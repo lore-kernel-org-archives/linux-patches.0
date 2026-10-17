@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F98356A12;
-	Sat, 17 Oct 2026 18:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED996356A12;
+	Sat, 17 Oct 2026 18:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260382; cv=none; b=btpN7wSOpF/lC3/Z0XiFqpfM4lsGOzKgHfIr6Rwvwip009J75JGowQeo7ws/3KdLcNDULmonCZK+JUSvNlFwu/W9H/rliDJgtPR8S7JqgvV2m+uXd+YgfgxT9u72zHrnz0Ji+nMbEZBCMRSllk1gv8zmpAy22Ae1qpBAAaLH28E=
+	t=1792260384; cv=none; b=flgEjLLLFGpSDaojiG8gog1k6Ei2D5dDpaHlaQgkYK3Y4gjreedLWamW4P3032KRL242sbWQLU5ysPeNRBwbI3Jt11aCl7rQVzjO4jnvAJxv5IsTg4/lNphHi4RpSTvc7EuF4tmlQWNtS+vddVRDCRnPzKZD7tWvSR7JfbtdIUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260382; c=relaxed/simple;
-	bh=vcK5Gl2orK2BE3X12AHO1STMbqdPQT//AOB5T0zudtQ=;
+	s=arc-20240116; t=1792260384; c=relaxed/simple;
+	bh=pJe42dr8wBI8imcAuyvuyqaIPjw0cF/suGljYyz3NUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejoXA5nl/tvXLcvLYNz8Bq7yvMHi1smOSrvvoegNqPE0qStGam5Nx4ReIvGkGbR53NfajHcIesIozOlTaVfo6EVjVlbMVq3rvnE5PNiHitZiUNO9OF0fwJ+Wbc+41OGL8R028fS8BCBvpgM+tMNf45dyh9Khm7OyQNLXnbMfkA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFPubzTJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WGlPwlOICywxUItqIz9k7UYBNzx3oE4Dpqf6gGhzzC/JDfm8RBM2C/5zELYqN7hCIkia0bkK+PR+9/53KOPcI7mgkYzehkU7IomVGJafRUyR8ySSJuRsoXcq3fSIJcUVHOsnZIBHij2hDQlFHlfDtHD69si1kdtNt9Jr1ywSRek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKs6l5Gj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFPubzTJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A90B1F000C4;
-	Sat, 17 Oct 2026 18:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKs6l5Gj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4634E1F000C4;
+	Sat, 17 Oct 2026 18:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260380;
-	bh=WzavxffMZ0OupDvVQt0i82udKfRfmq7Q/dJ2GYkD6/8=;
+	s=korg; t=1792260383;
+	bh=pkdfX6cX48NxaJ9t0auH8v0zzTw2jykWSKOPCOtQBAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FFPubzTJg2yN3le8vvMiHmpvdlcQQIivfx59ZnrhlPdYPqEoDuJkZJxRymyywPDC5
-	 RtFsNn31wLUiH1iSe95urn+80Xc7S6mJuW9evd+xp4DqjP4ty1sdFX7XkVI4F3Lkz4
-	 8XRlgLhMc65UHZNYZDOH7nsDIrHIJj7OmIG/2Wgw=
+	b=jKs6l5GjtYAWGTupgOAfCspcttHGjHP8GJrt8CTs36MwqFOu6Il8SKGxgLjOQJnRO
+	 CKCjf37JOlmH05HxLEQK+SYnFPmLgKF6oA9JEdDu5rV2puHNhUrmG21RpYFZVQwLeh
+	 dJRb1g1sSiou104CgC6DWOPpLXGFLpJnm7oi0sWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Timber <dxdt@dev.snart.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1525/1674] exfat: fix handling of damaged volume in exfat_create_upcase_table()
-Date: Sat, 17 Oct 2026 18:03:17 +0200
-Message-ID: <20261017160510.263815528@linuxfoundation.org>
+Subject: [PATCH 6.6 1526/1674] pds_core: quiesce DMA before freeing resources
+Date: Sat, 17 Oct 2026 18:03:18 +0200
+Message-ID: <20261017160510.289175242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,64 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Timber <dxdt@dev.snart.me>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit 20dd3185d13865214ff25b0bf7b931e8d73be1ac ]
+[ Upstream commit 6443f4f20bdae726fe01cf5946fba9742a0ffda6 ]
 
-When the size of the upcase table is set to zero in the dentry for any
-reason(e.g. corrupted media or misbehaving device), an integer overflow
-causes the module to loop indefinitely.
+pdsc_teardown() frees DMA buffers but does not disable bus mastering,
+leaving the device able to perform DMA after the buffers are freed.
+This can lead to use-after-free if the device writes to freed memory.
 
-If the size of the upcase table is read zero, do not attempt to load the
-table. Instead, fallback to loading the default upcase table. If the
-size of the upcase table is zero or no upcase table is found, raise
-exfat_fs_error() to mark the volume read-only.
+Add pci_clear_master() to pdsc_teardown() to disable bus mastering
+before freeing resources, ensuring all DMA is quiesced.
 
-Signed-off-by: David Timber <dxdt@dev.snart.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Add pci_set_master() to pdsc_setup() to re-enable bus mastering,
+which is needed for the firmware recovery path since pdsc_teardown()
+now disables it.
+
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Link: https://patch.msgid.link/20260604213637.3844317-1-nikhil.rao@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index e027b34356969..4bfe807716deb 100644
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -778,13 +778,18 @@ int exfat_create_upcase_table(struct super_block *sb)
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index 15884b4c77c3f..07bd5bd92a2ba 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -452,6 +452,8 @@ int pdsc_setup(struct pdsc *pdsc, bool init)
+ {
+ 	int err;
  
- 			tbl_clu  = le32_to_cpu(ep->dentry.upcase.start_clu);
- 			tbl_size = le64_to_cpu(ep->dentry.upcase.size);
--
--			sector = exfat_cluster_to_sector(sbi, tbl_clu);
--			num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
--			ret = exfat_load_upcase_table(sb, sector, num_sectors,
--				le32_to_cpu(ep->dentry.upcase.checksum));
--
-+			if (tbl_size) {
-+				sector = exfat_cluster_to_sector(sbi, tbl_clu);
-+				num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
-+				ret = exfat_load_upcase_table(sb, sector, num_sectors,
-+					le32_to_cpu(ep->dentry.upcase.checksum));
-+			} else {
-+				exfat_fs_error(sb,
-+					       "bad upcase table size (0 bytes). Please run fsck");
-+				ret = -EINVAL;
-+			}
- 			brelse(bh);
++	pci_set_master(pdsc->pdev);
 +
- 			if (ret && ret != -EIO) {
- 				/* free memory from exfat_load_upcase_table call */
- 				exfat_free_upcase_table(sbi);
-@@ -799,6 +804,8 @@ int exfat_create_upcase_table(struct super_block *sb)
- 			return -EIO;
- 	}
+ 	err = pdsc_dev_init(pdsc);
+ 	if (err)
+ 		return err;
+@@ -483,6 +485,8 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
+ 	if (!pdsc->pdev->is_virtfn)
+ 		pdsc_devcmd_reset(pdsc);
  
-+	exfat_fs_error(sb, "no upcase table entry. Please run fsck");
++	pci_clear_master(pdsc->pdev);
 +
- load_default:
- 	/* load default upcase table */
- 	return exfat_load_default_upcase_table(sb);
+ 	pdsc_core_uninit(pdsc);
+ 
+ 	kfree(pdsc->viftype_status);
 -- 
 2.53.0
 
