@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF573A7F4D;
-	Sat, 17 Oct 2026 18:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66B23909BC;
+	Sat, 17 Oct 2026 18:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260678; cv=none; b=pjf2OrAeyO2wBOCt6fYc7AFNCoJfDaBlH7wMAT4jGIY4aZeAYP2Tu0ufE7tjTCb5zb0bfq07v0zOtDbPUB+HJfeM9s6y3dc9rff3VezErOkqRTRh5c2JMQrlbp5yc0wYtu+pDLI3xn3hw6juzW9awCQsdPQluw3/29PbxJDYRUA=
+	t=1792260681; cv=none; b=giLrX7s+EHv/TQpKwTKPHTZjpz+RGd32Id8BNj9emG/7rvXRMZV4juQr2DCjSrK/zNU2YFvxY14I2OgcPdQC4i5XdtRNAAfX0jcbtHjJNgkY8G8RpWW6jUaZQSv2e7+M1YMjctf2Rohc1mLN5p3q6cp+N0M2EnGutrt2zXzw89A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260678; c=relaxed/simple;
-	bh=WeW2Yj8NuoLmJL2KKFa4nQiE4bl99UNAiJNGJk2nlvA=;
+	s=arc-20240116; t=1792260681; c=relaxed/simple;
+	bh=bp5fuli/1aX2AovwxKv++9AlC45x1WO0Vo05XgiCUX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjeSL7jdAAZ2B8RuVhsevEdtpbIjv1Fh0CxOOBk3HUeARzljyykdBuuC42cYKd5nYCalgNN0wvuIAIwb4ZgZst/X4MXSsiJY/6l6nxNttWr3CfjGJ7V0xePhz9PXYFt57ICU+m9TGvvzjYlcJvZDhojh3MiEBnK1M17YYnrSIJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez8V+AZe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q5hfPLyD2Gpt/LM9Q0k5kJPQVRpet57dH2eCZZnZNyRnz8NVSv3KfAZp/lQMKqCjTNK46i7SuOs3moelRvkcPt6LhCrGlDZupJyF3O7hFuOO+ojFvd6nsJEaIcRrGs9YH1PWGQ4qm0aJ6YCDnrjQv3N5kuahc4fdd/sr2/gV+b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPMz3lzm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez8V+AZe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24961F000C4;
-	Sat, 17 Oct 2026 18:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPMz3lzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E040E1F000C4;
+	Sat, 17 Oct 2026 18:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260677;
-	bh=XvilI6ROCoS7+ev6Aa5ejsCdLMlxKzj3oMFrYvalL78=;
+	s=korg; t=1792260680;
+	bh=9inRxIgDrIhaIREekPRuodH1SKNg3qVTZ9TtzzHZ8X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ez8V+AZeWtwY9ebuGcV2ORS/YZptcJskgLXc2xweHXgPA2z1mlmxP/zJARV3r7IgN
-	 aJFFkpYVKEAQ023AsSkE23EdqKuqSwp9QkGyeLpFpKs1tE8JK82yk7Lvkg5yK8KApB
-	 O3KgcpW+ZOzJY1hnqjjYEsPRxKw9XK/kps5IrILY=
+	b=xPMz3lzm3l8jN5Z6dMA69S83IwYHw4ZTfZUPFl/El2ScB112ZLLXe9YIWsEFpD5TA
+	 ZVAVnQIKyxGuR2FlvgNcVvtDypv9mXwZBpCee2EnPDba6OFdKol2YDllvohFMNsv+e
+	 EDjh47cIO7P25h39x6tAWdVdGjry0Ff037/XyLbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1587/1674] f2fs: accurately adjust free_sections during free_segment_range
-Date: Sat, 17 Oct 2026 18:04:19 +0200
-Message-ID: <20261017160511.824081664@linuxfoundation.org>
+Subject: [PATCH 6.6 1623/1674] bpf: mark a NULL call argument precise
+Date: Sat, 17 Oct 2026 18:04:55 +0200
+Message-ID: <20261017160512.743392295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,87 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 8c963d1738fdca400082ff5f9d99e083de4f4e70 ]
+[ Upstream commit 1a3a10b030c96ea88868ccc060a16827c01eaa5a ]
 
-In free_segment_range(), MAIN_SECS(sbi) is temporarily reduced by `secs`
-to restrict block allocation to the safe remaining main area while valid
-blocks in the truncated range are evacuated by GC.
+check_func_arg() allows bpf_register_is_null() for nullable arguments
+w/o marking the underlying scalar register precise. Hence a checkpoint
+created on such a path would prune against arbitrary scalar value.
 
-However, FREE_I(sbi)->free_sections tracks the total number of free
-sections across the whole filesystem. If any sections within the
-truncated range were already free upon entering free_segment_range(),
-failing to deduct them from free_sections causes the filesystem to
-overestimate available free sections in the active, reduced main area.
-This leads to inconsistent free section accounting during GC data
-migration and can trigger unexpected allocation failures or assertion
-errors when space is tight.
+check_helper_call() enforces second parameter of the
+bpf_get_local_storage() to be zero, w/o marking the underlying scalar
+register precise. Hence a checkpoint created on such a path would
+prune against arbitrary scalar value.
 
-Fix this by calculating the number of already-free sections in the
-truncated range, deducting them from free_sections upon entering
-free_segment_range(), and restoring them on exit.
+Grouping these two into one patch, as they share the same fixes tag.
 
-Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260904-register-is-null-precise-fixes-v1-1-0f5a360ff15d@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c                                |  9 ++++++++-
+ .../selftests/bpf/progs/verifier_subprog_precision.c | 12 ++++++------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 7cb41593462b2..663050f4bc19c 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2091,9 +2091,10 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
- static int free_segment_range(struct f2fs_sb_info *sbi,
- 				unsigned int secs, bool dry_run)
- {
--	unsigned int next_inuse, start, end;
-+	unsigned int secno, next_inuse, start, end, end_secno;
- 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
- 	int gc_mode, gc_type;
-+	unsigned int freed_secs = 0;
- 	int err = 0;
- 	int type;
- 
-@@ -2101,6 +2102,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 	MAIN_SECS(sbi) -= secs;
- 	start = MAIN_SECS(sbi) * SEGS_PER_SEC(sbi);
- 	end = MAIN_SEGS(sbi) - 1;
-+	end_secno = GET_SEC_FROM_SEG(sbi, end);
- 
- 	mutex_lock(&DIRTY_I(sbi)->seglist_lock);
- 	for (gc_mode = 0; gc_mode < MAX_GC_POLICY; gc_mode++)
-@@ -2112,6 +2114,14 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 			sbi->next_victim_seg[gc_type] = NULL_SEGNO;
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
- 
-+	spin_lock(&FREE_I(sbi)->segmap_lock);
-+	for (secno = MAIN_SECS(sbi); secno <= end_secno; secno++) {
-+		if (!test_bit(secno, FREE_I(sbi)->free_secmap))
-+			freed_secs++;
-+	}
-+	FREE_I(sbi)->free_sections -= freed_secs;
-+	spin_unlock(&FREE_I(sbi)->segmap_lock);
-+
- 	/* Move out cursegs from the target range */
- 	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++)
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
-@@ -2133,6 +2143,9 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 		f2fs_bug_on(sbi, 1);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e36a04cf3ccc7..d92787b445829 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8665,11 +8665,15 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 			return err;
  	}
- out:
-+	spin_lock(&FREE_I(sbi)->segmap_lock);
-+	FREE_I(sbi)->free_sections += freed_secs;
-+	spin_unlock(&FREE_I(sbi)->segmap_lock);
- 	MAIN_SECS(sbi) += secs;
- 	return err;
- }
+ 
+-	if (register_is_null(reg) && type_may_be_null(arg_type))
++	if (register_is_null(reg) && type_may_be_null(arg_type)) {
+ 		/* A NULL register has a SCALAR_VALUE type, so skip
+ 		 * type checking.
+ 		 */
++		err = mark_chain_precision(env, regno);
++		if (err)
++			return err;
+ 		goto skip_type_check;
++	}
+ 
+ 	/* arg_btf_id and arg_size are in a union. */
+ 	if (base_type(arg_type) == ARG_PTR_TO_BTF_ID ||
+@@ -10291,6 +10295,9 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+ 			verbose(env, "get_local_storage() doesn't support non-zero flags\n");
+ 			return -EINVAL;
+ 		}
++		err = mark_chain_precision(env, BPF_REG_2);
++		if (err)
++			return err;
+ 		break;
+ 	case BPF_FUNC_for_each_map_elem:
+ 		err = push_callback_call(env, insn, insn_idx, meta.subprogno,
+diff --git a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+index a188e26f04da7..54d9861194e6d 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
++++ b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+@@ -150,9 +150,9 @@ __msg("17: (b7) r0 = 0")
+ __msg("18: (95) exit")
+ __msg("returning from callee:")
+ __msg("to caller at 9:")
+-__msg("frame 0: propagating r1,r4")
++__msg("frame 0: propagating r1,r3,r4")
+ __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4 stack= before 18: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4 stack= before 18: (95) exit")
+ __msg("from 18 to 9: safe")
+ __naked int callback_result_precise(void)
+ {
+@@ -282,9 +282,9 @@ __msg("to caller at 9:")
+ /* r1, r4 are always precise for bpf_loop(),
+  * r6 was marked before backtracking to callback body.
+  */
+-__msg("frame 0: propagating r1,r4,r6")
++__msg("frame 0: propagating r1,r3,r4,r6")
+ __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4,r6 stack= before 16: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4,r6 stack= before 16: (95) exit")
+ __msg("mark_precise: frame1: regs= stack= before 15: (b7) r0 = 0")
+ __msg("mark_precise: frame1: regs= stack= before 9: (85) call bpf_loop")
+ __msg("mark_precise: frame0: parent state regs= stack=:")
+@@ -440,9 +440,9 @@ __msg("to caller at 10:")
+ /* r1, r4 are always precise for bpf_loop(),
+  * fp-8 was marked before backtracking to callback body.
+  */
+-__msg("frame 0: propagating r1,r4,fp-8")
++__msg("frame 0: propagating r1,r3,r4,fp-8")
+ __msg("mark_precise: frame0: last_idx 10 first_idx 10 subseq_idx -1")
+-__msg("mark_precise: frame0: regs=r1,r4 stack=-8 before 18: (95) exit")
++__msg("mark_precise: frame0: regs=r1,r3,r4 stack=-8 before 18: (95) exit")
+ __msg("mark_precise: frame1: regs= stack= before 17: (b7) r0 = 0")
+ __msg("mark_precise: frame1: regs= stack= before 10: (85) call bpf_loop#181")
+ __msg("mark_precise: frame0: parent state regs= stack=:")
 -- 
 2.53.0
 
