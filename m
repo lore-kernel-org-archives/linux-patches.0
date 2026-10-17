@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC073A1A58;
-	Sat, 17 Oct 2026 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F46238F658;
+	Sat, 17 Oct 2026 17:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259971; cv=none; b=uVwUlHhTaBKAjf4gZk4CNj2KVh8jNWoflNRYmIKiIML4WJL3xqoLo2IlzYMPqqnjh71DzhtmvX3dvMgQZHVPv2+/5h2zBVApmJ6mT7Dsh7JjvqJb3Ws9VSpLeS+HncPgN+JS3d/fvvHy0Db+wh6toa4tCMrhI/gxeALY8U8BKS4=
+	t=1792259974; cv=none; b=Bj172ouOa8l6Xohad+X7Q6uvLpH+76BN6mDkzsiX27skSVyizte381tiUyJnzP1uYG2IuR66u4I3A5DTaNfcf7MMgUbyXgUGBGu/tbwQBPDuyqkeg0fqmiisur6991D/Z0RosPAUSJLnOGQxkk67iJFl+ERA2a5mJOUyU91Vji4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259971; c=relaxed/simple;
-	bh=nirvm+az+xvcrgsuFD3DoubF7QXzsdpLlckJtZHc8bM=;
+	s=arc-20240116; t=1792259974; c=relaxed/simple;
+	bh=t45L965FnF9Q0XqHSOMVnRFiFHVA9wYr/R/S1bmHAC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf4IVTNLobc85coTyNooyRQ0dMnucrOYcVUGF5pqleliMD7gLKukXMVlnbR+enw0ayZcQ7kG+S4wJaKY5GFZS/QPJBtcj32wzKxK2AtO7fhT03eP9c7r/WB+8bi78vk5as8tJZOuyI2uP9AiLylp2AT65I89TfeHpJtRihpaVeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYetzixi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XpH2yJHswiJg/KWfW2To+jOPez1Q5Nr4vTciQpa0PJRZhONk/1mPKqrqXZ5zu8w1YKQhn3YMsTFNCY3F7BVs2/K671B5FkzBTFtXnQYkG+voZC41Ucyka1xAVPm9eZz8sd3svPaiOnycf06kWuHM1oKGz5eiJ43QKPSTs2K3Xe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRKJGpMZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYetzixi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471271F000C4;
-	Sat, 17 Oct 2026 17:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRKJGpMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8B91F000C4;
+	Sat, 17 Oct 2026 17:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259969;
-	bh=X9hIYzrrwrTSPoPYob4pYeq6tayI0BHzKqxJMdciBao=;
+	s=korg; t=1792259973;
+	bh=hCLn/8FB8l5Pel5z3gKtUMkpDiFgB2JCraypE8UZVBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYetzixiTtFFrYV4Chyhfq8P2pQRDTgFNQlWL/Clr0lg4BF0nF/pt5+IaE0mc9jqE
-	 HYt1sbljG4qz0+IrJVB4eSoWIkcAjc1EYrdQhmI6NWCjIWf35IDuWRL3ahJMaG812n
-	 h6TfBTW2TvCLSrGkvLTRlK9q977M0GcaY8lyUVWg=
+	b=wRKJGpMZdp95L0/6r22Yjl/cZuffjfY6O48EExk5NbgoAe3RRkuy/w1VYhEZAUH3M
+	 OdOGh6GMswjY4VF8vsbKRjl3i0+LzHl7j6HDD7P2lCwnNdzL8BadvxfjdSN6ivmwVM
+	 G6S5NCHedxM+HqsFbx6yAa3bmuhEg3b7WNvHwo9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Zhansong Gao <zhsgao@hotmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1390/1674] filelock: add some new helper functions
-Date: Sat, 17 Oct 2026 18:01:02 +0200
-Message-ID: <20261017160506.847858239@linuxfoundation.org>
+Subject: [PATCH 6.6 1391/1674] NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()
+Date: Sat, 17 Oct 2026 18:01:03 +0200
+Message-ID: <20261017160506.874264329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,167 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Zhansong Gao <zhsgao@hotmail.com>
 
-[ Upstream commit 75cabec0111b7ccb140d917cc9c481e845cc3498 ]
+[ Upstream commit 468e458ffde907ba19acd2102ca1fbb8f6fbede2 ]
 
-In later patches we're going to embed some common fields into a new
-structure inside struct file_lock. Smooth the transition by adding some
-new helper functions, and converting the core file locking code to use
-them.
+When nfs4_add_lease() races with a delegation return, it calls
+nfs4_delete_lease() to clean up. Previously, it passed priv,
+which can legitimately be NULL. Passing a NULL priv eventually
+leads to a NULL pointer dereference in generic_setlease().
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20240131-flsplit-v3-4-c6129007ee8d@kernel.org
-Reviewed-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 468e458ffde9 ("NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()")
+Fixes: e93a5e9306a5 ("NFSv4: Add support for application leases underpinned by a delegation")
+Signed-off-by: Zhansong Gao <zhsgao@hotmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/locks.c               | 18 ++++++++--------
- include/linux/filelock.h | 44 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 9 deletions(-)
+ fs/nfs/nfs4proc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/locks.c b/fs/locks.c
-index 19e9fcd1d4ca5..90ec12e0f4f98 100644
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -675,7 +675,7 @@ static void __locks_wake_up_blocks(struct file_lock *blocker)
- 		if (waiter->fl_lmops && waiter->fl_lmops->lm_notify)
- 			waiter->fl_lmops->lm_notify(waiter);
- 		else
--			wake_up(&waiter->fl_wait);
-+			locks_wake_up(waiter);
- 
- 		/*
- 		 * The setting of fl_blocker to NULL marks the "done"
-@@ -842,9 +842,9 @@ locks_delete_lock_ctx(struct file_lock *fl, struct list_head *dispose)
- static bool locks_conflict(struct file_lock *caller_fl,
- 			   struct file_lock *sys_fl)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index ce3ab0a9c0ef7..b226dbe853860 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7635,6 +7635,7 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lock **lease,
  {
--	if (sys_fl->fl_type == F_WRLCK)
-+	if (lock_is_write(sys_fl))
- 		return true;
--	if (caller_fl->fl_type == F_WRLCK)
-+	if (lock_is_write(caller_fl))
- 		return true;
- 	return false;
- }
-@@ -875,7 +875,7 @@ static bool posix_test_locks_conflict(struct file_lock *caller_fl,
- 				      struct file_lock *sys_fl)
- {
- 	/* F_UNLCK checks any locks on the same fd. */
--	if (caller_fl->fl_type == F_UNLCK) {
-+	if (lock_is_unlock(caller_fl)) {
- 		if (!posix_same_owner(caller_fl, sys_fl))
- 			return false;
- 		return locks_overlap(caller_fl, sys_fl);
-@@ -1056,7 +1056,7 @@ static int flock_lock_inode(struct inode *inode, struct file_lock *request)
- 		break;
- 	}
+ 	struct inode *inode = file_inode(file);
+ 	fmode_t type = arg == F_RDLCK ? FMODE_READ : FMODE_WRITE;
++	fl_owner_t owner = (*lease)->c.flc_owner;
+ 	int ret;
  
--	if (request->fl_type == F_UNLCK) {
-+	if (lock_is_unlock(request)) {
- 		if ((request->fl_flags & FL_EXISTS) && !found)
- 			error = -ENOENT;
- 		goto out;
-@@ -1108,7 +1108,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 
- 	ctx = locks_get_lock_context(inode, request->fl_type);
- 	if (!ctx)
--		return (request->fl_type == F_UNLCK) ? 0 : -ENOMEM;
-+		return lock_is_unlock(request) ? 0 : -ENOMEM;
- 
- 	/*
- 	 * We may need two file_lock structures for this operation,
-@@ -1229,7 +1229,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 				continue;
- 			if (fl->fl_start > request->fl_end)
- 				break;
--			if (request->fl_type == F_UNLCK)
-+			if (lock_is_unlock(request))
- 				added = true;
- 			if (fl->fl_start < request->fl_start)
- 				left = fl;
-@@ -1280,7 +1280,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 
- 	error = 0;
- 	if (!added) {
--		if (request->fl_type == F_UNLCK) {
-+		if (lock_is_unlock(request)) {
- 			if (request->fl_flags & FL_EXISTS)
- 				error = -ENOENT;
- 			goto out;
-@@ -1609,7 +1609,7 @@ void lease_get_mtime(struct inode *inode, struct timespec64 *time)
- 		spin_lock(&ctx->flc_lock);
- 		fl = list_first_entry_or_null(&ctx->flc_lease,
- 					      struct file_lock, fl_list);
--		if (fl && (fl->fl_type == F_WRLCK))
-+		if (fl && lock_is_write(fl))
- 			has_lease = true;
- 		spin_unlock(&ctx->flc_lock);
- 	}
-diff --git a/include/linux/filelock.h b/include/linux/filelock.h
-index 03fdaae58de42..4ae068f1522c0 100644
---- a/include/linux/filelock.h
-+++ b/include/linux/filelock.h
-@@ -167,6 +167,29 @@ int fcntl_setlk64(unsigned int, struct file *, unsigned int,
- int fcntl_setlease(unsigned int fd, struct file *filp, int arg);
- int fcntl_getlease(struct file *filp);
- 
-+static inline bool lock_is_unlock(struct file_lock *fl)
-+{
-+	return fl->fl_type == F_UNLCK;
-+}
-+
-+static inline bool lock_is_read(struct file_lock *fl)
-+{
-+	return fl->fl_type == F_RDLCK;
-+}
-+
-+static inline bool lock_is_write(struct file_lock *fl)
-+{
-+	return fl->fl_type == F_WRLCK;
-+}
-+
-+static inline void locks_wake_up(struct file_lock *fl)
-+{
-+	wake_up(&fl->fl_wait);
-+}
-+
-+/* for walking lists of file_locks linked by fl_list */
-+#define for_each_file_lock(_fl, _head)	list_for_each_entry(_fl, _head, fl_list)
-+
- /* fs/locks.c */
- void locks_free_lock_context(struct inode *inode);
- void locks_free_lock(struct file_lock *fl);
-@@ -243,6 +266,27 @@ static inline int fcntl_getlease(struct file *filp)
- 	return F_UNLCK;
+ 	/* No delegation, no lease */
+@@ -7644,7 +7645,8 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lock **lease,
+ 	if (ret || nfs4_have_delegation(inode, type))
+ 		return ret;
+ 	/* We raced with a delegation return */
+-	nfs4_delete_lease(file, priv);
++	dprintk("%s: raced with a delegation return\n", __func__);
++	nfs4_delete_lease(file, &owner);
+ 	return -EAGAIN;
  }
  
-+static inline bool lock_is_unlock(struct file_lock *fl)
-+{
-+	return false;
-+}
-+
-+static inline bool lock_is_read(struct file_lock *fl)
-+{
-+	return false;
-+}
-+
-+static inline bool lock_is_write(struct file_lock *fl)
-+{
-+	return false;
-+}
-+
-+static inline void locks_wake_up(struct file_lock *fl)
-+{
-+}
-+
-+#define for_each_file_lock(_fl, _head)	while(false)
-+
- static inline void
- locks_free_lock_context(struct inode *inode)
- {
 -- 
 2.53.0
 
