@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CF63ADBA4;
-	Sat, 17 Oct 2026 16:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B573AEB39;
+	Sat, 17 Oct 2026 16:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255346; cv=none; b=s5XgCV1P0pW6mdW+SI6AMgk/sm094/SAfCZvfymPlbvqHxGGDzXm8L59XLCkOJGJGpEEvgxTw5OTXt0jftv45155YUuQhfaJOeJfvvKQH6I2zc5XUPBIVwbxAENzmnMOASsCjkNv7su2H4qN9rrwK+mXtfSl6rZBcd/oE6qlS6I=
+	t=1792255349; cv=none; b=mJeqE3UWgZfKHgk2BwPYKsAXorRewCcv4DPAu8eiuC6gxHmg2SiF4Y/m79tEFoqg8pwptuvyt1V+nSV6JkSRUYkdoC3vbtY4OPzO8PyM+9HKV29quL8JKxrxI77aHVt/WMR3lPpi63GFTqoY6j7cty4uoS6vONT7pcHX0e67XtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255346; c=relaxed/simple;
-	bh=YNHhclPAvAY4kF0PRUIgmN1QyUXZNPTqecKPnNITMVg=;
+	s=arc-20240116; t=1792255349; c=relaxed/simple;
+	bh=f5WoZh2cUsVNIVASh7JkQwZ2PLsc9i8S+JgSzSCAnT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CicDWCH9qLAek2JFDmiI6tMfWv1+FxItyjMZutJEDJMI96JCUc4F8ByuO+wyG+G2QBWqaBSF1qiSLZjltZPU0bT4MB91ZDH44GACT3yjjx+JrNGgb21C2PVBLr5fjuTT1CrnrAW1GcwxMwBydZ2pedtB35541+tmQVqLfff29Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZPJmXCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qlMDETDMu5KnvkDZxecm0nKqYR2pmY02XjIIBsQHq2j9OyRFqCjw0IHsMtkOGnEB9V4e5ErrJWgC7wNryBYiUDxgcF2lzBqaVmdbzs+F9mHiN7rEzyJZhFAjF+76M97vxxqcDf8JixnAnbnDjtSYvB/6bdzmACaPj9ApVzj41d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APwlh0oS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZPJmXCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727AB1F000C4;
-	Sat, 17 Oct 2026 16:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APwlh0oS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915C51F000C4;
+	Sat, 17 Oct 2026 16:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255345;
-	bh=7gK9erOlhPzzX7dqoL3EJTPC25zx50bTKsMDfD6uVBE=;
+	s=korg; t=1792255348;
+	bh=vLhKfNqg9EZCCD8n7KMNVViaZckJ8SAU0OYIzcleBAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZPJmXCfEDTTHoFt2O9oxBZ0Neu81wlXMYceZ+cZwNkgPYyEu9yb0EPSHv1uRBBMv
-	 PKeu9vE7RWTmzdwEYr90KPNJQMlznrxtwni8kN+EpabTgVTnFOXBJ3R6fYLW8IYI9g
-	 ffGIfNwL+RqBCiV9W0YsPW003FwtIlamZmPtynhM=
+	b=APwlh0oScoi3kX4CcVQE4sC7apsfXvw63fY84UXDoGA0gHfolNIi2y8LNoJKbhJD4
+	 WyQ5l19/iFyVhZ9utLiMJwLEAfznCMUHNEXVS1pNw/5vDdQCiOYXqaENbspDSxx76U
+	 Df8zeRsessS/7OkuhF2/rI9kaGtGJm8sY3JU5LsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 743/869] tty: serial: 8250: protect against NULL uart->port.dev in register
-Date: Sat, 17 Oct 2026 17:59:44 +0200
-Message-ID: <20261017160055.989833550@linuxfoundation.org>
+Subject: [PATCH 6.12 744/869] drm/amdgpu: Remove unused amdgpu_i2c functions
+Date: Sat, 17 Oct 2026 17:59:45 +0200
+Message-ID: <20261017160056.014778825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,62 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Dr. David Alan Gilbert <linux@treblig.org>
 
-[ Upstream commit 941c9f84c9b6310f7aaa1c8c785dcc634ee33050 ]
+[ Upstream commit 0ee239911634dd29c3b05e1138d617cc3cab33fa ]
 
-serial8250_register_8250_port() conditionally copies uart->port.dev
-from up->port.dev only when up->port.dev is non-NULL:
+amdgpu_i2c_add and amdgpu_i2c_init were added in 2015's commit
+d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
+but never used.
 
-	if (up->port.dev) {
-		uart->port.dev = up->port.dev;
-		...
-	}
+Remove them.
 
-So if both the existing uart slot and up have a NULL ->dev,
-uart->port.dev remains NULL. The very next ACPI companion check
-then dereferences it unconditionally:
-
-	if (!has_acpi_companion(uart->port.dev)) {
-
-has_acpi_companion() reads dev->fwnode without a NULL guard
-(include/linux/acpi.h), so this NULL-derefs the kernel for the
-remaining no-dev case rather than just skipping the
-mctrl_gpio_init() initialisation as intended.
-
-smatch flags the inconsistency:
-
-  drivers/tty/serial/8250/8250_core.c:767
-  serial8250_register_8250_port() error: 'uart->port.dev' could be
-  null (see line 719)
-
-Guard the call with a NULL check so register continues to work
-for callers that legitimately have no parent device (legacy
-non-OF/non-ACPI registrations).
-
-No functional change for callers that pass a non-NULL ->dev.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260508181237.11146-1-sozdayvek@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a99cd231cd92 ("drm/amdgpu: Bound GPIO I2C table entry count from VBIOS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c | 25 -------------------------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.h |  4 ----
+ 2 files changed, 29 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
-index d7034f305c7b2..f35a060a73a74 100644
---- a/drivers/tty/serial/8250/8250_core.c
-+++ b/drivers/tty/serial/8250/8250_core.c
-@@ -768,7 +768,7 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
- 	 * Only call mctrl_gpio_init(), if the device has no ACPI
- 	 * companion device
- 	 */
--	if (!has_acpi_companion(uart->port.dev)) {
-+	if (uart->port.dev && !has_acpi_companion(uart->port.dev)) {
- 		struct mctrl_gpios *gpios = mctrl_gpio_init(&uart->port, 0);
- 		if (IS_ERR(gpios)) {
- 			ret = PTR_ERR(gpios);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c
+index 00d6211e0fbf9..f0765ccde6680 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c
+@@ -225,15 +225,6 @@ void amdgpu_i2c_destroy(struct amdgpu_i2c_chan *i2c)
+ 	kfree(i2c);
+ }
+ 
+-/* Add the default buses */
+-void amdgpu_i2c_init(struct amdgpu_device *adev)
+-{
+-	if (amdgpu_hw_i2c)
+-		DRM_INFO("hw_i2c forced on, you may experience display detection problems!\n");
+-
+-	amdgpu_atombios_i2c_init(adev);
+-}
+-
+ /* remove all the buses */
+ void amdgpu_i2c_fini(struct amdgpu_device *adev)
+ {
+@@ -247,22 +238,6 @@ void amdgpu_i2c_fini(struct amdgpu_device *adev)
+ 	}
+ }
+ 
+-/* Add additional buses */
+-void amdgpu_i2c_add(struct amdgpu_device *adev,
+-		    const struct amdgpu_i2c_bus_rec *rec,
+-		    const char *name)
+-{
+-	struct drm_device *dev = adev_to_drm(adev);
+-	int i;
+-
+-	for (i = 0; i < AMDGPU_MAX_I2C_BUS; i++) {
+-		if (!adev->i2c_bus[i]) {
+-			adev->i2c_bus[i] = amdgpu_i2c_create(dev, rec, name);
+-			return;
+-		}
+-	}
+-}
+-
+ /* looks up bus based on id */
+ struct amdgpu_i2c_chan *
+ amdgpu_i2c_lookup(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.h
+index 63c2ff7499e17..21e3d1dad0a12 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.h
+@@ -28,11 +28,7 @@ struct amdgpu_i2c_chan *amdgpu_i2c_create(struct drm_device *dev,
+ 					  const struct amdgpu_i2c_bus_rec *rec,
+ 					  const char *name);
+ void amdgpu_i2c_destroy(struct amdgpu_i2c_chan *i2c);
+-void amdgpu_i2c_init(struct amdgpu_device *adev);
+ void amdgpu_i2c_fini(struct amdgpu_device *adev);
+-void amdgpu_i2c_add(struct amdgpu_device *adev,
+-		    const struct amdgpu_i2c_bus_rec *rec,
+-		    const char *name);
+ struct amdgpu_i2c_chan *
+ amdgpu_i2c_lookup(struct amdgpu_device *adev,
+ 		  const struct amdgpu_i2c_bus_rec *i2c_bus);
 -- 
 2.53.0
 
