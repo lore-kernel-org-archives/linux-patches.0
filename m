@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A0277026;
-	Sat, 17 Oct 2026 16:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6DD303A0D;
+	Sat, 17 Oct 2026 16:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256150; cv=none; b=rs7Oc136viev1JUEVwnYonijbLfxFUQcnAnBJIcG2v5CsYjx1oD/b4I2/btSD89Sts+jz/dHJfBdUonpj81eJ89Hu48ynVfkO3jj7hAsQ9KOrGgRX60OFsXmlO3PUITPafohKHDn50l/Y1bNMjkeOS4a3PV0qojgDgjZYR0P8TE=
+	t=1792256153; cv=none; b=gSHIfIdU4wXBZR9tdq8Mxtrxa03S4jd16bNW0Di/QdZAJQc2hmdZhs5o9tvzsumOY9T+xBLLJ2Eu+JLEgpotsb00p/217+PvVMys4MdFHM2oV0J7CvAvMGLTzFcGWAnOa8tvve+BfHz8vg+1p9MDjGOmd2aeuYTQ/jLqpzWdKsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256150; c=relaxed/simple;
-	bh=PeFViZgplNDBg8X1/aLpTLJpTRMV/Z0PKzj/zhkFiyM=;
+	s=arc-20240116; t=1792256153; c=relaxed/simple;
+	bh=uiJ5n5LRSOtONpnSekrkfftfvABSawKNN8/aGbWZFCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChdLlq+3PYp95Dg2T/O7vlsXibyFynSuYcIBAQyZTf321Zfj6OWn7qaPus5Amo/aWMmTbmZOlimsDLPJgzjLe43EyXC8jgY1yROKwE5v7PGphW4FOgZxsdlY00efr0gzvLVXAKqRCMM0rzUv44UYQiXO69t3m4ufMVBZlbxzvF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcFYTDUI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qImKuvmNvmlHkWbiPG0I+GZcSP++uFFVloPjDJIcZOBAmIuhax/TlnsR41fbHAi50sO9Ixk1AZ+lj5W+F/A8lKmP3/tsa3AW+EcPLwwSdOQSXsJ91AW1BpMcoXI4tkMEUFAf8+x4HIoT3TIo0UErZnLVzzu+2w7LJZiiSDdTfQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rR7kLJi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcFYTDUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1E91F000C4;
-	Sat, 17 Oct 2026 16:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rR7kLJi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623421F000C4;
+	Sat, 17 Oct 2026 16:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256149;
-	bh=i8SEhN93K00rrEK+qmx/eNPHol5u3dduzZW+U7xP4eM=;
+	s=korg; t=1792256151;
+	bh=vwO+u7rtu0sJTyBTNikYQSPG2HcJurzntSDywKGKBq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcFYTDUIt3oFejlURqjFVrAdqsSiirxkl8pLszp7qMh6rS5ZtxeW3xhQ3HKwOHgcB
-	 lIOy/781I8cD/FNvegNq76NDZdoEjuPyQIMjshxfKag0r9E1niVdR5kcAw3NGVDtDq
-	 t9lWW4uHEO473iJG/59LMIk8QE/QqZjl8oGW611U=
+	b=1rR7kLJiSgfr1GrkIVAHqc8rIVMywlrfaRRcniDZrncIVGEjwdHJVaYkJRIrBRIO8
+	 itefRUM+nI+AtUzvfVl4vjWQpwVqV9I4Xw1RubtQrkRnt9eZDnAJCAx0HZBZtLgpZ2
+	 yRhv//Dcp5rC+eh2qkAndS0YFT4NhbWj2u7chLT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Yifan Wu <wuyifan50@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0141/1674] perf/core: Fix NULL pmu_ctx passed to pmu->sched_task()
-Date: Sat, 17 Oct 2026 17:40:13 +0200
-Message-ID: <20261017160434.778330700@linuxfoundation.org>
+Subject: [PATCH 6.6 0142/1674] perf/core: Allow list_del during perf_event_overflow()
+Date: Sat, 17 Oct 2026 17:40:14 +0200
+Message-ID: <20261017160434.804414594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,52 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 36bb85cf36cab15fb611cb44b78a5df06e4e69a2 ]
+[ Upstream commit 59e63416f5153e7d58652c616fbdcb7d5e01fff7 ]
 
-perf_pmu_sched_task() returns early when cpuctx->task_ctx is set, and
-cpc->task_epc is only non-NULL while a task context is scheduled in on
-this CPU. __perf_pmu_sched_task() therefore always passes NULL:
+A PMU might use perf_sched_cb_inc() and perf_sched_cb_dec()
+interface to get the PMU call back function pmu::sched_task
+invoked at schedule in and schedule out. This is achieved
+by walking along the list anchored by sched_cb_list.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 00
-  pc : armv8pmu_sched_task+0x14/0x50
-  Call trace:
-   armv8pmu_sched_task+0x14/0x50 (P)
-   perf_pmu_sched_task+0xac/0x108
-   __perf_event_task_sched_out+0x6c/0xe0
+The following scenario might lead to a list corruption.
 
-Pass &cpc->epc instead, the CPU-wide context for this PMU, which the
-function already dereferences a few lines up to find pmu.
+   perf_pmu_sched_task()
+      for_each_list_entry(..., &sched_cb_list)
+      +--> __perf_pmu_sched_task()
+           +--> event->pmu->sched_task())
+                +--> PMU_push_sample()
+                     +--> perf_event_overflow()
+                          +--> __perf_event_overflow()
+                               +--> pmu->stop()
+                                    +--> perf_sched_cb_dec()
+                                         remove entry from sched_cb_list
+                                         while list node in use.
 
-armv8pmu_sched_task() is the only in-tree implementation that
-dereferences the argument, and it only reads ->pmu, so the oops needs
-BRBE, added in v6.17.
+This happens when ioctl(fd, PERF_EVENT_IOC_REFRESH, xxx) has been
+invoked and perf_event::event_limit hits zero.
+
+Prevent the list corruption and convert for_each_list_entry()
+to for_each_list_entry_safe().
 
 Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Yifan Wu <wuyifan50@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260810133540.1947118-2-puranjay@kernel.org
+Link: https://patch.msgid.link/20260908105637.627004-1-tmricht@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 7cb8cb1f0f68e..c9ec3d08940e1 100644
+index c9ec3d08940e1..0567303b63fb8 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -3679,7 +3679,7 @@ static void __perf_pmu_sched_task(struct perf_cpu_pmu_context *cpc,
- 	perf_ctx_lock(cpuctx, cpuctx->task_ctx);
- 	perf_pmu_disable(pmu);
+@@ -3690,13 +3690,13 @@ static void perf_pmu_sched_task(struct task_struct *prev,
+ 				bool sched_in)
+ {
+ 	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
+-	struct perf_cpu_pmu_context *cpc;
++	struct perf_cpu_pmu_context *cpc, *cpc2;
  
--	pmu->sched_task(cpc->task_epc, task, sched_in);
-+	pmu->sched_task(&cpc->epc, task, sched_in);
+ 	/* cpuctx->task_ctx will be handled in perf_event_context_sched_in/out */
+ 	if (prev == next || cpuctx->task_ctx)
+ 		return;
  
- 	perf_pmu_enable(pmu);
- 	perf_ctx_unlock(cpuctx, cpuctx->task_ctx);
+-	list_for_each_entry(cpc, this_cpu_ptr(&sched_cb_list), sched_cb_entry)
++	list_for_each_entry_safe(cpc, cpc2, this_cpu_ptr(&sched_cb_list), sched_cb_entry)
+ 		__perf_pmu_sched_task(cpc, sched_in ? next : prev, sched_in);
+ }
+ 
 -- 
 2.53.0
 
