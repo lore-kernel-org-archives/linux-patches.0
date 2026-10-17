@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAA93A4F4A;
-	Sat, 17 Oct 2026 16:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5043A9DBE;
+	Sat, 17 Oct 2026 16:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253713; cv=none; b=ZloILM3LcRbg+NqQg/CUjsHIfNVpFb6Lzs0VfTp0RvWy1Z5vuHKaByLcio2dWKC92R2hLrsVJKrvms1TneL+iAoYxttjFTKHrnNzMTV/8/3mu6bfaw4wYgAi+tFq4C5SQbrBkG+4IrKzmEzFitBq+zxXKKHtLXclYdhCLHUdEQw=
+	t=1792253718; cv=none; b=qS6kXAvto78ESd58wZRDQ0a3UF1yMt3mYhO65zYloCuX2/hPy5EDEi6aYWAUrOf6jCD7NFAUglVFLYCIzH7NX7LQKKYBl0dlJj4nMDE6Jpn7uFykhxowk0ndSvkk4F9PRsqvf3PpN2yOyOyr0RwgzFB+FQC4Nd9GkIl8es9sXxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253713; c=relaxed/simple;
-	bh=kzKHZacw2A9Hee93ZEpreY2qdF6lwSMXAB4BgCnqsfc=;
+	s=arc-20240116; t=1792253718; c=relaxed/simple;
+	bh=Ydu78R5ZrSgihZSVDkm6iB8W+21la3c1QZiISvIZsi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgRy7b0oYMNlU9VhH0bVP2QR1NfQrxb78USSBNaPUUBTo341Ge2nwDzevIBDZtTP3A14s4R+x0/Lxeqjzf3aHSKG3hE5XALhD6isfYlThRgb0BU78gbCPD/6rL8PFOemvPenM2GmH8g5SHnWFIQbTPfGehzGdrlgt5XGEEJiKTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBJ20wiE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a25CLZ2YrDgMs+jxPmnqetLJ2WBP4xqG8apZGd3lJUMqWUs0OvzJweewF3n2kGr2S0znrQxsCg4FyYqJvwtiPQpKGX17k3LmswSbj0WGnVmykGXbS2sFeZSa39aGG+VJz7xSYqBs9m++rJQEYeHId9rL6Nt+Nd1PLcdqoxA3z3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARyD6/o7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBJ20wiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A521F000C4;
-	Sat, 17 Oct 2026 16:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARyD6/o7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4F61F000C4;
+	Sat, 17 Oct 2026 16:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253711;
-	bh=iHKxqCVZwXzFmDho5D3SYtpDbxWLlgqT3CKzTIoBsUM=;
+	s=korg; t=1792253714;
+	bh=W2z2i1rdd1WqLGxWqhYFDLg4lo9V7ShFw14K54d6hXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gBJ20wiE2c9IWgSpzbTUoApgWrwy03e8InzdBjpM5urAVN+dg6tn2kAFJjfkCQqb5
-	 veBzQjL8uMxfHWHo2cVtVrc6N/zaNQzGtDNqnXh57rjkfrhyfjR6wIgVug9P/O8Cqr
-	 ou3Rf2t1J7AGx/ImzSL00gEa4hXvzP3wBdBlVS9o=
+	b=ARyD6/o7gXxt2GWOLmL/CQqcU76KRsCOi9iXlw5EyNscXq0LerIOkj61Hzh/1afV5
+	 DB5tpskCeF85JZbNWcjMRnImttwofIU/aUS40COpAdwgDn6jYG+UslhuUXp5i7FCWg
+	 zzec/D99fzeQqlnctsi3WaB9zGh3o3LQFGB5AgO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 201/869] rxrpc: proc: size address buffers for %pISpc output
-Date: Sat, 17 Oct 2026 17:50:42 +0200
-Message-ID: <20261017160042.211863326@linuxfoundation.org>
+Subject: [PATCH 6.12 210/869] bpf: Fix incorrect pruning due to atomic fetch precision tracking
+Date: Sat, 17 Oct 2026 17:50:51 +0200
+Message-ID: <20261017160042.440141479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -57,167 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 ]
+[ Upstream commit 179ee84a89114b854ac2dd1d293633a7f6c8dac1 ]
 
-The AF_RXRPC procfs helpers format local and remote socket addresses into
-fixed 50-byte stack buffers with "%pISpc".
+When backtrack_insn encounters a BPF_STX instruction with BPF_ATOMIC
+and BPF_FETCH, the src register (or r0 for BPF_CMPXCHG) also acts as
+a destination, thus receiving the old value from the memory location.
 
-That is too small for the longest current-tree IPv6-with-port form the
-formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
-dotted-quad tail not only for v4mapped addresses, but also for ISATAP
-addresses via ipv6_addr_is_isatap().
+The current backtracking logic does not account for this. It treats
+atomic fetch operations the same as regular stores where the src
+register is only an input. This leads the backtrack_insn to fail to
+propagate precision to the stack location, which is then not marked
+as precise!
 
-As a result, a case such as
+Later, the verifier's path pruning can incorrectly consider two states
+equivalent when they differ in terms of stack state. Meaning, two
+branches can be treated as equivalent and thus get pruned when they
+should not be seen as such.
 
-  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
+Fix it as follows: Extend the BPF_LDX handling in backtrack_insn to
+also cover atomic fetch operations via is_atomic_fetch_insn() helper.
+When the fetch dst register is being tracked for precision, clear it,
+and propagate precision over to the stack slot. For non-stack memory,
+the precision walk stops at the atomic instruction, same as regular
+BPF_LDX. This covers all fetch variants.
 
-is possible with the current formatter. That is 50 visible characters, so
-51 bytes including the trailing NUL, which does not fit in the existing
-char[50] buffers used by net/rxrpc/proc.c.
+Before:
 
-Size the buffers from the formatter's maximum textual form and switch the
-call sites to scnprintf().
+  0: (b7) r1 = 8                        ; R1=8
+  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
+  2: (b7) r2 = 0                        ; R2=0
+  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
+  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
+  5: (0f) r3 += r2
+  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
+  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
+  mark_precise: frame0: regs=r2 stack= before 2: (b7) r2 = 0
+  6: R2=8 R3=fp8
+  6: (b7) r0 = 0                        ; R0=0
+  7: (95) exit
 
-Changes since v1:
-- correct the changelog to cite the actual maximum current-tree case
-  explicitly
-- frame the proof around the ISATAP formatting path instead of the earlier
-  mapped-v4 example
+After:
 
-Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  0: (b7) r1 = 8                        ; R1=8
+  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
+  2: (b7) r2 = 0                        ; R2=0
+  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
+  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
+  5: (0f) r3 += r2
+  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
+  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
+  mark_precise: frame0: regs= stack=-8 before 2: (b7) r2 = 0
+  mark_precise: frame0: regs= stack=-8 before 1: (7b) *(u64 *)(r10 -8) = r1
+  mark_precise: frame0: regs=r1 stack= before 0: (b7) r1 = 8
+  6: R2=8 R3=fp8
+  6: (b7) r0 = 0                        ; R0=0
+  7: (95) exit
+
+Fixes: 5ffa25502b5a ("bpf: Add instructions for atomic_[cmp]xchg")
+Fixes: 5ca419f2864a ("bpf: Add BPF_FETCH field / create atomic_fetch_add instruction")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260331222020.401848-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/proc.c | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ kernel/bpf/verifier.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
-index 2dd9567cb1cfd..7a2279cd11a7d 100644
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -10,6 +10,10 @@
- #include <net/af_rxrpc.h>
- #include "ar-internal.h"
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index d598c8f409c3e..5a1c8733f3222 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -578,6 +578,13 @@ static bool is_cmpxchg_insn(const struct bpf_insn *insn)
+ 	       insn->imm == BPF_CMPXCHG;
+ }
  
-+#define RXRPC_PROC_ADDRBUF_SIZE \
-+	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
-+	 sizeof(":12345"))
++static bool is_atomic_fetch_insn(const struct bpf_insn *insn)
++{
++	return BPF_CLASS(insn->code) == BPF_STX &&
++	       BPF_MODE(insn->code) == BPF_ATOMIC &&
++	       (insn->imm & BPF_FETCH);
++}
 +
- static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
- 	[RXRPC_CONN_UNUSED]			= "Unused  ",
- 	[RXRPC_CONN_CLIENT_UNSECURED]		= "ClUnsec ",
-@@ -53,7 +57,7 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	enum rxrpc_call_state state;
- 	rxrpc_seq_t acks_hard_ack;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 	long timeout = 0;
- 
- 	if (v == &rxnet->calls) {
-@@ -69,11 +73,11 @@ static int rxrpc_call_seq_show(struct seq_file *seq, void *v)
- 
- 	local = call->local;
- 	if (local)
--		sprintf(lbuff, "%pISpc", &local->srx.transport);
-+		scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 	else
- 		strcpy(lbuff, "no_local");
- 
--	sprintf(rbuff, "%pISpc", &call->dest_srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &call->dest_srx.transport);
- 
- 	state = rxrpc_call_state(call);
- 	if (state != RXRPC_CALL_SERVER_PREALLOC)
-@@ -142,7 +146,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 	struct rxrpc_connection *conn;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	const char *state;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == &rxnet->conn_proc_list) {
- 		seq_puts(seq,
-@@ -161,8 +165,8 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 		goto print;
- 	}
- 
--	sprintf(lbuff, "%pISpc", &conn->local->srx.transport);
--	sprintf(rbuff, "%pISpc", &conn->peer->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->local->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->peer->srx.transport);
- print:
- 	state = rxrpc_is_conn_aborted(conn) ?
- 		rxrpc_call_completions[conn->completion] :
-@@ -228,7 +232,7 @@ static int rxrpc_bundle_seq_show(struct seq_file *seq, void *v)
+ static int __get_spi(s32 off)
  {
- 	struct rxrpc_bundle *bundle;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 	return (-off - 1) / BPF_REG_SIZE;
+@@ -3968,10 +3975,22 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			   * dreg still needs precision before this insn
+ 			   */
+ 		}
+-	} else if (class == BPF_LDX) {
+-		if (!bt_is_reg_set(bt, dreg))
++	} else if (class == BPF_LDX || is_atomic_fetch_insn(insn)) {
++		u32 load_reg = dreg;
++
++		/*
++		 * Atomic fetch operation writes the old value into
++		 * a register (sreg or r0) and if it was tracked for
++		 * precision, propagate to the stack slot like we do
++		 * in regular ldx.
++		 */
++		if (is_atomic_fetch_insn(insn))
++			load_reg = insn->imm == BPF_CMPXCHG ?
++				   BPF_REG_0 : sreg;
++
++		if (!bt_is_reg_set(bt, load_reg))
+ 			return 0;
+-		bt_clear_reg(bt, dreg);
++		bt_clear_reg(bt, load_reg);
  
- 	if (v == &rxnet->bundle_proc_list) {
- 		seq_puts(seq,
-@@ -242,8 +246,8 @@ static int rxrpc_bundle_seq_show(struct seq_file *seq, void *v)
- 
- 	bundle = list_entry(v, struct rxrpc_bundle, proc_link);
- 
--	sprintf(lbuff, "%pISpc", &bundle->local->srx.transport);
--	sprintf(rbuff, "%pISpc", &bundle->peer->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &bundle->local->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &bundle->peer->srx.transport);
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %4x %3u %3d"
- 		   " %c%c%c %08x | %08x %08x %08x %08x %08x\n",
-@@ -279,7 +283,7 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_peer *peer;
- 	time64_t now;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -292,9 +296,9 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- 
- 	peer = list_entry(v, struct rxrpc_peer, hash_link);
- 
--	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
- 
--	sprintf(rbuff, "%pISpc", &peer->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
- 
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
-@@ -404,7 +408,7 @@ const struct seq_operations rxrpc_peer_seq_ops = {
- static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_local *local;
--	char lbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -415,7 +419,7 @@ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- 
- 	local = hlist_entry(v, struct rxrpc_local, link);
- 
--	sprintf(lbuff, "%pISpc", &local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %3u %3u %3u\n",
+ 		/* scalars can only be spilled into stack w/o losing precision.
+ 		 * Load from any other memory can be zero extended.
 -- 
 2.53.0
 
