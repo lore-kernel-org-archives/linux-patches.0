@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C34D374E60;
-	Sat, 17 Oct 2026 17:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6E43A7F41;
+	Sat, 17 Oct 2026 17:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257884; cv=none; b=Cela77XSQ2QFJzvgRL15x+OHBpH0wVEp0vJoqnwp3urrwZqsq1+TnO4I+Jon2FHIOUajmsQ5t6R2SRvshwxLbtViO4JSDmu89T34advTsD8zR7YJYvdMbxb3JhOYJNH5HLqnWUKUddw35NrMvCs9cbVO8ZYf737aFZgjol0181c=
+	t=1792257887; cv=none; b=oER3fEk245RUHdh1NEO8RCUEq5NjyVnQ0xdR+Ch8EeP10DHytwHvdiJREsGRf5E4xuTxjVTTS9WTGKFi1g9eO19pL3G9rI+WWEn2gs8GdGgJSEtEqAuw865b6p1RbI1lQCeyly6JIfaJMRLopKLmjPNVs3+Dzwr8nD1VuCW7ZL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257884; c=relaxed/simple;
-	bh=LSw827rWrXrj54zCPmQSz8+KL4k/BDxp+A6vXhtYEoo=;
+	s=arc-20240116; t=1792257887; c=relaxed/simple;
+	bh=oUc1cG5oobjQfYeWR1Y/RTPTBVNYsvICC71E2XucNqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TScjtTg3S/oSmgjUe8dePOZnSYray+/4azfiO8QfBq+0+lZA++jyB8nimPFEbH/pOCoWGuuLmmtCK9x/qEUsw6dFwXhR37o50S59BJZh0E1ntpZaKx9qK7EqN5rzmdm7rQJrccIHYq7UkqBRTrRCsfX8+vMdgOYfW+9F60AoJXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLgS4IxI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NWwitbRZfkWke+XW7wd9tO02Yo4EwChiX3f6cGywWzdBUxOI1QK8KbKbTW6zB307BhrCWnqBU5SC68iQFlfHcg3wMsDsSL7N4dp4lc6uMZWdhleicg6e4XvnCNWzK0bdankqIAJ8PdLm+TN9wSLODolFTdY0diwj9yBa9OqjboQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuU+eIjV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLgS4IxI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593C41F000C4;
-	Sat, 17 Oct 2026 17:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuU+eIjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C1F1F000C4;
+	Sat, 17 Oct 2026 17:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257882;
-	bh=kSCeWBkMSXef++ZGHFnw/u7JikRHbLGdir/Kf8lSefc=;
+	s=korg; t=1792257886;
+	bh=9Mh3cvZ67sgH2XXmHKyqvgIG0wDMsYKD2ttGN/LYUt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VLgS4IxI7I2cwjA7ldgv8jGr4Qrz3tjZAlbq9l9N11hzAS786174DMg2CCkiN+LQ0
-	 eYyxRwT8yvVZ8XMgBOBjx71jMS22V+R4I66mEX8NBUBfDs2r7PBRVEIkqOkmcOCIyd
-	 YipRu6b0EtzvoTe96oQzD5sg52WRae0gB6ZZqBV4=
+	b=QuU+eIjVuZdQtevnWKSyzHRzQA2gaOfm7imMVE53t/7uCjlTNBZd7a6HHq92kZDp6
+	 q8JIxWIf/J+aC47QYMzvMkS3BhFN+/d863hmw0+EoYhR1RtR+ahpxxldFgJYw2Tuq3
+	 mtPW4S9SgbfClvvmkpOjdmfJdetBqHZq8OFHI/Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0699/1674] btrfs: fix block group refcount race in btrfs_create_pending_block_groups()
-Date: Sat, 17 Oct 2026 17:49:31 +0200
-Message-ID: <20261017160449.045605593@linuxfoundation.org>
+Subject: [PATCH 6.6 0700/1674] f2fs: convert f2fs_handle_page_eio() to use folio
+Date: Sat, 17 Oct 2026 17:49:32 +0200
+Message-ID: <20261017160449.073571061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,109 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2d8e5168d48a91e7a802d3003e72afb4304bebfa ]
+[ Upstream commit 763a0dc792f9d7c79c1d85415c6cebc1f79bba16 ]
 
-Block group creation is done in two phases, which results in a slightly
-unintuitive property: a block group can be allocated/deallocated from
-after btrfs_make_block_group() adds it to the space_info with
-btrfs_add_bg_to_space_info(), but before creation is completely completed
-in btrfs_create_pending_block_groups(). As a result, it is possible for a
-block group to go unused and have 'btrfs_mark_bg_unused' called on it
-concurrently with 'btrfs_create_pending_block_groups'. This causes a
-number of issues, which were fixed with the block group flag
-'BLOCK_GROUP_FLAG_NEW'.
+Convert to use folio, so that we can get rid of 'page->index' to
+prepare for removal of 'index' field in structure page [1].
 
-However, this fix is not quite complete. Since it does not use the
-unused_bg_lock, it is possible for the following race to occur:
+[1] https://lore.kernel.org/all/Zp8fgUSIBGQ1TN0D@casper.infradead.org/
 
-btrfs_create_pending_block_groups            btrfs_mark_bg_unused
-                                           if list_empty // false
-        list_del_init
-        clear_bit
-                                           else if (test_bit) // true
-                                                list_move_tail
-
-And we get into the exact same broken ref count and invalid new_bgs
-state for transaction cleanup that BLOCK_GROUP_FLAG_NEW was designed to
-prevent.
-
-The broken refcount aspect will result in a warning like:
-
-  [1272.943527] refcount_t: underflow; use-after-free.
-  [1272.943967] WARNING: CPU: 1 PID: 61 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
-  [1272.944731] Modules linked in: btrfs virtio_net xor zstd_compress raid6_pq null_blk [last unloaded: btrfs]
-  [1272.945550] CPU: 1 UID: 0 PID: 61 Comm: kworker/u32:1 Kdump: loaded Tainted: G        W          6.14.0-rc5+ #108
-  [1272.946368] Tainted: [W]=WARN
-  [1272.946585] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-  [1272.947273] Workqueue: btrfs_discard btrfs_discard_workfn [btrfs]
-  [1272.947788] RIP: 0010:refcount_warn_saturate+0xba/0x110
-  [1272.949532] RSP: 0018:ffffbf1200247df0 EFLAGS: 00010282
-  [1272.949901] RAX: 0000000000000000 RBX: ffffa14b00e3f800 RCX: 0000000000000000
-  [1272.950437] RDX: 0000000000000000 RSI: ffffbf1200247c78 RDI: 00000000ffffdfff
-  [1272.950986] RBP: ffffa14b00dc2860 R08: 00000000ffffdfff R09: ffffffff90526268
-  [1272.951512] R10: ffffffff904762c0 R11: 0000000063666572 R12: ffffa14b00dc28c0
-  [1272.952024] R13: 0000000000000000 R14: ffffa14b00dc2868 R15: 000001285dcd12c0
-  [1272.952850] FS:  0000000000000000(0000) GS:ffffa14d33c40000(0000) knlGS:0000000000000000
-  [1272.953458] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [1272.953931] CR2: 00007f838cbda000 CR3: 000000010104e000 CR4: 00000000000006f0
-  [1272.954474] Call Trace:
-  [1272.954655]  <TASK>
-  [1272.954812]  ? refcount_warn_saturate+0xba/0x110
-  [1272.955173]  ? __warn.cold+0x93/0xd7
-  [1272.955487]  ? refcount_warn_saturate+0xba/0x110
-  [1272.955816]  ? report_bug+0xe7/0x120
-  [1272.956103]  ? handle_bug+0x53/0x90
-  [1272.956424]  ? exc_invalid_op+0x13/0x60
-  [1272.956700]  ? asm_exc_invalid_op+0x16/0x20
-  [1272.957011]  ? refcount_warn_saturate+0xba/0x110
-  [1272.957399]  btrfs_discard_cancel_work.cold+0x26/0x2b [btrfs]
-  [1272.957853]  btrfs_put_block_group.cold+0x5d/0x8e [btrfs]
-  [1272.958289]  btrfs_discard_workfn+0x194/0x380 [btrfs]
-  [1272.958729]  process_one_work+0x130/0x290
-  [1272.959026]  worker_thread+0x2ea/0x420
-  [1272.959335]  ? __pfx_worker_thread+0x10/0x10
-  [1272.959644]  kthread+0xd7/0x1c0
-  [1272.959872]  ? __pfx_kthread+0x10/0x10
-  [1272.960172]  ret_from_fork+0x30/0x50
-  [1272.960474]  ? __pfx_kthread+0x10/0x10
-  [1272.960745]  ret_from_fork_asm+0x1a/0x30
-  [1272.961035]  </TASK>
-  [1272.961238] ---[ end trace 0000000000000000 ]---
-
-Though we have seen them in the async discard workfn as well. It is
-most likely to happen after a relocation finishes which cancels discard,
-tears down the block group, etc.
-
-Fix this fully by taking the lock around the list_del_init + clear_bit
-so that the two are done atomically.
-
-Fixes: 0657b20c5a76 ("btrfs: fix use-after-free of new block group that became unused")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 3147ee567dd9 ("f2fs: fix potential deadloop in prepare_compress_overwrite()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/f2fs/checkpoint.c | 2 +-
+ fs/f2fs/f2fs.h       | 6 ++++--
+ fs/f2fs/node.c       | 2 +-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 705724089f755..b93b4ec042272 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2800,8 +2800,11 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
- 		/* Already aborted the transaction if it failed. */
- next:
- 		btrfs_delayed_refs_rsv_release(fs_info, 1);
-+
-+		spin_lock(&fs_info->unused_bgs_lock);
- 		list_del_init(&block_group->bg_list);
- 		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
-+		spin_unlock(&fs_info->unused_bgs_lock);
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index c629b5580b724..74bdce66f866d 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -99,7 +99,7 @@ static struct page *__get_meta_page(struct f2fs_sb_info *sbi, pgoff_t index,
  	}
- 	btrfs_trans_release_chunk_metadata(trans);
+ 
+ 	if (unlikely(!PageUptodate(page))) {
+-		f2fs_handle_page_eio(sbi, page->index, META);
++		f2fs_handle_page_eio(sbi, page_folio(page), META);
+ 		f2fs_put_page(page, 1);
+ 		return ERR_PTR(-EIO);
+ 	}
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 8f399d5d7dbc8..d0d5bb469d8d8 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -4718,9 +4718,11 @@ static inline void f2fs_io_schedule_timeout(long timeout)
+ 	io_schedule_timeout(timeout);
+ }
+ 
+-static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi, pgoff_t ofs,
+-					enum page_type type)
++static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi,
++				struct folio *folio, enum page_type type)
+ {
++	pgoff_t ofs = folio->index;
++
+ 	if (unlikely(f2fs_cp_error(sbi)))
+ 		return;
+ 
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 586a90643ddd2..e7a0a841bd689 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1519,7 +1519,7 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+ out_put_err:
+ 	/* ENOENT comes from read_node_page which is not an error. */
+ 	if (err != -ENOENT)
+-		f2fs_handle_page_eio(sbi, page->index, NODE);
++		f2fs_handle_page_eio(sbi, page_folio(page), NODE);
+ 	f2fs_put_page(page, 1);
+ 	return ERR_PTR(err);
  }
 -- 
 2.53.0
