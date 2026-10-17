@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A658E3A5E7D;
-	Sat, 17 Oct 2026 17:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE81392829;
+	Sat, 17 Oct 2026 17:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258273; cv=none; b=ZOxsCpjB+ECIIbixE+T7Bi7MffRnG/56edVkj1kLmz96F0k2Gmy2LT1qE0nzCfCK9HqpDcoNOnAhC03VxMaCd9LOa00BomSPZsZq3SruODNWiNOUTB+zr6pHTyqOH3BF3uHrCc53ISFdtAs9cenULuBKCU4dnt8hnsE6pU2fCRw=
+	t=1792258276; cv=none; b=HxRN+MeL5HieH/izgz1BmaN8M3Lym1V9bLhLpFKXhLbb1JIpWDPPS5Hp1mvdR1q/Gygz565rnt55Yd38eBECY3uA39G9hODMuWcOwgS/yZU4NvBOU2M5vqwcHUuR/wjI7u0XhQXORxF9DzQ9AC5sRhS1iNWibGrfzs5apZuOfRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258273; c=relaxed/simple;
-	bh=7qWtpK+48pHEkMuRN558Rt34VC5Pky8zyjB181vflXM=;
+	s=arc-20240116; t=1792258276; c=relaxed/simple;
+	bh=fuZW0JjYQYUPt8aPvQULTULdYVRtabSHyvknMRchnEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PV6sxQA8PXQhtne4xAuKXqjH+ItriPy+rYjHwZmNyZtQQ34N1WilOb/soE100r7BPQz56vpnHklI8bPGWc0S24W34FHNz3QkROqfLFW9elqrCXDOFIDwwqJ+GuTY2FbPcI9Wec9OKk22Kk8Ao9jn2cZcTebKv2erEKmYZZjqeEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0iSUGYI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QR9UKU1DHxh0GW5vFMulRVrlgto0i9a0qChvDEM+j53/D1f5lIv9k55oH5qBvUQ/l3gJLKuuftpgoBMzSd9GCvh2znwGeKuozD+ICho9C3WLvp+J3F5Pi7UTym807uP4TqGxysO9+4aT06lpw44ETvT6CcL3TxxMeRd6p2BQohk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DZ1P/CU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0iSUGYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023321F000C4;
-	Sat, 17 Oct 2026 17:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DZ1P/CU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2375F1F000C4;
+	Sat, 17 Oct 2026 17:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258271;
-	bh=7mZQqz8onhLirxfWax5VICmztJlbC1KNpXsTNGo9RKE=;
+	s=korg; t=1792258274;
+	bh=AVuRhcoRPd+vYpgF8N9/e7sI88VkblJBI0eYcFruecU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0iSUGYIncrpOOpIF53V7IetkuTiUDMgaG1gFu1bFPIQke8q4rH/HZACGLfx3cBbN
-	 aCo8nInY19qGmCSB/tntB51W0h+pQCkyLxLtVM6y9hMD0xZ1BBihiDN9TJGFV8vGp9
-	 AwrTLH3TneQtCQBRGrNBJ1FQFn1RNSAyrCMDQgww=
+	b=2DZ1P/CU6wcLyySICJaIn63rZw3ofuVFpghvaXEsolyWl6B9PRHoHLyT5CcaprJ/j
+	 7SaOl3alQDafdW8q+9WH+Bp2bp3Pda4jYaRe7o+4Gs1vhAmX6+O/W71KnDoKDumxZc
+	 I4REpLgP4RA7C76H8jO4ms9Yr6liRkTx6BVYbMqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0828/1674] md: fix stopping sync thread
-Date: Sat, 17 Oct 2026 17:51:40 +0200
-Message-ID: <20261017160452.379518849@linuxfoundation.org>
+Subject: [PATCH 6.6 0829/1674] md: fix rcu protection in md_wakeup_thread
+Date: Sat, 17 Oct 2026 17:51:41 +0200
+Message-ID: <20261017160452.403927955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,198 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit f52f5c71f3d4bb0992800139d2f35cf9f6f6e0ee ]
+[ Upstream commit 0dc76205549b4c25705e54345f211b9f66e018a0 ]
 
-Currently sync thread is stopped from multiple contex:
- - idle_sync_thread
- - frozen_sync_thread
- - __md_stop_writes
- - md_set_readonly
- - do_md_stop
+We attempted to use RCU to protect the pointer 'thread', but directly
+passed the value when calling md_wakeup_thread(). This means that the
+RCU pointer has been acquired before rcu_read_lock(), which renders
+rcu_read_lock() ineffective and could lead to a use-after-free.
 
-And there are some problems:
-1) sync_work is flushed while reconfig_mutex is grabbed, this can
-   deadlock because the work function will grab reconfig_mutex as well.
-2) md_reap_sync_thread() can't be called directly while md_do_sync() is
-   not finished yet, for example, commit 130443d60b1b ("md: refactor
-   idle/frozen_sync_thread() to fix deadlock").
-3) If MD_RECOVERY_RUNNING is not set, there is no need to stop
-   sync_thread at all because sync_thread must not be registered.
-
-Factor out a helper stop_sync_thread(), so that above contex will behave
-the same. Fix 1) by flushing sync_work after reconfig_mutex is released,
-before waiting for sync_thread to be done; Fix 2) bt letting daemon thread
-to unregister sync_thread; Fix 3) by always checking MD_RECOVERY_RUNNING
-first.
-
-Fixes: db5e653d7c9f ("md: delay choosing sync action to md_start_sync()")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231205094215.1824240-4-yukuai1@huaweicloud.com
-Stable-dep-of: 0dc76205549b ("md: fix rcu protection in md_wakeup_thread")
+Link: https://lore.kernel.org/linux-raid/20251015083227.1079009-1-yun.zhou@windriver.com
+Fixes: 446931543982 ("md: protect md_thread with rcu")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 90 ++++++++++++++++++++-----------------------------
- 1 file changed, 37 insertions(+), 53 deletions(-)
+ drivers/md/md.c | 14 ++++++--------
+ drivers/md/md.h |  8 +++++++-
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 3c605ba3801aa..4b2acf648d767 100644
+index 4b2acf648d767..5e13891d85139 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -4832,25 +4832,29 @@ action_show(struct mddev *mddev, char *page)
- 	return sprintf(page, "%s\n", type);
- }
+@@ -89,7 +89,7 @@ static int remove_and_add_spares(struct mddev *mddev,
+ 				 struct md_rdev *this);
+ static void mddev_detach(struct mddev *mddev);
+ static void export_rdev(struct md_rdev *rdev, struct mddev *mddev);
+-static void md_wakeup_thread_directly(struct md_thread __rcu *thread);
++static void md_wakeup_thread_directly(struct md_thread __rcu **thread);
  
--static void stop_sync_thread(struct mddev *mddev)
-+/**
-+ * stop_sync_thread() - wait for sync_thread to stop if it's running.
-+ * @mddev:	the array.
-+ * @locked:	if set, reconfig_mutex will still be held after this function
-+ *		return; if not set, reconfig_mutex will be released after this
-+ *		function return.
-+ * @check_seq:	if set, only wait for curent running sync_thread to stop, noted
-+ *		that new sync_thread can still start.
-+ */
-+static void stop_sync_thread(struct mddev *mddev, bool locked, bool check_seq)
- {
--	if (!test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
--		return;
-+	int sync_seq;
- 
--	if (mddev_lock(mddev))
--		return;
-+	if (check_seq)
-+		sync_seq = atomic_read(&mddev->sync_seq);
- 
--	/*
--	 * Check again in case MD_RECOVERY_RUNNING is cleared before lock is
--	 * held.
--	 */
- 	if (!test_bit(MD_RECOVERY_RUNNING, &mddev->recovery)) {
--		mddev_unlock(mddev);
-+		if (!locked)
-+			mddev_unlock(mddev);
- 		return;
- 	}
- 
--	if (work_pending(&mddev->sync_work))
--		flush_workqueue(md_misc_wq);
-+	mddev_unlock(mddev);
- 
- 	set_bit(MD_RECOVERY_INTR, &mddev->recovery);
- 	/*
-@@ -4858,21 +4862,28 @@ static void stop_sync_thread(struct mddev *mddev)
+ /*
+  * Default number of read corrections we'll attempt on an rdev
+@@ -4861,7 +4861,7 @@ static void stop_sync_thread(struct mddev *mddev, bool locked, bool check_seq)
+ 	 * Thread might be blocked waiting for metadata update which will now
  	 * never happen
  	 */
- 	md_wakeup_thread_directly(mddev->sync_thread);
-+	if (work_pending(&mddev->sync_work))
-+		flush_work(&mddev->sync_work);
+-	md_wakeup_thread_directly(mddev->sync_thread);
++	md_wakeup_thread_directly(&mddev->sync_thread);
+ 	if (work_pending(&mddev->sync_work))
+ 		flush_work(&mddev->sync_work);
  
--	mddev_unlock(mddev);
-+	wait_event(resync_wait,
-+		   !test_bit(MD_RECOVERY_RUNNING, &mddev->recovery) ||
-+		   (check_seq && sync_seq != atomic_read(&mddev->sync_seq)));
+@@ -8004,31 +8004,29 @@ static int md_thread(void *arg)
+ 	return 0;
+ }
+ 
+-static void md_wakeup_thread_directly(struct md_thread __rcu *thread)
++static void md_wakeup_thread_directly(struct md_thread __rcu **thread)
+ {
+ 	struct md_thread *t;
+ 
+ 	rcu_read_lock();
+-	t = rcu_dereference(thread);
++	t = rcu_dereference(*thread);
+ 	if (t)
+ 		wake_up_process(t->tsk);
+ 	rcu_read_unlock();
+ }
+ 
+-void md_wakeup_thread(struct md_thread __rcu *thread)
++void __md_wakeup_thread(struct md_thread __rcu *thread)
+ {
+ 	struct md_thread *t;
+ 
+-	rcu_read_lock();
+ 	t = rcu_dereference(thread);
+ 	if (t) {
+ 		pr_debug("md: waking up MD thread %s.\n", t->tsk->comm);
+ 		set_bit(THREAD_WAKEUP, &t->flags);
+ 		wake_up(&t->wqueue);
+ 	}
+-	rcu_read_unlock();
+ }
+-EXPORT_SYMBOL(md_wakeup_thread);
++EXPORT_SYMBOL(__md_wakeup_thread);
+ 
+ struct md_thread *md_register_thread(void (*run) (struct md_thread *),
+ 		struct mddev *mddev, const char *name)
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 46995558d3bd9..59f92aa48b37e 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -756,6 +756,12 @@ struct md_io_clone {
+ 
+ #define THREAD_WAKEUP  0
+ 
++#define md_wakeup_thread(thread) do {   \
++	rcu_read_lock();                    \
++	__md_wakeup_thread(thread);         \
++	rcu_read_unlock();                  \
++} while (0)
 +
-+	if (locked)
-+		mddev_lock_nointr(mddev);
- }
- 
- static void idle_sync_thread(struct mddev *mddev)
+ static inline void safe_put_page(struct page *p)
  {
--	int sync_seq = atomic_read(&mddev->sync_seq);
--
- 	mutex_lock(&mddev->sync_mutex);
- 	clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
--	stop_sync_thread(mddev);
- 
--	wait_event(resync_wait, sync_seq != atomic_read(&mddev->sync_seq) ||
--			!test_bit(MD_RECOVERY_RUNNING, &mddev->recovery));
-+	if (mddev_lock(mddev)) {
-+		mutex_unlock(&mddev->sync_mutex);
-+		return;
-+	}
- 
-+	stop_sync_thread(mddev, false, true);
- 	mutex_unlock(&mddev->sync_mutex);
- }
- 
-@@ -4880,11 +4891,13 @@ static void frozen_sync_thread(struct mddev *mddev)
- {
- 	mutex_lock(&mddev->sync_mutex);
- 	set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
--	stop_sync_thread(mddev);
- 
--	wait_event(resync_wait, mddev->sync_thread == NULL &&
--			!test_bit(MD_RECOVERY_RUNNING, &mddev->recovery));
-+	if (mddev_lock(mddev)) {
-+		mutex_unlock(&mddev->sync_mutex);
-+		return;
-+	}
- 
-+	stop_sync_thread(mddev, false, false);
- 	mutex_unlock(&mddev->sync_mutex);
- }
- 
-@@ -6305,14 +6318,7 @@ static void md_clean(struct mddev *mddev)
- 
- static void __md_stop_writes(struct mddev *mddev)
- {
--	set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
--	if (work_pending(&mddev->sync_work))
--		flush_workqueue(md_misc_wq);
--	if (mddev->sync_thread) {
--		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
--		md_reap_sync_thread(mddev);
--	}
--
-+	stop_sync_thread(mddev, true, false);
- 	del_timer_sync(&mddev->safemode_timer);
- 
- 	if (mddev->pers && mddev->pers->quiesce) {
-@@ -6406,18 +6412,8 @@ static int md_set_readonly(struct mddev *mddev, struct block_device *bdev)
- 		set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
- 		md_wakeup_thread(mddev->thread);
- 	}
--	if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
--		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
--
--	/*
--	 * Thread might be blocked waiting for metadata update which will now
--	 * never happen
--	 */
--	md_wakeup_thread_directly(mddev->sync_thread);
- 
--	mddev_unlock(mddev);
--	wait_event(resync_wait, !test_bit(MD_RECOVERY_RUNNING,
--					  &mddev->recovery));
-+	stop_sync_thread(mddev, false, false);
- 	wait_event(mddev->sb_wait,
- 		   !test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags));
- 	mddev_lock_nointr(mddev);
-@@ -6471,20 +6467,8 @@ static int do_md_stop(struct mddev *mddev, int mode,
- 		set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
- 		md_wakeup_thread(mddev->thread);
- 	}
--	if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
--		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
- 
--	/*
--	 * Thread might be blocked waiting for metadata update which will now
--	 * never happen
--	 */
--	md_wakeup_thread_directly(mddev->sync_thread);
--
--	mddev_unlock(mddev);
--	wait_event(resync_wait, (mddev->sync_thread == NULL &&
--				 !test_bit(MD_RECOVERY_RUNNING,
--					   &mddev->recovery)));
--	mddev_lock_nointr(mddev);
-+	stop_sync_thread(mddev, true, false);
- 
- 	mutex_lock(&mddev->open_mutex);
- 	if ((mddev->pers && atomic_read(&mddev->openers) > !!bdev) ||
+ 	if (p) put_page(p);
+@@ -773,7 +779,7 @@ extern struct md_thread *md_register_thread(
+ 	struct mddev *mddev,
+ 	const char *name);
+ extern void md_unregister_thread(struct mddev *mddev, struct md_thread __rcu **threadp);
+-extern void md_wakeup_thread(struct md_thread __rcu *thread);
++extern void __md_wakeup_thread(struct md_thread __rcu *thread);
+ extern void md_check_recovery(struct mddev *mddev);
+ extern void md_reap_sync_thread(struct mddev *mddev);
+ extern int mddev_init_writes_pending(struct mddev *mddev);
 -- 
 2.53.0
 
