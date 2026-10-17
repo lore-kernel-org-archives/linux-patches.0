@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C70E339365;
-	Sat, 17 Oct 2026 16:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48013A59A3;
+	Sat, 17 Oct 2026 16:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253619; cv=none; b=BIx3SP58o89/mvBVgXPSKAZpJnRJki+lFJ7I8BQAkfA18NRxBC1Lty1952fOn0UzR2OfVXYKCARRQP9TMX80PszGz7cw81Ih+ymOxmLYrVcKHqcjNEMa64v3qgaU3l8J/p8FH+PyLrD/vulb0kk+IFMv6oZU0AVmXGdg6k+5B6s=
+	t=1792253619; cv=none; b=NiLIAVvNxD9ao+HUWzglSdr08jmWDYVJjjwnoTHaek1qJ+x7cZXD26X2RE7rvykW8dC/vBiobyZpQ/v0M1qRJwF9CBvvo9t1HI8+JPmyjlZwY7Us8kTVK67Lq4bvFAifJQ3oslSO2jcGDHty0as4Etb1Hp9b71np/6XC3S9bQrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792253619; c=relaxed/simple;
-	bh=6W8b2RR68dirvqL26OKgvPlWiOmjuYhgaVsUov82+34=;
+	bh=sN3R4TkGU2BckZ7dZwKyVk4icJMf8sUCVelc751Esjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jP3ffvHG0muksBtnsx+DXZfV7XFrSREr4PhSipn9VKgsLhurvh/3VDoA7Ad5ftW5SFQ/DRsZPebC1gNyg47pYxmUfzNGc5omQBOzLWc145zTXP0GJ+oTwzyaj7QR9rPZnFB9dK0TwBDrVwPL6rOZnNzstPy+OujYjlTe2JPw7tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRVGOraU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G84HTciBfOJgaPKz2Xi2/1RBkW1ZOf6RPjkSCBVzmOZ6RUTUhkuSeG1BTAWwVmY9lUIGja0GDvXrUqAnaLF5mivXeZvocDs8mej45pkVxIk+Bi5leCvlpMDqLFu7zMCowZsrGq9yYn6eg1im67uOLnKuVS3TSXG6HFiYW8G2Ym8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaTftjxq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRVGOraU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC451F000C6;
-	Sat, 17 Oct 2026 16:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaTftjxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97CC1F000C5;
+	Sat, 17 Oct 2026 16:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253616;
-	bh=s4PJUOw5WVMAQB5jnU/J2pt4ua+PMX62qewetnq1kMY=;
+	s=korg; t=1792253613;
+	bh=+V7oVmZuwGapsgA8wWCOFlUdKvdVbI8G334kOKQrsY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jRVGOraUm1G+LqlBvsoWq9D1s/C8v2q+N3ClBCy+WHoWJdIgjsvg4Dqs+cMa8xwlD
-	 yFRxKDWvvdBS1ofGTJyVbUqHm7b6HlTW5XBy++W0ioIQqtAUNg1iJbLYLCFMWUPCgD
-	 xCi2n10nmdNS0iP2LIA3Nwku77UJXw51hLq0FYRc=
+	b=XaTftjxqZZpuk0FeSemggWUtiQGTC30FYOa3P5razrD2lH3DqABRxXieXWqUaoLGI
+	 MzgjQurILMM/KiStLJlGOzQMcLKsDnen4Lmxpq5xoiwIBvvRAf/o4dHj9kb3tAqotq
+	 gGcAoCS1m3nYfQ42w4/pdl4R3qa2Tw6oVYEROAkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek Kumar <iamvivekkumar@google.com>,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 177/869] idpf: fix error handling in the init_task on load
-Date: Sat, 17 Oct 2026 17:50:18 +0200
-Message-ID: <20261017160041.592896119@linuxfoundation.org>
+Subject: [PATCH 6.12 176/869] block: zero non-PI portion of auto integrity buffer
+Date: Sat, 17 Oct 2026 17:50:17 +0200
+Message-ID: <20261017160041.565356880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,97 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 4d792219fe6f891b5b557a607ac8a0a14eda6e38 ]
+[ Upstream commit ca22c566b89164f6e670af56ecc45f47ef3df819 ]
 
-If the init_task fails during a driver load, we end up without vports and
-netdevs, effectively failing the entire process. In that state a
-subsequent reset will result in a crash as the service task attempts to
-access uninitialized resources. Following trace is from an error in the
-init_task where the CREATE_VPORT (op 501) is rejected by the FW:
+The auto-generated integrity buffer for writes needs to be fully
+initialized before being passed to the underlying block device,
+otherwise the uninitialized memory can be read back by userspace or
+anyone with physical access to the storage device. If protection
+information is generated, that portion of the integrity buffer is
+already initialized. The integrity data is also zeroed if PI generation
+is disabled via sysfs or the PI tuple size is 0. However, this misses
+the case where PI is generated and the PI tuple size is nonzero, but the
+metadata size is larger than the PI tuple. In this case, the remainder
+("opaque") of the metadata is left uninitialized.
+Generalize the BLK_INTEGRITY_CSUM_NONE check to cover any case when the
+metadata is larger than just the PI tuple.
 
-[40922.763136] idpf 0000:83:00.0: Device HW Reset initiated
-[40924.449797] idpf 0000:83:00.0: Transaction failed (op 501)
-[40958.148190] idpf 0000:83:00.0: HW reset detected
-[40958.161202] BUG: kernel NULL pointer dereference, address: 00000000000000a8
-...
-[40958.168094] Workqueue: idpf-0000:83:00.0-vc_event idpf_vc_event_task [idpf]
-[40958.168865] RIP: 0010:idpf_vc_event_task+0x9b/0x350 [idpf]
-...
-[40958.177932] Call Trace:
-[40958.178491]  <TASK>
-[40958.179040]  process_one_work+0x226/0x6d0
-[40958.179609]  worker_thread+0x19e/0x340
-[40958.180158]  ? __pfx_worker_thread+0x10/0x10
-[40958.180702]  kthread+0x10f/0x250
-[40958.181238]  ? __pfx_kthread+0x10/0x10
-[40958.181774]  ret_from_fork+0x251/0x2b0
-[40958.182307]  ? __pfx_kthread+0x10/0x10
-[40958.182834]  ret_from_fork_asm+0x1a/0x30
-[40958.183370]  </TASK>
-
-Fix the error handling in the init_task to make sure the service and
-mailbox tasks are disabled if the error happens during load. These are
-started in idpf_vc_core_init(), which spawns the init_task and has no way
-of knowing if it failed. If the error happens on reset, following
-successful driver load, the tasks can still run, as that will allow the
-netdevs to attempt recovery through another reset. Stop the PTP callbacks
-either way as those will be restarted by the call to idpf_vc_core_init()
-during a successful reset.
-
-Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
-Reported-by: Vivek Kumar <iamvivekkumar@google.com>
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: c546d6f43833 ("block: only zero non-PI metadata tuples in bio_integrity_prep")
+Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ block/bio-integrity.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 36777ca10f32a..b7da39ba06169 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1624,10 +1624,9 @@ void idpf_init_task(struct work_struct *work)
- 		set_bit(IDPF_VPORT_REG_NETDEV, vport_config->flags);
- 	}
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 04bab987b0878..c6721b95d0348 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -12,6 +12,7 @@
+ #include <linux/bio.h>
+ #include <linux/workqueue.h>
+ #include <linux/slab.h>
++#include <linux/t10-pi.h>
+ #include "blk.h"
  
--	/* As all the required vports are created, clear the reset flag
--	 * unconditionally here in case we were in reset and the link was down.
--	 */
-+	/* Clear the reset and load bits as all vports are created */
- 	clear_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
-+	clear_bit(IDPF_HR_DRV_LOAD, adapter->flags);
- 	/* Start the statistics task now */
- 	queue_delayed_work(adapter->stats_wq, &adapter->stats_task,
- 			   msecs_to_jiffies(10 * (pdev->devfn & 0x07)));
-@@ -1641,6 +1640,14 @@ void idpf_init_task(struct work_struct *work)
- 				idpf_vport_dealloc(adapter->vports[index]);
- 		}
- 	}
-+	/* Cleanup after vc_core_init, which has no way of knowing the
-+	 * init task failed on driver load.
-+	 */
-+	if (test_and_clear_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
-+		cancel_delayed_work_sync(&adapter->serv_task);
-+		cancel_delayed_work_sync(&adapter->mbx_task);
-+	}
-+
- 	clear_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
- }
- 
-@@ -1790,7 +1797,7 @@ static void idpf_init_hard_reset(struct idpf_adapter *adapter)
- 	dev_info(dev, "Device HW Reset initiated\n");
- 
- 	/* Prepare for reset */
--	if (test_and_clear_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
-+	if (test_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
- 		reg_ops->trigger_reset(adapter, IDPF_HR_DRV_LOAD);
- 	} else if (test_and_clear_bit(IDPF_HR_FUNC_RESET, adapter->flags)) {
- 		bool is_reset = idpf_is_reset_detected(adapter);
+ static struct kmem_cache *bip_slab;
+@@ -428,7 +429,10 @@ bool bio_integrity_prep(struct bio *bio)
+ 		 * memory to disk for non-integrity metadata where nothing else
+ 		 * initializes the memory.
+ 		 */
+-		if (bi->csum_type == BLK_INTEGRITY_CSUM_NONE)
++		if (bi->csum_type == BLK_INTEGRITY_CSUM_NONE ||
++		    bi->tuple_size > (bi->csum_type == BLK_INTEGRITY_CSUM_CRC64 ?
++				      sizeof(struct crc64_pi_tuple) :
++				      sizeof(struct t10_pi_tuple)))
+ 			gfp |= __GFP_ZERO;
+ 		break;
+ 	default:
 -- 
 2.53.0
 
