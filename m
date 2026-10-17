@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFCB3AA9E2;
-	Sat, 17 Oct 2026 16:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253533A6B92;
+	Sat, 17 Oct 2026 16:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254118; cv=none; b=lnA7k4/DPc55XkSsZTMDuWrx3JOAAeaaFRgfBPp1wjdZX6c5JlGDzT+G5rdXEQm1g51dkQ2GPge7Uyet9HWfb0ugkna5M07GojnFS6Igpr3YY5clI7DMbpbkY9BUsGg2UdkCBsmwsVttyo5n07Fou4ScyZRkSFGQv839re3oQYs=
+	t=1792254119; cv=none; b=Eb6NCjUrkTzsXx+k/sSmpdexeerl/Cd+G3UNGRd3iiOD4PmqFVldaS3LxUJkn1rxrAX8vGaMaVtQ2ij1ojvtwWB0RzRmH08Hzejmp/RkBHnCRc0ffW/f36n8A5fxaFnDkmGoGEcnbh5xah9s4i4mwZd362xfJtvnBNplFN9WLVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254118; c=relaxed/simple;
-	bh=Ksut667ty/m7505afbQf/bZnL0HighrpQcVL5N8UE3Q=;
+	s=arc-20240116; t=1792254119; c=relaxed/simple;
+	bh=1tAmP4+8lPOJH44p8CfKl9oUAXRvpnKfbgglEYg9xlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=io1+OlS2eXQGsXn7waJn9YmlVsN/NUQ1FlfMrhax/b7h15Bb5BuwJ6iUXcbNq+o7R8ERPwVxOImR3r79ZLg77b0jMmPfZVg/Srox3XTGFuUkdK50UKeFtUHJ942RxpwSCFgBsDcj4B7CbJ0Ii3QuuUa+fsofCJzyMYcv7USB9uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i63ksqMX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SjK/geC1mYo02h0gLqOZFAm8SKxTy9sEuvVBEl4SXLdn6iVkj7ZidXQihbbPi2kujmm66ezGD97r0wERciCePdOLyqBUdVvCohxqgoSJF/YUw+hzGncTT7fSUGwS2KHzX3puf0uKZtwM0WPT2qkz0KIRi9TLiJkvagG4OrU1gR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaXCWmKH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i63ksqMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21F01F000C6;
-	Sat, 17 Oct 2026 16:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaXCWmKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE87B1F000C4;
+	Sat, 17 Oct 2026 16:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254116;
-	bh=dh/qluu24ruW9/WEVrqBXZQ5LI854nPX0MM0DjQJo+w=;
+	s=korg; t=1792254113;
+	bh=LGMUH/3aFVPKHXgaOIasvoEuWd8CEqo5J9Mu700xlE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i63ksqMXlFGq9LmFyuQ22D87Fd6xZP2hUpi6FS31ye3PVjtXGGWVURnFN62O9Auo/
-	 Sem/HvpbLkTH6MGusnIcCuYytgeUyi7YWgcC1S5iUQoKPkvIlzWFZzfgqmRU/KYHho
-	 2DKQSFOB+jaxenDUy/tiDbcvBVm2UQzJ8k9xNnYw=
+	b=yaXCWmKHugvJFla52c6nkVFaML5Sk3M2FT8+QLt9e693f3UQQddi7a/NVvW7BaUFY
+	 BtqOJ2FPGJ3OAZuSWGYDM0CDXVhWh6YXLLpKA+NdAKP/rv3jsJAGe3adK4ahOPmWiR
+	 SIECDT8Nx9FSuu39d+SBejsjmvk4KIl1cLrjTeyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/869] KVM: nSVM: Avoid clearing VMCB_LBR in vmcb12
-Date: Sat, 17 Oct 2026 17:52:07 +0200
-Message-ID: <20261017160044.406738011@linuxfoundation.org>
+Subject: [PATCH 6.12 295/869] RDMA/mlx4: Fix mis-use of RCU in mlx4_srq_event()
+Date: Sat, 17 Oct 2026 17:52:16 +0200
+Message-ID: <20261017160044.638630348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,70 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit b53ab5167a81537777ac780bbd93d32613aa3bda ]
+[ Upstream commit c9341307ea16b9395c2e4c9c94d8499d91fe31d0 ]
 
-svm_copy_lbrs() always marks VMCB_LBR dirty in the destination VMCB.
-However, nested_svm_vmexit() uses it to copy LBRs to vmcb12, and
-clearing clean bits in vmcb12 is not architecturally defined.
+Sashiko points out the radix_tree itself is RCU safe, but nothing ever
+frees the mlx4_srq struct with RCU, and it isn't even accessed within the
+RCU critical section. It also will crash if an event is delivered before
+the srq object is finished initializing.
 
-Move vmcb_mark_dirty() to callers and drop it for vmcb12.
+Use the spinlock since it isn't easy to make RCU work, use
+refcount_inc_not_zero() to protect against partially initialized objects,
+and order the refcount_set() to be after the srq is fully initialized.
 
-This also facilitates incoming refactoring that does not pass the entire
-VMCB to svm_copy_lbrs().
-
-Fixes: d20c796ca370 ("KVM: x86: nSVM: implement nested LBR virtualization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-2-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 30353bfc43a1 ("net/mlx4_core: Use RCU to perform radix tree lookup for SRQ")
+Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=5
+Link: https://patch.msgid.link/r/12-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 7 +++++--
- arch/x86/kvm/svm/svm.c    | 2 --
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/srq.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 2f98a90537d28..636f0354fa815 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -621,6 +621,7 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
- 	} else {
- 		svm_copy_lbrs(vmcb02, vmcb01);
+diff --git a/drivers/net/ethernet/mellanox/mlx4/srq.c b/drivers/net/ethernet/mellanox/mlx4/srq.c
+index dd890f5d7b725..8711689120f30 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/srq.c
++++ b/drivers/net/ethernet/mellanox/mlx4/srq.c
+@@ -44,13 +44,14 @@ void mlx4_srq_event(struct mlx4_dev *dev, u32 srqn, int event_type)
+ {
+ 	struct mlx4_srq_table *srq_table = &mlx4_priv(dev)->srq_table;
+ 	struct mlx4_srq *srq;
++	unsigned long flags;
+ 
+-	rcu_read_lock();
++	spin_lock_irqsave(&srq_table->lock, flags);
+ 	srq = radix_tree_lookup(&srq_table->tree, srqn & (dev->caps.num_srqs - 1));
+-	rcu_read_unlock();
+-	if (srq)
+-		refcount_inc(&srq->refcount);
+-	else {
++	if (!srq || !refcount_inc_not_zero(&srq->refcount))
++		srq = NULL;
++	spin_unlock_irqrestore(&srq_table->lock, flags);
++	if (!srq) {
+ 		mlx4_warn(dev, "Async event for bogus SRQ %08x\n", srqn);
+ 		return;
  	}
-+	vmcb_mark_dirty(vmcb02, VMCB_LBR);
- 	svm_update_lbrv(&svm->vcpu);
- }
+@@ -203,8 +204,8 @@ int mlx4_srq_alloc(struct mlx4_dev *dev, u32 pdn, u32 cqn, u16 xrcd,
+ 	if (err)
+ 		goto err_radix;
  
-@@ -1091,10 +1092,12 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
- 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
+-	refcount_set(&srq->refcount, 1);
+ 	init_completion(&srq->free);
++	refcount_set_release(&srq->refcount, 1);
  
- 	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
--		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK)))
-+		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
- 		svm_copy_lbrs(vmcb12, vmcb02);
--	else
-+	} else {
- 		svm_copy_lbrs(vmcb01, vmcb02);
-+		vmcb_mark_dirty(vmcb01, VMCB_LBR);
-+	}
+ 	return 0;
  
- 	svm_update_lbrv(vcpu);
- 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 3e2af127a4e27..4c3891fb789a5 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -990,8 +990,6 @@ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
- 	to_vmcb->save.br_to		= from_vmcb->save.br_to;
- 	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
- 	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
--
--	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
- }
- 
- static void svm_recalc_lbr_msr_intercepts(struct kvm_vcpu *vcpu)
 -- 
 2.53.0
 
