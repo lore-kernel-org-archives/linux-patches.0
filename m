@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844723B8BBB;
-	Sat, 17 Oct 2026 17:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9587F3BD651;
+	Sat, 17 Oct 2026 17:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259198; cv=none; b=eZdnhqMgqDhbOjJVYXzoauSg56RrPkUS1QmtFqJLxaOgrys5Z2jvuFfvXHyf7OccosEIMpPqIauyEdYqzhTRXMkJIy4gQD6379uo4umQXZ3ouYwODhVca46C+mptXEZYAa0XAgTVL4Iu2cxkln7hlmV8ErfOkc0bEsHYKkUvQtQ=
+	t=1792259201; cv=none; b=bzekLqMIcI4SZVB+rrVBUYqxRXvdvwKuFQaeL5c9/QIDU4hkIxnY1WZze2MZubeUWkvqASKSm0VotR72Imd0Tr3uvkCUcRl9wUcEgKmExTA+GbZco12mLuRtPyKFWpmshHvAIIp3iL6hit8oUy44+ngBSqwRGIFla0yQ+zsB5wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259198; c=relaxed/simple;
-	bh=0KWXN6t1lwbemtlsaSa4p9WSHx+5GIZCwwtVlRYUFOA=;
+	s=arc-20240116; t=1792259201; c=relaxed/simple;
+	bh=SoiDyHYAaoPrN3AxghoIWKQ7XNOMKqS4kMV+pkCjjyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbEqV0U8rF2eragX6A8NjXb+i8bWOuy7XQVhk/z0L1hWEQj++9X6rdYDpAkbswVOlb8vVxeNC//RH/9Ieq17BoP+EOSnPJ7MMPEC0uDJyGUqQMxjJMfvqzbXZTNGmOCxCrM+3BRfx+EUknwvDOFtZK8/iF0VGYJU0FAgUrdeIKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxyrEaSZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xm/TL260KntqZeEDvawBhsOatdvTSGKbTWIIdA0qicQHLMQXTJL0acoBDVhz/9ZOKYw2tCGwBjT60toEKknoHq6o0NdwLKu3Kp7KpEf4j5rtp8jDXASnzPNYuobGi/uKjSgr4CVLWXo6ykPq69D8Bcn/1TyIqBXew1qiBdsQ0s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ye4RKI/Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxyrEaSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E523F1F000C5;
-	Sat, 17 Oct 2026 17:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ye4RKI/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37851F000C5;
+	Sat, 17 Oct 2026 17:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259197;
-	bh=/JTLpvPvL5Te2fy8ruJcMeBBiN7xS3CtAWWAstp2HC8=;
+	s=korg; t=1792259200;
+	bh=KlXPVqGaBGaeao3YetNjy6Q+Xi4YNbJuam8p9pEH1aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxyrEaSZewMeLEGj3+mPo+u5HoJUyyjaICePjvzrdYiNbHTtrHTOBJ5ucHZOl8+od
-	 8p9CN4HBcxyrg8S4WpynWLxVR4t8WirL+Y9i2qu+nd5F1Jcf4mid3PN2nkcclJ/uj+
-	 sgxjgXtnCjKhcSeKvk8w4xQuCjJL7vZtbHiQHMg8=
+	b=ye4RKI/QJwAu+INKJ2bfrVnXG8egIEK5/pcPlH9dxtl9hS12xo16jBxyRIzmGSTAU
+	 GrwYRtLvf6xfKk7HcP/iMbzCECLHXuw2/z/BxWBqswY2KI0vDW/8J8z0Ob0Up72JLN
+	 5QvviQRJ4YKjQVjdufByn9n5u7RMAGZNxRb18PTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1133/1674] afs: Fix reinitialisation of the inode, in particular ->lock_work
-Date: Sat, 17 Oct 2026 17:56:45 +0200
-Message-ID: <20261017160500.240655839@linuxfoundation.org>
+Subject: [PATCH 6.6 1134/1674] xen/pvcalls: bound backend response req_id before indexing rsp[]
+Date: Sat, 17 Oct 2026 17:56:46 +0200
+Message-ID: <20261017160500.267078151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,92 +51,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 5597fbd1e7c161914f20315a726e54025b0fdadb ]
+[ Upstream commit d33846c8dcc06b83b7acdeac1e8bfbb5c0c26cb2 ]
 
-It seems that initalising afs_vnode::lock_work a single time in the slab's
-init function isn't sufficient for work_structs.  This results in the
-DEBUG_OBJECTS debugging stuff producing a warning occasionally when running
-the generic/131 xfstest:
+pvcalls_front_event_handler() takes req_id directly from the
+backend-supplied ring response and uses it to index the fixed-size
+bedata->rsp[] array for a memcpy() and a store, with no range check. A
+malicious or buggy backend can set req_id past PVCALLS_NR_RSP_PER_RING
+and drive an out-of-bounds write past the bedata allocation.
 
- ODEBUG: activate not available (active state 0) object: 0000000016d8760f object type: work_struct hint: afs_lock_work+0x0/0x220
- WARNING: lib/debugobjects.c:629 at debug_print_object+0x4b/0x90, CPU#3: locktest/7695
- ...
- CPU: 3 UID: 0 PID: 7695 Comm: locktest Tainted: G S                  7.1.0-build3+ #2771 PREEMPT
- ...
- RIP: 0010:debug_print_object+0x65/0x90
- ...
- Call Trace:
-  <TASK>
-  ? __pfx_afs_lock_work+0x10/0x10
-  debug_object_activate+0x122/0x170
-  insert_work+0x25/0x60
-  __queue_work+0x2e0/0x340
-  queue_delayed_work_on+0x48/0x70
-  afs_fl_release_private+0x57/0x70
-  locks_release_private+0x5c/0xa0
-  locks_free_lock+0xe/0x20
-  posix_lock_inode+0x55f/0x5b0
-  locks_lock_inode_wait+0x81/0x140
-  ? file_write_and_wait_range+0x50/0x70
-  afs_lock+0xcd/0x110
-  fcntl_setlk+0x10d/0x260
-  do_fcntl+0x24e/0x5b0
-  __do_sys_fcntl+0x6a/0x90
-  do_syscall_64+0x11e/0x310
-  entry_SYSCALL_64_after_hwframe+0x71/0x79
+req_id was also declared int while the wire field rsp->req_id is u32, so
+a range check on the signed value alone is insufficient: a backend
+req_id of 0xffffffff becomes -1, passes a >= PVCALLS_NR_RSP_PER_RING
+test and indexes bedata->rsp[-1]. Declare req_id as u32 so a single
+bound covers both ends.
 
-Fix this by reinitialising ->lock_work after allocating an inode.
+A backend that sends an out-of-range req_id has violated the wire
+protocol, so rather than silently dropping the response, log once and
+stop trusting the backend: set bedata->disabled. The event handler then
+ignores further responses, and the request paths that wait for a
+response return -EIO instead of blocking forever. This mirrors the
+fatal-error handling xen-netback uses (xenvif_fatal_tx_err()).
 
-Also, flush ->lock_work when the inode is being evicted to make sure it's
-not still running.
+The pvcalls frontend currently trusts its backend, so this is not a
+classic-Xen security issue, but it matters for hardening PV frontends
+against malicious backends (confidential and disaggregated deployments).
 
-Fixes: e8d6c554126b ("AFS: implement file locking")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-13-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Thomas Gleixner <tglx@kernel.org>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 2195046bfd69 ("xen/pvcalls: implement socket command and handle events")
+Suggested-by: Juergen Gross <jgross@suse.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260617014149.2647404-1-michael.bommarito@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/inode.c | 1 +
- fs/afs/super.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/pvcalls-front.c | 88 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 76 insertions(+), 12 deletions(-)
 
-diff --git a/fs/afs/inode.c b/fs/afs/inode.c
-index 1c794a1896aa5..069fb731687a0 100644
---- a/fs/afs/inode.c
-+++ b/fs/afs/inode.c
-@@ -820,6 +820,7 @@ void afs_evict_inode(struct inode *inode)
+diff --git a/drivers/xen/pvcalls-front.c b/drivers/xen/pvcalls-front.c
+index b72ee9379d77c..d2bdd43703e88 100644
+--- a/drivers/xen/pvcalls-front.c
++++ b/drivers/xen/pvcalls-front.c
+@@ -32,6 +32,7 @@ struct pvcalls_bedata {
+ 	struct xen_pvcalls_front_ring ring;
+ 	grant_ref_t ref;
+ 	int irq;
++	bool disabled;
  
- 	ASSERTCMP(inode->i_ino, ==, vnode->fid.vnode);
- 
-+	flush_delayed_work(&vnode->lock_work);
- 	truncate_inode_pages_final(&inode->i_data);
- 
- 	afs_set_cache_aux(vnode, &aux);
-diff --git a/fs/afs/super.c b/fs/afs/super.c
-index 1dd6c7c9713be..3fa0c38d7a7c0 100644
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -670,7 +670,6 @@ static void afs_i_init_once(void *_vnode)
- 	INIT_LIST_HEAD(&vnode->wb_keys);
- 	INIT_LIST_HEAD(&vnode->pending_locks);
- 	INIT_LIST_HEAD(&vnode->granted_locks);
--	INIT_DELAYED_WORK(&vnode->lock_work, afs_lock_work);
- 	INIT_LIST_HEAD(&vnode->cb_mmap_link);
- 	seqlock_init(&vnode->cb_lock);
+ 	struct list_head socket_mappings;
+ 	spinlock_t socket_lock;
+@@ -131,6 +132,20 @@ static inline int get_request(struct pvcalls_bedata *bedata, int *req_id)
+ 	return 0;
  }
-@@ -702,6 +701,7 @@ static struct inode *afs_alloc_inode(struct super_block *sb)
  
- 	init_rwsem(&vnode->rmdir_lock);
- 	INIT_WORK(&vnode->cb_work, afs_invalidate_mmap_work);
-+	INIT_DELAYED_WORK(&vnode->lock_work, afs_lock_work);
++/*
++ * Wait for the backend's response to req_id, or for the frontend to be
++ * disabled because the backend violated the wire protocol. Returns 0 once
++ * the response has arrived, or -EIO if the frontend was disabled.
++ */
++static int pvcalls_front_wait_rsp(struct pvcalls_bedata *bedata, u32 req_id)
++{
++	wait_event(bedata->inflight_req,
++		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
++		   READ_ONCE(bedata->disabled));
++
++	return READ_ONCE(bedata->disabled) ? -EIO : 0;
++}
++
+ static bool pvcalls_front_write_todo(struct sock_mapping *map)
+ {
+ 	struct pvcalls_data_intf *intf = map->active.ring;
+@@ -168,7 +183,8 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
+ 	struct pvcalls_bedata *bedata;
+ 	struct xen_pvcalls_response *rsp;
+ 	uint8_t *src, *dst;
+-	int req_id = 0, more = 0, done = 0;
++	u32 req_id = 0;
++	int more = 0, done = 0;
  
- 	_leave(" = %p", &vnode->netfs.inode);
- 	return &vnode->netfs.inode;
+ 	if (dev == NULL)
+ 		return IRQ_HANDLED;
+@@ -179,12 +195,31 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
+ 		pvcalls_exit();
+ 		return IRQ_HANDLED;
+ 	}
++	if (READ_ONCE(bedata->disabled)) {
++		pvcalls_exit();
++		return IRQ_HANDLED;
++	}
+ 
+ again:
+ 	while (RING_HAS_UNCONSUMED_RESPONSES(&bedata->ring)) {
+ 		rsp = RING_GET_RESPONSE(&bedata->ring, bedata->ring.rsp_cons);
+ 
+ 		req_id = rsp->req_id;
++		if (req_id >= PVCALLS_NR_RSP_PER_RING) {
++			/*
++			 * The backend supplied a req_id that would index
++			 * bedata->rsp[] out of bounds: a protocol violation
++			 * from a malicious or buggy backend. Log once, stop
++			 * trusting this backend and disable the frontend rather
++			 * than silently dropping the response and continuing.
++			 */
++			pr_err_once("pvcalls: backend sent out-of-range req_id %u, disabling frontend\n",
++				    req_id);
++			WRITE_ONCE(bedata->disabled, true);
++			bedata->ring.rsp_cons++;
++			done = 1;
++			break;
++		}
+ 		if (rsp->cmd == PVCALLS_POLL) {
+ 			struct sock_mapping *map = (struct sock_mapping *)(uintptr_t)
+ 						   rsp->u.poll.id;
+@@ -217,7 +252,7 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
+ 	}
+ 
+ 	RING_FINAL_CHECK_FOR_RESPONSES(&bedata->ring, more);
+-	if (more)
++	if (more && !READ_ONCE(bedata->disabled))
+ 		goto again;
+ 	if (done)
+ 		wake_up(&bedata->inflight_req);
+@@ -330,8 +365,11 @@ int pvcalls_front_socket(struct socket *sock)
+ 	if (notify)
+ 		notify_remote_via_irq(bedata->irq);
+ 
+-	wait_event(bedata->inflight_req,
+-		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
++	ret = pvcalls_front_wait_rsp(bedata, req_id);
++	if (ret) {
++		pvcalls_exit();
++		return ret;
++	}
+ 
+ 	/* read req_id, then the content */
+ 	smp_rmb();
+@@ -476,8 +514,11 @@ int pvcalls_front_connect(struct socket *sock, struct sockaddr *addr,
+ 	if (notify)
+ 		notify_remote_via_irq(bedata->irq);
+ 
+-	wait_event(bedata->inflight_req,
+-		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
++	ret = pvcalls_front_wait_rsp(bedata, req_id);
++	if (ret) {
++		pvcalls_exit_sock(sock);
++		return ret;
++	}
+ 
+ 	/* read req_id, then the content */
+ 	smp_rmb();
+@@ -707,8 +748,11 @@ int pvcalls_front_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	if (notify)
+ 		notify_remote_via_irq(bedata->irq);
+ 
+-	wait_event(bedata->inflight_req,
+-		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
++	ret = pvcalls_front_wait_rsp(bedata, req_id);
++	if (ret) {
++		pvcalls_exit_sock(sock);
++		return ret;
++	}
+ 
+ 	/* read req_id, then the content */
+ 	smp_rmb();
+@@ -756,8 +800,11 @@ int pvcalls_front_listen(struct socket *sock, int backlog)
+ 	if (notify)
+ 		notify_remote_via_irq(bedata->irq);
+ 
+-	wait_event(bedata->inflight_req,
+-		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
++	ret = pvcalls_front_wait_rsp(bedata, req_id);
++	if (ret) {
++		pvcalls_exit_sock(sock);
++		return ret;
++	}
+ 
+ 	/* read req_id, then the content */
+ 	smp_rmb();
+@@ -813,6 +860,14 @@ int pvcalls_front_accept(struct socket *sock, struct socket *newsock, int flags)
+ 		}
+ 	}
+ 
++	if (READ_ONCE(bedata->disabled)) {
++		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
++			  (void *)&map->passive.flags);
++		wake_up(&map->passive.inflight_accept_req);
++		pvcalls_exit_sock(sock);
++		return -EIO;
++	}
++
+ 	map2 = kzalloc(sizeof(*map2), GFP_KERNEL);
+ 	if (map2 == NULL) {
+ 		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
+@@ -873,10 +928,18 @@ int pvcalls_front_accept(struct socket *sock, struct socket *newsock, int flags)
+ 	}
+ 
+ 	if (wait_event_interruptible(bedata->inflight_req,
+-		READ_ONCE(bedata->rsp[req_id].req_id) == req_id)) {
++		READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
++		READ_ONCE(bedata->disabled))) {
+ 		pvcalls_exit_sock(sock);
+ 		return -EINTR;
+ 	}
++	if (READ_ONCE(bedata->disabled)) {
++		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
++			  (void *)&map->passive.flags);
++		wake_up(&map->passive.inflight_accept_req);
++		pvcalls_exit_sock(sock);
++		return -EIO;
++	}
+ 	/* read req_id, then the content */
+ 	smp_rmb();
+ 
+@@ -1045,7 +1108,8 @@ int pvcalls_front_release(struct socket *sock)
+ 		notify_remote_via_irq(bedata->irq);
+ 
+ 	wait_event(bedata->inflight_req,
+-		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
++		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
++		   READ_ONCE(bedata->disabled));
+ 
+ 	if (map->active_socket) {
+ 		/*
 -- 
 2.53.0
 
