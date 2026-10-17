@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A742392829;
-	Sat, 17 Oct 2026 17:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0B99460;
+	Sat, 17 Oct 2026 17:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258781; cv=none; b=FmdHTi/eDd7h5TMw5Rd2yRx1OkzBGJRgiGulVC+INEnB1XnaEtSHyRBdSQJK15rsQRin2FM970XwzeaFBbl+ByZuJLvGM6avpEkRjAwZE+O4xLAjvPqRQ7TpAdJZvFyf7Q1VxDlylWfrrqlDNuyPN29MEKjRJpr8QaUMYVeeg1k=
+	t=1792258784; cv=none; b=LvDN9E/PT8swd9wfzDEgYCwt3YS8WtXmIP8KgAdCKLAcnZNmfgeIwk8vGCqnuoCzS9wg+kIC4HuuztyPpfKpH98/4KyTdesDQIckhlavQs+KMWYSVKqV87TAQvL6DSXDSXl9LUKPmHiR5u5+dKzyfG3FmGCQz4JwqQxAZWHAHt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258781; c=relaxed/simple;
-	bh=3eHMwTbMZVUJGCAwWxbDBcVBckhUB/nC/8EcAqFZA5M=;
+	s=arc-20240116; t=1792258784; c=relaxed/simple;
+	bh=qmCzrPpvHAfenS2Ju9gyAgvM0AJj/eNmDY5ZQrgpmzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHWM3roh8iliDdVSM2SRFhG2a9M64O2eGcxFbOraMZN7X/A6BBUiHBdvSaKj3CA3HANfYkb9q8N0DK90jlh2Sq7hE29ispafk6Q2+zSDdT7yC9kFscRIhnAM0H6tDwGUQ4JaDgv9i0M8nOtMwjSYc9yDG76E/MpEU2oGGGJX/zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEmln094; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k09pPAIvnmo7vWTq044FFIk7lA6Ybrz6PymFNbK30qSr+TENgePAm1Hmj2dzTicltM+giZRAs9gs6Y82oeSOD3GCNFzOw19GiVwvBkTyymHqhV7alh7fy5JPlsSyMQBFfkvRASMdjv1L6PrsOCOxLGfakNxJHCfpDcaKHX7pxzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/qDqZqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEmln094"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EDA1F000C4;
-	Sat, 17 Oct 2026 17:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/qDqZqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D37D1F000C4;
+	Sat, 17 Oct 2026 17:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258780;
-	bh=S4oQHpuK0UHjbx8BNGzpRFcCy2vbjWzy1bMlo7YeXvI=;
+	s=korg; t=1792258783;
+	bh=a33obH37YtBM07xVcG6gEN74Z+BnCfECeje3M0l5AqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEmln0940+zXr+IoYcVK4Ml9qg9TomaNPO+BPFCsUrhs2VbXYedW/byP4r4fsIG8l
-	 OjAw4XdnQz0k1dM83L8UOyC8pKF4P+cni2pFFFO+o/vo50pXGNDApKr/lZ8YhnOnU6
-	 yAxt+j2+dfU6sL2yVuwuvOte6UNYFUJxXLerT+bw=
+	b=M/qDqZqis8f1HYwrPL3kRXGyz2PucYqIsQsCPBCvNfoaxh/4USnWqWnBmYpBIIX6j
+	 mTNMw+64PqalZkgV1wJp1795lt/Piy1k0L89cj2+ENWFCqSCaGPn284ZxnUUUfzFTB
+	 lTaXo5BG9VaNC8SqDmJt3ipcE2eJbU1aOy72xkwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0997/1674] bus: fsl-mc: use generic driver_override infrastructure
-Date: Sat, 17 Oct 2026 17:54:29 +0200
-Message-ID: <20261017160456.707059795@linuxfoundation.org>
+Subject: [PATCH 6.6 0998/1674] vdpa: use generic driver_override infrastructure
+Date: Sat, 17 Oct 2026 17:54:30 +0200
+Message-ID: <20261017160456.732419874@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -55,7 +56,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 6c8dfb0362732bf1e4829867a2a5239fedc592d0 ]
+[ Upstream commit 85bb534ff12aab6916058897b39c748940a7a4c6 ]
 
 When a driver is probed through __driver_attach(), the bus' match()
 callback is called without the device lock held, thus accessing the
@@ -67,60 +68,50 @@ care of proper locking internally.
 Note that calling match() from __driver_attach() without the device lock
 held is intentional. [1]
 
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Acked-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
 Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
 Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
-Link: https://patch.msgid.link/20260324005919.2408620-3-dakr@kernel.org
+Fixes: 539fec78edb4 ("vdpa: add driver_override support")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260324005919.2408620-9-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c   | 43 +++++--------------------------
- drivers/vfio/fsl-mc/vfio_fsl_mc.c |  4 +--
- include/linux/fsl/mc.h            |  4 ---
- 3 files changed, 8 insertions(+), 43 deletions(-)
+ drivers/vdpa/vdpa.c  | 48 +++++---------------------------------------
+ include/linux/vdpa.h |  4 ----
+ 2 files changed, 5 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index b5a1daed1ea41..afe610817f82d 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -93,12 +93,16 @@ static int fsl_mc_bus_match(struct device *dev, struct device_driver *drv)
- 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
- 	struct fsl_mc_driver *mc_drv = to_fsl_mc_driver(drv);
- 	bool found = false;
+diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
+index a7612e0783b36..28a2fb1d0fa45 100644
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -67,57 +67,20 @@ static void vdpa_dev_remove(struct device *d)
+ 
+ static int vdpa_dev_match(struct device *dev, struct device_driver *drv)
+ {
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
 +	int ret;
  
- 	/* When driver_override is set, only bind to the matching driver */
--	if (mc_dev->driver_override) {
--		found = !strcmp(mc_dev->driver_override, mc_drv->driver.name);
+ 	/* Check override first, and if set, only use the named driver */
+-	if (vdev->driver_override)
+-		return strcmp(vdev->driver_override, drv->name) == 0;
 +	ret = device_match_driver_override(dev, drv);
-+	if (ret > 0) {
-+		found = true;
- 		goto out;
- 	}
-+	if (ret == 0)
-+		goto out;
++	if (ret >= 0)
++		return ret;
  
- 	if (!mc_drv->match_id_table)
- 		goto out;
-@@ -187,39 +191,8 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
+ 	/* Currently devices must be supported by all vDPA bus drivers */
+ 	return 1;
  }
- static DEVICE_ATTR_RO(modalias);
  
 -static ssize_t driver_override_store(struct device *dev,
 -				     struct device_attribute *attr,
 -				     const char *buf, size_t count)
 -{
--	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
 -	int ret;
 -
--	if (WARN_ON(dev->bus != &fsl_mc_bus_type))
--		return -EINVAL;
--
--	ret = driver_set_override(dev, &mc_dev->driver_override, buf, count);
+-	ret = driver_set_override(dev, &vdev->driver_override, buf, count);
 -	if (ret)
 -		return ret;
 -
@@ -130,77 +121,64 @@ index b5a1daed1ea41..afe610817f82d 100644
 -static ssize_t driver_override_show(struct device *dev,
 -				    struct device_attribute *attr, char *buf)
 -{
--	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
 -	ssize_t len;
 -
 -	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
+-	len = snprintf(buf, PAGE_SIZE, "%s\n", vdev->driver_override);
 -	device_unlock(dev);
+-
 -	return len;
 -}
 -static DEVICE_ATTR_RW(driver_override);
 -
- static struct attribute *fsl_mc_dev_attrs[] = {
- 	&dev_attr_modalias.attr,
+-static struct attribute *vdpa_dev_attrs[] = {
 -	&dev_attr_driver_override.attr,
- 	NULL,
- };
- 
-@@ -322,6 +295,7 @@ ATTRIBUTE_GROUPS(fsl_mc_bus);
- 
- struct bus_type fsl_mc_bus_type = {
- 	.name = "fsl-mc",
-+	.driver_override = true,
- 	.match = fsl_mc_bus_match,
- 	.uevent = fsl_mc_bus_uevent,
- 	.dma_configure  = fsl_mc_dma_configure,
-@@ -931,9 +905,6 @@ static struct notifier_block fsl_mc_nb;
-  */
- void fsl_mc_device_remove(struct fsl_mc_device *mc_dev)
- {
--	kfree(mc_dev->driver_override);
--	mc_dev->driver_override = NULL;
+-	NULL,
+-};
 -
- 	/*
- 	 * The device-specific remove callback will get invoked by device_del()
- 	 */
-diff --git a/drivers/vfio/fsl-mc/vfio_fsl_mc.c b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
-index f65d91c01f2ec..03600872c4809 100644
---- a/drivers/vfio/fsl-mc/vfio_fsl_mc.c
-+++ b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
-@@ -430,9 +430,7 @@ static int vfio_fsl_mc_bus_notifier(struct notifier_block *nb,
+-static const struct attribute_group vdpa_dev_group = {
+-	.attrs  = vdpa_dev_attrs,
+-};
+-__ATTRIBUTE_GROUPS(vdpa_dev);
+-
+ static struct bus_type vdpa_bus = {
+ 	.name  = "vdpa",
+-	.dev_groups = vdpa_dev_groups,
++	.driver_override = true,
+ 	.match = vdpa_dev_match,
+ 	.probe = vdpa_dev_probe,
+ 	.remove = vdpa_dev_remove,
+@@ -132,7 +95,6 @@ static void vdpa_release_dev(struct device *d)
+ 		ops->free(vdev);
  
- 	if (action == BUS_NOTIFY_ADD_DEVICE &&
- 	    vdev->mc_dev == mc_cont) {
--		mc_dev->driver_override = kasprintf(GFP_KERNEL, "%s",
--						    vfio_fsl_mc_ops.name);
--		if (!mc_dev->driver_override)
-+		if (device_set_driver_override(dev, vfio_fsl_mc_ops.name))
- 			dev_warn(dev, "VFIO_FSL_MC: Setting driver override for device in dprc %s failed\n",
- 				 dev_name(&mc_cont->dev));
- 		else
-diff --git a/include/linux/fsl/mc.h b/include/linux/fsl/mc.h
-index a1b3de87a3d10..7a19f5a1cbcf6 100644
---- a/include/linux/fsl/mc.h
-+++ b/include/linux/fsl/mc.h
-@@ -178,9 +178,6 @@ struct fsl_mc_obj_desc {
-  * @regions: pointer to array of MMIO region entries
-  * @irqs: pointer to array of pointers to interrupts allocated to this device
-  * @resource: generic resource associated with this MC object device, if any.
+ 	ida_simple_remove(&vdpa_index_ida, vdev->index);
+-	kfree(vdev->driver_override);
+ 	kfree(vdev);
+ }
+ 
+diff --git a/include/linux/vdpa.h b/include/linux/vdpa.h
+index db15ac07f8a6a..85e4331f1eb95 100644
+--- a/include/linux/vdpa.h
++++ b/include/linux/vdpa.h
+@@ -70,9 +70,6 @@ struct vdpa_mgmt_dev;
+  * struct vdpa_device - representation of a vDPA device
+  * @dev: underlying device
+  * @dma_dev: the actual device that is performing DMA
 - * @driver_override: driver name to force a match; do not set directly,
 - *                   because core frees it; use driver_set_override() to
 - *                   set or clear it.
-  *
-  * Generic device object for MC object devices that are "attached" to a
-  * MC bus.
-@@ -214,7 +211,6 @@ struct fsl_mc_device {
- 	struct fsl_mc_device_irq **irqs;
- 	struct fsl_mc_resource *resource;
- 	struct device_link *consumer_link;
+  * @config: the configuration ops for this device.
+  * @cf_lock: Protects get and set access to configuration layout.
+  * @index: device index
+@@ -87,7 +84,6 @@ struct vdpa_mgmt_dev;
+ struct vdpa_device {
+ 	struct device dev;
+ 	struct device *dma_dev;
 -	const char *driver_override;
- };
- 
- #define to_fsl_mc_device(_dev) \
+ 	const struct vdpa_config_ops *config;
+ 	struct rw_semaphore cf_lock; /* Protects get/set config */
+ 	unsigned int index;
 -- 
 2.53.0
 
