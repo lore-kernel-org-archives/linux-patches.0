@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2C936F90C;
-	Sat, 17 Oct 2026 16:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0AB3AEB29;
+	Sat, 17 Oct 2026 16:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255547; cv=none; b=b0n7j6De8xAZwk2Y9ihO1dviT/9zhbRXwL9RhGhbz8Y45mK5Lva0goY/+wbR54U3LGk8e506RHVx0cALAHT7/40SjbryI6kn7+V7QeWHehkr2+Q7yRlEbZcC6YG3FkurP152Aa9WznbxhSCfuODNKGsUSzw2g4um6b/q0SNSBNU=
+	t=1792255550; cv=none; b=Cj8J3/XPCmigqbZQHgExLAVwHJDlvskOfHCe3ozGeANgGIlN20oyEf6XAke8gR2v4CxI962V+XSaHo9E65sN5PWy2u0uaTmrxf17wQsoKEx0dPMITtiGctth8vrOrSiiHJI0Hm8xI0TZ1AK0ywUGCzib0lbkZm5Qv19geEcV5DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255547; c=relaxed/simple;
-	bh=Vf/yez3yT2Efad94ptebvz1eZIgdALFQJ8Bd411tShU=;
+	s=arc-20240116; t=1792255550; c=relaxed/simple;
+	bh=MwC9HzBxB+8cdY+GpH0jKRhFUIjD7V2OIxqOTRnjGG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMoyStsvPFh3AOewRDtjA1aOWzjlv4ogZCrENjZjrCJgFwNQvBdB0Bs6mJ4vGtd/8+LMzSev2XED09MYhcxcoXq5Te/kV8QU1PVz3SoWwzLUZaU9VEwUioKcYSQJHcy4UyP5D+kgewCcMNRn4RPtB6mJvngVCd6qx9v5VCdcLoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1nuV1Df; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m8HaYlBqDkkN/B4E2KZDGi20ro4T9pDhYodXjO20S9t9QRpic4VZpyNTe7wlRw8+9TFYeMq16VkeTgQdJCiGVo1lxC72dClNY81BNOg749D9oT7YMykvw6LXsUZIfXbcVVQQrDGcSKFXngMaK5As/6UxJLnCnZoxxXgnKDMpRIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b016j+er; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1nuV1Df"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBB81F000C4;
-	Sat, 17 Oct 2026 16:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b016j+er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDB21F000C4;
+	Sat, 17 Oct 2026 16:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255546;
-	bh=Vd7FPEcz6jwr6eeK3QSlb6Se5zjQ4NBIKbOTQRNGQ3E=;
+	s=korg; t=1792255549;
+	bh=EGnM35zbCZOhZUP9PCGkFe5oeOtFvtQ3Ax/KfY63Sxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x1nuV1DfarfIR9sjDbys89+KMLdknKGaa/ln6jiW7kDRfqc8Fc6PsDiUTmtKfFE7O
-	 D6q433GgEjIkw2S7qKRNCTJlUPGoR98hWUcxCQFB7vavkFE1Vm871Im8WvC2YTXXVb
-	 OLNjZ9TDsrAZYUxrankSwf041T8ncCXu4r8i90A4=
+	b=b016j+ermNQQL+SdeA+Gu7u94o32m+Pm3icSlpC7A5btQBNl66GKIO6ScbmnXQFcn
+	 2dTuS6Z5ZWGDe56jSN55uHRT4G6G0g2S2Ghxe3Gvsyss92Ce+lXGMXTLUpDTaP2qtI
+	 GkZFt8vPQZDziG58x3tCxTq8V2tKbI4sBEJSqS8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
+	Kaitao Cheng <chengkaitao@kylinos.cn>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 812/869] bpf: Remove migrate_{disable|enable} in bpf_obj_free_fields()
-Date: Sat, 17 Oct 2026 18:00:53 +0200
-Message-ID: <20261017160057.712104099@linuxfoundation.org>
+Subject: [PATCH 6.12 813/869] bpf: Clear rb node linkage when freeing bpf_rb_root
+Date: Sat, 17 Oct 2026 18:00:54 +0200
+Message-ID: <20261017160057.737708626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,69 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Kaitao Cheng <chengkaitao@kylinos.cn>
 
-[ Upstream commit 1d2dbe7120e89090ed4f6be03d6fbadfbfff59bf ]
+[ Upstream commit 4a7910ee060d8ce55612f5b3cc267f3a265a3cec ]
 
-The callers of bpf_obj_free_fields() have already guaranteed that the
-migration is disabled, therefore, there is no need to invoke
-migrate_{disable,enable} pair in bpf_obj_free_fields()'s underly
-implementation.
+bpf_rb_root_free() detaches the root by copying the current rb_root_cached
+and then replacing the live root with RB_ROOT_CACHED. It then walks the
+copied root and drops each object contained in the tree.
 
-This patch removes unnecessary migrate_{disable|enable} pairs from
-bpf_obj_free_fields() and its callees: bpf_list_head_free() and
-bpf_rb_root_free().
+This leaves the rb node state intact while dropping the object. If the
+object is refcounted and survives the drop, its bpf_rb_node_kern still
+contains an owner pointer to the freed root and stale rb tree linkage. If
+a later bpf_rb_root allocation reuses the same address, bpf_rbtree_remove()
+can incorrectly pass the owner check and call rb_erase_cached() on a node
+whose rb pointers belong to the old tree.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250108010728.207536-12-houtao@huaweicloud.com
+Mirror the list draining behavior by marking nodes as busy while the root
+is being detached, then clear the rb node and release the owner before
+dropping the containing object. This makes surviving nodes unowned and
+safe to reject from remove or accept for a later add.
+
+Fixes: 9c395c1b99bd ("bpf: Add basic bpf_rb_{root,node} support")
+Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260605094143.5509-1-kaitao.cheng@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 4a7910ee060d ("bpf: Clear rb node linkage when freeing bpf_rb_root")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 4 ----
- kernel/bpf/syscall.c | 2 --
- 2 files changed, 6 deletions(-)
+ kernel/bpf/helpers.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 3126ec5097f15..e8417cd67decb 100644
+index e8417cd67decb..617f1b8c36703 100644
 --- a/kernel/bpf/helpers.c
 +++ b/kernel/bpf/helpers.c
-@@ -2100,9 +2100,7 @@ void bpf_list_head_free(const struct btf_field *field, void *list_head,
- 		/* The contained type can also have resources, including a
- 		 * bpf_list_head which needs to be freed.
- 		 */
--		migrate_disable();
- 		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
--		migrate_enable();
- 	}
- }
+@@ -2121,6 +2121,7 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+ 		      struct bpf_spin_lock *spin_lock)
+ {
+ 	struct rb_root_cached orig_root, *root = rb_root;
++	struct bpf_rb_node_kern *node;
+ 	struct rb_node *pos, *n;
+ 	void *obj;
  
-@@ -2139,9 +2137,7 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+@@ -2129,14 +2130,20 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+ 
+ 	__bpf_spin_lock_irqsave(spin_lock);
+ 	orig_root = *root;
++	bpf_rbtree_postorder_for_each_entry_safe(pos, n, &orig_root.rb_root) {
++		node = rb_entry(pos, struct bpf_rb_node_kern, rb_node);
++		WRITE_ONCE(node->owner, BPF_PTR_POISON);
++	}
+ 	*root = RB_ROOT_CACHED;
+ 	__bpf_spin_unlock_irqrestore(spin_lock);
+ 
+ 	bpf_rbtree_postorder_for_each_entry_safe(pos, n, &orig_root.rb_root) {
+ 		obj = pos;
  		obj -= field->graph_root.node_offset;
- 
- 
--		migrate_disable();
+-
+-
++		node = rb_entry(pos, struct bpf_rb_node_kern, rb_node);
++		RB_CLEAR_NODE(pos);
++		/* Ensure __bpf_rbtree_add() sees the node as unlinked. */
++		smp_store_release(&node->owner, NULL);
  		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
--		migrate_enable();
  	}
  }
- 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 9b3d067e47420..854cc29b47c8f 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -707,11 +707,9 @@ void bpf_obj_free_fields(const struct btf_record *rec, void *obj)
- 			if (!btf_is_kernel(field->kptr.btf)) {
- 				pointee_struct_meta = btf_find_struct_meta(field->kptr.btf,
- 									   field->kptr.btf_id);
--				migrate_disable();
- 				__bpf_obj_drop_impl(xchgd_field, pointee_struct_meta ?
- 								 pointee_struct_meta->record : NULL,
- 								 fields[i].type == BPF_KPTR_PERCPU);
--				migrate_enable();
- 			} else {
- 				field->kptr.dtor(xchgd_field);
- 			}
 -- 
 2.53.0
 
