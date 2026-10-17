@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F43F3A0E8B;
-	Sat, 17 Oct 2026 16:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019D0397929;
+	Sat, 17 Oct 2026 16:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254233; cv=none; b=AO4EV7AeKUp+AbRGJBRfOBvuFLHFAiDz9TZZtdTab6M56vvZkrDKIqAwQoYyG5Z4zx6l9Qr+Ct76BYchQrhW4zYzcSt5Cm3eTpIsx8w0euX4bjgXvXJlXQOllNn0XIziFvDWivro7qH3mQKG5P3YEP9OG1Y0EUY9xC0jjayD41A=
+	t=1792254236; cv=none; b=YQmlkIvUhl3Nk19W+IwleZ98gerlEZtAo/BroTFh12IMpVne9YPNTHUsWmVmwGVSENvfN/Z01ELSy/RV2nSiZgNmIADsD8jNX9p45VYsTgSFRuKtQTNpp8kXFapbo7OE3BhHiQ0F78IYeXUTy+MdGF5h6bHrVV6/s81mKpNszpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254233; c=relaxed/simple;
-	bh=mOsivJd1Il/nLaOgFdbGzAUK7KixOQHRjqoNPtSZzX4=;
+	s=arc-20240116; t=1792254236; c=relaxed/simple;
+	bh=lzhmRn8yU5I/WBZr0ETPU4Djsx33sLnJqUoH4UObe04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoWhdocWZwBLql1VnYCJeMSCGd3skeeTpmOKwfzesUiMtTWi8jZc5nGsm2JYpC4SZfooB3D9ZQzctoZKib6Uikc41wpn33gvCqThhxxTw/XaGdmc1kF9VF4OEtWLx/QLoXr3pNusOsQgpPLkywjWBC7uD6rUd81exSY+MfzYBnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+HdI/th; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ltdJPT8CeumougJc9LPcRIBlMC33riKaYkTLQuiorvKfthve7WBN4mcpV/fde5QTmalQqCZV0FORuFV1L5zyGYkVvc7f7QQee+MdXn8KoN5pF8yRhkS7hLof2j0uwI7AOXgYbr/MniKed8XCnh5GpAE9R9BTC3i97W2PU2cBukA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnjujgkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+HdI/th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EDC1F000C4;
-	Sat, 17 Oct 2026 16:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnjujgkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA531F000C4;
+	Sat, 17 Oct 2026 16:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254231;
-	bh=sDfC/h0qfdaACgOeEE9ZD9AXLy1kRx+9NjtTNpHtb+g=;
+	s=korg; t=1792254234;
+	bh=p+BFmkqZ/CsYDsn5XdV0RkXwDIILqVaCUtddNDbA9f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+HdI/th+lurJo9HJa+2yP2PZ0C4eFOHI2uLQunBPW3LpP6W19iNLIXBSjxg1sVK2
-	 7lwzmZ5iQIIHOJyEj5oLG+nDTQX3cCfg2FjDYgEPiH9fxKM29lIIR+fWB/4YYlLvHV
-	 z8tu4NNvfIRIXViJTfc8re1kG+G6GyJk/MpPERdk=
+	b=RnjujgkNPxwqjye+F2glIrXGOg+8e5Cw5JdHgt/W3BMtGdMsZF3EwOSRERwAFexy3
+	 QZWgIzDvG7TBDp/qbTokox1bVH/F+WzMG4CoBLb1ITTLtn+03ppVKZoItLhE7b4Cgs
+	 TijhpeW5NT4WeMYAPLNo3m44lMRfC3YHrbhasNLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 377/869] drm/amdgpu: Fix kernel panic during driver load failure
-Date: Sat, 17 Oct 2026 17:53:38 +0200
-Message-ID: <20261017160046.783085941@linuxfoundation.org>
+Subject: [PATCH 6.12 339/869] fbdev: omap2: fix use-after-free in omapfb_mmap
+Date: Sat, 17 Oct 2026 17:53:00 +0200
+Message-ID: <20261017160045.773923053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,80 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit a279bd143b3c184358b658e43a057e31ee8c4de5 ]
+[ Upstream commit 7958e67375aa111522086286bba13cfc0816ce8d ]
 
-Avoid kernel panic if MES init fails during driver load. The KIQ ring is
-falsely marked as ready as ASICs that use MES, KIQ is owned by MES.
+omapfb_mmap() has a race condition with OMAPFB_SETUP_PLANE ioctl that
+can lead to use-after-free:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:gfx_v12_1_wait_reg_mem+0x5a/0x1f0 [amdgpu]
-Call Trace:
- gfx_v12_1_ring_emit_reg_write_reg_wait+0x1f/0x30 [amdgpu]
- amdgpu_gmc_fw_reg_write_reg_wait+0xb2/0x190 [amdgpu]
- amdgpu_gmc_flush_gpu_tlb+0x1cc/0x230 [amdgpu]
- amdgpu_gart_invalidate_tlb+0x81/0xa0 [amdgpu]
- amdgpu_gart_unbind+0x72/0x90 [amdgpu]
- amdgpu_ttm_backend_unbind+0xa4/0xb0 [amdgpu]
- amdgpu_ttm_tt_unpopulate+0x13/0xd0 [amdgpu]
- amdttm_tt_unpopulate+0x29/0x70 [amdttm]
- ttm_bo_put+0x1eb/0x360 [amdttm]
- amdgpu_bo_free_kernel+0xf9/0x1f0 [amdgpu]
- amdgpu_ih_ring_fini+0x5a/0x90 [amdgpu]
- amdgpu_irq_fini_hw+0x58/0x80 [amdgpu]
- amdgpu_device_fini_hw+0x4e0/0x5b0 [amdgpu]
- amdgpu_driver_load_kms+0x60/0xa0 [amdgpu]
- amdgpu_pci_probe+0x28e/0x6d0 [amdgpu]
- pci_device_probe+0x19f/0x220
- really_probe+0x1ed/0x340
- driver_probe_device+0x1e/0x80
- __driver_attach+0xd3/0x1a0
- bus_for_each_dev+0x68/0xa0
- bus_add_driver+0x19f/0x270
- driver_register+0x5d/0xf0
- do_one_initcall+0xac/0x200
- do_init_module+0x1ec/0x280
- __se_sys_finit_module+0x2de/0x310
- do_syscall_64+0x6a/0x250
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+The fb_mmap() entry point holds mm_lock but not lock (fb_info->lock),
+while ioctl handlers like OMAPFB_SETUP_PLANE hold lock but not mm_lock.
+This allows concurrent execution.
 
-Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4623b958dd6da0f4c3026afdf330626a09ecb0f0)
+In omapfb_mmap():
+1. rg = omapfb_get_mem_region(ofbi->region);      // Get old region ref
+2. start = omapfb_get_region_paddr(ofbi);          // Read from NEW region
+3. len = fix->smem_len;                             // Read from NEW region
+4. vm_iomap_memory(vma, start, len);               // Map NEW region memory
+5. atomic_inc(&rg->map_count);                      // Increment OLD region!
+
+Concurrently, OMAPFB_SETUP_PLANE can:
+- Reassign ofbi->region = new_rg
+- Update fix->smem_len
+- OMAPFB_SETUP_MEM then checks NEW region's map_count (0!) and frees it
+
+This leaves userspace with a mapping to freed physical memory.
+
+The fix is to read all required values (start, len) from the same
+region reference (rg) that will have its map_count incremented,
+preventing the region from being freed while still mapped.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/omap2/omapfb/omapfb-main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index 4d115538a9563..a076a314dc677 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -3398,10 +3398,19 @@ static int gfx_v12_0_cp_resume(struct amdgpu_device *adev)
- 		gfx_v12_0_cp_gfx_enable(adev, true);
- 	}
+diff --git a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
+index 79688c2cc6d68..2b99a58ad6758 100644
+--- a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
++++ b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
+@@ -1099,7 +1099,11 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
  
--	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
-+	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
- 		r = amdgpu_mes_kiq_hw_init(adev);
--	else
-+		/*
-+		 * With MES, GFX KIQ ring is owned by the MES and is never
-+		 * initialized/used directly by the driver, so it must
-+		 * not be left flagged as ready. mes_v12_0_hw_init() clears
-+		 * but clear here if MES init fails
-+		*/
-+		if (r)
-+			adev->gfx.kiq[0].ring.sched.ready = false;
-+	} else {
- 		r = gfx_v12_0_kiq_resume(adev);
-+	}
+ 	rg = omapfb_get_mem_region(ofbi->region);
+ 
+-	start = omapfb_get_region_paddr(ofbi);
++	if (ofbi->rotation_type == OMAP_DSS_ROT_VRFB)
++		start = rg->vrfb.paddr[0];
++	else
++		start = rg->paddr;
++
+ 	len = fix->smem_len;
+ 
+ 	DBG("user mmap region start %lx, len %d, off %lx\n", start, len,
+@@ -1109,6 +1113,8 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
+ 	vma->vm_ops = &mmap_user_ops;
+ 	vma->vm_private_data = rg;
+ 
++	atomic_inc(&rg->map_count);
++
+ 	r = vm_iomap_memory(vma, start, len);
  	if (r)
- 		return r;
+ 		goto error;
+@@ -1121,6 +1127,7 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
+ 	return 0;
  
+ error:
++	atomic_dec(&rg->map_count);
+ 	omapfb_put_mem_region(rg);
+ 
+ 	return r;
 -- 
 2.53.0
 
