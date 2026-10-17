@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17A13A48E2;
-	Sat, 17 Oct 2026 16:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383F4CF477;
+	Sat, 17 Oct 2026 16:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253719; cv=none; b=Rn47zxklqDQc5vd0e/g2GFI90lZz4KiFdzRuxxkfbUoun9xQz51Kb0yse2p0uF5GjhKq6oxgl0NXouoZYWe4rMGp3O8ni7lfCQ2N2r3AEEbEbB1qwOpp1neeVTP3E1spEza4LhD44hlSepytNlFFsvwoFHQMLLOF8kZBc0lZ0Cs=
+	t=1792253722; cv=none; b=mrA82z9vQgF2ITEEe+ItRF1yznFDjl5CcU9gYVlWx4Ghpi5d663mYimW8oiNgmAXFDuJU7iqDCtDDRu2XJ3L+oQuXeyf1rJ4KnXwYBnwCbnewKm512L+GuDjTySLouxvHvsaqob7NyOTAtjlytsU+lo/M8I8+bt3zTAcDavx304=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253719; c=relaxed/simple;
-	bh=wnckeSAKHaQler8K7wAm+axuUz8l7BF64Frbo4q4daQ=;
+	s=arc-20240116; t=1792253722; c=relaxed/simple;
+	bh=3cqC/xF8hIZPlUfMaS9BqlMbShxxBt6g3Ixw54L1qAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ay8pyejHn/HJiXqRnS9EXvmYPC4BTup6x8PULg1Tim7EWrKkTWadmiaGbtxEJ9K/6nqdujym859VjzChGnwk1Atn5fgHDJdVqPWdEOnRvK8xA6wgJ4SpDBSIXIpOuFXfS9G4zT3+XpLrTxmSdPL6YlLBjgEadhgLQuLRkdKfaPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi5xSAhg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQ5QL69y3u+oRgBu+Ilh59yNRe7aSIYvgbmS2dX3P57Kw0ILwpDOk0kZFS4WxMLWGR9Zbfsc23ER0BATmwn8wvu72n90TQUrNnM2TOhv8zEQ7ySVXkeasq9qm2Wxm0HlaWE3lCMWaJPqKT0/MvqKSWnxwCpMszUMUSFhYdEHPno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8aCCN4v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi5xSAhg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF9B1F000C6;
-	Sat, 17 Oct 2026 16:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8aCCN4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC3A1F000C4;
+	Sat, 17 Oct 2026 16:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253717;
-	bh=BTuqf3WYGH9Xgn1XD6E4dBpJzbOnMINswKgi2UXErDA=;
+	s=korg; t=1792253720;
+	bh=Z0AJbB8q4ZwGuxmteq/AgHwX+7ujso1F8Qh2Gbtk49s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vi5xSAhgktgyK1z1/Z8tAYkYDYaH1sw4zGZTf3KxR+fcOPKAr5Gy3Hr4p1fl9SuTs
-	 FBXUuwK6E4jmayL6lYlsEjfOsT2i5XV0oziaNBgeb8oQmSSq9uoq4IPJ/yLRzppQ9O
-	 UvHGCIAHDJvOiVYQV/+VFSsmiFYeD+BW11ESg4/M=
+	b=q8aCCN4vlaqpG9l2TWmeebNQLOyOiPg3TKvriAXm2S0KggmZwD8NdD76xvYmqHK6g
+	 nOvLUcgk5GLw0fG1npf7d444uD2qbzq0jGu7OA+V9std7Ru0tvb56ea+tnmePkieRh
+	 hNqgY6DtqUgAu1ZNVd82RcLSgCkp/JvzuF1PnGD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 211/869] Bluetooth: hci_sync: hci_cmd_sync_queue_once() return -EEXIST if exists
-Date: Sat, 17 Oct 2026 17:50:52 +0200
-Message-ID: <20261017160042.463397518@linuxfoundation.org>
+Subject: [PATCH 6.12 212/869] mptcp: move the whole rx path under msk socket lock protection
+Date: Sat, 17 Oct 2026 17:50:53 +0200
+Message-ID: <20261017160042.490038561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,113 +53,363 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 2969554bcfccb5c609f6b6cd4a014933f3a66dd0 ]
+[ Upstream commit bc68b0efa1bf923cef1294a631d8e7416c7e06e4 ]
 
-hci_cmd_sync_queue_once() needs to indicate whether a queue item was
-added, so caller can know if callbacks are called, so it can avoid
-leaking resources.
+After commit c2e6048fa1cf ("mptcp: fix race in release_cb") we can
+move the whole MPTCP rx path under the socket lock leveraging the
+release_cb.
 
-Change the function to return -EEXIST if queue item already exists.
+We can drop a bunch of spin_lock pairs in the receive functions, use
+a single receive queue and invoke __mptcp_move_skbs only when subflows
+ask for it.
 
-Modify all callsites to handle that.
+This will allow more cleanup in the next patch.
 
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Some changes are worth specific mention:
+
+The msk rcvbuf update now always happens under both the msk and the
+subflow socket lock: we can drop a bunch of ONCE annotation and
+consolidate the checks.
+
+When the skbs move is delayed at msk release callback time, even the
+msk rcvbuf update is delayed; additionally take care of such action in
+__mptcp_move_skbs().
+
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250218-net-next-mptcp-rx-path-refactor-v1-3-4a47d90d7998@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5dd8025a49c2 ("mptcp: fix soft lockup in mptcp_recvmsg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 37 ++++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ net/mptcp/fastopen.c |   1 +
+ net/mptcp/protocol.c | 122 ++++++++++++++++++++-----------------------
+ net/mptcp/protocol.h |   2 +-
+ 3 files changed, 59 insertions(+), 66 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 6d7caf00fc897..b0ab43145e47f 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -794,7 +794,7 @@ int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 			    void *data, hci_cmd_sync_work_destroy_t destroy)
- {
- 	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
--		return 0;
-+		return -EEXIST;
+diff --git a/net/mptcp/fastopen.c b/net/mptcp/fastopen.c
+index 35b93adf1b735..40ca9aa21a626 100644
+--- a/net/mptcp/fastopen.c
++++ b/net/mptcp/fastopen.c
+@@ -51,6 +51,7 @@ void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subf
+ 	MPTCP_SKB_CB(skb)->cant_coalesce = 1;
  
- 	return hci_cmd_sync_queue(hdev, func, data, destroy);
+ 	mptcp_data_lock(sk);
++	DEBUG_NET_WARN_ON_ONCE(sock_owned_by_user_nocheck(sk));
+ 
+ 	mptcp_set_owner_r(skb, sk);
+ 	__skb_queue_tail(&sk->sk_receive_queue, skb);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index da774b1a94607..6106c561026d6 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -694,18 +694,6 @@ static bool __mptcp_move_skbs_from_subflow(struct mptcp_sock *msk,
+ 	bool more_data_avail;
+ 	struct tcp_sock *tp;
+ 	bool done = false;
+-	int sk_rbuf;
+-
+-	sk_rbuf = READ_ONCE(sk->sk_rcvbuf);
+-
+-	if (!(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
+-		int ssk_rbuf = READ_ONCE(ssk->sk_rcvbuf);
+-
+-		if (unlikely(ssk_rbuf > sk_rbuf)) {
+-			WRITE_ONCE(sk->sk_rcvbuf, ssk_rbuf);
+-			sk_rbuf = ssk_rbuf;
+-		}
+-	}
+ 
+ 	pr_debug("msk=%p ssk=%p\n", msk, ssk);
+ 	tp = tcp_sk(ssk);
+@@ -775,7 +763,7 @@ static bool __mptcp_move_skbs_from_subflow(struct mptcp_sock *msk,
+ 		WRITE_ONCE(tp->copied_seq, seq);
+ 		more_data_avail = mptcp_subflow_data_available(ssk);
+ 
+-		if (atomic_read(&sk->sk_rmem_alloc) > sk_rbuf) {
++		if (atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf) {
+ 			done = true;
+ 			break;
+ 		}
+@@ -900,11 +888,30 @@ static bool move_skbs_to_msk(struct mptcp_sock *msk, struct sock *ssk)
+ 	return moved > 0;
  }
-@@ -3383,6 +3383,8 @@ static int update_passive_scan_sync(struct hci_dev *hdev, void *data)
  
- int hci_update_passive_scan(struct hci_dev *hdev)
- {
-+	int err;
++static void __mptcp_rcvbuf_update(struct sock *sk, struct sock *ssk)
++{
++	if (unlikely(ssk->sk_rcvbuf > sk->sk_rcvbuf))
++		WRITE_ONCE(sk->sk_rcvbuf, ssk->sk_rcvbuf);
++}
 +
- 	/* Only queue if it would have any effect */
- 	if (!test_bit(HCI_UP, &hdev->flags) ||
- 	    test_bit(HCI_INIT, &hdev->flags) ||
-@@ -3392,8 +3394,9 @@ int hci_update_passive_scan(struct hci_dev *hdev)
- 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
- 		return 0;
- 
--	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
--				       NULL);
-+	err = hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
-+				      NULL);
-+	return (err == -EEXIST) ? 0 : err;
- }
- 
- int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
-@@ -7112,8 +7115,11 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 
- int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
--	return hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
--				       NULL);
-+	int err;
++static void __mptcp_data_ready(struct sock *sk, struct sock *ssk)
++{
++	struct mptcp_sock *msk = mptcp_sk(sk);
 +
-+	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
-+				      NULL);
-+	return (err == -EEXIST) ? 0 : err;
- }
- 
- static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
-@@ -7149,8 +7155,11 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
- 
- int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
--	return hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
--				       create_le_conn_complete);
-+	int err;
++	__mptcp_rcvbuf_update(sk, ssk);
 +
-+	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
-+				      create_le_conn_complete);
-+	return (err == -EEXIST) ? 0 : err;
- }
- 
- static int hci_acl_cancel_create_conn_sync(struct hci_dev *hdev,
-@@ -7383,8 +7392,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 
- int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
--	return hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
--				       create_pa_complete);
-+	int err;
++	/* over limit? can't append more skbs to msk, Also, no need to wake-up*/
++	if (__mptcp_rmem(sk) > sk->sk_rcvbuf)
++		return;
 +
-+	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
-+				      create_pa_complete);
-+	return (err == -EEXIST) ? 0 : err;
- }
- 
- static void create_big_complete(struct hci_dev *hdev, void *data, int err)
-@@ -7447,6 +7459,9 @@ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
- 
- int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
--	return hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
--				       create_big_complete);
-+	int err;
++	/* Wake-up the reader only for in-sequence data */
++	if (move_skbs_to_msk(msk, ssk) && mptcp_epollin_ready(sk))
++		sk->sk_data_ready(sk);
++}
 +
-+	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
-+				      create_big_complete);
-+	return (err == -EEXIST) ? 0 : err;
+ void mptcp_data_ready(struct sock *sk, struct sock *ssk)
+ {
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+-	struct mptcp_sock *msk = mptcp_sk(sk);
+-	int sk_rbuf, ssk_rbuf;
+ 
+ 	/* The peer can send data while we are shutting down this
+ 	 * subflow at subflow destruction time, but we must avoid enqueuing
+@@ -913,19 +920,11 @@ void mptcp_data_ready(struct sock *sk, struct sock *ssk)
+ 	if (unlikely(subflow->closing))
+ 		return;
+ 
+-	ssk_rbuf = READ_ONCE(ssk->sk_rcvbuf);
+-	sk_rbuf = READ_ONCE(sk->sk_rcvbuf);
+-	if (unlikely(ssk_rbuf > sk_rbuf))
+-		sk_rbuf = ssk_rbuf;
+-
+-	/* over limit? can't append more skbs to msk, Also, no need to wake-up*/
+-	if (__mptcp_rmem(sk) > sk_rbuf)
+-		return;
+-
+-	/* Wake-up the reader only for in-sequence data */
+ 	mptcp_data_lock(sk);
+-	if (move_skbs_to_msk(msk, ssk) && mptcp_epollin_ready(sk))
+-		sk->sk_data_ready(sk);
++	if (!sock_owned_by_user(sk))
++		__mptcp_data_ready(sk, ssk);
++	else
++		__set_bit(MPTCP_DEQUEUE, &mptcp_sk(sk)->cb_flags);
+ 	mptcp_data_unlock(sk);
  }
+ 
+@@ -2032,17 +2031,18 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 
+ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied);
+ 
+-static int __mptcp_recvmsg_mskq(struct mptcp_sock *msk,
++static int __mptcp_recvmsg_mskq(struct sock *sk,
+ 				struct msghdr *msg,
+ 				size_t len, int flags, int copied_total,
+ 				struct scm_timestamping_internal *tss,
+ 				int *cmsg_flags)
+ {
++	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct sk_buff *skb, *tmp;
+ 	int total_data_len = 0;
+ 	int copied = 0;
+ 
+-	skb_queue_walk_safe(&msk->receive_queue, skb, tmp) {
++	skb_queue_walk_safe(&sk->sk_receive_queue, skb, tmp) {
+ 		u32 delta, offset = MPTCP_SKB_CB(skb)->offset;
+ 		u32 data_len = skb->len - offset;
+ 		u32 count;
+@@ -2090,7 +2090,7 @@ static int __mptcp_recvmsg_mskq(struct mptcp_sock *msk,
+ 			/* we will bulk release the skb memory later */
+ 			skb->destructor = NULL;
+ 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
+-			__skb_unlink(skb, &msk->receive_queue);
++			__skb_unlink(skb, &sk->sk_receive_queue);
+ 			__kfree_skb(skb);
+ 		}
+ 
+@@ -2214,55 +2214,46 @@ static void __mptcp_update_rmem(struct sock *sk)
+ 	WRITE_ONCE(msk->rmem_released, 0);
+ }
+ 
+-static void __mptcp_splice_receive_queue(struct sock *sk)
++static bool __mptcp_move_skbs(struct sock *sk)
+ {
++	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+-
+-	skb_queue_splice_tail_init(&sk->sk_receive_queue, &msk->receive_queue);
+-}
+-
+-static bool __mptcp_move_skbs(struct mptcp_sock *msk)
+-{
+-	struct sock *sk = (struct sock *)msk;
+ 	unsigned int moved = 0;
+ 	bool ret, done;
+ 
++	/* verify we can move any data from the subflow, eventually updating */
++	if (!(sk->sk_userlocks & SOCK_RCVBUF_LOCK))
++		mptcp_for_each_subflow(msk, subflow)
++			__mptcp_rcvbuf_update(sk, subflow->tcp_sock);
++
++	if (__mptcp_rmem(sk) > sk->sk_rcvbuf)
++		return false;
++
+ 	do {
+ 		struct sock *ssk = mptcp_subflow_recv_lookup(msk);
+ 		bool slowpath;
+ 
+-		/* we can have data pending in the subflows only if the msk
+-		 * receive buffer was full at subflow_data_ready() time,
+-		 * that is an unlikely slow path.
+-		 */
+-		if (likely(!ssk))
++		if (unlikely(!ssk))
+ 			break;
+ 
+ 		slowpath = lock_sock_fast(ssk);
+-		mptcp_data_lock(sk);
+ 		__mptcp_update_rmem(sk);
+ 		done = __mptcp_move_skbs_from_subflow(msk, ssk, &moved);
+-		mptcp_data_unlock(sk);
+ 
+ 		if (unlikely(ssk->sk_err))
+ 			__mptcp_error_report(sk);
+ 		unlock_sock_fast(ssk, slowpath);
+ 	} while (!done);
+ 
+-	/* acquire the data lock only if some input data is pending */
+ 	ret = moved > 0;
+ 	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue) ||
+-	    !skb_queue_empty_lockless(&sk->sk_receive_queue)) {
+-		mptcp_data_lock(sk);
++	    !skb_queue_empty(&sk->sk_receive_queue)) {
+ 		__mptcp_update_rmem(sk);
+ 		ret |= __mptcp_ofo_queue(msk);
+-		__mptcp_splice_receive_queue(sk);
+-		mptcp_data_unlock(sk);
+ 	}
+ 	if (ret)
+ 		mptcp_check_data_fin((struct sock *)msk);
+ 
+-	ret = !skb_queue_empty(&msk->receive_queue);
+ 	if (ret && mptcp_epollin_ready(sk))
+ 		sk->sk_data_ready(sk);
+ 	return ret;
+@@ -2273,7 +2264,7 @@ static unsigned int mptcp_inq_hint(const struct sock *sk)
+ 	const struct mptcp_sock *msk = mptcp_sk(sk);
+ 	const struct sk_buff *skb;
+ 
+-	skb = skb_peek(&msk->receive_queue);
++	skb = skb_peek(&sk->sk_receive_queue);
+ 	if (skb) {
+ 		u64 hint_val = READ_ONCE(msk->ack_seq) - MPTCP_SKB_CB(skb)->map_seq;
+ 
+@@ -2319,7 +2310,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	while (copied < len) {
+ 		int err, bytes_read;
+ 
+-		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
++		bytes_read = __mptcp_recvmsg_mskq(sk, msg, len - copied, flags,
+ 						  copied, &tss, &cmsg_flags);
+ 		if (unlikely(bytes_read < 0)) {
+ 			if (!copied)
+@@ -2329,7 +2320,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 
+ 		copied += bytes_read;
+ 
+-		if (skb_queue_empty(&msk->receive_queue) && __mptcp_move_skbs(msk))
++		if (skb_queue_empty(&sk->sk_receive_queue) && __mptcp_move_skbs(sk))
+ 			continue;
+ 
+ 		/* only the MPTCP socket status is relevant here. The exit
+@@ -2355,7 +2346,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 				/* race breaker: the shutdown could be after the
+ 				 * previous receive queue check
+ 				 */
+-				if (__mptcp_move_skbs(msk))
++				if (__mptcp_move_skbs(sk))
+ 					continue;
+ 				break;
+ 			}
+@@ -2399,9 +2390,8 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		}
+ 	}
+ 
+-	pr_debug("msk=%p rx queue empty=%d:%d copied=%d\n",
+-		 msk, skb_queue_empty_lockless(&sk->sk_receive_queue),
+-		 skb_queue_empty(&msk->receive_queue), copied);
++	pr_debug("msk=%p rx queue empty=%d copied=%d\n",
++		 msk, skb_queue_empty(&sk->sk_receive_queue), copied);
+ 
+ 	release_sock(sk);
+ 	return copied;
+@@ -2982,7 +2972,6 @@ static void __mptcp_init_sock(struct sock *sk)
+ 	INIT_LIST_HEAD(&msk->join_list);
+ 	INIT_LIST_HEAD(&msk->rtx_queue);
+ 	INIT_WORK(&msk->work, mptcp_worker);
+-	__skb_queue_head_init(&msk->receive_queue);
+ 	msk->out_of_order_queue = RB_ROOT;
+ 	msk->first_pending = NULL;
+ 	WRITE_ONCE(msk->rmem_fwd_alloc, 0);
+@@ -3591,12 +3580,8 @@ void mptcp_destroy_common(struct mptcp_sock *msk)
+ 	mptcp_for_each_subflow_safe(msk, subflow, tmp)
+ 		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow), subflow, 0);
+ 
+-	/* move to sk_receive_queue, sk_stream_kill_queues will purge it */
+-	mptcp_data_lock(sk);
+-	skb_queue_splice_tail_init(&msk->receive_queue, &sk->sk_receive_queue);
+ 	__skb_queue_purge(&sk->sk_receive_queue);
+ 	skb_rbtree_purge(&msk->out_of_order_queue);
+-	mptcp_data_unlock(sk);
+ 
+ 	/* move all the rx fwd alloc into the sk_mem_reclaim_final in
+ 	 * inet_sock_destruct() will dispose it
+@@ -3645,7 +3630,8 @@ void __mptcp_check_push(struct sock *sk, struct sock *ssk)
+ 
+ #define MPTCP_FLAGS_PROCESS_CTX_NEED (BIT(MPTCP_PUSH_PENDING) | \
+ 				      BIT(MPTCP_RETRANSMIT) | \
+-				      BIT(MPTCP_FLUSH_JOIN_LIST))
++				      BIT(MPTCP_FLUSH_JOIN_LIST) | \
++				      BIT(MPTCP_DEQUEUE))
+ 
+ /* processes deferred events and flush wmem */
+ static void mptcp_release_cb(struct sock *sk)
+@@ -3679,6 +3665,11 @@ static void mptcp_release_cb(struct sock *sk)
+ 			__mptcp_push_pending(sk, 0);
+ 		if (flags & BIT(MPTCP_RETRANSMIT))
+ 			__mptcp_retrans(sk);
++		if ((flags & BIT(MPTCP_DEQUEUE)) && __mptcp_move_skbs(sk)) {
++			/* notify ack seq update */
++			mptcp_cleanup_rbuf(msk, 0);
++			sk->sk_data_ready(sk);
++		}
+ 
+ 		cond_resched();
+ 		spin_lock_bh(&sk->sk_lock.slock);
+@@ -3923,7 +3914,8 @@ static int mptcp_ioctl(struct sock *sk, int cmd, int *karg)
+ 			return -EINVAL;
+ 
+ 		lock_sock(sk);
+-		__mptcp_move_skbs(msk);
++		if (__mptcp_move_skbs(sk))
++			mptcp_cleanup_rbuf(msk, 0);
+ 		*karg = mptcp_inq_hint(sk);
+ 		release_sock(sk);
+ 		break;
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index dbfe959d3a18e..2f298250d575c 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -126,6 +126,7 @@
+ #define MPTCP_FLUSH_JOIN_LIST	5
+ #define MPTCP_SYNC_STATE	6
+ #define MPTCP_SYNC_SNDBUF	7
++#define MPTCP_DEQUEUE		8
+ 
+ struct mptcp_skb_cb {
+ 	u64 map_seq;
+@@ -329,7 +330,6 @@ struct mptcp_sock {
+ 	struct work_struct work;
+ 	struct sk_buff  *ooo_last_skb;
+ 	struct rb_root  out_of_order_queue;
+-	struct sk_buff_head receive_queue;
+ 	struct list_head conn_list;
+ 	struct list_head rtx_queue;
+ 	struct mptcp_data_frag *first_pending;
 -- 
 2.53.0
 
