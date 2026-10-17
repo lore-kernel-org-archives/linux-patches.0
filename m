@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4652C3C345F;
-	Sat, 17 Oct 2026 16:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDFF3911B8;
+	Sat, 17 Oct 2026 16:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255391; cv=none; b=g3IPLj+o8kzXoAQisuiGSeeTl+xqXtkzFIBi0czJRcFO9hX76BhVBj+LtBeGcB7C8Odk7l+b6Ej4+uF/ZYnUqoxYi56Wik0hINx3wPLyE79XAR6hG02v+1IwToY1xweTJSfJxSSCkOjk7nfU9zLBADaGpKSUoO/1JxmhYzknwJM=
+	t=1792255394; cv=none; b=LpB4vJFlx2jtmjL6hmx8w1nsUmU6UA4Apd/yOfIrM5mpgPiHpqoL5I/PNA/jHH5MxXNT+RRdnDKMLULM7YE7IhcGj4qO8jMsGNoe/Ka2NpGDoOtOGWaqFrFDpQ4Q04UhH5CJf4yVJylawa6C1IEaPzheEi3ygsNyfGhDBzRvk+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255391; c=relaxed/simple;
-	bh=rVkXx7RoOlQZz/r6TNegNiffJkj+v2HdgqLpeRvwpNQ=;
+	s=arc-20240116; t=1792255394; c=relaxed/simple;
+	bh=rSRsciPkBO6FL4DyNWmiwX+S7jr59SJjVKeNUA4qaBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SxlypX3CIO2+eoVwae/SaT4GDN/3qGgX8cf7PkSqbTHbmIT9KJwkiwKrMdBSPlq18xqSflzTe8oBjR6CAalRU9iUbgtdqgNlcTGfHjssnZcN5KChjfpO+95ZfDfkFavwctYYAvhekPHpkoMBLs4TTj9DS/a7k+kfipM7HMyfaH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXi3/ktb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1XDSxG4qMmIqmxqhh57UHMKhvJ/bCmVxo22o7tPPsxtrsFbI/MUUnrK+/U7g4m+Ym52T+Tp03dgpzCzrztmy7TZ3QW6txqso0YWaVmeKURmL8Q07TrjoNTf4XFIWHBpsvKgYIQ3w3kyRoFkjNUjAF856Ingfr/AwFjIq9leDag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipH4va9v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXi3/ktb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1CB1F000C4;
-	Sat, 17 Oct 2026 16:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipH4va9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BEC1F000C4;
+	Sat, 17 Oct 2026 16:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255389;
-	bh=SHS6EN9cqQmE6CQ2SpbZfpQMJo0+dilk0c5Q7Y6CYSA=;
+	s=korg; t=1792255393;
+	bh=68lX8RtQDXHIHixDinFIilMpjAoDwnZG7z5VzTuat20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXi3/ktbYFJApMpN1umz66kGrhwgyvGTO8VYHNGs+Hejm+xx/7U5umplq6NN6TR/u
-	 W7WWYCCpAqyAUfy7/x1pFgVyV7OJYtTvNpDugrLGyu4RMXJwSaLoTJQHnTuLaSpi/a
-	 EEQ+GD8p7hFm4p5tA0bPKY10/JMLMi+jHk0euFsg=
+	b=ipH4va9vr6nfxVYNFdNRYbA+eUaSjttpeun7+XTEZl40rR/1yJOji0OW7PpZQTlGY
+	 FPiuxaqeUwjNog9yfeu02C7nI6JeNu7Oz5QEFjhwjp9uvzQrqhyMkqAqSzgW7rKOX8
+	 rEn0xXeXVo4Dzt2eR8UP8E3/zPNBOBB9Ed5NZX7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 761/869] i3c: master: svc: Prevent IRQ storm from false SLVSTART on NPCM845
-Date: Sat, 17 Oct 2026 18:00:02 +0200
-Message-ID: <20261017160056.439461680@linuxfoundation.org>
+Subject: [PATCH 6.12 762/869] hwmon: (asus_rog_ryujin) Rely on subsystem locking
+Date: Sat, 17 Oct 2026 18:00:03 +0200
+Message-ID: <20261017160056.463497776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,58 +50,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 1effa3adfe53cb2bb28bf5640a676b791d5ab405 ]
+[ Upstream commit b4306c0c8e24f9e031185fb87de45391bc8c7fe9 ]
 
-On NPCM845, when a target on the I3C bus gets stuck holding SDA low,
-the controller reports a false Master Request (MR) in-band interrupt
-event. The driver handles this by emitting a STOP condition to restore
-the bus.
+Attribute access is now serialized in the hardware monitoring core,
+so locking in the driver code is no longer necessary. Drop it.
 
-However, the hardware quirk SVC_I3C_QUIRK_FALSE_SLVSTART indicates that
-emitting a STOP condition may spuriously set the SLVSTART interrupt
-status bit. In the Master Request case, this creates a feedback loop:
-the STOP triggers a new SLVSTART event, the IRQ handler fires again,
-the controller still reports an MR type, another STOP is emitted, and
-the cycle repeats indefinitely, resulting in an IRQ storm that can lock
-up the CPU.
-
-Clear the SLVSTART status bit explicitly after emitting the STOP in the
-Master Request IBI handler when the SVC_I3C_QUIRK_FALSE_SLVSTART quirk
-is set. This breaks the feedback loop without affecting normal SLVSTART
-processing, which is already guarded in the top-level IRQ handler by
-checking that MSTATUS is in SLVREQ state.
-
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260413005040.1211107-3-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 8042312e73c5 ("hwmon: (asus_rog_ryujin) Validate HID report lengths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hwmon/asus_rog_ryujin.c | 48 +++++++--------------------------
+ 1 file changed, 9 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 0b709be2544c2..1948d398ce503 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -570,6 +570,15 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
- 		svc_i3c_master_emit_stop(master);
-+
-+		/*
-+		 * If a target gets stuck holding SDA low, the controller reports a MR.
-+		 * On NPCM845, emitting STOP may spuriously set SLVSTART, retriggering
-+		 * the interrupt and re-entering MR handling, leading to an IRQ storm.
-+		 * Clear SLVSTART after STOP to break the loop.
-+		 */
-+		if (svc_has_quirk(master, SVC_I3C_QUIRK_FALSE_SLVSTART))
-+			writel(SVC_I3C_MINT_SLVSTART, master->regs + SVC_I3C_MSTATUS);
- 		break;
- 	default:
- 		break;
+diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
+index e5e93a20723c4..10a1f5aca988d 100644
+--- a/drivers/hwmon/asus_rog_ryujin.c
++++ b/drivers/hwmon/asus_rog_ryujin.c
+@@ -81,10 +81,6 @@ static const char *const rog_ryujin_speed_label[] = {
+ struct rog_ryujin_data {
+ 	struct hid_device *hdev;
+ 	struct device *hwmon_dev;
+-	/* For locking access to buffer */
+-	struct mutex buffer_lock;
+-	/* For queueing multiple readers */
+-	struct mutex status_report_request_mutex;
+ 	/* For reinitializing the completions below */
+ 	spinlock_t status_report_request_lock;
+ 	struct completion cooler_status_received;
+@@ -153,18 +149,10 @@ static umode_t rog_ryujin_is_visible(const void *data,
+ /* Writes the command to the device with the rest of the report filled with zeroes */
+ static int rog_ryujin_write_expanded(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length)
+ {
+-	int ret;
+-
+-	mutex_lock(&priv->buffer_lock);
+-
+ 	memcpy_and_pad(priv->buffer, MAX_REPORT_LENGTH, cmd, cmd_length, 0x00);
+-	ret = hid_hw_output_report(priv->hdev, priv->buffer, MAX_REPORT_LENGTH);
+-
+-	mutex_unlock(&priv->buffer_lock);
+-	return ret;
++	return hid_hw_output_report(priv->hdev, priv->buffer, MAX_REPORT_LENGTH);
+ }
+ 
+-/* Assumes priv->status_report_request_mutex is locked */
+ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length,
+ 				  struct completion *status_completion)
+ {
+@@ -196,14 +184,11 @@ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, i
+ 
+ static int rog_ryujin_get_status(struct rog_ryujin_data *priv)
+ {
+-	int ret = mutex_lock_interruptible(&priv->status_report_request_mutex);
+-
+-	if (ret < 0)
+-		return ret;
++	int ret;
+ 
+ 	if (!time_after(jiffies, priv->updated + msecs_to_jiffies(STATUS_VALIDITY))) {
+ 		/* Data is up to date */
+-		goto unlock_and_return;
++		return 0;
+ 	}
+ 
+ 	/* Retrieve cooler status */
+@@ -211,36 +196,30 @@ static int rog_ryujin_get_status(struct rog_ryujin_data *priv)
+ 	    rog_ryujin_execute_cmd(priv, get_cooler_status_cmd, GET_CMD_LENGTH,
+ 				   &priv->cooler_status_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve controller status (speeds) */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_controller_speed_cmd, GET_CMD_LENGTH,
+ 				   &priv->controller_status_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve cooler duty */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_cooler_duty_cmd, GET_CMD_LENGTH,
+ 				   &priv->cooler_duty_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve controller duty */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_controller_duty_cmd, GET_CMD_LENGTH,
+ 				   &priv->controller_duty_received);
+-	if (ret < 0)
+-		goto unlock_and_return;
+-
+-	priv->updated = jiffies;
+-
+-unlock_and_return:
+-	mutex_unlock(&priv->status_report_request_mutex);
+ 	if (ret < 0)
+ 		return ret;
+ 
++	priv->updated = jiffies;
+ 	return 0;
+ }
+ 
+@@ -303,14 +282,11 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 		 * Retrieve cooler duty since both pump and internal fan are set
+ 		 * together, then write back with one of them modified.
+ 		 */
+-		ret = mutex_lock_interruptible(&priv->status_report_request_mutex);
+-		if (ret < 0)
+-			return ret;
+ 		ret =
+ 		    rog_ryujin_execute_cmd(priv, get_cooler_duty_cmd, GET_CMD_LENGTH,
+ 					   &priv->cooler_duty_received);
+ 		if (ret < 0)
+-			goto unlock_and_return;
++			return ret;
+ 
+ 		memcpy(set_cmd, set_cooler_duty_cmd, SET_CMD_LENGTH);
+ 
+@@ -329,11 +305,7 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 			set_cmd[RYUJIN_SET_COOLER_FAN_DUTY_OFFSET] = val;
+ 		}
+ 
+-		ret = rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
+-unlock_and_return:
+-		mutex_unlock(&priv->status_report_request_mutex);
+-		if (ret < 0)
+-			return ret;
++		return rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
+ 	} else {
+ 		/*
+ 		 * Controller fan duty (channel == 2). No need to retrieve current
+@@ -538,8 +510,6 @@ static int rog_ryujin_probe(struct hid_device *hdev, const struct hid_device_id
+ 		goto fail_and_close;
+ 	}
+ 
+-	mutex_init(&priv->status_report_request_mutex);
+-	mutex_init(&priv->buffer_lock);
+ 	spin_lock_init(&priv->status_report_request_lock);
+ 	init_completion(&priv->cooler_status_received);
+ 	init_completion(&priv->controller_status_received);
 -- 
 2.53.0
 
