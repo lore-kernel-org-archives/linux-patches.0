@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD182387373;
-	Sat, 17 Oct 2026 17:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9C1321445;
+	Sat, 17 Oct 2026 17:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258178; cv=none; b=PInURGpQ1awIqORkHc7F4tseXPiWoxlrvBdfsvKMioHA60g4QAfYZ09oIq3OW7VZIEDnpMY7IAA2MnBuJXOI1d3y/8uR7GEPCO286z2v8Yydk/B2TkFooWWq8bhSrn2n3kqmrXTrkIowG+X13YuXoI4caLJ5DwFQMMUUYaoOi3I=
+	t=1792258181; cv=none; b=lr8DTpYbKBfbQgyNLS7qxycZjMXf0W8xpzZB4sCp+hL+HNOGPpbmG1tw0P7eVDirUZVMg+OXIJOCTj3badxJi+E0JJ970vmGoJ7RghtqIQ6uhEGBEaSdAZKg90XoQPG4ZMv4WRqjFqV1XbPtq/PXCQuX/YHR/fbwsZ9lUiqWYAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258178; c=relaxed/simple;
-	bh=uyNylWrThbpSLq6R8ENSGgTuyal//uGpOZ1lH3nu3eg=;
+	s=arc-20240116; t=1792258181; c=relaxed/simple;
+	bh=Q9Zg4/U55iaK23CWhHCYdTtyepoP5h1bBAzMn9PUBZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL1/n7Sa4uSezw1mtBHRAcdsoLCyOR9qyd1y6vD5hxMYW6JVDoIWlg7G4kPXbRQLShAGKX9jNxdkJl08VlnVEvl+KcbfTzjzX5SDzRXEC8m+m/DtDsBIfTTJJ2j7mZgsTzuo7/SdRsWsVpJcMLRXEDhKdgb8qfWkUEQqAKTXnmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuFIWaI+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j7/JySj1FgpcK1o7ZESReCbES2vrALUJD6afE9MLOYEx9X8U9SxviQRWH/9eoxbFXvDHsx3hMnoxGn93h8sMOYnHMfMdzQg1MyedgAB4oVjK72L657L0/5O0a3kKRMZ2wtNpgtvRywwBnAr5hhEIhHUCwfEpNMOT0FuyoiJuROg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNHL8ZsJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuFIWaI+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2979C1F000C4;
-	Sat, 17 Oct 2026 17:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNHL8ZsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2217E1F000C4;
+	Sat, 17 Oct 2026 17:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258177;
-	bh=FmHvvOPaD0ZeI1++mP/L+KQgH/Gwfh7rzvX674SijCc=;
+	s=korg; t=1792258180;
+	bh=IPkFL8GErdi1MlMSJAgsLMCNmgyHcNHQBttKC8kIEac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuFIWaI+/G+po+4tCDej4w5I9zL3qs8+pGSBX6+sBS/yu0YXMcyaGM86QWyHlAYxq
-	 DUsvyjzWCeJR1M0Eh5btQiTiIPbdYJN+UhGkF0WOCC2545zN5cPRbC/rATjnf7/NPh
-	 sgq65QvD+LzjQRFB7ou09YSOmmLX++APSDXLQXfA=
+	b=UNHL8ZsJhpQ8g4xaZDruSZ77C+54DRpFkxU0L3JYhraqPzYDGs5H5MJP3yXHae22Q
+	 vRKNMI6gYoQxV9gEs6n5NYFygMSbx8224h4RUFMxWOwajjhOK913vLoK0fQsL5Zlcc
+	 pNT2+V+4WVIJybgV9usM0AtE1mHRKu2+qE/NEqiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0755/1674] wifi: ath12k: fix invalid access to memory
-Date: Sat, 17 Oct 2026 17:50:27 +0200
-Message-ID: <20261017160450.481170542@linuxfoundation.org>
+Subject: [PATCH 6.6 0756/1674] Bluetooth: eir: Fix possible crashes on eir_create_adv_data
+Date: Sat, 17 Oct 2026 17:50:28 +0200
+Message-ID: <20261017160450.507566598@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,62 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 9f17747fbda6fca934854463873c4abf8061491d ]
+[ Upstream commit 47c03902269aff377f959dc3fd94a9733aa31d6e ]
 
-In ath12k_dp_rx_msdu_coalesce(), rxcb is fetched from skb and boolean
-is_continuation is part of rxcb.
-Currently, after freeing the skb, the rxcb->is_continuation accessed
-again which is wrong since the memory is already freed.
-This might lead use-after-free error.
+eir_create_adv_data may attempt to add EIR_FLAGS and EIR_TX_POWER
+without checking if that would fit.
 
-Hence, fix by locally defining bool is_continuation from rxcb,
-so that after freeing skb, is_continuation can be used.
-
-Compile tested only.
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250408045327.1632222-1-quic_sarishar@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://github.com/bluez/bluez/issues/1117#issuecomment-2958244066
+Fixes: 01ce70b0a274 ("Bluetooth: eir: Move EIR/Adv Data functions to its own file")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/eir.c      | 7 ++++---
+ net/bluetooth/eir.h      | 2 +-
+ net/bluetooth/hci_sync.c | 5 +++--
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 02e93f1627b95..a957b57eab1dc 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1765,6 +1765,7 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
- 	struct hal_rx_desc *ldesc;
- 	int space_extra, rem_len, buf_len;
- 	u32 hal_rx_desc_sz = ar->ab->hw_params->hal_desc_sz;
-+	bool is_continuation;
+diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+index 7a28baa2b71fe..2f695f1c69b36 100644
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -242,7 +242,7 @@ u8 eir_create_per_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
+ 	return ad_len;
+ }
  
- 	/* As the msdu is spread across multiple rx buffers,
- 	 * find the offset to the start of msdu for computing
-@@ -1813,7 +1814,8 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
- 	rem_len = msdu_len - buf_first_len;
- 	while ((skb = __skb_dequeue(msdu_list)) != NULL && rem_len > 0) {
- 		rxcb = ATH12K_SKB_RXCB(skb);
--		if (rxcb->is_continuation)
-+		is_continuation = rxcb->is_continuation;
-+		if (is_continuation)
- 			buf_len = DP_RX_BUFFER_SIZE - hal_rx_desc_sz;
- 		else
- 			buf_len = rem_len;
-@@ -1831,7 +1833,7 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
- 		dev_kfree_skb_any(skb);
+-u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
++u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
+ {
+ 	struct adv_info *adv = NULL;
+ 	u8 ad_len = 0, flags = 0;
+@@ -286,7 +286,7 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
+ 		/* If flags would still be empty, then there is no need to
+ 		 * include the "Flags" AD field".
+ 		 */
+-		if (flags) {
++		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
+ 			ptr[0] = 0x02;
+ 			ptr[1] = EIR_FLAGS;
+ 			ptr[2] = flags;
+@@ -316,7 +316,8 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr)
+ 		}
  
- 		rem_len -= buf_len;
--		if (!rxcb->is_continuation)
-+		if (!is_continuation)
- 			break;
+ 		/* Provide Tx Power only if we can provide a valid value for it */
+-		if (adv_tx_power != HCI_TX_POWER_INVALID) {
++		if (adv_tx_power != HCI_TX_POWER_INVALID &&
++		    (ad_len + eir_precalc_len(1) <= size)) {
+ 			ptr[0] = 0x02;
+ 			ptr[1] = EIR_TX_POWER;
+ 			ptr[2] = (u8)adv_tx_power;
+diff --git a/net/bluetooth/eir.h b/net/bluetooth/eir.h
+index 0df19f2f4af94..4497f8fd5fefb 100644
+--- a/net/bluetooth/eir.h
++++ b/net/bluetooth/eir.h
+@@ -9,7 +9,7 @@
+ 
+ void eir_create(struct hci_dev *hdev, u8 *data);
+ 
+-u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr);
++u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size);
+ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr);
+ u8 eir_create_per_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr);
+ 
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 4781ac734d951..5ad66eb7f6c38 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1336,7 +1336,8 @@ static int hci_set_ext_adv_data_sync(struct hci_dev *hdev, u8 instance)
+ 		}
  	}
  
+-	len = eir_create_adv_data(hdev, instance, pdu.data);
++	len = eir_create_adv_data(hdev, instance, pdu.data,
++				  sizeof(pdu.data));
+ 
+ 	pdu.cp.length = len;
+ 	pdu.cp.handle = instance;
+@@ -1378,7 +1379,7 @@ static int hci_set_adv_data_sync(struct hci_dev *hdev, u8 instance)
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
+-	len = eir_create_adv_data(hdev, instance, cp.data);
++	len = eir_create_adv_data(hdev, instance, cp.data, sizeof(cp.data));
+ 
+ 	/* There's nothing to do if the data hasn't changed */
+ 	if (hdev->adv_data_len == len &&
 -- 
 2.53.0
 
