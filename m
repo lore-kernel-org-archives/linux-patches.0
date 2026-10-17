@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9B7381AFB;
-	Sat, 17 Oct 2026 16:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BBB3976BA;
+	Sat, 17 Oct 2026 16:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255676; cv=none; b=uRHWppKlauUnMTDf5vKMWrJt7UueFWwoIyAEWGjUTXMZfoq6YLFfdzyxGBVi0YxoXbuX/nXyI4yqJtTIq+2HF9YQCJsTD5qwgda2yR0zsn7mpCi+Rwpldqm5g7W+Q1IAfkzzUA55EdKXtkgGdXqTCVkhoD2NbAmbW/EFSFgBhgg=
+	t=1792255679; cv=none; b=nFUytaMOWTaMq5znvig7+P8oWLw1WGA4fsYWgM/E91JihUOCIrI9pz8OpZAxFDm2pp71lRqs3APa/xxFFkeaMM+3NcLdNM3cC+9qSrc4VMLGXuNZCIZZXh+IVIgD9fw3qSaWFYW7BgNATlQvTR4kWm4+TTpFJDXIL9w20nR0PDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255676; c=relaxed/simple;
-	bh=ofXw9Gxqj9lO6G43N2XnC292VrlSVE/WscEX2sqqsx8=;
+	s=arc-20240116; t=1792255679; c=relaxed/simple;
+	bh=YzAv3prsHpz9K5AymJEJcaA/m7PUxKGaMmukrK6wrhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXn6LbF4Dbl6EEGN4SUd79iC2kxEEip+PaRIDqyi7JVrCDQpbXV9u01StP9QkGnHXDqf+0cgJFJYZEQL6Vziy3E4bs8deTEwNpZPF6/HEcfemDyAeKEqY0u1gb/2RaZtrkXWXPNjnVqcEDegwci+T+d/wDbB/Skah6D6HxJo80Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtTEVtQ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kiXHI8tHY3YPMLE2jHCt0wAl7whitMZRVOkmIJ+5Czjbvt7vSbRz+4UwxZ0BkvtkJwuIDafghkVfI2mMaez18EmTWdJAr6QGbC0WoqNOK6HgazPtjlhcp0FJnQgaw+Y1wC2bG5hkZqY9MTRnkBan1Ya50Mo/IIF+14eFPRxy1XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5REyJr5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtTEVtQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F081F000C4;
-	Sat, 17 Oct 2026 16:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5REyJr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BD31F000C4;
+	Sat, 17 Oct 2026 16:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255674;
-	bh=HIapBTEhxq7JiK1mqVbb6DslnDYqSQQzU24KMf38Zfc=;
+	s=korg; t=1792255677;
+	bh=COI/llH+Cmj28+0TZggU9NW3KZH/L9uY00lcLVsQz1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WtTEVtQ7GI8HEvevujuBH1v2cNyq3reZsJr7+J2d7MSIIYpEgO72A/KLpNfOqZ3oV
-	 MaFyjsUUx006b49ktsDybIzmWN20sd8g4ePCvuQ//ylAwe2ipiKDrB3r/jiF7pKan9
-	 En5pRoMz7jT2qANt8f6PyezQrr2XELtP7GD1FMac=
+	b=C5REyJr5G6G8hWpNFZX2C8t4TwtbEXzqQpI167HcUrecjYXYZGagSAaBRbuGBz5LW
+	 79NjX1gzP48uLJAWVW3K2Y884Ft+J5K1DCzJCLAjL6IyUw5A9XlXKApsUqhYS2oKrD
+	 rVj7+sw6EalT8pT5nJMqprev52rSV0YfHO+XinX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 855/869] soundwire: intel_auxdevice: Fix system suspend/resume handling
-Date: Sat, 17 Oct 2026 18:01:36 +0200
-Message-ID: <20261017160058.784180514@linuxfoundation.org>
+Subject: [PATCH 6.12 856/869] gpiolib: Allow to use setters with return value for output-only gpios
+Date: Sat, 17 Oct 2026 18:01:37 +0200
+Message-ID: <20261017160058.807469126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,149 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 
-[ Upstream commit 533a8a67cc3b072a24122d1ea10a8db66a5c9393 ]
+[ Upstream commit b424bb88afb6719b30340f059bf50953424cdd9d ]
 
-Before commit bca84a7b93fd ("PM: sleep: Use DPM_FLAG_SMART_SUSPEND
-conditionally") the runtime PM status of the device in intel_resume()
-had always been RPM_ACTIVE because setting DPM_FLAG_SMART_SUSPEND had
-caused the core to call pm_runtime_set_active() for that device during
-the "noirq" resume phase.  For this reason, the pm_runtime_suspended()
-check in intel_resume() had never triggered and the code depending on
-it had never run.  That had not caused any observable functional issues
-to appear, so effectively the code in question had never been needed.
+The gpiod_direction_output_raw_commit() function checks if any setter
+callback is present before doing anything. As the new GPIO setters with
+return values were introduced, make this check also succeed if one is
+present.
 
-After commit bca84a7b93fd the core does not call pm_runtime_set_active()
-for all devices with DPM_FLAG_SMART_SUSPEND set any more and the code
-depending on the pm_runtime_suspended() check in intel_resume() runs if
-the device is runtime-suspended prior to a system-wide suspend
-transition.  Unfortunately, when it runs, it breaks things due to the
-attempt to runtime-resume bus->dev which most likely is not ready for a
-runtime resume at that point.
-
-It also does other more-or-less questionable things.  Namely, it
-calls pm_runtime_idle() for a device with a nonzero runtime PM usage
-counter which has no effect (all devices have nonzero runtime PM
-usage counters during system-wide suspend and resume).  It also calls
-pm_runtime_mark_last_busy() for the device even though devices cannot
-runtime-suspend during system-wide suspend and resume (because their
-runtime PM usage counters are nonzero) and an analogous call is made
-in the same function later.  Moreover, it sets the runtime PM status
-of the device to RPM_ACTIVE before activating it.
-
-For the reasons listed above, remove that code altogether.
-
-On top of that, add a pm_runtime_disable() call to intel_suspend() to
-prevent the device from being runtime-resumed at any point after
-intel_suspend() has started to manipulate it because the changes
-made by that function would be undone by a runtime-suspend of the
-device.
-
-Next, once runtime PM has been disabled, the runtime PM status of the
-device cannot change, so pm_runtime_status_suspended() can be used
-instead of pm_runtime_suspended() in intel_suspend().
-
-Finally, make intel_resume() call pm_runtime_set_active() at the end to
-set the runtime PM status of the device to "active" because it has just
-been activated and re-enable runtime PM for it after that.
-
-Additionally, drop the setting of DPM_FLAG_SMART_SUSPEND from the
-driver because it has no effect on devices handled by it.
-
-Fixes: bca84a7b93fd ("PM: sleep: Use DPM_FLAG_SMART_SUSPEND conditionally")
-Reported-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Tested-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/12680420.O9o76ZdvQC@rjwysocki.net
+Fixes: 98ce1eb1fd87 ("gpiolib: introduce gpio_chip setters that return values")
+Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Link: https://lore.kernel.org/r/20250411-mdb-gpiolib-setters-fix-v2-1-9611280d8822@bootlin.com
+Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 36 +++++++++++------------------
- 1 file changed, 13 insertions(+), 23 deletions(-)
+ drivers/gpio/gpiolib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index 078f9eaf5161b..ae1dfce163e25 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -345,9 +345,6 @@ static int intel_link_probe(struct auxiliary_device *auxdev,
- 	/* use generic bandwidth allocation algorithm */
- 	sdw->cdns.bus.compute_params = sdw_compute_params;
- 
--	/* avoid resuming from pm_runtime suspend if it's not required */
--	dev_pm_set_driver_flags(dev, DPM_FLAG_SMART_SUSPEND);
--
- 	ret = sdw_bus_master_add(bus, dev, dev->fwnode);
- 	if (ret) {
- 		dev_err(dev, "sdw_bus_master_add fail: %d\n", ret);
-@@ -632,7 +629,10 @@ static int __maybe_unused intel_suspend(struct device *dev)
- 		return 0;
- 	}
- 
--	if (pm_runtime_suspended(dev)) {
-+	/* Prevent runtime PM from racing with the code below. */
-+	pm_runtime_disable(dev);
-+
-+	if (pm_runtime_status_suspended(dev)) {
- 		dev_dbg(dev, "pm_runtime status: suspended\n");
- 
- 		clock_stop_quirks = sdw->link_res->clock_stop_quirks;
-@@ -640,7 +640,7 @@ static int __maybe_unused intel_suspend(struct device *dev)
- 		if ((clock_stop_quirks & SDW_INTEL_CLK_STOP_BUS_RESET) ||
- 		    !clock_stop_quirks) {
- 
--			if (pm_runtime_suspended(dev->parent)) {
-+			if (pm_runtime_status_suspended(dev->parent)) {
- 				/*
- 				 * paranoia check: this should not happen with the .prepare
- 				 * resume to full power
-@@ -707,7 +707,6 @@ static int __maybe_unused intel_resume(struct device *dev)
- 	struct sdw_cdns *cdns = dev_get_drvdata(dev);
- 	struct sdw_intel *sdw = cdns_to_intel(cdns);
- 	struct sdw_bus *bus = &cdns->bus;
--	int link_flags;
- 	int ret;
- 
- 	if (bus->prop.hw_disabled || !sdw->startup_done) {
-@@ -716,23 +715,6 @@ static int __maybe_unused intel_resume(struct device *dev)
- 		return 0;
- 	}
- 
--	if (pm_runtime_suspended(dev)) {
--		dev_dbg(dev, "pm_runtime status was suspended, forcing active\n");
--
--		/* follow required sequence from runtime_pm.rst */
--		pm_runtime_disable(dev);
--		pm_runtime_set_active(dev);
--		pm_runtime_mark_last_busy(dev);
--		pm_runtime_enable(dev);
--
--		pm_runtime_resume(bus->dev);
--
--		link_flags = md_flags >> (bus->link_id * 8);
--
--		if (!(link_flags & SDW_INTEL_MASTER_DISABLE_PM_RUNTIME_IDLE))
--			pm_runtime_idle(dev);
--	}
--
- 	ret = sdw_intel_link_power_up(sdw);
- 	if (ret) {
- 		dev_err(dev, "%s failed: %d\n", __func__, ret);
-@@ -752,6 +734,14 @@ static int __maybe_unused intel_resume(struct device *dev)
- 		return ret;
- 	}
- 
-+	/*
-+	 * Runtime PM has been disabled in intel_suspend(), so set the status
-+	 * to active because the device has just been resumed and re-enable
-+	 * runtime PM.
-+	 */
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
-+
- 	/*
- 	 * after system resume, the pm_runtime suspend() may kick in
- 	 * during the enumeration, before any children device force the
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5f73f0c29cf6a..1e012d5a575e5 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2761,7 +2761,7 @@ static int gpiod_direction_output_raw_commit(struct gpio_desc *desc, int value)
+ 	 * output-only, but if there is then not even a .set() operation it
+ 	 * is pretty tricky to drive the output line.
+ 	 */
+-	if (!guard.gc->set && !guard.gc->direction_output) {
++	if (!guard.gc->set && !guard.gc->set_rv && !guard.gc->direction_output) {
+ 		gpiod_warn(desc,
+ 			   "%s: missing set() and direction_output() operations\n",
+ 			   __func__);
 -- 
 2.53.0
 
