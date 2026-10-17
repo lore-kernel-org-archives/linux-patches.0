@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9192B3B19BF;
-	Sat, 17 Oct 2026 17:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5FA3B27C9;
+	Sat, 17 Oct 2026 17:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256725; cv=none; b=h3ebVsLtxsHVBTMaRWG+QEUDmKzq31ozuix2Kwq4idB082QCRVB829A75Npt5Zrpgrs7/EakNmjt4wXxhC00vStxhktGgT6rEabE3EFchBkAmLZx8G4itx8HAo9/ndrHHfSDrVyO8PnE2B2STtLebfuQnVo9KvCiE295e4tioDA=
+	t=1792256728; cv=none; b=OoNI3kkKQEDDpHq/+mAELWHJuNs/EQdvWHcGE9ccTpPpDZgWHVnLkQFEFd1q6sZ+yj9n27nzXXz0xH2trja2YVsdUVvsyP+NDSLDrHrirhCQs2n2es1OM2CNa6aO1aYitXxCnP1CvqZswuC6VyW+DAXTuCUN0pTSxDrVgckFaqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256725; c=relaxed/simple;
-	bh=6FyiI9K5LSfKe/Abf98MlonYK/qATN+G8kTggeSDyPQ=;
+	s=arc-20240116; t=1792256728; c=relaxed/simple;
+	bh=0BT1gEkHHnKE75Y55lRQTKzVjYHwds7WqGMexUtUu5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YecnARC1fw7RLtsz9/YGgujfQdNybFbC5Ks55+Ia308jMFju9B9oDDIHRyQgUX+gvKb8CqqBKFfP9C7H1SfbMo6lGWpR0CM/Q34E4SaJsDC5+ElyiyWPpjU1pBA/wdl0p+jPJaacFi6Vulpz0YI4ylwj0Zv1OG4r226aJ90y3ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpoA4I0r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=APSy/WvFl+p03rr0c53T69MRHk+XCSJpN5k4/T2WXQC0WpaNBngsVZaRwjLMH5iRV8s3LhaaBoereTTHDpzWxce5mNC729oVj1HTpV02lleTahiG26BLNPLLLPOOyaPCqK1JjPumed1xno4df6t11B1n09oz/4atJ16BWV9u1A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ysq4yr1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpoA4I0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59F51F000C4;
-	Sat, 17 Oct 2026 17:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ysq4yr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9F71F000C4;
+	Sat, 17 Oct 2026 17:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256724;
-	bh=I0S39P9IkcgRdXqHMuyH/NiQFxdVr2GRDlMVynlIQTw=;
+	s=korg; t=1792256727;
+	bh=6Qvm88NFBcikqyCh4JrP0ghwarensJbLlcOVF1iXoYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpoA4I0rtKNa8PT9ZHTidR8dTpvt7Ba+2AUWxG2FNed9x6AtYnZdw39vaJQmodSB8
-	 Rl/8G8ZGhM/RGqrYe1KzuyYZXGDMuZHjCdnSrlRnXN8BmA7zWPfN4u00bkiULWWGeW
-	 +JfoHzwyfZOJAZOEA3MpHBxAwpKTSWxDOUvpCYtQ=
+	b=1ysq4yr1Q0j+jl/4jzdgct7dLGv4Q16JHEvGnh89U2W04ONTSDYj/R4BPYCKUWoNm
+	 qwgsWmodDdTKZDihO39rriXjRiLDh0MXjoZOLo0FzVhQ4ygW6ABwH//I0XSXyaCow5
+	 SHfWpNDnsfKnHHzTra/Myn3W7eBeITphn8y824YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Lin <ian.lin@jetone.com.tw>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0330/1674] USB: serial: option: add Compal EXC-T1 support
-Date: Sat, 17 Oct 2026 17:43:22 +0200
-Message-ID: <20261017160439.598919667@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 0331/1674] thunderbolt: Fix KASAN reported use-after-free when request is canceled
+Date: Sat, 17 Oct 2026 17:43:23 +0200
+Message-ID: <20261017160439.623195447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,57 +50,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Lin <ian.lin@jetone.com.tw>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit b51faf3f2e307f114854bbe6d495f03cd5370686 upstream.
+commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
 
-The Compal EXC-T1 is a Qualcomm MDM9207-based LTE modem which reports
-"EXC-x1" as its USB product string. It exposes diagnostic, modem, AT,
-and NMEA ports as vendor-specific interfaces with subclass 0x10 and
-protocols 0x01 through 0x04.
+Alan reported that when doing stress testing sometimes KASAN notices
+use-after-free during control channel operation (stripped down keeping
+the relevant parts):
 
-Add exact interface matches for these four ports, leaving the ff/ff/ff
-interface unbound.
+ BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+ Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
+  <TASK>
+  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-Relevant output from usb-devices:
+ Allocated by task 1760:
+  __kmalloc_cache_noprof+0x1ee/0x550
+  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-T:  Bus=03 Lev=02 Prnt=03 Port=03 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=04b7 ProdID=4d22 Rev=03.18
-S:  Manufacturer=CEI
-S:  Product=EXC-x1
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=10 Prot=01 Driver=option
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=02 Driver=option
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=03 Driver=option
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=04 Driver=option
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=10 Prot=05 Driver=qmi_wwan
+ Freed by task 926:
+  kfree+0x18f/0x4a0
+  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
+  tb_cfg_request_work+0x82/0x120 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Tested on a Compal EXC-T1 modem using an Ubuntu kernel build. The four
-serial interfaces bound to option and exposed ttyUSB3 through ttyUSB6.
+ Second to last potentially related work creation:
+  __queue_work+0x575/0xd00
+  queue_work_on+0x77/0x80
+  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
+  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Assisted-by: Codex:GPT-5
-Signed-off-by: Ian Lin <ian.lin@jetone.com.tw>
+The last stack trace is helpful because it shows that we are cancelling
+a request and looking at tb_cfg_request_cancel() what might happen is
+that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
+starts and because of this it will call schedule_work() queueing the
+same work to run again. However, it is already removed from the
+request_queue and reference count is dropped so when
+tb_cfg_request_work() triggers again it will access memory that is
+already released.
+
+Fix this so that we first make sure a cancelled request is not handed
+away from tb_cfg_request_find() or scheduled to run. Then instead of
+relying on the worker to clean up the request we will do it in
+tb_cfg_request_cancel() after the work is canceled from running. Make
+tb_cfg_request_dequeue() release the request only if it was actually
+removed from the queue.
+
+Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2437,6 +2437,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x01) },	/* Compal EXC-T1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x02) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x03) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x4d22, 0xff, 0x10, 0x04) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -65,7 +65,6 @@ struct tb_ctl {
+ #define tb_ctl_dbg(ctl, format, arg...) \
+ 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
+ 
+-static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
+ /* Serializes access to request kref_get/put */
+ static DEFINE_MUTEX(tb_cfg_request_lock);
+ 
+@@ -123,41 +122,42 @@ void tb_cfg_request_put(struct tb_cfg_re
+ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
+ 				  struct tb_cfg_request *req)
+ {
++	tb_cfg_request_get(req);
++
+ 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
+ 	WARN_ON(req->ctl);
+ 
+-	mutex_lock(&ctl->request_queue_lock);
++	guard(mutex)(&ctl->request_queue_lock);
+ 	if (!ctl->running) {
+-		mutex_unlock(&ctl->request_queue_lock);
++		tb_cfg_request_put(req);
+ 		return -ENOTCONN;
+ 	}
+ 	req->ctl = ctl;
+ 	list_add_tail(&req->list, &ctl->request_queue);
+ 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	mutex_unlock(&ctl->request_queue_lock);
+ 	return 0;
+ }
+ 
+-static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
++static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
+ {
+-	struct tb_ctl *ctl = req->ctl;
+-
+-	mutex_lock(&ctl->request_queue_lock);
+-	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
+-		mutex_unlock(&ctl->request_queue_lock);
+-		return;
+-	}
++	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++}
+ 
+-	list_del(&req->list);
+-	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+-		wake_up(&tb_cfg_request_cancel_queue);
+-	mutex_unlock(&ctl->request_queue_lock);
++static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
++{
++	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+ }
+ 
+-static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
++static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
+ {
+-	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++	struct tb_ctl *ctl = req->ctl;
++
++	guard(mutex)(&ctl->request_queue_lock);
++	if (tb_cfg_request_is_active(req)) {
++		list_del(&req->list);
++		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++		tb_cfg_request_put(req);
++	}
+ }
+ 
+ static struct tb_cfg_request *
+@@ -168,7 +168,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
+ 	mutex_lock(&pkg->ctl->request_queue_lock);
+ 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
+ 		tb_cfg_request_get(iter);
+-		if (iter->match(iter, pkg)) {
++		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
+ 			req = iter;
+ 			break;
+ 		}
+@@ -495,8 +495,11 @@ static void tb_ctl_rx_callback(struct tb
+ 	 */
+ 	req = tb_cfg_request_find(pkg->ctl, pkg);
+ 	if (req) {
+-		if (req->copy(req, pkg))
+-			schedule_work(&req->work);
++		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
++			if (!tb_cfg_request_is_canceled(req) &&
++			    req->copy(req, pkg))
++				schedule_work(&req->work);
++		}
+ 		tb_cfg_request_put(req);
+ 	}
+ 
+@@ -508,11 +511,10 @@ static void tb_cfg_request_work(struct w
+ {
+ 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
+ 
+-	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
++	if (!tb_cfg_request_is_canceled(req))
+ 		req->callback(req->callback_data);
+ 
+ 	tb_cfg_request_dequeue(req);
+-	tb_cfg_request_put(req);
+ }
+ 
+ /**
+@@ -536,10 +538,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 	INIT_WORK(&req->work, tb_cfg_request_work);
+ 	INIT_LIST_HEAD(&req->list);
+ 
+-	tb_cfg_request_get(req);
+ 	ret = tb_cfg_request_enqueue(ctl, req);
+ 	if (ret)
+-		goto err_put;
++		return ret;
+ 
+ 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
+ 			req->request_type);
+@@ -553,9 +554,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
+ 
+ err_dequeue:
+ 	tb_cfg_request_dequeue(req);
+-err_put:
+-	tb_cfg_request_put(req);
+-
+ 	return ret;
+ }
+ 
+@@ -569,9 +567,10 @@ err_put:
+  */
+ void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
+ {
+-	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+-	schedule_work(&req->work);
+-	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
++	scoped_guard(mutex, &req->ctl->request_queue_lock)
++		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
++	cancel_work_sync(&req->work);
++	tb_cfg_request_dequeue(req);
+ 	req->result.err = err;
+ }
+ 
 
 
