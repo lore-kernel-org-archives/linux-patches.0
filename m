@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35996377A92;
-	Sat, 17 Oct 2026 16:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551AC30216D;
+	Sat, 17 Oct 2026 16:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253807; cv=none; b=BXT6F59wB+33DjgvY+xh7JKTNUCiSzTnLo41uu3OgeG9JeopcRbVnM+8PIhiFq+O2bbr91iwF/b/mn0I6cX85szfX0e9gxHmtv6X57bdeu6pcImCwrrH0uXBcYZBD7kbbNEyql5ihixMjcm2gfTlgeIO3yRceo1e3gZG9I/z0yI=
+	t=1792253810; cv=none; b=Sf2Mup18VbiEVlaWnuf/DZ3GQa+8SbrBZEQNql6wF0vtmoQjc1PAtVCyp/7bA6R8Z8HKuWYJjDTqadg1HlLf9AxQIZZ1c610nYqz/xlstTVaoWbEUrdhELUWqnyFJHkja3AIknfsFzjvDSGlmstiBBbDrBtsduF+xWdBWa04Tic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253807; c=relaxed/simple;
-	bh=7qhcG0hKuIurimnY5iNeofaha1B+Sp3XjmphbGV0QeE=;
+	s=arc-20240116; t=1792253810; c=relaxed/simple;
+	bh=LjWa1559LwtmOC0WBgLhY7uODCmFmV77y61Tt4LUpwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqkf6jPfCX4qYDfVn2wVIbAG+kCJXVhwFaZfHaYWJvZfubsc0UVuHV0yyVtA3fv/OPx184288NUcmY60Q3aaxpUZcKmFzOEgfqXi784X29s8SZjPA2vWX11x7/7mi4w7J16mWGkfdCZ30yrCbSzv/PCMON5SdqFKbJeZvkJ6hV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkyCugBv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/f8HDcw8CT0ReeyWZaOme2lkRt4Rn9hvu0AxWw5Isl2vDslw/s8ZxjQoyPnVOhhsJ0MOWrnwWKqXFSiUozl7nKUI6ycC8wFXz0vvmQBvIfbKZiPHylpa6JaB7Kt8n7r3chBvt6gm+xhoTaxcv+FWoflSSqqtUniRZ6KCgg5iLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNy2aM75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkyCugBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8187F1F000C4;
-	Sat, 17 Oct 2026 16:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNy2aM75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14891F000C4;
+	Sat, 17 Oct 2026 16:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253806;
-	bh=6V8MA/d32+G7l6j1HsQeyHH/Jz0UAP70tAWhBWONGsI=;
+	s=korg; t=1792253809;
+	bh=9mchsPcEaS5BQtTXq3h9hCXq8R2h+UteQYBZ5JQo/yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkyCugBv2P3E1Y1CE+35W9f9h+vUmuDGqKl5w8Bszd1scwDL1oj2jXzj4b2XoChUg
-	 k4QHTLoyJ2NZo0T0sN78jxU0JGmpgHBLQB3X7ihH/jje0ixvFGy2b/IDGzz+TT9LSy
-	 PUdWkrgs0VSxTFbwG0mTEzC+XKOOZqL8Dwg+Le5c=
+	b=oNy2aM75ljGa6yOLAhUgZparse4j/u0yls9YlFomMmqZUy01LhyLpGf8LtEL50lOC
+	 9X+hMfXXaGuqdau9Dv/ZqCkZSFlVHYaZRptv7I/ulKM2NgEeHDE2zddB4bjU8y8gxe
+	 gDGNfqO1lXIkj+DKGyOYtOCnHyQ16oDYEqKiN/8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com,
+	Szymon Wilczek <swilczek.lx@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/869] fs/ntfs3: Accumulated refactoring changes
-Date: Sat, 17 Oct 2026 17:51:19 +0200
-Message-ID: <20261017160043.157204383@linuxfoundation.org>
+Subject: [PATCH 6.12 239/869] ntfs3: fix circular locking dependency in run_unpack_ex
+Date: Sat, 17 Oct 2026 17:51:20 +0200
+Message-ID: <20261017160043.183274845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,228 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit bac89bb33d91cdd75092e15cf59fe6be34571142 ]
+[ Upstream commit 08ce2fee1b869ecbfbd94e0eb2630e52203a2e03 ]
 
-Changes made to improve readability and debuggability.
+Syzbot reported a circular locking dependency between wnd->rw_lock
+(sbi->used.bitmap) and ni->file.run_lock.
 
+The deadlock scenario:
+1. ntfs_extend_mft() takes ni->file.run_lock then wnd->rw_lock.
+2. run_unpack_ex() takes wnd->rw_lock then tries to acquire
+   ni->file.run_lock inside ntfs_refresh_zone().
+
+This creates an AB-BA deadlock.
+
+Fix this by using down_read_trylock() instead of down_read() when
+acquiring run_lock in run_unpack_ex(). If the lock is contended,
+skip ntfs_refresh_zone() - the MFT zone will be refreshed on the
+next MFT operation. This breaks the circular dependency since we
+never block waiting for run_lock while holding wnd->rw_lock.
+
+Reported-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
+Tested-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d27edf9f96ae85939222
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: 08ce2fee1b86 ("ntfs3: fix circular locking dependency in run_unpack_ex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/bitmap.c  | 62 +++++++++++++---------------------------------
- fs/ntfs3/frecord.c |  1 -
- fs/ntfs3/fsntfs.c  |  2 +-
- fs/ntfs3/run.c     |  6 ++---
- 4 files changed, 21 insertions(+), 50 deletions(-)
+ fs/ntfs3/run.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/bitmap.c b/fs/ntfs3/bitmap.c
-index 29b585f443f3e..65d05e6a05665 100644
---- a/fs/ntfs3/bitmap.c
-+++ b/fs/ntfs3/bitmap.c
-@@ -710,20 +710,17 @@ int wnd_set_free(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- {
- 	int err = 0;
- 	struct super_block *sb = wnd->sb;
--	size_t bits0 = bits;
- 	u32 wbits = 8 * sb->s_blocksize;
- 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
- 	u32 wbit = bit & (wbits - 1);
- 	struct buffer_head *bh;
-+	u32 op;
- 
--	while (iw < wnd->nwnd && bits) {
--		u32 tail, op;
--
-+	for (; iw < wnd->nwnd && bits; iw++, bit += op, bits -= op, wbit = 0) {
- 		if (iw + 1 == wnd->nwnd)
- 			wbits = wnd->bits_last;
- 
--		tail = wbits - wbit;
--		op = min_t(u32, tail, bits);
-+		op = min_t(u32, wbits - wbit, bits);
- 
- 		bh = wnd_map(wnd, iw);
- 		if (IS_ERR(bh)) {
-@@ -736,20 +733,15 @@ int wnd_set_free(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 		ntfs_bitmap_clear_le(bh->b_data, wbit, op);
- 
- 		wnd->free_bits[iw] += op;
-+		wnd->total_zeroes += op;
- 
- 		set_buffer_uptodate(bh);
- 		mark_buffer_dirty(bh);
- 		unlock_buffer(bh);
- 		put_bh(bh);
- 
--		wnd->total_zeroes += op;
--		bits -= op;
--		wbit = 0;
--		iw += 1;
-+		wnd_add_free_ext(wnd, bit, op, false);
- 	}
--
--	wnd_add_free_ext(wnd, bit, bits0, false);
--
- 	return err;
- }
- 
-@@ -760,20 +752,17 @@ int wnd_set_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- {
- 	int err = 0;
- 	struct super_block *sb = wnd->sb;
--	size_t bits0 = bits;
- 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
- 	u32 wbits = 8 * sb->s_blocksize;
- 	u32 wbit = bit & (wbits - 1);
- 	struct buffer_head *bh;
-+	u32 op;
- 
--	while (iw < wnd->nwnd && bits) {
--		u32 tail, op;
--
-+	for (; iw < wnd->nwnd && bits; iw++, bit += op, bits -= op, wbit = 0) {
- 		if (unlikely(iw + 1 == wnd->nwnd))
- 			wbits = wnd->bits_last;
- 
--		tail = wbits - wbit;
--		op = min_t(u32, tail, bits);
-+		op = min_t(u32, wbits - wbit, bits);
- 
- 		bh = wnd_map(wnd, iw);
- 		if (IS_ERR(bh)) {
-@@ -785,21 +774,16 @@ int wnd_set_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 
- 		ntfs_bitmap_set_le(bh->b_data, wbit, op);
- 		wnd->free_bits[iw] -= op;
-+		wnd->total_zeroes -= op;
- 
- 		set_buffer_uptodate(bh);
- 		mark_buffer_dirty(bh);
- 		unlock_buffer(bh);
- 		put_bh(bh);
- 
--		wnd->total_zeroes -= op;
--		bits -= op;
--		wbit = 0;
--		iw += 1;
-+		if (!RB_EMPTY_ROOT(&wnd->start_tree))
-+			wnd_remove_free_ext(wnd, bit, op);
- 	}
--
--	if (!RB_EMPTY_ROOT(&wnd->start_tree))
--		wnd_remove_free_ext(wnd, bit, bits0);
--
- 	return err;
- }
- 
-@@ -852,15 +836,13 @@ static bool wnd_is_free_hlp(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
- 	u32 wbits = 8 * sb->s_blocksize;
- 	u32 wbit = bit & (wbits - 1);
-+	u32 op;
- 
--	while (iw < wnd->nwnd && bits) {
--		u32 tail, op;
--
-+	for (; iw < wnd->nwnd && bits; iw++, bits -= op, wbit = 0) {
- 		if (unlikely(iw + 1 == wnd->nwnd))
- 			wbits = wnd->bits_last;
- 
--		tail = wbits - wbit;
--		op = min_t(u32, tail, bits);
-+		op = min_t(u32, wbits - wbit, bits);
- 
- 		if (wbits != wnd->free_bits[iw]) {
- 			bool ret;
-@@ -875,10 +857,6 @@ static bool wnd_is_free_hlp(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 			if (!ret)
- 				return false;
- 		}
--
--		bits -= op;
--		wbit = 0;
--		iw += 1;
- 	}
- 
- 	return true;
-@@ -928,6 +906,7 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
- 	u32 wbits = 8 * sb->s_blocksize;
- 	u32 wbit = bit & (wbits - 1);
-+	u32 op;
- 	size_t end;
- 	struct rb_node *n;
- 	struct e_node *e;
-@@ -945,14 +924,11 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 		return false;
- 
- use_wnd:
--	while (iw < wnd->nwnd && bits) {
--		u32 tail, op;
--
-+	for (; iw < wnd->nwnd && bits; iw++, bits -= op, wbit = 0) {
- 		if (unlikely(iw + 1 == wnd->nwnd))
- 			wbits = wnd->bits_last;
- 
--		tail = wbits - wbit;
--		op = min_t(u32, tail, bits);
-+		op = min_t(u32, wbits - wbit, bits);
- 
- 		if (wnd->free_bits[iw]) {
- 			bool ret;
-@@ -966,10 +942,6 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
- 			if (!ret)
- 				goto out;
- 		}
--
--		bits -= op;
--		wbit = 0;
--		iw += 1;
- 	}
- 	ret = true;
- 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 45e8d73d38f8f..ab8615abb981b 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -1977,7 +1977,6 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
- 	if (end > alloc_size)
- 		end = alloc_size;
- 
--
- 	while (vbo < end) {
- 		if (idx == -1) {
- 			ok = run_lookup_entry(&run, vcn, &lcn, &clen, &idx);
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 170836749de68..c9ff8293fea73 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2716,4 +2716,4 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
- out:
- 	kfree(uni);
- 	return err;
--}
-\ No newline at end of file
-+}
 diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
-index 12f93f5a3d9bc..18b8767acba5f 100644
+index 18b8767acba5f..66baaada02e9a 100644
 --- a/fs/ntfs3/run.c
 +++ b/fs/ntfs3/run.c
-@@ -1133,9 +1133,9 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 		err = wnd_set_used_safe(wnd, lcn, len, &done);
- 		if (zone) {
- 			/* Restore zone. Lock mft run. */
--			struct rw_semaphore *lock;
--			lock = is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
--						 NULL;
-+			struct rw_semaphore *lock =
-+				is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
-+						  NULL;
- 			if (lock)
- 				down_read(lock);
- 			ntfs_refresh_zone(sbi);
+@@ -1136,11 +1136,14 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+ 			struct rw_semaphore *lock =
+ 				is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
+ 						  NULL;
+-			if (lock)
+-				down_read(lock);
+-			ntfs_refresh_zone(sbi);
+-			if (lock)
+-				up_read(lock);
++			if (lock) {
++				if (down_read_trylock(lock)) {
++					ntfs_refresh_zone(sbi);
++					up_read(lock);
++				}
++			} else {
++				ntfs_refresh_zone(sbi);
++			}
+ 		}
+ 		up_write(&wnd->rw_lock);
+ 		if (err)
 -- 
 2.53.0
 
