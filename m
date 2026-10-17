@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA743E00A3;
-	Sat, 17 Oct 2026 17:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8185B3CB57A;
+	Sat, 17 Oct 2026 17:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258425; cv=none; b=UkZ4FxPcf0LsdfVlMAB2HeAoRDDZE6WngH+8xpkXMXx9A/YqqOYOSOHj++vzMLhRmkhttiYIY/49x2Ygx22xcEmdYOEoZt1tVurO1hr+kSkutlw9+5BMeMNv61gOsZ1Af0GK639+oBdr/uychuMGjDVo0JVHnJmu636IQv2ZBm0=
+	t=1792258428; cv=none; b=DSwowSR8r/ju46wSsDnfScVzLBIjsH3bZEk3fQnFW+E5krH3+S2iI0+RMRjiYJ05eh+0JRR0hL4bSuiiSJPDCbeREGzYxGvjsE9jBznant3l5/RFyXOVGxNhByI5ZMadygdteAf1Z5MYghE/ZrBBfjbKr9QAS0nNdP4uWilirzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258425; c=relaxed/simple;
-	bh=uqMWAVEOm+ByU2v8c//pZopbU30NVAWEKbMABt/mzD4=;
+	s=arc-20240116; t=1792258428; c=relaxed/simple;
+	bh=GZeAfmPxS3dvRjx00480h+70FFjeon6jtYeyEGwhMPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZOXxNhH7H7HNa0NR80EGd6tImHIFFfi6ytUK28s2jM7vZyB6hgXhUTK5FvKAoAfxP7NPgHnKOQ6IyEoRwilPLO/ElA0fLGeXjGlj4S6mjq1wkeuFqcV+fu245a77+SsmOu6lq4cZ+Dm00Tr/v9AZmmXhe+fW2SElLprPguN+YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWeZhe7R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YtnXZ87KNwf0vu8Rx0gqzd+6wjg0DZqK2SLC5gBbBa/J58qDQoNm4ADY528RnXvq24wrgejGNmzfQWVlr/Ceu/lDSoe4HTQBxjmMzq2PejhBeopOc1xTRC1DSu1AGeUzMG8ejSP+jKF/jXWR5g99gIpQhDHAb16F5JvtXqqpUYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ul2eC4ZI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWeZhe7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036C51F000C4;
-	Sat, 17 Oct 2026 17:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ul2eC4ZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92631F000C4;
+	Sat, 17 Oct 2026 17:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258424;
-	bh=DlGSusvNsHsXghP2HBEQQYGDYzwKxXFSH29dbSgrPYE=;
+	s=korg; t=1792258427;
+	bh=2voDbs/498Srl2L/VjTSdXSFBqTMZFeMH+21haEWWXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZWeZhe7Rn0lG0t42f7tgJRGD88KJ/yMMh6zdsJbJ1XQ8JJ9f0uzNu8p86o/9nmPyt
-	 /R7F5KaFNr/kWrMK/tQ49uYZ5KRL6jEb7NDoVJ9XB0zxBEsoFf8rr2GFA70dkBGjhz
-	 cHBDzlZX1MHjGsqQ0CJSFXlssd+V8FryxTXX8qNs=
+	b=ul2eC4ZIOi4C6wLib43Ni1G9mcwKJUg6eZLITTPmxTt/naBuuIiDJ3oRnLoJfVNVS
+	 300OC2kxyaEmzESfO01+SQlxmeYJnyEFdGzBtHh/vCZpK1YfyZsqMckb7hwgnYtlw5
+	 1VXILAAaGq58+R8EZpo00hcFJ/GL6HYkMLd+G+zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0879/1674] s390/mm: Add missing secure storage access fixups for donated memory
-Date: Sat, 17 Oct 2026 17:52:31 +0200
-Message-ID: <20261017160453.678808581@linuxfoundation.org>
+Subject: [PATCH 6.6 0844/1674] md: add new helpers to suspend/resume and lock/unlock array
+Date: Sat, 17 Oct 2026 17:51:56 +0200
+Message-ID: <20261017160452.790614467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,61 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janosch Frank <frankja@linux.ibm.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit b00be77302d7ec4ad0367bb236494fce7172b730 ]
+[ Upstream commit f45461e24febab5c2ba8f331e9eb109bb59cbdc1 ]
 
-There are special cases where secure storage access exceptions happen
-in a kernel context for pages that don't have the PG_arch_1 bit
-set. That bit is set for non-exported guest secure storage (memory)
-but is absent on storage donated to the Ultravisor since the kernel
-isn't allowed to export donated pages.
+The new helpers suspend the array first and then lock the array,
 
-Prior to this patch we would try to export the page by calling
-arch_make_folio_accessible() which would instantly return since the
-arch bit is absent signifying that the page was already exported and
-no further action is necessary. This leads to secure storage access
-exception loops which can never be resolved.
+Prepare to refactor from:
 
-With this patch we unconditionally try to export and if that fails we
-fixup.
+mddev_lock/lock_nointr
+mddev_suspend
+...
+mddev_resuem
+mddev_lock
 
-Fixes: 084ea4d611a3 ("s390/mm: add (non)secure page access exceptions handlers")
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+With:
+
+mddev_suspend_and_lock/lock_nointr
+...
+mddev_unlock_and_resume
+
+After all the use cases is refactored, mddev_suspend/resume() will be
+removed.
+
+And mddev_suspend_and_lock() will also replace mddev_lock() for the case
+that the array will be reconfigured, in order to synchronize with io to
+prevent problems in many corner cases.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231010151958.145896-6-yukuai1@huaweicloud.com
+Stable-dep-of: 2cc583653bbe ("md: suspend array while updating raid_disks via sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/md/md.h | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index 23a891fb41343..9bafb1dbfafd7 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -656,10 +656,17 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		page = phys_to_page(addr);
- 		if (unlikely(!try_get_page(page)))
- 			break;
--		rc = arch_make_page_accessible(page);
-+		rc = uv_convert_from_secure(page_to_phys(page));
-+		if (!rc)
-+			clear_bit(PG_arch_1, &page->flags);
- 		put_page(page);
-+		/*
-+		 * There are some valid fixup types for kernel
-+		 * accesses to donated secure memory. zeropad is one
-+		 * of them.
-+		 */
- 		if (rc)
--			BUG();
-+			do_no_context(regs, VM_FAULT_BADACCESS);
- 		break;
- 	default:
- 		do_fault_error(regs, VM_FAULT_BADMAP);
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index a487e5c0648b5..a2e480ad3861e 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -869,6 +869,33 @@ static inline void mddev_check_write_zeroes(struct mddev *mddev, struct bio *bio
+ 		mddev->queue->limits.max_write_zeroes_sectors = 0;
+ }
+ 
++static inline int mddev_suspend_and_lock(struct mddev *mddev)
++{
++	int ret;
++
++	ret = __mddev_suspend(mddev, true);
++	if (ret)
++		return ret;
++
++	ret = mddev_lock(mddev);
++	if (ret)
++		__mddev_resume(mddev);
++
++	return ret;
++}
++
++static inline void mddev_suspend_and_lock_nointr(struct mddev *mddev)
++{
++	__mddev_suspend(mddev, false);
++	mutex_lock(&mddev->reconfig_mutex);
++}
++
++static inline void mddev_unlock_and_resume(struct mddev *mddev)
++{
++	mddev_unlock(mddev);
++	__mddev_resume(mddev);
++}
++
+ struct mdu_array_info_s;
+ struct mdu_disk_info_s;
+ 
 -- 
 2.53.0
 
