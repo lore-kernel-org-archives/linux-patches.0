@@ -1,39 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF23B9927;
-	Sat, 17 Oct 2026 17:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC622F767;
+	Sat, 17 Oct 2026 17:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258104; cv=none; b=jbXNSy7VkJdysktYQasj6Mft3iZ8OyECFrkvFTQHvgbsG35F0i6pdJdBvJiDC4aHPHXTSCf4kjdj8aOJZVH+mdmOuk/lBioHoOIRH2GrpQnXpcB55YHQoMhI8mBz40Wmt5ypP36zaPdS4E58mFZBY0qdu0Ueeu0qblnOXpnNjxQ=
+	t=1792258107; cv=none; b=jeK3a2VFwuKCc1rLcSGGLpAxu2DDeMXy14GExtuUJPGDgJf2M1khbQ3R0xB2wExPmXPaFAFtTcJBDcV8LYV4CnNFs9FABHp+96hNlGMhYLoQsQ3a3TGvz4kpA7gukGDJh13kJGfoE4/yNgwUbnhm6OB0m9e05bzNqNSR7Q3AOyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258104; c=relaxed/simple;
-	bh=xjh9QRWy3VYRTODhZosvyN4/ZKyxYL3H7laeE1tm1LE=;
+	s=arc-20240116; t=1792258107; c=relaxed/simple;
+	bh=oXRN4zif6CRVCfdXyuhUbpH6ZWaDYAdltr5x1NfVEts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cpq2IGVXRJ6REXGXgJFypCPC1Tb6rx6+KY71QHoBKen6Zm/jqwjTCufjcDDSHWPYOz67pdD9s7uXe9XF2blS28MluyUzpmTS4iD+ltVNhF2pShr25LSrDgEeMmp4Wi5CU1EUti4IlqHz90Goa6C2jfbV20MVxgr5XKOArWSb2Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijgGzmCq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uu1SJutFTEkc6zt91I2y2WxjzMN5I3HgZREimPOQ6ijrWHduxMU/eTe55A8y5OfoxrGwT8sw7VRZHHY7CF/i347ElMQVUiItVRjrRwMqGOZEFX4m2M+nGLVOw4wixKyjtpaadi6uBhRz4jAPLQTtFbHr4JvBAYIHRHTD+bbOuyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrO0X+OK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijgGzmCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275C11F000C4;
-	Sat, 17 Oct 2026 17:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrO0X+OK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA961F000C4;
+	Sat, 17 Oct 2026 17:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258102;
-	bh=CDqMxcNzWwRGWQVA8Oj0SmEVj6w3Jqglnap4avfNY/w=;
+	s=korg; t=1792258105;
+	bh=bkt7i6Lwe3zsaxd4IySKfgUaMzoHihb1q1UIhJaC8vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ijgGzmCqXNv6eFj+rl2/7dztoj6vjzPp/tFhwGJvSrcbh0HKJ0pkdlKHYfChB/FPo
-	 DMkb2VryUAfhjJ6qg89thWVfTGFAKvuktEg1FjgF4+7nRIyiR0QBdosZpzwl8w1KhW
-	 X7uCvoF5zSZ/al8FSAigCANaRuIbM5hjD/YqvhnU=
+	b=VrO0X+OK2RV6QP0ZrKb6QtiRAcTRrw9HhPrhAckaT1wzi8bFYBOVEwFTfeZkwEKzg
+	 A4y5Zh1AKMao+Gfroav2O8hSBvufvmITxVmGty06dDD1x78xAN5B+iiWuZ6I7LNfQf
+	 PR4MATr7NU2+1iz9awOq7k7a7GCLRAf1swoWNkJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Brahmajit Das <brahmajit.xyz@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	David Rientjes <rientjes@google.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	Joern Engel <joern@logfs.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0773/1674] wifi: ath10k: shutdown driver when hardware is unreliable
-Date: Sat, 17 Oct 2026 17:50:45 +0200
-Message-ID: <20261017160450.945650442@linuxfoundation.org>
+Subject: [PATCH 6.6 0774/1674] mm/smaps: fix race between smaps_hugetlb_range and migration
+Date: Sat, 17 Oct 2026 17:50:46 +0200
+Message-ID: <20261017160450.971643828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,210 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit c256a94d1b1b15109740306f7f2a7c2173e12072 ]
+[ Upstream commit 45d19b4b6c2d422771c29b83462d84afcbb33f01 ]
 
-In rare cases, ath10k may lose connection with the PCIe bus due to
-some unknown reasons, which could further lead to system crashes during
-resuming due to watchdog timeout:
+smaps_hugetlb_range() handles the pte without holdling ptl, and may be
+concurrenct with migration, leaing to BUG_ON in pfn_swap_entry_to_page().
+The race is as follows.
 
-ath10k_pci 0000:01:00.0: wmi command 20486 timeout, restarting hardware
-ath10k_pci 0000:01:00.0: already restarting
-ath10k_pci 0000:01:00.0: failed to stop WMI vdev 0: -11
-ath10k_pci 0000:01:00.0: failed to stop vdev 0: -11
-ieee80211 phy0: PM: **** DPM device timeout ****
-Call Trace:
- panic+0x125/0x315
- dpm_watchdog_set+0x54/0x54
- dpm_watchdog_handler+0x57/0x57
- call_timer_fn+0x31/0x13c
+smaps_hugetlb_range              migrate_pages
+  huge_ptep_get
+                                   remove_migration_ptes
+				   folio_unlock
+  pfn_swap_entry_folio
+    BUG_ON
 
-At this point, all WMI commands will timeout and attempt to restart
-device. So set a threshold for consecutive restart failures. If the
-threshold is exceeded, consider the hardware is unreliable and all
-ath10k operations should be skipped to avoid system crash.
+To fix it, hold ptl lock in smaps_hugetlb_range().
 
-fail_cont_count and pending_recovery are atomic variables, and
-do not involve complex conditional logic. Therefore, even if recovery
-check and reconfig complete are executed concurrently, the recovery
-mechanism will not be broken.
-
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
-
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250623022731.509-1-kang.yang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://lkml.kernel.org/r/20250724090958.455887-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20250724090958.455887-2-tujinjiang@huawei.com
+Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Brahmajit Das <brahmajit.xyz@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joern Engel <joern@logfs.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c | 48 +++++++++++++++++++++++---
- drivers/net/wireless/ath/ath10k/core.h | 11 ++++--
- drivers/net/wireless/ath/ath10k/mac.c  |  7 +++-
- drivers/net/wireless/ath/ath10k/wmi.c  |  6 ++++
- 4 files changed, 63 insertions(+), 9 deletions(-)
+ fs/proc/task_mmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 83e0efe0e3d90..0fb56246d4624 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2469,12 +2469,50 @@ static int ath10k_init_hw_params(struct ath10k *ar)
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index ac7e356cacebc..5c6214d8e0937 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -724,8 +724,11 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
+ 	struct mem_size_stats *mss = walk->private;
+ 	struct vm_area_struct *vma = walk->vma;
+ 	struct page *page = NULL;
+-	pte_t ptent = ptep_get(pte);
++	spinlock_t *ptl;
++	pte_t ptent;
+ 
++	ptl = huge_pte_lock(hstate_vma(vma), walk->mm, pte);
++	ptent = ptep_get(pte);
+ 	if (pte_present(ptent)) {
+ 		page = vm_normal_page(vma, addr, ptent);
+ 	} else if (is_swap_pte(ptent)) {
+@@ -740,6 +743,7 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
+ 		else
+ 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
+ 	}
++	spin_unlock(ptl);
  	return 0;
  }
- 
-+static bool ath10k_core_needs_recovery(struct ath10k *ar)
-+{
-+	long time_left;
-+
-+	/* Sometimes the recovery will fail and then the next all recovery fail,
-+	 * so avoid infinite recovery.
-+	 */
-+	if (atomic_read(&ar->fail_cont_count) >= ATH10K_RECOVERY_MAX_FAIL_COUNT) {
-+		ath10k_err(ar, "consecutive fail %d times, will shutdown driver!",
-+			   atomic_read(&ar->fail_cont_count));
-+		ar->state = ATH10K_STATE_WEDGED;
-+		return false;
-+	}
-+
-+	ath10k_dbg(ar, ATH10K_DBG_BOOT, "total recovery count: %d", ++ar->recovery_count);
-+
-+	if (atomic_read(&ar->pending_recovery)) {
-+		/* Sometimes it happened another recovery work before the previous one
-+		 * completed, then the second recovery work will destroy the previous
-+		 * one, thus below is to avoid that.
-+		 */
-+		time_left = wait_for_completion_timeout(&ar->driver_recovery,
-+							ATH10K_RECOVERY_TIMEOUT_HZ);
-+		if (time_left) {
-+			ath10k_warn(ar, "previous recovery succeeded, skip this!\n");
-+			return false;
-+		}
-+
-+		/* Record the continuous recovery fail count when recovery failed. */
-+		atomic_inc(&ar->fail_cont_count);
-+
-+		/* Avoid having multiple recoveries at the same time. */
-+		return false;
-+	}
-+
-+	atomic_inc(&ar->pending_recovery);
-+
-+	return true;
-+}
-+
- void ath10k_core_start_recovery(struct ath10k *ar)
- {
--	if (test_and_set_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags)) {
--		ath10k_warn(ar, "already restarting\n");
-+	if (!ath10k_core_needs_recovery(ar))
- 		return;
--	}
- 
- 	queue_work(ar->workqueue, &ar->restart_work);
- }
-@@ -2510,6 +2548,8 @@ static void ath10k_core_restart(struct work_struct *work)
- 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
- 	int ret;
- 
-+	reinit_completion(&ar->driver_recovery);
-+
- 	set_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
- 
- 	/* Place a barrier to make sure the compiler doesn't reorder
-@@ -2574,8 +2614,6 @@ static void ath10k_core_restart(struct work_struct *work)
- 	if (ret)
- 		ath10k_warn(ar, "failed to send firmware crash dump via devcoredump: %d",
- 			    ret);
--
--	complete(&ar->driver_recovery);
- }
- 
- static void ath10k_core_set_coverage_class_work(struct work_struct *work)
-diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
-index cb2359d2ee0b0..91f3466f9ccba 100644
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #ifndef _CORE_H_
-@@ -86,6 +87,8 @@
- 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
- #define ATH10K_ITER_RESUME_FLAGS (IEEE80211_IFACE_ITER_RESUME_ALL |\
- 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
-+#define ATH10K_RECOVERY_TIMEOUT_HZ			(5 * HZ)
-+#define ATH10K_RECOVERY_MAX_FAIL_COUNT			4
- 
- struct ath10k;
- 
-@@ -864,9 +867,6 @@ enum ath10k_dev_flags {
- 	/* Per Station statistics service */
- 	ATH10K_FLAG_PEER_STATS,
- 
--	/* Indicates that ath10k device is during recovery process and not complete */
--	ATH10K_FLAG_RESTARTING,
--
- 	/* protected by conf_mutex */
- 	ATH10K_FLAG_NAPI_ENABLED,
- };
-@@ -1208,6 +1208,11 @@ struct ath10k {
- 	struct work_struct bundle_tx_work;
- 	struct work_struct tx_complete_work;
- 
-+	atomic_t pending_recovery;
-+	unsigned int recovery_count;
-+	/* continuous recovery fail count */
-+	atomic_t fail_cont_count;
-+
- 	/* cycle count is reported twice for each visited channel during scan.
- 	 * access protected by data_lock
- 	 */
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 842edfcfef262..27f6cc05bf9aa 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -8132,7 +8132,12 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
- 		ath10k_info(ar, "device successfully recovered\n");
- 		ar->state = ATH10K_STATE_ON;
- 		ieee80211_wake_queues(ar->hw);
--		clear_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags);
-+
-+		/* Clear recovery state. */
-+		complete(&ar->driver_recovery);
-+		atomic_set(&ar->fail_cont_count, 0);
-+		atomic_set(&ar->pending_recovery, 0);
-+
- 		if (ar->hw_params.hw_restart_disconnect) {
- 			list_for_each_entry(arvif, &ar->arvifs, list) {
- 				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index 3c4bf7e78818d..172dc55375552 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/skbuff.h>
-@@ -1942,6 +1943,11 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
- 	}
- 
- 	wait_event_timeout(ar->wmi.tx_credits_wq, ({
-+		if (ar->state == ATH10K_STATE_WEDGED) {
-+			ret = -ESHUTDOWN;
-+			ath10k_dbg(ar, ATH10K_DBG_WMI,
-+				   "drop wmi command %d, hardware is wedged\n", cmd_id);
-+		}
- 		/* try to send pending beacons first. they take priority */
- 		ath10k_wmi_tx_beacons_nowait(ar);
- 
+ #else
 -- 
 2.53.0
 
