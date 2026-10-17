@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8251C3ADB9A;
-	Sat, 17 Oct 2026 16:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C62B36AB6B;
+	Sat, 17 Oct 2026 16:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255264; cv=none; b=VAc/zrZ6WIt+o/3/hNkinZyzf3+MilVzeJGny0lhZ5yUKnrxOcOOp62/djNpxU1HIIBjgcrCLYsGbM385Yb3wJl+uPlBPKJaAteKbV9fn6AQg4A2sRfoA8Krph2bPFqcCS7zpZQjM0ly2PV7tVW9BiWy3rAjBcjgDANEhzMFKbA=
+	t=1792255267; cv=none; b=TawoZ+AoXUsD/6M7ZxZHsmYR7f5n3jqmGAC02Ze2aBWwyHe2vGwH+Vu7B/QkPyiFs0zoUt6Ktdix3RrIhqC810+CGatDpRpeVoUJobTdKe2pTbWqFtF5DiK+0UrqZ022N1rR5CWxC/DbFvYuRlBUBrkS3+6dOQ5pgTRkUIdkGRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255264; c=relaxed/simple;
-	bh=1CO8jbFky/CPhcMnhnW5rVtHYLvG4Wb1NafJ5PW/6a0=;
+	s=arc-20240116; t=1792255267; c=relaxed/simple;
+	bh=TvCrEFfAvMSKMC5EPhYOnP2rY0s33+eNOo9E/kLoBl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKCSyFn4b2jgT42z1ZMKqY+8CwrObtgkKiv30WsTPVU1DI7vei/aNBAhBx9pd+Hwapya9XmrcgzNL79E4pnkCpEgwjXmzjZTa4XFfFTm1EQtvyDMeyGO+JcgakWIxm19wiqSNJ4O9Dr26mw9wvYkD8DhUulbCyrrjtKYbdnyFSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OInwuN6i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fn+fQ+zjtiPiLtiKJ6R+FSp9md4LRc07Tc19ffl7twz3tH3/Z6ivsIcS04KVjTqtq34V9ieSEbYLRDZpGjEksMEBn6oGYrYcTyFr+LtscW4E8FLe4r5EK8IGNNPXaJUjIT8UvfXNuRrKxldwEKjtcnQmQ445xUAxjdIFp7s0kfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGMSZRNU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OInwuN6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A661F000C4;
-	Sat, 17 Oct 2026 16:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGMSZRNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EEA1F000C5;
+	Sat, 17 Oct 2026 16:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255263;
-	bh=Q6YHdFl4wjPWozdw2Kv2tC5yuVwTRPNauVULvtlFnBo=;
+	s=korg; t=1792255266;
+	bh=4nOLo3dzlRJTsSkSeA7W05dHRyt17t7ZWKo1BBiXUd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OInwuN6imU2h7YHeD/S85vuKGGszNK4x04epGOm/q8GSgRwnzJKiaOOc58y+62icd
-	 6k15mNocOlRLl4WwF2qJrVYTnDZgQtFCEyj4n419RIEV+G7plFxYdZZfaZ9NbxUbKx
-	 lRJ65GTiKEgDz69JfAPjDUDOHZhlilcPibEcF+ks=
+	b=fGMSZRNUx/QWM+hST4UalKdlurk3yQ9u2JSYIneZkNFjjfM17sUGIUhP2Zdl5ciLj
+	 Zf+OKP74mgIxwrEY3OF8BTRR5yiWHAh9ZZjiv3j0B0POYsBpKvSpcgfYxFcqB9WroQ
+	 QB7H5VRG/nJReJHdegkKIpHBNgdDWkdYUspCd88o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ben Horgan <ben.horgan@arm.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 719/869] ACPI: bus: Introduce acpi_bus_get_primary_device()
-Date: Sat, 17 Oct 2026 17:59:20 +0200
-Message-ID: <20261017160055.393873250@linuxfoundation.org>
+Subject: [PATCH 6.12 702/869] fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
+Date: Sat, 17 Oct 2026 17:59:03 +0200
+Message-ID: <20261017160054.965886344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,137 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 72530e1f72b0515a73fd88292254d04fecf03649 ]
+[ Upstream commit f5bcf539484d2d604c2f2330e09487ea090b21c7 ]
 
-The function used for obtaining the first "physical" device for which
-the given ACPI one is the ACPI companion, acpi_get_first_physical_node(),
-may return a stale device pointer (mostly in theory) because
-acpi_unbind_one() may run as a whole after dropping the ACPI device's
-physical_node_lock in acpi_get_first_physical_node() and before it
-returns.  The last reference to the "physical" device may be dropped
-then before the pointer to it is returned to the caller.
+A struct rdtgroup is reference counted via rdtgroup::waitcount. Callers that
+need the structure to remain valid across a sleep (while waiting on acquiring
+rdtgroup_mutex) take a reference with rdtgroup_kn_get() and release it with
+rdtgroup_kn_put().
 
-If that happens and the acpi_get_first_physical_node() caller invokes
-get_device() on the pointer obtained from it, which is done by the
-majority of its callers, a use-after-free will occur.
+The release path is intended to serve as the fallback freer: if the count
+drops to zero and the group has already been marked RDT_DELETED,
+rdtgroup_kn_put() frees the structure.
 
-To prepare for addressing this problem, introduce a new function for
-getting the first "physical" device associated with the given ACPI one
-(the "primary physical device") that will also reference count the
-device in question before returning a pointer to it.
+The bulk teardown paths free_all_child_rdtgrp() and rmdir_all_sub() resulting
+from a resctrl directory remove or resctrl fs unmount act as the primary
+freer: they hold rdtgroup_mutex and free each rdtgroup whose waitcount is
+zero, otherwise they set RDT_DELETED and leave the freeing to the last waiter.
 
-Make that new function and acpi_get_first_physical_node() share the
-physical node list lookup code.
+These two freers race. rdtgroup_kn_put() commits waitcount == 0 with
+atomic_dec_and_test() outside rdtgroup_mutex, then reads rdtgroup::flags.
+Between those two operations a concurrent caller of free_all_child_rdtgrp()
+or rmdir_all_sub() (which holds the mutex) can observe waitcount == 0 via
+atomic_read(), call rdtgroup_remove(), and kfree() the structure.
 
-No intentional functional impact.
+The subsequent read of rdtgroup::flags in rdtgroup_kn_put() is then
+a use-after-free, and the structure may even be freed twice if the freed
+memory happens to satisfy the RDT_DELETED flag check.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2843318.mvXUDI8C0e@rafael.j.wysocki
+Replace the bare atomic_dec_and_test() with atomic_dec_and_mutex_lock() so
+that the decrement-to-zero takes rdtgroup_mutex before the count becomes
+globally visible. The inspection of rdtgroup::flags then runs under the same
+mutex held by the bulk freers, making the two paths mutually exclusive.
+
+The common case where the count does not reach zero remains lock-free. Defer
+kernfs_unbreak_active_protection() until after the mutex is dropped since
+kernfs active protections functionally wrap rdtgroup_mutex. Remove resource
+group, which in turn drops its kernfs reference, after kernfs protection is
+restored.
+
+  [ bp: Split the commit messsages into smaller, easier-parseable paragraphs. ]
+
+Fixes: b8511ccc75c0 ("x86/resctrl: Fix use-after-free when deleting resource groups")
+Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=1
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Assisted-by: GitHub_Copilot:gemini-3.1-pro
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/8d028bbea582dc382a4cc166b235f75bd5901aea.1783963505.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c      | 54 +++++++++++++++++++++++++++++------------
- include/acpi/acpi_bus.h |  6 +++++
- 2 files changed, 44 insertions(+), 16 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index 9deb98c0a6fee..da0d6628ee417 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -747,30 +747,52 @@ static int __init acpi_setup_sb_notify_handler(void)
-                              Device Matching
-    -------------------------------------------------------------------------- */
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 3db8992d1ae5f..868e260947a10 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2447,15 +2447,24 @@ static void rdtgroup_kn_get(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
  
-+
-+static struct device *primary_physical_device(struct acpi_device *adev)
-+{
-+	struct acpi_device_physical_node *pn;
-+
-+	pn = list_first_entry_or_null(&adev->physical_node_list,
-+				      struct acpi_device_physical_node, node);
-+	if (pn)
-+		return pn->dev;
-+
-+	return NULL;
-+}
-+
- /**
-- * acpi_get_first_physical_node - Get first physical node of an ACPI device
-+ * acpi_bus_get_primary_device - Get first physical device for a given ACPI one
-+ * @adev: ACPI device to get the first physical device for.
-+ *
-+ * Find the first physical device for which @adev is the ACPI companion and
-+ * reference count it if present.
-+ *
-+ * Return: Pointer to the first physical counterpart of @adev or NULL if there
-+ * are none.  Callers are responsible for invoking put_device() on the returned
-+ * device.
-+ */
-+struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
-+{
-+	if (!adev)
-+		return NULL;
-+
-+	guard(mutex)(&adev->physical_node_lock);
-+
-+	return get_device(primary_physical_device(adev));
-+}
-+EXPORT_SYMBOL_GPL(acpi_bus_get_primary_device);
-+
-+/**
-+ * acpi_get_first_physical_node - Find first physical node of an ACPI device
-  * @adev:	ACPI device in question
-  *
-  * Return: First physical node of ACPI device @adev
-  */
- struct device *acpi_get_first_physical_node(struct acpi_device *adev)
+ static void rdtgroup_kn_put(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
  {
--	struct mutex *physical_node_lock = &adev->physical_node_lock;
--	struct device *phys_dev;
--
--	mutex_lock(physical_node_lock);
--	if (list_empty(&adev->physical_node_list)) {
--		phys_dev = NULL;
--	} else {
--		const struct acpi_device_physical_node *node;
-+	guard(mutex)(&adev->physical_node_lock);
- 
--		node = list_first_entry(&adev->physical_node_list,
--					struct acpi_device_physical_node, node);
--
--		phys_dev = node->dev;
--	}
--	mutex_unlock(physical_node_lock);
--	return phys_dev;
-+	return primary_physical_device(adev);
- }
- EXPORT_SYMBOL_GPL(acpi_get_first_physical_node);
- 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 2aa34fcc10a15..b8cf06904fa20 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -677,6 +677,7 @@ void acpi_bus_unregister_driver(struct acpi_driver *driver);
- int acpi_bus_scan(acpi_handle handle);
- void acpi_bus_trim(struct acpi_device *start);
- acpi_status acpi_bus_get_ejd(acpi_handle handle, acpi_handle * ejd);
-+struct device *acpi_bus_get_primary_device(struct acpi_device *adev);
- int acpi_match_device_ids(struct acpi_device *device,
- 			  const struct acpi_device_id *ids);
- void acpi_set_modalias(struct acpi_device *adev, const char *default_id,
-@@ -1000,6 +1001,11 @@ int acpi_scan_add_dep(acpi_handle handle, struct acpi_handle_list *dep_devices);
- u32 arch_acpi_add_auto_dep(acpi_handle handle);
- #else	/* CONFIG_ACPI */
- 
-+static inline struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
-+{
-+	return NULL;
-+}
+-	if (atomic_dec_and_test(&rdtgrp->waitcount) &&
+-	    (rdtgrp->flags & RDT_DELETED)) {
++	bool needs_free;
 +
- static inline int register_acpi_bus_type(void *bus) { return 0; }
- static inline int unregister_acpi_bus_type(void *bus) { return 0; }
++	if (!atomic_dec_and_mutex_lock(&rdtgrp->waitcount, &rdtgroup_mutex)) {
++		kernfs_unbreak_active_protection(kn);
++		return;
++	}
++
++	needs_free = rdtgrp->flags & RDT_DELETED;
++
++	mutex_unlock(&rdtgroup_mutex);
++
++	kernfs_unbreak_active_protection(kn);
++
++	if (needs_free) {
+ 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+ 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+ 			rdtgroup_pseudo_lock_remove(rdtgrp);
+-		kernfs_unbreak_active_protection(kn);
+ 		rdtgroup_remove(rdtgrp);
+-	} else {
+-		kernfs_unbreak_active_protection(kn);
+ 	}
+ }
  
 -- 
 2.53.0
