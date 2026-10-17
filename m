@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E366039EF01;
-	Sat, 17 Oct 2026 17:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79A835C1BC;
+	Sat, 17 Oct 2026 17:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258037; cv=none; b=W+qjmJv1z7iDgjBGIbgnpZ3d3eelvo4lcWkrWO9JpW52XWQoCGnz2g+ntEXYhVJ6WQ7xebk2N0pZIl/td58sejfznsBBeoyG979Un25IeQ+rPjuIMVITSZHyAm6JjErO6auuCrMmGmrtqI+0rcq3jjCiHsbYEuXI/cD1mN2cio4=
+	t=1792258041; cv=none; b=OcftagFygyNgwEv7Ucm6sU0wDXBlwsp0TkDiVBoAiLInJgz5tENP3j9LTXkW65+KYFsfi4fJjRZHFj7YyKlyqsgtVJaeY7oqn84AYj8nbkG5Q1VHNNz2uVvfbd77qjVYDAXd+CT5z87sLsuz5D9lKYaoT7edAUw9FZxvSBNMsw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258037; c=relaxed/simple;
-	bh=hvCP401wxpjpPGeKuKbUInv30FhSAooicbDHv61xlnk=;
+	s=arc-20240116; t=1792258041; c=relaxed/simple;
+	bh=FL+mNAb/QPkIm/5hryUUov3LtQiKnk+Tt/EZrp0tX1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1YAPXLX0llaQ7SjjUJCwLG0ZQSI5VppIPCoQdxL/IUA30H+XbMOIieYgJudaFSeAFcXz55Kyl+0XRqunueAnLN2Pxbr9neCPp1Wi9AmR0g1RDYoZRusxY8UNQjdVlyDVzKhSFMcIU6cTEf28gfvik/ljXJOcSOug3FSkKaqN94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1raaxzTQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d57HcPODH/AAIaNlNwawwEQvCIIoI6WXRWcsf3r0IqQ6SSOg3atySvk6toT5gXguJw93+FH7vjE89PUdAeG97bESeCTDLKvxyWVRVvnwb/Z8/Iimsiq6GrGfDLTOiIL9Ry2bXOgaW+ldKoav/D9Dw6N4mZ6TTo9Uq7FbGeeANlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=savJPpWF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1raaxzTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4324D1F000C4;
-	Sat, 17 Oct 2026 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="savJPpWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392451F000C4;
+	Sat, 17 Oct 2026 17:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258036;
-	bh=iUD50ZGbDiC3GS5n8uZMHl6sn3FXsgbAAYhoW9ds8xs=;
+	s=korg; t=1792258039;
+	bh=uj9kaEczUxIVakhctgzR+KwaOGHIs+JyVknuvP3439U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1raaxzTQoKWEW7B/0RvlK6q+THGUp01ZnV+OLLr/IWw9qBzXujbPVKPBZzBzfRYwt
-	 DhZzvYfhs3TvxYSdPmszKOQuzdNMRk0d7R2edbQn4uObvARG9IMoF0eEww7MREW6ci
-	 umgle2waPi2rLlwF6pXRI3Q+kqWwaBVZjCKcz8dQ=
+	b=savJPpWFsfIEKnvIsXopC7knbwIRLOlnPUZFNeAiIO2K6JBeGfcOal+4TUcF7QVS1
+	 6qN1f1e4Q7g1JWwSsqk9ERhSQcEV7nkhImc6bxRK3pthBfEjtBI2ZegrWuU79xJ6Eg
+	 jj4vIF3ChI9xVitfhTnbFJE7eLbbsx671ftaSYz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eauger@redhat.com>,
-	Hongyu Ning <hongyu.ning@linux.intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Wu Yunchuan <yunchuan@nfschina.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0749/1674] virtio: break and reset virtio devices on device_shutdown()
-Date: Sat, 17 Oct 2026 17:50:21 +0200
-Message-ID: <20261017160450.329936771@linuxfoundation.org>
+Subject: [PATCH 6.6 0707/1674] wifi: ath12k: Remove unnecessary (void*) conversions
+Date: Sat, 17 Oct 2026 17:49:39 +0200
+Message-ID: <20261017160449.254046490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,88 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Wu Yunchuan <yunchuan@nfschina.com>
 
-[ Upstream commit 8bd2fa086a04886798b505f28db4002525895203 ]
+[ Upstream commit e5e8b38f0c05a3d0edba76bdee00e753067f4281 ]
 
-Hongyu reported a hang on kexec in a VM. QEMU reported invalid memory
-accesses during the hang.
+No need cast (void*) to (struct hal_rx_ppdu_end_user_stats *),
+(struct ath12k_rx_desc_info *) or (struct hal_tx_msdu_ext_desc *).
+Change the prototype to remove the local variable.
 
-	Invalid read at addr 0x102877002, size 2, region '(null)', reason: rejected
-	Invalid write at addr 0x102877A44, size 2, region '(null)', reason: rejected
-	...
-
-It was traced down to virtio-console. Kexec works fine if virtio-console
-is not in use.
-
-The issue is that virtio-console continues to write to the MMIO even after
-underlying virtio-pci device is reset.
-
-Additionally, Eric noticed that IOMMUs are reset before devices, if
-devices are not reset on shutdown they continue to poke at guest memory
-and get errors from the IOMMU. Some devices get wedged then.
-
-The problem can be solved by breaking all virtio devices on virtio
-bus shutdown, then resetting them.
-
-Reported-by: Eric Auger <eauger@redhat.com>
-Reported-by: Hongyu Ning <hongyu.ning@linux.intel.com>
-Message-ID: <c1dbc7dbad9b445245d3348f19e6742b0be07347.1740094946.git.mst@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Wu Yunchuan <yunchuan@nfschina.com>
+Suggested-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230919045142.524226-1-yunchuan@nfschina.com
+Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 12 +++++-------
+ drivers/net/wireless/ath/ath12k/dp_rx.c  |  2 +-
+ drivers/net/wireless/ath/ath12k/dp_tx.c  |  5 ++---
+ 3 files changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index eb8b17b3caec3..d09ab0ee74d6b 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -358,6 +358,34 @@ static const struct cpumask *virtio_irq_get_affinity(struct device *_d,
- 	return dev->config->get_vq_affinity(dev, irq_vec);
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index 69bf75ebd7518..97f068b0ae7f1 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -13,8 +13,7 @@
+ static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
+ 					       struct hal_rx_user_status *rx_user_status)
+ {
+-	struct hal_rx_ppdu_end_user_stats *ppdu_end_user =
+-				(struct hal_rx_ppdu_end_user_stats *)rx_tlv;
++	struct hal_rx_ppdu_end_user_stats *ppdu_end_user = rx_tlv;
+ 
+ 	rx_user_status->ul_ofdma_user_v0_word0 =
+ 		__le32_to_cpu(ppdu_end_user->usr_resp_ref);
+@@ -23,13 +22,12 @@ static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
  }
  
-+static void virtio_dev_shutdown(struct device *_d)
-+{
-+	struct virtio_device *dev = dev_to_virtio(_d);
-+	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
-+
-+	/*
-+	 * Stop accesses to or from the device.
-+	 * We only need to do it if there's a driver - no accesses otherwise.
-+	 */
-+	if (!drv)
-+		return;
-+
-+	/*
-+	 * Some devices get wedged if you kick them after they are
-+	 * reset. Mark all vqs as broken to make sure we don't.
-+	 */
-+	virtio_break_device(dev);
-+	/*
-+	 * Guarantee that any callback will see vq->broken as true.
-+	 */
-+	virtio_synchronize_cbs(dev);
-+	/*
-+	 * As IOMMUs are reset on shutdown, this will block device access to memory.
-+	 * Some devices get wedged if this happens, so reset to make sure it does not.
-+	 */
-+	dev->config->reset(dev);
-+}
-+
- static const struct bus_type virtio_bus = {
- 	.name  = "virtio",
- 	.match = virtio_dev_match,
-@@ -366,6 +394,7 @@ static const struct bus_type virtio_bus = {
- 	.probe = virtio_dev_probe,
- 	.remove = virtio_dev_remove,
- 	.irq_get_affinity = virtio_irq_get_affinity,
-+	.shutdown = virtio_dev_shutdown,
- };
+ static void
+-ath12k_dp_mon_rx_populate_byte_count(void *rx_tlv, void *ppduinfo,
++ath12k_dp_mon_rx_populate_byte_count(const struct hal_rx_ppdu_end_user_stats *stats,
++				     void *ppduinfo,
+ 				     struct hal_rx_user_status *rx_user_status)
+ {
+-	struct hal_rx_ppdu_end_user_stats *ppdu_end_user =
+-		(struct hal_rx_ppdu_end_user_stats *)rx_tlv;
+-	u32 mpdu_ok_byte_count = __le32_to_cpu(ppdu_end_user->mpdu_ok_cnt);
+-	u32 mpdu_err_byte_count = __le32_to_cpu(ppdu_end_user->mpdu_err_cnt);
++	u32 mpdu_ok_byte_count = __le32_to_cpu(stats->mpdu_ok_cnt);
++	u32 mpdu_err_byte_count = __le32_to_cpu(stats->mpdu_err_cnt);
  
- int register_virtio_driver(struct virtio_driver *driver)
+ 	rx_user_status->mpdu_ok_byte_count =
+ 		u32_get_bits(mpdu_ok_byte_count,
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 56dda76d066c3..7fef0e8f9d924 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -3808,7 +3808,7 @@ int ath12k_dp_rx_process_wbm_err(struct ath12k_base *ab,
+ 			continue;
+ 		}
+ 
+-		desc_info = (struct ath12k_rx_desc_info *)err_info.rx_desc;
++		desc_info = err_info.rx_desc;
+ 
+ 		/* retry manual desc retrieval if hw cc is not done */
+ 		if (!desc_info) {
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index 474e0d4d406ea..dde652dd37cae 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -106,11 +106,10 @@ static struct ath12k_tx_desc_info *ath12k_dp_tx_assign_buffer(struct ath12k_dp *
+ 	return desc;
+ }
+ 
+-static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab, void *cmd,
++static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
++					     struct hal_tx_msdu_ext_desc *tcl_ext_cmd,
+ 					     struct hal_tx_info *ti)
+ {
+-	struct hal_tx_msdu_ext_desc *tcl_ext_cmd = (struct hal_tx_msdu_ext_desc *)cmd;
+-
+ 	tcl_ext_cmd->info0 = le32_encode_bits(ti->paddr,
+ 					      HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO);
+ 	tcl_ext_cmd->info1 = le32_encode_bits(0x0,
 -- 
 2.53.0
 
