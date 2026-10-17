@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB0B17BED0;
-	Sat, 17 Oct 2026 16:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E686B3B0AF0;
+	Sat, 17 Oct 2026 16:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255711; cv=none; b=EhTICkX5gjeAgHOnZX69L432JAxPWWKcbod43DitDMF8xNk6z5DYHzRWrOAOcLHU6zFL5F0/KpO4pXPolG4LmFZQBbzBpqEhEoP6ii7LQ1om5JBGlSS55zNJGcvbkVogwDaH5tafphlqb/bo0ZZunDnBmqCHvm7gSmKMzhxVZ3E=
+	t=1792255715; cv=none; b=GPrhFoMYjHgN8MuwguKXKCaXxMNTVWWdCNnT0stGMz0v3AuCxuxf05Dgz5sPAMKK1BwCVZ7XehAODN/YP7yjRIoHN1rDZDolAjE9hWgzJo+3keyZWceR7NXqNN4kx/BbrQNR2o+6IIQ6w/X+LnPjiajfTQW4lR/S/SCj1OhGbdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255711; c=relaxed/simple;
-	bh=NY4oqUtEJcB4vVvy4FunWMq8m9c20O1yYv77O52uswM=;
+	s=arc-20240116; t=1792255715; c=relaxed/simple;
+	bh=O65D1F47Vgsv42XbwbbbnYcVLcUcr2dXWCMwfeHNgDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLdDq1bcDbYjqVWXnY3oZVORPr3EzD0q304rbqSNICzQICiQjkysxE0fkNPrgZ0TfwbzZNVgTkhlcwFaSXi3KFUWKqn3iVjtSkcgRBibong9SsplRlDq50WR4v0+N4uax4ZHUqb5OygAlm0T6ID00yKP7hJV3r5aMyTH3XUGzK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjZDnp59; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JIFKyTshzGSwwZtVfzPOZHQP3B3GhWQZgUuYIlCs7sMhRKAVE3QMsvf6L/pI5FiTrxKJTZ5v2Ufv7HcJGOR8FZnGvCI2HsGraYldh8OISAKbx9QqlHRa+UDXlFyMwaaE22kP9+76C6NZZlBLgZNTCMD8ii0mz4zs1hohzbNwJUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxI8HHDq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjZDnp59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2961F1F000C4;
-	Sat, 17 Oct 2026 16:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxI8HHDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F309F1F000C4;
+	Sat, 17 Oct 2026 16:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255710;
-	bh=EDurl6TPfU3vHHwYyfCO+fid9zgq2fzBvpQGECWIwgE=;
+	s=korg; t=1792255713;
+	bh=RqrvzqIpSR+1HWXWcMfv/HgCnDmsYS7C0DxmxBOdTA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjZDnp59vPf26vQqi319f5Efl+T6GaiE7z4upK2lub/F2BWkPFMZBAQ3C51zbWivg
-	 kiDLRviLaqRFW5AMmFudaSkTJN4UQXdujqoJ1KEMbh4AUuEkIeHsyK8BMTW7/6Iyk4
-	 SrFOkKB2BhN8m8JgKMTxpCvAo1kmLIjS+anCvQ7U=
+	b=HxI8HHDq6UwwFtYYBmj8w4AWdnnF6jdbnyv/93jCramTAaJ9e6pIbo7QOUFMIRZml
+	 YIq4kmZS6Yv4rArAq618iA4bJ6CiJC3NhU9W9Wc+SSfynL1yj2K7C7UVnyzzsa5Jls
+	 hp2HWMD/7Fwrc386bie7WDfqG8FtofkCINtzU6Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattia Meleleo <mattia.meleleo@coralogix.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 866/869] bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
-Date: Sat, 17 Oct 2026 18:01:47 +0200
-Message-ID: <20261017160059.060890644@linuxfoundation.org>
+Subject: [PATCH 6.12 840/869] ceph: introduce ceph_submit_write() method
+Date: Sat, 17 Oct 2026 18:01:21 +0200
+Message-ID: <20261017160058.407906674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,95 +52,618 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattia Meleleo <mattia.meleleo@coralogix.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 04af4efde58a4a4ef4feab7360c46af9ec0b83a0 ]
+[ Upstream commit 1551ec61dc551dab1bb40c516a5a096607aff774 ]
 
-tcp_bpf_ioctl() answers SIOCINQ from psock->msg_tot_len, which only
-counts bytes in ingress_msg. Without a stream/skb verdict program
-nothing is diverted there: data stays in sk_receive_queue, so FIONREAD
-returns 0 even though read() returns data.
+Final responsibility of ceph_writepages_start() is
+to submit write requests for processed dirty folios/pages.
+The ceph_submit_write() summarize all this logic in
+one method.
 
-Add tcp_inq() to the reported value when the psock has no verdict
-program. The two queues are disjoint, so bytes redirected into
-ingress_msg from other sockets stay correctly accounted through
-msg_tot_len.
+The generic/421 fails to finish because of the issue:
 
-Remove unused sk_psock_msg_inq().
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.894678] INFO: task kworker/u48:0:11 blocked for more than 122 seconds.
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.895403] Not tainted 6.13.0-rc5+ #1
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.895867] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.896633] task:kworker/u48:0 state:D stack:0 pid:11 tgid:11 ppid:2 flags:0x00004000
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.896641] Workqueue: writeback wb_workfn (flush-ceph-24)
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897614] Call Trace:
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897620] <TASK>
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897629] __schedule+0x443/0x16b0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897637] schedule+0x2b/0x140
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897640] io_schedule+0x4c/0x80
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897643] folio_wait_bit_common+0x11b/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897646] ? _raw_spin_unlock_irq+0xe/0x50
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897652] ? __pfx_wake_page_function+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897655] __folio_lock+0x17/0x30
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897658] ceph_writepages_start+0xca9/0x1fb0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897663] ? fsnotify_remove_queued_event+0x2f/0x40
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897668] do_writepages+0xd2/0x240
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897672] __writeback_single_inode+0x44/0x350
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897675] writeback_sb_inodes+0x25c/0x550
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897680] wb_writeback+0x89/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897683] ? finish_task_switch.isra.0+0x97/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897687] wb_workfn+0xb5/0x410
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897689] process_one_work+0x188/0x3d0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897692] worker_thread+0x2b5/0x3c0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897694] ? __pfx_worker_thread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897696] kthread+0xe1/0x120
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897699] ? __pfx_kthread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897701] ret_from_fork+0x43/0x70
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897705] ? __pfx_kthread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897707] ret_from_fork_asm+0x1a/0x30
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897711] </TASK>
 
-Fixes: 929e30f93125 ("bpf, sockmap: Fix FIONREAD for sockmap")
-Signed-off-by: Mattia Meleleo <mattia.meleleo@coralogix.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+There are two problems here:
+
+if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
+     rc = -EIO;
+     goto release_folios;
+}
+
+(1) ceph_kill_sb() doesn't wait ending of flushing
+all dirty folios/pages because of racy nature of
+mdsc->stopping_blockers. As a result, mdsc->stopping
+becomes CEPH_MDSC_STOPPING_FLUSHED too early.
+(2) The ceph_inc_osd_stopping_blocker(fsc->mdsc) fails
+to increment mdsc->stopping_blockers. Finally,
+already locked folios/pages are never been unlocked
+and the logic tries to lock the same page second time.
+
+This patch implements refactoring of ceph_submit_write()
+and also it solves the second issue.
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Link: https://lore.kernel.org/r/20250205000249.123054-4-slava@dubeyko.com
+Tested-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: cce7c15faaac ("ceph: always call ceph_shift_unused_folios_left()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h | 14 --------------
- net/ipv4/tcp_bpf.c    | 17 ++++++++++++++++-
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ fs/ceph/addr.c | 461 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 257 insertions(+), 204 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index ce8464324d42f..ae2b34cc10eea 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -561,20 +561,6 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
- 	return !!psock->saved_data_ready;
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 7d24bb943b1ee..ded22f066128f 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1385,6 +1385,245 @@ int ceph_process_folio_batch(struct address_space *mapping,
+ 	return rc;
  }
  
--/* for tcp only, sk is locked */
--static inline ssize_t sk_psock_msg_inq(struct sock *sk)
--{
--	struct sk_psock *psock;
--	ssize_t inq = 0;
--
--	psock = sk_psock_get(sk);
--	if (likely(psock)) {
--		inq = sk_psock_get_msg_len_nolock(psock);
--		sk_psock_put(sk, psock);
--	}
--	return inq;
--}
--
- /* for udp only, sk is not locked */
- static inline ssize_t sk_msg_first_len(struct sock *sk)
- {
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 0e7e121179134..4d3315ff45227 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -335,6 +335,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 
- static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- {
-+	struct sk_psock *psock;
- 	bool slow;
- 
- 	if (cmd != SIOCINQ)
-@@ -345,7 +346,21 @@ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- 		return -EINVAL;
- 
- 	slow = lock_sock_fast(sk);
--	*karg = sk_psock_msg_inq(sk);
-+	psock = sk_psock_get(sk);
-+	if (unlikely(!psock)) {
-+		unlock_sock_fast(sk, slow);
-+		return tcp_ioctl(sk, cmd, karg);
++static inline
++void ceph_shift_unused_folios_left(struct folio_batch *fbatch)
++{
++	unsigned j, n = 0;
++
++	/* shift unused page to beginning of fbatch */
++	for (j = 0; j < folio_batch_count(fbatch); j++) {
++		if (!fbatch->folios[j])
++			continue;
++
++		if (n < j) {
++			fbatch->folios[n] = fbatch->folios[j];
++		}
++
++		n++;
 +	}
-+	*karg = sk_psock_get_msg_len_nolock(psock);
-+	/* Without a verdict program, ingress data is never diverted to
-+	 * ingress_msg: it stays in sk_receive_queue and is read through
-+	 * the fallback to tcp_recvmsg(), so account for it like
-+	 * tcp_ioctl() does.
-+	 */
-+	if (!READ_ONCE(psock->progs.stream_verdict) &&
-+	    !READ_ONCE(psock->progs.skb_verdict))
-+		*karg += tcp_inq(sk);
-+	sk_psock_put(sk, psock);
- 	unlock_sock_fast(sk, slow);
++
++	fbatch->nr = n;
++}
++
++static
++int ceph_submit_write(struct address_space *mapping,
++			struct writeback_control *wbc,
++			struct ceph_writeback_ctl *ceph_wbc)
++{
++	struct inode *inode = mapping->host;
++	struct ceph_inode_info *ci = ceph_inode(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
++	struct ceph_client *cl = fsc->client;
++	struct ceph_vino vino = ceph_vino(inode);
++	struct ceph_osd_request *req = NULL;
++	struct page *page = NULL;
++	bool caching = ceph_is_cache_enabled(inode);
++	u64 offset;
++	u64 len;
++	unsigned i;
++
++new_request:
++	offset = ceph_fscrypt_page_offset(ceph_wbc->pages[0]);
++	len = ceph_wbc->wsize;
++
++	req = ceph_osdc_new_request(&fsc->client->osdc,
++				    &ci->i_layout, vino,
++				    offset, &len, 0, ceph_wbc->num_ops,
++				    CEPH_OSD_OP_WRITE, CEPH_OSD_FLAG_WRITE,
++				    ceph_wbc->snapc, ceph_wbc->truncate_seq,
++				    ceph_wbc->truncate_size, false);
++	if (IS_ERR(req)) {
++		req = ceph_osdc_new_request(&fsc->client->osdc,
++					    &ci->i_layout, vino,
++					    offset, &len, 0,
++					    min(ceph_wbc->num_ops,
++						CEPH_OSD_SLAB_OPS),
++					    CEPH_OSD_OP_WRITE,
++					    CEPH_OSD_FLAG_WRITE,
++					    ceph_wbc->snapc,
++					    ceph_wbc->truncate_seq,
++					    ceph_wbc->truncate_size,
++					    true);
++		BUG_ON(IS_ERR(req));
++	}
++
++	page = ceph_wbc->pages[ceph_wbc->locked_pages - 1];
++	BUG_ON(len < ceph_fscrypt_page_offset(page) + thp_size(page) - offset);
++
++	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
++		for (i = 0; i < folio_batch_count(&ceph_wbc->fbatch); i++) {
++			struct folio *folio = ceph_wbc->fbatch.folios[i];
++
++			if (!folio)
++				continue;
++
++			page = &folio->page;
++			redirty_page_for_writepage(wbc, page);
++			unlock_page(page);
++		}
++
++		for (i = 0; i < ceph_wbc->locked_pages; i++) {
++			page = ceph_fscrypt_pagecache_page(ceph_wbc->pages[i]);
++
++			if (!page)
++				continue;
++
++			redirty_page_for_writepage(wbc, page);
++			unlock_page(page);
++		}
++
++		ceph_osdc_put_request(req);
++		return -EIO;
++	}
++
++	req->r_callback = writepages_finish;
++	req->r_inode = inode;
++
++	/* Format the osd request message and submit the write */
++	len = 0;
++	ceph_wbc->data_pages = ceph_wbc->pages;
++	ceph_wbc->op_idx = 0;
++	for (i = 0; i < ceph_wbc->locked_pages; i++) {
++		u64 cur_offset;
++
++		page = ceph_fscrypt_pagecache_page(ceph_wbc->pages[i]);
++		cur_offset = page_offset(page);
++
++		/*
++		 * Discontinuity in page range? Ceph can handle that by just passing
++		 * multiple extents in the write op.
++		 */
++		if (offset + len != cur_offset) {
++			/* If it's full, stop here */
++			if (ceph_wbc->op_idx + 1 == req->r_num_ops)
++				break;
++
++			/* Kick off an fscache write with what we have so far. */
++			ceph_fscache_write_to_cache(inode, offset, len, caching);
++
++			/* Start a new extent */
++			osd_req_op_extent_dup_last(req, ceph_wbc->op_idx,
++						   cur_offset - offset);
++
++			doutc(cl, "got pages at %llu~%llu\n", offset, len);
++
++			osd_req_op_extent_osd_data_pages(req, ceph_wbc->op_idx,
++							 ceph_wbc->data_pages,
++							 len, 0,
++							 ceph_wbc->from_pool,
++							 false);
++			osd_req_op_extent_update(req, ceph_wbc->op_idx, len);
++
++			len = 0;
++			offset = cur_offset;
++			ceph_wbc->data_pages = ceph_wbc->pages + i;
++			ceph_wbc->op_idx++;
++		}
++
++		set_page_writeback(page);
++
++		if (caching)
++			ceph_set_page_fscache(page);
++
++		len += thp_size(page);
++	}
++
++	ceph_fscache_write_to_cache(inode, offset, len, caching);
++
++	if (ceph_wbc->size_stable) {
++		len = min(len, ceph_wbc->i_size - offset);
++	} else if (i == ceph_wbc->locked_pages) {
++		/* writepages_finish() clears writeback pages
++		 * according to the data length, so make sure
++		 * data length covers all locked pages */
++		u64 min_len = len + 1 - thp_size(page);
++		len = get_writepages_data_length(inode,
++						 ceph_wbc->pages[i - 1],
++						 offset);
++		len = max(len, min_len);
++	}
++
++	if (IS_ENCRYPTED(inode))
++		len = round_up(len, CEPH_FSCRYPT_BLOCK_SIZE);
++
++	doutc(cl, "got pages at %llu~%llu\n", offset, len);
++
++	if (IS_ENCRYPTED(inode) &&
++	    ((offset | len) & ~CEPH_FSCRYPT_BLOCK_MASK)) {
++		pr_warn_client(cl,
++			"bad encrypted write offset=%lld len=%llu\n",
++			offset, len);
++	}
++
++	osd_req_op_extent_osd_data_pages(req, ceph_wbc->op_idx,
++					 ceph_wbc->data_pages, len,
++					 0, ceph_wbc->from_pool, false);
++	osd_req_op_extent_update(req, ceph_wbc->op_idx, len);
++
++	BUG_ON(ceph_wbc->op_idx + 1 != req->r_num_ops);
++
++	ceph_wbc->from_pool = false;
++	if (i < ceph_wbc->locked_pages) {
++		BUG_ON(ceph_wbc->num_ops <= req->r_num_ops);
++		ceph_wbc->num_ops -= req->r_num_ops;
++		ceph_wbc->locked_pages -= i;
++
++		/* allocate new pages array for next request */
++		ceph_wbc->data_pages = ceph_wbc->pages;
++		__ceph_allocate_page_array(ceph_wbc, ceph_wbc->locked_pages);
++		memcpy(ceph_wbc->pages, ceph_wbc->data_pages + i,
++			ceph_wbc->locked_pages * sizeof(*ceph_wbc->pages));
++		memset(ceph_wbc->data_pages + i, 0,
++			ceph_wbc->locked_pages * sizeof(*ceph_wbc->pages));
++	} else {
++		BUG_ON(ceph_wbc->num_ops != req->r_num_ops);
++		/* request message now owns the pages array */
++		ceph_wbc->pages = NULL;
++	}
++
++	req->r_mtime = inode_get_mtime(inode);
++	ceph_osdc_start_request(&fsc->client->osdc, req);
++	req = NULL;
++
++	wbc->nr_to_write -= i;
++	if (ceph_wbc->pages)
++		goto new_request;
++
++	return 0;
++}
++
++static
++void ceph_wait_until_current_writes_complete(struct address_space *mapping,
++					     struct writeback_control *wbc,
++					     struct ceph_writeback_ctl *ceph_wbc)
++{
++	struct page *page;
++	unsigned i, nr;
++
++	if (wbc->sync_mode != WB_SYNC_NONE &&
++	    ceph_wbc->start_index == 0 && /* all dirty pages were checked */
++	    !ceph_wbc->head_snapc) {
++		ceph_wbc->index = 0;
++
++		while ((ceph_wbc->index <= ceph_wbc->end) &&
++			(nr = filemap_get_folios_tag(mapping,
++						     &ceph_wbc->index,
++						     (pgoff_t)-1,
++						     PAGECACHE_TAG_WRITEBACK,
++						     &ceph_wbc->fbatch))) {
++			for (i = 0; i < nr; i++) {
++				page = &ceph_wbc->fbatch.folios[i]->page;
++				if (page_snap_context(page) != ceph_wbc->snapc)
++					continue;
++				wait_on_page_writeback(page);
++			}
++
++			folio_batch_release(&ceph_wbc->fbatch);
++			cond_resched();
++		}
++	}
++}
++
+ /*
+  * initiate async writeback
+  */
+@@ -1392,17 +1631,12 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 				 struct writeback_control *wbc)
+ {
+ 	struct inode *inode = mapping->host;
+-	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_client *cl = fsc->client;
+-	struct ceph_vino vino = ceph_vino(inode);
+ 	struct ceph_writeback_ctl ceph_wbc;
+-	struct ceph_osd_request *req = NULL;
+ 	int rc = 0;
+-	bool caching = ceph_is_cache_enabled(inode);
  
- 	return 0;
+-	if (wbc->sync_mode == WB_SYNC_NONE &&
+-	    fsc->write_congested)
++	if (wbc->sync_mode == WB_SYNC_NONE && fsc->write_congested)
+ 		return 0;
+ 
+ 	doutc(cl, "%llx.%llx (mode=%s)\n", ceph_vinop(inode),
+@@ -1429,9 +1663,6 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		tag_pages_for_writeback(mapping, ceph_wbc.index, ceph_wbc.end);
+ 
+ 	while (!has_writeback_done(&ceph_wbc)) {
+-		unsigned i;
+-		struct page *page;
+-
+ 		ceph_wbc.locked_pages = 0;
+ 		ceph_wbc.max_pages = ceph_wbc.wsize >> PAGE_SHIFT;
+ 
+@@ -1449,6 +1680,7 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		if (!ceph_wbc.nr_folios && !ceph_wbc.locked_pages)
+ 			break;
+ 
++process_folio_batch:
+ 		rc = ceph_process_folio_batch(mapping, wbc, &ceph_wbc);
+ 		if (rc)
+ 			goto release_folios;
+@@ -1456,187 +1688,30 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		/* did we get anything? */
+ 		if (!ceph_wbc.locked_pages)
+ 			goto release_folios;
+-		if (i) {
+-			unsigned j, n = 0;
+-			/* shift unused page to beginning of fbatch */
+-			for (j = 0; j < ceph_wbc.nr_folios; j++) {
+-				if (!ceph_wbc.fbatch.folios[j])
+-					continue;
+-				if (n < j) {
+-					ceph_wbc.fbatch.folios[n] =
+-						ceph_wbc.fbatch.folios[j];
+-				}
+-				n++;
+-			}
+-			ceph_wbc.fbatch.nr = n;
+ 
+-			if (ceph_wbc.nr_folios && i == ceph_wbc.nr_folios &&
++		if (ceph_wbc.processed_in_fbatch) {
++			ceph_shift_unused_folios_left(&ceph_wbc.fbatch);
++
++			if (folio_batch_count(&ceph_wbc.fbatch) == 0 &&
+ 			    ceph_wbc.locked_pages < ceph_wbc.max_pages) {
+ 				doutc(cl, "reached end fbatch, trying for more\n");
+-				folio_batch_release(&ceph_wbc.fbatch);
+ 				goto get_more_pages;
+ 			}
+ 		}
+ 
+-new_request:
+-		ceph_wbc.offset = ceph_fscrypt_page_offset(ceph_wbc.pages[0]);
+-		ceph_wbc.len = ceph_wbc.wsize;
+-
+-		req = ceph_osdc_new_request(&fsc->client->osdc,
+-					&ci->i_layout, vino,
+-					ceph_wbc.offset, &ceph_wbc.len,
+-					0, ceph_wbc.num_ops,
+-					CEPH_OSD_OP_WRITE, CEPH_OSD_FLAG_WRITE,
+-					ceph_wbc.snapc, ceph_wbc.truncate_seq,
+-					ceph_wbc.truncate_size, false);
+-		if (IS_ERR(req)) {
+-			req = ceph_osdc_new_request(&fsc->client->osdc,
+-						&ci->i_layout, vino,
+-						ceph_wbc.offset, &ceph_wbc.len,
+-						0, min(ceph_wbc.num_ops,
+-						    CEPH_OSD_SLAB_OPS),
+-						CEPH_OSD_OP_WRITE,
+-						CEPH_OSD_FLAG_WRITE,
+-						ceph_wbc.snapc,
+-						ceph_wbc.truncate_seq,
+-						ceph_wbc.truncate_size, true);
+-			BUG_ON(IS_ERR(req));
+-		}
+-		BUG_ON(ceph_wbc.len <
+-			ceph_fscrypt_page_offset(ceph_wbc.pages[ceph_wbc.locked_pages - 1]) +
+-				thp_size(ceph_wbc.pages[ceph_wbc.locked_pages - 1]) -
+-					ceph_wbc.offset);
+-
+-		if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
+-			rc = -EIO;
++		rc = ceph_submit_write(mapping, wbc, &ceph_wbc);
++		if (rc)
+ 			goto release_folios;
+-		}
+-		req->r_callback = writepages_finish;
+-		req->r_inode = inode;
+-
+-		/* Format the osd request message and submit the write */
+-		ceph_wbc.len = 0;
+-		ceph_wbc.data_pages = ceph_wbc.pages;
+-		ceph_wbc.op_idx = 0;
+-		for (i = 0; i < ceph_wbc.locked_pages; i++) {
+-			struct page *page =
+-				ceph_fscrypt_pagecache_page(ceph_wbc.pages[i]);
+-
+-			u64 cur_offset = page_offset(page);
+-			/*
+-			 * Discontinuity in page range? Ceph can handle that by just passing
+-			 * multiple extents in the write op.
+-			 */
+-			if (ceph_wbc.offset + ceph_wbc.len != cur_offset) {
+-				/* If it's full, stop here */
+-				if (ceph_wbc.op_idx + 1 == req->r_num_ops)
+-					break;
+-
+-				/* Kick off an fscache write with what we have so far. */
+-				ceph_fscache_write_to_cache(inode, ceph_wbc.offset,
+-							    ceph_wbc.len, caching);
+-
+-				/* Start a new extent */
+-				osd_req_op_extent_dup_last(req, ceph_wbc.op_idx,
+-							   cur_offset -
+-								ceph_wbc.offset);
+-				doutc(cl, "got pages at %llu~%llu\n",
+-					ceph_wbc.offset,
+-					ceph_wbc.len);
+-				osd_req_op_extent_osd_data_pages(req,
+-							ceph_wbc.op_idx,
+-							ceph_wbc.data_pages,
+-							ceph_wbc.len, 0,
+-							ceph_wbc.from_pool, false);
+-				osd_req_op_extent_update(req, ceph_wbc.op_idx,
+-							 ceph_wbc.len);
+-
+-				ceph_wbc.len = 0;
+-				ceph_wbc.offset = cur_offset;
+-				ceph_wbc.data_pages = ceph_wbc.pages + i;
+-				ceph_wbc.op_idx++;
+-			}
+ 
+-			set_page_writeback(page);
+-			if (caching)
+-				ceph_set_page_fscache(page);
+-			ceph_wbc.len += thp_size(page);
+-		}
+-		ceph_fscache_write_to_cache(inode, ceph_wbc.offset,
+-					    ceph_wbc.len, caching);
+-
+-		if (ceph_wbc.size_stable) {
+-			ceph_wbc.len = min(ceph_wbc.len,
+-					    ceph_wbc.i_size - ceph_wbc.offset);
+-		} else if (i == ceph_wbc.locked_pages) {
+-			/* writepages_finish() clears writeback pages
+-			 * according to the data length, so make sure
+-			 * data length covers all locked pages */
+-			u64 min_len = ceph_wbc.len + 1 - thp_size(page);
+-			ceph_wbc.len =
+-				get_writepages_data_length(inode,
+-							ceph_wbc.pages[i - 1],
+-							ceph_wbc.offset);
+-			ceph_wbc.len = max(ceph_wbc.len, min_len);
+-		}
+-		if (IS_ENCRYPTED(inode)) {
+-			ceph_wbc.len = round_up(ceph_wbc.len,
+-						CEPH_FSCRYPT_BLOCK_SIZE);
+-		}
+-
+-		doutc(cl, "got pages at %llu~%llu\n",
+-			ceph_wbc.offset, ceph_wbc.len);
++		ceph_wbc.locked_pages = 0;
++		ceph_wbc.strip_unit_end = 0;
+ 
+-		if (IS_ENCRYPTED(inode) &&
+-		    ((ceph_wbc.offset | ceph_wbc.len) & ~CEPH_FSCRYPT_BLOCK_MASK))
+-			pr_warn_client(cl,
+-				"bad encrypted write offset=%lld len=%llu\n",
+-				ceph_wbc.offset, ceph_wbc.len);
+-
+-		osd_req_op_extent_osd_data_pages(req, ceph_wbc.op_idx,
+-						 ceph_wbc.data_pages,
+-						 ceph_wbc.len,
+-						 0, ceph_wbc.from_pool, false);
+-		osd_req_op_extent_update(req, ceph_wbc.op_idx, ceph_wbc.len);
+-
+-		BUG_ON(ceph_wbc.op_idx + 1 != req->r_num_ops);
+-
+-		ceph_wbc.from_pool = false;
+-		if (i < ceph_wbc.locked_pages) {
+-			BUG_ON(ceph_wbc.num_ops <= req->r_num_ops);
+-			ceph_wbc.num_ops -= req->r_num_ops;
+-			ceph_wbc.locked_pages -= i;
+-
+-			/* allocate new pages array for next request */
+-			ceph_wbc.data_pages = ceph_wbc.pages;
+-			ceph_wbc.pages = kmalloc_array(ceph_wbc.locked_pages,
+-							sizeof(*ceph_wbc.pages),
+-							GFP_NOFS);
+-			if (!ceph_wbc.pages) {
+-				ceph_wbc.from_pool = true;
+-				ceph_wbc.pages =
+-					mempool_alloc(ceph_wb_pagevec_pool, GFP_NOFS);
+-				BUG_ON(!ceph_wbc.pages);
+-			}
+-			memcpy(ceph_wbc.pages, ceph_wbc.data_pages + i,
+-			       ceph_wbc.locked_pages * sizeof(*ceph_wbc.pages));
+-			memset(ceph_wbc.data_pages + i, 0,
+-			       ceph_wbc.locked_pages * sizeof(*ceph_wbc.pages));
+-		} else {
+-			BUG_ON(ceph_wbc.num_ops != req->r_num_ops);
+-			ceph_wbc.index = ceph_wbc.pages[i - 1]->index + 1;
+-			/* request message now owns the pages array */
+-			ceph_wbc.pages = NULL;
++		if (folio_batch_count(&ceph_wbc.fbatch) > 0) {
++			ceph_wbc.nr_folios =
++				folio_batch_count(&ceph_wbc.fbatch);
++			goto process_folio_batch;
+ 		}
+ 
+-		req->r_mtime = inode_get_mtime(inode);
+-		ceph_osdc_start_request(&fsc->client->osdc, req);
+-		req = NULL;
+-
+-		wbc->nr_to_write -= i;
+-		if (ceph_wbc.pages)
+-			goto new_request;
+-
+ 		/*
+ 		 * We stop writing back only if we are not doing
+ 		 * integrity sync. In case of integrity sync we have to
+@@ -1656,32 +1731,12 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 	if (ceph_wbc.should_loop && !ceph_wbc.done) {
+ 		/* more to do; loop back to beginning of file */
+ 		doutc(cl, "looping back to beginning of file\n");
+-		ceph_wbc.end = ceph_wbc.start_index - 1; /* OK even when start_index == 0 */
++		/* OK even when start_index == 0 */
++		ceph_wbc.end = ceph_wbc.start_index - 1;
+ 
+ 		/* to write dirty pages associated with next snapc,
+ 		 * we need to wait until current writes complete */
+-		if (wbc->sync_mode != WB_SYNC_NONE &&
+-		    ceph_wbc.start_index == 0 && /* all dirty pages were checked */
+-		    !ceph_wbc.head_snapc) {
+-			struct page *page;
+-			unsigned i, nr;
+-			ceph_wbc.index = 0;
+-			while ((ceph_wbc.index <= ceph_wbc.end) &&
+-			       (nr = filemap_get_folios_tag(mapping,
+-						&ceph_wbc.index,
+-						(pgoff_t)-1,
+-						PAGECACHE_TAG_WRITEBACK,
+-						&ceph_wbc.fbatch))) {
+-				for (i = 0; i < nr; i++) {
+-					page = &ceph_wbc.fbatch.folios[i]->page;
+-					if (page_snap_context(page) != ceph_wbc.snapc)
+-						continue;
+-					wait_on_page_writeback(page);
+-				}
+-				folio_batch_release(&ceph_wbc.fbatch);
+-				cond_resched();
+-			}
+-		}
++		ceph_wait_until_current_writes_complete(mapping, wbc, &ceph_wbc);
+ 
+ 		ceph_wbc.start_index = 0;
+ 		ceph_wbc.index = 0;
+@@ -1692,15 +1747,13 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		mapping->writeback_index = ceph_wbc.index;
+ 
+ out:
+-	ceph_osdc_put_request(req);
+ 	ceph_put_snap_context(ceph_wbc.last_snapc);
+ 	doutc(cl, "%llx.%llx dend - startone, rc = %d\n", ceph_vinop(inode),
+ 	      rc);
++
+ 	return rc;
+ }
+ 
+-
+-
+ /*
+  * See if a given @snapc is either writeable, or already written.
+  */
 -- 
 2.53.0
 
