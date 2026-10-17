@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1B03B2FD8;
-	Sat, 17 Oct 2026 17:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8073B2FD8;
+	Sat, 17 Oct 2026 17:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259184; cv=none; b=XxV+oU7ljjhNr+uTmV9aO8vpaies9uDlQdDLGrVPY+BBsY5Feb+r7wkYDcJyqXzSyTVt1AjD2eicTXU9yyoJUUTQhiAe90n0K51ZDD5tMHroASz44za3Vx2fqaotYcxYw7g2MbigDm4hg4OxnDeUicVRK6zzg7lw7+UR3zk0eBc=
+	t=1792259186; cv=none; b=dkpa7bbl5wmxxpwil7YICFM1F4auMMofAeIM9SjVe3/eviGOO8qyHvdYrv3cNR6XRtX/iYvkrpqsgvRlg0CeWtXZazITxibbZzml2KXf9Cbh8NfbplUvU71zXWNTWd/7iAbLOnmzlGN9CzsnxH44GdQRNxzNkn6lXr2IOJun0n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259184; c=relaxed/simple;
-	bh=7qr75ywuq5JuQuZr1efhiBs2TTyp9kyc1wqup+vZB+U=;
+	s=arc-20240116; t=1792259186; c=relaxed/simple;
+	bh=XHbMtrvJGMlfHx+yTR2YCgqANWFuBn3Q+aSJ6i0mwuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sijlfy7HKwlYn1Eqb1V52a0URvlgv7ntUe9c1HYwdoyfMs0/AQDpFtrKLTYonQM5p0yZe1X3JHdCahN8BowKjlRuS62ayHjPcwsIWqTezE4ma01Pk7OQTQMCAQepnMqdTbJmnVcM96Mz7IZdmZyqLaV53Y3HADbeOwcouLUamQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jy8+l5VV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gBoNsngugdFmruIbU59E474r+0+xrP69+pFXsYCZrM7BkMfc4OYW1A76bvCiAggWRbm0qiuzgnDo2+mN/g5YtEWbkfSqFFKxJq+8OwzmwnNZJPxI4KvONUgD37CE2C0VTu8A0si9JvftUf0/l01PE92MfQa/t0faeJ+AT9KFcB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmexX43S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy8+l5VV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E82C1F000C5;
-	Sat, 17 Oct 2026 17:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmexX43S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240201F000C5;
+	Sat, 17 Oct 2026 17:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259182;
-	bh=hl4aj2kmAUIYMtoQuuOkTQjgyDPhqbKQlHxpx8snJoU=;
+	s=korg; t=1792259185;
+	bh=DNrpBsvb2Z6H5c5vAhuGYhxDcaTcrhnXrxG51CBeKko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jy8+l5VVeoXh5xM6ff7BzrDVZcoyRzzF699j9fFooQfcABXEg54qWj8cdmXbGpfQQ
-	 iigjJhSh/Y25/UVevlM2el74kkKPksmMOSeYT/RkukB6qwLR4CysMc38mdhfI5CRQJ
-	 +fKoF39Q+N+rhnUwoQR+jZPSAL2FrtBQR8mAJVpw=
+	b=hmexX43ShhbPkC+3dcymYm4XerfiEbQFmqwaBRoGri9rkdchKY/pudIQnDb9HUsQa
+	 hg4c/z/JuQGEEx0Yg3WzQCEmIk+f5DIi33UQrPZLP3s/5GUuwu2C7wwWWEWM943Rky
+	 +qnxbbnrU7rotn+a24iB4PBI0vHknam5kUdJHhcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1129/1674] net/liquidio: drop cached VF pci_dev LUT
-Date: Sat, 17 Oct 2026 17:56:41 +0200
-Message-ID: <20261017160500.137385114@linuxfoundation.org>
+Subject: [PATCH 6.6 1130/1674] Bluetooth: 6lowpan: avoid untracked enable work
+Date: Sat, 17 Oct 2026 17:56:42 +0200
+Message-ID: <20261017160500.161811540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,166 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5c0e3ba4f500fd4314ceb42f07f16bc445156431 ]
+[ Upstream commit 352a59dc1f4a41314b6f827c17e16af7ca88271a ]
 
-The PF SR-IOV enable path caches VF pci_dev pointers in
-dpiring_to_vfpcidev_lut[] by iterating with pci_get_device(). Those
-entries do not own a reference, because the iterator drops the previous
-device reference on each step. The cached pointer is then dereferenced
-later when handling OCTEON_VF_FLR_REQUEST.
+lowpan_enable_set() allocates a temporary work item and schedules
+do_enable_set() on system_wq, then returns to debugfs. The debugfs active
+operation has ended at that point, but the worker still executes module
+text and manipulates enable_6lowpan and listen_chan.
 
-Replace the cached VF mapping with runtime lookup on the mailbox DPI
-ring: derive the VF index from q_no, resolve the VF via exported PCI
-IOV helpers, validate it with the PF pointer and VF ID, then issue
-pcie_flr() and drop the reference with pci_dev_put(). Remove the
-unused VF lookup table initialization and cleanup.
+bt_6lowpan_exit() removes the debugfs files and immediately closes and
+puts listen_chan. It has no pointer to the queued work item, so it cannot
+cancel or flush it before tearing down the state that the worker uses.
 
-Fixes: ca6139ffc67ee ("liquidio CN23XX: sysfs VF config support")
-Fixes: 8c978d059224 ("liquidio CN23XX: Mailbox support")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260701040847.1897845-1-dbgh9129@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+debugfs enable write              module exit
+1. lowpan_enable_set() allocates  1. bt_6lowpan_exit() removes
+   set_enable work                   the debugfs file
+2. schedule_work() queues         2. bt_6lowpan_exit() closes
+   do_enable_set()                   and puts listen_chan
+3. the write operation returns    3. module teardown can continue
+4. do_enable_set() later runs
+   against stale state
+
+Run the enable state transition synchronously in lowpan_enable_set()
+instead. The simple debugfs setter can sleep, and this file already handles
+the 6LoWPAN control write synchronously under the same set_lock. Once the
+setter returns, debugfs removal covers the whole operation and exit can no
+longer race with an untracked work item.
+
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in do_enable_set+0x113/0x2e0
+Workqueue: events do_enable_set [bluetooth_6lowpan]
+The buggy address belongs to the object at ffff888109cb8000
+
+Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/cavium/liquidio/lio_main.c   | 27 ---------------
- .../ethernet/cavium/liquidio/octeon_device.h  |  3 --
- .../ethernet/cavium/liquidio/octeon_mailbox.c | 33 ++++++++++++++++++-
- 3 files changed, 32 insertions(+), 31 deletions(-)
+ net/bluetooth/6lowpan.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index 8e4e49d24dad8..19e8f8bbd06e7 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3795,9 +3795,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- static int octeon_enable_sriov(struct octeon_device *oct)
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 8625d3db24422..53b09639cba52 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1065,23 +1065,15 @@ static void disconnect_all_peers(void)
+ 	} while (nchans);
+ }
+ 
+-struct set_enable {
+-	struct work_struct work;
+-	bool flag;
+-};
+-
+-static void do_enable_set(struct work_struct *work)
++static void do_enable_set(bool flag)
  {
- 	unsigned int num_vfs_alloced = oct->sriov_info.num_vfs_alloced;
--	struct pci_dev *vfdev;
- 	int err;
--	u32 u;
- 
- 	if (OCTEON_CN23XX_PF(oct) && num_vfs_alloced) {
- 		err = pci_enable_sriov(oct->pci_dev,
-@@ -3810,23 +3808,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
- 			return err;
- 		}
- 		oct->sriov_info.sriov_enabled = 1;
+-	struct set_enable *set_enable = container_of(work,
+-						     struct set_enable, work);
 -
--		/* init lookup table that maps DPI ring number to VF pci_dev
--		 * struct pointer
--		 */
--		u = 0;
--		vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
--				       OCTEON_CN23XX_VF_VID, NULL);
--		while (vfdev) {
--			if (vfdev->is_virtfn &&
--			    (vfdev->physfn == oct->pci_dev)) {
--				oct->sriov_info.dpiring_to_vfpcidev_lut[u] =
--					vfdev;
--				u += oct->sriov_info.rings_per_vf;
--			}
--			vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
--					       OCTEON_CN23XX_VF_VID, vfdev);
--		}
- 	}
+-	if (!set_enable->flag || enable_6lowpan != set_enable->flag)
++	if (!flag || enable_6lowpan != flag)
+ 		/* Disconnect existing connections if 6lowpan is
+ 		 * disabled
+ 		 */
+ 		disconnect_all_peers();
  
- 	return num_vfs_alloced;
-@@ -3834,8 +3815,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+-	enable_6lowpan = set_enable->flag;
++	enable_6lowpan = flag;
  
- static int lio_pci_sriov_disable(struct octeon_device *oct)
+ 	mutex_lock(&set_lock);
+ 	if (listen_chan) {
+@@ -1091,22 +1083,11 @@ static void do_enable_set(struct work_struct *work)
+ 
+ 	listen_chan = bt_6lowpan_listen();
+ 	mutex_unlock(&set_lock);
+-
+-	kfree(set_enable);
+ }
+ 
+ static int lowpan_enable_set(void *data, u64 val)
  {
--	int u;
+-	struct set_enable *set_enable;
 -
- 	if (pci_vfs_assigned(oct->pci_dev)) {
- 		dev_err(&oct->pci_dev->dev, "VFs are still assigned to VMs.\n");
- 		return -EPERM;
-@@ -3843,12 +3822,6 @@ static int lio_pci_sriov_disable(struct octeon_device *oct)
- 
- 	pci_disable_sriov(oct->pci_dev);
- 
--	u = 0;
--	while (u < MAX_POSSIBLE_VFS) {
--		oct->sriov_info.dpiring_to_vfpcidev_lut[u] = NULL;
--		u += oct->sriov_info.rings_per_vf;
--	}
+-	set_enable = kzalloc(sizeof(*set_enable), GFP_KERNEL);
+-	if (!set_enable)
+-		return -ENOMEM;
 -
- 	oct->sriov_info.num_vfs_alloced = 0;
- 	dev_info(&oct->pci_dev->dev, "oct->pf_num:%d disabled VFs\n",
- 		 oct->pf_num);
-diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_device.h b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-index fb380b4f3e020..cfa3b769227f5 100644
---- a/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-+++ b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-@@ -390,9 +390,6 @@ struct octeon_sriov_info {
- 
- 	struct lio_trusted_vf	trusted_vf;
- 
--	/*lookup table that maps DPI ring number to VF pci_dev struct pointer*/
--	struct pci_dev *dpiring_to_vfpcidev_lut[MAX_POSSIBLE_VFS];
+-	set_enable->flag = !!val;
+-	INIT_WORK(&set_enable->work, do_enable_set);
 -
- 	u64	vf_macaddr[MAX_POSSIBLE_VFS];
+-	schedule_work(&set_enable->work);
++	do_enable_set(!!val);
  
- 	u16	vf_vlantci[MAX_POSSIBLE_VFS];
-diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-index ad685f5d0a136..697fcdc41e3cd 100644
---- a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-+++ b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-@@ -26,6 +26,31 @@
- #include "octeon_mailbox.h"
- #include "cn23xx_pf_device.h"
- 
-+static struct pci_dev *lio_vf_pci_dev_by_qno(struct octeon_device *oct, u32 q_no)
-+{
-+	struct pci_dev *vfdev = NULL;
-+	int vfidx;
-+
-+	if (!oct->sriov_info.rings_per_vf)
-+		return NULL;
-+
-+	if (q_no % oct->sriov_info.rings_per_vf)
-+		return NULL;
-+
-+	vfidx = q_no / oct->sriov_info.rings_per_vf;
-+	if (vfidx >= oct->sriov_info.num_vfs_alloced)
-+		return NULL;
-+
-+	while ((vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
-+				       OCTEON_CN23XX_VF_VID, vfdev))) {
-+		if (pci_physfn(vfdev) && pci_physfn(vfdev) == oct->pci_dev &&
-+		    pci_iov_vf_id(vfdev) == vfidx)
-+			return vfdev;
-+	}
-+
-+	return NULL;
-+}
-+
- /**
-  * octeon_mbox_read:
-  * @mbox: Pointer mailbox
-@@ -237,6 +262,7 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
- 				   struct octeon_mbox_cmd *mbox_cmd)
- {
- 	struct octeon_device *oct = mbox->oct_dev;
-+	struct pci_dev *vfdev;
- 
- 	switch (mbox_cmd->msg.s.cmd) {
- 	case OCTEON_VF_ACTIVE:
-@@ -260,7 +286,12 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
- 		dev_info(&oct->pci_dev->dev,
- 			 "got a request for FLR from VF that owns DPI ring %u\n",
- 			 mbox->q_no);
--		pcie_flr(oct->sriov_info.dpiring_to_vfpcidev_lut[mbox->q_no]);
-+		vfdev = lio_vf_pci_dev_by_qno(oct, mbox->q_no);
-+		if (!vfdev)
-+			break;
-+
-+		pcie_flr(vfdev);
-+		pci_dev_put(vfdev);
- 		break;
- 
- 	case OCTEON_PF_CHANGED_VF_MACADDR:
+ 	return 0;
+ }
 -- 
 2.53.0
 
