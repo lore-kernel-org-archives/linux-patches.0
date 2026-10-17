@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175CC2C026C;
-	Sat, 17 Oct 2026 16:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3922C026C;
+	Sat, 17 Oct 2026 16:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254227; cv=none; b=t4iiH1O3+iHOAdCt0BgvulT+6KRVtGfQrp3w07uXwXE9EAXAwRm1DBE5OB40s3ft72x+x7LSEMPKOCfoUTginvrUzviO2HM0TXKzU2Ll2wb96mo64+6umvVSbZ3fI0gR3G3LNIhIxrDLOfKyti3m9sFMk/hAbSOXgeeCf09qA4Y=
+	t=1792254229; cv=none; b=BZvxEEklNR4tQ6TyPKLnSNQltk0DKMMNCMV7c8mtAFUnqyXzPS4bwqPXYBnYkM/ACehWn+8XfUp7ulpySlVgzztzAJffieaTQzlNtoGPQe4Miqf6JWWF+S0NhfK7yxzNv1EKGxSRvlE8uQIQFAPDE92kaNfNXYao4XVdlBBTxb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254227; c=relaxed/simple;
-	bh=s85u5DQAPL/iOWDT/s8rixTf6SX7vlsUS95pqYaTu20=;
+	s=arc-20240116; t=1792254229; c=relaxed/simple;
+	bh=oZzDAL3DRSQhPxM1PdPrkL3/pd5Ug9VHs92edw6KZkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sLkBoDkezTtT6nGcJVdfBjdmN1d+Cj7YoIAYFDYmVQLoqaOYwLw/YyyMueziVQMIhaxX7c02AGelU0veqhO95Yeo6wJuCsat1yFuFeeNXy9IxMBo3KJK3IIWIz4Dvi0rQwSdjUHAf7BdkAUtTRw4+2+XdvIy5ZH1e2F/ipVFHDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPjYmogW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ccu1+PVxTMwRg/px8V7Ds/XAtabTqPoHDvDtDxIgxtb9NW3NTWMMigOWK6snPYAv2IIAFf5dg7uYp6HBVFyrVYWaPR3F4jjzfY1rPzfZgbJ/7UXl2PY0n6XqFfvH2/RIEdW/D5BLXU4r69GbRJ3Dx+TfnM869IfzA7u0aG1Uzo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZgXZ4py; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPjYmogW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B32A1F000C4;
-	Sat, 17 Oct 2026 16:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZgXZ4py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EE51F000C4;
+	Sat, 17 Oct 2026 16:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254225;
-	bh=NKGtS5byiDp9+1CT8Aebx952QkS4RDl4PAwqXictqpQ=;
+	s=korg; t=1792254228;
+	bh=x6yQrNRzES+wS9fCOBWp+GRmeSTdsyFLDrRNwcnFJsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YPjYmogWZUTV7YgMrHULgB7ya999aW7FzSWbT95griwEsipHSsQKQ8muice7vnTr8
-	 ZmZ2HLd7OaS825s/GE/GC6JgddxndqY3hjSEM95JkaZpwFnjHl0bWQkpxr3210y/5R
-	 BYCHXzJXvnofgT95Gqk7g/t9XqVSTdLdZVAYfkCA=
+	b=dZgXZ4pyHLWwdarLpi5yZIx3KRZxI5fAMATRZkdT1LerLxAIS/QIQyFTSbtcQnCyD
+	 UtAKou3W4hOtJhGr/oskSQDiZldvXEeDngQY/UkshAP4Fhmm3FqqBgL0iAPKqkBNFN
+	 K/7cuQ9wf5AJ6YQa/wWsL2oFlJrARjemrllQkrcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 375/869] KVM: x86: Unconditionally recompute CR8 intercept on PPR update
-Date: Sat, 17 Oct 2026 17:53:36 +0200
-Message-ID: <20261017160046.729382750@linuxfoundation.org>
+Subject: [PATCH 6.12 376/869] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
+Date: Sat, 17 Oct 2026 17:53:37 +0200
+Message-ID: <20261017160046.755547745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,118 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos López <clopez@suse.de>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit bb365a506b1e6fb050c0fceaad354fe395385ef0 ]
+[ Upstream commit 2f2312c422fd2695da772cecb30c69994b795964 ]
 
-The TPR_THRESHOLD field in the VMCS is used by VMX to induce VM exits
-when the guest's virtual TPR falls under the specified threshold,
-allowing KVM to inject previously masked interrupts.
+Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
+guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
+doesn't use nested_vmx_vmexit() as that API is intended to be used if and
+only if L2 is active, and the open coded equivalent neglects to put the
+vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
+(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
 
-KVM handles these VM exits in handle_tpr_below_threshold().
-Commit eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
-optimized this function by calling apic_update_ppr() instead of raising
-KVM_REQ_EVENT. apic_update_ppr() then raises KVM_REQ_EVENT if there is
-a pending, deliverable interrupt.
+Note, the !from_vmenter scenario doesn't suffer the same problem, as
+vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
+active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
+getting vmcs12 pages.
 
-However, if there are no new interrupts pending, apic_update_ppr() does
-not issue the request. Thus, kvm_lapic_update_cr8_intercept() and
-vmx_update_cr8_intercept() are not called before VM entry, which results
-in a high, stale TPR_THRESHOLD. This is problematic due to the following
-sentence in 28.2.1.1 "VM-Execution Control Fields" in the SDM:
-
-  The following check is performed if the “use TPR shadow” VM-execution
-  control is 1 and the “virtualize APIC accesses” and “virtual-interrupt
-  delivery” VM-execution controls are both 0: the value of bits 3:0 of
-  the TPR threshold VM-execution control field should not be greater
-  than the value of bits 7:4 of VTPR.
-
-This error condition is typically not observed when KVM runs on a bare
-metal system because modern processors support APICv, which enables
-virtual-interrupt delivery, and which KVM uses when possible. This
-causes the processor to no longer generate TPR-below-threshold exits
-and to no longer check TPR_THRESHOLD on entry. However, when running
-on older platforms, or under nested virtualization on a hypervisor that
-does not support virtual-interrupt delivery and enforces this check
-(like Hyper-V) this can cause a VM entry failure with hardware error
-0x7, as seen in [1].
-
-Call kvm_lapic_update_cr8_intercept() if apic_update_ppr() does not
-find a deliverable interrupt (and thus does not raise KVM_REQ_EVENT).
-Remove calls to kvm_lapic_update_cr8_intercept() on paths that end up in
-apic_update_ppr(), as they now become redundant. This ensures that any
-path that updates the guest's PPR also figures out if KVM needs to wait
-for a TPR change (using TPR_THRESHOLD on VMX or CR8 intercepts on SVM).
-
-Link: https://github.com/coconut-svsm/svsm/issues/1081 [1]
-Tested-by: Stefano Garzarella <sgarzare@redhat.com>
+Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
+Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
+Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: eb90f3417a0c ("KVM: vmx: speed up TPR below threshold vmexits")
-Signed-off-by: Carlos López <clopez@suse.de>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260618174347.1981064-3-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/lapic.c | 2 ++
- arch/x86/kvm/regs.c  | 4 +---
- arch/x86/kvm/x86.c   | 1 -
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index 574111144a903..6e6d00b3c042b 100644
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -994,6 +994,8 @@ static void apic_update_ppr(struct kvm_lapic *apic)
- 	if (__apic_update_ppr(apic, &ppr) &&
- 	    apic_has_interrupt_for_ppr(apic, ppr) != -1)
- 		kvm_make_request(KVM_REQ_EVENT, apic->vcpu);
-+	else
-+		kvm_lapic_update_cr8_intercept(apic->vcpu);
- }
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index b2a0e36de0d32..bd9f41a78ec17 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3692,6 +3692,11 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
+ 	if (!from_vmentry)
+ 		return NVMX_VMENTRY_VMEXIT;
  
- void kvm_apic_update_ppr(struct kvm_vcpu *vcpu)
-diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
-index 6d71bdb9f72c8..49afacc9b0990 100644
---- a/arch/x86/kvm/regs.c
-+++ b/arch/x86/kvm/regs.c
-@@ -591,8 +591,6 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
- 	kvm_register_mark_dirty(vcpu, VCPU_EXREG_CR3);
- 	kvm_x86_call(post_set_cr3)(vcpu, sregs->cr3);
- 
--	kvm_set_cr8(vcpu, sregs->cr8);
--
- 	*mmu_reset_needed |= vcpu->arch.efer != sregs->efer;
- 	kvm_x86_call(set_efer)(vcpu, sregs->efer);
- 
-@@ -621,7 +619,7 @@ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
- 	kvm_set_segment(vcpu, &sregs->tr, VCPU_SREG_TR);
- 	kvm_set_segment(vcpu, &sregs->ldt, VCPU_SREG_LDTR);
- 
--	kvm_lapic_update_cr8_intercept(vcpu);
-+	kvm_set_cr8(vcpu, sregs->cr8);
- 
- 	/* Older userspace won't unhalt the vcpu on reset. */
- 	if (kvm_vcpu_is_bsp(vcpu) && kvm_rip_read(vcpu) == 0xfff0 &&
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 796bca8b9a865..23696631599ac 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -4697,7 +4697,6 @@ static int kvm_vcpu_ioctl_set_lapic(struct kvm_vcpu *vcpu,
- 	r = kvm_apic_set_state(vcpu, s);
- 	if (r)
- 		return r;
--	kvm_lapic_update_cr8_intercept(vcpu);
- 
- 	return 0;
- }
++	kvm_vcpu_unmap(vcpu, &vmx->nested.apic_access_page_map, false);
++	kvm_vcpu_unmap(vcpu, &vmx->nested.virtual_apic_map, true);
++	kvm_vcpu_unmap(vcpu, &vmx->nested.pi_desc_map, true);
++	vmx->nested.pi_desc = NULL;
++
+ 	load_vmcs12_host_state(vcpu, vmcs12);
+ 	vmcs12->vm_exit_reason = exit_reason.full;
+ 	if (enable_shadow_vmcs || nested_vmx_is_evmptr12_valid(vmx))
 -- 
 2.53.0
 
