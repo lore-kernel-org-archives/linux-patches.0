@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871143A5E6C;
-	Sat, 17 Oct 2026 16:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5E0390C8A;
+	Sat, 17 Oct 2026 16:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253578; cv=none; b=TIIBBN9mmN2uc68TFCCpdEHGGjX+pDoBLsodfs3MlMws4ARjG6S6JvirQl78VQNjgKLdzWjMJH3jUHPLUbJxHsHVQxmYkwSZZspEGF/IkaMIxnZKh7V9w+nx2ioPzGAxsTxtWrDGT+a7zSxN6o3YlNw9aIrOKq086uNVHJ3IOI8=
+	t=1792253580; cv=none; b=fEQ1WRqoCMKymvVsGI8ASbmHvbKdaf3Xt2TKSfjBD88HjrPYW1Z3tgZxgvt37/ojeqd7ELpdl9VLtH0GNwxmvFqQvq6lq/ENtCPeUECCOdWqfVA5LvJNu9xG0PMh4ia/AzeuYLtkWQ6IymSbh7Q7pH/iwCT+oVroxWYnSAbWEuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253578; c=relaxed/simple;
-	bh=5EKreQpsa0RO8fOMBYQunZMYBVdJ3JyjbpWT3/01yQc=;
+	s=arc-20240116; t=1792253580; c=relaxed/simple;
+	bh=sK0tQrICodzIU49DDu9NPevn9+hCUEWfR6mPdh0Ades=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jp7Y/3/yuXnlG96+2htn5E7AjCoW8jbD+RVA6MNMQcviezJAC9KptjL6iYrceSFlDniyahU+OiFdwuydn3z1i7cngUdCq4R5FBCHq6Fe9cg1BwME3HVF83gZ82tho25+2OsksMJ9v5F1Jw+M0W8SRM9eRDZZkrKtmKEaIQSyVd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2wbAbFy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hhvJy2OWZUuj7xmqI5kSPXdXbaksZMz26rNhbxG2zuFYuymug4mmu3iVO590TlvJWObEVGH989xc/Jq9GQ/ku4J+HI38ZuyvBb1vhcJioU4j1VAtrdHVHA+WuoXtvsyv5NHPwRmVlY6cJfSagdIG0JTMq4u56togNLyrmpG6O4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7rkfI3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2wbAbFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE4E1F000C6;
-	Sat, 17 Oct 2026 16:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7rkfI3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132921F000C7;
+	Sat, 17 Oct 2026 16:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253570;
-	bh=CqU5FV0YEveDSSFElKi3s8JKHckQQ4UdVqt0KpHKQeI=;
+	s=korg; t=1792253576;
+	bh=0mkkehBF18SUxWG4uiS/5hUTKB1ccU/UsWdfZSHOYR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N2wbAbFy8OUdvOFcsC4MUVEU1N9/p2kcfXmTi5rUiTOC+ZJB5WDuOtEfAdoBIgZlB
-	 Vbd5qU1ChclTLa7vPT88i8/iJ42yHpeshpDeIJmWzYgDywMFVN8zLKbjv5/Ys8pHMg
-	 qfzZvsr766Mw2Ou6vrNKsUshlgGCOD5+qYWEgeOA=
+	b=j7rkfI3SrgJ4BNszm5RaP/tw+lR4Cr2Si6vtTc4Mn80r3fh7BVUOKc3NNqalsduFz
+	 uANPLuvadQdhK6YSSlAUxgNB4HgnJaePRD98udHzv0omQ3+WKxh3jKG58b05uEanSH
+	 8eE/3Po2t5Nd6zdkR+nugTAVy1ELtjesu1bTsKSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Pawlik <pawlik.dan@gmail.com>,
-	Matteo Croce <teknoraver@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/869] wifi: mt76: wed: use proper wed reference in mt76 wed driver callabacks
-Date: Sat, 17 Oct 2026 17:49:56 +0200
-Message-ID: <20261017160041.015819896@linuxfoundation.org>
+Subject: [PATCH 6.12 165/869] s390/fpu: Fix false-positive kmsan report in fpu_vstl()
+Date: Sat, 17 Oct 2026 17:50:06 +0200
+Message-ID: <20261017160041.278300689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,172 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
 
-[ Upstream commit 385aab8fccd7a8746b9f1a17f3c1e38498a14bc7 ]
+[ Upstream commit 14e4e4175b64dd9216b522f6ece8af6997d063b2 ]
 
-MT7996 driver can use both wed and wed_hif2 devices to offload traffic
-from/to the wireless NIC. In the current codebase we assume to always
-use the primary wed device in wed callbacks resulting in the following
-crash if the hw runs wed_hif2 (e.g. 6GHz link).
+A false-positive kmsan report is detected when running ping command.
 
-[  297.455876] Unable to handle kernel read from unreadable memory at virtual address 000000000000080a
-[  297.464928] Mem abort info:
-[  297.467722]   ESR = 0x0000000096000005
-[  297.471461]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  297.476766]   SET = 0, FnV = 0
-[  297.479809]   EA = 0, S1PTW = 0
-[  297.482940]   FSC = 0x05: level 1 translation fault
-[  297.487809] Data abort info:
-[  297.490679]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[  297.496156]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[  297.501196]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[  297.506500] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000107480000
-[  297.512927] [000000000000080a] pgd=08000001097fb003, p4d=08000001097fb003, pud=08000001097fb003, pmd=0000000000000000
-[  297.523532] Internal error: Oops: 0000000096000005 [#1] SMP
-[  297.715393] CPU: 2 UID: 0 PID: 45 Comm: kworker/u16:2 Tainted: G           O       6.12.50 #0
-[  297.723908] Tainted: [O]=OOT_MODULE
-[  297.727384] Hardware name: Banana Pi BPI-R4 (2x SFP+) (DT)
-[  297.732857] Workqueue: nf_ft_offload_del nf_flow_rule_route_ipv6 [nf_flow_table]
-[  297.740254] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  297.747205] pc : mt76_wed_offload_disable+0x64/0xa0 [mt76]
-[  297.752688] lr : mtk_wed_flow_remove+0x58/0x80
-[  297.757126] sp : ffffffc080fe3ae0
-[  297.760430] x29: ffffffc080fe3ae0 x28: ffffffc080fe3be0 x27: 00000000deadbef7
-[  297.767557] x26: ffffff80c5ebca00 x25: 0000000000000001 x24: ffffff80c85f4c00
-[  297.774683] x23: ffffff80c1875b78 x22: ffffffc080d42cd0 x21: ffffffc080660018
-[  297.781809] x20: ffffff80c6a076d0 x19: ffffff80c6a043c8 x18: 0000000000000000
-[  297.788935] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
-[  297.796060] x14: 0000000000000019 x13: ffffff80c0ad8ec0 x12: 00000000fa83b2da
-[  297.803185] x11: ffffff80c02700c0 x10: ffffff80c0ad8ec0 x9 : ffffff81fef96200
-[  297.810311] x8 : ffffff80c02700c0 x7 : ffffff80c02700d0 x6 : 0000000000000002
-[  297.817435] x5 : 0000000000000400 x4 : 0000000000000000 x3 : 0000000000000000
-[  297.824561] x2 : 0000000000000001 x1 : 0000000000000800 x0 : ffffff80c6a063c8
-[  297.831686] Call trace:
-[  297.834123]  mt76_wed_offload_disable+0x64/0xa0 [mt76]
-[  297.839254]  mtk_wed_flow_remove+0x58/0x80
-[  297.843342]  mtk_flow_offload_cmd+0x434/0x574
-[  297.847689]  mtk_wed_setup_tc_block_cb+0x30/0x40
-[  297.852295]  nf_flow_offload_ipv6_hook+0x7f4/0x964 [nf_flow_table]
-[  297.858466]  nf_flow_rule_route_ipv6+0x438/0x4a4 [nf_flow_table]
-[  297.864463]  process_one_work+0x174/0x300
-[  297.868465]  worker_thread+0x278/0x430
-[  297.872204]  kthread+0xd8/0xdc
-[  297.875251]  ret_from_fork+0x10/0x20
-[  297.878820] Code: 928b5ae0 8b000273 91400a60 f943fa61 (79401421)
-[  297.884901] ---[ end trace 0000000000000000 ]---
+An inline assembly instruction 'vstl' can write varied amount of bytes
+depending on value of 'index' argument. If 'index' > 0, 'vstl' writes
+at least 2 bytes.
 
-Fix the issue detecting the proper wed reference to use running wed
-callabacks.
+clang generates kmsan write helper call depending on inline assembly
+constraints. Constraints are evaluated compile-time, but value of
+'index' argument is known only at runtime.
 
-Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
-Tested-by: Daniel Pawlik <pawlik.dan@gmail.com>
-Tested-by: Matteo Croce <teknoraver@meta.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251008-wed-fixes-v1-1-8f7678583385@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+clang currently generates call to __msan_instrument_asm_store with 1 byte
+as size. Manually call kmsan function to indicate correct amount of bytes
+written and fix false-positive report.
+
+This change fixes following kmsan reports:
+
+[   36.563119] =====================================================
+[   36.563594] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
+[   36.563852]  virtqueue_add+0x35c6/0x7c70
+[   36.564016]  virtqueue_add_outbuf+0xa0/0xb0
+[   36.564266]  start_xmit+0x288c/0x4a20
+[   36.564460]  dev_hard_start_xmit+0x302/0x900
+[   36.564649]  sch_direct_xmit+0x340/0xea0
+[   36.564894]  __dev_queue_xmit+0x2e94/0x59b0
+[   36.565058]  neigh_resolve_output+0x936/0xb40
+[   36.565278]  __neigh_update+0x2f66/0x3a60
+[   36.565499]  neigh_update+0x52/0x60
+[   36.565683]  arp_process+0x1588/0x2de0
+[   36.565916]  NF_HOOK+0x1da/0x240
+[   36.566087]  arp_rcv+0x3e4/0x6e0
+[   36.566306]  __netif_receive_skb_list_core+0x1374/0x15a0
+[   36.566527]  netif_receive_skb_list_internal+0x1116/0x17d0
+[   36.566710]  napi_complete_done+0x376/0x740
+[   36.566918]  virtnet_poll+0x1bae/0x2910
+[   36.567130]  __napi_poll+0xf4/0x830
+[   36.567294]  net_rx_action+0x97c/0x1ed0
+[   36.567556]  handle_softirqs+0x306/0xe10
+[   36.567731]  irq_exit_rcu+0x14c/0x2e0
+[   36.567910]  do_io_irq+0xd4/0x120
+[   36.568139]  io_int_handler+0xc2/0xe8
+[   36.568299]  arch_cpu_idle+0xb0/0xc0
+[   36.568540]  arch_cpu_idle+0x76/0xc0
+[   36.568726]  default_idle_call+0x40/0x70
+[   36.568953]  do_idle+0x1d6/0x390
+[   36.569486]  cpu_startup_entry+0x9a/0xb0
+[   36.569745]  rest_init+0x1ea/0x290
+[   36.570029]  start_kernel+0x95e/0xb90
+[   36.570348]  startup_continue+0x2e/0x40
+[   36.570703]
+[   36.570798] Uninit was created at:
+[   36.571002]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
+[   36.571261]  kmalloc_reserve+0x12a/0x470
+[   36.571553]  __alloc_skb+0x310/0x860
+[   36.571844]  __ip_append_data+0x483e/0x6a30
+[   36.572170]  ip_append_data+0x11c/0x1e0
+[   36.572477]  raw_sendmsg+0x1c8c/0x2180
+[   36.572818]  inet_sendmsg+0xe6/0x190
+[   36.573142]  __sys_sendto+0x55e/0x8e0
+[   36.573392]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   36.573571]  __do_syscall+0x12e/0x240
+[   36.573823]  system_call+0x6e/0x90
+[   36.573976]
+[   36.574017] Byte 35 of 98 is uninitialized
+[   36.574082] Memory access of size 98 starts at 0000000007aa0012
+[   36.574218]
+[   36.574325] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G    B            N  6.17.0-dirty #16 NONE
+[   36.574541] Tainted: [B]=BAD_PAGE, [N]=TEST
+[   36.574617] Hardware name: IBM 3931 A01 703 (KVM/Linux)
+[   36.574755] =====================================================
+
+[   63.532541] =====================================================
+[   63.533639] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
+[   63.533989]  virtqueue_add+0x35c6/0x7c70
+[   63.534940]  virtqueue_add_outbuf+0xa0/0xb0
+[   63.535861]  start_xmit+0x288c/0x4a20
+[   63.536708]  dev_hard_start_xmit+0x302/0x900
+[   63.537020]  sch_direct_xmit+0x340/0xea0
+[   63.537997]  __dev_queue_xmit+0x2e94/0x59b0
+[   63.538819]  neigh_resolve_output+0x936/0xb40
+[   63.539793]  ip_finish_output2+0x1ee2/0x2200
+[   63.540784]  __ip_finish_output+0x272/0x7a0
+[   63.541765]  ip_finish_output+0x4e/0x5e0
+[   63.542791]  ip_output+0x166/0x410
+[   63.543771]  ip_push_pending_frames+0x1a2/0x470
+[   63.544753]  raw_sendmsg+0x1f06/0x2180
+[   63.545033]  inet_sendmsg+0xe6/0x190
+[   63.546006]  __sys_sendto+0x55e/0x8e0
+[   63.546859]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   63.547730]  __do_syscall+0x12e/0x240
+[   63.548019]  system_call+0x6e/0x90
+[   63.548989]
+[   63.549779] Uninit was created at:
+[   63.550691]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
+[   63.550975]  kmalloc_reserve+0x12a/0x470
+[   63.551969]  __alloc_skb+0x310/0x860
+[   63.552949]  __ip_append_data+0x483e/0x6a30
+[   63.553902]  ip_append_data+0x11c/0x1e0
+[   63.554912]  raw_sendmsg+0x1c8c/0x2180
+[   63.556719]  inet_sendmsg+0xe6/0x190
+[   63.557534]  __sys_sendto+0x55e/0x8e0
+[   63.557875]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   63.558869]  __do_syscall+0x12e/0x240
+[   63.559832]  system_call+0x6e/0x90
+[   63.560780]
+[   63.560972] Byte 35 of 98 is uninitialized
+[   63.561741] Memory access of size 98 starts at 0000000005704312
+[   63.561950]
+[   63.562824] CPU: 3 UID: 0 PID: 192 Comm: ping Tainted: G    B            N  6.17.0-dirty #16 NONE
+[   63.563868] Tainted: [B]=BAD_PAGE, [N]=TEST
+[   63.564751] Hardware name: IBM 3931 A01 703 (KVM/Linux)
+[   63.564986] =====================================================
+
+Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
+Signed-off-by: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h        |  9 +++++++++
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c |  1 +
- drivers/net/wireless/mediatek/mt76/wed.c         | 10 +++++-----
- include/linux/soc/mediatek/mtk_wed.h             |  1 +
- 4 files changed, 16 insertions(+), 5 deletions(-)
+ arch/s390/include/asm/fpu-insn.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index ffcd4509dfcae..8addbffa97c55 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1161,6 +1161,15 @@ static inline int mt76_wed_dma_setup(struct mt76_dev *dev, struct mt76_queue *q,
- 	for (i = 0; i < ARRAY_SIZE((dev)->q_rx); i++)	\
- 		if ((dev)->q_rx[i].ndesc)
+diff --git a/arch/s390/include/asm/fpu-insn.h b/arch/s390/include/asm/fpu-insn.h
+index a4c9b4db62ff5..c74c6056087fe 100644
+--- a/arch/s390/include/asm/fpu-insn.h
++++ b/arch/s390/include/asm/fpu-insn.h
+@@ -12,6 +12,7 @@
+ #ifndef __ASSEMBLY__
  
-+static inline struct mt76_dev *mt76_wed_to_dev(struct mtk_wed_device *wed)
-+{
-+#ifdef CONFIG_NET_MEDIATEK_SOC_WED
-+	if (wed->wlan.hif2)
-+		return container_of(wed, struct mt76_dev, mmio.wed_hif2);
-+#endif /* CONFIG_NET_MEDIATEK_SOC_WED */
-+	return container_of(wed, struct mt76_dev, mmio.wed);
-+}
-+
- struct mt76_dev *mt76_alloc_device(struct device *pdev, unsigned int size,
- 				   const struct ieee80211_ops *ops,
- 				   const struct mt76_driver_ops *drv_ops);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 01d4b54a1acc6..11e9c71e9b17a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -410,6 +410,7 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ #include <linux/instrumented.h>
++#include <linux/kmsan.h>
+ #include <asm/asm-extable.h>
  
- 	wed->wlan.nbuf = MT7996_HW_TOKEN_SIZE;
- 	wed->wlan.token_start = MT7996_TOKEN_SIZE - wed->wlan.nbuf;
-+	wed->wlan.hif2 = hif2;
- 
- 	wed->wlan.amsdu_max_subframes = 8;
- 	wed->wlan.amsdu_max_len = 1536;
-diff --git a/drivers/net/wireless/mediatek/mt76/wed.c b/drivers/net/wireless/mediatek/mt76/wed.c
-index f89e4537555c5..6798b56bc5554 100644
---- a/drivers/net/wireless/mediatek/mt76/wed.c
-+++ b/drivers/net/wireless/mediatek/mt76/wed.c
-@@ -8,7 +8,7 @@
- 
- void mt76_wed_release_rx_buf(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 	int i;
- 
- 	for (i = 0; i < dev->rx_token_size; i++) {
-@@ -31,8 +31,8 @@ EXPORT_SYMBOL_GPL(mt76_wed_release_rx_buf);
- #ifdef CONFIG_NET_MEDIATEK_SOC_WED
- u32 mt76_wed_init_rx_buf(struct mtk_wed_device *wed, int size)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
- 	struct mtk_wed_bm_desc *desc = wed->rx_buf_ring.desc;
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 	struct mt76_queue *q = &dev->q_rx[MT_RXQ_MAIN];
- 	int i, len = SKB_WITH_OVERHEAD(q->buf_size);
- 	struct mt76_txwi_cache *t = NULL;
-@@ -84,7 +84,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_init_rx_buf);
- 
- int mt76_wed_offload_enable(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	spin_lock_bh(&dev->token_lock);
- 	dev->token_size = wed->wlan.token_start;
-@@ -168,7 +168,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_dma_setup);
- 
- void mt76_wed_offload_disable(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	spin_lock_bh(&dev->token_lock);
- 	dev->token_size = dev->drv->token_size;
-@@ -178,7 +178,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_offload_disable);
- 
- void mt76_wed_reset_complete(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	complete(&dev->mmio.wed_reset_complete);
+ asm(".include \"asm/fpu-insn-asm.h\"\n");
+@@ -377,6 +378,7 @@ static __always_inline void fpu_vst(u8 v1, const void *vxr)
+ 		     : [vxr] "=Q" (*(__vector128 *)vxr)
+ 		     : [v1] "I" (v1)
+ 		     : "memory");
++	kmsan_unpoison_memory(vxr, size);
  }
-diff --git a/include/linux/soc/mediatek/mtk_wed.h b/include/linux/soc/mediatek/mtk_wed.h
-index a476648858a66..9b569b1300b93 100644
---- a/include/linux/soc/mediatek/mtk_wed.h
-+++ b/include/linux/soc/mediatek/mtk_wed.h
-@@ -154,6 +154,7 @@ struct mtk_wed_device {
- 		bool wcid_512;
- 		bool hw_rro;
- 		bool msi;
-+		bool hif2;
  
- 		u16 token_start;
- 		unsigned int nbuf;
+ #endif /* CONFIG_CC_IS_CLANG */
+@@ -395,6 +397,7 @@ static __always_inline void fpu_vstl(u8 v1, u32 index, const void *vxr)
+ 		: [vxr] "=R" (*(u8 *)vxr)
+ 		: [index] "d" (index), [v1] "I" (v1)
+ 		: "memory", "1");
++	kmsan_unpoison_memory(vxr, size);
+ }
+ 
+ #else /* CONFIG_CC_IS_CLANG */
 -- 
 2.53.0
 
