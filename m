@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC703845B3;
-	Sat, 17 Oct 2026 16:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8EF394785;
+	Sat, 17 Oct 2026 16:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253627; cv=none; b=WJmp9stPf7ShyZp76nt8JeCR6KsYuSjCfemOVZIRNbX63WOZ06UYmxpC99F2XgTsCF0s/Ost/GF3uC5hK160w1KGCDPbTi46t99tvUgj7cUgniX7lXqPcQMMHdWpyStrdVPgbbaehuqm39o0K2ZANcY54LB/fGnjan0jo4RIyIw=
+	t=1792253627; cv=none; b=rLh0MUd0dSqjkh2dJo5WuFodKZrDyTf2TvQI2mCv+10ZsGNSU4+0w3mavJjM25/Tgoo2yqBuD0KyN5ot0t+qHt3y+CPc8Y+gdTZianYpDGjpsfOqHeL2fv0Y34icUpUZZxq7SvJEDotu4EN3utQDiZRt6HMNe3rZr4wbBMowGvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792253627; c=relaxed/simple;
-	bh=2WNSrTlz0n0R0uYpcB7DYKwKyGYqD7Xo7eG8g3rAj/A=;
+	bh=bBF98VwzL2r4JiFm4xx0W9BMTaXGIOjeBgIQutcOHq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRi+U3hIFwyt94hi7jGjHzn6/nE4hn2iB/zSMpjbizYkSx2sZo5Uv7UMKv5OIpLOhyC4gbFyO2Z3IHSrOkFokaySXkXFwomb+tn8qmcJdv+or5/nnT4pZWH6nvlb4VQgxYEn2yhmS3XpQyK2+dxKC1eSm3A/aTLQe9JboZtsy7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eA+i9iv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h7V3NIPz6NX3hrGdLgpmtwCGDVuG5ZCuFDZpaxHlRZWWO90r3kbWGqRnaSPuXwkuOJ9kkPAVyEGDfVAWLM+kxyl/hatVTCJbQmM6Ibm/It1EjOvJDjdlCbcxVAouEJOsB0Nq53hQLddJQvQBrQCrXz5Thmu2vVh6r0couP2FD2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0499+57; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eA+i9iv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2379A1F000C6;
-	Sat, 17 Oct 2026 16:13:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0499+57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277CB1F000C4;
+	Sat, 17 Oct 2026 16:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253622;
-	bh=AqrSPh9g+yXWTCO/7PNQzspQQdVVLW5jj82U3YHw5XQ=;
+	s=korg; t=1792253625;
+	bh=csN/Vwpj7OkOhCBh0SmFxpc4H3htS8hjL2lddFRnsuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2eA+i9ivnDTCu6GOxS82d5NcmJQvQ3Isl1HCW1Si4zbIcLXUFxsvlOtLKPK7r85IA
-	 hdol8xW+OaFBdo1IKyZgQC9Q6nJiZo8y3RtoVaVKMVl6S/CzetptmevMwdaCiadljE
-	 Q5kVKJcLuxUSn1Ud/A8oUGyLt+CSWFpluqB0NXrE=
+	b=j0499+57YM/SwvOtu2VweM9+tNCZxxzpSoDlwYhfajjC9a+5+xCEe1fagFB3RkGSk
+	 evMzpRk4za9VrRUQ2OXca/hSgJCfJYvE7sa+MhsssqyflQLMww/33sj2NddxtKlLMN
+	 KOxpzz+ERwaq9oUSPlglyiKBZu4FIRILVp5Vrkug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/869] virtio_net: Fix misalignment bug in struct virtnet_info
-Date: Sat, 17 Oct 2026 17:50:20 +0200
-Message-ID: <20261017160041.641833855@linuxfoundation.org>
+Subject: [PATCH 6.12 180/869] ALSA: usb-audio: Prevent excessive number of frames
+Date: Sat, 17 Oct 2026 17:50:21 +0200
+Message-ID: <20261017160041.668026403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,120 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 4156c3745f06bc197094b9ee97a9584e69ed00bf ]
+[ Upstream commit ef5749ef8b307bf8717945701b1b79d036af0a15 ]
 
-Use the new TRAILING_OVERLAP() helper to fix a misalignment bug
-along with the following warning:
+In this case, the user constructed the parameters with maxpacksize 40
+for rate 22050 / pps 1000, and packsize[0] 22 packsize[1] 23. The buffer
+size for each data URB is maxpacksize * packets, which in this example
+is 40 * 6 = 240; When the user performs a write operation to send audio
+data into the ALSA PCM playback stream, the calculated number of frames
+is packsize[0] * packets = 264, which exceeds the allocated URB buffer
+size, triggering the out-of-bounds (OOB) issue reported by syzbot [1].
 
-drivers/net/virtio_net.c:429:46: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+Added a check for the number of single data URB frames when calculating
+the number of frames to prevent [1].
 
-This helper creates a union between a flexible-array member (FAM)
-and a set of members that would otherwise follow it (in this case
-`u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];`). This
-overlays the trailing members (rss_hash_key_data) onto the FAM
-(hash_key_data) while keeping the FAM and the start of MEMBERS aligned.
-The static_assert() ensures this alignment remains.
+[1]
+BUG: KASAN: slab-out-of-bounds in copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
+Write of size 264 at addr ffff88804337e800 by task syz.0.17/5506
+Call Trace:
+ copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
+ prepare_playback_urb+0x953/0x13d0 sound/usb/pcm.c:1611
+ prepare_outbound_urb+0x377/0xc50 sound/usb/endpoint.c:333
 
-Notice that due to tail padding in flexible `struct
-virtio_net_rss_config_trailer`, `rss_trailer.hash_key_data`
-(at offset 83 in struct virtnet_info) and `rss_hash_key_data` (at
-offset 84 in struct virtnet_info) are misaligned by one byte. See
-below:
-
-struct virtio_net_rss_config_trailer {
-        __le16                     max_tx_vq;            /*     0     2 */
-        __u8                       hash_key_length;      /*     2     1 */
-        __u8                       hash_key_data[];      /*     3     0 */
-
-        /* size: 4, cachelines: 1, members: 3 */
-        /* padding: 1 */
-        /* last cacheline: 4 bytes */
-};
-
-struct virtnet_info {
-...
-        struct virtio_net_rss_config_trailer rss_trailer; /*    80     4 */
-
-        /* XXX last struct has 1 byte of padding */
-
-        u8                         rss_hash_key_data[40]; /*    84    40 */
-...
-        /* size: 832, cachelines: 13, members: 48 */
-        /* sum members: 801, holes: 8, sum holes: 31 */
-        /* paddings: 2, sum paddings: 5 */
-};
-
-After changes, those members are correctly aligned at offset 795:
-
-struct virtnet_info {
-...
-        union {
-                struct virtio_net_rss_config_trailer rss_trailer; /*   792     4 */
-                struct {
-                        unsigned char __offset_to_hash_key_data[3]; /*   792     3 */
-                        u8         rss_hash_key_data[40]; /*   795    40 */
-                };                                       /*   792    43 */
-        };                                               /*   792    44 */
-...
-        /* size: 840, cachelines: 14, members: 47 */
-        /* sum members: 801, holes: 8, sum holes: 35 */
-        /* padding: 4 */
-        /* paddings: 1, sum paddings: 4 */
-        /* last cacheline: 8 bytes */
-};
-
-As a result, the RSS key passed to the device is shifted by 1
-byte: the last byte is cut off, and instead a (possibly
-uninitialized) byte is added at the beginning.
-
-As a last note `struct virtio_net_rss_config_hdr *rss_hdr;` is also
-moved to the end, since it seems those three members should stick
-around together. :)
-
-Cc: stable@vger.kernel.org
-Fixes: ed3100e90d0d ("virtio_net: Use new RSS config structs")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/aWIItWq5dV9XTTCJ@kspp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6db0415d6d5c635f72cb
+Tested-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_9AECE6CD2C7A826D902D696C289724E8120A@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/usb/pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index cb640d29d7912..851defa105e04 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -409,9 +409,6 @@ struct virtnet_info {
- 	u16 rss_indir_table_size;
- 	u32 rss_hash_types_supported;
- 	u32 rss_hash_types_saved;
--	struct virtio_net_rss_config_hdr *rss_hdr;
--	struct virtio_net_rss_config_trailer rss_trailer;
--	u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 08bf535ed1632..3a4666e3bf277 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1505,7 +1505,7 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
- 	/* Has control virtqueue */
- 	bool has_cvq;
-@@ -470,7 +467,16 @@ struct virtnet_info {
- 	struct failover *failover;
- 
- 	u64 device_stats_cap;
-+
-+	struct virtio_net_rss_config_hdr *rss_hdr;
-+
-+	/* Must be last as it ends in a flexible-array member. */
-+	TRAILING_OVERLAP(struct virtio_net_rss_config_trailer, rss_trailer, hash_key_data,
-+		u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];
-+	);
- };
-+static_assert(offsetof(struct virtnet_info, rss_trailer.hash_key_data) ==
-+	      offsetof(struct virtnet_info, rss_hash_key_data));
- 
- struct padded_vnet_hdr {
- 	struct virtio_net_hdr_v1_hash hdr;
+ 	for (i = 0; i < ctx->packets; i++) {
+ 		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
+-		if (counts < 0)
++		if (counts < 0 || frames + counts >= ep->max_urb_frames)
+ 			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.53.0
 
