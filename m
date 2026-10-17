@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C383AE6FA;
-	Sat, 17 Oct 2026 16:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2C936F90C;
+	Sat, 17 Oct 2026 16:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255544; cv=none; b=GPYY4z0RpLn5F3DR2da7RUjyccUfm6qDwjflN3suGOaIUuVsj8/W3GPtYU+R9lok0gx5ha9+r3OlPsicxulnqMt7qPo2UKPQQF74cptwK9MJT7FR/vNcrek+ocQ+STahTahf9NJFak5lwpBCTRzHfd2MtQRqevFqU3V90Z2e1SE=
+	t=1792255547; cv=none; b=b0n7j6De8xAZwk2Y9ihO1dviT/9zhbRXwL9RhGhbz8Y45mK5Lva0goY/+wbR54U3LGk8e506RHVx0cALAHT7/40SjbryI6kn7+V7QeWHehkr2+Q7yRlEbZcC6YG3FkurP152Aa9WznbxhSCfuODNKGsUSzw2g4um6b/q0SNSBNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255544; c=relaxed/simple;
-	bh=z4VDskaGde7iYkHXgxcu+mU6YCXNWusWX3QMl1CujeY=;
+	s=arc-20240116; t=1792255547; c=relaxed/simple;
+	bh=Vf/yez3yT2Efad94ptebvz1eZIgdALFQJ8Bd411tShU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbujYqSZ6CNGT2/goYBwwRZOxYP4pc5RfYu4u+a0vVViFPPzbWkhto+uXcIKjB9DU+mTNx/KoHFXo4A1hhkIntCRWX9H1aIz3oFgVHfqcmW1UjqRkdyOEJWgtqt6M2o1J3gVmLn7OqeRTn+RNQHsT55zU3olzk+wzhX9caC072w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc00EOZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YMoyStsvPFh3AOewRDtjA1aOWzjlv4ogZCrENjZjrCJgFwNQvBdB0Bs6mJ4vGtd/8+LMzSev2XED09MYhcxcoXq5Te/kV8QU1PVz3SoWwzLUZaU9VEwUioKcYSQJHcy4UyP5D+kgewCcMNRn4RPtB6mJvngVCd6qx9v5VCdcLoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1nuV1Df; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc00EOZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF901F000C4;
-	Sat, 17 Oct 2026 16:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1nuV1Df"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBB81F000C4;
+	Sat, 17 Oct 2026 16:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255542;
-	bh=fY46Br2H8JrfjFkZPflPymz8MhH3zKlDIEg7Vj5afQU=;
+	s=korg; t=1792255546;
+	bh=Vd7FPEcz6jwr6eeK3QSlb6Se5zjQ4NBIKbOTQRNGQ3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bc00EOZFXOoHECkrhiw56gL8S+Nz2dpKMny57X2UBpD5qZ9u9TtyC35/d0i5MRHFJ
-	 PY2bkax/aiVeLUGzw1nUWQI8EHADVqhZjSOq+czTHnE6aaZN4V4WhNLQURfG870I/h
-	 Osf74BK30qNAlFTDZyIgoes6LHOOtKcpRbqUxVzQ=
+	b=x1nuV1DfarfIR9sjDbys89+KMLdknKGaa/ln6jiW7kDRfqc8Fc6PsDiUTmtKfFE7O
+	 D6q433GgEjIkw2S7qKRNCTJlUPGoR98hWUcxCQFB7vavkFE1Vm871Im8WvC2YTXXVb
+	 OLNjZ9TDsrAZYUxrankSwf041T8ncCXu4r8i90A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Dan Williams <djbw@kernel.org>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 811/869] cxl/region: Resolve region deletion races
-Date: Sat, 17 Oct 2026 18:00:52 +0200
-Message-ID: <20261017160057.689330236@linuxfoundation.org>
+Subject: [PATCH 6.12 812/869] bpf: Remove migrate_{disable|enable} in bpf_obj_free_fields()
+Date: Sat, 17 Oct 2026 18:00:53 +0200
+Message-ID: <20261017160057.712104099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,257 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <djbw@kernel.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 4dd86ca99ffcc413cbf79063fd9956ef54e0ca91 ]
+[ Upstream commit 1d2dbe7120e89090ed4f6be03d6fbadfbfff59bf ]
 
-Sungwoo noticed that the sysfs trigger to delete a region may try to delete
-a region multiple times. It also has no exclusion relative to the kernel
-releasing the region via CXL root device teardown.
+The callers of bpf_obj_free_fields() have already guaranteed that the
+migration is disabled, therefore, there is no need to invoke
+migrate_{disable,enable} pair in bpf_obj_free_fields()'s underly
+implementation.
 
-Instead of installing new cxl root devres actions per region, use the
-existing root decoder unregistration event to remove all remaining regions.
-An xarray of regions replaces a devres list of regions.
+This patch removes unnecessary migrate_{disable|enable} pairs from
+bpf_obj_free_fields() and its callees: bpf_list_head_free() and
+bpf_rb_root_free().
 
-This handles 3 separate issues with the old approach:
-
-1/ sysfs users racing to delete the same region: no longer possible now
-   that the regions_lock is held over the lookup and deletion.
-
-2/ multiple actions triggering deletion of the same region: solved by
-   erasing regions while holding @regions_lock, and only proceeding on
-   successful erasure.
-
-3/ userspace racing devres_release_all() to trigger the devres not found
-   warning: solved by sysfs unregistration not requiring a release action
-
-Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
-Reported-by: Sungwoo Kim <iam@sung-woo.kim>
-Closes: http://lore.kernel.org/20260427032010.916681-2-iam@sung-woo.kim
-Signed-off-by: Dan Williams <djbw@kernel.org>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Tested-by: ALejandro Lucero <alucerop@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260519210158.1499795-3-djbw@kernel.org
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250108010728.207536-12-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 4a7910ee060d ("bpf: Clear rb node linkage when freeing bpf_rb_root")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/core.h   |  2 ++
- drivers/cxl/core/port.c   |  5 ++++
- drivers/cxl/core/region.c | 62 ++++++++++++++++++++++-----------------
- drivers/cxl/cxl.h         |  4 +++
- 4 files changed, 46 insertions(+), 27 deletions(-)
+ kernel/bpf/helpers.c | 4 ----
+ kernel/bpf/syscall.c | 2 --
+ 2 files changed, 6 deletions(-)
 
-diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
-index 1c11bd5f0df00..d95206ed6ab8d 100644
---- a/drivers/cxl/core/core.h
-+++ b/drivers/cxl/core/core.h
-@@ -32,6 +32,7 @@ int cxl_get_poison_by_endpoint(struct cxl_port *port);
- struct cxl_region *cxl_dpa_to_region(const struct cxl_memdev *cxlmd, u64 dpa);
- u64 cxl_dpa_to_hpa(struct cxl_region *cxlr, const struct cxl_memdev *cxlmd,
- 		   u64 dpa);
-+void kill_regions(struct cxl_root_decoder *cxlrd);
- 
- #else
- static inline u64 cxl_dpa_to_hpa(struct cxl_region *cxlr,
-@@ -58,6 +59,7 @@ static inline int cxl_region_init(void)
- static inline void cxl_region_exit(void)
- {
- }
-+static inline void kill_regions(struct cxl_root_decoder *cxlrd) { };
- #define CXL_REGION_ATTR(x) NULL
- #define CXL_REGION_TYPE(x) NULL
- #define SET_CXL_REGION_ATTR(x)
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 217a24a2f56e3..35aceb7b38040 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -445,6 +445,8 @@ static void cxl_root_decoder_release(struct device *dev)
- 
- 	if (atomic_read(&cxlrd->region_id) >= 0)
- 		memregion_free(atomic_read(&cxlrd->region_id));
-+	mutex_destroy(&cxlrd->regions_lock);
-+	xa_destroy(&cxlrd->regions);
- 	__cxl_decoder_release(&cxlrd->cxlsd.cxld);
- 	kfree(cxlrd);
- }
-@@ -1826,6 +1828,7 @@ struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 3126ec5097f15..e8417cd67decb 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2100,9 +2100,7 @@ void bpf_list_head_free(const struct btf_field *field, void *list_head,
+ 		/* The contained type can also have resources, including a
+ 		 * bpf_list_head which needs to be freed.
+ 		 */
+-		migrate_disable();
+ 		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
+-		migrate_enable();
  	}
+ }
  
- 	mutex_init(&cxlrd->regions_lock);
-+	xa_init(&cxlrd->regions);
+@@ -2139,9 +2137,7 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+ 		obj -= field->graph_root.node_offset;
  
- 	cxld = &cxlsd->cxld;
- 	cxld->dev.type = &cxl_decoder_root_type;
-@@ -2009,6 +2012,8 @@ static void cxld_unregister(void *dev)
- 		cxled = to_cxl_endpoint_decoder(dev);
- 		cxl_decoder_kill_region(cxled);
+ 
+-		migrate_disable();
+ 		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
+-		migrate_enable();
  	}
-+	if (is_root_decoder(dev))
-+		kill_regions(to_cxl_root_decoder(dev));
- 
- 	device_unregister(dev);
- }
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 00c9c60d9a246..15253e5c28d60 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2327,12 +2327,13 @@ static struct cxl_region *to_cxl_region(struct device *dev)
- 	return container_of(dev, struct cxl_region, dev);
  }
  
--static void unregister_region(void *_cxlr)
-+static void unregister_region(struct cxl_region *cxlr)
- {
--	struct cxl_region *cxlr = _cxlr;
-+	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
- 	struct cxl_region_params *p = &cxlr->params;
- 	int i;
- 
-+	xa_erase(&cxlrd->regions, cxlr->id);
- 	device_del(&cxlr->dev);
- 
- 	/*
-@@ -2460,6 +2461,19 @@ static int cxl_region_calculate_adistance(struct notifier_block *nb,
- 	return NOTIFY_STOP;
- }
- 
-+/* unwind all remaining regions */
-+void kill_regions(struct cxl_root_decoder *cxlrd)
-+{
-+	unsigned long index;
-+	struct cxl_region *cxlr;
-+
-+	guard(mutex)(&cxlrd->regions_lock);
-+	/* no more region creation */
-+	cxlrd->dead = true;
-+	xa_for_each(&cxlrd->regions, index, cxlr)
-+		unregister_region(cxlr);
-+}
-+
- /**
-  * devm_cxl_add_region - Adds a region to a decoder
-  * @cxlrd: root decoder
-@@ -2498,14 +2512,15 @@ static struct cxl_region *devm_cxl_add_region(struct cxl_root_decoder *cxlrd,
- 	if (rc)
- 		goto err;
- 
--	rc = devm_add_action_or_reset(port->uport_dev, unregister_region, cxlr);
--	if (rc)
-+	rc = xa_insert(&cxlrd->regions, cxlr->id, cxlr, GFP_KERNEL);
-+	if (rc) {
-+		unregister_region(cxlr);
- 		return ERR_PTR(rc);
-+	}
- 
- 	dev_dbg(port->uport_dev, "%s: created %s\n",
- 		dev_name(&cxlrd->cxlsd.cxld.dev), dev_name(dev));
- 	return cxlr;
--
- err:
- 	put_device(dev);
- 	return ERR_PTR(rc);
-@@ -2533,6 +2548,9 @@ static struct cxl_region *__create_region(struct cxl_root_decoder *cxlrd,
- {
- 	int rc;
- 
-+	if (cxlrd->dead)
-+		return ERR_PTR(-ENXIO);
-+
- 	switch (mode) {
- 	case CXL_DECODER_RAM:
- 	case CXL_DECODER_PMEM:
-@@ -2624,40 +2642,31 @@ static ssize_t region_show(struct device *dev, struct device_attribute *attr,
- }
- DEVICE_ATTR_RO(region);
- 
--static struct cxl_region *
--cxl_find_region_by_name(struct cxl_root_decoder *cxlrd, const char *name)
--{
--	struct cxl_decoder *cxld = &cxlrd->cxlsd.cxld;
--	struct device *region_dev;
--
--	region_dev = device_find_child_by_name(&cxld->dev, name);
--	if (!region_dev)
--		return ERR_PTR(-ENODEV);
--
--	return to_cxl_region(region_dev);
--}
--
- static ssize_t delete_region_store(struct device *dev,
- 				   struct device_attribute *attr,
- 				   const char *buf, size_t len)
- {
- 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(dev);
--	struct cxl_port *port = to_cxl_port(dev->parent);
- 	struct cxl_region *cxlr;
--	int rc;
-+	int rc, id;
- 
- 	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
- 	if (rc)
- 		return rc;
- 
--	cxlr = cxl_find_region_by_name(cxlrd, buf);
--	if (IS_ERR(cxlr)) {
-+	rc = sscanf(buf, "region%d\n", &id);
-+	if (rc != 1) {
- 		mutex_unlock(&cxlrd->regions_lock);
--		return PTR_ERR(cxlr);
-+		return -EINVAL;
- 	}
- 
--	devm_release_action(port->uport_dev, unregister_region, cxlr);
--	put_device(&cxlr->dev);
-+	cxlr = xa_load(&cxlrd->regions, id);
-+	if (!cxlr || !sysfs_streq(buf, dev_name(&cxlr->dev))) {
-+		mutex_unlock(&cxlrd->regions_lock);
-+		return -ENODEV;
-+	}
-+
-+	unregister_region(cxlr);
- 	mutex_unlock(&cxlrd->regions_lock);
- 
- 	return len;
-@@ -3256,7 +3265,6 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
- 					   struct cxl_endpoint_decoder *cxled)
- {
- 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
--	struct cxl_port *port = cxlrd_to_port(cxlrd);
- 	struct range *hpa = &cxled->cxld.hpa_range;
- 	struct cxl_region_params *p;
- 	struct cxl_region *cxlr;
-@@ -3331,7 +3339,7 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
- 
- err:
- 	up_write(&cxl_region_rwsem);
--	devm_release_action(port->uport_dev, unregister_region, cxlr);
-+	unregister_region(cxlr);
- 	return ERR_PTR(rc);
- }
- 
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index bcd1d140fa0f2..e2b7e398d4d57 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -453,6 +453,8 @@ typedef u64 (*cxl_hpa_to_spa_fn)(struct cxl_root_decoder *cxlrd, u64 hpa);
-  * @hpa_to_spa: translate CXL host-physical-address to Platform system-physical-address
-  * @platform_data: platform specific configuration data
-  * @regions_lock: sync region discovery, construction, and deletion
-+ * @regions: regions to remove at root decoder destruct time
-+ * @dead: root decoder dead to region creation
-  * @qos_class: QoS performance class cookie
-  * @cxlsd: base cxl switch decoder
-  */
-@@ -462,6 +464,8 @@ struct cxl_root_decoder {
- 	cxl_hpa_to_spa_fn hpa_to_spa;
- 	void *platform_data;
- 	struct mutex regions_lock;
-+	struct xarray regions;
-+	bool dead;
- 	int qos_class;
- 	struct cxl_switch_decoder cxlsd;
- };
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 9b3d067e47420..854cc29b47c8f 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -707,11 +707,9 @@ void bpf_obj_free_fields(const struct btf_record *rec, void *obj)
+ 			if (!btf_is_kernel(field->kptr.btf)) {
+ 				pointee_struct_meta = btf_find_struct_meta(field->kptr.btf,
+ 									   field->kptr.btf_id);
+-				migrate_disable();
+ 				__bpf_obj_drop_impl(xchgd_field, pointee_struct_meta ?
+ 								 pointee_struct_meta->record : NULL,
+ 								 fields[i].type == BPF_KPTR_PERCPU);
+-				migrate_enable();
+ 			} else {
+ 				field->kptr.dtor(xchgd_field);
+ 			}
 -- 
 2.53.0
 
