@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13493AF66D;
-	Sat, 17 Oct 2026 17:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6143ACEE0;
+	Sat, 17 Oct 2026 17:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256671; cv=none; b=Yrjkro1MtaHyS+A1vEFt9fFUt9rubhjQ7WTq7XRja+2/E39SW9C/IogTCuygaJzXVGoeKh+bEBStfoduSWJ+GbkkYgQ/DrTFnWwSPN8RvV8uSTelkwbAUiz++iWQEvl3KJh/cHKV7xOprEjs1xik2FeKx7PvZhtEY/VjYM3McHA=
+	t=1792256674; cv=none; b=BXkgirIIi5yP13M8S0zBV2yp+sPdW5v/6HhP19nh99z6g5gExSFzzvIIaowN14OtY0/eJ7ABliaUdRaw+qvODJpCni5LneCi0rO9jHQrGySGyejUv0S0nRF98PVfRUhqp2vYhx3Xk5Skex3eiDXqOmOiSD6mEwPWapuuzcfAlqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256671; c=relaxed/simple;
-	bh=iP9i1P6aTIkbJoNIbomueJkNOwzLj9H7xQKtqsCaG78=;
+	s=arc-20240116; t=1792256674; c=relaxed/simple;
+	bh=VIaZ4sWiB6xc40v5TNnSsEPdbvkbkdlTN8pKRa3GetU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhKHrp6DTSzozPsyQp3m1gAh8EQ1PmlTk6nwi9og/4pdfJEk5lpCx7kgtlnNh5V+eZTokwetmTzsBS6T6FCPboF4yJbZu31Fw4LB/wYQY8EnbAytm8ZKuzsfR3ES3wqzJlwzzkCt8vv1sbhhY1DhWE2hgVHJ2/FW57Acm8vQrwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1qXlD2H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NvMZre8aE00USHKAd3ze9WjhxPep60UA/+0/he98TR3oDD1SWoqsGd8BlGIp8cYCo2yfyXcseHb4BimkL3iN3Mrq6p0js8ZTm4RmNYNQWBIXIIbXQSq0t01P45K3BMkOpuhndiyC/qQeV/70ynnoP/Q6Hi6kJoodM5uaw+AO5sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FP7JIdZQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1qXlD2H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA171F000C4;
-	Sat, 17 Oct 2026 17:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FP7JIdZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EF01F000C5;
+	Sat, 17 Oct 2026 17:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256670;
-	bh=kBh3s9cR1z1csm1TkLEu3Pk+v3ykYaJJaYHgZ/n4M+Y=;
+	s=korg; t=1792256673;
+	bh=BHu7VquyMCGquh8a1TtT9c7u2e+2SB2czaeuCyXyLj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1qXlD2HOXuobyj1XJ/rCpFeWBYkTIjS+dMbHsLy3sRKFO4JUKy9QzRVBfkRgXYgz
-	 sNjOelCKfWBx5d3RVtqYf1gyDvWkluozPo+zrQtR09jWPRoJdIOETvKT4j0QeuK4RN
-	 m8e04TfmaGqQY4fDjYMZiK9Qnyg2wCzFvuaY4DHk=
+	b=FP7JIdZQASxHHXcA9c2Tn42u3kOjxL0VrjTiRKX3KYmU4lx1mMn5BQCAPLpdEzjNp
+	 Z+p1/mO/durxtWGbOA7IDUyDpcG/IV0TSL/eFLzyGJdXf00QrOw4Wxn1IUdTzkGakO
+	 ROBzBqQv+hcHnQSz0Bb0nAp5uT3S8rPEUC4b0p6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0314/1674] wifi: mac80211: drain PS delivery work during station teardown
-Date: Sat, 17 Oct 2026 17:43:06 +0200
-Message-ID: <20261017160439.180152742@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0297/1674] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
+Date: Sat, 17 Oct 2026 17:42:49 +0200
+Message-ID: <20261017160438.743275126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,75 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 67a9e80c3ca20c9044cd6ee72cd6278dd19b5023 upstream.
+commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
 
-Removing an AP or mesh station can notify the driver and wake TXQs after
-the station has already been removed from the driver, and can update
-num_sta_ps and the power-save queues after station cleanup has purged
-them.
+On 64-bit systems, outgoing BR/EDR connections always fall back to page
+scan repetition mode R2 with no clock offset once the system has been
+up for more than five minutes, even when inquiry found the peer only
+seconds earlier. This lengthens paging and can increase the risk of a
+Page Timeout.
 
-sta_deliver_ps_frames() tests sta->dead only before it starts delivery. A
-worker that passes that test can be delayed while teardown sets sta->dead
-and removes the station from the driver; when it resumes it still runs the
-full delivery.
+The inquiry cache stores jiffies in __u32 timestamps, but its age
+helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
+-300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
+after boot on 64-bit systems. Assigning it to __u32 then drops the upper
+32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
+2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
+hci_inquiry() is affected by the same truncation when checking the whole
+cache. 32-bit systems are unaffected because unsigned long is 32 bits
+wide there.
 
-The existing cancel_work_sync() sits near the end of
-__cleanup_single_sta(), after the final driver state transition and after
-PS accounting and queue purging, so it drains the worker only once the
-state it has to protect has already changed. Before commit d34ba2168a3c
-("mac80211: don't delay station destruction") cleanup was deferred
-through the same ordered workqueue as the delivery work, which kept the
-two ordered.
+Use unsigned long for both timestamps so they have the same width as
+jiffies on 32-bit and 64-bit systems, and update the debugfs format
+specifier accordingly.
 
-Cancel the work after setting sta->dead and before moving the driver
-state, and move the existing cancellation to the start of
-__cleanup_single_sta(). The first drain closes the driver-lifetime window;
-driver callbacks during the remaining state transitions can still queue
-drv_deliver_wk through ieee80211_sta_block_awake(), so retain the second
-drain at the start of __cleanup_single_sta(). That drain also covers
-insertion failures, which reach cleanup without setting sta->dead.
-
-Fixes: d34ba2168a3c ("mac80211: don't delay station destruction")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse smatch coccinelle kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113735.31029-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/sta_info.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci_core.h |    4 ++--
+ net/bluetooth/hci_debugfs.c      |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -122,6 +122,8 @@ static void __cleanup_single_sta(struct
- 	struct ieee80211_local *local = sdata->local;
- 	struct ps_data *ps;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -64,7 +64,7 @@ struct inquiry_entry {
+ 		NAME_PENDING,
+ 		NAME_KNOWN,
+ 	} name_state;
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	struct inquiry_data	data;
+ };
  
-+	cancel_work_sync(&sta->drv_deliver_wk);
-+
- 	if (test_sta_flag(sta, WLAN_STA_PS_STA) ||
- 	    test_sta_flag(sta, WLAN_STA_PS_DRIVER) ||
- 	    test_sta_flag(sta, WLAN_STA_PS_DELIVER)) {
-@@ -160,8 +162,6 @@ static void __cleanup_single_sta(struct
- 	if (ieee80211_vif_is_mesh(&sdata->vif))
- 		mesh_sta_cleanup(sta);
+@@ -80,7 +80,7 @@ struct discovery_state {
+ 	struct list_head	all;	/* All devices found during inquiry */
+ 	struct list_head	unknown;	/* Name state not known */
+ 	struct list_head	resolve;	/* Name needs to be resolved */
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	bdaddr_t		last_adv_addr;
+ 	u8			last_adv_addr_type;
+ 	s8			last_adv_rssi;
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -368,7 +368,7 @@ static int inquiry_cache_show(struct seq
  
--	cancel_work_sync(&sta->drv_deliver_wk);
--
- 	/*
- 	 * Destroy aggregation state here. It would be nice to wait for the
- 	 * driver to finish aggregation stop and then clean up, but for now
-@@ -1466,6 +1466,8 @@ static void __sta_info_destroy_part2(str
- 
- 	sta->dead = true;
- 
-+	cancel_work_sync(&sta->drv_deliver_wk);
-+
- 	local->num_sta--;
- 	local->sta_generation++;
- 
+ 	list_for_each_entry(e, &cache->all, all) {
+ 		struct inquiry_data *data = &e->data;
+-		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
++		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
+ 			   &data->bdaddr,
+ 			   data->pscan_rep_mode, data->pscan_period_mode,
+ 			   data->pscan_mode, data->dev_class[2],
 
 
