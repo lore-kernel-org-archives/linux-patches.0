@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3D338DC44;
-	Sat, 17 Oct 2026 16:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA43A3B19B6;
+	Sat, 17 Oct 2026 16:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255534; cv=none; b=If2yYoUUccLmMSW6/OV2MPAcXdOWjByVN6OboCYe4YDwK9IckY9tg7l0q7iBAhifepGYlqcPXNh/qirkhoUU4qxLHD+uaxERzOWAU8ZgmMqBR21S/lptyoTUTn2srH5g7dvksuDUAUXotk5uqnS3gQGfAKCQy4hXWFUPN4o85JQ=
+	t=1792255538; cv=none; b=mZjEaTzW/1wKXWEtBlfd+Oq6QPqYiemQP3fmHMwWWRVAAnUW+XtO6arqWk44WuH/NEqFIZruQuXKSwHQOKhIlRA288Y5rp58WftEd/2rCBKH2imu1UyYYVfVui3l1jCKTCRca6sTDFj/phhqWCmFyWRTConVNQO57bf6+iO8LuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255534; c=relaxed/simple;
-	bh=6F2xMDGenILuZrsKOOMsPC0xakb7/xZPjFTrevITl/g=;
+	s=arc-20240116; t=1792255538; c=relaxed/simple;
+	bh=IE9UL/1whd8i3R2+KeA80KxPLEYnNrQ96JHFPT/fOWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3JoO11HC3DqEcg3NJIyIaJqeo45czNCuhgSWqm4ycdeDmKjqE0OcB3HqGGfK+HZ9tBhJL9gLs/D1J8/vBfrNzop+GM4z3unpwldDAez+bfswAeqhCY/VDURJUbQA8q9LXNVj2PQDXce1gOxniR5eCQWrJE+1f+yid6rvqWQTos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLGKeQuU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNEXfjlZeDNkMjrtt9Zw4Z3T0WbCnXagwapjiL95hH/jU2O4aV7HwkOAWRNvzIDwkn3PhgVG7BWbKN5XbYoa7VUWPxaG/YODaYti7Yr/k/GiBgstj8vQvuytgslGMxa3Wm/CJ2YHF6iGwFvCtp0JjUMGlr/VWnEFA0Tf6daSjrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jw625EXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLGKeQuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237B31F000C4;
-	Sat, 17 Oct 2026 16:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jw625EXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BA91F000C4;
+	Sat, 17 Oct 2026 16:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255533;
-	bh=2SCVXYZPZR0bSaOMEIRS6nzuBmP64vqGP3CTWHKWSF8=;
+	s=korg; t=1792255536;
+	bh=QLs6L4hYDRYcrk/S8/mMCzMPWYg//8QqZ6c+JBeQh/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLGKeQuUHYYxep9a3Oyo3WyeSv/iig1MeSkgpzDyN45OD3NYB91LUc5zyzCDVcMbG
-	 ht3uywftd1eEnJ2euqpoBP9sSVKlIOt7KPUwKlMhtZ1nRlrnoLofpY56d6a3tMfTRN
-	 1NDCFiYtssVjY4PVqOI/S+pxcvI97Rl++4TOv/ik=
+	b=jw625EXxb4V/FDZJqe/PQDuqMzVSKYLo7ttnQ8uQjZpHn/M+3USIhoDGTBZ1Jv2xc
+	 aBhxTTyU9NnMTigZW5A4vVf8eheWu/51jCU7e0jOizlRcQ1HBWbewMARUyG4iKNmrB
+	 s6ZcwM/PrMURyVkAbC/Qr7xhz+kfWWkfPHfShIak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Mostafa Saleh <smostafa@google.com>,
-	Sebastian Ene <sebastianene@google.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 809/869] firmware: arm_ffa: Fix Endpoint Memory Access Descriptor offset calculation
-Date: Sat, 17 Oct 2026 18:00:50 +0200
-Message-ID: <20261017160057.639610735@linuxfoundation.org>
+Subject: [PATCH 6.12 810/869] pmdomain: imx93-blk-ctrl: Extract PHY as shared domain for DSI/CSI
+Date: Sat, 17 Oct 2026 18:00:51 +0200
+Message-ID: <20261017160057.663399686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,90 +53,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ene <sebastianene@google.com>
+From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
 
-[ Upstream commit b4d961351aa84fdf0148783fb1f3a1391b8a0adb ]
+[ Upstream commit 99611233f8cda833169fa6487d5dacdf189e5cb0 ]
 
-Use the descriptor's `ep_mem_offset` to calculate the start of the endpoint
-memory access array and to comply with the FF-A spec instead of defaulting
-to `sizeof(struct ffa_mem_region)`.
-This requires moving `ffa_mem_region_additional_setup()` earlier in the setup
-flow.
-Also, add sanity checks to ensure the calculated descriptor offsets do not
-exceed `max_fragsize`.
+The MIPI DSI and CSI domains share control bits for clock and reset, which
+can lead to incorrect behavior if one domain disables the shared resource
+while the other is still active.
 
-Fixes: 113580530ee7 ("firmware: arm_ffa: Update memory descriptor to support v1.1 format")
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Link: https://patch.msgid.link/20260702103848.1647249-3-sebastianene@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+To fix the issue, introduce a shared MIPI PHY power domain to own the
+common resources and make DSI and CSI its subdomains. This ensures the
+shared bits are properly managed and not disabled while still in use.
+
+Fixes: e9aa77d413c9 ("soc: imx: add i.MX93 media blk ctrl driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 20 +++++++++++++++-----
- include/linux/arm_ffa.h           |  2 +-
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/pmdomain/imx/imx93-blk-ctrl.c | 60 +++++++++++++++++++++++++--
+ 1 file changed, 57 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 8216c8e233844..04a4a58cb68b7 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -645,19 +645,30 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 	struct ffa_composite_mem_region *composite;
- 	struct ffa_mem_region_addr_range *constituents;
- 	struct ffa_mem_region_attributes *ep_mem_access;
--	u32 idx, frag_len, length, buf_sz = 0, num_entries = sg_nents(args->sg);
-+	u32 idx, frag_len, length, buf_sz = 0, num_entries = sg_nents(args->sg), ep_offset;
-+	u32 emad_end, emad_size = ffa_emad_size_get(drv_info->version);
+diff --git a/drivers/pmdomain/imx/imx93-blk-ctrl.c b/drivers/pmdomain/imx/imx93-blk-ctrl.c
+index b10348ac10f06..89886bdeb6cd3 100644
+--- a/drivers/pmdomain/imx/imx93-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx93-blk-ctrl.c
+@@ -47,6 +47,8 @@
  
- 	mem_region->tag = args->tag;
- 	mem_region->flags = args->flags;
- 	mem_region->sender_id = drv_info->vm_id;
- 	mem_region->attributes = ffa_memory_attributes_get(func_id);
-+
-+	ffa_mem_region_additional_setup(drv_info->version, mem_region);
- 	composite_offset = ffa_mem_desc_offset(buffer, args->nattrs,
- 					       drv_info->version);
-+	if (composite_offset + sizeof(*composite) > max_fragsize)
-+		return -ENXIO;
+ #define PRIO(X)			(X)
  
- 	for (idx = 0; idx < args->nattrs; idx++) {
--		ep_mem_access = buffer +
--			ffa_mem_desc_offset(buffer, idx, drv_info->version);
--		memset(ep_mem_access, 0, ffa_emad_size_get(drv_info->version));
-+		ep_offset = ffa_mem_desc_offset(buffer, idx, drv_info->version);
-+		if (check_add_overflow(ep_offset, emad_size, &emad_end))
-+			return -ENXIO;
++#define BLK_CTRL_NO_PARENT	UINT_MAX
 +
-+		if (emad_end > max_fragsize)
-+			return -ENXIO;
-+
-+		ep_mem_access = buffer + ep_offset;
-+		memset(ep_mem_access, 0, emad_size);
- 		ep_mem_access->receiver = args->attrs[idx].receiver;
- 		ep_mem_access->attrs = args->attrs[idx].attrs;
- 		ep_mem_access->composite_off = composite_offset;
-@@ -667,7 +678,6 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ struct imx93_blk_ctrl_domain;
+ 
+ struct imx93_blk_ctrl {
+@@ -73,6 +75,7 @@ struct imx93_blk_ctrl_domain_data {
+ 	int num_clks;
+ 	u32 rst_mask;
+ 	u32 clk_mask;
++	u32 parent;
+ 	int num_qos;
+ 	struct imx93_blk_ctrl_qos qos[DOMAIN_MAX_QOS];
+ };
+@@ -287,18 +290,46 @@ static int imx93_blk_ctrl_probe(struct platform_device *pdev)
+ 		bc->onecell_data.domains[i] = &domain->genpd;
  	}
- 	mem_region->handle = 0;
- 	mem_region->ep_count = args->nattrs;
--	ffa_mem_region_additional_setup(drv_info->version, mem_region);
  
- 	composite = buffer + composite_offset;
- 	composite->total_pg_cnt = ffa_get_num_pages_sg(args->sg);
-diff --git a/include/linux/arm_ffa.h b/include/linux/arm_ffa.h
-index ef84fb843610c..c1d511e85a799 100644
---- a/include/linux/arm_ffa.h
-+++ b/include/linux/arm_ffa.h
-@@ -434,7 +434,7 @@ ffa_mem_desc_offset(struct ffa_mem_region *buf, int count, u32 ffa_version)
- 	if (!FFA_MEM_REGION_HAS_EP_MEM_OFFSET(ffa_version))
- 		offset += offsetof(struct ffa_mem_region, ep_mem_offset);
- 	else
--		offset += sizeof(struct ffa_mem_region);
-+		offset += buf->ep_mem_offset;
++	for (i = 0; i < bc_data->num_domains; i++) {
++		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
++		const struct imx93_blk_ctrl_domain_data *data = domain->data;
++
++		if (data->parent == BLK_CTRL_NO_PARENT)
++			continue;
++
++		ret = pm_genpd_add_subdomain(&bc->domains[data->parent].genpd,
++					     &domain->genpd);
++		if (ret) {
++			dev_err_probe(dev, ret, "failed to add subdomain %s\n",
++				      domain->genpd.name);
++			goto cleanup_subdomains;
++		}
++	}
++
+ 	pm_runtime_enable(dev);
  
- 	return offset;
- }
+ 	ret = of_genpd_add_provider_onecell(dev->of_node, &bc->onecell_data);
+ 	if (ret) {
+ 		dev_err_probe(dev, ret, "failed to add power domain provider\n");
+-		goto cleanup_pds;
++		goto cleanup_subdomains;
+ 	}
+ 
+ 	dev_set_drvdata(dev, bc);
+ 
+ 	return 0;
+ 
++cleanup_subdomains:
++	for (i--; i >= 0; i--) {
++		const struct imx93_blk_ctrl_domain_data *data = bc->domains[i].data;
++
++		if (data->parent == BLK_CTRL_NO_PARENT)
++			continue;
++
++		pm_genpd_remove_subdomain(&bc->domains[data->parent].genpd,
++					  &bc->domains[i].genpd);
++	}
++	i = bc_data->num_domains;
++
+ cleanup_pds:
+ 	for (i--; i >= 0; i--)
+ 		pm_genpd_remove(&bc->domains[i].genpd);
+@@ -315,6 +346,16 @@ static void imx93_blk_ctrl_remove(struct platform_device *pdev)
+ 
+ 	pm_runtime_disable(&pdev->dev);
+ 
++	for (i = 0; i < bc->onecell_data.num_domains; i++) {
++		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
++
++		if (domain->data->parent == BLK_CTRL_NO_PARENT)
++			continue;
++
++		pm_genpd_remove_subdomain(&bc->domains[domain->data->parent].genpd,
++					  &domain->genpd);
++	}
++
+ 	for (i = 0; i < bc->onecell_data.num_domains; i++) {
+ 		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
+ 
+@@ -327,8 +368,9 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 		.name = "mediablk-mipi-dsi",
+ 		.clk_names = (const char *[]){ "dsi" },
+ 		.num_clks = 1,
+-		.rst_mask = BIT(11) | BIT(12),
+-		.clk_mask = BIT(11) | BIT(12),
++		.rst_mask = BIT(11),
++		.clk_mask = BIT(11),
++		.parent = IMX93_MEDIABLK_PD_MIPI_PHY,
+ 	},
+ 	[IMX93_MEDIABLK_PD_MIPI_CSI] = {
+ 		.name = "mediablk-mipi-csi",
+@@ -336,6 +378,7 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 		.num_clks = 2,
+ 		.rst_mask = BIT(9) | BIT(10),
+ 		.clk_mask = BIT(9) | BIT(10),
++		.parent = IMX93_MEDIABLK_PD_MIPI_PHY,
+ 	},
+ 	[IMX93_MEDIABLK_PD_PXP] = {
+ 		.name = "mediablk-pxp",
+@@ -343,6 +386,7 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 		.num_clks = 1,
+ 		.rst_mask = BIT(7) | BIT(8),
+ 		.clk_mask = BIT(7) | BIT(8),
++		.parent = BLK_CTRL_NO_PARENT,
+ 		.num_qos = 2,
+ 		.qos = {
+ 			{
+@@ -364,6 +408,7 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 		.num_clks = 2,
+ 		.rst_mask = BIT(4) | BIT(5) | BIT(6),
+ 		.clk_mask = BIT(4) | BIT(5) | BIT(6),
++		.parent = BLK_CTRL_NO_PARENT,
+ 		.num_qos = 1,
+ 		.qos = {
+ 			{
+@@ -380,6 +425,7 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 		.num_clks = 1,
+ 		.rst_mask = BIT(2) | BIT(3),
+ 		.clk_mask = BIT(2) | BIT(3),
++		.parent = BLK_CTRL_NO_PARENT,
+ 		.num_qos = 4,
+ 		.qos = {
+ 			{
+@@ -405,6 +451,14 @@ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[]
+ 			}
+ 		}
+ 	},
++	[IMX93_MEDIABLK_PD_MIPI_PHY] = {
++		.name = "mediablk-mipi-phy",
++		.clk_names = NULL,
++		.num_clks = 0,
++		.rst_mask = BIT(12),
++		.clk_mask = BIT(12),
++		.parent = BLK_CTRL_NO_PARENT,
++	},
+ };
+ 
+ static const struct regmap_range imx93_media_blk_ctl_yes_ranges[] = {
 -- 
 2.53.0
 
