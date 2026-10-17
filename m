@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC52E3C13E0;
-	Sat, 17 Oct 2026 18:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DD13CB91E;
+	Sat, 17 Oct 2026 18:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260589; cv=none; b=OBXDkskneAIq9EmAczBfOvbd57Ndy5qqGlzcOXHJl3Wz4tIEnDaTU9tOccEbveOhMROwFtFaWkVjAgJgF3ddjKlyAPtr7O5yQ5lLnpH0uH96rDRQTJsg3hVTLRoigv3MSEN/EMNzrH6dO0wxnMIxQyOU58CAU797YL+vPshpKPE=
+	t=1792260591; cv=none; b=nXBh5S8z2tgcBwDBcLL06BAchXyo1wsdDzDVlfsXVQT/1NmKWuIGQmDfeeDquMAsm1RnJ6mj2diURgOfmQcMwtOTsAb2JAW+5X3+iAfUUyhC9+TTimhm60L9KsPQn9REzYfWtDhT8AH/rBwNsVoPY0Tf/St/+V/EhcH7VLtjPSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260589; c=relaxed/simple;
-	bh=QFYPvUysL/SVQzxnSQ9rFRYmbQ3Ea1iSkKQKumkmbZ4=;
+	s=arc-20240116; t=1792260591; c=relaxed/simple;
+	bh=Pr6T4nAHpvJQoRzyQ8p47f7bnGjO7fuMtN2kJoT7byQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDDUTZzo6VxwNc9UgxoP07xRsr4cs6F07G+57uCBYsUrh+NJzRHl+0EuAgHYQfT8uU6KXl5wRqmcOYqBMv94gr9nlB6/zEXG8PVx4bpTgvPorq9cY5zPoY5VNgokLLeGq9umgSf/HTi1m7ypkkWCvQcdrGb2PilbUivetVcfZRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4S3PuA7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUfO+7JMSMGebHcFzGq/UxUDg7VhxzoC0Xr8rWM1P/SvCVdW3qZxzE0WQEjt1jrNbEEuBnbJEh/BrWl4ptCSC+h+V/Y5VthRW7ZK+XceKECNd3NO5xh+Om2AMRviBqAiLRP1RpoCAOBtRfmKV0M9cOvdP8r/Iy7XsFfTk0bG7sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eU792qJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4S3PuA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167131F000C4;
-	Sat, 17 Oct 2026 18:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eU792qJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1E91F000C5;
+	Sat, 17 Oct 2026 18:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260586;
-	bh=Qtcsxcqklbey9dR4a+EYwZ+E9//+Abs4o69oN79mwU0=;
+	s=korg; t=1792260589;
+	bh=7aGRsZ9U59Uf/OR7L/VDjKlzx90oIWpNBIFqNgzaTx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4S3PuA7Ygr0IdwkfeDwnJJUcU6rMMC020PDKOXdHT8xOrUcTOPDhmN+6vIiEHChb
-	 vevUyRdUPZ4/utVIW3QASpnTZOn/ONYiG/2zs6URn1csGBR8SZbgeevcsWvI+Qkcpj
-	 Lf5bnNIm5LuIXZ40J3xzJBqhKiHVQmsqDJdccjoQ=
+	b=eU792qJULE3EFMrKodsKORFnwJohoE7EWuPkoAoTX2VJGt9pTxf98hRfYAyDWalb1
+	 11w27HehHfNoH3lF53CZser1ocji3/J8ZzHeNFnq17BErF45h2cVQbsrpDiHGHu7g+
+	 jEuMZleOQ1xOGYZZ6eSEk3rntk46/sX0YhKgyDHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1595/1674] netfilter: cttimeout: prevent UAF during module unload
-Date: Sat, 17 Oct 2026 18:04:27 +0200
-Message-ID: <20261017160512.029365372@linuxfoundation.org>
+Subject: [PATCH 6.6 1596/1674] bootconfig: Fix integer overflow in initrd size check
+Date: Sat, 17 Oct 2026 18:04:28 +0200
+Message-ID: <20261017160512.054029102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,73 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit fec9b1de0d02de8dafa3cc344bcb91cf28660643 ]
+[ Upstream commit 7812d6dab0698001e50e8c2f901e17da3eb6f429 ]
 
-nf_ct_set_timeout() protects the timeout hook dereference and policy lookup
-with rcu_read_lock(). cttimeout_exit(), however, unregisters the per-net
-operations before it clears the hook.
+Sashiko reported that in get_boot_config_from_initrd(), a crafted initrd
+with a huge bootconfig size (such as 0xFFFFFFFF) can cause the pointer
+arithmetic:
 
-This allows the following interleaving:
+    data = ((void *)hdr) - size;
 
-  CPU 0                              CPU 1
-  cttimeout_exit()                   nf_ct_set_timeout()
-    unregister_pernet_subsys()         rcu_read_lock()
-      kfree(pernet)                     h = nf_ct_timeout_hook
-                                        h->timeout_find_get()
-                                          nfct_timeout_pernet()
+to wrap around on 32-bit systems (or when pointer subtraction overflows).
+Because data wraps around, the subsequent bounds check:
 
-The hook still points to ctnl_timeout_find_get() when CPU 1 looks up the
-already freed per-net timeout list. KASAN reported:
+    if ((unsigned long)data < initrd_start)
 
-  BUG: KASAN: slab-use-after-free in ctnl_timeout_find_get
-  Read of size 8 by task poc/90
-  Call Trace:
-   ctnl_timeout_find_get+0x271/0x2a0 [nfnetlink_cttimeout]
-   nf_ct_set_timeout+0x7b/0x3c0
-   xt_ct_tg_check+0x724/0xb20
-   xt_check_target+0x234/0xa90
-   do_ipt_set_ctl+0x570/0x1270
-  Allocated by task 89:
-   __kmalloc_noprof+0x16e/0x460
-   ops_init+0x6d/0x420
-   register_pernet_operations+0x2f6/0x670
-  Freed by task 91:
-   kfree+0x131/0x390
-   ops_undo_list+0x3d4/0x730
-   unregister_pernet_operations+0x232/0x490
-   unregister_pernet_subsys+0x1c/0x30
-   cttimeout_exit+0x52/0x970 [nfnetlink_cttimeout]
+evaluates to false, bypassing the check. The kernel then calls
+xbc_calc_checksum(data, size), which attempts to read 4GB of memory,
+hitting unmapped pages and triggering a fatal kernel page fault during
+early boot. Furthermore, on 64-bit systems with an initrd > 4.29 GB, an
+unbounded 32-bit size can similarly bypass the initrd_start check.
 
-Clear the hook and wait for existing readers before unregistering the
-per-net operations. This blocks new policy lookups and ensures readers that
-observed the hook finish before the per-net storage is freed.
+Fix this by:
+1. Ensuring the initrd is at least large enough to contain the bootconfig
+   footer and verifying hdr is within the initrd bounds.
+2. Checking that size does not exceed XBC_DATA_MAX and does not exceed
+   the available space between initrd_start and hdr before performing
+   pointer subtraction.
 
-Fixes: ebfbe67568a7 ("netfilter: cttimeout: use net_generic infra")
+Link: https://lore.kernel.org/all/178905333479.213925.1358412668943562406.stgit@devnote2/
+
+Fixes: de462e5f1071 ("bootconfig: Fix to remove bootconfig data from initrd while boot")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_cttimeout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/main.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_cttimeout.c b/net/netfilter/nfnetlink_cttimeout.c
-index eb4d4a3be922f..6067e99830e40 100644
---- a/net/netfilter/nfnetlink_cttimeout.c
-+++ b/net/netfilter/nfnetlink_cttimeout.c
-@@ -660,9 +660,9 @@ static void __exit cttimeout_exit(void)
- {
- 	nfnetlink_subsys_unregister(&cttimeout_subsys);
+diff --git a/init/main.c b/init/main.c
+index 62d8f7610e846..1442f95d6da10 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -268,7 +268,8 @@ static void * __init get_boot_config_from_initrd(size_t *_size)
+ 	u32 *hdr;
+ 	int i;
  
--	unregister_pernet_subsys(&cttimeout_ops);
- 	RCU_INIT_POINTER(nf_ct_timeout_hook, NULL);
- 	synchronize_net();
-+	unregister_pernet_subsys(&cttimeout_ops);
- }
+-	if (!initrd_end)
++	if (!initrd_end || initrd_end < initrd_start ||
++	    initrd_end - initrd_start < BOOTCONFIG_MAGIC_LEN + 8)
+ 		return NULL;
  
- module_init(cttimeout_init);
+ 	data = (char *)initrd_end - BOOTCONFIG_MAGIC_LEN;
+@@ -285,16 +286,26 @@ static void * __init get_boot_config_from_initrd(size_t *_size)
+ 
+ found:
+ 	hdr = (u32 *)(data - 8);
++	if ((unsigned long)hdr < initrd_start)
++		return NULL;
++
+ 	size = le32_to_cpu(hdr[0]);
+ 	csum = le32_to_cpu(hdr[1]);
+ 
+-	data = ((void *)hdr) - size;
+-	if ((unsigned long)data < initrd_start) {
+-		pr_err("bootconfig size %d is greater than initrd size %ld\n",
++	if (size > XBC_DATA_MAX) {
++		pr_err("bootconfig size %u is greater than max size %d\n",
++			size, XBC_DATA_MAX);
++		return NULL;
++	}
++
++	if (size > ((unsigned long)hdr - initrd_start)) {
++		pr_err("bootconfig size %u is greater than initrd size %lu\n",
+ 			size, initrd_end - initrd_start);
+ 		return NULL;
+ 	}
+ 
++	data = ((void *)hdr) - size;
++
+ 	if (xbc_calc_checksum(data, size) != csum) {
+ 		pr_err("bootconfig checksum failed\n");
+ 		return NULL;
+@@ -397,12 +408,6 @@ static void __init setup_boot_config(void)
+ 		return;
+ 	}
+ 
+-	if (size >= XBC_DATA_MAX) {
+-		pr_err("bootconfig size %ld greater than max size %d\n",
+-			(long)size, XBC_DATA_MAX);
+-		return;
+-	}
+-
+ 	ret = xbc_init(data, size, &msg, &pos);
+ 	if (ret < 0) {
+ 		if (pos < 0)
 -- 
 2.53.0
 
