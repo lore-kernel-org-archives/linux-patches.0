@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F8B3B19B9;
-	Sat, 17 Oct 2026 17:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4621432E151;
+	Sat, 17 Oct 2026 17:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256629; cv=none; b=Er2K7lRkqExrSZM+DH0eYWzviapzPSRabiZD90C+MyIoyZPCgrOz7nylUA2WinuoptKgTdi3kYZ9zttDFdX09+PzULYy+/Cn7khS/7KDZMhTITky2mpmoiyEdWdAo+lhZTHh8bZeAGfB1ZBqJJjoxce7K3cYypJ3ZO12UAerQIQ=
+	t=1792256632; cv=none; b=lhT2wshHjgeCrFThxO9z0VaTq24q/fUdKDz7DGOPEq7pSn/Bipc020pq760AizNbqQJe02n15e7dIPM0Tv2t1ssNY0Af1bE7cuDruHsMzg4ondFtyN+n+t+4czKAVGTQKJ39o9cxX01yY4rbwXoAWjP/LA5N1yT+dt9P1sPZ36E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256629; c=relaxed/simple;
-	bh=RKY2egwsl14MS1vkdkxHkHd7wb3vNDt3s40Ue24FQoA=;
+	s=arc-20240116; t=1792256632; c=relaxed/simple;
+	bh=z/3bdoK3CkAcmErWsQsHE9k3ZclReAoSiZmFpmM1AcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WI/9wKHCXtseynmblIysCukKRGR2I5ILXBqfgf7b5vCu24yxbB9t4taCt5J6T6ZnP9azDNREdo+lq0RHw5PPkvV8esttTXrtSbFt4B3eGJPqCvsZFGgBJj9jYVoM6ql23Qmhsje5R6a36zzjLkWe4JbpY2m0AvweCAxDlA4ftiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2k1kmXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tu+rg4Uf7c4FVDIdqmJpJ6dfCpa7RIC0rBFYZBsINrcg907QH2DSXuvLasXE/SnmMXTI0Fr2wM1XYo45F6EElT1BzRR05bJ4JUh+KASAyd67kTsXkeZ4uLnY85pnGD3Hgg6XSsdoYQJ45kaNC/3qlhFROvozNHTRC3VPFXeXy7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9orTd49; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2k1kmXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3B91F000C4;
-	Sat, 17 Oct 2026 17:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9orTd49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC7A1F000C4;
+	Sat, 17 Oct 2026 17:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256628;
-	bh=HDT8TKaniW5uWh4O+v3QzlsYlxcjDyhSKzOkUAIogwo=;
+	s=korg; t=1792256631;
+	bh=hLK8W9nyBTcSCnHxdD/BuOWHflv6RTYf4VbIl/MhGCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K2k1kmXJhJrMl93PL58KxVxPi7PkLnuT4nMa4Bs74yCtFTuAPqQ6hd73gxTpQVSla
-	 2rtrZnTJKqNFKQgr+viAyScqA6KlEw/o11luywOlqrgR1efjsKZHcO5Yghx3mkKPau
-	 zIiW4+JZ1d0E4LDNee4WJFk6tvM8VmEauS3GRliE=
+	b=o9orTd49UVOBuI8RRY2dRDvvpU83tPB4VzFDPQpeBqC0Nj2Q0FrvU1iEHuPCb0ANA
+	 Ctp3r3S2MBjcSpKmD5HimeWkJyq+E2oED0guRhM/r/oQrjaXz44GqFK3m3Vnzsb93m
+	 sPTVO2saUwqAY+PW0hmOP6jm0bFjoH48tdCXJMeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0257/1674] USB: serial: fix port tear down use-after-free
-Date: Sat, 17 Oct 2026 17:42:09 +0200
-Message-ID: <20261017160437.720719148@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
+Subject: [PATCH 6.6 0258/1674] usb: storage: sierra_ms: reject short SWoC info transfers
+Date: Sat, 17 Oct 2026 17:42:10 +0200
+Message-ID: <20261017160437.747400127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,55 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
 
-commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
+commit 8a0200d14acd9db388b85cd016e68a4e60d900ec upstream.
 
-Some drivers for multiport devices access port driver data from
-completion handlers of shared URBs submitted at attach() or first open()
-and stopped at disconnect() or last close(), respectively.
+sierra_get_swoc_info() requests sizeof(struct swoc_info) (60) bytes
+from the device via usb_control_msg(), but its callers only treat a
+negative return value as failure. A device that answers the
+vendor-specific GetSwocInfo request with a short IN transfer is
+therefore accepted, leaving the tail of the freshly allocated
+(kmalloc(), non-zeroing) swoc_info buffer uninitialized.
 
-A simple NULL check before accessing the driver data makes sure that a
-port state container has at least been allocated, but a completion
-handler can still race with port tear down.
+truinst_show() subsequently prints swocInfo->rev, swocInfo->LinuxSKU
+and swocInfo->LinuxVer from that buffer into the world-readable
+(0444) "truinst" sysfs attribute. An emulated/malicious USB device
+(VID 0x1199, PID 0x0fff) can exploit this to disclose up to 5 bytes
+of stale kernel heap memory (kmalloc-64) to unprivileged userspace,
+once per sysfs read, indefinitely. On kernels built without
+init_on_alloc this leaks recently freed heap contents.
 
-Reorder the disconnect handling so that ports are not deregistered (and
-their driver data freed) until after all ports have been hung up and the
-driver disconnect() callback has run so that all I/O has been stopped.
+Only accept the transfer when the full structure was received.
+sierra_ms_init() already retries failed queries, so well-behaved
+devices are unaffected.
 
-Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
-Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
-Cc: stable@vger.kernel.org	# 2.6.30
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 32fe5e393455 ("USB Storage Sierra: TRU-Install feature update")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Syed Labeeq Sajid Bukhari <syedlabeeq@gmail.com>
+Assisted-by: Kimi:K2 [Kimi Code CLI]
+Link: https://patch.msgid.link/20260910140343.49371-1-syedlabeeq@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/usb/storage/sierra_ms.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -1194,12 +1194,17 @@ static void usb_serial_disconnect(struct
- 		usb_serial_port_poison_urbs(port);
- 		wake_up_interruptible(&port->port.delta_msr_wait);
- 		cancel_work_sync(&port->work);
--		if (device_is_registered(&port->dev))
--			device_del(&port->dev);
- 	}
-+
- 	if (serial->type->disconnect)
- 		serial->type->disconnect(serial);
+--- a/drivers/usb/storage/sierra_ms.c
++++ b/drivers/usb/storage/sierra_ms.c
+@@ -77,6 +77,13 @@ static int sierra_get_swoc_info(struct u
+ 			sizeof(struct swoc_info),	/* __u16 size 	     */
+ 			USB_CTRL_SET_TIMEOUT);		/* int timeout 	     */
  
-+	for (i = 0; i < serial->num_ports; ++i) {
-+		port = serial->port[i];
-+		if (device_is_registered(&port->dev))
-+			device_del(&port->dev);
-+	}
++	/*
++	 * A short IN transfer leaves the tail of swocInfo uninitialized;
++	 * only a full transfer is valid.
++	 */
++	if (result != sizeof(struct swoc_info))
++		return -EIO;
 +
- 	release_sibling(serial, interface);
- 
- 	/* let the last holder of this object cause it to be cleaned up */
+ 	swocInfo->LinuxSKU = le16_to_cpu(swocInfo->LinuxSKU);
+ 	swocInfo->LinuxVer = le16_to_cpu(swocInfo->LinuxVer);
+ 	return result;
 
 
