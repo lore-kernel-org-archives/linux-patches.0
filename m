@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEE3B14A9;
-	Sat, 17 Oct 2026 17:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A1F23394D;
+	Sat, 17 Oct 2026 17:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256587; cv=none; b=J2ABIo7aO6ss/IZm2iSCZbx4U9HhiSZ6DEfqaOGr+afI1f3ovpV3wlUSoZGazBaZWF5v1gZshpfJjXX8S71fUuY/APsr4S/XvMPKzylloUTt5qA4G2r0cQtkybPkfmu9ZxqQz5IlwfVd/+sVWAISFihe6jvoWrMXTFADK5/aOBg=
+	t=1792256591; cv=none; b=GUQhKJ+c7gM84HyOnnuR0wkzi5n2J4PoIvtviLxTDNiyiIwEdlmiKQxCdvg3XirQyZEVgcRL51bvUI0uI/2b5nOn25oy/Qpa6qq8WgPvC0Do2U/6lFcwZv3/7y8xey5fGazUSP+YNc2vq1cmLc//LyusGpEYlPrOpwqEAZBfit8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256587; c=relaxed/simple;
-	bh=MkDdSYtqA8HHrVvPBko4RP78LTvWqhVUOwzg1+qLRoc=;
+	s=arc-20240116; t=1792256591; c=relaxed/simple;
+	bh=MgJ6SxrpaWpMOPsQu7DWnKqefOeOduCSfxSzOy0+BtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tb5O7jbwNs0qFyJocZ0gRm4z6HbeuOj0pMAULVsYFRCZdHsUXIqP+2Kiudg3ahzzfz9N4LL+lrphALbsJW/x7CYdnzxMwI1EKzZPVlldBMbZ8u/UO6hfQ7DV3fkGEpnk+3k1XDQVpZW+XeJRpyZoYhZrZfkuTYCFU6uE5NVRacU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXpBxRXh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgtQHUFLz5XIeeO1yA2GKn6Vewy4Y+GC+GH1B/dVfp+iUu4SAcAu0UruSOaHlkMDoZiirpYMHTt+TNgZRmuNF5YFHFrsjoUzKEOXNqMoFLU7VbvK70gL//DzTp1v65gyq3wz+9XEFft93ULmmF4q3DE6M+lbfXQGxynpi6BU87E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1sPVmlq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXpBxRXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328941F000C4;
-	Sat, 17 Oct 2026 17:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1sPVmlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB7E1F000C4;
+	Sat, 17 Oct 2026 17:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256586;
-	bh=QkhgyHU0KhHofy4liTmkjNX+jJkFOhowj9dcDGT+kZM=;
+	s=korg; t=1792256590;
+	bh=XTE5lscN6Zqh+ROaT3lx8C2nbNi6+e2lpqAlLnj1/6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXpBxRXhgp81gv1tj4PO+E9PbarsmrXuHQcK/cCejzKm7UwlY3x7kMs5IO4G6X71k
-	 h2G+mANjqKD8K1WpQGeFaJt3uOpdRvLkiujNmkqvnta9LkYZl+YSrBwWPP6Bcgojjc
-	 itiO17x3O82+VoECL+Rpy0DIGxeoHZ2YCHTtpwEw=
+	b=Q1sPVmlq8CYCt97qds4oYUlO5AnjsOUMXVjv04vHHwKw6+3Q7CRi80Dz5pRTcROoI
+	 g4OMAF0W78ooXe9JQ512gnPeumJzUJYgYEivoefWo2LnqYV6lCtDnOGPYxCC+RTJAb
+	 BVKXosrYqzBAHv4JC+Je+1H51U9QPKQrO04Pg5Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0284/1674] tty: abort break signalling on hangup
-Date: Sat, 17 Oct 2026 17:42:36 +0200
-Message-ID: <20261017160438.404892795@linuxfoundation.org>
+	stable@kernel.org,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.6 0285/1674] serial: 8250_bcm7271: fix use-after-free in brcmuart_remove()
+Date: Sat, 17 Oct 2026 17:42:37 +0200
+Message-ID: <20261017160438.431161847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,124 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
+commit 189b9dc8c96ec9486482f27c1372b04a7152175e upstream.
 
-The break ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+brcmuart_handle_irq() starts priv->hrt to work around a receive-timeout
+quirk of the 8250 core when hardware flow control is enabled; the timer
+callback brcmuart_hrtimer_func() dereferences priv.
 
-Drivers must handle this race, but TCSBRK and TCSBRKP should still be
-aborted to avoid calling back into the driver after a user-controlled
-timeout (possibly even after the tty has been reopened).
+brcmuart_remove() cancels the hrtimer before it unregisters the port, so
+a receive-timeout interrupt that arrives in between re-arms the timer.
+After devm frees priv, the callback runs on freed memory.
 
-Note that drivers should disable any break state on shutdown so just
-return on hangup (calling break_ctl() again is racy and will most likely
-fail for drivers handling the race).
+Unregister the port before cancelling the hrtimer.
+serial8250_unregister_port() shuts the port down and frees its IRQ, so
+brcmuart_handle_irq() can no longer restart the timer, and the final
+hrtimer_cancel() drains any timer that was armed before or during the
+unregister.
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+This issue was found by an in-house static analysis tool.
+
+Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260909084002.686911-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
- include/linux/tty.h  |    1 +
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ drivers/tty/serial/8250/8250_bcm7271.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -629,6 +629,8 @@ static void __tty_hangup(struct tty_stru
+--- a/drivers/tty/serial/8250/8250_bcm7271.c
++++ b/drivers/tty/serial/8250/8250_bcm7271.c
+@@ -1153,8 +1153,8 @@ static int brcmuart_remove(struct platfo
+ 	struct brcmuart_priv *priv = platform_get_drvdata(pdev);
  
- 	tty_ldisc_hangup(tty, cons_filp != NULL);
- 
-+	wake_up_interruptible(&tty->break_wait);
-+
- 	spin_lock_irq(&tty->ctrl.lock);
- 	clear_bit(TTY_THROTTLED, &tty->flags);
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-@@ -2460,6 +2462,7 @@ static int tiocgetd(struct tty_struct *t
-  * send_break	-	performed time break
-  * @tty: device to break on
-  * @duration: timeout in mS
-+ * @file: file object
-  *
-  * Perform a timed break on hardware that lacks its own driver level timed
-  * break functionality.
-@@ -2467,8 +2470,9 @@ static int tiocgetd(struct tty_struct *t
-  * Locking:
-  *	@tty->atomic_write_lock serializes
-  */
--static int send_break(struct tty_struct *tty, unsigned int duration)
-+static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
- {
-+	long timeout;
- 	int retval;
- 
- 	if (tty->ops->break_ctl == NULL)
-@@ -2482,13 +2486,26 @@ static int send_break(struct tty_struct
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (!retval) {
--		msleep_interruptible(duration);
--		retval = tty->ops->break_ctl(tty, 0);
--	} else if (retval == -EOPNOTSUPP) {
--		/* some drivers can tell only dynamically */
--		retval = 0;
-+	if (retval) {
-+		if (retval == -EOPNOTSUPP) {
-+			/* some drivers can tell only dynamically */
-+			retval = 0;
-+		}
-+		goto out_unlock;
-+	}
-+
-+	timeout = msecs_to_jiffies(duration);
-+	timeout = wait_event_interruptible_timeout(tty->break_wait,
-+						   tty_hung_up_p(file),
-+						   timeout);
-+	/* return early on hangup only */
-+	if (timeout > 0) {
-+		retval = -EIO;
-+		goto out_unlock;
- 	}
-+
-+	retval = tty->ops->break_ctl(tty, 0);
-+out_unlock:
- 	tty_write_unlock(tty);
- 
- 	if (signal_pending(current))
-@@ -2741,10 +2758,10 @@ long tty_ioctl(struct file *file, unsign
- 		 * This is used by the tcdrain() termios function.
- 		 */
- 		if (!arg)
--			return send_break(tty, 250);
-+			return send_break(file, tty, 250);
- 		return 0;
- 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
--		return send_break(tty, arg ? arg*100 : 250);
-+		return send_break(file, tty, arg ? arg * 100 : 250);
- 
- 	case TIOCMGET:
- 		return tty_tiocmget(tty, p);
-@@ -3107,6 +3124,7 @@ struct tty_struct *alloc_tty_struct(stru
- 	init_ldsem(&tty->ldisc_sem);
- 	init_waitqueue_head(&tty->write_wait);
- 	init_waitqueue_head(&tty->read_wait);
-+	init_waitqueue_head(&tty->break_wait);
- 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
- 	mutex_init(&tty->atomic_write_lock);
- 	spin_lock_init(&tty->ctrl.lock);
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -237,6 +237,7 @@ struct tty_struct {
- 	struct fasync_struct *fasync;
- 	wait_queue_head_t write_wait;
- 	wait_queue_head_t read_wait;
-+	wait_queue_head_t break_wait;
- 	struct work_struct hangup_work;
- 	void *disc_data;
- 	void *driver_data;
+ 	debugfs_remove_recursive(priv->debugfs_dir);
+-	hrtimer_cancel(&priv->hrt);
+ 	serial8250_unregister_port(priv->line);
++	hrtimer_cancel(&priv->hrt);
+ 	brcmuart_free_bufs(&pdev->dev, priv);
+ 	clk_disable_unprepare(priv->baud_mux_clk);
+ 	if (priv->dma_enabled)
 
 
