@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D175355F49;
-	Sat, 17 Oct 2026 16:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A38C17BED0;
+	Sat, 17 Oct 2026 16:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253517; cv=none; b=pqZh9ry10gKLCPquhWCK+jprtUX7065S3LkatzFtOunzCfqceUS6HrrLPJBpVA5cZNBogEqXjz5AwakguhfIAM+ihzG0Y14gTFQt9ZTYzetIWq/nxWMIqbUsUZS7lzblLEqnJVRYGmnJr0ZLs3BGjCM3Qe16O4p5DDQARZdci7E=
+	t=1792253520; cv=none; b=qdAARwpio5QgC+IxhMePoE2BHNjDrIfnXTnldecYH5xBFLrojyUszKIUZINHCZ2e9Pzp2lebvgPggYtOQ/TwIXbB6UYB4f9FKhfa+leQe+CLOx+wJiq9CgjutTdDYng90OmBsNffs1RXiUxAtd3O5YKCJp0fMFexuBEcIV78LHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253517; c=relaxed/simple;
-	bh=f28+ocmSjCrJJoGgnYRPGQrNk90pJidKgRSFm238p4Y=;
+	s=arc-20240116; t=1792253520; c=relaxed/simple;
+	bh=T2jrSmqGF6ArsRvqrFrNx6zMf044RD8n2suNZtwWQfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsiNXfGlMX7NJ+hjM8KVcfseKKBQNHdpvRINGRZiq5DaXoNJOtsIsOF2SaxZISo38+p/9yUALUhtsIvn8bGzdgOm8SWn0qMoGK9g6qOpaMaZD9TxoS6mpzR2ua4VqhwJh0r1PIgdT+nb1SGsqkPad00zilJTNMb27C3tFVuCU2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiqrnUpK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZtgh8E1xqT/6MIpPrXd4GR0eArHFsUe4mjsMICLHJ66ThbeGXpqPbPO+3YDTLy2aIC6EnAoEnxqg0SDKfO3x89Diw1QFlNUAev7nl/EjrgM4kGO7K/dcMJv6Cp88azz0NqRvYxDVpjBADSO+AVjSCzSqpugnzf8a0X/OP5xfM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4GbVCC+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiqrnUpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B840F1F000C5;
-	Sat, 17 Oct 2026 16:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4GbVCC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AC91F000C4;
+	Sat, 17 Oct 2026 16:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253516;
-	bh=vaoA6Atq+DjPgjC1H4YECc4BDUnHirJGgOcNa+ujUt4=;
+	s=korg; t=1792253519;
+	bh=O59s+1qZ+tvPj75rWMrKg6Yh6gsPjtq8jjwAN4psW+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JiqrnUpKdPahvNP+OUjmbbFYDWWUKpgHrEA7cFsVv27WwnHmcO21nppav1i7xFAc5
-	 va8PcJOCmzPNlYBfhLjLmGt3xCENRSlARs3NAXIE78xa86sm8nqwzl5WXCQ5I8JlTH
-	 Vbc8UuB+1Ks0UWjydBkZh9U02ZXd+Zrj6CgkZDYY=
+	b=C4GbVCC+IbnqJNguQiQRsost6UV2TIBst7ObLgJyXvEyXnCPenG4P/ESq7gpoLTE0
+	 V1G3HJU+wPQurQTAC7FsE1bVu+kiTkr0E/RArwmcJzCfpyyjzIbNDdJAp2nTEzqMVz
+	 spoHQ9IT0NSmblyrCYltds8znktHh8Iad6td2qE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Fan Li <fanl@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Vlad Dogaru <vdogaru@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/869] RDMA/mlx5: Remove the redundant MLX5_IB_STAGE_UAR stage
-Date: Sat, 17 Oct 2026 17:49:44 +0200
-Message-ID: <20261017160040.708031591@linuxfoundation.org>
+Subject: [PATCH 6.12 144/869] net/mlx5: HWS, fix bad parameter in CQ creation
+Date: Sat, 17 Oct 2026 17:49:45 +0200
+Message-ID: <20261017160040.733716754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,101 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit 972db388d40ded1a5ef8ce09d92ef1e2b9e40f07 ]
+[ Upstream commit 2462c1b9217246a889ec318b3894d84e4dd709c6 ]
 
-The MLX5_IB_STAGE_UAR stage in the RDMA driver is redundant and should
-be removed.
+'cqe_sz' valid value should be 0 for 64-byte CQE.
 
-Responsibility for initializing the device's UAR pointer
-(mdev->priv.uar) lies with mlx5_core, which already sets it during the
-mlx5_load() process.
-
-At present, the RDMA UAR stage overwrites this pointer, which was
-correctly initialized by mlx5_core, creating the risk of inconsistency.
-
-Ownership and management of the UAR pointer should remain exclusively
-within mlx5_core.
-
-In the current upstream code, we luckily receive the same pointer, since
-mlx5_get_uars_page() still finds available BF registers for that UAR,
-allowing it to be shared.
-
-However, future changes in mlx5_core may expose this flaw.
-For instance, if mlx5_alloc_bfreg() is invoked twice before the RDMA UAR
-stage runs, the RDMA driver may overwrite the UAR allocated by
-mlx5_core.
-
-This could lead to real bugs. For example, if mlx5_ib is unloaded
-(rmmod), it might free the UAR, leaving mlx5_core with a dangling
-reference to an invalid UAR.
-
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Reviewed-by: Fan Li <fanl@nvidia.com>
-Link: https://patch.msgid.link/feaa84ec6f20468b4935c439923e9266122a93d0.1747134130.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2ca62599aa0b ("net/mlx5: HWS, added send engine and context handling")
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Vlad Dogaru <vdogaru@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250817202323.308604-2-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: e5eba42f0134 ("mlx5: Fix default values in create CQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c    | 17 -----------------
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 -
- 2 files changed, 18 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c  | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 2d1cb516d8450..42a917c2d0d7f 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -4502,17 +4502,6 @@ static void mlx5_ib_stage_cong_debugfs_cleanup(struct mlx5_ib_dev *dev)
- 				     mlx5_core_native_port_num(dev->mdev) - 1);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
+index 08be034bd1e16..ad766451cd6ef 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
+@@ -839,7 +839,6 @@ static int hws_send_ring_open_cq(struct mlx5_core_dev *mdev,
+ 		return -ENOMEM;
  
--static int mlx5_ib_stage_uar_init(struct mlx5_ib_dev *dev)
--{
--	dev->mdev->priv.uar = mlx5_get_uars_page(dev->mdev);
--	return PTR_ERR_OR_ZERO(dev->mdev->priv.uar);
--}
--
--static void mlx5_ib_stage_uar_cleanup(struct mlx5_ib_dev *dev)
--{
--	mlx5_put_uars_page(dev->mdev, dev->mdev->priv.uar);
--}
--
- static int mlx5_ib_stage_bfrag_init(struct mlx5_ib_dev *dev)
- {
- 	int err;
-@@ -4742,9 +4731,6 @@ static const struct mlx5_ib_profile pf_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_CONG_DEBUGFS,
- 		     mlx5_ib_stage_cong_debugfs_init,
- 		     mlx5_ib_stage_cong_debugfs_cleanup),
--	STAGE_CREATE(MLX5_IB_STAGE_UAR,
--		     mlx5_ib_stage_uar_init,
--		     mlx5_ib_stage_uar_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_BFREG,
- 		     mlx5_ib_stage_bfrag_init,
- 		     mlx5_ib_stage_bfrag_cleanup),
-@@ -4805,9 +4791,6 @@ const struct mlx5_ib_profile raw_eth_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_CONG_DEBUGFS,
- 		     mlx5_ib_stage_cong_debugfs_init,
- 		     mlx5_ib_stage_cong_debugfs_cleanup),
--	STAGE_CREATE(MLX5_IB_STAGE_UAR,
--		     mlx5_ib_stage_uar_init,
--		     mlx5_ib_stage_uar_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_BFREG,
- 		     mlx5_ib_stage_bfrag_init,
- 		     mlx5_ib_stage_bfrag_cleanup),
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 3135519f1cfdf..5c0efac217eac 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -975,7 +975,6 @@ enum mlx5_ib_stages {
- 	MLX5_IB_STAGE_ODP,
- 	MLX5_IB_STAGE_COUNTERS,
- 	MLX5_IB_STAGE_CONG_DEBUGFS,
--	MLX5_IB_STAGE_UAR,
- 	MLX5_IB_STAGE_BFREG,
- 	MLX5_IB_STAGE_PRE_IB_REG_UMR,
- 	MLX5_IB_STAGE_WHITELIST_UID,
+ 	MLX5_SET(cqc, cqc_data, uar_page, mdev->priv.uar->index);
+-	MLX5_SET(cqc, cqc_data, cqe_sz, queue->num_entries);
+ 	MLX5_SET(cqc, cqc_data, log_cq_size, ilog2(queue->num_entries));
+ 
+ 	err = hws_send_ring_alloc_cq(mdev, numa_node, queue, cqc_data, cq);
 -- 
 2.53.0
 
