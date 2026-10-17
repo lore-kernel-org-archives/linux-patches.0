@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F1038F233;
-	Sat, 17 Oct 2026 17:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CE4374E60;
+	Sat, 17 Oct 2026 17:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258906; cv=none; b=sapBxr9yMHtPeSyg+1HpJrjoPlzPYmOs06KI4pbnA+8Sx3yhHu5E+WNUHcS7b/9/xHouXy7THt4AFZvepKRMTDp2R7XzI/PPGLRBIz47miSDu0kRxGz2LZqKg16dXiel6EV7YRKVEpwE9079LLaFo92uxANaBrnvKqUiFBvT+Xc=
+	t=1792258909; cv=none; b=M5ngSNyzAsrMQQKdt+ECZRV1zIW/H99YwEy//Dmfs9Vqas5lnWsBTBgyQIoJk2OPyv3L+YEUFBDpYB13o0zrSvmJ9yR5mzAUc9fVwadkMpG9h5E760+qha3KAHRsq7HixaVks6O/1wluSmigeFj2ACoPBRZ18zLaSz3XYZRG1Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258906; c=relaxed/simple;
-	bh=Leb1ZPHcZE0p4s3bfxHQS6xeyEXwlzOtuKfQoiPcWkw=;
+	s=arc-20240116; t=1792258909; c=relaxed/simple;
+	bh=joUrcz282Rgsh+KJu1oQpdW1IQt37ABzcUEaOTDigOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4ghLrR9MDMFsj2pDXXYJuQ/xY0w4XlwYgP0b7B9tneMkRAPOzejAdi6fGg2kJd7lLt4L5KMnd+NPO8F5BM0dKOxspKckaC3/VK+ES4xqM0G2rj1zBPy80pUeaKDYfihW8bkjyoVWrpw39zNhiZeOpD9HLpOiGY4KcizD5rnCV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MieopYAt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pc8eYoyKznEyj657IrkNXbd8PuqiWXak3xtui6spYf9jWbXEoT3Lek7x4ATb8V2DyfPiQNFri88KDhl9WLriRYGXEn6P77TEThmqBXNMBYnv4EMHz0nyUGAyRXHBmPIpqyxGDVsjdFBjZsPOnMyUYa/VlvjvkLCo0GcABBDB+0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye/Rnd1m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MieopYAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF681F000C4;
-	Sat, 17 Oct 2026 17:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye/Rnd1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810A91F000C4;
+	Sat, 17 Oct 2026 17:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258905;
-	bh=p9JaHK/nerB6mmEgI6HCiaUfJp9hILF3ny6k035+Pxk=;
+	s=korg; t=1792258908;
+	bh=b4icOcuKSApQot3A/mMCOlCNGMmzY1cAv21VRMmaJ6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MieopYAt/WVs3yxUjiPE/ey7in8GV0g2cGmNcqXDkOkZyJ3FsVsUHAAZ+QUm9Eec3
-	 jw6PfOePuD2cHfMEn4p6IiKwYBcGz4C4snrs+3MIbOdD/zlS305xAd0uCGuMo400/6
-	 WNHYJUc7rC7gsVUVWSuOdXmAi+0/bhqQYs4EcOi8=
+	b=Ye/Rnd1mcVXz/FZ+JHbwdTzMFrySlvxoq3v9UmvpxgLGYzFQ92cBDLgYBjYmq669c
+	 sIyiiMToUPXbdgrJLrCuTFsijDaoA+X76poHeqgllwtyzs7vG+356XBbUyNvI31i3j
+	 5iI/BtE9QN6waoivUw6JopmUA31hh93dxlu7Mu/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1038/1674] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Sat, 17 Oct 2026 17:55:10 +0200
-Message-ID: <20261017160457.777257069@linuxfoundation.org>
+Subject: [PATCH 6.6 1039/1674] usb: typec: tcpm: validate VDO count in Discover Identity ACK handlers
+Date: Sat, 17 Oct 2026 17:55:11 +0200
+Message-ID: <20261017160457.803110118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,67 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 ]
+[ Upstream commit 8fbc349e8383125dd2d8de1c1e926279d398ab17 ]
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
-
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
-
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
+Properly validate the count passed from a device when calling
+svdm_consume_identity() or svdm_consume_identity_sop_prime() as the
+device-controlled value could index off of the static arrays, which
+could leak data.
 
 Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
 Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://patch.msgid.link/2026051350-plated-salute-0efe@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 3c4bdd9695b60..d93393aeb2f49 100644
+index d93393aeb2f49..cac8f8167aa8a 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1553,17 +1553,16 @@ static void svdm_consume_modes(struct tcpm_port *port, const u32 *p, int cnt)
- 	struct typec_altmode_desc *paltmode;
- 	int i;
+@@ -1485,6 +1485,9 @@ static void svdm_consume_identity(struct tcpm_port *port, const u32 *p, int cnt)
+ 	u32 vdo = p[VDO_INDEX_IDH];
+ 	u32 product = p[VDO_INDEX_PRODUCT];
  
--	if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--		/* Already logged in svdm_consume_svids() */
--		return;
--	}
--
- 	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
- 		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
- 		return;
- 	}
++	if (cnt <= VDO_INDEX_PRODUCT)
++		return;
++
+ 	memset(&port->mode_data, 0, sizeof(port->mode_data));
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
- 
+ 	port->partner_ident.id_header = vdo;
 -- 
 2.53.0
 
