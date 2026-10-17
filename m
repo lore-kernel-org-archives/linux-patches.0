@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575D8324B32;
-	Sat, 17 Oct 2026 17:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E0B39F18A;
+	Sat, 17 Oct 2026 17:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259617; cv=none; b=RKWbU8OVTcdYea7KFN97xTxdwhJ2sxS1YBgqqMT4ILLIno38uTP9cOmDxCzNx/CYEtE1GISr8aRDcgo4nC92lT8zHpIzWfGBbDQHmmTVuX+gESNKP0xhTWZ1iRM5jFq7XzKiiKGuxnGbOBUQNqQV+jozX8a5aNEBg/+vmebi128=
+	t=1792259621; cv=none; b=lK4azqXJPdLXhoG3hrJF3Nsrg+Iyw+vM7RLNthl/AR1BLjpgy0vrv5VbOd2UqtjlhQMouF/a4t2K2gBk5WXtKPRttc+l03g0QsqW4HSyaq3hI1N9jcPgBr6LJ9t3pKq0G4NunKgXoe+jAXiuKzpvCYETtXYRxJbLl7pRQNyLsis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259617; c=relaxed/simple;
-	bh=DQAmyXnSwajN7+D28Nav0x52p+8WvGnkWbmRFfDx2Do=;
+	s=arc-20240116; t=1792259621; c=relaxed/simple;
+	bh=dnvC27sjiqK6NP26AjAK3MgU4ww70bV4b26agWiAd+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVx8/VNr4BsbMnB1D1CLnCcfApsBT57DzVbzaumLkAYFVal2v+xR/6p/qSlbBCtUtV/e6rDh0AeAMN+bsmOAc7Dsx8QNmHvJbZcEu/lCtTwxT7R7w5ZkahPkyekR7QsjDeZ69t4MbP5L+3P0BIJg8UAbnpggPra+tnQGV8RAsGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qG+8v1s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DtQ2ntE98dY3aID/kJRQEwrZZdiLp3oRIfcPxfs4WPUdoWB1LNcVVZq6MxbrpaSarfBfCpJedykR2/P+Y6B+nZjHLZZ7wtIL0CgDBOVpCD6hKT96889DGot/vm39OIjfWMYG+chcZZrX0hMxmSNwGSVkDVDAnABxIOokTs6HK1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWMU1MOV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qG+8v1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F1E1F000C4;
-	Sat, 17 Oct 2026 17:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWMU1MOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664C21F000C4;
+	Sat, 17 Oct 2026 17:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259616;
-	bh=H2ULVTZJRGrp2oMpnKj9YzT9731eFqs4Uo3D4ev2ht0=;
+	s=korg; t=1792259619;
+	bh=xSroLpY/GvpnF09ru5iKc/cR2+Sb7kh2NeGxuaCU5xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qG+8v1sjCD/ibgucMtTzHiYzdKgC3Yviy6X29lQtE3TX7Vo0alBuI292OjQ+cg7W
-	 OOB752c/BNZZNEEW88gX4Zv35JPrSF3EhzINzaF7YzgnIDJP9l+q94VwIYm7WfHJQ9
-	 x+xV15g7RxffvNuXCM1PFyIXxp/295WbiNrY5UaY=
+	b=lWMU1MOVI9UgIHNfB2bpqn+IhN7kBl9AlsEeCdzx+lOofK/wT2im5d4xJTo6yS6EV
+	 n32HXfFoHd12v1NQ7W0eUGKrAt1NaCiUCVdvnhAzOx3Bp5TxX0rUHb4ZlHKE5UNl52
+	 kBUUoaQfNljF5hY5y2CiKb5JWZKfOCzqwMdH43Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1236/1674] hwmon: (sht3x) Fix unaligned accesses
-Date: Sat, 17 Oct 2026 17:58:28 +0200
-Message-ID: <20261017160502.864448704@linuxfoundation.org>
+Subject: [PATCH 6.6 1272/1674] power: supply: lp8788-charger: Convert to platform remove callback returning void
+Date: Sat, 17 Oct 2026 17:59:04 +0200
+Message-ID: <20261017160503.792792363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,80 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit f46d5ab43a572b84773015a76966f5da56fc1748 ]
+[ Upstream commit 7810ba3c5110ce66652ec6bd2abb92da5d726c3b ]
 
-Sashiko reports:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() is renamed to .remove().
 
-In sht3x_update_client(), the 16-bit temperature and humidity values are
-extracted from a stack-allocated byte array using be16_to_cpup(). The
-pointers passed to this function are calculated as buf and buf + 3. Since
-the difference between the two pointers is an odd number of bytes, at
-least one of them is guaranteed to be at an unaligned offset.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-This will trigger an alignment fault on strict-alignment architectures
-such as ARMv5 or SPARC, resulting in a kernel panic.
-
-Fix the problem by using get_unaligned_be16() instead of be16_to_cpup(),
-and put_unaligned_be16() instead of cpu_to_be16().
-
-Fixes: 7c84f7f80d6f ("hwmon: add support for Sensirion SHT3x sensors")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230918133700.1254499-17-u.kleine-koenig@pengutronix.de
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 831c29a12d56 ("power: supply: lp8788-charger: fix use-after-free on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/power/supply/lp8788-charger.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index d8a86e60cf8c1..0f757ef4bbe99 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -20,6 +20,7 @@
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/jiffies.h>
-+#include <asm/unaligned.h>
+diff --git a/drivers/power/supply/lp8788-charger.c b/drivers/power/supply/lp8788-charger.c
+index 755b6a4379b85..2c81be82a41a4 100644
+--- a/drivers/power/supply/lp8788-charger.c
++++ b/drivers/power/supply/lp8788-charger.c
+@@ -714,20 +714,18 @@ static int lp8788_charger_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- /* commands (high repeatability mode) */
- static const unsigned char sht3x_cmd_measure_single_hpm[] = { 0x24, 0x00 };
-@@ -273,9 +274,9 @@ static struct sht3x_data *sht3x_update_client(struct device *dev)
- 		if (ret)
- 			goto out;
+-static int lp8788_charger_remove(struct platform_device *pdev)
++static void lp8788_charger_remove(struct platform_device *pdev)
+ {
+ 	struct lp8788_charger *pchg = platform_get_drvdata(pdev);
  
--		val = be16_to_cpup((__be16 *)buf);
-+		val = get_unaligned_be16(buf);
- 		data->temperature = sht3x_extract_temperature(val);
--		val = be16_to_cpup((__be16 *)(buf + 3));
-+		val = get_unaligned_be16(buf + 3);
- 		data->humidity = sht3x_extract_humidity(val);
- 		data->last_update = jiffies;
- 	}
-@@ -333,7 +334,7 @@ static int limits_update(struct sht3x_data *data)
- 		if (ret)
- 			return ret;
+ 	flush_work(&pchg->charger_work);
+ 	lp8788_irq_unregister(pdev, pchg);
+ 	lp8788_psy_unregister(pchg);
+-
+-	return 0;
+ }
  
--		raw = be16_to_cpup((__be16 *)buffer);
-+		raw = get_unaligned_be16(buffer);
- 		temperature = sht3x_extract_temperature((raw & 0x01ff) << 7);
- 		humidity = sht3x_extract_humidity(raw & 0xfe00);
- 		data->temperature_limits[index] = temperature;
-@@ -386,7 +387,7 @@ static size_t limit_write(struct device *dev,
- 	raw = ((u32)(temperature + 45000) * 24543) >> (16 + 7);
- 	raw |= ((humidity * 42950) >> 16) & 0xfe00;
- 
--	*((__be16 *)position) = cpu_to_be16(raw);
-+	put_unaligned_be16(raw, position);
- 	position += SHT3X_WORD_LEN;
- 	*position = crc8(sht3x_crc8_table,
- 			 position - SHT3X_WORD_LEN,
+ static struct platform_driver lp8788_charger_driver = {
+ 	.probe = lp8788_charger_probe,
+-	.remove = lp8788_charger_remove,
++	.remove_new = lp8788_charger_remove,
+ 	.driver = {
+ 		.name = LP8788_DEV_CHARGER,
+ 	},
 -- 
 2.53.0
 
