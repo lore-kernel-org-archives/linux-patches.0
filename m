@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780BB34B437;
-	Sat, 17 Oct 2026 18:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42BC34B437;
+	Sat, 17 Oct 2026 18:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260672; cv=none; b=YVH0WOy8Kd+PcWuyxEeG+fSpD6Ifwo8afeceeAl5lLLrNYNeFRI5E4SijZlr66l/8n0l5Hfekme2h0sNe+gfLFbwHWGWCUry09arWpAv1eJeBiQOPgOuWsUsxOOyfjboLUtgmpUuUoC3GwOLovyLOdzrRDYJSzS2HQWiJOO9KIc=
+	t=1792260675; cv=none; b=VgWfxdGcQlxdKhyqbavJbUp9ce3kPIBSUPQ3OSWjxvJeBg7KF1rp72ZX9gx7Y8R+zqZQE49Gc5PXtD+brPCgAk45G0xM1b610EaxP2hA7TdedA1rQQm0LPOMnQ13yq9Yq8qrWmGDn1WJSXx96R668aNQ3pPUgvorFDa4DqwzVr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260672; c=relaxed/simple;
-	bh=GYRMsiUYT4zlgMpwjj1IX92W97muS2RzZVGgORG93oM=;
+	s=arc-20240116; t=1792260675; c=relaxed/simple;
+	bh=FqyFPDcD+T4VytoJ1PL1XgH7tbEymVf87BH5LvlEEmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ci9mK7ST8BzVrBs+KAMttkcM5N9UWr9eFCOC4ENX1AeFddmTm21D4PyKwhmPQSyBaaWM/DhIfSgpAKXMA2DLY3EumZwG0zyuNuGdJKeCB/MKR45bTfrjSv2SEAx3mWhGY2VwPITnB9nverFY8CqvEx7sL0t1WrBY7QliCamGeO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXJpJH3M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vEGs/8FhvQ+duATKLDTS+ysNHVFjumkARQicbR2KFmOKfn2YnAK41qGRBVqauVfP+9e6Vemi/dC3hwp/3IZr7luT3ZsIqj3idM6gelgA/zGSzw7jhrra7K7H6j9dtOex+TVM74qGX8OAZdIyMTKIptY+JK0nzb9hPiKSeiKN+l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgLaDIiq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXJpJH3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47E71F000C4;
-	Sat, 17 Oct 2026 18:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgLaDIiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1451F000C4;
+	Sat, 17 Oct 2026 18:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260671;
-	bh=AgCLGNuIbCv6b9u5U+io5wTBNz9ZKC5YwCc9oFYqBBw=;
+	s=korg; t=1792260674;
+	bh=pmF2pgsM3O2psg5fc8yhyyqjgKDT8hWqa+5a7P2r75o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NXJpJH3MSkHccukZ8Y28+FChFtJMgbwkKLEJh1keYDoRHkrtKRra5/EBEvwmTvyQy
-	 kY7IA2NQTKFC62OguvhfMO3rV28iCl3EoaKZn/NbVAZpQ3n6qqpcoFJLM1Tg8wA4Na
-	 AQkoLLKTOpYmhH5Wt6+O/Bxedx+waE2ro/gvVpqM=
+	b=wgLaDIiq235F2It2LggFX/NKNbdUCv8s2sBY8BHTmWQ5HsyM0OCEo1z2hIwM80R4+
+	 2mlpMvmdxzuoLjnHCoQ2OoJ9C0VxsIiC18imQJuODd4mzR2b1Iwpg6HTokb6L3j57o
+	 al4+az/7+QtlfABXMW7xtnDD3WiBPaxOfbaRKnn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Graf <graf@amazon.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1621/1674] virtio_ring: fix stale descriptor flags after a failed packed add
-Date: Sat, 17 Oct 2026 18:04:53 +0200
-Message-ID: <20261017160512.693748068@linuxfoundation.org>
+Subject: [PATCH 6.6 1622/1674] iommu/amd: Do not reallocate GA log buffers on resume
+Date: Sat, 17 Oct 2026 18:04:54 +0200
+Message-ID: <20261017160512.718205278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,113 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Graf <graf@amazon.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 75d276e5bb68778b2916f98a2bc30f142ebadc64 ]
+[ Upstream commit 00a7dd64888d6dd72110b40e2824a088cf7b7386 ]
 
-In a packed ring the AVAIL and USED bits sit in the descriptor itself,
-so writing them makes that descriptor available. Those bit combinations
-flip meaning on every round of the ring, tracked by a wrap counter, so
-invalidating or validating a descriptor means inverting both bits.
+Commit c5e1a1eb9279 ("iommu/amd: Simplify and Consolidate Virtual APIC
+(AVIC) Enablement") moved the GA log allocation from iommu_init_pci()
+to enable_iommus_vapic(), which is called on every resume.
 
-Commit 1ce9e6055fa0 ("virtio_ring: introduce packed ring support") has
-virtqueue_add_packed() make every descriptor of a chain available as it
-maps the chain, and write the head last. The device consumes the ring in
-order and stops at a head that is not available yet, so it never reaches
-the rest.
+iommu_init_ga_log() assigns iommu->ga_log and iommu->ga_log_tail
+unconditionally. Each resume therefore replaces the boot-time pointers
+and leaks both old allocations. The function also uses GFP_KERNEL from a
+syscore resume callback, where interrupts are disabled and the non-boot
+CPUs are offline.
 
-When vring_map_one_sg() fails partway, unmap_release unmaps the segments
-and restores avail_used_flags, but the descriptors it wrote to in the
-ring stay marked with AVAIL and USED bits. The head is now the only
-entry that keeps the device from consuming these stale entries.
+Return early if both buffers are already allocated. Clear the pointers
+in free_ga_log() so a partial allocation failure cannot leave ga_log
+dangling.
 
-For example, the ring would look like this now.
-
-  Z - pre-previous command
-  A - previous command
-  B - aborted command
-  C - current command
-
-  [A1 DONE] [A2 DONE] <C1 EMPTY> [B2] [B3] [Z1 DONE]
-
-When the driver now attempts to issue the C command, the next add starts
-at the same head as B. If C spans less descriptors than B, there is no
-end marker because AVAIL and USED bits were still in place. And that
-means the device will start interpreting these stale entries (B2/B3) as
-another command entry, which then blocks the queue.
-
-This effect typically happens in swiotlb configurations under memory
-pressure, because vring_map_one_sg() can then fail with larger I/O
-requests which then leads to command abortions.
-
-There are broadly 2 ways to avoid leaving those flags behind:
-
-  1) Defer those flags too until the chain is complete.
-  2) Rewrite those flags for the previous wrap counter.
-
-Implement the second option in both packed add paths. The first option
-traverses the chain a second time on every successful add. The second
-option invalidates all added descriptors when any add fails.
-
-With this patch applied, a packed virtqueue keeps completing requests
-after a failed add.
-
-Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
-Fixes: f6a15d854986 ("virtio_ring: add in order support")
-Assisted-by: Kiro:claude-opus-5 checkpatch sparse
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260817223229.28954-1-graf@amazon.com>
+Fixes: c5e1a1eb9279 ("iommu/amd: Simplify and Consolidate Virtual APIC (AVIC) Enablement")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index db4582687b958..a7abe94b5dd81 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -1412,7 +1412,7 @@ static inline int virtqueue_add_packed(struct virtqueue *_vq,
- 	struct scatterlist *sg;
- 	unsigned int i, n, c, descs_used, err_idx;
- 	__le16 head_flags, flags;
--	u16 head, id, prev, curr, avail_used_flags;
-+	u16 head, id, prev, curr, avail_used_flags, unpub_flags;
- 	int err;
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 7a9119f99e98a..10ab34bed410e 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -958,7 +958,9 @@ static void free_ga_log(struct amd_iommu *iommu)
+ {
+ #ifdef CONFIG_IRQ_REMAP
+ 	free_pages((unsigned long)iommu->ga_log, get_order(GA_LOG_SIZE));
++	iommu->ga_log = NULL;
+ 	free_pages((unsigned long)iommu->ga_log_tail, get_order(8));
++	iommu->ga_log_tail = NULL;
+ #endif
+ }
  
- 	START_USE(vq);
-@@ -1535,15 +1535,30 @@ static inline int virtqueue_add_packed(struct virtqueue *_vq,
- 	curr = vq->free_head;
+@@ -1003,6 +1005,9 @@ static int iommu_init_ga_log(struct amd_iommu *iommu)
+ 	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
+ 		return 0;
  
- 	vq->packed.avail_used_flags = avail_used_flags;
-+	unpub_flags = avail_used_flags ^ (1 << VRING_PACKED_DESC_F_AVAIL |
-+					  1 << VRING_PACKED_DESC_F_USED);
- 
- 	for (n = 0; n < total_sg; n++) {
- 		if (i == err_idx)
- 			break;
-+		/*
-+		 * The mapping loop made every descriptor but the head
-+		 * available. Stamp the previous wrap counter's AVAIL and USED
-+		 * bits on those, so that a later and shorter chain at this head
-+		 * does not leave one of them available beyond its own last
-+		 * descriptor. Marking them used instead would hand
-+		 * is_used_desc_packed() a completion we never made.
-+		 */
-+		if (i != head)
-+			desc[i].flags = cpu_to_le16(unpub_flags);
- 		vring_unmap_extra_packed(vq, &vq->packed.desc_extra[curr]);
- 		curr = vq->packed.desc_extra[curr].next;
- 		i++;
--		if (i >= vq->packed.vring.num)
-+		if (i >= vq->packed.vring.num) {
- 			i = 0;
-+			unpub_flags ^= 1 << VRING_PACKED_DESC_F_AVAIL |
-+				       1 << VRING_PACKED_DESC_F_USED;
-+		}
- 	}
- 
- 	END_USE(vq);
++	if (iommu->ga_log && iommu->ga_log_tail)
++		return 0;
++
+ 	iommu->ga_log = (u8 *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
+ 					get_order(GA_LOG_SIZE));
+ 	if (!iommu->ga_log)
 -- 
 2.53.0
 
