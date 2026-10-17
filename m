@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942A23C1D78;
-	Sat, 17 Oct 2026 17:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8F23A1E92;
+	Sat, 17 Oct 2026 17:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259932; cv=none; b=F1MZST1Ug2EZDItY+1PUoa0YklYVHA2hdXfxmNdodOAa5hSzQD1SrGeRwBn87AR+hrE4SZp2pNfe9x3kuXity+Qs2f31Lydb3haH+YqOgKKuEIi30sOywzCb7SK+sRvn1+BZ/DzCQRG+KkinWs008uiL1GoXr0Wrq5DmcO4akYo=
+	t=1792259934; cv=none; b=kNw0aze5KiF5NqYwrrmVR/yE4LNL+0/7PC47JjHy0ucUfGS3ydMpebISHZw28SVnu93YxzexLjXTP+VgXd3BPrHDlULimVzvDc/3UElPgUdcX0i73aodqIQun91/z/SgwP29/CzTNDEP3LNSJTPVa1TzW3M2Y5nPTz+BGbqaeeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259932; c=relaxed/simple;
-	bh=kOq+mukS8xJeRxdy+YDc+TTJvogD/V5/vcsj/1qt/yI=;
+	s=arc-20240116; t=1792259934; c=relaxed/simple;
+	bh=SHyftku0ihgzXPt+TuAB00RCPkVQZL6YEPFezaSiRf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhuGls04lPR1rgNuCSBDrZB7+on4LW9sgtb39erWi16ElTxP32WOWVjl+4abzKsv9kn8J0pqzEoCAYCmema1sPz4g58Ch5w+QwMEvuCv6WNTZ7MEg5Ai3rXXusZ9z7+eeDCyw4VM4LxxsRM2Wzkm5EcUX4adSFoO8yTxdOhMNhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=015HjQu7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idSGtJDYVn0WFoeAb4zBpGkSfJ9HOlfkttViT5quscuDLLsv0aUx8JgWAqNsQS4LJ3ZQa9xwv99wYImbgR/pxnIgOc9sXy23HJe8lbbmIluwuy7aHWY7eODrNH2rU2cqAd8NYMDcdWQIOU8mFA2jcqQc5RD6TdaosKOA3b6qRfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuTdMJaU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="015HjQu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2221F000C4;
-	Sat, 17 Oct 2026 17:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuTdMJaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05741F000C4;
+	Sat, 17 Oct 2026 17:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259930;
-	bh=GdFp4hCxk7hGjTWQ0DL//twxL9UZFFqXOdOJUSm04M0=;
+	s=korg; t=1792259933;
+	bh=KHC01IkWbQ5B1RNnNAOy6h2L3K6tRViMUdbe5I6DeKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=015HjQu72s1Ea3o8tZReKln8TSrQa8VDXSjK8Hpx9gLViUqhYTXgFqzDvJUVBiepr
-	 JcoHTRTOJo5BmGYnz4atpQ62x80V6WH/D55d3K2SxEoYOXNpioPklB+/bOZsxvWpjx
-	 h7Hb4RAFRWf8nPYb74RLgT6oAGD5yKKEx4vq3ryc=
+	b=JuTdMJaUFlPOgdXPmFvrpxH1z7JmiCHW8U9uhW3zKPbMbl+p2gDXNPtjvnwHYDJqJ
+	 GGWO8BJpVZ1fMRDcHSKzVq/pV2hLbivWT4KIOiUydw0TLqJ9kZVHHEbJMOAAS4DCXS
+	 c8J8QcxcEmAa66sYWGCtnHAdIAyWszhPULPe0LbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	vega@nebusec.ai,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1378/1674] Drivers: hv: vmbus: Skip VMBus module cleanup for non-nested root partition
-Date: Sat, 17 Oct 2026 18:00:50 +0200
-Message-ID: <20261017160506.535800261@linuxfoundation.org>
+Subject: [PATCH 6.6 1379/1674] net/sched: account classifier filter allocations to memcg
+Date: Sat, 17 Oct 2026 18:00:51 +0200
+Message-ID: <20261017160506.563031046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,79 +53,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhkelley58@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit cee0d90bceae1dee3bcc70f8d6b2ceb5b87deb42 ]
+[ Upstream commit 1beb81947eb486716af80db7a584f9e9fef7e003 ]
 
-The VMBus module initialization function, hv_acpi_init(), currently
-does nothing when running in the root partition and root is not nested
-in another VM. But the initialization function reports success, so the
-VMBus module is indeed loaded. VMBus functionality is not actually
-needed, but the VMBus module must be loaded so that hv_vmbus_exists()
-can answer correctly. Furthermore, the mshv_root dependency on the
-VMBus module is needed as described in the commit message for
-840b740a35bf ("mshv: Add conditional VMBus dependency").
+Allocations in the tc classifier *_change() paths (filter objects,
+per-CPU counters, and per-filter aux data) use plain GFP_KERNEL without
+__GFP_ACCOUNT, allowing unprivileged users to pin kernel memory outside
+memcg charging. The shared tcf_exts_init_ex() action array allocation in
+cls_api.c was also uncharged; this patch closes it along with the
+per-classifier filter-object/percpu/aux allocations that remain
+unaccounted.
 
-Loading the VMBus module without actually initializing it causes
-failures if the module should later be unloaded. The module unload code
-tries to clean up things that were never initialized, resulting in
-memory faults and a panic.
+Add GFP_KERNEL_ACCOUNT to:
+- the shared tcf_exts_init_ex() action array (cls_api.c), common to every
+  filter of every classifier (32 pointers, 256 bytes);
+- the filter-object, per-CPU-counter, and per-filter aux allocations in
+  cls_basic, cls_bpf, cls_cgroup, cls_flow, cls_flower, cls_fw,
+  cls_matchall, cls_route and cls_u32;
+- the u32_init_knode() replace-path knode allocation (cls_u32.c), which
+  allocates the same struct tc_u_knode + sel.keys on every replace of an
+  existing knode and was missed by the create-path-only conversion.
 
-Fix this by having VMBus module exit function perform the same
-check for non-nested root partition, and do nothing in such a
-case, just like hv_acpi_init().
+Also fix the cls_basic error path: basic_change() inserts fnew into the
+IDR before allocating the per-CPU counter. If alloc_percpu() fails the
+errout path kfree'd fnew without idr_remove, leaving a dangling pointer
+in the IDR. With GFP_KERNEL_ACCOUNT the percpu alloc becomes failable
+on demand (memcg at memory.max), making the dead path attacker-reachable
+and burning the handle permanently. Add the idr_remove on the percpu
+failure path, matching the basic_set_parms failure-path pattern.
 
-In the long run, the code that manages the Hyper-V provided SynIC
-should be refactored to better coordinate the requirements of
-root partition scenarios and normal VM scenarios, and to hopefully
-remove the hv_vmbus_exists() dependnecy between mshv_root and
-VMBus modules. Preventing the current unload failure scenario is
-an expediency until such a refactoring is done.
+Note: vega@nebusec.ai provided a poc for basic_cls, but it was easy to
+extend to the other classifiers.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hyperv/20260721154943.A09BD1F00A3D@smtp.kernel.org/
-Fixes: 7e279d78664aa ("Drivers: hv: vmbus: skip VMBus initialization if Linux is root")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED, CONFIG_NET_CLS_* (the classifier being used),
+  CONFIG_NET_CLS_ACT, CONFIG_MEMCG, CONFIG_USER_NS, CONFIG_NET_NS.
+- Unprivileged user in a fresh user+network namespace (unshare -Urn),
+  or root with CAP_NET_ADMIN.
+- Create a large number of tc filters (e.g. tc filter add dev lo
+  ingress ... <classifier> ...) while watching a memcg-limited cgroup:
+  system slab grows far faster than memory.current, pinning kernel
+  memory outside memcg charging.
+
+Fixes: 0da974f4f303 ("[NET]: Conversions from kmalloc+memset to k(z|c)alloc.")
+Reported-by: vega@nebusec.ai
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260819143733.57538-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/sched/cls_api.c      |  2 +-
+ net/sched/cls_basic.c    |  6 ++++--
+ net/sched/cls_bpf.c      |  6 +++---
+ net/sched/cls_cgroup.c   |  2 +-
+ net/sched/cls_flow.c     |  2 +-
+ net/sched/cls_flower.c   |  4 ++--
+ net/sched/cls_fw.c       |  4 ++--
+ net/sched/cls_matchall.c |  4 ++--
+ net/sched/cls_route.c    |  4 ++--
+ net/sched/cls_u32.c      | 11 ++++++-----
+ 10 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 416c1383f5afd..9df19a69feb69 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2640,6 +2640,13 @@ static int __init hv_acpi_init(void)
- 		return -ENODEV;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 256cbfadea650..5eb337c1531fa 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3356,7 +3356,7 @@ int tcf_exts_init_ex(struct tcf_exts *exts, struct net *net, int action,
+ 	 */
+ 	exts->net = net;
+ 	exts->actions = kcalloc(TCA_ACT_MAX_PRIO, sizeof(struct tc_action *),
+-				GFP_KERNEL);
++				GFP_KERNEL_ACCOUNT);
+ 	if (!exts->actions)
+ 		return -ENOMEM;
+ #endif
+diff --git a/net/sched/cls_basic.c b/net/sched/cls_basic.c
+index 1b92c33b5f819..ee09ff574f966 100644
+--- a/net/sched/cls_basic.c
++++ b/net/sched/cls_basic.c
+@@ -193,7 +193,7 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
+ 	}
  
- 	if (hv_root_partition && !hv_nested)
-+		/*
-+		 * A non-nested root partition does not need VMBus client
-+		 * functionality. However, the mshv_root module may have
-+		 * a dependency on the VMBus module as described in
-+		 * commit 840b740a35bf. Return success so the module
-+		 * loads even though no VMBus initialization is done.
-+		 */
- 		return 0;
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew)
+ 		return -ENOBUFS;
  
- 	/*
-@@ -2688,6 +2695,14 @@ static void __exit vmbus_exit(void)
- {
- 	int cpu;
+@@ -212,9 +212,11 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
+ 	if (err)
+ 		goto errout;
+ 	fnew->handle = handle;
+-	fnew->pf = alloc_percpu(struct tc_basic_pcnt);
++	fnew->pf = alloc_percpu_gfp(struct tc_basic_pcnt, GFP_KERNEL_ACCOUNT);
+ 	if (!fnew->pf) {
+ 		err = -ENOMEM;
++		if (!fold)
++			idr_remove(&head->handle_idr, fnew->handle);
+ 		goto errout;
+ 	}
  
-+	if (hv_root_partition && !hv_nested)
-+		/*
-+		 * If a non-nested root partition loaded the VMBus module,
-+		 * hv_acpi_init() did not do any VMBus initialization.
-+		 * There's nothing to clean up, so just return.
-+		 */
-+		return;
-+
- 	unregister_syscore_ops(&hv_synic_syscore_ops);
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index 8ca716bf9e42b..b0ae488bc533f 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -352,7 +352,7 @@ static int cls_bpf_prog_from_ops(struct nlattr **tb, struct cls_bpf_prog *prog)
+ 	if (bpf_size != nla_len(tb[TCA_BPF_OPS]))
+ 		return -EINVAL;
  
- 	hv_remove_kexec_handler();
+-	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL);
++	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL_ACCOUNT);
+ 	if (bpf_ops == NULL)
+ 		return -ENOMEM;
+ 
+@@ -403,7 +403,7 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
+ 	}
+ 
+ 	if (tb[TCA_BPF_NAME]) {
+-		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL);
++		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL_ACCOUNT);
+ 		if (!name) {
+ 			bpf_prog_put(fp);
+ 			return -ENOMEM;
+@@ -443,7 +443,7 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	prog = kzalloc(sizeof(*prog), GFP_KERNEL);
++	prog = kzalloc(sizeof(*prog), GFP_KERNEL_ACCOUNT);
+ 	if (!prog)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_cgroup.c b/net/sched/cls_cgroup.c
+index bd9322d71910b..f05e654e0b996 100644
+--- a/net/sched/cls_cgroup.c
++++ b/net/sched/cls_cgroup.c
+@@ -95,7 +95,7 @@ static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
+ 	if (head && handle != head->handle)
+ 		return -ENOENT;
+ 
+-	new = kzalloc(sizeof(*head), GFP_KERNEL);
++	new = kzalloc(sizeof(*head), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
+index 9ba13953d3a5e..e2883f0e40488 100644
+--- a/net/sched/cls_flow.c
++++ b/net/sched/cls_flow.c
+@@ -438,7 +438,7 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EOPNOTSUPP;
+ 	}
+ 
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 4fc59af6696ea..8b4dc3930906a 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2109,7 +2109,7 @@ static struct fl_flow_mask *fl_create_new_mask(struct cls_fl_head *head,
+ 	struct fl_flow_mask *newmask;
+ 	int err;
+ 
+-	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL);
++	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL_ACCOUNT);
+ 	if (!newmask)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -2269,7 +2269,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
+ 		goto errout_tb;
+ 	}
+ 
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew) {
+ 		err = -ENOBUFS;
+ 		goto errout_tb;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index bc007bb47432c..1d5427757c692 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -276,7 +276,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 		if (f->id != handle && handle)
+ 			return -EINVAL;
+ 
+-		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
++		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
+ 		if (!fnew)
+ 			return -ENOBUFS;
+ 
+@@ -330,7 +330,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 		rcu_assign_pointer(tp->root, head);
+ 	}
+ 
+-	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
++	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
+ 	if (f == NULL)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
+index e8353b27c8c4d..c7060d8e54a2d 100644
+--- a/net/sched/cls_matchall.c
++++ b/net/sched/cls_matchall.c
+@@ -189,7 +189,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
+ 	}
+ 
+-	new = kzalloc(sizeof(*new), GFP_KERNEL);
++	new = kzalloc(sizeof(*new), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return -ENOBUFS;
+ 
+@@ -201,7 +201,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
+ 		handle = 1;
+ 	new->handle = handle;
+ 	new->flags = userflags;
+-	new->pf = alloc_percpu(struct tc_matchall_pcnt);
++	new->pf = alloc_percpu_gfp(struct tc_matchall_pcnt, GFP_KERNEL_ACCOUNT);
+ 	if (!new->pf) {
+ 		err = -ENOMEM;
+ 		goto err_alloc_percpu;
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 54f5f7857ee0c..592cd27cfaba6 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -455,7 +455,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 	h1 = to_hash(nhandle);
+ 	b = rtnl_dereference(head->table[h1]);
+ 	if (!b) {
+-		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL);
++		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL_ACCOUNT);
+ 		if (b == NULL)
+ 			return -ENOBUFS;
+ 
+@@ -530,7 +530,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
+ 
+ 	err = -ENOBUFS;
+-	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL);
++	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL_ACCOUNT);
+ 	if (!f)
+ 		goto errout;
+ 
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 4557051a7d0d0..69c6ccd8f0918 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -841,7 +841,7 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
+ 	struct tc_u32_sel *s = &n->sel;
+ 	struct tc_u_knode *new;
+ 
+-	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL);
++	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return NULL;
+ 
+@@ -1139,15 +1139,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto erridr;
+ 	}
+ 
+-	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL);
++	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
+ 	if (n == NULL) {
+ 		err = -ENOBUFS;
+ 		goto erridr;
+ 	}
+ 
+ #ifdef CONFIG_CLS_U32_PERF
+-	n->pf = __alloc_percpu(struct_size(n->pf, kcnts, s->nkeys),
+-			       __alignof__(struct tc_u32_pcnt));
++	n->pf = __alloc_percpu_gfp(struct_size(n->pf, kcnts, s->nkeys),
++				   __alignof__(struct tc_u32_pcnt),
++				   GFP_KERNEL_ACCOUNT);
+ 	if (!n->pf) {
+ 		err = -ENOBUFS;
+ 		goto errfree;
+@@ -1169,7 +1170,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto errout;
+ 
+ #ifdef CONFIG_CLS_U32_MARK
+-	n->pcpu_success = alloc_percpu(u32);
++	n->pcpu_success = alloc_percpu_gfp(u32, GFP_KERNEL_ACCOUNT);
+ 	if (!n->pcpu_success) {
+ 		err = -ENOMEM;
+ 		goto errout;
 -- 
 2.53.0
 
