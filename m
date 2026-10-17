@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8DB17BED0;
-	Sat, 17 Oct 2026 16:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0394C37DEBE;
+	Sat, 17 Oct 2026 16:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254075; cv=none; b=FWrpfzN2kqHu+rSe2akuzysp2zg7xdSWdFukpX6Sx4bTqmuJaehbWeei3mzaVp3lmrbZJ7G+nVZTgfJyp0l77MrbrH+mGJvqOogWkuOyX874/9pOrTz5i3EvtAzepzd3gqQCrTmVi4+2bjdqVzuZA4XeXBI8K7mr39EJeKKUp8I=
+	t=1792254078; cv=none; b=erJRyXob7iomuzmXSegSbr8fT0aXTYOX6XtaILsGvuclc0d6IP8bd5sYIB9rvm7rxD3sCJCilMuvh3gDVE7Sjf/ZQZAq0f/x4Ay+SeUXT+15OIBvUK5oidGcK3fKD7kU0hVoi3CF8F3n4oWZWLJATUzZwU7fHNbphqhMsPjQVYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254075; c=relaxed/simple;
-	bh=DHvR+wtmEdBf+2+PDFW163dgbDQZ9yaafqNHJJP2NDg=;
+	s=arc-20240116; t=1792254078; c=relaxed/simple;
+	bh=ET7cuSvCoo6sH5iBoJ1XHXFDiKvuy8vYYf7YPQQ9Skg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOVUUJ1j5Etmgm7mriSUX+wyZcxI4DYwet+FeF32yDvL977fFmUV34ZcmKmzuyrPriq7c9P0sIvEr2n+8cqAR5RBBow6aIQSH/2nvrnPZaR+0EzgkXyGVQCfhkGQIMqGSfBOqnZsY3Jhl3exFofKAB49d8K5Io7ICE3mf5TVCqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Igtu6Xql; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S/nqXzAwGN1cvC+wyAf0C3YI0pe0nqAW9+pqnVcmuwPYwqlTK3xOXt4nppHvP9BwATZeQqHJOcfW4E7r4r5UF1Cmzbt8DmaAURrbeNA3diBfHVcBUm32wvdLGx67de6/iEnPVAZ6oCxf0jujrT/13OWVKR7LPcXplXLMaAq/At0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns9VMjtI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Igtu6Xql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709BB1F000C4;
-	Sat, 17 Oct 2026 16:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns9VMjtI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4C41F000C4;
+	Sat, 17 Oct 2026 16:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254074;
-	bh=rhaURqi8OprAspzOGGbLT4aBJ6Zh9o8/DL8/LawwE8U=;
+	s=korg; t=1792254076;
+	bh=0eCWtz/uLUA0Eww/lTK124UfCrsZkZ3WwT1wO73LYQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Igtu6Xql7H72ax0BU30KL9CGYXJw+mSgeOrjPUjkhOzmxzex+ejg0pVZtr90nIIjp
-	 VWtcn29qIUT+Sk7+6EZ+NYubM8DHZV0tn74YoZp8uHMl2GFGmleDsslmx/5/vEDqPs
-	 2j0kejhvPLQNL1REHtzhVhugABKLlYVPwqgQC63E=
+	b=Ns9VMjtIxoH0Ld581Eq3BUaa3o3817N+EtlkGUVhVjU9HIYXlpj464IAfq3o43j5w
+	 G456qPvhpjx4kXODj+VkqL+IsuAxK795SU8iUpadr+B8bpuQxauuwA7xLBPHYGGOhf
+	 xPnmXv/CoZzSO3Vb0hCfHZLVglzoYGEd7K0ONR+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/869] spi: microchip-core-qspi: remove unused param from mchp_coreqspi_write_op()
-Date: Sat, 17 Oct 2026 17:52:11 +0200
-Message-ID: <20261017160044.507878851@linuxfoundation.org>
+Subject: [PATCH 6.12 326/869] btrfs: only release the dirty pages io tree after successful writes
+Date: Sat, 17 Oct 2026 17:52:47 +0200
+Message-ID: <20261017160045.436532464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,61 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 75ca45c472dac206df2ebbc1c0f1f9c3bbdace50 ]
+[ Upstream commit 4066c55e109475a06d18a1f127c939d551211956 ]
 
-"word" is unused in mchp_coreqspi_write_op(), so delete it.
+[WARNING]
+With extra warning on dirty extent buffers at umount (aka, the next
+patch in the series), test case generic/388 can trigger the following
+warning about dirty extent buffers at unmount time:
 
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20250620-starry-excusably-25e6be957d9d@spud
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 7672749e1496 ("spi: microchip-core-qspi: control built-in cs manually")
+  BTRFS critical (device dm-2 state E): emergency shutdown
+  BTRFS error (device dm-2 state E): error while writing out transaction: -30
+  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
+  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
+  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
+  BTRFS info (device dm-2 state EA): forced readonly
+  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
+  ------------[ cut here ]------------
+  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
+  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
+  Call Trace:
+   <TASK>
+   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   generic_shutdown_super+0x89/0x1a0
+   kill_anon_super+0x16/0x40
+   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   deactivate_locked_super+0x2d/0xb0
+   cleanup_mnt+0xdc/0x140
+   task_work_run+0x5a/0xa0
+   exit_to_user_mode_loop+0x123/0x4b0
+   do_syscall_64+0x243/0x7c0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
+
+I'm using a stripped down version, which seems to trigger the warning
+more reliably:
+
+  _fsstress_pid=""
+  workload()
+  {
+  	dmesg -C
+  	mkfs.btrfs -f -K $dev > /dev/null
+  	echo 1 > /sys/kernel/debug/clear_warn_once
+  	mount $dev $mnt
+  	$fsstress -w -n 1024 -p 4 -d $mnt &
+  	_fsstress_pid=$!
+  	sleep 0
+  	$godown $mnt
+  	pkill --echo -PIPE fsstress > /dev/null
+  	wait $_fsstress_pid
+  	unset _fsstress_pid
+  	umount $mnt
+
+  	if dmesg | grep -q "WARNING"; then
+  		fail
+  	fi
+  }
+
+  for (( i = 0; i < $runtime; i++ )); do
+  	echo "=== $i/$runtime ==="
+  	workload
+  done
+
+[CAUSE]
+Inside btrfs_write_and_wait_transaction(), we first try to write all
+dirty ebs, then wait for them to finish.
+
+After that we call btrfs_extent_io_tree_release() to free all
+extent states from dirty_pages io tree.
+
+However if we hit an error from btrfs_write_marked_extent(), then we
+still call btrfs_extent_io_tree_release() to clear that dirty_pages io
+tree, which may contain dirty records that we haven't yet submitted.
+
+Furthermore, the later transaction cleanup path will utilize that
+dirty_pages io tree to properly cleanup those dirty ebs, but since it's
+already empty, no dirty ebs are properly cleaned up, thus will later
+trigger the warnings inside invalidate_btree_folios().
+
+[FIX]
+Normally such dirty ebs won't cause problems, as when the iput() is
+called on the btree inode, the dirty ebs will be forcibly written back,
+and since the fs is already in an error status, such writeback will not
+reach disk and finish immediately.
+
+But it's still better to get rid of such dirty ebs, if we ended up with
+dirty ebs but the fs is not in an error status, then such writeback at
+iput() time will be too late, as all workers are already stopped but
+writeback will utilize workers, which will lead to NULL pointer
+dereferences.
+
+Instead of unconditionally calling btrfs_extent_io_tree_release(), only
+call it if btrfs_write_and_wait_transaction() finished successfully, so
+that @dirty_pages extent io tree is kept untouched for transaction
+cleanup.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-microchip-core-qspi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/disk-io.c     | 1 +
+ fs/btrfs/transaction.c | 9 ++++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
-index 8bce9aeb259a4..1d24aee26dac5 100644
---- a/drivers/spi/spi-microchip-core-qspi.c
-+++ b/drivers/spi/spi-microchip-core-qspi.c
-@@ -194,7 +194,7 @@ static inline void mchp_coreqspi_read_op(struct mchp_coreqspi *qspi)
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index b0035d13286a4..2c98dd8c126e8 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4693,6 +4693,7 @@ static void btrfs_destroy_marked_extents(struct btrfs_fs_info *fs_info,
+ 			free_extent_buffer_stale(eb);
+ 		}
  	}
++	extent_io_tree_release(dirty_pages);
  }
  
--static inline void mchp_coreqspi_write_op(struct mchp_coreqspi *qspi, bool word)
-+static inline void mchp_coreqspi_write_op(struct mchp_coreqspi *qspi)
- {
- 	u32 control, data;
+ static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 76842ed54335d..4cf852f531847 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1281,14 +1281,13 @@ static int btrfs_write_and_wait_transaction(struct btrfs_trans_handle *trans)
+ 	blk_finish_plug(&plug);
+ 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
  
-@@ -415,7 +415,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
- 		qspi->rxbuf = NULL;
- 		qspi->tx_len = op->cmd.nbytes;
- 		qspi->rx_len = 0;
--		mchp_coreqspi_write_op(qspi, false);
-+		mchp_coreqspi_write_op(qspi);
- 	}
+-	extent_io_tree_release(&trans->transaction->dirty_pages);
+-
+ 	if (ret)
+ 		return ret;
+-	else if (ret2)
++	if (ret2)
+ 		return ret2;
+-	else
+-		return 0;
++
++	extent_io_tree_release(&trans->transaction->dirty_pages);
++	return 0;
+ }
  
- 	qspi->txbuf = &opaddr[0];
-@@ -426,7 +426,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
- 		qspi->rxbuf = NULL;
- 		qspi->tx_len = op->addr.nbytes;
- 		qspi->rx_len = 0;
--		mchp_coreqspi_write_op(qspi, false);
-+		mchp_coreqspi_write_op(qspi);
- 	}
- 
- 	if (op->data.nbytes) {
-@@ -435,7 +435,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
- 			qspi->rxbuf = NULL;
- 			qspi->rx_len = 0;
- 			qspi->tx_len = op->data.nbytes;
--			mchp_coreqspi_write_op(qspi, true);
-+			mchp_coreqspi_write_op(qspi);
- 		} else {
- 			qspi->txbuf = NULL;
- 			qspi->rxbuf = (u8 *)op->data.buf.in;
+ /*
 -- 
 2.53.0
 
