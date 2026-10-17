@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F053B385D7B;
-	Sat, 17 Oct 2026 17:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9548417BED0;
+	Sat, 17 Oct 2026 17:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258675; cv=none; b=AtTm5rRUutk72p1JbA80pjx+ox69IPBucr8phpa1g/nuwY5/Jc6bAivL5147nW1Zgtcq3uHWjsqtGf6cXc78cKgMO3GfKqr+XyIoz8ClEfE4JzxVufY/R+QPZjNA2yWtGT8maqUHD1DndJtQHou2PsvvNCNT9aOOWfAtmi9KrDk=
+	t=1792258677; cv=none; b=tO0ADad94Cp7J3ObdQbZxprUeMjjJxdb34NAC/+zTTBxcKXpVZ2duDKHmq7Wfs8UTZUUTMwb3BPOruuTqLKBZeIylfCO+9465MRT99Ja6zSgOaw8SusBjfPy8oBt3hoWuH7Tvuti6EidWGVl5EOdwPl31WB1VSaf9xpY7jW4Mbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258675; c=relaxed/simple;
-	bh=szvWzYQ7dQtYfX3YgqtUBoMJvEe7Kn/ERRm5zPBwMUY=;
+	s=arc-20240116; t=1792258677; c=relaxed/simple;
+	bh=XT7lz9dJewerP78HEuVOL6w6ymH8ZmP+uWgUt17uE4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poqP8N+VUxfbsdLDZdiv0H9N/Qn/7M72Q9Judnftr/PspIh68QQw21ubDrpB7D9fLYG2r9RS7Yc1ZtYXuVVrE0jlSmdiKe0MPtNiXDjtsnuL41s0oxjtdxY3NAlhIrCR8uJgtR1e0OK1vEqDQQV75xR9KSPBsohxHgNsIvK11HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWv3X7O9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L63GgoPIsNDIt17nKSTuWDyoOqvCl+GuT4cVS1v98nVPTdm7e1+sv2J8+kefZ8Mjv8B7wnf3E6yh+L4+jhzGeAYzOJeRIeNaLNBTt1+OlzjYrxlKXAJel6Ubg9M0wpKSRi+hku81qcuHGCgixDAX5JUEIuPurCTjCorCVS97EIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WA0ifFRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWv3X7O9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB9D1F000C4;
-	Sat, 17 Oct 2026 17:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WA0ifFRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC411F000C4;
+	Sat, 17 Oct 2026 17:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258673;
-	bh=Em76Xug7tI59DrALxCgmKUROI7tC6YtONOpFbfWJbh8=;
+	s=korg; t=1792258676;
+	bh=+Vmnw5mmWIhOJeQvvqZtez48IuvGEUcs7RwH87bztAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWv3X7O9D/kipqmj4zZHDKBvVkPn/a3fH67jpkZVPrwzJFWd+eRHsK47yRcio2ko1
-	 dUrt9XKN30Vjf8E2XAZ+SovxRzwCwGcamPSbC3feQ1sRzOx6nWtTuElpsYTo5gknVI
-	 FU4BWR/FjA44UCUYMPVIS63UoxZeGmI/dPlRD+tk=
+	b=WA0ifFRXFIvHFY8xDQY0eAuf6xZ0mM4IyvuA+ZowziD5FjKKzzbcHMUfVA4YTvxt8
+	 JJkrdGoq5rWq2nnFOf3t+Bmkx3X/OP7BMKHMCVBBb32fYynoPn8ApQeGejvnxZV3pq
+	 rgF+uCfjWFIvixR6uTviHrBRhb1+DzWnE9AgJ5bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Kevin Cheng <chengkev@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0961/1674] KVM: nSVM: Raise #UD if unhandled VMMCALL isnt intercepted by L1
-Date: Sat, 17 Oct 2026 17:53:53 +0200
-Message-ID: <20261017160455.792244189@linuxfoundation.org>
+Subject: [PATCH 6.6 0962/1674] dm-verity-fec: fix reading parity bytes split across blocks (take 3)
+Date: Sat, 17 Oct 2026 17:53:54 +0200
+Message-ID: <20261017160455.817328368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,119 +51,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Cheng <chengkev@google.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit c36991c6f8d2ab56ee67aff04e3c357f45cfc76c ]
+[ Upstream commit 430a05cb926f6bdf53e81460a2c3a553257f3f61 ]
 
-Explicitly synthesize a #UD for VMMCALL if L2 is active, L1 does NOT want
-to intercept VMMCALL, nested_svm_l2_tlb_flush_enabled() is true, and the
-hypercall is something other than one of the supported Hyper-V hypercalls.
-When all of the above conditions are met, KVM will intercept VMMCALL but
-never forward it to L1, i.e. will let L2 make hypercalls as if it were L1.
+fec_decode_bufs() assumes that the parity bytes of the first RS codeword
+it decodes are never split across parity blocks.
 
-The TLFS says a whole lot of nothing about this scenario, so go with the
-architectural behavior, which says that VMMCALL #UDs if it's not
-intercepted.
+This assumption is false.  Consider v->fec->block_size == 4096 &&
+v->fec->roots == 17 && fio->nbufs == 1, for example.  In that case, each
+call to fec_decode_bufs() consumes v->fec->roots * (fio->nbufs <<
+DM_VERITY_FEC_BUF_RS_BITS) = 272 parity bytes.
 
-Opportunistically do a 2-for-1 stub trade by stub-ifying the new API
-instead of the helpers it uses.  The last remaining "single" stub will
-soon be dropped as well.
+Considering that the parity data for each message block starts on a
+block boundary, the byte alignment in the parity data will iterate
+through 272*i mod 4096 until the 3 parity blocks have been consumed.  On
+the 16th call (i=15), the alignment will be 4080 bytes into the first
+block.  Only 16 bytes remain in that block, but 17 parity bytes will be
+needed.  The code reads out-of-bounds from the parity block buffer.
 
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Fixes: 3f4a812edf5c ("KVM: nSVM: hyper-v: Enable L2 TLB flush")
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Fortunately this doesn't normally happen, since it can occur only for
+certain non-default values of fec_roots *and* when the maximum number of
+buffers couldn't be allocated due to low memory.  For example with
+block_size=4096 only the following cases are affected:
+
+    fec_roots=17: nbufs in [1, 3, 5, 15]
+    fec_roots=19: nbufs in [1, 229]
+    fec_roots=21: nbufs in [1, 3, 5, 13, 15, 39, 65, 195]
+    fec_roots=23: nbufs in [1, 89]
+
+Regardless, fix it by refactoring how the parity blocks are read.
+
+Fixes: 6df90c02bae4 ("dm-verity FEC: Fix RS FEC repair for roots unaligned to block size (take 2)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Cheng <chengkev@google.com>
-Link: https://patch.msgid.link/20260228033328.2285047-5-chengkev@google.com
-[sean: rewrite changelog and comment, tag for stable, remove defunct stubs]
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/20260304002223.1105129-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/hyperv.h |  7 +++++++
- arch/x86/kvm/svm/nested.c |  4 +---
- arch/x86/kvm/svm/svm.c    | 19 ++++++++++++++++++-
- 3 files changed, 26 insertions(+), 4 deletions(-)
+ drivers/md/dm-verity-fec.c | 97 +++++++++++++++++---------------------
+ 1 file changed, 43 insertions(+), 54 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/hyperv.h b/arch/x86/kvm/svm/hyperv.h
-index 02f4784b5d446..1970f09fce9f4 100644
---- a/arch/x86/kvm/svm/hyperv.h
-+++ b/arch/x86/kvm/svm/hyperv.h
-@@ -40,6 +40,13 @@ static inline bool nested_svm_l2_tlb_flush_enabled(struct kvm_vcpu *vcpu)
- 	return hv_vcpu->vp_assist_page.nested_control.features.directhypercall;
+diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
+index 5f646c4bb98a6..5073c93cf962c 100644
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -55,36 +55,6 @@ static int fec_decode_rs8(struct dm_verity *v, struct dm_verity_fec_io *fio,
+ 			  fio->erasures, 0, NULL);
  }
  
-+static inline bool nested_svm_is_l2_tlb_flush_hcall(struct kvm_vcpu *vcpu)
-+{
-+	return guest_hv_cpuid_has_l2_tlb_flush(vcpu) &&
-+	       nested_svm_l2_tlb_flush_enabled(vcpu) &&
-+	       kvm_hv_is_tlb_flush_hcall(vcpu);
-+}
-+
- void svm_hv_inject_synthetic_vmexit_post_tlb_flush(struct kvm_vcpu *vcpu);
+-/*
+- * Read error-correcting codes for the requested RS block. Returns a pointer
+- * to the data block. Caller is responsible for releasing buf.
+- */
+-static u8 *fec_read_parity(struct dm_verity *v, u64 rsb, int index,
+-			   unsigned int *offset, unsigned int par_buf_offset,
+-			  struct dm_buffer **buf)
+-{
+-	u64 position, block, rem;
+-	u8 *res;
+-
+-	/* We have already part of parity bytes read, skip to the next block */
+-	if (par_buf_offset)
+-		index++;
+-
+-	position = (index + rsb) * v->fec->roots;
+-	block = div64_u64_rem(position, v->fec->io_size, &rem);
+-	*offset = par_buf_offset ? 0 : (unsigned int)rem;
+-
+-	res = dm_bufio_read(v->fec->bufio, block, buf);
+-	if (IS_ERR(res)) {
+-		DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
+-		      v->data_dev->name, (unsigned long long)rsb,
+-		      (unsigned long long)block, PTR_ERR(res));
+-		*buf = NULL;
+-	}
+-
+-	return res;
+-}
+-
+ /* Loop over each preallocated buffer slot. */
+ #define fec_for_each_prealloc_buffer(__i) \
+ 	for (__i = 0; __i < DM_VERITY_FEC_BUF_PREALLOC; __i++)
+@@ -132,13 +102,27 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
+ {
+ 	int r, corrected = 0, res;
+ 	struct dm_buffer *buf;
+-	unsigned int n, i, offset, par_buf_offset = 0;
++	unsigned int n, i, parity_pos, to_copy;
+ 	u8 *par, *block, par_buf[DM_VERITY_FEC_RSM - DM_VERITY_FEC_MIN_RSN];
++	u64 parity_block;
  
- #endif /* __ARCH_X86_KVM_SVM_HYPERV_H__ */
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index bdcfcc492dec8..432d188b2f3c9 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1548,9 +1548,7 @@ int nested_svm_exit_special(struct vcpu_svm *svm)
- 	}
- 	case SVM_EXIT_VMMCALL:
- 		/* Hyper-V L2 TLB flush hypercall is handled by L0 */
--		if (guest_hv_cpuid_has_l2_tlb_flush(vcpu) &&
--		    nested_svm_l2_tlb_flush_enabled(vcpu) &&
--		    kvm_hv_is_tlb_flush_hcall(vcpu))
-+		if (nested_svm_is_l2_tlb_flush_hcall(vcpu))
- 			return NESTED_EXIT_HOST;
- 		break;
- 	default:
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index df8bc8def019b..8844f49d3e7f8 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -49,6 +49,7 @@
- #include "svm.h"
- #include "svm_ops.h"
- 
-+#include "hyperv.h"
- #include "kvm_onhyperv.h"
- #include "svm_onhyperv.h"
- 
-@@ -3300,6 +3301,22 @@ static int invpcid_interception(struct kvm_vcpu *vcpu)
- 	return kvm_handle_invpcid(vcpu, type, gva);
- }
- 
-+static int vmmcall_interception(struct kvm_vcpu *vcpu)
-+{
+-	par = fec_read_parity(v, rsb, block_offset, &offset,
+-			      par_buf_offset, &buf);
+-	if (IS_ERR(par))
 +	/*
-+	 * Inject a #UD if L2 is active and the VMMCALL isn't a Hyper-V TLB
-+	 * hypercall, as VMMCALL #UDs if it's not intercepted, and this path is
-+	 * reachable if and only if L1 doesn't want to intercept VMMCALL or has
-+	 * enabled L0 (KVM) handling of Hyper-V L2 TLB flush hypercalls.
++	 * Compute the index of the first parity block that will be needed and
++	 * the starting position in that block.  Then read that block.
++	 *
++	 * io_size is always a power of 2, but roots might not be.  Note that
++	 * when it's not, a codeword's parity bytes can span a block boundary.
 +	 */
-+	if (is_guest_mode(vcpu) && !nested_svm_is_l2_tlb_flush_hcall(vcpu)) {
-+		kvm_queue_exception(vcpu, UD_VECTOR);
-+		return 1;
++	parity_block = (rsb + block_offset) * v->fec->roots;
++	parity_pos = parity_block & (v->fec->io_size - 1);
++	parity_block >>= v->data_dev_block_bits;
++	par = dm_bufio_read(v->fec->bufio, parity_block, &buf);
++	if (IS_ERR(par)) {
++		DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
++		      v->data_dev->name, (unsigned long long)rsb,
++		      (unsigned long long)parity_block, PTR_ERR(par));
+ 		return PTR_ERR(par);
 +	}
+ 
+ 	/*
+ 	 * Decode the RS blocks we have in bufs. Each RS block results in
+@@ -146,7 +130,31 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
+ 	 */
+ 	fec_for_each_buffer_rs_block(fio, n, i) {
+ 		block = fec_buffer_rs_block(v, fio, n, i);
+-		memcpy(&par_buf[par_buf_offset], &par[offset], v->fec->roots - par_buf_offset);
 +
-+	return kvm_emulate_hypercall(vcpu);
-+}
++		/*
++		 * Copy the next 'roots' parity bytes to 'par_buf', reading
++		 * another parity block if needed.
++		 */
++		to_copy = min(v->fec->io_size - parity_pos, v->fec->roots);
++		memcpy(par_buf, &par[parity_pos], to_copy);
++		parity_pos += to_copy;
++		if (to_copy < v->fec->roots) {
++			parity_block++;
++			parity_pos = 0;
 +
- static int (*const svm_exit_handlers[])(struct kvm_vcpu *vcpu) = {
- 	[SVM_EXIT_READ_CR0]			= cr_interception,
- 	[SVM_EXIT_READ_CR3]			= cr_interception,
-@@ -3350,7 +3367,7 @@ static int (*const svm_exit_handlers[])(struct kvm_vcpu *vcpu) = {
- 	[SVM_EXIT_TASK_SWITCH]			= task_switch_interception,
- 	[SVM_EXIT_SHUTDOWN]			= shutdown_interception,
- 	[SVM_EXIT_VMRUN]			= vmrun_interception,
--	[SVM_EXIT_VMMCALL]			= kvm_emulate_hypercall,
-+	[SVM_EXIT_VMMCALL]			= vmmcall_interception,
- 	[SVM_EXIT_VMLOAD]			= vmload_interception,
- 	[SVM_EXIT_VMSAVE]			= vmsave_interception,
- 	[SVM_EXIT_STGI]				= stgi_interception,
++			dm_bufio_release(buf);
++			par = dm_bufio_read(v->fec->bufio, parity_block, &buf);
++			if (IS_ERR(par)) {
++				DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
++				      v->data_dev->name, (unsigned long long)rsb,
++				      (unsigned long long)parity_block,
++				      PTR_ERR(par));
++				return PTR_ERR(par);
++			}
++			memcpy(&par_buf[to_copy], par, v->fec->roots - to_copy);
++			parity_pos = v->fec->roots - to_copy;
++		}
++
+ 		res = fec_decode_rs8(v, fio, block, par_buf, neras);
+ 		if (res < 0) {
+ 			r = res;
+@@ -159,25 +167,6 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
+ 		block_offset++;
+ 		if (block_offset >= 1 << v->data_dev_block_bits)
+ 			goto done;
+-
+-		/* Read the next block when we run out of parity bytes */
+-		offset += (v->fec->roots - par_buf_offset);
+-		/* Check if parity bytes are split between blocks */
+-		if (offset < v->fec->io_size && (offset + v->fec->roots) > v->fec->io_size) {
+-			par_buf_offset = v->fec->io_size - offset;
+-			memcpy(par_buf, &par[offset], par_buf_offset);
+-			offset += par_buf_offset;
+-		} else
+-			par_buf_offset = 0;
+-
+-		if (offset >= v->fec->io_size) {
+-			dm_bufio_release(buf);
+-
+-			par = fec_read_parity(v, rsb, block_offset, &offset,
+-					      par_buf_offset, &buf);
+-			if (IS_ERR(par))
+-				return PTR_ERR(par);
+-		}
+ 	}
+ done:
+ 	r = corrected;
 -- 
 2.53.0
 
