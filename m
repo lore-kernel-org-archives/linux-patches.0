@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B463CE4B1;
-	Sat, 17 Oct 2026 18:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD24938F950;
+	Sat, 17 Oct 2026 18:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260295; cv=none; b=lVEyf3OVntKYwVQ+JKbTkCBXnwR2tcPW4vch6AkaNqJvPsLw09OapCWSM2SxO1wWIqhiOWPzfOBoA271nBgN802BDGi2YyIGxCaocxTJdSxixGq17jnOW6OZhOTb2w0IOGZ7zqPoNVBw+c5HF63YZcyMeYVZPOteqBlyrKJIeHQ=
+	t=1792260296; cv=none; b=lI2gep+9h2Io1ytX1TeZ/F0CiSBQKZcQHqYhL4YCoFTnWHeLdmYRad5/sEngk2RnBAGtvtDdblOpgOjRrTUFr0Zwqal80kLnuiN7LZ83O7UDVKnlkAZmlk2p1kqNbuLsKk1rUl1AqQCBmasIeZyVESBF8E7n4RjzDyUgZqy+c+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260295; c=relaxed/simple;
-	bh=YO3qW8eVL70mNr9wDvWxt9mJNMBou3U1bM3aNt1hy8c=;
+	s=arc-20240116; t=1792260296; c=relaxed/simple;
+	bh=okDOXrTQaNWqr0sf0wX9jVM5to+nb/eYy+9/VFk4uJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQKnjM20sINQTQWFMm/ys4VovRUzvme3anVK11XAOtK8gnMdabBRA+msc02N340gogeNrwJYjTWOfKLdVJ2MkvOTivp8Q/oxBTXakRdEwkDbqnzEK7sI7ofi6psLXvuOQgx/CbahN7QM1dymZyZghD+8D+mNSFzuNapdnarMPqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkmzob3o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qD2TUk+TztX2Da3GYY1G3VepTqFalV/cI7NGzts6+wV8lEKTAjMmtBIlPlCfuELjLqkoZanEmzeWmQVC27hVbqW5wmwL7oTrpBBiBWh5ko0NvEbA3BOmHlU/TD15EPH1js2b0/hjnACMmj7xEAjexfaQhqv6SVn2OQpsGYOD9nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frWskIzT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkmzob3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CC91F000C5;
-	Sat, 17 Oct 2026 18:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frWskIzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBF81F000C6;
+	Sat, 17 Oct 2026 18:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260293;
-	bh=mmYj8VcwGp/y0LfePoBkqzsip59rG9BxKuDWXoiNMVg=;
+	s=korg; t=1792260287;
+	bh=Wa71KZa1H/75cKd7+lnXbe+iVIR5DEqoxPbzIWvvnaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bkmzob3oD0dAodeHEHG7CRghTQxyggOyoY153mtzh9CEKva1O71XGHLo4aN99L8OT
-	 XJeeTa3FCgN5mJaelyBrJpy18UanQbimopvtoObkl3HncxkK2bP+JcEWCNFycsn9K7
-	 lLx1HWOqKaz9JG/Wb5smvNZEJCPNFrn7CnY903cQ=
+	b=frWskIzTfHfDDmR5wtyQfypa0W0c5Nvyr0rsRNWubOKWreUHRkBh3ZqQ0wTWRkniU
+	 ljDtp6beSudYQMOGEQnzGsQH7Hb3GyxAe6H8pJXRjbJgPKn7oFnrlU9NEu7w7SWos9
+	 zOGbbJThbn3SxLmSx+8wt+N+ib8cLWHmqIoHF1+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1456/1674] wifi: ath11k: fix stride mismatch in mac_phy_caps_parse()
-Date: Sat, 17 Oct 2026 18:02:08 +0200
-Message-ID: <20261017160508.545839049@linuxfoundation.org>
+Subject: [PATCH 6.6 1493/1674] cgroup/cpuset: Make nr_deadline_tasks an atomic_t
+Date: Sat, 17 Oct 2026 18:02:45 +0200
+Message-ID: <20261017160509.466043155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,63 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 7a246c72132eb943b5844ba79dad597b47429dba ]
+[ Upstream commit 95220e1f18f6321008f021abc7d6f581f64bcb82 ]
 
-Currently, in ath11k_wmi_tlv_mac_phy_caps_parse(), kcalloc() sizes the
-mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
-min(firmware_len, sizeof(struct wmi_mac_phy_capabilities)). The subsequent
-memcpy() destination advances by sizeof(full struct) per slot via C
-pointer arithmetic, not by the clamped len. When firmware sends short
-TLVs, the second and later slots are written past the end of the
-allocation.
+The nr_deadline_tasks variable in the cpuset structure was introduced by
+commit 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task
+in cpusets"). It is reported by sashiko [1] that nr_deadline_tasks
+can currently be modified by inc_dl_tasks_cs() under rq->lock and
+by cpuset_attach() under cpuset_mutex. So if both updates happen
+simultaneously, the nr_deadline_tasks variable can be corrupted leading
+to incorrect operations down the road.
 
-The reader in ath11k_pull_mac_phy_cap_svc_ready_ext() also indexes the
-buffer with full-struct pointer arithmetic, so the allocation must match
-that stride.
+Fix that by changing its type to atomic_t so that nr_deadline_tasks
+are always atomically updated. This fix patch is a low hanging fruit.
+It can handle some of the races between a concurrent sched_setscheduler()
+and cpuset_can_attach()/cpuset_attach() calls, but not all of them like
+the other issue raised by sashiko [2]. This will be handled hopefully
+in a future follow up patch.
 
-Fix by using kzalloc_objs(), which derives the element size from the
-pointer type, making allocation size and pointer stride provably
-consistent regardless of what len the firmware provides.
+[1] https://sashiko.dev/#/patchset/20260626181923.133658-1-longman%40redhat.com
+[2] https://sashiko.dev/#/patchset/20260630033344.352702-1-longman%40redhat.com
 
-Compile tested only.
-
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-2-27a9c1a3fbd0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets")
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/cgroup/cpuset-internal.h |  2 +-
+ kernel/cgroup/cpuset.c          | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 64f5a6a768a81..2fc9b7a86b8c6 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -4649,14 +4649,16 @@ static int ath11k_wmi_tlv_mac_phy_caps_parse(struct ath11k_base *soc,
- 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
- 		return -ENOBUFS;
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index f8e300ed0c34d..8e5c275d730da 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -151,7 +151,7 @@ struct cpuset {
+ 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
+ 	 * know when to rebuild associated root domain bandwidth information.
+ 	 */
+-	int nr_deadline_tasks;
++	atomic_t nr_deadline_tasks;
+ 	int nr_migrate_dl_tasks;
+ 	u64 sum_migrate_dl_bw;
  
--	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
- 	if (!svc_rdy_ext->n_mac_phy_caps) {
--		svc_rdy_ext->mac_phy_caps = kcalloc(svc_rdy_ext->tot_phy_id,
--						    len, GFP_ATOMIC);
-+		svc_rdy_ext->mac_phy_caps =
-+			kcalloc(svc_rdy_ext->tot_phy_id,
-+				sizeof(*svc_rdy_ext->mac_phy_caps),
-+				GFP_ATOMIC);
- 		if (!svc_rdy_ext->mac_phy_caps)
- 			return -ENOMEM;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 329e7b55e2fdf..f59c0922122dc 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -95,14 +95,14 @@ void inc_dl_tasks_cs(struct task_struct *p)
+ {
+ 	struct cpuset *cs = task_cs(p);
+ 
+-	cs->nr_deadline_tasks++;
++	atomic_inc(&cs->nr_deadline_tasks);
+ }
+ 
+ void dec_dl_tasks_cs(struct task_struct *p)
+ {
+ 	struct cpuset *cs = task_cs(p);
+ 
+-	cs->nr_deadline_tasks--;
++	atomic_dec(&cs->nr_deadline_tasks);
+ }
+ 
+ static inline int is_partition_valid(const struct cpuset *cs)
+@@ -898,7 +898,7 @@ static void dl_update_tasks_root_domain(struct cpuset *cs)
+ 	struct css_task_iter it;
+ 	struct task_struct *task;
+ 
+-	if (cs->nr_deadline_tasks == 0)
++	if (atomic_read(&cs->nr_deadline_tasks) == 0)
+ 		return;
+ 
+ 	css_task_iter_start(&cs->css, 0, &it);
+@@ -2564,8 +2564,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
+ 	cs->old_mems_allowed = cpuset_attach_nodemask_to;
+ 
+ 	if (cs->nr_migrate_dl_tasks) {
+-		cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
+-		oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
++		atomic_add(cs->nr_migrate_dl_tasks, &cs->nr_deadline_tasks);
++		atomic_sub(cs->nr_migrate_dl_tasks, &oldcs->nr_deadline_tasks);
+ 		reset_migrate_dl_data(cs);
  	}
  
-+	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
- 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
- 	svc_rdy_ext->n_mac_phy_caps++;
- 	return 0;
 -- 
 2.53.0
 
