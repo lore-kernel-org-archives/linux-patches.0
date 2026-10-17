@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4BE224D6;
-	Sat, 17 Oct 2026 16:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF36342532;
+	Sat, 17 Oct 2026 16:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253132; cv=none; b=VijRxxZGRh0WqpCyB0+xiY7W/EcocKOwBQW/9FH7e72Am9vwIsr+N2pZIKMiM5BRe4JwUW3V8coK7jqUjlPaVru/+rW/NW/xNB+DrgkLVvl0LeajAqx9Ch9IFGd1/KP47K3fuz94US/wgjie+OHFQ/B+uCxfsHlco8qu3h9+f5M=
+	t=1792253136; cv=none; b=M7jY/TyJH5KeIA/7667344ylwszQQTvnF8CuekLkpNkZ3UHzcCE27EIlmmNTZPfj9ezgWM4UC1RbFUSU6YEE/q57b/1nsHb2sFPjvUO7vssRzyf95bEzFLvrbkuSDMtla8qVtH5mD0Q7NRkzDjrOLrOouohjmF3XT/swPXpyhsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253132; c=relaxed/simple;
-	bh=vmB68MiGEsec9JNvt+EankOi1Z4t4zdBWCS5rpB8wa4=;
+	s=arc-20240116; t=1792253136; c=relaxed/simple;
+	bh=F5FpdrI9Z1o87h7yY+1GO8unAtxqnN/+L6bCmZF3DQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncxLlbKVmfPvr1cgUhVoSTgn/U27cl9mu9ygVR5edzkTa/FzfAd4x6jeVcaC9X/d6DCcw2ghNE8cSOfkgupMqPZk29xl+WKC8li6mKzbioeQ9R91JzdtVeScGl4JgALljgJwDO3zqzEAuKV+gjt5CT6Hmy43L0QmILLVjsH7XDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhwEo/8V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hdddz2lJw/lbuy2L9WtHL7YuKRPhunnrTfQDfXmlG7eIPxA9KbaPzKgKHUEl700rQwv9jydxLSH0mePNPzZ28GnbXzRjXhusZrUPAxIcjxXEdYgpw8ORUvp9cAidQAAxcHv3uBaXa+WYYtHvlyEjYjZe9tr3QonuNQATzmIqbd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqvbkqd7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhwEo/8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0837D1F000C4;
-	Sat, 17 Oct 2026 16:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqvbkqd7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295831F000C4;
+	Sat, 17 Oct 2026 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253131;
-	bh=6+DDdXmDpbPk/OD8RotROTgBQMQMUDOXkZujwUdtdN8=;
+	s=korg; t=1792253134;
+	bh=evfh/hSrWb/A98UVnrQxAOXWuk22dxyJpbwh4BO+5Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RhwEo/8V7+oXKTv8kgJh0O8fxnJglTSR4ZKpEfMH9yQ0qLRJbyan5H3wIvMZ5Oqj7
-	 uyRqin/Y5uoKo7KJBVai2JIgjfNTkkpf2tbZQTYFnmmXn/PquUHWNPtq9XH8xWkTs/
-	 X3JC84FvJUhLdt32Hh/LxtaWTxkfBtW0iKmfA8f4=
+	b=oqvbkqd7zgJLArwdwMxORiA9ggnbETWSlUM5LWCF7iKYyFsxT2MuSJ/rFFychpXYC
+	 ocxkt3TjoLT7A6uCRAQTJq8dM1o9bTkoyGMcaxDsoLzGWTbxTPVQFZxK0pOrvQqBzc
+	 i914kZ/MlQkVo2HQ9Zi0GV6Is6vxN7l5vGuEg3Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Patryk Holda <patryk.holda@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/869] ice: fix use-after-free in dynamic port cleanup
-Date: Sat, 17 Oct 2026 17:47:26 +0200
-Message-ID: <20261017160037.133462381@linuxfoundation.org>
+Subject: [PATCH 6.12 006/869] xfs: stop exchanging reflink flags when exchanging mappings
+Date: Sat, 17 Oct 2026 17:47:27 +0200
+Message-ID: <20261017160037.158811907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,45 +53,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 1402fc67d2f4e2e1fc7bf8ee0825b8ad994557ff ]
+[ Upstream commit d84d6c1a7f1e2de9e601703a326a4c1b7b421943 ]
 
-ice_dealloc_dynamic_port() uses dyn_port->vsi->idx to erase the dynamic
-port from pf->dyn_ports. However, it frees the VSI before reading the
-index for the erase, resulting in a use-after-free.
+When an exchange covers both files from offset 0 to i_disk_size,
+xmi_can_exchange_reflink_flags() assumes every mapping moved and hands
+the reflink flag over to the other file.
 
-Follow the reverse of the allocation order in ice_alloc_dynamic_port()
-by erasing the xarray entry before freeing the VSI.
+That assumption is wrong.  A file can still own shared blocks past
+i_disk_size, e.g. after EXCHANGE_RANGE_TO_EOF sets a smaller size
+without unmapping anything.  The flag is cleared anyway, and the next
+write to such a block happens in place instead of CoW, corrupting the
+other file that shares it.
 
-Fixes: eda69d654c7e ("ice: add basic devlink subfunctions support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260928230429.495442-3-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Commit a23eca88448e ("xfs: fix exchange-range reflink flag clearing
+issue with INO1_WRITTEN") fixed one instance of this.  Rather than add
+another special case, stop moving the flags.
+xfs_exchmaps_ensure_reflink() already sets the flag on both inodes
+before the exchange, so both just keep it.
+
+Nothing sets CLEAR_INO{1,2}_REFLINK anymore.  Intents logged by older
+kernels may still carry them; recovery already masks them off, so they
+stay in the log format mask and are ignored.
+
+XFS_IOC_SWAPEXT has the same problem: it moves the reflink flag from
+one inode to the other along with the extents.  Just removing that is
+not enough here: the exchange path flags both inodes up front in
+xfs_exchmaps_ensure_reflink(), but swapext has no such step, so the
+inode receiving the shared extents would be left without the flag.
+Set it on both inodes instead, and make sure both have a CoW fork,
+since an inode with the reflink flag is expected to have one.
+
+The flag now stays until FALLOC_FL_UNSHARE_RANGE, xfs_scrub, or a
+truncate to zero removes it.
+
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Fixes: f0bc4d134b46 ("xfs: swap inode reflink flags when swapping inode extents")
+Cc: stable@vger.kernel.org # v6.10
+Assisted-by: LLM
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+
+The reflink-exchange eligibility helper contains a duplicate
+INO1_WRITTEN guard in the code being updated.  Remove both copies
+with the helper, as neither is needed once reflink flag clearing
+is removed.
+
+Stable-dep-of: 7dfb218c829c ("xfs: fix exchange-range-to-eof file size exchange")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/devlink/devlink_port.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_exchmaps.c   | 90 ++--------------------------------
+ fs/xfs/libxfs/xfs_log_format.h |  4 +-
+ fs/xfs/xfs_bmap_util.c         | 15 +++---
+ 3 files changed, 10 insertions(+), 99 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink_port.c b/drivers/net/ethernet/intel/ice/devlink/devlink_port.c
-index c6779d9dffffd..a5859fcc10e68 100644
---- a/drivers/net/ethernet/intel/ice/devlink/devlink_port.c
-+++ b/drivers/net/ethernet/intel/ice/devlink/devlink_port.c
-@@ -588,8 +588,8 @@ static void ice_dealloc_dynamic_port(struct ice_dynamic_port *dyn_port)
- 
- 	xa_erase(&pf->sf_nums, devlink_port->attrs.pci_sf.sf);
- 	ice_eswitch_detach_sf(pf, dyn_port);
--	ice_vsi_free(dyn_port->vsi);
- 	xa_erase(&pf->dyn_ports, dyn_port->vsi->idx);
-+	ice_vsi_free(dyn_port->vsi);
- 	kfree(dyn_port);
+diff --git a/fs/xfs/libxfs/xfs_exchmaps.c b/fs/xfs/libxfs/xfs_exchmaps.c
+index 68b9ddf075019..6a9a73fc5fd90 100644
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -49,7 +49,7 @@ struct xfs_exchmaps_adjacent {
+ 	.right2 = { .br_startblock = HOLESTARTBLOCK }, \
  }
  
+-/* Information to reset reflink flag / CoW fork state after an exchange. */
++/* Information to reset CoW fork state after an exchange. */
+ 
+ /*
+  * If the reflink flag is set on either inode, make sure it has an incore CoW
+@@ -127,9 +127,7 @@ xmi_has_more_exchange_work(const struct xfs_exchmaps_intent *xmi)
+ static inline bool
+ xmi_has_postop_work(const struct xfs_exchmaps_intent *xmi)
+ {
+-	return xmi->xmi_flags & (XFS_EXCHMAPS_CLEAR_INO1_REFLINK |
+-				 XFS_EXCHMAPS_CLEAR_INO2_REFLINK |
+-				 __XFS_EXCHMAPS_INO2_SHORTFORM);
++	return xmi->xmi_flags & __XFS_EXCHMAPS_INO2_SHORTFORM;
+ }
+ 
+ /* Check all mappings to make sure we can actually exchange them. */
+@@ -525,18 +523,6 @@ xfs_exchmaps_link_to_sf(
+ 	return error;
+ }
+ 
+-/* Clear the reflink flag after an exchange. */
+-static inline void
+-xfs_exchmaps_clear_reflink(
+-	struct xfs_trans	*tp,
+-	struct xfs_inode	*ip)
+-{
+-	trace_xfs_reflink_unset_inode_flag(ip);
+-
+-	ip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+-}
+-
+ /* Finish whatever work might come after an exchange operation. */
+ static int
+ xfs_exchmaps_do_postop_work(
+@@ -557,16 +543,6 @@ xfs_exchmaps_do_postop_work(
+ 			return error;
+ 	}
+ 
+-	if (xmi->xmi_flags & XFS_EXCHMAPS_CLEAR_INO1_REFLINK) {
+-		xfs_exchmaps_clear_reflink(tp, xmi->xmi_ip1);
+-		xmi->xmi_flags &= ~XFS_EXCHMAPS_CLEAR_INO1_REFLINK;
+-	}
+-
+-	if (xmi->xmi_flags & XFS_EXCHMAPS_CLEAR_INO2_REFLINK) {
+-		xfs_exchmaps_clear_reflink(tp, xmi->xmi_ip2);
+-		xmi->xmi_flags &= ~XFS_EXCHMAPS_CLEAR_INO2_REFLINK;
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -946,56 +922,13 @@ xfs_exchmaps_intent_destroy_cache(void)
+ }
+ 
+ /*
+- * Decide if we will exchange the reflink flags between the two files after the
+- * exchange.  The only time we want to do this is if we're exchanging all
+- * mappings under EOF and the inode reflink flags have different states.
++ * Allocate and initialize a new incore intent item from a request.
+  */
+-static inline bool
+-xmi_can_exchange_reflink_flags(
+-	const struct xfs_exchmaps_req	*req,
+-	unsigned int			reflink_state)
+-{
+-	struct xfs_mount		*mp = req->ip1->i_mount;
+-
+-	/*
+-	 * The INO1_WRITTEN optimization can skip exchanging hole and
+-	 * unwritten mappings, which means we cannot guarantee that all
+-	 * shared extents actually moved to the other file.  Clearing the
+-	 * reflink flag of an inode that still holds shared extents breaks
+-	 * the CoW write path, so refuse to exchange the flags in that case.
+-	 */
+-	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
+-		return false;
+-
+-	/*
+-	 * The INO1_WRITTEN optimization can skip exchanging hole and
+-	 * unwritten mappings, which means we cannot guarantee that all
+-	 * shared extents actually moved to the other file.  Clearing the
+-	 * reflink flag of an inode that still holds shared extents breaks
+-	 * the CoW write path, so refuse to exchange the flags in that case.
+-	 */
+-	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
+-		return false;
+-
+-	if (hweight32(reflink_state) != 1)
+-		return false;
+-	if (req->startoff1 != 0 || req->startoff2 != 0)
+-		return false;
+-	if (req->blockcount != XFS_B_TO_FSB(mp, req->ip1->i_disk_size))
+-		return false;
+-	if (req->blockcount != XFS_B_TO_FSB(mp, req->ip2->i_disk_size))
+-		return false;
+-	return true;
+-}
+-
+-
+-/* Allocate and initialize a new incore intent item from a request. */
+ struct xfs_exchmaps_intent *
+ xfs_exchmaps_init_intent(
+ 	const struct xfs_exchmaps_req	*req)
+ {
+ 	struct xfs_exchmaps_intent	*xmi;
+-	unsigned int			rs = 0;
+ 
+ 	xmi = kmem_cache_zalloc(xfs_exchmaps_intent_cache,
+ 			GFP_NOFS | __GFP_NOFAIL);
+@@ -1019,23 +952,6 @@ xfs_exchmaps_init_intent(
+ 		xmi->xmi_isize2 = req->ip1->i_disk_size;
+ 	}
+ 
+-	/* Record the state of each inode's reflink flag before the op. */
+-	if (xfs_is_reflink_inode(req->ip1))
+-		rs |= 1;
+-	if (xfs_is_reflink_inode(req->ip2))
+-		rs |= 2;
+-
+-	/*
+-	 * Figure out if we're clearing the reflink flags (which effectively
+-	 * exchanges them) after the operation.
+-	 */
+-	if (xmi_can_exchange_reflink_flags(req, rs)) {
+-		if (rs & 1)
+-			xmi->xmi_flags |= XFS_EXCHMAPS_CLEAR_INO1_REFLINK;
+-		if (rs & 2)
+-			xmi->xmi_flags |= XFS_EXCHMAPS_CLEAR_INO2_REFLINK;
+-	}
+-
+ 	if (S_ISDIR(VFS_I(xmi->xmi_ip2)->i_mode) ||
+ 	    S_ISLNK(VFS_I(xmi->xmi_ip2)->i_mode))
+ 		xmi->xmi_flags |= __XFS_EXCHMAPS_INO2_SHORTFORM;
+diff --git a/fs/xfs/libxfs/xfs_log_format.h b/fs/xfs/libxfs/xfs_log_format.h
+index a151ea6c0f721..114286c37c3df 100644
+--- a/fs/xfs/libxfs/xfs_log_format.h
++++ b/fs/xfs/libxfs/xfs_log_format.h
+@@ -948,10 +948,8 @@ struct xfs_xmi_log_format {
+  */
+ #define XFS_EXCHMAPS_INO1_WRITTEN	(1ULL << 2)
+ 
+-/* Clear the reflink flag from inode1 after the operation. */
++/* No longer set, but older intents may carry them; keep them valid. */
+ #define XFS_EXCHMAPS_CLEAR_INO1_REFLINK	(1ULL << 3)
+-
+-/* Clear the reflink flag from inode2 after the operation. */
+ #define XFS_EXCHMAPS_CLEAR_INO2_REFLINK	(1ULL << 4)
+ 
+ #define XFS_EXCHMAPS_LOGGED_FLAGS	(XFS_EXCHMAPS_ATTR_FORK | \
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 95f8a09f96ae2..97ff767da5989 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -1504,7 +1504,6 @@ xfs_swap_extents(
+ 	struct xfs_bstat	*sbp = &sxp->sx_stat;
+ 	int			src_log_flags, target_log_flags;
+ 	int			error = 0;
+-	uint64_t		f;
+ 	int			resblks = 0;
+ 	unsigned int		flags = 0;
+ 	struct timespec64	ctime, mtime;
+@@ -1648,14 +1647,12 @@ xfs_swap_extents(
+ 	if (error)
+ 		goto out_trans_cancel;
+ 
+-	/* Do we have to swap reflink flags? */
+-	if ((ip->i_diflags2 & XFS_DIFLAG2_REFLINK) ^
+-	    (tip->i_diflags2 & XFS_DIFLAG2_REFLINK)) {
+-		f = ip->i_diflags2 & XFS_DIFLAG2_REFLINK;
+-		ip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-		ip->i_diflags2 |= tip->i_diflags2 & XFS_DIFLAG2_REFLINK;
+-		tip->i_diflags2 &= ~XFS_DIFLAG2_REFLINK;
+-		tip->i_diflags2 |= f & XFS_DIFLAG2_REFLINK;
++	/* Either inode may now own shared blocks; flag both, with CoW forks. */
++	if ((ip->i_diflags2 | tip->i_diflags2) & XFS_DIFLAG2_REFLINK) {
++		ip->i_diflags2 |= XFS_DIFLAG2_REFLINK;
++		tip->i_diflags2 |= XFS_DIFLAG2_REFLINK;
++		xfs_ifork_init_cow(ip);
++		xfs_ifork_init_cow(tip);
+ 	}
+ 
+ 	/* Swap the cow forks. */
 -- 
 2.53.0
 
