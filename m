@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840363B8BD1;
-	Sat, 17 Oct 2026 17:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5CA3BBFAE;
+	Sat, 17 Oct 2026 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257128; cv=none; b=UZ+dUsB+S709/Nc3xVXgJSEnfI+LC0itdUlhKRcv1Ees7ZIJ3g99fvoFQrt4eTiWXo5lMLN9Q/Ga3Padz/dp/bZfc1yvwF0AKXgtsh+uMuHbURm+Z+ESwF3OP3UOXB1zDpvA4FwvXOmCyf+NloL3aOKusUS4743+8CvPm6LTKAo=
+	t=1792257131; cv=none; b=H4ipvfXtAGTInJW1TtpHylt/jEac6DqekhVMJV6h8TfV0UJ1FkhlOgCMRA/N172HBvoX5WJ16NbWlYgNG1gvGoGMvHemG7Vl3g+t3vSmG8r+sNHpj8P+0enOctnsdN6kH6SFUiWFHpSukxoZU8mOf1IN7Bc3VVPYv/yLlYppvKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257128; c=relaxed/simple;
-	bh=vIpANn7cTA1kGRb3MmR1aDxkw1Qca1URIqFPjOFcwAU=;
+	s=arc-20240116; t=1792257131; c=relaxed/simple;
+	bh=3q5HYOeVlDiOHEbBfDhKY0TwRfKnJWCG344zxpeuCw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJT8bxoRnmz4oACgG0JA3jrfHUgkdlpRCM2F1xU4QAohAG3yYKvDRZDzm/5RtH1ngzkq6MHZ1v9eiKz0fhdVFXoGYuSmS5t804PgV7WTJxao0EZbMPldDHjFqpS++8E0R4MDjMoe4wTgpARoT6f+SjUWYgxNd82PBeRkAzJsw5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0G/uBSv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Byfx9a46QXK9ZgOc1HhN9joNdDyk+ohl5S8SiDsy7Ckl5E2ilj6vqXlMbNMtQzk+SXQNNEvxaXDnpIMzlgEmdp4on10p9RdXeG8i0NTXwlzV9HvWOwFx8obcr1iaBog3wTiDnUJPaNyOB866PCj5dFSJvUagFnZq1fDFcml93yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/mIsE37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0G/uBSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFCE1F000CB;
-	Sat, 17 Oct 2026 17:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/mIsE37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD081F000C4;
+	Sat, 17 Oct 2026 17:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257127;
-	bh=DndQczsfH5zk/ayP5o4ED20vGP+SOk601/InpYfr7jQ=;
+	s=korg; t=1792257130;
+	bh=8Kqa0tzxM6nbnjdkI17dFtXchWJ0qTDl/SLVBOdpcRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H0G/uBSvpN2pt2OzUDhg5BA5Lh3fq43WAaLptPZimQtm74oTLLCO/B12tZHEdiDDf
-	 t0G0GilJGghWmXsnw98FhjO7FrD0FyV4XxZtZypzLdZGJJJoayqC4jzLkm2S55u9mB
-	 iBqppSPXjZFpNaoQp6MVTMphk4TLK9Vqv77/YK1Y=
+	b=U/mIsE37LaIZTxSQVyKml3pkScpGiUiEWlV4S2P8SStr/dfAB4enqtudM7nnWzj8x
+	 9nIVCL0PIm3t9iXSsZ6VTBbEdOaUQj9BLhw1m3uQspPRSh1E1mj2c6xrugKMtAbBPg
+	 RKngkmFckBnSFnbDbC1/Hfo2pHVzDPVihX/iF3Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Iaroslav Voitovych <yaroslav.voytovych@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0460/1674] Bluetooth: hci_event: fix simultaneous discovery stuck in FINDING
-Date: Sat, 17 Oct 2026 17:45:32 +0200
-Message-ID: <20261017160442.925836474@linuxfoundation.org>
+Subject: [PATCH 6.6 0461/1674] netfilter: nft_set_pipapo: restore cloned mapping table memcg accounting
+Date: Sat, 17 Oct 2026 17:45:33 +0200
+Message-ID: <20261017160442.951627071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,105 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 96d006ae6445679436b945593950fd465eba7e76 ]
+The 6.6.y backport of commit 69e687cea79f
+("netfilter: nf_tables: missing objects with no memcg accounting")
+changed the pipapo_clone() mapping-table allocation to
+GFP_KERNEL_ACCOUNT.
 
-When hci_inquiry_complete_evt is called between le_scan_disable and
-le_set_scan_enable_complete and no remote name needs to be resolved,
-the interleaved discovery with SIMULTANEOUS quirk gets stuck in
-DISCOVERY_FINDING. le_set_scan_enable_complete does not check inquiry
-state. No one sets DISCOVERY_STOPPED in this process.
+The later stable backport of commit 07ace0bbe03b ("netfilter:
+nft_set_pipapo: do not rely on ZERO_SIZE_PTR") rewrote this allocation
+and changed the flag back to GFP_KERNEL. Upstream applied the
+ZERO_SIZE_PTR change before the memcg accounting change and retains
+GFP_KERNEL_ACCOUNT after both.
 
-Add state check in le_set_scan_enable_complete and change state if
-the state is DISCOVERY_FINDING. Tested with AX201 (8087:0026) in Dell
-Vostro 13. Discovering disabled MGMT Event below is reported when
-running into the above condition.
+nft_pipapo_deactivate() clones a populated set before looking up an
+element to delete. If the element is absent, priv->dirty remains false
+and the clone is retained. Its mapping tables therefore remain allocated
+without being charged to the requesting memory cgroup.
 
- @ MGMT Command: Start Discovery (0x0023)    {0x0001} [hci0] 10885.970873
-         Address type: 0x07
-           BR/EDR
-           LE Public
-           LE Random
- ...
- < HCI Command: LE Set Extended Scan Enable    #38205 [hci0] 10886.131438
-         Extended scan: Enabled (0x01)
-         Filter duplicates: Enabled (0x01)
-         Duration: 0 msec (0x0000)
-         Period: 0.00 sec (0x0000)
- > HCI Event: Command Complete (0x0e) plen 4   #38206 [hci0] 10886.133295
-       LE Set Extended Scan Enable (0x08|0x0042) ncmd 2
-         Status: Success (0x00)
- @ MGMT Event: Discovering (0x0013) plen 2   {0x0001} [hci0] 10886.133414
-         Address type: 0x07
-           BR/EDR
-           LE Public
-           LE Random
-         Discovery: Enabled (0x01)
- < HCI Command: Inquiry (0x01|0x0001) plen 5   #38207 [hci0] 10886.133528
-         Access code: 0x9e8b33 (General Inquiry)
-         Length: 10.24s (0x08)
-         Num responses: 0
- > HCI Event: Command Status (0x0f) plen 4     #38208 [hci0] 10886.141333
-       Inquiry (0x01|0x0001) ncmd 2
-         Status: Success (0x00)
- ...
- < HCI Command: LE Set Extended Scan Enable    #38242 [hci0] 10896.381802
-         Extended scan: Disabled (0x00)
-         Filter duplicates: Disabled (0x00)
-         Duration: 0 msec (0x0000)
-         Period: 0.00 sec (0x0000)
- > HCI Event: Inquiry Complete (0x01) plen 1   #38243 [hci0] 10896.383419
-         Status: Success (0x00)
- > HCI Event: Command Complete (0x0e) plen 4   #38244 [hci0] 10896.394378
-       LE Set Extended Scan Enable (0x08|0x0042) ncmd 2
-         Status: Success (0x00)
- @ MGMT Event: Device Found (0x0012) plen 22 {0x0001} [hci0] 10896.394497
-         LE Address: 88:12:AC:92:43:69
-         RSSI: -101 dBm (0x9b)
-         Flags: 0x00000004
-           Not Connectable
-         Data length: 8
-         Company: Xiaomi Inc. (911)
-           Data[0]:
-         16-bit Service UUIDs (complete): 1 entry
-           Xiaomi Inc. (0xfdaa)
- @ MGMT Event: Discovering (0x0013) plen 2   {0x0001} [hci0] 10896.394506
-         Address type: 0x07
-           BR/EDR
-           LE Public
-           LE Random
-         Discovery: Disabled (0x00)
+Restore GFP_KERNEL_ACCOUNT for the cloned mapping table.
 
-Fixes: 8ffde2a73f2c ("Bluetooth: Convert le_scan_disable timeout to hci_sync")
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Iaroslav: test the quirk with test_bit() on hdev->quirks, as
-  this branch does elsewhere; hci_test_quirk() does not exist here ]
-Signed-off-by: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+Fixes: 32bad10de347 ("netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/netfilter/nft_set_pipapo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 1a6fb75f2c1ea..d5f2be8783902 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1754,6 +1754,13 @@ static void le_set_scan_enable_complete(struct hci_dev *hdev, u8 enable)
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index b9d9218cb2ee3..cfdea0e65af60 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1465,7 +1465,7 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 				goto out_mt;
  
- 		hci_dev_clear_flag(hdev, HCI_LE_SCAN);
+ 			dst->mt = kvmalloc_array(src->rules, sizeof(*src->mt),
+-						 GFP_KERNEL);
++						 GFP_KERNEL_ACCOUNT);
+ 			if (!dst->mt)
+ 				goto out_mt;
  
-+		if (hdev->discovery.type == DISCOV_TYPE_INTERLEAVED &&
-+		    test_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks) &&
-+		    !test_bit(HCI_INQUIRY, &hdev->flags) &&
-+		    hdev->discovery.state == DISCOVERY_FINDING) {
-+			hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
-+		}
-+
- 		/* The HCI_LE_SCAN_INTERRUPTED flag indicates that we
- 		 * interrupted scanning due to a connect request. Mark
- 		 * therefore discovery as stopped.
 -- 
 2.53.0
 
