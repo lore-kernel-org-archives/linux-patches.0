@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4CE2C026C;
-	Sat, 17 Oct 2026 16:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40F5384CED;
+	Sat, 17 Oct 2026 16:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254404; cv=none; b=MPTqtbImizAC0Kb3v/R2vhmuTBxX2IeehawxW3/TUpF7CQFJxJrWS/nXG7SruCqFJwOGfmGXb8efuThjGRvN9RWSYFCo6UkmhI0cJCVnhwbXMXZVwIKY0VpT411ac2TP4Rt69eE2TLeEDEJ8b/wVrVioeo18K80vCM9PmStrWCg=
+	t=1792254407; cv=none; b=h5WihNskl4yu6Ny7n2MBPAj0IgeBNHfJn1/BvxJeIwMXfwOP/nkbgjMwCT89lbmXiHGuTbv0B7Ao2dFrWJC9I/qLPgOmzQLhT6nJVA2IOLE9PKrhVTwPmsGuE5yuoZOCKRZ2RE0dRrTMiD+mch9f874dyOiSySd4uOxUvLKqPz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254404; c=relaxed/simple;
-	bh=jeeK2VkDpDaXG+D+5+R85bZceqqfFOtscoEhmym8cdk=;
+	s=arc-20240116; t=1792254407; c=relaxed/simple;
+	bh=IElImc1xjP01/ULOzQXtk/tfQlSuepre7sqzuGznJpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIbgGKm7OAN9LDcRjC37G1fozWLQgkarnBAB5Uf/aPC9xwnktJ27E0tdUhTlgqdVzhQpiC7zMjuDEE8+2qavAKXILB8L6xDRrf8yDMfr69utpX5/Q0DPTNpm4UFg3P/SUVjsK6OYknYUS3gu//DRpP+0s94ysF44bywQJRuQ4Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuVC7/Vm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NP8KfCKfC8duRF9S09WxTAxiiN4/ot9dlx5Gylwgy6x06ZNMEESYPjAG8emyTJOprxXUIrZz/CGkE2BYUFUpW4MQ+alKeSiVuU+iGOcxmjwydaAgt1Mzq2cKjlHOm2C5HLcqgVXYdwNRM8slcKx+fs6MmIJeVsI3qqlJukWmJnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=107vdq6g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuVC7/Vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69AD1F000C4;
-	Sat, 17 Oct 2026 16:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="107vdq6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0276D1F000C4;
+	Sat, 17 Oct 2026 16:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254403;
-	bh=N7Fb7j+MCp+vJ0BtmAFOIbo1fpFynWDuJdDPyOpBsqk=;
+	s=korg; t=1792254406;
+	bh=yl3kqknNpQp4YbchvSLo9bcUiUSdatouqP0LXAxy4Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fuVC7/VmjsafyplTixW3MnVkofgNS0WTfCwz10gBTfO/aOMNJZprCmLdhKzGCwzIf
-	 b//nZGIdvk6aihgOTKhf4/WogKz+t2nr7jdQp0j1bOxzrRGfmHhpIJJJfnEeBw8u+5
-	 LUNaYveILD7fHcBYAvavMgAiuFoXObmTt3f8/PmY=
+	b=107vdq6g2ke5cL6sUdGpzMwM6vZkV3zGprVPAoKkeLyRfVBc4Z6hwIuYP8ltjwl4E
+	 bJGdFKT7+O63NE20vn4hbdqI058uua4mBW9WSKoCJFP+Q2QebrLP6ChiMF6pVvRSjN
+	 WmqeR+7DlsCeAS3JwxKwWWk0G1RdS8mt0Fl4cBNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 436/869] netfs: Clean up some whitespace in trace header
-Date: Sat, 17 Oct 2026 17:54:37 +0200
-Message-ID: <20261017160048.318705388@linuxfoundation.org>
+Subject: [PATCH 6.12 437/869] netfs: Use a folio_queue allocation and free functions
+Date: Sat, 17 Oct 2026 17:54:38 +0200
+Message-ID: <20261017160048.342744268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,12 +56,14 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit d3d3ec86568090cc5a4501b745274114de6881e0 ]
+[ Upstream commit eb1181594417dafad0f75808ead71f6d5170c1ea ]
 
-Clean up some whitespace in the netfs trace header.
+Provide and use folio_queue allocation and free functions to combine the
+allocation, initialisation and stat (un)accounting steps that are repeated
+in several places.
 
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241216204124.3752367-2-dhowells@redhat.com
+Link: https://lore.kernel.org/r/20241216204124.3752367-4-dhowells@redhat.com
 cc: Jeff Layton <jlayton@kernel.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
@@ -69,227 +71,141 @@ Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: dbd6f56d975b ("netfs: Fix netfs_create_write_req() to handle async cache object creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/netfs.h | 130 +++++++++++++++++------------------
- 1 file changed, 65 insertions(+), 65 deletions(-)
+ fs/netfs/buffered_read.c | 12 +++---------
+ fs/netfs/misc.c          | 38 ++++++++++++++++++++++++++++++++++----
+ include/linux/netfs.h    |  5 +++++
+ 3 files changed, 42 insertions(+), 13 deletions(-)
 
-diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
-index 1d9b068bb1758..59452f12dcbee 100644
---- a/include/trace/events/netfs.h
-+++ b/include/trace/events/netfs.h
-@@ -258,13 +258,13 @@ TRACE_EVENT(netfs_read,
- 	    TP_ARGS(rreq, start, len, what),
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index ec78ad094cf4a..e0822ecabb342 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -131,11 +131,9 @@ static ssize_t netfs_prepare_read_iterator(struct netfs_io_subrequest *subreq)
+ 			struct folio_queue *tail = rreq->buffer_tail, *new;
+ 			size_t added;
  
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(unsigned int,		cookie		)
--		    __field(loff_t,			i_size		)
--		    __field(loff_t,			start		)
--		    __field(size_t,			len		)
--		    __field(enum netfs_read_trace,	what		)
--		    __field(unsigned int,		netfs_inode	)
-+		    __field(unsigned int,		rreq)
-+		    __field(unsigned int,		cookie)
-+		    __field(loff_t,			i_size)
-+		    __field(loff_t,			start)
-+		    __field(size_t,			len)
-+		    __field(enum netfs_read_trace,	what)
-+		    __field(unsigned int,		netfs_inode)
- 			     ),
+-			new = kmalloc(sizeof(*new), GFP_NOFS);
++			new = netfs_folioq_alloc(GFP_NOFS);
+ 			if (!new)
+ 				return -ENOMEM;
+-			netfs_stat(&netfs_n_folioq);
+-			folioq_init(new);
+ 			new->prev = tail;
+ 			tail->next = new;
+ 			rreq->buffer_tail = new;
+@@ -363,11 +361,9 @@ static int netfs_prime_buffer(struct netfs_io_request *rreq)
+ 	struct folio_batch put_batch;
+ 	size_t added;
  
- 	    TP_fast_assign(
-@@ -292,10 +292,10 @@ TRACE_EVENT(netfs_rreq,
- 	    TP_ARGS(rreq, what),
+-	folioq = kmalloc(sizeof(*folioq), GFP_KERNEL);
++	folioq = netfs_folioq_alloc(GFP_KERNEL);
+ 	if (!folioq)
+ 		return -ENOMEM;
+-	netfs_stat(&netfs_n_folioq);
+-	folioq_init(folioq);
+ 	rreq->buffer = folioq;
+ 	rreq->buffer_tail = folioq;
+ 	rreq->submitted = rreq->start;
+@@ -440,12 +436,10 @@ static int netfs_create_singular_buffer(struct netfs_io_request *rreq, struct fo
+ {
+ 	struct folio_queue *folioq;
  
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(unsigned int,		flags		)
--		    __field(enum netfs_io_origin,	origin		)
--		    __field(enum netfs_rreq_trace,	what		)
-+		    __field(unsigned int,		rreq)
-+		    __field(unsigned int,		flags)
-+		    __field(enum netfs_io_origin,	origin)
-+		    __field(enum netfs_rreq_trace,	what)
- 			     ),
+-	folioq = kmalloc(sizeof(*folioq), GFP_KERNEL);
++	folioq = netfs_folioq_alloc(GFP_KERNEL);
+ 	if (!folioq)
+ 		return -ENOMEM;
  
- 	    TP_fast_assign(
-@@ -319,15 +319,15 @@ TRACE_EVENT(netfs_sreq,
- 	    TP_ARGS(sreq, what),
+-	netfs_stat(&netfs_n_folioq);
+-	folioq_init(folioq);
+ 	folioq_append(folioq, folio);
+ 	BUG_ON(folioq_folio(folioq, 0) != folio);
+ 	BUG_ON(folioq_folio_order(folioq, 0) != folio_order(folio));
+diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
+index 8bdacbf15226c..fbd239e6d3114 100644
+--- a/fs/netfs/misc.c
++++ b/fs/netfs/misc.c
+@@ -9,6 +9,38 @@
+ #include <linux/rmap.h>
+ #include "internal.h"
  
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(unsigned short,		index		)
--		    __field(short,			error		)
--		    __field(unsigned short,		flags		)
--		    __field(enum netfs_io_source,	source		)
--		    __field(enum netfs_sreq_trace,	what		)
--		    __field(size_t,			len		)
--		    __field(size_t,			transferred	)
--		    __field(loff_t,			start		)
-+		    __field(unsigned int,		rreq)
-+		    __field(unsigned short,		index)
-+		    __field(short,			error)
-+		    __field(unsigned short,		flags)
-+		    __field(enum netfs_io_source,	source)
-+		    __field(enum netfs_sreq_trace,	what)
-+		    __field(size_t,			len)
-+		    __field(size_t,			transferred)
-+		    __field(loff_t,			start)
- 			     ),
++/**
++ * netfs_folioq_alloc - Allocate a folio_queue struct
++ * @gfp: Allocation constraints
++ *
++ * Allocate, initialise and account the folio_queue struct.
++ */
++struct folio_queue *netfs_folioq_alloc(gfp_t gfp)
++{
++	struct folio_queue *fq;
++
++	fq = kmalloc(sizeof(*fq), gfp);
++	if (fq) {
++		netfs_stat(&netfs_n_folioq);
++		folioq_init(fq);
++	}
++	return fq;
++}
++EXPORT_SYMBOL(netfs_folioq_alloc);
++
++/**
++ * netfs_folioq_free - Free a folio_queue struct
++ * @folioq: The object to free
++ *
++ * Free and unaccount the folio_queue struct.
++ */
++void netfs_folioq_free(struct folio_queue *folioq)
++{
++	netfs_stat_d(&netfs_n_folioq);
++	kfree(folioq);
++}
++EXPORT_SYMBOL(netfs_folioq_free);
++
+ /*
+  * Make sure there's space in the rolling queue.
+  */
+@@ -88,8 +120,7 @@ struct folio_queue *netfs_delete_buffer_head(struct netfs_io_request *wreq)
  
- 	    TP_fast_assign(
-@@ -359,15 +359,15 @@ TRACE_EVENT(netfs_failure,
- 	    TP_ARGS(rreq, sreq, error, what),
+ 	if (next)
+ 		next->prev = NULL;
+-	netfs_stat_d(&netfs_n_folioq);
+-	kfree(head);
++	netfs_folioq_free(head);
+ 	wreq->buffer = next;
+ 	return next;
+ }
+@@ -112,8 +143,7 @@ void netfs_clear_buffer(struct netfs_io_request *rreq)
+ 				folio_put(folio);
+ 			}
+ 		}
+-		netfs_stat_d(&netfs_n_folioq);
+-		kfree(p);
++		netfs_folioq_free(p);
+ 	}
+ }
  
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(short,			index		)
--		    __field(short,			error		)
--		    __field(unsigned short,		flags		)
--		    __field(enum netfs_io_source,	source		)
--		    __field(enum netfs_failure,		what		)
--		    __field(size_t,			len		)
--		    __field(size_t,			transferred	)
--		    __field(loff_t,			start		)
-+		    __field(unsigned int,		rreq)
-+		    __field(short,			index)
-+		    __field(short,			error)
-+		    __field(unsigned short,		flags)
-+		    __field(enum netfs_io_source,	source)
-+		    __field(enum netfs_failure,		what)
-+		    __field(size_t,			len)
-+		    __field(size_t,			transferred)
-+		    __field(loff_t,			start)
- 			     ),
+diff --git a/include/linux/netfs.h b/include/linux/netfs.h
+index f8e0d9fa745a2..5180292bd2d10 100644
+--- a/include/linux/netfs.h
++++ b/include/linux/netfs.h
+@@ -21,6 +21,7 @@
  
- 	    TP_fast_assign(
-@@ -398,9 +398,9 @@ TRACE_EVENT(netfs_rreq_ref,
- 	    TP_ARGS(rreq_debug_id, ref, what),
+ enum netfs_sreq_ref_trace;
+ typedef struct mempool_s mempool_t;
++struct folio_queue;
  
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(int,			ref		)
--		    __field(enum netfs_rreq_ref_trace,	what		)
-+		    __field(unsigned int,		rreq)
-+		    __field(int,			ref)
-+		    __field(enum netfs_rreq_ref_trace,	what)
- 			     ),
+ /**
+  * folio_start_private_2 - Start an fscache write on a folio.  [DEPRECATED]
+@@ -455,6 +456,10 @@ void netfs_end_io_write(struct inode *inode);
+ int netfs_start_io_direct(struct inode *inode);
+ void netfs_end_io_direct(struct inode *inode);
  
- 	    TP_fast_assign(
-@@ -422,10 +422,10 @@ TRACE_EVENT(netfs_sreq_ref,
- 	    TP_ARGS(rreq_debug_id, subreq_debug_index, ref, what),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		rreq		)
--		    __field(unsigned int,		subreq		)
--		    __field(int,			ref		)
--		    __field(enum netfs_sreq_ref_trace,	what		)
-+		    __field(unsigned int,		rreq)
-+		    __field(unsigned int,		subreq)
-+		    __field(int,			ref)
-+		    __field(enum netfs_sreq_ref_trace,	what)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -473,10 +473,10 @@ TRACE_EVENT(netfs_write_iter,
- 	    TP_ARGS(iocb, from),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned long long,		start		)
--		    __field(size_t,			len		)
--		    __field(unsigned int,		flags		)
--		    __field(unsigned int,		ino		)
-+		    __field(unsigned long long,		start)
-+		    __field(size_t,			len)
-+		    __field(unsigned int,		flags)
-+		    __field(unsigned int,		ino)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -497,12 +497,12 @@ TRACE_EVENT(netfs_write,
- 	    TP_ARGS(wreq, what),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		wreq		)
--		    __field(unsigned int,		cookie		)
--		    __field(unsigned int,		ino		)
--		    __field(enum netfs_write_trace,	what		)
--		    __field(unsigned long long,		start		)
--		    __field(unsigned long long,		len		)
-+		    __field(unsigned int,		wreq)
-+		    __field(unsigned int,		cookie)
-+		    __field(unsigned int,		ino)
-+		    __field(enum netfs_write_trace,	what)
-+		    __field(unsigned long long,		start)
-+		    __field(unsigned long long,		len)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -530,10 +530,10 @@ TRACE_EVENT(netfs_collect,
- 	    TP_ARGS(wreq),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		wreq		)
--		    __field(unsigned int,		len		)
--		    __field(unsigned long long,		transferred	)
--		    __field(unsigned long long,		start		)
-+		    __field(unsigned int,		wreq)
-+		    __field(unsigned int,		len)
-+		    __field(unsigned long long,		transferred)
-+		    __field(unsigned long long,		start)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -556,12 +556,12 @@ TRACE_EVENT(netfs_collect_sreq,
- 	    TP_ARGS(wreq, subreq),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,		wreq		)
--		    __field(unsigned int,		subreq		)
--		    __field(unsigned int,		stream		)
--		    __field(unsigned int,		len		)
--		    __field(unsigned int,		transferred	)
--		    __field(unsigned long long,		start		)
-+		    __field(unsigned int,		wreq)
-+		    __field(unsigned int,		subreq)
-+		    __field(unsigned int,		stream)
-+		    __field(unsigned int,		len)
-+		    __field(unsigned int,		transferred)
-+		    __field(unsigned long long,		start)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -587,11 +587,11 @@ TRACE_EVENT(netfs_collect_folio,
- 	    TP_ARGS(wreq, folio, fend, collected_to),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,	wreq		)
--		    __field(unsigned long,	index		)
--		    __field(unsigned long long,	fend		)
--		    __field(unsigned long long,	cleaned_to	)
--		    __field(unsigned long long,	collected_to	)
-+		    __field(unsigned int,	wreq)
-+		    __field(unsigned long,	index)
-+		    __field(unsigned long long,	fend)
-+		    __field(unsigned long long,	cleaned_to)
-+		    __field(unsigned long long,	collected_to)
- 			     ),
- 
- 	    TP_fast_assign(
-@@ -616,10 +616,10 @@ TRACE_EVENT(netfs_collect_state,
- 	    TP_ARGS(wreq, collected_to, notes),
- 
- 	    TP_STRUCT__entry(
--		    __field(unsigned int,	wreq		)
--		    __field(unsigned int,	notes		)
--		    __field(unsigned long long,	collected_to	)
--		    __field(unsigned long long,	cleaned_to	)
-+		    __field(unsigned int,	wreq)
-+		    __field(unsigned int,	notes)
-+		    __field(unsigned long long,	collected_to)
-+		    __field(unsigned long long,	cleaned_to)
- 			     ),
- 
- 	    TP_fast_assign(
++/* Miscellaneous APIs. */
++struct folio_queue *netfs_folioq_alloc(gfp_t gfp);
++void netfs_folioq_free(struct folio_queue *folioq);
++
+ /**
+  * netfs_inode - Get the netfs inode context from the inode
+  * @inode: The inode to query
 -- 
 2.53.0
 
