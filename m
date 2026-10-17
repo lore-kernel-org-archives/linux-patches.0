@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294013AA9D1;
-	Sat, 17 Oct 2026 16:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDF33AB47A;
+	Sat, 17 Oct 2026 16:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255077; cv=none; b=oynH60fNoHq6KD1CwRcZ9ZYBn+/xQGFfT2Z+EZVIFoFT7FKTvCZk0GgIk4bC6ceTVtZ8pW3uWoT7NF43PKjtrvyuy3NScs4Y5XQNLZ76uOINCFIE23+UEN2UuLRrQXjMj+N1yMsJUERaqn3gfxgR8D0U0Rnhg0pFxU7P+E3G8BA=
+	t=1792255080; cv=none; b=jtwEzEt6BSkB0Rn7cCUiZSfp0DZ/wm8vgUtE1hM/jgeSjyrSJ4wUFH90RfhKQP5ak8NNbdso/J4BH1rR6Lg6nn/Cwzl8vCkNYA3nr/VF8F5wJ77q9LJnEXWp0FrqezlverAQYMN0VyqfTmfOvvFljW7r3VmHSJw7iU9UJQvGMGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255077; c=relaxed/simple;
-	bh=2rDhk0RRknslvqjn57hFjefA27yjf/olkuLV+mU91gc=;
+	s=arc-20240116; t=1792255080; c=relaxed/simple;
+	bh=Y7O1OkuSGWn5c7a4KF4ZGLecB1jqrUj1x16Pytyw5as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cgz7Xfoqb6CxZvP5AEEwGDod+57l7jJta7pCFpg7GC10QhiTEUy5XKBfd2stn8VB57zTFhXSD/vJdIYrwUORq/bneBVKqhkRRfj+ipoY6t5KmRQev1VH3cU1VNciGIqLxJli2MEgiKbVmSfbHz9GiypV/rq7rfaMRra3rbtQbPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5vV2NBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KG9m7F2QfkuUmKgCJDZ8udjKyKcIixqsvXakhCki1hNkJXVaa0PrAqnXgxQzNypYWIv9eID+aZKskEy6ZDX4a5pFS37aghDBk76o/PDRA8VAcXUq2slwUmEgANSlVyTcPa+gboWeburDRi57EmPzNQ1ruzrv2/kjuc066QuIFdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtLODh+t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5vV2NBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBB31F000C4;
-	Sat, 17 Oct 2026 16:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtLODh+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A26D1F000C4;
+	Sat, 17 Oct 2026 16:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255076;
-	bh=95ycY6jz5rJjHi1w2m68M+gijRoC0Th1/EjkwQSLrfw=;
+	s=korg; t=1792255079;
+	bh=7rxP240wHr0g6EpX1D/hyXstGeVyiYrNfj5VOCcOWaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5vV2NBw4VN90JMIOu53JSpQ+1mS3WtNO7qF8/+mBjeQx3vaLEGjlUQoWb6tk7fPc
-	 AHsRqwrN4ogCg3qM/osUs/Dj68LEuurR+i8uh75kPxcmitND+Je+rHFz+9QfCLGBwR
-	 wksxRP1jAEBGkI42oHHc+WdAm0dySLxPC1RkUgOM=
+	b=wtLODh+tAPLn/ydunUfJrYwPKV32ODgHHaJOmf4bCYgW8AnbmhMYDXWG+l5D7gz2m
+	 NeYQtXb7tmurLBLL8k8T++8XUU0l/9zA3gOzbuk2aVltyTao2CaVnNApF5ETp5Kvca
+	 qgD9apKENwRaxEEUHxp1aOR5ms6JDsc1gASGJudc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 611/869] net: bridge: arp/nd proxy: fix reading neigh ha
-Date: Sat, 17 Oct 2026 17:57:32 +0200
-Message-ID: <20261017160052.703724750@linuxfoundation.org>
+Subject: [PATCH 6.12 612/869] ip6mr: do not clone dst in ip6mr_cache_report()
+Date: Sat, 17 Oct 2026 17:57:33 +0200
+Message-ID: <20261017160052.727524937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,126 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 57549ab9079122991dfa0f8248ca00e101e8e69b ]
+[ Upstream commit 235b42b5860189eb8c27c36435ad932cae65a734 ]
 
-Currently neigh ha address is read directly, but that can result in
-torn/partial reads if the neigh is being updated. Use neigh_ha_snapshot
-to take a stable snapshot of the address.
+IPv6 input attaches a non-refcounted (NOREF) dst to skbs under RCU.
+When an ingress multicast packet misses MFC lookup,
+ip6mr_cache_unresolved() places the skb onto the unresolved queue,
+escaping the receive-side RCU grace period.
 
-Fixes: 057658cb33fb ("bridge: suppress arp pkts on BR_NEIGH_SUPPRESS ports")
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260818150756.890025-2-razor@blackwall.org
+If the underlying route is deleted and freed, and the MFC queue is later
+resolved with a wrong parent interface, ip6_mr_forward() invokes
+ip6mr_cache_report(..., MRT6MSG_WRONGMIF), which executes
+dst_clone(skb_dst(pkt)) on the freed dst entry, triggering a slab
+use-after-free.
+
+Report packets queued to mroute6_sk (a raw socket) and netlink
+notifications do not require an attached dst entry.
+
+Fix this by:
+1. Removing dst_clone() in ip6mr_cache_report() and ensuring report skbs
+   do not hold a dst.
+2. Dropping skb_dst before queuing unresolved skbs in
+   ip6mr_cache_unresolved(), matching the fact that multicast
+   forwarding resolves outgoing routes anew via ip6_route_output().
+
+Fixes: 67f415dd2906 ("ipv6: convert rx data path to not take refcnt on dst")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260818172755.4083692-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ net/ipv6/ip6mr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index f2d6643d2c0a1..e1c6a54e9a0c7 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -191,13 +191,15 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 	n = neigh_lookup(&arp_tbl, &tip, vlandev);
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
-+		u8 ha[ETH_ALEN] __aligned(2);
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index ac0120b75ff2b..d95b988be4afe 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1128,7 +1128,6 @@ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 	msg->im6_src = ipv6_hdr(pkt)->saddr;
+ 	msg->im6_dst = ipv6_hdr(pkt)->daddr;
  
- 		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
+-	skb_dst_set(skb, dst_clone(skb_dst(pkt)));
+ 	skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	}
+ 
+@@ -1138,6 +1137,7 @@ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 		return -EINVAL;
+ 	}
+ 
++	skb_dst_drop(skb);
+ 	mrt6msg_netlink_event(mrt, skb);
+ 
+ 	/* Deliver to user space multicast routing algorithms */
+@@ -1217,6 +1217,7 @@ static int ip6mr_cache_unresolved(struct mr_table *mrt, mifi_t mifi,
+ 			skb->dev = dev;
+ 			skb->skb_iif = dev->ifindex;
  		}
- 
--		f = br_fdb_find_rcu(br, n->ha, vid);
-+		neigh_ha_snapshot(ha, n, n->dev);
-+		f = br_fdb_find_rcu(br, ha, vid);
- 		if (f) {
- 			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
-@@ -207,10 +209,10 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 			    br_is_neigh_suppress_enabled(dst, vid)) {
- 				if (!vid)
- 					br_arp_send(br, p, skb->dev, sip, tip,
--						    sha, n->ha, sha, 0, 0);
-+						    sha, ha, sha, 0, 0);
- 				else
- 					br_arp_send(br, p, skb->dev, sip, tip,
--						    sha, n->ha, sha,
-+						    sha, ha, sha,
- 						    skb->vlan_proto,
- 						    skb_vlan_tag_get(skb));
- 				replied = true;
-@@ -248,7 +250,7 @@ struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *msg)
- }
- 
- static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
--		       struct sk_buff *request, struct neighbour *n,
-+		       struct sk_buff *request, struct neighbour *n, u8 *ha,
- 		       __be16 vlan_proto, u16 vlan_tci)
- {
- 	struct net_device *dev = request->dev;
-@@ -306,7 +308,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		ipv6_eth_mc_map(&in6addr_linklocal_allnodes, eth_hdr(reply)->h_dest);
- 	else
- 		ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
--	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
-+	ether_addr_copy(eth_hdr(reply)->h_source, ha);
- 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
- 	reply->protocol = htons(ETH_P_IPV6);
- 
-@@ -336,7 +338,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	na->icmph.icmp6_override = 1;
- 	na->icmph.icmp6_solicited = dad ? 0 : 1;
- 	na->target = ns->target;
--	ether_addr_copy(&na->opt[2], n->ha);
-+	ether_addr_copy(&na->opt[2], ha);
- 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
- 	na->opt[1] = na_olen >> 3;
- 
-@@ -365,7 +367,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		__vlan_hwaccel_put_tag(reply, vlan_proto, vlan_tci);
- 
- 	netdev_dbg(dev, "nd send dev %s dst %pI6 dst_hw %pM src %pI6 src_hw %pM\n",
--		   dev->name, &pip6->daddr, daddr, &pip6->saddr, n->ha);
-+		   dev->name, &pip6->daddr, daddr, &pip6->saddr, ha);
- 
- 	if (p) {
- 		dev_queue_xmit(reply);
-@@ -462,24 +464,26 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 	n = neigh_lookup(ipv6_stub->nd_tbl, &msg->target, vlandev);
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
-+		u8 ha[ETH_ALEN] __aligned(2);
- 
- 		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
- 		}
- 
--		f = br_fdb_find_rcu(br, n->ha, vid);
-+		neigh_ha_snapshot(ha, n, n->dev);
-+		f = br_fdb_find_rcu(br, ha, vid);
- 		if (f) {
- 			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
- 
- 			if (br_is_neigh_suppress_enabled(dst, vid)) {
- 				if (vid != 0)
--					br_nd_send(br, p, skb, n,
-+					br_nd_send(br, p, skb, n, ha,
- 						   skb->vlan_proto,
- 						   skb_vlan_tag_get(skb));
- 				else
--					br_nd_send(br, p, skb, n, 0, 0);
-+					br_nd_send(br, p, skb, n, ha, 0, 0);
- 				replied = true;
- 			}
- 
++		skb_dst_drop(skb);
+ 		skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
+ 		err = 0;
+ 	}
 -- 
 2.53.0
 
