@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C99C385D7B;
-	Sat, 17 Oct 2026 17:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D40385D7B;
+	Sat, 17 Oct 2026 17:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258867; cv=none; b=uKqcxGH46j8jmoCXhdliYCKMB31T33NHLBl3OyJyQqzj9tuCFFgv+vQGhXuf3Spo/7dRIX/vdvIJ534hmo21YlHNXRj93q1790O4yHLaNhLSj/zuSHN9fguhG6xQ7vUS43ZMO5iXnA3Qe2TDvQrqmwsq5T8WIivjN7VYuKl7zLE=
+	t=1792258870; cv=none; b=Jfk1WY0KFXlgiw5qMgzd+4Zjms5J6n5mdNJHXZRi6gBisQTDp6sPtuH4wZSGMQxZIKQpZzaSSD/20oMgSmI8ZCbkS/FYE1EHiqKaA/Gmp3eXIwnJy/Ld2S1uYAHAl3QXIaYZDbuGfVqkmsVUDHdvTVTOeBejM6zwx8IP4me7ouI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258867; c=relaxed/simple;
-	bh=tMW1F+sFLZxksCo1x41bqRm4r69KPqXmY1EFDhxM90Y=;
+	s=arc-20240116; t=1792258870; c=relaxed/simple;
+	bh=fUa2l01yw4Yul6UCutvgt6Dcni/+xMPoxLL+Vz9Q1pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtSN0N928hVHYymlXCdd8mU+xm8hvtyI+OBmCPsIhfqnaOeRRc7M48m+PBqJtkeHMu5RqscD9iRIHbKFSW6LmE3kOmIddZ9sQwbBz/KrT7SJ6qnZ4S20CnuTnW11eQxjjcauc33fmyGkFThIqoGgXg7+EjbBZESYvizZfNd6hUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLNs76a6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rYrZ2kJUJTe+3HIffdYOrHCDL96BzQNLcn0+ZGMiS4mdgaSYpuvXag9u6Cyg+B1Qd+m0v2SKciQ8QVGgGQsKsFaXxPcfZXzFS2JQ5/Y/cE414GLTOH92A42ZdYDOCYj/tn9R7QrkhYjt4A8VRbPqMKf+TEuKnXLFZd0jOf3SjFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwW9dtic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLNs76a6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0FF1F000C4;
-	Sat, 17 Oct 2026 17:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwW9dtic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A712C1F000C4;
+	Sat, 17 Oct 2026 17:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258866;
-	bh=UHKbSyCaNbTwITcuo+Dity6MnnoLU6nyhEUsumOspd4=;
+	s=korg; t=1792258869;
+	bh=h/1FTauSHL5NS5kO0iJwyiwIGSq24DHEn/9HnuWZ8e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLNs76a6guZlR7W8JEICV3CLvLTLWyw2gsjMCA1wtAWSizMlZOVQiUwuBH2Qtd5Rk
-	 t1spURGNhK6TsbHh/jkCXwTXWRy2KlqByTiBzplJCQtNwaanFd1sog9KVI47MR+4Xl
-	 pMuDdaZxMTa6oio/LiP3puP2Wy+sVzXUW2mXimT0=
+	b=EwW9dticY9NhLlS7UOOnB3MRnQ3h68KuF2lMR+/t0s/yfoMh3z9zl4jQhjjKsHx4h
+	 7eAm9QKNc/NbkvkJb9U66a3JmEVP/5KWQKV/Thvc2bNWRwFkH0HxEJxYkxP4cvlAyy
+	 DZ36FxvD8c8zxldB+XeXUtoq4Hq7Uar7D+ktvlvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1026/1674] net: mana: Guard mana_remove against double invocation
-Date: Sat, 17 Oct 2026 17:54:58 +0200
-Message-ID: <20261017160457.469673185@linuxfoundation.org>
+Subject: [PATCH 6.6 1027/1674] drm/amd/display: Avoid NULL dereference in dc_dmub_srv error paths
+Date: Sat, 17 Oct 2026 17:54:59 +0200
+Message-ID: <20261017160457.495067939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,55 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 50271d7ec95144d26808025b508f463780517d3c ]
+[ Upstream commit 4ae3e16f4b3bf64140f773629b765d605ee079a9 ]
 
-If PM resume fails (e.g., mana_attach() returns an error), mana_probe()
-calls mana_remove(), which tears down the device and sets
-gd->gdma_context = NULL and gd->driver_data = NULL.
+In dc_dmub_srv_log_diagnostic_data() and
+dc_dmub_srv_enable_dpia_trace().
 
-However, a failed resume callback does not automatically unbind the
-driver. When the device is eventually unbound, mana_remove() is invoked
-a second time. Without a NULL check, it dereferences gc->dev with
-gc == NULL, causing a kernel panic.
+Both functions check:
 
-Add an early return if gdma_context or driver_data is NULL so the second
-invocation is harmless. Move the dev = gc->dev assignment after the
-guard so it cannot dereference NULL.
+  if (!dc_dmub_srv || !dc_dmub_srv->dmub)
 
-Fixes: 635096a86edb ("net: mana: Support hibernation and kexec")
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260420124741.1056179-4-ernis@linux.microsoft.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+and then call DC_LOG_ERROR() inside that block.
+
+DC_LOG_ERROR() uses dc_dmub_srv->ctx internally. So if
+dc_dmub_srv is NULL, the logging itself can dereference a
+NULL pointer and cause a crash.
+
+Fix this by splitting the checks.
+
+First check if dc_dmub_srv is NULL and return immediately.
+Then check dc_dmub_srv->dmub and log the error only when
+dc_dmub_srv is valid.
+
+Fixes the below:
+../display/dc/dc_dmub_srv.c:962 dc_dmub_srv_log_diagnostic_data() error: we previously assumed 'dc_dmub_srv' could be null (see line 961)
+../display/dc/dc_dmub_srv.c:1167 dc_dmub_srv_enable_dpia_trace() error: we previously assumed 'dc_dmub_srv' could be null (see line 1166)
+
+Fixes: 2631ac1ac328 ("drm/amd/display: add DMUB registers to crash dump diagnostic data.")
+Fixes: 71ba6b577a35 ("drm/amd/display: Add interface to enable DPIA trace")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 5ec3396200384..d4a37341534d1 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2921,11 +2921,16 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index 3dd1761d5a932..624e93e22b06c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -793,7 +793,10 @@ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv)
  {
- 	struct gdma_context *gc = gd->gdma_context;
- 	struct mana_context *ac = gd->driver_data;
--	struct device *dev = gc->dev;
-+	struct device *dev;
- 	struct net_device *ndev;
- 	int err;
- 	int i;
+ 	struct dmub_diagnostic_data diag_data = {0};
  
-+	if (!gc || !ac)
+-	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
++	if (!dc_dmub_srv)
 +		return;
 +
-+	dev = gc->dev;
++	if (!dc_dmub_srv->dmub) {
+ 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
+ 		return;
+ 	}
+@@ -1034,7 +1037,10 @@ void dc_dmub_srv_enable_dpia_trace(const struct dc *dc)
+ 	enum dmub_status status;
+ 	static const uint32_t timeout_us = 30;
+ 
+-	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
++	if (!dc_dmub_srv)
++		return;
 +
- 	/* adev currently doesn't support suspending, always remove it */
- 	if (gd->adev)
- 		remove_adev(gd);
++	if (!dc_dmub_srv->dmub) {
+ 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
+ 		return;
+ 	}
 -- 
 2.53.0
 
