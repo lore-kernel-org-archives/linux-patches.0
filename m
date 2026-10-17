@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF6737F01B;
-	Sat, 17 Oct 2026 17:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519A439934B;
+	Sat, 17 Oct 2026 17:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258233; cv=none; b=ZsgHW4j5kSPg7+HwFKBSStDK12QiMOD02+Oy5I+Zc9h4PCBfpEimL6/utpGy7BAZNwHp1humCZ7zaJEZCNo4MIZWd+bOx4jwvKt5cjtoMMYEfVks5DV+hQHGJsdQxNbysfjJIrxu/ggNW4k3SPujbxaQfS1QCJ7LtpDDgOxRmas=
+	t=1792258236; cv=none; b=utaGHl9rPAFKweEBz4qRo1WGpA72Ej1/Q2MmyYA6IAXxSjFTEyw9QerN9o4tKYXMLkuNhYgi9+MYg2YFa5/M+Jq85oCGQj3ObjV51mGNfwkkinXui4+GHtEopbNCt9sef8IrC/mXHUKqavAbW9kzZzta45m4VmsmqbveVoGRm78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258233; c=relaxed/simple;
-	bh=0U0yxdi43bsa7CFQvitTGK7jO8wLXM+qFDQACk76/n4=;
+	s=arc-20240116; t=1792258236; c=relaxed/simple;
+	bh=ImigujwoPHsQJ9UfC2fF1nmIpLS5uMKl18K+VpvIzLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpMWDQqHyk+ixhKz59TKoaNQLJJL7C1TRZQOjTqs3g8Z91J6Wo8+sbma0MAqHFJJ6AikLlbE/77wnwFEd/O3yjRtUSAJyuBXv2OMvG+uCbggVrb5+v1zBo2ddTLXn8G/TkYO1xxHRR6RSS893RbEUVj5m+RGvQ+4x6sm6EtwsyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrBR54+y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kq4kVCe/8r69ygo5MVZXzt93n8B0yEaNy5Bt2OG2rED+DiZ099KacjCY1sqqaTqU+5rFHUvDS5SHrSs7g2xnrI3c5dde77+yJZEh/BqRro0tJ4Bmzws7GfhYQl75OnnFMwTMH1W2DuKJodksJiifFhvOoNWwkK7RdKwMq5u93+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef0SmtC1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrBR54+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BD51F000C4;
-	Sat, 17 Oct 2026 17:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef0SmtC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFE41F000C4;
+	Sat, 17 Oct 2026 17:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258232;
-	bh=eI2iQKJLiQVH5pZgZw7LLTImgK8GSgiK50uM9xK1sGc=;
+	s=korg; t=1792258234;
+	bh=RjKp2bjHOCSTluVK5+sFgvtvwhnXdoIPK0JqTu19VyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QrBR54+yT3DqQ83aTHZvaKg2hceVybroVJ+WnD9PyAXo6bX4PNBXvvgnl9sLhxQT+
-	 Tj01j6HwgI1vmK1tO9ufySfWipFP/BCuGizd4eUSL9UIonKquDMdGnM85L7dGkwjKf
-	 /6vQdlOHImAFez+HXvFDuzJdv0QuvMb8QFJ9+zAY=
+	b=Ef0SmtC1KQfwa2n+CsxfCb96QdJ/Lmh3n0lN06P7Y2WCxQvUZ3obrB9ykW4vqsZAA
+	 Y8Ju2JP3WYTOVMKVJFMmRr5kBEx2qBWhvi0sTNfvRbC9TIN7XryYR50wEw6f+sBQV2
+	 5IauFy0hacYbfYl8NS8fK4TpgIZE+V6nxsipXM5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Leitner <richard.leitner@linux.dev>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0816/1674] media: nxp: imx8-isi: Fix streaming cleanup on release
-Date: Sat, 17 Oct 2026 17:51:28 +0200
-Message-ID: <20261017160452.067460871@linuxfoundation.org>
+Subject: [PATCH 6.6 0817/1674] tcp: use dst_dev_rcu() in tcp_fastopen_active_disable_ofo_check()
+Date: Sat, 17 Oct 2026 17:51:29 +0200
+Message-ID: <20261017160452.093970431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,286 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Leitner <richard.leitner@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 47773031a148ad7973b809cc7723cba77eda2b42 ]
+[ Upstream commit b62a59c18b692f892dcb8109c1c2e653b2abc95c ]
 
-The current implementation unconditionally calls
-mxc_isi_video_cleanup_streaming() in mxc_isi_video_release(). This can
-lead to situations where any release call (like from a simple
-"v4l2-ctl -l") may release a currently streaming queue when called on
-such a device.
+Use RCU to avoid a pair of atomic operations and a potential
+UAF on dst_dev()->flags.
 
-This is reproducible on an i.MX8MP board by streaming from an ISI
-capture device using gstreamer:
-
-	gst-launch-1.0 -v v4l2src device=/dev/videoX ! \
-	    video/x-raw,format=GRAY8,width=1280,height=800,framerate=1/120 ! \
-	    fakesink
-
-While this stream is running, querying the caps of the same device
-provokes the error state:
-
-	v4l2-ctl -l -d /dev/videoX
-
-This results in the following trace:
-
-[  155.452152] ------------[ cut here ]------------
-[  155.452163] WARNING: CPU: 0 PID: 1708 at drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c:713 mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi]
-[  157.004248] Modules linked in: cfg80211 rpmsg_ctrl rpmsg_char rpmsg_tty virtio_rpmsg_bus rpmsg_ns rpmsg_core rfkill nft_ct nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables mcp251x6
-[  157.053499] CPU: 0 UID: 0 PID: 1708 Comm: python3 Not tainted 6.15.4-00114-g1f61ca5cad76 #1 PREEMPT
-[  157.064369] Hardware name: imx8mp_board_01 (DT)
-[  157.068205] pstate: 400000c5 (nZcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  157.075169] pc : mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi]
-[  157.081195] lr : mxc_isi_pipe_irq_handler+0x38/0x1b0 [imx8_isi]
-[  157.087126] sp : ffff800080003ee0
-[  157.090438] x29: ffff800080003ee0 x28: ffff0000c3688000 x27: 0000000000000000
-[  157.097580] x26: 0000000000000000 x25: ffff0000c1e7ac00 x24: ffff800081b5ad50
-[  157.104723] x23: 00000000000000d1 x22: 0000000000000000 x21: ffff0000c25e4000
-[  157.111866] x20: 0000000060000200 x19: ffff80007a0608d0 x18: 0000000000000000
-[  157.119008] x17: ffff80006a4e3000 x16: ffff800080000000 x15: 0000000000000000
-[  157.126146] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-[  157.133287] x11: 0000000000000040 x10: ffff0000c01445f0 x9 : ffff80007a053a38
-[  157.140425] x8 : ffff0000c04004b8 x7 : 0000000000000000 x6 : 0000000000000000
-[  157.147567] x5 : ffff0000c0400490 x4 : ffff80006a4e3000 x3 : ffff0000c25e4000
-[  157.154706] x2 : 0000000000000000 x1 : ffff8000825c0014 x0 : 0000000060000200
-[  157.161850] Call trace:
-[  157.164296]  mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi] (P)
-[  157.170319]  __handle_irq_event_percpu+0x58/0x218
-[  157.175029]  handle_irq_event+0x54/0xb8
-[  157.178867]  handle_fasteoi_irq+0xac/0x248
-[  157.182968]  handle_irq_desc+0x48/0x68
-[  157.186723]  generic_handle_domain_irq+0x24/0x38
-[  157.191346]  gic_handle_irq+0x54/0x120
-[  157.195098]  call_on_irq_stack+0x24/0x30
-[  157.199027]  do_interrupt_handler+0x88/0x98
-[  157.203212]  el0_interrupt+0x44/0xc0
-[  157.206792]  __el0_irq_handler_common+0x18/0x28
-[  157.211328]  el0t_64_irq_handler+0x10/0x20
-[  157.215429]  el0t_64_irq+0x198/0x1a0
-[  157.219009] ---[ end trace 0000000000000000 ]---
-
-Address this issue by moving the streaming preparation and cleanup to
-the vb2 .prepare_streaming() and .unprepare_streaming() operations. This
-also simplifies the driver by allowing direct usage of the
-vb2_ioctl_streamon() and vb2_ioctl_streamoff() helpers, and removal of
-the manual cleanup from mxc_isi_video_release().
-
-Link: https://lore.kernel.org/r/20250813212451.22140-2-laurent.pinchart@ideasonboard.com
-Signed-off-by: Richard Leitner <richard.leitner@linux.dev>
-Co-developed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Richard Leitner <richard.leitner@linux.dev> # i.MX8MP
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/nxp/imx8-isi/imx8-isi-video.c    | 156 +++++++-----------
- 1 file changed, 58 insertions(+), 98 deletions(-)
+ net/ipv4/tcp_fastopen.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-index cb032738ef95a..c2a507c3da6eb 100644
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-@@ -937,6 +937,49 @@ static void mxc_isi_video_init_channel(struct mxc_isi_video *video)
- 	mxc_isi_channel_set_output_format(pipe, video->fmtinfo, &video->pix);
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index e874ec597014d..d36a1ceb75101 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -575,11 +575,12 @@ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
+ 		}
+ 	} else if (tp->syn_fastopen_ch &&
+ 		   atomic_read(&sock_net(sk)->ipv4.tfo_active_disable_times)) {
+-		dst = sk_dst_get(sk);
+-		dev = dst ? dst_dev(dst) : NULL;
++		rcu_read_lock();
++		dst = __sk_dst_get(sk);
++		dev = dst ? dst_dev_rcu(dst) : NULL;
+ 		if (!(dev && (dev->flags & IFF_LOOPBACK)))
+ 			atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);
+-		dst_release(dst);
++		rcu_read_unlock();
+ 	}
  }
  
-+static int mxc_isi_vb2_prepare_streaming(struct vb2_queue *q)
-+{
-+	struct mxc_isi_video *video = vb2_get_drv_priv(q);
-+	struct media_device *mdev = &video->pipe->isi->media_dev;
-+	struct media_pipeline *pipe;
-+	int ret;
-+
-+	/* Get a pipeline for the video node and start it. */
-+	scoped_guard(mutex, &mdev->graph_mutex) {
-+		ret = mxc_isi_pipe_acquire(video->pipe,
-+					   &mxc_isi_video_frame_write_done);
-+		if (ret)
-+			return ret;
-+
-+		pipe = media_entity_pipeline(&video->vdev.entity)
-+		     ? : &video->pipe->pipe;
-+
-+		ret = __video_device_pipeline_start(&video->vdev, pipe);
-+		if (ret)
-+			goto err_release;
-+	}
-+
-+	/* Verify that the video format matches the output of the subdev. */
-+	ret = mxc_isi_video_validate_format(video);
-+	if (ret)
-+		goto err_stop;
-+
-+	/* Allocate buffers for discard operation. */
-+	ret = mxc_isi_video_alloc_discard_buffers(video);
-+	if (ret)
-+		goto err_stop;
-+
-+	video->is_streaming = true;
-+
-+	return 0;
-+
-+err_stop:
-+	video_device_pipeline_stop(&video->vdev);
-+err_release:
-+	mxc_isi_pipe_release(video->pipe);
-+	return ret;
-+}
-+
- static int mxc_isi_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
- {
- 	struct mxc_isi_video *video = vb2_get_drv_priv(q);
-@@ -985,6 +1028,17 @@ static void mxc_isi_vb2_stop_streaming(struct vb2_queue *q)
- 	mxc_isi_video_return_buffers(video, VB2_BUF_STATE_ERROR);
- }
- 
-+static void mxc_isi_vb2_unprepare_streaming(struct vb2_queue *q)
-+{
-+	struct mxc_isi_video *video = vb2_get_drv_priv(q);
-+
-+	mxc_isi_video_free_discard_buffers(video);
-+	video_device_pipeline_stop(&video->vdev);
-+	mxc_isi_pipe_release(video->pipe);
-+
-+	video->is_streaming = false;
-+}
-+
- static const struct vb2_ops mxc_isi_vb2_qops = {
- 	.queue_setup		= mxc_isi_vb2_queue_setup,
- 	.buf_init		= mxc_isi_vb2_buffer_init,
-@@ -992,8 +1046,10 @@ static const struct vb2_ops mxc_isi_vb2_qops = {
- 	.buf_queue		= mxc_isi_vb2_buffer_queue,
- 	.wait_prepare		= vb2_ops_wait_prepare,
- 	.wait_finish		= vb2_ops_wait_finish,
-+	.prepare_streaming	= mxc_isi_vb2_prepare_streaming,
- 	.start_streaming	= mxc_isi_vb2_start_streaming,
- 	.stop_streaming		= mxc_isi_vb2_stop_streaming,
-+	.unprepare_streaming	= mxc_isi_vb2_unprepare_streaming,
- };
- 
- /* -----------------------------------------------------------------------------
-@@ -1147,97 +1203,6 @@ static int mxc_isi_video_s_fmt(struct file *file, void *priv,
- 	return 0;
- }
- 
--static int mxc_isi_video_streamon(struct file *file, void *priv,
--				  enum v4l2_buf_type type)
--{
--	struct mxc_isi_video *video = video_drvdata(file);
--	struct media_device *mdev = &video->pipe->isi->media_dev;
--	struct media_pipeline *pipe;
--	int ret;
--
--	if (vb2_queue_is_busy(&video->vb2_q, file))
--		return -EBUSY;
--
--	/*
--	 * Get a pipeline for the video node and start it. This must be done
--	 * here and not in the queue .start_streaming() handler, so that
--	 * pipeline start errors can be reported from VIDIOC_STREAMON and not
--	 * delayed until subsequent VIDIOC_QBUF calls.
--	 */
--	mutex_lock(&mdev->graph_mutex);
--
--	ret = mxc_isi_pipe_acquire(video->pipe, &mxc_isi_video_frame_write_done);
--	if (ret) {
--		mutex_unlock(&mdev->graph_mutex);
--		return ret;
--	}
--
--	pipe = media_entity_pipeline(&video->vdev.entity) ? : &video->pipe->pipe;
--
--	ret = __video_device_pipeline_start(&video->vdev, pipe);
--	if (ret) {
--		mutex_unlock(&mdev->graph_mutex);
--		goto err_release;
--	}
--
--	mutex_unlock(&mdev->graph_mutex);
--
--	/* Verify that the video format matches the output of the subdev. */
--	ret = mxc_isi_video_validate_format(video);
--	if (ret)
--		goto err_stop;
--
--	/* Allocate buffers for discard operation. */
--	ret = mxc_isi_video_alloc_discard_buffers(video);
--	if (ret)
--		goto err_stop;
--
--	ret = vb2_streamon(&video->vb2_q, type);
--	if (ret)
--		goto err_free;
--
--	video->is_streaming = true;
--
--	return 0;
--
--err_free:
--	mxc_isi_video_free_discard_buffers(video);
--err_stop:
--	video_device_pipeline_stop(&video->vdev);
--err_release:
--	mxc_isi_pipe_release(video->pipe);
--	return ret;
--}
--
--static void mxc_isi_video_cleanup_streaming(struct mxc_isi_video *video)
--{
--	lockdep_assert_held(&video->lock);
--
--	if (!video->is_streaming)
--		return;
--
--	mxc_isi_video_free_discard_buffers(video);
--	video_device_pipeline_stop(&video->vdev);
--	mxc_isi_pipe_release(video->pipe);
--
--	video->is_streaming = false;
--}
--
--static int mxc_isi_video_streamoff(struct file *file, void *priv,
--				   enum v4l2_buf_type type)
--{
--	struct mxc_isi_video *video = video_drvdata(file);
--	int ret;
--
--	ret = vb2_ioctl_streamoff(file, priv, type);
--	if (ret)
--		return ret;
--
--	mxc_isi_video_cleanup_streaming(video);
--
--	return 0;
--}
--
- static int mxc_isi_video_enum_framesizes(struct file *file, void *priv,
- 					 struct v4l2_frmsizeenum *fsize)
- {
-@@ -1293,9 +1258,8 @@ static const struct v4l2_ioctl_ops mxc_isi_video_ioctl_ops = {
- 	.vidioc_expbuf			= vb2_ioctl_expbuf,
- 	.vidioc_prepare_buf		= vb2_ioctl_prepare_buf,
- 	.vidioc_create_bufs		= vb2_ioctl_create_bufs,
--
--	.vidioc_streamon		= mxc_isi_video_streamon,
--	.vidioc_streamoff		= mxc_isi_video_streamoff,
-+	.vidioc_streamon		= vb2_ioctl_streamon,
-+	.vidioc_streamoff		= vb2_ioctl_streamoff,
- 
- 	.vidioc_enum_framesizes		= mxc_isi_video_enum_framesizes,
- 
-@@ -1334,10 +1298,6 @@ static int mxc_isi_video_release(struct file *file)
- 	if (ret)
- 		dev_err(video->pipe->isi->dev, "%s fail\n", __func__);
- 
--	mutex_lock(&video->lock);
--	mxc_isi_video_cleanup_streaming(video);
--	mutex_unlock(&video->lock);
--
- 	pm_runtime_put(video->pipe->isi->dev);
- 	return ret;
- }
 -- 
 2.53.0
 
