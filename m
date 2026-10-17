@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5535A359A9B;
-	Sat, 17 Oct 2026 16:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C74C17BED0;
+	Sat, 17 Oct 2026 16:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253314; cv=none; b=ulP6Jco88sGR9DlTCYxlNClHj2Tkeg3rkC2Xt6x3QvtPDg8RkMNmadJKFNs/heMBvxRZZNLtv3mhYR72dGTjPJej4y27xKDtmwX8yxl5L3jRtUVm/IO6Ex6dBjj+nwgZNMlnbfURycqrUAs5hsnTVJCKH6FKKJkQQ+OlkbS/UyU=
+	t=1792253316; cv=none; b=iZuvAmTEZq5Zlnh5NK0REq29fQRMK42g8MEYa3Kslt1OhTMYO0qVE2LYBnnrHCn4tk/h1CGGttbL8TIrdTndZkBnz+hZ5fnNnIAPv+C9UQXZu2d0Cqu9y8StjvYNOTmhw+bMlLu6QsHuuiwAsE3rkXxJTlVKDS6W4TeWps1WpB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253314; c=relaxed/simple;
-	bh=eF8qs0+P8uM+jP3zvWQMvTajoiUE8QI2smZ+6uKc9vo=;
+	s=arc-20240116; t=1792253316; c=relaxed/simple;
+	bh=1o9BeHRt54Qr0dfExuQQehWmVIlprklG0rcN7d8QjI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O9Phrl0y8KFOMUgMcJAiLjwf9z8PMVilnIKhHyEX3rXbYgqd5wupQM3Fo4tibRZVSPx5XNa6nSHLQ26gJwvEKZlezof0Ru8ktsKNsbKzFfLZ3Msv0cPpl2zWW/Pznwk4gsq1nFI1TQipbmRQ6OL38kOr1sDXNaDd/nIQE8iOmGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/DK5kpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WecuNFZhkij/pOaHkg0skj+Ry88oY0ThQ2GQzqiV/nIk4t2ZmxrMYDHk3gxLz16WvPKxxQ175JSpkoJeJg1+vOtetGeDyHV7NRjM2QBHBzWsQuEP4Dj+Zq70i4Pk2hTJ8EOrDEsdjZl3WjeuPYFmJ17fAZ52pLQ94iSCmzNe4KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeaxLXb0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/DK5kpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7921F000C4;
-	Sat, 17 Oct 2026 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeaxLXb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607301F000C4;
+	Sat, 17 Oct 2026 16:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253311;
-	bh=hZ//0ZCxGXHQcQskAQkA46oti0NtnlftnDTZGeg6/u4=;
+	s=korg; t=1792253315;
+	bh=qsx0/2fbDpDFrHLQPgi34B4hybGAivLgR0S+wMozgPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/DK5kpMH9r3ZfEnGlyrmqrs8zF+B6W7wvTdx8yg1CG4k9CrNXi7fDMyNHpcNHb5e
-	 +FblVpgVT9/J7IPDvS3LkoRIF0NBM4zLStrcbpC2K/WOJZ3Ad8SFNuN17fC8Gct85F
-	 Z+RhMTP1CAhYn29a0cFKIM5kN3a7PUlMpS4a74T0=
+	b=JeaxLXb0ox+pxF6W/loINkIaiDzKUHvoa0nuu5bzQ/TVedB2gUSHeqt9+E1kM/8iW
+	 i5GUyeWTQpIQYzDPqMPcH0avXC16buOFYB/Bf1NnmAxGEgfrZ1fsMzrCK4emiAV1L1
+	 +zjaBVvULbDgNl75o+Bf8Xj0Fp4fvIFa25H8yB3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@google.com>,
-	Brian Norris <briannorris@chromium.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	Zhi Wang <zhiw@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/869] PCI/pwrctrl: Cancel outstanding rescan work when unregistering
-Date: Sat, 17 Oct 2026 17:48:39 +0200
-Message-ID: <20261017160039.027816607@linuxfoundation.org>
+Subject: [PATCH 6.12 079/869] drm/nouveau: fix a use-after-free in r535_gsp_rpc_push()
+Date: Sat, 17 Oct 2026 17:48:40 +0200
+Message-ID: <20261017160039.054748201@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,53 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Norris <briannorris@google.com>
+From: Zhi Wang <zhiw@nvidia.com>
 
-[ Upstream commit 8b926f237743f020518162c62b93cb7107a2b5eb ]
+[ Upstream commit 9802f0a63b641f4cddb2139c814c2e95cb825099 ]
 
-It's possible to trigger use-after-free here by:
+The RPC container is released after being passed to r535_gsp_rpc_send().
 
-  (a) forcing rescan_work_func() to take a long time and
-  (b) utilizing a pwrctrl driver that may be unloaded for some reason
+When sending the initial fragment of a large RPC and passing the
+caller's RPC container, the container will be freed prematurely. Subsequent
+attempts to send remaining fragments will therefore result in a
+use-after-free.
 
-Cancel outstanding work to ensure it is finished before we allow our data
-structures to be cleaned up.
+Allocate a temporary RPC container for holding the initial fragment of a
+large RPC when sending. Free the caller's container when all fragments
+are successfully sent.
 
-[bhelgaas: tidy commit log]
-Fixes: 8f62819aaace ("PCI/pwrctl: Rescan bus on a separate thread")
-Signed-off-by: Brian Norris <briannorris@google.com>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Link: https://patch.msgid.link/20250409115313.1.Ia319526ed4ef06bec3180378c9a008340cec9658@changeid
+Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
+Signed-off-by: Zhi Wang <zhiw@nvidia.com>
+Link: https://lore.kernel.org/r/20250527163712.3444-1-zhiw@nvidia.com
+[ Rebase onto Blackwell changes. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctl/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pwrctl/core.c b/drivers/pci/pwrctl/core.c
-index 01d913b603160..316c1bc05d4d9 100644
---- a/drivers/pci/pwrctl/core.c
-+++ b/drivers/pci/pwrctl/core.c
-@@ -110,6 +110,8 @@ EXPORT_SYMBOL_GPL(pci_pwrctl_device_set_ready);
-  */
- void pci_pwrctl_device_unset_ready(struct pci_pwrctl *pwrctl)
- {
-+	cancel_work_sync(&pwrctl->work);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+index 3ad4f6e9a8ac2..801b0bc676ab2 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+@@ -734,12 +734,18 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
+ 	mutex_lock(&gsp->cmdq.mutex);
+ 	if (rpc_size > max_rpc_size) {
+ 		const u32 fn = rpc->function;
++		void *next;
+ 
+-		/* Adjust length, and send initial RPC. */
+-		rpc->length = sizeof(*rpc) + max_rpc_size;
+-		cmd->checksum = rpc->length;
++		/* Send initial RPC. */
++		next = r535_gsp_rpc_get(gsp, fn, max_rpc_size);
++		if (IS_ERR(next)) {
++			repv = next;
++			goto done;
++		}
+ 
+-		repv = r535_gsp_rpc_send(gsp, argv, false, 0);
++		memcpy(next, argv, max_rpc_size);
 +
- 	/*
- 	 * We don't have to delete the link here. Typically, this function
- 	 * is only called when the power control device is being detached. If
++		repv = r535_gsp_rpc_send(gsp, next, false, 0);
+ 		if (IS_ERR(repv))
+ 			goto done;
+ 
+@@ -749,7 +755,6 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
+ 		/* Remaining chunks sent as CONTINUATION_RECORD RPCs. */
+ 		while (rpc_size) {
+ 			u32 size = min(rpc_size, max_rpc_size);
+-			void *next;
+ 
+ 			next = r535_gsp_rpc_get(gsp, NV_VGPU_MSG_FUNCTION_CONTINUATION_RECORD, size);
+ 			if (IS_ERR(next)) {
+@@ -777,6 +782,8 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
+ 		} else {
+ 			repv = NULL;
+ 		}
++		if (!IS_ERR(repv))
++			kvfree(cmd);
+ 	} else {
+ 		repv = r535_gsp_rpc_send(gsp, argv, wait, repc);
+ 	}
 -- 
 2.53.0
 
