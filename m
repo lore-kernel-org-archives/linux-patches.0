@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECF338330E;
-	Sat, 17 Oct 2026 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0763563E1;
+	Sat, 17 Oct 2026 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252546; cv=none; b=vEHxdh9ARyjO4JYlLcLJfiA1VcGQrT2j9BSO66S9Aqqjdrvru0Bzqf+TgHV4mqU6Ys/jyNHdCFSgUraCrJCMKmkX+S1hMueM4z4FQEM2fubSh5jXGlic3eSQVrkfd7laIe847kXlKf51MNXa8W80qrABn2EO3jgPSlXxSORRq5Y=
+	t=1792252553; cv=none; b=m4g1/SA+eA3gXXwCa0M8bg0SHC+IvirAAyCzUmxLN7uCE5P86UvRLEH2LwCHNjd1geensI0xTwqW6VGtNX7MRJIjahcEqrN6Ubddq503HwCKA3cDwSLb3IsqO6XiSAP1r8cxQ97KQk0Qj4uB0/KcQymcWMIgapC2wkrXJKhTJYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252546; c=relaxed/simple;
-	bh=0coOA3veyM81h7diz852q6JgijJn7MDSktkI+skXFmk=;
+	s=arc-20240116; t=1792252553; c=relaxed/simple;
+	bh=FCysdvGOU27kvpZffO1YvNy+lNLr0iP68SZFBtIZU1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h20kBnqyIMV8hx5vAswxx8lNNXjXttmrKbstuIPu8VgZdzlcp0Y2cGxxlSDHvYESobuEs/0R6lMMjOrD2EKxv0Wb+mg4fIysTytNDr3cYTkFm6ahqTiKx/9LqiLAOcEwUchO2SGH/n8l6imtECSqbYfIC3pQ2VD8b5G5p7bwd18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkl4MJlV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OnxErvCwoYpDvRzDCasklAsJGKwdAcat+yNTesS5W2gIJO1RclGfaJBL8R7OULzZdKobxBeCAXmfyYQQNEt11ggq+PtjXVlz4kqqP+OI+iRucgFJdn4wuP9CA4RF/hJyy5DjxxWIytca0HVckPsl7vEIHLSJ/+RExfFw2WSRCeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXeL2/oU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkl4MJlV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75DA1F000C4;
-	Sat, 17 Oct 2026 15:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXeL2/oU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1AF1F000C4;
+	Sat, 17 Oct 2026 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252544;
-	bh=l3hjBTe0fY0xaREvxfHykLAsvn+tu6b4FFOjTstnOw4=;
+	s=korg; t=1792252547;
+	bh=1BNKzfqUTAfw1cdGa/4rKVO+6gcYdCLoG73GTAiMkjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mkl4MJlVt+tQM7cDukj2UNKHTgUPw5REYR3nyCScj9dp6XZEkU4iThHKNgV+CQGDy
-	 zdWoBUzeItZT4jSWnvJYjunqbGs2aK2tTlvP7bXdzmxqrhOqtDzTmSzn6VKyc8AFpc
-	 lStbYFv+fetnIBRrpqcfUl7xJmAmrbqkwowp62d0=
+	b=zXeL2/oUnJt4lF3AzVcxZHpSaYypo6fCkR+sd7eeqyU7BZ9ikRIKz/Q9xNfTGw2re
+	 nJlImIiCOWPOKMcIHOk1CYmhwVtradMoEeDQJ6MxzGuStVH5gkJjsDxEw3zREqKVdd
+	 +24UPNG82m1DZ/0Tid6Tz87mJx6QDQvojCyv6fPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alap Mohan <mohaalap@meta.com>,
-	Joonwoo Park <joonwoo@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	syzbot+74071deb72339c215b2e@syzkaller.appspotmail.com,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 16/52] sched_ext: Fix CPU hotplug hang when a dying CPUs tasks sit in the BPF scheduler
-Date: Sat, 17 Oct 2026 17:54:17 +0200
-Message-ID: <20261017155105.382408958@linuxfoundation.org>
+Subject: [PATCH 6.18 17/52] Bluetooth: RFCOMM: connect the session socket without rfcomm_mutex
+Date: Sat, 17 Oct 2026 17:54:18 +0200
+Message-ID: <20261017155105.414001061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -47,133 +48,322 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit d35a535d3e3e71f92a051d94e415f43612c4edfc ]
+[ Upstream commit ac022970e9fb0a5f7e7d1f6c8e104c1ed924dd1c ]
 
-A CPU going down has to empty its own rq. Its hotplug thread waits in
-sched_cpu_wait_empty() until nothing else is left, and the only thing that
-wakes it is balance_push(), which runs from __schedule() on the dying CPU
-and pushes off the migratable tasks the CPU picks.
+An RFCOMM connect() issued while a BR/EDR link is being authenticated
+makes lockdep report a circular dependency, and the reported cycle is a
+real AB/BA between rfcomm_mutex and hdev->lock.
 
-sched_ext breaks this. A task sitting on a user DSQ or held by the BPF
-scheduler is still counted on its rq, but an inactive CPU no longer calls
-ops.dispatch() and can't pull the task back. The dying CPU goes idle with
-the task still counted, and one of two things happens:
+rfcomm_security_cfm() is called from the HCI event path, which already
+holds hdev->lock:
 
-- Another CPU consumes the task. The rq empties without a __schedule() on
-  the dying CPU, so the hotplug thread is never woken and cpu_down() hangs
-  holding cpu_hotplug_lock.
-- The task is affine only to the dying CPU. Nothing can move it, and the
-  offline stalls until the watchdog ejects the BPF scheduler.
+  hci_rx_work()
+    hci_event_packet()
+      hci_cc_read_enc_key_size()   [hdev->lock]
+        hci_encrypt_cfm()          [hci_cb_list_lock]
+          rfcomm_security_cfm()    [rfcomm_mutex]
 
-When the rq goes offline, re-enqueue every task on it that isn't already on
-the local DSQ. An enqueue on an offline rq lands on the local DSQ, so the
-dying CPU itself picks the tasks and balance_push() pushes them off, the
-same as for the other sched classes. From then on no sched_ext path on
-another CPU can pull a task off the rq.
+while an RFCOMM connect() from userspace takes the same two locks the
+other way round:
 
-ops.dispatch() currently stops as soon as the CPU goes inactive, and CPU
-hotplug then waits for an RCU grace period before taking the rq offline. A
-BPF-held task affine only to the dying CPU and preempted inside an RCU
-read-side critical section would block that grace period, and the rq would
-never go offline. Test SCX_RQ_ONLINE directly so that ops.dispatch() keeps
-running until the rq goes offline. Only the dying CPU's own hotplug thread
-clears the flag during teardown, and task_can_run_on_remote_rq() still keeps
-other rqs' tasks off the CPU.
+  rfcomm_sock_connect()
+    rfcomm_dlc_open()              [rfcomm_mutex]
+      __rfcomm_dlc_open()
+        rfcomm_session_create()
+          kernel_connect()
+            l2cap_sock_connect()
+              l2cap_chan_connect() [hdev->lock]
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Fixes: 991ef53a4832 ("sched_ext: Make scx_rq_online() also test cpu_active() in addition to SCX_RQ_ONLINE")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Alap Mohan <mohaalap@meta.com>
-Reported-by: Joonwoo Park <joonwoo@meta.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ sashal: adapted scx_dispatch_sched() changes to balance_one() in the unsplit sched_ext implementation. ]
+  WARNING: possible circular locking dependency detected
+  kworker/u131:1/1128 is trying to acquire lock:
+  rfcomm_mutex, at: rfcomm_security_cfm+0x31/0x3e0 [rfcomm]
+  but task is already holding lock:
+  hci_cb_list_lock, at: hci_cc_read_enc_key_size+0x1d2/0xcc0
+  Chain exists of:
+    rfcomm_mutex --> &hdev->lock --> hci_cb_list_lock
+
+hci_auth_complete_evt() and hci_encrypt_change_evt() reach the callback
+the same way.
+
+Both orders have to be seen in the same boot, which is why a BR/EDR
+connection alone is not enough to show it: a session set up by the
+remote side is created by rfcomm_accept_connection() in krfcommd, which
+calls kernel_accept() and never takes hdev->lock under rfcomm_mutex.
+Connecting a device that authenticates and encrypts the link and then
+calling connect() on an RFCOMM socket towards any address - the connect
+does not have to succeed, the order is recorded before the page timeout
+- reports it every time.
+
+Only the session socket has to be connected with the lock held, and it
+does not: nothing else can see the socket before it is put on the
+session list.  So connect it first and take rfcomm_mutex afterwards,
+which removes the rfcomm_mutex -> hdev->lock order for good, rather
+than keeping the HCI event path out of rfcomm_mutex.
+
+rfcomm_session_create() becomes rfcomm_session_connect(), which returns
+the connected socket without touching the session list, and
+rfcomm_dlc_open() adds the session once it holds the lock again.  If
+another opener added a session for the same pair while this socket was
+connecting, that session is used and this socket is dropped.
+__rfcomm_dlc_open() now takes the session it should use, and its state
+check runs after the lock is re-acquired, so a DLC that was opened or
+closed in the meantime is still handled.
+
+Over an existing ACL link the connection can complete before the
+session reaches the list, and the wakeup from the socket callback is
+then lost, so krfcommd is woken once the session is visible.
+
+Connecting without the lock opens a window in which the socket can be
+closed.  The DLC is not on a session yet, so rfcomm_dlc_close() finds
+nothing to do and returns without touching it, and rfcomm_dlc_open()
+would then attach a DLC whose owner is gone.  rfcomm_dlc_close() now
+marks such a DLC with RFCOMM_CLOSED, and rfcomm_dlc_open() checks the
+mark once it holds rfcomm_mutex again and drops the socket instead of
+attaching the DLC.  The mark is cleared when an open starts, so a DLC
+that is reused is not affected.  This covers both callers of
+rfcomm_dlc_open(), the socket and the tty layer.
+
+Fixes: 759c185d0bbd ("Bluetooth: RFCOMM: serialize security confirmation handling")
+Suggested-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: Pauli Virtanen <pav@iki.fi>
+Closes: https://lore.kernel.org/linux-bluetooth/5e76a95e934e451e7006db28827c2d64af5a88be.camel@iki.fi/
+Reported-by: syzbot+74071deb72339c215b2e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-bluetooth/6a92fadc.08e933ee.dbf97.008f.GAE@google.com/
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Closes: https://lore.kernel.org/all/CANypQFabseTuRiyz2pGkc_Qj0moGDnY7KEp1qdTOqkw6gAL3hw@mail.gmail.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Tested-by: syzbot+74071deb72339c215b2e@syzkaller.appspotmail.com
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Retained the struct sockaddr * cast instead of struct sockaddr_unsized * to match kernel_connect()’s API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c   | 29 ++++++++++++++++++++++++++---
- kernel/sched/sched.h |  5 +++--
- 2 files changed, 29 insertions(+), 5 deletions(-)
+ include/net/bluetooth/rfcomm.h |   1 +
+ net/bluetooth/rfcomm/core.c    | 134 +++++++++++++++++++++++----------
+ 2 files changed, 96 insertions(+), 39 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 189a4e0658eb5..55072a105cd6e 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1369,8 +1369,8 @@ static void set_task_runnable(struct rq *rq, struct task_struct *p)
- 	}
+diff --git a/include/net/bluetooth/rfcomm.h b/include/net/bluetooth/rfcomm.h
+index 7e40d3c5f5a97..e8e82869b2812 100644
+--- a/include/net/bluetooth/rfcomm.h
++++ b/include/net/bluetooth/rfcomm.h
+@@ -210,6 +210,7 @@ struct rfcomm_dlc {
+ #define RFCOMM_AUTH_REJECT  7
+ #define RFCOMM_DEFER_SETUP  8
+ #define RFCOMM_ENC_DROP     9
++#define RFCOMM_CLOSED       10
  
- 	/*
--	 * list_add_tail() must be used. scx_bypass() depends on tasks being
--	 * appended to the runnable_list.
-+	 * list_add_tail() must be used. scx_bypass() and rq_offline_scx()
-+	 * depend on tasks being appended to the runnable_list.
- 	 */
- 	list_add_tail(&p->scx.runnable_node, &rq->scx.runnable_list);
+ /* Scheduling flags and events */
+ #define RFCOMM_SCHED_WAKEUP 31
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index d45ea1807f8bd..59fb93be9c20e 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -65,10 +65,9 @@ static void rfcomm_make_uih(struct sk_buff *skb, u8 addr);
+ 
+ static void rfcomm_process_connect(struct rfcomm_session *s);
+ 
+-static struct rfcomm_session *rfcomm_session_create(bdaddr_t *src,
+-							bdaddr_t *dst,
+-							u8 sec_level,
+-							int *err);
++static struct socket *rfcomm_session_connect(bdaddr_t *src, bdaddr_t *dst,
++					     u8 sec_level, int *err);
++static struct rfcomm_session *rfcomm_session_add(struct socket *sock, int state);
+ static struct rfcomm_session *rfcomm_session_get(bdaddr_t *src, bdaddr_t *dst);
+ static struct rfcomm_session *rfcomm_session_del(struct rfcomm_session *s);
+ 
+@@ -368,28 +367,17 @@ static int rfcomm_check_channel(u8 channel)
+ 	return channel < 1 || channel > 30;
  }
-@@ -2147,8 +2147,14 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 	if (consume_global_dsq(sch, rq))
- 		goto has_tasks;
  
-+	/*
-+	 * scx_rq_online() can't be used. Its cpu_active() test goes false
-+	 * before CPU hotplug waits for an RCU grace period, and
-+	 * rq_offline_scx() moves this CPU's tasks to the local DSQ only after
-+	 * the wait. The grace period can depend on those tasks running.
-+	 */
- 	if (unlikely(!SCX_HAS_OP(sch, dispatch)) ||
--	    scx_rq_bypassing(rq) || !scx_rq_online(rq))
-+	    scx_rq_bypassing(rq) || !(rq->scx.flags & SCX_RQ_ONLINE))
- 		goto no_tasks;
- 
- 	dspc->rq = rq;
-@@ -2677,7 +2683,24 @@ static void rq_online_scx(struct rq *rq)
- 
- static void rq_offline_scx(struct rq *rq)
+-static int __rfcomm_dlc_open(struct rfcomm_dlc *d, bdaddr_t *src, bdaddr_t *dst, u8 channel)
++static int __rfcomm_dlc_open(struct rfcomm_dlc *d, struct rfcomm_session *s,
++			     u8 channel)
  {
-+	struct task_struct *p, *n;
+-	struct rfcomm_session *s;
+-	int err = 0;
+ 	u8 dlci;
+ 
+-	BT_DBG("dlc %p state %ld %pMR -> %pMR channel %d",
+-	       d, d->state, src, dst, channel);
+-
+-	if (rfcomm_check_channel(channel))
+-		return -EINVAL;
++	BT_DBG("dlc %p state %ld session %p channel %d",
++	       d, d->state, s, channel);
+ 
+ 	if (d->state != BT_OPEN && d->state != BT_CLOSED)
+ 		return 0;
+ 
+-	s = rfcomm_session_get(src, dst);
+-	if (!s) {
+-		s = rfcomm_session_create(src, dst, d->sec_level, &err);
+-		if (!s)
+-			return err;
+-	}
+-
+ 	dlci = __dlci(__session_dir(s), channel);
+ 
+ 	/* Check if DLCI already exists */
+@@ -424,14 +412,84 @@ static int __rfcomm_dlc_open(struct rfcomm_dlc *d, bdaddr_t *src, bdaddr_t *dst,
+ 
+ int rfcomm_dlc_open(struct rfcomm_dlc *d, bdaddr_t *src, bdaddr_t *dst, u8 channel)
+ {
+-	int r;
++	struct rfcomm_session *s;
++	struct socket *sock;
++	int err;
 +
- 	rq->scx.flags &= ~SCX_RQ_ONLINE;
++	BT_DBG("dlc %p state %ld %pMR -> %pMR channel %d",
++	       d, d->state, src, dst, channel);
 +
-+	/* sched domain rebuilds call rq_offline with the CPU staying alive */
-+	if (cpu_active(cpu_of(rq)))
-+		return;
-+
-+	/*
-+	 * An offline CPU no longer calls ops.dispatch(). Re-enqueue its tasks
-+	 * onto the local DSQ so that they run here and balance_push() moves
-+	 * them off.
++	if (rfcomm_check_channel(channel))
++		return -EINVAL;
+ 
+ 	rfcomm_lock();
+ 
+-	r = __rfcomm_dlc_open(d, src, dst, channel);
++	clear_bit(RFCOMM_CLOSED, &d->flags);
+ 
++	/* Do not page the remote device for a DLC that cannot be opened
++	 * anyway.  __rfcomm_dlc_open() looks at the state again once the
++	 * lock has been re-acquired below.
 +	 */
-+	list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list, scx.runnable_node) {
-+		if (p->scx.dsq == &rq->scx.local_dsq)
-+			continue;
-+		guard(sched_change)(p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK);
++	if (d->state != BT_OPEN && d->state != BT_CLOSED) {
++		rfcomm_unlock();
++		return 0;
 +	}
++
++	s = rfcomm_session_get(src, dst);
++	if (s) {
++		err = __rfcomm_dlc_open(d, s, channel);
++		rfcomm_unlock();
++		return err;
++	}
+ 	rfcomm_unlock();
+-	return r;
++
++	/* There is no session for this pair yet.  kernel_connect() ends up in
++	 * l2cap_chan_connect(), which takes hdev->lock, and the HCI event
++	 * path takes rfcomm_mutex while holding hdev->lock, so the socket has
++	 * to be connected with rfcomm_mutex released.
++	 */
++	sock = rfcomm_session_connect(src, dst, d->sec_level, &err);
++	if (!sock)
++		return err;
++
++	rfcomm_lock();
++
++	/* The DLC may have been closed while the socket was connecting.  It
++	 * was not on a session, so rfcomm_dlc_close() could only mark it;
++	 * attaching it now would leave it with no owner.
++	 */
++	if (test_bit(RFCOMM_CLOSED, &d->flags)) {
++		rfcomm_unlock();
++		sock_release(sock);
++		return -ECONNRESET;
++	}
++
++	/* Another opener may have added a session for the same pair in the
++	 * meantime; that one is used and this socket is dropped.
++	 */
++	s = rfcomm_session_get(src, dst);
++	if (!s) {
++		s = rfcomm_session_add(sock, BT_BOUND);
++		if (s) {
++			s->initiator = 1;
++			sock = NULL;
++		}
++	}
++
++	err = s ? __rfcomm_dlc_open(d, s, channel) : -ENOMEM;
++
++	rfcomm_unlock();
++
++	if (sock)
++		sock_release(sock);
++
++	/* Over an existing ACL link the connection can complete before the
++	 * session reaches the list, and that wakeup is then lost, so let
++	 * krfcommd look at the socket state now.
++	 */
++	rfcomm_schedule();
++
++	return err;
  }
  
+ static void __rfcomm_dlc_disconn(struct rfcomm_dlc *d)
+@@ -511,8 +569,14 @@ int rfcomm_dlc_close(struct rfcomm_dlc *d, int err)
+ 	rfcomm_lock();
  
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 4e58174d3d0b0..0f29def72877b 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -3905,8 +3905,9 @@ extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
-  * after which it is enqueued again.
-  *
-  * Typically this must be called while holding task_rq_lock, since most/all
-- * properties are serialized under those locks. There is currently one
-- * exception to this rule in sched/ext which only holds rq->lock.
-+ * properties are serialized under those locks. There are currently two
-+ * exceptions to this rule in sched/ext which only hold rq->lock: scx_bypass()
-+ * and rq_offline_scx().
-  */
+ 	s = d->session;
+-	if (!s)
++	if (!s) {
++		/* Not on a session yet: rfcomm_dlc_open() may be connecting a
++		 * socket for it with rfcomm_mutex released.  Leave a mark so
++		 * that it does not attach the DLC once it holds the lock again.
++		 */
++		set_bit(RFCOMM_CLOSED, &d->flags);
+ 		goto no_session;
++	}
  
- /*
+ 	/* after waiting on the mutex check the session still exists
+ 	 * then check the dlc still exists
+@@ -760,12 +824,12 @@ static struct rfcomm_session *rfcomm_session_close(struct rfcomm_session *s,
+ 	return rfcomm_session_del(s);
+ }
+ 
+-static struct rfcomm_session *rfcomm_session_create(bdaddr_t *src,
+-							bdaddr_t *dst,
+-							u8 sec_level,
+-							int *err)
++/* Creates the L2CAP socket a new session will run on and starts connecting
++ * it.  Must be called with rfcomm_mutex released.
++ */
++static struct socket *rfcomm_session_connect(bdaddr_t *src, bdaddr_t *dst,
++					     u8 sec_level, int *err)
+ {
+-	struct rfcomm_session *s = NULL;
+ 	struct sockaddr_l2 addr;
+ 	struct socket *sock;
+ 	struct sock *sk;
+@@ -795,24 +859,16 @@ static struct rfcomm_session *rfcomm_session_create(bdaddr_t *src,
+ 		l2cap_pi(sk)->chan->mode = L2CAP_MODE_ERTM;
+ 	release_sock(sk);
+ 
+-	s = rfcomm_session_add(sock, BT_BOUND);
+-	if (!s) {
+-		*err = -ENOMEM;
+-		goto failed;
+-	}
+-
+-	s->initiator = 1;
+-
+ 	bacpy(&addr.l2_bdaddr, dst);
+ 	addr.l2_family = AF_BLUETOOTH;
+ 	addr.l2_psm    = cpu_to_le16(L2CAP_PSM_RFCOMM);
+ 	addr.l2_cid    = 0;
+ 	addr.l2_bdaddr_type = BDADDR_BREDR;
+ 	*err = kernel_connect(sock, (struct sockaddr *) &addr, sizeof(addr), O_NONBLOCK);
+-	if (*err == 0 || *err == -EINPROGRESS)
+-		return s;
++	if (*err && *err != -EINPROGRESS)
++		goto failed;
+ 
+-	return rfcomm_session_del(s);
++	return sock;
+ 
+ failed:
+ 	sock_release(sock);
 -- 
 2.53.0
 
