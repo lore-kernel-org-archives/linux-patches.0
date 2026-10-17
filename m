@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A513921FB;
-	Sat, 17 Oct 2026 17:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967433921FB;
+	Sat, 17 Oct 2026 17:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258730; cv=none; b=aPJsgAyk4RxH22Hk+ObU+lPEmjZQrXYmi+owPWFzaifYw6veVeBv3M4Y3I4ULMuzqimHKOgJJnmYZhj3k4Q7i0nxPh/B8ouMuzgn3Lc3fzqZn7Auwjsv08Q+vwDHwq2DD0XEknFAsKLSNQID4fMEMJcOKS0l7tSdFtlbRy9oKoU=
+	t=1792258733; cv=none; b=LO30Kzi6DO2SMQBMAh2Sn/BUPs4aX0RJt1zfu/C1sjotKEP/St39xi6P39xlTMs2FZgiUoBIIIOk+ESP++kStVWSd3TEH0DY9ATdI/57zdydMD9dNL1jpqq7fSz7uEuf0EK5IhCuu9aXwLjMxtKWiZ+dXJuGU89JvTq6rAT3iQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258730; c=relaxed/simple;
-	bh=W93VKC0fi+UBoLVG4CBtF96UghM2VEOyF3+gWsbDn2w=;
+	s=arc-20240116; t=1792258733; c=relaxed/simple;
+	bh=SrV7IlghwrXwlPF1TQilkvmI9ymLtTyq7GhXmE2WaaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FrYu12NE+gMLaJ6aMhhR6GfdhVc18NdWLEfrJzXr7O+0FnAye8DGbrU95gPVldNG6URMAWz0KIUxqKKg5FGxGCUbnMNjfAzY5uHUu4idhZ2Rjvt2swcwcGqzwZszggatkXeImkPrLnv2GbIqxhvCf/z1chss9UpixZJj/hF/Q64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av1M5WXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T00nTAs6F3oDZDbQtSQ/Llq6RfzkoI7ISUMGVHtX6xWMtLjHScpFNX8t8YsNFLsc2mmQ3i1WkYQ1JKbXsPqD3mp8EX/FGYVUkrMPu+ZamoIwsOpvXRm5TQ5B2hqYFiq8ngc/QQTmLwHMAuLj4Ae7Mbgf2YH1j3ddqavyyMsJxpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWatNAUk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av1M5WXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC711F000C4;
-	Sat, 17 Oct 2026 17:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWatNAUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0C61F000C4;
+	Sat, 17 Oct 2026 17:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258729;
-	bh=k7s/SlYYzN/iHv/R7W5wU28pSvYB5f9bLzG9eo8a2Rk=;
+	s=korg; t=1792258732;
+	bh=c9GrkyZkOPmYTU3Ip3vAj62+S5f8khmWH234zGVZVB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=av1M5WXJ9Si8WKg/KM/KUuFQGrKLTN8x55G17VLcDGpzxdwO2yTdg0qf27OnpODCu
-	 PSkJHSsFnc6Q6VwwVIK3gslualjKIkgB+P6gHw1967duxcC1cUR8151nWwjmeBv4Hx
-	 omZd9TD/WI81w2TdE6SoLkdy+ECt8uzTcnqUoxrQ=
+	b=qWatNAUkYZyJD8fNqDZRlQAy9P5ojj8kb59AyslUR+EfNfNJQCegiotb8ER4aPs3F
+	 F6Q+MPg8n1/TBzARb8zI/j2ClgavuCPHf7vPSat+ncVXiQVrtzIvJ/vS360Lx0SBc2
+	 Sgul2VhNqNEeaiAGbNkIergWfiahuUyJ6lBwPt5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Xin Yin <yinxin.x@bytedance.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0981/1674] libceph: Fix potential out-of-bounds access in __ceph_x_decrypt()
-Date: Sat, 17 Oct 2026 17:54:13 +0200
-Message-ID: <20261017160456.306189844@linuxfoundation.org>
+Subject: [PATCH 6.6 0982/1674] fsnotify: fix inode reference leak in fsnotify_recalc_mask()
+Date: Sat, 17 Oct 2026 17:54:14 +0200
+Message-ID: <20261017160456.331772282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,56 +46,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 821365487aa58d06bda65c676ba215d506ba9768 ]
+[ Upstream commit 4aca914ac152f5d055ddcb36704d1e539ac08977 ]
 
-In __ceph_x_decrypt(), a part of the buffer p is interpreted as a
-ceph_x_encrypt_header, and the magic field of this struct is accessed.
-This happens without any guarantee that the buffer is large enough to
-hold this struct. The function parameter ciphertext_len represents the
-length of the ciphertext to decrypt and is guaranteed to be at most the
-remaining size of the allocated buffer p. However, this value is not
-necessarily greater than sizeof(ceph_x_encrypt_header). E.g., a message
-frame of type FRAME_TAG_AUTH_REPLY_MORE, that is just as long to hold
-the ciphertext at its end with a ciphertext_len of 8 or less, can
-trigger an out-of-bounds memory access when accessing hdr->magic.
+fsnotify_recalc_mask() fails to handle the return value of
+__fsnotify_recalc_mask(), which may return an inode pointer that needs
+to be released via fsnotify_drop_object() when the connector's HAS_IREF
+flag transitions from set to cleared.
 
-This patch fixes the issue by adding a check to ensure that the
-decrypted plaintext in the buffer is large enough to represent at least
-the ceph_x_encrypt_header.
+This manifests as a hung task with the following call trace:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+  INFO: task umount:1234 blocked for more than 120 seconds.
+  Call Trace:
+   __schedule
+   schedule
+   fsnotify_sb_delete
+   generic_shutdown_super
+   kill_anon_super
+   cleanup_mnt
+   task_work_run
+   do_exit
+   do_group_exit
+
+The race window that triggers the iref leak:
+
+  Thread A (adding mark)              Thread B (removing mark)
+  ──────────────────────              ────────────────────────
+  fsnotify_add_mark_locked():
+    fsnotify_add_mark_list():
+      spin_lock(conn->lock)
+      add mark_B(evictable) to list
+      spin_unlock(conn->lock)
+    return
+
+    /* ---- gap: no lock held ---- */
+
+                                      fsnotify_detach_mark(mark_A):
+                                        spin_lock(mark_A->lock)
+                                        clear ATTACHED flag on mark_A
+                                        spin_unlock(mark_A->lock)
+                                        fsnotify_put_mark(mark_A)
+
+    fsnotify_recalc_mask():
+      spin_lock(conn->lock)
+      __fsnotify_recalc_mask():
+        /* mark_A skipped: ATTACHED cleared */
+        /* only mark_B(evictable) remains */
+        want_iref = false
+        has_iref = true  /* not yet cleared */
+        -> HAS_IREF transitions true -> false
+        -> returns inode pointer
+      spin_unlock(conn->lock)
+      /* BUG: return value discarded!
+       * iput() and fsnotify_put_sb_watched_objects()
+       * are never called */
+
+Fix this by deferring the transition true -> false of HAS_IREF flag from
+fsnotify_recalc_mask() (Thread A) to fsnotify_put_mark() (thread B).
+
+Fixes: c3638b5b1374 ("fsnotify: allow adding an inode mark without pinning inode")
+Signed-off-by: Xin Yin <yinxin.x@bytedance.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/CAOQ4uxiPsbHb0o5voUKyPFMvBsDkG914FYDcs4C5UpBMNm0Vcg@mail.gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/auth_x.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/notify/mark.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/net/ceph/auth_x.c b/net/ceph/auth_x.c
-index c83559f015e46..f805a813308fd 100644
---- a/net/ceph/auth_x.c
-+++ b/net/ceph/auth_x.c
-@@ -86,6 +86,11 @@ static int __ceph_x_decrypt(struct ceph_crypto_key *secret, void *p,
- 	if (ret)
- 		return ret;
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index b419a5ccf192d..951d7de29f824 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -153,7 +153,12 @@ static struct inode *fsnotify_update_iref(struct fsnotify_mark_connector *conn,
+ 	return inode;
+ }
  
-+	if (plaintext_len < sizeof(*hdr)) {
-+		pr_err("%s plaintext too small %d\n", __func__, plaintext_len);
-+		return -EINVAL;
-+	}
+-static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
++/*
++ * Calculate mask of events for a list of marks.
++ *
++ * Return true if any of the attached marks want to hold an inode reference.
++ */
++static bool __fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ {
+ 	u32 new_mask = 0;
+ 	bool want_iref = false;
+@@ -173,6 +178,34 @@ static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ 	}
+ 	*fsnotify_conn_mask_p(conn) = new_mask;
+ 
++	return want_iref;
++}
 +
- 	if (le64_to_cpu(hdr->magic) != CEPHX_ENC_MAGIC) {
- 		pr_err("%s bad magic\n", __func__);
- 		return -EINVAL;
++/*
++ * Calculate mask of events for a list of marks after attach/modify mark
++ * and get an inode reference for the connector if needed.
++ *
++ * A concurrent add of evictable mark and detach of non-evictable mark can
++ * lead to __fsnotify_recalc_mask() returning false want_iref, but in this
++ * case we defer clearing iref to fsnotify_recalc_mask_clear_iref() called
++ * from fsnotify_put_mark().
++ */
++static void fsnotify_recalc_mask_set_iref(struct fsnotify_mark_connector *conn)
++{
++	bool has_iref = conn->flags & FSNOTIFY_CONN_FLAG_HAS_IREF;
++	bool want_iref = __fsnotify_recalc_mask(conn) || has_iref;
++
++	(void) fsnotify_update_iref(conn, want_iref);
++}
++
++/*
++ * Calculate mask of events for a list of marks after detach mark
++ * and return the inode object if its reference is no longer needed.
++ */
++static void *fsnotify_recalc_mask_clear_iref(struct fsnotify_mark_connector *conn)
++{
++	bool want_iref = __fsnotify_recalc_mask(conn);
++
+ 	return fsnotify_update_iref(conn, want_iref);
+ }
+ 
+@@ -209,7 +242,7 @@ void fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ 
+ 	spin_lock(&conn->lock);
+ 	update_children = !fsnotify_conn_watches_children(conn);
+-	__fsnotify_recalc_mask(conn);
++	fsnotify_recalc_mask_set_iref(conn);
+ 	update_children &= fsnotify_conn_watches_children(conn);
+ 	spin_unlock(&conn->lock);
+ 	/*
+@@ -342,7 +375,7 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
+ 		objp = fsnotify_detach_connector_from_object(conn, &type);
+ 		free_conn = true;
+ 	} else {
+-		objp = __fsnotify_recalc_mask(conn);
++		objp = fsnotify_recalc_mask_clear_iref(conn);
+ 		type = conn->type;
+ 	}
+ 	WRITE_ONCE(mark->connector, NULL);
 -- 
 2.53.0
 
