@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A61380FCA;
-	Sat, 17 Oct 2026 16:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596733515E7;
+	Sat, 17 Oct 2026 16:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253404; cv=none; b=ETO0FTWWzhbkBWS911FBB1CG43bl2oicr1QXWRSiewH9CPPO361hFrqwKPTfMAf+HOI5g0hXPfQGkK9kVcXZOLx/GYvss10qFcaGEil2Ky/gVLBpbuHAkL2yaRkyrZ1mb0aqmFoQLtciAnufvXghISiZOPKNtsi99P0h1yzlbo8=
+	t=1792253407; cv=none; b=OCe8h+RU4HA2GXlHTCzqCQ3PSAJHmxedOPvwIwZsMLMMLVVAUFDJ//mTuhgyRW//muT99FSE+JbzgGzseZ17iH64Oss7DPXZnYY42fZMVGk7KQX108YEQn+QxUCfqzQO5PhHQdun5bcTZBz2VRXZivojCLjv3Jdf17f3VFWNlq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253404; c=relaxed/simple;
-	bh=N/mc/oaUxGLDMVuG1PhNaIR8eCg5hmFvz0KqSQnTyQI=;
+	s=arc-20240116; t=1792253407; c=relaxed/simple;
+	bh=F7ZDt8DreTIT0JOIN3Pq9e8eEMt+kmPc3qExxf9QmCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJ0qhANsmZsazXbxAK2eSOpQ7+WWX+HX5+UobohOKDMTff8Y+/YSkMFHVBdx9dd1Utlk1ULhJxnNXKpSoxOh245ouLCCIHLebV1L02qZn+RZg07s/GNamvY74FrM/uzSLOOVLoBQQiLj3RDVFP2OfVIbJ98/uTcBoKlxOEdoBOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bxNCHnV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ef+jHj1YlCajWCePZijMsrDjZbJKSRoFajEAyTYUcbS/PsTsz2nPEi6QmSy9D943JvdHRq/ma7ag+e2AmvCTC41cyASdSqlbzUiQjsYL1ttZ2F/hSJnD73Y5Ljal5Mo1oulxPAvEAmC7DN1dh4K3fZIGdqjgch07G8vEC9Y4wLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZZTwHOa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bxNCHnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EC41F000C4;
-	Sat, 17 Oct 2026 16:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZZTwHOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711991F000C4;
+	Sat, 17 Oct 2026 16:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253403;
-	bh=7lHMQotHMqcA+TZmxeiVlo3CJB2lYg3lkzarI1RLiEk=;
+	s=korg; t=1792253406;
+	bh=FzVjNNE70M3sk30Pxajj2oJUrCCQEF1mOsCkluautDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bxNCHnVmcrmXWpk7TmD+9A2K0s+bXJzp7eZRiC2prSqpDZIJRSWZsVnb5ImMDhBU
-	 fnXoJkthDncGogatDJ4HlaVN1Dbjx3bnCTnFc2hmWL3fpHR8qPwlGvPDFvoH6V2BC9
-	 nxwqV0Z+c3/NGWzQOngJ+SPf70i28JkNOs/rFaQo=
+	b=AZZTwHOaofJNgFGu6bzpa2ID+DovRy4ekqPSutEMih+J4bVUMBS5NFPUluyy4I6b1
+	 8IvOi7+Yg00WVl/JR1ILgp2tCRavAEff54S/uDHagG+jzE8b5JUVrpgKoqSkosovPX
+	 Fw3w57fZun2MtjKdVtq8ymrUR0HIWwGIoNAwPK4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	syzbot+4d9a13f0797c46a29e42@syzkaller.appspotmail.com,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/869] net/sched: Fix backlog accounting in qdisc_dequeue_internal
-Date: Sat, 17 Oct 2026 17:49:06 +0200
-Message-ID: <20261017160039.728460684@linuxfoundation.org>
+Subject: [PATCH 6.12 106/869] mm/mremap: fix WARN with uffd that has remap events disabled
+Date: Sat, 17 Oct 2026 17:49:07 +0200
+Message-ID: <20261017160039.754168548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,315 +58,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 52bf272636bda69587952b35ae97690b8dc89941 ]
+[ Upstream commit 772e5b4a5e8360743645b9a466842d16092c4f94 ]
 
-This issue applies for the following qdiscs: hhf, fq, fq_codel, and
-fq_pie, and occurs in their change handlers when adjusting to the new
-limit. The problem is the following in the values passed to the
-subsequent qdisc_tree_reduce_backlog call given a tbf parent:
+Registering userfaultd on a VMA that spans at least one PMD and then
+mremap()'ing that VMA can trigger a WARN when recovering from a failed
+page table move due to a page table allocation error.
 
-   When the tbf parent runs out of tokens, skbs of these qdiscs will
-   be placed in gso_skb. Their peek handlers are qdisc_peek_dequeued,
-   which accounts for both qlen and backlog. However, in the case of
-   qdisc_dequeue_internal, ONLY qlen is accounted for when pulling
-   from gso_skb. This means that these qdiscs are missing a
-   qdisc_qstats_backlog_dec when dropping packets to satisfy the
-   new limit in their change handlers.
+The code ends up doing the right thing (recurse, avoiding moving actual
+page tables), but triggering that WARN is unpleasant:
 
-   One can observe this issue with the following (with tc patched to
-   support a limit of 0):
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_normal_pmd mm/mremap.c:357 [inline]
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_pgt_entry mm/mremap.c:595 [inline]
+WARNING: CPU: 2 PID: 6133 at mm/mremap.c:357 move_page_tables+0x3832/0x44a0 mm/mremap.c:852
+Modules linked in:
+CPU: 2 UID: 0 PID: 6133 Comm: syz.0.19 Not tainted 6.17.0-rc1-syzkaller-00004-g53e760d89498 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:move_normal_pmd mm/mremap.c:357 [inline]
+RIP: 0010:move_pgt_entry mm/mremap.c:595 [inline]
+RIP: 0010:move_page_tables+0x3832/0x44a0 mm/mremap.c:852
+Code: ...
+RSP: 0018:ffffc900037a76d8 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000032930007 RCX: ffffffff820c6645
+RDX: ffff88802e56a440 RSI: ffffffff820c7201 RDI: 0000000000000007
+RBP: ffff888037728fc0 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000032930007 R11: 0000000000000000 R12: 0000000000000000
+R13: ffffc900037a79a8 R14: 0000000000000001 R15: dffffc0000000000
+FS:  000055556316a500(0000) GS:ffff8880d68bc000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b30863fff CR3: 0000000050171000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ copy_vma_and_data+0x468/0x790 mm/mremap.c:1215
+ move_vma+0x548/0x1780 mm/mremap.c:1282
+ mremap_to+0x1b7/0x450 mm/mremap.c:1406
+ do_mremap+0xfad/0x1f80 mm/mremap.c:1921
+ __do_sys_mremap+0x119/0x170 mm/mremap.c:1977
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f00d0b8ebe9
+Code: ...
+RSP: 002b:00007ffe5ea5ee98 EFLAGS: 00000246 ORIG_RAX: 0000000000000019
+RAX: ffffffffffffffda RBX: 00007f00d0db5fa0 RCX: 00007f00d0b8ebe9
+RDX: 0000000000400000 RSI: 0000000000c00000 RDI: 0000200000000000
+RBP: 00007ffe5ea5eef0 R08: 0000200000c00000 R09: 0000000000000000
+R10: 0000000000000003 R11: 0000000000000246 R12: 0000000000000002
+R13: 00007f00d0db5fa0 R14: 00007f00d0db5fa0 R15: 0000000000000005
+ </TASK>
 
-   export TARGET=fq
-   tc qdisc del dev lo root
-   tc qdisc add dev lo root handle 1: tbf rate 8bit burst 100b latency 1ms
-   tc qdisc replace dev lo handle 3: parent 1:1 $TARGET limit 1000
-   echo ''; echo 'add child'; tc -s -d qdisc show dev lo
-   ping -I lo -f -c2 -s32 -W0.001 127.0.0.1 2>&1 >/dev/null
-   echo ''; echo 'after ping'; tc -s -d qdisc show dev lo
-   tc qdisc change dev lo handle 3: parent 1:1 $TARGET limit 0
-   echo ''; echo 'after limit drop'; tc -s -d qdisc show dev lo
-   tc qdisc replace dev lo handle 2: parent 1:1 sfq
-   echo ''; echo 'post graft'; tc -s -d qdisc show dev lo
+The underlying issue is that we recurse during the original page table
+move, but not during the recovery move.
 
-   The second to last show command shows 0 packets but a positive
-   number (74) of backlog bytes. The problem becomes clearer in the
-   last show command, where qdisc_purge_queue triggers
-   qdisc_tree_reduce_backlog with the positive backlog and causes an
-   underflow in the tbf parent's backlog (4096 Mb instead of 0).
+Fix it by checking for both VMAs and performing the check before the
+pmd_none() sanity check.
 
-To fix this issue, the codepath for all clients of qdisc_dequeue_internal
-has been simplified: codel, pie, hhf, fq, fq_pie, and fq_codel.
-qdisc_dequeue_internal handles the backlog adjustments for all cases that
-do not directly use the dequeue handler.
+Add a new helper where we perform+document that check for the PMD and PUD
+level.
 
-The old fq_codel_change limit adjustment loop accumulated the arguments to
-the subsequent qdisc_tree_reduce_backlog call through the cstats field.
-However, this is confusing and error prone as fq_codel_dequeue could also
-potentially mutate this field (which qdisc_dequeue_internal calls in the
-non gso_skb case), so we have unified the code here with other qdiscs.
+Thanks to Harry for bisecting.
 
-Fixes: 2d3cbfd6d54a ("net_sched: Flush gso_skb list too during ->change()")
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Signed-off-by: William Liu <will@willsroot.io>
-Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250812235725.45243-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250818175358.1184757-1-david@redhat.com
+Fixes: 0cef0bb836e3 ("mm: clear uffd-wp PTE/PMD state on mremap()")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: syzbot+4d9a13f0797c46a29e42@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/689bb893.050a0220.7f033.013a.GAE@google.com
+Tested-by: Harry Yoo <harry.yoo@oracle.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 11 ++++++++---
- net/sched/sch_codel.c     | 12 +++++++-----
- net/sched/sch_fq.c        | 12 +++++++-----
- net/sched/sch_fq_codel.c  | 12 +++++++-----
- net/sched/sch_fq_pie.c    | 12 +++++++-----
- net/sched/sch_hhf.c       | 12 +++++++-----
- net/sched/sch_pie.c       | 12 +++++++-----
- 7 files changed, 50 insertions(+), 33 deletions(-)
+ mm/mremap.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 4f38a7a5dd6a6..d174283373470 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -1094,12 +1094,17 @@ static inline struct sk_buff *qdisc_dequeue_internal(struct Qdisc *sch, bool dir
- 	skb = __skb_dequeue(&sch->gso_skb);
- 	if (skb) {
- 		sch->q.qlen--;
-+		qdisc_qstats_backlog_dec(sch, skb);
- 		return skb;
- 	}
--	if (direct)
--		return __qdisc_dequeue_head(&sch->q);
--	else
-+	if (direct) {
-+		skb = __qdisc_dequeue_head(&sch->q);
-+		if (skb)
-+			qdisc_qstats_backlog_dec(sch, skb);
-+		return skb;
-+	} else {
- 		return sch->dequeue(sch);
-+	}
- }
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 83c37ad39d345..8b507e228a274 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -281,15 +281,6 @@ static bool move_normal_pmd(struct vm_area_struct *vma, unsigned long old_addr,
+ 	if (WARN_ON_ONCE(!pmd_none(*new_pmd)))
+ 		return false;
  
- static inline struct sk_buff *qdisc_dequeue_head(struct Qdisc *sch)
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index f12a8f491108e..a491250caf338 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -138,9 +138,9 @@ static const struct nla_policy codel_policy[TCA_CODEL_MAX + 1] = {
- static int codel_change(struct Qdisc *sch, struct nlattr *opt,
- 			struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct codel_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_CODEL_MAX + 1];
--	unsigned int qlen, dropped = 0;
- 	int err;
+-	/* If this pmd belongs to a uffd vma with remap events disabled, we need
+-	 * to ensure that the uffd-wp state is cleared from all pgtables. This
+-	 * means recursing into lower page tables in move_page_tables(), and we
+-	 * can reuse the existing code if we simply treat the entry as "not
+-	 * moved".
+-	 */
+-	if (vma_has_uffd_without_event_remap(vma))
+-		return false;
+-
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
+@@ -345,15 +336,6 @@ static bool move_normal_pud(struct vm_area_struct *vma, unsigned long old_addr,
+ 	if (WARN_ON_ONCE(!pud_none(*new_pud)))
+ 		return false;
  
- 	err = nla_parse_nested_deprecated(tb, TCA_CODEL_MAX, opt,
-@@ -179,15 +179,17 @@ static int codel_change(struct Qdisc *sch, struct nlattr *opt,
- 		WRITE_ONCE(q->params.ecn,
- 			   !!nla_get_u32(tb[TCA_CODEL_ECN]));
+-	/* If this pud belongs to a uffd vma with remap events disabled, we need
+-	 * to ensure that the uffd-wp state is cleared from all pgtables. This
+-	 * means recursing into lower page tables in move_page_tables(), and we
+-	 * can reuse the existing code if we simply treat the entry as "not
+-	 * moved".
+-	 */
+-	if (vma_has_uffd_without_event_remap(vma))
+-		return false;
+-
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
+@@ -587,6 +569,7 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 	struct mmu_notifier_range range;
+ 	pmd_t *old_pmd, *new_pmd;
+ 	pud_t *old_pud, *new_pud;
++	bool uffd_supports_move;
  
--	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
+ 	if (!len)
+ 		return 0;
+@@ -597,6 +580,22 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 		return move_hugetlb_page_tables(vma, new_vma, old_addr,
+ 						new_addr, len);
  
--		dropped += qdisc_pkt_len(skb);
--		qdisc_qstats_backlog_dec(sch, skb);
-+		if (!skb)
-+			break;
++	/*
++	 * If we are moving a VMA that has uffd-wp registered but with
++	 * remap events disabled (new VMA will not be registered with uffd), we
++	 * need to ensure that the uffd-wp state is cleared from all pgtables.
++	 * This means recursing into lower page tables in move_page_tables().
++	 *
++	 * We might get called with VMAs reversed when recovering from a
++	 * failed page table move. In that case, the
++	 * "old"-but-actually-"originally new" VMA during recovery will not have
++	 * a uffd context. Recursing into lower page tables during the original
++	 * move but not during the recovery move will cause trouble, because we
++	 * run into already-existing page tables. So check both VMAs.
++	 */
++	uffd_supports_move = !vma_has_uffd_without_event_remap(vma) &&
++			     !vma_has_uffd_without_event_remap(new_vma);
 +
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_qdisc_drop(skb, sch);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen, dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
+ 	/*
+ 	 * If possible, realign addresses to PMD boundary for faster copy.
+ 	 * Only realign if the mremap copying hits a PMD boundary.
+@@ -631,7 +630,8 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 				/* We ignore and continue on error? */
+ 				continue;
+ 			}
+-		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PUD) && extent == PUD_SIZE) {
++		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PUD) &&
++			   extent == PUD_SIZE && uffd_supports_move) {
  
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 6b85bb2a4f8ab..d06e12d16b0e5 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -1002,11 +1002,11 @@ static int fq_load_priomap(struct fq_sched_data *q,
- static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 		     struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_MAX + 1];
--	int err, drop_count = 0;
--	unsigned drop_len = 0;
- 	u32 fq_log;
-+	int err;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_FQ_MAX, opt, fq_policy,
- 					  NULL);
-@@ -1109,16 +1109,18 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 		err = fq_resize(sch, fq_log);
- 		sch_tree_lock(sch);
- 	}
-+
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		if (!skb)
- 			break;
--		drop_len += qdisc_pkt_len(skb);
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
--		drop_count++;
- 	}
--	qdisc_tree_reduce_backlog(sch, drop_count, drop_len);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return err;
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 4b0196eed7a9c..7cfe8eaf3331c 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -402,6 +402,7 @@ static const struct nla_policy fq_codel_policy[TCA_FQ_CODEL_MAX + 1] = {
- static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
- 			   struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_codel_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_CODEL_MAX + 1];
- 	u32 quantum = 0;
-@@ -479,13 +480,14 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
- 	       q->memory_usage > q->memory_limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
--		q->cstats.drop_len += qdisc_pkt_len(skb);
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
--		q->cstats.drop_count++;
- 	}
--	qdisc_tree_reduce_backlog(sch, q->cstats.drop_count, q->cstats.drop_len);
--	q->cstats.drop_count = 0;
--	q->cstats.drop_len = 0;
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 4b96e26cb4202..d2588cc40d04e 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -285,10 +285,9 @@ static struct sk_buff *fq_pie_qdisc_dequeue(struct Qdisc *sch)
- static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 			 struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_pie_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_PIE_MAX + 1];
--	unsigned int len_dropped = 0;
--	unsigned int num_dropped = 0;
- 	int err;
- 
- 	err = nla_parse_nested(tb, TCA_FQ_PIE_MAX, opt, fq_pie_policy, extack);
-@@ -367,11 +366,14 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
--		len_dropped += qdisc_pkt_len(skb);
--		num_dropped += 1;
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
- 	}
--	qdisc_tree_reduce_backlog(sch, num_dropped, len_dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 7d7bc1d7e0498..d6a60ae8938c5 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -536,9 +536,9 @@ static const struct nla_policy hhf_policy[TCA_HHF_MAX + 1] = {
- static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 		      struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_HHF_MAX + 1];
--	unsigned int qlen, prev_backlog;
- 	int err;
- 	u64 non_hh_quantum;
- 	u32 new_quantum = q->quantum;
-@@ -589,15 +589,17 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 			   usecs_to_jiffies(us));
- 	}
- 
--	qlen = sch->q.qlen;
--	prev_backlog = sch->qstats.backlog;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen,
--				  prev_backlog - sch->qstats.backlog);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 793a155e27f99..d697adba1a947 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -138,9 +138,9 @@ static const struct nla_policy pie_policy[TCA_PIE_MAX + 1] = {
- static int pie_change(struct Qdisc *sch, struct nlattr *opt,
- 		      struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_PIE_MAX + 1];
--	unsigned int qlen, dropped = 0;
- 	int err;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_PIE_MAX, opt, pie_policy,
-@@ -190,15 +190,17 @@ static int pie_change(struct Qdisc *sch, struct nlattr *opt,
- 			   nla_get_u32(tb[TCA_PIE_DQ_RATE_ESTIMATOR]));
- 
- 	/* Drop excess packets if new limit is lower */
--	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
- 
--		dropped += qdisc_pkt_len(skb);
--		qdisc_qstats_backlog_dec(sch, skb);
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_qdisc_drop(skb, sch);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen, dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
+ 			if (move_pgt_entry(NORMAL_PUD, vma, old_addr, new_addr,
+ 					   old_pud, new_pud, true))
+@@ -654,7 +654,7 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
+ 				continue;
+ 			split_huge_pmd(vma, old_pmd, old_addr);
+ 		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PMD) &&
+-			   extent == PMD_SIZE) {
++			   extent == PMD_SIZE && uffd_supports_move) {
+ 			/*
+ 			 * If the extent is PMD-sized, try to speed the move by
+ 			 * moving at the PMD level if possible.
 -- 
 2.53.0
 
