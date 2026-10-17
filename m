@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0140D35E93B;
-	Sat, 17 Oct 2026 17:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180831F16B;
+	Sat, 17 Oct 2026 17:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258522; cv=none; b=fjHRI8rX801ieCa/BrfCHZ0B6OkcXnVpTl0bKYvSeil+BW9gBtj0GC8PZSHqiZ9DqZwmlxUmGHtqaTurE1lRkqsxS8dhsfLr3ccx5jDDZkLANsVXWvWDLqJIWNEXdM7004hzTQxEXqWQhmKoOuGLWSYtzoATlX00O1mlOgqqznA=
+	t=1792258525; cv=none; b=BE5LqZFcEsHiZLF9Mri++Sill1bGiktL/9TyeghDNrC8YDgblh6NhzJKCQxrbvoA0GyJXTmrDitM/scxUx5NZnMFeihppnS1lwEqpyBeQf5tCva28LQ4uvZmH+C/fgMmi4pJi1Q64hRii+tv73uN0UM/P4yvGYSq2FChtoDETj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258522; c=relaxed/simple;
-	bh=nhMDEAxLuDSqanmBqb9f+wjeMs/NljxHP1TA7LczaZs=;
+	s=arc-20240116; t=1792258525; c=relaxed/simple;
+	bh=nKc6ta09vlwgvghDmdf5SzEI/ITwroJWhsC81yWJTHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYyOhREUclikHTAuBe/Crr2+lMfdOZLySQPcZGLumIJbnv2VC0290jX3YU/MjG/zlqzCt5/XCgbr85agnoufs6rRmQMY8AT8G9U/Sp1J5OxY45McLe0gAGzeQWepHSKNyXJDZMzuzSjsmpm4nkojiTHfM4ZsS2qoJzf94MJIZqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLblY/BU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+rTdrkxKPZL5hkWR4wEa3tAB3BFL+fUY4zHboGecqnHcZxm4d9prNgRGM1lWBe/BkPwikd4MjqgAfRGqbtcjx47EoALgbwBWhZUD/wMruV8iaBg/82BmxTkh6CECcsIIwHJV1npVvdG+AOy8HumsLKYRQ8vr9gMwy6UbZLo6yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhHXSAcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLblY/BU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB761F000C4;
-	Sat, 17 Oct 2026 17:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhHXSAcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D161F000C4;
+	Sat, 17 Oct 2026 17:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258520;
-	bh=cZzDDMyJmtq4/oVisvmHJ6EZ+Yzbnt104d8uHe3tD4c=;
+	s=korg; t=1792258524;
+	bh=xV3K5wXZ7A/YK0/8Ds8fENvHlJzWS52VH77Ey6Bh+nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLblY/BUBXUa6xRyTfkFDpqzYyfEOCLGmExQUg3/F2ZrXAI5v7cxfXDOG203RXvg6
-	 XrNcpMcnz2R2WXms62P/U3zvbY+IltSkKNMXOwBdmWkWDDqVPm9uymn+7F6iYUUk/Q
-	 zaDhpLnJwIQ/gctJoMji+f9WwMAyrFpvdqZ2Tuo4=
+	b=KhHXSAcVyVLcbDGINnPqFeT8ale2mM9v3B9nPMk42pkfPMJS0OMXdI0l46KH7/8au
+	 NEGp5EaVciLTxv4I/hGThcLf67ythcVhP7E7ZRBbKXIgqJBJRjOfSwNZQ/hl9Y0pW4
+	 /kKVZ+t576By8/Vo3KA1sZeHn19IwjuszdUkvbiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0912/1674] xfrm: account XFRMA_IF_ID in aevent size calculation
-Date: Sat, 17 Oct 2026 17:53:04 +0200
-Message-ID: <20261017160454.543282888@linuxfoundation.org>
+Subject: [PATCH 6.6 0886/1674] xfrm: hold device only for the asynchronous decryption
+Date: Sat, 17 Oct 2026 17:52:38 +0200
+Message-ID: <20261017160453.855230581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,59 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 7081d46d32312f1a31f0e0e99c6835a394037599 ]
+[ Upstream commit b05d42eefac737ce3cd80114d3579111023941b8 ]
 
-xfrm_get_ae() allocates the reply skb with xfrm_aevent_msgsize(), then
-build_aevent() appends attributes including XFRMA_IF_ID when x->if_id is
-set.
+The dev_hold() on skb->dev during packet reception was originally
+added to prevent the device from being released prematurely during
+asynchronous decryption operations.
 
-xfrm_aevent_msgsize() does not include space for XFRMA_IF_ID. For states
-with if_id, build_aevent() can fail with -EMSGSIZE and hit BUG_ON(err < 0)
-in xfrm_get_ae(), turning a malformed netlink interaction into a kernel
-panic.
+As current hardware can offload decryption, this asynchronous path is
+not always utilized. This often results in a pattern of dev_hold()
+immediately followed by dev_put() for each packet, creating
+unnecessary reference counting overhead detrimental to performance.
 
-Account XFRMA_IF_ID in the size calculation unconditionally and replace
-the BUG_ON with normal error unwinding.
+This patch optimizes this by skipping the dev_hold() and subsequent
+dev_put() when asynchronous decryption is not being performed.
 
-Fixes: 7e6526404ade ("xfrm: Add a new lookup key to match xfrm interfaces.")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_input.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index b926d4651c068..2f84d8ddc46d4 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2404,7 +2404,8 @@ static inline unsigned int xfrm_aevent_msgsize(struct xfrm_state *x)
- 	       + nla_total_size_64bit(sizeof(struct xfrm_lifetime_cur))
- 	       + nla_total_size(sizeof(struct xfrm_mark))
- 	       + nla_total_size(4) /* XFRM_AE_RTHR */
--	       + nla_total_size(4); /* XFRM_AE_ETHR */
-+	       + nla_total_size(4) /* XFRM_AE_ETHR */
-+	       + nla_total_size(sizeof(x->if_id)); /* XFRMA_IF_ID */
- }
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index 3100c5ef18622..ffbccf0d1bb99 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -490,6 +490,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 		/* An encap_type of -1 indicates async resumption. */
+ 		if (encap_type == -1) {
+ 			async = 1;
++			dev_put(skb->dev);
+ 			seq = XFRM_SKB_CB(skb)->seq.input.low;
+ 			goto resume;
+ 		}
+@@ -627,18 +628,18 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 		XFRM_SKB_CB(skb)->seq.input.low = seq;
+ 		XFRM_SKB_CB(skb)->seq.input.hi = seq_hi;
  
- static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct km_event *c)
-@@ -2505,7 +2506,12 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	c.portid = nlh->nlmsg_pid;
+-		dev_hold(skb->dev);
+-
+-		if (crypto_done)
++		if (crypto_done) {
+ 			nexthdr = x->type_offload->input_tail(x, skb);
+-		else
++		} else {
++			dev_hold(skb->dev);
++
+ 			nexthdr = x->type->input(x, skb);
++			if (nexthdr == -EINPROGRESS)
++				return 0;
  
- 	err = build_aevent(r_skb, x, &c);
--	BUG_ON(err < 0);
-+	if (err < 0) {
-+		spin_unlock_bh(&x->lock);
-+		xfrm_state_put(x);
-+		kfree_skb(r_skb);
-+		return err;
-+	}
- 
- 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
- 	spin_unlock_bh(&x->lock);
+-		if (nexthdr == -EINPROGRESS)
+-			return 0;
++			dev_put(skb->dev);
++		}
+ resume:
+-		dev_put(skb->dev);
+-
+ 		spin_lock(&x->lock);
+ 		if (nexthdr < 0) {
+ 			if (nexthdr == -EBADMSG) {
 -- 
 2.53.0
 
