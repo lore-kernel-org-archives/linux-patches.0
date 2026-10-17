@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD52022F767;
-	Sat, 17 Oct 2026 17:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710893B19B9;
+	Sat, 17 Oct 2026 17:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258064; cv=none; b=BZi2tnHgOXC+l/K7OMFwlI9BLEEJ/XzVDtI1GAfM7A7yc2jwnVdlvxJ44wdw4MO5DeixpcSZrl9Xw9gcyA/MxwIPthl/AYWU296xpi1PVpFl3vTrIg34TnGArPrzLq+GaxaCL1a7j+rRDUvdATB6elJ4ZyZbBDgm1utabvHO3lE=
+	t=1792258067; cv=none; b=PtgZvOkBFL0lA1DUP55k4zzxjpicpXrkYygSeQNPZ6rqCGqSJI4IEUAjf0bzKw+EQ5YvP/c9N0xICdm/n5tuyvKwN+cPDFIbzmVfhbKV0XKmGoJuhODwxZXp4XgH1GHVWCplng0CDYbuLupveD3zp79K1QrujDVgYNsxoBph6cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258064; c=relaxed/simple;
-	bh=/asU4oAKgkC/tjuWOBctVwjusb7g/0fxtPxTJK44C80=;
+	s=arc-20240116; t=1792258067; c=relaxed/simple;
+	bh=N4e83ak6tXmw9rPUSNjUpgZ2HvIFq5ZYhhVbAyYDias=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHgVXRD4WTRjQ/8KTzeytpkq+woE977Od5Y1i9QUtp18AIPgBjsthctvIB7SS+x8FVhGrp+sxX0lWWwmzGDdwRWBchWatEq/i0i7Jcb5Ua7nGSoOFbSBxsfu/HHIFsTDdYYGrzEliUKiIWjxdgbTDbqjOKcjke1g7BRVFrowOdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8Ik23Lc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rdJpYLX48libsMRDO/AQlW8nixIlU35Ew0Qt+qYh0fdSJ1bWtFUT+uOB6qVs1DcdEcQ8S5KODADlzN3ktJidXwjw1bPNCGJuQF1PoN9uem/1t9hnsdc98dzDoIdYd5DE5w9rkbRSeVa5Jh8G6OZt38Eew3Geq2U02kpIJ2LjVfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fn+fQub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8Ik23Lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FCB1F000C4;
-	Sat, 17 Oct 2026 17:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fn+fQub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C493E1F000C4;
+	Sat, 17 Oct 2026 17:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258063;
-	bh=Artd8aNBYLxqYbaqT/gDEaHTio83K9RJSxRgIX690wQ=;
+	s=korg; t=1792258066;
+	bh=9Dhg8G39uzCnU8xb3v6SNE6wRVsl46M0VErwEodCYOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B8Ik23LcGuW+OyyLhBj7C2F1ZT6fb+tOtFMSWmB79MDiNTn8fN1s+gI/ouDZ80i7s
-	 8wJkOM0CFtulmCWwEBHZhy3tKMQLjzqRxXYPXazPdty8bCRQ2uIBG93+LeSfUa2UI0
-	 NHSjkKAxNmfO6quickRjxz+SSMMYMhVOpoTi1tmY=
+	b=1fn+fQubmyxFxd3QFEVNQk8yS0fUEU8bCxVdaZm4rCjAlAqEN5eli0rfRPV+C6TLY
+	 H9UkS3W08KzaHPyif7giu9yUie/FrlLP/DMSw3vr+VqpTu2KmOioW94xPBI12X9mrT
+	 N0z14anq4P9CwQ9ZBnG+URtm9ktHG3C9JZ9RKdlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	John Kacur <jkacur@redhat.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0761/1674] wifi: ath12k: Pass ab pointer directly to ath12k_dp_tx_get_encap_type()
-Date: Sat, 17 Oct 2026 17:50:33 +0200
-Message-ID: <20261017160450.633487456@linuxfoundation.org>
+Subject: [PATCH 6.6 0762/1674] rv: Use strings in da monitors tracepoints
+Date: Sat, 17 Oct 2026 17:50:34 +0200
+Message-ID: <20261017160450.656721526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,68 +59,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 05062834350f0bf7ad1abcebc2807220e90220eb ]
+[ Upstream commit 7f904ff6e58d398c4336f3c19c42b338324451f7 ]
 
-In ath12k_dp_tx_get_encap_type(), the arvif parameter is only used to
-retrieve the ab pointer. In vdev delete sequence the arvif->ar could
-become NULL and that would trigger kernel panic.
-Since the caller ath12k_dp_tx() already has a valid ab pointer, pass it
-directly to avoid panic and unnecessary dereferencing.
+Using DA monitors tracepoints with KASAN enabled triggers the following
+warning:
 
-PC points to "ath12k_dp_tx+0x228/0x988 [ath12k]"
-LR points to "ath12k_dp_tx+0xc8/0x988 [ath12k]".
-The Backtrace obtained is as follows:
-ath12k_dp_tx+0x228/0x988 [ath12k]
-ath12k_mac_tx_check_max_limit+0x608/0x920 [ath12k]
-ieee80211_process_measurement_req+0x320/0x348 [mac80211]
-ieee80211_tx_dequeue+0x9ac/0x1518 [mac80211]
-ieee80211_tx_dequeue+0xb14/0x1518 [mac80211]
-ieee80211_tx_prepare_skb+0x224/0x254 [mac80211]
-ieee80211_xmit+0xec/0x100 [mac80211]
-__ieee80211_subif_start_xmit+0xc50/0xf40 [mac80211]
-ieee80211_subif_start_xmit+0x2e8/0x308 [mac80211]
-netdev_start_xmit+0x150/0x18c
-dev_hard_start_xmit+0x74/0xc0
+ BUG: KASAN: global-out-of-bounds in do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
+ Read of size 32 at addr ffffffffaada8980 by task ...
+ Call Trace:
+  <TASK>
+ [...]
+  do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
+  ? __pfx_do_trace_event_raw_event_event_da_monitor+0x10/0x10
+  ? trace_event_sncid+0x83/0x200
+  trace_event_sncid+0x163/0x200
+ [...]
+ The buggy address belongs to the variable:
+  automaton_snep+0x4e0/0x5e0
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+This is caused by the tracepoints reading 32 bytes __array instead of
+__string from the automata definition. Such strings are literals and
+reading 32 bytes ends up in out of bound memory accesses (e.g. the next
+automaton's data in this case).
+The error is harmless as, while printing the string, we stop at the null
+terminator, but it should still be fixed.
 
-Fixes: e93bbd65547e ("wifi: ath12k: fix packets are sent in native wifi mode while we set raw mode")
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250606044936.3989400-1-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Use the __string facilities while defining the tracepoints to avoid
+reading out of bound memory.
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/20250728135022.255578-4-gmonaco@redhat.com
+Fixes: 792575348ff7 ("rv/include: Add deterministic automata monitor definition via C macros")
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_tx.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/trace/events/rv.h | 60 +++++++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index dde652dd37cae..cd5cc64ed541a 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -10,10 +10,9 @@
- #include "hw.h"
+diff --git a/include/trace/events/rv.h b/include/trace/events/rv.h
+index 56592da9301c0..9ac1e37bcc826 100644
+--- a/include/trace/events/rv.h
++++ b/include/trace/events/rv.h
+@@ -16,23 +16,23 @@ DECLARE_EVENT_CLASS(event_da_monitor,
+ 	TP_ARGS(state, event, next_state, final_state),
  
- static enum hal_tcl_encap_type
--ath12k_dp_tx_get_encap_type(struct ath12k_vif *arvif, struct sk_buff *skb)
-+ath12k_dp_tx_get_encap_type(struct ath12k_base *ab, struct sk_buff *skb)
- {
- 	struct ieee80211_tx_info *tx_info = IEEE80211_SKB_CB(skb);
--	struct ath12k_base *ab = arvif->ar->ab;
+ 	TP_STRUCT__entry(
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
+-		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
++		__string(	state,	state	)
++		__string(	event,	event	)
++		__string(	next_state,	next_state	)
+ 		__field(	bool,	final_state			)
+ 	),
  
- 	if (test_bit(ATH12K_FLAG_RAW_MODE, &ab->dev_flags))
- 		return HAL_TCL_ENCAP_TYPE_RAW;
-@@ -195,7 +194,7 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
- 		msdu_ext_desc = true;
- 	}
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
++		__assign_str(state, state);
++		__assign_str(event, event);
++		__assign_str(next_state, next_state);
+ 		__entry->final_state		= final_state;
+ 	),
  
--	ti.encap_type = ath12k_dp_tx_get_encap_type(arvif, skb);
-+	ti.encap_type = ath12k_dp_tx_get_encap_type(ab, skb);
- 	ti.addr_search_flags = arvif->hal_addr_search_flags;
- 	ti.search_type = arvif->search_type;
- 	ti.type = HAL_TCL_DESC_TYPE_BUFFER;
+ 	TP_printk("%s x %s -> %s %s",
+-		__entry->state,
+-		__entry->event,
+-		__entry->next_state,
++		__get_str(state),
++		__get_str(event),
++		__get_str(next_state),
+ 		__entry->final_state ? "(final)" : "")
+ );
+ 
+@@ -43,18 +43,18 @@ DECLARE_EVENT_CLASS(error_da_monitor,
+ 	TP_ARGS(state, event),
+ 
+ 	TP_STRUCT__entry(
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
++		__string(	state,	state	)
++		__string(	event,	event	)
+ 	),
+ 
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
++		__assign_str(state, state);
++		__assign_str(event, event);
+ 	),
+ 
+ 	TP_printk("event %s not expected in the state %s",
+-		__entry->event,
+-		__entry->state)
++		__get_str(event),
++		__get_str(state))
+ );
+ 
+ #ifdef CONFIG_RV_MON_WIP
+@@ -77,25 +77,25 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
+ 
+ 	TP_STRUCT__entry(
+ 		__field(	int,	id				)
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
+-		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
++		__string(	state,	state	)
++		__string(	event,	event	)
++		__string(	next_state,	next_state	)
+ 		__field(	bool,	final_state			)
+ 	),
+ 
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
++		__assign_str(state, state);
++		__assign_str(event, event);
++		__assign_str(next_state, next_state);
+ 		__entry->id			= id;
+ 		__entry->final_state		= final_state;
+ 	),
+ 
+ 	TP_printk("%d: %s x %s -> %s %s",
+ 		__entry->id,
+-		__entry->state,
+-		__entry->event,
+-		__entry->next_state,
++		__get_str(state),
++		__get_str(event),
++		__get_str(next_state),
+ 		__entry->final_state ? "(final)" : "")
+ );
+ 
+@@ -107,20 +107,20 @@ DECLARE_EVENT_CLASS(error_da_monitor_id,
+ 
+ 	TP_STRUCT__entry(
+ 		__field(	int,	id				)
+-		__array(	char,	state,		MAX_DA_NAME_LEN	)
+-		__array(	char,	event,		MAX_DA_NAME_LEN	)
++		__string(	state,	state	)
++		__string(	event,	event	)
+ 	),
+ 
+ 	TP_fast_assign(
+-		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
+-		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
++		__assign_str(state, state);
++		__assign_str(event, event);
+ 		__entry->id			= id;
+ 	),
+ 
+ 	TP_printk("%d: event %s not expected in the state %s",
+ 		__entry->id,
+-		__entry->event,
+-		__entry->state)
++		__get_str(event),
++		__get_str(state))
+ );
+ 
+ #ifdef CONFIG_RV_MON_WWNR
 -- 
 2.53.0
 
