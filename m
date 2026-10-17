@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896C83B2FD8;
-	Sat, 17 Oct 2026 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CBB3BE178;
+	Sat, 17 Oct 2026 17:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259158; cv=none; b=htIPrt7LfoOBedKKWiT4if8e7Shas+fpf4fcV0gYoSz5lReTihUie2b4WupZBmrMnnzAz+WeeFnuGw9/Acjdn7LsvKyRp4X+uFJuFG396C92LOKvbay7SGXfvl8qTwdYwMf6Yp/RK1bf9+eMXXDj+y6s1oFXWVc0IsPpYQzRpIA=
+	t=1792259166; cv=none; b=MlHhPDOcdEABlhL3EW7fuTnHwXikPHMIaht2S/fkK5i2UnAl23Yy6HEOOJyOO5ySyTY4qQYOVGg826dhc+kPASc30trGj6Rolq9JwHNVDtc2Y5DP0njOP5pZUJ6wp+W7g9mIHqxaJBqOzpBChoqKbRdPhoBtnqEaj0V+60jYeoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259158; c=relaxed/simple;
-	bh=/jT5Pge5kwSAeknHiQYqwaaPVFz3Y0qlf0NAnAMghjg=;
+	s=arc-20240116; t=1792259166; c=relaxed/simple;
+	bh=EXCigqPuGGl62mjfDTQtXC8SGIXRB/xW9wmoga+jH38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5RFJ1I1aH8zMXGRBqbSYfGK86bblQmncu+7raYGxBaDUCy6E2TMZj160VT1D7SbvP8+AaVvIsDbX/mY4XFcvfuaBxF60MN5z/XABxil0UVgQbleIcJBKCLXSrOXJvhMEmaDB7giruBbqXKtIyE3kUIt7KDkCapYhZ5MMUgHN8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0BbVeIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D1nIeD7/yQE+XcO/6+8BWMcPi44zQXB+Cu01B/gfgssbxnDW8QGiThbOrs8Aru8+7Wk/yHM4PxmJ7l3AHwQfmSV2vWZNVPJFucNRoF+WIA7uukw+b9GQOEIMeZ9dqqBT95TtfOBr4L+hh9lCAy9PcYz341QQ8aNtVQF+n7qB8y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMNsVWYS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0BbVeIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AE91F000C4;
-	Sat, 17 Oct 2026 17:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMNsVWYS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3411F000C5;
+	Sat, 17 Oct 2026 17:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259157;
-	bh=yBUdK29Db3/8yQFzw/nvxeGz7whTW2sz0xLwy3tARiU=;
+	s=korg; t=1792259164;
+	bh=SVE0h9WOAmJhI8TL+fLzZTZffGasf5N2mv4jJGLrhCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0BbVeIUykAKKLJiNu3iDUaedKGAbB3+2RSOwk18gw9hJxcO08UxYHqBXNF1ibSYA
-	 nSb0QKJfmhO0xP9XilyAtaDlBSMXlBQuxFB8odRPJBRxBb3nxcbaQ+9sX7hiwQKpCp
-	 6fCtBZIdXmfMxfu4s30vAQm2Cjpw8gsKfzdP2Xw4=
+	b=QMNsVWYSa6ib4cxlxvcdpzzVKMprIpJszCEEo4p7CEcYA/xAVW2RqbxhlN1uh7gxH
+	 EfY5TEikWQI6xeiODPxG9cQafnlzbuBET/ybCAyRb/3O6TXDhVmqUMk+rF1jQJ94km
+	 K60QgqUN59xnl0Kg9XUCRPwkEMhhdjtewLzy6wIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Mina Almasry <almasrymina@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1104/1674] wifi: mac80211: defer link RX stats percpu free to RCU
-Date: Sat, 17 Oct 2026 17:56:16 +0200
-Message-ID: <20261017160459.467563606@linuxfoundation.org>
+Subject: [PATCH 6.6 1123/1674] mm/hugetlb: fix hugetlb cgroup rsvd charge/uncharge mismatch
+Date: Sat, 17 Oct 2026 17:56:35 +0200
+Message-ID: <20261017160459.981446737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,75 +56,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit aa2eb62525188269cdd402a583b9a8ed94657ff0 ]
+[ Upstream commit 15807d0ddde37407af72859426b654f3d1972b00 ]
 
-sta_remove_link() frees a removed MLO link's RX stats percpu buffer right
-away, but defers only the link container to RCU:
+In alloc_hugetlb_folio(), a single h_cg pointer is used for both the rsvd
+and non-rsvd hugetlb cgroup charges.  When map_chg is set,
+hugetlb_cgroup_charge_cgroup_rsvd() stores the charged cgroup in h_cg, but
+the immediately following hugetlb_cgroup_charge_cgroup() overwrites h_cg
+with the non-rsvd cgroup pointer.
 
-	sta_info_free_link(&alloc->info);
-	kfree_rcu(alloc, rcu_head);
+As a result, hugetlb_cgroup_commit_charge_rsvd() stores the wrong
+(non-rsvd) cgroup pointer into the folio's rsvd slot.
 
-The RX fast path reads link_sta under rcu_read_lock and writes the percpu
-stats. A reader that resolved link_sta before the removal keeps the
-pointer. The container stays alive from the kfree_rcu, so the read still
-works. But the percpu block it points to is already freed. This needs
-uses_rss. That is when pcpu_rx_stats exists.
+When the folio is later freed, free_huge_folio() unconditionally calls
+both hugetlb_cgroup_uncharge_folio() and
+hugetlb_cgroup_uncharge_folio_rsvd().  The rsvd uncharge reads back the
+wrong cgroup from the folio and decrements a counter that was never
+charged for that cgroup, causing a page_counter underflow:
 
-The full STA teardown frees the deflink stats only after
-synchronize_net(). The link removal path had no such barrier. The race is
-hard to win in practice, but the free should still wait for RCU.
+  page_counter underflow: -512 nr_pages=512
+  WARNING: mm/page_counter.c:61 at page_counter_cancel
 
-Free the link together with its data from a single RCU callback, so the
-percpu block is reclaimed only after readers drain.
+Fix this by introducing a separate h_cg_rsvd pointer exclusively for the
+rsvd charge path, keeping the rsvd and non-rsvd charges fully independent
+through their charge, commit, and error uncharge paths.
 
-Fixes: c71420db653a ("wifi: mac80211: RCU-ify link STA pointers")
-Link: https://lore.kernel.org/r/20260626080158.3589711-1-maoyixie.tju@gmail.com
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260627083028.3826810-1-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/20260328065534.346053-1-kartikey406@gmail.com
+Fixes: 08cf9faf7558 ("hugetlb_cgroup: support noreserve mappings")
+Reported-by: syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=226c1f947186f8fef796
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/hugetlb.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 94ba60e9addbc..44019b515bf7e 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -349,6 +349,15 @@ static void sta_info_free_link(struct link_sta_info *link_sta)
- 	free_percpu(link_sta->pcpu_rx_stats);
- }
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index cca79f0e78f70..8bfaaa84bb3f7 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3058,6 +3058,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 	long gbl_chg;
+ 	int ret, idx;
+ 	struct hugetlb_cgroup *h_cg = NULL;
++	struct hugetlb_cgroup *h_cg_rsvd = NULL;
+ 	bool deferred_reserve;
  
-+static void sta_link_free_rcu(struct rcu_head *head)
-+{
-+	struct sta_link_alloc *alloc =
-+		container_of(head, struct sta_link_alloc, rcu_head);
-+
-+	sta_info_free_link(&alloc->info);
-+	kfree(alloc);
-+}
-+
- static void sta_remove_link(struct sta_info *sta, unsigned int link_id,
- 			    bool unhash)
- {
-@@ -374,10 +383,8 @@ static void sta_remove_link(struct sta_info *sta, unsigned int link_id,
- 	sta->sta.valid_links &= ~BIT(link_id);
- 	RCU_INIT_POINTER(sta->link[link_id], NULL);
- 	RCU_INIT_POINTER(sta->sta.link[link_id], NULL);
--	if (alloc) {
--		sta_info_free_link(&alloc->info);
--		kfree_rcu(alloc, rcu_head);
--	}
-+	if (alloc)
-+		call_rcu(&alloc->rcu_head, sta_link_free_rcu);
+ 	idx = hstate_index(h);
+@@ -3090,7 +3091,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 	deferred_reserve = map_chg || avoid_reserve;
+ 	if (deferred_reserve) {
+ 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
+-			idx, pages_per_huge_page(h), &h_cg);
++			idx, pages_per_huge_page(h), &h_cg_rsvd);
+ 		if (ret)
+ 			goto out_subpool_put;
+ 	}
+@@ -3127,7 +3128,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 	 */
+ 	if (deferred_reserve) {
+ 		hugetlb_cgroup_commit_charge_rsvd(idx, pages_per_huge_page(h),
+-						  h_cg, folio);
++						  h_cg_rsvd, folio);
+ 	}
  
- 	ieee80211_sta_recalc_aggregates(&sta->sta);
- }
+ 	spin_unlock_irq(&hugetlb_lock);
+@@ -3163,7 +3164,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ out_uncharge_cgroup_reservation:
+ 	if (deferred_reserve)
+ 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
+-						    h_cg);
++						    h_cg_rsvd);
+ out_subpool_put:
+ 	if (map_chg || avoid_reserve)
+ 		hugepage_subpool_put_pages(spool, 1);
 -- 
 2.53.0
 
