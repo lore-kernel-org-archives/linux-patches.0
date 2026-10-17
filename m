@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA64394785;
-	Sat, 17 Oct 2026 16:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2CB394785;
+	Sat, 17 Oct 2026 16:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253547; cv=none; b=VhLBOBFGaxc0bjHchMDqhtOC2ZHuSKT6ZGC02TiDoAQ6zK5cdv4N11K2oJGEUS1wjIfWfdd4QLtbCCMUlfTwhj4DXMWEQZgyRhaCBVotel5V5xPe09oP+JFsXzgwehDqFgB57mPhsUscAiY2LcE0t1M9gkePURADic0n33n2ykU=
+	t=1792253550; cv=none; b=NQ2z1RTcXQQGDw2mYuU3pKMyAGyCwAfdxkbw9yLknZzcKq+QWKiG7FLhdHHw3RCPp9gkd+XW2oXZ2J8qCNZhtBobXOYx3UnuwykUtDe/JpL7eImbI92Y0Uiyu1QI5ceGm1nir0kB7aJxD+tSasTYV/v96CpTciKYDh5Aqmo71+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253547; c=relaxed/simple;
-	bh=xVccQccLrNm61LYbephQdrsHO995/9UfaF/6fSYJnZo=;
+	s=arc-20240116; t=1792253550; c=relaxed/simple;
+	bh=M7TiBrp4wttUJjBasb6fnaOqdJFg0Z7gUm6zEFDSUVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtFxAwCC6uuyOFCELZMsEQlBfwMrT/WjysxySAjEgtwH4hguEDX4vP1pjkPtQBMyOFZIUC98oWOwV1wUqz3a83KzevRQPcrMjFSTMd8pLmi+9i6Gb+TgZ8Tl2pVHivFw7yjXg7x9tf+BqcXv68Gg4eSWm0gxbz2PJNNpja2D9FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDk6LC2+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hdfNx3XI7eVJ3ueWtYMam1ssvgCO/D+zO8iy+WQK3mAgpimzhDqdkJfjwOOBivUXg9Mi9+2O1BIoxd/xwqUm03x/HMwjmus8B6FHF2rMwtIZ7mqSmEoF37yFg4uxVpw5dG2CAtNWoVKjDcJ9ahokoRbaAJN3eAL4d4wt52DChgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enxOioqL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDk6LC2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DA81F000C4;
-	Sat, 17 Oct 2026 16:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enxOioqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8C01F000C4;
+	Sat, 17 Oct 2026 16:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253546;
-	bh=m6d8IP/jLX5lmHPUZlz4sPL7u9KiWEHKvKlwxHSMxjo=;
+	s=korg; t=1792253549;
+	bh=8FjwvMQFWpDb5EqfdOrD1pL+rY9XP+6BsBjPWtaj2tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LDk6LC2+2WmpCqqCAwHTMzibTzFajWxwCynMU0DbAvznQyYPekSboax7MHJ54YTOl
-	 efCV6nq0LSIng2W3u3783ommLMMNUSKoEiNy7qK3o0W+w3QzRRhN/IDbxh6J5gEqr4
-	 LjFapFf4eNOMuBr0ipj6RuRUBScEiEj0uMdnyROA=
+	b=enxOioqLkW5Iqg9COb8cM1NlflEmC4DZT+f6aN2pR8G4C1bbwFCFcbjnW33L7iUpT
+	 Qq36yVYL21GQRd28+mHDtvgcDGiWwYhL8YHS3k13uvTZ3iazk3WNTAEMGbctkNJc2c
+	 GCUn4b6skm9Hvlqt4EBOA/04zct6qDL3r02hN1yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Luiz Duarte <gustavold@gmail.com>,
+	Liang Li <liali@redhat.com>,
+	Beniamino Galvani <b.galvani@gmail.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/869] netconsole: Acquire su_mutex before navigating configs hierarchy
-Date: Sat, 17 Oct 2026 17:49:53 +0200
-Message-ID: <20261017160040.936542341@linuxfoundation.org>
+Subject: [PATCH 6.12 153/869] net: vxlan: prevent NULL deref in vxlan_xmit_one
+Date: Sat, 17 Oct 2026 17:49:54 +0200
+Message-ID: <20261017160040.963274912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,71 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo Luiz Duarte <gustavold@gmail.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit d7d2fcf7ae31471b4e08b7e448b8fd0ec2e06a1b ]
+[ Upstream commit 1f73a56f986005f0bc64ed23873930e2ee4f5911 ]
 
-There is a race between operations that iterate over the userdata
-cg_children list and concurrent add/remove of userdata items through
-configfs. The update_userdata() function iterates over the
-nt->userdata_group.cg_children list, and count_extradata_entries() also
-iterates over this same list to count nodes.
+Neither sock4 nor sock6 pointers are guaranteed to be non-NULL in
+vxlan_xmit_one, e.g. if the iface is brought down. This can lead to the
+following NULL dereference:
 
-Quoting from Documentation/filesystems/configfs.rst:
-> A subsystem can navigate the cg_children list and the ci_parent pointer
-> to see the tree created by the subsystem.  This can race with configfs'
-> management of the hierarchy, so configfs uses the subsystem mutex to
-> protect modifications.  Whenever a subsystem wants to navigate the
-> hierarchy, it must do so under the protection of the subsystem
-> mutex.
+  BUG: kernel NULL pointer dereference, address: 0000000000000010
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  RIP: 0010:vxlan_xmit_one+0xbb3/0x1580
+  Call Trace:
+   vxlan_xmit+0x429/0x610
+   dev_hard_start_xmit+0x55/0xa0
+   __dev_queue_xmit+0x6d0/0x7f0
+   ip_finish_output2+0x24b/0x590
+   ip_output+0x63/0x110
 
-Without proper locking, if a userdata item is added or removed
-concurrently while these functions are iterating, the list can be
-accessed in an inconsistent state. For example, the list_for_each() loop
-can reach a node that is being removed from the list by list_del_init()
-which sets the nodes' .next pointer to point to itself, so the loop will
-never end (or reach the WARN_ON_ONCE in update_userdata() ).
+Mentioned commits changed the code path in vxlan_xmit_one and as a side
+effect the sock4/6 pointer validity checks in vxlan(6)_get_route were
+lost. Fix this by adding back checks.
 
-Fix this by holding the configfs subsystem mutex (su_mutex) during all
-operations that iterate over cg_children.
-This includes:
-- userdatum_value_store() which calls update_userdata() to iterate over
-  cg_children
-- All sysdata_*_enabled_store() functions which call
-  count_extradata_entries() to iterate over cg_children
+Since both commits being fixed were released in the same version (v6.7)
+and are strongly related, bundle the fixes in a single commit.
 
-The su_mutex must be acquired before dynamic_netconsole_mutex to avoid
-potential lock ordering issues, as configfs operations may already hold
-su_mutex when calling into our code.
-
-Fixes: df03f830d099 ("net: netconsole: cache userdata formatted string in netconsole_target")
-Signed-off-by: Gustavo Luiz Duarte <gustavold@gmail.com>
-Link: https://patch.msgid.link/20251029-netconsole-fix-warn-v1-1-0d0dd4622f48@gmail.com
+Reported-by: Liang Li <liali@redhat.com>
+Fixes: 6f19b2c136d9 ("vxlan: use generic function for tunnel IPv4 route lookup")
+Fixes: 2aceb896ee18 ("vxlan: use generic function for tunnel IPv6 route lookup")
+Cc: Beniamino Galvani <b.galvani@gmail.com>
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251126102627.74223-1-atenart@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netconsole.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
-index 0c47713b6adbc..68df8a9e1ecc8 100644
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -748,6 +748,7 @@ static ssize_t userdatum_value_store(struct config_item *item, const char *buf,
- 	if (count > MAX_USERDATA_VALUE_LENGTH)
- 		return -EMSGSIZE;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index f612def46c3c4..567793aea4a21 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2402,7 +2402,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	int addr_family;
+ 	__u8 tos, ttl;
+ 	int ifindex;
+-	int err;
++	int err = 0;
+ 	u32 flags = vxlan->cfg.flags;
+ 	bool use_cache;
+ 	bool udp_sum = false;
+@@ -2504,11 +2504,16 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
  
-+	mutex_lock(&netconsole_subsys.su_mutex);
- 	mutex_lock(&dynamic_netconsole_mutex);
+ 	rcu_read_lock();
+ 	if (addr_family == AF_INET) {
+-		struct vxlan_sock *sock4 = rcu_dereference(vxlan->vn4_sock);
++		struct vxlan_sock *sock4;
+ 		struct rtable *rt;
+ 		__be16 df = 0;
+ 		__be32 saddr;
  
- 	ret = strscpy(udm->value, buf, sizeof(udm->value));
-@@ -761,6 +762,7 @@ static ssize_t userdatum_value_store(struct config_item *item, const char *buf,
- 	ret = count;
- out_unlock:
- 	mutex_unlock(&dynamic_netconsole_mutex);
-+	mutex_unlock(&netconsole_subsys.su_mutex);
- 	return ret;
- }
++		sock4 = rcu_dereference(vxlan->vn4_sock);
++		if (unlikely(!sock4)) {
++			goto tx_error;
++		}
++
+ 		if (!ifindex)
+ 			ifindex = sock4->sock->sk->sk_bound_dev_if;
+ 
+@@ -2576,9 +2581,14 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 				    src_port, dst_port, xnet, !udp_sum);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else {
+-		struct vxlan_sock *sock6 = rcu_dereference(vxlan->vn6_sock);
++		struct vxlan_sock *sock6;
+ 		struct in6_addr saddr;
+ 
++		sock6 = rcu_dereference(vxlan->vn6_sock);
++		if (unlikely(!sock6)) {
++			goto tx_error;
++		}
++
+ 		if (!ifindex)
+ 			ifindex = sock6->sock->sk->sk_bound_dev_if;
  
 -- 
 2.53.0
