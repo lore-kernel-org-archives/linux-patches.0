@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9E93BFAC8;
-	Sat, 17 Oct 2026 17:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D923BFAC8;
+	Sat, 17 Oct 2026 17:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259403; cv=none; b=g9UQZgtRyIvcuN+ZG4fZrZ4M4ZIseGgOesdpdkUUEKDeEIQ+qeOyDHuj4CprRAnDLpJr1wsoq1pTeHz3lka8RKvWDWii8Ey6H8G6v64hrEWjtFNbgt/pg/lhdmo5fSZ6qgo9frrIOkpdfLsKxvRw6RhTZzkI2MUfh0pajTrUDLQ=
+	t=1792259406; cv=none; b=NKMDHBv4JcE3yHh8Mkff4frAQJI4k//kfWNJVRpe92w2EcBA9g1j4R7VfO4K7Hg9ZQiRsdWVIm05xkg/m9GOTjROxnWRB4TT0iKpf44DWEluO5GlQGhEhjOGGDMUFkw7DuO9ChDNHdgpLCGFiqQjRYROEnQrltNwAzvyroYC+zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259403; c=relaxed/simple;
-	bh=+7GNU+x2ohwR+TIxrp1B+iJ30A4MWfJRAy4mTgjQ13Y=;
+	s=arc-20240116; t=1792259406; c=relaxed/simple;
+	bh=DN2qHweCzfOheeYAFy1N1KOtuy84caqS/g7K1grCkYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wdh5KW3Ngta0+nQ8tfgGucDvrSv9qW/tdTG7jCG/w+uRhoN8vvlTcbJSGAAHybISoRa11Va/ejTwFN0UjiUjA+/FHIQH6sYq9GeIPvDkMUfKHsedUSCBqsWS2vNu3nHLwxJOdGmOgsR5Op7c2cXpWj6de+pI2vaGAuKhWh79xpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhB6yPNk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uleyi8IoulwkCiI4KD41tndu6v45Vtb/GpGUa9vFtae1qN66tyDSwUY5iDlsTwgDRQsaUWi68bH6x4o1jNfX3h82VzhQPH7DtYSI8SVecjTOUyTrJ9TeoxF0/8GcwKf2N1pIS5AScD2uySmimc3toOgOzp62XEApTvOGyd3SaeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmsbN2j3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhB6yPNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93CE1F000C4;
-	Sat, 17 Oct 2026 17:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmsbN2j3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDAC1F000C4;
+	Sat, 17 Oct 2026 17:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259402;
-	bh=1yXQC42LsxtL03dt1V2orV+wGjripm1RmdLC1ub9zzM=;
+	s=korg; t=1792259405;
+	bh=g4Bk1d8HfNZztczzOc7LmOjHv5VAMEXXlOHb4p91r3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhB6yPNkh45TfezLdE+n84QIVU0sFZQRNtBuZU7Og7Msw2yxdDRROPgK+LkLYWd4n
-	 YWscU6T5x1aqp+AXaQvB6gKNv/7r999ZM8VXGZabpLUHjDIwjwszwNxKH6f8R/gmG3
-	 O0YUNx8pKPwMXE9V5SE1earnOgEFp9ceDerH4NQU=
+	b=LmsbN2j3jgKqf7Scs7V9gGadvIIzzJlvQ5cJlc3ZSqywjOeacAziyWe9x5cxQq/9Z
+	 0s1YpXJspTrs28SU+BvAQF6drVzWY+nuKeoCok7iIR63c8DEXpmU1Rq+lwhz5iMxqX
+	 pkcF35oy2zo7ZriqJO62FtQAKnVhLBNUhhxNuhjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1203/1674] bpf: Fix netns reference imbalance in conntrack kfuncs
-Date: Sat, 17 Oct 2026 17:57:55 +0200
-Message-ID: <20261017160502.017311477@linuxfoundation.org>
+Subject: [PATCH 6.6 1204/1674] btrfs: lzo: reject inline extents without valid headers
+Date: Sat, 17 Oct 2026 17:57:56 +0200
+Message-ID: <20261017160502.044257336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,150 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit fdeba03fea78407a8c52faa99177c9f7f29f90eb ]
+[ Upstream commit 0fa78ef637deb5dbe341582f88553a4bce496de0 ]
 
-The opts argument of the BPF conntrack kfuncs can point to a shared
-map value.  __bpf_nf_ct_lookup() and __bpf_nf_ct_alloc_entry() read
-opts->netns_id separately when acquiring and releasing the network
-namespace reference.
+[BUG]
+For a crafted btrfs image, the following KASAN can be triggered when
+reading an inline lzo compressed file extent:
 
-The reference imbalance can occur as follows:
+  BUG: KASAN: slab-out-of-bounds in lzo_decompress+0x57d/0x700
+  Read of size 4 at addr ffff888006f2e644 by task btrfs_lzo_inlin/77
 
-  CPU 0                                  CPU 1
-  read opts->netns_id (-1)
-  skip get_net_ns_by_id()
-                                         write opts->netns_id (id)
-  read opts->netns_id (id)
-  put_net(net) /* no matching get */
-
-The reverse transition leaks the reference.  Repeating the unmatched put
-can destroy a live namespace and crash later users.
-
-The kernel reported:
-
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: null-ptr-deref in range [0x00000000000000e8-0x00000000000000ef]
-  RIP: 0010:bpf_prog_test_run_xdp+0x52c/0x1700
   Call Trace:
-   __sys_bpf+0x1662/0x50c0
-   __x64_sys_bpf+0x73/0xb0
-   do_syscall_64+0xf9/0x540
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  Kernel panic - not syncing: Fatal exception
+   <TASK>
+   dump_stack_lvl+0x5b/0x70
+   print_report+0xd1/0x610
+   kasan_report+0xe0/0x110
+   __asan_report_load_n_noabort+0x13/0x20
+   lzo_decompress+0x57d/0x700
+   btrfs_decompress+0x140/0x1c0
+   uncompress_inline+0x147/0x1b0
+   btrfs_get_extent+0xb23/0x10a0
+   btrfs_do_readpage.constprop.0+0x538/0x1ac0
+   btrfs_readahead+0x32f/0x5f0
+   read_pages+0x16f/0x850
+   page_cache_ra_unbounded+0x296/0x490
+   do_page_cache_ra+0xd9/0x130
+   page_cache_sync_ra+0x3ee/0x6f0
+   filemap_get_pages+0x306/0x15c0
+   filemap_read+0x329/0xd00
+   btrfs_file_read_iter+0x1f8/0x2b0
+   vfs_read+0x4ef/0x720
+   ksys_read+0xf8/0x1d0
+   __x64_sys_read+0x71/0xb0
+   x64_sys_call+0x1ab0/0x1b70
+   do_syscall_64+0x61/0x470
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
 
-Snapshot every input field of opts with READ_ONCE() before validating or
-using it.  The netns_id snapshot keeps the namespace get/put pair
-balanced, while the other snapshots keep the remaining options from
-changing partway through an invocation.  The individual reads can still
-observe an inconsistent combination during a concurrent update, but each
-selected field value remains stable for that invocation.
+[CAUSE]
+For an inline lzo compressed file extent, there should always be one lzo
+header, recording the total length of the compressed data, followed by
+one segment header, recording the compressed lzo payload.
 
-Fixes: aed8ee7feb44 ("net: netfilter: Deduplicate code in bpf_{xdp,skb}_ct_lookup")
-Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260731160921.3245840-1-nicoyip.dev@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+But if a crafted inline lzo compressed file extent contains only an lzo
+header, without the segment header or payload, lzo_decompress() will
+still try to read the segment header, causing a read beyond the item
+boundary.
+
+Furthermore if the inline lzo compressed file extent is the first item
+of the leaf, it will be at the extent buffer boundary. The above
+out-of-boundary read will go beyond the extent buffer boundary,
+triggering the above KASAN report.
+
+[FIX]
+Validate the total length of the inlined lzo compressed file extent, to
+make sure there is at least one LZO header and one segment header, and a
+non-zero payload.
+
+Fixes: a6fa6fae40ec ("btrfs: Add lzo compression support")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+[ Rework the commit message to remove slop ]
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_bpf.c | 35 +++++++++++++++++++++-----------
- 1 file changed, 23 insertions(+), 12 deletions(-)
+ fs/btrfs/lzo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
-index ea74e299bddd1..89609f422bd68 100644
---- a/net/netfilter/nf_conntrack_bpf.c
-+++ b/net/netfilter/nf_conntrack_bpf.c
-@@ -114,27 +114,32 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
- {
- 	struct nf_conntrack_tuple otuple, rtuple;
- 	struct nf_conn *ct;
-+	s32 netns_id;
-+	u8 l4proto;
- 	int err;
+diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
+index d3fcfc628a4fe..70b3a3e035a89 100644
+--- a/fs/btrfs/lzo.c
++++ b/fs/btrfs/lzo.c
+@@ -436,7 +436,7 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
+ 	char *kaddr;
+ 	unsigned long bytes;
  
- 	if (!opts || !bpf_tuple || opts->reserved[0] || opts->reserved[1] ||
- 	    opts_len != NF_BPF_CT_OPTS_SZ)
- 		return ERR_PTR(-EINVAL);
+-	if (srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)
++	if (srclen <= LZO_LEN * 2 || srclen > max_segment_len + LZO_LEN * 2)
+ 		return -EUCLEAN;
  
--	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
-+	netns_id = READ_ONCE(opts->netns_id);
-+	l4proto = READ_ONCE(opts->l4proto);
-+
-+	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
- 		return ERR_PTR(-EINVAL);
- 
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_ORIGINAL, &otuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
- 
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_REPLY, &rtuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
- 
--	if (opts->netns_id >= 0) {
--		net = get_net_ns_by_id(net, opts->netns_id);
-+	if (netns_id >= 0) {
-+		net = get_net_ns_by_id(net, netns_id);
- 		if (unlikely(!net))
- 			return ERR_PTR(-ENONET);
- 	}
-@@ -148,7 +153,7 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
- 	__nf_ct_set_timeout(ct, timeout * HZ);
- 
- out:
--	if (opts->netns_id >= 0)
-+	if (netns_id >= 0)
- 		put_net(net);
- 
- 	return ct;
-@@ -162,29 +167,35 @@ static struct nf_conn *__bpf_nf_ct_lookup(struct net *net,
- 	struct nf_conntrack_tuple_hash *hash;
- 	struct nf_conntrack_tuple tuple;
- 	struct nf_conn *ct;
-+	s32 netns_id;
-+	u8 l4proto;
- 	int err;
- 
- 	if (!opts || !bpf_tuple || opts->reserved[0] || opts->reserved[1] ||
- 	    opts_len != NF_BPF_CT_OPTS_SZ)
- 		return ERR_PTR(-EINVAL);
--	if (unlikely(opts->l4proto != IPPROTO_TCP && opts->l4proto != IPPROTO_UDP))
-+
-+	netns_id = READ_ONCE(opts->netns_id);
-+	l4proto = READ_ONCE(opts->l4proto);
-+
-+	if (unlikely(l4proto != IPPROTO_TCP && l4proto != IPPROTO_UDP))
- 		return ERR_PTR(-EPROTO);
--	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
-+	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
- 		return ERR_PTR(-EINVAL);
- 
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_ORIGINAL, &tuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
- 
--	if (opts->netns_id >= 0) {
--		net = get_net_ns_by_id(net, opts->netns_id);
-+	if (netns_id >= 0) {
-+		net = get_net_ns_by_id(net, netns_id);
- 		if (unlikely(!net))
- 			return ERR_PTR(-ENONET);
- 	}
- 
- 	hash = nf_conntrack_find_get(net, &nf_ct_zone_dflt, &tuple);
--	if (opts->netns_id >= 0)
-+	if (netns_id >= 0)
- 		put_net(net);
- 	if (!hash)
- 		return ERR_PTR(-ENOENT);
+ 	in_len = read_compress_length(data_in);
 -- 
 2.53.0
 
