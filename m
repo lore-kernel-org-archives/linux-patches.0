@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F62A4CF49B;
-	Sat, 17 Oct 2026 16:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACBD3AFB07;
+	Sat, 17 Oct 2026 16:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256194; cv=none; b=bfxKIi45yJQnrBr0jY3elDRNmBUxEelQPA9d2mLAwDMTEtW2JFBGedoGydj1bJFv1/nxKDqcmr4DQwF9lWDi38y8444N9gEI/DJ/LkqkWS3KvwA+bdc09c3ar0UqH7RKR4mX/nc6V4KHQfcd5soLYed2jxV3CFzfsjevw1kAT/0=
+	t=1792256196; cv=none; b=TtgZ282bleBMjbsdx4JVeR6SHuWHb0HPB6s7Z93Ysc3oq+EhgWOTDRjt5ZvitbCnnrwKlCHIN2M2jtaoqetaLiqs5AmxeA9YZK+OsWzNY8aPVXNQmEhTzWB5eFt8iRzqX6u/guEV+QFIdwsTjN7gyQ3OEqs2zGu7ZIdop+S5BRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256194; c=relaxed/simple;
-	bh=p+PQGn7pkg9o/xbMkcUIgE5HwaM0rnHis8DZSqHj+y8=;
+	s=arc-20240116; t=1792256196; c=relaxed/simple;
+	bh=eUG0jNZLanl+14104K3vorU23ssQDJ9IDiAPkSOpvhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6aAAnNK8Usx4brbDXfdizPZyHsFpKUMUDeJq6FDnbXswOm0vdmPZ3yP4eG2IF2+oeyu6q7H2MUnOc3wY3SIpwYLIdJVaxSa5wsP4HvdnUPEFTcn+XkMce0Zwzbrd8P+wAlPZdyMTdgEqsMS+wF+eaPl2THg3abH5TDrSd2uhvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB4oIhij; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RR2/N8QDgzgKtbbgTuvXw/u6XahBGetvVmwhCAJkl3q9tnT2fHOB3uSzCLQWOu5pRdqTAxnr54LwGeVsaf3hpw0o+Pr37mygxWxrUPyQy7p0m6dvPDwWa+8x3fwVk3jAN8XbBpdcb0VPlOahYqtJimUIgyrLckGg012/9lsWbGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzxmwzOk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB4oIhij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6F51F000C4;
-	Sat, 17 Oct 2026 16:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzxmwzOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0298B1F000C4;
+	Sat, 17 Oct 2026 16:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256192;
-	bh=n4qU41N+jCl0smBih9/MfqK8h9VkoAbHKlktS03FIHA=;
+	s=korg; t=1792256195;
+	bh=krge7mAQULBSfJEL8FXs6AAOCVqm2INIui8lDdc6qbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GB4oIhijCvVBqh7hg4XKUB4FtCED6pFqw+q8diK8+Gt7TgBXyfiWSAdrSSh+9pnQY
-	 Lf9eVFa2ZyQg4U8Wk/EtsnUSoP7CLdipHh11SBDHncYoguNuuadV4VMZ1weBSOuCsG
-	 SV/jiM6LUCHHkA+ficPHgo/3JmgQ8yZ5ugYzIreA=
+	b=DzxmwzOkxzTNHQQiVI+LaJSJSLWMLdaPPvbi29Azc6UhG00acDUCvEXpbhfIrEMVO
+	 EjlM6rYwqht1xqklRgkoNSmH2xCzVUlyQzm1in5qsH9vLfKhq2rAxjbhmpPwH3xRLi
+	 2AMiyK48aiMR10D8Yj+eFzBZ1m/T8EIH0p8l+jTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Tibor Harcsa <silurust@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0118/1674] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
-Date: Sat, 17 Oct 2026 17:39:50 +0200
-Message-ID: <20261017160434.177798174@linuxfoundation.org>
+Subject: [PATCH 6.6 0154/1674] Bluetooth: btusb: Add IMC Networks QCA9377 to quirks table
+Date: Sat, 17 Oct 2026 17:40:26 +0200
+Message-ID: <20261017160435.117232111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,54 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Tibor Harcsa <silurust@gmail.com>
 
-[ Upstream commit d9be5e75530772fc31637070d51e5717d6aeaa2a ]
+[ Upstream commit dc16388d45ecbd3be0d8c9424dbbaa2c81806578 ]
 
-wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
-which only dequeues the timer and does not wait for a callback that is
-already executing; the preceding free_irq() calls synchronize the
-interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
-therefore be running past the teardown and use the wcn freed along
-with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
-reads wcn->tx_ack_skb and passes wcn->hw to
-ieee80211_tx_status_irqsafe().
+Add the USB ID (13d3:3503) for the IMC Networks Qualcomm Atheros
+QCA9377 Bluetooth controller to the btusb quirks table. This device
+requires Qualcomm Rome firmware and wideband speech support to function
+properly; otherwise, BLE scanning fails with HCI unexpected event
+opcode 0x2005 errors.
 
-Fix this by using timer_shutdown_sync(), which waits for a running
-callback and also prevents the timer from being rearmed again. The
-timer is set up again by wcn36xx_dxe_init() on the next start, so the
-start/stop cycle is unaffected.
+The device reports the following in /sys/kernel/debug/usb/devices:
 
-This issue was found by an in-house static analysis tool.
+P:  Vendor=13d3 ProdID=3503 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ Adapted the patch to replace del_timer() instead of timer_delete(). ]
+Signed-off-by: Tibor Harcsa <silurust@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/dxe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
-index 9013f056eecb4..02e66839ab3ac 100644
---- a/drivers/net/wireless/ath/wcn36xx/dxe.c
-+++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -1055,7 +1055,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index ced60cd806fbd..95becfdb0d2e9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -305,6 +305,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3503), .driver_info = BTUSB_QCA_ROME |
++						     BTUSB_WIDEBAND_SPEECH },
  
- 	free_irq(wcn->tx_irq, wcn);
- 	free_irq(wcn->rx_irq, wcn);
--	del_timer(&wcn->tx_ack_timer);
-+	timer_shutdown_sync(&wcn->tx_ack_timer);
- 
- 	if (wcn->tx_ack_skb) {
- 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
+ 	/* QCA WCN6855 chipset */
+ 	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
 -- 
 2.53.0
 
