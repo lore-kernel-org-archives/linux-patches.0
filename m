@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A493C81BE;
-	Sat, 17 Oct 2026 18:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1239C31B828;
+	Sat, 17 Oct 2026 18:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260534; cv=none; b=V/CbJvnhj3Bvgtdtlr1S76kcTXPjJy2b2GCpkSucKfpLbKb/9/WiPqArUmag2GrAjnD24hgNRMGHlUH1/VDEb9RLcH8BMmCSZQtLuw3e2/VTo0cY9WGAbpFQubMO34kI46z5VfTi1DGUpBQksPqYCytWemq4NZQnFX0prCrH/z4=
+	t=1792260537; cv=none; b=CXl226F9n02vJNZ+HaXxtf1uzecrj+ubUrO2eDF3B3F5Egzfrj+J7jPSBgiVVFgy+/nLT4hTOm6cuP4iPy4AELlBx+dMsDA58/BrziW4OOtqlDmDh/K19AvzMjuGw70OWZHy+8P3WAYtqSjsHLLYndU/vPu0aplAHHkDFW/gTEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260534; c=relaxed/simple;
-	bh=RPkr/EWO8WZUMMSLEN27MCGUdQwHZPCE68ycMHH6vhQ=;
+	s=arc-20240116; t=1792260537; c=relaxed/simple;
+	bh=JPKtgsyj0Rt6cnQNcmONmGD6bNRZKOuFXD3NNWb+jbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VatEEAtRApaLykmi0gKWX1rk6jQ1hSaGkX4E7HbfcAsJTEg7mGCvwiorSqD56bFKDz5nuJVZskV/HELT+PYz/ooHN0LZ+mDODbVrF5g7Fc1lhsvE5NXYUK9YHCnbkuA+kUN+fT6eUlmPGr1kARahZeasKsyQssiNJTN5ty5t+OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRki6s25; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JY0YM9+6mUeQOYnru2EkjnIs8mDZ8QESQVMydmpmrwTh2ETxbJhblWp9uwUKt++BRXNvEjUMQl5LWnw9fB3gb6mLtet5R9S4O73tgrJr3bTwW5HLZqNOjSO6vkTymctdTMSPWmIbZXprbU23J8qlPIrPJIA1bOQRmW4F6o13S80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRCzH+gP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRki6s25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC411F000C4;
-	Sat, 17 Oct 2026 18:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRCzH+gP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680AA1F000C4;
+	Sat, 17 Oct 2026 18:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260532;
-	bh=uIuqjFRz8ZblYWW4b0knEUKItqQWtfCLhB0I8DF6OYg=;
+	s=korg; t=1792260536;
+	bh=gDAFlukj87k48y/BVgfEivauJaH6B9Q0bokYuRjQewQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rRki6s2598KLCJLItFiLfM5OXijdyfKrvPdKGMUh4O/lJuByf1GTpaW2IIijOpmYB
-	 O2zQdJhSqQACfJYqh31pgfgHJAUYY+eXO7Z4MOd3IFa+eN3iufJJDKWIZSau9RKjN3
-	 pDDi4J3xnQh9K3ZR469y3o0a0rh5Xsz0uSBn1rkA=
+	b=aRCzH+gPefd0Yn2uifjreBbRJ0fe5XbTXR/xf3eOrRXIGRXqSxuU9J3PQezG2H1Xq
+	 E9GC5H0U8DJ1VMMtLu52PJyiApoxEMlshu5KfcUqxe7kw0OVaJaFBWluFs/Jvj2bra
+	 NeT8Vm7vYzRdzrvwss9HoG38S6CB+JUfMvecL3nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1575/1674] iommu: Pass domain to remove_dev_pasid() op
-Date: Sat, 17 Oct 2026 18:04:07 +0200
-Message-ID: <20261017160511.524154672@linuxfoundation.org>
+Subject: [PATCH 6.6 1576/1674] iommu/sva: Set handle->dev before the SVA handle is visible
+Date: Sat, 17 Oct 2026 18:04:08 +0200
+Message-ID: <20261017160511.548569633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,138 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit d2f85a263883b679f87ed8f911746105658e9c47 ]
+[ Upstream commit 530f8f9c3546cb3ebee1b135375aaee08a073ebb ]
 
-Existing remove_dev_pasid() callbacks of the underlying iommu drivers
-get the attached domain from the group->pasid_array. However, the domain
-stored in group->pasid_array is not always correct in all scenarios.
-A wrong domain may result in failure in remove_dev_pasid() callback.
-To avoid such problems, it is more reliable to pass the domain to the
-remove_dev_pasid() op.
+iommu_attach_device_pasid() installs the new SVA attach handle in the
+group PASID lookup before iommu_sva_bind_device() returns. A concurrent
+bind can therefore find and reuse the same handle after iommu_sva_lock is
+dropped.
 
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+handle->dev was initialized after dropping iommu_sva_lock. This leaves a
+window where a racing bind can return a handle whose dev pointer is still
+NULL. A subsequent iommu_sva_unbind_device() can then dereference it via
+handle->dev->iommu_group.
+
+Initialize handle->dev before releasing iommu_sva_lock so any visible SVA
+handle is fully initialized.
+
+Fixes: be51b1d6bbff ("iommu/sva: Refactoring iommu_sva_bind/unbind_device()")
+Cc: stable@vger.kernel.org
+Assisted-by: Qoder:Qwen-3.8-MAX-Preview
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240328122958.83332-3-yi.l.liu@intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 530f8f9c3546 ("iommu/sva: Set handle->dev before the SVA handle is visible")
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  9 ++-------
- drivers/iommu/intel/iommu.c                 | 11 +++--------
- drivers/iommu/iommu.c                       |  9 +++++----
- include/linux/iommu.h                       |  3 ++-
- 4 files changed, 12 insertions(+), 20 deletions(-)
+ drivers/iommu/iommu-sva.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 6f83556dda4d6..2c5e61786b368 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2864,14 +2864,9 @@ static int arm_smmu_def_domain_type(struct device *dev)
- 	return 0;
- }
- 
--static void arm_smmu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
-+static void arm_smmu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
-+				      struct iommu_domain *domain)
- {
--	struct iommu_domain *domain;
+diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
+index a340b805b82b7..efe491deaf61f 100644
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -100,10 +100,9 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
+ 		goto out_free_domain;
+ 	domain->users = 1;
+ out:
+-	mutex_unlock(&iommu_sva_lock);
+ 	handle->dev = dev;
+ 	handle->domain = domain;
 -
--	domain = iommu_get_domain_for_dev_pasid(dev, pasid, IOMMU_DOMAIN_SVA);
--	if (WARN_ON(IS_ERR(domain)) || !domain)
--		return;
--
- 	arm_smmu_sva_remove_dev_pasid(domain, dev, pasid);
- }
++	mutex_unlock(&iommu_sva_lock);
+ 	return handle;
  
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 53a0ba5badc91..10257548dd7d8 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4722,18 +4722,14 @@ static void intel_iommu_iotlb_sync_map(struct iommu_domain *domain,
- 		__mapping_notify_one(info->iommu, dmar_domain, pfn, pages);
- }
- 
--static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
-+static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
-+					 struct iommu_domain *domain)
- {
- 	struct intel_iommu *iommu = device_to_iommu(dev, NULL, NULL);
-+	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
- 	struct dev_pasid_info *curr, *dev_pasid = NULL;
--	struct dmar_domain *dmar_domain;
--	struct iommu_domain *domain;
- 	unsigned long flags;
- 
--	domain = iommu_get_domain_for_dev_pasid(dev, pasid, 0);
--	if (WARN_ON_ONCE(!domain))
--		goto out_tear_down;
--
- 	/*
- 	 * The SVA implementation needs to handle its own stuffs like the mm
- 	 * notification. Before consolidating that code into iommu core, let
-@@ -4744,7 +4740,6 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
- 		goto out_tear_down;
- 	}
- 
--	dmar_domain = to_dmar_domain(domain);
- 	spin_lock_irqsave(&dmar_domain->lock, flags);
- 	list_for_each_entry(curr, &dmar_domain->dev_pasids, link_domain) {
- 		if (curr->dev == dev && curr->pasid == pasid) {
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 3fa5699b9ff19..1927869ddf490 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -3407,20 +3407,21 @@ static int __iommu_set_group_pasid(struct iommu_domain *domain,
- 
- 		if (device == last_gdev)
- 			break;
--		ops->remove_dev_pasid(device->dev, pasid);
-+		ops->remove_dev_pasid(device->dev, pasid, domain);
- 	}
- 	return ret;
- }
- 
- static void __iommu_remove_group_pasid(struct iommu_group *group,
--				       ioasid_t pasid)
-+				       ioasid_t pasid,
-+				       struct iommu_domain *domain)
- {
- 	struct group_device *device;
- 	const struct iommu_ops *ops;
- 
- 	for_each_group_device(group, device) {
- 		ops = dev_iommu_ops(device->dev);
--		ops->remove_dev_pasid(device->dev, pasid);
-+		ops->remove_dev_pasid(device->dev, pasid, domain);
- 	}
- }
- 
-@@ -3479,7 +3480,7 @@ void iommu_detach_device_pasid(struct iommu_domain *domain, struct device *dev,
- 	struct iommu_group *group = iommu_group_get(dev);
- 
- 	mutex_lock(&group->mutex);
--	__iommu_remove_group_pasid(group, pasid);
-+	__iommu_remove_group_pasid(group, pasid, domain);
- 	WARN_ON(xa_erase(&group->pasid_array, pasid) != domain);
- 	mutex_unlock(&group->mutex);
- 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index b6ef263e85c06..6e5257bf9aeaf 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -289,7 +289,8 @@ struct iommu_ops {
- 			     struct iommu_page_response *msg);
- 
- 	int (*def_domain_type)(struct device *dev);
--	void (*remove_dev_pasid)(struct device *dev, ioasid_t pasid);
-+	void (*remove_dev_pasid)(struct device *dev, ioasid_t pasid,
-+				 struct iommu_domain *domain);
- 
- 	const struct iommu_domain_ops *default_domain_ops;
- 	unsigned long pgsize_bitmap;
+ out_free_domain:
 -- 
 2.53.0
 
