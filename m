@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0BA3A9879;
-	Sat, 17 Oct 2026 17:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927D394785;
+	Sat, 17 Oct 2026 17:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257103; cv=none; b=lLAj9Abju/KYU+sBp4DFbhWdz1dL5nh2iB0GZ3xiuDis5XwLJvWR88umS7kKdZj4Nk41rbwn8oO/cud5n62jGo84z8y4IpqNnM0vbQx8DSdQoNM6dEtOobzC5LBLalKyNekLiTlFurSPlfYqJMhy+yR/37g+T1MOTE01x3jwJgs=
+	t=1792257106; cv=none; b=mblWZ4duT7rb0wKBUF7QrKiwt9IQgY2j550KwLtuNSHdtjPQ+KMjHPBjOB+hgZaFaJMxXUAiI3pXXl+bsecrVwHJpa1A5SbvbQaFotkZTKdAFqVKrIXLCXCDc/jIFs0akw2tITTEZFjR3VwTgJ3683XGFhrWYaEWjNrKdtU+3VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257103; c=relaxed/simple;
-	bh=z8OSDlSNZk/EcGBAj6MYxIm9o/SgRRN4ZdUUTHp86SQ=;
+	s=arc-20240116; t=1792257106; c=relaxed/simple;
+	bh=YJd/YD1z/OqBgbaK1SNcIUc0DBUIpAFP43Szluz+e9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzvVQyLNfuU6cPRbObKDvyGJtxBOviwYAQYRSH7MhGIAbPnjwKG7vRn6YNVkIOLBmX017UZpFdldlvrFoIqd3DkJh6PZWsVabGvLSKgQqWqvljCX2DFBNiBeJCaVdIW+pft7FfXphLk6lgoj/kvWJCkIw6WikYC0Q1AuYStmBAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rys91N4b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g92Nu1WfHqo5Jl3r0Q5h/6KCBRJVLO75gqGPMV/wLNiVYGwYsuHzdHrC+tIi0GET+sV9VnMvt3tOJIlJkycyuP8hQV+RzaNs+U15UOvYAs6+0c6c9swqNvqLXuqLNcCyBtZ9xOlAcF/MDqHm2KLL3EPN4MAihw+NHCTCS82TkuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6ZdL+tn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rys91N4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA471F000C4;
-	Sat, 17 Oct 2026 17:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6ZdL+tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AF91F000C4;
+	Sat, 17 Oct 2026 17:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257102;
-	bh=a7dSVfrS7PVlUWlMade0c0ubURpRhH7jEcEUGlhSwVw=;
+	s=korg; t=1792257105;
+	bh=DVKhI3HZu0zb2j5xkg5CQFXRPKPT5XlgpICvSPjz02Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rys91N4bOQGpdpA7Cajz9XssQOmJHC7EONLTWRqgNYSRCeEv/djWRnPZSYp1GW+pQ
-	 tx9bPC2xnb8kdIDJto2mr/lNs82QVelcxle07he9X45Q0TOUsKKbqfFYfaP8UA2tXt
-	 /JkX5d2ieZSeiz3pkhqLgm9rgGrbk34ZXML9CcqE=
+	b=u6ZdL+tn5XFAt2+ixZfOJ9aazY+dDvGtRGK6RvnTNjmYqw9vxFkBcV6hILXZp/S+L
+	 vmsYSATq4IpxfYFypcIYVxnPzX0vkeQ/WmynDqjvdtBgL1KrnhsLQzLSgbY0H9n0Xo
+	 Ifm9pydDxLfVl2Y3oqPYDZgtIJFQqccENP+GrQQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0452/1674] wifi: cfg80211: release locks on error in cfg80211_wext_siwgenie()
-Date: Sat, 17 Oct 2026 17:45:24 +0200
-Message-ID: <20261017160442.719832594@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 0453/1674] HID: core: introduce hid_safe_input_report()
+Date: Sat, 17 Oct 2026 17:45:25 +0200
+Message-ID: <20261017160442.745523843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,52 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-This error path returns while both wiphy_lock() and wdev_lock() are still
-held, so one malformed IE request can permanently block later operations
-on this wiphy. Route the error through out to release both locks.
+[ Upstream commit 206342541fc887ae919774a43942dc883161fece ]
 
-This bug is stable-specific: it was introduced by the stable backport
-commit d01f1600e8b0 ("wifi: cfg80211: validate IEs in
-cfg80211_wext_siwgenie()") of upstream
-commit a2f5286ca4f3 ("wifi: cfg80211: validate IEs in
-cfg80211_wext_siwgenie()").  Upstream is safe because that function
-runs under guard(wiphy)(), added by
-commit f42d22d3f7963 ("wifi: cfg80211: define and use wiphy guard"),
-while this tree still uses explicit locking and the separate wdev
-mutex that upstream removed in
-commit 076fc8775dafe ("wifi: cfg80211: remove wdev mutex").  Backporting
-those locking reworks is not appropriate as a minimal stable fix.
+hid_input_report() is used in too many places to have a commit that
+doesn't cross subsystem borders. Instead of changing the API, introduce
+a new one when things matters in the transport layers:
+- usbhid
+- i2chid
 
-This is a fix for stable v6.6.158 backport commit, so no upstream commit.
+This effectively revert to the old behavior for those two transport
+layers.
 
-Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Closes: https://lore.kernel.org/all/93db0eae-f479-4343-a126-59987ae0dc22@oracle.com/
-Fixes: d01f1600e8b0 ("wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()")
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+(cherry picked from commit a9527c32cc9d98252dc975d6fcb29f2013d0f63a)
+[Lee: Implement hid_safe_input_report() directly and wrap it from
+      hid_input_report() as 67eccf151d76 ("HID: add source argument to
+      HID low level functions") is not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/wext-sme.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c             | 26 ++++++++++++++++++++++++--
+ drivers/hid/i2c-hid/i2c-hid-core.c |  7 ++++---
+ drivers/hid/usbhid/hid-core.c      | 11 ++++++-----
+ include/linux/hid.h                |  2 ++
+ 4 files changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
-index cfa903eb0e82f..0e7c314bdeef0 100644
---- a/net/wireless/wext-sme.c
-+++ b/net/wireless/wext-sme.c
-@@ -354,8 +354,10 @@ int cfg80211_wext_siwgenie(struct net_device *dev,
- 			/* nothing */
- 		}
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 446ed394dc488..9981346d23aac 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2082,14 +2082,36 @@ EXPORT_SYMBOL_GPL(hid_report_raw_event);
+  * @interrupt: distinguish between interrupt and control transfers
+  *
+  * This is data entry for lower layers.
++ * Legacy, please use hid_safe_input_report() instead.
+  */
+ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
+ 		     u32 size, int interrupt)
++{
++	return hid_safe_input_report(hid, type, data, size, size, interrupt);
++}
++EXPORT_SYMBOL_GPL(hid_input_report);
++
++/**
++ * hid_safe_input_report - report data from lower layer (usb, bt...)
++ *
++ * @hid: hid device
++ * @type: HID report type (HID_*_REPORT)
++ * @data: report contents
++ * @bufsize: allocated size of the data buffer
++ * @size: useful size of data parameter
++ * @interrupt: distinguish between interrupt and control transfers
++ *
++ * This is data entry for lower layers.
++ * Please use this function instead of the non safe version because we provide
++ * here the size of the buffer, allowing hid-core to make smarter decisions
++ * regarding the incoming buffer.
++ */
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt)
+ {
+ 	struct hid_report_enum *report_enum;
+ 	struct hid_driver *hdrv;
+ 	struct hid_report *report;
+-	size_t bufsize = size;
+ 	int ret = 0;
  
--		if (!for_each_element_completed(elem, extra, ie_len))
--			return -EINVAL;
-+		if (!for_each_element_completed(elem, extra, ie_len)) {
-+			err = -EINVAL;
-+			goto out;
-+		}
+ 	if (!hid)
+@@ -2140,7 +2162,7 @@ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data
+ 	up(&hid->driver_input_lock);
+ 	return ret;
+ }
+-EXPORT_SYMBOL_GPL(hid_input_report);
++EXPORT_SYMBOL_GPL(hid_safe_input_report);
  
- 		ie = kmemdup(extra, ie_len, GFP_KERNEL);
- 		if (!ie) {
+ bool hid_match_one_id(const struct hid_device *hdev,
+ 		      const struct hid_device_id *id)
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index b36284e2d5cbf..1760f2693d31b 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -544,9 +544,10 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
+ 		if (ihid->hid->group != HID_GROUP_RMI)
+ 			pm_wakeup_event(&ihid->client->dev, 0);
+ 
+-		hid_input_report(ihid->hid, HID_INPUT_REPORT,
+-				ihid->inbuf + sizeof(__le16),
+-				ret_size - sizeof(__le16), 1);
++		hid_safe_input_report(ihid->hid, HID_INPUT_REPORT,
++				      ihid->inbuf + sizeof(__le16),
++				      ihid->bufsize - sizeof(__le16),
++				      ret_size - sizeof(__le16), 1);
+ 	}
+ 
+ 	return;
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index 415d44ac14807..f8287774c6971 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -281,9 +281,9 @@ static void hid_irq_in(struct urb *urb)
+ 			break;
+ 		usbhid_mark_busy(usbhid);
+ 		if (!test_bit(HID_RESUME_RUNNING, &usbhid->iofl)) {
+-			hid_input_report(urb->context, HID_INPUT_REPORT,
+-					 urb->transfer_buffer,
+-					 urb->actual_length, 1);
++			hid_safe_input_report(urb->context, HID_INPUT_REPORT,
++					      urb->transfer_buffer, urb->transfer_buffer_length,
++					      urb->actual_length, 1);
+ 			/*
+ 			 * autosuspend refused while keys are pressed
+ 			 * because most keyboards don't wake up when
+@@ -480,9 +480,10 @@ static void hid_ctrl(struct urb *urb)
+ 	switch (status) {
+ 	case 0:			/* success */
+ 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
+-			hid_input_report(urb->context,
++			hid_safe_input_report(urb->context,
+ 				usbhid->ctrl[usbhid->ctrltail].report->type,
+-				urb->transfer_buffer, urb->actual_length, 0);
++				urb->transfer_buffer, urb->transfer_buffer_length,
++				urb->actual_length, 0);
+ 		break;
+ 	case -ESHUTDOWN:	/* unplug */
+ 		unplug = 1;
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 55c7061be2690..9ae229a34d7b8 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -976,6 +976,8 @@ extern void hidinput_disconnect(struct hid_device *);
+ int hid_set_field(struct hid_field *, unsigned, __s32);
+ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
+ 		     int interrupt);
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt);
+ struct hid_field *hidinput_get_led_field(struct hid_device *hid);
+ unsigned int hidinput_count_leds(struct hid_device *hid);
+ __s32 hidinput_calc_abs_res(const struct hid_field *field, __u16 code);
 -- 
 2.53.0
 
