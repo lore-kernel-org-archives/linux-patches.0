@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A522F767;
-	Sat, 17 Oct 2026 16:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3372E8DEB;
+	Sat, 17 Oct 2026 16:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253427; cv=none; b=tfwD2TbkycLjkh379NUssm0Lae/CtgbsmwwvcB+YfXQbZuBQrnR1HE8hZd8U6FIlENN7FMvce5uxkRd48sbaTjqU1l6Byo4zY4TtXdBWCI3WWJExxpArIzshjkwrGpMpLL6SWZgimPxAs+zInqloDmXbzWDc7K1O2QJ8q6NAO+8=
+	t=1792253430; cv=none; b=p9G8pP/KZTLM37K1T9fmdFvrJ0l0sZGx1kZUZiL7/QlDs4a7rDGq6IU1c849wKt8lCLRxDPFdiWv/HlpvECDl45OzEW6y0kP7kno9ySfsW1AUA19mZTy9nWB/4+x1G2AM55O86N08lfsUjOj/3uAPRtJA/9FM9wievvldtrSSzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253427; c=relaxed/simple;
-	bh=tuVy9w5i4N7FuTPrYhhI063Dm+mne8evBDQvd3lNfuI=;
+	s=arc-20240116; t=1792253430; c=relaxed/simple;
+	bh=5hxM/UhoYlorP7+crTRAPTZqvzF8TUiTd9leYCqlHKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttZ/ZRI9i79aC4gIj++a9x8jJBOgbE03qjgpvLzZ7q2maOk2gFGXAQlyJN9gjRaQ6V30h7r7F3/JfVqWyzhlERg6evoW9njixgNTESWMt6NG44XyazeAd95GDL/L1XtwNC6jyS8GY7P+Rv+szvRe46P1rmq54uFA8dOplN/UBKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIr1pKg+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NgxzRHsNyR3lpzMCPHfYBEtKYNSTsFoLX2Hlcjvs5xiaPsU0JTMYH7s+ZPT3SGXbqXMosrqajYHTx3nR1Ov2mzdz2npfBfCBu2zSVQNuXQFe8ZcWVEAf94YuIBtuuqlKWFSPSJn/bIo1Iu29/gBEknwe5oKRdgmVEkAVY+IPb7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHcqMpFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIr1pKg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711B41F000C4;
-	Sat, 17 Oct 2026 16:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHcqMpFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571511F000C4;
+	Sat, 17 Oct 2026 16:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253425;
-	bh=sTo7ZfP1ZqZ/fcsMR5H6qYsJF9kcE4ImMwaucCYT60E=;
+	s=korg; t=1792253428;
+	bh=UZezHUqceZvBs+X4+qzq1IXdZWh1U6hxSdAMB8xJf+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIr1pKg+OFj3quslXomVwpkMIHSOK4dUloJyCxtooPYW0cS2REzfs4mzdLwaVFD7r
-	 OJu40FgylJptpiQ0QhoUzHdTGmEDfaaqQh2qgOu2yG+FSmhFea0Jun8N5U8KOoGhBG
-	 TVAPFpet1mpl8A1kO+azAyoPtMqRXSwwN+gssvjM=
+	b=gHcqMpFbBP3URwmsvMWne6dclGi8Su7Ky3iP0Qyh3M8N9L7rwf92N++H4ggYI40HE
+	 mLrq2qqJ8QrH/X4FffMBhLnIqKR2/BxhE5Ju8aOt5e1jQqirkSYXZ73p8LyDEOTvKn
+	 ZdXGDQbqelvbYke6M6fZj8b87W7wHKdF13UMrvuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Roger Quadros <rogerq@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/869] net: ethernet: ti: am65-cpsw: streamline RX queue creation and cleanup
-Date: Sat, 17 Oct 2026 17:48:33 +0200
-Message-ID: <20261017160038.871122987@linuxfoundation.org>
+Subject: [PATCH 6.12 073/869] dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn
+Date: Sat, 17 Oct 2026 17:48:34 +0200
+Message-ID: <20261017160038.897758342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,357 +55,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 66c1ae68a1e9bde7376a50229b0b33145fcb0a71 ]
+[ Upstream commit 0da30874729baeb01889b0eca16cfda122687503 ]
 
-Introduce am65_cpsw_create_rxqs() and am65_cpsw_destroy_rxqs()
-and use them.
+The user of k3_udma_glue_reset_rx_chn() e.g. ti_am65_cpsw_nuss can
+run on multiple platforms having different DMA architectures.
+On some platforms there can be one FDQ for all flows in the RX channel
+while for others there is a separate FDQ for each flow in the RX channel.
+
+So far we have been relying on the skip_fdq argument of
+k3_udma_glue_reset_rx_chn().
+
+Instead of relying on the user to provide this information, infer it
+based on DMA architecture during k3_udma_glue_request_rx_chn() and save it
+in an internal flag 'single_fdq'. Use that flag at
+k3_udma_glue_reset_rx_chn() to deicide if the FDQ needs
+to be cleared for every flow or just for flow 0.
+
+Fixes the below issue on ti_am65_cpsw_nuss driver on AM62-SK.
+
+> ip link set eth1 down
+> ip link set eth0 down
+> ethtool -L eth0 rx 8
+> ip link set eth0 up
+> modprobe -r ti_am65_cpsw_nuss
+
+[  103.045726] ------------[ cut here ]------------
+[  103.050505] k3_knav_desc_pool size 512000 != avail 64000
+[  103.050703] WARNING: CPU: 1 PID: 450 at drivers/net/ethernet/ti/k3-cppi-desc-pool.c:33 k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.068810] Modules linked in: ti_am65_cpsw_nuss(-) k3_cppi_desc_pool snd_soc_hdmi_codec crct10dif_ce snd_soc_simple_card snd_soc_simple_card_utils display_connector rtc_ti_k3 k3_j72xx_bandgap tidss drm_client_lib snd_soc_davinci_mcas
+p drm_dma_helper tps6598x phylink snd_soc_ti_udma rti_wdt drm_display_helper snd_soc_tlv320aic3x_i2c typec at24 phy_gmii_sel snd_soc_ti_edma snd_soc_tlv320aic3x sii902x snd_soc_ti_sdma sa2ul omap_mailbox drm_kms_helper authenc cfg80211 r
+fkill fuse drm drm_panel_orientation_quirks backlight ip_tables x_tables ipv6 [last unloaded: k3_cppi_desc_pool]
+[  103.119950] CPU: 1 UID: 0 PID: 450 Comm: modprobe Not tainted 6.13.0-rc7-00001-g9c5e3435fa66 #1011
+[  103.119968] Hardware name: Texas Instruments AM625 SK (DT)
+[  103.119974] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  103.119983] pc : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.148007] lr : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.154709] sp : ffff8000826ebbc0
+[  103.158015] x29: ffff8000826ebbc0 x28: ffff0000090b6300 x27: 0000000000000000
+[  103.165145] x26: 0000000000000000 x25: 0000000000000000 x24: ffff0000019df6b0
+[  103.172271] x23: ffff0000019df6b8 x22: ffff0000019df410 x21: ffff8000826ebc88
+[  103.179397] x20: 000000000007d000 x19: ffff00000a3b3000 x18: 0000000000000000
+[  103.186522] x17: 0000000000000000 x16: 0000000000000000 x15: 000001e8c35e1cde
+[  103.193647] x14: 0000000000000396 x13: 000000000000035c x12: 0000000000000000
+[  103.200772] x11: 000000000000003a x10: 00000000000009c0 x9 : ffff8000826eba20
+[  103.207897] x8 : ffff0000090b6d20 x7 : ffff00007728c180 x6 : ffff00007728c100
+[  103.215022] x5 : 0000000000000001 x4 : ffff000000508a50 x3 : ffff7ffff6146000
+[  103.222147] x2 : 0000000000000000 x1 : e300b4173ee6b200 x0 : 0000000000000000
+[  103.229274] Call trace:
+[  103.231714]  k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool] (P)
+[  103.238408]  am65_cpsw_nuss_free_rx_chns+0x28/0x4c [ti_am65_cpsw_nuss]
+[  103.244942]  devm_action_release+0x14/0x20
+[  103.249040]  release_nodes+0x3c/0x68
+[  103.252610]  devres_release_all+0x8c/0xdc
+[  103.256614]  device_unbind_cleanup+0x18/0x60
+[  103.260876]  device_release_driver_internal+0xf8/0x178
+[  103.266004]  driver_detach+0x50/0x9c
+[  103.269571]  bus_remove_driver+0x6c/0xbc
+[  103.273485]  driver_unregister+0x30/0x60
+[  103.277401]  platform_driver_unregister+0x14/0x20
+[  103.282096]  am65_cpsw_nuss_driver_exit+0x18/0xff4 [ti_am65_cpsw_nuss]
+[  103.288620]  __arm64_sys_delete_module+0x17c/0x25c
+[  103.293404]  invoke_syscall+0x44/0x100
+[  103.297149]  el0_svc_common.constprop.0+0xc0/0xe0
+[  103.301845]  do_el0_svc+0x1c/0x28
+[  103.305155]  el0_svc+0x28/0x98
+[  103.308207]  el0t_64_sync_handler+0xc8/0xcc
+[  103.312384]  el0t_64_sync+0x198/0x19c
+[  103.316040] ---[ end trace 0000000000000000 ]---
 
 Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Link: https://patch.msgid.link/20250117-am65-cpsw-streamline-v2-2-91a29c97e569@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0da30874729b ("dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn")
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250224-k3-udma-glue-single-fdq-v2-1-cbe7621f2507@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 243 +++++++++++------------
- 1 file changed, 119 insertions(+), 124 deletions(-)
+ drivers/dma/ti/k3-udma-glue.c                | 15 +++++++++++----
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c     |  4 ++--
+ drivers/net/ethernet/ti/icssg/icssg_common.c |  2 +-
+ include/linux/dma/k3-udma-glue.h             |  3 +--
+ 4 files changed, 15 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index bf177879cc28a..d651983fe3816 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -84,6 +84,7 @@ struct k3_udma_glue_rx_channel {
+ 	struct k3_udma_glue_rx_flow *flows;
+ 	u32 flow_num;
+ 	u32 flows_ready;
++	bool single_fdq;	/* one FDQ for all flows */
+ };
+ 
+ static void k3_udma_chan_dev_release(struct device *dev)
+@@ -970,10 +971,13 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 
+ 	ep_cfg = rx_chn->common.ep_config;
+ 
+-	if (xudma_is_pktdma(rx_chn->common.udmax))
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
+ 		rx_chn->udma_rchan_id = ep_cfg->mapped_channel_id;
+-	else
++		rx_chn->single_fdq = false;
++	} else {
+ 		rx_chn->udma_rchan_id = -1;
++		rx_chn->single_fdq = true;
++	}
+ 
+ 	/* request and cfg UDMAP RX channel */
+ 	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax,
+@@ -1103,6 +1107,9 @@ k3_udma_glue_request_remote_rx_chn_common(struct k3_udma_glue_rx_channel *rx_chn
+ 		rx_chn->common.chan_dev.dma_coherent = true;
+ 		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
+ 					     DMA_BIT_MASK(48));
++		rx_chn->single_fdq = false;
++	} else {
++		rx_chn->single_fdq = true;
+ 	}
+ 
+ 	ret = k3_udma_glue_allocate_rx_flows(rx_chn, cfg);
+@@ -1454,7 +1461,7 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_rx_chn);
+ 
+ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 		u32 flow_num, void *data,
+-		void (*cleanup)(void *data, dma_addr_t desc_dma), bool skip_fdq)
++		void (*cleanup)(void *data, dma_addr_t desc_dma))
+ {
+ 	struct k3_udma_glue_rx_flow *flow = &rx_chn->flows[flow_num];
+ 	struct device *dev = rx_chn->common.dev;
+@@ -1466,7 +1473,7 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 	dev_dbg(dev, "RX reset flow %u occ_rx %u\n", flow_num, occ_rx);
+ 
+ 	/* Skip RX FDQ in case one FDQ is used for the set of flows */
+-	if (skip_fdq)
++	if (rx_chn->single_fdq && flow_num)
+ 		goto do_reset;
+ 
+ 	/*
 diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 45cea845d4aaa..8b47ff7a8b15b 100644
+index 8b47ff7a8b15b..e9d9d69e2ba9d 100644
 --- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
 +++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -398,35 +398,61 @@ static void am65_cpsw_init_host_port_switch(struct am65_cpsw_common *common);
- static void am65_cpsw_init_host_port_emac(struct am65_cpsw_common *common);
- static void am65_cpsw_init_port_switch_ale(struct am65_cpsw_port *port);
- static void am65_cpsw_init_port_emac_ale(struct am65_cpsw_port *port);
-+static inline void am65_cpsw_put_page(struct am65_cpsw_rx_flow *flow,
-+				      struct page *page,
-+				      bool allow_direct);
-+static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma);
+@@ -414,7 +414,7 @@ static void am65_cpsw_destroy_rxq(struct am65_cpsw_common *common, int id)
+ 	napi_disable(&flow->napi_rx);
+ 	hrtimer_cancel(&flow->rx_hrtimer);
+ 	k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, id, rx_chn,
+-				  am65_cpsw_nuss_rx_cleanup, !!id);
++				  am65_cpsw_nuss_rx_cleanup);
  
--static void am65_cpsw_destroy_xdp_rxqs(struct am65_cpsw_common *common)
-+static void am65_cpsw_destroy_rxq(struct am65_cpsw_common *common, int id)
- {
- 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
- 	struct am65_cpsw_rx_flow *flow;
- 	struct xdp_rxq_info *rxq;
--	int id, port;
-+	int port;
- 
--	for (id = 0; id < common->rx_ch_num_flows; id++) {
--		flow = &rx_chn->flows[id];
-+	flow = &rx_chn->flows[id];
-+	napi_disable(&flow->napi_rx);
-+	hrtimer_cancel(&flow->rx_hrtimer);
-+	k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, id, rx_chn,
-+				  am65_cpsw_nuss_rx_cleanup, !!id);
- 
--		for (port = 0; port < common->port_num; port++) {
--			if (!common->ports[port].ndev)
--				continue;
-+	for (port = 0; port < common->port_num; port++) {
-+		if (!common->ports[port].ndev)
-+			continue;
- 
--			rxq = &common->ports[port].xdp_rxq[id];
-+		rxq = &common->ports[port].xdp_rxq[id];
- 
--			if (xdp_rxq_info_is_reg(rxq))
--				xdp_rxq_info_unreg(rxq);
--		}
-+		if (xdp_rxq_info_is_reg(rxq))
-+			xdp_rxq_info_unreg(rxq);
-+	}
- 
--		if (flow->page_pool) {
--			page_pool_destroy(flow->page_pool);
--			flow->page_pool = NULL;
--		}
-+	if (flow->page_pool) {
-+		page_pool_destroy(flow->page_pool);
-+		flow->page_pool = NULL;
- 	}
- }
- 
--static int am65_cpsw_create_xdp_rxqs(struct am65_cpsw_common *common)
-+static void am65_cpsw_destroy_rxqs(struct am65_cpsw_common *common)
-+{
-+	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
-+	int id;
-+
-+	reinit_completion(&common->tdown_complete);
-+	k3_udma_glue_tdown_rx_chn(rx_chn->rx_chn, true);
-+
-+	if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ) {
-+		id = wait_for_completion_timeout(&common->tdown_complete, msecs_to_jiffies(1000));
-+		if (!id)
-+			dev_err(common->dev, "rx teardown timeout\n");
-+	}
-+
-+	for (id = common->rx_ch_num_flows - 1; id >= 0; id--)
-+		am65_cpsw_destroy_rxq(common, id);
-+
-+	k3_udma_glue_disable_rx_chn(common->rx_chns.rx_chn);
-+}
-+
-+static int am65_cpsw_create_rxq(struct am65_cpsw_common *common, int id)
- {
- 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
- 	struct page_pool_params pp_params = {
-@@ -441,45 +467,92 @@ static int am65_cpsw_create_xdp_rxqs(struct am65_cpsw_common *common)
- 	struct am65_cpsw_rx_flow *flow;
- 	struct xdp_rxq_info *rxq;
- 	struct page_pool *pool;
--	int id, port, ret;
-+	struct page *page;
-+	int port, ret, i;
- 
--	for (id = 0; id < common->rx_ch_num_flows; id++) {
--		flow = &rx_chn->flows[id];
--		pp_params.napi = &flow->napi_rx;
--		pool = page_pool_create(&pp_params);
--		if (IS_ERR(pool)) {
--			ret = PTR_ERR(pool);
-+	flow = &rx_chn->flows[id];
-+	pp_params.napi = &flow->napi_rx;
-+	pool = page_pool_create(&pp_params);
-+	if (IS_ERR(pool)) {
-+		ret = PTR_ERR(pool);
-+		return ret;
-+	}
-+
-+	flow->page_pool = pool;
-+
-+	/* using same page pool is allowed as no running rx handlers
-+	 * simultaneously for both ndevs
-+	 */
-+	for (port = 0; port < common->port_num; port++) {
-+		if (!common->ports[port].ndev)
-+		/* FIXME should we BUG here? */
-+			continue;
-+
-+		rxq = &common->ports[port].xdp_rxq[id];
-+		ret = xdp_rxq_info_reg(rxq, common->ports[port].ndev,
-+				       id, flow->napi_rx.napi_id);
-+		if (ret)
-+			goto err;
-+
-+		ret = xdp_rxq_info_reg_mem_model(rxq,
-+						 MEM_TYPE_PAGE_POOL,
-+						 pool);
-+		if (ret)
-+			goto err;
-+	}
-+
-+	for (i = 0; i < AM65_CPSW_MAX_RX_DESC; i++) {
-+		page = page_pool_dev_alloc_pages(flow->page_pool);
-+		if (!page) {
-+			dev_err(common->dev, "cannot allocate page in flow %d\n",
-+				id);
-+			ret = -ENOMEM;
- 			goto err;
- 		}
- 
--		flow->page_pool = pool;
-+		ret = am65_cpsw_nuss_rx_push(common, page, id);
-+		if (ret < 0) {
-+			dev_err(common->dev,
-+				"cannot submit page to rx channel flow %d, error %d\n",
-+				id, ret);
-+			am65_cpsw_put_page(flow, page, false);
-+			goto err;
-+		}
-+	}
- 
--		/* using same page pool is allowed as no running rx handlers
--		 * simultaneously for both ndevs
--		 */
--		for (port = 0; port < common->port_num; port++) {
--			if (!common->ports[port].ndev)
--				continue;
-+	napi_enable(&flow->napi_rx);
-+	return 0;
- 
--			rxq = &common->ports[port].xdp_rxq[id];
-+err:
-+	am65_cpsw_destroy_rxq(common, id);
-+	return ret;
-+}
- 
--			ret = xdp_rxq_info_reg(rxq, common->ports[port].ndev,
--					       id, flow->napi_rx.napi_id);
--			if (ret)
--				goto err;
-+static int am65_cpsw_create_rxqs(struct am65_cpsw_common *common)
-+{
-+	int id, ret;
- 
--			ret = xdp_rxq_info_reg_mem_model(rxq,
--							 MEM_TYPE_PAGE_POOL,
--							 pool);
--			if (ret)
--				goto err;
-+	for (id = 0; id < common->rx_ch_num_flows; id++) {
-+		ret = am65_cpsw_create_rxq(common, id);
-+		if (ret) {
-+			dev_err(common->dev, "couldn't create rxq %d: %d\n",
-+				id, ret);
-+			goto err;
- 		}
- 	}
- 
-+	ret = k3_udma_glue_enable_rx_chn(common->rx_chns.rx_chn);
-+	if (ret) {
-+		dev_err(common->dev, "couldn't enable rx chn: %d\n", ret);
-+		goto err;
-+	}
-+
- 	return 0;
- 
- err:
--	am65_cpsw_destroy_xdp_rxqs(common);
-+	for (--id; id >= 0; id--)
-+		am65_cpsw_destroy_rxq(common, id);
-+
- 	return ret;
- }
- 
-@@ -543,7 +616,6 @@ static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma)
- 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
- 	dma_unmap_single(rx_chn->dma_dev, buf_dma, buf_dma_len, DMA_FROM_DEVICE);
- 	k3_cppi_desc_pool_free(rx_chn->desc_pool, desc_rx);
--
- 	am65_cpsw_put_page(&rx_chn->flows[flow_id], page, false);
- }
- 
-@@ -625,12 +697,9 @@ static struct sk_buff *am65_cpsw_build_skb(void *page_addr,
- static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
- {
- 	struct am65_cpsw_host *host_p = am65_common_get_host(common);
--	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
- 	struct am65_cpsw_tx_chn *tx_chn = common->tx_chns;
--	int port_idx, i, ret, tx, flow_idx;
--	struct am65_cpsw_rx_flow *flow;
-+	int port_idx, ret, tx;
- 	u32 val, port_mask;
--	struct page *page;
- 
- 	if (common->usage_count)
- 		return 0;
-@@ -690,47 +759,9 @@ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
- 
- 	am65_cpsw_qos_tx_p0_rate_init(common);
- 
--	ret = am65_cpsw_create_xdp_rxqs(common);
--	if (ret) {
--		dev_err(common->dev, "Failed to create XDP rx queues\n");
-+	ret = am65_cpsw_create_rxqs(common);
-+	if (ret)
- 		return ret;
--	}
--
--	for (flow_idx = 0; flow_idx < common->rx_ch_num_flows; flow_idx++) {
--		flow = &rx_chn->flows[flow_idx];
--		for (i = 0; i < AM65_CPSW_MAX_RX_DESC; i++) {
--			page = page_pool_dev_alloc_pages(flow->page_pool);
--			if (!page) {
--				dev_err(common->dev, "cannot allocate page in flow %d\n",
--					flow_idx);
--				ret = -ENOMEM;
--				goto fail_rx;
--			}
--
--			ret = am65_cpsw_nuss_rx_push(common, page, flow_idx);
--			if (ret < 0) {
--				dev_err(common->dev,
--					"cannot submit page to rx channel flow %d, error %d\n",
--					flow_idx, ret);
--				am65_cpsw_put_page(flow, page, false);
--				goto fail_rx;
--			}
--		}
--	}
--
--	ret = k3_udma_glue_enable_rx_chn(rx_chn->rx_chn);
--	if (ret) {
--		dev_err(common->dev, "couldn't enable rx chn: %d\n", ret);
--		goto fail_rx;
--	}
--
--	for (i = 0; i < common->rx_ch_num_flows ; i++) {
--		napi_enable(&rx_chn->flows[i].napi_rx);
--		if (rx_chn->flows[i].irq_disabled) {
--			rx_chn->flows[i].irq_disabled = false;
--			enable_irq(rx_chn->flows[i].irq);
--		}
--	}
- 
- 	for (tx = 0; tx < common->tx_ch_num; tx++) {
- 		ret = k3_udma_glue_enable_tx_chn(tx_chn[tx].tx_chn);
-@@ -753,30 +784,13 @@ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
- 		tx--;
- 	}
- 
--	for (flow_idx = 0; i < common->rx_ch_num_flows; flow_idx++) {
--		flow = &rx_chn->flows[flow_idx];
--		if (!flow->irq_disabled) {
--			disable_irq(flow->irq);
--			flow->irq_disabled = true;
--		}
--		napi_disable(&flow->napi_rx);
--	}
--
--	k3_udma_glue_disable_rx_chn(rx_chn->rx_chn);
--
--fail_rx:
--	for (i = 0; i < common->rx_ch_num_flows; i++)
--		k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, i, rx_chn,
+ 	for (port = 0; port < common->port_num; port++) {
+ 		if (!common->ports[port].ndev)
+@@ -3370,7 +3370,7 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
+ 	for (i = 0; i < common->rx_ch_num_flows; i++)
+ 		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i,
+ 					  rx_chan,
 -					  am65_cpsw_nuss_rx_cleanup, !!i);
--
--	am65_cpsw_destroy_xdp_rxqs(common);
-+	am65_cpsw_destroy_rxqs(common);
++					  am65_cpsw_nuss_rx_cleanup);
  
- 	return ret;
+ 	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
+ 
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
+index 74f0f200a89d4..62065416e8861 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_common.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
+@@ -955,7 +955,7 @@ void prueth_reset_rx_chan(struct prueth_rx_chn *chn,
+ 
+ 	for (i = 0; i < num_flows; i++)
+ 		k3_udma_glue_reset_rx_chn(chn->rx_chn, i, chn,
+-					  prueth_rx_cleanup, !!i);
++					  prueth_rx_cleanup);
+ 	if (disable)
+ 		k3_udma_glue_disable_rx_chn(chn->rx_chn);
  }
- 
- static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
- {
--	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
- 	struct am65_cpsw_tx_chn *tx_chn = common->tx_chns;
- 	int i;
- 
-@@ -810,31 +824,12 @@ static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
- 		k3_udma_glue_disable_tx_chn(tx_chn[i].tx_chn);
- 	}
- 
--	reinit_completion(&common->tdown_complete);
--	k3_udma_glue_tdown_rx_chn(rx_chn->rx_chn, true);
--
--	if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ) {
--		i = wait_for_completion_timeout(&common->tdown_complete, msecs_to_jiffies(1000));
--		if (!i)
--			dev_err(common->dev, "rx teardown timeout\n");
--	}
--
--	for (i = common->rx_ch_num_flows - 1; i >= 0; i--) {
--		napi_disable(&rx_chn->flows[i].napi_rx);
--		hrtimer_cancel(&rx_chn->flows[i].rx_hrtimer);
--		k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, i, rx_chn,
--					  am65_cpsw_nuss_rx_cleanup, !!i);
--	}
--
--	k3_udma_glue_disable_rx_chn(rx_chn->rx_chn);
--
-+	am65_cpsw_destroy_rxqs(common);
- 	cpsw_ale_stop(common->ale);
- 
- 	writel(0, common->cpsw_base + AM65_CPSW_REG_CTL);
- 	writel(0, common->cpsw_base + AM65_CPSW_REG_STAT_PORT_EN);
- 
--	am65_cpsw_destroy_xdp_rxqs(common);
--
- 	dev_dbg(common->dev, "cpsw_nuss stopped\n");
- 	return 0;
- }
+diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
+index 2dea217629d0a..5d43881e6fb77 100644
+--- a/include/linux/dma/k3-udma-glue.h
++++ b/include/linux/dma/k3-udma-glue.h
+@@ -138,8 +138,7 @@ int k3_udma_glue_rx_get_irq(struct k3_udma_glue_rx_channel *rx_chn,
+ 			    u32 flow_num);
+ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 		u32 flow_num, void *data,
+-		void (*cleanup)(void *data, dma_addr_t desc_dma),
+-		bool skip_fdq);
++		void (*cleanup)(void *data, dma_addr_t desc_dma));
+ int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
+ 				u32 flow_idx);
+ int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
 -- 
 2.53.0
 
