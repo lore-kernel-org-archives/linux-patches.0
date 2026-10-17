@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA083B19BA;
-	Sat, 17 Oct 2026 17:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F9D38C2C0;
+	Sat, 17 Oct 2026 17:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259314; cv=none; b=LMXxrZ0gbhHZrgCc6L6z8ggHhW8028VWJWrrY/MS1YLKp4TK6SHY5wYI7l68Ua2Wd5ZbBUNINNLYlLmHUXchUuupQpv2+Rju7vY3joFGmhxSoQiO0akGsA4+Fx4FNdr3X/dG8v9dZ6MYsqtU6v3c0WA3pQ6ZJRA8zrJb14FqNnU=
+	t=1792259317; cv=none; b=dUDL9nn8QFvMQPxEBbVWT7FYaqisieD6BuQLTwRXt4dGULsDduelulwkoApZ4q/B61D4mGCkWT6iXTycXFU8q0daiSOMrv3Pp8GKVHOFXKxAM13oyNA77xP6ZVMP9u/2j4XY83UiMzEXaV0aKAKiRQGFex4r61H37Iz0Xu/qe9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259314; c=relaxed/simple;
-	bh=O6niAAW4CY31nAWNV2qgT8IIs/E5Gr4Yu4T7MIaVABs=;
+	s=arc-20240116; t=1792259317; c=relaxed/simple;
+	bh=UEq2F/L3NttMGFOsHjnPBld2I6zC57jUYyeNGmj9drw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlEqM85F9WVYqWej+40jOtmNh9XtlPHgxvNmOZRE9JIPq95iQuZtGjyBppWULpqxlUnoI6SpVCIGPbqExjW5MEC7YfZWawVP8Ieqlh/OyGpPi1j4uNsrZAruUboygfJQbuAwsUlfUnZjz1fC3nLt3ygcs8VU/w/MBdHElJW18nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKkSt0k3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQlnE6CsX6PP8+lt2z1TgkBGynm95A/N/6nEd/2ejsLGcgeoTx6PG19IJVr1KpoBOiLTzLU55MaiA4ZECSkDxOIBa3Fgii7m5/isUaixzs2k1NLcxJketbU3OYj+QErO+F9T6OFmtk5yZ5MIu9apGkIbUkg22hCjkMTwcUQMKIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO7gjnXe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKkSt0k3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8671F000C4;
-	Sat, 17 Oct 2026 17:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO7gjnXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713D51F000C4;
+	Sat, 17 Oct 2026 17:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259313;
-	bh=RAweHHr1UqL0R30wbCFcUaHJmj8R+l2UX5qaB5iHyp4=;
+	s=korg; t=1792259316;
+	bh=PI52rFxLX6o+0q2z/TcFZuOHxUvPelT1EcRL8lUtxuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKkSt0k3LNmGpKymHyOcdSyyPs0Ab+JaVB3FX5zcy+sKpwm3rkUBA4B7fX85yx0cd
-	 SAB+NYgOlpioLPEx5MdxGXW7Zxe1icog1ZjgQjTm7bf45TPfvMlBGgVU+58s1+PXDY
-	 owieG8HGaILODHJhhK0vQhd41v1QFyFen/S2CBM0=
+	b=IO7gjnXeCz5VtoIbpm/9CgZ7uajH2XOBbsCrvfj0U4ipHl7veb2bzcUsmMYb/0s3X
+	 ZIDbGp15/7Mp7bk5jkkK+DUd1sqwKmRhnghm2rJ0asmi7DO/tJOvpEKbhhqCs8QEB8
+	 U96/Q0C0Cvc5Beb27GGdFFbcVGtNRJ3hUvXjmPZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ShuangYu <shuangyu@yunyoo.cc>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1172/1674] vhost: fix vhost_get_avail_idx for a non empty ring
-Date: Sat, 17 Oct 2026 17:57:24 +0200
-Message-ID: <20261017160501.231235725@linuxfoundation.org>
+Subject: [PATCH 6.6 1173/1674] wifi: ath12k: fix memory leak in ath12k_wifi7_dp_rx_h_verify_tkip_mic()
+Date: Sat, 17 Oct 2026 17:57:25 +0200
+Message-ID: <20261017160501.258407881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,80 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit 09861858a68342f851f71c669ac0f69865c32151 ]
+[ Upstream commit 98d4f92ab6a1af2ea2ab590d7e2801b203110981 ]
 
-vhost_get_avail_idx is supposed to report whether it has updated
-vq->avail_idx. Instead, it returns whether all entries have been
-consumed, which is usually the same. But not always - in
-drivers/vhost/net.c and when mergeable buffers have been enabled, the
-driver checks whether the combined entries are big enough to store an
-incoming packet. If not, the driver re-enables notifications with
-available entries still in the ring. The incorrect return value from
-vhost_get_avail_idx propagates through vhost_enable_notify and causes
-the host to livelock if the guest is not making progress, as vhost will
-immediately disable notifications and retry using the available entries.
+In ath12k_wifi7_dp_rx_h_verify_tkip_mic(), the call to
+ath12k_dp_rx_check_nwifi_hdr_len_valid() may return false when the
+NWIFI header length is invalid, causing the function to abort early with
+-EINVAL.
 
-This goes back to commit d3bb267bbdcb ("vhost: cache avail index in
-vhost_enable_notify()") which changed vhost_enable_notify() to compare
-the freshly read avail index against vq->last_avail_idx instead of the
-previously cached vq->avail_idx. Commit 7ad472397667 ("vhost: move
-smp_rmb() into vhost_get_avail_idx()") then carried over the same
-comparison when refactoring vhost_enable_notify() to call the unified
-vhost_get_avail_idx().
+When this happens, the error propagates to
+ath12k_wifi7_dp_rx_h_defrag(), which clears first_frag by setting it
+to NULL. As a result, the corresponding MSDU is no longer referenced
+by the defragmentation path and is never freed.
 
-The obvious fix is to make vhost_get_avail_idx do what the comment
-says it does and report whether new entries have been added.
+This leads to a memory leak for the affected MSDU on this error path.
+Proper cleanup is required to ensure the MSDU is released when header
+validation fails during TKIP MIC verification.
 
-Reported-by: ShuangYu <shuangyu@yunyoo.cc>
-Fixes: d3bb267bbdcb ("vhost: cache avail index in vhost_enable_notify()")
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <559b04ae6ce52973c535dc47e461638b7f4c3d63.1772441455.git.mst@redhat.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 9a0dddfb30f1 ("wifi: ath12k: Fix invalid data access in ath12k_dp_rx_h_undecap_nwifi")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260512021108.2031651-1-miaoqing.pan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 5f4ffc9478337..cd618bfbb1705 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1361,6 +1361,7 @@ static void vhost_dev_unlock_vqs(struct vhost_dev *d)
- static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
- {
- 	__virtio16 idx;
-+	u16 avail_idx;
- 	int r;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index c849728732254..1f8357e9ae036 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2877,8 +2877,10 @@ static int ath12k_dp_rx_h_verify_tkip_mic(struct ath12k *ar, struct ath12k_peer
+ 		    RX_FLAG_IV_STRIPPED | RX_FLAG_DECRYPTED;
+ 	skb_pull(msdu, hal_rx_desc_sz);
  
- 	r = vhost_get_avail(vq, idx, &vq->avail->idx);
-@@ -1371,17 +1372,19 @@ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
- 	}
- 
- 	/* Check it isn't doing very strange thing with available indexes */
--	vq->avail_idx = vhost16_to_cpu(vq, idx);
--	if (unlikely((u16)(vq->avail_idx - vq->last_avail_idx) > vq->num)) {
-+	avail_idx = vhost16_to_cpu(vq, idx);
-+	if (unlikely((u16)(avail_idx - vq->last_avail_idx) > vq->num)) {
- 		vq_err(vq, "Invalid available index change from %u to %u",
--		       vq->last_avail_idx, vq->avail_idx);
-+		       vq->last_avail_idx, avail_idx);
+-	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu)))
++	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu))) {
++		dev_kfree_skb_any(msdu);
  		return -EINVAL;
- 	}
++	}
  
- 	/* We're done if there is nothing new */
--	if (vq->avail_idx == vq->last_avail_idx)
-+	if (avail_idx == vq->avail_idx)
- 		return 0;
- 
-+	vq->avail_idx = avail_idx;
-+
- 	/*
- 	 * We updated vq->avail_idx so we need a memory barrier between
- 	 * the index read above and the caller reading avail ring entries.
+ 	ath12k_dp_rx_h_ppdu(ar, rx_desc, rxs);
+ 	ath12k_dp_rx_h_undecap(ar, msdu, rx_desc,
 -- 
 2.53.0
 
