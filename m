@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC59377A97;
-	Sat, 17 Oct 2026 16:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F2F17BED0;
+	Sat, 17 Oct 2026 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254004; cv=none; b=tNq44vTHv3XCvRZYEd3KBocORs7AF1Lc7OzNB91obZs1e3ELAOcyEe7k7JakXzsr88hqLhgs8HQXLr7e8M3EbuO1JBC9ycVgh+N1LxQvSwM53zqaR40FILbOhgWvD+F5lHVqDfDnMizhXaQrWEOiZF8SfVX5nDnmk0b1WO6RTs4=
+	t=1792254007; cv=none; b=ZasK9qyhBbZzYweIHbL+haM/OoEQJt3XZJ1GphuChshulwj93p3L9fdZDU4WwzyaPb2o5+oAgF7NewvsUl1W9BA45tFm+9UaiA2xJQrBLK0bGmF0r0BA+erykoiBxbNDRopy195TJr4JiZOdvIo7FJMIjN/eggYrt0biUTNgUk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254004; c=relaxed/simple;
-	bh=gkEP3K90O7nqdjYwgzLINYpwu+R9adT9oiVF5xfrmhI=;
+	s=arc-20240116; t=1792254007; c=relaxed/simple;
+	bh=lfkhD6utb6G3UHi46AsYDdjQG55qvjbIQS4a+9wrF68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKzkpSU4cHdLUrIaLuIY3xLMKI3Ki67S6Ft3cP9jfF6Nyqon1+/A07TagKgeREoPhgQL5K7+xK6foN3P1qkwaFOHbOTjCAesjmD1pQa9Hd+sFvs4k0hGNIwnTMOUp5sfMk5t4E88gtmgf/ZWIdRsLRvFTg5BGDFNHAGEA64yaoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+5Mf2WK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G4ZRBzzgDpumoU0tVkkMSzT04EagclS/sXPqIqJStDYH9a4NidLcJezMPOzd1bbbpwvwZ0zgJASIYsLlMnOLYhjIph7K3IbEqutSuGfXlWdJkPwrE142JvgF2fS4Znzw4DVDl5rohzXwDDOe3Kui1ZhjuPkUkOUqcdX7fPwylqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOfOAJR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+5Mf2WK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D192C1F000C4;
-	Sat, 17 Oct 2026 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOfOAJR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA481F000C4;
+	Sat, 17 Oct 2026 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254003;
-	bh=cFGfVmmhXxrOEdmqX8yqIWCYkikZdcPYQocqJVwehcQ=;
+	s=korg; t=1792254006;
+	bh=/Dkc/tC/15T1bna0wKRnXq+dKvrdECdVf+AKumiwLrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+5Mf2WKwZCi8Nqx79E8eLE7masISC3810GokAokeHmIpdiMVjHGRDkGRmD2rzt00
-	 MYPXouJBJcIwOsWGCRAboUf2K3gUYG0FfR23f3+zL+5EP6whgxnrhyK2/iAV0l7L86
-	 A9szNH1Q8X6/0Uh1WVCp9uhot1W3SQtCq7v5lahU=
+	b=FOfOAJR/yd/3Z7aVmaNmHq9uXxuXDi48bqI2wL3RdJsCbwdpRHchswDvbZxDxVvib
+	 u/211ps5dxPMLSUfFVQ3wdnw6N0zVMPAjOs9o+ibFKIx12SOjug6/WkPZ7xoGFY8s1
+	 E7LkX2yRn+Tvo4uylIh704mVejxNA+iLqq8eFaUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 305/869] Revert "net/smc: Introduce TCP ULP support"
-Date: Sat, 17 Oct 2026 17:52:26 +0200
-Message-ID: <20261017160044.894456161@linuxfoundation.org>
+Subject: [PATCH 6.12 288/869] spi: microchip-core-qspi: Support per spi-mem operation frequency switches
+Date: Sat, 17 Oct 2026 17:52:09 +0200
+Message-ID: <20261017160044.457991691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,188 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
+[ Upstream commit 13529647743d906ed3cf991f1d77727e7ff1fb6f ]
 
-This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
+Every ->exec_op() call correctly configures the spi bus speed to the
+maximum allowed frequency for the memory using the constant spi default
+parameter. Since we can now have per-operation constraints, let's use
+the value that comes from the spi-mem operation structure instead. In
+case there is no specific limitation for this operation, the default spi
+device value will be given anyway.
 
-As reported by Al Viro, the TCP ULP support for SMC is fundamentally
-broken. The implementation attempts to convert an active TCP socket
-into an SMC socket by modifying the underlying `struct file`, dentry,
-and inode in-place, which violates core VFS invariants that assume
-these structures are immutable for an open file, creating a risk of
-use after free errors and general system instability.
+This controller however performed a frequency check, which is also
+observed during the ->check_op() phase.
 
-Given the severity of this design flaw and the fact that cleaner
-alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
-transparency, the correct course of action is to remove this feature
-entirely.
+The per-operation frequency capability is thus advertised to the spi-mem
+core.
 
-Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
-Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>
+Cc: Daire McNamara <daire.mcnamara@microchip.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20241224-winbond-6-11-rc1-quad-support-v2-9-ad218dbc406f@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7672749e1496 ("spi: microchip-core-qspi: control built-in cs manually")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 90 +++---------------------------------------------
- 1 file changed, 4 insertions(+), 86 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 17ce4d32f64f2..6f8c9b79e7bfb 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3380,11 +3380,10 @@ int smc_create_clcsk(struct net *net, struct sock *sk, int family)
- 	return 0;
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 6aba933fcc0b3..bda9a43dbf2ef 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -265,7 +265,8 @@ static irqreturn_t mchp_coreqspi_isr(int irq, void *dev_id)
+ 	return ret;
  }
  
--static int __smc_create(struct net *net, struct socket *sock, int protocol,
--			int kern, struct socket *clcsock)
-+static int smc_create(struct net *net, struct socket *sock, int protocol,
-+		      int kern)
+-static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_device *spi)
++static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_device *spi,
++				     const struct spi_mem_op *op)
  {
- 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
--	struct smc_sock *smc;
- 	struct sock *sk;
- 	int rc;
+ 	unsigned long clk_hz;
+ 	u32 control, baud_rate_val = 0;
+@@ -274,11 +275,11 @@ static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_devi
+ 	if (!clk_hz)
+ 		return -EINVAL;
  
-@@ -3403,15 +3402,7 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	if (!sk)
- 		goto out;
+-	baud_rate_val = DIV_ROUND_UP(clk_hz, 2 * spi->max_speed_hz);
++	baud_rate_val = DIV_ROUND_UP(clk_hz, 2 * op->max_freq);
+ 	if (baud_rate_val > MAX_DIVIDER || baud_rate_val < MIN_DIVIDER) {
+ 		dev_err(&spi->dev,
+ 			"could not configure the clock for spi clock %d Hz & system clock %ld Hz\n",
+-			spi->max_speed_hz, clk_hz);
++			op->max_freq, clk_hz);
+ 		return -EINVAL;
+ 	}
  
--	/* create internal TCP socket for CLC handshake and fallback */
--	smc = smc_sk(sk);
--
--	rc = 0;
--	if (clcsock)
--		smc->clcsock = clcsock;
--	else
--		rc = smc_create_clcsk(net, sk, family);
--
-+	rc = smc_create_clcsk(net, sk, family);
- 	if (rc) {
- 		sk_common_release(sk);
- 		sock->sk = NULL;
-@@ -3420,76 +3411,12 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	return rc;
+@@ -399,7 +400,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 	if (err)
+ 		goto error;
+ 
+-	err = mchp_coreqspi_setup_clock(qspi, mem->spi);
++	err = mchp_coreqspi_setup_clock(qspi, mem->spi, op);
+ 	if (err)
+ 		goto error;
+ 
+@@ -457,6 +458,10 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 
+ static bool mchp_coreqspi_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ {
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(mem->spi->controller);
++	unsigned long clk_hz;
++	u32 baud_rate_val;
++
+ 	if (!spi_mem_default_supports_op(mem, op))
+ 		return false;
+ 
+@@ -479,6 +484,14 @@ static bool mchp_coreqspi_supports_op(struct spi_mem *mem, const struct spi_mem_
+ 			return false;
+ 	}
+ 
++	clk_hz = clk_get_rate(qspi->clk);
++	if (!clk_hz)
++		return false;
++
++	baud_rate_val = DIV_ROUND_UP(clk_hz, 2 * op->max_freq);
++	if (baud_rate_val > MAX_DIVIDER || baud_rate_val < MIN_DIVIDER)
++		return false;
++
+ 	return true;
  }
  
--static int smc_create(struct net *net, struct socket *sock, int protocol,
--		      int kern)
--{
--	return __smc_create(net, sock, protocol, kern, NULL);
--}
--
- static const struct net_proto_family smc_sock_family_ops = {
- 	.family	= PF_SMC,
- 	.owner	= THIS_MODULE,
- 	.create	= smc_create,
+@@ -498,6 +511,10 @@ static const struct spi_controller_mem_ops mchp_coreqspi_mem_ops = {
+ 	.exec_op = mchp_coreqspi_exec_op,
  };
  
--static int smc_ulp_init(struct sock *sk)
--{
--	struct socket *tcp = sk->sk_socket;
--	struct net *net = sock_net(sk);
--	struct socket *smcsock;
--	int protocol, ret;
--
--	/* only TCP can be replaced */
--	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
--	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
--		return -ESOCKTNOSUPPORT;
--	/* don't handle wq now */
--	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
--		return -ENOTCONN;
--
--	if (sk->sk_family == AF_INET)
--		protocol = SMCPROTO_SMC;
--	else
--		protocol = SMCPROTO_SMC6;
--
--	smcsock = sock_alloc();
--	if (!smcsock)
--		return -ENFILE;
--
--	smcsock->type = SOCK_STREAM;
--	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
--	ret = __smc_create(net, smcsock, protocol, 1, tcp);
--	if (ret) {
--		sock_release(smcsock); /* module_put() which ops won't be NULL */
--		return ret;
--	}
--
--	/* replace tcp socket to smc */
--	smcsock->file = tcp->file;
--	smcsock->file->private_data = smcsock;
--	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
--	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
--	tcp->file = NULL;
--
--	return ret;
--}
--
--static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
--			  const gfp_t priority)
--{
--	struct inet_connection_sock *icsk = inet_csk(newsk);
--
--	/* don't inherit ulp ops to child when listen */
--	icsk->icsk_ulp_ops = NULL;
--}
--
--static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
--	.name		= "smc",
--	.owner		= THIS_MODULE,
--	.init		= smc_ulp_init,
--	.clone		= smc_ulp_clone,
--};
--
- unsigned int smc_net_id;
- 
- static __net_init int smc_net_init(struct net *net)
-@@ -3617,20 +3544,13 @@ static int __init smc_init(void)
- 		goto out_ib;
- 	}
- 
--	rc = tcp_register_ulp(&smc_ulp_ops);
--	if (rc) {
--		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
--		goto out_lo;
--	}
- 	rc = smc_inet_init();
- 	if (rc) {
- 		pr_err("%s: smc_inet_init fails with %d\n", __func__, rc);
--		goto out_ulp;
-+		goto out_lo;
- 	}
- 	static_branch_enable(&tcp_have_smc);
- 	return 0;
--out_ulp:
--	tcp_unregister_ulp(&smc_ulp_ops);
- out_lo:
- 	smc_loopback_exit();
- out_ib:
-@@ -3668,7 +3588,6 @@ static void __exit smc_exit(void)
++static const struct spi_controller_mem_caps mchp_coreqspi_mem_caps = {
++	.per_op_freq = true,
++};
++
+ static int mchp_coreqspi_probe(struct platform_device *pdev)
  {
- 	static_branch_disable(&tcp_have_smc);
- 	smc_inet_exit();
--	tcp_unregister_ulp(&smc_ulp_ops);
- 	sock_unregister(PF_SMC);
- 	smc_core_exit();
- 	smc_loopback_exit();
-@@ -3694,7 +3613,6 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
- MODULE_DESCRIPTION("smc socket address family");
- MODULE_LICENSE("GPL");
- MODULE_ALIAS_NETPROTO(PF_SMC);
--MODULE_ALIAS_TCP_ULP("smc");
- /* 256 for IPPROTO_SMC and 1 for SOCK_STREAM */
- MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 256, 1);
- #if IS_ENABLED(CONFIG_IPV6)
+ 	struct spi_controller *ctlr;
+@@ -540,6 +557,7 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctlr->mem_ops = &mchp_coreqspi_mem_ops;
++	ctlr->mem_caps = &mchp_coreqspi_mem_caps;
+ 	ctlr->setup = mchp_coreqspi_setup_op;
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_RX_DUAL | SPI_RX_QUAD |
+ 			  SPI_TX_DUAL | SPI_TX_QUAD;
 -- 
 2.53.0
 
