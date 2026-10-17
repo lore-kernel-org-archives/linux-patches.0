@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C90377A92;
-	Sat, 17 Oct 2026 16:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2838C2C3;
+	Sat, 17 Oct 2026 16:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253703; cv=none; b=ocEudXezX3xdjImny65XJFMQf2olCbTEDwFYcEWqSmILXBucBWTeX5dR80X00Bgwv2Ok86vXwc5iZmA57hbu/2yQctUElVvcu37FMvk6gCBM2Y2+Z28kxmRZJ338DY/lb2Xbnps+2hM+/FPwvNL6tWodfMhKyUKoNYsfaxCxiCg=
+	t=1792253706; cv=none; b=hCEQDTpGGNS0bECfwjHcgL8Bu0EoI7s2cmuDzL1yS8FLaItFoSft5pG3GFljQSgP6kLQ8J3/+hpfFoceNEw6Aa8f0J3X+5gDffMXP2Bm2q/ReBWd/IEbyEwkWB54BzGZ0pByCp1OS2SKrHcDkETK+qddA3EaYumrUNgriZTWftY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253703; c=relaxed/simple;
-	bh=WEQDFWRTJU/S0rcLIpAaRhplHQxyyjryFVUYfkQ9onM=;
+	s=arc-20240116; t=1792253706; c=relaxed/simple;
+	bh=owykMeypf2BfqQ6EsJHj/WIQl2Yh4rFEtWYMqyFzDDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7HBrePb1SfMGx8i8Bp9h98kLmKEWbsDewEa/W3Ji4/itJKHUu0u1GE+cAxsDr6MVMbyZK4t4B0MMHo2g9wcVL9KiF7236RJUzA6bgJyN6ChtkVCWes7LyVXOsFMI4ueYhkElp+tZ5VtyK3A5F3C11uo+zSbW8WGRZ27O1BfEb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efJk5+ME; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tiK3homfHzn6bZUqAZM2bK8uQagkIwTtl/B4RTUBrz0WsOE+os4bZ4y3w7K6TkuC7iw2ajzGk9eZwiY84Wj3YTfD3kLKNi/cSV0MG8SVYZW2F/dkYgo1LazoYBxf1Uw1uDO8ssyeA/8f4D2+/cOgL5hp4pHiX8LvuRDGxDDCGeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdbVF/MC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efJk5+ME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990201F000C4;
-	Sat, 17 Oct 2026 16:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdbVF/MC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55241F000C4;
+	Sat, 17 Oct 2026 16:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253702;
-	bh=kV54+Znz1sYlhvm+OA8o6pyq/48zveZwWKGaEze9HQ4=;
+	s=korg; t=1792253705;
+	bh=CWDVKEKPyhpYchf2ywi0oSGf6DDDG9+107C8nZ4JqYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efJk5+ME0MSusXEqHgWGXR4z8bCaT3JG6LoMzB1HZoRNlLPpBQSswf1Ic5+wfC+y4
-	 r5OIw47zoyVWpkdp2retCxM/3+oJKn+Fw+FbcunHZFo7tL3pzfEGPF7D0ED0JkuvXa
-	 KunjI7fM27AAvdNRWShfb7hbPcPUeeFQ0kLwN2ek=
+	b=HdbVF/MCJu2GdDMGXPQFhC+mS8nNRNHiuzelAHIiHtMLD5OHiXKl4CtvxC1u88/Lg
+	 ZlerC0JRI01YaIHPOW9m+6x0DMHFOA/GPXaiSJVrKgdTgQT8l7j9oZpqPR63180z8M
+	 +RTxEtMEgf2NwX0loeF7hqCWz2IgbENQzpVYZyek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Akash Goel <akash.goel@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/869] accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()
-Date: Sat, 17 Oct 2026 17:50:03 +0200
-Message-ID: <20261017160041.203032176@linuxfoundation.org>
+Subject: [PATCH 6.12 163/869] drm/panthor: Prevent potential UAF in group creation
+Date: Sat, 17 Oct 2026 17:50:04 +0200
+Message-ID: <20261017160041.227371560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,89 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Akash Goel <akash.goel@arm.com>
 
-[ Upstream commit 8b694b405a84696f1d964f6da7cf9721e68c4714 ]
+[ Upstream commit eec7e23d848d2194dd8791fcd0f4a54d4378eecd ]
 
-Don't add BO to the vdev->bo_list in ivpu_gem_create_object().
-When failure happens inside drm_gem_shmem_create(), the BO is not
-fully created and ivpu_gem_bo_free() callback will not be called
-causing a deleted BO to be left on the list.
+This commit prevents the possibility of a use after free issue in the
+GROUP_CREATE ioctl function, which arose as pointer to the group is
+accessed in that ioctl function after storing it in the Xarray.
+A malicious userspace can second guess the handle of a group and try
+to call GROUP_DESTROY ioctl from another thread around the same time
+as GROUP_CREATE ioctl.
 
-Fixes: 8d88e4cdce4f ("accel/ivpu: Use GEM shmem helper for all buffers")
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://lore.kernel.org/r/20250925145114.1446283-1-maciej.falkowski@linux.intel.com
+To prevent the use after free exploit, this commit uses a mark on an
+entry of group pool Xarray which is added just before returning from
+the GROUP_CREATE ioctl function. The mark is checked for all ioctls
+that specify the group handle and so userspace won't be abe to delete
+a group that isn't marked yet.
+
+v2: Add R-bs and fixes tags
+
+Fixes: de85488138247 ("drm/panthor: Add the scheduler logical block")
+Co-developed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Akash Goel <akash.goel@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
+Link: https://patch.msgid.link/20251127164912.3788155-1-akash.goel@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index b236a2e32bc0a..1f66355ffe9fb 100644
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -193,7 +193,6 @@ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_m
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index 822b003893a89..c1fc52f1ee426 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -742,6 +742,12 @@ struct panthor_job_profiling_data {
+  */
+ #define MAX_GROUPS_PER_POOL 128
  
- struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size)
- {
--	struct ivpu_device *vdev = to_ivpu_device(dev);
- 	struct ivpu_bo *bo;
++/*
++ * Mark added on an entry of group pool Xarray to identify if the group has
++ * been fully initialized and can be accessed elsewhere in the driver code.
++ */
++#define GROUP_REGISTERED XA_MARK_1
++
+ /**
+  * struct panthor_group_pool - Group pool
+  *
+@@ -3509,6 +3515,8 @@ int panthor_group_create(struct panthor_file *pfile,
+ 	}
+ 	mutex_unlock(&sched->reset.lock);
  
- 	if (size == 0 || !PAGE_ALIGNED(size))
-@@ -208,20 +207,17 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
++	xa_set_mark(&gpool->xa, gid, GROUP_REGISTERED);
++
+ 	return gid;
  
- 	INIT_LIST_HEAD(&bo->bo_list_node);
+ err_put_group:
+@@ -3523,6 +3531,9 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
+ 	struct panthor_scheduler *sched = ptdev->scheduler;
+ 	struct panthor_group *group;
  
--	mutex_lock(&vdev->bo_list_lock);
--	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
--	mutex_unlock(&vdev->bo_list_lock);
--
--	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9zu\n", bo, size);
- 	return &bo->base.base;
++	if (!xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
++		return -EINVAL;
++
+ 	group = xa_erase(&gpool->xa, group_handle);
+ 	if (!group)
+ 		return -EINVAL;
+@@ -3548,12 +3559,12 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
  }
  
- struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 					     struct dma_buf *dma_buf)
+ static struct panthor_group *group_from_handle(struct panthor_group_pool *pool,
+-					       u32 group_handle)
++					       unsigned long group_handle)
  {
-+	struct ivpu_device *vdev = to_ivpu_device(dev);
- 	struct device *attach_dev = dev->dev;
- 	struct dma_buf_attachment *attach;
- 	struct drm_gem_object *obj;
-+	struct ivpu_bo *bo;
- 	int ret;
+ 	struct panthor_group *group;
  
- 	attach = dma_buf_attach(dma_buf, attach_dev);
-@@ -239,6 +235,14 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 	obj->import_attach = attach;
- 	obj->resv = dma_buf->resv;
+ 	xa_lock(&pool->xa);
+-	group = group_get(xa_load(&pool->xa, group_handle));
++	group = group_get(xa_find(&pool->xa, &group_handle, group_handle, GROUP_REGISTERED));
+ 	xa_unlock(&pool->xa);
  
-+	bo = to_ivpu_bo(obj);
-+
-+	mutex_lock(&vdev->bo_list_lock);
-+	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
-+	ivpu_dbg(vdev, BO, "import: bo %8p size %9zu\n", bo, ivpu_bo_size(bo));
-+
- 	return obj;
- 
- fail_detach:
-@@ -269,6 +273,12 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
- 	bo->base.map_wc = flags & DRM_IVPU_BO_WC;
- 	bo->flags = flags;
- 
-+	mutex_lock(&vdev->bo_list_lock);
-+	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
-+	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
-+
- 	return bo;
- }
- 
+ 	return group;
 -- 
 2.53.0
 
