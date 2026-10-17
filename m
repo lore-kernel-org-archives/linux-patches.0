@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D4D392829;
-	Sat, 17 Oct 2026 17:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085883921FB;
+	Sat, 17 Oct 2026 17:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257655; cv=none; b=FFGGgAO8JheAHBIcWpygPxDPnUw8YYIZ0hF3XlYL52FG74gsAcib7qQMJQ9HyNcgbzr69YFUpUU6/b7U3HOPi9BGOdEEDgYoTAv85esoTKLXbdyHlJK2InP18MEzeAMkwiTkRjvfBgqzOPSLBSqd0YGZTurPa7IVozoH/xwJ61I=
+	t=1792257658; cv=none; b=Uw3YNsL8hw+ieRneN2DgRijo03Rl9uDctH0etdsKS6J7U2CEezKPifoGlZQvb7Kzi72geVCqoZn28r3cgn2CwFwLg+SNMZjVlM4tdkpddFs/k61aF44ujoNNfOjC0JJIS+0GVNYRhivyQd4mKFSSALwZ8/M704hUIFWJT90sloU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257655; c=relaxed/simple;
-	bh=A30fQ2ej8h71y1tuUDisMBbf4CyeBLKori+60WD70Qo=;
+	s=arc-20240116; t=1792257658; c=relaxed/simple;
+	bh=KDAPfA183i/PteITCUhJc3EOhUU+9HroAjlyd+loxhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXfnj069BmwqpK9mrHTLdLyez6H0hq3PttBW3H5VwTKCPDoxLq0BmEhkeRtTNjHnoIOOlHuCoewC/plB0fecALfVJHMz9v8CIbbEcIpsAMQ+ajGKdVkCmkeTXD0lZ5ztgh3rZKiAEoSrPkXRmT3lxNnP3wh68Lh1gpIhsMIu+fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMmFV8nb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N+kaa6DW0WaFWx9nMh6GHWgqDyxl6oVpB0FNjKNHQ/Vg2q2dvWGlEOQvPz7QP4U4aLixSzRP2AWhXQZ19Kb/LTTS47or9eezKgwIEQy4xu3PuN5Y1inpUmsUKvFR+/qR2nH9YMur0GBku1dHH7OdMAT2X5Y70t2+VJEcWbdcsM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0o+FDdn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMmFV8nb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B551F000C4;
-	Sat, 17 Oct 2026 17:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0o+FDdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABA81F000C4;
+	Sat, 17 Oct 2026 17:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257653;
-	bh=F/eVBOarF8SbLF8uQo09LMH3KZHTDXs1sxz8NrAjQFA=;
+	s=korg; t=1792257656;
+	bh=wtIBzIBOKZSA0yu5xFI3q8lGtWMQzTqS5aNzU1hQYDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMmFV8nbk1QpG+6PdnNy+rURQ/tTa0Ic2iHxmfd3F7OhCJVCidaXVK+okVln7hGoF
-	 CYAjUnqj9w0z7d5GSTYZLvOjZ6WvLbgeAgsZzaMYh6G4wHrAamEGTqYVqiyy4gHz0l
-	 dDG19cteLUoZnI+DIBM2aqL3HJ9XUZ83WMf3xM/c=
+	b=N0o+FDdnY4UFiLTKP3DfnakQNn8ZrKnreDDaTDe3t+SKHMlzfx8KMJcvvjK4HOstS
+	 RGR4oufieZDerH/ydI+X8WN9muzMK1m32zmMwcGgFGB1Np7n17iKT4qFY4N4Uxsovs
+	 Z2Awy2F14P8pUPZpRl3UtXw3zen8V2KqdbDIQkhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Shailend Chand <shailend@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Saurabh Singh Sengar <ssengar@microsoft.com>,
+	Zach OKeefe <zokeefe@google.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0629/1674] gve: Account for stopped queues when reading NIC stats
-Date: Sat, 17 Oct 2026 17:48:21 +0200
-Message-ID: <20261017160447.239642777@linuxfoundation.org>
+Subject: [PATCH 6.6 0630/1674] mm/thp: fix "mm: thp: kill __transhuge_page_enabled()"
+Date: Sat, 17 Oct 2026 17:48:22 +0200
+Message-ID: <20261017160447.263765014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,130 +56,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shailend Chand <shailend@google.com>
+From: Zach O'Keefe <zokeefe@google.com>
 
-[ Upstream commit af9bcf910b1f86244f39e15e701b2dc564b469a6 ]
+[ Upstream commit 7a81751fcdeb833acc858e59082688e3020bfe12 ]
 
-We now account for the fact that the NIC might send us stats for a
-subset of queues. Without this change, gve_get_ethtool_stats might make
-an invalid access on the priv->stats_report->stats array.
+The 6.0 commits:
 
-Tested-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Signed-off-by: Shailend Chand <shailend@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+commit 9fec51689ff6 ("mm: thp: kill transparent_hugepage_active()")
+commit 7da4e2cb8b1f ("mm: thp: kill __transhuge_page_enabled()")
+
+merged "can we have THPs in this VMA?" logic that was previously done
+separately by fault-path, khugepaged, and smaps "THPeligible" checks.
+
+During the process, the semantics of the fault path check changed in two
+ways:
+
+1) A VM_NO_KHUGEPAGED check was introduced (also added to smaps path).
+2) We no longer checked if non-anonymous memory had a vm_ops->huge_fault
+   handler that could satisfy the fault.  Previously, this check had been
+   done in create_huge_pud() and create_huge_pmd() routines, but after
+   the changes, we never reach those routines.
+
+During the review of the above commits, it was determined that in-tree
+users weren't affected by the change; most notably, since the only
+relevant user (in terms of THP) of VM_MIXEDMAP or ->huge_fault is DAX,
+which is explicitly approved early in approval logic.  However, this was a
+bad assumption to make as it assumes the only reason to support
+->huge_fault was for DAX (which is not true in general).
+
+Remove the VM_NO_KHUGEPAGED check when not in collapse path and give any
+->huge_fault handler a chance to handle the fault.  Note that we don't
+validate the file mode or mapping alignment, which is consistent with the
+behavior before the aforementioned commits.
+
+Link: https://lkml.kernel.org/r/20230925200110.1979606-1-zokeefe@google.com
+Fixes: 7da4e2cb8b1f ("mm: thp: kill __transhuge_page_enabled()")
+Reported-by: Saurabh Singh Sengar <ssengar@microsoft.com>
+Signed-off-by: Zach O'Keefe <zokeefe@google.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: d659b715e94a ("mm/huge_memory: avoid PMD-size page cache if needed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c | 38 ++++++++++++++++---
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ mm/huge_memory.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index b1c4df3bab292..bc20c13ba2870 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -166,6 +166,8 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 	struct stats *report_stats;
- 	int *rx_qid_to_stats_idx;
- 	int *tx_qid_to_stats_idx;
-+	int num_stopped_rxqs = 0;
-+	int num_stopped_txqs = 0;
- 	struct gve_priv *priv;
- 	bool skip_nic_stats;
- 	unsigned int start;
-@@ -182,12 +184,23 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 					    sizeof(int), GFP_KERNEL);
- 	if (!rx_qid_to_stats_idx)
- 		return;
-+	for (ring = 0; ring < priv->rx_cfg.num_queues; ring++) {
-+		rx_qid_to_stats_idx[ring] = -1;
-+		if (!priv->ntfy_blocks[gve_rx_idx_to_ntfy(priv, ring)].rx)
-+			num_stopped_rxqs++;
-+	}
- 	tx_qid_to_stats_idx = kmalloc_array(num_tx_queues,
- 					    sizeof(int), GFP_KERNEL);
- 	if (!tx_qid_to_stats_idx) {
- 		kfree(rx_qid_to_stats_idx);
- 		return;
- 	}
-+	for (ring = 0; ring < num_tx_queues; ring++) {
-+		tx_qid_to_stats_idx[ring] = -1;
-+		if (!priv->ntfy_blocks[gve_tx_idx_to_ntfy(priv, ring)].tx)
-+			num_stopped_txqs++;
-+	}
-+
- 	for (rx_pkts = 0, rx_bytes = 0, rx_skb_alloc_fail = 0,
- 	     rx_buf_alloc_fail = 0, rx_desc_err_dropped_pkt = 0,
- 	     xdp_tx_errors = 0, xdp_redirect_errors = 0,
-@@ -272,11 +285,16 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 		 */
- 		rx_base_stats_idx = (stats_region_len - nic_stats_len) /
- 							sizeof(struct stats);
-+		/* The boundary between driver stats and NIC stats shifts if there are
-+		 * stopped queues.
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 8df057bbe1bca..820e67ff8beb3 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -88,11 +88,11 @@ bool hugepage_vma_check(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		return in_pf;
+ 
+ 	/*
+-	 * Special VMA and hugetlb VMA.
++	 * khugepaged special VMA and hugetlb VMA.
+ 	 * Must be checked after dax since some dax mappings may have
+ 	 * VM_MIXEDMAP set.
+ 	 */
+-	if (vm_flags & VM_NO_KHUGEPAGED)
++	if (!in_pf && !smaps && (vm_flags & VM_NO_KHUGEPAGED))
+ 		return false;
+ 
+ 	/*
+@@ -120,12 +120,18 @@ bool hugepage_vma_check(struct vm_area_struct *vma, unsigned long vm_flags,
+ 					   !hugepage_flags_always())))
+ 		return false;
+ 
+-	/* Only regular file is valid */
+-	if (!in_pf && file_thp_enabled(vma))
+-		return true;
+-
+-	if (!vma_is_anonymous(vma))
++	if (!vma_is_anonymous(vma)) {
++		/*
++		 * Trust that ->huge_fault() handlers know what they are doing
++		 * in fault path.
 +		 */
-+		rx_base_stats_idx += NIC_RX_STATS_REPORT_NUM * num_stopped_rxqs +
-+			NIC_TX_STATS_REPORT_NUM * num_stopped_txqs;
- 		max_rx_stats_idx = NIC_RX_STATS_REPORT_NUM *
--			priv->rx_cfg.num_queues +
-+			(priv->rx_cfg.num_queues - num_stopped_rxqs) +
- 			rx_base_stats_idx;
- 		max_tx_stats_idx = NIC_TX_STATS_REPORT_NUM *
--			num_tx_queues +
-+			(num_tx_queues - num_stopped_txqs) +
- 			max_rx_stats_idx;
- 	}
- 	/* Preprocess the stats report for rx, map queue id to start index */
-@@ -291,6 +309,10 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			skip_nic_stats = true;
- 			break;
- 		}
-+		if (queue_id < 0 || queue_id >= priv->rx_cfg.num_queues) {
-+			net_err_ratelimited("Invalid rxq id in NIC stats\n");
-+			continue;
-+		}
- 		rx_qid_to_stats_idx[queue_id] = stats_idx;
- 	}
- 	/* walk RX rings */
-@@ -327,11 +349,11 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			data[i++] = rx->rx_copybreak_pkt;
- 			data[i++] = rx->rx_copied_pkt;
- 			/* stats from NIC */
--			if (skip_nic_stats) {
-+			stats_idx = rx_qid_to_stats_idx[ring];
-+			if (skip_nic_stats || stats_idx < 0) {
- 				/* skip NIC rx stats */
- 				i += NIC_RX_STATS_REPORT_NUM;
- 			} else {
--				stats_idx = rx_qid_to_stats_idx[ring];
- 				for (j = 0; j < NIC_RX_STATS_REPORT_NUM; j++) {
- 					u64 value =
- 						be64_to_cpu(report_stats[stats_idx + j].value);
-@@ -367,6 +389,10 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			skip_nic_stats = true;
- 			break;
- 		}
-+		if (queue_id < 0 || queue_id >= num_tx_queues) {
-+			net_err_ratelimited("Invalid txq id in NIC stats\n");
-+			continue;
-+		}
- 		tx_qid_to_stats_idx[queue_id] = stats_idx;
- 	}
- 	/* walk TX rings */
-@@ -400,11 +426,11 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			data[i++] = gve_tx_load_event_counter(priv, tx);
- 			data[i++] = tx->dma_mapping_error;
- 			/* stats from NIC */
--			if (skip_nic_stats) {
-+			stats_idx = tx_qid_to_stats_idx[ring];
-+			if (skip_nic_stats || stats_idx < 0) {
- 				/* skip NIC tx stats */
- 				i += NIC_TX_STATS_REPORT_NUM;
- 			} else {
--				stats_idx = tx_qid_to_stats_idx[ring];
- 				for (j = 0; j < NIC_TX_STATS_REPORT_NUM; j++) {
- 					u64 value =
- 						be64_to_cpu(report_stats[stats_idx + j].value);
++		if (((in_pf || smaps)) && vma->vm_ops->huge_fault)
++			return true;
++		/* Only regular file is valid in collapse path */
++		if (((!in_pf || smaps)) && file_thp_enabled(vma))
++			return true;
+ 		return false;
++	}
+ 
+ 	if (vma_is_temporary_stack(vma))
+ 		return false;
 -- 
 2.53.0
 
