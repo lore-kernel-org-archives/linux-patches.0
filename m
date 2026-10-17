@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386B71F16B;
-	Sat, 17 Oct 2026 17:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267B35E93B;
+	Sat, 17 Oct 2026 17:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258528; cv=none; b=eeXGrLJYeBhJ1LPXklW00ZN1jYj4Nzk3eXTN29g2FhzJY1H7Rhdb1BOe6Pe/HRUOTEHiUK4aQ5n19xRWycVYFs7c32kfzADCePz/jJLb3Y2PwhpBSY0GXfDzZEmgb9AzCyQUtuiHoMFzzrySYxYe3a3UApRfnpEl7WmOhVpMrJI=
+	t=1792258531; cv=none; b=LAoK9aRP4/L/SbA4YelVrwnX+w6il/QQGbasJ1in9pIDIzMMttmnPdi6KjqPwTFEeMBbMpdrquOO7QzvWmJFatb0OORw6hQFR1lJ8P3SJMng95K2dnrouDUBysHWefjLRbPnmUmNLhMd2s31U0U8kuzyL4VCfGk0FpmxFLat20Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258528; c=relaxed/simple;
-	bh=ubOR/hGyL3hh/LYN+EzNXUXzmjYbwu9XIGKYU269tNc=;
+	s=arc-20240116; t=1792258531; c=relaxed/simple;
+	bh=MXM/Aj54Wu5bf9BEkMQO9u+5i8Zhw05GxtgEMEK3QXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOKI/GodCKD9JxX+vgt8jiU8rF2dAPEDh81n1clQeE0KuhFqaLCTgeI8sbiQQ0AhSC8yNBnmH5NlGSPH1qwkHAeEgQ5hR27ntrtbBgIVppau76vmhHRr9mENo1NEshkE9NmXwm2W23fe0V4fzm+of0Cj0dlx3E6ePxK3wLweo+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPLX6ntF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKeLLkIUS1KMFoRWBofwI6BrTxhLC9pmZD0jODikGz+YJdlH/6pIwvX37+CVf0cnE8646CCamaXpJzndZxnWb4omTw0xxKndOiBCnsjIMzoVdV/0IYkT4Xp3WFM0qGnjKQJYryDJAEpchDekg5q7XwYBplehqczrAjFQel8GpX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6xOUxbf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPLX6ntF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851751F000C4;
-	Sat, 17 Oct 2026 17:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6xOUxbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE5D1F000C4;
+	Sat, 17 Oct 2026 17:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258527;
-	bh=a7ZFmN5c8Jf0apT2Ms80d6qxER+INg8ubKDZswyfE1c=;
+	s=korg; t=1792258530;
+	bh=X+LMjIteq7vS6UJv1QqJMfMgzRAjnN5cYA/UGKHQ74A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPLX6ntFPITnRj/Tnmkoz8/qLoMu3kH60EwK+FRVwIlj1EMegTAb1kP7dXTDWMxzo
-	 v/VpOs5VL/1rPirZS12AT2p/Yn2IJOMLAQQd7T4yVyAlYF9TO2EeaQmPs33FK8QgHj
-	 ZEhrFb7KiNl1IsAtqRVQutSPXpw2l915Ydm/K2Xg=
+	b=W6xOUxbfFKdbAQdZBSVHMNIc9/gmKM1lAgNv24cLgg6kaz0moCtVErxwNotcUo8ms
+	 K2yUSVSkMmzi6nz/lYJU5qSmXz/es1lBZ+BpBJzTHjhZlaR2P8dCGN9y4Tn2+/jdtp
+	 D2hnDIYsWZwI+9fEN0GxYgQ5KATnGdi5eeWGay/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0913/1674] srcu: Use irq_work to start GP in tiny SRCU
-Date: Sat, 17 Oct 2026 17:53:05 +0200
-Message-ID: <20261017160454.569959252@linuxfoundation.org>
+Subject: [PATCH 6.6 0914/1674] btrfs: convert to new timestamp accessors
+Date: Sat, 17 Oct 2026 17:53:06 +0200
+Message-ID: <20261017160454.594642725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,132 +51,300 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
+[ Upstream commit b1c38a1338c90597c7af66985a9e31152ae8cfd3 ]
 
-Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
-which acquires the workqueue pool->lock.
+Convert to using the new inode timestamp accessor functions.
 
-This causes a lockdep splat when call_srcu() is called with a scheduler
-lock held, due to:
-
-  call_srcu() [holding pi_lock]
-    srcu_gp_start_if_needed()
-      schedule_work() -> pool->lock
-
-  workqueue_init() / create_worker() [holding pool->lock]
-    wake_up_process() -> try_to_wake_up() -> pi_lock
-
-Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
-use-after-free if a queued irq_work fires after cleanup begins.
-
-Tested with rcutorture SRCU-T and no lockdep warnings.
-
-[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
-to start process_srcu()" ]
-
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20231004185347.80880-21-jlayton@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 5254d4181add ("btrfs: fix zero size inode with non-zero size after log replay")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/srcutiny.h |  4 ++++
- kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ fs/btrfs/delayed-inode.c | 20 ++++++++---------
+ fs/btrfs/file.c          | 18 ++++++++-------
+ fs/btrfs/inode.c         | 47 ++++++++++++++++++++--------------------
+ fs/btrfs/reflink.c       |  2 +-
+ fs/btrfs/transaction.c   |  3 ++-
+ fs/btrfs/tree-log.c      | 12 +++++-----
+ 6 files changed, 52 insertions(+), 50 deletions(-)
 
-diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
-index 447133171d95f..bad5fd0f1ddb6 100644
---- a/include/linux/srcutiny.h
-+++ b/include/linux/srcutiny.h
-@@ -11,6 +11,7 @@
- #ifndef _LINUX_SRCU_TINY_H
- #define _LINUX_SRCU_TINY_H
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index c39e39142abf1..4fde25d02298f 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1835,19 +1835,19 @@ static void fill_stack_inode_item(struct btrfs_trans_handle *trans,
+ 	btrfs_set_stack_inode_block_group(inode_item, 0);
  
-+#include <linux/irq_work_types.h>
- #include <linux/swait.h>
+ 	btrfs_set_stack_timespec_sec(&inode_item->atime,
+-				     inode->i_atime.tv_sec);
++				     inode_get_atime_sec(inode));
+ 	btrfs_set_stack_timespec_nsec(&inode_item->atime,
+-				      inode->i_atime.tv_nsec);
++				      inode_get_atime_nsec(inode));
  
- struct srcu_struct {
-@@ -24,18 +25,21 @@ struct srcu_struct {
- 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
- 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
- 	struct work_struct srcu_work;	/* For driving grace periods. */
-+	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
- 	struct lockdep_map dep_map;
- #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
- };
+ 	btrfs_set_stack_timespec_sec(&inode_item->mtime,
+-				     inode->i_mtime.tv_sec);
++				     inode_get_mtime_sec(inode));
+ 	btrfs_set_stack_timespec_nsec(&inode_item->mtime,
+-				      inode->i_mtime.tv_nsec);
++				      inode_get_mtime_nsec(inode));
  
- void srcu_drive_gp(struct work_struct *wp);
-+void srcu_tiny_irq_work(struct irq_work *irq_work);
+ 	btrfs_set_stack_timespec_sec(&inode_item->ctime,
+-				     inode_get_ctime(inode).tv_sec);
++				     inode_get_ctime_sec(inode));
+ 	btrfs_set_stack_timespec_nsec(&inode_item->ctime,
+-				      inode_get_ctime(inode).tv_nsec);
++				      inode_get_ctime_nsec(inode));
  
- #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
- {									\
- 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
- 	.srcu_cb_tail = &name.srcu_cb_head,				\
- 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
-+	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
- 	__SRCU_DEP_MAP_INIT(name)					\
- }
+ 	btrfs_set_stack_timespec_sec(&inode_item->otime, BTRFS_I(inode)->i_otime_sec);
+ 	btrfs_set_stack_timespec_nsec(&inode_item->otime, BTRFS_I(inode)->i_otime_nsec);
+@@ -1890,11 +1890,11 @@ int btrfs_fill_inode(struct inode *inode, u32 *rdev)
+ 	btrfs_inode_split_flags(btrfs_stack_inode_flags(inode_item),
+ 				&BTRFS_I(inode)->flags, &BTRFS_I(inode)->ro_flags);
  
-diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
-index c38e5933a5d69..24aa302b3269a 100644
---- a/kernel/rcu/srcutiny.c
-+++ b/kernel/rcu/srcutiny.c
-@@ -9,6 +9,7 @@
-  */
+-	inode->i_atime.tv_sec = btrfs_stack_timespec_sec(&inode_item->atime);
+-	inode->i_atime.tv_nsec = btrfs_stack_timespec_nsec(&inode_item->atime);
++	inode_set_atime(inode, btrfs_stack_timespec_sec(&inode_item->atime),
++			btrfs_stack_timespec_nsec(&inode_item->atime));
  
- #include <linux/export.h>
-+#include <linux/irq_work.h>
- #include <linux/mutex.h>
- #include <linux/preempt.h>
- #include <linux/rcupdate_wait.h>
-@@ -37,6 +38,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
- 	ssp->srcu_idx_max = 0;
- 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
- 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
-+	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
- 	return 0;
- }
+-	inode->i_mtime.tv_sec = btrfs_stack_timespec_sec(&inode_item->mtime);
+-	inode->i_mtime.tv_nsec = btrfs_stack_timespec_nsec(&inode_item->mtime);
++	inode_set_mtime(inode, btrfs_stack_timespec_sec(&inode_item->mtime),
++			btrfs_stack_timespec_nsec(&inode_item->mtime));
  
-@@ -80,6 +82,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
- void cleanup_srcu_struct(struct srcu_struct *ssp)
+ 	inode_set_ctime(inode, btrfs_stack_timespec_sec(&inode_item->ctime),
+ 			btrfs_stack_timespec_nsec(&inode_item->ctime));
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 7db2344a748cf..4211194c18cf1 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1100,17 +1100,18 @@ void btrfs_check_nocow_unlock(struct btrfs_inode *inode)
+ 
+ static void update_time_for_write(struct inode *inode)
  {
- 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
-+	irq_work_sync(&ssp->srcu_irq_work);
- 	flush_work(&ssp->srcu_work);
- 	WARN_ON(ssp->srcu_gp_running);
- 	WARN_ON(ssp->srcu_gp_waiting);
-@@ -156,6 +159,20 @@ void srcu_drive_gp(struct work_struct *wp)
- }
- EXPORT_SYMBOL_GPL(srcu_drive_gp);
+-	struct timespec64 now, ctime;
++	struct timespec64 now, ts;
  
-+/*
-+ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
-+ * pool->lock while the caller might hold scheduler locks, causing lockdep
-+ * splats due to workqueue_init() doing a wakeup.
-+ */
-+void srcu_tiny_irq_work(struct irq_work *irq_work)
-+{
-+	struct srcu_struct *ssp;
-+
-+	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
-+	schedule_work(&ssp->srcu_work);
-+}
-+EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
-+
- static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- {
- 	unsigned long cookie;
-@@ -166,7 +183,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
- 	if (!READ_ONCE(ssp->srcu_gp_running)) {
- 		if (likely(srcu_init_done))
--			schedule_work(&ssp->srcu_work);
-+			irq_work_queue(&ssp->srcu_irq_work);
- 		else if (list_empty(&ssp->srcu_work.entry))
- 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	if (IS_NOCMTIME(inode))
+ 		return;
+ 
+ 	now = current_time(inode);
+-	if (!timespec64_equal(&inode->i_mtime, &now))
+-		inode->i_mtime = now;
++	ts = inode_get_mtime(inode);
++	if (!timespec64_equal(&ts, &now))
++		inode_set_mtime_to_ts(inode, now);
+ 
+-	ctime = inode_get_ctime(inode);
+-	if (!timespec64_equal(&ctime, &now))
++	ts = inode_get_ctime(inode);
++	if (!timespec64_equal(&ts, &now))
+ 		inode_set_ctime_to_ts(inode, now);
+ 
+ 	if (IS_I_VERSION(inode))
+@@ -2511,7 +2512,8 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
+ 		inode_inc_iversion(&inode->vfs_inode);
+ 
+ 		if (!extent_info || extent_info->update_times)
+-			inode->vfs_inode.i_mtime = inode_set_ctime_current(&inode->vfs_inode);
++			inode_set_mtime_to_ts(&inode->vfs_inode,
++					      inode_set_ctime_current(&inode->vfs_inode));
+ 
+ 		ret = btrfs_update_inode(trans, inode);
+ 		if (unlikely(ret)) {
+@@ -2754,7 +2756,7 @@ static int btrfs_punch_hole(struct file *file, loff_t offset, loff_t len)
+ 
+ 	ASSERT(trans != NULL);
+ 	inode_inc_iversion(inode);
+-	inode->i_mtime = inode_set_ctime_current(inode);
++	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	ret = btrfs_update_inode(trans, BTRFS_I(inode));
+ 	updated_inode = true;
+ 	btrfs_end_transaction(trans);
+@@ -2774,7 +2776,7 @@ static int btrfs_punch_hole(struct file *file, loff_t offset, loff_t len)
+ 		struct timespec64 now = inode_set_ctime_current(inode);
+ 
+ 		inode_inc_iversion(inode);
+-		inode->i_mtime = now;
++		inode_set_mtime_to_ts(inode, now);
+ 		trans = btrfs_start_transaction(root, 1);
+ 		if (IS_ERR(trans)) {
+ 			ret = PTR_ERR(trans);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 8945e35a1f3a2..ea41ded4c6843 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3938,11 +3938,11 @@ static int btrfs_read_locked_inode(struct inode *inode,
+ 	btrfs_inode_set_file_extent_range(BTRFS_I(inode), 0,
+ 			round_up(i_size_read(inode), fs_info->sectorsize));
+ 
+-	inode->i_atime.tv_sec = btrfs_timespec_sec(leaf, &inode_item->atime);
+-	inode->i_atime.tv_nsec = btrfs_timespec_nsec(leaf, &inode_item->atime);
++	inode_set_atime(inode, btrfs_timespec_sec(leaf, &inode_item->atime),
++			btrfs_timespec_nsec(leaf, &inode_item->atime));
+ 
+-	inode->i_mtime.tv_sec = btrfs_timespec_sec(leaf, &inode_item->mtime);
+-	inode->i_mtime.tv_nsec = btrfs_timespec_nsec(leaf, &inode_item->mtime);
++	inode_set_mtime(inode, btrfs_timespec_sec(leaf, &inode_item->mtime),
++			btrfs_timespec_nsec(leaf, &inode_item->mtime));
+ 
+ 	inode_set_ctime(inode, btrfs_timespec_sec(leaf, &inode_item->ctime),
+ 			btrfs_timespec_nsec(leaf, &inode_item->ctime));
+@@ -4104,19 +4104,19 @@ static void fill_inode_item(struct btrfs_trans_handle *trans,
+ 	btrfs_set_token_inode_nlink(&token, item, inode->i_nlink);
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->atime,
+-				     inode->i_atime.tv_sec);
++				     inode_get_atime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->atime,
+-				      inode->i_atime.tv_nsec);
++				      inode_get_atime_nsec(inode));
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->mtime,
+-				     inode->i_mtime.tv_sec);
++				     inode_get_mtime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->mtime,
+-				      inode->i_mtime.tv_nsec);
++				      inode_get_mtime_nsec(inode));
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->ctime,
+-				     inode_get_ctime(inode).tv_sec);
++				     inode_get_ctime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
+-				      inode_get_ctime(inode).tv_nsec);
++				      inode_get_ctime_nsec(inode));
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->otime, BTRFS_I(inode)->i_otime_sec);
+ 	btrfs_set_token_timespec_nsec(&token, &item->otime, BTRFS_I(inode)->i_otime_nsec);
+@@ -4313,8 +4313,7 @@ static int __btrfs_unlink_inode(struct btrfs_trans_handle *trans,
+ 	inode_inc_iversion(&inode->vfs_inode);
+ 	inode_set_ctime_current(&inode->vfs_inode);
+ 	inode_inc_iversion(&dir->vfs_inode);
+-	inode_set_ctime_current(&inode->vfs_inode);
+-	dir->vfs_inode.i_mtime = inode_set_ctime_current(&dir->vfs_inode);
++	inode_set_mtime_to_ts(&dir->vfs_inode, inode_set_ctime_current(&dir->vfs_inode));
+ 	ret = btrfs_update_inode(trans, dir);
+ out:
+ 	return ret;
+@@ -4484,7 +4483,7 @@ static int btrfs_unlink_subvol(struct btrfs_trans_handle *trans,
+ 
+ 	btrfs_i_size_write(dir, dir->vfs_inode.i_size - fname.disk_name.len * 2);
+ 	inode_inc_iversion(&dir->vfs_inode);
+-	dir->vfs_inode.i_mtime = inode_set_ctime_current(&dir->vfs_inode);
++	inode_set_mtime_to_ts(&dir->vfs_inode, inode_set_ctime_current(&dir->vfs_inode));
+ 	ret = btrfs_update_inode_fallback(trans, dir);
+ 	if (ret)
+ 		btrfs_abort_transaction(trans, ret);
+@@ -5153,7 +5152,8 @@ static int btrfs_setsize(struct inode *inode, struct iattr *attr)
+ 	if (newsize != oldsize) {
+ 		inode_inc_iversion(inode);
+ 		if (!(mask & (ATTR_CTIME | ATTR_MTIME))) {
+-			inode->i_mtime = inode_set_ctime_current(inode);
++			inode_set_mtime_to_ts(inode,
++					      inode_set_ctime_current(inode));
+ 		}
  	}
+ 
+@@ -5797,10 +5797,10 @@ static struct inode *new_simple_dir(struct inode *dir,
+ 	inode->i_opflags &= ~IOP_XATTR;
+ 	inode->i_fop = &simple_dir_operations;
+ 	inode->i_mode = S_IFDIR | S_IRUGO | S_IWUSR | S_IXUGO;
+-	inode->i_mtime = inode_set_ctime_current(inode);
+-	inode->i_atime = dir->i_atime;
+-	BTRFS_I(inode)->i_otime_sec = inode->i_mtime.tv_sec;
+-	BTRFS_I(inode)->i_otime_nsec = inode->i_mtime.tv_nsec;
++	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
++	inode_set_atime_to_ts(inode, inode_get_atime(dir));
++	BTRFS_I(inode)->i_otime_sec = inode_get_mtime_sec(inode);
++	BTRFS_I(inode)->i_otime_nsec = inode_get_mtime_nsec(inode);
+ 	inode->i_uid = dir->i_uid;
+ 	inode->i_gid = dir->i_gid;
+ 
+@@ -6494,10 +6494,9 @@ int btrfs_create_new_inode(struct btrfs_trans_handle *trans,
+ 		goto discard;
+ 	}
+ 
+-	inode->i_mtime = inode_set_ctime_current(inode);
+-	inode->i_atime = inode->i_mtime;
+-	BTRFS_I(inode)->i_otime_sec = inode->i_mtime.tv_sec;
+-	BTRFS_I(inode)->i_otime_nsec = inode->i_mtime.tv_nsec;
++	simple_inode_init_ts(inode);
++	BTRFS_I(inode)->i_otime_sec = inode_get_mtime_sec(inode);
++	BTRFS_I(inode)->i_otime_nsec = inode_get_mtime_nsec(inode);
+ 
+ 	/*
+ 	 * We're going to fill the inode item now, so at this point the inode
+@@ -6662,8 +6661,8 @@ int btrfs_add_link(struct btrfs_trans_handle *trans,
+ 	 * values (the ones it had when the fsync was done).
+ 	 */
+ 	if (!test_bit(BTRFS_FS_LOG_RECOVERING, &root->fs_info->flags))
+-		parent_inode->vfs_inode.i_mtime =
+-			inode_set_ctime_current(&parent_inode->vfs_inode);
++		inode_set_mtime_to_ts(&parent_inode->vfs_inode,
++				      inode_set_ctime_current(&parent_inode->vfs_inode));
+ 
+ 	ret = btrfs_update_inode(trans, parent_inode);
+ 	if (ret)
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index 60e78c446b38b..0a919f76ee00a 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -29,7 +29,7 @@ static int clone_finish_inode_update(struct btrfs_trans_handle *trans,
+ 
+ 	inode_inc_iversion(inode);
+ 	if (!no_time_update) {
+-		inode->i_mtime = inode_set_ctime_current(inode);
++		inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	}
+ 	/*
+ 	 * We round up to the block size at eof when determining which
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 6dce8c299d699..5e7b8d47c3c87 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1878,7 +1878,8 @@ static noinline int create_pending_snapshot(struct btrfs_trans_handle *trans,
+ 
+ 	btrfs_i_size_write(BTRFS_I(parent_inode), parent_inode->i_size +
+ 						  fname.disk_name.len * 2);
+-	parent_inode->i_mtime = inode_set_ctime_current(parent_inode);
++	inode_set_mtime_to_ts(parent_inode,
++			      inode_set_ctime_current(parent_inode));
+ 	ret = btrfs_update_inode_fallback(trans, BTRFS_I(parent_inode));
+ 	if (ret) {
+ 		btrfs_abort_transaction(trans, ret);
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 642d35816a61b..7f8544c426518 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -4277,19 +4277,19 @@ static void fill_inode_item(struct btrfs_trans_handle *trans,
+ 	btrfs_set_token_inode_nlink(&token, item, inode->i_nlink);
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->atime,
+-				     inode->i_atime.tv_sec);
++				     inode_get_atime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->atime,
+-				      inode->i_atime.tv_nsec);
++				      inode_get_atime_nsec(inode));
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->mtime,
+-				     inode->i_mtime.tv_sec);
++				     inode_get_mtime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->mtime,
+-				      inode->i_mtime.tv_nsec);
++				      inode_get_mtime_nsec(inode));
+ 
+ 	btrfs_set_token_timespec_sec(&token, &item->ctime,
+-				     inode_get_ctime(inode).tv_sec);
++				     inode_get_ctime_sec(inode));
+ 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
+-				      inode_get_ctime(inode).tv_nsec);
++				      inode_get_ctime_nsec(inode));
+ 
+ 	btrfs_set_timespec_sec(leaf, &item->otime, BTRFS_I(inode)->i_otime_sec);
+ 	btrfs_set_timespec_nsec(leaf, &item->otime, BTRFS_I(inode)->i_otime_nsec);
 -- 
 2.53.0
 
