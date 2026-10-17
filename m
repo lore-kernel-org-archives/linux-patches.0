@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942C3B813A;
-	Sat, 17 Oct 2026 18:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4D03A7F4D;
+	Sat, 17 Oct 2026 18:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260644; cv=none; b=SpxDVP4WwPPgbB+Cl91SKmwg4xvuJs0Mfxn7F+/sag1LIlG8pS57mG/iY3F/4SiTJsPYYsdn9PVp/GhdWzcZalod8RFBLVE9obP9En6VJ/Lg+sxGJorXYCLGGoi52LE28oG7WJdagYMr9V1WUL7BcT3MRMzFUwH5Xsj7iycD8ZE=
+	t=1792260647; cv=none; b=mi3vpCbZ8XfHfgO+2mybvO8S0hXpssHdq9eZDP7rnHUins8IERCVLnGmHVfGcIakdELtOinxjjM/5bHPIlQO37Dqy8zosyY+V7CoUDmTUqHR00vfPklA03a4i9gV98yogWwVGZoc4kcebX+Y8K58SOZuiI47zFdEXWh3Qetfnfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260644; c=relaxed/simple;
-	bh=Xqv3/0oAdca8Hvp8yGoplpFnmpd6dbP7elhUtlwfECU=;
+	s=arc-20240116; t=1792260647; c=relaxed/simple;
+	bh=3t+irYfsW64kJZfAGz/6SUJHiq/+gPR+S/Oc5RPVDY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGp8S4CaD4USA4IjErh9bQqABidPWzavxK3tdPMRSapGtu+iZxMGbV5Pf6KtbJJoEt1pOLiRhfV/1kYMa79N4ke+4FrDV2jiVwYFi1MPxqav0B2MVkN792iKlX8K/OVpsQ+2iO2Mzh6bKh1a2R1ruggcRp+FTOVypl0RgJ+/1pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Haq9EANP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K28bvPh9sMkDsHE6dXURVcEHGbnDSYWzkPbtU6+QyX3VUFLETrSg0J/8H1z/nn3qvXOyax8VolT4qFc/La+tNKtJ8zZyRoc/lKvQYfFPQvaooMoW9AfBRRjgb8zW7smvUF/fomepbovL63zPYKLPxAfjCeiygx9aQWHTSgDq164=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYYw71ot; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Haq9EANP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322301F000C4;
-	Sat, 17 Oct 2026 18:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYYw71ot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CF01F000C4;
+	Sat, 17 Oct 2026 18:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260643;
-	bh=jmTxNeAb/qb89MBG5o4a7HUrkmwq9rHArmcgOFVWPMo=;
+	s=korg; t=1792260646;
+	bh=SGizIoPANE1X+1qgRWCiRfw56eFHClUtVX/1k+KpLbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Haq9EANPlJs6KDi//WnyiVWoddmnDwWlliQYPKpElOI3eBA/8oyWRLym0HpWmljQS
-	 tAyrN9wiEzAVxjrL3zi+ia3pNt4h9pz7TMfX9C8Jl9p9ly3J+YD4xE9GzaF8QTGz+r
-	 m8HEZI2jQL6e3rbiT1Gce86Uwsl5yEsNLtQ1qquk=
+	b=sYYw71otWixeA0yWCCVg1NfU19S/i1nHjDT9O/snPuPuWP6W+2UGBw2QgeEdGWdxk
+	 bTQ/KumnN5oyS5k6gJQen4dkuoBzabbWuiUZW5xFW7vVlCI6f5PBMxvVj+hFUJp8ZO
+	 pJ5wuffOXzZYQENfURr1ekBaPEMM+iDFxS8IZ4gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1586/1674] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
-Date: Sat, 17 Oct 2026 18:04:18 +0200
-Message-ID: <20261017160511.799011777@linuxfoundation.org>
+Subject: [PATCH 6.6 1613/1674] vxlan: initialize _md in vxlan_xmit_one()
+Date: Sat, 17 Oct 2026 18:04:45 +0200
+Message-ID: <20261017160512.487395375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,53 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
+[ Upstream commit be83178bfc44588f6e3adb827ed874c683193466 ]
 
-qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
-vport_slock, takes a vref_count on the matching vport and calls
-qla_update_host_map() to register its port id.
+If a VXLAN device is configured with both VXLAN_F_COLLECT_METADATA and
+VXLAN_F_GBP, and a packet is transmitted through it using an external
+ip_tunnel_info that lacks the IP_TUNNEL_VXLAN_OPT_BIT flag, md is left
+pointing to the uninitialized _md stack variable:
 
-A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
-qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
-vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
-in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
-but does not touch host_map. In the window in between, report ID
-acquisition can still find the vport on vp_list and call
-qla_update_host_map(); with d_id already zeroed it takes the
-btree_insert32() path and re-inserts the dying vport into host_map.
-Nothing cleans that entry afterwards, so once scsi_host_put() frees the
-vha a later host_map lookup dereferences freed memory.
+                if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
+                        if (info->options_len < sizeof(*md))
+                                goto drop;
+                        md = ip_tunnel_info_opts(info);
+                }
 
-Skip a vport that has VPORT_DELETE set before taking the reference, so it
-is neither re-registered nor scheduled for DPC re-registration. This
-mirrors the existing guard in qla2x00_alert_all_vps().
+Because IP_TUNNEL_VXLAN_OPT_BIT is not set, md is not updated and remains
+pointing to _md. Later, vxlan_build_skb() is called with md, which
+eventually calls vxlan_build_gbp_hdr():
 
-Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+        if (vxflags & VXLAN_F_GBP)
+                vxlan_build_gbp_hdr(vxh, md);
+
+Inside vxlan_build_gbp_hdr(), md->gbp is read:
+
+        if (!md->gbp)
+                return;
+        gbp = (struct vxlanhdr_gbp *)vxh;
+        ...
+        if (md->gbp & VXLAN_GBP_DONT_LEARN)
+                gbp->dont_learn = 1;
+
+If the stack contains garbage, this causes:
+1) VXLAN_HF_GBP flag to be spuriously set in the VXLAN header.
+2) gbp->dont_learn and gbp->policy_applied to be set from stack bits.
+3) gbp->policy_id to receive 16 bits of uninitialized kernel stack data,
+   leaking it onto the wire.
+
+Fix this by zero-initializing _md. If IP_TUNNEL_VXLAN_OPT_BIT is not
+present, md->gbp remains 0, and vxlan_build_gbp_hdr() returns early
+without modifying the VXLAN header.
+
+Fixes: ee122c79d422 ("vxlan: Flow based tunneling")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260906180111.1973188-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
-index 56db436894661..391a69878705b 100644
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
- 			spin_lock_irqsave(&ha->vport_slock, flags);
- 			list_for_each_entry(vp, &ha->vp_list, list) {
- 				if (rptid_entry->vp_idx == vp->vp_idx) {
-+					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
-+						break;
- 					found = 1;
- 					atomic_inc(&vp->vref_count);
- 					break;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 93940ea5cf9c8..355337d428e52 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2487,7 +2487,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	const struct iphdr *old_iph = ip_hdr(skb);
+ 	union vxlan_addr *dst;
+ 	union vxlan_addr remote_ip, local_ip;
+-	struct vxlan_metadata _md;
++	struct vxlan_metadata _md = {};
+ 	struct vxlan_metadata *md = &_md;
+ 	unsigned int pkt_len = skb->len;
+ 	__be16 src_port = 0, dst_port;
 -- 
 2.53.0
 
