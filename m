@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19733C73F6;
-	Sat, 17 Oct 2026 17:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD05B3B2FCA;
+	Sat, 17 Oct 2026 17:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259508; cv=none; b=Wl8tINC+3jkrLuOLW63ZZeoHyE+Uq859pYqym9G6vadxs1nuNln59n6Lj/VlhRFsnH5mMTyo3yIpousk24MBNCOsFUMeCyGelC0fc1dBVIrvDv5MWolJSyQPKqde3CotwMHSgLqQqny+Vw9qNg0o5J5GrLkB2c9q5aXOumDmcTU=
+	t=1792259511; cv=none; b=ix4ZbYM2F7Ghnb1JqSWRS955iIf/NHYzxmCrMMVGL00mUGN6UlhVTOtrqDvf6CAIVBkMbu0TZYwb6Vgt1R5+Y9zSELBd7vdV7k9AA3P1/BlscVL59k3YkpgNJbOLI6K2ePJjKfFbRBBi5ikiUjSVTq1TBTSxPZPOvPEA2iUc0zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259508; c=relaxed/simple;
-	bh=3u19HbY7qAfxF2LkpatJamTFBgUbhvJP25Gn/Ixi/bc=;
+	s=arc-20240116; t=1792259511; c=relaxed/simple;
+	bh=+rWflcDubzXHWP7vxpMn5toeROu9nectMTfWHbZqWSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0zVtflTE3zBbvX+rPsaHJ16HE6tI2p78IH5s2OfKesIWLfYN3DoCIuyAD36ABlLHU+46U+/qhLMH9Og3p0d+v9eksXf6EXCl8tTYMcqbQCEif48OY9sD4ITNSfNsUPTNxhM3QmCYoCBBFTBS70rlrCuq41H3amH9L1abFyygF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bw/8BOEl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MmGSxgnOuU2Fg0E+PbAkma6HpvUDMUN64Jzeq64eqwyql1pHzmMgLRZIUAi4yh6z6t5ZG8Qg0Jmk4WXHn75vO1BAtWe3FJhwHIZGVqfxy/0AfoYm2M3LEJLgeeDlraqxw30Xry0KDdh+8udG7Fou6Su2Y1Q0OeGe+EpZV4otc50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGd1z/Zm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bw/8BOEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD211F000C4;
-	Sat, 17 Oct 2026 17:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGd1z/Zm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3424A1F000C4;
+	Sat, 17 Oct 2026 17:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259506;
-	bh=qe/LNyTOlpnD0qssdg/MgsfgGMDoYwWcRvNAxO2ZZBg=;
+	s=korg; t=1792259509;
+	bh=b62JaTcoEOerD1CoDx0bVPoiV76wX3n3S3lDSleqAt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bw/8BOElvJC0UdFDMBcaxPOx5vkFBb9DKiopmydcCxGA+ShFzLdt63OWRC1+mrywV
-	 jS2Ms53z096EsWaoLQE+WGYamtQm84x1toXnZ4wx6Sp0UNW/3deziWWMtsFjlXf4KE
-	 vxrEdZGnngUtMR38V4Rekn57gLIN1ldM9gPl4Zag=
+	b=rGd1z/ZmxZWpm5+SKjo/78ZwsvIp/IP4eRzsKeokyasD8N2ufCQtwizdKu4w9KhWc
+	 abJvCLryzHTZJtilrIOBYpPcX914bAjnVZnBZEWJ1wDYu9mTK1Y0+8mayN4g48qHTH
+	 EGCD7aIZAHnQ17RLQlMhvavZZRPRnT8YshqgZbo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ryan Wilbur <rwilbur633@gmail.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1196/1674] serial: 8250_of: clear stuck empty-FIFO RX-timeout on LPC32xx
-Date: Sat, 17 Oct 2026 17:57:48 +0200
-Message-ID: <20261017160501.840558241@linuxfoundation.org>
+Subject: [PATCH 6.6 1197/1674] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
+Date: Sat, 17 Oct 2026 17:57:49 +0200
+Message-ID: <20261017160501.865166150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,108 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Wilbur <rwilbur633@gmail.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit 1423415471274abda87024967d7fe2206ceee0ea ]
+[ Upstream commit 3874892dd27d5387aa9a06f58d9060f18f351d24 ]
 
-The NXP LPC32xx UART (PORT_LPC3220) can latch an RX character-timeout
-interrupt while the RX FIFO is empty: IIR reports UART_IIR_RX_TIMEOUT
-(0x0c) but LSR.DR is clear. A character timeout is only cleared by
-reading RHR, but serial8250_rx_chars() reads RHR only when LSR.DR is
-set, so nothing ever clears the condition. The interrupt is
-level-triggered and re-fires immediately, so on a single-core ARM926
-the resulting interrupt storm livelocks the CPU.
+The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
+dev_parse_header_protocol when skb->dev is null") fixed a crash in
+tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
+This is required because virtio_net_hdr_to_skb() may invoke
+dev_parse_header_protocol(), which dereferences skb->dev. Without the
+assignment, a NULL pointer dereference can occur.
 
-It is reproducible when userspace repeatedly opens the front-panel port
-(ttyS1): serial8250_do_set_termios() re-enables interrupts on unlock and
-the handler then spins forever with iir=0xcc lsr=0x60 ier=0x05, tripping
-the soft-lockup detector in serial8250_handle_irq_locked().
+However, tap_get_user_xdp() still parses the virtio-net header before
+assigning skb->dev. When the vhost TX path passes an XDP buffer containing
+a GSO virtio-net header but the protocol is set to zero on purpose,
+tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
+is still NULL, resulting in a crash.
 
-LPC32xx has no dedicated 8250 glue driver, it's driven by the generic
-8250_of. Add a hardware specific handle_irq for PORT_LPC3220, wired up
-in of_platform_serial_setup() the same way fsl8250_handle_irq is
-installed. The handler follows dw8250_handle_irq(): on an RX timeout
-with an empty FIFO (LSR.DR and LSR.BI clear) it does one throwaway RHR
-read to clear the condition, then calls serial8250_handle_irq_locked().
-No real received data is ever discarded, and it is a no-op on healthy
-UARTs which never report a timeout with DR clear.
+Fix this by looking up the tap device and assigning skb->dev before calling
+tun_vnet_hdr_to_skb(), matching the ordering already used in
+tap_get_user(). Preserve the existing RCU read-side critical section across
+dev_queue_xmit().
 
-This is the same class of bug already worked around in other 8250 drivers;
-see commit 424d79183af0 ("serial: 8250_dw: Avoid "too much work" from bogus rx timeout interrupt")
-which reports the identical iir=0xcc/lsr=0x60. See also
-UART_RX_TIMEOUT_QUIRK in 8250_omap, and the note in 8250_bcm7271.
-
-Cc: stable <stable@kernel.org>
-Assisted-by: Claude:Opus4.8
-Signed-off-by: Ryan Wilbur <rwilbur633@gmail.com>
-Link: https://patch.msgid.link/20260730193920.28954-1-rwilbur633@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_of.c | 43 +++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/net/tap.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_of.c b/drivers/tty/serial/8250/8250_of.c
-index 51329625c48ab..b704248f6bb1a 100644
---- a/drivers/tty/serial/8250/8250_of.c
-+++ b/drivers/tty/serial/8250/8250_of.c
-@@ -25,6 +25,46 @@ struct of_serial_info {
- 	int line;
- };
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 40aea069c3ad3..d8bcb34236267 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1200,10 +1200,21 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	skb_reset_mac_header(skb);
+ 	skb->protocol = eth_hdr(skb)->h_proto;
  
-+static int lpc32xx_handle_irq(struct uart_port *port)
-+{
-+	struct uart_8250_port *up = up_to_u8250p(port);
-+	unsigned long flags;
-+	unsigned int iir;
-+	u16 status;
-+	int ret;
-+
-+	serial8250_rpm_get(up);
-+
-+	iir = serial_port_in(port, UART_IIR);
-+	if (iir & UART_IIR_NO_INT) {
-+		serial8250_rpm_put(up);
++	rcu_read_lock();
++	tap = rcu_dereference(q->tap);
++	if (!tap) {
++		kfree_skb(skb);
++		rcu_read_unlock();
 +		return 0;
 +	}
++	skb->dev = tap->dev;
 +
-+	/*
-+	 * The LPC32xx UART can assert an RX character-timeout interrupt while
-+	 * the RX FIFO is empty: IIR reports UART_IIR_RX_TIMEOUT but LSR.DR is
-+	 * clear. The timeout is only cleared by reading RHR, but the core RX
-+	 * path skips that read when the FIFO is empty, so the level-triggered
-+	 * IRQ re-fires forever and livelocks this single-core SoC. Do one
-+	 * throwaway RHR read to clear it; a healthy UART never reports a
-+	 * timeout with DR/BI clear, so no received data is ever discarded.
-+	 */
-+	if ((iir & 0x3f) == UART_IIR_RX_TIMEOUT) {
-+		spin_lock_irqsave(&port->lock, flags);
-+		status = serial_lsr_in(up);
-+		if (!(status & (UART_LSR_DR | UART_LSR_BI)))
-+			serial_port_in(port, UART_RX);
-+		spin_unlock_irqrestore(&port->lock, flags);
-+	}
-+
-+	ret = serial8250_handle_irq(port, iir);
-+
-+	serial8250_rpm_put(up);
-+
-+	return ret;
-+}
-+
- /*
-  * Fill a struct uart_port for a given device node
-  */
-@@ -175,6 +215,9 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
- 		if (ret)
- 			goto err_unprepare;
- 		break;
-+	case PORT_LPC3220:
-+		port->handle_irq = lpc32xx_handle_irq;
-+		break;
+ 	if (vnet_hdr_len) {
+ 		err = virtio_net_hdr_to_skb(skb, gso, tap_is_little_endian(q));
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto err_kfree;
++		}
  	}
  
- 	if (IS_REACHABLE(CONFIG_SERIAL_8250_FSL) &&
+ 	/* Move network header to the right position for VLAN tagged packets */
+@@ -1211,15 +1222,8 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+ 
+-	rcu_read_lock();
+-	tap = rcu_dereference(q->tap);
+-	if (tap) {
+-		skb->dev = tap->dev;
+-		skb_probe_transport_header(skb);
+-		dev_queue_xmit(skb);
+-	} else {
+-		kfree_skb(skb);
+-	}
++	skb_probe_transport_header(skb);
++	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
+ 
+ 	return 0;
 -- 
 2.53.0
 
