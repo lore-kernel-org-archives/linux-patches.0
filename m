@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BC43B774F;
-	Sat, 17 Oct 2026 17:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109973515CE;
+	Sat, 17 Oct 2026 17:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257781; cv=none; b=iFQte9YVjRMEBG4je9O79BRYPFw9nJkrHRPdrFTh0Y1nxQWP3IWQV+ntgDVk9HDJBGvwWQt4WVfgHk2fMiOFG2H/vrC/JB4W6+4A5RNHG5nh65K3ZlouuRh2+Z8dzt/AJRmHESnebphNR37g8mbdo+7rY4HN1eKwrFEeYnbl7SY=
+	t=1792257784; cv=none; b=JK8SY2GXx4EFXqoA2cvMLxL2O36LD4W0nkfxxyzwPxjyFaN51DTDO2Qm0uixy/Qq9R4pzWm3zbU/Ii96aw+TddAzyR3g4U/66VJeXUBXxVqlXJkkwspdzNl0ktRgwJiC42df+DOLjk/C7p9kXEllA8kNB79W7l5/wXCOXEMqA9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257781; c=relaxed/simple;
-	bh=SD0ALSKUFJ5IC/OjqDPweemGvJgv58DlMNELlYUkzp8=;
+	s=arc-20240116; t=1792257784; c=relaxed/simple;
+	bh=igyXd0RJpvph493K360wEA/0ltQQS/9yo720CRA/rkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehjmqP0HGUcN6of5WzReof+YPlEpoXhaoVpCmmjEmvwHaT2/6vmuF9BQ8lWNA1e9UnIxskSJjD/V6tZFMpnKB4SfNec+tBhIOBrMqlWpiqiMatOdtzatSq/alFhIIR5N/gGa7RVSV6epvJVdarFcD2BzhsoWSEINcZsTikXzbKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bishBzcA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=REUGjhVPZyfYTkS9ogVuCt0eZIUjTW2o6Z5mn5ZcdektFWGJlM3TCCqY+QyNQezc2lPC3pmGhdx0Mwo1jfhKRmuV5041DM/qgNoo8mLRYU+daUOhBVNRgbLNgWDNvz7gWQNQ/7X5hEeujweBhDBk83dbN0jKCMEDBkavsnVBfiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbWKz4fD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bishBzcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EDA1F000C5;
-	Sat, 17 Oct 2026 17:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbWKz4fD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEAD1F000C4;
+	Sat, 17 Oct 2026 17:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257780;
-	bh=NVSR5z7zYds3Xc/Jo3A/Tz1Hwcyz+widYyqT1Y/Kw/8=;
+	s=korg; t=1792257783;
+	bh=63we6QY97n7Yo7gIXvKOd5oHpAjrwrf1zo0gMr/UdiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bishBzcAh++M/jlFmyQB1S385ktyMY5etT2IptJnm3xa8t30S+1NYrFWaOmNNfIQ7
-	 AVecU4z5f/Rw5yualFfd55OIVyf6GVyi8rcYfxW36hqAwAcJF2jF/T1GyWfq2gf1Ho
-	 BCICFwfhz7j38Y3i3e1GTDhwlHCrH0nSgYdE+RZA=
+	b=dbWKz4fDo5uEXvo0sjbneQ0idyPBvhhKwq73WY0jZgLNjCizAgFZK6Uvu7u4b528z
+	 fl2tksKlGlCQ2weRcpo0WZu1itUt5w7BgXdYx4QK9lyidUM2vn1X7njWNzH7uS/+6s
+	 LtMRqmkvgjLkVReLnvtXDypKareG5EVbhPLMT9Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0669/1674] powerpc/iommu: Move pSeries specific functions to pseries/iommu.c
-Date: Sat, 17 Oct 2026 17:49:01 +0200
-Message-ID: <20261017160448.281572781@linuxfoundation.org>
+Subject: [PATCH 6.6 0670/1674] powerpc/pseries/iommu: IOMMU incorrectly marks MMIO range in DDW
+Date: Sat, 17 Oct 2026 17:49:02 +0200
+Message-ID: <20261017160448.307344820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,402 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit b09c031d9433dda3186190e5845ba0d720212567 ]
+[ Upstream commit 8f70caad82e9c088ed93b4fea48d941ab6441886 ]
 
-The PowerNV specific table_group_ops are defined in powernv/pci-ioda.c.
-The pSeries specific table_group_ops are sitting in the generic powerpc
-file. Move it to where it actually belong(pseries/iommu.c).
+Power Hypervisor can possibily allocate MMIO window intersecting with
+Dynamic DMA Window (DDW) range, which is over 32-bit addressing.
 
-The functions are currently defined even for CONFIG_PPC_POWERNV
-which are unused on PowerNV.
+These MMIO pages needs to be marked as reserved so that IOMMU doesn't map
+DMA buffers in this range.
 
-Only code movement, no functional changes intended.
+The current code is not marking these pages correctly which is resulting
+in LPAR to OOPS while booting. The stack is at below
 
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/171923269701.1397.15758640002786937132.stgit@linux.ibm.com
-Stable-dep-of: 8f70caad82e9 ("powerpc/pseries/iommu: IOMMU incorrectly marks MMIO range in DDW")
+BUG: Unable to handle kernel data access on read at 0xc00800005cd40000
+Faulting instruction address: 0xc00000000005cdac
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
+Modules linked in: af_packet rfkill ibmveth(X) lpfc(+) nvmet_fc nvmet nvme_keyring crct10dif_vpmsum nvme_fc nvme_fabrics nvme_core be2net(+) nvme_auth rtc_generic nfsd auth_rpcgss nfs_acl lockd grace sunrpc fuse configfs ip_tables x_tables xfs libcrc32c dm_service_time ibmvfc(X) scsi_transport_fc vmx_crypto gf128mul crc32c_vpmsum dm_mirror dm_region_hash dm_log dm_multipath dm_mod sd_mod scsi_dh_emc scsi_dh_rdac scsi_dh_alua t10_pi crc64_rocksoft_generic crc64_rocksoft sg crc64 scsi_mod
+Supported: Yes, External
+CPU: 8 PID: 241 Comm: kworker/8:1 Kdump: loaded Not tainted 6.4.0-150600.23.14-default #1 SLE15-SP6 b44ee71c81261b9e4bab5e0cde1f2ed891d5359b
+Hardware name: IBM,9080-M9S POWER9 (raw) 0x4e2103 0xf000005 of:IBM,FW950.B0 (VH950_149) hv:phyp pSeries
+Workqueue: events work_for_cpu_fn
+NIP:  c00000000005cdac LR: c00000000005e830 CTR: 0000000000000000
+REGS: c00001400c9ff770 TRAP: 0300   Not tainted  (6.4.0-150600.23.14-default)
+MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 24228448  XER: 00000001
+CFAR: c00000000005cdd4 DAR: c00800005cd40000 DSISR: 40000000 IRQMASK: 0
+GPR00: c00000000005e830 c00001400c9ffa10 c000000001987d00 c00001400c4fe800
+GPR04: 0000080000000000 0000000000000001 0000000004000000 0000000000800000
+GPR08: 0000000004000000 0000000000000001 c00800005cd40000 ffffffffffffffff
+GPR12: 0000000084228882 c00000000a4c4f00 0000000000000010 0000080000000000
+GPR16: c00001400c4fe800 0000000004000000 0800000000000000 c00000006088b800
+GPR20: c00001401a7be980 c00001400eff3800 c000000002a2da68 000000000000002b
+GPR24: c0000000026793a8 c000000002679368 000000000000002a c0000000026793c8
+GPR28: 000008007effffff 0000080000000000 0000000000800000 c00001400c4fe800
+NIP [c00000000005cdac] iommu_table_reserve_pages+0xac/0x100
+LR [c00000000005e830] iommu_init_table+0x80/0x1e0
+Call Trace:
+[c00001400c9ffa10] [c00000000005e810] iommu_init_table+0x60/0x1e0 (unreliable)
+[c00001400c9ffa90] [c00000000010356c] iommu_bypass_supported_pSeriesLP+0x9cc/0xe40
+[c00001400c9ffc30] [c00000000005c300] dma_iommu_dma_supported+0xf0/0x230
+[c00001400c9ffcb0] [c00000000024b0c4] dma_supported+0x44/0x90
+[c00001400c9ffcd0] [c00000000024b14c] dma_set_mask+0x3c/0x80
+[c00001400c9ffd00] [c0080000555b715c] be_probe+0xc4/0xb90 [be2net]
+[c00001400c9ffdc0] [c000000000986f3c] local_pci_probe+0x6c/0x110
+[c00001400c9ffe40] [c000000000188f28] work_for_cpu_fn+0x38/0x60
+[c00001400c9ffe70] [c00000000018e454] process_one_work+0x314/0x620
+[c00001400c9fff10] [c00000000018f280] worker_thread+0x2b0/0x620
+[c00001400c9fff90] [c00000000019bb18] kthread+0x148/0x150
+[c00001400c9fffe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+There are 2 issues in the code
+
+1. The index is "int" while the address is "unsigned long". This results in
+   negative value when setting the bitmap.
+
+2. The DMA offset is page shifted but the MMIO range is used as-is (64-bit
+   address). MMIO address needs to be page shifted as well.
+
+Fixes: 3c33066a2190 ("powerpc/kernel/iommu: Add new iommu_table_in_use() helper")
+
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241206210039.93172-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/iommu.h       |   4 +-
- arch/powerpc/kernel/iommu.c            | 149 +------------------------
- arch/powerpc/platforms/pseries/iommu.c | 144 ++++++++++++++++++++++++
- 3 files changed, 149 insertions(+), 148 deletions(-)
+ arch/powerpc/kernel/iommu.c            | 2 +-
+ arch/powerpc/platforms/pseries/iommu.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/iommu.h b/arch/powerpc/include/asm/iommu.h
-index 0266959435505..744cc5fc22d3b 100644
---- a/arch/powerpc/include/asm/iommu.h
-+++ b/arch/powerpc/include/asm/iommu.h
-@@ -156,6 +156,9 @@ extern int iommu_tce_table_put(struct iommu_table *tbl);
- extern struct iommu_table *iommu_init_table(struct iommu_table *tbl,
- 		int nid, unsigned long res_start, unsigned long res_end);
- bool iommu_table_in_use(struct iommu_table *tbl);
-+extern void iommu_table_reserve_pages(struct iommu_table *tbl,
-+		unsigned long res_start, unsigned long res_end);
-+extern void iommu_table_clear(struct iommu_table *tbl);
- 
- #define IOMMU_TABLE_GROUP_MAX_TABLES	2
- 
-@@ -218,7 +221,6 @@ extern long iommu_tce_xchg_no_kill(struct mm_struct *mm,
- extern void iommu_tce_kill(struct iommu_table *tbl,
- 		unsigned long entry, unsigned long pages);
- 
--extern struct iommu_table_group_ops spapr_tce_table_group_ops;
- #else
- static inline void iommu_register_group(struct iommu_table_group *table_group,
- 					int pci_domain_number,
 diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index 49f01f6b9346b..af306dcc9e400 100644
+index af306dcc9e400..9227ba3814f56 100644
 --- a/arch/powerpc/kernel/iommu.c
 +++ b/arch/powerpc/kernel/iommu.c
-@@ -642,7 +642,7 @@ void ppc_iommu_unmap_sg(struct iommu_table *tbl, struct scatterlist *sglist,
- 		tbl->it_ops->flush(tbl);
- }
- 
--static void iommu_table_clear(struct iommu_table *tbl)
-+void iommu_table_clear(struct iommu_table *tbl)
- {
- 	/*
- 	 * In case of firmware assisted dump system goes through clean
-@@ -683,7 +683,7 @@ static void iommu_table_clear(struct iommu_table *tbl)
- #endif
- }
- 
--static void iommu_table_reserve_pages(struct iommu_table *tbl,
-+void iommu_table_reserve_pages(struct iommu_table *tbl,
+@@ -686,7 +686,7 @@ void iommu_table_clear(struct iommu_table *tbl)
+ void iommu_table_reserve_pages(struct iommu_table *tbl,
  		unsigned long res_start, unsigned long res_end)
  {
- 	int i;
-@@ -1101,59 +1101,6 @@ void iommu_tce_kill(struct iommu_table *tbl,
- }
- EXPORT_SYMBOL_GPL(iommu_tce_kill);
- 
--#if defined(CONFIG_PPC_PSERIES) || defined(CONFIG_PPC_POWERNV)
--static int iommu_take_ownership(struct iommu_table *tbl)
--{
--	unsigned long flags, i, sz = (tbl->it_size + 7) >> 3;
--	int ret = 0;
--
--	/*
--	 * VFIO does not control TCE entries allocation and the guest
--	 * can write new TCEs on top of existing ones so iommu_tce_build()
--	 * must be able to release old pages. This functionality
--	 * requires exchange() callback defined so if it is not
--	 * implemented, we disallow taking ownership over the table.
--	 */
--	if (!tbl->it_ops->xchg_no_kill)
--		return -EINVAL;
--
--	spin_lock_irqsave(&tbl->large_pool.lock, flags);
--	for (i = 0; i < tbl->nr_pools; i++)
--		spin_lock_nest_lock(&tbl->pools[i].lock, &tbl->large_pool.lock);
--
--	if (iommu_table_in_use(tbl)) {
--		pr_err("iommu_tce: it_map is not empty");
--		ret = -EBUSY;
--	} else {
--		memset(tbl->it_map, 0xff, sz);
--	}
--
--	for (i = 0; i < tbl->nr_pools; i++)
--		spin_unlock(&tbl->pools[i].lock);
--	spin_unlock_irqrestore(&tbl->large_pool.lock, flags);
--
--	return ret;
--}
--
--static void iommu_release_ownership(struct iommu_table *tbl)
--{
--	unsigned long flags, i, sz = (tbl->it_size + 7) >> 3;
--
--	spin_lock_irqsave(&tbl->large_pool.lock, flags);
--	for (i = 0; i < tbl->nr_pools; i++)
--		spin_lock_nest_lock(&tbl->pools[i].lock, &tbl->large_pool.lock);
--
--	memset(tbl->it_map, 0, sz);
--
--	iommu_table_reserve_pages(tbl, tbl->it_reserved_start,
--			tbl->it_reserved_end);
--
--	for (i = 0; i < tbl->nr_pools; i++)
--		spin_unlock(&tbl->pools[i].lock);
--	spin_unlock_irqrestore(&tbl->large_pool.lock, flags);
--}
--#endif
--
- int iommu_add_device(struct iommu_table_group *table_group, struct device *dev)
- {
- 	/*
-@@ -1185,98 +1132,6 @@ int iommu_add_device(struct iommu_table_group *table_group, struct device *dev)
- EXPORT_SYMBOL_GPL(iommu_add_device);
- 
- #if defined(CONFIG_PPC_PSERIES) || defined(CONFIG_PPC_POWERNV)
--/*
-- * A simple iommu_table_group_ops which only allows reusing the existing
-- * iommu_table. This handles VFIO for POWER7 or the nested KVM.
-- * The ops does not allow creating windows and only allows reusing the existing
-- * one if it matches table_group->tce32_start/tce32_size/page_shift.
-- */
--static unsigned long spapr_tce_get_table_size(__u32 page_shift,
--					      __u64 window_size, __u32 levels)
--{
--	unsigned long size;
--
--	if (levels > 1)
--		return ~0U;
--	size = window_size >> (page_shift - 3);
--	return size;
--}
--
--static long spapr_tce_create_table(struct iommu_table_group *table_group, int num,
--				   __u32 page_shift, __u64 window_size, __u32 levels,
--				   struct iommu_table **ptbl)
--{
--	struct iommu_table *tbl = table_group->tables[0];
--
--	if (num > 0)
--		return -EPERM;
--
--	if (tbl->it_page_shift != page_shift ||
--	    tbl->it_size != (window_size >> page_shift) ||
--	    tbl->it_indirect_levels != levels - 1)
--		return -EINVAL;
--
--	*ptbl = iommu_tce_table_get(tbl);
--	return 0;
--}
--
--static long spapr_tce_set_window(struct iommu_table_group *table_group,
--				 int num, struct iommu_table *tbl)
--{
--	return tbl == table_group->tables[num] ? 0 : -EPERM;
--}
--
--static long spapr_tce_unset_window(struct iommu_table_group *table_group, int num)
--{
--	return 0;
--}
--
--static long spapr_tce_take_ownership(struct iommu_table_group *table_group)
--{
--	int i, j, rc = 0;
--
--	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
--		struct iommu_table *tbl = table_group->tables[i];
--
--		if (!tbl || !tbl->it_map)
--			continue;
--
--		rc = iommu_take_ownership(tbl);
--		if (!rc)
--			continue;
--
--		for (j = 0; j < i; ++j)
--			iommu_release_ownership(table_group->tables[j]);
--		return rc;
--	}
--	return 0;
--}
--
--static void spapr_tce_release_ownership(struct iommu_table_group *table_group)
--{
 -	int i;
--
--	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
--		struct iommu_table *tbl = table_group->tables[i];
--
--		if (!tbl)
--			continue;
--
--		iommu_table_clear(tbl);
--		if (tbl->it_map)
--			iommu_release_ownership(tbl);
--	}
--}
--
--struct iommu_table_group_ops spapr_tce_table_group_ops = {
--	.get_table_size = spapr_tce_get_table_size,
--	.create_table = spapr_tce_create_table,
--	.set_window = spapr_tce_set_window,
--	.unset_window = spapr_tce_unset_window,
--	.take_ownership = spapr_tce_take_ownership,
--	.release_ownership = spapr_tce_release_ownership,
--};
--
- /*
-  * A simple iommu_ops to allow less cruft in generic VFIO code.
-  */
++	unsigned long i;
+ 
+ 	WARN_ON_ONCE(res_end < res_start);
+ 	/*
 diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index 54fd2a0d6604d..82d88389ec67b 100644
+index 82d88389ec67b..6a45e3e86f79b 100644
 --- a/arch/powerpc/platforms/pseries/iommu.c
 +++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -54,6 +54,57 @@ enum {
- 	DDW_EXT_QUERY_OUT_SIZE = 2
- };
+@@ -1558,7 +1558,8 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
  
-+static int iommu_take_ownership(struct iommu_table *tbl)
-+{
-+	unsigned long flags, i, sz = (tbl->it_size + 7) >> 3;
-+	int ret = 0;
-+
-+	/*
-+	 * VFIO does not control TCE entries allocation and the guest
-+	 * can write new TCEs on top of existing ones so iommu_tce_build()
-+	 * must be able to release old pages. This functionality
-+	 * requires exchange() callback defined so if it is not
-+	 * implemented, we disallow taking ownership over the table.
-+	 */
-+	if (!tbl->it_ops->xchg_no_kill)
-+		return -EINVAL;
-+
-+	spin_lock_irqsave(&tbl->large_pool.lock, flags);
-+	for (i = 0; i < tbl->nr_pools; i++)
-+		spin_lock_nest_lock(&tbl->pools[i].lock, &tbl->large_pool.lock);
-+
-+	if (iommu_table_in_use(tbl)) {
-+		pr_err("iommu_tce: it_map is not empty");
-+		ret = -EBUSY;
-+	} else {
-+		memset(tbl->it_map, 0xff, sz);
-+	}
-+
-+	for (i = 0; i < tbl->nr_pools; i++)
-+		spin_unlock(&tbl->pools[i].lock);
-+	spin_unlock_irqrestore(&tbl->large_pool.lock, flags);
-+
-+	return ret;
-+}
-+
-+static void iommu_release_ownership(struct iommu_table *tbl)
-+{
-+	unsigned long flags, i, sz = (tbl->it_size + 7) >> 3;
-+
-+	spin_lock_irqsave(&tbl->large_pool.lock, flags);
-+	for (i = 0; i < tbl->nr_pools; i++)
-+		spin_lock_nest_lock(&tbl->pools[i].lock, &tbl->large_pool.lock);
-+
-+	memset(tbl->it_map, 0, sz);
-+
-+	iommu_table_reserve_pages(tbl, tbl->it_reserved_start,
-+			tbl->it_reserved_end);
-+
-+	for (i = 0; i < tbl->nr_pools; i++)
-+		spin_unlock(&tbl->pools[i].lock);
-+	spin_unlock_irqrestore(&tbl->large_pool.lock, flags);
-+}
-+
- static struct iommu_table *iommu_pseries_alloc_table(int node)
- {
- 	struct iommu_table *tbl;
-@@ -67,6 +118,8 @@ static struct iommu_table *iommu_pseries_alloc_table(int node)
- 	return tbl;
- }
+ 		iommu_table_setparms_common(newtbl, pci->phb->bus->number, create.liobn, win_addr,
+ 					    1UL << len, page_shift, NULL, &iommu_table_lpar_multi_ops);
+-		iommu_init_table(newtbl, pci->phb->node, start, end);
++		iommu_init_table(newtbl, pci->phb->node,
++				 start >> page_shift, end >> page_shift);
  
-+static struct iommu_table_group_ops spapr_tce_table_group_ops;
-+
- static struct iommu_table_group *iommu_pseries_alloc_group(int node)
- {
- 	struct iommu_table_group *table_group;
-@@ -1648,6 +1701,97 @@ static bool iommu_bypass_supported_pSeriesLP(struct pci_dev *pdev, u64 dma_mask)
- 	return false;
- }
+ 		pci->table_group->tables[1] = newtbl;
  
-+/*
-+ * A simple iommu_table_group_ops which only allows reusing the existing
-+ * iommu_table. This handles VFIO for POWER7 or the nested KVM.
-+ * The ops does not allow creating windows and only allows reusing the existing
-+ * one if it matches table_group->tce32_start/tce32_size/page_shift.
-+ */
-+static unsigned long spapr_tce_get_table_size(__u32 page_shift,
-+					      __u64 window_size, __u32 levels)
-+{
-+	unsigned long size;
-+
-+	if (levels > 1)
-+		return ~0U;
-+	size = window_size >> (page_shift - 3);
-+	return size;
-+}
-+
-+static long spapr_tce_create_table(struct iommu_table_group *table_group, int num,
-+				   __u32 page_shift, __u64 window_size, __u32 levels,
-+				   struct iommu_table **ptbl)
-+{
-+	struct iommu_table *tbl = table_group->tables[0];
-+
-+	if (num > 0)
-+		return -EPERM;
-+
-+	if (tbl->it_page_shift != page_shift ||
-+	    tbl->it_size != (window_size >> page_shift) ||
-+	    tbl->it_indirect_levels != levels - 1)
-+		return -EINVAL;
-+
-+	*ptbl = iommu_tce_table_get(tbl);
-+	return 0;
-+}
-+
-+static long spapr_tce_set_window(struct iommu_table_group *table_group,
-+				 int num, struct iommu_table *tbl)
-+{
-+	return tbl == table_group->tables[num] ? 0 : -EPERM;
-+}
-+
-+static long spapr_tce_unset_window(struct iommu_table_group *table_group, int num)
-+{
-+	return 0;
-+}
-+
-+static long spapr_tce_take_ownership(struct iommu_table_group *table_group)
-+{
-+	int i, j, rc = 0;
-+
-+	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
-+		struct iommu_table *tbl = table_group->tables[i];
-+
-+		if (!tbl || !tbl->it_map)
-+			continue;
-+
-+		rc = iommu_take_ownership(tbl);
-+		if (!rc)
-+			continue;
-+
-+		for (j = 0; j < i; ++j)
-+			iommu_release_ownership(table_group->tables[j]);
-+		return rc;
-+	}
-+	return 0;
-+}
-+
-+static void spapr_tce_release_ownership(struct iommu_table_group *table_group)
-+{
-+	int i;
-+
-+	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
-+		struct iommu_table *tbl = table_group->tables[i];
-+
-+		if (!tbl)
-+			continue;
-+
-+		if (tbl->it_map)
-+			iommu_release_ownership(tbl);
-+	}
-+}
-+
-+static struct iommu_table_group_ops spapr_tce_table_group_ops = {
-+	.get_table_size = spapr_tce_get_table_size,
-+	.create_table = spapr_tce_create_table,
-+	.set_window = spapr_tce_set_window,
-+	.unset_window = spapr_tce_unset_window,
-+	.take_ownership = spapr_tce_take_ownership,
-+	.release_ownership = spapr_tce_release_ownership,
-+};
-+
- static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
- 		void *data)
- {
 -- 
 2.53.0
 
