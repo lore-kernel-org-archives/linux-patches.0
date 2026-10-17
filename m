@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D643845B3;
-	Sat, 17 Oct 2026 16:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A823A48E2;
+	Sat, 17 Oct 2026 16:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254611; cv=none; b=S2jo5G4B1njO4bOnG/ES3NkbH/61ljLN72vSWxKkWJi/vckGCm8SRafpXKswnRLI5r5ALEEq6L49LDmNGFQnCcHVWupp+9uF2ej4gtv9bqknoK9IWI9DXEOQ8iO91kl9Or76n/I/Ut8jS7nw96RgtMKnb9XqKY7C8yfUtzhDcPM=
+	t=1792254615; cv=none; b=bgc581Aod2efX2We8hIksgJOCxQS66JbnY9tL3CG9JsuUNnHY2w01EX/jLiTZ65qyrLShaVe0Qmd9NYeapKXsHnDdqCfTEoms9rbGV4r17Bmr1MhtPPDkQppw3jq+VWvqVL0T+3v5460H7EECmMAZ2xW4IKQrytyzVaUvKZQjHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254611; c=relaxed/simple;
-	bh=Q64Dv8zHfpWmWivmz2dSscQ5Gv+g44uXBS3x2yIK67s=;
+	s=arc-20240116; t=1792254615; c=relaxed/simple;
+	bh=i279TI93LfWKg8YE2s1gakzztTggtGhrHdKV6YinPJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVBRjGf/hLMlnVnYHq+FJs2xT1/IBjGPkg2JzpsLXAn+SeLfXWynmVlnI5DCtiRdxGPzEDFk9VRj2DekoUfwM8MBdQeom1TgmfIG3I79gVkuC2n8Lo3l5u4uQnLNaejk3zwnLfrJw7Nn+NqSM83UeLBV2P5WKvCfpafXAfGWLMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPWXW6xb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wmn4vW+y4KENfy/X1BPJQDMByzyYJ2ShuKzcCCTASWmC6uyaoXryg2tSNTQi9wg/qwtKFfKuTlH9PXh27PQKkTlDSmrij49iNGZkpfJ27r2hNK9vCluBbjO+csqF5XZWM/Ky7nBZdJFwRmSGYVw49Vb20lABOotBaEAC20sMhAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/9918jF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPWXW6xb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E821F000C4;
-	Sat, 17 Oct 2026 16:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/9918jF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FFF1F000C4;
+	Sat, 17 Oct 2026 16:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254610;
-	bh=++/XevejkbNqeCHhwBeZDq+AKf+llkCROP1hH4H9ct0=;
+	s=korg; t=1792254613;
+	bh=x3h48LFSvCF91DY6Co8agVzm0gKpRyLfRvaKX3FX8xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPWXW6xbYKSj4Iecm2Nr5IfZdlk1pSOw88rFGWQuizzHBpNGLCT3lnNgjvpQYADXz
-	 RwPKRCgTR2H2FnORDOOWi2Qvnq+KfzzlFzlxUSQ2qhoiKp1NoTfa+HnhAnFxX1JTuO
-	 sRu/ICL+up521J3GzOFZt6Y+Jz4RiJ5fGWa253l0=
+	b=y/9918jF0UDyzYS2v1nuofilEnrlJqo248fHovELB8O/usoPiki9k5pgzHz/CQNOB
+	 4RkLam0BphKEc4eQjvDiZrFRtATwLptj4jDTP426+8cu1mJhdJCgqzhhmjc4vP9+vb
+	 yMV/dX/4UWfCoHxBLCEtxdWrrGUzmdx/Bo56Hmdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Vega <vega@nebusec.ai>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 503/869] mm/page_table_check: skip special zero mappings
-Date: Sat, 17 Oct 2026 17:55:44 +0200
-Message-ID: <20261017160050.002386899@linuxfoundation.org>
+Subject: [PATCH 6.12 504/869] eventfs: Use children field for rcu head and add memory barriers
+Date: Sat, 17 Oct 2026 17:55:45 +0200
+Message-ID: <20261017160050.026719795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,96 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 8db4bab826ccc9ec10fa41736a48031cd338d392 ]
+[ Upstream commit f0ece16ffca7384787b692431961ce202907acf5 ]
 
-page_table_check_set() and page_table_check_clear() account mappings based
-on PageAnon().  Shared zero-page PTEs and huge zero PMDs are special
-mappings, but page_table_check can still account them as file-backed
-pages.
+When an eventfs inode is freed, it sets ei->is_freed and then uses its
+ei->list to add it to the srcu link list as the list field is a union with
+the rcu list head. As the ei->list is used to iterate over an SRCU
+protected list without taking the eventfs_mutex, there's nothing stopping
+the iteration over that list to see the ei->rcu instead of the ei->list
+and it will read a corrupt target.
 
-An unprivileged process can populate enough zero mappings to overflow
-file_map_count and hit the existing BUG_ON().  The PTE path can do this
-with the shared zero page, and the PMD path can do the same with huge zero
-mappings.
+To fix this, change the union of the rcu list head with the children list.
+On freeing the eventfs inode, set the is_free and execute a smp_wmb()
+before adding the eventfs inode to the SRCU list.
 
-Skip special zero mappings in the user page-table accounting paths.  Keep
-the PTE-side pte_special() check, and identify huge zero PMDs from the
-mapped folio instead of pmd_special().  That covers architectures where
-pmd_special() is a no-op without adding huge_zero_pfn checks to the
-generic counter helpers.
+On iteration of the ei->children list, at the start, execute a smp_rmb()
+and then read the is_freed of the ei to see if the children list is still
+valid. If is_freed is set, then the ei_child read is not valid and the
+loop should exit immediately.
 
-Link: https://lore.kernel.org/cover.1784717203.git.zhilinz@nebusec.ai
-Link: https://lore.kernel.org/e94478e4fb7912fb7e8ebebed5ce85d00dc9a69d.1784717203.git.zhilinz@nebusec.ai
-Fixes: df4e817b7108 ("mm: page table check")
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reported-by: Vega <vega@nebusec.ai>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Assisted-by: Codex:gpt-5.4
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260808094215.4252430d@robin
+Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_table_check.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ fs/tracefs/event_inode.c | 24 ++++++++++++++++++++++++
+ fs/tracefs/internal.h    |  4 ++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/mm/page_table_check.c b/mm/page_table_check.c
-index ee52927e9e66b..2efa910eef23e 100644
---- a/mm/page_table_check.c
-+++ b/mm/page_table_check.c
-@@ -165,18 +165,29 @@ void __page_table_check_pte_clear(struct mm_struct *mm, pte_t pte)
- 	if (&init_mm == mm)
- 		return;
- 
--	if (pte_user_accessible_page(pte)) {
-+	if (pte_user_accessible_page(pte) && !pte_special(pte)) {
- 		page_table_check_clear(pte_pfn(pte), PAGE_SIZE >> PAGE_SHIFT);
- 	}
- }
- EXPORT_SYMBOL(__page_table_check_pte_clear);
- 
-+static inline bool page_table_check_huge_zero_pmd(pmd_t pmd)
-+{
-+	unsigned long pfn = pmd_pfn(pmd);
-+
-+	if (!pfn_valid(pfn))
-+		return false;
-+
-+	return is_huge_zero_folio(page_folio(pfn_to_page(pfn)));
-+}
-+
- void __page_table_check_pmd_clear(struct mm_struct *mm, pmd_t pmd)
+diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
+index a7b082a665bd1..abb0ea57601b6 100644
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -124,7 +124,17 @@ static inline void put_ei(struct eventfs_inode *ei)
+ static inline void free_ei(struct eventfs_inode *ei)
  {
- 	if (&init_mm == mm)
- 		return;
- 
--	if (pmd_user_accessible_page(pmd)) {
-+	if (pmd_user_accessible_page(pmd) &&
-+	    !page_table_check_huge_zero_pmd(pmd)) {
- 		page_table_check_clear(pmd_pfn(pmd), PMD_SIZE >> PAGE_SHIFT);
+ 	if (ei) {
++		/* The ei should have no children if it is being freed. */
++		WARN_ON_ONCE(!list_empty(&ei->children));
+ 		ei->is_freed = 1;
++		/*
++		 * The SRCU iteration has a smp_rmb() to make sure it
++		 * sees a child (that may have already been freed)
++		 * before it reads is_free. If is_free is set, it must
++		 * not use the child it acquired from ei->children, as
++		 * the list may be used for SRCU.
++		 */
++		smp_wmb();
+ 		put_ei(ei);
  	}
  }
-@@ -221,7 +232,7 @@ void __page_table_check_ptes_set(struct mm_struct *mm, pte_t *ptep, pte_t pte,
+@@ -649,6 +659,20 @@ static int eventfs_iterate(struct file *file, struct dir_context *ctx)
+ 	list_for_each_entry_srcu(ei_child, &ei->children, list,
+ 				 srcu_read_lock_held(&eventfs_srcu)) {
  
- 	for (i = 0; i < nr; i++)
- 		__page_table_check_pte_clear(mm, ptep_get(ptep + i));
--	if (pte_user_accessible_page(pte))
-+	if (pte_user_accessible_page(pte) && !pte_special(pte))
- 		page_table_check_set(pte_pfn(pte), nr, pte_write(pte));
- }
- EXPORT_SYMBOL(__page_table_check_ptes_set);
-@@ -246,7 +257,8 @@ void __page_table_check_pmd_set(struct mm_struct *mm, pmd_t *pmdp, pmd_t pmd)
- 	page_table_check_pmd_flags(pmd);
- 
- 	__page_table_check_pmd_clear(mm, *pmdp);
--	if (pmd_user_accessible_page(pmd)) {
-+	if (pmd_user_accessible_page(pmd) &&
-+	    !page_table_check_huge_zero_pmd(pmd)) {
- 		page_table_check_set(pmd_pfn(pmd), PMD_SIZE >> PAGE_SHIFT,
- 				     pmd_write(pmd));
- 	}
++		/*
++		 * If the ei is being freed, then the ei->children may be
++		 * being used as the rcu list, which means the next element
++		 * may be garbage. The ei->is_free is set before switching
++		 * the ei->children over to ei->rcu. The read memory barrier
++		 * here makes sure the ei_child is read before is_free is
++		 * updated.
++		 *
++		 * Matches the smp_wmb() in free_ei()
++		 */
++		smp_rmb();
++		if (ei->is_freed)
++			return -EINVAL;
++
+ 		if (c > 0) {
+ 			c--;
+ 			continue;
+diff --git a/fs/tracefs/internal.h b/fs/tracefs/internal.h
+index a4a7f8431affb..c61481d04c8ee 100644
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -46,11 +46,11 @@ struct eventfs_attr {
+  * @ino:	The saved inode number
+  */
+ struct eventfs_inode {
++	struct list_head	list;
+ 	union {
+-		struct list_head	list;
++		struct list_head	children;
+ 		struct rcu_head		rcu;
+ 	};
+-	struct list_head		children;
+ 	const struct eventfs_entry	*entries;
+ 	const char			*name;
+ 	struct eventfs_attr		*entry_attrs;
 -- 
 2.53.0
 
