@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59794392829;
-	Sat, 17 Oct 2026 17:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519D8392829;
+	Sat, 17 Oct 2026 17:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257840; cv=none; b=grcnLOBcjsl+qInL4SoeR8suqzaN6gWIRn7/BteIw8TWUg6hWrwDM9yY5ir4lktq+rgQYWem0UJeqcsIF9CUwwANXPMrDqlZvV4RMdBLNgbrmGRxYap7xPokMs3kq+9WPgvJclftVLcceXoFRHGpBTzc3YTgB18hU9ycIDgRG/0=
+	t=1792257843; cv=none; b=L1NsOWqBgripf1ipFlRR1nSp63TWpMCMbwNRot63ms7AN09hZrRXbpmHwdMSQoq4CoIdKZlwmySU1gz5YieldqCEL08oKuvcx+uzDe9JYl/QtxStmNcLqyOc1A/o42D0++LHbyhvnlaRnk2njLczc86aozpsZzRs3YUtdpq8Ozc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257840; c=relaxed/simple;
-	bh=sekkYMJbIJtehnSC1/m8wPu2oJkWrwFdZKwNmE/bg8E=;
+	s=arc-20240116; t=1792257843; c=relaxed/simple;
+	bh=xkNiCC0/3my+oGI2HjC5XzmhxHUfdAFAdRCk9I+F61c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unhulHcbop9qKc8D82uXEgoOooEknAUfXKwmhEh7rBxKin2tT3vTX79cNghmwS9fJ8+wjm0p319RSmLL4Z+1YEW0a65G84XxJfVagt/z4RmnL3OdAstqnfZeTfF8MGTQVMCvW7B+yTxV2+OY1Ztn6BiFc/GOR5fp/WFmMW0Edrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxKr2Lz8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Igi2KSrBguVd9XCG5WEaUHQ5JZD0a7m6DP8rsZCQPue9qZjVCoYmlWhkPbHS78oXrbiG/Utkz59iabA3L6UzhLXs3FRi/7izEynIAq5FGmrVaS+S947EyTfUDbu7Wt4H/WoYrRcQM+MCaI/HqaAQ77OiBD9nm1wdsyaEj40mgmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZpawxX3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxKr2Lz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B111F000C4;
-	Sat, 17 Oct 2026 17:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZpawxX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9701F000C4;
+	Sat, 17 Oct 2026 17:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257839;
-	bh=vPgR4cX+wQQIuB5WxVX/1jzeFjKrNIJEFEyvMOquPhs=;
+	s=korg; t=1792257842;
+	bh=cCEWq7wUKUjPsI52NN6oP+MHpmwB95H/3YGaICQJCuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UxKr2Lz8fxbIvtK+9GCVTPFVfxtUpxiuOPLZoYX4lexuVjjOg4JfGNUsvsgtjbqGD
-	 VxTfFdJZS/LI/6lpvbTKgh7i1RtR3TfJ/pn7NhFRyc3AUWLMx1Rpe7Wk5PUOcjgt1O
-	 Xjvnf09ikFsG8y0TqKwUXNZHPHOD1NqAfsuFiTxs=
+	b=BZpawxX3X0Dk6tbZLc/nt3vrMoTY/GVdxueQzfAvr0UZsmwHRCeYNZ3DNBIVfwyfM
+	 gO0okhzftBLDZ0kR2AqY+ZQJWGjKI6OQvV32D5ZbBoPdnSMKIkdyYMtH5qHzEtL7Ve
+	 n92/P9XQGD/2TwdTIW2APOnZsHKw04eMrLWsUamU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Huang <lei.huang@linux.intel.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0660/1674] fuse: Fix missing FOLL_PIN for direct-io
-Date: Sat, 17 Oct 2026 17:48:52 +0200
-Message-ID: <20261017160448.053894742@linuxfoundation.org>
+Subject: [PATCH 6.6 0687/1674] nvme-tcp: fix potential memory corruption in nvme_tcp_recv_pdu()
+Date: Sat, 17 Oct 2026 17:49:19 +0200
+Message-ID: <20261017160448.742002662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,94 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Huang <lei.huang@linux.intel.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 738adade96b2ec414a44f3b1ed891fec3e0c03dd ]
+[ Upstream commit ad95bab0cd28ed77c2c0d0b6e76e03e031391064 ]
 
-Our user space filesystem relies on fuse to provide POSIX interface.
-In our test, a known string is written into a file and the content
-is read back later to verify correct data returned. We observed wrong
-data returned in read buffer in rare cases although correct data are
-stored in our filesystem.
+nvme_tcp_recv_pdu() doesn't check the validity of the header length.
+When header digests are enabled, a target might send a packet with an
+invalid header length (e.g. 255), causing nvme_tcp_verify_hdgst()
+to access memory outside the allocated area and cause memory corruptions
+by overwriting it with the calculated digest.
 
-Fuse kernel module calls iov_iter_get_pages2() to get the physical
-pages of the user-space read buffer passed in read(). The pages are
-not pinned to avoid page migration. When page migration occurs, the
-consequence are two-folds.
+Fix this by rejecting packets with an unexpected header length.
 
-1) Applications do not receive correct data in read buffer.
-2) fuse kernel writes data into a wrong place.
-
-Using iov_iter_extract_pages() to pin pages fixes the issue in our
-test.
-
-An auxiliary variable "struct page **pt_pages" is used in the patch
-to prepare the 2nd parameter for iov_iter_extract_pages() since
-iov_iter_get_pages2() uses a different type for the 2nd parameter.
-
-[SzM] add iov_iter_extract_will_pin(ii) and unpin only if true.
-
-Signed-off-by: Lei Huang <lei.huang@linux.intel.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 41748675c0bf ("virtiofs: use pages instead of pointer for kernel direct IO")
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c   | 15 ++++++++++-----
- fs/fuse/fuse_i.h |  1 +
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/nvme/host/tcp.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 553c163afbc2d..8a8c0aa82b866 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -666,7 +666,8 @@ static void fuse_release_user_pages(struct fuse_args_pages *ap,
- 	for (i = 0; i < ap->num_pages; i++) {
- 		if (should_dirty)
- 			set_page_dirty_lock(ap->pages[i]);
--		put_page(ap->pages[i]);
-+		if (ap->args.is_pinned)
-+			unpin_user_page(ap->pages[i]);
- 	}
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index e270024fe5490..cd8fb901cabcd 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -190,6 +190,19 @@ static inline int nvme_tcp_queue_id(struct nvme_tcp_queue *queue)
+ 	return queue - queue->ctrl->queues;
  }
  
-@@ -1424,10 +1425,13 @@ static int fuse_get_user_pages(struct fuse_args_pages *ap, struct iov_iter *ii,
- 	while (nbytes < *nbytesp && ap->num_pages < max_pages) {
- 		unsigned npages;
- 		size_t start;
--		ret = iov_iter_get_pages2(ii, &ap->pages[ap->num_pages],
--					*nbytesp - nbytes,
--					max_pages - ap->num_pages,
--					&start);
-+		struct page **pt_pages;
++static inline bool nvme_tcp_recv_pdu_supported(enum nvme_tcp_pdu_type type)
++{
++	switch (type) {
++	case nvme_tcp_c2h_term:
++	case nvme_tcp_c2h_data:
++	case nvme_tcp_r2t:
++	case nvme_tcp_rsp:
++		return true;
++	default:
++		return false;
++	}
++}
 +
-+		pt_pages = &ap->pages[ap->num_pages];
-+		ret = iov_iter_extract_pages(ii, &pt_pages,
-+					     *nbytesp - nbytes,
-+					     max_pages - ap->num_pages,
-+					     0, &start);
- 		if (ret < 0)
- 			break;
+ static inline struct blk_mq_tags *nvme_tcp_tagset(struct nvme_tcp_queue *queue)
+ {
+ 	u32 queue_idx = nvme_tcp_queue_id(queue);
+@@ -816,6 +829,16 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
+ 		return 0;
  
-@@ -1444,6 +1448,7 @@ static int fuse_get_user_pages(struct fuse_args_pages *ap, struct iov_iter *ii,
- 			(PAGE_SIZE - ret) & (PAGE_SIZE - 1);
+ 	hdr = queue->pdu;
++	if (unlikely(hdr->hlen != sizeof(struct nvme_tcp_rsp_pdu))) {
++		if (!nvme_tcp_recv_pdu_supported(hdr->type))
++			goto unsupported_pdu;
++
++		dev_err(queue->ctrl->ctrl.device,
++			"pdu type %d has unexpected header length (%d)\n",
++			hdr->type, hdr->hlen);
++		return -EPROTO;
++	}
++
+ 	if (unlikely(hdr->type == nvme_tcp_c2h_term)) {
+ 		/*
+ 		 * C2HTermReq never includes Header or Data digests.
+@@ -848,10 +871,13 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
+ 		nvme_tcp_init_recv_ctx(queue);
+ 		return nvme_tcp_handle_r2t(queue, (void *)queue->pdu);
+ 	default:
+-		dev_err(queue->ctrl->ctrl.device,
+-			"unsupported pdu type (%d)\n", hdr->type);
+-		return -EINVAL;
++		goto unsupported_pdu;
  	}
++
++unsupported_pdu:
++	dev_err(queue->ctrl->ctrl.device,
++		"unsupported pdu type (%d)\n", hdr->type);
++	return -EINVAL;
+ }
  
-+	ap->args.is_pinned = iov_iter_extract_will_pin(ii);
- 	ap->args.user_pages = true;
- 	if (write)
- 		ap->args.in_pages = true;
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index 8751217aaafa7..83dc806d72056 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -289,6 +289,7 @@ struct fuse_args {
- 	bool page_replace:1;
- 	bool may_block:1;
- 	bool is_ext:1;
-+	bool is_pinned:1;
- 	struct fuse_in_arg in_args[3];
- 	struct fuse_arg out_args[2];
- 	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
+ static inline void nvme_tcp_end_request(struct request *rq, u16 status)
 -- 
 2.53.0
 
