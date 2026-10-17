@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8547224D6;
-	Sat, 17 Oct 2026 16:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AA238B12D;
+	Sat, 17 Oct 2026 16:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253180; cv=none; b=ZMVt3tu4DwTakhxfrXoIZAs6NH5mCrSfmHn+cWqiJwazmCEoDHB6+gygQGyt9FAefECiTkWwhvgJY6gIMxO81HSyrOrM/bW57lBHCCeqqQ1YSnFgOEcT0L/c7l0erq/URI5bAWLk3nz9DYY/9Q7f7Na4AFQ8FoywhaR4FWdGUPw=
+	t=1792253183; cv=none; b=IeWauTgVBSIxwW0TvV4kxKJbD0zm1wvH7atyvnHhyMskvA+DOGAZqMhXO+tPVUdKPLh0tH7XfnVZayjOz0qQ4u8SOgyCEdqwiQ1+E+efaTJLY09N9UR/zkJ7UZmNul+8+HgkA1hN8Ad8q7kJWFSvmWcX/bhWO45YCGH8176D+oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253180; c=relaxed/simple;
-	bh=W3yPTDPQQe0Of5hK6yGzUWeGNMRRt72Y0JVgKsGMHD0=;
+	s=arc-20240116; t=1792253183; c=relaxed/simple;
+	bh=alRRBwp5HA6ywkaof1RV3T3Rwb5GTFkONvO/tVzgZ50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXSyZ9s/sgTj/zbP+qhteTLMKoTHGYGJz5upS80N09CAmtXRFglx1mxj1XoungqzhypYAWx7/GILY/ayjaPdFbf8jVW7og0fBnXsfrRt4u+LxYgJ4BTMgNMHbpwvUeorwW49fVIU1PduWM4Gxlmsf9qjCZVnNVXHnWTamGS8Nig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGGxcCn9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMM1bkIia07EcohABGJfj3XXfHmfJytzhnWpiyVV+E/CMVC/F92t18s1Jl1vRRDkRxnfVXh7y4xAEFpYX4h7kVHIS1+ObsjQG7rpUW/tzSAVkwJCv+7U7Ng6sqP6f8821OelCkpIA3KqSdX581/faz2wDw8uHBcLVV9DIC9Ju4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xePlKMSC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGGxcCn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064591F000C4;
-	Sat, 17 Oct 2026 16:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xePlKMSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CA21F000C4;
+	Sat, 17 Oct 2026 16:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253179;
-	bh=a4DDRKcw5vx2VBfQ3ZEEtT/pmUjqCiOjGrBedwnat3g=;
+	s=korg; t=1792253182;
+	bh=8fs/9ZTU0Y4y1WADi5xP7wQuO/pyKuB3rublpvk1MsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGGxcCn93s6IdoRoU0wUGlKsbSQNk3ZV5lEgloUNe98CCwIgeb8O2yaZYAAFDQt4e
-	 GA6tHneqa0bV/54AnlhcYnHjjA8uB8wSGRkWMNMEVV3VpjoUi4FEQrd1bCE982gnI3
-	 VAxGpPk4L1mVZVhD+Y2O8cTTKSx7VBD1F4/6Nz0Y=
+	b=xePlKMSCF1VZYwQU5tM7BugRRKrSTCJY4pjYrSt+LdEomK7iBHEcGtcvXsWqXn2Hk
+	 9Ee/9RhtNYqj86j86SwNks5zbmkKImittsqp1PnOFjNvQonTSQ0qEe8gfFJuhzCSSl
+	 JqG4R8A7jtRtH9D6xtput92h9VVYts950VnZyNPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei-Jie Hung <imbigking12@gmail.com>,
-	Pu Lehui <pulehui@huawei.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/869] riscv: patch: fix handling of bpf-jit execmem addresses
-Date: Sat, 17 Oct 2026 17:47:57 +0200
-Message-ID: <20261017160037.940910466@linuxfoundation.org>
+Subject: [PATCH 6.12 037/869] scsi: ufs: core: Decouple CQ sweep from request iterator in MCQ
+Date: Sat, 17 Oct 2026 17:47:58 +0200
+Message-ID: <20261017160037.966124688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,76 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei-Jie Hung <imbigking12@gmail.com>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit a510e1ae8c9030750c2edf7b0bc9b186cd8c7a06 ]
+[ Upstream commit 469fa055664bfd8717b087a80d59c03055789c17 ]
 
-Commit 8718e5a3090b ("riscv: patch: skip fixmap mapping when kernel text
-is already writable") gated the core_kernel_text() branch of patch_map()
-on CONFIG_STRICT_KERNEL_RWX, and explicitly left the vmalloc branch
-unchanged. That branch has a separate problem.
+In MCQ mode, ufshcd_mcq_compl_pending_transfer() uses
+blk_mq_tagset_busy_iter() to iterate over busy requests during error
+recovery and host reset. However, both iterator callbacks perform
+whole-queue operations redundantly for each visited request:
 
-That branch only creates a temporary writable fixmap alias when
-CONFIG_STRICT_MODULE_RWX is enabled, and otherwise assumes the target is
-directly writable and returns the address unchanged. That assumption no
-longer holds: bpf_prog_pack_alloc calls set_memory_rox() on every pack
-unconditionally in alloc_new_pack(), independently of any
-CONFIG_STRICT_*_RWX option, so BPF text in the vmalloc area is read-only
-regardless of what CONFIG_STRICT_MODULE_RWX says.
+ - force_compl == true: ufshcd_mcq_force_compl_one() calls
+   ufshcd_mcq_compl_all_cqes_lock() on every busy request, sweeping the
+   entire completion ring (hwq->max_entries slots) once per active request
+   under spin_lock_irqsave even though the first sweep already cleared all
+   completion entries.
 
-With CONFIG_STRICT_MODULE_RWX=n, patch_map() returns the read-only
-address directly, the subsequent copy_to_kernel_nofault() takes a
-page fault and returns -EFAULT. bpf_arch_text_copy() turns that into
--EINVAL, which propagates through bpf_jit_binary_pack_finalize() to the
-WARN_ON() in bpf_int_jit_compile() and leaves the program un-JITed.
+ - force_compl == false: ufshcd_mcq_compl_one() acquires cq_lock and polls
+   CQTPy over MMIO via ufshcd_mcq_poll_cqe_lock() for every busy request
+   without doing any per-request work.
 
-Note that BPF cannot be fixed the way kprobes was in
-commit bdc46e507b59 ("riscv: mm: make EXECMEM_KPROBES writable without
-CONFIG_STRICT_MODULE_RWX"). EXECMEM_BPF is already PAGE_KERNEL, i.e.
-writable at allocation time; the read-only mapping is established
-afterwards by generic code in alloc_new_pack(), which arch code cannot
-influence. The only place this can be handled is patch_map().
+Sweep or poll each hardware queue (hba->uhq[i]) once at the start of
+ufshcd_mcq_compl_pending_transfer(). When force_compl is true, run
+blk_mq_tagset_busy_iter() afterward to complete residual in-flight
+requests with DID_REQUEUE, and remove the now-unused
+ufshcd_mcq_compl_one() callback.
 
-This is the same problem that was fixed on arm64 by commit b1480ed230ac
-("arm64: patching: fix handling of execmem addresses"), and the fix is
-the same: CONFIG_EXECMEM is what actually tracks whether the vmalloc
-area can hold executable memory that needs a temporary alias to be
-written. CONFIG_BPF_JIT, CONFIG_KPROBES and CONFIG_MODULES all select
-it.
-
-Note that this is not limited to CONFIG_MODULES=n. Unlike arm64, riscv
-selects CONFIG_ARCH_OPTIONAL_KERNEL_RWX, so CONFIG_STRICT_MODULE_RWX can
-be disabled with CONFIG_MODULES=y as well, and the bug is reachable in
-that configuration too.
-
-The !CONFIG_MMU build is unaffected: it has its own __patch_insn_set()
-and __patch_insn_write() implementations and never calls patch_map().
-
-Fixes: 2c9e5d4a0082 ("bpf: remove CONFIG_BPF_JIT dependency on CONFIG_MODULES of")
-Signed-off-by: Wei-Jie Hung <imbigking12@gmail.com>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Tested-by: Pu Lehui <pulehui@huawei.com>
-Link: https://patch.msgid.link/20260914115607.350097-1-imbigking12@gmail.com
+Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20260928035816.1294326-3-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: adapted blk_mq_tagset_busy_iter() callback changes to the existing tag-based completion loop ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/patch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index f8826f1595e16..9c9282f8a3a50 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -46,7 +46,7 @@ static __always_inline void *patch_map(void *addr, const unsigned int fixmap)
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 22f4f5f08e74a..9c2f407da28a1 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5685,7 +5685,17 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
+ 	struct ufshcd_lrb *lrbp;
+ 	struct scsi_cmnd *cmd;
+ 	unsigned long flags;
+-	int tag;
++	int tag, i;
++
++	for (i = 0; i < hba->nr_hw_queues; i++) {
++		if (force_compl)
++			ufshcd_mcq_compl_all_cqes_lock(hba, &hba->uhq[i]);
++		else
++			ufshcd_mcq_poll_cqe_lock(hba, &hba->uhq[i]);
++	}
++
++	if (!force_compl)
++		return;
  
- 	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr)) {
- 		phys = __pa_symbol(addr);
--	} else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX)) {
-+	} else if (IS_ENABLED(CONFIG_EXECMEM)) {
- 		struct page *page = vmalloc_to_page(addr);
+ 	for (tag = 0; tag < hba->nutrs; tag++) {
+ 		lrbp = &hba->lrb[tag];
+@@ -5698,22 +5708,17 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
+ 		if (!hwq)
+ 			continue;
  
- 		BUG_ON(!page);
+-		if (force_compl) {
+-			ufshcd_mcq_compl_all_cqes_lock(hba, hwq);
+-			/*
+-			 * For those cmds of which the cqes are not present
+-			 * in the cq, complete them explicitly.
+-			 */
+-			spin_lock_irqsave(&hwq->cq_lock, flags);
+-			if (cmd && !test_bit(SCMD_STATE_COMPLETE, &cmd->state)) {
+-				set_host_byte(cmd, DID_REQUEUE);
+-				ufshcd_release_scsi_cmd(hba, lrbp);
+-				scsi_done(cmd);
+-			}
+-			spin_unlock_irqrestore(&hwq->cq_lock, flags);
+-		} else {
+-			ufshcd_mcq_poll_cqe_lock(hba, hwq);
++		/*
++		 * For those cmds of which the cqes are not present
++		 * in the cq, complete them explicitly.
++		 */
++		spin_lock_irqsave(&hwq->cq_lock, flags);
++		if (cmd && !test_bit(SCMD_STATE_COMPLETE, &cmd->state)) {
++			set_host_byte(cmd, DID_REQUEUE);
++			ufshcd_release_scsi_cmd(hba, lrbp);
++			scsi_done(cmd);
+ 		}
++		spin_unlock_irqrestore(&hwq->cq_lock, flags);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
