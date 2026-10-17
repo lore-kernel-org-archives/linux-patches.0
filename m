@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184FB3A1E92;
-	Sat, 17 Oct 2026 17:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0667621FF23;
+	Sat, 17 Oct 2026 17:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259791; cv=none; b=UoElSBnZchRpLKXrGKbLwyjtFCuXISUATJ4CVXCE2G7W5AktneDvy4901j1x963+dJVAz98kbNcji0Q4AZdf/GQNpEe/EomjJSywePEJ5iFjEQKIg23K7W+9RAYRzocx5Y5uB1ktgi5O3C1SBF1+zxMvq2udqgymm3zsu/LwTLM=
+	t=1792259794; cv=none; b=ueyV1EvMBTGquM/bfqMfedRLJlECJOGcCFV5eWZ+/0nR95FDs62n81c2YwkqWklnrRUxEyFs8oNYOb2slfrX4lpIQgC+NaHGzmUb3tyiiXCBvSY63hK9Lnk3qWaHGgbuHgaWOLsS3MeUstTC9ArTg4+FgPwSuopB3DtpHQLrH8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259791; c=relaxed/simple;
-	bh=jriZ5Ciu3hYlfNorsTaRL7SI6eTxLWzcN/+tk5KlHjc=;
+	s=arc-20240116; t=1792259794; c=relaxed/simple;
+	bh=hMQhJkVGKN9Oo/OqOXSy7AHAMxgrVMw5RtcWwsMJ6eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOJQ66Uocv26dCVCTJJXWEpsvJGzs9y1BtcFNVk/KY9GuYIXT011sR6ZBIGZHADZtDy9isVByzjXxRyiDMC1MkayBA2pDPkI4NIts6AuM3Ri39zwavGvJ1epJESEo4vTbyxgWH5ep850ZAr7IlRTlfvUsIxcPaXZ4LmWW4zFAmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfgAo8Dw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kaYpY0wfGJ1ELaBc/Dkl6ZXxMBOTlrvYNno02D95YIfjUGTo2cxVyN3lGdAO3oEogQOaWdvyxrAmZ8GL1J3Qem5sYAKdihaiPxYNVwe0V6UgDOUq6SrElyNzctzO7PiW36SQkIFoSLRj1EfUaf2Cux/9XxOo1ItjN5Nfh3UqNMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4gR0uPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfgAo8Dw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFBF1F000C4;
-	Sat, 17 Oct 2026 17:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4gR0uPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCE11F000C4;
+	Sat, 17 Oct 2026 17:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259790;
-	bh=EKaLV9jRXgFmNEWC9OFaufRq+JSryBhbjDOWO1/Nh+A=;
+	s=korg; t=1792259792;
+	bh=/eBBT0DpFmHh9b2/4MN6/dBDfZv4Zeoq1tlYTKoTlTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DfgAo8DwNgJJalbsjt3uSyXTPg8HSH5VqV1g9sXom7KUdP+lLDE3QEd3lC5u3KOB8
-	 uI5Q0CzEgTizLtWTafPqPQj7HZMiJyI5DKDU0m7rxFUHHhysB4tjuyfIQgFCJFvTWz
-	 ME8KKXWUD4+JAVFo69h5nVnFra3Ynu9aSjk6Apm4=
+	b=R4gR0uPx8GXR4zJi0gNwIVGY05LaVUTcrxBAc3lj43fp6/IksludYQnwegjQ85d0h
+	 NxZfl90kZCFXe8+dysw0KFFYMpo/QQaAI22Eqtd74JIQgIQy6PzbSn9QFNjrtAc1e0
+	 GOzvuZGHFExdaQ63bhOElWGlcipTwGfE+00FWtNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Lance Yang <lance.yang@linux.dev>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Qian Cai <cai@lca.pw>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1332/1674] mm/kmemleak: avoid soft lockup when scanning task stacks
-Date: Sat, 17 Oct 2026 18:00:04 +0200
-Message-ID: <20261017160505.336851220@linuxfoundation.org>
+Subject: [PATCH 6.6 1333/1674] ksmbd: fix tree connection use-after-free in smb2_tree_connect()
+Date: Sat, 17 Oct 2026 18:00:05 +0200
+Message-ID: <20261017160505.362046836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,138 +53,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 5d10d4e19e6daa487f0cd0ea6cba472325de92f9 ]
+[ Upstream commit b5ec6c462aab1062cf5d1e667ba7c6442f737055 ]
 
-Patch series "mm/kmemleak: avoid soft lockup when scanning task", v3.
+ksmbd_tree_conn_connect() publishes a new tree connection in
+sess->tree_conns with a single reference and returns its pointer to
+smb2_tree_connect(). The handler continues to initialize the object and
+build the response after publication. A concurrent session logoff can
+erase the connection and drop that reference, freeing the object while
+the handler still uses it.
 
-kmemleak_scan() scans every task stack under one rcu_read_lock() with no
-reschedule point, which can trip the soft lockup watchdog on hosts with
-very many threads.
+BUG: KASAN: slab-use-after-free in smb2_tree_connect+0xe3d/0xf90
+  smb2_tree_connect (fs/smb/server/smb2pdu.c:2872)
+  handle_ksmbd_work
+  process_one_work
+  worker_thread
+  kthread
 
-That prints the following message, depending on the workload+host
-configuration:
+After xa_store() succeeds, take a second reference before releasing
+tree_conns_lock. The original reference belongs to the xarray entry and
+the second belongs to the creating smb2_tree_connect() handler.
 
-      watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
-       scan_block
-       kmemleak_scan
-       kmemleak_scan_thread
-       kthread
+Keep the references balanced in every path:
 
-Patch 1 walks the tasks with find_ge_pid() so the scan reschedules between
-tasks
+- On normal exit or an error after publication, smb2_tree_connect()
+  drops its creator reference. Error cleanup also calls
+  ksmbd_tree_conn_disconnect(), which drops the xarray reference only if
+  it removes the exact entry.
+- SMB2 TREE_DISCONNECT uses the same helper to remove the entry and drop
+  its xarray reference. The request's existing lookup reference remains
+  owned by the request and is released by the existing cleanup.
+- Session LOGOFF removes each entry and drops its xarray reference. If
+  it wins the race, later cleanup sees that the entry is gone and does
+  not drop that reference again.
 
-Patches 2-3 let the scan loops stop early once a scan is interrupted.
+To enforce this ownership, claim the disconnected state and erase the
+exact entry atomically under tree_conns_lock. This guarantees one drop
+for the xarray reference and one drop by each in-flight user, regardless
+of which teardown path wins. If logoff removes the entry before
+initialization completes, fail the connect instead of marking the
+detached object TREE_CONNECTED.
 
-This patch (of 3):
-
-kmemleak_scan() walks every thread and scans its kernel stack under a
-single rcu_read_lock() with no reschedule point.  On a host with very many
-threads -- amplified by KASAN/lockdep in debug builds -- this loop can hog
-a CPU long enough to trip the soft lockup watchdog:
-
-  watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
-   scan_block
-   kmemleak_scan
-   kmemleak_scan_thread
-   kthread
-
-A cond_resched() cannot be added directly: the loop runs inside an RCU
-read-side critical section.
-
-Walk the tasks one PID at a time with find_ge_pid(), taking the RCU read
-lock only to look up and pin each task.  The stack is then scanned with no
-lock held, so cond_resched() runs between tasks and the scan stops early
-on scan_should_stop().  This follows the next_tgid()/task_seq_get_next()
-iteration pattern and keeps each RCU critical section short.
-
-Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-0-acecd7d7fd92@debian.org
-Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-1-acecd7d7fd92@debian.org
-Fixes: c4b28963fd79 ("mm/kmemleak: rely on rcu for task stack scanning")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Qian Cai <cai@lca.pw>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 33b235a6e6eb ("ksmbd: fix race condition between tree conn lookup and disconnect")
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kmemleak.c | 51 ++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 13 deletions(-)
+ fs/smb/server/mgmt/tree_connect.c | 20 ++++++++------------
+ fs/smb/server/smb2pdu.c           | 28 ++++++++++++++--------------
+ 2 files changed, 22 insertions(+), 26 deletions(-)
 
-diff --git a/mm/kmemleak.c b/mm/kmemleak.c
-index e2e41de55c02b..fceb28690f2fc 100644
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -1516,6 +1516,42 @@ static void kmemleak_cond_resched(struct kmemleak_object *object)
- 	put_object(object);
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index 9bde1b58f9c46..8f963602935cd 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -76,7 +76,7 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 	tree_conn->share_conf = sc;
+ 	tree_conn->t_state = TREE_NEW;
+ 	status.tree_conn = tree_conn;
+-	atomic_set(&tree_conn->refcount, 1);
++	atomic_set(&tree_conn->refcount, 2);
+ 
+ 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
+ 			      GFP_KERNEL));
+@@ -108,6 +108,12 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+ 	int ret;
+ 
+ 	write_lock(&sess->tree_conns_lock);
++	if (tree_conn->t_state == TREE_DISCONNECTED ||
++	    xa_load(&sess->tree_conns, tree_conn->id) != tree_conn) {
++		write_unlock(&sess->tree_conns_lock);
++		return -ENOENT;
++	}
++	tree_conn->t_state = TREE_DISCONNECTED;
+ 	xa_erase(&sess->tree_conns, tree_conn->id);
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+@@ -146,18 +152,8 @@ int ksmbd_tree_conn_session_logoff(struct ksmbd_session *sess)
+ 	if (!sess)
+ 		return -EINVAL;
+ 
+-	xa_for_each(&sess->tree_conns, id, tc) {
+-		write_lock(&sess->tree_conns_lock);
+-		if (tc->t_state == TREE_DISCONNECTED) {
+-			write_unlock(&sess->tree_conns_lock);
+-			ret = -ENOENT;
+-			continue;
+-		}
+-		tc->t_state = TREE_DISCONNECTED;
+-		write_unlock(&sess->tree_conns_lock);
+-
++	xa_for_each(&sess->tree_conns, id, tc)
+ 		ret |= ksmbd_tree_conn_disconnect(sess, tc);
+-	}
+ 	xa_destroy(&sess->tree_conns);
+ 	return ret;
+ }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 4f4307ce1482d..90186e062257a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1991,6 +1991,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *treename = NULL, *name = NULL;
+ 	struct ksmbd_tree_conn_status status;
++	struct ksmbd_tree_connect *tree_conn = NULL;
+ 	struct ksmbd_share_config *share = NULL;
+ 	int rc = -EINVAL;
+ 
+@@ -2015,10 +2016,12 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		    name, treename);
+ 
+ 	status = ksmbd_tree_conn_connect(work, name);
+-	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
++	if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
++		tree_conn = status.tree_conn;
+ 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
+-	else
++	} else {
+ 		goto out_err1;
++	}
+ 
+ 	share = status.tree_conn->share_conf;
+ 	if (test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
+@@ -2049,8 +2052,13 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		status.tree_conn->posix_extensions = true;
+ 
+ 	write_lock(&sess->tree_conns_lock);
+-	status.tree_conn->t_state = TREE_CONNECTED;
++	if (status.tree_conn->t_state == TREE_DISCONNECTED)
++		status.ret = KSMBD_TREE_CONN_STATUS_ERROR;
++	else
++		status.tree_conn->t_state = TREE_CONNECTED;
+ 	write_unlock(&sess->tree_conns_lock);
++	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
++		goto out_err1;
+ 	rsp->StructureSize = cpu_to_le16(16);
+ out_err1:
+ 	/*
+@@ -2100,6 +2108,9 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
+ 		smb2_set_err_rsp(work);
+ 
++	if (tree_conn)
++		ksmbd_tree_connect_put(tree_conn);
++
+ 	return rc;
  }
  
-+/*
-+ * Scan all task kernel stacks, rescheduling between tasks. Each task is looked
-+ * up and pinned within its own RCU read-side section, so no lock is held across
-+ * the scan and the walk cannot trip the soft lockup watchdog.
-+ */
-+static void kmemleak_scan_task_stacks(void)
-+{
-+	struct pid *pid;
-+	int nr = 1;
-+
-+	do {
-+		struct task_struct *p = NULL;
-+
-+		rcu_read_lock();
-+		pid = find_ge_pid(nr, &init_pid_ns);
-+		if (pid) {
-+			nr = pid_nr(pid) + 1;
-+			p = pid_task(pid, PIDTYPE_PID);
-+			if (p)
-+				get_task_struct(p);
-+		}
-+		rcu_read_unlock();
-+
-+		if (p) {
-+			void *stack = try_get_task_stack(p);
-+
-+			if (stack) {
-+				scan_block(stack, stack + THREAD_SIZE, NULL);
-+				put_task_stack(p);
-+			}
-+			put_task_struct(p);
-+		}
-+		cond_resched();
-+	} while (pid && !scan_should_stop());
-+}
-+
- /*
-  * Scan data sections and all the referenced memory blocks allocated via the
-  * kernel's standard allocators. This function must be called with the
-@@ -1607,19 +1643,8 @@ static void kmemleak_scan(void)
- 	/*
- 	 * Scanning the task stacks (may introduce false negatives).
- 	 */
--	if (kmemleak_stack_scan) {
--		struct task_struct *p, *g;
--
--		rcu_read_lock();
--		for_each_process_thread(g, p) {
--			void *stack = try_get_task_stack(p);
--			if (stack) {
--				scan_block(stack, stack + THREAD_SIZE, NULL);
--				put_task_stack(p);
--			}
--		}
--		rcu_read_unlock();
--	}
-+	if (kmemleak_stack_scan)
-+		kmemleak_scan_task_stacks();
+@@ -2201,17 +2212,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
  
- 	/*
- 	 * Scan the objects already referenced from the sections scanned
+ 	ksmbd_close_tree_conn_fds(work);
+ 
+-	write_lock(&sess->tree_conns_lock);
+-	if (tcon->t_state == TREE_DISCONNECTED) {
+-		write_unlock(&sess->tree_conns_lock);
+-		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+-		err = -ENOENT;
+-		goto err_out;
+-	}
+-
+-	tcon->t_state = TREE_DISCONNECTED;
+-	write_unlock(&sess->tree_conns_lock);
+-
+ 	err = ksmbd_tree_conn_disconnect(sess, tcon);
+ 	if (err) {
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
 -- 
 2.53.0
 
