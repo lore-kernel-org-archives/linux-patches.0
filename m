@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC703AA4E8;
-	Sat, 17 Oct 2026 17:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B3C3976BA;
+	Sat, 17 Oct 2026 17:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257181; cv=none; b=okMclJ0TZ9+4s5yfDknCG52f7lKDP86f1+kT52Yj/u3roAtswI1i3lDI9QH0nAREg+Fn2AtqOeXtllTl0fTlYhnefA75bfpZSeKYQU3+uHG6q0ZrxzbAhl4LSFcSEMRh9/YRgM8kGZ9XtnAVZO4mox26kCcTZu65tp+TMFZGsHM=
+	t=1792257184; cv=none; b=b5vCgli5KduZhO1SYQQ4nUS6Bf1PxO9POllD042oTI5MyPJdflWWt5RWAZ3UMH3wgJGtdyg3Dh6Xb7Jp20eXCzmntT6ACm9NYftUFZW0LR7tcMupOY4SBo6kr8525Q7aXjcBpKGujZo0duRXcoyA5zQ9gMu0hxBVb0I3HzI9/H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257181; c=relaxed/simple;
-	bh=Rer5gZBjYBmEvJQJOlb+QX55MwZH40u1qoMdtLoTEcY=;
+	s=arc-20240116; t=1792257184; c=relaxed/simple;
+	bh=QmJSL+CYKmkjQEzkVKE0AVZBmhLwaKW2axQA33AELm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VWHRgm5ESEbROmWslJ3rw7GfD+eVyWS5E5ghkPSEH3OJmpJ37kSyTKCXy09TDIAjIIul1oKfyT2urYPX16/sfRervLOykGnEzQkQ9SRFKOKpcHvj5jq/EHQz5P9sHblUZLJGGZ5wG9zKzIWD4nrCGvm4bZ9bdw+nRINZxXFxbF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV/OafLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RHZ6sy0jQX/YoYlyULRinbGH+xZS8OmOSrl6471cWwbxecvnOREFv6Q689A0zDnw4JNdeJ47F82pL2vOlgeSScHKZ9NAXklQAOXjNO09dyq7KNWt1wuboiyYl0tHao7MH/pqC9bDnZeZzqNGw9qlNoHlLzmY97mOx1odl5LTu1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc2NdsU8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV/OafLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9991F000C4;
-	Sat, 17 Oct 2026 17:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc2NdsU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFEB1F000C4;
+	Sat, 17 Oct 2026 17:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257180;
-	bh=qusRis1I97eAql+PanycV2bnnHK2FxEpjrXIyxSQhAg=;
+	s=korg; t=1792257183;
+	bh=AFNloL5iaNh3LRGlI8yjG0vUSNOonQHQff/AYi6pmj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GV/OafLOYawnUevMSLw+uWAi5UiJ5wqYyEmuv9S9FuZXYcGbUuRd14J4NQPDoVb0N
-	 KcpnjnefXFd3q14YHUb8LyF0A7MNAE84dylYc49y9Dj0I5hPAfBihrY2kPd1P6rnb9
-	 qZFIhwTzhf3sZLMQexUOg5/PpdPZs4fSAGNff/d8=
+	b=Hc2NdsU85CmNEp/GuBQdG4XAoPeUklOOR9hCj+VcE6MIzQfUr2QMN8f5RvYYLhHc1
+	 LeJGnDHtEa/XyGjGwfGjS6IAYI7zYatwh6wb8daOy+16oqlCC7dGa2tXzVzpXZBazL
+	 kw1Szqb93QhMiggMN6tFIgUS6gAlAE7SNrcIKvHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0475/1674] wireguard: noise: reject response consumption after intermediate initiation
-Date: Sat, 17 Oct 2026 17:45:47 +0200
-Message-ID: <20261017160443.307640465@linuxfoundation.org>
+	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.6 0476/1674] workqueue: Fix NULL current_pwq deref in chained work check
+Date: Sat, 17 Oct 2026 17:45:48 +0200
+Message-ID: <20261017160443.332414103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,104 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-commit d0305f8d90029556260c6824b61c493c424eba9e upstream.
+commit 980db94e3eeefdd8a1c46f86412c33a7f7806f51 upstream.
 
-Two threads begin processing the identical response message, received
-twice. The first thread, A, runs. While it's running, the second one,
-B, gets partway through, and during that slow calculation, or even while
-blocking on down_write(), A completes and then also a handshake
-initiation that's already been queued up runs in thread C, which itself
-takes that same down_write(). The handshake initiation creation
-succeeds, and sets the state back to waiting-for-response, and calls
-up_write(), at which point thread B resumes, because either its finished
-its calculations or was finally allowed to acquire down_write(). Thread
-B then copies the state back to the peer, and begins a new session,
-using that state, which is the same session as the one made in thread A.
+current_wq_worker() only tells us that %current is a kworker. It does
+not guarantee that the worker is currently executing a work item, as
+worker->current_pwq is populated only while process_one_work() is running
+the work function.
 
-Thread A			Thread B			Thread C
+is_chained_work() can be reached while queueing on a draining or
+destroying workqueue. If a kworker outside work-item execution reaches
+that path, current_wq_worker() returns a worker but worker->current_pwq is
+NULL, and the chained-work test can fault before it emits the intended
+warning.
 
-down_read()
- sA = handshake->state
- memcpy(cA, handshake->crypto)
-up_read()
-if (sA != 1)
- goto fail
-slow_crypto(cA)
-				down_read()
-				 sB = handshake->state
-				 memcpy(cB, handshake->crypto)
-				up_read()
-				if (sB != 1)
-				 goto fail
-				slow_crypto(cB)
-down_write()
- if (sA != handshake->state)
-  goto fail
- memcpy(handshake->crypto, cA)
- handshake->state = 2
-up_write()
-down_write()
- if (handshake->state != 2)
-  goto fail
- derive_session(handshake->crypto)
-up_write()
-								down_write()
-								 slow_crypto(handshake->crypto)
-								 handshake->state = 1
-								up_write()
-				down_write()
-				 if (sB != handshake->state)
-				   goto fail
-				 memcpy(handshake->crypto, cB)
-				 handshake->state = 2
-				up_write()
-				down_write()
-				 if (handshake->state != 2)
-				  goto fail
-				 derive_session(handshake->crypto)
-				up_write()
+Guard the chained-work test with worker->current_pwq. A kworker without
+current_pwq is not executing work on the target workqueue, so the helper
+should return false and let the draining/destroying warning fire.
 
-This seems basically impossible to hit in a meaningful way in practice,
-but ensure that it absolutely cannot happen by comparing the ephemeral
-private key that's on the stack with the latest one that the peer's
-handshake state has.
-
+Fixes: 8d03ecfe4718 ("workqueue: reimplement is_chained_work() using current_wq_worker()")
 Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20261008130124.724119-4-Jason@zx2c4.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/noise.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireguard/noise.c
-+++ b/drivers/net/wireguard/noise.c
-@@ -784,10 +784,11 @@ wg_noise_handshake_consume_response(stru
- 
- 	/* Success! Copy everything to peer */
- 	down_write(&handshake->lock);
--	/* It's important to check that the state is still the same, while we
--	 * have an exclusive lock.
-+	/* Check that the state is the same and that this is still the
-+	 * initiation we started with, while we have an exclusive lock.
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -1692,7 +1692,7 @@ static bool is_chained_work(struct workq
+ 	 * Return %true iff I'm a worker executing a work item on @wq.  If
+ 	 * I'm @worker, it's safe to dereference it without locking.
  	 */
--	if (handshake->state != state) {
-+	if (handshake->state != state ||
-+	    crypto_memneq(handshake->ephemeral_private, ephemeral_private, NOISE_PUBLIC_KEY_LEN)) {
- 		up_write(&handshake->lock);
- 		goto fail;
- 	}
+-	return worker && worker->current_pwq->wq == wq;
++	return worker && worker->current_pwq && worker->current_pwq->wq == wq;
+ }
+ 
+ /*
 
 
