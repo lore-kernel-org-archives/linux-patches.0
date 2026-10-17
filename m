@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901D73C0633;
-	Sat, 17 Oct 2026 17:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87014382F25;
+	Sat, 17 Oct 2026 17:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258998; cv=none; b=TYdehxmsse8yIIzD3TSe3Ay6Q7TJbcMazaPy4Gj7vjG+ufptesEgrDRbsaodaXs7Q8hf3fbUxzg69Hspt4X25e1nJqUFu86qMp81tcGTcnwjDg7zeFT9Xkk9tJcIvcupbDzN8QmHWeHvt9XmuyaYwmJ6XGYoZWDK9xyMIbW3LVs=
+	t=1792259001; cv=none; b=PcRmQtRMsvYC0V+SD1aXb9fYgP6nWGTE+C1JXhdqLXItp6fWOLYEH/j27m4PVajvlcOyRRxI1WiVFHo0T9DU6S01NiKp6rxPWPNFZ+vYatmrLhpJZRZWu6F8qF+YjEt6Sk+Bz9vg1UJUIDecT6U+FrNuLlZpbcWrSBMugOiKWk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258998; c=relaxed/simple;
-	bh=msuIVgUwE6VUNSiImBUZzKWJK9WGGTTY00I3DQcOzts=;
+	s=arc-20240116; t=1792259001; c=relaxed/simple;
+	bh=FZG0mQf/AkmBDNvpB4clojAR+9qrMTDBwBaLTlz71BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwoHFWaU+FHKpRv5vMDtnEXwu5/GsU1m0Xqz5S0ZQL2bnds9CKCW1wj2jmoglPtIY2gCnMwxmb+AOUJEwwuZ7jXazBAWTc/i6VU05h+Z37Tj4xWD+DhtZnGUNx0LN+y3BO30VDD6/UQtsKKnBAvT23yiD2BKNYqRNsGAQTt27vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n///H61O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYFA9mrUEdWXJZD7HzhFVdZAvXouVshzqE7rrTTtSYc4S6aRUr6ijkZw926taHcXfun5/1bMOGjkd9HKja8UJ3SUjf/nrl4/52il80Vi62ZBWSsAYRn6OqQPtw0cDRx+4NOVkNASKaGvyaUgMkdWVefKEqgmIMUX2ovkciKnubA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj4eMV14; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n///H61O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E5C1F000C4;
-	Sat, 17 Oct 2026 17:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj4eMV14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D532A1F000C4;
+	Sat, 17 Oct 2026 17:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258997;
-	bh=Nll83hkQ9GuIwlkouwO9Al+oQhKUB3knkcYjcsZcMhA=;
+	s=korg; t=1792259000;
+	bh=tEPB/vt05dJwK89rNYYqHw5SJuQCTMxUW07ixgx0Jvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n///H61OBFLDx7uWrdR/D7+5Iimq9wlv+XlST1QnmzDjOEAooeDO8CDAVVUqht8LQ
-	 ijjuDed7No8R6/lq5pG4hyzb4wh4hd3XsppaZ8mk9nX0WIHhZU0lAPjbij7cc7jLVd
-	 q54Lq/og6SSYp/JS6dc6DJAqimkJD9pGNLYWtN8Y=
+	b=Uj4eMV14SjeJHZmnVs/lTquY57UHXg4VgKDQb4kZQHYHuATNoIhS+s6q1eLjm6DWm
+	 B0VX9Ot1hUesxWKwwKgERbbHDIQzShkYQxsfxKgBPvq4KD3Y6X7ACG52HRM2L1SgyP
+	 Gad1Yl1OuCMIgdtkY0+cIdgNLestO4Peu9UdsbOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1069/1674] Bluetooth: eir: Fix stack OOB write when prepending the Flags AD
-Date: Sat, 17 Oct 2026 17:55:41 +0200
-Message-ID: <20261017160458.563268024@linuxfoundation.org>
+Subject: [PATCH 6.6 1070/1674] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
+Date: Sat, 17 Oct 2026 17:55:42 +0200
+Message-ID: <20261017160458.587447726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,73 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 6f5fb689fdf80bdd143f22a502f9eb1f3c85e286 ]
+[ Upstream commit 2f2312c422fd2695da772cecb30c69994b795964 ]
 
-eir_create_adv_data() builds the advertising data into a fixed-size
-buffer ("size", 31 for the legacy path). It may prepend a 3-byte "Flags"
-AD structure (LE_AD_NO_BREDR on an LE-only controller) and then copies
-the per-instance data without checking that it still fits:
+Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
+guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
+doesn't use nested_vmx_vmexit() as that API is intended to be used if and
+only if L2 is active, and the open coded equivalent neglects to put the
+vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
+(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
 
-	memcpy(ptr, adv->adv_data, adv->adv_data_len);
+Note, the !from_vmenter scenario doesn't suffer the same problem, as
+vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
+active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
+getting vmcs12 pages.
 
-tlv_data_max_len() only reserves those 3 bytes when the user-supplied
-flags carry a managed-flags bit, so an instance added with flags == 0 is
-accepted with adv_data_len up to the full buffer. At advertise time the
-flags are still prepended, and the memcpy() writes 3 + adv_data_len
-bytes into the size-byte buffer:
-
-  BUG: KASAN: stack-out-of-bounds in eir_create_adv_data (net/bluetooth/eir.c:301)
-  Write of size 31 at addr ffff88800a547bdc by task kworker/u9:0/65
-  Workqueue: hci0 hci_cmd_sync_work
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   eir_create_adv_data (net/bluetooth/eir.c:301)
-   hci_update_adv_data_sync (net/bluetooth/hci_sync.c:1310)
-   hci_schedule_adv_instance_sync (net/bluetooth/hci_sync.c:1817)
-   hci_cmd_sync_work (net/bluetooth/hci_sync.c:332)
-  This frame has 1 object:
-   [32, 64) 'cp'
-
-The "Flags" structure is added by the kernel, not requested by
-userspace, so only prepend it when it fits together with the instance
-advertising data; when there is no room for both, drop the flags rather
-than the user-provided data.
-
-Reachable by a local user with CAP_NET_ADMIN owning an LE-only
-controller on the legacy advertising path.
-
-Fixes: b44133ff03be ("Bluetooth: Support the "discoverable" adv flag")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
+Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
+Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/eir.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 2f695f1c69b36..ee0136bfae40b 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -283,10 +283,12 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
- 		if (!flags)
- 			flags |= mgmt_get_adv_discov_flags(hdev);
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index a130e2d70c481..2561f2288dc1b 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3571,6 +3571,11 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
+ 	if (!from_vmentry)
+ 		return NVMX_VMENTRY_VMEXIT;
  
--		/* If flags would still be empty, then there is no need to
--		 * include the "Flags" AD field".
-+		/* Only add the "Flags" if it fits together with the instance
-+		 * advertising data; drop it rather than overflow the buffer.
- 		 */
--		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
-+		if (flags &&
-+		    (ad_len + eir_precalc_len(1) +
-+		     (adv ? adv->adv_data_len : 0) <= size)) {
- 			ptr[0] = 0x02;
- 			ptr[1] = EIR_FLAGS;
- 			ptr[2] = flags;
++	kvm_vcpu_unmap(vcpu, &vmx->nested.apic_access_page_map, false);
++	kvm_vcpu_unmap(vcpu, &vmx->nested.virtual_apic_map, true);
++	kvm_vcpu_unmap(vcpu, &vmx->nested.pi_desc_map, true);
++	vmx->nested.pi_desc = NULL;
++
+ 	load_vmcs12_host_state(vcpu, vmcs12);
+ 	vmcs12->vm_exit_reason = exit_reason.full;
+ 	if (enable_shadow_vmcs || evmptr_is_valid(vmx->nested.hv_evmcs_vmptr))
 -- 
 2.53.0
 
