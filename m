@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F284CF461;
-	Sat, 17 Oct 2026 18:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E1D3A2540;
+	Sat, 17 Oct 2026 18:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260543; cv=none; b=kUlgLlVwqdTqMg61QF/YdBCTwJqQyF5uHraD5kGoklG1hbxVpBLohMl8vJnK2YvZjO7mZBI1gZ3ISgYPaL1X7RVKnbFEvSQpk3YCoGOUAJ1DzpD5urrttDtrMreV/ANOjFnBL23tutsMvp5LDIXu6sf/7R7ul+1MUkROGyjN6nY=
+	t=1792260546; cv=none; b=gp43JJHIHCL5FYsI/vtHiBR7KbIw/UXw9fUyjIYS2odbcRNjrskATxA2mKWPUPcsljanv1MCvMmXDreHOvGIR1IFkbYSHGvdyZ+oCr3tnt/0FSzfvzTvGaL5wppX9q6i4XOfT0PImTYo0RhyamRkCX33p+snA565CZWaTVmjoIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260543; c=relaxed/simple;
-	bh=nHu0FWo5plqydj4W+g4CvDkFB6oz0ExbphTOP7jI3R4=;
+	s=arc-20240116; t=1792260546; c=relaxed/simple;
+	bh=3U6chij0kpdMihNe96coCMQG7L0qjA+Pt2JfIiAVh8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HP93YYvVq8CCkC3Z8qrmA5QVFtHHAr+r3A0JOdo6YjpfIPLVkTS5R1S7Z1dzJz4JkBqbTXsxwdG+kpbDVA1p0gw1LWJcLeV3kAKDvhxTDtECrpu52OOodgoikmho4Fs6ZKk/YyYJxYgvCj7d1s0HEzRGCeiDXDrwVmk/Mrr8B4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPsV+1SC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lWYLMmyqt7U5PKN2e9xMXtc8HMwV8QRIxWOor2T7zxsjCJVjp8GhM66BA8Ax2rXawahv6RAF5MxVzHcSLK97PqoN0jxDBf52jNePhDOXGfXJ3M6UuCmorDCzTUezh5soriqXCrPMR5whaz0vLE61w3P4LHbP2X2V1pCxoo6CeYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2NqV+eI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPsV+1SC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5121F000C4;
-	Sat, 17 Oct 2026 18:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2NqV+eI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC101F000C4;
+	Sat, 17 Oct 2026 18:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260541;
-	bh=nfNM6xR/wKaN5T//MUwfvzOu896QhLUIjY04DRZzMIg=;
+	s=korg; t=1792260544;
+	bh=tin2lT5iBHIS6FM9DgDJlx8UclKBD9vfkUyUCbkrFCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPsV+1SCgD7ej+50T/jmS5kbuqkcEcnXmMDQYhwJ8Zc4MX0ADccwsGJ5+AGfQajJm
-	 Tu2687ow2/CYFFH8d/w9Zorll1nbShV8zVatOFu2y006q0YYiINFpY9WYqTgDHUipJ
-	 qPL3Odvvgvzy3PPuy1T3G+zCMY1rRFfyCi0h09zY=
+	b=w2NqV+eIZf8K5o2jd0aCI/OgHjKpk+beqQV3pwqKXqpM9FwiPCr3lctM8O2NcHu2t
+	 EvkZEVsD/SDQtJKsduzhEwUri/nm1TYqEuxqn1qD1LJ4tjDNjGDDebKSVLUQPyL+TZ
+	 x1I+Wwkv8BBFswDF9sBW/jCX2YA2guJKEIUXljac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1578/1674] nfsd: fix fcache_disposal UAF by inlining dispose state into nfsd_net
-Date: Sat, 17 Oct 2026 18:04:10 +0200
-Message-ID: <20261017160511.598604519@linuxfoundation.org>
+Subject: [PATCH 6.6 1543/1674] pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction
+Date: Sat, 17 Oct 2026 18:03:35 +0200
+Message-ID: <20261017160510.716478688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,178 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit bbf13732f74351d21c5e0e8dd9bd8e1c48dc35d4 ]
+[ Upstream commit c87c9046c4e00d599454e033a477176c4d73ac2a ]
 
-nfsd_file_dispose_list_delayed() defers fput() to nfsd service threads
-via a per-net freeme queue, preventing the shrinker and GC worker from
-bearing the cost of closing files (see ffb402596147).  However, the
-queue lives in a separately-allocated struct nfsd_fcache_disposal that
-is freed by nfsd_free_fcache_disposal_net() during per-net teardown.
-The global shrinker, laundrette, and fsnotify callbacks can still be
-inside nfsd_file_dispose_list_delayed() dereferencing that pointer,
-causing a use-after-free.
+pinctrl_gpio_direction_input() / pinctrl_gpio_direction_output() take
+the pinctrl mutex. This causes a gpiochip operations to need to sleep.
+Worse yet, the .can_sleep field in the gpiochip is not set. This causes
+the shared GPIO proxy to trip over, as it uses gpiod_cansleep() to check
+whether it can use a spinlock or needs a mutex. In this case, it ends
+up taking a spinlock, then calls pinctrl_gpio_direction_output(), which
+takes a mutex. This causes a huge warning.
 
-Inline the spinlock and freeme list directly into struct nfsd_net (as
-fcache_dispose_lock and fcache_dispose_list), eliminating the separately
-allocated struct nfsd_fcache_disposal entirely.  These fields now have
-the same lifetime as the net namespace itself, so there is no dangling
-pointer to chase.
+While this class of Mediatek hardware does not have separate clear/set
+registers, the pinctrl context has a spinlock that is taken whenever
+a register read-modify-write is done. Also, once the GPIO function is
+selected / muxed in, further GPIO operations do not involve pinctrl
+operations or state. The GPIO direction and level values do not require
+toggling the pinmux or any other pin config options.
 
-nfsd_file_cache_start_net() now just initializes the inline fields and
-cannot fail due to allocation.  nfsd_file_cache_shutdown_net() drains
-the inline list directly instead of freeing a separate struct.  The
-alloc/free helpers are removed.
+Switch to directly calling mtk_pinmux_gpio_set_direction() in the GPIO
+set direction callbacks to avoid taking the pinctrl mutex. Drop the
+.gpio_set_direction field in mtk_pmxops to signal we are no longer using
+the pinctrl GPIO layer for setting the direction.
 
-Fixes: 1463b38e7cf3 ("NFSD: simplify per-net file cache management")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-7-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 74 +++++++++++++++------------------------------
- fs/nfsd/netns.h     |  4 ++-
- 2 files changed, 27 insertions(+), 51 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 7d8ad34127d33..c3ce0c100446e 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -60,12 +60,6 @@ static DEFINE_PER_CPU(unsigned long, nfsd_file_releases);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_total_age);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_evictions);
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 972035ab86237..b2c99f0facf99 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -775,7 +775,6 @@ static const struct pinmux_ops mtk_pmxops = {
+ 	.get_function_name	= mtk_pmx_get_func_name,
+ 	.get_function_groups	= mtk_pmx_get_func_groups,
+ 	.set_mux		= mtk_pmx_set_mux,
+-	.gpio_set_direction	= mtk_pinmux_gpio_set_direction,
+ 	.gpio_request_enable	= mtk_pinmux_gpio_request_enable,
+ };
  
--struct nfsd_fcache_disposal {
--	struct work_struct work;
--	spinlock_t lock;
--	struct list_head freeme;
--};
--
- static struct workqueue_struct *nfsd_filecache_wq __read_mostly;
+@@ -904,7 +903,7 @@ static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned int gpio)
+ 	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
  
- static struct kmem_cache		*nfsd_file_slab;
-@@ -417,12 +411,11 @@ nfsd_file_dispose_list_delayed(struct list_head *dispose)
- 		struct nfsd_file *nf = list_first_entry(dispose,
- 						struct nfsd_file, nf_gc);
- 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
--		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
- 
--		spin_lock(&l->lock);
--		list_move_tail(&nf->nf_gc, &l->freeme);
--		spin_unlock(&l->lock);
--		queue_work(nfsd_filecache_wq, &l->work);
-+		spin_lock(&nn->fcache_dispose_lock);
-+		list_move_tail(&nf->nf_gc, &nn->fcache_dispose_list);
-+		spin_unlock(&nn->fcache_dispose_lock);
-+		queue_work(nfsd_filecache_wq, &nn->fcache_dispose_work);
- 	}
+-	return pinctrl_gpio_direction_input(chip, gpio);
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true);
  }
  
-@@ -651,12 +644,12 @@ static void
- nfsd_file_delayed_close(struct work_struct *work)
- {
- 	LIST_HEAD(head);
--	struct nfsd_fcache_disposal *l = container_of(work,
--			struct nfsd_fcache_disposal, work);
-+	struct nfsd_net *nn = container_of(work, struct nfsd_net,
-+					   fcache_dispose_work);
+ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+@@ -917,7 +916,7 @@ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
  
--	spin_lock(&l->lock);
--	list_splice_init(&l->freeme, &head);
--	spin_unlock(&l->lock);
-+	spin_lock(&nn->fcache_dispose_lock);
-+	list_splice_init(&nn->fcache_dispose_list, &head);
-+	spin_unlock(&nn->fcache_dispose_lock);
+ 	mtk_gpio_set(chip, gpio, value);
  
- 	nfsd_file_dispose_list(&head);
- }
-@@ -825,44 +818,22 @@ __nfsd_file_cache_purge(struct net *net)
- 	nfsd_file_dispose_list(&dispose);
+-	return pinctrl_gpio_direction_output(chip, gpio);
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, false);
  }
  
--static struct nfsd_fcache_disposal *
--nfsd_alloc_fcache_disposal(void)
--{
--	struct nfsd_fcache_disposal *l;
--
--	l = kmalloc(sizeof(*l), GFP_KERNEL);
--	if (!l)
--		return NULL;
--	INIT_WORK(&l->work, nfsd_file_delayed_close);
--	spin_lock_init(&l->lock);
--	INIT_LIST_HEAD(&l->freeme);
--	return l;
--}
--
--static void
--nfsd_free_fcache_disposal(struct nfsd_fcache_disposal *l)
--{
--	cancel_work_sync(&l->work);
--	nfsd_file_dispose_list(&l->freeme);
--	kfree(l);
--}
--
--static void
--nfsd_free_fcache_disposal_net(struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--	struct nfsd_fcache_disposal *l = nn->fcache_disposal;
--
--	nfsd_free_fcache_disposal(l);
--}
--
- int
- nfsd_file_cache_start_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	nn->fcache_disposal = nfsd_alloc_fcache_disposal();
--	return nn->fcache_disposal ? 0 : -ENOMEM;
-+	/*
-+	 * The dispose state lives as long as the net namespace and may still
-+	 * be reached by the shrinker after a previous shutdown, so only
-+	 * initialize it once.
-+	 */
-+	if (!nn->fcache_dispose_work.func) {
-+		INIT_WORK(&nn->fcache_dispose_work, nfsd_file_delayed_close);
-+		spin_lock_init(&nn->fcache_dispose_lock);
-+		INIT_LIST_HEAD(&nn->fcache_dispose_list);
-+	}
-+	return 0;
- }
- 
- /**
-@@ -881,8 +852,11 @@ nfsd_file_cache_purge(struct net *net)
- void
- nfsd_file_cache_shutdown_net(struct net *net)
- {
-+	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+
- 	nfsd_file_cache_purge(net);
--	nfsd_free_fcache_disposal_net(net);
-+	cancel_work_sync(&nn->fcache_dispose_work);
-+	nfsd_file_dispose_list(&nn->fcache_dispose_list);
- }
- 
- void
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index 443b7d2368f38..798f66da05365 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -211,7 +211,9 @@ struct nfsd_net {
- 	/* utsname taken from the process that starts the server */
- 	char			nfsd_name[UNX_MAXNODENAME+1];
- 
--	struct nfsd_fcache_disposal *fcache_disposal;
-+	spinlock_t		fcache_dispose_lock;
-+	struct list_head	fcache_dispose_list;
-+	struct work_struct	fcache_dispose_work;
- 
- 	siphash_key_t		siphash_key;
- 
+ static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
 -- 
 2.53.0
 
