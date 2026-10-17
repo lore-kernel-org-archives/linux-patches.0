@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058883B6BFE;
-	Sat, 17 Oct 2026 17:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705D239B4A5;
+	Sat, 17 Oct 2026 17:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257147; cv=none; b=At0hVr1mEE24hV5pIiWVJA9EO083CKAJPQJ4TjV6xstG2Nnq0+VhzIwAwxZLMQ0jVspGL4elQQtkMhtQpLEHmXmvLjXhrepZMVfm/z2nYkypQDsZGAl2KXmpVLAvpGigrhRLUBhwRlv7DUYKr2pKdIkEu4PrRopvZnzHc8tGHTs=
+	t=1792257150; cv=none; b=tPsDtEpGwsA7yfsefSL6ikxJsyDXH0iONW7vlYrwULFD7xApufvO2REq34im+1Ea+MDksz7C2yLrg6XctQgK8Mwuwlssh0MbOG75KRHvcZv9a9CMNr9o4CtdyOGl7qHqyAbdDlizmDvPssLsMVuT+WFQu1OE2SsjQTCEQd4aVXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257147; c=relaxed/simple;
-	bh=JvffVdUaoTM+GnPxVQE6SVg6AiTgdGQNmxd3lPYqBNo=;
+	s=arc-20240116; t=1792257150; c=relaxed/simple;
+	bh=ulywHdPO/buawnGLil5HrlPGRDJPTtjUOPj+ODil2Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTNGFKhYKktWFeMuMVitbn4UplbBzMfrBnyJlAq/wUAqh4M/aDokQ8d5yHYvwvOeGcVersM41BEVJgRb1ZrIumLRC/a8nENjcBH43mhsEs+OWOjK4Yze5pFhbLtT0Vi0lNXlWaDTsUP86fTfGthPaW5iU2jSvGnn6iNsPfhMo7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfVxHdhY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWklF7b3UN5URwBAwr/faW1830FenZ2FTL3DvX214II7ctE7UhEASd/pacvP+ZPfmDk4QzMBfek/ueWZwh2q+tkAWOaffBB5SWqGfeM+WdfpaTeQ4ZyubgPMNxDC2/ZlkDAhFnliGc2nKjjQudicN2RDgm+zMROKovW+drsPmyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbc6P+nw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfVxHdhY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511081F000C4;
-	Sat, 17 Oct 2026 17:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbc6P+nw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7562A1F000C4;
+	Sat, 17 Oct 2026 17:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257145;
-	bh=Z5E0ZJAfdpSECoM3fO/0wsUvF8krgaYp8IYDoIXbZ5Y=;
+	s=korg; t=1792257149;
+	bh=Zxwlei8kNH5pE0xjp4wLc5nwvvnaa36pGxJO24pN/fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VfVxHdhYQ5FiU+bA1wt47qSdONuWMmw/35lZ1DC1t3XmV8cn2NK7UCBS0aA+5t7/o
-	 UQ6MIisr0t4+7YnG6bUFrz2BxHdRzxVuHzqawyRk+oxYyCRNdylD8mm6sbM2P1vEmN
-	 SdDEzx2W45HxOgywM0Ux9cz3ZGrKtP8afiCdjDFw=
+	b=mbc6P+nwK2CSZbuI2cNVrRdlOFCsNsRKwejnGtskI/uF+ZosQAxpyT/EgIdKs1UgY
+	 wugI++RPeH7kScPGaZ+AoByehsvCA1t3Ixzs8YtBQGm98iHkRr8EGMbBeVJ5/6Liqb
+	 caNTUeBu/23Tb8WIwuewAF6pou1VkujQZMilG+P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Daehyeon Ko <4ncienth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0465/1674] ipv4: do not warn on route notification size race
-Date: Sat, 17 Oct 2026 17:45:37 +0200
-Message-ID: <20261017160443.056180884@linuxfoundation.org>
+Subject: [PATCH 6.6 0466/1674] ipv6: do not warn on route notification size race
+Date: Sat, 17 Oct 2026 17:45:38 +0200
+Message-ID: <20261017160443.081171100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,41 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit e02a5b6588161673ef75a4bc5cdfb62bd493374d upstream.
+commit c97426ec649d99596d8969e1a052c16b14b7b485 upstream.
 
-Commit 680aea08e78c ("net: ipv4: Emit notification when fib hardware
-flags are changed") added asynchronous route notifications for hardware
-flag changes.
-
-fib_alias_hw_flags_set() sizes the skb with fib_nlmsg_size() and later
-fills it with fib_dump_info() while holding only RCU.  With nexthop
-compatibility mode enabled, a concurrent replacement can grow the group
-between these independent snapshots.  fib_dump_info() can then
-legitimately return -EMSGSIZE, so the warning does not prove a sizing bug.
+fib6_info_hw_flags_set() sizes the skb with rt6_nlmsg_size() and later
+fills it with rt6_fill_node().  With nexthop compatibility mode enabled,
+a concurrent replacement can grow the group between these independent
+snapshots.  rt6_fill_node() can then legitimately return -EMSGSIZE, so
+the warning does not prove a sizing bug.
 
 Remove the warning.  The existing error path still frees the skb and
 reports the error to listeners.
 
-Fixes: 680aea08e78c ("net: ipv4: Emit notification when fib hardware flags are changed")
+Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
 Reported-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/netdev/20261004082043.GB92032@shredder/
+Link: https://lore.kernel.org/netdev/20261007114003.GA1011260@shredder/
 Suggested-by: Ido Schimmel <idosch@nvidia.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/b7e203fc5867651cb67ef84aa03e082f0f76008e.1791423190.git.4ncienth@gmail.com
+Link: https://patch.msgid.link/4012604727e5ba80b69ccd4d08796511397ddaef.1791423190.git.4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_trie.c |    2 --
+ net/ipv6/route.c |    2 --
  1 file changed, 2 deletions(-)
 
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1084,8 +1084,6 @@ void fib_alias_hw_flags_set(struct net *
- 
- 	err = fib_dump_info(skb, 0, 0, RTM_NEWROUTE, fri, 0);
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6340,8 +6340,6 @@ void fib6_info_hw_flags_set(struct net *
+ 	err = rt6_fill_node(net, skb, f6i, NULL, NULL, NULL, 0, RTM_NEWROUTE, 0,
+ 			    0, 0);
  	if (err < 0) {
--		/* -EMSGSIZE implies BUG in fib_nlmsg_size() */
+-		/* -EMSGSIZE implies BUG in rt6_nlmsg_size() */
 -		WARN_ON(err == -EMSGSIZE);
  		kfree_skb(skb);
  		goto errout;
