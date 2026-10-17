@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9EC356A12;
-	Sat, 17 Oct 2026 17:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D060B3C1092;
+	Sat, 17 Oct 2026 17:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259356; cv=none; b=S6vsOCpxaJmzRvbLoHo4XFBcFppFemUPReDaK6JqWVU0H31Mvn6WUfZCSJMDTift3UtWfKzk6y9sOTpyMwchC9S0j1ojY6QMgR2ynJjLdfWAgdFa2eaj5GYQ2OgvEBM1uHaqjxoIDjDsXYe49WlXCqB0eXu8RupPMXQBniqQIcs=
+	t=1792259358; cv=none; b=V3Z4wJn6x1S5Q8ixQsfGrt0hTEmfrQFm3eLundrKya1XklJbfxjzQstjJNnVRV1MMy/ch4Qm+AhovkvFtHbMZZlmponq0ut8cokUv0IqDFlv4K9g2lT4oB4AwnR4VDX0+31xAs2k2ZdjqnpDOwNcjGWYaLa2WpjfqVF42FAqqSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259356; c=relaxed/simple;
-	bh=GI5D8nn4d6addC3YikhuDGTH5quDmoO6y7C1jh2Slv4=;
+	s=arc-20240116; t=1792259358; c=relaxed/simple;
+	bh=mruUy/Tu+OwzwddqrVWPL4uMQIHGS2Gh4huDwiVmESU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0WpPQMQ7ZNSxHJpcQ8eVF866YKy6sSJXaWncze6K9PuoZmZiZMcftw73k60yeBKhmvMg/ChUX4Z0ImjBbJbOvOXX01AqWog3VzuP78X+SdWZz10g0KaYkMoIrydheRKNaq72xQiIVZNho+JR6LMcJ0EY+e/PeNRYUpUJ4tNLy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPly9kn5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V2HiMZzzwSdoxBcpBb6U0WejybyrDZ9wnGq7zUbOmTLPAaJdZp9GnxuwAXP7GcsoxASBdv2FcAT/PEl80CXfXbKjH9BAFpu1ij4EqdbBnDWcyCOANpE555Bt1GNa3kA7Uh09ezErBCvtk9p+sQXTzTCZRCmqWn2XrkS8MkaQt3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KjzJptt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPly9kn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B671F000C4;
-	Sat, 17 Oct 2026 17:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KjzJptt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10D11F000C4;
+	Sat, 17 Oct 2026 17:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259354;
-	bh=e/37IMSeDAJitJZXCDZxqLaKk3H6r2Hcjb5l6e2z/vE=;
+	s=korg; t=1792259357;
+	bh=svtDgu6IxeIAadRZIbkWdNy0NKDi7caDdgJG4ZKPRu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPly9kn5uOjUS7i1VktvNsKnJZY3kFe8E+KEJc2G50I6tOrE9DinSfpujnkLfU7qf
-	 lFc1bZ77sTWhT8KkMSwQCRMmvboJmHBDBkdGKsIsTv8fegJ+c2Oe3+zI72rTvEMkAu
-	 lUZjiDr5EZZqKw9+H3gsBtb8JicrUSY4CipLoSsQ=
+	b=2KjzJptt8C2Euhs5hMIK71mv5yYdKZ8xXYHRjrX1e6krQQCtSPbp6VGfD/KhtnBfu
+	 EArt8W3E4cKztbavm901uM6Kt7BogIbLG/8Sp765hbKxZyoIkd1P6UHlx4Zi52b+A7
+	 JouQ06SprbxhUDfslJ/k77Vaqxb5xAOCcjzx4+44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1184/1674] octeontx2-af: Block VFs from clobbering special CGX PKIND state
-Date: Sat, 17 Oct 2026 17:57:36 +0200
-Message-ID: <20261017160501.534708857@linuxfoundation.org>
+Subject: [PATCH 6.6 1185/1674] Bluetooth: ISO: hold sk properly in iso_conn_ready
+Date: Sat, 17 Oct 2026 17:57:37 +0200
+Message-ID: <20261017160501.559959047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,281 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 3bd438a58e910db5dc369aa25dfed1fc95f1b596 ]
+[ Upstream commit 0d255e63fcf3f13a570d7ac11678fa1164ac015c ]
 
-PF and VF NIX LFs that share a CGX LMAC reuse the same hardware PKIND
-programming. When HiGig2 or EDSA parsing is enabled, a VF NIX LF alloc must
-not reset the LMAC RX PKIND or default TX parse config over the PF setup.
+sk deref in iso_conn_ready must be done either under conn->lock, or
+holding a refcount, to avoid concurrent close. conn->sk is currently
+accessed without either:
 
-Add cgx_get_pkind() and rvu_cgx_is_pkind_config_permitted() so VFs skip
-cgx_set_pkind(), rvu_npc_set_pkind(), and NIX_AF_LFX_TX_PARSE_CFG updates
-when the LMAC is using NPC_RX_HIGIG_PKIND or NPC_RX_EDSA_PKIND.
+    [Task 1]            [Task 2]
+                        iso_sock_release
+    iso_conn_ready
+      sk = conn->sk
+                          lock_sock(sk)
+                            conn->sk = NULL
+      lock_sock(sk)
+                          release_sock(sk)
+                          iso_sock_kill(sk)
+       UAF on sk deref
 
-Fixes: 94d942c5fb97 ("octeontx2-af: Config pkind for CGX mapped PFs")
-Cc: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260722081229.1653619-1-rkannoth@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix possible UAF by holding sk refcount in iso_conn_ready().  Also
+recheck after lock_sock that the socket is still valid.  Adjust locking
+so conn->sk is cleared only under lock_sock.
+
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/cgx.c   | 12 +++
- .../net/ethernet/marvell/octeontx2/af/cgx.h   |  1 +
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  2 +
- .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 79 +++++++++++++++++++
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 22 +++++-
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 27 ++++---
- 6 files changed, 130 insertions(+), 13 deletions(-)
+ net/bluetooth/iso.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index d415d5dbc1104..b62ed53032784 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -518,6 +518,18 @@ int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind)
- 	return 0;
- }
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 2dd8e6e6beac5..0bce3f1759dd2 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -735,11 +735,13 @@ static void iso_sock_kill(struct sock *sk)
+ 	BT_DBG("sk %p state %d", sk, sk->sk_state);
  
-+int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind)
-+{
-+	struct cgx *cgx = cgxd;
-+
-+	if (!is_lmac_valid(cgx, lmac_id))
-+		return -ENODEV;
-+
-+	*pkind = cgx_read(cgx, lmac_id, cgx->mac_ops->rxid_map_offset);
-+	*pkind = *pkind & 0x3F;
-+	return 0;
-+}
-+
- static u8 cgx_get_lmac_type(void *cgxd, int lmac_id)
- {
- 	struct cgx *cgx = cgxd;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-index 1cf12e5c7da87..e8f010ecb2849 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
-@@ -141,6 +141,7 @@ int cgx_get_cgxid(void *cgxd);
- int cgx_get_lmac_cnt(void *cgxd);
- void *cgx_get_pdata(int cgx_id);
- int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind);
-+int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind);
- int cgx_lmac_evh_register(struct cgx_event_cb *cb, void *cgxd, int lmac_id);
- int cgx_lmac_evh_unregister(void *cgxd, int lmac_id);
- int cgx_get_tx_stats(void *cgxd, int lmac_id, int idx, u64 *tx_stat);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index f26814c499028..042195b87808a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -904,6 +904,8 @@ void npc_read_mcam_entry(struct rvu *rvu, struct npc_mcam *mcam,
- 			 int blkaddr, u16 src, struct mcam_entry *entry,
- 			 u8 *intf, u8 *ena);
- bool is_cgx_config_permitted(struct rvu *rvu, u16 pcifunc);
-+bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind);
-+bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc);
- bool is_mac_feature_supported(struct rvu *rvu, int pf, int feature);
- u32  rvu_cgx_get_fifolen(struct rvu *rvu);
- void *rvu_first_cgx_pdata(struct rvu *rvu);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index d14cf2a9d207e..5b84f541e6f90 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -1349,3 +1349,82 @@ void rvu_mac_reset(struct rvu *rvu, u16 pcifunc)
- 	if (mac_ops->mac_reset(cgxd, lmac, !is_vf(pcifunc)))
- 		dev_err(rvu->dev, "Failed to reset MAC\n");
- }
-+
-+/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
-+ * (HiGig, EDSA, etc.) are in use on the shared LMAC. VFs must not program
-+ * NPC_TX_DEF_PKIND on NIX_AF_LFX_TX_PARSE_CFG in that case: the PF owns
-+ * parse mode and no separate NPC_TX_HIGIG_PKIND is installed on the VF LF.
-+ * TX-parse callers skip the write when denied; rvu_lf_reset() clears each LF
-+ * before alloc so the next permitted owner programs NPC_TX_DEF_PKIND.
-+ */
-+bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc)
-+{
-+	int pf, err, rxpkind;
-+	u8 cgx_id, lmac_id;
-+	void *cgxd;
-+
-+	pf = rvu_get_pf(pcifunc);
-+
-+	if (!(pcifunc & RVU_PFVF_FUNC_MASK))
-+		return true;
-+
-+	if (!is_pf_cgxmapped(rvu, pf))
-+		return true;
-+
-+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
-+	cgxd = rvu_cgx_pdata(cgx_id, rvu);
-+	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
-+	if (err)
-+		return false;
-+
-+	switch (rxpkind) {
-+	case NPC_RX_HIGIG_PKIND:
-+	case NPC_RX_EDSA_PKIND:
-+		return false;
-+	default:
-+		return true;
-+	}
-+}
-+
-+/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
-+ * (HiGig, EDSA, etc.) are in use on the shared LMAC.
-+ */
-+bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind)
-+{
-+	int pf, err, rxpkind;
-+	u8 cgx_id, lmac_id;
-+	struct cgx *cgxd;
-+
-+	pf = rvu_get_pf(pcifunc);
-+
-+	if (!is_pf_cgxmapped(rvu, pf))
-+		return false;
-+
-+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
-+	cgxd = rvu_cgx_pdata(cgx_id, rvu);
-+
-+	mutex_lock(&cgxd->lock);
-+	if (!is_vf(pcifunc))
-+		goto set;
-+
-+	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
-+	if (err)
-+		goto err;
-+
-+	switch (rxpkind) {
-+	case NPC_RX_HIGIG_PKIND:
-+	case NPC_RX_EDSA_PKIND:
-+		goto err;
-+	default:
-+		break;
-+	}
-+
-+set:
-+	cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
-+	mutex_unlock(&cgxd->lock);
-+	return true;
-+
-+err:
-+	mutex_unlock(&cgxd->lock);
-+	return false;
-+}
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index d07deeb53a53e..35c8c7229f352 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -336,8 +336,8 @@ static int nix_interface_init(struct rvu *rvu, u16 pcifunc, int type, int nixlf,
- 		pfvf->tx_chan_cnt = 1;
- 		rsp->tx_link = cgx_id * hw->lmac_per_cgx + lmac_id;
- 
--		cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
--		rvu_npc_set_pkind(rvu, pkind, pfvf);
-+		if (rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, pkind))
-+			rvu_npc_set_pkind(rvu, pkind, pfvf);
- 
- 		break;
- 	case NIX_INTF_TYPE_LBK:
-@@ -1326,11 +1326,13 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 				  struct nix_lf_alloc_req *req,
- 				  struct nix_lf_alloc_rsp *rsp)
- {
--	int nixlf, qints, hwctx_size, intf, err, rc = 0;
-+	int nixlf, qints, hwctx_size, intf, err, rc = 0, pf;
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	u16 pcifunc = req->hdr.pcifunc;
-+	u8 cgx_id = 0, lmac_id = 0;
- 	struct rvu_block *block;
- 	struct rvu_pfvf *pfvf;
-+	struct cgx *cgxd;
- 	u64 cfg, ctx_cfg;
- 	int blkaddr;
- 
-@@ -1498,8 +1500,20 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_RX_CFG(nixlf), req->rx_cfg);
- 
- 	/* Configure pkind for TX parse config */
-+
-+	pf = rvu_get_pf(pcifunc);
- 	cfg = NPC_TX_DEF_PKIND;
--	rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
-+
-+	if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
-+		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
-+		cgxd = rvu_cgx_pdata(cgx_id, rvu);
-+		mutex_lock(&cgxd->lock);
-+		if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
-+			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
-+		mutex_unlock(&cgxd->lock);
-+	} else {
-+		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
-+	}
- 
- 	intf = is_afvf(pcifunc) ? NIX_INTF_TYPE_LBK : NIX_INTF_TYPE_CGX;
- 	if (is_sdp_pfvf(pcifunc))
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index 65ad7476e6098..01ffba0b4f906 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -16,6 +16,7 @@
- #include "cgx.h"
- #include "npc_profile.h"
- #include "rvu_npc_hash.h"
-+#include "lmac_common.h"
- 
- #define RSVD_MCAM_ENTRIES_PER_PF	3 /* Broadcast, Promisc and AllMulticast */
- #define RSVD_MCAM_ENTRIES_PER_NIXLF	1 /* Ucast for LFs */
-@@ -3339,8 +3340,9 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
- 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
- 	int blkaddr, nixlf, rc, intf_mode;
- 	int pf = rvu_get_pf(pcifunc);
-+	u8 cgx_id = 0, lmac_id = 0;
- 	u64 rxpkind, txpkind;
--	u8 cgx_id, lmac_id;
-+	struct cgx *cgxd;
- 
- 	/* use default pkind to disable edsa/higig */
- 	rxpkind = rvu_npc_get_pkind(rvu, pf);
-@@ -3364,12 +3366,8 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
- 		/* rx pkind set req valid only for cgx mapped PFs */
- 		if (!is_cgx_config_permitted(rvu, pcifunc))
- 			return 0;
--		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
--
--		rc = cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id,
--				   rxpkind);
--		if (rc)
--			return rc;
-+		if (!rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, rxpkind))
-+			return -EINVAL;
+ 	/* Sock is dead, so set conn->sk to NULL to avoid possible UAF */
++	lock_sock(sk);
+ 	if (iso_pi(sk)->conn) {
+ 		iso_conn_lock(iso_pi(sk)->conn);
+ 		iso_pi(sk)->conn->sk = NULL;
+ 		iso_conn_unlock(iso_pi(sk)->conn);
  	}
++	release_sock(sk);
  
- 	if (dir & PKIND_TX) {
-@@ -3378,8 +3376,19 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
- 		if (rc)
- 			return rc;
+ 	/* Kill poor orphan */
+ 	bt_sock_unlink(&iso_sk_list, sk);
+@@ -1696,14 +1698,11 @@ static void iso_sock_ready(struct sock *sk)
+ {
+ 	BT_DBG("sk %p", sk);
  
--		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
--			    txpkind);
-+		if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
-+			rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id,
-+					    &lmac_id);
-+			cgxd = rvu_cgx_pdata(cgx_id, rvu);
-+			mutex_lock(&cgxd->lock);
-+			if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
-+				rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
-+					    txpkind);
-+			mutex_unlock(&cgxd->lock);
-+		} else {
-+			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
-+				    txpkind);
+-	if (!sk)
+-		return;
++	lockdep_assert(lockdep_sock_is_held(sk));
+ 
+-	lock_sock(sk);
+ 	iso_sock_clear_timer(sk);
+ 	sk->sk_state = BT_CONNECTED;
+ 	sk->sk_state_change(sk);
+-	release_sock(sk);
+ }
+ 
+ struct iso_list_data {
+@@ -1726,7 +1725,7 @@ static bool iso_match_pa_sync_flag(struct sock *sk, void *data)
+ static void iso_conn_ready(struct iso_conn *conn)
+ {
+ 	struct sock *parent = NULL;
+-	struct sock *sk = conn->sk;
++	struct sock *sk;
+ 	struct hci_ev_le_big_sync_estabilished *ev = NULL;
+ 	struct hci_ev_le_pa_sync_established *ev2 = NULL;
+ 	struct hci_evt_le_big_info_adv_report *ev3 = NULL;
+@@ -1734,8 +1733,26 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 
+ 	BT_DBG("conn %p", conn);
+ 
++	iso_conn_lock(conn);
++	sk = iso_sock_hold(conn);
++	iso_conn_unlock(conn);
++
+ 	if (sk) {
+-		iso_sock_ready(conn->sk);
++		lock_sock(sk);
++
++		/* conn->sk may have become NULL if racing with sk close, but
++		 * due to held hdev->lock, it can't become different sk.
++		 */
++		if (!conn->sk) {
++			release_sock(sk);
++			sock_put(sk);
++			return;
 +		}
- 	}
- 
- 	pfvf->intf_mode = intf_mode;
++
++		iso_sock_ready(sk);
++
++		release_sock(sk);
++		sock_put(sk);
+ 	} else {
+ 		hcon = conn->hcon;
+ 		if (!hcon)
 -- 
 2.53.0
 
