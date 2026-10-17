@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC53587DE;
-	Sat, 17 Oct 2026 17:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94E03AA4E8;
+	Sat, 17 Oct 2026 17:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257159; cv=none; b=krXIvPjt2udOzp13HRyemp/P9HgCrAD7hjoWfD8KijfxS9ZriJ9kkYtR0MftEoT0Qnj82RsXMZ5+NofJKruoqtX76pSxxm8t3DWKqMq7ltx8kuJZ0u8PMwPekTQJKeLvX8/wjNfB60XlrKqAzfh8UfRmEO9A7NbHLq2+jMIV3zo=
+	t=1792257162; cv=none; b=HEFlOzU4o/IooOWc1EuDIyGYJSEUZatXzVLT9SHNWw3hYMYvTY3obVrcQF9/cljHgaudTiMmGSayjZUA05cU4+MUqTlfXVrBUdpq8NL3lmWV3G3qeu4sH/KGeoA5QYtcysDrp/qYFF11yL5Nk6Khk9lB1b8KsrZBeiWMB9wBPKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257159; c=relaxed/simple;
-	bh=Nw21+9G+0V639kob+wSOA5iYPuK78f/XHRPOfcRcuQs=;
+	s=arc-20240116; t=1792257162; c=relaxed/simple;
+	bh=eVS6cgAH8X+WL81d+Ux6BdSHqWVpgIoXKZeahE9laEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UW+fAXFW9isXJRq35+t4/U/WQEXuhpFrczXQSFc+X5p9AUZSRzplOjqjYaBt4pNCL1e7LGl5a61LSPjA18Q/5BUrW8XptCc1B1I8qKFKhjdk3kfDbjPCQ6ETL9S5Si6+C/aTpI4kUcoFZT+187tTl/nErcae+tLNr8i/V6EfZrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYUqOOGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z0M/qSMn8o6UTNI/pMvhwVKjtdRfbFDngTjdJr1CR441DHUO+K9e1wl1vkGFX13SPWNfphHh2FynJ+VQfzV0pyZ70GxuNEBLE5yWQD2tAc7PZoI5ZoUzS6MomPxBinWQZoC+n/v8CkSRIPpxgHDmUvrs1hEPGFql4jTHG7d7vEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bN4vnj35; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYUqOOGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D618F1F000C4;
-	Sat, 17 Oct 2026 17:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bN4vnj35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036AC1F000C4;
+	Sat, 17 Oct 2026 17:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257158;
-	bh=v20kWHLeQ3QJUHhwLlbeZ6LrPAoFY6Hudsl+MwdJOVk=;
+	s=korg; t=1792257161;
+	bh=aU23fymiX1cI18pdLvdONVbTekLo+3S/aChKrLJQ7oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rYUqOOGIvFgSSLn2RdMOem8072XISpuDiA18PyqU4DVzGPJIEf/jXF1ENdJ3bCCh2
-	 ejScix71XUgMJ1YSRPlSeMXER1sprbm3f3YsH1XiMYEl/yiDEgiLyTLZVxgip969iu
-	 veSAH9SbOCx9UJSlH7jZCBRvrA7Im/GvM9wpdQ0Y=
+	b=bN4vnj35810+HCKGEULnthMy+Ji1BCKIDAKSJ25dcjsyR5xW4MhI46thCn3Y1pV0p
+	 qThEI6bFcS/rTZKakueAWdJ1D06KfvyZCP7qxCZe1LcQjAxbNeRNxElPFPYqTPQUyW
+	 kgunVkDumYtT77MrCuEoA3/4MuYaW4dSfLRpUIjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Garland <minimelkav@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0469/1674] ASoC: amd: yc: Add DMI quirk for Acer Aspire Go 15 (AG15-21P)
-Date: Sat, 17 Oct 2026 17:45:41 +0200
-Message-ID: <20261017160443.154701081@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 0470/1674] btrfs: scrub: fix local_root reference leak in scrub_print_warning_inode()
+Date: Sat, 17 Oct 2026 17:45:42 +0200
+Message-ID: <20261017160443.179714350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Garland <minimelkav@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit d0cb7a7b2a490c381ad97f53155d02a748b60dea upstream.
+commit 1fd742c7479961da6d0bb794ef8ac6b7b9442847 upstream.
 
-The Acer Aspire Go 15 (AG15-21P, board MDC Herbag2_MDU) has two PDM
-DMICs connected to the ACP. The BIOS does not set the AcpDmicConnected
-_DSD property, so the acp6x machine driver never registers the DMIC
-card. The existing Herbag_MDU entry does not match this board name, so
-add a DMI quirk for it.
+When paths_from_inode() fails, scrub_print_warning_inode() jumps to err
+without dropping the reference taken by btrfs_get_fs_root(), leaking a
+reference to the root every time path resolution fails while printing
+scrub warnings.  Every other error and success path of the function
+drops the reference.
 
-Tested on BIOS V1.11: the acp6x DMIC capture device is registered and
-records audio on both channels.
+Drop the reference on the paths_from_inode() failure path too.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Garland <minimelkav@gmail.com>
-Link: https://patch.msgid.link/20261005-acp6x-herbag2-quirk-v1-1-a1f2683d758f@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 558540c17771 ("btrfs scrub: print paths of corrupted files")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/btrfs/scrub.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -699,6 +699,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "MDC"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Herbag2_MDU"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "System76"),
- 			DMI_MATCH(DMI_PRODUCT_VERSION, "pang12"),
- 		}
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -446,8 +446,10 @@ static int scrub_print_warning_inode(u64
+ 	}
+ 	ret = paths_from_inode(inum, ipath);
+ 
+-	if (ret < 0)
++	if (ret < 0) {
++		btrfs_put_root(local_root);
+ 		goto err;
++	}
+ 
+ 	/*
+ 	 * we deliberately ignore the bit ipath might have been too small to
 
 
