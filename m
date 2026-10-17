@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4A13B71DC;
-	Sat, 17 Oct 2026 17:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2C13AF66D;
+	Sat, 17 Oct 2026 17:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256683; cv=none; b=uD+plqlWCd4KfWxdfY8mxmtUNcxyb12zUx6sHNftI+vsoOz2Zl+EliRl9pUtcgdZxihXrf5itdIYltLQHBWrh+mlyztDXAJqLkXu3iJ7G4hmah0NDOmxG+IM6gZjV71u6SKsW2/LNVT3nV8pGwG3QaL8xSu3JpoU7vEzUf7q9UI=
+	t=1792256686; cv=none; b=MMe9i54yOUOocMMYwnmQ89mfVTHQALe7ImW3/gvHS3HBK7kryCiys1I6MW93BCX9WRtzTUv+Yadq6UGF4p5oFm/qjkKfJgKztRW6XE3yYhLYrClhsDUItH6bv8vOpLa6AwrWj8OHuz8ApliNfHYHvUhQ9zNBXF0s5lf8Di4oY9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256683; c=relaxed/simple;
-	bh=6fjAUQa4avrtqBU4N6maSjHjDV4rEOH79Tu/IuZQgV0=;
+	s=arc-20240116; t=1792256686; c=relaxed/simple;
+	bh=7bwWemvAZWnI2h67epMuCWcn39Mef2bTtMa46i3eNPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0vX4efKg3QzcYY3wS7caW4tljEv2J3Fi7KftvDaNab+H4IUOAA1V3z1Ryxp8fFeEIs7lN3RoojCEqPqPH1zo8M5x23tbrQbWtqRt7MqAEvrq1FkPNvlnkkFWgkMUIgcFIYAj8jwDAyhdxcJaH5F3p1WwMymLJileGo5u5drYE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id593NMV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=evYb7wu4d5pWZsiUIQsuE8DotQGnmbapBGpDatkrc6m44ydP/Oaw2dbXU75KjgT00YiARo1InCkKZKm2p5UiUuMS3TRxy8eFVKDF3Fkhjb4nq3RfwXHBwoqPpa4aOhS8ASGR9hH90Nco8QaqPkWtyKIQFh/s6PBd/qXxXs2+R6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rl/e2mNj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id593NMV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0846F1F000C4;
-	Sat, 17 Oct 2026 17:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rl/e2mNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163141F000C4;
+	Sat, 17 Oct 2026 17:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256682;
-	bh=fKy8iWlH0J/bBvEhveOPLIClKUfQbVBXhCG8Dc1uxDM=;
+	s=korg; t=1792256685;
+	bh=N6/+63bDqzIiW+9hHOIOzt58wWxxw2QgwKbl5t43a/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=id593NMVF3G70FYhC8a/dp5PRlH7hbeuWlqj5p34N3GfuLewDeau9MnsBolrclglM
-	 cCyM8HWe1y6myYbcLDeiAHaCieIEaF52lcuuG00iV7dzyLc7ir/FXznekmkIBqCsUm
-	 cZt9mpQS/mTTwpn5EQNJONQXWR0oVrrcDhFDsLNA=
+	b=rl/e2mNjVbrrseU8A/wGVKofaBdNNkDcY/ketmrMiGwG3MpiZLdOelv2DCvuRETzE
+	 rMUNm6znSxzKkJczH3rJk34OCKwqo5IQKyKckG9lohrFvT+Lqy/5Fl6y1nsrXOzAJH
+	 uzvx2XelQo/jGy4Wsp6Xwlb29yZ9sQ47xWIWkeog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0317/1674] wifi: mac80211: release mesh path quota on failed additions
-Date: Sat, 17 Oct 2026 17:43:09 +0200
-Message-ID: <20261017160439.254378660@linuxfoundation.org>
+Subject: [PATCH 6.6 0318/1674] wifi: mac80211: fix mesh fast xmit path deletion UAF
+Date: Sat, 17 Oct 2026 17:43:10 +0200
+Message-ID: <20261017160439.280098274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,55 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 7325a44474f20c1393a1c114c6811abce6ddfaf4 upstream.
+commit ee3aadc43ea69d98f666431e787137ac0badbb85 upstream.
 
-Repeated failed or duplicate mesh path additions can exhaust
-MESH_MAX_MPATHS while the path table holds fewer paths, which stops new
-paths to reachable destinations from being created.
+mesh_fast_tx_cache() stores raw mesh_path pointers. Path deletion
+flushes the cache and then frees the path with kfree_rcu(), but a
+lookup that already holds the path can insert a new cache entry
+after the flush. The cache then points at freed memory.
 
-mesh_path_add() reserves a slot before allocating and inserting a path.
-If allocation fails, the function returns without releasing the slot. If
-the rhashtable insertion reports an error or an existing destination, the
-function discards its candidate but retains the reservation. No new path
-is installed in any of these cases.
+Set MESH_PATH_DELETED before flushing, and skip inserting a cache
+entry if the path or MPP path is already deleted. Check this under
+the cache walk lock so it is ordered with the flush. Use WRITE_ONCE()
+for the deletion flag updates because the cache check reads flags
+without taking state_lock.
 
-Release the reservation whenever the candidate is not installed.
-
-Fixes: ae76eef027f7 ("mac80211: return new mpath from mesh_path_add()")
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
+Fixes: d5edb9ae8d56 ("wifi: mac80211: mesh fast xmit support")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-2-enderaoelyther@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/1daa7a98199fe6965c2da7c42717073a6fd39a0b.1789615568.git.zihanx@nebusec.ai
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_pathtbl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/mesh_pathtbl.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 --- a/net/mac80211/mesh_pathtbl.c
 +++ b/net/mac80211/mesh_pathtbl.c
-@@ -689,8 +689,10 @@ struct mesh_path *mesh_path_add(struct i
- 		return ERR_PTR(-ENOSPC);
+@@ -572,6 +572,12 @@ void mesh_fast_tx_cache(struct ieee80211
+ 		goto unlock_sta;
  
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return ERR_PTR(-ENOMEM);
+ 	spin_lock(&cache->walk_lock);
++	if ((READ_ONCE(mpath->flags) & MESH_PATH_DELETED) ||
++	    (mppath && (READ_ONCE(mppath->flags) & MESH_PATH_DELETED))) {
++		kfree(entry);
++		goto unlock_cache;
 +	}
++
+ 	prev = rhashtable_lookup_get_insert_fast(&cache->rht,
+ 						 &entry->rhash,
+ 						 fast_tx_rht_params);
+@@ -803,7 +809,8 @@ static void mesh_path_free_rcu(struct me
+ 	struct ieee80211_sub_if_data *sdata = mpath->sdata;
  
- 	tbl = &sdata->u.mesh.mesh_paths;
- 	spin_lock_bh(&tbl->walk_lock);
-@@ -703,6 +705,7 @@ struct mesh_path *mesh_path_add(struct i
- 
- 	if (mpath) {
- 		kfree(new_mpath);
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 
- 		if (IS_ERR(mpath))
- 			return mpath;
+ 	spin_lock_bh(&mpath->state_lock);
+-	mpath->flags |= MESH_PATH_RESOLVING | MESH_PATH_DELETED;
++	WRITE_ONCE(mpath->flags,
++		   mpath->flags | MESH_PATH_RESOLVING | MESH_PATH_DELETED);
+ 	mesh_gate_del(tbl, mpath);
+ 	spin_unlock_bh(&mpath->state_lock);
+ 	timer_shutdown_sync(&mpath->timer);
+@@ -817,6 +824,9 @@ static void __mesh_path_del(struct mesh_
+ {
+ 	hlist_del_rcu(&mpath->walk_list);
+ 	rhashtable_remove_fast(&tbl->rhead, &mpath->rhash, mesh_rht_params);
++	spin_lock_bh(&mpath->state_lock);
++	WRITE_ONCE(mpath->flags, mpath->flags | MESH_PATH_DELETED);
++	spin_unlock_bh(&mpath->state_lock);
+ 	if (tbl == &mpath->sdata->u.mesh.mpp_paths)
+ 		mesh_fast_tx_flush_addr(mpath->sdata, mpath->dst);
+ 	else
 
 
