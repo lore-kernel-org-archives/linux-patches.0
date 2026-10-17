@@ -1,17 +1,17 @@
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF51394470;
-	Sat, 17 Oct 2026 17:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF5B3BD651;
+	Sat, 17 Oct 2026 17:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257583; cv=none; b=iKc/o1Ate75lCjE/ttdcLEQeHePT06OSnt3ErPFxpCkG+P1oOC3U4uuxta0hrb0Ic4k2KYFWeqln/yRlX9fVAtLYhGlp0MXfezmz1dUPVP0xrSSWjUcHiswJBOWM8UwAR/ZL9GqHWqeqlExgbv0zDFSDzONWeUgWCXSDjCQWi6M=
+	t=1792257585; cv=none; b=PprdzzR2AqliwxvB88WL8EvS7obTTc9awaIpNkpI3KFes6QF5t4byh4pexdioaSXBtgEwnl/TOoSdREU4zpFwpgse/bXQz5lea7Ksdeq4JhHyQ6Q08WVHOoGnhUHSQhxNHWjxKQ1QYALlCsgHeUdLqMFJ6p56YIf/5B8344cy30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257583; c=relaxed/simple;
-	bh=PMeYN8ha80zGhZ2lT2MNIraopUrdnHAOPz3RDTn7zH8=;
+	s=arc-20240116; t=1792257585; c=relaxed/simple;
+	bh=a+WtBuF0yiCmap263WiXF+YyDOjphw4mR65G8mQJMLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/wh8sof8J+2pcGZyavGKU20XXAyCIhizv1Sw+LNOaGbKArQThj8rc8mmJnQKIwoDhM8jdnyjFRQsUENgq4n5fJr1zfmwL1H6CdZr/CJLggdRgOo+aTOVqnQF+qyJ+Zi0MF0sbb7MfzEC4gxQ4gP/qoeXG4FrROC1udSL5a8MWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+	 MIME-Version; b=Z5xnCBi6Zm7zl5I32qLN2sqSrLilRp+DYdKS2uFGaDUNYXJ6BV04zA6oPLHJZjFW7WJ4Gv94HHFNgzR9XL4UNQv17u663pG7EJrUxYqIOPy78kh73KKmUgDt2WaNhLSSasGV6ENzNmVl8xmhG6f3HiJxI4Sql0pSxTp+ExTB/04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
 From: Brett A C Sheffield <bacs@librecast.net>
@@ -36,12 +36,12 @@ Cc: stable@vger.kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com,
 	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.12 000/869] 6.12.114-rc1 review
-Date: Sat, 17 Oct 2026 17:19:18 +0000
-Message-ID: <20261017171924.501415-1-bacs@librecast.net>
+Subject: Re: [PATCH 7.2 00/10] 7.2.12-rc1 review
+Date: Sat, 17 Oct 2026 17:19:29 +0000
+Message-ID: <20261017171932.501529-1-bacs@librecast.net>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
-References: <20261017160036.979869304@linuxfoundation.org>
+In-Reply-To: <20261017155059.698368299@linuxfoundation.org>
+References: <20261017155059.698368299@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,6 +56,6 @@ Content-Transfer-Encoding: 8bit
 010/010 [ OK ] libmld
 120/120 [ OK ] liblibrecast
 
-CPU/kernel: Linux auntie 6.12.114-rc1-g1cda2e472e80 #1 SMP PREEMPT_DYNAMIC Sat Oct 17 16:40:18 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+CPU/kernel: Linux auntie 7.2.12-rc1-g590446e5a2fe #2 SMP PREEMPT_DYNAMIC Sat Oct 17 16:46:51 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
 Tested-by: Brett A C Sheffield <bacs@librecast.net>
