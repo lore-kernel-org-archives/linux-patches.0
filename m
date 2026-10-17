@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38F032E151;
-	Sat, 17 Oct 2026 17:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAE83B19BA;
+	Sat, 17 Oct 2026 17:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257414; cv=none; b=sGDC2Wj7YVyKoHWAKf2PSzcgAandTe00+SYTvH8nWiQ27QkNt6wYfrrSN4jylx0bgnAy+BTfMUArdeD4qeHYGxn146R+f1dLXq0Kn2XFoRtwjB843WLyRcwfh+Ni0UsKVkutMjc0jaiCkdbdWKH/l9uFSRSOP6NaAdCQy24u9RM=
+	t=1792257417; cv=none; b=k4Z+RNTqQpegzpTCg1j/cWC1TOeMFIjAw5CFfhcQlFmQTEuAbfIvFmPt+OpnsCcLFxe5QAHYaLGO65s7P7pDVr+zkOD+VfubTTiBkm2otpDZDLya2rRFgZxdQ50EUtAgENf3gEzVQoWlgmHR5FTExDKwTcSf5JhJA205vYfO5PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257414; c=relaxed/simple;
-	bh=hr9OyXeSRXjus2FOPiE3khFRSIRsCvcR4nVwsSAJeDY=;
+	s=arc-20240116; t=1792257417; c=relaxed/simple;
+	bh=H0W5GtOJcOkwHXoYYrur80L2FwZ6ko4rPJnwcfH7Azo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2rfSNEPIYHnvZVGSRJl7MYke8cCNCb3OS8393onsQEEIbqHTWsxXuLK32Hyj7s3cifcWf/IBDFZrNuQsi2TWoeOzwWXwWX5DTFUxXX38SNqQhBKo1LYLIW3uowPdEw/296CcDIGkHcW4FBeQfu+vKJIl5ZdsgR6CFKRiR7c/9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI+wssHy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kb6J8451Oei0+yZ2cFo3/R9mkleQrlKH9/uiH2XzUoO53tQUbIxOzqP4Z3iR4MxkelxeI+IORmvmVMG72inng3YsgB04TAxyHttS0t2B3JVRlH20YDz/J+Fu2YLvaIWhgE626/3yPZF5x9D5xyJXnSIZm3lvgIVSl3PPRNiGPXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dv6WvDua; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI+wssHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4135F1F000C4;
-	Sat, 17 Oct 2026 17:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dv6WvDua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586F71F000C5;
+	Sat, 17 Oct 2026 17:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257412;
-	bh=8Vrf9oHqHe5BUGmxayyWcK6cMvyT9oayaMS0LlGafQA=;
+	s=korg; t=1792257415;
+	bh=M7jZyYPk2Mz6Layih6T0FZSuvUFFM82PzuZOE/1WUSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZI+wssHyzrlvh/FF5GlOO8L1XHN3FwJm8E91Ld2riRAgy3jxGl8K1a/aX7YHsjeID
-	 vt2rtAQSP+VxeDIdpw6+E5DV7ZvcmPEYFXpMPzSYThis6i/I044/3s/4DoZ5lfTC1N
-	 GcncE1QrL8Lv6I7CBAgGQZHWNvFceO5xHFHQEvR8=
+	b=dv6WvDuai+/rQd39aR82oxJfjw5tcwTMFGoxHpGFAbP7ZvUxE8lQbi24eQORa0WGO
+	 stYEkjKGqxG1g1zjmoCOIwFJwKUOhZ37LKrtkRFhsMA9zHcamgNrb19otyNUvxEMEp
+	 4ln7nxBMk71lZrqDZJnjBBvJLtBgfWWvCkIPNrYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0551/1674] net/sched: cls_route: reject change with no routing attribute
-Date: Sat, 17 Oct 2026 17:47:03 +0200
-Message-ID: <20261017160445.238193347@linuxfoundation.org>
+	Saleel Kudchadker <Saleel.Kudchadker@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 0525/1674] drm/amdkfd: align SDMA doorbell base for shader doorbell writes
+Date: Sat, 17 Oct 2026 17:46:37 +0200
+Message-ID: <20261017160444.584308175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,81 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
 
-[ Upstream commit b72e025ac556984766392001e74b7587e145bcd0 ]
+commit f145d5b3f740de05d85257acdc82f6877180f5c6 upstream.
 
-route4_change on a filter change that supplies no routing attribute
-at all (no to/from/iif) reaches route4_set_parms with fold set, so the
-handle-mismatch check -- which only fires when creating -- is skipped.
-nhandle is built as the all-wildcard bucket (0x8000 | 0xFFFF << 16) and
-the filter is rekeyed to 0xFFFF8000, so the handle userspace already
-stored no longer addresses the filter. (The netlink reply carries the
-new handle; what goes stale is the handle the caller holds.)
+On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
+routed to an SDMA engine at 32-byte (4 doorbell index) granularity.
+SDMA engine doorbell ranges are 10 indices apart, so the range of every
+odd engine starts 2 indices into a 4-index block that begins in the
+previous engine's range. A shader ringing the doorbell of a queue on an
+odd engine therefore rings the previous engine instead. The intended
+queue never sees the doorbell, so its work stalls and the application
+hangs.
 
-The rekey actually misclassifies the packets. The new handle's from_hash
-is the wildcard chain (route4_hash_wild), whose filters route4_classify
-applies without any id/iif comparison, and its bucket (256) is reached
-by every packet through the h < 256 restart. A filter that matched only
-a specific realm therefore becomes an unconditional catch-all that applies
-its classid and actions to all otherwise-unmatched traffic.
+Align the per-engine doorbell base up to a 4-index boundary on these
+ASICs. Each engine only uses 4 of its 10 indices, so the aligned base
+plus the queue offset stays within the engine's range. Even engines are
+already aligned, so only the doorbell IDs of odd-engine queues change.
 
-Reject a change that would rekey the filter this way, with the
-routing-attributes-required error. A change that names at least one of
-to/from/iif, and an in-place replace that keeps the routing identity via
-a supplied attribute, are unaffected. A change of a filter that already
-sits at the wildcard handle is a metadata-only update and remains valid,
-so only a change that actually moves the handle is rejected.
+Only doorbells rung by the device itself are routed this way. Doorbell
+writes from the host, including the kernel's own SDMA rings, are not
+affected.
 
-This is a follow-up to commit 41e85e54e564 ("net/sched: cls_route: Fix
-in-place replace"); this patch closes the no-routing-attribute variant
-that the parent series did not address.
+The doorbell ID of an SDMA queue is saved in CRIU checkpoints and
+checked again on restore. A checkpoint taken before this change that
+contains an SDMA queue on an odd engine will fail to restore with
+-EINVAL. This is intentional: the restored process still holds the old
+doorbell address, so accepting the stale ID would bring back the same
+stall.
 
-Conditions to recreate the bug:
-  tc qdisc add dev lo clsact
-  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
-  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
-      route classid 1:2
-  tc filter show dev lo ingress   # handle became 0xffff8000; iproute2's
-                                  # stored 0x10001 no longer addresses it
+Tested on MI300X with a shader-rung SDMA doorbell test: queues on odd
+engines hung before this change and complete with it.
 
-A change of a filter already at the wildcard handle, e.g. one created by
-"tc filter add dev lo ingress protocol ip pref 100 route classid 1:1"
-(iproute2 defaults the handle to 0xffff8000), stays a valid metadata-only
-update.
+v2: use u32 instead of uint32_t for the new locals (checkpatch)
+v3: name the routing granularity, use dev->node_id, document the
+    layout invariants, describe impact
+v4: express the granularity in doorbell indices, drop unrelated
+    cleanups, explain the CRIU restore behavior, add test note
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260907192133.2639067-1-victor@mojatatu.com
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-0JB3.v1.20260929143022@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6df442a03d1a ("drm/amdgpu: add new doorbell assignment table for aqua_vanjaram")
+Signed-off-by: Saleel Kudchadker <Saleel.Kudchadker@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ee1379e6d7da47bdf7a8d5b89c2d1b28473701fb)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_route.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   32 ++++++++++++++----
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h                 |    7 +++
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 233bfba3bc812..54f5f7857ee0c 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -434,6 +434,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
- 		nhandle |= handle & 0x7F00;
- 
-+	if (fold && !tb[TCA_ROUTE4_TO] && !tb[TCA_ROUTE4_FROM] &&
-+	    !tb[TCA_ROUTE4_IIF] && nhandle != fold->handle) {
-+		NL_SET_ERR_MSG(extack, "Routing attributes required");
-+		return -EINVAL;
-+	}
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -372,12 +372,32 @@ static int allocate_doorbell(struct qcm_
+ 		 * we need the physical sdma engine id in order to get the
+ 		 * correct doorbell offset.
+ 		 */
+-		uint32_t valid_id = idx_offset[qpd->dqm->dev->node_id *
+-					       get_num_all_sdma_engines(qpd->dqm) +
+-					       q->properties.sdma_engine_id]
+-						+ (q->properties.sdma_queue_id & 1)
+-						* KFD_QUEUE_DOORBELL_MIRROR_OFFSET
+-						+ (q->properties.sdma_queue_id >> 1);
++		u32 engine_base = idx_offset[dev->node_id *
++					     get_num_all_sdma_engines(qpd->dqm) +
++					     q->properties.sdma_engine_id];
++		u32 valid_id;
 +
- 	if (handle && !fold && nhandle != handle) {
- 		NL_SET_ERR_MSG_FMT(extack,
- 				   "Handle mismatch constructed: %x (expected: %x)",
--- 
-2.53.0
-
++		/*
++		 * With the aqua_vanjaram doorbell layout, a shader doorbell
++		 * write whose 32-byte block starts in the previous engine's
++		 * range rings that engine instead. Engine ranges are 10
++		 * indices apart (sdma_doorbell_range = 20 dwords, halved for
++		 * 8-byte doorbells, in aqua_vanjaram_doorbell_index_init()),
++		 * which puts odd engines 2 indices into a shared block.
++		 * Aligning costs at most 2 indices, and 8 queues per engine use
++		 * only 4 of the 10, so the aligned base stays in range. The
++		 * 512-index mirror offset keeps the alignment.
++		 */
++		if (KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 3) ||
++		    KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 4) ||
++		    KFD_GC_VERSION(dev) == IP_VERSION(9, 5, 0))
++			engine_base = ALIGN(engine_base,
++					    KFD_SDMA_SHADER_DOORBELL_GRANULARITY);
++
++		valid_id = engine_base +
++			   (q->properties.sdma_queue_id & 1) *
++			   KFD_QUEUE_DOORBELL_MIRROR_OFFSET +
++			   (q->properties.sdma_queue_id >> 1);
+ 
+ 		if (restore_id && *restore_id != valid_id)
+ 			return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -132,6 +132,13 @@
+  */
+ #define KFD_QUEUE_DOORBELL_MIRROR_OFFSET 512
+ 
++/*
++ * On GC 9.4.3, 9.4.4 and 9.5.0, doorbell writes issued from shaders are
++ * routed to an SDMA engine at 32-byte granularity, i.e. 4 indices with the
++ * 8-byte SDMA doorbells used on SOC15.
++ */
++#define KFD_SDMA_SHADER_DOORBELL_GRANULARITY 4
++
+ /**
+  * enum kfd_ioctl_flags - KFD ioctl flags
+  * Various flags that can be set in &amdkfd_ioctl_desc.flags to control how
 
 
