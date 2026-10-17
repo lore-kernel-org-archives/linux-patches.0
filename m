@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130F93AFCF0;
-	Sat, 17 Oct 2026 17:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABD92D73A6;
+	Sat, 17 Oct 2026 17:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256952; cv=none; b=NHFaA82LrELJNMFKyd9RXhtELW2iP97uW9zsO5RAwiHSfd8c6pU2pCQ29gZirmYD2uxHk7AlUqFkLWhmyuN3lrGi6Hd0QK2qzZaydvzIBFXV+ba5DHrP644MhA7qTTWWeO6NJEqpwkhdfEGvQ6qwolT3BZXn5upEZbG3rIJFtP0=
+	t=1792256955; cv=none; b=fizu3++ZX2kCFqCns5l4ly+VwH+b84TF3CprgfJApLdwGXUo3R5xyqEDSjdZ6QY9wQ7vPB0NvcUlqtNxIqqUxxbuSbC0dtRLSJKn/I1rQ319MGLZ291V/l0iyORsuuquZOLqahcbpEHB6ezCdtlyUQylwhfbvAiGhoZjhfeCsgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256952; c=relaxed/simple;
-	bh=MYM9DCz210TBZA2FpRtiJ6gYl1WRvFsQwfUOet3WKGU=;
+	s=arc-20240116; t=1792256955; c=relaxed/simple;
+	bh=0VpaAxPbhiLPni+dtspJ3lGww6E7NV+e24UcmL+uJDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rnttS0002/a3MqJLhaNVCtw/lQE64tz7bj93Ez0irC7IHtSN2vdvMi2ChH5/udxpPZalowQA8YOCoT970DwSB+COkkhgp7wpPYkKzkrs8M1S5BtleqAlpdDx1rSAfuz5VgoST5AYJwNEu4p7a6uSLMiyB3joIJ/xruKD+4rWq9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLothImV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iZPAM9ak+N9V5kNG/1pnZQFW/YKe6HPvGAlpwiVTaglAWUtQ28mgqbO9B04W9ixTzCu2SJtTdDE4nQUiPae6jL67WIn1UFnLtBWsCPBAcS5+G2XySeXfUq706Z5UHmWyJB03VfqdIUZPLpnbkHUpuoSCciCPxtVdn/v2gxvdL2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bjARSVu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLothImV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBA71F000C4;
-	Sat, 17 Oct 2026 17:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bjARSVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C65D1F000C4;
+	Sat, 17 Oct 2026 17:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256951;
-	bh=DhOlezDL3s5DbPTlQifywWtMLxLqVofv/9m1zgKP0ls=;
+	s=korg; t=1792256954;
+	bh=JETce3qnTJyYBhn+XmlotjrkmU6FOlQjiY6rN88SC6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZLothImVsddre50FTcVbq5kQuxAy/DYRwoA6Mawa8Pt9vgzIT02LYSHnuDOIfx1Yw
-	 E9lE0+TpC/W4McFCOP46KYpedAD5ObPeMe7xCE5bpuiH1m7X54Unok0yzy+usAQkv4
-	 lczI/H44X2VtwXBB2MoavEh82l1YJPZfEMgOVIVA=
+	b=0bjARSVuhaExtLS88bLv+2ONL1LFGSAHItNxc7FYYosOOlPUUz4ZYws4W/9wzFW9q
+	 CwOMLh2Bb8P5KgXbraUruBDgQk4lgLOdYbtiuAb1qwXehNfQi3sHwsYlKBQr4JtzEo
+	 YXubL6dXgdr3OQfNAAPh37h90/LAOExXLyZ6sun4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	George Zhang <george.zhang@amd.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0405/1674] drm/amd/display: Mark DCE 6.4 as not APU
-Date: Sat, 17 Oct 2026 17:44:37 +0200
-Message-ID: <20261017160441.515194557@linuxfoundation.org>
+Subject: [PATCH 6.6 0388/1674] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
+Date: Sat, 17 Oct 2026 17:44:20 +0200
+Message-ID: <20261017160441.069890589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,49 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 3a52d587d1fc8e8bf94ba1b07374f7ec91aaffb4 ]
+[ Upstream commit 015e72cde567d2450e282c2790773463156b2d0a ]
 
-DCE 6.4 is found in Oland chips, which were advertised
-as low-end gaming GPUs in 2013~2015 and then have been
-sold as low-end workstation GPUs until 2017~2019.
+dc_state_create_copy() can return NULL on allocation failure.
+dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
+and continues execution, returning success.  dm_resume() then
+dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
+following dc_state->stream_count loop, crashing during GPU reset
+recovery.
 
-These are not APUs.
+Return -ENOMEM immediately if the copy fails, so the caller aborts
+suspend instead of leaving a NULL cached state for resume.
 
-Fixes: 7c15fd86aaec ("drm/amd/display: dc/dce: add initial DCE6 support (v10)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923122033.1046651-3-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1072aa811ea1e61d5f763e4ec1bc6d24bb61f14a)
+(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context for missing dc->debug and dc->check_config assignments. ]
+[ sashal: Adjusted context for dc_copy_state() instead of dc_state_create_copy(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-index 8db9f75144662..556c453666a74 100644
---- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-@@ -1355,7 +1355,6 @@ static bool dce64_construct(
- 	dc->caps.max_downscale_ratio = 200;
- 	dc->caps.i2c_speed_in_khz = 40;
- 	dc->caps.max_cursor_size = 64;
--	dc->caps.is_apu = true;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 4b03bb4b913f8..530b85a22222b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2639,9 +2639,14 @@ static int dm_suspend(void *handle)
+ 		dc_allow_idle_optimizations(adev->dm.dc, false);
  
- 	/*************************************************
- 	 *  Create resources                             *
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
++		if (!dm->cached_dc_state) {
++			drm_err(adev_to_drm(adev),
++				"Failed to allocate cached DC state during suspend\n");
++			mutex_unlock(&dm->dc_lock);
++			return -ENOMEM;
++		}
+ 
+-		if (dm->cached_dc_state)
+-			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
+ 
 -- 
 2.53.0
 
