@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D9D4CF461;
-	Sat, 17 Oct 2026 18:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B090F36195A;
+	Sat, 17 Oct 2026 18:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260560; cv=none; b=NcLCNlIYwsral5K6UeZbicAMiixc28waNYnvq1YuEvfRw/xqMSGatw4LBWy6XKnia930JwwPWJyDVOO+9JRH7qSSzjYeSunVi3wETc6s0+GDRPajJPJnd4SnCg5ueCleInNwBnbcGWkQirGpLLtjMZR67OMQ6WpSsVa3YS4Iu/I=
+	t=1792260563; cv=none; b=jf5rBwi509fY7ZjQd/vpgNlf/CLMwZlWj2kzUPClEtPh3SExqv4DHCej8Gldv8i3p/hPTtetFf/hXe04i+Y1wpZuDV37eHQCfBuBliBAx1JyeYA03AYrCcOIw0B5mnKPqmCQPjVsBbOF2rpXyCE4pV+h2YyATxoh7V6NoCrvZec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260560; c=relaxed/simple;
-	bh=k/krU6oRUaxPF42qefJ/xf9cg4/W9HHRTSFllpHRO7c=;
+	s=arc-20240116; t=1792260563; c=relaxed/simple;
+	bh=sgI+cZRmeWTnlEdx9xHR92YbjnuvxCKkRkw6W30FZOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlfkdejL0LVsPO17ZJlpmGvgsYyH5dz+597P8Hzlo/It1nrqpn+FjxqTQuVQcUubIMof7UhJH7avCvva7iAa7hcrjBCmVsiVZEk5D5gZwoPf+giHCU3tdvRkqtz3Cd2plWFRPXOGID3JG/IvXNx/9Dv9W3fjIZkzcfmHwSa4mfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6TG2YAZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O4DNrthobJJhohEzEoNcdjleMRs5WzzvBGguxH3fIdb88yjN471pd7vDwNadVPKxWzMeNwEP6ohe/S/J+Sp1GHgpPH82pqSEbwfQmU7fe89bJAXAPHabwS3Fb1K+Q+YCW+OsFHwL6mEGCcKKtLNLwPZpOMSLAvr2jtWARijsHwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VWcSwEW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6TG2YAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A941F000C4;
-	Sat, 17 Oct 2026 18:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VWcSwEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E8E1F000C4;
+	Sat, 17 Oct 2026 18:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260559;
-	bh=X4q5Jp7X0OIuDhLw4csbHRp+LTgnXQexPNu2ORFtR7E=;
+	s=korg; t=1792260562;
+	bh=ii/yiAz7Rnr47wliahjT1uNI7e0JX6bU1lIC5t7vkgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6TG2YAZZUSRy/BMlLLjzZoY3a3mFmFAo6jUtD6bn5AYZ13tAzf0wN/6c5EpQRIqY
-	 4DpfqasLVs9MWvJRjlwK7RKFSy95RRue1CdIKRt2WBNbY8OeRKl4lQy+3dwBiwWxKe
-	 U/zotlfNy80jiGFy9OXGsRbUtakdexVbUHb76RjI=
+	b=2VWcSwEWAmIPKpRJEGs3FX5shTZlFlWXXT9zs9nCuzO9mXTIdkq+M4UEbwhytf86n
+	 DRaXpZFvQ5OOc38I1I2ZWEAtAyuAWBnxgFKnXt3KgnaVGZ023ubSHdppBsvhJO+Ynr
+	 PTniKzQmkPAsqI+8RE8qE4dhQh/CbczaLOBlzc7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1544/1674] genirq/proc: Size interrupt directory names for 10-digit interrupt numbers
-Date: Sat, 17 Oct 2026 18:03:36 +0200
-Message-ID: <20261017160510.741000561@linuxfoundation.org>
+Subject: [PATCH 6.6 1545/1674] PCI/sysfs: Demacrofy pci_dev_resource_resize_attr(n) functions
+Date: Sat, 17 Oct 2026 18:03:37 +0200
+Message-ID: <20261017160510.767226198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,71 +45,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit c2c7983c93f5d86962318be7e7298f1bc3feb1a6 ]
+[ Upstream commit f6c73999837820f98519bf0146df44e58f20f89c ]
 
-/proc/irq/<n>/ directory names are built in `char name[10]` buffers
-with `sprintf(name, "%u", irq)`.
+pci_dev_resource_resize_attr(n) macro is invoked for six resources,
+creating a large footprint function for each resource.
 
-Ten-digit IRQ numbers already need 11 bytes including the trailing NUL, and
-current sparse-IRQ configurations allow interrupt numbers in that range.
+Rework the macro to only create a function that calls a helper function so
+the compiler can decide if it warrants to inline the function or not.
 
-Size the temporary name buffer for the current decimal form and switch
-to bounded formatting when creating or removing the proc entry.
+With x86_64 defconfig, this saves roughly 2.5kB:
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260404101001.1-genirq-proc-pengpeng@iscas.ac.cn
+  $ scripts/bloat-o-meter drivers/pci/pci-sysfs.o{.old,.new}
+  add/remove: 1/0 grow/shrink: 0/6 up/down: 512/-2934 (-2422)
+  Function                                     old     new   delta
+  __resource_resize_store                        -     512    +512
+  resource5_resize_store                       503      14    -489
+  resource4_resize_store                       503      14    -489
+  resource3_resize_store                       503      14    -489
+  resource2_resize_store                       503      14    -489
+  resource1_resize_store                       503      14    -489
+  resource0_resize_store                       500      11    -489
+  Total: Before=13399, After=10977, chg -18.08%
+
+(The compiler seemingly chose to still inline __resource_resize_show()
+which is fine, those functions are not very complex/large.)
+
+Link: https://lore.kernel.org/r/20240222114607.1837-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+
+Adapt the helper to this tree's existing resize logic: keep the
+four-argument pci_resize_resource() call and omit the loop that releases
+same-flag BARs, which is not present here.
+
+Stable-dep-of: 25ec7f57dece ("PCI/sysfs: Add CAP_SYS_ADMIN check to __resource_resize_store()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/proc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/pci-sysfs.c | 122 ++++++++++++++++++++++------------------
+ 1 file changed, 66 insertions(+), 56 deletions(-)
 
-diff --git a/kernel/irq/proc.c b/kernel/irq/proc.c
-index 623b8136e9af3..1dccdbbd76970 100644
---- a/kernel/irq/proc.c
-+++ b/kernel/irq/proc.c
-@@ -10,6 +10,7 @@
- #include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/interrupt.h>
-+#include <linux/kernel.h>
- #include <linux/kernel_stat.h>
- #include <linux/mutex.h>
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 857bfe349cf5c..087fe400e6372 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1409,71 +1409,81 @@ static const struct attribute_group pci_dev_reset_attr_group = {
+ 	.is_visible = pci_dev_reset_attr_is_visible,
+ };
  
-@@ -333,7 +334,7 @@ void register_handler_proc(unsigned int irq, struct irqaction *action)
- 
- #undef MAX_NAMELEN
- 
--#define MAX_NAMELEN 10
-+#define MAX_NAMELEN 11
- 
- void register_irq_proc(unsigned int irq, struct irq_desc *desc)
- {
-@@ -354,7 +355,7 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
- 	if (desc->dir)
- 		goto out_unlock;
- 
--	sprintf(name, "%d", irq);
-+	snprintf(name, MAX_NAMELEN, "%u", irq);
- 
- 	/* create /proc/irq/1234 */
- 	desc->dir = proc_mkdir(name, root_irq_dir);
-@@ -408,7 +409,7 @@ void unregister_irq_proc(unsigned int irq, struct irq_desc *desc)
- #endif
- 	remove_proc_entry("spurious", desc->dir);
- 
--	sprintf(name, "%u", irq);
-+	snprintf(name, MAX_NAMELEN, "%u", irq);
- 	remove_proc_entry(name, root_irq_dir);
- }
++static ssize_t __resource_resize_show(struct device *dev, int n, char *buf)
++{
++	struct pci_dev *pdev = to_pci_dev(dev);
++	ssize_t ret;
++
++	pci_config_pm_runtime_get(pdev);
++
++	ret = sysfs_emit(buf, "%016llx\n",
++			 (u64)pci_rebar_get_possible_sizes(pdev, n));
++
++	pci_config_pm_runtime_put(pdev);
++
++	return ret;
++}
++
++static ssize_t __resource_resize_store(struct device *dev, int n,
++				       const char *buf, size_t count)
++{
++	struct pci_dev *pdev = to_pci_dev(dev);
++	unsigned long size;
++	int ret;
++	u16 cmd;
++
++	if (kstrtoul(buf, 0, &size) < 0)
++		return -EINVAL;
++
++	device_lock(dev);
++	if (dev->driver) {
++		ret = -EBUSY;
++		goto unlock;
++	}
++
++	pci_config_pm_runtime_get(pdev);
++
++	if ((pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA) {
++		ret = aperture_remove_conflicting_pci_devices(pdev,
++						"resourceN_resize");
++		if (ret)
++			goto pm_put;
++	}
++
++	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
++	pci_write_config_word(pdev, PCI_COMMAND,
++			      cmd & ~PCI_COMMAND_MEMORY);
++
++	pci_remove_resource_files(pdev);
++
++	ret = pci_resize_resource(pdev, n, size, 0);
++
++	pci_assign_unassigned_bus_resources(pdev->bus);
++
++	if (pci_create_resource_files(pdev))
++		pci_warn(pdev, "Failed to recreate resource files after BAR resizing\n");
++
++	pci_write_config_word(pdev, PCI_COMMAND, cmd);
++pm_put:
++	pci_config_pm_runtime_put(pdev);
++unlock:
++	device_unlock(dev);
++
++	return ret ? ret : count;
++}
++
+ #define pci_dev_resource_resize_attr(n)					\
+ static ssize_t resource##n##_resize_show(struct device *dev,		\
+ 					 struct device_attribute *attr,	\
+-					 char * buf)			\
++					 char *buf)			\
+ {									\
+-	struct pci_dev *pdev = to_pci_dev(dev);				\
+-	ssize_t ret;							\
+-									\
+-	pci_config_pm_runtime_get(pdev);				\
+-									\
+-	ret = sysfs_emit(buf, "%016llx\n",				\
+-			 (u64)pci_rebar_get_possible_sizes(pdev, n));	\
+-									\
+-	pci_config_pm_runtime_put(pdev);				\
+-									\
+-	return ret;							\
++	return __resource_resize_show(dev, n, buf);			\
+ }									\
+-									\
+ static ssize_t resource##n##_resize_store(struct device *dev,		\
+ 					  struct device_attribute *attr,\
+ 					  const char *buf, size_t count)\
+ {									\
+-	struct pci_dev *pdev = to_pci_dev(dev);				\
+-	unsigned long size;						\
+-	int ret;							\
+-	u16 cmd;							\
+-									\
+-	if (kstrtoul(buf, 0, &size) < 0)				\
+-		return -EINVAL;						\
+-									\
+-	device_lock(dev);						\
+-	if (dev->driver) {						\
+-		ret = -EBUSY;						\
+-		goto unlock;						\
+-	}								\
+-									\
+-	pci_config_pm_runtime_get(pdev);				\
+-									\
+-	if ((pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA) {		\
+-		ret = aperture_remove_conflicting_pci_devices(pdev,	\
+-						"resourceN_resize");	\
+-		if (ret)						\
+-			goto pm_put;					\
+-	}								\
+-									\
+-	pci_read_config_word(pdev, PCI_COMMAND, &cmd);			\
+-	pci_write_config_word(pdev, PCI_COMMAND,			\
+-			      cmd & ~PCI_COMMAND_MEMORY);		\
+-									\
+-	pci_remove_resource_files(pdev);				\
+-									\
+-	ret = pci_resize_resource(pdev, n, size, 0);			\
+-									\
+-	pci_assign_unassigned_bus_resources(pdev->bus);			\
+-									\
+-	if (pci_create_resource_files(pdev))				\
+-		pci_warn(pdev, "Failed to recreate resource files after BAR resizing\n");\
+-									\
+-	pci_write_config_word(pdev, PCI_COMMAND, cmd);			\
+-pm_put:									\
+-	pci_config_pm_runtime_put(pdev);				\
+-unlock:									\
+-	device_unlock(dev);						\
+-									\
+-	return ret ? ret : count;					\
++	return __resource_resize_store(dev, n, buf, count);		\
+ }									\
+ static DEVICE_ATTR_RW(resource##n##_resize)
  
 -- 
 2.53.0
