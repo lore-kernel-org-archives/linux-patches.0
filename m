@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16227324B32;
-	Sat, 17 Oct 2026 17:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308613BB9F7;
+	Sat, 17 Oct 2026 17:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259563; cv=none; b=RPU4nwBI9qoFmBK9KEqrrI2Jh+fuJovO2etf+6NcelIIzcFH8vrkXEO5UK4VjZAvOpcsWgQqefIhKQdsLKBotz6BaDtgJGfTHovEKEWAoDKQG6qmjPNcWfqOIrJ7xST8DTJnR4SMps9w6B9IQxhMStdjuP2MnKlR0ImykN8et3I=
+	t=1792259566; cv=none; b=H2HEk3rXrmW5xcFiSQii9nqBfIYhoRe1TJeNB5pYGojy9mtAAilB5tKkJjaDciTu7ONa+F6HRVYjlJ/1jxhLtCE+CYN7rb+5UUGI/zM1AJi52H1s8Acnlffqxw1hPZSPB7QhOqTCnIhnnTvXzUvbfNGHpb9RdzWaQctQdgWb6Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259563; c=relaxed/simple;
-	bh=pJtq+BYbwEzV1yw26TA47KOXNo7SPE4oB2t5RS8yFN4=;
+	s=arc-20240116; t=1792259566; c=relaxed/simple;
+	bh=WUITDk3iVaboFanAKvpuYxpqnbdcc60ZYwbZgDm9rXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/SgpDF5htjRjHKLT/cOvK1Ff/LrgOeGOIN6LD5GTKMQbp17p7yJEV+SF7FA6idyyD0TWTiew3omGpu3rDSoMOGvxfQmk4L/Zp1ZMK4QOnPK+EnbAfXO771n0b/gQ0b8Vggfca6UTqAWpy+WPwUx3rR5UQxwzUTnyt+InsixJZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjHz4eLV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OohSNHsBHOLJMGiEb6XiKKxpNdnLlmzcUdLXzZu8F/ekSmOeszV2+kbD/8X0IN/C6Gpem/+kEPzwsGqGM53AxDn8wJ1/Wvckx0pQbiycM6zC8oEo1/5Chm2t4IrfhFrYCLCBEkeHlx5o89BHIiEOXkhgmSZtBFQO3Tya07ew7no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioJ6trPb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjHz4eLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6971F000C4;
-	Sat, 17 Oct 2026 17:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioJ6trPb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4C91F000C4;
+	Sat, 17 Oct 2026 17:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259562;
-	bh=0fYW3po/guttzoDIKjDYHDEte7rcgStmZTEVK9jKc84=;
+	s=korg; t=1792259565;
+	bh=fw3ajt1h5ym9PdNMpjZT2BhrB343PW3fHE4y/TMyRZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjHz4eLVNhJxSgtquuVLINOCgc39leqA6/93uZ8QSFTUVtmrauXLKPmNCRlzfrphV
-	 GO2++gvZfuWt3iJuzATzYYP95yiJ3J5zVInOv9Y1nvStb2kjhEvSxX07fR/VMs7cyf
-	 MzGs3375tx4UeDEqGoCCWKIbiT0e66fMPYZvlrHo=
+	b=ioJ6trPb70F7thSvqP6F/tEFOvZIBNX1KPOQeyMY9mPRJccJSj90W2ftbQ5ECOEhF
+	 9iELsUm6yD8+tq+JIVPMKIj4FVgjYtH5LR7BggER6zPbV8RUtgxBciNmDj+sBip0DD
+	 Af+YmF+NVx1vRt9Sct5Ybt1cw9KL/F0JlxjQaSM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1255/1674] io_uring: defer eventfd signaling when queued from a wakeup handler
-Date: Sat, 17 Oct 2026 17:58:47 +0200
-Message-ID: <20261017160503.357031271@linuxfoundation.org>
+Subject: [PATCH 6.6 1256/1674] wifi: mt76: mt7915: set correct background radar capability
+Date: Sat, 17 Oct 2026 17:58:48 +0200
+Message-ID: <20261017160503.381931270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,178 +52,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit cd305ee3633a45fcf5f3a5d83f99f3cb77d87b6e ]
+[ Upstream commit 888208d1ccc41bebe97744445787183b17bb3ea4 ]
 
-io_req_local_work_add() signals the CQ ring eventfd inline when it is the
-one to push the first entry onto ->work_list. For DEFER_TASKRUN rings that
-add is frequently done from a waitqueue wakeup handler, where an
-arbitrary waitqueue lock is held.
+Some of the variants do not support background radar, so add a
+helper to report background radar capability.
+For mt7916, only the variant of 5G 2T2R + 1R supports background
+radar.
 
-eventfd_signal_mask() only refuses to recurse when current->in_eventfd
-is set, but that bit is set by eventfd_signal_mask() itself. If the wake
-chain starts somewhere else, signal goes out inline and can feed back
-into epoll.
-
-Add IOU_F_TWQ_IN_WAKE, set it on the task_work add done from the three
-waitqueue callbacks, and use it to force io_eventfd_signal() down the
-existing call_rcu_hurry() deferral instead of signaling inline.
-
-Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260813133843.2933127-1-4ncienth@gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Reviewed-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250320015909.3948612-1-StanleyYP.Wang@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 44b5adfe4949 ("wifi: mt76: mt7915: bound the device EEPROM address before the EFUSE copy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |  8 ++++----
- io_uring/io_uring.h |  8 ++++++++
- io_uring/poll.c     | 22 ++++++++++++----------
- 3 files changed, 24 insertions(+), 14 deletions(-)
+ .../wireless/mediatek/mt76/mt7915/debugfs.c   |  5 +++
+ .../wireless/mediatek/mt76/mt7915/eeprom.c    | 33 ++++++++++++++++++-
+ .../wireless/mediatek/mt76/mt7915/eeprom.h    |  1 +
+ .../net/wireless/mediatek/mt76/mt7915/init.c  |  7 ++--
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c   |  8 +++--
+ .../wireless/mediatek/mt76/mt7915/mt7915.h    |  3 +-
+ 6 files changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 910cd75753df9..d4973d0d4e434 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -539,7 +539,7 @@ static void io_eventfd_ops(struct rcu_head *rcu)
- 		call_rcu(&ev_fd->rcu, io_eventfd_free);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+index 450f4d221184b..1646328bde9c9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+@@ -444,6 +444,11 @@ mt7915_rdd_monitor(struct seq_file *s, void *data)
  
--static void io_eventfd_signal(struct io_ring_ctx *ctx)
-+static void io_eventfd_signal(struct io_ring_ctx *ctx, bool defer)
- {
- 	struct io_ev_fd *ev_fd = NULL;
+ 	mutex_lock(&dev->mt76.mutex);
  
-@@ -562,7 +562,7 @@ static void io_eventfd_signal(struct io_ring_ctx *ctx)
- 	if (ev_fd->eventfd_async && !io_wq_current_is_worker())
- 		goto out;
- 
--	if (likely(eventfd_signal_allowed())) {
-+	if (!defer && likely(eventfd_signal_allowed())) {
- 		eventfd_signal_mask(ev_fd->cq_ev_fd, 1, EPOLL_URING_WAKE);
- 	} else {
- 		atomic_inc(&ev_fd->refs);
-@@ -596,7 +596,7 @@ static void io_eventfd_flush_signal(struct io_ring_ctx *ctx)
- 	if (skip)
- 		return;
- 
--	io_eventfd_signal(ctx);
-+	io_eventfd_signal(ctx, false);
- }
- 
- void __io_commit_cqring_flush(struct io_ring_ctx *ctx)
-@@ -1310,7 +1310,7 @@ static inline void io_req_local_work_add(struct io_kiocb *req, unsigned flags)
- 		if (ctx->flags & IORING_SETUP_TASKRUN_FLAG)
- 			atomic_or(IORING_SQ_TASKRUN, &ctx->rings->sq_flags);
- 		if (ctx->has_evfd)
--			io_eventfd_signal(ctx);
-+			io_eventfd_signal(ctx, flags & IOU_F_TWQ_IN_WAKE);
- 	}
- 
- 	nr_wait = atomic_read(&ctx->cq_wait_nr);
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 0f6b47f55c249..f845bf3eef0b5 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -25,6 +25,14 @@ enum {
- 	 * It's also ignored unless IORING_SETUP_DEFER_TASKRUN is set.
- 	 */
- 	IOU_F_TWQ_LAZY_WAKE			= 1,
++	if (!mt7915_eeprom_has_background_radar(dev)) {
++		seq_puts(s, "no background radar capability\n");
++		goto out;
++	}
 +
-+	/*
-+	 * Set when task_work is queued from a waitqueue wakeup handler, where
-+	 * an arbitrary provider waitqueue lock is held. Signaling the CQ ring
-+	 * eventfd inline from there can recurse back into that lock through
-+	 * epoll, so the eventfd signal must be deferred.
-+	 */
-+	IOU_F_TWQ_IN_WAKE			= 2,
- };
- 
- enum {
-diff --git a/io_uring/poll.c b/io_uring/poll.c
-index 66a0a9b9950b4..c4cfc7a5236d6 100644
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -229,19 +229,21 @@ enum {
- 	IOU_POLL_REQUEUE = 4,
- };
- 
--static void __io_poll_execute(struct io_kiocb *req, int mask)
-+static void __io_poll_execute(struct io_kiocb *req, int mask,
-+			      unsigned tw_flags)
- {
- 	io_req_set_res(req, mask, 0);
- 	req->io_task_work.func = io_poll_task_func;
- 
- 	trace_io_uring_task_add(req, mask);
--	io_req_task_work_add(req);
-+	__io_req_task_work_add(req, tw_flags);
- }
- 
--static inline void io_poll_execute(struct io_kiocb *req, int res)
-+static inline void io_poll_execute(struct io_kiocb *req, int res,
-+				   unsigned tw_flags)
- {
- 	if (io_poll_get_ownership(req))
--		__io_poll_execute(req, res);
-+		__io_poll_execute(req, res, tw_flags);
- }
- 
- /*
-@@ -359,7 +361,7 @@ void io_poll_task_func(struct io_kiocb *req, struct io_tw_state *ts)
- 		return;
- 	} else if (ret == IOU_POLL_REQUEUE) {
- 		io_kbuf_recycle(req, 0);
--		__io_poll_execute(req, 0);
-+		__io_poll_execute(req, 0, 0);
- 		return;
- 	}
- 	io_poll_remove_entries(req);
-@@ -397,7 +399,7 @@ static void io_poll_cancel_req(struct io_kiocb *req)
- {
- 	io_poll_mark_cancelled(req);
- 	/* kick tw, which should complete the request */
--	io_poll_execute(req, 0);
-+	io_poll_execute(req, 0, 0);
- }
- 
- #define IO_ASYNC_POLL_COMMON	(EPOLLONESHOT | EPOLLPRI)
-@@ -406,7 +408,7 @@ static __cold int io_pollfree_wake(struct io_kiocb *req, struct io_poll *poll)
- {
- 	io_poll_mark_cancelled(req);
- 	/* we have to kick tw in case it's not already */
--	io_poll_execute(req, 0);
-+	io_poll_execute(req, 0, IOU_F_TWQ_IN_WAKE);
- 
- 	/*
- 	 * If the waitqueue is being freed early but someone is already
-@@ -461,7 +463,7 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
- 			else
- 				req->flags &= ~REQ_F_SINGLE_POLL;
+ 	if (!cfg80211_chandef_valid(chandef)) {
+ 		ret = -EINVAL;
+ 		goto out;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 0425cf8b5650f..cf9fe6b533fc2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -136,7 +136,7 @@ static int mt7915_eeprom_load(struct mt7915_dev *dev)
+ 		/* read eeprom data from efuse */
+ 		block_num = DIV_ROUND_UP(eeprom_size, eeprom_blk_size);
+ 		for (i = 0; i < block_num; i++) {
+-			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size);
++			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size, NULL);
+ 			if (ret < 0)
+ 				return ret;
  		}
--		__io_poll_execute(req, mask);
-+		__io_poll_execute(req, mask, IOU_F_TWQ_IN_WAKE);
- 	}
- 	return 1;
+@@ -353,6 +353,37 @@ s8 mt7915_eeprom_get_power_delta(struct mt7915_dev *dev, int band)
+ 	return val & MT_EE_RATE_DELTA_SIGN ? delta : -delta;
  }
-@@ -644,7 +646,7 @@ static int __io_arm_poll_handler(struct io_kiocb *req,
  
- 	if (mask && (poll->events & EPOLLET) &&
- 	    io_poll_can_finish_inline(req, ipt)) {
--		__io_poll_execute(req, mask);
-+		__io_poll_execute(req, mask, 0);
- 		return 0;
- 	}
++bool
++mt7915_eeprom_has_background_radar(struct mt7915_dev *dev)
++{
++	u8 val, buf[MT7915_EEPROM_BLOCK_SIZE];
++	u8 band_sel, tx_path, rx_path;
++	int offs = MT_EE_WIFI_CONF + 1;
++
++	switch (mt76_chip(&dev->mt76)) {
++	case 0x7915:
++		return true;
++	case 0x7906:
++		/* read efuse to check background radar capability */
++		if (mt7915_mcu_get_eeprom(dev, offs, buf))
++			break;
++
++		val = buf[offs % MT7915_EEPROM_BLOCK_SIZE];
++		band_sel = u8_get_bits(val, MT_EE_WIFI_CONF0_BAND_SEL);
++		tx_path = u8_get_bits(val, MT_EE_WIFI_CONF0_TX_PATH);
++		rx_path = u8_get_bits(val, MT_EE_WIFI_CONF0_RX_PATH);
++
++		return (band_sel == MT_EE_V2_BAND_SEL_5GHZ &&
++			tx_path == rx_path && rx_path == 2);
++	case 0x7981:
++	case 0x7986:
++	default:
++		break;
++	}
++
++	return false;
++}
++
+ const u8 mt7915_sku_group_len[] = {
+ 	[SKU_CCK] = 4,
+ 	[SKU_OFDM] = 8,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+index adc26a222823b..ca0506df1ef39 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+@@ -45,6 +45,7 @@ enum mt7915_eeprom_field {
+ #define MT_EE_CAL_DPD_SIZE			(54 * MT_EE_CAL_UNIT)
  
-@@ -654,7 +656,7 @@ static int __io_arm_poll_handler(struct io_kiocb *req,
- 		 * poll was waken up, queue up a tw, it'll deal with it.
- 		 */
- 		if (atomic_cmpxchg(&req->poll_refs, 1, 0) != 1)
--			__io_poll_execute(req, 0);
-+			__io_poll_execute(req, 0, 0);
- 	}
+ #define MT_EE_WIFI_CONF0_TX_PATH		GENMASK(2, 0)
++#define MT_EE_WIFI_CONF0_RX_PATH		GENMASK(5, 3)
+ #define MT_EE_WIFI_CONF0_BAND_SEL		GENMASK(7, 6)
+ #define MT_EE_WIFI_CONF1_BAND_SEL		GENMASK(7, 6)
+ #define MT_EE_WIFI_CONF_STREAM_NUM		GENMASK(7, 5)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index ba8da7e2e7e6f..c5f4ced8f4b11 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -377,9 +377,10 @@ mt7915_init_wiphy(struct mt7915_phy *phy)
+ 	if (!is_mt7915(&dev->mt76))
+ 		wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_STA_TX_PWR);
+ 
+-	if (!mdev->dev->of_node ||
+-	    !of_property_read_bool(mdev->dev->of_node,
+-				   "mediatek,disable-radar-background"))
++	if (mt7915_eeprom_has_background_radar(phy->dev) &&
++	    (!mdev->dev->of_node ||
++	     !of_property_read_bool(mdev->dev->of_node,
++				    "mediatek,disable-radar-background")))
+ 		wiphy_ext_feature_set(wiphy,
+ 				      NL80211_EXT_FEATURE_RADAR_BACKGROUND);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index e74ff483f2e18..ce51bb27f7a4f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2840,7 +2840,7 @@ int mt7915_mcu_set_eeprom(struct mt7915_dev *dev)
+ 				 &req, sizeof(req), true);
+ }
+ 
+-int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
++int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset, u8 *read_buf)
+ {
+ 	struct mt7915_mcu_eeprom_info req = {
+ 		.addr = cpu_to_le32(round_down(offset,
+@@ -2848,8 +2848,8 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
+ 	};
+ 	struct mt7915_mcu_eeprom_info *res;
+ 	struct sk_buff *skb;
++	u8 *buf = read_buf;
+ 	int ret;
+-	u8 *buf;
+ 
+ 	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
+ 					MCU_EXT_QUERY(EFUSE_ACCESS),
+@@ -2858,8 +2858,10 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
+ 		return ret;
+ 
+ 	res = (struct mt7915_mcu_eeprom_info *)skb->data;
+-	buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
++	if (!buf)
++		buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
+ 	memcpy(buf, res->data, MT7915_EEPROM_BLOCK_SIZE);
++
+ 	dev_kfree_skb(skb);
+ 
  	return 0;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index 19e3a773d9c2a..94dbe3045260a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -439,6 +439,7 @@ int mt7915_eeprom_get_target_power(struct mt7915_dev *dev,
+ 				   struct ieee80211_channel *chan,
+ 				   u8 chain_idx);
+ s8 mt7915_eeprom_get_power_delta(struct mt7915_dev *dev, int band);
++bool mt7915_eeprom_has_background_radar(struct mt7915_dev *dev);
+ int mt7915_dma_init(struct mt7915_dev *dev, struct mt7915_phy *phy2);
+ void mt7915_dma_prefetch(struct mt7915_dev *dev);
+ void mt7915_dma_cleanup(struct mt7915_dev *dev);
+@@ -490,7 +491,7 @@ int mt7915_mcu_set_fixed_rate_ctrl(struct mt7915_dev *dev,
+ 				   struct ieee80211_sta *sta,
+ 				   void *data, u32 field);
+ int mt7915_mcu_set_eeprom(struct mt7915_dev *dev);
+-int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset);
++int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset, u8 *read_buf);
+ int mt7915_mcu_get_eeprom_free_block(struct mt7915_dev *dev, u8 *block_num);
+ int mt7915_mcu_set_mac(struct mt7915_dev *dev, int band, bool enable,
+ 		       bool hdr_trans);
 -- 
 2.53.0
 
