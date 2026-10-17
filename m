@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A638F658;
-	Sat, 17 Oct 2026 17:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A413451DA;
+	Sat, 17 Oct 2026 17:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259860; cv=none; b=GomiTYghDAm0L48ustfW1+TZ+TsNLfu9R8VH6Y1US0TCHcwNbM5s8Y/uoZGXUjZYSsS51XyHOCJ8f02hZ1O2Jm0DrYTeik/G7d+OftsOH8prf8La0M5j5hic7PIAATbpjthFCkR5rjE+lm8Xd9BWB0SivjBzh35W3hpcMhjK83c=
+	t=1792259864; cv=none; b=Rf5gOoXsqcCkNRRxgs2isyjrQbq35Gi4zMgHQTjvR06eK8yd6gv+y8V3WFxdJf6HOtOtTZDwIDqMzR9/MlhaLU9Fg76XlfXZdkY5O3cwsm4mEXScBQX1pc0FhQtTqAoaxtzLu1ei/qFlFZE7D/nidD06cyPAxmKIN5D9i3CpIgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259860; c=relaxed/simple;
-	bh=1JAnJBdeJpzwKkB+YpQ7Yfn0w6X5rfmW9MzL8C4X2Tg=;
+	s=arc-20240116; t=1792259864; c=relaxed/simple;
+	bh=UDc95Eit/cH4odf8PCbES8CM9mhC05xJ72NdbUhAH34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tE/lCJrPw8GmgGguVIbTyifZy35+gn01gsSj076WQkekb4C4pkOCvO9YnZ7Bz4EdSgOjjVyiSb0oQZyQHeDerfQqILGCV36DrhISHL9uf0tE/uuudBNvSJbgzKNsqhi9l9Kim5tlUJTg2okhVwGmJMqi5M1ZPkPogpGnU8fqJfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnG2I40i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f4r+EF3iC+cpG/omi9jVxdzwoLazXHUK8hUAzNmkAmZfePDPNRXW5LLYeaUHbzvzFWZWPxY65AAkM+IN7HQ5TktDfdEXEROC51QFq+DExJaX/u7eLlAinLLOXdq/14EK3XiJlskMFcNTdEXpyBnXcmG4a+nd53dW/pzIHrO48sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPYiBA74; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnG2I40i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6F91F000C4;
-	Sat, 17 Oct 2026 17:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPYiBA74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8881F000C5;
+	Sat, 17 Oct 2026 17:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259859;
-	bh=ajTnr7QCEGQghQotEVVP4srS+FxNf9k15HiONmqh3dE=;
+	s=korg; t=1792259863;
+	bh=dOdXblx4mpux5CZ/d7kQrWdTe3PTy9U+DeIdTETqV0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnG2I40iQJYkJYimxXD9oFH9gM5vI+IC6a0ACOTkGH6SnI/xoV+aeC/PHB1P3+iqN
-	 RwzpqItVydKrlo7wnJtyqBW5mZA4aw622J3UZdDY8y2cvE2sPqx4yd4jCoLcRxo1Ru
-	 W8TbkdLYSYr02LBlQ0TuoH4gkMHsBoA66VDPp4ec=
+	b=uPYiBA74C7OJa4/v0X90wj7dgcIl7g743ay9prifX5Ou/VTi36zbDbKJ9N2VdRUHq
+	 D+z67m8UYNczPiRJFvHlaBiw/Z567/oBAqDoctxzE3UX4eAaY+REPsk2s4iOZsFC+t
+	 tfvqrM87eyULTJBh/VaulfHWQt7HNqejMKkzWgNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1353/1674] KVM: s390: Fix memory corruption by not reinjecting CK machine checks
-Date: Sat, 17 Oct 2026 18:00:25 +0200
-Message-ID: <20261017160505.893449611@linuxfoundation.org>
+Subject: [PATCH 6.6 1354/1674] KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU
+Date: Sat, 17 Oct 2026 18:00:26 +0200
+Message-ID: <20261017160505.919766723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,121 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit 546dde823a36d7283dcf46127c2f3d093443860f ]
+[ Upstream commit 6d00e67326d831e6e610933a3800712f4ffe6ec1 ]
 
-Channel-subsystem damage machine checks are for the host channel
-subsystem. The guest channel subsystem is emulated in the userspace VMM.
-There is no point in forwarding such machine checks into the guest.
+When emulating INVVPID, KVM executes INVVPID on the physical CPU using
+vpid02 (instead of the L1 assigned VPID), after doing some validations
+on the operands. However, it is possible that the physical CPU KVM
+executes INVVPID on is different from the CPU L2 is running on.
 
-This also simplifies the machine check reinjection and avoids kfree of a
-stack variable as reported by sashiko.  There might be still machine
-checks that have the ck bit set with another bit (like instruction
-damage), mask out the CK bit in s390_backup_mcck_info(), like the CP and
-ED bits already are.
+For example, in the following scenario:
+- L2 runs on CPU #1 and exits to L1 (vmx->nested.vmcs02.cpu=1)
+- L1 migrates to CPU #2 and executes INVVPID
+- KVM executes INVVPID on CPU #2
+- L1 migrates back to CPU #1 and runs L2 (vmx->nested.vmcs02.cpu=1)
 
-Fixes: 4d62fcc0b692 ("KVM: s390: Inject machine check into the guest")
+The TLB entries on CPU #1 are never invalidated, because INVVPID was
+executed on CPU #2, and vmcs02 never ran on a different pCPU (i.e.
+vmx_vcpu_load_vmcs() will *not* request KVM_REQ_TLB_FLUSH).
+
+Ensure that INVVPID is being executed on the same pCPU that L2 last ran
+on, and if not, fallback to clearing last_vpid=0 to trigger a full VPID
+flush on the next nested VM-Enter (as KVM will detect L1 using a
+different VPID for L2). If L2 ends up running on a different pCPU, KVM
+will flush the TLB anyway through vmx_vcpu_load_vmcs().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260806145835.31818-1-borntraeger@linux.ibm.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260616214652.2157032-4-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/nmi.h |  3 +++
- arch/s390/kernel/nmi.c      |  5 +----
- arch/s390/kvm/interrupt.c   | 24 ++++++++----------------
- 3 files changed, 12 insertions(+), 20 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/include/asm/nmi.h b/arch/s390/include/asm/nmi.h
-index 227466ce9e416..da5a98183cb65 100644
---- a/arch/s390/include/asm/nmi.h
-+++ b/arch/s390/include/asm/nmi.h
-@@ -22,6 +22,7 @@
- #define MCCK_CODE_SYSTEM_DAMAGE		BIT(63)
- #define MCCK_CODE_EXT_DAMAGE		BIT(63 - 5)
- #define MCCK_CODE_CP			BIT(63 - 9)
-+#define MCCK_CODE_CK			BIT(63 - 11)
- #define MCCK_CODE_STG_ERROR		BIT(63 - 16)
- #define MCCK_CODE_STG_KEY_ERROR		BIT(63 - 18)
- #define MCCK_CODE_STG_DEGRAD		BIT(63 - 19)
-@@ -33,6 +34,8 @@
- #define MCCK_CODE_FC_VALID		BIT(63 - 43)
- #define MCCK_CODE_CPU_TIMER_VALID	BIT(63 - 46)
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 2561f2288dc1b..2d9cfdfa78061 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -5855,6 +5855,7 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
+ 	} operand;
+ 	u16 vpid02;
+ 	int r, gpr_index;
++	int cpu;
  
-+#define MCCK_CODE_NO_GUEST	(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE | MCCK_CODE_CK)
-+
- #ifndef __ASSEMBLY__
- 
- union mci {
-diff --git a/arch/s390/kernel/nmi.c b/arch/s390/kernel/nmi.c
-index 38ec0487521c4..bc07f6c11b332 100644
---- a/arch/s390/kernel/nmi.c
-+++ b/arch/s390/kernel/nmi.c
-@@ -347,8 +347,7 @@ static void notrace s390_backup_mcck_info(struct pt_regs *regs)
- 
- 	sie_page = container_of(sie_block, struct sie_page, sie_block);
- 	mcck_backup = &sie_page->mcck_info;
--	mcck_backup->mcic = S390_lowcore.mcck_interruption_code &
--				~(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE);
-+	mcck_backup->mcic = S390_lowcore.mcck_interruption_code & ~MCCK_CODE_NO_GUEST;
- 	mcck_backup->ext_damage_code = S390_lowcore.external_damage_code;
- 	mcck_backup->failing_storage_address
- 			= S390_lowcore.failing_storage_address;
-@@ -361,8 +360,6 @@ NOKPROBE_SYMBOL(s390_backup_mcck_info);
- #define ED_STP_ISLAND	6	/* External damage STP island check */
- #define ED_STP_SYNC	7	/* External damage STP sync check */
- 
--#define MCCK_CODE_NO_GUEST	(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE)
--
- /*
-  * machine check handler.
-  */
-diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
-index 4b3892584f5b9..fe31bf352ce09 100644
---- a/arch/s390/kvm/interrupt.c
-+++ b/arch/s390/kvm/interrupt.c
-@@ -2862,9 +2862,7 @@ static int set_adapter_int(struct kvm_kernel_irq_routing_entry *e,
- void kvm_s390_reinject_machine_check(struct kvm_vcpu *vcpu,
- 				     struct mcck_volatile_info *mcck_info)
- {
--	struct kvm_s390_interrupt_info inti;
- 	struct kvm_s390_irq irq = {};
--	struct kvm_s390_mchk_info *mchk;
- 	union mci mci;
- 	__u64 cr14 = 0;         /* upper bits are not used */
- 	int rc;
-@@ -2877,20 +2875,14 @@ void kvm_s390_reinject_machine_check(struct kvm_vcpu *vcpu,
- 	if (mci.w)
- 		cr14 |= CR14_WARNING_SUBMASK;
- 
--	mchk = mci.ck ? &inti.mchk : &irq.u.mchk;
--	mchk->cr14 = cr14;
--	mchk->mcic = mcck_info->mcic;
--	mchk->ext_damage_code = mcck_info->ext_damage_code;
--	mchk->failing_storage_address = mcck_info->failing_storage_address;
--	if (mci.ck) {
--		/* Inject the floating machine check */
--		inti.type = KVM_S390_MCHK;
--		rc = __inject_vm(vcpu->kvm, &inti);
--	} else {
--		/* Inject the machine check to specified vcpu */
--		irq.type = KVM_S390_MCHK;
--		rc = kvm_s390_inject_vcpu(vcpu, &irq);
--	}
-+	irq.u.mchk.cr14 = cr14;
-+	irq.u.mchk.mcic = mcck_info->mcic;
-+	irq.u.mchk.ext_damage_code = mcck_info->ext_damage_code;
-+	irq.u.mchk.failing_storage_address = mcck_info->failing_storage_address;
-+
-+	/* Inject the machine check to specified vcpu */
-+	irq.type = KVM_S390_MCHK;
-+	rc = kvm_s390_inject_vcpu(vcpu, &irq);
- 	WARN_ON_ONCE(rc);
- }
- 
+ 	if (!(vmx->nested.msrs.secondary_ctls_high &
+ 	      SECONDARY_EXEC_ENABLE_VPID) ||
+@@ -5896,6 +5897,10 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
+ 	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
+ 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
+ 	 * irrelevant (and there may not be a loaded vmcs12).
++	 *
++	 * If vmcs02 was last loaded on a different pCPU, then defer the flush
++	 * by invalidating the nested VPID tracking to ensure that KVM performs
++	 * the invalidation on the correct pCPU.
+ 	 */
+ 	vpid02 = nested_get_vpid02(vcpu);
+ 	switch (type) {
+@@ -5904,17 +5909,32 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
+ 		    is_noncanonical_address(operand.gla, vcpu))
+ 			return nested_vmx_fail(vcpu,
+ 				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_vcpu_addr(vpid02, operand.gla);
++		cpu = get_cpu();
++		if (cpu != vmx->nested.vmcs02.cpu)
++			vmx->nested.last_vpid = 0;
++		else
++			vpid_sync_vcpu_addr(vpid02, operand.gla);
++		put_cpu();
+ 		break;
+ 	case VMX_VPID_EXTENT_SINGLE_CONTEXT:
+ 	case VMX_VPID_EXTENT_SINGLE_NON_GLOBAL:
+ 		if (!operand.vpid)
+ 			return nested_vmx_fail(vcpu,
+ 				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_context(vpid02);
++		cpu = get_cpu();
++		if (cpu != vmx->nested.vmcs02.cpu)
++			vmx->nested.last_vpid = 0;
++		else
++			vpid_sync_context(vpid02);
++		put_cpu();
+ 		break;
+ 	case VMX_VPID_EXTENT_ALL_CONTEXT:
+-		vpid_sync_context(vpid02);
++		cpu = get_cpu();
++		if (cpu != vmx->nested.vmcs02.cpu)
++			vmx->nested.last_vpid = 0;
++		else
++			vpid_sync_context(vpid02);
++		put_cpu();
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(1);
 -- 
 2.53.0
 
