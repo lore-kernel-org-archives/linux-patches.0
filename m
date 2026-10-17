@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0D63939B1;
-	Sat, 17 Oct 2026 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED9D3C73CC;
+	Sat, 17 Oct 2026 17:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259549; cv=none; b=dNrBleLMcmW0ImiiDzvDlt1+g5/N91ff9v1CNWbvcAqX1HQGG2mAk7N/hT76JYgtA5DrBmGv9udZVWJW7ZZRARIMaSLl98qaKPBCF6lyq/jprQP7ro9DDFlyJB5BASvhAz2R7DFWSuPR3aYXAOd3fvQJb1WP6QJ3ZKDY8Qrb69o=
+	t=1792259553; cv=none; b=AdBWO2JJxJ7O9SSwspl39GN0rD2Vlm7n9w1tgFs/FPRNdRs+rnYHqJOsay0d9BsFXNWoAXgZg4hlJzGUwQ8x+TbVOvVw45F+7XFClBS7TqWIDmK8rbICgTZHkn05RWhQtH4Yny3L7YiusL30tboEz350URp/OPh4k41YKGqc834=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259549; c=relaxed/simple;
-	bh=ts9R5G0uCdBo8LcxUxNfQJRB6MAAF7bIs93nlmnQHrc=;
+	s=arc-20240116; t=1792259553; c=relaxed/simple;
+	bh=aFMasWXg+bi4Db3l7fxNUwZiFpq/QkJAwI78GfvpkJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXwExDoni+R09zHKCSDvxcu1mWg6H0D7gsgWMMFF1OgQJen7Ku2jKz6lDMnZoXcB4mOl1R3ggiXCEqUn0A7b42go6wTM6/MoZr0lFiv+MG2SeLDDKzTlZXiEtBYd4+fgKbEsSC11vMIEIxDmYH2yj3CzS9AdmDwxkqai47V9Ho0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBF7WAJu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JVUSZwoMoYWQeVaKOPf9hIjy33CrnOnk/ERanqcgFVtSYrg8y7XaGmeC3Ka+bQ9SJJbrREGnH+kN/3T6RFNKaRCvLQGJS7foKNQieRzYbtvRJHT6ezyQy/eS1opZZyi/IKEPCun4IVN8Ab2DaH8xezlWvgdqjADR60uhcUW3k0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QwSf+LR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBF7WAJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74291F000C4;
-	Sat, 17 Oct 2026 17:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QwSf+LR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC6D1F000C5;
+	Sat, 17 Oct 2026 17:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259548;
-	bh=CGp9S1G8FT9eBkPcZDRzM9E02gFNK2jJFZ7UP2lvCgs=;
+	s=korg; t=1792259552;
+	bh=anm1IytJp2oJyUWIfttNXCHMMzDPcB/WUv/ylEUdbpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IBF7WAJut2r7GzL68+AAFa8yziGUh9FABG7+rseJgLjMdEoPlbO9CFrVDKV/Mqi+v
-	 SzQNawB7Dnra4Rny7EmH05inaCYuqQ3QvJQlAqU9MY0Ev04JCSAKbMx3SUIQptgzvl
-	 6u60kIW2n/1ZSYms8RjqP/6JmkyMLJFtiAb4pULw=
+	b=0QwSf+LRGZgF4Edy/gmXWTJeOr8dzc0HetB0t7D6qRIkaXczCDBkFEmC+9Ox7/lFa
+	 1M4pHEwz10pfSHKWTDxQLZnckLjX2cWm2RZetPOuJtyjGXhnq81LlyP+WCG36eI+z6
+	 xICFlyLrd55fPEKkS7+VbV8V89iy870y7r3qEFlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1234/1674] Bluetooth: hci_sync: hold conn in hci_connect_acl/le_sync() callbacks
-Date: Sat, 17 Oct 2026 17:58:26 +0200
-Message-ID: <20261017160502.814910609@linuxfoundation.org>
+Subject: [PATCH 6.6 1252/1674] ntb: Store original DMA address for future release
+Date: Sat, 17 Oct 2026 17:58:44 +0200
+Message-ID: <20261017160503.278047272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,101 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 2f5d635ad5906b0235bc0c870e8beba3116e1e98 ]
+[ Upstream commit da6d997ac556479c112554ab5d95cbd04683eb11 ]
 
-There is theoretical UAF if the conn is freed while the hci_sync task
-is running.
+The DMA API requires that dma_free_attrs receive the exact dma_handle
+originally returned by the allocation function. Do not modify it.
 
-Hold refcount to avoid that.
-
-Fixes: 881559af5f5c ("Bluetooth: hci_sync: Attempt to dequeue connection attempt")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: fc5d1829f9bf ("NTB: transport: Try harder to alloc an aligned MW buffer")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260501-dma-attrs-debug-v2-1-8dbac75cd501@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/ntb/ntb_transport.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index ce665ef463a39..d400206d7afec 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -7115,12 +7115,23 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 	return err;
- }
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index afefbe557f727..df86c99c554f1 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -211,6 +211,7 @@ struct ntb_transport_mw {
+ 	void *alloc_addr;
+ 	void *virt_addr;
+ 	dma_addr_t dma_addr;
++	dma_addr_t original_dma_addr;
+ };
  
-+static void hci_acl_create_conn_sync_complete(struct hci_dev *hdev, void *data,
-+					      int err)
-+{
-+	struct hci_conn *conn = data;
-+
-+	hci_conn_put(conn);
-+}
-+
- int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
- 	int err;
+ struct ntb_transport_client_dev {
+@@ -798,7 +799,7 @@ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
  
--	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
--				      NULL);
-+	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync,
-+				      hci_conn_get(conn),
-+				      hci_acl_create_conn_sync_complete);
-+	if (err)
-+		hci_conn_put(conn);
- 	return (err == -EEXIST) ? 0 : err;
- }
- 
-@@ -7131,36 +7142,41 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	if (err == -ECANCELED)
--		return;
-+		goto done;
- 
- 	hci_dev_lock(hdev);
- 
- 	if (!hci_conn_valid(hdev, conn))
--		goto done;
-+		goto unlock;
- 
- 	if (!err) {
- 		hci_connect_le_scan_cleanup(conn, 0x00);
--		goto done;
-+		goto unlock;
+ 	ntb_mw_clear_trans(nt->ndev, PIDX, num_mw);
+ 	dma_free_coherent(dma_dev, mw->alloc_size,
+-			  mw->alloc_addr, mw->dma_addr);
++			  mw->alloc_addr, mw->original_dma_addr);
+ 	mw->xlat_size = 0;
+ 	mw->buff_size = 0;
+ 	mw->alloc_size = 0;
+@@ -834,6 +835,7 @@ static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
+ 		return -ENOMEM;
  	}
+ 	virt_addr = alloc_addr;
++	mw->original_dma_addr = dma_addr;
  
- 	/* Check if connection is still pending */
- 	if (conn != hci_lookup_le_connect(hdev))
--		goto done;
-+		goto unlock;
- 
- 	/* Flush to make sure we send create conn cancel command if needed */
- 	flush_delayed_work(&conn->le_conn_timeout);
- 	hci_conn_failed(conn, bt_status(err));
- 
--done:
-+unlock:
- 	hci_dev_unlock(hdev);
-+done:
-+	hci_conn_put(conn);
- }
- 
- int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
- {
- 	int err;
- 
--	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
-+	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync,
-+				      hci_conn_get(conn),
- 				      create_le_conn_complete);
-+	if (err)
-+		hci_conn_put(conn);
- 	return (err == -EEXIST) ? 0 : err;
- }
- 
+ 	/*
+ 	 * we must ensure that the memory address allocated is BAR size
 -- 
 2.53.0
 
