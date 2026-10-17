@@ -1,54 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC622F767;
-	Sat, 17 Oct 2026 17:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3543BB102;
+	Sat, 17 Oct 2026 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258107; cv=none; b=jeK3a2VFwuKCc1rLcSGGLpAxu2DDeMXy14GExtuUJPGDgJf2M1khbQ3R0xB2wExPmXPaFAFtTcJBDcV8LYV4CnNFs9FABHp+96hNlGMhYLoQsQ3a3TGvz4kpA7gukGDJh13kJGfoE4/yNgwUbnhm6OB0m9e05bzNqNSR7Q3AOyg=
+	t=1792258110; cv=none; b=IlXWXfByvywzuuEFDePSQykJJuVSgcX2vM5ZHQ2rivNDdkNK3zkVEiubtaExdNnBzd8KiOypJP7ImNNTWcXOHnaI6mvsBK9RDlQgc+tLJQMTPSnEloivJ01oAPlnanK+m/jKIK3iUnimQuIzU9FbIqnTnvjMeI/d3+KgEFJmePA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258107; c=relaxed/simple;
-	bh=oXRN4zif6CRVCfdXyuhUbpH6ZWaDYAdltr5x1NfVEts=;
+	s=arc-20240116; t=1792258110; c=relaxed/simple;
+	bh=6j9ZtQyfd2kBCsGhrOShsHw4dTj+oG7tAcrjddUGHLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uu1SJutFTEkc6zt91I2y2WxjzMN5I3HgZREimPOQ6ijrWHduxMU/eTe55A8y5OfoxrGwT8sw7VRZHHY7CF/i347ElMQVUiItVRjrRwMqGOZEFX4m2M+nGLVOw4wixKyjtpaadi6uBhRz4jAPLQTtFbHr4JvBAYIHRHTD+bbOuyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrO0X+OK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cv4mewIcsJCsk40iIhvYPF+RjPDwmTz4xrfjrCttzqxYdAxB5j+j/vdO3IS10UrGUe4P4l+yyEnGH08pg2dcbyAMeBNlDWXeyG626z/YfWLwzXrwspAx3wkRT0ZG51GP+mcMNbWo0V9HCdjhTF556cJTXAGfdViTCAY27z75bXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaAva7Tu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrO0X+OK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA961F000C4;
-	Sat, 17 Oct 2026 17:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaAva7Tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8531F000C4;
+	Sat, 17 Oct 2026 17:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258105;
-	bh=bkt7i6Lwe3zsaxd4IySKfgUaMzoHihb1q1UIhJaC8vA=;
+	s=korg; t=1792258108;
+	bh=Wa03hj/qVjPSndU+aAfgLgTFyUN5puKZWC+zZ6MEWcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VrO0X+OK2RV6QP0ZrKb6QtiRAcTRrw9HhPrhAckaT1wzi8bFYBOVEwFTfeZkwEKzg
-	 A4y5Zh1AKMao+Gfroav2O8hSBvufvmITxVmGty06dDD1x78xAN5B+iiWuZ6I7LNfQf
-	 PR4MATr7NU2+1iz9awOq7k7a7GCLRAf1swoWNkJE=
+	b=DaAva7TuZeRjdXB4SpVU/GwwKMgdxIZF27RbQXih/h3bCnPt+oREZqfDGtoSleAjj
+	 fzyYaRC+MPktkZ/DnIH1pp7W9SvbbmAqUtfsH8m9DpaV+XQveWfGut5xHvUBjwp4Z3
+	 Mbl5FEgbFJ1NucwMw+KsUf/tYRNkN2T2H4buMg70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrei Vagin <avagin@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Brahmajit Das <brahmajit.xyz@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	David Rientjes <rientjes@google.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Joern Engel <joern@logfs.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0774/1674] mm/smaps: fix race between smaps_hugetlb_range and migration
-Date: Sat, 17 Oct 2026 17:50:46 +0200
-Message-ID: <20261017160450.971643828@linuxfoundation.org>
+Subject: [PATCH 6.6 0775/1674] crypto: x86/aegis128 - eliminate some indirect calls
+Date: Sat, 17 Oct 2026 17:50:47 +0200
+Message-ID: <20261017160450.998172134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -67,74 +52,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 45d19b4b6c2d422771c29b83462d84afcbb33f01 ]
+[ Upstream commit b8d2e7bac3f768e5ab0b52a4a6dd65aa130113be ]
 
-smaps_hugetlb_range() handles the pte without holdling ptl, and may be
-concurrenct with migration, leaing to BUG_ON in pfn_swap_entry_to_page().
-The race is as follows.
+Instead of using a struct of function pointers to decide whether to call
+the encryption or decryption assembly functions, use a conditional
+branch on a bool.  Force-inline the functions to avoid actually
+generating the branch.  This improves performance slightly since
+indirect calls are slow.  Remove the now-unnecessary CFI stubs.
 
-smaps_hugetlb_range              migrate_pages
-  huge_ptep_get
-                                   remove_migration_ptes
-				   folio_unlock
-  pfn_swap_entry_folio
-    BUG_ON
+Note that just force-inlining the existing functions might cause the
+compiler to optimize out the indirect branches, but that would not be a
+reliable way to do it and the CFI stubs would still be required.
 
-To fix it, hold ptl lock in smaps_hugetlb_range().
-
-Link: https://lkml.kernel.org/r/20250724090958.455887-1-tujinjiang@huawei.com
-Link: https://lkml.kernel.org/r/20250724090958.455887-2-tujinjiang@huawei.com
-Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Brahmajit Das <brahmajit.xyz@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Joern Engel <joern@logfs.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3d9eb180fbe8 ("crypto: x86/aegis - Add missing error checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_mmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/crypto/aegis128-aesni-asm.S  |  9 ++--
+ arch/x86/crypto/aegis128-aesni-glue.c | 74 +++++++++++++--------------
+ 2 files changed, 40 insertions(+), 43 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index ac7e356cacebc..5c6214d8e0937 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -724,8 +724,11 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
- 	struct mem_size_stats *mss = walk->private;
- 	struct vm_area_struct *vma = walk->vma;
- 	struct page *page = NULL;
--	pte_t ptent = ptep_get(pte);
-+	spinlock_t *ptl;
-+	pte_t ptent;
+diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
+index 2de859173940e..1b57558548c78 100644
+--- a/arch/x86/crypto/aegis128-aesni-asm.S
++++ b/arch/x86/crypto/aegis128-aesni-asm.S
+@@ -7,7 +7,6 @@
+  */
  
-+	ptl = huge_pte_lock(hstate_vma(vma), walk->mm, pte);
-+	ptent = ptep_get(pte);
- 	if (pte_present(ptent)) {
- 		page = vm_normal_page(vma, addr, ptent);
- 	} else if (is_swap_pte(ptent)) {
-@@ -740,6 +743,7 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
- 		else
- 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
+ #include <linux/linkage.h>
+-#include <linux/cfi_types.h>
+ #include <asm/frame.h>
+ 
+ #define STATE0	%xmm0
+@@ -403,7 +402,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
+  * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
+  *                                const void *src, void *dst);
+  */
+-SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc)
++SYM_FUNC_START(crypto_aegis128_aesni_enc)
+ 	FRAME_BEGIN
+ 
+ 	cmp $0x10, LEN
+@@ -500,7 +499,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc)
+  * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
+  *                                     const void *src, void *dst);
+  */
+-SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc_tail)
++SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+@@ -557,7 +556,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
+  * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
+  *                                const void *src, void *dst);
+  */
+-SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec)
++SYM_FUNC_START(crypto_aegis128_aesni_dec)
+ 	FRAME_BEGIN
+ 
+ 	cmp $0x10, LEN
+@@ -654,7 +653,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec)
+  * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
+  *                                     const void *src, void *dst);
+  */
+-SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec_tail)
++SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
+index 4623189000d89..6c4c2cda2c2d1 100644
+--- a/arch/x86/crypto/aegis128-aesni-glue.c
++++ b/arch/x86/crypto/aegis128-aesni-glue.c
+@@ -56,16 +56,6 @@ struct aegis_ctx {
+ 	struct aegis_block key;
+ };
+ 
+-struct aegis_crypt_ops {
+-	int (*skcipher_walk_init)(struct skcipher_walk *walk,
+-				  struct aead_request *req, bool atomic);
+-
+-	void (*crypt_blocks)(void *state, unsigned int length, const void *src,
+-			     void *dst);
+-	void (*crypt_tail)(void *state, unsigned int length, const void *src,
+-			   void *dst);
+-};
+-
+ static void crypto_aegis128_aesni_process_ad(
+ 		struct aegis_state *state, struct scatterlist *sg_src,
+ 		unsigned int assoclen)
+@@ -114,20 +104,37 @@ static void crypto_aegis128_aesni_process_ad(
  	}
-+	spin_unlock(ptl);
+ }
+ 
+-static void crypto_aegis128_aesni_process_crypt(
+-		struct aegis_state *state, struct skcipher_walk *walk,
+-		const struct aegis_crypt_ops *ops)
++static __always_inline void
++crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
++				    struct skcipher_walk *walk, bool enc)
+ {
+ 	while (walk->nbytes >= AEGIS128_BLOCK_SIZE) {
+-		ops->crypt_blocks(state,
+-				  round_down(walk->nbytes, AEGIS128_BLOCK_SIZE),
+-				  walk->src.virt.addr, walk->dst.virt.addr);
++		if (enc)
++			crypto_aegis128_aesni_enc(
++					state,
++					round_down(walk->nbytes,
++						   AEGIS128_BLOCK_SIZE),
++					walk->src.virt.addr,
++					walk->dst.virt.addr);
++		else
++			crypto_aegis128_aesni_dec(
++					state,
++					round_down(walk->nbytes,
++						   AEGIS128_BLOCK_SIZE),
++					walk->src.virt.addr,
++					walk->dst.virt.addr);
+ 		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
+ 	}
+ 
+ 	if (walk->nbytes) {
+-		ops->crypt_tail(state, walk->nbytes, walk->src.virt.addr,
+-				walk->dst.virt.addr);
++		if (enc)
++			crypto_aegis128_aesni_enc_tail(state, walk->nbytes,
++						       walk->src.virt.addr,
++						       walk->dst.virt.addr);
++		else
++			crypto_aegis128_aesni_dec_tail(state, walk->nbytes,
++						       walk->src.virt.addr,
++						       walk->dst.virt.addr);
+ 		skcipher_walk_done(walk, 0);
+ 	}
+ }
+@@ -162,23 +169,26 @@ static int crypto_aegis128_aesni_setauthsize(struct crypto_aead *tfm,
  	return 0;
  }
- #else
+ 
+-static void crypto_aegis128_aesni_crypt(struct aead_request *req,
+-					struct aegis_block *tag_xor,
+-					unsigned int cryptlen,
+-					const struct aegis_crypt_ops *ops)
++static __always_inline void
++crypto_aegis128_aesni_crypt(struct aead_request *req,
++			    struct aegis_block *tag_xor,
++			    unsigned int cryptlen, bool enc)
+ {
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	struct aegis_ctx *ctx = crypto_aegis128_aesni_ctx(tfm);
+ 	struct skcipher_walk walk;
+ 	struct aegis_state state;
+ 
+-	ops->skcipher_walk_init(&walk, req, true);
++	if (enc)
++		skcipher_walk_aead_encrypt(&walk, req, true);
++	else
++		skcipher_walk_aead_decrypt(&walk, req, true);
+ 
+ 	kernel_fpu_begin();
+ 
+ 	crypto_aegis128_aesni_init(&state, ctx->key.bytes, req->iv);
+ 	crypto_aegis128_aesni_process_ad(&state, req->src, req->assoclen);
+-	crypto_aegis128_aesni_process_crypt(&state, &walk, ops);
++	crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
+ 	crypto_aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
+ 
+ 	kernel_fpu_end();
+@@ -186,18 +196,12 @@ static void crypto_aegis128_aesni_crypt(struct aead_request *req,
+ 
+ static int crypto_aegis128_aesni_encrypt(struct aead_request *req)
+ {
+-	static const struct aegis_crypt_ops OPS = {
+-		.skcipher_walk_init = skcipher_walk_aead_encrypt,
+-		.crypt_blocks = crypto_aegis128_aesni_enc,
+-		.crypt_tail = crypto_aegis128_aesni_enc_tail,
+-	};
+-
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	struct aegis_block tag = {};
+ 	unsigned int authsize = crypto_aead_authsize(tfm);
+ 	unsigned int cryptlen = req->cryptlen;
+ 
+-	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, &OPS);
++	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, true);
+ 
+ 	scatterwalk_map_and_copy(tag.bytes, req->dst,
+ 				 req->assoclen + cryptlen, authsize, 1);
+@@ -208,12 +212,6 @@ static int crypto_aegis128_aesni_decrypt(struct aead_request *req)
+ {
+ 	static const struct aegis_block zeros = {};
+ 
+-	static const struct aegis_crypt_ops OPS = {
+-		.skcipher_walk_init = skcipher_walk_aead_decrypt,
+-		.crypt_blocks = crypto_aegis128_aesni_dec,
+-		.crypt_tail = crypto_aegis128_aesni_dec_tail,
+-	};
+-
+ 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+ 	struct aegis_block tag;
+ 	unsigned int authsize = crypto_aead_authsize(tfm);
+@@ -222,7 +220,7 @@ static int crypto_aegis128_aesni_decrypt(struct aead_request *req)
+ 	scatterwalk_map_and_copy(tag.bytes, req->src,
+ 				 req->assoclen + cryptlen, authsize, 0);
+ 
+-	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, &OPS);
++	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, false);
+ 
+ 	return crypto_memneq(tag.bytes, zeros.bytes, authsize) ? -EBADMSG : 0;
+ }
 -- 
 2.53.0
 
