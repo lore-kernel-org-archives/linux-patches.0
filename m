@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D569A3B9DAE;
-	Sat, 17 Oct 2026 17:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF133BBA0B;
+	Sat, 17 Oct 2026 17:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257250; cv=none; b=lEYXs/fplSHTMi7GCqXID4Ni5p3BJHcN8U7mnQQ2r1zo9icgNgD6bPkAfmNN2UegvbClE6u++C7WqJu7a8/aQBJ1tw6vACy3QqkvNPw+A9/gu3CWXOr/wTxWO/e4Dgj0DAWHI4xWeAgY8puIsjjzToV70yM+IZ3rShvSGA7J8OU=
+	t=1792257252; cv=none; b=bwV8BDOa4gXTJs9Mef3WBgiONc+1lOyA3J3JEB2CQIOKWffAMd4Ie1sVpeEPDO/mucU0GN9RPaJz+Gn0Djoo+nm/0bLwkqltowKmO0k/eNgVnfpo7vZsQd//QWfxb96ClMu+FxSKPHiQuqSs+RQ82I6OG3up4pv7B/tb7mlCuUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257250; c=relaxed/simple;
-	bh=9GqCxyE+BYRr5/lvc1CHn1Cj5Ln94G1F/o2ZKo1ue/c=;
+	s=arc-20240116; t=1792257252; c=relaxed/simple;
+	bh=LSstxXYfEFvkplx/DLWRj+acl55OEw+92hteRqBPca4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ru2OTYIdggoRyy3VFJBajSKJTbaxh1UgoFhY+V9qqcNrOMQRf4WDepcX/XnZHBgw2Fo1uoksxLhgWsQxplNBxJH5TZ/TPbPgE2AdiunmlWuEuRRoWVovhV7q4UN9GmVXPVkB5/0jVCrx30MdDtHhYJ3W/SmLAmSIIOC2prgUJPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7lIB2TY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8FaLKTZUbmRNQlOImuOP6E2f9Kq9lvE4wvuy3odNgw2p93CSZqJwYIF1i1O3WCyMh8OE/W3NEGvJC3lw36iRP9jwl10pzXyZmSAqLLeOOp3cL76WUp2kjdGkoZZLN4GP8Zl/r7Lajml3bbT8haHZn6wZCHKnGiOxUP2uT1fu6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvv2KSVl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7lIB2TY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218A21F000C4;
-	Sat, 17 Oct 2026 17:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvv2KSVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A9F1F000C5;
+	Sat, 17 Oct 2026 17:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257248;
-	bh=OnUgRR3AAev9H16TPiGyeJQQhRGSUyAgAxbC/Fn+Xxw=;
+	s=korg; t=1792257251;
+	bh=wyo4rtiVxELUapuboExMpWVFhubmyHa+m9RZAm/GKvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7lIB2TYXWjVK0JcZNnxbsKBGK7WDyTKiZ+33cSVnIZAs/NCkjrW0kvggdOmPItCR
-	 ejLcUaW8vdj0Gz9y7dvt1KFH0diRhlHGCyR8vzIl2qEr8KnqBdIuMlMGxvcdRKD+Z0
-	 ExghcB5GCo+rMN2vTLz31ANNPi5eY5+PazWy4Llw=
+	b=wvv2KSVlJpn4UcNShWc6SzVAwAVksQ2xSIk6AP5pI8rkDcn9w8/kcGNgpHtmg7O5g
+	 Onqq1+TviInRnWMGAmtF0dxjsUCxYYLWm3d0fQSVa+calIqoQ95YM7p9pX1yeCfrW1
+	 zYaZlwXG5ejrPAKvs9OxU593aKjNMxoVV5HPsBYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0499/1674] mmc: mtk-sd: Cancel request timeout work on remove
-Date: Sat, 17 Oct 2026 17:46:11 +0200
-Message-ID: <20261017160443.922839931@linuxfoundation.org>
+Subject: [PATCH 6.6 0500/1674] mmc: sdhci-sprd: disable runtime PM on remove
+Date: Sat, 17 Oct 2026 17:46:12 +0200
+Message-ID: <20261017160443.947379106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,45 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit b38af5386a74416e898955443f2e26547b358cb2 upstream.
+commit e1c6c10a6a70a69e29b04fcc1ebe4b9bcbc7a49a upstream.
 
-The driver queues req_timeout while a request is active.
-msdc_request_done() uses cancel_delayed_work(), which does not wait for
-a timeout callback that has already started.
+sdhci_sprd_probe() enables runtime PM, while sdhci_sprd_remove() does
+not perform the corresponding runtime PM cleanup.
 
-The timeout callback calls mmc_request_done(), which wakes the request
-waiter, and then continues to use host->dev_comp and check the SDIO IRQ.
-During unbind, msdc_drv_remove() can return and the managed mmc_host can
-be freed before the callback finishes.
+The probe failure path disables runtime PM before disabling the clocks,
+but the normal remove path directly disables clocks that are also
+managed by the runtime PM callbacks. If the device is runtime
+suspended, those clocks may already be disabled.
 
-KASAN reported use-after-free accesses in msdc_request_done() and
-msdc_recheck_sdio_irq() in each of three unbind tests.  The same tests
-completed without a kernel diagnostic after this change.
+Resume the device before removal, disable runtime PM and drop the
+temporary runtime PM reference before disabling the clocks.
 
-Call cancel_delayed_work_sync() after mmc_remove_host() has stopped new
-requests and before the driver releases the host resources.
+This issue was found by manual code inspection.
 
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mtk-sd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci-sprd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2912,6 +2912,7 @@ static void msdc_drv_remove(struct platf
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -903,6 +903,10 @@ static void sdhci_sprd_remove(struct pla
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+ 	struct sdhci_sprd_host *sprd_host = TO_SPRD_HOST(host);
  
- 	platform_set_drvdata(pdev, NULL);
- 	mmc_remove_host(mmc);
-+	cancel_delayed_work_sync(&host->req_timeout);
- 	msdc_deinit_hw(host);
- 	msdc_gate_clock(host);
++	pm_runtime_get_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++
+ 	sdhci_remove_host(host, 0);
  
+ 	clk_disable_unprepare(sprd_host->clk_sdio);
 
 
