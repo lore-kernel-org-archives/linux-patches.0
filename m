@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30303876CC;
-	Sat, 17 Oct 2026 17:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B664A3B9DAE;
+	Sat, 17 Oct 2026 17:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257033; cv=none; b=nk9BfoYKIWcTCl6kVLPYqcfmSVu4EGd4AnHELOZQ1IPq2KdMcFwLLGPm3RxFlHd4QvXt75pHeftKS6xr/enB17pmajfZkrZlXZEnhVPkwPxAXkPREsyJTZHBsDKyGxaK4YwDcB5R0F5+BUxf7P9+l79TvB/u1K2MXuq7wftwqCE=
+	t=1792257037; cv=none; b=XP1PaiA8LB7nv1G/58U2x+8+PJXyMyDbXIB5gArNdOMmz6mo5L+oX1b5NHwV3qkOMqVTJ8R9ohSPiBRmDM0tTWsKAGoXy3JnwDx7BwUfI814lFCi8nsY/pFsVt00z01erMv/bKdk/mJPOdbnKNmHIU/5xJgPqB7ja9cut4R4yxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257033; c=relaxed/simple;
-	bh=9AZ2HoDprKrJdxfulYYlMwnQtilJ7S4ojAK0Q14yjvo=;
+	s=arc-20240116; t=1792257037; c=relaxed/simple;
+	bh=7iSdW4zxIGfMMsfhJp7O/AJ6MKMj3+Y9Zr7eYQGo4d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5DrRTUEMb5BNfdB2HyXJJZ0pvcCWfkOEo36ylt7uiG+EZbdIEtgEnhkRH4l4xTSz4UL9kHNBkUW3Pmr2BFJR0M0EcWNwYdqUqh0IQmK25SWYYWrXEEexFbrA6n6rrDRQZYo955WSql8ciV7SV/VIGZBg2EunOQ2pCtkq5mc5lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZziOsJ+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sMd5QIpIyYsn2wLsoXxPdUQ1THoTs1GOwVmL6aZXruzKZd7zrdhO70Y2SF9oiP+62RPu154EhHk/WPF+YovO9dpIzEjx+RNQ/NH4wOzN+NwvS0leE2kkfikkneGOHXJPzBT6ctGtErAZfGtazZQFaJzcpcYJjbJ+G29JtuCeydw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiB3sbgw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZziOsJ+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022111F000C4;
-	Sat, 17 Oct 2026 17:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiB3sbgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1104C1F000C4;
+	Sat, 17 Oct 2026 17:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257032;
-	bh=2A3H/Y8dRfZXv6KKRdNvnG/oL/t0V3TuuMZ2gNAYSrA=;
+	s=korg; t=1792257035;
+	bh=AJtddBsN5na3K09c4OS4xHtF1qeHAgKswkMRmfUc5uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZziOsJ+4SEiZHvdNjrGbbDcY8mnTm7L6X9OVPhjjz2sdePkb6eBByYNes+hHRAVzY
-	 Ahf/DXqZp+DvxALzjpIMmxIzmS2fqo6rkK4fdDkLuDYnCg4xFZ0Wu222qNQqUHpfMT
-	 OELTkB9xenBiFC2Kw3m/f4W6DX61ijQ2C/BTFN7c=
+	b=tiB3sbgwhecC1HcTgj85r0xsecBow16SCRVeztyxxgVFWMkFx2z6cUFfvxDO9L+hZ
+	 CmLkxMVjLJJbIjWquwBvUF0nexDiob7Uh3qIWyZ+VPbj0DvuzDqQREHrrhTX8vlQhm
+	 0vvRuCgPaWCsn3Tj3zlF0HmiYsjTP0qUe6oUznOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0428/1674] jbd2: bound shrinker scans by examined checkpoint buffers
-Date: Sat, 17 Oct 2026 17:45:00 +0200
-Message-ID: <20261017160442.113529757@linuxfoundation.org>
+Subject: [PATCH 6.6 0429/1674] wifi: mac80211: keep paired old chanctx alive
+Date: Sat, 17 Oct 2026 17:45:01 +0200
+Message-ID: <20261017160442.138042452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,126 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 15cb16496446b94e67f7abcb049b8e2c75cd3d02 ]
+[ Upstream commit 3412e9a800786d1dec4a58367db1cba275e7ef11 ]
 
-The jbd2 shrinker currently accounts only checkpoint buffers that it
-successfully releases against nr_to_scan.  Busy buffers therefore do not
-consume the scan budget.
+An in-place replacement keeps reciprocal replace_ctx pointers between
+the old WILL_BE_REPLACED chanctx and the new REPLACES_OTHER chanctx.
+However, the early free paths only consider assigned and reserved link
+users when deciding whether to free the old chanctx.
 
-If a checkpoint transaction contains mostly busy buffers, the shrinker
-can scan its entire checkpoint list while holding journal->j_list_lock.
-Large checkpoint lists can result in excessive lock hold times and leave
-other CPUs spinning on j_list_lock, causing soft lockups or RCU stalls.
+That lets the old chanctx be freed too early while the replacement
+partner still points back to it, either when the last assigned link is
+released or when that link successfully reassigns to another existing
+context. Later unreserve and switch-finalization paths can then follow a
+stale replace_ctx pointer.
 
-Pass nr_to_scan into journal_shrink_one_cp_list() and decrement it for
-every buffer examined, including busy buffers.  Pass NULL from checkpoint
-cleanup paths so their existing full-list behavior is preserved.
+Keep a paired old chanctx alive until the replacement pair has been torn
+down. Apply the same check to both __ieee80211_link_release_channel()
+and ieee80211_link_use_reserved_reassign(). If the replacement is later
+abandoned, ieee80211_link_unreserve_chanctx() already tears down the
+pairing before freeing the old chanctx once no users remain.
 
-This restores the scan-budget semantics that existed before
-journal_shrink_one_cp_list() was changed to always scan a complete
-checkpoint list.
-
-[ Backport to 6.6.y: use this tree's older shrink_type enumerator names;
-  the scan-budget accounting and caller changes are otherwise unchanged. ]
-
-Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260713102229.1598812-3-max.kellermann@ionos.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/b9b582b0db3814f641648b8886bb50f9d68f93ac.1785730815.git.zhilinz@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Inlined the replacement-partner helper at both call sites. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ net/mac80211/chan.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index e8a7186eb8c36..0462101f683c8 100644
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -360,15 +360,16 @@ enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
- /*
-  * journal_shrink_one_cp_list
-  *
-- * Find all the written-back checkpoint buffers in the given list
-- * and try to release them. If the whole transaction is released, set
-- * the 'released' parameter. Return the number of released checkpointed
-- * buffers.
-+ * Find written-back checkpoint buffers in the given list and try to release
-+ * them. If 'nr_to_scan' is set, scan at most that many buffers. If the whole
-+ * transaction is released, set the 'released' parameter. Return the number of
-+ * released checkpointed buffers.
-  *
-  * Called with j_list_lock held.
-  */
- static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
- 						enum shrink_type type,
-+						unsigned long *nr_to_scan,
- 						bool *released)
+diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
+index 4a21e53afa72e..85875ed7536f8 100644
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -1067,6 +1067,7 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
  {
- 	struct journal_head *last_jh;
-@@ -377,13 +378,15 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
- 	int ret;
+ 	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_chanctx *ctx = link->reserved_chanctx;
++	struct ieee80211_chanctx *old_ctx = NULL;
  
- 	*released = false;
--	if (!jh)
-+	if (!jh || (nr_to_scan && !*nr_to_scan))
- 		return 0;
+ 	lockdep_assert_held(&sdata->local->chanctx_mtx);
  
- 	last_jh = jh->b_cpprev;
- 	do {
- 		jh = next_jh;
- 		next_jh = jh->b_cpnext;
-+		if (nr_to_scan)
-+			(*nr_to_scan)--;
+@@ -1081,6 +1082,7 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
+ 			if (WARN_ON(!ctx->replace_ctx))
+ 				return -EINVAL;
  
- 		if (type == SHRINK_DESTROY) {
- 			ret = __jbd2_journal_remove_checkpoint(jh);
-@@ -405,7 +408,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
- next:
- 		if (need_resched())
- 			break;
--	} while (jh != last_jh);
-+	} while (jh != last_jh && (!nr_to_scan || *nr_to_scan));
++			old_ctx = ctx->replace_ctx;
+ 			WARN_ON(ctx->replace_ctx->replace_state !=
+ 			        IEEE80211_CHANCTX_WILL_BE_REPLACED);
+ 			WARN_ON(ctx->replace_ctx->replace_ctx != ctx);
+@@ -1091,6 +1093,10 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
  
- 	return nr_freed;
- }
-@@ -427,7 +430,6 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
- 	tid_t first_tid = 0, last_tid = 0, next_tid = 0;
- 	tid_t tid = 0;
- 	unsigned long nr_freed = 0;
--	unsigned long freed;
- 	bool first_set = false;
+ 			list_del_rcu(&ctx->list);
+ 			kfree_rcu(ctx, rcu_head);
++
++			if (ieee80211_chanctx_refcount(sdata->local,
++						       old_ctx) == 0)
++				ieee80211_free_chanctx(sdata->local, old_ctx);
+ 		} else {
+ 			ieee80211_free_chanctx(sdata->local, ctx);
+ 		}
+@@ -1322,7 +1328,9 @@ ieee80211_link_use_reserved_reassign(struct ieee80211_link_data *link)
  
- again:
-@@ -460,10 +462,9 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
- 		next_transaction = transaction->t_cpnext;
- 		tid = transaction->t_tid;
+ 	ieee80211_check_fast_xmit_iface(sdata);
  
--		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--						   SHRINK_BUSY_SKIP, &released);
--		nr_freed += freed;
--		(*nr_to_scan) -= min(*nr_to_scan, freed);
-+		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_list,
-+						       SHRINK_BUSY_SKIP,
-+						       nr_to_scan, &released);
- 		if (*nr_to_scan == 0)
- 			break;
- 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
-@@ -515,7 +516,7 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
- 		transaction = next_transaction;
- 		next_transaction = transaction->t_cpnext;
- 		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--					   type, &released);
-+					   type, NULL, &released);
- 		/*
- 		 * This function only frees up some memory if possible so we
- 		 * dont have an obligation to finish processing. Bail out if
+-	if (ieee80211_chanctx_refcount(local, old_ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, old_ctx) == 0 &&
++	    !(old_ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
++	      old_ctx->replace_ctx))
+ 		ieee80211_free_chanctx(local, old_ctx);
+ 
+ 	ieee80211_recalc_chanctx_min_def(local, new_ctx, NULL);
+@@ -1802,7 +1810,9 @@ static void __ieee80211_link_release_channel(struct ieee80211_link_data *link)
+ 	}
+ 
+ 	ieee80211_assign_link_chanctx(link, NULL);
+-	if (ieee80211_chanctx_refcount(local, ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, ctx) == 0 &&
++	    !(ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
++	      ctx->replace_ctx))
+ 		ieee80211_free_chanctx(local, ctx);
+ 
+ 	link->radar_required = false;
 -- 
 2.53.0
 
