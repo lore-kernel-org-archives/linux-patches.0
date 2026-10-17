@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EAB3976BA;
-	Sat, 17 Oct 2026 17:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD163B9DAE;
+	Sat, 17 Oct 2026 17:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257190; cv=none; b=hQGkmbztJxe1Q1I647sw0xHGvUA6RVWCu9FAEX/xw0O7GV1jixNeMJ9Y6U/R6dk7BCq80Zc5aKAHS1/8zoQQkrLFA8sVa6XV3pxtJBd25/+rEuDdSPi6/fjdNjjRTTdbrBqxqrEd9U/90RQCP5eqYR4ww+uqZD+22jl8Ev29Egs=
+	t=1792257194; cv=none; b=m4oCSaik929JXi+rZe4/h3m/JdJJtP4wRzI1iYnQ9mgej5xnaWe17BfFRnhK6peZ3h+/tSzXa0uigeNZ2oBDAfZiJ3MKBbD3Tvp/plE2pix7FdZBkMi18AwdNkVvvHmDWqY8q3UyunAO8PpR0Y51T00twqNTGucTcriKnub0qzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257190; c=relaxed/simple;
-	bh=n+1w80osjZB6uc1cpbkA4vFa8d9jU+bUyu+mAMr+gDw=;
+	s=arc-20240116; t=1792257194; c=relaxed/simple;
+	bh=a5/kDFTaHneQOSlIYFkEvE47vP8/dFQsjUSjVTEesnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NFXq1YIIjrGYK2Abt0Dmg7SXWCc/4j0hyGeNvbKsMyYrl+J2SvV6j4xTE6UEfsEdRYfKSyb5TlpZ0UP9KlzyNVXoDLmCTiSiLE7NTGODYU0T1wBB6g9Mm2wCh78Qi1v2sVCYQeOwtOKGyKlpk7HPgRJPGEAT2YQzD3kHHuUAsfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OD1UxzOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lCQeKt5JI4vy2R87ydJwch65e3H3ufXdcHQp+CUJXb45gdCmgLSM0T5Ik5r2ygpNKn/iVCSZ0b5JV/SM1rLtkVoYpfYl0F8l+LGJiqNaGOpk5LHFrgXs4SuX0EOF1ScG8RXCSi+SROFLVQdT6v370nmmhfaPah9BgbB3alQWtBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id+xho+8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OD1UxzOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223B11F000C4;
-	Sat, 17 Oct 2026 17:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id+xho+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104211F000C4;
+	Sat, 17 Oct 2026 17:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257189;
-	bh=LlGYu+/g0g8fMP71mCxroCbiaNiB9Q/GQjdttF5BH/w=;
+	s=korg; t=1792257192;
+	bh=xithwWzSCKTQ9W6WQaWXJ3npzn7j34m+4VVCT0E84ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OD1UxzOOHgWXHqMBp8ajHFkGVVZATqddClnB4KrugpDyadHdm3b1UUu7Vms4uBL7j
-	 +RbbdCnWRqNscXfccUw/WlELxX8RWC10AVpltVMncaYXWwTqNJiE5FHgsu4GYiCLYE
-	 Gsw1V/hyAyyXSPt9nd2P/lHjJjBW0MMe9UqGdK1c=
+	b=id+xho+8NP9+I+0T62sFPZRyWx/4Rd4RrowxDzy2bTrvKNg94RTcin9CMwjyh0P1Y
+	 JYByuKOY2zVWRQ9aJdCryXMwH54Ssyhs6g/qfl+14vLBUp3GQjmvmHULLZZX9V17u8
+	 w7aPJiSMQVIovi+sJI8leR6YQbD6ojP77B7LYYpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Peter Xu <peterx@redhat.com>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Breno Leitao <leitao@debian.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0438/1674] net: mana: remove double CQ cleanup in mana_create_rxq error path
-Date: Sat, 17 Oct 2026 17:45:10 +0200
-Message-ID: <20261017160442.366317318@linuxfoundation.org>
+Subject: [PATCH 6.6 0439/1674] mm/hugetlb: fix avoid_reserve to allow taking folio from subpool
+Date: Sat, 17 Oct 2026 17:45:11 +0200
+Message-ID: <20261017160442.391572665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -49,60 +53,244 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Peter Xu <peterx@redhat.com>
 
-[ Upstream commit 3985c9a56da49af8b2e45cb1fa55c03c89b1d471 ]
+commit 58db7c5fbe7daa42098d4965133a864f98ba90ba upstream.
 
-In mana_create_rxq(), the error cleanup path calls mana_destroy_rxq()
-followed by mana_deinit_cq(). This is incorrect for two reasons:
+Patch series "mm/hugetlb: Refactor hugetlb allocation resv accounting",
+v2.
 
-1. mana_destroy_rxq() already calls mana_deinit_cq() internally,
-   so the CQ's GDMA queue is destroyed twice.
+This is a follow up on Ackerley's series here as replacement:
 
-2. mana_destroy_rxq() frees the rxq via kfree(rxq) before returning.
-   The subsequent mana_deinit_cq(apc, cq) then operates on freed memory
-   since cq points to &rxq->rx_cq, which is embedded in the
-   already-freed rxq structure — a use-after-free.
+https://lore.kernel.org/r/cover.1728684491.git.ackerleytng@google.com
 
-Remove the redundant mana_deinit_cq() call from the error path since
-mana_destroy_rxq() already handles CQ cleanup. mana_deinit_cq() is
-itself safe for an uninitialized CQ as it checks for a NULL gdma_cq
-before proceeding.
+The goal of this series is to cleanup hugetlb resv accounting, especially
+during folio allocation, to decouple a few things:
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Link: https://patch.msgid.link/20260430035935.1859220-4-dipayanroy@linux.microsoft.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+  - Hugetlb folios v.s. Hugetlbfs: IOW, the hope is in the future hugetlb
+    folios can be allocated completely without hugetlbfs.
+
+  - Decouple VMA v.s. hugetlb folio allocations: allocating a hugetlb folio
+    should not always require a hugetlbfs VMA.  For example, either it got
+    allocated from the inode level (see hugetlbfs_fallocate() where it used
+    a pesudo VMA for allocation), or it can be allocated by other kernel
+    subsystems.
+
+It paves way for other users to allocate hugetlb folios out of either
+system reservations, or subpools (instead of hugetlbfs, as a file system).
+For longer term, this prepares hugetlb as a separate concept versus
+hugetlbfs, so that hugetlb folios can be allocated by not only hugetlbfs
+and other things.
+
+Tests I've done:
+
+- I had a reproducer in patch 1 for the bug I found, this will start to
+  work after patch 1 or the whole set applied.
+
+- Hugetlb regression tests (on x86_64 2MBs), includes:
+
+  - All vmtests on hugetlbfs
+
+  - libhugetlbfs test suite (which may fail some tests, but no new failures
+    will be introduced by this series, so all such failures happen before
+    this series so shouldn't be relevant).
+
+This patch (of 7):
+
+Since commit 04f2cbe35699 ("hugetlb: guarantee that COW faults for a
+process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed"),
+avoid_reserve was introduced for a special case of CoW on hugetlb private
+mappings, and only if the owner VMA is trying to allocate yet another
+hugetlb folio that is not reserved within the private vma reserved map.
+
+Later on, in commit d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle
+areas hole punched by fallocate"), alloc_huge_page() enforced to not
+consume any global reservation as long as avoid_reserve=true.  This
+operation doesn't look correct, because even if it will enforce the
+allocation to not use global reservation at all, it will still try to take
+one reservation from the spool (if the subpool existed).  Then since the
+spool reserved pages take from global reservation, it'll also take one
+reservation globally.
+
+Logically it can cause global reservation to go wrong.
+
+I wrote a reproducer below, trigger this special path, and every run of
+such program will cause global reservation count to increment by one, until
+it hits the number of free pages:
+
+  #define _GNU_SOURCE             /* See feature_test_macros(7) */
+  #include <stdio.h>
+  #include <fcntl.h>
+  #include <errno.h>
+  #include <unistd.h>
+  #include <stdlib.h>
+  #include <sys/mman.h>
+
+  #define  MSIZE  (2UL << 20)
+
+  int main(int argc, char *argv[])
+  {
+      const char *path;
+      int *buf;
+      int fd, ret;
+      pid_t child;
+
+      if (argc < 2) {
+          printf("usage: %s <hugetlb_file>\n", argv[0]);
+          return -1;
+      }
+
+      path = argv[1];
+
+      fd = open(path, O_RDWR | O_CREAT, 0666);
+      if (fd < 0) {
+          perror("open failed");
+          return -1;
+      }
+
+      ret = fallocate(fd, 0, 0, MSIZE);
+      if (ret != 0) {
+          perror("fallocate");
+          return -1;
+      }
+
+      buf = mmap(NULL, MSIZE, PROT_READ|PROT_WRITE,
+                 MAP_PRIVATE, fd, 0);
+
+      if (buf == MAP_FAILED) {
+          perror("mmap() failed");
+          return -1;
+      }
+
+      /* Allocate a page */
+      *buf = 1;
+
+      child = fork();
+      if (child == 0) {
+          /* child doesn't need to do anything */
+          exit(0);
+      }
+
+      /* Trigger CoW from owner */
+      *buf = 2;
+
+      munmap(buf, MSIZE);
+      close(fd);
+      unlink(path);
+
+      return 0;
+  }
+
+It can only reproduce with a sub-mount when there're reserved pages on the
+spool, like:
+
+  # sysctl vm.nr_hugepages=128
+  # mkdir ./hugetlb-pool
+  # mount -t hugetlbfs -o min_size=8M,pagesize=2M none ./hugetlb-pool
+
+Then run the reproducer on the mountpoint:
+
+  # ./reproducer ./hugetlb-pool/test
+
+Fix it by taking the reservation from spool if available.  In general,
+avoid_reserve is IMHO more about "avoid vma resv map", not spool's.
+
+I copied stable, however I have no intention for backporting if it's not a
+clean cherry-pick, because private hugetlb mapping, and then fork() on top
+is too rare to hit.
+
+Link: https://lkml.kernel.org/r/20250107204002.2683356-1-peterx@redhat.com
+Link: https://lkml.kernel.org/r/20250107204002.2683356-2-peterx@redhat.com
+Fixes: d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle areas hole punched by fallocate")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Tested-by: Ackerley Tng <ackerleytng@google.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Karl Mehltretter: Only the allocation-error context differs in this stable
+  tree. The backport retains this stable tree's direct -ENOSPC return instead
+  of importing the later out_end_reservation path; the functional changes
+  otherwise match upstream. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 3 ---
- 1 file changed, 3 deletions(-)
+ mm/hugetlb.c | 22 +++-------------------
+ 1 file changed, 3 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 2c49bb7ddaba3..5ec3396200384 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2321,9 +2321,6 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index ffaf1ffbe885d..fbda160ffc073 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -1398,8 +1398,7 @@ static unsigned long available_huge_pages(struct hstate *h)
  
- 	mana_destroy_rxq(apc, rxq, false);
+ static struct folio *dequeue_hugetlb_folio_vma(struct hstate *h,
+ 				struct vm_area_struct *vma,
+-				unsigned long address, int avoid_reserve,
+-				long chg)
++				unsigned long address, long chg)
+ {
+ 	struct folio *folio = NULL;
+ 	struct mempolicy *mpol;
+@@ -1415,10 +1414,6 @@ static struct folio *dequeue_hugetlb_folio_vma(struct hstate *h,
+ 	if (!vma_has_reserves(vma, chg) && !available_huge_pages(h))
+ 		goto err;
  
--	if (cq)
--		mana_deinit_cq(apc, cq);
+-	/* If reserves cannot be used, ensure enough pages are in the pool */
+-	if (avoid_reserve && !available_huge_pages(h))
+-		goto err;
 -
- 	return NULL;
- }
+ 	gfp_mask = htlb_alloc_mask(h);
+ 	nid = huge_node(vma, address, gfp_mask, &mpol, &nodemask);
  
+@@ -1434,7 +1429,7 @@ static struct folio *dequeue_hugetlb_folio_vma(struct hstate *h,
+ 		folio = dequeue_hugetlb_folio_nodemask(h, gfp_mask,
+ 							nid, nodemask);
+ 
+-	if (folio && !avoid_reserve && vma_has_reserves(vma, chg)) {
++	if (folio && vma_has_reserves(vma, chg)) {
+ 		folio_set_hugetlb_restore_reserve(folio);
+ 		h->resv_huge_pages--;
+ 	}
+@@ -3088,17 +3083,6 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 			vma_end_reservation(h, vma, addr);
+ 			return ERR_PTR(-ENOSPC);
+ 		}
+-
+-		/*
+-		 * Even though there was no reservation in the region/reserve
+-		 * map, there could be reservations associated with the
+-		 * subpool that can be used.  This would be indicated if the
+-		 * return value of hugepage_subpool_get_pages() is zero.
+-		 * However, if avoid_reserve is specified we still avoid even
+-		 * the subpool reservations.
+-		 */
+-		if (avoid_reserve)
+-			gbl_chg = 1;
+ 	}
+ 
+ 	/* If this allocation is not consuming a reservation, charge it now.
+@@ -3121,7 +3105,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 	 * from the global free pool (global change).  gbl_chg == 0 indicates
+ 	 * a reservation exists for the allocation.
+ 	 */
+-	folio = dequeue_hugetlb_folio_vma(h, vma, addr, avoid_reserve, gbl_chg);
++	folio = dequeue_hugetlb_folio_vma(h, vma, addr, gbl_chg);
+ 	if (!folio) {
+ 		spin_unlock_irq(&hugetlb_lock);
+ 		folio = alloc_buddy_hugetlb_folio_with_mpol(h, vma, addr);
 -- 
 2.53.0
 
