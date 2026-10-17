@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF29B377A97;
-	Sat, 17 Oct 2026 16:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04F617BED0;
+	Sat, 17 Oct 2026 16:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253952; cv=none; b=bmCG8bIUSesmgVOWebOPYzQ0LOODflL1y0/+RggzRGNHE2UGzrGv96XRaHyeY2ewTPmoR3y+bgCyi+FnPMnWhMu7seSqjDDoNkECrFmj1ybZejh3RH9h4W7v/SEQtssHs+xZBy83f7HnyRtOM2vqkphqgEKmltl4LxRh5HtPrXg=
+	t=1792253956; cv=none; b=Zihf5dXERAKh4ckVcEHNgGVUb+BKzDjVbJjiFYtfsdvHOHRIE23RU4mV9N8n8O4U/bF+2zLd9Z1VLqHKpT/K/HhrRw8BqRrx39GyW3o7SrxWZRg8O/lUgPEYfD9fJmeLSBfipv0eI9CiAvZkGwjW7kHLKTXe6lfVU3zHctsOtEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253952; c=relaxed/simple;
-	bh=qYO0m2jJ+Rmkx3lsctCEvg3umjLyYO4rtvLhKMh0rZA=;
+	s=arc-20240116; t=1792253956; c=relaxed/simple;
+	bh=c/YAFXMQGKDSjzc3k968lI/3zaBzt64Wn4AHjI/Hm5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLBN9JTEsf90Y88JX5DJ4ldwCQsfzBEC8Iku4rHawOjrUTi+vyY8AUcJrbCiPOcY/PQ/dK4HIHApkLyhR+DTCBA8DBUmyXqJf/lrXd/bDL54eleVnwBgLEqHYxoL0L6uXi5LcuHphOv4hXhU18sMuYGpNStV2FBTXfVkHkU/5RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEuZ0cc1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=saIptisi4SUJP8qoJ772CnUDTfaFH/GQCw0tAk2ZudM1w8scnj2dZqkPjyu/YzH3MCdZ/mAJ5Dw9gUA2ujRbRHMvFBYfpn/ipIeljYzwKZHppWrdkIuiIoXgI7jdVAiCi6L3NU3r4QycBAYDhvLphQG25QgX8mSA9at6uD41x8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKa0kUzs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEuZ0cc1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C5F1F000C4;
-	Sat, 17 Oct 2026 16:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKa0kUzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D971F000C4;
+	Sat, 17 Oct 2026 16:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253951;
-	bh=FEahMrB0S2iyhCpm8lAGl7aHi/L+HMDLQ4z7t2kbE68=;
+	s=korg; t=1792253954;
+	bh=sJWW12iijXWqiS9Am2hy8/3Pu4C3FMkEtrgJ9WhcPoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEuZ0cc1li4Hz8Q3esPwz1Ed6f1OpHWhuFl5QHxx4MuW7BPu1vALm6hpEwnI/Si8o
-	 ghhrWuW9d8FtKlzwn5tWWoLBFIysPcUg9RVk8cMO1HiH6U3XyOaVRVCjjPowbkZfJt
-	 kEdGZSZd8QE4xycokUPJXvG3AoD/LOr1LoGqFd7Y=
+	b=wKa0kUzs4aUaCLr4H5am5dnmAQ2bXcbXReJthQZTB+cNCJ22bYvLPzscnkRbOvw35
+	 E2sxXvfotUrKIN3GN7Y0O3satDieNtEhcFSwtX1HRuO5z+5vXgJq3g1dIU1o4KbJHr
+	 pBSmWLm6/9XVicURTeptPectgm4irO1AR1b+13Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/869] ceph: fix num_ops off-by-one when crypto allocation fails
-Date: Sat, 17 Oct 2026 17:52:06 +0200
-Message-ID: <20261017160044.380701872@linuxfoundation.org>
+Subject: [PATCH 6.12 248/869] ring-buffer: Fix possible dereference of uninitialized pointer
+Date: Sat, 17 Oct 2026 17:51:29 +0200
+Message-ID: <20261017160043.416552141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,67 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit a0d9555bf9eaeba34fe6b6bb86f442fe08ba3842 ]
+[ Upstream commit f1547779402c4cd67755c33616b7203baa88420b ]
 
-move_dirty_folio_in_page_array() may fail if the file is encrypted, the
-dirty folio is not the first in the batch, and it fails to allocate a
-bounce buffer to hold the ciphertext. When that happens,
-ceph_process_folio_batch() simply redirties the folio and flushes the
-current batch -- it can retry that folio in a future batch.
+There is a pointer head_page in rb_meta_validate_events() which is not
+initialized at the beginning of a function. This pointer can be dereferenced
+if there is a failure during reader page validation. In this case the control
+is passed to "invalid" label where the pointer is dereferenced in a loop.
 
-However, if this failed folio is not contiguous with the last folio that
-did make it into the batch, then ceph_process_folio_batch() has already
-incremented `ceph_wbc->num_ops`; because it doesn't follow through and
-add the discontiguous folio to the array, ceph_submit_write() -- which
-expects that `ceph_wbc->num_ops` accurately reflects the number of
-contiguous ranges (and therefore the required number of "write extent"
-ops) in the writeback -- will panic the kernel:
+To fix the issue initialize orig_head and head_page before calling
+rb_validate_buffer.
 
-    BUG_ON(ceph_wbc->op_idx + 1 != req->r_num_ops);
-
-This issue can be reproduced on affected kernels by writing to
-fscrypt-enabled CephFS file(s) with a 4KiB-written/4KiB-skipped/repeat
-pattern (total filesize should not matter) and gradually increasing the
-system's memory pressure until a bounce buffer allocation fails.
-
-Fix this crash by decrementing `ceph_wbc->num_ops` back to the correct
-value when move_dirty_folio_in_page_array() fails, but the folio already
-started counting a new (i.e. still-empty) extent.
-
-The defect corrected by this patch has existed since 2022 (see first
-`Fixes:`), but another bug blocked multi-folio encrypted writeback until
-recently (see second `Fixes:`). The second commit made it into 6.18.16,
-6.19.6, and 7.0-rc1, unmasking the panic in those versions. This patch
-therefore fixes a regression (panic) introduced by cac190c7674f.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Cc: stable@vger.kernel.org
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Fixes: cac190c7674f ("ceph: fix write storm on fscrypted files")
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260213100130.2013839-1-d.dulov@aladdin.ru
+Closes: https://lore.kernel.org/r/202406130130.JtTGRf7W-lkp@intel.com/
+Fixes: 5f3b6e839f3c ("ring-buffer: Validate boot range memory events")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/ring_buffer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 4ba991efb1ca3..355555e313102 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1366,6 +1366,10 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 		rc = ceph_move_dirty_page_in_page_array(mapping, wbc,
- 							ceph_wbc, &folio->page);
- 		if (rc) {
-+			/* Did we just begin a new contiguous op? Nevermind! */
-+			if (ceph_wbc->len == 0)
-+				ceph_wbc->num_ops--;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index c54e7e910b436..ca6a4d0f3ef37 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1888,6 +1888,8 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 	if (!meta || !meta->head_buffer)
+ 		return;
+ 
++	head_page = cpu_buffer->head_page;
 +
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_unlock(folio);
- 			break;
+ 	/* Do the reader page first */
+ 	ret = rb_validate_buffer(cpu_buffer->reader_page->page, cpu_buffer->cpu);
+ 	if (ret < 0) {
+@@ -1898,8 +1900,6 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ 	entry_bytes += local_read(&cpu_buffer->reader_page->page->commit);
+ 	local_set(&cpu_buffer->reader_page->entries, ret);
+ 
+-	head_page = cpu_buffer->head_page;
+-
+ 	/* If the commit_buffer is the reader page, update the commit page */
+ 	if (meta->commit_buffer == (unsigned long)cpu_buffer->reader_page->page) {
+ 		cpu_buffer->commit_page = cpu_buffer->reader_page;
 -- 
 2.53.0
 
