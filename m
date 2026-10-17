@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A735C68B;
-	Sat, 17 Oct 2026 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F14277026;
+	Sat, 17 Oct 2026 16:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256093; cv=none; b=k2Wr/PBkhsjtquMoyW0LPo8JPzbejALvIMwuSSZDshQGlsccT/4fTf2mnIZT2aLlhLmrcUWaHvLgs9nAZ1MRZZsnS7ZBxlGQQNIhOnuS9zPkc4LdA32ixOcMRLLb+Qh4FiCeQRqJxPP40Z/SY7mBe0TyJpfl43bxehTcww5r5Pw=
+	t=1792256096; cv=none; b=YuMPqA7I8AA+Tg5gR5SlQBmGUwobH11XmphMEHZA5dT7FctWrWzHx5y0pAcXzbaslSMEh65+taimVoqYz341y1LAD4lqb5VEJKklgJMdd/2ReyuEBTAQYUsXCzvMPJf0qMLCwQ01/A9F3v83ZdWjNLNC/Em94xsuCD5Omhb2Juw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256093; c=relaxed/simple;
-	bh=UEPNpgUEYahkwBq2xnGka7uz0U8cRCQuZAA67dpOK20=;
+	s=arc-20240116; t=1792256096; c=relaxed/simple;
+	bh=6UjqatVnm7yrpaxwPD+6I3QZ5rhn1YJd4iOcrPLBFj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqApHnyTZE2p9xCqNHlRZQ7LQQ5S1bbqfF4oyEk41/gCYc5PUXc5vzLhm6sTzOV5rw11Ha3nU03vS54Jw6VF94oPAoqY5z2pZHqLJ4RDLeFn/9wjUSmOl3zaB2Qb4CUb15dzG5LhwMrnf4rVSpDo4BEGqw3AsSOL80edhSTGTMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDRwYPZz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9CfMqOLrZ+jHkTzfJjsntM93ePmK/8NKHafZIC9IG38E/M8D8qblYpTJ4W2YH4FALs58dbl+uShYsJJqjVdHALb9hTR4PFU+B89eIOCCvvz5WyiZbhovKsDDim5MB42w9YIY23s8ttXMCT6u+VnmC2lQL8GE+zwZLgleTiNOfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WP1aHeXC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDRwYPZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F521F000C4;
-	Sat, 17 Oct 2026 16:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WP1aHeXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A44B1F000C4;
+	Sat, 17 Oct 2026 16:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256092;
-	bh=y0PREmQ5g24CF7rvush8VQrWhD2FmzH1IAxZ+4g7CVQ=;
+	s=korg; t=1792256095;
+	bh=hvljujTSz4YyLxRHw9pYfS2lu9av/jirhhvnJocTljM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDRwYPZzU5XVCr6IeAolWgXuGAShf9WBlWCijyUMODaPyppP3j17lpcnFD9KCVujz
-	 sWjgGKLcXeHwocvDCVga5Rl3oqIziFbRfQOdEc2Ja5QdZ3KAImNoviEMn4bMK0QqsZ
-	 TvTl2jiGhaWaS3BxZl1YhogEjrBOA9TKgqzB7lN4=
+	b=WP1aHeXC7kkh70YnhlaQyWubcmZ6s3FALm/y0qfhF+3Wuu9divcW9EG0SSdacRDxm
+	 Zaj1xamCxxY5COwXQ3e9mp9qxJUkPjpinc+FNigxyetUuQpOJVk94UYX1aexlmeZdv
+	 pptb6vezcvppeSAF+9kZNu5JUmqYZglNEyvTB75E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0115/1674] smb: client: fix cifsFileInfo reference leak in deferred close
-Date: Sat, 17 Oct 2026 17:39:47 +0200
-Message-ID: <20261017160434.100398280@linuxfoundation.org>
+Subject: [PATCH 6.6 0124/1674] drm/amdgpu: Fix acpi device leak in amdgpu_acpi_enumerate_xcc()
+Date: Sat, 17 Oct 2026 17:39:56 +0200
+Message-ID: <20261017160434.337596886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,73 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5520e89a5a4f834bced64cf2ac927001cc513a40 ]
+[ Upstream commit a997baa61179b450bd55c4810c7ccfed3b753a54 ]
 
-When cifs_close() defers a close, it hands the cifsFileInfo reference
-of the closing struct file to the queued work. Each execution of
-smb2_deferred_work_close() drops one such reference.
+amdgpu_acpi_enumerate_xcc() looks up each XCC ACPI device with
+acpi_dev_get_first_match_dev(), which takes a reference to the device.
+The reference is dropped with acpi_dev_put() after the XCC info is
+initialized, but if the kzalloc_obj() allocation of the XCC info fails
+the function returns -ENOMEM without releasing the reference, leaking
+the last reference to the ACPI device.
 
-deferred_close_scheduled can be false while the work is pending: the
-workqueue clears PENDING when the callback starts to run, before the
-callback clears the flag under deferred_lock. A close in that
-interval requeues the running work, and the callback then clears the
-flag, leaving the requeued work pending with the flag down. A later
-cifs_open() can reuse the handle and its cifs_close() reaches the
-same branch: queue_delayed_work() fails because the work is still
-pending, but cifs_close() returns without dropping the closing file's
-reference. The cifsFileInfo count stays pinned and its tlink, dentry
-and server handle are leaked.
+Drop the ACPI device reference on the allocation failure path before
+returning.
 
-Check the return value and hand off the reference only when work was
-actually queued. Otherwise, use the shared _cifsFileInfo_put(), like
-the mod_delayed_work() branch above: the pending execution already
-owns its reference.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: c3f207ab29f7 ("cifs: Deferred close for files")
+Fixes: 4d5275ab0b18 ("drm/amdgpu: Add parsing of acpi xcc objects")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9211ef48b31ec66999cf55e04d0cbc60cd855fd5)
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ Adjusted cifs_close() context due to missing trace_smb3_close_cached(). ]
+[ adapted the hunk to the existing kzalloc() failure block with braces and DRM_ERROR() logging. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index a6be7903a67cb..4fc05271b9d40 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1260,11 +1260,18 @@ int cifs_close(struct inode *inode, struct file *file)
- 					cifsFileInfo_get(cfile);
- 			} else {
- 				/* Deferred close for files */
--				queue_delayed_work(deferredclose_wq,
--						&cfile->deferred, cifs_sb->ctx->closetimeo);
--				cfile->deferred_close_scheduled = true;
--				spin_unlock(&cinode->deferred_lock);
--				return 0;
-+				/*
-+				 * Each queued execution owns one reference.
-+				 * If nothing was queued, the reference of
-+				 * the closing file is dropped below.
-+				 */
-+				if (queue_delayed_work(deferredclose_wq,
-+						       &cfile->deferred,
-+						       cifs_sb->ctx->closetimeo)) {
-+					cfile->deferred_close_scheduled = true;
-+					spin_unlock(&cinode->deferred_lock);
-+					return 0;
-+				}
- 			}
- 			spin_unlock(&cinode->deferred_lock);
- 			_cifsFileInfo_put(cfile, true, false);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+index 7730e56444934..45cea079d6c82 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -1110,6 +1110,7 @@ static int amdgpu_acpi_enumerate_xcc(void)
+ 				   GFP_KERNEL);
+ 		if (!xcc_info) {
+ 			DRM_ERROR("Failed to allocate memory for xcc info\n");
++			acpi_dev_put(acpi_dev);
+ 			return -ENOMEM;
+ 		}
+ 
 -- 
 2.53.0
 
