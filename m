@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6353AFCF0;
-	Sat, 17 Oct 2026 17:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF933AFCF0;
+	Sat, 17 Oct 2026 17:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256939; cv=none; b=LWxVIvT8vwu8tsnCsnj8VjV+qFErkPF5/OctgGcpZ30IwGTMWKfDk2pAnqWoVf/MuRTztOtS+eGbK8EQLfHw6AkE5LXXzc7EN1u9srrUrm8leNBFPc/r2t79TxVcajQt2YvotHMfi1PtaEZ7axHQtjcKltNN4klBDAHni1gCFWU=
+	t=1792256942; cv=none; b=S9IzRlEqLnvRA/Had1IoI+hL1VAjEBHDt3BU1nOnuWVqQNocCje6IRD0pmgr+ufGxpY2DwqbqSwoPjRzj/OTNpOJLysE9ZbpsZ/+c/NVor7EOQ1wHW9+/wnvKAL0FlB/9pjYUlxde3wP1zMv2YG5tStf+iieuS+HMN/4ssYSLrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256939; c=relaxed/simple;
-	bh=2s6TsnuYtcHtPUX6MvXImewMnXbHGeerZIdRVVK93OM=;
+	s=arc-20240116; t=1792256942; c=relaxed/simple;
+	bh=/2o6N5n3TLsOYDkrCni6Xfq6Lk7jcWA8iBQu5XsACFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WT4+EC1SKlYs0E/F2/wPdrCqHqUgrXxFCcY8qE6cuY58O9JDJC+qICebN9zavWUPMO3l2kYZbPVd62tOAX+suC1YzgPrie5wIFUpsGcrWzef7bR1KuATaHxNZrRw8hMalX3evX4/+IcrMxEWNDRfJ70BR0VgyUbMDhqyosyb7fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7iT+fKt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tB/SZzl8vKEQXhqClxEKKKaGIQVFL/qJhMGfiUv3z+EOW/mQjJQYs6B3FwcwSDpKm7uXBSXgKzkMeFdU6BEFt86liTEXZRSTC4S0hV3Mlj63HtIWb0GqdmHjQjvtt0vmYPcYfYx9QjFVW+rHCDu3UtHw/TAm9QfP6TY6+UbmEjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZpBEVlw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7iT+fKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C632F1F000C4;
-	Sat, 17 Oct 2026 17:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZpBEVlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA0D1F000C4;
+	Sat, 17 Oct 2026 17:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256938;
-	bh=de9gCHOrtq+nSBSzHiY9Rbm7yhtsVPdGTvgxeYeTJs8=;
+	s=korg; t=1792256941;
+	bh=RDVd6o0D7xDelTnO//ANUFU9iMu2cf6zX+kNKk4YrGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J7iT+fKtkAZ8Cdu50ywutf6aPxhAPMkeibSX1lKn1rWqlxRQO5GH5gxYWWIqU47kf
-	 JoAFDYKoXwOeyU4UBVHACPwhWbAAVkpsGwFUJgZ4joFCmOmcJEG+lebKnWwI5ACC72
-	 8VrG+cwKWSOLPSkRLAa4p4AzAOy0gbQAkDJaJjBQ=
+	b=OZpBEVlwSl60ey/IiYUnM/sQNfVKyfPvEBjplI1pgi4hIrq4xdLp8Onm7ssqnrhP2
+	 sZA4XOvoBVe3kevc4qWRh8ypwlpdtT1KJko83EORr/mtKJJceKFcrIHysHexDG9jGY
+	 RG8mqWgwM3bK/2A4k1rFBy1aIQh+LiNDw+pzdflQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0401/1674] serial: ma35d1: Fix clock reference leak in ma35d1serial_probe()
-Date: Sat, 17 Oct 2026 17:44:33 +0200
-Message-ID: <20261017160441.411936136@linuxfoundation.org>
+Subject: [PATCH 6.6 0402/1674] ALSA: hda/tegra: Re-enable SDO workaround for Tegra194
+Date: Sat, 17 Oct 2026 17:44:34 +0200
+Message-ID: <20261017160441.437293386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 98401cf912fe8a081ef8e500c421b6d957b55a99 ]
+[ Upstream commit 89365897f4210979966aa808d7b013edf4080558 ]
 
-of_clk_get() returns a clock with a reference that has to be released
-with clk_put(). ma35d1serial_probe() never does that, so the reference
-is leaked on the probe error paths and also when the port is removed.
+This workaround was originally added for Tegra194, but no longer gets
+applied for it. Commit 615d43540043 ("ALSA: hda/tegra: fix tegra-hda on
+tegra30 soc") changed the guard to tegra30-hda, which worked because all
+affected archs had the fallback compatible. However, commit 7f0ea5acfc19
+("arm64: tegra: Use correct compatible string for Tegra194 HDA") removed
+the fallback compatible for Tegra194, causing this to break.
 
-Release it on the error paths and in ma35d1serial_remove().
-
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Cc: stable@kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917155650.2161274-1-vulab@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7f0ea5acfc19 ("arm64: tegra: Use correct compatible string for Tegra194 HDA")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://patch.msgid.link/20260926-tegra194-hda-sdo-v1-1-f7a636a07a58@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/ma35d1_serial.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_tegra.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
-index f6f832ba7204d..225feb5868e85 100644
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -725,7 +725,7 @@ static int ma35d1serial_probe(struct platform_device *pdev)
+diff --git a/sound/pci/hda/hda_tegra.c b/sound/pci/hda/hda_tegra.c
+index 12a144a269ee8..de47ea7b9ee13 100644
+--- a/sound/pci/hda/hda_tegra.c
++++ b/sound/pci/hda/hda_tegra.c
+@@ -376,7 +376,8 @@ static int hda_tegra_first_init(struct azx *chip, struct platform_device *pdev)
+ 	 * in powers of 2, next available ratio is 16 which can be
+ 	 * used as a limiting factor here.
+ 	 */
+-	if (of_device_is_compatible(np, "nvidia,tegra30-hda"))
++	if (of_device_is_compatible(np, "nvidia,tegra30-hda") ||
++	    of_device_is_compatible(np, "nvidia,tegra194-hda"))
+ 		chip->bus.core.sdo_limit = 16;
  
- 	ret = clk_prepare_enable(up->clk);
- 	if (ret)
--		goto err_iounmap;
-+		goto err_put_clk;
- 
- 	if (up->port.line != 0)
- 		up->port.uartclk = clk_get_rate(up->clk);
-@@ -752,6 +752,9 @@ static int ma35d1serial_probe(struct platform_device *pdev)
- err_clk_disable:
- 	clk_disable_unprepare(up->clk);
- 
-+err_put_clk:
-+	clk_put(up->clk);
-+
- err_iounmap:
- 	iounmap(up->port.membase);
- 	return ret;
-@@ -767,6 +770,7 @@ static void ma35d1serial_remove(struct platform_device *dev)
- 
- 	uart_remove_one_port(&ma35d1serial_reg, port);
- 	clk_disable_unprepare(up->clk);
-+	clk_put(up->clk);
- }
- 
- static int ma35d1serial_suspend(struct platform_device *dev, pm_message_t state)
+ 	/* codec detection */
 -- 
 2.53.0
 
