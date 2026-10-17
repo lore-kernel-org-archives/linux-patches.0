@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C4B3A7F41;
-	Sat, 17 Oct 2026 16:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CCC391E51;
+	Sat, 17 Oct 2026 16:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254606; cv=none; b=n5OCgo9CXCyNiB7x26IsQh2ht00FibP/HW0e1Bpec4t2GYrVZMJZhyX/k0Ycb1peydol6eoqnnKg2LDYbfMX6JYzUMT5qhmM81l+4JcgLbiRn2RQEcnrUfj5PXWcFLTthhM4xXGOlFumtxprBgC8M4T/aeFVis4bs2cHJXfJDgA=
+	t=1792254608; cv=none; b=ZlXewdigOeSsTfr5SnPLzufxd2R3Fj3FldacYJIVwkw3J2MG36nHyskyuwBNLLSU10tLmt+uC40QfJIDFGjgQ02eqNBLliG41KFVgcpF5yreaTP1U+ZVfCnoT3xtKvyJXXTQq2QwyJLDNxQlgxINqZrT1Wt75fW4GV9DW9UqrBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254606; c=relaxed/simple;
-	bh=pWcPE3HjxcejKEDE4ZCVnb40Jmv3XVldDOKH0JycZHc=;
+	s=arc-20240116; t=1792254608; c=relaxed/simple;
+	bh=/5HhOAw02Lz4poCr/HKMk5t/dBP2iNE6M1vhp6FdPho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yl64FMEicQ2M3nrX1vBEqwgaQk7lUrkSg+fFOrHcWJRVHFpjNauXSdEdRa8W4EY6PP5GgIvonzLRNUmLnSkjsFR9nKI38C2wJ4m6UCYzdljqWhL9b6ARwMzVXZc0OENSgws+Mczp1vFuVAcyVUl4s/AMunvMcvzRGufJg6zGyCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaRtQGKQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fuqLizrfumGLHABu4OuxBtkg89dXe+y68xi2DqsdKrW6iUdez6Y6pOjQmmG9M4pDl7QSSyt0gjq1yXdbUvQfpPLg7wdIa3PevPx5htC7N2+9YA/gSUFLFI8Z3h93hMlavRAlx2GxtFiwJVA8qWW/BfVyyk3jeBlGE4hY6LehOZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFrjNoM4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaRtQGKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF771F000C4;
-	Sat, 17 Oct 2026 16:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFrjNoM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156D41F000C5;
+	Sat, 17 Oct 2026 16:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254604;
-	bh=jMWKVFT9fvon8CUDtNQmziUlDPo9vXvjWg3QKGYWAqU=;
+	s=korg; t=1792254607;
+	bh=myF1WhvFLXtfWM0OFtqj/Xe1jex51tlhg4J1KC85/e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OaRtQGKQWj1lkkb43xmx+V9M5znW1V9kRu7fKOLu6lwbcCEbpDpI4eA0ghh/nUfCy
-	 VY6892POQ0TAaq6TO1C1BeZkFxK033Qu05oio86C73SD2ny4ngzx//5hzQe5wnv1HT
-	 /q+WjBCEuy+0JHcsnEiY0rZqKLb7wJKKRPqwXY60=
+	b=IFrjNoM4wgrTs7AO3SFmIvpIObk4Hg/hV/F+eKTaWnnqi7449ynbsPOlouo2laqKD
+	 yykKKGM/7qbku1CTH1xuE+lwwDv7shATOWQBCwQ1+vP/+KpWcB2LmM7ZhJ8vvYxrMF
+	 +AvyJr+c/+GXg99XbOgJwWtMO4cWPQW6/dCdmKew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Dongjiang Zhu <zhudongjiang@fnnas.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 501/869] xsk: reclaim invalid Tx descriptors in ZC batch path
-Date: Sat, 17 Oct 2026 17:55:42 +0200
-Message-ID: <20261017160049.952500205@linuxfoundation.org>
+Subject: [PATCH 6.12 502/869] btrfs: skip global block reserve accounting for rescue mounts
+Date: Sat, 17 Oct 2026 17:55:43 +0200
+Message-ID: <20261017160049.977731258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,515 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Dongjiang Zhu <zhudongjiang@fnnas.com>
 
-[ Upstream commit 72f2b4516faf55d4dfac2414649d3cffa5fd2c5e ]
+[ Upstream commit 51a0e8399858621442807a26057bcd1cd3ced046 ]
 
-The zero-copy Tx batch parser stops when it encounters an invalid
-descriptor. If this happens after one or more continuation descriptors,
-the Tx consumer can be advanced past fragments that are neither submitted
-to the driver nor returned to userspace through the completion ring.
+[BUG]
+Mounting with rescue=ibadroots after corrupting the block group tree
+root triggers a NULL pointer dereference:
 
-A similar problem occurs when a packet exceeds xdp_zc_max_segs. The
-descriptors consumed up to the limit are released without completion, and
-the remaining continuation descriptors can subsequently be interpreted
-as the beginning of another packet.
+  BUG: kernel NULL pointer dereference, address: 0000000000000100
+  RIP: 0010:btrfs_update_global_block_rsv+0x9d/0x1c0 [btrfs]
+  Call Trace:
+   fill_dummy_bgs+0xd4/0x120 [btrfs]
+   open_ctree+0xc6e/0x1ca0 [btrfs]
+   btrfs_get_tree+0x50d/0xa40 [btrfs]
 
-Parse Tx batches in packet units and distinguish descriptors belonging to
-complete valid packets from descriptors consumed while draining an
-invalid or oversized packet. Return the former to the driver and append
-the latter to the CQ address area so userspace can reclaim their UMEM
-frames.
+The same crash occurs with a corrupted raid stripe tree root, via
+btrfs_read_block_groups() instead of fill_dummy_bgs().
 
-Treat a standalone invalid descriptor as a one-descriptor reclaim-only
-packet. Advancing the Tx-ring consumer releases the ring slot, but does
-not by itself return ownership of the referenced UMEM frame to userspace.
+[CAUSE]
+With rescue=ibadroots, btrfs_read_roots() allows the mount to continue
+when either root cannot be read, leaving the corresponding root pointer
+NULL while its on-disk feature bit remains set.
 
-Once draining starts, continue until the packet's end-of-packet
-descriptor is consumed. Preserve the drain state on the socket when EOP
-has not yet been supplied, so draining can continue during a later call.
-Leave incomplete but otherwise valid packets on the Tx ring.
+btrfs_update_global_block_rsv() then dereferences the missing root based
+on the feature bit alone.
 
-Shared-UMEM pools using multi-buffer Tx also need packet-framed parsing.
-Walk their Tx sockets one packet at a time, preserving the existing
-per-socket fairness scheme, instead of using the legacy one-descriptor
-fallback. Keep that fallback for shared pools that do not use
-multi-buffer Tx. Since the drain state is maintained per socket and both
-the singular and shared paths can resume an interrupted drain, changing
-the socket list from singular to shared requires no special bind-time
-transition.
+[FIX]
+Rescue mounts are fully read-only and cannot start transactions, so the
+global reserve is never consumed. Under btrfs_is_full_ro(), mark the
+reserve as full and return before performing the accounting.
 
-CQ entries are positional, and drivers may complete only part of the Tx
-work returned by xsk_tx_peek_release_desc_batch(). Therefore, reclaim-only
-entries cannot be published immediately when earlier driver-visible
-descriptors are still outstanding.
+And since we need to check if the fs is mount fully RO, export
+fs_is_full_ro() as btrfs_is_full_ro(), and move it to fs.h.
 
-Track the number of driver-visible CQ entries preceding the reclaim
-entries. Let xsk_tx_completed() publish partial hardware Tx completions,
-and publish the reclaim entries only after every earlier Tx descriptor
-has completed. Complete a reclaim-only batch immediately when there is no
-driver-visible work in front of it, and prevent another Tx batch from
-being appended while reclaim entries remain pending.
-
-Also cap batch processing by the size of the pool's temporary descriptor
-array, as Tx rings belonging to sockets sharing a UMEM may have different
-sizes.
-
-This ensures that every invalid Tx descriptor consumed by the ZC batch
-path is either submitted to the driver as part of a valid packet or
-returned to userspace without violating CQ completion ordering.
-
-Reviewed-by: Jason Xing <kernelxing@tencent.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Link: https://patch.msgid.link/20260719135609.147823-5-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8dbfc14fc736 ("btrfs: account block group tree when calculating global reserve size")
+Fixes: 515020900d44 ("btrfs: read raid stripe tree from disk")
+Suggested-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Dongjiang Zhu <zhudongjiang@fnnas.com>
+[ Squash the fs_is_full_ro() export commit into this one. ]
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/af_xdp.rst |  54 ++++----
- include/net/xsk_buff_pool.h         |   3 +
- net/xdp/xsk.c                       | 188 +++++++++++++++++++++++++---
- net/xdp/xsk_buff_pool.c             |   1 +
- net/xdp/xsk_queue.h                 |  65 +++++++---
- 5 files changed, 249 insertions(+), 62 deletions(-)
+ fs/btrfs/block-rsv.c | 19 +++++++++++++++++--
+ fs/btrfs/disk-io.c   | 11 +----------
+ fs/btrfs/fs.h        |  9 +++++++++
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
-index dceeb0d763aa2..e2c5ec61c2bd9 100644
---- a/Documentation/networking/af_xdp.rst
-+++ b/Documentation/networking/af_xdp.rst
-@@ -43,12 +43,13 @@ UMEM also has two rings: the FILL ring and the COMPLETION ring. The
- FILL ring is used by the application to send down addr for the kernel
- to fill in with RX packet data. References to these frames will then
- appear in the RX ring once each packet has been received. The
--COMPLETION ring, on the other hand, contains frame addr that the
--kernel has transmitted completely and can now be used again by user
--space, for either TX or RX. Thus, the frame addrs appearing in the
--COMPLETION ring are addrs that were previously transmitted using the
--TX ring. In summary, the RX and FILL rings are used for the RX path
--and the TX and COMPLETION rings are used for the TX path.
-+COMPLETION ring, on the other hand, contains frame addresses from Tx
-+descriptors that the kernel has finished processing and that can now be
-+used again by user space, for either Tx or Rx. This includes frames whose
-+transmission has completed as well as frames referenced by invalid Tx
-+descriptors rejected by the kernel. A completion therefore returns
-+ownership of a frame to user space, but does not by itself guarantee that
-+the packet was successfully transmitted.
- 
- The socket is then finally bound with a bind() call to a device and a
- specific queue id on that device, and it is not until bind is
-@@ -169,14 +170,15 @@ chunks mode, then the incoming addr will be left untouched.
- UMEM Completion Ring
- ~~~~~~~~~~~~~~~~~~~~
- 
--The COMPLETION Ring is used transfer ownership of UMEM frames from
-+The COMPLETION Ring is used to transfer ownership of UMEM frames from
- kernel-space to user-space. Just like the FILL ring, UMEM indices are
--used.
--
--Frames passed from the kernel to user-space are frames that has been
--sent (TX ring) and can be used by user-space again.
--
--The user application consumes UMEM addrs from this ring.
-+used. Frames passed from the kernel to user-space are frames referenced
-+by Tx descriptors that the kernel has finished processing and can be
-+used by user-space again. This includes both frames whose transmission
-+has completed and frames referenced by invalid Tx descriptors that were
-+rejected and reclaimed by the kernel. A completion entry does not
-+guarantee successful packet transmission. The user application consumes
-+UMEM addrs from this ring.
- 
- 
- RX Ring
-@@ -499,21 +501,25 @@ will be treated as an invalid descriptor.
- These are the semantics for producing packets onto AF_XDP Tx ring
- consisting of multiple frames:
- 
--* When an invalid descriptor is found, all the other
--  descriptors/frames of this packet are marked as invalid and not
--  completed. The next descriptor is treated as the start of a new
--  packet, even if this was not the intent (because we cannot guess
--  the intent). As before, if your program is producing invalid
--  descriptors you have a bug that must be fixed.
-+* When an invalid descriptor is found, the complete packet is treated as
-+  invalid. The kernel consumes descriptors through the descriptor marking
-+  the end of the packet and returns all their frame addresses through the
-+  COMPLETION ring. A standalone invalid descriptor is treated as a
-+  one-descriptor invalid packet. The descriptor following the end of the
-+  invalid packet is treated as the start of a new packet. As before, if
-+  your program is producing invalid descriptors you have a bug that must
-+  be fixed. Rejected descriptors are reported in the ``tx_invalid_descs``
-+  statistic.
- 
- * Zero length descriptors are treated as invalid descriptors.
- 
- * For copy mode, the maximum supported number of frames in a packet is
--  equal to CONFIG_MAX_SKB_FRAGS + 1. If it is exceeded, all
--  descriptors accumulated so far are dropped and treated as
--  invalid. To produce an application that will work on any system
--  regardless of this config setting, limit the number of frags to 18,
--  as the minimum value of the config is 17.
-+  equal to CONFIG_MAX_SKB_FRAGS + 1. If it is exceeded, all descriptors
-+  through the end of the oversized packet are consumed, treated as invalid,
-+  and their frame addresses are returned through the COMPLETION ring. To
-+  produce an application that will work on any system regardless of this
-+  config setting, limit the number of frags to 18, as the minimum value of
-+  the config is 17.
- 
- * For zero-copy mode, the limit is up to what the NIC HW
-   supports. Usually at least five on the NICs we have checked. We
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index 85e07a5a314b5..4fce4bd826b9c 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -78,6 +78,9 @@ struct xsk_buff_pool {
- 	u32 chunk_size;
- 	u32 chunk_shift;
- 	u32 frame_len;
-+	u32 tx_descs_nentries;
-+	u32 reclaim_descs;
-+	u32 tx_zc_pending_descs;
- 	u8 tx_metadata_len; /* inherited from umem */
- 	u8 cached_need_wakeup;
- 	bool uses_need_wakeup;
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 3442941285ec4..8dd43f06d6ed1 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -440,6 +440,23 @@ void __xsk_map_flush(struct list_head *flush_list)
- 
- void xsk_tx_completed(struct xsk_buff_pool *pool, u32 nb_entries)
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index a578bd3b32bb0..f111500a2c46e 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -326,10 +326,25 @@ void btrfs_block_rsv_add_bytes(struct btrfs_block_rsv *block_rsv,
+ void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
  {
-+	u32 reclaim_descs = READ_ONCE(pool->reclaim_descs);
+ 	struct btrfs_block_rsv *block_rsv = &fs_info->global_block_rsv;
+-	struct btrfs_space_info *sinfo = block_rsv->space_info;
++	struct btrfs_space_info *sinfo;
+ 	struct btrfs_root *root, *tmp;
+-	u64 num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
+ 	unsigned int min_items = 1;
++	u64 num_bytes;
 +
-+	if (unlikely(reclaim_descs)) {
-+		u32 pending_descs = READ_ONCE(pool->tx_zc_pending_descs);
-+
-+		if (nb_entries < pending_descs) {
-+			WRITE_ONCE(pool->tx_zc_pending_descs,
-+				   pending_descs - nb_entries);
-+			xskq_prod_submit_n(pool->cq, nb_entries);
-+			return;
-+		}
-+
-+		WRITE_ONCE(pool->tx_zc_pending_descs, 0);
-+		nb_entries += reclaim_descs;
-+		WRITE_ONCE(pool->reclaim_descs, 0);
-+	}
-+
- 	xskq_prod_submit_n(pool->cq, nb_entries);
- }
- EXPORT_SYMBOL(xsk_tx_completed);
-@@ -518,24 +535,158 @@ static u32 xsk_tx_peek_release_fallback(struct xsk_buff_pool *pool, u32 max_entr
- 	return nb_pkts;
- }
- 
-+static void xsk_tx_commit_batch(struct xsk_buff_pool *pool,
-+				struct xsk_tx_batch *batch)
-+{
-+	u32 nb_descs = xsk_tx_batch_cq_descs(batch);
-+	u32 cq_cached_prod;
-+
-+	if (!nb_descs)
++	/*
++	 * A full read-only mount (rescue options) cannot start transactions,
++	 * so the global reserve is never consumed. Mark it as full and skip
++	 * the accounting.
++	 */
++	if (btrfs_is_full_ro(fs_info)) {
++		spin_lock(&block_rsv->lock);
++		block_rsv->full = true;
++		spin_unlock(&block_rsv->lock);
 +		return;
-+
-+	cq_cached_prod = pool->cq->cached_prod;
-+	xskq_prod_write_addr_batch(pool->cq, pool->tx_descs, nb_descs);
-+
-+	if (unlikely(batch->reclaim_descs)) {
-+		u32 cq_pending_descs;
-+
-+		/* CQ is positional. Descriptors already written but not
-+		 * submitted must complete before any reclaim-only descriptors
-+		 * appended below.
-+		 */
-+		cq_pending_descs = cq_cached_prod -
-+				  READ_ONCE(pool->cq->ring->producer);
-+
-+		WRITE_ONCE(pool->tx_zc_pending_descs,
-+			   batch->tx_descs + cq_pending_descs);
-+		WRITE_ONCE(pool->reclaim_descs, batch->reclaim_descs);
-+		if (unlikely(!pool->tx_zc_pending_descs))
-+			xsk_tx_completed(pool, 0);
-+	}
-+}
-+
-+static struct xsk_tx_batch
-+__xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, struct xdp_sock *xs,
-+				 struct xdp_desc *descs, u32 max_descs)
-+{
-+	struct xsk_tx_batch batch = {};
-+	u32 entries;
-+
-+	entries = xskq_cons_nb_entries(xs->tx, max_descs);
-+	if (!entries)
-+		return batch;
-+
-+	batch = xskq_cons_read_desc_batch(xs, pool, descs, max_descs);
-+	if (!xsk_tx_batch_cq_descs(&batch)) {
-+		xs->tx->queue_empty_descs++;
-+	} else {
-+		__xskq_cons_release(xs->tx);
-+		xs->sk.sk_write_space(&xs->sk);
-+	}
-+	return batch;
-+}
-+
-+static struct xsk_tx_batch
-+xsk_tx_peek_release_shared_desc_batch(struct xsk_buff_pool *pool, u32 max_descs)
-+{
-+	u32 cq_descs_before, cq_descs_after;
-+	struct xsk_tx_batch sum_batch = {};
-+	bool budget_exhausted;
-+	u32 per_socket_budget;
-+	struct xdp_sock *xs;
-+
-+	/* The fairness quota must allow one maximum-sized valid packet. */
-+	per_socket_budget = max_t(u32, MAX_PER_SOCKET_BUDGET,
-+				  pool->netdev->xdp_zc_max_segs);
-+
-+again:
-+	budget_exhausted = false;
-+	cq_descs_before = xsk_tx_batch_cq_descs(&sum_batch);
-+	list_for_each_entry_rcu(xs, &pool->xsk_tx_list, tx_list) {
-+		u32 budget, budget_left, offset, remaining, used;
-+		struct xsk_tx_batch curr_batch;
-+
-+		/* Once reclaim-only descriptors have been appended to the CQ
-+		 * address area, do not append driver-visible Tx descriptors
-+		 * from another socket after them. xsk_tx_completed() relies on
-+		 * all driver-visible descriptors preceding all reclaim-only
-+		 * descriptors in CQ order.
-+		 */
-+		if (sum_batch.reclaim_descs)
-+			break;
-+
-+		/* be gentle when playing with pool->tx_descs */
-+		offset = xsk_tx_batch_cq_descs(&sum_batch);
-+		if (offset >= max_descs)
-+			break;
-+
-+		if (xs->tx_budget_spent >= per_socket_budget) {
-+			if (xskq_cons_nb_entries(xs->tx, 1))
-+				budget_exhausted = true;
-+			continue;
-+		}
-+
-+		budget_left = per_socket_budget - xs->tx_budget_spent;
-+		remaining = max_descs - offset;
-+		budget = min(remaining, budget_left);
-+
-+		curr_batch = __xsk_tx_peek_release_desc_batch(pool, xs,
-+							      pool->tx_descs + offset,
-+							      budget);
-+		used = xsk_tx_batch_cq_descs(&curr_batch);
-+		if (!used) {
-+			if (curr_batch.budget_limited && budget_left < remaining)
-+				budget_exhausted = true;
-+			continue;
-+		}
-+
-+		xs->tx_budget_spent += used;
-+		sum_batch.tx_descs += curr_batch.tx_descs;
-+		sum_batch.reclaim_descs = curr_batch.reclaim_descs;
 +	}
 +
-+	cq_descs_after = xsk_tx_batch_cq_descs(&sum_batch);
-+
-+	if (sum_batch.reclaim_descs || cq_descs_after >= max_descs)
-+		return sum_batch;
-+
-+	/* Continue filling the batch while this pass made progress */
-+	if (cq_descs_before != cq_descs_after)
-+		goto again;
-+
-+	if (!budget_exhausted)
-+		return sum_batch;
-+
-+	list_for_each_entry_rcu(xs, &pool->xsk_tx_list, tx_list)
-+		xs->tx_budget_spent = 0;
-+	goto again;
-+}
-+
- u32 xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, u32 nb_pkts)
- {
-+	struct xsk_tx_batch batch = {};
- 	struct xdp_sock *xs;
-+	bool umem_shared;
++	sinfo = block_rsv->space_info;
++	num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
  
- 	rcu_read_lock();
--	if (!list_is_singular(&pool->xsk_tx_list)) {
--		/* Fallback to the non-batched version */
--		rcu_read_unlock();
--		return xsk_tx_peek_release_fallback(pool, nb_pkts);
--	}
-+	if (unlikely(READ_ONCE(pool->reclaim_descs)))
-+		goto out;
- 
--	xs = list_first_or_null_rcu(&pool->xsk_tx_list, struct xdp_sock, tx_list);
--	if (!xs) {
--		nb_pkts = 0;
-+	xs = list_first_or_null_rcu(&pool->xsk_tx_list, struct xdp_sock,
-+				    tx_list);
-+	if (!xs)
- 		goto out;
--	}
- 
--	nb_pkts = xskq_cons_nb_entries(xs->tx, nb_pkts);
-+	nb_pkts = min(nb_pkts, pool->tx_descs_nentries);
-+	if (!nb_pkts)
-+		goto out;
-+
-+	umem_shared = !list_is_singular(&pool->xsk_tx_list);
-+
-+	if (umem_shared && !(pool->umem->flags & XDP_UMEM_SG_FLAG)) {
-+		rcu_read_unlock();
-+		return xsk_tx_peek_release_fallback(pool, nb_pkts);
-+	}
- 
- 	/* This is the backpressure mechanism for the Tx path. Try to
- 	 * reserve space in the completion queue for all packets, but
-@@ -547,19 +698,16 @@ u32 xsk_tx_peek_release_desc_batch(struct xsk_buff_pool *pool, u32 nb_pkts)
- 	if (!nb_pkts)
- 		goto out;
- 
--	nb_pkts = xskq_cons_read_desc_batch(xs->tx, pool, nb_pkts);
--	if (!nb_pkts) {
--		xs->tx->queue_empty_descs++;
--		goto out;
--	}
--
--	__xskq_cons_release(xs->tx);
--	xskq_prod_write_addr_batch(pool->cq, pool->tx_descs, nb_pkts);
--	xs->sk.sk_write_space(&xs->sk);
-+	batch = umem_shared ?
-+		xsk_tx_peek_release_shared_desc_batch(pool, nb_pkts) :
-+		__xsk_tx_peek_release_desc_batch(pool, xs,
-+						 pool->tx_descs,
-+						 nb_pkts);
-+	xsk_tx_commit_batch(pool, &batch);
- 
- out:
- 	rcu_read_unlock();
--	return nb_pkts;
-+	return batch.tx_descs;
- }
- EXPORT_SYMBOL(xsk_tx_peek_release_desc_batch);
- 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index dba014f72dc22..925e0e62491d9 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -53,6 +53,7 @@ int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs,
- 	if (!pool->tx_descs)
- 		return -ENOMEM;
- 
-+	pool->tx_descs_nentries = nentries;
+ 	/*
+ 	 * The global block rsv is based on the size of the extent tree, the
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 2c98dd8c126e8..74af70897bcb0 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3169,15 +3169,6 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
  	return 0;
  }
  
-diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
-index 2ec64c185f8f7..43d4de9afcf90 100644
---- a/net/xdp/xsk_queue.h
-+++ b/net/xdp/xsk_queue.h
-@@ -53,6 +53,17 @@ struct parsed_desc {
- 	u32 valid;
- };
+-static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
+-{
+-	if (!sb_rdonly(fs_info->sb))
+-		return false;
+-	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
+-		return true;
+-	return false;
+-}
+-
+ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices)
+ {
+ 	u32 sectorsize;
+@@ -3287,7 +3278,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 		WRITE_ONCE(fs_info->fs_error, -EUCLEAN);
  
-+struct xsk_tx_batch {
-+	u32 tx_descs;
-+	u32 reclaim_descs;
-+	bool budget_limited;
-+};
-+
-+static inline u32 xsk_tx_batch_cq_descs(const struct xsk_tx_batch *batch)
+ 	/* If the fs has any rescue options, no transaction is allowed. */
+-	if (fs_is_full_ro(fs_info))
++	if (btrfs_is_full_ro(fs_info))
+ 		WRITE_ONCE(fs_info->fs_error, -EROFS);
+ 
+ 	/* Set up fs_info before parsing mount options */
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index 90b104dd38c23..de10a95707c85 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -1044,6 +1044,15 @@ void __btrfs_clear_fs_compat_ro(struct btrfs_fs_info *fs_info, u64 flag,
+ #define btrfs_test_opt(fs_info, opt)	((fs_info)->mount_opt & \
+ 					 BTRFS_MOUNT_##opt)
+ 
++static inline bool btrfs_is_full_ro(const struct btrfs_fs_info *fs_info)
 +{
-+	return batch->tx_descs + batch->reclaim_descs;
++	if (!sb_rdonly(fs_info->sb))
++		return false;
++	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
++		return true;
++	return false;
 +}
 +
- /* The structure of the shared state of the rings are a simple
-  * circular buffer, as outlined in
-  * Documentation/core-api/circular-buffers.rst. For the Rx and
-@@ -258,17 +269,18 @@ static inline void parse_desc(struct xsk_queue *q, struct xsk_buff_pool *pool,
- 	parsed->mb = xp_mb_desc(desc);
- }
- 
--static inline
--u32 xskq_cons_read_desc_batch(struct xsk_queue *q, struct xsk_buff_pool *pool,
--			      u32 max)
-+static inline struct xsk_tx_batch
-+xskq_cons_read_desc_batch(struct xdp_sock *xs, struct xsk_buff_pool *pool,
-+			  struct xdp_desc *descs, u32 max)
+ static inline int btrfs_fs_closing(const struct btrfs_fs_info *fs_info)
  {
--	u32 cached_cons = q->cached_cons, nb_entries = 0;
--	struct xdp_desc *descs = pool->tx_descs;
--	u32 total_descs = 0, nr_frags = 0;
-+	bool drain = READ_ONCE(xs->drain_cont);
-+	u32 cached_cons, nb_entries = 0;
-+	struct xsk_tx_batch batch = {};
-+	struct xsk_queue *q = xs->tx;
-+	u32 nr_frags = 0;
-+
-+	cached_cons = q->cached_cons;
- 
--	/* track first entry, if stumble upon *any* invalid descriptor, rewind
--	 * current packet that consists of frags and stop the processing
--	 */
- 	while (cached_cons != q->cached_prod && nb_entries < max) {
- 		struct xdp_rxtx_ring *ring = (struct xdp_rxtx_ring *)q->ring;
- 		u32 idx = cached_cons & q->ring_mask;
-@@ -278,25 +290,42 @@ u32 xskq_cons_read_desc_batch(struct xsk_queue *q, struct xsk_buff_pool *pool,
- 		cached_cons++;
- 		parse_desc(q, pool, &descs[nb_entries], &parsed);
- 		if (unlikely(!parsed.valid))
--			break;
-+			drain = true;
-+
-+		nr_frags++;
-+		nb_entries++;
- 
- 		if (likely(!parsed.mb)) {
--			total_descs += (nr_frags + 1);
--			nr_frags = 0;
--		} else {
--			nr_frags++;
--			if (nr_frags == pool->netdev->xdp_zc_max_segs) {
-+			if (unlikely(drain)) {
-+				batch.reclaim_descs = nr_frags;
-+				WRITE_ONCE(xs->drain_cont, false);
- 				nr_frags = 0;
- 				break;
- 			}
-+
-+			batch.tx_descs += nr_frags;
-+			nr_frags = 0;
-+			continue;
-+		}
-+
-+		if (nr_frags == pool->netdev->xdp_zc_max_segs)
-+			drain = true;
-+	}
-+
-+	if (nr_frags) {
-+		if (drain) {
-+			batch.reclaim_descs = nr_frags;
-+			WRITE_ONCE(xs->drain_cont, true);
-+		} else {
-+			if (nb_entries == max)
-+				batch.budget_limited = true;
-+			cached_cons -= nr_frags;
- 		}
--		nb_entries++;
- 	}
- 
--	cached_cons -= nr_frags;
- 	/* Release valid plus any invalid entries */
- 	xskq_cons_release_n(q, cached_cons - q->cached_cons);
--	return total_descs;
-+	return batch;
- }
- 
- /* Functions for consumers */
+ 	/* Do it this way so we only ever do one test_bit in the normal case. */
 -- 
 2.53.0
 
