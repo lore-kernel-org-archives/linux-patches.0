@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13263BD643;
-	Sat, 17 Oct 2026 17:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC71615E5BB;
+	Sat, 17 Oct 2026 17:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257485; cv=none; b=TQnQlS62ZKONiXyDxLP5eagXm9eWHmvZIkFFy9bJ9+xL118Uoe4fWWmy/QA8msMf4W+Mo0ALvAWLEdJmoKzHjIgye/NxprRfSryxX3avJo9qb8pXrgM5SxRAWAmtFszoiAd3MExhoHmSAOSTdOIxEPlb6yif2pPT6dDc9FIpFR0=
+	t=1792257489; cv=none; b=JgAB/jeYNbXzD3xgx6We1Q4H49OUfi2PSkLNQ9KHUBipoKdfsHFa+cYMsUPxeJ0UYuMOquR85Kl+G2NKa9EUHieAv7hJp4Lms2O4vgOJYHKleBL68QdHW2n8sxgmdDvlMVTmhlQXW6O8QrW4sk213f5LAawvdZv8+5uVI7q6F9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257485; c=relaxed/simple;
-	bh=t8dOxUlV8VC5ZLLjcIo+bcmG8PlbSmsVATsWyE8rxT8=;
+	s=arc-20240116; t=1792257489; c=relaxed/simple;
+	bh=6s9ya0AzvNzKqrGjpK0GIrwbFCvjkAPmhePqbCSz3IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIy2bPGwMFRVoa2CGu+jogtSlpxMTZj3NfhQcnSjn+eoZAWw6IEwlf3UffeVvh816PIv+QDT6MCpF1GIRRDqVmg1YHJU3rYXUYQ7RpQYMdryna/hpnhpP+xRkBYOvxg+fXcr8XHV6gce5yBIt36HYISxYfS/bSw/CT2vLGW70gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOogOmnC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qQM1xyCp79ctiSp8kilsYXeGXy8rvQty/WpFVAehbDtpjjk0ZvDW/5Sn2dC8opwwtQH59LJVAO8Ld6TzGI6IoNbo/8MikIxoTg1ayNQAI8kMVR1Rxt4EwlaDpx0isRaSLvmWC91cwr5L5TB3DNLWg5YWsPdzBM2mbwcaTf0y1qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHIKCdPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOogOmnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D0B1F000C4;
-	Sat, 17 Oct 2026 17:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHIKCdPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445921F000C4;
+	Sat, 17 Oct 2026 17:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257484;
-	bh=Zu3UAfVvAkwwE14y7n90HbQcfK1wgFtZMvHJQceLXo0=;
+	s=korg; t=1792257487;
+	bh=CMEp3s7cZZqsJD/R0YUYfZs6n36KVMtLunRSHltb+tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOogOmnC8ywpYuvWG8sU5baVN6+y44nK0K8ZZxXd8DdNyOF6QU6LwZM2Bo0Wa5INq
-	 goXkCdPPzG4lzufQjr62ZI9KkRW1t2P3MJck6WlCvbYlh0+gRkLY3HUtN+BrxIMVgl
-	 RN6SjYwZ4mqRiSAEtMfZ8W07llByJC35EzMHgnPI=
+	b=CHIKCdPW8365nSCmrjCi3d0iG5Uo3orxQyr+l3IH8zz5yLUkMITTMwE4dFX58/raq
+	 UckIoELc/WZFSN6vM4xxHIWz/vRIIu5kxmeAveaWNKUzUeWlXBzqqpDStT5dj7gmuw
+	 eYzVKQzpgE3IvYSaPC+mS7drCx4Apel8/qahJKZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 0522/1674] drm/i915/gem: Prevent overstepping exec array boundary
-Date: Sat, 17 Oct 2026 17:46:34 +0200
-Message-ID: <20261017160444.503678760@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0568/1674] tracing: Set the trace clock before registering the histogram trigger
+Date: Sat, 17 Oct 2026 17:47:20 +0200
+Message-ID: <20261017160445.674181729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,57 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
+[ Upstream commit 6ede78d0563a2a3ae3e46f9c07cedb5d79645429 ]
 
-It is possible for eb_relocate_parse_slow() to call kvfree() on
-entries outside the original exec array during following
-scenario inside eb_relocate_parse_slow():
+hist_register_trigger() puts the trigger on the global named_triggers
+list in cmd_ops->init(), and only then sets the trace clock:
 
-1) eb_copy_relocations() allocates as many as eb->buffer_count
-   copies for exec entries;
-2) eb_parse() appends up to two VMAs, right after incrementing
-   eb->buffer_count;
-3) cleanup under "out" label uses this incremented buffer_count
-   to release relocation pointers from exec array via kvfree(),
-   not from VMA array.
+	if (data->cmd_ops->init) {
+		ret = data->cmd_ops->init(data);
+		if (ret < 0)
+			goto out;
+	}
 
-To amend this problem, ensure that relocation cleanup uses the
-original exec object count, excluding the VMAs appended by the
-command parser.
+	if (hist_data->enable_timestamps) {
+		ret = tracing_set_clock(file->tr, hist_data->attrs->clock);
+		if (ret) {
+			hist_err(tr, HIST_ERR_SET_CLOCK_FAIL, errpos(clock));
+			goto out;
+		}
 
-Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Cc: stable@vger.kernel.org # 5.10+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
-(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The clock string is not checked anywhere before that call, so a named
+trigger using common_timestamp with an unknown clock fails after it has
+already become findable. event_hist_trigger_parse() then frees it
+without taking it off the list, and the next lookup by name reads the
+freed object:
+
+ ~# cd /sys/kernel/tracing/events/sched/sched_switch
+ ~# echo 'hist:name=foo:keys=common_pid:ts=common_timestamp:clock=bogus' > trigger
+ bash: echo: write error: Invalid argument
+ ~# echo 'hist:name=foo:keys=common_pid' > trigger
+
+  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+  Read of size 8 at addr ffff88800915d760 by task init/1
+   find_named_trigger+0xac/0xc0
+   hist_register_trigger+0xc1/0x900
+   event_hist_trigger_parse+0x3146/0x6af0
+   event_trigger_write+0xce/0x160
+  Freed by task 63:
+   kfree+0x154/0x420
+   trigger_kthread_fn+0xfd/0x160
+
+Set the clock before the trigger is registered, so that nothing which
+can fail runs after it is published, the way commit 6f86bdeab633
+("tracing: Fix bad hist from corrupting named_triggers list") moved the
+registration below the rest of the setup.
+
+tracing_set_filter_buffering() is reference counted, so the init failure
+path has to drop the reference that the clock block now takes first.
+
+Cc: stable@vger.kernel.org
+Fixes: a4072fe85ba3 ("tracing: Add a clock attribute for hist triggers")
+Link: https://patch.msgid.link/20260907091415.554535-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[Lee: Call data->ops->init(data) as b052d70f7c9c ("tracing: Merge struct
+      event_trigger_ops into struct event_command") is not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -1764,6 +1764,7 @@ static int eb_reinit_userptr(struct i915
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index d96faf3436a05..492e183d09a0a 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6565,12 +6565,6 @@ static int hist_register_trigger(char *glob,
+ 		data->ops = &event_hist_trigger_named_ops;
+ 	}
  
- static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb)
- {
-+	const unsigned int count = eb->buffer_count;
- 	bool have_copy = false;
- 	struct eb_vma *ev;
- 	int err = 0;
-@@ -1866,7 +1867,6 @@ err:
+-	if (data->ops->init) {
+-		ret = data->ops->init(data);
+-		if (ret < 0)
+-			goto out;
+-	}
+-
+ 	if (hist_data->enable_timestamps) {
+ 		char *clock = hist_data->attrs->clock;
  
- out:
- 	if (have_copy) {
--		const unsigned int count = eb->buffer_count;
- 		unsigned int i;
+@@ -6583,6 +6577,15 @@ static int hist_register_trigger(char *glob,
+ 		tracing_set_filter_buffering(file->tr, true);
+ 	}
  
- 		for (i = 0; i < count; i++) {
++	if (data->ops->init) {
++		ret = data->ops->init(data);
++		if (ret < 0) {
++			if (hist_data->enable_timestamps)
++				tracing_set_filter_buffering(file->tr, false);
++			goto out;
++		}
++	}
++
+ 	if (named_data) {
+ 		remove_hist_vars(hist_data);
+ 		destroy_hist_data(hist_data);
+-- 
+2.53.0
+
 
 
