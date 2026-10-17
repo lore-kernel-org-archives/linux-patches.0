@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C62B36AB6B;
-	Sat, 17 Oct 2026 16:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8162A3ADB9A;
+	Sat, 17 Oct 2026 16:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255267; cv=none; b=TawoZ+AoXUsD/6M7ZxZHsmYR7f5n3jqmGAC02Ze2aBWwyHe2vGwH+Vu7B/QkPyiFs0zoUt6Ktdix3RrIhqC810+CGatDpRpeVoUJobTdKe2pTbWqFtF5DiK+0UrqZ022N1rR5CWxC/DbFvYuRlBUBrkS3+6dOQ5pgTRkUIdkGRo=
+	t=1792255270; cv=none; b=cxhBa3l3/U+splr6l0WaR0rA80IECu4Sob4rcgAcfecBuFxrq9PksKt+RGBWv5Ta9qom+ixOcZ+1lQSIZCPjyjwJM6w9yr6MOTbe4UZsRyb2Xqw6NC/mA4JG4Zj1lvnAA5ue2yZl0ZBD2cyGpnyNwT8aK/BOnhIUMJrPp65jU6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255267; c=relaxed/simple;
-	bh=TvCrEFfAvMSKMC5EPhYOnP2rY0s33+eNOo9E/kLoBl0=;
+	s=arc-20240116; t=1792255270; c=relaxed/simple;
+	bh=d5mRw6GwADAxarIPfppdprFVfb0z3CnZpzlxFuiZYyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fn+fQ+zjtiPiLtiKJ6R+FSp9md4LRc07Tc19ffl7twz3tH3/Z6ivsIcS04KVjTqtq34V9ieSEbYLRDZpGjEksMEBn6oGYrYcTyFr+LtscW4E8FLe4r5EK8IGNNPXaJUjIT8UvfXNuRrKxldwEKjtcnQmQ445xUAxjdIFp7s0kfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGMSZRNU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Dh+ZlwMc6/CVv6Po5GPQ/iELUUbXSbi0zfPEzNq5Ko/2UG8cVWS9eCcFq8HOC2miaTDuKA5g9BEci8sKZhpGKHMFAjY15bPKg5LC9ny3YgUEo0tcodExGkBRn0bCcC0At34xK3KFRGVUcOfYBd/l6EwAspyr4u7HuMH+B1sFgh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKy2BrIe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGMSZRNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EEA1F000C5;
-	Sat, 17 Oct 2026 16:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKy2BrIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43CD1F000C4;
+	Sat, 17 Oct 2026 16:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255266;
-	bh=4nOLo3dzlRJTsSkSeA7W05dHRyt17t7ZWKo1BBiXUd0=;
+	s=korg; t=1792255269;
+	bh=MimSKdDqdgtLep3EKjOGtBtcvV2tYADu1DtfOVX9OC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGMSZRNUx/QWM+hST4UalKdlurk3yQ9u2JSYIneZkNFjjfM17sUGIUhP2Zdl5ciLj
-	 Zf+OKP74mgIxwrEY3OF8BTRR5yiWHAh9ZZjiv3j0B0POYsBpKvSpcgfYxFcqB9WroQ
-	 QB7H5VRG/nJReJHdegkKIpHBNgdDWkdYUspCd88o=
+	b=xKy2BrIe/B1RP+pSqxc8p1Yh09ZEG3uAed1vEUya2I+bH2Icyq6qHcDjELA6yZrIg
+	 VvYAMMq2CY2gdm+sDSLqFl+AzCrDyj9PPmpZTqJle5RF4yxKfIEY6Lx9Sh0qd64VsR
+	 JiPr/OS2njJ4lGkhqYWvWDUW7mFtC4LhRYp1kx8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ben Horgan <ben.horgan@arm.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Gou Hao <gouhao@uniontech.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 702/869] fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-Date: Sat, 17 Oct 2026 17:59:03 +0200
-Message-ID: <20261017160054.965886344@linuxfoundation.org>
+Subject: [PATCH 6.12 720/869] powerpc/xive: add error return value to xive_smp_probe()
+Date: Sat, 17 Oct 2026 17:59:21 +0200
+Message-ID: <20261017160055.417515843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -48,101 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit f5bcf539484d2d604c2f2330e09487ea090b21c7 ]
+[ Upstream commit ab5ae5dceb86614f6c9e7488f91b652000edfdc5 ]
 
-A struct rdtgroup is reference counted via rdtgroup::waitcount. Callers that
-need the structure to remain valid across a sleep (while waiting on acquiring
-rdtgroup_mutex) take a reference with rdtgroup_kn_get() and release it with
-rdtgroup_kn_put().
+xive_smp_probe() calls xive_init_ipis() which can fail, but its
+return value is currently ignored.  Change xive_smp_probe() to
+return int so that errors can be propagated to callers.
 
-The release path is intended to serve as the fallback freer: if the count
-drops to zero and the group has already been marked RDT_DELETED,
-rdtgroup_kn_put() frees the structure.
+This is a preparatory patch for the next one.
 
-The bulk teardown paths free_all_child_rdtgrp() and rmdir_all_sub() resulting
-from a resctrl directory remove or resctrl fs unmount act as the primary
-freer: they hold rdtgroup_mutex and free each rdtgroup whose waitcount is
-zero, otherwise they set RDT_DELETED and leave the freeing to the last waiter.
+No functional change yet; the return value is always 0 at this point.
 
-These two freers race. rdtgroup_kn_put() commits waitcount == 0 with
-atomic_dec_and_test() outside rdtgroup_mutex, then reads rdtgroup::flags.
-Between those two operations a concurrent caller of free_all_child_rdtgrp()
-or rmdir_all_sub() (which holds the mutex) can observe waitcount == 0 via
-atomic_read(), call rdtgroup_remove(), and kfree() the structure.
-
-The subsequent read of rdtgroup::flags in rdtgroup_kn_put() is then
-a use-after-free, and the structure may even be freed twice if the freed
-memory happens to satisfy the RDT_DELETED flag check.
-
-Replace the bare atomic_dec_and_test() with atomic_dec_and_mutex_lock() so
-that the decrement-to-zero takes rdtgroup_mutex before the count becomes
-globally visible. The inspection of rdtgroup::flags then runs under the same
-mutex held by the bulk freers, making the two paths mutually exclusive.
-
-The common case where the count does not reach zero remains lock-free. Defer
-kernfs_unbreak_active_protection() until after the mutex is dropped since
-kernfs active protections functionally wrap rdtgroup_mutex. Remove resource
-group, which in turn drops its kernfs reference, after kernfs protection is
-restored.
-
-  [ bp: Split the commit messsages into smaller, easier-parseable paragraphs. ]
-
-Fixes: b8511ccc75c0 ("x86/resctrl: Fix use-after-free when deleting resource groups")
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=1
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/8d028bbea582dc382a4cc166b235f75bd5901aea.1783963505.git.reinette.chatre@intel.com
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: Wentao Guan <guanwentao@uniontech.com>
+Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727104215.184786-3-gouhao@uniontech.com
+Stable-dep-of: 411a3c016e7a ("powerpc/xive: propagate IPI init errors to prevent use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/powerpc/include/asm/xive.h   | 4 ++--
+ arch/powerpc/sysdev/xive/common.c | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 3db8992d1ae5f..868e260947a10 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -2447,15 +2447,24 @@ static void rdtgroup_kn_get(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
+diff --git a/arch/powerpc/include/asm/xive.h b/arch/powerpc/include/asm/xive.h
+index 92930b0b5d0e1..8ac7c1d3564fc 100644
+--- a/arch/powerpc/include/asm/xive.h
++++ b/arch/powerpc/include/asm/xive.h
+@@ -91,7 +91,7 @@ static inline bool xive_enabled(void) { return __xive_enabled; }
  
- static void rdtgroup_kn_put(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- {
--	if (atomic_dec_and_test(&rdtgrp->waitcount) &&
--	    (rdtgrp->flags & RDT_DELETED)) {
-+	bool needs_free;
-+
-+	if (!atomic_dec_and_mutex_lock(&rdtgrp->waitcount, &rdtgroup_mutex)) {
-+		kernfs_unbreak_active_protection(kn);
-+		return;
-+	}
-+
-+	needs_free = rdtgrp->flags & RDT_DELETED;
-+
-+	mutex_unlock(&rdtgroup_mutex);
-+
-+	kernfs_unbreak_active_protection(kn);
-+
-+	if (needs_free) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
- 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
- 			rdtgroup_pseudo_lock_remove(rdtgrp);
--		kernfs_unbreak_active_protection(kn);
- 		rdtgroup_remove(rdtgrp);
--	} else {
--		kernfs_unbreak_active_protection(kn);
- 	}
+ bool xive_spapr_init(void);
+ bool xive_native_init(void);
+-void xive_smp_probe(void);
++int xive_smp_probe(void);
+ int  xive_smp_prepare_cpu(unsigned int cpu);
+ void xive_smp_setup_cpu(void);
+ void xive_smp_disable_cpu(void);
+@@ -154,7 +154,7 @@ static inline bool xive_enabled(void) { return false; }
+ 
+ static inline bool xive_spapr_init(void) { return false; }
+ static inline bool xive_native_init(void) { return false; }
+-static inline void xive_smp_probe(void) { }
++static inline int xive_smp_probe(void) { return -EINVAL; }
+ static inline int  xive_smp_prepare_cpu(unsigned int cpu) { return -EINVAL; }
+ static inline void xive_smp_setup_cpu(void) { }
+ static inline void xive_smp_disable_cpu(void) { }
+diff --git a/arch/powerpc/sysdev/xive/common.c b/arch/powerpc/sysdev/xive/common.c
+index fa01818c1972c..8665431e23217 100644
+--- a/arch/powerpc/sysdev/xive/common.c
++++ b/arch/powerpc/sysdev/xive/common.c
+@@ -1270,7 +1270,7 @@ noinstr static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
+ 	xive_ops->put_ipi(cpu, xc);
  }
  
+-void __init xive_smp_probe(void)
++int __init xive_smp_probe(void)
+ {
+ 	smp_ops->cause_ipi = xive_cause_ipi;
+ 
+@@ -1279,6 +1279,8 @@ void __init xive_smp_probe(void)
+ 
+ 	/* Allocate and setup IPI for the boot CPU */
+ 	xive_setup_cpu_ipi(smp_processor_id());
++
++	return 0;
+ }
+ 
+ #endif /* CONFIG_SMP */
 -- 
 2.53.0
 
