@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180831F16B;
-	Sat, 17 Oct 2026 17:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386B71F16B;
+	Sat, 17 Oct 2026 17:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258525; cv=none; b=BE5LqZFcEsHiZLF9Mri++Sill1bGiktL/9TyeghDNrC8YDgblh6NhzJKCQxrbvoA0GyJXTmrDitM/scxUx5NZnMFeihppnS1lwEqpyBeQf5tCva28LQ4uvZmH+C/fgMmi4pJi1Q64hRii+tv73uN0UM/P4yvGYSq2FChtoDETj0=
+	t=1792258528; cv=none; b=eeXGrLJYeBhJ1LPXklW00ZN1jYj4Nzk3eXTN29g2FhzJY1H7Rhdb1BOe6Pe/HRUOTEHiUK4aQ5n19xRWycVYFs7c32kfzADCePz/jJLb3Y2PwhpBSY0GXfDzZEmgb9AzCyQUtuiHoMFzzrySYxYe3a3UApRfnpEl7WmOhVpMrJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258525; c=relaxed/simple;
-	bh=nKc6ta09vlwgvghDmdf5SzEI/ITwroJWhsC81yWJTHI=;
+	s=arc-20240116; t=1792258528; c=relaxed/simple;
+	bh=ubOR/hGyL3hh/LYN+EzNXUXzmjYbwu9XIGKYU269tNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+rTdrkxKPZL5hkWR4wEa3tAB3BFL+fUY4zHboGecqnHcZxm4d9prNgRGM1lWBe/BkPwikd4MjqgAfRGqbtcjx47EoALgbwBWhZUD/wMruV8iaBg/82BmxTkh6CECcsIIwHJV1npVvdG+AOy8HumsLKYRQ8vr9gMwy6UbZLo6yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhHXSAcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bOKI/GodCKD9JxX+vgt8jiU8rF2dAPEDh81n1clQeE0KuhFqaLCTgeI8sbiQQ0AhSC8yNBnmH5NlGSPH1qwkHAeEgQ5hR27ntrtbBgIVppau76vmhHRr9mENo1NEshkE9NmXwm2W23fe0V4fzm+of0Cj0dlx3E6ePxK3wLweo+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPLX6ntF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhHXSAcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D161F000C4;
-	Sat, 17 Oct 2026 17:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPLX6ntF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851751F000C4;
+	Sat, 17 Oct 2026 17:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258524;
-	bh=xV3K5wXZ7A/YK0/8Ds8fENvHlJzWS52VH77Ey6Bh+nU=;
+	s=korg; t=1792258527;
+	bh=a7ZFmN5c8Jf0apT2Ms80d6qxER+INg8ubKDZswyfE1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KhHXSAcVyVLcbDGINnPqFeT8ale2mM9v3B9nPMk42pkfPMJS0OMXdI0l46KH7/8au
-	 NEGp5EaVciLTxv4I/hGThcLf67ythcVhP7E7ZRBbKXIgqJBJRjOfSwNZQ/hl9Y0pW4
-	 /kKVZ+t576By8/Vo3KA1sZeHn19IwjuszdUkvbiE=
+	b=TPLX6ntFPITnRj/Tnmkoz8/qLoMu3kH60EwK+FRVwIlj1EMegTAb1kP7dXTDWMxzo
+	 v/VpOs5VL/1rPirZS12AT2p/Yn2IJOMLAQQd7T4yVyAlYF9TO2EeaQmPs33FK8QgHj
+	 ZEhrFb7KiNl1IsAtqRVQutSPXpw2l915Ydm/K2Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0886/1674] xfrm: hold device only for the asynchronous decryption
-Date: Sat, 17 Oct 2026 17:52:38 +0200
-Message-ID: <20261017160453.855230581@linuxfoundation.org>
+Subject: [PATCH 6.6 0913/1674] srcu: Use irq_work to start GP in tiny SRCU
+Date: Sat, 17 Oct 2026 17:53:05 +0200
+Message-ID: <20261017160454.569959252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,70 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit b05d42eefac737ce3cd80114d3579111023941b8 ]
+[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
 
-The dev_hold() on skb->dev during packet reception was originally
-added to prevent the device from being released prematurely during
-asynchronous decryption operations.
+Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
+which acquires the workqueue pool->lock.
 
-As current hardware can offload decryption, this asynchronous path is
-not always utilized. This often results in a pattern of dev_hold()
-immediately followed by dev_put() for each packet, creating
-unnecessary reference counting overhead detrimental to performance.
+This causes a lockdep splat when call_srcu() is called with a scheduler
+lock held, due to:
 
-This patch optimizes this by skipping the dev_hold() and subsequent
-dev_put() when asynchronous decryption is not being performed.
+  call_srcu() [holding pi_lock]
+    srcu_gp_start_if_needed()
+      schedule_work() -> pool->lock
 
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Stable-dep-of: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
+  workqueue_init() / create_worker() [holding pool->lock]
+    wake_up_process() -> try_to_wake_up() -> pi_lock
+
+Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
+use-after-free if a queued irq_work fires after cleanup begins.
+
+Tested with rcutorture SRCU-T and no lockdep warnings.
+
+[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
+to start process_srcu()" ]
+
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Boqun Feng <boqun@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ include/linux/srcutiny.h |  4 ++++
+ kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index 3100c5ef18622..ffbccf0d1bb99 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -490,6 +490,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		/* An encap_type of -1 indicates async resumption. */
- 		if (encap_type == -1) {
- 			async = 1;
-+			dev_put(skb->dev);
- 			seq = XFRM_SKB_CB(skb)->seq.input.low;
- 			goto resume;
- 		}
-@@ -627,18 +628,18 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		XFRM_SKB_CB(skb)->seq.input.low = seq;
- 		XFRM_SKB_CB(skb)->seq.input.hi = seq_hi;
+diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
+index 447133171d95f..bad5fd0f1ddb6 100644
+--- a/include/linux/srcutiny.h
++++ b/include/linux/srcutiny.h
+@@ -11,6 +11,7 @@
+ #ifndef _LINUX_SRCU_TINY_H
+ #define _LINUX_SRCU_TINY_H
  
--		dev_hold(skb->dev);
--
--		if (crypto_done)
-+		if (crypto_done) {
- 			nexthdr = x->type_offload->input_tail(x, skb);
--		else
-+		} else {
-+			dev_hold(skb->dev);
++#include <linux/irq_work_types.h>
+ #include <linux/swait.h>
+ 
+ struct srcu_struct {
+@@ -24,18 +25,21 @@ struct srcu_struct {
+ 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
+ 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
+ 	struct work_struct srcu_work;	/* For driving grace periods. */
++	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ 	struct lockdep_map dep_map;
+ #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+ };
+ 
+ void srcu_drive_gp(struct work_struct *wp);
++void srcu_tiny_irq_work(struct irq_work *irq_work);
+ 
+ #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
+ {									\
+ 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
+ 	.srcu_cb_tail = &name.srcu_cb_head,				\
+ 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
++	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
+ 	__SRCU_DEP_MAP_INIT(name)					\
+ }
+ 
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index c38e5933a5d69..24aa302b3269a 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <linux/export.h>
++#include <linux/irq_work.h>
+ #include <linux/mutex.h>
+ #include <linux/preempt.h>
+ #include <linux/rcupdate_wait.h>
+@@ -37,6 +38,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
+ 	ssp->srcu_idx_max = 0;
+ 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
+ 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
++	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
+ 	return 0;
+ }
+ 
+@@ -80,6 +82,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
+ void cleanup_srcu_struct(struct srcu_struct *ssp)
+ {
+ 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
++	irq_work_sync(&ssp->srcu_irq_work);
+ 	flush_work(&ssp->srcu_work);
+ 	WARN_ON(ssp->srcu_gp_running);
+ 	WARN_ON(ssp->srcu_gp_waiting);
+@@ -156,6 +159,20 @@ void srcu_drive_gp(struct work_struct *wp)
+ }
+ EXPORT_SYMBOL_GPL(srcu_drive_gp);
+ 
++/*
++ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
++ * pool->lock while the caller might hold scheduler locks, causing lockdep
++ * splats due to workqueue_init() doing a wakeup.
++ */
++void srcu_tiny_irq_work(struct irq_work *irq_work)
++{
++	struct srcu_struct *ssp;
 +
- 			nexthdr = x->type->input(x, skb);
-+			if (nexthdr == -EINPROGRESS)
-+				return 0;
- 
--		if (nexthdr == -EINPROGRESS)
--			return 0;
-+			dev_put(skb->dev);
-+		}
- resume:
--		dev_put(skb->dev);
--
- 		spin_lock(&x->lock);
- 		if (nexthdr < 0) {
- 			if (nexthdr == -EBADMSG) {
++	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
++	schedule_work(&ssp->srcu_work);
++}
++EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
++
+ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ {
+ 	unsigned long cookie;
+@@ -166,7 +183,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
+ 	if (!READ_ONCE(ssp->srcu_gp_running)) {
+ 		if (likely(srcu_init_done))
+-			schedule_work(&ssp->srcu_work);
++			irq_work_queue(&ssp->srcu_irq_work);
+ 		else if (list_empty(&ssp->srcu_work.entry))
+ 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	}
 -- 
 2.53.0
 
