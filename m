@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E48321445;
-	Sat, 17 Oct 2026 17:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2EE394470;
+	Sat, 17 Oct 2026 17:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257347; cv=none; b=DwRX3bYO2xAhkkjeSC9oCxLoFOjOEd+z0RMH7ap9TaZLaAiGWMMrroE/Ol8uaAg8mZhqYSNQcdxk5tKpw6KCaq6QagiHZi6tpR38F6/yooTo5b/GtjlQAU/S/IcnGyxGeTHgeuCC6PvOKdDrSlxbyLmidBp5KV7h3kILy3EH0h4=
+	t=1792257350; cv=none; b=FENXA386RSipcohChP56NnIJ8LI7SVvrodZ0YTGrr3LtExx8NKW4XxR55wUjqoSDhyAxTTamZynyc+hlPXx3xB+xTIj1cXQJoao/YTT4dbjbJGeqCNtTeximMDmL1OJhej0vuKMedDbZ9d43QXvR8jw9BdjnCgZ/BkB/eSjoUIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257347; c=relaxed/simple;
-	bh=g1WSkHP45QFeiU0m+ROsPcGK15WQKAdEhpONYMxzaxY=;
+	s=arc-20240116; t=1792257350; c=relaxed/simple;
+	bh=K4zYTcs3izTHi4dRJDqQbvx+mRJRqh8n9WsdGTYauBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpUVgRg61oMgKfAtfdY/hoeIq4tz2Y00JDb6RTPYpKQLils0/DIIWrq/BqU1Yutp8XYf94hwDMd+CLSQllkXVLeJeBzRIeHdQ1SKUyt8LqxsztzAIDBQvNAfvN/rmcc8+dodt9KIxtVlHre2hnPp89HEJ1dNRYj0FjBrdsWciqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1u2yYYSn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fYG08CoCmMI3n3+fyUXin4ee3QHt3CEe4nDdXaqQj1gugQOlV8o/N+Dvb/4PJa8xz7me2BszqtX8aWQRZEvvPZCmMZD3WgPsGHg8gMyiQ7whKDOJdQgghxEpoMI+MD2kzr/gKwivj0PEAc3UDtK4ZqYntYNUi6J5aDzflMoZ51w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWMzRJfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1u2yYYSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4371F000C4;
-	Sat, 17 Oct 2026 17:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWMzRJfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6691F000C4;
+	Sat, 17 Oct 2026 17:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257345;
-	bh=tHHVYWvJUrjFK6Bsgvn2OwYJJmRK4X2NwtC6KAkbtnc=;
+	s=korg; t=1792257348;
+	bh=Q9oIxFeiHAzkI+yC7t41ICOfNM6wEB4C4a6TMXL2goQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1u2yYYSnq3qAGcHLBXZhG7dFFaVq1Y0cq6RdF2zA+5DZn5S9vcnCUS+edtM2Gvz3a
-	 nRnFDNy89UUY1f8rxfYHu4+NtNJnc1uDvNqRoe4mN6dsvCPQjM5xz7w/2P/ycMFwXL
-	 fFb3OulwHVhR3nyYEest9THKonIuwKxMgLL7fFWs=
+	b=GWMzRJfKVWfU3YICC10A6xo87GCfW0aAZQStASnzpu5TkZI6CRA4FgasXNeEjw2tQ
+	 PBgkwJeYuVwtF03qXk+fh6tznZJDKcLsX9BWBTVkkHPjhuzn3URfigidbuAofEDDWf
+	 +dIY0HE3oyxGiQ7xfy8l5lcPtkzZQceZFaSUwrjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 0523/1674] drm/i915/gt: Unmask interrupts only when ACTIVE is true
-Date: Sat, 17 Oct 2026 17:46:35 +0200
-Message-ID: <20261017160444.531158453@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.6 0532/1674] namespace: check a submount for references right before unmounting it
+Date: Sat, 17 Oct 2026 17:46:44 +0200
+Message-ID: <20261017160444.759486453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,116 +49,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 5346b1cec6afa4f9b4b49a9f84e3cfef95a3f7bb upstream.
+commit 32bf92416614a1e3ff3524fc6b780259c7aad3ef upstream.
 
-There is a small race window between intel_rps_boost() reading
-a stale ACTIVE state and queuing rps->work, where ACTIVE may be
-changed via asynchronous calls triggered by wakeref drop.
-This means that rps_work() could be triggered after the GT has
-been parked, so unmasking RPS PM interrupts would happen without
-holding PM wakelock. This sequence of events may be observed
-during live_rc6_ctx_wa() selftest:
+shrink_submounts() and mark_mounts_for_expiry() first collect all the
+mounts they are allowed to unmount and then unmount them.
 
-1) live_rc6_ctx_wa()
-   -> intel_engine_pm_put()
-      -> wakeref_put()
+Whether a mount is busy is decided by propagate_mount_busy() on the
+tree. But unmounting the first mount changes the tree that the second
+one propagates into. propagate_umount()
+moves a surviving overmount off a copy it unmounts and mounts it where
+the copy was mounted. If that's where the propagated copy of the second
+victim is looked up the overmount becomes a candidate of the second
+umount_tree(). It's childless and so trim_one() commits it without
+looking at its reference count.
 
-ASYNC1) wakeref_put() callback
-          -> __engine_park()
-             -> intel_gt_pm_put_async()
-                -> intel_gt_pm_put_async_untracked()
-                   -> intel_wakeref_put_async()
+So a synchronous umount pulls out a busy mount that is in use somewhere
+else and marks it MNT_SYNC_UMOUNT while it has users:
 
-ASYNC2) wakeref_put_async() callback
-          -> __gt_park()
-             -> intel_rps_park()
-                -> intel_rps_clear_active() [clear ACTIVE]
-                WITH INTERRUPTS:
-                -> rps_disable_interrupts()
-                   -> cancel_work_sync(rps->work)
-                   -> rps_reset_interrupts() [rps->pm_iir = 0]
-                WITHOUT INTERRUPTS (TIMER mode):
-                -> rps_stop_timer()
-                   -> cancel_work_sync(rps->work)
+  umount2(/tmp/plshrink/p1, 0) = 0 errno 0
+  cwd is (unreachable)
 
-2) live_rc6_ctx_wa()
-   -> intel_gt_wait_for_idle()
-      -> intel_gt_retire_requests_timeout()
-         -> dma_fence_wait_timeout()
-            -> ops->wait() [i915_fence_wait()]
-               -> i915_request_wait_timeout()
-                  -> intel_rps_boost()
-                     -> intel_rps_is_active() [check ACTIVE]
-                        [OPEN RACE WINDOW]
-                     -> queue_work(rps->work)
-         -> retire_requests()
-            -> i915_request_retire()
-               -> intel_rps_dec_waiters() [from 1 to 0]
+The same two umounts requested one after the other fail with EBUSY.
+This needs a mount with MNT_SHRINKABLE, i.e., automounted submounts of
+NFS, AFS and CIFS or the tracefs mount below debugfs. Bind mounts
+inherit the flag.
 
-If ASYNC1 and ASYNC2 would execute during [OPEN RACE WINDOW],
-then:
+Check each mount right before it is unmounted under the same hold of
+namespace_sem and mount_lock as the umount itself. Make sure that the
+algorithm stays linear.
 
-3) rps_work() executes from the workqueue and may satisfy
-   "(!pm_iir && !client_boost)" test (in TIMER mode rps->pm_iir
-   is zeroed by an earlier rps_work() call or never gets a new
-   value after previous intel_rps_unpark() event), so it jumps
-   to "out" label, bypassing intel_rps_is_active() guard and
-   executes gen6_gt_pm_unmask_irq();
-
-4) GT is parked and runtime PM wakelock is dropped, so only
-   a raw reference in __gt_park() ->
-   intel_display_power_put_async() remains for 100ms, then the
-   MMIO write in gen6_gt_pm_unmask_irq() detects missing
-   wakelock via assert_rpm_wakelock_held() and emits
-   "RPM wakelock ref not held during HW access" tainting kernel.
-
-Commit 3e7abf814193 ("drm/i915: Extract GT render power state management")
-dropped the "if (rps->interrupts_enabled)" guard that
-gen6_pm_rps_work() had around this unmask in i915_irq.c.
-INTEL_RPS_ACTIVE brackets the same window, since it is set in
-intel_rps_unpark() before rps_enable_interrupts() and
-rps_start_timer() and cleared in intel_rps_park() before
-rps_stop_timer() and rps_disable_interrupts().
-
-Skip unmasking when RPS is no longer active (reaching unmask
-operation is independent of INTERRUPT mode). This does not
-prevent RPS operation from resuming on the next unpark.
-In interrupt mode, intel_rps_unpark() calls
-rps_enable_interrupts(), which enables and unmasks the PM
-interrupts. In timer mode, it calls rps_start_timer(),
-restarting periodic engine-busyness evaluation. The timer
-generates software RPS events and queues rps_work() directly,
-independently of PM interrupt delivery. Neither mode requires
-the late worker to unmask interrupts while the GT is parked
-
-Fixes: 3e7abf814193 ("drm/i915: Extract GT render power state management")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/16562
-Cc: stable@vger.kernel.org # v5.5+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260910081329.3300417-1-krzysztof.karas@intel.com
-(cherry picked from commit ca4a6deadad15b91ee083afe445fa6bdbfb68206)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 1064f874abc0 ("mnt: Tuck mounts under others instead of creating shadow/side mounts.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-2-be34c83956ae@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c |   78 ++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 53 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_rps.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rps.c
-@@ -1886,7 +1886,8 @@ static void rps_work(struct work_struct
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3503,6 +3503,11 @@ void mark_mounts_for_expiry(struct list_
+ 	}
+ 	while (!list_empty(&graveyard)) {
+ 		mnt = list_first_entry(&graveyard, struct mount, mnt_expire);
++		/* an earlier umount_tree() may have moved a busy mount here */
++		if (propagate_mount_busy(mnt, 1)) {
++			list_move(&mnt->mnt_expire, mounts);
++			continue;
++		}
+ 		touch_mnt_namespace(mnt->mnt_ns);
+ 		umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
+ 	}
+@@ -3513,16 +3518,36 @@ void mark_mounts_for_expiry(struct list_
+ EXPORT_SYMBOL_GPL(mark_mounts_for_expiry);
  
- out:
- 	spin_lock_irq(gt->irq_lock);
--	gen6_gt_pm_unmask_irq(gt, rps->pm_events);
-+	if (intel_rps_is_active(rps))
-+		gen6_gt_pm_unmask_irq(gt, rps->pm_events);
- 	spin_unlock_irq(gt->irq_lock);
+ /*
++ * Unmount @mnt if it's a shrinkable mount without children that nobody uses.
++ *
++ * mount_lock must be held for write
++ */
++static bool shrink_submount(struct mount *mnt)
++{
++	if (propagate_mount_busy(mnt, 1))
++		return false;
++	touch_mnt_namespace(mnt->mnt_ns);
++	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
++	return true;
++}
++
++/*
+  * Ripoff of 'select_parent()'
+  *
+- * search the list of submounts for a given mountpoint, and move any
+- * shrinkable submounts to the 'graveyard' list.
++ * unmount the shrinkable submounts of @parent that aren't busy, children
++ * before their parent, and say whether anything went
++ *
++ * The cursor into the children of @this_parent survives the umount of a
++ * child mount without child mounts. The mounts that get umounted together with
++ * it are located under receiving mounts of @this_parent and never under
++ * @this_parent itself. The one exception is @this_parent getting unmounted
++ * then the walk starts over.
+  */
+-static int select_submounts(struct mount *parent, struct list_head *graveyard)
++static bool __shrink_submounts(struct mount *parent)
+ {
+ 	struct mount *this_parent = parent;
+ 	struct list_head *next;
+-	int found = 0;
++	bool shrunk = false;
+ 
+ repeat:
+ 	next = this_parent->mnt_mounts.next;
+@@ -3541,42 +3566,45 @@ resume:
+ 			this_parent = mnt;
+ 			goto repeat;
+ 		}
+-
+-		if (!propagate_mount_busy(mnt, 1)) {
+-			list_move_tail(&mnt->mnt_expire, graveyard);
+-			found++;
+-		}
++		if (!shrink_submount(mnt))
++			continue;
++		shrunk = true;
++		if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
++			return true;
+ 	}
+ 	/*
+ 	 * All done at this level ... ascend and resume the search
+ 	 */
+ 	if (this_parent != parent) {
+-		next = this_parent->mnt_child.next;
+-		this_parent = this_parent->mnt_parent;
++		struct mount *mnt = this_parent;
++
++		next = mnt->mnt_child.next;
++		this_parent = mnt->mnt_parent;
++		/* its children are gone, maybe it can go as well */
++		if (shrink_submount(mnt)) {
++			shrunk = true;
++			if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
++				return true;
++		}
+ 		goto resume;
+ 	}
+-	return found;
++	return shrunk;
+ }
+ 
+ /*
+- * process a list of expirable mountpoints with the intent of discarding any
+- * submounts of a specific parent mountpoint
++ * unmount the shrinkable submounts of @mnt that aren't busy
++ *
++ * The busy check and the umount of a mount are adjacent. An umount can
++ * still empty or move a mount in a part of the tree that was walked
++ * already, so walk again until nothing goes.
+  *
+  * mount_lock must be held for write
+  */
+ static void shrink_submounts(struct mount *mnt)
+ {
+-	LIST_HEAD(graveyard);
+-	struct mount *m;
+-
+-	/* extract submounts of 'mountpoint' from the expiration list */
+-	while (select_submounts(mnt, &graveyard)) {
+-		while (!list_empty(&graveyard)) {
+-			m = list_first_entry(&graveyard, struct mount,
+-						mnt_expire);
+-			touch_mnt_namespace(m->mnt_ns);
+-			umount_tree(m, UMOUNT_PROPAGATE|UMOUNT_SYNC);
+-		}
++	for (;;) {
++		if (!__shrink_submounts(mnt))
++			break;
+ 	}
  }
  
 
