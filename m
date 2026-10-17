@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165CD38654F;
-	Sat, 17 Oct 2026 16:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E94935C1BC;
+	Sat, 17 Oct 2026 16:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253828; cv=none; b=kHIid4mPoZUllR2psB3srqygqmjHU8JCpwDsLblRAD8keQJrImkmrMNWDkZYDJeqg4gVP/FfoSvoLHgcmVMw+gkPDVwXhptI15s5cTUI7omTP/ovdxHY2unCDhZsUgaJb4kEA21EJf+ScqnMVBmE2Sbvktc93k+05ITzVaaoJbw=
+	t=1792253831; cv=none; b=V66/heQVYBw8TWvvzbjZqpfjQ0i9zGTEPwscoP9rhLwl46BoOVgNqui1BgWsOrOyrFozuEINox3iV4XCEEASqja0N7MUQa1tRLNoDQajauOuCujEmway0SdJFZSKDvAt7J+yf0nUHNhJRc1XWAD7Ilnlj1Z8Vs6zgBHfw3N0Y2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253828; c=relaxed/simple;
-	bh=VDpOs6k0wIEINx7BQPKjhYumZGFQRY0naSZPxBqVhJc=;
+	s=arc-20240116; t=1792253831; c=relaxed/simple;
+	bh=g4Gn1f63//6A4x64NlGSI4xpZkaZnwWDX5FRBV41Bwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oT25V8u4s686/Uod/A6ktoU0I1AuAqOBsl8EyUHyN6l9QOs5+y/22Tn+EP3Xp05NTu4wyjAFi+DtFIEuWbYoEBuXHOB3j1TelT7Obxq/m3zhCKg80VvC3Q2Lqc6Nvn+dcT7FR3l7stw2dUnKP0B5V2d8PS9uPTj8mIoRfwKpQsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZlBGHgO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r8/RWZiq1A/BR+ghNx1LuDowuKgEnCXhX2ElV87cVWLMC1AFNEJjoVpKQ5yjbMyXsXu4WeBxzHcLFIniIi7nrulMqVPMh490ctroQE4an8wfJZWPaPi/CjI5oYmJCKcNZaL2xAeu9xdsXJ8vMgdn9VhvX986kRqm0BW4qasWe3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6jIVhfg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZlBGHgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC7A1F000C4;
-	Sat, 17 Oct 2026 16:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6jIVhfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795AC1F000C4;
+	Sat, 17 Oct 2026 16:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253827;
-	bh=2wBR3ow5E4zg4l9jhgTMbyqDUzrPWeHKCVb4G+pOhIk=;
+	s=korg; t=1792253830;
+	bh=QaOvW5YIkKb9kPrKeGxyaoiBjeKBcWHMy/Svj8bAoAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZlBGHgOwc0/QOO3K3YD9bO9hK4vOO+GtVP4pcIWqup3cvyV/uHed5TKy6rmgfo0q
-	 b40d2At0YxlDJ1mbf9aKtPU4QKD4m+2VMqV3ONkXlxr6/JXcNxHnZL5SnVNJj4T5qW
-	 DbrVg04r6SosNZFlGJAMew8Lwa/2XqWc3xHFOAF8=
+	b=i6jIVhfg3cKIthqt4qe2gGI3Z89oE3VYGkpGJ2KblZ9wTRrY9Z7VcRCH8bYf2zyYk
+	 Oy6Tpm7bmUoy4M3oUQ5tWYPYHSgDVMEu6LcrJFwCwEZEfJr7aOjY6Evz0bIp7lTku0
+	 CiFmmk3ujWQ1AiqZRfKPKHq9hWD5fyYiGlJ3fLmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Peilin Ye <yepeilin@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/869] ALSA: ctxfi: Check the error for index mapping
-Date: Sat, 17 Oct 2026 17:50:47 +0200
-Message-ID: <20261017160042.337226027@linuxfoundation.org>
+Subject: [PATCH 6.12 207/869] bpf: Factor out atomic_ptr_type_ok()
+Date: Sat, 17 Oct 2026 17:50:48 +0200
+Message-ID: <20261017160042.362738909@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,200 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Peilin Ye <yepeilin@google.com>
 
-[ Upstream commit 277c6960d4ddb94d16198afd70c92c3d4593d131 ]
+[ Upstream commit 66faaea94e1a8e8197d98de6e9d07591970837d6 ]
 
-The ctxfi driver blindly assumed a proper value returned from
-daio_device_index(), but it's not always true.  Add a proper error
-check to deal with the error from the function.
+Factor out atomic_ptr_type_ok() as a helper function to be used later.
 
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/87cy149n6k.wl-tiwai@suse.de
-Link: https://patch.msgid.link/20260329091240.420194-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peilin Ye <yepeilin@google.com>
+Link: https://lore.kernel.org/r/e5ef8b3116f3fffce78117a14060ddce05eba52a.1740978603.git.yepeilin@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 179ee84a8911 ("bpf: Fix incorrect pruning due to atomic fetch precision tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctdaio.c | 85 ++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 33 deletions(-)
+ kernel/bpf/verifier.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index 143dd0979cc9a..85bc1fbef9bf2 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -98,7 +98,7 @@ static const struct rsc_ops daio_in_rsc_ops_20k2 = {
- 	.output_slot	= daio_index,
- };
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 4978c1d68bd98..1f5c8b5b74ffb 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5986,6 +5986,26 @@ static bool is_arena_reg(struct bpf_verifier_env *env, int regno)
+ 	return reg->type == PTR_TO_ARENA;
+ }
  
--static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
-+static int daio_device_index(enum DAIOTYP type, struct hw *hw)
- {
- 	switch (hw->chip_type) {
- 	case ATC20K1:
-@@ -111,7 +111,9 @@ static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
- 		case LINEO3:	return 5;
- 		case LINEO4:	return 6;
- 		case LINEIM:	return 7;
--		default:	return -EINVAL;
-+		default:
-+			pr_err("ctxfi: Invalid type %d for hw20k1\n", type);
-+			return -EINVAL;
- 		}
- 	case ATC20K2:
- 		switch (type) {
-@@ -124,9 +126,12 @@ static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
- 		case LINEO4:	return 6;
- 		case LINEIM:	return 4;
- 		case MIC:	return 5;
--		default:	return -EINVAL;
-+		default:
-+			pr_err("ctxfi: Invalid type %d for hw20k2\n", type);
-+			return -EINVAL;
- 		}
- 	default:
-+		pr_err("ctxfi: Invalid chip type %d\n", hw->chip_type);
- 		return -EINVAL;
++/* Return false if @regno contains a pointer whose type isn't supported for
++ * atomic instruction @insn.
++ */
++static bool atomic_ptr_type_ok(struct bpf_verifier_env *env, int regno,
++			       struct bpf_insn *insn)
++{
++	if (is_ctx_reg(env, regno))
++		return false;
++	if (is_pkt_reg(env, regno))
++		return false;
++	if (is_flow_key_reg(env, regno))
++		return false;
++	if (is_sk_reg(env, regno))
++		return false;
++	if (is_arena_reg(env, regno))
++		return bpf_jit_supports_insn(insn, true);
++
++	return true;
++}
++
+ static u32 *reg2btf_ids[__BPF_REG_TYPE_MAX] = {
+ #ifdef CONFIG_NET
+ 	[PTR_TO_SOCKET] = &btf_sock_ids[BTF_SOCK_TYPE_SOCK],
+@@ -7439,11 +7459,7 @@ static int check_atomic(struct bpf_verifier_env *env, int insn_idx, struct bpf_i
+ 		return -EACCES;
  	}
- }
-@@ -147,8 +152,11 @@ static int dao_spdif_set_spos(struct dao *dao, unsigned int spos)
  
- static int dao_commit_write(struct dao *dao)
- {
--	dao->hw->dao_commit_write(dao->hw,
--		daio_device_index(dao->daio.type, dao->hw), dao->ctrl_blk);
-+	int idx = daio_device_index(dao->daio.type, dao->hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	dao->hw->dao_commit_write(dao->hw, idx, dao->ctrl_blk);
- 	return 0;
- }
- 
-@@ -308,8 +316,11 @@ static int dai_set_enb_srt(struct dai *dai, unsigned int enb)
- 
- static int dai_commit_write(struct dai *dai)
- {
--	dai->hw->dai_commit_write(dai->hw,
--		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
-+	int idx = daio_device_index(dai->daio.type, dai->hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	dai->hw->dai_commit_write(dai->hw, idx, dai->ctrl_blk);
- 	return 0;
- }
- 
-@@ -388,7 +399,7 @@ static int dao_rsc_init(struct dao *dao,
- {
- 	struct hw *hw = mgr->mgr.hw;
- 	unsigned int conf;
--	int err;
-+	int idx, err;
- 
- 	err = daio_rsc_init(&dao->daio, desc, mgr->mgr.hw);
- 	if (err)
-@@ -407,15 +418,18 @@ static int dao_rsc_init(struct dao *dao,
- 	if (err)
- 		goto error2;
- 
--	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw));
-+	idx = daio_device_index(dao->daio.type, hw);
-+	if (idx < 0) {
-+		err = idx;
-+		goto error2;
-+	}
-+
-+	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
- 
- 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
--	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw), conf);
--	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw));
-+	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk, idx, conf);
-+	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
- 
- 	return 0;
-@@ -464,7 +478,7 @@ static int dai_rsc_init(struct dai *dai,
- 			const struct daio_desc *desc,
- 			struct daio_mgr *mgr)
- {
--	int err;
-+	int idx, err;
- 	struct hw *hw = mgr->mgr.hw;
- 	unsigned int rsr, msr;
- 
-@@ -478,6 +492,12 @@ static int dai_rsc_init(struct dai *dai,
- 	if (err)
- 		goto error1;
- 
-+	idx = daio_device_index(dai->daio.type, dai->hw);
-+	if (idx < 0) {
-+		err = idx;
-+		goto error1;
-+	}
-+
- 	for (rsr = 0, msr = desc->msr; msr > 1; msr >>= 1)
- 		rsr++;
- 
-@@ -486,8 +506,7 @@ static int dai_rsc_init(struct dai *dai,
- 	/* default to disabling control of a SRC */
- 	hw->dai_srt_set_ec(dai->ctrl_blk, 0);
- 	hw->dai_srt_set_et(dai->ctrl_blk, 0); /* default to disabling SRT */
--	hw->dai_commit_write(hw,
--		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
-+	hw->dai_commit_write(hw, idx, dai->ctrl_blk);
- 
- 	return 0;
- 
-@@ -605,28 +624,28 @@ static int put_daio_rsc(struct daio_mgr *mgr, struct daio *daio)
- static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
--
--	if (daio->output) {
--		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	} else {
--		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	}
-+	int idx = daio_device_index(daio->type, hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	if (daio->output)
-+		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
-+	else
-+		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk, idx);
- 	return 0;
- }
- 
- static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
--
--	if (daio->output) {
--		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	} else {
--		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	}
-+	int idx = daio_device_index(daio->type, hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	if (daio->output)
-+		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
-+	else
-+		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk, idx);
- 	return 0;
- }
- 
+-	if (is_ctx_reg(env, insn->dst_reg) ||
+-	    is_pkt_reg(env, insn->dst_reg) ||
+-	    is_flow_key_reg(env, insn->dst_reg) ||
+-	    is_sk_reg(env, insn->dst_reg) ||
+-	    (is_arena_reg(env, insn->dst_reg) && !bpf_jit_supports_insn(insn, true))) {
++	if (!atomic_ptr_type_ok(env, insn->dst_reg, insn)) {
+ 		verbose(env, "BPF_ATOMIC stores into R%d %s is not allowed\n",
+ 			insn->dst_reg,
+ 			reg_type_str(env, reg_state(env, insn->dst_reg)->type));
 -- 
 2.53.0
 
