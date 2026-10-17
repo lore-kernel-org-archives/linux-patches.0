@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CE731B828;
-	Sat, 17 Oct 2026 18:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A2638424C;
+	Sat, 17 Oct 2026 18:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260516; cv=none; b=DNf3zi2NbxtULvDmwTf/E0C5dUpHXdrD4oDb+N5182RltlImYKWCvnbnh8WiXi5y6+H8lqoonDf7xGiQTjK5bG3e8u/ViHP6EyxHEL92/AsSjfiDArcJljTYPdaGCf5tomSpNQO3iv4vYdiYyetsYLBjcfS4GZPNV4ETSUYQlj0=
+	t=1792260519; cv=none; b=I2GMEWCXWBT1dTNo2IXyZag0DqbK1LxwmeOohGJVeGUyM56LDOahF26abhP+upb+0t0PvO/v2G4ZFQZ4YfXVQEZhHpCIAR6U0Cvr/nmKOfOosB9fi1i1sjaRveCYrZlKqkBBDYsvN/TiTv+MIl00vA57jchIF2ueS2xtFocthHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260516; c=relaxed/simple;
-	bh=iBRhPvjbYH16OOVmoG2dUz2FXzKetMs1U2L/C2o6SiY=;
+	s=arc-20240116; t=1792260519; c=relaxed/simple;
+	bh=gCaPyzzoEFNS/leZFH+3X5MhdCEjhp18GAoLzaejU+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6m2yPEGMTI177ssWKQXAy63tS0i9/MFSbXEg1hnuSdUFEQXFcV7B2oy2HvtpgevPev2MMC1KvGs/IXwPkxMZsLZmgv1W/6qo0E52J9ovui+eqTFre4N/0kG7y2FUJw0YbgoAnb6Mnnyfn4Trex4+HJD4TkPYJOSMCnROi0o+pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1aX9MvV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t+0naiwySEETwNXpvQXLFKsnPTHKyybcjRULV759CX/3ArRcjnQVDO8qX6oUzDKHJ5ltOB2C4staPrkbylnrm8iLQjOMKkRdnMO2pA4YfQal02p8p6ME81g3L5dpmrHwOuBIy/2XJlw7gtLKLzsTGhmo8z+cOdfTOeM6HO7n7gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OfhteGgN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1aX9MvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685DF1F000C4;
-	Sat, 17 Oct 2026 18:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfhteGgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9341F000C4;
+	Sat, 17 Oct 2026 18:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260515;
-	bh=+oi2zQb6dLgVSrUHr18DAewPvMzBd6/J0hsBxSYKebw=;
+	s=korg; t=1792260517;
+	bh=RPSJfgHOcsnnu0TAP6H/X+R7hB3FWwROCLmoxm5ZnY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1aX9MvVpRrNKaZ1ovQ8fUBirzcoDwylo/hJnGCOqo4OglKy80uEPXgwGwgexTR5h
-	 WHlsWOokmiPDUxo4JPC7zZq+6IuusqyXFGLlfkHFxTubmyP7zK+fb/4M26HY2qRMaf
-	 OwNm2BxLwK8hqApc9fbLUquxMYzNJ7Cb4w1x8UX0=
+	b=OfhteGgNFtQ7BYTS+wD2Vu7eh46DC24ydjMQA2VT2We3MqMbx8gsfOXkSyI0QJXa7
+	 1LSKpq9SE2tENc+rtwn67H9ObCgBF6yuz3F8gKRm1/+2zZrg2dlNA09ZqECMHaGIhQ
+	 UdHiAK8qpPaZobvlBoj+aYdYIiY1PPJ42ZVlpfPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Dan Williams <djbw@kernel.org>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1569/1674] net/handshake: hand off the pinned file reference to accept_doit
-Date: Sat, 17 Oct 2026 18:04:01 +0200
-Message-ID: <20261017160511.374223993@linuxfoundation.org>
+Subject: [PATCH 6.6 1570/1674] cxl/region: Resolve region deletion races
+Date: Sat, 17 Oct 2026 18:04:02 +0200
+Message-ID: <20261017160511.401456530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,155 +53,263 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Dan Williams <djbw@kernel.org>
 
-[ Upstream commit f4251190e58b209999c1ba9e6d2976136a1be055 ]
+[ Upstream commit 4dd86ca99ffcc413cbf79063fd9956ef54e0ca91 ]
 
-handshake_req_next() removes the request from the per-net
-pending list and drops hn_lock before handshake_nl_accept_doit()
-reads req->hr_sk->sk_socket and dereferences sock->file (once in
-FD_PREPARE() and again in get_file()).  In that window a
-consumer running tls_handshake_cancel() followed by sockfd_put()
-(svc_sock_free) or __fput_sync() (xs_reset_transport) releases
-sock->file.  sock_release() then runs sock_orphan(), zeroing
-sk_socket, and frees the struct socket.  The accept-side code
-either reads NULL through sk_socket or chases freed memory.
+Sungwoo noticed that the sysfs trigger to delete a region may try to delete
+a region multiple times. It also has no exclusion relative to the kernel
+releasing the region via CXL root device teardown.
 
-The submit-side sock_hold() does not prevent this.  sk_refcnt
-protects struct sock, but struct socket and sock->file are
-independently refcounted via the file descriptor the consumer
-owns.  Pinning sk leaves sock and sock->file unprotected.
+Instead of installing new cxl root devres actions per region, use the
+existing root decoder unregistration event to remove all remaining regions.
+An xarray of regions replaces a devres list of regions.
 
-Retarget the accept-side dereferences at req->hr_file, which was
-pinned at submit time, instead of req->hr_sk->sk_socket->file.
-Pinning on its own is not sufficient: a consumer that cancels
-between handshake_req_next() returning and accept_doit reaching
-FD_PREPARE() takes the !remove_pending() branch in
-handshake_req_cancel() and drops hr_file before the accept side
-takes its own reference.  Hand off an additional file reference
-inside handshake_req_next(), under hn_lock, so the accept side
-operates on a reference that no concurrent handshake_req_cancel()
-can revoke.  FD_PREPARE() consumes that handed-off reference,
-either by transferring it to the new fd in fd_publish() or by
-dropping it in the cleanup destructor on error; the explicit
-get_file() that previously balanced FD_PREPARE() is therefore
-redundant and goes away.
+This handles 3 separate issues with the old approach:
 
-Update handshake_req_cancel_test2 and _test3 to simulate the
-FD_PREPARE() consumption with an fput() so the kunit file-count
-assertions stay balanced.
+1/ sysfs users racing to delete the same region: no longer possible now
+   that the regions_lock is held over the lookup and deletion.
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-5-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+2/ multiple actions triggering deletion of the same region: solved by
+   erasing regions while holding @regions_lock, and only proceeding on
+   successful erasure.
+
+3/ userspace racing devres_release_all() to trigger the devres not found
+   warning: solved by sysfs unregistration not requiring a release action
+
+Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
+Reported-by: Sungwoo Kim <iam@sung-woo.kim>
+Closes: http://lore.kernel.org/20260427032010.916681-2-iam@sung-woo.kim
+Signed-off-by: Dan Williams <djbw@kernel.org>
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Tested-by: ALejandro Lucero <alucerop@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260519210158.1499795-3-djbw@kernel.org
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/handshake-test.c |  8 ++++++++
- net/handshake/netlink.c        |  6 +++---
- net/handshake/request.c        | 18 ++++++++++++++++++
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ drivers/cxl/core/core.h   |  2 ++
+ drivers/cxl/core/port.c   |  5 +++
+ drivers/cxl/core/region.c | 65 ++++++++++++++++++++++-----------------
+ drivers/cxl/cxl.h         |  4 +++
+ 4 files changed, 48 insertions(+), 28 deletions(-)
 
-diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
-index 34fd1d9b2db86..6eeb53da6e2de 100644
---- a/net/handshake/handshake-test.c
-+++ b/net/handshake/handshake-test.c
-@@ -375,6 +375,10 @@ static void handshake_req_cancel_test2(struct kunit *test)
- 	/* Pretend to accept this request */
- 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
- 	KUNIT_ASSERT_PTR_EQ(test, req, next);
-+	/* Simulate FD_PREPARE() consuming the file reference handed
-+	 * off by handshake_req_next(); see handshake_nl_accept_doit().
-+	 */
-+	fput(filp);
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 6444cc827c9ce..3f05fa7c65a75 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -28,6 +28,7 @@ int cxl_region_init(void);
+ void cxl_region_exit(void);
+ int cxl_get_poison_by_endpoint(struct cxl_port *port);
+ struct cxl_region *cxl_dpa_to_region(const struct cxl_memdev *cxlmd, u64 dpa);
++void kill_regions(struct cxl_root_decoder *cxlrd);
  
- 	/* Act */
- 	result = handshake_req_cancel(sock->sk);
-@@ -417,6 +421,10 @@ static void handshake_req_cancel_test3(struct kunit *test)
- 	/* Pretend to accept this request */
- 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
- 	KUNIT_ASSERT_PTR_EQ(test, req, next);
-+	/* Simulate FD_PREPARE() consuming the file reference handed
-+	 * off by handshake_req_next(); see handshake_nl_accept_doit().
-+	 */
-+	fput(filp);
- 
- 	/* Pretend to complete this request */
- 	handshake_complete(next, -ETIMEDOUT, NULL);
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index c4a76319e1f88..1afa7d4880381 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -92,7 +92,6 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	struct net *net = sock_net(skb->sk);
- 	struct handshake_net *hn = handshake_pernet(net);
- 	struct handshake_req *req = NULL;
--	struct socket *sock;
- 	int class, fd, err;
- 
- 	err = -EOPNOTSUPP;
-@@ -109,9 +108,9 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (!req)
- 		goto out_status;
- 
--	sock = req->hr_sk->sk_socket;
- 	fd = get_unused_fd_flags(O_CLOEXEC);
- 	if (fd < 0) {
-+		fput(req->hr_file); /* drop ref from handshake_req_next() */
- 		err = fd;
- 		goto out_complete;
- 	}
-@@ -119,10 +118,11 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	err = req->hr_proto->hp_accept(req, info, fd);
- 	if (err) {
- 		put_unused_fd(fd);
-+		fput(req->hr_file); /* drop ref from handshake_req_next() */
- 		goto out_complete;
- 	}
- 
--	fd_install(fd, get_file(sock->file));
-+	fd_install(fd, req->hr_file);
- 
- 	trace_handshake_cmd_accept(net, req, req->hr_sk, fd);
+ #else
+ static inline
+@@ -42,6 +43,7 @@ static inline int cxl_get_poison_by_endpoint(struct cxl_port *port)
+ static inline void cxl_decoder_kill_region(struct cxl_endpoint_decoder *cxled)
+ {
+ }
++static inline void kill_regions(struct cxl_root_decoder *cxlrd) { };
+ static inline int cxl_region_init(void)
+ {
  	return 0;
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index e5285fcf15b06..b8eb7e8e0ec48 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -182,6 +182,17 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
- 	return ret;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 7746e2691802c..2589354b0ca44 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -433,6 +433,8 @@ static void cxl_root_decoder_release(struct device *dev)
+ 
+ 	if (atomic_read(&cxlrd->region_id) >= 0)
+ 		memregion_free(atomic_read(&cxlrd->region_id));
++	mutex_destroy(&cxlrd->regions_lock);
++	xa_destroy(&cxlrd->regions);
+ 	__cxl_decoder_release(&cxlrd->cxlsd.cxld);
+ 	kfree(cxlrd);
+ }
+@@ -1708,6 +1710,7 @@ struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
+ 
+ 	cxlrd->calc_hb = calc_hb;
+ 	mutex_init(&cxlrd->regions_lock);
++	xa_init(&cxlrd->regions);
+ 
+ 	cxld = &cxlsd->cxld;
+ 	cxld->dev.type = &cxl_decoder_root_type;
+@@ -1894,6 +1897,8 @@ static void cxld_unregister(void *dev)
+ 		cxled = to_cxl_endpoint_decoder(dev);
+ 		cxl_decoder_kill_region(cxled);
+ 	}
++	if (is_root_decoder(dev))
++		kill_regions(to_cxl_root_decoder(dev));
+ 
+ 	device_unregister(dev);
+ }
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 5fc2a6a50ae94..873ee24a34317 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -2193,13 +2193,14 @@ static struct cxl_region *to_cxl_region(struct device *dev)
+ 	return container_of(dev, struct cxl_region, dev);
  }
  
-+/**
-+ * handshake_req_next - Return the next queued handshake request
-+ * @hn: per-net handshake state
-+ * @class: handler class to match
-+ *
-+ * On a non-NULL return, the caller owns an extra reference
-+ * on @req->hr_file.  FD_PREPARE() consumes it on success; on
-+ * the FD_PREPARE() failure path the caller must fput() it.
-+ *
-+ * Return: pointer to a removed handshake_req, or NULL.
-+ */
- struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+-static void unregister_region(void *dev)
++static void unregister_region(struct cxl_region *cxlr)
  {
- 	struct handshake_req *req, *pos;
-@@ -192,6 +203,13 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
- 		if (pos->hr_proto->hp_handler_class != class)
- 			continue;
- 		__remove_pending_locked(hn, pos);
-+		/* Hand off a file reference to the accept side under
-+		 * hn_lock.  A concurrent handshake_req_cancel() can drop
-+		 * hr_file before accept reaches FD_PREPARE(); this extra
-+		 * reference keeps the file alive until FD_PREPARE() takes
-+		 * ownership.
-+		 */
-+		get_file(pos->hr_file);
- 		req = pos;
- 		break;
+-	struct cxl_region *cxlr = to_cxl_region(dev);
++	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
+ 	struct cxl_region_params *p = &cxlr->params;
+ 	int i;
+ 
+-	device_del(dev);
++	xa_erase(&cxlrd->regions, cxlr->id);
++	device_del(&cxlr->dev);
+ 
+ 	/*
+ 	 * Now that region sysfs is shutdown, the parameter block is now
+@@ -2210,7 +2211,7 @@ static void unregister_region(void *dev)
+ 		detach_target(cxlr, i);
+ 
+ 	cxl_region_iomem_release(cxlr);
+-	put_device(dev);
++	put_device(&cxlr->dev);
+ }
+ 
+ static struct lock_class_key cxl_region_key;
+@@ -2243,6 +2244,19 @@ static struct cxl_region *cxl_region_alloc(struct cxl_root_decoder *cxlrd, int i
+ 	return cxlr;
+ }
+ 
++/* unwind all remaining regions */
++void kill_regions(struct cxl_root_decoder *cxlrd)
++{
++	unsigned long index;
++	struct cxl_region *cxlr;
++
++	guard(mutex)(&cxlrd->regions_lock);
++	/* no more region creation */
++	cxlrd->dead = true;
++	xa_for_each(&cxlrd->regions, index, cxlr)
++		unregister_region(cxlr);
++}
++
+ /**
+  * devm_cxl_add_region - Adds a region to a decoder
+  * @cxlrd: root decoder
+@@ -2281,9 +2295,11 @@ static struct cxl_region *devm_cxl_add_region(struct cxl_root_decoder *cxlrd,
+ 	if (rc)
+ 		goto err;
+ 
+-	rc = devm_add_action_or_reset(port->uport_dev, unregister_region, cxlr);
+-	if (rc)
++	rc = xa_insert(&cxlrd->regions, cxlr->id, cxlr, GFP_KERNEL);
++	if (rc) {
++		unregister_region(cxlr);
+ 		return ERR_PTR(rc);
++	}
+ 
+ 	dev_dbg(port->uport_dev, "%s: created %s\n",
+ 		dev_name(&cxlrd->cxlsd.cxld.dev), dev_name(dev));
+@@ -2316,6 +2332,9 @@ static struct cxl_region *__create_region(struct cxl_root_decoder *cxlrd,
+ {
+ 	int rc;
+ 
++	if (cxlrd->dead)
++		return ERR_PTR(-ENXIO);
++
+ 	switch (mode) {
+ 	case CXL_DECODER_RAM:
+ 	case CXL_DECODER_PMEM:
+@@ -2407,40 +2426,31 @@ static ssize_t region_show(struct device *dev, struct device_attribute *attr,
+ }
+ DEVICE_ATTR_RO(region);
+ 
+-static struct cxl_region *
+-cxl_find_region_by_name(struct cxl_root_decoder *cxlrd, const char *name)
+-{
+-	struct cxl_decoder *cxld = &cxlrd->cxlsd.cxld;
+-	struct device *region_dev;
+-
+-	region_dev = device_find_child_by_name(&cxld->dev, name);
+-	if (!region_dev)
+-		return ERR_PTR(-ENODEV);
+-
+-	return to_cxl_region(region_dev);
+-}
+-
+ static ssize_t delete_region_store(struct device *dev,
+ 				   struct device_attribute *attr,
+ 				   const char *buf, size_t len)
+ {
+ 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(dev);
+-	struct cxl_port *port = to_cxl_port(dev->parent);
+ 	struct cxl_region *cxlr;
+-	int rc;
++	int rc, id;
+ 
+ 	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
+ 	if (rc)
+ 		return rc;
+ 
+-	cxlr = cxl_find_region_by_name(cxlrd, buf);
+-	if (IS_ERR(cxlr)) {
++	rc = sscanf(buf, "region%d\n", &id);
++	if (rc != 1) {
+ 		mutex_unlock(&cxlrd->regions_lock);
+-		return PTR_ERR(cxlr);
++		return -EINVAL;
  	}
+ 
+-	devm_release_action(port->uport_dev, unregister_region, cxlr);
+-	put_device(&cxlr->dev);
++	cxlr = xa_load(&cxlrd->regions, id);
++	if (!cxlr || !sysfs_streq(buf, dev_name(&cxlr->dev))) {
++		mutex_unlock(&cxlrd->regions_lock);
++		return -ENODEV;
++	}
++
++	unregister_region(cxlr);
+ 	mutex_unlock(&cxlrd->regions_lock);
+ 
+ 	return len;
+@@ -2958,7 +2968,6 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
+ 					   struct cxl_endpoint_decoder *cxled)
+ {
+ 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+-	struct cxl_port *port = cxlrd_to_port(cxlrd);
+ 	struct range *hpa = &cxled->cxld.hpa_range;
+ 	struct cxl_region_params *p;
+ 	struct cxl_region *cxlr;
+@@ -3033,7 +3042,7 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
+ 
+ err:
+ 	up_write(&cxl_region_rwsem);
+-	devm_release_action(port->uport_dev, unregister_region, cxlr);
++	unregister_region(cxlr);
+ 	return ERR_PTR(rc);
+ }
+ 
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index 9dcc8a4d5128a..7a1b1721860d7 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -442,6 +442,8 @@ typedef struct cxl_dport *(*cxl_calc_hb_fn)(struct cxl_root_decoder *cxlrd,
+  * @calc_hb: which host bridge covers the n'th position by granularity
+  * @platform_data: platform specific configuration data
+  * @regions_lock: sync region discovery, construction, and deletion
++ * @regions: regions to remove at root decoder destruct time
++ * @dead: root decoder dead to region creation
+  * @cxlsd: base cxl switch decoder
+  */
+ struct cxl_root_decoder {
+@@ -450,6 +452,8 @@ struct cxl_root_decoder {
+ 	cxl_calc_hb_fn calc_hb;
+ 	void *platform_data;
+ 	struct mutex regions_lock;
++	struct xarray regions;
++	bool dead;
+ 	struct cxl_switch_decoder cxlsd;
+ };
+ 
 -- 
 2.53.0
 
