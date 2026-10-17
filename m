@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A0935E93B;
-	Sat, 17 Oct 2026 18:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2AC3B813A;
+	Sat, 17 Oct 2026 18:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260701; cv=none; b=L2zNB73PsyeAEgzs74tX7M5l8yVcSG6fnxLTqw4VJwRzi400GHCQO7gxby0bXYoNWJUtRpM4UmwK1OrA224zYPbcn/Mn5Dt0zD0tGBOShQFxTMhfJ0/hb+hVurY4jdcbJDJx83E9m6JT8dfyWxodQ6ocStta2eHzt3No+O88iFo=
+	t=1792260702; cv=none; b=E/ywmWTITaosuDvB6bHxdhnxtJPpvBT+A1YYNodMHgPdglRMcKwcI709Syxgf9nzTBmlFWuGyvKGNh2VLEsrt9Stu59GSjwqUiSgUi5DFzNgx7BlJD3VfZXv1P48vcPBTHSS0q3P8Ulu186reLMf8jGTmJTAullWX94BjOoPz08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260701; c=relaxed/simple;
-	bh=R3/eFZQ3z3RTJnI04X8GE7UY+jKpYE3eophNX/U0FxE=;
+	s=arc-20240116; t=1792260702; c=relaxed/simple;
+	bh=HGNPqUIZHGSeDKFu/RbKVZ5qA3edNOx5xjw6URazPTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJIhltkRYFQU7b0dhY3C25VPzThHH5gieDDGinATqyhUyOFLyFbR45GS/ueGCftLjUttkONgPz/+HUDjdph5L10vplv5XUgdy9iZCM3uuJqVyV7y4SE2uP7Am/xHRPsM1+yxXTdk13CqlONEKrsJNs2rp2wVy0z/XI9KGlOT4J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTfoOep7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EZNxpbfN3KVGVHkMHMwx2tvn7FZMOb0WngDVh3zSEXh/DS2KtpibUTbeRgDZgY1sfiLKLzreWZFuLu4b2cg34CImu12GrTBYoCp6LxNQ5SCTLt6iXBLGBxpNsY3bN4210fqiuj5CxejepXRTl+mo85D6BvL2/1Ncv2Gdj4slsuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4Z6998M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTfoOep7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21191F000C5;
-	Sat, 17 Oct 2026 18:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4Z6998M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01E81F000C4;
+	Sat, 17 Oct 2026 18:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260698;
-	bh=KDT6ciOMcAXhU3ZGgqy2i2YcjkRAWssbcF7lVHc98m4=;
+	s=korg; t=1792260701;
+	bh=LQvJcglAZ8rEgDgSSETa/qyrYwfaXhbt5QjXcPYq1e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTfoOep784AysxpA+ROGLx/UHztW/uLfDolvOxZyZ558GLYBgAfptgU/iZVI6QQyj
-	 iR3Z4hi8IHaJP8s/21t4bM+2guAPOlFXinsLPekkPO1vOwCMpbHp9NG639DmGt3dXD
-	 Y8ZAC/T4Lju0MxE4BWHCGoPC/O71ndUWL0rlzn0o=
+	b=S4Z6998M5b1h1LJS20ElWgIVil0mlSO1dyD5Nlq+Oe6B7H0AEYtrQyjOAb0lUs2Bv
+	 5TjPKa7Hft701QrhCaNy7de5xsirfIn0gTRmaz+QR7U0q5aJgULOHHMH0QSgtlYgKo
+	 rq3hGBva0oSTYjRZ1wq1iNNVDsCYpDkDkKDa/Atk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Bjoern Doebel <doebel@amazon.de>,
 	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1590/1674] smb: client: fail DACL rewrite when the new DACL exceeds 64K
-Date: Sat, 17 Oct 2026 18:04:22 +0200
-Message-ID: <20261017160511.904264888@linuxfoundation.org>
+Subject: [PATCH 6.6 1591/1674] smb: client: honor forceuid/forcegid when mapping SIDs to uid/gid
+Date: Sat, 17 Oct 2026 18:04:23 +0200
+Message-ID: <20261017160511.929749056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,156 +55,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit d05045177a855386bca5e1909e08d06290e6e3b3 ]
+[ Upstream commit 18a72975e9f35aadecc75b031f693f2d1f49308f ]
 
-replace_sids_and_copy_aces() and set_chmod_dacl() accumulate the size of
-the DACL they build in a u16. That accumulator can wrap.
+When the administrator mounts with forceuid or forcegid (uid=/gid=
+mount options), they expect all files to appear owned by the specified
+user/group.  However, several code paths unconditionally called
+sid_to_id() to overwrite cf_uid/cf_gid with server-provided values,
+ignoring the administrator's explicit override:
 
-validate_dacl() caps num_aces at (dacl_size - sizeof(struct smb_acl)) /
-20, i.e. 3276 for a maximally sized DACL, while each rewritten ACE can
-grow to sizeof(struct smb_ace) (76 bytes) once its SID is replaced with
-one carrying SID_MAX_SUB_AUTHORITIES sub-authorities. The worst case is
-therefore sizeof(struct smb_acl) + 3276 * 76 = 248984 bytes, far beyond
-what a u16 can hold. A wraparound is reached with 863 ACEs.
+  - smb311_posix_info_to_fattr() (stat via POSIX extensions)
+  - cifs_posix_to_fattr() (readdir via POSIX extensions)
+  - parse_sec_desc() (CIFS ACL ownership mapping)
 
-After the wraparound, ndacl_ptr->size becomes meaningless and the offset
-will point anywhere in the ACE array. As a result, we will see
-corruption of the DACL, which then gets sent to the server. This is not
-an out-of-bounds write as the allocation now covers the worst-case
-expansion, so writes will always go into the buffer.
+This allowed an untrusted server to dictate local file ownership even
+when the mount was configured to force specific uid/gid values.
 
-Adjust the code to use a u32 internally and return -EOVERFLOW in the
-overflow case. The operation must be refused, because a DACL can only
-hold 2^16-1 bytes on the wire and larger DACLs cannot be represented.
+Fix all three call sites to check CIFS_MOUNT_OVERR_UID and
+CIFS_MOUNT_OVERR_GID before calling sid_to_id(), following the
+same pattern already used by cifs_unix_basic_to_fattr() for unix
+extensions.
 
-set_chmod_dacl() carries the same pattern and is fixed the same way. It
-only wraps once the source DACL comes within roughly 380 bytes of the
-64K ceiling, but the failure mode is identical.
-
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Closes: https://sashiko.dev/#/patchset/20260906155816.603278-1-pc%40manguebit.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 37 ++++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ fs/smb/client/cifsacl.c | 29 ++++++++++++++++++-----------
+ fs/smb/client/inode.c   |  9 +++++++--
+ fs/smb/client/readdir.c | 11 +++++++----
+ 3 files changed, 32 insertions(+), 17 deletions(-)
 
 diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index 0a7c98e768367..7752a6d33cee4 100644
+index 7752a6d33cee4..4ed7b6311af55 100644
 --- a/fs/smb/client/cifsacl.c
 +++ b/fs/smb/client/cifsacl.c
-@@ -1024,13 +1024,13 @@ unsigned int setup_special_user_owner_ACE(struct smb_ace *pntace)
- static void populate_new_aces(char *nacl_base,
- 		struct smb_sid *pownersid,
- 		struct smb_sid *pgrpsid,
--		__u64 *pnmode, u16 *pnum_aces, u16 *pnsize,
-+		__u64 *pnmode, u16 *pnum_aces, u32 *pnsize,
- 		bool modefromsid,
- 		bool posix)
+@@ -1312,6 +1312,7 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
  {
- 	__u64 nmode;
- 	u16 num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	__u64 user_mode;
- 	__u64 group_mode;
- 	__u64 other_mode;
-@@ -1129,16 +1129,17 @@ static void populate_new_aces(char *nacl_base,
- 	*pnsize = nsize;
- }
- 
--static __u16 replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
--		struct smb_sid *pownersid, struct smb_sid *pgrpsid,
--		struct smb_sid *pnownersid, struct smb_sid *pngrpsid)
-+static int replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
-+				      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
-+				      struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
-+				      u16 *pnsize)
- {
- 	int i;
- 	u16 size = 0;
- 	struct smb_ace *pntace = NULL;
- 	char *acl_base = NULL;
- 	u16 src_num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	struct smb_ace *pnntace = NULL;
- 	char *nacl_base = NULL;
- 	u16 ace_size = 0;
-@@ -1164,9 +1165,12 @@ static __u16 replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *p
- 
- 		size += le16_to_cpu(pntace->size);
- 		nsize += ace_size;
-+		if (nsize > U16_MAX)
-+			return -EOVERFLOW;
- 	}
- 
--	return nsize;
-+	*pnsize = nsize;
-+	return 0;
- }
- 
- static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
-@@ -1178,7 +1182,7 @@ static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
- 	struct smb_ace *pntace = NULL;
- 	char *acl_base = NULL;
- 	u16 src_num_aces = 0;
--	u16 nsize = 0;
-+	u32 nsize = 0;
- 	struct smb_ace *pnntace = NULL;
- 	char *nacl_base = NULL;
- 	u16 num_aces = 0;
-@@ -1229,6 +1233,8 @@ static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
- 
- 		nsize += cifs_copy_ace(pnntace, pntace, NULL);
- 		num_aces++;
-+		if (nsize > U16_MAX)
-+			return -EOVERFLOW;
- 
- next_ace:
- 		size += le16_to_cpu(pntace->size);
-@@ -1245,6 +1251,10 @@ static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
- 	}
- 
- finalize_dacl:
-+	/* The DACL size field is 16-bit on the wire, see MS-DTYP 2.4.5 */
-+	if (nsize > U16_MAX)
-+		return -EOVERFLOW;
+ 	int rc = 0;
+ 	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
+ 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
+ 	char *end_of_acl = ((char *)pntsd) + acl_len;
+ 	__u32 dacloffset;
+@@ -1328,17 +1329,21 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+ 		 pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
+ 		 le32_to_cpu(pntsd->gsidoffset),
+ 		 le32_to_cpu(pntsd->sacloffset), dacloffset);
+-/*	cifs_dump_mem("owner_sid: ", owner_sid_ptr, 64); */
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
 +
- 	pndacl->num_aces = cpu_to_le16(num_aces);
- 	pndacl->size = cpu_to_le16(nsize);
- 
-@@ -1405,6 +1415,8 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
- 
- 		rc = set_chmod_dacl(dacl_ptr, ndacl_ptr, owner_sid_ptr, group_sid_ptr,
- 				    pnmode, mode_from_sid, posix);
-+		if (rc)
+ 	rc = parse_sid(owner_sid_ptr, end_of_acl);
+ 	if (rc) {
+ 		cifs_dbg(FYI, "%s: Error %d parsing Owner SID\n", __func__, rc);
+ 		return rc;
+ 	}
+-	rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
+-	if (rc) {
+-		cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
+-			 __func__, rc);
+-		return rc;
++	if (!(sbflags & CIFS_MOUNT_OVERR_UID)) {
++		rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
++		if (rc) {
++			cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
++				 __func__, rc);
 +			return rc;
++		}
+ 	}
  
- 		sidsoffset = ndacloffset + le16_to_cpu(ndacl_ptr->size);
- 		/* copy the non-dacl portion of secdesc */
-@@ -1480,9 +1492,12 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
+ 	rc = parse_sid(group_sid_ptr, end_of_acl);
+@@ -1347,11 +1352,13 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+ 			 __func__, rc);
+ 		return rc;
+ 	}
+-	rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
+-	if (rc) {
+-		cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
+-			 __func__, rc);
+-		return rc;
++	if (!(sbflags & CIFS_MOUNT_OVERR_GID)) {
++		rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
++		if (rc) {
++			cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
++				 __func__, rc);
++			return rc;
++		}
+ 	}
  
- 		if (dacloffset) {
- 			/* Replace ACEs for old owner with new one */
--			size = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
--					owner_sid_ptr, group_sid_ptr,
--					nowner_sid_ptr, ngroup_sid_ptr);
-+			rc = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
-+							owner_sid_ptr, group_sid_ptr,
-+							nowner_sid_ptr, ngroup_sid_ptr,
-+							&size);
-+			if (rc)
-+				goto chown_chgrp_exit;
- 			ndacl_ptr->size = cpu_to_le16(size);
- 		}
+ 	if (dacloffset) {
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 1859e3ceb9a4c..8d201db930281 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -772,6 +772,7 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 	struct smb311_posix_qinfo *info = &data->posix_fi;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
  
+ 	memset(fattr, 0, sizeof(*fattr));
+ 
+@@ -816,8 +817,12 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 		fattr->cf_symlink_target = data->symlink_target;
+ 		data->symlink_target = NULL;
+ 	}
+-	sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
+-	sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
++	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
++		sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
++	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
++		sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
+ 
+ 	cifs_dbg(FYI, "POSIX query info: mode 0x%x uniqueid 0x%llx nlink %d\n",
+ 		fattr->cf_mode, fattr->cf_uniqueid, fattr->cf_nlink);
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index 434d5f74b2ef7..7b7942f0f53ea 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -241,6 +241,7 @@ static void
+ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		    struct cifs_sb_info *cifs_sb)
+ {
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
+ 	struct smb2_posix_info_parsed parsed;
+ 	int rc;
+ 
+@@ -281,15 +282,17 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		 le32_to_cpu(info->ReparseTag),
+ 		 le32_to_cpu(info->Mode));
+ 
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
+ 	if (rc < 0) {
+ 		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
+ 			 __func__, rc);
+-		fattr->cf_uid = cifs_sb->ctx->linux_uid;
+-		fattr->cf_gid = cifs_sb->ctx->linux_gid;
+-	} else {
++		return;
++	}
++	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
+ 		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
++	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
+ 		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
+-	}
+ }
+ 
+ static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
 -- 
 2.53.0
 
