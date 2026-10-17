@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D94E31B828;
-	Sat, 17 Oct 2026 18:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A493C81BE;
+	Sat, 17 Oct 2026 18:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260531; cv=none; b=o8FUnewWSqU/qVTfawSSyF/QEs6BrBJM2ivJ3WENKFIsoEsxkImLy1I6Vu6edmr4EN927QgWMKs8YITPnPM/4PyLOfbhrd6wEGmcscSpHrQkK2Gn+V26jOgezVXNAwU4LADhocxup9LQr9mnOc0NlCH/UlaOP/GfGAh579JX8ac=
+	t=1792260534; cv=none; b=V/CbJvnhj3Bvgtdtlr1S76kcTXPjJy2b2GCpkSucKfpLbKb/9/WiPqArUmag2GrAjnD24hgNRMGHlUH1/VDEb9RLcH8BMmCSZQtLuw3e2/VTo0cY9WGAbpFQubMO34kI46z5VfTi1DGUpBQksPqYCytWemq4NZQnFX0prCrH/z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260531; c=relaxed/simple;
-	bh=fhi7kU9fIB3P4jxNyn30/SuqT/zOGBrAzwQu2kgZI44=;
+	s=arc-20240116; t=1792260534; c=relaxed/simple;
+	bh=RPkr/EWO8WZUMMSLEN27MCGUdQwHZPCE68ycMHH6vhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBDKkZ9uArPdxb74liWeXeQHVO+oDgoFMcbpxi/mHrAsohYvfBcWqTgi7MhhzVUwSOcuENBmjuq9fy1Qqoin0LufjfajQDRiEWY74IQYff7YSymeNClmR3Q3Ucain/dADoBp5/4/VhPkLn1JK/RYjwlw7a5/Bo6+edGRBa2rUsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XysQkX1v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VatEEAtRApaLykmi0gKWX1rk6jQ1hSaGkX4E7HbfcAsJTEg7mGCvwiorSqD56bFKDz5nuJVZskV/HELT+PYz/ooHN0LZ+mDODbVrF5g7Fc1lhsvE5NXYUK9YHCnbkuA+kUN+fT6eUlmPGr1kARahZeasKsyQssiNJTN5ty5t+OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRki6s25; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XysQkX1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C71F1F000C4;
-	Sat, 17 Oct 2026 18:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRki6s25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC411F000C4;
+	Sat, 17 Oct 2026 18:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260530;
-	bh=vH7J1bZXSgikz/e2/7gNWY5Hpfv/BfjpSjnY+DxRtnY=;
+	s=korg; t=1792260532;
+	bh=uIuqjFRz8ZblYWW4b0knEUKItqQWtfCLhB0I8DF6OYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XysQkX1vR/1udVA2TmWYfn+s0WnzbXNs8CK3Ypj+Iec3X3F5Qwom2Mu5kOtt3YpRo
-	 FOxJrMNaGE/D6htPr7iqch5zg9eS8TPOkFVG+Z/J7FAA2u1ocVJ8TSLycdPRoneZbs
-	 RNbjL6rwiKiTa3ymXNADq0nJKbtHQraVLlt3mbIU=
+	b=rRki6s2598KLCJLItFiLfM5OXijdyfKrvPdKGMUh4O/lJuByf1GTpaW2IIijOpmYB
+	 O2zQdJhSqQACfJYqh31pgfgHJAUYY+eXO7Z4MOd3IFa+eN3iufJJDKWIZSau9RKjN3
+	 pDDi4J3xnQh9K3ZR469y3o0a0rh5Xsz0uSBn1rkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Xiao Ni <xiao@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1574/1674] md/raid1,raid10: fix error-path detection with md_cloned_bio()
-Date: Sat, 17 Oct 2026 18:04:06 +0200
-Message-ID: <20261017160511.499609806@linuxfoundation.org>
+Subject: [PATCH 6.6 1575/1674] iommu: Pass domain to remove_dev_pasid() op
+Date: Sat, 17 Oct 2026 18:04:07 +0200
+Message-ID: <20261017160511.524154672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,95 +53,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit 811545e0926d02a6a0b1a1258bb5544777c164d4 ]
+[ Upstream commit d2f85a263883b679f87ed8f911746105658e9c47 ]
 
-Detect the error path using md_cloned_bio() instead of relying
-on r1_bio in raid1 or r10_bio->read_slot in raid10, which may be
-NULL or -1 after splitting and resubmitting a failed bio.
+Existing remove_dev_pasid() callbacks of the underlying iommu drivers
+get the attached domain from the group->pasid_array. However, the domain
+stored in group->pasid_array is not always correct in all scenarios.
+A wrong domain may result in failure in remove_dev_pasid() callback.
+To avoid such problems, it is more reliable to pass the domain to the
+remove_dev_pasid() op.
 
-As a result, the error path may not be recognized and memory
-allocations can incorrectly use GFP_NOIO instead of
-(GFP_NOIO | __GFP_HIGH), which can lead to a deadlock under
-memory pressure.
-
-Fixes: 689389a06ce7 ("md/raid1: simplify handle_read_error().")
-Fixes: 545250f24809 ("md/raid10: simplify handle_read_error()")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260501114652.590037-3-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20240328122958.83332-3-yi.l.liu@intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 530f8f9c3546 ("iommu/sva: Set handle->dev before the SVA handle is visible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 13 ++++++++++---
- drivers/md/raid10.c | 20 ++++++++++++++------
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  9 ++-------
+ drivers/iommu/intel/iommu.c                 | 11 +++--------
+ drivers/iommu/iommu.c                       |  9 +++++----
+ include/linux/iommu.h                       |  3 ++-
+ 4 files changed, 12 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 86c5319de7ad3..710727814ea8b 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1220,11 +1220,18 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	char b[BDEVNAME_SIZE];
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 6f83556dda4d6..2c5e61786b368 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2864,14 +2864,9 @@ static int arm_smmu_def_domain_type(struct device *dev)
+ 	return 0;
+ }
  
+-static void arm_smmu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
++static void arm_smmu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
++				      struct iommu_domain *domain)
+ {
+-	struct iommu_domain *domain;
+-
+-	domain = iommu_get_domain_for_dev_pasid(dev, pasid, IOMMU_DOMAIN_SVA);
+-	if (WARN_ON(IS_ERR(domain)) || !domain)
+-		return;
+-
+ 	arm_smmu_sva_remove_dev_pasid(domain, dev, pasid);
+ }
+ 
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 53a0ba5badc91..10257548dd7d8 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4722,18 +4722,14 @@ static void intel_iommu_iotlb_sync_map(struct iommu_domain *domain,
+ 		__mapping_notify_one(info->iommu, dmar_domain, pfn, pages);
+ }
+ 
+-static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
++static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
++					 struct iommu_domain *domain)
+ {
+ 	struct intel_iommu *iommu = device_to_iommu(dev, NULL, NULL);
++	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+ 	struct dev_pasid_info *curr, *dev_pasid = NULL;
+-	struct dmar_domain *dmar_domain;
+-	struct iommu_domain *domain;
+ 	unsigned long flags;
+ 
+-	domain = iommu_get_domain_for_dev_pasid(dev, pasid, 0);
+-	if (WARN_ON_ONCE(!domain))
+-		goto out_tear_down;
+-
  	/*
--	 * If r1_bio is set, we are blocking the raid1d thread
--	 * so there is a tiny risk of deadlock.  So ask for
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking r1_bio, which might
-+	 * be NULL even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
-+
-+	/*
-+	 * If we are in the error path, we are blocking the raid1d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
- 	 * emergency memory if needed.
- 	 */
--	gfp_t gfp = r1_bio ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
+ 	 * The SVA implementation needs to handle its own stuffs like the mm
+ 	 * notification. Before consolidating that code into iommu core, let
+@@ -4744,7 +4740,6 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
+ 		goto out_tear_down;
+ 	}
  
- 	if (r1bio_existed) {
- 		/* Need to get the block device name carefully */
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 3e1fabd72dab9..2f06b406d9147 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1173,7 +1173,20 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	char b[BDEVNAME_SIZE];
- 	int slot = r10_bio->read_slot;
- 	struct md_rdev *err_rdev = NULL;
--	gfp_t gfp = GFP_NOIO;
-+
-+	/*
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking slot, which might
-+	 * be -1 even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
-+
-+	/*
-+	 * If we are in the error path, we are blocking the raid10d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
-+	 * emergency memory if needed.
-+	 */
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
- 	int error;
+-	dmar_domain = to_dmar_domain(domain);
+ 	spin_lock_irqsave(&dmar_domain->lock, flags);
+ 	list_for_each_entry(curr, &dmar_domain->dev_pasids, link_domain) {
+ 		if (curr->dev == dev && curr->pasid == pasid) {
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 3fa5699b9ff19..1927869ddf490 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -3407,20 +3407,21 @@ static int __iommu_set_group_pasid(struct iommu_domain *domain,
  
- 	if (slot >= 0 && r10_bio->devs[slot].rdev) {
-@@ -1185,11 +1198,6 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		 * we lose the device name in error messages.
- 		 */
- 		int disk;
--		/*
--		 * As we are blocking raid10, it is a little safer to
--		 * use __GFP_HIGH.
--		 */
--		gfp = GFP_NOIO | __GFP_HIGH;
+ 		if (device == last_gdev)
+ 			break;
+-		ops->remove_dev_pasid(device->dev, pasid);
++		ops->remove_dev_pasid(device->dev, pasid, domain);
+ 	}
+ 	return ret;
+ }
  
- 		rcu_read_lock();
- 		disk = r10_bio->devs[slot].devnum;
+ static void __iommu_remove_group_pasid(struct iommu_group *group,
+-				       ioasid_t pasid)
++				       ioasid_t pasid,
++				       struct iommu_domain *domain)
+ {
+ 	struct group_device *device;
+ 	const struct iommu_ops *ops;
+ 
+ 	for_each_group_device(group, device) {
+ 		ops = dev_iommu_ops(device->dev);
+-		ops->remove_dev_pasid(device->dev, pasid);
++		ops->remove_dev_pasid(device->dev, pasid, domain);
+ 	}
+ }
+ 
+@@ -3479,7 +3480,7 @@ void iommu_detach_device_pasid(struct iommu_domain *domain, struct device *dev,
+ 	struct iommu_group *group = iommu_group_get(dev);
+ 
+ 	mutex_lock(&group->mutex);
+-	__iommu_remove_group_pasid(group, pasid);
++	__iommu_remove_group_pasid(group, pasid, domain);
+ 	WARN_ON(xa_erase(&group->pasid_array, pasid) != domain);
+ 	mutex_unlock(&group->mutex);
+ 
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index b6ef263e85c06..6e5257bf9aeaf 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -289,7 +289,8 @@ struct iommu_ops {
+ 			     struct iommu_page_response *msg);
+ 
+ 	int (*def_domain_type)(struct device *dev);
+-	void (*remove_dev_pasid)(struct device *dev, ioasid_t pasid);
++	void (*remove_dev_pasid)(struct device *dev, ioasid_t pasid,
++				 struct iommu_domain *domain);
+ 
+ 	const struct iommu_domain_ops *default_domain_ops;
+ 	unsigned long pgsize_bitmap;
 -- 
 2.53.0
 
