@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11A3911A9;
-	Sat, 17 Oct 2026 16:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD4384CED;
+	Sat, 17 Oct 2026 16:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254443; cv=none; b=MpasB/+z+nO7Ti6Osxd3ANLwwTLO73U+37quLeXV9s+mqOsq/ADGfSnEMgsJewyUs9hgjxcRk/QekecKg2uOEdaZOPM0OgG/IARBUjqDofgstq9D0P9df1zCperWevHsIRUP7qrMk2VtRU91VnpJdQf5oSM6ay0uGQ3YyUadwL4=
+	t=1792254446; cv=none; b=LmU2Xr1oIsDCQ/HwvbRcIY4UEP1CCjWQUuU25SnHtLKe++VVFlOBu7QDkPG5mH3xs0sPYFzCLtW9HCO1FwdMXSzavTvedB+ZFIZVsstvePrcFsFIwAEJG3J5dkgcY+gIHCczNzzvM8sl6Sav1BOi11Yf1mfgKUVAG0zg9cwAyGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254443; c=relaxed/simple;
-	bh=99eWtoa/+iHY/Lea6chCQr6WCi2w/T0JpekjmWNT+sk=;
+	s=arc-20240116; t=1792254446; c=relaxed/simple;
+	bh=xOsm8HyavRjhNdnieBHKgDcHFqNxlTPY1argi6C7M3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uk7PgXpkrrpdO6Nu2yibuzvAaz0BvZif5nmgEa+bW7hu0OKDcmX08O3xgpZ+qe88+bzLhCN1MaE3GPGlPUN9K2eIl/vSjZCM0pYagqwZxJFiHR3ACOpAL4T1QE0Awepyf8XWNOtMS35RWQ6IGgBUn94tmxdtsHxSmI4rtZqkaH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGY4dOBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=At4Qo9TP8upyIp+J0s5eP5q+VAvpVtr3lE0+kc77lIUw9AvYlrHEc44YfZUK2Pg2XLFZFrwqQdOn43Q3WC6d4w3hmWxoeAKk5x0Cp/Rx2PFWQn+1TBVQZmBisqNHVysV2JZ3eA5cdjk4js0Q1wxrHTVfeqKJEcUWbsUq5d5VuGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUzYuqpg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGY4dOBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B641F000C4;
-	Sat, 17 Oct 2026 16:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUzYuqpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE861F000C4;
+	Sat, 17 Oct 2026 16:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254442;
-	bh=HjTFzdEZ9aeDihL+hjRUYEnr+iZLzOjYJWuDMv+3rLQ=;
+	s=korg; t=1792254445;
+	bh=IGMVm0NPXf/N0S0QCsyA94RDn2oJowanwYxvFEX3YYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGY4dOBGGYR70jLBYlamJammBq+WLxvqjRcl1MY1xgK0oEdGIirtWiNM3rTa440Uu
-	 R2CyZxJ9C/9N/60p5BgeRJDeHaNMAnjMp3elSnuDGNncmDScP8cXja0daKRSAEBc7e
-	 gHnjPysHE+u9wxQ9SSzzAqwvz47D5RLYKbpgRIpw=
+	b=CUzYuqpgTdB6Unju99tzsscVFtKahR4tx0zvK1R5pRUTU8RGH2SG7GSA4C+x1kExB
+	 +BUKVa4iXZeKHbYTY4yl3Y5G7/vRjcRGK5Ez1hMB+JKMe4Ok7VQuTbRYY3R4cuT7Yu
+	 6VeC6ZRYR6+u1bCP0+3fGGF1rMW4JSFsXLNW6oOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+e14bc5d4942756023b77@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	tipc-discussion@lists.sourceforge.net,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 448/869] sctp: add INIT verification after cookie unpacking
-Date: Sat, 17 Oct 2026 17:54:49 +0200
-Message-ID: <20261017160048.629760410@linuxfoundation.org>
+Subject: [PATCH 6.12 449/869] tipc: fix UAF in cleanup_bearer() due to premature dst_cache_destroy()
+Date: Sat, 17 Oct 2026 17:54:50 +0200
+Message-ID: <20261017160048.653458820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,151 +55,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 414c5447fe6a200613dd46d7fdc8454622076cb1 ]
+[ Upstream commit 7116764ca53ff529335d7ab7c364a69f094b23a5 ]
 
-In SCTP handshake, the INIT chunk is initially processed by the server
-and embedded into the cookie carried in INIT-ACK. The client then
-returns this cookie via COOKIE-ECHO, where the server unpacks it and
-reconstructs the original INIT chunk.
+TIPC UDP media bearer teardown calls dst_cache_destroy() on its
+replicast caches before calling synchronize_net() to wait for
+concurrent RCU readers (transmitters) to finish:
 
-When cookie authentication is enabled, the cookie contents are protected
-against tampering, so reusing the unpacked INIT without re-verification
-is safe.
+static void cleanup_bearer(struct work_struct *work)
+{
+...
+	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+		dst_cache_destroy(&rcast->dst_cache);
+		list_del_rcu(&rcast->list);
+		kfree_rcu(rcast, rcu);
+	}
+...
+	dst_cache_destroy(&ub->rcast.dst_cache);
+	udp_tunnel_sock_release(ub->sk);
+	synchronize_net();
+...
+}
 
-However, when cookie authentication is disabled, the reconstructed INIT
-can no longer be trusted. In this case, the INIT must be explicitly
-validated after unpacking to avoid processing potentially tampered data.
+This is highly buggy because dst_cache_destroy() immediately frees the
+per-CPU cache memory (free_percpu()) and releases the cached dst
+entries without any synchronization.
 
-Add sctp_verify_init() checks after cookie unpacking in COOKIE-ECHO
-processing paths (sctp_sf_do_5_1D_ce() and sctp_sf_do_5_2_4_dupcook())
-when cookie_auth_enable is disabled. On failure, the new association is
-freed and the packet is discarded.
+If a concurrent transmitter (e.g., tipc_udp_xmit()) is running on another
+CPU under RCU protection, it can call dst_cache_get() concurrently,
+leading to:
+1. Use-After-Free on the per-CPU cache pointer itself (crash).
+2. "rcuref - imbalanced put()" warning if it attempts to release a
+   dst that was concurrently released by dst_cache_destroy().
 
-Also tighten cookie validation in sctp_unpack_cookie() by verifying the
-embedded chunk type is SCTP_CID_INIT before treating it as an INIT
-chunk.
+Furthermore, calling kfree(ub) immediately after synchronize_net() without
+closing the socket first (or waiting after closing it) leaves a window
+where a concurrent receiver (tipc_udp_recv()) could start after
+synchronize_net(), access ub, and suffer a UAF when kfree(ub) runs.
 
-Finally, update sctp_verify_init() to validate parameter bounds using
-the actual embedded INIT length instead of chunk->chunk_end, since the
-INIT stored in COOKIE-ECHO may not span the entire chunk buffer.
+To fix this, we must defer dst_cache_destroy() and kfree(ub) until after
+we have ensured that no more readers can see the bearer/socket and all
+existing readers have finished:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/ebcbbac574815b0850f371b4bdb02f2e602b94d3.1782341592.git.lucien.xin@gmail.com
+1. Defer rcast entry destruction (both dst_cache_destroy() and kfree())
+   to an RCU callback using call_rcu_hurry().
+   Using call_rcu_hurry() ensures the dst entries are released quickly.
+
+2. Release the bearer socket using udp_tunnel_sock_release() (stops
+   new receive readers).
+
+3. Call synchronize_net() to wait for all outstanding RCU readers
+   (both transmit and receive) to finish.
+
+4. Now that it is safe, call dst_cache_destroy() on the main bearer
+   cache, and free ub.
+
+Note: 3) and 4) can be changed later in net-next to also use
+call_rcu_hurry() and get rid of the synchronize_net() latency.
+
+Fixes: e9c1a793210f ("tipc: add dst_cache support for udp media")
+Reported-by: syzbot+e14bc5d4942756023b77@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a396a66.52ae72c2.136ac7.0003.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jon Maloy <jmaloy@redhat.com>
+Cc: tipc-discussion@lists.sourceforge.net
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260623173030.2925059-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c |  5 ++++-
- net/sctp/sm_statefuns.c  | 36 +++++++++++++++++++++++++++++++++---
- 2 files changed, 37 insertions(+), 4 deletions(-)
+ net/tipc/udp_media.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index bec5bd6cf1d1f..34692cadea982 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -1781,6 +1781,8 @@ struct sctp_association *sctp_unpack_cookie(
- 	bear_cookie = &cookie->c;
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 2a37b274bcb95..311ebc6163855 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -797,6 +797,14 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
+ 	return err;
+ }
  
- 	ch = (struct sctp_chunkhdr *)(bear_cookie + 1);
-+	if (ch->type != SCTP_CID_INIT)
-+		goto malformed;
- 	chlen = ntohs(ch->length);
- 	if (chlen < sizeof(struct sctp_init_chunk))
- 		goto malformed;
-@@ -2338,7 +2340,8 @@ int sctp_verify_init(struct net *net, const struct sctp_endpoint *ep,
- 	 * VIOLATION error.  We build the ERROR chunk here and let the normal
- 	 * error handling code build and send the packet.
- 	 */
--	if (param.v != (void *)chunk->chunk_end)
-+	if (param.v != (void *)peer_init +
-+		       SCTP_PAD4(ntohs(peer_init->chunk_hdr.length)))
- 		return sctp_process_inv_paramlength(asoc, param.p, chunk, errp);
- 
- 	/* The only missing mandatory param possible today is
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index ee4269b75e36a..b16bb0ebb552e 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -708,11 +708,12 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 					 struct sctp_cmd_seq *commands)
- {
- 	struct sctp_ulpevent *ev, *ai_ev = NULL, *auth_ev = NULL;
-+	struct sctp_chunk *err_chk_p = NULL;
- 	struct sctp_association *new_asoc;
- 	struct sctp_init_chunk *peer_init;
- 	struct sctp_chunk *chunk = arg;
--	struct sctp_chunk *err_chk_p;
- 	struct sctp_chunk *repl;
-+	enum sctp_cid cid;
- 	struct sock *sk;
- 	int error = 0;
- 
-@@ -786,6 +787,19 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 		}
- 	}
- 
-+	peer_init = (struct sctp_init_chunk *)(chunk->subh.cookie_hdr + 1);
-+	cid = peer_init->chunk_hdr.type;
-+	if (!sctp_sk(sk)->hmac &&
-+	    !sctp_verify_init(net, ep, asoc, cid, peer_init, chunk,
-+			      &err_chk_p)) {
-+		sctp_association_free(new_asoc);
-+		if (err_chk_p)
-+			sctp_chunk_free(err_chk_p);
-+		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-+	}
-+	if (err_chk_p)
-+		sctp_chunk_free(err_chk_p);
++static void rcast_free_rcu(struct rcu_head *rcu)
++{
++	struct udp_replicast *rcast = container_of(rcu, struct udp_replicast, rcu);
 +
- 	if (security_sctp_assoc_request(new_asoc, chunk->head_skb ?: chunk->skb)) {
- 		sctp_association_free(new_asoc);
- 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-@@ -799,7 +813,6 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 	/* This is a brand-new association, so these are not yet side
- 	 * effects--it is safe to run them here.
- 	 */
--	peer_init = (struct sctp_init_chunk *)(chunk->subh.cookie_hdr + 1);
- 	if (!sctp_process_init(new_asoc, chunk,
- 			       &chunk->subh.cookie_hdr->c.peer_addr,
- 			       peer_init, GFP_ATOMIC))
-@@ -2216,10 +2229,12 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
- 					void *arg,
- 					struct sctp_cmd_seq *commands)
++	dst_cache_destroy(&rcast->dst_cache);
++	kfree(rcast);
++}
++
+ /* cleanup_bearer - break the socket/bearer association */
+ static void cleanup_bearer(struct work_struct *work)
  {
-+	struct sctp_chunk *err_chk_p = NULL;
- 	struct sctp_association *new_asoc;
-+	struct sctp_init_chunk *peer_init;
- 	struct sctp_chunk *chunk = arg;
- 	enum sctp_disposition retval;
--	struct sctp_chunk *err_chk_p;
-+	enum sctp_cid cid;
- 	int error = 0;
- 	char action;
+@@ -806,20 +814,19 @@ static void cleanup_bearer(struct work_struct *work)
  
-@@ -2288,6 +2303,21 @@ enum sctp_disposition sctp_sf_do_5_2_4_dupcook(
- 	switch (action) {
- 	case 'A': /* Association restart. */
- 	case 'B': /* Collision case B. */
-+		peer_init = (struct sctp_init_chunk *)
-+				(chunk->subh.cookie_hdr + 1);
-+		cid = peer_init->chunk_hdr.type;
-+		if (!sctp_sk(ep->base.sk)->hmac &&
-+		    !sctp_verify_init(net, ep, asoc, cid, peer_init, chunk,
-+				      &err_chk_p)) {
-+			sctp_association_free(new_asoc);
-+			if (err_chk_p)
-+				sctp_chunk_free(err_chk_p);
-+			return sctp_sf_pdiscard(net, ep, asoc, type, arg,
-+						commands);
-+		}
-+		if (err_chk_p)
-+			sctp_chunk_free(err_chk_p);
-+		fallthrough;
- 	case 'D': /* Collision case D. */
- 		/* Update socket peer label if first association. */
- 		if (security_sctp_assoc_request((struct sctp_association *)asoc,
+ 	spin_lock_bh(&ub->rcast_lock);
+ 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+-		dst_cache_destroy(&rcast->dst_cache);
+ 		list_del_rcu(&rcast->list);
+-		kfree_rcu(rcast, rcu);
++		call_rcu_hurry(&rcast->rcu, rcast_free_rcu);
+ 	}
+ 	ub->disabled = true;
+ 	spin_unlock_bh(&ub->rcast_lock);
+ 
+ 	tn = tipc_net(sock_net(ub->ubsock->sk));
+ 
+-	dst_cache_destroy(&ub->rcast.dst_cache);
+ 	udp_tunnel_sock_release(ub->ubsock);
+ 
+-	/* Note: could use a call_rcu() to avoid another synchronize_net() */
+ 	synchronize_net();
++
++	dst_cache_destroy(&ub->rcast.dst_cache);
+ 	atomic_dec(&tn->wq_count);
+ 	kfree(ub);
+ }
 -- 
 2.53.0
 
