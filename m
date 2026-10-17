@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700983BF699;
-	Sat, 17 Oct 2026 17:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559D38F950;
+	Sat, 17 Oct 2026 17:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259394; cv=none; b=YK7Peiaa1ShwvaspBLkQO17pVDdFxjUaUCmpnYwKSoEQBR4xJhk1wCqAUYiXzh4kNArnR0fKYGzC59IrEiBtRSiYSODHW8zctSGjppmHT14FZB2uQTP+/9OOFw1pKVgNw6pLr+6Y/Kgh8KMXiB9hB7uiqWvc0zoS4fLtwjgtYoc=
+	t=1792259397; cv=none; b=TaIfbpwgrmh5BANA/ucugkWX91UayiuoE2Mii6vvnqEa0x1q9w6i8Zbtd9f7JDYA8fPnHUdCZn6yZlBqz5fypX+tjGzW0anME/prfVHI0o5TAEi9myGz/7bQDcBPIn5CGQJmmwCnkAAKLNdkaIetA+IroVvD7WVV1q2k7D7tKLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259394; c=relaxed/simple;
-	bh=93cbIqXRG/jaOobSFdX31DsVkJF/BkMFywBHCgaoNns=;
+	s=arc-20240116; t=1792259397; c=relaxed/simple;
+	bh=ozUIspASpEcq0fqoayuIAAVVHt5q583GagHURrm59Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+/U2Bf71SFbmJYwvz6ZOYcoDrA5AM9MOLzEBZbaFPpTnOU81k9Cq6hmsPONkO0X6GZfkTP6Rugn67tNd/U2c2oq493ByZA8HgIjzIs1h3vpoEgEEi8b/2qZLTqB4OdRdMpC5ICiuOiz1/gBWjjMuXj8N7idOJ1X7Vk/mRZzvZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piy9r9At; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FKvsItyB5xs0/sl055fysxBe5YEii/ilyIoovHtjbvCnJlzGf/alpa5auEGMNzE/qx/8Q877kYRNHGugVN6gk+K5oPJhJyiX6e/fsQQr+sFTzIDrowdSPRwIbcCe2SuAEPmeAy3KuETCHQ9Wc/84SvDzbPuh7RDazU93JuOk9ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASnXV3B7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piy9r9At"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0691F000C4;
-	Sat, 17 Oct 2026 17:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASnXV3B7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66851F000C4;
+	Sat, 17 Oct 2026 17:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259393;
-	bh=YH2oNqTYMqRSXRMdIXO6FDp/SfrhSlo9s2cwv+nooyk=;
+	s=korg; t=1792259396;
+	bh=VK8y5FfX+Ar6j35dx5Mn6gnLDD6qL+nv8OJywOZkCiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=piy9r9AtwVvPXZuwWZzmcDYbny04OW2QLzAwarFr8z/SuF/MpaCWjsnVS1DFr/pw0
-	 Vi4GI9GPROEsjzoYbq8hCoihCAxYSCg9BsJUrvO2uRMQlxrwztECHAvpfid4a6JLR0
-	 yknsPl1n7BGyxRZV+agb96u0rB1en3SCUqRGcKPQ=
+	b=ASnXV3B7xfpRTrvOX43m8q9IfJxdEmBTpFl+9kc2GWH5rdD2tpVUcha163D86AKI8
+	 O3ieNrFcy+ota4D1jTJHgSGFft4u5eQOMXhy0jb0AGr+Z2t1n4E0e7tRl7jyWrDdfH
+	 ag8N5XvqRx0Xyznd1s8zq7bmTZPXTCWbCfn+FgNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Jardin <vjardin@free.fr>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1200/1674] netfilter: nf_flow_table: drop existing skb dst before skb_dst_set_noref()
-Date: Sat, 17 Oct 2026 17:57:52 +0200
-Message-ID: <20261017160501.939494988@linuxfoundation.org>
+Subject: [PATCH 6.6 1201/1674] hwmon: (pmbus) Fix type confusion in notification logic
+Date: Sat, 17 Oct 2026 17:57:53 +0200
+Message-ID: <20261017160501.965709127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,66 +51,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 8aecf0bbcc72605592134c917c222207d8f63ab0 ]
+[ Upstream commit 59bd68ab05a8f9c9a60b6ec44682084184803ff4 ]
 
-Incoming skbs passing through netfilter flowtable offload hooks (or XFRM
-offload path) might already carry a ref-counted dst_entry assigned during
-earlier RX or routing steps.
+Sashiko reports:
 
-Calling skb_dst_set_noref() when skb already holds a ref-counted dst
-overwrites skb->_skb_refdst, leaking the previous dst_entry reference
-count and triggering a DEBUG_NET_WARN_ON_ONCE assertion in
-skb_dst_check_unset():
+At the start of the loop in pmbus_notify(), the code unconditionally casts
+every attribute to a struct sensor_device_attribute:
 
-  WARNING: at skb_dst_check_unset include/linux/skbuff.h:1170
-  WARNING: at skb_dst_set_noref include/linux/skbuff.h:1234
-  WARNING: at nf_flow_offload_ip_hook+0xf6c/0x2b60 net/netfilter/nf_flow_table_ip.c:864
+drivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {
+    for (i = 0; i < data->num_attributes; i++) {
+        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
+        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+        int index = attr->index;
+...
+}
 
-Drop any existing dst_entry reference with skb_dst_drop(skb) before
-setting the non-referenced flowtable destination.
+However, data->group.attrs can contain other types like struct
+pmbus_samples_reg or struct pmbus_sensor, which only embed a base
+struct device_attribute.
 
-Fixes: 2a79fd3908ac ("netfilter: nf_flow_table: attach dst to skbs")
-Reported-by: syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a71b141.9511d2ce.1fc5b9.033b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20260804093328.1831847-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If da is a struct pmbus_samples_reg, dev_attr is the last member. Casting
+it to struct sensor_device_attribute and reading the index field appears
+to access memory past the end of the allocation, which might trigger a
+slab-out-of-bounds read.
+
+Additionally, if da is a struct pmbus_sensor, casting it causes the index
+field to overlap with the page, phase, and reg fields. Could this produce
+a garbage mask on little-endian systems that spuriously matches the target
+reg, page, and flags during an alert?
+
+Fix the problem by using struct sensor_device_attr in struct pmbus_sensor
+and struct pmbus_label. Since those attributes never trigger a
+notification, set the value of attr->index to -1 for them. Use this value
+to distinguish from boolean attributes which _can_ trigger a notification
+and use the index field to encode mask, page, and register values.
+
+Fixes: f469bde9afd1 ("hwmon: (pmbus/core) Notify hwmon events")
+Cc: Vincent Jardin <vjardin@free.fr>
+Tested-by: Vincent Jardin <vjardin@free.fr>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/pmbus/pmbus_core.c | 59 +++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 23 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index 20dd4eeac78b1..6e6d036fe1391 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -268,6 +268,7 @@ static unsigned int nf_flow_xmit_xfrm(struct sk_buff *skb,
- 				      struct dst_entry *dst)
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index e763ecf2f3c1e..45720413e4099 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -34,7 +34,7 @@
+ struct pmbus_sensor {
+ 	struct pmbus_sensor *next;
+ 	char name[PMBUS_NAME_SIZE];	/* sysfs sensor name */
+-	struct device_attribute attribute;
++	struct sensor_device_attribute attribute;
+ 	u8 page;		/* page number */
+ 	u8 phase;		/* phase number, 0xff for all phases */
+ 	u16 reg;		/* register */
+@@ -58,7 +58,7 @@ struct pmbus_boolean {
+ 
+ struct pmbus_label {
+ 	char name[PMBUS_NAME_SIZE];	/* sysfs label name */
+-	struct device_attribute attribute;
++	struct sensor_device_attribute attribute;
+ 	char label[PMBUS_NAME_SIZE];	/* label */
+ };
+ #define to_pmbus_label(_attr) \
+@@ -1170,7 +1170,8 @@ static ssize_t pmbus_show_sensor(struct device *dev,
+ 				 struct device_attribute *devattr, char *buf)
  {
- 	skb_orphan(skb);
-+	skb_dst_drop(skb);
- 	skb_dst_set_noref(skb, dst);
- 	dst_output(state->net, state->sk, skb);
- 	return NF_STOLEN;
-@@ -453,6 +454,7 @@ nf_flow_offload_ip_hook(void *priv, struct sk_buff *skb,
- 		outdev = rt->dst.dev;
- 		skb->dev = outdev;
- 		nexthop = rt_nexthop(rt, flow->tuplehash[!dir].tuple.src_v4.s_addr);
-+		skb_dst_drop(skb);
- 		skb_dst_set_noref(skb, &rt->dst);
- 		neigh_xmit(NEIGH_ARP_TABLE, outdev, &nexthop, skb);
- 		ret = NF_STOLEN;
-@@ -748,6 +750,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
- 		outdev = rt->dst.dev;
- 		skb->dev = outdev;
- 		nexthop = rt6_nexthop(rt, &flow->tuplehash[!dir].tuple.src_v6);
-+		skb_dst_drop(skb);
- 		skb_dst_set_noref(skb, &rt->dst);
- 		neigh_xmit(NEIGH_ND_TABLE, outdev, nexthop, skb);
- 		ret = NF_STOLEN;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	ssize_t ret;
+ 
+@@ -1190,7 +1191,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ {
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+-	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
+ 	ssize_t rv = count;
+ 	s64 val;
+ 	int ret;
+@@ -1213,7 +1215,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ static ssize_t pmbus_show_label(struct device *dev,
+ 				struct device_attribute *da, char *buf)
+ {
+-	struct pmbus_label *label = to_pmbus_label(da);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
++	struct pmbus_label *label = to_pmbus_label(attr);
+ 
+ 	return sysfs_emit(buf, "%s\n", label->label);
+ }
+@@ -1366,8 +1369,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 					     bool update, bool readonly,
+ 					     bool convert)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_sensor *sensor;
+-	struct device_attribute *a;
+ 
+ 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
+ 	if (!sensor)
+@@ -1391,11 +1394,10 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 	sensor->update = update;
+ 	sensor->convert = convert;
+ 	sensor->data = -ENODATA;
+-	pmbus_dev_attr_init(a, sensor->name,
+-			    readonly ? 0444 : 0644,
+-			    pmbus_show_sensor, pmbus_set_sensor);
++	pmbus_attr_init(a, sensor->name, readonly ? 0444 : 0644,
++			pmbus_show_sensor, pmbus_set_sensor, -1);
+ 
+-	if (pmbus_add_attribute(data, &a->attr))
++	if (pmbus_add_attribute(data, &a->dev_attr.attr))
+ 		return NULL;
+ 
+ 	sensor->next = data->sensors;
+@@ -1412,8 +1414,8 @@ static int pmbus_add_label(struct pmbus_data *data,
+ 			   const char *name, int seq,
+ 			   const char *lstring, int index, int phase)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_label *label;
+-	struct device_attribute *a;
+ 
+ 	label = devm_kzalloc(data->dev, sizeof(*label), GFP_KERNEL);
+ 	if (!label)
+@@ -1438,8 +1440,8 @@ static int pmbus_add_label(struct pmbus_data *data,
+ 				 lstring, index, phase);
+ 	}
+ 
+-	pmbus_dev_attr_init(a, label->name, 0444, pmbus_show_label, NULL);
+-	return pmbus_add_attribute(data, &a->attr);
++	pmbus_attr_init(a, label->name, 0444, pmbus_show_label, NULL, -1);
++	return pmbus_add_attribute(data, &a->dev_attr.attr);
+ }
+ 
+ /*
+@@ -2283,7 +2285,7 @@ struct pmbus_samples_attr {
+ struct pmbus_samples_reg {
+ 	int page;
+ 	struct pmbus_samples_attr *attr;
+-	struct device_attribute dev_attr;
++	struct sensor_device_attribute attribute;
+ };
+ 
+ static struct pmbus_samples_attr pmbus_samples_registers[] = {
+@@ -2305,14 +2307,15 @@ static struct pmbus_samples_attr pmbus_samples_registers[] = {
+ 	}
+ };
+ 
+-#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, dev_attr)
++#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, attribute)
+ 
+ static ssize_t pmbus_show_samples(struct device *dev,
+ 				  struct device_attribute *devattr, char *buf)
+ {
+ 	int val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_samples_reg *reg = to_samples_reg(attr);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 
+ 	mutex_lock(&data->update_lock);
+@@ -2331,7 +2334,8 @@ static ssize_t pmbus_set_samples(struct device *dev,
+ 	int ret;
+ 	long val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_samples_reg *reg = to_samples_reg(attr);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 
+ 	if (kstrtol(buf, 0, &val) < 0)
+@@ -2347,6 +2351,7 @@ static ssize_t pmbus_set_samples(struct device *dev,
+ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
+ 				  struct pmbus_samples_attr *attr)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_samples_reg *reg;
+ 
+ 	reg = devm_kzalloc(data->dev, sizeof(*reg), GFP_KERNEL);
+@@ -2356,10 +2361,12 @@ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
+ 	reg->attr = attr;
+ 	reg->page = page;
+ 
+-	pmbus_dev_attr_init(&reg->dev_attr, attr->name, 0644,
+-			    pmbus_show_samples, pmbus_set_samples);
++	a = &reg->attribute;
++
++	pmbus_attr_init(a, attr->name, 0644,
++			pmbus_show_samples, pmbus_set_samples, -1);
+ 
+-	return pmbus_add_attribute(data, &reg->dev_attr.attr);
++	return pmbus_add_attribute(data, &a->dev_attr.attr);
+ }
+ 
+ static int pmbus_add_samples_attributes(struct i2c_client *client,
+@@ -2814,9 +2821,15 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
+ 		struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
+ 		struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+ 		int index = attr->index;
+-		u16 smask = pb_index_to_mask(index);
+-		u8 spage = pb_index_to_page(index);
+-		u16 sreg = pb_index_to_reg(index);
++		u16 smask, sreg;
++		u8 spage;
++
++		if (index == -1)
++			continue;
++
++		smask = pb_index_to_mask(index);
++		spage = pb_index_to_page(index);
++		sreg = pb_index_to_reg(index);
+ 
+ 		if (reg == sreg && page == spage && (smask & flags)) {
+ 			dev_dbg(data->dev, "sysfs notify: %s", da->attr.name);
 -- 
 2.53.0
 
