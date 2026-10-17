@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800813ACF0E;
-	Sat, 17 Oct 2026 16:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEB73AAF73;
+	Sat, 17 Oct 2026 16:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255228; cv=none; b=V60aEK+g/AJzrCcJIRmAhgwm+3SnFLjhuUOyCqMYmabMLyXYzidhuOJugZ6BHEUgk5nPqXAx0Lr4bslNYitDH46Sy8GjT9gFfqt/kTpOpK/Dt1FV4kZD/M9EeLhtEVMtwn3rhOldiqeO4VcEKMq2tkjTEyjMS6cV/CAHhm37xJo=
+	t=1792255231; cv=none; b=NM9Hz6HXusTdocJ4Q9tUJoMgRzOvi33nWUzO52Ps7QFvYrOz6tPJxlsT0h3TNBL1h2MNbfsSqM5RudNYYxyGSYlVyi0rBzK7Xi826VwyKEG8tHcxA/PWkmADaIS++h3jruXOMNf1b6aVeur1/Xojye6LDRsJNCDxiOU5DE5Y5KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255228; c=relaxed/simple;
-	bh=/18orUbxozTKp2dNoMsQFYwZQgGki7wCD6qGS/oFsqI=;
+	s=arc-20240116; t=1792255231; c=relaxed/simple;
+	bh=zNSz3oz1r9dyE+HXjLsvfyhBQCC3U+Pn2LvsW59BnwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL/QKtgpiN0D6PSP3kv6i4S3XcJEoI/moef9DuY4Wmb8BTEPxQtmclsf5MkbZtkserLd4I/8jq0XYwO9/cShFMjyta1SIptrImBczsJtgAxLrFe/kcspWHi5+o4Gkuo7wah0//WJ24nWIMDgoWraAKlhVMSwoYMeg/PGlFcTTLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiR4ZKQ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LniCg02viYvl76W0xOKPfLkgxoNh77s6jyanerjvDb2dSB0BSIZP767b5NiG7KBVJM5m4vAjJTFh0Pg853WAiXyeEPYJf8sFgnY2S4Mu9zDcdnJA9Z0bGpTeLwpQICzJvo6v6IYi8w9PGSUnKEL7DxIEEgi+iiGHwMy4Y7ddxic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIPcsAB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiR4ZKQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44381F000C6;
-	Sat, 17 Oct 2026 16:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIPcsAB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5221F000C4;
+	Sat, 17 Oct 2026 16:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255227;
-	bh=nh5VuehddMfSFogr1R20i5imOtWfAqACIo7U8JogteQ=;
+	s=korg; t=1792255230;
+	bh=bBYJiXSYDlWfe7mYNIud87n+vg+crFpHqCcd7KVzm5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iiR4ZKQ6if+iJXm7ufOskquwnRM/MLvHONDTNJJmz2RAqkOjqy0gU6xQFYR39TSBf
-	 2PGSl11BPqL/N08Geg3kuDV5vFrs3McivlNRtE+C6aj7j9eZsPwGaGvkgPmkloeB2m
-	 Yylh6M0fkiFhtHj2NrYq/D5G7T0nRuwYGxPekqh0=
+	b=aIPcsAB3muId61fzbS/X0yhxkbnNyBx6yXasaMn739eU5iKDn6TdIZljeICKIB4VJ
+	 nQ4kS4+jBVrGWeRPzFKjlLTMkZr17H24rEOdcdvpgUJQ/QLNCB8DXN8D4Ii+MxOJOd
+	 0r0UpkoxhmatcLxlcRF2bpuP2cFLSZpDhVoFNdIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 652/869] drm/amd/display: Resize MST HDCP per-connector arrays to 32
-Date: Sat, 17 Oct 2026 17:58:13 +0200
-Message-ID: <20261017160053.720837548@linuxfoundation.org>
+Subject: [PATCH 6.12 701/869] firmware: arm_scmi: Fix SCMI device destroy lifetimes
+Date: Sat, 17 Oct 2026 17:59:02 +0200
+Message-ID: <20261017160054.941129375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,123 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 261e0fe4e2c99f687114b64b10b98db964b475f4 ]
+[ Upstream commit 6abe8fe36b29ff51d1a42c2f338972883f4751a5 ]
 
-AMDGPU_DM_MAX_DISPLAY_INDEX is 31. It suggest a maximum number of
-32 connectors. But the way it's used is like MAX_DISPLAY_COUNT.
-Hence we're off by one with DRM core, which supports a max of 32
-connectors.
+scmi_child_dev_find() drops the reference returned by
+device_find_child() before returning the scmi_device pointer. A
+concurrent unregister can then release the device while the destroy path
+is still using the returned pointer.
 
-Rename AMDGPU_DM_MAX_DISPLAY_INDEX to AMDGPU_DM_MAX_DISPLAY_COUNT
-to match its actual use, and increase the size to 32 to match the
-originally intended size.
+Make the lookup helper return the device_find_child() reference and keep
+it until scmi_device_destroy() has finished unregistering the child.
 
-Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
-Assisted-by: Copilot:claude-opus-4.8
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Also split device_unregister() in __scmi_device_destroy() so the SCMI bus
+ID is not made reusable until after device_del() has removed the old
+scmi_dev.N name from sysfs. This avoids a new SCMI device reusing the
+same ID while the old device is still registered.
+
+The final device release callback is also a possible cleanup path when
+SCMI children are deleted by driver core recursion rather than
+__scmi_device_destroy(). Release the SCMI bus ID from a common helper
+used by destroy, register-failure and final-release paths, and clear
+scmi_dev->id after freeing it so the final release cannot free the same
+ID again.
+
+Fixes: 9ca67840c0dd ("firmware: arm_scmi: Balance device refcount when destroying devices")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-15-3afe499d46e3@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h      |  2 +-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c | 10 +++++-----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h |  8 ++++----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/firmware/arm_scmi/bus.c | 36 ++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index e447ab49cf3ca..db707c2311be2 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -44,7 +44,7 @@
-  * in amdgpu_dm_kms.h file
-  */
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index 771b6da2d83b6..8769078e36894 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -249,8 +249,9 @@ static int scmi_match_by_id_table(struct device *dev, void *data)
+ 		(id_table->name && !strcmp(sdev->name, id_table->name));
+ }
  
--#define AMDGPU_DM_MAX_DISPLAY_INDEX 31
-+#define AMDGPU_DM_MAX_DISPLAY_COUNT 32
+-static struct scmi_device *scmi_child_dev_find(struct device *parent,
+-					       int prot_id, const char *name)
++/* Returns a device_find_child() reference which must be dropped by caller. */
++static struct scmi_device *
++scmi_child_dev_find_get(struct device *parent, int prot_id, const char *name)
+ {
+ 	struct scmi_device_id id_table;
+ 	struct device *dev;
+@@ -262,9 +263,6 @@ static struct scmi_device *scmi_child_dev_find(struct device *parent,
+ 	if (!dev)
+ 		return NULL;
  
- #define AMDGPU_DM_MAX_CRTC 6
+-	/* Drop the refcnt bumped implicitly by device_find_child */
+-	put_device(dev);
+-
+ 	return to_scmi_dev(dev);
+ }
  
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-index 10ba4d7bf6325..930310aff1d66 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-@@ -256,7 +256,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+@@ -332,10 +330,19 @@ void scmi_driver_unregister(struct scmi_driver *driver)
+ }
+ EXPORT_SYMBOL_GPL(scmi_driver_unregister);
  
- 	cancel_delayed_work(&hdcp_w->property_validate_dwork);
++static void scmi_device_release_resources(struct scmi_device *scmi_dev)
++{
++	if (scmi_dev->id) {
++		ida_free(&scmi_bus_id, scmi_dev->id);
++		scmi_dev->id = 0;
++	}
++}
++
+ static void scmi_device_release(struct device *dev)
+ {
+ 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
  
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
- 		hdcp_w->encryption_status[conn_index] =
- 			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
- 		if (hdcp_w->aconnector[conn_index]) {
-@@ -303,7 +303,7 @@ static void event_property_update(struct work_struct *work)
- 	struct drm_connector *connector;
- 	struct drm_connector_state *conn_state;
++	scmi_device_release_resources(scmi_dev);
+ 	kfree_const(scmi_dev->name);
+ 	kfree(scmi_dev);
+ }
+@@ -350,8 +357,9 @@ static void __scmi_device_destroy(struct scmi_device *scmi_dev)
+ 	if (scmi_dev->protocol_id == SCMI_PROTOCOL_SYSTEM)
+ 		atomic_set(&scmi_syspower_registered, 0);
  
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
- 		aconnector = hdcp_work->aconnector[conn_index];
+-	ida_free(&scmi_bus_id, scmi_dev->id);
+-	device_unregister(&scmi_dev->dev);
++	device_del(&scmi_dev->dev);
++	scmi_device_release_resources(scmi_dev);
++	put_device(&scmi_dev->dev);
+ }
  
- 		if (!aconnector)
-@@ -372,7 +372,7 @@ static void event_property_validate(struct work_struct *work)
- 
- 	guard(mutex)(&hdcp_work->mutex);
- 
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT;
- 	     conn_index++) {
- 		aconnector = hdcp_work->aconnector[conn_index];
- 
-@@ -749,10 +749,10 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev,
- 
- 		memset(hdcp_work[i].aconnector, 0,
- 		       sizeof(struct amdgpu_dm_connector *) *
--			       AMDGPU_DM_MAX_DISPLAY_INDEX);
-+			       AMDGPU_DM_MAX_DISPLAY_COUNT);
- 		memset(hdcp_work[i].encryption_status, 0,
- 		       sizeof(enum mod_hdcp_encryption_status) *
--			       AMDGPU_DM_MAX_DISPLAY_INDEX);
-+			       AMDGPU_DM_MAX_DISPLAY_COUNT);
- 	}
- 
- 	cp_psp->funcs.update_stream_config = update_config;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-index 69b445b011c8c..d18c4cc7d69f3 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-@@ -43,7 +43,7 @@ struct hdcp_workqueue {
- 	struct delayed_work callback_dwork;
- 	struct delayed_work watchdog_timer_dwork;
- 	struct delayed_work property_validate_dwork;
--	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	struct mutex mutex;
- 
- 	struct mod_hdcp hdcp;
-@@ -51,7 +51,7 @@ struct hdcp_workqueue {
- 	struct mod_hdcp_display display;
- 	struct mod_hdcp_link link;
- 
--	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	/* when display is unplugged from mst hub, connctor will be
- 	 * destroyed within dm_dp_mst_connector_destroy. connector
- 	 * hdcp perperties, like type, undesired, desired, enabled,
-@@ -61,9 +61,9 @@ struct hdcp_workqueue {
- 	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
+ static struct scmi_device *
+@@ -368,9 +376,11 @@ __scmi_device_create(struct device_node *np, struct device *parent,
+ 	 * each DT defined protocol at probe time, and the concurrent
+ 	 * registration of SCMI drivers.
  	 */
- 	/* un-desired, desired, enabled */
--	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	/* hdcp1.x, hdcp2.x */
--	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_COUNT];
+-	scmi_dev = scmi_child_dev_find(parent, protocol, name);
+-	if (scmi_dev)
++	scmi_dev = scmi_child_dev_find_get(parent, protocol, name);
++	if (scmi_dev) {
++		put_device(&scmi_dev->dev);
+ 		return scmi_dev;
++	}
  
- 	uint8_t max_link;
+ 	/*
+ 	 * Ignore any possible subsequent failures while creating the device
+@@ -421,8 +431,8 @@ __scmi_device_create(struct device_node *np, struct device *parent,
+ 
+ 	return scmi_dev;
+ put_dev:
++	scmi_device_release_resources(scmi_dev);
+ 	put_device(&scmi_dev->dev);
+-	ida_free(&scmi_bus_id, id);
+ 	return NULL;
+ }
+ 
+@@ -494,9 +504,11 @@ void scmi_device_destroy(struct device *parent, int protocol, const char *name)
+ {
+ 	struct scmi_device *scmi_dev;
+ 
+-	scmi_dev = scmi_child_dev_find(parent, protocol, name);
+-	if (scmi_dev)
++	scmi_dev = scmi_child_dev_find_get(parent, protocol, name);
++	if (scmi_dev) {
+ 		__scmi_device_destroy(scmi_dev);
++		put_device(&scmi_dev->dev);
++	}
+ }
+ EXPORT_SYMBOL_GPL(scmi_device_destroy);
  
 -- 
 2.53.0
