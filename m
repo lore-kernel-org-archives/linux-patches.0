@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF9E3AFCF4;
-	Sat, 17 Oct 2026 16:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFBE3AF666;
+	Sat, 17 Oct 2026 16:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256320; cv=none; b=g+9gCCHeevSXMU3ETFBiRHHBIeCq9XR3cLx9Gijtop198hhdCxq7sUoZTR7yxhTFJC4FOHVhHvFpvkah4XHpDaXJs+dHE+iYHlZ5YHIi2i34LyPoSPxyEZ7bccXDp2CeaMvHuhNuxNivqCc59xWwCfqdczRvWl1VrUUIMLpfDWw=
+	t=1792256323; cv=none; b=LF+w8+EgyQk3tLAmk28UNyAxcdvB7E+hUoDbBIerdPLi1WpqwGERE0SvA+BmA+eJQW5/0fw+Td1BKD5TCKe87ONplvp+qQ83Zv1n0GRab/NZhGUXEGI+rh+WOu/NWSixZn/WIefa9Y9RRhau+tP9GsbDluJV6C8mdO3afPniouI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256320; c=relaxed/simple;
-	bh=FOqb1N5d8gYUHSW1f7ayilHpkbZnZiyterKtlerK/KM=;
+	s=arc-20240116; t=1792256323; c=relaxed/simple;
+	bh=lGjd3nILj2dBB3W57pvV1HJu2+frQ/4nKrjSDQVWC+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyiySuMg6wm0zWFwO8eVLY1gYuDjhwA2inHczaHBoThfzWXTmngtHD+zI1UNwD5onJTlvGQWz5aaCsB75bsqvCsFlOPPP1JU5uWjqV+Xw+tYkOPXGEAzqUonCHLn4F9v5Br3guM+5NcYul3dhTWSNpQBF8+E7SI2AOGH4OOnoRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwuEWRvf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LLvr6Y8rucApYhv+iveVgxzPkNFbolB6VCRPxTek7spiZN2fxUlHsq+0ngCa1Hny8u785K6iPErcyu2UfhIHCY8oY0nMUMLQGWHp7M78Oibxo/Vw0c/9IjuCs81SFB3MTo9cFD0uqRy/86n5gR6Yfw6ffsbkI3gArykEX/otvB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQa1r+an; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwuEWRvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705AB1F000C4;
-	Sat, 17 Oct 2026 16:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQa1r+an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886841F000C4;
+	Sat, 17 Oct 2026 16:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256319;
-	bh=rH1Bj0UbFNFVoO/d/aHemo8czVLgRONih3qr2S6AGdw=;
+	s=korg; t=1792256322;
+	bh=Cn/3QCDYBx+nKxZjiUEHwxA94rnGCK/Vvroynmp9ti8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwuEWRvfaBYOdGdB+uLIJz7khd5pacr967aRZk6SMDfV1gdZjcv0YoSX0eM0RBxO3
-	 Qxkxz1zgXzjptzSQQ1YzjItFMigq0aL8jWKsXu4YDwXcXGaXX5/ZRofKV0reU4LV/v
-	 emACgHmIXC770zoeKjd4QuNS4hNxpFQIPUwVPrE8=
+	b=qQa1r+ankOV06f94y4xfH0OkxpuIhnaQxMGy+9qWP+LZBBmOTf6UGFeJh2NtR5O7g
+	 N4wAOQZNPViSTvAQ2XKSqeHnJCAqSohu4QzaGN29cCRwZ9umyTstCJ+FL8xGCllU1J
+	 SEiZ8B+eP5BigsmrS7w2gRlCoZhDsXPmOY8k9YX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
+	Manush Prajwal <manushprajwal555@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0196/1674] rtc: dev: zero-initialize struct rtc_wkalrm to prevent information leak
-Date: Sat, 17 Oct 2026 17:41:08 +0200
-Message-ID: <20261017160436.183564293@linuxfoundation.org>
+Subject: [PATCH 6.6 0197/1674] rtc: mpfs: fix unchecked devm_clk_get() error pointer in probe()
+Date: Sat, 17 Oct 2026 17:41:09 +0200
+Message-ID: <20261017160436.210730298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,44 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Manush Prajwal <manushprajwal555@gmail.com>
 
-[ Upstream commit 0ee5c5d804d592a8328a425b9274487d393d3a05 ]
+[ Upstream commit ac41b05d15db3134e839148290d67415ee0bdb58 ]
 
-The struct rtc_wkalrm has padding holes after the 'pending' member.
-When returned to userspace via the RTC_WKALRM_RD ioctl, uninitialized
-kernel stack data residing in these holes may be leaked.
+devm_clk_get(&pdev->dev, "rtcref")'s return value was passed straight
+into clk_get_rate() without checking it for an error first, unlike the
+"rtc" clock a few lines above which is correctly checked with
+IS_ERR(). clk_get_rate() only guards against a NULL clk, not an error
+pointer:
 
-Zero-initialize the struct at declaration to eliminate this information
-leak risk.
+	if (!clk)
+		return 0;
+	...
+	rate = clk_core_get_rate_recalc(clk->core);
 
-Fixes smatch warnings:
-- drivers/rtc/dev.c:392 rtc_dev_ioctl() warn: check that 'alarm' doesn't
-  leak information (struct has a hole after 'pending')
+so if devm_clk_get() ever returns an error pointer here (for example
+ERR_PTR(-EPROBE_DEFER), which is the normal, expected outcome if the
+clkcfg clock-provider this RTC depends on has not registered its
+clocks yet by the time this driver probes), clk_get_rate() dereferences
+that error pointer instead of returning 0, crashing instead of letting
+probe defer.
 
-Fixes: 36e14f5fdfdf ("rtc: rename core files")
-Assisted-by: smatch:2.0 [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/B28B7DE18F3A9447+20260827015444.3314227-1-liudalin@kylinsec.com.cn
+Capture the clock in the existing 'clk' local and check it with
+IS_ERR() before calling clk_get_rate(), matching the handling already
+used for the "rtc" clock in this same function.
+
+Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
+Fixes: 0b31d703598d ("rtc: Add driver for Microchip PolarFire SoC")
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/6a9d4b02.7d74b517.206c4c.75f8@mx.google.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-mpfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/dev.c b/drivers/rtc/dev.c
-index 4aad9bb998683..8ff910017b105 100644
---- a/drivers/rtc/dev.c
-+++ b/drivers/rtc/dev.c
-@@ -207,7 +207,7 @@ static long rtc_dev_ioctl(struct file *file,
- 	struct rtc_device *rtc = file->private_data;
- 	const struct rtc_class_ops *ops = rtc->ops;
- 	struct rtc_time tm;
--	struct rtc_wkalrm alarm;
-+	struct rtc_wkalrm alarm = { 0 };
- 	struct rtc_param param;
- 	void __user *uarg = (void __user *)arg;
+diff --git a/drivers/rtc/rtc-mpfs.c b/drivers/rtc/rtc-mpfs.c
+index aa724a945c088..8335e8c7357e9 100644
+--- a/drivers/rtc/rtc-mpfs.c
++++ b/drivers/rtc/rtc-mpfs.c
+@@ -256,8 +256,12 @@ static int mpfs_rtc_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
++	clk = devm_clk_get(&pdev->dev, "rtcref");
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
++
+ 	/* prescaler hardware adds 1 to reg value */
+-	prescaler = clk_get_rate(devm_clk_get(&pdev->dev, "rtcref")) - 1;
++	prescaler = clk_get_rate(clk) - 1;
+ 	if (prescaler > MAX_PRESCALER_COUNT) {
+ 		dev_dbg(&pdev->dev, "invalid prescaler %lu\n", prescaler);
+ 		return -EINVAL;
 -- 
 2.53.0
 
