@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3436314B8F;
-	Sat, 17 Oct 2026 16:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8469391512;
+	Sat, 17 Oct 2026 16:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254599; cv=none; b=OMwTvwXaUTsdKVfIQV2XkXr3B2JT4cf03+EUcGhDr1WsJT0vw8rjJgbSbP+wPKhFYwkVIZWkvpSu2u5IIkHyi+K3XeJ6KWaZ0hOfuBI6+KowXxbS1vzMnIY1w5dZdVx/nFZUrc9IgZajeqlpvJvHzLMRAtzpCYj5IYQB6wRssP4=
+	t=1792254603; cv=none; b=q5O5nd437G3uCAIv5qnDJ7rk56GwbS9SxRgRPliEIsV5otIATC3qwIRpg+NJ+6gW1MYjG8lKYP/oGjH/XjFAkWh/Grc3lDx7RfB18mOcxVOwXEr1Y7hHyqwcj9JrGnv6OaPIPPmomqrB4wGUObcwR3X+2jWzSJcDWCe2xFXrk8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254599; c=relaxed/simple;
-	bh=47O4X7ZR7v9+nl9aUc17Lazvgfp751vxVnl68yf3/k4=;
+	s=arc-20240116; t=1792254603; c=relaxed/simple;
+	bh=HD4Mkj4OMLkzzcgin4sxaAFxOeNzgZxJlzB43CQPYDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgW88zOD9KKufvp6I/5o8ZShi/r3U8r08SDlPFx/4YY7AoTAeN8tx++uoeCsKftkVwOKHC9/zz2iEmGpC3vjcf/bEWFdgrMDrbpyfiXrKCD02qIcj/VMVvMqcH+lc7uegMcDjpGhpsRhPkPeuTqEQi+ULTnajoo8YC3B8IZsLT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wUGa101; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KbXVLFWHTmlqA7kclxwZJUE34GtpF9Aqa6laUBymM+dcpSCqzuEBfYHhxLQXmvW+zSwIM2uOK0mB2AQJ7Xi45ZwZ9iRKtg+gI0QfdpRVZNgETOmhcM/pFDoubSu1ZnfNjGZEbcyr9UpVXfnk/S1CpmM9swUtEU2EqVfizQJp0Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DW1coUHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wUGa101"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F351F000C4;
-	Sat, 17 Oct 2026 16:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DW1coUHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA171F000C4;
+	Sat, 17 Oct 2026 16:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254597;
-	bh=+bmJnYio5wp5TiygNzv035tcjwcn9UM0yM7L35Pq4mk=;
+	s=korg; t=1792254601;
+	bh=6MZlJoaWRQevrn3f92N2JmDiaCEUA2OxVCGx67wN7EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1wUGa101vPPwOm/syGlAU+FYeEkaNl2z98EjxzKJGJQrIL7XDfNM3D7EyNL66paVB
-	 XjRD2uBdIJO5+jsyg61j1SEAp81KroxV09z0dMUQbtFhjvBeF6bcTpz3Tto5X2Qkqw
-	 XM2DoqVxtQLmrVUx4dZ7Fv/Qhg48p/rAQceyDfuU=
+	b=DW1coUHOU3N7Wsre0X4tzRfQmn1edRD7LDCzRoU6wqEhcfCVR227AUL4T6GDN2JDL
+	 bTgIwVDl5N740fTIE4fviRGFDXmTPFjO08Sn5WZw12dV43YUnbYCW5Ge2xRowDFOqi
+	 qvmMeiJ3GpJS1NPqrQKz8LYHeLt58yqoEYWiqCyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 499/869] xsk: drain continuation descs after overflow in xsk_build_skb()
-Date: Sat, 17 Oct 2026 17:55:40 +0200
-Message-ID: <20261017160049.902813016@linuxfoundation.org>
+Subject: [PATCH 6.12 500/869] xsk: provide sufficient space in pool->tx_descs
+Date: Sat, 17 Oct 2026 17:55:41 +0200
+Message-ID: <20261017160049.928019984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,152 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit bd44a6dcd4248883de90f5dad53ae80066e27096 ]
+[ Upstream commit 08c9a8e794b4694c100dafcb80e069e29ad81b64 ]
 
-Fix generic xmit path multi-buffer logic when packets are either too big
-(count of descriptors exceed MAX_SKB_FRAGS) or an invalid descriptor is
-included in fragmented packet. Introduce xdp_sock::drain_cont and act
-upon this flag - when it is set, keep on consuming descriptors from
-AF_XDP Tx ring and put them directly onto Cq. Previously these
-descriptors were silently lost and could never be reached again.
+The temporary Tx descriptor array in an XSK buffer pool is currently
+sized from the Tx ring of the socket that creates the pool.
 
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Closes: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
+This is insufficient for shared-UMEM Tx. A later socket may have a
+larger Tx ring and submit a valid multi-buffer packet containing more
+descriptors than the first socket's ring, while still remaining within
+the device's xdp_zc_max_segs limit.
+
+A packet-framed batch parser bounded by the temporary array cannot reach
+the end-of-packet descriptor in that case. It leaves the packet on the
+Tx ring and encounters the same packet on every subsequent attempt,
+stalling Tx processing for that socket.
+
+Size the temporary descriptor array to the larger of the first Tx ring
+and the device's xdp_zc_max_segs capability. This keeps the array large
+enough to inspect one maximum-sized valid packet. Larger shared Tx rings
+do not require further resizing, as they can be processed over multiple
+batches.
+
+Following commit will actually address the data path side.
+
+Fixes: d5581966040f ("xsk: support ZC Tx multi-buffer in batch API")
 Reviewed-by: Jason Xing <kernelxing@tencent.com>
-Co-developed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # wrapped cq addr submission onto routine
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
 Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260719135609.147823-3-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20260719135609.147823-4-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 72f2b4516faf ("xsk: reclaim invalid Tx descriptors in ZC batch path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h |  1 +
- net/xdp/xsk.c          | 53 +++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 51 insertions(+), 3 deletions(-)
+ include/net/xsk_buff_pool.h |  6 ++++--
+ net/xdp/xsk.c               | 10 +++++++---
+ net/xdp/xsk_buff_pool.c     | 13 ++++++++-----
+ 3 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index 98491d774d826..02a0896f8525c 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -80,6 +80,7 @@ struct xdp_sock {
- 	 * call of __xsk_generic_xmit().
- 	 */
- 	struct sk_buff *skb;
-+	bool drain_cont;
+diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
+index 42e9058d85687..85e07a5a314b5 100644
+--- a/include/net/xsk_buff_pool.h
++++ b/include/net/xsk_buff_pool.h
+@@ -101,12 +101,14 @@ struct xsk_buff_pool {
  
- 	struct list_head map_list;
- 	/* Protects map_list */
+ /* AF_XDP core. */
+ struct xsk_buff_pool *xp_create_and_assign_umem(struct xdp_sock *xs,
+-						struct xdp_umem *umem);
++						struct xdp_umem *umem,
++						u32 max_segs);
+ int xp_assign_dev(struct xsk_buff_pool *pool, struct net_device *dev,
+ 		  u16 queue_id, u16 flags);
+ int xp_assign_dev_shared(struct xsk_buff_pool *pool, struct xdp_sock *umem_xs,
+ 			 struct net_device *dev, u16 queue_id);
+-int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs);
++int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs,
++		      u32 max_segs);
+ void xp_destroy(struct xsk_buff_pool *pool);
+ void xp_get_pool(struct xsk_buff_pool *pool);
+ bool xp_put_pool(struct xsk_buff_pool *pool);
 diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 36170e10deda4..7054f5fd7f03e 100644
+index 7054f5fd7f03e..3442941285ec4 100644
 --- a/net/xdp/xsk.c
 +++ b/net/xdp/xsk.c
-@@ -600,6 +600,28 @@ static void xsk_cq_cancel_locked(struct xdp_sock *xs, u32 n)
- 	spin_unlock_irqrestore(&xs->pool->cq_lock, flags);
+@@ -1317,7 +1317,8 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 			 * and/or device.
+ 			 */
+ 			xs->pool = xp_create_and_assign_umem(xs,
+-							     umem_xs->umem);
++							     umem_xs->umem,
++							     dev->xdp_zc_max_segs);
+ 			if (!xs->pool) {
+ 				err = -ENOMEM;
+ 				sockfd_put(sock);
+@@ -1349,7 +1350,8 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 			 * utilizes
+ 			 */
+ 			if (xs->tx && !xs->pool->tx_descs) {
+-				err = xp_alloc_tx_descs(xs->pool, xs);
++				err = xp_alloc_tx_descs(xs->pool, xs,
++							dev->xdp_zc_max_segs);
+ 				if (err) {
+ 					xp_put_pool(xs->pool);
+ 					xs->pool = NULL;
+@@ -1367,7 +1369,9 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 		goto out_unlock;
+ 	} else {
+ 		/* This xsk has its own umem. */
+-		xs->pool = xp_create_and_assign_umem(xs, xs->umem);
++		xs->pool = xp_create_and_assign_umem(xs, xs->umem,
++						     dev->xdp_zc_max_segs);
++
+ 		if (!xs->pool) {
+ 			err = -ENOMEM;
+ 			goto out_unlock;
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index a22cedd280cbb..dba014f72dc22 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -44,10 +44,12 @@ void xp_destroy(struct xsk_buff_pool *pool)
+ 	kvfree(pool);
  }
  
-+static int xsk_cq_submit_addr_single_locked(struct xsk_buff_pool *pool,
-+					    struct xdp_desc *desc)
-+{
-+	struct xsk_queue *cq = pool->cq;
-+	unsigned long flags;
-+	int err = -EAGAIN;
-+
-+	spin_lock_irqsave(&pool->cq_lock, flags);
-+	/* Addresses are written at reserve time and publishing is positional,
-+	 * so the entry can only be published if no earlier Tx is still in
-+	 * flight in front of it. The caller retries later otherwise.
-+	 */
-+	if (cq->cached_prod == READ_ONCE(cq->ring->producer)) {
-+		err = xskq_prod_reserve_addr(cq, desc->addr);
-+		if (!err)
-+			xskq_prod_submit_n(cq, 1);
-+	}
-+	spin_unlock_irqrestore(&pool->cq_lock, flags);
-+
-+	return err;
-+}
-+
- static u32 xsk_get_num_desc(struct sk_buff *skb)
+-int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs)
++int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs,
++		      u32 max_segs)
  {
- 	return skb ? (long)skb_shinfo(skb)->destructor_arg : 0;
-@@ -822,12 +844,13 @@ static int __xsk_generic_xmit(struct sock *sk)
+-	pool->tx_descs = kvcalloc(xs->tx->nentries, sizeof(*pool->tx_descs),
+-				  GFP_KERNEL);
++	u32 nentries = max(xs->tx->nentries, max_segs);
++
++	pool->tx_descs = kvcalloc(nentries, sizeof(*pool->tx_descs), GFP_KERNEL);
+ 	if (!pool->tx_descs)
+ 		return -ENOMEM;
+ 
+@@ -55,7 +57,8 @@ int xp_alloc_tx_descs(struct xsk_buff_pool *pool, struct xdp_sock *xs)
+ }
+ 
+ struct xsk_buff_pool *xp_create_and_assign_umem(struct xdp_sock *xs,
+-						struct xdp_umem *umem)
++						struct xdp_umem *umem,
++						u32 max_segs)
  {
- 	struct xdp_sock *xs = xdp_sk(sk);
- 	u32 max_batch = TX_BATCH_SIZE;
--	bool sent_frame = false;
- 	struct xdp_desc desc;
- 	struct sk_buff *skb;
-+	u32 cached_cons;
- 	int err = 0;
+ 	bool unaligned = umem->flags & XDP_UMEM_UNALIGNED_CHUNK_FLAG;
+ 	struct xsk_buff_pool *pool;
+@@ -72,7 +75,7 @@ struct xsk_buff_pool *xp_create_and_assign_umem(struct xdp_sock *xs,
+ 		goto out;
  
- 	mutex_lock(&xs->mutex);
-+	cached_cons = xs->tx->cached_cons;
- 
- 	/* Since we dropped the RCU read lock, the socket state might have changed. */
- 	if (unlikely(!xsk_is_bound(xs))) {
-@@ -844,6 +867,17 @@ static int __xsk_generic_xmit(struct sock *sk)
+ 	if (xs->tx)
+-		if (xp_alloc_tx_descs(pool, xs))
++		if (xp_alloc_tx_descs(pool, xs, max_segs))
  			goto out;
- 		}
  
-+		if (unlikely(xs->drain_cont)) {
-+			if (xsk_cq_submit_addr_single_locked(xs->pool, &desc)) {
-+				err = -EAGAIN;
-+				goto out;
-+			}
-+			xs->tx->invalid_descs++;
-+			xskq_cons_release(xs->tx);
-+			xs->drain_cont = xp_mb_desc(&desc);
-+			continue;
-+		}
-+
- 		/* This is the backpressure mechanism for the Tx path.
- 		 * Reserve space in the completion queue and only proceed
- 		 * if there is space in it. This avoids having to implement
-@@ -857,6 +891,8 @@ static int __xsk_generic_xmit(struct sock *sk)
- 			err = PTR_ERR(skb);
- 			if (err != -EOVERFLOW)
- 				goto out;
-+			if (xp_mb_desc(&desc))
-+				xs->drain_cont = true;
- 			err = 0;
- 			continue;
- 		}
-@@ -885,18 +921,29 @@ static int __xsk_generic_xmit(struct sock *sk)
- 			goto out;
- 		}
- 
--		sent_frame = true;
- 		xs->skb = NULL;
- 	}
- 
- 	if (xskq_has_descs(xs->tx)) {
-+		bool drain = xs->skb || xs->drain_cont || xp_mb_desc(&desc);
-+
- 		if (xs->skb)
- 			xsk_drop_skb(xs->skb);
-+
-+		err = xsk_cq_submit_addr_single_locked(xs->pool, &desc);
-+		if (err) {
-+			xs->tx->invalid_descs--;
-+			xs->drain_cont = drain;
-+			err = -EAGAIN;
-+			goto out;
-+		}
-+
- 		xskq_cons_release(xs->tx);
-+		xs->drain_cont = xp_mb_desc(&desc);
- 	}
- 
- out:
--	if (sent_frame)
-+	if (xs->tx->cached_cons != cached_cons)
- 		if (xsk_tx_writeable(xs))
- 			sk->sk_write_space(sk);
- 
+ 	pool->chunk_mask = ~((u64)umem->chunk_size - 1);
 -- 
 2.53.0
 
