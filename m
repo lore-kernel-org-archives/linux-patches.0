@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277338F253;
-	Sat, 17 Oct 2026 16:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8305C388371;
+	Sat, 17 Oct 2026 16:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254668; cv=none; b=ua/X/av77vaNeWCEEn0o0dtiScRvy++N3XiL5MJQbbOug8/4C+vK2OFvs9rMiPySIRbV10L+FAppD5sd07cDWw0q5WB720ZF8O3ub+YP0/zKw/LNI+rQraoYscnySzy7LSG14qNk34Wm8RExGvhXTlNQATwWjfd+O6ZsrLvx0sA=
+	t=1792254671; cv=none; b=YdchEwJ5vQr5/XQm2JB1MNMDIKwPUKciSivavK3Wn55cOqZh0mB/mALmz1hvx2Zv34ThGV8JT6yh+sUShUCpw0zHlUEoiKA/qMJnXMqOMvX4DE8gDPfsjcSETEtkST+csNTgUhz/pR8Eyl2r51m41/GX1ga41knW31ho794K+rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254668; c=relaxed/simple;
-	bh=YhFjrU25w75g3EjkGqg6JL9t1BdmBvQRHdgChpLq4JQ=;
+	s=arc-20240116; t=1792254671; c=relaxed/simple;
+	bh=hydmhSXyvE88U6HuPPUbgK7uyz5ptc2D5yJxZAaR4mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVIg5NnMZkfsZ9Nh9UlQ2I2b7BY49o+CQh61lDYXx8v8Vi4pEMsJP3lf4lhT4vdkwtVeDRmXfFzpfA3Zj3A7EZ9B/g6fZhUB1oiVJVQsZfH7A3uQKcF+WsA+9XHHq57alrsqv8fLmA+S/y3SL+dcS/cfLkZqNv7Z5bDXwunajLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxXN6Wgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uM0cvG8m4hDCnAhBS8U69tals6Fjowyk80Pdzmuw5h+63lDirvF/mjXFsGIIzhOCnFmogTrQadDSnAyKLzhWdRVIStDtKxtI9YEhcLx3RtqEXR7uyAjoJl8gYTLkk30o5FPkja/7FimBR+hjelG8VMzm7hBY5+vND4xTFWFK3LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFPFHVHe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxXN6Wgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723CE1F000C5;
-	Sat, 17 Oct 2026 16:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFPFHVHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F371F000C4;
+	Sat, 17 Oct 2026 16:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254667;
-	bh=72WICmzPoj4P4UJqZv1DE9P+/stX00ntTJx2IixGUbM=;
+	s=korg; t=1792254670;
+	bh=BVduAaeR50vK4+EjGIYWv4XHmE1xZUb0g1I3Hm0wplU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxXN6Wgy6eEd6b4iRu3noPjRLI/1W2ms0jksO6/5kZVL1TE0kBLP42iBgvzwXxgTc
-	 ivtiUAY8ahTTzZ2cqPaAHYdHJ2+ybUyGmUD1MfsaJIu3SedxGi1U6/UGvDdGD7BsXb
-	 MZ6lmyjLAgXqza1PatPAStMI/dTlCoznQF2r0EcQ=
+	b=gFPFHVHeCt4payihItgaHidf/vkBdlaYs+5qnkcmID2QTXHy6+zNCviZYlroh4+NJ
+	 qccWPlBzomH8fPT9qorxvJ+ZViQcdpHaSRYeWjwhK8tHyTt1CMhRfjmKAlKng7BsPE
+	 vK1HpdJEOVlNn1YMNHG5lpSRZx0PTKi/02YBhZIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 523/869] ASoC: SOF: pcm: Move period/buffer configuration print after platform open
-Date: Sat, 17 Oct 2026 17:56:04 +0200
-Message-ID: <20261017160050.523011383@linuxfoundation.org>
+Subject: [PATCH 6.12 524/869] ASoC: SOF: pcm: Add snd_sof_pcm specific wrappers for dev_dbg() and dev_err()
+Date: Sat, 17 Oct 2026 17:56:05 +0200
+Message-ID: <20261017160050.548810315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,70 +56,401 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 4d2ea16576c8aa1437048cf436bff85653f139fe ]
+[ Upstream commit 860693187c597645b28a421d8acb26428b8afd3f ]
 
-The platform specific pcm_open call via snd_sof_pcm_platform_open() can
-modify the initial buffer configuration via constraints.
+Introduce spcm_dbg() and spcm_err() macros to provide consistent printing
+for debug and error messages which includes usable information in the
+print's prefix.
 
-Move the prints as last step in the sof_pcm_open() function to reflect the
-final setup.
+Update the prints in pcm.c, ipc3-pcm.c and ipc4-pcm.c to take advantage of
+the features provided by the macros.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20250206092828.7569-3-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20250206092828.7569-4-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 17661c67b206 ("ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/pcm.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ sound/soc/sof/ipc3-pcm.c  | 13 +++---
+ sound/soc/sof/ipc4-pcm.c  | 16 ++++---
+ sound/soc/sof/pcm.c       | 95 +++++++++++++++++----------------------
+ sound/soc/sof/sof-audio.h | 14 ++++++
+ 4 files changed, 72 insertions(+), 66 deletions(-)
 
+diff --git a/sound/soc/sof/ipc3-pcm.c b/sound/soc/sof/ipc3-pcm.c
+index 1c1b8f5953674..90ef5d99f626a 100644
+--- a/sound/soc/sof/ipc3-pcm.c
++++ b/sound/soc/sof/ipc3-pcm.c
+@@ -117,22 +117,23 @@ static int sof_ipc3_pcm_hw_params(struct snd_soc_component *component,
+ 	if (platform_params->cont_update_posn)
+ 		pcm.params.cont_update_posn = 1;
+ 
+-	dev_dbg(component->dev, "stream_tag %d", pcm.params.stream_tag);
++	spcm_dbg(spcm, substream->stream, "stream_tag %d\n",
++		 pcm.params.stream_tag);
+ 
+ 	/* send hw_params IPC to the DSP */
+ 	ret = sof_ipc_tx_message(sdev->ipc, &pcm, sizeof(pcm),
+ 				 &ipc_params_reply, sizeof(ipc_params_reply));
+ 	if (ret < 0) {
+-		dev_err(component->dev, "HW params ipc failed for stream %d\n",
+-			pcm.params.stream_tag);
++		spcm_err(spcm, substream->stream,
++			 "STREAM_PCM_PARAMS ipc failed for stream_tag %d\n",
++			 pcm.params.stream_tag);
+ 		return ret;
+ 	}
+ 
+ 	ret = snd_sof_set_stream_data_offset(sdev, &spcm->stream[substream->stream],
+ 					     ipc_params_reply.posn_offset);
+ 	if (ret < 0) {
+-		dev_err(component->dev, "%s: invalid stream data offset for PCM %d\n",
+-			__func__, spcm->pcm.pcm_id);
++		spcm_err(spcm, substream->stream, "invalid stream data offset\n");
+ 		return ret;
+ 	}
+ 
+@@ -171,7 +172,7 @@ static int sof_ipc3_pcm_trigger(struct snd_soc_component *component,
+ 		stream.hdr.cmd |= SOF_IPC_STREAM_TRIG_STOP;
+ 		break;
+ 	default:
+-		dev_err(component->dev, "Unhandled trigger cmd %d\n", cmd);
++		spcm_err(spcm, substream->stream, "Unhandled trigger cmd %d\n", cmd);
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
+index 5e877dc921b1e..dd521ea0b16a4 100644
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -324,7 +324,7 @@ static int sof_ipc4_chain_dma_trigger(struct snd_sof_dev *sdev,
+ 		set_fifo_size = false;
+ 		break;
+ 	default:
+-		dev_err(sdev->dev, "Unexpected state %d", state);
++		spcm_err(spcm, direction, "Unexpected pipeline state %d\n", state);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -344,8 +344,8 @@ static int sof_ipc4_chain_dma_trigger(struct snd_sof_dev *sdev,
+ 		struct sof_ipc4_pipeline *pipeline = pipe_widget->private;
+ 
+ 		if (!pipeline->use_chain_dma) {
+-			dev_err(sdev->dev,
+-				"All pipelines in chained DMA stream should have use_chain_dma attribute set.");
++			spcm_err(spcm, direction,
++				 "All pipelines in chained DMA path should have use_chain_dma attribute set.");
+ 			return -EINVAL;
+ 		}
+ 
+@@ -400,12 +400,12 @@ static int sof_ipc4_trigger_pipelines(struct snd_soc_component *component,
+ 	int ret;
+ 	int i;
+ 
+-	dev_dbg(sdev->dev, "trigger cmd: %d state: %d\n", cmd, state);
+-
+ 	spcm = snd_sof_find_spcm_dai(component, rtd);
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
++	spcm_dbg(spcm, substream->stream, "cmd: %d, state: %d\n", cmd, state);
++
+ 	pipeline_list = &spcm->stream[substream->stream].pipeline_list;
+ 
+ 	/* nothing to trigger if the list is empty */
+@@ -500,7 +500,7 @@ static int sof_ipc4_trigger_pipelines(struct snd_soc_component *component,
+ 	 */
+ 	ret = sof_ipc4_set_multi_pipeline_state(sdev, SOF_IPC4_PIPE_PAUSED, trigger_list);
+ 	if (ret < 0) {
+-		dev_err(sdev->dev, "failed to pause all pipelines\n");
++		spcm_err(spcm, substream->stream, "failed to pause all pipelines\n");
+ 		goto free;
+ 	}
+ 
+@@ -529,7 +529,9 @@ static int sof_ipc4_trigger_pipelines(struct snd_soc_component *component,
+ 	/* else set the RUNNING/RESET state in the DSP */
+ 	ret = sof_ipc4_set_multi_pipeline_state(sdev, state, trigger_list);
+ 	if (ret < 0) {
+-		dev_err(sdev->dev, "failed to set final state %d for all pipelines\n", state);
++		spcm_err(spcm, substream->stream,
++			 "failed to set final state %d for all pipelines\n",
++			 state);
+ 		/*
+ 		 * workaround: if the firmware is crashed while setting the
+ 		 * pipelines to reset state we must ignore the error code and
 diff --git a/sound/soc/sof/pcm.c b/sound/soc/sof/pcm.c
-index 61bd690b29fa5..cba6d0b67999e 100644
+index cba6d0b67999e..d584a72e6f52f 100644
 --- a/sound/soc/sof/pcm.c
 +++ b/sound/soc/sof/pcm.c
-@@ -536,15 +536,6 @@ static int sof_pcm_open(struct snd_soc_component *component,
- 	 */
- 	runtime->hw.buffer_bytes_max = le32_to_cpu(caps->buffer_size_max);
+@@ -99,8 +99,8 @@ sof_pcm_setup_connected_widgets(struct snd_sof_dev *sdev, struct snd_soc_pcm_run
+ 		ret = snd_soc_dapm_dai_get_connected_widgets(dai, dir, &list,
+ 							     dpcm_end_walk_at_be);
+ 		if (ret < 0) {
+-			dev_err(sdev->dev, "error: dai %s has no valid %s path\n", dai->name,
+-				snd_pcm_direction_name(dir));
++			spcm_err(spcm, dir, "dai %s has no valid %s path\n",
++				 dai->name, snd_pcm_direction_name(dir));
+ 			return ret;
+ 		}
  
--	dev_dbg(component->dev, "period min %zd max %zd bytes\n",
--		runtime->hw.period_bytes_min,
--		runtime->hw.period_bytes_max);
--	dev_dbg(component->dev, "period count %d max %d\n",
--		runtime->hw.periods_min,
--		runtime->hw.periods_max);
--	dev_dbg(component->dev, "buffer max %zd bytes\n",
--		runtime->hw.buffer_bytes_max);
+@@ -108,8 +108,7 @@ sof_pcm_setup_connected_widgets(struct snd_sof_dev *sdev, struct snd_soc_pcm_run
+ 
+ 		ret = sof_widget_list_setup(sdev, spcm, params, platform_params, dir);
+ 		if (ret < 0) {
+-			dev_err(sdev->dev, "error: failed widget list set up for pcm %d dir %d\n",
+-				spcm->pcm.pcm_id, dir);
++			spcm_err(spcm, dir, "Widget list set up failed\n");
+ 			spcm->stream[dir].list = NULL;
+ 			snd_soc_dapm_dai_free_widgets(&list);
+ 			return ret;
+@@ -139,6 +138,8 @@ static int sof_pcm_hw_params(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
++	spcm_dbg(spcm, substream->stream, "Entry: hw_params\n");
++
+ 	/*
+ 	 * Handle repeated calls to hw_params() without free_pcm() in
+ 	 * between. At least ALSA OSS emulation depends on this.
+@@ -151,12 +152,9 @@ static int sof_pcm_hw_params(struct snd_soc_component *component,
+ 		spcm->prepared[substream->stream] = false;
+ 	}
+ 
+-	dev_dbg(component->dev, "pcm: hw params stream %d dir %d\n",
+-		spcm->pcm.pcm_id, substream->stream);
 -
- 	/* set wait time - TODO: come from topology */
- 	substream->wait_time = 500;
+ 	ret = snd_sof_pcm_platform_hw_params(sdev, substream, params, &platform_params);
+ 	if (ret < 0) {
+-		dev_err(component->dev, "platform hw params failed\n");
++		spcm_err(spcm, substream->stream, "platform hw params failed\n");
+ 		return ret;
+ 	}
  
-@@ -554,10 +545,21 @@ static int sof_pcm_open(struct snd_soc_component *component,
- 	spcm->prepared[substream->stream] = false;
+@@ -210,8 +208,8 @@ static int sof_pcm_stream_free(struct snd_sof_dev *sdev,
+ 		if (pcm_ops && pcm_ops->hw_free) {
+ 			ret = pcm_ops->hw_free(sdev->component, substream);
+ 			if (ret < 0) {
+-				dev_err(sdev->dev, "%s: pcm_ops hw_free failed %d\n",
+-					__func__, ret);
++				spcm_err(spcm, substream->stream,
++					 "pcm_ops->hw_free failed %d\n", ret);
+ 				err = ret;
+ 			}
+ 		}
+@@ -223,8 +221,8 @@ static int sof_pcm_stream_free(struct snd_sof_dev *sdev,
+ 	/* reset the DMA */
+ 	ret = snd_sof_pcm_platform_hw_free(sdev, substream);
+ 	if (ret < 0) {
+-		dev_err(sdev->dev, "%s: platform hw free failed %d\n",
+-			__func__, ret);
++		spcm_err(spcm, substream->stream,
++			 "platform hw free failed %d\n", ret);
+ 		if (!err)
+ 			err = ret;
+ 	}
+@@ -233,8 +231,8 @@ static int sof_pcm_stream_free(struct snd_sof_dev *sdev,
+ 	if (free_widget_list) {
+ 		ret = sof_widget_list_free(sdev, spcm, dir);
+ 		if (ret < 0) {
+-			dev_err(sdev->dev, "%s: sof_widget_list_free failed %d\n",
+-				__func__, ret);
++			spcm_err(spcm, substream->stream,
++				 "sof_widget_list_free failed %d\n", ret);
+ 			if (!err)
+ 				err = ret;
+ 		}
+@@ -285,8 +283,7 @@ static int sof_pcm_hw_free(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
+-	dev_dbg(component->dev, "pcm: free stream %d dir %d\n",
+-		spcm->pcm.pcm_id, substream->stream);
++	spcm_dbg(spcm, substream->stream, "Entry: hw_free\n");
+ 
+ 	ret = sof_pcm_stream_free(sdev, substream, spcm, substream->stream, true);
+ 
+@@ -311,6 +308,8 @@ static int sof_pcm_prepare(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
++	spcm_dbg(spcm, substream->stream, "Entry: prepare\n");
++
+ 	if (spcm->prepared[substream->stream]) {
+ 		if (!spcm->pending_stop[substream->stream])
+ 			return 0;
+@@ -324,15 +323,12 @@ static int sof_pcm_prepare(struct snd_soc_component *component,
+ 			return ret;
+ 	}
+ 
+-	dev_dbg(component->dev, "pcm: prepare stream %d dir %d\n",
+-		spcm->pcm.pcm_id, substream->stream);
+-
+ 	/* set hw_params */
+ 	ret = sof_pcm_hw_params(component,
+ 				substream, &spcm->params[substream->stream]);
+ 	if (ret < 0) {
+-		dev_err(component->dev,
+-			"error: set pcm hw_params after resume\n");
++		spcm_err(spcm, substream->stream,
++			 "failed to set hw_params after resume\n");
+ 		return ret;
+ 	}
+ 
+@@ -362,8 +358,7 @@ static int sof_pcm_trigger(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
+-	dev_dbg(component->dev, "pcm: trigger stream %d dir %d cmd %d\n",
+-		spcm->pcm.pcm_id, substream->stream, cmd);
++	spcm_dbg(spcm, substream->stream, "Entry: trigger (cmd: %d)\n", cmd);
+ 
+ 	spcm->pending_stop[substream->stream] = false;
+ 
+@@ -412,7 +407,7 @@ static int sof_pcm_trigger(struct snd_soc_component *component,
+ 			reset_hw_params = true;
+ 		break;
+ 	default:
+-		dev_err(component->dev, "Unhandled trigger cmd %d\n", cmd);
++		spcm_err(spcm, substream->stream, "Unhandled trigger cmd %d\n", cmd);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -514,9 +509,7 @@ static int sof_pcm_open(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
+ 
+-	dev_dbg(component->dev, "pcm: open stream %d dir %d\n",
+-		spcm->pcm.pcm_id, substream->stream);
+-
++	spcm_dbg(spcm, substream->stream, "Entry: open\n");
+ 
+ 	caps = &spcm->pcm.caps[substream->stream];
+ 
+@@ -546,18 +539,16 @@ static int sof_pcm_open(struct snd_soc_component *component,
  
  	ret = snd_sof_pcm_platform_open(sdev, substream);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(component->dev, "error: pcm open failed %d\n", ret);
-+		return ret;
-+	}
+ 	if (ret < 0) {
+-		dev_err(component->dev, "error: pcm open failed %d\n", ret);
++		spcm_err(spcm, substream->stream,
++			 "platform pcm open failed %d\n", ret);
+ 		return ret;
+ 	}
  
--	return ret;
-+	dev_dbg(component->dev, "period bytes min %zd, max %zd\n",
-+		runtime->hw.period_bytes_min,
-+		runtime->hw.period_bytes_max);
-+	dev_dbg(component->dev, "period count min %d, max %d\n",
-+		runtime->hw.periods_min,
-+		runtime->hw.periods_max);
-+	dev_dbg(component->dev, "buffer bytes max %zd\n",
-+		runtime->hw.buffer_bytes_max);
-+
-+	return 0;
+-	dev_dbg(component->dev, "period bytes min %zd, max %zd\n",
+-		runtime->hw.period_bytes_min,
+-		runtime->hw.period_bytes_max);
+-	dev_dbg(component->dev, "period count min %d, max %d\n",
+-		runtime->hw.periods_min,
+-		runtime->hw.periods_max);
+-	dev_dbg(component->dev, "buffer bytes max %zd\n",
+-		runtime->hw.buffer_bytes_max);
++	spcm_dbg(spcm, substream->stream, "period bytes min %zd, max %zd\n",
++		 runtime->hw.period_bytes_min, runtime->hw.period_bytes_max);
++	spcm_dbg(spcm, substream->stream, "period count min %d, max %d\n",
++		 runtime->hw.periods_min, runtime->hw.periods_max);
++	spcm_dbg(spcm, substream->stream, "buffer bytes max %zd\n", runtime->hw.buffer_bytes_max);
+ 
+ 	return 0;
  }
+@@ -578,13 +569,12 @@ static int sof_pcm_close(struct snd_soc_component *component,
+ 	if (!spcm)
+ 		return -EINVAL;
  
- static int sof_pcm_close(struct snd_soc_component *component,
+-	dev_dbg(component->dev, "pcm: close stream %d dir %d\n",
+-		spcm->pcm.pcm_id, substream->stream);
++	spcm_dbg(spcm, substream->stream, "Entry: close\n");
+ 
+ 	err = snd_sof_pcm_platform_close(sdev, substream);
+ 	if (err < 0) {
+-		dev_err(component->dev, "error: pcm close failed %d\n",
+-			err);
++		spcm_err(spcm, substream->stream,
++			 "platform pcm close failed %d\n", err);
+ 		/*
+ 		 * keep going, no point in preventing the close
+ 		 * from happening
+@@ -618,7 +608,8 @@ static int sof_pcm_new(struct snd_soc_component *component,
+ 		return 0;
+ 	}
+ 
+-	dev_dbg(component->dev, "creating new PCM %s\n", spcm->pcm.pcm_name);
++	dev_dbg(spcm->scomp->dev, "pcm%u (%s): Entry: pcm_construct\n",
++		spcm->pcm.pcm_id, spcm->pcm.pcm_name);
+ 
+ 	/* do we need to pre-allocate playback audio buffer pages */
+ 	if (!spcm->pcm.playback)
+@@ -626,16 +617,15 @@ static int sof_pcm_new(struct snd_soc_component *component,
+ 
+ 	caps = &spcm->pcm.caps[stream];
+ 
+-	/* pre-allocate playback audio buffer pages */
+-	dev_dbg(component->dev,
+-		"spcm: allocate %s playback DMA buffer size 0x%x max 0x%x\n",
+-		caps->name, caps->buffer_size_min, caps->buffer_size_max);
+-
+ 	if (!pcm->streams[stream].substream) {
+-		dev_err(component->dev, "error: NULL playback substream!\n");
++		spcm_err(spcm, stream, "NULL playback substream!\n");
+ 		return -EINVAL;
+ 	}
+ 
++	/* pre-allocate playback audio buffer pages */
++	spcm_dbg(spcm, stream, "allocate %s playback DMA buffer size 0x%x max 0x%x\n",
++		 caps->name, caps->buffer_size_min, caps->buffer_size_max);
++
+ 	snd_pcm_set_managed_buffer(pcm->streams[stream].substream,
+ 				   SNDRV_DMA_TYPE_DEV_SG, sdev->dev,
+ 				   0, le32_to_cpu(caps->buffer_size_max));
+@@ -648,16 +638,15 @@ static int sof_pcm_new(struct snd_soc_component *component,
+ 
+ 	caps = &spcm->pcm.caps[stream];
+ 
+-	/* pre-allocate capture audio buffer pages */
+-	dev_dbg(component->dev,
+-		"spcm: allocate %s capture DMA buffer size 0x%x max 0x%x\n",
+-		caps->name, caps->buffer_size_min, caps->buffer_size_max);
+-
+ 	if (!pcm->streams[stream].substream) {
+-		dev_err(component->dev, "error: NULL capture substream!\n");
++		spcm_err(spcm, stream, "NULL capture substream!\n");
+ 		return -EINVAL;
+ 	}
+ 
++	/* pre-allocate capture audio buffer pages */
++	spcm_dbg(spcm, stream, "allocate %s capture DMA buffer size 0x%x max 0x%x\n",
++		 caps->name, caps->buffer_size_min, caps->buffer_size_max);
++
+ 	snd_pcm_set_managed_buffer(pcm->streams[stream].substream,
+ 				   SNDRV_DMA_TYPE_DEV_SG, sdev->dev,
+ 				   0, le32_to_cpu(caps->buffer_size_max));
+diff --git a/sound/soc/sof/sof-audio.h b/sound/soc/sof/sof-audio.h
+index 6d652a202f698..a0b1bfcc093a8 100644
+--- a/sound/soc/sof/sof-audio.h
++++ b/sound/soc/sof/sof-audio.h
+@@ -616,6 +616,20 @@ struct snd_sof_pcm *snd_sof_find_spcm_comp(struct snd_soc_component *scomp,
+ void snd_sof_pcm_period_elapsed(struct snd_pcm_substream *substream);
+ void snd_sof_pcm_init_elapsed_work(struct work_struct *work);
+ 
++/*
++ * snd_sof_pcm specific wrappers for dev_dbg() and dev_err() to provide
++ * consistent and useful prints.
++ */
++#define spcm_dbg(__spcm, __dir, __fmt, ...)					\
++	dev_dbg((__spcm)->scomp->dev, "pcm%u (%s), dir %d: " __fmt,		\
++		(__spcm)->pcm.pcm_id, (__spcm)->pcm.pcm_name, __dir,		\
++		##__VA_ARGS__)
++
++#define spcm_err(__spcm, __dir, __fmt, ...)					\
++	dev_err((__spcm)->scomp->dev, "%s: pcm%u (%s), dir %d: " __fmt,		\
++		__func__, (__spcm)->pcm.pcm_id, (__spcm)->pcm.pcm_name, __dir,	\
++		##__VA_ARGS__)
++
+ #if IS_ENABLED(CONFIG_SND_SOC_SOF_COMPRESS)
+ void snd_sof_compr_fragment_elapsed(struct snd_compr_stream *cstream);
+ void snd_sof_compr_init_elapsed_work(struct work_struct *work);
 -- 
 2.53.0
 
