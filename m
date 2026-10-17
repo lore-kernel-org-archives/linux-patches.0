@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6E43A7F41;
-	Sat, 17 Oct 2026 17:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537F4374E60;
+	Sat, 17 Oct 2026 17:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257887; cv=none; b=oER3fEk245RUHdh1NEO8RCUEq5NjyVnQ0xdR+Ch8EeP10DHytwHvdiJREsGRf5E4xuTxjVTTS9WTGKFi1g9eO19pL3G9rI+WWEn2gs8GdGgJSEtEqAuw865b6p1RbI1lQCeyly6JIfaJMRLopKLmjPNVs3+Dzwr8nD1VuCW7ZL0=
+	t=1792257890; cv=none; b=Pf2LtWIfhjl4QA2jzuSNC0nOOpEJgeiv/AXe8xgzaeUmPVJZwD6Kn5Sir9vL1i/DFIWXUOWcYj/l2qeSCASJEkJEDUPCJYpgIru78X42XCLQk/40uJ13yvF4YIJjtwFV9jCcK58M5yQ0dflxJmzBd2VnpyQKfugkvvHcRT0U0Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257887; c=relaxed/simple;
-	bh=oUc1cG5oobjQfYeWR1Y/RTPTBVNYsvICC71E2XucNqM=;
+	s=arc-20240116; t=1792257890; c=relaxed/simple;
+	bh=JIyjoG9bGeYSYymEx/lI4XtAl0bf3H9rLAWVeCQVdDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWwitbRZfkWke+XW7wd9tO02Yo4EwChiX3f6cGywWzdBUxOI1QK8KbKbTW6zB307BhrCWnqBU5SC68iQFlfHcg3wMsDsSL7N4dp4lc6uMZWdhleicg6e4XvnCNWzK0bdankqIAJ8PdLm+TN9wSLODolFTdY0diwj9yBa9OqjboQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuU+eIjV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLiI9jCNKi3K7h9+NC/e656rHaPoje051MeVKvO7A3MNYggozs693ElWMo/JV+HF9f46OJZbF6EX8QcSQ2Yr3zzPUQNRXyUREhvMf3Kb2qP2Ahg7XPisCryiZhXzlb2MfgrlfLhZmaIOfickOd9SmoDpQuPLJA9uUyZWduDUeCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Zy9UsY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuU+eIjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C1F1F000C4;
-	Sat, 17 Oct 2026 17:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Zy9UsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931D81F000C4;
+	Sat, 17 Oct 2026 17:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257886;
-	bh=9Mh3cvZ67sgH2XXmHKyqvgIG0wDMsYKD2ttGN/LYUt8=;
+	s=korg; t=1792257889;
+	bh=LOw2vyL354tVZbO3aY9/r60fP2gR+bGapibGhUrtpKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QuU+eIjVuZdQtevnWKSyzHRzQA2gaOfm7imMVE53t/7uCjlTNBZd7a6HHq92kZDp6
-	 q8JIxWIf/J+aC47QYMzvMkS3BhFN+/d863hmw0+EoYhR1RtR+ahpxxldFgJYw2Tuq3
-	 mtPW4S9SgbfClvvmkpOjdmfJdetBqHZq8OFHI/Rg=
+	b=r7Zy9UsYV7iS8dBj/DVHEikXtD1Fm85tbiditHkXYX6k8YccI+0plqhhPL7xLlMGe
+	 ocjz5BBVrVBznontyFYm7PzdKePIo2Ltn/FvGMmG5Vm0FYHwXbp9BaFoBL5nkMl2i2
+	 eF3slWBNrvcMPHYQ7eCcoSgv7S3B+auLlHUUcZWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
+	Jan Prusakowski <jprusakowski@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0700/1674] f2fs: convert f2fs_handle_page_eio() to use folio
-Date: Sat, 17 Oct 2026 17:49:32 +0200
-Message-ID: <20261017160449.073571061@linuxfoundation.org>
+Subject: [PATCH 6.6 0701/1674] f2fs: fix potential deadloop in prepare_compress_overwrite()
+Date: Sat, 17 Oct 2026 17:49:33 +0200
+Message-ID: <20261017160449.098406343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,68 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 763a0dc792f9d7c79c1d85415c6cebc1f79bba16 ]
+[ Upstream commit 3147ee567dd9004a49826ddeaf0a4b12865d4409 ]
 
-Convert to use folio, so that we can get rid of 'page->index' to
-prepare for removal of 'index' field in structure page [1].
+Jan Prusakowski reported a kernel hang issue as below:
 
-[1] https://lore.kernel.org/all/Zp8fgUSIBGQ1TN0D@casper.infradead.org/
+When running xfstests on linux-next kernel (6.14.0-rc3, 6.12) I
+encountered a problem in generic/475 test where fsstress process
+gets blocked in __f2fs_write_data_pages() and the test hangs.
+The options I used are:
 
-Cc: Matthew Wilcox <willy@infradead.org>
+MKFS_OPTIONS  -- -O compression -O extra_attr -O project_quota -O quota /dev/vdc
+MOUNT_OPTIONS -- -o acl,user_xattr -o discard,compress_extension=* /dev/vdc /vdc
+
+INFO: task kworker/u8:0:11 blocked for more than 122 seconds.
+      Not tainted 6.14.0-rc3-xfstests-lockdep #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u8:0    state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208160 flags:0x00004000
+Workqueue: writeback wb_workfn (flush-253:0)
+Call Trace:
+ <TASK>
+ __schedule+0x309/0x8e0
+ schedule+0x3a/0x100
+ schedule_preempt_disabled+0x15/0x30
+ __mutex_lock+0x59a/0xdb0
+ __f2fs_write_data_pages+0x3ac/0x400
+ do_writepages+0xe8/0x290
+ __writeback_single_inode+0x5c/0x360
+ writeback_sb_inodes+0x22f/0x570
+ wb_writeback+0xb0/0x410
+ wb_do_writeback+0x47/0x2f0
+ wb_workfn+0x5a/0x1c0
+ process_one_work+0x223/0x5b0
+ worker_thread+0x1d5/0x3c0
+ kthread+0xfd/0x230
+ ret_from_fork+0x31/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+The root cause is: once generic/475 starts toload error table to dm
+device, f2fs_prepare_compress_overwrite() will loop reading compressed
+cluster pages due to IO error, meanwhile it has held .writepages lock,
+it can block all other writeback tasks.
+
+Let's fix this issue w/ below changes:
+- add f2fs_handle_page_eio() in prepare_compress_overwrite() to
+detect IO error.
+- detect cp_error earler in f2fs_read_multi_pages().
+
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Reported-by: Jan Prusakowski <jprusakowski@google.com>
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 3147ee567dd9 ("f2fs: fix potential deadloop in prepare_compress_overwrite()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/checkpoint.c | 2 +-
- fs/f2fs/f2fs.h       | 6 ++++--
- fs/f2fs/node.c       | 2 +-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ fs/f2fs/compress.c |  1 +
+ fs/f2fs/data.c     | 10 ++++++----
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
-index c629b5580b724..74bdce66f866d 100644
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -99,7 +99,7 @@ static struct page *__get_meta_page(struct f2fs_sb_info *sbi, pgoff_t index,
- 	}
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index c9758fe396a52..7a7e6f8e6970e 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1114,6 +1114,7 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
+ 		f2fs_compress_ctx_add_page(cc, page);
  
- 	if (unlikely(!PageUptodate(page))) {
--		f2fs_handle_page_eio(sbi, page->index, META);
-+		f2fs_handle_page_eio(sbi, page_folio(page), META);
- 		f2fs_put_page(page, 1);
- 		return ERR_PTR(-EIO);
- 	}
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 8f399d5d7dbc8..d0d5bb469d8d8 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4718,9 +4718,11 @@ static inline void f2fs_io_schedule_timeout(long timeout)
- 	io_schedule_timeout(timeout);
- }
+ 		if (!PageUptodate(page)) {
++			f2fs_handle_page_eio(sbi, page_folio(page), DATA);
+ release_and_retry:
+ 			f2fs_put_rpages(cc);
+ 			f2fs_unlock_rpages(cc, i + 1);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index d068111436d79..5c47b0eed887d 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2216,6 +2216,12 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+ 	int i;
+ 	int ret = 0;
  
--static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi, pgoff_t ofs,
--					enum page_type type)
-+static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi,
-+				struct folio *folio, enum page_type type)
- {
-+	pgoff_t ofs = folio->index;
++	if (unlikely(f2fs_cp_error(sbi))) {
++		ret = -EIO;
++		from_dnode = false;
++		goto out_put_dnode;
++	}
 +
- 	if (unlikely(f2fs_cp_error(sbi)))
- 		return;
+ 	f2fs_bug_on(sbi, f2fs_cluster_is_empty(cc));
  
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 586a90643ddd2..e7a0a841bd689 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1519,7 +1519,7 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
- out_put_err:
- 	/* ENOENT comes from read_node_page which is not an error. */
- 	if (err != -ENOENT)
--		f2fs_handle_page_eio(sbi, page->index, NODE);
-+		f2fs_handle_page_eio(sbi, page_folio(page), NODE);
- 	f2fs_put_page(page, 1);
- 	return ERR_PTR(err);
- }
+ 	last_block_in_file = bytes_to_blks(inode,
+@@ -2256,10 +2262,6 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+ 	if (ret)
+ 		goto out;
+ 
+-	if (unlikely(f2fs_cp_error(sbi))) {
+-		ret = -EIO;
+-		goto out_put_dnode;
+-	}
+ 	f2fs_bug_on(sbi, dn.data_blkaddr != COMPRESS_ADDR);
+ 
+ skip_reading_dnode:
 -- 
 2.53.0
 
