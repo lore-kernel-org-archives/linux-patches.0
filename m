@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF36339EF01;
-	Sat, 17 Oct 2026 17:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F387215E5BB;
+	Sat, 17 Oct 2026 17:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257933; cv=none; b=a1GGNNHwoYElTNkfaPLTggTVCViK1FH2h5ztjtpNqYJme6rf6KhPyNWfMRkeqtqHxLFCaOWKPIIs/8o2mzXAZDbOo/wTFavueGT4nolj5OTDGvZnlyiYeu3lKeYpEe+y7kJ/8FE+EyC14jK8CRhdHf8LN9BPgTuby5DU+2X9QKw=
+	t=1792257936; cv=none; b=t7yq2Xsi7smOX2v3tHteQSKiML448FR4pMBdrpK5zrYFJRiCC7+uYOtkJ8hucitVH0vxKk3e7qEQxsYhuXHjx3hpxBvPRBBI4PWhZmOc7po9ZF4PS04tnKvYVkLr1mb0SxqhHIg7dKVkxjoTNrHW+zbBZE5pmLaxNr7Ti5sGowM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257933; c=relaxed/simple;
-	bh=fdRTGnHHRSArrIp7dvhmyKqTnm+S5MIUEbDqZUzz/28=;
+	s=arc-20240116; t=1792257936; c=relaxed/simple;
+	bh=KlfZ0lGXqdtK/PXlD69ql8xXxGU56t9zWtl2UIAnzGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr4w09Oz6guJM5Tik+i9DqrEAjGTXaxIwe/WmJEBTsXwVhGGZhlPQi7EjgCs23+qMwMPDXn/ALmvJxCr/nXMqEUa5nukYPsyY5eL/I6I2sATTf5iUnqLScdpdck0rBuxCc+ryZ/lY8YP9LonNcpZsfF081HXyh2hRsqsgTvy3fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtBPEARj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYVgqW9sIX6UL6cZiFcqCtDpkNuI2R3jnbr3iCnEPw9kMQCsLveeckIdcd2yf/T5ZybnnYnkcRV0oCjbgOBjOEx/NJWQjQb42qOMSEFWb75y4fdNfT2IaLOiAS00YYuwWStcI+r6rSgJV8TA+Qm/mC6fT6jSKNuymHUjR2g520o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RL3stMkg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtBPEARj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE231F000C5;
-	Sat, 17 Oct 2026 17:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RL3stMkg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9C61F000C4;
+	Sat, 17 Oct 2026 17:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257931;
-	bh=RQ8To3ud2RfyuowMMccRgdYNGOd8VHOR/4b9HCD1+SE=;
+	s=korg; t=1792257934;
+	bh=UgmQLWLDUPEaGUMGzslke5zv2PSvn2rxnwCOO8NmJ/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OtBPEARj2rVN8blC3L3/rI6lKs2gNaLNyP9Gl3syoBHmcQTqztJY8I7M4JS5lTM72
-	 H//LRR0cHOg2C3LwtJXsimVVevQwV9/BsbKXRrwxpwowjFcdIgAB6r0tVGnVWTyZpg
-	 xhkcdAhrTUF2Z7oIX7TiYdnYQoiLo1K91Qo4Hg74=
+	b=RL3stMkghobM55pUK9derS2dWLeiXSD3usPpe/C//OWVSKQJA/NXUHT94YVKoA1B/
+	 evJiHwkSJaffYpk9dh7OJgezLTqKIU4mqhmCf/johB1TjBIcjdCcNsPgpvtXlm5arQ
+	 yYv6BJcyn8MMUG8bwvsWChz+UF+vpuacmjQtXLFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0718/1674] smb: client: fix UAF in decryption with multichannel
-Date: Sat, 17 Oct 2026 17:49:50 +0200
-Message-ID: <20261017160449.536828311@linuxfoundation.org>
+Subject: [PATCH 6.6 0719/1674] ublk: fix handling recovery & reissue in ublk_abort_queue()
+Date: Sat, 17 Oct 2026 17:49:51 +0200
+Message-ID: <20261017160449.562967753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,162 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 9502dd5c7029902f4a425bf959917a5a9e7c0e50 ]
+[ Upstream commit 6ee6bd5d4fce502a5b5a2ea805e9ff16e6aa890f ]
 
-After commit f7025d861694 ("smb: client: allocate crypto only for
-primary server") and commit b0abcd65ec54 ("smb: client: fix UAF in
-async decryption"), the channels started reusing AEAD TFM from primary
-channel to perform synchronous decryption, but that can't done as
-there could be multiple cifsd threads (one per channel) simultaneously
-accessing it to perform decryption.
+Commit 8284066946e6 ("ublk: grab request reference when the request is handled
+by userspace") doesn't grab request reference in case of recovery reissue.
+Then the request can be requeued & re-dispatch & failed when canceling
+uring command.
 
-This fixes the following KASAN splat when running fstest generic/249
-with 'vers=3.1.1,multichannel,max_channels=4,seal' against Windows
-Server 2022:
+If it is one zc request, the request can be freed before io_uring
+returns the zc buffer back, then cause kernel panic:
 
-BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xba/0x110
-Read of size 8 at addr ffff8881046c18a0 by task cifsd/986
-CPU: 3 UID: 0 PID: 986 Comm: cifsd Not tainted 6.15.0-rc1 #1
-PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- print_report+0x156/0x528
- ? gf128mul_4k_lle+0xba/0x110
- ? __virt_addr_valid+0x145/0x300
- ? __phys_addr+0x46/0x90
- ? gf128mul_4k_lle+0xba/0x110
- kasan_report+0xdf/0x1a0
- ? gf128mul_4k_lle+0xba/0x110
- gf128mul_4k_lle+0xba/0x110
- ghash_update+0x189/0x210
- shash_ahash_update+0x295/0x370
- ? __pfx_shash_ahash_update+0x10/0x10
- ? __pfx_shash_ahash_update+0x10/0x10
- ? __pfx_extract_iter_to_sg+0x10/0x10
- ? ___kmalloc_large_node+0x10e/0x180
- ? __asan_memset+0x23/0x50
- crypto_ahash_update+0x3c/0xc0
- gcm_hash_assoc_remain_continue+0x93/0xc0
- crypt_message+0xe09/0xec0 [cifs]
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? _raw_spin_unlock+0x23/0x40
- ? __pfx_cifs_readv_from_socket+0x10/0x10 [cifs]
- decrypt_raw_data+0x229/0x380 [cifs]
- ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
- ? __pfx_cifs_read_iter_from_socket+0x10/0x10 [cifs]
- smb3_receive_transform+0x837/0xc80 [cifs]
- ? __pfx_smb3_receive_transform+0x10/0x10 [cifs]
- ? __pfx___might_resched+0x10/0x10
- ? __pfx_smb3_is_transform_hdr+0x10/0x10 [cifs]
- cifs_demultiplex_thread+0x692/0x1570 [cifs]
- ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
- ? rcu_is_watching+0x20/0x50
- ? rcu_lockdep_current_cpu_online+0x62/0xb0
- ? find_held_lock+0x32/0x90
- ? kvm_sched_clock_read+0x11/0x20
- ? local_clock_noinstr+0xd/0xd0
- ? trace_irq_enable.constprop.0+0xa8/0xe0
- ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
- kthread+0x1fe/0x380
- ? kthread+0x10f/0x380
- ? __pfx_kthread+0x10/0x10
- ? local_clock_noinstr+0xd/0xd0
- ? ret_from_fork+0x1b/0x60
- ? local_clock+0x15/0x30
- ? lock_release+0x29b/0x390
- ? rcu_is_watching+0x20/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x31/0x60
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+[  126.773061] BUG: kernel NULL pointer dereference, address: 00000000000000c8
+[  126.773657] #PF: supervisor read access in kernel mode
+[  126.774052] #PF: error_code(0x0000) - not-present page
+[  126.774455] PGD 0 P4D 0
+[  126.774698] Oops: Oops: 0000 [#1] SMP NOPTI
+[  126.775034] CPU: 13 UID: 0 PID: 1612 Comm: kworker/u64:55 Not tainted 6.14.0_blk+ #182 PREEMPT(full)
+[  126.775676] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39 04/01/2014
+[  126.776275] Workqueue: iou_exit io_ring_exit_work
+[  126.776651] RIP: 0010:ublk_io_release+0x14/0x130 [ublk_drv]
 
-Tested-by: David Howells <dhowells@redhat.com>
-Reported-by: Steve French <stfrench@microsoft.com>
-Closes: https://lore.kernel.org/r/CAH2r5mu6Yc0-RJXM3kFyBYUB09XmXBrNodOiCVR4EDrmxq5Szg@mail.gmail.com
-Fixes: f7025d861694 ("smb: client: allocate crypto only for primary server")
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes it by always grabbing request reference for aborting the request.
+
+Reported-by: Caleb Sander Mateos <csander@purestorage.com>
+Closes: https://lore.kernel.org/linux-block/CADUfDZodKfOGUeWrnAxcZiLT+puaZX8jDHoj_sfHZCOZwhzz6A@mail.gmail.com/
+Fixes: 8284066946e6 ("ublk: grab request reference when the request is handled by userspace")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250409011444.2142010-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsencrypt.c | 16 +++++-----------
- fs/smb/client/smb2ops.c     |  6 +++---
- fs/smb/client/smb2pdu.c     | 11 ++---------
- 3 files changed, 10 insertions(+), 23 deletions(-)
+ drivers/block/ublk_drv.c | 37 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/cifsencrypt.c b/fs/smb/client/cifsencrypt.c
-index 1043341be1248..63712b83eb83c 100644
---- a/fs/smb/client/cifsencrypt.c
-+++ b/fs/smb/client/cifsencrypt.c
-@@ -850,18 +850,12 @@ cifs_crypto_secmech_release(struct TCP_Server_Info *server)
- 	cifs_free_hash(&server->secmech.sha512);
- 	cifs_free_hash(&server->secmech.hmacmd5);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 356f32b6f1803..c39eab406978e 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1134,13 +1134,37 @@ static inline void __ublk_complete_rq(struct request *req)
+ 	ublk_end_request(req, res);
+ }
  
--	if (!SERVER_IS_CHAN(server)) {
--		if (server->secmech.enc) {
--			crypto_free_aead(server->secmech.enc);
--			server->secmech.enc = NULL;
--		}
--
--		if (server->secmech.dec) {
--			crypto_free_aead(server->secmech.dec);
--			server->secmech.dec = NULL;
--		}
--	} else {
-+	if (server->secmech.enc) {
-+		crypto_free_aead(server->secmech.enc);
- 		server->secmech.enc = NULL;
-+	}
-+	if (server->secmech.dec) {
-+		crypto_free_aead(server->secmech.dec);
- 		server->secmech.dec = NULL;
++static void ublk_do_fail_rq(struct request *req)
++{
++	struct ublk_queue *ubq = req->mq_hctx->driver_data;
++
++	if (ublk_queue_can_use_recovery_reissue(ubq))
++		blk_mq_requeue_request(req, false);
++	else
++		__ublk_complete_rq(req);
++}
++
++static void ublk_fail_rq_fn(struct kref *ref)
++{
++	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
++			ref);
++	struct request *req = blk_mq_rq_from_pdu(data);
++
++	ublk_do_fail_rq(req);
++}
++
+ static void ublk_complete_rq(struct kref *ref)
+ {
+ 	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
+ 			ref);
+ 	struct request *req = blk_mq_rq_from_pdu(data);
++	struct ublk_queue *ubq = req->mq_hctx->driver_data;
+ 
+-	__ublk_complete_rq(req);
++	/* the abort path's reference may be dropped by another holder last */
++	if (ubq->ios[req->tag].flags & UBLK_IO_FLAG_ABORTED)
++		ublk_do_fail_rq(req);
++	else
++		__ublk_complete_rq(req);
+ }
+ 
+ /*
+@@ -1158,10 +1182,13 @@ static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
+ 
+ 	if (!(io->flags & UBLK_IO_FLAG_ABORTED)) {
+ 		io->flags |= UBLK_IO_FLAG_ABORTED;
+-		if (ublk_queue_can_use_recovery_reissue(ubq))
+-			blk_mq_requeue_request(req, false);
+-		else
+-			ublk_put_req_ref(ubq, req);
++		if (ublk_need_req_ref(ubq)) {
++			struct ublk_rq_data *data = blk_mq_rq_to_pdu(req);
++
++			kref_put(&data->ref, ublk_fail_rq_fn);
++		} else {
++			ublk_do_fail_rq(req);
++		}
  	}
  }
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 734d25e1292d6..dd2e0d77abd59 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4594,9 +4594,9 @@ decrypt_raw_data(struct TCP_Server_Info *server, char *buf,
- 			return rc;
- 		}
- 	} else {
--		if (unlikely(!server->secmech.dec))
--			return -EIO;
--
-+		rc = smb3_crypto_aead_allocate(server);
-+		if (unlikely(rc))
-+			return rc;
- 		tfm = server->secmech.dec;
- 	}
  
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 1b1804f21414f..13c877a9bc97c 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1280,15 +1280,8 @@ SMB2_negotiate(const unsigned int xid,
- 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
- 	}
- 
--	if (server->cipher_type && !rc) {
--		if (!SERVER_IS_CHAN(server)) {
--			rc = smb3_crypto_aead_allocate(server);
--		} else {
--			/* For channels, just reuse the primary server crypto secmech. */
--			server->secmech.enc = server->primary_server->secmech.enc;
--			server->secmech.dec = server->primary_server->secmech.dec;
--		}
--	}
-+	if (server->cipher_type && !rc)
-+		rc = smb3_crypto_aead_allocate(server);
- neg_exit:
- 	free_rsp_buf(resp_buftype, rsp);
- 	return rc;
 -- 
 2.53.0
 
