@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE4229B795;
-	Sat, 17 Oct 2026 16:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD043A5E78;
+	Sat, 17 Oct 2026 16:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254783; cv=none; b=cJB2KMWMBjQaIqBcKXe4vKd/HEGjEQLO6nQ2/NYFUJepJtVWCsEHi3BPkrjrgBHwUZwb0R0mT+2aZo5VOKlWNGURVnK/0zk0rfdjv/8uZss23UehYHq8Sdj8gradPOrRgBMONXTRqpgy99yJKjgdrL+3fmO8l5w1UkG/kT0YsD8=
+	t=1792254786; cv=none; b=ojC28focnDOXUTH94+0K0Lvj5SpPIOyxaHXZqUcaZti74ejjPyrdGMHytILO5wMqZmdQtnKAKj/YU26saZGmB5g6pi5GcswTNR4/SAoMBGkpnqTdb9nQnUOsy1qCQ9r258ujElvm9PEXRziTbNr1MFT/OjkdMTi8EnzWg34O+fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254783; c=relaxed/simple;
-	bh=BRKOXI0hvZLzzMiSv4CXp5FsUOalhygkFTOHPKJQIrY=;
+	s=arc-20240116; t=1792254786; c=relaxed/simple;
+	bh=I0pNWlDLz5ddmHFFVUAfbzjs12BKQVOe1gCgh+fpTPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhFIEAppnsnE+4rzzUmwNbWhSB4kdDBGYi4XiFZJix3K8ZxnwerptilwluQ0OkxIvtPqNQM9dPq4S2JI1PIZiZ/UsNLPl7xjww3j0JPnKz9x8EM9gkBBWcJ1PqPz6aMxGR8IRm6eociE5IkEfxEgvZ/tjh6olndcmT69N6kWYsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJALUfA4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NZ5zJUJED/EAeQeDaJ9RXgxe+JEIFh6JWYu+NVuzlKVNOiS4/XQ2ZGUqcx+LE1kVxK2nZJ7d9XHa9ODpz0EGc2kKJJd80/Mf4EpJgjbEwT+4mzcUfaSKXQdWDp7C85VQ4m0x7sPzie1/0A6Mfkhy4/5ioYyI3o/y9C/+/0xvuZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2mD03Ij; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJALUfA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923BA1F000C4;
-	Sat, 17 Oct 2026 16:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2mD03Ij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504C21F000C4;
+	Sat, 17 Oct 2026 16:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254782;
-	bh=xhrh33gutxRsiFUpqXlrpty9WEFi3LXoRmYe0DmUJuE=;
+	s=korg; t=1792254784;
+	bh=UFxKQ53pjkUaPVoiNFPLGSpJ2Ih10YfRepFbABl4N2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJALUfA4oayT5Yd93kjuTcUozrvJCIMT7mUxaVleVsg9c5jC2SDH4cVPcu7BA5Y2A
-	 LaDGgln3+WSh02wzwWS2IWnK2K8oTXQkIJzTbkaaP7LfUsyATEL9GVUs5nCOVSIaxU
-	 Sji8uMYsFjCI0utSp0FM6PzKFemqKVHerF0c9Jlo=
+	b=E2mD03IjVTmfGruYgqsf5zfsUBx5UhgG9qx4qXJMgBYQl3tzDKKkU4Dd223nFw9j/
+	 dKt1pqM+cMmurD28bLxlf6VlJs4I8Z7RlKG4qEFz6DIqZF79N1E+ajFY8HlutF406d
+	 uCvgWUXXhC+a5qtrUSL5+wrTda4Oy45buopOVIWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d30aad27833a559defab@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 518/869] firewire: ohci: fix NULL pointer dereference in ar_context_release
-Date: Sat, 17 Oct 2026 17:55:59 +0200
-Message-ID: <20261017160050.390571854@linuxfoundation.org>
+Subject: [PATCH 6.12 519/869] ipvs: revalidate ihl to prevent out-of-bounds access
+Date: Sat, 17 Oct 2026 17:56:00 +0200
+Message-ID: <20261017160050.419109515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,73 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 42d217add8d80d6e7d9f58f80d11ea9b07ea113e ]
+[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
 
-During the error handling path of the driver's probe function, a NULL
-pointer dereference can occur in ar_context_release().
+While the outer IP header is already pulled into the skb head,
+we must be careful and revalidate the embedded headers after
+reading them from the skb frags to prevent out-of-bounds
+access.
 
-When pci_probe() fails early (e.g., if pcim_enable_device() or MMIO mapping
-fails), the devres cleanup mechanism invokes release_ohci(). This function
-unconditionally calls ar_context_release() to clean up the asynchronous
-receive contexts. However, if ar_context_init() was not yet called,
-ctx->ohci remains NULL (as the fw_ohci structure is zero-initialized by
-devres_alloc()).
+One such place reported by Sashiko is ip_vs_nat_icmp() where
+local process can change the ihl field and after
+skb_ensure_writable() we can see larger value which is a
+problem for the ip_send_check(cih) calls.
 
-ar_context_release() immediately dereferences ctx->ohci to get the dev
-pointer before checking if the context was actually initialized, leading to
-a crash:
+Add check to drop the packet if the ihl field is changed.
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:ar_context_release+0x3f/0x380 drivers/firewire/ohci.c:543
-Call Trace:
- release_ohci+0x3f/0x60 drivers/firewire/ohci.c:3567
- release_nodes drivers/base/devres.c:546 [inline]
- devres_release_all+0x1a8/0x260 drivers/base/devres.c:576
- device_unbind_cleanup drivers/base/dd.c:597 [inline]
- really_probe+0x451/0xae0 drivers/base/dd.c:772
-
-To fix this, move the assignment of the dev pointer after the !ctx->buffer
-check. If ctx->buffer is NULL, it indicates that the context was never
-successfully initialized and there is nothing to release, safely avoiding
-the dereference of the uninitialized ctx->ohci pointer.
-
-Fixes: 5716e58aecdd ("firewire: ohci: release buffer for AR req/resp contexts when managed resource is released")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+d30aad27833a559defab@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d30aad27833a559defab
-Link: https://syzkaller.appspot.com/ai_job?id=10a18617-7893-42dd-bf1c-cd49e19e95d9
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://lore.kernel.org/r/90c5db71-dd1f-4d46-b9d3-2f1046cbd5ea@mail.kernel.org
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/ohci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/ip_vs.h             |  2 +-
+ net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
+ net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
-index 90fcab1f65bcd..4dca78f859f63 100644
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -753,12 +753,14 @@ static void ar_context_link_page(struct ar_context *ctx, unsigned int index)
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 35f012f620150..d2bfc9f67082c 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -1713,7 +1713,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
+ 	return fwd;
+ }
  
- static void ar_context_release(struct ar_context *ctx)
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph);
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 4e30a903f4bdc..401159a660750 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -745,7 +745,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
+  * Packet has been made sufficiently writable in caller
+  * - inout: 1=in->out, 0=out->in
+  */
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph)
  {
--	struct device *dev = ctx->ohci->card.device;
-+	struct device *dev;
- 	unsigned int i;
+@@ -753,6 +753,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
+ 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
  
- 	if (!ctx->buffer)
- 		return;
++	/* Before now we may used ihl from skb frag, revalidate it after
++	 * copying it into skb head to prevent out-of-bounds access
++	 */
++	if (cih->ihl * 4 != ciph->len - ciph->off)
++		return false;
+ 	if (inout) {
+ 		iph->saddr = cp->vaddr.ip;
+ 		ip_send_check(iph);
+@@ -786,6 +791,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	else
+ 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
+ 			      "Forwarding altered incoming ICMP");
++	return true;
+ }
  
-+	dev = ctx->ohci->card.device;
-+
- 	vunmap(ctx->buffer);
+ #ifdef CONFIG_IP_VS_IPV6
+@@ -877,7 +883,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
+ 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
+ 	else
+ #endif
+-		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
++		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
++			goto out;
  
- 	for (i = 0; i < AR_BUFFERS; i++) {
+ 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
+ 		goto out;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 240378e37741a..e0c2820be57ee 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -1577,7 +1577,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
+ 		goto tx_error;
+ 
+-	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
++	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
++		goto tx_error;
+ 
+ 	/* Another hack: avoid icmp_send in ip_fragment */
+ 	skb->ignore_df = 1;
 -- 
 2.53.0
 
