@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F393ADBA4;
-	Sat, 17 Oct 2026 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6BF3B2FCA;
+	Sat, 17 Oct 2026 17:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259055; cv=none; b=j56+RAXHm2TAd7v4vuwtf+ubJkPphCsifYRc2xW1x4b0W2BBC0CiumrKquH8HVbr1Tld9NId0IQLJqH6XwH55oEeTZwVu3F5BeeOtoeAeRWj8D3w8USbzizJuWQAakjhj8KjK7lbkXou5pHoiIfMpl5vcIV9DjM16dlZ3POg+/8=
+	t=1792259059; cv=none; b=pADZL4gL9Wi+BnNgAsV5RVnzBcMYhIO9wz/FU6V8C4xTQrx0boWn12zIVKhOhutvdq6YtVrTlrSypyWnOe8mvv4FvnrRWBYpsXvT1aqSiZLwucqsGaaQa2T+plm/6eAhtGaTpWHppG1wWJNBTjit0Cd6yhbbOHJXLFNVcp1q79s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259055; c=relaxed/simple;
-	bh=e9tBagjCGe3Uex4TMLSHq/cPc3J2KPndcm9rWRQOi8Q=;
+	s=arc-20240116; t=1792259059; c=relaxed/simple;
+	bh=qiLRnlFD0EjdlDmymdb8zBF6LGWMRpK/MhyGZuXdAyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eT3zqXfRkeHjbEwHmVoLovkltOaHwroCkjt+GvPruZsJyI++RlbnmlUJz211Fwf1dY0aCZMtbRjPxyvUWgOnrIQF3zp1Uwzi/zfWHpTy/6sUEsyA4+hqAzGkN5kUOzz4NPjSXs8shCVFL1jiw9AvZ1oN4/4Nfgut3s4MjdtSoo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlxWZJBF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kIkCdsXdKdS8MHYDDULFH/dTqOK0HCY5OT5/MTlpUEBpMWR1paWmkgIiT90ijTA0oK6r6M1eeUPeOH/IXL1bCzw1Ozj+UauUJt+l+6TbvRq4380jzupKEQs3J2tPDeKPxfC7bltM3hkbiccz9S6L6chZNMKCdq9u0veFzDPnTqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5nsXcdM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlxWZJBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA4F1F000C4;
-	Sat, 17 Oct 2026 17:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5nsXcdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F2B1F000C4;
+	Sat, 17 Oct 2026 17:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259054;
-	bh=F1xSR58+SYD8v3WNr+OlyHVe4qERW87NT46XkDMcAus=;
+	s=korg; t=1792259057;
+	bh=os0lVFa/GymkHPWx24+Vb1wcmlIUVOmlSPppY58XayA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nlxWZJBFpVvTnlJ4/11xdEy8AboLNO/FSABOdf4SrYi3rpnwmkL9TGeC/lWoJPF1P
-	 hJMKujfflEfGQvZFANpkSF+hgwaAqkMU4XyQ1xoSS+v6jxgbVzLuRrj7Xkx1wx95Ma
-	 E/GhBgydCgzYSQj4n+shdYAhRQuYRcXa+LYQzKMk=
+	b=T5nsXcdMHpqzatAaDh+c0OeAVq0WVJELISJYWfeVejlr22/81vwvBXONyVyKVK/wy
+	 JKtCsK4zC+Ct+ahYAAY7Oi4KNnMU+xz7iP/JL4F3Ce/Oo2FOM+cgDbIxn3YIABZEvf
+	 rfdUHQooOT9KNs1BIsvkWAlHaqX5vNh7t9RQcm90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1087/1674] cifs: prevent readdir from changing file size due to stale directory metadata
-Date: Sat, 17 Oct 2026 17:55:59 +0200
-Message-ID: <20261017160459.031081500@linuxfoundation.org>
+	Lizhe <sensor1010@163.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Kevin Hilman <khilman@baylibre.com>
+Subject: [PATCH 6.6 1061/1674] cpufreq: Make cpufreq_driver->exit() return void
+Date: Sat, 17 Oct 2026 17:55:33 +0200
+Message-ID: <20261017160458.358449118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,282 +57,672 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Lizhe <sensor1010@163.com>
 
-[ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
+[ Upstream commit b4b1ddc9dfe997a5f492fa3a36487f8e7a5de30d ]
 
-Windows Server's directory enumeration metadata lags behind the actual
-file size after a write+close or rename.  A concurrent readdir() in the
-window between close() returning to userspace and stat() being called
-overwrites the correct cached i_size with the stale server value, causing
-stat() to return the wrong size.
+The cpufreq core doesn't check the return type of the exit() callback
+and there is not much the core can do on failures at that point. Just
+drop the returned value and make it return void.
 
-Once _cifsFileInfo_put() removes the last writable handle from
-openFileList, is_size_safe_to_change() permits readdir to overwrite
-i_size.  smb2_close_getattr() then stamps cifs_i->time = jiffies, making
-the corrupt cached value appear fresh to the next stat().
-
-The existing check (see Fixes:) only blocked stale size updates while
-an active RW lease was held, not after the last writable handle closes.
-
-Add cifsInodeInfo->time_last_write, written via smp_store_release() at
-writable close and on setattr/truncate.  is_size_safe_to_change() checks
-is_inode_writable() first (acquiring open_file_lock), then rejects a
-readdir size update if time_last_write falls within acregmax jiffies.
-The spinlock release in _cifsFileInfo_put() forms a store-release barrier
-that pairs with the spin_lock() (load-acquire) in is_inode_writable(),
-ensuring the subsequent smp_load_acquire() on time_last_write observes
-any update from a concurrent close().  When a size update is rejected and
-the server value differs from the cached one, cifs_i->time is cleared to
-force a fresh QUERY_INFO on the next stat().
-
-readdir is also blocked from changing i_size while writable handles are
-open or an RW lease is held, even on direct-IO mounts.
-
-For deferred close (closetimeo > 0), time_last_write is refreshed at the
-actual server close in smb2_deferred_work_close() and in the
-cifs_close_deferred_file*() drain paths invoked by lease/oplock breaks
-and tcon teardown, anchoring the protection window to the real close time
-rather than the earlier userspace close.
-
-time_last_write == 0 skips the time_before() check to avoid false
-positives near boot on 32-bit systems where jiffies starts close to
-INITIAL_JIFFIES.
-
-Does not reproduce against Samba or with actimeo=0.
-
-Fixes: e4b61f3b1c67 ("cifs: prevent updating file size from server if we have a read/write lease")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: c2f2e83e3bbc ("cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths")
+Signed-off-by: Lizhe <sensor1010@163.com>
+[ Viresh: Reworked the patches to fix all missing changes together. ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> # Mediatek
+Acked-by: Sudeep Holla <sudeep.holla@arm.com> # scpi, scmi, vexpress
+Acked-by: Mario Limonciello <mario.limonciello@amd.com> # amd
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com> # bmips
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Acked-by: Kevin Hilman <khilman@baylibre.com> # omap
+Stable-dep-of: bcb8889c4981 ("cpufreq: qcom-cpufreq-hw: Fix possible double free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c   |  1 +
- fs/smb/client/cifsglob.h |  1 +
- fs/smb/client/file.c     | 70 ++++++++++++++++++++++++++++++++++++----
- fs/smb/client/inode.c    |  6 ++++
- fs/smb/client/misc.c     | 27 ++++++++++++++--
- 5 files changed, 96 insertions(+), 9 deletions(-)
+ drivers/cpufreq/acpi-cpufreq.c         |  4 +---
+ drivers/cpufreq/amd-pstate.c           |  7 ++-----
+ drivers/cpufreq/apple-soc-cpufreq.c    |  4 +---
+ drivers/cpufreq/bmips-cpufreq.c        |  4 +---
+ drivers/cpufreq/cppc_cpufreq.c         |  3 +--
+ drivers/cpufreq/cpufreq-dt.c           |  3 +--
+ drivers/cpufreq/e_powersaver.c         |  3 +--
+ drivers/cpufreq/intel_pstate.c         |  8 +++-----
+ drivers/cpufreq/mediatek-cpufreq-hw.c  |  4 +---
+ drivers/cpufreq/mediatek-cpufreq.c     |  4 +---
+ drivers/cpufreq/omap-cpufreq.c         |  3 +--
+ drivers/cpufreq/pasemi-cpufreq.c       |  6 ++----
+ drivers/cpufreq/powernow-k6.c          |  5 ++---
+ drivers/cpufreq/powernow-k7.c          |  3 +--
+ drivers/cpufreq/powernow-k8.c          |  6 ++----
+ drivers/cpufreq/powernv-cpufreq.c      |  4 +---
+ drivers/cpufreq/ppc_cbe_cpufreq.c      |  3 +--
+ drivers/cpufreq/qcom-cpufreq-hw.c      |  4 +---
+ drivers/cpufreq/qoriq-cpufreq.c        |  4 +---
+ drivers/cpufreq/scmi-cpufreq.c         |  4 +---
+ drivers/cpufreq/scpi-cpufreq.c         |  4 +---
+ drivers/cpufreq/sh-cpufreq.c           |  4 +---
+ drivers/cpufreq/sparc-us2e-cpufreq.c   |  3 +--
+ drivers/cpufreq/sparc-us3-cpufreq.c    |  3 +--
+ drivers/cpufreq/speedstep-centrino.c   | 10 +++-------
+ drivers/cpufreq/tegra194-cpufreq.c     |  4 +---
+ drivers/cpufreq/vexpress-spc-cpufreq.c |  5 ++---
+ include/linux/cpufreq.h                |  2 +-
+ 28 files changed, 37 insertions(+), 84 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index a1c5ef3b2f1eb..a3dfeda8144d9 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -401,6 +401,7 @@ cifs_alloc_inode(struct super_block *sb)
- 		return NULL;
- 	cifs_inode->cifsAttrs = 0x20;	/* default */
- 	cifs_inode->time = 0;
-+	cifs_inode->time_last_write = 0;
+diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
+index 0bfced81cc17e..f9d50d81ac618 100644
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -926,7 +926,7 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return result;
+ }
+ 
+-static int acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct acpi_cpufreq_data *data = policy->driver_data;
+ 
+@@ -939,8 +939,6 @@ static int acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ 	free_cpumask_var(data->freqdomain_cpus);
+ 	kfree(policy->freq_table);
+ 	kfree(data);
+-
+-	return 0;
+ }
+ 
+ static int acpi_cpufreq_resume(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 7e7fa04188cf6..664bd617a2d67 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -900,7 +900,7 @@ static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int amd_pstate_cpu_exit(struct cpufreq_policy *policy)
++static void amd_pstate_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+ 
+@@ -908,8 +908,6 @@ static int amd_pstate_cpu_exit(struct cpufreq_policy *policy)
+ 	freq_qos_remove_request(&cpudata->req[0]);
+ 	policy->fast_switch_possible = false;
+ 	kfree(cpudata);
+-
+-	return 0;
+ }
+ 
+ static int amd_pstate_cpu_resume(struct cpufreq_policy *policy)
+@@ -1353,7 +1351,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
++static void amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+ 
+@@ -1363,7 +1361,6 @@ static int amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
+ 	}
+ 
+ 	pr_debug("CPU %d exiting\n", policy->cpu);
+-	return 0;
+ }
+ 
+ static void amd_pstate_epp_update_limit(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/apple-soc-cpufreq.c b/drivers/cpufreq/apple-soc-cpufreq.c
+index 8e0cb3952feae..873c8b7864755 100644
+--- a/drivers/cpufreq/apple-soc-cpufreq.c
++++ b/drivers/cpufreq/apple-soc-cpufreq.c
+@@ -303,7 +303,7 @@ static int apple_soc_cpufreq_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int apple_soc_cpufreq_exit(struct cpufreq_policy *policy)
++static void apple_soc_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct apple_cpu_priv *priv = policy->driver_data;
+ 
+@@ -311,8 +311,6 @@ static int apple_soc_cpufreq_exit(struct cpufreq_policy *policy)
+ 	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
+ 	iounmap(priv->reg_base);
+ 	kfree(priv);
+-
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver apple_soc_cpufreq_driver = {
+diff --git a/drivers/cpufreq/bmips-cpufreq.c b/drivers/cpufreq/bmips-cpufreq.c
+index 39221a9a187a7..17a4c174553d3 100644
+--- a/drivers/cpufreq/bmips-cpufreq.c
++++ b/drivers/cpufreq/bmips-cpufreq.c
+@@ -121,11 +121,9 @@ static int bmips_cpufreq_target_index(struct cpufreq_policy *policy,
+ 	return 0;
+ }
+ 
+-static int bmips_cpufreq_exit(struct cpufreq_policy *policy)
++static void bmips_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	kfree(policy->freq_table);
+-
+-	return 0;
+ }
+ 
+ static int bmips_cpufreq_init(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 4d96eed64fe0c..a10ea3be7dc6b 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -707,7 +707,7 @@ static int cppc_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int cppc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void cppc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct cppc_cpudata *cpu_data = policy->driver_data;
+ 	struct cppc_perf_caps *caps = &cpu_data->perf_caps;
+@@ -724,7 +724,6 @@ static int cppc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ 			 caps->lowest_perf, cpu, ret);
+ 
+ 	cppc_cpufreq_put_cpu_data(policy);
+-	return 0;
+ }
+ 
+ static inline u64 get_delta(u64 t1, u64 t0)
+diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
+index 2d83bbc65dd0b..eaf02579ea744 100644
+--- a/drivers/cpufreq/cpufreq-dt.c
++++ b/drivers/cpufreq/cpufreq-dt.c
+@@ -166,10 +166,9 @@ static int cpufreq_offline(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int cpufreq_exit(struct cpufreq_policy *policy)
++static void cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	clk_put(policy->clk);
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver dt_cpufreq_driver = {
+diff --git a/drivers/cpufreq/e_powersaver.c b/drivers/cpufreq/e_powersaver.c
+index ab93bce8ae77d..6e958b09e1b52 100644
+--- a/drivers/cpufreq/e_powersaver.c
++++ b/drivers/cpufreq/e_powersaver.c
+@@ -360,14 +360,13 @@ static int eps_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int eps_cpu_exit(struct cpufreq_policy *policy)
++static void eps_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	unsigned int cpu = policy->cpu;
+ 
+ 	/* Bye */
+ 	kfree(eps_cpu[cpu]);
+ 	eps_cpu[cpu] = NULL;
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver eps_driver = {
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index df865612158ab..b7441e6937333 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2703,13 +2703,11 @@ static int intel_pstate_cpu_offline(struct cpufreq_policy *policy)
+ 	return intel_cpufreq_cpu_offline(policy);
+ }
+ 
+-static int intel_pstate_cpu_exit(struct cpufreq_policy *policy)
++static void intel_pstate_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	pr_debug("CPU %d exiting\n", policy->cpu);
+ 
+ 	policy->fast_switch_possible = false;
+-
+-	return 0;
+ }
+ 
+ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
+@@ -3044,7 +3042,7 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int intel_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void intel_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct freq_qos_request *req;
+ 
+@@ -3054,7 +3052,7 @@ static int intel_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ 	freq_qos_remove_request(req);
+ 	kfree(req);
+ 
+-	return intel_pstate_cpu_exit(policy);
++	intel_pstate_cpu_exit(policy);
+ }
+ 
+ static int intel_cpufreq_suspend(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
+index 55353fe7b9e74..aeb5e63045421 100644
+--- a/drivers/cpufreq/mediatek-cpufreq-hw.c
++++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+@@ -260,7 +260,7 @@ static int mtk_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int mtk_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
++static void mtk_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct mtk_cpufreq_data *data = policy->driver_data;
+ 	struct resource *res = data->res;
+@@ -270,8 +270,6 @@ static int mtk_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ 	writel_relaxed(0x0, data->reg_bases[REG_FREQ_ENABLE]);
+ 	iounmap(base);
+ 	release_mem_region(res->start, resource_size(res));
+-
+-	return 0;
+ }
+ 
+ static void mtk_cpufreq_register_em(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+index a0a61919bc4c1..aba34fb7948ea 100644
+--- a/drivers/cpufreq/mediatek-cpufreq.c
++++ b/drivers/cpufreq/mediatek-cpufreq.c
+@@ -599,13 +599,11 @@ static int mtk_cpufreq_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int mtk_cpufreq_exit(struct cpufreq_policy *policy)
++static void mtk_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct mtk_cpu_dvfs_info *info = policy->driver_data;
+ 
+ 	dev_pm_opp_free_cpufreq_table(info->cpu_dev, &policy->freq_table);
+-
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver mtk_cpufreq_driver = {
+diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
+index 895690856665d..3458d5cc9b7f2 100644
+--- a/drivers/cpufreq/omap-cpufreq.c
++++ b/drivers/cpufreq/omap-cpufreq.c
+@@ -135,11 +135,10 @@ static int omap_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int omap_cpu_exit(struct cpufreq_policy *policy)
++static void omap_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	freq_table_free();
+ 	clk_put(policy->clk);
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver omap_driver = {
+diff --git a/drivers/cpufreq/pasemi-cpufreq.c b/drivers/cpufreq/pasemi-cpufreq.c
+index 039a66bbe1bef..ee925b53b6b92 100644
+--- a/drivers/cpufreq/pasemi-cpufreq.c
++++ b/drivers/cpufreq/pasemi-cpufreq.c
+@@ -204,21 +204,19 @@ static int pas_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return err;
+ }
+ 
+-static int pas_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void pas_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
  	/*
- 	 * Until the file is open and we have gotten oplock info back from the
- 	 * server, can not assume caching of file data or metadata.
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index b490e3f006a34..b6a89d0515757 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1575,6 +1575,7 @@ struct cifsInodeInfo {
- 	unsigned int writers;		/* Number of writers on this inode */
- 	unsigned long time;		/* jiffies of last update of inode */
- 	u64  server_eof;		/* current file size on server -- protected by i_lock */
-+	unsigned long time_last_write;	/* jiffies of last writable close or truncate */
- 	u64  uniqueid;			/* server inode number */
- 	u64  createtime;		/* creation time on server */
- 	__u8 lease_key[SMB2_LEASE_KEY_SIZE];	/* lease key for this inode */
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index 75682ef67bc85..d329b8a3b756d 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1207,11 +1207,21 @@ void smb2_deferred_work_close(struct work_struct *work)
- {
- 	struct cifsFileInfo *cfile = container_of(work,
- 			struct cifsFileInfo, deferred.work);
-+	struct cifsInodeInfo *cinode = CIFS_I(d_inode(cfile->dentry));
+ 	 * We don't support CPU hotplug. Don't unmap after the system
+ 	 * has already made it to a running state.
+ 	 */
+ 	if (system_state >= SYSTEM_RUNNING)
+-		return 0;
++		return;
  
--	spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
-+	spin_lock(&cinode->deferred_lock);
- 	cifs_del_deferred_close(cfile);
- 	cfile->deferred_close_scheduled = false;
--	spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
-+	spin_unlock(&cinode->deferred_lock);
-+	/*
-+	 * Refresh time_last_write immediately before the actual server close
-+	 * so the protection window is anchored to the real close time, not
-+	 * the earlier userspace close time stored by cifs_close().
-+	 */
-+	if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cinode->time_last_write, jiffies);
-+	}
- 	_cifsFileInfo_put(cfile, true, false);
+ 	if (sdcasr_mapbase)
+ 		iounmap(sdcasr_mapbase);
+ 	if (sdcpwr_mapbase)
+ 		iounmap(sdcpwr_mapbase);
+-
+-	return 0;
  }
  
-@@ -1240,6 +1250,10 @@ int cifs_close(struct inode *inode, struct file *file)
- 	if (file->private_data != NULL) {
- 		cfile = file->private_data;
- 		file->private_data = NULL;
-+		if (file->f_mode & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&cinode->time_last_write, jiffies);
-+		}
- 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
- 		if ((cfile->status_file_deleted == false) &&
- 		    (smb2_can_defer_close(inode, dclose))) {
-@@ -5001,15 +5015,27 @@ static int is_inode_writable(struct cifsInodeInfo *cifs_inode)
- bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 end_of_file,
- 			    bool from_readdir)
- {
-+	struct cifs_sb_info *cifs_sb;
-+	unsigned long tlw;
-+
- 	if (!cifsInode)
- 		return true;
- 
-+	cifs_sb = CIFS_SB(cifsInode->netfs.inode.i_sb);
-+
- 	if (is_inode_writable(cifsInode) ||
- 		((cifsInode->oplock & CIFS_CACHE_RW_FLG) != 0 && from_readdir)) {
- 		/* This inode is open for write at least once */
--		struct cifs_sb_info *cifs_sb;
- 
--		cifs_sb = CIFS_SB(cifsInode->netfs.inode.i_sb);
-+		/*
-+		 * Readdir data is unreliable when we have writable handles or
-+		 * an exclusive lease -- never allow it to change i_size, even
-+		 * on direct-IO mounts where the server's directory metadata
-+		 * can still lag behind the actual file state.
-+		 */
-+		if (from_readdir)
-+			return false;
-+
- 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_DIRECT_IO) {
- 			/* since no page cache to corrupt on directio
- 			we can change size safely */
-@@ -5020,8 +5046,40 @@ bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 end_of_file,
- 			return true;
- 
- 		return false;
--	} else
--		return true;
-+	}
-+
-+	/*
-+	 * No writable handles open. Check whether we are within the attribute
-+	 * cache validity window of a recent local modification.
-+	 *
-+	 * For the close() path: cifs_close() calls smp_store_release() on
-+	 * time_last_write before _cifsFileInfo_put() removes the handle under
-+	 * open_file_lock. That spin_unlock() is a store-release that pairs
-+	 * with the spin_lock() (load-acquire) in is_inode_writable() above,
-+	 * so if is_inode_writable() returned false the smp_load_acquire()
-+	 * below is guaranteed to observe any time_last_write update from a
-+	 * concurrent close().
-+	 *
-+	 * For the setattr/truncate paths: those callers use smp_store_release()
-+	 * directly; the smp_load_acquire() below pairs with that store. There
-+	 * is no shared lock between setattr and readdir, so this relies on
-+	 * acquire-release semantics alone. The store propagation latency on
-+	 * weakly-ordered architectures (nanoseconds) is negligible relative to
-+	 * the acregmax window (seconds) and the readdir RPC round-trip
-+	 * (milliseconds), making this a sound design choice in practice.
-+	 *
-+	 * time_last_write == 0 means the inode has never been written locally;
-+	 * skip the window check to avoid false positives near boot time when
-+	 * jiffies is still close to INITIAL_JIFFIES on 32-bit systems.
-+	 */
-+	if (from_readdir) {
-+		/* Pairs with smp_store_release() at close and truncate sites. */
-+		tlw = smp_load_acquire(&cifsInode->time_last_write);
-+		if (tlw && time_before(jiffies, tlw + cifs_sb->ctx->acregmax))
-+			return false;
-+	}
-+
-+	return true;
+ static int pas_cpufreq_target(struct cpufreq_policy *policy,
+diff --git a/drivers/cpufreq/powernow-k6.c b/drivers/cpufreq/powernow-k6.c
+index 41eefef95d873..f0a4a6c312049 100644
+--- a/drivers/cpufreq/powernow-k6.c
++++ b/drivers/cpufreq/powernow-k6.c
+@@ -219,7 +219,7 @@ static int powernow_k6_cpu_init(struct cpufreq_policy *policy)
  }
  
- static int cifs_write_begin(struct file *file, struct address_space *mapping,
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index fc76614148900..5db7b2e4a868d 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -227,6 +227,8 @@ cifs_fattr_to_inode(struct inode *inode, struct cifs_fattr *fattr,
- 		 * calculating num blocks.
- 		 */
- 		inode->i_blocks = (512 - 1 + fattr->cf_bytes) >> 9;
-+	} else if (from_readdir && i_size_read(inode) != fattr->cf_eof) {
-+		cifs_i->time = 0;
+ 
+-static int powernow_k6_cpu_exit(struct cpufreq_policy *policy)
++static void powernow_k6_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	unsigned int i;
+ 
+@@ -234,10 +234,9 @@ static int powernow_k6_cpu_exit(struct cpufreq_policy *policy)
+ 			cpufreq_freq_transition_begin(policy, &freqs);
+ 			powernow_k6_target(policy, i);
+ 			cpufreq_freq_transition_end(policy, &freqs, 0);
+-			break;
++			return;
+ 		}
+ 	}
+-	return 0;
+ }
+ 
+ static unsigned int powernow_k6_get(unsigned int cpu)
+diff --git a/drivers/cpufreq/powernow-k7.c b/drivers/cpufreq/powernow-k7.c
+index 5d515fc348364..4271446c87258 100644
+--- a/drivers/cpufreq/powernow-k7.c
++++ b/drivers/cpufreq/powernow-k7.c
+@@ -644,7 +644,7 @@ static int powernow_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int powernow_cpu_exit(struct cpufreq_policy *policy)
++static void powernow_cpu_exit(struct cpufreq_policy *policy)
+ {
+ #ifdef CONFIG_X86_POWERNOW_K7_ACPI
+ 	if (acpi_processor_perf) {
+@@ -655,7 +655,6 @@ static int powernow_cpu_exit(struct cpufreq_policy *policy)
+ #endif
+ 
+ 	kfree(powernow_table);
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver powernow_driver = {
+diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
+index 508bd6f68f1ee..1260d4023a59a 100644
+--- a/drivers/cpufreq/powernow-k8.c
++++ b/drivers/cpufreq/powernow-k8.c
+@@ -1090,13 +1090,13 @@ static int powernowk8_cpu_init(struct cpufreq_policy *pol)
+ 	return -ENODEV;
+ }
+ 
+-static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
++static void powernowk8_cpu_exit(struct cpufreq_policy *pol)
+ {
+ 	struct powernow_k8_data *data = per_cpu(powernow_data, pol->cpu);
+ 	int cpu;
+ 
+ 	if (!data)
+-		return -EINVAL;
++		return;
+ 
+ 	powernow_k8_cpu_exit_acpi(data);
+ 
+@@ -1105,8 +1105,6 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
+ 	/* pol->cpus will be empty here, use related_cpus instead. */
+ 	for_each_cpu(cpu, pol->related_cpus)
+ 		per_cpu(powernow_data, cpu) = NULL;
+-
+-	return 0;
+ }
+ 
+ static void query_values_on_cpu(void *_err)
+diff --git a/drivers/cpufreq/powernv-cpufreq.c b/drivers/cpufreq/powernv-cpufreq.c
+index fddbd1ea16355..50c62929f7ca6 100644
+--- a/drivers/cpufreq/powernv-cpufreq.c
++++ b/drivers/cpufreq/powernv-cpufreq.c
+@@ -874,7 +874,7 @@ static int powernv_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int powernv_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void powernv_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct powernv_smp_call_data freq_data;
+ 	struct global_pstate_info *gpstates = policy->driver_data;
+@@ -886,8 +886,6 @@ static int powernv_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ 		del_timer_sync(&gpstates->timer);
+ 
+ 	kfree(policy->driver_data);
+-
+-	return 0;
+ }
+ 
+ static int powernv_cpufreq_reboot_notifier(struct notifier_block *nb,
+diff --git a/drivers/cpufreq/ppc_cbe_cpufreq.c b/drivers/cpufreq/ppc_cbe_cpufreq.c
+index 88afc49941b71..5ee4c7bfdcc53 100644
+--- a/drivers/cpufreq/ppc_cbe_cpufreq.c
++++ b/drivers/cpufreq/ppc_cbe_cpufreq.c
+@@ -113,10 +113,9 @@ static int cbe_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int cbe_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void cbe_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	cbe_cpufreq_pmi_policy_exit(policy);
+-	return 0;
+ }
+ 
+ static int cbe_cpufreq_target(struct cpufreq_policy *policy,
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 92c0fc4a3cf60..0daf442aedd4b 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -574,7 +574,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 	return qcom_cpufreq_hw_lmh_init(policy, index);
+ }
+ 
+-static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
++static void qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+ 	struct qcom_cpufreq_data *data = policy->driver_data;
+@@ -584,8 +584,6 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ 	qcom_cpufreq_hw_lmh_exit(data);
+ 	kfree(policy->freq_table);
+ 	kfree(data);
+-
+-	return 0;
+ }
+ 
+ static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/qoriq-cpufreq.c b/drivers/cpufreq/qoriq-cpufreq.c
+index 0aecaecbb0e67..3519bf34d3970 100644
+--- a/drivers/cpufreq/qoriq-cpufreq.c
++++ b/drivers/cpufreq/qoriq-cpufreq.c
+@@ -225,7 +225,7 @@ static int qoriq_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return -ENODEV;
+ }
+ 
+-static int qoriq_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void qoriq_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct cpu_data *data = policy->driver_data;
+ 
+@@ -233,8 +233,6 @@ static int qoriq_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ 	kfree(data->table);
+ 	kfree(data);
+ 	policy->driver_data = NULL;
+-
+-	return 0;
+ }
+ 
+ static int qoriq_cpufreq_target(struct cpufreq_policy *policy,
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index 68325ebd56fe3..27e5d887d1313 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -247,7 +247,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int scmi_cpufreq_exit(struct cpufreq_policy *policy)
++static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct scmi_data *priv = policy->driver_data;
+ 
+@@ -255,8 +255,6 @@ static int scmi_cpufreq_exit(struct cpufreq_policy *policy)
+ 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
+ 	free_cpumask_var(priv->opp_shared_cpus);
+ 	kfree(priv);
+-
+-	return 0;
+ }
+ 
+ static void scmi_cpufreq_register_em(struct cpufreq_policy *policy)
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index 2aef39bff7d6f..a191d9bdf667a 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -175,7 +175,7 @@ static int scpi_cpufreq_init(struct cpufreq_policy *policy)
+ 	return ret;
+ }
+ 
+-static int scpi_cpufreq_exit(struct cpufreq_policy *policy)
++static void scpi_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct scpi_data *priv = policy->driver_data;
+ 
+@@ -183,8 +183,6 @@ static int scpi_cpufreq_exit(struct cpufreq_policy *policy)
+ 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
+ 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
+ 	kfree(priv);
+-
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver scpi_cpufreq_driver = {
+diff --git a/drivers/cpufreq/sh-cpufreq.c b/drivers/cpufreq/sh-cpufreq.c
+index b8704232c27b2..aa74036d0420e 100644
+--- a/drivers/cpufreq/sh-cpufreq.c
++++ b/drivers/cpufreq/sh-cpufreq.c
+@@ -135,14 +135,12 @@ static int sh_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int sh_cpufreq_cpu_exit(struct cpufreq_policy *policy)
++static void sh_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	unsigned int cpu = policy->cpu;
+ 	struct clk *cpuclk = &per_cpu(sh_cpuclk, cpu);
+ 
+ 	clk_put(cpuclk);
+-
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver sh_cpufreq_driver = {
+diff --git a/drivers/cpufreq/sparc-us2e-cpufreq.c b/drivers/cpufreq/sparc-us2e-cpufreq.c
+index 2783d3d55fcee..8a0cd5312a593 100644
+--- a/drivers/cpufreq/sparc-us2e-cpufreq.c
++++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
+@@ -296,10 +296,9 @@ static int us2e_freq_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int us2e_freq_cpu_exit(struct cpufreq_policy *policy)
++static void us2e_freq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	us2e_freq_target(policy, 0);
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver cpufreq_us2e_driver = {
+diff --git a/drivers/cpufreq/sparc-us3-cpufreq.c b/drivers/cpufreq/sparc-us3-cpufreq.c
+index 6c3657679a880..b50f9d13e6d26 100644
+--- a/drivers/cpufreq/sparc-us3-cpufreq.c
++++ b/drivers/cpufreq/sparc-us3-cpufreq.c
+@@ -140,10 +140,9 @@ static int us3_freq_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int us3_freq_cpu_exit(struct cpufreq_policy *policy)
++static void us3_freq_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	us3_freq_target(policy, 0);
+-	return 0;
+ }
+ 
+ static struct cpufreq_driver cpufreq_us3_driver = {
+diff --git a/drivers/cpufreq/speedstep-centrino.c b/drivers/cpufreq/speedstep-centrino.c
+index 75b10ecdb60f2..0eb51fb73a803 100644
+--- a/drivers/cpufreq/speedstep-centrino.c
++++ b/drivers/cpufreq/speedstep-centrino.c
+@@ -400,16 +400,12 @@ static int centrino_cpu_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int centrino_cpu_exit(struct cpufreq_policy *policy)
++static void centrino_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	unsigned int cpu = policy->cpu;
+ 
+-	if (!per_cpu(centrino_model, cpu))
+-		return -ENODEV;
+-
+-	per_cpu(centrino_model, cpu) = NULL;
+-
+-	return 0;
++	if (per_cpu(centrino_model, cpu))
++		per_cpu(centrino_model, cpu) = NULL;
+ }
+ 
+ /**
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index 386aed3637b4e..454767c2ad6ba 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -526,14 +526,12 @@ static int tegra194_cpufreq_offline(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int tegra194_cpufreq_exit(struct cpufreq_policy *policy)
++static void tegra194_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+ 
+ 	dev_pm_opp_remove_all_dynamic(cpu_dev);
+ 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+-
+-	return 0;
+ }
+ 
+ static int tegra194_cpufreq_set_target(struct cpufreq_policy *policy,
+diff --git a/drivers/cpufreq/vexpress-spc-cpufreq.c b/drivers/cpufreq/vexpress-spc-cpufreq.c
+index 9ac4ea50b8746..3fadf536c4298 100644
+--- a/drivers/cpufreq/vexpress-spc-cpufreq.c
++++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
+@@ -447,7 +447,7 @@ static int ve_spc_cpufreq_init(struct cpufreq_policy *policy)
+ 	return 0;
+ }
+ 
+-static int ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
++static void ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev;
+ 
+@@ -455,11 +455,10 @@ static int ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
+ 	if (!cpu_dev) {
+ 		pr_err("%s: failed to get cpu%d device\n", __func__,
+ 		       policy->cpu);
+-		return -ENODEV;
++		return;
  	}
  
- 	if (S_ISLNK(fattr->cf_mode) && fattr->cf_symlink_target) {
-@@ -3135,6 +3137,8 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 	put_cluster_clk_and_freq_table(cpu_dev, policy->related_cpus);
+-	return 0;
+ }
  
- 	if ((attrs->ia_valid & ATTR_SIZE) &&
- 	    attrs->ia_size != i_size_read(inode)) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cifsInode->time_last_write, jiffies);
- 		truncate_setsize(inode, attrs->ia_size);
- 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
- 	}
-@@ -3353,6 +3357,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ static struct cpufreq_driver ve_spc_cpufreq_driver = {
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 1f94fe8559a9a..445b68efe49fe 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -388,7 +388,7 @@ struct cpufreq_driver {
  
- 	if ((attrs->ia_valid & ATTR_SIZE) &&
- 	    attrs->ia_size != i_size_read(inode)) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cifsInode->time_last_write, jiffies);
- 		truncate_setsize(inode, attrs->ia_size);
- 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
- 	}
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 6f426986eec6e..991e960e16b0c 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -799,7 +799,14 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 	spin_unlock(&cifs_inode->open_file_lock);
+ 	int		(*online)(struct cpufreq_policy *policy);
+ 	int		(*offline)(struct cpufreq_policy *policy);
+-	int		(*exit)(struct cpufreq_policy *policy);
++	void		(*exit)(struct cpufreq_policy *policy);
+ 	int		(*suspend)(struct cpufreq_policy *policy);
+ 	int		(*resume)(struct cpufreq_policy *policy);
  
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, false, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, false, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
-@@ -832,7 +839,14 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 	spin_unlock(&tcon->open_file_lock);
- 
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, true, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, true, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
-@@ -908,7 +922,14 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- 	spin_unlock(&tcon->open_file_lock);
- 
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, true, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, true, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
 -- 
 2.53.0
 
