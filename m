@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA9E3ADBA4;
-	Sat, 17 Oct 2026 16:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BA53AFCF4;
+	Sat, 17 Oct 2026 16:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255288; cv=none; b=sHMGlECS31ws6QSDiuX7Zd7LpKaVRzOWxV2jHKi0wXecX1EUtt7QKyJMU0GAiCAqmsAMNFqCynjL4o1iD9ywBz81sdFDhgwRWyKq0r7XyX0vG1Mn/xS18CVs9TwNHEymVN3UfCx7OhaCHgc6xuAZKExtgnKgUmAl5pqukGK248o=
+	t=1792255292; cv=none; b=ZEjE2h2x3rbGN3xo4DQlfB5TghujZ+k34dXYfTNCDKr/pGk8Aibm4WQZyj/+4e+IRP9v6oUGoh8BGRaNZr/VdBc7apBkZ9nKyP/+YlEwUwLhDRgeE+sCi4SPlrkBG6Kid6Jlh2IB/s8TWLHtzk3NmlAm8hxhUbkqxbSS1FJ/N5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255288; c=relaxed/simple;
-	bh=VyrOiv8vMSi4dys8gAak7faqikNU/xiEzsva1yAd69Q=;
+	s=arc-20240116; t=1792255292; c=relaxed/simple;
+	bh=YQHvbWM0w0xQkcJmvH2ByZuCjH9Q2yibx3UkHYyT6H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nozBdy7kOr1zfgGncUeX997MQqfaLK8uSoJkX4Is5+Ud/GK5bWVf2lKz6MUrU19BejnxE3E6zNVyQIK9B4R3dd3oDZJTL8jzdDXIetsgAMlOsEIDmq46WqF7XdMlYeKys3k8/r6dFzwZehi182PSVz/PA7Twv6VucyrcfeNDQHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8gEopem; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vpb/f/W3yACbfXDhZyWK/8LB4lS3RxtsxoQ0N32mPRxvx6FW4d34e9RiMZcW/0ZAMAbT2FTWy1XptiTpsdtz0RV4yqn5HYl2WLSN5XyxGF2jHaB4MiXEr1fFLHz5zAavnSbBlM3j8SnDXH2CXe6PTpcdnvzQW1vDQoQAgbjm+fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3sBLhuN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8gEopem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933DD1F000C4;
-	Sat, 17 Oct 2026 16:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3sBLhuN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DF31F000C4;
+	Sat, 17 Oct 2026 16:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255287;
-	bh=31r/l1f37ZSzvY+JWr7rKC+Dfc0TwW6r3DUlTbs0hqs=;
+	s=korg; t=1792255290;
+	bh=hyoM1xq+s2Y2cK+4dGCt2Hkp0Tra5WzUgr0pPbdzqic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8gEopemupPqjoY1jlYkKdj0UlfJh4cds0MX8kiugvp/8I59z+QhMvq+/MTCNSe3C
-	 Ss51RbVwLBLykVJDPNrx8g/frTJxhruG05hgiBfdsSv+vVdVIPIfXSngWw6k3i6yXf
-	 xRPiE8PYRWz4NDZtaprz5jhomeRe15lY4pyB0EpA=
+	b=O3sBLhuNIXmIwtJVrzEoDNMUEff0+m8ykz99yDVZCjcKAbBsBdVne3WBQt6HYAFyR
+	 b2Xul3WgQ+3QmpWMoFXskyIRiA5ZbuRTwdgLllPm9vyPr+Fn2F1a5nCfn4Qv9g1wOq
+	 vpyIO1T1UaVXyiMB01p1Q+ciZopFRKfkhuHx9Tf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Skvortsov <victor.skvortsov@amd.com>,
-	Zhigang Luo <zhigang.luo@amd.com>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 726/869] drm/amdgpu: Update SRIOV Exchange Headers for RAS Telemetry Support
-Date: Sat, 17 Oct 2026 17:59:27 +0200
-Message-ID: <20261017160055.565794598@linuxfoundation.org>
+Subject: [PATCH 6.12 727/869] drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq
+Date: Sat, 17 Oct 2026 17:59:28 +0200
+Message-ID: <20261017160055.591400275@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,246 +51,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Skvortsov <victor.skvortsov@amd.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 60c58d72afb81d2dc3f52f638eff5197511ac114 ]
+[ Upstream commit e3829992dd9fa0a82511af4f01733fc854cd15a5 ]
 
-The SRIOV PF/VF Data exchange is extended by 64KB for VF RAS Telemetry data.
-Add Host RAS Telemetry enable capabilities bitfields.
-Add a new VF msg REQ_RAS_ERROR_COUNT, the host response data will be populated
-in the RAS Telemetry region.
+cp_ecc_error_irq is acquired in amdgpu_gfx_ras_late_init() but
+released in gfx_v9_0_hw_fini(), so the put site has to query
+amdgpu_irq_enabled() because the get is skipped on SR-IOV VF.
 
-Signed-off-by: Victor Skvortsov <victor.skvortsov@amd.com>
-Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
+ras_late_init / ras_fini have no suspend counterpart, so move the
+put to amdgpu_gfx_ras_suspend() / amdgpu_gfx_ras_fini() and add a
+matching ras_suspend callback that is invoked from
+amdgpu_ras_suspend() before disable_all_features().  The get and
+put now sit in the same place and check the same condition (not
+VF, funcs registered), no refcount querying needed.
+
+An active flag gates ras_fini so the
+suspend-then-unload-without-resume path falls into
+amdgpu_ras_block_late_fini_default() instead of double-releasing
+what ras_suspend already cleaned up.
+
+Drop the cp_ecc_error_irq put from gfx_v9_0_hw_fini().  gfx_v8_0
+manages cp_ecc_error_irq locally and is unaffected; no other GFX
+generation has this IRQ.
+
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: e3829992dd9f ("drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h | 131 +++++++++++++++++---
- drivers/gpu/drm/amd/amdgpu/mxgpu_nv.h       |   3 +
- 2 files changed, 115 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 23 +++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h |  3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 32 +++++++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h |  1 +
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   |  2 --
+ 5 files changed, 53 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-index 6e9eeaeb3de1d..b4f9c2f4e92cc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgv_sriovmsg.h
-@@ -28,17 +28,21 @@
- #define AMD_SRIOV_MSG_VBIOS_SIZE_KB	     64
- #define AMD_SRIOV_MSG_DATAEXCHANGE_OFFSET_KB AMD_SRIOV_MSG_VBIOS_SIZE_KB
- #define AMD_SRIOV_MSG_DATAEXCHANGE_SIZE_KB   4
--
-+#define AMD_SRIOV_MSG_TMR_OFFSET_KB	     2048
-+#define AMD_SRIOV_MSG_BAD_PAGE_SIZE_KB	     2
-+#define AMD_SRIOV_RAS_TELEMETRY_SIZE_KB	     64
- /*
-  * layout
-- * 0           64KB        65KB        66KB
-- * |   VBIOS   |   PF2VF   |   VF2PF   |   Bad Page   | ...
-- * |   64KB    |   1KB     |   1KB     |
-+ * 0           64KB        65KB        66KB           68KB                   132KB
-+ * |   VBIOS   |   PF2VF   |   VF2PF   |   Bad Page   | RAS Telemetry Region | ...
-+ * |   64KB    |   1KB     |   1KB     |   2KB        | 64KB                 | ...
-  */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index 171603c4ee6c9..66e7f899de2a9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -922,7 +922,7 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
+ 		if (r)
+ 			return r;
+ 
+-		if (adev->gfx.cp_ecc_error_irq.funcs) {
++		if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs) {
+ 			r = amdgpu_irq_get(adev, &adev->gfx.cp_ecc_error_irq, 0);
+ 			if (r)
+ 				goto late_fini;
+@@ -937,6 +937,21 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
+ 	return r;
+ }
+ 
++void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev,
++			    struct ras_common_if *ras_block)
++{
++	if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
++		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
++}
 +
- #define AMD_SRIOV_MSG_SIZE_KB                   1
- #define AMD_SRIOV_MSG_PF2VF_OFFSET_KB           AMD_SRIOV_MSG_DATAEXCHANGE_OFFSET_KB
- #define AMD_SRIOV_MSG_VF2PF_OFFSET_KB           (AMD_SRIOV_MSG_PF2VF_OFFSET_KB + AMD_SRIOV_MSG_SIZE_KB)
- #define AMD_SRIOV_MSG_BAD_PAGE_OFFSET_KB        (AMD_SRIOV_MSG_VF2PF_OFFSET_KB + AMD_SRIOV_MSG_SIZE_KB)
-+#define AMD_SRIOV_MSG_RAS_TELEMETRY_OFFSET_KB   (AMD_SRIOV_MSG_BAD_PAGE_OFFSET_KB + AMD_SRIOV_MSG_BAD_PAGE_SIZE_KB)
++void amdgpu_gfx_ras_fini(struct amdgpu_device *adev,
++			 struct ras_common_if *ras_block)
++{
++	if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
++		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
++	amdgpu_ras_block_late_fini(adev, ras_block);
++}
++
+ int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
+ {
+ 	int err = 0;
+@@ -965,6 +980,12 @@ int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
+ 	if (!ras->ras_block.ras_late_init)
+ 		ras->ras_block.ras_late_init = amdgpu_gfx_ras_late_init;
  
- /*
-  * PF2VF history log:
-@@ -86,30 +90,59 @@ enum amd_sriov_ucode_engine_id {
++	if (!ras->ras_block.ras_suspend)
++		ras->ras_block.ras_suspend = amdgpu_gfx_ras_suspend;
++
++	if (!ras->ras_block.ras_fini)
++		ras->ras_block.ras_fini = amdgpu_gfx_ras_fini;
++
+ 	/* If not defined special ras_cb function, use default ras_cb */
+ 	if (!ras->ras_block.ras_cb)
+ 		ras->ras_block.ras_cb = amdgpu_gfx_process_ras_data_cb;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+index 5644e10a86a99..e64dcfdbfadd9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+@@ -547,7 +547,8 @@ bool amdgpu_gfx_is_me_queue_enabled(struct amdgpu_device *adev, int me,
+ void amdgpu_gfx_off_ctrl(struct amdgpu_device *adev, bool enable);
+ int amdgpu_get_gfx_off_status(struct amdgpu_device *adev, uint32_t *value);
+ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+-void amdgpu_gfx_ras_fini(struct amdgpu_device *adev);
++void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev, struct ras_common_if *ras_block);
++void amdgpu_gfx_ras_fini(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ int amdgpu_get_gfx_off_entrycount(struct amdgpu_device *adev, u64 *value);
+ int amdgpu_get_gfx_off_residency(struct amdgpu_device *adev, u32 *residency);
+ int amdgpu_set_gfx_off_residency(struct amdgpu_device *adev, bool value);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index bf563904b3fa9..1784e484798b5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -90,6 +90,9 @@ struct amdgpu_ras_block_list {
+ 	struct list_head node;
  
- union amd_sriov_msg_feature_flags {
- 	struct {
--		uint32_t error_log_collect : 1;
--		uint32_t host_load_ucodes  : 1;
--		uint32_t host_flr_vramlost : 1;
--		uint32_t mm_bw_management  : 1;
--		uint32_t pp_one_vf_mode    : 1;
--		uint32_t reg_indirect_acc  : 1;
--		uint32_t av1_support       : 1;
--		uint32_t vcn_rb_decouple   : 1;
--		uint32_t mes_info_enable   : 1;
--		uint32_t reserved          : 23;
-+		uint32_t error_log_collect	: 1;
-+		uint32_t host_load_ucodes	: 1;
-+		uint32_t host_flr_vramlost	: 1;
-+		uint32_t mm_bw_management	: 1;
-+		uint32_t pp_one_vf_mode		: 1;
-+		uint32_t reg_indirect_acc	: 1;
-+		uint32_t av1_support		: 1;
-+		uint32_t vcn_rb_decouple 	: 1;
-+		uint32_t mes_info_dump_enable	: 1;
-+		uint32_t ras_caps		: 1;
-+		uint32_t ras_telemetry		: 1;
-+		uint32_t reserved		: 21;
- 	} flags;
- 	uint32_t all;
+ 	struct amdgpu_ras_block_object *ras_obj;
++
++	/* set by ras_late_init, cleared by ras_suspend/ras_fini */
++	bool active;
  };
  
- union amd_sriov_reg_access_flags {
- 	struct {
--		uint32_t vf_reg_access_ih 	 : 1;
--		uint32_t vf_reg_access_mmhub : 1;
--		uint32_t vf_reg_access_gc 	 : 1;
--		uint32_t reserved	         : 29;
-+		uint32_t vf_reg_access_ih	: 1;
-+		uint32_t vf_reg_access_mmhub	: 1;
-+		uint32_t vf_reg_access_gc	: 1;
-+		uint32_t reserved		: 29;
- 	} flags;
- 	uint32_t all;
- };
+ const char *get_ras_block_str(struct ras_common_if *ras_block)
+@@ -3874,10 +3877,23 @@ void amdgpu_ras_resume(struct amdgpu_device *adev)
+ void amdgpu_ras_suspend(struct amdgpu_device *adev)
+ {
+ 	struct amdgpu_ras *con = amdgpu_ras_get_context(adev);
++	struct amdgpu_ras_block_list *node;
++	struct amdgpu_ras_block_object *obj;
  
-+union amd_sriov_ras_caps {
-+	struct {
-+		uint64_t block_umc			: 1;
-+		uint64_t block_sdma			: 1;
-+		uint64_t block_gfx			: 1;
-+		uint64_t block_mmhub			: 1;
-+		uint64_t block_athub			: 1;
-+		uint64_t block_pcie_bif			: 1;
-+		uint64_t block_hdp			: 1;
-+		uint64_t block_xgmi_wafl		: 1;
-+		uint64_t block_df			: 1;
-+		uint64_t block_smn			: 1;
-+		uint64_t block_sem			: 1;
-+		uint64_t block_mp0			: 1;
-+		uint64_t block_mp1			: 1;
-+		uint64_t block_fuse			: 1;
-+		uint64_t block_mca			: 1;
-+		uint64_t block_vcn			: 1;
-+		uint64_t block_jpeg			: 1;
-+		uint64_t block_ih			: 1;
-+		uint64_t block_mpio			: 1;
-+		uint64_t poison_propogation_mode	: 1;
-+		uint64_t reserved			: 44;
-+	} bits;
-+	uint64_t all;
-+};
-+
- union amd_sriov_msg_os_info {
- 	struct {
- 		uint32_t windows  : 1;
-@@ -158,7 +191,7 @@ struct amd_sriov_msg_pf2vf_info_header {
- 	uint32_t reserved[2];
- };
+ 	if (!adev->ras_enabled || !con)
+ 		return;
  
--#define AMD_SRIOV_MSG_PF2VF_INFO_FILLED_SIZE (49)
-+#define AMD_SRIOV_MSG_PF2VF_INFO_FILLED_SIZE (55)
- struct amd_sriov_msg_pf2vf_info {
- 	/* header contains size and version */
- 	struct amd_sriov_msg_pf2vf_info_header header;
-@@ -211,6 +244,12 @@ struct amd_sriov_msg_pf2vf_info {
- 	uint32_t pcie_atomic_ops_support_flags;
- 	/* Portion of GPU memory occupied by VF.  MAX value is 65535, but set to uint32_t to maintain alignment with reserved size */
- 	uint32_t gpu_capacity;
-+	/* vf bdf on host pci tree for debug only */
-+	uint32_t bdf_on_host;
-+	uint32_t more_bp;	//Reserved for future use.
-+	union amd_sriov_ras_caps ras_en_caps;
-+	union amd_sriov_ras_caps ras_telemetry_en_caps;
++	/* run per-block ras_suspend before tearing down the RAS context */
++	list_for_each_entry(node, &adev->ras_list, node) {
++		if (!node->active)
++			continue;
 +
- 	/* reserved */
- 	uint32_t reserved[256 - AMD_SRIOV_MSG_PF2VF_INFO_FILLED_SIZE];
- } __packed;
-@@ -283,8 +322,12 @@ enum amd_sriov_mailbox_request_message {
- 	MB_REQ_MSG_REL_GPU_FINI_ACCESS,
- 	MB_REQ_MSG_REQ_GPU_RESET_ACCESS,
- 	MB_REQ_MSG_REQ_GPU_INIT_DATA,
-+	MB_REQ_MSG_PSP_VF_CMD_RELAY,
++		obj = node->ras_obj;
++		if (obj && obj->ras_suspend)
++			obj->ras_suspend(adev, &obj->ras_comm);
++		node->active = false;
++	}
++
+ 	amdgpu_ras_disable_all_features(adev, 0);
+ 	/* Make sure all ras objects are disabled. */
+ 	if (AMDGPU_RAS_GET_FEATURES(con->features))
+@@ -3931,8 +3947,15 @@ int amdgpu_ras_late_init(struct amdgpu_device *adev)
+ 					obj->ras_comm.name, r);
+ 				return r;
+ 			}
+-		} else
+-			amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
++		} else {
++			r = amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
++			if (r) {
++				dev_err(adev->dev, "%s failed to execute ras_block_late_init_default! ret:%d\n",
++					obj->ras_comm.name, r);
++				return r;
++			}
++		}
++		node->active = true;
+ 	}
  
- 	MB_REQ_MSG_LOG_VF_ERROR = 200,
-+	MB_REQ_MSG_READY_TO_RESET = 201,
-+	MB_REQ_MSG_RAS_POISON = 202,
-+	MB_REQ_RAS_ERROR_COUNT = 203,
- };
+ 	return 0;
+@@ -3966,11 +3989,12 @@ int amdgpu_ras_fini(struct amdgpu_device *adev)
+ 	list_for_each_entry_safe(ras_node, tmp, &adev->ras_list, node) {
+ 		if (ras_node->ras_obj) {
+ 			obj = ras_node->ras_obj;
+-			if (amdgpu_ras_is_supported(adev, obj->ras_comm.block) &&
+-			    obj->ras_fini)
++			/* fall back to default cleanup if ras_suspend already ran */
++			if (ras_node->active && obj->ras_fini)
+ 				obj->ras_fini(adev, &obj->ras_comm);
+ 			else
+ 				amdgpu_ras_block_late_fini_default(adev, &obj->ras_comm);
++			ras_node->active = false;
+ 		}
  
- /* mailbox message send from host to guest  */
-@@ -297,10 +340,60 @@ enum amd_sriov_mailbox_response_message {
- 	MB_RES_MSG_FAIL,
- 	MB_RES_MSG_QUERY_ALIVE,
- 	MB_RES_MSG_GPU_INIT_DATA_READY,
-+	MB_RES_MSG_RAS_ERROR_COUNT_READY = 11,
+ 		/* Clear ras blocks from ras_list and free ras block list node */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+index 7e7521fedafc7..a705b1157d8e1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+@@ -706,6 +706,7 @@ struct amdgpu_ras_block_object {
+ 	int (*ras_block_match)(struct amdgpu_ras_block_object *block_obj,
+ 				enum amdgpu_ras_block block, uint32_t sub_block_index);
+ 	int (*ras_late_init)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
++	void (*ras_suspend)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ 	void (*ras_fini)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ 	ras_ih_cb ras_cb;
+ 	const struct amdgpu_ras_block_hw_ops *hw_ops;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 06ab40412200f..870ec359ed4b6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -4018,8 +4018,6 @@ static int gfx_v9_0_hw_fini(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
  
- 	MB_RES_MSG_TEXT_MESSAGE = 255
- };
- 
-+enum amd_sriov_ras_telemetry_gpu_block {
-+	RAS_TELEMETRY_GPU_BLOCK_UMC		= 0,
-+	RAS_TELEMETRY_GPU_BLOCK_SDMA		= 1,
-+	RAS_TELEMETRY_GPU_BLOCK_GFX		= 2,
-+	RAS_TELEMETRY_GPU_BLOCK_MMHUB		= 3,
-+	RAS_TELEMETRY_GPU_BLOCK_ATHUB		= 4,
-+	RAS_TELEMETRY_GPU_BLOCK_PCIE_BIF	= 5,
-+	RAS_TELEMETRY_GPU_BLOCK_HDP		= 6,
-+	RAS_TELEMETRY_GPU_BLOCK_XGMI_WAFL	= 7,
-+	RAS_TELEMETRY_GPU_BLOCK_DF		= 8,
-+	RAS_TELEMETRY_GPU_BLOCK_SMN		= 9,
-+	RAS_TELEMETRY_GPU_BLOCK_SEM		= 10,
-+	RAS_TELEMETRY_GPU_BLOCK_MP0		= 11,
-+	RAS_TELEMETRY_GPU_BLOCK_MP1		= 12,
-+	RAS_TELEMETRY_GPU_BLOCK_FUSE		= 13,
-+	RAS_TELEMETRY_GPU_BLOCK_MCA		= 14,
-+	RAS_TELEMETRY_GPU_BLOCK_VCN		= 15,
-+	RAS_TELEMETRY_GPU_BLOCK_JPEG		= 16,
-+	RAS_TELEMETRY_GPU_BLOCK_IH		= 17,
-+	RAS_TELEMETRY_GPU_BLOCK_MPIO		= 18,
-+	RAS_TELEMETRY_GPU_BLOCK_COUNT		= 19,
-+};
-+
-+struct amd_sriov_ras_telemetry_header {
-+	uint32_t checksum;
-+	uint32_t used_size;
-+	uint32_t reserved[2];
-+};
-+
-+struct amd_sriov_ras_telemetry_error_count {
-+	struct {
-+		uint32_t ce_count;
-+		uint32_t ue_count;
-+		uint32_t de_count;
-+		uint32_t ce_overflow_count;
-+		uint32_t ue_overflow_count;
-+		uint32_t de_overflow_count;
-+		uint32_t reserved[6];
-+	} block[RAS_TELEMETRY_GPU_BLOCK_COUNT];
-+};
-+
-+struct amdsriov_ras_telemetry {
-+	struct amd_sriov_ras_telemetry_header header;
-+
-+	union {
-+		struct amd_sriov_ras_telemetry_error_count error_count;
-+	} body;
-+};
-+
- /* version data stored in MAILBOX_MSGBUF_RCV_DW1 for future expansion */
- enum amd_sriov_gpu_init_data_version {
- 	GPU_INIT_DATA_READY_V1 = 1,
-diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.h b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.h
-index 1d099ffb3a5a2..9d61d76e1bf96 100644
---- a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.h
-+++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.h
-@@ -40,6 +40,7 @@ enum idh_request {
- 	IDH_LOG_VF_ERROR	= 200,
- 	IDH_READY_TO_RESET 	= 201,
- 	IDH_RAS_POISON	= 202,
-+	IDH_REQ_RAS_ERROR_COUNT = 203,
- };
- 
- enum idh_event {
-@@ -54,6 +55,8 @@ enum idh_event {
- 	IDH_RAS_POISON_READY,
- 	IDH_PF_SOFT_FLR_NOTIFICATION,
- 	IDH_RAS_ERROR_DETECTED,
-+	IDH_RAS_ERROR_COUNT_READY = 11,
-+
- 	IDH_TEXT_MESSAGE = 255,
- };
- 
+-	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
+-		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.bad_op_irq, 0);
 -- 
 2.53.0
 
