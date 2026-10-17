@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A682248B3;
-	Sat, 17 Oct 2026 16:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915EE38654F;
+	Sat, 17 Oct 2026 16:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254163; cv=none; b=HbxBhhM7xDmQ+gm/WsEAlx0/97M6Ue7KzpJtnEfQYhqt9DypzH9A8eKgo2tzgkYBGLiOTVMFwKnAeBf+h6Km5kL9n+v2tpg/ThlAyxzlxMj000E6P+1Fp/7SX1Babqr5vRUKbtzd/rbviwz52D1sk1u5mRU5fexcwi98nCWUhQk=
+	t=1792254166; cv=none; b=MvJVJ3Rh9STtoOEuC5EsATCQMQ4y8UpF3z1hpz/ZkSNsIlkVnVBlBoYaoX+eyAezkK/ifyI3kosy9N9kdt9piMiw8N8ioYPjxQDpAY4COLM6x/BoV5vAtLocoiPH+XEM1f5+PiykXZHaDJPpyRDSPvM+qjFyilBXUOPv6aVik4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254163; c=relaxed/simple;
-	bh=573aALkI6ygS10sTpHOQ/FI7UAyi8SLfMXCCmivh82U=;
+	s=arc-20240116; t=1792254166; c=relaxed/simple;
+	bh=bTz3gqkdUIMQo2iXnSWfvkOXXEcjkyZ9tIItVFxQQA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGaCrxN51xRq3ymQuCF4QspNIrecTPU7r8mcXDq6csIm2NDcqmDMqOieXpkv+zgjaPvYM9lim3xHJc8eLHyehaqO6ihbp4J4/MmtEuQBl/HoO9eROCwzMsX+kHU8lm3vm4up96scsJhpog5Zwl3tjVdzOwiqZp+CFsFnF2prDcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFnzQvDG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKU9bWe2lVuKEpi2/OCGd1m//befJTMDdpqIttCiuCjGNYQ1iT8Kj5+cBWsmLFv4fqQy9NN7cq8VrlEJbcUfL2p01BH56u3NbWd0bMUKAMFh0oV+rRvGCvD0ILB0/OoY7D4gjWP7wbhKGkX8DjOqrH5Dkt3IPk3O1Qfw1/h5als=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUeHWXGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFnzQvDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA26F1F000C4;
-	Sat, 17 Oct 2026 16:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUeHWXGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0491F000C5;
+	Sat, 17 Oct 2026 16:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254162;
-	bh=B/DQCLIYadzjVrnF83FGXwttCSzoHCf8mjMIVCPtEHc=;
+	s=korg; t=1792254165;
+	bh=BClXT+jFdV4srEGeLxhJ7Z/y8W574+L44CZJZs79AM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFnzQvDGqoScS9SQCn6sfZQtA7PsAAixIQ1TxRoKDgQ18uCg4puoNTLAD1kmWihMV
-	 Q0Xe0IK49u1XwM9/zlGiRdvB/gqfc/dpxJRT93gzTcADnaQLBW9y7eEK8dmJIXne6u
-	 ZrYzgu2JjIFeag6xcR0lG7IA4umqI9QVwT6Y9aPE=
+	b=UUeHWXGm814/TAUc7AogCiFuNnA6i53zn5d12miGexWJo26MV23PhAss77SsYavlk
+	 IMegCBXZaUtu7m5joZUJDoCvy+Rs7fhwR2BidqxBncEg6HnTQ30UuQ2m8SuDMP1OG+
+	 qpEpdoMdXxSOETPoyjHB+uRk4EuTPtG7ATnOipMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/869] netfs: Fix missing locking around retry adding new subreqs
-Date: Sat, 17 Oct 2026 17:53:17 +0200
-Message-ID: <20261017160046.234460515@linuxfoundation.org>
+Subject: [PATCH 6.12 357/869] netfilter: bridge: eb_tables: close module init race
+Date: Sat, 17 Oct 2026 17:53:18 +0200
+Message-ID: <20261017160046.259104019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,54 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit cce18c263e9623872327ba3c956012f73c1179cc ]
+[ Upstream commit 27414ff1b287ea9a2a11675149ec28e05539f3cc ]
 
-Fix netfs_retry_read_subrequests() and netfs_retry_write_stream() to take
-the appropriate lock when adding extra subrequests into
-stream->subrequests.
+sashiko reports for unrelated patch:
+ Does the core ebtables initialization in ebtables.c suffer from a similar race?
+ Once nf_register_sockopt() completes, the sockopts are exposed globally.
 
-Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Closes: https://sashiko.dev/#/patchset/20260425125426.3855807-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-3-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+sockopt has to be registered last, just like in ip/ip6/arptables.
+
+Fixes: 5b53951cfc85 ("netfilter: ebtables: use net_generic infra")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_collect.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/netfs/write_collect.c b/fs/netfs/write_collect.c
-index c349867d74c34..ad2edf794f0ff 100644
---- a/fs/netfs/write_collect.c
-+++ b/fs/netfs/write_collect.c
-@@ -263,7 +263,9 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
- 			list_for_each_entry_safe_from(subreq, tmp,
- 						      &stream->subrequests, rreq_link) {
- 				trace_netfs_sreq(subreq, netfs_sreq_trace_discard);
-+				spin_lock_bh(&wreq->lock);
- 				list_del(&subreq->rreq_link);
-+				spin_unlock_bh(&wreq->lock);
- 				netfs_put_subrequest(subreq, false, netfs_sreq_trace_put_done);
- 				if (subreq == to)
- 					break;
-@@ -287,8 +289,10 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
- 					     netfs_sreq_trace_new);
- 			trace_netfs_sreq(subreq, netfs_sreq_trace_split);
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index ab5eca1c9981e..4990a1d0ffb35 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -2607,19 +2607,20 @@ static int __init ebtables_init(void)
+ {
+ 	int ret;
  
-+			spin_lock_bh(&wreq->lock);
- 			list_add(&subreq->rreq_link, &to->rreq_link);
--			to = list_next_entry(to, rreq_link);
-+			spin_unlock_bh(&wreq->lock);
-+			to = subreq;
- 			trace_netfs_sreq(subreq, netfs_sreq_trace_retry);
+-	ret = xt_register_target(&ebt_standard_target);
++	ret = register_pernet_subsys(&ebt_net_ops);
+ 	if (ret < 0)
+ 		return ret;
+-	ret = nf_register_sockopt(&ebt_sockopts);
++
++	ret = xt_register_target(&ebt_standard_target);
+ 	if (ret < 0) {
+-		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
+ 	}
  
- 			stream->sreq_max_len	= len;
+-	ret = register_pernet_subsys(&ebt_net_ops);
++	ret = nf_register_sockopt(&ebt_sockopts);
+ 	if (ret < 0) {
+-		nf_unregister_sockopt(&ebt_sockopts);
+ 		xt_unregister_target(&ebt_standard_target);
++		unregister_pernet_subsys(&ebt_net_ops);
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
