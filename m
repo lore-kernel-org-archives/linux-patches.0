@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18563C13E0;
-	Sat, 17 Oct 2026 18:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F284CF461;
+	Sat, 17 Oct 2026 18:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260540; cv=none; b=k44+ugiA/zy9Enc8bDRq2NsdaJBMM6+vJsr4lgDFrzgwULji8nyLKOCLF9cBMUH5oZXisIV/A4fhTRnOGbJ05AY1SjiaclWBs4lOSMg4TctAuMyqjgxKP2AxaTMmP/BdcHY9IPbzISdcRRJG9kqPC3+yAhUDQ6QS0yZyRHIgkzQ=
+	t=1792260543; cv=none; b=kUlgLlVwqdTqMg61QF/YdBCTwJqQyF5uHraD5kGoklG1hbxVpBLohMl8vJnK2YvZjO7mZBI1gZ3ISgYPaL1X7RVKnbFEvSQpk3YCoGOUAJ1DzpD5urrttDtrMreV/ANOjFnBL23tutsMvp5LDIXu6sf/7R7ul+1MUkROGyjN6nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260540; c=relaxed/simple;
-	bh=baF/ACFluZYJqzZ3JIq9VI9P9Xz7tfffEx8Vpcz1rjI=;
+	s=arc-20240116; t=1792260543; c=relaxed/simple;
+	bh=nHu0FWo5plqydj4W+g4CvDkFB6oz0ExbphTOP7jI3R4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpR1TMKfTIphZwnAQN6HwnxvGuDhNCIakopDEiwBWC5tpUYSGiV7lshzT1FFf9rK57jHShuZYS9Ghut42o+TlRwBIFpqQRH05wrkPKEHm8BiST4F687btrXZckxo7grzlKZOuPF9pw5Ipn20EMfbU3jcH9uZa+0Nm4qwolgM9ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pta/v39M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HP93YYvVq8CCkC3Z8qrmA5QVFtHHAr+r3A0JOdo6YjpfIPLVkTS5R1S7Z1dzJz4JkBqbTXsxwdG+kpbDVA1p0gw1LWJcLeV3kAKDvhxTDtECrpu52OOodgoikmho4Fs6ZKk/YyYJxYgvCj7d1s0HEzRGCeiDXDrwVmk/Mrr8B4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPsV+1SC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pta/v39M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F111F000C4;
-	Sat, 17 Oct 2026 18:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPsV+1SC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5121F000C4;
+	Sat, 17 Oct 2026 18:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260538;
-	bh=R4rEgcGgtOCpReJZpgHOjWJafTQojiK69QGo/o9xMSg=;
+	s=korg; t=1792260541;
+	bh=nfNM6xR/wKaN5T//MUwfvzOu896QhLUIjY04DRZzMIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pta/v39MRHHS7mQG74REAySH1y5vRE61aOV0B/e7G+kmguZmBula8ZzsRbmZvmgDl
-	 eoynNERsLaaacD++Y/e2JFOuCjHBR/LNqdhyJkt/CY+yZpP+5JeU7exVb2DTkdOevH
-	 XZiV1opoFZSV1Q6G7ysC6tvg+gBUr6QRqe67eA1k=
+	b=TPsV+1SCgD7ej+50T/jmS5kbuqkcEcnXmMDQYhwJ8Zc4MX0ADccwsGJ5+AGfQajJm
+	 Tu2687ow2/CYFFH8d/w9Zorll1nbShV8zVatOFu2y006q0YYiINFpY9WYqTgDHUipJ
+	 qPL3Odvvgvzy3PPuy1T3G+zCMY1rRFfyCi0h09zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1577/1674] svcrdma: Validate Read chunk positions before reconstruction
-Date: Sat, 17 Oct 2026 18:04:09 +0200
-Message-ID: <20261017160511.573320218@linuxfoundation.org>
+Subject: [PATCH 6.6 1578/1674] nfsd: fix fcache_disposal UAF by inlining dispose state into nfsd_net
+Date: Sat, 17 Oct 2026 18:04:10 +0200
+Message-ID: <20261017160511.598604519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,154 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3779b7b9e7d1c8ba4738f9d327de3b0288cefe9b ]
+[ Upstream commit bbf13732f74351d21c5e0e8dd9bd8e1c48dc35d4 ]
 
-The RPC/RDMA Read chunk position field is supplied by the remote
-client and stored verbatim in the parsed chunk list.
-xdr_count_read_segments() checks only 4-byte alignment; it never
-compares the position against the received inline body length.
+nfsd_file_dispose_list_delayed() defers fput() to nfsd service threads
+via a per-net freeme queue, preventing the shrinker and GC worker from
+bearing the cost of closing files (see ffb402596147).  However, the
+queue lives in a separately-allocated struct nfsd_fcache_disposal that
+is freed by nfsd_free_fcache_disposal_net() during per-net teardown.
+The global shrinker, laundrette, and fsnotify callbacks can still be
+inside nfsd_file_dispose_list_delayed() dereferencing that pointer,
+causing a use-after-free.
 
-In the single-chunk path, svc_rdma_read_complete_one() splits the
-head and tail kvecs at ch_position. A position past the inline
-body underflows the tail length, exposing adjacent slab memory to
-the upper XDR decoder.
+Inline the spinlock and freeme list directly into struct nfsd_net (as
+fcache_dispose_lock and fcache_dispose_list), eliminating the separately
+allocated struct nfsd_fcache_disposal entirely.  These fields now have
+the same lifetime as the net namespace itself, so there is no dangling
+pointer to chase.
 
-In the multi-chunk path, svc_rdma_read_multiple_chunks() computes
-gap lengths between chunks as unsigned subtractions from
-ch_position. Overlapping Read chunks cause these subtractions to
-underflow. A final position past the inline body likewise
-underflows the trailing gap length. svc_rdma_copy_inline_range()
-then copies past the receive buffer into request pages that are
-returned to the client through the Reply channel.
+nfsd_file_cache_start_net() now just initializes the inline fields and
+cannot fail due to allocation.  nfsd_file_cache_shutdown_net() drains
+the inline list directly instead of freeing a separate struct.  The
+alloc/free helpers are removed.
 
-Bound inline-range copies in svc_rdma_copy_inline_range() against
-the decoded inline RPC body saved in rc_saved_arg. Reject a
-single Read chunk positioned beyond that body, and reject
-multi-chunk lists where accumulated read bytes exceed the next
-chunk's position. Apply the same position and overlap checks in
-the call-chunk interleaving path.
-
-Fixes: d96962e6d0e2 ("svcrdma: Use the new parsed chunk list when pulling Read chunks")
+Fixes: 1463b38e7cf3 ("NFSD: simplify per-net file cache management")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-1-e251306ccca9@oracle.com
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260602-nfsd-testing-v2-7-e4ea62e3cd5c@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ fs/nfsd/filecache.c | 74 +++++++++++++++------------------------------
+ fs/nfsd/netns.h     |  4 ++-
+ 2 files changed, 27 insertions(+), 51 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-index 347db3b7e0bc8..e9edbcfec28cc 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -790,7 +790,7 @@ static int svc_rdma_build_read_chunk(struct svc_rdma_read_info *info,
- /**
-  * svc_rdma_copy_inline_range - Copy part of the inline content into pages
-  * @info: context for RDMA Reads
-- * @offset: offset into the Receive buffer of region to copy
-+ * @offset: offset into the inline content of region to copy
-  * @remaining: length of region to copy
-  *
-  * Take a page at a time from rqstp->rq_pages and copy the inline
-@@ -807,10 +807,14 @@ static int svc_rdma_copy_inline_range(struct svc_rdma_read_info *info,
- 				      unsigned int remaining)
- {
- 	struct svc_rdma_recv_ctxt *head = info->ri_readctxt;
--	unsigned char *dst, *src = head->rc_recv_buf;
- 	struct svc_rqst *rqstp = info->ri_rqst;
-+	unsigned char *dst, *src = rqstp->rq_arg.head[0].iov_base;
-+	unsigned int inline_len = rqstp->rq_arg.head[0].iov_len;
- 	unsigned int page_no, numpages;
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 7d8ad34127d33..c3ce0c100446e 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -60,12 +60,6 @@ static DEFINE_PER_CPU(unsigned long, nfsd_file_releases);
+ static DEFINE_PER_CPU(unsigned long, nfsd_file_total_age);
+ static DEFINE_PER_CPU(unsigned long, nfsd_file_evictions);
  
-+	if (offset > inline_len || remaining > inline_len - offset)
-+		return -EINVAL;
-+
- 	numpages = PAGE_ALIGN(info->ri_pageoff + remaining) >> PAGE_SHIFT;
- 	for (page_no = 0; page_no < numpages; page_no++) {
- 		unsigned int page_len;
-@@ -860,9 +864,10 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
- 	const struct svc_rdma_pcl *pcl = &head->rc_read_pcl;
- 	struct xdr_buf *buf = &info->ri_rqst->rq_arg;
- 	struct svc_rdma_chunk *chunk, *next;
--	unsigned int start, length;
-+	unsigned int inline_len, start, length;
- 	int ret;
+-struct nfsd_fcache_disposal {
+-	struct work_struct work;
+-	spinlock_t lock;
+-	struct list_head freeme;
+-};
+-
+ static struct workqueue_struct *nfsd_filecache_wq __read_mostly;
  
-+	inline_len = buf->head[0].iov_len;
- 	start = 0;
- 	chunk = pcl_first_chunk(pcl);
- 	length = chunk->ch_position;
-@@ -880,6 +885,8 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
- 			break;
+ static struct kmem_cache		*nfsd_file_slab;
+@@ -417,12 +411,11 @@ nfsd_file_dispose_list_delayed(struct list_head *dispose)
+ 		struct nfsd_file *nf = list_first_entry(dispose,
+ 						struct nfsd_file, nf_gc);
+ 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
+-		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
  
- 		start += length;
-+		if (info->ri_totalbytes > next->ch_position)
-+			return -EINVAL;
- 		length = next->ch_position - info->ri_totalbytes;
- 		ret = svc_rdma_copy_inline_range(info, start, length);
- 		if (ret < 0)
-@@ -887,7 +894,9 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
+-		spin_lock(&l->lock);
+-		list_move_tail(&nf->nf_gc, &l->freeme);
+-		spin_unlock(&l->lock);
+-		queue_work(nfsd_filecache_wq, &l->work);
++		spin_lock(&nn->fcache_dispose_lock);
++		list_move_tail(&nf->nf_gc, &nn->fcache_dispose_list);
++		spin_unlock(&nn->fcache_dispose_lock);
++		queue_work(nfsd_filecache_wq, &nn->fcache_dispose_work);
  	}
- 
- 	start += length;
--	length = head->rc_byte_len - start;
-+	if (start > inline_len)
-+		return -EINVAL;
-+	length = inline_len - start;
- 	ret = svc_rdma_copy_inline_range(info, start, length);
- 	if (ret < 0)
- 		return ret;
-@@ -928,6 +937,9 @@ static int svc_rdma_read_data_item(struct svc_rdma_read_info *info)
- 	int ret;
- 
- 	chunk = pcl_first_chunk(&head->rc_read_pcl);
-+	if (chunk->ch_position > buf->head[0].iov_len)
-+		return -EINVAL;
-+
- 	ret = svc_rdma_build_read_chunk(info, chunk);
- 	if (ret < 0)
- 		goto out;
-@@ -1028,14 +1040,17 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
- 			pcl_first_chunk(&head->rc_call_pcl);
- 	const struct svc_rdma_pcl *pcl = &head->rc_read_pcl;
- 	struct svc_rdma_chunk *chunk, *next;
--	unsigned int start, length;
-+	unsigned int call_len, start, length;
- 	int ret;
- 
- 	if (pcl_is_empty(pcl))
- 		return svc_rdma_build_read_chunk(info, call_chunk);
- 
-+	call_len = call_chunk->ch_length;
- 	start = 0;
- 	chunk = pcl_first_chunk(pcl);
-+	if (chunk->ch_position > call_len)
-+		return -EINVAL;
- 	length = chunk->ch_position;
- 	ret = svc_rdma_read_chunk_range(info, call_chunk, start, length);
- 	if (ret < 0)
-@@ -1051,6 +1066,8 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
- 			break;
- 
- 		start += length;
-+		if (info->ri_totalbytes > next->ch_position)
-+			return -EINVAL;
- 		length = next->ch_position - info->ri_totalbytes;
- 		ret = svc_rdma_read_chunk_range(info, call_chunk,
- 						start, length);
-@@ -1059,7 +1076,9 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
- 	}
- 
- 	start += length;
--	length = call_chunk->ch_length - start;
-+	if (start > call_len)
-+		return -EINVAL;
-+	length = call_len - start;
- 	return svc_rdma_read_chunk_range(info, call_chunk, start, length);
  }
+ 
+@@ -651,12 +644,12 @@ static void
+ nfsd_file_delayed_close(struct work_struct *work)
+ {
+ 	LIST_HEAD(head);
+-	struct nfsd_fcache_disposal *l = container_of(work,
+-			struct nfsd_fcache_disposal, work);
++	struct nfsd_net *nn = container_of(work, struct nfsd_net,
++					   fcache_dispose_work);
+ 
+-	spin_lock(&l->lock);
+-	list_splice_init(&l->freeme, &head);
+-	spin_unlock(&l->lock);
++	spin_lock(&nn->fcache_dispose_lock);
++	list_splice_init(&nn->fcache_dispose_list, &head);
++	spin_unlock(&nn->fcache_dispose_lock);
+ 
+ 	nfsd_file_dispose_list(&head);
+ }
+@@ -825,44 +818,22 @@ __nfsd_file_cache_purge(struct net *net)
+ 	nfsd_file_dispose_list(&dispose);
+ }
+ 
+-static struct nfsd_fcache_disposal *
+-nfsd_alloc_fcache_disposal(void)
+-{
+-	struct nfsd_fcache_disposal *l;
+-
+-	l = kmalloc(sizeof(*l), GFP_KERNEL);
+-	if (!l)
+-		return NULL;
+-	INIT_WORK(&l->work, nfsd_file_delayed_close);
+-	spin_lock_init(&l->lock);
+-	INIT_LIST_HEAD(&l->freeme);
+-	return l;
+-}
+-
+-static void
+-nfsd_free_fcache_disposal(struct nfsd_fcache_disposal *l)
+-{
+-	cancel_work_sync(&l->work);
+-	nfsd_file_dispose_list(&l->freeme);
+-	kfree(l);
+-}
+-
+-static void
+-nfsd_free_fcache_disposal_net(struct net *net)
+-{
+-	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-	struct nfsd_fcache_disposal *l = nn->fcache_disposal;
+-
+-	nfsd_free_fcache_disposal(l);
+-}
+-
+ int
+ nfsd_file_cache_start_net(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	nn->fcache_disposal = nfsd_alloc_fcache_disposal();
+-	return nn->fcache_disposal ? 0 : -ENOMEM;
++	/*
++	 * The dispose state lives as long as the net namespace and may still
++	 * be reached by the shrinker after a previous shutdown, so only
++	 * initialize it once.
++	 */
++	if (!nn->fcache_dispose_work.func) {
++		INIT_WORK(&nn->fcache_dispose_work, nfsd_file_delayed_close);
++		spin_lock_init(&nn->fcache_dispose_lock);
++		INIT_LIST_HEAD(&nn->fcache_dispose_list);
++	}
++	return 0;
+ }
+ 
+ /**
+@@ -881,8 +852,11 @@ nfsd_file_cache_purge(struct net *net)
+ void
+ nfsd_file_cache_shutdown_net(struct net *net)
+ {
++	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
++
+ 	nfsd_file_cache_purge(net);
+-	nfsd_free_fcache_disposal_net(net);
++	cancel_work_sync(&nn->fcache_dispose_work);
++	nfsd_file_dispose_list(&nn->fcache_dispose_list);
+ }
+ 
+ void
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 443b7d2368f38..798f66da05365 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -211,7 +211,9 @@ struct nfsd_net {
+ 	/* utsname taken from the process that starts the server */
+ 	char			nfsd_name[UNX_MAXNODENAME+1];
+ 
+-	struct nfsd_fcache_disposal *fcache_disposal;
++	spinlock_t		fcache_dispose_lock;
++	struct list_head	fcache_dispose_list;
++	struct work_struct	fcache_dispose_work;
+ 
+ 	siphash_key_t		siphash_key;
  
 -- 
 2.53.0
