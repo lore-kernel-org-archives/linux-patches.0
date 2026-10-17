@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5D83AF66D;
-	Sat, 17 Oct 2026 17:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F8B3B19B9;
+	Sat, 17 Oct 2026 17:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256626; cv=none; b=aWW+iFvvdZPaUK+yr/m5DDsUb6rYJOKMAsk/s2DmNdqtBZOVkAi0NHqx4ZyHvpwVhVCVFZNKN3lG4gsFdCihv8NebkJtprDNl8kR22a2o0+dnBVtZB7G5qjNzK75G+RJTQTOJ+2fiuGJ9z3ferwM5aUJfrudOOs2c4Yr5L0LFms=
+	t=1792256629; cv=none; b=Er2K7lRkqExrSZM+DH0eYWzviapzPSRabiZD90C+MyIoyZPCgrOz7nylUA2WinuoptKgTdi3kYZ9zttDFdX09+PzULYy+/Cn7khS/7KDZMhTITky2mpmoiyEdWdAo+lhZTHh8bZeAGfB1ZBqJJjoxce7K3cYypJ3ZO12UAerQIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256626; c=relaxed/simple;
-	bh=gm7mg+9Ou2h2krrU9vzXtYB7Awn4Msk2lYRj8m/uZCo=;
+	s=arc-20240116; t=1792256629; c=relaxed/simple;
+	bh=RKY2egwsl14MS1vkdkxHkHd7wb3vNDt3s40Ue24FQoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMI1ag5M7rt80ilKsDSsWqqnLjb8JYs7uxZzuAcPH6BnQWf51UkKXt3csiCXadxrPAIrodPbFEicJqFJTry36z6tM4g+uV4leY7yTls8uJw+eNfVLt0V4vDFYCx63c4n1GZFn7OAZyvQpBIiEtV9+LLcXW2KYweh6sfvx4kKwDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdBITgIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WI/9wKHCXtseynmblIysCukKRGR2I5ILXBqfgf7b5vCu24yxbB9t4taCt5J6T6ZnP9azDNREdo+lq0RHw5PPkvV8esttTXrtSbFt4B3eGJPqCvsZFGgBJj9jYVoM6ql23Qmhsje5R6a36zzjLkWe4JbpY2m0AvweCAxDlA4ftiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2k1kmXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdBITgIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B559D1F000C4;
-	Sat, 17 Oct 2026 17:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2k1kmXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3B91F000C4;
+	Sat, 17 Oct 2026 17:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256625;
-	bh=Ep0aErvAdi+s6/3Hfxbkx9YlWMSAvKVnmCL5APi4Jds=;
+	s=korg; t=1792256628;
+	bh=HDT8TKaniW5uWh4O+v3QzlsYlxcjDyhSKzOkUAIogwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdBITgImd+unM105VNwsv3NWJcxFXNRiEjOUNDTy24qjwWFzEJvgd9oIiQjHlM7nv
-	 wFV7ytJSEXGZZyzCoxH8s52Y7KB/GTP25AaMasXtIyRMezjcVRo8KtfPqq3usuLXC+
-	 w1uEuaLza+wfrcV8GkLuo2h11EdUCf1VmdgUUXfQ=
+	b=K2k1kmXJhJrMl93PL58KxVxPi7PkLnuT4nMa4Bs74yCtFTuAPqQ6hd73gxTpQVSla
+	 2rtrZnTJKqNFKQgr+viAyScqA6KlEw/o11luywOlqrgR1efjsKZHcO5Yghx3mkKPau
+	 zIiW4+JZ1d0E4LDNee4WJFk6tvM8VmEauS3GRliE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yuchao Zhang <ndaugoing@gmail.com>
-Subject: [PATCH 6.6 0256/1674] USB: cdc-acm: skip URB restart in port_shutdown if disconnected
-Date: Sat, 17 Oct 2026 17:42:08 +0200
-Message-ID: <20261017160437.695296052@linuxfoundation.org>
+	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0257/1674] USB: serial: fix port tear down use-after-free
+Date: Sat, 17 Oct 2026 17:42:09 +0200
+Message-ID: <20261017160437.720719148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,51 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit dc614d6bc991740d41d5a99ac7765c4b675dda88 upstream.
+commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
 
-acm_port_shutdown() is called from the tty-port machinery whenever the
-last user closes the port.  acm_disconnect() sets acm->disconnected and
-calls tty_port_tty_vhangup(), which eventually triggers port_shutdown().
-At that point acm_disconnect() has already called acm_poison_urbs() and
-is about to free the control and read URBs.
+Some drivers for multiport devices access port driver data from
+completion handlers of shared URBs submitted at attach() or first open()
+and stopped at disconnect() or last close(), respectively.
 
-However, acm_port_shutdown() unconditionally calls acm_unpoison_urbs()
-and, when the ALWAYS_POLL_CTRL quirk is set, immediately re-submits the
-ctrlurb and all read URBs.  If the concurrent acm_disconnect() then
-frees those URBs and their DMA buffers while they are in-flight, the
-result is a use-after-free in acm_ctrl_irq() or acm_read_bulk_callback()
-accessing the freed DMA memory.
+A simple NULL check before accessing the driver data makes sure that a
+port state container has at least been allocated, but a completion
+handler can still race with port tear down.
 
-Fix by checking acm->disconnected after draining the delayed anchor and
-returning early: if we are in a disconnect path the URBs must remain
-poisoned and must not be resubmitted.
+Reorder the disconnect handling so that ports are not deregistered (and
+their driver data freed) until after all ports have been hung up and the
+driver disconnect() callback has run so that all I/O has been stopped.
 
-The early return is placed after the delayed-anchor drain loop because
-that loop only cancels write-side accounting (wb->use = false and
-autopm counter) and does not touch the hardware path.
-
-Fixes: f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10 INGENIC touchscreen")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Link: https://patch.msgid.link/20260918114309.3659635-2-ndaugoing@gmail.com
+Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
+Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
+Cc: stable@vger.kernel.org	# 2.6.30
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/usb-serial.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -787,6 +787,9 @@ static void acm_port_shutdown(struct tty
- 		usb_autopm_put_interface_async(acm->control);
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1194,12 +1194,17 @@ static void usb_serial_disconnect(struct
+ 		usb_serial_port_poison_urbs(port);
+ 		wake_up_interruptible(&port->port.delta_msr_wait);
+ 		cancel_work_sync(&port->work);
+-		if (device_is_registered(&port->dev))
+-			device_del(&port->dev);
  	}
- 
-+	if (acm->disconnected)
-+		return;
 +
- 	acm_unpoison_urbs(acm);
+ 	if (serial->type->disconnect)
+ 		serial->type->disconnect(serial);
  
- 	if (acm->quirks & ALWAYS_POLL_CTRL) {
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (device_is_registered(&port->dev))
++			device_del(&port->dev);
++	}
++
+ 	release_sibling(serial, interface);
+ 
+ 	/* let the last holder of this object cause it to be cleaned up */
 
 
