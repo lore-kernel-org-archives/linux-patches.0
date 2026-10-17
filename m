@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B093A2540;
-	Sat, 17 Oct 2026 18:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F3038424C;
+	Sat, 17 Oct 2026 18:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260493; cv=none; b=Uno/bTxjEspWpFRDapa61yL7rmXmo/m4kZ5kJwb9/rcoHG04nBbQLHtjdGcRjaFdFsHlHNNaD8x6uw+utSYp4vvChutPOYJFao3y+YLRwI5Sm3c7gLAoDJZvkSqhYtGvLPJZane7JjpyRyjsy0A+pM12Zc4Y4MU9leGN4wadFtY=
+	t=1792260495; cv=none; b=BsB4isEGyBkue8tCvRXIMkR6OC9GgRv2mRGpol/kPwwv+FvYKM5oqol7cUvtDCWut2oQ17yrtA9mBRM2+E9iMxOBemlTU7to8FsuSwDPbbwOXlTJ1oDirxkuCx90isathVVLDrdPD1r9ks5Pa8VKIMQJG0+V0k7LPMrsrT2a8L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260493; c=relaxed/simple;
-	bh=fBc1J9un+Rkm+H9erXVz/QGP2R2A2JVpYNMgSYC7AcY=;
+	s=arc-20240116; t=1792260495; c=relaxed/simple;
+	bh=jL+4jz1mKId1p694pJMU6CyI/XaScK4QqQai6AfD3z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgmvYPtNLP5GY1tkBkQAPsTLAANjMmxCwm4qxk0h9PLzo+rMPn06h8w+VsPxrxZg3EaOg22djiYZG00DV6JFmk1B56x2/qqRZFPFLHWnv7yprHIHK9bw2O/skSnAsdenCvxnfInnntnA65fQr9906NkMw0UiLc1cPZszEuysOOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGJphxAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYE9gis3G+1er/fcqqCKtIzXmCdnY+TeGvsjEWI2H/y79t1foFhLrfUuv4EQzQETn0ht77Usm0rhQYOrbgoQv8HGs+QRDHXvafxl3xricAbSBRlwHPJGr8Lhwctq1sQCkgl4vPfq+P3lpl2KPq0/omI72dWpE6dX4lu4E6gADpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGlDTxRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGJphxAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1361F000C4;
-	Sat, 17 Oct 2026 18:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGlDTxRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1DA1F000C5;
+	Sat, 17 Oct 2026 18:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260490;
-	bh=iNUvQAxyT5ct9dVQFspdoAnfMWphRrx7nd8D77rNGv4=;
+	s=korg; t=1792260493;
+	bh=ebtnYifeHXJbAbLWJQmN/akt6ucduxi2+vzQ4LvFWyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGJphxAbg8D3EHxXfEvqwKWTmQOIu0m1QiPKicGazaVkebErCaT93gQYZVxZR0wMa
-	 eLXIhC5c7KJ2tpFgi98fWX26wgggRgD/PJSt+NmVbTHAoW8i3Y2wr8xnS+44waCAsY
-	 b0xlzPdOLlW6OR/AgSshu5QYaOXwIjfzwh+h6g1I=
+	b=wGlDTxRzg+CB2gFtWt/2ORDFGJNA2uHcSbv3yU83T8toPyUwmjIJDAc2odqm1FyXl
+	 2657i4UHD8yFbAgfqRmOjU9IrMAai9KS8UO0Vmmk2bR2r4Kb4WTJ2tRe5KRT8Mpuxk
+	 BPNLfWssOAihKdlFkZ137PTAlt3UHx7HvkJLTvsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Weber <ulrich.weber@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lianjie Wang <karin0.zst@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1562/1674] netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation
-Date: Sat, 17 Oct 2026 18:03:54 +0200
-Message-ID: <20261017160511.195318801@linuxfoundation.org>
+Subject: [PATCH 6.6 1563/1674] hwrng: core - use RCU and work_struct to fix race condition
+Date: Sat, 17 Oct 2026 18:03:55 +0200
+Message-ID: <20261017160511.220081949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,235 +51,427 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Lianjie Wang <karin0.zst@gmail.com>
 
-[ Upstream commit 207b3ebacb6113acaaec0d171d5307032c690004 ]
+[ Upstream commit cc2f39d6ac48e6e3cb2d6240bc0d6df839dd0828 ]
 
-Ulrich reports a regression with nfqueue:
+Currently, hwrng_fill is not cleared until the hwrng_fillfn() thread
+exits. Since hwrng_unregister() reads hwrng_fill outside the rng_mutex
+lock, a concurrent hwrng_unregister() may call kthread_stop() again on
+the same task.
 
-If an application did not set the 'F_GSO' capability flag and a gso
-packet with an unconfirmed nf_conn entry is received all packets are
-now dropped instead of queued, because the check happens after
-skb_gso_segment().  In that case, we did have exclusive ownership
-of the skb and its associated conntrack entry.  The elevated use
-count is due to skb_clone happening via skb_gso_segment().
+Additionally, if hwrng_unregister() is called immediately after
+hwrng_register(), the stopped thread may have never been executed. Thus,
+hwrng_fill remains dirty even after hwrng_unregister() returns. In this
+case, subsequent calls to hwrng_register() will fail to start new
+threads, and hwrng_unregister() will call kthread_stop() on the same
+freed task. In both cases, a use-after-free occurs:
 
-Move the check so that its peformed vs. the aggregated packet.
+refcount_t: addition on 0; use-after-free.
+WARNING: ... at lib/refcount.c:25 refcount_warn_saturate+0xec/0x1c0
+Call Trace:
+ kthread_stop+0x181/0x360
+ hwrng_unregister+0x288/0x380
+ virtrng_remove+0xe3/0x200
 
-Then, annotate the individual segments except the first one so we
-can do a 2nd check at reinject time.
+This patch fixes the race by protecting the global hwrng_fill pointer
+inside the rng_mutex lock, so that hwrng_fillfn() thread is stopped only
+once, and calls to kthread_run() and kthread_stop() are serialized
+with the lock held.
 
-For the normal case, where userspace does in-order reinjects, this avoids
-packet drops: first reinjected segment continues traversal and confirms
-entry, remaining segments observe the confirmed entry.
+To avoid deadlock in hwrng_fillfn() while being stopped with the lock
+held, we convert current_rng to RCU, so that get_current_rng() can read
+current_rng without holding the lock. To remove the lock from put_rng(),
+we also delay the actual cleanup into a work_struct.
 
-While at it, simplify nf_ct_drop_unconfirmed(): We only care about
-unconfirmed entries with a refcnt > 1, there is no need to special-case
-dying entries.
+Since get_current_rng() no longer returns ERR_PTR values, the IS_ERR()
+checks are removed from its callers.
 
-This only happens with UDP.  With TCP, the only unconfirmed packet will
-be the TCP SYN, those aren't aggregated by GRO.
+With hwrng_fill protected by the rng_mutex lock, hwrng_fillfn() can no
+longer clear hwrng_fill itself. Therefore, if hwrng_fillfn() returns
+directly after current_rng is dropped, kthread_stop() would be called on
+a freed task_struct later. To fix this, hwrng_fillfn() calls schedule()
+now to keep the task alive until being stopped. The kthread_stop() call
+is also moved from hwrng_unregister() to drop_current_rng(), ensuring
+kthread_stop() is called on all possible paths where current_rng becomes
+NULL, so that the thread would not wait forever.
 
-Next patch adds a udpgro test case to cover this scenario.
-
-Reported-by: Ulrich Weber <ulrich.weber@gmail.com>
-Fixes: 7d8dc1c7be8d ("netfilter: nf_queue: drop packets with cloned unconfirmed conntracks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: be4000bc4644 ("hwrng: create filler thread")
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Lianjie Wang <karin0.zst@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_queue.h |   1 +
- net/netfilter/nfnetlink_queue.c  | 122 +++++++++++++++++++------------
- 2 files changed, 75 insertions(+), 48 deletions(-)
+ drivers/char/hw_random/core.c | 148 ++++++++++++++++++++++------------
+ include/linux/hw_random.h     |   2 +
+ 2 files changed, 99 insertions(+), 51 deletions(-)
 
-diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index c576479b9aa56..4cf158b5ea698 100644
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -21,6 +21,7 @@ struct nf_queue_entry {
- 	struct net_device	*physout;
- #endif
- 	struct nf_hook_state	state;
-+	bool			nf_ct_is_unconfirmed;
- 	u16			size; /* sizeof(entry) + saved route keys */
+diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
+index 6863121e16b01..e3e730dc64c42 100644
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -20,23 +20,25 @@
+ #include <linux/miscdevice.h>
+ #include <linux/module.h>
+ #include <linux/random.h>
++#include <linux/rcupdate.h>
+ #include <linux/sched.h>
+ #include <linux/sched/signal.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/uaccess.h>
++#include <linux/workqueue.h>
  
- 	/* extra space to store route keys */
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 1944fba91b021..56c16fa0ba227 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -225,6 +225,34 @@ find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
- 	return entry;
+ #define RNG_MODULE_NAME		"hw_random"
+ 
+ #define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
+ 
+-static struct hwrng *current_rng;
++static struct hwrng __rcu *current_rng;
+ /* the current rng has been explicitly chosen by user via sysfs */
+ static int cur_rng_set_by_user;
+ static struct task_struct *hwrng_fill;
+ /* list of registered rngs */
+ static LIST_HEAD(rng_list);
+-/* Protects rng_list and current_rng */
++/* Protects rng_list, hwrng_fill and updating on current_rng */
+ static DEFINE_MUTEX(rng_mutex);
+ /* Protects rng read functions, data_avail, rng_buffer and rng_fillbuf */
+ static DEFINE_MUTEX(reading_mutex);
+@@ -77,18 +79,39 @@ static void add_early_randomness(struct hwrng *rng)
+ 	}
  }
  
-+/* return true if the entry has an unconfirmed conntrack attached that isn't owned by us
-+ * exclusively.
-+ */
-+static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_unconfirmed)
-+{
-+#if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
+-static inline void cleanup_rng(struct kref *kref)
++static void cleanup_rng_work(struct work_struct *work)
+ {
+-	struct hwrng *rng = container_of(kref, struct hwrng, ref);
++	struct hwrng *rng = container_of(work, struct hwrng, cleanup_work);
 +
-+	if (!ct || nf_ct_is_confirmed(ct))
-+		return false;
-+
-+	if (is_unconfirmed)
-+		*is_unconfirmed = true;
-+
-+	/* in some cases skb_clone() can occur after initial conntrack
-+	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
-+	 * unconfirmed entries.
-+	 *
-+	 * This happens for br_netfilter and with ip multicast routing.
-+	 * This can't be solved with serialization here because one clone
-+	 * could have been queued for local delivery or could be transmitted
-+	 * in parallel on another CPU.
++	/*
++	 * Hold rng_mutex here so we serialize in case they set_current_rng
++	 * on rng again immediately.
 +	 */
-+	return refcount_read(&ct->ct_general.use) > 1;
-+#endif
-+	return false;
++	mutex_lock(&rng_mutex);
++
++	/* Skip if rng has been reinitialized. */
++	if (kref_read(&rng->ref)) {
++		mutex_unlock(&rng_mutex);
++		return;
++	}
+ 
+ 	if (rng->cleanup)
+ 		rng->cleanup(rng);
+ 
+ 	complete(&rng->cleanup_done);
++	mutex_unlock(&rng_mutex);
 +}
 +
- static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- {
- 	const struct nf_ct_hook *ct_hook;
-@@ -242,6 +270,24 @@ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- 		}
- 		rcu_read_unlock();
- 	}
++static inline void cleanup_rng(struct kref *kref)
++{
++	struct hwrng *rng = container_of(kref, struct hwrng, ref);
 +
-+	if (verdict != NF_DROP && entry->nf_ct_is_unconfirmed) {
-+		/* If first queued segment was already reinjected then
-+		 * there is a good chance the ct entry is now confirmed.
-+		 *
-+		 * Handle the rare cases:
-+		 *  - out-of-order verdict
-+		 *  - threaded userspace reinjecting in parallel
-+		 *  - first segment was dropped
-+		 *
-+		 * In all of those cases we can't handle this packet
-+		 * because we can't be sure that another CPU won't modify
-+		 * nf_conn->ext in parallel which isn't allowed.
-+		 */
-+		if (nf_ct_drop_unconfirmed(entry, NULL))
-+			verdict = NF_DROP;
++	schedule_work(&rng->cleanup_work);
+ }
+ 
+ static int set_current_rng(struct hwrng *rng)
+ {
++	struct hwrng *old_rng;
+ 	int err;
+ 
+ 	BUG_ON(!mutex_is_locked(&rng_mutex));
+@@ -97,8 +120,14 @@ static int set_current_rng(struct hwrng *rng)
+ 	if (err)
+ 		return err;
+ 
+-	drop_current_rng();
+-	current_rng = rng;
++	old_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	rcu_assign_pointer(current_rng, rng);
++
++	if (old_rng) {
++		synchronize_rcu();
++		kref_put(&old_rng->ref, cleanup_rng);
++	}
+ 
+ 	/* if necessary, start hwrng thread */
+ 	if (!hwrng_fill) {
+@@ -114,47 +143,56 @@ static int set_current_rng(struct hwrng *rng)
+ 
+ static void drop_current_rng(void)
+ {
+-	BUG_ON(!mutex_is_locked(&rng_mutex));
+-	if (!current_rng)
++	struct hwrng *rng;
++
++	rng = rcu_dereference_protected(current_rng,
++					lockdep_is_held(&rng_mutex));
++	if (!rng)
+ 		return;
+ 
++	RCU_INIT_POINTER(current_rng, NULL);
++	synchronize_rcu();
++
++	if (hwrng_fill) {
++		kthread_stop(hwrng_fill);
++		hwrng_fill = NULL;
 +	}
 +
- 	nf_reinject(entry, verdict);
+ 	/* decrease last reference for triggering the cleanup */
+-	kref_put(&current_rng->ref, cleanup_rng);
+-	current_rng = NULL;
++	kref_put(&rng->ref, cleanup_rng);
  }
  
-@@ -676,49 +722,6 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 	return NULL;
- }
- 
--static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry)
--{
--#if IS_ENABLED(CONFIG_NF_CONNTRACK)
--	static const unsigned long flags = IPS_CONFIRMED | IPS_DYING;
--	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
--	unsigned long status;
--	unsigned int use;
--
--	if (!ct)
--		return false;
--
--	status = READ_ONCE(ct->status);
--	if ((status & flags) == IPS_DYING)
--		return true;
--
--	if (status & IPS_CONFIRMED)
--		return false;
--
--	/* in some cases skb_clone() can occur after initial conntrack
--	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
--	 * unconfirmed entries.
--	 *
--	 * This happens for br_netfilter and with ip multicast routing.
--	 * We can't be solved with serialization here because one clone could
--	 * have been queued for local delivery.
--	 */
--	use = refcount_read(&ct->ct_general.use);
--	if (likely(use == 1))
--		return false;
--
--	/* Can't decrement further? Exclusive ownership. */
--	if (!refcount_dec_not_one(&ct->ct_general.use))
--		return false;
--
--	skb_set_nfct(entry->skb, 0);
--	/* No nf_ct_put(): we already decremented .use and it cannot
--	 * drop down to 0.
--	 */
--	return true;
--#endif
--	return false;
--}
--
- static int
- __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 			struct nf_queue_entry *entry)
-@@ -735,9 +738,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
- 	}
- 	spin_lock_bh(&queue->lock);
- 
--	if (nf_ct_drop_unconfirmed(entry))
--		goto err_out_free_nskb;
--
- 	if (queue->queue_total >= queue->queue_maxlen) {
- 		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
- 			failopen = 1;
-@@ -848,9 +848,10 @@ __nfqnl_enqueue_packet_gso(struct net *net, struct nfqnl_instance *queue,
- static int
- nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+-/* Returns ERR_PTR(), NULL or refcounted hwrng */
++/* Returns NULL or refcounted hwrng */
+ static struct hwrng *get_current_rng_nolock(void)
  {
--	unsigned int queued;
--	struct nfqnl_instance *queue;
- 	struct sk_buff *skb, *segs, *nskb;
-+	bool ct_is_unconfirmed = false;
-+	struct nfqnl_instance *queue;
-+	unsigned int queued;
- 	int err = -ENOBUFS;
- 	struct net *net = entry->state.net;
- 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
-@@ -874,6 +875,15 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- 		break;
+-	if (current_rng)
+-		kref_get(&current_rng->ref);
++	struct hwrng *rng;
++
++	rng = rcu_dereference_protected(current_rng,
++					lockdep_is_held(&rng_mutex));
++	if (rng)
++		kref_get(&rng->ref);
+ 
+-	return current_rng;
++	return rng;
+ }
+ 
+ static struct hwrng *get_current_rng(void)
+ {
+ 	struct hwrng *rng;
+ 
+-	if (mutex_lock_interruptible(&rng_mutex))
+-		return ERR_PTR(-ERESTARTSYS);
++	rcu_read_lock();
++	rng = rcu_dereference(current_rng);
++	if (rng)
++		kref_get(&rng->ref);
+ 
+-	rng = get_current_rng_nolock();
++	rcu_read_unlock();
+ 
+-	mutex_unlock(&rng_mutex);
+ 	return rng;
+ }
+ 
+ static void put_rng(struct hwrng *rng)
+ {
+-	/*
+-	 * Hold rng_mutex here so we serialize in case they set_current_rng
+-	 * on rng again immediately.
+-	 */
+-	mutex_lock(&rng_mutex);
+ 	if (rng)
+ 		kref_put(&rng->ref, cleanup_rng);
+-	mutex_unlock(&rng_mutex);
+ }
+ 
+ static int hwrng_init(struct hwrng *rng)
+@@ -219,10 +257,6 @@ static ssize_t rng_dev_read(struct file *filp, char __user *buf,
+ 
+ 	while (size) {
+ 		rng = get_current_rng();
+-		if (IS_ERR(rng)) {
+-			err = PTR_ERR(rng);
+-			goto out;
+-		}
+ 		if (!rng) {
+ 			err = -ENODEV;
+ 			goto out;
+@@ -309,7 +343,7 @@ static struct miscdevice rng_miscdev = {
+ 
+ static int enable_best_rng(void)
+ {
+-	struct hwrng *rng, *new_rng = NULL;
++	struct hwrng *rng, *cur_rng, *new_rng = NULL;
+ 	int ret = -ENODEV;
+ 
+ 	BUG_ON(!mutex_is_locked(&rng_mutex));
+@@ -327,7 +361,9 @@ static int enable_best_rng(void)
+ 			new_rng = rng;
  	}
  
-+	/* Check if someone already holds another reference to
-+	 * unconfirmed ct.  If so, we cannot queue the skb:
-+	 * concurrent modifications of nf_conn->ext are not
-+	 * allowed and we can't know if another CPU isn't
-+	 * processing the same nf_conn entry in parallel.
-+	 */
-+	if (nf_ct_drop_unconfirmed(entry, &ct_is_unconfirmed))
-+		return -EINVAL;
-+
- 	if (!skb_is_gso(skb) || ((queue->flags & NFQA_CFG_F_GSO) && !skb_is_gso_sctp(skb)))
- 		return __nfqnl_enqueue_packet(net, queue, entry);
+-	ret = ((new_rng == current_rng) ? 0 : set_current_rng(new_rng));
++	cur_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	ret = ((new_rng == cur_rng) ? 0 : set_current_rng(new_rng));
+ 	if (!ret)
+ 		cur_rng_set_by_user = 0;
  
-@@ -887,7 +897,23 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- 		goto out_err;
- 	queued = 0;
- 	err = 0;
-+
- 	skb_list_walk_safe(segs, segs, nskb) {
-+		if (ct_is_unconfirmed && queued > 0) {
-+			/* skb_gso_segment() increments the ct refcount.
-+			 * This is a problem for unconfirmed (not in hash)
-+			 * entries, those can race when reinjections happen
-+			 * in parallel.
-+			 *
-+			 * Annotate this for all queued entries except the
-+			 * first one.
-+			 *
-+			 * As long as the first one is reinjected first it
-+			 * will do the confirmation for us.
+@@ -345,7 +381,8 @@ static ssize_t rng_current_store(struct device *dev,
+ 	if (err)
+ 		return -ERESTARTSYS;
+ 
+-	old_rng = current_rng;
++	old_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
+ 	if (sysfs_streq(buf, "")) {
+ 		err = enable_best_rng();
+ 	} else {
+@@ -378,8 +415,6 @@ static ssize_t rng_current_show(struct device *dev,
+ 	struct hwrng *rng;
+ 
+ 	rng = get_current_rng();
+-	if (IS_ERR(rng))
+-		return PTR_ERR(rng);
+ 
+ 	ret = snprintf(buf, PAGE_SIZE, "%s\n", rng ? rng->name : "none");
+ 	put_rng(rng);
+@@ -423,8 +458,6 @@ static ssize_t rng_quality_show(struct device *dev,
+ 	struct hwrng *rng;
+ 
+ 	rng = get_current_rng();
+-	if (IS_ERR(rng))
+-		return PTR_ERR(rng);
+ 
+ 	if (!rng) /* no need to put_rng */
+ 		return -ENODEV;
+@@ -439,6 +472,7 @@ static ssize_t rng_quality_store(struct device *dev,
+ 				 struct device_attribute *attr,
+ 				 const char *buf, size_t len)
+ {
++	struct hwrng *rng;
+ 	u16 quality;
+ 	int ret = -EINVAL;
+ 
+@@ -455,12 +489,13 @@ static ssize_t rng_quality_store(struct device *dev,
+ 		goto out;
+ 	}
+ 
+-	if (!current_rng) {
++	rng = rcu_dereference_protected(current_rng, lockdep_is_held(&rng_mutex));
++	if (!rng) {
+ 		ret = -ENODEV;
+ 		goto out;
+ 	}
+ 
+-	current_rng->quality = quality;
++	rng->quality = quality;
+ 	current_quality = quality; /* obsolete */
+ 
+ 	/* the best available RNG may have changed */
+@@ -506,8 +541,20 @@ static int hwrng_fillfn(void *unused)
+ 		struct hwrng *rng;
+ 
+ 		rng = get_current_rng();
+-		if (IS_ERR(rng) || !rng)
++		if (!rng) {
++			/*
++			 * Keep the task_struct alive until kthread_stop()
++			 * is called to avoid UAF in drop_current_rng().
 +			 */
-+			entry->nf_ct_is_unconfirmed = ct_is_unconfirmed;
++			while (!kthread_should_stop()) {
++				set_current_state(TASK_INTERRUPTIBLE);
++				if (!kthread_should_stop())
++					schedule();
++			}
++			set_current_state(TASK_RUNNING);
+ 			break;
 +		}
 +
- 		if (err == 0)
- 			err = __nfqnl_enqueue_packet_gso(net, queue,
- 							segs, entry);
+ 		mutex_lock(&reading_mutex);
+ 		rc = rng_get_data(rng, rng_fillbuf,
+ 				  rng_buffer_size(), 1);
+@@ -535,14 +582,13 @@ static int hwrng_fillfn(void *unused)
+ 		add_hwgenerator_randomness((void *)rng_fillbuf, rc,
+ 					   entropy >> 10, true);
+ 	}
+-	hwrng_fill = NULL;
+ 	return 0;
+ }
+ 
+ int hwrng_register(struct hwrng *rng)
+ {
+ 	int err = -EINVAL;
+-	struct hwrng *tmp;
++	struct hwrng *cur_rng, *tmp;
+ 	bool is_new_current = false;
+ 
+ 	if (!rng->name || (!rng->data_read && !rng->read))
+@@ -558,6 +604,7 @@ int hwrng_register(struct hwrng *rng)
+ 	}
+ 	list_add_tail(&rng->list, &rng_list);
+ 
++	INIT_WORK(&rng->cleanup_work, cleanup_rng_work);
+ 	init_completion(&rng->cleanup_done);
+ 	complete(&rng->cleanup_done);
+ 	init_completion(&rng->dying);
+@@ -565,8 +612,10 @@ int hwrng_register(struct hwrng *rng)
+ 	/* Adjust quality field to always have a proper value */
+ 	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
+ 
+-	if (!current_rng ||
+-	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
++	cur_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
++	if (!cur_rng ||
++	    (!cur_rng_set_by_user && rng->quality > cur_rng->quality)) {
+ 		/*
+ 		 * Set new rng as current as the new rng source
+ 		 * provides better entropy quality and was not
+@@ -611,10 +660,12 @@ void hwrng_unregister(struct hwrng *rng)
+ 
+ 	mutex_lock(&rng_mutex);
+ 
+-	old_rng = current_rng;
++	old_rng = rcu_dereference_protected(current_rng,
++					    lockdep_is_held(&rng_mutex));
+ 	list_del(&rng->list);
+ 	complete_all(&rng->dying);
+-	if (current_rng == rng) {
++
++	if (old_rng == rng) {
+ 		err = enable_best_rng();
+ 		if (err) {
+ 			drop_current_rng();
+@@ -623,12 +674,7 @@ void hwrng_unregister(struct hwrng *rng)
+ 	}
+ 
+ 	new_rng = get_current_rng_nolock();
+-	if (list_empty(&rng_list)) {
+-		mutex_unlock(&rng_mutex);
+-		if (hwrng_fill)
+-			kthread_stop(hwrng_fill);
+-	} else
+-		mutex_unlock(&rng_mutex);
++	mutex_unlock(&rng_mutex);
+ 
+ 	if (new_rng) {
+ 		if (old_rng != new_rng)
+@@ -723,7 +769,7 @@ static int __init hwrng_modinit(void)
+ static void __exit hwrng_modexit(void)
+ {
+ 	mutex_lock(&rng_mutex);
+-	BUG_ON(current_rng);
++	WARN_ON(rcu_access_pointer(current_rng));
+ 	kfree(rng_buffer);
+ 	kfree(rng_fillbuf);
+ 	mutex_unlock(&rng_mutex);
+diff --git a/include/linux/hw_random.h b/include/linux/hw_random.h
+index 136e9842120e8..37a52d071a1f7 100644
+--- a/include/linux/hw_random.h
++++ b/include/linux/hw_random.h
+@@ -16,6 +16,7 @@
+ #include <linux/types.h>
+ #include <linux/list.h>
+ #include <linux/kref.h>
++#include <linux/workqueue.h>
+ 
+ /**
+  * struct hwrng - Hardware Random Number Generator driver
+@@ -49,6 +50,7 @@ struct hwrng {
+ 	/* internal. */
+ 	struct list_head list;
+ 	struct kref ref;
++	struct work_struct cleanup_work;
+ 	struct completion cleanup_done;
+ 	struct completion dying;
+ };
 -- 
 2.53.0
 
