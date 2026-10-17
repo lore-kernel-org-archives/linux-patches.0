@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3AA39891E;
-	Sat, 17 Oct 2026 16:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F36382F25;
+	Sat, 17 Oct 2026 16:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253174; cv=none; b=IMsqQhjoqJgfcXVQ5VL86IQpxx9D5RhOKNLVPWskPuT4dTFQU+su5ttkCEUcfTyqvjA1NbP4rGwa3wwWga7SDqTVwFAufBuvZEzrKdrYvQTTGKh426qQ1QltT7Mup2Uvwk2lk4p65DRx8C5/m3brfdqCRVrziAJDTZzLZd5LNVE=
+	t=1792253177; cv=none; b=OJ7KJyyhkRALu5056nd/HtyxuIqedJkhbHm+WSjvczoohqWUpR4spv59KXfhTVW9JRYCIScXoaxAc+2Fo6UN598n0Okm3LdULPN7I0YT0cz5b5dFpVPGtKa7w4G6VbfWX6QhqvTxPVNgiWxmJPEHJzMU+YaXNZMLEHPrYtErMII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253174; c=relaxed/simple;
-	bh=9yvw2BYpPryGM1UL2WhsoMwW9af4sJmixcU14MTXSzA=;
+	s=arc-20240116; t=1792253177; c=relaxed/simple;
+	bh=B56Vj3fzqpOtpi+pvxPynCS0f02whqix21EcfA82u6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1tJW9rPaociNawP0453Hr9rNO8dTXinm2gd1ydr1U+qMxsV/MfH9OKObHDJv4VLA1muCCV7tPqjOqZuPtFDOrpN+7FJXo8yKuS9DfT6cRNT1BZdSELsNTIEDz3AzYVNLFNL2iuk1ut3DCFzg2wuog35TyOIWT3i/zf+YogZQ/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCn8jKLn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tnHDmivyznyf2caMcCdiRB3dVsQEnZej/lx+Efq/UTdi61g6YDuncx+nWxW4hD+ulhvsu3O/4Dx3vH9IJIPFywb9YD0yH+mqGhEbSTVndrZzmzc6k46sL4JOlPaT15nj6ksWrZaGGDRgPQLOx3cmW5JT8cuBUnkWeztf37MD3aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m07rI0VT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCn8jKLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E0F1F000C4;
-	Sat, 17 Oct 2026 16:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m07rI0VT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413BF1F000C4;
+	Sat, 17 Oct 2026 16:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253172;
-	bh=iAupQTtaplgPng4UylRWQ/wljEIMHZfbt/+L2Z+w72g=;
+	s=korg; t=1792253175;
+	bh=Bm0fEe2/+uAJED/vxxIf85vnf0dgloWJxf0kI+5XSMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gCn8jKLnH6kUA354al3HViiDXkLbrGO1STRIYCWbNQi5H8jKtY1sm88LqWkB9cyX7
-	 R4HsV0xqbj7EMCMRj6nKzdZsIXpeDZDGpKAWcWuNUKVy657Xtb08u/WNAMj/W2pV2J
-	 lBPqccpRs1AbanbgGplHnIyejxVPfkKPbQQlLZ3I=
+	b=m07rI0VT72Xj3KmkZXRAbBAy06KJQRtqEcoIp1XJDyLWkMuP0pi1xO5v7nb1WQn55
+	 VkB8eAAlyPK8hItLkUWJNTex50+IdRQRMFUAH/28xV8XmPkYTHJxRIWwxuGu/xzTJT
+	 h2KaUKIAJMDv11nhFOzIttHQaW/2CEPAHYmCheXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Mike Rapoport <rppt@kernel.org>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/869] net: xilinx: axienet: Free outstanding DMA buffers on dmaengine stop
-Date: Sat, 17 Oct 2026 17:47:55 +0200
-Message-ID: <20261017160037.889491361@linuxfoundation.org>
+Subject: [PATCH 6.12 035/869] riscv: patch: Avoid early phys_to_page()
+Date: Sat, 17 Oct 2026 17:47:56 +0200
+Message-ID: <20261017160037.914044169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,190 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-[ Upstream commit bcf2573a68a808a5b54cadafa72b6672e662c2bf ]
+[ Upstream commit 6b60a128c2f43180664a614830f3c529497e0394 ]
 
-In the dmaengine path the driver pre-submits RX buffers and holds
-in-flight TX buffers whose SKBs are DMA-mapped by the driver and freed
-only in the completion callbacks. On ndo_stop() dmaengine_terminate_sync()
-aborts these descriptors without running their callbacks, and the driver
-then frees only the ring shells, leaking every SKB still owned by the
-engine and its DMA mapping on each ifdown. With 128 RX buffers pre-posted
-per channel, the mapping leak can eventually exhaust a limited IOMMU
-aperture.
+Similarly to commit 8d09e2d569f6 ("arm64: patching: avoid early
+page_to_phys()"), avoid using phys_to_page() for the kernel address case
+in patch_map().
 
-Clear the slot's skb in the TX and RX callbacks so a non-NULL skb marks a
-slot that still owns a live, DMA-mapped buffer, and on stop unmap and free
-every such buffer.
+Since this is called from apply_boot_alternatives() in setup_arch(), and
+commit 4267739cabb8 ("arch, mm: consolidate initialization of SPARSE
+memory model") has moved sparse_init() to after setup_arch(),
+phys_to_page() is not available there yet, and it panics on boot with
+SPARSEMEM on RV32, which does not use SPARSEMEM_VMEMMAP.
 
-axienet_dma_rx_cb() runs from the DMA tasklet and re-arms the RX ring on
-each completion, so it can race axienet_stop(): a completion may submit a
-fresh buffer after dmaengine_terminate_sync() has returned, leaving the
-channel armed with a buffer the teardown then frees while the engine may
-still write into it (dma_release_channel() does not stop it either). Add a
-lock that axienet_dma_rx_cb() holds across the @stopping check and the
-resubmit, and axienet_stop() holds to set @stopping before terminating.
-Once @stopping is set no callback can arm a new buffer, and any armed just
-before is aborted by the terminate, so teardown only frees buffers the
-engine no longer owns.
-
-Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Link: https://patch.msgid.link/20260928184207.2361931-1-suraj.gupta2@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adjusted context for existing kcalloc() allocation and missing interrupt-coalescing locks. ]
+Reported-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Closes: https://lore.kernel.org/r/20260223144108-dcace0b9-02e8-4b67-a7ce-f263bed36f26@linutronix.de/
+Fixes: 4267739cabb8 ("arch, mm: consolidate initialization of SPARSE memory model")
+Suggested-by: Mike Rapoport <rppt@kernel.org>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Tested-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260310-riscv-sparsemem-alternatives-fix-v1-1-659d5dd257e2@iscas.ac.cn
+[pjw@kernel.org: fix the subject line to align with the patch description]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Stable-dep-of: a510e1ae8c90 ("riscv: patch: fix handling of bpf-jit execmem addresses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h  |  7 ++-
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 51 +++++++++++++++----
- 2 files changed, 47 insertions(+), 11 deletions(-)
+ arch/riscv/kernel/patch.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index cbdca0fb89454..f9e8e83cfed93 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -516,8 +516,9 @@ struct skbuf_dma_descriptor {
-  * @stats_work: Work for reading the hardware statistics counters often enough
-  *              to catch overflows.
-  * @dma_err_task: Work structure to process Axi DMA errors
-- * @stopping:   Set when @dma_err_task shouldn't do anything because we are
-- *              about to stop the device.
-+ * @stopping:   Set when we are about to stop the device: makes @dma_err_task
-+ *              a no-op (legacy DMA path) and fences RX descriptor
-+ *              resubmission in axienet_dma_rx_cb() (dmaengine path).
-  * @tx_irq:	Axidma TX IRQ number
-  * @rx_irq:	Axidma RX IRQ number
-  * @eth_irq:	Ethernet core IRQ number
-@@ -542,6 +543,7 @@ struct skbuf_dma_descriptor {
-  * @tx_ring_tail: TX skb ring buffer tail index.
-  * @rx_ring_head: RX skb ring buffer head index.
-  * @rx_ring_tail: RX skb ring buffer tail index.
-+ * @rx_submit_lock: Protects RX ring resubmission vs teardown in dmaengine path.
-  */
- struct axienet_local {
- 	struct net_device *ndev;
-@@ -620,6 +622,7 @@ struct axienet_local {
- 	int tx_ring_tail;
- 	int rx_ring_head;
- 	int rx_ring_tail;
-+	spinlock_t rx_submit_lock;
- };
+diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
+index 34ef522f07a8c..f8826f1595e16 100644
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -42,19 +42,20 @@ static inline bool is_kernel_exittext(uintptr_t addr)
+ static __always_inline void *patch_map(void *addr, const unsigned int fixmap)
+ {
+ 	uintptr_t uintaddr = (uintptr_t) addr;
+-	struct page *page;
++	phys_addr_t phys;
  
- /**
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 3339c5e1a57a9..76970a8065494 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -841,6 +841,7 @@ static void axienet_dma_tx_cb(void *data, const struct dmaengine_result *result)
- 	u64_stats_update_end(&lp->tx_stat_sync);
- 	dma_unmap_sg(lp->dev, skbuf_dma->sgl, skbuf_dma->sg_len, DMA_TO_DEVICE);
- 	dev_consume_skb_any(skbuf_dma->skb);
-+	skbuf_dma->skb = NULL;
- 	netif_txq_completed_wake(txq, 1, len,
- 				 CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
- 				 2);
-@@ -1127,6 +1128,7 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
- 						       &meta_max_len);
- 	dma_unmap_single(lp->dev, skbuf_dma->dma_address, lp->max_frm_size,
- 			 DMA_FROM_DEVICE);
-+	skbuf_dma->skb = NULL;
+-	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr))
+-		page = phys_to_page(__pa_symbol(addr));
+-	else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX))
+-		page = vmalloc_to_page(addr);
+-	else
+-		return addr;
++	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr)) {
++		phys = __pa_symbol(addr);
++	} else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX)) {
++		struct page *page = vmalloc_to_page(addr);
  
- 	if (IS_ERR(app_metadata)) {
- 		if (net_ratelimit())
-@@ -1149,10 +1151,17 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
- 	u64_stats_update_end(&lp->rx_stat_sync);
- 
- rx_submit:
-+	spin_lock(&lp->rx_submit_lock);
-+	if (lp->stopping) {
-+		spin_unlock(&lp->rx_submit_lock);
-+		return;
+-	BUG_ON(!page);
++		BUG_ON(!page);
++		phys = page_to_phys(page) + offset_in_page(addr);
++	} else {
++		return addr;
 +	}
-+
- 	for (i = 0; i < CIRC_SPACE(lp->rx_ring_head, lp->rx_ring_tail,
- 				   RX_BUF_NUM_DEFAULT); i++)
- 		axienet_rx_submit_desc(lp->ndev);
- 	dma_async_issue_pending(lp->rx_chan);
-+	spin_unlock(&lp->rx_submit_lock);
+ 
+-	return (void *)set_fixmap_offset(fixmap, page_to_phys(page) +
+-					 offset_in_page(addr));
++	return (void *)set_fixmap_offset(fixmap, phys);
  }
  
- /**
-@@ -1475,6 +1484,7 @@ static int axienet_init_dmaengine(struct net_device *ndev)
- 	lp->tx_ring_head = 0;
- 	lp->rx_ring_tail = 0;
- 	lp->rx_ring_head = 0;
-+	lp->stopping = false;
- 	lp->tx_skb_ring = kcalloc(TX_BD_NUM_MAX, sizeof(*lp->tx_skb_ring),
- 				  GFP_KERNEL);
- 	if (!lp->tx_skb_ring) {
-@@ -1686,20 +1696,42 @@ static int axienet_stop(struct net_device *ndev)
- 		free_irq(lp->rx_irq, ndev);
- 		axienet_dma_bd_release(ndev);
- 	} else {
-+		struct skbuf_dma_descriptor *skbuf_dma;
-+
-+		spin_lock_bh(&lp->rx_submit_lock);
-+		lp->stopping = true;
-+		spin_unlock_bh(&lp->rx_submit_lock);
-+
- 		dmaengine_terminate_sync(lp->tx_chan);
--		dmaengine_synchronize(lp->tx_chan);
- 		dmaengine_terminate_sync(lp->rx_chan);
--		dmaengine_synchronize(lp->rx_chan);
--
--		for (i = 0; i < TX_BD_NUM_MAX; i++)
--			kfree(lp->tx_skb_ring[i]);
--		kfree(lp->tx_skb_ring);
--		for (i = 0; i < RX_BUF_NUM_DEFAULT; i++)
--			kfree(lp->rx_skb_ring[i]);
--		kfree(lp->rx_skb_ring);
- 
- 		dma_release_channel(lp->rx_chan);
- 		dma_release_channel(lp->tx_chan);
-+
-+		/* Unmap and free any buffer the terminate did not reclaim, so it
-+		 * is not leaked; a non-NULL skb marks such a slot.
-+		 */
-+		for (i = 0; i < TX_BD_NUM_MAX; i++) {
-+			skbuf_dma = lp->tx_skb_ring[i];
-+			if (skbuf_dma && skbuf_dma->skb) {
-+				dma_unmap_sg(lp->dev, skbuf_dma->sgl,
-+					     skbuf_dma->sg_len, DMA_TO_DEVICE);
-+				dev_kfree_skb_any(skbuf_dma->skb);
-+			}
-+			kfree(skbuf_dma);
-+		}
-+		kfree(lp->tx_skb_ring);
-+
-+		for (i = 0; i < RX_BUF_NUM_DEFAULT; i++) {
-+			skbuf_dma = lp->rx_skb_ring[i];
-+			if (skbuf_dma && skbuf_dma->skb) {
-+				dma_unmap_single(lp->dev, skbuf_dma->dma_address,
-+						 lp->max_frm_size, DMA_FROM_DEVICE);
-+				dev_kfree_skb_any(skbuf_dma->skb);
-+			}
-+			kfree(skbuf_dma);
-+		}
-+		kfree(lp->rx_skb_ring);
- 	}
- 
- 	axienet_iow(lp, XAE_IE_OFFSET, 0);
-@@ -2615,6 +2647,7 @@ static int axienet_probe(struct platform_device *pdev)
- 	u64_stats_init(&lp->rx_stat_sync);
- 	u64_stats_init(&lp->tx_stat_sync);
- 
-+	spin_lock_init(&lp->rx_submit_lock);
- 	mutex_init(&lp->stats_lock);
- 	seqcount_mutex_init(&lp->hw_stats_seqcount, &lp->stats_lock);
- 	INIT_DEFERRABLE_WORK(&lp->stats_work, axienet_refresh_stats);
+ static void patch_unmap(int fixmap)
 -- 
 2.53.0
 
