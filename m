@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8E138DC44;
-	Sat, 17 Oct 2026 16:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C383AE6FA;
+	Sat, 17 Oct 2026 16:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255541; cv=none; b=bBRPyiYYNG0JXRQe/Tz35soMsZ7rModzXIza+RP33o/01w5SbhhXN1W3iCg3fBdCDCXtI+0sn/FXzUM5MuOxBhZVWqRH/rFnIqAjE/8FI5BYL+JaqVZTUjj9Dk8HKZev3goBlJ8xTvNnXujJj+L02o1CrpElBv8btl/jjHQ9nXE=
+	t=1792255544; cv=none; b=GPYY4z0RpLn5F3DR2da7RUjyccUfm6qDwjflN3suGOaIUuVsj8/W3GPtYU+R9lok0gx5ha9+r3OlPsicxulnqMt7qPo2UKPQQF74cptwK9MJT7FR/vNcrek+ocQ+STahTahf9NJFak5lwpBCTRzHfd2MtQRqevFqU3V90Z2e1SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255541; c=relaxed/simple;
-	bh=2JmP1EZMw37WiFgsALF30mwEc6WuzkPut2OhBFtNtzM=;
+	s=arc-20240116; t=1792255544; c=relaxed/simple;
+	bh=z4VDskaGde7iYkHXgxcu+mU6YCXNWusWX3QMl1CujeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1STU2V4KHelcFejD/oDE9UNLDr3LfgK4gvGJ4rTRV4sc7RXX6EZTb9J62BQOxBB95wQqrofXHErHJkgxKenkTWUaJADBONhlVEzgf/Z+LucSY6KY3PnJyY0zWaFrsFmY0wEiN1Y/JzQzai22MuaFy1EiGgMFBzcb+VWAf+nkJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QH7T66Fi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbujYqSZ6CNGT2/goYBwwRZOxYP4pc5RfYu4u+a0vVViFPPzbWkhto+uXcIKjB9DU+mTNx/KoHFXo4A1hhkIntCRWX9H1aIz3oFgVHfqcmW1UjqRkdyOEJWgtqt6M2o1J3gVmLn7OqeRTn+RNQHsT55zU3olzk+wzhX9caC072w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc00EOZF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QH7T66Fi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C93E1F000C4;
-	Sat, 17 Oct 2026 16:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc00EOZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF901F000C4;
+	Sat, 17 Oct 2026 16:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255540;
-	bh=gAWsI9QAGEx5i3tW+iLiwDBdg0Aa+/zJXZFkicazr9A=;
+	s=korg; t=1792255542;
+	bh=fY46Br2H8JrfjFkZPflPymz8MhH3zKlDIEg7Vj5afQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QH7T66FiCZHpyMglJE0N7km030XGfHTr0ha4XWKvWQkyC10Dsf8isJU3fblzugJYm
-	 njLbuECLxer3IP/sM9ZnD+yvs6/kz+jY32WnQsF6SquJEPZSbuQ1TCNOcSFFrr+BUV
-	 0fJt+Nf9jPVvPA0a/zw+V0s9JOXLXkmGMXBPu+mA=
+	b=Bc00EOZFXOoHECkrhiw56gL8S+Nz2dpKMny57X2UBpD5qZ9u9TtyC35/d0i5MRHFJ
+	 PY2bkax/aiVeLUGzw1nUWQI8EHADVqhZjSOq+czTHnE6aaZN4V4WhNLQURfG870I/h
+	 Osf74BK30qNAlFTDZyIgoes6LHOOtKcpRbqUxVzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Dan Williams <djbw@kernel.org>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 793/869] bpf: backtracking shouldnt clear outer frame R1-R5 for callbacks
-Date: Sat, 17 Oct 2026 18:00:34 +0200
-Message-ID: <20261017160057.238878152@linuxfoundation.org>
+Subject: [PATCH 6.12 811/869] cxl/region: Resolve region deletion races
+Date: Sat, 17 Oct 2026 18:00:52 +0200
+Message-ID: <20261017160057.689330236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,106 +53,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Dan Williams <djbw@kernel.org>
 
-[ Upstream commit e3e4f66cc4b72333d0886ae2673c360248987889 ]
+[ Upstream commit 4dd86ca99ffcc413cbf79063fd9956ef54e0ca91 ]
 
-When processing calls to bpf_loop() verifier marks R1 (and R4) as
-precise. R1 tracks loop iterations number and because of the
-'callback_depth < R1' mechanics in check_helper_call() must be marked
-precise. However, precision propagation for R1 was broken,
-when bpf_loop() call was verified on a second iteration.
+Sungwoo noticed that the sysfs trigger to delete a region may try to delete
+a region multiple times. It also has no exclusion relative to the kernel
+releasing the region via CXL root device teardown.
 
-Consider the following verification trace:
-- main: bpf_loop(nr_loops, callback ...)
-- callback: BPF_EXIT
-- main: bpf_loop(nr_loops, callback ...)
-- ...
+Instead of installing new cxl root devres actions per region, use the
+existing root decoder unregistration event to remove all remaining regions.
+An xarray of regions replaces a devres list of regions.
 
-While the first visit of the call to bpf_loop() propagated R1
-precision as expected, the second call to mark_chain_precision() in
-the check_helper_call() set R1, but it was immediately reset when
-backtrack_insn() processed preceding BPF_EXIT in the loop deleted in
-this patch.
+This handles 3 separate issues with the old approach:
 
-Because of that, the second visit of the call to bpf_loop() injected
-checkpoint with R1 not marked as precise. Which could trick the
-verifier into accepting unsafe programs. See the next patch for an
-example of such program.
+1/ sysfs users racing to delete the same region: no longer possible now
+   that the regions_lock is held over the lookup and deletion.
 
-Commit is structured in a way to minimize conflicts when
-'bpf' would be eventually merged with 'bpf-next'.
+2/ multiple actions triggering deletion of the same region: solved by
+   erasing regions while holding @regions_lock, and only proceeding on
+   successful erasure.
 
-Fixes: ab5cfac139ab ("bpf: verify callbacks as if they are called unknown number of times")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260831-bug-015-backtrack-cb-args-precise-v1-1-68a8e2a821e0@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+3/ userspace racing devres_release_all() to trigger the devres not found
+   warning: solved by sysfs unregistration not requiring a release action
+
+Fixes: 779dd20cfb56 ("cxl/region: Add region creation support")
+Reported-by: Sungwoo Kim <iam@sung-woo.kim>
+Closes: http://lore.kernel.org/20260427032010.916681-2-iam@sung-woo.kim
+Signed-off-by: Dan Williams <djbw@kernel.org>
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Tested-by: ALejandro Lucero <alucerop@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260519210158.1499795-3-djbw@kernel.org
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/cxl/core/core.h   |  2 ++
+ drivers/cxl/core/port.c   |  5 ++++
+ drivers/cxl/core/region.c | 62 ++++++++++++++++++++++-----------------
+ drivers/cxl/cxl.h         |  4 +++
+ 4 files changed, 46 insertions(+), 27 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 60fc4935288c8..76868b01727f5 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4148,37 +4148,34 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 				return -EFAULT;
- 			}
- 		} else if (opcode == BPF_EXIT) {
--			bool r0_precise;
-+			bool from_subprog_call, r0_precise;
-+
-+			/* BPF_EXIT in subprog or callback always returns
-+			 * right after the call instruction, so by checking
-+			 * whether the instruction at subseq_idx-1 is subprog
-+			 * call or not we can distinguish actual exit from
-+			 * *subprog* from exit from *callback*. In the former
-+			 * case, we need to propagate r0 precision, if
-+			 * necessary. In the former we never do that.
-+			 */
-+			from_subprog_call = subseq_idx - 1 >= 0 &&
-+					    bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]);
-+
-+			r0_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_0);
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 1c11bd5f0df00..d95206ed6ab8d 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -32,6 +32,7 @@ int cxl_get_poison_by_endpoint(struct cxl_port *port);
+ struct cxl_region *cxl_dpa_to_region(const struct cxl_memdev *cxlmd, u64 dpa);
+ u64 cxl_dpa_to_hpa(struct cxl_region *cxlr, const struct cxl_memdev *cxlmd,
+ 		   u64 dpa);
++void kill_regions(struct cxl_root_decoder *cxlrd);
  
- 			/* Backtracking to a nested function call, 'idx' is a part of
- 			 * the inner frame 'subseq_idx' is a part of the outer frame.
- 			 * In case of a regular function call, instructions giving
- 			 * precision to registers R1-R5 should have been found already.
--			 * In case of a callback, it is ok to have R1-R5 marked for
--			 * backtracking, as these registers are set by the function
--			 * invoking callback.
-+			 * In case of a callback from bpf_loop(), R{1,4} in the calling
-+			 * frame would be set as precise and that is correct.
- 			 */
--			if (subseq_idx >= 0 && calls_callback(env, subseq_idx))
--				for (i = BPF_REG_1; i <= BPF_REG_5; i++)
--					bt_clear_reg(bt, i);
--			if (bt_reg_mask(bt) & BPF_REGMASK_ARGS) {
-+			if (from_subprog_call && (bt_reg_mask(bt) & BPF_REGMASK_ARGS)) {
- 				verbose(env, "BUG regs %x\n", bt_reg_mask(bt));
- 				WARN_ONCE(1, "verifier backtracking bug");
- 				return -EFAULT;
- 			}
+ #else
+ static inline u64 cxl_dpa_to_hpa(struct cxl_region *cxlr,
+@@ -58,6 +59,7 @@ static inline int cxl_region_init(void)
+ static inline void cxl_region_exit(void)
+ {
+ }
++static inline void kill_regions(struct cxl_root_decoder *cxlrd) { };
+ #define CXL_REGION_ATTR(x) NULL
+ #define CXL_REGION_TYPE(x) NULL
+ #define SET_CXL_REGION_ATTR(x)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 217a24a2f56e3..35aceb7b38040 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -445,6 +445,8 @@ static void cxl_root_decoder_release(struct device *dev)
  
--			/* BPF_EXIT in subprog or callback always returns
--			 * right after the call instruction, so by checking
--			 * whether the instruction at subseq_idx-1 is subprog
--			 * call or not we can distinguish actual exit from
--			 * *subprog* from exit from *callback*. In the former
--			 * case, we need to propagate r0 precision, if
--			 * necessary. In the former we never do that.
--			 */
--			r0_precise = subseq_idx - 1 >= 0 &&
--				     bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]) &&
--				     bt_is_reg_set(bt, BPF_REG_0);
+ 	if (atomic_read(&cxlrd->region_id) >= 0)
+ 		memregion_free(atomic_read(&cxlrd->region_id));
++	mutex_destroy(&cxlrd->regions_lock);
++	xa_destroy(&cxlrd->regions);
+ 	__cxl_decoder_release(&cxlrd->cxlsd.cxld);
+ 	kfree(cxlrd);
+ }
+@@ -1826,6 +1828,7 @@ struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
+ 	}
+ 
+ 	mutex_init(&cxlrd->regions_lock);
++	xa_init(&cxlrd->regions);
+ 
+ 	cxld = &cxlsd->cxld;
+ 	cxld->dev.type = &cxl_decoder_root_type;
+@@ -2009,6 +2012,8 @@ static void cxld_unregister(void *dev)
+ 		cxled = to_cxl_endpoint_decoder(dev);
+ 		cxl_decoder_kill_region(cxled);
+ 	}
++	if (is_root_decoder(dev))
++		kill_regions(to_cxl_root_decoder(dev));
+ 
+ 	device_unregister(dev);
+ }
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 00c9c60d9a246..15253e5c28d60 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -2327,12 +2327,13 @@ static struct cxl_region *to_cxl_region(struct device *dev)
+ 	return container_of(dev, struct cxl_region, dev);
+ }
+ 
+-static void unregister_region(void *_cxlr)
++static void unregister_region(struct cxl_region *cxlr)
+ {
+-	struct cxl_region *cxlr = _cxlr;
++	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
+ 	struct cxl_region_params *p = &cxlr->params;
+ 	int i;
+ 
++	xa_erase(&cxlrd->regions, cxlr->id);
+ 	device_del(&cxlr->dev);
+ 
+ 	/*
+@@ -2460,6 +2461,19 @@ static int cxl_region_calculate_adistance(struct notifier_block *nb,
+ 	return NOTIFY_STOP;
+ }
+ 
++/* unwind all remaining regions */
++void kill_regions(struct cxl_root_decoder *cxlrd)
++{
++	unsigned long index;
++	struct cxl_region *cxlr;
++
++	guard(mutex)(&cxlrd->regions_lock);
++	/* no more region creation */
++	cxlrd->dead = true;
++	xa_for_each(&cxlrd->regions, index, cxlr)
++		unregister_region(cxlr);
++}
++
+ /**
+  * devm_cxl_add_region - Adds a region to a decoder
+  * @cxlrd: root decoder
+@@ -2498,14 +2512,15 @@ static struct cxl_region *devm_cxl_add_region(struct cxl_root_decoder *cxlrd,
+ 	if (rc)
+ 		goto err;
+ 
+-	rc = devm_add_action_or_reset(port->uport_dev, unregister_region, cxlr);
+-	if (rc)
++	rc = xa_insert(&cxlrd->regions, cxlr->id, cxlr, GFP_KERNEL);
++	if (rc) {
++		unregister_region(cxlr);
+ 		return ERR_PTR(rc);
++	}
+ 
+ 	dev_dbg(port->uport_dev, "%s: created %s\n",
+ 		dev_name(&cxlrd->cxlsd.cxld.dev), dev_name(dev));
+ 	return cxlr;
 -
- 			bt_clear_reg(bt, BPF_REG_0);
- 			if (bt_subprog_enter(bt))
- 				return -EFAULT;
+ err:
+ 	put_device(dev);
+ 	return ERR_PTR(rc);
+@@ -2533,6 +2548,9 @@ static struct cxl_region *__create_region(struct cxl_root_decoder *cxlrd,
+ {
+ 	int rc;
+ 
++	if (cxlrd->dead)
++		return ERR_PTR(-ENXIO);
++
+ 	switch (mode) {
+ 	case CXL_DECODER_RAM:
+ 	case CXL_DECODER_PMEM:
+@@ -2624,40 +2642,31 @@ static ssize_t region_show(struct device *dev, struct device_attribute *attr,
+ }
+ DEVICE_ATTR_RO(region);
+ 
+-static struct cxl_region *
+-cxl_find_region_by_name(struct cxl_root_decoder *cxlrd, const char *name)
+-{
+-	struct cxl_decoder *cxld = &cxlrd->cxlsd.cxld;
+-	struct device *region_dev;
+-
+-	region_dev = device_find_child_by_name(&cxld->dev, name);
+-	if (!region_dev)
+-		return ERR_PTR(-ENODEV);
+-
+-	return to_cxl_region(region_dev);
+-}
+-
+ static ssize_t delete_region_store(struct device *dev,
+ 				   struct device_attribute *attr,
+ 				   const char *buf, size_t len)
+ {
+ 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(dev);
+-	struct cxl_port *port = to_cxl_port(dev->parent);
+ 	struct cxl_region *cxlr;
+-	int rc;
++	int rc, id;
+ 
+ 	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
+ 	if (rc)
+ 		return rc;
+ 
+-	cxlr = cxl_find_region_by_name(cxlrd, buf);
+-	if (IS_ERR(cxlr)) {
++	rc = sscanf(buf, "region%d\n", &id);
++	if (rc != 1) {
+ 		mutex_unlock(&cxlrd->regions_lock);
+-		return PTR_ERR(cxlr);
++		return -EINVAL;
+ 	}
+ 
+-	devm_release_action(port->uport_dev, unregister_region, cxlr);
+-	put_device(&cxlr->dev);
++	cxlr = xa_load(&cxlrd->regions, id);
++	if (!cxlr || !sysfs_streq(buf, dev_name(&cxlr->dev))) {
++		mutex_unlock(&cxlrd->regions_lock);
++		return -ENODEV;
++	}
++
++	unregister_region(cxlr);
+ 	mutex_unlock(&cxlrd->regions_lock);
+ 
+ 	return len;
+@@ -3256,7 +3265,6 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
+ 					   struct cxl_endpoint_decoder *cxled)
+ {
+ 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+-	struct cxl_port *port = cxlrd_to_port(cxlrd);
+ 	struct range *hpa = &cxled->cxld.hpa_range;
+ 	struct cxl_region_params *p;
+ 	struct cxl_region *cxlr;
+@@ -3331,7 +3339,7 @@ static struct cxl_region *construct_region(struct cxl_root_decoder *cxlrd,
+ 
+ err:
+ 	up_write(&cxl_region_rwsem);
+-	devm_release_action(port->uport_dev, unregister_region, cxlr);
++	unregister_region(cxlr);
+ 	return ERR_PTR(rc);
+ }
+ 
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index bcd1d140fa0f2..e2b7e398d4d57 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -453,6 +453,8 @@ typedef u64 (*cxl_hpa_to_spa_fn)(struct cxl_root_decoder *cxlrd, u64 hpa);
+  * @hpa_to_spa: translate CXL host-physical-address to Platform system-physical-address
+  * @platform_data: platform specific configuration data
+  * @regions_lock: sync region discovery, construction, and deletion
++ * @regions: regions to remove at root decoder destruct time
++ * @dead: root decoder dead to region creation
+  * @qos_class: QoS performance class cookie
+  * @cxlsd: base cxl switch decoder
+  */
+@@ -462,6 +464,8 @@ struct cxl_root_decoder {
+ 	cxl_hpa_to_spa_fn hpa_to_spa;
+ 	void *platform_data;
+ 	struct mutex regions_lock;
++	struct xarray regions;
++	bool dead;
+ 	int qos_class;
+ 	struct cxl_switch_decoder cxlsd;
+ };
 -- 
 2.53.0
 
