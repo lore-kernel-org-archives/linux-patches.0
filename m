@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2222C391E51;
-	Sat, 17 Oct 2026 17:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F495391E51;
+	Sat, 17 Oct 2026 17:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259910; cv=none; b=iLxClnVb8LvMEHvC7U2ITDiZbeH/iMS/JlWZV5ITZn/t3br/nFSOCyaz3zrl/bd5OXsXuhNCYlrm7gl8ne+ja0QtOdLZGzPk0VvScdKZzWVz8sE+IXLm3Zyzi18uX5sVIRT177xx+gdb7K36sgKZP3DI+r8viEBnmzjz3M5qZUI=
+	t=1792259913; cv=none; b=ljTDJnda6vjyvH4AkKBucKWZMEN58FkkBBZe1sYYIngh6/A9iHZ5drbXmTfK59gr3FTDTdYjiZFDowM1jyfKDc/KKuZVDlLW5cuh9g3J0LWHx2Fiypb0UaQl6Qb8gSLkBOkBdk27EHOBObZ091IJbuXHfergR/WYzC+hb4def9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259910; c=relaxed/simple;
-	bh=OPKz8KgnNXKDiUdEw2XSrPv1fwvVY7oEXwpT7MLdmps=;
+	s=arc-20240116; t=1792259913; c=relaxed/simple;
+	bh=6Wi7cAR486fEcPl8eJyAIF9Eqsij9CmPAZw5CWHMszY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gD1VWG6+7r2YHKXhjnbOW6Y02bXtwusbHtglCWX3prrkRHQQ5HylMckeuXfK6Rb++DU+YNm7A82GYSw26ChDS36gG8UNKnREcG6qNEQmEY9oTTeBLmOeB0WknljwUDBE4oBHEVo5qKCT2uj2dlVXblS9pIt1jEgf5cK+vP9aV94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhXmnTP3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S+mdAejRdpobi9RRsK9DGcCZ0AyegJxqFWHIi64NQzMShbWNfUf2aop8QPSQGFjQyf2oHcijwh3addJ+1kFbzakeLJK0lT5NApKHflzdDmqbr+c7pHh52uEHTCTNJGaECOHTcqwR0P59ufqDVK8xfT+5rTr9gfIvIxgkoB7IxZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqFkAm1X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhXmnTP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707681F000C4;
-	Sat, 17 Oct 2026 17:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqFkAm1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F21F000C4;
+	Sat, 17 Oct 2026 17:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259909;
-	bh=M1ZhnMGsgroiVoywIl4rZ9spTnhbiPHTe7ATROZrPLY=;
+	s=korg; t=1792259912;
+	bh=SGr+VBBbnpu/huhZ6jILc//JLoMwrHzsX/O9vQRbqy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OhXmnTP3czt/68wAKZZPPnkiIbquUHEvG+Cib+bNW75luYSoBROXcByElFj1fvb6M
-	 kzEic1Pcezz/FKutI2PQOY3tu2zttD7062w3yqv+fQXKIICE3ZRtLV4dQeY3crsybi
-	 G83GaWUa4EFqcBilRYwT41D3QWr7+7UIdKvHDtLQ=
+	b=SqFkAm1XDPbndHb6khntV9m5vYTV71KAMjYYyf0BqQpvhSAjIAV34siGDWXJR+lvF
+	 bNcDyzW020cv86RRyOnr2uRJfVC7nGaT92Hg5H1/XZrXPpGYwtAljfY5aAQ6cDuBWP
+	 mrCC0wwen+IkadRU8skWssh2f1MItZuepSdmK020=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1319/1674] nfsd: fix stale s2s_cp_stateids IDR entry for async COPY
-Date: Sat, 17 Oct 2026 17:59:51 +0200
-Message-ID: <20261017160505.001427704@linuxfoundation.org>
+Subject: [PATCH 6.6 1364/1674] usb: dwc3: gadget: Reinitiate stream for all host NoStream behavior
+Date: Sat, 17 Oct 2026 18:00:36 +0200
+Message-ID: <20261017160506.167270970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,57 +50,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit d0beaee498e11880e72826026db0e9c9890fc114 ]
+[ Upstream commit dcfe437492e27d54f3ac491aed024da760f5c43c ]
 
-For an async COPY, nfsd4_copy() called nfs4_init_copy_state() before
-dup_copy_fields(), so the s2s_cp_stateids IDR was pointed at
-&u->copy->cp_stateid -- memory in the per-rqstp COMPOUND buffer that is
-reused by the next request. dup_copy_fields() copies only the value into
-async_copy, so the IDR slot dangled at the transient buffer for the whole
-background copy. Any IDR walker then dereferences reused request memory:
-the laundromat reads cs_type from it and, if the bytes look like an
-expired NFS4_COPYNOTIFY_STID, follows into
-refcount_dec()/idr_remove()/kfree() on garbage; manage_cpntf_state() has
-the same exposure via idr_find().
+There are too many different host behaviors when it comes to NoStream
+handling, and not everyone follows the USB and xHCI spec. The DWC3
+driver attempts to do some guess work to interop with different hosts,
+but it can't cover everything. Let's keep it simple and treat every host
+the same: just retry on NoStream after a 100ms of no response delay.
+Note that some hosts cannot handle frequent retries. This may affect
+performance on certain defective hosts, but NoStream is a rare
+occurrence and interoperability is more important.
 
-Duplicate the fields first, then register the stateid on the stable
-async_copy. result->cb_stateid is unchanged.
-
-Fixes: e0639dc5805a ("NFSD introduce async copy feature")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-3-a0ff7db6aa3e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/b92ae94c86f01f165d5f178b7767898573b6dc75.1736819308.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b58e6200450d ("usb: dwc3: clear forceRM when issuing EndTransfer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/core.h   |   3 +-
+ drivers/usb/dwc3/gadget.c | 109 ++++++++++++++++++++------------------
+ 2 files changed, 59 insertions(+), 53 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 79791ebfc1a30..de32446f58b37 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1853,11 +1853,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
- 		if (!async_copy->cp_src)
- 			goto out_err;
--		if (!nfs4_init_copy_state(nn, copy))
-+		dup_copy_fields(copy, async_copy);
+diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+index 2a6891c6a996d..52b75592294ce 100644
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -727,6 +727,7 @@ struct dwc3_event_buffer {
+  */
+ struct dwc3_ep {
+ 	struct usb_ep		endpoint;
++	struct delayed_work	nostream_work;
+ 	struct list_head	cancelled_list;
+ 	struct list_head	pending_list;
+ 	struct list_head	started_list;
+@@ -749,7 +750,7 @@ struct dwc3_ep {
+ #define DWC3_EP_WAIT_TRANSFER_COMPLETE	BIT(7)
+ #define DWC3_EP_IGNORE_NEXT_NOSTREAM	BIT(8)
+ #define DWC3_EP_FORCE_RESTART_STREAM	BIT(9)
+-#define DWC3_EP_FIRST_STREAM_PRIMED	BIT(10)
++#define DWC3_EP_STREAM_PRIMED		BIT(10)
+ #define DWC3_EP_PENDING_CLEAR_STALL	BIT(11)
+ #define DWC3_EP_TXFIFO_RESIZED		BIT(12)
+ #define DWC3_EP_DELAY_STOP             BIT(13)
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index ea2d8e8931a21..d671c26bf7b81 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -997,8 +997,7 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep, unsigned int action)
+ 
+ 			/*
+ 			 * All stream eps will reinitiate stream on NoStream
+-			 * rejection until we can determine that the host can
+-			 * prime after the first transfer.
++			 * rejection.
+ 			 *
+ 			 * However, if the controller is capable of
+ 			 * TXF_FLUSH_BYPASS, then IN direction endpoints will
+@@ -3364,6 +3363,50 @@ static int dwc3_gadget_init_out_endpoint(struct dwc3_ep *dep)
+ 	return dwc3_alloc_trb_pool(dep);
+ }
+ 
++#define nostream_work_to_dep(w) (container_of(to_delayed_work(w), struct dwc3_ep, nostream_work))
++static void dwc3_nostream_work(struct work_struct *work)
++{
++	struct dwc3_ep	*dep = nostream_work_to_dep(work);
++	struct dwc3	*dwc = dep->dwc;
++	unsigned long   flags;
 +
-+		if (!nfs4_init_copy_state(nn, async_copy))
- 			goto out_err;
--		memcpy(&result->cb_stateid, &copy->cp_stateid.cs_stid,
-+		memcpy(&result->cb_stateid, &async_copy->cp_stateid.cs_stid,
-+			sizeof(result->cb_stateid));
-+		memcpy(&async_copy->cp_res.cb_stateid, &result->cb_stateid,
- 			sizeof(result->cb_stateid));
--		dup_copy_fields(copy, async_copy);
- 		async_copy->copy_task = kthread_create(nfsd4_do_async_copy,
- 				async_copy, "%s", "copy thread");
- 		if (IS_ERR(async_copy->copy_task))
++	spin_lock_irqsave(&dwc->lock, flags);
++	if (dep->flags & DWC3_EP_STREAM_PRIMED)
++		goto out;
++
++	if ((dep->flags & DWC3_EP_IGNORE_NEXT_NOSTREAM) ||
++	    (!DWC3_MST_CAPABLE(&dwc->hwparams) &&
++	     !(dep->flags & DWC3_EP_WAIT_TRANSFER_COMPLETE)))
++		goto out;
++	/*
++	 * If the host rejects a stream due to no active stream, by the
++	 * USB and xHCI spec, the endpoint will be put back to idle
++	 * state. When the host is ready (buffer added/updated), it will
++	 * prime the endpoint to inform the usb device controller. This
++	 * triggers the device controller to issue ERDY to restart the
++	 * stream. However, some hosts don't follow this and keep the
++	 * endpoint in the idle state. No prime will come despite host
++	 * streams are updated, and the device controller will not be
++	 * triggered to generate ERDY to move the next stream data. To
++	 * workaround this and maintain compatibility with various
++	 * hosts, force to reinitiate the stream until the host is ready
++	 * instead of waiting for the host to prime the endpoint.
++	 */
++	if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
++		unsigned int cmd = DWC3_DGCMD_SET_ENDPOINT_PRIME;
++
++		dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
++	} else {
++		dep->flags |= DWC3_EP_DELAY_START;
++		dwc3_stop_active_transfer(dep, true, true);
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return;
++	}
++out:
++	dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
++	spin_unlock_irqrestore(&dwc->lock, flags);
++}
++
+ static int dwc3_gadget_init_endpoint(struct dwc3 *dwc, u8 epnum)
+ {
+ 	struct dwc3_ep			*dep;
+@@ -3409,6 +3452,7 @@ static int dwc3_gadget_init_endpoint(struct dwc3 *dwc, u8 epnum)
+ 	INIT_LIST_HEAD(&dep->pending_list);
+ 	INIT_LIST_HEAD(&dep->started_list);
+ 	INIT_LIST_HEAD(&dep->cancelled_list);
++	INIT_DELAYED_WORK(&dep->nostream_work, dwc3_nostream_work);
+ 
+ 	dwc3_debugfs_create_endpoint_dir(dep);
+ 
+@@ -3844,66 +3888,27 @@ static void dwc3_gadget_endpoint_command_complete(struct dwc3_ep *dep,
+ static void dwc3_gadget_endpoint_stream_event(struct dwc3_ep *dep,
+ 		const struct dwc3_event_depevt *event)
+ {
+-	struct dwc3 *dwc = dep->dwc;
+-
+ 	if (event->status == DEPEVT_STREAMEVT_FOUND) {
+-		dep->flags |= DWC3_EP_FIRST_STREAM_PRIMED;
+-		goto out;
++		cancel_delayed_work(&dep->nostream_work);
++		dep->flags |= DWC3_EP_STREAM_PRIMED;
++		dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
++		return;
+ 	}
+ 
+ 	/* Note: NoStream rejection event param value is 0 and not 0xFFFF */
+ 	switch (event->parameters) {
+ 	case DEPEVT_STREAM_PRIME:
+-		/*
+-		 * If the host can properly transition the endpoint state from
+-		 * idle to prime after a NoStream rejection, there's no need to
+-		 * force restarting the endpoint to reinitiate the stream. To
+-		 * simplify the check, assume the host follows the USB spec if
+-		 * it primed the endpoint more than once.
+-		 */
+-		if (dep->flags & DWC3_EP_FORCE_RESTART_STREAM) {
+-			if (dep->flags & DWC3_EP_FIRST_STREAM_PRIMED)
+-				dep->flags &= ~DWC3_EP_FORCE_RESTART_STREAM;
+-			else
+-				dep->flags |= DWC3_EP_FIRST_STREAM_PRIMED;
+-		}
+-
++		cancel_delayed_work(&dep->nostream_work);
++		dep->flags |= DWC3_EP_STREAM_PRIMED;
++		dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
+ 		break;
+ 	case DEPEVT_STREAM_NOSTREAM:
+-		if ((dep->flags & DWC3_EP_IGNORE_NEXT_NOSTREAM) ||
+-		    !(dep->flags & DWC3_EP_FORCE_RESTART_STREAM) ||
+-		    (!DWC3_MST_CAPABLE(&dwc->hwparams) &&
+-		     !(dep->flags & DWC3_EP_WAIT_TRANSFER_COMPLETE)))
+-			break;
+-
+-		/*
+-		 * If the host rejects a stream due to no active stream, by the
+-		 * USB and xHCI spec, the endpoint will be put back to idle
+-		 * state. When the host is ready (buffer added/updated), it will
+-		 * prime the endpoint to inform the usb device controller. This
+-		 * triggers the device controller to issue ERDY to restart the
+-		 * stream. However, some hosts don't follow this and keep the
+-		 * endpoint in the idle state. No prime will come despite host
+-		 * streams are updated, and the device controller will not be
+-		 * triggered to generate ERDY to move the next stream data. To
+-		 * workaround this and maintain compatibility with various
+-		 * hosts, force to reinitiate the stream until the host is ready
+-		 * instead of waiting for the host to prime the endpoint.
+-		 */
+-		if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
+-			unsigned int cmd = DWC3_DGCMD_SET_ENDPOINT_PRIME;
+-
+-			dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
+-		} else {
+-			dep->flags |= DWC3_EP_DELAY_START;
+-			dwc3_stop_active_transfer(dep, true, true);
+-			return;
+-		}
++		dep->flags &= ~DWC3_EP_STREAM_PRIMED;
++		if (dep->flags & DWC3_EP_FORCE_RESTART_STREAM)
++			queue_delayed_work(system_wq, &dep->nostream_work,
++					   msecs_to_jiffies(100));
+ 		break;
+ 	}
+-
+-out:
+-	dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
+ }
+ 
+ static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
 -- 
 2.53.0
 
