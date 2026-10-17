@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0243B3880;
-	Sat, 17 Oct 2026 16:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B815E3BFAC8;
+	Sat, 17 Oct 2026 16:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255309; cv=none; b=f5HCMgS3ietNyjRGkLJiGDRhFz6E9ZtvPxNISuqZ5Wuo/rMAh57poV1rm8lVtKf79/8gw8J5BTSHtTIkLhl8ZtnwHrDYzSa41zZ1BcVFWhr8KPchIRtFF2rMSItFKdZBtqvLGX3H9Lhxu2Jn1/IV+fsv8SJFDdZIjoRaxTaPGR0=
+	t=1792255312; cv=none; b=OCbYe6lrf3HUg4bWG+CUopmSFtGzNIoy7lgQj0czyYHLTkkG1v/q+ylhWlEE/4qU+iLHcaEo2nwBgkrD69104ij8eTXr9AtwnJeUHpozZ1YkUkwG3Lc4h6DQ4rPNJSh294YpsLT5hUGMvHhIgTXEaOFLbQvv9u9dxZOm7dkcbi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255309; c=relaxed/simple;
-	bh=PkL/ajIdyCfWP/EnlTQY8iYsK7YAp1vSe8wk0OxWB2A=;
+	s=arc-20240116; t=1792255312; c=relaxed/simple;
+	bh=75dujK0sH9R/1oN0At8wW3XrVOVLU8cK0uwCClee9xA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3O8MpKQATIj3mY/BKiiH+OrvprUL+IUeuw3N66kXJuE6iSWbOh04n1y861r5S8aoTM6xgztgUTv5OUwXq16uDz6YKvPhm61mn50O+v4PEvXfFzWJ+AIfUtGmiFM9B3UZU+hC6nWRI84vHc+9Pu05PQ1rx9IjUg5u38sicJUp4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UW/RUifH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bywWysLXqxl0aC99tHN9Xqc7kYE00+e7Zy5Y3fiLwbpODK0jJKoS9ZZBTIFtVmCQj2YFiWazx5UNz2uPm3TxMjRyB8sRhbiCj9sr4NQhW/Mgh+lw25XQfBlreMdE2hst8t3ZQy/9KmLwIsVXTHO8MkY6j5AVNGF+UurU+PjCqzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EEvUM01; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UW/RUifH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A6D1F000C6;
-	Sat, 17 Oct 2026 16:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EEvUM01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED4D1F000C4;
+	Sat, 17 Oct 2026 16:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255308;
-	bh=zABqjDbBQclPq5O2qZAqYi9OWLPC/vP9R79mFlzjriA=;
+	s=korg; t=1792255311;
+	bh=m7aLbNtUWN8F3Zj6K2MxLCiiM59NBeoYOUVyVAbFVY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UW/RUifH3F5buUfDDP35mVfXK6HNCMn1Qm5ZpuCQuBRB69GtD5+O1gcDLjt0yP/iG
-	 45krMvteHqcIvCR4PJBSg9uRnNczCKSRB8wdysZsNIytKm8m9by5fhbw0lSka/TsoB
-	 GPYSw/dp3KWaYZE5ydv9lmxl2h1pd/5786yCVgMc=
+	b=1EEvUM01ZbDNhTu4Y3z59nJklOIdvd/Oa7AMJQskOhkAZ7fUZEP9mEtRT9lbcnL34
+	 ez13Zvo/skn8va/PqGhOmPGMzdpX05hMnAetXf2WG/UsUDzCWH46h+lHnM8epZiuBs
+	 DMA2J53h/zlUVpldEyYdkg7cUTsvF+py0IGFvgeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sicong Huang <congei42@163.com>,
-	Fei Li <fei1.li@intel.com>,
+	Johan Hovold <johan@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 732/869] virt: acrn: Fix irqfd use-after-free during eventfd shutdown
-Date: Sat, 17 Oct 2026 17:59:33 +0200
-Message-ID: <20261017160055.715186327@linuxfoundation.org>
+Subject: [PATCH 6.12 733/869] PM: sleep: core: Synchronize runtime PM status of parents and children
+Date: Sat, 17 Oct 2026 17:59:34 +0200
+Message-ID: <20261017160055.742707455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,228 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicong Huang <congei42@163.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 666c7f9e07925aa0863348f960e09bb89f8f05a3 ]
+[ Upstream commit 3775fc538f535a7c5adaf11990c7932a0bd1f9eb ]
 
-acrn_irqfd_deassign() and the eventfd EPOLLHUP wakeup can race and free
-the same struct hsm_irqfd:
+Commit 6e176bf8d461 ("PM: sleep: core: Do not skip callbacks in the
+resume phase") overlooked the case in which the parent of a device with
+DPM_FLAG_SMART_SUSPEND set did not use that flag and could be runtime-
+suspended before a transition into a system-wide sleep state.  In that
+case, if the child is resumed during the subsequent transition from
+that state into the working state, its runtime PM status will be set to
+RPM_ACTIVE, but the runtime PM status of the parent will not be updated
+accordingly, even though the parent will be resumed too, because of the
+dev_pm_skip_suspend() check in device_resume_noirq().
 
-  CPU0                                 CPU1
-  ----                                 ----
-  eventfd_release()
-    wake_up_poll(EPOLLHUP)
-      hsm_irqfd_wakeup()
-        queue_work(&irqfd->shutdown)
-                                       acrn_irqfd_deassign()
-                                         hsm_irqfd_shutdown()
-                                           list_del_init()
-                                           eventfd_ctx_remove_wait_queue()
-                                           eventfd_ctx_put()
-                                         kfree(irqfd)
-  hsm_irqfd_shutdown_work()
-    container_of(work, ..., shutdown)
-    irqfd->vm                  <-- use-after-free
+Address this problem by tracking the need to set the runtime PM status
+to RPM_ACTIVE during system-wide resume transitions for devices with
+DPM_FLAG_SMART_SUSPEND set and all of the devices depended on by them.
 
-The deassign path freed the irqfd while a shutdown work item was
-already queued by EPOLLHUP (or vice versa), so the work item could
-resurrect a dangling pointer through container_of().
-
-Switch to the lifetime model used by KVM irqfds:
-
- - Deassign/deinit only deactivate the irqfd: remove it from vm->irqfds
-   under irqfds_lock and queue the cleanup work.
- - hsm_irqfd_shutdown_work() becomes the sole owner that unhooks the
-   eventfd waitqueue entry, drops the eventfd reference and frees the
-   irqfd.
- - A new HSM_IRQFD_FLAG_SHUTDOWN bit guarded by test_and_set_bit()
-   ensures the cleanup work is queued at most once, no matter how many
-   of {EPOLLHUP, deassign, deinit} fire concurrently.  This is safe to
-   call from the waitqueue callback, which runs with wqh->lock held and
-   IRQs disabled and therefore cannot take irqfds_lock.
- - acrn_irqfd_deassign() flushes vm->irqfd_wq before returning so the
-   eventfd is fully detached on return.  acrn_irqfd_deinit() deactivates
-   every irqfd, flushes the workqueue and only then destroys it, so no
-   path can queue_work() onto a torn-down workqueue.
- - acrn_irqfd_assign() now installs the eventfd waitqueue entry and
-   publishes the irqfd to vm->irqfds under irqfds_lock, so the irqfd is
-   never visible to deassign/deinit before its waitqueue entry is in
-   place, and any EPOLLHUP that fires in the assign window queues
-   cleanup work that blocks on irqfds_lock until publication is done.
-
-Signed-off-by: Sicong Huang <congei42@163.com>
-Reviewed-by: Fei Li <fei1.li@intel.com>
-Link: https://patch.msgid.link/20260519112018.2135000-2-congei42@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6e176bf8d461 ("PM: sleep: core: Do not skip callbacks in the resume phase")
+Closes: https://lore.kernel.org/linux-pm/Z30p2Etwf3F2AUvD@hovoldconsulting.com/
+Reported-by: Johan Hovold <johan@kernel.org>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://patch.msgid.link/12619233.O9o76ZdvQC@rjwysocki.net
+Stable-dep-of: 36d74f17e03f ("driver core: Avoid warning when removing a device while its supplier is unbinding")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/acrn/irqfd.c | 71 ++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 27 deletions(-)
+ drivers/base/power/main.c | 29 ++++++++++++++++++++---------
+ include/linux/pm.h        |  1 +
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/virt/acrn/irqfd.c b/drivers/virt/acrn/irqfd.c
-index 5574fbf878209..1b1a33d702c10 100644
---- a/drivers/virt/acrn/irqfd.c
-+++ b/drivers/virt/acrn/irqfd.c
-@@ -16,6 +16,9 @@
- 
- #include "acrn_drv.h"
- 
-+/* Cleanup work has been queued; set via test_and_set_bit(). */
-+#define HSM_IRQFD_FLAG_SHUTDOWN	0
-+
- /**
-  * struct hsm_irqfd - Properties of HSM irqfd
-  * @vm:		Associated VM pointer
-@@ -25,6 +28,7 @@
-  * @list:	Entry within &acrn_vm.irqfds of irqfds of a VM
-  * @pt:		Structure for select/poll on the associated eventfd
-  * @msi:	MSI data
-+ * @flags:	Internal lifecycle flags (HSM_IRQFD_FLAG_*)
-  */
- struct hsm_irqfd {
- 	struct acrn_vm		*vm;
-@@ -34,6 +38,7 @@ struct hsm_irqfd {
- 	struct list_head	list;
- 	poll_table		pt;
- 	struct acrn_msi_entry	msi;
-+	unsigned long		flags;
- };
- 
- static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
-@@ -44,30 +49,29 @@ static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
- 			irqfd->msi.msi_data);
- }
- 
--static void hsm_irqfd_shutdown(struct hsm_irqfd *irqfd)
-+/* Queue the cleanup work at most once. Safe from atomic context. */
-+static void hsm_irqfd_queue_shutdown(struct hsm_irqfd *irqfd)
- {
--	u64 cnt;
--
--	lockdep_assert_held(&irqfd->vm->irqfds_lock);
--
--	/* remove from wait queue */
--	list_del_init(&irqfd->list);
--	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
--	eventfd_ctx_put(irqfd->eventfd);
--	kfree(irqfd);
-+	if (!test_and_set_bit(HSM_IRQFD_FLAG_SHUTDOWN, &irqfd->flags))
-+		queue_work(irqfd->vm->irqfd_wq, &irqfd->shutdown);
- }
- 
-+/* Sole owner of @irqfd: unhook waitqueue, drop eventfd ref, free. */
- static void hsm_irqfd_shutdown_work(struct work_struct *work)
- {
--	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
-+	struct hsm_irqfd *irqfd = container_of(work, struct hsm_irqfd,
-+					       shutdown);
-+	struct acrn_vm *vm = irqfd->vm;
-+	u64 cnt;
- 
--	irqfd = container_of(work, struct hsm_irqfd, shutdown);
--	vm = irqfd->vm;
- 	mutex_lock(&vm->irqfds_lock);
- 	if (!list_empty(&irqfd->list))
--		hsm_irqfd_shutdown(irqfd);
-+		list_del_init(&irqfd->list);
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
-+	eventfd_ctx_put(irqfd->eventfd);
-+	kfree(irqfd);
- }
- 
- /* Called with wqh->lock held and interrupts disabled */
-@@ -76,17 +80,16 @@ static int hsm_irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode,
- {
- 	unsigned long poll_bits = (unsigned long)key;
- 	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
- 
- 	irqfd = container_of(wait, struct hsm_irqfd, wait);
--	vm = irqfd->vm;
-+
- 	if (poll_bits & POLLIN)
- 		/* An event has been signaled, inject an interrupt */
- 		acrn_irqfd_inject(irqfd);
- 
- 	if (poll_bits & POLLHUP)
--		/* Do shutdown work in thread to hold wqh->lock */
--		queue_work(vm->irqfd_wq, &irqfd->shutdown);
-+		/* Defer teardown to the cleanup work; can't sleep here. */
-+		hsm_irqfd_queue_shutdown(irqfd);
- 
- 	return 0;
- }
-@@ -143,6 +146,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 	init_waitqueue_func_entry(&irqfd->wait, hsm_irqfd_wakeup);
- 	init_poll_funcptr(&irqfd->pt, hsm_irqfd_poll_func);
- 
-+	/*
-+	 * Hold irqfds_lock across waitqueue install and list_add so the
-+	 * irqfd is not visible to deassign/deinit before its waitqueue
-+	 * entry is in place, and any racing EPOLLHUP cleanup work blocks
-+	 * on irqfds_lock until publication completes.
-+	 */
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry(tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd != tmp->eventfd)
-@@ -151,14 +160,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 		mutex_unlock(&vm->irqfds_lock);
- 		goto fail;
- 	}
--	list_add_tail(&irqfd->list, &vm->irqfds);
--	mutex_unlock(&vm->irqfds_lock);
- 
--	/* Check the pending event in this stage */
- 	events = vfs_poll(fd_file(f), &irqfd->pt);
--
-+	list_add_tail(&irqfd->list, &vm->irqfds);
- 	if (events & EPOLLIN)
- 		acrn_irqfd_inject(irqfd);
-+	mutex_unlock(&vm->irqfds_lock);
- 
- 	fdput(f);
- 	return 0;
-@@ -185,13 +192,17 @@ static int acrn_irqfd_deassign(struct acrn_vm *vm,
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry_safe(irqfd, tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd == eventfd) {
--			hsm_irqfd_shutdown(irqfd);
-+			list_del_init(&irqfd->list);
-+			hsm_irqfd_queue_shutdown(irqfd);
- 			break;
- 		}
- 	}
- 	mutex_unlock(&vm->irqfds_lock);
- 	eventfd_ctx_put(eventfd);
- 
-+	/* Wait for cleanup work to finish so the eventfd is fully detached. */
-+	flush_workqueue(vm->irqfd_wq);
-+
- 	return 0;
- }
- 
-@@ -224,9 +235,15 @@ void acrn_irqfd_deinit(struct acrn_vm *vm)
- 	struct hsm_irqfd *irqfd, *next;
- 
- 	dev_dbg(acrn_dev.this_device, "VM %u irqfd deinit.\n", vm->vmid);
--	destroy_workqueue(vm->irqfd_wq);
-+
- 	mutex_lock(&vm->irqfds_lock);
--	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list)
--		hsm_irqfd_shutdown(irqfd);
-+	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list) {
-+		list_del_init(&irqfd->list);
-+		hsm_irqfd_queue_shutdown(irqfd);
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index abb16a5bb7967..71489b46a07bb 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -654,13 +654,15 @@ static void device_resume_noirq(struct device *dev, pm_message_t state, bool asy
+ 	 * so change its status accordingly.
+ 	 *
+ 	 * Otherwise, the device is going to be resumed, so set its PM-runtime
+-	 * status to "active", but do that only if DPM_FLAG_SMART_SUSPEND is set
+-	 * to avoid confusing drivers that don't use it.
++	 * status to "active" unless its power.set_active flag is clear, in
++	 * which case it is not necessary to update its PM-runtime status.
+ 	 */
+-	if (skip_resume)
++	if (skip_resume) {
+ 		pm_runtime_set_suspended(dev);
+-	else if (dev_pm_skip_suspend(dev))
++	} else if (dev->power.set_active) {
+ 		pm_runtime_set_active(dev);
++		dev->power.set_active = false;
 +	}
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	/* Drain all cleanup work before tearing the workqueue down. */
-+	flush_workqueue(vm->irqfd_wq);
-+	destroy_workqueue(vm->irqfd_wq);
+ 
+ 	if (dev->pm_domain) {
+ 		info = "noirq power domain ";
+@@ -1187,18 +1189,24 @@ static pm_message_t resume_event(pm_message_t sleep_state)
+ 	return PMSG_ON;
  }
+ 
+-static void dpm_superior_set_must_resume(struct device *dev)
++static void dpm_superior_set_must_resume(struct device *dev, bool set_active)
+ {
+ 	struct device_link *link;
+ 	int idx;
+ 
+-	if (dev->parent)
++	if (dev->parent) {
+ 		dev->parent->power.must_resume = true;
++		if (set_active)
++			dev->parent->power.set_active = true;
++	}
+ 
+ 	idx = device_links_read_lock();
+ 
+-	list_for_each_entry_rcu_locked(link, &dev->links.suppliers, c_node)
++	list_for_each_entry_rcu_locked(link, &dev->links.suppliers, c_node) {
+ 		link->supplier->power.must_resume = true;
++		if (set_active)
++			link->supplier->power.set_active = true;
++	}
+ 
+ 	device_links_read_unlock(idx);
+ }
+@@ -1275,8 +1283,11 @@ static int device_suspend_noirq(struct device *dev, pm_message_t state, bool asy
+ 	      dev->power.may_skip_resume) || !pm_runtime_need_not_resume(dev))
+ 		dev->power.must_resume = true;
+ 
+-	if (dev->power.must_resume)
+-		dpm_superior_set_must_resume(dev);
++	if (dev->power.must_resume) {
++		dev->power.set_active = dev->power.set_active ||
++			dev_pm_test_driver_flags(dev, DPM_FLAG_SMART_SUSPEND);
++		dpm_superior_set_must_resume(dev, dev->power.set_active);
++	}
+ 
+ Complete:
+ 	complete_all(&dev->power.completion);
+diff --git a/include/linux/pm.h b/include/linux/pm.h
+index 97b0e23363c82..a478737115cd9 100644
+--- a/include/linux/pm.h
++++ b/include/linux/pm.h
+@@ -683,6 +683,7 @@ struct dev_pm_info {
+ 	bool			no_pm_callbacks:1;	/* Owned by the PM core */
+ 	bool			async_in_progress:1;	/* Owned by the PM core */
+ 	bool			must_resume:1;		/* Owned by the PM core */
++	bool			set_active:1;		/* Owned by the PM core */
+ 	bool			may_skip_resume:1;	/* Set by subsystems */
+ #else
+ 	bool			should_wakeup:1;
 -- 
 2.53.0
 
