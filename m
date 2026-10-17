@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA9622F767;
-	Sat, 17 Oct 2026 16:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F023876BA;
+	Sat, 17 Oct 2026 16:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254523; cv=none; b=sxq/m0bM842YXVIthxrgPF/E2oXZ8AzWB7syEgSwmpMT2lIjzvnkYMCR8nWQt59Ebf7/eIGSAmQ9lWL677hsMJgkBxFrmlr70MwEo7TX7KA/PF6hAdOrTl0dBWbTOk91p4QsRtCnS9zSJ8XhhCxwZpXqaI0I/F6vmCrM3kuSS5A=
+	t=1792254527; cv=none; b=SWKsTgIDAK+JRImtr5Ci8Q92khfXHJLyufBJW+w15S46ybESK4db1JH3ZKNllO8MKeNIOosCVqUlIHqW9cbc9kFI4V9rlO6g9HxNeBugOBIB/mFxJMUo2DNZ8jmkOs3DCc5F1u0ffakwlZ6qO5YRZx8peW9ue6THDEU7GxF0Etc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254523; c=relaxed/simple;
-	bh=Ts9FXatDmoxNErqQ/riltiSwc0kWzvU0MYv7mrSxZD0=;
+	s=arc-20240116; t=1792254527; c=relaxed/simple;
+	bh=oEff2vhJ76/up0l+c4d6rjYgUiYr9stRO7ahL+a+qIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0GsAww+EycsOYgbVmsF40hd3Hx/FUXhheaTTdQlLLINN4Jo3P8Lb58FVBkTGpQ8/0M7AkdAZfjmT/nfmzUgJwR4fhO0l0gW7pRCh5lkF+xKlyWtprZEnvWv2ifukdc9Vdl9BeBKuZx5hbujU9mf/Ap3K3WOEEvAj4i/TeYZhTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgtiO4a5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Le1z8xfbbfffPT/rnBkiFH7/6d+28wXLhzbKcY8IXkfwau6XcYaRmgvUEocQXH9KHYY1smGX0zTsdwGhtUL3tyBaU5H+Agx/XSp/aLn0Xbv8NSCBasqhUViqeRONdSKHfSK3avg3VLtf4L45Eq3K7o8K4/Kwm0ZiGGbnlCfp0+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWA13QBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgtiO4a5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090911F000C4;
-	Sat, 17 Oct 2026 16:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWA13QBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183411F000C4;
+	Sat, 17 Oct 2026 16:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254522;
-	bh=1JBCNz78ETZDvcaVfhDcyA8pvE2RFJaVFUbCpGtJKkM=;
+	s=korg; t=1792254525;
+	bh=YKNR/kk3M/uS2G0TotmG8jzCt1+hGZqwk9As39rltPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FgtiO4a5RxAbmLO7hZFH5Ume/P4zwknWz7aIIoLNctOP9WD17hI65Fd+Yv2N3vFKp
-	 75GeYsGD5NjqDIgXz7Tl8NMpvXnMO1W8fo9afxKCNF7ZgzuPQd2XCgOMm6pE4zJEUh
-	 6RUpXc/unXpFSI2x+BvEiv4VFLV1UiQQt9rCNqFU=
+	b=XWA13QBCVLKw3DgcjpwdQ5gOBJhMBM+2R3DvhNUzbzrgV64Nd5bK6npg0/m8vwCQc
+	 //LlKP43cVnya2e5twtR/7wvmN5qRrMxrYou19rYRS1Um5vJ05GM2wdRyCws5Rd6h0
+	 lvjDdH9XU5wAq2c21QEWBjBO1rSXjLwAwRgoEK2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Xiao Ni <xiao@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
+	Hannes Reinecke <hare@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 476/869] md/raid1,raid10: fix error-path detection with md_cloned_bio()
-Date: Sat, 17 Oct 2026 17:55:17 +0200
-Message-ID: <20261017160049.329655933@linuxfoundation.org>
+Subject: [PATCH 6.12 477/869] nvmet-tcp: check return value of nvmet_tcp_set_queue_sock
+Date: Sat, 17 Oct 2026 17:55:18 +0200
+Message-ID: <20261017160049.354485401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,97 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 811545e0926d02a6a0b1a1258bb5544777c164d4 ]
+[ Upstream commit 7ef789703e2b91775dcb36b2efa46325be31a2a0 ]
 
-Detect the error path using md_cloned_bio() instead of relying
-on r1_bio in raid1 or r10_bio->read_slot in raid10, which may be
-NULL or -1 after splitting and resubmitting a failed bio.
+The return value of nvmet_tcp_set_queue_sock() is currently ignored in
+nvmet_tcp_tls_handshake_done(). If it fails (e.g., due to the socket
+not being in TCP_ESTABLISHED state), the socket callbacks will not be
+properly set, leading to queue and socket leakage.
 
-As a result, the error path may not be recognized and memory
-allocations can incorrectly use GFP_NOIO instead of
-(GFP_NOIO | __GFP_HIGH), which can lead to a deadlock under
-memory pressure.
+Fix this by capturing the return value and calling
+nvmet_tcp_schedule_release_queue() on failure to ensure proper cleanup.
 
-Fixes: 689389a06ce7 ("md/raid1: simplify handle_read_error().")
-Fixes: 545250f24809 ("md/raid10: simplify handle_read_error()")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260501114652.590037-3-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 13 ++++++++++---
- drivers/md/raid10.c | 20 ++++++++++++++------
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/nvme/target/tcp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index b365fd4595228..c1ed903fa9c03 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1322,11 +1322,18 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	bool r1bio_existed = !!r1_bio;
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 5509737bb4cb9..fcb1a3dbff011 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1906,10 +1906,12 @@ static void nvmet_tcp_tls_handshake_done(void *data, int status,
+ 	spin_unlock_bh(&queue->state_lock);
  
- 	/*
--	 * If r1_bio is set, we are blocking the raid1d thread
--	 * so there is a tiny risk of deadlock.  So ask for
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking r1_bio, which might
-+	 * be NULL even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
+ 	cancel_delayed_work_sync(&queue->tls_handshake_tmo_work);
 +
-+	/*
-+	 * If we are in the error path, we are blocking the raid1d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
- 	 * emergency memory if needed.
- 	 */
--	gfp_t gfp = r1_bio ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
- 
- 	/*
- 	 * Still need barrier for READ in case that whole
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index fe136080a3798..875759fa86cab 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1152,9 +1152,22 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	char b[BDEVNAME_SIZE];
- 	int slot = r10_bio->read_slot;
- 	struct md_rdev *err_rdev = NULL;
--	gfp_t gfp = GFP_NOIO;
- 	int error;
- 
-+	/*
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking slot, which might
-+	 * be -1 even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
++	if (!status)
++		status = nvmet_tcp_set_queue_sock(queue);
 +
-+	/*
-+	 * If we are in the error path, we are blocking the raid10d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
-+	 * emergency memory if needed.
-+	 */
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
-+
- 	if (slot >= 0 && r10_bio->devs[slot].rdev) {
- 		/*
- 		 * This is an error retry, but we cannot
-@@ -1164,11 +1177,6 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		 * we lose the device name in error messages.
- 		 */
- 		int disk;
--		/*
--		 * As we are blocking raid10, it is a little safer to
--		 * use __GFP_HIGH.
--		 */
--		gfp = GFP_NOIO | __GFP_HIGH;
+ 	if (status)
+ 		nvmet_tcp_schedule_release_queue(queue);
+-	else
+-		nvmet_tcp_set_queue_sock(queue);
+ 	kref_put(&queue->kref, nvmet_tcp_release_queue);
+ }
  
- 		disk = r10_bio->devs[slot].devnum;
- 		err_rdev = conf->mirrors[disk].rdev;
 -- 
 2.53.0
 
