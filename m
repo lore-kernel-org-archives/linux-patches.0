@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C0317BED0;
-	Sat, 17 Oct 2026 16:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF0022F767;
+	Sat, 17 Oct 2026 16:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253460; cv=none; b=SE1uP1gwsOiX45ETjPNGAYRJWUdo4u8P3exs0QD35hfZnOmkNtEBJWuZ/P0w7Y5r6DBwO5CpIugPMlzMWW657eW2RhuIFNj0z1HEYnumwe25pYI/4JSXgc/4h1y1Tn84GBIVKYUl1gMlGrgkmW4S7O5/vrMFPth0kuED89joGMY=
+	t=1792253463; cv=none; b=CRQ4fHGBFacLXn7Z40mNEoB+UCjtmeMlF7NzU1PajFcyk3ug6cbOjv/iRoeTLu2krtWXaqIz2BaoQelnbPQVmrko3+eAIGo/rvPZPDXIU/I/I6Y8uMDHLxlXabTGDcZ5C2hv1NDrN1MI+yMnvfzxl/yK9ELhm0eg8b2mOxpJ4uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253460; c=relaxed/simple;
-	bh=BkKWJVVEDqLfRyq3JqfPwJxZhEeIe3FJngflzw4EdM0=;
+	s=arc-20240116; t=1792253463; c=relaxed/simple;
+	bh=D66ij6lp6dOSng9+RYsNKwJd5gYPuiGwn9meeNY49Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sv/TMX3HoGw1GZuM8SUhyZmJHLwBfPuNpC0ZMGnIFiDGVqEoeVMZ0dCYzMRkhtI60OazYa5a4qS5lzgP08XyuFyzRvvolMK1kaLN13Q3GvIZ7+1T/y/w/d/W4vAdsh31IMCC0MhTefjB3pgFtaqZz8xPKqfSpTgYG+OX4zRX/9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZgvZPtS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TdNlJrRe21a3u/BKJT1t1xBxGmQaW0alsJesqKSQYwyjg+hzZlhSSn1khNALSy+oeDjY0DCFkkvErjKfbiN44vj4ufMIvQviLe4QO/vyPV4yBM3tQVPXfmXDlKbkmiO11jpdVp/7NxhE3J+HLyJJXvYfdZxXYlA9PI+3cAiJbOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml+FMQ01; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZgvZPtS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6132A1F000C4;
-	Sat, 17 Oct 2026 16:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml+FMQ01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA801F000C4;
+	Sat, 17 Oct 2026 16:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253459;
-	bh=cD3CYsdq2E1pNGOPOoupdtGX5Ja+lelu0uHpdveGuMs=;
+	s=korg; t=1792253462;
+	bh=wfCwJfi5LDrEPs286R5dsCvddJYuVwlEETwfxUws0W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fZgvZPtSSoxX0r3OYgdbfyTM/jF4bty3gckD8BssE0dnlcr6FaQGY9FwVlvKFFLdl
-	 w7v650vxDnYuxFGXKfktBwdcpTia7z8rBBvP8zVYGL6FOteGf2s3wj2PM0MbobNNLi
-	 IUWUHNxZSmnKVF3HBlnDyvywu0t8YLx0Q+CTag58=
+	b=Ml+FMQ01Os/ONiXJ/1mMBDCulamUbGKfYNzUhwpF3R26laWW7yCN61V7bUKfULX6n
+	 fx2j10fqn1s73isFL8BNTOe05SydBts847J01ssO6Nlhw1PSE3hJMGwdFmQcyRctrl
+	 +/HvmgRs2i1prEz/DiV7e4n+/TwI3m9EiXhNGbMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jason Gunthorpe <jgg@ziepe.ca>,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/869] iommu/s390: set appropriate IOTA region type
-Date: Sat, 17 Oct 2026 17:49:27 +0200
-Message-ID: <20261017160040.270314390@linuxfoundation.org>
+Subject: [PATCH 6.12 127/869] iommu/s390: Make attach succeed when the device was surprise removed
+Date: Sat, 17 Oct 2026 17:49:28 +0200
+Message-ID: <20261017160040.297255604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,77 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 83c1aec21064c762a2ee475f0fd19f5241de25bc ]
+[ Upstream commit 9ffaf5229055fcfbb3b3d6f1c7e58d63715c3f73 ]
 
-When registering the I/O Translation Anchor, use the current table type
-stored in the s390_domain to set the appropriate region type
-indication.  For the moment, the table type will always be stored as
-region third.
+When a PCI device is removed with surprise hotplug, there may still be
+attempts to attach the device to the default domain as part of tear down
+via (__iommu_release_dma_ownership()), or because the removal happens
+during probe (__iommu_probe_device()). In both cases zpci_register_ioat()
+fails with a cc value indicating that the device handle is invalid. This
+is because the device is no longer part of the instance as far as the
+hypervisor is concerned.
 
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250411202433.181683-2-mjrosato@linux.ibm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 9ffaf5229055 ("iommu/s390: Make attach succeed when the device was surprise removed")
+Currently this leads to an error return and s390_iommu_attach_device()
+fails. This triggers the WARN_ON() in __iommu_group_set_domain_nofail()
+because attaching to the default domain must never fail.
+
+With the device fenced by the hypervisor no DMAs to or from memory are
+possible and the IOMMU translations have no effect. Proceed as if the
+registration was successful and let the hotplug event handling clean up
+the device.
+
+This is similar to how devices in the error state are handled since
+commit 59bbf596791b ("iommu/s390: Make attach succeed even if the device
+is in error state") except that for removal the domain will not be
+registered later. This approach was also previously discussed at the
+link.
+
+Handle both cases, error state and removal, in a helper which checks if
+the error needs to be propagated or ignored. Avoid magic number
+condition codes by using the pre-existing, but never used, defines for
+PCI load/store condition codes and rename them to reflect that they
+apply to all PCI instructions.
+
+Cc: stable@vger.kernel.org # v6.2
+Link: https://lore.kernel.org/linux-iommu/20240808194155.GD1985367@ziepe.ca/
+Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250904-iommu_succeed_attach_removed-v1-1-e7f333d2f80f@linux.ibm.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/s390-iommu.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/pci_insn.h | 10 +++++-----
+ drivers/iommu/s390-iommu.c       |  3 ++-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
+diff --git a/arch/s390/include/asm/pci_insn.h b/arch/s390/include/asm/pci_insn.h
+index e5f57cfe1d458..025c6dcbf8933 100644
+--- a/arch/s390/include/asm/pci_insn.h
++++ b/arch/s390/include/asm/pci_insn.h
+@@ -16,11 +16,11 @@
+ #define ZPCI_PCI_ST_FUNC_NOT_AVAIL		40
+ #define ZPCI_PCI_ST_ALREADY_IN_RQ_STATE		44
+ 
+-/* Load/Store return codes */
+-#define ZPCI_PCI_LS_OK				0
+-#define ZPCI_PCI_LS_ERR				1
+-#define ZPCI_PCI_LS_BUSY			2
+-#define ZPCI_PCI_LS_INVAL_HANDLE		3
++/* PCI instruction condition codes */
++#define ZPCI_CC_OK				0
++#define ZPCI_CC_ERR				1
++#define ZPCI_CC_BUSY				2
++#define ZPCI_CC_INVAL_HANDLE			3
+ 
+ /* Load/Store address space identifiers */
+ #define ZPCI_PCIAS_MEMIO_0			0
 diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-index 007ccfdad4954..3df6b3e322271 100644
+index 3df6b3e322271..067b175231ad1 100644
 --- a/drivers/iommu/s390-iommu.c
 +++ b/drivers/iommu/s390-iommu.c
-@@ -31,6 +31,7 @@ struct s390_domain {
- 	unsigned long		*dma_table;
- 	spinlock_t		list_lock;
- 	struct rcu_head		rcu;
-+	u8			origin_type;
- };
+@@ -480,7 +480,8 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
  
- static struct iommu_domain blocking_domain;
-@@ -345,6 +346,7 @@ static struct iommu_domain *s390_domain_alloc_paging(struct device *dev)
- 	s390_domain->domain.geometry.force_aperture = true;
- 	s390_domain->domain.geometry.aperture_start = 0;
- 	s390_domain->domain.geometry.aperture_end = ZPCI_TABLE_SIZE_RT - 1;
-+	s390_domain->origin_type = ZPCI_TABLE_TYPE_RTX;
- 
- 	spin_lock_init(&s390_domain->list_lock);
- 	INIT_LIST_HEAD_RCU(&s390_domain->devices);
-@@ -381,6 +383,21 @@ static void zdev_s390_domain_update(struct zpci_dev *zdev,
- 	spin_unlock_irqrestore(&zdev->dom_lock, flags);
- }
- 
-+static u64 get_iota_region_flag(struct s390_domain *domain)
-+{
-+	switch (domain->origin_type) {
-+	case ZPCI_TABLE_TYPE_RTX:
-+		return ZPCI_IOTA_RTTO_FLAG;
-+	case ZPCI_TABLE_TYPE_RSX:
-+		return ZPCI_IOTA_RSTO_FLAG;
-+	case ZPCI_TABLE_TYPE_RFX:
-+		return ZPCI_IOTA_RFTO_FLAG;
-+	default:
-+		WARN_ONCE(1, "Invalid IOMMU table (%x)\n", domain->origin_type);
-+		return 0;
-+	}
-+}
-+
- static int s390_iommu_domain_reg_ioat(struct zpci_dev *zdev,
- 				      struct iommu_domain *domain, u8 *status)
- {
-@@ -399,7 +416,7 @@ static int s390_iommu_domain_reg_ioat(struct zpci_dev *zdev,
- 	default:
- 		s390_domain = to_s390_domain(domain);
- 		iota = virt_to_phys(s390_domain->dma_table) |
--		       ZPCI_IOTA_RTTO_FLAG;
-+		       get_iota_region_flag(s390_domain);
- 		rc = zpci_register_ioat(zdev, 0, zdev->start_dma,
- 					zdev->end_dma, iota, status);
- 	}
+ 	/* If we fail now DMA remains blocked via blocking domain */
+ 	cc = s390_iommu_domain_reg_ioat(zdev, domain, &status);
+-	if (cc && status != ZPCI_PCI_ST_FUNC_NOT_AVAIL)
++	if (cc != ZPCI_CC_OK && cc != ZPCI_CC_INVAL_HANDLE &&
++	    (cc != ZPCI_CC_ERR || status != ZPCI_PCI_ST_FUNC_NOT_AVAIL))
+ 		return -EIO;
+ 	zdev->dma_table = s390_domain->dma_table;
+ 	zdev_s390_domain_update(zdev, domain);
 -- 
 2.53.0
 
