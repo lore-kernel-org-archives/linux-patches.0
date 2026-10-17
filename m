@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3BC2DF126;
-	Sat, 17 Oct 2026 18:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33043C4B8D;
+	Sat, 17 Oct 2026 18:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260723; cv=none; b=cseRNUtFi1iCOeDb96sCz1aHJx4oeSIx4JoXZGdEv9/AvQt9T9SzeAkDw1ChqyDnwklXMJhMtz57AHukoo0DvcXGaPorViP/pTQujOKZKbjKdsEH20a9oJVZvei6Z2oKmlqeW+7dQBmiSXdIqSkzrMH4V262QRJaLw7oMvPRxr8=
+	t=1792260727; cv=none; b=cOs2LYgPUH8Q4aH+NdnRyP+B8chEmLm+IFl4aGxstDb/c/Dzg9GsemlOJrwGA+XgKpkgfb7RCvshuTRsrJ0FgP4NwqzS2aD7VkQcJ5AgD0RXwEmSTevfMONRtr/RX21MQsify6bhdc+8FAyUVWaf0ZZMVm/Lwh8bRnxuR/ktPSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260723; c=relaxed/simple;
-	bh=8RFuG8uY0lCVo9ZLa8R00G7HBbOR8C+GGJDkOVyt5iA=;
+	s=arc-20240116; t=1792260727; c=relaxed/simple;
+	bh=p4pbg6rV7jIq1rhIpSFPDJ+3o3kvUN6noe2/9fOzcXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfEk6Oh6fOz8sKYnEze6tJSsHCoCGyxQRJ0y+UHdTOfElDWiVioM7z/Dn2gdBzQNjsdeZuFXn9IUFcQH9Ztv9bkXm+l48Kx6pOHCpdddOAnWncUKR7cM66r+O2/fbVfNwBMSdvhZ0oRUf1JO1ppZ56EbPJjDOkdnWKwtOZ+2dgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY1JiPG8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d7o6GLHWvlFi7IuoULZtyQ48dqYy+Bb8gEgrxZGt1ZzzHG1NfWa5GZWGgnrrvunFub8/dSCc2XSSQsd+di1iQjOZVZAUbW07HNPFZEZuf+EyJ36cSe4ki1SeCjw4EOe+AF3OiYcQ1npTMolWoiUfk+BQOfoKBfHorjaDWt4uCyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BuCKkue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY1JiPG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E02F1F000C4;
-	Sat, 17 Oct 2026 18:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BuCKkue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021221F000C4;
+	Sat, 17 Oct 2026 18:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260722;
-	bh=KVncqfrXgIu8B5NEfyizAtYIFswBC9evgdvy/Hnh+nY=;
+	s=korg; t=1792260725;
+	bh=b7RpNLrnmktaqMc5657QIy5tM67zIDb8ZsBJMghFD+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DY1JiPG8ejhXC1hcDNJUJh5Bzk1FdAmiU5vgb1NAGR2T0Rl4Q95vDuJzivb/E+q0v
-	 mYSRz0OuS1B0c9SFqVrgJEhyjHQE+zSLGnEQgIq0dSrkYbxQdDp0NYTUjonijtyaav
-	 N8dNjqTDW5zlDqDXeI7gHvYvBtEd7f2B+6qu4CkY=
+	b=0BuCKkuez2kdT+zaMfrv5rEMT7+WM+3eaJEbYpz1iUbL/cve1JEduqlNPaWS2h8c9
+	 FUiazLEUo3aYILHgYMGD2KMU1Quur2PL+THyIuNzCLtevSPYqrshg+Rlm6foKTTWeA
+	 0pLJ/9lnQSjxZsrFyBpNnquOosR9Xj+qY+emRykc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1640/1674] net: plumb extack in __dev_change_net_namespace()
-Date: Sat, 17 Oct 2026 18:05:12 +0200
-Message-ID: <20261017160513.172954300@linuxfoundation.org>
+Subject: [PATCH 6.6 1641/1674] net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().
+Date: Sat, 17 Oct 2026 18:05:13 +0200
+Message-ID: <20261017160513.198208513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,155 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 12b6f7069ba5aa160f3332916408b34ae8e0b0f6 ]
+[ Upstream commit debac3a20dec524a59625cf10fa2f18571127824 ]
 
-It could be hard to understand why the netlink command fails. For example,
-if dev->netns_immutable is set, the error is "Invalid argument".
+syzbot reported the warning in cfg80211_pernet_exit(). [0]
 
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: debac3a20dec ("net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().")
+The repro does the following:
+
+  1. create two device in root netns and non-root netns
+  2. assign the same altname for the two devices
+  3. remove the non-root netns
+
+Since commit 7663d522099e ("net: check for altname conflicts
+when changing netdev's netns"), cfg80211_switch_netns() and
+cfg802154_switch_netns() fail if init_net has a device with the
+conflicting altname.
+
+default_device_exit_net() had the same issue and commit d09486a04f5d
+("net: fix removing a namespace with conflicting altnames") fixed it.
+
+cfg80211_pernet_exit() and cfg802154_pernet_exit() need the same fix.
+
+Let's generalise the fix by removing conflicting altnames for dying
+netns in __dev_change_net_namespace().
+
+[0]:
+cfg80211_switch_netns(rdev, &init_net)
+WARNING: net/wireless/core.c:1871 at cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871, CPU#1: kworker/u8:9/1160
+Modules linked in:
+CPU: 1 UID: 0 PID: 1160 Comm: kworker/u8:9 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+Workqueue: netns cleanup_net
+RIP: 0010:cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871
+Code: e8 03 42 80 3c 20 00 74 08 4c 89 f7 e8 b4 ef 0e f7 4d 8b 36 49 81 fe 20 10 4a 90 74 12 e8 03 3d 9f f6 eb 85 e8 fc 3c 9f f6 90 <0f> 0b 90 eb cc e8 f1 3c 9f f6 eb 05 e8 ea 3c 9f f6 5b 41 5c 41 5e
+RSP: 0018:ffffc900057a78f0 EFLAGS: 00010293
+RAX: ffffffff8b287154 RBX: ffff88807ba72780 RCX: ffff8880213e8000
+RDX: 0000000000000000 RSI: 00000000ffffffef RDI: 0000000000000000
+RBP: 00000000ffffffef R08: ffffffff9024cc67 R09: 0000000000000000
+R10: fffff52000af4eb0 R11: fffffbfff204998d R12: dffffc0000000000
+R13: ffffffff904a1080 R14: ffff888144ed0008 R15: ffff888144ed0e20
+FS:  0000000000000000(0000) GS:ffff888124de6000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005642de0a8a70 CR3: 000000007a40c000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ ops_exit_list net/core/net_namespace.c:200 [inline]
+ ops_undo_list+0x43d/0x8d0 net/core/net_namespace.c:253
+ cleanup_net+0x572/0x810 net/core/net_namespace.c:706
+ process_one_work kernel/workqueue.c:3387 [inline]
+ process_scheduled_works+0xc3d/0x1630 kernel/workqueue.c:3470
+ worker_thread+0xa47/0xfb0 kernel/workqueue.c:3551
+ kthread+0x38b/0x480 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
+Reported-by: syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a96219e.04428c52.29b18.0001.GAE@google.com/T/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260901005550.2042357-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  5 +++--
- net/core/dev.c            | 43 +++++++++++++++++++++++++++++++--------
- net/core/rtnetlink.c      |  2 +-
- 3 files changed, 38 insertions(+), 12 deletions(-)
+ net/core/dev.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index f733b7de0fe0c..61f1a64b72293 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -4031,12 +4031,13 @@ int dev_change_flags(struct net_device *dev, unsigned int flags,
- int dev_set_alias(struct net_device *, const char *, size_t);
- int dev_get_alias(const struct net_device *, char *, size_t);
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
--			       const char *pat, int new_ifindex);
-+			       const char *pat, int new_ifindex,
-+			       struct netlink_ext_ack *extack);
- static inline
- int dev_change_net_namespace(struct net_device *dev, struct net *net,
- 			     const char *pat)
- {
--	return __dev_change_net_namespace(dev, net, pat, 0);
-+	return __dev_change_net_namespace(dev, net, pat, 0, NULL);
- }
- int __dev_set_mtu(struct net_device *, int);
- int dev_set_mtu(struct net_device *, int);
 diff --git a/net/core/dev.c b/net/core/dev.c
-index bad8765c7f13b..cc0335ce38c37 100644
+index cc0335ce38c37..f9436563a2e84 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -11309,6 +11309,7 @@ EXPORT_SYMBOL(unregister_netdev);
-  *	      is already taken in the destination network namespace.
-  *	@new_ifindex: If not zero, specifies device index in the target
-  *	              namespace.
-+ *	@extack: netlink extended ack
-  *
-  *	This function shuts down a device interface and moves it
-  *	to a new network namespace. On success 0 is returned, on
-@@ -11318,7 +11319,8 @@ EXPORT_SYMBOL(unregister_netdev);
-  */
- 
- int __dev_change_net_namespace(struct net_device *dev, struct net *net,
--			       const char *pat, int new_ifindex)
-+			       const char *pat, int new_ifindex,
-+			       struct netlink_ext_ack *extack)
+@@ -11322,7 +11322,7 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+ 			       const char *pat, int new_ifindex,
+ 			       struct netlink_ext_ack *extack)
  {
- 	struct netdev_name_node *name_node;
+-	struct netdev_name_node *name_node;
++	struct netdev_name_node *name_node, *tmp;
  	struct net *net_old = dev_net(dev);
-@@ -11329,12 +11331,16 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 
- 	/* Don't allow namespace local devices to be moved. */
- 	err = -EINVAL;
--	if (dev->features & NETIF_F_NETNS_LOCAL)
-+	if (dev->features & NETIF_F_NETNS_LOCAL) {
-+		NL_SET_ERR_MSG(extack, "The interface netns is immutable");
- 		goto out;
-+	}
- 
- 	/* Ensure the device has been registrered */
--	if (dev->reg_state != NETREG_REGISTERED)
-+	if (dev->reg_state != NETREG_REGISTERED) {
-+		NL_SET_ERR_MSG(extack, "The interface isn't registered");
- 		goto out;
-+	}
- 
- 	/* Get out if there is nothing todo */
- 	err = 0;
-@@ -11347,30 +11353,49 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
- 	err = -EEXIST;
- 	if (netdev_name_in_use(net, dev->name)) {
- 		/* We get here if we can't use the current device name */
--		if (!pat)
-+		if (!pat) {
-+			NL_SET_ERR_MSG(extack,
-+				       "An interface with the same name exists in the target netns");
- 			goto out;
-+		}
- 		err = dev_prep_valid_name(net, dev, pat, new_name);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "Unable to use '%s' for the new interface name in the target netns",
-+					   pat);
- 			goto out;
-+		}
+ 	char new_name[IFNAMSIZ] = {};
+ 	int err, new_nsid;
+@@ -11368,13 +11368,21 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
  	}
  	/* Check that none of the altnames conflicts. */
  	err = -EEXIST;
--	netdev_for_each_altname(dev, name_node)
--		if (netdev_name_in_use(net, name_node->name))
-+	netdev_for_each_altname(dev, name_node) {
-+		if (netdev_name_in_use(net, name_node->name)) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "An interface with the altname %s exists in the target netns",
-+					   name_node->name);
- 			goto out;
-+		}
-+	}
- 
- 	/* Check that new_ifindex isn't used yet. */
- 	if (new_ifindex) {
- 		err = dev_index_reserve(net, new_ifindex);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "The ifindex %d is not available in the target netns",
-+					   new_ifindex);
- 			goto out;
-+		}
- 	} else {
- 		/* If there is an ifindex conflict assign a new one */
- 		err = dev_index_reserve(net, dev->ifindex);
- 		if (err == -EBUSY)
- 			err = dev_index_reserve(net, 0);
--		if (err < 0)
-+		if (err < 0) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Unable to allocate a new ifindex in the target netns");
- 			goto out;
-+		}
- 		new_ifindex = err;
+-	netdev_for_each_altname(dev, name_node) {
+-		if (netdev_name_in_use(net, name_node->name)) {
+-			NL_SET_ERR_MSG_FMT(extack,
+-					   "An interface with the altname %s exists in the target netns",
+-					   name_node->name);
+-			goto out;
++	netdev_for_each_altname_safe(dev, name_node, tmp) {
++		if (!netdev_name_in_use(net, name_node->name))
++			continue;
++
++		if (!check_net(net_old)) {
++			netdev_name_node_del(name_node);
++			synchronize_rcu();
++			__netdev_name_node_alt_destroy(name_node);
++			continue;
+ 		}
++
++		NL_SET_ERR_MSG_FMT(extack,
++				   "An interface with the altname %s exists in the target netns",
++				   name_node->name);
++		goto out;
  	}
  
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 6e4c366ecffc0..5e2df9b8aaf95 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2824,7 +2824,7 @@ static int do_setlink(const struct sk_buff *skb,
- 		else
- 			new_ifindex = 0;
+ 	/* Check that new_ifindex isn't used yet. */
+@@ -11804,7 +11812,6 @@ static struct pernet_operations __net_initdata netdev_net_ops = {
  
--		err = __dev_change_net_namespace(dev, net, pat, new_ifindex);
-+		err = __dev_change_net_namespace(dev, net, pat, new_ifindex, extack);
- 		put_net(net);
- 		if (err)
- 			goto errout;
+ static void __net_exit default_device_exit_net(struct net *net)
+ {
+-	struct netdev_name_node *name_node, *tmp;
+ 	struct net_device *dev, *aux;
+ 	/*
+ 	 * Push all migratable network devices back to the
+@@ -11828,13 +11835,6 @@ static void __net_exit default_device_exit_net(struct net *net)
+ 		if (netdev_name_in_use(&init_net, fb_name))
+ 			snprintf(fb_name, IFNAMSIZ, "dev%%d");
+ 
+-		netdev_for_each_altname_safe(dev, name_node, tmp)
+-			if (netdev_name_in_use(&init_net, name_node->name)) {
+-				netdev_name_node_del(name_node);
+-				synchronize_rcu();
+-				__netdev_name_node_alt_destroy(name_node);
+-			}
+-
+ 		err = dev_change_net_namespace(dev, &init_net, fb_name);
+ 		if (err) {
+ 			pr_emerg("%s: failed to move %s to init_net: %d\n",
 -- 
 2.53.0
 
