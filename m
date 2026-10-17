@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF383876BA;
-	Sat, 17 Oct 2026 16:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D175355F49;
+	Sat, 17 Oct 2026 16:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253514; cv=none; b=GieGXmZh2dA1TomGJOKVHtMU/0wynaBNAXaURP/ipXHgyFJJUmbtpW4K1vjG+Opn/3zD/RVk6IiZEHnZYbkFNHqKuyGPuMfeuBvLRV2vdqPAglXMGDlTPst/Rh9PJ7erMx+d+Zuoy1xjn3W4Ed69QTdfO8SiZResuWQsl/rleNc=
+	t=1792253517; cv=none; b=pqZh9ry10gKLCPquhWCK+jprtUX7065S3LkatzFtOunzCfqceUS6HrrLPJBpVA5cZNBogEqXjz5AwakguhfIAM+ihzG0Y14gTFQt9ZTYzetIWq/nxWMIqbUsUZS7lzblLEqnJVRYGmnJr0ZLs3BGjCM3Qe16O4p5DDQARZdci7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253514; c=relaxed/simple;
-	bh=89h/ZESUzp/6ixkPJJDHKxX8fwITPtotXzDMCR/1FhQ=;
+	s=arc-20240116; t=1792253517; c=relaxed/simple;
+	bh=f28+ocmSjCrJJoGgnYRPGQrNk90pJidKgRSFm238p4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmmlj/WpqWQOdc18/oGc4BbedabI7xOUaCMGfH7BY7uSOTJIBU58UHwcYlSVZVZXrlz0MYZnH3NtgFakvjYomC4VRJdRR+8hkGzvglZzA4fsdcGxezqjSG1jshH+ModsLDdX2HuJW/xYUa7ioijkouHdvp8U+dD51amUVB1B+LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxkXaV2X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jsiNXfGlMX7NJ+hjM8KVcfseKKBQNHdpvRINGRZiq5DaXoNJOtsIsOF2SaxZISo38+p/9yUALUhtsIvn8bGzdgOm8SWn0qMoGK9g6qOpaMaZD9TxoS6mpzR2ua4VqhwJh0r1PIgdT+nb1SGsqkPad00zilJTNMb27C3tFVuCU2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiqrnUpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxkXaV2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998661F000C5;
-	Sat, 17 Oct 2026 16:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiqrnUpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B840F1F000C5;
+	Sat, 17 Oct 2026 16:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253513;
-	bh=eZ7jGy+S2nO7JFQWCCBQ5yyRjaBVFi3t4Zlnp+OEBdc=;
+	s=korg; t=1792253516;
+	bh=vaoA6Atq+DjPgjC1H4YECc4BDUnHirJGgOcNa+ujUt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxkXaV2X7KxsyF1YdqXWXhVMmjHm+I1CTuPeNqDMd7yqhDMJubJxYg7lTIQZmwDf9
-	 4BgeAG02ZqoOe4FIlTz1FdFifJIq9K3qvw7LSFhk/tBtiehVFqaKcFGvT2BY42bEkB
-	 KctgS4AgYIFa4oOT/xGB9a0Z6IEDlUVmjonXKliU=
+	b=JiqrnUpKdPahvNP+OUjmbbFYDWWUKpgHrEA7cFsVv27WwnHmcO21nppav1i7xFAc5
+	 va8PcJOCmzPNlYBfhLjLmGt3xCENRSlARs3NAXIE78xa86sm8nqwzl5WXCQ5I8JlTH
+	 Vbc8UuB+1Ks0UWjydBkZh9U02ZXd+Zrj6CgkZDYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Summers Stuart <stuart.summers@intel.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Fan Li <fanl@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/869] drm/xe/guc: Add devm release action to safely tear down CT
-Date: Sat, 17 Oct 2026 17:49:43 +0200
-Message-ID: <20261017160040.681830519@linuxfoundation.org>
+Subject: [PATCH 6.12 143/869] RDMA/mlx5: Remove the redundant MLX5_IB_STAGE_UAR stage
+Date: Sat, 17 Oct 2026 17:49:44 +0200
+Message-ID: <20261017160040.708031591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,150 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit ee4b32220a6b41e71512e8804585325e685456ba ]
+[ Upstream commit 972db388d40ded1a5ef8ce09d92ef1e2b9e40f07 ]
 
-When a buffer object (BO) is allocated with the XE_BO_FLAG_GGTT_INVALIDATE
-flag, the driver initiates TLB invalidation requests via the CTB mechanism
-while releasing the BO. However a premature release of the CTB BO can lead
-to system crashes, as observed in:
+The MLX5_IB_STAGE_UAR stage in the RDMA driver is redundant and should
+be removed.
 
-Oops: Oops: 0000 [#1] SMP NOPTI
-RIP: 0010:h2g_write+0x2f3/0x7c0 [xe]
-Call Trace:
- guc_ct_send_locked+0x8b/0x670 [xe]
- xe_guc_ct_send_locked+0x19/0x60 [xe]
- send_tlb_invalidation+0xb4/0x460 [xe]
- xe_gt_tlb_invalidation_ggtt+0x15e/0x2e0 [xe]
- ggtt_invalidate_gt_tlb.part.0+0x16/0x90 [xe]
- ggtt_node_remove+0x110/0x140 [xe]
- xe_ggtt_node_remove+0x40/0xa0 [xe]
- xe_ggtt_remove_bo+0x87/0x250 [xe]
+Responsibility for initializing the device's UAR pointer
+(mdev->priv.uar) lies with mlx5_core, which already sets it during the
+mlx5_load() process.
 
-Introduce a devm-managed release action during xe_guc_ct_init() and
-xe_guc_ct_init_post_hwconfig() to ensure proper CTB disablement before
-resource deallocation, preventing the use-after-free scenario.
+At present, the RDMA UAR stage overwrites this pointer, which was
+correctly initialized by mlx5_core, creating the risk of inconsistency.
 
-Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Summers Stuart <stuart.summers@intel.com>
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://lore.kernel.org/r/20250901072541.31461-1-satyanarayana.k.v.p@intel.com
+Ownership and management of the UAR pointer should remain exclusively
+within mlx5_core.
+
+In the current upstream code, we luckily receive the same pointer, since
+mlx5_get_uars_page() still finds available BF registers for that UAR,
+allowing it to be shared.
+
+However, future changes in mlx5_core may expose this flaw.
+For instance, if mlx5_alloc_bfreg() is invoked twice before the RDMA UAR
+stage runs, the RDMA driver may overwrite the UAR allocated by
+mlx5_core.
+
+This could lead to real bugs. For example, if mlx5_ib is unloaded
+(rmmod), it might free the UAR, leaving mlx5_core with a dangling
+reference to an invalid UAR.
+
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Reviewed-by: Fan Li <fanl@nvidia.com>
+Link: https://patch.msgid.link/feaa84ec6f20468b4935c439923e9266122a93d0.1747134130.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: e5eba42f0134 ("mlx5: Fix default values in create CQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc.c    |  8 +++----
- drivers/gpu/drm/xe/xe_guc_ct.c | 41 +++++++++++++++++++++++++++++++++-
- drivers/gpu/drm/xe/xe_guc_ct.h |  1 +
- 3 files changed, 45 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c    | 17 -----------------
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 -
+ 2 files changed, 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index bedd9894e182e..d4c8a782e7e56 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -289,10 +289,6 @@ static int xe_guc_realloc_post_hwconfig(struct xe_guc *guc)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 2d1cb516d8450..42a917c2d0d7f 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4502,17 +4502,6 @@ static void mlx5_ib_stage_cong_debugfs_cleanup(struct mlx5_ib_dev *dev)
+ 				     mlx5_core_native_port_num(dev->mdev) - 1);
+ }
  
--	ret = xe_managed_bo_reinit_in_vram(xe, tile, &guc->ct.bo);
--	if (ret)
--		return ret;
+-static int mlx5_ib_stage_uar_init(struct mlx5_ib_dev *dev)
+-{
+-	dev->mdev->priv.uar = mlx5_get_uars_page(dev->mdev);
+-	return PTR_ERR_OR_ZERO(dev->mdev->priv.uar);
+-}
 -
- 	return 0;
- }
- 
-@@ -397,6 +393,10 @@ int xe_guc_init_post_hwconfig(struct xe_guc *guc)
- 	if (ret)
- 		return ret;
- 
-+	ret = xe_guc_ct_init_post_hwconfig(&guc->ct);
-+	if (ret)
-+		return ret;
-+
- 	guc_init_params_post_hwconfig(guc);
- 
- 	ret = xe_guc_submit_init(guc, ~0);
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
-index 7619b48dbfe43..e9da1b478cb3d 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -36,6 +36,8 @@ static void receive_g2h(struct xe_guc_ct *ct);
- static void g2h_worker_func(struct work_struct *w);
- static void safe_mode_worker_func(struct work_struct *w);
- static void ct_exit_safe_mode(struct xe_guc_ct *ct);
-+static void xe_guc_ct_set_state(struct xe_guc_ct *ct,
-+				enum xe_guc_ct_state state);
- 
- #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
- enum {
-@@ -206,6 +208,13 @@ static void primelockdep(struct xe_guc_ct *ct)
- 	fs_reclaim_release(GFP_KERNEL);
- }
- 
-+static void guc_action_disable_ct(void *arg)
-+{
-+	struct xe_guc_ct *ct = arg;
-+
-+	xe_guc_ct_set_state(ct, XE_GUC_CT_STATE_DISABLED);
-+}
-+
- int xe_guc_ct_init(struct xe_guc_ct *ct)
+-static void mlx5_ib_stage_uar_cleanup(struct mlx5_ib_dev *dev)
+-{
+-	mlx5_put_uars_page(dev->mdev, dev->mdev->priv.uar);
+-}
+-
+ static int mlx5_ib_stage_bfrag_init(struct mlx5_ib_dev *dev)
  {
- 	struct xe_device *xe = ct_to_xe(ct);
-@@ -252,7 +261,37 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
- 
- 	xe_gt_assert(gt, ct->state == XE_GUC_CT_STATE_NOT_INITIALIZED);
- 	ct->state = XE_GUC_CT_STATE_DISABLED;
--	return 0;
-+
-+	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
-+}
-+
-+/**
-+ * xe_guc_ct_init_post_hwconfig - Reinitialize the GuC CTB in VRAM
-+ * @ct: the &xe_guc_ct
-+ *
-+ * Allocate a new BO in VRAM and free the previous BO that was allocated
-+ * in system memory (SMEM). Applicable only for DGFX products.
-+ *
-+ * Return: 0 on success, or a negative errno on failure.
-+ */
-+int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct)
-+{
-+	struct xe_device *xe = ct_to_xe(ct);
-+	struct xe_gt *gt = ct_to_gt(ct);
-+	struct xe_tile *tile = gt_to_tile(gt);
-+	int ret;
-+
-+	xe_assert(xe, !xe_guc_ct_enabled(ct));
-+
-+	if (!IS_DGFX(xe))
-+		return 0;
-+
-+	ret = xe_managed_bo_reinit_in_vram(xe, tile, &ct->bo);
-+	if (ret)
-+		return ret;
-+
-+	devm_release_action(xe->drm.dev, guc_action_disable_ct, ct);
-+	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
- }
- 
- #define desc_read(xe_, guc_ctb__, field_)			\
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.h b/drivers/gpu/drm/xe/xe_guc_ct.h
-index c7ac9407b861e..398e3adf49c73 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.h
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.h
-@@ -11,6 +11,7 @@
- struct drm_printer;
- 
- int xe_guc_ct_init(struct xe_guc_ct *ct);
-+int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct);
- int xe_guc_ct_enable(struct xe_guc_ct *ct);
- void xe_guc_ct_disable(struct xe_guc_ct *ct);
- void xe_guc_ct_stop(struct xe_guc_ct *ct);
+ 	int err;
+@@ -4742,9 +4731,6 @@ static const struct mlx5_ib_profile pf_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_CONG_DEBUGFS,
+ 		     mlx5_ib_stage_cong_debugfs_init,
+ 		     mlx5_ib_stage_cong_debugfs_cleanup),
+-	STAGE_CREATE(MLX5_IB_STAGE_UAR,
+-		     mlx5_ib_stage_uar_init,
+-		     mlx5_ib_stage_uar_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_BFREG,
+ 		     mlx5_ib_stage_bfrag_init,
+ 		     mlx5_ib_stage_bfrag_cleanup),
+@@ -4805,9 +4791,6 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_CONG_DEBUGFS,
+ 		     mlx5_ib_stage_cong_debugfs_init,
+ 		     mlx5_ib_stage_cong_debugfs_cleanup),
+-	STAGE_CREATE(MLX5_IB_STAGE_UAR,
+-		     mlx5_ib_stage_uar_init,
+-		     mlx5_ib_stage_uar_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_BFREG,
+ 		     mlx5_ib_stage_bfrag_init,
+ 		     mlx5_ib_stage_bfrag_cleanup),
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 3135519f1cfdf..5c0efac217eac 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -975,7 +975,6 @@ enum mlx5_ib_stages {
+ 	MLX5_IB_STAGE_ODP,
+ 	MLX5_IB_STAGE_COUNTERS,
+ 	MLX5_IB_STAGE_CONG_DEBUGFS,
+-	MLX5_IB_STAGE_UAR,
+ 	MLX5_IB_STAGE_BFREG,
+ 	MLX5_IB_STAGE_PRE_IB_REG_UMR,
+ 	MLX5_IB_STAGE_WHITELIST_UID,
 -- 
 2.53.0
 
