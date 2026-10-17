@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1C218787A;
-	Sat, 17 Oct 2026 16:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6F8277026;
+	Sat, 17 Oct 2026 16:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255760; cv=none; b=SBV2SxatcNItGMcwdKWdEyjAiVR30WtaN15hc0+1KjKB6cUGYxZ9ScvudGrAm5eyL7YxF3ZFyOeg/wHkCztaA2U4o8TH4Q9c3K0miCXoiq6VOH7a35F4Vt6qY7/h9NKFnwmwSUKTYXqUblEplmqT22mpEDS4zqfrpyWah+oGqEs=
+	t=1792255764; cv=none; b=mRQMSmnKRvaTb5QN7OgKo6K+d+Da03lEFaeyZeNQANVPK3rD5msHpKCFDa67RvUxTvsyEslHo2EaT7r+XL2osRvg+zAKWB5u9geMJRpLDLMp+c8gPB1m+vNlpo/Z/qyoUJZrHEwbYZunt9BbOVERKijUUlLMSokuokQpHFoElu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255760; c=relaxed/simple;
-	bh=04OiL7Skt3UtSOcPrNR1HaEidnqnc43ODrlL3strWik=;
+	s=arc-20240116; t=1792255764; c=relaxed/simple;
+	bh=M7GrTTF0hKCWu5oQtHGK3sOLG7ydpqsHy4vVV2xEmKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0WA7hNUCt4285bXeAf7BMyCI8XuHPnr4iJBsJMpclNEXSXijUy1xDMa/0la//b7wibPgpPYYAn/72DQu4hphHYWqzamLhQ1OM46y+6HtZ8r3EZaFqBtNEKNq+hNAKqgD4a5uP3BuIqitmRbAZ0aDZPLTFmSY1Wm1u7wgS0Wpck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZsD6gh+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jbBHZpffzw7azrBb9LuS0bhNyNjzKMc0n7cqbqCtUJr6mejmwKARJ3Z0jwyBB+Wa4/GLdDT+bWeaTtpzVAcojpMillN1NTYill21/FvlTGRvlu1+SsdhZK3W+EXsK82uxFc3vfI6H4Th0FdiSDMnNa2SWglo7OkmaK/DJbx6h+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+7mt1xz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZsD6gh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91C61F000C4;
-	Sat, 17 Oct 2026 16:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+7mt1xz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC42F1F000C4;
+	Sat, 17 Oct 2026 16:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255759;
-	bh=LaAhrH9UetlHisZ0fVN5dO5HYvI4XshAdpENymLOT4I=;
+	s=korg; t=1792255762;
+	bh=HKWioMd9R9KbQSYhxl/yP0XOEED9+4kyCorrJo941Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZsD6gh+n3FjwUmMxMfNS+99IJWa99bTklHKmhqNAq622m2rIGP003tT7qjO6De53
-	 AsNqgDV+dVLBt4dKGxy+hakZMjk1qpxgJXMyLvvDRfbJXH3JVkOlRC1l9BLL71YzvX
-	 fRVbMj5k64h2kUUeqdT83g/ucsQO6OB+0+bZjtc8=
+	b=t+7mt1xz5QOMCH/OsTNzmuJBjV1MDt+BVtDQgEea3IGjWj6ARJh0ZDaURZfSe1f+b
+	 75DsvLXkakA2unF1kWmMtklp3PawO7MgeSbsSCAj6Aa0fOnGdeqBxWaYy1nKJjeJew
+	 HuOJ1CHxL1SXuWKKez+ORMR1etHlW31sNflxGj+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shen Yongchao <grayhat@foxmail.com>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0013/1674] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
-Date: Sat, 17 Oct 2026 17:38:05 +0200
-Message-ID: <20261017160431.481808351@linuxfoundation.org>
+Subject: [PATCH 6.6 0014/1674] HID: sony: fix UAF of ghl_poke_timer / ghl_urb at driver unbind
+Date: Sat, 17 Oct 2026 17:38:06 +0200
+Message-ID: <20261017160431.507038485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,83 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 6343c1da561962688f203362d80d6a3bfa39fa1b ]
+[ Upstream commit a26705bd2e2728833e7a538ce91e58a5eeff496a ]
 
-coalesce_t2() computes data pointers directly from server-supplied
-DataOffset fields with no validation against buffer bounds:
+For GHL (Guitar Hero Live) dongles, sony_probe() arms a periodic timer:
+ghl_magic_poke() (the timer callback) submits sc->ghl_urb, and the URB
+completion ghl_magic_poke_cb() re-arms the timer with mod_timer().
 
-  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
-                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
-  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
-                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
-  data_area_of_tgt += total_in_tgt;
-  ...
-  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
+sony_remove() drained the timer with timer_delete_sync() and then freed
+the URB with usb_free_urb():
 
-A small DataOffset can push a pointer below the actual byte area,
-overwriting header fields; a large one can push it past the buffer
-end, causing out-of-bounds heap reads (source) or writes (target).
-The BCC overflow guard does not prevent this: BCC reflects how much
-data is present, while DataOffset controls where in the buffer it
-starts.
+	timer_delete_sync(&sc->ghl_poke_timer);
+	usb_free_urb(sc->ghl_urb);
 
-The "validate target area" comment present since the function was
-first written in 2005 was a placeholder that was never implemented.
+timer_delete_sync() does not block re-arming, and while the URB is in
+flight the timer is not pending, so the sync delete is a no-op. A URB
+completion that runs after the delete re-arms the timer, and usb_free_urb()
+only drops a reference -- it does not kill an in-flight URB. sc is
+allocated with devm_kzalloc() and freed once sony_remove() returns, so the
+re-armed ghl_poke_timer (embedded in sc) then fires on freed memory, a
+use-after-free from timer softirq. This is a disconnect/rmmod race.
 
-Add lower- and upper-bound checks for both data pointers before the
-memcpy, and before any target header fields are modified.
+Poison the URB first, then shut the timer down, before freeing the URB.
+usb_poison_urb() kills any in-flight URB and permanently rejects further
+submissions, so a poke timer that is still pending cannot re-submit the
+URB from ghl_magic_poke() in the window before timer_shutdown_sync() runs.
+usb_kill_urb() would not suffice: it only cancels the in-flight URB and
+leaves it submittable once it returns, so the pending timer could
+re-submit it and put a fresh URB in flight over the freed sc.
+timer_shutdown_sync() then drains any last callback and blocks re-arming.
+The probe error path is unaffected: it is only reached before the timer
+is armed.
 
-Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
+Reproduced under KASAN on next-20260710 via dummy_hcd + raw-gadget
+emulation of the GHL PS4 dongle (VID 0x1430 / PID 0x07bb): hid-sony binds
+and arms the poke timer, the poke URB is held in flight, the driver is
+unbound (freeing sc), then the URB is released. The completion re-arms the
+timer on the freed sc, and the re-armed timer fires ~8 s later:
+
+  BUG: KASAN: slab-use-after-free in ghl_magic_poke+0x98/0xb0
+  Read of size 8 at addr ffff88810b02fd50 by task swapper/0/0
+   ghl_magic_poke+0x98/0xb0
+   call_timer_fn+0x35/0x2b0
+   __run_timers+0x69c/0x9a0
+   run_timer_softirq+0x173/0x2a0
+  Allocated by task 169:  sony_probe
+  Freed by task 338:      devres_release_group <- hid_device_remove (sony_remove)
+
+Found by 0sec (https://0sec.ai) using automated source analysis.
+
+Fixes: cc894ac55360 ("HID: sony: support for ghlive ps3/wii u dongles")
 Cc: stable@vger.kernel.org
-Reported-by: Shen Yongchao <grayhat@foxmail.com>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ transplanted the bounds validation to coalesce_t2() in smb1ops.c due to code relocation ]
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ changed the old del_timer_sync() call to timer_shutdown_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb1ops.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/hid/hid-sony.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 6acadfcbadc8e..ef71c0eb8704a 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -325,12 +325,31 @@ coalesce_t2(char *second_buf, struct smb_hdr *target_hdr)
- 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
- 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index ebc0aa4e4345f..e4b5d202c6637 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -2166,7 +2166,9 @@ static void sony_remove(struct hid_device *hdev)
+ 	struct sony_sc *sc = hid_get_drvdata(hdev);
  
--	/* validate target area */
- 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
- 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+ 	if (sc->quirks & (GHL_GUITAR_PS3WIIU | GHL_GUITAR_PS4)) {
+-		del_timer_sync(&sc->ghl_poke_timer);
++		/* poison, not kill: a pending timer must not re-submit during teardown */
++		usb_poison_urb(sc->ghl_urb);
++		timer_shutdown_sync(&sc->ghl_poke_timer);
+ 		usb_free_urb(sc->ghl_urb);
+ 	}
  
- 	data_area_of_tgt += total_in_tgt;
- 
-+	/*
-+	 * DataOffset fields are server-supplied and not validated against
-+	 * buffer bounds; check both data pointers before mutating the
-+	 * target header.
-+	 */
-+	if (data_area_of_tgt < (char *)target_hdr +
-+				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
-+	    data_area_of_tgt + total_in_src >
-+	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
-+		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
-+		return -EPROTO;
-+	}
-+	if (data_area_of_src < second_buf +
-+				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
-+	    data_area_of_src + total_in_src >
-+	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
-+		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
-+		return -EPROTO;
-+	}
-+
- 	total_in_tgt += total_in_src;
- 	/* is the result too big for the field? */
- 	if (total_in_tgt > USHRT_MAX) {
 -- 
 2.53.0
 
