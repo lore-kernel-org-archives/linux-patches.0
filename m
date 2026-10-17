@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863FC3803DC;
-	Sat, 17 Oct 2026 17:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA403B19B9;
+	Sat, 17 Oct 2026 17:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257552; cv=none; b=S8JAA9B2Bae0OKq2qKMAX9z03sc491Mp0LFI0diOkwWhILrsSugSSrPbh9MonEiedd7Yi/mIduaB/u0zBn+P4j9+2iL+zWvaHu0A2y9nBPI/dmO36JV6GvM5vEJoqnwg93qFeL0BTad84sYxOAKCI6nfcsP5EaSbZrMCPX7JN+8=
+	t=1792257555; cv=none; b=ktQgGwfXPNG99dgxAngYXT6D/i7xYsaSh3SE4OCKDE7TB6B6dolXWs4qgyqv75kbjSMUwzcqZ42hDEB9lZ8lD5Gc/rz/bthoJMBVQHVqHgMtAmNGLNZbyXxR3t8lxbv6PzqynqGi5enZwvUiSqtP5KFrIS64Ei6pvMqoOmc2vT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257552; c=relaxed/simple;
-	bh=yNrCU7PtKyWtjkxkoTECJ+/f/FgMbWatf+uQrP58mcg=;
+	s=arc-20240116; t=1792257555; c=relaxed/simple;
+	bh=EcflqZbJusZeqUI4vCY/CxFb0Ht3OmjiJuakTjdsSC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAcezkswLQM/AIpFah+xuq+1zldTKVAGjvfxE7qZrJxTLY25Mg8Ccm1RL4uaI9+RiOs7l5mWD/KtwJF0dFFyCqevzzICb+E+wGNlCEhjOEGDedET+uQnkgUXFVo4WlgZuQY0SVll+pPyQgprlK9Hlpi6ttKvP1EU8BhQFdRI97Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHOpubks; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebYEGNqr0qnojTrbinw7cGN6gKqEK45lV85muKbhUsq9+3YgmbfnjVEC1YAljTue/HKvB42gm7AyzK0Xw/vp1U3YD9p2A4b1YsQntR5cAmWW+kelUGSzqXIgr1YqZFmXIfbn3Y1XVxNfNaFHFPReFs8fUB8ayqWscbRq2V0L5Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXa0OGgt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHOpubks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB161F000C4;
-	Sat, 17 Oct 2026 17:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXa0OGgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF711F000C4;
+	Sat, 17 Oct 2026 17:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257550;
-	bh=g5392D8Zy9sfYUVgcQBHnSqb9GzTk/BRCcAYOYeUPWw=;
+	s=korg; t=1792257553;
+	bh=Y2+sQEjr738GgW+rPdyZBzZNKXrekaOOqN2OK1kzQfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHOpubks2JVoMU5Ch0wYJlFI4D1ejsNKi2Qu+zeDfsH9cyCt89aV9OLyVR0gOsx/r
-	 ZpU5U9s/ZTrQx0oGWWuBxHFGKnCVFzpHgw/OXTnj95PC2FiF6i7i6aIJerY5HlBDse
-	 /5aiVyuvYuXUZk61DCuWQLXBFgcnXW/AZ+pXr/gM=
+	b=CXa0OGgtuSBgKm8LH88ZLNR8jEm7tpCu5eWm3l+xupwrLVMkorDL5+vx/rKpnZFqX
+	 HcK/k1+13TM6z1SN6WbFxpd8RcTMS/oWyi+WFohpIUJn8Kktaw07tJDxDZHisLePUu
+	 04W0YNpfIhp+rgJkw2xx4OsxSe9a1dQ5nXDsQYK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b7fe2760ea6f1ee44b4d@syzkaller.appspotmail.com,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0595/1674] ALSA: control: Dont add invalid kcontrols to LED layer
-Date: Sat, 17 Oct 2026 17:47:47 +0200
-Message-ID: <20261017160446.354116823@linuxfoundation.org>
+Subject: [PATCH 6.6 0596/1674] ASoC: hdac_hda: Fix hlink refcount leak on component registration failure
+Date: Sat, 17 Oct 2026 17:47:48 +0200
+Message-ID: <20261017160446.379328286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,51 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 74e3b979ce8b78a690f8b94ccf2e2c965f7f5c11 ]
+[ Upstream commit 6ad4892c4f5cb437a928a02f5b7d37d496aa9268 ]
 
-The kcontrol LED state layer tries to track the all associated
-kcontrol elements with naive assumptions that they are readable.
-But one can create a write-only element that has no get callback (even
-a user element can do it), and this may lead to a NULL dereference at
-the call chain of snd_ctl_led_notify(), as found by syzkaller.
+hdac_hda_dev_probe() gets the HDA link with snd_hdac_ext_bus_link_get()
+before registering the ASoC component. If component registration fails,
+the function returns without dropping the link reference.
 
-For avoiding the Oops, add a sanity check of the kcontrol's info and
-get callbacks, and just skip the invalid kcontrols before assigning
-the kctl to the LED layer.
+Always call snd_hdac_ext_bus_link_put() after the registration attempt so
+the reference taken during probe is balanced on both success and failure.
 
-Reported-by: syzbot+b7fe2760ea6f1ee44b4d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6a9007b3.1d9ded08.62e62.00cd.GAE@google.com
-Fixes: 22d8de62f11b ("ALSA: control - add generic LED trigger module as the new control layer")
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260827113951.893291-1-tiwai@suse.de
+Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260622145645.1184986-1-haoxiang_li2024@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Assisted-by: LLM
-[ Backport to 6.6.y: After the target's locked control lookup, reject
-  missing info/get callbacks via the existing unlock label so
-  controls_rwsem and the card reference are released. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control_led.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/hdac_hda.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/core/control_led.c b/sound/core/control_led.c
-index 15acb07c65150..639d86e4dd162 100644
---- a/sound/core/control_led.c
-+++ b/sound/core/control_led.c
-@@ -253,6 +253,10 @@ static int snd_ctl_led_set_id(int card_number, struct snd_ctl_elem_id *id,
- 		down_write(&card->controls_rwsem);
- 		kctl = snd_ctl_find_id_locked(card, id);
- 		if (kctl) {
-+			if (!kctl->info || !kctl->get) {
-+				err = -EINVAL;
-+				goto unlock;
-+			}
- 			ioff = snd_ctl_get_ioff(kctl, id);
- 			vd = &kctl->vd[ioff];
- 			access = vd->access & SNDRV_CTL_ELEM_ACCESS_LED_MASK;
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index d59d38ce5657b..c497354251cb2 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -612,10 +612,8 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
+ 						&hdac_hda_codec, hdac_hda_dais,
+ 						ARRAY_SIZE(hdac_hda_dais));
+ 
+-	if (ret < 0) {
++	if (ret < 0)
+ 		dev_err(&hdev->dev, "failed to register HDA codec %d\n", ret);
+-		return ret;
+-	}
+ 
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 
 -- 
 2.53.0
 
