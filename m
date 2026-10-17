@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B0F18787A;
-	Sat, 17 Oct 2026 15:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1A323394D;
+	Sat, 17 Oct 2026 15:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252630; cv=none; b=P+Zs8XBA/ZtGwc3DbUNrMQLfhdfrGfvjjHGH0v0UyBRwg//ywY0qzzEww8nfT9dAt2cfvlwF5bNwb/YZ/qWJHxZ+q4ehHHs1X/kzSSs4uIskehGj7Z2Y0a8GGb4grbXxe9EI99iAxCmqiAsrQSSAyF5uqWT5qmW3V0T97AEhuJ4=
+	t=1792252633; cv=none; b=I6N5LNKCU0XKvOXavD7SlnzXaBXF2VdKVHPNAXk7yeShfOpdImlHN9pxFgs7wcrsBpOXxArgkCi6N0th/O5ysE9Ds9I2aShvB8hCK3wRg3QKBkN+4HeHKMNmsBU8lyi7XqwA5+0JAZ1zbPizbTsw8dI77CEHW38XxCBZwRzAuso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252630; c=relaxed/simple;
-	bh=ByQmsZMP92nHaO4WFVEc1ZWyTrk2I6XYqD/345y1q44=;
+	s=arc-20240116; t=1792252633; c=relaxed/simple;
+	bh=ciKfejKM8VGDpX2JSuein+TdDq/E5S3aCCXN7KgaVdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c01uFQ9QQ5n2x9xQygW7Olfa3L8MIZZr9oF5LQpHSn6GJ5ekmvzCYYx9QuHPZS2wuc4dh6baqclxa3AS7rcA2FFlOSUu0/yssjSJ6j5ZX2jNPC8XNS1RkvH+rrrytY0lgIMkyCL8EIoZfj+b7w8L9Ky9Wni+ko/4JQD5LlZd+2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnhumBmQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UAu1VIdha2EJ82D6llYHlrPs9NBs4w90oWTda/TRFe5tP+mU7UmyEpDjq3UqU1857+/z4cOsSxLopvLYLS7O8l6+qJSpCkpLjB9YW2P9i5UBJow5huztT1dxnEuleP7DXt90eQtsgsTIvgXB7+eHXKDlC9MHDQqNaSMRzarOopI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKF8ICGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnhumBmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B188F1F000C4;
-	Sat, 17 Oct 2026 15:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKF8ICGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0AC1F000C4;
+	Sat, 17 Oct 2026 15:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252629;
-	bh=REB6sik8153NbRx0/19SmXqz07mlJVtoUCrwqxec7VU=;
+	s=korg; t=1792252632;
+	bh=7HVXWugFiw6AoCO/yoTdC1c5qLaJ/ON/C9sy/S5WiBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnhumBmQuzcMghqfsUbvYC4rR2F1cO7Y8CK6mVUrwf4PMOCu+9Gjo17ZOfEGQnEwi
-	 ayAPMBml7svfAOLnmkz8s48aME4Jh63jsl6+Uo2Q994dBFV3Gdp1dzam8JQDyQGCAA
-	 XrXKuRI8qIbJZDCCNnZ0MdUSESTr1SbhzHnDk8wc=
+	b=XKF8ICGZVwrK5PzLs337Gqe+KNxACaLFeyDelhy7x4n7LYiu6cl9ArANRFRJUUkHZ
+	 Q7wXsBReGhzOOT+3h8Pt89Rr6569tlts+t0GSNjMTlE6v6hSGm/MghOAmcBQa+HjPW
+	 khh5h+kDptuyhlgJWfJMau6eFgDthwlnKaGoxFBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 43/52] selinux: allow multiple opens of /sys/fs/selinux/policy
-Date: Sat, 17 Oct 2026 17:54:44 +0200
-Message-ID: <20261017155106.225127394@linuxfoundation.org>
+Subject: [PATCH 6.18 44/52] usb: iowarrior: remove inherent race with minor number
+Date: Sat, 17 Oct 2026 17:54:45 +0200
+Message-ID: <20261017155106.255641424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -51,103 +50,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit a02cd6805562305f936e807da83e253b719dd965 ]
+[ Upstream commit 56dd29088c9d9510c48a8ebad2465248fde36551 ]
 
-Currently there can only be a single open of /sys/fs/selinux/policy at
-any time. This allows any process to block any other process from
-reading the kernel policy. The original motivation seems to have been
-a mix of preventing an inconsistent view of the policy size and
-preventing userspace from allocating kernel memory without bound, but
-this is arguably equally bad. Eliminate the policy_opened flag and
-shrink the critical section that the policy mutex is held. While we
-are making changes here, drop a couple of extraneous BUG_ONs.
+The driver saves the minor number it gets upon registration
+in its descriptor for debugging purposes. However, there is
+inevitably a window between registration and saving the correct
+minor in a descriptor. During this window the debugging output
+will be wrong.
+As wrong debug output is worse than no debug output, just
+remove it.
 
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/selinux/20100726193414.19538.64028.stgit@paris.rdu.redhat.com/
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260312094619.1590556-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c602254ba4c1 ("USB: iowarrior: fix use-after-free on disconnect race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/selinuxfs.c | 27 ++++-----------------------
- 1 file changed, 4 insertions(+), 23 deletions(-)
+ drivers/usb/misc/iowarrior.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
-index e821519205978..9ad11246ad1f4 100644
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -74,7 +74,6 @@ struct selinux_fs_info {
- 	int *bool_pending_values;
- 	struct dentry *class_dir;
- 	unsigned long last_class_ino;
--	bool policy_opened;
- 	struct dentry *policycap_dir;
- 	unsigned long last_ino;
- 	struct super_block *sb;
-@@ -340,44 +339,31 @@ struct policy_load_memory {
- 
- static int sel_open_policy(struct inode *inode, struct file *filp)
+diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
+index 38f6dcdfd7fb9..f9266ae816410 100644
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -74,7 +74,6 @@ struct iowarrior {
+ 	struct mutex mutex;			/* locks this structure */
+ 	struct usb_device *udev;		/* save off the usb device pointer */
+ 	struct usb_interface *interface;	/* the interface for this device */
+-	unsigned char minor;			/* the starting minor number for this device */
+ 	struct usb_endpoint_descriptor *int_out_endpoint;	/* endpoint for reading (needed for IOW56 only) */
+ 	struct usb_endpoint_descriptor *int_in_endpoint;	/* endpoint for reading */
+ 	struct urb *int_in_urb;		/* the urb for reading data */
+@@ -246,7 +245,6 @@ static void iowarrior_write_callback(struct urb *urb)
+  */
+ static inline void iowarrior_delete(struct iowarrior *dev)
  {
--	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
- 	struct policy_load_memory *plm = NULL;
- 	int rc;
- 
--	BUG_ON(filp->private_data);
--
--	mutex_lock(&selinux_state.policy_mutex);
--
- 	rc = avc_has_perm(current_sid(), SECINITSID_SECURITY,
- 			  SECCLASS_SECURITY, SECURITY__READ_POLICY, NULL);
- 	if (rc)
--		goto err;
--
--	rc = -EBUSY;
--	if (fsi->policy_opened)
--		goto err;
-+		return rc;
- 
--	rc = -ENOMEM;
- 	plm = kzalloc(sizeof(*plm), GFP_KERNEL);
- 	if (!plm)
--		goto err;
-+		return -ENOMEM;
- 
-+	mutex_lock(&selinux_state.policy_mutex);
- 	rc = security_read_policy(&plm->data, &plm->len);
- 	if (rc)
- 		goto err;
--
- 	if ((size_t)i_size_read(inode) != plm->len) {
- 		inode_lock(inode);
- 		i_size_write(inode, plm->len);
- 		inode_unlock(inode);
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
+ 	kfree(dev->int_in_buffer);
+ 	usb_free_urb(dev->int_in_urb);
+ 	kfree(dev->read_queue);
+@@ -297,9 +295,6 @@ static ssize_t iowarrior_read(struct file *file, char __user *buffer,
+ 		goto exit;
  	}
+ 
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
 -
--	fsi->policy_opened = 1;
-+	mutex_unlock(&selinux_state.policy_mutex);
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+ 	    && (count != (dev->report_size + 1))) {
+@@ -379,8 +374,6 @@ static ssize_t iowarrior_write(struct file *file,
+ 		retval = -ENODEV;
+ 		goto exit;
+ 	}
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
+ 	/* if count is 0 we're already done */
+ 	if (count == 0) {
+ 		retval = 0;
+@@ -523,9 +516,6 @@ static long iowarrior_ioctl(struct file *file, unsigned int cmd,
+ 		goto error_out;
+ 	}
  
- 	filp->private_data = plm;
- 
--	mutex_unlock(&selinux_state.policy_mutex);
+-	dev_dbg(&dev->interface->dev, "minor %d, cmd 0x%.4x, arg %ld\n",
+-		dev->minor, cmd, arg);
 -
- 	return 0;
- err:
- 	mutex_unlock(&selinux_state.policy_mutex);
-@@ -390,13 +376,8 @@ static int sel_open_policy(struct inode *inode, struct file *filp)
+ 	retval = 0;
+ 	switch (cmd) {
+ 	case IOW_WRITE:
+@@ -671,8 +661,6 @@ static int iowarrior_release(struct inode *inode, struct file *file)
+ 	if (!dev)
+ 		return -ENODEV;
  
- static int sel_release_policy(struct inode *inode, struct file *filp)
- {
--	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
- 	struct policy_load_memory *plm = filp->private_data;
- 
--	BUG_ON(!plm);
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
 -
--	fsi->policy_opened = 0;
--
- 	vfree(plm->data);
- 	kfree(plm);
+ 	/* lock our device */
+ 	mutex_lock(&dev->mutex);
  
+@@ -775,6 +763,7 @@ static int iowarrior_probe(struct usb_interface *interface,
+ 	struct usb_host_interface *iface_desc;
+ 	int retval = -ENOMEM;
+ 	int res;
++	int minor;
+ 
+ 	/* allocate memory for our device state and initialize it */
+ 	dev = kzalloc(sizeof(struct iowarrior), GFP_KERNEL);
+@@ -890,12 +879,12 @@ static int iowarrior_probe(struct usb_interface *interface,
+ 		goto error;
+ 	}
+ 
+-	dev->minor = interface->minor;
++	minor = interface->minor;
+ 
+ 	/* let the user know what node this device is now attached to */
+ 	dev_info(&interface->dev, "IOWarrior product=0x%x, serial=%s interface=%d "
+ 		 "now attached to iowarrior%d\n", dev->product_id, dev->chip_serial,
+-		 iface_desc->desc.bInterfaceNumber, dev->minor - IOWARRIOR_MINOR_BASE);
++		 iface_desc->desc.bInterfaceNumber, minor - IOWARRIOR_MINOR_BASE);
+ 	return retval;
+ 
+ error:
 -- 
 2.53.0
 
