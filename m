@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B1377A92;
-	Sat, 17 Oct 2026 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97621E520A;
+	Sat, 17 Oct 2026 16:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253941; cv=none; b=EuI/pH5tIk2O1cS5q80/+VGloZf7xMRinpen7+mMvZ1YKNO7nA/8wAAOWsB+wVnVKhsH32Oh6FOCUj5jEAf+UMCyPviSAR2q/AHII11ENdViaXg3wJ1eb6pVcT8enMsKxwajBkyPiMvZviu0066AeBySuO+TTF68YQlZdNRjmlE=
+	t=1792253944; cv=none; b=o+vLqLutHmGFvHJ1wfhUtBU+S2rM3mSFJ+zL+ViuswYh59ZCnGOP7COBoNzrGOdto+06BwXgBA9L91bCC27cDtiCIf8SiQY36jx6NAVcFmNF632IWuHLg78MpwCRR0bV3Cd+Oz7IjIaAwxc4by6xeMWcR81WcmNY5FvOzXTzOWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253941; c=relaxed/simple;
-	bh=r0pEyWJB+0c3D7gGNqAvcVkapyusXUDETXrRX6wOZ/g=;
+	s=arc-20240116; t=1792253944; c=relaxed/simple;
+	bh=Cuqth0upOgkhEEFuGo4R68cw2stDn7jzKKP2iifrG4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVuLcLG663V88eWbuYtPVNOFxNjJKwkOUOD4Ju5uX3Bgi+sjM+1tFCPekEnpp8SHGwCKsvSfsjl+kLprIaQw+9BJjHAUfqfYKWapCXp2FxE4IGrkJhv/h4NEC7humXYDz7zhe77+ClgMordF3RCE2HlcErtLx+4KaP6QQ3ICHic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvrA3UKx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iE7GD2fGPRR6uv9slxPzsJBi0zu45Pj7+glE7cSAp5+2oe1Q8XXyAj/AmAfgxrqdm75GfLPeLcEucnoaj9BYi2CB7Sqi5nfDV7SNXfsgaqdydfWX7BOJslT/H/jEqvvwCwdRrLKP8m1PGFacVeWhsWIWesp2PmQcqANivGDFdFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5Tepe/Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvrA3UKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B9D1F000C4;
-	Sat, 17 Oct 2026 16:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5Tepe/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396F21F000C4;
+	Sat, 17 Oct 2026 16:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253939;
-	bh=GVf6xspk4iA7zjMaKuA40uQbCXgHYpUzzmPWm9ZjYFA=;
+	s=korg; t=1792253942;
+	bh=x1ffU8XVuZCkQ46EZyL2Czhd6p0MFIjDZuNiV5omIsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xvrA3UKxKBLxCHdcimEY6dL7Ek5veeUsMlIK+efPxyMiE7ZtjKx6rugZeElGbk6qj
-	 llPqP2hpCi3RNz8xu0Pc9u0pFTRUZFj6bfzENzBteiGpwO8JkvsHEIqdlj79t8ZeFX
-	 fYdiPvWUd4DEdU3ppQnHydHgiop1yTqsZrU1N/9k=
+	b=r5Tepe/ZzxCLoKH666553TH89rA6HF23xnDwNE02hcGkb0wr8ScdUWwkYNOpbD8xk
+	 gCiBJl1XBRwenUIuX9T0QEdEm6P1nxTgRLYzgBPXW6D5930Od41nsF2aQOF3PQAHO3
+	 gULJMCAKjuk74vLRPATvSRyVmu3F1qZ1Et5ypR74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 282/869] ceph: extend ceph_writeback_ctl for ceph_writepages_start() refactoring
-Date: Sat, 17 Oct 2026 17:52:03 +0200
-Message-ID: <20261017160044.303958753@linuxfoundation.org>
+Subject: [PATCH 6.12 247/869] media: chips-media: wave5: Fix Null reference while testing fluster
+Date: Sat, 17 Oct 2026 17:51:28 +0200
+Message-ID: <20261017160043.390891178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,766 +54,355 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-[ Upstream commit f08068df4aa411465319bfb796dc6a2228131bc5 ]
+[ Upstream commit e66ff2b08e4ee1c4d3b84f24818e5bcc178cc3a4 ]
 
-The ceph_writepages_start() has unreasonably huge size and
-complex logic that makes this method hard to understand.
-Current state of the method's logic makes bug fix really
-hard task. This patch extends the struct ceph_writeback_ctl
-with the goal to make ceph_writepages_start() method
-more compact and easy to understand by means of deep refactoring.
+When multi instances are created/destroyed, many interrupts happens
+and structures for decoder are removed.
+"struct vpu_instance" this structure is shared for all flow in the decoder,
+so if the structure is not protected by lock, Null dereference
+could happens sometimes.
+IRQ Handler was spilt to two phases and Lock was added as well.
 
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Link: https://lore.kernel.org/r/20250205000249.123054-2-slava@dubeyko.com
-Tested-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: a0d9555bf9ea ("ceph: fix num_ops off-by-one when crypto allocation fails")
+Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Tested-by: Brandon Brnich <b-brnich@ti.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 487 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 302 insertions(+), 185 deletions(-)
+ .../platform/chips-media/wave5/wave5-helper.c | 28 +++++-
+ .../platform/chips-media/wave5/wave5-helper.h |  1 +
+ .../chips-media/wave5/wave5-vpu-dec.c         |  5 +
+ .../chips-media/wave5/wave5-vpu-enc.c         |  5 +
+ .../platform/chips-media/wave5/wave5-vpu.c    | 97 +++++++++++++++++--
+ .../platform/chips-media/wave5/wave5-vpuapi.h |  6 ++
+ 6 files changed, 131 insertions(+), 11 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 674aa886a66e3..9ca7fe3da6bce 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -572,7 +572,36 @@ struct ceph_writeback_ctl
- 	u64 truncate_size;
- 	u32 truncate_seq;
- 	bool size_stable;
-+
- 	bool head_snapc;
-+	struct ceph_snap_context *snapc;
-+	struct ceph_snap_context *last_snapc;
-+
-+	bool done;
-+	bool should_loop;
-+	bool range_whole;
-+	pgoff_t start_index;
-+	pgoff_t index;
-+	pgoff_t end;
-+	xa_mark_t tag;
-+
-+	pgoff_t strip_unit_end;
-+	unsigned int wsize;
-+	unsigned int nr_folios;
-+	unsigned int max_pages;
-+	unsigned int locked_pages;
-+
-+	int op_idx;
-+	int num_ops;
-+	u64 offset;
-+	u64 len;
-+
-+	struct folio_batch fbatch;
-+	unsigned int processed_in_fbatch;
-+
-+	bool from_pool;
-+	struct page **pages;
-+	struct page **data_pages;
- };
- 
- /*
-@@ -937,6 +966,74 @@ static void writepages_finish(struct ceph_osd_request *req)
- 	ceph_dec_osd_stopping_blocker(fsc->mdsc);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.c b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+index d60841c54a802..56914c749c045 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-helper.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+@@ -25,6 +25,11 @@ const char *state_to_str(enum vpu_instance_state state)
+ 	}
  }
  
-+static inline
-+unsigned int ceph_define_write_size(struct address_space *mapping)
++int wave5_kfifo_alloc(struct vpu_instance *inst)
 +{
-+	struct inode *inode = mapping->host;
-+	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
-+	unsigned int wsize = i_blocksize(inode);
-+
-+	if (fsc->mount_options->wsize < wsize)
-+		wsize = fsc->mount_options->wsize;
-+
-+	return wsize;
++	return kfifo_alloc(&inst->irq_status, 16 * sizeof(int), GFP_KERNEL);
 +}
 +
-+static inline
-+void ceph_folio_batch_init(struct ceph_writeback_ctl *ceph_wbc)
-+{
-+	folio_batch_init(&ceph_wbc->fbatch);
-+	ceph_wbc->processed_in_fbatch = 0;
+ void wave5_cleanup_instance(struct vpu_instance *inst)
+ {
+ 	int i;
+@@ -47,7 +52,7 @@ void wave5_cleanup_instance(struct vpu_instance *inst)
+ 		v4l2_fh_del(&inst->v4l2_fh);
+ 		v4l2_fh_exit(&inst->v4l2_fh);
+ 	}
+-	list_del_init(&inst->list);
++	kfifo_free(&inst->irq_status);
+ 	ida_free(&inst->dev->inst_ida, inst->id);
+ 	kfree(inst->codec_info);
+ 	kfree(inst);
+@@ -60,8 +65,29 @@ int wave5_vpu_release_device(struct file *filp,
+ 	struct vpu_instance *inst = wave5_to_vpu_inst(filp->private_data);
+ 	struct vpu_device *dev = inst->dev;
+ 	int ret = 0;
++	unsigned long flags;
+ 
+ 	v4l2_m2m_ctx_release(inst->v4l2_fh.m2m_ctx);
++	/*
++	 * To prevent Null reference exception, the existing irq handler were
++	 * separated to two modules.
++	 * One is to queue interrupt reason into the irq handler,
++	 * the other is irq_thread to call the wave5_vpu_dec_finish_decode
++	 * to get decoded frame.
++	 * The list of instances should be protected between all flow of the
++	 * decoding process, but to protect the list in the irq_handler, spin lock
++	 * should be used, and mutex should be used in the irq_thread because spin lock
++	 * is not able to be used because mutex is already being used
++	 * in the wave5_vpu_dec_finish_decode.
++	 * So the spin lock and mutex were used to protect the list in the release function.
++	 */
++	ret = mutex_lock_interruptible(&inst->dev->irq_lock);
++	if (ret)
++		return ret;
++	spin_lock_irqsave(&inst->dev->irq_spinlock, flags);
++	list_del_init(&inst->list);
++	spin_unlock_irqrestore(&inst->dev->irq_spinlock, flags);
++	mutex_unlock(&inst->dev->irq_lock);
+ 	if (inst->state != VPU_INST_STATE_NONE) {
+ 		u32 fail_res;
+ 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.h b/drivers/media/platform/chips-media/wave5/wave5-helper.h
+index 6cee1c14d3ce2..f84a0365186aa 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-helper.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-helper.h
+@@ -28,4 +28,5 @@ const struct vpu_format *wave5_find_vpu_fmt_by_idx(unsigned int idx,
+ 						   const struct vpu_format fmt_list[MAX_FMTS]);
+ enum wave_std wave5_to_vpu_std(unsigned int v4l2_pix_fmt, enum vpu_instance_type type);
+ void wave5_return_bufs(struct vb2_queue *q, u32 state);
++int wave5_kfifo_alloc(struct vpu_instance *inst);
+ #endif
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index fba3d7cc4cca8..19510a363724e 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1923,6 +1923,11 @@ static int wave5_vpu_open_dec(struct file *filp)
+ 	inst->xfer_func = V4L2_XFER_FUNC_DEFAULT;
+ 
+ 	init_completion(&inst->irq_done);
++	ret = wave5_kfifo_alloc(inst);
++	if (ret) {
++		dev_err(inst->dev->dev, "failed to allocate fifo\n");
++		goto cleanup_inst;
++	}
+ 
+ 	inst->id = ida_alloc(&inst->dev->inst_ida, GFP_KERNEL);
+ 	if (inst->id < 0) {
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+index 0e92eca182365..917264348b554 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -1705,6 +1705,11 @@ static int wave5_vpu_open_enc(struct file *filp)
+ 	inst->frame_rate = 30;
+ 
+ 	init_completion(&inst->irq_done);
++	ret = wave5_kfifo_alloc(inst);
++	if (ret) {
++		dev_err(inst->dev->dev, "failed to allocate fifo\n");
++		goto cleanup_inst;
++	}
+ 
+ 	inst->id = ida_alloc(&inst->dev->inst_ida, GFP_KERNEL);
+ 	if (inst->id < 0) {
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.c b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+index 4f7eda0504abe..5ec14a7c70c7c 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+@@ -50,8 +50,11 @@ static void wave5_vpu_handle_irq(void *dev_id)
+ 	u32 seq_done;
+ 	u32 cmd_done;
+ 	u32 irq_reason;
+-	struct vpu_instance *inst;
++	u32 irq_subreason;
++	struct vpu_instance *inst, *tmp;
+ 	struct vpu_device *dev = dev_id;
++	int val;
++	unsigned long flags;
+ 
+ 	irq_reason = wave5_vdi_read_register(dev, W5_VPU_VINT_REASON);
+ 	seq_done = wave5_vdi_read_register(dev, W5_RET_SEQ_DONE_INSTANCE_INFO);
+@@ -59,7 +62,8 @@ static void wave5_vpu_handle_irq(void *dev_id)
+ 	wave5_vdi_write_register(dev, W5_VPU_VINT_REASON_CLR, irq_reason);
+ 	wave5_vdi_write_register(dev, W5_VPU_VINT_CLEAR, 0x1);
+ 
+-	list_for_each_entry(inst, &dev->instances, list) {
++	spin_lock_irqsave(&dev->irq_spinlock, flags);
++	list_for_each_entry_safe(inst, tmp, &dev->instances, list) {
+ 
+ 		if (irq_reason & BIT(INT_WAVE5_INIT_SEQ) ||
+ 		    irq_reason & BIT(INT_WAVE5_ENC_SET_PARAM)) {
+@@ -81,22 +85,54 @@ static void wave5_vpu_handle_irq(void *dev_id)
+ 		    irq_reason & BIT(INT_WAVE5_ENC_PIC)) {
+ 			if (cmd_done & BIT(inst->id)) {
+ 				cmd_done &= ~BIT(inst->id);
+-				wave5_vdi_write_register(dev, W5_RET_QUEUE_CMD_DONE_INST,
+-							 cmd_done);
+-				inst->ops->finish_process(inst);
++				if (dev->irq >= 0) {
++					irq_subreason =
++						wave5_vdi_read_register(dev, W5_VPU_VINT_REASON);
++					if (!(irq_subreason & BIT(INT_WAVE5_DEC_PIC)))
++						wave5_vdi_write_register(dev,
++									 W5_RET_QUEUE_CMD_DONE_INST,
++									 cmd_done);
++				}
++				val = BIT(INT_WAVE5_DEC_PIC);
++				kfifo_in(&inst->irq_status, &val, sizeof(int));
+ 			}
+ 		}
++	}
++	spin_unlock_irqrestore(&dev->irq_spinlock, flags);
++
++	if (dev->irq < 0)
++		up(&dev->irq_sem);
 +}
 +
-+static inline
-+void ceph_folio_batch_reinit(struct ceph_writeback_ctl *ceph_wbc)
++static irqreturn_t wave5_vpu_irq(int irq, void *dev_id)
 +{
-+	folio_batch_release(&ceph_wbc->fbatch);
-+	ceph_folio_batch_init(ceph_wbc);
-+}
++	struct vpu_device *dev = dev_id;
+ 
+-		wave5_vpu_clear_interrupt(inst, irq_reason);
++	if (wave5_vdi_read_register(dev, W5_VPU_VPU_INT_STS)) {
++		wave5_vpu_handle_irq(dev);
++		return IRQ_WAKE_THREAD;
+ 	}
 +
-+static inline
-+void ceph_init_writeback_ctl(struct address_space *mapping,
-+			     struct writeback_control *wbc,
-+			     struct ceph_writeback_ctl *ceph_wbc)
++	return IRQ_HANDLED;
+ }
+ 
+ static irqreturn_t wave5_vpu_irq_thread(int irq, void *dev_id)
+ {
+ 	struct vpu_device *dev = dev_id;
++	struct vpu_instance *inst, *tmp;
++	int irq_status, ret;
+ 
+-	if (wave5_vdi_read_register(dev, W5_VPU_VPU_INT_STS))
+-		wave5_vpu_handle_irq(dev);
++	mutex_lock(&dev->irq_lock);
++	list_for_each_entry_safe(inst, tmp, &dev->instances, list) {
++		while (kfifo_len(&inst->irq_status)) {
++			ret = kfifo_out(&inst->irq_status, &irq_status, sizeof(int));
++			if (!ret)
++				break;
++
++			inst->ops->finish_process(inst);
++		}
++	}
++	mutex_unlock(&dev->irq_lock);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -120,6 +156,35 @@ static enum hrtimer_restart wave5_vpu_timer_callback(struct hrtimer *timer)
+ 	return HRTIMER_RESTART;
+ }
+ 
++static int irq_thread(void *data)
 +{
-+	ceph_wbc->snapc = NULL;
-+	ceph_wbc->last_snapc = NULL;
++	struct vpu_device *dev = (struct vpu_device *)data;
++	struct vpu_instance *inst, *tmp;
++	int irq_status, ret;
 +
-+	ceph_wbc->strip_unit_end = 0;
-+	ceph_wbc->wsize = ceph_define_write_size(mapping);
++	while (!kthread_should_stop()) {
++		if (down_interruptible(&dev->irq_sem))
++			continue;
 +
-+	ceph_wbc->nr_folios = 0;
-+	ceph_wbc->max_pages = 0;
-+	ceph_wbc->locked_pages = 0;
++		if (kthread_should_stop())
++			break;
 +
-+	ceph_wbc->done = false;
-+	ceph_wbc->should_loop = false;
-+	ceph_wbc->range_whole = false;
++		mutex_lock(&dev->irq_lock);
++		list_for_each_entry_safe(inst, tmp, &dev->instances, list) {
++			while (kfifo_len(&inst->irq_status)) {
++				ret = kfifo_out(&inst->irq_status, &irq_status, sizeof(int));
++				if (!ret)
++					break;
 +
-+	ceph_wbc->start_index = wbc->range_cyclic ? mapping->writeback_index : 0;
-+	ceph_wbc->index = ceph_wbc->start_index;
-+	ceph_wbc->end = -1;
-+
-+	if (wbc->sync_mode == WB_SYNC_ALL || wbc->tagged_writepages) {
-+		ceph_wbc->tag = PAGECACHE_TAG_TOWRITE;
-+	} else {
-+		ceph_wbc->tag = PAGECACHE_TAG_DIRTY;
++				inst->ops->finish_process(inst);
++			}
++		}
++		mutex_unlock(&dev->irq_lock);
 +	}
 +
-+	ceph_wbc->op_idx = -1;
-+	ceph_wbc->num_ops = 0;
-+	ceph_wbc->offset = 0;
-+	ceph_wbc->len = 0;
-+	ceph_wbc->from_pool = false;
-+
-+	ceph_folio_batch_init(ceph_wbc);
-+
-+	ceph_wbc->pages = NULL;
-+	ceph_wbc->data_pages = NULL;
++	return 0;
 +}
 +
- /*
-  * initiate async writeback
-  */
-@@ -948,17 +1045,11 @@ static int ceph_writepages_start(struct address_space *mapping,
- 	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
- 	struct ceph_client *cl = fsc->client;
- 	struct ceph_vino vino = ceph_vino(inode);
--	pgoff_t index, start_index, end = -1;
--	struct ceph_snap_context *snapc = NULL, *last_snapc = NULL, *pgsnapc;
--	struct folio_batch fbatch;
--	int rc = 0;
--	unsigned int wsize = i_blocksize(inode);
--	struct ceph_osd_request *req = NULL;
-+	struct ceph_snap_context *pgsnapc;
- 	struct ceph_writeback_ctl ceph_wbc;
--	bool should_loop, range_whole = false;
--	bool done = false;
-+	struct ceph_osd_request *req = NULL;
-+	int rc = 0;
- 	bool caching = ceph_is_cache_enabled(inode);
--	xa_mark_t tag;
+ static int wave5_vpu_load_firmware(struct device *dev, const char *fw_name,
+ 				   u32 *revision)
+ {
+@@ -184,6 +249,8 @@ static int wave5_vpu_probe(struct platform_device *pdev)
  
- 	if (wbc->sync_mode == WB_SYNC_NONE &&
- 	    fsc->write_congested)
-@@ -977,86 +1068,78 @@ static int ceph_writepages_start(struct address_space *mapping,
- 		mapping_set_error(mapping, -EIO);
- 		return -EIO; /* we're in a forced umount, don't write! */
+ 	mutex_init(&dev->dev_lock);
+ 	mutex_init(&dev->hw_lock);
++	mutex_init(&dev->irq_lock);
++	spin_lock_init(&dev->irq_spinlock);
+ 	dev_set_drvdata(&pdev->dev, dev);
+ 	dev->dev = &pdev->dev;
+ 
+@@ -226,9 +293,13 @@ static int wave5_vpu_probe(struct platform_device *pdev)
  	}
--	if (fsc->mount_options->wsize < wsize)
--		wsize = fsc->mount_options->wsize;
+ 	dev->product = wave5_vpu_get_product_id(dev);
  
--	folio_batch_init(&fbatch);
-+	ceph_init_writeback_ctl(mapping, wbc, &ceph_wbc);
- 
--	start_index = wbc->range_cyclic ? mapping->writeback_index : 0;
--	index = start_index;
--
--	if (wbc->sync_mode == WB_SYNC_ALL || wbc->tagged_writepages) {
--		tag = PAGECACHE_TAG_TOWRITE;
--	} else {
--		tag = PAGECACHE_TAG_DIRTY;
--	}
- retry:
- 	/* find oldest snap context with dirty data */
--	snapc = get_oldest_context(inode, &ceph_wbc, NULL);
--	if (!snapc) {
-+	ceph_wbc.snapc = get_oldest_context(inode, &ceph_wbc, NULL);
-+	if (!ceph_wbc.snapc) {
- 		/* hmm, why does writepages get called when there
- 		   is no dirty data? */
- 		doutc(cl, " no snap context with dirty data?\n");
- 		goto out;
- 	}
--	doutc(cl, " oldest snapc is %p seq %lld (%d snaps)\n", snapc,
--	      snapc->seq, snapc->num_snaps);
-+	doutc(cl, " oldest snapc is %p seq %lld (%d snaps)\n",
-+	      ceph_wbc.snapc, ceph_wbc.snapc->seq,
-+	      ceph_wbc.snapc->num_snaps);
- 
--	should_loop = false;
--	if (ceph_wbc.head_snapc && snapc != last_snapc) {
-+	ceph_wbc.should_loop = false;
-+	if (ceph_wbc.head_snapc && ceph_wbc.snapc != ceph_wbc.last_snapc) {
- 		/* where to start/end? */
- 		if (wbc->range_cyclic) {
--			index = start_index;
--			end = -1;
--			if (index > 0)
--				should_loop = true;
--			doutc(cl, " cyclic, start at %lu\n", index);
-+			ceph_wbc.index = ceph_wbc.start_index;
-+			ceph_wbc.end = -1;
-+			if (ceph_wbc.index > 0)
-+				ceph_wbc.should_loop = true;
-+			doutc(cl, " cyclic, start at %lu\n", ceph_wbc.index);
- 		} else {
--			index = wbc->range_start >> PAGE_SHIFT;
--			end = wbc->range_end >> PAGE_SHIFT;
-+			ceph_wbc.index = wbc->range_start >> PAGE_SHIFT;
-+			ceph_wbc.end = wbc->range_end >> PAGE_SHIFT;
- 			if (wbc->range_start == 0 && wbc->range_end == LLONG_MAX)
--				range_whole = true;
--			doutc(cl, " not cyclic, %lu to %lu\n", index, end);
-+				ceph_wbc.range_whole = true;
-+			doutc(cl, " not cyclic, %lu to %lu\n",
-+			      ceph_wbc.index, ceph_wbc.end);
- 		}
- 	} else if (!ceph_wbc.head_snapc) {
- 		/* Do not respect wbc->range_{start,end}. Dirty pages
- 		 * in that range can be associated with newer snapc.
- 		 * They are not writeable until we write all dirty pages
- 		 * associated with 'snapc' get written */
--		if (index > 0)
--			should_loop = true;
-+		if (ceph_wbc.index > 0)
-+			ceph_wbc.should_loop = true;
- 		doutc(cl, " non-head snapc, range whole\n");
- 	}
- 
- 	if (wbc->sync_mode == WB_SYNC_ALL || wbc->tagged_writepages)
--		tag_pages_for_writeback(mapping, index, end);
-+		tag_pages_for_writeback(mapping, ceph_wbc.index, ceph_wbc.end);
- 
--	ceph_put_snap_context(last_snapc);
--	last_snapc = snapc;
-+	ceph_put_snap_context(ceph_wbc.last_snapc);
-+	ceph_wbc.last_snapc = ceph_wbc.snapc;
- 
--	while (!done && index <= end) {
--		int num_ops = 0, op_idx;
--		unsigned i, nr_folios, max_pages, locked_pages = 0;
--		struct page **pages = NULL, **data_pages;
-+	while (!ceph_wbc.done && ceph_wbc.index <= ceph_wbc.end) {
-+		unsigned i;
- 		struct page *page;
--		pgoff_t strip_unit_end = 0;
--		u64 offset = 0, len = 0;
--		bool from_pool = false;
- 
--		max_pages = wsize >> PAGE_SHIFT;
-+		ceph_wbc.max_pages = ceph_wbc.wsize >> PAGE_SHIFT;
- 
- get_more_pages:
--		nr_folios = filemap_get_folios_tag(mapping, &index,
--						   end, tag, &fbatch);
--		doutc(cl, "pagevec_lookup_range_tag got %d\n", nr_folios);
--		if (!nr_folios && !locked_pages)
-+		ceph_wbc.nr_folios = filemap_get_folios_tag(mapping,
-+							    &ceph_wbc.index,
-+							    ceph_wbc.end,
-+							    ceph_wbc.tag,
-+							    &ceph_wbc.fbatch);
-+		doutc(cl, "pagevec_lookup_range_tag got %d\n",
-+			ceph_wbc.nr_folios);
-+		if (!ceph_wbc.nr_folios && !ceph_wbc.locked_pages)
- 			break;
--		for (i = 0; i < nr_folios && locked_pages < max_pages; i++) {
--			struct folio *folio = fbatch.folios[i];
-+		for (i = 0; i < ceph_wbc.nr_folios &&
-+			    ceph_wbc.locked_pages < ceph_wbc.max_pages; i++) {
-+			struct folio *folio = ceph_wbc.fbatch.folios[i];
- 
- 			page = &folio->page;
- 			doutc(cl, "? %p idx %lu\n", page, page->index);
--			if (locked_pages == 0)
-+			if (ceph_wbc.locked_pages == 0)
- 				lock_page(page);  /* first page */
- 			else if (!trylock_page(page))
- 				break;
-@@ -1070,13 +1153,14 @@ static int ceph_writepages_start(struct address_space *mapping,
- 			}
- 			/* only if matching snap context */
- 			pgsnapc = page_snap_context(page);
--			if (pgsnapc != snapc) {
-+			if (pgsnapc != ceph_wbc.snapc) {
- 				doutc(cl, "page snapc %p %lld != oldest %p %lld\n",
--				      pgsnapc, pgsnapc->seq, snapc, snapc->seq);
--				if (!should_loop &&
-+				      pgsnapc, pgsnapc->seq,
-+				      ceph_wbc.snapc, ceph_wbc.snapc->seq);
-+				if (!ceph_wbc.should_loop &&
- 				    !ceph_wbc.head_snapc &&
- 				    wbc->sync_mode != WB_SYNC_NONE)
--					should_loop = true;
-+					ceph_wbc.should_loop = true;
- 				unlock_page(page);
- 				continue;
- 			}
-@@ -1091,7 +1175,8 @@ static int ceph_writepages_start(struct address_space *mapping,
- 				folio_unlock(folio);
- 				continue;
- 			}
--			if (strip_unit_end && (page->index > strip_unit_end)) {
-+			if (ceph_wbc.strip_unit_end &&
-+			    (page->index > ceph_wbc.strip_unit_end)) {
- 				doutc(cl, "end of strip unit %p\n", page);
- 				unlock_page(page);
- 				break;
-@@ -1120,47 +1205,52 @@ static int ceph_writepages_start(struct address_space *mapping,
- 			 * calculate max possinle write size and
- 			 * allocate a page array
- 			 */
--			if (locked_pages == 0) {
-+			if (ceph_wbc.locked_pages == 0) {
- 				u64 objnum;
- 				u64 objoff;
- 				u32 xlen;
- 
- 				/* prepare async write request */
--				offset = (u64)page_offset(page);
-+				ceph_wbc.offset = (u64)page_offset(page);
- 				ceph_calc_file_object_mapping(&ci->i_layout,
--							      offset, wsize,
-+							      ceph_wbc.offset,
-+							      ceph_wbc.wsize,
- 							      &objnum, &objoff,
- 							      &xlen);
--				len = xlen;
-+				ceph_wbc.len = xlen;
- 
--				num_ops = 1;
--				strip_unit_end = page->index +
--					((len - 1) >> PAGE_SHIFT);
-+				ceph_wbc.num_ops = 1;
-+				ceph_wbc.strip_unit_end = page->index +
-+					((ceph_wbc.len - 1) >> PAGE_SHIFT);
- 
--				BUG_ON(pages);
--				max_pages = calc_pages_for(0, (u64)len);
--				pages = kmalloc_array(max_pages,
--						      sizeof(*pages),
-+				BUG_ON(ceph_wbc.pages);
-+				ceph_wbc.max_pages =
-+					calc_pages_for(0, (u64)ceph_wbc.len);
-+				ceph_wbc.pages = kmalloc_array(ceph_wbc.max_pages,
-+						      sizeof(*ceph_wbc.pages),
- 						      GFP_NOFS);
--				if (!pages) {
--					from_pool = true;
--					pages = mempool_alloc(ceph_wb_pagevec_pool, GFP_NOFS);
--					BUG_ON(!pages);
-+				if (!ceph_wbc.pages) {
-+					ceph_wbc.from_pool = true;
-+					ceph_wbc.pages =
-+						mempool_alloc(ceph_wb_pagevec_pool,
-+								GFP_NOFS);
-+					BUG_ON(!ceph_wbc.pages);
- 				}
- 
--				len = 0;
-+				ceph_wbc.len = 0;
- 			} else if (page->index !=
--				   (offset + len) >> PAGE_SHIFT) {
--				if (num_ops >= (from_pool ?  CEPH_OSD_SLAB_OPS :
-+				   (ceph_wbc.offset + ceph_wbc.len) >> PAGE_SHIFT) {
-+				if (ceph_wbc.num_ops >=
-+				    (ceph_wbc.from_pool ?  CEPH_OSD_SLAB_OPS :
- 							     CEPH_OSD_MAX_OPS)) {
- 					redirty_page_for_writepage(wbc, page);
- 					unlock_page(page);
- 					break;
- 				}
- 
--				num_ops++;
--				offset = (u64)page_offset(page);
--				len = 0;
-+				ceph_wbc.num_ops++;
-+				ceph_wbc.offset = (u64)page_offset(page);
-+				ceph_wbc.len = 0;
- 			}
- 
- 			/* note position of first page in fbatch */
-@@ -1173,78 +1263,85 @@ static int ceph_writepages_start(struct address_space *mapping,
- 				fsc->write_congested = true;
- 
- 			if (IS_ENCRYPTED(inode)) {
--				pages[locked_pages] =
-+				ceph_wbc.pages[ceph_wbc.locked_pages] =
- 					fscrypt_encrypt_pagecache_blocks(page,
- 						PAGE_SIZE, 0,
--						locked_pages ? GFP_NOWAIT : GFP_NOFS);
--				if (IS_ERR(pages[locked_pages])) {
--					if (PTR_ERR(pages[locked_pages]) == -EINVAL)
-+						ceph_wbc.locked_pages ?
-+							GFP_NOWAIT : GFP_NOFS);
-+				if (IS_ERR(ceph_wbc.pages[ceph_wbc.locked_pages])) {
-+					if (PTR_ERR(ceph_wbc.pages[ceph_wbc.locked_pages]) == -EINVAL)
- 						pr_err_client(cl,
- 							"inode->i_blkbits=%hhu\n",
- 							inode->i_blkbits);
- 					/* better not fail on first page! */
--					BUG_ON(locked_pages == 0);
--					pages[locked_pages] = NULL;
-+					BUG_ON(ceph_wbc.locked_pages == 0);
-+					ceph_wbc.pages[ceph_wbc.locked_pages] = NULL;
- 					redirty_page_for_writepage(wbc, page);
- 					unlock_page(page);
- 					break;
- 				}
--				++locked_pages;
-+				++ceph_wbc.locked_pages;
- 			} else {
--				pages[locked_pages++] = page;
-+				ceph_wbc.pages[ceph_wbc.locked_pages++] = page;
- 			}
- 
--			fbatch.folios[i] = NULL;
--			len += thp_size(page);
-+			ceph_wbc.fbatch.folios[i] = NULL;
-+			ceph_wbc.len += thp_size(page);
- 		}
- 
- 		/* did we get anything? */
--		if (!locked_pages)
-+		if (!ceph_wbc.locked_pages)
- 			goto release_folios;
- 		if (i) {
- 			unsigned j, n = 0;
- 			/* shift unused page to beginning of fbatch */
--			for (j = 0; j < nr_folios; j++) {
--				if (!fbatch.folios[j])
-+			for (j = 0; j < ceph_wbc.nr_folios; j++) {
-+				if (!ceph_wbc.fbatch.folios[j])
- 					continue;
--				if (n < j)
--					fbatch.folios[n] = fbatch.folios[j];
-+				if (n < j) {
-+					ceph_wbc.fbatch.folios[n] =
-+						ceph_wbc.fbatch.folios[j];
-+				}
- 				n++;
- 			}
--			fbatch.nr = n;
-+			ceph_wbc.fbatch.nr = n;
- 
--			if (nr_folios && i == nr_folios &&
--			    locked_pages < max_pages) {
-+			if (ceph_wbc.nr_folios && i == ceph_wbc.nr_folios &&
-+			    ceph_wbc.locked_pages < ceph_wbc.max_pages) {
- 				doutc(cl, "reached end fbatch, trying for more\n");
--				folio_batch_release(&fbatch);
-+				folio_batch_release(&ceph_wbc.fbatch);
- 				goto get_more_pages;
- 			}
- 		}
- 
- new_request:
--		offset = ceph_fscrypt_page_offset(pages[0]);
--		len = wsize;
-+		ceph_wbc.offset = ceph_fscrypt_page_offset(ceph_wbc.pages[0]);
-+		ceph_wbc.len = ceph_wbc.wsize;
- 
- 		req = ceph_osdc_new_request(&fsc->client->osdc,
- 					&ci->i_layout, vino,
--					offset, &len, 0, num_ops,
-+					ceph_wbc.offset, &ceph_wbc.len,
-+					0, ceph_wbc.num_ops,
- 					CEPH_OSD_OP_WRITE, CEPH_OSD_FLAG_WRITE,
--					snapc, ceph_wbc.truncate_seq,
-+					ceph_wbc.snapc, ceph_wbc.truncate_seq,
- 					ceph_wbc.truncate_size, false);
- 		if (IS_ERR(req)) {
- 			req = ceph_osdc_new_request(&fsc->client->osdc,
- 						&ci->i_layout, vino,
--						offset, &len, 0,
--						min(num_ops,
-+						ceph_wbc.offset, &ceph_wbc.len,
-+						0, min(ceph_wbc.num_ops,
- 						    CEPH_OSD_SLAB_OPS),
- 						CEPH_OSD_OP_WRITE,
- 						CEPH_OSD_FLAG_WRITE,
--						snapc, ceph_wbc.truncate_seq,
-+						ceph_wbc.snapc,
-+						ceph_wbc.truncate_seq,
- 						ceph_wbc.truncate_size, true);
- 			BUG_ON(IS_ERR(req));
- 		}
--		BUG_ON(len < ceph_fscrypt_page_offset(pages[locked_pages - 1]) +
--			     thp_size(pages[locked_pages - 1]) - offset);
-+		BUG_ON(ceph_wbc.len <
-+			ceph_fscrypt_page_offset(ceph_wbc.pages[ceph_wbc.locked_pages - 1]) +
-+				thp_size(ceph_wbc.pages[ceph_wbc.locked_pages - 1]) -
-+					ceph_wbc.offset);
- 
- 		if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
- 			rc = -EIO;
-@@ -1254,100 +1351,118 @@ static int ceph_writepages_start(struct address_space *mapping,
- 		req->r_inode = inode;
- 
- 		/* Format the osd request message and submit the write */
--		len = 0;
--		data_pages = pages;
--		op_idx = 0;
--		for (i = 0; i < locked_pages; i++) {
--			struct page *page = ceph_fscrypt_pagecache_page(pages[i]);
-+		ceph_wbc.len = 0;
-+		ceph_wbc.data_pages = ceph_wbc.pages;
-+		ceph_wbc.op_idx = 0;
-+		for (i = 0; i < ceph_wbc.locked_pages; i++) {
-+			struct page *page =
-+				ceph_fscrypt_pagecache_page(ceph_wbc.pages[i]);
- 
- 			u64 cur_offset = page_offset(page);
- 			/*
- 			 * Discontinuity in page range? Ceph can handle that by just passing
- 			 * multiple extents in the write op.
- 			 */
--			if (offset + len != cur_offset) {
-+			if (ceph_wbc.offset + ceph_wbc.len != cur_offset) {
- 				/* If it's full, stop here */
--				if (op_idx + 1 == req->r_num_ops)
-+				if (ceph_wbc.op_idx + 1 == req->r_num_ops)
- 					break;
- 
- 				/* Kick off an fscache write with what we have so far. */
--				ceph_fscache_write_to_cache(inode, offset, len, caching);
-+				ceph_fscache_write_to_cache(inode, ceph_wbc.offset,
-+							    ceph_wbc.len, caching);
- 
- 				/* Start a new extent */
--				osd_req_op_extent_dup_last(req, op_idx,
--							   cur_offset - offset);
--				doutc(cl, "got pages at %llu~%llu\n", offset,
--				      len);
--				osd_req_op_extent_osd_data_pages(req, op_idx,
--							data_pages, len, 0,
--							from_pool, false);
--				osd_req_op_extent_update(req, op_idx, len);
--
--				len = 0;
--				offset = cur_offset;
--				data_pages = pages + i;
--				op_idx++;
-+				osd_req_op_extent_dup_last(req, ceph_wbc.op_idx,
-+							   cur_offset -
-+								ceph_wbc.offset);
-+				doutc(cl, "got pages at %llu~%llu\n",
-+					ceph_wbc.offset,
-+					ceph_wbc.len);
-+				osd_req_op_extent_osd_data_pages(req,
-+							ceph_wbc.op_idx,
-+							ceph_wbc.data_pages,
-+							ceph_wbc.len, 0,
-+							ceph_wbc.from_pool, false);
-+				osd_req_op_extent_update(req, ceph_wbc.op_idx,
-+							 ceph_wbc.len);
++	INIT_LIST_HEAD(&dev->instances);
 +
-+				ceph_wbc.len = 0;
-+				ceph_wbc.offset = cur_offset;
-+				ceph_wbc.data_pages = ceph_wbc.pages + i;
-+				ceph_wbc.op_idx++;
- 			}
- 
- 			set_page_writeback(page);
- 			if (caching)
- 				ceph_set_page_fscache(page);
--			len += thp_size(page);
-+			ceph_wbc.len += thp_size(page);
+ 	dev->irq = platform_get_irq(pdev, 0);
+ 	if (dev->irq < 0) {
+ 		dev_err(&pdev->dev, "failed to get irq resource, falling back to polling\n");
++		sema_init(&dev->irq_sem, 1);
++		dev->irq_thread = kthread_run(irq_thread, dev, "irq thread");
+ 		hrtimer_init(&dev->hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_PINNED);
+ 		dev->hrtimer.function = &wave5_vpu_timer_callback;
+ 		dev->worker = kthread_create_worker(0, "vpu_irq_thread");
+@@ -240,7 +311,7 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 		dev->vpu_poll_interval = vpu_poll_interval;
+ 		kthread_init_work(&dev->work, wave5_vpu_irq_work_fn);
+ 	} else {
+-		ret = devm_request_threaded_irq(&pdev->dev, dev->irq, NULL,
++		ret = devm_request_threaded_irq(&pdev->dev, dev->irq, wave5_vpu_irq,
+ 						wave5_vpu_irq_thread, IRQF_ONESHOT, "vpu_irq", dev);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "Register interrupt handler, fail: %d\n", ret);
+@@ -248,7 +319,6 @@ static int wave5_vpu_probe(struct platform_device *pdev)
  		}
--		ceph_fscache_write_to_cache(inode, offset, len, caching);
-+		ceph_fscache_write_to_cache(inode, ceph_wbc.offset,
-+					    ceph_wbc.len, caching);
+ 	}
  
- 		if (ceph_wbc.size_stable) {
--			len = min(len, ceph_wbc.i_size - offset);
--		} else if (i == locked_pages) {
-+			ceph_wbc.len = min(ceph_wbc.len,
-+					    ceph_wbc.i_size - ceph_wbc.offset);
-+		} else if (i == ceph_wbc.locked_pages) {
- 			/* writepages_finish() clears writeback pages
- 			 * according to the data length, so make sure
- 			 * data length covers all locked pages */
--			u64 min_len = len + 1 - thp_size(page);
--			len = get_writepages_data_length(inode, pages[i - 1],
--							 offset);
--			len = max(len, min_len);
-+			u64 min_len = ceph_wbc.len + 1 - thp_size(page);
-+			ceph_wbc.len =
-+				get_writepages_data_length(inode,
-+							ceph_wbc.pages[i - 1],
-+							ceph_wbc.offset);
-+			ceph_wbc.len = max(ceph_wbc.len, min_len);
+-	INIT_LIST_HEAD(&dev->instances);
+ 	ret = v4l2_device_register(&pdev->dev, &dev->v4l2_dev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "v4l2_device_register, fail: %d\n", ret);
+@@ -310,6 +380,12 @@ static void wave5_vpu_remove(struct platform_device *pdev)
+ 	v4l2_device_unregister(&dev->v4l2_dev);
+ 
+ 	if (dev->irq < 0) {
++		if (dev->irq_thread) {
++			kthread_stop(dev->irq_thread);
++			up(&dev->irq_sem);
++			dev->irq_thread = NULL;
 +		}
-+		if (IS_ENCRYPTED(inode)) {
-+			ceph_wbc.len = round_up(ceph_wbc.len,
-+						CEPH_FSCRYPT_BLOCK_SIZE);
- 		}
--		if (IS_ENCRYPTED(inode))
--			len = round_up(len, CEPH_FSCRYPT_BLOCK_SIZE);
++
+ 		hrtimer_cancel(&dev->hrtimer);
+ 		kthread_cancel_work_sync(&dev->work);
+ 		kthread_destroy_worker(dev->worker);
+@@ -317,6 +393,7 @@ static void wave5_vpu_remove(struct platform_device *pdev)
  
--		doutc(cl, "got pages at %llu~%llu\n", offset, len);
-+		doutc(cl, "got pages at %llu~%llu\n",
-+			ceph_wbc.offset, ceph_wbc.len);
+ 	mutex_destroy(&dev->dev_lock);
+ 	mutex_destroy(&dev->hw_lock);
++	mutex_destroy(&dev->irq_lock);
+ 	reset_control_assert(dev->resets);
+ 	clk_bulk_disable_unprepare(dev->num_clks, dev->clks);
+ 	wave5_vdi_release(&pdev->dev);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+index 703b2413dafa1..70b8324bbb789 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+@@ -8,6 +8,7 @@
+ #ifndef VPUAPI_H_INCLUDED
+ #define VPUAPI_H_INCLUDED
  
- 		if (IS_ENCRYPTED(inode) &&
--		    ((offset | len) & ~CEPH_FSCRYPT_BLOCK_MASK))
-+		    ((ceph_wbc.offset | ceph_wbc.len) & ~CEPH_FSCRYPT_BLOCK_MASK))
- 			pr_warn_client(cl,
- 				"bad encrypted write offset=%lld len=%llu\n",
--				offset, len);
-+				ceph_wbc.offset, ceph_wbc.len);
++#include <linux/kfifo.h>
+ #include <linux/idr.h>
+ #include <linux/genalloc.h>
+ #include <media/v4l2-device.h>
+@@ -747,6 +748,7 @@ struct vpu_device {
+ 	struct video_device *video_dev_enc;
+ 	struct mutex dev_lock; /* lock for the src, dst v4l2 queues */
+ 	struct mutex hw_lock; /* lock hw configurations */
++	struct mutex irq_lock;
+ 	int irq;
+ 	enum product_id product;
+ 	struct vpu_attr attr;
+@@ -764,7 +766,10 @@ struct vpu_device {
+ 	struct kthread_worker *worker;
+ 	int vpu_poll_interval;
+ 	int num_clks;
++	struct task_struct *irq_thread;
++	struct semaphore irq_sem; /* signal to irq_thread when interrupt happens*/
+ 	struct reset_control *resets;
++	spinlock_t irq_spinlock; /* protect instances list */
+ };
  
--		osd_req_op_extent_osd_data_pages(req, op_idx, data_pages, len,
--						 0, from_pool, false);
--		osd_req_op_extent_update(req, op_idx, len);
-+		osd_req_op_extent_osd_data_pages(req, ceph_wbc.op_idx,
-+						 ceph_wbc.data_pages,
-+						 ceph_wbc.len,
-+						 0, ceph_wbc.from_pool, false);
-+		osd_req_op_extent_update(req, ceph_wbc.op_idx, ceph_wbc.len);
+ struct vpu_instance;
+@@ -788,6 +793,7 @@ struct vpu_instance {
+ 	enum v4l2_ycbcr_encoding ycbcr_enc;
+ 	enum v4l2_quantization quantization;
  
--		BUG_ON(op_idx + 1 != req->r_num_ops);
-+		BUG_ON(ceph_wbc.op_idx + 1 != req->r_num_ops);
- 
--		from_pool = false;
--		if (i < locked_pages) {
--			BUG_ON(num_ops <= req->r_num_ops);
--			num_ops -= req->r_num_ops;
--			locked_pages -= i;
-+		ceph_wbc.from_pool = false;
-+		if (i < ceph_wbc.locked_pages) {
-+			BUG_ON(ceph_wbc.num_ops <= req->r_num_ops);
-+			ceph_wbc.num_ops -= req->r_num_ops;
-+			ceph_wbc.locked_pages -= i;
- 
- 			/* allocate new pages array for next request */
--			data_pages = pages;
--			pages = kmalloc_array(locked_pages, sizeof(*pages),
--					      GFP_NOFS);
--			if (!pages) {
--				from_pool = true;
--				pages = mempool_alloc(ceph_wb_pagevec_pool, GFP_NOFS);
--				BUG_ON(!pages);
-+			ceph_wbc.data_pages = ceph_wbc.pages;
-+			ceph_wbc.pages = kmalloc_array(ceph_wbc.locked_pages,
-+							sizeof(*ceph_wbc.pages),
-+							GFP_NOFS);
-+			if (!ceph_wbc.pages) {
-+				ceph_wbc.from_pool = true;
-+				ceph_wbc.pages =
-+					mempool_alloc(ceph_wb_pagevec_pool, GFP_NOFS);
-+				BUG_ON(!ceph_wbc.pages);
- 			}
--			memcpy(pages, data_pages + i,
--			       locked_pages * sizeof(*pages));
--			memset(data_pages + i, 0,
--			       locked_pages * sizeof(*pages));
-+			memcpy(ceph_wbc.pages, ceph_wbc.data_pages + i,
-+			       ceph_wbc.locked_pages * sizeof(*ceph_wbc.pages));
-+			memset(ceph_wbc.data_pages + i, 0,
-+			       ceph_wbc.locked_pages * sizeof(*ceph_wbc.pages));
- 		} else {
--			BUG_ON(num_ops != req->r_num_ops);
--			index = pages[i - 1]->index + 1;
-+			BUG_ON(ceph_wbc.num_ops != req->r_num_ops);
-+			ceph_wbc.index = ceph_wbc.pages[i - 1]->index + 1;
- 			/* request message now owns the pages array */
--			pages = NULL;
-+			ceph_wbc.pages = NULL;
- 		}
- 
- 		req->r_mtime = inode_get_mtime(inode);
-@@ -1355,7 +1470,7 @@ static int ceph_writepages_start(struct address_space *mapping,
- 		req = NULL;
- 
- 		wbc->nr_to_write -= i;
--		if (pages)
-+		if (ceph_wbc.pages)
- 			goto new_request;
- 
- 		/*
-@@ -1365,54 +1480,56 @@ static int ceph_writepages_start(struct address_space *mapping,
- 		 * we tagged for writeback prior to entering this loop.
- 		 */
- 		if (wbc->nr_to_write <= 0 && wbc->sync_mode == WB_SYNC_NONE)
--			done = true;
-+			ceph_wbc.done = true;
- 
- release_folios:
- 		doutc(cl, "folio_batch release on %d folios (%p)\n",
--		      (int)fbatch.nr, fbatch.nr ? fbatch.folios[0] : NULL);
--		folio_batch_release(&fbatch);
-+		      (int)ceph_wbc.fbatch.nr,
-+		      ceph_wbc.fbatch.nr ? ceph_wbc.fbatch.folios[0] : NULL);
-+		folio_batch_release(&ceph_wbc.fbatch);
- 	}
- 
--	if (should_loop && !done) {
-+	if (ceph_wbc.should_loop && !ceph_wbc.done) {
- 		/* more to do; loop back to beginning of file */
- 		doutc(cl, "looping back to beginning of file\n");
--		end = start_index - 1; /* OK even when start_index == 0 */
-+		ceph_wbc.end = ceph_wbc.start_index - 1; /* OK even when start_index == 0 */
- 
- 		/* to write dirty pages associated with next snapc,
- 		 * we need to wait until current writes complete */
- 		if (wbc->sync_mode != WB_SYNC_NONE &&
--		    start_index == 0 && /* all dirty pages were checked */
-+		    ceph_wbc.start_index == 0 && /* all dirty pages were checked */
- 		    !ceph_wbc.head_snapc) {
- 			struct page *page;
- 			unsigned i, nr;
--			index = 0;
--			while ((index <= end) &&
--			       (nr = filemap_get_folios_tag(mapping, &index,
-+			ceph_wbc.index = 0;
-+			while ((ceph_wbc.index <= ceph_wbc.end) &&
-+			       (nr = filemap_get_folios_tag(mapping,
-+						&ceph_wbc.index,
- 						(pgoff_t)-1,
- 						PAGECACHE_TAG_WRITEBACK,
--						&fbatch))) {
-+						&ceph_wbc.fbatch))) {
- 				for (i = 0; i < nr; i++) {
--					page = &fbatch.folios[i]->page;
--					if (page_snap_context(page) != snapc)
-+					page = &ceph_wbc.fbatch.folios[i]->page;
-+					if (page_snap_context(page) != ceph_wbc.snapc)
- 						continue;
- 					wait_on_page_writeback(page);
- 				}
--				folio_batch_release(&fbatch);
-+				folio_batch_release(&ceph_wbc.fbatch);
- 				cond_resched();
- 			}
- 		}
- 
--		start_index = 0;
--		index = 0;
-+		ceph_wbc.start_index = 0;
-+		ceph_wbc.index = 0;
- 		goto retry;
- 	}
- 
--	if (wbc->range_cyclic || (range_whole && wbc->nr_to_write > 0))
--		mapping->writeback_index = index;
-+	if (wbc->range_cyclic || (ceph_wbc.range_whole && wbc->nr_to_write > 0))
-+		mapping->writeback_index = ceph_wbc.index;
- 
- out:
- 	ceph_osdc_put_request(req);
--	ceph_put_snap_context(last_snapc);
-+	ceph_put_snap_context(ceph_wbc.last_snapc);
- 	doutc(cl, "%llx.%llx dend - startone, rc = %d\n", ceph_vinop(inode),
- 	      rc);
- 	return rc;
++	struct kfifo irq_status;
+ 	enum vpu_instance_state state;
+ 	enum vpu_instance_type type;
+ 	const struct vpu_instance_ops *ops;
 -- 
 2.53.0
 
