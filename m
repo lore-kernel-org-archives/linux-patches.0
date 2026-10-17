@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCC73A5E6F;
-	Sat, 17 Oct 2026 18:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2152356A12;
+	Sat, 17 Oct 2026 18:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260032; cv=none; b=YwJco36KdRTdZQkGDZJjStkqqJw/VuPYZP7FLeVjgQ67a2O7NX6jPMe7xWgclh1Yb3wCWmzo3LRn/R3iJ1c3JRowGPWk6nhnUJwie1gIQzjbTxqjWUNr3IbiFycEyd1lel9hBxXWdSEiPqWgZGwa4z4/N7lLfAg00UFdxNyqyLs=
+	t=1792260035; cv=none; b=LuIbEjut6VxPFk6BNvtCX17EMnJf96gC9jS80MyMmcI0iokF3xLAwnahr8c2tGPoDjWiRnHCeo5qeeGPMF8Uu2KQAymoLQp1bwzwULf0gLz2TBQJLp3QKzNk8TwrlB1P7Kcui1rn4rFZGquLvMAdSXY7kwDcdt5PmwlD+itIj6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260032; c=relaxed/simple;
-	bh=7Pqru9kTBnPOihome9nxWToZlKuiS5MaPVxrgydi2To=;
+	s=arc-20240116; t=1792260035; c=relaxed/simple;
+	bh=2vm2/zsx+WEwya6KlUIKDcsWyjX3aOqLjGWDJU48m2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1wAu9gbsZBKrbwr6JTXJRF0oSJDLNq6bPtz49kyHt3FZNIDPZUMMBmam8KQReRzVfD/zivcXYmzPxd3fUhogkGSEUlooHz48nKsmg8mx1p+owvT7IJniL56JV3TmrUOHASgEXuhpGBV7T/3IeAveEVjcmejtb1GVH2MoMPKXAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFOHnSiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q3qbFIBe/YG25h3Q2faMRzm97XDsmrxyvyGTlTVRakM0pnuvJvyGxnzCJggQOZruBtlH1fLBzNusQpWexwLLgIF5YFpsoiAM3zauM1u9U4Wr9TpY9NJVG5iyzh+1TWE/TjC9HmR5+flu+PaY8qIz8yTJaRcDnQGJveOv6vDH0RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udl2gsoq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFOHnSiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A201F000C4;
-	Sat, 17 Oct 2026 18:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udl2gsoq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084F41F000C4;
+	Sat, 17 Oct 2026 18:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260031;
-	bh=48haBJqxUYlpp1zqyu2IN93Lyp037xc9wqtrcyM15dM=;
+	s=korg; t=1792260034;
+	bh=9E3K6gIioeuTzO8Vu3jIRcO/aPHg4BQmLTwKnkhbKxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fFOHnSiPPTTK88oX2aa2J/1NCJzge1SWoeR93V8SDy6GaboXBKjRTp6aXrgkklRUU
-	 DWnR3Tjg+QhRmWWo+GxMzrFU2+shGubz9QHbeMJLoCsfaQtiMg8mnVX8l5BG5dGWk7
-	 Tr09ku93wTpnOckWBTLbm13QXfEnkWHwaDbJI6QQ=
+	b=udl2gsoqn8z8qPWnbYUO6hQk7v4J56wTcXJUCidps0zpwn6yCsmDZzJ9YXctTM8F0
+	 seeMIEOOn8CDYW2fb15E1XP4NQ9kjq9hWClqUdl0cWDw8xbJBh9b3maNksRHcAC1/b
+	 eYlt1sO2gs1agToD0F8c6vSFmLCzl/PpFt+/tsgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1369/1674] netfilter: nf_tables: skip double clone set expressions on element insert
-Date: Sat, 17 Oct 2026 18:00:41 +0200
-Message-ID: <20261017160506.298533068@linuxfoundation.org>
+Subject: [PATCH 6.6 1370/1674] net_sched: sch_fq: struct sched_data reorg
+Date: Sat, 17 Oct 2026 18:00:42 +0200
+Message-ID: <20261017160506.326010238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,253 +51,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 43559058d21e0493aa220ac167e0279334dea5f9 ]
+[ Upstream commit 54ff8ad69c6e93c0767451ae170b41c000e565dd ]
 
-Both the dynset and newsetelem path clone the existing set expressions
-when setting set element expressions if no override expressions are
-provided. This results in a double clone, once to clone the template set
-expressions then another clone on the new element. Add a flag to
-annotate if userspace provides a override expression (ie. expression of
-the same type of the set but different configuration), otherwise borrow
-the existing expression from the set. Add conditionals to release
-expression iif they represent an override. Use this new override_exprs
-flag to dump the dynset expression override to userspace.
+q->flows can be often modified, and q->timer_slack is read mostly.
 
-This simplifies the existing logic and it also fixes a bug with the
-connlimit expression which results in a module refcount imbalance
-WARNING splat when resorting on the default set expressions.
+Exchange the two fields, so that cache line countaining
+quantum, initial_quantum, and other critical parameters
+stay clean (read-mostly).
 
-Fixes: 65038428b2c6 ("netfilter: nf_tables: allow to specify stateful expression in set definition")
-Fixes: fca05d4d61e6 ("netfilter: nft_dynset: honor stateful expressions in set definition")
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Move q->watchdog next to q->stat_throttled
+
+Add comments explaining how the structure is split in
+three different parts.
+
+pahole output before the patch:
+
+struct fq_sched_data {
+	struct fq_flow_head        new_flows;            /*     0  0x10 */
+	struct fq_flow_head        old_flows;            /*  0x10  0x10 */
+	struct rb_root             delayed;              /*  0x20   0x8 */
+	u64                        time_next_delayed_flow; /*  0x28   0x8 */
+	u64                        ktime_cache;          /*  0x30   0x8 */
+	unsigned long              unthrottle_latency_ns; /*  0x38   0x8 */
+	/* --- cacheline 1 boundary (64 bytes) --- */
+	struct fq_flow             internal __attribute__((__aligned__(64))); /*  0x40  0x80 */
+
+	/* XXX last struct has 16 bytes of padding */
+
+	/* --- cacheline 3 boundary (192 bytes) --- */
+	u32                        quantum;              /*  0xc0   0x4 */
+	u32                        initial_quantum;      /*  0xc4   0x4 */
+	u32                        flow_refill_delay;    /*  0xc8   0x4 */
+	u32                        flow_plimit;          /*  0xcc   0x4 */
+	unsigned long              flow_max_rate;        /*  0xd0   0x8 */
+	u64                        ce_threshold;         /*  0xd8   0x8 */
+	u64                        horizon;              /*  0xe0   0x8 */
+	u32                        orphan_mask;          /*  0xe8   0x4 */
+	u32                        low_rate_threshold;   /*  0xec   0x4 */
+	struct rb_root *           fq_root;              /*  0xf0   0x8 */
+	u8                         rate_enable;          /*  0xf8   0x1 */
+	u8                         fq_trees_log;         /*  0xf9   0x1 */
+	u8                         horizon_drop;         /*  0xfa   0x1 */
+
+	/* XXX 1 byte hole, try to pack */
+
+<bad>	u32                        flows;                /*  0xfc   0x4 */
+	/* --- cacheline 4 boundary (256 bytes) --- */
+	u32                        inactive_flows;       /* 0x100   0x4 */
+	u32                        throttled_flows;      /* 0x104   0x4 */
+	u64                        stat_gc_flows;        /* 0x108   0x8 */
+	u64                        stat_internal_packets; /* 0x110   0x8 */
+	u64                        stat_throttled;       /* 0x118   0x8 */
+	u64                        stat_ce_mark;         /* 0x120   0x8 */
+	u64                        stat_horizon_drops;   /* 0x128   0x8 */
+	u64                        stat_horizon_caps;    /* 0x130   0x8 */
+	u64                        stat_flows_plimit;    /* 0x138   0x8 */
+	/* --- cacheline 5 boundary (320 bytes) --- */
+	u64                        stat_pkts_too_long;   /* 0x140   0x8 */
+	u64                        stat_allocation_errors; /* 0x148   0x8 */
+<bad>	u32                        timer_slack;          /* 0x150   0x4 */
+
+	/* XXX 4 bytes hole, try to pack */
+
+	struct qdisc_watchdog      watchdog;             /* 0x158  0x48 */
+
+	/* size: 448, cachelines: 7, members: 34 */
+	/* sum members: 411, holes: 2, sum holes: 5 */
+	/* padding: 32 */
+	/* paddings: 1, sum paddings: 16 */
+	/* forced alignments: 1 */
+};
+
+pahole output after the patch:
+
+struct fq_sched_data {
+	struct fq_flow_head        new_flows;            /*     0  0x10 */
+	struct fq_flow_head        old_flows;            /*  0x10  0x10 */
+	struct rb_root             delayed;              /*  0x20   0x8 */
+	u64                        time_next_delayed_flow; /*  0x28   0x8 */
+	u64                        ktime_cache;          /*  0x30   0x8 */
+	unsigned long              unthrottle_latency_ns; /*  0x38   0x8 */
+	/* --- cacheline 1 boundary (64 bytes) --- */
+	struct fq_flow             internal __attribute__((__aligned__(64))); /*  0x40  0x80 */
+
+	/* XXX last struct has 16 bytes of padding */
+
+	/* --- cacheline 3 boundary (192 bytes) --- */
+	u32                        quantum;              /*  0xc0   0x4 */
+	u32                        initial_quantum;      /*  0xc4   0x4 */
+	u32                        flow_refill_delay;    /*  0xc8   0x4 */
+	u32                        flow_plimit;          /*  0xcc   0x4 */
+	unsigned long              flow_max_rate;        /*  0xd0   0x8 */
+	u64                        ce_threshold;         /*  0xd8   0x8 */
+	u64                        horizon;              /*  0xe0   0x8 */
+	u32                        orphan_mask;          /*  0xe8   0x4 */
+	u32                        low_rate_threshold;   /*  0xec   0x4 */
+	struct rb_root *           fq_root;              /*  0xf0   0x8 */
+	u8                         rate_enable;          /*  0xf8   0x1 */
+	u8                         fq_trees_log;         /*  0xf9   0x1 */
+	u8                         horizon_drop;         /*  0xfa   0x1 */
+
+	/* XXX 1 byte hole, try to pack */
+
+<good>	u32                        timer_slack;          /*  0xfc   0x4 */
+	/* --- cacheline 4 boundary (256 bytes) --- */
+<good>	u32                        flows;                /* 0x100   0x4 */
+	u32                        inactive_flows;       /* 0x104   0x4 */
+	u32                        throttled_flows;      /* 0x108   0x4 */
+
+	/* XXX 4 bytes hole, try to pack */
+
+	u64                        stat_throttled;       /* 0x110   0x8 */
+<better> struct qdisc_watchdog     watchdog;             /* 0x118  0x48 */
+	/* --- cacheline 5 boundary (320 bytes) was 32 bytes ago --- */
+	u64                        stat_gc_flows;        /* 0x160   0x8 */
+	u64                        stat_internal_packets; /* 0x168   0x8 */
+	u64                        stat_ce_mark;         /* 0x170   0x8 */
+	u64                        stat_horizon_drops;   /* 0x178   0x8 */
+	/* --- cacheline 6 boundary (384 bytes) --- */
+	u64                        stat_horizon_caps;    /* 0x180   0x8 */
+	u64                        stat_flows_plimit;    /* 0x188   0x8 */
+	u64                        stat_pkts_too_long;   /* 0x190   0x8 */
+	u64                        stat_allocation_errors; /* 0x198   0x8 */
+
+	/* Force padding: */
+	u64                        :64;
+	u64                        :64;
+	u64                        :64;
+	u64                        :64;
+
+	/* size: 448, cachelines: 7, members: 34 */
+	/* sum members: 411, holes: 2, sum holes: 5 */
+	/* padding: 32 */
+	/* paddings: 1, sum paddings: 16 */
+	/* forced alignments: 1 */
+};
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 --
- net/netfilter/nf_tables_api.c     | 56 ++++++++++---------------------
- net/netfilter/nft_dynset.c        | 25 ++++++++------
- 3 files changed, 33 insertions(+), 50 deletions(-)
+ net/sched/sch_fq.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index cc52c76a68e88..0a6edf2aec7d2 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -855,8 +855,6 @@ void *nft_set_elem_init(const struct nft_set *set,
- 			const struct nft_set_ext_tmpl *tmpl,
- 			const u32 *key, const u32 *key_end, const u32 *data,
- 			u64 timeout, u64 expiration, gfp_t gfp);
--int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
--			    struct nft_expr *expr_array[]);
- void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
- 			       struct nft_set_elem_expr *elem_expr);
- void nft_set_elem_destroy(const struct nft_set *set, void *elem,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a003839e41d64..a036deb93781a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6466,39 +6466,11 @@ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
- 	kfree(elem);
- }
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 2223edfd7aa77..9ea2735df4f75 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -104,6 +104,9 @@ struct fq_sched_data {
+ 	unsigned long	unthrottle_latency_ns;
  
--int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
--			    struct nft_expr *expr_array[])
--{
--	struct nft_expr *expr;
--	int err, i, k;
--
--	for (i = 0; i < set->num_exprs; i++) {
--		expr = kzalloc(set->exprs[i]->ops->size, GFP_KERNEL_ACCOUNT);
--		if (!expr)
--			goto err_expr;
--
--		err = nft_expr_clone(expr, set->exprs[i], GFP_KERNEL_ACCOUNT);
--		if (err < 0) {
--			kfree(expr);
--			goto err_expr;
--		}
--		expr_array[i] = expr;
--	}
--
--	return 0;
--
--err_expr:
--	for (k = i - 1; k >= 0; k--)
--		nft_expr_destroy(ctx, expr_array[k]);
--
--	return -ENOMEM;
--}
--
- static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 				   const struct nft_set_ext_tmpl *tmpl,
- 				   const struct nft_set_ext *ext,
- 				   struct nft_expr *expr_array[],
--				   u32 num_exprs)
-+				   u32 num_exprs, bool override_exprs)
- {
- 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
- 	u32 len = sizeof(struct nft_set_elem_expr);
-@@ -6521,7 +6493,8 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 			goto err_elem_expr_setup;
- 
- 		elem_expr->size += expr_array[i]->ops->size;
--		nft_expr_destroy(ctx, expr_array[i]);
-+		if (override_exprs)
-+			nft_expr_destroy(ctx, expr_array[i]);
- 		expr_array[i] = NULL;
- 	}
- 
-@@ -6529,7 +6502,9 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 
- err_elem_expr_setup:
- 	for (; i < num_exprs; i++) {
--		nft_expr_destroy(ctx, expr_array[i]);
-+		if (override_exprs)
-+			nft_expr_destroy(ctx, expr_array[i]);
+ 	struct fq_flow	internal;	/* for non classified or high prio packets */
 +
- 		expr_array[i] = NULL;
- 	}
- 
-@@ -6762,6 +6737,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_set_elem elem;
- 	struct nft_set_binding *binding;
- 	struct nft_object *obj = NULL;
-+	bool override_exprs = false;
- 	struct nft_userdata *udata;
- 	struct nft_data_desc desc;
- 	enum nft_registers dreg;
-@@ -6868,6 +6844,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 
- 		expr_array[0] = expr;
- 		num_exprs = 1;
-+		override_exprs = true;
- 
- 		if (set->num_exprs && set->exprs[0]->ops != expr->ops) {
- 			err = -EOPNOTSUPP;
-@@ -6896,6 +6873,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 			}
- 			expr_array[i] = expr;
- 			num_exprs++;
-+			override_exprs = true;
- 
- 			if (set->num_exprs && expr->ops != set->exprs[i]->ops) {
- 				err = -EOPNOTSUPP;
-@@ -6909,9 +6887,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		}
- 	} else if (set->num_exprs > 0 &&
- 		   !(flags & NFT_SET_ELEM_INTERVAL_END)) {
--		err = nft_set_elem_expr_clone(ctx, set, expr_array);
--		if (err < 0)
--			goto err_set_elem_expr_clone;
-+		for (i = 0; i < set->num_exprs; i++)
-+			expr_array[i] = set->exprs[i];
- 
- 		num_exprs = set->num_exprs;
- 	}
-@@ -7056,7 +7033,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		udata->len = ulen - 1;
- 		nla_memcpy(&udata->data, nla[NFTA_SET_ELEM_USERDATA], ulen);
- 	}
--	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs);
-+	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs,
-+				      override_exprs);
- 	if (err < 0)
- 		goto err_elem_free;
- 
-@@ -7127,9 +7105,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- err_parse_key:
- 	nft_data_release(&elem.key.val, NFT_DATA_VALUE);
- err_set_elem_expr:
--	for (i = 0; i < num_exprs && expr_array[i]; i++)
--		nft_expr_destroy(ctx, expr_array[i]);
--err_set_elem_expr_clone:
-+	if (override_exprs) {
-+		for (i = 0; i < num_exprs && expr_array[i]; i++)
-+			nft_expr_destroy(ctx, expr_array[i]);
-+	}
++/* Read mostly cache line */
 +
- 	return err;
- }
+ 	u32		quantum;
+ 	u32		initial_quantum;
+ 	u32		flow_refill_delay;
+@@ -117,22 +120,27 @@ struct fq_sched_data {
+ 	u8		rate_enable;
+ 	u8		fq_trees_log;
+ 	u8		horizon_drop;
++	u32		timer_slack; /* hrtimer slack in ns */
++
++/* Read/Write fields. */
++
+ 	u32		flows;
+ 	u32		inactive_flows;
+ 	u32		throttled_flows;
  
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index b1c6bb490d462..41a385cc334d6 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -19,7 +19,8 @@ struct nft_dynset {
- 	u8				sreg_key;
- 	u8				sreg_data;
- 	bool				invert;
--	bool				expr;
-+	bool				expr:1,
-+					override_exprs:1;
- 	u8				num_exprs;
- 	u64				timeout;
- 	struct nft_expr			*expr_array[NFT_SET_EXPR_MAX];
-@@ -254,6 +255,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 
- 		priv->num_exprs++;
- 		priv->expr_array[0] = dynset_expr;
-+		priv->override_exprs = true;
- 
- 		if (set->num_exprs > 1 ||
- 		    (set->num_exprs == 1 &&
-@@ -286,6 +288,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 			}
- 			priv->expr_array[i] = dynset_expr;
- 			priv->num_exprs++;
-+			priv->override_exprs = true;
- 
- 			if (set->num_exprs) {
- 				if (i >= set->num_exprs) {
-@@ -304,9 +307,8 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 			goto err_expr_free;
- 		}
- 	} else if (set->num_exprs > 0) {
--		err = nft_set_elem_expr_clone(ctx, set, priv->expr_array);
--		if (err < 0)
--			return err;
-+		for (i = 0; i < set->num_exprs; i++)
-+			priv->expr_array[i] = set->exprs[i];
- 
- 		priv->num_exprs = set->num_exprs;
- 	}
-@@ -339,8 +341,10 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 	return 0;
- 
- err_expr_free:
--	for (i = 0; i < priv->num_exprs; i++)
--		nft_expr_destroy(ctx, priv->expr_array[i]);
-+	if (priv->override_exprs) {
-+		for (i = 0; i < priv->num_exprs; i++)
-+			nft_expr_destroy(ctx, priv->expr_array[i]);
-+	}
- 	return err;
- }
- 
-@@ -367,9 +371,10 @@ static void nft_dynset_destroy(const struct nft_ctx *ctx,
- 	struct nft_dynset *priv = nft_expr_priv(expr);
- 	int i;
- 
--	for (i = 0; i < priv->num_exprs; i++)
--		nft_expr_destroy(ctx, priv->expr_array[i]);
++	u64		stat_throttled;
++	struct qdisc_watchdog watchdog;
+ 	u64		stat_gc_flows;
++
++/* Seldom used fields. */
++
+ 	u64		stat_internal_packets;
+-	u64		stat_throttled;
+ 	u64		stat_ce_mark;
+ 	u64		stat_horizon_drops;
+ 	u64		stat_horizon_caps;
+ 	u64		stat_flows_plimit;
+ 	u64		stat_pkts_too_long;
+ 	u64		stat_allocation_errors;
 -
-+	if (priv->override_exprs) {
-+		for (i = 0; i < priv->num_exprs; i++)
-+			nft_expr_destroy(ctx, priv->expr_array[i]);
-+	}
- 	nf_tables_destroy_set(ctx, priv->set);
- }
+-	u32		timer_slack; /* hrtimer slack in ns */
+-	struct qdisc_watchdog watchdog;
+ };
  
-@@ -393,7 +398,7 @@ static int nft_dynset_dump(struct sk_buff *skb,
- 			 nf_jiffies64_to_msecs(priv->timeout),
- 			 NFTA_DYNSET_PAD))
- 		goto nla_put_failure;
--	if (priv->set->num_exprs == 0) {
-+	if (priv->set->num_exprs == 0 || priv->override_exprs) {
- 		if (priv->num_exprs == 1) {
- 			if (nft_expr_dump(skb, NFTA_DYNSET_EXPR,
- 					  priv->expr_array[0], reset))
+ /*
 -- 
 2.53.0
 
