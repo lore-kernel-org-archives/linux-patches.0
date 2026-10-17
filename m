@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E386B1C861D;
-	Sat, 17 Oct 2026 16:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C57D339365;
+	Sat, 17 Oct 2026 16:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253644; cv=none; b=I643uvdvVEPZixGZMr8hl5Nn4tENhVGA3uprksWBdbslKqaYn7EKa08XJVVE+hXnrTQivRMq9Kh1QhpGUbC/UPPoLPhugFJM9BapIJPs3hO7rSZPFLDfaNXeH+pw1dJw8VM2lwJIqxQQ2d43+X6FT4fWmYw0vs8KvuLC4G0ZQUM=
+	t=1792253648; cv=none; b=ky+PNivzw/fBJlRL1NVgcjCIgPNjajpfAzJ7rPtUyXVyqwjC6gE9l9RCc/W0SihZeAs8fL1yJD1a11q6FSGOUimeVv/BrSpSbltoi0rZHd1cswIlJ6IYTNFlBzE6wHt/kkTh3mZ+++h6+E9+avJpczIk2jg44jTWsLoOaUGcO04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253644; c=relaxed/simple;
-	bh=2CSO7Xv/3bcZKYpHSJARsiR0L2lzWznCL7VBi1rVP9w=;
+	s=arc-20240116; t=1792253648; c=relaxed/simple;
+	bh=Vd/J2/CstIEciXwwsOs70PTvrpNxoUl/lmNRaSmnQhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKEPCC9U19P4mI6k26Rm41TlDojCwU3DHHdEjdCIDytiDbkGjqkvxSSPw2surWqfWs33+o6mq497CGU+IVLDo4GB9lI7fF+hb/tk9lBoCKPEKcLhY08AxlopNLGJGkUCG7BW4TKM08m1U4FMbuy5sOK4Z7sXu3GE3pzk1vjtCgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUVQEYET; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PNV3EJMcRy43dEazXv7wuTaNxrJNpG7y88BiDjIIx99t82rx/mxwf2E7cc+GAvys1L8B0834YKb1D1Rxc0aHnVm/xoxNxRlVz5kKwaxiRSo8USPBlga4uxDF7au5wzLADYnbQr5cjqczuzLzfLbFMmP48auVbSPmdawh2vip/+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoWV61eP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUVQEYET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB3A1F000C5;
-	Sat, 17 Oct 2026 16:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoWV61eP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB8A1F000C4;
+	Sat, 17 Oct 2026 16:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253643;
-	bh=87sV0EdvhCBwLJ5M6A0nelJILOR+b44OSd/KExpyNWc=;
+	s=korg; t=1792253647;
+	bh=WSUzYMhk2BvfNFGL2NzeBkOLfwD17Oc1bGmUHz1wLG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUVQEYET7YK3N2/pNV7Tm5GSpuuummEFTiR1Nle4iVLWPLS2VDetxGgiTzC9vqbk0
-	 Xf2SYwBNW7kxMFKyT89NuwcfDCxJKkU4ZC6ZvHdUVPRkNLxRx5/dScdR+eXhIWYV4B
-	 tB5jpZbyY0Ste0RIGHTpQ75mqqLpr2s521cU+DQc=
+	b=ZoWV61eP7uaq8ztY+A+gkgs34t2GegKfVq9cNIgIgpjHFMYycrJtXB1InnRuCLUk/
+	 UUHpXub8jw7MDYG9ZC8H+3438OTQzcYHVtdsuwuUKhvzBOBE/K/g9kRaxTF31hzaMt
+	 T2gaK7Tg1eowBNRwD5pv7Aa0m3bGYprbZXQhDqqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/869] ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz
-Date: Sat, 17 Oct 2026 17:50:26 +0200
-Message-ID: <20261017160041.800730876@linuxfoundation.org>
+Subject: [PATCH 6.12 186/869] netfilter: nf_tables: clone set on flush only
+Date: Sat, 17 Oct 2026 17:50:27 +0200
+Message-ID: <20261017160041.827081351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,76 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit e142dc4ef0f451b7ef99d09aaa84e9389af629d7 ]
+[ Upstream commit fb7fb4016300ac622c964069e286dc83166a5d52 ]
 
-The only user of frag_size field in XDP RxQ info is
-bpf_xdp_frags_increase_tail(). It clearly expects whole buff size instead
-of DMA write size. Different assumptions in ice driver configuration lead
-to negative tailroom.
+Syzbot with fault injection triggered a failing memory allocation with
+GFP_KERNEL which results in a WARN splat:
 
-This allows to trigger kernel panic, when using
-XDP_ADJUST_TAIL_GROW_MULTI_BUFF xskxceiver test and changing packet size to
-6912 and the requested offset to a huge value, e.g.
-XSK_UMEM__MAX_FRAME_SIZE * 100.
+iter.err
+WARNING: net/netfilter/nf_tables_api.c:845 at nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845, CPU#0: syz.0.17/5992
+Modules linked in:
+CPU: 0 UID: 0 PID: 5992 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
+RIP: 0010:nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845
+Code: 8b 05 86 5a 4e 09 48 3b 84 24 a0 00 00 00 75 62 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc e8 63 6d fa f7 90 <0f> 0b 90 43
++80 7c 35 00 00 0f 85 23 fe ff ff e9 26 fe ff ff 89 d9
+RSP: 0018:ffffc900045af780 EFLAGS: 00010293
+RAX: ffffffff89ca45bd RBX: 00000000fffffff4 RCX: ffff888028111e40
+RDX: 0000000000000000 RSI: 00000000fffffff4 RDI: 0000000000000000
+RBP: ffffc900045af870 R08: 0000000000400dc0 R09: 00000000ffffffff
+R10: dffffc0000000000 R11: fffffbfff1d141db R12: ffffc900045af7e0
+R13: 1ffff920008b5f24 R14: dffffc0000000000 R15: ffffc900045af920
+FS:  000055557a6a5500(0000) GS:ffff888125496000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb5ea271fc0 CR3: 000000003269e000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __nft_release_table+0xceb/0x11f0 net/netfilter/nf_tables_api.c:12115
+ nft_rcv_nl_event+0xc25/0xdb0 net/netfilter/nf_tables_api.c:12187
+ notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+ blocking_notifier_call_chain+0x6a/0x90 kernel/notifier.c:380
+ netlink_release+0x123b/0x1ad0 net/netlink/af_netlink.c:761
+ __sock_release net/socket.c:662 [inline]
+ sock_close+0xc3/0x240 net/socket.c:1455
 
-Due to other quirks of the ZC configuration in ice, panic is not observed
-in ZC mode, but tailroom growing still fails when it should not.
+Restrict set clone to the flush set command in the preparation phase.
+Add NFT_ITER_UPDATE_CLONE and use it for this purpose, update the rbtree
+and pipapo backends to only clone the set when this iteration type is
+used.
 
-Use fill queue buffer truesize instead of DMA write size in XDP RxQ info.
-Fix ZC mode too by using the new helper.
+As for the existing NFT_ITER_UPDATE type, update the pipapo backend to
+use the existing set clone if available, otherwise use the existing set
+representation. After this update, there is no need to clone a set that
+is being deleted, this includes bound anonymous set.
 
-Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/20260305111253.2317394-5-larysa.zaremba@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+An alternative approach to NFT_ITER_UPDATE_CLONE is to add a .clone
+interface and call it from the flush set path.
+
+Reported-by: syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com
+Fixes: 3f1d886cc7c3 ("netfilter: nft_set_pipapo: move cloning of match info to insert/removal path")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_base.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     | 10 +++++++++-
+ net/netfilter/nft_set_pipapo.c    | 11 +++++++++--
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index 98c3764fed396..8d7a2f44469b4 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -546,13 +546,16 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
- 						 ring->q_index,
- 						 ring->q_vector->napi.napi_id,
--						 ring->rx_buf_len);
-+						 ice_get_frame_sz(ring));
- 			if (err)
- 				return err;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 923b2c0d6e844..d14acbc44b44b 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -306,11 +306,13 @@ static inline void *nft_elem_priv_cast(const struct nft_elem_priv *priv)
+  * @NFT_ITER_UNSPEC: unspecified, to catch errors
+  * @NFT_ITER_READ: read-only iteration over set elements
+  * @NFT_ITER_UPDATE: iteration under mutex to update set element state
++ * @NFT_ITER_UPDATE_CLONE: clone set before iteration under mutex to update element
+  */
+ enum nft_iter_type {
+ 	NFT_ITER_UNSPEC,
+ 	NFT_ITER_READ,
+ 	NFT_ITER_UPDATE,
++	NFT_ITER_UPDATE_CLONE,
+ };
+ 
+ struct nft_set;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index e4325686953e9..f30c4d8029e0c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -701,6 +701,11 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
++/* Use NFT_ITER_UPDATE iterator even if this may be called from the preparation
++ * phase, the set clone might already exist from a previous command, or it might
++ * be a set that is going away and does not require a clone. The netns and
++ * netlink release paths also need to work on the live set.
++ */
+ static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	struct nft_set_iter iter = {
+@@ -7485,9 +7490,12 @@ static int nft_set_catchall_flush(const struct nft_ctx *ctx,
+ 
+ static int nft_set_flush(struct nft_ctx *ctx, struct nft_set *set, u8 genmask)
+ {
++	/* The set backend might need to clone the set, do it now from the
++	 * preparation phase, use NFT_ITER_UPDATE_CLONE iterator type.
++	 */
+ 	struct nft_set_iter iter = {
+ 		.genmask	= genmask,
+-		.type		= NFT_ITER_UPDATE,
++		.type		= NFT_ITER_UPDATE_CLONE,
+ 		.fn		= nft_setelem_flush,
+ 	};
+ 
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 9d2cfdc94a523..96cd9e17bd64f 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2188,13 +2188,20 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ 	const struct nft_pipapo_match *m;
+ 
+ 	switch (iter->type) {
+-	case NFT_ITER_UPDATE:
++	case NFT_ITER_UPDATE_CLONE:
+ 		m = pipapo_maybe_clone(set);
+ 		if (!m) {
+ 			iter->err = -ENOMEM;
+ 			return;
  		}
- 
- 		ice_rx_xsk_pool(ring);
- 		if (ring->xsk_pool) {
-+			u32 frag_size =
-+				xsk_pool_get_rx_frag_step(ring->xsk_pool);
-+
- 			xdp_rxq_info_unreg(&ring->xdp_rxq);
- 
- 			ring->rx_buf_len =
-@@ -560,7 +563,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
- 						 ring->q_index,
- 						 ring->q_vector->napi.napi_id,
--						 ring->rx_buf_len);
-+						 frag_size);
- 			if (err)
- 				return err;
- 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
-@@ -578,7 +581,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 				err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
- 							 ring->q_index,
- 							 ring->q_vector->napi.napi_id,
--							 ring->rx_buf_len);
-+							 ice_get_frame_sz(ring));
- 				if (err)
- 					return err;
- 			}
+-
++		nft_pipapo_do_walk(ctx, set, m, iter);
++		break;
++	case NFT_ITER_UPDATE:
++		if (priv->clone)
++			m = priv->clone;
++		else
++			m = rcu_dereference_protected(priv->match,
++						      nft_pipapo_transaction_mutex_held(set));
+ 		nft_pipapo_do_walk(ctx, set, m, iter);
+ 		break;
+ 	case NFT_ITER_READ:
 -- 
 2.53.0
 
