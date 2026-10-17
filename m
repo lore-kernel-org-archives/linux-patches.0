@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713113822B7;
-	Sat, 17 Oct 2026 16:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B257404E;
+	Sat, 17 Oct 2026 16:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254701; cv=none; b=AD7uVNcuxjO7STHp/0GKYmb4sAmZjiMBR+PQDO7u5+a+4uyS2bwB7K+lwCxRbkQKhy0J2qLVU6iHBeS7Gdo8BMfNu8i8GV4FN7tFI84Wtk0d+z+LFTZk7yON9xwiFZMCf66d7Z56qcOiQcXHj1Gq6758iQb+gAdJ0dzTnCQbuEc=
+	t=1792254704; cv=none; b=IkeEc2mMQQ70jO2Z+kkV4zLfQPpCbZ8nXRe7L1uzqfvt27V53pe7Ihk2sMmB6BAHWNlfyAvHLfgthEa44exrqZCviGKt+wn77cg33h4PSgZS9ivus6ebfo/cuZesMyTMt9aL5RGqlcjaImy6gHBkMZoAx30oy8gsXihCAnJDu0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254701; c=relaxed/simple;
-	bh=KeK3cT4kSB+XZiwsOogx1et2L6P8EJJGx5F2nAQe/vM=;
+	s=arc-20240116; t=1792254704; c=relaxed/simple;
+	bh=c2IXWzvBN8g46VQJmYoqThXa/9BsTtNvs2hBl3U1MlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4EOdcxjq9mbqXb54GpeoLJ9cAtY/Oc5unHq58T8Oe04nirBZn7pBWgRtJWXNE5nZBKo4R0bbHvWUnposPVJ9oE+UZOMNYf1RqBYFCcS8PLL1zu+KAvTpRoJW3tUnh44Yj+NQ1EZ4nLH4El1hG6RQo86IWkGo+JB/2puhc9vWfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmyXhgHi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bRcxhKiE21g4x9b1gt/rA2URKDO05JsI91B5QYNW6kxFI59c2o7cnOqDsJ/RxRU3nP/vUkkKDyMtMKfNYhscpB9RIU3TsjSv5/BB5I31asaFcvLW1iT1ApcYza2XPhCJf0NOAnPKA8RdkH2YO6B4BUqzNeXNGkrFJJvVQXm8Uuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8V763xl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmyXhgHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C676F1F000C4;
-	Sat, 17 Oct 2026 16:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8V763xl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A691F000C4;
+	Sat, 17 Oct 2026 16:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254700;
-	bh=vxalMwLRbNnz8NcIpPOu6sSinBAMo6BCe/ktEt0at/Q=;
+	s=korg; t=1792254703;
+	bh=6uImR8M/yCLpEcjEyo9xib2ld1FiW/VZfkvSzlTyvnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmyXhgHiv3F5JQtdFRsQu7Xx9RXIORhdyIv618Ta9QiiXZ1cjmtBNd4eEbaGXKWi3
-	 aeTWzyYaG7ee+qqMU0HycOkL+rEFB/FJUi9DGTNCcISNPdgKJcZqoov8ihEUvAl7HP
-	 21/hHn/iD+NoXPBG3B3xMQmbBW6wUYhRu062LRCw=
+	b=x8V763xlro9/G0Sl5xanOOJ9m0tD6xht4pKthThcM4TTwwyvdYZPIhfd7D6GJoef7
+	 F1rJkMGtVg3CNpPn2UuaQRVFKkAYQJtBzkFR7xXuOjLZIKnYobn4vnikZpW6CsGFF9
+	 EFH3HPkHvsnAEEq+lsmhAG3+g5FrC2QVyR+XHCLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Qu Wenruo <wqu@suse.com>,
-	Weiming Shi <bestswngs@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	David Carlier <devnexen@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 533/869] btrfs: lzo: reject compressed segment that overflows the compressed input
-Date: Sat, 17 Oct 2026 17:56:14 +0200
-Message-ID: <20261017160050.769362913@linuxfoundation.org>
+Subject: [PATCH 6.12 534/869] netfilter: flowtable: avoid num_encaps underflow on bridge VLAN untag
+Date: Sat, 17 Oct 2026 17:56:15 +0200
+Message-ID: <20261017160050.794914400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,67 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit b0d27d43791b7a3057c3c4aedf9b4aa033d37c46 ]
+[ Upstream commit e052f920773b73be49eb4d8702a9f85de7464363 ]
 
-lzo_decompress_bio() validates each on-disk segment length seg_len only
-against the workspace cbuf size, not against the compressed input size
-(compressed_len, the total folio bytes of the bio).  A crafted extent can
-carry a segment whose seg_len passes the cbuf check but runs past the end
-of the bio, so copy_compressed_segment() walks off the last folio:
-get_current_folio() then returns the NULL folio from bio_next_folio(), and
-with CONFIG_BTRFS_ASSERT disabled (default) folio_size(NULL) faults.
+The DEV_PATH_BR_VLAN_UNTAG case post-decrements info->num_encaps
+inside WARN_ON_ONCE(). num_encaps is u8, so if it's already 0 the
+decrement still happens and wraps it to 255. The break only leaves
+the inner switch -- a later path entry can set info->indev back to
+a real device, and we end up returning with num_encaps == 255.
 
- BUG: KASAN: null-ptr-deref in lzo_decompress_bio (fs/btrfs/lzo.c:383)
- Read of size 8 at addr 0000000000000000 by task kworker/u8:1/29
- Workqueue: btrfs-endio simple_end_io_work
-  kasan_report (mm/kasan/report.c:590)
-  lzo_decompress_bio (fs/btrfs/lzo.c:383)
-  end_bbio_compressed_read (fs/btrfs/compression.c:1065)
-  btrfs_bio_end_io (fs/btrfs/bio.c:135)
-  btrfs_check_read_bio (fs/btrfs/bio.c:180 fs/btrfs/bio.c:285)
-  simple_end_io_work
-  process_one_work
-  worker_thread
+nft_dev_forward_path() then walks info.encap[] (size 2) up to
+num_encaps, which means an OOB stack read and a bogus count copied
+into the route descriptor.
 
-Reject any segment whose payload would extend beyond compressed_len before
-copying it, treating it as corruption like the other on-disk validation
-failures in this function.
+Should only happen on a malformed bridge path stack, hence the WARN,
+but worth handling sanely. Move the decrement out of the WARN.
 
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Fixes: a6e66e6f8c1b ("btrfs: rework lzo_decompress_bio() to make it subpage compatible")
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[ While at this, remove the WARN_ON_ONCE since this can only happen
+  with a buggy bridge path stack --pablo ].
+
+Fixes: e990cef6516d ("netfilter: flowtable: add bridge vlan filtering support")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/lzo.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/netfilter/nft_flow_offload.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
-index 0d136da8b6be1..f2097e7cab435 100644
---- a/fs/btrfs/lzo.c
-+++ b/fs/btrfs/lzo.c
-@@ -400,6 +400,17 @@ int lzo_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
- 			return -EIO;
- 		}
- 
-+		/* The segment must not extend beyond the compressed input. */
-+		if (unlikely(cur_in + seg_len > cb->compressed_len)) {
-+			struct btrfs_inode *inode = cb->bbio.inode;
-+
-+			btrfs_err(fs_info,
-+			"lzo segment overflows compressed input, root %llu inode %llu offset %llu cur_in %u len %u compressed len %u",
-+				  btrfs_root_id(inode->root), btrfs_ino(inode),
-+				  cb->start, cur_in, seg_len, cb->compressed_len);
-+			return -EUCLEAN;
-+		}
-+
- 		/* Copy the compressed segment payload into workspace */
- 		copy_compressed_segment(cb, workspace->cbuf, seg_len, &cur_in);
- 
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index 4ddf3eb002259..99d3454f9e3b1 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -150,10 +150,11 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
+ 				info->num_encaps++;
+ 				break;
+ 			case DEV_PATH_BR_VLAN_UNTAG:
+-				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
++				if (info->num_encaps == 0) {
+ 					info->indev = NULL;
+ 					break;
+ 				}
++				info->num_encaps--;
+ 				break;
+ 			case DEV_PATH_BR_VLAN_KEEP:
+ 				break;
 -- 
 2.53.0
 
