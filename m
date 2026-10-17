@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AA63A5E70;
-	Sat, 17 Oct 2026 17:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815373A5E7D;
+	Sat, 17 Oct 2026 17:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258760; cv=none; b=hEhzRa9lGnxbYsioQBgUodxRiWnOJvll5mCxT+mG2DcXZ2BZzdbwx8ex4smMPyLzsvjlwug7yj8OeGbJR//U6F7JVbQEOB0d2PrAnyhEKaNYx1t0tqDWdSbtvMXYkZJUifXh9gRvwjohDLlt9NL4skvPifin2CZn/wXE8RFuk1E=
+	t=1792258763; cv=none; b=cqD7jj4B+OPfO4z0im4mbBwxwMlzqExmSLApmYIlVr5TlWLsU6r4u+Wt1hvC25ZLqfTz4Je/TEoplM7L0DM8iOc7bayHS/z8WGBE3ZuShrKGL0pfGpixvvU854mQrvPUS5W+ZV14vqrTfblttDgMbe/WBEPVuNhxQi5PrHsGeVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258760; c=relaxed/simple;
-	bh=++laxnAQmkSy51R1fEKE9hixIbVbLEX0ZTJJ0/qiI8E=;
+	s=arc-20240116; t=1792258763; c=relaxed/simple;
+	bh=EYwWx8l5R12k6io5V1LLSZHq3W1NnfdU6ZQRZ2PKtcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUK92n4+NkvdQNoya1aJV0BAF7jN/XxrsECUL0SLr3WAQ1dqDg2H5PmfapdxBn8Qny3JVObmx31gIFUY3Ha1EqGvyel69cjS6xYt981nE8tNUpAlFXBkhfTu8qrLB7bSPSM+bTbvGZHOY3emowRG6vHeC3bySbaMJ5YQ/OwXXAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJwcEEwF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oe/xn/kPG0FtIO5q4Uhap9hyHBMqYd5//rlWPvd+kmbB6a6Cu8KwD7D/Q/VtihMaN4FUY2Z9tAldSrVGLnW/sFI11jPTowUo7FGLmIXQyhKJm6fIfBk1GV/NBoR16FFKwhq+MzgA8dGTUpbQOuwlPoe7OXZubNXRdwSv2AZJJXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bbxbJud; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJwcEEwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04501F000C4;
-	Sat, 17 Oct 2026 17:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bbxbJud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90C61F000C4;
+	Sat, 17 Oct 2026 17:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258759;
-	bh=fGMX4PACSGtJXIL1vXRxFKh/fq+crTwKnShjrKCIeb4=;
+	s=korg; t=1792258762;
+	bh=rTsRE0lPCwfRURR7amyDGfdorDoM+2KF4TGEnDZbVXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJwcEEwFiKVQ5yVMTrQA3SZkKb0rHA8M41MwzC0U1dPtO6kXdr6Oj/ajnV8r0C+lj
-	 ztknAbuirwUFIceefVF0jXilnij/OVSTBpOrYtvTsMnJyhARsQoElSyAT+ZDA2xVXa
-	 ec6hcJtO425T3ewONw+ReLHNQ/LczvgkDAjqAJo4=
+	b=1bbxbJudxZ2XQUrN9dWPt+qmFPXgxYwz5W8fXmbgqIyMUKA1Pl5lc2vPMdPMPugVR
+	 Fv3fNAtOzI+qOFX8uH+7XOyU/uvkLjXV884RIW1LAFL64AOQB4Wwx6K090R3oxRF/U
+	 gSMyqxu7RFvUu85ZE0rJtFd5X+o+AaBZ8SGjbc2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Joe Damato <joe@dama.to>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0973/1674] iio: frequency: admv1013: Use devm_regulator_get_enable_read_voltage()
-Date: Sat, 17 Oct 2026 17:54:05 +0200
-Message-ID: <20261017160456.100522742@linuxfoundation.org>
+Subject: [PATCH 6.6 0991/1674] net: pull headers in qdisc_pkt_len_segs_init()
+Date: Sat, 17 Oct 2026 17:54:23 +0200
+Message-ID: <20261017160456.556860899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,137 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2f4bb1fa758abf4f5ee5a70ea7c2b1b8c8f7625d ]
+[ Upstream commit 7fb4c19670110f052c04e1ec1d2b953b9f4f57e4 ]
 
-We can reduce boilerplate code by using
-devm_regulator_get_enable_read_voltage().
+Most ndo_start_xmit() methods expects headers of gso packets
+to be already in skb->head.
 
-The common mode voltage is now passed as a parameter in the init
-functions so we can avoid adding a state member that is only used
-during init.
+net/core/tso.c users are particularly at risk, because tso_build_hdr()
+does a memcpy(hdr, skb->data, hdr_len);
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240429-regulator-get-enable-get-votlage-v2-5-b1f11ab766c1@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: aac0a51b1670 ("iio: frequency: admv1013: fix NULL pointer dereference on str")
+qdisc_pkt_len_segs_init() already does a dissection of gso packets.
+
+Use pskb_may_pull() instead of skb_header_pointer() to make
+sure drivers do not have to reimplement this.
+
+Some malicious packets could be fed, detect them so that we can
+drop them sooner with a new SKB_DROP_REASON_SKB_BAD_GSO drop_reason.
+
+Fixes: e876f208af18 ("net: Add a software TSO helper API")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260403221540.3297753-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/frequency/admv1013.c | 40 ++++++++------------------------
- 1 file changed, 10 insertions(+), 30 deletions(-)
+ include/net/dropreason-core.h |  3 ++
+ net/core/dev.c                | 81 +++++++++++++++++++++--------------
+ 2 files changed, 53 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
-index adfdeda2ef161..e0f5842f6411c 100644
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -95,7 +95,6 @@ struct admv1013_state {
- 	struct clk		*clkin;
- 	/* Protect against concurrent accesses to the device and to data */
- 	struct mutex		lock;
--	struct regulator	*reg;
- 	struct notifier_block	nb;
- 	unsigned int		input_mode;
- 	unsigned int		quad_se_mode;
-@@ -342,14 +341,9 @@ static int admv1013_update_quad_filters(struct admv1013_state *st)
- 					FIELD_PREP(ADMV1013_QUAD_FILTERS_MSK, filt_raw));
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index e88e785d221bb..16c140e00cc80 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -56,6 +56,7 @@
+ 	FN(UNHANDLED_PROTO)		\
+ 	FN(SKB_CSUM)			\
+ 	FN(SKB_GSO_SEG)			\
++	FN(SKB_BAD_GSO)			\
+ 	FN(SKB_UCOPY_FAULT)		\
+ 	FN(DEV_HDR)			\
+ 	FN(DEV_READY)			\
+@@ -262,6 +263,8 @@ enum skb_drop_reason {
+ 	SKB_DROP_REASON_SKB_CSUM,
+ 	/** @SKB_DROP_REASON_SKB_GSO_SEG: gso segmentation error */
+ 	SKB_DROP_REASON_SKB_GSO_SEG,
++	/** @SKB_DROP_REASON_SKB_BAD_GSO: malicious gso packet. */
++	SKB_DROP_REASON_SKB_BAD_GSO,
+ 	/**
+ 	 * @SKB_DROP_REASON_SKB_UCOPY_FAULT: failed to copy data from user space,
+ 	 * e.g., via zerocopy_sg_from_iter() or skb_orphan_frags_rx()
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 502b22c604693..045b815516010 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3821,49 +3821,62 @@ struct sk_buff *validate_xmit_skb_list(struct sk_buff *skb, struct net_device *d
+ }
+ EXPORT_SYMBOL_GPL(validate_xmit_skb_list);
+ 
+-static void qdisc_pkt_len_init(struct sk_buff *skb)
++static enum skb_drop_reason qdisc_pkt_len_init(struct sk_buff *skb)
+ {
+-	const struct skb_shared_info *shinfo = skb_shinfo(skb);
++	struct skb_shared_info *shinfo = skb_shinfo(skb);
++	unsigned int hdr_len, tlen;
++	u16 gso_segs;
+ 
+ 	qdisc_skb_cb(skb)->pkt_len = skb->len;
++	if (!shinfo->gso_size)
++		return SKB_NOT_DROPPED_YET;
++
++	gso_segs = shinfo->gso_segs;
+ 
+ 	/* To get more precise estimation of bytes sent on wire,
+ 	 * we add to pkt_len the headers size of all segments
+ 	 */
+-	if (shinfo->gso_size && skb_transport_header_was_set(skb)) {
+-		u16 gso_segs = shinfo->gso_segs;
+-		unsigned int hdr_len;
+ 
+-		/* mac layer + network layer */
++	/* mac layer + network layer */
++	if (!skb->encapsulation) {
++		if (unlikely(!skb_transport_header_was_set(skb)))
++			return SKB_NOT_DROPPED_YET;
+ 		hdr_len = skb_transport_offset(skb);
++	} else {
++		hdr_len = skb_inner_transport_offset(skb);
++	}
++	/* + transport layer */
++	if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
++		const struct tcphdr *th;
+ 
+-		/* + transport layer */
+-		if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
+-			const struct tcphdr *th;
+-			struct tcphdr _tcphdr;
+-
+-			th = skb_header_pointer(skb, hdr_len,
+-						sizeof(_tcphdr), &_tcphdr);
+-			if (likely(th))
+-				hdr_len += __tcp_hdrlen(th);
+-		} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
+-			struct udphdr _udphdr;
+-
+-			if (skb_header_pointer(skb, hdr_len,
+-					       sizeof(_udphdr), &_udphdr))
+-				hdr_len += sizeof(struct udphdr);
+-		}
++		if (!pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
+ 
+-		if (unlikely(shinfo->gso_type & SKB_GSO_DODGY)) {
+-			int payload = skb->len - hdr_len;
++		th = (const struct tcphdr *)(skb->data + hdr_len);
++		tlen = __tcp_hdrlen(th);
++		if (tlen < sizeof(*th))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		hdr_len += tlen;
++		if (!pskb_may_pull(skb, hdr_len))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++	} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
++		if (!pskb_may_pull(skb, hdr_len + sizeof(struct udphdr)))
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		hdr_len += sizeof(struct udphdr);
++	}
+ 
+-			/* Malicious packet. */
+-			if (payload <= 0)
+-				return;
+-			gso_segs = DIV_ROUND_UP(payload, shinfo->gso_size);
+-		}
+-		qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
++	/* prior pskb_may_pull() might have changed skb->head. */
++	shinfo = skb_shinfo(skb);
++	if (unlikely(shinfo->gso_type & SKB_GSO_DODGY)) {
++		int payload = skb->len - hdr_len;
++
++		/* Malicious packet. */
++		if (payload <= 0)
++			return SKB_DROP_REASON_SKB_BAD_GSO;
++		gso_segs = DIV_ROUND_UP(payload, shinfo->gso_size);
+ 	}
++	qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
++	return SKB_NOT_DROPPED_YET;
  }
  
--static int admv1013_update_mixer_vgate(struct admv1013_state *st)
-+static int admv1013_update_mixer_vgate(struct admv1013_state *st, int vcm)
- {
- 	unsigned int mixer_vgate;
--	int vcm;
--
--	vcm = regulator_get_voltage(st->reg);
--	if (vcm < 0)
--		return vcm;
+ static int dev_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *q,
+@@ -4407,6 +4420,7 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	struct Qdisc *q;
+ 	int rc = -ENOMEM;
+ 	bool again = false;
++	enum skb_drop_reason reason;
  
- 	if (vcm <= 1800000)
- 		mixer_vgate = (2389 * vcm / 1000000 + 8100) / 100;
-@@ -443,7 +437,7 @@ static const struct iio_chan_spec admv1013_channels[] = {
- 	ADMV1013_CHAN_CALIB(1, Q),
- };
+ 	skb_reset_mac_header(skb);
+ 	skb_assert_len(skb);
+@@ -4414,6 +4428,12 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_SCHED_TSTAMP))
+ 		__skb_tstamp_tx(skb, NULL, NULL, skb->sk, SCM_TSTAMP_SCHED);
  
--static int admv1013_init(struct admv1013_state *st)
-+static int admv1013_init(struct admv1013_state *st, int vcm_uv)
- {
- 	int ret;
- 	unsigned int data;
-@@ -483,7 +477,7 @@ static int admv1013_init(struct admv1013_state *st)
- 	if (ret)
- 		return ret;
++	reason = qdisc_pkt_len_init(skb);
++	if (unlikely(reason)) {
++		dev_core_stats_tx_dropped_inc(dev);
++		kfree_skb_reason(skb, reason);
++		return -EINVAL;
++	}
+ 	/* Disable soft irqs for various locks below. Also
+ 	 * stops preemption for RCU.
+ 	 */
+@@ -4421,7 +4441,6 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
  
--	ret = admv1013_update_mixer_vgate(st);
-+	ret = admv1013_update_mixer_vgate(st, vcm_uv);
- 	if (ret)
- 		return ret;
+ 	skb_update_prio(skb);
  
-@@ -498,11 +492,6 @@ static int admv1013_init(struct admv1013_state *st)
- 					  st->input_mode);
- }
- 
--static void admv1013_reg_disable(void *data)
--{
--	regulator_disable(data);
--}
--
- static void admv1013_powerdown(void *data)
- {
- 	unsigned int enable_reg, enable_reg_msk;
-@@ -557,11 +546,6 @@ static int admv1013_properties_parse(struct admv1013_state *st)
- 	else
- 		return -EINVAL;
- 
--	st->reg = devm_regulator_get(&spi->dev, "vcm");
--	if (IS_ERR(st->reg))
--		return dev_err_probe(&spi->dev, PTR_ERR(st->reg),
--				     "failed to get the common-mode voltage\n");
--
- 	ret = devm_regulator_bulk_get_enable(&st->spi->dev,
- 					     ARRAY_SIZE(admv1013_vcc_regs),
- 					     admv1013_vcc_regs);
-@@ -578,7 +562,7 @@ static int admv1013_probe(struct spi_device *spi)
- {
- 	struct iio_dev *indio_dev;
- 	struct admv1013_state *st;
--	int ret;
-+	int ret, vcm_uv;
- 
- 	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
- 	if (!indio_dev)
-@@ -597,16 +581,12 @@ static int admv1013_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
- 
--	ret = regulator_enable(st->reg);
--	if (ret) {
--		dev_err(&spi->dev, "Failed to enable specified Common-Mode Voltage!\n");
--		return ret;
--	}
-+	ret = devm_regulator_get_enable_read_voltage(&spi->dev, "vcm");
-+	if (ret < 0)
-+		return dev_err_probe(&spi->dev, ret,
-+				     "failed to get the common-mode voltage\n");
- 
--	ret = devm_add_action_or_reset(&spi->dev, admv1013_reg_disable,
--				       st->reg);
--	if (ret)
--		return ret;
-+	vcm_uv = ret;
- 
- 	st->clkin = devm_clk_get_enabled(&spi->dev, "lo_in");
- 	if (IS_ERR(st->clkin))
-@@ -620,7 +600,7 @@ static int admv1013_probe(struct spi_device *spi)
- 
- 	mutex_init(&st->lock);
- 
--	ret = admv1013_init(st);
-+	ret = admv1013_init(st, vcm_uv);
- 	if (ret) {
- 		dev_err(&spi->dev, "admv1013 init failed\n");
- 		return ret;
+-	qdisc_pkt_len_init(skb);
+ 	tcx_set_ingress(skb, false);
+ #ifdef CONFIG_NET_EGRESS
+ 	if (static_branch_unlikely(&egress_needed_key)) {
 -- 
 2.53.0
 
