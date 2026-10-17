@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855883C8C62;
-	Sat, 17 Oct 2026 18:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E103CB557;
+	Sat, 17 Oct 2026 18:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260026; cv=none; b=HKzsq65BpAkBzHIfAW7/wASmYjiXXVm4LarU/6rw0ctmUlwz/S4JqwkjguskNWDJG48P2nyAgQnzx1t3bzekeYb8VVZq0hhTBhUAfqGU8QbUEY1n5kfaU0RzH+5uTnidJhROT+2GpqwMICUqu07TeTKbmhEFSiJUjto+OORJbfM=
+	t=1792260029; cv=none; b=Zq6x1uA9LPZwEMbsGl2sNq84sUChnFLZROeijyYhjiaViHQE+7fabGXFf0kfoarDFhAQzPMm22ItFawHTIf3up7CDHfh4YLUIp5zZN2YU3u8T+9BSIU9/uXxtkBXjnQoj+8dZd2zdwpFsuyU8R/syODUDNABUfFhgPmgnGFlo4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260026; c=relaxed/simple;
-	bh=KKyeEUnH8P+kAs1bXdEqJtqIdvu8WaUrIyQdQZIk0qY=;
+	s=arc-20240116; t=1792260029; c=relaxed/simple;
+	bh=XiUDsYtS6xBbTwO1SZyBw7NCQlcaVLjWFq2wxvoXIjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhDUeycxZwM5fly1W1rX92S2CmRdfBGRy/LkToWsRXsoJIO80P80FGX3BU/QiMQOZ4TaaCyYc0ghvEi1hQ1mEdHDnDlK6cBdYaHBQTnQ0PIA5+72SAQ/6MlSt26GsgykbhMCH98H5X3xGx0dJa+tSpVeRbQtjCaqz/R9EEki09E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIzd0yff; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGOVIXFhwuckGQ9qR0M6KG3K+YGySa/2qJcDvfboQUMCwEyiTag4jMhphd96uByWpRnMI7gsB3Xh6NVPD8NbVMjtpeSoBJ/W1UJuxu2CertBnSz6xMmxK/0usK9XTFyTf85G5slCuChSh8U3ZQ9VaZxJSU10ZGfh5Zscg0j7rSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4hFV43q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIzd0yff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DA41F000C4;
-	Sat, 17 Oct 2026 18:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4hFV43q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB991F000C4;
+	Sat, 17 Oct 2026 18:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260025;
-	bh=trFKdp0fc7tCxTyTXZXeNVkUqsH+sNnAIuTcB3LzP7o=;
+	s=korg; t=1792260028;
+	bh=XxKHBJsjDum7S3yhODbWmuJOwetDiEmJod9WYXxzkHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pIzd0yffMXJAlcr/YN/s+ml3yHroTFQfPnoPSUVwMsG+iNjpEssE6UjvXwc4AAab4
-	 jXVlMhmivEYR/Y+u8GKhxTDKxQvxT9TfZ8F65rgqTRirIuaitWIFMBd4FkXZRZXjAT
-	 hsHleATQxWvi4AlNjjfxe05tn+WIKJ1vPnXJO7Pg=
+	b=f4hFV43q+sJEwIHhWMovJQUF25CxlMSntA6XgvJNT/jBEOYarJh9SDHMNKbMxMJQT
+	 M186Gps4iORXnHj2V+TGcgOOOGOQc2qUdIK4CeJ0Eyi4PdyDEmVxtbJmi8KkeeT9ya
+	 lc356KLAfyIPRtytXQe55D7E8lv7uCVK86aQEyfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1406/1674] blk-iolatency: clear delay state when freeing policy data
-Date: Sat, 17 Oct 2026 18:01:18 +0200
-Message-ID: <20261017160507.267662535@linuxfoundation.org>
+Subject: [PATCH 6.6 1368/1674] HID: sony: clean up device list on probe failure
+Date: Sat, 17 Oct 2026 18:00:40 +0200
+Message-ID: <20261017160506.272980188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,61 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 8935bf22c0a0db517a7f72f7097300e05dd852f5 ]
+[ Upstream commit 7c65699a3a311198a07659a614fe64d45924839e ]
 
-io.latency can throttle a group which has no latency target of its own.
-When a sibling misses its target, check_scale_change() scales down its
-peers, and a peer that reaches queue depth one gets blkcg_use_delay()
-called on it on every further scale-down, even with min_lat_nsec == 0.
+sony_input_configured() adds some controllers to sony_device_list before
+HID core registers their input devices. input_register_device() can fail
+after the callback returns successfully. sony_probe() then observes that
+HID_CLAIMED_INPUT is clear and unwinds, but only stops the HID hardware.
+The devres-managed sony_sc is freed while its list node remains linked, so
+the next matching controller traverses freed memory.
 
-iolatency_pd_offline() resets the target through
-iolatency_set_min_lat_nsec(), which clears the delay only on a nonzero
-to zero transition, so it never clears such a peer.  Freeing the policy
-data then leaves blkg->use_delay set and blkcg->congestion_count
-elevated with nothing left that can drop it.
+Initialize the list node and device ID to inactive states. Make list
+removal idempotent and run the driver-private cleanup on every probe
+failure path. This also makes a second cleanup safe when
+sony_input_configured() already unwound a partial initialization before
+sony_probe() handles the missing input claim.
 
-blk_cgroup_congested() then returns true for every task in that cgroup
-and its descendants for as long as the cgroup lives: page_cache_sync_ra()
-cuts readahead to a single page, page_cache_async_ra() skips it
-altogether, and __folio_throttle_swaprate() takes swap_avail_lock and
-schedules a throttle on anonymous folio allocation.
+Found by 0sec (https://0sec.ai) using automated source analysis;
+verified against the HID input registration and probe unwind paths.
 
-Clear the delay in iolatency_pd_free().  By then bio-held blkg
-references have drained, or the queue is frozen for policy
-deactivation, so check_scale_change() cannot re-arm it.  The free
-callback can also see policy data which was never attached to a blkg,
-hence the pd->blkg check.
-
-Fixes: d70675121546 ("block: introduce blk-iolatency io controller")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260814165712.510132-2-usama.arif@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4f967f6d7374 ("HID: sony: Fix memory issue when connecting device using both Bluetooth and USB")
+Cc: stable@vger.kernel.org
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://lore.kernel.org/linux-input/20260724143925.007D61F00A3A@smtp.kernel.org/
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iolatency.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-sony.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 432d35a7196ec..e50fc4e4240fb 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -1043,6 +1043,15 @@ static void iolat_release(struct rcu_head *rcu)
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index e4b5d202c6637..a83ebda692437 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -1745,13 +1745,10 @@ static int sony_check_add_dev_list(struct sony_sc *sc)
  
- static void iolatency_pd_free(struct blkg_policy_data *pd)
+ static void sony_remove_dev_list(struct sony_sc *sc)
  {
-+	struct blkcg_gq *blkg = pd_to_blkg(pd);
+-	unsigned long flags;
++	guard(spinlock_irqsave)(&sony_dev_list_lock);
+ 
+-	if (sc->list_node.next) {
+-		spin_lock_irqsave(&sony_dev_list_lock, flags);
+-		list_del(&(sc->list_node));
+-		spin_unlock_irqrestore(&sony_dev_list_lock, flags);
+-	}
++	if (!list_empty(&sc->list_node))
++		list_del_init(&sc->list_node);
+ }
+ 
+ static int sony_get_bt_devaddr(struct sony_sc *sc)
+@@ -1889,6 +1886,13 @@ static inline void sony_cancel_work_sync(struct sony_sc *sc)
+ 	}
+ }
+ 
++static void sony_cleanup(struct sony_sc *sc)
++{
++	sony_cancel_work_sync(sc);
++	sony_remove_dev_list(sc);
++	sony_release_device_id(sc);
++}
 +
-+	/*
-+	 * Groups throttled as collateral have min_lat_nsec == 0, so
-+	 * iolatency_pd_offline() leaves their delay set.  Drop it here, where
-+	 * no in-flight bio can re-arm it via check_scale_change().
-+	 */
-+	if (blkg)
-+		blkcg_clear_delay(blkg);
- 	call_rcu(&pd->rcu_head, iolat_release);
+ static int sony_input_configured(struct hid_device *hdev,
+ 					struct hid_input *hidinput)
+ {
+@@ -2049,9 +2053,7 @@ static int sony_input_configured(struct hid_device *hdev,
+ err_close:
+ 	hid_hw_close(hdev);
+ err_stop:
+-	sony_cancel_work_sync(sc);
+-	sony_remove_dev_list(sc);
+-	sony_release_device_id(sc);
++	sony_cleanup(sc);
+ 	return ret;
+ }
+ 
+@@ -2077,6 +2079,8 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	}
+ 
+ 	spin_lock_init(&sc->lock);
++	INIT_LIST_HEAD(&sc->list_node);
++	sc->device_id = -1;
+ 
+ 	sc->quirks = quirks;
+ 	hid_set_drvdata(hdev, sc);
+@@ -2105,6 +2109,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	ret = hid_hw_start(hdev, connect_mask);
+ 	if (ret) {
+ 		hid_err(hdev, "hw start failed\n");
++		sony_cleanup(sc);
+ 		return ret;
+ 	}
+ 
+@@ -2156,7 +2161,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ err:
+ 	usb_free_urb(sc->ghl_urb);
+-
++	sony_cleanup(sc);
+ 	hid_hw_stop(hdev);
+ 	return ret;
+ }
+@@ -2173,13 +2178,7 @@ static void sony_remove(struct hid_device *hdev)
+ 	}
+ 
+ 	hid_hw_close(hdev);
+-
+-	sony_cancel_work_sync(sc);
+-
+-	sony_remove_dev_list(sc);
+-
+-	sony_release_device_id(sc);
+-
++	sony_cleanup(sc);
+ 	hid_hw_stop(hdev);
  }
  
 -- 
