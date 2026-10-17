@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2AC3B813A;
-	Sat, 17 Oct 2026 18:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFAE3B71A7;
+	Sat, 17 Oct 2026 18:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260702; cv=none; b=E/ywmWTITaosuDvB6bHxdhnxtJPpvBT+A1YYNodMHgPdglRMcKwcI709Syxgf9nzTBmlFWuGyvKGNh2VLEsrt9Stu59GSjwqUiSgUi5DFzNgx7BlJD3VfZXv1P48vcPBTHSS0q3P8Ulu186reLMf8jGTmJTAullWX94BjOoPz08=
+	t=1792260705; cv=none; b=usmHTXm+WMNSwB/iJAvkTG323G2HMCiCMqWkdmeMXDR0v+7vGNSyhFxdtVhg4a9ooqlbZcUmT8jT9QvwPy/bDCPJZa4XVqk4YAeEghno/7NFBNJywf9XScDgOYR32Hitf30a25qIlSdlVbEntL2IDI0VYIvPlYMbcjhpvi7dp0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260702; c=relaxed/simple;
-	bh=HGNPqUIZHGSeDKFu/RbKVZ5qA3edNOx5xjw6URazPTA=;
+	s=arc-20240116; t=1792260705; c=relaxed/simple;
+	bh=kcOyGEZtsQi+kfdwMGUMCxVa4YUTeSu3UAF11DaW1mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZNxpbfN3KVGVHkMHMwx2tvn7FZMOb0WngDVh3zSEXh/DS2KtpibUTbeRgDZgY1sfiLKLzreWZFuLu4b2cg34CImu12GrTBYoCp6LxNQ5SCTLt6iXBLGBxpNsY3bN4210fqiuj5CxejepXRTl+mo85D6BvL2/1Ncv2Gdj4slsuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4Z6998M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jfuy2x1CholyxL0CRDnOc8VZvZk3ZmLktpaQlIBIPRAlC7jJKuOK0qjpU1hSaMwzR9Yor4op8ONhRo5aD2pqmBjsz2LjabGCuBQT6wKSSpbzKCZbNqEHZLsUgf9smeqEj8i2K3B8rWyJdUzJjgbrnal66QjPzlQX7B7uRuthQmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3cXEIH9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4Z6998M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01E81F000C4;
-	Sat, 17 Oct 2026 18:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3cXEIH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45781F000C4;
+	Sat, 17 Oct 2026 18:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260701;
-	bh=LQvJcglAZ8rEgDgSSETa/qyrYwfaXhbt5QjXcPYq1e4=;
+	s=korg; t=1792260704;
+	bh=JSYMkbngZ4lQqaHBr5MQkA7UkQYgvY56hHHNq7vVX6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4Z6998M5b1h1LJS20ElWgIVil0mlSO1dyD5Nlq+Oe6B7H0AEYtrQyjOAb0lUs2Bv
-	 5TjPKa7Hft701QrhCaNy7de5xsirfIn0gTRmaz+QR7U0q5aJgULOHHMH0QSgtlYgKo
-	 rq3hGBva0oSTYjRZ1wq1iNNVDsCYpDkDkKDa/Atk=
+	b=N3cXEIH98zdztuCkdvEjBYaQ1oYNGJJKCWEC5WlnY3r2MMhBBSidnWYqJt4sjf9HJ
+	 9eJ71qtkxsD3TWUYleJyWFYymBcbXUfHl8PlewyG7sDRf5bc2+ZQF6PvfH3U7X4K0V
+	 eBkhSi4TOb7M1IEQ/dZDzz192HLtShaWyJmSWIoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com,
+	Tao Cui <cuitao@kylinos.cn>,
+	Kalpan Jani <kalpan.jani@mpiricsoftware.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1591/1674] smb: client: honor forceuid/forcegid when mapping SIDs to uid/gid
-Date: Sat, 17 Oct 2026 18:04:23 +0200
-Message-ID: <20261017160511.929749056@linuxfoundation.org>
+Subject: [PATCH 6.6 1592/1674] mptcp: pm: kernel: drop pending ADD_ADDR when removing ID0
+Date: Sat, 17 Oct 2026 18:04:24 +0200
+Message-ID: <20261017160511.953704611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,163 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
 
-[ Upstream commit 18a72975e9f35aadecc75b031f693f2d1f49308f ]
+[ Upstream commit 2ac7d6e620764f1fc79eb4edd3610a7a661981ca ]
 
-When the administrator mounts with forceuid or forcegid (uid=/gid=
-mount options), they expect all files to appear owned by the specified
-user/group.  However, several code paths unconditionally called
-sid_to_id() to overwrite cf_uid/cf_gid with server-provided values,
-ignoring the administrator's explicit override:
+The in-kernel MPTCP path manager can leave a stale ADD_ADDR announcement
+entry alive when removing the id 0 endpoint. This happens because the id 0
+removal path does not tear down pending announcements, unlike the non-zero
+id path.
 
-  - smb311_posix_info_to_fattr() (stat via POSIX extensions)
-  - cifs_posix_to_fattr() (readdir via POSIX extensions)
-  - parse_sec_desc() (CIFS ACL ownership mapping)
+When the PM later reselects id 0 after adding another signal endpoint, it
+finds the stale anno_list entry and hits WARN_ON_ONCE(mptcp_pm_is_kernel())
+in mptcp_pm_announced_alloc().
 
-This allowed an untrusted server to dictate local file ownership even
-when the mount was configured to force specific uid/gid values.
+Root cause: asymmetry between removal paths.
+- Non-zero id path: mptcp_nl_remove_subflow_and_signal_addr() calls
+  mptcp_pm_remove_announced() to clean up.
+- Id 0 path: mptcp_nl_remove_id_zero_address() skips cleanup entirely.
 
-Fix all three call sites to check CIFS_MOUNT_OVERR_UID and
-CIFS_MOUNT_OVERR_GID before calling sid_to_id(), following the
-same pattern already used by cifs_unix_basic_to_fattr() for unix
-extensions.
+Fix by making the id 0 path symmetric: call mptcp_pm_announced_remove()
+and decrement add_addr_signaled before queuing the RM_ADDR.
 
-Closes: https://sashiko.dev/#/patchset/20260906155816.603278-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Subtle detail: signal endpoints are stored in anno_list with port 0, but
+msk_local carries the connection's local port. In other words, entries
+linked to ID0 paths should have port == 0. A follow-up patch will ensure
+that. mptcp_pm_announced_remove() uses use_port=true for comparison. So
+clear the port before the lookup.
+
+Fixes: 740d798e8767 ("mptcp: remove id 0 address")
 Cc: stable@vger.kernel.org
+Reported-by: syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/620
+Suggested-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-4-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 29 ++++++++++++++++++-----------
- fs/smb/client/inode.c   |  9 +++++++--
- fs/smb/client/readdir.c | 11 +++++++----
- 3 files changed, 32 insertions(+), 17 deletions(-)
+ net/mptcp/pm_netlink.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index 7752a6d33cee4..4ed7b6311af55 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1312,6 +1312,7 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
- {
- 	int rc = 0;
- 	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
-+	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
- 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
- 	char *end_of_acl = ((char *)pntsd) + acl_len;
- 	__u32 dacloffset;
-@@ -1328,17 +1329,21 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
- 		 pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
- 		 le32_to_cpu(pntsd->gsidoffset),
- 		 le32_to_cpu(pntsd->sacloffset), dacloffset);
--/*	cifs_dump_mem("owner_sid: ", owner_sid_ptr, 64); */
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+
- 	rc = parse_sid(owner_sid_ptr, end_of_acl);
- 	if (rc) {
- 		cifs_dbg(FYI, "%s: Error %d parsing Owner SID\n", __func__, rc);
- 		return rc;
- 	}
--	rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
--	if (rc) {
--		cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
--			 __func__, rc);
--		return rc;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_UID)) {
-+		rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
-+		if (rc) {
-+			cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
-+				 __func__, rc);
-+			return rc;
-+		}
- 	}
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 2e5eb51d6ee09..8eb7fed89d6fc 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1725,6 +1725,8 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
+ 	while ((msk = mptcp_token_iter_next(net, &s_slot, &s_num)) != NULL) {
+ 		struct sock *sk = (struct sock *)msk;
+ 		struct mptcp_addr_info msk_local;
++		struct mptcp_addr_info anno_addr;
++		bool announced;
  
- 	rc = parse_sid(group_sid_ptr, end_of_acl);
-@@ -1347,11 +1352,13 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
- 			 __func__, rc);
- 		return rc;
- 	}
--	rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
--	if (rc) {
--		cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
--			 __func__, rc);
--		return rc;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_GID)) {
-+		rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
-+		if (rc) {
-+			cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
-+				 __func__, rc);
-+			return rc;
-+		}
- 	}
+ 		if (list_empty(&msk->conn_list) || mptcp_pm_is_userspace(msk))
+ 			goto next;
+@@ -1734,7 +1736,13 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
+ 			goto next;
  
- 	if (dacloffset) {
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 1859e3ceb9a4c..8d201db930281 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -772,6 +772,7 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
- 	struct smb311_posix_qinfo *info = &data->posix_fi;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
-+	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
- 
- 	memset(fattr, 0, sizeof(*fattr));
- 
-@@ -816,8 +817,12 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
- 		fattr->cf_symlink_target = data->symlink_target;
- 		data->symlink_target = NULL;
- 	}
--	sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
--	sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
-+		sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
-+	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
-+		sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
- 
- 	cifs_dbg(FYI, "POSIX query info: mode 0x%x uniqueid 0x%llx nlink %d\n",
- 		fattr->cf_mode, fattr->cf_uniqueid, fattr->cf_nlink);
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 434d5f74b2ef7..7b7942f0f53ea 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -241,6 +241,7 @@ static void
- cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		    struct cifs_sb_info *cifs_sb)
- {
-+	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
- 	struct smb2_posix_info_parsed parsed;
- 	int rc;
- 
-@@ -281,15 +282,17 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		 le32_to_cpu(info->ReparseTag),
- 		 le32_to_cpu(info->Mode));
- 
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
- 	if (rc < 0) {
- 		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
- 			 __func__, rc);
--		fattr->cf_uid = cifs_sb->ctx->linux_uid;
--		fattr->cf_gid = cifs_sb->ctx->linux_gid;
--	} else {
-+		return;
-+	}
-+	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
- 		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
-+	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
- 		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
--	}
- }
- 
- static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
+ 		lock_sock(sk);
++		/* Drop a possibly pending ADD_ADDR for this address. */
++		anno_addr = msk_local;
++		anno_addr.port = 0;
++		announced = remove_anno_list_by_saddr(msk, &anno_addr);
+ 		spin_lock_bh(&msk->pm.lock);
++		if (announced)
++			msk->pm.add_addr_signaled--;
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		mptcp_pm_nl_rm_subflow_received(msk, &list);
+ 		__mark_subflow_endp_available(msk, 0);
 -- 
 2.53.0
 
