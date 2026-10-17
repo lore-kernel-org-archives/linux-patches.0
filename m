@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0F29BDB5;
-	Sat, 17 Oct 2026 16:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF76352C35;
+	Sat, 17 Oct 2026 16:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255839; cv=none; b=bO4QdtZGY6YxToCB013HfkuKu3AsPRn6LpAt3nDkMB6Jh0yZj7+GyPa7sBgXI5sXmtKEIENrRKDKjNuyFPd1nl50l1AXbro03K4xJGm3VLBKvebR44pLm9itc+/xjh+L+YFmerr2vOUz/d669H8KZV9WC59YXgNS4W9E80ImovU=
+	t=1792255842; cv=none; b=E6l5a+Asm7eB8BXoB0KNEuYYYXQ6zYGNOwJDb3gZ1wCmNTDcJb58UWX2B/z6a2k1RQ1xkWiG1MpjOBxaQ15ckBD6OyXjaHH1EgCzKVFR77b8df7Kk1zZ2c/QzPX+XkUn2lOeiP701Fe1SnEnBrIsJeni5Wl6zuBngWfryldmakE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255839; c=relaxed/simple;
-	bh=GS+MlrqIpqlDzZaH8iZgJMNU2RVRe0cDFXGa8QGYSL4=;
+	s=arc-20240116; t=1792255842; c=relaxed/simple;
+	bh=RP/vwB6Cj2npjtyXxlTf/rpxyaJ7g87WyQiUXDfv+K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JqBab2zQ0ZT11qNth8E7zel5/h3JznTgYWYNBtcZYj/5xhZoC9CLAYdNORIfIwNSyZz7lIPA0klyZissT7fbXaZHE/ELo9BjU3tjjz1+uZd4NQI0D8ltxZuQmIJFz84y2jkKjbs5DecoxNwscdB5sjtOKDrk1EROCA6Fz4faJ+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEG3N9vl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NwYyj1bZ3EdQuDUT0j4iSD+fNHjPdG7CZ82ChPjOtuT7l8MadsYYlm2y+pqzLkaRqoR+0nHoXgnn4ipw909M0EQeXN+csYX6KymVeB1T+8272A4jR1IcSl/s4KQQ0dkwCEm3BQeIFIIOFqVA6RPOPOwgEGJoeuILKLMKes78PEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlhoDQZ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEG3N9vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1651F000C4;
-	Sat, 17 Oct 2026 16:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlhoDQZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5071F000C4;
+	Sat, 17 Oct 2026 16:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255837;
-	bh=EByNp6I13+IExJZC6LYZi+VyO/ADqPgvStf4p/HmLmI=;
+	s=korg; t=1792255840;
+	bh=5dnB57yONS2O/xiF3HXP7fCQdD8O6SbDe18R73v/P0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UEG3N9vlYWP9UIq+E4np3fnXKBn07MylbI+pjr1sQGv7FGyLRsYgayaUntdDz5uqt
-	 LO8NX6a8wkaghgq6LuMFeS2TVkPcLVh8wvIMwJIR5WAZfI91sk01ZPEj3Udm/g/z7B
-	 fmRN+d0Hp23ZfFiJB2zMH60RV1AAOO+hu/BTibxM=
+	b=WlhoDQZ/5Q5+P10pCoPN+rsAYnJMFvGbk3dver6Coh14lmjetJkeCjmLIOqU1OSXE
+	 fzHGrRzdVi3fej37aAcHdQh5i4pdStN8mu5oXssna+RXp8NsFBpnVEofehX85YH5xE
+	 0wSPNYbmhbYKYnunncLREqQdqjGSKJAWckt7yzhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0039/1674] landlock: Fix use-after-free of the sources parent directory
-Date: Sat, 17 Oct 2026 17:38:31 +0200
-Message-ID: <20261017160432.145411531@linuxfoundation.org>
+Subject: [PATCH 6.6 0040/1674] ALSA: usb-audio: Optimize the copy of packet sizes for implicit fb handling
+Date: Sat, 17 Oct 2026 17:38:32 +0200
+Message-ID: <20261017160432.170555863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,112 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 2c6dc792538260a8087ac5b22c31b3b8e47c85d6 ]
+[ Upstream commit 36adb51ac0b19edb32ffeea3fe66b174bad25ead ]
 
-current_check_refer_path() reads old_dentry->d_parent without holding a
-reference nor a lock on it, and then dereferences it in
-collect_domain_accesses() and in the audit record.
+We did manual copies over loop for the packet data update of the
+implicit feedback, but this can be optimized with a simple memcpy().
 
-A reference on a child does not pin its parent: __d_move() reassigns
-dentry->d_parent and drops the reference the child held on its former
-parent.  hook_path_rename() is not affected because the rename path
-calls lock_rename() before the hook, so the source cannot be reparented
-under it.  hook_path_link() has no such protection: filename_linkat()
-holds a reference on the source dentry but neither locks nor references
-its parent, so a concurrent rename(2) can reparent the source while
-security_path_link() runs, and the former parent can then be removed and
-freed while the hook walks it.
+Along with it, change the data type of snd_usb_packet_info struct to
+align with other (from uint32_t to int).
 
-A process can trigger this after entering a Landlock domain that handles
-at least one filesystem access right.  The process can then race a
-linkat(2) loop against rename(2) and rmdir(2):
+No functional changes but only code optimizations.
 
-  BUG: KASAN: slab-use-after-free in collect_domain_accesses+0x278/0x290
-  Read of size 4 at addr ffff888160bd53f4 by task llrepro2/549
-   collect_domain_accesses+0x278/0x290
-   current_check_refer_path+0x952/0x1120
-   security_path_link+0x1be/0x320
-   filename_linkat+0x342/0x6d0
-   __x64_sys_linkat+0xfa/0x150
-  Freed by task 562:
-   kmem_cache_free+0x139/0x4c0
-   i_callback+0x4b/0x80
-   rcu_core+0x7dc/0x10a0
-
-Take a reference on the dentry selected as the source parent, using
-dget() for the common-mount-root case and dget_parent() otherwise.
-Release it after the hierarchy walk and synchronous audit logging.
-
-Cc: stable@vger.kernel.org
-Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Tested-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/E9CDD9E6-E960-4DE2-B1AC-5667D52ABB3E@doyensec.com
-[mic: Clarify the caller, reachability, and reference handling]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[ adjusted context for the older dom-based Landlock implementation without audit logging. ]
+Link: https://patch.msgid.link/20260216141209.1849200-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 76a986c980bb ("ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/fs.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ sound/usb/card.h     | 2 +-
+ sound/usb/endpoint.c | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index 9c1cee4c4c3cb..91773a7f27e79 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -908,11 +908,12 @@ static int current_check_refer_path(struct dentry *const old_dentry,
- 	/*
- 	 * old_dentry may be the root of the common mount point and
- 	 * !IS_ROOT(old_dentry) at the same time (e.g. with open_tree() and
--	 * OPEN_TREE_CLONE).  We do not need to call dget(old_parent) because
--	 * we keep a reference to old_dentry.
-+	 * OPEN_TREE_CLONE).  Pin the dentry used as old_parent in either case.
-+	 * Otherwise, dget_parent() safely fetches and pins the current parent
-+	 * against a concurrent rename(2).
- 	 */
--	old_parent = (old_dentry == mnt_dir.dentry) ? old_dentry :
--						      old_dentry->d_parent;
-+	old_parent = (old_dentry == mnt_dir.dentry) ? dget(old_dentry) :
-+						      dget_parent(old_dentry);
+diff --git a/sound/usb/card.h b/sound/usb/card.h
+index 6ec95b2edf863..ac5505ce046de 100644
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -89,7 +89,7 @@ struct snd_usb_endpoint {
+ 	struct snd_urb_ctx urb[MAX_URBS];
  
- 	/* new_dir->dentry is equal to new_dentry->d_parent */
- 	allow_parent1 = collect_domain_accesses(dom, mnt_dir.dentry, old_parent,
-@@ -920,8 +921,10 @@ static int current_check_refer_path(struct dentry *const old_dentry,
- 	allow_parent2 = collect_domain_accesses(
- 		dom, mnt_dir.dentry, new_dir->dentry, &layer_masks_parent2);
+ 	struct snd_usb_packet_info {
+-		uint32_t packet_size[MAX_PACKS_HS];
++		int packet_size[MAX_PACKS_HS];
+ 		int packets;
+ 	} next_packet[MAX_URBS];
+ 	unsigned int next_packet_head;	/* ring buffer offset to read */
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index c393a9125b9b3..ade43bd97b991 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -478,7 +478,7 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 		unsigned long flags;
+ 		struct snd_usb_packet_info *packet;
+ 		struct snd_urb_ctx *ctx = NULL;
+-		int err, i;
++		int err;
  
--	if (allow_parent1 && allow_parent2)
-+	if (allow_parent1 && allow_parent2) {
-+		dput(old_parent);
- 		return 0;
-+	}
+ 		spin_lock_irqsave(&ep->lock, flags);
+ 		if ((!implicit_fb || ep->next_packet_queued > 0) &&
+@@ -498,8 +498,8 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
+ 			ctx->packets = packet->packets;
+-			for (i = 0; i < packet->packets; i++)
+-				ctx->packet_size[i] = packet->packet_size[i];
++			memcpy(ctx->packet_size, packet->packet_size,
++			       packet->packets * sizeof(packet->packet_size[0]));
+ 		}
  
- 	/*
- 	 * To be able to compare source and destination domain access rights,
-@@ -932,8 +935,12 @@ static int current_check_refer_path(struct dentry *const old_dentry,
- 	if (is_access_to_paths_allowed(
- 		    dom, &mnt_dir, access_request_parent1, &layer_masks_parent1,
- 		    old_dentry, access_request_parent2, &layer_masks_parent2,
--		    exchange ? new_dentry : NULL))
-+		    exchange ? new_dentry : NULL)) {
-+		dput(old_parent);
- 		return 0;
-+	}
-+
-+	dput(old_parent);
- 
- 	/*
- 	 * This prioritizes EACCES over EXDEV for all actions, including
+ 		/* call the data handler to fill in playback data */
 -- 
 2.53.0
 
