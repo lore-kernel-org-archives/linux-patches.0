@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B41922F767;
-	Sat, 17 Oct 2026 16:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C10F17BED0;
+	Sat, 17 Oct 2026 16:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253475; cv=none; b=g2d8yinT6GU0EqH8AFOd5SlLtytb4ez6yeTtR3m/jAwvmsch1b819wVw28LjXq3nayI6+EA+tNSXESe32hTkLx6h+Yn8p1Imtt36iZcOq2k58OutUXWZDvu/PxIAVq7AWgPNxUKam6du8cwjWYj13QEDucmyzQHAWHqwTUW/1pk=
+	t=1792253478; cv=none; b=bi97sdn9bXcw+Ei/qFGlGRQbl1iqUqvFKtape9fJZKonqOi430BkX8pUyTy57FsMvamBm1dtka1CF+gPDmmWE3sFrpJ5Ej5QOZd1FLZ3oicVPQoK0PpxQNenM413iCgEzphB7b0M5ANCiylBw8uXFRofo3XfC+nDcrLcqh7FJxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253475; c=relaxed/simple;
-	bh=ARreJWno0fH/ZsDWdSBoDI7knxf3ZHN9pWaKEwB/jpc=;
+	s=arc-20240116; t=1792253478; c=relaxed/simple;
+	bh=KaxpjIfm+jwfbpq0hpa2g6e4cT3dgJacZhXLPLmZGRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P9uDzLl6tNl5AzFBRPQRzU/YEMKWXNZmSWdBA8lNWTrHz7ntX9bdJbKcIytrMHu05MuZXhJ/unJszr8r+knVxkG0zuBrwEifgnoP9d0Ntc2JDisd6cTLynSKQDvMqTOv9OSVD/muFE16y+xf45yJcQtWY3GhmKoKZmKtu5/NCa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu1eKkya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZyLn3f6hC5aWBvCDk6onM9qdGz2JAHG7SiNi9MTlTXQosahu08IR7iZdZKUW5/wEgEQZvH7WpcFlu1MiVzNuCcTX6UdAx+5PsNbCRIAHzCm1V9KHgwOMOALZAPRLyU+h1grfXSmeK7hWVpfGfgRT46hfLjb4gWAvDZNQj5iEyRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaG8Mqub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu1eKkya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825271F000C4;
-	Sat, 17 Oct 2026 16:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaG8Mqub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EEF1F000C4;
+	Sat, 17 Oct 2026 16:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253474;
-	bh=w6x2YP6TqFHos3eg9jF0Vuxjb3JO8Q+jC8R6aOMbGD0=;
+	s=korg; t=1792253477;
+	bh=J1ehWbAu2w9XkoGp3gwKHr0B0kdmcfQ3TRR2VgHkLGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fu1eKkyaKrlFkakTlGUw86ATa1sYsl+AB6bhK/hU4XvDI6n4aTryOGPqwUj44Iod1
-	 /omwxMiUdCT/YUcrT6c9ZAThX7DjmqE2HfqehBAjl4x1fKJso6p6PYpK/Bv4MF+GYB
-	 ZMFxFwYgmfWkj0c8izZ2+Tr4vzbc02wm0CjWDUqI=
+	b=yaG8MqubqEYfiqjQl8gh+Gi0tDyImoLrafxoc6Q5glp+xBywNi8JkSuVN61UkDJmB
+	 bqsP6p/7GPJGnmb/G/NCx6jhtqSuvf1ZBzPzJnHViHjEQb0S0u2xHb8/XFES3LTxX8
+	 8iPcTg67xgS8dw/Jl+vA8JeYetVDfaqRtDkAN40E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 130/869] remoteproc: Switch back to struct platform_driver::remove()
-Date: Sat, 17 Oct 2026 17:49:31 +0200
-Message-ID: <20261017160040.377607146@linuxfoundation.org>
+Subject: [PATCH 6.12 131/869] remoteproc: qcom: pas: Make remoteproc name human friendly
+Date: Sat, 17 Oct 2026 17:49:32 +0200
+Message-ID: <20261017160040.404790015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,286 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit ad64a7c4a49d30c5d909a35e2c7882d3870ddafc ]
+[ Upstream commit b64b1266d6195d9bbfa75a93b4265fba2d447c86 ]
 
-After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-return void") .remove() is (again) the right callback to implement for
-platform drivers.
+The remoteproc "name" property is supposed to present the "human
+readable" name of the remoteproc, while using the device name is
+readable, it's not "friendly".
 
-Convert all platform drivers below drivers/remoteproc to use .remove(),
-with the eventual goal to drop struct platform_driver::remove_new(). As
-.remove() and .remove_new() have the same prototypes, conversion is done
-by just changing the structure member name in the driver initializer.
+Instead, use the "sysmon_name" as the identifier for the remoteproc
+instance. It matches the typical names used when we speak about each
+instance, while still being unique.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20241025131340.258233-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+Link: https://lore.kernel.org/r/20241022-rproc-friendly-name-v1-1-350c82b075cb@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Stable-dep-of: 142964960c7c ("remoteproc: qcom: pas: Shutdown lite ADSP DTB on X1E")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/da8xx_remoteproc.c     | 2 +-
- drivers/remoteproc/imx_dsp_rproc.c        | 2 +-
- drivers/remoteproc/imx_rproc.c            | 2 +-
- drivers/remoteproc/keystone_remoteproc.c  | 2 +-
- drivers/remoteproc/meson_mx_ao_arc.c      | 2 +-
- drivers/remoteproc/mtk_scp.c              | 2 +-
- drivers/remoteproc/pru_rproc.c            | 2 +-
- drivers/remoteproc/qcom_q6v5_adsp.c       | 2 +-
- drivers/remoteproc/qcom_q6v5_mss.c        | 2 +-
- drivers/remoteproc/qcom_q6v5_pas.c        | 2 +-
- drivers/remoteproc/qcom_q6v5_wcss.c       | 2 +-
- drivers/remoteproc/qcom_wcnss.c           | 2 +-
- drivers/remoteproc/rcar_rproc.c           | 2 +-
- drivers/remoteproc/remoteproc_virtio.c    | 2 +-
- drivers/remoteproc/st_remoteproc.c        | 2 +-
- drivers/remoteproc/stm32_rproc.c          | 2 +-
- drivers/remoteproc/ti_k3_dsp_remoteproc.c | 2 +-
- drivers/remoteproc/wkup_m3_rproc.c        | 2 +-
- 18 files changed, 18 insertions(+), 18 deletions(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/da8xx_remoteproc.c b/drivers/remoteproc/da8xx_remoteproc.c
-index 8770d0cf1255f..fe0179f4044f3 100644
---- a/drivers/remoteproc/da8xx_remoteproc.c
-+++ b/drivers/remoteproc/da8xx_remoteproc.c
-@@ -378,7 +378,7 @@ MODULE_DEVICE_TABLE(of, davinci_rproc_of_match);
- 
- static struct platform_driver da8xx_rproc_driver = {
- 	.probe = da8xx_rproc_probe,
--	.remove_new = da8xx_rproc_remove,
-+	.remove = da8xx_rproc_remove,
- 	.driver = {
- 		.name = "davinci-rproc",
- 		.of_match_table = of_match_ptr(davinci_rproc_of_match),
-diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
-index 713a57200cf09..427c200a175c3 100644
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -1267,7 +1267,7 @@ MODULE_DEVICE_TABLE(of, imx_dsp_rproc_of_match);
- 
- static struct platform_driver imx_dsp_rproc_driver = {
- 	.probe = imx_dsp_rproc_probe,
--	.remove_new = imx_dsp_rproc_remove,
-+	.remove = imx_dsp_rproc_remove,
- 	.driver = {
- 		.name = "imx-dsp-rproc",
- 		.of_match_table = imx_dsp_rproc_of_match,
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 2797b7e971429..4f73b1ea05ffb 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -1202,7 +1202,7 @@ MODULE_DEVICE_TABLE(of, imx_rproc_of_match);
- 
- static struct platform_driver imx_rproc_driver = {
- 	.probe = imx_rproc_probe,
--	.remove_new = imx_rproc_remove,
-+	.remove = imx_rproc_remove,
- 	.driver = {
- 		.name = "imx-rproc",
- 		.of_match_table = imx_rproc_of_match,
-diff --git a/drivers/remoteproc/keystone_remoteproc.c b/drivers/remoteproc/keystone_remoteproc.c
-index 8f0f7a4cfef26..6e54093d17323 100644
---- a/drivers/remoteproc/keystone_remoteproc.c
-+++ b/drivers/remoteproc/keystone_remoteproc.c
-@@ -490,7 +490,7 @@ MODULE_DEVICE_TABLE(of, keystone_rproc_of_match);
- 
- static struct platform_driver keystone_rproc_driver = {
- 	.probe	= keystone_rproc_probe,
--	.remove_new = keystone_rproc_remove,
-+	.remove = keystone_rproc_remove,
- 	.driver	= {
- 		.name = "keystone-rproc",
- 		.of_match_table = keystone_rproc_of_match,
-diff --git a/drivers/remoteproc/meson_mx_ao_arc.c b/drivers/remoteproc/meson_mx_ao_arc.c
-index f6744b5383230..7dfdf11b00368 100644
---- a/drivers/remoteproc/meson_mx_ao_arc.c
-+++ b/drivers/remoteproc/meson_mx_ao_arc.c
-@@ -246,7 +246,7 @@ MODULE_DEVICE_TABLE(of, meson_mx_ao_arc_rproc_match);
- 
- static struct platform_driver meson_mx_ao_arc_rproc_driver = {
- 	.probe = meson_mx_ao_arc_rproc_probe,
--	.remove_new = meson_mx_ao_arc_rproc_remove,
-+	.remove = meson_mx_ao_arc_rproc_remove,
- 	.driver = {
- 		.name = "meson-mx-ao-arc-rproc",
- 		.of_match_table = meson_mx_ao_arc_rproc_match,
-diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-index 81ca0fc3820f9..b3613802730c1 100644
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -1591,7 +1591,7 @@ static const struct dev_pm_ops scp_pm_ops = {
- 
- static struct platform_driver mtk_scp_driver = {
- 	.probe = scp_probe,
--	.remove_new = scp_remove,
-+	.remove = scp_remove,
- 	.driver = {
- 		.name = "mtk-scp",
- 		.of_match_table = mtk_scp_of_match,
-diff --git a/drivers/remoteproc/pru_rproc.c b/drivers/remoteproc/pru_rproc.c
-index 7ffbae209a31f..985daf6945dd4 100644
---- a/drivers/remoteproc/pru_rproc.c
-+++ b/drivers/remoteproc/pru_rproc.c
-@@ -1133,7 +1133,7 @@ static struct platform_driver pru_rproc_driver = {
- 		.suppress_bind_attrs = true,
- 	},
- 	.probe  = pru_rproc_probe,
--	.remove_new = pru_rproc_remove,
-+	.remove = pru_rproc_remove,
- };
- module_platform_driver(pru_rproc_driver);
- 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 0345940268126..13c9898447b2d 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -848,7 +848,7 @@ MODULE_DEVICE_TABLE(of, adsp_of_match);
- 
- static struct platform_driver adsp_pil_driver = {
- 	.probe = adsp_probe,
--	.remove_new = adsp_remove,
-+	.remove = adsp_remove,
- 	.driver = {
- 		.name = "qcom_q6v5_adsp",
- 		.of_match_table = adsp_of_match,
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index e19081d530226..5ddc146435cda 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -2546,7 +2546,7 @@ MODULE_DEVICE_TABLE(of, q6v5_of_match);
- 
- static struct platform_driver q6v5_driver = {
- 	.probe = q6v5_probe,
--	.remove_new = q6v5_remove,
-+	.remove = q6v5_remove,
- 	.driver = {
- 		.name = "qcom-q6v5-mss",
- 		.of_match_table = q6v5_of_match,
 diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 23f928323bcfd..bc1d56a2684e6 100644
+index bc1d56a2684e6..c3a634454d53d 100644
 --- a/drivers/remoteproc/qcom_q6v5_pas.c
 +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1510,7 +1510,7 @@ MODULE_DEVICE_TABLE(of, adsp_of_match);
+@@ -714,7 +714,7 @@ static int adsp_probe(struct platform_device *pdev)
+ 	if (desc->minidump_id)
+ 		ops = &adsp_minidump_ops;
  
- static struct platform_driver adsp_driver = {
- 	.probe = adsp_probe,
--	.remove_new = adsp_remove,
-+	.remove = adsp_remove,
- 	.driver = {
- 		.name = "qcom_q6v5_pas",
- 		.of_match_table = adsp_of_match,
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index c560b81b72631..a89faabc11ce1 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -1111,7 +1111,7 @@ MODULE_DEVICE_TABLE(of, q6v5_wcss_of_match);
+-	rproc = devm_rproc_alloc(&pdev->dev, pdev->name, ops, fw_name, sizeof(*adsp));
++	rproc = devm_rproc_alloc(&pdev->dev, desc->sysmon_name, ops, fw_name, sizeof(*adsp));
  
- static struct platform_driver q6v5_wcss_driver = {
- 	.probe = q6v5_wcss_probe,
--	.remove_new = q6v5_wcss_remove,
-+	.remove = q6v5_wcss_remove,
- 	.driver = {
- 		.name = "qcom-q6v5-wcss-pil",
- 		.of_match_table = q6v5_wcss_of_match,
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index a2ae6adf0053a..2c7e519a2254b 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -702,7 +702,7 @@ MODULE_DEVICE_TABLE(of, wcnss_of_match);
- 
- static struct platform_driver wcnss_driver = {
- 	.probe = wcnss_probe,
--	.remove_new = wcnss_remove,
-+	.remove = wcnss_remove,
- 	.driver = {
- 		.name = "qcom-wcnss-pil",
- 		.of_match_table = wcnss_of_match,
-diff --git a/drivers/remoteproc/rcar_rproc.c b/drivers/remoteproc/rcar_rproc.c
-index cc17e8421f65b..921d853594f42 100644
---- a/drivers/remoteproc/rcar_rproc.c
-+++ b/drivers/remoteproc/rcar_rproc.c
-@@ -214,7 +214,7 @@ MODULE_DEVICE_TABLE(of, rcar_rproc_of_match);
- 
- static struct platform_driver rcar_rproc_driver = {
- 	.probe = rcar_rproc_probe,
--	.remove_new = rcar_rproc_remove,
-+	.remove = rcar_rproc_remove,
- 	.driver = {
- 		.name = "rcar-rproc",
- 		.of_match_table = rcar_rproc_of_match,
-diff --git a/drivers/remoteproc/remoteproc_virtio.c b/drivers/remoteproc/remoteproc_virtio.c
-index d3f39009b28ed..25a655f33ec0e 100644
---- a/drivers/remoteproc/remoteproc_virtio.c
-+++ b/drivers/remoteproc/remoteproc_virtio.c
-@@ -593,7 +593,7 @@ static void rproc_virtio_remove(struct platform_device *pdev)
- /* Platform driver */
- static struct platform_driver rproc_virtio_driver = {
- 	.probe		= rproc_virtio_probe,
--	.remove_new	= rproc_virtio_remove,
-+	.remove		= rproc_virtio_remove,
- 	.driver		= {
- 		.name	= "rproc-virtio",
- 	},
-diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
-index 1340be9d01101..5df99bae7131a 100644
---- a/drivers/remoteproc/st_remoteproc.c
-+++ b/drivers/remoteproc/st_remoteproc.c
-@@ -457,7 +457,7 @@ static void st_rproc_remove(struct platform_device *pdev)
- 
- static struct platform_driver st_rproc_driver = {
- 	.probe = st_rproc_probe,
--	.remove_new = st_rproc_remove,
-+	.remove = st_rproc_remove,
- 	.driver = {
- 		.name = "st-rproc",
- 		.of_match_table = of_match_ptr(st_rproc_match),
-diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rproc.c
-index 8c7f7950b80ee..b02b36a3f5156 100644
---- a/drivers/remoteproc/stm32_rproc.c
-+++ b/drivers/remoteproc/stm32_rproc.c
-@@ -946,7 +946,7 @@ static DEFINE_SIMPLE_DEV_PM_OPS(stm32_rproc_pm_ops,
- 
- static struct platform_driver stm32_rproc_driver = {
- 	.probe = stm32_rproc_probe,
--	.remove_new = stm32_rproc_remove,
-+	.remove = stm32_rproc_remove,
- 	.driver = {
- 		.name = "stm32-rproc",
- 		.pm = pm_ptr(&stm32_rproc_pm_ops),
-diff --git a/drivers/remoteproc/ti_k3_dsp_remoteproc.c b/drivers/remoteproc/ti_k3_dsp_remoteproc.c
-index 73be3d2167914..f48146e8077f5 100644
---- a/drivers/remoteproc/ti_k3_dsp_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_dsp_remoteproc.c
-@@ -783,7 +783,7 @@ MODULE_DEVICE_TABLE(of, k3_dsp_of_match);
- 
- static struct platform_driver k3_dsp_rproc_driver = {
- 	.probe	= k3_dsp_rproc_probe,
--	.remove_new = k3_dsp_rproc_remove,
-+	.remove = k3_dsp_rproc_remove,
- 	.driver	= {
- 		.name = "k3-dsp-rproc",
- 		.of_match_table = k3_dsp_of_match,
-diff --git a/drivers/remoteproc/wkup_m3_rproc.c b/drivers/remoteproc/wkup_m3_rproc.c
-index c39bd2bf2c1e7..35c2145b12db7 100644
---- a/drivers/remoteproc/wkup_m3_rproc.c
-+++ b/drivers/remoteproc/wkup_m3_rproc.c
-@@ -251,7 +251,7 @@ static const struct dev_pm_ops wkup_m3_rproc_pm_ops = {
- 
- static struct platform_driver wkup_m3_rproc_driver = {
- 	.probe = wkup_m3_rproc_probe,
--	.remove_new = wkup_m3_rproc_remove,
-+	.remove = wkup_m3_rproc_remove,
- 	.driver = {
- 		.name = "wkup_m3_rproc",
- 		.of_match_table = wkup_m3_rproc_of_match,
+ 	if (!rproc) {
+ 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
 -- 
 2.53.0
 
