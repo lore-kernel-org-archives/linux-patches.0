@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C62917BED0;
-	Sat, 17 Oct 2026 17:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F152917BED0;
+	Sat, 17 Oct 2026 17:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257942; cv=none; b=EGZ+erJNB5CBShOb4Az1LbLRglKL1X+GyqAOCIsz4ikDAXBQmS9lWxAgfU67ypVF/LNsrWxtKo5anDGQNx0amEit1HVAzULwMEJbya0iVKMsQ4GFPXX//bI8Iq0rM9ahqnWFcCak/iXDNTmU65656jbD5fuC+SXHomLe3zztwVk=
+	t=1792257945; cv=none; b=slOtAPYjdY20HDj+Mc2W6kPh92OswR0x83aIQI/SejANSW3MXJT7fbVPufkUMr76lIL1mrzc3ymKhGxT32aMLf+hI7fAvNjh+XOPO1S106U/IBcqyBYgmB3O+kybhl1KHGgF97GX/vy/9JfY7GKl5AmWHdm6aMIxNLSJEAu17BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257942; c=relaxed/simple;
-	bh=f23Q5aNMS+zf02JOUlocIZozUvzYO6yxUyUrnxl94Ik=;
+	s=arc-20240116; t=1792257945; c=relaxed/simple;
+	bh=ZQGSyTpSJnNmF8Zkhrw7C1hh+F4M+WKzsPDn9P72x4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FAsrzpjV5T22RyxEkc1jKI8FMqm9EwcEqdbb9L3sjsZoxcKXIp+CbnAkWYDfAbhqjKhWxtnhi9vbymNuKuJmbsp556IvIsag7JCchidQZmQMTYguD+57rxA07TW+u2cRncpg0HH9Y7sCUJHFInefvNI4qe2gyGwsePv01PB5MTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7WDl1rP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g1Wi1e3l4xWNPABaJs9oMI9aeH7URrph6kv6KROK3Oh5SEh8YCDEfsykEwFlUObWfUOWbx6DeX/nZCuxs64gFqasqGcGgLqR/RL/X0vE1Pu2zg0az++P1kd7ngh/vT2AhLlNy9VgU5SIsIYari+f6THHv2mGmw82BkCiGHRjIpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMsSgLus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7WDl1rP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F921F000C4;
-	Sat, 17 Oct 2026 17:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMsSgLus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558CE1F000C4;
+	Sat, 17 Oct 2026 17:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257940;
-	bh=kSsUfll/XVi0PChrDCggdK2WYNhiPVCCR8pxKUiMGko=;
+	s=korg; t=1792257943;
+	bh=d8Uf2strwM42MBJR/KwqkF+hfgzMbBSgFrK+ynMPRqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D7WDl1rPAEX/K2Rr2Al2KpbV7hibEy5numjUlIyvKajOj1gngLHVS3o0e1Hrj4bwC
-	 WrLX7xeBdphl9gw+mlnBcKGM65BvcXrCpAWZN6e0goOaXaDp+UFYlS3hHO87YuuQ1S
-	 vi/ocn/L49Tq3mFzScndPqiW8+Za/Wd0vD2TLxbo=
+	b=kMsSgLusbfFzDd01Mm8jVk0JAxNgAOMLRzJlQHJlV74Mf4lmunMiOaAKOqgB+qqoa
+	 kNGM0oElD9exlGwPQWU0tLBoHK/eaEAPinHRbSoctLAeLl7InkbsGXqPsQVHOUlTRV
+	 /iN9onpdIwt8CvEYyyi31miIJ6LA1Z2+DMRYCZd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Wen Gong <quic_wgong@quicinc.com>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0721/1674] fs/ntfs3: Separete common code for file_read/write iter/splice
-Date: Sat, 17 Oct 2026 17:49:53 +0200
-Message-ID: <20261017160449.615759596@linuxfoundation.org>
+Subject: [PATCH 6.6 0704/1674] wifi: ath11k: update channel list in reg notifier instead reg worker
+Date: Sat, 17 Oct 2026 17:49:36 +0200
+Message-ID: <20261017160449.176754759@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,208 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit e4a7d60a891b8493a1284053acdc496febe81e7c ]
+[ Upstream commit 933ab187e679e6fbdeea1835ae39efcc59c022d2 ]
 
-The common code for handling encrypted, dedup, and compressed files
-has been moved to check_read_restriction() and check_write_restriction().
+Currently when ath11k gets a new channel list, it will be processed
+according to the following steps:
+1. update new channel list to cfg80211 and queue reg_work.
+2. cfg80211 handles new channel list during reg_work.
+3. update cfg80211's handled channel list to firmware by
+ath11k_reg_update_chan_list().
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: 285cec318bf5 ("fs/ntfs3: Keep write operations atomic")
+But ath11k will immediately execute step 3 after reg_work is just
+queued. Since step 2 is asynchronous, cfg80211 may not have completed
+handling the new channel list, which may leading to an out-of-bounds
+write error:
+BUG: KASAN: slab-out-of-bounds in ath11k_reg_update_chan_list
+Call Trace:
+    ath11k_reg_update_chan_list+0xbfe/0xfe0 [ath11k]
+    kfree+0x109/0x3a0
+    ath11k_regd_update+0x1cf/0x350 [ath11k]
+    ath11k_regd_update_work+0x14/0x20 [ath11k]
+    process_one_work+0xe35/0x14c0
+
+Should ensure step 2 is completely done before executing step 3. Thus
+Wen raised patch[1]. When flag NL80211_REGDOM_SET_BY_DRIVER is set,
+cfg80211 will notify ath11k after step 2 is done.
+
+So enable the flag NL80211_REGDOM_SET_BY_DRIVER then cfg80211 will
+notify ath11k after step 2 is done. At this time, there will be no
+KASAN bug during the execution of the step 3.
+
+[1] https://patchwork.kernel.org/project/linux-wireless/patch/20230201065313.27203-1-quic_wgong@quicinc.com/
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
+
+Fixes: f45cb6b29cd3 ("wifi: ath11k: avoid deadlock during regulatory update in ath11k_regd_update()")
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Link: https://patch.msgid.link/20250117061737.1921-2-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 116 +++++++++++++++++++++++++++++++-----------------
- 1 file changed, 76 insertions(+), 40 deletions(-)
+ drivers/net/wireless/ath/ath11k/reg.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 18753121159c5..490225b30e600 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -732,10 +732,12 @@ int ntfs3_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	return err;
- }
+diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/wireless/ath/ath11k/reg.c
+index 72b0eb588c06e..9d30928588bae 100644
+--- a/drivers/net/wireless/ath/ath11k/reg.c
++++ b/drivers/net/wireless/ath/ath11k/reg.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ #include <linux/rtnetlink.h>
  
--static ssize_t ntfs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
-+/*
-+ * check_read_restriction:
-+ * common code for ntfs_file_read_iter and ntfs_file_splice_read
-+ */
-+static int check_read_restriction(struct inode *inode)
- {
--	struct file *file = iocb->ki_filp;
--	struct inode *inode = file_inode(file);
- 	struct ntfs_inode *ni = ntfs_i(inode);
+@@ -56,6 +56,19 @@ ath11k_reg_notifier(struct wiphy *wiphy, struct regulatory_request *request)
+ 	ath11k_dbg(ar->ab, ATH11K_DBG_REG,
+ 		   "Regulatory Notification received for %s\n", wiphy_name(wiphy));
  
- 	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
-@@ -746,11 +748,6 @@ static ssize_t ntfs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		return -EOPNOTSUPP;
- 	}
++	if (request->initiator == NL80211_REGDOM_SET_BY_DRIVER) {
++		ath11k_dbg(ar->ab, ATH11K_DBG_REG,
++			   "driver initiated regd update\n");
++		if (ar->state != ATH11K_STATE_ON)
++			return;
++
++		ret = ath11k_reg_update_chan_list(ar, true);
++		if (ret)
++			ath11k_warn(ar->ab, "failed to update channel list: %d\n", ret);
++
++		return;
++	}
++
+ 	/* Currently supporting only General User Hints. Cell base user
+ 	 * hints to be handled later.
+ 	 * Hints from other sources like Core, Beacons are not expected for
+@@ -295,12 +308,6 @@ int ath11k_regd_update(struct ath11k *ar)
+ 	if (ret)
+ 		goto err;
  
--	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
--		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
--		return -EOPNOTSUPP;
+-	if (ar->state == ATH11K_STATE_ON) {
+-		ret = ath11k_reg_update_chan_list(ar, true);
+-		if (ret)
+-			goto err;
 -	}
 -
- #ifndef CONFIG_NTFS3_LZX_XPRESS
- 	if (ni->ni_flags & NI_FLAG_COMPRESSED_MASK) {
- 		ntfs_inode_warn(
-@@ -765,37 +762,44 @@ static ssize_t ntfs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		return -EOPNOTSUPP;
- 	}
- 
--	return generic_file_read_iter(iocb, iter);
-+	return 0;
- }
- 
--static ssize_t ntfs_file_splice_read(struct file *in, loff_t *ppos,
--				     struct pipe_inode_info *pipe, size_t len,
--				     unsigned int flags)
-+/*
-+ * ntfs_file_read_iter - file_operations::read_iter
-+ */
-+static ssize_t ntfs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	return 0;
+ err:
+ 	ath11k_warn(ab, "failed to perform regd update : %d\n", ret);
+@@ -807,6 +814,7 @@ void ath11k_regd_update_work(struct work_struct *work)
+ void ath11k_reg_init(struct ath11k *ar)
  {
--	struct inode *inode = file_inode(in);
-+	struct file *file = iocb->ki_filp;
-+	struct inode *inode = file_inode(file);
- 	struct ntfs_inode *ni = ntfs_i(inode);
-+	ssize_t err;
- 
--	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
--		return -EIO;
-+	err = check_read_restriction(inode);
-+	if (err)
-+		return err;
- 
--	if (is_encrypted(ni)) {
--		ntfs_inode_warn(inode, "encrypted i/o not supported");
-+	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
-+		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
- 		return -EOPNOTSUPP;
- 	}
- 
--#ifndef CONFIG_NTFS3_LZX_XPRESS
--	if (ni->ni_flags & NI_FLAG_COMPRESSED_MASK) {
--		ntfs_inode_warn(
--			inode,
--			"activate CONFIG_NTFS3_LZX_XPRESS to read external compressed files");
--		return -EOPNOTSUPP;
--	}
--#endif
-+	return generic_file_read_iter(iocb, iter);
-+}
- 
--	if (is_dedup(ni)) {
--		ntfs_inode_warn(inode, "read deduplicated not supported");
--		return -EOPNOTSUPP;
--	}
-+/*
-+ * ntfs_file_splice_read - file_operations::splice_read
-+ */
-+static ssize_t ntfs_file_splice_read(struct file *in, loff_t *ppos,
-+				     struct pipe_inode_info *pipe, size_t len,
-+				     unsigned int flags)
-+{
-+	struct inode *inode = file_inode(in);
-+	ssize_t err;
-+
-+	err = check_read_restriction(inode);
-+	if (err)
-+		return err;
- 
- 	return filemap_splice_read(in, ppos, pipe, len, flags);
- }
-@@ -1065,14 +1069,11 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ 	ar->hw->wiphy->regulatory_flags = REGULATORY_WIPHY_SELF_MANAGED;
++	ar->hw->wiphy->flags |= WIPHY_FLAG_NOTIFY_REGDOM_BY_DRIVER;
+ 	ar->hw->wiphy->reg_notifier = ath11k_reg_notifier;
  }
  
- /*
-- * ntfs_file_write_iter - file_operations::write_iter
-+ * check_write_restriction:
-+ * common code for ntfs_file_write_iter and ntfs_file_splice_write
-  */
--static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
-+static int check_write_restriction(struct inode *inode)
- {
--	struct file *file = iocb->ki_filp;
--	struct inode *inode = file_inode(file);
--	ssize_t ret;
--	int err;
- 	struct ntfs_inode *ni = ntfs_i(inode);
- 
- 	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
-@@ -1083,13 +1084,31 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		return -EOPNOTSUPP;
- 	}
- 
--	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
--		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
-+	if (is_dedup(ni)) {
-+		ntfs_inode_warn(inode, "write into deduplicated not supported");
- 		return -EOPNOTSUPP;
- 	}
- 
--	if (is_dedup(ni)) {
--		ntfs_inode_warn(inode, "write into deduplicated not supported");
-+	return 0;
-+}
-+
-+/*
-+ * ntfs_file_write_iter - file_operations::write_iter
-+ */
-+static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
-+{
-+	struct file *file = iocb->ki_filp;
-+	struct inode *inode = file_inode(file);
-+	struct ntfs_inode *ni = ntfs_i(inode);
-+	ssize_t ret;
-+	int err;
-+
-+	err = check_write_restriction(inode);
-+	if (err)
-+		return err;
-+
-+	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
-+		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
- 		return -EOPNOTSUPP;
- 	}
- 
-@@ -1256,6 +1275,23 @@ int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
- 	return ret;
- }
- 
-+/*
-+ * ntfs_file_splice_write - file_operations::splice_write
-+ */
-+static ssize_t ntfs_file_splice_write(struct pipe_inode_info *pipe,
-+				      struct file *file, loff_t *ppos,
-+				      size_t len, unsigned int flags)
-+{
-+	ssize_t err;
-+	struct inode *inode = file_inode(file);
-+
-+	err = check_write_restriction(inode);
-+	if (err)
-+		return err;
-+
-+	return iter_file_splice_write(pipe, file, ppos, len, flags);
-+}
-+
- // clang-format off
- const struct inode_operations ntfs_file_inode_operations = {
- 	.getattr	= ntfs_getattr,
-@@ -1275,10 +1311,10 @@ const struct file_operations ntfs_file_operations = {
- 	.compat_ioctl	= ntfs_compat_ioctl,
- #endif
- 	.splice_read	= ntfs_file_splice_read,
-+	.splice_write	= ntfs_file_splice_write,
- 	.mmap		= ntfs_file_mmap,
- 	.open		= ntfs_file_open,
- 	.fsync		= ntfs_file_fsync,
--	.splice_write	= iter_file_splice_write,
- 	.fallocate	= ntfs_fallocate,
- 	.release	= ntfs_file_release,
- };
 -- 
 2.53.0
 
