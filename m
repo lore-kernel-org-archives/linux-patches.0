@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678C83939A4;
-	Sat, 17 Oct 2026 18:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2103D1CC1;
+	Sat, 17 Oct 2026 18:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260123; cv=none; b=U61bYKqolvjMPcjP61pFlRKQewK6uFH05rTJJY4T2E1j4S9WxO3xUrNMUWp3y9pro/cnSB1jIhJlmzRLb3zoTb9dVuIwHBAAYVsVXjhN9qoi5yzahMoGND4sV7zwWQOJHc8qUXhdENmm/17Gc7gwpFQ1RfWttke+MD68wVZ5EBk=
+	t=1792260126; cv=none; b=lzTFq9Ix5GnaSqOCRVRygUYvevMSOwbuL5J8FbnOVPbNtURUzoffJ+/GKyokCGPgiezEkuQcyqYJ74dYZMF4jMk5zxd9rvOwG2ak2ZfdmlqN9PFkInjePRDyAhlXaIbFyZPQd1Zm8Jc/WM9ucZy2YvVSHyEzLP8abYgaICVwwn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260123; c=relaxed/simple;
-	bh=UCfcFIemXbsCs0/nT0AFbyza1OvJXMMFVVMbTkwJstg=;
+	s=arc-20240116; t=1792260126; c=relaxed/simple;
+	bh=0EvRphqzQJMw8Siip+W445CAQtctVO5O6UNAB5kU8lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltBQcd1naUbLOqrmAUq+nM7PcLCL/UITpq6lHQmQsdb3ApVNty3lgbYRbwaGUXeGeWzINV0X56/4OlyKzoZg9lJf1bADPav9bfeQQgp89v5iXlpZMCofXW5B0Q0H2r0C2zQcaj23mIHQEzMSG9Pta/7gFkE3Tsyz7w5WyGc5+nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgJp5ZY/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YqCgMuOd3j/isWG5ZpyYnmE4ZmTdhvrk0NmTpfb1e/qDpMHcfSFwfr943msXputdDhBmm81J3eH/UqM89CF5ndX3n5tV3hiBGVkn0mlevzsKAcYo3TaiQCBnSJ4nnZHO3ygktCChN6MhaCtm3+7AEezwLeAF9aVFh5pwRia5O3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hs/WmaD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgJp5ZY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FBB1F000C4;
-	Sat, 17 Oct 2026 18:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hs/WmaD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D11F000C4;
+	Sat, 17 Oct 2026 18:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260122;
-	bh=rjv9EOupQeK6JgbgHGXcbxsclWWXG6Xoo0SAlafUmcI=;
+	s=korg; t=1792260125;
+	bh=e+kPbI60/joo7NgNeiRemPTOS9qU7nFE8lSpEYs5WHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FgJp5ZY/rp12x2bAIbG21pbNV7KQ05xJrPIeaaUQlBazrTEqnPJ78AR2IV5x1GX9M
-	 jYCi9BSv2bjYw7eUh0iGt+AMp23WGDqnbjf8Li7IBfiKkOxNYGaMZTeD3elshVK237
-	 Tg8i6aTVeMQiO6NDB4TC8ibd3WANwiPqpvumKVs4=
+	b=Hs/WmaD05NlXgW4qgBOcUTe3DEBwkIlnkGmHew/83e+ZwUw+qg7XflY0EeUNpAinG
+	 0axjM6lyTeVAXj31KXMd37WcONvQn7Fmby5CyRq51m0RzOKd9xUwo4Xykg042t1WcO
+	 Mo2g0ns7SVy1Cmt2dhPcMSRZdvXPkIQia0JVvrQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Jason Huang <jason.huang2@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1440/1674] wifi: cfg80211: stop PMSR before P2P and NAN teardown
-Date: Sat, 17 Oct 2026 18:01:52 +0200
-Message-ID: <20261017160508.142709500@linuxfoundation.org>
+Subject: [PATCH 6.6 1441/1674] wifi: brcmfmac: fix P2P action frame handling without device vif
+Date: Sat, 17 Oct 2026 18:01:53 +0200
+Message-ID: <20261017160508.168623591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,62 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Jason Huang <jason.huang2@infineon.com>
 
-[ Upstream commit 6c5fc504d0d6934132637aa3db4b9b58148eaa78 ]
+[ Upstream commit 1b1edb9ebed49099bdc924cef49a9aea8b552199 ]
 
-PMSR request teardown must abort active measurements while the
-wireless_dev is still present in the driver. cfg80211_leave_locked() and
-cfg80211_stop_pd() already do this before invoking the driver's stop
-callback, but cfg80211_stop_p2p_device() and cfg80211_stop_nan() do not.
+Some P2P action frame paths assume the P2P device vif is always
+available. That is not true when userspace sends non-P2P public action
+frames through the primary interface, or when action-frame abort runs
+after the P2P device vif has not been created.
 
-Those helpers are also called directly by nl80211, rfkill shutdown, and
-wireless_dev unregister paths. If one of these paths stops a P2P device
-or NAN interface with a pending request, it removes the mac80211
-subinterface from the driver first. Subsequent request cleanup cannot
-reach the lower driver's abort callback, but cfg80211 frees the request
-regardless. Driver state can then retain a stale request and use it when
-it later reports a result.
+Fall back to the primary vif when aborting an action frame without a P2P
+device vif, and guard P2P device saved IE access before using it for
+peer channel search.
 
-Call cfg80211_pmsr_wdev_down() before stopping the P2P device or NAN
-interface. This keeps lower-driver request state and cfg80211 request
-ownership in sync for all of the helpers' callers.
-
-Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260731071103.73563-1-enderaoelyther@gmail.com
+Fixes: 30fb1b272909 ("brcmfmac: use actframe_abort to cancel ongoing action frame")
+Fixes: 6eda4e2c5425 ("brcmfmac: Add tx p2p off-channel support.")
+Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260722082608.412472-1-Jason.Huang2@infineon.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 622192eeb7834..164277e81234b 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -237,6 +237,9 @@ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
- 	if (!wdev_running(wdev))
- 		return;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+index 33f27c83c33eb..c2c713f2dae6e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -1281,6 +1281,9 @@ static s32 brcmf_p2p_abort_action_frame(struct brcmf_cfg80211_info *cfg)
+ 	brcmf_dbg(TRACE, "Enter\n");
  
-+	wdev_lock(wdev);
-+	cfg80211_pmsr_wdev_down(wdev);
-+	wdev_unlock(wdev);
- 	rdev_stop_p2p_device(rdev, wdev);
- 	wdev->is_running = false;
- 
-@@ -262,6 +265,10 @@ void cfg80211_stop_nan(struct cfg80211_registered_device *rdev,
- 	if (!wdev_running(wdev))
- 		return;
- 
-+	wdev_lock(wdev);
-+	cfg80211_pmsr_wdev_down(wdev);
-+	wdev_unlock(wdev);
+ 	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
++	if (!vif)
++		vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
 +
- 	rdev_stop_nan(rdev, wdev);
- 	wdev->is_running = false;
- 
+ 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe_abort", &int_val,
+ 					sizeof(s32));
+ 	if (err)
+@@ -1817,6 +1820,7 @@ bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 	/* validate channel and p2p ies */
+ 	if (config_af_params.search_channel &&
+ 	    IS_P2P_SOCIAL_CHANNEL(le32_to_cpu(af_params->channel)) &&
++	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif &&
+ 	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->saved_ie.probe_req_ie_len) {
+ 		afx_hdl = &p2p->afx_hdl;
+ 		afx_hdl->peer_listen_chan = le32_to_cpu(af_params->channel);
 -- 
 2.53.0
 
