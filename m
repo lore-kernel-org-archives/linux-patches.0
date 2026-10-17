@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77FD18787A;
-	Sat, 17 Oct 2026 16:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1F83A1D01;
+	Sat, 17 Oct 2026 16:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256220; cv=none; b=AMuNrnQGaiwJr2jCWjwjGqp62BoeyZNZf4ew3YVPXy16d8KIR/I1jPX8m4E4sfRA3mAIcJtPGoE0trLgdOkhfG7L1A1wO1a/+hry9f8H8HTWhQcyxrby3qYPg4EGZQvQlcFBWdyTziZdwwU+n6e7x0Ux/Xl0LP/Frpz6NCObgv4=
+	t=1792256223; cv=none; b=YlNtedWn4R0bPxBlub5M+aWINVivJlDBxZ3l8zHX0/+rGD+3jgozEUlrvScmC/N265frCQRhOkczx44BIiOle2zFK7/JZZH3tLkp9mKFTJimwoE48+SySVTlBjs6XWuhBZLpxkB5wKN34fB8Qw3uyNnZ1Yi/sai2cT3t6bpI5C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256220; c=relaxed/simple;
-	bh=fHoX7dqxDKoYbWJCehLVOSY/nwnJdnMY/4TcDvptNSk=;
+	s=arc-20240116; t=1792256223; c=relaxed/simple;
+	bh=MQxs3KB7sXxz2F1eEHDI0jpMMv8Usm6q/ESAyqyuyQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7ww1kKbR+jFxhnvDgjC+FHcWDTKR4oaJtxXMxVvtaodWGvkgyLxGJ1RsWo9gVdW+pkAIacS0gPjDGCyBlmnLMY/XYnNfnWxmbCxcZa08xFsW7SjUbdlxrBXyXcdmdz0Xn/x8uxhxuU3shH1gxJUSFScQ+UtCP1N9H/8kT8OPqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQUsuUkw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WlFJ4Zos0ZjIzRhQJCGjA3nFM6mFd6y0pAoDWaxGlr9btUFlhGmcB5+0IkgOzsafdofux27w2SvIfj5QjGrCuKWqlIzshXlIdjoAcXORiWRxBMRgUclxrV3MzPjsmosRkHrk3ecbRZqqR85H0crhd3yNbf6Zv/MmXE9If6ZBJuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPmKl3Da; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQUsuUkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5221F000C4;
-	Sat, 17 Oct 2026 16:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPmKl3Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194121F000C4;
+	Sat, 17 Oct 2026 16:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256219;
-	bh=iIRqoxsv9Br3xGkydC0MBZ1yHGUrtFdQk2iTNj1tZ4Y=;
+	s=korg; t=1792256222;
+	bh=7bdRGKCn7MWdXKnY0BPalTO9YpwPQ9dhXghKavd4c9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQUsuUkwJItEH9qbJxBWmNyTzTo9cVAzt8VUTNrqk+YV0tidcn8BU0/MPiwVsRKEC
-	 p6uPua2UPc6Rk250c3+QNNAnDqJUTCks9hvBiCXzxhErwzJPg2HodElRp+6LJ66Cnb
-	 WP5iwX9jFUY/xvh2+kpKFqR2eEX7hw/FhVPGM7Jc=
+	b=VPmKl3Da151p1Y81Av/WGdrC301crxWLRtaP2O63e5A0hkrXEK5MtDfSzPnQwJH4p
+	 sf5eQxeQyCiKwGgRZTzJkbx8SpFPyvpwl2Lt0AKnh8ak22ZpX0b5Pl767EZJOI0naG
+	 WYomuXzfZZptm5DbHSRY3QvXUNkP/4Tl6zKGS+2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zide Chen <zide.chen@intel.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0122/1674] tcp: prevent collapsing skbs across boundary in rtx queue
-Date: Sat, 17 Oct 2026 17:39:54 +0200
-Message-ID: <20261017160434.285309593@linuxfoundation.org>
+Subject: [PATCH 6.6 0123/1674] perf/x86/intel: Remove anythread_deprecated bit from perf_capabilities
+Date: Sat, 17 Oct 2026 17:39:55 +0200
+Message-ID: <20261017160434.311513443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,98 +48,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit fc6d80eb504458d6416b75a94188b268c95c6533 ]
+[ Upstream commit 8767b4d73018bd3143f4c55b672064fad292f11b ]
 
-tcp_write_collapse_fence() sets TCP_SKB_CB(skb)->eor = 1 on
-tcp_write_queue_tail(sk) to prevent skbs queued after a switch to
-device encryption from being collapsed into earlier skbs.
+AnyThread mode deprecation is enumerated by CPUID.0AH:EDX[15] instead of
+PERF_CAPABILITIES MSR. It's not a good practice to define a bit to
+represent "anythread deprecation" in perf_capabilities. It leads to the
+anythread_deprecated bit could be overwritten by the real value of
+PERF_CAPABILITIES MSR, just like the below code in update_pmu_cap() does.
 
-The fence is a no-op if all earlier data has already been transmitted
-when the switch happens: sk->sk_write_queue is empty. The not yet
-acknowledged earlier skbs wait in sk->tcp_rtx_queue with eor 0.
+if (!intel_pmu_broken_perf_cap()) {
+	/* Perf Metric (Bit 15) and PEBS via PT (Bit 16) are hybrid enumeration */
+	rdmsrq(MSR_IA32_PERF_CAPABILITIES, hybrid(pmu, intel_cap).capabilities);
+}
 
-On a subsequent retransmit or SACK shift, tcp_retrans_try_collapse() or
-tcp_shift_skb_data() can then merge an skb queued after the switch into
-one queued before it.
+It leads to the anythread_deprecated bit is cleared to 0 and the "any"
+attribute is incorrectly shown in the /sys/devices/cpu/format/ folder on
+these support Perfmon v6 platforms, like Clearwater Forest.
 
-Both users of the fence are affected:
+$ grep . /sys/devices/cpu/format/*
+/sys/devices/cpu/format/acr_mask:config2:0-63
+/sys/devices/cpu/format/any:config:21
+/sys/devices/cpu/format/cmask:config:24-31
 
-- psp: devices only encrypt skbs with skb->decrypted set. The merged skb
-  keeps decrypted = 0 from the earlier skb, so merged data sent after
-  psp_sock_assoc_set_tx() is retransmitted in cleartext.
+So remove the anythread_deprecated bit from perf_capabilities structure
+and directly depends on CPUID.0AH:EDX[15] to judge if anythread is
+deprecated.
 
-- tls device offload: the merged skb straddles the start marker set in
-  tls_set_device_offload(). The software fallback (fill_sg_in() returns
-  -EINVAL) and the mlx5, nfp and funeth drivers cannot handle such an
-  skb and drop it. Every retransmit rebuilds the same skb, so the
-  connection stalls.
-
-Fix this in two places, for defense in depth:
-
-1. Fall back to tcp_rtx_queue_tail(sk) in tcp_write_collapse_fence()
-   when tcp_write_queue_tail(sk) is NULL.
-
-2. Check !skb_cmp_decrypted(to, from) in tcp_skb_can_collapse(), as
-   tcp_skb_can_collapse_rx() does on receive. skb_shift(), which both
-   collapse paths call, already has a DEBUG_NET_WARN_ON_ONCE() for this
-   condition.
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: cadbaa039b99 ("perf/x86/intel: Make anythread filter support conditional")
+Reported-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20260924154427.953800-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Applied tcp_write_collapse_fence() changes directly to the existing TLS code blocks because the helper is absent. ]
+Link: https://patch.msgid.link/20260616044654.3468742-2-dapeng1.mi@linux.intel.com
+[ Adjusted patch context to match Linux 6.6’s older PMU code. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    | 1 +
- net/tls/tls_device.c | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c | 10 +++-------
+ arch/x86/events/perf_event.h |  2 +-
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index c75d12e5156db..3fe0c1d928407 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -985,6 +985,7 @@ static inline bool tcp_skb_can_collapse(const struct sk_buff *to,
- {
- 	return likely(tcp_skb_can_collapse_to(to) &&
- 		      mptcp_skb_can_collapse(to, from) &&
-+		      !skb_cmp_decrypted(to, from) &&
- 		      skb_pure_zcopy_same(to, from));
- }
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index db5ad012dd40a..43e65e4c4ebe2 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -6185,12 +6185,6 @@ __init int intel_pmu_init(void)
  
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 34d321ff11980..bb7057aa828e1 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -239,7 +239,7 @@ static void tls_device_resync_tx(struct sock *sk, struct tls_context *tls_ctx,
- 	int err = 0;
- 	u8 *rcd_sn;
+ 	x86_add_quirk(intel_arch_events_quirk); /* Install first, so it runs last */
  
--	skb = tcp_write_queue_tail(sk);
-+	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
- 	if (skb)
- 		TCP_SKB_CB(skb)->eor = 1;
- 
-@@ -1157,7 +1157,7 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
- 	 * SKBs where only part of the payload needs to be encrypted.
- 	 * So mark the last skb in the write queue as end of record.
+-	if (version >= 5) {
+-		x86_pmu.intel_cap.anythread_deprecated = edx.split.anythread_deprecated;
+-		if (x86_pmu.intel_cap.anythread_deprecated)
+-			pr_cont(" AnyThread deprecated, ");
+-	}
+-
+ 	/*
+ 	 * Install the hw-cache-events table:
  	 */
--	skb = tcp_write_queue_tail(sk);
-+	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
- 	if (skb)
- 		TCP_SKB_CB(skb)->eor = 1;
+@@ -6981,8 +6975,10 @@ __init int intel_pmu_init(void)
+ 				     (u64)fixed_mask);
  
+ 	/* AnyThread may be deprecated on arch perfmon v5 or later */
+-	if (x86_pmu.intel_cap.anythread_deprecated)
++	if (version >= 5 && edx.split.anythread_deprecated) {
+ 		x86_pmu.format_attrs = intel_arch_formats_attr;
++		pr_cont("AnyThread deprecated, ");
++	}
+ 
+ 	intel_pmu_check_event_constraints(x86_pmu.event_constraints,
+ 					  x86_pmu.num_counters,
+diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
+index 4ca15be45cb80..9837e8d0deb39 100644
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -609,7 +609,7 @@ union perf_capabilities {
+ 		u64	perf_metrics:1;
+ 		u64	pebs_output_pt_available:1;
+ 		u64	pebs_timing_info:1;
+-		u64	anythread_deprecated:1;
++		u64	__reserved:1;
+ 	};
+ 	u64	capabilities;
+ };
 -- 
 2.53.0
 
