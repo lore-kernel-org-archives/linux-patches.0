@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07573BAD9B;
-	Sat, 17 Oct 2026 17:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0B03976BA;
+	Sat, 17 Oct 2026 17:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257141; cv=none; b=IQNn0c3sfI64tKRptKdmo5/M6zUCxUNA/7GwvKCcsOsoICYVQTSIyvcfxDBp/zYyOCKiPaioOdLFhYAUHyzfN7SkzZpc6bayXsFVGGl+cvDNMg6VqBj3gj+V5bUwXv4ONpQOEUO6PODA2RCRVaGVy0fI0RHF8Otlf21w566IJgs=
+	t=1792257143; cv=none; b=kkgeCwXTRKz3LesyQ49L7jdVQoN8Ocsa40itcCVj0HmdsyfsC9XI1ED9igRy8SOb3dUxq/LxcjdrNG7Q6fMHo74TodttxOxt/tnF7CMydNuaXMXF7HqKOgU4C6Rau/nObsdXRND8pL8/s46bhftOVw7pBYKZN+JlmNJRHSP5Pa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257141; c=relaxed/simple;
-	bh=P+CAMD1lyRAWwuknnxo850RHpHtuMV5MudmXOJnBUfk=;
+	s=arc-20240116; t=1792257143; c=relaxed/simple;
+	bh=XLUpatY57Q3llvKtHrIVoSxSf6c6c5vhGTc4nHHbwEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwYglwoO8KUC4R/SE0wViVfG8NC/c61eMl0akw+iCQ/K2QSsrO9LiKJhUGeUSpCLIwSSxIuu3/PAIN9ByjjIo4IlEiGfMUDOAV54AVHQCjRt8moa6KaDvFDG0cNcm45zF8XJ3bSU9gfYtY/TsO3+u8d2+/Sq8clIuMTM9MBPukU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anO3BUY+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c659UbuGjZBuJWrjFe8fwn2nTBQismqeD/tA74CzKUO3es0DIhmxSbVHDMBc1u3jJ+i3l8hgJh0pyH6Az3Sg6JwxIZw/oN6vuxSdaBzBasafCl8Cv0WoaqXco5bBvP6EW/yBx3TfK8vwlcHUjiKCjIRuDJFX/GvOUlHYacAATBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgFIF4rT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anO3BUY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0A31F000C4;
-	Sat, 17 Oct 2026 17:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgFIF4rT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C75E1F000C4;
+	Sat, 17 Oct 2026 17:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257139;
-	bh=h1dcs/IvSssPcxecrK2DdpOrwz/VT6WDFc5QH8lctCI=;
+	s=korg; t=1792257142;
+	bh=/70+MDy9rZbJSyoOzX8NdDp5f5+B9+TNT9MgNRi9x0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=anO3BUY+5g+UVFvVXKF27eVnru23ddX7mFD2+X6gwLFcOQmLf5A9FAZvG5omZnDzo
-	 rwxKEdkuu594+wdjFqeHocGUKlVNCwSCya20txsEnzJmsPEY51W8Y/aE0hHTV95U3v
-	 AqLzpYM0+P+9DLkP05oE2pKJkVDys7AcP9rPErMc=
+	b=AgFIF4rT3aDjBprGTTVdsQr/cf7P/9xAd6ZN4C7WjHgKb+vnOh5x0RBtUGrCflGSe
+	 HQeeDl1XL5iCql/UXFb/YDOQeMP6M0CX9JbCdu6szVl0pa67mbRS8a4VVBlGziI+3o
+	 A7RhdH8jgub/aS3qJb3vT/raOPrz3FTR5laVepSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daehyeon Ko <4ncienth@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0463/1674] ipv4: stop PMTU walk when nexthop group shrinks
-Date: Sat, 17 Oct 2026 17:45:35 +0200
-Message-ID: <20261017160443.003735359@linuxfoundation.org>
+Subject: [PATCH 6.6 0464/1674] ipv4: stop route notification sizing when nexthop group shrinks
+Date: Sat, 17 Oct 2026 17:45:36 +0200
+Message-ID: <20261017160443.030636482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,55 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 6619e01855e65ef35723685a557e3eb106f4ecf5 upstream.
+commit d3daa33c7af92e38f2274bbd2576f58bfbaf89e6 upstream.
 
-Commit 7d3f3b4367f3 ("net: ipv4: Cache pmtu for all packet paths if
-multipath enabled") made __ip_rt_update_pmtu() update every path.
+Commit 680aea08e78c ("net: ipv4: Emit notification when fib
+hardware flags are changed") added an RCU-only fib_nlmsg_size() call
+for asynchronous hardware flag notifications.
 
-For nexthop objects, fib_info_num_path() and fib_info_nhc()
-independently load nh->nh_grp.  RCU protects each group's lifetime but
-does not make the loads observe the same group.  If replacement shrinks
-the group after the loop accepts an index, fib_info_nhc() returns NULL
-and update_or_create_fnhe() dereferences it.
+fib_nlmsg_size() checks fib_info_num_path() before each iteration,
+then fib_info_nhc() independently reloads nh->nh_grp. If
+RTM_NEWNEXTHOP replaces a group with fewer paths between those loads,
+fib_info_nhc() returns NULL and fib_nexthop_nlmsg_size() dereferences
+it.
 
-A deterministic probe only widened the existing window between the real
-operations.  On v7.2, an RTM_NEWNEXTHOP replacement published a
-one-member group after the PMTU reader accepted index 1 from a two-member
-group, producing:
+Stop sizing when the indexed path is absent. Nexthop groups are
+dense, so the current snapshot has no later path.
 
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: update_or_create_fnhe+0x45/0x15b0
-
-Stop when the indexed path is absent.  Groups are dense, so no later
-index exists in that snapshot.  The same real-writer window completed
-114,423 PMTU iterations without an oops with this check.  A reproducer
-is available on request.
-
-Replacement requires CAP_NET_ADMIN in the network namespace.  Where
-unprivileged user namespaces are permitted, a local user can obtain it
-in a new user and network namespace.
-
-Fixes: 7d3f3b4367f3 ("net: ipv4: Cache pmtu for all packet paths if multipath enabled")
+Fixes: 680aea08e78c ("net: ipv4: Emit notification when fib hardware flags are changed")
 Cc: stable@vger.kernel.org
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/4fb87ed994dfc067178fc845cdd8bc9b5446b039.1790915964.git.4ncienth@gmail.com
+Link: https://patch.msgid.link/1054fa46165bba1b473782fa41367804aa908e86.1790915964.git.4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/fib_semantics.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1089,6 +1089,8 @@ static void __ip_rt_update_pmtu(struct r
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -514,6 +514,9 @@ size_t fib_nlmsg_size(struct fib_info *f
+ 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
+ 			size_t nhsize;
  
- 			for (nhsel = 0; nhsel < fib_info_num_path(res.fi); nhsel++) {
- 				nhc = fib_info_nhc(res.fi, nhsel);
-+				if (!nhc)
-+					break;
- 				update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
- 						      jiffies + net->ipv4.ip_rt_mtu_expires);
- 			}
++			if (!nhc)
++				break;
++
+ 			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
+ 
+ 			if (nhs != 1)
 
 
