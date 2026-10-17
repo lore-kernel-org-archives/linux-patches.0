@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921FE3B8BBB;
-	Sat, 17 Oct 2026 17:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8AF35C1BC;
+	Sat, 17 Oct 2026 17:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258302; cv=none; b=aYzmDPnJNwU8hOKs9qjWDImzhFbQDi/rD7thpCnd89wB0hRYLXbtI4epnKwMdZ5hTFXJme4y73rMPtisn+tQsZqHMNeEDcABlyC141kwoh9MrpdujtG+vUy0vMpSAQgo19Iajs78ryWXH/c1CL8Xnko+jyY2VGNH7IeOl61WOEw=
+	t=1792258305; cv=none; b=iyxRDsqFut6jA4V02kAsQPBuBYi3UBr8xFKz1CbOvP/4Km63AF1YhXNxFM3b+GjsGAdLr2j+Ddn5Mvl/gL4pXONJzarVUBqMK3BQtiyx2CgIaDDGffbaviSpJLUeZ0CybNnPMnm53gkh8JzmAHY+PQ7B4O7TE/AELb2W+o1coQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258302; c=relaxed/simple;
-	bh=HtEUrE6jFS6MeO2ewS2TErkiVi90IOKynLvQEEoTzCc=;
+	s=arc-20240116; t=1792258305; c=relaxed/simple;
+	bh=UoaPdQdI7EzJvncAlVqNgClY+HYa1GujQIE4PvgVdNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZ1dtyjDRRpdxMvOSQfJdlDa5310xtei+4E5xC+cPfP1L6EUGz5djU2RXXacMLz6cOca+plt5VGWVnvsL5jHuthZm7Kq0P3UVS365BryZoKLUqdJ+TkYEH3Vq7Rnkl545DKmpIzc7/xf9GFjK0Kuj7+O66aTw+jPIykEam/Z+EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fc2w0wGi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iFYbmBhIuOkhKWHB9XGAlFvyVDLAHui8mJMwI3SjpqGn+Z8eI2NQeQUCRsbexmR5sVw1INzJsmZpqwQv32dh+eHz53ebUQVTl06Uoj1cjouD4QqV5f+IYUPK/Jt8jzx91VyjAPph5VumO6hNSygo1Etq8YzbRXKK7xPOZ+2xbnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dT5nIEW8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fc2w0wGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1E81F000C4;
-	Sat, 17 Oct 2026 17:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dT5nIEW8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43321F000C4;
+	Sat, 17 Oct 2026 17:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258301;
-	bh=UXgrM5x+9VRe6fk/t/DO1IKTS9E9i5lVcUGYvgUfPVY=;
+	s=korg; t=1792258304;
+	bh=PpKIK41tjrKgzl3JpbGG9ZUTgQCyyfpALNni6PBFPM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fc2w0wGiAaI8yjUDRBIivDm2wfGRml6u976eJAcsiPd8HQog8MBwfpw5VvRHIxBfX
-	 o2cWfDb+4OGTY5/et1q3QlqoJjITiah5NDT+kfTYIc/pMyWukAPlvATZ+tQqk9HleE
-	 u6fxensaoCIYl/0RzXT2RRT2VWHQbclP5420UxrM=
+	b=dT5nIEW8OYL2rYrM5idDIzSbgHzhGxX2/tcP0jszC8UcS5gmCAcwtsltKl8bRnN/c
+	 WL3T0ge5+An5ASAodXh8/SZ0uMB0LquopUmNt69OAmBZRUFcTipbqr0aFppFx3Xs12
+	 gt/xZhNOknSmcOz0adxhSa3H+es8BOEnXGkzmhyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseong Kim <ii4gsp@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Paul Cercueil <paul@crapouillou.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0837/1674] Input: lkkbd - disable pending work before freeing device
-Date: Sat, 17 Oct 2026 17:51:49 +0200
-Message-ID: <20261017160452.614723466@linuxfoundation.org>
+Subject: [PATCH 6.6 0838/1674] usb: gadget: Support already-mapped DMA SGs
+Date: Sat, 17 Oct 2026 17:51:50 +0200
+Message-ID: <20261017160452.640193565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,52 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minseong Kim <ii4gsp@gmail.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit e58c88f0cb2d8ed89de78f6f17409d29cfab6c5c ]
+[ Upstream commit 99f638dd49ca80538addec6b3733ddb5784c9373 ]
 
-lkkbd_interrupt() schedules lk->tq via schedule_work(), and the work
-handler lkkbd_reinit() dereferences the lkkbd structure and its
-serio/input_dev fields.
+Add a new 'sg_was_mapped' field to the struct usb_request. This field
+can be used to indicate that the scatterlist associated to the USB
+transfer has already been mapped into the DMA space, and it does not
+have to be done internally.
 
-lkkbd_disconnect() and error paths in lkkbd_connect() free the lkkbd
-structure without preventing the reinit work from being queued again
-until serio_close() returns. This can allow the work handler to run
-after the structure has been freed, leading to a potential use-after-free.
-
-Use disable_work_sync() instead of cancel_work_sync() to ensure the
-reinit work cannot be re-queued, and call it both in lkkbd_disconnect()
-and in lkkbd_connect() error paths after serio_open().
-
-Signed-off-by: Minseong Kim <ii4gsp@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251212052314.16139-1-ii4gsp@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://lore.kernel.org/r/20240130122340.54813-2-paul@crapouillou.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e5bf5ee26663 ("functionfs: fix the open/removal races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/lkkbd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/udc/core.c | 7 ++++++-
+ include/linux/usb/gadget.h    | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/keyboard/lkkbd.c b/drivers/input/keyboard/lkkbd.c
-index 047b654b3752c..7b57577a1715c 100644
---- a/drivers/input/keyboard/lkkbd.c
-+++ b/drivers/input/keyboard/lkkbd.c
-@@ -671,6 +671,7 @@ static int lkkbd_connect(struct serio *serio, struct serio_driver *drv)
- 	return 0;
+diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
+index 2ef28760e9ad9..365d1f77856e2 100644
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -913,6 +913,11 @@ int usb_gadget_map_request_by_dev(struct device *dev,
+ 	if (req->length == 0)
+ 		return 0;
  
-  fail3:	serio_close(serio);
-+	cancel_work_sync(&lk->tq);
-  fail2:	serio_set_drvdata(serio, NULL);
-  fail1:	input_free_device(input_dev);
- 	kfree(lk);
-@@ -687,6 +688,7 @@ static void lkkbd_disconnect(struct serio *serio)
- 	input_get_device(lk->dev);
- 	input_unregister_device(lk->dev);
- 	serio_close(serio);
-+	cancel_work_sync(&lk->tq);
- 	serio_set_drvdata(serio, NULL);
- 	input_put_device(lk->dev);
- 	kfree(lk);
++	if (req->sg_was_mapped) {
++		req->num_mapped_sgs = req->num_sgs;
++		return 0;
++	}
++
+ 	if (req->num_sgs) {
+ 		int     mapped;
+ 
+@@ -958,7 +963,7 @@ EXPORT_SYMBOL_GPL(usb_gadget_map_request);
+ void usb_gadget_unmap_request_by_dev(struct device *dev,
+ 		struct usb_request *req, int is_in)
+ {
+-	if (req->length == 0)
++	if (req->length == 0 || req->sg_was_mapped)
+ 		return;
+ 
+ 	if (req->num_mapped_sgs) {
+diff --git a/include/linux/usb/gadget.h b/include/linux/usb/gadget.h
+index 1a13d0c01b0aa..6ec7f94c5adc2 100644
+--- a/include/linux/usb/gadget.h
++++ b/include/linux/usb/gadget.h
+@@ -54,6 +54,7 @@ struct usb_ep;
+  * @short_not_ok: When reading data, makes short packets be
+  *     treated as errors (queue stops advancing till cleanup).
+  * @dma_mapped: Indicates if request has been mapped to DMA (internal)
++ * @sg_was_mapped: Set if the scatterlist has been mapped before the request
+  * @complete: Function called when request completes, so this request and
+  *	its buffer may be re-used.  The function will always be called with
+  *	interrupts disabled, and it must not sleep.
+@@ -114,6 +115,7 @@ struct usb_request {
+ 	unsigned		zero:1;
+ 	unsigned		short_not_ok:1;
+ 	unsigned		dma_mapped:1;
++	unsigned		sg_was_mapped:1;
+ 
+ 	void			(*complete)(struct usb_ep *ep,
+ 					struct usb_request *req);
 -- 
 2.53.0
 
