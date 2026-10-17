@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5E0390C8A;
-	Sat, 17 Oct 2026 16:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2853A5E7D;
+	Sat, 17 Oct 2026 16:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253580; cv=none; b=fEQ1WRqoCMKymvVsGI8ASbmHvbKdaf3Xt2TKSfjBD88HjrPYW1Z3tgZxgvt37/ojeqd7ELpdl9VLtH0GNwxmvFqQvq6lq/ENtCPeUECCOdWqfVA5LvJNu9xG0PMh4ia/AzeuYLtkWQ6IymSbh7Q7pH/iwCT+oVroxWYnSAbWEuw=
+	t=1792253582; cv=none; b=IREfrVF7235YcJSFvDsccLeRYIY5/VgCitp+op70tuxqUd5xzQXa2m1iUXxt0Ej7bkDNtkOsr6yvlMjEREGBU1EWdZplp+PU5XoUxpDIzp2ATHu8e916464EoiXtwpNurUapntRdjo91KWMsVfOWk2Cqp3+ET9nu6s1iPTnuO94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253580; c=relaxed/simple;
-	bh=sK0tQrICodzIU49DDu9NPevn9+hCUEWfR6mPdh0Ades=;
+	s=arc-20240116; t=1792253582; c=relaxed/simple;
+	bh=uniTAJXsiNl+w1e+mDePe6M2B7h7SOs5ZuCPeBwyXtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhvJy2OWZUuj7xmqI5kSPXdXbaksZMz26rNhbxG2zuFYuymug4mmu3iVO590TlvJWObEVGH989xc/Jq9GQ/ku4J+HI38ZuyvBb1vhcJioU4j1VAtrdHVHA+WuoXtvsyv5NHPwRmVlY6cJfSagdIG0JTMq4u56togNLyrmpG6O4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7rkfI3S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n//4jbPeznZURac9KbWwk/uKRidmROtb/+SoD/eZjdc3aegB0V+gzDMTgn28QBepUBaJaqjkVgC3AhqrdyX1Lf8iOITSGPaSVMZBXX1LsUMoUwrx3jQ3z8Kp51zi9xPf1zUXSwxSr3fLGuiBZR2hiKZImSPQ543qTzsZUIQS6oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1MFhWJZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7rkfI3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132921F000C7;
-	Sat, 17 Oct 2026 16:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1MFhWJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D311F000C5;
+	Sat, 17 Oct 2026 16:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253576;
-	bh=0mkkehBF18SUxWG4uiS/5hUTKB1ccU/UsWdfZSHOYR0=;
+	s=korg; t=1792253579;
+	bh=P20lrb1ob4X2EtxAHgf8j4E4+gNRprG5gzCIQstK85o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j7rkfI3SrgJ4BNszm5RaP/tw+lR4Cr2Si6vtTc4Mn80r3fh7BVUOKc3NNqalsduFz
-	 uANPLuvadQdhK6YSSlAUxgNB4HgnJaePRD98udHzv0omQ3+WKxh3jKG58b05uEanSH
-	 8eE/3Po2t5Nd6zdkR+nugTAVy1ELtjesu1bTsKSw=
+	b=y1MFhWJZoD6CK/RlAQ2UGIqyrM07AVtTHj1gP357+MLf9Qhn9dlKjhQ9Wv5kUiJ8b
+	 A5ffhuUbxWUHCb3ofQyqpinKuftGyWClTpX+28UdrYRN+S/WoVE2TxFZucSJyTDsRh
+	 9BD0Gz0gfsEBrqyCgPYMkp3dxtJmSXeLGO8qaFqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Christian Gromm <christian.gromm@microchip.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/869] s390/fpu: Fix false-positive kmsan report in fpu_vstl()
-Date: Sat, 17 Oct 2026 17:50:06 +0200
-Message-ID: <20261017160041.278300689@linuxfoundation.org>
+Subject: [PATCH 6.12 166/869] staging: most: remove broken i2c driver
+Date: Sat, 17 Oct 2026 17:50:07 +0200
+Message-ID: <20261017160041.303958802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,158 +51,465 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 14e4e4175b64dd9216b522f6ece8af6997d063b2 ]
+[ Upstream commit 495df2da6944477d282d5cc0c13174d06e25b310 ]
 
-A false-positive kmsan report is detected when running ping command.
+The MOST I2C driver has been completely broken for five years without
+anyone noticing so remove the driver from staging.
 
-An inline assembly instruction 'vstl' can write varied amount of bytes
-depending on value of 'index' argument. If 'index' > 0, 'vstl' writes
-at least 2 bytes.
+Specifically, commit 723de0f9171e ("staging: most: remove device from
+interface structure") started requiring drivers to set the interface
+device pointer before registration, but the I2C driver was never updated
+which results in a NULL pointer dereference if anyone ever tries to
+probe it.
 
-clang generates kmsan write helper call depending on inline assembly
-constraints. Constraints are evaluated compile-time, but value of
-'index' argument is known only at runtime.
-
-clang currently generates call to __msan_instrument_asm_store with 1 byte
-as size. Manually call kmsan function to indicate correct amount of bytes
-written and fix false-positive report.
-
-This change fixes following kmsan reports:
-
-[   36.563119] =====================================================
-[   36.563594] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
-[   36.563852]  virtqueue_add+0x35c6/0x7c70
-[   36.564016]  virtqueue_add_outbuf+0xa0/0xb0
-[   36.564266]  start_xmit+0x288c/0x4a20
-[   36.564460]  dev_hard_start_xmit+0x302/0x900
-[   36.564649]  sch_direct_xmit+0x340/0xea0
-[   36.564894]  __dev_queue_xmit+0x2e94/0x59b0
-[   36.565058]  neigh_resolve_output+0x936/0xb40
-[   36.565278]  __neigh_update+0x2f66/0x3a60
-[   36.565499]  neigh_update+0x52/0x60
-[   36.565683]  arp_process+0x1588/0x2de0
-[   36.565916]  NF_HOOK+0x1da/0x240
-[   36.566087]  arp_rcv+0x3e4/0x6e0
-[   36.566306]  __netif_receive_skb_list_core+0x1374/0x15a0
-[   36.566527]  netif_receive_skb_list_internal+0x1116/0x17d0
-[   36.566710]  napi_complete_done+0x376/0x740
-[   36.566918]  virtnet_poll+0x1bae/0x2910
-[   36.567130]  __napi_poll+0xf4/0x830
-[   36.567294]  net_rx_action+0x97c/0x1ed0
-[   36.567556]  handle_softirqs+0x306/0xe10
-[   36.567731]  irq_exit_rcu+0x14c/0x2e0
-[   36.567910]  do_io_irq+0xd4/0x120
-[   36.568139]  io_int_handler+0xc2/0xe8
-[   36.568299]  arch_cpu_idle+0xb0/0xc0
-[   36.568540]  arch_cpu_idle+0x76/0xc0
-[   36.568726]  default_idle_call+0x40/0x70
-[   36.568953]  do_idle+0x1d6/0x390
-[   36.569486]  cpu_startup_entry+0x9a/0xb0
-[   36.569745]  rest_init+0x1ea/0x290
-[   36.570029]  start_kernel+0x95e/0xb90
-[   36.570348]  startup_continue+0x2e/0x40
-[   36.570703]
-[   36.570798] Uninit was created at:
-[   36.571002]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
-[   36.571261]  kmalloc_reserve+0x12a/0x470
-[   36.571553]  __alloc_skb+0x310/0x860
-[   36.571844]  __ip_append_data+0x483e/0x6a30
-[   36.572170]  ip_append_data+0x11c/0x1e0
-[   36.572477]  raw_sendmsg+0x1c8c/0x2180
-[   36.572818]  inet_sendmsg+0xe6/0x190
-[   36.573142]  __sys_sendto+0x55e/0x8e0
-[   36.573392]  __s390x_sys_socketcall+0x19ae/0x2ba0
-[   36.573571]  __do_syscall+0x12e/0x240
-[   36.573823]  system_call+0x6e/0x90
-[   36.573976]
-[   36.574017] Byte 35 of 98 is uninitialized
-[   36.574082] Memory access of size 98 starts at 0000000007aa0012
-[   36.574218]
-[   36.574325] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G    B            N  6.17.0-dirty #16 NONE
-[   36.574541] Tainted: [B]=BAD_PAGE, [N]=TEST
-[   36.574617] Hardware name: IBM 3931 A01 703 (KVM/Linux)
-[   36.574755] =====================================================
-
-[   63.532541] =====================================================
-[   63.533639] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
-[   63.533989]  virtqueue_add+0x35c6/0x7c70
-[   63.534940]  virtqueue_add_outbuf+0xa0/0xb0
-[   63.535861]  start_xmit+0x288c/0x4a20
-[   63.536708]  dev_hard_start_xmit+0x302/0x900
-[   63.537020]  sch_direct_xmit+0x340/0xea0
-[   63.537997]  __dev_queue_xmit+0x2e94/0x59b0
-[   63.538819]  neigh_resolve_output+0x936/0xb40
-[   63.539793]  ip_finish_output2+0x1ee2/0x2200
-[   63.540784]  __ip_finish_output+0x272/0x7a0
-[   63.541765]  ip_finish_output+0x4e/0x5e0
-[   63.542791]  ip_output+0x166/0x410
-[   63.543771]  ip_push_pending_frames+0x1a2/0x470
-[   63.544753]  raw_sendmsg+0x1f06/0x2180
-[   63.545033]  inet_sendmsg+0xe6/0x190
-[   63.546006]  __sys_sendto+0x55e/0x8e0
-[   63.546859]  __s390x_sys_socketcall+0x19ae/0x2ba0
-[   63.547730]  __do_syscall+0x12e/0x240
-[   63.548019]  system_call+0x6e/0x90
-[   63.548989]
-[   63.549779] Uninit was created at:
-[   63.550691]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
-[   63.550975]  kmalloc_reserve+0x12a/0x470
-[   63.551969]  __alloc_skb+0x310/0x860
-[   63.552949]  __ip_append_data+0x483e/0x6a30
-[   63.553902]  ip_append_data+0x11c/0x1e0
-[   63.554912]  raw_sendmsg+0x1c8c/0x2180
-[   63.556719]  inet_sendmsg+0xe6/0x190
-[   63.557534]  __sys_sendto+0x55e/0x8e0
-[   63.557875]  __s390x_sys_socketcall+0x19ae/0x2ba0
-[   63.558869]  __do_syscall+0x12e/0x240
-[   63.559832]  system_call+0x6e/0x90
-[   63.560780]
-[   63.560972] Byte 35 of 98 is uninitialized
-[   63.561741] Memory access of size 98 starts at 0000000005704312
-[   63.561950]
-[   63.562824] CPU: 3 UID: 0 PID: 192 Comm: ping Tainted: G    B            N  6.17.0-dirty #16 NONE
-[   63.563868] Tainted: [B]=BAD_PAGE, [N]=TEST
-[   63.564751] Hardware name: IBM 3931 A01 703 (KVM/Linux)
-[   63.564986] =====================================================
-
-Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
-Signed-off-by: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 723de0f9171e ("staging: most: remove device from interface structure")
+Cc: Christian Gromm <christian.gromm@microchip.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251029093442.29256-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/fpu-insn.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/most/Kconfig      |   2 -
+ drivers/staging/most/Makefile     |   1 -
+ drivers/staging/most/i2c/Kconfig  |  13 --
+ drivers/staging/most/i2c/Makefile |   4 -
+ drivers/staging/most/i2c/i2c.c    | 374 ------------------------------
+ 5 files changed, 394 deletions(-)
+ delete mode 100644 drivers/staging/most/i2c/Kconfig
+ delete mode 100644 drivers/staging/most/i2c/Makefile
+ delete mode 100644 drivers/staging/most/i2c/i2c.c
 
-diff --git a/arch/s390/include/asm/fpu-insn.h b/arch/s390/include/asm/fpu-insn.h
-index a4c9b4db62ff5..c74c6056087fe 100644
---- a/arch/s390/include/asm/fpu-insn.h
-+++ b/arch/s390/include/asm/fpu-insn.h
-@@ -12,6 +12,7 @@
- #ifndef __ASSEMBLY__
+diff --git a/drivers/staging/most/Kconfig b/drivers/staging/most/Kconfig
+index 6f420cbcdcfff..e89658df6f124 100644
+--- a/drivers/staging/most/Kconfig
++++ b/drivers/staging/most/Kconfig
+@@ -24,6 +24,4 @@ source "drivers/staging/most/video/Kconfig"
  
- #include <linux/instrumented.h>
-+#include <linux/kmsan.h>
- #include <asm/asm-extable.h>
+ source "drivers/staging/most/dim2/Kconfig"
  
- asm(".include \"asm/fpu-insn-asm.h\"\n");
-@@ -377,6 +378,7 @@ static __always_inline void fpu_vst(u8 v1, const void *vxr)
- 		     : [vxr] "=Q" (*(__vector128 *)vxr)
- 		     : [v1] "I" (v1)
- 		     : "memory");
-+	kmsan_unpoison_memory(vxr, size);
- }
- 
- #endif /* CONFIG_CC_IS_CLANG */
-@@ -395,6 +397,7 @@ static __always_inline void fpu_vstl(u8 v1, u32 index, const void *vxr)
- 		: [vxr] "=R" (*(u8 *)vxr)
- 		: [index] "d" (index), [v1] "I" (v1)
- 		: "memory", "1");
-+	kmsan_unpoison_memory(vxr, size);
- }
- 
- #else /* CONFIG_CC_IS_CLANG */
+-source "drivers/staging/most/i2c/Kconfig"
+-
+ endif
+diff --git a/drivers/staging/most/Makefile b/drivers/staging/most/Makefile
+index 8b3fc5a7af514..e45084df7803a 100644
+--- a/drivers/staging/most/Makefile
++++ b/drivers/staging/most/Makefile
+@@ -3,4 +3,3 @@
+ obj-$(CONFIG_MOST_NET)	+= net/
+ obj-$(CONFIG_MOST_VIDEO)	+= video/
+ obj-$(CONFIG_MOST_DIM2)	+= dim2/
+-obj-$(CONFIG_MOST_I2C)	+= i2c/
+diff --git a/drivers/staging/most/i2c/Kconfig b/drivers/staging/most/i2c/Kconfig
+deleted file mode 100644
+index ff64283cbad18..0000000000000
+--- a/drivers/staging/most/i2c/Kconfig
++++ /dev/null
+@@ -1,13 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0
+-#
+-# MOST I2C configuration
+-#
+-
+-config MOST_I2C
+-	tristate "I2C"
+-	depends on I2C
+-	help
+-	  Say Y here if you want to connect via I2C to network transceiver.
+-
+-	  To compile this driver as a module, choose M here: the
+-	  module will be called most_i2c.
+diff --git a/drivers/staging/most/i2c/Makefile b/drivers/staging/most/i2c/Makefile
+deleted file mode 100644
+index 71099dd0f85b9..0000000000000
+--- a/drivers/staging/most/i2c/Makefile
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0
+-obj-$(CONFIG_MOST_I2C) += most_i2c.o
+-
+-most_i2c-objs := i2c.o
+diff --git a/drivers/staging/most/i2c/i2c.c b/drivers/staging/most/i2c/i2c.c
+deleted file mode 100644
+index ce869280a056b..0000000000000
+--- a/drivers/staging/most/i2c/i2c.c
++++ /dev/null
+@@ -1,374 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * i2c.c - Hardware Dependent Module for I2C Interface
+- *
+- * Copyright (C) 2013-2015, Microchip Technology Germany II GmbH & Co. KG
+- */
+-
+-#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+-
+-#include <linux/init.h>
+-#include <linux/module.h>
+-#include <linux/slab.h>
+-#include <linux/i2c.h>
+-#include <linux/interrupt.h>
+-#include <linux/err.h>
+-#include <linux/most.h>
+-
+-enum { CH_RX, CH_TX, NUM_CHANNELS };
+-
+-#define MAX_BUFFERS_CONTROL 32
+-#define MAX_BUF_SIZE_CONTROL 256
+-
+-/**
+- * list_first_mbo - get the first mbo from a list
+- * @ptr:	the list head to take the mbo from.
+- */
+-#define list_first_mbo(ptr) \
+-	list_first_entry(ptr, struct mbo, list)
+-
+-static unsigned int polling_rate;
+-module_param(polling_rate, uint, 0644);
+-MODULE_PARM_DESC(polling_rate, "Polling rate [Hz]. Default = 0 (use IRQ)");
+-
+-struct hdm_i2c {
+-	struct most_interface most_iface;
+-	struct most_channel_capability capabilities[NUM_CHANNELS];
+-	struct i2c_client *client;
+-	struct rx {
+-		struct delayed_work dwork;
+-		struct list_head list;
+-		bool int_disabled;
+-		unsigned int delay;
+-	} rx;
+-	char name[64];
+-};
+-
+-static inline struct hdm_i2c *to_hdm(struct most_interface *iface)
+-{
+-	return container_of(iface, struct hdm_i2c, most_iface);
+-}
+-
+-static irqreturn_t most_irq_handler(int, void *);
+-static void pending_rx_work(struct work_struct *);
+-
+-/**
+- * configure_channel - called from MOST core to configure a channel
+- * @most_iface: interface the channel belongs to
+- * @ch_idx: channel to be configured
+- * @channel_config: structure that holds the configuration information
+- *
+- * Return 0 on success, negative on failure.
+- *
+- * Receives configuration information from MOST core and initialize the
+- * corresponding channel.
+- */
+-static int configure_channel(struct most_interface *most_iface,
+-			     int ch_idx,
+-			     struct most_channel_config *channel_config)
+-{
+-	int ret;
+-	struct hdm_i2c *dev = to_hdm(most_iface);
+-	unsigned int delay, pr;
+-
+-	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
+-
+-	if (channel_config->data_type != MOST_CH_CONTROL) {
+-		pr_err("bad data type for channel %d\n", ch_idx);
+-		return -EPERM;
+-	}
+-
+-	if (channel_config->direction != dev->capabilities[ch_idx].direction) {
+-		pr_err("bad direction for channel %d\n", ch_idx);
+-		return -EPERM;
+-	}
+-
+-	if (channel_config->direction == MOST_CH_RX) {
+-		if (!polling_rate) {
+-			if (dev->client->irq <= 0) {
+-				pr_err("bad irq: %d\n", dev->client->irq);
+-				return -ENOENT;
+-			}
+-			dev->rx.int_disabled = false;
+-			ret = request_irq(dev->client->irq, most_irq_handler, 0,
+-					  dev->client->name, dev);
+-			if (ret) {
+-				pr_err("request_irq(%d) failed: %d\n",
+-				       dev->client->irq, ret);
+-				return ret;
+-			}
+-		} else {
+-			delay = msecs_to_jiffies(MSEC_PER_SEC / polling_rate);
+-			dev->rx.delay = delay ? delay : 1;
+-			pr = MSEC_PER_SEC / jiffies_to_msecs(dev->rx.delay);
+-			pr_info("polling rate is %u Hz\n", pr);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+-/**
+- * enqueue - called from MOST core to enqueue a buffer for data transfer
+- * @most_iface: intended interface
+- * @ch_idx: ID of the channel the buffer is intended for
+- * @mbo: pointer to the buffer object
+- *
+- * Return 0 on success, negative on failure.
+- *
+- * Transmit the data over I2C if it is a "write" request or push the buffer into
+- * list if it is an "read" request
+- */
+-static int enqueue(struct most_interface *most_iface,
+-		   int ch_idx, struct mbo *mbo)
+-{
+-	struct hdm_i2c *dev = to_hdm(most_iface);
+-	int ret;
+-
+-	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
+-
+-	if (ch_idx == CH_RX) {
+-		/* RX */
+-		if (!polling_rate)
+-			disable_irq(dev->client->irq);
+-		cancel_delayed_work_sync(&dev->rx.dwork);
+-		list_add_tail(&mbo->list, &dev->rx.list);
+-		if (dev->rx.int_disabled || polling_rate)
+-			pending_rx_work(&dev->rx.dwork.work);
+-		if (!polling_rate)
+-			enable_irq(dev->client->irq);
+-	} else {
+-		/* TX */
+-		ret = i2c_master_send(dev->client, mbo->virt_address,
+-				      mbo->buffer_length);
+-		if (ret <= 0) {
+-			mbo->processed_length = 0;
+-			mbo->status = MBO_E_INVAL;
+-		} else {
+-			mbo->processed_length = mbo->buffer_length;
+-			mbo->status = MBO_SUCCESS;
+-		}
+-		mbo->complete(mbo);
+-	}
+-
+-	return 0;
+-}
+-
+-/**
+- * poison_channel - called from MOST core to poison buffers of a channel
+- * @most_iface: pointer to the interface the channel to be poisoned belongs to
+- * @ch_idx: corresponding channel ID
+- *
+- * Return 0 on success, negative on failure.
+- *
+- * If channel direction is RX, complete the buffers in list with
+- * status MBO_E_CLOSE
+- */
+-static int poison_channel(struct most_interface *most_iface,
+-			  int ch_idx)
+-{
+-	struct hdm_i2c *dev = to_hdm(most_iface);
+-	struct mbo *mbo;
+-
+-	BUG_ON(ch_idx < 0 || ch_idx >= NUM_CHANNELS);
+-
+-	if (ch_idx == CH_RX) {
+-		if (!polling_rate)
+-			free_irq(dev->client->irq, dev);
+-		cancel_delayed_work_sync(&dev->rx.dwork);
+-
+-		while (!list_empty(&dev->rx.list)) {
+-			mbo = list_first_mbo(&dev->rx.list);
+-			list_del(&mbo->list);
+-
+-			mbo->processed_length = 0;
+-			mbo->status = MBO_E_CLOSE;
+-			mbo->complete(mbo);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+-static void do_rx_work(struct hdm_i2c *dev)
+-{
+-	struct mbo *mbo;
+-	unsigned char msg[MAX_BUF_SIZE_CONTROL];
+-	int ret;
+-	u16 pml, data_size;
+-
+-	/* Read PML (2 bytes) */
+-	ret = i2c_master_recv(dev->client, msg, 2);
+-	if (ret <= 0) {
+-		pr_err("Failed to receive PML\n");
+-		return;
+-	}
+-
+-	pml = (msg[0] << 8) | msg[1];
+-	if (!pml)
+-		return;
+-
+-	data_size = pml + 2;
+-
+-	/* Read the whole message, including PML */
+-	ret = i2c_master_recv(dev->client, msg, data_size);
+-	if (ret <= 0) {
+-		pr_err("Failed to receive a Port Message\n");
+-		return;
+-	}
+-
+-	mbo = list_first_mbo(&dev->rx.list);
+-	list_del(&mbo->list);
+-
+-	mbo->processed_length = min(data_size, mbo->buffer_length);
+-	memcpy(mbo->virt_address, msg, mbo->processed_length);
+-	mbo->status = MBO_SUCCESS;
+-	mbo->complete(mbo);
+-}
+-
+-/**
+- * pending_rx_work - Read pending messages through I2C
+- * @work: definition of this work item
+- *
+- * Invoked by the Interrupt Service Routine, most_irq_handler()
+- */
+-static void pending_rx_work(struct work_struct *work)
+-{
+-	struct hdm_i2c *dev = container_of(work, struct hdm_i2c, rx.dwork.work);
+-
+-	if (list_empty(&dev->rx.list))
+-		return;
+-
+-	do_rx_work(dev);
+-
+-	if (polling_rate) {
+-		schedule_delayed_work(&dev->rx.dwork, dev->rx.delay);
+-	} else {
+-		dev->rx.int_disabled = false;
+-		enable_irq(dev->client->irq);
+-	}
+-}
+-
+-/*
+- * most_irq_handler - Interrupt Service Routine
+- * @irq: irq number
+- * @_dev: private data
+- *
+- * Schedules a delayed work
+- *
+- * By default the interrupt line behavior is Active Low. Once an interrupt is
+- * generated by the device, until driver clears the interrupt (by reading
+- * the PMP message), device keeps the interrupt line in low state. Since i2c
+- * read is done in work queue, the interrupt line must be disabled temporarily
+- * to avoid ISR being called repeatedly. Re-enable the interrupt in workqueue,
+- * after reading the message.
+- *
+- * Note: If we use the interrupt line in Falling edge mode, there is a
+- * possibility to miss interrupts when ISR is getting executed.
+- *
+- */
+-static irqreturn_t most_irq_handler(int irq, void *_dev)
+-{
+-	struct hdm_i2c *dev = _dev;
+-
+-	disable_irq_nosync(irq);
+-	dev->rx.int_disabled = true;
+-	schedule_delayed_work(&dev->rx.dwork, 0);
+-
+-	return IRQ_HANDLED;
+-}
+-
+-/*
+- * i2c_probe - i2c probe handler
+- * @client: i2c client device structure
+- * @id: i2c client device id
+- *
+- * Return 0 on success, negative on failure.
+- *
+- * Register the i2c client device as a MOST interface
+- */
+-static int i2c_probe(struct i2c_client *client)
+-{
+-	struct hdm_i2c *dev;
+-	int ret, i;
+-
+-	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+-	if (!dev)
+-		return -ENOMEM;
+-
+-	/* ID format: i2c-<bus>-<address> */
+-	snprintf(dev->name, sizeof(dev->name), "i2c-%d-%04x",
+-		 client->adapter->nr, client->addr);
+-
+-	for (i = 0; i < NUM_CHANNELS; i++) {
+-		dev->capabilities[i].data_type = MOST_CH_CONTROL;
+-		dev->capabilities[i].num_buffers_packet = MAX_BUFFERS_CONTROL;
+-		dev->capabilities[i].buffer_size_packet = MAX_BUF_SIZE_CONTROL;
+-	}
+-	dev->capabilities[CH_RX].direction = MOST_CH_RX;
+-	dev->capabilities[CH_RX].name_suffix = "rx";
+-	dev->capabilities[CH_TX].direction = MOST_CH_TX;
+-	dev->capabilities[CH_TX].name_suffix = "tx";
+-
+-	dev->most_iface.interface = ITYPE_I2C;
+-	dev->most_iface.description = dev->name;
+-	dev->most_iface.num_channels = NUM_CHANNELS;
+-	dev->most_iface.channel_vector = dev->capabilities;
+-	dev->most_iface.configure = configure_channel;
+-	dev->most_iface.enqueue = enqueue;
+-	dev->most_iface.poison_channel = poison_channel;
+-
+-	INIT_LIST_HEAD(&dev->rx.list);
+-
+-	INIT_DELAYED_WORK(&dev->rx.dwork, pending_rx_work);
+-
+-	dev->client = client;
+-	i2c_set_clientdata(client, dev);
+-
+-	ret = most_register_interface(&dev->most_iface);
+-	if (ret) {
+-		pr_err("Failed to register i2c as a MOST interface\n");
+-		kfree(dev);
+-		return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-/*
+- * i2c_remove - i2c remove handler
+- * @client: i2c client device structure
+- *
+- * Return 0 on success.
+- *
+- * Unregister the i2c client device as a MOST interface
+- */
+-static void i2c_remove(struct i2c_client *client)
+-{
+-	struct hdm_i2c *dev = i2c_get_clientdata(client);
+-
+-	most_deregister_interface(&dev->most_iface);
+-	kfree(dev);
+-}
+-
+-static const struct i2c_device_id i2c_id[] = {
+-	{ "most_i2c", 0 },
+-	{ }, /* Terminating entry */
+-};
+-
+-MODULE_DEVICE_TABLE(i2c, i2c_id);
+-
+-static struct i2c_driver i2c_driver = {
+-	.driver = {
+-		.name = "hdm_i2c",
+-	},
+-	.probe = i2c_probe,
+-	.remove = i2c_remove,
+-	.id_table = i2c_id,
+-};
+-
+-module_i2c_driver(i2c_driver);
+-
+-MODULE_AUTHOR("Andrey Shvetsov <andrey.shvetsov@k2l.de>");
+-MODULE_DESCRIPTION("I2C Hardware Dependent Module");
+-MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
