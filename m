@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3F138AC99;
-	Sat, 17 Oct 2026 17:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106273921FB;
+	Sat, 17 Oct 2026 17:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257830; cv=none; b=gkqJI24u3gNzzsCXWjt9P1uUKFCgpd+U+DE8LpUql3qKpPIJc6b6OwiIhBENPRI2szXAInDR4KdlrmMGc0Cw5nXDKbg9w/DgXr3bHwinYIQf7MQgs6rX/s0Gjqz0XSRtZ3wTpUjV2osOYTczJnnJD5VisbMC9avxu8+DIkyHlTQ=
+	t=1792257834; cv=none; b=kR02NWQ8QDxSjdgrvAgFI/WM84tUIL4D78P5UNtv5kD3bKFvaRabzxlU5Eyvk5q8DZeOx5x09rot+Apk7/mD9Z5kIJt0oQsj5cVcRn4RbtPB2NT2mmI4Akyg3f6hCNgJRrCcwhisy629rrU31cYMeG/Qt0XaPQjGU0DBFenIFMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257830; c=relaxed/simple;
-	bh=gNQue9JdC6rP8xlpqvbZrRz58I/XL6tEAHkv4bhGXtY=;
+	s=arc-20240116; t=1792257834; c=relaxed/simple;
+	bh=VzIXEx4hEbQXoVVjFzunDGgNLesw1RujjG97hHmk2WU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnA00NrcqMTY7qKo/dA2xLYTt2RKlms/stSNFW2oTIY5LuJEH70XD10F0lETX4gWX5PXas3oMb0dxUA4rT/o3cpXcoUzSAr/4OJF2NHWwxW8GGM4eu9T2tf2HSgDLJ4GwTBpnOMZxwaql88kOayYL4RdfRiTntlu74NJgbRPFYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYSjcieA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CUZHhXW+KvvT1Dgtzgf18lw0nQl33rr4327g8LPupFvklahYBBhHGg2anBesA9sIyGhY2vobyHTjqxLSRSwr0NSOK3EoOW65YlbS6t0axjOXsNqeyGwhGvmNlFBfLU9xFIVjtZ2vfnRqjkOjwRxR20rdhE4PGwD2iXGbaAjqfxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkObj3Id; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYSjcieA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348FD1F000C4;
-	Sat, 17 Oct 2026 17:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkObj3Id"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594681F000C4;
+	Sat, 17 Oct 2026 17:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257829;
-	bh=6AvHM/70dlU076B/iUOqzJ59W65TVn2bqPl8vYgHFJE=;
+	s=korg; t=1792257832;
+	bh=wWpWAo0h+8RC2Djvy5rE0ZdsD0pMv4SLN5Is8CsQpbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYSjcieAXonf6umaCKhfx+BP/mIckhp5T+N7CWLYPNCAhMyJmRBDmaKW+d8XgmDJp
-	 VRHJO6HW57bDcO8H2FyegDunxrXiVidJdWHxolsgmUEe5cuVF8eo61D+vJLrqFLb26
-	 /0AC5lewHD9aTbGctCq3SnvGpgNfp9550AmXAq/Y=
+	b=DkObj3IdoeQEOafvvMApxaUdHefT9DeLFfs6Uaz1MDPlob+KSElP/l/0orhOpNwUK
+	 K4ImOfzH3l9K87JbnvgjgPJzoPR/T8xjtwVkFU9JhP5GQO3gX8hiINcK/ERI/2A7kG
+	 0taOsxk7Oj9zanG2I81gqQthcilBbNDb8IZUW0Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0684/1674] RDMA/bnxt_re: Fix the page details for the srq created by kernel consumers
-Date: Sat, 17 Oct 2026 17:49:16 +0200
-Message-ID: <20261017160448.665169615@linuxfoundation.org>
+Subject: [PATCH 6.6 0685/1674] RDMA/mlx5: Fix a WARN during dereg_mr for DM type
+Date: Sat, 17 Oct 2026 17:49:17 +0200
+Message-ID: <20261017160448.690699387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,62 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit b66535356a4834a234f99e16a97eb51f2c6c5a7d ]
+[ Upstream commit abc7b3f1f056d69a8f11d6dceecc0c9549ace770 ]
 
-While using nvme target with use_srq on, below kernel panic is noticed.
+Memory regions (MR) of type DM (device memory) do not have an associated
+umem.
 
-[  549.698111] bnxt_en 0000:41:00.0 enp65s0np0: FEC autoneg off encoding: Clause 91 RS(544,514)
-[  566.393619] Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
-..
-[  566.393799]  <TASK>
-[  566.393807]  ? __die_body+0x1a/0x60
-[  566.393823]  ? die+0x38/0x60
-[  566.393835]  ? do_trap+0xe4/0x110
-[  566.393847]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
-[  566.393867]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
-[  566.393881]  ? do_error_trap+0x7c/0x120
-[  566.393890]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
-[  566.393911]  ? exc_divide_error+0x34/0x50
-[  566.393923]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
-[  566.393939]  ? asm_exc_divide_error+0x16/0x20
-[  566.393966]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
-[  566.393997]  bnxt_qplib_create_srq+0xc9/0x340 [bnxt_re]
-[  566.394040]  bnxt_re_create_srq+0x335/0x3b0 [bnxt_re]
-[  566.394057]  ? srso_return_thunk+0x5/0x5f
-[  566.394068]  ? __init_swait_queue_head+0x4a/0x60
-[  566.394090]  ib_create_srq_user+0xa7/0x150 [ib_core]
-[  566.394147]  nvmet_rdma_queue_connect+0x7d0/0xbe0 [nvmet_rdma]
-[  566.394174]  ? lock_release+0x22c/0x3f0
-[  566.394187]  ? srso_return_thunk+0x5/0x5f
+In the __mlx5_ib_dereg_mr() -> mlx5_free_priv_descs() flow, the code
+incorrectly takes the wrong branch, attempting to call
+dma_unmap_single() on a DMA address that is not mapped.
 
-Page size and shift info is set only for the user space SRQs.
-Set page size and page shift for kernel space SRQs also.
+This results in a WARN [1], as shown below.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1740237621-29291-1-git-send-email-selvin.xavier@broadcom.com
+The issue is resolved by properly accounting for the DM type and
+ensuring the correct branch is selected in mlx5_free_priv_descs().
+
+[1]
+WARNING: CPU: 12 PID: 1346 at drivers/iommu/dma-iommu.c:1230 iommu_dma_unmap_page+0x79/0x90
+Modules linked in: ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry ovelay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core fuse mlx5_core
+CPU: 12 UID: 0 PID: 1346 Comm: ibv_rc_pingpong Not tainted 6.12.0-rc7+ #1631
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:iommu_dma_unmap_page+0x79/0x90
+Code: 2b 49 3b 29 72 26 49 3b 69 08 73 20 4d 89 f0 44 89 e9 4c 89 e2 48 89 ee 48 89 df 5b 5d 41 5c 41 5d 41 5e 41 5f e9 07 b8 88 ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 66 0f 1f 44 00
+RSP: 0018:ffffc90001913a10 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88810194b0a8 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000001
+RBP: ffff88810194b0a8 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f537abdd740(0000) GS:ffff88885fb00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f537aeb8000 CR3: 000000010c248001 CR4: 0000000000372eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+? __warn+0x84/0x190
+? iommu_dma_unmap_page+0x79/0x90
+? report_bug+0xf8/0x1c0
+? handle_bug+0x55/0x90
+? exc_invalid_op+0x13/0x60
+? asm_exc_invalid_op+0x16/0x20
+? iommu_dma_unmap_page+0x79/0x90
+dma_unmap_page_attrs+0xe6/0x290
+mlx5_free_priv_descs+0xb0/0xe0 [mlx5_ib]
+__mlx5_ib_dereg_mr+0x37e/0x520 [mlx5_ib]
+? _raw_spin_unlock_irq+0x24/0x40
+? wait_for_completion+0xfe/0x130
+? rdma_restrack_put+0x63/0xe0 [ib_core]
+ib_dereg_mr_user+0x5f/0x120 [ib_core]
+? lock_release+0xc6/0x280
+destroy_hw_idr_uobject+0x1d/0x60 [ib_uverbs]
+uverbs_destroy_uobject+0x58/0x1d0 [ib_uverbs]
+uobj_destroy+0x3f/0x70 [ib_uverbs]
+ib_uverbs_cmd_verbs+0x3e4/0xbb0 [ib_uverbs]
+? __pfx_uverbs_destroy_def_handler+0x10/0x10 [ib_uverbs]
+? lock_acquire+0xc1/0x2f0
+? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
+? ib_uverbs_ioctl+0x116/0x170 [ib_uverbs]
+? lock_release+0xc6/0x280
+ib_uverbs_ioctl+0xe7/0x170 [ib_uverbs]
+? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
+__x64_sys_ioctl+0x1b0/0xa70
+do_syscall_64+0x6b/0x140
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f537adaf17b
+Code: 0f 1e fa 48 8b 05 1d ad 0c 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ed ac 0c 00 f7 d8 64 89 01 48
+RSP: 002b:00007ffff218f0b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007ffff218f1d8 RCX: 00007f537adaf17b
+RDX: 00007ffff218f1c0 RSI: 00000000c0181b01 RDI: 0000000000000003
+RBP: 00007ffff218f1a0 R08: 00007f537aa8d010 R09: 0000561ee2e4f270
+R10: 00007f537aace3a8 R11: 0000000000000246 R12: 00007ffff218f190
+R13: 000000000000001c R14: 0000561ee2e4d7c0 R15: 00007ffff218f450
+</TASK>
+
+Fixes: f18ec4223117 ("RDMA/mlx5: Use a union inside mlx5_ib_mr")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/2039c22cfc3df02378747ba4d623a558b53fc263.1738587076.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx5/mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 7d6c296da3b6e..9ea0c2b352a68 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1775,6 +1775,8 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
- 	srq->qplib_srq.threshold = srq_init_attr->attr.srq_limit;
- 	srq->srq_limit = srq_init_attr->attr.srq_limit;
- 	srq->qplib_srq.eventq_hw_ring_id = rdev->nq[0].ring_id;
-+	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
-+	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
- 	nq = &rdev->nq[0];
- 
- 	if (udata) {
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 25348f732ac54..9f3644a6e503b 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -1834,7 +1834,7 @@ mlx5_alloc_priv_descs(struct ib_device *device,
+ static void
+ mlx5_free_priv_descs(struct mlx5_ib_mr *mr)
+ {
+-	if (!mr->umem && mr->descs) {
++	if (!mr->umem && mr->ibmr.type != IB_MR_TYPE_DM && mr->descs) {
+ 		struct ib_device *device = mr->ibmr.device;
+ 		int size = mr->max_descs * mr->desc_size;
+ 		struct mlx5_ib_dev *dev = to_mdev(device);
 -- 
 2.53.0
 
