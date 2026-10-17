@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F4A3148B4;
-	Sat, 17 Oct 2026 16:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC59377A97;
+	Sat, 17 Oct 2026 16:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254002; cv=none; b=SwDe0Kzcc6QpFclq+Cswu1O6tzSJ737G6eYs2EHVqu+tM/m8qCTs/GwZckSDkcvw2woPw7gZDP/mHxwG9oSrc4glDmUcqTtNehy2FBqFWwSWmxJxdufdI3svJ/uCuOYCaR2FTnLtC/bg6sZvpKbCBg18xaug3vNuc522GcIBCNc=
+	t=1792254004; cv=none; b=tNq44vTHv3XCvRZYEd3KBocORs7AF1Lc7OzNB91obZs1e3ELAOcyEe7k7JakXzsr88hqLhgs8HQXLr7e8M3EbuO1JBC9ycVgh+N1LxQvSwM53zqaR40FILbOhgWvD+F5lHVqDfDnMizhXaQrWEOiZF8SfVX5nDnmk0b1WO6RTs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254002; c=relaxed/simple;
-	bh=1Rq47jBj8l08hH+w3FqqtM8nAwwxBJkp9xDs3MDvsNw=;
+	s=arc-20240116; t=1792254004; c=relaxed/simple;
+	bh=gkEP3K90O7nqdjYwgzLINYpwu+R9adT9oiVF5xfrmhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPSt5c/YCAGO5hgRj+wdpH1SKraZHTvk7MYoJO+mD5JcyOvN2wAvnzK9zVPx32XU2/n162glS61BaaQhKm2uj/oqtXl4Y8uXlYLVsM2CKB5Md38no/ZAaQPtkc0beIF22pA1107aCs2slDX3KB7NLDziU9hEsl6fTvs+R9dKKtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvVl3itH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gKzkpSU4cHdLUrIaLuIY3xLMKI3Ki67S6Ft3cP9jfF6Nyqon1+/A07TagKgeREoPhgQL5K7+xK6foN3P1qkwaFOHbOTjCAesjmD1pQa9Hd+sFvs4k0hGNIwnTMOUp5sfMk5t4E88gtmgf/ZWIdRsLRvFTg5BGDFNHAGEA64yaoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+5Mf2WK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvVl3itH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08AD1F000C4;
-	Sat, 17 Oct 2026 16:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+5Mf2WK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D192C1F000C4;
+	Sat, 17 Oct 2026 16:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254000;
-	bh=x5V4IhjQLEzRkya3ZkxzcLQA3pTCBmFnEVhWQShpL9Y=;
+	s=korg; t=1792254003;
+	bh=cFGfVmmhXxrOEdmqX8yqIWCYkikZdcPYQocqJVwehcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zvVl3itH92Nb0renHBmUDDp/1vMClXEylVrlxCRXXGvhNKz5FfF21v4KneWmL0qH3
-	 X3KxbOnHJeT91jtc3W0Wy04XbnaIVzrPG1VYmzwwK6Rpax0QJ62wYx9oqO8qGSqQYL
-	 nCT8CKavSUXKrdpKUsPfNbXjRuXKeIx2oi3b+768=
+	b=d+5Mf2WKwZCi8Nqx79E8eLE7masISC3810GokAokeHmIpdiMVjHGRDkGRmD2rzt00
+	 MYPXouJBJcIwOsWGCRAboUf2K3gUYG0FfR23f3+zL+5EP6whgxnrhyK2/iAV0l7L86
+	 A9szNH1Q8X6/0Uh1WVCp9uhot1W3SQtCq7v5lahU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 304/869] RDMA/rxe: Fix iova-to-va conversion for MR page sizes != PAGE_SIZE
-Date: Sat, 17 Oct 2026 17:52:25 +0200
-Message-ID: <20261017160044.869190952@linuxfoundation.org>
+Subject: [PATCH 6.12 305/869] Revert "net/smc: Introduce TCP ULP support"
+Date: Sat, 17 Oct 2026 17:52:26 +0200
+Message-ID: <20261017160044.894456161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,551 +55,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 12985e5915a0b8354796efadaaeb201eed115377 ]
+[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
 
-The current implementation incorrectly handles memory regions (MRs) with
-page sizes different from the system PAGE_SIZE. The core issue is that
-rxe_set_page() is called with mr->page_size step increments, but the
-page_list stores individual struct page pointers, each representing
-PAGE_SIZE of memory.
+This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
 
-ib_sg_to_page() has ensured that when i>=1 either
-a) SG[i-1].dma_end and SG[i].dma_addr are contiguous
-or
-b) SG[i-1].dma_end and SG[i].dma_addr are mr->page_size aligned.
+As reported by Al Viro, the TCP ULP support for SMC is fundamentally
+broken. The implementation attempts to convert an active TCP socket
+into an SMC socket by modifying the underlying `struct file`, dentry,
+and inode in-place, which violates core VFS invariants that assume
+these structures are immutable for an open file, creating a risk of
+use after free errors and general system instability.
 
-This leads to incorrect iova-to-va conversion in scenarios:
+Given the severity of this design flaw and the fact that cleaner
+alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
+transparency, the correct course of action is to remove this feature
+entirely.
 
-1) page_size < PAGE_SIZE (e.g., MR: 4K, system: 64K):
-   ibmr->iova = 0x181800
-   sg[0]: dma_addr=0x181800, len=0x800
-   sg[1]: dma_addr=0x173000, len=0x1000
-
-   Access iova = 0x181800 + 0x810 = 0x182010
-   Expected VA: 0x173010 (second SG, offset 0x10)
-   Before fix:
-     - index = (0x182010 >> 12) - (0x181800 >> 12) = 1
-     - page_offset = 0x182010 & 0xFFF = 0x10
-     - xarray[1] stores system page base 0x170000
-     - Resulting VA: 0x170000 + 0x10 = 0x170010 (wrong)
-
-2) page_size > PAGE_SIZE (e.g., MR: 64K, system: 4K):
-   ibmr->iova = 0x18f800
-   sg[0]: dma_addr=0x18f800, len=0x800
-   sg[1]: dma_addr=0x170000, len=0x1000
-
-   Access iova = 0x18f800 + 0x810 = 0x190010
-   Expected VA: 0x170010 (second SG, offset 0x10)
-   Before fix:
-     - index = (0x190010 >> 16) - (0x18f800 >> 16) = 1
-     - page_offset = 0x190010 & 0xFFFF = 0x10
-     - xarray[1] stores system page for dma_addr 0x170000
-     - Resulting VA: system page of 0x170000 + 0x10 = 0x170010 (wrong)
-
-Yi Zhang reported a kernel panic[1] years ago related to this defect.
-
-Solution:
-1. Replace xarray with pre-allocated rxe_mr_page array for sequential
-   indexing (all MR page indices are contiguous)
-2. Each rxe_mr_page stores both struct page* and offset within the
-   system page
-3. Handle MR page_size != PAGE_SIZE relationships:
-   - page_size > PAGE_SIZE: Split MR pages into multiple system pages
-   - page_size <= PAGE_SIZE: Store offset within system page
-4. Add boundary checks and compatibility validation
-
-This ensures correct iova-to-va conversion regardless of MR page size
-and system PAGE_SIZE relationship, while improving performance through
-array-based sequential access.
-
-Tests on 4K and 64K PAGE_SIZE hosts:
-- rdma-core/pytests
-  $ ./build/bin/run_tests.py  --dev eth0_rxe
-- blktest:
-  $ TIMEOUT=30 QUICK_RUN=1 USE_RXE=1 NVMET_TRTYPES=rdma ./check nvme srp rnbd
-
-[1] https://lore.kernel.org/all/CAHj4cs9XRqE25jyVw9rj9YugffLn5+f=1znaBEnu1usLOciD+g@mail.gmail.com/T/
-
-Fixes: 592627ccbdff ("RDMA/rxe: Replace rxe_map and rxe_phys_buf by xarray")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://patch.msgid.link/20260116032753.2574363-1-lizhijian@fujitsu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
+Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c    | 281 +++++++++++++++++---------
- drivers/infiniband/sw/rxe/rxe_verbs.h |  10 +-
- 2 files changed, 194 insertions(+), 97 deletions(-)
+ net/smc/af_smc.c | 90 +++---------------------------------------------
+ 1 file changed, 4 insertions(+), 86 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index ab1635d53da3d..818f1693bdec7 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -73,14 +73,46 @@ void rxe_mr_init_dma(int access, struct rxe_mr *mr)
- 	mr->ibmr.type = IB_MR_TYPE_DMA;
- }
- 
-+/*
-+ * Convert iova to page_info index. The page_info stores pages of size
-+ * PAGE_SIZE, but MRs can have different page sizes. This function
-+ * handles the conversion for all cases:
-+ *
-+ * 1. mr->page_size > PAGE_SIZE:
-+ *    The MR's iova may not be aligned to mr->page_size. We use the
-+ *    aligned base (iova & page_mask) as reference, then calculate
-+ *    which PAGE_SIZE sub-page the iova falls into.
-+ *
-+ * 2. mr->page_size <= PAGE_SIZE:
-+ *    Use simple shift arithmetic since each page_info entry corresponds
-+ *    to one or more MR pages.
-+ */
- static unsigned long rxe_mr_iova_to_index(struct rxe_mr *mr, u64 iova)
- {
--	return (iova >> mr->page_shift) - (mr->ibmr.iova >> mr->page_shift);
-+	int idx;
-+
-+	if (mr_page_size(mr) > PAGE_SIZE)
-+		idx = (iova - (mr->ibmr.iova & mr->page_mask)) >> PAGE_SHIFT;
-+	else
-+		idx = (iova >> mr->page_shift) -
-+			(mr->ibmr.iova >> mr->page_shift);
-+
-+	WARN_ON(idx >= mr->nbuf);
-+	return idx;
- }
- 
-+/*
-+ * Convert iova to offset within the page_info entry.
-+ *
-+ * For mr_page_size > PAGE_SIZE, the offset is within the system page.
-+ * For mr_page_size <= PAGE_SIZE, the offset is within the MR page size.
-+ */
- static unsigned long rxe_mr_iova_to_page_offset(struct rxe_mr *mr, u64 iova)
- {
--	return iova & (mr_page_size(mr) - 1);
-+	if (mr_page_size(mr) > PAGE_SIZE)
-+		return iova & (PAGE_SIZE - 1);
-+	else
-+		return iova & (mr_page_size(mr) - 1);
- }
- 
- static bool is_pmem_page(struct page *pg)
-@@ -94,37 +126,69 @@ static bool is_pmem_page(struct page *pg)
- 
- static int rxe_mr_fill_pages_from_sgt(struct rxe_mr *mr, struct sg_table *sgt)
- {
--	XA_STATE(xas, &mr->page_list, 0);
- 	struct sg_page_iter sg_iter;
- 	struct page *page;
- 	bool persistent = !!(mr->access & IB_ACCESS_FLUSH_PERSISTENT);
- 
-+	WARN_ON(mr_page_size(mr) != PAGE_SIZE);
-+
- 	__sg_page_iter_start(&sg_iter, sgt->sgl, sgt->orig_nents, 0);
- 	if (!__sg_page_iter_next(&sg_iter))
- 		return 0;
- 
--	do {
--		xas_lock(&xas);
--		while (true) {
--			page = sg_page_iter_page(&sg_iter);
--
--			if (persistent && !is_pmem_page(page)) {
--				rxe_dbg_mr(mr, "Page can't be persistent\n");
--				xas_set_err(&xas, -EINVAL);
--				break;
--			}
-+	while (true) {
-+		page = sg_page_iter_page(&sg_iter);
- 
--			xas_store(&xas, page);
--			if (xas_error(&xas))
--				break;
--			xas_next(&xas);
--			if (!__sg_page_iter_next(&sg_iter))
--				break;
-+		if (persistent && !is_pmem_page(page)) {
-+			rxe_dbg_mr(mr, "Page can't be persistent\n");
-+			return -EINVAL;
- 		}
--		xas_unlock(&xas);
--	} while (xas_nomem(&xas, GFP_KERNEL));
- 
--	return xas_error(&xas);
-+		mr->page_info[mr->nbuf].page = page;
-+		mr->page_info[mr->nbuf].offset = 0;
-+		mr->nbuf++;
-+
-+		if (!__sg_page_iter_next(&sg_iter))
-+			break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int __alloc_mr_page_info(struct rxe_mr *mr, int num_pages)
-+{
-+	mr->page_info = kcalloc(num_pages, sizeof(struct rxe_mr_page),
-+				GFP_KERNEL);
-+	if (!mr->page_info)
-+		return -ENOMEM;
-+
-+	mr->max_allowed_buf = num_pages;
-+	mr->nbuf = 0;
-+
-+	return 0;
-+}
-+
-+static int alloc_mr_page_info(struct rxe_mr *mr, int num_pages)
-+{
-+	int ret;
-+
-+	WARN_ON(mr->num_buf);
-+	ret = __alloc_mr_page_info(mr, num_pages);
-+	if (ret)
-+		return ret;
-+
-+	mr->num_buf = num_pages;
-+
-+	return 0;
-+}
-+
-+static void free_mr_page_info(struct rxe_mr *mr)
-+{
-+	if (!mr->page_info)
-+		return;
-+
-+	kfree(mr->page_info);
-+	mr->page_info = NULL;
- }
- 
- int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length,
-@@ -135,8 +199,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length,
- 
- 	rxe_mr_init(access, mr);
- 
--	xa_init(&mr->page_list);
--
- 	umem = ib_umem_get(&rxe->ib_dev, start, length, access);
- 	if (IS_ERR(umem)) {
- 		rxe_dbg_mr(mr, "Unable to pin memory region err = %d\n",
-@@ -144,46 +206,24 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length,
- 		return PTR_ERR(umem);
- 	}
- 
-+	err = alloc_mr_page_info(mr, ib_umem_num_pages(umem));
-+	if (err)
-+		goto err2;
-+
- 	err = rxe_mr_fill_pages_from_sgt(mr, &umem->sgt_append.sgt);
--	if (err) {
--		ib_umem_release(umem);
--		return err;
--	}
-+	if (err)
-+		goto err1;
- 
- 	mr->umem = umem;
- 	mr->ibmr.type = IB_MR_TYPE_USER;
- 	mr->state = RXE_MR_STATE_VALID;
- 
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 17ce4d32f64f2..6f8c9b79e7bfb 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3380,11 +3380,10 @@ int smc_create_clcsk(struct net *net, struct sock *sk, int family)
  	return 0;
+ }
+ 
+-static int __smc_create(struct net *net, struct socket *sock, int protocol,
+-			int kern, struct socket *clcsock)
++static int smc_create(struct net *net, struct socket *sock, int protocol,
++		      int kern)
+ {
+ 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
+-	struct smc_sock *smc;
+ 	struct sock *sk;
+ 	int rc;
+ 
+@@ -3403,15 +3402,7 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
+ 	if (!sk)
+ 		goto out;
+ 
+-	/* create internal TCP socket for CLC handshake and fallback */
+-	smc = smc_sk(sk);
+-
+-	rc = 0;
+-	if (clcsock)
+-		smc->clcsock = clcsock;
+-	else
+-		rc = smc_create_clcsk(net, sk, family);
+-
++	rc = smc_create_clcsk(net, sk, family);
+ 	if (rc) {
+ 		sk_common_release(sk);
+ 		sock->sk = NULL;
+@@ -3420,76 +3411,12 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
+ 	return rc;
+ }
+ 
+-static int smc_create(struct net *net, struct socket *sock, int protocol,
+-		      int kern)
+-{
+-	return __smc_create(net, sock, protocol, kern, NULL);
 -}
 -
--static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
--{
--	XA_STATE(xas, &mr->page_list, 0);
--	int i = 0;
--	int err;
--
--	xa_init(&mr->page_list);
--
--	do {
--		xas_lock(&xas);
--		while (i != num_buf) {
--			xas_store(&xas, XA_ZERO_ENTRY);
--			if (xas_error(&xas))
--				break;
--			xas_next(&xas);
--			i++;
--		}
--		xas_unlock(&xas);
--	} while (xas_nomem(&xas, GFP_KERNEL));
--
--	err = xas_error(&xas);
--	if (err)
--		return err;
--
--	mr->num_buf = num_buf;
--
--	return 0;
-+err1:
-+	free_mr_page_info(mr);
-+err2:
-+	ib_umem_release(umem);
-+	return err;
- }
- 
- int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
-@@ -193,7 +233,7 @@ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
- 	/* always allow remote access for FMRs */
- 	rxe_mr_init(RXE_ACCESS_REMOTE, mr);
- 
--	err = rxe_mr_alloc(mr, max_pages);
-+	err = alloc_mr_page_info(mr, max_pages);
- 	if (err)
- 		goto err1;
- 
-@@ -206,26 +246,43 @@ int rxe_mr_init_fast(int max_pages, struct rxe_mr *mr)
- 	return err;
- }
- 
-+/*
-+ * I) MRs with page_size >= PAGE_SIZE,
-+ * Split a large MR page (mr->page_size) into multiple PAGE_SIZE
-+ * sub-pages and store them in page_info, offset is always 0.
-+ *
-+ * Called when mr->page_size > PAGE_SIZE. Each call to rxe_set_page()
-+ * represents one mr->page_size region, which we must split into
-+ * (mr->page_size >> PAGE_SHIFT) individual pages.
-+ *
-+ * II) MRs with page_size < PAGE_SIZE,
-+ * Save each PAGE_SIZE page and its offset within the system page in page_info.
-+ */
- static int rxe_set_page(struct ib_mr *ibmr, u64 dma_addr)
- {
- 	struct rxe_mr *mr = to_rmr(ibmr);
--	struct page *page = ib_virt_dma_to_page(dma_addr);
- 	bool persistent = !!(mr->access & IB_ACCESS_FLUSH_PERSISTENT);
--	int err;
-+	u32 i, pages_per_mr = mr_page_size(mr) >> PAGE_SHIFT;
- 
--	if (persistent && !is_pmem_page(page)) {
--		rxe_dbg_mr(mr, "Page cannot be persistent\n");
--		return -EINVAL;
--	}
-+	pages_per_mr = MAX(1, pages_per_mr);
- 
--	if (unlikely(mr->nbuf == mr->num_buf))
--		return -ENOMEM;
-+	for (i = 0; i < pages_per_mr; i++) {
-+		u64 addr = dma_addr + i * PAGE_SIZE;
-+		struct page *sub_page = ib_virt_dma_to_page(addr);
- 
--	err = xa_err(xa_store(&mr->page_list, mr->nbuf, page, GFP_KERNEL));
--	if (err)
--		return err;
-+		if (unlikely(mr->nbuf >= mr->max_allowed_buf))
-+			return -ENOMEM;
-+
-+		if (persistent && !is_pmem_page(sub_page)) {
-+			rxe_dbg_mr(mr, "Page cannot be persistent\n");
-+			return -EINVAL;
-+		}
-+
-+		mr->page_info[mr->nbuf].page = sub_page;
-+		mr->page_info[mr->nbuf].offset = addr & (PAGE_SIZE - 1);
-+		mr->nbuf++;
-+	}
- 
--	mr->nbuf++;
- 	return 0;
- }
- 
-@@ -235,6 +292,31 @@ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sgl,
- 	struct rxe_mr *mr = to_rmr(ibmr);
- 	unsigned int page_size = mr_page_size(mr);
- 
-+	/*
-+	 * Ensure page_size and PAGE_SIZE are compatible for mapping.
-+	 * We require one to be a multiple of the other for correct
-+	 * iova-to-page conversion.
-+	 */
-+	if (!IS_ALIGNED(page_size, PAGE_SIZE) &&
-+	    !IS_ALIGNED(PAGE_SIZE, page_size)) {
-+		rxe_dbg_mr(mr, "MR page size %u must be compatible with PAGE_SIZE %lu\n",
-+			   page_size, PAGE_SIZE);
-+		return -EINVAL;
-+	}
-+
-+	if (mr_page_size(mr) > PAGE_SIZE) {
-+		/* resize page_info if needed */
-+		u32 map_mr_pages = (page_size >> PAGE_SHIFT) * mr->num_buf;
-+
-+		if (map_mr_pages > mr->max_allowed_buf) {
-+			rxe_dbg_mr(mr, "requested pages %u exceed max %u\n",
-+				   map_mr_pages, mr->max_allowed_buf);
-+			free_mr_page_info(mr);
-+			if (__alloc_mr_page_info(mr, map_mr_pages))
-+				return -ENOMEM;
-+		}
-+	}
-+
- 	mr->nbuf = 0;
- 	mr->page_shift = ilog2(page_size);
- 	mr->page_mask = ~((u64)page_size - 1);
-@@ -246,30 +328,30 @@ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sgl,
- static int rxe_mr_copy_xarray(struct rxe_mr *mr, u64 iova, void *addr,
- 			      unsigned int length, enum rxe_mr_copy_dir dir)
- {
--	unsigned int page_offset = rxe_mr_iova_to_page_offset(mr, iova);
--	unsigned long index = rxe_mr_iova_to_index(mr, iova);
- 	unsigned int bytes;
--	struct page *page;
--	void *va;
-+	u8 *va;
- 
- 	while (length) {
--		page = xa_load(&mr->page_list, index);
--		if (!page)
-+		unsigned long index = rxe_mr_iova_to_index(mr, iova);
-+		struct rxe_mr_page *info = &mr->page_info[index];
-+		unsigned int page_offset = rxe_mr_iova_to_page_offset(mr, iova);
-+
-+		if (!info->page)
- 			return -EFAULT;
- 
--		bytes = min_t(unsigned int, length,
--				mr_page_size(mr) - page_offset);
--		va = kmap_local_page(page);
-+		page_offset += info->offset;
-+		bytes = min_t(unsigned int, length, PAGE_SIZE - page_offset);
-+		va = kmap_local_page(info->page);
-+
- 		if (dir == RXE_FROM_MR_OBJ)
- 			memcpy(addr, va + page_offset, bytes);
- 		else
- 			memcpy(va + page_offset, addr, bytes);
- 		kunmap_local(va);
- 
--		page_offset = 0;
- 		addr += bytes;
-+		iova += bytes;
- 		length -= bytes;
--		index++;
- 	}
- 
- 	return 0;
-@@ -424,9 +506,6 @@ int copy_data(
- 
- int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length)
- {
--	unsigned int page_offset;
--	unsigned long index;
--	struct page *page;
- 	unsigned int bytes;
- 	int err;
- 	u8 *va;
-@@ -446,15 +525,17 @@ int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length)
- 		return err;
- 
- 	while (length > 0) {
--		index = rxe_mr_iova_to_index(mr, iova);
--		page = xa_load(&mr->page_list, index);
--		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
--		if (!page)
-+		unsigned long index = rxe_mr_iova_to_index(mr, iova);
-+		struct rxe_mr_page *info = &mr->page_info[index];
-+		unsigned int page_offset = rxe_mr_iova_to_page_offset(mr, iova);
-+
-+		if (!info->page)
- 			return -EFAULT;
--		bytes = min_t(unsigned int, length,
--				mr_page_size(mr) - page_offset);
- 
--		va = kmap_local_page(page);
-+		page_offset += info->offset;
-+		bytes = min_t(unsigned int, length, PAGE_SIZE - page_offset);
-+
-+		va = kmap_local_page(info->page);
- 		arch_wb_cache_pmem(va + page_offset, bytes);
- 		kunmap_local(va);
- 
-@@ -488,6 +569,7 @@ int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
- 	} else {
- 		unsigned long index;
- 		int err;
-+		struct rxe_mr_page *info;
- 
- 		err = mr_check_range(mr, iova, sizeof(value));
- 		if (err) {
-@@ -496,9 +578,12 @@ int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
- 		}
- 		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
- 		index = rxe_mr_iova_to_index(mr, iova);
--		page = xa_load(&mr->page_list, index);
--		if (!page)
-+		info = &mr->page_info[index];
-+		if (!info->page)
- 			return RESPST_ERR_RKEY_VIOLATION;
-+
-+		page_offset += info->offset;
-+		page = info->page;
- 	}
- 
- 	if (unlikely(page_offset & 0x7)) {
-@@ -545,6 +630,7 @@ int rxe_mr_do_atomic_write(struct rxe_mr *mr, u64 iova, u64 value)
- 	} else {
- 		unsigned long index;
- 		int err;
-+		struct rxe_mr_page *info;
- 
- 		/* See IBA oA19-28 */
- 		err = mr_check_range(mr, iova, sizeof(value));
-@@ -554,9 +640,12 @@ int rxe_mr_do_atomic_write(struct rxe_mr *mr, u64 iova, u64 value)
- 		}
- 		page_offset = rxe_mr_iova_to_page_offset(mr, iova);
- 		index = rxe_mr_iova_to_index(mr, iova);
--		page = xa_load(&mr->page_list, index);
--		if (!page)
-+		info = &mr->page_info[index];
-+		if (!info->page)
- 			return RESPST_ERR_RKEY_VIOLATION;
-+
-+		page_offset += info->offset;
-+		page = info->page;
- 	}
- 
- 	/* See IBA A19.4.2 */
-@@ -728,5 +817,5 @@ void rxe_mr_cleanup(struct rxe_pool_elem *elem)
- 	ib_umem_release(mr->umem);
- 
- 	if (mr->ibmr.type != IB_MR_TYPE_DMA)
--		xa_destroy(&mr->page_list);
-+		free_mr_page_info(mr);
- }
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
-index f7a226155e359..49bac90a8f272 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.h
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
-@@ -335,6 +335,11 @@ static inline int rkey_is_mw(u32 rkey)
- 	return (index >= RXE_MIN_MW_INDEX) && (index <= RXE_MAX_MW_INDEX);
- }
- 
-+struct rxe_mr_page {
-+	struct page		*page;
-+	unsigned int		offset; /* offset in system page */
-+};
-+
- struct rxe_mr {
- 	struct rxe_pool_elem	elem;
- 	struct ib_mr		ibmr;
-@@ -351,10 +356,13 @@ struct rxe_mr {
- 	unsigned int		page_shift;
- 	u64			page_mask;
- 
-+	/* size of page_info when mr allocated */
- 	u32			num_buf;
-+	/* real size of page_info */
-+	u32			max_allowed_buf;
- 	u32			nbuf;
- 
--	struct xarray		page_list;
-+	struct rxe_mr_page	*page_info;
+ static const struct net_proto_family smc_sock_family_ops = {
+ 	.family	= PF_SMC,
+ 	.owner	= THIS_MODULE,
+ 	.create	= smc_create,
  };
  
- static inline unsigned int mr_page_size(struct rxe_mr *mr)
+-static int smc_ulp_init(struct sock *sk)
+-{
+-	struct socket *tcp = sk->sk_socket;
+-	struct net *net = sock_net(sk);
+-	struct socket *smcsock;
+-	int protocol, ret;
+-
+-	/* only TCP can be replaced */
+-	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
+-	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
+-		return -ESOCKTNOSUPPORT;
+-	/* don't handle wq now */
+-	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
+-		return -ENOTCONN;
+-
+-	if (sk->sk_family == AF_INET)
+-		protocol = SMCPROTO_SMC;
+-	else
+-		protocol = SMCPROTO_SMC6;
+-
+-	smcsock = sock_alloc();
+-	if (!smcsock)
+-		return -ENFILE;
+-
+-	smcsock->type = SOCK_STREAM;
+-	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
+-	ret = __smc_create(net, smcsock, protocol, 1, tcp);
+-	if (ret) {
+-		sock_release(smcsock); /* module_put() which ops won't be NULL */
+-		return ret;
+-	}
+-
+-	/* replace tcp socket to smc */
+-	smcsock->file = tcp->file;
+-	smcsock->file->private_data = smcsock;
+-	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
+-	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
+-	tcp->file = NULL;
+-
+-	return ret;
+-}
+-
+-static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
+-			  const gfp_t priority)
+-{
+-	struct inet_connection_sock *icsk = inet_csk(newsk);
+-
+-	/* don't inherit ulp ops to child when listen */
+-	icsk->icsk_ulp_ops = NULL;
+-}
+-
+-static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
+-	.name		= "smc",
+-	.owner		= THIS_MODULE,
+-	.init		= smc_ulp_init,
+-	.clone		= smc_ulp_clone,
+-};
+-
+ unsigned int smc_net_id;
+ 
+ static __net_init int smc_net_init(struct net *net)
+@@ -3617,20 +3544,13 @@ static int __init smc_init(void)
+ 		goto out_ib;
+ 	}
+ 
+-	rc = tcp_register_ulp(&smc_ulp_ops);
+-	if (rc) {
+-		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
+-		goto out_lo;
+-	}
+ 	rc = smc_inet_init();
+ 	if (rc) {
+ 		pr_err("%s: smc_inet_init fails with %d\n", __func__, rc);
+-		goto out_ulp;
++		goto out_lo;
+ 	}
+ 	static_branch_enable(&tcp_have_smc);
+ 	return 0;
+-out_ulp:
+-	tcp_unregister_ulp(&smc_ulp_ops);
+ out_lo:
+ 	smc_loopback_exit();
+ out_ib:
+@@ -3668,7 +3588,6 @@ static void __exit smc_exit(void)
+ {
+ 	static_branch_disable(&tcp_have_smc);
+ 	smc_inet_exit();
+-	tcp_unregister_ulp(&smc_ulp_ops);
+ 	sock_unregister(PF_SMC);
+ 	smc_core_exit();
+ 	smc_loopback_exit();
+@@ -3694,7 +3613,6 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
+ MODULE_DESCRIPTION("smc socket address family");
+ MODULE_LICENSE("GPL");
+ MODULE_ALIAS_NETPROTO(PF_SMC);
+-MODULE_ALIAS_TCP_ULP("smc");
+ /* 256 for IPPROTO_SMC and 1 for SOCK_STREAM */
+ MODULE_ALIAS_NET_PF_PROTO_TYPE(PF_INET, 256, 1);
+ #if IS_ENABLED(CONFIG_IPV6)
 -- 
 2.53.0
 
