@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F2E37F01B;
-	Sat, 17 Oct 2026 17:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20A82D3225;
+	Sat, 17 Oct 2026 17:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258600; cv=none; b=FSg71X4B+NItfvlDxMBttIJxOIyDjzj+BJNUElanHa9Bw7/yPAchIA+mZzQivnsEBSKPRW7gaqMMv+iKCnKhQu6+GSGhyQWN8OD4FdaaKp81Tt/ZSdvw30rHdgiNHOZy0RuP9aUFU9wzxU3R7FZlNjIxaixlvrODJqyrJBacOLg=
+	t=1792258603; cv=none; b=LFPh/wKrMytpqfI8/h+tlzMGjldDVxcrv6Vc4fxSbnH/P7vt7flJKq7UQ44+7T0SvkvMawrUbYzFk3XqsQyCR1KFktYrLsoKXgaKVoOu6Z/xJYG2Ncqze+8eNj0YrpoRgffETkg+cDHjCcrCrghYo6Sj0ETaQf+MpLanirD9lHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258600; c=relaxed/simple;
-	bh=srVF/QErlHcPjfP75xXa/kk2ptcVRxLZdTs2I+iofP8=;
+	s=arc-20240116; t=1792258603; c=relaxed/simple;
+	bh=6MBmobUqs6TyFitwM/dwExeSyFq3XWuSd4Hcaskz1WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AI3Zw1PyKw6jrQbE2XhPnAayCptcUaqfUWAqUKHEthJZZ+Tw/0AHbUUh4SMV1NejlXlZQ/9nEb+9docZwISoGFbosyTdSRUzMc6Qo/seDpZvM20HsqHlUaVF5VNsGRkNgoXxOA9xdABOaUkc+QLfHHq7vXNckccS+1z5V0RRYCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kjme1jyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qMv3kgtNOZGEpknUmPKvGkRxHlzTCJ8W1oMBWvUK51p9+/PMjW5IrCpb72gcySNgqHV6FpLy0REfftPtOtJpm8pE5ePbv5z87vWxbgpI77H62CfLW/4aYkvovmDfZKsvdqEN70fV4pLpwfvNs41yoZ9GS99qcyzuv1vX6Vr28gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRwYLzMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kjme1jyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010D01F000C4;
-	Sat, 17 Oct 2026 17:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRwYLzMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B11F000C4;
+	Sat, 17 Oct 2026 17:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258599;
-	bh=MInWrkXXO+eq+zvlUT8kJCiyGnGvcWJgRm2GBDEdfx4=;
+	s=korg; t=1792258602;
+	bh=QBct6eMyAchb2eLXMDKIZt21lJ2SjLTAJeTO5q+njbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kjme1jyp9deH+S/W9wsDu0FUMO2nvrUkTSvaNXPg9KKWmFVQUGpD7jy7kSuo1Pn47
-	 hIRadP5RNBBTaOFIT6Fs2nTdwy+zzyb//fYkgg4R6t+tmqVRZwMrMbesFQH1egkqgx
-	 BX+zcBGg8S3pttyBoIbddawjvMk6A2MTyD2ocaDE=
+	b=tRwYLzMX6+zdRg1r0jbkFVB8SwCGSd65Uov3k0swOGbkKXhxAOd7DUgv0PuT1nRo9
+	 WPi5viPBAe1kxvD4awTtmNxCc9z9mx/FloenmjWV7yf+gdn8xtuI3dB3wcwSTpzBkg
+	 U7TU95cun2klkqNMyXg9T4gAFqs5t9YcPp6X9wgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	Farhat Abbas <fabbas@cloudlinux.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0939/1674] scsi: qla2xxx: Completely fix fcport double free
-Date: Sat, 17 Oct 2026 17:53:31 +0200
-Message-ID: <20261017160455.230841498@linuxfoundation.org>
+Subject: [PATCH 6.6 0940/1674] ASoC: amd: acp-mach-common: Add missing error check for clock acquisition
+Date: Sat, 17 Oct 2026 17:53:32 +0200
+Message-ID: <20261017160455.261617446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit c0b7da13a04bd70ef6070bfb9ea85f582294560a ]
+[ Upstream commit 30c64fb9839949f085c8eb55b979cbd8a4c51f00 ]
 
-In qla24xx_els_dcmd_iocb() sp->free is set to qla2x00_els_dcmd_sp_free().
-When an error happens, this function is called by qla2x00_sp_release(),
-when kref_put() releases the first and the last reference.
+The acp_card_rt5682_init() and acp_card_rt5682s_init() functions did not
+check the return values of clk_get(). This could lead to a kernel crash
+when the invalid pointers are later dereferenced by clock core
+functions.
 
-qla2x00_els_dcmd_sp_free() frees fcport by calling qla2x00_free_fcport().
-Doing it one more time after kref_put() is a bad idea.
+Fix this by:
+1. Changing clk_get() to the device-managed devm_clk_get().
+2. Adding IS_ERR() checks immediately after each clock acquisition.
 
-Fixes: 82f522ae0d97 ("scsi: qla2xxx: Fix double free of fcport")
-Fixes: 4895009c4bb7 ("scsi: qla2xxx: Prevent command send on chip reset")
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Farhat Abbas <fabbas@cloudlinux.com>
-Link: https://patch.msgid.link/aYsDln9NFQQsPDgg@vova-pc
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 8b7256266848 ("ASoC: amd: acp: Add support for RT5682-VS codec")
+Fixes: d4c750f2c7d4 ("ASoC: amd: acp: Add generic machine driver support for ACP cards")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260310044327.2582018-1-nichen@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/amd/acp/acp-mach-common.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 4764d5066caf6..0a013f34143af 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2758,7 +2758,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
- 	if (!elsio->u.els_logo.els_logo_pyld) {
- 		/* ref: INIT */
- 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
--		qla2x00_free_fcport(fcport);
- 		return QLA_FUNCTION_FAILED;
+diff --git a/sound/soc/amd/acp/acp-mach-common.c b/sound/soc/amd/acp/acp-mach-common.c
+index fc4e91535578b..ecfabdda2fd0f 100644
+--- a/sound/soc/amd/acp/acp-mach-common.c
++++ b/sound/soc/amd/acp/acp-mach-common.c
+@@ -126,8 +126,13 @@ static int acp_card_rt5682_init(struct snd_soc_pcm_runtime *rtd)
+ 	if (drvdata->hs_codec_id != RT5682)
+ 		return -EINVAL;
+ 
+-	drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
+-	drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
++	drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
++	if (IS_ERR(drvdata->wclk))
++		return PTR_ERR(drvdata->wclk);
++
++	drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
++	if (IS_ERR(drvdata->bclk))
++		return PTR_ERR(drvdata->bclk);
+ 
+ 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682_widgets,
+ 					ARRAY_SIZE(rt5682_widgets));
+@@ -352,8 +357,13 @@ static int acp_card_rt5682s_init(struct snd_soc_pcm_runtime *rtd)
+ 		return -EINVAL;
+ 
+ 	if (!drvdata->soc_mclk) {
+-		drvdata->wclk = clk_get(component->dev, "rt5682-dai-wclk");
+-		drvdata->bclk = clk_get(component->dev, "rt5682-dai-bclk");
++		drvdata->wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
++		if (IS_ERR(drvdata->wclk))
++			return PTR_ERR(drvdata->wclk);
++
++		drvdata->bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
++		if (IS_ERR(drvdata->bclk))
++			return PTR_ERR(drvdata->bclk);
  	}
  
-@@ -2783,7 +2782,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
- 	if (rval != QLA_SUCCESS) {
- 		/* ref: INIT */
- 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
--		qla2x00_free_fcport(fcport);
- 		return QLA_FUNCTION_FAILED;
- 	}
- 
+ 	ret = snd_soc_dapm_new_controls(&card->dapm, rt5682s_widgets,
 -- 
 2.53.0
 
