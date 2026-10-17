@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3672917BED0;
-	Sat, 17 Oct 2026 17:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F09E2C3255;
+	Sat, 17 Oct 2026 17:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256647; cv=none; b=GEbQbLs7GKm51JrHzM1iSdb/IwPQ7EiBzJq9c0G75motDi7ytRY1YV/uY+MWMYHUNTzPleTMeuXtYpoNAilRwYh5geiO9YwADGoCc0VOe8ZGAY04f/vKDGnx+YhsVQbKWfqqYVeNuMwY0MKY0RntZG6xYksjQdRqnJpfJ8eFwU0=
+	t=1792256650; cv=none; b=GtfnUX72a2ayHBlLEbWU1PXvUeu5s3KL69CSaqQGHk/mSnQFJI22UnNx/pmCGAnz+aMaYohgqpRt/CeMn62mk9Q3dTczsht0nzin9efIstSxWzmOdxb7mtRkDPK0cjqX3WRP0g4ttYPH52xMikBK4/sxX+NjTiLmIXXT026PQIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256647; c=relaxed/simple;
-	bh=hGoEffxJP+tNthlqKu0xqn8GHnqwgbdafJn9/Aggcas=;
+	s=arc-20240116; t=1792256650; c=relaxed/simple;
+	bh=/7E8jaa3TIC4+u43xW+mxDs//NHcnt+De9AtpiCDKcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p33lotDkDwC9oDRbostvb64ySVJ4QM+sDIcWS+1XEg5EvqBZxVi9Q1zNz7hIg/Sc7+HSEDbecE8jtwwOfrGcveMkKYseiCUK7B1AQ4QzL9jHzkovZ6IjrT4wW9smH7LCsy2fYO074or+SaTn3qTN+FvI+ezkSX/l1piRXfIZxa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lm6ndv0w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lUtZPqR+k8juZvatICnMc56Rdn/aIcQu4vrdHKIyAmcMvmb37/YaeuFHwcsXtNfmGfo1AI1UpzeoTrczTlzGcTExJK0lQryjUuTYBLhXEAqfy3KjYf7YfTKzLF3Sxutc/BEozaLFW9SMJvWOD1/yYyG/U7LZ1QqmjoETiWt4IwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR948qBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lm6ndv0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906F11F000C4;
-	Sat, 17 Oct 2026 17:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR948qBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5491F000C4;
+	Sat, 17 Oct 2026 17:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256646;
-	bh=U1upZ5uhwIYqLpP5bDrZImx0447tQkmTmrGQoaaq7qo=;
+	s=korg; t=1792256649;
+	bh=bHVxmjKnerbMGyg7NJAEEgeo7I/SAl8bDY1qIrXTRx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lm6ndv0wMW1QRfw8x56RFjqzhtIr/cLN5QOYVB8qDe5eqGdz61Kmsb9fKq1IxCICW
-	 1DG4T2QP18b+FrLsvGhuvhGXLflUZ7Q+6UColXzU9qTMrd12tKKGMXt6PJbAAqOpxI
-	 qqqkoD6MzJbW3ihGcmyB48ucBcqdx6ZnOguxTtAs=
+	b=wR948qBPJT+B3v6qMaU9gMUPly67r41k1ADZzrl73Jt0Un3kbgkcMRGh4bjjyqgwU
+	 H6T4vvqF3Rpzo90Z9BQMQISsjZEgYgi8wkpHDiFmDHEGrMFZ7BJ3hOzJNiBF/MWsqe
+	 KW2+BasUlO6MSUnFDEXedW2o2Y4KJ8NBsPxPNdRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Sinha <gsinha@micron.com>,
-	Bean Huo <beanhuo@micron.com>,
+	co+77553a7fc66ac133@bugs.sh,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 0306/1674] nvme-pci: add NVME_QUIRK_DMAPOOL_ALIGN_512 for Micron 4100AT
-Date: Sat, 17 Oct 2026 17:42:58 +0200
-Message-ID: <20261017160438.972270987@linuxfoundation.org>
+Subject: [PATCH 6.6 0307/1674] nvmet-auth: fix out-of-bounds write in nvmet_auth_challenge()
+Date: Sat, 17 Oct 2026 17:42:59 +0200
+Message-ID: <20261017160438.998296108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,42 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit c72f9f7bd23c91e944910d9bcbf12503d21a4a1f upstream.
+commit fa6778e030bed9841ddcdf96bc7018da9ac03562 upstream.
 
-The Micron 4100AT fetches PRP Lists in 512 byte strides, but the driver
-allocates small PRP List descriptors in 256 byte strides.  A descriptor
-in the last 256 bytes of a dmapool page makes the controller read past
-the page: the access lands on an adjacent IOVA, the IOMMU faults the
-command. That last block only became reachable with commit da9619a30e73
-("dmapool: link blocks across pages"), so this affects v6.4 and later.
+nvmet_auth_challenge() receives its output buffer as a void pointer.
+sizeof(*d) therefore evaluates to one with GCC and undercounts the fixed
+challenge header by 15 bytes.  A short AUTH_RECEIVE buffer can pass the
+check before the challenge is copied past the end of its allocation.
 
-Align the small descriptor pool to 512 bytes, as commit ebefac564796
-("nvme-pci: 512 byte aligned dma pool segment quirk") already does for
-another controller with the same erratum.  The last block then starts
-at offset 0xE00 and the fetch stays inside the page.
+Use the typed challenge pointer when calculating the response size.
 
-Cc: <stable@vger.kernel.org> # 6.4.x: ebefac564796: nvme-pci: 512 byte aligned dma pool segment quirk
-Cc: <stable@vger.kernel.org> # 6.4.x
-Signed-off-by: Gaurav Sinha <gsinha@micron.com>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
+  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
+  Write of size 32 by task kworker/1:1H/64
+  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
+  Call Trace:
+  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
+  nvmet_tcp_try_recv_pdu (drivers/nvme/target/tcp.c:1119 drivers/nvme/target/tcp.c:1243)
+  nvmet_tcp_io_work (drivers/nvme/target/tcp.c:1350 drivers/nvme/target/tcp.c:1382 drivers/nvme/target/tcp.c:1445)
+  process_one_work (kernel/workqueue.c:3322)
+  worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  The buggy address is located 16 bytes inside of
+   allocated 33-byte region [ffff888000554e80, ffff888000554ea1)
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+Cc: stable@vger.kernel.org
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Reported-by: co+77553a7fc66ac133@bugs.sh
+Closes: https://lore.kernel.org/all/Ah6QavQXwvshtqyUcYD1P1R7XE0ND9fB7lbV@bugs.sh/
+Assisted-by: Codex:gpt-5.6
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3556,6 +3556,8 @@ static const struct pci_device_id nvme_i
- 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
- 	 { PCI_DEVICE(0x1344, 0x6001),   /* Micron Nitro NVMe */
- 		 .driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1344, 0x6004),	/* Micron 4100AT */
-+		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
- 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
- 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
- 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -373,7 +373,7 @@ static int nvmet_auth_challenge(struct n
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+ 	int ret = 0;
+ 	int hash_len = nvme_auth_hmac_hash_len(ctrl->shash_id);
+-	int data_size = sizeof(*d) + hash_len;
++	int data_size = sizeof(*data) + hash_len;
+ 
+ 	if (ctrl->dh_tfm)
+ 		data_size += ctrl->dh_keysize;
 
 
