@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8B33911A9;
-	Sat, 17 Oct 2026 16:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0EE3911A9;
+	Sat, 17 Oct 2026 16:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254627; cv=none; b=Gj6+hZwBCLIKPRJEaG8y6Fh554wuggkpzTphvc6KrK1b7XxN366tyjH5VHys79vD090/mGCWsvwpG7bWJq3aokQvX05Ixqtb7sxbebn2FXy/wMm4Gk+bL9M6Gyfz3LwDcrfQUmH25EO5wqLMJdgQXKlxSp5ligz5HZGp8wjLiWM=
+	t=1792254629; cv=none; b=b3j6O1oVwPmHpdE07Ha6qXrPmKT7CV3IevJ1+StX/kiwdlvvTqlfIS24JqBtz7lDkI1Sl+U2lAisr9+/hBeHkc1DcO7jnYXFK0Qi/l0vxKg3ygUHm7TUitxcFU4OhFzZlG1zKhbohtwbedeuwxGns7yIFrFu2FX34BSe5qhLJqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254627; c=relaxed/simple;
-	bh=J+xmxEQ1TaYtGswBPVB1QJEPv1AkU5X6jJwTz2UojY8=;
+	s=arc-20240116; t=1792254629; c=relaxed/simple;
+	bh=TE0/UFR/bEcraQaHg7C5YiQ4bgBdd766JoRgkPiA38U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aF6Q7eFkArkm4aeOTlaJnm9e+pXHS4Et4FAUW/dTeqp8J+Rj3mqKIQKfmdq2wzigDE39lPY1VF2U+HSMKdv/oZ2UNBJExfuaszevogpvze/BGLYJhgdQYnCA3fef6cTeReTiN6LrQjBpHXAltFf+zlOcC/5t2Faodzq4g+YW+4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFEDauCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZtsSmj/Z9HgkzfAI2aRwyVSWMdd4j87qdAMVSJNid9Pu+CKHdxg+WzoyMlomG59nKcON7ZQjNYnBFy96rKLZ1Ubu2eGPW219TW085EPcLviE7H7IR8/QMakOjsNLS+3BBwyg5vqbArnfJgk+X2fZDNYKxWrCZS+lrBoNBWnCbUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1uPr/ZQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFEDauCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E471F000C4;
-	Sat, 17 Oct 2026 16:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1uPr/ZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F2F1F000C4;
+	Sat, 17 Oct 2026 16:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254625;
-	bh=BH4QnEYuVGCv+SDsSK1ntt8fyFRA3jXQHAeVTNnimic=;
+	s=korg; t=1792254628;
+	bh=/ZFHgfURAn8W6ET6/iioBwiE6Hr71NOO/GkRRbKBw64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FFEDauCfIYgfO00V/gjJaDpXTvh4Iqh1BaGi6SiBejJ09GTPm+3IRphdhxHh/rML+
-	 Te0xXGKBvc3WtZJzqjHTPXvcVc9XDGXeKyo00OQYU4+VGm4ougOh0BgjJzFiJuEdKY
-	 jh2brk1kW+Flihp2T8TrUgQ+BqbK3ZvTQEg9zMpQ=
+	b=J1uPr/ZQFohG9iGNyagXzvTZRDY1O5nYxcBSD24M3DcCoFkCVT4b+rBRFWE3MnYq7
+	 hfzXBkFGY15rMfSV9hSRzIa3g8r8bVq4KBexgPgSzNdcw3BDNDUSZ/0/xV2oAjj4rP
+	 Dun9xUYinv+HpDB3vypHBgaXraie8EcjXoaxlP80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 507/869] watchdog: at91sam9_wdt: prevent timer rearm during teardown
-Date: Sat, 17 Oct 2026 17:55:48 +0200
-Message-ID: <20261017160050.102450309@linuxfoundation.org>
+Subject: [PATCH 6.12 508/869] s390/ism: Fix UAF of sba and ieq during ism_dev_exit()
+Date: Sat, 17 Oct 2026 17:55:49 +0200
+Message-ID: <20261017160050.125397108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,49 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit 8444d66aa6b6e7fe0a26fa1a00a11cb4d0523783 ]
+[ Upstream commit b1896543ce59c4258625a35cf41e23a9a1f80ea2 ]
 
-at91_ping() rearms the watchdog timer from its callback. timer_delete()
-neither waits for a running callback nor prevents it from rearming the
-timer, so probe failure or driver removal can leave the timer accessing the
-devm-allocated at91wdt after it has been freed.
+A ism interrupt handler can be active in parallel with ism_dev_exit(),
+accessing freed data structures.
 
-Use timer_shutdown_sync() on both teardown paths. It waits for a running
-callback and rejects any attempt by the callback to rearm the timer.
+No new interrupts will be generated after unregister_ieq(). Drain ongoing
+interrupt handlers by free_irq(), before freeing ism data structures.
 
-Fixes: 5161b31dc39a ("watchdog: at91sam9_wdt: better watchdog support")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260806060613.1830-1-getshell@seu.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260805131043.954639-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/at91sam9_wdt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/net/ism_drv.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/watchdog/at91sam9_wdt.c b/drivers/watchdog/at91sam9_wdt.c
-index 2c6474cb858b7..fe14f00662c56 100644
---- a/drivers/watchdog/at91sam9_wdt.c
-+++ b/drivers/watchdog/at91sam9_wdt.c
-@@ -242,7 +242,7 @@ static int at91_wdt_init(struct platform_device *pdev, struct at91wdt *wdt)
- 	return 0;
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index f2264cf6f40d8..c728095fc5059 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -244,13 +244,16 @@ static int unregister_sba(struct ism_dev *ism)
+ 	if (ret && ret != ISM_ERROR)
+ 		return -EIO;
  
- out_stop_timer:
--	del_timer(&wdt->timer);
-+	timer_shutdown_sync(&wdt->timer);
- 	return err;
++	return 0;
++}
++
++static void ism_free_sba(struct ism_dev *ism)
++{
+ 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
+ 			  ism->sba, ism->sba_dma_addr);
+ 
+ 	ism->sba = NULL;
+ 	ism->sba_dma_addr = 0;
+-
+-	return 0;
  }
  
-@@ -378,7 +378,7 @@ static void at91wdt_remove(struct platform_device *pdev)
- 	watchdog_unregister_device(&wdt->wdd);
+ static int unregister_ieq(struct ism_dev *ism)
+@@ -264,13 +267,16 @@ static int unregister_ieq(struct ism_dev *ism)
+ 	if (ret && ret != ISM_ERROR)
+ 		return -EIO;
  
- 	pr_warn("I quit now, hardware will probably reboot!\n");
--	del_timer(&wdt->timer);
-+	timer_shutdown_sync(&wdt->timer);
++	return 0;
++}
++
++static void ism_free_ieq(struct ism_dev *ism)
++{
+ 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
+ 			  ism->ieq, ism->ieq_dma_addr);
+ 
+ 	ism->ieq = NULL;
+ 	ism->ieq_dma_addr = 0;
+-
+-	return 0;
  }
  
- #if defined(CONFIG_OF)
+ static int ism_read_local_gid(struct ism_dev *ism)
+@@ -580,8 +586,10 @@ static int ism_dev_init(struct ism_dev *ism)
+ 
+ unreg_ieq:
+ 	unregister_ieq(ism);
++	ism_free_ieq(ism);
+ unreg_sba:
+ 	unregister_sba(ism);
++	ism_free_sba(ism);
+ free_irq:
+ 	free_irq(pci_irq_vector(pdev, 0), ism);
+ free_client_arr:
+@@ -678,9 +686,13 @@ static void ism_dev_exit(struct ism_dev *ism)
+ 
+ 	if (ism_v2_capable)
+ 		ism_del_vlan_id(ism, ISM_RESERVED_VLANID);
++	/* ism will only generate new IRQs while ieq & sba are registered */
+ 	unregister_ieq(ism);
+ 	unregister_sba(ism);
++	/* drain ongoing irpt handlers */
+ 	free_irq(pci_irq_vector(pdev, 0), ism);
++	ism_free_ieq(ism);
++	ism_free_sba(ism);
+ 	kfree(ism->sba_client_arr);
+ 	pci_free_irq_vectors(pdev);
+ 	list_del_init(&ism->list);
 -- 
 2.53.0
 
