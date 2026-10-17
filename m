@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77F73939A4;
-	Sat, 17 Oct 2026 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8646CE555;
+	Sat, 17 Oct 2026 17:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258431; cv=none; b=A6RDWfvq3tjURmUCqXYF5OgIvLkpeSdBRahCS3etRnpBo7DiNjzknAyTWpECFG9aIbI86QmOfAgfu0nmyoDLWtn5cQGiacBuykTQVHP9ru3mZqPHwM73gFQETfqNM55WWJbr34LYd01WLFE08uruOT+QfhtyAflcPzFN+57LDdI=
+	t=1792258434; cv=none; b=uKSLbfsFIBf+WvTumHtEdH/frx3VyrxHbryqU4X4BRKAuOlToZh186VW2zKw2rp/j3Q3laNP6ShrWgM0VHVNyGOfqPyIM//7MBB5oTKJwzVD03KEwJLS7NZVZVLYBcEG6PohngqewbSW5JlfPCd0RorVipFNSICKQyua9jUTK1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258431; c=relaxed/simple;
-	bh=IwgUfOO3kuKAnN5iKMopJ6Nw1j8n40thTkkMd7SGqWw=;
+	s=arc-20240116; t=1792258434; c=relaxed/simple;
+	bh=MtCiBB0jBniOe2fzpKyckrUA1u8P6uat4AQZ7H4gko4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fq0H1u7A60T4PalWaKh/W5/GJM2hyaGJ8RFEKDC9vN+hAP1EoP3+CbDsx9pnCYl/8LdTfg7TowNoebC59yZHD7WJPs9zzCqvmjrVHb2l7HkM3RPrYagyliNp8q5QFLZjS0xcpvLp9+uv3CFLlUTM+E/WipkAUCOeMFk1FkqIJ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUjI0o7a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SD+R+ZW8wtHpZz+1u7jy0eyE6/fg0CsG0+Vuf0Qd/Xpzqvm7NADHTlCSZyyB9N5DoUCCcVEOUH66++m5nrQC2PXvH0GbAVQX6MC6vW9rIHHOx5CEf+gzgHkTHpuEjY9bkcM0ij8ntbGRzEA5qIA2F1gV06WyUKuRsaOpd4ziULk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCAPLjiZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUjI0o7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F328E1F000C4;
-	Sat, 17 Oct 2026 17:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCAPLjiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19F61F000C4;
+	Sat, 17 Oct 2026 17:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258430;
-	bh=mK7ngR52C/IblSPYbZofWaNIMvulf60zP4L1bMe4PV4=;
+	s=korg; t=1792258433;
+	bh=TBysR97Ih1kaIJfRfebCuRfMYbVu6W2kg9VIDFIdsqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUjI0o7ausJURic/Yr1qZtx5lbcYqAS7NfxIP0wzPWfUQI7LQkXL6hMNWnk5u55AS
-	 Qg0Ix0rQJ7h17YCCFEVsNjW6UY0B9Y5BIOqjY2a0ruZTRlTT42/FzmJqVlFLe0zMRR
-	 a4uqPo4Cax7DFg880y3B7QQiRnTK27V06vesq8EE=
+	b=ZCAPLjiZ2OHs8qghK1AZiVxWyzKIbUGo2OzrIqCLvL0eYnHFA8kaMM/Yx3/t4he6m
+	 sXSQHtT7ycLVwR+nDBhR06Uorziezect8eZITS/oUeh1vxC04L8fYcAqNQ3bNcvxSS
+	 Kl837wmw4gL/P9cauwUevb712ee5i898vI1cY6VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ge Yang <yangge1116@126.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	David Hildenbrand <david@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0880/1674] KVM: SEV: Use long-term pin when registering encrypted memory regions
-Date: Sat, 17 Oct 2026 17:52:32 +0200
-Message-ID: <20261017160453.705720339@linuxfoundation.org>
+Subject: [PATCH 6.6 0881/1674] KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock
+Date: Sat, 17 Oct 2026 17:52:33 +0200
+Message-ID: <20261017160453.730702106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,96 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ge Yang <yangge1116@126.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 7e066cb9b71a22c3e5ef233de63ff14525baf6f0 ]
+[ Upstream commit b6408b6cec5df76a165575777800ef2aba12b109 ]
 
-When registering an encrypted memory region for SEV-MEM/SEV-ES guests,
-pin the pages with FOLL_TERM so that the pages are migrated out of
-MIGRATE_CMA/ZONE_MOVABLE.  Failure to do so violates the CMA/MOVABLE
-mechanisms and can result in fragmentation due to unmovable pages, e.g.
-can make CMA allocations fail.
+Take and hold kvm->lock for before checking sev_guest() in
+sev_mem_enc_register_region(), as sev_guest() isn't stable unless kvm->lock
+is held (or KVM can guarantee KVM_SEV_INIT{2} has completed and can't
+rollack state).  If KVM_SEV_INIT{2} fails, KVM can end up trying to add to
+a not-yet-initialized sev->regions_list, e.g. triggering a #GP
 
-Signed-off-by: Ge Yang <yangge1116@126.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/1739241423-14326-1-git-send-email-yangge1116@126.com
-[sean: massage changelog, make @flags an unsigned int]
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  CPU: 110 UID: 0 PID: 72717 Comm: syz.15.11462 Tainted: G     U  W  O        6.16.0-smp-DEV #1 NONE
+  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.52.0-0 10/28/2024
+  RIP: 0010:sev_mem_enc_register_region+0x3f0/0x4f0 ../include/linux/list.h:83
+  Code: <41> 80 3c 04 00 74 08 4c 89 ff e8 f1 c7 a2 00 49 39 ed 0f 84 c6 00
+  RSP: 0018:ffff88838647fbb8 EFLAGS: 00010256
+  RAX: dffffc0000000000 RBX: 1ffff92015cf1e0b RCX: dffffc0000000000
+  RDX: 0000000000000000 RSI: 0000000000001000 RDI: ffff888367870000
+  RBP: ffffc900ae78f050 R08: ffffea000d9e0007 R09: 1ffffd4001b3c000
+  R10: dffffc0000000000 R11: fffff94001b3c001 R12: 0000000000000000
+  R13: ffff8982ab0bde00 R14: ffffc900ae78f058 R15: 0000000000000000
+  FS:  00007f34e9dc66c0(0000) GS:ffff89ee64d33000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fe180adef98 CR3: 000000047210e000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   kvm_arch_vm_ioctl+0xa72/0x1240 ../arch/x86/kvm/x86.c:7371
+   kvm_vm_ioctl+0x649/0x990 ../virt/kvm/kvm_main.c:5363
+   __se_sys_ioctl+0x101/0x170 ../fs/ioctl.c:51
+   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x6f/0x1f0 ../arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f34e9f7e9a9
+  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007f34e9dc6038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007f34ea1a6080 RCX: 00007f34e9f7e9a9
+  RDX: 0000200000000280 RSI: 000000008010aebb RDI: 0000000000000007
+  RBP: 00007f34ea000d69 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 0000000000000000 R14: 00007f34ea1a6080 R15: 00007ffce77197a8
+   </TASK>
+
+with a syzlang reproducer that looks like:
+
+  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000040)={0x0, &(0x7f0000000180)=ANY=[], 0x70}) (async)
+  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000080)={0x0, &(0x7f0000000180)=ANY=[@ANYBLOB="..."], 0x4f}) (async)
+  r0 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000200), 0x0, 0x0)
+  r1 = ioctl$KVM_CREATE_VM(r0, 0xae01, 0x0)
+  r2 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000240), 0x0, 0x0)
+  r3 = ioctl$KVM_CREATE_VM(r2, 0xae01, 0x0)
+  ioctl$KVM_SET_CLOCK(r3, 0xc008aeba, &(0x7f0000000040)={0x1, 0x8, 0x0, 0x5625e9b0}) (async)
+  ioctl$KVM_SET_PIT2(r3, 0x8010aebb, &(0x7f0000000280)={[...], 0x5}) (async)
+  ioctl$KVM_SET_PIT2(r1, 0x4070aea0, 0x0) (async)
+  r4 = ioctl$KVM_CREATE_VM(0xffffffffffffffff, 0xae01, 0x0)
+  openat$kvm(0xffffffffffffff9c, 0x0, 0x0, 0x0) (async)
+  ioctl$KVM_SET_USER_MEMORY_REGION(r4, 0x4020ae46, &(0x7f0000000400)={0x0, 0x0, 0x0, 0x2000, &(0x7f0000001000/0x2000)=nil}) (async)
+  r5 = ioctl$KVM_CREATE_VCPU(r4, 0xae41, 0x2)
+  close(r0) (async)
+  openat$kvm(0xffffffffffffff9c, &(0x7f0000000000), 0x8000, 0x0) (async)
+  ioctl$KVM_SET_GUEST_DEBUG(r5, 0x4048ae9b, &(0x7f0000000300)={0x4376ea830d46549b, 0x0, [0x46, 0x0, 0x0, 0x0, 0x0, 0x1000]}) (async)
+  ioctl$KVM_RUN(r5, 0xae80, 0x0)
+
+Opportunistically use guard() to avoid having to define a new error label
+and goto usage.
+
+Fixes: 1e80fdc09d12 ("KVM: SVM: Pin guest memory when SEV is active")
+Cc: stable@vger.kernel.org
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Link: https://patch.msgid.link/20260310234829.2608037-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: b6408b6cec5d ("KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/sev.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 0ba286bd50c27..7ed6f71f49de6 100644
+index 7ed6f71f49de6..7602a205cd3cd 100644
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -401,7 +401,7 @@ static int sev_launch_start(struct kvm *kvm, struct kvm_sev_cmd *argp)
+@@ -1984,6 +1984,8 @@ int sev_mem_enc_register_region(struct kvm *kvm,
+ 	struct enc_region *region;
+ 	int ret = 0;
  
- static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
- 				    unsigned long ulen, unsigned long *n,
--				    int write)
-+				    unsigned int flags)
- {
- 	struct kvm_sev_info *sev = &to_kvm_svm(kvm)->sev_info;
- 	unsigned long npages, size;
-@@ -445,7 +445,7 @@ static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
- 		return ERR_PTR(-ENOMEM);
++	guard(mutex)(&kvm->lock);
++
+ 	if (!sev_guest(kvm))
+ 		return -ENOTTY;
  
- 	/* Pin the user virtual address. */
--	npinned = pin_user_pages_fast(uaddr, npages, write ? FOLL_WRITE : 0, pages);
-+	npinned = pin_user_pages_fast(uaddr, npages, flags, pages);
- 	if (npinned != npages) {
- 		pr_err("SEV: Failure locking %lu pages.\n", npages);
- 		ret = -ENOMEM;
-@@ -533,7 +533,7 @@ static int sev_launch_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 	vaddr_end = vaddr + size;
- 
- 	/* Lock the user memory. */
--	inpages = sev_pin_memory(kvm, vaddr, size, &npages, 1);
-+	inpages = sev_pin_memory(kvm, vaddr, size, &npages, FOLL_WRITE);
- 	if (IS_ERR(inpages))
- 		return PTR_ERR(inpages);
- 
-@@ -985,7 +985,7 @@ static int sev_dbg_crypt(struct kvm *kvm, struct kvm_sev_cmd *argp, bool dec)
- 		if (IS_ERR(src_p))
- 			return PTR_ERR(src_p);
- 
--		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, 1);
-+		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, FOLL_WRITE);
- 		if (IS_ERR(dst_p)) {
- 			sev_unpin_memory(kvm, src_p, n);
- 			return PTR_ERR(dst_p);
-@@ -1052,7 +1052,7 @@ static int sev_launch_secret(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 	if (copy_from_user(&params, (void __user *)(uintptr_t)argp->data, sizeof(params)))
- 		return -EFAULT;
- 
--	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, 1);
-+	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, FOLL_WRITE);
- 	if (IS_ERR(pages))
- 		return PTR_ERR(pages);
- 
-@@ -1534,7 +1534,7 @@ static int sev_receive_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 
- 	/* Pin guest memory */
- 	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
--				    PAGE_SIZE, &n, 1);
-+				    PAGE_SIZE, &n, FOLL_WRITE);
- 	if (IS_ERR(guest_page)) {
- 		ret = PTR_ERR(guest_page);
- 		goto e_free_trans;
-@@ -1999,7 +1999,8 @@ int sev_mem_enc_register_region(struct kvm *kvm,
+@@ -1998,12 +2000,10 @@ int sev_mem_enc_register_region(struct kvm *kvm,
+ 	if (!region)
  		return -ENOMEM;
  
- 	mutex_lock(&kvm->lock);
--	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages, 1);
-+	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
-+				       FOLL_WRITE | FOLL_LONGTERM);
+-	mutex_lock(&kvm->lock);
+ 	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
+ 				       FOLL_WRITE | FOLL_LONGTERM);
  	if (IS_ERR(region->pages)) {
  		ret = PTR_ERR(region->pages);
- 		mutex_unlock(&kvm->lock);
+-		mutex_unlock(&kvm->lock);
+ 		goto e_free;
+ 	}
+ 
+@@ -2021,8 +2021,6 @@ int sev_mem_enc_register_region(struct kvm *kvm,
+ 	region->size = range->size;
+ 
+ 	list_add_tail(&region->list, &sev->regions_list);
+-	mutex_unlock(&kvm->lock);
+-
+ 	return ret;
+ 
+ e_free:
 -- 
 2.53.0
 
