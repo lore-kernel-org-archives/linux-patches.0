@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125E538C2C3;
-	Sat, 17 Oct 2026 16:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0F29BDB5;
+	Sat, 17 Oct 2026 16:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255836; cv=none; b=MVnOsaLQaIg7JMlTYYZk3rKZLdHbTjUiGN/Y7VWfgna+FY2RiAKRx6pJhLqwez04qxnNetMlk74g8bR61ZbTrn5KNhBMSkExQxe+ndy++Wt/BSRdRPKxBGLUutS4j81hXJlJ/wBgkhUuwV+y6luYv9url+Ch1ck/cHkhplTdqjY=
+	t=1792255839; cv=none; b=bO4QdtZGY6YxToCB013HfkuKu3AsPRn6LpAt3nDkMB6Jh0yZj7+GyPa7sBgXI5sXmtKEIENrRKDKjNuyFPd1nl50l1AXbro03K4xJGm3VLBKvebR44pLm9itc+/xjh+L+YFmerr2vOUz/d669H8KZV9WC59YXgNS4W9E80ImovU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255836; c=relaxed/simple;
-	bh=fZLX2GXtQXDKGOL9Uh3lkuzGfFUF8R+x221Q1zDjIyk=;
+	s=arc-20240116; t=1792255839; c=relaxed/simple;
+	bh=GS+MlrqIpqlDzZaH8iZgJMNU2RVRe0cDFXGa8QGYSL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw2qcEKovw7VdcSc2NOX8Tjj70vUVrglBR+FBTyiJ9VwU+lf79hDzun3bh3wZhYubd0cv7t2beCJNsFbuScwmveeSy0ElAIQvRyiFNpIAJlCY5PzPDXMgydmWV0isiFkVwqieZP+sa+szrmMw4ZvEMKcdqnciNn9srECKJEA3E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkekyRWJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JqBab2zQ0ZT11qNth8E7zel5/h3JznTgYWYNBtcZYj/5xhZoC9CLAYdNORIfIwNSyZz7lIPA0klyZissT7fbXaZHE/ELo9BjU3tjjz1+uZd4NQI0D8ltxZuQmIJFz84y2jkKjbs5DecoxNwscdB5sjtOKDrk1EROCA6Fz4faJ+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEG3N9vl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkekyRWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270631F000C4;
-	Sat, 17 Oct 2026 16:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEG3N9vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1651F000C4;
+	Sat, 17 Oct 2026 16:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255834;
-	bh=hjpA7Kpcsj1+s/bD6uyhOiy7gpSAeAH+jme0SL6QN/4=;
+	s=korg; t=1792255837;
+	bh=EByNp6I13+IExJZC6LYZi+VyO/ADqPgvStf4p/HmLmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zkekyRWJI69sZMsoxFHymlISVQW/cmOsVa0noxBSu2yF1Idq6d8kSMTA8NqIXXEi2
-	 Fa4JV1lLHmlqpFgDMKeIW/8S3k38v+nWAb2KC0Ew2k5qjuRlj1BwSapROubNFuCYZ/
-	 jI0saW7xNmxcjhq9c2Dw6L4ImABj3pcDX/N61BPM=
+	b=UEG3N9vlYWP9UIq+E4np3fnXKBn07MylbI+pjr1sQGv7FGyLRsYgayaUntdDz5uqt
+	 LO8NX6a8wkaghgq6LuMFeS2TVkPcLVh8wvIMwJIR5WAZfI91sk01ZPEj3Udm/g/z7B
+	 fmRN+d0Hp23ZfFiJB2zMH60RV1AAOO+hu/BTibxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0038/1674] ieee802154: cc2520: fix FIFOP work use-after-free
-Date: Sat, 17 Oct 2026 17:38:30 +0200
-Message-ID: <20261017160432.120083553@linuxfoundation.org>
+Subject: [PATCH 6.6 0039/1674] landlock: Fix use-after-free of the sources parent directory
+Date: Sat, 17 Oct 2026 17:38:31 +0200
+Message-ID: <20261017160432.145411531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,81 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit ff5891b266a7fc6a062710836be84f1cc19338b5 ]
+[ Upstream commit 2c6dc792538260a8087ac5b22c31b3b8e47c85d6 ]
 
-The FIFOP interrupt handler queues cc2520_fifop_irqwork.  On removal,
-cc2520_remove() only flushes the work.  The devm-managed FIFOP IRQ
-remains active until after ->remove() returns and can queue the work
-again after that flush, allowing it to run after the private data is
-released.
+current_check_refer_path() reads old_dentry->d_parent without holding a
+reference nor a lock on it, and then dereferences it in
+collect_domain_accesses() and in the audit record.
 
-Disable the work with disable_work_sync() instead of flushing it, so
-the handler can no longer queue it once removal begins.  Destroy the
-buffer mutex last, since the worker and the stop callback invoked
-through ieee802154_unregister_hw() both take it.
+A reference on a child does not pin its parent: __d_move() reassigns
+dentry->d_parent and drops the reference the child held on its former
+parent.  hook_path_rename() is not affected because the rename path
+calls lock_rename() before the hook, so the source cannot be reparented
+under it.  hook_path_link() has no such protection: filename_linkat()
+holds a reference on the source dentry but neither locks nor references
+its parent, so a concurrent rename(2) can reparent the source while
+security_path_link() runs, and the former parent can then be removed and
+freed while the hook walks it.
 
-Found by an in-house static analysis tool.
+A process can trigger this after entering a Landlock domain that handles
+at least one filesystem access right.  The process can then race a
+linkat(2) loop against rename(2) and rmdir(2):
 
-Fixes: 0da6bc8cc341 ("ieee802154: cc2520: adds driver for TI CC2520 radio")
-Cc: stable@vger.kernel.org # v6.10+
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://lore.kernel.org/20260812061714.175966-1-fanwu01@zju.edu.cn
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
-[ replaced unavailable disable_work_sync() with disable_irq() followed by cancel_work_sync(). ]
+  BUG: KASAN: slab-use-after-free in collect_domain_accesses+0x278/0x290
+  Read of size 4 at addr ffff888160bd53f4 by task llrepro2/549
+   collect_domain_accesses+0x278/0x290
+   current_check_refer_path+0x952/0x1120
+   security_path_link+0x1be/0x320
+   filename_linkat+0x342/0x6d0
+   __x64_sys_linkat+0xfa/0x150
+  Freed by task 562:
+   kmem_cache_free+0x139/0x4c0
+   i_callback+0x4b/0x80
+   rcu_core+0x7dc/0x10a0
+
+Take a reference on the dentry selected as the source parent, using
+dget() for the common-mount-root case and dget_parent() otherwise.
+Release it after the hierarchy walk and synchronous audit logging.
+
+Cc: stable@vger.kernel.org
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Tested-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://patch.msgid.link/E9CDD9E6-E960-4DE2-B1AC-5667D52ABB3E@doyensec.com
+[mic: Clarify the caller, reachability, and reference handling]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[ adjusted context for the older dom-based Landlock implementation without audit logging. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/cc2520.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ security/landlock/fs.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ieee802154/cc2520.c b/drivers/net/ieee802154/cc2520.c
-index a94d8dd71aad9..10bdc317ae282 100644
---- a/drivers/net/ieee802154/cc2520.c
-+++ b/drivers/net/ieee802154/cc2520.c
-@@ -206,6 +206,7 @@ struct cc2520_private {
- 	bool is_tx;			/* Flag for sync b/w Tx and Rx */
- 	bool amplified;			/* Flag for CC2591 */
- 	struct gpio_desc *fifo_pin;	/* FIFO GPIO pin number */
-+	int fifop_irq;			/* FIFOP IRQ */
- 	struct work_struct fifop_irqwork;/* Workqueue for FIFOP */
- 	spinlock_t lock;		/* Lock for is_tx*/
- 	struct completion tx_complete;	/* Work completion for Tx */
-@@ -1117,8 +1118,9 @@ static int cc2520_probe(struct spi_device *spi)
- 		goto err_hw_init;
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index 9c1cee4c4c3cb..91773a7f27e79 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -908,11 +908,12 @@ static int current_check_refer_path(struct dentry *const old_dentry,
+ 	/*
+ 	 * old_dentry may be the root of the common mount point and
+ 	 * !IS_ROOT(old_dentry) at the same time (e.g. with open_tree() and
+-	 * OPEN_TREE_CLONE).  We do not need to call dget(old_parent) because
+-	 * we keep a reference to old_dentry.
++	 * OPEN_TREE_CLONE).  Pin the dentry used as old_parent in either case.
++	 * Otherwise, dget_parent() safely fetches and pins the current parent
++	 * against a concurrent rename(2).
+ 	 */
+-	old_parent = (old_dentry == mnt_dir.dentry) ? old_dentry :
+-						      old_dentry->d_parent;
++	old_parent = (old_dentry == mnt_dir.dentry) ? dget(old_dentry) :
++						      dget_parent(old_dentry);
  
- 	/* Set up fifop interrupt */
-+	priv->fifop_irq = gpiod_to_irq(fifop);
- 	ret = devm_request_irq(&spi->dev,
--			       gpiod_to_irq(fifop),
-+			       priv->fifop_irq,
- 			       cc2520_fifop_isr,
- 			       IRQF_TRIGGER_RISING,
- 			       dev_name(&spi->dev),
-@@ -1156,11 +1158,11 @@ static void cc2520_remove(struct spi_device *spi)
- {
- 	struct cc2520_private *priv = spi_get_drvdata(spi);
+ 	/* new_dir->dentry is equal to new_dentry->d_parent */
+ 	allow_parent1 = collect_domain_accesses(dom, mnt_dir.dentry, old_parent,
+@@ -920,8 +921,10 @@ static int current_check_refer_path(struct dentry *const old_dentry,
+ 	allow_parent2 = collect_domain_accesses(
+ 		dom, mnt_dir.dentry, new_dir->dentry, &layer_masks_parent2);
  
--	mutex_destroy(&priv->buffer_mutex);
--	flush_work(&priv->fifop_irqwork);
--
-+	disable_irq(priv->fifop_irq);
-+	cancel_work_sync(&priv->fifop_irqwork);
- 	ieee802154_unregister_hw(priv->hw);
- 	ieee802154_free_hw(priv->hw);
-+	mutex_destroy(&priv->buffer_mutex);
- }
+-	if (allow_parent1 && allow_parent2)
++	if (allow_parent1 && allow_parent2) {
++		dput(old_parent);
+ 		return 0;
++	}
  
- static const struct spi_device_id cc2520_ids[] = {
+ 	/*
+ 	 * To be able to compare source and destination domain access rights,
+@@ -932,8 +935,12 @@ static int current_check_refer_path(struct dentry *const old_dentry,
+ 	if (is_access_to_paths_allowed(
+ 		    dom, &mnt_dir, access_request_parent1, &layer_masks_parent1,
+ 		    old_dentry, access_request_parent2, &layer_masks_parent2,
+-		    exchange ? new_dentry : NULL))
++		    exchange ? new_dentry : NULL)) {
++		dput(old_parent);
+ 		return 0;
++	}
++
++	dput(old_parent);
+ 
+ 	/*
+ 	 * This prioritizes EACCES over EXDEV for all actions, including
 -- 
 2.53.0
 
