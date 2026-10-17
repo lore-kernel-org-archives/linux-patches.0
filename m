@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F5E3909BC;
-	Sat, 17 Oct 2026 18:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCD63909BC;
+	Sat, 17 Oct 2026 18:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260633; cv=none; b=cz1cdS6EF4rkcr9CdpiT36uwHPO44t+IT4Ck2GFGYbLuLO9FCQch5ndeCheb2opFgncCSoLQzlBmwQMoaVf4Hb5E/zGSoj0/EDk6KPYmTTTzEJLAJSBxm41d+cpoEZyQNBgtRrFf/rjeKK+xiMVh6/pnUNuZdCJQiSp9AynT/EM=
+	t=1792260636; cv=none; b=R0n0e4tCmEvx9lb8eRvLjlHfZmTwqkFB174U2MjjEU3AxS8h4bwt8Wb6paS9OLphPTnFRudfiEF1hvxgzZ38hqmOUG3y8L7DRbzF2k3U2aNLCjv0Ko3O+nUfGHLh//0isITp3HCaVfl4sqCr6KID+I/OxXHj5qid1hZojPeCYeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260633; c=relaxed/simple;
-	bh=L42YnfNLrZ9NZ+7jbZ9PlYqKjurD2o2Yp861Ey1ZYOc=;
+	s=arc-20240116; t=1792260636; c=relaxed/simple;
+	bh=ORayCIrbUpaz3ii28t+a30QacfPC4Ak7CoWrv6o9k0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyyIwkCCH0PZfxxHEAATdjwMNHEP8Lo6g9xc4cBjmacUYL37xm61cXx24VtWUZPRcj+giJS3GhT1X0c96VtHzF200heVJVbG9jg+o+eGLZOY0fh4hMugiAfJicxBP+IpE+JZjWYfoLjoxIx9BMOAH3HjjiY8t2kLr0PgsOCSpKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1g1SsAT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CWSlAJtpca9dlSyTYf6wjmVNvETH4CQK16vg/nR3cOEcGjAKchx5OEVLk1paIjoT6HE0Uc0evKY/B8HIxQEJy2PG3o7/I4d+0ih6/ISN5wLaU7l5acYDJCtKwtB8oGIoB+nygqrju0PEi2D7BD102r/O1Ky+2aC+Ms8cpjOS/dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUGZIXqc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1g1SsAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8A71F000C4;
-	Sat, 17 Oct 2026 18:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUGZIXqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7BE1F000C4;
+	Sat, 17 Oct 2026 18:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260631;
-	bh=nz/gUNMo+W95/DPZoAOhFlYIMCZ9zOjcEYW/r1brjpU=;
+	s=korg; t=1792260635;
+	bh=eD4UcxaLJbFwNa37mSCLpQ2KWf41p7syTZc1wDKG8XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1g1SsATubBcZZ2G3sV4vZg0XN7OEdScvOzWMX1zn9nfdDbo7hvAZzap4JJRXfN4q
-	 Uy8VWwAsB+GoxxzZiYSChFjBjs7wbEEOIVRNa9ahchIejWbe6QRR7L9ERCRP5oUxDe
-	 dY4yykFzgUOz4oWJbNeauOq5y+Um3khWV8b6Ki5g=
+	b=KUGZIXqc3IsBdvSweHy6HqYdgZALMYc+EzXZ3V63abdnsqqrp9rsY7ZgSIU7WBKwf
+	 E96C8SRMsR8qNqwS0utF/snC7x9fUMudMMQM1UqUQuM28O/hTwH9kOHIWe/LkEENO4
+	 ZpR64/yhG2ZT7ByQTDjQhHZ54boEeP7KRPn8Iwfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1609/1674] configfs: pin the symlink targets dirent instead of chasing ->ci_dentry
-Date: Sat, 17 Oct 2026 18:04:41 +0200
-Message-ID: <20261017160512.385914162@linuxfoundation.org>
+Subject: [PATCH 6.6 1610/1674] net: stmmac: fix TX descriptor availability check for TSO traffic
+Date: Sat, 17 Oct 2026 18:04:42 +0200
+Message-ID: <20261017160512.411752388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,113 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit a7c1290eef60711c10289c056ad32ed1f2b47b12 ]
+[ Upstream commit 5e38d732ec67a5b1f9a56e6c73add480c4b6030a ]
 
-create_link() reads the target's configfs_dirent from
-item->ci_dentry->d_fsdata, relying on the item reference taken by
-get_target().  That reference pins the item, not its dentry: the dentry is
-pinned by DCACHE_PERSISTENT, which configfs_remove_dir() releases via
-simple_rmdir() while the item is still alive.  A symlink racing with rmdir
-of its target can therefore find ->ci_dentry freed and its dirent
-released, triggering WARN_ON(!atomic_read(&sd->s_count)) in configfs_get().
+stmmac_tso_xmit() estimates the number of free TX descriptors required by
+a TSO skb as:
 
-Take the dirent in get_target() as well, under ->d_lock and atomically
-with the item reference, and pass it down to create_link().  A hashed
-dentry has not been killed yet, so its ->d_fsdata reference keeps the
-dirent alive there.
+	(skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1
 
-Cc: stable@vger.kernel.org
-Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Tested-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260730093435.195441-2-vasilisalmpanis@gmail.com
-Signed-off-by: Breno Leitao <leitao@debian.org>
+which assumes the payload is split into TSO_MAX_BUFF_SIZE chunks. This
+underestimates the descriptors actually consumed by stmmac_tso_allocator(),
+since each fragment is mapped individually and so it needs at least one
+descriptor regardless of its size. Moreover, one descriptor is used for
+the L2/L3/L4 headers and, when the MSS changes, one more is consumed for
+the MSS context descriptor.
+For a highly fragmented TSO skb the check can therefore pass even when the
+ring has too few free slots. stmmac_tso_allocator() then writes past the
+available descriptors, overwriting descriptors still owned by the DMA
+engine, corrupting the TX ring.
+Add stmmac_tso_get_num_desc() to compute the exact number of descriptors
+needed for the header, the linear payload and each fragment, plus the MSS
+context descriptor when required, and use it in the availability check.
+
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907-stmmac-fix-tso-nfrags-check-v1-1-328459906cdb@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/symlink.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 31 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/fs/configfs/symlink.c b/fs/configfs/symlink.c
-index f3f79c67add5d..b42f07e2ea7f5 100644
---- a/fs/configfs/symlink.c
-+++ b/fs/configfs/symlink.c
-@@ -76,9 +76,9 @@ static int configfs_get_target_path(struct config_item *item,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 96d97b209af9c..6f7a2fec7f133 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4040,6 +4040,26 @@ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
+ 	stmmac_set_tx_tail_ptr(priv, priv->ioaddr, tx_q->tx_tail_addr, queue);
+ }
  
- static int create_link(struct config_item *parent_item,
- 		       struct config_item *item,
-+		       struct configfs_dirent *target_sd,
- 		       struct dentry *dentry)
- {
--	struct configfs_dirent *target_sd = item->ci_dentry->d_fsdata;
- 	char *body;
- 	int ret;
- 
-@@ -115,6 +115,7 @@ static int create_link(struct config_item *parent_item,
- 
- 
- static int get_target(const char *symname, struct config_item **target,
-+		      struct configfs_dirent **target_sd,
- 		      struct super_block *sb)
- {
- 	struct path path __free(path_put) = {};
-@@ -125,7 +126,20 @@ static int get_target(const char *symname, struct config_item **target,
- 		return ret;
- 	if (path.dentry->d_sb != sb)
- 		return -EPERM;
--	*target = configfs_get_config_item(path.dentry);
-+	/*
-+	 * A hashed dentry guarantees that neither the item nor the dirent
-+	 * have been released yet, as removals unhash before dropping.
-+	 * Grab both references here. An item reference alone would not keep
-+	 * ->ci_dentry alive.
-+	 */
-+	spin_lock(&path.dentry->d_lock);
-+	if (!d_unhashed(path.dentry)) {
-+		struct configfs_dirent *sd = path.dentry->d_fsdata;
++static int stmmac_tso_get_num_desc(struct stmmac_tx_queue *tx_q,
++				   struct sk_buff *skb, u32 pay_len)
++{
++	int i, ndesc = 1;
 +
-+		*target = config_item_get(sd->s_element);
-+		*target_sd = configfs_get(sd);
++	/* head payload */
++	ndesc += DIV_ROUND_UP(pay_len, TSO_MAX_BUFF_SIZE);
++	/* frag payload */
++	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
++		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
++
++		ndesc += DIV_ROUND_UP(skb_frag_size(frag),
++				      TSO_MAX_BUFF_SIZE);
 +	}
-+	spin_unlock(&path.dentry->d_lock);
- 	if (!*target)
- 		return -ENOENT;
- 	return 0;
-@@ -139,6 +153,7 @@ int configfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 	struct configfs_dirent *sd;
- 	struct config_item *parent_item;
- 	struct config_item *target_item = NULL;
-+	struct configfs_dirent *target_sd = NULL;
- 	const struct config_item_type *type;
- 
- 	sd = dentry->d_parent->d_fsdata;
-@@ -182,7 +197,7 @@ int configfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 	 *  AV, a thoroughly annoyed bastard.
- 	 */
- 	inode_unlock(dir);
--	ret = get_target(symname, &target_item, dentry->d_sb);
-+	ret = get_target(symname, &target_item, &target_sd, dentry->d_sb);
- 	inode_lock(dir);
- 	if (ret)
- 		goto out_put;
-@@ -196,13 +211,14 @@ int configfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 		ret = type->ct_item_ops->allow_link(parent_item, target_item);
- 	if (!ret) {
- 		mutex_lock(&configfs_symlink_mutex);
--		ret = create_link(parent_item, target_item, dentry);
-+		ret = create_link(parent_item, target_item, target_sd, dentry);
- 		mutex_unlock(&configfs_symlink_mutex);
- 		if (ret && type->ct_item_ops->drop_link)
- 			type->ct_item_ops->drop_link(parent_item,
- 						     target_item);
++	/* MSS update requires a new descriptor */
++	ndesc += !!(skb_shinfo(skb)->gso_size != tx_q->mss);
++
++	return ndesc;
++}
++
+ /**
+  *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
+  *  @skb : the socket buffer
+@@ -4075,7 +4095,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	u32 queue = skb_get_queue_mapping(skb);
+ 	unsigned int first_entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
+-	int tmp_pay_len = 0, first_tx;
++	int tmp_pay_len = 0, first_tx, ndesc;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
+ 	dma_addr_t tso_des, des;
+@@ -4096,9 +4116,10 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		hdr = tcp_hdrlen(skb);
  	}
  
-+	configfs_put(target_sd);
- 	config_item_put(target_item);
+-	/* Desc availability based on threshold should be enough safe */
+-	if (unlikely(stmmac_tx_avail(priv, queue) <
+-		(((skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1)))) {
++	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
++
++	ndesc = stmmac_tso_get_num_desc(tx_q, skb, pay_len);
++	if (unlikely(stmmac_tx_avail(priv, queue) < ndesc)) {
+ 		if (!netif_tx_queue_stopped(netdev_get_tx_queue(dev, queue))) {
+ 			netif_tx_stop_queue(netdev_get_tx_queue(priv->dev,
+ 								queue));
+@@ -4110,8 +4131,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		return NETDEV_TX_BUSY;
+ 	}
  
- out_put:
+-	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
+-
+ 	mss = skb_shinfo(skb)->gso_size;
+ 
+ 	/* set new MSS value if needed */
 -- 
 2.53.0
 
