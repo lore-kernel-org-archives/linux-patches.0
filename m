@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F9D38C2C0;
-	Sat, 17 Oct 2026 17:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849843B19BA;
+	Sat, 17 Oct 2026 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259317; cv=none; b=dUDL9nn8QFvMQPxEBbVWT7FYaqisieD6BuQLTwRXt4dGULsDduelulwkoApZ4q/B61D4mGCkWT6iXTycXFU8q0daiSOMrv3Pp8GKVHOFXKxAM13oyNA77xP6ZVMP9u/2j4XY83UiMzEXaV0aKAKiRQGFex4r61H37Iz0Xu/qe9w=
+	t=1792259320; cv=none; b=uN4UyjR4FaAGuvWODfrxyrC8wOGyBzLaHaYQ8QcNrVWqWtOMKkjTFDIkM7rT/xhID2uapLCh4nYO7QVdtkFwip3KdE9g0jGWNm/eOa4jKc/VHREPuRartWiz4/I5wOdN/l0UuF+AXzP2comvcms1JK5Ljw3TMWYjINsc5+JQx8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259317; c=relaxed/simple;
-	bh=UEq2F/L3NttMGFOsHjnPBld2I6zC57jUYyeNGmj9drw=;
+	s=arc-20240116; t=1792259320; c=relaxed/simple;
+	bh=u9DmcvCZ3mNlk5c0ZBjIZxbIQ1FuvIW6czuwZby6/jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQlnE6CsX6PP8+lt2z1TgkBGynm95A/N/6nEd/2ejsLGcgeoTx6PG19IJVr1KpoBOiLTzLU55MaiA4ZECSkDxOIBa3Fgii7m5/isUaixzs2k1NLcxJketbU3OYj+QErO+F9T6OFmtk5yZ5MIu9apGkIbUkg22hCjkMTwcUQMKIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO7gjnXe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aPvkkdqshcxKs6hZodBEzRz4kSUVrz9PZi+Pv6nhIAUhdmtDuixX5GRRqeoimMrb/Q9NwMJaWPFiBJvEtMpsb0dILiGKC7VtsaUwvJuYnJgAl1tMY3hUuYZt2RqqHVal/tNd85S62CeP5R8kSTWdeNwP48GW+XrInEV7vq9Z0KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vL0SmAPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO7gjnXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713D51F000C4;
-	Sat, 17 Oct 2026 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vL0SmAPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8325A1F000C4;
+	Sat, 17 Oct 2026 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259316;
-	bh=PI52rFxLX6o+0q2z/TcFZuOHxUvPelT1EcRL8lUtxuo=;
+	s=korg; t=1792259319;
+	bh=ZKlfYzajf6u4WDgs2hNBdiLgtSzDJWc2yHX4mpbgHMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IO7gjnXeCz5VtoIbpm/9CgZ7uajH2XOBbsCrvfj0U4ipHl7veb2bzcUsmMYb/0s3X
-	 ZIDbGp15/7Mp7bk5jkkK+DUd1sqwKmRhnghm2rJ0asmi7DO/tJOvpEKbhhqCs8QEB8
-	 U96/Q0C0Cvc5Beb27GGdFFbcVGtNRJ3hUvXjmPZo=
+	b=vL0SmAPiq50Pg7P8esmkPoO26D9VWmXovQdqyy1uc64W469DkdMp4XjIYolc7T2Wd
+	 x0y15MvSSV2iNJo6c0PA+AM1XSuaKeB4gpt3slsFO5VrDhA7bNKmtotG2n7wLnSLI8
+	 Gc2Q0CkHBcYs+GzYl0eMPcQnRxRnnfcN7b8r07jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1173/1674] wifi: ath12k: fix memory leak in ath12k_wifi7_dp_rx_h_verify_tkip_mic()
-Date: Sat, 17 Oct 2026 17:57:25 +0200
-Message-ID: <20261017160501.258407881@linuxfoundation.org>
+Subject: [PATCH 6.6 1147/1674] xprtrdma: Fix ep kref imbalance on ADDR_CHANGE
+Date: Sat, 17 Oct 2026 17:56:59 +0200
+Message-ID: <20261017160500.594052938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,53 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 98d4f92ab6a1af2ea2ab590d7e2801b203110981 ]
+[ Upstream commit af9b65b29af341932625c4283dc7a23cdb62688a ]
 
-In ath12k_wifi7_dp_rx_h_verify_tkip_mic(), the call to
-ath12k_dp_rx_check_nwifi_hdr_len_valid() may return false when the
-NWIFI header length is invalid, causing the function to abort early with
--EINVAL.
+rpcrdma_cm_event_handler() falls through to the disconnected: label
+on RDMA_CM_EVENT_ADDR_CHANGE and calls rpcrdma_ep_put() with no
+matching get when the event arrives before RDMA_CM_EVENT_ESTABLISHED.
+The kref then underflows during connect teardown and
+rpcrdma_xprt_disconnect() operates on a freed ep.
 
-When this happens, the error propagates to
-ath12k_wifi7_dp_rx_h_defrag(), which clears first_frag by setting it
-to NULL. As a result, the corresponding MSDU is no longer referenced
-by the defragmentation path and is never freed.
+Reference counts across a normal connection lifecycle:
 
-This leads to a memory leak for the affected MSDU on this error path.
-Proper cleanup is required to ensure the MSDU is released when header
-validation fails during TKIP MIC verification.
+    rpcrdma_ep_create()             kref_init     ->1
+    rpcrdma_xprt_connect()          ep_get        ->2  (before post_recvs)
+    RDMA_CM_EVENT_ESTABLISHED       ep_get        ->3
+    RDMA_CM_EVENT_DISCONNECTED      ep_put        ->2
+    rpcrdma_xprt_drain()            ep_put        ->1
+    rpcrdma_xprt_disconnect() tail  ep_put        ->0  (ep_destroy)
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+The connect-time get in rpcrdma_xprt_connect(), taken just before
+rpcrdma_post_recvs() "while there are outstanding Receives," is
+balanced by rpcrdma_xprt_drain. ADDR_CHANGE before ESTABLISHED has
+no get to consume, so its put drops the count to 1 and the drain
+put then frees the ep while rpcrdma_xprt_disconnect() still holds a
+pointer to it.
 
-Fixes: 9a0dddfb30f1 ("wifi: ath12k: Fix invalid data access in ath12k_dp_rx_h_undecap_nwifi")
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260512021108.2031651-1-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fix by dispatching on the prior re_connect_status via xchg(): for
+prev == 0 (pre-ESTABLISHED) wake the connect waiter and return with
+no put; for prev == 1 call rpcrdma_force_disconnect() and return.
+The case-1 arm relies on the subsequent RDMA_CM_EVENT_DISCONNECTED
+event -- reliably delivered when rdma_disconnect() is called on a
+still-connected cm_id -- to balance the ESTABLISHED get;
+rpcrdma_xprt_drain() continues to balance only that connect-time
+get. Any other prior value means teardown is already in flight.
+
+Fixes: 2acc5cae2923 ("xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed")
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/verbs.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index c849728732254..1f8357e9ae036 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -2877,8 +2877,10 @@ static int ath12k_dp_rx_h_verify_tkip_mic(struct ath12k *ar, struct ath12k_peer
- 		    RX_FLAG_IV_STRIPPED | RX_FLAG_DECRYPTED;
- 	skb_pull(msdu, hal_rx_desc_sz);
- 
--	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu)))
-+	if (unlikely(!ath12k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu))) {
-+		dev_kfree_skb_any(msdu);
- 		return -EINVAL;
-+	}
- 
- 	ath12k_dp_rx_h_ppdu(ar, rx_desc, rxs);
- 	ath12k_dp_rx_h_undecap(ar, msdu, rx_desc,
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 34a3c08a82fba..4990e37bcdc00 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -256,8 +256,17 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+ 		}
+ 		return 0;
+ 	case RDMA_CM_EVENT_ADDR_CHANGE:
+-		ep->re_connect_status = -ENODEV;
+-		goto disconnected;
++		switch (xchg(&ep->re_connect_status, -ENODEV)) {
++		case 0:
++			goto wake_connect_worker;
++		case 1:
++			/* The later DISCONNECTED event balances the
++			 * ESTABLISHED get; do not put here.
++			 */
++			rpcrdma_force_disconnect(ep);
++			return 0;
++		}
++		return 0;
+ 	case RDMA_CM_EVENT_ESTABLISHED:
+ 		rpcrdma_ep_get(ep);
+ 		ep->re_connect_status = 1;
 -- 
 2.53.0
 
