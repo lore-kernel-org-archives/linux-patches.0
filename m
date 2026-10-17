@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35F33921FB;
-	Sat, 17 Oct 2026 17:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB573B4404;
+	Sat, 17 Oct 2026 17:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257627; cv=none; b=JuGB2DJTOm0EiwRffi6C2s0/Vs3VopgByiGYcrERgZZxB6Z/YZABFyRbIJL7/7hyjKEJcfh9TDMxyWE7C2D8KUEXnBwBRwDKcoOQkZ8ORcJzoRub9eIbzOzqf1gVaAHMtEIMiw72betQCzt3B70Wy1ZshnC2btgV5ujZHSlPCkQ=
+	t=1792257630; cv=none; b=E+YUQI1CqdNz6kaQfnZzEPyKLAOB1JFxDsc1/gqGDVt8FidKXfwSQd1Umr+gUJ22/jhE/PHgtLFBTIm8gI5CUaZ9MkAlxkKAeZE3hpuh1C61Exib+aQ7uLwvT9pLbNg2nMrYgNSKM+RQj/ngBvKkoJ2NSZbeZtSYpHq+iN4SkvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257627; c=relaxed/simple;
-	bh=MxY5SgjpLS8D7TaP3Hxepd4qD/H3gNlrfaIoa38SEm8=;
+	s=arc-20240116; t=1792257630; c=relaxed/simple;
+	bh=K6Ox68/ZINr+v+VpPX8RU5qdZpUv8/3eyTEjEe5rDRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRV33wgxkh1+vYWeD0DuDJLCAwEk7XXrKvD0Mt0QuNmMvwEHO9LcF0WdvMHObMQMXIZAyPiLEqEPdRKPMMpU+Th1rRnmlaVr84/01ns7wqBoNWAtP7kDqZ+r47UfijS3jQTFUf05JShUgEZGnPv0wrUincEllzxP88vNqp8Nvkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwNh003q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KKDjLrIzWHAppocVmpo/ZC6MDn7GCsy7N63sERybFwaUrTO+0X1a8XvGScrzUZq1EMab8Cjiv8eLTVju1VXObF4xSbm2LVkf/qUHdbcrPS89zUhY98oDaWiqdwKjGVA7AwfscUJlhmcyjQ6bAZ/Z+DexzNPJzy5hH3lLuN669i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERlX41cg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwNh003q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096F01F000C4;
-	Sat, 17 Oct 2026 17:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERlX41cg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327C81F000C4;
+	Sat, 17 Oct 2026 17:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257625;
-	bh=1WoYAE9Iy4kmvjPwcUccAat9rIndV62n8OU6+E4meSM=;
+	s=korg; t=1792257628;
+	bh=Cl7ooxFUXOxe93JYJ3a6s48owsELmTpqzHjMvhkDOXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HwNh003qCdIFA9VJoY4FPdtBkv6prDkWGp7k9hQ86hVbyOg6cuwFTaoB64eXGs8z2
-	 pfELCAtST8pRZZVtKSIgR+X7tzSM8Vu5vCo+QVyq92VYw/pn0EAP1Z1sLxpfawC/1v
-	 zDKkcsB+ZOm665sqUv6VvBgVI3MTKn0PnsWWLWkM=
+	b=ERlX41cgFBvhahN2dvariUzOOlz/6+r4BsecImTxkfg3bsgBtG7v71nGMhs2jiNwk
+	 X5NVS9cMqBpYez+QsPwe7k5MrXEAIaYijn5jdIaDLYaPfQmPFOeIcj5rd3eeq4trz7
+	 R/jeUbUKwbVQNj5PDIZ3audDHtpRnLq2/qiZ+nAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Lee Jones <lee@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0567/1674] HID: steam: Clean up locking
-Date: Sat, 17 Oct 2026 17:47:19 +0200
-Message-ID: <20261017160445.648842244@linuxfoundation.org>
+Subject: [PATCH 6.6 0613/1674] namespace: handle mount locking for automounts correctly
+Date: Sat, 17 Oct 2026 17:48:05 +0200
+Message-ID: <20261017160446.815180074@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,338 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit de1d341b9b3ec9655f31fb8b44f784cca5e670ad ]
+[ Upstream commit 33aadc7c72055fca93cb5a3691d836ebf8b31c9b ]
 
-This cleans up several issues with locking behavior, including RCU accesses
-not being guarded behind a lock.
+If mounts are propagated across user namespaces, attach_recursive_mnt()
+locks every copy of the source mount to protect overmounts from
+vanishing and revealing the underlying files or directories.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[Lee: Drop report_mutex from steam_get_serial() instead of
-      steam_exchange_report_id(), preserve lizard_mode check order in
-      steam_mode_switch_cb(), and omit sensor open/close,
-      coalesce_rumble_work and Ibex changes as a0fbd9437d7d, 1d4549fd1115,
-      fcfa7db89f7a and 0a80b4e8ec6a are not present]
-Signed-off-by: Lee Jones <lee@kernel.org>
+The user namespace is taken from the caller's mount namespaces since
+this is where the mounts end up. Except, that's not always true.
+Automounts may legitimately get popped in by tasks located in a
+different mount and user namespace during path lookup.
+
+Then check doesn't make sense at that point. The copy in the namespace
+of the parent - which may be the host's - is now locked and the host
+cannot change the flags of its own mounts anymore.
+
+Here's the reproducer:
+
+- host has debugfs mounted nosuid,nodev,noexec and shared
+- tracefs automount below it is not yet active
+- hand a child process a directory descriptor on that mount
+- child process enters auser and mount namespace
+- child process' namespace now holds a locked copy of the host's debugfs
+  mount that receives propagation from it
+- child process stats "tracing/." through the descriptor
+- lookup runs on the host's mount so the automount lands below the host's mount
+- propagation puts a copy below the child's copy
+- both try to clear the flags on the mount they got, with a bind remount:
+
+    host, on its own automount:            MS_REMOUNT|MS_BIND = EPERM
+    child, on the copy in its namespace:   MS_REMOUNT|MS_BIND = 0
+
+So the lock landed on the host's mount instead of the child's copy.
+Congrats. So we need to compare with the owner of the namespace the
+mount actually gets mounted on. For all regular cases that is the
+caller's mount namespace and so nothing changes.
+
+Detached trees in anonymous mount namespaces by be handed over via
+SCM_RIGHTS or inherited in other ways on purpose so the attaching task's
+mount namespace is authoritative, not the creator of the detached tree.
+
+Fixes: 132c94e31b8b ("vfs: Carefully propogate mounts across user namespaces")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-6-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Adapted the namespace lookup from dest_mnt->mnt_ns to top_mnt->mnt_ns. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 92 ++++++++++++++++++++++-------------------
- 1 file changed, 49 insertions(+), 43 deletions(-)
+ fs/namespace.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 06c2fcd134ce0..61e8070bed3f8 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -294,6 +294,7 @@ struct steam_device {
- 	spinlock_t lock;
- 	struct hid_device *hdev, *client_hdev;
- 	struct mutex report_mutex;
-+	struct mutex registration_mutex;
- 	unsigned long client_opened;
- 	struct input_dev __rcu *input;
- 	struct input_dev __rcu *sensors;
-@@ -446,21 +447,16 @@ static int steam_get_serial(struct steam_device *steam)
- 	u8 cmd[] = {ID_GET_STRING_ATTRIBUTE, 0x15, ATTRIB_STR_UNIT_SERIAL};
- 	u8 reply[3 + STEAM_SERIAL_LEN + 1];
- 
--	mutex_lock(&steam->report_mutex);
- 	ret = steam_send_report(steam, cmd, sizeof(cmd));
- 	if (ret < 0)
--		goto out;
-+		return ret;
- 	ret = steam_recv_report(steam, reply, sizeof(reply));
- 	if (ret < 0)
--		goto out;
--	if (reply[0] != ID_GET_STRING_ATTRIBUTE || reply[1] != 0x15 || reply[2] != ATTRIB_STR_UNIT_SERIAL) {
--		ret = -EIO;
--		goto out;
--	}
-+		return ret;
-+	if (reply[0] != ID_GET_STRING_ATTRIBUTE || reply[1] != 0x15 || reply[2] != ATTRIB_STR_UNIT_SERIAL)
-+		return -EIO;
- 	reply[3 + STEAM_SERIAL_LEN] = 0;
- 	strscpy(steam->serial_no, reply + 3, sizeof(steam->serial_no));
--out:
--	mutex_unlock(&steam->report_mutex);
- 	return ret;
- }
- 
-@@ -503,9 +499,7 @@ static inline int steam_haptic_pulse(struct steam_device *steam, u8 pad,
- 	report[8] = count >> 8;
- 	report[9] = gain;
- 
--	mutex_lock(&steam->report_mutex);
- 	ret = steam_send_report(steam, report, sizeof(report));
--	mutex_unlock(&steam->report_mutex);
- 	return ret;
- }
- 
-@@ -525,9 +519,7 @@ static inline int steam_haptic_rumble(struct steam_device *steam,
- 	report[9] = left_gain;
- 	report[10] = right_gain;
- 
--	mutex_lock(&steam->report_mutex);
- 	ret = steam_send_report(steam, report, sizeof(report));
--	mutex_unlock(&steam->report_mutex);
- 	return ret;
- }
- 
-@@ -535,8 +527,11 @@ static void steam_haptic_rumble_cb(struct work_struct *work)
+diff --git a/fs/namespace.c b/fs/namespace.c
+index c0d32896981fc..0d5f71d56b12e 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2320,15 +2320,31 @@ static int attach_recursive_mnt(struct mount *source_mnt,
+ 				struct mountpoint *dest_mp,
+ 				enum mnt_tree_flags_t flags)
  {
- 	struct steam_device *steam = container_of(work, struct steam_device,
- 							rumble_work);
+-	struct user_namespace *user_ns = current->nsproxy->mnt_ns->user_ns;
+ 	HLIST_HEAD(tree_list);
+ 	struct mnt_namespace *ns = top_mnt->mnt_ns;
++	struct user_namespace *user_ns = ns->user_ns;
+ 	struct mountpoint *smp;
+ 	struct mount *child, *dest_mnt, *p;
+ 	struct hlist_node *n;
+ 	int err = 0;
+ 	bool moving = flags & MNT_TREE_MOVE, beneath = flags & MNT_TREE_BENEATH;
+ 
++	/*
++	 * A caller in an unprivileged mount namespaces may trigger an
++	 * automount and propagate locked mounts into privileged mount
++	 * namespaces. Take ownership from the target mount namespace.
++	 * It's equivalent for everything but the automount case.
++	 *
++	 * Detached trees in anonymous mount namespaces by be handed
++	 * over via SCM_RIGHTS or inherited in other ways on purpose
++	 * the attaching task's mount namespace is authoritative, not
++	 * the creator of the detached tree.
++	 */
++	if (is_anon_ns(ns))
++		user_ns = current->nsproxy->mnt_ns->user_ns;
++	else
++		user_ns = ns->user_ns;
 +
-+	mutex_lock(&steam->report_mutex);
- 	steam_haptic_rumble(steam, 0, steam->rumble_left,
- 		steam->rumble_right, 2, 0);
-+	mutex_unlock(&steam->report_mutex);
- }
- 
- #ifdef CONFIG_STEAM_FF
-@@ -558,14 +553,11 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
- 		enable = false;
- 
- 	if (enable) {
--		mutex_lock(&steam->report_mutex);
- 		/* enable esc, enter, cursors */
- 		steam_send_report_byte(steam, ID_SET_DEFAULT_DIGITAL_MAPPINGS);
- 		/* reset settings */
- 		steam_send_report_byte(steam, ID_LOAD_DEFAULT_SETTINGS);
--		mutex_unlock(&steam->report_mutex);
- 	} else {
--		mutex_lock(&steam->report_mutex);
- 		/* disable esc, enter, cursor */
- 		steam_send_report_byte(steam, ID_CLEAR_DIGITAL_MAPPINGS);
- 
-@@ -577,13 +569,11 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
- 				SETTING_RIGHT_TRACKPAD_CLICK_PRESSURE, 0xFFFF, /* disable haptic click */
- 				SETTING_STEAM_WATCHDOG_ENABLE, 0, /* disable watchdog that tests if Steam is active */
- 				0);
--			mutex_unlock(&steam->report_mutex);
- 		} else {
- 			steam_write_settings(steam,
- 				SETTING_LEFT_TRACKPAD_MODE, TRACKPAD_NONE, /* disable mouse */
- 				SETTING_RIGHT_TRACKPAD_MODE, TRACKPAD_NONE, /* disable mouse */
- 				0);
--			mutex_unlock(&steam->report_mutex);
- 		}
- 	}
- }
-@@ -592,7 +582,7 @@ static int steam_input_open(struct input_dev *dev)
- {
- 	struct steam_device *steam = input_get_drvdata(dev);
- 	unsigned long flags;
--	bool set_lizard_mode;
-+	bool client_opened;
- 
  	/*
- 	 * Disabling lizard mode automatically is only done on the Steam
-@@ -601,9 +591,10 @@ static int steam_input_open(struct input_dev *dev)
- 	 */
- 	if (!(steam->quirks & STEAM_QUIRK_DECK)) {
- 		spin_lock_irqsave(&steam->lock, flags);
--		set_lizard_mode = !steam->client_opened && lizard_mode;
-+		client_opened = steam->client_opened;
- 		spin_unlock_irqrestore(&steam->lock, flags);
--		if (set_lizard_mode)
-+		guard(mutex)(&steam->report_mutex);
-+		if (!client_opened && lizard_mode)
- 			steam_set_lizard_mode(steam, false);
- 	}
- 
-@@ -614,13 +605,14 @@ static void steam_input_close(struct input_dev *dev)
- {
- 	struct steam_device *steam = input_get_drvdata(dev);
- 	unsigned long flags;
--	bool set_lizard_mode;
-+	bool client_opened;
- 
- 	if (!(steam->quirks & STEAM_QUIRK_DECK)) {
- 		spin_lock_irqsave(&steam->lock, flags);
--		set_lizard_mode = !steam->client_opened && lizard_mode;
-+		client_opened = steam->client_opened;
- 		spin_unlock_irqrestore(&steam->lock, flags);
--		if (set_lizard_mode)
-+		guard(mutex)(&steam->report_mutex);
-+		if (!client_opened && lizard_mode)
- 			steam_set_lizard_mode(steam, true);
- 	}
- }
-@@ -955,15 +947,19 @@ static int steam_register(struct steam_device *steam)
- {
- 	int ret;
- 
-+	mutex_lock(&steam->registration_mutex);
- 	/*
- 	 * This function can be called several times in a row with the
- 	 * wireless adaptor, without steam_unregister() between them, because
- 	 * another client send a get_connection_status command, for example.
- 	 * The battery and serial number are set just once per device.
- 	 */
--	if (steam->registered)
-+	if (steam->registered) {
-+		mutex_unlock(&steam->registration_mutex);
- 		return 0;
-+	}
- 
-+	mutex_lock(&steam->report_mutex);
- 	/*
- 	 * Unlikely, but getting the serial could fail, and it is not so
- 	 * important, so make up a serial number and go on.
-@@ -975,11 +971,13 @@ static int steam_register(struct steam_device *steam)
- 	hid_info(steam->hdev, "Steam Controller '%s' connected",
- 			steam->serial_no);
- 
-+	steam_set_lizard_mode(steam, lizard_mode);
-+	mutex_unlock(&steam->report_mutex);
-+
- 	/* ignore battery errors, we can live without it */
- 	if (steam->quirks & STEAM_QUIRK_WIRELESS)
- 		steam_battery_register(steam);
- 
--	steam_set_lizard_mode(steam, lizard_mode);
- 	ret = steam_input_register(steam);
- 	if (ret != 0)
- 		goto steam_register_input_fail;
-@@ -988,6 +986,7 @@ static int steam_register(struct steam_device *steam)
- 		goto steam_register_sensors_fail;
- 
- 	steam->registered = true;
-+	mutex_unlock(&steam->registration_mutex);
- 	mutex_lock(&steam_devices_lock);
- 	if (list_empty(&steam->list))
- 		list_add(&steam->list, &steam_devices);
-@@ -998,6 +997,7 @@ static int steam_register(struct steam_device *steam)
- 	steam_input_unregister(steam);
- steam_register_input_fail:
- 	steam_battery_unregister(steam);
-+	mutex_unlock(&steam->registration_mutex);
- 	cancel_work_sync(&steam->rumble_work);
- 	cancel_delayed_work_sync(&steam->mode_switch);
- 	return ret;
-@@ -1010,10 +1010,12 @@ static void steam_unregister(struct steam_device *steam)
- 
- 	hid_info(steam->hdev, "Steam Controller '%s' disconnected",
- 			steam->serial_no);
-+	mutex_lock(&steam->registration_mutex);
- 	steam->registered = false;
- 	steam_battery_unregister(steam);
- 	steam_sensors_unregister(steam);
- 	steam_input_unregister(steam);
-+	mutex_unlock(&steam->registration_mutex);
- 	cancel_work_sync(&steam->rumble_work);
- 	cancel_delayed_work_sync(&steam->mode_switch);
- 	mutex_lock(&steam_devices_lock);
-@@ -1054,22 +1056,24 @@ static void steam_mode_switch_cb(struct work_struct *work)
- 							struct steam_device, mode_switch);
- 	unsigned long flags;
- 	bool client_opened;
-+	bool gamepad_mode;
-+
-+	spin_lock_irqsave(&steam->lock, flags);
- 	steam->gamepad_mode = !steam->gamepad_mode;
-+	gamepad_mode = steam->gamepad_mode;
-+	client_opened = steam->client_opened;
-+	spin_unlock_irqrestore(&steam->lock, flags);
- 	if (!lizard_mode)
- 		return;
- 
--	if (steam->gamepad_mode)
-+	guard(mutex)(&steam->report_mutex);
-+	if (gamepad_mode)
- 		steam_set_lizard_mode(steam, false);
--	else {
--		spin_lock_irqsave(&steam->lock, flags);
--		client_opened = steam->client_opened;
--		spin_unlock_irqrestore(&steam->lock, flags);
--		if (!client_opened)
--			steam_set_lizard_mode(steam, lizard_mode);
--	}
-+	else if (!client_opened)
-+		steam_set_lizard_mode(steam, lizard_mode);
- 
- 	steam_haptic_pulse(steam, STEAM_PAD_RIGHT, 0x190, 0, 1, 0);
--	if (steam->gamepad_mode) {
-+	if (gamepad_mode) {
- 		steam_haptic_pulse(steam, STEAM_PAD_LEFT, 0x14D, 0x14D, 0x2D, 0);
- 	} else {
- 		steam_haptic_pulse(steam, STEAM_PAD_LEFT, 0x1F4, 0x1F4, 0x1E, 0);
-@@ -1224,6 +1228,7 @@ static int steam_probe(struct hid_device *hdev,
- 	hid_set_drvdata(hdev, steam);
- 	spin_lock_init(&steam->lock);
- 	mutex_init(&steam->report_mutex);
-+	mutex_init(&steam->registration_mutex);
- 	steam->quirks = id->driver_data;
- 	INIT_WORK(&steam->work_connect, steam_work_connect_cb);
- 	INIT_DELAYED_WORK(&steam->mode_switch, steam_mode_switch_cb);
-@@ -1319,13 +1324,10 @@ static void steam_remove(struct hid_device *hdev)
- 
- static void steam_do_connect_event(struct steam_device *steam, bool connected)
- {
--	unsigned long flags;
- 	bool changed;
- 
--	spin_lock_irqsave(&steam->lock, flags);
- 	changed = steam->connected != connected;
- 	steam->connected = connected;
--	spin_unlock_irqrestore(&steam->lock, flags);
- 
- 	if (changed && schedule_work(&steam->work_connect) == 0)
- 		dbg_hid("%s: connected=%d event already queued\n",
-@@ -1695,8 +1697,6 @@ static void steam_do_deck_sensors_event(struct steam_device *steam,
- static void steam_do_battery_event(struct steam_device *steam,
- 		struct power_supply *battery, u8 *data)
- {
--	unsigned long flags;
--
- 	s16 volts = steam_le16(data + 12);
- 	u8 batt = data[14];
- 
-@@ -1704,10 +1704,8 @@ static void steam_do_battery_event(struct steam_device *steam,
- 	rcu_read_lock();
- 	battery = rcu_dereference(steam->battery);
- 	if (likely(battery)) {
--		spin_lock_irqsave(&steam->lock, flags);
- 		steam->voltage = volts;
- 		steam->battery_charge = batt;
--		spin_unlock_irqrestore(&steam->lock, flags);
- 		power_supply_changed(battery);
- 	}
- 	rcu_read_unlock();
-@@ -1725,6 +1723,7 @@ static int steam_raw_event(struct hid_device *hdev,
- 	if (!steam)
- 		return 0;
- 
-+	guard(spinlock_irqsave)(&steam->lock);
- 	if (steam->client_opened)
- 		hid_input_report(steam->client_hdev, HID_FEATURE_REPORT,
- 				data, size, 0);
-@@ -1809,6 +1808,8 @@ static int steam_param_set_lizard_mode(const char *val,
- {
- 	struct steam_device *steam;
- 	int ret;
-+	bool client_opened;
-+	unsigned long flags;
- 
- 	ret = param_set_bool(val, kp);
- 	if (ret)
-@@ -1816,8 +1817,13 @@ static int steam_param_set_lizard_mode(const char *val,
- 
- 	mutex_lock(&steam_devices_lock);
- 	list_for_each_entry(steam, &steam_devices, list) {
--		if (!steam->client_opened)
-+		spin_lock_irqsave(&steam->lock, flags);
-+		client_opened = steam->client_opened;
-+		spin_unlock_irqrestore(&steam->lock, flags);
-+		if (!client_opened) {
-+			guard(mutex)(&steam->report_mutex);
- 			steam_set_lizard_mode(steam, lizard_mode);
-+		}
- 	}
- 	mutex_unlock(&steam_devices_lock);
- 	return 0;
+ 	 * Preallocate a mountpoint in case the new mounts need to be
+ 	 * mounted beneath mounts on the same mountpoint.
 -- 
 2.53.0
 
