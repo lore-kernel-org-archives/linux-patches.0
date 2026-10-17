@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3372E8DEB;
-	Sat, 17 Oct 2026 16:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A01C3515E7;
+	Sat, 17 Oct 2026 16:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253430; cv=none; b=p9G8pP/KZTLM37K1T9fmdFvrJ0l0sZGx1kZUZiL7/QlDs4a7rDGq6IU1c849wKt8lCLRxDPFdiWv/HlpvECDl45OzEW6y0kP7kno9ySfsW1AUA19mZTy9nWB/4+x1G2AM55O86N08lfsUjOj/3uAPRtJA/9FM9wievvldtrSSzQ=
+	t=1792253433; cv=none; b=ZKwAZ+49eSUOLnQ1bMNaCo2t3COW/Sx3+cmXPcQslMiveXZgxZYm9p15DfD0eeM9JhMm2nG9spYumpEi3QJTQwg7iWLCPiC2LOIjmL1rBvVOJAn1KY4R0SXW9B90R546A7amwtRensCSAwe/TpfeNw5dFsmHScQuYt4UIpCkcig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253430; c=relaxed/simple;
-	bh=5hxM/UhoYlorP7+crTRAPTZqvzF8TUiTd9leYCqlHKg=;
+	s=arc-20240116; t=1792253433; c=relaxed/simple;
+	bh=HHlfRHRLFIZqW5LdtIvml+Eh/S3y9TkxMyc5pVtshgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgxzRHsNyR3lpzMCPHfYBEtKYNSTsFoLX2Hlcjvs5xiaPsU0JTMYH7s+ZPT3SGXbqXMosrqajYHTx3nR1Ov2mzdz2npfBfCBu2zSVQNuXQFe8ZcWVEAf94YuIBtuuqlKWFSPSJn/bIo1Iu29/gBEknwe5oKRdgmVEkAVY+IPb7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHcqMpFb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N3hrysARPbuTU1mUSBz1b39on8iZP8vsPKtSL8mkWSCgL1v3dpUEXsFuTxgGITWhjIVJ7VQGItzSlG7lQihDGv7qcclgp96HVntuC408HZwxQWqYCBNjVaMdY1twrSKEovcunRaFFh28+M2Z/EXmAdne+ayHBrsbNboJMubSwmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6wIkHdS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHcqMpFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571511F000C4;
-	Sat, 17 Oct 2026 16:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6wIkHdS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5855D1F000C4;
+	Sat, 17 Oct 2026 16:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253428;
-	bh=UZezHUqceZvBs+X4+qzq1IXdZWh1U6hxSdAMB8xJf+s=;
+	s=korg; t=1792253431;
+	bh=02OlaB0Q7c6ecvtt6QaXX+YIpHfdEp3kX6pRN6UKmGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHcqMpFbBP3URwmsvMWne6dclGi8Su7Ky3iP0Qyh3M8N9L7rwf92N++H4ggYI40HE
-	 mLrq2qqJ8QrH/X4FffMBhLnIqKR2/BxhE5Ju8aOt5e1jQqirkSYXZ73p8LyDEOTvKn
-	 ZdXGDQbqelvbYke6M6fZj8b87W7wHKdF13UMrvuE=
+	b=W6wIkHdSUCg6MuFr64w3MVVtCyqOcSzyDjsHV3rWimrKfaCHr4FJnWbA87ty8793o
+	 X2cOwb81RvaWcfsOvtBF59AlM+rM3yMPcXuH7DKzDdslsz7RxbkuWyt01tGJl5QXKz
+	 9arouytUHEhIZxslrHr4k5B3dqv+PUMWTbSGB8JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/869] dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn
-Date: Sat, 17 Oct 2026 17:48:34 +0200
-Message-ID: <20261017160038.897758342@linuxfoundation.org>
+Subject: [PATCH 6.12 064/869] wifi: ath12k: Avoid explicit type cast in monitor status parse handler
+Date: Sat, 17 Oct 2026 17:48:25 +0200
+Message-ID: <20261017160038.666008486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,194 +53,408 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit 0da30874729baeb01889b0eca16cfda122687503 ]
+[ Upstream commit 8534c42397ed8f05257dbddcd305a351ad40add1 ]
 
-The user of k3_udma_glue_reset_rx_chn() e.g. ti_am65_cpsw_nuss can
-run on multiple platforms having different DMA architectures.
-On some platforms there can be one FDQ for all flows in the RX channel
-while for others there is a separate FDQ for each flow in the RX channel.
+Currently, monitor status parse procedure handles all the supported TLV
+tags. Each TLV tag has its own data structure for parsing. Now, this
+handler is passed the tlv_data as a u8 pointer, so explicit type cast
+conversion happens for every TLV tag parsing. Therefore, avoid the
+explicit type conversion by changing the tlv_data type from a u8 pointer
+to a const void pointer.
 
-So far we have been relying on the skip_fdq argument of
-k3_udma_glue_reset_rx_chn().
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Instead of relying on the user to provide this information, infer it
-based on DMA architecture during k3_udma_glue_request_rx_chn() and save it
-in an internal flag 'single_fdq'. Use that flag at
-k3_udma_glue_reset_rx_chn() to deicide if the FDQ needs
-to be cleared for every flow or just for flow 0.
-
-Fixes the below issue on ti_am65_cpsw_nuss driver on AM62-SK.
-
-> ip link set eth1 down
-> ip link set eth0 down
-> ethtool -L eth0 rx 8
-> ip link set eth0 up
-> modprobe -r ti_am65_cpsw_nuss
-
-[  103.045726] ------------[ cut here ]------------
-[  103.050505] k3_knav_desc_pool size 512000 != avail 64000
-[  103.050703] WARNING: CPU: 1 PID: 450 at drivers/net/ethernet/ti/k3-cppi-desc-pool.c:33 k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.068810] Modules linked in: ti_am65_cpsw_nuss(-) k3_cppi_desc_pool snd_soc_hdmi_codec crct10dif_ce snd_soc_simple_card snd_soc_simple_card_utils display_connector rtc_ti_k3 k3_j72xx_bandgap tidss drm_client_lib snd_soc_davinci_mcas
-p drm_dma_helper tps6598x phylink snd_soc_ti_udma rti_wdt drm_display_helper snd_soc_tlv320aic3x_i2c typec at24 phy_gmii_sel snd_soc_ti_edma snd_soc_tlv320aic3x sii902x snd_soc_ti_sdma sa2ul omap_mailbox drm_kms_helper authenc cfg80211 r
-fkill fuse drm drm_panel_orientation_quirks backlight ip_tables x_tables ipv6 [last unloaded: k3_cppi_desc_pool]
-[  103.119950] CPU: 1 UID: 0 PID: 450 Comm: modprobe Not tainted 6.13.0-rc7-00001-g9c5e3435fa66 #1011
-[  103.119968] Hardware name: Texas Instruments AM625 SK (DT)
-[  103.119974] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  103.119983] pc : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.148007] lr : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.154709] sp : ffff8000826ebbc0
-[  103.158015] x29: ffff8000826ebbc0 x28: ffff0000090b6300 x27: 0000000000000000
-[  103.165145] x26: 0000000000000000 x25: 0000000000000000 x24: ffff0000019df6b0
-[  103.172271] x23: ffff0000019df6b8 x22: ffff0000019df410 x21: ffff8000826ebc88
-[  103.179397] x20: 000000000007d000 x19: ffff00000a3b3000 x18: 0000000000000000
-[  103.186522] x17: 0000000000000000 x16: 0000000000000000 x15: 000001e8c35e1cde
-[  103.193647] x14: 0000000000000396 x13: 000000000000035c x12: 0000000000000000
-[  103.200772] x11: 000000000000003a x10: 00000000000009c0 x9 : ffff8000826eba20
-[  103.207897] x8 : ffff0000090b6d20 x7 : ffff00007728c180 x6 : ffff00007728c100
-[  103.215022] x5 : 0000000000000001 x4 : ffff000000508a50 x3 : ffff7ffff6146000
-[  103.222147] x2 : 0000000000000000 x1 : e300b4173ee6b200 x0 : 0000000000000000
-[  103.229274] Call trace:
-[  103.231714]  k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool] (P)
-[  103.238408]  am65_cpsw_nuss_free_rx_chns+0x28/0x4c [ti_am65_cpsw_nuss]
-[  103.244942]  devm_action_release+0x14/0x20
-[  103.249040]  release_nodes+0x3c/0x68
-[  103.252610]  devres_release_all+0x8c/0xdc
-[  103.256614]  device_unbind_cleanup+0x18/0x60
-[  103.260876]  device_release_driver_internal+0xf8/0x178
-[  103.266004]  driver_detach+0x50/0x9c
-[  103.269571]  bus_remove_driver+0x6c/0xbc
-[  103.273485]  driver_unregister+0x30/0x60
-[  103.277401]  platform_driver_unregister+0x14/0x20
-[  103.282096]  am65_cpsw_nuss_driver_exit+0x18/0xff4 [ti_am65_cpsw_nuss]
-[  103.288620]  __arm64_sys_delete_module+0x17c/0x25c
-[  103.293404]  invoke_syscall+0x44/0x100
-[  103.297149]  el0_svc_common.constprop.0+0xc0/0xe0
-[  103.301845]  do_el0_svc+0x1c/0x28
-[  103.305155]  el0_svc+0x28/0x98
-[  103.308207]  el0t_64_sync_handler+0xc8/0xcc
-[  103.312384]  el0t_64_sync+0x198/0x19c
-[  103.316040] ---[ end trace 0000000000000000 ]---
-
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250224-k3-udma-glue-single-fdq-v2-1-cbe7621f2507@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241217084511.2981515-9-quic_periyasa@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma-glue.c                | 15 +++++++++++----
- drivers/net/ethernet/ti/am65-cpsw-nuss.c     |  4 ++--
- drivers/net/ethernet/ti/icssg/icssg_common.c |  2 +-
- include/linux/dma/k3-udma-glue.h             |  3 +--
- 4 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 126 +++++++++--------------
+ 1 file changed, 47 insertions(+), 79 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-index bf177879cc28a..d651983fe3816 100644
---- a/drivers/dma/ti/k3-udma-glue.c
-+++ b/drivers/dma/ti/k3-udma-glue.c
-@@ -84,6 +84,7 @@ struct k3_udma_glue_rx_channel {
- 	struct k3_udma_glue_rx_flow *flows;
- 	u32 flow_num;
- 	u32 flows_ready;
-+	bool single_fdq;	/* one FDQ for all flows */
- };
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index f1377e186518a..bc24b8edfaea3 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -10,11 +10,10 @@
+ #include "dp_tx.h"
+ #include "peer.h"
  
- static void k3_udma_chan_dev_release(struct device *dev)
-@@ -970,10 +971,13 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+-static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
+-					       struct hal_rx_user_status *rx_user_status)
++static void
++ath12k_dp_mon_rx_handle_ofdma_info(const struct hal_rx_ppdu_end_user_stats *ppdu_end_user,
++				   struct hal_rx_user_status *rx_user_status)
+ {
+-	struct hal_rx_ppdu_end_user_stats *ppdu_end_user = rx_tlv;
+-
+ 	rx_user_status->ul_ofdma_user_v0_word0 =
+ 		__le32_to_cpu(ppdu_end_user->usr_resp_ref);
+ 	rx_user_status->ul_ofdma_user_v0_word1 =
+@@ -38,7 +37,7 @@ ath12k_dp_mon_rx_populate_byte_count(const struct hal_rx_ppdu_end_user_stats *st
+ }
  
- 	ep_cfg = rx_chn->common.ep_config;
+ static void
+-ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
++ath12k_dp_mon_rx_populate_mu_user_info(const struct hal_rx_ppdu_end_user_stats *rx_tlv,
+ 				       struct hal_rx_mon_ppdu_info *ppdu_info,
+ 				       struct hal_rx_user_status *rx_user_status)
+ {
+@@ -76,11 +75,9 @@ ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
+ 	ath12k_dp_mon_rx_populate_byte_count(rx_tlv, ppdu_info, rx_user_status);
+ }
  
--	if (xudma_is_pktdma(rx_chn->common.udmax))
-+	if (xudma_is_pktdma(rx_chn->common.udmax)) {
- 		rx_chn->udma_rchan_id = ep_cfg->mapped_channel_id;
--	else
-+		rx_chn->single_fdq = false;
-+	} else {
- 		rx_chn->udma_rchan_id = -1;
-+		rx_chn->single_fdq = true;
-+	}
+-static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
++static void ath12k_dp_mon_parse_vht_sig_a(const struct hal_rx_vht_sig_a_info *vht_sig,
+ 					  struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_vht_sig_a_info *vht_sig =
+-			(struct hal_rx_vht_sig_a_info *)tlv_data;
+ 	u32 nsts, group_id, info0, info1;
+ 	u8 gi_setting;
  
- 	/* request and cfg UDMAP RX channel */
- 	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax,
-@@ -1103,6 +1107,9 @@ k3_udma_glue_request_remote_rx_chn_common(struct k3_udma_glue_rx_channel *rx_chn
- 		rx_chn->common.chan_dev.dma_coherent = true;
- 		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
- 					     DMA_BIT_MASK(48));
-+		rx_chn->single_fdq = false;
-+	} else {
-+		rx_chn->single_fdq = true;
+@@ -122,11 +119,9 @@ static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
+ 		u32_get_bits(info1, HAL_RX_VHT_SIG_A_INFO_INFO1_SU_MU_CODING);
+ }
+ 
+-static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
++static void ath12k_dp_mon_parse_ht_sig(const struct hal_rx_ht_sig_info *ht_sig,
+ 				       struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_ht_sig_info *ht_sig =
+-			(struct hal_rx_ht_sig_info *)tlv_data;
+ 	u32 info0 = __le32_to_cpu(ht_sig->info0);
+ 	u32 info1 = __le32_to_cpu(ht_sig->info1);
+ 
+@@ -139,11 +134,9 @@ static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
+ }
+ 
+-static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
++static void ath12k_dp_mon_parse_l_sig_b(const struct hal_rx_lsig_b_info *lsigb,
+ 					struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_lsig_b_info *lsigb =
+-			(struct hal_rx_lsig_b_info *)tlv_data;
+ 	u32 info0 = __le32_to_cpu(lsigb->info0);
+ 	u8 rate;
+ 
+@@ -173,11 +166,9 @@ static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
+ }
+ 
+-static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
++static void ath12k_dp_mon_parse_l_sig_a(const struct hal_rx_lsig_a_info *lsiga,
+ 					struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_lsig_a_info *lsiga =
+-			(struct hal_rx_lsig_a_info *)tlv_data;
+ 	u32 info0 = __le32_to_cpu(lsiga->info0);
+ 	u8 rate;
+ 
+@@ -215,14 +206,13 @@ static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
+ }
+ 
+-static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
+-						struct hal_rx_mon_ppdu_info *ppdu_info)
++static void
++ath12k_dp_mon_parse_he_sig_b2_ofdma(const struct hal_rx_he_sig_b2_ofdma_info *ofdma,
++				    struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_he_sig_b2_ofdma_info *he_sig_b2_ofdma =
+-			(struct hal_rx_he_sig_b2_ofdma_info *)tlv_data;
+ 	u32 info0, value;
+ 
+-	info0 = __le32_to_cpu(he_sig_b2_ofdma->info0);
++	info0 = __le32_to_cpu(ofdma->info0);
+ 
+ 	ppdu_info->he_data1 |= HE_MCS_KNOWN | HE_DCM_KNOWN | HE_CODING_KNOWN;
+ 
+@@ -253,11 +243,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_OFDMA;
+ }
+ 
+-static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
+-					     struct hal_rx_mon_ppdu_info *ppdu_info)
++static void
++ath12k_dp_mon_parse_he_sig_b2_mu(const struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu,
++				 struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu =
+-			(struct hal_rx_he_sig_b2_mu_info *)tlv_data;
+ 	u32 info0, value;
+ 
+ 	info0 = __le32_to_cpu(he_sig_b2_mu->info0);
+@@ -280,11 +269,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
+ 	ppdu_info->nss = u32_get_bits(info0, HAL_RX_HE_SIG_B2_MU_INFO_INFO0_STA_NSTS);
+ }
+ 
+-static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
+-					     struct hal_rx_mon_ppdu_info *ppdu_info)
++static void
++ath12k_dp_mon_parse_he_sig_b1_mu(const struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu,
++				 struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu =
+-			(struct hal_rx_he_sig_b1_mu_info *)tlv_data;
+ 	u32 info0 = __le32_to_cpu(he_sig_b1_mu->info0);
+ 	u16 ru_tones;
+ 
+@@ -295,11 +283,10 @@ static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
+ }
+ 
+-static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
+-					  struct hal_rx_mon_ppdu_info *ppdu_info)
++static void
++ath12k_dp_mon_parse_he_sig_mu(const struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl,
++			      struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl =
+-			(struct hal_rx_he_sig_a_mu_dl_info *)tlv_data;
+ 	u32 info0, info1, value;
+ 	u16 he_gi = 0, he_ltf = 0;
+ 
+@@ -430,11 +417,9 @@ static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
+ 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
+ }
+ 
+-static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
++static void ath12k_dp_mon_parse_he_sig_su(const struct hal_rx_he_sig_a_su_info *he_sig_a,
+ 					  struct hal_rx_mon_ppdu_info *ppdu_info)
+ {
+-	struct hal_rx_he_sig_a_su_info *he_sig_a =
+-			(struct hal_rx_he_sig_a_su_info *)tlv_data;
+ 	u32 info0, info1, value;
+ 	u32 dcm;
+ 	u8 he_dcm = 0, he_stbc = 0;
+@@ -583,15 +568,15 @@ static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
+ static enum hal_rx_mon_status
+ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 				  struct ath12k_mon_data *pmon,
+-				  u32 tlv_tag, u8 *tlv_data, u32 userid)
++				  u32 tlv_tag, const void *tlv_data,
++				  u32 userid)
+ {
+ 	struct hal_rx_mon_ppdu_info *ppdu_info = &pmon->mon_ppdu_info;
+ 	u32 info[7];
+ 
+ 	switch (tlv_tag) {
+ 	case HAL_RX_PPDU_START: {
+-		struct hal_rx_ppdu_start *ppdu_start =
+-			(struct hal_rx_ppdu_start *)tlv_data;
++		const struct hal_rx_ppdu_start *ppdu_start = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(ppdu_start->info0);
+ 
+@@ -610,8 +595,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RX_PPDU_END_USER_STATS: {
+-		struct hal_rx_ppdu_end_user_stats *eu_stats =
+-			(struct hal_rx_ppdu_end_user_stats *)tlv_data;
++		const struct hal_rx_ppdu_end_user_stats *eu_stats = tlv_data;
+ 		u32 tid_bitmap;
+ 
+ 		info[0] = __le32_to_cpu(eu_stats->info0);
+@@ -673,8 +657,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 
+ 			ppdu_info->num_users += 1;
+ 
+-			ath12k_dp_mon_rx_handle_ofdma_info(tlv_data, rxuser_stats);
+-			ath12k_dp_mon_rx_populate_mu_user_info(tlv_data, ppdu_info,
++			ath12k_dp_mon_rx_handle_ofdma_info(eu_stats, rxuser_stats);
++			ath12k_dp_mon_rx_populate_mu_user_info(eu_stats, ppdu_info,
+ 							       rxuser_stats);
+ 		}
+ 		ppdu_info->mpdu_fcs_ok_bitmap[0] = __le32_to_cpu(eu_stats->rsvd1[0]);
+@@ -682,8 +666,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RX_PPDU_END_USER_STATS_EXT: {
+-		struct hal_rx_ppdu_end_user_stats_ext *eu_stats =
+-			(struct hal_rx_ppdu_end_user_stats_ext *)tlv_data;
++		const struct hal_rx_ppdu_end_user_stats_ext *eu_stats = tlv_data;
++
+ 		ppdu_info->mpdu_fcs_ok_bitmap[2] = __le32_to_cpu(eu_stats->info1);
+ 		ppdu_info->mpdu_fcs_ok_bitmap[3] = __le32_to_cpu(eu_stats->info2);
+ 		ppdu_info->mpdu_fcs_ok_bitmap[4] = __le32_to_cpu(eu_stats->info3);
+@@ -729,8 +713,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 
+ 	case HAL_PHYRX_RSSI_LEGACY: {
+-		struct hal_rx_phyrx_rssi_legacy_info *rssi =
+-			(struct hal_rx_phyrx_rssi_legacy_info *)tlv_data;
++		const struct hal_rx_phyrx_rssi_legacy_info *rssi = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(rssi->info0);
+ 		info[1] = __le32_to_cpu(rssi->info1);
+@@ -748,8 +731,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RXPCU_PPDU_END_INFO: {
+-		struct hal_rx_ppdu_end_duration *ppdu_rx_duration =
+-			(struct hal_rx_ppdu_end_duration *)tlv_data;
++		const struct hal_rx_ppdu_end_duration *ppdu_rx_duration = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(ppdu_rx_duration->info0);
+ 		ppdu_info->rx_duration =
+@@ -760,8 +742,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RX_MPDU_START: {
+-		struct hal_rx_mpdu_start *mpdu_start =
+-			(struct hal_rx_mpdu_start *)tlv_data;
++		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
+ 		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
+ 		u16 peer_id;
+ 
+@@ -790,8 +771,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	case HAL_MON_BUF_ADDR: {
+ 		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
+-		struct dp_mon_packet_info *packet_info =
+-			(struct dp_mon_packet_info *)tlv_data;
++		const struct dp_mon_packet_info *packet_info = tlv_data;
+ 		int buf_id = u32_get_bits(packet_info->cookie,
+ 					  DP_RXDMA_BUF_COOKIE_BUF_ID);
+ 		struct sk_buff *msdu;
+@@ -823,8 +803,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RX_MSDU_END: {
+-		struct rx_msdu_end_qcn9274 *msdu_end =
+-			(struct rx_msdu_end_qcn9274 *)tlv_data;
++		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
+ 		bool is_first_msdu_in_mpdu;
+ 		u16 msdu_end_info;
+ 
+@@ -1589,7 +1568,7 @@ ath12k_dp_mon_tx_gen_prot_frame(struct dp_mon_tx_ppdu_info *tx_ppdu_info)
+ static enum dp_mon_tx_tlv_status
+ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 				  struct ath12k_mon_data *pmon,
+-				  u16 tlv_tag, u8 *tlv_data, u32 userid)
++				  u16 tlv_tag, const void *tlv_data, u32 userid)
+ {
+ 	struct dp_mon_tx_ppdu_info *tx_ppdu_info;
+ 	enum dp_mon_tx_tlv_status status = DP_MON_TX_STATUS_PPDU_NOT_DONE;
+@@ -1599,8 +1578,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 
+ 	switch (tlv_tag) {
+ 	case HAL_TX_FES_SETUP: {
+-		struct hal_tx_fes_setup *tx_fes_setup =
+-					(struct hal_tx_fes_setup *)tlv_data;
++		const struct hal_tx_fes_setup *tx_fes_setup = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(tx_fes_setup->info0);
+ 		tx_ppdu_info->ppdu_id = __le32_to_cpu(tx_fes_setup->schedule_id);
+@@ -1611,8 +1589,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
  	}
  
- 	ret = k3_udma_glue_allocate_rx_flows(rx_chn, cfg);
-@@ -1454,7 +1461,7 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_rx_chn);
+ 	case HAL_TX_FES_STATUS_END: {
+-		struct hal_tx_fes_status_end *tx_fes_status_end =
+-			(struct hal_tx_fes_status_end *)tlv_data;
++		const struct hal_tx_fes_status_end *tx_fes_status_end = tlv_data;
+ 		u32 tst_15_0, tst_31_16;
  
- void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 		u32 flow_num, void *data,
--		void (*cleanup)(void *data, dma_addr_t desc_dma), bool skip_fdq)
-+		void (*cleanup)(void *data, dma_addr_t desc_dma))
- {
- 	struct k3_udma_glue_rx_flow *flow = &rx_chn->flows[flow_num];
- 	struct device *dev = rx_chn->common.dev;
-@@ -1466,7 +1473,7 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 	dev_dbg(dev, "RX reset flow %u occ_rx %u\n", flow_num, occ_rx);
+ 		info[0] = __le32_to_cpu(tx_fes_status_end->info0);
+@@ -1629,8 +1606,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
  
- 	/* Skip RX FDQ in case one FDQ is used for the set of flows */
--	if (skip_fdq)
-+	if (rx_chn->single_fdq && flow_num)
- 		goto do_reset;
+ 	case HAL_RX_RESPONSE_REQUIRED_INFO: {
+-		struct hal_rx_resp_req_info *rx_resp_req_info =
+-			(struct hal_rx_resp_req_info *)tlv_data;
++		const struct hal_rx_resp_req_info *rx_resp_req_info = tlv_data;
+ 		u32 addr_32;
+ 		u16 addr_16;
  
- 	/*
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 8b47ff7a8b15b..e9d9d69e2ba9d 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -414,7 +414,7 @@ static void am65_cpsw_destroy_rxq(struct am65_cpsw_common *common, int id)
- 	napi_disable(&flow->napi_rx);
- 	hrtimer_cancel(&flow->rx_hrtimer);
- 	k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, id, rx_chn,
--				  am65_cpsw_nuss_rx_cleanup, !!id);
-+				  am65_cpsw_nuss_rx_cleanup);
+@@ -1675,8 +1651,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
  
- 	for (port = 0; port < common->port_num; port++) {
- 		if (!common->ports[port].ndev)
-@@ -3370,7 +3370,7 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- 	for (i = 0; i < common->rx_ch_num_flows; i++)
- 		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i,
- 					  rx_chan,
--					  am65_cpsw_nuss_rx_cleanup, !!i);
-+					  am65_cpsw_nuss_rx_cleanup);
+ 	case HAL_PCU_PPDU_SETUP_INIT: {
+-		struct hal_tx_pcu_ppdu_setup_init *ppdu_setup =
+-			(struct hal_tx_pcu_ppdu_setup_init *)tlv_data;
++		const struct hal_tx_pcu_ppdu_setup_init *ppdu_setup = tlv_data;
+ 		u32 addr_32;
+ 		u16 addr_16;
  
- 	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
+@@ -1722,8 +1697,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
  
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index 74f0f200a89d4..62065416e8861 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -955,7 +955,7 @@ void prueth_reset_rx_chan(struct prueth_rx_chn *chn,
+ 	case HAL_TX_QUEUE_EXTENSION: {
+-		struct hal_tx_queue_exten *tx_q_exten =
+-			(struct hal_tx_queue_exten *)tlv_data;
++		const struct hal_tx_queue_exten *tx_q_exten = tlv_data;
  
- 	for (i = 0; i < num_flows; i++)
- 		k3_udma_glue_reset_rx_chn(chn->rx_chn, i, chn,
--					  prueth_rx_cleanup, !!i);
-+					  prueth_rx_cleanup);
- 	if (disable)
- 		k3_udma_glue_disable_rx_chn(chn->rx_chn);
- }
-diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
-index 2dea217629d0a..5d43881e6fb77 100644
---- a/include/linux/dma/k3-udma-glue.h
-+++ b/include/linux/dma/k3-udma-glue.h
-@@ -138,8 +138,7 @@ int k3_udma_glue_rx_get_irq(struct k3_udma_glue_rx_channel *rx_chn,
- 			    u32 flow_num);
- void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 		u32 flow_num, void *data,
--		void (*cleanup)(void *data, dma_addr_t desc_dma),
--		bool skip_fdq);
-+		void (*cleanup)(void *data, dma_addr_t desc_dma));
- int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
- 				u32 flow_idx);
- int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
+ 		info[0] = __le32_to_cpu(tx_q_exten->info0);
+ 
+@@ -1735,8 +1709,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
+ 
+ 	case HAL_TX_FES_STATUS_START: {
+-		struct hal_tx_fes_status_start *tx_fes_start =
+-			(struct hal_tx_fes_status_start *)tlv_data;
++		const struct hal_tx_fes_status_start *tx_fes_start = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(tx_fes_start->info0);
+ 
+@@ -1747,8 +1720,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
+ 
+ 	case HAL_TX_FES_STATUS_PROT: {
+-		struct hal_tx_fes_status_prot *tx_fes_status =
+-			(struct hal_tx_fes_status_prot *)tlv_data;
++		const struct hal_tx_fes_status_prot *tx_fes_status = tlv_data;
+ 		u32 start_timestamp;
+ 		u32 end_timestamp;
+ 
+@@ -1775,8 +1747,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 
+ 	case HAL_TX_FES_STATUS_START_PPDU:
+ 	case HAL_TX_FES_STATUS_START_PROT: {
+-		struct hal_tx_fes_status_start_prot *tx_fes_stat_start =
+-			(struct hal_tx_fes_status_start_prot *)tlv_data;
++		const struct hal_tx_fes_status_start_prot *tx_fes_stat_start = tlv_data;
+ 		u64 ppdu_ts;
+ 
+ 		info[0] = __le32_to_cpu(tx_fes_stat_start->info0);
+@@ -1791,8 +1762,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
+ 
+ 	case HAL_TX_FES_STATUS_USER_PPDU: {
+-		struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu =
+-			(struct hal_tx_fes_status_user_ppdu *)tlv_data;
++		const struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(tx_fes_usr_ppdu->info0);
+ 
+@@ -1835,8 +1805,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 		break;
+ 
+ 	case HAL_RX_FRAME_BITMAP_ACK: {
+-		struct hal_rx_frame_bitmap_ack *fbm_ack =
+-			(struct hal_rx_frame_bitmap_ack *)tlv_data;
++		const struct hal_rx_frame_bitmap_ack *fbm_ack = tlv_data;
+ 		u32 addr_32;
+ 		u16 addr_16;
+ 
+@@ -1854,8 +1823,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
+ 
+ 	case HAL_MACTX_PHY_DESC: {
+-		struct hal_tx_phy_desc *tx_phy_desc =
+-			(struct hal_tx_phy_desc *)tlv_data;
++		const struct hal_tx_phy_desc *tx_phy_desc = tlv_data;
+ 
+ 		info[0] = __le32_to_cpu(tx_phy_desc->info0);
+ 		info[1] = __le32_to_cpu(tx_phy_desc->info1);
 -- 
 2.53.0
 
