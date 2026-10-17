@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D983B71A7;
-	Sat, 17 Oct 2026 18:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB784CF461;
+	Sat, 17 Oct 2026 18:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260370; cv=none; b=sMY+979UqiP/7rJAD5EV4zaC48ltGffv7/rt+CYqQZxOLlg1PDSEXWJ8eC7db66Si7BPd4/FB3tIPlnq4307ME7AgwuhcAkj2MZXgakkSb6EzOe2FUH/uJ5iPzPPIHJ8G1G7Tup7kWNaqP+f2A9bB6f8WbZ3mPP5bf8O32r8/sU=
+	t=1792260372; cv=none; b=sFpm3Q/EvX+DCXKZnVWuh3WPHAbsPvphzfFy+YWD2k/B0V5BBCKs3pwrtSURaFFHTbZMnaLIV/kL1K3feyZVRSnxKtEpCkhUgPCMzHOJwUkAa9w8Ea/KUX4MAJaNBTK59yNXfm5MWREzaN9kwc99k940dbiWuJnXKfW0IvNGEAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260370; c=relaxed/simple;
-	bh=kJ7AXhRht9p8Dz8qnSoRGceKVN1UfmUs/gVFzTKRDNs=;
+	s=arc-20240116; t=1792260372; c=relaxed/simple;
+	bh=Sxva5zWc5UCYCmPM18Cpfq0Mlpof1Y/7m0PKJMH/lU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8PrF5RqDFbQmaO3JO1EkvDtrSOAL350AF3mrIuU3edSnLbsbtAVWe9liyYjL4LtfH7fbzUA8LWjILsl3pCnry+6kAC+Q24r7gu0sn2+eeySEtM35a0nE170RDbmQgA5GRkDo2GsnaZp2o/aeswohEDHwziuZTKyG/lBgoFCLsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOvB1AxJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVW/HYIY+cxq+HyyZbn9sNbsOiWPhCkFN4Rmfo7I+zTS22mwrFBaBan65Hslm3Q0DxST6+2g7dplTfaXsoRyd7IZvU7cfWK7u+vUz8C9rHoNt80XcbFVZQjYSYgm1iA/OdUg9q02S0bJKs7YustbZr2TyqJJ3hmSTLP7rbGPhCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsRgUboT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOvB1AxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457E21F000C4;
-	Sat, 17 Oct 2026 18:06:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsRgUboT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B4D1F000C4;
+	Sat, 17 Oct 2026 18:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260368;
-	bh=eMoAb6vKCDnnKwWlhMGYTQnsNBbmvDTDZFMMyXO9v4A=;
+	s=korg; t=1792260371;
+	bh=m/h+xCZNB3KVvcHAc+oCmuOdt/uea+aHHzWt6f7ITL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOvB1AxJw8yrHlEGDJ5FApSrBfohH+b6thxgEXT0qPYWA5ZWWLTQwyOaN/IImtl2f
-	 3JATP/su79xOvNxgu3xN3LGtYOrQcJN3jkp5CUGlg+WFwmUOXLxIStTk4/BI5y6tw/
-	 IXATM//V59LUmQ5qfn71zAUoOGyZr8bT2g5XOQQ0=
+	b=xsRgUboTayDt34VO6KzJNJYfoidBA5LTntAIKtdh4sPF02wwu5i6ZG1wZD88JqIB2
+	 K3AhsWSSjScpbEd/yHy14QgV7YZCH2pCED93iTyFJPLmk688koBm8+PLF9wPiEiAKs
+	 4iJVCotjDipjTOvvoiSDp0NN/uhp5LOCpH3i7xcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Lee Jia Jie <jiajie.lee@starlabs.sg>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1522/1674] wifi: mac80211: ibss: wait for in-flight TX on disconnect
-Date: Sat, 17 Oct 2026 18:03:14 +0200
-Message-ID: <20261017160510.187146563@linuxfoundation.org>
+Subject: [PATCH 6.6 1523/1674] perf: Fix addr_filter_ranges lifetime
+Date: Sat, 17 Oct 2026 18:03:15 +0200
+Message-ID: <20261017160510.212515605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,76 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit d0e69d9afa59b93c30294eba89b1f15f69e91105 ]
+[ Upstream commit e62d4192e593630f355094adc467058a05bdc935 ]
 
-While leaving an IBSS in ieee80211_ibss_disconnect() mac80211 flushes
-stations, turns the carrier off and immediately tells the driver to
-leave as well. While there may be synchronize_net() in station flush
-and in this code later, packets can still be transmitted due to
-cross-CPU race conditions after carrier off is set.
-Therefore, it's possible for a race to happen where a TX to the
-driver occurs while or after telling it to leave the IBSS. This can
-be confusing to drivers, and in the case of iwlwifi leads to an
-attempt to use invalid queues.
+Lee Jia Jie reported that since event::addr_filter_ranges is used
+under RCU, it should be RCU freed.
 
-Move netif_carrier_off() to occur before sta_info_flush() during
-IBSS disconnect, and add synchronize_net() if flushing didn't,
-so that the synchronize_net() always happens between turning the
-carrier off and telling the driver, avoiding this race.
-
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ibss.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ kernel/events/core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 5542c93edfba0..2474feb149b3a 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -695,7 +695,9 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index ad0e04e3e5777..a226f908490f0 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5022,6 +5022,7 @@ static void free_event_rcu(struct rcu_head *head)
+ 	if (event->ns)
+ 		put_pid_ns(event->ns);
+ 	perf_event_free_filter(event);
++	kfree(event->addr_filter_ranges);
+ 	kmem_cache_free(perf_event_cache, event);
+ }
  
- 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
+@@ -5257,7 +5258,6 @@ static void _free_event(struct perf_event *event)
  
--	sta_info_flush(sdata);
-+	netif_carrier_off(sdata->dev);
-+	if (!sta_info_flush(sdata))
-+		synchronize_net();
+ 	perf_event_free_bpf_prog(event);
+ 	perf_addr_filters_splice(event, NULL);
+-	kfree(event->addr_filter_ranges);
  
- 	spin_lock_bh(&ifibss->incomplete_lock);
- 	while (!list_empty(&ifibss->incomplete_stations)) {
-@@ -709,8 +711,6 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+ 	if (event->destroy)
+ 		event->destroy(event);
+@@ -12276,8 +12276,6 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+ 			put_callchain_buffers();
  	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
- 
--	netif_carrier_off(sdata->dev);
+ err_addr_filters:
+-	kfree(event->addr_filter_ranges);
 -
- 	sdata->vif.cfg.ibss_joined = false;
- 	sdata->vif.cfg.ibss_creator = false;
- 	sdata->vif.bss_conf.enable_beacon = false;
-@@ -741,7 +741,6 @@ static void ieee80211_csa_connection_drop_work(struct wiphy *wiphy,
- 	sdata_lock(sdata);
+ err_per_task:
+ 	exclusive_event_destroy(event);
  
- 	ieee80211_ibss_disconnect(sdata);
--	synchronize_rcu();
- 	skb_queue_purge(&sdata->skb_queue);
- 
- 	/* trigger a scan to find another IBSS network to join */
-@@ -1882,8 +1881,6 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
- 	memset(&ifibss->ht_capa, 0, sizeof(ifibss->ht_capa));
- 	memset(&ifibss->ht_capa_mask, 0, sizeof(ifibss->ht_capa_mask));
- 
--	synchronize_rcu();
--
- 	skb_queue_purge(&sdata->skb_queue);
- 
- 	del_timer_sync(&sdata->u.ibss.timer);
 -- 
 2.53.0
 
