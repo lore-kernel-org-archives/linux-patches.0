@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC549258EE9;
-	Sat, 17 Oct 2026 18:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B093A2540;
+	Sat, 17 Oct 2026 18:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260488; cv=none; b=d8st49Ie1naenHtz9MPi3RYiFyyV6kQgJJbwyb2Me174a+8EJwALEnvA3OlHaF1G0MmAnMh04kYDrFvoc5Mdh+zSz9DprqUsxXW9OegBmZEJKQvJoLmaMiMgSQPbSCn1hnT5NPSgvxPKklct+3w1jDD7Hy2WiX02wLwg1/k0N7I=
+	t=1792260493; cv=none; b=Uno/bTxjEspWpFRDapa61yL7rmXmo/m4kZ5kJwb9/rcoHG04nBbQLHtjdGcRjaFdFsHlHNNaD8x6uw+utSYp4vvChutPOYJFao3y+YLRwI5Sm3c7gLAoDJZvkSqhYtGvLPJZane7JjpyRyjsy0A+pM12Zc4Y4MU9leGN4wadFtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260488; c=relaxed/simple;
-	bh=ctk+KhAcH9ORJoxsxr96JvobAtVAdC/tVtDjUUUl+z4=;
+	s=arc-20240116; t=1792260493; c=relaxed/simple;
+	bh=fBc1J9un+Rkm+H9erXVz/QGP2R2A2JVpYNMgSYC7AcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCHGwzXFWW2/zZngdgiJBZaRowg1p3/7IsZyPjnntUIVquDTjqimLeEWMumHoo1kFZWu1Cn2KmrKQScuQULuFYz/RU7T2KzWnoEe8ToaTD3vyOMMnhEAN5omF89Sf+7Mk2OXtm/coBB11iSfMqMmPijXqGets8cmsp+b7GTKpKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9ToPIC2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgmvYPtNLP5GY1tkBkQAPsTLAANjMmxCwm4qxk0h9PLzo+rMPn06h8w+VsPxrxZg3EaOg22djiYZG00DV6JFmk1B56x2/qqRZFPFLHWnv7yprHIHK9bw2O/skSnAsdenCvxnfInnntnA65fQr9906NkMw0UiLc1cPZszEuysOOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGJphxAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9ToPIC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171B41F000C4;
-	Sat, 17 Oct 2026 18:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGJphxAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1361F000C4;
+	Sat, 17 Oct 2026 18:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260487;
-	bh=ZVqlU3fi36dQ5Cup5fC9Utvkdg4d7+ka3qM5jPblpQk=;
+	s=korg; t=1792260490;
+	bh=iNUvQAxyT5ct9dVQFspdoAnfMWphRrx7nd8D77rNGv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r9ToPIC2jt9X/EiLXcQ62w6ll2cNyMr7dwQxJguNvkVvxYvvk7FRh1WHty59NYaZ0
-	 ENuum/Fz6cXs2jSgWj51eosVMcLAjQBZwYfm9eaQMWR3W9oAAG+vvhC4Qoy2gPVciY
-	 5pbQ441EJzJdtWhX0o1nQt6Sue/D+uYR5T9urvks=
+	b=IGJphxAbg8D3EHxXfEvqwKWTmQOIu0m1QiPKicGazaVkebErCaT93gQYZVxZR0wMa
+	 eLXIhC5c7KJ2tpFgi98fWX26wgggRgD/PJSt+NmVbTHAoW8i3Y2wr8xnS+44waCAsY
+	 b0xlzPdOLlW6OR/AgSshu5QYaOXwIjfzwh+h6g1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ulrich Weber <ulrich.weber@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1561/1674] media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC
-Date: Sat, 17 Oct 2026 18:03:53 +0200
-Message-ID: <20261017160511.169952565@linuxfoundation.org>
+Subject: [PATCH 6.6 1562/1674] netfilter: nfnetlink_queue: do shared-unconfirmed check before segmentation
+Date: Sat, 17 Oct 2026 18:03:54 +0200
+Message-ID: <20261017160511.195318801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,171 +51,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e0203ddf9af7c8e170e1e99ce83b4dc07f0cd765 ]
+[ Upstream commit 207b3ebacb6113acaaec0d171d5307032c690004 ]
 
-For the i.MX8MQ platform, there is a hardware limitation: the g1 VPU and
-g2 VPU cannot decode simultaneously; otherwise, it will cause below bus
-error and produce corrupted pictures, even potentially lead to system hang.
+Ulrich reports a regression with nfqueue:
 
-[  110.527986] hantro-vpu 38310000.video-codec: frame decode timed out.
-[  110.583517] hantro-vpu 38310000.video-codec: bus error detected.
+If an application did not set the 'F_GSO' capability flag and a gso
+packet with an unconfirmed nf_conn entry is received all packets are
+now dropped instead of queued, because the check happens after
+skb_gso_segment().  In that case, we did have exclusive ownership
+of the skb and its associated conntrack entry.  The elevated use
+count is due to skb_clone happening via skb_gso_segment().
 
-Therefore, it is necessary to ensure that g1 and g2 operate alternately.
-This allows for successful multi-instance decoding of H.264 and HEVC.
+Move the check so that its peformed vs. the aggregated packet.
 
-To achieve this, g1 and g2 share the same v4l2_m2m_dev, and then the
-v4l2_m2m_dev can handle the scheduling.
+Then, annotate the individual segments except the first one so we
+can do a 2nd check at reinject time.
 
-Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+For the normal case, where userspace does in-order reinjects, this avoids
+packet drops: first reinjected segment continues traversal and confirms
+entry, remaining segments observe the confirmed entry.
+
+While at it, simplify nf_ct_drop_unconfirmed(): We only care about
+unconfirmed entries with a refcnt > 1, there is no need to special-case
+dying entries.
+
+This only happens with UDP.  With TCP, the only unconfirmed packet will
+be the TCP SYN, those aren't aggregated by GRO.
+
+Next patch adds a udpgro test case to cover this scenario.
+
+Reported-by: Ulrich Weber <ulrich.weber@gmail.com>
+Fixes: 7d8dc1c7be8d ("netfilter: nf_queue: drop packets with cloned unconfirmed conntracks")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro.h   |  2 +
- .../media/platform/verisilicon/hantro_drv.c   | 42 +++++++++++++++++--
- .../media/platform/verisilicon/imx8m_vpu_hw.c |  8 ++++
- 3 files changed, 49 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_queue.h |   1 +
+ net/netfilter/nfnetlink_queue.c  | 122 +++++++++++++++++++------------
+ 2 files changed, 75 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-index e9e15746f0aa1..ce13812a94001 100644
---- a/drivers/media/platform/verisilicon/hantro.h
-+++ b/drivers/media/platform/verisilicon/hantro.h
-@@ -77,6 +77,7 @@ struct hantro_irq {
-  * @double_buffer:		core needs double buffering
-  * @legacy_regs:		core uses legacy register set
-  * @late_postproc:		postproc must be set up at the end of the job
-+ * @shared_devices:		an array of device ids that cannot run concurrently
-  */
- struct hantro_variant {
- 	unsigned int enc_offset;
-@@ -101,6 +102,7 @@ struct hantro_variant {
- 	unsigned int double_buffer : 1;
- 	unsigned int legacy_regs : 1;
- 	unsigned int late_postproc : 1;
-+	const struct of_device_id *shared_devices;
- };
+diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
+index c576479b9aa56..4cf158b5ea698 100644
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -21,6 +21,7 @@ struct nf_queue_entry {
+ 	struct net_device	*physout;
+ #endif
+ 	struct nf_hook_state	state;
++	bool			nf_ct_is_unconfirmed;
+ 	u16			size; /* sizeof(entry) + saved route keys */
  
- /**
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 7892b9f34599a..6ebab13712af3 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -13,6 +13,7 @@
- #include <linux/clk.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/pm_runtime.h>
-@@ -1030,6 +1031,41 @@ static int hantro_disable_multicore(struct hantro_dev *vpu)
- 	return 0;
+ 	/* extra space to store route keys */
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 1944fba91b021..56c16fa0ba227 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -225,6 +225,34 @@ find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
+ 	return entry;
  }
  
-+static struct v4l2_m2m_dev *hantro_get_v4l2_m2m_dev(struct hantro_dev *vpu)
++/* return true if the entry has an unconfirmed conntrack attached that isn't owned by us
++ * exclusively.
++ */
++static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_unconfirmed)
 +{
-+	struct device_node *node;
-+	struct hantro_dev *shared_vpu;
++#if IS_ENABLED(CONFIG_NF_CONNTRACK)
++	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
 +
-+	if (!vpu->variant || !vpu->variant->shared_devices)
-+		goto init_new_m2m_dev;
++	if (!ct || nf_ct_is_confirmed(ct))
++		return false;
 +
-+	for_each_matching_node(node, vpu->variant->shared_devices) {
-+		struct platform_device *pdev;
-+		struct v4l2_m2m_dev *m2m_dev;
++	if (is_unconfirmed)
++		*is_unconfirmed = true;
 +
-+		pdev = of_find_device_by_node(node);
-+		if (!pdev)
-+			continue;
-+
-+		shared_vpu = platform_get_drvdata(pdev);
-+		if (IS_ERR_OR_NULL(shared_vpu) || shared_vpu == vpu) {
-+			platform_device_put(pdev);
-+			continue;
-+		}
-+
-+		v4l2_m2m_get(shared_vpu->m2m_dev);
-+		m2m_dev = shared_vpu->m2m_dev;
-+		platform_device_put(pdev);
-+
-+		of_node_put(node);
-+
-+		return m2m_dev;
-+	}
-+
-+init_new_m2m_dev:
-+	return v4l2_m2m_init(&vpu_m2m_ops);
++	/* in some cases skb_clone() can occur after initial conntrack
++	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
++	 * unconfirmed entries.
++	 *
++	 * This happens for br_netfilter and with ip multicast routing.
++	 * This can't be solved with serialization here because one clone
++	 * could have been queued for local delivery or could be transmitted
++	 * in parallel on another CPU.
++	 */
++	return refcount_read(&ct->ct_general.use) > 1;
++#endif
++	return false;
 +}
 +
- static int hantro_probe(struct platform_device *pdev)
+ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
  {
- 	const struct of_device_id *match;
-@@ -1181,7 +1217,7 @@ static int hantro_probe(struct platform_device *pdev)
+ 	const struct nf_ct_hook *ct_hook;
+@@ -242,6 +270,24 @@ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
+ 		}
+ 		rcu_read_unlock();
  	}
- 	platform_set_drvdata(pdev, vpu);
- 
--	vpu->m2m_dev = v4l2_m2m_init(&vpu_m2m_ops);
-+	vpu->m2m_dev = hantro_get_v4l2_m2m_dev(vpu);
- 	if (IS_ERR(vpu->m2m_dev)) {
- 		v4l2_err(&vpu->v4l2_dev, "Failed to init mem2mem device\n");
- 		ret = PTR_ERR(vpu->m2m_dev);
-@@ -1220,7 +1256,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	hantro_remove_enc_func(vpu);
- err_m2m_rel:
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- err_v4l2_unreg:
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
-@@ -1243,7 +1279,7 @@ static void hantro_remove(struct platform_device *pdev)
- 	hantro_remove_dec_func(vpu);
- 	hantro_remove_enc_func(vpu);
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
- 	reset_control_assert(vpu->resets);
-diff --git a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-index 74fd985a8aad1..cdaac2f18fb54 100644
---- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-@@ -361,6 +361,12 @@ const struct hantro_variant imx8mq_vpu_variant = {
- 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
- };
- 
-+static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
-+	{ .compatible = "nxp,imx8mq-vpu-g1", },
-+	{ .compatible = "nxp,imx8mq-vpu-g2", },
-+	{ /* sentinel */ }
-+};
 +
- const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.dec_fmts = imx8m_vpu_dec_fmts,
- 	.num_dec_fmts = ARRAY_SIZE(imx8m_vpu_dec_fmts),
-@@ -374,6 +380,7 @@ const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_irqs),
- 	.clk_names = imx8mq_g1_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g1_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
++	if (verdict != NF_DROP && entry->nf_ct_is_unconfirmed) {
++		/* If first queued segment was already reinjected then
++		 * there is a good chance the ct entry is now confirmed.
++		 *
++		 * Handle the rare cases:
++		 *  - out-of-order verdict
++		 *  - threaded userspace reinjecting in parallel
++		 *  - first segment was dropped
++		 *
++		 * In all of those cases we can't handle this packet
++		 * because we can't be sure that another CPU won't modify
++		 * nf_conn->ext in parallel which isn't allowed.
++		 */
++		if (nf_ct_drop_unconfirmed(entry, NULL))
++			verdict = NF_DROP;
++	}
++
+ 	nf_reinject(entry, verdict);
+ }
  
- const struct hantro_variant imx8mq_vpu_g2_variant = {
-@@ -389,6 +396,7 @@ const struct hantro_variant imx8mq_vpu_g2_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_g2_irqs),
- 	.clk_names = imx8mq_g2_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g2_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
+@@ -676,49 +722,6 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 	return NULL;
+ }
  
- const struct hantro_variant imx8mm_vpu_g1_variant = {
+-static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry)
+-{
+-#if IS_ENABLED(CONFIG_NF_CONNTRACK)
+-	static const unsigned long flags = IPS_CONFIRMED | IPS_DYING;
+-	struct nf_conn *ct = (void *)skb_nfct(entry->skb);
+-	unsigned long status;
+-	unsigned int use;
+-
+-	if (!ct)
+-		return false;
+-
+-	status = READ_ONCE(ct->status);
+-	if ((status & flags) == IPS_DYING)
+-		return true;
+-
+-	if (status & IPS_CONFIRMED)
+-		return false;
+-
+-	/* in some cases skb_clone() can occur after initial conntrack
+-	 * pickup, but conntrack assumes exclusive skb->_nfct ownership for
+-	 * unconfirmed entries.
+-	 *
+-	 * This happens for br_netfilter and with ip multicast routing.
+-	 * We can't be solved with serialization here because one clone could
+-	 * have been queued for local delivery.
+-	 */
+-	use = refcount_read(&ct->ct_general.use);
+-	if (likely(use == 1))
+-		return false;
+-
+-	/* Can't decrement further? Exclusive ownership. */
+-	if (!refcount_dec_not_one(&ct->ct_general.use))
+-		return false;
+-
+-	skb_set_nfct(entry->skb, 0);
+-	/* No nf_ct_put(): we already decremented .use and it cannot
+-	 * drop down to 0.
+-	 */
+-	return true;
+-#endif
+-	return false;
+-}
+-
+ static int
+ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 			struct nf_queue_entry *entry)
+@@ -735,9 +738,6 @@ __nfqnl_enqueue_packet(struct net *net, struct nfqnl_instance *queue,
+ 	}
+ 	spin_lock_bh(&queue->lock);
+ 
+-	if (nf_ct_drop_unconfirmed(entry))
+-		goto err_out_free_nskb;
+-
+ 	if (queue->queue_total >= queue->queue_maxlen) {
+ 		if (queue->flags & NFQA_CFG_F_FAIL_OPEN) {
+ 			failopen = 1;
+@@ -848,9 +848,10 @@ __nfqnl_enqueue_packet_gso(struct net *net, struct nfqnl_instance *queue,
+ static int
+ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+ {
+-	unsigned int queued;
+-	struct nfqnl_instance *queue;
+ 	struct sk_buff *skb, *segs, *nskb;
++	bool ct_is_unconfirmed = false;
++	struct nfqnl_instance *queue;
++	unsigned int queued;
+ 	int err = -ENOBUFS;
+ 	struct net *net = entry->state.net;
+ 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
+@@ -874,6 +875,15 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+ 		break;
+ 	}
+ 
++	/* Check if someone already holds another reference to
++	 * unconfirmed ct.  If so, we cannot queue the skb:
++	 * concurrent modifications of nf_conn->ext are not
++	 * allowed and we can't know if another CPU isn't
++	 * processing the same nf_conn entry in parallel.
++	 */
++	if (nf_ct_drop_unconfirmed(entry, &ct_is_unconfirmed))
++		return -EINVAL;
++
+ 	if (!skb_is_gso(skb) || ((queue->flags & NFQA_CFG_F_GSO) && !skb_is_gso_sctp(skb)))
+ 		return __nfqnl_enqueue_packet(net, queue, entry);
+ 
+@@ -887,7 +897,23 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
+ 		goto out_err;
+ 	queued = 0;
+ 	err = 0;
++
+ 	skb_list_walk_safe(segs, segs, nskb) {
++		if (ct_is_unconfirmed && queued > 0) {
++			/* skb_gso_segment() increments the ct refcount.
++			 * This is a problem for unconfirmed (not in hash)
++			 * entries, those can race when reinjections happen
++			 * in parallel.
++			 *
++			 * Annotate this for all queued entries except the
++			 * first one.
++			 *
++			 * As long as the first one is reinjected first it
++			 * will do the confirmation for us.
++			 */
++			entry->nf_ct_is_unconfirmed = ct_is_unconfirmed;
++		}
++
+ 		if (err == 0)
+ 			err = __nfqnl_enqueue_packet_gso(net, queue,
+ 							segs, entry);
 -- 
 2.53.0
 
