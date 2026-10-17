@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6143ACEE0;
-	Sat, 17 Oct 2026 17:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0D33B8BD1;
+	Sat, 17 Oct 2026 17:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256674; cv=none; b=BXkgirIIi5yP13M8S0zBV2yp+sPdW5v/6HhP19nh99z6g5gExSFzzvIIaowN14OtY0/eJ7ABliaUdRaw+qvODJpCni5LneCi0rO9jHQrGySGyejUv0S0nRF98PVfRUhqp2vYhx3Xk5Skex3eiDXqOmOiSD6mEwPWapuuzcfAlqY=
+	t=1792256677; cv=none; b=kMijjAQrx+KnDyKS6Gk6mKthENZKLuJUh5T3XTxQiyhShI9xG3IKxXKUphWuSnP+FxkhDLpgK2O4URne+WtLZgwSnzx8uOZfOPBNFF5oxMxvDZy09Lsl3+MSLX20OVpvl6yUQqVGgBenqWki+VcaEtsEOly/24Q+aRjfW83FiHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256674; c=relaxed/simple;
-	bh=VIaZ4sWiB6xc40v5TNnSsEPdbvkbkdlTN8pKRa3GetU=;
+	s=arc-20240116; t=1792256677; c=relaxed/simple;
+	bh=gDoptg+HqkkFcs5bsR1WuAwlIvvHcgO5wsKO2GUvsXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvMZre8aE00USHKAd3ze9WjhxPep60UA/+0/he98TR3oDD1SWoqsGd8BlGIp8cYCo2yfyXcseHb4BimkL3iN3Mrq6p0js8ZTm4RmNYNQWBIXIIbXQSq0t01P45K3BMkOpuhndiyC/qQeV/70ynnoP/Q6Hi6kJoodM5uaw+AO5sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FP7JIdZQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O4vrtq4m20argYC0n8sWlKTVzvc1ULcJcoA+EeqDXVuVQUV/b6lv+4mhbuVRn3IP60/D4hjoVeGTFLdayPSAPP0wphbKNAROfHm7EHCQk9qS0U0Z+TnsYyd58VAAEvJ8YSPIcPzpj3L1Ldytxr2yFy5HyxMdcYZuYIqfvyaF3Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HO/JSuwR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FP7JIdZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EF01F000C5;
-	Sat, 17 Oct 2026 17:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HO/JSuwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B541F000C4;
+	Sat, 17 Oct 2026 17:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256673;
-	bh=BHu7VquyMCGquh8a1TtT9c7u2e+2SB2czaeuCyXyLj8=;
+	s=korg; t=1792256676;
+	bh=/GoO4PZCjT6xW8W4+U5QFzeANACrTllNOxfgeRwOtQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FP7JIdZQASxHHXcA9c2Tn42u3kOjxL0VrjTiRKX3KYmU4lx1mMn5BQCAPLpdEzjNp
-	 Z+p1/mO/durxtWGbOA7IDUyDpcG/IV0TSL/eFLzyGJdXf00QrOw4Wxn1IUdTzkGakO
-	 ROBzBqQv+hcHnQSz0Bb0nAp5uT3S8rPEUC4b0p6c=
+	b=HO/JSuwRUM2CVQ+YS4V1zthIc6XEXjxrlKk8TfZVi06X5+RpBm1NOBqbjSBcKtOx3
+	 /bRe/e9fwo5eql6A+5vonKFgFQZI+/dAsAx7E5a5Yo66plsIul2zSibzsgbWKkiSLK
+	 UDHo+pwDE/Mm6o/N2KmQ3GE7LoSRrUT56rn1fDN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0297/1674] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
-Date: Sat, 17 Oct 2026 17:42:49 +0200
-Message-ID: <20261017160438.743275126@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 0315/1674] wifi: mac80211: account proxy paths against the mesh path limit
+Date: Sat, 17 Oct 2026 17:43:07 +0200
+Message-ID: <20261017160439.203991647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,70 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
+commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b upstream.
 
-On 64-bit systems, outgoing BR/EDR connections always fall back to page
-scan repetition mode R2 with no clock offset once the system has been
-up for more than five minutes, even when inquiry found the peer only
-seconds earlier. This lengthens paging and can increase the risk of a
-Page Timeout.
+Proxy-path churn can drive the interface path counter negative and let
+later mesh path additions exceed MESH_MAX_MPATHS.
 
-The inquiry cache stores jiffies in __u32 timestamps, but its age
-helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
--300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
-after boot on 64-bit systems. Assigning it to __u32 then drops the upper
-32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
-2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
-hci_inquiry() is affected by the same truncation when checking the whole
-cache. 32-bit systems are unaffected because unsigned long is 32 bits
-wide there.
+mesh_path_free_rcu() decrements the interface mpaths counter for entries
+from both the mesh and proxy path tables, but mpp_path_add() never
+reserves a slot in that counter. Removing or expiring a proxy path
+therefore returns a slot that was never charged.
 
-Use unsigned long for both timestamps so they have the same width as
-jiffies on 32-bit and 64-bit systems, and update the debugfs format
-specifier accordingly.
+mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
+it falls below the number of installed paths the limit no longer holds.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reserve the shared quota before allocating a proxy path and release it on
+every unsuccessful addition. Mesh and proxy paths now share one
+1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
+
+Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: LLM sparse kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    4 ++--
- net/bluetooth/hci_debugfs.c      |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/mesh_pathtbl.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -64,7 +64,7 @@ struct inquiry_entry {
- 		NAME_PENDING,
- 		NAME_KNOWN,
- 	} name_state;
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	struct inquiry_data	data;
- };
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -728,10 +728,15 @@ int mpp_path_add(struct ieee80211_sub_if
+ 	if (is_multicast_ether_addr(dst))
+ 		return -ENOTSUPP;
  
-@@ -80,7 +80,7 @@ struct discovery_state {
- 	struct list_head	all;	/* All devices found during inquiry */
- 	struct list_head	unknown;	/* Name state not known */
- 	struct list_head	resolve;	/* Name needs to be resolved */
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	bdaddr_t		last_adv_addr;
- 	u8			last_adv_addr_type;
- 	s8			last_adv_rssi;
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -368,7 +368,7 @@ static int inquiry_cache_show(struct seq
++	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
++		return -ENOSPC;
++
+ 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
  
- 	list_for_each_entry(e, &cache->all, all) {
- 		struct inquiry_data *data = &e->data;
--		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
-+		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
- 			   &data->bdaddr,
- 			   data->pscan_rep_mode, data->pscan_period_mode,
- 			   data->pscan_mode, data->dev_class[2],
+-	if (!new_mpath)
++	if (!new_mpath) {
++		atomic_dec(&sdata->u.mesh.mpaths);
+ 		return -ENOMEM;
++	}
+ 
+ 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
+ 	tbl = &sdata->u.mesh.mpp_paths;
+@@ -744,10 +749,12 @@ int mpp_path_add(struct ieee80211_sub_if
+ 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
+ 	spin_unlock_bh(&tbl->walk_lock);
+ 
+-	if (ret)
++	if (ret) {
+ 		kfree(new_mpath);
+-	else
++		atomic_dec(&sdata->u.mesh.mpaths);
++	} else {
+ 		mesh_fast_tx_flush_addr(sdata, dst);
++	}
+ 
+ 	sdata->u.mesh.mpp_paths_generation++;
+ 	return ret;
 
 
