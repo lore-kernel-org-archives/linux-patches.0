@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3612F3AEF2D;
-	Sat, 17 Oct 2026 17:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2328938F233;
+	Sat, 17 Oct 2026 17:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258924; cv=none; b=gBw15D+iGIS6TPjrNuQ9RjjyNbXXDQqrD/q4YQHEFfS/+5uZ8mKUD4Hs6wM8BNakPtZICeEGpII7t5mEn4PanH2oZn1I30yRUryjfI0nFX5oxDNc1tItqrXm0rl651EkwcHKXP8rsau76sNE16qwq0Aofhf6azCmsdoWszyTT7c=
+	t=1792258927; cv=none; b=ooRJxGLOMpyZhkHuJeggzlNLpdtoJSQxk93pwQhBnar/RfAo/KzcS1R9fVI6NWnJQ4LgCXEPLU8foAxG1oCQoIIwJpfbxUB8w0y8ztle3mFPNSOha4qBZZe2nIMksAiWo5ZA6XRN+uLQJAtS+1OBfxfpwJmJwCGfTGCh+DMoT5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258924; c=relaxed/simple;
-	bh=G/zeZqaA1mB0j7JTizziKj/iVf+D6ZW4Q9b8DMt1JMg=;
+	s=arc-20240116; t=1792258927; c=relaxed/simple;
+	bh=fDKwilzksJdpu+EaYBtQwyd0gH3e2HivqCUY9dHrVC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/briy7FKvjH3kEG0XL3pXOjdDTmFDAO9dFoNhvEYwhpHUr8l+tIYrAOTYWObAkbCJrmbgB3XfDMUq7FrUB61I/h7XZhuZmwZuEPLhKEDYo1tN6qMpBHbFqnJRqVxDMSNdq7xdriXrLvm0JzaPFVIjooBOGUOKeA+4Y4cLtAThA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y08JlREH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rajMnpYReBv2P+zMtcyehYcTz+nPdjvnK4orL4UVTlhhFd4Q+ACxnrYZMwY/Fe5hqWZLfXh2RtIUi5LzE7uZ1j1l65Oh6DDl8FaqnpJItqONGrLBRIRd8atdQnHT8C91Wzjk/CTn35VPsdTz0GovMUFAmc4sxmL7dqebaSCTol8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoxa9ksu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y08JlREH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859641F000C4;
-	Sat, 17 Oct 2026 17:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoxa9ksu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F8D1F000C4;
+	Sat, 17 Oct 2026 17:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258923;
-	bh=6O1dM/i3ls3CWoNoeHTqIK4PckSSujWO/yMXPDVpOzU=;
+	s=korg; t=1792258926;
+	bh=v2X2SylKDGYG9uQtMH4ID31bHKeWSkDpDZzGBsjvSOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y08JlREHaT+oh6jDgxfd0zq5RFLaNQ7GA4jX4FAzkuGN/XPftIqbjnBwU5sg3+/tf
-	 HQi03E11+gLF8q5/eElJI27j/1icvbEOrwG3YwAd7npG96eTIvyF1UeMftDTyL9D8J
-	 7Mi33pRIDA2bXldst5ZiW6GUnUgaFmt+Ltb64MzA=
+	b=qoxa9ksuDVyZlxsphyRoCRovaRQfsdwl8dnAsjqUhur8bTXqQoyxKz76e5D0UA+lU
+	 mbUOGaceNfjZxv30eGamx5+rn/VonNXq+GaiPVQLCbgcS0JrwCpLDzuR2fsSpd28BY
+	 7wGcFvCunKo0M4/BpyyfIYOzFHf11QBSZQdgnHs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Salman Alghamdi <me@cipherat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1017/1674] staging: rtl8723bs: fix buffer over-read in rtw_update_protection
-Date: Sat, 17 Oct 2026 17:54:49 +0200
-Message-ID: <20261017160457.235875289@linuxfoundation.org>
+Subject: [PATCH 6.6 1044/1674] hwmon: (lm90) Stop work before releasing hwmon device
+Date: Sat, 17 Oct 2026 17:55:16 +0200
+Message-ID: <20261017160457.934003396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,58 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salman Alghamdi <me@cipherat.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 514ab98364595007d4557ecc85d7e5f012c504d3 ]
+[ Upstream commit b09a45601094c7f4ec4db8090b825fa61e169d93 ]
 
-rtw_update_protection() is called with a pointer offset into the
-ies buffer but the full ie_length is passed, causing a potential
-buffer over-read.
+Sashiko reports:
 
-Fixes: e945c43df60b ("Staging: rtl8723bs: Delete dead code from update_current_network()")
-Fixes: d3fcee1b78a5 ("staging: rtl8723bs: fix camel case in struct wlan_bssid_ex")
-Reported-by: Luka Gejak <luka.gejak@linux.dev>
-Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev
-Cc: stable@vger.kernel.org
-Signed-off-by: Salman Alghamdi <me@cipherat.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260508222649.23989-1-me@cipherat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In lm90_probe(), the devm action to cancel the alert_work and report_work
+(lm90_restore_conf) is registered in lm90_init_client() before
+devm_hwmon_device_register_with_info() is called.
+
+Because devm executes cleanup actions in reverse order during module
+unbind or probe failure, the hwmon device is unregistered and freed first.
+
+If lm90_alert_work() or lm90_report_alarms() runs in the window between
+the hwmon device being freed and the delayed works being cancelled,
+lm90_update_alarms() will dereference the freed data->hwmon_dev here.
+
+Fix the problem by canceling the workers separately after registering
+the hwmon device and before registering the interrupt handler. This ensures
+that the workers are canceled after interrupts are disabled and before
+the hwmon device is released. Add "shutdown" flag to indicate that device
+shutdown is in progress to prevent workers from being re-armed.
+
+Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/hwmon/lm90.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-index 8dd0251956732..061634bafae58 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -450,8 +450,11 @@ static void update_current_network(struct adapter *adapter, struct wlan_bssid_ex
+diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
+index 7be9874b3dfb1..96a10b9875f0e 100644
+--- a/drivers/hwmon/lm90.c
++++ b/drivers/hwmon/lm90.c
+@@ -695,6 +695,7 @@ struct lm90_data {
+ 	struct mutex update_lock;
+ 	struct delayed_work alert_work;
+ 	struct work_struct report_work;
++	bool shutdown;		/* true if shutting down */
+ 	bool valid;		/* true if register values are valid */
+ 	bool alarms_valid;	/* true if status register values are valid */
+ 	unsigned long last_updated; /* in jiffies */
+@@ -1113,6 +1114,9 @@ static void lm90_report_alarms(struct work_struct *work)
  
- 	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&pmlmepriv->cur_network.network, pnetwork, 0))) {
- 		update_network(&pmlmepriv->cur_network.network, pnetwork, adapter, true);
-+		if (pmlmepriv->cur_network.network.ie_length < sizeof(struct ndis_802_11_fix_ie))
-+			return;
+ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
+ {
++	if (data->shutdown)
++		return 0;
 +
- 		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
--								pmlmepriv->cur_network.network.ie_length);
-+								pmlmepriv->cur_network.network.ie_length - sizeof(struct ndis_802_11_fix_ie));
- 	}
+ 	if (force || !data->alarms_valid ||
+ 	    time_after(jiffies, data->alarms_updated + msecs_to_jiffies(data->update_interval))) {
+ 		struct i2c_client *client = data->client;
+@@ -2558,15 +2562,23 @@ static void lm90_restore_conf(void *_data)
+ 	struct lm90_data *data = _data;
+ 	struct i2c_client *client = data->client;
+ 
+-	cancel_delayed_work_sync(&data->alert_work);
+-	cancel_work_sync(&data->report_work);
+-
+ 	/* Restore initial configuration */
+ 	if (data->flags & LM90_HAVE_CONVRATE)
+ 		lm90_write_convrate(data, data->convrate_orig);
+ 	lm90_write_reg(client, LM90_REG_CONFIG1, data->config_orig);
  }
  
-@@ -1077,8 +1080,11 @@ static void rtw_joinbss_update_network(struct adapter *padapter, struct wlan_net
- 			break;
- 	}
- 
-+	if (cur_network->network.ie_length < sizeof(struct ndis_802_11_fix_ie))
-+		return;
++static void lm90_stop_work(void *_data)
++{
++	struct lm90_data *data = _data;
 +
- 	rtw_update_protection(padapter, (cur_network->network.ies) + sizeof(struct ndis_802_11_fix_ie),
--									(cur_network->network.ie_length));
-+									(cur_network->network.ie_length - sizeof(struct ndis_802_11_fix_ie)));
++	mutex_lock(&data->update_lock);
++	data->shutdown = true;
++	mutex_unlock(&data->update_lock);
++	cancel_delayed_work_sync(&data->alert_work);
++	cancel_work_sync(&data->report_work);
++}
++
+ static int lm90_init_client(struct i2c_client *client, struct lm90_data *data)
+ {
+ 	struct device_node *np = client->dev.of_node;
+@@ -2899,6 +2911,10 @@ static int lm90_probe(struct i2c_client *client)
  
- 	rtw_update_ht_cap(padapter, cur_network->network.ies, cur_network->network.ie_length, (u8) cur_network->network.configuration.ds_config);
- }
+ 	data->hwmon_dev = hwmon_dev;
+ 
++	err = devm_add_action_or_reset(&client->dev, lm90_stop_work, data);
++	if (err)
++		return err;
++
+ 	if (client->irq) {
+ 		dev_dbg(dev, "IRQ: %d\n", client->irq);
+ 		err = devm_request_threaded_irq(dev, client->irq,
+@@ -2927,7 +2943,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
+ 		 */
+ 		struct lm90_data *data = i2c_get_clientdata(client);
+ 
+-		if ((data->flags & LM90_HAVE_BROKEN_ALERT) &&
++		if (!data->shutdown && (data->flags & LM90_HAVE_BROKEN_ALERT) &&
+ 		    (data->current_alarms & data->alert_alarms)) {
+ 			if (!(data->config & 0x80)) {
+ 				dev_dbg(&client->dev, "Disabling ALERT#\n");
 -- 
 2.53.0
 
