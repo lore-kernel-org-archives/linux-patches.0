@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3163A6B92;
-	Sat, 17 Oct 2026 16:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DC33803DC;
+	Sat, 17 Oct 2026 16:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254016; cv=none; b=UGFQkBmB1DSmslpQfuY30WMOb40wKo0C3VwY4c50SUl9kzu37qLAsGghzJ1xXiQZJXAqkX/zFbAcGyNtVnBZNScJunKcU+Mkwa84P0HcJGWztHzjxLrMwaGwRhehAfGSGrEsd8PAt/jDMDSKjv1nDiGk/s/AyGXe4uLi44gNnOI=
+	t=1792254019; cv=none; b=RAWyP2onSMe6Lm703z3CCgRkOnAOmgLFRyYQga5bGI4AnlP+jV+baVkpCUYHt8lCIn3pnK/nQRiaWAHncIBOtZwSZVLN78uyn4MS9q80RpgphYagO1y08yRnkNn2+Vk58z2rkOVg0tUPOr9vDvVAXwx46WooJpt3bUeRYgT3aIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254016; c=relaxed/simple;
-	bh=BN/h6RwOhIwwVyH00Zc6QmmfOUGEWFqLFGsbdvLSogw=;
+	s=arc-20240116; t=1792254019; c=relaxed/simple;
+	bh=dc2dBPDnTPmS4e7n/Y4e9VFJVXby/n2eQZtTwZUnhiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mu+u2CkM46AKsdY/s791ZvjvaUcmv3ilkbrGCMN8ixk7AgDpDA6TclsGuDgniD243P5wAZcvD+Z6226WwUinqBeuAQ83Z+UADZSVUn18KZReVf8yc6aUCeZFzqQRktd5izhkV1fGEJsv5/tyERLGry5VXF5wnEtdlCV0rX7o7ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJaFLED3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4v9uw2JKTA1xmdvMNu+oGJt03f0yLBkfXNUXFyC3v8UWaP9TcCpKFtUwQycThu0AXaxCKxSX0sjjVd2dPI/F2XiT73Y1Zm7fzgg79m+WHrvJzT5LU+EAbuWOe6ASx+r8tNKlnvQGtonvwJTANmVM57Xhxgkmu2WjH/n1hUm8lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZM/TYQr9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJaFLED3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08291F000C4;
-	Sat, 17 Oct 2026 16:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZM/TYQr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE4B1F000C4;
+	Sat, 17 Oct 2026 16:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254015;
-	bh=9bUxWg21CQjQ9UHKRza/AI4fsWkAF0G7LeTePI7mHBo=;
+	s=korg; t=1792254018;
+	bh=sM5O7k46o/aAaGXGm0tBH5Bgao///hL/8a6fc+Qn8PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJaFLED3H3OSHLhQ+5doalxshUOdXE6YYB44zYGCAl9kfBuNDGvVr9E9BwRr0YLpQ
-	 PEDSF+98KYn+wkt38a1aj/9jQ2dRxOmbs3s0aUNoIhDQqURzhhkMrNyW3iQ6uhqKmW
-	 3LzVpKu4PWv02UeG2Ow5JRgGq3bQyhsCxEqRSfFE=
+	b=ZM/TYQr95wH71XmvUYeeHzjbmXneq/GN+4ufZTG82II+D5DxIo6LqXhaojm/JCJJZ
+	 uC7emhrm02VZz0F5uMBAUlfzGp0R3TgCdeOJKKLPNzkkrEYFdzUax2IairOaGm6SL5
+	 2Iswm4XmXEbghBSOjEGR24Pl6auglkKyI4mYduyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/869] net: airoha: fix BQL imbalance in TX path
-Date: Sat, 17 Oct 2026 17:52:29 +0200
-Message-ID: <20261017160044.972413123@linuxfoundation.org>
+Subject: [PATCH 6.12 309/869] sched/psi: fix race between file release and pressure write
+Date: Sat, 17 Oct 2026 17:52:30 +0200
+Message-ID: <20261017160044.998014334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,58 +53,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 2d9f5a118205da2683ffcec78b9347f1f01a820e ]
+[ Upstream commit a5b98009f16d8a5fb4a8ff9a193f5735515c38fa ]
 
-Fix a possible BQL imbalance in airoha_dev_xmit(), where inflight
-packets are accounted only for the AIROHA_NUM_TX_RING netdev TX
-queues. The queue index is computed as:
+A potential race condition exists between pressure write and cgroup file
+release regarding the priv member of struct kernfs_open_file, which
+triggers the uaf reported in [1].
 
-    qid = skb_get_queue_mapping(skb) % ARRAY_SIZE(qdma->q_tx)
-    txq = netdev_get_tx_queue(dev, qid);
+Consider the following scenario involving execution on two separate CPUs:
 
-However, airoha_qdma_tx_napi_poll() accounts completions across all
-netdev TX queues (num_tx_queues), leading to inconsistent BQL
-accounting.
+   CPU0					CPU1
+   ====					====
+					vfs_rmdir()
+					kernfs_iop_rmdir()
+					cgroup_rmdir()
+					cgroup_kn_lock_live()
+					cgroup_destroy_locked()
+					cgroup_addrm_files()
+					cgroup_rm_file()
+					kernfs_remove_by_name()
+					kernfs_remove_by_name_ns()
+ vfs_write()				__kernfs_remove()
+ new_sync_write()			kernfs_drain()
+ kernfs_fop_write_iter()		kernfs_drain_open_files()
+ cgroup_file_write()			kernfs_release_file()
+ pressure_write()			cgroup_file_release()
+ ctx = of->priv;
+					kfree(ctx);
+ 					of->priv = NULL;
+					cgroup_kn_unlock()
+ cgroup_kn_lock_live()
+ cgroup_get(cgrp)
+ cgroup_kn_unlock()
+ if (ctx->psi.trigger)  // here, trigger uaf for ctx, that is of->priv
 
-Also reset all netdev TX queues in the ndo_stop callback.
+The cgroup_rmdir() is protected by the cgroup_mutex, it also safeguards
+the memory deallocation of of->priv performed within cgroup_file_release().
+However, the operations involving of->priv executed within pressure_write()
+are not entirely covered by the protection of cgroup_mutex. Consequently,
+if the code in pressure_write(), specifically the section handling the
+ctx variable executes after cgroup_file_release() has completed, a uaf
+vulnerability involving of->priv is triggered.
 
-Fixes: 1d304174106c ("net: airoha: Implement BQL support")
-Fixes: c9f947769b77 ("net: airoha: Reset BQL stopping the netdevice")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260421-airoha-fix-bql-v1-1-f135afe4275b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Therefore, the issue can be resolved by extending the scope of the
+cgroup_mutex lock within pressure_write() to encompass all code paths
+involving of->priv, thereby properly synchronizing the race condition
+occurring between cgroup_file_release() and pressure_write().
+
+And, if an live kn lock can be successfully acquired while executing
+the pressure write operation, it indicates that the cgroup deletion
+process has not yet reached its final stage; consequently, the priv
+pointer within open_file cannot be NULL. Therefore, the operation to
+retrieve the ctx value must be moved to a point *after* the live kn
+lock has been successfully acquired.
+
+In another situation, specifically after entering cgroup_kn_lock_live()
+but before acquiring cgroup_mutex, there exists a different class of
+race condition:
+
+CPU0: write memory.pressure               CPU1: write cgroup.pressure=0
+===========================		  =============================
+
+kernfs_fop_write_iter()
+ kernfs_get_active_of(of)
+ pressure_write()
+   cgroup_kn_lock_live(memory.pressure)
+     cgroup_tryget(cgrp)
+     kernfs_break_active_protection(kn)
+     ... blocks on cgroup_mutex
+
+                                     	  cgroup_pressure_write()
+                                     	  cgroup_kn_lock_live(cgroup.pressure)
+                                     	  cgroup_file_show(memory.pressure, false)
+                                     	    kernfs_show(false)
+                                     	      kernfs_drain_open_files()
+                                     	        cgroup_file_release(of)
+                                     	          kfree(ctx)
+                                     	            of->priv = NULL
+                                     	  cgroup_kn_unlock()
+
+   ... acquires cgroup_mutex
+   ctx = of->priv;        // may now be NULL
+   if (ctx->psi.trigger)  // NULL dereference
+
+Consequently, there is a possibility that of->priv is NULL, the pressure
+write needs to check for this.
+
+Now that the scope of the cgroup_mutex has been expanded, the original
+explicit cgroup_get/put operations are no longer necessary, this is
+because acquiring/releasing the live kn lock inherently executes a
+cgroup get/put operation.
+
+[1]
+BUG: KASAN: slab-use-after-free in pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+Call Trace:
+ pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+ cgroup_file_write+0x36f/0x790 kernel/cgroup/cgroup.c:4311
+ kernfs_fop_write_iter+0x3b0/0x540 fs/kernfs/file.c:352
+
+Allocated by task 9352:
+ cgroup_file_open+0x90/0x3a0 kernel/cgroup/cgroup.c:4256
+ kernfs_fop_open+0x9eb/0xcb0 fs/kernfs/file.c:724
+ do_dentry_open+0x83d/0x13e0 fs/open.c:949
+
+Freed by task 9353:
+ cgroup_file_release+0xd6/0x100 kernel/cgroup/cgroup.c:4283
+ kernfs_release_file fs/kernfs/file.c:764 [inline]
+ kernfs_drain_open_files+0x392/0x720 fs/kernfs/file.c:834
+ kernfs_drain+0x470/0x600 fs/kernfs/dir.c:525
+
+Fixes: 0e94682b73bf ("psi: introduce psi monitor")
+Reported-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33e571025d88efd1312c
+Tested-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/cgroup/cgroup.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 9ebc9788ded70..41695f353cdc6 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1777,10 +1777,9 @@ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
- 			WRITE_ONCE(desc->msg1, 0);
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index ce012aca272a5..38fd322ccf2e9 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -3881,33 +3881,41 @@ static int cgroup_cpu_pressure_show(struct seq_file *seq, void *v)
+ static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
+ 			      size_t nbytes, enum psi_res res)
+ {
+-	struct cgroup_file_ctx *ctx = of->priv;
++	struct cgroup_file_ctx *ctx;
+ 	struct psi_trigger *new;
+ 	struct cgroup *cgrp;
+ 	struct psi_group *psi;
++	ssize_t ret = 0;
  
- 			if (skb) {
--				u16 queue = skb_get_queue_mapping(skb);
- 				struct netdev_queue *txq;
+ 	cgrp = cgroup_kn_lock_live(of->kn, false);
+ 	if (!cgrp)
+ 		return -ENODEV;
  
--				txq = netdev_get_tx_queue(skb->dev, queue);
-+				txq = skb_get_tx_queue(skb->dev, skb);
- 				netdev_tx_completed_queue(txq, 1, skb->len);
- 				if (netif_tx_queue_stopped(txq) &&
- 				    q->ndesc - q->queued >= q->free_thr)
-@@ -2559,7 +2558,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+-	cgroup_get(cgrp);
+-	cgroup_kn_unlock(of->kn);
++	ctx = of->priv;
++	if (!ctx) {
++		ret = -ENODEV;
++		goto out_unlock;
++	}
  
- 	spin_lock_bh(&q->lock);
+ 	/* Allow only one trigger per file descriptor */
+ 	if (ctx->psi.trigger) {
+-		cgroup_put(cgrp);
+-		return -EBUSY;
++		ret = -EBUSY;
++		goto out_unlock;
+ 	}
  
--	txq = netdev_get_tx_queue(dev, qid);
-+	txq = skb_get_tx_queue(dev, skb);
- 	if (q->queued + nr_frags > q->ndesc) {
- 		/* not enough space in the queue */
- 		netif_tx_stop_queue(txq);
+ 	psi = cgroup_psi(cgrp);
+ 	new = psi_trigger_create(psi, buf, res, of->file, of);
+ 	if (IS_ERR(new)) {
+-		cgroup_put(cgrp);
+-		return PTR_ERR(new);
++		ret = PTR_ERR(new);
++		goto out_unlock;
+ 	}
+ 
+ 	smp_store_release(&ctx->psi.trigger, new);
+-	cgroup_put(cgrp);
++
++out_unlock:
++	cgroup_kn_unlock(of->kn);
++	if (ret)
++		return ret;
+ 
+ 	return nbytes;
+ }
 -- 
 2.53.0
 
