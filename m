@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B683B19CA;
-	Sat, 17 Oct 2026 16:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D162B1419A4;
+	Sat, 17 Oct 2026 16:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255415; cv=none; b=Oigj2CMhNkuz77657xFpED2l6OdhUTdKRloPv0Eugv3buGiMLWqvn4OYY0TjBGtk9XlqFR8Zmb7/UBQ9B4u6gXO41ZEXtBOtET3bCkRrG/hzNksXPH13RFz22wmtLAj53zKeJscfWsi9fOcwFJJ4JJNOkB2Uug8prPX+LeElyQs=
+	t=1792255418; cv=none; b=aRAFGureM0nCMtkoO/B9jAheAmnwiZgpcHehBELUTlUk4fBbK+YmGEH0aYAetua4uh+XPJn5KJHeD59kuYiR2Me5sgWTZtRZq1xqUtBotjo9NaSyJcGPe774sIUliQv5Ze+eoLBTTEvqGD4hFTpWjNLP9Kk9uriXdGN1sUTiHLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255415; c=relaxed/simple;
-	bh=tGQ/J3dIqFzEFN+xlklN+19gNsZCnhoN0aQPdt6VK8c=;
+	s=arc-20240116; t=1792255418; c=relaxed/simple;
+	bh=0V5xH9Jrlekug4lIvBbJ4uW2RxP2kKEn2Bady756P8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azgbhpXMDHuwFISJoUKJui4cizoamo9JJcA0jX6Ldrl7qCHzCgUfbs0O/9aVYmWlrl4Xg/4G55PPCsCHA3Rsr3mxLVP6qZYUEBdZNP8p7aFLCdZmNcsIfq/32o5XWwzqvI5ixwVi6fNlmPgChj9ntTencRD807ItkHxGQrYgBxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIYD/gmL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yku+Ef1B6NELdO75emDuRUJ2RyDCMc6tJTLLErA49K6O/sTFwmfhtgU6DPFIO6X692OjziAyYUoQgvPAQOemo8oKrAgN6bc0l3LYJvN+nY64YYdHL65cxSH5s5PSwSv7TDDT+QV099dozZdgO31ZbNiqqYlEbVHNifvrnDop6wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfOQhbtY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIYD/gmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4787F1F000C4;
-	Sat, 17 Oct 2026 16:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfOQhbtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D411F000C4;
+	Sat, 17 Oct 2026 16:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255413;
-	bh=5JuJmZUzFv1ItDslHKZGaAATZx6J/nvYDdik7jDIx50=;
+	s=korg; t=1792255416;
+	bh=ULs0X1dfb82r7uvIf9z1d8x1Ey1FWt7WyUvix77/+qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JIYD/gmLwCAwayQz4dexXsLGtkXSUrRXURD9kpdPubxkuBMkg7iP0lwyGbvUwwYho
-	 Xw6y4eWkx9g30NKr2DZjDVvVvqunGkx8Ew03DkIE6/DaZykSKYdx8WFkKrTG2B9J9C
-	 mYtrn0TTZrWL9PD52NMk1Tn+ss7oxZvyvkhVVBiY=
+	b=TfOQhbtYwhQk6zAW+tmyOCXHOrSBwkjcWmz8xPHsWO5uXnjjlhIi1XteRLYDcC7pm
+	 LljQ5L93ETpyIUBGrmSZ284l+FtwGRQPk0cvV6JVzNAG1Wy1s28l4tfQH6pkrfw7mO
+	 r2J83qq3WnBy8TlCge3CmpqoNNJO3Q/0y26unmdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 768/869] perf/x86/intel: Prevent drain_pebs() reentry
-Date: Sat, 17 Oct 2026 18:00:09 +0200
-Message-ID: <20261017160056.612767893@linuxfoundation.org>
+Subject: [PATCH 6.12 769/869] net/mlx5e: Move representor vnic reporter to eswitch devlink port
+Date: Sat, 17 Oct 2026 18:00:10 +0200
+Message-ID: <20261017160056.638327003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,154 +54,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit a56c03a397e2cd0c4cf8da96dcd6214f7d0e7d8c ]
+[ Upstream commit 7f26a5e8040b4957ef4dbdfcde6cc7ba2db53937 ]
 
-The PEBS buffer is shared by all events on a CPU, so drain_pebs() must
-not be reentered. If so, one instance may observe stale buffer state and
-potentially access out-of-bound memory.
+The representor vnic devlink health reporter is created and destroyed
+along the representor netdev (un)load path, which is not serialized by
+the devlink instance lock. Destroying the reporter from there triggers
+a devl_assert_locked() splat on driver unbind:
+  WARNING: net/devlink/core.c:259 at devl_assert_locked+0x54/0x70, CPU#2: bash/3758
+  Modules linked in: mlx5_vdpa vringh vdpa mlx5_ib mlx5_fwctl mlx5_core ...
+  CPU: 2 UID: 0 PID: 3758 Comm: bash Tainted: G        W           6.19.0+ #1 PREEMPT
+  Tainted: [W]=WARN
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), ...
+  RIP: 0010:devl_assert_locked+0x54/0x70
+  Call Trace:
+   <TASK>
+   devl_health_reporter_destroy+0x3a/0x1b0
+   mlx5e_vport_rep_unload+0x12d/0x2b0 [mlx5_core]
+   mlx5_eswitch_unregister_vport_reps+0x1b8/0x220 [mlx5_core]
+   ? __esw_offloads_unload_rep+0x190/0x190 [mlx5_core]
+   ? kernfs_remove_by_name_ns+0xc3/0xf0
+   device_release_driver_internal+0x3b2/0x560
+   unbind_store+0xce/0xf0
 
-Most invocations happen in NMI context, which naturally prevents reentry.
-However, drain_pebs() is also reachable from process context via
-intel_pmu_drain_pebs_buffer().
+Move the reporter's lifecycle to the eswitch devlink port (un)register
+paths, which are already serialized by the devlink instance lock, and
+store the handle on mlx5_devlink_port. Use the port's mlx5_vport as the
+reporter priv since the diagnose callback only needs a device handle and
+a vport number, and mlx5_vport carries both and is initialized before
+any representor driver probes.
 
-In those paths, the PMU is often already disabled, but not guaranteed.
-For example, __intel_pmu_pebs_disable() only disables the target counter,
-so other active counters can still raise a PMI and interrupt an in-flight
-drain_pebs(). Here is an example,
-
-__perf_addr_filters_adjust()
-  perf_event_stop()
-    __perf_event_stop()
-      x86_pmu_stop() (event->pmu->stop)
-        intel_pmu_disable_event()
-          intel_pmu_pebs_disable()
-            __intel_pmu_pebs_disable()
-              intel_pmu_drain_large_pebs()
-                intel_pmu_drain_pebs_buffer()
-
-Introduce __intel_pmu_quiesce() and __intel_pmu_resume() helpers and
-use them in intel_pmu_drain_large_pebs() to disable the full PMU
-around the intel_pmu_drain_pebs_buffer() call, preventing reentry.
-
-Also add a warning in intel_pmu_drain_pebs_buffer() when the full PMU is
-not disabled.
-
-Fixes: b752ea0c28e3 ("perf/x86/intel/ds: Flush PEBS DS when changing PEBS_DATA_CFG")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260813064346.335458-1-dapeng1.mi@linux.intel.com
+Fixes: cf14af140a5a ("net/mlx5e: Add vnic devlink health reporter to representors")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260906090700.3761260-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 32 ++++++++++++++++++++++++--------
- arch/x86/events/intel/ds.c   |  8 +++++++-
- arch/x86/events/perf_event.h |  3 +++
- 3 files changed, 34 insertions(+), 9 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 52 +------------------
+ .../net/ethernet/mellanox/mlx5/core/en_rep.h  |  1 -
+ .../mellanox/mlx5/core/esw/devlink_port.c     | 36 +++++++++++++
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
+ 4 files changed, 38 insertions(+), 52 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 2efb414959e1f..35b6c340001db 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2606,6 +2606,27 @@ static void intel_pmu_del_event(struct perf_event *event)
- 		intel_pmu_pebs_del(event);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 763b264721af1..82ef5d252161e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -56,7 +56,6 @@
+ #include "lib/vxlan.h"
+ #define CREATE_TRACE_POINTS
+ #include "diag/en_rep_tracepoint.h"
+-#include "diag/reporter_vnic.h"
+ #include "en_accel/ipsec.h"
+ #include "en/tc/int_port.h"
+ #include "en/ptp.h"
+@@ -1412,51 +1411,6 @@ static unsigned int mlx5e_ul_rep_stats_grps_num(struct mlx5e_priv *priv)
+ 	return ARRAY_SIZE(mlx5e_ul_rep_stats_grps);
  }
  
-+int __intel_pmu_quiesce(void)
-+{
-+	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+	int pmu_enabled = cpuc->enabled;
-+
-+	cpuc->enabled = 0;
-+	if (pmu_enabled)
-+		intel_pmu_disable_all();
-+
-+	return pmu_enabled;
-+}
-+
-+void __intel_pmu_resume(int pmu_enabled)
-+{
-+	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+
-+	cpuc->enabled = pmu_enabled;
-+	if (pmu_enabled)
-+		intel_pmu_enable_all(0);
-+}
-+
- static int icl_set_topdown_event_period(struct perf_event *event)
- {
- 	struct hw_perf_event *hwc = &event->hw;
-@@ -2784,24 +2805,19 @@ static void intel_pmu_read_event(struct perf_event *event)
- {
- 	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
- 		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
--		bool pmu_enabled = cpuc->enabled;
-+		int pmu_enabled;
- 
- 		/* Only need to call update_topdown_event() once for group read. */
- 		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
- 			return;
- 
--		cpuc->enabled = 0;
--		if (pmu_enabled)
--			intel_pmu_disable_all();
-+		pmu_enabled = __intel_pmu_quiesce();
- 
- 		if (is_topdown_count(event))
- 			static_call(intel_pmu_update_topdown_event)(event);
- 		else
- 			intel_pmu_drain_pebs_buffer();
+-static int
+-mlx5e_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
+-				 struct devlink_fmsg *fmsg,
+-				 struct netlink_ext_ack *extack)
+-{
+-	struct mlx5e_rep_priv *rpriv = devlink_health_reporter_priv(reporter);
+-	struct mlx5_eswitch_rep *rep = rpriv->rep;
 -
--		cpuc->enabled = pmu_enabled;
--		if (pmu_enabled)
--			intel_pmu_enable_all(0);
-+		__intel_pmu_resume(pmu_enabled);
+-	mlx5_reporter_vnic_diagnose_counters(rep->esw->dev, fmsg, rep->vport,
+-					     true);
+-	return 0;
+-}
+-
+-static const struct devlink_health_reporter_ops mlx5_rep_vnic_reporter_ops = {
+-	.name = "vnic",
+-	.diagnose = mlx5e_rep_vnic_reporter_diagnose,
+-};
+-
+-static void mlx5e_rep_vnic_reporter_create(struct mlx5e_priv *priv,
+-					   struct devlink_port *dl_port)
+-{
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+-	struct devlink_health_reporter *reporter;
+-
+-	reporter = devl_port_health_reporter_create(dl_port,
+-						    &mlx5_rep_vnic_reporter_ops,
+-						    0, rpriv);
+-	if (IS_ERR(reporter)) {
+-		mlx5_core_err(priv->mdev,
+-			      "Failed to create representor vnic reporter, err = %ld\n",
+-			      PTR_ERR(reporter));
+-		return;
+-	}
+-
+-	rpriv->rep_vnic_reporter = reporter;
+-}
+-
+-static void mlx5e_rep_vnic_reporter_destroy(struct mlx5e_priv *priv)
+-{
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+-
+-	if (!IS_ERR_OR_NULL(rpriv->rep_vnic_reporter))
+-		devl_health_reporter_destroy(rpriv->rep_vnic_reporter);
+-}
+-
+ static const struct mlx5e_profile mlx5e_rep_profile = {
+ 	.init			= mlx5e_init_rep,
+ 	.cleanup		= mlx5e_cleanup_rep,
+@@ -1580,10 +1534,8 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
  
- 		return;
+ 	dl_port = mlx5_esw_offloads_devlink_port(dev->priv.eswitch,
+ 						 rpriv->rep->vport);
+-	if (!IS_ERR(dl_port)) {
++	if (!IS_ERR(dl_port))
+ 		SET_NETDEV_DEVLINK_PORT(netdev, dl_port);
+-		mlx5e_rep_vnic_reporter_create(priv, dl_port);
+-	}
+ 
+ 	err = register_netdev(netdev);
+ 	if (err) {
+@@ -1596,7 +1548,6 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
+ 	return 0;
+ 
+ err_detach_netdev:
+-	mlx5e_rep_vnic_reporter_destroy(priv);
+ 	mlx5e_detach_netdev(netdev_priv(netdev));
+ err_cleanup_profile:
+ 	priv->profile->cleanup(priv);
+@@ -1654,7 +1605,6 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
  	}
-diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 4eac316932108..44c041c6a29b7 100644
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -949,8 +949,11 @@ int intel_pmu_drain_bts_buffer(void)
  
- void intel_pmu_drain_pebs_buffer(void)
- {
-+	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
- 	struct perf_sample_data data;
+ 	unregister_netdev(netdev);
+-	mlx5e_rep_vnic_reporter_destroy(priv);
+ 	mlx5e_detach_netdev(priv);
+ 	priv->profile->cleanup(priv);
+ 	mlx5e_destroy_netdev(netdev);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
+index 70640fa1ad7bc..bcd7b4e814d06 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
+@@ -118,7 +118,6 @@ struct mlx5e_rep_priv {
+ 	struct rtnl_link_stats64 prev_vf_vport_stats;
+ 	struct mlx5_flow_handle *send_to_vport_meta_rule;
+ 	struct rhashtable tc_ht;
+-	struct devlink_health_reporter *rep_vnic_reporter;
+ };
  
-+	WARN_ON_ONCE(cpuc->enabled);
+ static inline
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+index b0c97648ffc71..9283b7c46e50c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+@@ -3,6 +3,26 @@
+ 
+ #include <linux/mlx5/driver.h>
+ #include "eswitch.h"
++#include "diag/reporter_vnic.h"
 +
- 	static_call(x86_pmu_drain_pebs)(NULL, &data);
- }
++static int
++mlx5_esw_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
++				    struct devlink_fmsg *fmsg,
++				    struct netlink_ext_ack *extack)
++{
++	struct mlx5_vport *vport = devlink_health_reporter_priv(reporter);
++
++	mlx5_reporter_vnic_diagnose_counters(vport->dev, fmsg, vport->vport,
++					     true);
++
++	return 0;
++}
++
++static const
++struct devlink_health_reporter_ops mlx5_esw_rep_vnic_reporter_ops = {
++	.name = "vnic",
++	.diagnose = mlx5_esw_rep_vnic_reporter_diagnose,
++};
  
-@@ -1448,8 +1451,11 @@ static void intel_pmu_pebs_via_pt_enable(struct perf_event *event)
- static inline void intel_pmu_drain_large_pebs(struct cpu_hw_events *cpuc)
+ static void
+ mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
+@@ -153,6 +173,7 @@ static const struct devlink_port_ops mlx5_esw_dl_sf_port_ops = {
+ 
+ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
  {
- 	if (cpuc->n_pebs == cpuc->n_large_pebs &&
--	    cpuc->n_pebs != cpuc->n_pebs_via_pt)
-+	    cpuc->n_pebs != cpuc->n_pebs_via_pt) {
-+		int enabled = __intel_pmu_quiesce();
- 		intel_pmu_drain_pebs_buffer();
-+		__intel_pmu_resume(enabled);
++	struct devlink_health_reporter *reporter;
+ 	struct mlx5_core_dev *dev = esw->dev;
+ 	const struct devlink_port_ops *ops;
+ 	struct mlx5_devlink_port *dl_port;
+@@ -182,6 +203,16 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
+ 	if (err)
+ 		goto rate_err;
+ 
++	reporter = devl_port_health_reporter_create(
++		&dl_port->dl_port, &mlx5_esw_rep_vnic_reporter_ops,
++		0, vport);
++	if (IS_ERR(reporter))
++		mlx5_core_err(dev,
++			      "Failed to create vnic health reporter for vport %d: %ld\n",
++			      vport_num, PTR_ERR(reporter));
++	else
++		dl_port->vnic_reporter = reporter;
++
+ 	return 0;
+ 
+ rate_err:
+@@ -197,6 +228,11 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, struct
+ 		return;
+ 	dl_port = vport->dl_port;
+ 
++	if (dl_port->vnic_reporter) {
++		devl_health_reporter_destroy(dl_port->vnic_reporter);
++		dl_port->vnic_reporter = NULL;
 +	}
- }
- 
- void intel_pmu_pebs_enable(struct perf_event *event)
-diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
-index 3878173933be6..85afab67414a8 100644
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1560,6 +1560,9 @@ static __always_inline void __intel_pmu_lbr_disable(void)
- 	wrmsrl(MSR_IA32_DEBUGCTLMSR, debugctl);
- }
- 
-+extern int __intel_pmu_quiesce(void);
-+extern void __intel_pmu_resume(int pmu_enabled);
 +
- int intel_pmu_save_and_restart(struct perf_event *event);
+ 	mlx5_esw_qos_vport_update_group(esw, vport, NULL, NULL);
+ 	devl_rate_leaf_destroy(&dl_port->dl_port);
  
- struct event_constraint *
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 63c2b36ce967b..af25da01181d8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -179,6 +179,7 @@ struct mlx5_vport;
+ struct mlx5_devlink_port {
+ 	struct devlink_port dl_port;
+ 	struct mlx5_vport *vport;
++	struct devlink_health_reporter *vnic_reporter;
+ };
+ 
+ static inline void mlx5_devlink_port_init(struct mlx5_devlink_port *dl_port,
 -- 
 2.53.0
 
