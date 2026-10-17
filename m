@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B603BB115;
-	Sat, 17 Oct 2026 16:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E869D29BDB5;
+	Sat, 17 Oct 2026 16:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255728; cv=none; b=ltNQGhPmSYM+blDrug0dIS9YqjXatqT0lz195m7Tsf89LvtN6YI7QzamoxUPoVLQgTx8HrtkLQRydrs4efXzFGYlqGIYsB4LByEw5K0ACOz0fSQtoQjvXbKhCYmA12YCt/jKXi8EcUwRfpTPoE52ilsPjYk+zBs0Y5Hxj02/Lrg=
+	t=1792255729; cv=none; b=rfLDWgKN6ZvwuuDU44tRfqAM8ypHM7lqhZy7f6gKUoGQbZ2DmHy9taUlWYg9n6ZkAPB8RPFhv464qk4t1Oh/fouJ+sDuCEJXzIPdvRJwqS8XJt+TwXkMP/vem2J2m70wm9a193WHD0smWfltjaFfaECqyMoTmvMtY8aUYCBgu0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255728; c=relaxed/simple;
-	bh=Ge3C7unONvp4HjPN9cjmiplAMPrs1WW3RKVEAnI5qMc=;
+	s=arc-20240116; t=1792255729; c=relaxed/simple;
+	bh=pBTogoMCC8J22QJR/i0Sy+OsMrLDoIStH3Y6F0pWzZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IVHIXSMn0Zlrr79WpRoEVEcNmbntAjxuPQwWRdjtzimE3FfmeCdbAaOt36jL/02qv0d9gWqHja46A3qbqcIpoPC6FL6nKcAWJsxRjlw/R9V8W7PdXnBqH1k368yZgIJfNSYaCMP1ZXhMP9tMSf+lJDKCE6POEOGifvGp4aG2JBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PU2jRuaO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y5qMH3JYxHTXqaxLt9a+Ed/6BKRMaMaYCfyHsfGDwEogGMw805Q4nnPpe/KJBamgw1ojWsTjlsJPXvtdYqfm8FXi9i7+y1N4az2KHOJQmxdd9CQZAjnEQDP1LTbFrU3yfq26odaoZfag3Ev/wgXLZPPxL+mazliFMiJjuXdh+BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZsA+nfH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU2jRuaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE801F000C4;
-	Sat, 17 Oct 2026 16:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZsA+nfH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779491F000C4;
+	Sat, 17 Oct 2026 16:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255726;
-	bh=8SOfPmjWjzoSMshNwUYYuf6beFo/F7UmMRGS467CL+E=;
+	s=korg; t=1792255728;
+	bh=5ixqVOuKXNilv++Q+RSSZ8WooMy9K31npA1mPNrKsLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PU2jRuaOBaquNq1dP2tcRI7I1P9GpTIA83YIYOuEsK9LC9HoorHQLxOFDjGDS7BHf
-	 Ape3k7Dbe7FCuXYORHsOUd6+jrx74cskdCJjdzVlsaeEYhbumoX840IuKNU4IDrUmL
-	 /xrCPg8PzuZJaa67pmzT/IsiGu4wA8q/1qw56ZqE=
+	b=QZsA+nfHrTSlv6nIurZ4u68PPouEqz33tWW5/DQY5JQlI01krIu9FSt05naxZEHU/
+	 aPOnYwIuAXFSs65eKSALDgOZ10KJig73wsOpNwA/bKIDXSzzBpATtzDtaSX04mSpi3
+	 T2zO9y0L7lryg2KnZeTOiPmci3nZCQPYTCK8Ky4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 841/869] ceph: always call ceph_shift_unused_folios_left()
-Date: Sat, 17 Oct 2026 18:01:22 +0200
-Message-ID: <20261017160058.432480493@linuxfoundation.org>
+Subject: [PATCH 6.12 842/869] spi: microchip-core-qspi: stop checking viability of op->max_freq in supports_op callback
+Date: Sat, 17 Oct 2026 18:01:23 +0200
+Message-ID: <20261017160058.458633943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,111 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit cce7c15faaac79b532a07ed6ab8332280ad83762 ]
+[ Upstream commit 89e7353f522f5cf70cb48c01ce2dcdcb275b8022 ]
 
-The function ceph_process_folio_batch() sets folio_batch entries to
-NULL, which is an illegal state.  Before folio_batch_release() crashes
-due to this API violation, the function ceph_shift_unused_folios_left()
-is supposed to remove those NULLs from the array.
+In commit 13529647743d9 ("spi: microchip-core-qspi: Support per spi-mem
+operation frequency switches") the logic for checking the viability of
+op->max_freq in mchp_coreqspi_setup_clock() was copied into
+mchp_coreqspi_supports_op(). Unfortunately, op->max_freq is not valid
+when this function is called during probe but is instead zero.
+Accordingly, baud_rate_val is calculated to be INT_MAX due to division
+by zero, causing probe of the attached memory device to fail.
 
-However, since commit ce80b76dd327 ("ceph: introduce
-ceph_process_folio_batch() method"), this shifting doesn't happen
-anymore because the "for" loop got moved to ceph_process_folio_batch(),
-and now the `i` variable that remains in ceph_writepages_start()
-doesn't get incremented anymore, making the shifting effectively
-unreachable much of the time.
+Seemingly spi-microchip-core-qspi was the only driver that had such a
+modification made to its supports_op callback when the per_op_freq
+capability was added, so just remove it to restore prior functionality.
 
-Later, commit 1551ec61dc55 ("ceph: introduce ceph_submit_write()
-method") added more preconditions for doing the shift, replacing the
-`i` check (with something that is still just as broken):
-
-- if ceph_process_folio_batch() fails, shifting never happens
-
-- if ceph_move_dirty_page_in_page_array() was never called (because
-  ceph_process_folio_batch() has returned early for some of various
-  reasons), shifting never happens
-
-- if `processed_in_fbatch` is zero (because ceph_process_folio_batch()
-  has returned early for some of the reasons mentioned above or
-  because ceph_move_dirty_page_in_page_array() has failed), shifting
-  never happens
-
-Since those two commits, any problem in ceph_process_folio_batch()
-could crash the kernel, e.g. this way:
-
- BUG: kernel NULL pointer dereference, address: 0000000000000034
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0002 [#1] SMP NOPTI
- CPU: 172 UID: 0 PID: 2342707 Comm: kworker/u778:8 Not tainted 6.15.10-cm4all1-es #714 NONE
- Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.10 12/08/2023
- Workqueue: writeback wb_workfn (flush-ceph-1)
- RIP: 0010:folios_put_refs+0x85/0x140
- Code: 83 c5 01 39 e8 7e 76 48 63 c5 49 8b 5c c4 08 b8 01 00 00 00 4d 85 ed 74 05 41 8b 44 ad 00 48 8b 15 b0 >
- RSP: 0018:ffffb880af8db778 EFLAGS: 00010207
- RAX: 0000000000000001 RBX: 0000000000000000 RCX: 0000000000000003
- RDX: ffffe377cc3b0000 RSI: 0000000000000000 RDI: ffffb880af8db8c0
- RBP: 0000000000000000 R08: 000000000000007d R09: 000000000102b86f
- R10: 0000000000000001 R11: 00000000000000ac R12: ffffb880af8db8c0
- R13: 0000000000000000 R14: 0000000000000000 R15: ffff9bd262c97000
- FS:  0000000000000000(0000) GS:ffff9c8efc303000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000034 CR3: 0000000160958004 CR4: 0000000000770ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ceph_writepages_start+0xeb9/0x1410
-
-The crash can be reproduced easily by changing the
-ceph_check_page_before_write() return value to `-E2BIG`.
-
-(Interestingly, the crash happens only if `huge_zero_folio` has
-already been allocated; without `huge_zero_folio`,
-is_huge_zero_folio(NULL) returns true and folios_put_refs() skips NULL
-entries instead of dereferencing them.  That makes reproducing the bug
-somewhat unreliable.  See
-https://lore.kernel.org/20250826231626.218675-1-max.kellermann@ionos.com
-for a discussion of this detail.)
-
-My suggestion is to move the ceph_shift_unused_folios_left() to right
-after ceph_process_folio_batch() to ensure it always gets called to
-fix up the illegal folio_batch state.
-
-Cc: stable@vger.kernel.org
-Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
-Link: https://lore.kernel.org/ceph-devel/aK4v548CId5GIKG1@swift.blarg.de/
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+CC: stable@vger.kernel.org
+Reported-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+Fixes: 13529647743d9 ("spi: microchip-core-qspi: Support per spi-mem operation frequency switches")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Message-ID: <20250825-during-ploy-939bdd068593@spud>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index ded22f066128f..5e0f83adc4590 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1682,6 +1682,7 @@ static int ceph_writepages_start(struct address_space *mapping,
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index bc5e4e4e558a0..2b5271fa870bf 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -486,10 +486,6 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
  
- process_folio_batch:
- 		rc = ceph_process_folio_batch(mapping, wbc, &ceph_wbc);
-+		ceph_shift_unused_folios_left(&ceph_wbc.fbatch);
- 		if (rc)
- 			goto release_folios;
- 
-@@ -1690,8 +1691,6 @@ static int ceph_writepages_start(struct address_space *mapping,
- 			goto release_folios;
- 
- 		if (ceph_wbc.processed_in_fbatch) {
--			ceph_shift_unused_folios_left(&ceph_wbc.fbatch);
+ static bool mchp_coreqspi_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ {
+-	struct mchp_coreqspi *qspi = spi_controller_get_devdata(mem->spi->controller);
+-	unsigned long clk_hz;
+-	u32 baud_rate_val;
 -
- 			if (folio_batch_count(&ceph_wbc.fbatch) == 0 &&
- 			    ceph_wbc.locked_pages < ceph_wbc.max_pages) {
- 				doutc(cl, "reached end fbatch, trying for more\n");
+ 	if (!spi_mem_default_supports_op(mem, op))
+ 		return false;
+ 
+@@ -512,14 +508,6 @@ static bool mchp_coreqspi_supports_op(struct spi_mem *mem, const struct spi_mem_
+ 			return false;
+ 	}
+ 
+-	clk_hz = clk_get_rate(qspi->clk);
+-	if (!clk_hz)
+-		return false;
+-
+-	baud_rate_val = DIV_ROUND_UP(clk_hz, 2 * op->max_freq);
+-	if (baud_rate_val > MAX_DIVIDER || baud_rate_val < MIN_DIVIDER)
+-		return false;
+-
+ 	return true;
+ }
+ 
 -- 
 2.53.0
 
