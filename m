@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6681617BED0;
-	Sat, 17 Oct 2026 17:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD9392829;
+	Sat, 17 Oct 2026 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258628; cv=none; b=efXbMQZZ38SV1EQ+Kzx19mU8wxjsCoeQIbX3fQ7ml/+Z5FqjOqAigz/xTEEDhks6di73JrkdJ/9MgTKJFNeKVHBegOkQQ+igYVmTmui1wLueDUB+FKJwlPheSpam/uHE0DbnltsXf0QJhII4Ax6uDMWtOiQKAaCxG4/dwtjXzgc=
+	t=1792258631; cv=none; b=gwE0IOAhsSz1lwcHP9KPYybIsAXjQGxvSeifkAfdOHRz1M4NjdrKclmKE4LEDg0GzBlzJxe4FxJTWOQTO3q/lfwqOAB8Uh+e5a6kDISG4El7D6bSb0rD+hPKeAsUdhovv3Btd0TjmRjH1xd/ha7mSUltYwhykh06vZkm7J3p79Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258628; c=relaxed/simple;
-	bh=g7UJpycJTSa/lEjrC5n5MfLtxqPDjEEjAcf0c2eaysI=;
+	s=arc-20240116; t=1792258631; c=relaxed/simple;
+	bh=aQfFuN6PRt/yZVzMYsdARtFew5MH+d3ZAQIKvTBUuRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hn8E4FOa60iIjyGsS5j1VajTlfuBXH0TOfbxzEnmKOYlFNt4KoGTJ8vCkxtpWT9QsOgSVotoXTYWyzgf6UJl621pBxdVGkkSdhNNmOvMmvIdGIrpX2zMo8loOpEHo2zKxlsoANWTkZPBT+yIJJ5jViHUx9qvEOTh6zQ/s6vdDBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OR7pKXTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n6iK5RPYsbV3M0UmfkaR9QShYMX045TuYFslj6gZtM7TtMrXJ0OsmIE05p2F0PUqscz0Q48hAu2Jve2w3hpmIafFIAOsf23rNkbjJPUZy6HcqHlUe3kkRLRpHxL4PQZa8y6yKxoBFIFXtuo9g8YAk8D2DWIe91KhD1nDNZHpKFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1/3vAvt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OR7pKXTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527451F000C4;
-	Sat, 17 Oct 2026 17:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1/3vAvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61FCB1F000C4;
+	Sat, 17 Oct 2026 17:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258626;
-	bh=UfZIXFYFI2olp1y8crKDhJxL1s5E+YkZekTRTx7BqMk=;
+	s=korg; t=1792258630;
+	bh=EJUVxg6AU4HR+6imiev2E2VzWkhvPFEtJA+v6WMqHW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OR7pKXTnE+nuqayf8qDzUj7TAZlpZr8fncNqv9j7HljRmclcADY7o8HJfIM5nFLwz
-	 vwVtVZDj/LnwVHs0pLtuFxOakmSlXp+4D1q9KP+OdKRP7sz5tl7o9r9JvT5+PRFkkG
-	 Cxe85ERUE8IsQCrvT6r1OeEZLwPvYKqtW1H87WrI=
+	b=l1/3vAvto7QL53WtIA/l52FyW+U3bAqgoZzFcb1waKjdsitX99fnDoFrixr2lTEUU
+	 noH5KIyjFMZpFVyrjKyakUm6mgO8HvCHTfCtrcNvIwBvPdsH5VObfH2EayDB86ahuC
+	 jYrm4IitOBFpPpTmrXqJ1EsYRmk/hDd+07kfze1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lin <ryan.lin@intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0947/1674] HID: intel-ish-hid: fix NULL-ptr-deref in ishtp_bus_remove_all_clients
-Date: Sat, 17 Oct 2026 17:53:39 +0200
-Message-ID: <20261017160455.441391016@linuxfoundation.org>
+Subject: [PATCH 6.6 0948/1674] iommu/vt-d: Clear Present bit before tearing down PASID entry
+Date: Sat, 17 Oct 2026 17:53:40 +0200
+Message-ID: <20261017160455.465891593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,47 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lin <ryan.lin@intel.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 56f7db581ee73af53cd512e00a6261a025bf1d58 ]
+[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
 
-During a warm reset flow, the cl->device pointer may be NULL if the
-reset occurs while clients are still being enumerated. Accessing
-cl->device->reference_count without a NULL check leads to a kernel panic.
+The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
+bytes). When tearing down an entry, the current implementation zeros the
+entire 64-byte structure immediately using multiple 64-bit writes.
 
-This issue was identified during multi-unit warm reboot stress clycles.
-Add a defensive NULL check for cl->device to ensure stability under
-such intensive testing conditions.
+Since the IOMMU hardware may fetch these 64 bytes using multiple
+internal transactions (e.g., four 128-bit bursts), updating or zeroing
+the entire entry while it is active (P=1) risks a "torn" read. If a
+hardware fetch occurs simultaneously with the CPU zeroing the entry, the
+hardware could observe an inconsistent state, leading to unpredictable
+behavior or spurious faults.
 
-KASAN: null-ptr-deref in range [0000000000000000-0000000000000007]
-Workqueue: ish_fw_update_wq fw_reset_work_fn
+Follow the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
 
-Call Trace:
- ishtp_bus_remove_all_clients+0xbe/0x130 [intel_ishtp]
- ishtp_reset_handler+0x85/0x1a0 [intel_ishtp]
- fw_reset_work_fn+0x8a/0xc0 [intel_ish_ipc]
+1. Clear only the 'Present' (P) bit of the PASID entry.
+2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
+   before proceeding.
+3. Execute the required invalidation sequence (PASID cache, IOTLB, and
+   Device-TLB flush) to ensure the hardware has released all cached
+   references.
+4. Only after the flushes are complete, zero out the remaining fields
+   of the PASID entry.
 
-Fixes: 3703f53b99e4a ("HID: intel_ish-hid: ISH Transport layer")
-Signed-off-by: Ryan Lin <ryan.lin@intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Also, add a dma_wmb() in pasid_set_present() to ensure that all other
+fields of the PASID entry are visible to the hardware before the Present
+bit is set.
+
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ishtp/bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/pasid.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp/bus.c b/drivers/hid/intel-ish-hid/ishtp/bus.c
-index 465c419a1854d..8d00b2816c81f 100644
---- a/drivers/hid/intel-ish-hid/ishtp/bus.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
-@@ -730,7 +730,7 @@ void ishtp_bus_remove_all_clients(struct ishtp_device *ishtp_dev,
- 	spin_lock_irqsave(&ishtp_dev->cl_list_lock, flags);
- 	list_for_each_entry(cl, &ishtp_dev->cl_list, link) {
- 		cl->state = ISHTP_CL_DISCONNECTED;
--		if (warm_reset && cl->device->reference_count)
-+		if (warm_reset && cl->device && cl->device->reference_count)
- 			continue;
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 99589ac3b96bc..5ce46fddcb0ba 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -351,9 +351,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
+  */
+ static inline void pasid_set_present(struct pasid_entry *pe)
+ {
++	dma_wmb();
+ 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
+ }
  
- 		/*
++/*
++ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
++ * This initiates the transition of the entry's ownership from hardware
++ * to software. The caller is responsible for fulfilling the invalidation
++ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
++ * Software for Invalidations).
++ */
++static inline void pasid_clear_present(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[0], 1 << 0, 0);
++	dma_wmb();
++}
++
+ /*
+  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
+  * entry.
+@@ -463,7 +477,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 
+ 	did = pasid_get_domain_id(pte);
+ 	pgtt = pasid_pte_get_pgtt(pte);
+-	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	pasid_clear_present(pte);
+ 	spin_unlock(&iommu->lock);
+ 
+ 	if (!ecap_coherent(iommu->ecap))
+@@ -479,6 +493,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 	/* Device IOTLB doesn't need to be flushed in caching mode. */
+ 	if (!cap_caching_mode(iommu->cap))
+ 		devtlb_invalidation_with_pasid(iommu, dev, pasid);
++
++	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	if (!ecap_coherent(iommu->ecap))
++		clflush_cache_range(pte, sizeof(*pte));
+ }
+ 
+ /*
 -- 
 2.53.0
 
