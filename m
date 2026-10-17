@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0DF17BED0;
-	Sat, 17 Oct 2026 16:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9043515E7;
+	Sat, 17 Oct 2026 16:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253295; cv=none; b=E4H1GlVzPJzsNqO6DP/keRvu/yIk75tXCsZ0pxzHAAVYGVC7LE4OzI6rWt5Xz0SbuC0HgaJUdJNHv6Rigk1hwxPF7vpAL9+2RAlpgvu4SEkcof/T1PfXKmXo2lRYuwSJU8jCNCDXwYFdTl37UJX8Cf6HoYQqzDhkx3cZdonfieU=
+	t=1792253297; cv=none; b=TTwTKdERviybGYeizYqJotf3xAdAfPhl5s0j/Ohu/PhdhTend8DBndD21XjGoZ16PfCdAJPMibEIG1Ek0KBLuC0oStpKpTNUOcXtwD0xhl4GxRxT6L5D8aqUZO3Wp8Qwljvhna4gxA6UHv5gyfguzk0BRxuQSl0egoZIsBdvn9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253295; c=relaxed/simple;
-	bh=j+DH6ABj+C4tfrSdIdNWaof/VX2k57b69NlcXcOgjGg=;
+	s=arc-20240116; t=1792253297; c=relaxed/simple;
+	bh=8hQRHIiMgcz1KCtWvgYblcTTGWsH+8Z9LX3UADfcKtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snjzrHYkfjnbQYOE3cIXSj3IbERlspo9qs6qcuU8mu/vLDd7V9hn/iZ/3JxGnus/fBG+1KoZOEEsbashGRdO+7ehSZHBmgWFzDmS88qChyk5oTiwbVKzBYeqHEMPaLpqeGLpNHOU6GGrtfnV7r5Np7QuMUVmUThsVLVlS2+ZSnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wfa5uJU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bSGOnDRPgmoOantac+a302Zi6U/592X6McThd+ykpzqLll1BJKdzBu7USq/OmG21JJDbeq0sW7PUwb/eEB7FqtBSodqi3T18jpD2R4InmYNKCKK5gBe3XRBoJWFc5/zvc9LyE9o7sqBOC0uGYErNFpCBmr5A0m5uRNC+b0vVARU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqvcDVOS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wfa5uJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B491F000C4;
-	Sat, 17 Oct 2026 16:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqvcDVOS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AAC1F000C5;
+	Sat, 17 Oct 2026 16:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253290;
-	bh=XSa/fBlqAHk9vggjmmEMWtCxWCUOs26qxNan+fYVJYY=;
+	s=korg; t=1792253293;
+	bh=hGcHZUFeqkEhfeZzDvVFXL0WlUt+MOnzbusHW0JleTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1wfa5uJUebecpnZ+56WJSs9GaACZ+wCyL66mYZRzDrsY4acMFhZ0CdW5RFwCfHREb
-	 T7twT1oRcAvT91V3K5a2qaYEtZTNFE6nfXJPBxypHRXqwO1nZmhjztN9c/G/CjVlqS
-	 Pqb7/ZELd5KP5VR/qKK5Pn4F+m5TF5jBaE8oWZMA=
+	b=SqvcDVOS4+9syXEFGFDoieNX293Ffol9i3rfFL46zP56pAVb8awSg603L9hwVLTy4
+	 D/u5v2HouCZs8/5HquTDeCSqI8HiBkYpC+jjZxKdlE8tE5MZzxyStc6RwDdUH3/ry4
+	 3Jqz6ztyf3887FbTyL72b2W6K/l9+5mGf8Y0bPWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/869] drm/vmwgfx: Stop using dev_private to store driver data.
-Date: Sat, 17 Oct 2026 17:47:48 +0200
-Message-ID: <20261017160037.708110592@linuxfoundation.org>
+Subject: [PATCH 6.12 018/869] mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
+Date: Sat, 17 Oct 2026 17:47:39 +0200
+Message-ID: <20261017160037.475693208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,79 +60,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 1b1d5fe66ca591d34c5501aab8f5f09f347e8a3e ]
+[ Upstream commit 838bb60dc21553e32df90f2f3bac5b905376e7aa ]
 
-Currently vmwgfx uses the dev_private opaque pointer in drm_device to store
-driver data in vmw_private struct. Using dev_private is deprecated, and the
-recommendation is to embed struct drm_device in the larger per-device
-structure.
+Patch series "mm/mremap: fix two issues with MREMAP_DONTUNMAP", v2.
 
-The vmwgfx driver already embeds struct drm_device in its struct
-vmw_private, so switch to using that exclusively and stop using
-dev_private.
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
 
-Signed-off-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240502004033.107533-1-maaz.mombasawala@broadcom.com
-Stable-dep-of: 21bc51cb89ce ("drm/vmwgfx: validate pitch coming from userspace")
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
+
+Commit 397432cab17b ("mm/mremap: account mm->locked_vm correctly for
+MREMAP_DONTUNMAP") fixed an accidentally introduced bug around
+mm->locked_vm accounting, but this wasn't the only issue.
+
+And thus history repeats itself, as it turns out that mm->locked_vm
+accounting is broken by MREMAP_DONTUNMAP yet again by two further cases,
+and has been broken ever since the feature was introduced.
+
+Both relate to the fact that VMA_LOCKED_BIT is cleared on the source VMA
+(it has to be as all page tables are moved):
+
+1. If an unfaulted VMA_LOCKONFAULT_BIT anonymous VMA self-merges it
+   clears the VMA_LOCKED_BIT flag and permanently leaks mm->locked_vm
+   pages.
+
+2. If a partial mremap() is performed on a locked VMA there is a leak equal
+   to the number of pages not copied.
+
+(Both for MREMAP_DONTUNMAP operations only)
+
+Both issues can be fixed by treating the source range as distinct from the
+destination range, which is the definition of what MREMAP_DONTUNMAP does
+so is appropriate.
+
+In case 1, simply disallow the self-merge, keeping adjacent source and
+destination VMAs distinct.
+
+In case 2, split the source range ahead of time if the VMA is mlock()'d,
+so accounting is always correct.
+
+Both changes were tested locally and confirmed to fix the issues.
+
+For the purposes of a backport, the fixes are kept distinct, a follow-up
+series can add self-tests.
+
+This patch (of 2):
+
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
+
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
+
+Fix another of these - self-merge.
+
+Self-merge occurs when a VMA is moved in front of or behind itself and the
+attributes of the VMA permit such a merge.
+
+Practically this can only happen for unfaulted anonymous VMAs due to the
+page offset equality requirement for merge:
+
+                           |------------|
+                           |            |
+                           |            v
+        |...........||-----------||...........|
+        |           || unfaulted ||           |
+        |...........||-----------||...........|
+              ^            |
+              |            |
+              |------------|
+
+This becomes problematic if the VMA is configured by the user to
+mlock-on-fault, i.e. the VMA_LOCKED_BIT, VMA_LOCKONFAULT_BIT VMA flags are
+set.
+
+MREMAP_DONTUNMAP clears mlock flags for the source VMA and maintains them
+for the destination VMA.
+
+Self-merge makes this impossible (there is only one VMA) and incorrectly
+clears the destination VMA's mlock flags.
+
+This causes a leak in mm->locked_vm as clearing this flag does not
+decrement the counter and the VMA no longer has VMA_LOCKED_BIT set so it
+is not decremented on unmap.
+
+Resolve this by simply disallowing a self-merge in this case - the source
+and destination VMAs are kept distinct and then are able to have distinct
+mlock() flags.
+
+Update dontunmap_complete() to make the now-redundant self-merge check a
+VM_WARN_ON_ONCE() instead to guard against future regressions.
+
+Also update the VMA userland tests to reflect the change.
+
+Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-0-f388985a0f0a@kernel.org
+Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-1-f388985a0f0a@kernel.org
+Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: translated can_self_merge logic to the inverse faulted_in_anon_vma flag. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.c | 2 --
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h | 2 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 4 ++--
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ mm/mremap.c             |  7 +++++--
+ mm/vma.c                | 17 ++++++++++++++++-
+ mm/vma.h                |  2 +-
+ tools/testing/vma/vma.c |  4 ++--
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-index 2e84e1029732d..1b0b9d2d4e720 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -856,8 +856,6 @@ static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
- 	bool refuse_dma = false;
- 	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 2e717cf938aa6..83c37ad39d345 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -759,7 +759,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 	vma_start_write(vma);
+ 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
+ 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
+-			   &need_rmap_locks);
++			   &need_rmap_locks, flags & MREMAP_DONTUNMAP);
+ 	if (!new_vma) {
+ 		if (vm_flags & VM_ACCOUNT)
+ 			vm_unacct_memory(to_account >> PAGE_SHIFT);
+@@ -820,6 +820,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		untrack_pfn_clear(vma);
  
--	dev_priv->drm.dev_private = dev_priv;
--
- 	vmw_sw_context_init(dev_priv);
+ 	if (unlikely(!err && (flags & MREMAP_DONTUNMAP))) {
++		/* Self-merge is disallowed. */
++		VM_WARN_ON_ONCE(new_vma == vma);
++
+ 		/* We always clear VM_LOCKED[ONFAULT] on the old vma */
+ 		vm_flags_clear(vma, VM_LOCKED_MASK);
  
- 	mutex_init(&dev_priv->cmdbuf_mutex);
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index 4e2807f5f94cf..b21831ef214a6 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -639,7 +639,7 @@ static inline struct vmw_surface *vmw_res_to_srf(struct vmw_resource *res)
+@@ -827,7 +830,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		 * anon_vma links of the old vma is no longer needed after its page
+ 		 * table has been moved.
+ 		 */
+-		if (new_vma != vma && vma->vm_start == old_addr &&
++		if (vma->vm_start == old_addr &&
+ 			vma->vm_end == (old_addr + old_len)) {
+ 			const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
  
- static inline struct vmw_private *vmw_priv(struct drm_device *dev)
+diff --git a/mm/vma.c b/mm/vma.c
+index 55321fe0f7912..b58588cac3aab 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -1641,7 +1641,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma)
+  */
+ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	unsigned long addr, unsigned long len, pgoff_t pgoff,
+-	bool *need_rmap_locks)
++	bool *need_rmap_locks, bool keep_source)
  {
--	return (struct vmw_private *)dev->dev_private;
-+	return container_of(dev, struct vmw_private, drm);
- }
+ 	struct vm_area_struct *vma = *vmap;
+ 	unsigned long vma_start = vma->vm_start;
+@@ -1667,6 +1667,21 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	vmg.vma = NULL; /* New VMA range. */
+ 	vmg.pgoff = pgoff;
+ 	vmg.next = vma_iter_next_rewind(&vmi, NULL);
++
++	/*
++	 * If the original VMA is kept (MREMAP_DONTUNMAP), the source and
++	 * destination VMA must be treated distinctly.
++	 *
++	 * A merge violates this, so in this case disallow a self-merge.
++	 */
++	if (!faulted_in_anon_vma && keep_source) {
++		if (vmg.prev == vma)
++			vmg.prev = NULL;
++		if (vmg.next == vma)
++			vmg.next = NULL;
++		faulted_in_anon_vma = true;
++	}
++
+ 	new_vma = vma_merge_new_range(&vmg);
  
- static inline struct vmw_private *vmw_priv_from_ttm(struct ttm_device *bdev)
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 5f99f7437ae61..800a79e035ed6 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -280,7 +280,7 @@ static void vmw_du_put_cursor_mob(struct vmw_cursor_plane *vcp,
- static int vmw_du_get_cursor_mob(struct vmw_cursor_plane *vcp,
- 				 struct vmw_plane_state *vps)
- {
--	struct vmw_private *dev_priv = vcp->base.dev->dev_private;
-+	struct vmw_private *dev_priv = vmw_priv(vcp->base.dev);
- 	u32 size = vmw_du_cursor_mob_size(vps->base.crtc_w, vps->base.crtc_h);
- 	u32 i;
- 	u32 cursor_max_dim, mob_max_size;
-@@ -519,7 +519,7 @@ void vmw_du_cursor_plane_destroy(struct drm_plane *plane)
- 	struct vmw_cursor_plane *vcp = vmw_plane_to_vcp(plane);
- 	u32 i;
+ 	if (new_vma) {
+diff --git a/mm/vma.h b/mm/vma.h
+index c953d4ade1f0d..7c2932ec62356 100644
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -333,7 +333,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma);
  
--	vmw_cursor_update_position(plane->dev->dev_private, false, 0, 0);
-+	vmw_cursor_update_position(vmw_priv(plane->dev), false, 0, 0);
+ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	unsigned long addr, unsigned long len, pgoff_t pgoff,
+-	bool *need_rmap_locks);
++	bool *need_rmap_locks, bool keep_source);
  
- 	for (i = 0; i < ARRAY_SIZE(vcp->cursor_mobs); i++)
- 		vmw_du_destroy_cursor_mob(&vcp->cursor_mobs[i]);
+ struct anon_vma *find_mergeable_anon_vma(struct vm_area_struct *vma);
+ 
+diff --git a/tools/testing/vma/vma.c b/tools/testing/vma/vma.c
+index 9074aaced9c5a..46edffe9c55ac 100644
+--- a/tools/testing/vma/vma.c
++++ b/tools/testing/vma/vma.c
+@@ -1501,7 +1501,7 @@ static bool test_copy_vma(void)
+ 	/* Move backwards and do not merge. */
+ 
+ 	vma = alloc_and_link_vma(&mm, 0x3000, 0x5000, 3, flags);
+-	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks);
++	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks, false);
+ 
+ 	ASSERT_NE(vma_new, vma);
+ 	ASSERT_EQ(vma_new->vm_start, 0);
+@@ -1514,7 +1514,7 @@ static bool test_copy_vma(void)
+ 
+ 	vma = alloc_and_link_vma(&mm, 0, 0x2000, 0, flags);
+ 	vma_next = alloc_and_link_vma(&mm, 0x6000, 0x8000, 6, flags);
+-	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks);
++	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks, false);
+ 
+ 	ASSERT_EQ(vma_new, vma_next);
+ 
 -- 
 2.53.0
 
