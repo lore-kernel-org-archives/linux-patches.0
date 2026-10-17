@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4D63AA4F1;
-	Sat, 17 Oct 2026 16:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA133A9870;
+	Sat, 17 Oct 2026 16:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254904; cv=none; b=qb+KFzRhCtuLRuHFCpEDmj9irYWxcIHmFWxJwLxXkSLg52bd3lR0E257HOENRzW/0V/Z2zlVf+yXn3BVz4PPFYm9VlZTQLb70wNR456D6wrn9Q9cxeRoQxI4Our4uX+AJabt0NGyZ4vn/h9ZGxdSTYnx07Dhxq6tVnwO1evLa7I=
+	t=1792254907; cv=none; b=dl/VufxoC/4lmNvaZMn6r1XRMQfilvucfeSwyjCB5hkO3Kmzc/PRhHusJ7rO9s1LkI6++RE5rmBmfshDCHNZTGEEOgbVskihE2hIFOa1uZ3RRq3f67SsWJ/rSkY9IZHUJNtfsB6euuLUgSa2lzD+0kk/Kd0CKqSm0+6Oetr8jwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254904; c=relaxed/simple;
-	bh=+BcTQ139Q966FJOaGy8mnHoFx/x6nQ8HpyuINuQIZ6c=;
+	s=arc-20240116; t=1792254907; c=relaxed/simple;
+	bh=Vv9A/CQNnV9hA1eWrQBi7uY8VQULBbBA1vCm2+rTJH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dUauIQHnL2ld9dVPSlCEW5e0dyJNeWmBQ0LhedgEE6mq76C0piuqaV5eKjwP3k3pDRHS2MzQNh/Yxbi1L+oLJknJQwMkz8Gv0BAp72HJik809dypAvOBTiePV1XeGWV6sejzo5hu9PofbzGC7qmp9G1bXGR7xa2etghNbY3YmVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRKL77qo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VuapjYCSVlprYsU/RFLHPzGJq5pjurLDgrJjMtgeb/8BTxdivCzoQRi7bXu5DrGgcK+4mOZnwnMy6WL3Cz1QLTRXOXmHxDrfLOhne/3Ide6TJf1Fug3MRx1AKDSyQ7A450MWzcXWReRPNOBXb1rL+1bTMKT9fNUGYh1O71sMF8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiNTIWZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRKL77qo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F6B1F000C6;
-	Sat, 17 Oct 2026 16:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiNTIWZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CC11F000C4;
+	Sat, 17 Oct 2026 16:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254903;
-	bh=2FP6wr2LRI+8grclvEvXXg2TpGghv1xwl4EDRApUo58=;
+	s=korg; t=1792254906;
+	bh=0snXyyyf3zTz5EW68BruLef1loaafmLUbYwG1yHt8fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hRKL77qouOvfvjfF369wVNUuNEZzJWY+ZiZ2FWcnfSRwRPn+FCMViBf4jXQUwmvIx
-	 qqX2RwJYJbPDm3bimT96/0OYlD9bKlqwFcSroDPvbWJT5nHdKSyl69bGeCKnoxEyJJ
-	 vawy5oSpbAlerF0gccSOCTvL2bS1/JtCc4FpRSas=
+	b=CiNTIWZo6xexQPye0QsJ14KHVoR3B/wfEc/JXWul55xKcnaeIoL5SW3uaNiwzXuZl
+	 6tZiD8ZpfrtAxXnAuTJc5D1vAHtik2mMVsZg32xxr3OyUpA7ioZnGb5zEztlMJKQRR
+	 qd6B3q4ImRUG+Shum/j+7q2JN86Y6CygHrbaSENA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 598/869] net_sched: sch_fq: add three drop_reason
-Date: Sat, 17 Oct 2026 17:57:19 +0200
-Message-ID: <20261017160052.376712508@linuxfoundation.org>
+Subject: [PATCH 6.12 599/869] net/sched: add qstats_cpu_drop_inc() helper
+Date: Sat, 17 Oct 2026 17:57:20 +0200
+Message-ID: <20261017160052.400092685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -48,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -57,177 +54,244 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5765c7f6e3173eb894889a29963a497aeb721c5e ]
+[ Upstream commit 3f3aa77ff1c8b45ec8c9e40212f1a24a93e00df3 ]
 
-Add three new drop_reason, more precise than generic QDISC_DROP:
+1) Using this_cpu_inc() is better than going through this_cpu_ptr():
 
-"tc -s qd" show aggregate counters, it might be more useful
-to use drop_reason infrastructure for bug hunting.
+- Single instruction on x86.
+- Store tearing prevention.
 
-1) SKB_DROP_REASON_FQ_BAND_LIMIT
-   Whenever a packet is added while its band limit is hit.
-   Corresponding value in "tc -s qd" is bandX_drops XXXX
+2) Change tcf_action_update_stats() to use this_cpu_add().
 
-2) SKB_DROP_REASON_FQ_HORIZON_LIMIT
-   Whenever a packet has a timestamp too far in the future.
-   Corresponding value in "tc -s qd" is horizon_drops XXXX
+3) Add WRITE_ONCE() to __qdisc_qstats_drop() and qstats_drop_inc()
+   in preparation for lockless "tc qdisc show".
 
-3) SKB_DROP_REASON_FQ_FLOW_LIMIT
-   Whenever a flow has reached its limit.
-   Corresponding value in "tc -s qd" is flows_plimit XXXX
-
-Tested:
-tc qd replace dev eth1 root fq flow_limit 10 limit 100000
-perf record -a -e skb:kfree_skb sleep 1; perf script
-
-      udp_stream   12329 [004]   216.929492: skb:kfree_skb: skbaddr=0xffff888eabe17e00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
-      udp_stream   12385 [006]   216.929593: skb:kfree_skb: skbaddr=0xffff888ef8827f00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
-      udp_stream   12389 [005]   216.929871: skb:kfree_skb: skbaddr=0xffff888ecb9ba500 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
-      udp_stream   12316 [009]   216.930398: skb:kfree_skb: skbaddr=0xffff888eca286b00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
-      udp_stream   12400 [008]   216.930490: skb:kfree_skb: skbaddr=0xffff888eabf93d00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
-
-tc qd replace dev eth1 root fq flow_limit 100 limit 10000
-perf record -a -e skb:kfree_skb sleep 1; perf script
-
-      udp_stream   18074 [001]  1058.318040: skb:kfree_skb: skbaddr=0xffffa23c881fc000 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
-      udp_stream   18126 [005]  1058.320651: skb:kfree_skb: skbaddr=0xffffa23c6aad4000 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
-      udp_stream   18118 [006]  1058.321065: skb:kfree_skb: skbaddr=0xffffa23df0d48a00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
-      udp_stream   18074 [001]  1058.321126: skb:kfree_skb: skbaddr=0xffffa23c881ffa00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
-      udp_stream   15815 [003]  1058.321224: skb:kfree_skb: skbaddr=0xffffa23c9835db00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
-
-tc -s -d qd sh dev eth1
-qdisc fq 8023: root refcnt 257 limit 10000p flow_limit 100p buckets 1024 orphan_mask 1023
- bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1 weights 589824 196608 65536 quantum 18Kb
- initial_quantum 92120b low_rate_threshold 550Kbit refill_delay 40ms
- timer_slack 10us horizon 10s horizon_drop
- Sent 492439603330 bytes 336953991 pkt (dropped 61724094, overlimits 0 requeues 4463)
- backlog 14611228b 9995p requeues 4463
-  flows 2965 (inactive 1151 throttled 0) band0_pkts 0 band1_pkts 9993 band2_pkts 0
-  gc 6347 highprio 0 fastpath 30 throttled 5 latency 2.32us flows_plimit 7403693
- band1_drops 54320401
+$ scripts/bloat-o-meter -t vmlinux.old vmlinux.new
+add/remove: 0/0 grow/shrink: 3/17 up/down: 72/-216 (-144)
+Function                                     old     new   delta
+dualpi2_enqueue_skb                          462     511     +49
+tcf_ife_act                                 1061    1077     +16
+taprio_enqueue                               613     620      +7
+codel_qdisc_enqueue                          149     143      -6
+tcf_vlan_act                                 684     676      -8
+tcf_skbedit_act                              626     618      -8
+tcf_police_act                               725     717      -8
+tcf_mpls_act                                1297    1289      -8
+tcf_gate_act                                 310     302      -8
+tcf_gact_act                                 222     214      -8
+tcf_csum_act                                2438    2430      -8
+tcf_bpf_act                                  709     701      -8
+tcf_action_update_stats                      124     115      -9
+pie_qdisc_enqueue                            865     856      -9
+pfifo_enqueue                                116     107      -9
+choke_enqueue                               2069    2059     -10
+plug_enqueue                                 139     128     -11
+bfifo_enqueue                                121     110     -11
+tcf_nat_act                                 1501    1489     -12
+gred_enqueue                                1743    1668     -75
+Total: Before=24388609, After=24388465, chg -0.00%
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20241204171950.89829-1-edumazet@google.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260501135916.2566766-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 5b483f7791b0 ("net/sched: act_ife: Only operate on Ethernet frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dropreason-core.h | 18 ++++++++++++++++++
- include/net/sch_generic.h     |  8 ++++++++
- net/sched/sch_fq.c            | 14 ++++++++++----
- 3 files changed, 36 insertions(+), 4 deletions(-)
+ include/net/act_api.h     | 2 +-
+ include/net/sch_generic.h | 9 +++++++--
+ net/sched/act_api.c       | 2 +-
+ net/sched/act_bpf.c       | 2 +-
+ net/sched/act_ife.c       | 8 ++++----
+ net/sched/act_mpls.c      | 2 +-
+ net/sched/act_police.c    | 2 +-
+ net/sched/act_skbedit.c   | 2 +-
+ net/sched/sch_cake.c      | 2 +-
+ net/sched/sch_fq_codel.c  | 2 +-
+ net/sched/sch_gred.c      | 2 +-
+ 11 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index f8f4d2b77e6ac..31e0cc1b64ff1 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -60,6 +60,9 @@
- 	FN(TC_EGRESS)			\
- 	FN(SECURITY_HOOK)		\
- 	FN(QDISC_DROP)			\
-+	FN(FQ_BAND_LIMIT)		\
-+	FN(FQ_HORIZON_LIMIT)		\
-+	FN(FQ_FLOW_LIMIT)		\
- 	FN(CPU_BACKLOG)			\
- 	FN(XDP)				\
- 	FN(TC_INGRESS)			\
-@@ -316,6 +319,21 @@ enum skb_drop_reason {
- 	 * failed to enqueue to current qdisc)
- 	 */
- 	SKB_DROP_REASON_QDISC_DROP,
-+	/**
-+	 * @SKB_DROP_REASON_FQ_BAND_LIMIT: dropped by fq qdisc when per band
-+	 * limit is reached.
-+	 */
-+	SKB_DROP_REASON_FQ_BAND_LIMIT,
-+	/**
-+	 * @SKB_DROP_REASON_FQ_HORIZON_LIMIT: dropped by fq qdisc when packet
-+	 * timestamp is too far in the future.
-+	 */
-+	SKB_DROP_REASON_FQ_HORIZON_LIMIT,
-+	/**
-+	 * @SKB_DROP_REASON_FQ_FLOW_LIMIT: dropped by fq qdisc when a flow
-+	 * exceeds its limits.
-+	 */
-+	SKB_DROP_REASON_FQ_FLOW_LIMIT,
- 	/**
- 	 * @SKB_DROP_REASON_CPU_BACKLOG: failed to enqueue the skb to the per CPU
- 	 * backlog queue. This can be caused by backlog queue full (see
+diff --git a/include/net/act_api.h b/include/net/act_api.h
+index 76c31ce80fe52..29b72635abe71 100644
+--- a/include/net/act_api.h
++++ b/include/net/act_api.h
+@@ -238,7 +238,7 @@ static inline void tcf_action_update_bstats(struct tc_action *a,
+ static inline void tcf_action_inc_drop_qstats(struct tc_action *a)
+ {
+ 	if (likely(a->cpu_qstats)) {
+-		qstats_drop_inc(this_cpu_ptr(a->cpu_qstats));
++		qstats_cpu_drop_inc(a->cpu_qstats);
+ 		return;
+ 	}
+ 	spin_lock(&a->tcfa_lock);
 diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index d174283373470..016d9cf827069 100644
+index 016d9cf827069..5f83b4970f792 100644
 --- a/include/net/sch_generic.h
 +++ b/include/net/sch_generic.h
-@@ -1320,6 +1320,14 @@ static inline int qdisc_drop(struct sk_buff *skb, struct Qdisc *sch,
- 	return NET_XMIT_DROP;
+@@ -976,12 +976,17 @@ static inline void qdisc_qstats_cpu_requeues_inc(struct Qdisc *sch)
+ 
+ static inline void __qdisc_qstats_drop(struct Qdisc *sch, int count)
+ {
+-	sch->qstats.drops += count;
++	WRITE_ONCE(sch->qstats.drops, sch->qstats.drops + count);
  }
  
-+static inline int qdisc_drop_reason(struct sk_buff *skb, struct Qdisc *sch,
-+				    struct sk_buff **to_free,
-+				    enum skb_drop_reason reason)
-+{
-+	tcf_set_drop_reason(skb, reason);
-+	return qdisc_drop(skb, sch, to_free);
+ static inline void qstats_drop_inc(struct gnet_stats_queue *qstats)
+ {
+-	qstats->drops++;
++	WRITE_ONCE(qstats->drops, qstats->drops + 1);
 +}
 +
- static inline int qdisc_drop_all(struct sk_buff *skb, struct Qdisc *sch,
- 				 struct sk_buff **to_free)
- {
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index d06e12d16b0e5..cf70468b67607 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -535,6 +535,8 @@ static bool fq_packet_beyond_horizon(const struct sk_buff *skb,
- 	return unlikely((s64)skb->tstamp > (s64)(now + q->horizon));
++static inline void qstats_cpu_drop_inc(struct gnet_stats_queue __percpu *qstats)
++{
++	this_cpu_inc(qstats->drops);
  }
  
-+#define FQDR(reason) SKB_DROP_REASON_FQ_##reason
-+
- static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		      struct sk_buff **to_free)
- {
-@@ -546,7 +548,8 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	band = fq_prio2band(q->prio2band, skb->priority & TC_PRIO_MAX);
- 	if (unlikely(q->band_pkt_count[band] >= sch->limit)) {
- 		q->stat_band_drops[band]++;
--		return qdisc_drop(skb, sch, to_free);
-+		return qdisc_drop_reason(skb, sch, to_free,
-+					 FQDR(BAND_LIMIT));
+ static inline void qstats_overlimit_inc(struct gnet_stats_queue *qstats)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index ca851146f6958..94feb3961dcd2 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1570,7 +1570,7 @@ void tcf_action_update_stats(struct tc_action *a, u64 bytes, u64 packets,
+ 	if (a->cpu_bstats) {
+ 		_bstats_update(this_cpu_ptr(a->cpu_bstats), bytes, packets);
+ 
+-		this_cpu_ptr(a->cpu_qstats)->drops += drops;
++		this_cpu_add(a->cpu_qstats->drops, drops);
+ 
+ 		if (hw)
+ 			_bstats_update(this_cpu_ptr(a->cpu_bstats_hw),
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index e99b9269ea1a9..06d8f78b73683 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -76,7 +76,7 @@ TC_INDIRECT_SCOPE int tcf_bpf_act(struct sk_buff *skb,
+ 		break;
+ 	case TC_ACT_SHOT:
+ 		action = filter_res;
+-		qstats_drop_inc(this_cpu_ptr(prog->common.cpu_qstats));
++		qstats_cpu_drop_inc(prog->common.cpu_qstats);
+ 		break;
+ 	case TC_ACT_UNSPEC:
+ 		action = prog->tcf_action;
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index a90d7959fc432..3333714b68650 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -727,7 +727,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 
+ 	tlv_data = ife_decode(skb, &metalen);
+ 	if (unlikely(!tlv_data)) {
+-		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
++		qstats_cpu_drop_inc(ife->common.cpu_qstats);
+ 		return TC_ACT_SHOT;
  	}
  
- 	now = ktime_get_ns();
-@@ -556,8 +559,9 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* Check if packet timestamp is too far in the future. */
- 		if (fq_packet_beyond_horizon(skb, q, now)) {
- 			if (q->horizon_drop) {
--					q->stat_horizon_drops++;
--					return qdisc_drop(skb, sch, to_free);
-+				q->stat_horizon_drops++;
-+				return qdisc_drop_reason(skb, sch, to_free,
-+							 FQDR(HORIZON_LIMIT));
- 			}
- 			q->stat_horizon_caps++;
- 			skb->tstamp = now + q->horizon;
-@@ -570,7 +574,8 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	if (f != &q->internal) {
- 		if (unlikely(f->qlen >= q->flow_plimit)) {
- 			q->stat_flows_plimit++;
--			return qdisc_drop(skb, sch, to_free);
-+			return qdisc_drop_reason(skb, sch, to_free,
-+						 FQDR(FLOW_LIMIT));
+@@ -740,7 +740,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 		curr_data = ife_tlv_meta_decode(tlv_data, ifehdr_end, &mtype,
+ 						&dlen, NULL);
+ 		if (!curr_data) {
+-			qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
++			qstats_cpu_drop_inc(ife->common.cpu_qstats);
+ 			return TC_ACT_SHOT;
  		}
  
- 		if (fq_flow_is_detached(f)) {
-@@ -595,6 +600,7 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+@@ -755,7 +755,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 	}
  
- 	return NET_XMIT_SUCCESS;
+ 	if (WARN_ON(tlv_data != ifehdr_end)) {
+-		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
++		qstats_cpu_drop_inc(ife->common.cpu_qstats);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+@@ -821,7 +821,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	 * so lets be conservative.. */
+ 	if ((action == TC_ACT_SHOT) || exceed_mtu) {
+ drop:
+-		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
++		qstats_cpu_drop_inc(ife->common.cpu_qstats);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
+index 44a37a71ae923..24d9cb7c1c4db 100644
+--- a/net/sched/act_mpls.c
++++ b/net/sched/act_mpls.c
+@@ -125,7 +125,7 @@ TC_INDIRECT_SCOPE int tcf_mpls_act(struct sk_buff *skb,
+ 	return ret;
+ 
+ drop:
+-	qstats_drop_inc(this_cpu_ptr(m->common.cpu_qstats));
++	qstats_cpu_drop_inc(m->common.cpu_qstats);
+ 	return TC_ACT_SHOT;
  }
-+#undef FQDR
  
- static void fq_check_throttled(struct fq_sched_data *q, u64 now)
- {
+diff --git a/net/sched/act_police.c b/net/sched/act_police.c
+index 1ad8a79486902..098eddcd36b6c 100644
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -317,7 +317,7 @@ TC_INDIRECT_SCOPE int tcf_police_act(struct sk_buff *skb,
+ 	qstats_overlimit_inc(this_cpu_ptr(police->common.cpu_qstats));
+ inc_drops:
+ 	if (ret == TC_ACT_SHOT)
+-		qstats_drop_inc(this_cpu_ptr(police->common.cpu_qstats));
++		qstats_cpu_drop_inc(police->common.cpu_qstats);
+ end:
+ 	return ret;
+ }
+diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
+index 4cddf2674373f..c52f25e0c0a09 100644
+--- a/net/sched/act_skbedit.c
++++ b/net/sched/act_skbedit.c
+@@ -85,7 +85,7 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
+ 	return params->action;
+ 
+ err:
+-	qstats_drop_inc(this_cpu_ptr(d->common.cpu_qstats));
++	qstats_cpu_drop_inc(d->common.cpu_qstats);
+ 	return TC_ACT_SHOT;
+ }
+ 
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index 7eb3e7485539f..a60aae42398a3 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1824,7 +1824,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 		if (ack) {
+ 			b->ack_drops++;
+-			sch->qstats.drops++;
++			qdisc_qstats_drop(sch);
+ 			ack_pkt_len = qdisc_pkt_len(ack);
+ 			b->bytes += ack_pkt_len;
+ 			q->buffer_used += skb->truesize - ack->truesize;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 4da7525c3e7cf..d41a55863d165 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -175,7 +175,7 @@ static unsigned int fq_codel_drop(struct Qdisc *sch, unsigned int max_packets,
+ 	flow->cvars.count += i;
+ 	q->backlogs[idx] -= len;
+ 	q->memory_usage -= mem;
+-	sch->qstats.drops += i;
++	__qdisc_qstats_drop(sch, i);
+ 	sch->qstats.backlog -= len;
+ 	sch->q.qlen -= i;
+ 	return idx;
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index 53b348b83c913..26103178a4ce4 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -389,7 +389,7 @@ static int gred_offload_dump_stats(struct Qdisc *sch)
+ 		packets += u64_stats_read(&hw_stats->stats.bstats[i].packets);
+ 		sch->qstats.qlen += hw_stats->stats.qstats[i].qlen;
+ 		sch->qstats.backlog += hw_stats->stats.qstats[i].backlog;
+-		sch->qstats.drops += hw_stats->stats.qstats[i].drops;
++		__qdisc_qstats_drop(sch, hw_stats->stats.qstats[i].drops);
+ 		sch->qstats.requeues += hw_stats->stats.qstats[i].requeues;
+ 		sch->qstats.overlimits += hw_stats->stats.qstats[i].overlimits;
+ 	}
 -- 
 2.53.0
 
