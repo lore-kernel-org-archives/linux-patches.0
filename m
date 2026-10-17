@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E3838654F;
-	Sat, 17 Oct 2026 16:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E453148B4;
+	Sat, 17 Oct 2026 16:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253916; cv=none; b=Le7hfVbpG7LHFhhHu3kzPUpwMGMjivyK3azDU2RuvaGKBPvDT+0kbssB1SJdx0OXcv5xEKKINlkBsMMoP/UM3yC5BPO7t9jMUnHCPzjkiK4lBUf/edw5srf/n5neaT1/1SVD34wnwezEF3EDwbuz3ge05M4mcYik8wQN5xDkvAY=
+	t=1792253919; cv=none; b=pTXUZZuEndbLDau6cHh+BAk19b13Kuw5H+mFxazbXDgcKKtLXHUZnFy+XFv9jHhHT9SOQNmYrJKarFlZL3MDv+VjZfjeTZCvHTecnASq9AW/ZnWpB0fHnE75iZ06mB1WQU3mRwTJzNPVne2y5JoKXAeD1n/eOFja1tVW3CvBZu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253916; c=relaxed/simple;
-	bh=CJX2NC+acQfQPpgRL0Vds0/Mifo1mGaU5r/8ulY1nrg=;
+	s=arc-20240116; t=1792253919; c=relaxed/simple;
+	bh=wcVDJvcGdKOdaetp8SFmenRchLA1rFN9FCABqKT8wZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgR1CoBQ3dteMVjlkHg8Y/hwwBHT5tgOxAxX4LgLpiPMU502IzaWt0ZGHzoU14zU8BT9kFNPeLiUKb37OsP+2DKQ8m4PzDmgbfAM473/tk/UVRuqBMBzJmA6rgyX1+ZE5Jr2pgmmsSBri+eW+9o4J4L2yrJOvX5cEMPqNIOimoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSVr2lP/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AiQIYeOLRrZQCTfk64r8og0mF4EQWT9zuAl5jM+MZxOB7f/z3Hbq7ZsOrGiFSYl7tcq7lR+Pe8BWwrMuu+q4Q5xqFC5BA7CjwZef08VwSZcb7wZ9Ehe4g4djlRMNmT1UizYJ5BpLtmczmaOX57GjbfUVvg5e76wFzBMmZT3Ff9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+Xu4BPE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSVr2lP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820091F000C4;
-	Sat, 17 Oct 2026 16:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+Xu4BPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD9A1F000C4;
+	Sat, 17 Oct 2026 16:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253915;
-	bh=HBThgxXK8iUlC6IY16jliO3+FaQBg2ZauWk3BK65J9A=;
+	s=korg; t=1792253918;
+	bh=gLmjPi1ENA/EZ2XNTJu3Ojk1QWGE5EDl3sSlFf2ciYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSVr2lP/HmKoVWdMr1oeaDL2fZIsVgD1BQLn4EsKAKRBCpORs403LW3t+axCApsiR
-	 IHt/bs7Ot9ZkrIgTELTTyivi1Jv0XtnWdl9NSjlIOs4OYbSc/vsjQBc+ZmmAnXH5yX
-	 PYmIh7419NoP0xcuNhNKDPqgUnR7a0BLfD74BmLY=
+	b=p+Xu4BPEi/qjSmmL80Svd8yg1fYh7F+s1nUtY52rMpenEzZGnPSCX6/bXZFGX+Nkr
+	 pQphzQmrmwlXlKUbM2AsSsehpZsHB0ykAKh+R2tYd/4Nusi5bezWgSgnSnujdPVnGM
+	 6IQu6s035voq5+0aDtnW+hCvPFoQY+RG6JJkwzM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jie Zhang <jie.zhang@analog.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 274/869] net: stmmac: fix oops when split header is enabled
-Date: Sat, 17 Oct 2026 17:51:55 +0200
-Message-ID: <20261017160044.093840993@linuxfoundation.org>
+Subject: [PATCH 6.12 275/869] drm/exynos: vidi: use priv->vidi_dev for ctx lookup in vidi_connection_ioctl()
+Date: Sat, 17 Oct 2026 17:51:56 +0200
+Message-ID: <20261017160044.118732560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,77 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jzhang918@gmail.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit babab1b42ed68877ef669a08384becf281ad2582 ]
+[ Upstream commit d3968a0d85b211e197f2f4f06268a7031079e0d0 ]
 
-For GMAC4, when split header is enabled, in some rare cases, the
-hardware does not fill buf2 of the first descriptor with payload.
-Thus we cannot assume buf2 is always fully filled if it is not
-the last descriptor. Otherwise, the length of buf2 of the second
-descriptor will be calculated wrong and cause an oops:
+vidi_connection_ioctl() retrieves the driver_data from drm_dev->dev to
+obtain a struct vidi_context pointer. However, drm_dev->dev is the
+exynos-drm master device, and the driver_data contained therein is not
+the vidi component device, but a completely different device.
 
-Unable to handle kernel paging request at virtual address ffff00019246bfc0
-...
-x2 : 0000000000000040 x1 : ffff00019246bfc0 x0 : ffff00009246c000
-Call trace:
- dcache_inval_poc+0x28/0x58 (P)
- dma_direct_sync_single_for_cpu+0x38/0x6c
- __dma_sync_single_for_cpu+0x34/0x6c
- stmmac_napi_poll_rx+0x8f0/0xb60
- __napi_poll.constprop.0+0x30/0x144
- net_rx_action+0x160/0x274
- handle_softirqs+0x1b8/0x1fc
-...
+This can lead to various bugs, ranging from null pointer dereferences and
+garbage value accesses to, in unlucky cases, out-of-bounds errors,
+use-after-free errors, and more.
 
-To fix this, the PL bit-field in RDES3 register is used for all
-descriptors, whether it is the last descriptor or not.
+To resolve this issue, we need to store/delete the vidi device pointer in
+exynos_drm_private->vidi_dev during bind/unbind, and then read this
+exynos_drm_private->vidi_dev within ioctl() to obtain the correct
+struct vidi_context pointer.
 
-Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jie Zhang <jie.zhang@analog.com>
-Link: https://patch.msgid.link/20260209225037.589130-1-jie.zhang@analog.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_drv.h  |  1 +
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 14 +++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 91c07c04435f2..dfab95896adde 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4903,13 +4903,27 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
- 	if (!priv->sph)
- 		return 0;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.h b/drivers/gpu/drm/exynos/exynos_drm_drv.h
+index 23646e55f142c..06c29ff2aac0e 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_drv.h
++++ b/drivers/gpu/drm/exynos/exynos_drm_drv.h
+@@ -199,6 +199,7 @@ struct drm_exynos_file_private {
+ struct exynos_drm_private {
+ 	struct device *g2d_dev;
+ 	struct device *dma_dev;
++	struct device *vidi_dev;
+ 	void *mapping;
  
--	/* Not last descriptor */
--	if (status & rx_not_ls)
-+	/* For GMAC4, when split header is enabled, in some rare cases, the
-+	 * hardware does not fill buf2 of the first descriptor with payload.
-+	 * Thus we cannot assume buf2 is always fully filled if it is not
-+	 * the last descriptor. Otherwise, the length of buf2 of the second
-+	 * descriptor will be calculated wrong and cause an oops.
-+	 *
-+	 * If this is the last descriptor, 'plen' is the length of the
-+	 * received packet that was transferred to system memory.
-+	 * Otherwise, it is the accumulated number of bytes that have been
-+	 * transferred for the current packet.
-+	 *
-+	 * Thus 'plen - len' always gives the correct length of buf2.
-+	 */
+ 	/* for atomic commit */
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 8400330dfe3eb..684170f44989e 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -231,9 +231,14 @@ ATTRIBUTE_GROUPS(vidi);
+ int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
+ 				struct drm_file *file_priv)
+ {
+-	struct vidi_context *ctx = dev_get_drvdata(drm_dev->dev);
++	struct exynos_drm_private *priv = drm_dev->dev_private;
++	struct device *dev = priv ? priv->vidi_dev : NULL;
++	struct vidi_context *ctx = dev ? dev_get_drvdata(dev) : NULL;
+ 	struct drm_exynos_vidi_connection *vidi = data;
+ 
++	if (!ctx)
++		return -ENODEV;
 +
-+	/* Not GMAC4 and not last descriptor */
-+	if (!priv->plat->has_gmac4 && (status & rx_not_ls))
- 		return priv->dma_conf.dma_buf_sz;
+ 	if (!vidi) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev,
+ 				  "user data for vidi is null.\n");
+@@ -407,6 +412,7 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
+ {
+ 	struct vidi_context *ctx = dev_get_drvdata(dev);
+ 	struct drm_device *drm_dev = data;
++	struct exynos_drm_private *priv = drm_dev->dev_private;
+ 	struct drm_encoder *encoder = &ctx->encoder;
+ 	struct exynos_drm_plane *exynos_plane;
+ 	struct exynos_drm_plane_config plane_config = { 0 };
+@@ -414,6 +420,8 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
+ 	int ret;
  
-+	/* GMAC4 or last descriptor */
- 	plen = stmmac_get_rx_frame_len(priv, p, coe);
+ 	ctx->drm_dev = drm_dev;
++	if (priv)
++		priv->vidi_dev = dev;
  
--	/* Last descriptor */
- 	return plen - len;
+ 	plane_config.pixel_formats = formats;
+ 	plane_config.num_pixel_formats = ARRAY_SIZE(formats);
+@@ -459,8 +467,12 @@ static int vidi_bind(struct device *dev, struct device *master, void *data)
+ static void vidi_unbind(struct device *dev, struct device *master, void *data)
+ {
+ 	struct vidi_context *ctx = dev_get_drvdata(dev);
++	struct drm_device *drm_dev = data;
++	struct exynos_drm_private *priv = drm_dev->dev_private;
+ 
+ 	del_timer_sync(&ctx->timer);
++	if (priv)
++		priv->vidi_dev = NULL;
  }
  
+ static const struct component_ops vidi_component_ops = {
 -- 
 2.53.0
 
