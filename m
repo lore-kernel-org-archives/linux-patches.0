@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1003C7E1D;
-	Sat, 17 Oct 2026 16:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EAE3B71C9;
+	Sat, 17 Oct 2026 16:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255562; cv=none; b=LVZbumcuP/RZjUrDp8toKA6+oH2Sxr2ZyBXEREi+0Zx6cXCyitR7pGEBDlv595MUNn8UIfXrZKKTF6B0EMWFDsLQzN0BpAWH21Fv2vpcWaN+hNCuYble0nLQ5SWyBTO763dv5c3WBzQL0Hw0pSR25LgBkFbBrn6Ik0Ag1K7Zg6I=
+	t=1792255566; cv=none; b=iVhAXZRKNgVRnsCStMas8S8V49cSQtmLSDYSI9p5HKNRelZlIljOYW5v/jJ4Jj0BsqQHRhvlN/2OgFA2k5KiBmt/MXpYwkm7T4npF1x3bLVI9LGDErfTY0ObmYq8B8Z2ysECzbe94TenhYtMFrudwmpQKRliJVYYoa7CNJ23ZjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255562; c=relaxed/simple;
-	bh=hqWU/vloKjS03gMAoWlwoK/L1y2C6SgXSuEbPfxzQE4=;
+	s=arc-20240116; t=1792255566; c=relaxed/simple;
+	bh=Cmrt9Xf524pxzaQdwQnSdgokbx4DRynVUk5eUse0ccE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8HVvqTZAYVW8kczHAyu6GGqGszmv1UZSHlCXw45kcHwgFeRYJRGMhmNpccbinIUhAPfweNwXRYFH6Wkvgo7zZLr0/AKbRTn0ISIFtIgpl1axUUNixNDHrj2w12o70+7GSo9zLN7EJYV/w0gqVKRqBLgGaK2Ejqz3WCDfVc5PF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evj0ll8p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nVmVh4NsrBA6lk4tKyekICeJpGusesH69Qq9nYHpAGEyVpttEOChQi4r/DawMQe5CovVeQtfJwn24e8UfGxql4oUkNxzSkUpLvy+DMcjhP3VPIrXoy09H015qW4Todsns79mJ/9hyDKTnKqDUJA09vO47t34kfufEMPAW9Pvrz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eS1gUWpP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evj0ll8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A412B1F000C7;
-	Sat, 17 Oct 2026 16:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS1gUWpP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B6E1F000C4;
+	Sat, 17 Oct 2026 16:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255561;
-	bh=S26IWwn3OOtrde4xddvRjr3v0UMboDuhYwT+VgdNh8A=;
+	s=korg; t=1792255565;
+	bh=GrfxMwQFF3SENSCWXHfoDdZFQHmBlQPfL1BONwe/994=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evj0ll8pm2UDhZFdcigZtjEOyeJwhiHLZhPwmz96Mh0hUn+Y2YMODdk9R8MLm74dA
-	 SfvaTnGqAlM3UJkMcaCqRPQxKwvNuFLlOqpDD9Ir14fMBPK5D2fdE3biO1u6wmPV3N
-	 LwoOaDryMflXqaI+T5+WdBcT7dHAWQjmFwAlgVXc=
+	b=eS1gUWpPRbRZgZArZGOK3yQcu+LO11Wguooy/7bQCGFNr54QAhezwdmJst6PbWpd5
+	 IHgIkVq1vQtPVb0suRWaKnOpxRgz6BI57WcVHfZu3gGr7kVj+T7GMAcjbCShAXLeqY
+	 APDceQ2jZjmfGsM1XQB+6WVe7MhqhsEIRa4Of964=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 817/869] i3c: master: Fix recursive locking during device registration
-Date: Sat, 17 Oct 2026 18:00:58 +0200
-Message-ID: <20261017160057.838156916@linuxfoundation.org>
+Subject: [PATCH 6.12 818/869] xfs: remove unused trace event xfs_dqreclaim_dirty
+Date: Sat, 17 Oct 2026 18:00:59 +0200
+Message-ID: <20261017160057.860844527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,154 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 456f832e5fc26fbfd3b8200fd4553eee520cc377 ]
+[ Upstream commit b9adb86b9045e6e912035e5991d370ac769be0b8 ]
 
-i3c_master_register_new_i3c_devs() registers newly discovered devices
-while holding i3c_bus_normaluse_lock(), a down_read().  device_register()
-can immediately probe the device, and probe callbacks typically invoke
-I3C helpers that take i3c_bus_normaluse_lock() again, leading to a
-recursive acquisition of the same rwsem.  rwsems do not support recursive
-read locking and can deadlock when a writer is waiting.  See the
-"Recursive read locks" section of Documentation/locking/lockdep-design.rst.
+The tracepoint trace_xfs_dqreclaim_dirty was removed with other code
+removed from xfs_qm_dquot_isolate() but the defined tracepoint was not.
 
-For example, with Intel LPSS I3C, LOCKDEP generates a WARNING like:
-  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/unbind
-  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/bind
-  WARNING: possible recursive locking detected
-  kworker/5:1/94 is trying to acquire lock:
-  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_device_match_id+0x45/0x370
-  but task is already holding lock:
-  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_master_reg_work_fn+0x21/0x5f0
-
-Fix this by separating device creation from device registration.
-Populate desc->dev under the maintenance lock, collect the devices that
-still need registration into a local list, then release the lock before
-calling device_register().  Finally retake the lock and clean up any
-devices that failed to register.
-
-Use the maintenance lock rather than the normal-use lock while adding
-device objects.  A write-side maintenance lock prevents readers from
-observing a partially initialized desc->dev during initial device
-population, or desc->dev disappearing if registration fails.
-
-The local list requires a list node, so add a list node member to struct
-i3c_device.
-
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-2-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: d62016b1a2df ("xfs: avoid dquot buffer pin deadlock")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 39 ++++++++++++++++++++++++++------------
- include/linux/i3c/master.h |  3 +++
- 2 files changed, 30 insertions(+), 12 deletions(-)
+ fs/xfs/xfs_trace.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 4b23fe33329b0..bb15b621c067b 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1661,12 +1661,16 @@ static int i3c_master_early_i3c_dev_add(struct i3c_master_controller *master,
- static void
- i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- {
-+	struct i3c_device *i3cdev, *tmp;
- 	struct i3c_dev_desc *desc;
-+	LIST_HEAD(i3c_unreg_devs);
- 	int ret;
- 
- 	if (!master->init_done)
- 		return;
- 
-+	i3c_bus_maintenance_lock(&master->bus);
-+
- 	i3c_bus_for_each_i3cdev(&master->bus, desc) {
- 		if (desc->dev || !desc->info.dyn_addr || desc == master->this)
- 			continue;
-@@ -1687,15 +1691,30 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 		if (desc->boardinfo)
- 			desc->dev->dev.of_node = desc->boardinfo->of_node;
- 
--		ret = device_register(&desc->dev->dev);
--		if (ret) {
--			dev_err(&master->dev,
--				"Failed to add I3C device (err = %d)\n", ret);
--			desc->dev->desc = NULL;
--			put_device(&desc->dev->dev);
--			desc->dev = NULL;
--		}
-+		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
-+	}
-+
-+	i3c_bus_maintenance_unlock(&master->bus);
-+
-+	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
-+		ret = device_register(&i3cdev->dev);
-+		if (ret)
-+			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
-+		else
-+			list_del_init(&i3cdev->node);
- 	}
-+
-+	i3c_bus_maintenance_lock(&master->bus);
-+
-+	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
-+		list_del(&i3cdev->node);
-+		desc = i3cdev->desc;
-+		i3cdev->desc = NULL;
-+		put_device(&i3cdev->dev);
-+		desc->dev = NULL;
-+	}
-+
-+	i3c_bus_maintenance_unlock(&master->bus);
- }
- 
- /**
-@@ -1724,9 +1743,7 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
- 	if (ret)
- 		return ret;
- 
--	i3c_bus_normaluse_lock(&master->bus);
- 	i3c_master_register_new_i3c_devs(master);
--	i3c_bus_normaluse_unlock(&master->bus);
- 
- 	return 0;
- }
-@@ -2904,9 +2921,7 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	 * register I3C devices discovered during the initial DAA.
- 	 */
- 	master->init_done = true;
--	i3c_bus_normaluse_lock(&master->bus);
- 	i3c_master_register_new_i3c_devs(master);
--	i3c_bus_normaluse_unlock(&master->bus);
- 
- 	return 0;
- 
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 414a8acde0183..a17433c2458a3 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -228,6 +228,8 @@ struct i3c_dev_desc {
-  *	  every time the I3C device is rediscovered with a different dynamic
-  *	  address assigned
-  * @bus: I3C bus this device is attached to
-+ * @node: unregistered device list node, only for use by
-+ *	  i3c_master_register_new_i3c_devs(), it is not protected by a lock
-  *
-  * I3C device object exposed to I3C device drivers. The takes care of linking
-  * this object to the relevant &struct_i3c_dev_desc one.
-@@ -238,6 +240,7 @@ struct i3c_device {
- 	struct device dev;
- 	struct i3c_dev_desc *desc;
- 	struct i3c_bus *bus;
-+	struct list_head node;
- };
- 
- /*
+diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
+index 526920b41766b..af12e4c7ecd2d 100644
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -1097,7 +1097,6 @@ DEFINE_EVENT(xfs_dquot_class, name, \
+ 	TP_ARGS(dqp))
+ DEFINE_DQUOT_EVENT(xfs_dqadjust);
+ DEFINE_DQUOT_EVENT(xfs_dqreclaim_want);
+-DEFINE_DQUOT_EVENT(xfs_dqreclaim_dirty);
+ DEFINE_DQUOT_EVENT(xfs_dqreclaim_busy);
+ DEFINE_DQUOT_EVENT(xfs_dqreclaim_done);
+ DEFINE_DQUOT_EVENT(xfs_dqattach_found);
 -- 
 2.53.0
 
