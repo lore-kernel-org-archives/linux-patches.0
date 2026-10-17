@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568BE35E93B;
-	Sat, 17 Oct 2026 17:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74033803DC;
+	Sat, 17 Oct 2026 17:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256793; cv=none; b=ooaNn2U7dvl4Mt7UJm6WcPLcNBlYpeScsZjCMPr8udaHpkuvC+lzIE2qHAx/1dZQql4ybH4FaNJsOiSfe0EHcO+i1JJ7j40Bn2qQnTg/eeWb2HESebvrl9nDkNb9YS1I59BP19KNN2rRlyC9BJ1EuVDohOZ0xIP0PAC55xftt4o=
+	t=1792256798; cv=none; b=ecZEWa0sAznsBOQkMj5PaEQyMGj6K0kHfxHx/CZToJFeJrsS64TyXOKIMmSFd1Ehzs/idCtouepP2LwvK+y/mmlyX7/HtH3Wkuv/k4skwH+Lk4jzz/3xhtwtmNEvOg8/A7q1/yRlV+TROv4owTF/gKuxfMHTKyT9YEvkVFfrKhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256793; c=relaxed/simple;
-	bh=dqC+M0nEYPaRnb0uYhDMetl9ngqqLI2Xara978k6zxc=;
+	s=arc-20240116; t=1792256798; c=relaxed/simple;
+	bh=53bUs+FXeYjSSelM3798Mgd8s/5ZuBTTGgzOMZG4nMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEbtlSthklQDg0/gnNVhdz17ESSaSPcvakew2Ku0e3LtWPFImngpIj0SwociNKbQQcHyXmQwe8j9pFrbu8bAJw74NMMafX6o/ulDy8lj5zjJ2OOaTnEzeZ1B7xI5t8lJaie4mgeOo1Cn4G84Nw+ou0uhwv2DkIbw4upjwMSNOQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugFXS60d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f9UK8ipq76KGXbm5B4+EMnu7P16WVHBKv3uV6lXTZkCgiZFU/DTiHZqQVpKfQigJKw2vAftAUWv6SeXiImdkOxeL4OZeMdrbvh0DghCGt/jvTAzguoMmuMf/9NEKmCIJI7Ld9FxpqeRvJsZUyKcqjYY3Gen9NopEBLADtQLr62Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnGw1Rlv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugFXS60d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5231F000C4;
-	Sat, 17 Oct 2026 17:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnGw1Rlv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1255B1F000C4;
+	Sat, 17 Oct 2026 17:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256791;
-	bh=NfdKBb8dYnwKdDfEOCiPmisx6PeQRADu+qvL4XeI64Y=;
+	s=korg; t=1792256795;
+	bh=SVwEl9Bcd7imwtkjsOsHjm8pOLsuLKtXC/2sQaZGhoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ugFXS60dTW0HrmIZHm9e6Pmmr+kj2nmjhnRkGIML1zwZ537e2sqWrN7ix1eZbd54p
-	 3NinQnTLyEhHRu0ytlhi8g6D98zxbIoXvdUzT8Zv/PjRBRajXZdZftJrzlefenEo8Q
-	 p7fdwmk9g2JXGOhKiJfvdHVZIoNlqhGSgqZxAYBE=
+	b=pnGw1RlvlHNyJswsth/u4BABxRYX+qyqFWJUd5xdEurt36Qahqzuw8xWQ8jALvyiq
+	 iFnkOPbGUDBy+Kc/aTxodz2hfr6aaY2JzdOmEuTHpVlzBOjLIiuUYBKhbDC/oNhdiC
+	 13mlKfvU55+QmK7LEiHt0jz9DvHNgdeBduS4Oc5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com,
-	Aditya Dutt <duttaditya18@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0354/1674] jfs: fix array-index-out-of-bounds read in add_missing_indices
-Date: Sat, 17 Oct 2026 17:43:46 +0200
-Message-ID: <20261017160440.209503959@linuxfoundation.org>
+Subject: [PATCH 6.6 0355/1674] KVM: arm64: vgic-its: Dont dereference a NULL collection on ITT save
+Date: Sat, 17 Oct 2026 17:43:47 +0200
+Message-ID: <20261017160440.233423536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,83 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Dutt <duttaditya18@gmail.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 5dff41a86377563f7a2b968aae00d25b4ceb37c9 ]
+[ Upstream commit c6c156d931c33b92362383cf76f6d6e1291dcbfe ]
 
-stbl is s8 but it must contain offsets into slot which can go from 0 to
-127.
+MAPC with V=0 drops ite->collection but leaves the ITE on the device's
+ITT list, and vgic_its_save_ite() dereferences it unconditionally. A
+guest that issues MAPD, MAPTI and then MAPC(V=0) therefore oopses the
+host when the VMM issues KVM_DEV_ARM_ITS_SAVE_TABLES to migrate it.
+That sequence is UNPREDICTABLE per the architecture, but KVM already
+handles the resulting state in the translate, MOVI and DISCARD paths.
 
-Added a bound check for that error and return -EIO if the check fails.
-Also make jfs_readdir return with error if add_missing_indices returns
-with an error.
+Save a zeroed entry, which vgic_its_restore_ite() reads back as
+invalid. Skipping the ITE instead would leave the ITT slot holding
+whatever is in guest memory, and restore rejects an entry naming a
+collection the restored collection table does not have.
 
-Reported-by: syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com./bug?extid=b974bd41515f770c608b
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: eff484e0298da ("KVM: arm64: vgic-its: ITT save and restore")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260807104102.2410744-2-fuad.tabba@linux.dev
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dtree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index 93db6eec44655..ab11849cf9cc3 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -2613,7 +2613,7 @@ void dtInitRoot(tid_t tid, struct inode *ip, u32 idotdot)
-  *	     fsck.jfs should really fix this, but it currently does not.
-  *	     Called from jfs_readdir when bad index is detected.
-  */
--static void add_missing_indices(struct inode *inode, s64 bn)
-+static int add_missing_indices(struct inode *inode, s64 bn)
- {
- 	struct ldtentry *d;
- 	struct dt_lock *dtlck;
-@@ -2622,7 +2622,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	struct lv *lv;
- 	struct metapage *mp;
- 	dtpage_t *p;
--	int rc;
-+	int rc = 0;
- 	s8 *stbl;
- 	tid_t tid;
- 	struct tlock *tlck;
-@@ -2647,6 +2647,16 @@ static void add_missing_indices(struct inode *inode, s64 bn)
+diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+index e6c5e18664cd5..efc556b196826 100644
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -2256,6 +2256,14 @@ static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
+ 	u32 next_offset;
+ 	u64 val;
  
- 	stbl = DT_GETSTBL(p);
- 	for (i = 0; i < p->header.nextindex; i++) {
-+		if (stbl[i] < 0) {
-+			jfs_err("jfs: add_missing_indices: Invalid stbl[%d] = %d for inode %ld, block = %lld",
-+				i, stbl[i], (long)inode->i_ino, (long long)bn);
-+			rc = -EIO;
++	/*
++	 * MAPC with V=0 keeps the ITEs mapped but drops their collection,
++	 * and with it the ICID. Save a zeroed entry, which the restore path
++	 * reads back as invalid.
++	 */
++	if (!ite->collection)
++		return vgic_its_write_entry_lock(its, gpa, 0ULL, ite);
 +
-+			DT_PUTPAGE(mp);
-+			txAbort(tid, 0);
-+			goto end;
-+		}
-+
- 		d = (struct ldtentry *) &p->slot[stbl[i]];
- 		index = le32_to_cpu(d->index);
- 		if ((index < 2) || (index >= JFS_IP(inode)->next_index)) {
-@@ -2664,6 +2674,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	(void) txCommit(tid, 1, &inode, 0);
- end:
- 	txEnd(tid);
-+	return rc;
- }
- 
- /*
-@@ -3017,7 +3028,8 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
- 		}
- 
- 		if (fix_page) {
--			add_missing_indices(ip, bn);
-+			if ((rc = add_missing_indices(ip, bn)))
-+				goto out;
- 			page_fixed = 1;
- 		}
- 
+ 	next_offset = compute_next_eventid_offset(&dev->itt_head, ite);
+ 	val = ((u64)next_offset << KVM_ITS_ITE_NEXT_SHIFT) |
+ 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
 -- 
 2.53.0
 
