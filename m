@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF66A3AA9F3;
-	Sat, 17 Oct 2026 16:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD21D3876CC;
+	Sat, 17 Oct 2026 16:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256289; cv=none; b=RX7Zp0hgiVINP2d3PG7k42RTyTIEzEpE1ajV+EVrGZ5RxUlsEdbLwour0m+S4CW04Es5lLRsUlns6b89X92S3DTlrsYmfM65FcDodte0Du8SP6Pn4QNVfSN/5+MIc1RRiga/wTTbE3yCrvx34qUo9LIq4gaBi9DQd4nAi8FTQ0Q=
+	t=1792256292; cv=none; b=W0e3Sz7IFTiwiKS/S5Go6Wi9hbZG22fm6O8mkyS3wjtfodCsdcxGecLSXebxEoB8A0RqkwOEkffo/QAT97gF75VizHaZI0PprQSHaROksR0VruKxq/h5G7phSDiWy1dloMri5tNwJl6i6tLabQgyxtqIA2vX0RuxQcrywM7yc/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256289; c=relaxed/simple;
-	bh=k6b5nbPTcZjB+4H71bfsunt8xli9MFW7Jp4Mq1ugbRw=;
+	s=arc-20240116; t=1792256292; c=relaxed/simple;
+	bh=lpoW5cLuR6ZiII+1CLtjDxoOaJQX0xfq1ybeGGsd+ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdIq5X7VK6jg2gIiJQuonmIijrv35ijw0nHRilvuqMYGHR+Fy3jahAp9fH9IdiiSgya9dm1DH9WQ1eyxjIBpPQkf6Z2IiyL4LRi0KPWMDt0gy2mKnxaCMvcYjw7y3WlhqRKuiyJFFSUhPoX4EG1mv9Wtp74yFAHtkF4XeEfuZyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3w32BKK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hL23awQJyJrNsk5Jzh6NkwZ8seQUwEuFnrHINAYCtpinwTFcMUG+ic0fkJTJGLPm/Yl8yflzg2ugz27XI5Yx3OeD+gOH3GPRAj0ufVCXQe5Q1Ds5xFmNTO8Ac/9SVa0ZAp/NQjBewVB26Or2Qqzk0KREU9LRFg7ClHmvbrNKwgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWr4KWPr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3w32BKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283921F000C4;
-	Sat, 17 Oct 2026 16:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWr4KWPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B2B1F000C4;
+	Sat, 17 Oct 2026 16:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256288;
-	bh=4+e9pq/Xu49p2GWGRQayr2YDpR7782O+YxN+xhZ9xiA=;
+	s=korg; t=1792256291;
+	bh=2tHPx4wifsQjWwGmHQBWKN5Nr3+unraHJ+EapNzWwWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3w32BKKOC7MhcisH/+Ef4xbCEWrES9iCQtUgA6Q+ECZc4JfzAbX/if5+y4ZGT7xc
-	 QuJ6VbP9Ij9xzwfNpRXyO61zQtIiVFh51IKUslZ8SRrDXyy4bL8g6SJZC+UBCU85g9
-	 9N7ES79MsKhxjup1mLjTzP0DHJ+furJ3EqlSrAvg=
+	b=aWr4KWPrtVrTWIyDlmQg98ZMxAl0O3AFsbMeryfqOnCbu6fIrvx5/XL/KIHQkDhI6
+	 FeqSprw2SzBvr16//NrJMNrc3bC/Kh0HiJkfJwmgQCzSt7PGx53+M3aCkjPsKhW9lz
+	 EGR247o2MBbZXPquZH0qO309MzXHE9uodqKQEuu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0187/1674] iio: accel: kionix-kx022a: Fix array boundary check
-Date: Sat, 17 Oct 2026 17:40:59 +0200
-Message-ID: <20261017160435.953469350@linuxfoundation.org>
+Subject: [PATCH 6.6 0188/1674] mtd: core: call _get_device() with the master MTD
+Date: Sat, 17 Oct 2026 17:41:00 +0200
+Message-ID: <20261017160435.979628004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0e65412aee4f651d2c9785f542a13e4b44002a75 ]
+[ Upstream commit 12b31d1acd20b3185bb5f0748db0cf6874c8e9d1 ]
 
-The driver performs a sanity check for an array size, when converting a
-register value to an array index. The check incorrectly accepts the
-sizeof(array) as a last index, when last valid index should be
-sizeof(array) - 1.
+__get_mtd_device() calls the master's _get_device() callback with mtd,
+which may be a partition. __put_mtd_device() passes the master.
 
-Fix the check by bailing out when index >= sizeof(array).
+This breaks gluebi partitions because gluebi_get_device() uses
+container_of() and therefore requires the master MTD. Pass the master
+to _get_device(), matching _put_device().
 
-Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/kionix-kx022a.c | 2 +-
+ drivers/mtd/mtdcore.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/kionix-kx022a.c b/drivers/iio/accel/kionix-kx022a.c
-index 220465d9c713f..1f23130a84e5a 100644
---- a/drivers/iio/accel/kionix-kx022a.c
-+++ b/drivers/iio/accel/kionix-kx022a.c
-@@ -507,7 +507,7 @@ static int kx022a_read_raw(struct iio_dev *idev,
- 		if (ret)
- 			return ret;
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 506ebd4ba1b45..114127e08739d 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -1255,7 +1255,7 @@ int __get_mtd_device(struct mtd_info *mtd)
+ 	int err;
  
--		if ((regval & KX022A_MASK_ODR) >
-+		if ((regval & KX022A_MASK_ODR) >=
- 		    ARRAY_SIZE(kx022a_accel_samp_freq_table)) {
- 			dev_err(data->dev, "Invalid ODR\n");
- 			return -EINVAL;
+ 	if (master->_get_device) {
+-		err = master->_get_device(mtd);
++		err = master->_get_device(master);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.53.0
 
