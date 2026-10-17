@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD003B6364;
-	Sat, 17 Oct 2026 17:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8343939A4;
+	Sat, 17 Oct 2026 17:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258369; cv=none; b=C1Bs+S24ddzrfGOUJgANTHu8LLiRz3tWfcFOsqADmN8z+QGOk9pjq2aqrKEDoCQFq5Uxko8hTd0lTdRRDo5loWnYjwc8rAXDfyUBDUH9rNMTSIfnZw0i4f77n5PRr/iJbUNdHiqYkmhzWeFnp/PC7R3CJ+lLY6AVqPzoMRdc7wk=
+	t=1792258372; cv=none; b=gBhrY9dYyCd1t/E34b4TANnUhMExmkFbpFAtxBWSbMDpQXLPmiCIR5IywqUjyis/QV8e2++4G56Mq0vnlWkkIJRxK37zNL/Vw9AXyoZE5mL6QtNOqjtoLeCQkNeTllr/MdvkZMygHyl8r4y+PViElueAA85/TJ+4hMTsp2Ayve4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258369; c=relaxed/simple;
-	bh=3mgjPS22D4JS00vej1Z3iDL7i8H78YyTjugXW8oCdxM=;
+	s=arc-20240116; t=1792258372; c=relaxed/simple;
+	bh=Kl3IFeNp2A9JhDX1vmEtI/cKmu0Ec958ZQZJnIc4kJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBgSNnZ7okTmba62tb7RxZPfeHaz0PFfYmZs3OobosYQL3Tg5UGqH3CI9BxcVUmojvmhJ1reaZt54OoehhEaWcBrG7oQ2SjuWsqUiYDj2/OoEbxG0KfIkTvJEFduTfhZlUs+9I//PFsgTgC0E3MP+D/e/H5u24XO2hqpjWk2fLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yP114/sM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iTb1A4zXX1JWiZ9E0s2fdTRCRFGk7EOax58yjCltQgpI290wsBUf7RUQHnLo164iCzrdrPsBJ7uYLgv1gq45BtAsbUfzAg+QFx56hfefnyZ/f/ZwnRTtGHS6fa0efIATICNyaCgZfzaVYfXaUG/x0dW4NVJBvlNrm+bxu9pBBh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv1MXsh2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yP114/sM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5941F000C4;
-	Sat, 17 Oct 2026 17:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv1MXsh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7301F000C4;
+	Sat, 17 Oct 2026 17:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258368;
-	bh=WzVWEES+1KdIoFTgdkEVsZTJ+v7qH93wfN7yahzcq1s=;
+	s=korg; t=1792258371;
+	bh=1ZwqV+0KYiiKxDEGCrQ7vAviAkeyAB3XLvnW60l5IKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yP114/sM8BwMF+ny5wNVF5osMTGZaVVG7aLWr5xSReCySLoDNGnTBGZrVce0xwn/d
-	 S5JwR2NJaa88fsvdy4huQCU0RDjJDQqRoBnGob04LU7zEQiVF0tXI53v/EqfYUko9c
-	 lOi2KVWrvlPihMQYW9tjekYCR1X5JYVe6KuSrE/w=
+	b=Vv1MXsh26TIGND0tcL7ne2juinZf8meAws3YA8r1ZyJ9SQe5di26+awAZZin/S6gR
+	 SvqpovdD+MgJvvZQZpZgW9RBpLgP/vUsNPcYFMtev2J4G4CGVbL9Tck/EpXgIlE9Wj
+	 +7+psf4jg44qtIB4oA4uGyW8cQt/bSsT1N+8REaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0861/1674] cxl/mbox: validate payload size before accessing contents in cxl_payload_from_user_allowed()
-Date: Sat, 17 Oct 2026 17:52:13 +0200
-Message-ID: <20261017160453.219307906@linuxfoundation.org>
+Subject: [PATCH 6.6 0862/1674] PCI: dwc: ep: Flush MSI-X write before unmapping its ATU entry
+Date: Sat, 17 Oct 2026 17:52:14 +0200
+Message-ID: <20261017160453.242829227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,107 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 60b5d1f68338aff2c5af0113f04aefa7169c50c2 ]
+[ Upstream commit c22533c66ccae10511ad6a7afc34bb26c47577e3 ]
 
-cxl_payload_from_user_allowed() casts and dereferences the input
-payload without first verifying its size. When a raw mailbox command
-is sent with an undersized payload (ie: 1 byte for CXL_MBOX_OP_CLEAR_LOG,
-which expects a 16-byte UUID), uuid_equal() reads past the allocated buffer,
-triggering a KASAN splat:
+Endpoint drivers use dw_pcie_ep_raise_msix_irq() to raise an MSI-X
+interrupt to the host using a writel(), which generates a PCI posted write
+transaction.  There's no completion for posted writes, so the writel() may
+return before the PCI write completes.  dw_pcie_ep_raise_msix_irq() also
+unmaps the outbound ATU entry used for the PCI write, so the write races
+with the unmap.
 
-BUG: KASAN: slab-out-of-bounds in memcmp+0x176/0x1d0 lib/string.c:683
-Read of size 8 at addr ffff88810130f5c0 by task syz.1.62/2258
+If the PCI write loses the race with the ATU unmap, the write may corrupt
+host memory or cause IOMMU errors, e.g., these when running fio with a
+larger queue depth against nvmet-pci-epf:
 
-CPU: 2 UID: 0 PID: 2258 Comm: syz.1.62 Not tainted 6.19.0-dirty #3 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xab/0xe0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x650 mm/kasan/report.c:482
- kasan_report+0xce/0x100 mm/kasan/report.c:595
- memcmp+0x176/0x1d0 lib/string.c:683
- uuid_equal include/linux/uuid.h:73 [inline]
- cxl_payload_from_user_allowed drivers/cxl/core/mbox.c:345 [inline]
- cxl_mbox_cmd_ctor drivers/cxl/core/mbox.c:368 [inline]
- cxl_validate_cmd_from_user drivers/cxl/core/mbox.c:522 [inline]
- cxl_send_cmd+0x9c0/0xb50 drivers/cxl/core/mbox.c:643
- __cxl_memdev_ioctl drivers/cxl/core/memdev.c:698 [inline]
- cxl_memdev_ioctl+0x14f/0x190 drivers/cxl/core/memdev.c:713
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xa8/0x330 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fdaf331ba79
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fdaf1d77038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fdaf3585fa0 RCX: 00007fdaf331ba79
-RDX: 00002000000001c0 RSI: 00000000c030ce02 RDI: 0000000000000003
-RBP: 00007fdaf33749df R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fdaf3586038 R14: 00007fdaf3585fa0 R15: 00007ffced2af768
- </TASK>
+  arm-smmu-v3 fc900000.iommu:      0x0000010000000010
+  arm-smmu-v3 fc900000.iommu:      0x0000020000000000
+  arm-smmu-v3 fc900000.iommu:      0x000000090000f040
+  arm-smmu-v3 fc900000.iommu:      0x0000000000000000
+  arm-smmu-v3 fc900000.iommu: event: F_TRANSLATION client: 0000:01:00.0 sid: 0x100 ssid: 0x0 iova: 0x90000f040 ipa: 0x0
+  arm-smmu-v3 fc900000.iommu: unpriv data write s1 "Input address caused fault" stag: 0x0
 
-Add 'in_size' parameter to cxl_payload_from_user_allowed() and validate
-the payload is large enough.
+Flush the write by performing a readl() of the same address to ensure that
+the write has reached the destination before the ATU entry is unmapped.
 
-Fixes: 6179045ccc0c ("cxl/mbox: Block immediate mode in SET_PARTITION_INFO command")
-Fixes: 206f9fa9d555 ("cxl/mbox: Add Clear Log mailbox command")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260220001618.963490-2-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+The same problem was solved for dw_pcie_ep_raise_msi_irq() in commit
+8719c64e76bf ("PCI: dwc: ep: Cache MSI outbound iATU mapping"), but there
+it was solved by dedicating an outbound iATU only for MSI. We can't do the
+same for MSI-X because each vector can have a different msg_addr and the
+msg_addr may be changed while the vector is masked.
+
+Fixes: beb4641a787d ("PCI: dwc: Add MSI-X callbacks handler")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260211175540.105677-2-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 059e95e086205..d18d9188b577d 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -306,6 +306,7 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  * cxl_payload_from_user_allowed() - Check contents of in_payload.
-  * @opcode: The mailbox command opcode.
-  * @payload_in: Pointer to the input payload passed in from user space.
-+ * @in_size: Size of @payload_in in bytes.
-  *
-  * Return:
-  *  * true	- payload_in passes check for @opcode.
-@@ -320,12 +321,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  *
-  * The specific checks are determined by the opcode.
-  */
--static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
-+static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in,
-+					  size_t in_size)
- {
- 	switch (opcode) {
- 	case CXL_MBOX_OP_SET_PARTITION_INFO: {
- 		struct cxl_mbox_set_partition_info *pi = payload_in;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 120ce2d472aa8..2860645d65bfd 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -635,6 +635,9 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
  
-+		if (in_size < sizeof(*pi))
-+			return false;
- 		if (pi->flags & CXL_SET_PARTITION_IMMEDIATE_FLAG)
- 			return false;
- 		break;
-@@ -351,7 +355,8 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox,
- 		if (IS_ERR(mbox->payload_in))
- 			return PTR_ERR(mbox->payload_in);
+ 	writel(msg_data, ep->msi_mem + aligned_offset);
  
--		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in)) {
-+		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in,
-+						  in_size)) {
- 			dev_dbg(mds->cxlds.dev, "%s: input payload not allowed\n",
- 				cxl_mem_opcode_to_name(opcode));
- 			kvfree(mbox->payload_in);
++	/* flush posted write before unmap */
++	readl(ep->msi_mem + aligned_offset);
++
+ 	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+ 
+ 	return 0;
 -- 
 2.53.0
 
