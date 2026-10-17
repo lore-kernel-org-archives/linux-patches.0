@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068523AFB07;
-	Sat, 17 Oct 2026 17:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E4D17BED0;
+	Sat, 17 Oct 2026 17:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258116; cv=none; b=TJYnSCeAwscUNyo7lMa9+rLtEGo+7fX0qlGAh0OFtk8WTwE2YiDl8vwWPGjgkJmiyrpUsV3WzBvGictgeP9P0Zm8bcXC+i9cfW/TKkXxndldAJI6cjB89/TdDPMGwbRwEPUnZvBZsWHTHXw/4jEvP2CEXGqjv6i+2eowurBacQU=
+	t=1792258118; cv=none; b=LpLmbsPQdePFgteaClc09OHMGjRdnPwx6lqq3jKLb7ryRskJOn1AIFHSTxebEZybAm3NA6Ou5xBzfXdwvGWs+NXC9NndwM+idBQhTduhZiV9ofrKh/Gc5PabeB7O93Vf+wt6ZWX3pfVuz9+fOK0ZHPx604ynXG6GeHINTwXL8XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258116; c=relaxed/simple;
-	bh=rTZJ1z5WwUzkyMSgYzR7bYxRg/jVzs/YnsQO0MqL/1Q=;
+	s=arc-20240116; t=1792258118; c=relaxed/simple;
+	bh=ilj8cpQPP9RlzqKU6C+mCb76Jyg/kdebZ+t3/rYp9uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J93YT96mybrKwGvXjnsRUAMlgqHBeppwWaCtR6n8eFDjCHU95RfKad4y1KSTRET4czE1/XzndjUt64KBuaeqq9gwNPz7fi2nzjA0Cnkl2sNLFLLUH3HVoE5CExavMLstrhnG0jf852KwkxBXm/lnJEeBe1mMNXS31wfe84uouMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZMYxslr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YRoVtnKNm8kaw9vTdAD15tbjDBfWFQzhxYcXh/bSbF7VejxPjibKI+X5XMPfDcy2HDv5bj5J3/f2CRjBVkS5VaNyIA4U2n9HGidiEmg0o4Qb/OM5+4VFV2BAzUJN6u6lXA+4R6NB2T+ETuxBeHvboiMiN9YysWXDtTGui43VH5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3OCPBrW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZMYxslr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524321F000C4;
-	Sat, 17 Oct 2026 17:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3OCPBrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5551F000C4;
+	Sat, 17 Oct 2026 17:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258114;
-	bh=h2Wq1yCN8J+zp3INRwNpWeBLMckf7yGlE6P/J13L4uc=;
+	s=korg; t=1792258117;
+	bh=6o/nBf6lkAHlKuVh0vn0+a35+mwhJqO+1RBMvJnyCsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fZMYxslrF0a29SNcDeisbMfDohy7ow+k89xzWxbPSRUUCbXjcgr+sPAiZDn0mpleY
-	 I8KMhWhXyHPw006flI7npD8IJ2lYRJgoiQz8BFYbDGajp0N9gEcrOV1KYIfm4gZBjS
-	 K2FDRNvAH5ccsDygi+0Wh70oZzg0vEoTATWNRG7Q=
+	b=T3OCPBrWTtttY2FL0a412rk8GcXqwt+6eXIjO3qDiv1Ek9EfQcFZJeQO7xIKSbHS5
+	 1O4kOeBln9NQQnY0LPX7hZjWP/0C174wM9U/dWaUJBCZt8aO0zENZkY5apEvdfPN4R
+	 Cc1CqIfbo4g/Hd2hYkh3aaqTQG3A7RcVJws10FsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Eric Biggers <ebiggers@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0777/1674] crypto: x86/aegis128 - improve assembly function prototypes
-Date: Sat, 17 Oct 2026 17:50:49 +0200
-Message-ID: <20261017160451.048688872@linuxfoundation.org>
+Subject: [PATCH 6.6 0778/1674] crypto: x86/aegis - Fix sleeping when disallowed on PREEMPT_RT
+Date: Sat, 17 Oct 2026 17:50:50 +0200
+Message-ID: <20261017160451.075993944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,423 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 8da94b300f67240fbd8880d918200aa9046fc398 ]
+[ Upstream commit c7f49dadfcdf27e1f747442e874e9baa52ab7674 ]
 
-Adjust the prototypes of the AEGIS assembly functions:
+skcipher_walk_done() can call kfree(), which takes a spinlock, which
+makes it incorrect to call while preemption is disabled on PREEMPT_RT.
+Therefore, end the kernel-mode FPU section before calling
+skcipher_walk_done(), and restart it afterwards.
 
-- Use proper types instead of 'void *', when applicable.
+Moreover, pass atomic=false to skcipher_walk_aead_encrypt() instead of
+atomic=true.  The point of atomic=true was to make skcipher_walk_done()
+safe to call while in a kernel-mode FPU section, but that does not
+actually work.  So just use the usual atomic=false.
 
-- Move the length parameter to after the buffers it describes rather
-  than before, to match the usual convention.  Also shorten its name to
-  just len (which is the name used in the assembly code).
-
-- Declare register aliases at the beginning of each function rather than
-  once per file.  This was necessary because len was moved, but also it
-  allows adding some aliases where raw registers were used before.
-
-- Put assoclen and cryptlen in the correct order when declaring the
-  finalization function in the .c file.
-
-- Remove the unnecessary "crypto_" prefix.
-
-Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: 3d9eb180fbe8 ("crypto: x86/aegis - Add missing error checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aegis128-aesni-asm.S  | 105 ++++++++++++++++----------
- arch/x86/crypto/aegis128-aesni-glue.c |  92 +++++++++++-----------
- 2 files changed, 112 insertions(+), 85 deletions(-)
+ arch/x86/crypto/aegis128-aesni-glue.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
-index 639ba6f31a90e..6520d0ed98146 100644
---- a/arch/x86/crypto/aegis128-aesni-asm.S
-+++ b/arch/x86/crypto/aegis128-aesni-asm.S
-@@ -19,11 +19,6 @@
- #define T0	%xmm6
- #define T1	%xmm7
- 
--#define STATEP	%rdi
--#define LEN	%esi
--#define SRC	%rdx
--#define DST	%rcx
--
- .section .rodata.cst16.aegis128_const, "aM", @progbits, 32
- .align 16
- .Laegis128_const_0:
-@@ -72,6 +67,8 @@
-  *   %r9
-  */
- SYM_FUNC_START_LOCAL(__load_partial)
-+	.set LEN, %ecx
-+	.set SRC, %rsi
- 	xor %r9d, %r9d
- 	pxor MSG, MSG
- 
-@@ -138,6 +135,8 @@ SYM_FUNC_END(__load_partial)
-  *   %r10
-  */
- SYM_FUNC_START_LOCAL(__store_partial)
-+	.set LEN, %ecx
-+	.set DST, %rdx
- 	mov LEN, %r8d
- 	mov DST, %r9
- 
-@@ -184,16 +183,21 @@ SYM_FUNC_START_LOCAL(__store_partial)
- SYM_FUNC_END(__store_partial)
- 
- /*
-- * void crypto_aegis128_aesni_init(void *state, const void *key, const void *iv);
-+ * void aegis128_aesni_init(struct aegis_state *state,
-+ *			    const struct aegis_block *key,
-+ *			    const u8 iv[AEGIS128_NONCE_SIZE]);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_init)
-+SYM_FUNC_START(aegis128_aesni_init)
-+	.set STATEP, %rdi
-+	.set KEYP, %rsi
-+	.set IVP, %rdx
- 	FRAME_BEGIN
- 
- 	/* load IV: */
--	movdqu (%rdx), T1
-+	movdqu (IVP), T1
- 
- 	/* load key: */
--	movdqa (%rsi), KEY
-+	movdqa (KEYP), KEY
- 	pxor KEY, T1
- 	movdqa T1, STATE0
- 	movdqa KEY, STATE3
-@@ -226,13 +230,16 @@ SYM_FUNC_START(crypto_aegis128_aesni_init)
- 
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_init)
-+SYM_FUNC_END(aegis128_aesni_init)
- 
- /*
-- * void crypto_aegis128_aesni_ad(void *state, unsigned int length,
-- *                               const void *data);
-+ * void aegis128_aesni_ad(struct aegis_state *state, const u8 *data,
-+ *			  unsigned int len);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_ad)
-+SYM_FUNC_START(aegis128_aesni_ad)
-+	.set STATEP, %rdi
-+	.set SRC, %rsi
-+	.set LEN, %edx
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -378,7 +385,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_ad)
- .Lad_out:
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_ad)
-+SYM_FUNC_END(aegis128_aesni_ad)
- 
- .macro encrypt_block a s0 s1 s2 s3 s4 i
- 	movdq\a (\i * 0x10)(SRC), MSG
-@@ -399,10 +406,14 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
- .endm
- 
- /*
-- * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
-- *                                const void *src, void *dst);
-+ * void aegis128_aesni_enc(struct aegis_state *state, const u8 *src, u8 *dst,
-+ *			   unsigned int len);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_enc)
-+SYM_FUNC_START(aegis128_aesni_enc)
-+	.set STATEP, %rdi
-+	.set SRC, %rsi
-+	.set DST, %rdx
-+	.set LEN, %ecx
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -493,13 +504,17 @@ SYM_FUNC_START(crypto_aegis128_aesni_enc)
- .Lenc_out:
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_enc)
-+SYM_FUNC_END(aegis128_aesni_enc)
- 
- /*
-- * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
-- *                                     const void *src, void *dst);
-+ * void aegis128_aesni_enc_tail(struct aegis_state *state, const u8 *src,
-+ *				u8 *dst, unsigned int len);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
-+SYM_FUNC_START(aegis128_aesni_enc_tail)
-+	.set STATEP, %rdi
-+	.set SRC, %rsi
-+	.set DST, %rdx
-+	.set LEN, %ecx
- 	FRAME_BEGIN
- 
- 	/* load the state: */
-@@ -533,7 +548,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
- 
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
-+SYM_FUNC_END(aegis128_aesni_enc_tail)
- 
- .macro decrypt_block a s0 s1 s2 s3 s4 i
- 	movdq\a (\i * 0x10)(SRC), MSG
-@@ -553,10 +568,14 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
- .endm
- 
- /*
-- * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
-- *                                const void *src, void *dst);
-+ * void aegis128_aesni_dec(struct aegis_state *state, const u8 *src, u8 *dst,
-+ *			   unsigned int len);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_dec)
-+SYM_FUNC_START(aegis128_aesni_dec)
-+	.set STATEP, %rdi
-+	.set SRC, %rsi
-+	.set DST, %rdx
-+	.set LEN, %ecx
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -647,13 +666,17 @@ SYM_FUNC_START(crypto_aegis128_aesni_dec)
- .Ldec_out:
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_dec)
-+SYM_FUNC_END(aegis128_aesni_dec)
- 
- /*
-- * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
-- *                                     const void *src, void *dst);
-+ * void aegis128_aesni_dec_tail(struct aegis_state *state, const u8 *src,
-+ *				u8 *dst, unsigned int len);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
-+SYM_FUNC_START(aegis128_aesni_dec_tail)
-+	.set STATEP, %rdi
-+	.set SRC, %rsi
-+	.set DST, %rdx
-+	.set LEN, %ecx
- 	FRAME_BEGIN
- 
- 	/* load the state: */
-@@ -697,14 +720,18 @@ SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
- 
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_dec_tail)
-+SYM_FUNC_END(aegis128_aesni_dec_tail)
- 
- /*
-- * void crypto_aegis128_aesni_final(void *state, void *tag_xor,
-- *                                  unsigned int assoclen,
-- *                                  unsigned int cryptlen);
-+ * void aegis128_aesni_final(struct aegis_state *state,
-+ *			     struct aegis_block *tag_xor,
-+ *			     unsigned int assoclen, unsigned int cryptlen);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_final)
-+SYM_FUNC_START(aegis128_aesni_final)
-+	.set STATEP, %rdi
-+	.set TAG_XOR, %rsi
-+	.set ASSOCLEN, %edx
-+	.set CRYPTLEN, %ecx
- 	FRAME_BEGIN
- 
- 	/* load the state: */
-@@ -715,8 +742,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
- 	movdqu 0x40(STATEP), STATE4
- 
- 	/* prepare length block: */
--	movd %edx, MSG
--	pinsrd $2, %ecx, MSG
-+	movd ASSOCLEN, MSG
-+	pinsrd $2, CRYPTLEN, MSG
- 	psllq $3, MSG /* multiply by 8 (to get bit count) */
- 
- 	pxor STATE3, MSG
-@@ -731,7 +758,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
- 	aegis128_update; pxor MSG, STATE3
- 
- 	/* xor tag: */
--	movdqu (%rsi), MSG
-+	movdqu (TAG_XOR), MSG
- 
- 	pxor STATE0, MSG
- 	pxor STATE1, MSG
-@@ -739,8 +766,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
- 	pxor STATE3, MSG
- 	pxor STATE4, MSG
- 
--	movdqu MSG, (%rsi)
-+	movdqu MSG, (TAG_XOR)
- 
- 	FRAME_END
- 	RET
--SYM_FUNC_END(crypto_aegis128_aesni_final)
-+SYM_FUNC_END(aegis128_aesni_final)
 diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
-index 9b52451f6feec..e7a28ccf273bf 100644
+index e7a28ccf273bf..de0aab6997d41 100644
 --- a/arch/x86/crypto/aegis128-aesni-glue.c
 +++ b/arch/x86/crypto/aegis128-aesni-glue.c
-@@ -23,27 +23,6 @@
- #define AEGIS128_MIN_AUTH_SIZE 8
- #define AEGIS128_MAX_AUTH_SIZE 16
- 
--asmlinkage void crypto_aegis128_aesni_init(void *state, void *key, void *iv);
--
--asmlinkage void crypto_aegis128_aesni_ad(
--		void *state, unsigned int length, const void *data);
--
--asmlinkage void crypto_aegis128_aesni_enc(
--		void *state, unsigned int length, const void *src, void *dst);
--
--asmlinkage void crypto_aegis128_aesni_dec(
--		void *state, unsigned int length, const void *src, void *dst);
--
--asmlinkage void crypto_aegis128_aesni_enc_tail(
--		void *state, unsigned int length, const void *src, void *dst);
--
--asmlinkage void crypto_aegis128_aesni_dec_tail(
--		void *state, unsigned int length, const void *src, void *dst);
--
--asmlinkage void crypto_aegis128_aesni_final(
--		void *state, void *tag_xor, unsigned int cryptlen,
--		unsigned int assoclen);
--
- struct aegis_block {
- 	u8 bytes[AEGIS128_BLOCK_SIZE] __aligned(AEGIS128_BLOCK_ALIGN);
- };
-@@ -56,6 +35,32 @@ struct aegis_ctx {
- 	struct aegis_block key;
- };
- 
-+asmlinkage void aegis128_aesni_init(struct aegis_state *state,
-+				    const struct aegis_block *key,
-+				    const u8 iv[AEGIS128_NONCE_SIZE]);
-+
-+asmlinkage void aegis128_aesni_ad(struct aegis_state *state, const u8 *data,
-+				  unsigned int len);
-+
-+asmlinkage void aegis128_aesni_enc(struct aegis_state *state, const u8 *src,
-+				   u8 *dst, unsigned int len);
-+
-+asmlinkage void aegis128_aesni_dec(struct aegis_state *state, const u8 *src,
-+				   u8 *dst, unsigned int len);
-+
-+asmlinkage void aegis128_aesni_enc_tail(struct aegis_state *state,
-+					const u8 *src, u8 *dst,
-+					unsigned int len);
-+
-+asmlinkage void aegis128_aesni_dec_tail(struct aegis_state *state,
-+					const u8 *src, u8 *dst,
-+					unsigned int len);
-+
-+asmlinkage void aegis128_aesni_final(struct aegis_state *state,
-+				     struct aegis_block *tag_xor,
-+				     unsigned int assoclen,
-+				     unsigned int cryptlen);
-+
- static void crypto_aegis128_aesni_process_ad(
- 		struct aegis_state *state, struct scatterlist *sg_src,
- 		unsigned int assoclen)
-@@ -75,15 +80,14 @@ static void crypto_aegis128_aesni_process_ad(
- 			if (pos > 0) {
- 				unsigned int fill = AEGIS128_BLOCK_SIZE - pos;
- 				memcpy(buf.bytes + pos, src, fill);
--				crypto_aegis128_aesni_ad(state,
--							 AEGIS128_BLOCK_SIZE,
--							 buf.bytes);
-+				aegis128_aesni_ad(state, buf.bytes,
-+						  AEGIS128_BLOCK_SIZE);
- 				pos = 0;
- 				left -= fill;
- 				src += fill;
- 			}
- 
--			crypto_aegis128_aesni_ad(state, left, src);
-+			aegis128_aesni_ad(state, src, left);
- 
- 			src += left & ~(AEGIS128_BLOCK_SIZE - 1);
- 			left &= AEGIS128_BLOCK_SIZE - 1;
-@@ -100,7 +104,7 @@ static void crypto_aegis128_aesni_process_ad(
- 
- 	if (pos > 0) {
- 		memset(buf.bytes + pos, 0, AEGIS128_BLOCK_SIZE - pos);
--		crypto_aegis128_aesni_ad(state, AEGIS128_BLOCK_SIZE, buf.bytes);
-+		aegis128_aesni_ad(state, buf.bytes, AEGIS128_BLOCK_SIZE);
- 	}
- }
- 
-@@ -110,31 +114,27 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
- {
- 	while (walk->nbytes >= AEGIS128_BLOCK_SIZE) {
- 		if (enc)
--			crypto_aegis128_aesni_enc(
--					state,
--					round_down(walk->nbytes,
--						   AEGIS128_BLOCK_SIZE),
--					walk->src.virt.addr,
--					walk->dst.virt.addr);
-+			aegis128_aesni_enc(state, walk->src.virt.addr,
-+					   walk->dst.virt.addr,
-+					   round_down(walk->nbytes,
-+						      AEGIS128_BLOCK_SIZE));
- 		else
--			crypto_aegis128_aesni_dec(
--					state,
--					round_down(walk->nbytes,
--						   AEGIS128_BLOCK_SIZE),
--					walk->src.virt.addr,
--					walk->dst.virt.addr);
-+			aegis128_aesni_dec(state, walk->src.virt.addr,
-+					   walk->dst.virt.addr,
-+					   round_down(walk->nbytes,
-+						      AEGIS128_BLOCK_SIZE));
+@@ -123,7 +123,9 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
+ 					   walk->dst.virt.addr,
+ 					   round_down(walk->nbytes,
+ 						      AEGIS128_BLOCK_SIZE));
++		kernel_fpu_end();
  		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
++		kernel_fpu_begin();
  	}
  
  	if (walk->nbytes) {
- 		if (enc)
--			crypto_aegis128_aesni_enc_tail(state, walk->nbytes,
--						       walk->src.virt.addr,
--						       walk->dst.virt.addr);
-+			aegis128_aesni_enc_tail(state, walk->src.virt.addr,
-+						walk->dst.virt.addr,
-+						walk->nbytes);
- 		else
--			crypto_aegis128_aesni_dec_tail(state, walk->nbytes,
--						       walk->src.virt.addr,
--						       walk->dst.virt.addr);
-+			aegis128_aesni_dec_tail(state, walk->src.virt.addr,
-+						walk->dst.virt.addr,
-+						walk->nbytes);
+@@ -135,7 +137,9 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
+ 			aegis128_aesni_dec_tail(state, walk->src.virt.addr,
+ 						walk->dst.virt.addr,
+ 						walk->nbytes);
++		kernel_fpu_end();
  		skcipher_walk_done(walk, 0);
++		kernel_fpu_begin();
  	}
  }
-@@ -186,10 +186,10 @@ crypto_aegis128_aesni_crypt(struct aead_request *req,
+ 
+@@ -180,9 +184,9 @@ crypto_aegis128_aesni_crypt(struct aead_request *req,
+ 	struct aegis_state state;
+ 
+ 	if (enc)
+-		skcipher_walk_aead_encrypt(&walk, req, true);
++		skcipher_walk_aead_encrypt(&walk, req, false);
+ 	else
+-		skcipher_walk_aead_decrypt(&walk, req, true);
++		skcipher_walk_aead_decrypt(&walk, req, false);
  
  	kernel_fpu_begin();
  
--	crypto_aegis128_aesni_init(&state, ctx->key.bytes, req->iv);
-+	aegis128_aesni_init(&state, &ctx->key, req->iv);
- 	crypto_aegis128_aesni_process_ad(&state, req->src, req->assoclen);
- 	crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
--	crypto_aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
-+	aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
- 
- 	kernel_fpu_end();
- }
 -- 
 2.53.0
 
