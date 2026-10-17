@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701ABE555;
-	Sat, 17 Oct 2026 17:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9203A1E92;
+	Sat, 17 Oct 2026 17:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258543; cv=none; b=SbD319vbmIqBy8CJqvNNrvdRYTx+eavSrGzP3YPiYfpbsghBlTVqgG96d6NQQ1gHvZDsTgSg7A502hONItzsipda6vtwArgsEafwWfmyRFwyhDoclfI+rOa7PWkSIWcS3bsl5ibjpjrbrYswMlM+kxWANEL2npMiqUFcd5DSkEY=
+	t=1792258546; cv=none; b=nF1kvBB51RLo6nuEa2+MOdKe684xxNHgmtzovlTiLSMPWioHQ0y28ayiMn4FX/KFfRzW70Xl7oX2CiTwbaV2pfqVjSnu+4TGD7RdbL4Ki1UUSJZv9vFg+AfyCtRlSkLxGb3HpdNceM/754COUIGbfH3qwbhRVGWN1XXr12FCDjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258543; c=relaxed/simple;
-	bh=lG3TyZAjjYafo2GbsvJvuC3uRMlv0XvTY4l3ECv63WI=;
+	s=arc-20240116; t=1792258546; c=relaxed/simple;
+	bh=l3/4fen2Qf8HYk/vcZ1cuK860sydqLqMX+Cvokt+rSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2KQVaHZmSQkS4v1s8ktJMe+P2VWZ5FVhe5vBSGArkCLxxtp6Cs9mXMdQtpQGuZNXlqvi4He7yx3cvShlfMiWOy0q9Gcv4ltb98DTfPfUM07RgcAOvU8JxgmijC9lU+R2CCoVFNHTMozIlU2D2/Jlqol2anRGDhWf3xaqsuDkXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lR1c4kpV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mv1Fw6YzQ7v/e1mWya9s0sazZcRBaPEmbM+GR+xrZ/TzAd84Fqq8KDrWxbJRSUiDUH/mQ3xoPVCorWwxPXuhZXYfePPrmyzP+YMorKDFDEoEgqCtt27JrpW3nWJlM7O76jas8feJ5pjTY6jq7F2V8UDfUPGByvjsd/CpNQXUdrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGgI+Pm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lR1c4kpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78741F000C5;
-	Sat, 17 Oct 2026 17:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGgI+Pm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51561F000C4;
+	Sat, 17 Oct 2026 17:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258542;
-	bh=OvT00m7x48c2vJ4AgFS4i5UOLQxZ+X4KWngen+dkvEo=;
+	s=korg; t=1792258545;
+	bh=4PnmgSsUTeR+Wm4Mq0YJaEQPCkVcRg2J7dySHUnSzKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lR1c4kpVmMTXejjB9rrkgTfkBu0HzHxU5SK5KIVeJNcKZh0KCd+a8+i0krh/Cpyz5
-	 By2MnqnGr+JG9mKxyxEzmFmA18EzoukO8b1GTZYivZ1VujOKfzVe0o7hGHXP4kfiQ7
-	 l90JkyS9gIEVbMX8d/DPG1vB9ocv+u9qWPNTVQRQ=
+	b=hGgI+Pm3R45SDH+GX5dY2I5zzKRO6ZBXQw53X3/5dT9cL3SpQ8huPz2BnteKJulk6
+	 vFFiHcssROjR2DNbVXwhRFV2TcmGdcbw1bj6rwpFKGKGrMZX99cLliFWL/GUKk582X
+	 Sq5NGsmHYLAsIPxRSFxFlvYxGbXgkquUn4eBU+r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com,
-	Szymon Wilczek <swilczek.lx@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Mark Tinguely <mark.tinguely@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0918/1674] ntfs3: fix circular locking dependency in run_unpack_ex
-Date: Sat, 17 Oct 2026 17:53:10 +0200
-Message-ID: <20261017160454.695565358@linuxfoundation.org>
+Subject: [PATCH 6.6 0919/1674] xfs: remove xfs_attr_leaf_hasname
+Date: Sat, 17 Oct 2026 17:53:11 +0200
+Message-ID: <20261017160454.721327467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,60 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Wilczek <swilczek.lx@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 08ce2fee1b869ecbfbd94e0eb2630e52203a2e03 ]
+[ Upstream commit 3a65ea768b8094e4699e72f9ab420eb9e0f3f568 ]
 
-Syzbot reported a circular locking dependency between wnd->rw_lock
-(sbi->used.bitmap) and ni->file.run_lock.
+The calling convention of xfs_attr_leaf_hasname() is problematic, because
+it returns a NULL buffer when xfs_attr3_leaf_read fails, a valid buffer
+when xfs_attr3_leaf_lookup_int returns -ENOATTR or -EEXIST, and a
+non-NULL buffer pointer for an already released buffer when
+xfs_attr3_leaf_lookup_int fails with other error values.
 
-The deadlock scenario:
-1. ntfs_extend_mft() takes ni->file.run_lock then wnd->rw_lock.
-2. run_unpack_ex() takes wnd->rw_lock then tries to acquire
-   ni->file.run_lock inside ntfs_refresh_zone().
+Fix this by simply open coding xfs_attr_leaf_hasname in the callers, so
+that the buffer release code is done by each caller of
+xfs_attr3_leaf_read.
 
-This creates an AB-BA deadlock.
-
-Fix this by using down_read_trylock() instead of down_read() when
-acquiring run_lock in run_unpack_ex(). If the lock is contended,
-skip ntfs_refresh_zone() - the MFT zone will be refreshed on the
-next MFT operation. This breaks the circular dependency since we
-never block waiting for run_lock while holding wnd->rw_lock.
-
-Reported-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
-Tested-by: syzbot+d27edf9f96ae85939222@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d27edf9f96ae85939222
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org # v5.19+
+Fixes: 07120f1abdff ("xfs: Add xfs_has_attr and subroutines")
+Reported-by: Mark Tinguely <mark.tinguely@oracle.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/run.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/xfs/libxfs/xfs_attr.c | 74 +++++++++++++---------------------------
+ 1 file changed, 23 insertions(+), 51 deletions(-)
 
-diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
-index 8d05f3f276db4..6c7f311f24c60 100644
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -1134,11 +1134,14 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 			struct rw_semaphore *lock =
- 				is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
- 						  NULL;
--			if (lock)
--				down_read(lock);
--			ntfs_refresh_zone(sbi);
--			if (lock)
--				up_read(lock);
-+			if (lock) {
-+				if (down_read_trylock(lock)) {
-+					ntfs_refresh_zone(sbi);
-+					up_read(lock);
-+				}
-+			} else {
-+				ntfs_refresh_zone(sbi);
-+			}
- 		}
- 		up_write(&wnd->rw_lock);
- 		if (err)
+diff --git a/fs/xfs/libxfs/xfs_attr.c b/fs/xfs/libxfs/xfs_attr.c
+index 50172bb8026fd..024e9734c0b66 100644
+--- a/fs/xfs/libxfs/xfs_attr.c
++++ b/fs/xfs/libxfs/xfs_attr.c
+@@ -49,7 +49,6 @@ STATIC int xfs_attr_shortform_addname(xfs_da_args_t *args);
+  */
+ STATIC int xfs_attr_leaf_get(xfs_da_args_t *args);
+ STATIC int xfs_attr_leaf_removename(xfs_da_args_t *args);
+-STATIC int xfs_attr_leaf_hasname(struct xfs_da_args *args, struct xfs_buf **bp);
+ 
+ /*
+  * Internal routines when attribute list is more than one block.
+@@ -917,11 +916,11 @@ xfs_attr_lookup(
+ 		return xfs_attr_sf_findname(args, NULL, NULL);
+ 
+ 	if (xfs_attr_is_leaf(dp)) {
+-		error = xfs_attr_leaf_hasname(args, &bp);
+-
+-		if (bp)
+-			xfs_trans_brelse(args->trans, bp);
+-
++		error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
++		if (error)
++			return error;
++		error = xfs_attr3_leaf_lookup_int(bp, args);
++		xfs_trans_brelse(args->trans, bp);
+ 		return error;
+ 	}
+ 
+@@ -1215,27 +1214,6 @@ xfs_attr_shortform_addname(
+  * External routines when attribute list is one block
+  *========================================================================*/
+ 
+-/*
+- * Return EEXIST if attr is found, or ENOATTR if not
+- */
+-STATIC int
+-xfs_attr_leaf_hasname(
+-	struct xfs_da_args	*args,
+-	struct xfs_buf		**bp)
+-{
+-	int                     error = 0;
+-
+-	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, bp);
+-	if (error)
+-		return error;
+-
+-	error = xfs_attr3_leaf_lookup_int(*bp, args);
+-	if (error != -ENOATTR && error != -EEXIST)
+-		xfs_trans_brelse(args->trans, *bp);
+-
+-	return error;
+-}
+-
+ /*
+  * Remove a name from the leaf attribute list structure
+  *
+@@ -1246,25 +1224,22 @@ STATIC int
+ xfs_attr_leaf_removename(
+ 	struct xfs_da_args	*args)
+ {
+-	struct xfs_inode	*dp;
+-	struct xfs_buf		*bp;
++	struct xfs_inode	*dp = args->dp;
+ 	int			error, forkoff;
++	struct xfs_buf		*bp;
+ 
+ 	trace_xfs_attr_leaf_removename(args);
+ 
+-	/*
+-	 * Remove the attribute.
+-	 */
+-	dp = args->dp;
+-
+-	error = xfs_attr_leaf_hasname(args, &bp);
+-	if (error == -ENOATTR) {
++	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
++	if (error)
++		return error;
++	error = xfs_attr3_leaf_lookup_int(bp, args);
++	if (error != -EEXIST) {
+ 		xfs_trans_brelse(args->trans, bp);
+-		if (args->op_flags & XFS_DA_OP_RECOVERY)
++		if (error == -ENOATTR && (args->op_flags & XFS_DA_OP_RECOVERY))
+ 			return 0;
+ 		return error;
+-	} else if (error != -EEXIST)
+-		return error;
++	}
+ 
+ 	xfs_attr3_leaf_remove(bp, args);
+ 
+@@ -1288,23 +1263,20 @@ xfs_attr_leaf_removename(
+  * Returns 0 on successful retrieval, otherwise an error.
+  */
+ STATIC int
+-xfs_attr_leaf_get(xfs_da_args_t *args)
++xfs_attr_leaf_get(
++	struct xfs_da_args	*args)
+ {
+-	struct xfs_buf *bp;
+-	int error;
++	struct xfs_buf		*bp;
++	int			error;
+ 
+ 	trace_xfs_attr_leaf_get(args);
+ 
+-	error = xfs_attr_leaf_hasname(args, &bp);
+-
+-	if (error == -ENOATTR)  {
+-		xfs_trans_brelse(args->trans, bp);
+-		return error;
+-	} else if (error != -EEXIST)
++	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
++	if (error)
+ 		return error;
+-
+-
+-	error = xfs_attr3_leaf_getvalue(bp, args);
++	error = xfs_attr3_leaf_lookup_int(bp, args);
++	if (error == -EEXIST)
++		error = xfs_attr3_leaf_getvalue(bp, args);
+ 	xfs_trans_brelse(args->trans, bp);
+ 	return error;
+ }
 -- 
 2.53.0
 
