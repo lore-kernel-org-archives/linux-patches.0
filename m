@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8429138654F;
-	Sat, 17 Oct 2026 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD32248B3;
+	Sat, 17 Oct 2026 16:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254130; cv=none; b=Q7QXI62hJepv02aZNb35AK6YV1UR3b4dJXm7wOkNbawfBHjXBIbE6gWnMnIkh2ELVWaeN+s3D/GdGd94/CGjFn/YBaoi1h43lnpPDbgzzFwE+TglIn8zf+QyKQ4rCWwKhQjR3GFJ/ZFVwUgTr2Jhp/j/PWnOVFCE7ZqcWQuSXi4=
+	t=1792254134; cv=none; b=PqYTL9zDZpmC5BEOAQ/6tAhlfWy/Rr6OFh3kGtSGGt//mQ1iY8TsG/WwesY/KeKvvne26mpWwROkaQoTqJdwQCa5jLir25z9O8vWYnzSN97djFmPKntzuDfH1APX7viT7bqY8IjKudaJp87Jb2i7uZewIbslflz24uvAe1jdcvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254130; c=relaxed/simple;
-	bh=N8mDlGKawHCKo6cu5w8PTRuzt1JtRibrlXuEyDxNPBM=;
+	s=arc-20240116; t=1792254134; c=relaxed/simple;
+	bh=kS2eVcAh0OTxqgMiRPGTLBMcK831maqhkghvRJW6OE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ewVrKe9p155vGbe+j7FbfYCsv9VGkiiMsp6deXdXsE9l633LJfvF4VxYisGeyUYK7of9aeLDJCmPWwJUIAe2eAIsDtvP4vlR3doBwEJx0bLnlK4mHBmRvdO0g73taEkjssDweQHZE2gwsVgPErf8Roiopevv6Kge0OgyZ8Qy6oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDbk1FRH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TAZ4iDr3jmzxTvhyexCw6BuNpTGgZKS+t2DmnZqs2C/nBnbdaVCAKGMwbevja0T0qMD7NiuG4PIz8zWjxO4kMHCghA4L+ZcISE312gZBJ6fG5//UyLZhtCFkJv6v94V80stWW4W79QtzbrTGEj0g/huraiAKxVcj2CWrkZbA4Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx3Zed3Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDbk1FRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883201F000C4;
-	Sat, 17 Oct 2026 16:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx3Zed3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EB61F000C4;
+	Sat, 17 Oct 2026 16:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254129;
-	bh=eRwJXeL8n/p2wOPjTYFSz14qpwljrPbjh7tFTk3W0CA=;
+	s=korg; t=1792254132;
+	bh=VoWkFVi4IfQBXnRpMNHxhI7+aOwKcHLQNwD5BHyk1gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDbk1FRHFgEOye+575O4HcbNP/d5W5fQFqOfZRoR8zJGmg8rMTGjoVAQXXMfOu+XO
-	 R+Q+0jO49RDJgh9BaVHHBagRUNHTLTj5t8tyCvpS1Jw2l3Q+tV3WKMBwd776D+7UCN
-	 tyRgXiGHN2c9p6DZPJ0WuPtdQrFX33Pt5F9LCU20=
+	b=zx3Zed3YfLuY2efshHm3lqVlt+R1xhhIxi3hdbRET2ctxEyjhDB5O2LERA+HqdGW7
+	 g6HqG4D60+rggIxfeEmknNyRO+NUMo0I5RdmasRp194CPJhIIOR9s3BYksF0piJEtc
+	 CfrR6ra9yfHgvNdOzGafulnl/lePHpyrOI+43Qzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/869] drm/amdgpu: fix amdgpu_hmm_range_get_pages
-Date: Sat, 17 Oct 2026 17:53:07 +0200
-Message-ID: <20261017160045.969869582@linuxfoundation.org>
+Subject: [PATCH 6.12 347/869] net/handshake: hand off the pinned file reference to accept_doit
+Date: Sat, 17 Oct 2026 17:53:08 +0200
+Message-ID: <20261017160045.996397518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,94 +47,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 962d684b5dc0741dcd93485d41b450de402d5592 ]
+[ Upstream commit f4251190e58b209999c1ba9e6d2976136a1be055 ]
 
-The notifier sequence must only be read once or otherwise we could work
-with invalid pages.
+handshake_req_next() removes the request from the per-net
+pending list and drops hn_lock before handshake_nl_accept_doit()
+reads req->hr_sk->sk_socket and dereferences sock->file (once in
+FD_PREPARE() and again in get_file()).  In that window a
+consumer running tls_handshake_cancel() followed by sockfd_put()
+(svc_sock_free) or __fput_sync() (xs_reset_transport) releases
+sock->file.  sock_release() then runs sock_orphan(), zeroing
+sk_socket, and frees the struct socket.  The accept-side code
+either reads NULL through sk_socket or chases freed memory.
 
-While at it also fix the coding style, e.g. drop the pre-initialized
-return value and use the common define for 2G range.
+The submit-side sock_hold() does not prevent this.  sk_refcnt
+protects struct sock, but struct socket and sock->file are
+independently refcounted via the file descriptor the consumer
+owns.  Pinning sk leaves sock and sock->file unprotected.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c08972f555945cda57b0adb72272a37910153390)
-Cc: stable@vger.kernel.org
+Retarget the accept-side dereferences at req->hr_file, which was
+pinned at submit time, instead of req->hr_sk->sk_socket->file.
+Pinning on its own is not sufficient: a consumer that cancels
+between handshake_req_next() returning and accept_doit reaching
+FD_PREPARE() takes the !remove_pending() branch in
+handshake_req_cancel() and drops hr_file before the accept side
+takes its own reference.  Hand off an additional file reference
+inside handshake_req_next(), under hn_lock, so the accept side
+operates on a reference that no concurrent handshake_req_cancel()
+can revoke.  FD_PREPARE() consumes that handed-off reference,
+either by transferring it to the new fd in fd_publish() or by
+dropping it in the cleanup destructor on error; the explicit
+get_file() that previously balanced FD_PREPARE() is therefore
+redundant and goes away.
+
+Update handshake_req_cancel_test2 and _test3 to simulate the
+FD_PREPARE() consumption with an fput() so the kunit file-count
+assertions stay balanced.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-5-66c616906ead@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/handshake/handshake-test.c |  8 ++++++++
+ net/handshake/netlink.c        |  6 +++---
+ net/handshake/request.c        | 18 ++++++++++++++++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-index e36fede7f74c3..52882d88c290a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-@@ -51,8 +51,6 @@
- #include "amdgpu_amdkfd.h"
- #include "amdgpu_hmm.h"
+diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
+index a331b308aaa24..d66b133f59d12 100644
+--- a/net/handshake/handshake-test.c
++++ b/net/handshake/handshake-test.c
+@@ -375,6 +375,10 @@ static void handshake_req_cancel_test2(struct kunit *test)
+ 	/* Pretend to accept this request */
+ 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
+ 	KUNIT_ASSERT_PTR_EQ(test, req, next);
++	/* Simulate FD_PREPARE() consuming the file reference handed
++	 * off by handshake_req_next(); see handshake_nl_accept_doit().
++	 */
++	fput(filp);
  
--#define MAX_WALK_BYTE	(2UL << 30)
--
- /**
-  * amdgpu_hmm_invalidate_gfx - callback to notify about mm change
-  *
-@@ -170,12 +168,14 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 			       void *owner, struct page **pages,
- 			       struct hmm_range **phmm_range)
+ 	/* Act */
+ 	result = handshake_req_cancel(sock->sk);
+@@ -417,6 +421,10 @@ static void handshake_req_cancel_test3(struct kunit *test)
+ 	/* Pretend to accept this request */
+ 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
+ 	KUNIT_ASSERT_PTR_EQ(test, req, next);
++	/* Simulate FD_PREPARE() consuming the file reference handed
++	 * off by handshake_req_next(); see handshake_nl_accept_doit().
++	 */
++	fput(filp);
+ 
+ 	/* Pretend to complete this request */
+ 	handshake_complete(next, -ETIMEDOUT, NULL);
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index e49041cc0f9d7..d36f069549f93 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -92,7 +92,6 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	struct net *net = sock_net(skb->sk);
+ 	struct handshake_net *hn = handshake_pernet(net);
+ 	struct handshake_req *req = NULL;
+-	struct socket *sock;
+ 	int class, fd, err;
+ 
+ 	err = -EOPNOTSUPP;
+@@ -109,9 +108,9 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (!req)
+ 		goto out_status;
+ 
+-	sock = req->hr_sk->sk_socket;
+ 	fd = get_unused_fd_flags(O_CLOEXEC);
+ 	if (fd < 0) {
++		fput(req->hr_file); /* drop ref from handshake_req_next() */
+ 		err = fd;
+ 		goto out_complete;
+ 	}
+@@ -119,10 +118,11 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	err = req->hr_proto->hp_accept(req, info, fd);
+ 	if (err) {
+ 		put_unused_fd(fd);
++		fput(req->hr_file); /* drop ref from handshake_req_next() */
+ 		goto out_complete;
+ 	}
+ 
+-	fd_install(fd, get_file(sock->file));
++	fd_install(fd, req->hr_file);
+ 
+ 	trace_handshake_cmd_accept(net, req, req->hr_sk, fd);
+ 	return 0;
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 96f80e0df67b5..670e0f9793825 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -181,6 +181,17 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
+ 	return ret;
+ }
+ 
++/**
++ * handshake_req_next - Return the next queued handshake request
++ * @hn: per-net handshake state
++ * @class: handler class to match
++ *
++ * On a non-NULL return, the caller owns an extra reference
++ * on @req->hr_file.  FD_PREPARE() consumes it on success; on
++ * the FD_PREPARE() failure path the caller must fput() it.
++ *
++ * Return: pointer to a removed handshake_req, or NULL.
++ */
+ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
  {
-+	const u64 max_bytes = SZ_2G;
-+
- 	struct hmm_range *hmm_range;
--	unsigned long end;
- 	unsigned long timeout;
--	unsigned long i;
- 	unsigned long *pfns;
--	int r = 0;
-+	unsigned long end;
-+	unsigned long i;
-+	int r;
- 
- 	hmm_range = kzalloc(sizeof(*hmm_range), GFP_KERNEL);
- 	if (unlikely(!hmm_range))
-@@ -196,8 +196,9 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 	end = start + npages * PAGE_SIZE;
- 	hmm_range->dev_private_owner = owner;
- 
-+	hmm_range->notifier_seq = mmu_interval_read_begin(notifier);
- 	do {
--		hmm_range->end = min(hmm_range->start + MAX_WALK_BYTE, end);
-+		hmm_range->end = min(hmm_range->start + max_bytes, end);
- 
- 		pr_debug("hmm range: start = 0x%lx, end = 0x%lx",
- 			hmm_range->start, hmm_range->end);
-@@ -205,7 +206,6 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 		timeout = jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
- 
- retry:
--		hmm_range->notifier_seq = mmu_interval_read_begin(notifier);
- 		r = hmm_range_fault(hmm_range);
- 		if (unlikely(r)) {
- 			if (r == -EBUSY && !time_after(jiffies, timeout))
-@@ -215,7 +215,7 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 
- 		if (hmm_range->end == end)
- 			break;
--		hmm_range->hmm_pfns += MAX_WALK_BYTE >> PAGE_SHIFT;
-+		hmm_range->hmm_pfns += max_bytes >> PAGE_SHIFT;
- 		hmm_range->start = hmm_range->end;
- 	} while (hmm_range->end < end);
- 
+ 	struct handshake_req *req, *pos;
+@@ -191,6 +202,13 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 		if (pos->hr_proto->hp_handler_class != class)
+ 			continue;
+ 		__remove_pending_locked(hn, pos);
++		/* Hand off a file reference to the accept side under
++		 * hn_lock.  A concurrent handshake_req_cancel() can drop
++		 * hr_file before accept reaches FD_PREPARE(); this extra
++		 * reference keeps the file alive until FD_PREPARE() takes
++		 * ownership.
++		 */
++		get_file(pos->hr_file);
+ 		req = pos;
+ 		break;
+ 	}
 -- 
 2.53.0
 
