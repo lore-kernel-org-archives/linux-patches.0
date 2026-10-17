@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4BD9460;
-	Sat, 17 Oct 2026 17:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF313C73EC;
+	Sat, 17 Oct 2026 17:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258791; cv=none; b=sx9CVm0pu1H7dH2+crssg2NeSXToBG46GFJDAaF+auZh7Plxgj4XJGkNL/Eix20dsGu+rsYxnidoS64bFeKXfJMIlqwedR6YoQsl2L6gzw65dq27/0UvYXo8hF+6UATyZ739amwQwntvkB34qNmPhFr7hd4LmQgaZQE6xvmjwHQ=
+	t=1792258793; cv=none; b=la6H3N1YW4bJRY+7UXfFqZq5Wd6x8nwlew434IgwoKIXYxXk26B5T02ybF8W9idy1mjzoRhZT2fIgT5Hrmu3NkkbyCDdf3Z1wx30kVPEqCJZZD6uyozcyAP6wgkYDwLm7S8BKB9C1P72g1Ng/PRS7vQiGAMwPFRI+ghnqXf0YTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258791; c=relaxed/simple;
-	bh=gJoEAkBsLXXnYoviiAuyxN4qyjBLI8id6wkO1h0hl8w=;
+	s=arc-20240116; t=1792258793; c=relaxed/simple;
+	bh=//lzMDGsRNK/BQ+QGcOk5Ps7dv812tRtF9NbXB578O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIRiCfVZC+aitSkvjAIIqnloFTEQ16WWYoHkDBE3wPxMEHVquem/JNe1oBxGgC88SpkZ25/D9oifJqnwQ51l9VnSd2NKG0kNz6iFLw8dzyb/z7Ag/RzB33tjy7b9Fwvym+9E9gYBBP1hW25QTg43lrEaEyUT+O2UTm7wA3a69fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP1xLEsW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P9vOFOeN1iF8k47Wserbm/VtiU3MsuKecV8t/PpsKNixfkJZizvpL/J0hIiFjULRe6myf4C1glKy5ASsjnCIrVP88JiKT1f57yHPXlKA38RsazuS/zDBXxvtsa4hh1m+84gPjnxsBAl2eP0+9tM8wCYFlIRXfgV7dPgDmvuSUpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aychjpW9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP1xLEsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237821F000C4;
-	Sat, 17 Oct 2026 17:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aychjpW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE181F000C4;
+	Sat, 17 Oct 2026 17:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258789;
-	bh=MDTtIK+TiweSMbjkFEBrJLXhV+m/HN1ZzuIPu8o2ViI=;
+	s=korg; t=1792258792;
+	bh=7KBf9d7UgM2WzkBF2JsVs6mPvnFevJWU1HvMBdMiUAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dP1xLEsW7j85CYaA83uTqP8KH6xloyY/32uNNlmVPQk0aMuw6UqR3aSHEnpO7Cel1
-	 G0W0ng2vTJbHK5zRtZ6bGJ0agfjtj0SeahczlgkcJPz6FndjGJ6xgexE0G/pX3Jkkp
-	 0iVDOUiHMK7TfCtxYoWhT46GTB3LJ/wb4XgYBj0M=
+	b=aychjpW97KcSLepyBRYpg4ThydDqdZAUgZU8Q/VbVSNYZadVTP9hG2NDyTcIp8COh
+	 yzfBi7zVnBDUSGtJBdiGLtNZLbRLiX44h44VRvk98qDakj9uMkbjF79HyV6swynSjD
+	 3fYctcTCH8sTAHnKhO6INzKL3wRzqIC7QOEyXAsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1000/1674] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
-Date: Sat, 17 Oct 2026 17:54:32 +0200
-Message-ID: <20261017160456.786465547@linuxfoundation.org>
+Subject: [PATCH 6.6 0974/1674] iio: frequency: admv1013: add dev variable
+Date: Sat, 17 Oct 2026 17:54:06 +0200
+Message-ID: <20261017160456.124823121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,227 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
+[ Upstream commit e61b5bb0e91390adee41eaddc0a1a7d55d5652b2 ]
 
-When using the flushoncommit mount option, we can have a deadlock between
-a transaction commit and a reflink operation that copied an inline extent
-to an offset beyond the current i_size of the destination node.
+Introduce a local struct device pointer in functions that reference
+&spi->dev for device-managed resource calls and device property reads,
+improving code readability.
 
-The deadlock happens like this:
-
-1) Task A clones an inline extent from inode X to an offset of inode Y
-   that is beyond Y's current i_size. This means we copied the inline
-   extent's data to a folio of inode Y that is beyond its EOF, using a
-   call to copy_inline_to_page();
-
-2) Task B starts a transaction commit and calls
-   btrfs_start_delalloc_flush() to flush delalloc;
-
-3) The delalloc flushing sees the new dirty folio of inode Y and when it
-   attempts to flush it, it ends up at extent_writepage() and sees that
-   the offset of the folio is beyond the i_size of inode Y, so it attempts
-   to invalidate the folio by calling folio_invalidate(), which ends up at
-   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
-   tries to lock the folio's range in inode Y's extent io tree, but it
-   blocks since it's currently locked by task A - during a reflink we lock
-   the inodes and the source and destination ranges after flushing all
-   delalloc and waiting for ordered extent completion - after that we
-   don't expect to have dirty folios in the ranges, the exception is if
-   we have to copy an inline extent's data (because the destination offset
-   is not zero);
-
-4) Task A then attempts to start a transaction to update the inode item,
-   and then it's blocked since the current transaction is in the
-   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
-   current transaction to become unblocked (its state >=
-   TRANS_STATE_UNBLOCKED).
-
-   So task A is waiting for the transaction commit done by task B, and
-   the later waiting on the extent lock of inode Y that is currently
-   held by task A.
-
-Syzbot recently reported this with the following stack traces:
-
-  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
-  Workqueue: writeback wb_workfn (flush-btrfs-46)
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
-   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
-   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
-   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
-   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
-   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
-   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
-   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
-   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
-   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
-   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
-   wb_do_writeback fs/fs-writeback.c:2374 [inline]
-   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
-   process_one_work kernel/workqueue.c:3276 [inline]
-   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
-   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
-   kthread+0x388/0x470 kernel/kthread.c:436
-   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
-  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
-   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
-   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
-   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
-   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
-   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
-   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
-   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
-   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f5f73afc799
-  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
-  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
-  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
-  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
-  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
-   </TASK>
-  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
-   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
-   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
-   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
-   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
-   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f5f73afc799
-  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
-  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
-  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
-   </TASK>
-
-Fix this by updating the i_size of the destination inode of a reflink
-operation after we copy an inline extent's data to an offset beyond the
-i_size and before attempting to start a transaction to update the inode's
-item.
-
-Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
-Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: aac0a51b1670 ("iio: frequency: admv1013: fix NULL pointer dereference on str")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/reflink.c | 52 +++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 47 insertions(+), 5 deletions(-)
+ drivers/iio/frequency/admv1013.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
-index 0a919f76ee00a..c28279a51d97b 100644
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -180,11 +180,8 @@ static int clone_copy_inline_extent(struct inode *dst,
+diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
+index e0f5842f6411c..222e641a6aa97 100644
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -518,11 +518,11 @@ static int admv1013_properties_parse(struct admv1013_state *st)
+ {
  	int ret;
- 	struct btrfs_key key;
+ 	const char *str;
+-	struct spi_device *spi = st->spi;
++	struct device *dev = &st->spi->dev;
  
--	if (new_key->offset > 0) {
--		ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
--					  inline_data, size, datal, comp_type);
--		goto out;
--	}
-+	if (new_key->offset > 0)
-+		goto copy_to_page;
+-	st->det_en = device_property_read_bool(&spi->dev, "adi,detector-enable");
++	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
  
- 	key.objectid = btrfs_ino(BTRFS_I(dst));
- 	key.type = BTRFS_EXTENT_DATA_KEY;
-@@ -316,6 +313,51 @@ static int clone_copy_inline_extent(struct inode *dst,
+-	ret = device_property_read_string(&spi->dev, "adi,input-mode", &str);
++	ret = device_property_read_string(dev, "adi,input-mode", &str);
+ 	if (ret)
+ 		st->input_mode = ADMV1013_IQ_MODE;
  
- 	ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
- 				  inline_data, size, datal, comp_type);
-+
-+	/*
-+	 * If we copied the inline extent data to a page/folio beyond the i_size
-+	 * of the destination inode, then we need to increase the i_size before
-+	 * we start a transaction to update the inode item. This is to prevent a
-+	 * deadlock when the flushoncommit mount option is used, which happens
-+	 * like this:
-+	 *
-+	 * 1) Task A clones an inline extent from inode X to an offset of inode
-+	 *    Y that is beyond Y's current i_size. This means we copied the
-+	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
-+	 *    using the call above to copy_inline_to_page();
-+	 *
-+	 * 2) Task B starts a transaction commit and calls
-+	 *    btrfs_start_delalloc_flush() to flush delalloc;
-+	 *
-+	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
-+	 *    it attempts to flush it, it ends up at extent_writepage() and sees
-+	 *    that the offset of the folio is beyond the i_size of inode Y, so
-+	 *    it attempts to invalidate the folio by calling folio_invalidate(),
-+	 *    which ends up at btrfs' folio invalidate callback -
-+	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
-+	 *    in inode Y's extent io tree, but it blocks since it's currently
-+	 *    locked by task A - during reflink we lock the inodes and the
-+	 *    source and destination ranges after flushing all delalloc and
-+	 *    waiting for ordered extent completion - after that we don't expect
-+	 *    to have dirty folios in the ranges, the exception is if we have to
-+	 *    copy an inline extent's data (because the destination offset is
-+	 *    not zero);
-+	 *
-+	 * 4) Task A then does the 'goto out' below and attempts to start a
-+	 *    transaction to update the inode item, and then it's blocked since
-+	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
-+	 *    Therefore task A has to wait for the current transaction to become
-+	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
-+	 *
-+	 * This leads to a deadlock - the task committing the transaction
-+	 * waiting for the delalloc flushing which is blocked during folio
-+	 * invalidation on the inode's extent lock and the reflink task waiting
-+	 * for the current transaction to be unblocked so that it can start a
-+	 * a new one to update the inode item (while holding the extent lock).
-+	 */
-+	if (ret == 0 && new_key->offset + datal > i_size_read(dst))
-+		i_size_write(dst, new_key->offset + datal);
-+
- 	goto out;
+@@ -533,7 +533,7 @@ static int admv1013_properties_parse(struct admv1013_state *st)
+ 	else
+ 		return -EINVAL;
+ 
+-	ret = device_property_read_string(&spi->dev, "adi,quad-se-mode", &str);
++	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
+ 	if (ret)
+ 		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+ 
+@@ -546,11 +546,11 @@ static int admv1013_properties_parse(struct admv1013_state *st)
+ 	else
+ 		return -EINVAL;
+ 
+-	ret = devm_regulator_bulk_get_enable(&st->spi->dev,
++	ret = devm_regulator_bulk_get_enable(dev,
+ 					     ARRAY_SIZE(admv1013_vcc_regs),
+ 					     admv1013_vcc_regs);
+ 	if (ret) {
+-		dev_err_probe(&spi->dev, ret,
++		dev_err_probe(dev, ret,
+ 			      "Failed to request VCC regulators\n");
+ 		return ret;
+ 	}
+@@ -562,9 +562,10 @@ static int admv1013_probe(struct spi_device *spi)
+ {
+ 	struct iio_dev *indio_dev;
+ 	struct admv1013_state *st;
++	struct device *dev = &spi->dev;
+ 	int ret, vcm_uv;
+ 
+-	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
++	indio_dev = devm_iio_device_alloc(dev, sizeof(*st));
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+ 
+@@ -581,20 +582,20 @@ static int admv1013_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_regulator_get_enable_read_voltage(&spi->dev, "vcm");
++	ret = devm_regulator_get_enable_read_voltage(dev, "vcm");
+ 	if (ret < 0)
+-		return dev_err_probe(&spi->dev, ret,
++		return dev_err_probe(dev, ret,
+ 				     "failed to get the common-mode voltage\n");
+ 
+ 	vcm_uv = ret;
+ 
+-	st->clkin = devm_clk_get_enabled(&spi->dev, "lo_in");
++	st->clkin = devm_clk_get_enabled(dev, "lo_in");
+ 	if (IS_ERR(st->clkin))
+-		return dev_err_probe(&spi->dev, PTR_ERR(st->clkin),
++		return dev_err_probe(dev, PTR_ERR(st->clkin),
+ 				     "failed to get the LO input clock\n");
+ 
+ 	st->nb.notifier_call = admv1013_freq_change;
+-	ret = devm_clk_notifier_register(&spi->dev, st->clkin, &st->nb);
++	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -606,11 +607,11 @@ static int admv1013_probe(struct spi_device *spi)
+ 		return ret;
+ 	}
+ 
+-	ret = devm_add_action_or_reset(&spi->dev, admv1013_powerdown, st);
++	ret = devm_add_action_or_reset(dev, admv1013_powerdown, st);
+ 	if (ret)
+ 		return ret;
+ 
+-	return devm_iio_device_register(&spi->dev, indio_dev);
++	return devm_iio_device_register(dev, indio_dev);
  }
  
+ static const struct spi_device_id admv1013_id[] = {
 -- 
 2.53.0
 
