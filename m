@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE117BED0;
-	Sat, 17 Oct 2026 17:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F313C13E0;
+	Sat, 17 Oct 2026 17:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258480; cv=none; b=KaQTuuH14rH3xQg8BmVUFofVRfE6q8rUvJyIftnuw47MkerRLh8fUJrn61oov5ZOkfQUtOxew+NNoXeetuJ5lW/JxCIrDirtZYXEomYCcBcXXN9Lb1bh6jBei3ZV6ItOHPlPkhQ1upRzLNpjKfZCeJ5maL0fNb29oJgmGygxlwM=
+	t=1792258483; cv=none; b=hmfZvPpSZA6qAlCFwqPvxczRzzeI9QPK/pKnpHkgqjvYqvKM7G6NgEN334l94rpEusbnOAiixjDG0HHGduBiVmIgAKEv765CuvMePO5I6u8WHP532+uRlyXLt05WrCTs9S3xqWrqQ0PfoOHr/yXYs5RXMvJvXOSb7VUVWrXJ0kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258480; c=relaxed/simple;
-	bh=j7+AmajgMnrOcikH0Pm4dnePbOGpIuLYSYWj5cSly7Y=;
+	s=arc-20240116; t=1792258483; c=relaxed/simple;
+	bh=m2gmhmXhqEfhLEx59VGXrQuNrLz9w5mP6VVSQbP/jlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0T1LSJOsg3Ebi6He+zc4O/ZWQHZ0BAU6fgnTIMxaSG0OUFxStpfQrZSGQuvj/WeWHBJgBaQxYavgssmFHRFO5NgF3y6rWERm8QQNnXh7QxnUoQxn8lslfT6J2/uJ/EcY7O/7YU5AMQskLTtU03GXUY0kBlKv0jRWmg+3wcRjdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ds8rzYJl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RvvaWYyg/ZrN0z11deKcwHTtzahkEG706gypgNKCOc2OKaBmcDVcKLdb/786PHmpOJTZMgcfoGFC9eWB9fO/qYrq+tqGPPWrByvKUShDMUrIFiWTdS7ayTyqh6LnZzAh+C0ZFM4H1ZOQIWQcq28dz4wQEsBG9J8wDESMNpeRhUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUqCp4mz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ds8rzYJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583461F000C4;
-	Sat, 17 Oct 2026 17:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUqCp4mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559661F000C4;
+	Sat, 17 Oct 2026 17:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258478;
-	bh=ct4InAN2ov2HRs/QRnPeXZTnjFgxQup4XYpgi+Y/tU4=;
+	s=korg; t=1792258481;
+	bh=EXplGDBO9Qu0MAlUdtBfHRPXC2XB7ypHn/EdYN45rWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ds8rzYJlioWKuhwdt5ddMWORe9TxyNoYLVSFRrv4+y/3Wb3GgR1cuvriMyBkYBCCz
-	 hafWFPJ8CDnEQIw0L8R5Mx8JgHceUWm1kyt5UQeKDT79CnYiG0+ubBgh+tAdrIF8WP
-	 seCIFvOi3Zn6r4wqVg7IjG+1IAE+Gy6JH4QAP0F8=
+	b=xUqCp4mza35TjCq4zBsbOkrObXHj7pQyT2py03wr/oJW+L3kF3B+c25Mm/nQdpDFx
+	 RFwJjwHyK5/zOiJ45xWAQrDw+EZbEKiPvtiG5BNpoYMYE/Jlhwtul7cP0IywcuacKj
+	 Jn6lYeEehyxEf6QFCqVpVixZVs0HdJ3jdiHJkT3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0899/1674] ALSA: ctxfi: Check the error for index mapping
-Date: Sat, 17 Oct 2026 17:52:51 +0200
-Message-ID: <20261017160454.205846123@linuxfoundation.org>
+Subject: [PATCH 6.6 0900/1674] bpf: Fix incorrect pruning due to atomic fetch precision tracking
+Date: Sat, 17 Oct 2026 17:52:52 +0200
+Message-ID: <20261017160454.231214940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,200 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 277c6960d4ddb94d16198afd70c92c3d4593d131 ]
+[ Upstream commit 179ee84a89114b854ac2dd1d293633a7f6c8dac1 ]
 
-The ctxfi driver blindly assumed a proper value returned from
-daio_device_index(), but it's not always true.  Add a proper error
-check to deal with the error from the function.
+When backtrack_insn encounters a BPF_STX instruction with BPF_ATOMIC
+and BPF_FETCH, the src register (or r0 for BPF_CMPXCHG) also acts as
+a destination, thus receiving the old value from the memory location.
 
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/87cy149n6k.wl-tiwai@suse.de
-Link: https://patch.msgid.link/20260329091240.420194-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The current backtracking logic does not account for this. It treats
+atomic fetch operations the same as regular stores where the src
+register is only an input. This leads the backtrack_insn to fail to
+propagate precision to the stack location, which is then not marked
+as precise!
+
+Later, the verifier's path pruning can incorrectly consider two states
+equivalent when they differ in terms of stack state. Meaning, two
+branches can be treated as equivalent and thus get pruned when they
+should not be seen as such.
+
+Fix it as follows: Extend the BPF_LDX handling in backtrack_insn to
+also cover atomic fetch operations via is_atomic_fetch_insn() helper.
+When the fetch dst register is being tracked for precision, clear it,
+and propagate precision over to the stack slot. For non-stack memory,
+the precision walk stops at the atomic instruction, same as regular
+BPF_LDX. This covers all fetch variants.
+
+Before:
+
+  0: (b7) r1 = 8                        ; R1=8
+  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
+  2: (b7) r2 = 0                        ; R2=0
+  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
+  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
+  5: (0f) r3 += r2
+  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
+  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
+  mark_precise: frame0: regs=r2 stack= before 2: (b7) r2 = 0
+  6: R2=8 R3=fp8
+  6: (b7) r0 = 0                        ; R0=0
+  7: (95) exit
+
+After:
+
+  0: (b7) r1 = 8                        ; R1=8
+  1: (7b) *(u64 *)(r10 -8) = r1         ; R1=8 R10=fp0 fp-8=8
+  2: (b7) r2 = 0                        ; R2=0
+  3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)          ; R2=8 R10=fp0 fp-8=mmmmmmmm
+  4: (bf) r3 = r10                      ; R3=fp0 R10=fp0
+  5: (0f) r3 += r2
+  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r2 stack= before 4: (bf) r3 = r10
+  mark_precise: frame0: regs=r2 stack= before 3: (db) r2 = atomic64_fetch_add((u64 *)(r10 -8), r2)
+  mark_precise: frame0: regs= stack=-8 before 2: (b7) r2 = 0
+  mark_precise: frame0: regs= stack=-8 before 1: (7b) *(u64 *)(r10 -8) = r1
+  mark_precise: frame0: regs=r1 stack= before 0: (b7) r1 = 8
+  6: R2=8 R3=fp8
+  6: (b7) r0 = 0                        ; R0=0
+  7: (95) exit
+
+Fixes: 5ffa25502b5a ("bpf: Add instructions for atomic_[cmp]xchg")
+Fixes: 5ca419f2864a ("bpf: Add BPF_FETCH field / create atomic_fetch_add instruction")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260331222020.401848-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctdaio.c | 85 ++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 33 deletions(-)
+ kernel/bpf/verifier.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index de06e8243c137..411c6a7758d2a 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -98,7 +98,7 @@ static const struct rsc_ops daio_in_rsc_ops_20k2 = {
- 	.output_slot	= daio_index,
- };
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 68e9660405342..e47fd179abf61 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -677,6 +677,13 @@ static void print_liveness(struct bpf_verifier_env *env,
+ 		verbose(env, "D");
+ }
  
--static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
-+static int daio_device_index(enum DAIOTYP type, struct hw *hw)
++static bool is_atomic_fetch_insn(const struct bpf_insn *insn)
++{
++	return BPF_CLASS(insn->code) == BPF_STX &&
++	       BPF_MODE(insn->code) == BPF_ATOMIC &&
++	       (insn->imm & BPF_FETCH);
++}
++
+ static int __get_spi(s32 off)
  {
- 	switch (hw->chip_type) {
- 	case ATC20K1:
-@@ -111,7 +111,9 @@ static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
- 		case LINEO3:	return 5;
- 		case LINEO4:	return 6;
- 		case LINEIM:	return 7;
--		default:	return -EINVAL;
-+		default:
-+			pr_err("ctxfi: Invalid type %d for hw20k1\n", type);
-+			return -EINVAL;
+ 	return (-off - 1) / BPF_REG_SIZE;
+@@ -3925,10 +3932,22 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			   * dreg still needs precision before this insn
+ 			   */
  		}
- 	case ATC20K2:
- 		switch (type) {
-@@ -124,9 +126,12 @@ static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
- 		case LINEO4:	return 6;
- 		case LINEIM:	return 4;
- 		case MIC:	return 5;
--		default:	return -EINVAL;
-+		default:
-+			pr_err("ctxfi: Invalid type %d for hw20k2\n", type);
-+			return -EINVAL;
- 		}
- 	default:
-+		pr_err("ctxfi: Invalid chip type %d\n", hw->chip_type);
- 		return -EINVAL;
- 	}
- }
-@@ -147,8 +152,11 @@ static int dao_spdif_set_spos(struct dao *dao, unsigned int spos)
- 
- static int dao_commit_write(struct dao *dao)
- {
--	dao->hw->dao_commit_write(dao->hw,
--		daio_device_index(dao->daio.type, dao->hw), dao->ctrl_blk);
-+	int idx = daio_device_index(dao->daio.type, dao->hw);
+-	} else if (class == BPF_LDX) {
+-		if (!bt_is_reg_set(bt, dreg))
++	} else if (class == BPF_LDX || is_atomic_fetch_insn(insn)) {
++		u32 load_reg = dreg;
 +
-+	if (idx < 0)
-+		return idx;
-+	dao->hw->dao_commit_write(dao->hw, idx, dao->ctrl_blk);
- 	return 0;
- }
- 
-@@ -308,8 +316,11 @@ static int dai_set_enb_srt(struct dai *dai, unsigned int enb)
- 
- static int dai_commit_write(struct dai *dai)
- {
--	dai->hw->dai_commit_write(dai->hw,
--		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
-+	int idx = daio_device_index(dai->daio.type, dai->hw);
++		/*
++		 * Atomic fetch operation writes the old value into
++		 * a register (sreg or r0) and if it was tracked for
++		 * precision, propagate to the stack slot like we do
++		 * in regular ldx.
++		 */
++		if (is_atomic_fetch_insn(insn))
++			load_reg = insn->imm == BPF_CMPXCHG ?
++				   BPF_REG_0 : sreg;
 +
-+	if (idx < 0)
-+		return idx;
-+	dai->hw->dai_commit_write(dai->hw, idx, dai->ctrl_blk);
- 	return 0;
- }
++		if (!bt_is_reg_set(bt, load_reg))
+ 			return 0;
+-		bt_clear_reg(bt, dreg);
++		bt_clear_reg(bt, load_reg);
  
-@@ -388,7 +399,7 @@ static int dao_rsc_init(struct dao *dao,
- {
- 	struct hw *hw = mgr->mgr.hw;
- 	unsigned int conf;
--	int err;
-+	int idx, err;
- 
- 	err = daio_rsc_init(&dao->daio, desc, mgr->mgr.hw);
- 	if (err)
-@@ -407,15 +418,18 @@ static int dao_rsc_init(struct dao *dao,
- 	if (err)
- 		goto error2;
- 
--	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw));
-+	idx = daio_device_index(dao->daio.type, hw);
-+	if (idx < 0) {
-+		err = idx;
-+		goto error2;
-+	}
-+
-+	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
- 
- 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
--	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw), conf);
--	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
--			daio_device_index(dao->daio.type, hw));
-+	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk, idx, conf);
-+	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
- 
- 	return 0;
-@@ -464,7 +478,7 @@ static int dai_rsc_init(struct dai *dai,
- 			const struct daio_desc *desc,
- 			struct daio_mgr *mgr)
- {
--	int err;
-+	int idx, err;
- 	struct hw *hw = mgr->mgr.hw;
- 	unsigned int rsr, msr;
- 
-@@ -478,6 +492,12 @@ static int dai_rsc_init(struct dai *dai,
- 	if (err)
- 		goto error1;
- 
-+	idx = daio_device_index(dai->daio.type, dai->hw);
-+	if (idx < 0) {
-+		err = idx;
-+		goto error1;
-+	}
-+
- 	for (rsr = 0, msr = desc->msr; msr > 1; msr >>= 1)
- 		rsr++;
- 
-@@ -486,8 +506,7 @@ static int dai_rsc_init(struct dai *dai,
- 	/* default to disabling control of a SRC */
- 	hw->dai_srt_set_ec(dai->ctrl_blk, 0);
- 	hw->dai_srt_set_et(dai->ctrl_blk, 0); /* default to disabling SRT */
--	hw->dai_commit_write(hw,
--		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
-+	hw->dai_commit_write(hw, idx, dai->ctrl_blk);
- 
- 	return 0;
- 
-@@ -605,28 +624,28 @@ static int put_daio_rsc(struct daio_mgr *mgr, struct daio *daio)
- static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
--
--	if (daio->output) {
--		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	} else {
--		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	}
-+	int idx = daio_device_index(daio->type, hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	if (daio->output)
-+		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
-+	else
-+		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk, idx);
- 	return 0;
- }
- 
- static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
- {
- 	struct hw *hw = mgr->mgr.hw;
--
--	if (daio->output) {
--		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	} else {
--		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk,
--				daio_device_index(daio->type, hw));
--	}
-+	int idx = daio_device_index(daio->type, hw);
-+
-+	if (idx < 0)
-+		return idx;
-+	if (daio->output)
-+		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
-+	else
-+		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk, idx);
- 	return 0;
- }
- 
+ 		/* scalars can only be spilled into stack w/o losing precision.
+ 		 * Load from any other memory can be zero extended.
 -- 
 2.53.0
 
