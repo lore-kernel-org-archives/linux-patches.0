@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67CC3BB9E1;
-	Sat, 17 Oct 2026 17:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67513BB9E1;
+	Sat, 17 Oct 2026 17:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257341; cv=none; b=kSgCbFrrTeCMv/AtsHfRnxszRmjfUwuJeaMsrwHZtLYQYHipy9CcZLp6USqENucCQLgqTEsFL8uhEwzIF3Ky856ZfYL7QNsxyjZAqEI4KVtgcMRfBl36IyBxkKmk1Zy4hGWRSZocBfRYZyAh4+ye6i3kdg12CHFU5ljqx5sD7ns=
+	t=1792257343; cv=none; b=Vad2/Td507V0xmC9W3nqKBieHtbyzlOXxpifYHh2HCdHP3D15abEsuYqjLrB4h3d5MSAaQLxyTod3UlyMYBRJGtSD0g/Xg0yNnFJ+LVAcRDcVWyWPIHSusHVxlOX20ieRjdfCwFwe3WWRffOUJD0Y79CXCYoVw0bXdKhXPP0Wng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257341; c=relaxed/simple;
-	bh=MP29x1je6eL0oJDXJUSddE884vCgpRm/GnsiCBndslU=;
+	s=arc-20240116; t=1792257343; c=relaxed/simple;
+	bh=PT6ZAk7vG7S83IOMjYnSOOtJ3rP7vI1SS8cVbx3rwm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdmm0U/NEtQbn7tUqQP/pqaBQwHcNTD0G1rAYgSvrn8SdHsB326fXAN89jtbmDfKeduJfx1staVDhjF39cXrYvBCN2z92ZhJjIu0NEX+KsfUS1K8jp6i0zD2iAFhM5qGq7zvcVwWEAOSNXGFRegYrSQrrUHHGweUqXdkFiJFsms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDuZLIgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkHmthM7PUOrVeekLB8oCdotwuCJlI9F/hgVeqgZN129//XiGlmQJsj/g4nIfdGHFjBZm/gnsG4ByVezmDrKgDUlq654JKY+zvL/Ar2XUuWIFYM1D/3CZ7kOGlUY7+ufJGDlh8Q6hi7TbK+scsm9+k4btKqf8nFYPVYnxpImPPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPoSzgmw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDuZLIgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBE61F000C4;
-	Sat, 17 Oct 2026 17:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPoSzgmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B25F1F000C4;
+	Sat, 17 Oct 2026 17:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257339;
-	bh=dxhvgExzO/0jBcuIGhlhSfZyyWdXsJD8GtIuvz5SKDI=;
+	s=korg; t=1792257342;
+	bh=Cppv7npUaBXPu/IVFgYuk4VbX2VxUa3dfRbbtKguEX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDuZLIgyZdBM6knZJ7CyhjEL75NAPkuGrgUEnWdZ/8hnXySayI8cJgqy05Zm1vfWw
-	 BRFqYTeLbv4obGkrGe5/BlaS/Jx+SeArzun3jLPK/OmKR/H1KV3EqoYKdadaL5a4Sp
-	 OO/MezzugOypN2SK/2D4wAzeEy0Y3EzQPhVPMdwY=
+	b=SPoSzgmwemMGzO4oXw4yq8SlTds8PIOwnyFRYCfnPpgkDNkZEvSNhneCN+Ctc8JNB
+	 hP0Ws+1LrMFY2x/w0dsoM4PE1DKFVBeuuWQRoKIu4CpRkiRjg7fjM43HIFcbXqYwLj
+	 728Upd3hRMqesYUyGWOKoXxRHTx8v5nzynvVw1ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Vishal Badole <Vishal.Badole@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 0486/1674] EDAC/amd64: Mask UMC chip select to the four implemented selects
-Date: Sat, 17 Oct 2026 17:45:58 +0200
-Message-ID: <20261017160443.589987271@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Juergen Gross <jgross@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0477/1674] xen/netfront: dont leak the skb when xennet_fill_frags() fails
+Date: Sat, 17 Oct 2026 17:45:49 +0200
+Message-ID: <20261017160443.357918720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,55 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Badole <Vishal.Badole@amd.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7484bc43ba6b8e189b482db5b75e7842890a82b1 upstream.
+commit 93ccaf1c26e2133396173b76a071e59024daa622 upstream.
 
-For DRAM ECC errors, the chip select value can be found in the
-MCA_SYND[ErrorInformation] field.
+When a response chain has more slots than fit in the skb's frags,
+xennet_fill_frags() returns an error and xennet_poll() jumps to its
+error path.  That path moves what's left on tmpq to errq to be freed,
+but the skb being filled was already dequeued from tmpq, so it's never
+freed.  Each chain that overflows leaks the skb and the pages attached
+to it as frags, and the backend decides how many slots it sends.
 
-ErrorInformation[2:0] was first documented in Zen1. The 3 bit field
-implied that up to 8 chip selects may be used.
+Put the skb back on tmpq before taking the error path, like the
+xennet_set_skb_gso() failure just above it does.
 
-However, all Zen-based systems have only ever had up to 4 chip selects.
-So only bits [1:0] would contain a valid chip select value.
-
-Future systems are redefining the field to ErrorInformation[1:0]. This
-matches the existing 'up to 4 chip selects' implementations. And it
-frees up the extra bit for other decoding.
-
-Change the current chip select mask from 0x7 to 0x3 to prepare for the
-decode change.
-
-Fixes: 713ad54675fd ("EDAC, amd64: Define and register UMC error decode function")
-Suggested-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261002113204.3358815-2-Vishal.Badole@amd.com
+Fixes: ad4f15dc2c70 ("xen/netfront: don't bug in case of too many frags")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-fill-frags-leak-v1-1-a8a01ff9cd52@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/amd64_edac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/xen-netfront.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -3068,13 +3068,13 @@ static inline void decode_bus_error(int
-  * the instance_id. For example, instance_id=0xYXXXXX where Y is the channel
-  * number.
-  *
-- * For DRAM ECC errors, the Chip Select number is given in bits [2:0] of
-+ * For DRAM ECC errors, the Chip Select number is given in bits [1:0] of
-  * the MCA_SYND[ErrorInformation] field.
-  */
- static void umc_get_err_info(struct mce *m, struct err_info *err)
- {
- 	err->channel = (m->ipid & GENMASK(31, 0)) >> 20;
--	err->csrow = m->synd & 0x7;
-+	err->csrow = m->synd & 0x3;
- }
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1345,8 +1345,10 @@ err:
+ 		skb->data_len = rx->status;
+ 		skb->len += rx->status;
  
- static void decode_umc_error(int node_id, struct mce *m)
+-		if (unlikely(xennet_fill_frags(queue, skb, &tmpq)))
++		if (unlikely(xennet_fill_frags(queue, skb, &tmpq))) {
++			__skb_queue_head(&tmpq, skb);
+ 			goto err;
++		}
+ 
+ 		if (rx->flags & XEN_NETRXF_csum_blank)
+ 			skb->ip_summed = CHECKSUM_PARTIAL;
 
 
