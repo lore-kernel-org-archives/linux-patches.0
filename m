@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B2D38F658;
-	Sat, 17 Oct 2026 17:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0380C38F658;
+	Sat, 17 Oct 2026 17:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259952; cv=none; b=cVqiWPsQUFh2gB1NAAM/Al4/Aqs29+PslSBAlxenkP1hxEmW7UCEuFUOubX4nsKdE7HhleYmHpU5C1YipA/+wOQgRH9GKSmXAZuGTde3Ay1VIaQjel3pvWBGfoGFqjCtpIBOKGXTpkE88mbE9DeSiquI7uNGnLjTJl4I/Dx8+Ek=
+	t=1792259956; cv=none; b=Q63cgSch0tbenIJd62lVEPkM0WMt4yhIvXprl+rXe6NdxjL5/iTeq7Pa4kJAPoPgnuCi/pxVxcIMOxCn83u1bXjr4WdEFCMSt2O7vxF+MiMOAcDyqBIJNbXCXBf/TFrCjSg9x0dWVN/E2ZWGQBKAfRF3jp/IPzJN549HusqGBfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259952; c=relaxed/simple;
-	bh=0d69J5Z6V7w7RGme+QgXyEi07DgzgPRLPMBecll2ros=;
+	s=arc-20240116; t=1792259956; c=relaxed/simple;
+	bh=N27OOl7e4zmgsd+jyx93G9/xYX/x/2u2d+8Iid9wNE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgVCdn3BsIFFygDDxsvTXHPfrgH8T0UIWCgzutAXWTwfVIySJbI1w1pZbmiXG9u1C15JawxWIDzFlvCMIL9tQzR/J3eCyd/B3JjSGPgB3R87k51NSoVedMMq5fWMye1USCM62/htiYNqFxPOEfMj9wdTLcawBFkWtxsWTI0EuAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V41wflgJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T9/tGv1YMya5DqOIjE//kSLe6rZt6PVGeqxyD04TtM0F4CtPcBXLjBD/OSszr1cPxUM0+AHXvQuRvdUCCeDIi8PstqXpjdSnZR4/ih+oPkhzWPYy4eMdjlid40MMfpZ0anUan6uAKCzMdTy4Z43ILC1GUnV9lwfUt4kU3hRu2Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=im1gOUU5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V41wflgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B31E1F000C4;
-	Sat, 17 Oct 2026 17:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="im1gOUU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1F31F000C4;
+	Sat, 17 Oct 2026 17:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259951;
-	bh=haW225Fw1Ugv1IZID5Z6ybpDftA3zkpC1An385GkSBM=;
+	s=korg; t=1792259954;
+	bh=qQXfljo5vz+fIlmXpJ/pzP9LeKTOXqVZeboLhg7gQ00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V41wflgJ07IGL5cq1HAYqA4N0g5HnjP0yXi5i/ptQ9usjKm9oR70yMnCrsYv1lNOF
-	 fuLLmmthXHLy7syTcgFbir0PBML52gCZWLQq7NMwBbdjNz9sBW2c2kYDVmWkWClLCi
-	 NhhZlPMc16EbpdGh2Oaw6RKtwXqoPHFVdl7sL9hg=
+	b=im1gOUU5Lng+qkxtszULHNflVJssckUEq+tj9KMs8c2X6r9sTgCJ1UGTUFoIXkxta
+	 gKxxn90W3J0BEt2TiIeH+Y84k7qsanRqmJfoylcGiquMuDK6UzdB256BNhASusdlnB
+	 yJ0X08fkXtxQn6XamHFaBJV2fBb3Nz8ltA5JOLrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1384/1674] net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue
-Date: Sat, 17 Oct 2026 18:00:56 +0200
-Message-ID: <20261017160506.688406287@linuxfoundation.org>
+Subject: [PATCH 6.6 1385/1674] ip6mr: do not clone dst in ip6mr_cache_report()
+Date: Sat, 17 Oct 2026 18:00:57 +0200
+Message-ID: <20261017160506.714525645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,97 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4c660ee8c809637909f4f7eb1017f7b9401c75c4 ]
+[ Upstream commit 235b42b5860189eb8c27c36435ad932cae65a734 ]
 
-gred_enqueue(), bfifo_enqueue() and plug_enqueue() admit a packet when the
-current backlog plus the packet length fits within the queue limit:
+IPv6 input attaches a non-refcounted (NOREF) dst to skbs under RCU.
+When an ingress multicast packet misses MFC lookup,
+ip6mr_cache_unresolved() places the skb onto the unresolved queue,
+escaping the receive-side RCU grace period.
 
-  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (gred default VQ)
-  gred_backlog+qdisc_pkt_len(skb) <= q->limit  (gred configured VQ)
-  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (bfifo)
-  sch->qstats.backlog + skb->len <= q->limit             (plug)
+If the underlying route is deleted and freed, and the MFC queue is later
+resolved with a wrong parent interface, ip6_mr_forward() invokes
+ip6mr_cache_report(..., MRT6MSG_WRONGMIF), which executes
+dst_clone(skb_dst(pkt)) on the freed dst entry, triggering a slab
+use-after-free.
 
-sch->qstats.backlog and q->backlog are u32, and qdisc_pkt_len()/skb->len
-are unsigned int, so all sums are computed in 32 bits and wrap at 2^32.
-Once the true backlog exceeds 4 GiB the wrapped sum becomes small and
-admission keeps succeeding, so the queue grows without bound and the kernel
-can be driven to OOM.
+Report packets queued to mroute6_sk (a raw socket) and netlink
+notifications do not require an attached dst entry.
 
-Promote the sums to u64 so admission stops once the true backlog exceeds
-the limit.  The limit is u32, so the bounded queue stays below 2^32 and
-the stored u32 backlog never wraps.
+Fix this by:
+1. Removing dst_clone() in ip6mr_cache_report() and ensuring report skbs
+   do not hold a dst.
+2. Dropping skb_dst before queuing unresolved skbs in
+   ip6mr_cache_unresolved(), matching the fact that multicast
+   forwarding resolves outgoing routes anew via ip6_route_output().
 
-The bug can only be reproduced as root (albeit with ridiculous setup):
- attach a gred (or bfifo/plug) qdisc with a limit near 4 GiB,
- leaving the default VQ unconfigured (for gred), and drive >4 GiB of
- queued traffic (e.g. via a size table / stab to inflate qdisc_pkt_len,
- or sustained high-rate traffic). The u32 backlog+len sum wraps at 2^32,
- admission keeps succeeding, and the queue grows unboundedly to OOM.
-
-Fixes: a3eb95f891d6 ("net_sched: gred: add TCA_GRED_LIMIT attribute")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260818095927.15901-1-jhs@mojatatu.com
+Fixes: 67f415dd2906 ("ipv6: convert rx data path to not take refcnt on dst")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260818172755.4083692-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fifo.c | 2 +-
- net/sched/sch_gred.c | 4 ++--
- net/sched/sch_plug.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/ip6mr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
-index ded0eac944068..f3c5e22eb5294 100644
---- a/net/sched/sch_fifo.c
-+++ b/net/sched/sch_fifo.c
-@@ -19,7 +19,7 @@
- static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 struct sk_buff **to_free)
- {
--	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
-+	if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
- 		   READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index a7fa0d1d82b08..1724d50c50fd8 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1128,7 +1128,6 @@ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 	msg->im6_src = ipv6_hdr(pkt)->saddr;
+ 	msg->im6_dst = ipv6_hdr(pkt)->daddr;
  
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index fa7a1b69c0f35..4f44a268286fa 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -179,7 +179,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 * if no default DP has been configured. This
- 			 * allows for DP flows to be left untouched.
- 			 */
--			if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
-+			if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
- 					sch->limit))
- 				return qdisc_enqueue_tail(skb, sch);
- 			else
-@@ -244,7 +244,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		break;
+-	skb_dst_set(skb, dst_clone(skb_dst(pkt)));
+ 	skb->ip_summed = CHECKSUM_UNNECESSARY;
  	}
  
--	if (gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
-+	if ((u64)gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
- 		q->backlog += qdisc_pkt_len(skb);
- 		return qdisc_enqueue_tail(skb, sch);
+@@ -1138,6 +1137,7 @@ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 		return -EINVAL;
  	}
-diff --git a/net/sched/sch_plug.c b/net/sched/sch_plug.c
-index 35f49edf63dbf..6638343ca671a 100644
---- a/net/sched/sch_plug.c
-+++ b/net/sched/sch_plug.c
-@@ -89,7 +89,7 @@ static int plug_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- {
- 	struct plug_sched_data *q = qdisc_priv(sch);
  
--	if (likely(sch->qstats.backlog + skb->len <= q->limit)) {
-+	if (likely((u64)sch->qstats.backlog + skb->len <= q->limit)) {
- 		if (!q->unplug_indefinite)
- 			q->pkts_current_epoch++;
- 		return qdisc_enqueue_tail(skb, sch);
++	skb_dst_drop(skb);
+ 	mrt6msg_netlink_event(mrt, skb);
+ 
+ 	/* Deliver to user space multicast routing algorithms */
+@@ -1217,6 +1217,7 @@ static int ip6mr_cache_unresolved(struct mr_table *mrt, mifi_t mifi,
+ 			skb->dev = dev;
+ 			skb->skb_iif = dev->ifindex;
+ 		}
++		skb_dst_drop(skb);
+ 		skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
+ 		err = 0;
+ 	}
 -- 
 2.53.0
 
