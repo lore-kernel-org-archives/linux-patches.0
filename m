@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42862DF126;
-	Sat, 17 Oct 2026 17:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E153803DC;
+	Sat, 17 Oct 2026 17:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257561; cv=none; b=UymVGxNaX4J5ARmPmgzY9FwsLWKxp1AzpgXubPdzNAAamVZN5cYLT79WZbepw8jZoQskZ5/9pDyxwrNy585s5KD4rQo2XepdbYmnjMwVaHjNo2O+yO550mmx3NjjMUIshGLxM9skLKoFipaHbzfiq5MPtKnkGh8KumauxK0cZH8=
+	t=1792257564; cv=none; b=rgXKWa//iQCkaiCnQGH4LHResNTmHveeLkraze9zoasbHzNDrsvOXPPYEvyar6TNbgYh/ut/Ej8RZJ73HdHsXOLsOmzD0ZCqr2k2hvVEKbPnp4pCPG0dUP8/Ztp5X8DHBC5hN4Ra3ffl+AVsMtvqibDdK7bGbnr//GqH08tSuc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257561; c=relaxed/simple;
-	bh=OY2euPAQs5pToZOwKJAXrLY8D1tiRCsiBnTOlbmR3Ng=;
+	s=arc-20240116; t=1792257564; c=relaxed/simple;
+	bh=0+1231w+WE/lH7OcGtdmFvFeV525zWeieHIbXAoy11g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/1qiEX1KnV6BSUUyNHpK8uXjrhqpZmjpkD3TFvNhdTygE9fNpmyU4UAqmzsWlKJsyWYjGT97ueN5T8ga67X6hMDavPLbOT0IvPbuS+od2JxOMJfVAw+j2xHthc9a7M8By5MLSe+a44sKbuhyDU3Hp7IWt2IAspj3UHW+pZe5aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQ6l8nXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hRF/DeitWGhOXTwBUMwsGwX88QfNMZgALfIR8LIHvEhtGVqnsfCE4938STl39LX0srJ6FL845eDnrcSfa8nSkrjO+MHtSSE7r/TgY0xZjfV6zQGMQRbLFjkOU36ZMH2ZGgUu5qQfe9gYubwgj8TUFzQL5jUKET+dFbSePPXYmXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yg7IWGD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQ6l8nXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453B21F000C4;
-	Sat, 17 Oct 2026 17:19:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yg7IWGD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3241F000C4;
+	Sat, 17 Oct 2026 17:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257559;
-	bh=vnGzl5fYMbfIbDhMe6NrS1/J4WNrCTvKf/hFaj/6FLg=;
+	s=korg; t=1792257563;
+	bh=7MlhxWeJ1qmoh3cgcvD68T2gx5dNwqIJwWw2u6kjbkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQ6l8nXcNLqiXM8uQhqyxBB6Zz6UDmXVAzKjIKWEeppXoP1uB0g7rfZbh2KinWlSM
-	 lJynnP35kGjxgat7rhA/61eQDHNfHOl1G6gNxaVlGlWsmmcIddDhR3VD3pk2IQRjEK
-	 RMrPUkoOnX6odKDG5rUlC1rvbuMZiCS4S61cSaVo=
+	b=yg7IWGD0Hwsb0hO120848aJ8FiIvrNTB4cRQjwsEJ7U+3BdekbTuEWFcVPxze+OWG
+	 EMDAls3mkO+3v/7026cDryFIkkkLH3WXRcVreKSGoHAlxPxX2HscX4Ds1zsrZuMqig
+	 ckXUuJcF6XxPxLZQLHQrN070QOJ9iMcRjotrJBSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0597/1674] ASoC: SOF: Intel: hda-dai: Ensure DAI widget is valid during params
-Date: Sat, 17 Oct 2026 17:47:49 +0200
-Message-ID: <20261017160446.405813982@linuxfoundation.org>
+Subject: [PATCH 6.6 0598/1674] wifi: ath12k: fix reusing m3 memory
+Date: Sat, 17 Oct 2026 17:47:50 +0200
+Message-ID: <20261017160446.430952327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -49,74 +47,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 569922b82ca660f8b24e705f6cf674e6b1f99cc7 ]
+[ Upstream commit 00575bb44b2c2aa53d0a768de2b80c9c1af0174d ]
 
-Each cpu DAI should associate with a widget. However, the topology might
-not create the right number of DAI widgets for aggregated amps. And it
-will cause NULL pointer deference.
-Check that the DAI widget associated with the CPU DAI is valid to prevent
-NULL pointer deference due to missing DAI widgets in topologies with
-aggregated amps.
+During firmware recovery or suspend/resume, m3 memory could be reused if
+the size of the new m3 binary is equal to or less than that of the
+existing memory. There will be issues for the latter case, since
+m3_mem->size will be updated with a smaller value and this value is
+eventually used in the free path, where the original total size should be
+used instead.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20241203104853.56956-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+To fix it, add a new member in m3_mem_region structure to track the original
+memory size and use it in free path.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+[ Backport to 6.6.y: 6.6.y only loads the separate m3.bin, so use
+  fw->size where upstream uses m3_len. The upstream change to the
+  allocation-failure message only matters for the firmware-N.bin path,
+  which 6.6.y lacks, so it is dropped. The copyright lines are left as
+  they are.
+  On its own this changes nothing in 6.6.y, because the reuse path
+  currently returns before m3_mem->size is updated. It is needed by the
+  following fix to my 6.6.y backport of 05090ae82f44, which copies a
+  possibly smaller image into the reused buffer as upstream does. ]
+
+Fixes: 05090ae82f44 ("wifi: ath12k: check M3 buffer size as well whey trying to reuse it")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251029-ath12k-fix-m3-reuse-v1-1-69225bacfc5d@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Assisted-by: LLM
-[ Backport to 6.6.y: Keep the NULL-widget checks in
-  sdw_hda_dai_hw_params() and sdw_params_stream(). Omit the extra check
-  in the newer IPC4 CPU-DAI aggregation loop, which this target lacks. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-dai.c | 6 ++++++
- sound/soc/sof/intel/hda.c     | 5 +++++
- 2 files changed, 11 insertions(+)
+ drivers/net/wireless/ath/ath12k/qmi.c | 7 +++++--
+ drivers/net/wireless/ath/ath12k/qmi.h | 3 +++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index a3d0b6d721aaf..f541cd0fe78a4 100644
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -454,6 +454,12 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 	struct snd_sof_dev *sdev;
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
+index 48d0043fcee93..86cc61dba0946 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.c
++++ b/drivers/net/wireless/ath/ath12k/qmi.c
+@@ -2518,9 +2518,10 @@ static void ath12k_qmi_m3_free(struct ath12k_base *ab)
+ 	if (!m3_mem->vaddr)
+ 		return;
  
-+	if (!w) {
-+		dev_err(cpu_dai->dev, "%s widget not found, check amp link num in the topology\n",
-+			cpu_dai->name);
-+		return -EINVAL;
-+	}
+-	dma_free_coherent(ab->dev, m3_mem->size,
++	dma_free_coherent(ab->dev, m3_mem->total_size,
+ 			  m3_mem->vaddr, m3_mem->paddr);
+ 	m3_mem->vaddr = NULL;
++	m3_mem->total_size = 0;
+ 	m3_mem->size = 0;
+ }
+ 
+@@ -2542,7 +2543,7 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
+ 
+ 	/* In recovery/resume cases, M3 buffer is not freed, try to reuse that */
+ 	if (m3_mem->vaddr) {
+-		if (m3_mem->size >= fw->size) {
++		if (m3_mem->total_size >= fw->size) {
+ 			release_firmware(fw);
+ 			return 0;
+ 		}
+@@ -2561,6 +2562,8 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
+ 		return -ENOMEM;
+ 	}
+ 
++	m3_mem->total_size = fw->size;
 +
- 	ret = non_hda_dai_hw_params(substream, params, cpu_dai);
- 	if (ret < 0) {
- 		dev_err(cpu_dai->dev, "%s: non_hda_dai_hw_params failed %d\n", __func__, ret);
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index 15e6779efaa3b..aa3f9c9611737 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -102,6 +102,11 @@ static int sdw_params_stream(struct device *dev,
- 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(d, params_data->substream->stream);
- 	struct snd_sof_dai_config_data data = { 0 };
+ 	memcpy(m3_mem->vaddr, fw->data, fw->size);
+ 	m3_mem->size = fw->size;
+ 	release_firmware(fw);
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.h b/drivers/net/wireless/ath/ath12k/qmi.h
+index a996c6d57aa7b..62c7a526f1114 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.h
++++ b/drivers/net/wireless/ath/ath12k/qmi.h
+@@ -119,6 +119,9 @@ struct target_info {
+ };
  
-+	if (!w) {
-+		dev_err(dev, "%s widget not found, check amp link num in the topology\n",
-+			d->name);
-+		return -EINVAL;
-+	}
- 	data.dai_index = (params_data->link_id << 8) | d->id;
- 	data.dai_data = params_data->alh_stream_id;
- 
+ struct m3_mem_region {
++	/* total memory allocated */
++	u32 total_size;
++	/* actual memory being used */
+ 	u32 size;
+ 	dma_addr_t paddr;
+ 	void *vaddr;
 -- 
 2.53.0
 
