@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A15D3A6418;
-	Sat, 17 Oct 2026 17:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678793B3880;
+	Sat, 17 Oct 2026 17:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257423; cv=none; b=W/WIMYG62wBeoXG1q3kH8NvPaTh1/n2ARsJJJjyH8vPyadDtGYwKj6Uo2eo2zTnU+Ep5u3+71Ks8MjfrcdZtdn1QXsOBGWzA9UiQa3CAwtbTSVP+YYLsMuMASMx7hpPnY4iMxyQXPxdUvkFqOY4L+M1VpksRai9ueF0dxD8CJYw=
+	t=1792257426; cv=none; b=tUsVTqmKNTNPFqF84aOqDDIe6N9qtSeMsQmWX4ahfeoOb+KzqEWDt5k39OM+/HCsuPxAz7y+FlohVJeWDvwtLfCEcda2TpSNh8/3J4r7WwbumOgMS+GWDAaEJLXCnFQUgnqZZPlUVvhDVmAw33IUeZ711l0CP4lroCnRgLfRqzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257423; c=relaxed/simple;
-	bh=m1rTKvqnT9j3CJEIX7sxCbXP8FIM4Z9C7HGjluvsPfM=;
+	s=arc-20240116; t=1792257426; c=relaxed/simple;
+	bh=1fG+fnY8CpL4zLCX6TJ+ffaADox5p84oSV9aG37fN60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kAu3NjyQVl9lDRu6wCwO1TgX1PYwoalkr7S0Z1D6QqiZ8Ff82/65INQWNR/gagiNF9jeSgb3kjkosdLHRIHkGetDrm7p084EMKQZ4jV3ivgwW5O9/oqdKhrquFaA3ZT6k2a7nIbjeMIQKiyDetXn9PrDCk7kzIjiZ0K4oQP6d8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVszaBKj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JKiSenDhWTlQM9zEn4+P70jqWLFIPglItSR3rYC4tpzOmCUlvYgB4f6XhiIdF1hxbKtWx3pfTg5QsYe+wzgwtMtDLn9e887P3dWTo/4XTulKjHpO4Bwm0qilU8Gov7i+FkDzEjauXgtLWRg2LQn49b09AFsjpVqajjITQWykm8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRLKuUrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVszaBKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBA81F000C5;
-	Sat, 17 Oct 2026 17:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRLKuUrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D7D1F000C5;
+	Sat, 17 Oct 2026 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257422;
-	bh=xUeMQy/t+M1RdugT1OFfTM5I9hQn4+Lb+xY6P8wQBMI=;
+	s=korg; t=1792257425;
+	bh=NQ1reAnsef9Fb6qck8+NXF0QJCMS9vqlyK9a5IWeAO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVszaBKjmYeSDbjzJGbbGniRwXcG4qukDVaqejvuTShI+VD0VCiSNMezsxl67YVWF
-	 vhIRVN0p1tTte7Hh69R5kA5fDywZ7JAVx5p4m6xsG1PHBGAvE5lXeLEsSAkoDYkr5w
-	 j/EYxu95Vf9e+IalBj2+yo1cdnjF1LIyOw2/uQAA=
+	b=SRLKuUrMyhqiemwTOzH03jXGe89NDXKe0bMM3yVZSss5eNmvkHboI3HovcOKasGCZ
+	 FIr9NppNKZ+xo0zH0XcGtKPu9uWIhvnC+XD7Gw71iihGj9OeGqDijZMHVISTtzSpQW
+	 M3omsbN06m+y+wnkHJxCrHVoX/FYSh+e8CJvnkKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyi Gao <tianyi@cloudflare.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0553/1674] veth: fix peer NETDEV_XDP_ACT_NDO_XMIT after GRO is toggled while down
-Date: Sat, 17 Oct 2026 17:47:05 +0200
-Message-ID: <20261017160445.290829909@linuxfoundation.org>
+Subject: [PATCH 6.6 0554/1674] net/mlx5e: Order ICOSQ cc update after CQ doorbell
+Date: Sat, 17 Oct 2026 17:47:06 +0200
+Message-ID: <20261017160445.314287583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -48,62 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianyi Gao <tianyi@cloudflare.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 3f090039995f609a8e236f37980dee5712dded61 ]
+[ Upstream commit b056ca4d3742d0769f91137bb1ce3215428398f7 ]
 
-A veth device advertises NETDEV_XDP_ACT_NDO_XMIT only if its peer has an
-XDP program attached or GRO enabled, that is, only if the peer will have
-NAPI to receive the frames.
+mlx5e_poll_ico_cq() requires sq->cc to be updated only after
+mlx5_cqwq_update_db_record(), otherwise a CQ overrun may occur.
 
-veth_set_features() updates the peer's flag when GRO is toggled, but
-returns early if the device is down, and veth_open() only refreshes the
-flags of the device being opened. Toggling GRO while the device is down
-therefore leaves the peer's flag stale after the device comes up.
+The current implementation updates sq->cc before the CQ doorbell
+record, violating this ordering requirement.
 
-If GRO was enabled while down, the device comes up with NAPI but the
-peer does not advertise NDO_XMIT, and devmap rejects redirects to the
-peer with -EOPNOTSUPP. If GRO was disabled while down, the device comes
-up without NAPI but the peer still advertises NDO_XMIT, so redirects are
-accepted and then dropped in veth_xdp_xmit() with -ENXIO.
+Update the CQ doorbell record first and use dma_wmb() before updating
+sq->cc. This ensures that the CQ space is released to the device
+before the corresponding ICOSQ consumer index is updated by software.
 
-Commit 7a6102aa6df0 ("veth: Update XDP feature set when bringing up
-device") made veth_open() refresh the device's own flags. Refresh the
-peer's flags there too. The peer's flag depends on this device's XDP
-program and GRO setting, not on whether the peer is up, so it is
-correct to set it even if the peer is down.
-
-Fixes: 8267fc71abb2 ("veth: take into account peer device for NETDEV_XDP_ACT_NDO_XMIT xdp_features flag")
-Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261006173241.65945-2-tianyi@cloudflare.com
+Fixes: fd9b4be8002c ("net/mlx5e: RX, Support multiple outstanding UMR posts")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261006105820.257208-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index e5daca818c702..334783a022194 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1436,6 +1436,7 @@ static int veth_open(struct net_device *dev)
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 1146a8a4ea19b..e11e07f7f3550 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -1073,10 +1073,12 @@ int mlx5e_poll_ico_cq(struct mlx5e_cq *cq)
+ 		} while (!last_wqe);
+ 	} while ((++i < MLX5E_TX_CQ_POLL_BUDGET) && (cqe = mlx5_cqwq_get_cqe(&cq->wq)));
  
- 	veth_set_xdp_features(dev);
-+	veth_set_xdp_features(peer);
+-	sq->cc = sqcc;
+-
+ 	mlx5_cqwq_update_db_record(&cq->wq);
  
- 	return 0;
++	/* ensure cq space is freed before enabling more cqes */
++	dma_wmb();
++
++	sq->cc = sqcc;
+ 	return i;
  }
+ 
 -- 
 2.53.0
 
