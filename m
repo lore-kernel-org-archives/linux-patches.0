@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967433921FB;
-	Sat, 17 Oct 2026 17:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF3D3A1E92;
+	Sat, 17 Oct 2026 17:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258733; cv=none; b=LO30Kzi6DO2SMQBMAh2Sn/BUPs4aX0RJt1zfu/C1sjotKEP/St39xi6P39xlTMs2FZgiUoBIIIOk+ESP++kStVWSd3TEH0DY9ATdI/57zdydMD9dNL1jpqq7fSz7uEuf0EK5IhCuu9aXwLjMxtKWiZ+dXJuGU89JvTq6rAT3iQs=
+	t=1792258736; cv=none; b=QtKCob8hYDHaLxM7/VY1pjv4Hb1EPwfDFLcotZtJtXSU/w/LxubPrcqBBTGwMLWeRcPmuaIejRcrDEJ2INy0biJ8R0ZfltZ2IaHmsQsC++00zrtnPTOT4GOkLxcf1S25emDEdbvnPXU4fazdiuvDqBHmlm4pSvRNv3dDzWoRcIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258733; c=relaxed/simple;
-	bh=SrV7IlghwrXwlPF1TQilkvmI9ymLtTyq7GhXmE2WaaE=;
+	s=arc-20240116; t=1792258736; c=relaxed/simple;
+	bh=QrK8NMpsbMYYNywISmnMwcXIxo99sRQiJYT/xnAXumg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T00nTAs6F3oDZDbQtSQ/Llq6RfzkoI7ISUMGVHtX6xWMtLjHScpFNX8t8YsNFLsc2mmQ3i1WkYQ1JKbXsPqD3mp8EX/FGYVUkrMPu+ZamoIwsOpvXRm5TQ5B2hqYFiq8ngc/QQTmLwHMAuLj4Ae7Mbgf2YH1j3ddqavyyMsJxpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWatNAUk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uae0AAH52g+kEla5a4ugRUeKrOYqU4OXx/2wfiu08gB/gvnzrJvun0HmEr+YuCvRgasT8p87wXlXy0q9IhgDJRDxcJ8kdVGB4k/lt69W8H3rio+KIYTgAemR+adTt9ACTDdtSA2iDOH1s/x/MTqVHOYnJUqEodgBiN6rjsWXmXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySfuEy/c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWatNAUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0C61F000C4;
-	Sat, 17 Oct 2026 17:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySfuEy/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D301F000C4;
+	Sat, 17 Oct 2026 17:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258732;
-	bh=c9GrkyZkOPmYTU3Ip3vAj62+S5f8khmWH234zGVZVB0=;
+	s=korg; t=1792258735;
+	bh=TfGGZq8T3BLe+CUMXcECGNVaSWTLV1+LK55OZQJL6WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qWatNAUkYZyJD8fNqDZRlQAy9P5ojj8kb59AyslUR+EfNfNJQCegiotb8ER4aPs3F
-	 F6Q+MPg8n1/TBzARb8zI/j2ClgavuCPHf7vPSat+ncVXiQVrtzIvJ/vS360Lx0SBc2
-	 Sgul2VhNqNEeaiAGbNkIergWfiahuUyJ6lBwPt5U=
+	b=ySfuEy/c4PtvfFBn6AQB51IywVtpiDSd79H3vrV/RsisWu4gWQv2drd0tG2FI7n3n
+	 NuAWNdm4jCR2qC/tXTeUUngac9WnG/uiR5f9bp2YZfcqR6xVNN2Er7TWG2tiP2xPII
+	 sZv0t+xlAj8QkTGxyw/t8qOKEhxcYueZF6PwqL+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Yin <yinxin.x@bytedance.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0982/1674] fsnotify: fix inode reference leak in fsnotify_recalc_mask()
-Date: Sat, 17 Oct 2026 17:54:14 +0200
-Message-ID: <20261017160456.331772282@linuxfoundation.org>
+Subject: [PATCH 6.6 0983/1674] sched/psi: fix race between file release and pressure write
+Date: Sat, 17 Oct 2026 17:54:15 +0200
+Message-ID: <20261017160456.357326308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,153 +47,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 4aca914ac152f5d055ddcb36704d1e539ac08977 ]
+[ Upstream commit a5b98009f16d8a5fb4a8ff9a193f5735515c38fa ]
 
-fsnotify_recalc_mask() fails to handle the return value of
-__fsnotify_recalc_mask(), which may return an inode pointer that needs
-to be released via fsnotify_drop_object() when the connector's HAS_IREF
-flag transitions from set to cleared.
+A potential race condition exists between pressure write and cgroup file
+release regarding the priv member of struct kernfs_open_file, which
+triggers the uaf reported in [1].
 
-This manifests as a hung task with the following call trace:
+Consider the following scenario involving execution on two separate CPUs:
 
-  INFO: task umount:1234 blocked for more than 120 seconds.
-  Call Trace:
-   __schedule
-   schedule
-   fsnotify_sb_delete
-   generic_shutdown_super
-   kill_anon_super
-   cleanup_mnt
-   task_work_run
-   do_exit
-   do_group_exit
+   CPU0					CPU1
+   ====					====
+					vfs_rmdir()
+					kernfs_iop_rmdir()
+					cgroup_rmdir()
+					cgroup_kn_lock_live()
+					cgroup_destroy_locked()
+					cgroup_addrm_files()
+					cgroup_rm_file()
+					kernfs_remove_by_name()
+					kernfs_remove_by_name_ns()
+ vfs_write()				__kernfs_remove()
+ new_sync_write()			kernfs_drain()
+ kernfs_fop_write_iter()		kernfs_drain_open_files()
+ cgroup_file_write()			kernfs_release_file()
+ pressure_write()			cgroup_file_release()
+ ctx = of->priv;
+					kfree(ctx);
+ 					of->priv = NULL;
+					cgroup_kn_unlock()
+ cgroup_kn_lock_live()
+ cgroup_get(cgrp)
+ cgroup_kn_unlock()
+ if (ctx->psi.trigger)  // here, trigger uaf for ctx, that is of->priv
 
-The race window that triggers the iref leak:
+The cgroup_rmdir() is protected by the cgroup_mutex, it also safeguards
+the memory deallocation of of->priv performed within cgroup_file_release().
+However, the operations involving of->priv executed within pressure_write()
+are not entirely covered by the protection of cgroup_mutex. Consequently,
+if the code in pressure_write(), specifically the section handling the
+ctx variable executes after cgroup_file_release() has completed, a uaf
+vulnerability involving of->priv is triggered.
 
-  Thread A (adding mark)              Thread B (removing mark)
-  ──────────────────────              ────────────────────────
-  fsnotify_add_mark_locked():
-    fsnotify_add_mark_list():
-      spin_lock(conn->lock)
-      add mark_B(evictable) to list
-      spin_unlock(conn->lock)
-    return
+Therefore, the issue can be resolved by extending the scope of the
+cgroup_mutex lock within pressure_write() to encompass all code paths
+involving of->priv, thereby properly synchronizing the race condition
+occurring between cgroup_file_release() and pressure_write().
 
-    /* ---- gap: no lock held ---- */
+And, if an live kn lock can be successfully acquired while executing
+the pressure write operation, it indicates that the cgroup deletion
+process has not yet reached its final stage; consequently, the priv
+pointer within open_file cannot be NULL. Therefore, the operation to
+retrieve the ctx value must be moved to a point *after* the live kn
+lock has been successfully acquired.
 
-                                      fsnotify_detach_mark(mark_A):
-                                        spin_lock(mark_A->lock)
-                                        clear ATTACHED flag on mark_A
-                                        spin_unlock(mark_A->lock)
-                                        fsnotify_put_mark(mark_A)
+In another situation, specifically after entering cgroup_kn_lock_live()
+but before acquiring cgroup_mutex, there exists a different class of
+race condition:
 
-    fsnotify_recalc_mask():
-      spin_lock(conn->lock)
-      __fsnotify_recalc_mask():
-        /* mark_A skipped: ATTACHED cleared */
-        /* only mark_B(evictable) remains */
-        want_iref = false
-        has_iref = true  /* not yet cleared */
-        -> HAS_IREF transitions true -> false
-        -> returns inode pointer
-      spin_unlock(conn->lock)
-      /* BUG: return value discarded!
-       * iput() and fsnotify_put_sb_watched_objects()
-       * are never called */
+CPU0: write memory.pressure               CPU1: write cgroup.pressure=0
+===========================		  =============================
 
-Fix this by deferring the transition true -> false of HAS_IREF flag from
-fsnotify_recalc_mask() (Thread A) to fsnotify_put_mark() (thread B).
+kernfs_fop_write_iter()
+ kernfs_get_active_of(of)
+ pressure_write()
+   cgroup_kn_lock_live(memory.pressure)
+     cgroup_tryget(cgrp)
+     kernfs_break_active_protection(kn)
+     ... blocks on cgroup_mutex
 
-Fixes: c3638b5b1374 ("fsnotify: allow adding an inode mark without pinning inode")
-Signed-off-by: Xin Yin <yinxin.x@bytedance.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/CAOQ4uxiPsbHb0o5voUKyPFMvBsDkG914FYDcs4C5UpBMNm0Vcg@mail.gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+                                     	  cgroup_pressure_write()
+                                     	  cgroup_kn_lock_live(cgroup.pressure)
+                                     	  cgroup_file_show(memory.pressure, false)
+                                     	    kernfs_show(false)
+                                     	      kernfs_drain_open_files()
+                                     	        cgroup_file_release(of)
+                                     	          kfree(ctx)
+                                     	            of->priv = NULL
+                                     	  cgroup_kn_unlock()
+
+   ... acquires cgroup_mutex
+   ctx = of->priv;        // may now be NULL
+   if (ctx->psi.trigger)  // NULL dereference
+
+Consequently, there is a possibility that of->priv is NULL, the pressure
+write needs to check for this.
+
+Now that the scope of the cgroup_mutex has been expanded, the original
+explicit cgroup_get/put operations are no longer necessary, this is
+because acquiring/releasing the live kn lock inherently executes a
+cgroup get/put operation.
+
+[1]
+BUG: KASAN: slab-use-after-free in pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+Call Trace:
+ pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
+ cgroup_file_write+0x36f/0x790 kernel/cgroup/cgroup.c:4311
+ kernfs_fop_write_iter+0x3b0/0x540 fs/kernfs/file.c:352
+
+Allocated by task 9352:
+ cgroup_file_open+0x90/0x3a0 kernel/cgroup/cgroup.c:4256
+ kernfs_fop_open+0x9eb/0xcb0 fs/kernfs/file.c:724
+ do_dentry_open+0x83d/0x13e0 fs/open.c:949
+
+Freed by task 9353:
+ cgroup_file_release+0xd6/0x100 kernel/cgroup/cgroup.c:4283
+ kernfs_release_file fs/kernfs/file.c:764 [inline]
+ kernfs_drain_open_files+0x392/0x720 fs/kernfs/file.c:834
+ kernfs_drain+0x470/0x600 fs/kernfs/dir.c:525
+
+Fixes: 0e94682b73bf ("psi: introduce psi monitor")
+Reported-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33e571025d88efd1312c
+Tested-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/mark.c | 39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ kernel/cgroup/cgroup.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index b419a5ccf192d..951d7de29f824 100644
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -153,7 +153,12 @@ static struct inode *fsnotify_update_iref(struct fsnotify_mark_connector *conn,
- 	return inode;
- }
- 
--static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
-+/*
-+ * Calculate mask of events for a list of marks.
-+ *
-+ * Return true if any of the attached marks want to hold an inode reference.
-+ */
-+static bool __fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index e787dc0eacd7d..97812c0b04dd6 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -3775,33 +3775,41 @@ static int cgroup_cpu_pressure_show(struct seq_file *seq, void *v)
+ static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
+ 			      size_t nbytes, enum psi_res res)
  {
- 	u32 new_mask = 0;
- 	bool want_iref = false;
-@@ -173,6 +178,34 @@ static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
- 	}
- 	*fsnotify_conn_mask_p(conn) = new_mask;
+-	struct cgroup_file_ctx *ctx = of->priv;
++	struct cgroup_file_ctx *ctx;
+ 	struct psi_trigger *new;
+ 	struct cgroup *cgrp;
+ 	struct psi_group *psi;
++	ssize_t ret = 0;
  
-+	return want_iref;
-+}
+ 	cgrp = cgroup_kn_lock_live(of->kn, false);
+ 	if (!cgrp)
+ 		return -ENODEV;
+ 
+-	cgroup_get(cgrp);
+-	cgroup_kn_unlock(of->kn);
++	ctx = of->priv;
++	if (!ctx) {
++		ret = -ENODEV;
++		goto out_unlock;
++	}
+ 
+ 	/* Allow only one trigger per file descriptor */
+ 	if (ctx->psi.trigger) {
+-		cgroup_put(cgrp);
+-		return -EBUSY;
++		ret = -EBUSY;
++		goto out_unlock;
+ 	}
+ 
+ 	psi = cgroup_psi(cgrp);
+ 	new = psi_trigger_create(psi, buf, res, of->file, of);
+ 	if (IS_ERR(new)) {
+-		cgroup_put(cgrp);
+-		return PTR_ERR(new);
++		ret = PTR_ERR(new);
++		goto out_unlock;
+ 	}
+ 
+ 	smp_store_release(&ctx->psi.trigger, new);
+-	cgroup_put(cgrp);
 +
-+/*
-+ * Calculate mask of events for a list of marks after attach/modify mark
-+ * and get an inode reference for the connector if needed.
-+ *
-+ * A concurrent add of evictable mark and detach of non-evictable mark can
-+ * lead to __fsnotify_recalc_mask() returning false want_iref, but in this
-+ * case we defer clearing iref to fsnotify_recalc_mask_clear_iref() called
-+ * from fsnotify_put_mark().
-+ */
-+static void fsnotify_recalc_mask_set_iref(struct fsnotify_mark_connector *conn)
-+{
-+	bool has_iref = conn->flags & FSNOTIFY_CONN_FLAG_HAS_IREF;
-+	bool want_iref = __fsnotify_recalc_mask(conn) || has_iref;
-+
-+	(void) fsnotify_update_iref(conn, want_iref);
-+}
-+
-+/*
-+ * Calculate mask of events for a list of marks after detach mark
-+ * and return the inode object if its reference is no longer needed.
-+ */
-+static void *fsnotify_recalc_mask_clear_iref(struct fsnotify_mark_connector *conn)
-+{
-+	bool want_iref = __fsnotify_recalc_mask(conn);
-+
- 	return fsnotify_update_iref(conn, want_iref);
++out_unlock:
++	cgroup_kn_unlock(of->kn);
++	if (ret)
++		return ret;
+ 
+ 	return nbytes;
  }
- 
-@@ -209,7 +242,7 @@ void fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
- 
- 	spin_lock(&conn->lock);
- 	update_children = !fsnotify_conn_watches_children(conn);
--	__fsnotify_recalc_mask(conn);
-+	fsnotify_recalc_mask_set_iref(conn);
- 	update_children &= fsnotify_conn_watches_children(conn);
- 	spin_unlock(&conn->lock);
- 	/*
-@@ -342,7 +375,7 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
- 		objp = fsnotify_detach_connector_from_object(conn, &type);
- 		free_conn = true;
- 	} else {
--		objp = __fsnotify_recalc_mask(conn);
-+		objp = fsnotify_recalc_mask_clear_iref(conn);
- 		type = conn->type;
- 	}
- 	WRITE_ONCE(mark->connector, NULL);
 -- 
 2.53.0
 
