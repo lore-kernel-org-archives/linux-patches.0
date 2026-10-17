@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6063B0AF5;
-	Sat, 17 Oct 2026 16:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FE7391E6D;
+	Sat, 17 Oct 2026 16:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255212; cv=none; b=LYJqzzM7Mb2gyvTBwni2FZ4abOXXxsc5V26qSMY+VYCrbHA12fi0lAoMlPjj8a5H/tORb1tg/icvNqPIVHUkjEyBudpPh9vfkWsnlH2zKnCtdcNRtEPzqEBAyEzwrfyWMld8r5PRdP7G9Y3IjH+yT56KLoFJYWKCZtVwlofmubM=
+	t=1792255215; cv=none; b=MtRyQuPuA1Fjp0TeNyvfPK5pt7VVKNXXJuPvi4MgJ07+MebS/x55PqfGOuNen5Hjwlgwjh7MR820ax4M0wg7bqFy+wFRl4bSEXkOTcAlp/QErJsqd3vvnhQAK2atxLlhEuDoQJXDDdbmN52iHjC0b5fNATAtzo7iG6C6OQN2+tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255212; c=relaxed/simple;
-	bh=YhclNAZ//bAHcWBQcHL9HnBvjoDlVj2Cqu5phkr2QuI=;
+	s=arc-20240116; t=1792255215; c=relaxed/simple;
+	bh=G4ViatX4H453VFdH9oRGh5rO5ioBDsNrn1t7OZuRrls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lfWQ7+jV2/kahoocWpvIAOt4YiPmEflPyP/o47PefHUy67WKOi3Jivbnh0nxnBbcw6HND64czzS4Yu6Zjc+7pSLk3MnG2Fshc9jUGVHS0XzuQW4HSowNjoC8rU8LcEJoNv3nbop18Xw6HzzHx0hE6S/Mup29ocH1pH6Iw8Jb0Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRf55Ooe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SS8kNeVBQfpVWbFlQaZLrHvMKlCRZnT88qbwmr0fl0KAfX8OdKHDjyvuL7nUYWbfEk0/UNu9Q2QsmKAodfk567Xe95hZV4R7rR9I33wqB4jiFWoG7/8lUQ2Z3uSDyMS4jBap9iq1XP1vbZW7OBCHB7duoIQrTfEmhnOePaL5n24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0USoY5p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRf55Ooe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4F81F000C7;
-	Sat, 17 Oct 2026 16:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0USoY5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DD91F000C4;
+	Sat, 17 Oct 2026 16:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255209;
-	bh=lJkf2LsE5dbJ++MS1HQZT7vxZTmglrPJPplrBt2XrxM=;
+	s=korg; t=1792255212;
+	bh=N6gP6XMUtIjAOeRTcqwH7M5ekYba7PX1O0zw5Labc3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRf55OoerXpGs3FV01CAtqAuuX0FoOdEcwmIYvXsjHMRrvRfIpiiK+TSXcbO83Que
-	 TAclFWy1yg/NELtR7Q+LViF2TQ1iH44apQYyMQJzILvsKDU/u7J2TNpahHVDLAVr92
-	 1TcjkSwBTzjpjPFnVNZuiGJDyVg+KKbdBrbsiqg4=
+	b=b0USoY5pTQNwp0VjzbvIyBiBL7L6DUiGy6qur6RnjiKdEWctvNHWZs/o7HT5+iPC2
+	 lclVfY+97guwsDMmuhgFqXrZtXYl53PjhVvZLzxMVVy6gCWWxjMgkEyApFsgnF0BJx
+	 2QvfpT0JSd2/uE6WUv7FB7n5FrNJ1FPqVxk8QFqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Philipp Stanner <phasta@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Frank Binns <frank.binns@imgtec.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Lizhi Hou <lizhi.hou@amd.com>
-Subject: [PATCH 6.12 699/869] drm/sched: Use struct for drm_sched_init() params
-Date: Sat, 17 Oct 2026 17:59:00 +0200
-Message-ID: <20261017160054.891364597@linuxfoundation.org>
+	Yufan Chen <ericterminal@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 657/869] ocfs2/heartbeat: fix slot mapping rollback leaks on error paths
+Date: Sat, 17 Oct 2026 17:58:18 +0200
+Message-ID: <20261017160053.843641960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,701 +52,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Yufan Chen <ericterminal@gmail.com>
 
-[ Upstream commit 796a9f55a8d1d85387b973df9a06cbf4bc2d6327 ]
+[ Upstream commit 5686459423d03d192134166f0ec45f98bb2d5d57 ]
 
-drm_sched_init() has a great many parameters and upcoming new
-functionality for the scheduler might add even more. Generally, the
-great number of parameters reduces readability and has already caused
-one missnaming, addressed in:
+o2hb_map_slot_data() allocates hr_tmp_block, hr_slots, hr_slot_data, and
+pages in stages.  If a later allocation fails, the current code returns
+without unwinding the earlier allocations.
 
-commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
-nouveau_sched_init()").
+o2hb_region_dev_store() also leaves slot mapping resources behind when
+setup aborts, and it keeps hr_aborted_start/hr_node_deleted set across
+retries.  That leaves stale state behind after a failed start.
 
-Introduce a new struct for the scheduler init parameters and port all
-users.
+Factor the slot cleanup into o2hb_unmap_slot_data(), use it from both
+o2hb_map_slot_data() and o2hb_region_release(), and call it from the
+dev_store() rollback after stopping a started heartbeat thread.  While
+freeing pages, clear each hr_slot_data entry as it is released, and reset
+the start state before each new setup attempt.
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Acked-by: Matthew Brost <matthew.brost@intel.com> # for Xe
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com> # for Panfrost and Panthor
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com> # for Etnaviv
-Reviewed-by: Frank Binns <frank.binns@imgtec.com> # for Imagination
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com> # for Sched
-Reviewed-by: Maíra Canal <mcanal@igalia.com> # for v3d
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com> # for amdxdna
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250211111422.21235-2-phasta@kernel.org
-Stable-dep-of: e2332abed2a4 ("drm/msm: Only fini scheduler after successful init")
+This closes the slot mapping leak on allocation/setup failure paths and
+keeps failed setup attempts retryable.
+
+Link: https://lkml.kernel.org/r/20260330153428.19586-1-yufan.chen@linux.dev
+Signed-off-by: Yufan Chen <ericterminal@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 011291b70ba4 ("ocfs2: o2hb: quiesce negotiate handlers and timeout work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 18 ++++--
- drivers/gpu/drm/etnaviv/etnaviv_sched.c    | 22 ++++----
- drivers/gpu/drm/imagination/pvr_queue.c    | 18 ++++--
- drivers/gpu/drm/lima/lima_sched.c          | 16 ++++--
- drivers/gpu/drm/msm/msm_ringbuffer.c       | 17 +++---
- drivers/gpu/drm/nouveau/nouveau_sched.c    | 16 ++++--
- drivers/gpu/drm/panfrost/panfrost_job.c    | 20 ++++---
- drivers/gpu/drm/panthor/panthor_mmu.c      | 16 ++++--
- drivers/gpu/drm/panthor/panthor_sched.c    | 28 ++++++----
- drivers/gpu/drm/scheduler/sched_main.c     | 50 ++++++-----------
- drivers/gpu/drm/v3d/v3d_sched.c            | 65 +++++++++-------------
- drivers/gpu/drm/xe/xe_execlist.c           | 15 +++--
- drivers/gpu/drm/xe/xe_gpu_scheduler.c      | 17 +++++-
- include/drm/gpu_scheduler.h                | 36 ++++++++++--
- 14 files changed, 202 insertions(+), 152 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c | 83 ++++++++++++++++++++++++------------
+ 1 file changed, 56 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 692c8883a0364..172cc8cd8356b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2849,6 +2849,12 @@ static int amdgpu_device_fw_loading(struct amdgpu_device *adev)
- 
- static int amdgpu_device_init_schedulers(struct amdgpu_device *adev)
- {
-+	struct drm_sched_init_args args = {
-+		.ops = &amdgpu_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.timeout_wq = adev->reset_domain->wq,
-+		.dev = adev->dev,
-+	};
- 	long timeout;
- 	int r, i;
- 
-@@ -2874,12 +2880,12 @@ static int amdgpu_device_init_schedulers(struct amdgpu_device *adev)
- 			break;
- 		}
- 
--		r = drm_sched_init(&ring->sched, &amdgpu_sched_ops, NULL,
--				   DRM_SCHED_PRIORITY_COUNT,
--				   ring->num_hw_submission, 0,
--				   timeout, adev->reset_domain->wq,
--				   ring->sched_score, ring->name,
--				   adev->dev);
-+		args.timeout = timeout;
-+		args.credit_limit = ring->num_hw_submission;
-+		args.score = ring->sched_score;
-+		args.name = ring->name;
-+
-+		r = drm_sched_init(&ring->sched, &args);
- 		if (r) {
- 			DRM_ERROR("Failed to create scheduler on ring %s.\n",
- 				  ring->name);
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_sched.c b/drivers/gpu/drm/etnaviv/etnaviv_sched.c
-index e60288af35027..ee4cc67214144 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_sched.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_sched.c
-@@ -134,17 +134,17 @@ int etnaviv_sched_push_job(struct etnaviv_gem_submit *submit)
- 
- int etnaviv_sched_init(struct etnaviv_gpu *gpu)
- {
--	int ret;
--
--	ret = drm_sched_init(&gpu->sched, &etnaviv_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     etnaviv_hw_jobs_limit, etnaviv_job_hang_limit,
--			     msecs_to_jiffies(500), NULL, NULL,
--			     dev_name(gpu->dev), gpu->dev);
--	if (ret)
--		return ret;
--
--	return 0;
-+	const struct drm_sched_init_args args = {
-+		.ops = &etnaviv_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = etnaviv_hw_jobs_limit,
-+		.hang_limit = etnaviv_job_hang_limit,
-+		.timeout = msecs_to_jiffies(500),
-+		.name = dev_name(gpu->dev),
-+		.dev = gpu->dev,
-+	};
-+
-+	return drm_sched_init(&gpu->sched, &args);
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 6170e202e56e3..806da7f2d37cc 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -1531,33 +1531,45 @@ static struct o2hb_region *to_o2hb_region(struct config_item *item)
+ 	return item ? container_of(item, struct o2hb_region, hr_item) : NULL;
  }
  
- void etnaviv_sched_fini(struct etnaviv_gpu *gpu)
-diff --git a/drivers/gpu/drm/imagination/pvr_queue.c b/drivers/gpu/drm/imagination/pvr_queue.c
-index 367d5915130a9..b660b85b58fdd 100644
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -1240,6 +1240,17 @@ struct pvr_queue *pvr_queue_create(struct pvr_context *ctx,
- 		},
- 	};
- 	struct pvr_device *pvr_dev = ctx->pvr_dev;
-+	const struct drm_sched_init_args sched_args = {
-+		.ops = &pvr_queue_sched_ops,
-+		.submit_wq = pvr_dev->sched_wq,
-+		.num_rqs = 1,
-+		.credit_limit = 64 * 1024,
-+		.hang_limit = 1,
-+		.timeout = msecs_to_jiffies(500),
-+		.timeout_wq = pvr_dev->sched_wq,
-+		.name = "pvr-queue",
-+		.dev = pvr_dev->base.dev,
-+	};
- 	struct drm_gpu_scheduler *sched;
- 	struct pvr_queue *queue;
- 	int ctx_state_size, err;
-@@ -1312,12 +1323,7 @@ struct pvr_queue *pvr_queue_create(struct pvr_context *ctx,
- 
- 	queue->timeline_ufo.value = cpu_map;
- 
--	err = drm_sched_init(&queue->scheduler,
--			     &pvr_queue_sched_ops,
--			     pvr_dev->sched_wq, 1, 64 * 1024, 1,
--			     msecs_to_jiffies(500),
--			     pvr_dev->sched_wq, NULL, "pvr-queue",
--			     pvr_dev->base.dev);
-+	err = drm_sched_init(&queue->scheduler, &sched_args);
- 	if (err)
- 		goto err_release_ufo;
- 
-diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
-index 00f0b2907cb6d..9b21eada6c49d 100644
---- a/drivers/gpu/drm/lima/lima_sched.c
-+++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -517,18 +517,22 @@ int lima_sched_pipe_init(struct lima_sched_pipe *pipe, const char *name)
- {
- 	unsigned int timeout = lima_sched_timeout_ms > 0 ?
- 			       lima_sched_timeout_ms : 10000;
-+	const struct drm_sched_init_args args = {
-+		.ops = &lima_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = 1,
-+		.hang_limit = lima_job_hang_limit,
-+		.timeout = msecs_to_jiffies(timeout),
-+		.name = name,
-+		.dev = pipe->ldev->dev,
-+	};
- 
- 	pipe->fence_context = dma_fence_context_alloc(1);
- 	spin_lock_init(&pipe->fence_lock);
- 
- 	INIT_WORK(&pipe->recover_work, lima_sched_recover_work);
- 
--	return drm_sched_init(&pipe->base, &lima_sched_ops, NULL,
--			      DRM_SCHED_PRIORITY_COUNT,
--			      1,
--			      lima_job_hang_limit,
--			      msecs_to_jiffies(timeout), NULL,
--			      NULL, name, pipe->ldev->dev);
-+	return drm_sched_init(&pipe->base, &args);
- }
- 
- void lima_sched_pipe_fini(struct lima_sched_pipe *pipe)
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 9d6655f96f0ce..8a20355ca314a 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -59,8 +59,14 @@ static const struct drm_sched_backend_ops msm_sched_ops = {
- struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 		void *memptrs, uint64_t memptrs_iova)
- {
-+	struct drm_sched_init_args args = {
-+		.ops = &msm_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = num_hw_submissions,
-+		.timeout = MAX_SCHEDULE_TIMEOUT,
-+		.dev = gpu->dev->dev,
-+	};
- 	struct msm_ringbuffer *ring;
--	long sched_timeout;
- 	char name[32];
- 	int ret;
- 
-@@ -87,6 +93,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 	}
- 
- 	msm_gem_object_set_name(ring->bo, "ring%d", id);
-+	args.name = to_msm_bo(ring->bo)->name,
- 
- 	ring->end   = ring->start + (MSM_GPU_RINGBUFFER_SZ >> 2);
- 	ring->next  = ring->start;
-@@ -95,13 +102,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 	ring->memptrs = memptrs;
- 	ring->memptrs_iova = memptrs_iova;
- 
--	 /* currently managing hangcheck ourselves: */
--	sched_timeout = MAX_SCHEDULE_TIMEOUT;
--
--	ret = drm_sched_init(&ring->sched, &msm_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     num_hw_submissions, 0, sched_timeout,
--			     NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
-+	ret = drm_sched_init(&ring->sched, &args);
- 	if (ret) {
- 		goto fail;
- 	}
-diff --git a/drivers/gpu/drm/nouveau/nouveau_sched.c b/drivers/gpu/drm/nouveau/nouveau_sched.c
-index 23f60b7d0e4f2..7676d962a9598 100644
---- a/drivers/gpu/drm/nouveau/nouveau_sched.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
-@@ -405,7 +405,14 @@ nouveau_sched_init(struct nouveau_sched *sched, struct nouveau_drm *drm,
- {
- 	struct drm_gpu_scheduler *drm_sched = &sched->base;
- 	struct drm_sched_entity *entity = &sched->entity;
--	const long timeout = msecs_to_jiffies(NOUVEAU_SCHED_JOB_TIMEOUT_MS);
-+	struct drm_sched_init_args args = {
-+		.ops = &nouveau_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = credit_limit,
-+		.timeout = msecs_to_jiffies(NOUVEAU_SCHED_JOB_TIMEOUT_MS),
-+		.name = "nouveau_sched",
-+		.dev = drm->dev->dev
-+	};
- 	int ret;
- 
- 	if (!wq) {
-@@ -417,10 +424,9 @@ nouveau_sched_init(struct nouveau_sched *sched, struct nouveau_drm *drm,
- 		sched->wq = wq;
- 	}
- 
--	ret = drm_sched_init(drm_sched, &nouveau_sched_ops, wq,
--			     NOUVEAU_SCHED_PRIORITY_COUNT,
--			     credit_limit, 0, timeout,
--			     NULL, NULL, "nouveau_sched", drm->dev->dev);
-+	args.submit_wq = wq,
-+
-+	ret = drm_sched_init(drm_sched, &args);
- 	if (ret)
- 		goto fail_wq;
- 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/panfrost/panfrost_job.c
-index df49d37d0e7eb..303709e5e3b4c 100644
---- a/drivers/gpu/drm/panfrost/panfrost_job.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_job.c
-@@ -830,8 +830,16 @@ static irqreturn_t panfrost_job_irq_handler(int irq, void *data)
- 
- int panfrost_job_init(struct panfrost_device *pfdev)
- {
-+	struct drm_sched_init_args args = {
-+		.ops = &panfrost_sched_ops,
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = 2,
-+		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
-+		.timeout_wq = pfdev->reset.wq,
-+		.name = "pan_js",
-+		.dev = pfdev->dev,
-+	};
- 	struct panfrost_job_slot *js;
--	unsigned int nentries = 2;
- 	int ret, j;
- 
- 	/* All GPUs have two entries per queue, but without jobchain
-@@ -839,7 +847,7 @@ int panfrost_job_init(struct panfrost_device *pfdev)
- 	 * so let's just advertise one entry in that case.
- 	 */
- 	if (!panfrost_has_hw_feature(pfdev, HW_FEATURE_JOBCHAIN_DISAMBIGUATION))
--		nentries = 1;
-+		args.credit_limit = 1;
- 
- 	pfdev->js = js = devm_kzalloc(pfdev->dev, sizeof(*js), GFP_KERNEL);
- 	if (!js)
-@@ -869,13 +877,7 @@ int panfrost_job_init(struct panfrost_device *pfdev)
- 	for (j = 0; j < NUM_JOB_SLOTS; j++) {
- 		js->queue[j].fence_context = dma_fence_context_alloc(1);
- 
--		ret = drm_sched_init(&js->queue[j].sched,
--				     &panfrost_sched_ops, NULL,
--				     DRM_SCHED_PRIORITY_COUNT,
--				     nentries, 0,
--				     msecs_to_jiffies(JOB_TIMEOUT_MS),
--				     pfdev->reset.wq,
--				     NULL, "pan_js", pfdev->dev);
-+		ret = drm_sched_init(&js->queue[j].sched, &args);
- 		if (ret) {
- 			dev_err(pfdev->dev, "Failed to create scheduler: %d.", ret);
- 			goto err_sched;
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index 3cad487c1b727..30107d28d230b 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -2296,6 +2296,16 @@ panthor_vm_create(struct panthor_device *ptdev, bool for_mcu,
- 	u64 full_va_range = 1ull << va_bits;
- 	struct drm_gem_object *dummy_gem;
- 	struct drm_gpu_scheduler *sched;
-+	const struct drm_sched_init_args sched_args = {
-+		.ops = &panthor_vm_bind_ops,
-+		.submit_wq = ptdev->mmu->vm.wq,
-+		.num_rqs = 1,
-+		.credit_limit = 1,
-+		/* Bind operations are synchronous for now, no timeout needed. */
-+		.timeout = MAX_SCHEDULE_TIMEOUT,
-+		.name = "panthor-vm-bind",
-+		.dev = ptdev->base.dev,
-+	};
- 	struct io_pgtable_cfg pgtbl_cfg;
- 	u64 mair, min_va, va_range;
- 	struct panthor_vm *vm;
-@@ -2355,11 +2365,7 @@ panthor_vm_create(struct panthor_device *ptdev, bool for_mcu,
- 		goto err_mm_takedown;
- 	}
- 
--	/* Bind operations are synchronous for now, no timeout needed. */
--	ret = drm_sched_init(&vm->sched, &panthor_vm_bind_ops, ptdev->mmu->vm.wq,
--			     1, 1, 0,
--			     MAX_SCHEDULE_TIMEOUT, NULL, NULL,
--			     "panthor-vm-bind", ptdev->base.dev);
-+	ret = drm_sched_init(&vm->sched, &sched_args);
- 	if (ret)
- 		goto err_free_io_pgtable;
- 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 95649ea56ba88..e3fbe34924ceb 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3290,6 +3290,22 @@ static struct panthor_queue *
- group_create_queue(struct panthor_group *group,
- 		   const struct drm_panthor_queue_create *args)
- {
-+	const struct drm_sched_init_args sched_args = {
-+		.ops = &panthor_queue_sched_ops,
-+		.submit_wq = group->ptdev->scheduler->wq,
-+		.num_rqs = 1,
-+		/*
-+		 * The credit limit argument tells us the total number of
-+		 * instructions across all CS slots in the ringbuffer, with
-+		 * some jobs requiring twice as many as others, depending on
-+		 * their profiling status.
-+		 */
-+		.credit_limit = args->ringbuf_size / sizeof(u64),
-+		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
-+		.timeout_wq = group->ptdev->reset.wq,
-+		.name = "panthor-queue",
-+		.dev = group->ptdev->base.dev,
-+	};
- 	struct drm_gpu_scheduler *drm_sched;
- 	struct panthor_queue *queue;
- 	int ret;
-@@ -3360,17 +3376,7 @@ group_create_queue(struct panthor_group *group,
- 	if (ret)
- 		goto err_free_queue;
- 
--	/*
--	 * Credit limit argument tells us the total number of instructions
--	 * across all CS slots in the ringbuffer, with some jobs requiring
--	 * twice as many as others, depending on their profiling status.
--	 */
--	ret = drm_sched_init(&queue->scheduler, &panthor_queue_sched_ops,
--			     group->ptdev->scheduler->wq, 1,
--			     args->ringbuf_size / sizeof(u64),
--			     0, msecs_to_jiffies(JOB_TIMEOUT_MS),
--			     group->ptdev->reset.wq,
--			     NULL, "panthor-queue", group->ptdev->base.dev);
-+	ret = drm_sched_init(&queue->scheduler, &sched_args);
- 	if (ret)
- 		goto err_free_queue;
- 
-diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
-index 34ebc2fa3a5a4..9a80d01152672 100644
---- a/drivers/gpu/drm/scheduler/sched_main.c
-+++ b/drivers/gpu/drm/scheduler/sched_main.c
-@@ -1236,40 +1236,24 @@ static void drm_sched_run_job_work(struct work_struct *w)
-  * drm_sched_init - Init a gpu scheduler instance
-  *
-  * @sched: scheduler instance
-- * @ops: backend operations for this scheduler
-- * @submit_wq: workqueue to use for submission. If NULL, an ordered wq is
-- *	       allocated and used
-- * @num_rqs: number of runqueues, one for each priority, up to DRM_SCHED_PRIORITY_COUNT
-- * @credit_limit: the number of credits this scheduler can hold from all jobs
-- * @hang_limit: number of times to allow a job to hang before dropping it
-- * @timeout: timeout value in jiffies for the scheduler
-- * @timeout_wq: workqueue to use for timeout work. If NULL, the system_wq is
-- *		used
-- * @score: optional score atomic shared with other schedulers
-- * @name: name used for debugging
-- * @dev: target &struct device
-+ * @args: scheduler initialization arguments
-  *
-  * Return 0 on success, otherwise error code.
-  */
--int drm_sched_init(struct drm_gpu_scheduler *sched,
--		   const struct drm_sched_backend_ops *ops,
--		   struct workqueue_struct *submit_wq,
--		   u32 num_rqs, u32 credit_limit, unsigned int hang_limit,
--		   long timeout, struct workqueue_struct *timeout_wq,
--		   atomic_t *score, const char *name, struct device *dev)
-+int drm_sched_init(struct drm_gpu_scheduler *sched, const struct drm_sched_init_args *args)
+-/* drop_item only drops its ref after killing the thread, nothing should
+- * be using the region anymore.  this has to clean up any state that
+- * attributes might have built up. */
+-static void o2hb_region_release(struct config_item *item)
++static void o2hb_unmap_slot_data(struct o2hb_region *reg)
  {
  	int i;
+ 	struct page *page;
+-	struct o2hb_region *reg = to_o2hb_region(item);
+-
+-	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg_bdev(reg));
+-
+-	kfree(reg->hr_tmp_block);
  
--	sched->ops = ops;
--	sched->credit_limit = credit_limit;
--	sched->name = name;
--	sched->timeout = timeout;
--	sched->timeout_wq = timeout_wq ? : system_wq;
--	sched->hang_limit = hang_limit;
--	sched->score = score ? score : &sched->_score;
--	sched->dev = dev;
-+	sched->ops = args->ops;
-+	sched->credit_limit = args->credit_limit;
-+	sched->name = args->name;
-+	sched->timeout = args->timeout;
-+	sched->hang_limit = args->hang_limit;
-+	sched->timeout_wq = args->timeout_wq ? args->timeout_wq : system_wq;
-+	sched->score = args->score ? args->score : &sched->_score;
-+	sched->dev = args->dev;
- 
--	if (num_rqs > DRM_SCHED_PRIORITY_COUNT) {
-+	if (args->num_rqs > DRM_SCHED_PRIORITY_COUNT) {
- 		/* This is a gross violation--tell drivers what the  problem is.
- 		 */
- 		drm_err(sched, "%s: num_rqs cannot be greater than DRM_SCHED_PRIORITY_COUNT\n",
-@@ -1284,16 +1268,16 @@ int drm_sched_init(struct drm_gpu_scheduler *sched,
- 		return 0;
+ 	if (reg->hr_slot_data) {
+ 		for (i = 0; i < reg->hr_num_pages; i++) {
+ 			page = reg->hr_slot_data[i];
+-			if (page)
++			if (page) {
+ 				__free_page(page);
++				reg->hr_slot_data[i] = NULL;
++			}
+ 		}
+ 		kfree(reg->hr_slot_data);
++		reg->hr_slot_data = NULL;
  	}
  
--	if (submit_wq) {
--		sched->submit_wq = submit_wq;
-+	if (args->submit_wq) {
-+		sched->submit_wq = args->submit_wq;
- 		sched->own_submit_wq = false;
- 	} else {
- #ifdef CONFIG_LOCKDEP
--		sched->submit_wq = alloc_ordered_workqueue_lockdep_map(name,
-+		sched->submit_wq = alloc_ordered_workqueue_lockdep_map(args->name,
- 								       WQ_MEM_RECLAIM,
- 								       &drm_sched_lockdep_map);
- #else
--		sched->submit_wq = alloc_ordered_workqueue(name, WQ_MEM_RECLAIM);
-+		sched->submit_wq = alloc_ordered_workqueue(args->name, WQ_MEM_RECLAIM);
- #endif
- 		if (!sched->submit_wq)
- 			return -ENOMEM;
-@@ -1301,11 +1285,11 @@ int drm_sched_init(struct drm_gpu_scheduler *sched,
- 		sched->own_submit_wq = true;
- 	}
- 
--	sched->sched_rq = kmalloc_array(num_rqs, sizeof(*sched->sched_rq),
-+	sched->sched_rq = kmalloc_array(args->num_rqs, sizeof(*sched->sched_rq),
- 					GFP_KERNEL | __GFP_ZERO);
- 	if (!sched->sched_rq)
- 		goto Out_check_own;
--	sched->num_rqs = num_rqs;
-+	sched->num_rqs = args->num_rqs;
- 	for (i = DRM_SCHED_PRIORITY_KERNEL; i < sched->num_rqs; i++) {
- 		sched->sched_rq[i] = kzalloc(sizeof(*sched->sched_rq[i]), GFP_KERNEL);
- 		if (!sched->sched_rq[i])
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index 5bc656509ee90..70bd566cf6d42 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -865,67 +865,54 @@ static const struct drm_sched_backend_ops v3d_cpu_sched_ops = {
- 	.free_job = v3d_sched_job_free
- };
- 
-+static int
-+v3d_queue_sched_init(struct v3d_dev *v3d, const struct drm_sched_backend_ops *ops,
-+		     enum v3d_queue queue, const char *name)
-+{
-+	struct drm_sched_init_args args = {
-+		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+		.credit_limit = 1,
-+		.timeout = msecs_to_jiffies(500),
-+		.dev = v3d->drm.dev,
-+	};
++	kfree(reg->hr_slots);
++	reg->hr_slots = NULL;
 +
-+	args.ops = ops;
-+	args.name = name;
-+
-+	return drm_sched_init(&v3d->queue[queue].sched, &args);
++	kfree(reg->hr_tmp_block);
++	reg->hr_tmp_block = NULL;
 +}
 +
- int
- v3d_sched_init(struct v3d_dev *v3d)
++/* drop_item only drops its ref after killing the thread, nothing should
++ * be using the region anymore.  this has to clean up any state that
++ * attributes might have built up.
++ */
++static void o2hb_region_release(struct config_item *item)
++{
++	struct o2hb_region *reg = to_o2hb_region(item);
++
++	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg_bdev(reg));
++
++	o2hb_unmap_slot_data(reg);
++
+ 	if (reg->hr_bdev_file)
+ 		fput(reg->hr_bdev_file);
+ 
+-	kfree(reg->hr_slots);
+-
+ 	debugfs_remove_recursive(reg->hr_debug_dir);
+ 	kfree(reg->hr_db_livenodes);
+ 	kfree(reg->hr_db_regnum);
+@@ -1708,6 +1720,7 @@ static void o2hb_init_region_params(struct o2hb_region *reg)
+ static int o2hb_map_slot_data(struct o2hb_region *reg)
  {
--	int hw_jobs_limit = 1;
--	int job_hang_limit = 0;
--	int hang_limit_ms = 500;
- 	int ret;
+ 	int i, j;
++	int ret = -ENOMEM;
+ 	unsigned int last_slot;
+ 	unsigned int spp = reg->hr_slots_per_page;
+ 	struct page *page;
+@@ -1715,15 +1728,15 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
+ 	struct o2hb_disk_slot *slot;
  
--	ret = drm_sched_init(&v3d->queue[V3D_BIN].sched,
--			     &v3d_bin_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     hw_jobs_limit, job_hang_limit,
--			     msecs_to_jiffies(hang_limit_ms), NULL,
--			     NULL, "v3d_bin", v3d->drm.dev);
-+	ret = v3d_queue_sched_init(v3d, &v3d_bin_sched_ops, V3D_BIN, "v3d_bin");
- 	if (ret)
- 		return ret;
+ 	reg->hr_tmp_block = kmalloc(reg->hr_block_bytes, GFP_KERNEL);
+-	if (reg->hr_tmp_block == NULL)
+-		return -ENOMEM;
++	if (!reg->hr_tmp_block)
++		goto out;
  
--	ret = drm_sched_init(&v3d->queue[V3D_RENDER].sched,
--			     &v3d_render_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     hw_jobs_limit, job_hang_limit,
--			     msecs_to_jiffies(hang_limit_ms), NULL,
--			     NULL, "v3d_render", v3d->drm.dev);
-+	ret = v3d_queue_sched_init(v3d, &v3d_render_sched_ops, V3D_RENDER,
-+				   "v3d_render");
- 	if (ret)
- 		goto fail;
+ 	reg->hr_slots = kcalloc(reg->hr_blocks,
+ 				sizeof(struct o2hb_disk_slot), GFP_KERNEL);
+-	if (reg->hr_slots == NULL)
+-		return -ENOMEM;
++	if (!reg->hr_slots)
++		goto out;
  
--	ret = drm_sched_init(&v3d->queue[V3D_TFU].sched,
--			     &v3d_tfu_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     hw_jobs_limit, job_hang_limit,
--			     msecs_to_jiffies(hang_limit_ms), NULL,
--			     NULL, "v3d_tfu", v3d->drm.dev);
-+	ret = v3d_queue_sched_init(v3d, &v3d_tfu_sched_ops, V3D_TFU, "v3d_tfu");
- 	if (ret)
- 		goto fail;
+-	for(i = 0; i < reg->hr_blocks; i++) {
++	for (i = 0; i < reg->hr_blocks; i++) {
+ 		slot = &reg->hr_slots[i];
+ 		slot->ds_node_num = i;
+ 		INIT_LIST_HEAD(&slot->ds_live_item);
+@@ -1738,12 +1751,12 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
+ 	reg->hr_slot_data = kcalloc(reg->hr_num_pages, sizeof(struct page *),
+ 				    GFP_KERNEL);
+ 	if (!reg->hr_slot_data)
+-		return -ENOMEM;
++		goto out;
  
- 	if (v3d_has_csd(v3d)) {
--		ret = drm_sched_init(&v3d->queue[V3D_CSD].sched,
--				     &v3d_csd_sched_ops, NULL,
--				     DRM_SCHED_PRIORITY_COUNT,
--				     hw_jobs_limit, job_hang_limit,
--				     msecs_to_jiffies(hang_limit_ms), NULL,
--				     NULL, "v3d_csd", v3d->drm.dev);
-+		ret = v3d_queue_sched_init(v3d, &v3d_csd_sched_ops, V3D_CSD,
-+					   "v3d_csd");
- 		if (ret)
- 			goto fail;
+-	for(i = 0; i < reg->hr_num_pages; i++) {
++	for (i = 0; i < reg->hr_num_pages; i++) {
+ 		page = alloc_page(GFP_KERNEL);
+ 		if (!page)
+-			return -ENOMEM;
++			goto out;
  
--		ret = drm_sched_init(&v3d->queue[V3D_CACHE_CLEAN].sched,
--				     &v3d_cache_clean_sched_ops, NULL,
--				     DRM_SCHED_PRIORITY_COUNT,
--				     hw_jobs_limit, job_hang_limit,
--				     msecs_to_jiffies(hang_limit_ms), NULL,
--				     NULL, "v3d_cache_clean", v3d->drm.dev);
-+		ret = v3d_queue_sched_init(v3d, &v3d_cache_clean_sched_ops,
-+					   V3D_CACHE_CLEAN, "v3d_cache_clean");
- 		if (ret)
- 			goto fail;
+ 		reg->hr_slot_data[i] = page;
+ 
+@@ -1763,6 +1776,10 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
  	}
  
--	ret = drm_sched_init(&v3d->queue[V3D_CPU].sched,
--			     &v3d_cpu_sched_ops, NULL,
--			     DRM_SCHED_PRIORITY_COUNT,
--			     1, job_hang_limit,
--			     msecs_to_jiffies(hang_limit_ms), NULL,
--			     NULL, "v3d_cpu", v3d->drm.dev);
-+	ret = v3d_queue_sched_init(v3d, &v3d_cpu_sched_ops, V3D_CPU, "v3d_cpu");
- 	if (ret)
- 		goto fail;
- 
-diff --git a/drivers/gpu/drm/xe/xe_execlist.c b/drivers/gpu/drm/xe/xe_execlist.c
-index 6a59165b95690..99bfb50df1cac 100644
---- a/drivers/gpu/drm/xe/xe_execlist.c
-+++ b/drivers/gpu/drm/xe/xe_execlist.c
-@@ -331,6 +331,15 @@ static const struct drm_sched_backend_ops drm_sched_ops = {
- static int execlist_exec_queue_init(struct xe_exec_queue *q)
- {
- 	struct drm_gpu_scheduler *sched;
-+	const struct drm_sched_init_args args = {
-+		.ops = &drm_sched_ops,
-+		.num_rqs = 1,
-+		.credit_limit = q->lrc[0]->ring.size / MAX_JOB_SIZE_BYTES,
-+		.hang_limit = XE_SCHED_HANG_LIMIT,
-+		.timeout = XE_SCHED_JOB_TIMEOUT,
-+		.name = q->hwe->name,
-+		.dev = gt_to_xe(q->gt)->drm.dev,
-+	};
- 	struct xe_execlist_exec_queue *exl;
- 	struct xe_device *xe = gt_to_xe(q->gt);
- 	int err;
-@@ -345,11 +354,7 @@ static int execlist_exec_queue_init(struct xe_exec_queue *q)
- 
- 	exl->q = q;
- 
--	err = drm_sched_init(&exl->sched, &drm_sched_ops, NULL, 1,
--			     q->lrc[0]->ring.size / MAX_JOB_SIZE_BYTES,
--			     XE_SCHED_HANG_LIMIT, XE_SCHED_JOB_TIMEOUT,
--			     NULL, NULL, q->hwe->name,
--			     gt_to_xe(q->gt)->drm.dev);
-+	err = drm_sched_init(&exl->sched, &args);
- 	if (err)
- 		goto err_free;
- 
-diff --git a/drivers/gpu/drm/xe/xe_gpu_scheduler.c b/drivers/gpu/drm/xe/xe_gpu_scheduler.c
-index 50361b4638f96..869b43a4151d2 100644
---- a/drivers/gpu/drm/xe/xe_gpu_scheduler.c
-+++ b/drivers/gpu/drm/xe/xe_gpu_scheduler.c
-@@ -63,13 +63,24 @@ int xe_sched_init(struct xe_gpu_scheduler *sched,
- 		  atomic_t *score, const char *name,
- 		  struct device *dev)
- {
-+	const struct drm_sched_init_args args = {
-+		.ops = ops,
-+		.submit_wq = submit_wq,
-+		.num_rqs = 1,
-+		.credit_limit = hw_submission,
-+		.hang_limit = hang_limit,
-+		.timeout = timeout,
-+		.timeout_wq = timeout_wq,
-+		.score = score,
-+		.name = name,
-+		.dev = dev,
-+	};
+ 	return 0;
 +
- 	sched->ops = xe_ops;
- 	INIT_LIST_HEAD(&sched->msgs);
- 	INIT_WORK(&sched->work_process_msg, xe_sched_process_msg_work);
- 
--	return drm_sched_init(&sched->base, ops, submit_wq, 1, hw_submission,
--			      hang_limit, timeout, timeout_wq, score, name,
--			      dev);
-+	return drm_sched_init(&sched->base, &args);
++out:
++	o2hb_unmap_slot_data(reg);
++	return ret;
  }
  
- void xe_sched_fini(struct xe_gpu_scheduler *sched)
-diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-index 4246ed5b97039..be2644f96da8e 100644
---- a/include/drm/gpu_scheduler.h
-+++ b/include/drm/gpu_scheduler.h
-@@ -550,12 +550,38 @@ struct drm_gpu_scheduler {
- 	struct device			*dev;
- };
+ /* Read in all the slots available and populate the tracking
+@@ -1854,9 +1871,11 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 		     "blocksize %u incorrect for device, expected %d",
+ 		     reg->hr_block_bytes, sectsize);
+ 		ret = -EINVAL;
+-		goto out3;
++		goto out;
+ 	}
  
-+/**
-+ * struct drm_sched_init_args - parameters for initializing a DRM GPU scheduler
-+ *
-+ * @ops: backend operations provided by the driver
-+ * @submit_wq: workqueue to use for submission. If NULL, an ordered wq is
-+ *	       allocated and used.
-+ * @num_rqs: Number of run-queues. This may be at most DRM_SCHED_PRIORITY_COUNT,
-+ *	     as there's usually one run-queue per priority, but may be less.
-+ * @credit_limit: the number of credits this scheduler can hold from all jobs
-+ * @hang_limit: number of times to allow a job to hang before dropping it.
-+ *		This mechanism is DEPRECATED. Set it to 0.
-+ * @timeout: timeout value in jiffies for submitted jobs.
-+ * @timeout_wq: workqueue to use for timeout work. If NULL, the system_wq is used.
-+ * @score: score atomic shared with other schedulers. May be NULL.
-+ * @name: name (typically the driver's name). Used for debugging
-+ * @dev: associated device. Used for debugging
-+ */
-+struct drm_sched_init_args {
-+	const struct drm_sched_backend_ops *ops;
-+	struct workqueue_struct *submit_wq;
-+	struct workqueue_struct *timeout_wq;
-+	u32 num_rqs;
-+	u32 credit_limit;
-+	unsigned int hang_limit;
-+	long timeout;
-+	atomic_t *score;
-+	const char *name;
-+	struct device *dev;
-+};
++	reg->hr_aborted_start = 0;
++	reg->hr_node_deleted = 0;
+ 	o2hb_init_region_params(reg);
+ 
+ 	/* Generation of zero is invalid */
+@@ -1868,13 +1887,13 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 	ret = o2hb_map_slot_data(reg);
+ 	if (ret) {
+ 		mlog_errno(ret);
+-		goto out3;
++		goto out;
+ 	}
+ 
+ 	ret = o2hb_populate_slot_data(reg);
+ 	if (ret) {
+ 		mlog_errno(ret);
+-		goto out3;
++		goto out;
+ 	}
+ 
+ 	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+@@ -1905,7 +1924,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 	if (IS_ERR(hb_task)) {
+ 		ret = PTR_ERR(hb_task);
+ 		mlog_errno(ret);
+-		goto out3;
++		goto out;
+ 	}
+ 
+ 	spin_lock(&o2hb_live_lock);
+@@ -1922,12 +1941,12 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 
+ 	if (reg->hr_aborted_start) {
+ 		ret = -EIO;
+-		goto out3;
++		goto out;
+ 	}
+ 
+ 	if (reg->hr_node_deleted) {
+ 		ret = -EINVAL;
+-		goto out3;
++		goto out;
+ 	}
+ 
+ 	/* Ok, we were woken.  Make sure it wasn't by drop_item() */
+@@ -1946,8 +1965,18 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 		printk(KERN_NOTICE "o2hb: Heartbeat started on region %s (%pg)\n",
+ 		       config_item_name(&reg->hr_item), reg_bdev(reg));
+ 
+-out3:
++out:
+ 	if (ret < 0) {
++		spin_lock(&o2hb_live_lock);
++		hb_task = reg->hr_task;
++		reg->hr_task = NULL;
++		spin_unlock(&o2hb_live_lock);
 +
- int drm_sched_init(struct drm_gpu_scheduler *sched,
--		   const struct drm_sched_backend_ops *ops,
--		   struct workqueue_struct *submit_wq,
--		   u32 num_rqs, u32 credit_limit, unsigned int hang_limit,
--		   long timeout, struct workqueue_struct *timeout_wq,
--		   atomic_t *score, const char *name, struct device *dev);
-+		   const struct drm_sched_init_args *args);
- 
- void drm_sched_fini(struct drm_gpu_scheduler *sched);
- int drm_sched_job_init(struct drm_sched_job *job,
++		if (hb_task)
++			kthread_stop(hb_task);
++
++		o2hb_unmap_slot_data(reg);
++
+ 		fput(reg->hr_bdev_file);
+ 		reg->hr_bdev_file = NULL;
+ 	}
 -- 
 2.53.0
 
