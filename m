@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56133AAF43;
-	Sat, 17 Oct 2026 16:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E075D39769B;
+	Sat, 17 Oct 2026 16:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255064; cv=none; b=HqWXpVoaYekNbfwvG2iSey5mFWRofYJxdGLuy1znuikm5A+xr2gCA3V8P/1AoC8JGZtmEwlZwFHXTmEAX698BBD/EaZcjNpH3GApMcg4JVuYCZyK15sM9RJrWXXK7inPZu0B45AEAAEvD12g/7k3msfTyAPVljonwzH0fsau7UE=
+	t=1792255068; cv=none; b=EPYsOedg3PCECxcn+pO5vkJ3egmcEbiKV3bam5IXHypfhR+B3/lHA5x2jApKzPcRME0cMe2rx8G4DkvVLPEo1/k2UNsoO7wnXDtc/pRicR+Y2sEPiNlpYg4vvrZsLPQXnrMAImqHzJaycXqUxtslNWM90Evp9LlMAIIZZ3pCCFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255064; c=relaxed/simple;
-	bh=lDmXF3CsVzembjgiUVuVIiUOBdpJDqAFhBP8hkBY5Ng=;
+	s=arc-20240116; t=1792255068; c=relaxed/simple;
+	bh=9bSWI5tx7/kPCZkCcL3FYftETWotZ3uELvbaWPn7lq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=br7dMSmreuQmZG+egRC5KaU+C+eqXQ3bjjZfHox49N0kc3ioeo4qTQNy9VUmurjaZ7UzA2f4T1GRGN+/7OD9ZSsXrQoDUp6Mf7CpLflh2FOVIfb+1vFmeB/vbF13fXd2ekRdc2E8Kl6EsLFMQ82xWSXouIUMWjZoLG23xjE/p/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoKDY6zA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d5YZKL+0/Ynh1J+4sWNl+735IZvUyEhxEaSOmN2lyAlc0K2vBpI8h2Jfcv19fe3bbB7c9E/gIAvFFFeZl7QnnBqlwj/k0xnZ/ZXDssZ0OAa0aemabG+M3rYN6wg+ZUnICr3UZqGXBDUENzuixFvLiYcbAnPdJsWx3kHL+BKcgvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ear/adYK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoKDY6zA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B151F000C4;
-	Sat, 17 Oct 2026 16:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ear/adYK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B561F000C4;
+	Sat, 17 Oct 2026 16:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255063;
-	bh=B3FMZBzYvG5WRZlV3Gs0zd6aspuuarkgF6ayA0eNSMA=;
+	s=korg; t=1792255066;
+	bh=fsMPnHp5Dy1fGJjliv9aAgapCoMvv7uqHrfMB4H82ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CoKDY6zAEBibIMLj24SOsJyqYsD8ti99Az/F2Xsu2x7g8jPYnPCyCkw1nvRwwZZlC
-	 8jKw3WOVjq/tiN/rf/EBwOfq5XfGN/9Wqs8eu/09oTbLqwP+AbXSJeEP//bqKGwLfR
-	 5GlD+iXTBSzTmPEh9LA1X15+i88c8HzTDcfKsCw8=
+	b=Ear/adYKJOd2ME6oMECYv/ct4WGEHgyWX/e/ilUwT5wMlOfaCuLoFh4ZzHT6k3fcu
+	 N8FU9KNBG2gxBvjeB6imxDD0jytZQCQGafyUpDXjoVLTM1JCws/PonGCrBapHlprzj
+	 sWwvxnEQhShABjNpCAc/xtqkp2pNb67Z3E+Ulw9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"ChiaHsuan (Tom) Chung" <chiahsuan.chung@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	vega@nebusec.ai,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 651/869] drm/amd/display: disable replay when crc source is enabled
-Date: Sat, 17 Oct 2026 17:58:12 +0200
-Message-ID: <20261017160053.696622960@linuxfoundation.org>
+Subject: [PATCH 6.12 608/869] net/sched: account classifier filter allocations to memcg
+Date: Sat, 17 Oct 2026 17:57:29 +0200
+Message-ID: <20261017160052.629152045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,125 +53,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ray Wu <ray.wu@amd.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit a036db3953140d5c2816b056aa3e73b8e98d9bc0 ]
+[ Upstream commit 1beb81947eb486716af80db7a584f9e9fef7e003 ]
 
-[Why]
-IGT CRC tests fail on replay panels due to invalid CRC values
-captured when replay is active.
+Allocations in the tc classifier *_change() paths (filter objects,
+per-CPU counters, and per-filter aux data) use plain GFP_KERNEL without
+__GFP_ACCOUNT, allowing unprivileged users to pin kernel memory outside
+memcg charging. The shared tcf_exts_init_ex() action array allocation in
+cls_api.c was also uncharged; this patch closes it along with the
+per-classifier filter-object/percpu/aux allocations that remain
+unaccounted.
 
-[How]
-- Disable replay when CRC source is enabled; set flag to
-  prevent unexpected re-enable
-- Reset flag when CRC source is disabled to allow replay
+Add GFP_KERNEL_ACCOUNT to:
+- the shared tcf_exts_init_ex() action array (cls_api.c), common to every
+  filter of every classifier (32 pointers, 256 bytes);
+- the filter-object, per-CPU-counter, and per-filter aux allocations in
+  cls_basic, cls_bpf, cls_cgroup, cls_flow, cls_flower, cls_fw,
+  cls_matchall, cls_route and cls_u32;
+- the u32_init_knode() replace-path knode allocation (cls_u32.c), which
+  allocates the same struct tc_u_knode + sel.keys on every replace of an
+  existing knode and was missed by the create-path-only conversion.
 
-Reviewed-by: ChiaHsuan (Tom) Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 261e0fe4e2c9 ("drm/amd/display: Resize MST HDCP per-connector arrays to 32")
+Also fix the cls_basic error path: basic_change() inserts fnew into the
+IDR before allocating the per-CPU counter. If alloc_percpu() fails the
+errout path kfree'd fnew without idr_remove, leaving a dangling pointer
+in the IDR. With GFP_KERNEL_ACCOUNT the percpu alloc becomes failable
+on demand (memcg at memory.max), making the dead path attacker-reachable
+and burning the handle permanently. Add the idr_remove on the percpu
+failure path, matching the basic_set_parms failure-path pattern.
+
+Note: vega@nebusec.ai provided a poc for basic_cls, but it was easy to
+extend to the other classifiers.
+
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED, CONFIG_NET_CLS_* (the classifier being used),
+  CONFIG_NET_CLS_ACT, CONFIG_MEMCG, CONFIG_USER_NS, CONFIG_NET_NS.
+- Unprivileged user in a fresh user+network namespace (unshare -Urn),
+  or root with CAP_NET_ADMIN.
+- Create a large number of tc filters (e.g. tc filter add dev lo
+  ingress ... <classifier> ...) while watching a memcg-limited cgroup:
+  system slab grows far faster than memory.current, pinning kernel
+  memory outside memcg charging.
+
+Fixes: 0da974f4f303 ("[NET]: Conversions from kmalloc+memset to k(z|c)alloc.")
+Reported-by: vega@nebusec.ai
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260819143733.57538-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  1 +
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 25 ++++++++++++++++---
- .../amd/display/amdgpu_dm/amdgpu_dm_replay.c  |  7 ++++++
- 3 files changed, 30 insertions(+), 3 deletions(-)
+ net/sched/cls_api.c      |  2 +-
+ net/sched/cls_basic.c    |  6 ++++--
+ net/sched/cls_bpf.c      |  6 +++---
+ net/sched/cls_cgroup.c   |  2 +-
+ net/sched/cls_flow.c     |  2 +-
+ net/sched/cls_flower.c   |  4 ++--
+ net/sched/cls_fw.c       |  4 ++--
+ net/sched/cls_matchall.c |  4 ++--
+ net/sched/cls_route.c    |  4 ++--
+ net/sched/cls_u32.c      | 11 ++++++-----
+ 10 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index 9682c190e9524..e447ab49cf3ca 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -732,6 +732,7 @@ struct amdgpu_dm_connector {
- 
- 	int sr_skip_count;
- 	bool disallow_edp_enter_psr;
-+	bool disallow_edp_enter_replay;
- 
- 	/* Record progress status of mst*/
- 	uint8_t mst_status;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-index 41812081418e3..b4a769216d609 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
-@@ -31,6 +31,7 @@
- #include "dc.h"
- #include "amdgpu_securedisplay.h"
- #include "amdgpu_dm_psr.h"
-+#include "amdgpu_dm_replay.h"
- 
- static const char *const pipe_crc_sources[] = {
- 	"none",
-@@ -216,6 +217,7 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
- {
- 	struct amdgpu_device *adev = drm_to_adev(crtc->dev);
- 	struct dc_stream_state *stream_state = dm_crtc_state->stream;
-+	struct amdgpu_dm_connector *aconnector = NULL;
- 	bool enable = amdgpu_dm_is_valid_crc_source(source);
- 	int ret = 0;
- 
-@@ -223,11 +225,22 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
- 	if (!stream_state)
- 		return -EINVAL;
- 
-+	/* Get connector from stream */
-+	aconnector = (struct amdgpu_dm_connector *)stream_state->dm_stream_context;
-+
- 	mutex_lock(&adev->dm.dc_lock);
- 
--	/* For PSR1, check that the panel has exited PSR */
--	if (stream_state->link->psr_settings.psr_version < DC_PSR_VERSION_SU_1)
--		amdgpu_dm_psr_wait_disable(stream_state);
-+
-+	if (enable) {
-+		/* For PSR1, check that the panel has exited PSR */
-+		if (stream_state->link->psr_settings.psr_version < DC_PSR_VERSION_SU_1)
-+			amdgpu_dm_psr_wait_disable(stream_state);
-+
-+		/* Set flag to disallow enter replay when CRC source is enabled */
-+		if (aconnector)
-+			aconnector->disallow_edp_enter_replay = true;
-+		amdgpu_dm_replay_disable(stream_state);
-+	}
- 
- 	/* Enable or disable CRTC CRC generation */
- 	if (dm_is_crc_source_crtc(source) || source == AMDGPU_DM_PIPE_CRC_SOURCE_NONE) {
-@@ -250,6 +263,12 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
- 					    DYN_EXPANSION_AUTO);
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index f8d1cc0f23c15..1e2dccd6cc4e1 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3375,7 +3375,7 @@ int tcf_exts_init_ex(struct tcf_exts *exts, struct net *net, int action,
+ 	 */
+ 	exts->net = net;
+ 	exts->actions = kcalloc(TCA_ACT_MAX_PRIO, sizeof(struct tc_action *),
+-				GFP_KERNEL);
++				GFP_KERNEL_ACCOUNT);
+ 	if (!exts->actions)
+ 		return -ENOMEM;
+ #endif
+diff --git a/net/sched/cls_basic.c b/net/sched/cls_basic.c
+index ecfaa4f9a04ea..d5ef0a66a73fa 100644
+--- a/net/sched/cls_basic.c
++++ b/net/sched/cls_basic.c
+@@ -193,7 +193,7 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
  	}
  
-+	if (!enable) {
-+		/* Clear flag to allow enter replay when CRC source is disabled */
-+		if (aconnector)
-+			aconnector->disallow_edp_enter_replay = false;
-+	}
-+
- unlock:
- 	mutex_unlock(&adev->dm.dc_lock);
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew)
+ 		return -ENOBUFS;
  
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
-index 41f07f13a7b57..7db927dcfe8d2 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_replay.c
-@@ -153,10 +153,17 @@ bool amdgpu_dm_replay_enable(struct dc_stream_state *stream, bool wait)
- {
- 	bool replay_active = true;
- 	struct dc_link *link = NULL;
-+	struct amdgpu_dm_connector *aconnector = NULL;
+@@ -212,9 +212,11 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
+ 	if (err)
+ 		goto errout;
+ 	fnew->handle = handle;
+-	fnew->pf = alloc_percpu(struct tc_basic_pcnt);
++	fnew->pf = alloc_percpu_gfp(struct tc_basic_pcnt, GFP_KERNEL_ACCOUNT);
+ 	if (!fnew->pf) {
+ 		err = -ENOMEM;
++		if (!fold)
++			idr_remove(&head->handle_idr, fnew->handle);
+ 		goto errout;
+ 	}
  
- 	if (stream == NULL)
- 		return false;
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index a6003fa35c7c5..66b525a852875 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -352,7 +352,7 @@ static int cls_bpf_prog_from_ops(struct nlattr **tb, struct cls_bpf_prog *prog)
+ 	if (bpf_size != nla_len(tb[TCA_BPF_OPS]))
+ 		return -EINVAL;
  
-+	/* Check if replay is disabled by connector flag */
-+	aconnector = (struct amdgpu_dm_connector *)stream->dm_stream_context;
-+	if (!aconnector || aconnector->disallow_edp_enter_replay) {
-+		return false;
-+	}
-+
- 	link = stream->link;
+-	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL);
++	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL_ACCOUNT);
+ 	if (bpf_ops == NULL)
+ 		return -ENOMEM;
  
- 	if (link) {
+@@ -403,7 +403,7 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
+ 	}
+ 
+ 	if (tb[TCA_BPF_NAME]) {
+-		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL);
++		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL_ACCOUNT);
+ 		if (!name) {
+ 			bpf_prog_put(fp);
+ 			return -ENOMEM;
+@@ -443,7 +443,7 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	prog = kzalloc(sizeof(*prog), GFP_KERNEL);
++	prog = kzalloc(sizeof(*prog), GFP_KERNEL_ACCOUNT);
+ 	if (!prog)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_cgroup.c b/net/sched/cls_cgroup.c
+index 424252982d6ae..8f6563e50e63e 100644
+--- a/net/sched/cls_cgroup.c
++++ b/net/sched/cls_cgroup.c
+@@ -95,7 +95,7 @@ static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
+ 	if (head && handle != head->handle)
+ 		return -ENOENT;
+ 
+-	new = kzalloc(sizeof(*head), GFP_KERNEL);
++	new = kzalloc(sizeof(*head), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
+index a8b900a27d2f0..334f8fc82ddcc 100644
+--- a/net/sched/cls_flow.c
++++ b/net/sched/cls_flow.c
+@@ -438,7 +438,7 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EOPNOTSUPP;
+ 	}
+ 
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 099ff6a3e1f51..5e61bf334ed84 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2237,7 +2237,7 @@ static struct fl_flow_mask *fl_create_new_mask(struct cls_fl_head *head,
+ 	struct fl_flow_mask *newmask;
+ 	int err;
+ 
+-	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL);
++	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL_ACCOUNT);
+ 	if (!newmask)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -2398,7 +2398,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
+ 		goto errout_tb;
+ 	}
+ 
+-	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
++	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
+ 	if (!fnew) {
+ 		err = -ENOBUFS;
+ 		goto errout_tb;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index fd9c6c2815a1c..e32eecdf675fe 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -276,7 +276,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 		if (f->id != handle && handle)
+ 			return -EINVAL;
+ 
+-		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
++		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
+ 		if (!fnew)
+ 			return -ENOBUFS;
+ 
+@@ -330,7 +330,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 		rcu_assign_pointer(tp->root, head);
+ 	}
+ 
+-	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
++	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
+ 	if (f == NULL)
+ 		return -ENOBUFS;
+ 
+diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
+index f03bf5da39ee8..762ba74aa7be0 100644
+--- a/net/sched/cls_matchall.c
++++ b/net/sched/cls_matchall.c
+@@ -189,7 +189,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
+ 	}
+ 
+-	new = kzalloc(sizeof(*new), GFP_KERNEL);
++	new = kzalloc(sizeof(*new), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return -ENOBUFS;
+ 
+@@ -201,7 +201,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
+ 		handle = 1;
+ 	new->handle = handle;
+ 	new->flags = userflags;
+-	new->pf = alloc_percpu(struct tc_matchall_pcnt);
++	new->pf = alloc_percpu_gfp(struct tc_matchall_pcnt, GFP_KERNEL_ACCOUNT);
+ 	if (!new->pf) {
+ 		err = -ENOMEM;
+ 		goto err_alloc_percpu;
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 6d5b734e7c48e..1a41237d07aac 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -455,7 +455,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 	h1 = to_hash(nhandle);
+ 	b = rtnl_dereference(head->table[h1]);
+ 	if (!b) {
+-		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL);
++		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL_ACCOUNT);
+ 		if (b == NULL)
+ 			return -ENOBUFS;
+ 
+@@ -530,7 +530,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 			return -EINVAL;
+ 
+ 	err = -ENOBUFS;
+-	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL);
++	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL_ACCOUNT);
+ 	if (!f)
+ 		goto errout;
+ 
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index ea021dc39fea3..ac344aabe8595 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -841,7 +841,7 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
+ 	struct tc_u32_sel *s = &n->sel;
+ 	struct tc_u_knode *new;
+ 
+-	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL);
++	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return NULL;
+ 
+@@ -1139,15 +1139,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto erridr;
+ 	}
+ 
+-	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL);
++	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
+ 	if (n == NULL) {
+ 		err = -ENOBUFS;
+ 		goto erridr;
+ 	}
+ 
+ #ifdef CONFIG_CLS_U32_PERF
+-	n->pf = __alloc_percpu(struct_size(n->pf, kcnts, s->nkeys),
+-			       __alignof__(struct tc_u32_pcnt));
++	n->pf = __alloc_percpu_gfp(struct_size(n->pf, kcnts, s->nkeys),
++				   __alignof__(struct tc_u32_pcnt),
++				   GFP_KERNEL_ACCOUNT);
+ 	if (!n->pf) {
+ 		err = -ENOBUFS;
+ 		goto errfree;
+@@ -1169,7 +1170,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto errout;
+ 
+ #ifdef CONFIG_CLS_U32_MARK
+-	n->pcpu_success = alloc_percpu(u32);
++	n->pcpu_success = alloc_percpu_gfp(u32, GFP_KERNEL_ACCOUNT);
+ 	if (!n->pcpu_success) {
+ 		err = -ENOMEM;
+ 		goto errout;
 -- 
 2.53.0
 
