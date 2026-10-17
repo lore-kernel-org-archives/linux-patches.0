@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682DD3BFE2D;
-	Sat, 17 Oct 2026 17:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAFB385D7B;
+	Sat, 17 Oct 2026 17:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258855; cv=none; b=A4+0HjkBMIkyULXvuTKLNa0WAvVbNfjtgzZeXXl7aS5vCh3mcPvxcg0YTFaSoy0lzDK0L8/E72kWFIXlB8jpn4D3jSl4lPnUlkKxki+2X6JjfNfJeIbjTtoM62uvtqb7wMK7GKQ/w8zF53/zi+7z08xaO0gOj2QnjRGOUyBiRA4=
+	t=1792258858; cv=none; b=B3oqmBBcTRMoNqxn1ft85hmkiWyya9p2Prflt5AMYghu7QTmC3ah9a3LMEBO7RvikE3gWTHDc66FqUfRCF0U8IGoJQRxWSZsGBX4m89q/DhoS95OACCGIgh+Y3ZpmqFo7QHWgrAOJBMVfy1I4qjjpUcVgDYU/HuqSuWbvPUV8iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258855; c=relaxed/simple;
-	bh=6IBGJUvAfxz2OzUaEet0o8VjbxUK1YcEX9CDNfO7AFs=;
+	s=arc-20240116; t=1792258858; c=relaxed/simple;
+	bh=XZJO4htN0hAEqBQCm5STOb7O4t5NNobZ9M3h2jcY+J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/Z68JzHlWzRp02uEefko/QvhHFFvwkOuMBZ3ybKdi/QwLwlUyJaUOr3jTHtQTDRa3fYh3OX/EjHs/j1sAzI3y5lkZ8y+L8Kd0chv/S0/IkTMCmdTLspPIt3Q3QY92ukJsgiTf5kIek6RyyNRr/EkPwBy02tbkugMdJ86BEx+CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+4dDwdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pyhEzQi/VXOMPFwb3iiYrCymsP7VhmgoicR0xxNi4NwgamxuaJZ/k6jmEl/Ek1LhR0miy/kHUjtOjd8IH3wZnflGAwpZ7mRt2ensL9FtTRzeaxia98ISX9D5FmYb4pbmLWFAB8BvKuUY05Dh0tRX73bZEJPdEfPNPcEEtbzpP6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IplS9YYh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+4dDwdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B887E1F000C4;
-	Sat, 17 Oct 2026 17:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IplS9YYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABD91F000C4;
+	Sat, 17 Oct 2026 17:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258854;
-	bh=pLdUIRkr7bPJ6QaQzSh6R+8M7BiHVNe0vGmUqfFd0/w=;
+	s=korg; t=1792258857;
+	bh=74+UI+I6N0o6tACwbDO6N0mceX1cizYv++QCT1gFWi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+4dDwdzwmPRr3N6v9KmzennF5jBB7rQhXMMW6VbvIgC82/pJj2mtKNiBta7wKvFS
-	 kp4HIuzCkjzSZWS4AP54lFB/xRod5kK6h4Es4+g65gsrF2YxzeBsU1u8nYU+BIoxjO
-	 Yfm5N7iRTzGiVGPuKr+1VFS8KjxFHIELAY7qiYuw=
+	b=IplS9YYhyJhV4F4BdTsiGJUEeysDZ8JOtFjnOkZg4u9eqsEhH4EQHvvR7scPhKNtW
+	 Cf7/YOsUMGKDwCezjYw8VomPyNo5z/MHfWIHnDRTMZwb1S1gdC0AoBspo3naN4yYgE
+	 EJ3pUwXmkz6iQh+0rXwXyP7j8xAc6G9CzaEbUfXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Junhao He <hejunhao3@h-partners.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Meir Elisha <meir6264@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0971/1674] coresight: tmc-etr: Fix race condition between sysfs and perf mode
-Date: Sat, 17 Oct 2026 17:54:03 +0200
-Message-ID: <20261017160456.049088005@linuxfoundation.org>
+Subject: [PATCH 6.6 1015/1674] Staging: rtl8723bs: Delete dead code from update_current_network()
+Date: Sat, 17 Oct 2026 17:54:47 +0200
+Message-ID: <20261017160457.185829844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,91 +50,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Meir Elisha <meir6264@gmail.com>
 
-[ Upstream commit e6e43e82c79c97917cbe356c07e8a6f3f982ab53 ]
+[ Upstream commit e945c43df60b50bda05800ef83d380ec34e391e2 ]
 
-When trying to run perf and sysfs mode simultaneously, the WARN_ON()
-in tmc_etr_enable_hw() is triggered sometimes:
+Remove dead code from rtw_mlme.c in order to improve code readability.
 
- WARNING: CPU: 42 PID: 3911571 at drivers/hwtracing/coresight/coresight-tmc-etr.c:1060 tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc]
- [..snip..]
- Call trace:
-  tmc_etr_enable_hw+0xc0/0xd8 [coresight_tmc] (P)
-  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc] (L)
-  tmc_enable_etr_sink+0x11c/0x250 [coresight_tmc]
-  coresight_enable_path+0x1c8/0x218 [coresight]
-  coresight_enable_sysfs+0xa4/0x228 [coresight]
-  enable_source_store+0x58/0xa8 [coresight]
-  dev_attr_store+0x20/0x40
-  sysfs_kf_write+0x4c/0x68
-  kernfs_fop_write_iter+0x120/0x1b8
-  vfs_write+0x2c8/0x388
-  ksys_write+0x74/0x108
-  __arm64_sys_write+0x24/0x38
-  el0_svc_common.constprop.0+0x64/0x148
-  do_el0_svc+0x24/0x38
-  el0_svc+0x3c/0x130
-  el0t_64_sync_handler+0xc8/0xd0
-  el0t_64_sync+0x1ac/0x1b0
- ---[ end trace 0000000000000000 ]---
-
-Since the enablement of sysfs mode is separeted into two critical regions,
-one for sysfs buffer allocation and another for hardware enablement, it's
-possible to race with the perf mode. Fix this by double check whether
-the perf mode's been used before enabling the hardware in sysfs mode.
-
- mode:
-   [sysfs mode]                   [perf mode]
-   tmc_etr_get_sysfs_buffer()
-     spin_lock(&drvdata->spinlock)
-     [sysfs buffer allocation]
-     spin_unlock(&drvdata->spinlock)
-                                  spin_lock(&drvdata->spinlock)
-                                  tmc_etr_enable_hw()
-                                    drvdata->etr_buf = etr_perf->etr_buf
-                                  spin_unlock(&drvdata->spinlock)
-   spin_lock(&drvdata->spinlock)
-   tmc_etr_enable_hw()
-     WARN_ON(drvdata->etr_buf) // WARN sicne etr_buf initialized at
-                                  the perf side
-   spin_unlock(&drvdata->spinlock)
-
-With this fix, we retain the check for CS_MODE_PERF in get_etr_sysfs_buf.
-This ensures we verify whether the perf mode's already running before we
-actually allocate the buffer. Then we can save the time of
-allocating/freeing the sysfs buffer if race with the perf mode.
-
-Fixes: 296b01fd106e ("coresight: Refactor out buffer allocation function for ETR")
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260121101543.2017014-3-wangyushan12@huawei.com
+Signed-off-by: Meir Elisha <meir6264@gmail.com>
+Link: https://lore.kernel.org/r/20240407123836.115055-1-meir6264@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 514ab9836459 ("staging: rtl8723bs: fix buffer over-read in rtw_update_protection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c | 92 ++---------------------
+ 1 file changed, 5 insertions(+), 87 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index e9b8a396e4ba8..f8e59cf69b93d 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -1212,6 +1212,15 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index b5fb0ad08f384..2422bf30ab757 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -22,7 +22,6 @@ int	rtw_init_mlme_priv(struct adapter *padapter)
  
- 	spin_lock_irqsave(&drvdata->spinlock, flags);
+ 	pmlmepriv->pscanned = NULL;
+ 	pmlmepriv->fw_state = WIFI_STATION_STATE; /*  Must sync with rtw_wdev_alloc() */
+-	/*  wdev->iftype = NL80211_IFTYPE_STATION */
+ 	pmlmepriv->cur_network.network.infrastructure_mode = Ndis802_11AutoUnknown;
+ 	pmlmepriv->scan_mode = SCAN_ACTIVE;/*  1: active, 0: passive. Maybe someday we should rename this varable to "active_mode" (Jeff) */
  
-+	/*
-+	 * Since the sysfs buffer allocation and the hardware enablement is not
-+	 * in the same critical region, it's possible to race with the perf.
-+	 */
-+	if (drvdata->mode == CS_MODE_PERF) {
-+		spin_unlock_irqrestore(&drvdata->spinlock, flags);
-+		return -EBUSY;
-+	}
-+
- 	/*
- 	 * In sysFS mode we can have multiple writers per sink.  Since this
- 	 * sink is already enabled no memory is needed and the HW need not be
+@@ -109,32 +108,6 @@ void _rtw_free_mlme_priv(struct mlme_priv *pmlmepriv)
+ 	}
+ }
+ 
+-/*
+-struct	wlan_network *_rtw_dequeue_network(struct __queue *queue)
+-{
+-	_irqL irqL;
+-
+-	struct wlan_network *pnetwork;
+-
+-	spin_lock_bh(&queue->lock);
+-
+-	if (list_empty(&queue->queue))
+-
+-		pnetwork = NULL;
+-
+-	else
+-	{
+-		pnetwork = container_of(get_next(&queue->queue), struct wlan_network, list);
+-
+-		list_del_init(&(pnetwork->list));
+-	}
+-
+-	spin_unlock_bh(&queue->lock);
+-
+-	return pnetwork;
+-}
+-*/
+-
+ struct	wlan_network *rtw_alloc_network(struct	mlme_priv *pmlmepriv)
+ {
+ 	struct	wlan_network	*pnetwork;
+@@ -207,13 +180,9 @@ void _rtw_free_network_nolock(struct	mlme_priv *pmlmepriv, struct wlan_network *
+ 	if (pnetwork->fixed)
+ 		return;
+ 
+-	/* spin_lock_irqsave(&free_queue->lock, irqL); */
+-
+ 	list_del_init(&(pnetwork->list));
+ 
+ 	list_add_tail(&(pnetwork->list), get_list_head(free_queue));
+-
+-	/* spin_unlock_irqrestore(&free_queue->lock, irqL); */
+ }
+ 
+ /*
+@@ -231,8 +200,6 @@ struct wlan_network *_rtw_find_network(struct __queue *scanned_queue, u8 *addr)
+ 		goto exit;
+ 	}
+ 
+-	/* spin_lock_bh(&scanned_queue->lock); */
+-
+ 	phead = get_list_head(scanned_queue);
+ 	list_for_each(plist, phead) {
+ 		pnetwork = list_entry(plist, struct wlan_network, list);
+@@ -244,8 +211,6 @@ struct wlan_network *_rtw_find_network(struct __queue *scanned_queue, u8 *addr)
+ 	if (plist == phead)
+ 		pnetwork = NULL;
+ 
+-	/* spin_unlock_bh(&scanned_queue->lock); */
+-
+ exit:
+ 	return pnetwork;
+ }
+@@ -320,16 +285,6 @@ void rtw_free_mlme_priv(struct mlme_priv *pmlmepriv)
+ 	_rtw_free_mlme_priv(pmlmepriv);
+ }
+ 
+-/*
+-static struct	wlan_network *rtw_dequeue_network(struct __queue *queue)
+-{
+-	struct wlan_network *pnetwork;
+-
+-	pnetwork = _rtw_dequeue_network(queue);
+-	return pnetwork;
+-}
+-*/
+-
+ void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork);
+ void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork)
+ {
+@@ -494,12 +449,9 @@ static void update_current_network(struct adapter *adapter, struct wlan_bssid_ex
+ 		&(pmlmepriv->cur_network.network));
+ 
+ 	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&(pmlmepriv->cur_network.network), pnetwork, 0))) {
+-		/* if (pmlmepriv->cur_network.network.ie_length<= pnetwork->ie_length) */
+-		{
+-			update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
+-			rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
+-									pmlmepriv->cur_network.network.ie_length);
+-		}
++		update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
++		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
++								pmlmepriv->cur_network.network.ie_length);
+ 	}
+ }
+ 
+@@ -540,7 +492,6 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 
+ 	/* If we didn't find a match, then get a new network slot to initialize
+ 	 * with this beacon's information */
+-	/* if (phead == plist) { */
+ 	if (!target_find) {
+ 		if (list_empty(&pmlmepriv->free_bss_pool.queue)) {
+ 			/* If there are no more slots, expire the oldest */
+@@ -613,15 +564,8 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ void rtw_add_network(struct adapter *adapter, struct wlan_bssid_ex *pnetwork);
+ void rtw_add_network(struct adapter *adapter, struct wlan_bssid_ex *pnetwork)
+ {
+-	/* struct __queue	*queue	= &(pmlmepriv->scanned_queue); */
+-
+-	/* spin_lock_bh(&queue->lock); */
+-
+ 	update_current_network(adapter, pnetwork);
+-
+ 	rtw_update_scanned_network(adapter, pnetwork);
+-
+-	/* spin_unlock_bh(&queue->lock); */
+ }
+ 
+ /* select the desired network based on the capability of the (i)bss. */
+@@ -637,10 +581,7 @@ int rtw_is_desired_network(struct adapter *adapter, struct wlan_network *pnetwor
+ 	struct mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 	u32 desired_encmode;
+ 	u32 privacy;
+-
+-	/* u8 wps_ie[512]; */
+ 	uint wps_ielen;
+-
+ 	int bselected = true;
+ 
+ 	desired_encmode = psecuritypriv->ndisencryptstatus;
+@@ -1060,9 +1001,8 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
+ 			memset((u8 *)&psta->dot11rxpn, 0, sizeof(union pn48));
+ 		}
+ 
+-		/* 	Commented by Albert 2012/07/21 */
+-		/* 	When doing the WPS, the wps_ie_len won't equal to 0 */
+-		/* 	And the Wi-Fi driver shouldn't allow the data packet to be transmitted. */
++		/* When doing the WPS, the wps_ie_len won't equal to 0 */
++		/* And the Wi-Fi driver shouldn't allow the data packet to be transmitted. */
+ 		if (padapter->securitypriv.wps_ie_len != 0) {
+ 			psta->ieee8021x_blocked = true;
+ 			padapter->securitypriv.wps_ie_len = 0;
+@@ -1072,7 +1012,6 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
+ 		/* if A-MPDU Rx is enabled, resetting  rx_ordering_ctrl wstart_b(indicate_seq) to default value = 0xffff */
+ 		/* todo: check if AP can send A-MPDU packets */
+ 		for (i = 0; i < 16 ; i++) {
+-			/* preorder_ctrl = &precvpriv->recvreorder_ctrl[i]; */
+ 			preorder_ctrl = &psta->recvreorder_ctrl[i];
+ 			preorder_ctrl->enable = false;
+ 			preorder_ctrl->indicate_seq = 0xffff;
+@@ -1083,7 +1022,6 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
+ 		bmc_sta = rtw_get_bcmc_stainfo(padapter);
+ 		if (bmc_sta) {
+ 			for (i = 0; i < 16 ; i++) {
+-				/* preorder_ctrl = &precvpriv->recvreorder_ctrl[i]; */
+ 				preorder_ctrl = &bmc_sta->recvreorder_ctrl[i];
+ 				preorder_ctrl->enable = false;
+ 				preorder_ctrl->indicate_seq = 0xffff;
+@@ -1247,8 +1185,6 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 		rtw_reset_securitypriv(adapter);
+ 		_set_timer(&pmlmepriv->assoc_timer, 1);
+ 
+-		/* rtw_free_assoc_resources(adapter, 1); */
+-
+ 		if ((check_fwstate(pmlmepriv, _FW_UNDER_LINKING)) == true)
+ 			_clr_fwstate_(pmlmepriv, _FW_UNDER_LINKING);
+ 
+@@ -1270,7 +1206,6 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 		#endif
+ 
+ 			_set_timer(&pmlmepriv->assoc_timer, 1);
+-			/* rtw_free_assoc_resources(adapter, 1); */
+ 			_clr_fwstate_(pmlmepriv, _FW_UNDER_LINKING);
+ 
+ 		#ifdef REJOIN
+@@ -1365,7 +1300,6 @@ void rtw_stassoc_event_callback(struct adapter *adapter, u8 *pbuf)
+ 	/* to do : init sta_info variable */
+ 	psta->qos_option = 0;
+ 	psta->mac_id = (uint)pstassoc->cam_id;
+-	/* psta->aid = (uint)pstassoc->cam_id; */
+ 
+ 	/* for ad-hoc mode */
+ 	rtw_hal_set_odm_var(adapter, HAL_ODM_STA_INFO, psta, true);
+@@ -1480,10 +1414,8 @@ void rtw_stadel_event_callback(struct adapter *adapter, u8 *pbuf)
+ 
+ 		if (adapter->stapriv.asoc_sta_count == 1) {/* a sta + bc/mc_stainfo (not Ibss_stainfo) */
+ 			u8 ret = _SUCCESS;
+-			/* rtw_indicate_disconnect(adapter);removed@20091105 */
+ 			spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
+ 			/* free old ibss network */
+-			/* pwlan = rtw_find_network(&pmlmepriv->scanned_queue, pstadel->macaddr); */
+ 			pwlan = rtw_find_network(&pmlmepriv->scanned_queue, tgt_network->network.mac_address);
+ 			if (pwlan) {
+ 				pwlan->fixed = false;
+@@ -2102,14 +2034,6 @@ signed int rtw_restruct_sec_ie(struct adapter *adapter, u8 *in_ie, u8 *out_ie, u
+ 	} else if ((authmode == WLAN_EID_VENDOR_SPECIFIC) || (authmode == WLAN_EID_RSN)) {
+ 		/* copy RSN or SSN */
+ 		memcpy(&out_ie[ielength], &psecuritypriv->supplicant_ie[0], psecuritypriv->supplicant_ie[1]+2);
+-		/* debug for CONFIG_IEEE80211W
+-		{
+-			int jj;
+-			printk("supplicant_ie_length =%d &&&&&&&&&&&&&&&&&&&\n", psecuritypriv->supplicant_ie[1]+2);
+-			for (jj = 0; jj < psecuritypriv->supplicant_ie[1]+2; jj++)
+-				printk(" %02x ", psecuritypriv->supplicant_ie[jj]);
+-			printk("\n");
+-		}*/
+ 		ielength += psecuritypriv->supplicant_ie[1]+2;
+ 		rtw_report_sec_ie(adapter, authmode, psecuritypriv->supplicant_ie);
+ 	}
+@@ -2146,7 +2070,6 @@ void rtw_update_registrypriv_dev_network(struct adapter *adapter)
+ 	struct wlan_bssid_ex    *pdev_network = &pregistrypriv->dev_network;
+ 	struct	security_priv *psecuritypriv = &adapter->securitypriv;
+ 	struct	wlan_network	*cur_network = &adapter->mlmepriv.cur_network;
+-	/* struct	xmit_priv *pxmitpriv = &adapter->xmitpriv; */
+ 
+ 	pdev_network->privacy = (psecuritypriv->dot11PrivacyAlgrthm > 0 ? 1 : 0) ; /*  adhoc no 802.1x */
+ 
+@@ -2395,7 +2318,6 @@ unsigned int rtw_restructure_ht_ie(struct adapter *padapter, u8 *in_ie, u8 *out_
+ 		rtw_hal_get_def_var(padapter, HW_VAR_MAX_RX_AMPDU_FACTOR,
+ 				    &max_rx_ampdu_factor);
+ 
+-	/* rtw_hal_get_def_var(padapter, HW_VAR_MAX_RX_AMPDU_FACTOR, &max_rx_ampdu_factor); */
+ 	ht_capie.ampdu_params_info = (max_rx_ampdu_factor&0x03);
+ 
+ 	if (padapter->securitypriv.dot11PrivacyAlgrthm == _AES_)
+@@ -2425,14 +2347,10 @@ void rtw_update_ht_cap(struct adapter *padapter, u8 *pie, uint ie_len, u8 channe
+ {
+ 	u8 *p, max_ampdu_sz;
+ 	int len;
+-	/* struct sta_info *bmc_sta, *psta; */
+ 	struct ieee80211_ht_cap *pht_capie;
+-	/* struct recv_reorder_ctrl *preorder_ctrl; */
+ 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
+ 	struct ht_priv 	*phtpriv = &pmlmepriv->htpriv;
+-	/* struct recv_priv *precvpriv = &padapter->recvpriv; */
+ 	struct registry_priv *pregistrypriv = &padapter->registrypriv;
+-	/* struct wlan_network *pcur_network = &(pmlmepriv->cur_network);; */
+ 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
+ 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
+ 	u8 cbw40_enable = 0;
 -- 
 2.53.0
 
