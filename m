@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739301DFDA1;
-	Sat, 17 Oct 2026 17:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC31DFDA1;
+	Sat, 17 Oct 2026 17:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257642; cv=none; b=XWJ6dyT/m7nNVUiJU0ADLi0sNm5+Y7lSCv4+gw9XvFCOUY5+3jYq0+JEi8RVnezii69C2tq6oOmSMpO9Pzn+RlW+ymhr/YdMUhouv4uXZ8L0copd4I2EakPPpW4rvBdmOk01x53+pXzUMtRxqmmYXlRYrKOKxvXmdAj0KOvMx/Y=
+	t=1792257645; cv=none; b=TdgMJzds0Us7kZ5yrRJYl9UQeRJDnyYieI8bqWO97AUNj78uFKtmEprINOuf9D6n2m4ZlpO/+eObnnFGMClruxjGf1yoHTZncYOLPru2tCQFMVmzFhiHB3Fx9Dcm3MHTNwFEcL/cda2JNqgNPK637LN5Kzn5PQoHujaEv6etJrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257642; c=relaxed/simple;
-	bh=tqZwOpDrhl/vCeJKpjbLqEi3FJZmb7naDxtIZodErK4=;
+	s=arc-20240116; t=1792257645; c=relaxed/simple;
+	bh=gHRoZfV9/lgbTwt51lvVXbAT7Ll6XHG9dpTxKdo5qXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmFl9ZBuWcMisB9Rit/+M4Q778UCFCJvjT4SzXldn1myO694pl4eoTc1odlP3Y02kZwhIZqxHCMJPbQb1QdY/Ng2TxWYJ0tdnhmcV4davLjuEWKs8EY0AueTtuuyWAnSD3ogdiviv6dPdTcMSpCtd+1eCyz2Hle7b15IoIaOns0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFIUa3W/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EnilKLyWdD6n29uqCl/Goa9VNjjq3PS+L+SzpSmB2mzpzKenX6MEEQcIIRwfOdhzSHUzQJ3Zmh/4GqNuHsyT+oMQarB5AQ7w5+VM7vPJIecljt+tI9Ug7U1/ua+PSduUtdWqxZPUb1QtYC41CgFiCRdLCPSgc+CSH6q2jtOs5gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcmUMH8W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFIUa3W/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA3D1F000C4;
-	Sat, 17 Oct 2026 17:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcmUMH8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12051F000C4;
+	Sat, 17 Oct 2026 17:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257641;
-	bh=9eEBSVTNmXW8HhYrAt9an2+CfR6bI1+PuSPGYsDTgVw=;
+	s=korg; t=1792257644;
+	bh=RPLkSWNoRcMj20AYefJ+qGiOHrP9talTp9B1cHCMEuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vFIUa3W/BMUErhIhnqrSHUrYh9+doFMxeS8bkM2EbSb4oeGvb/5xTAzcPI2geVDLH
-	 QLye3oMl1hRhOSa4L9M649KU9ZZdrRtp3kgW0XkjJIlAc54WnexZbZC7PL9e88DKE6
-	 nsxTO5F5ex+oazC+6mb0liXLV3tU7i1DW+bEmT58=
+	b=hcmUMH8WDRwIQ1r1Q9IFpBIFQyPOzfL8K1VOgioOg0gWk0iNilOmbkZnGRC33B03z
+	 GhViVCtCvKDDM9XkapqzVbHbwHE/IsVKgrlK3BRnOSoSZOqZ+o2ZRm/SPL79DmAUaU
+	 dp5sWljjVTRhhS2/2HA6SeOeltDbSnABCt7pwmeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0625/1674] drm/amdgpu: fix double free err_addr pointer warnings
-Date: Sat, 17 Oct 2026 17:48:17 +0200
-Message-ID: <20261017160447.130952937@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Milena Olech <milena.olech@intel.com>,
+	Karol Kolacinski <karol.kolacinski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.6 0626/1674] ice: Fix improper extts handling
+Date: Sat, 17 Oct 2026 17:48:18 +0200
+Message-ID: <20261017160447.158240677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,34 +57,275 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Zhou <bob.zhou@amd.com>
+From: Milena Olech <milena.olech@intel.com>
 
-[ Upstream commit 506c245f3f1cd989cb89811a7f06e04ff8813a0d ]
+[ Upstream commit 00d3b4f54582d4e4a02cda5886bb336eeab268cc ]
 
-In amdgpu_umc_bad_page_polling_timeout, the amdgpu_umc_handle_bad_pages
-will be run many times so that double free err_addr in some special case.
-So set the err_addr to NULL to avoid the warnings.
+Extts events are disabled and enabled by the application ts2phc.
+However, in case where the driver is removed when the application is
+running, a specific extts event remains enabled and can cause a kernel
+crash.
+As a side effect, when the driver is reloaded and application is started
+again, remaining extts event for the channel from a previous run will
+keep firing and the message "extts on unexpected channel" might be
+printed to the user.
 
-Signed-off-by: Bob Zhou <bob.zhou@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To avoid that, extts events shall be disabled when PTP is released.
+
+Fixes: 172db5f91d5f ("ice: add support for auxiliary input/output pins")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Co-developed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Milena Olech <milena.olech@intel.com>
+Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20240702171459.2606611-2-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 105 ++++++++++++++++++-----
+ drivers/net/ethernet/intel/ice/ice_ptp.h |   8 ++
+ 2 files changed, 91 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-index db0d94ca4ffc5..cf6ebb10acc90 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-@@ -162,6 +162,7 @@ static int amdgpu_umc_do_page_retirement(struct amdgpu_device *adev,
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index f738e35395741..df88304c9a1b1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -1506,27 +1506,24 @@ void ice_ptp_extts_event(struct ice_pf *pf)
+ /**
+  * ice_ptp_cfg_extts - Configure EXTTS pin and channel
+  * @pf: Board private structure
+- * @ena: true to enable; false to disable
+  * @chan: GPIO channel (0-3)
+- * @gpio_pin: GPIO pin
+- * @extts_flags: request flags from the ptp_extts_request.flags
++ * @config: desired EXTTS configuration.
++ * @store: If set to true, the values will be stored
++ *
++ * Configure an external timestamp event on the requested channel.
+  */
+-static int
+-ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
+-		  unsigned int extts_flags)
++static void ice_ptp_cfg_extts(struct ice_pf *pf, unsigned int chan,
++			      struct ice_extts_channel *config, bool store)
+ {
+ 	u32 func, aux_reg, gpio_reg, irq_reg;
+ 	struct ice_hw *hw = &pf->hw;
+ 	u8 tmr_idx;
  
- 	kfree(err_data->err_addr);
-+	err_data->err_addr = NULL;
- 	return AMDGPU_RAS_SUCCESS;
+-	if (chan > (unsigned int)pf->ptp.info.n_ext_ts)
+-		return -EINVAL;
+-
+ 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
+ 
+ 	irq_reg = rd32(hw, PFINT_OICR_ENA);
+ 
+-	if (ena) {
++	if (config->ena) {
+ 		/* Enable the interrupt */
+ 		irq_reg |= PFINT_OICR_TSYN_EVNT_M;
+ 		aux_reg = GLTSYN_AUX_IN_0_INT_ENA_M;
+@@ -1535,9 +1532,9 @@ ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
+ #define GLTSYN_AUX_IN_0_EVNTLVL_FALLING_EDGE	BIT(1)
+ 
+ 		/* set event level to requested edge */
+-		if (extts_flags & PTP_FALLING_EDGE)
++		if (config->flags & PTP_FALLING_EDGE)
+ 			aux_reg |= GLTSYN_AUX_IN_0_EVNTLVL_FALLING_EDGE;
+-		if (extts_flags & PTP_RISING_EDGE)
++		if (config->flags & PTP_RISING_EDGE)
+ 			aux_reg |= GLTSYN_AUX_IN_0_EVNTLVL_RISING_EDGE;
+ 
+ 		/* Write GPIO CTL reg.
+@@ -1559,9 +1556,47 @@ ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
+ 
+ 	wr32(hw, PFINT_OICR_ENA, irq_reg);
+ 	wr32(hw, GLTSYN_AUX_IN(chan, tmr_idx), aux_reg);
+-	wr32(hw, GLGEN_GPIO_CTL(gpio_pin), gpio_reg);
++	wr32(hw, GLGEN_GPIO_CTL(config->gpio_pin), gpio_reg);
+ 
+-	return 0;
++	if (store)
++		memcpy(&pf->ptp.extts_channels[chan], config, sizeof(*config));
++}
++
++/**
++ * ice_ptp_disable_all_extts - Disable all EXTTS channels
++ * @pf: Board private structure
++ */
++static void ice_ptp_disable_all_extts(struct ice_pf *pf)
++{
++	struct ice_extts_channel extts_cfg = {};
++	int i;
++
++	for (i = 0; i < pf->ptp.info.n_ext_ts; i++) {
++		if (pf->ptp.extts_channels[i].ena) {
++			extts_cfg.gpio_pin = pf->ptp.extts_channels[i].gpio_pin;
++			extts_cfg.ena = false;
++			ice_ptp_cfg_extts(pf, i, &extts_cfg, false);
++		}
++	}
++
++	synchronize_irq(pf->oicr_irq.virq);
++}
++
++/**
++ * ice_ptp_enable_all_extts - Enable all EXTTS channels
++ * @pf: Board private structure
++ *
++ * Called during reset to restore user configuration.
++ */
++static void ice_ptp_enable_all_extts(struct ice_pf *pf)
++{
++	int i;
++
++	for (i = 0; i < pf->ptp.info.n_ext_ts; i++) {
++		if (pf->ptp.extts_channels[i].ena)
++			ice_ptp_cfg_extts(pf, i, &pf->ptp.extts_channels[i],
++					  false);
++	}
  }
  
+ /**
+@@ -1718,7 +1753,6 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
+ 			 struct ptp_clock_request *rq, int on)
+ {
+ 	struct ice_pf *pf = ptp_info_to_pf(info);
+-	struct ice_perout_channel clk_cfg = {0};
+ 	bool sma_pres = false;
+ 	unsigned int chan;
+ 	u32 gpio_pin;
+@@ -1729,6 +1763,9 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
+ 
+ 	switch (rq->type) {
+ 	case PTP_CLK_REQ_PEROUT:
++	{
++		struct ice_perout_channel clk_cfg = {};
++
+ 		chan = rq->perout.index;
+ 		if (sma_pres) {
+ 			if (chan == ice_pin_desc_e810t[SMA1].chan)
+@@ -1756,7 +1793,11 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
+ 
+ 		err = ice_ptp_cfg_clkout(pf, chan, &clk_cfg, true);
+ 		break;
++	}
+ 	case PTP_CLK_REQ_EXTTS:
++	{
++		struct ice_extts_channel extts_cfg = {};
++
+ 		chan = rq->extts.index;
+ 		if (sma_pres) {
+ 			if (chan < ice_pin_desc_e810t[SMA2].chan)
+@@ -1772,9 +1813,13 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
+ 			gpio_pin = chan;
+ 		}
+ 
+-		err = ice_ptp_cfg_extts(pf, !!on, chan, gpio_pin,
+-					rq->extts.flags);
+-		break;
++		extts_cfg.flags = rq->extts.flags;
++		extts_cfg.gpio_pin = gpio_pin;
++		extts_cfg.ena = !!on;
++
++		ice_ptp_cfg_extts(pf, chan, &extts_cfg, true);
++		return 0;
++	}
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -1792,21 +1837,31 @@ static int ice_ptp_gpio_enable_e823(struct ptp_clock_info *info,
+ 				    struct ptp_clock_request *rq, int on)
+ {
+ 	struct ice_pf *pf = ptp_info_to_pf(info);
+-	struct ice_perout_channel clk_cfg = {0};
+ 	int err;
+ 
+ 	switch (rq->type) {
+ 	case PTP_CLK_REQ_PPS:
++	{
++		struct ice_perout_channel clk_cfg = {};
++
+ 		clk_cfg.gpio_pin = PPS_PIN_INDEX;
+ 		clk_cfg.period = NSEC_PER_SEC;
+ 		clk_cfg.ena = !!on;
+ 
+ 		err = ice_ptp_cfg_clkout(pf, PPS_CLK_GEN_CHAN, &clk_cfg, true);
+ 		break;
++	}
+ 	case PTP_CLK_REQ_EXTTS:
+-		err = ice_ptp_cfg_extts(pf, !!on, rq->extts.index,
+-					TIME_SYNC_PIN_INDEX, rq->extts.flags);
+-		break;
++	{
++		struct ice_extts_channel extts_cfg = {};
++
++		extts_cfg.flags = rq->extts.flags;
++		extts_cfg.gpio_pin = TIME_SYNC_PIN_INDEX;
++		extts_cfg.ena = !!on;
++
++		ice_ptp_cfg_extts(pf, rq->extts.index, &extts_cfg, true);
++		return 0;
++	}
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -2526,6 +2581,10 @@ void ice_ptp_reset(struct ice_pf *pf)
+ 			goto err;
+ 	}
+ 
++	/* Re-enable all periodic outputs and external timestamp events */
++	ice_ptp_enable_all_clkout(pf);
++	ice_ptp_enable_all_extts(pf);
++
+ reset_ts:
+ 	/* Restart the PHY timestamping block */
+ 	ice_ptp_reset_phy_timestamping(pf);
+@@ -2773,6 +2832,8 @@ void ice_ptp_release(struct ice_pf *pf)
+ 
+ 	clear_bit(ICE_FLAG_PTP, pf->flags);
+ 
++	ice_ptp_disable_all_extts(pf);
++
+ 	kthread_cancel_delayed_work_sync(&pf->ptp.work);
+ 
+ 	ice_ptp_port_phy_stop(&pf->ptp.port);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
+index 995a57019ba76..3dd7584be0fa8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.h
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
+@@ -33,6 +33,12 @@ struct ice_perout_channel {
+ 	u64 start_time;
+ };
+ 
++struct ice_extts_channel {
++	bool ena;
++	u32 gpio_pin;
++	u32 flags;
++};
++
+ /* The ice hardware captures Tx hardware timestamps in the PHY. The timestamp
+  * is stored in a buffer of registers. Depending on the specific hardware,
+  * this buffer might be shared across multiple PHY ports.
+@@ -185,6 +191,7 @@ struct ice_ptp_port {
+  * @ext_ts_irq: the external timestamp IRQ in use
+  * @kworker: kwork thread for handling periodic work
+  * @perout_channels: periodic output data
++ * @extts_channels: channels for external timestamps
+  * @info: structure defining PTP hardware capabilities
+  * @clock: pointer to registered PTP clock device
+  * @tstamp_config: hardware timestamping configuration
+@@ -205,6 +212,7 @@ struct ice_ptp {
+ 	u8 ext_ts_irq;
+ 	struct kthread_worker *kworker;
+ 	struct ice_perout_channel perout_channels[GLTSYN_TGT_H_IDX_MAX];
++	struct ice_extts_channel extts_channels[GLTSYN_TGT_H_IDX_MAX];
+ 	struct ptp_clock_info info;
+ 	struct ptp_clock *clock;
+ 	struct hwtstamp_config tstamp_config;
 -- 
 2.53.0
 
