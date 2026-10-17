@@ -1,38 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152D93AE713;
-	Sat, 17 Oct 2026 16:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F343B19CF;
+	Sat, 17 Oct 2026 16:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255253; cv=none; b=qUMwZh4ThEFSX6HRuhF0UWunatekRV664wvso7BynHAYSxQjLGzyAtW1h/NyU7pDrZ/hlekbWB3dLf6dpKUnYVMqzdO+m7fdj/oVRCp8H4QKbYwZsY16MGg1qtoRfavn52zQxAcSMT1i43YDX8pE0CHgx1USKR+i+H6asCKFwxg=
+	t=1792255257; cv=none; b=a1dydWvmNqEzuFakTW2+Az1JBoxETepgTa2alCojWf7XUJxeO8ejFaoXq+9ZYD0w3/uvCBnsVGd+PwQBL0xcp5A8Otsi+4oM+a4sVFyOIQh6FJ0kqny8u39D0mLumIrkr4OyclXPhGPjrlprPIGlZPu25F7MguOv7+EKidkjgqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255253; c=relaxed/simple;
-	bh=1Ujvop5cCiwY2X2UNOGkdfE02vc62IB5UiQpJoUpPcc=;
+	s=arc-20240116; t=1792255257; c=relaxed/simple;
+	bh=kR1yjzO1Wq5BzJCAPQFhctIfhSRnC/KmD9iyK28RnPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDPHWzFitYi1kJinUr+pb8w8cH0w0/7gby18g3Brou8pb6+4/sk424QWZSTKwJOJu/3pGLbMQ0uye/THVh61SseK+w0RJwNOPdXJE5iPmg4+4EL3F+FbPT6Mm1T/qKC9UiZ6mATQB81kbgYUJbHDlh1BLBM45DoUYxul/JKLfRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RQtnsoF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pxU56qQuM5FyOTTypUWedKlb+Ntb4/mLXtKUg97SZ/YvJkVloQ+Qorv3f6htpVgUSHFMx1TZ8fJoH3Aj/K8a7DPqCHsbEbhqTutCVPcPXeyX/TY4aYi3YxG5hUvt7Yq+KDp6FnrEC1ecWQh9GTuv2Chbi7jqCe/fhLnrxpS+RSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/X62hzG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RQtnsoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6D91F000C4;
-	Sat, 17 Oct 2026 16:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/X62hzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592EF1F000C4;
+	Sat, 17 Oct 2026 16:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255252;
-	bh=899taClW8v82axmF9DkfqFB6r8CPFj5zPFTzX6HdzPg=;
+	s=korg; t=1792255255;
+	bh=dN1oBcuGAqw3QZKgEoUAvH55RQ7I9cla0JYCZUcQVxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0RQtnsoFrP6t3+7Jqd2pB14sBADE7CrgEnvZZVDkONVoOQ3sq7N/3Uo3ll9NZTNyj
-	 Yw75NjCf4lPro2xgQz1zOTN3+EvzuzQOHcW/jLjeAicZxYyhLmRpmAFnqhnzVMWPYv
-	 Uz5TDaw6jeaobXSbvtrL+C3qVLFVmtjZvO5R7wp0=
+	b=o/X62hzGlBd07skMgaO4xU15tWy0QERuZVynAotMP6KkcXsPZb3FJHBCVcW8hPUUf
+	 ZC3T22vjkxqtZsjehHhD0fO1GDeUJRPeHocWbQVayXsVtUQQrU8RWuYZIIgR19Aqmb
+	 qKwsVVqvY6dZO+EFF1HU29AMKdETmI+zglqS6mrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Baoquan He <bhe@redhat.com>,
+	Christoph Lameter <cl@gentwo.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	David Rientjes <rientjes@google.com>,
+	Frank van der Linden <fvdl@google.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 716/869] nfsd: convert nfsd_net boolean flags to unsigned long flags word
-Date: Sat, 17 Oct 2026 17:59:17 +0200
-Message-ID: <20261017160055.318073174@linuxfoundation.org>
+Subject: [PATCH 6.12 717/869] mm/hugetlb: refactor code around vmemmap_walk
+Date: Sat, 17 Oct 2026 17:59:18 +0200
+Message-ID: <20261017160055.343210649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,417 +75,472 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-[ Upstream commit 11a5fe42e1811f793e04ef885b639ea7668f439d ]
+[ Upstream commit c0b495b91a47b6c5ee54cf00e620dbadeb884253 ]
 
-nfsd_net contains several boolean fields that are accessed from
-concurrent contexts without serialization.  In particular,
-nfsd4_end_grace() guards its drain path with a plain bool:
+To prepare for removing fake head pages, the vmemmap_walk code is being
+reworked.
 
-    if (nn->grace_ended)
-            return;
-    nn->grace_ended = true;
+The reuse_page and reuse_addr variables are being eliminated.  There will
+no longer be an expectation regarding the reuse address in relation to the
+operated range.  Instead, the caller will provide head and tail vmemmap
+pages.
 
-The read and the write are independent, and nothing in struct
-nfsd_net serializes them.  At least two contexts can reach this
-code with no lock held:
+Currently, vmemmap_head and vmemmap_tail are set to the same page, but
+this will change in the future.
 
-    laundromat path
-      laundry_wq kworker
-        nfs4_laundromat()
-          nfsd4_end_grace()
+The only functional change is that __hugetlb_vmemmap_optimize_folio() will
+abandon optimization if memory allocation fails.
 
-    RECLAIM_COMPLETE path
-      nfsd compound kthread
-        nfsd4_reclaim_complete()
-          inc_reclaim_complete()
-            nfsd4_end_grace()
-
-Both callers can observe grace_ended == false on different CPUs,
-both store true, and both proceed into nfsd4_record_grace_done(),
-which invokes the active client_tracking_ops->grace_done callback.
-For tracking ops that drain reclaim_str_hashtbl (legacy_tracking_ops
-via nfsd4_recdir_purge_old, and the cld v1+ ops via
-nfsd4_cld_grace_done), grace_done calls nfs4_release_reclaim(),
-which walks every bucket of reclaim_str_hashtbl with no lock and
-calls nfs4_remove_reclaim_record() (list_del + kfree) on each
-entry.  Two concurrent walkers corrupt the list and double-free
-every nfs4_client_reclaim.  A concurrent nfsd4_find_reclaim_client()
-iterating the same bucket reads through freed memory.
-
-A third call site exists in nfs4_state_start_net() on the
-skip_grace startup path, but it runs under nfsd_mutex before any
-client has connected and before the laundromat's first delayed
-work fires, so it cannot race with the two callers above.
-
-Replace the scattered boolean fields in nfsd_net with a single
-unsigned long flags word and an enum nfsd_net_flag for the bit
-positions.  The grace_ended race is fixed by using
-test_and_set_bit(), which is atomic on all architectures.  The
-remaining flags (grace_end_forced, in_grace, somebody_reclaimed,
-track_reclaim_completes, nfsd_net_up, lockd_up) are converted to
-use test_bit/set_bit/clear_bit for consistency.  This avoids
-sub-word cmpxchg issues on architectures like Hexagon that only
-support word-sized atomic operations.
-
-Fixes: 362063a595be ("nfsd: keep a tally of RECLAIM_COMPLETE operations when using nfsdcld")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-3-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lkml.kernel.org/r/20260227194302.274384-11-kas@kernel.org
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Christoph Lameter <cl@gentwo.org>
+Cc: David Hildenbrand (arm) <david@kernel.org>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: Harry Yoo <harry.yoo@oracle.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b1b7c045e808 ("mm/hugetlb: initialize gigantic bootmem hugepage struct pages earlier")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/netns.h       | 19 +++++++++++--------
- fs/nfsd/nfs4proc.c    |  2 +-
- fs/nfsd/nfs4recover.c | 12 ++++++------
- fs/nfsd/nfs4state.c   | 41 +++++++++++++++++++++++++----------------
- fs/nfsd/nfsctl.c      |  4 ++--
- fs/nfsd/nfssvc.c      | 22 +++++++++++-----------
- 6 files changed, 56 insertions(+), 44 deletions(-)
+ mm/hugetlb_vmemmap.c | 224 +++++++++++++++++--------------------------
+ 1 file changed, 89 insertions(+), 135 deletions(-)
 
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index 550ee3c4fc26c..a42d36b85b224 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -27,6 +27,16 @@
- struct cld_net;
- struct nfsd4_client_tracking_ops;
- 
-+enum nfsd_net_flag {
-+	NFSD_NET_GRACE_ENDED,
-+	NFSD_NET_GRACE_END_FORCED,
-+	NFSD_NET_IN_GRACE,
-+	NFSD_NET_SOMEBODY_RECLAIMED,
-+	NFSD_NET_TRACK_RECLAIM_COMPLETES,
-+	NFSD_NET_UP,
-+	NFSD_NET_LOCKD_UP,
-+};
+diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+index 95496e9358430..1394c13c1516f 100644
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -24,8 +24,8 @@
+  *
+  * @remap_pte:		called for each lowest-level entry (PTE).
+  * @nr_walked:		the number of walked pte.
+- * @reuse_page:		the page which is reused for the tail vmemmap pages.
+- * @reuse_addr:		the virtual address of the @reuse_page page.
++ * @vmemmap_head:	the page to be installed as first in the vmemmap range
++ * @vmemmap_tail:	the page to be installed as non-first in the vmemmap range
+  * @vmemmap_pages:	the list head of the vmemmap pages that can be freed
+  *			or is mapped from.
+  * @flags:		used to modify behavior in vmemmap page table walking
+@@ -34,11 +34,13 @@
+ struct vmemmap_remap_walk {
+ 	void			(*remap_pte)(pte_t *pte, unsigned long addr,
+ 					     struct vmemmap_remap_walk *walk);
 +
- enum {
- 	/* cache misses due only to checksum comparison failures */
- 	NFSD_STATS_PAYLOAD_MISSES,
-@@ -65,8 +75,7 @@ struct nfsd_net {
- 	struct cache_detail *nametoid_cache;
+ 	unsigned long		nr_walked;
+-	struct page		*reuse_page;
+-	unsigned long		reuse_addr;
++	struct page		*vmemmap_head;
++	struct page		*vmemmap_tail;
+ 	struct list_head	*vmemmap_pages;
  
- 	struct lock_manager nfsd4_manager;
--	bool grace_ended;
--	bool grace_end_forced;
-+	unsigned long flags;
- 	bool client_tracking_active;
- 	time64_t boot_time;
- 	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
-@@ -124,19 +133,13 @@ struct nfsd_net {
- 	spinlock_t blocked_locks_lock;
- 
- 	struct file *rec_file;
--	bool in_grace;
- 	const struct nfsd4_client_tracking_ops *client_tracking_ops;
- 
- 	time64_t nfsd4_lease;
- 	time64_t nfsd4_grace;
--	bool somebody_reclaimed;
- 
--	bool track_reclaim_completes;
- 	atomic_t nr_reclaim_complete;
- 
--	bool nfsd_net_up;
--	bool lockd_up;
--
- 	seqlock_t writeverf_lock;
- 	unsigned char writeverf[8];
- 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index efc7cd0ae73b3..f94c01d23ea7c 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -627,7 +627,7 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		pr_warn("nfsd4_process_open2 failed to open newly-created file: status=%u\n",
- 			be32_to_cpu(status));
- 	if (reclaim && !status)
--		nn->somebody_reclaimed = true;
-+		set_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
- out:
- 	if (open->op_filp) {
- 		fput(open->op_filp);
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 41bc53288a142..d49bc03afc2f0 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -229,7 +229,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
- out_unlock:
- 	inode_unlock(d_inode(dir));
- 	if (status == 0) {
--		if (nn->in_grace)
-+		if (test_bit(NFSD_NET_IN_GRACE, &nn->flags))
- 			__nfsd4_create_reclaim_record_grace(clp, dname, nn);
- 		vfs_fsync(nn->rec_file, 0);
- 	} else {
-@@ -391,7 +391,7 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
- 	nfs4_reset_creds(original_cred);
- 	if (status == 0) {
- 		vfs_fsync(nn->rec_file, 0);
--		if (nn->in_grace)
-+		if (test_bit(NFSD_NET_IN_GRACE, &nn->flags))
- 			__nfsd4_remove_reclaim_record_grace(dname,
- 					HEXDIR_LEN, nn);
- 	}
-@@ -449,7 +449,7 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
++
+ /* Skip the TLB flush when we split the PMD */
+ #define VMEMMAP_SPLIT_NO_TLB_FLUSH	BIT(0)
+ /* Skip the TLB flush when we remap the PTE */
+@@ -140,14 +142,7 @@ static int vmemmap_pte_entry(pte_t *pte, unsigned long addr,
  {
- 	int status;
+ 	struct vmemmap_remap_walk *vmemmap_walk = walk->private;
  
--	nn->in_grace = false;
-+	clear_bit(NFSD_NET_IN_GRACE, &nn->flags);
- 	if (!nn->rec_file)
- 		return;
- 	status = mnt_want_write_file(nn->rec_file);
-@@ -531,7 +531,7 @@ nfsd4_init_recdir(struct net *net)
- 
- 	nfs4_reset_creds(original_cred);
- 	if (!status)
--		nn->in_grace = true;
-+		set_bit(NFSD_NET_IN_GRACE, &nn->flags);
- 	return status;
- }
- 
-@@ -1510,7 +1510,7 @@ nfs4_cld_state_init(struct net *net)
- 		INIT_LIST_HEAD(&nn->reclaim_str_hashtbl[i]);
- 	nn->reclaim_str_hashtbl_size = 0;
- 	init_rwsem(&nn->reclaim_str_hashtbl_lock);
--	nn->track_reclaim_completes = true;
-+	set_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags);
- 	atomic_set(&nn->nr_reclaim_complete, 0);
+-	/*
+-	 * The reuse_page is found 'first' in page table walking before
+-	 * starting remapping.
+-	 */
+-	if (!vmemmap_walk->reuse_page)
+-		vmemmap_walk->reuse_page = pte_page(ptep_get(pte));
+-	else
+-		vmemmap_walk->remap_pte(pte, addr, vmemmap_walk);
++	vmemmap_walk->remap_pte(pte, addr, vmemmap_walk);
+ 	vmemmap_walk->nr_walked++;
  
  	return 0;
-@@ -1521,7 +1521,7 @@ nfs4_cld_state_shutdown(struct net *net)
+@@ -207,18 +202,12 @@ static void free_vmemmap_page_list(struct list_head *list)
+ static void vmemmap_remap_pte(pte_t *pte, unsigned long addr,
+ 			      struct vmemmap_remap_walk *walk)
  {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-	/*
+-	 * Remap the tail pages as read-only to catch illegal write operation
+-	 * to the tail pages.
+-	 */
+-	pgprot_t pgprot = PAGE_KERNEL_RO;
+ 	struct page *page = pte_page(ptep_get(pte));
+ 	pte_t entry;
  
--	nn->track_reclaim_completes = false;
-+	clear_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags);
- 	kfree(nn->reclaim_str_hashtbl);
+ 	/* Remapping the head page requires r/w */
+-	if (unlikely(addr == walk->reuse_addr)) {
+-		pgprot = PAGE_KERNEL;
+-		list_del(&walk->reuse_page->lru);
++	if (unlikely(walk->nr_walked == 0 && walk->vmemmap_head)) {
++		list_del(&walk->vmemmap_head->lru);
+ 
+ 		/*
+ 		 * Makes sure that preceding stores to the page contents from
+@@ -226,53 +215,50 @@ static void vmemmap_remap_pte(pte_t *pte, unsigned long addr,
+ 		 * write.
+ 		 */
+ 		smp_wmb();
++
++		entry = mk_pte(walk->vmemmap_head, PAGE_KERNEL);
++	} else {
++		/*
++		 * Remap the tail pages as read-only to catch illegal write
++		 * operation to the tail pages.
++		 */
++		entry = mk_pte(walk->vmemmap_tail, PAGE_KERNEL_RO);
+ 	}
+ 
+-	entry = mk_pte(walk->reuse_page, pgprot);
+ 	list_add(&page->lru, walk->vmemmap_pages);
+ 	set_pte_at(&init_mm, addr, pte, entry);
  }
  
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 0e74cf87fc541..c9a55105fa8e7 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2608,7 +2608,7 @@ static void inc_reclaim_complete(struct nfs4_client *clp)
+-/*
+- * How many struct page structs need to be reset. When we reuse the head
+- * struct page, the special metadata (e.g. page->flags or page->mapping)
+- * cannot copy to the tail struct page structs. The invalid value will be
+- * checked in the free_tail_page_prepare(). In order to avoid the message
+- * of "corrupted mapping in tail page". We need to reset at least 4 (one
+- * head struct page struct and three tail struct page structs) struct page
+- * structs.
+- */
+-#define NR_RESET_STRUCT_PAGE		4
+-
+-static inline void reset_struct_pages(struct page *start)
+-{
+-	struct page *from = start + NR_RESET_STRUCT_PAGE;
+-
+-	BUILD_BUG_ON(NR_RESET_STRUCT_PAGE * 2 > PAGE_SIZE / sizeof(struct page));
+-	memcpy(start, from, sizeof(*from) * NR_RESET_STRUCT_PAGE);
+-}
+-
+ static void vmemmap_restore_pte(pte_t *pte, unsigned long addr,
+ 				struct vmemmap_remap_walk *walk)
  {
- 	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
+-	pgprot_t pgprot = PAGE_KERNEL;
+ 	struct page *page;
+-	void *to;
+-
+-	BUG_ON(pte_page(ptep_get(pte)) != walk->reuse_page);
++	struct page *from, *to;
  
--	if (!nn->track_reclaim_completes)
-+	if (!test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags))
- 		return;
- 
- 	down_read(&nn->reclaim_str_hashtbl_lock);
-@@ -4863,8 +4863,6 @@ nfsd4_init_leases_net(struct nfsd_net *nn)
- 
- 	nn->nfsd4_lease = 90;	/* default lease time */
- 	nn->nfsd4_grace = 90;
--	nn->somebody_reclaimed = false;
--	nn->track_reclaim_completes = false;
- 	nn->clverifier_counter = get_random_u32();
- 	nn->clientid_base = get_random_u32();
- 	nn->clientid_counter = nn->clientid_base + 1;
-@@ -6467,12 +6465,21 @@ nfsd4_renew(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- static void
- nfsd4_end_grace(struct nfsd_net *nn)
- {
--	/* do nothing if grace period already ended */
--	if (nn->grace_ended)
+ 	page = list_first_entry(walk->vmemmap_pages, struct page, lru);
+ 	list_del(&page->lru);
++
 +	/*
-+	 * nfsd4_end_grace() can be entered concurrently from the
-+	 * laundromat workqueue and from an nfsd compound thread
-+	 * handling RECLAIM_COMPLETE.  Without serialization, both
-+	 * callers can observe NFSD_NET_GRACE_ENDED clear and proceed
-+	 * into nfsd4_record_grace_done().  For tracking ops whose
-+	 * grace_done drains reclaim_str_hashtbl, that results in
-+	 * list corruption and a double free of every
-+	 * nfs4_client_reclaim entry.  Use an atomic test-and-set so
-+	 * exactly one caller proceeds.
++	 * Initialize tail pages in the newly allocated vmemmap page.
++	 *
++	 * There is folio-scope metadata that is encoded in the first few
++	 * tail pages.
++	 *
++	 * Use the value last tail page in the page with the head page
++	 * to initialize the rest of tail pages.
 +	 */
-+	if (test_and_set_bit(NFSD_NET_GRACE_ENDED, &nn->flags))
- 		return;
++	from = compound_head((struct page *)addr) +
++		PAGE_SIZE / sizeof(struct page) - 1;
+ 	to = page_to_virt(page);
+-	copy_page(to, (void *)walk->reuse_addr);
+-	reset_struct_pages(to);
++	for (int i = 0; i < PAGE_SIZE / sizeof(struct page); i++, to++)
++		*to = *from;
  
- 	trace_nfsd_grace_complete(nn);
--	nn->grace_ended = true;
  	/*
- 	 * If the server goes down again right now, an NFSv4
- 	 * client will still be allowed to reclaim after it comes back up,
-@@ -6514,11 +6521,12 @@ bool nfsd4_force_end_grace(struct nfsd_net *nn)
- 	if (!nn->client_tracking_ops)
- 		return false;
- 	spin_lock(&nn->client_lock);
--	if (nn->grace_ended || !nn->client_tracking_active) {
-+	if (test_bit(NFSD_NET_GRACE_ENDED, &nn->flags) ||
-+	    !nn->client_tracking_active) {
- 		spin_unlock(&nn->client_lock);
- 		return false;
- 	}
--	WRITE_ONCE(nn->grace_end_forced, true);
-+	set_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags);
- 	mod_delayed_work(laundry_wq, &nn->laundromat_work, 0);
- 	spin_unlock(&nn->client_lock);
- 	return true;
-@@ -6533,9 +6541,9 @@ static bool clients_still_reclaiming(struct nfsd_net *nn)
- 	time64_t double_grace_period_end = nn->boot_time_bt +
- 					   2 * nn->nfsd4_lease;
- 
--	if (READ_ONCE(nn->grace_end_forced))
-+	if (test_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags))
- 		return false;
--	if (nn->track_reclaim_completes) {
-+	if (test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags)) {
- 		int size;
- 
- 		down_read(&nn->reclaim_str_hashtbl_lock);
-@@ -6544,9 +6552,9 @@ static bool clients_still_reclaiming(struct nfsd_net *nn)
- 		if (atomic_read(&nn->nr_reclaim_complete) == size)
- 			return false;
- 	}
--	if (!nn->somebody_reclaimed)
-+	if (!test_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags))
- 		return false;
--	nn->somebody_reclaimed = false;
-+	clear_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
- 	/*
- 	 * If we've given them *two* lease times to reclaim, and they're
- 	 * still not done, give up:
-@@ -8404,7 +8412,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		nfs4_inc_and_copy_stateid(&lock->lk_resp_stateid, &lock_stp->st_stid);
- 		status = 0;
- 		if (lock->lk_reclaim)
--			nn->somebody_reclaimed = true;
-+			set_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
- 		break;
- 	case FILE_LOCK_DEFERRED:
- 		kref_put(&nbl->nbl_kref, free_nbl);
-@@ -8974,8 +8982,8 @@ static int nfs4_state_create_net(struct net *net)
- 	nn->unconf_name_tree = RB_ROOT;
- 	nn->boot_time = ktime_get_real_seconds();
- 	nn->boot_time_bt = ktime_get_boottime_seconds();
--	nn->grace_ended = false;
--	nn->grace_end_forced = false;
-+	clear_bit(NFSD_NET_GRACE_ENDED, &nn->flags);
-+	clear_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags);
- 	nn->client_tracking_active = false;
- 	nn->nfsd4_manager.block_opens = true;
- 	INIT_LIST_HEAD(&nn->nfsd4_manager.list);
-@@ -9062,7 +9070,8 @@ nfs4_state_start_net(struct net *net)
- 	spin_lock(&nn->client_lock);
- 	nn->client_tracking_active = true;
- 	spin_unlock(&nn->client_lock);
--	if (nn->track_reclaim_completes && nn->reclaim_str_hashtbl_size == 0)
-+	if (test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags) &&
-+	    nn->reclaim_str_hashtbl_size == 0)
- 		goto skip_grace;
- 	printk(KERN_INFO "NFSD: starting %lld-second grace period (net %x)\n",
- 	       nn->nfsd4_grace, net->ns.inum);
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 16fd95a23e113..5646e07b74c3b 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -301,7 +301,7 @@ static ssize_t write_unlock_fs(struct file *file, char *buf, size_t size)
- 	error = nlmsvc_unlock_all_by_sb(path.dentry->d_sb);
- 	mutex_lock(&nfsd_mutex);
- 	nn = net_generic(netns(file), nfsd_net_id);
--	if (nn->nfsd_net_up)
-+	if (test_bit(NFSD_NET_UP, &nn->flags))
- 		nfsd4_revoke_states(nn, path.dentry->d_sb);
- 	else
- 		error = -EINVAL;
-@@ -1150,7 +1150,7 @@ static ssize_t write_v4_end_grace(struct file *file, char *buf, size_t size)
- 	}
- 
- 	return scnprintf(buf, SIMPLE_TRANSACTION_LIMIT, "%c\n",
--			 nn->grace_ended ? 'Y' : 'N');
-+			 test_bit(NFSD_NET_GRACE_ENDED, &nn->flags) ? 'Y' : 'N');
+ 	 * Makes sure that preceding stores to the page contents become visible
+ 	 * before the set_pte_at() write.
+ 	 */
+ 	smp_wmb();
+-	set_pte_at(&init_mm, addr, pte, mk_pte(page, pgprot));
++	set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
  }
  
- #endif
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 57754dfacf9cb..1927fbf26d56d 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -381,7 +381,7 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 	int ret;
+ /**
+@@ -282,33 +268,28 @@ static void vmemmap_restore_pte(pte_t *pte, unsigned long addr,
+  *             to remap.
+  * @end:       end address of the vmemmap virtual address range that we want to
+  *             remap.
+- * @reuse:     reuse address.
+- *
+  * Return: %0 on success, negative error code otherwise.
+  */
+-static int vmemmap_remap_split(unsigned long start, unsigned long end,
+-			       unsigned long reuse)
++static int vmemmap_remap_split(unsigned long start, unsigned long end)
+ {
+ 	struct vmemmap_remap_walk walk = {
+ 		.remap_pte	= NULL,
+ 		.flags		= VMEMMAP_SPLIT_NO_TLB_FLUSH,
+ 	};
  
--	if (nn->nfsd_net_up)
-+	if (test_bit(NFSD_NET_UP, &nn->flags))
+-	/* See the comment in the vmemmap_remap_free(). */
+-	BUG_ON(start - reuse != PAGE_SIZE);
+-
+-	return vmemmap_remap_range(reuse, end, &walk);
++	return vmemmap_remap_range(start, end, &walk);
+ }
+ 
+ /**
+  * vmemmap_remap_free - remap the vmemmap virtual address range [@start, @end)
+- *			to the page which @reuse is mapped to, then free vmemmap
+- *			which the range are mapped to.
++ *			to use @vmemmap_head/tail, then free vmemmap which
++ *			the range are mapped to.
+  * @start:	start address of the vmemmap virtual address range that we want
+  *		to remap.
+  * @end:	end address of the vmemmap virtual address range that we want to
+  *		remap.
+- * @reuse:	reuse address.
++ * @vmemmap_head: the page to be installed as first in the vmemmap range
++ * @vmemmap_tail: the page to be installed as non-first in the vmemmap range
+  * @vmemmap_pages: list to deposit vmemmap pages to be freed.  It is callers
+  *		responsibility to free pages.
+  * @flags:	modifications to vmemmap_remap_walk flags
+@@ -316,69 +297,38 @@ static int vmemmap_remap_split(unsigned long start, unsigned long end,
+  * Return: %0 on success, negative error code otherwise.
+  */
+ static int vmemmap_remap_free(unsigned long start, unsigned long end,
+-			      unsigned long reuse,
++			      struct page *vmemmap_head,
++			      struct page *vmemmap_tail,
+ 			      struct list_head *vmemmap_pages,
+ 			      unsigned long flags)
+ {
+ 	int ret;
+ 	struct vmemmap_remap_walk walk = {
+ 		.remap_pte	= vmemmap_remap_pte,
+-		.reuse_addr	= reuse,
++		.vmemmap_head	= vmemmap_head,
++		.vmemmap_tail	= vmemmap_tail,
+ 		.vmemmap_pages	= vmemmap_pages,
+ 		.flags		= flags,
+ 	};
+-	int nid = page_to_nid((struct page *)reuse);
+-	gfp_t gfp_mask = GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN;
+ 
+-	/*
+-	 * Allocate a new head vmemmap page to avoid breaking a contiguous
+-	 * block of struct page memory when freeing it back to page allocator
+-	 * in free_vmemmap_page_list(). This will allow the likely contiguous
+-	 * struct page backing memory to be kept contiguous and allowing for
+-	 * more allocations of hugepages. Fallback to the currently
+-	 * mapped head page in case should it fail to allocate.
+-	 */
+-	walk.reuse_page = alloc_pages_node(nid, gfp_mask, 0);
+-	if (walk.reuse_page) {
+-		copy_page(page_to_virt(walk.reuse_page),
+-			  (void *)walk.reuse_addr);
+-		list_add(&walk.reuse_page->lru, vmemmap_pages);
+-		memmap_pages_add(1);
+-	}
++	ret = vmemmap_remap_range(start, end, &walk);
++	if (!ret || !walk.nr_walked)
++		return ret;
++
++	end = start + walk.nr_walked * PAGE_SIZE;
+ 
+ 	/*
+-	 * In order to make remapping routine most efficient for the huge pages,
+-	 * the routine of vmemmap page table walking has the following rules
+-	 * (see more details from the vmemmap_pte_range()):
+-	 *
+-	 * - The range [@start, @end) and the range [@reuse, @reuse + PAGE_SIZE)
+-	 *   should be continuous.
+-	 * - The @reuse address is part of the range [@reuse, @end) that we are
+-	 *   walking which is passed to vmemmap_remap_range().
+-	 * - The @reuse address is the first in the complete range.
+-	 *
+-	 * So we need to make sure that @start and @reuse meet the above rules.
++	 * vmemmap_pages contains pages from the previous vmemmap_remap_range()
++	 * call which failed.  These are pages which were removed from
++	 * the vmemmap. They will be restored in the following call.
+ 	 */
+-	BUG_ON(start - reuse != PAGE_SIZE);
++	walk = (struct vmemmap_remap_walk) {
++		.remap_pte	= vmemmap_restore_pte,
++		.vmemmap_pages	= vmemmap_pages,
++		.flags		= 0,
++	};
+ 
+-	ret = vmemmap_remap_range(reuse, end, &walk);
+-	if (ret && walk.nr_walked) {
+-		end = reuse + walk.nr_walked * PAGE_SIZE;
+-		/*
+-		 * vmemmap_pages contains pages from the previous
+-		 * vmemmap_remap_range call which failed.  These
+-		 * are pages which were removed from the vmemmap.
+-		 * They will be restored in the following call.
+-		 */
+-		walk = (struct vmemmap_remap_walk) {
+-			.remap_pte	= vmemmap_restore_pte,
+-			.reuse_addr	= reuse,
+-			.vmemmap_pages	= vmemmap_pages,
+-			.flags		= 0,
+-		};
+-
+-		vmemmap_remap_range(reuse, end, &walk);
+-	}
++	vmemmap_remap_range(start, end, &walk);
+ 
+ 	return ret;
+ }
+@@ -415,29 +365,24 @@ static int alloc_vmemmap_page_list(unsigned long start, unsigned long end,
+  *		to remap.
+  * @end:	end address of the vmemmap virtual address range that we want to
+  *		remap.
+- * @reuse:	reuse address.
+  * @flags:	modifications to vmemmap_remap_walk flags
+  *
+  * Return: %0 on success, negative error code otherwise.
+  */
+ static int vmemmap_remap_alloc(unsigned long start, unsigned long end,
+-			       unsigned long reuse, unsigned long flags)
++			       unsigned long flags)
+ {
+ 	LIST_HEAD(vmemmap_pages);
+ 	struct vmemmap_remap_walk walk = {
+ 		.remap_pte	= vmemmap_restore_pte,
+-		.reuse_addr	= reuse,
+ 		.vmemmap_pages	= &vmemmap_pages,
+ 		.flags		= flags,
+ 	};
+ 
+-	/* See the comment in the vmemmap_remap_free(). */
+-	BUG_ON(start - reuse != PAGE_SIZE);
+-
+ 	if (alloc_vmemmap_page_list(start, end, &vmemmap_pages))
+ 		return -ENOMEM;
+ 
+-	return vmemmap_remap_range(reuse, end, &walk);
++	return vmemmap_remap_range(start, end, &walk);
+ }
+ 
+ DEFINE_STATIC_KEY_FALSE(hugetlb_optimize_vmemmap_key);
+@@ -450,8 +395,7 @@ static int __hugetlb_vmemmap_restore_folio(const struct hstate *h,
+ 					   struct folio *folio, unsigned long flags)
+ {
+ 	int ret;
+-	unsigned long vmemmap_start = (unsigned long)&folio->page, vmemmap_end;
+-	unsigned long vmemmap_reuse;
++	unsigned long vmemmap_start, vmemmap_end;
+ 
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_hugetlb(folio), folio);
+ 	VM_WARN_ON_ONCE_FOLIO(folio_ref_count(folio), folio);
+@@ -462,18 +406,18 @@ static int __hugetlb_vmemmap_restore_folio(const struct hstate *h,
+ 	if (flags & VMEMMAP_SYNCHRONIZE_RCU)
+ 		synchronize_rcu();
+ 
++	vmemmap_start	= (unsigned long)&folio->page;
+ 	vmemmap_end	= vmemmap_start + hugetlb_vmemmap_size(h);
+-	vmemmap_reuse	= vmemmap_start;
++
+ 	vmemmap_start	+= HUGETLB_VMEMMAP_RESERVE_SIZE;
+ 
+ 	/*
+ 	 * The pages which the vmemmap virtual address range [@vmemmap_start,
+-	 * @vmemmap_end) are mapped to are freed to the buddy allocator, and
+-	 * the range is mapped to the page which @vmemmap_reuse is mapped to.
++	 * @vmemmap_end) are mapped to are freed to the buddy allocator.
+ 	 * When a HugeTLB page is freed to the buddy allocator, previously
+ 	 * discarded vmemmap pages must be allocated and remapping.
+ 	 */
+-	ret = vmemmap_remap_alloc(vmemmap_start, vmemmap_end, vmemmap_reuse, flags);
++	ret = vmemmap_remap_alloc(vmemmap_start, vmemmap_end, flags);
+ 	if (!ret) {
+ 		folio_clear_hugetlb_vmemmap_optimized(folio);
+ 		static_branch_dec(&hugetlb_optimize_vmemmap_key);
+@@ -561,9 +505,9 @@ static int __hugetlb_vmemmap_optimize_folio(const struct hstate *h,
+ 					    struct list_head *vmemmap_pages,
+ 					    unsigned long flags)
+ {
+-	int ret = 0;
+-	unsigned long vmemmap_start = (unsigned long)&folio->page, vmemmap_end;
+-	unsigned long vmemmap_reuse;
++	unsigned long vmemmap_start, vmemmap_end;
++	struct page *vmemmap_head, *vmemmap_tail;
++	int nid, ret = 0;
+ 
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_hugetlb(folio), folio);
+ 	VM_WARN_ON_ONCE_FOLIO(folio_ref_count(folio), folio);
+@@ -588,18 +532,30 @@ static int __hugetlb_vmemmap_optimize_folio(const struct hstate *h,
+ 	 */
+ 	folio_set_hugetlb_vmemmap_optimized(folio);
+ 
++	nid = folio_nid(folio);
++	vmemmap_head = alloc_pages_node(nid, GFP_KERNEL, 0);
++	if (!vmemmap_head) {
++		ret = -ENOMEM;
++		goto out;
++	}
++
++	copy_page(page_to_virt(vmemmap_head), folio);
++	list_add(&vmemmap_head->lru, vmemmap_pages);
++	memmap_pages_add(1);
++
++	vmemmap_tail	= vmemmap_head;
++	vmemmap_start	= (unsigned long)&folio->page;
+ 	vmemmap_end	= vmemmap_start + hugetlb_vmemmap_size(h);
+-	vmemmap_reuse	= vmemmap_start;
+-	vmemmap_start	+= HUGETLB_VMEMMAP_RESERVE_SIZE;
+ 
+ 	/*
+-	 * Remap the vmemmap virtual address range [@vmemmap_start, @vmemmap_end)
+-	 * to the page which @vmemmap_reuse is mapped to.  Add pages previously
+-	 * mapping the range to vmemmap_pages list so that they can be freed by
+-	 * the caller.
++	 * Remap the vmemmap virtual address range [@vmemmap_start, @vmemmap_end).
++	 * Add pages previously mapping the range to vmemmap_pages list so that
++	 * they can be freed by the caller.
+ 	 */
+-	ret = vmemmap_remap_free(vmemmap_start, vmemmap_end, vmemmap_reuse,
++	ret = vmemmap_remap_free(vmemmap_start, vmemmap_end,
++				 vmemmap_head, vmemmap_tail,
+ 				 vmemmap_pages, flags);
++out:
+ 	if (ret) {
+ 		static_branch_dec(&hugetlb_optimize_vmemmap_key);
+ 		folio_clear_hugetlb_vmemmap_optimized(folio);
+@@ -628,21 +584,19 @@ void hugetlb_vmemmap_optimize_folio(const struct hstate *h, struct folio *folio)
+ 
+ static int hugetlb_vmemmap_split_folio(const struct hstate *h, struct folio *folio)
+ {
+-	unsigned long vmemmap_start = (unsigned long)&folio->page, vmemmap_end;
+-	unsigned long vmemmap_reuse;
++	unsigned long vmemmap_start, vmemmap_end;
+ 
+ 	if (!vmemmap_should_optimize_folio(h, folio))
  		return 0;
  
- 	ret = nfsd_startup_generic();
-@@ -391,11 +391,11 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
- 	if (ret)
- 		goto out_socks;
++	vmemmap_start	= (unsigned long)&folio->page;
+ 	vmemmap_end	= vmemmap_start + hugetlb_vmemmap_size(h);
+-	vmemmap_reuse	= vmemmap_start;
+-	vmemmap_start	+= HUGETLB_VMEMMAP_RESERVE_SIZE;
  
--	if (nfsd_needs_lockd(nn) && !nn->lockd_up) {
-+	if (nfsd_needs_lockd(nn) && !test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
- 		ret = lockd_up(net, cred);
- 		if (ret)
- 			goto out_socks;
--		nn->lockd_up = true;
-+		set_bit(NFSD_NET_LOCKD_UP, &nn->flags);
- 	}
- 
- 	ret = nfsd_file_cache_start_net(net);
-@@ -413,7 +413,7 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
- 	if (ret)
- 		goto out_reply_cache;
- 
--	nn->nfsd_net_up = true;
-+	set_bit(NFSD_NET_UP, &nn->flags);
- 	return 0;
- 
- out_reply_cache:
-@@ -421,9 +421,9 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
- out_filecache:
- 	nfsd_file_cache_shutdown_net(net);
- out_lockd:
--	if (nn->lockd_up) {
-+	if (test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
- 		lockd_down(net);
--		nn->lockd_up = false;
-+		clear_bit(NFSD_NET_LOCKD_UP, &nn->flags);
- 	}
- out_socks:
- 	nfsd_shutdown_generic();
-@@ -434,7 +434,7 @@ static void nfsd_shutdown_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	if (nn->nfsd_net_up) {
-+	if (test_bit(NFSD_NET_UP, &nn->flags)) {
- 		percpu_ref_kill_and_confirm(&nn->nfsd_net_ref, nfsd_net_done);
- 		wait_for_completion(&nn->nfsd_net_confirm_done);
- 
-@@ -442,18 +442,18 @@ static void nfsd_shutdown_net(struct net *net)
- 		nfs4_state_shutdown_net(net);
- 		nfsd_reply_cache_shutdown(nn);
- 		nfsd_file_cache_shutdown_net(net);
--		if (nn->lockd_up) {
-+		if (test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
- 			lockd_down(net);
--			nn->lockd_up = false;
-+			clear_bit(NFSD_NET_LOCKD_UP, &nn->flags);
- 		}
- 		wait_for_completion(&nn->nfsd_net_free_done);
- 	}
- 
- 	percpu_ref_exit(&nn->nfsd_net_ref);
- 
--	if (nn->nfsd_net_up)
-+	if (test_bit(NFSD_NET_UP, &nn->flags))
- 		nfsd_shutdown_generic();
--	nn->nfsd_net_up = false;
-+	clear_bit(NFSD_NET_UP, &nn->flags);
+ 	/*
+ 	 * Split PMDs on the vmemmap virtual address range [@vmemmap_start,
+ 	 * @vmemmap_end]
+ 	 */
+-	return vmemmap_remap_split(vmemmap_start, vmemmap_end, vmemmap_reuse);
++	return vmemmap_remap_split(vmemmap_start, vmemmap_end);
  }
  
- static DEFINE_SPINLOCK(nfsd_notifier_lock);
+ void hugetlb_vmemmap_optimize_folios(struct hstate *h, struct list_head *folio_list)
 -- 
 2.53.0
 
