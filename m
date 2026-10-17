@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6012D3225;
-	Sat, 17 Oct 2026 17:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DC2374E60;
+	Sat, 17 Oct 2026 17:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258360; cv=none; b=UD3TtlO05HSqH4wYjeZvedH7OTOulAIiZW13DM1Ac7PSEMgf8eAge8ZUqVFbciWfabiAhjskF7DnL5CJAkojER7Xr5k/BetMKPIrvIThGcRnCRZC0r2/qoy1zpNbrcjQOZEaVAQPI4Ge3utUii7F7fYV+U4qYMycubnOHiIz3cI=
+	t=1792258363; cv=none; b=VB7G8uo5WS0WfMAOJ/AwvzvnwsRSZCAVNE999uN0/mANUXLtq1v/nWVoVX8TD2idlQa+nvgKskrfCJGxjdPFo/6nn5aykN/DCVDy1wvQCtQb+LonmtSFEFkpxHXSJLIL0S2jqXGCaivBj49YpOp280AvgKn/bgZsIthXxXoKID8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258360; c=relaxed/simple;
-	bh=049ULdMy62IPAF5ZHn1CirExW3wfZefl6921EVNqW6s=;
+	s=arc-20240116; t=1792258363; c=relaxed/simple;
+	bh=OxURTCZN75SOXj0t70hlH872tqAf7GBYDgOzTmDa5pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuesgALYlvJXgS6o7cWSemv58/F2U7e6HKS28CrMcWGEMyaMlcwPC4OQ8kea33fZvZoavPouQFcv8860/d+4OvQLnfZ4nV8wKiBZAD6PiQT/wDKMmuHk+1SemlCeczFigFCA+2cdqwOKF8rO7eDtGMjYm7XYxEfuAA+Vgp91VSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxwiYVI1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MbRYOSTANLMdX1Nzr7iLYkRma2YTeZE5xkxndy/QC55nwIbk/lUN4KCcKFOaoD9Gbp+Q3lNRakmzSubACQYv0HqApX72rC+kzhBQ0f6xeOUoabaJKRZjuKNZnyLGfCVv0knSiohexjVnnSdj0hJAwLn+NrfDDFTZzVdveQpOIgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+6IFLaN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxwiYVI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B5C1F000C4;
-	Sat, 17 Oct 2026 17:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+6IFLaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAA81F000C4;
+	Sat, 17 Oct 2026 17:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258359;
-	bh=OIbdjFj8fkVumEG6i+XTyL4KHKBCGgPbyneYobeGfyk=;
+	s=korg; t=1792258362;
+	bh=Fu5neLRiaLjWc1sk2knjD9tIJ65t+iDDKFmj6npeJR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxwiYVI14g4HVu46cHuifpX4xcRizijK9gYczjOuaxf4kPoSJz5NLQSFGC9BJMK3A
-	 EbPGWEvcxZ/5nP8lERwT3q55lgMxl7zuIHYP7PswvqG1r+LVRjCgkUo1nEc1ym+SQm
-	 6THDKGYc9cukcJeqRiGMR7EkL6JPddZYPVbDuhUA=
+	b=n+6IFLaN0OpJp6Ydazl+8m6pWjMXWriozqiVimu7mKbci7NnQDfuMe3YguzMiBMf0
+	 jLaOThVfaXURKPJJJiNcgboAtnm7727ZamMKkrekfECDDDXj3i3XZfIfDBev57ZnN6
+	 oqVxEG74Ym8563vwsEslmlC9qKcao4KQXC/EkHkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhouyan Deng <dengzhouyan_nwpu@163.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0859/1674] tcp: secure_seq: add back ports to TS offset
-Date: Sat, 17 Oct 2026 17:52:11 +0200
-Message-ID: <20261017160453.169416529@linuxfoundation.org>
+Subject: [PATCH 6.6 0842/1674] MIPS: ftrace: Fix memory corruption when kernel is located beyond 32 bits
+Date: Sat, 17 Oct 2026 17:51:54 +0200
+Message-ID: <20261017160452.741871746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,465 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit 165573e41f2f66ef98940cf65f838b2cb575d9d1 ]
+[ Upstream commit 36dac9a3dda1f2bae343191bc16b910c603cac25 ]
 
-This reverts 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
+Since commit e424054000878 ("MIPS: Tracing: Reduce the overhead of
+dynamic Function Tracer"), the macro UASM_i_LA_mostly has been used,
+and this macro can generate more than 2 instructions. At the same
+time, the code in ftrace assumes that no more than 2 instructions can
+be generated, which is why it stores them in an int[2] array. However,
+as previously noted, the macro UASM_i_LA_mostly (and now UASM_i_LA)
+causes a buffer overflow when _mcount is beyond 32 bits. This leads to
+corruption of the variables located in the __read_mostly section.
 
-tcp_tw_recycle went away in 2017.
+This corruption was observed because the variable
+__cpu_primary_thread_mask was corrupted, causing a hang very early
+during boot.
 
-Zhouyan Deng reported off-path TCP source port leakage via
-SYN cookie side-channel that can be fixed in multiple ways.
+This fix prevents the corruption by avoiding the generation of
+instructions if they could exceed 2 instructions in
+length. Fortunately, insn_la_mcount is only used if the instrumented
+code is located outside the kernel code section, so dynamic ftrace can
+still be used, albeit in a more limited scope. This is still
+preferable to corrupting memory and/or crashing the kernel.
 
-One of them is to bring back TCP ports in TS offset randomization.
-
-As a bonus, we perform a single siphash() computation
-to provide both an ISN and a TS offset.
-
-Fixes: 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
-Reported-by: Zhouyan Deng <dengzhouyan_nwpu@163.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20260302205527.1982836-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/secure_seq.h | 45 ++++++++++++++++++----
- include/net/tcp.h        |  6 ++-
- net/core/secure_seq.c    | 80 +++++++++++++++-------------------------
- net/ipv4/syncookies.c    | 11 ++++--
- net/ipv4/tcp_input.c     |  8 +++-
- net/ipv4/tcp_ipv4.c      | 37 +++++++++----------
- net/ipv6/syncookies.c    | 11 ++++--
- net/ipv6/tcp_ipv6.c      | 37 +++++++++----------
- 8 files changed, 127 insertions(+), 108 deletions(-)
+ arch/mips/kernel/ftrace.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/secure_seq.h b/include/net/secure_seq.h
-index 21e7fa2a18138..e4ad681a2a125 100644
---- a/include/net/secure_seq.h
-+++ b/include/net/secure_seq.h
-@@ -5,20 +5,51 @@
- #include <linux/types.h>
+diff --git a/arch/mips/kernel/ftrace.c b/arch/mips/kernel/ftrace.c
+index f39e85fd58fa9..b15615b285690 100644
+--- a/arch/mips/kernel/ftrace.c
++++ b/arch/mips/kernel/ftrace.c
+@@ -54,10 +54,20 @@ static inline void ftrace_dyn_arch_init_insns(void)
+ 	u32 *buf;
+ 	unsigned int v1;
  
- struct net;
-+extern struct net init_net;
+-	/* la v1, _mcount */
+-	v1 = 3;
+-	buf = (u32 *)&insn_la_mcount[0];
+-	UASM_i_LA(&buf, v1, MCOUNT_ADDR);
++	/* If we are not in compat space, the number of generated
++	 * instructions will exceed the maximum expected limit of 2.
++	 * To prevent buffer overflow, we avoid generating them.
++	 * insn_la_mcount will not be used later in ftrace_make_call.
++	 */
++	if (uasm_in_compat_space_p(MCOUNT_ADDR)) {
++		/* la v1, _mcount */
++		v1 = 3;
++		buf = (u32 *)&insn_la_mcount[0];
++		UASM_i_LA(&buf, v1, MCOUNT_ADDR);
++	} else {
++		pr_warn("ftrace: mcount address beyond 32 bits is not supported (%lX)\n",
++			MCOUNT_ADDR);
++	}
+ 
+ 	/* jal (ftrace_caller + 8), jump over the first two instruction */
+ 	buf = (u32 *)&insn_jal_ftrace_caller;
+@@ -189,6 +199,13 @@ int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
+ 	unsigned int new;
+ 	unsigned long ip = rec->ip;
+ 
++	/* When the code to patch does not belong to the kernel code
++	 * space, we must use insn_la_mcount. However, if MCOUNT_ADDR
++	 * is not in compat space, insn_la_mcount is not usable.
++	 */
++	if (!core_kernel_text(ip) && !uasm_in_compat_space_p(MCOUNT_ADDR))
++		return -EFAULT;
 +
-+union tcp_seq_and_ts_off {
-+	struct {
-+		u32 seq;
-+		u32 ts_off;
-+	};
-+	u64 hash64;
-+};
+ 	new = core_kernel_text(ip) ? insn_jal_ftrace_caller : insn_la_mcount[0];
  
- u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
- u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
- 			       __be16 dport);
--u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
--		   __be16 sport, __be16 dport);
--u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr);
--u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
--		     __be16 sport, __be16 dport);
--u32 secure_tcpv6_ts_off(const struct net *net,
--			const __be32 *saddr, const __be32 *daddr);
- u64 secure_dccp_sequence_number(__be32 saddr, __be32 daddr,
- 				__be16 sport, __be16 dport);
- u64 secure_dccpv6_sequence_number(__be32 *saddr, __be32 *daddr,
- 				  __be16 sport, __be16 dport);
-+union tcp_seq_and_ts_off
-+secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
-+			  __be16 sport, __be16 dport);
-+
-+static inline u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
-+				 __be16 sport, __be16 dport)
-+{
-+	union tcp_seq_and_ts_off ts;
-+
-+	ts = secure_tcp_seq_and_ts_off(&init_net, saddr, daddr,
-+				       sport, dport);
-+
-+	return ts.seq;
-+}
-+
-+union tcp_seq_and_ts_off
-+secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
-+			    const __be32 *daddr,
-+			    __be16 sport, __be16 dport);
-+
-+static inline u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
-+				   __be16 sport, __be16 dport)
-+{
-+	union tcp_seq_and_ts_off ts;
-+
-+	ts = secure_tcpv6_seq_and_ts_off(&init_net, saddr, daddr,
-+					 sport, dport);
- 
-+	return ts.seq;
-+}
- #endif /* _NET_SECURE_SEQ */
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 3fe0c1d928407..ee4d1edd2e804 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -42,6 +42,7 @@
- #include <net/dst.h>
- #include <net/mptcp.h>
- #include <net/xfrm.h>
-+#include <net/secure_seq.h>
- 
- #include <linux/seq_file.h>
- #include <linux/memcontrol.h>
-@@ -2189,8 +2190,9 @@ struct tcp_request_sock_ops {
- 				       struct sk_buff *skb,
- 				       struct flowi *fl,
- 				       struct request_sock *req);
--	u32 (*init_seq)(const struct sk_buff *skb);
--	u32 (*init_ts_off)(const struct net *net, const struct sk_buff *skb);
-+	union tcp_seq_and_ts_off (*init_seq_and_ts_off)(
-+					const struct net *net,
-+					const struct sk_buff *skb);
- 	int (*send_synack)(const struct sock *sk, struct dst_entry *dst,
- 			   struct flowi *fl, struct request_sock *req,
- 			   struct tcp_fastopen_cookie *foc,
-diff --git a/net/core/secure_seq.c b/net/core/secure_seq.c
-index b0ff6153be623..740642aeaf765 100644
---- a/net/core/secure_seq.c
-+++ b/net/core/secure_seq.c
-@@ -20,7 +20,6 @@
- #include <net/tcp.h>
- 
- static siphash_aligned_key_t net_secret;
--static siphash_aligned_key_t ts_secret;
- 
- #define EPHEMERAL_PORT_SHUFFLE_PERIOD (10 * HZ)
- 
-@@ -28,11 +27,6 @@ static __always_inline void net_secret_init(void)
- {
- 	net_get_random_once(&net_secret, sizeof(net_secret));
- }
--
--static __always_inline void ts_secret_init(void)
--{
--	net_get_random_once(&ts_secret, sizeof(ts_secret));
--}
- #endif
- 
- #ifdef CONFIG_INET
-@@ -53,28 +47,9 @@ static u32 seq_scale(u32 seq)
- #endif
- 
- #if IS_ENABLED(CONFIG_IPV6)
--u32 secure_tcpv6_ts_off(const struct net *net,
--			const __be32 *saddr, const __be32 *daddr)
--{
--	const struct {
--		struct in6_addr saddr;
--		struct in6_addr daddr;
--	} __aligned(SIPHASH_ALIGNMENT) combined = {
--		.saddr = *(struct in6_addr *)saddr,
--		.daddr = *(struct in6_addr *)daddr,
--	};
--
--	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
--		return 0;
--
--	ts_secret_init();
--	return siphash(&combined, offsetofend(typeof(combined), daddr),
--		       &ts_secret);
--}
--EXPORT_SYMBOL(secure_tcpv6_ts_off);
--
--u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
--		     __be16 sport, __be16 dport)
-+union tcp_seq_and_ts_off
-+secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
-+			    const __be32 *daddr, __be16 sport, __be16 dport)
- {
- 	const struct {
- 		struct in6_addr saddr;
-@@ -87,14 +62,20 @@ u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
- 		.sport = sport,
- 		.dport = dport
- 	};
--	u32 hash;
-+	union tcp_seq_and_ts_off st;
- 
- 	net_secret_init();
--	hash = siphash(&combined, offsetofend(typeof(combined), dport),
--		       &net_secret);
--	return seq_scale(hash);
-+
-+	st.hash64 = siphash(&combined, offsetofend(typeof(combined), dport),
-+			    &net_secret);
-+
-+	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
-+		st.ts_off = 0;
-+
-+	st.seq = seq_scale(st.seq);
-+	return st;
- }
--EXPORT_SYMBOL(secure_tcpv6_seq);
-+EXPORT_SYMBOL(secure_tcpv6_seq_and_ts_off);
- 
- u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
- 			       __be16 dport)
-@@ -118,33 +99,30 @@ EXPORT_SYMBOL(secure_ipv6_port_ephemeral);
- #endif
- 
- #ifdef CONFIG_INET
--u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr)
--{
--	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
--		return 0;
--
--	ts_secret_init();
--	return siphash_2u32((__force u32)saddr, (__force u32)daddr,
--			    &ts_secret);
--}
--
- /* secure_tcp_seq_and_tsoff(a, b, 0, d) == secure_ipv4_port_ephemeral(a, b, d),
-  * but fortunately, `sport' cannot be 0 in any circumstances. If this changes,
-  * it would be easy enough to have the former function use siphash_4u32, passing
-  * the arguments as separate u32.
-  */
--u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
--		   __be16 sport, __be16 dport)
-+union tcp_seq_and_ts_off
-+secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
-+			  __be16 sport, __be16 dport)
- {
--	u32 hash;
-+	u32 ports = (__force u32)sport << 16 | (__force u32)dport;
-+	union tcp_seq_and_ts_off st;
- 
- 	net_secret_init();
--	hash = siphash_3u32((__force u32)saddr, (__force u32)daddr,
--			    (__force u32)sport << 16 | (__force u32)dport,
--			    &net_secret);
--	return seq_scale(hash);
-+
-+	st.hash64 = siphash_3u32((__force u32)saddr, (__force u32)daddr,
-+				 ports, &net_secret);
-+
-+	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
-+		st.ts_off = 0;
-+
-+	st.seq = seq_scale(st.seq);
-+	return st;
- }
--EXPORT_SYMBOL_GPL(secure_tcp_seq);
-+EXPORT_SYMBOL_GPL(secure_tcp_seq_and_ts_off);
- 
- u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport)
- {
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 9deeb3f8215ea..349e96d029c3d 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -353,9 +353,14 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 	tcp_parse_options(sock_net(sk), skb, &tcp_opt, 0, NULL);
- 
- 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
--		tsoff = secure_tcp_ts_off(sock_net(sk),
--					  ip_hdr(skb)->daddr,
--					  ip_hdr(skb)->saddr);
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcp_seq_and_ts_off(sock_net(sk),
-+					       ip_hdr(skb)->daddr,
-+					       ip_hdr(skb)->saddr,
-+					       tcp_hdr(skb)->dest,
-+					       tcp_hdr(skb)->source);
-+		tsoff = st.ts_off;
- 		tcp_opt.rcv_tsecr -= tsoff;
- 	}
- 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index e18c0e8b41c35..8a6d7dac50b26 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7146,6 +7146,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct sock *fastopen_sk = NULL;
-+	union tcp_seq_and_ts_off st;
- 	struct request_sock *req;
- 	bool want_cookie = false;
- 	struct dst_entry *dst;
-@@ -7203,8 +7204,11 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 	if (!dst)
- 		goto drop_and_free;
- 
-+	if (tmp_opt.tstamp_ok || (!want_cookie && !isn))
-+		st = af_ops->init_seq_and_ts_off(net, skb);
-+
- 	if (tmp_opt.tstamp_ok)
--		tcp_rsk(req)->ts_off = af_ops->init_ts_off(net, skb);
-+		tcp_rsk(req)->ts_off = st.ts_off;
- 
- 	if (!want_cookie && !isn) {
- 		int max_syn_backlog = READ_ONCE(net->ipv4.sysctl_max_syn_backlog);
-@@ -7226,7 +7230,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 			goto drop_and_release;
- 		}
- 
--		isn = af_ops->init_seq(skb);
-+		isn = st.seq;
- 	}
- 
- 	tcp_ecn_create_request(req, skb, sk, dst);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 77dfcc7f74973..272190f9dc2c3 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -98,17 +98,14 @@ static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
- 
- static DEFINE_MUTEX(tcp_exit_batch_mutex);
- 
--static u32 tcp_v4_init_seq(const struct sk_buff *skb)
-+static union tcp_seq_and_ts_off
-+tcp_v4_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
- {
--	return secure_tcp_seq(ip_hdr(skb)->daddr,
--			      ip_hdr(skb)->saddr,
--			      tcp_hdr(skb)->dest,
--			      tcp_hdr(skb)->source);
--}
--
--static u32 tcp_v4_init_ts_off(const struct net *net, const struct sk_buff *skb)
--{
--	return secure_tcp_ts_off(net, ip_hdr(skb)->daddr, ip_hdr(skb)->saddr);
-+	return secure_tcp_seq_and_ts_off(net,
-+					 ip_hdr(skb)->daddr,
-+					 ip_hdr(skb)->saddr,
-+					 tcp_hdr(skb)->dest,
-+					 tcp_hdr(skb)->source);
- }
- 
- int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
-@@ -315,15 +312,16 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	rt = NULL;
- 
- 	if (likely(!tp->repair)) {
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcp_seq_and_ts_off(net,
-+					       inet->inet_saddr,
-+					       inet->inet_daddr,
-+					       inet->inet_sport,
-+					       usin->sin_port);
- 		if (!tp->write_seq)
--			WRITE_ONCE(tp->write_seq,
--				   secure_tcp_seq(inet->inet_saddr,
--						  inet->inet_daddr,
--						  inet->inet_sport,
--						  usin->sin_port));
--		WRITE_ONCE(tp->tsoffset,
--			   secure_tcp_ts_off(net, inet->inet_saddr,
--					     inet->inet_daddr));
-+			WRITE_ONCE(tp->write_seq, st.seq);
-+		WRITE_ONCE(tp->tsoffset, st.ts_off);
- 	}
- 
- 	atomic_set(&inet->inet_id, get_random_u16());
-@@ -1538,8 +1536,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv4_ops = {
- 	.cookie_init_seq =	cookie_v4_init_sequence,
- #endif
- 	.route_req	=	tcp_v4_route_req,
--	.init_seq	=	tcp_v4_init_seq,
--	.init_ts_off	=	tcp_v4_init_ts_off,
-+	.init_seq_and_ts_off	=	tcp_v4_init_seq_and_ts_off,
- 	.send_synack	=	tcp_v4_send_synack,
- };
- 
-diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
-index 593ead8a45d79..acacd758505e3 100644
---- a/net/ipv6/syncookies.c
-+++ b/net/ipv6/syncookies.c
-@@ -161,9 +161,14 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
- 	tcp_parse_options(sock_net(sk), skb, &tcp_opt, 0, NULL);
- 
- 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
--		tsoff = secure_tcpv6_ts_off(sock_net(sk),
--					    ipv6_hdr(skb)->daddr.s6_addr32,
--					    ipv6_hdr(skb)->saddr.s6_addr32);
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcpv6_seq_and_ts_off(sock_net(sk),
-+						 ipv6_hdr(skb)->daddr.s6_addr32,
-+						 ipv6_hdr(skb)->saddr.s6_addr32,
-+						 tcp_hdr(skb)->dest,
-+						 tcp_hdr(skb)->source);
-+		tsoff = st.ts_off;
- 		tcp_opt.rcv_tsecr -= tsoff;
- 	}
- 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 41ddf4172c018..6a2e348396a72 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -108,18 +108,14 @@ static void inet6_sk_rx_dst_set(struct sock *sk, const struct sk_buff *skb)
- 	}
- }
- 
--static u32 tcp_v6_init_seq(const struct sk_buff *skb)
-+static union tcp_seq_and_ts_off
-+tcp_v6_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
- {
--	return secure_tcpv6_seq(ipv6_hdr(skb)->daddr.s6_addr32,
--				ipv6_hdr(skb)->saddr.s6_addr32,
--				tcp_hdr(skb)->dest,
--				tcp_hdr(skb)->source);
--}
--
--static u32 tcp_v6_init_ts_off(const struct net *net, const struct sk_buff *skb)
--{
--	return secure_tcpv6_ts_off(net, ipv6_hdr(skb)->daddr.s6_addr32,
--				   ipv6_hdr(skb)->saddr.s6_addr32);
-+	return secure_tcpv6_seq_and_ts_off(net,
-+					   ipv6_hdr(skb)->daddr.s6_addr32,
-+					   ipv6_hdr(skb)->saddr.s6_addr32,
-+					   tcp_hdr(skb)->dest,
-+					   tcp_hdr(skb)->source);
- }
- 
- static int tcp_v6_pre_connect(struct sock *sk, struct sockaddr *uaddr,
-@@ -319,14 +315,16 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 	sk_set_txhash(sk);
- 
- 	if (likely(!tp->repair)) {
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcpv6_seq_and_ts_off(net,
-+						 np->saddr.s6_addr32,
-+						 sk->sk_v6_daddr.s6_addr32,
-+						 inet->inet_sport,
-+						 inet->inet_dport);
- 		if (!tp->write_seq)
--			WRITE_ONCE(tp->write_seq,
--				   secure_tcpv6_seq(np->saddr.s6_addr32,
--						    sk->sk_v6_daddr.s6_addr32,
--						    inet->inet_sport,
--						    inet->inet_dport));
--		tp->tsoffset = secure_tcpv6_ts_off(net, np->saddr.s6_addr32,
--						   sk->sk_v6_daddr.s6_addr32);
-+			WRITE_ONCE(tp->write_seq, st.seq);
-+		tp->tsoffset = st.ts_off;
- 	}
- 
- 	if (tcp_fastopen_defer_connect(sk, &err))
-@@ -826,8 +824,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv6_ops = {
- 	.cookie_init_seq =	cookie_v6_init_sequence,
- #endif
- 	.route_req	=	tcp_v6_route_req,
--	.init_seq	=	tcp_v6_init_seq,
--	.init_ts_off	=	tcp_v6_init_ts_off,
-+	.init_seq_and_ts_off	= tcp_v6_init_seq_and_ts_off,
- 	.send_synack	=	tcp_v6_send_synack,
- };
- 
+ #ifdef CONFIG_64BIT
 -- 
 2.53.0
 
