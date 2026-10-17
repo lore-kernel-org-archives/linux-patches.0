@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1459F38F950;
-	Sat, 17 Oct 2026 18:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB03367F26;
+	Sat, 17 Oct 2026 18:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260255; cv=none; b=A1ZzAHMrOh7DWDhBaH6LPf8hi3Y3IrLY9xY7BX3i325mdMFpAK63Z+GfieOGHBe/DEELwQ6QXiH935cQpiQxh5EiE/LCP3W9Nf/c/Sai39zBiW/x52zt/WQ9Egpoen7yqAAXSFsYTNx+r91ZkaGg/6gORjGhLLIQqKHn8rbLbWw=
+	t=1792260258; cv=none; b=DDh+I78qNYFODcXR2y24Hv5qsNNh42nkZ/hsK/KLMMA9NKDng2ZTMCnXAoeNNh5+pKPWUFVSej5I7gntfOtP7coFImVFu90M+6Tsj9GFc+JIFaRHln01J7KOij4yplFYzVG3yvp7FlwTp0y9ZTDG54qblOPozomCp7hhm7RTzEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260255; c=relaxed/simple;
-	bh=9xhoGIrPcEPyO/ZTxGS1tqF7G10gtEM7cmy/pluZ5gg=;
+	s=arc-20240116; t=1792260258; c=relaxed/simple;
+	bh=5Yk1a7jDZyaSuwLq7YBkaHvMjsgX7E9ddmLGtgpqSu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iqTvhraqVMVYdc2NYhmK04Z5znodG38B+GDpxmXyYWG2CdltKLWqOhivEYL/0uMcETbv/mE4vul7CiQGhLp0ZUHxf4HN3apoFY/lDBuv8++YFRCKnMLaqDhmmZVljEfhHRKjhYJN7c07MFO8aHdkbM5lEPq1/SchK/ZvrfWeBx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxervQg+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WRadioPs/mn7o0J1Dab2HZsZ2nnvl/fYrWP9Q4h00Vn+Wz2n8AWknHPhyfzK/KhXeBsbrs5GtRqxPCdHVTp8d7GgmZfzOI1vOSM4N3clOHG03MV1I9sWMchar+HgAJcdo6sqrKpTi7HyzRci0KxCS7jcDbMaTVy2fDu6Um4mOfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWEcuTuG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxervQg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533311F000C4;
-	Sat, 17 Oct 2026 18:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWEcuTuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762041F000C4;
+	Sat, 17 Oct 2026 18:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260253;
-	bh=6RnyW2YDkrEWsCBn6zhtk6y/bRXyFHAof53fE9hswEU=;
+	s=korg; t=1792260257;
+	bh=QUFBnRn9CPzWYtOBo+mdi4goSuXN9x/8C9mVSgihGdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxervQg+lvn2FKKhtDRa/38E4HnSqR7SnZTzfFwzvW2N4DI2d9BkSDmYx83saJ3VP
-	 Sg7SSbnmgGblkG/LC9V0YEuF5qzvDS0ynNTotd+Lu5LBWa6KKPZfG82MGw507riWfV
-	 mryIG5Vbt+nb76qVXGSzj/1WTBSnNiaZmQMDkKpo=
+	b=PWEcuTuGr8gbCfYAwBCV40TI2wqaNUIWI7EjzNqnv1wRZxdqOHKylCyhAgXMBkzxc
+	 /i0VgpGZB60iS24DNVFzj1qPev8SlQXUmYm2Iahr0Ged0l6w3sjGqLAEU7G2rQUHHL
+	 aC6t7kHbyhEM4e7itHgs16Zf3ZPWhCg5Yaj6s15Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Qing Ming <a0yami@mailbox.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1483/1674] platform/x86: asus-wmi: fix resource leaks on probe failure
-Date: Sat, 17 Oct 2026 18:02:35 +0200
-Message-ID: <20261017160509.213368993@linuxfoundation.org>
+Subject: [PATCH 6.6 1484/1674] usb: gadget: uac: validate rate list length before storing
+Date: Sat, 17 Oct 2026 18:02:36 +0200
+Message-ID: <20261017160509.237538422@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,64 +44,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Qing Ming <a0yami@mailbox.org>
 
-[ Upstream commit ef3daa2b84a2b8499ce9e2ce1c865dca36d39f95 ]
+[ Upstream commit 844d83d5964b87919b958ff48405188c6ddae9cc ]
 
-During driver initialization in asus_wmi_add(), various subsystems are
-registered sequentially. However, the error path labels are out of order
-relative to the registration sequence.
+UAC1 and UAC2 configfs rate-list attributes parse a comma-separated
+list of sampling rates and store each parsed value in fixed-size arrays.
+The arrays have UAC_MAX_RATES entries, but the store paths do not check
+that the input contains at most that many tokens before writing through
+opts->name##s[i++].
 
-Specifically:
-1. If asus_wmi_custom_fan_curve_init() fails, the driver jumps to
-   fail_custom_fan_curve. Because this label is placed below fail_sysfs,
-   it bypasses the cleanup calls for the input device and sysfs groups,
-   which were successfully registered before, leaking those resources.
-2. If asus_screenpad_init() fails, the driver jumps to fail_screenpad.
-   Because fail_screenpad is placed below fail_backlight, it bypasses the
-   cleanup calls for backlight and rfkill, leaking those resources.
+Writing more than ten rates therefore writes past the end of the
+p_srates[] or c_srates[] array in struct f_uac1_opts or struct
+f_uac2_opts.
 
-Fix these resource leaks by reordering the error path labels in
-asus_wmi_add() to match the exact reverse order of the resource
-allocations.
+With CONFIG_UBSAN_BOUNDS enabled, writing an 11-entry rate list to the
+UAC1 p_srate attribute reports:
 
-Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
-Fixes: 2c97d3e55b70 ("platform/x86: asus-wmi: add support for ASUS screenpad")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260617155104.10111-1-scardracs@disroot.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  UBSAN: array-index-out-of-bounds
+  drivers/usb/gadget/function/f_uac1.c:1669:1
+  index 10 is out of range for type 'int [10]'
+  __ubsan_handle_out_of_bounds.cold
+  f_uac1_opts_p_srate_store
+  configfs_write_iter
+  vfs_write
+  ksys_write
+  do_syscall_64
+
+The same reproducer against the UAC2 p_srate attribute reports:
+
+  UBSAN: array-index-out-of-bounds
+  drivers/usb/gadget/function/f_uac2.c:2087:1
+  index 10 is out of range for type 'int [10]'
+  __ubsan_handle_out_of_bounds.cold
+  f_uac2_opts_p_srate_store
+  configfs_write_iter
+  vfs_write
+  ksys_write
+  do_syscall_64
+
+Reject additional tokens once UAC_MAX_RATES entries have been parsed.
+Also keep the original kstrdup() pointer for kfree(), because strsep()
+advances the parsing cursor. Freeing the advanced cursor leaks the
+original buffer on successful parses and can free an interior pointer on
+some error paths.
+
+Fixes: 695d39ffc2b5 ("usb: gadget: f_uac1: Support multiple sampling rates")
+Fixes: a7339e4f5788 ("usb: gadget: f_uac2: Support multiple sampling rates")
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
+Link: https://patch.msgid.link/20260519143319.147494-1-a0yami@mailbox.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_uac1.c | 13 +++++++++----
+ drivers/usb/gadget/function/f_uac2.c | 13 +++++++++----
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index a7af32723a089..a76d43ca647d4 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -4470,12 +4470,12 @@ static int asus_wmi_add(struct platform_device *pdev)
- fail_rfkill:
- 	asus_wmi_led_exit(asus);
- fail_leds:
-+fail_custom_fan_curve:
- fail_hwmon:
- 	asus_wmi_input_exit(asus);
- fail_input:
- 	asus_wmi_sysfs_exit(asus->platform_device);
- fail_sysfs:
--fail_custom_fan_curve:
- fail_platform_profile_setup:
- 	if (asus->platform_profile_support)
- 		platform_profile_remove();
+diff --git a/drivers/usb/gadget/function/f_uac1.c b/drivers/usb/gadget/function/f_uac1.c
+index 6f0e1d803dc24..7939dadd52a5a 100644
+--- a/drivers/usb/gadget/function/f_uac1.c
++++ b/drivers/usb/gadget/function/f_uac1.c
+@@ -1521,7 +1521,8 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
+ 					  const char *page, size_t len)	\
+ {									\
+ 	struct f_uac1_opts *opts = to_f_uac1_opts(item);		\
+-	char *split_page = NULL;					\
++	char *buf = NULL;						\
++	char *split_page;						\
+ 	int ret = -EINVAL;						\
+ 	char *token;							\
+ 	u32 num;							\
+@@ -1535,18 +1536,22 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
+ 									\
+ 	i = 0;								\
+ 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
+-	split_page = kstrdup(page, GFP_KERNEL);				\
++	buf = kstrdup(page, GFP_KERNEL);				\
++	split_page = buf;						\
+ 	while ((token = strsep(&split_page, ",")) != NULL) {		\
+ 		ret = kstrtou32(token, 0, &num);			\
+ 		if (ret)						\
+ 			goto end;					\
+-									\
++		if (i >= UAC_MAX_RATES) {				\
++			ret = -EINVAL;					\
++			goto end;					\
++		}							\
+ 		opts->name##s[i++] = num;				\
+ 		ret = len;						\
+ 	};								\
+ 									\
+ end:									\
+-	kfree(split_page);						\
++	kfree(buf);							\
+ 	mutex_unlock(&opts->lock);					\
+ 	return ret;							\
+ }									\
+diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
+index eabd10817e1e7..b7d3988caa9c0 100644
+--- a/drivers/usb/gadget/function/f_uac2.c
++++ b/drivers/usb/gadget/function/f_uac2.c
+@@ -2003,7 +2003,8 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
+ 					  const char *page, size_t len)	\
+ {									\
+ 	struct f_uac2_opts *opts = to_f_uac2_opts(item);		\
+-	char *split_page = NULL;					\
++	char *buf = NULL;						\
++	char *split_page;						\
+ 	int ret = -EINVAL;						\
+ 	char *token;							\
+ 	u32 num;							\
+@@ -2017,18 +2018,22 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
+ 									\
+ 	i = 0;								\
+ 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
+-	split_page = kstrdup(page, GFP_KERNEL);				\
++	buf = kstrdup(page, GFP_KERNEL);				\
++	split_page = buf;						\
+ 	while ((token = strsep(&split_page, ",")) != NULL) {		\
+ 		ret = kstrtou32(token, 0, &num);			\
+ 		if (ret)						\
+ 			goto end;					\
+-									\
++		if (i >= UAC_MAX_RATES) {				\
++			ret = -EINVAL;					\
++			goto end;					\
++		}							\
+ 		opts->name##s[i++] = num;				\
+ 		ret = len;						\
+ 	};								\
+ 									\
+ end:									\
+-	kfree(split_page);						\
++	kfree(buf);							\
+ 	mutex_unlock(&opts->lock);					\
+ 	return ret;							\
+ }									\
 -- 
 2.53.0
 
