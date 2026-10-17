@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2214517BED0;
-	Sat, 17 Oct 2026 17:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5159392829;
+	Sat, 17 Oct 2026 17:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258648; cv=none; b=EzektaDromeYhjI8E3VT1RQgg/oRS0rENKiScnIe2trzM5WTa8wqtAHkIGK7oKML4Kl+sPTsSVO33/lBLkv9SpbfB+RR/q3awf690pOIuXpHfuS/cD3/BwK5rVxOkx+HhVmueFbopFG4VI3IwUpLhzpHrjPTK4N9hip4foIb2Qk=
+	t=1792258651; cv=none; b=Iwb7NPtVqULX318R/xaumhhlkEpyN+3FOJtrGCVycYCWMDVR25EZAlvuHqbQT3kEurl5fOsdX08CjLcxSJu/tN9V9rwzHn21IhOwjcqBZVd5rLxxnp++wOhGf2+MgXLCqDSkxDBzLyleOfmVl6DrUcHRWe4TU7RDBHWpC19Mp8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258648; c=relaxed/simple;
-	bh=o85s+bHstggSZdL/h1r0NMLYvbv4G7/yt0nwzNUECjA=;
+	s=arc-20240116; t=1792258651; c=relaxed/simple;
+	bh=H2oNiFGFZPoCxKlBDeGi3Yr1TmOd3FB9SdVQfeywvrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqhE6VfiLLYuNUI1UQb+rdstaUfn9tZ0ZXlSdz6SSAy83b4b9N1uKNE93wxImG5bfUrb0kF8ELP2MKPbH7CxQDp6+0YQWtm6U7UvkF1DDTX/5w4+x0VWRAj+gJEPWk1n23Oz2HYoC6FJax6cp9lnOoKnp3a/2xGVFBM9xU9TVp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sq05LhEr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DqYWAa0TUQf9cYCV8qElADlMgS4IBF9N+6uLSezSPS/k9vzkVGETTdzWeF88z5YZvCaFVMx5CTt6FFd/3uWf2Kiv0kmkK3sU5gBUlCmVT/d00yQXStFPnerlW8YahsmZzDx2byOIuBp62xy8uRvDp/pGVKX1NaISd2ia3XTTe/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHOjCu5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sq05LhEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157DB1F000C4;
-	Sat, 17 Oct 2026 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHOjCu5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5141F000C4;
+	Sat, 17 Oct 2026 17:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258646;
-	bh=h3WWMFNk+sZTzSf5Xb39moOfQ9QAOfs4vdS7G1iu+s4=;
+	s=korg; t=1792258649;
+	bh=WaSDynTbGGvXyLLDnr6B2j29QauBns/rtyvGWYL7/NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sq05LhEr7gEkWzUqbaSlurm8Jn17JomMSel4i6wnfq0LCocZcmjy6JPtw2hHKnuOl
-	 93n0tuQYppVRIzP9LB3ov4mW2GVH4HtwJ6OVea9W19MsosGAGxda9Q+UJvage4//FC
-	 TpLiNifcHFfPEYJE0cEzHAFlpUL5+YlmhIjnPsgM=
+	b=CHOjCu5q4bDCnuoxI9um6rR0ezy/QGrELqcjKrycWutCp8SQVUczTkZow8ho7BsgF
+	 7qLX2U5DptGxc5hA3nGYs05XKqYye4JOl0Dri5d3M+Qj4P+Rs45EQ2Fvw76zep5nE0
+	 fWOG5+EcFuxgDC3ajM9LVPFmWGI5FA2P4nXzZkFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jie Zhang <jie.zhang@analog.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0953/1674] net: stmmac: fix oops when split header is enabled
-Date: Sat, 17 Oct 2026 17:53:45 +0200
-Message-ID: <20261017160455.589635475@linuxfoundation.org>
+Subject: [PATCH 6.6 0954/1674] erofs: fix inline data read failure for ztailpacking pclusters
+Date: Sat, 17 Oct 2026 17:53:46 +0200
+Message-ID: <20261017160455.614263654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,77 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jzhang918@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit babab1b42ed68877ef669a08384becf281ad2582 ]
+[ Upstream commit c134a40f86efb8d6b5a949ef70e06d5752209be5 ]
 
-For GMAC4, when split header is enabled, in some rare cases, the
-hardware does not fill buf2 of the first descriptor with payload.
-Thus we cannot assume buf2 is always fully filled if it is not
-the last descriptor. Otherwise, the length of buf2 of the second
-descriptor will be calculated wrong and cause an oops:
+Compressed folios for ztailpacking pclusters must be valid before adding
+these pclusters to I/O chains. Otherwise, z_erofs_decompress_pcluster()
+may assume they are already valid and then trigger a NULL pointer
+dereference.
 
-Unable to handle kernel paging request at virtual address ffff00019246bfc0
-...
-x2 : 0000000000000040 x1 : ffff00019246bfc0 x0 : ffff00009246c000
-Call trace:
- dcache_inval_poc+0x28/0x58 (P)
- dma_direct_sync_single_for_cpu+0x38/0x6c
- __dma_sync_single_for_cpu+0x34/0x6c
- stmmac_napi_poll_rx+0x8f0/0xb60
- __napi_poll.constprop.0+0x30/0x144
- net_rx_action+0x160/0x274
- handle_softirqs+0x1b8/0x1fc
-...
+It is somewhat hard to reproduce because the inline data is in the same
+block as the tail of the compressed indexes, which are usually read just
+before. However, it may still happen if a fatal signal arrives while
+read_mapping_folio() is running, as shown below:
 
-To fix this, the PL bit-field in RDES3 register is used for all
-descriptors, whether it is the last descriptor or not.
+ erofs: (device dm-1): z_erofs_pcluster_begin: failed to get inline data -4
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
 
-Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jie Zhang <jie.zhang@analog.com>
-Link: https://patch.msgid.link/20260209225037.589130-1-jie.zhang@analog.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ ...
+
+ pc : z_erofs_decompress_queue+0x4c8/0xa14
+ lr : z_erofs_decompress_queue+0x160/0xa14
+ sp : ffffffc08b3eb3a0
+ x29: ffffffc08b3eb570 x28: ffffffc08b3eb418 x27: 0000000000001000
+ x26: ffffff8086ebdbb8 x25: ffffff8086ebdbb8 x24: 0000000000000001
+ x23: 0000000000000008 x22: 00000000fffffffb x21: dead000000000700
+ x20: 00000000000015e7 x19: ffffff808babb400 x18: ffffffc089edc098
+ x17: 00000000c006287d x16: 00000000c006287d x15: 0000000000000004
+ x14: ffffff80ba8f8000 x13: 0000000000000004 x12: 00000006589a77c9
+ x11: 0000000000000015 x10: 0000000000000000 x9 : 0000000000000000
+ x8 : 0000000000000000 x7 : 0000000000000000 x6 : 000000000000003f
+ x5 : 0000000000000040 x4 : ffffffffffffffe0 x3 : 0000000000000020
+ x2 : 0000000000000008 x1 : 0000000000000000 x0 : 0000000000000000
+ Call trace:
+  z_erofs_decompress_queue+0x4c8/0xa14
+  z_erofs_runqueue+0x908/0x97c
+  z_erofs_read_folio+0x128/0x228
+  filemap_read_folio+0x68/0x128
+  filemap_get_pages+0x44c/0x8b4
+  filemap_read+0x12c/0x5b8
+  generic_file_read_iter+0x4c/0x15c
+  do_iter_readv_writev+0x188/0x1e0
+  vfs_iter_read+0xac/0x1a4
+  backing_file_read_iter+0x170/0x34c
+  ovl_read_iter+0xf0/0x140
+  vfs_read+0x28c/0x344
+  ksys_read+0x80/0xf0
+  __arm64_sys_read+0x24/0x34
+  invoke_syscall+0x60/0x114
+  el0_svc_common+0x88/0xe4
+  do_el0_svc+0x24/0x30
+  el0_svc+0x40/0xa8
+  el0t_64_sync_handler+0x70/0xbc
+  el0t_64_sync+0x1bc/0x1c0
+
+Fix this by reading the inline data before allocating and adding
+the pclusters to the I/O chains.
+
+Fixes: cecf864d3d76 ("erofs: support inline data decompression")
+Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-and-tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ fs/erofs/zdata.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 435189e35b8ad..96d97b209af9c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4728,13 +4728,27 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
- 	if (!priv->sph)
- 		return 0;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 5b3eb4a227934..08af755ebd8e4 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -863,9 +863,20 @@ static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
  
--	/* Not last descriptor */
--	if (status & rx_not_ls)
-+	/* For GMAC4, when split header is enabled, in some rare cases, the
-+	 * hardware does not fill buf2 of the first descriptor with payload.
-+	 * Thus we cannot assume buf2 is always fully filled if it is not
-+	 * the last descriptor. Otherwise, the length of buf2 of the second
-+	 * descriptor will be calculated wrong and cause an oops.
-+	 *
-+	 * If this is the last descriptor, 'plen' is the length of the
-+	 * received packet that was transferred to system memory.
-+	 * Otherwise, it is the accumulated number of bytes that have been
-+	 * transferred for the current packet.
-+	 *
-+	 * Thus 'plen - len' always gives the correct length of buf2.
-+	 */
+ 	if (!(map->m_flags & EROFS_MAP_META)) {
+ 		grp = erofs_find_workgroup(sb, blknr);
+-	} else if ((map->m_pa & ~PAGE_MASK) + map->m_plen > PAGE_SIZE) {
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
++	} else {
++		void *mptr;
 +
-+	/* Not GMAC4 and not last descriptor */
-+	if (!priv->plat->has_gmac4 && (status & rx_not_ls))
- 		return priv->dma_conf.dma_buf_sz;
++		if ((map->m_pa & ~PAGE_MASK) + map->m_plen > PAGE_SIZE) {
++			DBG_BUGON(1);
++			return -EFSCORRUPTED;
++		}
++
++		mptr = erofs_read_metabuf(&map->buf, sb, blknr, EROFS_NO_KMAP);
++		if (IS_ERR(mptr)) {
++			ret = PTR_ERR(mptr);
++			erofs_err(sb, "failed to get inline data %d", ret);
++			return ret;
++		}
+ 	}
  
-+	/* GMAC4 or last descriptor */
- 	plen = stmmac_get_rx_frame_len(priv, p, coe);
- 
--	/* Last descriptor */
- 	return plen - len;
- }
- 
+ 	if (grp) {
+@@ -888,14 +899,6 @@ static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
+ 		/* bind cache first when cached decompression is preferred */
+ 		z_erofs_bind_cache(fe);
+ 	} else {
+-		void *mptr;
+-
+-		mptr = erofs_read_metabuf(&map->buf, sb, blknr, EROFS_NO_KMAP);
+-		if (IS_ERR(mptr)) {
+-			ret = PTR_ERR(mptr);
+-			erofs_err(sb, "failed to get inline data %d", ret);
+-			return ret;
+-		}
+ 		get_page(map->buf.page);
+ 		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, map->buf.page);
+ 		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
 -- 
 2.53.0
 
