@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF2A377A97;
-	Sat, 17 Oct 2026 16:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6309D17BED0;
+	Sat, 17 Oct 2026 16:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253922; cv=none; b=jbrqbGrAENn7kK2Z1Ig6qo3UVL7JhpEQ1RjB0FS8pb7Ahl7W4HMRVp2vgqGTLpYXcDq8YCa2LIPrrcdWSxbugWorFE1vBYIVngMmM4/IFHafl+8rQObtqWDU3RBEscd9ub/qtsT8e8+BWDkBQX4lBcbLSHYh2hhd5+7ac4Bc0c4=
+	t=1792253925; cv=none; b=NzDtQxidxbQnskF8T6B8f19kWFuSgC/iIW1urELS41fpPm5xRwUHkqXWbjvW014fwwOzBA93v9oxUvr63oMR/HnBm2U49KvbLyxbxR5QsMhgT8/EHS/6WEv4hLYv7DVYhzfpiD09ce9V/fK6ZAtnYXP3YRGysZdSCRZ++hhIuI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253922; c=relaxed/simple;
-	bh=TsoATu57ohbFysULtrQwDZJJhZF/ylnalW11RuEuG6s=;
+	s=arc-20240116; t=1792253925; c=relaxed/simple;
+	bh=X1motj4ihvoWnEtD7lZDxSdsFgWfFba2hKJBxhH1Tq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXorEZPtaSd5WAgkIKJye/mpnQZaK+edCGGaz8gJYUPtA0h5hn7ULQgwhkt0i6znlQX2FTjeToi4he1kPLTuz2e0CmYHr2qOr39qMHjbMCFKHGIHExaRaHIm0Adl5eB+WUQGRHo3+7n9d2ZkokE7Y42zgAIoRJCcl7bFab3nkHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWzUa+fp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QQHo0RKRAb3DVKVtJIX7WPw7pL7WfelW8xWxdCyMblRzw2ILoOd1/ySiqGQDATo21U8NPVlz7PLZcNPReLj6S6xdkiek/Lo0p+RpqGx7mXaF6uxOm73SUu0sdTq5OAeJV5rdbWxA6RiI8iXKdj3KOzTtFDj3A+nj0xaXbwSbCiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8rqkJHx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWzUa+fp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817DF1F000C4;
-	Sat, 17 Oct 2026 16:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8rqkJHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB57F1F000C4;
+	Sat, 17 Oct 2026 16:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253921;
-	bh=EqcNk4VSuk8/BeT9i8nm0kyNhYJUCfY5lBp8xhKSdMk=;
+	s=korg; t=1792253924;
+	bh=JcrJDQO3oWiBAUNAsjbyhgw7IwzTFkRO3PaLYjI99qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWzUa+fp7rX17CplZaHliUYV4OnFb6i43i88s4eKVNWA/GSphm3T3edT0Msn4Wgek
-	 AchAd2F0o2KN94RC+58fUXXfmQdVzUsl3Jja83q/q6RwIByfNbRa1QIPSUhJ+8j46x
-	 NcRCiopvgogOtI3pdpt1iPg/bYV6H/KtSfemG/Fw=
+	b=V8rqkJHxIf3qXtZfLWrVzfQKdWpNuPiFYX8jYADgFidNKJ4Msj/mSDv60omsinLkx
+	 g3kpLoF1VZEtxNJzfoeVdvvkjMbQsvbS27Dq1C/NnXu7fhPhFGQDepQFhNw9H31d5p
+	 tQusFeUeUEwraNJpipSR2gV0Zp/gj1vXmAqSBKRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Jim Mattson <jmattson@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/869] gfs2: fix memory leaks in gfs2_fill_super error path
-Date: Sat, 17 Oct 2026 17:51:57 +0200
-Message-ID: <20261017160044.145462473@linuxfoundation.org>
+Subject: [PATCH 6.12 277/869] KVM: SVM: Add missing save/restore handling of LBR MSRs
+Date: Sat, 17 Oct 2026 17:51:58 +0200
+Message-ID: <20261017160044.173795370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,93 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit da6f5bbc2e7902f578b503f2a4c3d8d09ca4b102 ]
+[ Upstream commit 3700f0788da6acf73b2df56690f4b201aa4aefd2 ]
 
-Fix two memory leaks in the gfs2_fill_super() error handling path when
-transitioning a filesystem to read-write mode fails.
+MSR_IA32_DEBUGCTLMSR and LBR MSRs are currently not enumerated by
+KVM_GET_MSR_INDEX_LIST, and LBR MSRs cannot be set with KVM_SET_MSRS. So
+save/restore is completely broken.
 
-First leak: kthread objects (thread_struct, task_struct, etc.)
-When gfs2_freeze_lock_shared() fails after init_threads() succeeds, the
-created kernel threads (logd and quotad) are never destroyed. This
-occurs because the fail_per_node label doesn't call
-gfs2_destroy_threads().
+Fix it by adding the MSRs to msrs_to_save_base, and allowing writes to
+LBR MSRs from userspace only (as they are read-only MSRs) if LBR
+virtualization is enabled.  Additionally, to correctly restore L1's LBRs
+while L2 is running, make sure the LBRs are copied from the captured
+VMCB01 save area in svm_copy_vmrun_state().
 
-Second leak: quota bitmap buffer (8192 bytes)
-When gfs2_make_fs_rw() fails after gfs2_quota_init() succeeds but
-before other operations complete, the allocated quota bitmap is never
-freed.
+Note, for VMX, this also fixes a flaw where MSR_IA32_DEBUGCTLMSR isn't
+reported as an MSR to save/restore.
 
-The fix moves thread cleanup to the fail_per_node label to handle all
-error paths uniformly. gfs2_destroy_threads() is safe to call
-unconditionally as it checks for NULL pointers. Quota cleanup is added
-in gfs2_make_fs_rw() to properly handle the withdrawal case where
-quota initialization succeeds but the filesystem is then withdrawn.
+Note #2, over-reporting MSR_IA32_LASTxxx on Intel is ok, as KVM already
+handles unsupported reads and writes thanks to commit b5e2fec0ebc3 ("KVM:
+Ignore DEBUGCTL MSRs with no effect") (kvm_do_msr_access() will morph the
+unsupported userspace write into a nop).
 
-Thread leak backtrace (gfs2_freeze_lock_shared failure):
-  unreferenced object 0xffff88801d7bca80 (size 4480):
-    copy_process+0x3a1/0x4670 kernel/fork.c:2422
-    kernel_clone+0xf3/0x6e0 kernel/fork.c:2779
-    kthread_create_on_node+0x100/0x150 kernel/kthread.c:478
-    init_threads+0xab/0x350 fs/gfs2/ops_fstype.c:611
-    gfs2_fill_super+0xe5c/0x1240 fs/gfs2/ops_fstype.c:1265
-
-Quota leak backtrace (gfs2_make_fs_rw failure):
-  unreferenced object 0xffff88812de7c000 (size 8192):
-    gfs2_quota_init+0xe5/0x820 fs/gfs2/quota.c:1409
-    gfs2_make_fs_rw+0x7a/0xe0 fs/gfs2/super.c:149
-    gfs2_fill_super+0xfbb/0x1240 fs/gfs2/ops_fstype.c:1275
-
-Reported-by: syzbot+aac438d7a1c44071e04b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=aac438d7a1c44071e04b
-Fixes: 6c7410f44961 ("gfs2: gfs2_freeze_lock_shared cleanup")
-Fixes: b66f723bb552 ("gfs2: Improve gfs2_make_fs_rw error handling")
-Link: https://lore.kernel.org/all/20260131062509.77974-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 24e09cbf480a ("KVM: SVM: enable LBR virtualization")
+Cc: stable@vger.kernel.org
+Reported-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260303003421.2185681-4-yosry@kernel.org
+[sean: guard with lbrv checks, massage changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/ops_fstype.c | 2 +-
- fs/gfs2/super.c      | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/nested.c |  8 ++++++++
+ arch/x86/kvm/svm/svm.c    | 42 ++++++++++++++++++++++++++++++++++-----
+ arch/x86/kvm/x86.c        |  3 +++
+ 3 files changed, 48 insertions(+), 5 deletions(-)
 
-diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
-index 4c6d1f15a6a84..243971150973c 100644
---- a/fs/gfs2/ops_fstype.c
-+++ b/fs/gfs2/ops_fstype.c
-@@ -1281,7 +1281,6 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- 	if (error) {
- 		gfs2_freeze_unlock(sdp);
--		gfs2_destroy_threads(sdp);
- 		fs_err(sdp, "can't make FS RW: %d\n", error);
- 		goto fail_per_node;
- 	}
-@@ -1291,6 +1290,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- fail_per_node:
- 	init_per_node(sdp, UNDO);
-+	gfs2_destroy_threads(sdp);
- fail_inodes:
- 	init_inodes(sdp, UNDO);
- fail_sb:
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 3d5d4b8446214..8628121c1ab14 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -157,8 +157,10 @@ int gfs2_make_fs_rw(struct gfs2_sbd *sdp)
- 	gfs2_log_pointers_init(sdp, head.lh_blkno);
- 
- 	error = gfs2_quota_init(sdp);
--	if (!error && gfs2_withdrawing_or_withdrawn(sdp))
-+	if (!error && gfs2_withdrawing_or_withdrawn(sdp)) {
-+		gfs2_quota_cleanup(sdp);
- 		error = -EIO;
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 2d81f1cb4ca7b..95698c1da833d 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -959,6 +959,14 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
+ 	to_save->rsp = from_save->rsp;
+ 	to_save->rip = from_save->rip;
+ 	to_save->cpl = 0;
++
++	if (kvm_cpu_cap_has(X86_FEATURE_LBRV)) {
++		to_save->dbgctl = from_save->dbgctl & ~DEBUGCTL_RESERVED_BITS;
++		to_save->br_from = from_save->br_from;
++		to_save->br_to = from_save->br_to;
++		to_save->last_excp_from = from_save->last_excp_from;
++		to_save->last_excp_to = from_save->last_excp_to;
 +	}
- 	if (!error)
- 		set_bit(SDF_JOURNAL_LIVE, &sdp->sd_flags);
- 	return error;
+ }
+ 
+ void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 9408ab965aeaa..21f74cea2b05b 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -2966,19 +2966,19 @@ static int svm_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		msr_info->data = svm->tsc_aux;
+ 		break;
+ 	case MSR_IA32_DEBUGCTLMSR:
+-		msr_info->data = svm->vmcb->save.dbgctl;
++		msr_info->data = lbrv ? svm->vmcb->save.dbgctl : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHFROMIP:
+-		msr_info->data = svm->vmcb->save.br_from;
++		msr_info->data = lbrv ? svm->vmcb->save.br_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHTOIP:
+-		msr_info->data = svm->vmcb->save.br_to;
++		msr_info->data = lbrv ? svm->vmcb->save.br_to : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTFROMIP:
+-		msr_info->data = svm->vmcb->save.last_excp_from;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTTOIP:
+-		msr_info->data = svm->vmcb->save.last_excp_to;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_to : 0;
+ 		break;
+ 	case MSR_VM_HSAVE_PA:
+ 		msr_info->data = svm->nested.hsave_msr;
+@@ -3258,6 +3258,38 @@ static int svm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
+ 		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
+ 		svm_update_lbrv(vcpu);
+ 		break;
++	case MSR_IA32_LASTBRANCHFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTBRANCHTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
+ 	case MSR_VM_HSAVE_PA:
+ 		/*
+ 		 * Old kernels did not validate the value written to
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 99549df4c633d..842e4af926302 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -320,6 +320,9 @@ static const u32 msrs_to_save_base[] = {
+ 	MSR_IA32_UMWAIT_CONTROL,
+ 
+ 	MSR_IA32_XFD, MSR_IA32_XFD_ERR,
++	MSR_IA32_DEBUGCTLMSR,
++	MSR_IA32_LASTBRANCHFROMIP, MSR_IA32_LASTBRANCHTOIP,
++	MSR_IA32_LASTINTFROMIP, MSR_IA32_LASTINTTOIP,
+ };
+ 
+ static const u32 msrs_to_save_pmu[] = {
 -- 
 2.53.0
 
