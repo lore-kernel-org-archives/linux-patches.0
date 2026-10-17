@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4103C3F41;
-	Sat, 17 Oct 2026 17:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AE13A48E4;
+	Sat, 17 Oct 2026 17:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259656; cv=none; b=AsvmMR7AHDwjeQ3mO7DouZ8jRMuR0YoR98ACZ1MHGrk5ahDOgLLjHhaCmB6iQ271YrZUGP5v/2K3wxDf3QVCpLdyYrbuPJAbBy7ytm5jEi3FRU29n8i9OolP0CDEb9OsiDH+m/rnkXHS/iwH45jDOhr6T6z7csGehpnoreLZiq8=
+	t=1792259659; cv=none; b=DYgugvREPOeGMaHStDZQhkl4Vk9Ol4vfnO+A00md8g9KpeVpR8KTlovOlgpsVvBv3OSzgMJUuk4V37Jcs70ZJEDh8qc3trM1o0cwm+K8rSaV2XdREQv8TOzfbMtnd9HZDpJvbwp/ZT0d8o1F2WGQW3s0KBzCzANwsHCqdMs/x/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259656; c=relaxed/simple;
-	bh=nwyfcjdupROprT/8OvtjYrfLYN2Lj7FfJrn15r77+l8=;
+	s=arc-20240116; t=1792259659; c=relaxed/simple;
+	bh=hgIPOzKPEPvZ/KhfIjSG1/5ijkEkLULlJDcrDAl3X98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vq8JRvc+ehLRCu0wmAWIwJpakC2pRj82tvaxFDhgdKExi05vernruXam8rGWE44qVxMGXDM2eYm40kFCV1ohndivmRonHw6HYcgd2+SnHHM9bBZscz31oJxhxpgW9lDIgmyqwIG1OV2QDvIIHxgB2poWkqh404HRRnw/s7+rZkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcsxGAf1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NlOPYC/TW+uwnyCKylgHKLGrCH+AmXWptARWFmSCrnrQca7JBicXyCIDDEK0uWADQ05rQoy7L68rI1j0kIehudvATpe5OA/BOOZPl2Ccbb67TQdwggecDBcbQLGNgifiVVYzMGUsqOaRdP8UHfXwEb0h2GsH7EjdigOguWcAxSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uufj6dfi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcsxGAf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B19B1F000C4;
-	Sat, 17 Oct 2026 17:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uufj6dfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18BB1F000C4;
+	Sat, 17 Oct 2026 17:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259655;
-	bh=iEWoaUroLeHVegoCc3EMej47UqUVBtAF9mRgFN91L2I=;
+	s=korg; t=1792259658;
+	bh=g4NXe2ZiPeRfWNWy3pgg5akjz1NO9G2JngjjSgyyPxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcsxGAf1UmIAeFV2oRDkRDGz1nGbtOx9bx7zBb7M5q8A9YPdB/u/nccw4FcrOGhJS
-	 ZohvOVKDz6BSGWgMJvONMTyUGVPUZRvoLlamRxHlgQCDuhnEQkTXMaLh/lsiFrZjCp
-	 Imx03HgCfCc5bfYxlm0bHni/kDZ590A2o30gHyOY=
+	b=Uufj6dfiAKGRyRWRmSJa07LqoeHvR2SSTQz7S2O8NzxtR3lXfDVLN9fY4q5CMsK1R
+	 uCBW6gdfOnk7pihZI17XIg8TsQUII1a1s6roVT5yHFmLQ9LZcTmW6zdwO0nVqt23/d
+	 QVHhihi4TGJVHc3zjXvvMfUkwrIR/VuDz+Ni3yGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1287/1674] svcrdma: Reject connection when transport allocation fails
-Date: Sat, 17 Oct 2026 17:59:19 +0200
-Message-ID: <20261017160504.176501465@linuxfoundation.org>
+Subject: [PATCH 6.6 1288/1674] SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2
+Date: Sat, 17 Oct 2026 17:59:20 +0200
+Message-ID: <20261017160504.201089014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,80 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0944462247dcb7de7622cdaaadf5f05c52707dab ]
+[ Upstream commit b94f6719dcd9f7a609bc5f459f85795900e77d25 ]
 
-handle_connect_req() returns without action when
-svc_rdma_create_xprt() fails to allocate the new transport.
-The CM core returns 0 for CONNECT_REQUEST events, so it does
-not destroy the new rdma_cm_id. Each allocation failure under
-memory pressure leaks one rdma_cm_id, and a remote peer driving
-connection attempts can amplify this.
+gss_krb5_verify_mic_v2() reads the token ID at ptr[0..1], the flags
+byte at ptr[2], and padding at ptr[3..7], then passes
+ptr + GSS_KRB5_TOK_HDR_LEN and cksum_len to gss_krb5_mic_build_sg().
+None of these accesses check read_token->len first.
 
-Reject the connection by returning a non-zero status from the
-CM event handler, which tells the CM core to destroy the
-orphaned cm_id.
+The minimum safe token size is GSS_KRB5_TOK_HDR_LEN (16) plus
+ctx->krb5e->cksum_len (12-24, depending on the enctype).  All callers
+accept shorter tokens from the wire:
 
-Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
+ - gss_unwrap_resp_integ() enforces only an upper bound
+   (offset + len <= rcv_buf->len) before allocating
+   mic.data = kmalloc(len) and passing it to gss_verify_mic().
+   A malicious NFS server can therefore supply a short checksum
+   opaque, producing a small slab allocation that the Kerberos MIC
+   verifier reads past.
+
+ - gss_validate() enforces only len <= RPC_MAX_AUTH_SIZE (400)
+   before passing the wire-supplied length to
+   gss_validate_seqno_mic(), which constructs a mic xdr_netobj
+   and calls gss_verify_mic().
+
+ - svcauth_gss_verify_header() enforces only
+   checksum.len >= XDR_UNIT (4 bytes) before dispatching to
+   gss_verify_mic().
+
+ - svcauth_gss_unwrap_integ() checks only that the checksum fits
+   in gsd->gsd_scratch.
+
+Add a length guard at the top of gss_krb5_verify_mic_v2(), before any
+ptr[] access or scatterlist construction.  Well-formed MIC tokens from
+gss_krb5_get_mic_v2() already have exactly GSS_KRB5_TOK_HDR_LEN +
+cksum_len bytes, so valid traffic is unaffected.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260523165237.510204-1-cel@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/sunrpc/auth_gss/gss_krb5_unseal.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index 7135aa57bf50b..85867dba0c016 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -219,12 +219,16 @@ svc_rdma_parse_connect_private(struct svcxprt_rdma *newxprt,
-  * structure for the listening endpoint.
-  *
-  * This function creates a new xprt for the new connection and enqueues it on
-- * the accept queue for the listent xprt. When the listen thread is kicked, it
-+ * the accept queue for the listen xprt. When the listen thread is kicked, it
-  * will call the recvfrom method on the listen xprt which will accept the new
-  * connection.
-+ *
-+ * Return values:
-+ *     %0: Do not destroy @new_cma_id
-+ *     %1: Destroy @new_cma_id (allocation failure)
-  */
--static void handle_connect_req(struct rdma_cm_id *new_cma_id,
--			       struct rdma_conn_param *param)
-+static int handle_connect_req(struct rdma_cm_id *new_cma_id,
-+			      struct rdma_conn_param *param)
- {
- 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
- 	struct svcxprt_rdma *newxprt;
-@@ -234,7 +238,7 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
- 				       listen_xprt->sc_xprt.xpt_net,
- 				       ibdev_to_node(new_cma_id->device));
- 	if (!newxprt)
--		return;
-+		return 1;
- 	newxprt->sc_cm_id = new_cma_id;
- 	new_cma_id->context = newxprt;
- 	svc_rdma_parse_connect_private(newxprt, param);
-@@ -268,6 +272,7 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+diff --git a/net/sunrpc/auth_gss/gss_krb5_unseal.c b/net/sunrpc/auth_gss/gss_krb5_unseal.c
+index 4fbc50a0a2c4b..1a98060dae2c9 100644
+--- a/net/sunrpc/auth_gss/gss_krb5_unseal.c
++++ b/net/sunrpc/auth_gss/gss_krb5_unseal.c
+@@ -88,6 +88,9 @@ gss_krb5_verify_mic_v2(struct krb5_ctx *ctx, struct xdr_buf *message_buffer,
  
- 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
- 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
-+	return 0;
- }
+ 	dprintk("RPC:       %s\n", __func__);
  
- /**
-@@ -291,8 +296,7 @@ static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
- 
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
--		handle_connect_req(cma_id, &event->param.conn);
--		break;
-+		return handle_connect_req(cma_id, &event->param.conn);
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
- 						      sap, cma_xprt);
++	if (read_token->len < GSS_KRB5_TOK_HDR_LEN + ctx->gk5e->cksumlength)
++		return GSS_S_DEFECTIVE_TOKEN;
++
+ 	memcpy(&be16_ptr, (char *) ptr, 2);
+ 	if (be16_to_cpu(be16_ptr) != KG2_TOK_MIC)
+ 		return GSS_S_DEFECTIVE_TOKEN;
 -- 
 2.53.0
 
