@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201002D7D3A;
-	Sat, 17 Oct 2026 17:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031B83839B2;
+	Sat, 17 Oct 2026 17:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257985; cv=none; b=EnVV7GQN50b4dxq+FHcs5ARWsDHxqb2d/LxnUpIyEZ0xXla2jmICxBFBm7M6me+WP4HQWO7+GqGVYuCQMCqoOTBNWR4oU0EFH7kaj2NtUvoHisXb28xRaZZWGAwRpI/ZEaVWdAi5P3yIDjn89mSKlLKPjcQQx2NkSLqxW5yNAlw=
+	t=1792257988; cv=none; b=oGK/O9u6wgXvuLact/IKfUBsaPjatuKYGkaTLnrvJIU84hVENI4MawW6I8t5BAGc5dbakUw33hjICYcCIrzEB5lhJssLo96GaNpwLTs6BG5bU1EYEbzqtNASGzmyhH9/a6n0BGki9XXilVfAxBmuvyjqGi8HZRCn7CBNNYarmIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257985; c=relaxed/simple;
-	bh=NOaVL3xiEl9Cp0TkHIcsFOoiEcwsr43UNDzWvNUv+eI=;
+	s=arc-20240116; t=1792257988; c=relaxed/simple;
+	bh=oEdyfMGfB760AINLyXyUrCoPK725SKlD4eihLjM6XXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deorUiTrapz5WUUZdgVlhKn+D/trmN7f1ufQp2IDNj/M7aVErU9qXDFXVLlXqml183VWYvk7fqE6F1y1letz/X9WJClRPA+noTwFJWIRs7g2dIVzZEFlY1gSaFYq20SOrv6yP4xu3+w0l24PF6w4cZljePShSPhPzw0chYNCKws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1y5fMoW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nPzMLybx4fuZnCcyb0J3rbJ1uQyau+UnFe204CGOyBgWivjnx8nPzvcV54CIbF3sLr85i55n8iLEWwOGtJHsyraATqF2wIYpAg+Se2EfvIP1EEw1vJAyYMOR1HpVN6WVvi1XTZpCqLe5MHJPYBicLNIztbUmmHkqOFcz1PP2yR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYBvWLzh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1y5fMoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418BD1F000C4;
-	Sat, 17 Oct 2026 17:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYBvWLzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502881F000C4;
+	Sat, 17 Oct 2026 17:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257983;
-	bh=OF3Glm6l5fYLpCNrmB5fCAxqVVLi48fkqgQ37oKnfD8=;
+	s=korg; t=1792257986;
+	bh=3lQFht/mQXlDuYjC1/ptTJYrgpiZaCiTwbKtJP+AK5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1y5fMoWwnImqhYL9avC/9zpFSIjtXLFmizzsQvcnpqcbEeXlZu+M30WVPCJiI/TJ
-	 5MN383Rz/FIns6m67uUkuYJA3pZl95w77TFzIft0FRYmD7LtMYmVjbPjV5qCf5V9gk
-	 05WE2lFrmeTG/vVAIrCiNUaqhCLKYM5ZV7Cc2qds=
+	b=BYBvWLzh+k7DgldYhDpgk/0we9quxUQn5OW+FQu9XAQFEth+Bc5DMrTJnc4styCvr
+	 zO6kqooAnd0WLnBkC0WqVbT1k/wD7gCZ8IGSQEmlgFwFCHOgYcB75ADWdiaBrXyC/g
+	 nvJndfojlptD3Qv5P5KMgxHRqmt74KxviJCfz55Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyungwook Boo <bookyungwook@gmail.com>,
 	Edward Cree <ecree.xilinx@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0733/1674] sfc: rip out MDIO support
-Date: Sat, 17 Oct 2026 17:50:05 +0200
-Message-ID: <20261017160449.918992095@linuxfoundation.org>
+Subject: [PATCH 6.6 0734/1674] sfc: fix NULL dereferences in ef100_process_design_param()
+Date: Sat, 17 Oct 2026 17:50:06 +0200
+Message-ID: <20261017160449.943469521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,224 +55,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Edward Cree <ecree.xilinx@gmail.com>
 
-[ Upstream commit c339fcdd738be78c540407ae78fef5601ba5092a ]
+[ Upstream commit 8241ecec1cdc6699ae197d52d58e76bddd995fa5 ]
 
-Unlike Siena, no EF10 board ever had an external PHY, and consequently
- MDIO handling isn't even built into the firmware.  Since Siena has
- been split out into its own driver, the MDIO code can be deleted from
- the sfc driver.
+Since cited commit, ef100_probe_main() and hence also
+ ef100_check_design_params() run before efx->net_dev is created;
+ consequently, we cannot netif_set_tso_max_size() or _segs() at this
+ point.
+Move those netif calls to ef100_probe_netdev(), and also replace
+ netif_err within the design params code with pci_err.
 
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 98ff4c7c8ac7 ("sfc: Separate netdev probe/remove from PCI probe/remove")
 Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/aa689d192ddaef7abe82709316c2be648a7bd66e.1742493017.git.ecree.xilinx@gmail.com
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250401225439.2401047-1-edward.cree@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8241ecec1cdc ("sfc: fix NULL dereferences in ef100_process_design_param()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef100_netdev.c     |  1 -
- drivers/net/ethernet/sfc/efx.c              | 24 ---------
- drivers/net/ethernet/sfc/mcdi_port.c        | 59 +--------------------
- drivers/net/ethernet/sfc/mcdi_port_common.c | 11 ----
- drivers/net/ethernet/sfc/net_driver.h       |  6 +--
- 5 files changed, 2 insertions(+), 99 deletions(-)
+ drivers/net/ethernet/sfc/ef100_netdev.c |  6 ++--
+ drivers/net/ethernet/sfc/ef100_nic.c    | 47 +++++++++++--------------
+ 2 files changed, 24 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
-index 7f7d560cb2b4c..d941f073f1ebf 100644
+index d941f073f1ebf..3a06e3b1bd6bf 100644
 --- a/drivers/net/ethernet/sfc/ef100_netdev.c
 +++ b/drivers/net/ethernet/sfc/ef100_netdev.c
-@@ -452,7 +452,6 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+@@ -450,8 +450,9 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+ 	net_dev->hw_enc_features |= efx->type->offload_features;
+ 	net_dev->vlan_features |= NETIF_F_HW_CSUM | NETIF_F_SG |
  				  NETIF_F_HIGHDMA | NETIF_F_ALL_TSO;
- 	netif_set_tso_max_segs(net_dev,
- 			       ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS_DEFAULT);
--	efx->mdio.dev = net_dev;
+-	netif_set_tso_max_segs(net_dev,
+-			       ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS_DEFAULT);
++	nic_data = efx->nic_data;
++	netif_set_tso_max_size(efx->net_dev, nic_data->tso_max_payload_len);
++	netif_set_tso_max_segs(efx->net_dev, nic_data->tso_max_payload_num_segs);
  
  	rc = efx_ef100_init_datapath_caps(efx);
  	if (rc < 0)
-diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index e9d9de8e648ac..6395fda5906df 100644
---- a/drivers/net/ethernet/sfc/efx.c
-+++ b/drivers/net/ethernet/sfc/efx.c
-@@ -481,28 +481,6 @@ void efx_get_irq_moderation(struct efx_nic *efx, unsigned int *tx_usecs,
+@@ -477,7 +478,6 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
+ 	/* Don't fail init if RSS setup doesn't work. */
+ 	efx_mcdi_push_default_indir_table(efx, efx->n_rx_channels);
+ 
+-	nic_data = efx->nic_data;
+ 	rc = ef100_get_mac_address(efx, net_dev->perm_addr, CLIENT_HANDLE_SELF,
+ 				   efx->type->is_vf);
+ 	if (rc)
+diff --git a/drivers/net/ethernet/sfc/ef100_nic.c b/drivers/net/ethernet/sfc/ef100_nic.c
+index 6da06931187d6..5b1bdcac81d99 100644
+--- a/drivers/net/ethernet/sfc/ef100_nic.c
++++ b/drivers/net/ethernet/sfc/ef100_nic.c
+@@ -887,8 +887,7 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 	case ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS:
+ 		/* We always put HDR_NUM_SEGS=1 in our TSO descriptors */
+ 		if (!reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "TSO_MAX_HDR_NUM_SEGS < 1\n");
++			pci_err(efx->pci_dev, "TSO_MAX_HDR_NUM_SEGS < 1\n");
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+@@ -901,32 +900,28 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		 */
+ 		if (!reader->value || reader->value > EFX_MIN_DMAQ_SIZE ||
+ 		    EFX_MIN_DMAQ_SIZE % (u32)reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "%s size granularity is %llu, can't guarantee safety\n",
+-				  reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
+-				  reader->value);
++			pci_err(efx->pci_dev,
++				"%s size granularity is %llu, can't guarantee safety\n",
++				reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
++				reader->value);
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_LEN:
+ 		nic_data->tso_max_payload_len = min_t(u64, reader->value,
+ 						      GSO_LEGACY_MAX_SIZE);
+-		netif_set_tso_max_size(efx->net_dev,
+-				       nic_data->tso_max_payload_len);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_NUM_SEGS:
+ 		nic_data->tso_max_payload_num_segs = min_t(u64, reader->value, 0xffff);
+-		netif_set_tso_max_segs(efx->net_dev,
+-				       nic_data->tso_max_payload_num_segs);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_TSO_MAX_NUM_FRAMES:
+ 		nic_data->tso_max_frames = min_t(u64, reader->value, 0xffff);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_COMPAT:
+ 		if (reader->value) {
+-			netif_err(efx, probe, efx->net_dev,
+-				  "DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
+-				  reader->value);
++			pci_err(efx->pci_dev,
++				"DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
++				reader->value);
+ 			return -EOPNOTSUPP;
+ 		}
+ 		return 0;
+@@ -946,10 +941,10 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		 * So the value of this shouldn't matter.
+ 		 */
+ 		if (reader->value != ESE_EF100_DP_GZ_VI_STRIDES_DEFAULT)
+-			netif_dbg(efx, probe, efx->net_dev,
+-				  "NIC has other than default VI_STRIDES (mask "
+-				  "%#llx), early probing might use wrong one\n",
+-				  reader->value);
++			pci_dbg(efx->pci_dev,
++				"NIC has other than default VI_STRIDES (mask "
++				"%#llx), early probing might use wrong one\n",
++				reader->value);
+ 		return 0;
+ 	case ESE_EF100_DP_GZ_RX_MAX_RUNT:
+ 		/* Driver doesn't look at L2_STATUS:LEN_ERR bit, so we don't
+@@ -961,9 +956,9 @@ static int ef100_process_design_param(struct efx_nic *efx,
+ 		/* Host interface says "Drivers should ignore design parameters
+ 		 * that they do not recognise."
+ 		 */
+-		netif_dbg(efx, probe, efx->net_dev,
+-			  "Ignoring unrecognised design parameter %u\n",
+-			  reader->type);
++		pci_dbg(efx->pci_dev,
++			"Ignoring unrecognised design parameter %u\n",
++			reader->type);
+ 		return 0;
  	}
  }
- 
--/**************************************************************************
-- *
-- * ioctls
-- *
-- *************************************************************************/
--
--/* Net device ioctl
-- * Context: process, rtnl_lock() held.
-- */
--static int efx_ioctl(struct net_device *net_dev, struct ifreq *ifr, int cmd)
--{
--	struct efx_nic *efx = efx_netdev_priv(net_dev);
--	struct mii_ioctl_data *data = if_mii(ifr);
--
--	/* Convert phy_id from older PRTAD/DEVAD format */
--	if ((cmd == SIOCGMIIREG || cmd == SIOCSMIIREG) &&
--	    (data->phy_id & 0xfc00) == 0x0400)
--		data->phy_id ^= MDIO_PHY_ID_C45 | 0x0400;
--
--	return mdio_mii_ioctl(&efx->mdio, data, cmd);
--}
--
- /**************************************************************************
-  *
-  * Kernel net device interface
-@@ -600,7 +578,6 @@ static const struct net_device_ops efx_netdev_ops = {
- 	.ndo_tx_timeout		= efx_watchdog,
- 	.ndo_start_xmit		= efx_hard_start_xmit,
- 	.ndo_validate_addr	= eth_validate_addr,
--	.ndo_eth_ioctl		= efx_ioctl,
- 	.ndo_change_mtu		= efx_change_mtu,
- 	.ndo_set_mac_address	= efx_set_mac_address,
- 	.ndo_set_rx_mode	= efx_set_rx_mode,
-@@ -1096,7 +1073,6 @@ static int efx_pci_probe(struct pci_dev *pci_dev,
- 	rc = efx_init_struct(efx, pci_dev);
- 	if (rc)
- 		goto fail1;
--	efx->mdio.dev = net_dev;
- 
- 	pci_info(pci_dev, "Solarflare NIC detected\n");
- 
-diff --git a/drivers/net/ethernet/sfc/mcdi_port.c b/drivers/net/ethernet/sfc/mcdi_port.c
-index ad4694fa3ddae..7b236d291d8c2 100644
---- a/drivers/net/ethernet/sfc/mcdi_port.c
-+++ b/drivers/net/ethernet/sfc/mcdi_port.c
-@@ -17,58 +17,6 @@
- #include "selftest.h"
- #include "mcdi_port_common.h"
- 
--static int efx_mcdi_mdio_read(struct net_device *net_dev,
--			      int prtad, int devad, u16 addr)
--{
--	struct efx_nic *efx = efx_netdev_priv(net_dev);
--	MCDI_DECLARE_BUF(inbuf, MC_CMD_MDIO_READ_IN_LEN);
--	MCDI_DECLARE_BUF(outbuf, MC_CMD_MDIO_READ_OUT_LEN);
--	size_t outlen;
--	int rc;
--
--	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_BUS, efx->mdio_bus);
--	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_PRTAD, prtad);
--	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_DEVAD, devad);
--	MCDI_SET_DWORD(inbuf, MDIO_READ_IN_ADDR, addr);
--
--	rc = efx_mcdi_rpc(efx, MC_CMD_MDIO_READ, inbuf, sizeof(inbuf),
--			  outbuf, sizeof(outbuf), &outlen);
--	if (rc)
--		return rc;
--
--	if (MCDI_DWORD(outbuf, MDIO_READ_OUT_STATUS) !=
--	    MC_CMD_MDIO_STATUS_GOOD)
--		return -EIO;
--
--	return (u16)MCDI_DWORD(outbuf, MDIO_READ_OUT_VALUE);
--}
--
--static int efx_mcdi_mdio_write(struct net_device *net_dev,
--			       int prtad, int devad, u16 addr, u16 value)
--{
--	struct efx_nic *efx = efx_netdev_priv(net_dev);
--	MCDI_DECLARE_BUF(inbuf, MC_CMD_MDIO_WRITE_IN_LEN);
--	MCDI_DECLARE_BUF(outbuf, MC_CMD_MDIO_WRITE_OUT_LEN);
--	size_t outlen;
--	int rc;
--
--	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_BUS, efx->mdio_bus);
--	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_PRTAD, prtad);
--	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_DEVAD, devad);
--	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_ADDR, addr);
--	MCDI_SET_DWORD(inbuf, MDIO_WRITE_IN_VALUE, value);
--
--	rc = efx_mcdi_rpc(efx, MC_CMD_MDIO_WRITE, inbuf, sizeof(inbuf),
--			  outbuf, sizeof(outbuf), &outlen);
--	if (rc)
--		return rc;
--
--	if (MCDI_DWORD(outbuf, MDIO_WRITE_OUT_STATUS) !=
--	    MC_CMD_MDIO_STATUS_GOOD)
--		return -EIO;
--
--	return 0;
--}
- 
- u32 efx_mcdi_phy_get_caps(struct efx_nic *efx)
- {
-@@ -97,12 +45,7 @@ int efx_mcdi_port_probe(struct efx_nic *efx)
- {
- 	int rc;
- 
--	/* Set up MDIO structure for PHY */
--	efx->mdio.mode_support = MDIO_SUPPORTS_C45 | MDIO_EMULATE_C22;
--	efx->mdio.mdio_read = efx_mcdi_mdio_read;
--	efx->mdio.mdio_write = efx_mcdi_mdio_write;
--
--	/* Fill out MDIO structure, loopback modes, and initial link state */
-+	/* Fill out loopback modes and initial link state */
- 	rc = efx_mcdi_phy_probe(efx);
- 	if (rc != 0)
- 		return rc;
-diff --git a/drivers/net/ethernet/sfc/mcdi_port_common.c b/drivers/net/ethernet/sfc/mcdi_port_common.c
-index 76ea26722ca46..dae684194ac8c 100644
---- a/drivers/net/ethernet/sfc/mcdi_port_common.c
-+++ b/drivers/net/ethernet/sfc/mcdi_port_common.c
-@@ -448,15 +448,6 @@ int efx_mcdi_phy_probe(struct efx_nic *efx)
- 	efx->phy_data = phy_data;
- 	efx->phy_type = phy_data->type;
- 
--	efx->mdio_bus = phy_data->channel;
--	efx->mdio.prtad = phy_data->port;
--	efx->mdio.mmds = phy_data->mmd_mask & ~(1 << MC_CMD_MMD_CLAUSE22);
--	efx->mdio.mode_support = 0;
--	if (phy_data->mmd_mask & (1 << MC_CMD_MMD_CLAUSE22))
--		efx->mdio.mode_support |= MDIO_SUPPORTS_C22;
--	if (phy_data->mmd_mask & ~(1 << MC_CMD_MMD_CLAUSE22))
--		efx->mdio.mode_support |= MDIO_SUPPORTS_C45 | MDIO_EMULATE_C22;
--
- 	caps = MCDI_DWORD(outbuf, GET_LINK_OUT_CAP);
- 	if (caps & (1 << MC_CMD_PHY_CAP_AN_LBN))
- 		mcdi_to_ethtool_linkset(phy_data->media, caps,
-@@ -546,8 +537,6 @@ void efx_mcdi_phy_get_link_ksettings(struct efx_nic *efx, struct ethtool_link_ks
- 	cmd->base.port = mcdi_to_ethtool_media(phy_cfg->media);
- 	cmd->base.phy_address = phy_cfg->port;
- 	cmd->base.autoneg = !!(efx->link_advertising[0] & ADVERTISED_Autoneg);
--	cmd->base.mdio_support = (efx->mdio.mode_support &
--			      (MDIO_SUPPORTS_C45 | MDIO_SUPPORTS_C22));
- 
- 	mcdi_to_ethtool_linkset(phy_cfg->media, phy_cfg->supported_cap,
- 				cmd->link_modes.supported);
-diff --git a/drivers/net/ethernet/sfc/net_driver.h b/drivers/net/ethernet/sfc/net_driver.h
-index f2dd7feb0e0cd..37e7e3059315d 100644
---- a/drivers/net/ethernet/sfc/net_driver.h
-+++ b/drivers/net/ethernet/sfc/net_driver.h
-@@ -15,7 +15,7 @@
- #include <linux/ethtool.h>
- #include <linux/if_vlan.h>
- #include <linux/timer.h>
--#include <linux/mdio.h>
-+#include <linux/mii.h>
- #include <linux/list.h>
- #include <linux/pci.h>
- #include <linux/device.h>
-@@ -914,8 +914,6 @@ struct efx_mae;
-  * @stats_buffer: DMA buffer for statistics
-  * @phy_type: PHY type
-  * @phy_data: PHY private data (including PHY-specific stats)
-- * @mdio: PHY MDIO interface
-- * @mdio_bus: PHY MDIO bus ID (only used by Siena)
-  * @phy_mode: PHY operating mode. Serialised by @mac_lock.
-  * @link_advertising: Autonegotiation advertising flags
-  * @fec_config: Forward Error Correction configuration flags.  For bit positions
-@@ -1090,8 +1088,6 @@ struct efx_nic {
- 
- 	unsigned int phy_type;
- 	void *phy_data;
--	struct mdio_if_info mdio;
--	unsigned int mdio_bus;
- 	enum efx_phy_mode phy_mode;
- 
- 	__ETHTOOL_DECLARE_LINK_MODE_MASK(link_advertising);
+@@ -999,13 +994,13 @@ static int ef100_check_design_params(struct efx_nic *efx)
+ 	 */
+ 	if (reader.state != EF100_TLV_TYPE) {
+ 		if (reader.state == EF100_TLV_TYPE_CONT)
+-			netif_err(efx, probe, efx->net_dev,
+-				  "truncated design parameter (incomplete type %u)\n",
+-				  reader.type);
++			pci_err(efx->pci_dev,
++				"truncated design parameter (incomplete type %u)\n",
++				reader.type);
+ 		else
+-			netif_err(efx, probe, efx->net_dev,
+-				  "truncated design parameter %u\n",
+-				  reader.type);
++			pci_err(efx->pci_dev,
++				"truncated design parameter %u\n",
++				reader.type);
+ 		rc = -EIO;
+ 	}
+ out:
 -- 
 2.53.0
 
