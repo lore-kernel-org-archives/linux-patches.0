@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA883ADBA4;
-	Sat, 17 Oct 2026 16:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5E13563FB;
+	Sat, 17 Oct 2026 16:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256365; cv=none; b=Z6/0KLAOpMCOb2oKuzn39Jk9Bp2zUKMDNpUqAnqg15x2Ll5ZjHbKxuqYtxQx9EeTdpCL0amrjsxd+s7k8D5Vt2YIANWbmz9LoZkUUbr+EiZugTrrnyFMtHtu7oOMT53mUvpr/cExPPO/bUzXdb3sDfHBYoUBv2SI4PIHCAYZkkA=
+	t=1792256368; cv=none; b=gnK6Kzt3DanodHiHAClRYYU/AtYaWB8y664nZuyATuF17zPPYeGOrQT7XDWMAaBcZf24kBrDl8KrOw4M0SQp+AU3LFHBFhd4cXxZrlORiJNt+c89o9nDj9WhLWx3Myj6KEVf+lUSuTMhpWxlKDXjFx7bKyFQvPUfSfz9S/ziX6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256365; c=relaxed/simple;
-	bh=bZKzZFWDnw2utrYS60Yxs83eFSN44/P8e4ZZBBgtjZg=;
+	s=arc-20240116; t=1792256368; c=relaxed/simple;
+	bh=t+pa1B7DT1zF9Cr0ggGBpZsz8DtQnDTcu75VK/gjnfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLk0l4X068vLCR+Q87EpJOq4o28akT33NX5xMtKUoyBFcdnuO9HBROpmWUSAXo7Ls2mKRDc7dMmdG/bEeVhCuMH5XCA16cyurbx9JggkIVlXmW1RBE+xpV1+AOhOymSc6TXH270zQqlBZRjQbMDXecbBVQq/lYRTdBnIyzRLjms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwQIyMbc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ak86UaTdcoISWXQQJjm81ukYQQCm3SmCI1Yiw+Ma6tZCNmogTjNcO+CRkOEeu8U7MxM1sDM3gYKG6jC7H+2KdiMvDMBlLk5+wnj0U+5c+wJwYCukr2/KXmFNJkLhcAq1xMXobWuXTizInQoTIJivKDsg4CilFsB9nVFsNTCNkBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vK4KXYUH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwQIyMbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35571F000C4;
-	Sat, 17 Oct 2026 16:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vK4KXYUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6611F000C4;
+	Sat, 17 Oct 2026 16:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256364;
-	bh=0dRWs60ht8uNKwYpkIjOuLByMMlMlZkeG6ArgJ2f388=;
+	s=korg; t=1792256367;
+	bh=lcRzTUj1c26LqfYzeatiSciC/oRVQSKqAh7aMaiS0BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GwQIyMbcWcAszZsrNUzAkUyXQsWlOP1RbpOyQCqNe99v1iqKy+oDgxT4lgPtPSg1R
-	 GRqjFNafqNN4Yc3BYpsyzp/rpfKK1rrNR+wKSskPuqqXlU5kyiSX4b4zy3rwuqoLWs
-	 gIIc2Vhe7gNkQXraiql8x5qryB/NVtzp9AB683ic=
+	b=vK4KXYUHnpjU8mz82/oe/Lr9Vv4ft/GrhnpnaeBhXkySI8Q99E1QANJrguLGHc1Zv
+	 aEhj/BinfxhJk8h5tRPUJswaU3/ZdRpx/H7CWDyCt1MZjeA/SPt1+dxxHywD/bozen
+	 VQLm22/gUE90aipk785akfvZLWN3X3bkBMFUWZfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0205/1674] Bluetooth: btintel: validate DDC record lengths
-Date: Sat, 17 Oct 2026 17:41:17 +0200
-Message-ID: <20261017160436.411705438@linuxfoundation.org>
+Subject: [PATCH 6.6 0214/1674] tipc: prevent GCM nonce reuse on peer key changes
+Date: Sat, 17 Oct 2026 17:41:26 +0200
+Message-ID: <20261017160436.642064580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,54 +46,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit c9c15d4d8956df8c564f7c210e4dc5b9b820d97a ]
+[ Upstream commit 512ccd3d0e91e791fb37442aa0a2599aca19783d ]
 
-Parse DDC record lengths in unsigned storage so 0xFF does not wrap.
-Reject records smaller than the mandatory three-byte header, records
-exceeding U8_MAX, and records exceeding remaining firmware bytes before
-issuing Intel_Write_DDC.
+TIPC can encrypt traffic between nodes using a different transmit key
+for each node. In this mode, the AES-GCM nonce for a packet sent to a
+known peer consists of a 32-bit prefix (a per-key salt XOR the peer's
+address) followed by a 64-bit counter. That counter is stored in the
+peer's RX crypto object. When the peer reports a change in which key
+it uses to receive packets, TIPC resets this counter. The sender can
+still be using the same TX key and salt, so subsequent packets reuse
+earlier nonces. This nonce reuse breaks confidentiality and exposes
+GCM's authentication key. This makes forgeries trivial: an attacker
+can exploit CTR malleability to alter captured ciphertexts and use the
+recovered authentication key to compute a valid tag for the modified
+ciphertext, under the same key and nonce.
 
-This issue was reported by Claude Mythos.
+Use the TX key's existing aead->seqno counter instead. All encryptions
+using that key object share the same atomic counter, so concurrent
+encryptions get distinct nonce counter values. The counter survives
+key activation and peer reconnection, and peer key-status reports
+cannot reset it. This prevents those transitions from causing nonce
+reuse while the same TX key remains installed.
 
-Fixes: 145f2368c5fd ("Bluetooth: btintel: Add Device Configuration support")
-Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The nonce format is unchanged, and receivers do not require consecutive
+counter values, so sharing the counter across peers remains compatible
+with existing receivers. A pre-existing check still invokes key
+revocation in the unlikely event that the counter wraps to zero.
+
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260924202105.3722778-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/tipc/crypto.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index d713bbebbc5a5..1c8b9f863275a 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -384,8 +384,16 @@ int btintel_load_ddc_config(struct hci_dev *hdev, const char *ddc_name)
- 	/* DDC file contains one or more DDC structure which has
- 	 * Length (1 byte), DDC ID (2 bytes), and DDC value (Length - 2).
- 	 */
--	while (fw->size > fw_ptr - fw->data) {
--		u8 cmd_plen = fw_ptr[0] + sizeof(u8);
-+	while (fw->size > (size_t)(fw_ptr - fw->data)) {
-+		size_t remaining = fw->size - (fw_ptr - fw->data);
-+		unsigned int cmd_plen = fw_ptr[0] + 1U;
-+
-+		if (cmd_plen < 3 || cmd_plen > U8_MAX || cmd_plen > remaining) {
-+			bt_dev_err(hdev, "Malformed DDC record (plen=%u, remaining=%zu)",
-+				   cmd_plen, remaining);
-+			release_firmware(fw);
-+			return -EINVAL;
-+		}
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index d58db40d6c036..9c3ef67eb5f41 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -144,7 +144,7 @@ struct tipc_tfm {
+  * @rcu: struct rcu_head
+  * @key: the aead key
+  * @gen: the key's generation
+- * @seqno: the key seqno (cluster scope)
++ * @seqno: the per-key TX nonce counter
+  * @refcnt: the key reference counter
+  */
+ struct tipc_aead {
+@@ -190,7 +190,6 @@ struct tipc_crypto_stats {
+  * @rekeying_intv: rekeying interval (in minutes)
+  * @stats: the crypto statistics
+  * @name: the crypto name
+- * @sndnxt: the per-peer sndnxt (TX)
+  * @timer1: general timer 1 (jiffies)
+  * @timer2: general timer 2 (jiffies)
+  * @working: the crypto is working or not
+@@ -219,7 +218,6 @@ struct tipc_crypto {
+ 	struct tipc_crypto_stats __percpu *stats;
+ 	char name[48];
  
- 		skb = __hci_cmd_sync(hdev, 0xfc8b, cmd_plen, fw_ptr,
- 				     HCI_INIT_TIMEOUT);
+-	atomic64_t sndnxt ____cacheline_aligned;
+ 	unsigned long timer1;
+ 	unsigned long timer2;
+ 	union {
+@@ -1060,14 +1058,11 @@ static int tipc_ehdr_build(struct net *net, struct tipc_aead *aead,
+ 	WARN_ON(skb_headroom(skb) < ehsz);
+ 	ehdr = (struct tipc_ehdr *)skb_push(skb, ehsz);
+ 
+-	/* Obtain a seqno first:
+-	 * Use the key seqno (= cluster wise) if dest is unknown or we're in
+-	 * cluster key mode, otherwise it's better for a per-peer seqno!
++	/*
++	 * Keep the nonce unique for the lifetime of the TX key,
++	 * including key state changes and peer reconnection.
+ 	 */
+-	if (!__rx || aead->mode == CLUSTER_KEY)
+-		seqno = atomic64_inc_return(&aead->seqno);
+-	else
+-		seqno = atomic64_inc_return(&__rx->sndnxt);
++	seqno = atomic64_inc_return(&aead->seqno);
+ 
+ 	/* Revoke the key if seqno is wrapped around */
+ 	if (unlikely(!seqno))
+@@ -1246,7 +1241,6 @@ void tipc_crypto_key_flush(struct tipc_crypto *c)
+ 	tipc_crypto_key_set_state(c, 0, 0, 0);
+ 	for (k = KEY_MIN; k <= KEY_MAX; k++)
+ 		tipc_crypto_key_detach(c->aead[k], &c->lock);
+-	atomic64_set(&c->sndnxt, 0);
+ 	spin_unlock_bh(&c->lock);
+ }
+ 
+@@ -1393,8 +1387,6 @@ static struct tipc_aead *tipc_crypto_key_pick_tx(struct tipc_crypto *tx,
+  * It also considers if peer has no key, then we need to make own master key
+  * (if any) taking over i.e. starting grace period and also trigger key
+  * distributing process.
+- *
+- * The "per-peer" sndnxt is also reset when the peer key has switched.
+  */
+ static void tipc_crypto_key_synch(struct tipc_crypto *rx, struct sk_buff *skb)
+ {
+@@ -1445,7 +1437,6 @@ static void tipc_crypto_key_synch(struct tipc_crypto *rx, struct sk_buff *skb)
+ 		if (cur)
+ 			tipc_aead_users_dec(tx->aead[cur], 0);
+ 
+-		atomic64_set(&rx->sndnxt, 0);
+ 		/* Mark the point TX key users changed */
+ 		tx->timer1 = jiffies;
+ 
+@@ -1510,7 +1501,6 @@ int tipc_crypto_start(struct tipc_crypto **crypto, struct net *net,
+ 	tipc_crypto_key_set_state(c, 0, 0, 0);
+ 	atomic_set(&c->key_distr, 0);
+ 	atomic_set(&c->peer_rx_active, 0);
+-	atomic64_set(&c->sndnxt, 0);
+ 	c->timer1 = jiffies;
+ 	c->timer2 = jiffies;
+ 	c->rekeying_intv = TIPC_REKEYING_INTV_DEF;
 -- 
 2.53.0
 
