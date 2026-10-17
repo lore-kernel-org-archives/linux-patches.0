@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C4A3876CC;
-	Sat, 17 Oct 2026 16:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4AA3A1E96;
+	Sat, 17 Oct 2026 16:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256254; cv=none; b=bw0X5O2XBEUZYT89RpVqC/XANMQHRjMtv1Alv3Q2MisX6i6FM1q7ZJ/GxfTvVjgajPOA5HBsqeaEtxBau4CBHmlbm11+wsEk5ezMxCP/4VoZ275JFMmq5gSNFUtOcRQ9ySzVLiHG4nPTInHf+QZDNNjvsF5AK1YqNxI5z5IfOw0=
+	t=1792256257; cv=none; b=AHRxSIeOY9q4wmg9pEvBuRaGKOIqkjcSFoAy/EdbVsvvjkwfqnTH/+ksEr/zIsT3nlbSBZTQfvUG0Ce97gxx90PLf6dpBVregFBVMGjfQd6dPBDydJ9x840C8dFbysgKQr0QILAp1ZDhBQebLEvx+FG8I+M2TM2pkjFkJDkhJTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256254; c=relaxed/simple;
-	bh=QZhzC1kqlP+pQYU9lQU+3rFxBhJVY7THMVWMrHDx9ug=;
+	s=arc-20240116; t=1792256257; c=relaxed/simple;
+	bh=ar160hs7dlTl7NsybgDL3LUwYYLObkFiZH/ajKvtjBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxkKA2id2Gbqrf9bMfySA9IwPfLJyyEavuLK/mqtetvUtAECckky6B91UuezhD1vpcdmsijouPNdGG63LoYn+gJOSHUoqc2ZzhQFhwSSHMB/G4wh1hZmuEq87XYV//q9T0ZT/s1zS+dCCi5zirJN0RxvcVQ++EdTAyQoZmfRte8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaqdG8sW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZekeoNy/Urzg0ukn0ly+JBoj/KRT/0VD0d7PFx4h+0PGyCvhCYL2hl/s9rlBNLHewYxlreWPVi2cbsMKhkyOaFSmjNJTJpYvdh4kUJiFRS8DF5jU2V0DbAngSL6dHUWdCPk3aN2pHTFgVhRCW+BBu83x8bSbmVw1xBN7HK4vqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05tuYoF0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaqdG8sW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13C31F000C4;
-	Sat, 17 Oct 2026 16:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05tuYoF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A833A1F000C4;
+	Sat, 17 Oct 2026 16:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256253;
-	bh=E9qQvg1zBcW3peEyYxH0GsNbCowe0rs1qvlhzJAd4l4=;
+	s=korg; t=1792256256;
+	bh=g29fxlLCAXs83k/wQOByn/JMlcZHMnBiFWuM8AcfMwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jaqdG8sWXcczwDKvR56bgPWxD9HhS2w0i0BDN9F/rPdDSHHUXAKTZj2OVVubtSMBh
-	 hp1YxmitYH+hp3OMD37ZJHgvaG5MKCiKxHRaqm93qwwCalLHGkOLZ1j9UjujpKL+3n
-	 8H+o8LKx14sps9zEUBXi81xAfOARMEcIqB3Q10uU=
+	b=05tuYoF0xiCjRTy+LNfqOM6d4PT75EtDFzJCg+N7lwziIFUAm4fV4sIWSLRvYOiep
+	 ItJzE1WxSrPG09KmQkTJifMFPHsgKyZmINvVDDTHYEFFw2kmpLeI4oR008TafxkJ7C
+	 dZBwO424spKe0zJKlsdCXMknWLGi64PrKmTItqNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0176/1674] smb: client: clear setuid/setgid bit on write with cifsacl/modefromsid/posix extensions
-Date: Sat, 17 Oct 2026 17:40:48 +0200
-Message-ID: <20261017160435.673092445@linuxfoundation.org>
+Subject: [PATCH 6.6 0177/1674] scsi: lpfc: Define lpfc_dmabuf type for ctx_buf ptr
+Date: Sat, 17 Oct 2026 17:40:49 +0200
+Message-ID: <20261017160435.698988885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,112 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Justin Tee <justin.tee@broadcom.com>
 
-commit b8e5dc4f95e5484159b343903f302eb6d783f2e6 upstream.
+[ Upstream commit 115d137aa918d879e3cca9605bbf59e0482aa734 ]
 
-When a file has the setuid or setgid bit set and is written to, the VFS
-strips those bits and issues a setattr with ATTR_KILL_SUID/ATTR_KILL_SGID
-together with an ATTR_MODE carrying the already-cleared mode.
+In LPFC_MBOXQ_t, the ctx_buf ptr shouldn't be defined as a generic void
+*ptr.  It is named ctx_buf and it should only be used as an lpfc_dmabuf
+*ptr.  Due to the void* declaration, there have been abuses of ctx_buf for
+things not related to lpfc_dmabuf.
 
-Both cifs_setattr_unix() and cifs_setattr_nounix() unconditionally dropped
-ATTR_MODE in that case:
+So, set the ptr type for *ctx_buf as lpfc_dmabuf.  Remove all type casts on
+ctx_buf because it is no longer a void *ptr.  Convert the abuse of ctx_buf
+for something not related to lpfc_dmabuf to use the void *context3 ptr.
 
-	/* skip mode change if it's just for clearing setuid/setgid */
-	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-		attrs->ia_valid &= ~ATTR_MODE;
+A particular abuse of the ctx_buf warranted a new void *ext_buf ptr.
+However, the usage of this new void *ext_buf is not generic.  It is
+intended to only hold virtual addresses for extended mailbox commands.
 
-This is fine for the default mount, where the mode is only emulated via
-the DOS read-only attribute and cannot represent the setuid/setgid bits
-anyway.  However, with the "cifsacl" or "modefromsid" mount options the
-mode is stored on the server through an ACL (id_mode_to_cifs_acl()), with
-the SMB3.1.1 POSIX extensions the mode is sent to the server directly,
-and with the SMB1 Unix extensions (cifs_setattr_unix) the mode is sent
-via CIFSSMBUnixSetPathInfo().  In all those cases dropping ATTR_MODE means
-the cleared mode is never pushed to the server, so the setuid/setgid bit
-survives the write.
+[ Backport to 6.6.y: retain only the ext_buf member and the corresponding
+  extended-mailbox producers and SLI3 copy sites. The remainder of the
+  upstream context-pointer cleanup depends on earlier patches in the lpfc
+  14.4.0.1 series and is unrelated to this timeout fix. Keeping the SLI3
+  payload in ext_buf leaves ctx_buf pointing to its DMA descriptor through
+  late completion and cleanup. ]
 
-This is a security issue: on local filesystems the setuid bit is stripped
-when a file is written, but over these cifs.ko mounts the bit persists on
-the server, potentially allowing an unexpected privilege escalation on
-subsequent execution.
-
-Fix this in two places:
-
-  1. cifs_setattr_nounix(): only take the "skip mode change" shortcut
-     when the mode is emulated via the DOS read-only attribute (i.e.
-     neither cifsacl/modefromsid nor the SMB3.1.1 POSIX extensions are
-     in effect), so that the cleared mode is propagated to the server
-     in the ACL / POSIX cases.
-
-  2. cifs_setattr_unix(): this function is only called when Unix
-     extensions are in effect, so the mode is always stored on the
-     server.  Remove the shortcut entirely so that the cleared mode is
-     always pushed.
-
-Fixes: d32c4f2626ac ("CIFS: ignore mode change if it's just for clearing setuid/setgid bits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-
-[ Backport note for 6.6: no sbflags local exists here, so test
-  cifs_sb->mnt_cifs_flags directly (same flag bits); uses existing "bool posix". ]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Assisted-by: opencode:kimi-k3
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240305200503.57317-10-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/scsi/lpfc/lpfc_bsg.c |  2 +-
+ drivers/scsi/lpfc/lpfc_els.c |  4 ++--
+ drivers/scsi/lpfc/lpfc_sli.c | 20 ++++++++++----------
+ drivers/scsi/lpfc/lpfc_sli.h |  1 +
+ 4 files changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index cca480ab7e64b..fcf9d0729e03a 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3064,9 +3064,13 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
- 			goto out;
- 	}
+diff --git a/drivers/scsi/lpfc/lpfc_bsg.c b/drivers/scsi/lpfc/lpfc_bsg.c
+index 0166f86c7b71a..d5febd2119ad6 100644
+--- a/drivers/scsi/lpfc/lpfc_bsg.c
++++ b/drivers/scsi/lpfc/lpfc_bsg.c
+@@ -4747,7 +4747,7 @@ lpfc_bsg_issue_mbox(struct lpfc_hba *phba, struct bsg_job *job,
+ 	if (mbox_req->inExtWLen || mbox_req->outExtWLen) {
+ 		from = pmbx;
+ 		ext = from + sizeof(MAILBOX_t);
+-		pmboxq->ctx_buf = ext;
++		pmboxq->ext_buf = ext;
+ 		pmboxq->in_ext_byte_len =
+ 			mbox_req->inExtWLen * sizeof(uint32_t);
+ 		pmboxq->out_ext_byte_len =
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index 2e9972a587810..8ef571498d846 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -7300,7 +7300,7 @@ int lpfc_get_sfp_info_wait(struct lpfc_hba *phba,
+ 		mbox->in_ext_byte_len = DMP_SFF_PAGE_A0_SIZE;
+ 		mbox->out_ext_byte_len = DMP_SFF_PAGE_A0_SIZE;
+ 		mbox->mbox_offset_word = 5;
+-		mbox->ctx_buf = virt;
++		mbox->ext_buf = virt;
+ 	} else {
+ 		bf_set(lpfc_mbx_memory_dump_type3_length,
+ 		       &mbox->u.mqe.un.mem_dump_type3, DMP_SFF_PAGE_A0_SIZE);
+@@ -7360,7 +7360,7 @@ int lpfc_get_sfp_info_wait(struct lpfc_hba *phba,
+ 		mbox->in_ext_byte_len = DMP_SFF_PAGE_A2_SIZE;
+ 		mbox->out_ext_byte_len = DMP_SFF_PAGE_A2_SIZE;
+ 		mbox->mbox_offset_word = 5;
+-		mbox->ctx_buf = virt;
++		mbox->ext_buf = virt;
+ 	} else {
+ 		bf_set(lpfc_mbx_memory_dump_type3_length,
+ 		       &mbox->u.mqe.un.mem_dump_type3, DMP_SFF_PAGE_A2_SIZE);
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index c88e224feed8a..fd726348cb693 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -9558,8 +9558,8 @@ lpfc_sli_issue_mbox_s3(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmbox,
+ 		}
  
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
--		attrs->ia_valid &= ~ATTR_MODE;
-+	/*
-+	 * This function is only called when Unix extensions are in effect,
-+	 * so the mode is always sent to and stored on the server.  Do not
-+	 * skip the mode change when clearing setuid/setgid bits: dropping
-+	 * ATTR_MODE here would leave those bits set on the server after a
-+	 * write, which is a security issue.
-+	 */
+ 		/* Copy the mailbox extension data */
+-		if (pmbox->in_ext_byte_len && pmbox->ctx_buf) {
+-			lpfc_sli_pcimem_bcopy(pmbox->ctx_buf,
++		if (pmbox->in_ext_byte_len && pmbox->ext_buf) {
++			lpfc_sli_pcimem_bcopy(pmbox->ext_buf,
+ 					      (uint8_t *)phba->mbox_ext,
+ 					      pmbox->in_ext_byte_len);
+ 		}
+@@ -9572,10 +9572,10 @@ lpfc_sli_issue_mbox_s3(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmbox,
+ 				= MAILBOX_HBA_EXT_OFFSET;
  
- 	args = kmalloc(sizeof(*args), GFP_KERNEL);
- 	if (args == NULL) {
-@@ -3253,8 +3257,24 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
- 	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_SET_UID))
- 		attrs->ia_valid &= ~(ATTR_UID | ATTR_GID);
+ 		/* Copy the mailbox extension data */
+-		if (pmbox->in_ext_byte_len && pmbox->ctx_buf)
++		if (pmbox->in_ext_byte_len && pmbox->ext_buf)
+ 			lpfc_memcpy_to_slim(phba->MBslimaddr +
+ 				MAILBOX_HBA_EXT_OFFSET,
+-				pmbox->ctx_buf, pmbox->in_ext_byte_len);
++				pmbox->ext_buf, pmbox->in_ext_byte_len);
  
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-+	/*
-+	 * Skip the mode change if it is only being done to clear the
-+	 * setuid/setgid bits *and* the mode is emulated via the DOS
-+	 * read-only attribute (the default, non-ACL case), which cannot
-+	 * represent the setuid/setgid bits anyway.
-+	 *
-+	 * When the mode is instead stored on the server - i.e. with the
-+	 * cifsacl or modefromsid mount options (via an ACL) or with the
-+	 * SMB3.1.1 POSIX extensions - the cleared mode must be pushed to
-+	 * the server.  Dropping ATTR_MODE here would leave the setuid/
-+	 * setgid bit set on the server after a write, which is a security
-+	 * issue (the bits are not stripped as they are on local
-+	 * filesystems).
-+	 */
-+	if ((attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID)) &&
-+	    !((cifs_sb->mnt_cifs_flags &
-+	       (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
-+	      posix))
- 		attrs->ia_valid &= ~ATTR_MODE;
+ 		if (mbx->mbxCommand == MBX_CONFIG_PORT)
+ 			/* copy command data into host mbox for cmpl */
+@@ -9698,9 +9698,9 @@ lpfc_sli_issue_mbox_s3(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmbox,
+ 			lpfc_sli_pcimem_bcopy(phba->mbox, mbx,
+ 						MAILBOX_CMD_SIZE);
+ 			/* Copy the mailbox extension data */
+-			if (pmbox->out_ext_byte_len && pmbox->ctx_buf) {
++			if (pmbox->out_ext_byte_len && pmbox->ext_buf) {
+ 				lpfc_sli_pcimem_bcopy(phba->mbox_ext,
+-						      pmbox->ctx_buf,
++						      pmbox->ext_buf,
+ 						      pmbox->out_ext_byte_len);
+ 			}
+ 		} else {
+@@ -9708,9 +9708,9 @@ lpfc_sli_issue_mbox_s3(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmbox,
+ 			lpfc_memcpy_from_slim(mbx, phba->MBslimaddr,
+ 						MAILBOX_CMD_SIZE);
+ 			/* Copy the mailbox extension data */
+-			if (pmbox->out_ext_byte_len && pmbox->ctx_buf) {
++			if (pmbox->out_ext_byte_len && pmbox->ext_buf) {
+ 				lpfc_memcpy_from_slim(
+-					pmbox->ctx_buf,
++					pmbox->ext_buf,
+ 					phba->MBslimaddr +
+ 					MAILBOX_HBA_EXT_OFFSET,
+ 					pmbox->out_ext_byte_len);
+@@ -13822,10 +13822,10 @@ lpfc_sli_sp_intr_handler(int irq, void *dev_id)
+ 					lpfc_sli_pcimem_bcopy(mbox, pmbox,
+ 							MAILBOX_CMD_SIZE);
+ 					if (pmb->out_ext_byte_len &&
+-						pmb->ctx_buf)
++						pmb->ext_buf)
+ 						lpfc_sli_pcimem_bcopy(
+ 						phba->mbox_ext,
+-						pmb->ctx_buf,
++						pmb->ext_buf,
+ 						pmb->out_ext_byte_len);
+ 				}
+ 				if (pmb->mbox_flag & LPFC_MBX_IMED_UNREG) {
+diff --git a/drivers/scsi/lpfc/lpfc_sli.h b/drivers/scsi/lpfc/lpfc_sli.h
+index cd33dfec758c0..350bd4f147e83 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.h
++++ b/drivers/scsi/lpfc/lpfc_sli.h
+@@ -184,6 +184,7 @@ typedef struct lpfcMboxq {
+ 	struct lpfc_vport *vport; /* virtual port pointer */
+ 	void *ctx_ndlp;		  /* caller ndlp information */
+ 	void *ctx_buf;		  /* caller buffer information */
++	void *ext_buf;		  /* extended mailbox payload */
+ 	void *context3;
  
- 	if (attrs->ia_valid & ATTR_MODE) {
+ 	void (*mbox_cmpl) (struct lpfc_hba *, struct lpfcMboxq *);
 -- 
 2.53.0
 
