@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6210A391E51;
-	Sat, 17 Oct 2026 18:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA1A2C026C;
+	Sat, 17 Oct 2026 18:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260050; cv=none; b=RCF3qMjznB/AUaA3DsPwwGJ1bJoNcZPlRwIF4ACSmfFhutMsU+Wobioeae1MxmkUkkkeAzi2TQHtDYaSzXHUVXbcU1/8+0A70iI5uLLYI12F4PSFj5tGqUiyGNS9wC0fBiPiBW6R6z40PEeIAy+5a/EIv4Pg78jLu6bWXdhZOXs=
+	t=1792260053; cv=none; b=qy8SevlpEXCD2XtLdhHzzHIRTLYW5G+XM1vmy2CAJS1pJIjCy8XbD2LroNDfTL2MfVWcHkfSklqGDSlJqa+MvQPg6MT8iA0i02pJZq+a+0dOrQFc5Mw+9nmi2acmImzwU+ki56P4/4UVxEuZEf6F7ZG5zrC2JYRk40hW9KQHlU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260050; c=relaxed/simple;
-	bh=AadJd2+LVKHYXpYofiyBeCWJ8XArfHsEymV9InF9BXE=;
+	s=arc-20240116; t=1792260053; c=relaxed/simple;
+	bh=uS6kdynQGZizRmnNtlFkTHy8oKWFcdEqjOFOHBHj7JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDUAE93zLL+n2mJ09vRcB5wIuV0nSbArly8BWit4zSQKles2d9RxlpCjrp0/VcrghHrypXS6QCr7q5kInA4BDqW8V4A/2KXGgq4oMNBOwL7C3TqlGRoJG24y0sRuWLMmtVLgpVdAP7cTb+Pyfb2XDTmMPPAfXkCwQjUaOMsI5QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0Dn8PN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3hHwpwBmhDusrlyYkTxnY+3+0fDWVI9+wfd8NlliPws/pYK4YJ4FEYdO5DLWVJvkUOJmtnfwhl0NdEZmYcRvbL61cgPeTJVx+g+tl/EesIkll/JUVikSp39/Ro0PsyKKmQsJWcQCxnBCLcESx1H01287jc7C5iHLVqjPHsEGRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9+mN5U8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0Dn8PN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9741F000C4;
-	Sat, 17 Oct 2026 18:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9+mN5U8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32B21F000C4;
+	Sat, 17 Oct 2026 18:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260049;
-	bh=FiWX7VaA1NLP4fXIjyByC2DUIbnjgs1HrPP5fcmLiqg=;
+	s=korg; t=1792260052;
+	bh=b/EYPmpsFTIgZ31aG4OWXNaDK10pwLFHPDRn4/wmdx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P0Dn8PN07lZCxbd6VdYIfCdUknnQB/uGfChUDwgzCM7OlMd/ucNAiu0FAobIMIq8p
-	 ym6wlwh6dfcYKFX+eLgLbHrgNTbLtZc76E1s/0FJyt7ecdTU7/K0hsVpz5OtOWV95m
-	 6qk54W4w6IwarHe3OlDyDGdC38GoOi/HQjwMims0=
+	b=V9+mN5U85GCcDKe9+/36BmFIGhFVJKjwPo48bQbUZcHxPwepni5DsYluDMJTPa7hg
+	 7bly4EEbyeykXZIwfy28iHS10IDQzBfnWr+MGG96ycxCC3C6GpHO4LqHVSDpDtm2Nh
+	 QvWAJRiApYHBWuOcf12HhQ2bYcbeYDPskl9/m1wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1417/1674] Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind
-Date: Sat, 17 Oct 2026 18:01:29 +0200
-Message-ID: <20261017160507.552826790@linuxfoundation.org>
+Subject: [PATCH 6.6 1418/1674] btrfs: qgroup: fix a wrong length calculation in qgroup_free_reserved_data()
+Date: Sat, 17 Oct 2026 18:01:30 +0200
+Message-ID: <20261017160507.577066993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,90 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 2b66c83ff1751d6bd3201b3017206262ab46dc05 ]
+[ Upstream commit 9102b179512e11644fb0489ae62010a09afa199c ]
 
-hci_conn::l2cap_data is accessed without locks in l2cap_disconn_ind via
-hci_conn_timeout (disc_work) -> hci_proto_disconn_ind ->
-l2cap_disconn_ind.  This is UAF if the l2cap_conn is deleted
-concurrently.
+In that function, we round down the start position and round up the
+ending position.
 
-disc_work is disabled sync in hci_conn_del(), so we cannot take
-hci_dev_lock in disc_work.
+But during the calculation of @len, we use "round_up(start + len,
+sectorsize)", which is the rounded up end position, not the rounded up
+length.
 
-Fix by using proto_lock to guard l2cap_data, in addition to hdev->lock
-which is held in other access paths.
+Which results a much larger length, and later we are still using
+"start + len", which is completely incorrect.
 
-Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
-Reported-by: syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9c40ad7c6ed7165e46e8
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix it by declaring a local @aligned_start and @aligned_len and use them
+instead.
+
+Fixes: bc42bda22345 ("btrfs: qgroup: Fix qgroup reserved space underflow by only freeing reserved ranges")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ fs/btrfs/qgroup.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 0b4b7fcca9879..260031e59d646 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1824,7 +1824,10 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
- 	hci_chan_del(conn->hchan);
- 	conn->hchan = NULL;
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 622febdb61e23..e4c4d369eb8d9 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3897,12 +3897,13 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
+ 	struct ulist_node *unode;
+ 	struct ulist_iterator uiter;
+ 	struct extent_changeset changeset;
++	const u32 sectorsize = root->fs_info->sectorsize;
++	const u64 aligned_start = round_down(start, sectorsize);
++	const u64 aligned_len = round_up(start + len, sectorsize) - aligned_start;
+ 	u64 freed = 0;
+ 	int ret;
  
-+	spin_lock(&hcon->proto_lock);
- 	hcon->l2cap_data = NULL;
-+	spin_unlock(&hcon->proto_lock);
-+
- 	mutex_unlock(&conn->lock);
- 	l2cap_conn_put(conn);
- }
-@@ -7105,8 +7108,6 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
- 	}
+ 	extent_changeset_init(&changeset);
+-	len = round_up(start + len, root->fs_info->sectorsize);
+-	start = round_down(start, root->fs_info->sectorsize);
  
- 	kref_init(&conn->ref);
--	hcon->l2cap_data = conn;
--	conn->hcon = hci_conn_get(hcon);
- 	conn->hchan = hchan;
+ 	ULIST_ITER_INIT(&uiter);
+ 	while ((unode = ulist_next(&reserved->range_changed, &uiter))) {
+@@ -3914,12 +3915,15 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
  
- 	BT_DBG("hcon %p conn %p hchan %p", hcon, conn, hchan);
-@@ -7135,6 +7136,11 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 		extent_changeset_release(&changeset);
  
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
-+	spin_lock(&hcon->proto_lock);
-+	conn->hcon = hci_conn_get(hcon);
-+	hcon->l2cap_data = conn;
-+	spin_unlock(&hcon->proto_lock);
-+
- 	return conn;
- }
- 
-@@ -7524,13 +7530,18 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- 
- int l2cap_disconn_ind(struct hci_conn *hcon)
- {
--	struct l2cap_conn *conn = hcon->l2cap_data;
-+	struct l2cap_conn *conn;
-+	int ret = HCI_ERROR_REMOTE_USER_TERM;
- 
- 	BT_DBG("hcon %p", hcon);
- 
--	if (!conn)
--		return HCI_ERROR_REMOTE_USER_TERM;
--	return conn->disc_reason;
-+	spin_lock(&hcon->proto_lock);
-+	conn = hcon->l2cap_data;
-+	if (conn)
-+		ret = conn->disc_reason;
-+	spin_unlock(&hcon->proto_lock);
-+
-+	return ret;
- }
- 
- static void l2cap_disconn_cfm(struct hci_conn *hcon, u8 reason)
+-		/* Only free range in range [start, start + len) */
+-		if (range_start >= start + len ||
+-		    range_start + range_len <= start)
++		/*
++		 * Only free the range within
++		 * [aligned_start, aligned_start + aligned_len).
++		 */
++		if (range_start >= aligned_start + aligned_len ||
++		    range_start + range_len <= aligned_start)
+ 			continue;
+-		free_start = max(range_start, start);
+-		free_len = min(start + len, range_start + range_len) -
++		free_start = max(range_start, aligned_start);
++		free_len = min(aligned_start + aligned_len, range_start + range_len) -
+ 			   free_start;
+ 		/*
+ 		 * TODO: To also modify reserved->ranges_reserved to reflect
 -- 
 2.53.0
 
