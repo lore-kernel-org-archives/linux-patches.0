@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58599460;
-	Sat, 17 Oct 2026 17:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A742392829;
+	Sat, 17 Oct 2026 17:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258778; cv=none; b=ImfxnrHmbkQWlxLpbITi3UZKvWmwKKSZgjPST/JtwTzcZj42Vh35tZ2kWfuGo+BS1GZthpSxJID5NgJ8Fe9VPzAnrK3cqPtnIW3yTP9RUGsQ1aWKgjdkaCbHXpduuWaCp/ar0ujHOcEnNwHKRgvxpL9BnztYriAw7a2ibRqObyM=
+	t=1792258781; cv=none; b=FmdHTi/eDd7h5TMw5Rd2yRx1OkzBGJRgiGulVC+INEnB1XnaEtSHyRBdSQJK15rsQRin2FM970XwzeaFBbl+ByZuJLvGM6avpEkRjAwZE+O4xLAjvPqRQ7TpAdJZvFyf7Q1VxDlylWfrrqlDNuyPN29MEKjRJpr8QaUMYVeeg1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258778; c=relaxed/simple;
-	bh=GWe73x5+ZXEm0TRn0sp8tt3tFdlQZuOryPXb6gZnIqg=;
+	s=arc-20240116; t=1792258781; c=relaxed/simple;
+	bh=3eHMwTbMZVUJGCAwWxbDBcVBckhUB/nC/8EcAqFZA5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMyV3G1DNHgnJG/ghw7rcCnVFJPFAWssiS00+oQxaKShJd3//fKXr8mOjVJEbio/M1MAtB0wL2Mrjqs/14bxKGCOV6brxAiBnh7JRPg7txa8wzMwN+TxXTiqwaWSSIgQehF9ouAly/rxsvO1djj6dZVc84iPY4vorasWBJI0Nq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3OHYg/D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AHWM3roh8iliDdVSM2SRFhG2a9M64O2eGcxFbOraMZN7X/A6BBUiHBdvSaKj3CA3HANfYkb9q8N0DK90jlh2Sq7hE29ispafk6Q2+zSDdT7yC9kFscRIhnAM0H6tDwGUQ4JaDgv9i0M8nOtMwjSYc9yDG76E/MpEU2oGGGJX/zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEmln094; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3OHYg/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AE81F000C4;
-	Sat, 17 Oct 2026 17:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEmln094"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EDA1F000C4;
+	Sat, 17 Oct 2026 17:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258777;
-	bh=iMNM4JgycjsluINgswXBVKeqMHNrppmkyV9B090eLz0=;
+	s=korg; t=1792258780;
+	bh=S4oQHpuK0UHjbx8BNGzpRFcCy2vbjWzy1bMlo7YeXvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C3OHYg/D0M2tOzGt9Nwhl4iC1K2sOQebFGd6OGKusEOcqeni1yAjyCX7abjNEJdo1
-	 ILFdew34KgtHQaTCS3IAP6W6SFyurVcu5sSeeB0TRPhnZKxKAJv0LuWodybs1GUW/D
-	 GodIKcjhVrvnlgbkJwI3ZMRFqKbdl31ZF87HiV6w=
+	b=LEmln0940+zXr+IoYcVK4Ml9qg9TomaNPO+BPFCsUrhs2VbXYedW/byP4r4fsIG8l
+	 OjAw4XdnQz0k1dM83L8UOyC8pKF4P+cni2pFFFO+o/vo50pXGNDApKr/lZ8YhnOnU6
+	 yAxt+j2+dfU6sL2yVuwuvOte6UNYFUJxXLerT+bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0996/1674] wifi: ath11k: fix memory leaks in beacon template setup
-Date: Sat, 17 Oct 2026 17:54:28 +0200
-Message-ID: <20261017160456.683000870@linuxfoundation.org>
+Subject: [PATCH 6.6 0997/1674] bus: fsl-mc: use generic driver_override infrastructure
+Date: Sat, 17 Oct 2026 17:54:29 +0200
+Message-ID: <20261017160456.707059795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,89 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit ff49eba595df500e4ddccc593088c8a4ab5f2c27 ]
+[ Upstream commit 6c8dfb0362732bf1e4829867a2a5239fedc592d0 ]
 
-The functions ath11k_mac_setup_bcn_tmpl_ema() and
-ath11k_mac_setup_bcn_tmpl_mbssid() allocate memory for beacon templates
-but fail to free it when parameter setup returns an error.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-Since beacon templates must be released during normal execution, they
-must also be released in the error handling paths to prevent memory
-leaks.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Fix this by using unified exit paths with proper cleanup in the respective
-error paths.
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: 3a415daa3e8b ("wifi: ath11k: add P2P IE in beacon template")
-Fixes: 335a92765d30 ("wifi: ath11k: MBSSID beacon support")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260130084451.110768-1-zilin@seu.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Acked-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
+Link: https://patch.msgid.link/20260324005919.2408620-3-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c   | 43 +++++--------------------------
+ drivers/vfio/fsl-mc/vfio_fsl_mc.c |  4 +--
+ include/linux/fsl/mc.h            |  4 ---
+ 3 files changed, 8 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 83936ccfb506c..fade0b8d87782 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -1461,7 +1461,8 @@ static int ath11k_mac_setup_bcn_tmpl_ema(struct ath11k_vif *arvif)
- 	if (!beacons || !beacons->cnt) {
- 		ath11k_warn(arvif->ar->ab,
- 			    "failed to get ema beacon templates from mac80211\n");
--		return -EPERM;
-+		ret = -EPERM;
-+		goto free;
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index b5a1daed1ea41..afe610817f82d 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -93,12 +93,16 @@ static int fsl_mc_bus_match(struct device *dev, struct device_driver *drv)
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+ 	struct fsl_mc_driver *mc_drv = to_fsl_mc_driver(drv);
+ 	bool found = false;
++	int ret;
+ 
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (mc_dev->driver_override) {
+-		found = !strcmp(mc_dev->driver_override, mc_drv->driver.name);
++	ret = device_match_driver_override(dev, drv);
++	if (ret > 0) {
++		found = true;
+ 		goto out;
  	}
++	if (ret == 0)
++		goto out;
  
- 	if (tx_arvif == arvif)
-@@ -1491,11 +1492,11 @@ static int ath11k_mac_setup_bcn_tmpl_ema(struct ath11k_vif *arvif)
- 		}
- 	}
- 
--	ieee80211_beacon_free_ema_list(beacons);
--
- 	if (tx_arvif != arvif && !nontx_vif_params_set)
--		return -EINVAL; /* Profile not found in the beacons */
-+		ret = -EINVAL; /* Profile not found in the beacons */
- 
-+free:
-+	ieee80211_beacon_free_ema_list(beacons);
- 	return ret;
+ 	if (!mc_drv->match_id_table)
+ 		goto out;
+@@ -187,39 +191,8 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
  }
+ static DEVICE_ATTR_RO(modalias);
  
-@@ -1528,16 +1529,18 @@ static int ath11k_mac_setup_bcn_tmpl_mbssid(struct ath11k_vif *arvif)
- 
- 	if (tx_arvif == arvif)
- 		ath11k_mac_set_vif_params(tx_arvif, bcn);
--	else if (!ath11k_mac_set_nontx_vif_params(tx_arvif, arvif, bcn))
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+-	int ret;
+-
+-	if (WARN_ON(dev->bus != &fsl_mc_bus_type))
 -		return -EINVAL;
-+	else if (!ath11k_mac_set_nontx_vif_params(tx_arvif, arvif, bcn)) {
-+		ret = -EINVAL;
-+		goto free;
-+	}
- 
- 	ret = ath11k_wmi_bcn_tmpl(ar, arvif->vdev_id, &offs, bcn, 0);
--	kfree_skb(bcn);
 -
- 	if (ret)
- 		ath11k_warn(ab, "failed to submit beacon template command: %d\n",
- 			    ret);
+-	ret = driver_set_override(dev, &mc_dev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
+-	device_unlock(dev);
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ static struct attribute *fsl_mc_dev_attrs[] = {
+ 	&dev_attr_modalias.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
+ };
  
-+free:
-+	kfree_skb(bcn);
- 	return ret;
- }
+@@ -322,6 +295,7 @@ ATTRIBUTE_GROUPS(fsl_mc_bus);
  
+ struct bus_type fsl_mc_bus_type = {
+ 	.name = "fsl-mc",
++	.driver_override = true,
+ 	.match = fsl_mc_bus_match,
+ 	.uevent = fsl_mc_bus_uevent,
+ 	.dma_configure  = fsl_mc_dma_configure,
+@@ -931,9 +905,6 @@ static struct notifier_block fsl_mc_nb;
+  */
+ void fsl_mc_device_remove(struct fsl_mc_device *mc_dev)
+ {
+-	kfree(mc_dev->driver_override);
+-	mc_dev->driver_override = NULL;
+-
+ 	/*
+ 	 * The device-specific remove callback will get invoked by device_del()
+ 	 */
+diff --git a/drivers/vfio/fsl-mc/vfio_fsl_mc.c b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+index f65d91c01f2ec..03600872c4809 100644
+--- a/drivers/vfio/fsl-mc/vfio_fsl_mc.c
++++ b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+@@ -430,9 +430,7 @@ static int vfio_fsl_mc_bus_notifier(struct notifier_block *nb,
+ 
+ 	if (action == BUS_NOTIFY_ADD_DEVICE &&
+ 	    vdev->mc_dev == mc_cont) {
+-		mc_dev->driver_override = kasprintf(GFP_KERNEL, "%s",
+-						    vfio_fsl_mc_ops.name);
+-		if (!mc_dev->driver_override)
++		if (device_set_driver_override(dev, vfio_fsl_mc_ops.name))
+ 			dev_warn(dev, "VFIO_FSL_MC: Setting driver override for device in dprc %s failed\n",
+ 				 dev_name(&mc_cont->dev));
+ 		else
+diff --git a/include/linux/fsl/mc.h b/include/linux/fsl/mc.h
+index a1b3de87a3d10..7a19f5a1cbcf6 100644
+--- a/include/linux/fsl/mc.h
++++ b/include/linux/fsl/mc.h
+@@ -178,9 +178,6 @@ struct fsl_mc_obj_desc {
+  * @regions: pointer to array of MMIO region entries
+  * @irqs: pointer to array of pointers to interrupts allocated to this device
+  * @resource: generic resource associated with this MC object device, if any.
+- * @driver_override: driver name to force a match; do not set directly,
+- *                   because core frees it; use driver_set_override() to
+- *                   set or clear it.
+  *
+  * Generic device object for MC object devices that are "attached" to a
+  * MC bus.
+@@ -214,7 +211,6 @@ struct fsl_mc_device {
+ 	struct fsl_mc_device_irq **irqs;
+ 	struct fsl_mc_resource *resource;
+ 	struct device_link *consumer_link;
+-	const char *driver_override;
+ };
+ 
+ #define to_fsl_mc_device(_dev) \
 -- 
 2.53.0
 
