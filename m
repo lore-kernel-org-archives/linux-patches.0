@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693103B4404;
-	Sat, 17 Oct 2026 17:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863FC3803DC;
+	Sat, 17 Oct 2026 17:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257549; cv=none; b=LbX0RaiY/MsG2o0AQqu4WjbOphBf/WlzP+dVq8ctA9WuP4K7fyY7S4virpTWN4Z7lUzuNblzJoorG8PYejq1sehMCtea9kxfThN+UxbzYUHgMTzlgaG0izHJHT6GlRX3t80KZH2tOestrqfO3CIwA1nbPNH+lc/20HvoyrAJtuE=
+	t=1792257552; cv=none; b=S8JAA9B2Bae0OKq2qKMAX9z03sc491Mp0LFI0diOkwWhILrsSugSSrPbh9MonEiedd7Yi/mIduaB/u0zBn+P4j9+2iL+zWvaHu0A2y9nBPI/dmO36JV6GvM5vEJoqnwg93qFeL0BTad84sYxOAKCI6nfcsP5EaSbZrMCPX7JN+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257549; c=relaxed/simple;
-	bh=pWZTTtZr9YcJdj6RII55Dw3tGD7xTn8rTCaUargQTDY=;
+	s=arc-20240116; t=1792257552; c=relaxed/simple;
+	bh=yNrCU7PtKyWtjkxkoTECJ+/f/FgMbWatf+uQrP58mcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RyUv31Jy2nbS1zf2JWSas1sV6SAYadrpDUERide3yjbJQkY1YYkmiuOz+62SGqOt6XABYdHEXH57Cab3N72VDEaBlDI/4xWCKyC9tL+QyXUVboAwq14cHl1oRB9B7F3ia6oVyQOxbULfX2FGQRhKaPMdWK4RKXRw81j2uyaWT/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKutGgtU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NAcezkswLQM/AIpFah+xuq+1zldTKVAGjvfxE7qZrJxTLY25Mg8Ccm1RL4uaI9+RiOs7l5mWD/KtwJF0dFFyCqevzzICb+E+wGNlCEhjOEGDedET+uQnkgUXFVo4WlgZuQY0SVll+pPyQgprlK9Hlpi6ttKvP1EU8BhQFdRI97Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHOpubks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKutGgtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6D61F000C4;
-	Sat, 17 Oct 2026 17:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHOpubks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB161F000C4;
+	Sat, 17 Oct 2026 17:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257547;
-	bh=JDU6RKZhPozXJO00PpBffc7SFJSCcm3qbjGnBS4LqFk=;
+	s=korg; t=1792257550;
+	bh=g5392D8Zy9sfYUVgcQBHnSqb9GzTk/BRCcAYOYeUPWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKutGgtU50sB41SS5LDDdhm6fpyaWxcHEyD3Mxo0QSD7If6udFTPWRM/fEcWPCC9t
-	 dMPi5GODXqMH1GTgBz13/YXytDw8JH5ld97YDSZpchm9wCsbEYiZZ0XV8hkb3vNpWP
-	 lOePKGO1dOBjbmZ2O+mY8v5YxV3lKIGwCIJvr2VA=
+	b=DHOpubks2JVoMU5Ch0wYJlFI4D1ejsNKi2Qu+zeDfsH9cyCt89aV9OLyVR0gOsx/r
+	 ZpU5U9s/ZTrQx0oGWWuBxHFGKnCVFzpHgw/OXTnj95PC2FiF6i7i6aIJerY5HlBDse
+	 /5aiVyuvYuXUZk61DCuWQLXBFgcnXW/AZ+pXr/gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	lihuisong@huawei.com,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+b7fe2760ea6f1ee44b4d@syzkaller.appspotmail.com,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0594/1674] ACPI: processor_idle: Mark LPI enter functions as __cpuidle
-Date: Sat, 17 Oct 2026 17:47:46 +0200
-Message-ID: <20261017160446.327901767@linuxfoundation.org>
+Subject: [PATCH 6.6 0595/1674] ALSA: control: Dont add invalid kcontrols to LED layer
+Date: Sat, 17 Oct 2026 17:47:47 +0200
+Message-ID: <20261017160446.354116823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,65 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 956ca5d72c76504824c8eb601879da9476973e15 ]
+[ Upstream commit 74e3b979ce8b78a690f8b94ccf2e2c965f7f5c11 ]
 
-When function tracing or Kprobes is enabled, entering an ACPI Low
-Power Idle (LPI) state triggers the following RCU splat:
+The kcontrol LED state layer tries to track the all associated
+kcontrol elements with naive assumptions that they are readable.
+But one can create a write-only element that has no get callback (even
+a user element can do it), and this may lead to a NULL dereference at
+the call chain of snd_ctl_led_notify(), as found by syzkaller.
 
-  RCU not on for: acpi_idle_lpi_enter+0x4/0xd8
-  WARNING: CPU: 8 PID: 0 at include/linux/trace_recursion.h:162 function_trace_call+0x1e8/0x228
+For avoiding the Oops, add a sanity check of the kcontrol's info and
+get callbacks, and just skip the invalid kcontrols before assigning
+the kctl to the LED layer.
 
-The acpi_idle_lpi_enter() function is invoked within the cpuidle
-path after RCU has already been disabled for the current local CPU.
-Consequently, ftrace's function_trace_call() expects RCU to be
-actively watching before recording trace data, emitting a warning
-if it is not.
-
-Fix this by annotating acpi_idle_lpi_enter(), the generic __weak
-stub, and the RISC-V implementation of acpi_processor_ffh_lpi_enter()
-with __cpuidle. This moves these functions into the '.cpuidle.text'
-section, implicitly disabling ftrace instrumentation (notrace) along
-this sensitive path and preventing trace-induced RCU warnings during
-idle entry.
-
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Acked-by: lihuisong@huawei.com
-Link: https://patch.msgid.link/20260616072617.2272-1-lirongqing@baidu.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: syzbot+b7fe2760ea6f1ee44b4d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/6a9007b3.1d9ded08.62e62.00cd.GAE@google.com
+Fixes: 22d8de62f11b ("ALSA: control - add generic LED trigger module as the new control layer")
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260827113951.893291-1-tiwai@suse.de
 Assisted-by: LLM
-[ Backport to 6.6.y: Omit the RISC-V hunk because this target has no
-  RISC-V ACPI LPI implementation. ]
+[ Backport to 6.6.y: After the target's locked control lookup, reject
+  missing info/get callbacks via the existing unlock label so
+  controls_rwsem and the card reference are released. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/control_led.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index d755c266e3586..5db34356328c7 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1175,7 +1175,7 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
- 	return 0;
- }
- 
--int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-+int __weak __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
- {
- 	return -ENODEV;
- }
-@@ -1188,7 +1188,7 @@ int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-  *
-  * Return: 0 for success or negative value for error
-  */
--static int acpi_idle_lpi_enter(struct cpuidle_device *dev,
-+static int __cpuidle acpi_idle_lpi_enter(struct cpuidle_device *dev,
- 			       struct cpuidle_driver *drv, int index)
- {
- 	struct acpi_processor *pr;
+diff --git a/sound/core/control_led.c b/sound/core/control_led.c
+index 15acb07c65150..639d86e4dd162 100644
+--- a/sound/core/control_led.c
++++ b/sound/core/control_led.c
+@@ -253,6 +253,10 @@ static int snd_ctl_led_set_id(int card_number, struct snd_ctl_elem_id *id,
+ 		down_write(&card->controls_rwsem);
+ 		kctl = snd_ctl_find_id_locked(card, id);
+ 		if (kctl) {
++			if (!kctl->info || !kctl->get) {
++				err = -EINVAL;
++				goto unlock;
++			}
+ 			ioff = snd_ctl_get_ioff(kctl, id);
+ 			vd = &kctl->vd[ioff];
+ 			access = vd->access & SNDRV_CTL_ELEM_ACCESS_LED_MASK;
 -- 
 2.53.0
 
