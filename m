@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A75D3B531D;
-	Sat, 17 Oct 2026 17:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5136B3921FB;
+	Sat, 17 Oct 2026 17:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257991; cv=none; b=NOKxqHLSmiQAzt2Fvwq+hptEEXTrCgjrQGVz3uByNCQVf67pViUCXQLLX3YpUpi/t/8HrMfu5+Q5FDL32ZlQ/vELeiub0erv2U0YAes5DmDPDZCkCMjX7vOsbf/1JOPOuSH+zor4c4Zw8T/pUzFpDSSngKFCrzgfUgJFMnHsUoI=
+	t=1792257994; cv=none; b=hvknEkQPaqi+OHk+aD2LoF0t9H00mNwVNfzZpW89PWJnC1DY6aBZy4uknQch4+h36Q1Qs9031avspQKs0MskQPQP1SplXfKr7D9mr3BqjiNGC0U8jSmTe/rLu+9X78ssKQozCAEAfL2D6aELHNLAeKbCjKdnDqRKGrUynLioQi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257991; c=relaxed/simple;
-	bh=+MXdnjgGySv9pLOnNlsgfC3UZsRZxGCclccMmQs+GUs=;
+	s=arc-20240116; t=1792257994; c=relaxed/simple;
+	bh=2VdgqmnU3dO/KJcyoxY3eSYkbMQkjLwirWLE59K69Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1pIN1nIgdhBCx0rXhNwCMRBYB+9hdjlKhmJ19ZTgzqBi/J9yVUTm1KCHVvFXERXFbYPqxjR1ELzvN8GfIXFhM6Keiy08eYgzTOqdyl9VUgrqf/RBeIGw44yFmVK2BNsdMmXpvsusRHfxomjt+AzwzVvy5ycOKhKlVSxUQBvqnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh+6d8p/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qj0CgH+r2mEcxtnNQ/u26FVmTDefgVpFVlE5CfsgVtkjGBoajhuHzbPQFBdfuZHNlnJs/rrUwtcCCCLJ0U5HRDmuRZIGufv8l2/RJsGjx12G/S+8DWeOosZ6PiR9QkLuPt+FhnBEFRhwBscWSyNu/b7fsFdD/atytfkxg7tgu3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM1IeRjS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh+6d8p/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED1F1F000C4;
-	Sat, 17 Oct 2026 17:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM1IeRjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CA11F000C4;
+	Sat, 17 Oct 2026 17:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257990;
-	bh=Py0pqjGSEvnHQKb0Zsh/cqdxELQEikFF6kv5mYmUaRk=;
+	s=korg; t=1792257993;
+	bh=H/PStm6EMGQP9rn0hAqXvRjzB7kcKywBgtEoAbBb/hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eh+6d8p/njUTWytLAI08ir7cNuKV5GfQ9/AupEP9biqjguV6fGr0OvJcboY5E0pdd
-	 K57VJcD22yLfiRd86Uogf2uX2tFBR0L4TmBfD+FmhSjJaenm9rjI7Q4Z1ZtcAmQG74
-	 z/oKb9mg7Gp+xW9UWXqOrHWQBq/YPzDBLBPSXdik=
+	b=iM1IeRjSGWYz0RrYpRRD4AMnboi8aVDrW7J562CHayqI6bCmZxkrgJVkGpajhbyrf
+	 skP40QxDJvI5GPyokFw9vGjLha7z/zzaP042SSkUi7sys0Nhb4O1SZVBd1cboT82kc
+	 20QqxhnOr0AOz+k8IK7bErCf/fO745NCy/UwzfmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	kernel test robot <lkp@intel.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Sathya Prakash <sathya.prakash@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0735/1674] scsi: mpi3mr: Split off bus_reset function from host_reset
-Date: Sat, 17 Oct 2026 17:50:07 +0200
-Message-ID: <20261017160449.969501341@linuxfoundation.org>
+Subject: [PATCH 6.6 0736/1674] scsi: mpi3mr: Debug ability improvements
+Date: Sat, 17 Oct 2026 17:50:08 +0200
+Message-ID: <20261017160449.993732703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,128 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 82b2fb52d6ecc3c902b46b3f9bb4325ab3f6d50d ]
+[ Upstream commit 0a2714b787b91176e7d4f005dcef8d177efdff8a ]
 
-SCSI EH host reset is the final callback in the escalation chain; once we
-reach this we need to reset the controller.  As such it defeats the purpose
-to skip controller reset if no I/Os are pending and the RAID device is to
-be reset; especially after kexec there might be stale commands pending in
-firmware for which we have no reference whatsoever.  So this patch splits
-off the check for pending I/O into a 'bus_reset' function, and leaves the
-actual controller reset to the host reset.
+Update driver to include OS type in fault/reset reason code.  MPI request
+sent through ioctl now automatically dumped on timeout.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20231002154328.43718-19-hare@suse.de
-Cc: Kashyap Desai <kashyap.desai@broadcom.com>
-Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Cc: Sumit Saxena <sumit.saxena@broadcom.com>
-Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202403081903.q3Dq54zZ-lkp@intel.com/
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Link: https://lore.kernel.org/r/20240313100746.128951-6-ranjan.kumar@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: f195fc060c73 ("scsi: mpi3mr: Synchronous access b/w reset and tm thread for reply queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 57 +++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 20 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    | 10 +++++++---
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 21 ++++++++++++++-------
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 1bf3572c7aac4..f257721033841 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -4053,20 +4053,45 @@ static inline void mpi3mr_setup_divert_ws(struct mpi3mr_ioc *mrioc,
-  * mpi3mr_eh_host_reset - Host reset error handling callback
-  * @scmd: SCSI command reference
-  *
-- * Issue controller reset if the scmd is for a Physical Device,
-- * if the scmd is for RAID volume, then wait for
-- * MPI3MR_RAID_ERRREC_RESET_TIMEOUT and checke whether any
-- * pending I/Os prior to issuing reset to the controller.
-+ * Issue controller reset
-  *
-  * Return: SUCCESS of successful reset else FAILED
-  */
- static int mpi3mr_eh_host_reset(struct scsi_cmnd *scmd)
-+{
-+	struct mpi3mr_ioc *mrioc = shost_priv(scmd->device->host);
-+	int retval = FAILED, ret;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
+index 5593d119d5dfa..05ee88cc54e44 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -63,7 +63,7 @@ extern atomic64_t event_counter;
+ #define MPI3MR_DRIVER_AUTHOR	"Broadcom Inc. <mpi3mr-linuxdrv.pdl@broadcom.com>"
+ #define MPI3MR_DRIVER_DESC	"MPI3 Storage Controller Device Driver"
+ 
+-#define MPI3MR_NAME_LENGTH	32
++#define MPI3MR_NAME_LENGTH	64
+ #define IOCNAME			"%s: "
+ 
+ #define MPI3MR_DEFAULT_MAX_IO_SIZE	(1 * 1024 * 1024)
+@@ -288,6 +288,10 @@ enum mpi3mr_reset_reason {
+ 	MPI3MR_RESET_FROM_SAS_TRANSPORT_TIMEOUT = 30,
+ };
+ 
++#define MPI3MR_RESET_REASON_OSTYPE_LINUX	1
++#define MPI3MR_RESET_REASON_OSTYPE_SHIFT	28
++#define MPI3MR_RESET_REASON_IOCNUM_SHIFT	20
 +
-+	ret = mpi3mr_soft_reset_handler(mrioc,
-+	    MPI3MR_RESET_FROM_EH_HOS, 1);
-+	if (ret)
-+		goto out;
-+
-+	retval = SUCCESS;
-+out:
-+	sdev_printk(KERN_INFO, scmd->device,
-+	    "Host reset is %s for scmd(%p)\n",
-+	    ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
-+
-+	return retval;
-+}
-+
-+/**
-+ * mpi3mr_eh_bus_reset - Bus reset error handling callback
-+ * @scmd: SCSI command reference
-+ *
-+ * Checks whether pending I/Os are present for the RAID volume;
-+ * if not there's no need to reset the adapter.
-+ *
-+ * Return: SUCCESS of successful reset else FAILED
-+ */
-+static int mpi3mr_eh_bus_reset(struct scsi_cmnd *scmd)
+ /* Queue type definitions */
+ enum queue_type {
+ 	MPI3MR_DEFAULT_QUEUE = 0,
+@@ -1126,7 +1130,7 @@ struct mpi3mr_ioc {
+ 	spinlock_t fwevt_lock;
+ 	struct list_head fwevt_list;
+ 
+-	char watchdog_work_q_name[20];
++	char watchdog_work_q_name[50];
+ 	struct workqueue_struct *watchdog_work_q;
+ 	struct delayed_work watchdog_work;
+ 	spinlock_t watchdog_lock;
+@@ -1312,7 +1316,7 @@ void mpi3mr_start_watchdog(struct mpi3mr_ioc *mrioc);
+ void mpi3mr_stop_watchdog(struct mpi3mr_ioc *mrioc);
+ 
+ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
+-			      u32 reset_reason, u8 snapdump);
++			      u16 reset_reason, u8 snapdump);
+ void mpi3mr_ioc_disable_intr(struct mpi3mr_ioc *mrioc);
+ void mpi3mr_ioc_enable_intr(struct mpi3mr_ioc *mrioc);
+ 
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index c29e23cce3742..d6fe3c42bd2b6 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -11,7 +11,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ 
+ static int
+-mpi3mr_issue_reset(struct mpi3mr_ioc *mrioc, u16 reset_type, u32 reset_reason);
++mpi3mr_issue_reset(struct mpi3mr_ioc *mrioc, u16 reset_type, u16 reset_reason);
+ static int mpi3mr_setup_admin_qpair(struct mpi3mr_ioc *mrioc);
+ static void mpi3mr_process_factsdata(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_ioc_facts_data *facts_data);
+@@ -1097,7 +1097,7 @@ static inline void mpi3mr_clear_reset_history(struct mpi3mr_ioc *mrioc)
+ static int mpi3mr_issue_and_process_mur(struct mpi3mr_ioc *mrioc,
+ 	u32 reset_reason)
  {
- 	struct mpi3mr_ioc *mrioc = shost_priv(scmd->device->host);
- 	struct mpi3mr_stgt_priv_data *stgt_priv_data;
- 	struct mpi3mr_sdev_priv_data *sdev_priv_data;
- 	u8 dev_type = MPI3_DEVICE_DEVFORM_VD;
--	int retval = FAILED, ret;
-+	int retval = FAILED;
+-	u32 ioc_config, timeout, ioc_status;
++	u32 ioc_config, timeout, ioc_status, scratch_pad0;
+ 	int retval = -1;
  
- 	sdev_priv_data = scmd->device->hostdata;
- 	if (sdev_priv_data && sdev_priv_data->tgt_priv_data) {
-@@ -4076,25 +4101,16 @@ static int mpi3mr_eh_host_reset(struct scsi_cmnd *scmd)
- 
- 	if (dev_type == MPI3_DEVICE_DEVFORM_VD) {
- 		mpi3mr_wait_for_host_io(mrioc,
--		    MPI3MR_RAID_ERRREC_RESET_TIMEOUT);
--		if (!mpi3mr_get_fw_pending_ios(mrioc)) {
-+			MPI3MR_RAID_ERRREC_RESET_TIMEOUT);
-+		if (!mpi3mr_get_fw_pending_ios(mrioc))
- 			retval = SUCCESS;
--			goto out;
--		}
+ 	ioc_info(mrioc, "Issuing Message unit Reset(MUR)\n");
+@@ -1106,7 +1106,11 @@ static int mpi3mr_issue_and_process_mur(struct mpi3mr_ioc *mrioc,
+ 		return retval;
  	}
-+	if (retval == FAILED)
-+		mpi3mr_print_pending_host_io(mrioc);
+ 	mpi3mr_clear_reset_history(mrioc);
+-	writel(reset_reason, &mrioc->sysif_regs->scratchpad[0]);
++	scratch_pad0 = ((MPI3MR_RESET_REASON_OSTYPE_LINUX <<
++			 MPI3MR_RESET_REASON_OSTYPE_SHIFT) |
++			(mrioc->facts.ioc_num <<
++			 MPI3MR_RESET_REASON_IOCNUM_SHIFT) | reset_reason);
++	writel(scratch_pad0, &mrioc->sysif_regs->scratchpad[0]);
+ 	ioc_config = readl(&mrioc->sysif_regs->ioc_configuration);
+ 	ioc_config &= ~MPI3_SYSIF_IOC_CONFIG_ENABLE_IOC;
+ 	writel(ioc_config, &mrioc->sysif_regs->ioc_configuration);
+@@ -1422,11 +1426,11 @@ static inline void mpi3mr_set_diagsave(struct mpi3mr_ioc *mrioc)
+  * Return: 0 on success, non-zero on failure.
+  */
+ static int mpi3mr_issue_reset(struct mpi3mr_ioc *mrioc, u16 reset_type,
+-	u32 reset_reason)
++	u16 reset_reason)
+ {
+ 	int retval = -1;
+ 	u8 unlock_retry_count = 0;
+-	u32 host_diagnostic, ioc_status, ioc_config;
++	u32 host_diagnostic, ioc_status, ioc_config, scratch_pad0;
+ 	u32 timeout = MPI3MR_RESET_ACK_TIMEOUT * 10;
  
--	mpi3mr_print_pending_host_io(mrioc);
--	ret = mpi3mr_soft_reset_handler(mrioc,
--	    MPI3MR_RESET_FROM_EH_HOS, 1);
--	if (ret)
--		goto out;
--
--	retval = SUCCESS;
--out:
- 	sdev_printk(KERN_INFO, scmd->device,
--	    "Host reset is %s for scmd(%p)\n",
--	    ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
--
-+		"Bus reset is %s for scmd(%p)\n",
-+		((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
- 	return retval;
- }
+ 	if ((reset_type != MPI3_SYSIF_HOST_DIAG_RESET_ACTION_SOFT_RESET) &&
+@@ -1478,6 +1482,9 @@ static int mpi3mr_issue_reset(struct mpi3mr_ioc *mrioc, u16 reset_type,
+ 		    unlock_retry_count, host_diagnostic);
+ 	} while (!(host_diagnostic & MPI3_SYSIF_HOST_DIAG_DIAG_WRITE_ENABLE));
  
-@@ -4941,6 +4957,7 @@ static const struct scsi_host_template mpi3mr_driver_template = {
- 	.change_queue_depth		= mpi3mr_change_queue_depth,
- 	.eh_device_reset_handler	= mpi3mr_eh_dev_reset,
- 	.eh_target_reset_handler	= mpi3mr_eh_target_reset,
-+	.eh_bus_reset_handler		= mpi3mr_eh_bus_reset,
- 	.eh_host_reset_handler		= mpi3mr_eh_host_reset,
- 	.bios_param			= mpi3mr_bios_param,
- 	.map_queues			= mpi3mr_map_queues,
++	scratch_pad0 = ((MPI3MR_RESET_REASON_OSTYPE_LINUX <<
++	    MPI3MR_RESET_REASON_OSTYPE_SHIFT) | (mrioc->facts.ioc_num <<
++	    MPI3MR_RESET_REASON_IOCNUM_SHIFT) | reset_reason);
+ 	writel(reset_reason, &mrioc->sysif_regs->scratchpad[0]);
+ 	writel(host_diagnostic | reset_type,
+ 	    &mrioc->sysif_regs->host_diagnostic);
+@@ -2493,7 +2500,7 @@ static void mpi3mr_watchdog_work(struct work_struct *work)
+ 	unsigned long flags;
+ 	enum mpi3mr_iocstate ioc_state;
+ 	u32 fault, host_diagnostic, ioc_status;
+-	u32 reset_reason = MPI3MR_RESET_FROM_FAULT_WATCH;
++	u16 reset_reason = MPI3MR_RESET_FROM_FAULT_WATCH;
+ 
+ 	if (mrioc->reset_in_progress)
+ 		return;
+@@ -4862,7 +4869,7 @@ void mpi3mr_pel_get_seqnum_complete(struct mpi3mr_ioc *mrioc,
+  * Return: 0 on success, non-zero on failure.
+  */
+ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
+-	u32 reset_reason, u8 snapdump)
++	u16 reset_reason, u8 snapdump)
+ {
+ 	int retval = 0, i;
+ 	unsigned long flags;
 -- 
 2.53.0
 
