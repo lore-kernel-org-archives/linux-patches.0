@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21143AB476;
-	Sat, 17 Oct 2026 16:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F10B3AEF36;
+	Sat, 17 Oct 2026 16:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255781; cv=none; b=FyMJMEw0NN35Yoz7pIF9YMk0tXGG8jcBRxxPBSovBPbkyR8GUFlrgldrozI5jTFrCTmYrVLJoacgCNBmgjh0rWV6DSB6TvRwIZXhVpXlOFFaJzS5vsXPMBKI27gwPTRMY9Xqf46POYKbLf2mNG5AWeV9vkZi3/8ypYjs3RfW0Rg=
+	t=1792255784; cv=none; b=bCb4o4S33cPjQA4lrIlZCdmM+8PiANl9AtM3nEMPYwqkU0/k8wEgsBEEILEtfwE+wjdkd0Oa+PFaAkUUR7JQNPc/knO5gbefQgmpQyuDM+nz/YSRZ0Jzs62KKfsdn1I1R6uEx7PcmLhB+sSXJX5oJxfBz+x7S///zGtDlo3ugh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255781; c=relaxed/simple;
-	bh=Fva4MZ9fWst1ZO6oPXoxwKsyBTalgpi7SXfIZ+5djMo=;
+	s=arc-20240116; t=1792255784; c=relaxed/simple;
+	bh=fDCgMSgVY6wwHUCDeD9ijfdEZrWuZmD+R78oj5XF490=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVThVIeYaAv091MfXxMANr4YDXW9huhmuH2j37vwNE3A06ULQbG56g2aeds5aJ2E+e80i4Nm3vLS49YmSQ6ZdN0Kuuq1VJOIOp58zdeyqaCEc8pEEnkBRd6HqNlYTkkV3zL8y5RuStav7Wc1DxuKGTxkqL4MHhMWIU6wVM53etA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugfic0LM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Eb2cGpnCKei3sAeQ5/NamJqpSCJ/ClUzlMir9sKupaFI3DEwfjOTvPa0V79ZuMYJWrnOlG3vU9Uh4SnLld54gCQuTpKOJaWCzxxhpiEWfbDClf4Vydnloqm/h9dlyVBRpVc1QAd6h/8sslzS3r+SI3ewEH+Oq6qTDoi7wwvzlSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9GvgGnf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugfic0LM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5D31F000C4;
-	Sat, 17 Oct 2026 16:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9GvgGnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A668C1F000C4;
+	Sat, 17 Oct 2026 16:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255780;
-	bh=J2ONSiAdltFjHrJty5yYIUQ4zgn5aImKk26XUxBWxNY=;
+	s=korg; t=1792255783;
+	bh=j5W5qb/kR+OvfLbnpzLBA9lgXIYEKJg4Hfi/zhwmuM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ugfic0LMiMHga71+NnXrd7sMOCLz7KuxxypZd3vWkhMHRJ3nnfvHwBAFWP0qLZ5dc
-	 yMxNPLngyJBb119m9fu5loZSqTEplWO/w6+/ZZ0VbPOZiet153nOvaewXDKrxTJx6V
-	 55dr2KPWo/2ZFInbHSD1UO99TjxgYecc7Y5Myth0=
+	b=P9GvgGnfeKzKHDrqqsQXitTMG3wgT3QdZAKfnV6PNQz1JWD7SnPYjlDL0vUGYquZG
+	 Ut7+HwAzn66JCbpWRx2gHwKt9/tLEeUC8+7g5rzYHyO/stlW5LPdkh7kie1mmup8cn
+	 +F7ZlDWIiQUJji1B0jVA8dlAQFECr0zvZhzSabyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0002/1674] dma-direct: return struct page from dma_direct_alloc_from_pool()
-Date: Sat, 17 Oct 2026 17:37:54 +0200
-Message-ID: <20261017160431.203219352@linuxfoundation.org>
+Subject: [PATCH 6.6 0020/1674] usb: storage: realtek_cr: fix use-after-free on disconnect
+Date: Sat, 17 Oct 2026 17:38:12 +0200
+Message-ID: <20261017160431.660270503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -48,93 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 94a04ad732c9f8b9554270fc4038a06737de5c22 ]
+[ Upstream commit 4ffee1aebb0c0ffcda9faffd17834ea9b00d42cc ]
 
-Commit 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool
-helper") changed dma_direct_alloc_from_pool() to return the CPU address
-from dma_alloc_from_pool(). That fits dma_direct_alloc(), but
-dma_direct_alloc_pages() also uses the helper and expects a struct page *.
+realtek_cr_destructor() calls timer_delete() before the chip containing
+the timer is freed. The timer callback may still be running and can
+rearm itself, resulting in a use-after-free.
 
-Fix this by making dma_direct_alloc_from_pool() return the struct page *
-again, and pass the CPU address back through an out-parameter for the
-dma_direct_alloc() caller.
+Use timer_shutdown_sync() to wait for the callback and prevent further
+rearming. Do this unconditionally because ss_en may be changed after
+the timer is armed.
 
-Fixes: 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool helper")
-Cc: stable@vger.kernel.org
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Link: https://lore.kernel.org/r/20260717180442.110954-2-aneesh.kumar@kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Move timer_setup() into init_realtek_cr() so the timer is initialized
+before any failure path can invoke the destructor.
+
+Found by static analysis.
+
+Fixes: e931830bb877 ("Realtek cr: Add autosuspend function.")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260727123414.44700-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted the timer_delete() removal to the branch’s del_timer() spelling. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/usb/storage/realtek_cr.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index 25d4d8710f6c0..d04464d7e2306 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -168,22 +168,21 @@ static bool dma_direct_use_pool(struct device *dev, gfp_t gfp)
- 	return !gfpflags_allow_blocking(gfp) && !is_swiotlb_for_alloc(dev);
+diff --git a/drivers/usb/storage/realtek_cr.c b/drivers/usb/storage/realtek_cr.c
+index a026c6cb6e684..de82d8260d729 100644
+--- a/drivers/usb/storage/realtek_cr.c
++++ b/drivers/usb/storage/realtek_cr.c
+@@ -915,7 +915,6 @@ static int realtek_cr_autosuspend_setup(struct us_data *us)
+ 	us->proto_handler = rts51x_invoke_transport;
+ 
+ 	chip->timer_expires = 0;
+-	timer_setup(&chip->rts51x_suspend_timer, rts51x_suspend_timer_fn, 0);
+ 	fw5895_init(us);
+ 
+ 	/* enable autosuspend function of the usb device */
+@@ -933,10 +932,7 @@ static void realtek_cr_destructor(void *extra)
+ 		return;
+ 
+ #ifdef CONFIG_REALTEK_AUTOPM
+-	if (ss_en) {
+-		del_timer(&chip->rts51x_suspend_timer);
+-		chip->timer_expires = 0;
+-	}
++	timer_shutdown_sync(&chip->rts51x_suspend_timer);
+ #endif
+ 	kfree(chip->status);
  }
+@@ -981,6 +977,9 @@ static int init_realtek_cr(struct us_data *us)
  
--static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
--		dma_addr_t *dma_handle, gfp_t gfp)
-+static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
-+		dma_addr_t *dma_handle, void **cpu_addr, gfp_t gfp)
- {
- 	struct page *page;
- 	u64 phys_limit;
--	void *ret;
+ 	us->extra = chip;
+ 	us->extra_destructor = realtek_cr_destructor;
++#ifdef CONFIG_REALTEK_AUTOPM
++	timer_setup(&chip->rts51x_suspend_timer, rts51x_suspend_timer_fn, 0);
++#endif
+ 	us->max_lun = chip->max_lun = rts51x_get_max_lun(us);
+ 	chip->us = us;
  
- 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
- 		return NULL;
- 
- 	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
--	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
-+	page = dma_alloc_from_pool(dev, size, cpu_addr, gfp, dma_coherent_ok);
- 	if (!page)
- 		return NULL;
- 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
--	return ret;
-+	return page;
- }
- 
- static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
-@@ -249,8 +248,11 @@ void *dma_direct_alloc(struct device *dev, size_t size,
- 	 * the atomic pools instead if we aren't allowed block.
- 	 */
- 	if ((remap || force_dma_unencrypted(dev)) &&
--	    dma_direct_use_pool(dev, gfp))
--		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
-+	    dma_direct_use_pool(dev, gfp)) {
-+		page = dma_direct_alloc_from_pool(dev, size, dma_handle,
-+						  &ret, gfp);
-+		return page ? ret : NULL;
-+	}
- 
- 	/* we always manually zero the memory once we are done */
- 	page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
-@@ -359,7 +361,7 @@ struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
- 	void *ret;
- 
- 	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
--		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
-+		return dma_direct_alloc_from_pool(dev, size, dma_handle, &ret, gfp);
- 
- 	page = __dma_direct_alloc_pages(dev, size, gfp, false);
- 	if (!page)
 -- 
 2.53.0
 
