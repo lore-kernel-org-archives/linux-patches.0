@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86993A7189;
-	Sat, 17 Oct 2026 16:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C733B4CF49B;
+	Sat, 17 Oct 2026 16:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256387; cv=none; b=iL7FZA+XkBMOUSs9v7V08aG/r9d8lNWjYuOHAFPNm6+TE6jMn5wlM369PpCUZgc1OUn4fRLqIB6SUAhCP7RLwsr6ujeG/8XOva2E4GL7JM9TKjwBoB5Fpk0vXMJSe7PGHONpfsCSk50VHeNRCH2Vutbh4Wxrco4BU4Ln/2cnQE4=
+	t=1792256389; cv=none; b=DXpE1rg5Rj/I7OtkRDSSXO5dRycK+0WktOkhUPkth6JAbTSri+LWJvJ8G1eHt1HuQvu4IYXUrd+Tkd23WZIfDFTIOUnnY8iUgk7SLc6oJ5OeAiruQ5gg5QrnynPBomH10Sd5XbNo3hRzja4mJvf5urNlI7N9RFFy4dJuwF4VvFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256387; c=relaxed/simple;
-	bh=9KUMZxd6A8+pNAspBzwmLSmufvylTs5Tfx81lQfsyU8=;
+	s=arc-20240116; t=1792256389; c=relaxed/simple;
+	bh=Es3AloTv7ayWRTvy4EDIWYIPSvMMz4HjBtGlLGY9inU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZH8H3n6ZacsDXAkOdW3VNrDfMdegvBXw7SaVj0XGJz6ZarkIz2oWuK7NAH1CiNEFq67OX4wB10mjRh+jQJN6wSed5aNtOosADty1IR3t3GGf/emJwnhaTuQt/HdFu5wk9IMfOY9XJjImzzcrqHVil56v6wvmWhMoVivl2uirW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SehnWVx9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yc7G9WsvIU9pYsRTEh7ITjNBGbu9GISCxhZMQFZWkcOF9ZGap2GHBA+856t+/RFUhm/I0+6qIpXsw8yVO35jtpxS0w+Nkat/WL3wQcbne+s/FotepaitB897zks8ieoYrpKCLoF8WTSow1SbfXjn6A66KDHLVvAohp95MnuZhJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEYqwL/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SehnWVx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432751F000C4;
-	Sat, 17 Oct 2026 16:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEYqwL/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B17A1F000C4;
+	Sat, 17 Oct 2026 16:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256385;
-	bh=oUjDLs0mZn8X4hgkRYQYutsxf0UNp0F7ksOQqlCaapo=;
+	s=korg; t=1792256388;
+	bh=tcLq/eQ9bpM6IOf6vYCtgaYdc+z6YVUrDAQRm9Mv2Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SehnWVx9o0FOVav/Wj6jVbTKyqVqweTWnLnN1GzmL8Y14M8MTRmEN2ACbVb6J1AlN
-	 xRGXW7KZCGhX0F5keBy1DB9ZkSbv5Bi2PiGyGIBYSkjCefPGb9LRme+7ooE50yTtJt
-	 Q1DhdiJhNzaNaixm35wb4I9hFwHtwth+nT2SKeZo=
+	b=FEYqwL/AsUiO0zLqlkB4MaW/ye4mH9Y/uKw/AOt/nbanYADtieD4/7EsI3+PTdHm+
+	 a5JnLIvbrm+J6BGccVdzwPociVIRfxd/L8Y8lQYJJSJy06xW3GbS/WUMM/VFQFmoEJ
+	 pvZPtq5K+ZRIDF7YvjrhatbOFhwDZXdg5Wk2ro+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0220/1674] ipvs: fix missing counter decrement in lblc
-Date: Sat, 17 Oct 2026 17:41:32 +0200
-Message-ID: <20261017160436.793357495@linuxfoundation.org>
+Subject: [PATCH 6.6 0221/1674] ipvs: do not create invisible templates
+Date: Sat, 17 Oct 2026 17:41:33 +0200
+Message-ID: <20261017160436.819485962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,36 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit bdac17779f46817f60103baf09f0370546c3f023 ]
+[ Upstream commit 616cf5c06934364ab1002b420ebe975850b4b208 ]
 
-LBLC may delete cache entries for destinations that are
-removed or overloaded and replace them with available ones.
-But ip_vs_lblc_new() forgets to decrement the tbl->entries
-counter after calling ip_vs_lblc_del(). This can lead to
-increased shrinking of the cache with every new garbage
-collection.
+The IP_VS_CONN_F_ONE_PACKET flag was implemented for normal
+connections. When conn template inherits this flag from
+dest->conn_flags it will not be hashed. As result, we will
+create new template for every new normal connection.
 
-Fixes: 2f3d771a35fe ("ipvs: do not use dest after ip_vs_dest_put in LBLC")
-Link: https://sashiko.dev/#/patchset/0bdd5abe9968ded7ca2b9cb6844ba83d94cc8d53.1787318053.git.zhilinz%40nebusec.ai
+Fix it to allow one template to be used by many normal
+connections.
+
+Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260916231652.127456-1-pablo%40netfilter.org
 Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_lblc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_conn.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
-index 70014c89955d6..521e68603d14e 100644
---- a/net/netfilter/ipvs/ip_vs_lblc.c
-+++ b/net/netfilter/ipvs/ip_vs_lblc.c
-@@ -205,6 +205,7 @@ ip_vs_lblc_new(struct ip_vs_lblc_table *tbl, const union nf_inet_addr *daddr,
- 		if (en->dest == dest)
- 			return en;
- 		ip_vs_lblc_del(en);
-+		atomic_dec(&tbl->entries);
- 	}
- 	en = kmalloc(sizeof(*en), GFP_ATOMIC);
- 	if (!en)
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index f0a00e902450b..252fb49c36d07 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -590,6 +590,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
+ 	if (cp->protocol != IPPROTO_UDP)
+ 		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	flags = cp->flags;
++	/* Only visible templates can control multiple connections */
++	if (flags & IP_VS_CONN_F_TEMPLATE)
++		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	/* Bind with the destination and its corresponding transmitter */
+ 	if (flags & IP_VS_CONN_F_SYNC) {
+ 		/* Synced conns are hashed, so they can not get this flag */
 -- 
 2.53.0
 
