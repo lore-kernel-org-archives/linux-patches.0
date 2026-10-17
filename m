@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE763BD63B;
-	Sat, 17 Oct 2026 17:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE62D73A6;
+	Sat, 17 Oct 2026 17:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257324; cv=none; b=sXskFXkqRW133tOD5kGi5fFAEYESiMdZvv67YTivXDJh3/fTEZ3IMuf4pPlFuqtD7aVO5QhfIk3i1tNN39v5HaUyMCe2GImotMSIej1Bp76maBr+zuCF1TfcPpxSYrTcGBpPBGG1enYCd/YeKy8tTl16DvN0Enyb4yLK5hZPGIA=
+	t=1792257328; cv=none; b=RABguOnyTmaqAf9DYPDfFUp98xL69fZT020lw6H4rLBZPZA5MKKW+pWAVoN5o+16Ce2gJrkQWRIXmDzGMiofLKK7c1H5WSb0iegHvFpdAXfuiGEDBPOTEV7FtOavjT3AW6S8eW4zH5hbHvXTwAqH/B9D3KjRzBD+zG0SLtc5dOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257324; c=relaxed/simple;
-	bh=3RqrwaElAeI/Zfhk9nRu8MXKOB2vY2L4BTnDf3bi8rs=;
+	s=arc-20240116; t=1792257328; c=relaxed/simple;
+	bh=rSDRW0Ginal37zTkxp7qrm5f9EH9Wvz3iPSk8HW7OJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNbczaDgGN5F44+PRy7XZyRF+IPUf8HVwYhKFXWG++gIl65wra2f9kyi9k7Islk4Z/I3/rf/XtUJDPZAisX1IDJwre9KSmDteZAJeeS2pAR1woYJ0vesJPHF9nrKo0UQEPj7SUi+Pyn2GmsJ6NXC5Ger4rxw1icls0N6C7UqP3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nljt8XI+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tJ+LO4VGmFUNA1ErbnRP1LnBQr8/gsYbXdSvPi+0896zJ/0vA10UusequlmbkUQSN9n1iIiaB3SB3XvzhjWqpd6DiyKEwiDZib990YG/f88nN/uedHDjOCgcpa5kVID/dCdEOTk9gJ0y7xhF38QHVaGSb3Dh696FRI5PvSkSco4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lz/Wk653; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nljt8XI+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DA41F000C4;
-	Sat, 17 Oct 2026 17:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lz/Wk653"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF1A1F000C4;
+	Sat, 17 Oct 2026 17:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257323;
-	bh=F8AE3bGeW4vAhY5FmKXpC1X+tudZR/Ug3ZemJGs/GRo=;
+	s=korg; t=1792257327;
+	bh=t8+VL/l5/6rFemwkUPdJ3sAsgWxCwBss5UTzh6D1UwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nljt8XI+g07sFPRUdgSZJFzi5UeTR0e7tlwv7qassYSZQl/yL8KvNDZ4iNa0259B+
-	 rPE1t5pFMALedOHf7SeSrX6DK3OMA5OAenpEfo/2LIRJxrsaFh6idFjI83Ls4NrrFD
-	 2jqSMDq0KW4MxYQhZUEnUtBJO87vnPLg+Z/ba1Bg=
+	b=Lz/Wk653XJ3gst4yEh6cg0XI2CzKsWn+FBswS2ufnfcPL4MocSmfVg0MZT7GOnCWF
+	 pUip/WXmMahFQEvJxulwhrYqqFFSjEP15MCxeajU+aqqoo4B4S9DjdqmNQmwbBqwXL
+	 1PAcxzJmcNM+wHALhbhrDQDmmxRRjCW1wK0CEPNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sajal Gupta <sajal2005gupta@gmail.com>,
-	Ruben Wauters <rubenru09@aol.com>
-Subject: [PATCH 6.6 0521/1674] drm/gud: dont keep a connector without a CRTC as connector_state
-Date: Sat, 17 Oct 2026 17:46:33 +0200
-Message-ID: <20261017160444.478282528@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 0482/1674] Revert "wifi: libertas: reject short monitor TX frames"
+Date: Sat, 17 Oct 2026 17:45:54 +0200
+Message-ID: <20261017160443.485592369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,44 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sajal Gupta <sajal2005gupta@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 71ec70ea26e399eb8371fe9d2d5bf5dab09570fb upstream.
+commit 9727d1c4e1c971fc42b049b645fdda6852758835 upstream.
 
-If the 'for_each_new_connector_in_state()' loop finishes without
-hitting the break, connector_state is left pointing at the last
-connector visited, which has no CRTC, instead of
-staying NULL.
+This reverts commit 13ff543e0b2c713aedeaadadde686686e949dc78.
 
-That skips the "if (!connector_state)" fallback below the loop, which
-looks up the active connector when the state contains none. The
-function then carries on with a connector that is not driven.
+The 'goto free' just made things worse, causing a spinlock
+to be handled incorrectly. Revert this for now.
 
-Fix by resetting connector_state to NULL for each connector visited that
-has no CRTC, so that it is NULL when none was found and the fallback runs.
-
-Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260902123254.36987-1-sajal2005gupta@gmail.com?part=1
-Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
-Acked-by: Ruben Wauters <rubenru09@aol.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ruben Wauters <rubenru09@aol.com>
-Link: https://patch.msgid.link/20260922084026.15481-1-sajal2005gupta@gmail.com
+Reported-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 13ff543e0b2c ("wifi: libertas: reject short monitor TX frames")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gud/gud_pipe.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/marvell/libertas/tx.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/drivers/gpu/drm/gud/gud_pipe.c
-+++ b/drivers/gpu/drm/gud/gud_pipe.c
-@@ -480,6 +480,7 @@ int gud_pipe_check(struct drm_simple_dis
- 	for_each_new_connector_in_state(state, connector, connector_state, i) {
- 		if (connector_state->crtc)
- 			break;
-+		connector_state = NULL;
- 	}
+--- a/drivers/net/wireless/marvell/libertas/tx.c
++++ b/drivers/net/wireless/marvell/libertas/tx.c
+@@ -117,13 +117,6 @@ netdev_tx_t lbs_hard_start_xmit(struct s
+ 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
+ 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
  
- 	/*
+-		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
+-			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
+-			dev->stats.tx_dropped++;
+-			dev->stats.tx_errors++;
+-			goto free;
+-		}
+-
+ 		/* set txpd fields from the radiotap header */
+ 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
+ 
 
 
