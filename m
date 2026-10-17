@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439A03AAF69;
-	Sat, 17 Oct 2026 16:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720E41FDE31;
+	Sat, 17 Oct 2026 16:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256239; cv=none; b=hx2WM8yYDslCFGxOmSCvSJ6ykbQQ0U4iasNSZdP6g7BNhgIpIba+cBe791NlcaKWXWc1MDNiBew+Yii0ppC0ybntBuKjkyoTrgEM5lrtHiN6VNIGAxKTkDqdTraZU8qERqMK/QTn51/0EKbXGAmqxVG9/ur58uAarGbp1MgDcJw=
+	t=1792256242; cv=none; b=PGIm3GiX3Nt19AtO7mkQxLjzAXftwcQHWqn/KKSI3vV3upjZDIflumbCcrSLtQk+YyBixYP2MjdKEdsvPeEP3WWc2dP49EwAnbBtFetuC3EnHBDmSoGV+GhqycAA9oiM+YeY+Nu22zIXCc4Ed6OdOc7h8dDUPhyyg2PmUfnlQgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256239; c=relaxed/simple;
-	bh=hVrWB/JbIQ5Y2oEJcVMhNIwEq4fNc1zCG7eae9y9tqA=;
+	s=arc-20240116; t=1792256242; c=relaxed/simple;
+	bh=UjyBnQUVrPaHOksJpdUyQxBwo9/DnJwKvAWwEz8b/XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hx3zbtbBeVCVOY9h7BDZpr4WdZinj6n9rEoYMraJh9wd8IFO3Z8VNMhfkRBveSWkMRZ4/Isi8I61r+0NenCX67PpdkA9AO0VQDdDXXPbnvS5+IS+sI0tC18qeje4sp32vK/ynm2uB5tgeYi3BWn7aV8qqTOaR+fjQ+nLnkImtHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nW/h/yMK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bravf9W1ZtI90tq5r6sHb/PMIpkNsLJfdOYGp8ntg1++kuv60+Y7kGkYOjuxJE3PS809kRh1nX/fk/rvQLvG1UOMvPs/Xj/IIFqnJynoyrEmdbCwS35vfbWDHHBzJu4dWERQbjzgwGKi2XQZ4gQSfTd4C2B2Ircpk5Jd9qUXlSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yc81i9c5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nW/h/yMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2E41F000C4;
-	Sat, 17 Oct 2026 16:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yc81i9c5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899FF1F000C4;
+	Sat, 17 Oct 2026 16:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256238;
-	bh=/8o2mCzgl2JpqemyEaWfloQLsikwMGb7wqEPAaiTEg0=;
+	s=korg; t=1792256241;
+	bh=72VTrAn4cr+j/7q5pzVIfbJGxpA3v0zRUHVC8Tvegp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nW/h/yMKbGXAF0mxGC9kYCJ+08NvvSEaSP7Ym/uwpOTg0xbWCHySHUzvdbPqR+j5V
-	 V0p1Jf0xslMqlKMvKllA60y0R299RC/kk/cu7m+s07XxyuTqadBSpjkSeVXvOQGq0m
-	 P4WlUg2jfxh5fhHTMjb9pUo5oWt9I+ZMHBlIKOmM=
+	b=Yc81i9c5Ist5YXHfXz7UUx1dfJ7fywM4O1ZBEqnryVysQWejGGTqB2/C6D1a27kBt
+	 YGqwN58QufsOCmvzxWI9mGHHdUzRYDeLDvADTDvLDA2edPj2ZiNP16fieWJISUrF+Z
+	 +0J6R/8aQs7GQtasC0oLMuqD3T5+qX3qe2tExegI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 0171/1674] netfilter: nft_flow_offload: drop flowtable reference on init error path
-Date: Sat, 17 Oct 2026 17:40:43 +0200
-Message-ID: <20261017160435.546726868@linuxfoundation.org>
+	=?UTF-8?q?Ilkka=20Lappetel=C3=A4inen?= <ilkka.lappetelainen@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0172/1674] net/packet: prevent TX_RING byte count overflow
+Date: Sat, 17 Oct 2026 17:40:44 +0200
+Message-ID: <20261017160435.572578323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,68 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
 
-commit 747928b5d4ff8c8de55138a54c13980e4bb88578 upstream.
+commit 2cf81fc9505b148b1b70068303ea6ea4b1212403 upstream.
 
-nft_flow_offload_init() bumps the flowtable use count with
-nft_use_inc() before calling nf_ct_netns_get().  When the latter
-fails, the error is returned as-is and the reference is leaked.
+tpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds
+each valid packet length to the signed int len_sum. Userspace can
+recycle completed frames concurrently, so a single blocking send call
+is not bounded by the ring size.
 
-The upper layers do not balance it either: nf_tables_newexpr()
-clears expr->ops when the expression init callback fails, so the
-nft_expr_more() iteration in nft_rule_expr_deactivate() and
-nf_tables_rule_destroy() stops right before the failed expression
-and its ->destroy callback, which would drop the reference, never
-runs.
+After enough successful transmissions len_sum wraps into the negative
+range. In particular, 65536 65535-byte frames followed by a 65007-byte
+frame produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats
+that as an impossible return and triggers a BUG. On systems configured
+to panic on oops, a CAP_NET_RAW holder can panic the host kernel.
 
-Each failed rule addition therefore leaks one flowtable reference
-and the flowtable can no longer be removed: NFT_MSG_DELFLOWTABLE
-keeps reporting -EBUSY even though no rule references it.
+Stop before the next frame would make the byte count exceed INT_MAX.
+The positive short count leaves that frame pending for a later send
+call.
 
-Save the nf_ct_netns_get() return value and undo the nft_use_inc()
-when it fails, restoring the inc/dec pairing within
-nft_flow_offload_init() itself.
+A two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build
+of Linux 7.3-rc4. With this change, the same reproducer returned the
+expected positive short count without an oops.
 
-Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260925124829.6595-1-ilkka.lappetelainen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_flow_offload.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/packet/af_packet.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -416,6 +416,7 @@ static int nft_flow_offload_init(const s
- 	struct nft_flow_offload *priv = nft_expr_priv(expr);
- 	u8 genmask = nft_genmask_next(ctx->net);
- 	struct nft_flowtable *flowtable;
-+	int err;
- 
- 	if (!tb[NFTA_FLOW_TABLE_NAME])
- 		return -EINVAL;
-@@ -430,7 +431,11 @@ static int nft_flow_offload_init(const s
- 
- 	priv->flowtable = flowtable;
- 
--	return nf_ct_netns_get(ctx->net, ctx->family);
-+	err = nf_ct_netns_get(ctx->net, ctx->family);
-+	if (err < 0)
-+		nft_use_dec(&flowtable->use);
-+
-+	return err;
- }
- 
- static void nft_flow_offload_deactivate(const struct nft_ctx *ctx,
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2917,6 +2917,9 @@ static int tpacket_snd(struct packet_soc
+ 						    vnet_hdr.hdr_len);
+ 			has_vnet_hdr = true;
+ 		}
++		/* Prevent the byte count from wrapping into a negative errno */
++		if (unlikely(tp_len > INT_MAX - len_sum))
++			break;
+ 		copylen = max_t(int, copylen, hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+ 				hlen + tlen + sizeof(struct sockaddr_ll) +
 
 
