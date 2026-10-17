@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FEA34C98C;
-	Sat, 17 Oct 2026 18:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C6936195A;
+	Sat, 17 Oct 2026 18:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260570; cv=none; b=QfVbLi+Sxt44LPaYHVQh8mLXZ5vLNBWZD2qf8v0yiaq91UPbckT0twCtMyYY21aGh/PBW3g+1B15nQ3QZXICzifnEw3pM/3UKmboG3GoNEsuk4qRQ3yJGMY1WCuX8Fl8J5/zeG02vKIbD7dWjEaD88NSWpxCew0YCtxEs/r7Iqg=
+	t=1792260575; cv=none; b=O8EV8dcUUOC9VZJ8K3KffdDpC+Qxm2X1Nn9ePNHbQEm6WJYe/Nsb0g7CjU0DOq8w3xBzktD7vIq5Cq9derM2qWxacLYNnv1aKF5Di23z4F7xVM5IWenImFZIwhcGF4bpQCxRNfewEwj9joklSy6kOlUrWjYTGXOqByWvIQ2aVtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260570; c=relaxed/simple;
-	bh=v8yTc512RI9blYBb684n5b33ta3fZwcaVQWH1R0LD8I=;
+	s=arc-20240116; t=1792260575; c=relaxed/simple;
+	bh=vaBcL72PMuEHcPyz7uA/MseQpClGrKNzwY5wITHT+hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1EUVUAI/Q7NJS/uiR4jNJffOSI+AuvWqgcmxUsSgIYIpOl/XB6DWNhV64/JundD/A4LgqeB8pSVHdZegUwqpdRZ24jMxo01Zsw2xiWfagER95WVM8zLuqs/+YGou6KDIKSkUgzEU65gjWRpa6RnIbKouBDr3dmqJTcV4JpIruc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt1hY5GO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KdDWR/l3G6XGeX8eErheXPBVT1rxRWL3ALWar7VThXtDflA3oKcttKVPnU5cUwCoFPoV9lO3j5H4bFGCk0ElGkgzWZJq+I36BtG8eXcqlyntdOooPMrSQr3Qd3chhf7bo6z+mtvXR+q3KC3dirgMAv1Tec2rDUurb2N5FXtdWr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjqw/Gsb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt1hY5GO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C07C1F000C4;
-	Sat, 17 Oct 2026 18:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjqw/Gsb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6788D1F000C4;
+	Sat, 17 Oct 2026 18:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260568;
-	bh=MQBkXI+b4tHQckGvjYdcFmH1UKw/lyWATwUCLd/0Wlw=;
+	s=korg; t=1792260572;
+	bh=vxKFIM3HDi/FA62nXD4EJrxvgMNgah2xGMeS+1uyp30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bt1hY5GO83Tz2uxIMEC6gpS7rwKNrkbLDC7jDg7vJxZ69LRjBKSoCtyg8wsQQ44uI
-	 ZZwJPCGox1DTrwYWP33S91SVi6Mnvqkupn+Hx21Uwgln1q9zHazHSZsBzWq8UldZnt
-	 ywWlHZngBtNqAtEIeXYECuKJz/PhEiQmU9+dY9WM=
+	b=Rjqw/GsbcgOD44uTDuFRw5JGkcdpVGQjxYao8JDUCzbkdEc6yEIEKEUCI9QVPvyYN
+	 1kTKiaMOU18OaTrxpsZbUJ38zyP3PQZp+EHLvFmGVLmFfaW7RD4Rfb7XjiveLjWBJ7
+	 d70E4xmr0wjYvXW3uXCFlFV9ZLbtOS4d8TgcErqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Chanho Park <chanho61.park@samsung.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1547/1674] bpf: Mark raw_tp arguments with PTR_MAYBE_NULL
-Date: Sat, 17 Oct 2026 18:03:39 +0200
-Message-ID: <20261017160510.817002938@linuxfoundation.org>
+Subject: [PATCH 6.6 1548/1674] scsi: ufs: exynos: Disable iocc if dma-coherent property isnt set
+Date: Sat, 17 Oct 2026 18:03:40 +0200
+Message-ID: <20261017160510.841224885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,323 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit cb4158ce8ec8a5bb528cc1693356a5eb8058094d ]
+[ Upstream commit f92bb7436802f8eb7ee72dc911a33c8897fde366 ]
 
-Arguments to a raw tracepoint are tagged as trusted, which carries the
-semantics that the pointer will be non-NULL.  However, in certain cases,
-a raw tracepoint argument may end up being NULL. More context about this
-issue is available in [0].
+If dma-coherent property isn't set then descriptors are non-cacheable
+and the iocc shareability bits should be disabled. Without this UFS can
+end up in an incompatible configuration and suffer from random cache
+related stability issues.
 
-Thus, there is a discrepancy between the reality, that raw_tp arguments
-can actually be NULL, and the verifier's knowledge, that they are never
-NULL, causing explicit NULL checks to be deleted, and accesses to such
-pointers potentially crashing the kernel.
-
-To fix this, mark raw_tp arguments as PTR_MAYBE_NULL, and then special
-case the dereference and pointer arithmetic to permit it, and allow
-passing them into helpers/kfuncs; these exceptions are made for raw_tp
-programs only. Ensure that we don't do this when ref_obj_id > 0, as in
-that case this is an acquired object and doesn't need such adjustment.
-
-The reason we do mask_raw_tp_trusted_reg logic is because other will
-recheck in places whether the register is a trusted_reg, and then
-consider our register as untrusted when detecting the presence of the
-PTR_MAYBE_NULL flag.
-
-To allow safe dereference, we enable PROBE_MEM marking when we see loads
-into trusted pointers with PTR_MAYBE_NULL.
-
-While trusted raw_tp arguments can also be passed into helpers or kfuncs
-where such broken assumption may cause issues, a future patch set will
-tackle their case separately, as PTR_TO_BTF_ID (without PTR_TRUSTED) can
-already be passed into helpers and causes similar problems. Thus, they
-are left alone for now.
-
-It is possible that these checks also permit passing non-raw_tp args
-that are trusted PTR_TO_BTF_ID with null marking. In such a case,
-allowing dereference when pointer is NULL expands allowed behavior, so
-won't regress existing programs, and the case of passing these into
-helpers is the same as above and will be dealt with later.
-
-Also update the failure case in tp_btf_nullable selftest to capture the
-new behavior, as the verifier will no longer cause an error when
-directly dereference a raw tracepoint argument marked as __nullable.
-
-  [0]: https://lore.kernel.org/bpf/ZrCZS6nisraEqehw@jlelli-thinkpadt14gen4.remote.csb
-
-Reviewed-by: Jiri Olsa <jolsa@kernel.org>
-Reported-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: Juri Lelli <juri.lelli@redhat.com>
-Fixes: 3f00c5239344 ("bpf: Allow trusted pointers to be passed to KF_TRUSTED_ARGS kfuncs")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241104171959.2938862-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: cc52e15397cc ("scsi: ufs: ufs-exynos: Support ExynosAuto v9 UFS")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-3-96722cc2ba1b@linaro.org
+Cc: Chanho Park <chanho61.park@samsung.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h   |  6 ++++
- kernel/bpf/btf.c      |  4 +++
- kernel/bpf/verifier.c | 77 ++++++++++++++++++++++++++++++++++++++-----
- 3 files changed, 79 insertions(+), 8 deletions(-)
+ drivers/ufs/host/ufs-exynos.c | 17 +++++++++++++----
+ drivers/ufs/host/ufs-exynos.h |  3 ++-
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 01598ffc27926..e3af0e06b4bfd 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -3278,4 +3278,10 @@ static inline gfp_t bpf_memcg_flags(gfp_t flags)
- 	return flags;
- }
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index 14c1b855e10ad..3e3ec906cb602 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -200,8 +200,8 @@ static int exynosauto_ufs_drv_init(struct device *dev, struct exynos_ufs *ufs)
+ 	/* IO Coherency setting */
+ 	if (ufs->sysreg) {
+ 		return regmap_update_bits(ufs->sysreg,
+-					  ufs->shareability_reg_offset,
+-					  UFS_SHARABLE, UFS_SHARABLE);
++					  ufs->iocc_offset,
++					  UFS_SHARABLE, ufs->iocc_val);
+ 	}
  
-+static inline bool bpf_prog_is_raw_tp(const struct bpf_prog *prog)
-+{
-+	return prog->type == BPF_PROG_TYPE_TRACING &&
-+	       prog->expected_attach_type == BPF_TRACE_RAW_TP;
-+}
-+
- #endif /* _LINUX_BPF_H */
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index fd1c69d98beff..5cef2bb2ddfc1 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6107,6 +6107,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
- 	if (prog_args_trusted(prog))
- 		info->reg_type |= PTR_TRUSTED;
+ 	attr->tx_dif_p_nsec = 3200000;
+@@ -1102,12 +1102,21 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
+ 		ufs->sysreg = NULL;
+ 	else {
+ 		if (of_property_read_u32_index(np, "samsung,sysreg", 1,
+-					       &ufs->shareability_reg_offset)) {
++					       &ufs->iocc_offset)) {
+ 			dev_warn(dev, "can't get an offset from sysreg. Set to default value\n");
+-			ufs->shareability_reg_offset = UFS_SHAREABILITY_OFFSET;
++			ufs->iocc_offset = UFS_SHAREABILITY_OFFSET;
+ 		}
+ 	}
  
-+	/* Raw tracepoint arguments always get marked as maybe NULL */
-+	if (bpf_prog_is_raw_tp(prog))
-+		info->reg_type |= PTR_MAYBE_NULL;
-+
- 	if (tgt_prog) {
- 		enum bpf_prog_type tgt_type;
- 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9f2567f1f2e57..e36a04cf3ccc7 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -489,6 +489,25 @@ static struct btf_record *reg_btf_record(const struct bpf_reg_state *reg)
- 	return rec;
- }
- 
-+static bool mask_raw_tp_reg_cond(const struct bpf_verifier_env *env, struct bpf_reg_state *reg) {
-+	return reg->type == (PTR_TO_BTF_ID | PTR_TRUSTED | PTR_MAYBE_NULL) &&
-+	       bpf_prog_is_raw_tp(env->prog) && !reg->ref_obj_id;
-+}
-+
-+static bool mask_raw_tp_reg(const struct bpf_verifier_env *env, struct bpf_reg_state *reg)
-+{
-+	if (!mask_raw_tp_reg_cond(env, reg))
-+		return false;
-+	reg->type &= ~PTR_MAYBE_NULL;
-+	return true;
-+}
-+
-+static void unmask_raw_tp_reg(struct bpf_reg_state *reg, bool result)
-+{
-+	if (result)
-+		reg->type |= PTR_MAYBE_NULL;
-+}
-+
- static bool subprog_is_global(const struct bpf_verifier_env *env, int subprog)
- {
- 	struct bpf_func_info_aux *aux = env->prog->aux->func_info_aux;
-@@ -6536,6 +6555,7 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 	const char *field_name = NULL;
- 	enum bpf_type_flag flag = 0;
- 	u32 btf_id = 0;
-+	bool mask;
- 	int ret;
- 
- 	if (!env->allow_ptr_leaks) {
-@@ -6611,7 +6631,21 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 
- 	if (ret < 0)
- 		return ret;
--
-+	/* For raw_tp progs, we allow dereference of PTR_MAYBE_NULL
-+	 * trusted PTR_TO_BTF_ID, these are the ones that are possibly
-+	 * arguments to the raw_tp. Since internal checks in for trusted
-+	 * reg in check_ptr_to_btf_access would consider PTR_MAYBE_NULL
-+	 * modifier as problematic, mask it out temporarily for the
-+	 * check. Don't apply this to pointers with ref_obj_id > 0, as
-+	 * those won't be raw_tp args.
-+	 *
-+	 * We may end up applying this relaxation to other trusted
-+	 * PTR_TO_BTF_ID with maybe null flag, since we cannot
-+	 * distinguish PTR_MAYBE_NULL tagged for arguments vs normal
-+	 * tagging, but that should expand allowed behavior, and not
-+	 * cause regression for existing behavior.
++	/*
++	 * no 'dma-coherent' property means the descriptors are
++	 * non-cacheable so iocc shareability should be disabled.
 +	 */
-+	mask = mask_raw_tp_reg(env, reg);
- 	if (ret != PTR_TO_BTF_ID) {
- 		/* just mark; */
++	if (of_dma_is_coherent(dev->of_node))
++		ufs->iocc_val = UFS_SHARABLE;
++	else
++		ufs->iocc_val = 0;
++
+ 	ufs->pclk_avail_min = PCLK_AVAIL_MIN;
+ 	ufs->pclk_avail_max = PCLK_AVAIL_MAX;
  
-@@ -6672,8 +6706,13 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 		clear_trusted_flags(&flag);
- 	}
+diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
+index a4bd6646d7f13..65aa04d41c3eb 100644
+--- a/drivers/ufs/host/ufs-exynos.h
++++ b/drivers/ufs/host/ufs-exynos.h
+@@ -212,7 +212,8 @@ struct exynos_ufs {
+ 	ktime_t entry_hibern8_t;
+ 	const struct exynos_ufs_drv_data *drv_data;
+ 	struct regmap *sysreg;
+-	u32 shareability_reg_offset;
++	u32 iocc_offset;
++	u32 iocc_val;
  
--	if (atype == BPF_READ && value_regno >= 0)
-+	if (atype == BPF_READ && value_regno >= 0) {
- 		mark_btf_ld_reg(env, regs, value_regno, ret, reg->btf, btf_id, flag);
-+		/* We've assigned a new type to regno, so don't undo masking. */
-+		if (regno == value_regno)
-+			mask = false;
-+	}
-+	unmask_raw_tp_reg(reg, mask);
- 
- 	return 0;
- }
-@@ -7025,7 +7064,7 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
- 		if (!err && t == BPF_READ && value_regno >= 0)
- 			mark_reg_unknown(env, regs, value_regno);
- 	} else if (base_type(reg->type) == PTR_TO_BTF_ID &&
--		   !type_may_be_null(reg->type)) {
-+		   (mask_raw_tp_reg_cond(env, reg) || !type_may_be_null(reg->type))) {
- 		err = check_ptr_to_btf_access(env, regs, regno, off, size, t,
- 					      value_regno);
- 	} else if (reg->type == CONST_PTR_TO_MAP) {
-@@ -8596,6 +8635,7 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 	enum bpf_reg_type type = reg->type;
- 	u32 *arg_btf_id = NULL;
- 	int err = 0;
-+	bool mask;
- 
- 	if (arg_type == ARG_DONTCARE)
- 		return 0;
-@@ -8636,11 +8676,11 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 	    base_type(arg_type) == ARG_PTR_TO_SPIN_LOCK)
- 		arg_btf_id = fn->arg_btf_id[arg];
- 
-+	mask = mask_raw_tp_reg(env, reg);
- 	err = check_reg_type(env, regno, arg_type, arg_btf_id, meta);
--	if (err)
--		return err;
- 
--	err = check_func_arg_reg_off(env, reg, regno, arg_type);
-+	err = err ?: check_func_arg_reg_off(env, reg, regno, arg_type);
-+	unmask_raw_tp_reg(reg, mask);
- 	if (err)
- 		return err;
- 
-@@ -11454,6 +11494,7 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 		enum bpf_arg_type arg_type = ARG_DONTCARE;
- 		u32 regno = i + 1, ref_id, type_size;
- 		bool is_ret_buf_sz = false;
-+		bool mask = false;
- 		int kf_arg_type;
- 
- 		t = btf_type_skip_modifiers(btf, args[i].type, NULL);
-@@ -11516,11 +11557,14 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 			return -EINVAL;
- 		}
- 
-+		mask = mask_raw_tp_reg(env, reg);
- 		if ((is_kfunc_trusted_args(meta) || is_kfunc_rcu(meta)) &&
- 		    (register_is_null(reg) || type_may_be_null(reg->type))) {
- 			verbose(env, "Possibly NULL pointer passed to trusted arg%d\n", i);
-+			unmask_raw_tp_reg(reg, mask);
- 			return -EACCES;
- 		}
-+		unmask_raw_tp_reg(reg, mask);
- 
- 		if (reg->ref_obj_id) {
- 			if (is_kfunc_release(meta) && meta->ref_obj_id) {
-@@ -11547,17 +11591,24 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 			if (!is_kfunc_trusted_args(meta) && !is_kfunc_rcu(meta))
- 				break;
- 
-+			/* Allow passing maybe NULL raw_tp arguments to
-+			 * kfuncs for compatibility. Don't apply this to
-+			 * arguments with ref_obj_id > 0.
-+			 */
-+			mask = mask_raw_tp_reg(env, reg);
- 			if (!is_trusted_reg(reg)) {
- 				if (!is_kfunc_rcu(meta)) {
- 					verbose(env, "R%d must be referenced or trusted\n", regno);
-+					unmask_raw_tp_reg(reg, mask);
- 					return -EINVAL;
- 				}
- 				if (!is_rcu_reg(reg)) {
- 					verbose(env, "R%d must be a rcu pointer\n", regno);
-+					unmask_raw_tp_reg(reg, mask);
- 					return -EINVAL;
- 				}
- 			}
--
-+			unmask_raw_tp_reg(reg, mask);
- 			fallthrough;
- 		case KF_ARG_PTR_TO_CTX:
- 			/* Trusted arguments have the same offset checks as release arguments */
-@@ -11582,7 +11633,9 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 
- 		if (is_kfunc_release(meta) && reg->ref_obj_id)
- 			arg_type |= OBJ_RELEASE;
-+		mask = mask_raw_tp_reg(env, reg);
- 		ret = check_func_arg_reg_off(env, reg, regno, arg_type);
-+		unmask_raw_tp_reg(reg, mask);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -11743,6 +11796,7 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 				return ret;
- 			break;
- 		case KF_ARG_PTR_TO_BTF_ID:
-+			mask = mask_raw_tp_reg(env, reg);
- 			/* Only base_type is checked, further checks are done here */
- 			if ((base_type(reg->type) != PTR_TO_BTF_ID ||
- 			     (bpf_type_has_unsafe_modifiers(reg->type) && !is_rcu_reg(reg))) &&
-@@ -11751,9 +11805,11 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 				verbose(env, "expected %s or socket\n",
- 					reg_type_str(env, base_type(reg->type) |
- 							  (type_flag(reg->type) & BPF_REG_TRUSTED_MODIFIERS)));
-+				unmask_raw_tp_reg(reg, mask);
- 				return -EINVAL;
- 			}
- 			ret = process_kf_arg_ptr_to_btf_id(env, reg, ref_t, ref_tname, ref_id, meta, i);
-+			unmask_raw_tp_reg(reg, mask);
- 			if (ret < 0)
- 				return ret;
- 			break;
-@@ -12640,7 +12696,7 @@ static int sanitize_check_bounds(struct bpf_verifier_env *env,
-  */
- static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 				   struct bpf_insn *insn,
--				   const struct bpf_reg_state *ptr_reg,
-+				   struct bpf_reg_state *ptr_reg,
- 				   const struct bpf_reg_state *off_reg)
- {
- 	struct bpf_verifier_state *vstate = env->cur_state;
-@@ -12654,6 +12710,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 	struct bpf_sanitize_info info = {};
- 	u8 opcode = BPF_OP(insn->code);
- 	u32 dst = insn->dst_reg;
-+	bool mask;
- 	int ret;
- 
- 	dst_reg = &regs[dst];
-@@ -12680,11 +12737,14 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		return -EACCES;
- 	}
- 
-+	mask = mask_raw_tp_reg(env, ptr_reg);
- 	if (ptr_reg->type & PTR_MAYBE_NULL) {
- 		verbose(env, "R%d pointer arithmetic on %s prohibited, null-check it first\n",
- 			dst, reg_type_str(env, ptr_reg->type));
-+		unmask_raw_tp_reg(ptr_reg, mask);
- 		return -EACCES;
- 	}
-+	unmask_raw_tp_reg(ptr_reg, mask);
- 
- 	switch (base_type(ptr_reg->type)) {
- 	case PTR_TO_FLOW_KEYS:
-@@ -18695,6 +18755,7 @@ static int convert_ctx_accesses(struct bpf_verifier_env *env)
- 		 * for this case.
- 		 */
- 		case PTR_TO_BTF_ID | MEM_ALLOC | PTR_UNTRUSTED:
-+		case PTR_TO_BTF_ID | PTR_TRUSTED | PTR_MAYBE_NULL:
- 			if (type == BPF_READ) {
- 				if (BPF_MODE(insn->code) == BPF_MEM)
- 					insn->code = BPF_LDX | BPF_PROBE_MEM |
+ 	u32 opts;
+ #define EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL		BIT(0)
 -- 
 2.53.0
 
