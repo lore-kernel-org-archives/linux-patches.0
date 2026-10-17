@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC31DFDA1;
-	Sat, 17 Oct 2026 17:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8415314B8F;
+	Sat, 17 Oct 2026 17:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257645; cv=none; b=TdgMJzds0Us7kZ5yrRJYl9UQeRJDnyYieI8bqWO97AUNj78uFKtmEprINOuf9D6n2m4ZlpO/+eObnnFGMClruxjGf1yoHTZncYOLPru2tCQFMVmzFhiHB3Fx9Dcm3MHTNwFEcL/cda2JNqgNPK637LN5Kzn5PQoHujaEv6etJrg=
+	t=1792257648; cv=none; b=naLeVepka3AeMkaHQQXtAyLTkwbQBkkKsTMKUFbmcHqqdzhQGwY2K2tnnYkKn/F1yOd+bvY7vClBhB9Gd2VZ04fQURd8IRYLJdp8FAazMU2WyYZ51u6QsywwYNZzoqQE/7BJxEpORbuI9j4gAyqp2AybLWzepNZ/DhCd0+ehZz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257645; c=relaxed/simple;
-	bh=gHRoZfV9/lgbTwt51lvVXbAT7Ll6XHG9dpTxKdo5qXk=;
+	s=arc-20240116; t=1792257648; c=relaxed/simple;
+	bh=Rne5+mVF3eD+mBIqq6vSw2O9nkU2dChdIVsuKbfMc2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnilKLyWdD6n29uqCl/Goa9VNjjq3PS+L+SzpSmB2mzpzKenX6MEEQcIIRwfOdhzSHUzQJ3Zmh/4GqNuHsyT+oMQarB5AQ7w5+VM7vPJIecljt+tI9Ug7U1/ua+PSduUtdWqxZPUb1QtYC41CgFiCRdLCPSgc+CSH6q2jtOs5gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcmUMH8W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L4UAX+6dMIAAvBhlkKg0VlQcD+Fnk2dYE4XTHVMWCv9DJqhj7OGJx9dUAt8wk/9ce7SVxRZYEt10D4NWFI8HU6p5Y6r/v4U6tfVpGMhwdHPNqSAqKR08EZpZYBcGRqGjWVIlW04+pWtAcHgT8xpWmAuPN6Im0Rk/h/jV9LNAAtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzpy7eV6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcmUMH8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12051F000C4;
-	Sat, 17 Oct 2026 17:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzpy7eV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107E41F000C4;
+	Sat, 17 Oct 2026 17:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257644;
-	bh=RPLkSWNoRcMj20AYefJ+qGiOHrP9talTp9B1cHCMEuE=;
+	s=korg; t=1792257647;
+	bh=4PcL0pLm+ZIqzi3FmfkTK+1ZhJDjIoLwg495f7FXyB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hcmUMH8WDRwIQ1r1Q9IFpBIFQyPOzfL8K1VOgioOg0gWk0iNilOmbkZnGRC33B03z
-	 GhViVCtCvKDDM9XkapqzVbHbwHE/IsVKgrlK3BRnOSoSZOqZ+o2ZRm/SPL79DmAUaU
-	 dp5sWljjVTRhhS2/2HA6SeOeltDbSnABCt7pwmeE=
+	b=lzpy7eV6tlYDvVgZTYKjZLNIKxAsHJl7Vb1UmWsMXWISEhSoPCyXmSqhtAJoujtM7
+	 5Gj05S4TwRatIMNFj7+gESDl737ojEQMYDddg9F3eSe5JG0OqrPjP+Y5dfIoFUqWhg
+	 ps6FgYMyqaIRUj8HXQetW05+AeOdELSxPgso2cIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Milena Olech <milena.olech@intel.com>,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 0626/1674] ice: Fix improper extts handling
-Date: Sat, 17 Oct 2026 17:48:18 +0200
-Message-ID: <20261017160447.158240677@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0627/1674] s390/pkey: harmonize pkey s390 debug feature calls
+Date: Sat, 17 Oct 2026 17:48:19 +0200
+Message-ID: <20261017160447.186045363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,275 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milena Olech <milena.olech@intel.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 00d3b4f54582d4e4a02cda5886bb336eeab268cc ]
+[ Upstream commit 0ccac45295403a7730d7bdd8b047a824b7a23a2e ]
 
-Extts events are disabled and enabled by the application ts2phc.
-However, in case where the driver is removed when the application is
-running, a specific extts event remains enabled and can cause a kernel
-crash.
-As a side effect, when the driver is reloaded and application is started
-again, remaining extts event for the channel from a previous run will
-keep firing and the message "extts on unexpected channel" might be
-printed to the user.
+Cleanup and harmonize the s390 debug feature calls
+and defines for the pkey module to be similar to
+the debug feature as it is used in the zcrypt device
+driver and AP bus.
 
-To avoid that, extts events shall be disabled when PTP is released.
+More or less only renaming but no functional changes.
 
-Fixes: 172db5f91d5f ("ice: add support for auxiliary input/output pins")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Co-developed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Milena Olech <milena.olech@intel.com>
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20240702171459.2606611-2-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+
+Adapt this dependency to the ioctl call sites used by the follow-up
+protected- and secure-key wiping change. Use pr_debug() directly at
+those sites, matching the later dynamic-debug conversion, and omit the
+unrelated debug-handle, macro and helper-call renames.
+
+Replace the three existing key-blob wipe-and-free sequences with
+kfree_sensitive() to provide the cleanup context expected by that
+change. Preserve the existing clear-key error-path wiping and array
+allocation overflow checks. No functions are added.
+
+Stable-dep-of: f2ebdadd85af ("s390/pkey: Wipe copies of protected- and secure-keys")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 105 ++++++++++++++++++-----
- drivers/net/ethernet/intel/ice/ice_ptp.h |   8 ++
- 2 files changed, 91 insertions(+), 22 deletions(-)
+ drivers/s390/crypto/pkey_api.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index f738e35395741..df88304c9a1b1 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -1506,27 +1506,24 @@ void ice_ptp_extts_event(struct ice_pf *pf)
- /**
-  * ice_ptp_cfg_extts - Configure EXTTS pin and channel
-  * @pf: Board private structure
-- * @ena: true to enable; false to disable
-  * @chan: GPIO channel (0-3)
-- * @gpio_pin: GPIO pin
-- * @extts_flags: request flags from the ptp_extts_request.flags
-+ * @config: desired EXTTS configuration.
-+ * @store: If set to true, the values will be stored
-+ *
-+ * Configure an external timestamp event on the requested channel.
-  */
--static int
--ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
--		  unsigned int extts_flags)
-+static void ice_ptp_cfg_extts(struct ice_pf *pf, unsigned int chan,
-+			      struct ice_extts_channel *config, bool store)
- {
- 	u32 func, aux_reg, gpio_reg, irq_reg;
- 	struct ice_hw *hw = &pf->hw;
- 	u8 tmr_idx;
- 
--	if (chan > (unsigned int)pf->ptp.info.n_ext_ts)
--		return -EINVAL;
--
- 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
- 
- 	irq_reg = rd32(hw, PFINT_OICR_ENA);
- 
--	if (ena) {
-+	if (config->ena) {
- 		/* Enable the interrupt */
- 		irq_reg |= PFINT_OICR_TSYN_EVNT_M;
- 		aux_reg = GLTSYN_AUX_IN_0_INT_ENA_M;
-@@ -1535,9 +1532,9 @@ ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
- #define GLTSYN_AUX_IN_0_EVNTLVL_FALLING_EDGE	BIT(1)
- 
- 		/* set event level to requested edge */
--		if (extts_flags & PTP_FALLING_EDGE)
-+		if (config->flags & PTP_FALLING_EDGE)
- 			aux_reg |= GLTSYN_AUX_IN_0_EVNTLVL_FALLING_EDGE;
--		if (extts_flags & PTP_RISING_EDGE)
-+		if (config->flags & PTP_RISING_EDGE)
- 			aux_reg |= GLTSYN_AUX_IN_0_EVNTLVL_RISING_EDGE;
- 
- 		/* Write GPIO CTL reg.
-@@ -1559,9 +1556,47 @@ ice_ptp_cfg_extts(struct ice_pf *pf, bool ena, unsigned int chan, u32 gpio_pin,
- 
- 	wr32(hw, PFINT_OICR_ENA, irq_reg);
- 	wr32(hw, GLTSYN_AUX_IN(chan, tmr_idx), aux_reg);
--	wr32(hw, GLGEN_GPIO_CTL(gpio_pin), gpio_reg);
-+	wr32(hw, GLGEN_GPIO_CTL(config->gpio_pin), gpio_reg);
- 
--	return 0;
-+	if (store)
-+		memcpy(&pf->ptp.extts_channels[chan], config, sizeof(*config));
-+}
-+
-+/**
-+ * ice_ptp_disable_all_extts - Disable all EXTTS channels
-+ * @pf: Board private structure
-+ */
-+static void ice_ptp_disable_all_extts(struct ice_pf *pf)
-+{
-+	struct ice_extts_channel extts_cfg = {};
-+	int i;
-+
-+	for (i = 0; i < pf->ptp.info.n_ext_ts; i++) {
-+		if (pf->ptp.extts_channels[i].ena) {
-+			extts_cfg.gpio_pin = pf->ptp.extts_channels[i].gpio_pin;
-+			extts_cfg.ena = false;
-+			ice_ptp_cfg_extts(pf, i, &extts_cfg, false);
-+		}
-+	}
-+
-+	synchronize_irq(pf->oicr_irq.virq);
-+}
-+
-+/**
-+ * ice_ptp_enable_all_extts - Enable all EXTTS channels
-+ * @pf: Board private structure
-+ *
-+ * Called during reset to restore user configuration.
-+ */
-+static void ice_ptp_enable_all_extts(struct ice_pf *pf)
-+{
-+	int i;
-+
-+	for (i = 0; i < pf->ptp.info.n_ext_ts; i++) {
-+		if (pf->ptp.extts_channels[i].ena)
-+			ice_ptp_cfg_extts(pf, i, &pf->ptp.extts_channels[i],
-+					  false);
-+	}
- }
- 
- /**
-@@ -1718,7 +1753,6 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 			 struct ptp_clock_request *rq, int on)
- {
- 	struct ice_pf *pf = ptp_info_to_pf(info);
--	struct ice_perout_channel clk_cfg = {0};
- 	bool sma_pres = false;
- 	unsigned int chan;
- 	u32 gpio_pin;
-@@ -1729,6 +1763,9 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 
- 	switch (rq->type) {
- 	case PTP_CLK_REQ_PEROUT:
-+	{
-+		struct ice_perout_channel clk_cfg = {};
-+
- 		chan = rq->perout.index;
- 		if (sma_pres) {
- 			if (chan == ice_pin_desc_e810t[SMA1].chan)
-@@ -1756,7 +1793,11 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 
- 		err = ice_ptp_cfg_clkout(pf, chan, &clk_cfg, true);
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 21fc6151af79f..6f435055f685c 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1350,7 +1350,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 			return -EFAULT;
+ 		rc = cca_genseckey(kgs.cardnr, kgs.domain,
+ 				   kgs.keytype, kgs.seckey.seckey);
+-		DEBUG_DBG("%s cca_genseckey()=%d\n", __func__, rc);
++		pr_debug("%s cca_genseckey()=%d\n", __func__, rc);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(ugs, &kgs, sizeof(kgs)))
+@@ -1381,7 +1381,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		rc = cca_sec2protkey(ksp.cardnr, ksp.domain,
+ 				     ksp.seckey.seckey, ksp.protkey.protkey,
+ 				     &ksp.protkey.len, &ksp.protkey.type);
+-		DEBUG_DBG("%s cca_sec2protkey()=%d\n", __func__, rc);
++		pr_debug("%s cca_sec2protkey()=%d\n", __func__, rc);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(usp, &ksp, sizeof(ksp)))
+@@ -1428,7 +1428,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		ksp.protkey.len = sizeof(ksp.protkey.protkey);
+ 		rc = pkey_skey2pkey(ksp.seckey.seckey, ksp.protkey.protkey,
+ 				    &ksp.protkey.len, &ksp.protkey.type);
+-		DEBUG_DBG("%s pkey_skey2pkey()=%d\n", __func__, rc);
++		pr_debug("%s pkey_skey2pkey()=%d\n", __func__, rc);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(usp, &ksp, sizeof(ksp)))
+@@ -1443,7 +1443,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 			return -EFAULT;
+ 		rc = pkey_verifykey(&kvk.seckey, &kvk.cardnr, &kvk.domain,
+ 				    &kvk.keysize, &kvk.attributes);
+-		DEBUG_DBG("%s pkey_verifykey()=%d\n", __func__, rc);
++		pr_debug("%s pkey_verifykey()=%d\n", __func__, rc);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(uvk, &kvk, sizeof(kvk)))
+@@ -1459,7 +1459,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		kgp.protkey.len = sizeof(kgp.protkey.protkey);
+ 		rc = pkey_genprotkey(kgp.keytype, kgp.protkey.protkey,
+ 				     &kgp.protkey.len, &kgp.protkey.type);
+-		DEBUG_DBG("%s pkey_genprotkey()=%d\n", __func__, rc);
++		pr_debug("%s pkey_genprotkey()=%d\n", __func__, rc);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(ugp, &kgp, sizeof(kgp)))
+@@ -1474,7 +1474,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 			return -EFAULT;
+ 		rc = pkey_verifyprotkey(kvp.protkey.protkey,
+ 					kvp.protkey.len, kvp.protkey.type);
+-		DEBUG_DBG("%s pkey_verifyprotkey()=%d\n", __func__, rc);
++		pr_debug("%s pkey_verifyprotkey()=%d\n", __func__, rc);
  		break;
-+	}
- 	case PTP_CLK_REQ_EXTTS:
-+	{
-+		struct ice_extts_channel extts_cfg = {};
-+
- 		chan = rq->extts.index;
- 		if (sma_pres) {
- 			if (chan < ice_pin_desc_e810t[SMA2].chan)
-@@ -1772,9 +1813,13 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 			gpio_pin = chan;
+ 	}
+ 	case PKEY_KBLOB2PROTK: {
+@@ -1490,9 +1490,8 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		ktp.protkey.len = sizeof(ktp.protkey.protkey);
+ 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, ktp.protkey.protkey,
+ 				       &ktp.protkey.len, &ktp.protkey.type);
+-		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		pr_debug("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
++		kfree_sensitive(kkey);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(utp, &ktp, sizeof(ktp)))
+@@ -1519,7 +1518,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		rc = pkey_genseckey2(apqns, kgs.apqn_entries,
+ 				     kgs.type, kgs.size, kgs.keygenflags,
+ 				     kkey, &klen);
+-		DEBUG_DBG("%s pkey_genseckey2()=%d\n", __func__, rc);
++		pr_debug("%s pkey_genseckey2()=%d\n", __func__, rc);
+ 		kfree(apqns);
+ 		if (rc) {
+ 			kfree(kkey);
+@@ -1564,7 +1563,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		rc = pkey_clr2seckey2(apqns, kcs.apqn_entries,
+ 				      kcs.type, kcs.size, kcs.keygenflags,
+ 				      kcs.clrkey.clrkey, kkey, &klen);
+-		DEBUG_DBG("%s pkey_clr2seckey2()=%d\n", __func__, rc);
++		pr_debug("%s pkey_clr2seckey2()=%d\n", __func__, rc);
+ 		kfree(apqns);
+ 		if (rc) {
+ 			kfree(kkey);
+@@ -1603,7 +1602,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		rc = pkey_verifykey2(kkey, kvk.keylen,
+ 				     &kvk.cardnr, &kvk.domain,
+ 				     &kvk.type, &kvk.size, &kvk.flags);
+-		DEBUG_DBG("%s pkey_verifykey2()=%d\n", __func__, rc);
++		pr_debug("%s pkey_verifykey2()=%d\n", __func__, rc);
+ 		kfree(kkey);
+ 		if (rc)
+ 			break;
+@@ -1632,10 +1631,9 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					kkey, ktp.keylen,
+ 					ktp.protkey.protkey, &ktp.protkey.len,
+ 					&ktp.protkey.type);
+-		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
++		pr_debug("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
+ 		kfree(apqns);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		kfree_sensitive(kkey);
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(utp, &ktp, sizeof(ktp)))
+@@ -1666,7 +1664,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
  		}
- 
--		err = ice_ptp_cfg_extts(pf, !!on, chan, gpio_pin,
--					rq->extts.flags);
--		break;
-+		extts_cfg.flags = rq->extts.flags;
-+		extts_cfg.gpio_pin = gpio_pin;
-+		extts_cfg.ena = !!on;
-+
-+		ice_ptp_cfg_extts(pf, chan, &extts_cfg, true);
-+		return 0;
-+	}
- 	default:
- 		return -EOPNOTSUPP;
- 	}
-@@ -1792,21 +1837,31 @@ static int ice_ptp_gpio_enable_e823(struct ptp_clock_info *info,
- 				    struct ptp_clock_request *rq, int on)
- {
- 	struct ice_pf *pf = ptp_info_to_pf(info);
--	struct ice_perout_channel clk_cfg = {0};
- 	int err;
- 
- 	switch (rq->type) {
- 	case PTP_CLK_REQ_PPS:
-+	{
-+		struct ice_perout_channel clk_cfg = {};
-+
- 		clk_cfg.gpio_pin = PPS_PIN_INDEX;
- 		clk_cfg.period = NSEC_PER_SEC;
- 		clk_cfg.ena = !!on;
- 
- 		err = ice_ptp_cfg_clkout(pf, PPS_CLK_GEN_CHAN, &clk_cfg, true);
- 		break;
-+	}
- 	case PTP_CLK_REQ_EXTTS:
--		err = ice_ptp_cfg_extts(pf, !!on, rq->extts.index,
--					TIME_SYNC_PIN_INDEX, rq->extts.flags);
--		break;
-+	{
-+		struct ice_extts_channel extts_cfg = {};
-+
-+		extts_cfg.flags = rq->extts.flags;
-+		extts_cfg.gpio_pin = TIME_SYNC_PIN_INDEX;
-+		extts_cfg.ena = !!on;
-+
-+		ice_ptp_cfg_extts(pf, rq->extts.index, &extts_cfg, true);
-+		return 0;
-+	}
- 	default:
- 		return -EOPNOTSUPP;
- 	}
-@@ -2526,6 +2581,10 @@ void ice_ptp_reset(struct ice_pf *pf)
- 			goto err;
- 	}
- 
-+	/* Re-enable all periodic outputs and external timestamp events */
-+	ice_ptp_enable_all_clkout(pf);
-+	ice_ptp_enable_all_extts(pf);
-+
- reset_ts:
- 	/* Restart the PHY timestamping block */
- 	ice_ptp_reset_phy_timestamping(pf);
-@@ -2773,6 +2832,8 @@ void ice_ptp_release(struct ice_pf *pf)
- 
- 	clear_bit(ICE_FLAG_PTP, pf->flags);
- 
-+	ice_ptp_disable_all_extts(pf);
-+
- 	kthread_cancel_delayed_work_sync(&pf->ptp.work);
- 
- 	ice_ptp_port_phy_stop(&pf->ptp.port);
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 995a57019ba76..3dd7584be0fa8 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -33,6 +33,12 @@ struct ice_perout_channel {
- 	u64 start_time;
- };
- 
-+struct ice_extts_channel {
-+	bool ena;
-+	u32 gpio_pin;
-+	u32 flags;
-+};
-+
- /* The ice hardware captures Tx hardware timestamps in the PHY. The timestamp
-  * is stored in a buffer of registers. Depending on the specific hardware,
-  * this buffer might be shared across multiple PHY ports.
-@@ -185,6 +191,7 @@ struct ice_ptp_port {
-  * @ext_ts_irq: the external timestamp IRQ in use
-  * @kworker: kwork thread for handling periodic work
-  * @perout_channels: periodic output data
-+ * @extts_channels: channels for external timestamps
-  * @info: structure defining PTP hardware capabilities
-  * @clock: pointer to registered PTP clock device
-  * @tstamp_config: hardware timestamping configuration
-@@ -205,6 +212,7 @@ struct ice_ptp {
- 	u8 ext_ts_irq;
- 	struct kthread_worker *kworker;
- 	struct ice_perout_channel perout_channels[GLTSYN_TGT_H_IDX_MAX];
-+	struct ice_extts_channel extts_channels[GLTSYN_TGT_H_IDX_MAX];
- 	struct ptp_clock_info info;
- 	struct ptp_clock *clock;
- 	struct hwtstamp_config tstamp_config;
+ 		rc = pkey_apqns4key(kkey, kak.keylen, kak.flags,
+ 				    apqns, &nr_apqns);
+-		DEBUG_DBG("%s pkey_apqns4key()=%d\n", __func__, rc);
++		pr_debug("%s pkey_apqns4key()=%d\n", __func__, rc);
+ 		kfree(kkey);
+ 		if (rc && rc != -ENOSPC) {
+ 			kfree(apqns);
+@@ -1761,8 +1759,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					protkey, &protkeylen, &ktp.pkeytype);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
+ 		kfree(apqns);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		kfree_sensitive(kkey);
+ 		if (rc) {
+ 			kfree(protkey);
+ 			break;
 -- 
 2.53.0
 
