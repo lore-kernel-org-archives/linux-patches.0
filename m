@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3B63BCD20;
-	Sat, 17 Oct 2026 16:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475893BBFB3;
+	Sat, 17 Oct 2026 16:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255361; cv=none; b=df6bhlXKxJjxi1zxenaQZJxp8gpYl+AZ7wZIixg8IYJEwe+Ya6fEA10yEUiv36Xo48nrro4UNx/36Ypsj6t1rzvIXolEeTB0WH2UcyAmiJ45eAgv95UTU21yDWoV2MUKTWr7Gu1ChiQ+W5SoD19rClYmvFFIFmHkw1I7sDRks2Y=
+	t=1792255364; cv=none; b=qLIQ5y0A3y0qdxRCUf7vDdr/t/7Xh7mUeCZtI8Ci1uUSgXnjiCwcJztNa1fRnjQeQwQO0PwF2Gp6qoTqglVH/tfhNWHcTuCTiCPK4e6rYcs5qU1R4eR1OvQQekGMTCw1tterQ4xHF/N/x8wAuyCf0YLdqTzu0KcbLJBwcQxCQGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255361; c=relaxed/simple;
-	bh=KwNR6Fnes6kmkpPy3N2ZEcKvEwFt3cTQK+h9vbCm5EA=;
+	s=arc-20240116; t=1792255364; c=relaxed/simple;
+	bh=1coU+2nP0aI1smj2z0FLU5LQD1ZFss3DtN67GOgFzP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbZS4sY+hePL5NgyIImELfAenttGWPVjDqICtppEMyFObxg5MAyUqTj+kiW979QQI1CTeYCp/TV0T1B1XlqrdtLKfSJ7wRPEnrQUeJS270ZcfUcdxQuNW8H9Tvy8R5pWCpO1QetDquRL9eCtDTJiu7z1DWdUG7yB75M5oaBkL1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/NHG7Ol; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LOAjymJZwlC1RDRWN1MQZvactnyzCC5ZyYc/l73g9y3NXca/e7v2f71u2VlHZw2Xj0Cib+twhduuVNKUiD+UOnqFb1aLXPd8+0p3Sqygz97ddGhNAN4y4jh5K8WsfkcocqgeEVL2mZn47fKF4OxKJwtv5+SQi4uu/ODCojZv8ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xShUBUjY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/NHG7Ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3461F000C4;
-	Sat, 17 Oct 2026 16:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xShUBUjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940751F000C5;
+	Sat, 17 Oct 2026 16:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255360;
-	bh=spj2PwywmGe/0YulW147wBHr3R4Td+EzetunWuhRi4A=;
+	s=korg; t=1792255363;
+	bh=Z8VVSwCzoqoipvIW9ur8eOBS8D6rbuhqe2SbJFm50lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/NHG7OlV8Bp0EVdCa9X9fpF+JlOGEqdNdbgDwKZtNFsqwJ7orAnybj3Z593zmR1m
-	 XAgDbQELO6PoK4v0sqcDKzNk0vV+FdYmqs4RdR3+Lbc2Bu3vN0LNt2kZxlQoAgR4Sp
-	 xm//OuKxloW5cnszM9NaUvii16WHpfAUBZfxLkI8=
+	b=xShUBUjYPH5yTKOhrVFMH8jrAuc2ehvDrVAzNl+LfG09hz0P/5DzNJCK1D4yxE6Ab
+	 BJ2O0mXAU1gGP/r+BOZWnBjEsZ2uCG+uMYZW9x1n7s8D2KxvaJqsvQQLbRLQT+oPfa
+	 2zmVuXTZCyQCrWXRWHw/Zw8aOFIF0vqRONFlB0u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 707/869] bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
-Date: Sat, 17 Oct 2026 17:59:08 +0200
-Message-ID: <20261017160055.089506884@linuxfoundation.org>
+Subject: [PATCH 6.12 708/869] platform/x86: dell-wmi-base: Fix handling of ultra performance key
+Date: Sat, 17 Oct 2026 17:59:09 +0200
+Message-ID: <20261017160055.114996672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,61 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 2aaf67f0516fde29620d0edfc29c01b9ea7ad430 ]
+[ Upstream commit adfd6846bea13667ff28f8aaf00c32fbd69825ab ]
 
-check_kfunc_args() detects a kfunc argument named rdonly_buf_size or
-rdwr_buf_size and stores reg->var_off.value into meta->r0_size, a u64,
-and does not bound it. check_kfunc_call() later copies that value into
-the returned register's mem_size field:
+The commit message of commit 5fbd827eb9c2 ("platform/x86: dell-wmi: Recognise or support new switches")
+states that the ultra performance key contains additional data
+after the type and code fields. The event data passed to
+dell_wmi_process_key() is already parsed, so "buffer" already
+starts after those two fields.
 
-  meta->r0_size = reg->var_off.value;
-  ...
-  regs[BPF_REG_0].mem_size = meta.r0_size;
+Use the correct index for accessing the first data field to avoid
+a potential buffer overread.
 
-regs[BPF_REG_0].mem_size is u32. A constant whose upper 32 bits are set
-gets truncated instead of causing a load-time rejection, so the verifier
-records a PTR_TO_MEM register with an approximately 4 GiB mem_size for
-whatever allocation the kfunc returned. A later access check against
-that register uses the truncated, wrong bound.
-
-Reject rdonly_buf_size/rdwr_buf_size values that exceed U32_MAX at the
-point meta->r0_size is set.
-
-Fixes: eb1f7f71c126 ("bpf/verifier: allow kfunc to return an allocated mem")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260709155837.1879230-2-main.kalliope@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 5fbd827eb9c2 ("platform/x86: dell-wmi: Recognise or support new switches")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260612173451.467629-4-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/platform/x86/dell/dell-wmi-base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 03b6093327187..7c814248e842c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -12347,6 +12347,11 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 				}
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index 713ec2c12a04e..4838992ee5f99 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -442,7 +442,7 @@ static int dell_wmi_process_key(struct wmi_device *wdev, int type, int code, u16
+ 				      SW_TABLET_MODE, !buffer[0]);
+ 		return 1;
+ 	} else if (type == 0x0012 && code == 0x000d && remaining > 0) {
+-		value = (buffer[2] == 2);
++		value = (buffer[0] == 2);
+ 		used = 1;
+ 	}
  
- 				meta->r0_size = reg->var_off.value;
-+				if (meta->r0_size > U32_MAX) {
-+					verbose(env, "R%d rdonly/rdwr_buf_size exceeds u32 max\n",
-+						regno);
-+					return -EINVAL;
-+				}
- 				ret = mark_chain_precision(env, regno);
- 				if (ret)
- 					return ret;
 -- 
 2.53.0
 
