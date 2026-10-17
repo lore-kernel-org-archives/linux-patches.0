@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C075E356A12;
-	Sat, 17 Oct 2026 17:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD710356A12;
+	Sat, 17 Oct 2026 17:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257398; cv=none; b=GcDbnoX7YiRRHDO2DhZqSORKBsBMdiPCnB02BQf+mt3WiRjTbCq+I/B4pmQ2syh2eAaIZbYCVITc51xyXwikH1m8KKYYpR15qi73HJX9CeIikKgydlOn3h1ALaRnyYSRc4oP89NcnDsvJ/i9uaIL7Vwn2NLCtEiiCi9uz92LHdo=
+	t=1792257401; cv=none; b=U+ZEryp0w/GH7d5B0xU++j3JB41p6Z6hwYZm1FOWuPmkCNaKTVELR7PMyiSaBZNag4Kh/TMDgoPAsy6dFJeGeSDB/OCDXPPWtmIPOFBy8ESEXx+0H7sd8rwIfejyHlp3g8dLg74LMZYow4bq98QjU22pbEyZDLhve3MMIkWxu3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257398; c=relaxed/simple;
-	bh=3ebywsHm6NrwSgbwsuux6/3NyrI+2gUqQuqrnrVGEGc=;
+	s=arc-20240116; t=1792257401; c=relaxed/simple;
+	bh=wVyXS4S2Cq5Y48UFM05h5xhva8olHB9uG0PQsd+/aSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6t3SVteDwD1LOOOZbdVD5rHI0ddeWv/6q96Ydvq6b6mN6mQOG8rVvlpPkN8YJh55miKlt2SqJI6vXMd5q16UZ92DBdDRhHZgpKf7146ROKr3rvbDkm56DjBy9O2CZJHFQH3vciUNTsoxxx19jIGpmCALbwXZ0VE6KJD7E7apyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1PtpNEY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r/0ETWsSR7vMX08fI6pbswa2aG+9Uuh6YcOzcp+FwjN13UVIImO10uRfvIGsFupYQyLv3WJnRSOGNfVrzRItTuwqETEoY/+jC23Dld3dr46WtWMM8R7N60dY9bO+LLqi6DHJX5oXlD2GBF8b5MRflD7a88FHhmN1mQ5X9hFjxuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+fDlFdl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1PtpNEY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190941F000C4;
-	Sat, 17 Oct 2026 17:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+fDlFdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353C81F000C5;
+	Sat, 17 Oct 2026 17:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257395;
-	bh=2BNKJeKK6U6HEbEkZFuOrR+Bmu110UxhnGrL4ikMBss=;
+	s=korg; t=1792257398;
+	bh=k6ZJROi3NhoyuOpJ0RZCFUpdN4nJkfXWZcHuQidGUgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1PtpNEY9lH+shxMa/JDhssC6vGkuz+LzEEZ/ElCej71Fu7mD4+PSsMXTLtpTZaVv
-	 iAXaQWSEyGlLz8Ul0gqGbKeYI+qMEMvGWoBwEq05C5EnIwcDuWNkRUd4oSgjnV25qZ
-	 8GyjEZ1vCUaBHQ1gMWtr9ammlc6c89Kc403m4fZ8=
+	b=S+fDlFdlt9DAewDoIwTo9Gp0M6F0GumoiJI6fpMp0WUjFOy0NbmPadzR5mEMyLvQC
+	 dPkRM1Vag0lRDJ6fp/ztwr03Pw8t4RTQ9TUOiGuB7iA5JiNJMSsd2S+jFtqzHO56dh
+	 xCggHhyW4JPH0nnQ8//TmPciUTVZ9BXUE6i8WTBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagun Kayastha <sgn.kayastha@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0546/1674] wifi: mt76: mt792x: pick the SAR table layout from the table itself
-Date: Sat, 17 Oct 2026 17:46:58 +0200
-Message-ID: <20261017160445.111863387@linuxfoundation.org>
+Subject: [PATCH 6.6 0547/1674] ASoC: adau1372: allow sleepy powerdown GPIOs
+Date: Sat, 17 Oct 2026 17:46:59 +0200
+Message-ID: <20261017160445.138154718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,230 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Alvin Šipraga <alvin.sipraga@analog.com>
 
-[ Upstream commit af97bf5a7e72da9026de184676df8e2fa57e1058 ]
+[ Upstream commit 64dd172bbffe6135d79a06ddad53dd2da4d8bd62 ]
 
-The SAR power tables are parsed with a version byte from a different
-ACPI table, never their own.
+gpiod_set_value() emits a WARN when the GPIO provider indicates that it
+can sleep, as is typical for I2C controlled GPIO expanders. Since the
+powerdown GPIO is only manipulated in process context, use the _cansleep
+variant instead. This lets the driver use sleepy GPIOs to power off the
+chip.
 
-Some firmware declares version 1 and ships version 2 tables. The
-entries then start a byte early, and the 6 GHz limits the table
-carries are dropped, because the older layout has no room for them.
-
-  ASUS GA503RM, MTCL declares v1:
-  MTGS  28 bytes   v1: (28-6) % 5 = 2, no fit   v2: 3 tables
-  MTDS  19 bytes   v1: (19-6) % 6 = 1, no fit   v2: 1 table
-
-The layouts accept disjoint lengths, so take whichever one fits and
-keep it per table.
-
-Reported-by: Sagun Kayastha <sgn.kayastha@gmail.com>
-Closes: https://github.com/morrownr/mt76/issues/62
-Fixes: f965333e491e ("mt76: mt7921: introduce ACPI SAR support")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260905013551.24635-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
+Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-1-599cc17fb5f6@analog.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt792x_acpi_sar.c  | 110 +++++++++++-------
- .../wireless/mediatek/mt76/mt792x_acpi_sar.h  |   2 +
- 2 files changed, 73 insertions(+), 39 deletions(-)
+ sound/soc/codecs/adau1372.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-index 9e8a0b2d01a35..3643db2ce8c8f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.c
-@@ -77,68 +77,98 @@ mt792x_asar_acpi_read_mtcl(struct mt792x_dev *dev, u8 **table, u8 *version)
- 	return ret;
- }
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index 7dc0b5c79e399..b758213471ec0 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -798,7 +798,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		if (ret)
+ 			return ret;
+ 		if (adau1372->pd_gpio)
+-			gpiod_set_value(adau1372->pd_gpio, 0);
++			gpiod_set_value_cansleep(adau1372->pd_gpio, 0);
  
-+/* A table's layout is decided by the version byte in MTCL, but some firmware
-+ * labels a version 2 table as version 1.  Accept whichever layout the table
-+ * actually has: for every accepted entry count the two do not overlap, since
-+ * one is 6 + 5n bytes and the other 7 + 7n.
-+ */
-+static bool
-+mt792x_asar_fits(u8 *table, int len, int prelen, int sarlen, int nr_off,
-+		 int min, int max)
-+{
-+	int tblcnt;
-+
-+	if (len < prelen || (len - prelen) % sarlen)
-+		return false;
-+
-+	tblcnt = (len - prelen) / sarlen;
-+	if (tblcnt < min || tblcnt > max)
-+		return false;
-+
-+	return tblcnt == table[nr_off];
-+}
-+
- /* MTDS : Dynamic SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtds(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
- {
--	int len, ret, sarlen, prelen, tblcnt;
--	bool enable;
-+	int len, ret;
-+	u8 *t;
- 
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTDS, table, &len);
- 	if (ret)
- 		return ret;
- 
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		enable = ((struct mt792x_asar_dyn *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit);
--		prelen = sizeof(struct mt792x_asar_dyn);
--		break;
--	case 2:
--		enable = ((struct mt792x_asar_dyn_v2 *)*table)->enable;
--		sarlen = sizeof(struct mt792x_asar_dyn_limit_v2);
--		prelen = sizeof(struct mt792x_asar_dyn_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn),
-+			     sizeof(struct mt792x_asar_dyn_limit),
-+			     offsetof(struct mt792x_asar_dyn, nr_tbl),
-+			     MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_dyn_v2),
-+				  sizeof(struct mt792x_asar_dyn_limit_v2),
-+				  offsetof(struct mt792x_asar_dyn_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_DYN, MT792x_ASAR_MAX_DYN))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
- 
--	tblcnt = (len - prelen) / sarlen;
--	if (!enable ||
--	    tblcnt > MT792x_ASAR_MAX_DYN || tblcnt < MT792x_ASAR_MIN_DYN)
-+	if (!t[offsetof(struct mt792x_asar_dyn, enable)])
- 		return -EINVAL;
- 
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTDS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
-+
- 	return 0;
- }
- 
- /* MTGS : Geo SAR Power Table */
- static int
--mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version)
-+mt792x_asar_acpi_read_mtgs(struct mt792x_dev *dev, u8 **table, u8 version,
-+			   u8 *used)
- {
--	int len, ret, sarlen, prelen, tblcnt;
-+	int len, ret;
-+	u8 *t;
- 
- 	ret = mt792x_acpi_read(dev, MT792x_ACPI_MTGS, table, &len);
- 	if (ret)
- 		return ret;
- 
-+	t = *table;
-+
- 	/* Table content validation */
--	switch (version) {
--	case 1:
--		sarlen = sizeof(struct mt792x_asar_geo_limit);
--		prelen = sizeof(struct mt792x_asar_geo);
--		break;
--	case 2:
--		sarlen = sizeof(struct mt792x_asar_geo_limit_v2);
--		prelen = sizeof(struct mt792x_asar_geo_v2);
--		break;
--	default:
-+	if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo),
-+			     sizeof(struct mt792x_asar_geo_limit),
-+			     offsetof(struct mt792x_asar_geo, nr_tbl),
-+			     MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 1;
-+	else if (mt792x_asar_fits(t, len, sizeof(struct mt792x_asar_geo_v2),
-+				  sizeof(struct mt792x_asar_geo_limit_v2),
-+				  offsetof(struct mt792x_asar_geo_v2, nr_tbl),
-+				  MT792x_ASAR_MIN_GEO, MT792x_ASAR_MAX_GEO))
-+		*used = 2;
-+	else
- 		return -EINVAL;
--	}
- 
--	tblcnt = (len - prelen) / sarlen;
--	if (tblcnt > MT792x_ASAR_MAX_GEO || tblcnt < MT792x_ASAR_MIN_GEO)
--		return -EINVAL;
-+	if (version && *used != version)
-+		dev_info(dev->mt76.dev,
-+			 "MTGS is v%u, MTCL says v%u; using v%u\n",
-+			 *used, version, *used);
- 
- 	return 0;
- }
-@@ -174,14 +204,16 @@ int mt792x_init_acpi_sar(struct mt792x_dev *dev)
- 		asar->countrylist = NULL;
- 	}
- 
--	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtds(dev, (u8 **)&asar->dyn, asar->ver,
-+					 &asar->dyn_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->dyn);
- 		asar->dyn = NULL;
- 	}
- 
- 	/* MTGS is optional */
--	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver);
-+	ret = mt792x_asar_acpi_read_mtgs(dev, (u8 **)&asar->geo, asar->ver,
-+					 &asar->geo_ver);
- 	if (ret) {
- 		devm_kfree(dev->mt76.dev, asar->geo);
- 		asar->geo = NULL;
-@@ -223,7 +255,7 @@ mt792x_asar_get_geo_pwr(struct mt792x_phy *phy,
- 		break;
- 	}
- 
--	if (asar->ver == 1) {
-+	if (asar->geo_ver == 1) {
- 		band_pwr = &asar->geo->tbl[idx].band[0];
- 		max = ARRAY_SIZE(asar->geo->tbl[idx].band);
- 	} else {
-@@ -274,7 +306,7 @@ mt792x_asar_range_pwr(struct mt792x_phy *phy,
- 	if (!capa)
- 		return 127;
- 
--	if (asar->ver == 1) {
-+	if (asar->dyn_ver == 1) {
- 		limit = &asar->dyn->tbl[0].frp[0];
- 		max = ARRAY_SIZE(asar->dyn->tbl[0].frp);
- 	} else {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-index d6d332e863ba9..ed2e266d06375 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_acpi_sar.h
-@@ -90,6 +90,8 @@ struct mt792x_asar_fg {
- 
- struct mt792x_acpi_sar {
- 	u8 ver;
-+	u8 dyn_ver;
-+	u8 geo_ver;
- 	union {
- 		struct mt792x_asar_dyn *dyn;
- 		struct mt792x_asar_dyn_v2 *dyn_v2;
+ 		if (adau1372->switch_mode)
+ 			adau1372->switch_mode(adau1372->dev);
+@@ -818,8 +818,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 							   ADAU1372_CLK_CTRL_PLL_EN,
+ 							   0);
+ 				regcache_cache_only(adau1372->regmap, true);
+-				if (adau1372->pd_gpio)
+-					gpiod_set_value(adau1372->pd_gpio, 1);
++				gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
+ 				clk_disable_unprepare(adau1372->mclk);
+ 				return ret;
+ 			}
+@@ -836,7 +835,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 			 * map. No need to do any register writes to manually
+ 			 * turn things off.
+ 			 */
+-			gpiod_set_value(adau1372->pd_gpio, 1);
++			gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
+ 			regcache_mark_dirty(adau1372->regmap);
+ 		} else {
+ 			regmap_update_bits(adau1372->regmap, ADAU1372_REG_CLK_CTRL,
 -- 
 2.53.0
 
