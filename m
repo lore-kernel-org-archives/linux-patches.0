@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0FE277026;
-	Sat, 17 Oct 2026 16:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7CE29BDB5;
+	Sat, 17 Oct 2026 16:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255915; cv=none; b=jhL+BBBr5ozNbLXPDFW0dzhcjWZGE3WwO6ETHLGaDVDsq0Qth87F1mGbnVzq/xSQf2yofz5zdxewKst1rM4eKK0pv0wFb4juBOx33LZHckB1b7KpwVQR3dsbZ88tc3ccCYhYOTlwmxnPwaSb0j7zEUsSUt2m5NivgGU7GKPs+e8=
+	t=1792255918; cv=none; b=cx11JoKHVAs5NPFES2erBx7xmQ70epmVhtrow+Vy8EGl2SFAoFsUYuvVPUA34wpdy1qq4smSv4eqoHWZ0ORtJa1YrgbGIcEHS+9TIyjvFjH8kNFLPyjsyQ1SvK0XCK3BbrfhlpQcQsrrYTE/nMgzsAK3rHYCapkRClDVaF4k0to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255915; c=relaxed/simple;
-	bh=Z0wRB2igwFqYsRGRq2RnAB24oJTl4twqHBd+5emIuiM=;
+	s=arc-20240116; t=1792255918; c=relaxed/simple;
+	bh=drxbTjLmrN+Y6JPDUvqNFdsWmrL/RWet19jdPWtlU3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsKpIaoWW5W931oWzUfcAIUwOEePU4oVIK2zpxRANrlkN1kjtxmEc8sJ7ZTQCSfF/dmCOTvKy5Ky9qCX/Sz/L0eWDnUiV4jXNmXnfS9kuQns2g27qCPKNjSJymKn6tsJcQAm8z8zFqB4rsv6m3q5F1fwjSWs7m7khXYAQE748T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v54z9TAj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rb15AtzVR5BvKgoRMwB97jtOTIHou3g0WdeaSiVoRuMpkQT6WyrMBvWR09x+7AkITrGBbmiMlIOWLrTWoY65u2EJxQ+SSG1lgLgI3NmqXaQ1gFns2BUkmb02Rbci4aiPOtxoaWZu2Uy9pzS3P1DQvxUCvhBrdad2iSsANsx8Gdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFRn3Lyr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v54z9TAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244A01F000C5;
-	Sat, 17 Oct 2026 16:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFRn3Lyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1FF1F000C4;
+	Sat, 17 Oct 2026 16:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255914;
-	bh=D/U3bPkfoORqn/dMl2sx+vlij5M2fMvHQIa7ibDRIFg=;
+	s=korg; t=1792255917;
+	bh=gawNwjOETBvbDDUHt+3TYaL8A0U9B6Eu4d/tTJdVSQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v54z9TAjximg0HTxyKzX2qdZNozgQela89TI1CMQ2vJYgnJu4+FHoZ6Rm7N/od4Ci
-	 vrzMeRduhJJw0ibprNXzZ2WaI+q8BSGLWYINimapv/YqAdLc+Xw1iAhEC+lwDk9vl3
-	 nsX7v5Rli4vUbm4gvcCra4O+HZuZpgw3MGoGJSGs=
+	b=BFRn3Lyrf0ldWmxdu5gUPsbNpZX3DexUsjdhOagMWbDU+KRZqhQ+3RHqSYb3eXN3y
+	 LnqUHmd3J2JM2aSIWPYRPjAZjltx3wVaD6nZA0MQAfLE/9mLR+fBluey53hjI9TcdS
+	 mRGn2RgAM2LnZPsggopbMdXjsVmRAb8WcK993Vlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0062/1674] ACPI: TAD: Split three functions to untangle runtime PM handling
-Date: Sat, 17 Oct 2026 17:38:54 +0200
-Message-ID: <20261017160432.728945478@linuxfoundation.org>
+Subject: [PATCH 6.6 0027/1674] scsi: qla2xxx: Fix queue teardown NULL dma_free and bitmap locking
+Date: Sat, 17 Oct 2026 17:38:19 +0200
+Message-ID: <20261017160431.838078749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,218 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit b14b77bbea0a82cb66f1538824783e63d4128510 ]
+[ Upstream commit 34a40e0dff940ac5eba494a69b553ea571e24873 ]
 
-Move the core functionality of acpi_tad_get_real_time(),
-acpi_tad_wake_set(), and acpi_tad_wake_read() into separate functions
-called __acpi_tad_get_real_time(), __acpi_tad_wake_set(), and
-__acpi_tad_wake_read(), respectively, which can be called from
-code blocks following a single runtime resume of the device.
+qla25xx_free_req_que() and qla25xx_free_rsp_que() have two pre-existing
+bugs exposed on the error path of qla25xx_create_{req,rsp}_que():
 
-This will facilitate adding alarm support to the RTC class device
-interface of the driver going forward.
+ 1. When dma_alloc_coherent() fails during queue creation, the error
+    path calls the free function with req->ring / rsp->ring still NULL
+    (from kzalloc).  The unconditional dma_free_coherent() with a NULL
+    cpu_addr is undefined behavior and can panic.
 
-No intentional functional impact.
+ 2. The free functions clear req_qid_map / rsp_qid_map under vport_lock,
+    but the create functions protect the same bitmaps with mq_lock.
+    This provides no mutual exclusion.  Additionally, the create error
+    path clears the bit and releases mq_lock before calling the free
+    function, creating a window where another thread can allocate the
+    same que_id and have its ha->req_q_map entry clobbered by the
+    subsequent lockless NULL assignment in the free function.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://patch.msgid.link/23076728.EfDdHjke4D@rafael.j.wysocki
-Stable-dep-of: a3df8bbe0a70 ("ACPI: TAD: Add locking around AML evaluations")
+Fix by:
+
+ - Guarding dma_free_coherent() with a NULL check on the ring pointer.
+
+ - Using mq_lock (the lock held by all creators) in the free functions
+   to atomically NULL the map entry and clear the bitmap bit.
+
+ - Removing the now-redundant clear_bit blocks from the create error
+   paths since the free functions handle it atomically.
+
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-41-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+
+Backport adaptation for the stable tree: the 29xx IOCB size-selection
+helpers are absent, and queue creation still allocates fixed-size entries.
+Initialize the local req_entry_size and rsp_entry_size values with
+sizeof(request_t) and sizeof(response_t), respectively, so DMA freeing
+continues to match allocation without adding helper functions or 29xx
+support. Retain all NULL-ring guards, mq_lock protection, and removal of
+the premature bitmap clears.
+
+Keep the response-ring cleanup layout used by upstream so target commit
+19788a55cab61d78e33e0914a5a31d27843e8a4a applies unchanged.
+
+Stable-dep-of: 19788a55cab6 ("scsi: qla2xxx: Fix use-after-free of qpair work on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_tad.c | 128 ++++++++++++++++++++++++++--------------
- 1 file changed, 84 insertions(+), 44 deletions(-)
+ drivers/scsi/qla2xxx/qla_mid.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/acpi/acpi_tad.c b/drivers/acpi/acpi_tad.c
-index 7af8e6b833533..8fb892424cfb2 100644
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -110,7 +110,7 @@ static int acpi_tad_set_real_time(struct device *dev, struct acpi_tad_rt *rt)
- 	return 0;
+diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
+index 9946899dd83b8..61570f032a8ac 100644
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -574,16 +574,19 @@ qla25xx_free_req_que(struct scsi_qla_host *vha, struct req_que *req)
+ {
+ 	struct qla_hw_data *ha = vha->hw;
+ 	uint16_t que_id = req->id;
++	size_t req_entry_size = sizeof(request_t);
+ 
+-	dma_free_coherent(&ha->pdev->dev, (req->length + 1) *
+-		sizeof(request_t), req->ring, req->dma);
++	if (req->ring)
++		dma_free_coherent(&ha->pdev->dev,
++				  (req->length + 1) * req_entry_size,
++				  req->ring, req->dma);
+ 	req->ring = NULL;
+ 	req->dma = 0;
+ 	if (que_id) {
++		mutex_lock(&ha->mq_lock);
+ 		ha->req_q_map[que_id] = NULL;
+-		mutex_lock(&ha->vport_lock);
+ 		clear_bit(que_id, ha->req_qid_map);
+-		mutex_unlock(&ha->vport_lock);
++		mutex_unlock(&ha->mq_lock);
+ 	}
+ 	kfree(req->outstanding_cmds);
+ 	kfree(req);
+@@ -594,6 +597,7 @@ qla25xx_free_rsp_que(struct scsi_qla_host *vha, struct rsp_que *rsp)
+ {
+ 	struct qla_hw_data *ha = vha->hw;
+ 	uint16_t que_id = rsp->id;
++	size_t rsp_entry_size = sizeof(response_t);
+ 
+ 	if (rsp->msix && rsp->msix->have_irq) {
+ 		free_irq(rsp->msix->vector, rsp->msix->handle);
+@@ -601,15 +605,18 @@ qla25xx_free_rsp_que(struct scsi_qla_host *vha, struct rsp_que *rsp)
+ 		rsp->msix->in_use = 0;
+ 		rsp->msix->handle = NULL;
+ 	}
+-	dma_free_coherent(&ha->pdev->dev, (rsp->length + 1) *
+-		sizeof(response_t), rsp->ring, rsp->dma);
++
++	if (rsp->ring)
++		dma_free_coherent(&ha->pdev->dev,
++				  (rsp->length + 1) * rsp_entry_size,
++				  rsp->ring, rsp->dma);
+ 	rsp->ring = NULL;
+ 	rsp->dma = 0;
+ 	if (que_id) {
++		mutex_lock(&ha->mq_lock);
+ 		ha->rsp_q_map[que_id] = NULL;
+-		mutex_lock(&ha->vport_lock);
+ 		clear_bit(que_id, ha->rsp_qid_map);
+-		mutex_unlock(&ha->vport_lock);
++		mutex_unlock(&ha->mq_lock);
+ 	}
+ 	kfree(rsp);
  }
- 
--static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
-+static int acpi_tad_evaluate_grt(struct device *dev, struct acpi_tad_rt *rt)
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER };
-@@ -119,12 +119,7 @@ static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
- 	acpi_status status;
- 	int ret = -EIO;
- 
--	pm_runtime_get_sync(dev);
--
- 	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
--
--	pm_runtime_put_sync(dev);
--
- 	if (ACPI_FAILURE(status))
- 		goto out_free;
- 
-@@ -140,11 +135,6 @@ static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
- 		goto out_free;
- 
- 	memcpy(rt, data, sizeof(*rt));
--	if (acpi_tad_rt_is_invalid(rt)) {
--		ret = -ENODATA;
--		goto out_free;
--	}
--
- 	ret = 0;
- 
- out_free:
-@@ -152,6 +142,82 @@ static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
- 	return ret;
- }
- 
-+static int __acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
-+{
-+	int ret;
-+
-+	ret = acpi_tad_evaluate_grt(dev, rt);
-+	if (ret)
-+		return ret;
-+
-+	if (acpi_tad_rt_is_invalid(rt))
-+		return -ENODATA;
-+
-+	return 0;
-+}
-+
-+static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
-+{
-+	int ret;
-+
-+	pm_runtime_get_sync(dev);
-+
-+	ret = __acpi_tad_get_real_time(dev, rt);
-+
-+	pm_runtime_put_sync(dev);
-+
-+	return ret;
-+}
-+
-+static int __acpi_tad_wake_set(struct device *dev, char *method, u32 timer_id,
-+			       u32 value)
-+{
-+	acpi_handle handle = ACPI_HANDLE(dev);
-+	union acpi_object args[] = {
-+		{ .type = ACPI_TYPE_INTEGER, },
-+		{ .type = ACPI_TYPE_INTEGER, },
-+	};
-+	struct acpi_object_list arg_list = {
-+		.pointer = args,
-+		.count = ARRAY_SIZE(args),
-+	};
-+	unsigned long long retval;
-+	acpi_status status;
-+
-+	args[0].integer.value = timer_id;
-+	args[1].integer.value = value;
-+
-+	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
-+	if (ACPI_FAILURE(status) || retval)
-+		return -EIO;
-+
-+	return 0;
-+}
-+
-+static int __acpi_tad_wake_read(struct device *dev, char *method, u32 timer_id,
-+				unsigned long long *retval)
-+{
-+	acpi_handle handle = ACPI_HANDLE(dev);
-+	union acpi_object args[] = {
-+		{ .type = ACPI_TYPE_INTEGER, },
-+	};
-+	struct acpi_object_list arg_list = {
-+		.pointer = args,
-+		.count = ARRAY_SIZE(args),
-+	};
-+	acpi_status status;
-+
-+	args[0].integer.value = timer_id;
-+
-+	status = acpi_evaluate_integer(handle, method, &arg_list, retval);
-+	if (ACPI_FAILURE(status))
-+		return -EIO;
-+
-+	return 0;
-+}
-+
-+/* sysfs interface */
-+
- static char *acpi_tad_rt_next_field(char *s, int *val)
- {
- 	char *p;
-@@ -264,31 +330,15 @@ static const struct attribute_group acpi_tad_time_attr_group = {
- static int acpi_tad_wake_set(struct device *dev, char *method, u32 timer_id,
- 			     u32 value)
- {
--	acpi_handle handle = ACPI_HANDLE(dev);
--	union acpi_object args[] = {
--		{ .type = ACPI_TYPE_INTEGER, },
--		{ .type = ACPI_TYPE_INTEGER, },
--	};
--	struct acpi_object_list arg_list = {
--		.pointer = args,
--		.count = ARRAY_SIZE(args),
--	};
--	unsigned long long retval;
--	acpi_status status;
--
--	args[0].integer.value = timer_id;
--	args[1].integer.value = value;
-+	int ret;
- 
- 	pm_runtime_get_sync(dev);
- 
--	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
-+	ret = __acpi_tad_wake_set(dev, method, timer_id, value);
- 
- 	pm_runtime_put_sync(dev);
- 
--	if (ACPI_FAILURE(status) || retval)
--		return -EIO;
--
--	return 0;
-+	return ret;
- }
- 
- static int acpi_tad_wake_write(struct device *dev, const char *buf, char *method,
-@@ -314,27 +364,17 @@ static int acpi_tad_wake_write(struct device *dev, const char *buf, char *method
- static ssize_t acpi_tad_wake_read(struct device *dev, char *buf, char *method,
- 				  u32 timer_id, const char *specval)
- {
--	acpi_handle handle = ACPI_HANDLE(dev);
--	union acpi_object args[] = {
--		{ .type = ACPI_TYPE_INTEGER, },
--	};
--	struct acpi_object_list arg_list = {
--		.pointer = args,
--		.count = ARRAY_SIZE(args),
--	};
- 	unsigned long long retval;
--	acpi_status status;
--
--	args[0].integer.value = timer_id;
-+	int ret;
- 
- 	pm_runtime_get_sync(dev);
- 
--	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
-+	ret = __acpi_tad_wake_read(dev, method, timer_id, &retval);
- 
- 	pm_runtime_put_sync(dev);
- 
--	if (ACPI_FAILURE(status))
--		return -EIO;
-+	if (ret)
-+		return ret;
- 
- 	if ((u32)retval == ACPI_TAD_WAKE_DISABLED)
- 		return sprintf(buf, "%s\n", specval);
+@@ -794,9 +801,6 @@ qla25xx_create_req_que(struct qla_hw_data *ha, uint16_t options,
+ 		if (ret != QLA_SUCCESS) {
+ 			ql_log(ql_log_fatal, base_vha, 0x00df,
+ 			    "%s failed.\n", __func__);
+-			mutex_lock(&ha->mq_lock);
+-			clear_bit(que_id, ha->req_qid_map);
+-			mutex_unlock(&ha->mq_lock);
+ 			goto que_failed;
+ 		}
+ 		vha->flags.qpairs_req_created = 1;
+@@ -908,9 +912,6 @@ qla25xx_create_rsp_que(struct qla_hw_data *ha, uint16_t options,
+ 		if (ret != QLA_SUCCESS) {
+ 			ql_log(ql_log_fatal, base_vha, 0x00e7,
+ 			    "%s failed.\n", __func__);
+-			mutex_lock(&ha->mq_lock);
+-			clear_bit(que_id, ha->rsp_qid_map);
+-			mutex_unlock(&ha->mq_lock);
+ 			goto que_failed;
+ 		}
+ 		vha->flags.qpairs_rsp_created = 1;
 -- 
 2.53.0
 
