@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F495391E51;
-	Sat, 17 Oct 2026 17:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED603A1E92;
+	Sat, 17 Oct 2026 17:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259913; cv=none; b=ljTDJnda6vjyvH4AkKBucKWZMEN58FkkBBZe1sYYIngh6/A9iHZ5drbXmTfK59gr3FTDTdYjiZFDowM1jyfKDc/KKuZVDlLW5cuh9g3J0LWHx2Fiypb0UaQl6Qb8gSLkBOkBdk27EHOBObZ091IJbuXHfergR/WYzC+hb4def9A=
+	t=1792259917; cv=none; b=qJW+zfbJRYi9bN1orIX11KEKbAVmXdEoYaH2h3FnqDse3kx/0x/vBZfCIGVYLjn/PkTBlJ6TxcC7TzH19RETMwU9vFSdvtJFlbKjbjUgAP4mACkEiVoOSkQ2oyjL/CKn6nrhKpzL5zV3ksqQjFrqGoEFF+UBSNowYVebR2ttE0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259913; c=relaxed/simple;
-	bh=6Wi7cAR486fEcPl8eJyAIF9Eqsij9CmPAZw5CWHMszY=;
+	s=arc-20240116; t=1792259917; c=relaxed/simple;
+	bh=gbEik2bspSkc83CwPcl1Jom/lPZE3WbQ2yzg4SCcllA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+mdAejRdpobi9RRsK9DGcCZ0AyegJxqFWHIi64NQzMShbWNfUf2aop8QPSQGFjQyf2oHcijwh3addJ+1kFbzakeLJK0lT5NApKHflzdDmqbr+c7pHh52uEHTCTNJGaECOHTcqwR0P59ufqDVK8xfT+5rTr9gfIvIxgkoB7IxZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqFkAm1X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EmZGPxgj+EeLyYcaYtLLv167iUrWZyTCHJktv/aoE/+dNYJNy038RSBH1O9J1yIpejkGzFv+RO90IZvoS4PGTvl5Z+2Lgi0YZku7Wj6f6xpkR9Oh2ohbnrlE/jtioXjAWziVbxDCDBwEB2e7wPM6kUqtcdZuXmH7yRvEJrAimVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg2MMOJS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqFkAm1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F21F000C4;
-	Sat, 17 Oct 2026 17:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg2MMOJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7268C1F000C4;
+	Sat, 17 Oct 2026 17:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259912;
-	bh=SGr+VBBbnpu/huhZ6jILc//JLoMwrHzsX/O9vQRbqy0=;
+	s=korg; t=1792259915;
+	bh=3k1LNaaoF12MwEma5XsUHhLjwH0LL11iVq9t67KEnaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqFkAm1XDPbndHb6khntV9m5vYTV71KAMjYYyf0BqQpvhSAjIAV34siGDWXJR+lvF
-	 bNcDyzW020cv86RRyOnr2uRJfVC7nGaT92Hg5H1/XZrXPpGYwtAljfY5aAQ6cDuBWP
-	 mrCC0wwen+IkadRU8skWssh2f1MItZuepSdmK020=
+	b=Lg2MMOJSjrqkmIxclplV81N8lOiFhenUNxY3xjBxE8xzZNikwn2TKL4bFouIBpQG4
+	 De4yGPAwQFV41Ai36nQ8JNmPWr7UrG7yg5mzoKU4KVgtneoWWKNpOP2DJyg/QjV4Vg
+	 IZSeopXW/SYtGoKpnx+XYKcFYsarF4J13vZI6si4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1364/1674] usb: dwc3: gadget: Reinitiate stream for all host NoStream behavior
-Date: Sat, 17 Oct 2026 18:00:36 +0200
-Message-ID: <20261017160506.167270970@linuxfoundation.org>
+Subject: [PATCH 6.6 1373/1674] net/sched: fq: add overflow bounds to quantum and initial quantum
+Date: Sat, 17 Oct 2026 18:00:45 +0200
+Message-ID: <20261017160506.404405614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,201 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit dcfe437492e27d54f3ac491aed024da760f5c43c ]
+[ Upstream commit 709f34f7c28dc4dd6c40343d101850f11e172312 ]
 
-There are too many different host behaviors when it comes to NoStream
-handling, and not everyone follows the USB and xHCI spec. The DWC3
-driver attempts to do some guess work to interop with different hosts,
-but it can't cover everything. Let's keep it simple and treat every host
-the same: just retry on NoStream after a 100ms of no response delay.
-Note that some hosts cannot handle frequent retries. This may affect
-performance on certain defective hosts, but NoStream is a rare
-occurrence and interoperability is more important.
+fq_init() computes quantum = 2 * psched_mtu() and initial_quantum = 10 *
+psched_mtu() with no overflow check. A device with a huge MTU (e.g. dummy
+with max_mtu == 0 accepting MTU 2147483634) makes psched_mtu() return
+0x80000000; the 2 * and 10 * multiplications wrap to 0 in 32-bit
+arithmetic, so q->quantum == 0. Then in fq_dequeue() the credit-refill
+loop adds 0 to f->credit (which stays <= 0) and goto begin loops
+forever under the qdisc lock, creating a soft lockup.
 
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/b92ae94c86f01f165d5f178b7767898573b6dc75.1736819308.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b58e6200450d ("usb: dwc3: clear forceRM when issuing EndTransfer")
+Clamp psched_mtu() to [1, 1 << 20] before multiplying so the product
+cannot wrap, then cap the result at 1 << 20, matching the bound already
+enforced on TCA_FQ_QUANTUM in fq_change().
+
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) is large enough that 2 * psched_mtu() wraps (e.g. a
+dummy device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
+
+Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-2-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.h   |   3 +-
- drivers/usb/dwc3/gadget.c | 109 ++++++++++++++++++++------------------
- 2 files changed, 59 insertions(+), 53 deletions(-)
+ net/sched/sch_fq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 2a6891c6a996d..52b75592294ce 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -727,6 +727,7 @@ struct dwc3_event_buffer {
-  */
- struct dwc3_ep {
- 	struct usb_ep		endpoint;
-+	struct delayed_work	nostream_work;
- 	struct list_head	cancelled_list;
- 	struct list_head	pending_list;
- 	struct list_head	started_list;
-@@ -749,7 +750,7 @@ struct dwc3_ep {
- #define DWC3_EP_WAIT_TRANSFER_COMPLETE	BIT(7)
- #define DWC3_EP_IGNORE_NEXT_NOSTREAM	BIT(8)
- #define DWC3_EP_FORCE_RESTART_STREAM	BIT(9)
--#define DWC3_EP_FIRST_STREAM_PRIMED	BIT(10)
-+#define DWC3_EP_STREAM_PRIMED		BIT(10)
- #define DWC3_EP_PENDING_CLEAR_STALL	BIT(11)
- #define DWC3_EP_TXFIFO_RESIZED		BIT(12)
- #define DWC3_EP_DELAY_STOP             BIT(13)
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index ea2d8e8931a21..d671c26bf7b81 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -997,8 +997,7 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep, unsigned int action)
- 
- 			/*
- 			 * All stream eps will reinitiate stream on NoStream
--			 * rejection until we can determine that the host can
--			 * prime after the first transfer.
-+			 * rejection.
- 			 *
- 			 * However, if the controller is capable of
- 			 * TXF_FLUSH_BYPASS, then IN direction endpoints will
-@@ -3364,6 +3363,50 @@ static int dwc3_gadget_init_out_endpoint(struct dwc3_ep *dep)
- 	return dwc3_alloc_trb_pool(dep);
- }
- 
-+#define nostream_work_to_dep(w) (container_of(to_delayed_work(w), struct dwc3_ep, nostream_work))
-+static void dwc3_nostream_work(struct work_struct *work)
-+{
-+	struct dwc3_ep	*dep = nostream_work_to_dep(work);
-+	struct dwc3	*dwc = dep->dwc;
-+	unsigned long   flags;
-+
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dep->flags & DWC3_EP_STREAM_PRIMED)
-+		goto out;
-+
-+	if ((dep->flags & DWC3_EP_IGNORE_NEXT_NOSTREAM) ||
-+	    (!DWC3_MST_CAPABLE(&dwc->hwparams) &&
-+	     !(dep->flags & DWC3_EP_WAIT_TRANSFER_COMPLETE)))
-+		goto out;
-+	/*
-+	 * If the host rejects a stream due to no active stream, by the
-+	 * USB and xHCI spec, the endpoint will be put back to idle
-+	 * state. When the host is ready (buffer added/updated), it will
-+	 * prime the endpoint to inform the usb device controller. This
-+	 * triggers the device controller to issue ERDY to restart the
-+	 * stream. However, some hosts don't follow this and keep the
-+	 * endpoint in the idle state. No prime will come despite host
-+	 * streams are updated, and the device controller will not be
-+	 * triggered to generate ERDY to move the next stream data. To
-+	 * workaround this and maintain compatibility with various
-+	 * hosts, force to reinitiate the stream until the host is ready
-+	 * instead of waiting for the host to prime the endpoint.
-+	 */
-+	if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
-+		unsigned int cmd = DWC3_DGCMD_SET_ENDPOINT_PRIME;
-+
-+		dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
-+	} else {
-+		dep->flags |= DWC3_EP_DELAY_START;
-+		dwc3_stop_active_transfer(dep, true, true);
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return;
-+	}
-+out:
-+	dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
-+	spin_unlock_irqrestore(&dwc->lock, flags);
-+}
-+
- static int dwc3_gadget_init_endpoint(struct dwc3 *dwc, u8 epnum)
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index a99950d8baa1b..edabe21ef3038 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -940,12 +940,14 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
+ 		   struct netlink_ext_ack *extack)
  {
- 	struct dwc3_ep			*dep;
-@@ -3409,6 +3452,7 @@ static int dwc3_gadget_init_endpoint(struct dwc3 *dwc, u8 epnum)
- 	INIT_LIST_HEAD(&dep->pending_list);
- 	INIT_LIST_HEAD(&dep->started_list);
- 	INIT_LIST_HEAD(&dep->cancelled_list);
-+	INIT_DELAYED_WORK(&dep->nostream_work, dwc3_nostream_work);
+ 	struct fq_sched_data *q = qdisc_priv(sch);
++	u32 mtu;
+ 	int err;
  
- 	dwc3_debugfs_create_endpoint_dir(dep);
- 
-@@ -3844,66 +3888,27 @@ static void dwc3_gadget_endpoint_command_complete(struct dwc3_ep *dep,
- static void dwc3_gadget_endpoint_stream_event(struct dwc3_ep *dep,
- 		const struct dwc3_event_depevt *event)
- {
--	struct dwc3 *dwc = dep->dwc;
--
- 	if (event->status == DEPEVT_STREAMEVT_FOUND) {
--		dep->flags |= DWC3_EP_FIRST_STREAM_PRIMED;
--		goto out;
-+		cancel_delayed_work(&dep->nostream_work);
-+		dep->flags |= DWC3_EP_STREAM_PRIMED;
-+		dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
-+		return;
- 	}
- 
- 	/* Note: NoStream rejection event param value is 0 and not 0xFFFF */
- 	switch (event->parameters) {
- 	case DEPEVT_STREAM_PRIME:
--		/*
--		 * If the host can properly transition the endpoint state from
--		 * idle to prime after a NoStream rejection, there's no need to
--		 * force restarting the endpoint to reinitiate the stream. To
--		 * simplify the check, assume the host follows the USB spec if
--		 * it primed the endpoint more than once.
--		 */
--		if (dep->flags & DWC3_EP_FORCE_RESTART_STREAM) {
--			if (dep->flags & DWC3_EP_FIRST_STREAM_PRIMED)
--				dep->flags &= ~DWC3_EP_FORCE_RESTART_STREAM;
--			else
--				dep->flags |= DWC3_EP_FIRST_STREAM_PRIMED;
--		}
--
-+		cancel_delayed_work(&dep->nostream_work);
-+		dep->flags |= DWC3_EP_STREAM_PRIMED;
-+		dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
- 		break;
- 	case DEPEVT_STREAM_NOSTREAM:
--		if ((dep->flags & DWC3_EP_IGNORE_NEXT_NOSTREAM) ||
--		    !(dep->flags & DWC3_EP_FORCE_RESTART_STREAM) ||
--		    (!DWC3_MST_CAPABLE(&dwc->hwparams) &&
--		     !(dep->flags & DWC3_EP_WAIT_TRANSFER_COMPLETE)))
--			break;
--
--		/*
--		 * If the host rejects a stream due to no active stream, by the
--		 * USB and xHCI spec, the endpoint will be put back to idle
--		 * state. When the host is ready (buffer added/updated), it will
--		 * prime the endpoint to inform the usb device controller. This
--		 * triggers the device controller to issue ERDY to restart the
--		 * stream. However, some hosts don't follow this and keep the
--		 * endpoint in the idle state. No prime will come despite host
--		 * streams are updated, and the device controller will not be
--		 * triggered to generate ERDY to move the next stream data. To
--		 * workaround this and maintain compatibility with various
--		 * hosts, force to reinitiate the stream until the host is ready
--		 * instead of waiting for the host to prime the endpoint.
--		 */
--		if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
--			unsigned int cmd = DWC3_DGCMD_SET_ENDPOINT_PRIME;
--
--			dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
--		} else {
--			dep->flags |= DWC3_EP_DELAY_START;
--			dwc3_stop_active_transfer(dep, true, true);
--			return;
--		}
-+		dep->flags &= ~DWC3_EP_STREAM_PRIMED;
-+		if (dep->flags & DWC3_EP_FORCE_RESTART_STREAM)
-+			queue_delayed_work(system_wq, &dep->nostream_work,
-+					   msecs_to_jiffies(100));
- 		break;
- 	}
--
--out:
--	dep->flags &= ~DWC3_EP_IGNORE_NEXT_NOSTREAM;
- }
- 
- static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
+ 	sch->limit		= 10000;
+ 	q->flow_plimit		= 100;
+-	q->quantum		= 2 * psched_mtu(qdisc_dev(sch));
+-	q->initial_quantum	= 10 * psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
++	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
++	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
+ 	q->flow_refill_delay	= msecs_to_jiffies(40);
+ 	q->flow_max_rate	= ~0UL;
+ 	q->time_next_delayed_flow = ~0ULL;
 -- 
 2.53.0
 
