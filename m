@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A568D3C09EF;
-	Sat, 17 Oct 2026 17:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2D532FA18;
+	Sat, 17 Oct 2026 17:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259219; cv=none; b=qsbg0rqpfctHkbIdTOVDK1CgmFjtWEby0kqRwTXl8B7bRjnH7A1/ZrW5FTHty/CZUaGyXytQPqBVgrbj33HNRQcS7D7NSuqxsQWsok+W1IYc3UZxAae/YgThc6Tvzy9zn36AYYZoPpP58ty1Fc5EjU2MbmKNr6o+kWfyr+W/Tg0=
+	t=1792259222; cv=none; b=aofA0sNNgvM/TFN7spRJHOOYPwpRSXyZiow+Ev7By5C0Eww9fryEjR9l1wa5t9TXYFgjT80VwmdLZvAS/HEfhOoSl98H0Jpw/XkHYicNJxWCdSHByjDvUh+HIgIKI710WD9tn3ROC9nagrjkF5ltMl3qmKIhW1C+xSYK3yKGsOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259219; c=relaxed/simple;
-	bh=9OjwjHSKnR0DiKtNMOdNoB2LPpcwM+zShvu5ntsvz1s=;
+	s=arc-20240116; t=1792259222; c=relaxed/simple;
+	bh=tB5IMzquw4IKEKno1JB177ChwqHAr6sZIom8waTs4lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu9882THqB2LQfoTCo8idY/IbeIc+T9cDJeDm2kjRg5tD/AhnKu3sn4znwbeQCvRA8dKQtVXXpWzxjxrroeOmHIyBOgGBOQPSAgl7QJ0omqb1aOBDOHidR5yF5ouYG96z17v4A0b9c4rM5u0dso0ODkxEHAP9V5BitPuea9LxI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpz5psWR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=chh07cl7njkQpAp5zn/beUbQ4bTEnHt6FdNXsaptFuTftN+xMPR9sA9LJX+p7jk/xYa0+P5g6syqZd9tARKQa7oKdN5dzRT6am+yZvzPrMgONHiMFShG0NtVNuD8kDmlorXt2eUWe7h/xOweVgWXFk+cWpZjTw1X3R+w0WaHq/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J35fnIyl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpz5psWR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084071F000C4;
-	Sat, 17 Oct 2026 17:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J35fnIyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66161F000C4;
+	Sat, 17 Oct 2026 17:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259218;
-	bh=ttdl4yUIFIPjXkjiU6E9LOo2id2kFZdoWy1LRNOT5Mk=;
+	s=korg; t=1792259221;
+	bh=vjaOFU2i14jL/0F/ZT1UJHem77OseATjSET4OwVS7/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bpz5psWRwOUl/qln5OgGhtTMu0ID0Vy7WhjlhFI4mXn7tGQ+/qgOcqjSnD2pGwU10
-	 SahUdI5djti4lo13rKiMH0ooU+zbO0bgCt/dijcr8yH6Csv+L5KE8xf0aBP85jc0Vd
-	 4IiKkxk4KcxOqpYr2EPWzqGwtfqXdpj4iCLEmFWI=
+	b=J35fnIyl5PlZlSOwceB/2WebuFhZo3VPW5LYB/4P8hWPEBVZ0L5YjFYSUNks2P3zc
+	 gfPaZzolj9VkCzK6lezSSdmW4Zp/wCjvF0t/4+Q9NjI2pEPF0KvdMCC6QmgvBaqZvy
+	 9KotzOkD8UyHp+c30QpmUvRu5whKGCyLcKjLfsc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1140/1674] md/raid5: avoid R5_Overlap races while breaking stripe batches
-Date: Sat, 17 Oct 2026 17:56:52 +0200
-Message-ID: <20261017160500.420687653@linuxfoundation.org>
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Sonnet 5.5" <noreply@anthropic.com>
+Subject: [PATCH 6.6 1141/1674] bpf: net: netfilter: drop dead NULL checks
+Date: Sat, 17 Oct 2026 17:56:53 +0200
+Message-ID: <20261017160500.446261914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,125 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 55b77337bdd088c77461588e5ec094421b89911b ]
+[ Upstream commit bddaf9adda72447061a52b328c2d4c64b327fa30 ]
 
-KCSAN report a race in break_stripe_batch_list() vs. raid5_make_request()
-on sh->dev[i].flags (plain word write vs. atomic bit op)..
+bpf_xdp_ct_lookup() and bpf_skb_ct_lookup() receive bpf_tuple and opts
+parameter that are expected to be not NULL for real usages (see doc
+string above functions). They return an error if NULL is passed for opts
+or tuple.
 
-and .. one possible scenario is:
+The verifier will now reject programs that pass NULL to these
+parameters, the kfuns can assume that these are always valid pointer, so
+drop the NULL checks for these parameters.
 
-CPU1                            CPU2
-break_stripe_batch_list(sh1)
--> handle sh2
--> lock(sh2)
--> sh2->batch_head = NULL
--> unlock(sh2)
--> test_and_clear_bit(R5_Overlap, sh2->dev[i].flags)
--> wake_up_bit(sh2->dev[i].flags)
-                                raid5_make_request()
-                                -> add_all_stripe_bios(sh2)
-                                -> lock(sh2)
-                                -> stripe_bio_overlaps(sh2) returns true
-				   batch_head is NULL, so new bio overlap
-				   exist bio on sh2 -> true
-                                -> set_bit(R5_Overlap, sh2->dev[i].flags)
-                                -> unlock(sh2)
-                                -> wait_on_bit(sh2->dev[i].flags)
--> sh2->dev[i].flags = sh1->dev[i].flags & ~R5_Overlap
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Link: https://lore.kernel.org/r/20260102180038.2708325-4-puranjay@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 
-No wait_up_bit(), CPU2 could be wait_on_bit() forever...
+Drop only the dead opts NULL guards on the error path of the four kfunc
+wrappers, and keep the NULL checks inside __bpf_nf_ct_alloc_entry().
+Since the verifier-side change is not present here, a NULL opts is
+instead rejected up front in each wrapper, so the unconditional
+opts->error write cannot dereference NULL.
 
-Fix by :
-- Expand the protect zone.
-- Use batch_head's device flag's snaphot when no held head_sh->stripe_lock.
-- Move sh/head_sh->batch_head = NULL to the end of protected zone , and ,
-  any concurrent add_all_stripe_bios() grabs sh->stripe_lock now either:
-	- see batch_head != null, and , is rejected by stripe_bio_overlaps()
-	  under the lock (no R5_Overlap wait ) , or ,
-	- sees batch_head == NULL, only after dev[i].flags has already been
-	  set and the prior R5_Overlap waiters worken.
-
-KCSAN report:
-================================================
-  BUG: KCSAN: data-race in break_stripe_batch_list / raid5_make_request
-
-  write (marked) to 0xffff8e89c8117548 of 8 bytes by task 4042 on cpu 0:
-    raid5_make_request+0xea0/0x2930
-    md_handle_request+0x4a2/0xa40
-    md_submit_bio+0x109/0x1a0
-    __submit_bio+0x2ec/0x390
-    submit_bio_noacct_nocheck+0x457/0x710
-    submit_bio_noacct+0x2a7/0xc20
-    submit_bio+0x56/0x250
-    blkdev_direct_IO+0x54c/0xda0
-    blkdev_write_iter+0x38f/0x570
-    aio_write+0x22b/0x490
-    io_submit_one+0xa51/0xf70
-    __x64_sys_io_submit+0xf7/0x220
-    x64_sys_call+0x1907/0x1c60
-    do_syscall_64+0x130/0x570
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  read to 0xffff8e89c8117548 of 8 bytes by task 4010 on cpu 5:
-    break_stripe_batch_list+0x249/0x480
-    handle_stripe_clean_event+0x720/0x9b0
-    handle_stripe+0x32fb/0x4500
-    handle_active_stripes.isra.0+0x6e0/0xa50
-    raid5d+0x7e0/0xba0
-    md_thread+0x15a/0x2d0
-    kthread+0x1e3/0x220
-    ret_from_fork+0x37a/0x410
-    ret_from_fork_asm+0x1a/0x30
-
-  value changed: 0x0000000000000019 -> 0x0000000000000099 --> R5_Overlap
-
-Fixes: fb642b92c267 ("md/raid5: duplicate some more handle_stripe_clean_event code in break_stripe_batch_list")
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Link: https://patch.msgid.link/20260619041013.1207148-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Stable-dep-of: 6f6183a39533 ("bpf: Guard conntrack opts error writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/nf_conntrack_bpf.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index d83b23b122171..ac14655c85d66 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -4916,25 +4916,25 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- 		sh->check_state = head_sh->check_state;
- 		sh->reconstruct_state = head_sh->reconstruct_state;
- 		spin_lock_irq(&sh->stripe_lock);
--		sh->batch_head = NULL;
--		spin_unlock_irq(&sh->stripe_lock);
- 		for (i = 0; i < sh->disks; i++) {
- 			if (test_and_clear_bit(R5_Overlap, &sh->dev[i].flags))
- 				do_wakeup = 1;
--			sh->dev[i].flags = head_sh->dev[i].flags &
-+			sh->dev[i].flags = READ_ONCE(head_sh->dev[i].flags) &
- 				(~((1 << R5_WriteError) | (1 << R5_Overlap)));
- 		}
-+		sh->batch_head = NULL;
-+		spin_unlock_irq(&sh->stripe_lock);
- 		if (handle_flags == 0 ||
- 		    sh->state & handle_flags)
- 			set_bit(STRIPE_HANDLE, &sh->state);
- 		raid5_release_stripe(sh);
- 	}
- 	spin_lock_irq(&head_sh->stripe_lock);
--	head_sh->batch_head = NULL;
--	spin_unlock_irq(&head_sh->stripe_lock);
- 	for (i = 0; i < head_sh->disks; i++)
- 		if (test_and_clear_bit(R5_Overlap, &head_sh->dev[i].flags))
- 			do_wakeup = 1;
-+	head_sh->batch_head = NULL;
-+	spin_unlock_irq(&head_sh->stripe_lock);
- 	if (head_sh->state & handle_flags)
- 		set_bit(STRIPE_HANDLE, &head_sh->state);
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index b21799d468d28..ba990086bbb08 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -256,11 +256,13 @@ bpf_xdp_ct_alloc(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 	struct xdp_buff *ctx = (struct xdp_buff *)xdp_ctx;
+ 	struct nf_conn *nfct;
  
++	if (!opts)
++		return NULL;
++
+ 	nfct = __bpf_nf_ct_alloc_entry(dev_net(ctx->rxq->dev), bpf_tuple, tuple__sz,
+ 				       opts, opts__sz, 10);
+ 	if (IS_ERR(nfct)) {
+-		if (opts)
+-			opts->error = PTR_ERR(nfct);
++		opts->error = PTR_ERR(nfct);
+ 		return NULL;
+ 	}
+ 
+@@ -291,11 +293,13 @@ bpf_xdp_ct_lookup(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 	struct net *caller_net;
+ 	struct nf_conn *nfct;
+ 
++	if (!opts)
++		return NULL;
++
+ 	caller_net = dev_net(ctx->rxq->dev);
+ 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
+ 	if (IS_ERR(nfct)) {
+-		if (opts)
+-			opts->error = PTR_ERR(nfct);
++		opts->error = PTR_ERR(nfct);
+ 		return NULL;
+ 	}
+ 	return nfct;
+@@ -324,11 +328,13 @@ bpf_skb_ct_alloc(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 	struct nf_conn *nfct;
+ 	struct net *net;
+ 
++	if (!opts)
++		return NULL;
++
+ 	net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
+ 	nfct = __bpf_nf_ct_alloc_entry(net, bpf_tuple, tuple__sz, opts, opts__sz, 10);
+ 	if (IS_ERR(nfct)) {
+-		if (opts)
+-			opts->error = PTR_ERR(nfct);
++		opts->error = PTR_ERR(nfct);
+ 		return NULL;
+ 	}
+ 
+@@ -359,11 +365,13 @@ bpf_skb_ct_lookup(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 	struct net *caller_net;
+ 	struct nf_conn *nfct;
+ 
++	if (!opts)
++		return NULL;
++
+ 	caller_net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
+ 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
+ 	if (IS_ERR(nfct)) {
+-		if (opts)
+-			opts->error = PTR_ERR(nfct);
++		opts->error = PTR_ERR(nfct);
+ 		return NULL;
+ 	}
+ 	return nfct;
 -- 
 2.53.0
 
