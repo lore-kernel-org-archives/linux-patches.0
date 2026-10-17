@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458113AAF60;
-	Sat, 17 Oct 2026 17:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3A23BFAF7;
+	Sat, 17 Oct 2026 17:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258393; cv=none; b=nNNOddrPK7UIU02VbN0zeYIqWHrmYuGvBApg2s0mY3vuTjZq2ZBgXBHnF67VRehjTDzl+Fe0jY+H5kpxjZe06+ISdaIJbbp/leGYB0wlmbkEp0gChVmwc+OZB8Sok4SodAGPppxYXWl7uvO9yky1c1MpsXB2j72JSZty7l4Kgp8=
+	t=1792258396; cv=none; b=H8SNtf05CHNhnX8WW28oGgq8QdxidcmEZhE8PIJnxD8fbciOUouTjZOCkmrv9OK/Wd6mVQjj1Pa9LN0IpCWnTT8+etHdVNpcnisWprLDQbcbsNxG99+UaziQdnxln1rgr0kFf6ST4kNuviwhKfGaIH8shWd4OCcfW2HAgdqDjSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258393; c=relaxed/simple;
-	bh=JuAi+noSOx2QO5BXdQnrNDNJuzNiqe5oNWlqNwhLQP4=;
+	s=arc-20240116; t=1792258396; c=relaxed/simple;
+	bh=Pj+j1jPtrE8yHv+dzoEZgcVOdChb+ZyRQkaLocmU/nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJMyE1t7HJ/bvd+Vl5NoMaV/vh2+qluYbvomO2cdbFOgJfD6e1uJgNAE/wQNUlL+XOmaHowPEGGYJzb32RtlMw220Aed7cO01YFo9p+6Py2rWt9Qb/L/nIadVjwBTMC1fY6TRovG8iKVnoC+vBMJQdlAyzZpq0OCAIaKblv5O9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+r+RZRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mm/dNUod66Sa8V3tLBc1P3U2a1+LVK3muycBVaxy8Zkpb0P6ayTWTMuzWcpYVGkro2HKn7u+cm12oghUDUwPrj2SDUsncY3MMKRxZ2NA/sUOtRnMiuHjYUtUuRiZ7RwQwYp2K5zm9Fr37257td49cxr8zs38u7hV7lBAGLHn588=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1kce0dw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+r+RZRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEA01F000C4;
-	Sat, 17 Oct 2026 17:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1kce0dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A73E1F000C6;
+	Sat, 17 Oct 2026 17:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258391;
-	bh=WXCveqR4d6BfP6flOcerxQd/kgZThn7dUXVH6y2FBM8=;
+	s=korg; t=1792258394;
+	bh=vtxjwtLnnkWA9GYpgOMCes8CauZ5DVXrny0WJe8/ays=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+r+RZRN9cufTzwUfGwS2+kD6gRYLX7Yg/4nvqOqBYs7/RVNlb82Q/nXLSbVaIIV+
-	 aYXcqoyKp5kXhEq2yPf9S10VqmDc3hx+xLu2NuLAEQJ0dy8ruMRjEkGVDuAHoqDcqY
-	 ETe/hj+HuCDfGEKxhFgcyUc0nm8PGp+I49bFDV/A=
+	b=r1kce0dw7Mnvc45JTZLtzlU3lL/4YB6cAVfNpe86YBIs5jxq+2N+ys/XeT71qoC8O
+	 Twh6I4a78M+S/UGFHLQf8eJxeEPz53NbjmI9QCXnjjS4P+QTWYbFAQbmxxRxAuoUrb
+	 bKvguagclYBOW5jxYL+SgJ+8iwwbMax6PNsu/sH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0869/1674] ksmbd: use volume UUID in FS_OBJECT_ID_INFORMATION
-Date: Sat, 17 Oct 2026 17:52:21 +0200
-Message-ID: <20261017160453.418751474@linuxfoundation.org>
+Subject: [PATCH 6.6 0843/1674] md: add new helpers to suspend/resume array
+Date: Sat, 17 Oct 2026 17:51:55 +0200
+Message-ID: <20261017160452.766100152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,50 +51,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 3a64125730cabc34fccfbc230c2667c2e14f7308 ]
+[ Upstream commit 714d20150ed85811193ae07a494d91f9927c590f ]
 
-Use sb->s_uuid for a proper volume identifier as the primary choice.
-For filesystems that do not provide a UUID, fall back to stfs.f_fsid
-obtained from vfs_statfs().
+Advantages for new apis:
+ - reconfig_mutex is not required;
+ - the weird logical that suspend array hold 'reconfig_mutex' for
+   mddev_check_recovery() to update superblock is not needed;
+ - the specail handling, 'pers->prepare_suspend', for raid456 is not
+   needed;
+ - It's safe to be called at any time once mddev is allocated, and it's
+   designed to be used from slow path where array configuration is changed;
+ - the new helpers is designed to be called before mddev_lock(), hence
+   it support to be interrupted by user as well.
 
-Cc: stable@vger.kernel.org
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231010151958.145896-5-yukuai1@huaweicloud.com
+Stable-dep-of: 2cc583653bbe ("md: suspend array while updating raid_disks via sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 102 +++++++++++++++++++++++++++++++++++++++++++++++-
+ drivers/md/md.h |   3 ++
+ 2 files changed, 103 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index b6b67a9e09a98..4f4307ce1482d 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5543,7 +5543,6 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 				    struct smb2_query_info_req *req,
- 				    struct smb2_query_info_rsp *rsp)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 5e13891d85139..f4d9defee5d04 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -443,12 +443,22 @@ void mddev_suspend(struct mddev *mddev)
+ 			lockdep_is_held(&mddev->reconfig_mutex));
+ 
+ 	WARN_ON_ONCE(thread && current == thread->tsk);
+-	if (mddev->suspended++)
++
++	/* can't concurrent with __mddev_suspend() and __mddev_resume() */
++	mutex_lock(&mddev->suspend_mutex);
++	if (mddev->suspended++) {
++		mutex_unlock(&mddev->suspend_mutex);
+ 		return;
++	}
++
+ 	wake_up(&mddev->sb_wait);
+ 	set_bit(MD_ALLOW_SB_UPDATE, &mddev->flags);
+ 	percpu_ref_kill(&mddev->active_io);
+ 
++	/*
++	 * TODO: cleanup 'pers->prepare_suspend after all callers are replaced
++	 * by __mddev_suspend().
++	 */
+ 	if (mddev->pers && mddev->pers->prepare_suspend)
+ 		mddev->pers->prepare_suspend(mddev);
+ 
+@@ -458,14 +468,21 @@ void mddev_suspend(struct mddev *mddev)
+ 
+ 	/* restrict memory reclaim I/O during raid array is suspend */
+ 	mddev->noio_flag = memalloc_noio_save();
++
++	mutex_unlock(&mddev->suspend_mutex);
+ }
+ EXPORT_SYMBOL_GPL(mddev_suspend);
+ 
+ void mddev_resume(struct mddev *mddev)
  {
--	struct ksmbd_session *sess = work->sess;
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_share_config *share = work->tcon->share_conf;
- 	int fsinfoclass = 0;
-@@ -5679,10 +5678,11 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
+ 	lockdep_assert_held(&mddev->reconfig_mutex);
+-	if (--mddev->suspended)
++
++	/* can't concurrent with __mddev_suspend() and __mddev_resume() */
++	mutex_lock(&mddev->suspend_mutex);
++	if (--mddev->suspended) {
++		mutex_unlock(&mddev->suspend_mutex);
+ 		return;
++	}
  
- 		info = (struct object_id_info *)(rsp->Buffer);
+ 	/* entred the memalloc scope from mddev_suspend() */
+ 	memalloc_noio_restore(mddev->noio_flag);
+@@ -476,9 +493,89 @@ void mddev_resume(struct mddev *mddev)
+ 	set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
+ 	md_wakeup_thread(mddev->thread);
+ 	md_wakeup_thread(mddev->sync_thread); /* possibly kick off a reshape */
++
++	mutex_unlock(&mddev->suspend_mutex);
+ }
+ EXPORT_SYMBOL_GPL(mddev_resume);
  
--		if (!user_guest(sess->user))
--			memcpy(info->objid, user_passkey(sess->user), 16);
-+		if (path.mnt->mnt_sb->s_uuid_len == 16)
-+			memcpy(info->objid, path.mnt->mnt_sb->s_uuid.b,
-+					path.mnt->mnt_sb->s_uuid_len);
- 		else
--			memset(info->objid, 0, 16);
-+			memcpy(info->objid, &stfs.f_fsid, sizeof(stfs.f_fsid));
++int __mddev_suspend(struct mddev *mddev, bool interruptible)
++{
++	int err = 0;
++
++	/*
++	 * hold reconfig_mutex to wait for normal io will deadlock, because
++	 * other context can't update super_block, and normal io can rely on
++	 * updating super_block.
++	 */
++	lockdep_assert_not_held(&mddev->reconfig_mutex);
++
++	if (interruptible)
++		err = mutex_lock_interruptible(&mddev->suspend_mutex);
++	else
++		mutex_lock(&mddev->suspend_mutex);
++	if (err)
++		return err;
++
++	if (mddev->suspended) {
++		WRITE_ONCE(mddev->suspended, mddev->suspended + 1);
++		mutex_unlock(&mddev->suspend_mutex);
++		return 0;
++	}
++
++	percpu_ref_kill(&mddev->active_io);
++	if (interruptible)
++		err = wait_event_interruptible(mddev->sb_wait,
++				percpu_ref_is_zero(&mddev->active_io));
++	else
++		wait_event(mddev->sb_wait,
++				percpu_ref_is_zero(&mddev->active_io));
++	if (err) {
++		percpu_ref_resurrect(&mddev->active_io);
++		mutex_unlock(&mddev->suspend_mutex);
++		return err;
++	}
++
++	/*
++	 * For raid456, io might be waiting for reshape to make progress,
++	 * allow new reshape to start while waiting for io to be done to
++	 * prevent deadlock.
++	 */
++	WRITE_ONCE(mddev->suspended, mddev->suspended + 1);
++
++	del_timer_sync(&mddev->safemode_timer);
++	/* restrict memory reclaim I/O during raid array is suspend */
++	mddev->noio_flag = memalloc_noio_save();
++
++	mutex_unlock(&mddev->suspend_mutex);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(__mddev_suspend);
++
++void __mddev_resume(struct mddev *mddev)
++{
++	lockdep_assert_not_held(&mddev->reconfig_mutex);
++
++	mutex_lock(&mddev->suspend_mutex);
++	WRITE_ONCE(mddev->suspended, mddev->suspended - 1);
++	if (mddev->suspended) {
++		mutex_unlock(&mddev->suspend_mutex);
++		return;
++	}
++
++	/* entred the memalloc scope from __mddev_suspend() */
++	memalloc_noio_restore(mddev->noio_flag);
++
++	percpu_ref_resurrect(&mddev->active_io);
++	wake_up(&mddev->sb_wait);
++
++	set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
++	md_wakeup_thread(mddev->thread);
++	md_wakeup_thread(mddev->sync_thread); /* possibly kick off a reshape */
++
++	mutex_unlock(&mddev->suspend_mutex);
++}
++EXPORT_SYMBOL_GPL(__mddev_resume);
++
+ /*
+  * Generic flush handling for md
+  */
+@@ -672,6 +769,7 @@ void mddev_init(struct mddev *mddev)
+ 	mutex_init(&mddev->open_mutex);
+ 	mutex_init(&mddev->reconfig_mutex);
+ 	mutex_init(&mddev->sync_mutex);
++	mutex_init(&mddev->suspend_mutex);
+ 	mutex_init(&mddev->bitmap_info.mutex);
+ 	INIT_LIST_HEAD(&mddev->disks);
+ 	INIT_LIST_HEAD(&mddev->all_mddevs);
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 59f92aa48b37e..a487e5c0648b5 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -316,6 +316,7 @@ struct mddev {
+ 	unsigned long			sb_flags;
  
- 		info->extended_info.magic = cpu_to_le32(EXTENDED_INFO_MAGIC);
- 		info->extended_info.version = cpu_to_le32(1);
+ 	int				suspended;
++	struct mutex			suspend_mutex;
+ 	struct percpu_ref		active_io;
+ 	int				ro;
+ 	int				sysfs_active; /* set when sysfs deletes
+@@ -822,6 +823,8 @@ extern void md_rdev_clear(struct md_rdev *rdev);
+ extern void md_handle_request(struct mddev *mddev, struct bio *bio);
+ extern void mddev_suspend(struct mddev *mddev);
+ extern void mddev_resume(struct mddev *mddev);
++extern int __mddev_suspend(struct mddev *mddev, bool interruptible);
++extern void __mddev_resume(struct mddev *mddev);
+ 
+ extern void md_reload_sb(struct mddev *mddev, int raid_disk);
+ extern void md_update_sb(struct mddev *mddev, int force);
 -- 
 2.53.0
 
