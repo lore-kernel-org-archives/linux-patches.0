@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F84D3939A4;
-	Sat, 17 Oct 2026 17:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DAD392829;
+	Sat, 17 Oct 2026 17:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257661; cv=none; b=uNRyUQvayoRtApZzAyXYtaXAej5MLiWb7X/9hfoLV4jLTty6393nebK/pC4I4xE1sjc1tCMXZmpeqPwJt6e9k/BYgqdy+uqeJSzxL4j/4gPwZtzYO4JDzTf6onOwztvdPac1owq5zEeyq4vV7JA2/TkfDLPj/o56e7orpUc8M1E=
+	t=1792257664; cv=none; b=MogLA9c4HG5+tRNYWTbw132V7Jf1xfthMKE4WicJYA54PrDOWiFpSp7z+BRZJD1BP5ynKnhNaX4YiZ/VsC9FcsXqldhLJsAaZQ55u2fZ2IOtslQfczPMFy6ubxtGXkKqpmgjqwjulxnYqqm9B0PS+pzEMSlE+VasNs1s2zs2eoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257661; c=relaxed/simple;
-	bh=1iMkiT1//uVNlp9YrFmcTlXyuu2WIwNh46bSjxXKnOI=;
+	s=arc-20240116; t=1792257664; c=relaxed/simple;
+	bh=ui8IMcNq/0WqAb0WpoBLO91AcNyO10ygMgsbO43fTHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFsxe0MfL9bsnhZCDScW+C9vOqxGAeTAp0gnjcjdpTq/vCo8lZuyRKGCRmUJtO2Ku9/OG5AOm5VczBqgS376lFT74XAL6tY5oitBKO4ejKp/S3Gs9MpSmmcNiidCfguYs7/CXUTX5QVtAlbF1DDf4CiVOVDMXHncwow8yUGLHXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gd8ZIRwP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f7Waq7Okura7xBaMHQF5ufA+8cdZk0kS6LaZ4EX5MTs9NgrtDtkx1wZ57xSjKoOYFrGUDnvbxdo/KUKn+pjqhxcw9EuzAKIOF2TZfoez6jK9Yl08pzirl6jQ655fDxHVYy+UOWV9nciqXk7Ylznkrhoogi9n7zoT7GtX7frNlA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVH0Aeju; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gd8ZIRwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7425F1F000C4;
-	Sat, 17 Oct 2026 17:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVH0Aeju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6481F000C4;
+	Sat, 17 Oct 2026 17:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257660;
-	bh=ggbEbmpZio6Wys2WJU+gLjsYLvJhgM3HqAS4pbqQP2g=;
+	s=korg; t=1792257663;
+	bh=xdHnaMe5DcZCL7/3zaZciQOuHBMrx/d/mcnY7V07FfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gd8ZIRwPcaMjvWRyaX/wtgeMyn9Ir5bnpEVQ8oZt7DSzQGhJsm2Lrcke7VQG0zHD3
-	 9fcL4z85AJv/FP+H1QhHrNCTag9QC0EtnocDVvckJOSQ6AbREsr8JPRD35SRIdvUZi
-	 vi5dRPa2VjtiKfy+14TrjMo0/XPQQmPDr24N7ycU=
+	b=fVH0Aeju3ljGLbJurcGgSHF2sgN4oGT+3Z+8e+kQE0Ritwn4qJgEqpXGeau69zp4e
+	 5V9Z3fsbgDPbR8XmIuPFIhQfFX2XNc9U8/2D4GyaSWKdnBf/XCxNp3YzSfKlRCNbzO
+	 en5VglVtMG+swxuforTA8YSfsj6jgtBd3SGZvpAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0631/1674] mm: simplify thp_vma_allowable_order
-Date: Sat, 17 Oct 2026 17:48:23 +0200
-Message-ID: <20261017160447.289575156@linuxfoundation.org>
+Subject: [PATCH 6.6 0614/1674] tty: add break_wait kernel-doc
+Date: Sat, 17 Oct 2026 17:48:06 +0200
+Message-ID: <20261017160446.838332471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,209 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox <willy@infradead.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e0ffb29bc54d86b9ab10ebafc66eb1b7229e0cd7 ]
+[ Upstream commit 5dad87615c9861cfa366ca984b52f581e861df20 ]
 
-Combine the three boolean arguments into one flags argument for
-readability.
+Add the missing kernel-doc description for the new break_wait field in
+struct tty_struct.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-Adapt the flags conversion to the existing hugepage_vma_check()
-predicate and its disabled-THP stub. Add a requested-order mask and
-supported-order definitions so the follow-up page cache limit can be
-applied without introducing additional functions.
-
-Keep anonymous hugepages and collapse checks limited to PMD order, and
-pass the appropriate PMD or PUD order from the fault path. Preserve the
-existing alignment, shmem, sysfs and VMA policy checks. Omit the change
-to the multi-size anonymous allocation path, which is absent here.
-
-Stable-dep-of: d659b715e94a ("mm/huge_memory: avoid PMD-size page cache if needed")
+Fixes: 845a2737e0f5 ("tty: abort break signalling on hangup")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/20d75a7a-2e7a-484f-a267-c21db82dd922@infradead.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260925094222.18303-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_mmu.c      |  3 ++-
- include/linux/huge_mm.h | 23 ++++++++++++++++++++---
- mm/huge_memory.c        | 13 +++++++++++--
- mm/khugepaged.c         | 14 ++++++++------
- mm/memory.c             |  6 ++++--
- 5 files changed, 45 insertions(+), 14 deletions(-)
+ include/linux/tty.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index d0896bf8e12f0..ac7e356cacebc 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -865,7 +865,8 @@ static int show_smap(struct seq_file *m, void *v)
- 	__show_smap(m, &mss, false);
- 
- 	seq_printf(m, "THPeligible:    %8u\n",
--		   hugepage_vma_check(vma, vma->vm_flags, true, false, true));
-+		   hugepage_vma_check(vma, vma->vm_flags,
-+			   TVA_SMAPS | TVA_ENFORCE_SYSFS, BIT(PMD_ORDER)));
- 
- 	if (arch_pkeys_enabled())
- 		seq_printf(m, "ProtectionKey:  %8u\n", vma_pkey(vma));
-diff --git a/include/linux/huge_mm.h b/include/linux/huge_mm.h
-index fc789c0ac85b8..f1fa9bbb858a7 100644
---- a/include/linux/huge_mm.h
-+++ b/include/linux/huge_mm.h
-@@ -64,6 +64,22 @@ ssize_t single_hugepage_flag_show(struct kobject *kobj,
- 				  enum transparent_hugepage_flag flag);
- extern struct kobj_attribute shmem_enabled_attr;
- 
-+#define THP_ORDERS_ALL_ANON	BIT(PMD_ORDER)
-+
-+/*
-+ * Mask of all large folio orders supported for file THP.
-+ */
-+#define THP_ORDERS_ALL_FILE	(BIT(PMD_ORDER) | BIT(PUD_ORDER))
-+
-+/*
-+ * Mask of all large folio orders supported for THP.
-+ */
-+#define THP_ORDERS_ALL		(THP_ORDERS_ALL_ANON | THP_ORDERS_ALL_FILE)
-+
-+#define TVA_SMAPS		(1 << 0)	/* Will be used for procfs */
-+#define TVA_IN_PF		(1 << 1)	/* Page fault handler */
-+#define TVA_ENFORCE_SYSFS	(1 << 2)	/* Obey sysfs configuration */
-+
- #define HPAGE_PMD_ORDER (HPAGE_PMD_SHIFT-PAGE_SHIFT)
- #define HPAGE_PMD_NR (1<<HPAGE_PMD_ORDER)
- 
-@@ -131,7 +147,7 @@ static inline bool file_thp_enabled(struct vm_area_struct *vma)
- }
- 
- bool hugepage_vma_check(struct vm_area_struct *vma, unsigned long vm_flags,
--			bool smaps, bool in_pf, bool enforce_sysfs);
-+			unsigned long tva_flags, unsigned long orders);
- 
- #define transparent_hugepage_use_zero_page()				\
- 	(transparent_hugepage_flags &					\
-@@ -292,8 +308,9 @@ static inline bool transhuge_vma_suitable(struct vm_area_struct *vma,
- }
- 
- static inline bool hugepage_vma_check(struct vm_area_struct *vma,
--				      unsigned long vm_flags, bool smaps,
--				      bool in_pf, bool enforce_sysfs)
-+				      unsigned long vm_flags,
-+				      unsigned long tva_flags,
-+				      unsigned long orders)
- {
- 	return false;
- }
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 820e67ff8beb3..4a711012bb974 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -75,8 +75,17 @@ struct page *huge_zero_page __read_mostly;
- unsigned long huge_zero_pfn __read_mostly = ~0UL;
- 
- bool hugepage_vma_check(struct vm_area_struct *vma, unsigned long vm_flags,
--			bool smaps, bool in_pf, bool enforce_sysfs)
--{
-+			unsigned long tva_flags, unsigned long orders)
-+{
-+	bool smaps = tva_flags & TVA_SMAPS;
-+	bool in_pf = tva_flags & TVA_IN_PF;
-+	bool enforce_sysfs = tva_flags & TVA_ENFORCE_SYSFS;
-+	/* Check the intersection of requested and supported orders. */
-+	orders &= vma_is_anonymous(vma) ?
-+			THP_ORDERS_ALL_ANON : THP_ORDERS_ALL_FILE;
-+	if (!orders)
-+		return 0;
-+
- 	if (!vma->vm_mm)		/* vdso */
- 		return false;
- 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 16d29ee602c70..ead6b0001524b 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -446,7 +446,8 @@ void khugepaged_enter_vma(struct vm_area_struct *vma,
- {
- 	if (!test_bit(MMF_VM_HUGEPAGE, &vma->vm_mm->flags) &&
- 	    hugepage_flags_enabled()) {
--		if (hugepage_vma_check(vma, vm_flags, false, false, true))
-+		if (hugepage_vma_check(vma, vm_flags, TVA_ENFORCE_SYSFS,
-+				       BIT(PMD_ORDER)))
- 			__khugepaged_enter(vma->vm_mm);
- 	}
- }
-@@ -899,6 +900,7 @@ static int hugepage_vma_revalidate(struct mm_struct *mm, unsigned long address,
- 				   struct collapse_control *cc)
- {
- 	struct vm_area_struct *vma;
-+	unsigned long tva_flags = cc->is_khugepaged ? TVA_ENFORCE_SYSFS : 0;
- 
- 	if (unlikely(hpage_collapse_test_exit(mm)))
- 		return SCAN_ANY_PROCESS;
-@@ -909,8 +911,7 @@ static int hugepage_vma_revalidate(struct mm_struct *mm, unsigned long address,
- 
- 	if (!transhuge_vma_suitable(vma, address))
- 		return SCAN_ADDRESS_RANGE;
--	if (!hugepage_vma_check(vma, vma->vm_flags, false, false,
--				cc->is_khugepaged))
-+	if (!hugepage_vma_check(vma, vma->vm_flags, tva_flags, BIT(PMD_ORDER)))
- 		return SCAN_VMA_CHECK;
- 	/*
- 	 * Anon VMA expected, the address may be unmapped then
-@@ -1492,7 +1493,7 @@ int collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
- 	 * and map it by a PMD, regardless of sysfs THP settings. As such, let's
- 	 * analogously elide sysfs THP settings here.
- 	 */
--	if (!hugepage_vma_check(vma, vma->vm_flags, false, false, false))
-+	if (!hugepage_vma_check(vma, vma->vm_flags, 0, BIT(PMD_ORDER)))
- 		return SCAN_VMA_CHECK;
- 
- 	/* Keep pmd pgtable for uffd-wp; see comment in retract_page_tables() */
-@@ -2364,7 +2365,8 @@ static unsigned int khugepaged_scan_mm_slot(unsigned int pages, int *result,
- 			progress++;
- 			break;
- 		}
--		if (!hugepage_vma_check(vma, vma->vm_flags, false, false, true)) {
-+		if (!hugepage_vma_check(vma, vma->vm_flags,
-+					TVA_ENFORCE_SYSFS, BIT(PMD_ORDER))) {
- skip:
- 			progress++;
- 			continue;
-@@ -2701,7 +2703,7 @@ int madvise_collapse(struct vm_area_struct *vma, struct vm_area_struct **prev,
- 
- 	*prev = vma;
- 
--	if (!hugepage_vma_check(vma, vma->vm_flags, false, false, false))
-+	if (!hugepage_vma_check(vma, vma->vm_flags, 0, BIT(PMD_ORDER)))
- 		return -EINVAL;
- 
- 	cc = kmalloc(sizeof(*cc), GFP_KERNEL);
-diff --git a/mm/memory.c b/mm/memory.c
-index 2157c5c9139f9..a64919cf0fb0d 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5121,7 +5121,8 @@ static vm_fault_t __handle_mm_fault(struct vm_area_struct *vma,
- 		return VM_FAULT_OOM;
- retry_pud:
- 	if (pud_none(*vmf.pud) &&
--	    hugepage_vma_check(vma, vm_flags, false, true, true)) {
-+	    hugepage_vma_check(vma, vm_flags,
-+			       TVA_IN_PF | TVA_ENFORCE_SYSFS, BIT(PUD_ORDER))) {
- 		ret = create_huge_pud(&vmf);
- 		if (!(ret & VM_FAULT_FALLBACK))
- 			return ret;
-@@ -5155,7 +5156,8 @@ static vm_fault_t __handle_mm_fault(struct vm_area_struct *vma,
- 		goto retry_pud;
- 
- 	if (pmd_none(*vmf.pmd) &&
--	    hugepage_vma_check(vma, vm_flags, false, true, true)) {
-+	    hugepage_vma_check(vma, vm_flags,
-+			       TVA_IN_PF | TVA_ENFORCE_SYSFS, BIT(PMD_ORDER))) {
- 		ret = create_huge_pmd(&vmf);
- 		if (!(ret & VM_FAULT_FALLBACK))
- 			return ret;
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index 54dfc9e8e75d0..e4b17886d9988 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -173,6 +173,7 @@ struct tty_operations;
+  * @write_wait: concurrent writers are waiting in this queue until they are
+  *		allowed to write
+  * @read_wait: readers wait for data in this queue
++ * @break_wait: wait queue for timed breaks
+  * @hangup_work: normally a work to perform a hangup (do_tty_hangup()); while
+  *		 freeing the tty, (re)used to release_one_tty()
+  * @disc_data: pointer to @ldisc's private data (e.g. to &struct n_tty_data)
 -- 
 2.53.0
 
