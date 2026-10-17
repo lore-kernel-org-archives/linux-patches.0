@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D183E224D6;
-	Sat, 17 Oct 2026 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A9618787A;
+	Sat, 17 Oct 2026 15:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252643; cv=none; b=aL/YIZ3VcOCx8diuJVpJNytqJCFisePZ9+gAHZvJzXwNkSrx973bf6wROlSAHVXlNiwjd62u9Oy9exasmn/IJcPYyDBXMuhX/rk2MFt1ewVVtd/3kKF2Bes+2nAy/yHRUbjspGsBVlRW2he/lAua0W8wpgw7icbFka2iTEYEpVs=
+	t=1792252645; cv=none; b=aenR8+58jBBr6rSAuBwSKEH0nCQODeKbOsmSzM6gQ0PzON3UDc2S4bsW9xwtdd9dLDwhm0RCxDMXvJSit6r87L5I8nJcN+5wwRvDi1QP6RsBY3+tf3SRdKY3Oku6OFk1QL6ESbQFwkOMU5WsvkvFqBv72TZDYnDWL5ycdlsH1/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252643; c=relaxed/simple;
-	bh=adX59XQWIwBdNA3uYXdlck4uJSn8RTVBAi6j+2wTkxo=;
+	s=arc-20240116; t=1792252645; c=relaxed/simple;
+	bh=hyffvoBjUhfv5fYNwjwAfW4MaL5REzkJBbhPHXmQcRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Otr64lLt/PNcW8arVQhdK0ElA6+D2Ds3pIqdQQNAtQK2+UzAvgGBAtv+oxFe8Jp/lMUt2aCriDt1xyOFJLYMLgPul5MBnmz8rkIXmMi5NWIWcS0PrtTGQBu6VV0BZ9LmpSu5PmXZLCnyhJ0xRQTsR+nJH8CW6mIq5C/0gPBC+wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbWw266/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+Od+OiRlPT5z6gVw14x+Q3PS7HRt4JhWa9z1nGDOg5dMqP+3oDUjVEQb6whvweM698s0n3Q93ek2BqK9W+jIecLMrF0gHwWoBe3KsxWDBuYB2XIgh+IvcS3vJpL0rGt+WfhiOZvuxZtsz5ltG9x1haVxjFBaHWlB60G9kd8oQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2SP/rKB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbWw266/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80CB1F000C4;
-	Sat, 17 Oct 2026 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2SP/rKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F297E1F000C4;
+	Sat, 17 Oct 2026 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252641;
-	bh=lJ1DPZ3GHVrzqA/QBTGoPFPYKB2HD7sJefOFl+ZuJ/E=;
+	s=korg; t=1792252644;
+	bh=W7L8nirPlpGyo/7wXXa07R2j2C9tzZGRQy29qatQrWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbWw266/2++7pdoKZ1HFVi6mSisRRTgTt2jFMCCPR94K0O/WZ/U80STwEKceWyFYj
-	 R69GmcYywmjYamK8U2FzcRVN+ajxy/y0IIGPZ/GbdojGDIL2EMRV209qVX4RnFb3mr
-	 21sgBdW7KTFC7brcq8bNjZ7wCnmWIK45aSGplfeI=
+	b=U2SP/rKBEOR0soItEQs/526mPpxJOG15Vy5IvgJPu76tt+2lRCCCKOA4xePn5QX0K
+	 I84+YixLieviPmoeXnjBP7RGVhChdlWipVEZWW4T4g32MgIw6Tb9NLtzF7QPhdM+vH
+	 aH7jZJJJN/Zyj4D2wXlkTbjxgN2aavEtpE0slYQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Wei-Jie Hung <imbigking12@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 47/52] rose: hold a reference on incoming sockets queued for accept()
-Date: Sat, 17 Oct 2026 17:54:48 +0200
-Message-ID: <20261017155106.356685135@linuxfoundation.org>
+Subject: [PATCH 6.18 21/52] riscv: patch: fix handling of bpf-jit execmem addresses
+Date: Sat, 17 Oct 2026 17:54:22 +0200
+Message-ID: <20261017155105.538596548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -50,152 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Wei-Jie Hung <imbigking12@gmail.com>
 
-commit 6b0223a4795f5db52dee038a7a29e9906122b0f7 upstream.
+[ Upstream commit a510e1ae8c9030750c2edf7b0bc9b186cd8c7a06 ]
 
-rose_rx_call_request() creates the socket for an incoming call and
-queues the call's skb on the listening socket with skb->sk pointing at
-it, without taking a reference. If the caller clears the call before
-it is accepted, rose_disconnect() leaves that socket in STATE_0 with
-SOCK_DEAD set, and since commit "rose: release netdev ref and destroy
-orphaned incoming sockets" rose_heartbeat_expiry() reaps such orphaned
-sockets and frees them. The skb stays on the listener's queue, so:
+Commit 8718e5a3090b ("riscv: patch: skip fixmap mapping when kernel text
+is already writable") gated the core_kernel_text() branch of patch_map()
+on CONFIG_STRICT_KERNEL_RWX, and explicitly left the vmalloc branch
+unchanged. That branch has a separate problem.
 
-- closing the listener makes rose_destroy_socket() walk its queue and
-  set flags and restart the heartbeat on the freed socket;
-- accept() can hand the freed socket to user space.
+That branch only creates a temporary writable fixmap alias when
+CONFIG_STRICT_MODULE_RWX is enabled, and otherwise assumes the target is
+directly writable and returns the address unchanged. That assumption no
+longer holds: bpf_prog_pack_alloc calls set_memory_rox() on every pack
+unconditionally in alloc_new_pack(), independently of any
+CONFIG_STRICT_*_RWX option, so BPF text in the vmalloc area is read-only
+regardless of what CONFIG_STRICT_MODULE_RWX says.
 
-On a live node running a KASAN kernel, stopping the FPAC daemons shortly
-after a local (loopback) call had been set up and dropped gave:
+With CONFIG_STRICT_MODULE_RWX=n, patch_map() returns the read-only
+address directly, the subsequent copy_to_kernel_nofault() takes a
+page fault and returns -EFAULT. bpf_arch_text_copy() turns that into
+-EINVAL, which propagates through bpf_jit_binary_pack_finalize() to the
+WARN_ON() in bpf_int_jit_compile() and leaves the program un-JITed.
 
-  BUG: KASAN: slab-use-after-free in rose_destroy_socket+0x24a/0x570 [rose]
-  Write of size 8 ... by task fpacwpd
-   rose_destroy_socket
-   rose_release
-  Allocated by task 0: ... rose_rx_call_request <- rose_loopback_timer
-  Freed by task ...: ... sk_free <- rose_heartbeat_expiry
-  refcount_t: addition on 0; use-after-free.
-   rose_start_heartbeat <- rose_destroy_socket <- rose_release
+Note that BPF cannot be fixed the way kprobes was in
+commit bdc46e507b59 ("riscv: mm: make EXECMEM_KPROBES writable without
+CONFIG_STRICT_MODULE_RWX"). EXECMEM_BPF is already PAGE_KERNEL, i.e.
+writable at allocation time; the read-only mapping is established
+afterwards by generic code in alloc_new_pack(), which arch code cannot
+influence. The only place this can be handled is patch_map().
 
-followed a few seconds later by a page fault in the re-armed heartbeat
-and a kernel panic.
+This is the same problem that was fixed on arm64 by commit b1480ed230ac
+("arm64: patching: fix handling of execmem addresses"), and the fix is
+the same: CONFIG_EXECMEM is what actually tracks whether the vmalloc
+area can hold executable memory that needs a temporary alias to be
+written. CONFIG_BPF_JIT, CONFIG_KPROBES and CONFIG_MODULES all select
+it.
 
-Make the listener's queue own a reference on each pending socket,
-taken when the call is queued and dropped by rose_accept() or by the
-listener's rose_destroy_socket() once the skb is off the queue. Have
-the heartbeat set SOCK_DESTROY under the socket lock before reaping a
-dead socket, as the other reaping paths already do, and make both
-consumers check it under the child's lock: rose_accept() skips a
-reaped socket and waits for the next call, and rose_destroy_socket()
-no longer re-arms the heartbeat of a socket that is gone.
+Note that this is not limited to CONFIG_MODULES=n. Unlike arm64, riscv
+selects CONFIG_ARCH_OPTIONAL_KERNEL_RWX, so CONFIG_STRICT_MODULE_RWX can
+be disabled with CONFIG_MODULES=y as well, and the bug is reachable in
+that configuration too.
 
-Fixes: df12be096302 ("rose: release netdev ref and destroy orphaned incoming sockets")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+The !CONFIG_MMU build is unaffected: it has its own __patch_insn_set()
+and __patch_insn_write() implementations and never calls patch_map().
+
+Fixes: 2c9e5d4a0082 ("bpf: remove CONFIG_BPF_JIT dependency on CONFIG_MODULES of")
+Signed-off-by: Wei-Jie Hung <imbigking12@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Tested-by: Pu Lehui <pulehui@huawei.com>
+Link: https://patch.msgid.link/20260914115607.350097-1-imbigking12@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c    | 44 ++++++++++++++++++++++++++++++++++++++-----
- net/rose/rose_timer.c |  5 +++++
- 2 files changed, 44 insertions(+), 5 deletions(-)
+ arch/riscv/kernel/patch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 97893498e6111..48b82fe3bee18 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -390,11 +390,25 @@ void rose_destroy_socket(struct sock *sk)
- 	rose_clear_queues(sk);		/* Flush the queues */
+diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
+index 16b243376f362..1e8f1ac5a755f 100644
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -46,7 +46,7 @@ static __always_inline void *patch_map(void *addr, const unsigned int fixmap)
  
- 	while ((skb = skb_dequeue(&sk->sk_receive_queue)) != NULL) {
--		if (skb->sk != sk) {	/* A pending connection */
--			/* Queue the unaccepted socket for death */
--			sock_set_flag(skb->sk, SOCK_DEAD);
--			rose_start_heartbeat(skb->sk);
--			rose_sk(skb->sk)->state = ROSE_STATE_0;
-+		struct sock *child = skb->sk;
-+
-+		if (child != sk) {	/* A pending connection */
-+			/* Queue the unaccepted socket for death, unless
-+			 * rose_heartbeat_expiry() has already reaped it or is
-+			 * about to (SOCK_DESTROY).
-+			 */
-+			local_bh_disable();
-+			bh_lock_sock_nested(child);
-+			if (!sock_flag(child, SOCK_DESTROY)) {
-+				sock_set_flag(child, SOCK_DEAD);
-+				rose_start_heartbeat(child);
-+				rose_sk(child)->state = ROSE_STATE_0;
-+			}
-+			bh_unlock_sock(child);
-+			local_bh_enable();
-+
-+			skb->sk = NULL;
-+			sock_put(child);	/* the queue's reference */
- 		}
+ 	if (core_kernel_text(uintaddr) || is_kernel_exittext(uintaddr)) {
+ 		phys = __pa_symbol(addr);
+-	} else if (IS_ENABLED(CONFIG_STRICT_MODULE_RWX)) {
++	} else if (IS_ENABLED(CONFIG_EXECMEM)) {
+ 		struct page *page = vmalloc_to_page(addr);
  
- 		kfree_skb(skb);
-@@ -980,6 +994,7 @@ static int rose_accept(struct socket *sock, struct socket *newsock,
- 	 *	The write queue this time is holding sockets ready to use
- 	 *	hooked into the SABM we saved
- 	 */
-+again:
- 	for (;;) {
- 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
- 
-@@ -1005,12 +1020,27 @@ static int rose_accept(struct socket *sock, struct socket *newsock,
- 		goto out_release;
- 
- 	newsk = skb->sk;
-+	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
-+	if (sock_flag(newsk, SOCK_DESTROY)) {
-+		/* The call went away and rose_heartbeat_expiry() reaped (or
-+		 * is about to reap) the socket before it was accepted: drop
-+		 * it and wait for the next one.
-+		 */
-+		release_sock(newsk);
-+		skb->sk = NULL;
-+		kfree_skb(skb);
-+		sk_acceptq_removed(sk);
-+		sock_put(newsk);	/* the queue's reference */
-+		goto again;
-+	}
- 	sock_graft(newsk, newsock);
-+	release_sock(newsk);
- 
- 	/* Now attach up the new socket */
- 	skb->sk = NULL;
- 	kfree_skb(skb);
- 	sk_acceptq_removed(sk);
-+	sock_put(newsk);		/* the queue's reference */
- 
- out_release:
- 	release_sock(sk);
-@@ -1124,6 +1154,10 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 
- 	rose_insert_socket(make);
- 
-+	/* The listener's queue holds a reference on the pending socket
-+	 * until rose_accept() or rose_destroy_socket() takes it off.
-+	 */
-+	sock_hold(make);
- 	skb_queue_head(&sk->sk_receive_queue, skb);
- 
- 	rose_start_heartbeat(make);
-diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
-index d967cbc1db3db..4130ddf848504 100644
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -188,6 +188,11 @@ static void rose_heartbeat_expiry(struct timer_list *t)
- 				rose_neigh_put(rose->neighbour);
- 				rose->neighbour = NULL;
- 			}
-+			/* Tell rose_accept() and the listener's teardown, which
-+			 * may still hold this socket on their queue, that it is
-+			 * gone.
-+			 */
-+			sock_set_flag(sk, SOCK_DESTROY);
- 			bh_unlock_sock(sk);
- 			rose_destroy_socket(sk);
- 			sock_put(sk);
+ 		BUG_ON(!page);
 -- 
 2.53.0
 
