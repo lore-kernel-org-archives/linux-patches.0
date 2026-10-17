@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B44392C3D;
-	Sat, 17 Oct 2026 18:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9587A3C0601;
+	Sat, 17 Oct 2026 18:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260337; cv=none; b=ZTH4mpy0iPPY4P4Ak1YKI8YhPRSbL0a2XWl9Fr+A0+gpfDEpES6FRbFoFW94o3zfV8I2hPmu3men3mM3KjmmEx84DPfsa629sAyn7fTCCg4kVPO3zLCNXXF4M1vbIxI77Q67raqFwpOC7V7yWWG3eqUaH1dfI0fI4K3U3+ke2eI=
+	t=1792260340; cv=none; b=HyBBtXN1x6ptFMhIElxyXwTo1fLgmQyM2bRbS7yPhmQMk852KOjzg39gWmiIaxlzj0uQ2FFjivgIEk+xpnKeIaCEY6Ry2v1pntuxYSC8ihIx+ml95Y/xS2iMbo73SykPPuIm1SpfrPUrnGA2HVVM1LsOIhvB7TGNIc0zuXHfNCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260337; c=relaxed/simple;
-	bh=3Dyoi8EW7HxITAGMwU68o8efJs1Z/lLq5qLiokfbQbM=;
+	s=arc-20240116; t=1792260340; c=relaxed/simple;
+	bh=lFQJ1RC5v4dmzP80xJXIXrYlDqY5xIXA4IEDLf9Dj8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s48n3KsmVOmiL5Aww+Q0YnvGOx0KNm9nlBXl/0V4otoTcRUNjhHphC8AXteM/4iHYLTnTaS/yfadu5enGnkK0DjOcZWtiO8cBQJqvwfq3ny7ODQghW+Cr+LJEcJEa5y0TNrzDY3tl8JWtW1NNwkIKbFFq14a0SRo4BiJluZdC3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvVH1Weg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PI3XR/Sal5AaDIqMl8x4jm0QarVx4GgLsO14F/H1qQIlFHy+DcT3skT3RJpN20SgMCRycnM2bwtexFE7HuXNw26sOMHV7wDIcWeyofJjjgfF9ckOeUWGxyB97uEJ5ikws0QsCybdLRnPHb4zyqqgNNCZhqT8xioXojn/AhBW4wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NccAdwdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvVH1Weg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3071F000C4;
-	Sat, 17 Oct 2026 18:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NccAdwdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BD71F000C4;
+	Sat, 17 Oct 2026 18:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260335;
-	bh=roUirZpXmLO7Qn/IkuZbY/hP2CkU36WlFlHF+kX+iBg=;
+	s=korg; t=1792260338;
+	bh=ZvS8OrV6QiDZvM8DmZ8MFCiycSRMCvmRuRy/WrnFtT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvVH1Weg1q58XNL1NBPnPsSrfuEFVcGsoS9CKt6fxq/0B/xEsMHQ8SqdrFkLKFd1z
-	 M2xdbuekPZ1iS8TIGS4/jNo+6f8+AKDsv2i6F+/+DVMi4P4ZNm+p0lskP9kcfqHEQk
-	 iYDOyGlnXuen5KPHEmlJovO7fPOwmqIyjtcxJD0c=
+	b=NccAdwdzSfijcaGR+0HWvgrZoTWWmjdRywBhSS+RSuc0UsjJOQbPd1Ih+4GbZiQX3
+	 oj7CATUtd5XSPFigCATHv1PAqD6hud31FLHC9un69Qn1bxDPR3CZwupieQYk1k2sIi
+	 GQhH08X8Bjtgo2n7+1dYOXhezWq5eirKBjpsfw24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1512/1674] powerpc/xive: add error return value to xive_smp_probe()
-Date: Sat, 17 Oct 2026 18:03:04 +0200
-Message-ID: <20261017160509.935037831@linuxfoundation.org>
+Subject: [PATCH 6.6 1513/1674] powerpc/xive: propagate IPI init errors to prevent use-after-free
+Date: Sat, 17 Oct 2026 18:03:05 +0200
+Message-ID: <20261017160509.960199251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,70 +57,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit ab5ae5dceb86614f6c9e7488f91b652000edfdc5 ]
+[ Upstream commit 411a3c016e7a95f5fa105a0587e07d0647a77727 ]
 
-xive_smp_probe() calls xive_init_ipis() which can fail, but its
-return value is currently ignored.  Change xive_smp_probe() to
-return int so that errors can be propagated to callers.
+When xive_init_ipis() fails (e.g. irq_domain_alloc_irqs() fails),
+the error path frees the global xive_ipis array.  However,
+xive_smp_probe() previously ignored this failure and proceeded to
+call xive_setup_cpu_ipi(), which dereferences the already-freed
+xive_ipis pointer -- a use-after-free.
 
-This is a preparatory patch for the next one.
+Now that xive_smp_probe() returns int (previous patch), propagate
+the error from xive_init_ipis() and xive_setup_cpu_ipi() through
+xive_smp_probe().  Check the return value in both pnv_smp_probe()
+and pSeries_smp_probe() so that IPI setup is aborted cleanly on
+failure, avoiding the use-after-free.
 
-No functional change yet; the return value is always 0 at this point.
-
+Fixes: 243e25112d06 ("powerpc/xive: Native exploitation of the XIVE interrupt controller")
+Fixes: cbc06f051c52 ("powerpc/xive: Do not skip CPU-less nodes when creating the IPIs")
 Signed-off-by: Gou Hao <gouhao@uniontech.com>
 Reviewed-by: Wentao Guan <guanwentao@uniontech.com>
 Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727104215.184786-3-gouhao@uniontech.com
-Stable-dep-of: 411a3c016e7a ("powerpc/xive: propagate IPI init errors to prevent use-after-free")
+Link: https://patch.msgid.link/20260727104215.184786-4-gouhao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/xive.h   | 4 ++--
- arch/powerpc/sysdev/xive/common.c | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/powernv/smp.c |  8 +++++---
+ arch/powerpc/platforms/pseries/smp.c |  8 +++++---
+ arch/powerpc/sysdev/xive/common.c    | 10 ++++++----
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/xive.h b/arch/powerpc/include/asm/xive.h
-index 92930b0b5d0e1..8ac7c1d3564fc 100644
---- a/arch/powerpc/include/asm/xive.h
-+++ b/arch/powerpc/include/asm/xive.h
-@@ -91,7 +91,7 @@ static inline bool xive_enabled(void) { return __xive_enabled; }
+diff --git a/arch/powerpc/platforms/powernv/smp.c b/arch/powerpc/platforms/powernv/smp.c
+index 9e1a25398f98c..4887f9176aa4b 100644
+--- a/arch/powerpc/platforms/powernv/smp.c
++++ b/arch/powerpc/platforms/powernv/smp.c
+@@ -329,10 +329,12 @@ static void pnv_cause_ipi(int cpu)
  
- bool xive_spapr_init(void);
- bool xive_native_init(void);
--void xive_smp_probe(void);
-+int xive_smp_probe(void);
- int  xive_smp_prepare_cpu(unsigned int cpu);
- void xive_smp_setup_cpu(void);
- void xive_smp_disable_cpu(void);
-@@ -154,7 +154,7 @@ static inline bool xive_enabled(void) { return false; }
+ static void __init pnv_smp_probe(void)
+ {
+-	if (xive_enabled())
+-		xive_smp_probe();
+-	else
++	if (xive_enabled()) {
++		if (xive_smp_probe() < 0)
++			return;
++	} else {
+ 		xics_smp_probe();
++	}
  
- static inline bool xive_spapr_init(void) { return false; }
- static inline bool xive_native_init(void) { return false; }
--static inline void xive_smp_probe(void) { }
-+static inline int xive_smp_probe(void) { return -EINVAL; }
- static inline int  xive_smp_prepare_cpu(unsigned int cpu) { return -EINVAL; }
- static inline void xive_smp_setup_cpu(void) { }
- static inline void xive_smp_disable_cpu(void) { }
+ 	if (cpu_has_feature(CPU_FTR_DBELL)) {
+ 		ic_cause_ipi = smp_ops->cause_ipi;
+diff --git a/arch/powerpc/platforms/pseries/smp.c b/arch/powerpc/platforms/pseries/smp.c
+index c597711ef20a2..0d9b0b901807e 100644
+--- a/arch/powerpc/platforms/pseries/smp.c
++++ b/arch/powerpc/platforms/pseries/smp.c
+@@ -194,10 +194,12 @@ static int pseries_cause_nmi_ipi(int cpu)
+ 
+ static __init void pSeries_smp_probe(void)
+ {
+-	if (xive_enabled())
+-		xive_smp_probe();
+-	else
++	if (xive_enabled()) {
++		if (xive_smp_probe() < 0)
++			return;
++	} else {
+ 		xics_smp_probe();
++	}
+ 
+ 	/* No doorbell facility, must use the interrupt controller for IPIs */
+ 	if (!cpu_has_feature(CPU_FTR_DBELL))
 diff --git a/arch/powerpc/sysdev/xive/common.c b/arch/powerpc/sysdev/xive/common.c
-index a289cb97c1d7b..5f6a05380e955 100644
+index 5f6a05380e955..a5da09c1895f7 100644
 --- a/arch/powerpc/sysdev/xive/common.c
 +++ b/arch/powerpc/sysdev/xive/common.c
-@@ -1270,7 +1270,7 @@ noinstr static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
- 	xive_ops->put_ipi(cpu, xc);
- }
+@@ -1272,15 +1272,17 @@ noinstr static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
  
--void __init xive_smp_probe(void)
-+int __init xive_smp_probe(void)
+ int __init xive_smp_probe(void)
  {
++	int ret;
++
  	smp_ops->cause_ipi = xive_cause_ipi;
  
-@@ -1279,6 +1279,8 @@ void __init xive_smp_probe(void)
+ 	/* Register the IPI */
+-	xive_init_ipis();
++	ret = xive_init_ipis();
++	if (ret < 0)
++		return ret;
  
  	/* Allocate and setup IPI for the boot CPU */
- 	xive_setup_cpu_ipi(smp_processor_id());
-+
-+	return 0;
+-	xive_setup_cpu_ipi(smp_processor_id());
+-
+-	return 0;
++	return xive_setup_cpu_ipi(smp_processor_id());
  }
  
  #endif /* CONFIG_SMP */
