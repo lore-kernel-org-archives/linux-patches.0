@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB0A3B2FD8;
-	Sat, 17 Oct 2026 17:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1B03B2FD8;
+	Sat, 17 Oct 2026 17:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259180; cv=none; b=eZxMSWhX4r0KVBFnVZqENQ+xXvZBHYn7NAcQID0IEj5xtj/89W79flro7ND/6AWJkujV74BJSwxLiBnMsovkNKfDrmcAtl4QJEsKOx81Z63CGInXliMuSOOkouJD9BIoXaZ/Iy9lwF7gzJ0zft8gQXJqzEttqR12S7Q6tYePOE8=
+	t=1792259184; cv=none; b=XxV+oU7ljjhNr+uTmV9aO8vpaies9uDlQdDLGrVPY+BBsY5Feb+r7wkYDcJyqXzSyTVt1AjD2eicTXU9yyoJUUTQhiAe90n0K51ZDD5tMHroASz44za3Vx2fqaotYcxYw7g2MbigDm4hg4OxnDeUicVRK6zzg7lw7+UR3zk0eBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259180; c=relaxed/simple;
-	bh=cVoYeDS19VuGsadO01eVvXgMdhhHSee43Y878K7vpu0=;
+	s=arc-20240116; t=1792259184; c=relaxed/simple;
+	bh=7qr75ywuq5JuQuZr1efhiBs2TTyp9kyc1wqup+vZB+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3FQWAcwefzsvquN9pTSY0eXMK0dIezYqXO17rzDxinokdMqxqo6JhurYJYXmRnwbbTwO07CZWKu191PyBlYEZwy8WmGZMY7p+WR8vrsjKOI5SVS7Ex1WtodN0nA/33x8Od0EBFfBRvaKnCCw8gBVWiIT3xosGfNVTsJdhC5hmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN6LZpBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sijlfy7HKwlYn1Eqb1V52a0URvlgv7ntUe9c1HYwdoyfMs0/AQDpFtrKLTYonQM5p0yZe1X3JHdCahN8BowKjlRuS62ayHjPcwsIWqTezE4ma01Pk7OQTQMCAQepnMqdTbJmnVcM96Mz7IZdmZyqLaV53Y3HADbeOwcouLUamQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jy8+l5VV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN6LZpBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343461F000C5;
-	Sat, 17 Oct 2026 17:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy8+l5VV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E82C1F000C5;
+	Sat, 17 Oct 2026 17:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259179;
-	bh=tQ4wWQmvdE16qPJHZk35g99afTL3DLXzy3c5B9rNUF0=;
+	s=korg; t=1792259182;
+	bh=hl4aj2kmAUIYMtoQuuOkTQjgyDPhqbKQlHxpx8snJoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wN6LZpBw/PKC+SMR2iCYZ5MeEi5mVfzni5SNmJldS+eGDow7h9D5VvM4yHpOxoKzx
-	 NTK16YG7j5OO49lVNVU0fBTGAaWzkCeP6gV/MiXJcTluqKqsyb+1Hey8veBlZe5lY2
-	 th9g9nsUnOIHdzSpMQYwno/WyyMPYiGyECD/w5W8=
+	b=Jy8+l5VVeoXh5xM6ff7BzrDVZcoyRzzF699j9fFooQfcABXEg54qWj8cdmXbGpfQQ
+	 iigjJhSh/Y25/UVevlM2el74kkKPksmMOSeYT/RkukB6qwLR4CysMc38mdhfI5CRQJ
+	 +fKoF39Q+N+rhnUwoQR+jZPSAL2FrtBQR8mAJVpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1128/1674] perf/x86/amd/core: Avoid enabling BRS from the SVM reload path
-Date: Sat, 17 Oct 2026 17:56:40 +0200
-Message-ID: <20261017160500.113960688@linuxfoundation.org>
+Subject: [PATCH 6.6 1129/1674] net/liquidio: drop cached VF pci_dev LUT
+Date: Sat, 17 Oct 2026 17:56:41 +0200
+Message-ID: <20261017160500.137385114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,101 +51,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 07c60dda9c059c09f83d42a3ebda2e7cc1cf3bc2 ]
+[ Upstream commit 5c0e3ba4f500fd4314ceb42f07f16bc445156431 ]
 
-Branch Sampling (BRS) and Last Branch Record (LBR) are mutually
-exclusive hardware features, and users of both are tracked via
-cpuc->lbr_users.
+The PF SR-IOV enable path caches VF pci_dev pointers in
+dpiring_to_vfpcidev_lut[] by iterating with pci_get_device(). Those
+entries do not own a reference, because the iterator drops the previous
+device reference on each step. The cached pointer is then dereferenced
+later when handling OCTEON_VF_FLR_REQUEST.
 
-When SVM is toggled on a CPU, the host perf events are reprogrammed to
-update the HostOnly filter bit (set when virtualization is enabled,
-cleared when it is disabled). On PerfMonV2-capable processors, this
-reprogramming is performed by calling amd_pmu_enable_all() to rewrite
-the event selectors. However, amd_pmu_enable_all() also calls
-amd_brs_enable_all(), which enables BRS whenever cpuc->lbr_users > 0.
-Having active LBR events satisfies this gating on processors that have
-LBR but not BRS. The kernel then tries to set the BRS enable bit in
-DebugExtnCfg (MSR 0xc000010f). Since that bit is deprecated on such
-hardware, the write results in a #GP:
+Replace the cached VF mapping with runtime lookup on the mailbox DPI
+ring: derive the VF index from q_no, resolve the VF via exported PCI
+IOV helpers, validate it with the PF pointer and VF ID, then issue
+pcie_flr() and drop the reference with pci_dev_put(). Remove the
+unused VF lookup table initialization and cleanup.
 
-  Call Trace:
-   <IRQ>
-   amd_pmu_enable_all+0x1d/0x90
-   amd_pmu_disable_virt+0x62/0xb0
-   kvm_arch_disable_virtualization_cpu+0xa/0x40 [kvm]
-   hardware_disable_nolock+0x1a/0x30 [kvm]
-   __flush_smp_call_function_queue+0x9b/0x410
-   __sysvec_call_function+0x18/0xc0
-   sysvec_call_function+0x69/0x90
-   </IRQ>
-   <TASK>
-   asm_sysvec_call_function+0x16/0x20
-  RIP: 0010:cpuidle_enter_state+0xc4/0x450
-   ? cpuidle_enter_state+0xb7/0x450
-   cpuidle_enter+0x29/0x40
-   cpuidle_idle_call+0xf5/0x160
-   do_idle+0x7b/0xe0
-   cpu_startup_entry+0x26/0x30
-   start_secondary+0x115/0x140
-   secondary_startup_64_no_verify+0x194/0x19b
-   </TASK>
-
-Fix this by ensuring that BRS is not enabled from the event selector
-reprogramming path even when cpuc->lbr_users > 0.
-
-Fixes: bae19fdd7e9e ("perf/x86/amd/core: Fix reloading events for SVM")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/702fa204d574b03d14e3664c7d4b201db048bbfd.1783506528.git.sandipan.das@amd.com
+Fixes: ca6139ffc67ee ("liquidio CN23XX: sysfs VF config support")
+Fixes: 8c978d059224 ("liquidio CN23XX: Mailbox support")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260701040847.1897845-1-dbgh9129@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .../net/ethernet/cavium/liquidio/lio_main.c   | 27 ---------------
+ .../ethernet/cavium/liquidio/octeon_device.h  |  3 --
+ .../ethernet/cavium/liquidio/octeon_mailbox.c | 33 ++++++++++++++++++-
+ 3 files changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index 24f356e561e28..b0126fbb39d1d 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -733,13 +733,11 @@ static void amd_pmu_enable_event(struct perf_event *event)
- 	x86_pmu_enable_event(event);
- }
- 
--static void amd_pmu_enable_all(int added)
-+static void __amd_pmu_enable_all(void)
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index 8e4e49d24dad8..19e8f8bbd06e7 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -3795,9 +3795,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ static int octeon_enable_sriov(struct octeon_device *oct)
  {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
- 	int idx;
+ 	unsigned int num_vfs_alloced = oct->sriov_info.num_vfs_alloced;
+-	struct pci_dev *vfdev;
+ 	int err;
+-	u32 u;
  
--	amd_brs_enable_all();
+ 	if (OCTEON_CN23XX_PF(oct) && num_vfs_alloced) {
+ 		err = pci_enable_sriov(oct->pci_dev,
+@@ -3810,23 +3808,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+ 			return err;
+ 		}
+ 		oct->sriov_info.sriov_enabled = 1;
 -
- 	for (idx = 0; idx < x86_pmu.num_counters; idx++) {
- 		/* only activate events which are marked as active */
- 		if (!test_bit(idx, cpuc->active_mask))
-@@ -754,6 +752,12 @@ static void amd_pmu_enable_all(int added)
+-		/* init lookup table that maps DPI ring number to VF pci_dev
+-		 * struct pointer
+-		 */
+-		u = 0;
+-		vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
+-				       OCTEON_CN23XX_VF_VID, NULL);
+-		while (vfdev) {
+-			if (vfdev->is_virtfn &&
+-			    (vfdev->physfn == oct->pci_dev)) {
+-				oct->sriov_info.dpiring_to_vfpcidev_lut[u] =
+-					vfdev;
+-				u += oct->sriov_info.rings_per_vf;
+-			}
+-			vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
+-					       OCTEON_CN23XX_VF_VID, vfdev);
+-		}
  	}
- }
  
-+static void amd_pmu_enable_all(int added)
+ 	return num_vfs_alloced;
+@@ -3834,8 +3815,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+ 
+ static int lio_pci_sriov_disable(struct octeon_device *oct)
+ {
+-	int u;
+-
+ 	if (pci_vfs_assigned(oct->pci_dev)) {
+ 		dev_err(&oct->pci_dev->dev, "VFs are still assigned to VMs.\n");
+ 		return -EPERM;
+@@ -3843,12 +3822,6 @@ static int lio_pci_sriov_disable(struct octeon_device *oct)
+ 
+ 	pci_disable_sriov(oct->pci_dev);
+ 
+-	u = 0;
+-	while (u < MAX_POSSIBLE_VFS) {
+-		oct->sriov_info.dpiring_to_vfpcidev_lut[u] = NULL;
+-		u += oct->sriov_info.rings_per_vf;
+-	}
+-
+ 	oct->sriov_info.num_vfs_alloced = 0;
+ 	dev_info(&oct->pci_dev->dev, "oct->pf_num:%d disabled VFs\n",
+ 		 oct->pf_num);
+diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_device.h b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
+index fb380b4f3e020..cfa3b769227f5 100644
+--- a/drivers/net/ethernet/cavium/liquidio/octeon_device.h
++++ b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
+@@ -390,9 +390,6 @@ struct octeon_sriov_info {
+ 
+ 	struct lio_trusted_vf	trusted_vf;
+ 
+-	/*lookup table that maps DPI ring number to VF pci_dev struct pointer*/
+-	struct pci_dev *dpiring_to_vfpcidev_lut[MAX_POSSIBLE_VFS];
+-
+ 	u64	vf_macaddr[MAX_POSSIBLE_VFS];
+ 
+ 	u16	vf_vlantci[MAX_POSSIBLE_VFS];
+diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
+index ad685f5d0a136..697fcdc41e3cd 100644
+--- a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
++++ b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
+@@ -26,6 +26,31 @@
+ #include "octeon_mailbox.h"
+ #include "cn23xx_pf_device.h"
+ 
++static struct pci_dev *lio_vf_pci_dev_by_qno(struct octeon_device *oct, u32 q_no)
 +{
-+	amd_brs_enable_all();
-+	__amd_pmu_enable_all();
++	struct pci_dev *vfdev = NULL;
++	int vfidx;
++
++	if (!oct->sriov_info.rings_per_vf)
++		return NULL;
++
++	if (q_no % oct->sriov_info.rings_per_vf)
++		return NULL;
++
++	vfidx = q_no / oct->sriov_info.rings_per_vf;
++	if (vfidx >= oct->sriov_info.num_vfs_alloced)
++		return NULL;
++
++	while ((vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
++				       OCTEON_CN23XX_VF_VID, vfdev))) {
++		if (pci_physfn(vfdev) && pci_physfn(vfdev) == oct->pci_dev &&
++		    pci_iov_vf_id(vfdev) == vfidx)
++			return vfdev;
++	}
++
++	return NULL;
 +}
 +
- static void amd_pmu_v2_enable_event(struct perf_event *event)
+ /**
+  * octeon_mbox_read:
+  * @mbox: Pointer mailbox
+@@ -237,6 +262,7 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
+ 				   struct octeon_mbox_cmd *mbox_cmd)
  {
- 	struct hw_perf_event *hwc = &event->hw;
-@@ -1505,7 +1509,7 @@ static inline void amd_pmu_reload_virt(void)
- 		 * set global enable bits once again
- 		 */
- 		amd_pmu_v2_disable_all();
--		amd_pmu_enable_all(0);
-+		__amd_pmu_enable_all();
- 		amd_pmu_v2_enable_all(0);
- 		return;
- 	}
+ 	struct octeon_device *oct = mbox->oct_dev;
++	struct pci_dev *vfdev;
+ 
+ 	switch (mbox_cmd->msg.s.cmd) {
+ 	case OCTEON_VF_ACTIVE:
+@@ -260,7 +286,12 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
+ 		dev_info(&oct->pci_dev->dev,
+ 			 "got a request for FLR from VF that owns DPI ring %u\n",
+ 			 mbox->q_no);
+-		pcie_flr(oct->sriov_info.dpiring_to_vfpcidev_lut[mbox->q_no]);
++		vfdev = lio_vf_pci_dev_by_qno(oct, mbox->q_no);
++		if (!vfdev)
++			break;
++
++		pcie_flr(vfdev);
++		pci_dev_put(vfdev);
+ 		break;
+ 
+ 	case OCTEON_PF_CHANGED_VF_MACADDR:
 -- 
 2.53.0
 
