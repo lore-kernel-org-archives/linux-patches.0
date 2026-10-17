@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C03A48E4;
-	Sat, 17 Oct 2026 17:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBF73B9D9F;
+	Sat, 17 Oct 2026 17:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259847; cv=none; b=Cvu4csGrbgw76jetGSA48CD6dTQMxu5usMcbMXeJ2FeuVUvJbWXDVDUxyrJH+gRp54MJ6DhraSg5GbuEiKxJN2e91LOSf2/07xzh92x1Xuo1TN98CJTHgw7GUX3qCq9YHELDexfl6HrKcrHC17PLYXxLJCagMyPflBWmlZo0o/g=
+	t=1792259850; cv=none; b=KmOFdGeMfVMBAu+VNp+yH1gJzJciCHWqkjLFmuNvQw/S/+Py10e7erZHSfi36+6g177NDFzj2wa2ORX1tPLfdHRzPoyVDPGZxjE/EQkksAPJYtcwZjWPTIF53eUlxDU01Q5CsXlfzRMzLst7JppCcWaKa4vnyKXDvErD+uJbem4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259847; c=relaxed/simple;
-	bh=lPe/ona86cOoM8U1dQXDa3oDh7IodugNV3/eGHMT+gU=;
+	s=arc-20240116; t=1792259850; c=relaxed/simple;
+	bh=uI+ABIp/qIOMqORjKA92tyQ/w4WrONry6lk+m7WgKWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JE5z12PSH+sx529XAOM9vK4u+sRWA6LYJ6QxobC99ed6550k7ylmmsLZEVeirixn4ZKFHHVj1BitsOpWi2KCcAB0b3oFZoYoC7cXHltuUqO+a/RDFoDQdslYj9bcR3+HUWYzmkmyPDwu5ydtpQF3QnKm11CTQ/N/mHb4GZVlnk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBEpmMBU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XwYYCPbbeN0zqvF8q3nPOsu1gRqcn+vITCoHEba3GZo8+16zFfxzKGgtjKT2K9ROkizbTAy6CctGmJuPnZIRMBtskpM978ytJOzf0r87Q3zBycBUkdAsMI1OaQFKbf0BMeuH39BKF8fuBqzdL3TW9ZDlfv/bUq4wMtDO9OwV8cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bf9G0UYo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBEpmMBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CF91F000C4;
-	Sat, 17 Oct 2026 17:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bf9G0UYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368FF1F000C4;
+	Sat, 17 Oct 2026 17:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259846;
-	bh=UW8ryABCkYS8BuHsm0R7g5qlNFr75JqffILL5rUYckM=;
+	s=korg; t=1792259849;
+	bh=wKtmA/r+uyV3IcteaW+e+HKo7at2F9sSgdE2LuEeKP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lBEpmMBUvaMeAh4qV8G12RTD7IqD3Pas/1JEOPmRMye4bBZzVfmv4Rh8rW0hdR6hd
-	 PJCHp3nVcFM3es1wVZCVI+1nXeQyjp10vtNfiytq5Xuc6WTx6Ds6OIuSI2a14FqyPP
-	 ERNQHKDRJjNmZJtQY3e2KEU6TivwHGRo+5LsjJgQ=
+	b=Bf9G0UYof/35A7+IMwdSMKbyDWS3Xtp7nR4BIIdNNGx/1hNbbtIah7I0/HdsfyCgz
+	 RZDEoOP8boaKnq7N5mGfMySi4d4xlLqMTwThn+jLx3xXvbHUke74i6Xv6e2ROQV/zo
+	 RCtchMw4k3lA9gtuEjdySNTHYYfrt3G312gUM/Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1349/1674] f2fs: fix to migrate all curseg types during free_segment_range
-Date: Sat, 17 Oct 2026 18:00:21 +0200
-Message-ID: <20261017160505.787419506@linuxfoundation.org>
+Subject: [PATCH 6.6 1350/1674] f2fs: use new ioprio Macro to get ckpt thread ioprio level
+Date: Sat, 17 Oct 2026 18:00:22 +0200
+Message-ID: <20261017160505.814303928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,49 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 ]
+[ Upstream commit 270b09313b4e16cdfd01d8371023a1661dd1112e ]
 
-In free_segment_range(), the curseg evacuation loop only iterates up to
-NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
-types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
+IOPRIO_PRIO_DATA in the new kernel version includes level and hint,
+So Macro IOPRIO_PRIO_LEVEL is more accurate to get ckpt thread
+ioprio data/level, and it is also consisten with the way setting
+ckpt thread ioprio by IOPRIO_PRIO_VALUE(class, data/level).
 
-Even though these in-memory curseg types are not saved in the on-disk
-checkpoint header, they still occupy active physical segments at runtime.
-If an active in-memory curseg happens to be allocated within the segment
-range being truncated during filesystem shrink, failing to evacuate it
-will cause subsequent writes to the curseg attempting out-of-bounds I/O
-on the truncated storage range.
+Besides, change variable name from "data" to "level" for more readable.
 
-Fix this by expanding the curseg evacuation loop upper bound to
-NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
-out of the target range.
-
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 5cb33b00c8fb ("f2fs: avoid NULL checkpoint thread access in sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/sysfs.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index b8dd61cf584c9..7cb41593462b2 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2113,7 +2113,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 58def29e99750..f47b745d3c390 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -339,13 +339,13 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 	if (!strcmp(a->attr.name, "ckpt_thread_ioprio")) {
+ 		struct ckpt_req_control *cprc = &sbi->cprc_info;
+ 		int class = IOPRIO_PRIO_CLASS(cprc->ckpt_thread_ioprio);
+-		int data = IOPRIO_PRIO_DATA(cprc->ckpt_thread_ioprio);
++		int level = IOPRIO_PRIO_LEVEL(cprc->ckpt_thread_ioprio);
  
- 	/* Move out cursegs from the target range */
--	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++)
-+	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++)
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
+ 		if (class != IOPRIO_CLASS_RT && class != IOPRIO_CLASS_BE)
+ 			return -EINVAL;
  
- 	/* do GC to move out valid blocks in the range */
+ 		return sysfs_emit(buf, "%s,%d\n",
+-			class == IOPRIO_CLASS_RT ? "rt" : "be", data);
++			class == IOPRIO_CLASS_RT ? "rt" : "be", level);
+ 	}
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+@@ -470,7 +470,7 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 		const char *name = strim((char *)buf);
+ 		struct ckpt_req_control *cprc = &sbi->cprc_info;
+ 		int class;
+-		long data;
++		long level;
+ 		int ret;
+ 
+ 		if (!strncmp(name, "rt,", 3))
+@@ -481,13 +481,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 			return -EINVAL;
+ 
+ 		name += 3;
+-		ret = kstrtol(name, 10, &data);
++		ret = kstrtol(name, 10, &level);
+ 		if (ret)
+ 			return ret;
+-		if (data >= IOPRIO_NR_LEVELS || data < 0)
++		if (level >= IOPRIO_NR_LEVELS || level < 0)
+ 			return -EINVAL;
+ 
+-		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, data);
++		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
+ 		if (test_opt(sbi, MERGE_CHECKPOINT)) {
+ 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
+ 					cprc->ckpt_thread_ioprio);
 -- 
 2.53.0
 
