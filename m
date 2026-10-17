@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97167E555;
-	Sat, 17 Oct 2026 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4434235E93B;
+	Sat, 17 Oct 2026 17:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259448; cv=none; b=nCoRHo0SfyWRpQOto/Lz4cPhvPUazVDct2zYoABpCjZsfZlB1zWsL0LpNl5BaboWs1VtEqwgzn/LDRwkFz0mn1nHgmjERbTignGUhBlzPDm6ao/gVMmBRgOGqITOTaIxfUGrvdMWZ1Dt3qNDKaVxVUAm7e+eTzeAQrcFXnCqPX4=
+	t=1792259451; cv=none; b=Z/osP3aDnFY467kwnvQ5JRqD1lwk2lyRoi6i2JQbYN86WaBHIDQ1vi05uZo2/RBmD3ljKs4RdsJBh6jlKfvbPVbH/TuU4xLT9g0ojEbSIvJUi91TB4714YEFNG94OjMRXuPS8x5cBTr8ZwR20089/5y/JcaLPobbUU74wLZnDVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259448; c=relaxed/simple;
-	bh=5/Owe5yauuX8L6BS6tkRvrWEbOxzk787U4pB4/5nvUQ=;
+	s=arc-20240116; t=1792259451; c=relaxed/simple;
+	bh=L8nw4VZyrFae29UOcmhvWMNomN+ZDmPy1ZoWTG5RZyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOgv6agqL94E3cm9H327+rCjUMeENpfSgq+VmonYlaZnccPc8lRVDYkgR+k+nuDmZ/N8NHlkZCyssaNjiPjLywtwSHsyjxdVyUJghLSx8vgIQnQl2zt9yUVw+rFiwCFJRwGKNzUBKNqVprdFVxXpQkyPjjsrZ4v7R5ZkAhPUDCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2Alczx3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdtybnUP5CxCLbSelnuATYZD1T3mk6G2iExyhZZFQpRiTv5E37WkL1wsANoo61sIXynmha6Wryct2ZMnBoo6RDqWWCaTFlzI9RjDVpAvj4vXwd6G6Rbp1xJ0WabHmQvRoUqos+mWf9ouFHNQT+I7kc9hN0Y4LI/2LSrgqTcd0W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWHlo8qy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2Alczx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4B01F000C4;
-	Sat, 17 Oct 2026 17:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWHlo8qy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546E61F000C4;
+	Sat, 17 Oct 2026 17:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259447;
-	bh=fqbwttNLGWb+m390EgX+mlRqlDiv1Yq3Y7DdqZeKaAc=;
+	s=korg; t=1792259449;
+	bh=D5pES9GfHQtDvqhYAXDxmaEcHxYEsv69U14+iFagSTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u2Alczx37+asYoxQw9U/eKf0rpwnyy5PoswrhuZqu7AUAi4rpkxpOpgINDUXHx//+
-	 XAlvSEUE9lZdT1PDlHDdUTetJHACaXv3cbyHVkMLcmz+hnz78whcObXD169hAv+nDN
-	 GyRKG8eItPg3NxLfuE3jVTUygYWfEytuETz6ySVY=
+	b=LWHlo8qyA4GqL4kneL9thxco1z4LFIstRuY7b2cRgK3qw1kWeETojluUmz9l1Nthi
+	 kDVVK3Pu4+EMSx2OxRyacI+aobEHG5G/4ArRFCs5juWHLfNdLglLkFDtdnM93qMP90
+	 RxIE+e9JDojlZ8Vij9M7h3AfUvrbnexjQiIyheqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1217/1674] ALSA: seq: oss: Serialize readq reset state with q->lock
-Date: Sat, 17 Oct 2026 17:58:09 +0200
-Message-ID: <20261017160502.380560213@linuxfoundation.org>
+Subject: [PATCH 6.6 1191/1674] mm/page_table_check: skip special zero mappings
+Date: Sat, 17 Oct 2026 17:57:43 +0200
+Message-ID: <20261017160501.711125437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,199 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
+[ Upstream commit 8db4bab826ccc9ec10fa41736a48031cd338d392 ]
 
-snd_seq_oss_readq_clear() resets qlen, head, and tail without
-q->lock even though the normal reader and producer paths serialize the
-same ring state under that spinlock. A reset can therefore race
-snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
-stale records in the queue, drop freshly queued ones, or report the
-wrong readiness after wakeup. KCSAN reports a data race between
-snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
+page_table_check_set() and page_table_check_clear() account mappings based
+on PageAnon().  Shared zero-page PTEs and huge zero PMDs are special
+mappings, but page_table_check can still account them as file-backed
+pages.
 
-Take q->lock while clearing the ring and resetting input_time. Factor
-the enqueue logic into a caller-locked helper so
-snd_seq_oss_readq_put_timestamp() updates its suppression state under
-the same lock instead of racing the reset path.
+An unprivileged process can populate enough zero mappings to overflow
+file_map_count and hit the existing BUG_ON().  The PTE path can do this
+with the shared zero page, and the PMD path can do the same with huge zero
+mappings.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
+Skip special zero mappings in the user page-table accounting paths.  Keep
+the PTE-side pte_special() check, and identify huge zero PMDs from the
+mapped folio instead of pmd_special().  That covers architectures where
+pmd_special() is a no-op without adding huge_zero_pfn checks to the
+generic counter helpers.
 
-reset path:                      locked readq updater:
-1. snd_seq_oss_reset() or        1. A reader or callback producer
-   release reaches                  takes q->lock on the same queue.
-   snd_seq_oss_readq_clear().
-2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
-   resets qlen, head, tail,         qlen, head, and tail.
-   and input_time.
-3. snd_seq_oss_readq_clear()     3. The updater completes its
-   wakes sleepers on                read-modify-write sequence.
-   q->midi_sleep.
-4. Without q->lock, the reset    4. The resulting ring state drives
-   can overlap the locked           later reads and readiness.
-   update.
-
-KCSAN reports:
-
-BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
-snd_seq_oss_readq_free
-
-write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
-  snd_seq_oss_readq_free+0x6c/0x80
-  snd_seq_oss_read+0xcb/0x250
-  odev_read+0x38/0x60
-  vfs_read+0xff/0x600
-  ksys_read+0xb4/0x140
-  __x64_sys_read+0x46/0x60
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
-  snd_seq_oss_readq_clear+0x1f/0x90
-  snd_seq_oss_reset+0xa7/0xf0
-  snd_seq_oss_ioctl+0x6f6/0x7e0
-  odev_ioctl+0x56/0xc0
-  __x64_sys_ioctl+0xd1/0x120
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-value changed: 0x00000001 -> 0x00000000
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/cover.1784717203.git.zhilinz@nebusec.ai
+Link: https://lore.kernel.org/e94478e4fb7912fb7e8ebebed5ce85d00dc9a69d.1784717203.git.zhilinz@nebusec.ai
+Fixes: df4e817b7108 ("mm: page table check")
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Assisted-by: Codex:gpt-5.4
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_readq.c | 83 +++++++++++++++++++-----------
- 1 file changed, 52 insertions(+), 31 deletions(-)
+ mm/page_table_check.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
-index f0db5d3dcba47..b7cdb1c61f265 100644
---- a/sound/core/seq/oss/seq_oss_readq.c
-+++ b/sound/core/seq/oss/seq_oss_readq.c
-@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
- void
- snd_seq_oss_readq_clear(struct seq_oss_readq *q)
- {
--	if (q->qlen) {
--		q->qlen = 0;
--		q->head = q->tail = 0;
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (q->qlen) {
-+			q->qlen = 0;
-+			q->head = 0;
-+			q->tail = 0;
-+		}
-+		q->input_time = (unsigned long)-1;
+diff --git a/mm/page_table_check.c b/mm/page_table_check.c
+index 509c6ef8de400..75269bc47547f 100644
+--- a/mm/page_table_check.c
++++ b/mm/page_table_check.c
+@@ -165,18 +165,29 @@ void __page_table_check_pte_clear(struct mm_struct *mm, pte_t pte)
+ 	if (&init_mm == mm)
+ 		return;
+ 
+-	if (pte_user_accessible_page(pte)) {
++	if (pte_user_accessible_page(pte) && !pte_special(pte)) {
+ 		page_table_check_clear(pte_pfn(pte), PAGE_SIZE >> PAGE_SHIFT);
  	}
-+
- 	/* if someone sleeping, wake'em up */
- 	wake_up(&q->midi_sleep);
--	q->input_time = (unsigned long)-1;
  }
+ EXPORT_SYMBOL(__page_table_check_pte_clear);
  
- /*
-@@ -136,28 +140,37 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
- /*
-  * copy an event to input queue:
-  * return zero if enqueued
-+ * caller must hold lock
-  */
--int
--snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
-+static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
-+					      union evrec *ev)
- {
--	unsigned long flags;
--
--	spin_lock_irqsave(&q->lock, flags);
--	if (q->qlen >= q->maxlen - 1) {
--		spin_unlock_irqrestore(&q->lock, flags);
-+	if (q->qlen >= q->maxlen - 1)
- 		return -ENOMEM;
--	}
- 
- 	memcpy(&q->q[q->tail], ev, sizeof(*ev));
- 	q->tail = (q->tail + 1) % q->maxlen;
- 	q->qlen++;
- 
--	/* wake up sleeper */
--	wake_up(&q->midi_sleep);
-+	return 0;
-+}
- 
--	spin_unlock_irqrestore(&q->lock, flags);
-+/*
-+ * copy an event to input queue:
-+ * return zero if enqueued
-+ */
-+int
-+snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++static inline bool page_table_check_huge_zero_pmd(pmd_t pmd)
 +{
-+	int rc;
- 
--	return 0;
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		rc = snd_seq_oss_readq_put_event_locked(q, ev);
-+		if (!rc)
-+			wake_up(&q->midi_sleep);
-+	}
++	unsigned long pfn = pmd_pfn(pmd);
 +
-+	return rc;
- }
- 
- 
-@@ -215,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
- int
- snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
++	if (!pfn_valid(pfn))
++		return false;
++
++	return is_huge_zero_page(pfn_to_page(pfn));
++}
++
+ void __page_table_check_pmd_clear(struct mm_struct *mm, pmd_t pmd)
  {
--	if (curt != q->input_time) {
--		union evrec rec;
--		memset(&rec, 0, sizeof(rec));
--		switch (seq_mode) {
--		case SNDRV_SEQ_OSS_MODE_SYNTH:
--			rec.echo = (curt << 8) | SEQ_WAIT;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
--		case SNDRV_SEQ_OSS_MODE_MUSIC:
--			rec.t.code = EV_TIMING;
--			rec.t.cmd = TMR_WAIT_ABS;
--			rec.t.time = curt;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
-+	int queued = 0;
-+
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (curt != q->input_time) {
-+			union evrec rec;
-+
-+			memset(&rec, 0, sizeof(rec));
-+			switch (seq_mode) {
-+			case SNDRV_SEQ_OSS_MODE_SYNTH:
-+				rec.echo = (curt << 8) | SEQ_WAIT;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			case SNDRV_SEQ_OSS_MODE_MUSIC:
-+				rec.t.code = EV_TIMING;
-+				rec.t.cmd = TMR_WAIT_ABS;
-+				rec.t.time = curt;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			}
-+			q->input_time = curt;
- 		}
--		q->input_time = curt;
- 	}
-+	if (queued)
-+		wake_up(&q->midi_sleep);
-+
- 	return 0;
- }
+ 	if (&init_mm == mm)
+ 		return;
  
+-	if (pmd_user_accessible_page(pmd)) {
++	if (pmd_user_accessible_page(pmd) &&
++	    !page_table_check_huge_zero_pmd(pmd)) {
+ 		page_table_check_clear(pmd_pfn(pmd), PMD_SIZE >> PAGE_SHIFT);
+ 	}
+ }
+@@ -221,7 +232,7 @@ void __page_table_check_ptes_set(struct mm_struct *mm, pte_t *ptep, pte_t pte,
+ 
+ 	for (i = 0; i < nr; i++)
+ 		__page_table_check_pte_clear(mm, ptep_get(ptep + i));
+-	if (pte_user_accessible_page(pte))
++	if (pte_user_accessible_page(pte) && !pte_special(pte))
+ 		page_table_check_set(pte_pfn(pte), nr, pte_write(pte));
+ }
+ EXPORT_SYMBOL(__page_table_check_ptes_set);
+@@ -242,7 +253,8 @@ void __page_table_check_pmd_set(struct mm_struct *mm, pmd_t *pmdp, pmd_t pmd)
+ 	page_table_check_pmd_flags(pmd);
+ 
+ 	__page_table_check_pmd_clear(mm, *pmdp);
+-	if (pmd_user_accessible_page(pmd)) {
++	if (pmd_user_accessible_page(pmd) &&
++	    !page_table_check_huge_zero_pmd(pmd)) {
+ 		page_table_check_set(pmd_pfn(pmd), PMD_SIZE >> PAGE_SHIFT,
+ 				     pmd_write(pmd));
+ 	}
 -- 
 2.53.0
 
