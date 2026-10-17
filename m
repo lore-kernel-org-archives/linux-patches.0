@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C10384CED;
-	Sat, 17 Oct 2026 16:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6B6380FCA;
+	Sat, 17 Oct 2026 16:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254033; cv=none; b=c7vF8b/dwaQQ6FtkfwF1gpSSprsL8VdNF53nPymCatoToeSa6/dfliTHzoQpxhQSUhgVjnRwdVizyT2RKK03sMfA9rTAh4sCujI5CGomh8/WgEY1eHqNyck5o5EhS8rzBUToEqROC8WgcitT7O3lA55Ru28PkTf0ax84wc+5Vy0=
+	t=1792254036; cv=none; b=ZN3o7J8Yz1NBqxIiVClVVuS1lrJVC+o5GAOV7IoWm1i0p1Ax/h6iUwYpBHyRGBCbpH8tWNtMhsA4DlYNJ1iMUD+pUM37geFoT6BDI8v7ltlTZbIsRORg8rdpuCD9454YOYX+aa4vpV1q7A+V5Nj2xH/p+2MgiqJU/u1/kyOUyqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254033; c=relaxed/simple;
-	bh=anzsZwaPjQvBmc/ieebVk5d0Gqut5x+pFb8xxp7Z4Ag=;
+	s=arc-20240116; t=1792254036; c=relaxed/simple;
+	bh=Pz0kGMl5ithq8hddej0Cw0797G6VdcsKg0FlmYAzMyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sl200WZ31WtUuqzb4OwVVET6Bzaeix8nhdkdiMSbjHnukIrubrLpEBew3UR8YGehrcUTAMaAAzQaQ2TbRazzDkeLfXA8uTAQs5SBbI7CZ5l7321aL8DJOyKJ3rA6vv4Y62Avhx0LV7KI/bQcelstLWnrvTbZ75mX1fWJHGYgdbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6JoQq7s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Vi7qjbca7P8529sgpaVLapJuJVhWRlhPO3bS7EO6LaCfR4viOE2HjTJU1z8uQ8uNn9GpixyHP1Prj3G7VgUtSCLznJnpWxmaWcZxTSU6R44yjhJHWSViqyVXwC238jlDLnDwXVpL+n3CcrJxCqdOtB4nkrmY7ttKugIjU23/4lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQivQ6XZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6JoQq7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B7A1F000C4;
-	Sat, 17 Oct 2026 16:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQivQ6XZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010A41F000C4;
+	Sat, 17 Oct 2026 16:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254032;
-	bh=bjUratlyWCwDcFx8mXysQKSM7IM/WIRHlW2OnoLLhmI=;
+	s=korg; t=1792254035;
+	bh=7SX7EOlTqiTrUlf0STZB0M9j0RbC6stjAuFuLso4Dfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6JoQq7sgxZ+kPZUb0uANDnvOd0wma/qcMFsRLQepgKKVLasxqZA/REiMqXkUTM8q
-	 xtMnQ8UO4HsvQJ7mJm8tPu5XFoTKpN6Zo9ovCiSlgxrbZOAyTZq3dc/qqK2k1JPoDT
-	 zyJTYfBZbPJqS26Ezb94fJ84mtLja8QYgonckbFM=
+	b=KQivQ6XZnPODwAQOu302rZMSzcC8/KMHiFf9/gD1/BoseoFmwZIl7Ko2BgKmF385R
+	 suol26TpHYPZx/BjaDhNDlKaLDN6dkhuyHOz3Muk40JHA9WLp+kB+7Ht8+nNsaM0Gf
+	 RAAQn0wPNPGqUexR6oczwDce0pDOkcogYWteJUEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <huangjianan@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 313/869] f2fs: avoid reading already updated pages during GC
-Date: Sat, 17 Oct 2026 17:52:34 +0200
-Message-ID: <20261017160045.099782059@linuxfoundation.org>
+Subject: [PATCH 6.12 314/869] greybus: raw: fix use-after-free on cdev close
+Date: Sat, 17 Oct 2026 17:52:35 +0200
+Message-ID: <20261017160045.125963643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,99 +45,192 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianan Huang <huangjianan@xiaomi.com>
+From: Damien Riégel <damien.riegel@silabs.com>
 
-[ Upstream commit 570e2ccc7cb35fe720106964e65060602d3d2ac4 ]
+[ Upstream commit 983cc2c7efbce04ecbf6328448d895044dd6ab31 ]
 
-We found the following issue during fuzz testing:
+This addresses a use-after-free bug when a raw bundle is disconnected
+but its chardev is still opened by an application. When the application
+releases the cdev, it causes the following panic when init on free is
+enabled (CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
 
-page: refcount:3 mapcount:0 mapping:00000000b6e89c65 index:0x18b2dc pfn:0x161ba9
-memcg:f8ffff800e269c00
-aops:f2fs_meta_aops ino:2
-flags: 0x52880000000080a9(locked|waiters|uptodate|lru|private|zone=1|kasantag=0x4a)
-raw: 52880000000080a9 fffffffec6e17588 fffffffec0ccc088 a7ffff8067063618
-raw: 000000000018b2dc 0000000000000009 00000003ffffffff f8ffff800e269c00
-page dumped because: VM_BUG_ON_FOLIO(folio_test_uptodate(folio))
-page_owner tracks the page as allocated
- post_alloc_hook+0x58c/0x5ec
- prep_new_page+0x34/0x284
- get_page_from_freelist+0x2dcc/0x2e8c
- __alloc_pages_noprof+0x280/0x76c
- __folio_alloc_noprof+0x18/0xac
- __filemap_get_folio+0x6bc/0xdc4
- pagecache_get_page+0x3c/0x104
- do_garbage_collect+0x5c78/0x77a4
- f2fs_gc+0xd74/0x25f0
- gc_thread_func+0xb28/0x2930
- kthread+0x464/0x5d8
- ret_from_fork+0x10/0x20
-------------[ cut here ]------------
-kernel BUG at mm/filemap.c:1563!
- folio_end_read+0x140/0x168
- f2fs_finish_read_bio+0x5c4/0xb80
- f2fs_read_end_io+0x64c/0x708
- bio_endio+0x85c/0x8c0
- blk_update_request+0x690/0x127c
- scsi_end_request+0x9c/0xb8c
- scsi_io_completion+0xf0/0x250
- scsi_finish_command+0x430/0x45c
- scsi_complete+0x178/0x6d4
- blk_mq_complete_request+0xcc/0x104
- scsi_done_internal+0x214/0x454
- scsi_done+0x24/0x34
+        refcount_t: underflow; use-after-free.
+        WARNING: CPU: 0 PID: 139 at lib/refcount.c:28 refcount_warn_saturate+0xd0/0x130
+         ...
+        Call Trace:
+         <TASK>
+         cdev_put+0x18/0x30
+         __fput+0x255/0x2a0
+         __x64_sys_close+0x3d/0x80
+         do_syscall_64+0xa4/0x290
+         entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-which is similar to the problem reported by syzbot:
-https://syzkaller.appspot.com/bug?extid=3686758660f980b402dc
+The cdev is contained in the "gb_raw" structure, which is freed in the
+disconnect operation. When the cdev is released at a later time,
+cdev_put gets an address that points to freed memory.
 
-This case is consistent with the description in commit 9bf1a3f
-("f2fs: avoid GC causing encrypted file corrupted"):
-Page 1 is moved from blkaddr A to blkaddr B by move_data_block, and after
-being written it is marked as uptodate. Then, Page 1 is moved from blkaddr
-B to blkaddr C, VM_BUG_ON_FOLIO was triggered in the endio initiated by
-ra_data_block.
+To fix this use-after-free, convert the struct device from a pointer to
+being embedded, that makes the lifetime of the cdev and of this device
+the same. Then, use cdev_device_add, which guarantees that the device
+won't be released until all references to the cdev have been released.
+Finally, delegate the freeing of the structure to the device release
+function, instead of freeing immediately in the disconnect callback.
 
-There is no need to read Page 1 again from blkaddr B, since it has already
-been updated. Therefore, avoid initiating I/O in this case.
-
-Fixes: 6aa58d8ad20a ("f2fs: readahead encrypted block during GC")
-Signed-off-by: Jianan Huang <huangjianan@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
+Link: https://patch.msgid.link/20260324140039.40001-1-damien.riegel@silabs.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/staging/greybus/raw.c | 67 +++++++++++++++++------------------
+ 1 file changed, 33 insertions(+), 34 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 6c831276d81da..6924876f1c2f5 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1222,7 +1222,7 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
- 		.encrypted_page = NULL,
- 		.in_list = 0,
- 	};
--	int err;
-+	int err = 0;
+diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
+index 71de6776739c2..e668438e1a2c4 100644
+--- a/drivers/staging/greybus/raw.c
++++ b/drivers/staging/greybus/raw.c
+@@ -21,9 +21,8 @@ struct gb_raw {
+ 	struct list_head list;
+ 	int list_data;
+ 	struct mutex list_lock;
+-	dev_t dev;
+ 	struct cdev cdev;
+-	struct device *device;
++	struct device dev;
+ };
  
- 	f2fs_down_read(&F2FS_I(inode)->i_sem);
- 	if (f2fs_is_cow_file(inode)) {
-@@ -1287,6 +1287,9 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
- 		goto put_page;
+ struct raw_data {
+@@ -148,6 +147,15 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
+ 	return retval;
+ }
+ 
++static void raw_dev_release(struct device *dev)
++{
++	struct gb_raw *raw = container_of(dev, struct gb_raw, dev);
++
++	ida_free(&minors, MINOR(raw->dev.devt));
++
++	kfree(raw);
++}
++
+ static int gb_raw_probe(struct gb_bundle *bundle,
+ 			const struct greybus_bundle_id *id)
+ {
+@@ -164,15 +172,30 @@ static int gb_raw_probe(struct gb_bundle *bundle,
+ 	if (cport_desc->protocol_id != GREYBUS_PROTOCOL_RAW)
+ 		return -ENODEV;
+ 
++	minor = ida_alloc(&minors, GFP_KERNEL);
++	if (minor < 0)
++		return minor;
++
+ 	raw = kzalloc(sizeof(*raw), GFP_KERNEL);
+-	if (!raw)
++	if (!raw) {
++		ida_free(&minors, minor);
+ 		return -ENOMEM;
++	}
++
++	device_initialize(&raw->dev);
++	raw->dev.devt = MKDEV(raw_major, minor);
++	raw->dev.class = &raw_class;
++	raw->dev.parent = &bundle->dev;
++	raw->dev.release = raw_dev_release;
++	retval = dev_set_name(&raw->dev, "gb!raw%d", minor);
++	if (retval)
++		goto error_put_device;
+ 
+ 	connection = gb_connection_create(bundle, le16_to_cpu(cport_desc->id),
+ 					  gb_raw_request_handler);
+ 	if (IS_ERR(connection)) {
+ 		retval = PTR_ERR(connection);
+-		goto error_free;
++		goto error_put_device;
  	}
  
-+	if (PageUptodate(fio.encrypted_page))
-+		goto put_encrypted_page;
-+
- 	err = f2fs_submit_page_bio(&fio);
- 	if (err)
- 		goto put_encrypted_page;
+ 	INIT_LIST_HEAD(&raw->list);
+@@ -181,46 +204,26 @@ static int gb_raw_probe(struct gb_bundle *bundle,
+ 	raw->connection = connection;
+ 	greybus_set_drvdata(bundle, raw);
+ 
+-	minor = ida_alloc(&minors, GFP_KERNEL);
+-	if (minor < 0) {
+-		retval = minor;
+-		goto error_connection_destroy;
+-	}
+-
+-	raw->dev = MKDEV(raw_major, minor);
+ 	cdev_init(&raw->cdev, &raw_fops);
+ 
+ 	retval = gb_connection_enable(connection);
+ 	if (retval)
+-		goto error_remove_ida;
++		goto error_connection_destroy;
+ 
+-	retval = cdev_add(&raw->cdev, raw->dev, 1);
++	retval = cdev_device_add(&raw->cdev, &raw->dev);
+ 	if (retval)
+ 		goto error_connection_disable;
+ 
+-	raw->device = device_create(&raw_class, &connection->bundle->dev,
+-				    raw->dev, raw, "gb!raw%d", minor);
+-	if (IS_ERR(raw->device)) {
+-		retval = PTR_ERR(raw->device);
+-		goto error_del_cdev;
+-	}
+-
+ 	return 0;
+ 
+-error_del_cdev:
+-	cdev_del(&raw->cdev);
+-
+ error_connection_disable:
+ 	gb_connection_disable(connection);
+ 
+-error_remove_ida:
+-	ida_free(&minors, minor);
+-
+ error_connection_destroy:
+ 	gb_connection_destroy(connection);
+ 
+-error_free:
+-	kfree(raw);
++error_put_device:
++	put_device(&raw->dev);
+ 	return retval;
+ }
+ 
+@@ -231,11 +234,8 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
+ 	struct raw_data *raw_data;
+ 	struct raw_data *temp;
+ 
+-	// FIXME - handle removing a connection when the char device node is open.
+-	device_destroy(&raw_class, raw->dev);
+-	cdev_del(&raw->cdev);
++	cdev_device_del(&raw->cdev, &raw->dev);
+ 	gb_connection_disable(connection);
+-	ida_free(&minors, MINOR(raw->dev));
+ 	gb_connection_destroy(connection);
+ 
+ 	mutex_lock(&raw->list_lock);
+@@ -244,8 +244,7 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
+ 		kfree(raw_data);
+ 	}
+ 	mutex_unlock(&raw->list_lock);
+-
+-	kfree(raw);
++	put_device(&raw->dev);
+ }
+ 
+ /*
 -- 
 2.53.0
 
