@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F09E2C3255;
-	Sat, 17 Oct 2026 17:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A263382F25;
+	Sat, 17 Oct 2026 17:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256650; cv=none; b=GtfnUX72a2ayHBlLEbWU1PXvUeu5s3KL69CSaqQGHk/mSnQFJI22UnNx/pmCGAnz+aMaYohgqpRt/CeMn62mk9Q3dTczsht0nzin9efIstSxWzmOdxb7mtRkDPK0cjqX3WRP0g4ttYPH52xMikBK4/sxX+NjTiLmIXXT026PQIw=
+	t=1792256653; cv=none; b=HwRF+d7vBD3301s1oXfeND1g9zFkCfjFNdiCAwro9EuXuF+2S2aB2xWCv+Wna4GHItKHkHpg5sSRx9ujolss1o1Vs6qQRcCmrbnjThUvVIukupFFSemawnGQYh2f52OTeh7JuCWoeQZp36oJN46/QgWTviFBPlvIVixAyNZ0vOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256650; c=relaxed/simple;
-	bh=/7E8jaa3TIC4+u43xW+mxDs//NHcnt+De9AtpiCDKcM=;
+	s=arc-20240116; t=1792256653; c=relaxed/simple;
+	bh=3qDIacb9+uhDTJROxN8w96T3zBdHLgZLSOMc1axnmgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUtZPqR+k8juZvatICnMc56Rdn/aIcQu4vrdHKIyAmcMvmb37/YaeuFHwcsXtNfmGfo1AI1UpzeoTrczTlzGcTExJK0lQryjUuTYBLhXEAqfy3KjYf7YfTKzLF3Sxutc/BEozaLFW9SMJvWOD1/yYyG/U7LZ1QqmjoETiWt4IwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR948qBP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WTyZyLnAAJDW4f1iqfswOgncGehY4T6JTVbwK/KVvh/ukyBoiG80gsR9OIhHjDEHM+cpFnZM/V+zWZ8cVjMDU5CRiEINsVnkGlc19jJPWWOx8GKWkFqMYeA2ydVKfcObiRa+Y/2z/4+d1+74y6CB75Di/Bkk4hf03AQkhIiMx54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2dVZ5Co; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR948qBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5491F000C4;
-	Sat, 17 Oct 2026 17:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2dVZ5Co"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A44D1F000C4;
+	Sat, 17 Oct 2026 17:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256649;
-	bh=bHVxmjKnerbMGyg7NJAEEgeo7I/SAl8bDY1qIrXTRx4=;
+	s=korg; t=1792256652;
+	bh=2rVtIpZ6WNEVZRLyshVx2WREUPpojGxZ2hivnsyPasI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wR948qBPJT+B3v6qMaU9gMUPly67r41k1ADZzrl73Jt0Un3kbgkcMRGh4bjjyqgwU
-	 H6T4vvqF3Rpzo90Z9BQMQISsjZEgYgi8wkpHDiFmDHEGrMFZ7BJ3hOzJNiBF/MWsqe
-	 KW2+BasUlO6MSUnFDEXedW2o2Y4KJ8NBsPxPNdRE=
+	b=J2dVZ5CoJjFyEp4codWQ8ME/aAjLJzKTnAXHfZBBhFRTlV5aWqptDhgse9q4QveXu
+	 U2PnEr1E7XscMwyEZ9YlwNVBHLjZD5KoK4MU81+gP1009JzJGZs3WYxS3K4xLjGqkH
+	 Thg3NW4jVCapTSaL9+VVpAlm80WluetgBrxSWHWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+77553a7fc66ac133@bugs.sh,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 0307/1674] nvmet-auth: fix out-of-bounds write in nvmet_auth_challenge()
-Date: Sat, 17 Oct 2026 17:42:59 +0200
-Message-ID: <20261017160438.998296108@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 0308/1674] mtd: rawnand: cadence: Initialize IRQ state before requesting IRQ
+Date: Sat, 17 Oct 2026 17:43:00 +0200
+Message-ID: <20261017160439.025136999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,57 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit fa6778e030bed9841ddcdf96bc7018da9ac03562 upstream.
+commit 21f027016b1290d13c30b198ae7a00e6b3d1d5a5 upstream.
 
-nvmet_auth_challenge() receives its output buffer as a void pointer.
-sizeof(*d) therefore evaluates to one with GCC and undercounts the fixed
-challenge header by 15 bytes.  A short AUTH_RECEIVE buffer can pass the
-check before the challenge is copied past the end of its allocation.
+The Cadence NAND interrupt handler uses both the IRQ lock and completion
+object. Registering the IRQ before initializing them leaves a window in
+which a pending interrupt can access uninitialized synchronization state.
 
-Use the typed challenge pointer when calculating the response size.
+Initialize them before registering the handler.
 
-  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
-  Write of size 32 by task kworker/1:1H/64
-  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
-  Call Trace:
-  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:442 drivers/nvme/target/fabrics-cmd-auth.c:569)
-  nvmet_tcp_try_recv_pdu (drivers/nvme/target/tcp.c:1119 drivers/nvme/target/tcp.c:1243)
-  nvmet_tcp_io_work (drivers/nvme/target/tcp.c:1350 drivers/nvme/target/tcp.c:1382 drivers/nvme/target/tcp.c:1445)
-  process_one_work (kernel/workqueue.c:3322)
-  worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  The buggy address is located 16 bytes inside of
-   allocated 33-byte region [ffff888000554e80, ffff888000554ea1)
-  Kernel panic - not syncing: KASAN: panic_on_warn set ...
-
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
 Cc: stable@vger.kernel.org
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Reported-by: co+77553a7fc66ac133@bugs.sh
-Closes: https://lore.kernel.org/all/Ah6QavQXwvshtqyUcYD1P1R7XE0ND9fB7lbV@bugs.sh/
-Assisted-by: Codex:gpt-5.6
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -373,7 +373,7 @@ static int nvmet_auth_challenge(struct n
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
- 	int ret = 0;
- 	int hash_len = nvme_auth_hmac_hash_len(ctrl->shash_id);
--	int data_size = sizeof(*d) + hash_len;
-+	int data_size = sizeof(*data) + hash_len;
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -2893,6 +2893,9 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf_desc;
+ 	}
  
- 	if (ctrl->dh_tfm)
- 		data_size += ctrl->dh_keysize;
++	spin_lock_init(&cdns_ctrl->irq_lock);
++	init_completion(&cdns_ctrl->complete);
++
+ 	if (devm_request_irq(cdns_ctrl->dev, cdns_ctrl->irq, cadence_nand_isr,
+ 			     IRQF_SHARED, "cadence-nand-controller",
+ 			     cdns_ctrl)) {
+@@ -2901,9 +2904,6 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf;
+ 	}
+ 
+-	spin_lock_init(&cdns_ctrl->irq_lock);
+-	init_completion(&cdns_ctrl->complete);
+-
+ 	ret = cadence_nand_hw_init(cdns_ctrl);
+ 	if (ret)
+ 		goto disable_irq;
 
 
