@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CFD38F950;
-	Sat, 17 Oct 2026 18:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE797356A12;
+	Sat, 17 Oct 2026 18:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260391; cv=none; b=j9x6FG5plkAPlefSdVF5FcVaZALN7+SDSH1JyzyOikpRVHKiRNWuI7nJEbWrwQ4sirl2WezrSnhvBk6McIZtm8LRdElanlfx7HEQ3Bs0RL/0hqRwi9GY7O0f+yKbIaYBN7DHnKHNZ01tycb0bZnlTl/5tN/v1GquyLkDZTo5x54=
+	t=1792260394; cv=none; b=Ce0xiFffHXf4OkQWtRTuCGfqoNqmx+nfb7nAQ7LdnDqBAM2wz6BVvm7lFjNngjStodJ++RSW9QeMUWgK/Shz7T9kSDIWvCcFpZJ6FoGp4l2c10LC4inEC3CViTWZTOZ7TdQZggNidHg+jriHGR974V06H1cbd4YmR6rj2xXVXdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260391; c=relaxed/simple;
-	bh=7JHKIpbQjcND464pMFEhc1dqypte3W7JafZOH79hxyQ=;
+	s=arc-20240116; t=1792260394; c=relaxed/simple;
+	bh=8wFmnirUh/yuReI2/uycejDgbaQUCFOwx97pXP6ix7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6024kMp4qaoagL8CrR0Vjpk6U7vkonIEKkdkPmpXhDl2v8YAg2iNz2doW+HGn02vHnLFfu915UUssHvLRj6OAWjcglX7/KCaqAnN7ejqmmS7VfXvzW+p3te2GJO7ZY4oMKj0xkpNpTtcN2VYkyXd3Hkja3VxmQXi2s1hpCHSs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKGIFSBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZagYaj6UPH99AoQoZKcv7JLuFw6hYOjboV1qtaBVT+Pk5t1Um20QzN2SYoQMvCgZeRvDDbIr6/rmYDqa+cWvpRfM+J7KbuRFC3Xd7n13uzRL5/Fv6NevOySaPic+NBMvS0/8NtFLBggqNufyNsaBM0zUv4umYwhqOOulKAiMhBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFFq81rZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKGIFSBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AAF1F000C4;
-	Sat, 17 Oct 2026 18:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFFq81rZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A721F000C4;
+	Sat, 17 Oct 2026 18:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260390;
-	bh=vNV3W2SPgtefcg6U6p0lOEIqQdRaeCbkhHqAAav9E6M=;
+	s=korg; t=1792260392;
+	bh=8plhqLXXhV/uBe04dmhSlrfxvfkjjebp9UhIcWuBgQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKGIFSBGzzCeQO1ZlaNTd7BTx3stKFS1ZD/J01rj9bsPiUyMR2/pobGIvW9oTNQ4G
-	 LOeZD4+bxTWr3uJb7zzoE2beojKfhhdQm3AncyRj1CPtOpVzPPGRpzujW4vhwi8hEK
-	 w8TN7Ot6n01eanOsXtSLvTWoW9vqEZd+plIZBC7o=
+	b=rFFq81rZkk+L7J/w4r1dJKTdVZQu9Qo+66hHYjrFslatK3qevJuSVQQ/CNeyVDIpG
+	 wnBHBGzheosYo553FIff0Ss5/9Q4RybAONx1uNTCRLXdZGybJKNhBBne1y7L2pQp5/
+	 RKq4g+/1+ytVVQbH/ZDIlsGCkoU670WjCqQyPnkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1528/1674] drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq
-Date: Sat, 17 Oct 2026 18:03:20 +0200
-Message-ID: <20261017160510.341945008@linuxfoundation.org>
+Subject: [PATCH 6.6 1529/1674] drm/amdgpu: Refactor FRU product information
+Date: Sat, 17 Oct 2026 18:03:21 +0200
+Message-ID: <20261017160510.366473243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,202 +52,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit e3829992dd9fa0a82511af4f01733fc854cd15a5 ]
+[ Upstream commit 8a2b51392ac4a5ecc310c6dddd6cb70c71f0ddeb ]
 
-cp_ecc_error_irq is acquired in amdgpu_gfx_ras_late_init() but
-released in gfx_v9_0_hw_fini(), so the put site has to query
-amdgpu_irq_enabled() because the get is skipped on SR-IOV VF.
+Keep FRU related information together in a separate structure.
 
-ras_late_init / ras_fini have no suspend counterpart, so move the
-put to amdgpu_gfx_ras_suspend() / amdgpu_gfx_ras_fini() and add a
-matching ras_suspend callback that is invoked from
-amdgpu_ras_suspend() before disable_all_features().  The get and
-put now sit in the same place and check the same condition (not
-VF, funcs registered), no refcount querying needed.
-
-An active flag gates ras_fini so the
-suspend-then-unload-without-resume path falls into
-amdgpu_ras_block_late_fini_default() instead of double-releasing
-what ras_suspend already cleaned up.
-
-Drop the cp_ecc_error_irq put from gfx_v9_0_hw_fini().  gfx_v8_0
-manages cp_ecc_error_irq locally and is unaffected; no other GFX
-generation has this IRQ.
-
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c990c05eb6c7 ("drm/amdgpu: harden FRU PIA parsing with bounded helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 25 ++++++++++++++++++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h |  3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 32 +++++++++++++++++++++----
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h |  1 +
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   |  2 --
- 5 files changed, 55 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h           |  8 +---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    |  3 ++
+ .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c    | 46 +++++++++++--------
+ .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h    |  9 ++++
+ .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c |  4 --
+ .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   |  2 -
+ .../drm/amd/pm/swsmu/smu13/aldebaran_ppt.c    |  2 -
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  |  2 -
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c  |  2 -
+ 9 files changed, 42 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index e7b053898f9e9..4ade7b68ad154 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -803,7 +803,7 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
- 		if (r)
- 			return r;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 84c0a051474f9..975c362f2b22a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -758,8 +758,8 @@ struct amdgpu_mqd {
  
--		if (adev->gfx.cp_ecc_error_irq.funcs) {
-+		if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs) {
- 			r = amdgpu_irq_get(adev, &adev->gfx.cp_ecc_error_irq, 0);
- 			if (r)
- 				goto late_fini;
-@@ -818,6 +818,23 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
- 	return r;
- }
+ #define AMDGPU_RESET_MAGIC_NUM 64
+ #define AMDGPU_MAX_DF_PERFMONS 4
+-#define AMDGPU_PRODUCT_NAME_LEN 64
+ struct amdgpu_reset_domain;
++struct amdgpu_fru_info;
  
-+void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev,
-+			    struct ras_common_if *ras_block)
-+{
-+	if (amdgpu_ras_is_supported(adev, ras_block->block) &&
-+	    !amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
-+		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
-+}
+ /*
+  * Non-zero (true) if the GPU has VRAM. Zero (false) otherwise.
+@@ -1037,11 +1037,7 @@ struct amdgpu_device {
+ 
+ 	bool                            ucode_sysfs_en;
+ 
+-	/* Chip product information */
+-	char				product_number[20];
+-	char				product_name[AMDGPU_PRODUCT_NAME_LEN];
+-	char				serial[20];
+-
++	struct amdgpu_fru_info		*fru_info;
+ 	atomic_t			throttling_logging_enabled;
+ 	struct ratelimit_state		throttling_logging_rs;
+ 	uint32_t                        ras_hw_enabled;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index c9aff16f05481..bb1dde51c6fe0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4172,6 +4172,9 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 
+ 	amdgpu_bios_release(adev);
+ 
++	kfree(adev->fru_info);
++	adev->fru_info = NULL;
 +
-+void amdgpu_gfx_ras_fini(struct amdgpu_device *adev,
-+			 struct ras_common_if *ras_block)
-+{
-+	if (amdgpu_ras_is_supported(adev, ras_block->block) &&
-+	    !amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
-+		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
-+	amdgpu_ras_block_late_fini(adev, ras_block);
-+}
-+
- int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
+ 	px = amdgpu_device_supports_px(adev_to_drm(adev));
+ 
+ 	if (amdgpu_device_should_register_switcheroo(adev, px))
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+index 7cd0dfaeee206..ba62ddeaa31f9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+@@ -99,6 +99,7 @@ static bool is_fru_eeprom_supported(struct amdgpu_device *adev, u32 *fru_addr)
+ 
+ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
  {
- 	int err = 0;
-@@ -846,6 +863,12 @@ int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
- 	if (!ras->ras_block.ras_late_init)
- 		ras->ras_block.ras_late_init = amdgpu_gfx_ras_late_init;
++	struct amdgpu_fru_info *fru_info;
+ 	unsigned char buf[8], *pia;
+ 	u32 addr, fru_addr;
+ 	int size, len;
+@@ -107,6 +108,19 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 	if (!is_fru_eeprom_supported(adev, &fru_addr))
+ 		return 0;
  
-+	if (!ras->ras_block.ras_suspend)
-+		ras->ras_block.ras_suspend = amdgpu_gfx_ras_suspend;
-+
-+	if (!ras->ras_block.ras_fini)
-+		ras->ras_block.ras_fini = amdgpu_gfx_ras_fini;
-+
- 	/* If not defined special ras_cb function, use default ras_cb */
- 	if (!ras->ras_block.ras_cb)
- 		ras->ras_block.ras_cb = amdgpu_gfx_process_ras_data_cb;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
-index 0ca95c4d4bfbe..405d6b73afeb8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
-@@ -516,7 +516,8 @@ bool amdgpu_gfx_is_me_queue_enabled(struct amdgpu_device *adev, int me,
- void amdgpu_gfx_off_ctrl(struct amdgpu_device *adev, bool enable);
- int amdgpu_get_gfx_off_status(struct amdgpu_device *adev, uint32_t *value);
- int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *ras_block);
--void amdgpu_gfx_ras_fini(struct amdgpu_device *adev);
-+void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev, struct ras_common_if *ras_block);
-+void amdgpu_gfx_ras_fini(struct amdgpu_device *adev, struct ras_common_if *ras_block);
- int amdgpu_get_gfx_off_entrycount(struct amdgpu_device *adev, u64 *value);
- int amdgpu_get_gfx_off_residency(struct amdgpu_device *adev, u32 *residency);
- int amdgpu_set_gfx_off_residency(struct amdgpu_device *adev, bool value);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-index 4214bbd7a1a23..65a5edcb12ba4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -86,6 +86,9 @@ struct amdgpu_ras_block_list {
- 	struct list_head node;
- 
- 	struct amdgpu_ras_block_object *ras_obj;
-+
-+	/* set by ras_late_init, cleared by ras_suspend/ras_fini */
-+	bool active;
- };
- 
- const char *get_ras_block_str(struct ras_common_if *ras_block)
-@@ -2886,10 +2889,23 @@ void amdgpu_ras_resume(struct amdgpu_device *adev)
- void amdgpu_ras_suspend(struct amdgpu_device *adev)
- {
- 	struct amdgpu_ras *con = amdgpu_ras_get_context(adev);
-+	struct amdgpu_ras_block_list *node;
-+	struct amdgpu_ras_block_object *obj;
- 
- 	if (!adev->ras_enabled || !con)
- 		return;
- 
-+	/* run per-block ras_suspend before tearing down the RAS context */
-+	list_for_each_entry(node, &adev->ras_list, node) {
-+		if (!node->active)
-+			continue;
-+
-+		obj = node->ras_obj;
-+		if (obj && obj->ras_suspend)
-+			obj->ras_suspend(adev, &obj->ras_comm);
-+		node->active = false;
++	if (!adev->fru_info) {
++		adev->fru_info = kzalloc(sizeof(*adev->fru_info), GFP_KERNEL);
++		if (!adev->fru_info)
++			return -ENOMEM;
 +	}
 +
- 	amdgpu_ras_disable_all_features(adev, 0);
- 	/* Make sure all ras objects are disabled. */
- 	if (con->features)
-@@ -2920,8 +2936,15 @@ int amdgpu_ras_late_init(struct amdgpu_device *adev)
- 					obj->ras_comm.name, r);
- 				return r;
- 			}
--		} else
--			amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
-+		} else {
-+			r = amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
-+			if (r) {
-+				dev_err(adev->dev, "%s failed to execute ras_block_late_init_default! ret:%d\n",
-+					obj->ras_comm.name, r);
-+				return r;
-+			}
-+		}
-+		node->active = true;
- 	}
++	fru_info = adev->fru_info;
++	/* For Arcturus-and-later, default value of serial_number is unique_id
++	 * so convert it to a 16-digit HEX string for convenience and
++	 * backwards-compatibility.
++	 */
++	sprintf(fru_info->serial, "%llx", adev->unique_id);
++
+ 	/* If algo exists, it means that the i2c_adapter's initialized */
+ 	if (!adev->pm.fru_eeprom_i2c_bus || !adev->pm.fru_eeprom_i2c_bus->algo) {
+ 		DRM_WARN("Cannot access FRU, EEPROM accessor not initialized");
+@@ -182,21 +196,18 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 	addr = 3 + 1 + (pia[3] & 0x3F);
+ 	if (addr + 1 >= len)
+ 		goto Out;
+-	memcpy(adev->product_name, pia + addr + 1,
+-	       min_t(size_t,
+-		     sizeof(adev->product_name),
+-		     pia[addr] & 0x3F));
+-	adev->product_name[sizeof(adev->product_name) - 1] = '\0';
++	memcpy(fru_info->product_name, pia + addr + 1,
++	       min_t(size_t, sizeof(fru_info->product_name), pia[addr] & 0x3F));
++	fru_info->product_name[sizeof(fru_info->product_name) - 1] = '\0';
  
+ 	/* Go to the Product Part/Model Number field. */
+ 	addr += 1 + (pia[addr] & 0x3F);
+ 	if (addr + 1 >= len)
+ 		goto Out;
+-	memcpy(adev->product_number, pia + addr + 1,
+-	       min_t(size_t,
+-		     sizeof(adev->product_number),
++	memcpy(fru_info->product_number, pia + addr + 1,
++	       min_t(size_t, sizeof(fru_info->product_number),
+ 		     pia[addr] & 0x3F));
+-	adev->product_number[sizeof(adev->product_number) - 1] = '\0';
++	fru_info->product_number[sizeof(fru_info->product_number) - 1] = '\0';
+ 
+ 	/* Go to the Product Version field. */
+ 	addr += 1 + (pia[addr] & 0x3F);
+@@ -205,10 +216,9 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 	addr += 1 + (pia[addr] & 0x3F);
+ 	if (addr + 1 >= len)
+ 		goto Out;
+-	memcpy(adev->serial, pia + addr + 1, min_t(size_t,
+-						   sizeof(adev->serial),
+-						   pia[addr] & 0x3F));
+-	adev->serial[sizeof(adev->serial) - 1] = '\0';
++	memcpy(fru_info->serial, pia + addr + 1,
++	       min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
++	fru_info->serial[sizeof(fru_info->serial) - 1] = '\0';
+ Out:
+ 	kfree(pia);
  	return 0;
-@@ -2955,11 +2978,12 @@ int amdgpu_ras_fini(struct amdgpu_device *adev)
- 	list_for_each_entry_safe(ras_node, tmp, &adev->ras_list, node) {
- 		if (ras_node->ras_obj) {
- 			obj = ras_node->ras_obj;
--			if (amdgpu_ras_is_supported(adev, obj->ras_comm.block) &&
--			    obj->ras_fini)
-+			/* fall back to default cleanup if ras_suspend already ran */
-+			if (ras_node->active && obj->ras_fini)
- 				obj->ras_fini(adev, &obj->ras_comm);
- 			else
- 				amdgpu_ras_block_late_fini_default(adev, &obj->ras_comm);
-+			ras_node->active = false;
- 		}
+@@ -231,7 +241,7 @@ static ssize_t amdgpu_fru_product_name_show(struct device *dev,
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(ddev);
  
- 		/* Clear ras blocks from ras_list and free ras block list node */
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-index ffb49b2d533ad..742449833c8b7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-@@ -551,6 +551,7 @@ struct amdgpu_ras_block_object {
- 	int (*ras_block_match)(struct amdgpu_ras_block_object *block_obj,
- 				enum amdgpu_ras_block block, uint32_t sub_block_index);
- 	int (*ras_late_init)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
-+	void (*ras_suspend)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
- 	void (*ras_fini)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
- 	ras_ih_cb ras_cb;
- 	const struct amdgpu_ras_block_hw_ops *hw_ops;
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index b1b4f75ebad35..4bcd5a93415b2 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3776,8 +3776,6 @@ static int gfx_v9_0_hw_fini(void *handle)
+-	return sysfs_emit(buf, "%s\n", adev->product_name);
++	return sysfs_emit(buf, "%s\n", adev->fru_info->product_name);
+ }
+ 
+ static DEVICE_ATTR(product_name, 0444, amdgpu_fru_product_name_show, NULL);
+@@ -253,7 +263,7 @@ static ssize_t amdgpu_fru_product_number_show(struct device *dev,
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(ddev);
+ 
+-	return sysfs_emit(buf, "%s\n", adev->product_number);
++	return sysfs_emit(buf, "%s\n", adev->fru_info->product_number);
+ }
+ 
+ static DEVICE_ATTR(product_number, 0444, amdgpu_fru_product_number_show, NULL);
+@@ -275,7 +285,7 @@ static ssize_t amdgpu_fru_serial_number_show(struct device *dev,
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(ddev);
+ 
+-	return sysfs_emit(buf, "%s\n", adev->serial);
++	return sysfs_emit(buf, "%s\n", adev->fru_info->serial);
+ }
+ 
+ static DEVICE_ATTR(serial_number, 0444, amdgpu_fru_serial_number_show, NULL);
+@@ -289,7 +299,7 @@ static const struct attribute *amdgpu_fru_attributes[] = {
+ 
+ int amdgpu_fru_sysfs_init(struct amdgpu_device *adev)
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+-	if (!is_fru_eeprom_supported(adev, NULL))
++	if (!is_fru_eeprom_supported(adev, NULL) || !adev->fru_info)
+ 		return 0;
  
--	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
--		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
+ 	return sysfs_create_files(&adev->dev->kobj, amdgpu_fru_attributes);
+@@ -297,7 +307,7 @@ int amdgpu_fru_sysfs_init(struct amdgpu_device *adev)
  
+ void amdgpu_fru_sysfs_fini(struct amdgpu_device *adev)
+ {
+-	if (!is_fru_eeprom_supported(adev, NULL))
++	if (!is_fru_eeprom_supported(adev, NULL) || !adev->fru_info)
+ 		return;
+ 
+ 	sysfs_remove_files(&adev->dev->kobj, amdgpu_fru_attributes);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
+index c817db17cfa75..c99c74811c78a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
+@@ -24,6 +24,15 @@
+ #ifndef __AMDGPU_FRU_EEPROM_H__
+ #define __AMDGPU_FRU_EEPROM_H__
+ 
++#define AMDGPU_PRODUCT_NAME_LEN 64
++
++/* FRU product information */
++struct amdgpu_fru_info {
++	char				product_number[20];
++	char				product_name[AMDGPU_PRODUCT_NAME_LEN];
++	char				serial[20];
++};
++
+ int amdgpu_fru_get_product_info(struct amdgpu_device *adev);
+ int amdgpu_fru_sysfs_init(struct amdgpu_device *adev);
+ void amdgpu_fru_sysfs_fini(struct amdgpu_device *adev);
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+index a47898487de09..cb4f7f1649115 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+@@ -2237,10 +2237,6 @@ static void arcturus_get_unique_id(struct smu_context *smu)
+ 
+ 	id = ((uint64_t)bottom32 << 32) | top32;
+ 	adev->unique_id = id;
+-	/* For Arcturus-and-later, unique_id == serial_number, so convert it to a
+-	 * 16-digit HEX string for convenience and backwards-compatibility
+-	 */
+-	sprintf(adev->serial, "%llx", id);
+ }
+ 
+ static int arcturus_set_df_cstate(struct smu_context *smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+index 2fdb982e70ef7..0da0b6792cdf5 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -1989,8 +1989,6 @@ static void sienna_cichlid_get_unique_id(struct smu_context *smu)
+ out:
+ 
+ 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
+-	if (adev->serial[0] == '\0')
+-		sprintf(adev->serial, "%016llx", adev->unique_id);
+ }
+ 
+ static int sienna_cichlid_get_uclk_dpm_states(struct smu_context *smu, uint32_t *clocks_in_khz, uint32_t *num_states)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+index d1fd643e7a48c..337e7722d25ed 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -1622,8 +1622,6 @@ static void aldebaran_get_unique_id(struct smu_context *smu)
+ 
+ out:
+ 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
+-	if (adev->serial[0] == '\0')
+-		sprintf(adev->serial, "%016llx", adev->unique_id);
+ }
+ 
+ static bool aldebaran_is_baco_supported(struct smu_context *smu)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index 7d9470778a991..6ef3140edacd1 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1931,8 +1931,6 @@ static void smu_v13_0_0_get_unique_id(struct smu_context *smu)
+ 
+ out:
+ 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
+-	if (adev->serial[0] == '\0')
+-		sprintf(adev->serial, "%016llx", adev->unique_id);
+ }
+ 
+ static int smu_v13_0_0_get_fan_speed_pwm(struct smu_context *smu,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+index 4edb631461223..ac2b60512e2d4 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -1858,8 +1858,6 @@ static void smu_v13_0_6_get_unique_id(struct smu_context *smu)
+ 		(struct PPTable_t *)smu_table->driver_pptable;
+ 
+ 	adev->unique_id = pptable->PublicSerialNumber_AID;
+-	if (adev->serial[0] == '\0')
+-		sprintf(adev->serial, "%016llx", adev->unique_id);
+ }
+ 
+ static bool smu_v13_0_6_is_baco_supported(struct smu_context *smu)
 -- 
 2.53.0
 
