@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468AE18D62A;
-	Sat, 17 Oct 2026 18:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4923B71A7;
+	Sat, 17 Oct 2026 18:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260319; cv=none; b=Iv0S0NW8LFEzcpzRO6MFEotIEjh65uTrRWCleFCOIihbBhNfG1kQoVmYO0t/fbJLtFg77zEJTS18CrBRf8ikabjnkY+prfnJBBAT80FLjomcA2N5RIvVGT+1oiTeMJ/Omzb8opODzMOBBQCLEfGgT37Qwim/uFOW3S9Z179Lkd4=
+	t=1792260323; cv=none; b=BdpAvdz8c4yEUP9VBZ4Cemtowq4HqaLWvzcnY9R5mOx5kVC4objgCzFpR+Kn9qG9xnYkGV/oIxc3qQ25IKmp+Tr2HJAYtt59nYENpGgSNw+IvlfGMUz5+DoFzS90EmnkCtCHLZZFOESehDBGL5a9T36q7YnMTIaIIqno/ubWL1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260319; c=relaxed/simple;
-	bh=97ElIcv96l+No5kqcq1D7MQJcUNoavrFl+GI9WuSXzg=;
+	s=arc-20240116; t=1792260323; c=relaxed/simple;
+	bh=xBGI39P3c5xTBwsSdgMFZacDataCLvuqLYTPzqFn/eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEVxuJB0K+VB5mwkm64O5nKPfD1IKx8yIB+BAE+sZDtsZ+DXN1ccrkgFXTEfashFbYIMWGQCyXrnWPkV8Xb53huiCo++7ayzpGr1iG1Y7uEL+lXm7e9jtIXPEEV9k/m9rxRk5GHaYLjXV9JLrNHa5lWLQKt3Y0AauQGBDMhJ3AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWbaXM/c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kjH4PRTs3pbadqGg+UbgmyeELBSd/+z0FymbYEBzNxuVE20GoH5Kam/gpt3HVPDORieJ+Mrlza7eL5p0/fodNg/VqFAN/uVzZthellVQMNePNY1fOhyANvDHNVTsUZOsLDQnnyOAhGnWvMZhCCfTj9F4zqXYtA3eY5KLhLvYD9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5OvfnLv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWbaXM/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998DA1F000C4;
-	Sat, 17 Oct 2026 18:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5OvfnLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781E91F000C4;
+	Sat, 17 Oct 2026 18:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260318;
-	bh=XqJGLGwhKmQmwevtTxcniCLyfKlXaN94v36iEwhjn3E=;
+	s=korg; t=1792260321;
+	bh=K0+DE5x7OwUk7jx0g5uO0wPmWCxZHE5bIjJ0QM+qnE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JWbaXM/c3BK4c8BkN2ixf6IkIbm7sMvNPv7ZuoieqLYIwO8Ps+SDG3COxjXZCRZny
-	 9TyTnL4nWa54Turz8vISd89f19nVAVMmiEL4yjn2Cd8XW/Py+a6zV0Uiuyw/j5dRx4
-	 jz9geieLJ1OAh8y8XFHRT3AdU/YFlXjnRNGxXgdU=
+	b=q5OvfnLvj6lMElsHU06Sg8ghID/FApSZqSkwusaiSVCrZlrjNWMVipx9Z2PxHFhZm
+	 rfvpU5LDbPuDkpSVBkSqMQS+osXlhQy1YHh61mHEgYy4U1y2QGAM0C8IU517aurDNj
+	 ybNGEY16YI+Qq2BGbA6Z4YMw/PnePGu8jRkaVVzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Ye Liu <ye.liu@linux.dev>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1506/1674] iommu/arm-smmu-v3: Manage teardown with devm
-Date: Sat, 17 Oct 2026 18:02:58 +0200
-Message-ID: <20261017160509.789264792@linuxfoundation.org>
+Subject: [PATCH 6.6 1507/1674] mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg()
+Date: Sat, 17 Oct 2026 18:02:59 +0200
+Message-ID: <20261017160509.813988737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,156 +60,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Ye Liu <ye.liu@linux.dev>
 
-[ Upstream commit 2bd22a0d40503a65d243b011de146603c8ce1cbc ]
+[ Upstream commit 90f095b816e25c6a9e4446d299bac5007fdcb3df ]
 
-arm_smmu_device_remove() manually frees the IOPF queue, destroys the
-vmid_map and disables the device, while the IRQs and queues are devm
-managed. devm unwinds only after remove() returns, so the cleanup runs
-in the wrong order. The IOPF queue is freed before the event-queue IRQ
-whose handler uses it.
+print_page_owner_memcg() reads page->memcg_data via READ_ONCE() at the
+start to guard against tail pages and NULL data.  However, it later
+re-reads page->memcg_data locklessly in two places:
 
-Manage all of it with devm so the unwind order is correct. Free the IOPF
-queue and vmid_map via devm actions, and disable the device from one
-registered after arm_smmu_device_reset().
+1: page_memcg_check(page)
 
-This is also a prerequisite for fixing a Tegra241 CMDQV CMD_SYNC
-use-after-free in the subsequent patch.
+2: PageMemcgKmem(page) (via folio_memcg_kmem(), which includes
+   VM_BUG_ON assertions for tail pages and MEMCG_DATA_OBJEXTS)
 
-Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+If the page is concurrently freed and reallocated as a THP tail page or
+slab page between these calls, the VM_BUG_ON assertions can trigger on
+CONFIG_DEBUG_VM=y builds, crashing the kernel.
+
+Fix both TOCTOU issues by using the memcg_data snapshot throughout.
+
+Link: https://lore.kernel.org/20260714015117.78351-10-ye.liu@linux.dev
+Fixes: fcf8935832b8 ("mm/page_owner: print memcg information")
+Signed-off-by: Ye Liu <ye.liu@linux.dev>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: David Hildenbrand (Arm) <david@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 56 +++++++++++++++------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ mm/page_owner.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 70e5d7cda0c98..6f83556dda4d6 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2962,6 +2962,20 @@ static int arm_smmu_cmdq_init(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static void arm_smmu_free_iopf_action(void *data)
-+{
-+	struct iopf_queue *queue = data;
-+
-+	iopf_queue_free(queue);
-+}
-+
-+static void arm_smmu_destroy_vmid_map(void *data)
-+{
-+	struct ida *ida = data;
-+
-+	ida_destroy(ida);
-+}
-+
- static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
+diff --git a/mm/page_owner.c b/mm/page_owner.c
+index 4e2723e1b300d..3f539928324a3 100644
+--- a/mm/page_owner.c
++++ b/mm/page_owner.c
+@@ -363,6 +363,7 @@ static inline int print_page_owner_memcg(char *kbuf, size_t count, int ret,
  {
- 	int ret;
-@@ -2989,6 +3003,11 @@ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
- 		smmu->evtq.iopf = iopf_queue_alloc(dev_name(smmu->dev));
- 		if (!smmu->evtq.iopf)
- 			return -ENOMEM;
-+		ret = devm_add_action_or_reset(smmu->dev,
-+					       arm_smmu_free_iopf_action,
-+					       smmu->evtq.iopf);
-+		if (ret)
-+			return ret;
- 	}
+ #ifdef CONFIG_MEMCG
+ 	unsigned long memcg_data;
++	struct obj_cgroup *objcg;
+ 	struct mem_cgroup *memcg;
+ 	bool online;
+ 	char name[80];
+@@ -372,11 +373,18 @@ static inline int print_page_owner_memcg(char *kbuf, size_t count, int ret,
+ 	if (!memcg_data)
+ 		goto out_unlock;
  
- 	/* priq */
-@@ -3105,7 +3124,8 @@ static int arm_smmu_init_strtab(struct arm_smmu_device *smmu)
- 
- 	ida_init(&smmu->vmid_map);
- 
--	return 0;
-+	return devm_add_action_or_reset(smmu->dev, arm_smmu_destroy_vmid_map,
-+					&smmu->vmid_map);
- }
- 
- static int arm_smmu_init_structures(struct arm_smmu_device *smmu)
-@@ -3311,6 +3331,13 @@ static int arm_smmu_device_disable(struct arm_smmu_device *smmu)
- 	return ret;
- }
- 
-+static void arm_smmu_disable_action(void *data)
-+{
-+	struct arm_smmu_device *smmu = data;
-+
-+	arm_smmu_device_disable(smmu);
-+}
-+
- static int arm_smmu_device_reset(struct arm_smmu_device *smmu, bool bypass)
- {
- 	int ret;
-@@ -3892,7 +3919,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 	/* Initialise in-memory data structures */
- 	ret = arm_smmu_init_structures(smmu);
- 	if (ret)
--		goto err_free_iopf;
-+		return ret;
- 
- 	/* Record our private device structure */
- 	platform_set_drvdata(pdev, smmu);
-@@ -3902,30 +3929,30 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 
- 	/* Reset the device */
- 	ret = arm_smmu_device_reset(smmu, bypass);
-+	if (ret) {
-+		arm_smmu_device_disable(smmu);
-+		return ret;
+-	if (memcg_data & MEMCG_DATA_OBJCGS)
++	if (memcg_data & MEMCG_DATA_OBJCGS) {
+ 		ret += scnprintf(kbuf + ret, count - ret,
+ 				"Slab cache page\n");
++		goto out_unlock;
 +	}
-+
-+	/* Register last so it unwinds first, while the CMDQ is still up. */
-+	ret = devm_add_action_or_reset(smmu->dev, arm_smmu_disable_action, smmu);
- 	if (ret)
--		goto err_disable;
-+		return ret;
  
- 	/* And we're up. Go go go! */
- 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
- 				     "smmu3.%pa", &ioaddr);
- 	if (ret)
--		goto err_disable;
-+		return ret;
+-	memcg = page_memcg_check(page);
++	if (memcg_data & MEMCG_DATA_KMEM) {
++		objcg = (void *)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
++		memcg = obj_cgroup_memcg(objcg);
++	} else {
++		memcg = (void *)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
++	}
+ 	if (!memcg)
+ 		goto out_unlock;
  
- 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		goto err_free_sysfs;
-+		iommu_device_sysfs_remove(&smmu->iommu);
-+		return ret;
- 	}
- 
- 	return 0;
--
--err_free_sysfs:
--	iommu_device_sysfs_remove(&smmu->iommu);
--err_disable:
--	arm_smmu_device_disable(smmu);
--err_free_iopf:
--	iopf_queue_free(smmu->evtq.iopf);
--	return ret;
- }
- 
- static void arm_smmu_device_remove(struct platform_device *pdev)
-@@ -3934,9 +3961,6 @@ static void arm_smmu_device_remove(struct platform_device *pdev)
- 
- 	iommu_device_unregister(&smmu->iommu);
- 	iommu_device_sysfs_remove(&smmu->iommu);
--	arm_smmu_device_disable(smmu);
--	iopf_queue_free(smmu->evtq.iopf);
--	ida_destroy(&smmu->vmid_map);
- }
- 
- static void arm_smmu_device_shutdown(struct platform_device *pdev)
+@@ -384,7 +392,7 @@ static inline int print_page_owner_memcg(char *kbuf, size_t count, int ret,
+ 	cgroup_name(memcg->css.cgroup, name, sizeof(name));
+ 	ret += scnprintf(kbuf + ret, count - ret,
+ 			"Charged %sto %smemcg %s\n",
+-			PageMemcgKmem(page) ? "(via objcg) " : "",
++			(memcg_data & MEMCG_DATA_KMEM) ? "(via objcg) " : "",
+ 			online ? "" : "offline ",
+ 			name);
+ out_unlock:
 -- 
 2.53.0
 
