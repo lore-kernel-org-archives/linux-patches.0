@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4328B391E6D;
-	Sat, 17 Oct 2026 16:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A303A9DA5;
+	Sat, 17 Oct 2026 16:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255004; cv=none; b=dL09HBVH/EVkvnJQ9i/zBAL7fgjzdQnqjHrtM7Dx/vOdYR2N7IV5Oohs/yWLlaIc0foMenc2TKGej2g75CKLp98uxCjd4ePNpsqdre1wzFpJbeRmjREbqoSFcGiBa2k2SK8G64pytSBaEhnC1j1YKQblhu0gdOgllA5zk9I9y+s=
+	t=1792255007; cv=none; b=budUIuERLfWkKWxJrF3wYwisqTbJwGhkEUamHFpezHDM6pcCi9DbE51Luy9sbQtjNR0aNMA/slWt9vHaYthY4M4Bv0y0XMOPBMy+452PrK8wOxC3oZ9Y8ZkvHQaCB2cKnpkAEnxpN2Vudl1TW867caAbl96ErOiodLL+1lbFXZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255004; c=relaxed/simple;
-	bh=y/gEe0hNNMdEIV9QgkFW2qIrUUO3yyvmbbQR/KOQTJg=;
+	s=arc-20240116; t=1792255007; c=relaxed/simple;
+	bh=gw8gZd1gECW1VYzh0qvXYrZ+qrn1NvTcvgFlZnVtx6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iS49k7cdJtUVxzWrIAnS4hsXVIpOwdmQ657Y+0hPi+QVps2b/GcJRqxIrC/aNbRgnMdHjvCL8DutM96xjFPXuMTtpD3hwzR2hB7HvGW4QFMAjAhWKSrd9zG6egQHj4PcpvlI9oJAv2fStf/gnOBGr70gy/u80QFgaycDP5nyt70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy11InEG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RQqk27qhqzzoLBUUcUf1HXkx6uJhF8URwQCcT73nHbFTM97na+vXI3qDJoU6Umymd0MRN6tqkPIKMtKY5r0hu7vJ0jzK2mQ2FwZuTEue1Gvp/TgS98PHK9cYYG8f4QDyLsnRJ6AC16eWUnOLmV9wHLxgbIDPqLP01aRIqa46X20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJxPavta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy11InEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ACE1F000C4;
-	Sat, 17 Oct 2026 16:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJxPavta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04901F000C4;
+	Sat, 17 Oct 2026 16:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255003;
-	bh=XBo41shGg6pSaT44jeVElhI3uWl3GfYtB7S8I4/d0DU=;
+	s=korg; t=1792255006;
+	bh=JUzl6UQBbfp4/re+5QQfPyOX0w+MswxZCMd9xp5O7ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hy11InEGCbfBru3MzA+zbIMl6hLdrVEuI2NNycLL2DUqvFyvZZqzByhvoDgyN1nBJ
-	 4yC4dBrapzCW4niFEzS1MXBwtIXWYwu6K6kLQGYNkqUMNZLu6DBVVnC/fHT6WdGz3C
-	 4fcyiAoDnswImY5ot8tnGBbuOQxWdSMa5U764pG0=
+	b=aJxPavtatXuy2D6TjsZEZRRkzECeTNQ0/6x6YTq+dEMxQIDA/hKcHghYeW/IIjLV8
+	 z3PyPE5o9hHzskjgy5bVrbpbpq99LmM+JhNy1xWAchluYGQyTBDc7Wk8W2i3TPhWyQ
+	 Racv7Ta160vCzm2hYmV0n19SwZPFgmVR1JlEAl8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 606/869] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
-Date: Sat, 17 Oct 2026 17:57:27 +0200
-Message-ID: <20261017160052.578443126@linuxfoundation.org>
+Subject: [PATCH 6.12 633/869] clocksource/drivers/samsung_pwm: Switch to raw_spinlock_t type
+Date: Sat, 17 Oct 2026 17:57:54 +0200
+Message-ID: <20261017160053.256363491@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,218 +48,249 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
+[ Upstream commit 3b212f9d70805d91febae01d618868f4860e267c ]
 
-Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-l2cap_chan::conn has held reference and remains non-NULL also after the
-corresponding hci_conn is deleted.  In this state accessing various
-fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
-l2cap_sock_setsockopt() access of conn->hcon->hdev.
+Samsung PWM timer might be used as a clock source on some legacy systems.
+When PREEMPT_RT is enabled on ARM, regular spinlock is converted to a
+sleeping lock (mutex-based), which must not be used in atomic context
+such as hard interrupt handlers. Switch the samsung_pwm_lock to the
+raw_spinlock, which remains a true non-sleeping spinlock even
+under PREEMPT_RT.
 
-Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
-trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
-getsockopt/setsockopt to ensure it stays alive, and to avoid data races
-in l2cap_chan fields.
-
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 7aac482e6290 ("clocksource: samsung_pwm_timer: Make PWM spinlock global")
+Fixes: f11899894c0a ("clocksource: add samsung pwm timer driver")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Uwe Kleine-König <ukleinek@kernel.org>
+Link: https://patch.msgid.link/20260713085653.1145015-1-m.szyprowski@samsung.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 11 deletions(-)
+ drivers/clocksource/samsung_pwm_timer.c | 22 +++++++++++-----------
+ drivers/pwm/pwm-samsung.c               | 22 +++++++++++-----------
+ include/clocksource/samsung_pwm.h       |  2 +-
+ 3 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index a44a49c70b2f3..ef3af57e4637f 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -439,11 +439,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
- 	return -EINVAL;
+diff --git a/drivers/clocksource/samsung_pwm_timer.c b/drivers/clocksource/samsung_pwm_timer.c
+index b9561e3f196c4..0544124cf5cea 100644
+--- a/drivers/clocksource/samsung_pwm_timer.c
++++ b/drivers/clocksource/samsung_pwm_timer.c
+@@ -56,7 +56,7 @@
+ #define TCON_AUTORELOAD(chan)		\
+ 	((chan < 5) ? _TCON_AUTORELOAD(chan) : _TCON_AUTORELOAD4(chan))
+ 
+-DEFINE_SPINLOCK(samsung_pwm_lock);
++DEFINE_RAW_SPINLOCK(samsung_pwm_lock);
+ EXPORT_SYMBOL(samsung_pwm_lock);
+ 
+ struct samsung_pwm_clocksource {
+@@ -87,14 +87,14 @@ static void samsung_timer_set_prescale(unsigned int channel, u16 prescale)
+ 	if (channel >= 2)
+ 		shift = TCFG0_PRESCALER1_SHIFT;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	reg = readl(pwm.base + REG_TCFG0);
+ 	reg &= ~(TCFG0_PRESCALER_MASK << shift);
+ 	reg |= (prescale - 1) << shift;
+ 	writel(reg, pwm.base + REG_TCFG0);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
  }
  
-+static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
-+{
-+	lockdep_assert_held(&chan->lock);
-+
-+	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
-+	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
-+	 * remains alive during this chan->lock critical section.
-+	 */
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		return NULL;
-+
-+	return chan->conn;
-+}
-+
- static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 				     sockopt_t *sopt)
+ static void samsung_timer_set_divisor(unsigned int channel, u8 divisor)
+@@ -106,14 +106,14 @@ static void samsung_timer_set_divisor(unsigned int channel, u8 divisor)
+ 
+ 	bits = (fls(divisor) - 1) - pwm.variant.div_base;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	reg = readl(pwm.base + REG_TCFG1);
+ 	reg &= ~(TCFG1_MUX_MASK << shift);
+ 	reg |= bits << shift;
+ 	writel(reg, pwm.base + REG_TCFG1);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static void samsung_time_stop(unsigned int channel)
+@@ -124,13 +124,13 @@ static void samsung_time_stop(unsigned int channel)
+ 	if (channel > 0)
+ 		++channel;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl_relaxed(pwm.base + REG_TCON);
+ 	tcon &= ~TCON_START(channel);
+ 	writel_relaxed(tcon, pwm.base + REG_TCON);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
+@@ -142,7 +142,7 @@ static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
+ 	if (tcon_chan > 0)
+ 		++tcon_chan;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl_relaxed(pwm.base + REG_TCON);
+ 
+@@ -153,7 +153,7 @@ static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
+ 	writel_relaxed(tcnt, pwm.base + REG_TCMPB(channel));
+ 	writel_relaxed(tcon, pwm.base + REG_TCON);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static void samsung_time_start(unsigned int channel, bool periodic)
+@@ -164,7 +164,7 @@ static void samsung_time_start(unsigned int channel, bool periodic)
+ 	if (channel > 0)
+ 		++channel;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl_relaxed(pwm.base + REG_TCON);
+ 
+@@ -178,7 +178,7 @@ static void samsung_time_start(unsigned int channel, bool periodic)
+ 
+ 	writel_relaxed(tcon, pwm.base + REG_TCON);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static int samsung_set_next_event(unsigned long cycles,
+diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
+index 951b38ff5f8ec..14fb460a45655 100644
+--- a/drivers/pwm/pwm-samsung.c
++++ b/drivers/pwm/pwm-samsung.c
+@@ -102,7 +102,7 @@ struct samsung_pwm_chip {
+  * IP. Should this change, both drivers will need to be modified to
+  * properly synchronize accesses to particular instances.
+  */
+-static DEFINE_SPINLOCK(samsung_pwm_lock);
++static DEFINE_RAW_SPINLOCK(samsung_pwm_lock);
+ #endif
+ 
+ static inline
+@@ -141,14 +141,14 @@ static void pwm_samsung_set_divisor(struct samsung_pwm_chip *our_chip,
+ 
+ 	bits = (fls(divisor) - 1) - our_chip->variant.div_base;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	reg = readl(our_chip->base + REG_TCFG1);
+ 	reg &= ~(TCFG1_MUX_MASK << shift);
+ 	reg |= bits << shift;
+ 	writel(reg, our_chip->base + REG_TCFG1);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static int pwm_samsung_is_tdiv(struct samsung_pwm_chip *our_chip, unsigned int chan)
+@@ -249,7 +249,7 @@ static int pwm_samsung_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	unsigned long flags;
+ 	u32 tcon;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl(our_chip->base + REG_TCON);
+ 
+@@ -263,7 +263,7 @@ static int pwm_samsung_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 
+ 	our_chip->disabled_mask &= ~BIT(pwm->hwpwm);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -275,7 +275,7 @@ static void pwm_samsung_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	unsigned long flags;
+ 	u32 tcon;
+ 
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl(our_chip->base + REG_TCON);
+ 	tcon &= ~TCON_AUTORELOAD(tcon_chan);
+@@ -290,7 +290,7 @@ static void pwm_samsung_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 
+ 	our_chip->disabled_mask |= BIT(pwm->hwpwm);
+ 
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+ static void pwm_samsung_manual_update(struct samsung_pwm_chip *our_chip,
+@@ -298,11 +298,11 @@ static void pwm_samsung_manual_update(struct samsung_pwm_chip *our_chip,
  {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
- 	int err = 0;
-@@ -454,6 +469,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 	unsigned long flags;
  
- 	len = sopt->optlen;
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
  
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
+ 	__pwm_samsung_manual_update(our_chip, pwm);
  
- 	switch (optname) {
-@@ -540,9 +556,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn) {
-+			err = -ENOTCONN;
-+			break;
-+		}
-+
- 		memset(&cinfo, 0, sizeof(cinfo));
--		cinfo.hci_handle = chan->conn->hcon->handle;
--		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
-+		cinfo.hci_handle = conn->hcon->handle;
-+		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
- 		len = min(len, sizeof(cinfo));
- 		if (copy_to_iter(&cinfo, len, &sopt->iter_out) != len)
-@@ -556,6 +578,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+
- 	return err;
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
  }
  
-@@ -564,6 +588,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct bt_security sec;
- 	struct bt_power pwr;
- 	int len, mode, err = 0;
-@@ -581,6 +606,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
+@@ -390,7 +390,7 @@ static void pwm_samsung_set_invert(struct samsung_pwm_chip *our_chip,
+ 	unsigned long flags;
+ 	u32 tcon;
  
- 	len = sopt->optlen;
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
++	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
  
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
+ 	tcon = readl(our_chip->base + REG_TCON);
  
- 	switch (optname) {
-@@ -592,12 +618,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
+@@ -404,7 +404,7 @@ static void pwm_samsung_set_invert(struct samsung_pwm_chip *our_chip,
  
-+		conn = l2cap_chan_conn(chan);
-+
- 		memset(&sec, 0, sizeof(sec));
--		if (chan->conn) {
--			sec.level = chan->conn->hcon->sec_level;
-+		if (conn) {
-+			sec.level = conn->hcon->sec_level;
+ 	writel(tcon, our_chip->base + REG_TCON);
  
- 			if (sk->sk_state == BT_CONNECTED)
--				sec.key_size = chan->conn->hcon->enc_key_size;
-+				sec.key_size = conn->hcon->enc_key_size;
- 		} else {
- 			sec.level = chan->sec_level;
- 		}
-@@ -681,12 +709,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PHY:
--		if (sk->sk_state != BT_CONNECTED) {
-+		conn = l2cap_chan_conn(chan);
-+
-+		if (sk->sk_state != BT_CONNECTED || !conn) {
- 			err = -ENOTCONN;
- 			break;
- 		}
- 
--		opt = hci_conn_get_phy(chan->conn->hcon);
-+		opt = hci_conn_get_phy(conn->hcon);
- 
- 		if (copy_to_iter(&opt, sizeof(opt), &sopt->iter_out) !=
- 		    sizeof(opt))
-@@ -722,6 +752,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
+-	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
++	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
  }
  
-@@ -752,6 +783,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ static int pwm_samsung_set_polarity(struct pwm_chip *chip,
+diff --git a/include/clocksource/samsung_pwm.h b/include/clocksource/samsung_pwm.h
+index 9b435caa95fef..36f6f246e5594 100644
+--- a/include/clocksource/samsung_pwm.h
++++ b/include/clocksource/samsung_pwm.h
+@@ -15,7 +15,7 @@
+  * spinlock is not shared between both drivers.
+  */
+ #ifdef CONFIG_CLKSRC_SAMSUNG_PWM
+-extern spinlock_t samsung_pwm_lock;
++extern raw_spinlock_t samsung_pwm_lock;
+ #endif
  
- 	BT_DBG("sk %p", sk);
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -853,6 +885,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -916,6 +949,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	if (level != SOL_BLUETOOTH)
- 		return -ENOPROTOOPT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -941,11 +975,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		chan->sec_level = sec.level;
- 
--		if (!chan->conn)
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn)
- 			break;
- 
--		conn = chan->conn;
--
- 		/* change security for LE channels */
- 		if (chan->scid == L2CAP_CID_ATT) {
- 			if (smp_conn_security(conn->hcon, sec.level)) {
-@@ -1000,7 +1033,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		}
- 
- 		if (opt == BT_FLUSHABLE_OFF) {
--			conn = chan->conn;
-+			conn = l2cap_chan_conn(chan);
-+
- 			/* proceed further only when we have l2cap_conn and
- 			   No Flush support in the LM */
- 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
-@@ -1124,6 +1158,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
+ struct samsung_pwm_variant {
 -- 
 2.53.0
 
