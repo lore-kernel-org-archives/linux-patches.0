@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2103ACA4B;
-	Sat, 17 Oct 2026 16:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41723AAF67;
+	Sat, 17 Oct 2026 16:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255058; cv=none; b=kMN9Zktn0tmhPqRUPqM9/sKI04w9bOLZhN1kPsiaVQfd/mXlwwIAtRsWqibK9ob7dKe3wsC6MomQ+n9F4tdlL3hadot+TbyAh6+UJ+y8hrTy47rmPkReU7IdrJLo7PnKGd0Amoarve5DgVUx8U6UjmYlmcBThg00sUBQBWJTzlY=
+	t=1792255061; cv=none; b=VistD3WRv39bKFPyXlR8blG0SZKNGzVxjFlKbupcFrMQLx0JJfv4eTiE12Gf8j2h5Eeb9XM1uLT4p63W5fSNuj7hq6O+fXkB0SBecOz+Rpv6ASQE3IV9Rj4R+bh0dck+JvC4XogVx1KIujft+KhKGpLogwGfxZhKGRnC4g1fcpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255058; c=relaxed/simple;
-	bh=3d5hCesPPVvXfEg0dSVJ0HfWjr5eYaFCQs7YtqGOFTo=;
+	s=arc-20240116; t=1792255061; c=relaxed/simple;
+	bh=t5LpzYpIp0VE7fcXFE2VIjGeu/m7/0/WdUEhwlhux4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6dzLJnEgg69w+DEqp/1YsfDdlsnd2UFs6AB/4b8vUkp2SBFmb+34Hq+/4gQ4wPSitrzv/Q7zapueEh0FcQijryC52aX8+PPnYTvkry2KMtlWigMdgKeREGkMxNov662xXiR0X6PYeZEJcf7jYMV9tElvqHijTLxG/clYhpQejo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVJRzk+3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cM+QPlje1jb+UIHsq9wLKtLjzGApTgGyrVqNIxU+SkO8FgzQ9n3IYOIvjUvfPLfs3UgOKNE6RGJPBP+ZDQwcEdZcHYKL1ZM2WysOxWAdaegmcEd07E1mYxbuJ7TTBhDIxRCzL7N7xjQdG8WkVYoBE1TjgdOe2Y+rI4JIKI/Nch4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Di/1iEiX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVJRzk+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83C11F000C4;
-	Sat, 17 Oct 2026 16:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Di/1iEiX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDCF1F000C4;
+	Sat, 17 Oct 2026 16:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255057;
-	bh=Az3tGSqHgAglhOOuglPLPh92Xa/ZYziuDlU9IQaobp8=;
+	s=korg; t=1792255060;
+	bh=cmVN+lFtU4Yi94o/d9LoJd+sd2yibUt70U/lNVgYXG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VVJRzk+36RjZn3aOV4zbyAJ8IiUceAYicXGxV4ZOCumtRwzov+yazXicnHWTlBYvA
-	 WlzDVMJqmCDJfPoKLFySm9B/X5hJ8/OwXgvPT09uCRSz8Ju4UFxJ3X+50tp2nxuO6U
-	 cj10IZlDlX8ijkXGXKNICdFXMdr5LehCZXDE+vY4=
+	b=Di/1iEiXWq7t26T40RIDg3wdaoKYhYnqMfe3pWfrGpcXOPnO2dtVJZao38eAl5tQT
+	 FPeeoeM5kHmbzrYiuynUaAEa8skehhc7Fm7YHMzMQcnkGIEad2QGx4OLFvu3qC1xSY
+	 0bcFAY1pEYlIgcXn7Z42pg6VSRqY4ivBVbK6jTC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 649/869] scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails
-Date: Sat, 17 Oct 2026 17:58:10 +0200
-Message-ID: <20261017160053.648780559@linuxfoundation.org>
+Subject: [PATCH 6.12 650/869] coresight: etm4x: missing cscfg_csdev_disable_active_config() in perf enable
+Date: Sat, 17 Oct 2026 17:58:11 +0200
+Message-ID: <20261017160053.672693810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,124 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit bb31844d88b77138b67aa20c3600203baff40140 ]
+[ Upstream commit 0a47f0be6557b4a851addd430383a4dc7ee08752 ]
 
-sd_set_special_bvec() allocates a special payload page for UNMAP and
-WRITE SAME commands. If scsi_alloc_sgtables() fails afterward in
-sd_setup_unmap_cmnd() or sd_setup_write_same{10,16}_cmnd(), the SCSI
-midlayer does not call uninit_command() because RQF_DONTPREP is not set
-yet, leaking the page.
+In the perf enable path, there are missing cases where
+cscfg_csdev_disable_active_config() is not called:
 
-Call sd_uninit_command() on error, and clear RQF_SPECIAL_PAYLOAD after
-freeing the page.
+  - Branch broadcast is selected but not supported by the hardware
+  - etm4_enable_hw() fails
 
-Fixes: 81d926e8b552 ("sd: split sd_setup_discard_cmnd")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20260707030333.22245-3-yangxiuwei@kylinos.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+This can lead to a leak of config_desc->active_cnt.
+Fix this by properly calling cscfg_csdev_disable_active_config()
+in these error paths.
+
+Fixes: 810ac401db1f ("coresight: etm4x: Add complex configuration handlers to etmv4")
+Suggested-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-6-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c |   37 ++++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ .../coresight/coresight-etm4x-core.c          | 46 +++++++++++--------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -890,6 +890,17 @@ static unsigned char sd_setup_protect_cm
- 	return protect;
- }
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index e69ee4ccc2658..9127bc0255528 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -698,8 +698,7 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+ 	struct etmv4_config *config = &drvdata->config;
+ 	struct perf_event_attr *attr = &event->attr;
+-	unsigned long cfg_hash;
+-	int preset, cc_threshold;
++	int cc_threshold;
  
-+static void sd_uninit_command(struct scsi_cmnd *cmd)
-+{
-+	struct request *rq = scsi_cmd_to_rq(cmd);
-+
-+	if (!(rq->rq_flags & RQF_SPECIAL_PAYLOAD))
-+		return;
-+
-+	mempool_free(rq->special_vec.bv_page, sd_page_pool);
-+	rq->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
-+}
-+
- static void *sd_set_special_bvec(struct request *rq, unsigned int data_len)
+ 	/* Clear configuration from previous run */
+ 	memset(config, 0, sizeof(struct etmv4_config));
+@@ -774,20 +773,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
+ 		/* bit[12], Return stack enable bit */
+ 		config->cfg |= TRCCONFIGR_RS;
+ 
+-	/*
+-	 * Set any selected configuration and preset.
+-	 *
+-	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
+-	 * in the perf attributes defined in coresight-etm-perf.c.
+-	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
+-	 * A zero configid means no configuration active, preset = 0 means no preset selected.
+-	 */
+-	if (attr->config2 & GENMASK_ULL(63, 32)) {
+-		cfg_hash = (u32)(attr->config2 >> 32);
+-		preset = attr->config & 0xF;
+-		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
+-	}
+-
+ 	/* branch broadcast - enable if selected and supported */
+ 	if (attr->config & BIT(ETM_OPT_BRANCH_BROADCAST)) {
+ 		if (!drvdata->trcbb) {
+@@ -810,8 +795,10 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 			    struct perf_event *event,
+ 			    struct coresight_trace_id_map *id_map)
  {
- 	struct page *page;
-@@ -912,6 +923,7 @@ static blk_status_t sd_setup_unmap_cmnd(
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
- 	unsigned int data_len = 24;
- 	char *buf;
-+	blk_status_t ret;
+-	int ret = 0, trace_id;
++	int ret = 0, trace_id, preset;
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
++	struct perf_event_attr *attr = &event->attr;
++	unsigned long cfg_hash = 0;
  
- 	buf = sd_set_special_bvec(rq, data_len);
- 	if (!buf)
-@@ -930,7 +942,10 @@ static blk_status_t sd_setup_unmap_cmnd(
- 	cmd->transfersize = data_len;
- 	rq->timeout = SD_TIMEOUT;
+ 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id())) {
+ 		ret = -EINVAL;
+@@ -823,6 +810,22 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 	if (ret)
+ 		goto out;
  
--	return scsi_alloc_sgtables(cmd);
-+	ret = scsi_alloc_sgtables(cmd);
-+	if (ret != BLK_STS_OK)
-+		sd_uninit_command(cmd);
-+	return ret;
- }
- 
- static void sd_config_atomic(struct scsi_disk *sdkp, struct queue_limits *lim)
-@@ -1000,6 +1015,7 @@ static blk_status_t sd_setup_write_same1
- 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
- 	u32 data_len = sdp->sector_size;
-+	blk_status_t ret;
- 
- 	if (!sd_set_special_bvec(rq, data_len))
- 		return BLK_STS_RESOURCE;
-@@ -1015,7 +1031,10 @@ static blk_status_t sd_setup_write_same1
- 	cmd->transfersize = data_len;
- 	rq->timeout = unmap ? SD_TIMEOUT : SD_WRITE_SAME_TIMEOUT;
- 
--	return scsi_alloc_sgtables(cmd);
-+	ret = scsi_alloc_sgtables(cmd);
-+	if (ret != BLK_STS_OK)
-+		sd_uninit_command(cmd);
-+	return ret;
- }
- 
- static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
-@@ -1027,6 +1046,7 @@ static blk_status_t sd_setup_write_same1
- 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
- 	u32 data_len = sdp->sector_size;
-+	blk_status_t ret;
- 
- 	if (!sd_set_special_bvec(rq, data_len))
- 		return BLK_STS_RESOURCE;
-@@ -1042,7 +1062,10 @@ static blk_status_t sd_setup_write_same1
- 	cmd->transfersize = data_len;
- 	rq->timeout = unmap ? SD_TIMEOUT : SD_WRITE_SAME_TIMEOUT;
- 
--	return scsi_alloc_sgtables(cmd);
-+	ret = scsi_alloc_sgtables(cmd);
-+	if (ret != BLK_STS_OK)
-+		sd_uninit_command(cmd);
-+	return ret;
- }
- 
- static blk_status_t sd_setup_write_zeroes_cmnd(struct scsi_cmnd *cmd)
-@@ -1466,14 +1489,6 @@ static blk_status_t sd_init_command(stru
++	/*
++	 * Set any selected configuration and preset.
++	 *
++	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
++	 * in the perf attributes defined in coresight-etm-perf.c.
++	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
++	 * A zero configid means no configuration active, preset = 0 means no preset selected.
++	 */
++	if (attr->config2 & GENMASK_ULL(63, 32)) {
++		cfg_hash = (u32)(attr->config2 >> 32);
++		preset = attr->config & 0xF;
++		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
++		if (ret)
++			goto out;
++	}
++
+ 	/*
+ 	 * perf allocates cpu ids as part of _setup_aux() - device needs to use
+ 	 * the allocated ID. This reads the current version without allocation.
+@@ -836,13 +839,20 @@ static int etm4_enable_perf(struct coresight_device *csdev,
+ 		dev_err(&drvdata->csdev->dev, "Failed to set trace ID for %s on CPU%d\n",
+ 			dev_name(&drvdata->csdev->dev), drvdata->cpu);
+ 		ret = -EINVAL;
+-		goto out;
++		goto err_cfg;
  	}
- }
+ 	drvdata->trcid = (u8)trace_id;
  
--static void sd_uninit_command(struct scsi_cmnd *SCpnt)
--{
--	struct request *rq = scsi_cmd_to_rq(SCpnt);
--
--	if (rq->rq_flags & RQF_SPECIAL_PAYLOAD)
--		mempool_free(rq->special_vec.bv_page, sd_page_pool);
--}
--
- static bool sd_need_revalidate(struct gendisk *disk, struct scsi_disk *sdkp)
- {
- 	if (sdkp->device->removable || sdkp->write_prot) {
+ 	/* And enable it */
+ 	ret = etm4_enable_hw(drvdata);
++	if (ret)
++		goto err_cfg;
++
++	return 0;
+ 
++err_cfg:
++	if (cfg_hash)
++		cscfg_csdev_disable_active_config(csdev);
+ out:
+ 	return ret;
+ }
+-- 
+2.53.0
+
 
 
