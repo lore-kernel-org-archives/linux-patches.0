@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9017BED0;
-	Sat, 17 Oct 2026 17:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7133921FB;
+	Sat, 17 Oct 2026 17:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257954; cv=none; b=kwzhYRd8E/30Y9kj4hjb6lko1BB1SnZy4z8O6X789fVWSXc03FqVLKPR6KTlwBdcn5d0aNBWWAdASUoiCvhOYqhBV7diLzEhNjXBGK/xvpK0zqFjWtYKBpJnjDwQHaIhaVdYAD80s5bi7pRwCghuUpoi+MT/lveRQVfV7VpJO2c=
+	t=1792257957; cv=none; b=iknoKKxt6aELSEK+R8ckatO32ZKud7SPumzAPxKAobMtjKuMl7mIJDewH+q+Z5KSc1ldTGQsIiFlrS2BhJU46cdF48yFJ7DfeGZCmSCyW54RUNXDXg6JpCbkN2INt0JDMNUp0i+/lQwtWa4WREl62Szhlr3zKDEVxaDqwPLAt7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257954; c=relaxed/simple;
-	bh=W9Uo1d61SedM8EKGAJXKcQ5oHbWP5G9waKTQ4lrf6kM=;
+	s=arc-20240116; t=1792257957; c=relaxed/simple;
+	bh=P353YTP6prB2lcKo77cqlyED7HrEwp53WtYIvjGB/dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLwTZDE2mgQm5hAZd+TsRaPpYBwREpeD/OqbeEIglk5n9AFAwCysYSxaWX/plkf4uLeRH3O+wvuzzFFTZQ4SnAplTKTkqRHC2PrAH1NoLQ/aEM09Qvs5Ai7dUK5oBVj7tSmpWw5/5BjgVaGjFUduzVyLMBG3/w0gdX0qviMKElg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zCVu13i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YL/gbF7dc2xTFReZIgnaq+BbF2waLeoOWGguPZnfRgblTzrErQu6nPE6TVQ8+BJHawH5Doqz9LbjbSyWNwkajGIcyI07mGGi77By4rbiaywiekbfkgKra3kDoL7ySo3i+RZvqw5s8OO+DMBczYvsp/CNNbg+mapVqeA9k4tlgz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4gwkd27; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zCVu13i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79D41F000C4;
-	Sat, 17 Oct 2026 17:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4gwkd27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C319A1F000C5;
+	Sat, 17 Oct 2026 17:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257953;
-	bh=MVH7Kja21UzVfGhDAGUfwIJireVcHMRHlCxMT6ccilE=;
+	s=korg; t=1792257956;
+	bh=fQw8uvq9VOg8kpEQTf9TT8vGztq1vxbsUV9mB0trhQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0zCVu13iIO0kMTxzeeFiq8GzQE1LjVqpYTTPLc4653jS9DcOLh2MbetJJ+1PLo+Wn
-	 io/o5qUCzGCWDdokkbMul+aOQyKb21tgBSvdvWkHheYG9pbSmC6QCyFj056a5ERtwg
-	 lmYWcVxG5f05E43PfMdNfFsJo4vQiVn9mVX5TWI8=
+	b=o4gwkd27wZVCbU1SHr9ZEDZ5t/wQEwmRggM2WBkMKFHHnnU83WBi7ha1u04dSYsLO
+	 +9lQ37KqdFtkT2caRP5UU6WO4DYBTBFJfP6y3N4i0stnfCxVKg/ErHi0PUlQR5u9xf
+	 UYx/4O6GxCwuZW1gt9j2w2riMZjDPAoy18lDV4m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0724/1674] btrfs: allow to run delayed refs by bytes to be released instead of count
-Date: Sat, 17 Oct 2026 17:49:56 +0200
-Message-ID: <20261017160449.694749923@linuxfoundation.org>
+Subject: [PATCH 6.6 0725/1674] btrfs: reserve space for delayed refs on a per ref basis
+Date: Sat, 17 Oct 2026 17:49:57 +0200
+Message-ID: <20261017160449.720122909@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,303 +54,297 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8a526c44daeeb14df0f6e3147a58b4b996968830 ]
+[ Upstream commit 3ee56a58ad8921cb43c49d56347a8e270871844c ]
 
-When running delayed references, through btrfs_run_delayed_refs(), we can
-specify how many to run, run all existing delayed references and keep
-running delayed references while we can find any. This is controlled with
-the value of the 'count' argument, where a value of 0 means to run all
-delayed references that exist by the time btrfs_run_delayed_refs() is
-called, (unsigned long)-1 means to keep running delayed references while
-we are able find any, and any other value to run that exact number of
-delayed references.
+Currently when reserving space for delayed refs we do it on a per ref head
+basis. This is generally enough because most back refs for an extent end
+up being inlined in the extent item - with the default leaf size of 16K we
+can have at most 33 inline back refs (this is calculated by the macro
+BTRFS_MAX_EXTENT_ITEM_SIZE()). The amount of bytes reserved for each ref
+head is given by btrfs_calc_delayed_ref_bytes(), which basically
+corresponds to a single path for insertion into the extent tree plus
+another path for insertion into the free space tree if it's enabled.
 
-Typically a specific value other than 0 or -1 is used when flushing space
-to try to release a certain amount of bytes for a ticket. In this case
-we just simply calculate how many delayed reference heads correspond to a
-specific amount of bytes, with calc_delayed_refs_nr(). However that only
-takes into account the space reserved for the reference heads themselves,
-and does not account for the space reserved for deleting checksums from
-the csum tree (see add_delayed_ref_head() and update_existing_head_ref())
-in case we are going to delete a data extent. This means we may end up
-running more delayed references than necessary in case we process delayed
-references for deleting a data extent.
+However if we have reached the limit of inline refs or we have a mix of
+inline and non-inline refs, then we will need to insert a non-inline ref
+and update the existing extent item to update the total number of
+references for the extent. This implies we need reserved space for two
+insertion paths in the extent tree, but we only reserved for one path.
+The extent item and the non-inline ref item may be located in different
+leaves, or even if they are located in the same leaf, after updating the
+extent item and before inserting the non-inline ref item, the extent
+buffers in the btree path may have been written (due to memory pressure
+for e.g.), in which case we need to COW the entire path again. In this
+case since we have not reserved enough space for the delayed refs block
+reserve, we will use the global block reserve.
 
-So change the logic of btrfs_run_delayed_refs() to take a bytes argument
-to specify how many bytes of delayed references to run/release, using the
-special values of 0 to mean all existing delayed references and U64_MAX
-(or (u64)-1) to keep running delayed references while we can find any.
+If we are in a situation where the fs has no more unallocated space enough
+to allocate a new metadata block group and available space in the existing
+metadata block groups is close to the maximum size of the global block
+reserve (512M), we may end up consuming too much of the free metadata
+space to the point where we can't commit any future transaction because it
+will fail, with -ENOSPC, during its commit when trying to allocate an
+extent for some COW operation (running delayed refs generated by running
+delayed refs or COWing the root tree's root node at commit_cowonly_roots()
+for example). Such dramatic scenario can happen if we have many delayed
+refs that require the insertion of non-inline ref items, due to too many
+reflinks or snapshots. We also have situations where we use the global
+block reserve because we could not in advance know that we will need
+space to update some trees (block group creation for example), so this
+all adds up to increase the chances of exhausting the global block reserve
+and making any future transaction commit to fail with -ENOSPC and turn
+the fs into RO mode, or fail the mount operation in case the mount needs
+to start and commit a transaction, such as when we have orphans to cleanup
+for example - such case was reported and hit by someone running a SLE
+(SUSE Linux Enterprise) distribution for example - where the fs had no
+more unallocated space that could be used to allocate a new metadata block
+group, and the available metadata space was about 1.5M, not enough to
+commit a transaction to cleanup an orphan inode (or do relocation of data
+block groups that were far from being full).
 
-This prevents running more delayed references than necessary, when we have
-delayed references for deleting data extents, but also makes the upcoming
-changes/patches simpler and it's preparatory work for them.
+So reserve space for delayed refs by individual refs and not by ref heads,
+as we may need to COW multiple extent tree paths due to non-inline ref
+items.
 
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 7511e29cf135 ("btrfs: harden block_group::bg_list against list_del() races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c |  3 +--
- fs/btrfs/extent-tree.c | 53 +++++++++++++++++++++++++++---------------
- fs/btrfs/extent-tree.h |  4 ++--
- fs/btrfs/space-info.c  | 17 ++------------
- fs/btrfs/transaction.c |  8 +++----
- 5 files changed, 43 insertions(+), 42 deletions(-)
+ fs/btrfs/delayed-ref.c | 32 ++++++++++++++++++++++----------
+ fs/btrfs/disk-io.c     |  1 +
+ fs/btrfs/extent-tree.c | 29 +++++++++++++++--------------
+ 3 files changed, 38 insertions(+), 24 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index b93b4ec042272..ebd08aa81760e 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -3569,8 +3569,7 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
- 		cache_save_setup(cache, trans, path);
- 
- 		if (!ret)
--			ret = btrfs_run_delayed_refs(trans,
--						     (unsigned long) -1);
-+			ret = btrfs_run_delayed_refs(trans, U64_MAX);
- 
- 		if (!ret && cache->disk_cache_state == BTRFS_DC_SETUP) {
- 			cache->io_ctl.inode = NULL;
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index ebb94ec9f3d70..15fd5d91cf939 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1860,7 +1860,7 @@ static int run_and_cleanup_extent_op(struct btrfs_trans_handle *trans,
- 	return ret ? ret : 1;
+diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
+index 6f2e48d697dd6..c7b1ce749175f 100644
+--- a/fs/btrfs/delayed-ref.c
++++ b/fs/btrfs/delayed-ref.c
+@@ -422,7 +422,8 @@ int btrfs_delayed_ref_lock(struct btrfs_delayed_ref_root *delayed_refs,
+ 	return 0;
  }
  
--void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
-+u64 btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
+-static inline void drop_delayed_ref(struct btrfs_delayed_ref_root *delayed_refs,
++static inline void drop_delayed_ref(struct btrfs_fs_info *fs_info,
++				    struct btrfs_delayed_ref_root *delayed_refs,
+ 				    struct btrfs_delayed_ref_head *head,
+ 				    struct btrfs_delayed_ref_node *ref)
+ {
+@@ -433,9 +434,11 @@ static inline void drop_delayed_ref(struct btrfs_delayed_ref_root *delayed_refs,
+ 		list_del(&ref->add_list);
+ 	btrfs_put_delayed_ref(ref);
+ 	atomic_dec(&delayed_refs->num_entries);
++	btrfs_delayed_refs_rsv_release(fs_info, 1);
+ }
+ 
+-static bool merge_ref(struct btrfs_delayed_ref_root *delayed_refs,
++static bool merge_ref(struct btrfs_fs_info *fs_info,
++		      struct btrfs_delayed_ref_root *delayed_refs,
+ 		      struct btrfs_delayed_ref_head *head,
+ 		      struct btrfs_delayed_ref_node *ref,
+ 		      u64 seq)
+@@ -464,10 +467,10 @@ static bool merge_ref(struct btrfs_delayed_ref_root *delayed_refs,
+ 			mod = -next->ref_mod;
+ 		}
+ 
+-		drop_delayed_ref(delayed_refs, head, next);
++		drop_delayed_ref(fs_info, delayed_refs, head, next);
+ 		ref->ref_mod += mod;
+ 		if (ref->ref_mod == 0) {
+-			drop_delayed_ref(delayed_refs, head, ref);
++			drop_delayed_ref(fs_info, delayed_refs, head, ref);
+ 			done = true;
+ 		} else {
+ 			/*
+@@ -505,7 +508,7 @@ void btrfs_merge_delayed_refs(struct btrfs_fs_info *fs_info,
+ 		ref = rb_entry(node, struct btrfs_delayed_ref_node, ref_node);
+ 		if (seq && ref->seq >= seq)
+ 			continue;
+-		if (merge_ref(delayed_refs, head, ref, seq))
++		if (merge_ref(fs_info, delayed_refs, head, ref, seq))
+ 			goto again;
+ 	}
+ }
+@@ -584,10 +587,11 @@ void btrfs_delete_ref_head(struct btrfs_delayed_ref_root *delayed_refs,
+  * Return true if the ref was merged into an existing one (and therefore can be
+  * freed by the caller).
+  */
+-static bool insert_delayed_ref(struct btrfs_delayed_ref_root *root,
++static bool insert_delayed_ref(struct btrfs_trans_handle *trans,
+ 			       struct btrfs_delayed_ref_head *href,
+ 			       struct btrfs_delayed_ref_node *ref)
+ {
++	struct btrfs_delayed_ref_root *root = &trans->transaction->delayed_refs;
+ 	struct btrfs_delayed_ref_node *exist;
+ 	int mod;
+ 
+@@ -598,6 +602,7 @@ static bool insert_delayed_ref(struct btrfs_delayed_ref_root *root,
+ 			list_add_tail(&ref->add_list, &href->ref_add_list);
+ 		atomic_inc(&root->num_entries);
+ 		spin_unlock(&href->lock);
++		trans->delayed_ref_updates++;
+ 		return false;
+ 	}
+ 
+@@ -626,7 +631,7 @@ static bool insert_delayed_ref(struct btrfs_delayed_ref_root *root,
+ 
+ 	/* remove existing tail if its ref_mod is zero */
+ 	if (exist->ref_mod == 0)
+-		drop_delayed_ref(root, href, exist);
++		drop_delayed_ref(trans->fs_info, root, href, exist);
+ 	spin_unlock(&href->lock);
+ 	return true;
+ }
+@@ -695,6 +700,8 @@ static noinline void update_existing_head_ref(struct btrfs_trans_handle *trans,
+ 	/*
+ 	 * If we are going to from a positive ref mod to a negative or vice
+ 	 * versa we need to make sure to adjust pending_csums accordingly.
++	 * We reserve bytes for csum deletion when adding or updating a ref head
++	 * see add_delayed_ref_head() for more details.
+ 	 */
+ 	if (existing->is_data) {
+ 		u64 csum_leaves =
+@@ -819,6 +826,12 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
+ 		kmem_cache_free(btrfs_delayed_ref_head_cachep, head_ref);
+ 		head_ref = existing;
+ 	} else {
++		/*
++		 * We reserve the amount of bytes needed to delete csums when
++		 * adding the ref head and not when adding individual drop refs
++		 * since the csum items are deleted only after running the last
++		 * delayed drop ref (the data extent's ref count drops to 0).
++		 */
+ 		if (head_ref->is_data && head_ref->ref_mod < 0) {
+ 			delayed_refs->pending_csums += head_ref->num_bytes;
+ 			trans->delayed_ref_updates +=
+@@ -828,7 +841,6 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
+ 		delayed_refs->num_heads++;
+ 		delayed_refs->num_heads_ready++;
+ 		atomic_inc(&delayed_refs->num_entries);
+-		trans->delayed_ref_updates++;
+ 	}
+ 	if (qrecord_inserted_ret)
+ 		*qrecord_inserted_ret = qrecord_inserted;
+@@ -959,7 +971,7 @@ int btrfs_add_delayed_tree_ref(struct btrfs_trans_handle *trans,
+ 	head_ref = add_delayed_ref_head(trans, head_ref, record,
+ 					action, &qrecord_inserted);
+ 
+-	merged = insert_delayed_ref(delayed_refs, head_ref, &ref->node);
++	merged = insert_delayed_ref(trans, head_ref, &ref->node);
+ 	spin_unlock(&delayed_refs->lock);
+ 
+ 	/*
+@@ -1051,7 +1063,7 @@ int btrfs_add_delayed_data_ref(struct btrfs_trans_handle *trans,
+ 	head_ref = add_delayed_ref_head(trans, head_ref, record,
+ 					action, &qrecord_inserted);
+ 
+-	merged = insert_delayed_ref(delayed_refs, head_ref, &ref->node);
++	merged = insert_delayed_ref(trans, head_ref, &ref->node);
+ 	spin_unlock(&delayed_refs->lock);
+ 
+ 	/*
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index c7746baa86f8c..d6215701fcb60 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4661,6 +4661,7 @@ static void btrfs_destroy_delayed_refs(struct btrfs_transaction *trans,
+ 				list_del(&ref->add_list);
+ 			atomic_dec(&delayed_refs->num_entries);
+ 			btrfs_put_delayed_ref(ref);
++			btrfs_delayed_refs_rsv_release(fs_info, 1);
+ 		}
+ 		if (head->must_insert_reserved)
+ 			pin_bytes = true;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 15fd5d91cf939..c331f66f75988 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1864,22 +1864,24 @@ u64 btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
  				  struct btrfs_delayed_ref_root *delayed_refs,
  				  struct btrfs_delayed_ref_head *head)
  {
-@@ -1878,10 +1878,13 @@ void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
- 	}
- 
- 	btrfs_delayed_refs_rsv_release(fs_info, nr_items);
+-	int nr_items = 1;	/* Dropping this ref head update. */
+-
+ 	/*
+ 	 * We had csum deletions accounted for in our delayed refs rsv, we need
+ 	 * to drop the csum leaves for this update from our delayed_refs_rsv.
+ 	 */
+ 	if (head->total_ref_mod < 0 && head->is_data) {
++		int nr_items;
 +
-+	return btrfs_calc_delayed_ref_bytes(fs_info, nr_items);
+ 		spin_lock(&delayed_refs->lock);
+ 		delayed_refs->pending_csums -= head->num_bytes;
+ 		spin_unlock(&delayed_refs->lock);
+-		nr_items += btrfs_csum_bytes_to_leaves(fs_info, head->num_bytes);
+-	}
++		nr_items = btrfs_csum_bytes_to_leaves(fs_info, head->num_bytes);
++
++		btrfs_delayed_refs_rsv_release(fs_info, nr_items);
+ 
+-	btrfs_delayed_refs_rsv_release(fs_info, nr_items);
++		return btrfs_calc_delayed_ref_bytes(fs_info, nr_items);
++	}
+ 
+-	return btrfs_calc_delayed_ref_bytes(fs_info, nr_items);
++	return 0;
  }
  
  static int cleanup_ref_head(struct btrfs_trans_handle *trans,
--			    struct btrfs_delayed_ref_head *head)
-+			    struct btrfs_delayed_ref_head *head,
-+			    u64 *bytes_released)
- {
- 
- 	struct btrfs_fs_info *fs_info = trans->fs_info;
-@@ -1926,7 +1929,7 @@ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
+@@ -1929,7 +1931,7 @@ static int cleanup_ref_head(struct btrfs_trans_handle *trans,
  		}
  	}
  
--	btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
-+	*bytes_released = btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
+-	*bytes_released = btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
++	*bytes_released += btrfs_cleanup_ref_head_accounting(fs_info, delayed_refs, head);
  
  	trace_run_delayed_ref_head(fs_info, head, 0);
  	btrfs_delayed_ref_unlock(head);
-@@ -2047,15 +2050,22 @@ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
-  * Returns -ENOMEM or -EIO on failure and will abort the transaction.
-  */
- static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
--					     unsigned long nr)
-+					     u64 min_bytes)
+@@ -1971,7 +1973,8 @@ static struct btrfs_delayed_ref_head *btrfs_obtain_ref_head(
+ }
+ 
+ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
+-					   struct btrfs_delayed_ref_head *locked_ref)
++					   struct btrfs_delayed_ref_head *locked_ref,
++					   u64 *bytes_released)
  {
  	struct btrfs_fs_info *fs_info = trans->fs_info;
  	struct btrfs_delayed_ref_root *delayed_refs;
- 	struct btrfs_delayed_ref_head *locked_ref = NULL;
- 	int ret;
- 	unsigned long count = 0;
-+	unsigned long max_count = 0;
-+	u64 bytes_processed = 0;
+@@ -2027,7 +2030,8 @@ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
  
- 	delayed_refs = &trans->transaction->delayed_refs;
-+	if (min_bytes == 0) {
-+		max_count = delayed_refs->num_heads_ready;
-+		min_bytes = U64_MAX;
-+	}
-+
- 	do {
- 		if (!locked_ref) {
- 			locked_ref = btrfs_obtain_ref_head(trans);
-@@ -2092,11 +2102,14 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 		ret = run_one_delayed_ref(trans, ref, extent_op,
+ 					  must_insert_reserved);
+-
++		btrfs_delayed_refs_rsv_release(fs_info, 1);
++		*bytes_released += btrfs_calc_delayed_ref_bytes(fs_info, 1);
+ 		btrfs_free_delayed_extent_op(extent_op);
+ 		if (ret) {
+ 			unselect_delayed_ref_head(delayed_refs, locked_ref);
+@@ -2094,7 +2098,7 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 		spin_lock(&locked_ref->lock);
+ 		btrfs_merge_delayed_refs(fs_info, delayed_refs, locked_ref);
+ 
+-		ret = btrfs_run_delayed_refs_for_head(trans, locked_ref);
++		ret = btrfs_run_delayed_refs_for_head(trans, locked_ref, &bytes_processed);
+ 		if (ret < 0 && ret != -EAGAIN) {
+ 			/*
+ 			 * Error, btrfs_run_delayed_refs_for_head already
+@@ -2102,14 +2106,11 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
  			 */
  			return ret;
  		} else if (!ret) {
-+			u64 bytes_released = 0;
-+
+-			u64 bytes_released = 0;
+-
  			/*
  			 * Success, perform the usual cleanup of a processed
  			 * head
  			 */
--			ret = cleanup_ref_head(trans, locked_ref);
-+			ret = cleanup_ref_head(trans, locked_ref, &bytes_released);
-+			bytes_processed += bytes_released;
+-			ret = cleanup_ref_head(trans, locked_ref, &bytes_released);
+-			bytes_processed += bytes_released;
++			ret = cleanup_ref_head(trans, locked_ref, &bytes_processed);
  			if (ret > 0 ) {
  				/* We dropped our lock, we need to loop. */
  				ret = 0;
-@@ -2113,7 +2126,9 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
- again:
- 		locked_ref = NULL;
- 		cond_resched();
--	} while ((nr != -1 && count < nr) || locked_ref);
-+	} while ((min_bytes != U64_MAX && bytes_processed < min_bytes) ||
-+		 (max_count > 0 && count < max_count) ||
-+		 locked_ref);
- 
- 	return 0;
- }
-@@ -2162,24 +2177,27 @@ static u64 find_middle(struct rb_root *root)
- #endif
- 
- /*
-- * this starts processing the delayed reference count updates and
-- * extent insertions we have queued up so far.  count can be
-- * 0, which means to process everything in the tree at the start
-- * of the run (but not newly added entries), or it can be some target
-- * number you'd like to process.
-+ * Start processing the delayed reference count updates and extent insertions
-+ * we have queued up so far.
-+ *
-+ * @trans:	Transaction handle.
-+ * @min_bytes:	How many bytes of delayed references to process. After this
-+ *		many bytes we stop processing delayed references if there are
-+ *		any more. If 0 it means to run all existing delayed references,
-+ *		but not new ones added after running all existing ones.
-+ *		Use (u64)-1 (U64_MAX) to run all existing delayed references
-+ *		plus any new ones that are added.
-  *
-  * Returns 0 on success or if called with an aborted transaction
-  * Returns <0 on error and aborts the transaction
-  */
--int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
--			   unsigned long count)
-+int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, u64 min_bytes)
- {
- 	struct btrfs_fs_info *fs_info = trans->fs_info;
- 	struct rb_node *node;
- 	struct btrfs_delayed_ref_root *delayed_refs;
- 	struct btrfs_delayed_ref_head *head;
- 	int ret;
--	int run_all = count == (unsigned long)-1;
- 
- 	/* We'll clean this up in btrfs_cleanup_transaction */
- 	if (TRANS_ABORTED(trans))
-@@ -2189,20 +2207,17 @@ int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
- 		return 0;
- 
- 	delayed_refs = &trans->transaction->delayed_refs;
--	if (count == 0)
--		count = delayed_refs->num_heads_ready;
--
- again:
- #ifdef SCRAMBLE_DELAYED_REFS
- 	delayed_refs->run_delayed_start = find_middle(&delayed_refs->root);
- #endif
--	ret = __btrfs_run_delayed_refs(trans, count);
-+	ret = __btrfs_run_delayed_refs(trans, min_bytes);
- 	if (ret < 0) {
- 		btrfs_abort_transaction(trans, ret);
- 		return ret;
- 	}
- 
--	if (run_all) {
-+	if (min_bytes == U64_MAX) {
- 		btrfs_create_pending_block_groups(trans);
- 
- 		spin_lock(&delayed_refs->lock);
-diff --git a/fs/btrfs/extent-tree.h b/fs/btrfs/extent-tree.h
-index ef1c1c99294eb..c155f398fcb66 100644
---- a/fs/btrfs/extent-tree.h
-+++ b/fs/btrfs/extent-tree.h
-@@ -91,8 +91,8 @@ int btrfs_get_extent_inline_ref_type(const struct extent_buffer *eb,
- 				     enum btrfs_inline_ref_type is_data);
- u64 hash_extent_data_ref(u64 root_objectid, u64 owner, u64 offset);
- 
--int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, unsigned long count);
--void btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
-+int btrfs_run_delayed_refs(struct btrfs_trans_handle *trans, u64 min_bytes);
-+u64 btrfs_cleanup_ref_head_accounting(struct btrfs_fs_info *fs_info,
- 				  struct btrfs_delayed_ref_root *delayed_refs,
- 				  struct btrfs_delayed_ref_head *head);
- int btrfs_lookup_data_extent(struct btrfs_fs_info *fs_info, u64 start, u64 len);
-diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index a50f0db756337..e786078402f8e 100644
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -601,18 +601,6 @@ static inline u64 calc_reclaim_items_nr(const struct btrfs_fs_info *fs_info,
- 	return nr;
- }
- 
--static inline u64 calc_delayed_refs_nr(const struct btrfs_fs_info *fs_info,
--				       u64 to_reclaim)
--{
--	const u64 bytes = btrfs_calc_delayed_ref_bytes(fs_info, 1);
--	u64 nr;
--
--	nr = div64_u64(to_reclaim, bytes);
--	if (!nr)
--		nr = 1;
--	return nr;
--}
--
- #define EXTENT_SIZE_PER_ITEM	SZ_256K
- 
- /*
-@@ -794,10 +782,9 @@ static void flush_space(struct btrfs_fs_info *fs_info,
- 			break;
- 		}
- 		if (state == FLUSH_DELAYED_REFS_NR)
--			nr = calc_delayed_refs_nr(fs_info, num_bytes);
-+			btrfs_run_delayed_refs(trans, num_bytes);
- 		else
--			nr = 0;
--		btrfs_run_delayed_refs(trans, nr);
-+			btrfs_run_delayed_refs(trans, 0);
- 		btrfs_end_transaction(trans);
- 		break;
- 	case ALLOC_CHUNK:
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 8f14dc4691e48..e3e6527757d0b 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1346,7 +1346,7 @@ static noinline int commit_cowonly_roots(struct btrfs_trans_handle *trans)
- 	}
- 
- 	/* Now flush any delayed refs generated by updating all of the roots */
--	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
-+	ret = btrfs_run_delayed_refs(trans, U64_MAX);
- 	if (ret)
- 		return ret;
- 
-@@ -1361,7 +1361,7 @@ static noinline int commit_cowonly_roots(struct btrfs_trans_handle *trans)
- 		 * so we want to keep this flushing in this loop to make sure
- 		 * everything gets run.
- 		 */
--		ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
-+		ret = btrfs_run_delayed_refs(trans, U64_MAX);
- 		if (ret)
- 			return ret;
- 	}
-@@ -1579,7 +1579,7 @@ static int qgroup_account_snapshot(struct btrfs_trans_handle *trans,
- 	 * for now flush the delayed refs to narrow the race window where the
- 	 * qgroup counters could end up wrong.
- 	 */
--	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
-+	ret = btrfs_run_delayed_refs(trans, U64_MAX);
- 	if (ret) {
- 		btrfs_abort_transaction(trans, ret);
- 		return ret;
-@@ -2431,7 +2431,7 @@ int btrfs_commit_transaction(struct btrfs_trans_handle *trans)
- 	if (ret)
- 		goto unlock_reloc;
- 
--	ret = btrfs_run_delayed_refs(trans, (unsigned long)-1);
-+	ret = btrfs_run_delayed_refs(trans, U64_MAX);
- 	if (ret)
- 		goto unlock_reloc;
- 
 -- 
 2.53.0
 
