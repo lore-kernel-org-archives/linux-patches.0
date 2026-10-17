@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B033C6A56;
-	Sat, 17 Oct 2026 18:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7D33C10AC;
+	Sat, 17 Oct 2026 18:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260008; cv=none; b=b0kNjxedkGAPsD4aFAxFYi8GDwsqR/nHGEM+cUe8XiXWWiObhfZ4cJa0AnhUk3yNivep9NinmYMLkjfPm9xvcV+Ex6VufBXqIlQ2TP2h2PMBerRSeYgRoBCQinngLx20wjhD2higX2Sqk5S6f8pHZhsgTHtXbe6GZtsuE7N3Q5g=
+	t=1792260011; cv=none; b=Ah++0G7Z93N44cdYtfXbcSGLPX+psfE1XdqHVeTiPwy4LSX6OwIUiG7HJE+UShfxyCun9ZZ7eM2KmZAqBZ+Tseog1S7Slel1hGI/J0wuA0KY9eboA6K7qH2UQKFgVzAK3H7mtO4vohYCd0OoVi5I+an4dTYODU+jGhILcgNaoWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260008; c=relaxed/simple;
-	bh=Q+2dhRIdvMqGcmVy2w+WqaZTPIZZi+0Ts5GsN0s6lpc=;
+	s=arc-20240116; t=1792260011; c=relaxed/simple;
+	bh=Lsd4wY1o9up8nEZF/ECru/J7u9hYt0Mo3c3/I3rjSyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0b/tC4eDmKxpADkB1Tk8tRBcPZiE2zhL/YJs1qFtvIiJHvUMhgmo90bDokWz1Dehh9OZiJwsfTjs4zqwZAAPdBZMadcaeAZI0f2pz+wmCtQV6lflcyffurlCRKyDt1RN3km9XeFnr7Ql5tPI4WrYD+Z1yIoYFmS3FoqC9dTHhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybXM7bq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sqoubGxmKpJPLCaQar/gYTkhmAykeuX7kzH35W3WFP8wuQo6ra02QQ572rIDbM8+1nl4Qnx0FjyttMdWzmv9CevuDgSRlG8cZNT+6/5Q/TjKzDEOWVCKFydYT7RSqeM3B8vstwanYKOQCcP7H3mfX7aDhXFbsc9O8weNTd/PNPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5tVGLgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybXM7bq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF44F1F000C4;
-	Sat, 17 Oct 2026 18:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5tVGLgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD841F000C5;
+	Sat, 17 Oct 2026 18:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260007;
-	bh=WrkkQ0d/VO7swyJShjjeC3NXhNPdJhLjtczOozZ8HIU=;
+	s=korg; t=1792260010;
+	bh=6q2Mp/fDcYAWkiWObeIkp5lrV+G5xDfRXN+n7qpJzXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybXM7bq6Z6uPUQaYKCUbnKwNzdhRcjNZyREfeIwdfPTbN9+LhVAgzHEWYCZ6/azi2
-	 BrMLFW+kCEmacS+AyJgSQa3oFZVwhqiXgXgCUcoPSEJhGNRlmWO9BoaxCTWpavzOXH
-	 G1te3mopQc7WhJAuBznJ+TscVcuJNU0+th38EWX0=
+	b=T5tVGLgA2fUnIBwFFxBjW4APse1l60/QRjK42Vlu79SkKurc/+uIPKhXDvlHoQQtp
+	 lHkwmMpkxJFb62yQ+9E57dwuFLxljysi4rT2G8e3IS5gRyuJ1jXK3X1yaApqsJZy5d
+	 3f9sK3uanBINPD8wjk3bpNXVR/wM3oux2zSlGfpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yunseong Kim <yunseong.kim@est.tech>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1401/1674] ksmbd: serialize oplock close with pending break ownership
-Date: Sat, 17 Oct 2026 18:01:13 +0200
-Message-ID: <20261017160507.137840637@linuxfoundation.org>
+Subject: [PATCH 6.6 1402/1674] ksmbd: fix slab-out-of-bounds read in ksmbd_alloc_user()
+Date: Sat, 17 Oct 2026 18:01:14 +0200
+Message-ID: <20261017160507.162545817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,232 +45,162 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Yunseong Kim <yunseong.kim@est.tech>
 
-[ Upstream commit b0148dc5625dbfd50596ac63c7487c12e8a8ab03 ]
+[ Upstream commit 7405d0ba294306721843bc551611775e6edef516 ]
 
-close may abort an in-flight oplock break while another breaker already
-holds an opinfo reference. Releasing pending_break wakes that waiter, but
-without serializing the close transition with bit acquisition it can become
-a new break owner through the test_and_set_bit() fast path. It can then
-overwrite OPLOCK_CLOSING with OPLOCK_ACK_WAIT and continue a break for
-a dying opinfo.
+ksmbd_alloc_user() copies resp->hash_sz bytes out of the mountd IPC
+login response with
 
-Make OPLOCK_CLOSING terminal once the opinfo is removed from the inode
-list. Serialize that transition, pending_break acquisition, and
-OPLOCK_ACK_WAIT setup with an opinfo state lock. A breaker which loses
-the race releases its ownership and returns -ENOENT. Explicitly wake
-pending_break waiters during close so they can observe the terminal state.
+	user->passkey_sz = resp->hash_sz;
+	user->passkey = kmalloc(resp->hash_sz, KSMBD_DEFAULT_GFP);
+	if (user->passkey)
+		memcpy(user->passkey, resp->hash, resp->hash_sz);
 
-Also prevent ACK and timeout paths from replacing OPLOCK_CLOSING with
-OPLOCK_STATE_NONE.
+resp->hash_sz is a __u16 supplied by the response, but resp->hash[] is
+only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or malicious login
+response can set hash_sz well beyond that (up to 65535), so the memcpy()
+reads past the end of the response object.  ipc_validate_msg() does not
+bound hash_sz, so reject any response whose hash_sz exceeds the on-stack
+hash[] buffer before allocating and copying.
+
+[ 2030.238706] BUG: KASAN: slab-out-of-bounds in ksmbd_alloc_user+0x278/0x680
+[ 2030.240549] Read of size 65535 at addr ffff888121bb6680 by task kworker/4:1/18611
+[ 2030.242296]
+[ 2030.242710] CPU: 4 UID: 0 PID: 18611 Comm: kworker/4:1 Not tainted 7.1.0-next-20260623-virtme #96 PREEMPT(lazy)
+[ 2030.242732] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[ 2030.242743] Workqueue: ksmbd-io handle_ksmbd_work
+[ 2030.242763] Call Trace:
+[ 2030.242769]  <TASK>
+[ 2030.242776]  dump_stack_lvl+0xa2/0xd0
+[ 2030.242794]  print_address_description+0x77/0x200
+[ 2030.242815]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242831]  print_report+0x58/0x70
+[ 2030.242848]  kasan_report+0x117/0x150
+[ 2030.242869]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242888]  kasan_check_range+0x3c7/0x3f0
+[ 2030.242908]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242925]  __asan_memcpy+0x29/0x70
+[ 2030.242942]  ksmbd_alloc_user+0x278/0x680
+[ 2030.242960]  ksmbd_login_user+0xc3/0x120
+[ 2030.242978]  ntlm_authenticate+0x5e6/0x1b00
+[ 2030.243017]  ? __pfx_ntlm_authenticate+0x10/0x10
+[ 2030.243035]  ? ksmbd_session_lookup+0x188/0x1d0
+[ 2030.243054]  ? __pfx_ksmbd_session_lookup+0x10/0x10
+[ 2030.243090]  ? __sanitizer_cov_trace_switch+0x7b/0x140
+[ 2030.243108]  smb2_sess_setup+0x1e4a/0x27b0
+[ 2030.243126]  ? copy_from_kernel_nofault+0x199/0x300
+[ 2030.243156]  ? __pfx_smb2_sess_setup+0x10/0x10
+[ 2030.243173]  ? get_smb2_cmd_val+0xe3/0x1c0
+[ 2030.243208]  handle_ksmbd_work+0x954/0x1280
+[ 2030.243230]  ? __pfx_handle_ksmbd_work+0x10/0x10
+[ 2030.243249]  ? process_scheduled_works+0xa07/0x1490
+[ 2030.243270]  ? process_scheduled_works+0xa07/0x1490
+[ 2030.243291]  process_scheduled_works+0xa70/0x1490
+[ 2030.243320]  ? __pfx_process_scheduled_works+0x10/0x10
+[ 2030.243340]  ? do_raw_spin_lock+0x130/0x300
+[ 2030.243358]  ? lock_is_held_type+0x7b/0x110
+[ 2030.243388]  worker_thread+0x932/0xe20
+[ 2030.243415]  kthread+0x38a/0x470
+[ 2030.243431]  ? __pfx_worker_thread+0x10/0x10
+[ 2030.243451]  ? __pfx_kthread+0x10/0x10
+[ 2030.243467]  ret_from_fork+0x484/0x910
+[ 2030.243485]  ? __pfx_ret_from_fork+0x10/0x10
+[ 2030.243501]  ? __switch_to+0xc77/0x12c0
+[ 2030.243523]  ? __pfx_kthread+0x10/0x10
+[ 2030.243540]  ret_from_fork_asm+0x1a/0x30
+[ 2030.243564]  </TASK>
+[ 2030.243570]
+[ 2030.290164] Allocated by task 19279:
+[ 2030.290911]  kasan_save_track+0x3e/0x80
+[ 2030.292179]  __kasan_kmalloc+0x72/0x90
+[ 2030.293217]  __kvmalloc_node_noprof+0x3ff/0x6b0
+[ 2030.294467]  handle_generic_event+0x59b/0x750
+[ 2030.295345]  genl_family_rcv_msg_doit+0x238/0x340
+[ 2030.296553]  genl_rcv_msg+0x606/0x7b0
+[ 2030.297129]  netlink_rcv_skb+0x22b/0x4a0
+[ 2030.298500]  genl_rcv+0x2d/0x40
+[ 2030.299273]  netlink_unicast+0x7ba/0x930
+[ 2030.300019]  netlink_sendmsg+0x8c3/0xb00
+[ 2030.301073]  __sock_sendmsg+0xec/0x140
+[ 2030.301579]  __sys_sendto+0x357/0x470
+[ 2030.302255]  __x64_sys_sendto+0xe3/0x100
+[ 2030.303425]  do_syscall_64+0x135/0x460
+[ 2030.304763]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 2030.305594]
+[ 2030.305819] The buggy address belongs to the object at ffff888121bb6640
+[ 2030.305819]  which belongs to the cache kmalloc-192 of size 192
+[ 2030.309595] The buggy address is located 64 bytes inside of
+[ 2030.309595]  allocated 166-byte region [ffff888121bb6640, ffff888121bb66e6)
+[ 2030.312484]
+[ 2030.312719] The buggy address belongs to the physical page:
+[ 2030.314315] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x121bb6
+[ 2030.316481] head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[ 2030.318248] flags: 0x100000000000040(head|node=0|zone=2)
+[ 2030.319662] page_type: f5(slab)
+[ 2030.320242] raw: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
+[ 2030.321911] raw: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
+[ 2030.324413] head: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
+[ 2030.326150] head: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
+[ 2030.327960] head: 0100000000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
+[ 2030.329615] head: ffff888121bb7ab0 0000000000000000 00000000ffffffff 0000000000000000
+[ 2030.331861] page dumped because: kasan: bad access detected
+[ 2030.332946]
+[ 2030.333502] Memory state around the buggy address:
+[ 2030.334698]  ffff888121bb6580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2030.336475]  ffff888121bb6600: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
+[ 2030.338143] >ffff888121bb6680: 00 00 00 00 00 00 00 00 00 00 00 00 06 fc fc fc
+[ 2030.339116]                                                        ^
+[ 2030.341315]  ffff888121bb6700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2030.342801]  ffff888121bb6780: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+[ 2030.344643] ==================================================================
+
+Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
+kcov-dataflow [1] coverage vector: it folds each instrumented
+comparison/argument's runtime operand value together with its PC (the
+default arm mixes them as pc⊕val) so that a new operand value at a known
+site counts as new coverage.
+
+[1] https://lwn.net/Articles/1077606/
+[2] https://github.com/yskzalloc/kcov-dataflow
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Co-developed-by: Yunseong Kim <yunseong.kim@est.tech>
 Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c  | 83 +++++++++++++++++++++++++++++++++--------
- fs/smb/server/oplock.h  |  1 +
- fs/smb/server/smb2pdu.c | 12 ++++--
- 3 files changed, 78 insertions(+), 18 deletions(-)
+ fs/smb/server/mgmt/user_config.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index dc2ca423a1bf8..7d85b9e338ec2 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -56,6 +56,7 @@ static struct oplock_info *alloc_opinfo(struct ksmbd_work *work,
- 	opinfo->conn = ksmbd_conn_get(work->conn);
- 	opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
- 	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock_init(&opinfo->state_lock);
- 	opinfo->pending_break = 0;
- 	opinfo->fid = id;
- 	opinfo->Tid = Tid;
-@@ -424,14 +425,23 @@ void close_id_del_oplock(struct ksmbd_file *fp)
- 	opinfo_del(opinfo);
- 
- 	rcu_assign_pointer(fp->f_opinfo, NULL);
--	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
--		opinfo->op_state = OPLOCK_CLOSING;
--		wake_up_interruptible_all(&opinfo->oplock_q);
--		if (opinfo->is_lease) {
--			atomic_set(&opinfo->breaking_cnt, 0);
--			wake_up_interruptible_all(&opinfo->oplock_brk);
--		}
--	}
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state == OPLOCK_ACK_WAIT && opinfo->is_lease)
-+		atomic_set(&opinfo->breaking_cnt, 0);
-+	/*
-+	 * An opinfo that has been removed from the inode list is terminal. Keep
-+	 * this transition and releasing pending_break under state_lock. a breaker
-+	 * takes the same lock before it acquires pending_break or sets ACK_WAIT.
-+	 */
-+	opinfo->op_state = OPLOCK_CLOSING;
-+	clear_bit_unlock(0, &opinfo->pending_break);
-+	spin_unlock(&opinfo->state_lock);
-+	wake_up_interruptible_all(&opinfo->oplock_q);
-+	if (opinfo->is_lease)
-+		wake_up_interruptible_all(&opinfo->oplock_brk);
-+	/* memory barrier is needed for wake_up_bit() */
-+	smp_mb__after_atomic();
-+	wake_up_bit(&opinfo->pending_break, 0);
- 
- 	opinfo_count_dec(fp);
- 	atomic_dec(&opinfo->refcount);
-@@ -610,10 +620,16 @@ static void wait_for_break_ack(struct oplock_info *opinfo)
- 
- 	/* is this a timeout ? */
- 	if (!rc) {
-+		spin_lock(&opinfo->state_lock);
-+		if (opinfo->op_state == OPLOCK_CLOSING) {
-+			spin_unlock(&opinfo->state_lock);
-+			return;
-+		}
- 		if (opinfo->is_lease)
- 			opinfo->o_lease->state = SMB2_LEASE_NONE_LE;
- 		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
- 		opinfo->op_state = OPLOCK_STATE_NONE;
-+		spin_unlock(&opinfo->state_lock);
- 	}
- }
- 
-@@ -625,17 +641,46 @@ static void wake_up_oplock_break(struct oplock_info *opinfo)
- 	wake_up_bit(&opinfo->pending_break, 0);
- }
- 
-+static bool oplock_break_set_ack_wait(struct oplock_info *opinfo)
-+{
-+	bool ret = false;
-+
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING) {
-+		opinfo->op_state = OPLOCK_ACK_WAIT;
-+		ret = true;
-+	}
-+	spin_unlock(&opinfo->state_lock);
-+
-+	return ret;
-+}
-+
- static int oplock_break_pending(struct oplock_info *opinfo, int req_op_level)
+diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
+index 3d7c9b6b032e9..6d51ff79ba0d0 100644
+--- a/fs/smb/server/mgmt/user_config.c
++++ b/fs/smb/server/mgmt/user_config.c
+@@ -37,6 +37,17 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
  {
--	while (test_and_set_bit(0, &opinfo->pending_break)) {
-+	for (;;) {
-+		bool closing;
+ 	struct ksmbd_user *user;
+ 
++	/*
++	 * resp->hash_sz is a __u16 taken from the mountd IPC login response but
++	 * resp->hash[] is only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or
++	 * malicious response can set hash_sz far beyond that (up to 65535),
++	 * making the memcpy() below read past the response object
++	 * (slab-out-of-bounds in ksmbd_alloc_user()).  Reject any oversized
++	 * hash rather than trust the length.
++	 */
++	if (resp->hash_sz > sizeof(resp->hash))
++		return NULL;
 +
-+		spin_lock(&opinfo->state_lock);
-+		closing = opinfo->op_state == OPLOCK_CLOSING;
-+		if (!closing && !test_and_set_bit(0, &opinfo->pending_break)) {
-+			spin_unlock(&opinfo->state_lock);
-+			break;
-+		}
-+		spin_unlock(&opinfo->state_lock);
-+		if (closing)
-+			return -ENOENT;
-+
- 		wait_on_bit(&opinfo->pending_break, 0, TASK_UNINTERRUPTIBLE);
- 
- 		/* Not immediately break to none. */
- 		opinfo->open_trunc = 0;
- 
--		if (opinfo->op_state == OPLOCK_CLOSING)
-+		spin_lock(&opinfo->state_lock);
-+		closing = opinfo->op_state == OPLOCK_CLOSING;
-+		spin_unlock(&opinfo->state_lock);
-+		if (closing)
- 			return -ENOENT;
--		else if (opinfo->level <= req_op_level) {
-+		if (opinfo->level <= req_op_level) {
- 			if (opinfo->is_lease == false)
- 				return 1;
- 
-@@ -999,13 +1044,17 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 
- 		if (lease->state & (SMB2_LEASE_WRITE_CACHING_LE |
- 				SMB2_LEASE_HANDLE_CACHING_LE)) {
-+			if (!oplock_break_set_ack_wait(brk_opinfo)) {
-+				atomic_dec_if_positive(&brk_opinfo->breaking_cnt);
-+				wake_up_oplock_break(brk_opinfo);
-+				return -ENOENT;
-+			}
-+
- 			if (in_work) {
- 				setup_async_work(in_work, NULL, NULL);
- 				smb2_send_interim_resp(in_work, STATUS_PENDING);
- 				release_async_work(in_work);
- 			}
--
--			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
- 		} else
- 			atomic_dec(&brk_opinfo->breaking_cnt);
- 	} else {
-@@ -1014,8 +1063,12 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 			return err < 0 ? err : 0;
- 
- 		if (brk_opinfo->level == SMB2_OPLOCK_LEVEL_BATCH ||
--		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
--			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
-+		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
-+			if (!oplock_break_set_ack_wait(brk_opinfo)) {
-+				wake_up_oplock_break(brk_opinfo);
-+				return -ENOENT;
-+			}
-+		}
- 	}
- 
- 	if (brk_opinfo->is_lease)
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index f50366ef66377..4992c850280de 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -66,6 +66,7 @@ struct oplock_info {
- 	struct ksmbd_file	*o_fp;
- 	int                     level;
- 	int                     op_state;
-+	spinlock_t		state_lock;
- 	unsigned long		pending_break;
- 	u64			fid;
- 	atomic_t		breaking_cnt;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index a3e23eb59eaa9..ca5c465ab2be5 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8817,7 +8817,10 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	smb2_set_err_rsp(work);
- 
- out:
--	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING)
-+		opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_unlock(&opinfo->state_lock);
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	opinfo_put(opinfo);
- 	ksmbd_fd_put(work, fp);
-@@ -8903,9 +8906,12 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	if (ret)
- 		goto err_out;
- 
--	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING)
-+		opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_unlock(&opinfo->state_lock);
- 	wake_up_interruptible_all(&opinfo->oplock_q);
--	atomic_dec(&opinfo->breaking_cnt);
-+	atomic_dec_if_positive(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
- 	opinfo_put(opinfo);
- 	return;
+ 	user = kmalloc(sizeof(struct ksmbd_user), GFP_KERNEL);
+ 	if (!user)
+ 		return NULL;
 -- 
 2.53.0
 
