@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0223976BA;
-	Sat, 17 Oct 2026 16:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3E2380FCA;
+	Sat, 17 Oct 2026 16:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253386; cv=none; b=ZJzQ8ao6Ab25eaI7Au6LzYwoKP9WvYPiQXAF810IHbgk/lHatlROYV6ShaWcjEUnhhldxDNhkSqLYI0QCdRLJvmd7gG50d7cnfy310/BpZ4tAzpUMJCSVaEvdGAN45/MQ+QKCGCj1/WcJaoUrQUEXjCtPcvnTJpAff4vRJDMAiU=
+	t=1792253389; cv=none; b=AVcUh1nYRm0Bj2Uas6Uqaq0/OAFWLabbjlWFJzFzNSqwyUzpqE5G+KKQEd/k+/bk2IAi9bfrsbwL26Z/8iX4D4C6UhDVRdzZ6gMeG96xfHjjqk3s2Zbh8cWUHG76Igx7/miCEmV21u6ju4tyNFQ0vA6U/uSbuCokvoWbg/BQhys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253386; c=relaxed/simple;
-	bh=AVo83oo8ze4+PgouHoHBcI2h3TGimmrQVKTIqfQwEVE=;
+	s=arc-20240116; t=1792253389; c=relaxed/simple;
+	bh=SWq2dA06dqf3ggnC8RNVBRmDLRjr49CDO3r+IZMtArA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIEeUZCIqyPdy5F6FQltzs3kjHKP6zdpKCv2gQphqCB/hbeKj353Aoehdt9Rb7yA+GqTdIEyCDTfwpIBsQP3HUVTRxaZDOz6+OV+1EeV9YqTqhIEzqTPu6TeYq4ptef/P+GT10Ix3hLuTxkA9hmOoYgoC9H6d0I80RlsQ0wqWbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F48qmm8Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uw6ctmLc5crEyyLldmIIyu6Tz01u+M5yGmzruISRGuq8slWPeyN+XsQf83/ZgqTPCU58bpLXo2FQMc/iEvd4YEAu9b9FxtBYbqDj8A4ZIHDETBBXgSqTso36Nbzs+FGf9hwFTF0a6Y0hUj1dEKCCQt3P4JcQ+yiKRmsuZGVZDTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+7yS5+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F48qmm8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FB51F000C4;
-	Sat, 17 Oct 2026 16:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+7yS5+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39731F000C5;
+	Sat, 17 Oct 2026 16:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253385;
-	bh=WXiWfYe7et3pSh7NlunB0R0hFwgUqhhbNsbI7nlBBpk=;
+	s=korg; t=1792253388;
+	bh=9O73+JVZ5tL/ySr/VnFsstXPw26aQ30/W6YKiJDofac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F48qmm8Z4ZMEuuMC1j2+UJL+qCTVTbVstcMQe7T+lAv58exrtilQG5vB0f2EAEHyc
-	 qm+kc3Do2JK5Vy8lfsftREa4DJBh9x6rZT6yCC2RzGKBjklyNUgol2TWw5pFHl8S4W
-	 CsRUkGp7EGLgeM+naClSZM2s1j2LExaaChO1ffKg=
+	b=d+7yS5+KN1pnD2sN7saydC+eAbmlLWJL4OonMUMG/dtNafN+KevuSEBlAo3AJNjKG
+	 uTHFRIjmz1lD4ViVwtRlDLK7Ogmdp5o7AueM6KGfcIYJWasXW8kJ9kTWmxGRHjFstL
+	 cKGtS1I/dGnI3vICNuWtNc0lKNAJYij3XzQCJIUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Juri Lelli <jlelli@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	John Kacur <jkacur@redhat.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/869] wifi: ath12k: Pass ab pointer directly to ath12k_dp_tx_get_encap_type()
-Date: Sat, 17 Oct 2026 17:49:01 +0200
-Message-ID: <20261017160039.598962896@linuxfoundation.org>
+Subject: [PATCH 6.12 101/869] rv: Remove trailing whitespace from tracepoint string
+Date: Sat, 17 Oct 2026 17:49:02 +0200
+Message-ID: <20261017160039.624654278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,68 +59,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 05062834350f0bf7ad1abcebc2807220e90220eb ]
+[ Upstream commit 7b70ac4cad2b20eaf415276bbaa0d9df9abb428c ]
 
-In ath12k_dp_tx_get_encap_type(), the arvif parameter is only used to
-retrieve the ab pointer. In vdev delete sequence the arvif->ar could
-become NULL and that would trigger kernel panic.
-Since the caller ath12k_dp_tx() already has a valid ab pointer, pass it
-directly to avoid panic and unnecessary dereferencing.
+RV event tracepoints print a line with the format:
+    "event_xyz: S0 x event -> S1 "
+    "event_xyz: S1 x event -> S0 (final)"
 
-PC points to "ath12k_dp_tx+0x228/0x988 [ath12k]"
-LR points to "ath12k_dp_tx+0xc8/0x988 [ath12k]".
-The Backtrace obtained is as follows:
-ath12k_dp_tx+0x228/0x988 [ath12k]
-ath12k_mac_tx_check_max_limit+0x608/0x920 [ath12k]
-ieee80211_process_measurement_req+0x320/0x348 [mac80211]
-ieee80211_tx_dequeue+0x9ac/0x1518 [mac80211]
-ieee80211_tx_dequeue+0xb14/0x1518 [mac80211]
-ieee80211_tx_prepare_skb+0x224/0x254 [mac80211]
-ieee80211_xmit+0xec/0x100 [mac80211]
-__ieee80211_subif_start_xmit+0xc50/0xf40 [mac80211]
-ieee80211_subif_start_xmit+0x2e8/0x308 [mac80211]
-netdev_start_xmit+0x150/0x18c
-dev_hard_start_xmit+0x74/0xc0
+While printing an event leading to a non-final state, the line
+has a trailing white space (visible above before the closing ").
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Adapt the format string not to print the trailing whitespace if we are
+not printing "(final)".
 
-Fixes: e93bbd65547e ("wifi: ath12k: fix packets are sent in native wifi mode while we set raw mode")
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250606044936.3989400-1-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tomas Glozar <tglozar@redhat.com>
+Cc: Juri Lelli <jlelli@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/20250728135022.255578-3-gmonaco@redhat.com
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 7f904ff6e58d ("rv: Use strings in da monitors tracepoints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_tx.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/trace/events/rv.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index 21e07b5cee570..f08ab5a4112c0 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -10,10 +10,9 @@
- #include "hw.h"
+diff --git a/include/trace/events/rv.h b/include/trace/events/rv.h
+index 56592da9301c0..17bab55546fad 100644
+--- a/include/trace/events/rv.h
++++ b/include/trace/events/rv.h
+@@ -29,11 +29,11 @@ DECLARE_EVENT_CLASS(event_da_monitor,
+ 		__entry->final_state		= final_state;
+ 	),
  
- static enum hal_tcl_encap_type
--ath12k_dp_tx_get_encap_type(struct ath12k_vif *arvif, struct sk_buff *skb)
-+ath12k_dp_tx_get_encap_type(struct ath12k_base *ab, struct sk_buff *skb)
- {
- 	struct ieee80211_tx_info *tx_info = IEEE80211_SKB_CB(skb);
--	struct ath12k_base *ab = arvif->ar->ab;
+-	TP_printk("%s x %s -> %s %s",
++	TP_printk("%s x %s -> %s%s",
+ 		__entry->state,
+ 		__entry->event,
+ 		__entry->next_state,
+-		__entry->final_state ? "(final)" : "")
++		__entry->final_state ? " (final)" : "")
+ );
  
- 	if (test_bit(ATH12K_FLAG_RAW_MODE, &ab->dev_flags))
- 		return HAL_TCL_ENCAP_TYPE_RAW;
-@@ -289,7 +288,7 @@ int ath12k_dp_tx(struct ath12k *ar, struct ath12k_vif *arvif,
- 		msdu_ext_desc = true;
- 	}
+ DECLARE_EVENT_CLASS(error_da_monitor,
+@@ -91,12 +91,12 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
+ 		__entry->final_state		= final_state;
+ 	),
  
--	ti.encap_type = ath12k_dp_tx_get_encap_type(arvif, skb);
-+	ti.encap_type = ath12k_dp_tx_get_encap_type(ab, skb);
- 	ti.addr_search_flags = arvif->hal_addr_search_flags;
- 	ti.search_type = arvif->search_type;
- 	ti.type = HAL_TCL_DESC_TYPE_BUFFER;
+-	TP_printk("%d: %s x %s -> %s %s",
++	TP_printk("%d: %s x %s -> %s%s",
+ 		__entry->id,
+ 		__entry->state,
+ 		__entry->event,
+ 		__entry->next_state,
+-		__entry->final_state ? "(final)" : "")
++		__entry->final_state ? " (final)" : "")
+ );
+ 
+ DECLARE_EVENT_CLASS(error_da_monitor_id,
 -- 
 2.53.0
 
