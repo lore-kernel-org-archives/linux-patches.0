@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059B836195A;
-	Sat, 17 Oct 2026 18:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41C635E93B;
+	Sat, 17 Oct 2026 18:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260624; cv=none; b=gmzdtwjsXvyGYjESbE0izcOlZ7/MNyYkBjFILrlFB4Qyj8Rvj8i9cnacQdAEsLK0qG5J9gBUIU5BuUM+DCG1A08qFcvksnjNwe/HgUWS2PzMIcPsmvpN1kNskeSV7ZudDGsp+5bDQgI5BtaRKLpY5kXPXKCNkvz+zEni6Odmflw=
+	t=1792260625; cv=none; b=Qu5vYo55VBvljuAjd1pdR3C+v2q0XOFPGCJBOOCL706aMxmBZk2HDtZuwE9S7vq45rHAqz4rrRnEvfJQWDganx/rQ8ldLNee/EsSnQ0who7OBk99NRAoP+MPb4Jzq8xk7j7WzplsnQfBweB0aV7hxoZeQwYwx3KCvyEeWFTp4RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260624; c=relaxed/simple;
-	bh=nzUJwX9tW9BoQabireRNJ+t7xiOst+IMhQ4lg9Z0nmg=;
+	s=arc-20240116; t=1792260625; c=relaxed/simple;
+	bh=00xLYSh6GRduD/gP3FkFOz2WVUGMsda3Dv283dtg8Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SowBXz2PPWuiS6rAwojHQwS1QJtYqBl7/5AoLUlDJmSi/UTvqorgkFMHlOh8TlJ21WtfqNMAw33V9B2+LUjoNWhIzTSDObg5UevqcydT8991bktx44JY1HgvyKAaFq0Ct4bbcDedOnH42OeJUmYuC+KLyElNPHC+sDt52ZI43kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdLqP1jQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uT+bJx4zj43KpYdqWRECUwUQbmLX+jjuNfBuWGURKGlq0p5umQ98QtbaDRIzyPbEgiPavOj1VV1agF0NC3rV8/lQ+QKOLsa50yr1+vYZ2Kq6oGjzuNivYkRD561anSVS/0CbLgi05w8ndMZPTscL94N0AkvSI4tR8QA1M1I/In4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huolv9Hl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdLqP1jQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546E71F000C5;
-	Sat, 17 Oct 2026 18:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huolv9Hl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4537B1F000C4;
+	Sat, 17 Oct 2026 18:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260622;
-	bh=l76VFmBE4bimihkgC4t6/NRp7kVZKhRUnJNRROK+rrk=;
+	s=korg; t=1792260619;
+	bh=zagXz109LEgeBSD48ynFB3UQWHVvwJYNSenGfB6Pmv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdLqP1jQogxasSXJobKCBUO68e3fuaTMdFE1iBV6q9ENRLuwhyAoqVAOkLbXBwyNG
-	 /bMA2xs3naAm7WA5Qjt4bLv9yk1Yv1gVPwBlEgQl3Ezcw/0KhlwoPIBA+0L2CnpHLA
-	 muYTUG8inStyxVgtyyeOiDkNCmhUqyGGj0Lph0UE=
+	b=huolv9Hlax8eUUg5R48bZzAiXZHw1IFKzfBhCPgo0herlXmruTza1XybPO5+pywiU
+	 TO7Eiig74OqoojBCp3Uoleo2xHZQlYx9WkCWSBGMfKBtQXVDSeOw1ZPEBOpr/mtzPN
+	 cFnPHLWaM2M5YKDo6Lr8jZnJbRAX8XbIixG79XZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1606/1674] configfs: unhash the dentry before dropping the item in rmdir
-Date: Sat, 17 Oct 2026 18:04:38 +0200
-Message-ID: <20261017160512.308706373@linuxfoundation.org>
+Subject: [PATCH 6.6 1605/1674] reboot: fix cad_pid use-after-free race
+Date: Sat, 17 Oct 2026 18:04:37 +0200
+Message-ID: <20261017160512.283708222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,64 +57,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit f06c2d26d1999d37e93299db0ecead04ca7d0b9f ]
+[ Upstream commit 5a88f78df753993469dab4d1831f8fb4256a9468 ]
 
-configfs_get_config_item() treats a hashed dentry as proof that
-sd->s_element is a live config_item.  configfs_rmdir() breaks that:
-simple_rmdir() leaves the dentry hashed, the last reference to the item is
-dropped right after, and the dentry is only unhashed by d_delete() once
-->rmdir() has returned.  configfs_symlink() resolves its target holding no
-lock on it, so get_target() can land in that window:
+cad_pid is a single kernel-wide struct pid pointer. proc_do_cad_pid()
+reads it and passes it to pid_vnr() without protecting the lifetime of
+the referenced struct pid. A concurrent writer can replace cad_pid and
+drop the final reference to the old struct pid after the reader has
+loaded the pointer but before pid_vnr() has finished dereferencing it,
+causing a use-after-free.
 
-  BUG: KASAN: slab-use-after-free in config_item_get+0x26/0x90
-   get_target fs/configfs/symlink.c:128 [inline]
-   configfs_symlink+0x4ab/0x1030 fs/configfs/symlink.c:185
+kill_cad_pid() has the same lifetime race when it passes cad_pid to
+kill_pid().
 
-Unhash in configfs_remove_dir(), while the item is still guaranteed to be
-there.  A reference obtained just before that stays harmless, as
-create_link() rechecks CONFIGFS_USET_DROPPING, already set by
-configfs_detach_prep().  Both configfs_unregister_subsystem() paths
-d_drop() after detaching, so this only makes rmdir match them.
+At the time this issue was reported, an unprivileged user could reach the
+sysctl through user and PID namespaces because cad_pid was registered in
+pid_table[]. Moving cad_pid back to the global reboot sysctl table
+corrected that namespace and permission mismatch, but did not fix the
+underlying lifetime race.
 
-Reported-by: syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6b16e3d085833cbf3e25
-Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Fix this by treating cad_pid as an RCU-protected pointer at both read
+sites and by waiting for a grace period before dropping the old reference
+on the write side.
+
+call_rcu(&old_pid->rcu, ...) cannot be used here because free_pid()
+also queues pid->rcu; queueing the same rcu_head twice can corrupt the
+RCU callback list.
+
+Original KASAN crash stack:
+  kernel/pid.c:545 pid_nr_ns()        # reads freed pid->level
+  kernel/pid.c:556 pid_vnr()          # calls pid_nr_ns()
+  kernel/pid.c:775 proc_do_cad_pid()  # calls pid_vnr(cad_pid)
+
+Fixes: 9ec52099e4b8 ("[PATCH] replace cad_pid by a struct pid")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/20260717210143.4734-1-blbllhy@gmail.com/
+Link: https://lore.kernel.org/all/alz5ZYLE4kaq_v2P@redhat.com/
+Link: https://lore.kernel.org/all/al4ICz9biJKtdZc4@redhat.com/
+Suggested-by: Mateusz Guzik <mjguzik@gmail.com>
+Suggested-by: Bradley Morgan <include@grrlz.net>
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Suggested-by: Eric W. Biederman <ebiederm@xmission.com>
+Suggested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Tested-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260730093435.195441-3-vasilisalmpanis@gmail.com
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260814040944.16561-1-blbllhy@gmail.com
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ include/linux/sched.h        |  2 +-
+ include/linux/sched/signal.h |  5 +----
+ init/main.c                  |  2 +-
+ kernel/reboot.c              |  3 +--
+ kernel/signal.c              | 12 ++++++++++++
+ kernel/sysctl.c              | 13 +++++++++++--
+ 6 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index 46540846d815c..e7ca50f119969 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -395,8 +395,17 @@ static void remove_dir(struct dentry * d)
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 4be7af82f813c..66b554f5fdb2c 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1739,7 +1739,7 @@ static inline int is_global_init(struct task_struct *tsk)
+ 	return task_tgid_nr(tsk) == 1;
+ }
  
- 	configfs_remove_dirent(d);
+-extern struct pid *cad_pid;
++extern struct pid __rcu *cad_pid;
  
--	if (d_really_is_positive(d))
--		simple_rmdir(d_inode(parent),d);
-+	if (d_really_is_positive(d)) {
-+		if (!simple_rmdir(d_inode(parent), d))
-+			/*
-+			 * configfs_get_config_item() takes a hashed dentry as
-+			 * proof that ->s_element is still alive.  Our caller
-+			 * is about to drop the last reference to the item and
-+			 * the VFS will not unhash until after we return, so
-+			 * unhash it here.
-+			 */
-+			d_drop(d);
-+	}
+ /*
+  * Per process flags
+diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
+index 0014d3adaf846..daa95d3251891 100644
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -568,10 +568,7 @@ static inline sigset_t *sigmask_to_save(void)
+ 	return res;
+ }
  
- 	pr_debug(" o %pd removing done (%d)\n", d, d_count(d));
+-static inline int kill_cad_pid(int sig, int priv)
+-{
+-	return kill_pid(cad_pid, sig, priv);
+-}
++int kill_cad_pid(int sig, int priv);
+ 
+ /* These can be the second arg to send_sig_info/send_group_sig_info.  */
+ #define SEND_SIG_NOINFO ((struct kernel_siginfo *) 0)
+diff --git a/init/main.c b/init/main.c
+index 1442f95d6da10..0598d6aa8be82 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -1508,7 +1508,7 @@ static noinline void __init kernel_init_freeable(void)
+ 	 */
+ 	set_mems_allowed(node_states[N_MEMORY]);
+ 
+-	cad_pid = get_pid(task_pid(current));
++	rcu_assign_pointer(cad_pid, get_pid(task_pid(current)));
+ 
+ 	smp_prepare_cpus(setup_max_cpus);
+ 
+diff --git a/kernel/reboot.c b/kernel/reboot.c
+index 6ebef11c88760..153a7588354ff 100644
+--- a/kernel/reboot.c
++++ b/kernel/reboot.c
+@@ -24,8 +24,7 @@
+  */
+ 
+ static int C_A_D = 1;
+-struct pid *cad_pid;
+-EXPORT_SYMBOL(cad_pid);
++struct pid __rcu *cad_pid;
+ 
+ #if defined(CONFIG_ARM)
+ #define DEFAULT_REBOOT_MODE		= REBOOT_HARD
+diff --git a/kernel/signal.c b/kernel/signal.c
+index 6a51bd690092f..cfc4196131904 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1950,6 +1950,18 @@ int kill_pid(struct pid *pid, int sig, int priv)
+ }
+ EXPORT_SYMBOL(kill_pid);
+ 
++int kill_cad_pid(int sig, int priv)
++{
++	int ret;
++
++	rcu_read_lock();
++	ret = kill_pid(rcu_dereference(cad_pid), sig, priv);
++	rcu_read_unlock();
++
++	return ret;
++}
++EXPORT_SYMBOL(kill_cad_pid);
++
+ /*
+  * These functions support sending signals using preallocated sigqueue
+  * structures.  This is needed "because realtime applications cannot
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index f8f07c0492388..0f0c2fafcfb26 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -1331,10 +1331,13 @@ static int proc_do_cad_pid(struct ctl_table *table, int write, void *buffer,
+ 		size_t *lenp, loff_t *ppos)
+ {
+ 	struct pid *new_pid;
++	struct pid *old_pid;
+ 	pid_t tmp;
+ 	int r;
+ 
+-	tmp = pid_vnr(cad_pid);
++	rcu_read_lock();
++	tmp = pid_vnr(rcu_dereference(cad_pid));
++	rcu_read_unlock();
+ 
+ 	r = __do_proc_dointvec(&tmp, table, write, buffer,
+ 			       lenp, ppos, NULL, NULL);
+@@ -1345,7 +1348,13 @@ static int proc_do_cad_pid(struct ctl_table *table, int write, void *buffer,
+ 	if (!new_pid)
+ 		return -ESRCH;
+ 
+-	put_pid(xchg(&cad_pid, new_pid));
++	old_pid = unrcu_pointer(xchg(&cad_pid, RCU_INITIALIZER(new_pid)));
++	/*
++	 * Wait for cad_pid readers before put_pid().  We cannot use
++	 * call_rcu() here because free_pid() already owns pid->rcu.
++	 */
++	synchronize_rcu();
++	put_pid(old_pid);
+ 	return 0;
+ }
  
 -- 
 2.53.0
