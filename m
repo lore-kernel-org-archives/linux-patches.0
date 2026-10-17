@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A4C3C1F45;
-	Sat, 17 Oct 2026 17:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE5A3B47F5;
+	Sat, 17 Oct 2026 17:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259650; cv=none; b=duUUw2RVmJTEchwoj94Hxyoy7M7mw6d8kd1TsilQZIdnzNbnU4bwsCBVYpuvLljVaK6EjMM4gn4KG1UbUQl4LERFViKwucX34G+uMXnOhAH6z3wAS1uRN6TBlxGTgT66oGidhyVKeu66+Eg7oSTaNiJLZHUI7nADsJ2EmwGw69Y=
+	t=1792259653; cv=none; b=J8XlY8v3d7dU7idgWBFIKjkY7Rlzu18oQ2nCvrflpRGRiQ6pImstimzCjd91febT6b+UFv2bPU5O5XTXqjtzkmgEBfE1nm9+gj2lt/x5jpKf3jp6yFuz9KgyAQIWztL+8MSoK3L4tJ9jagJeVDFmbrONZi3BGcIH6IhIKEEPGiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259650; c=relaxed/simple;
-	bh=RT9imLmJqDG8M6r45VRuXSzxnP9rPF1Vm9hGJazPa6U=;
+	s=arc-20240116; t=1792259653; c=relaxed/simple;
+	bh=AYIpG+JpVIdL3/wgth+gtHXG1e5k7d4bPdVGi0AaSSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7wa7/TOM/YcPaAKAB0XAqIWXbelgzxWM/DXA51lmtaEOSpHZ4w7qScTqXGCnBM5zOWfg27t40ibyATSemLWmMhXicvcit6qiE/LG1FLwNoT0JROb/vYN63HSWlm8iuPWcT2c5X0Y823DBBdT0r28GcbFLgCFpVZr/YX1TjwzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ep99tbEc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nUH3l7W3LU1yOH4X8sKhnPN0RoG+q8ptkOteQ85wTd2a+yB9uOM3WuFiB8Qiuemlsx6PeBdyhReWWRbT2lGhBtkYaGrbVGuP3CD/srwJwKNJj5Ak8ollMo0Uv8BQKPMU6t1MLOP89LpE1y451iscG+slCYJ+hb0UYmKhrEAU7QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3HS3VTu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ep99tbEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD21B1F000C4;
-	Sat, 17 Oct 2026 17:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3HS3VTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69031F000C4;
+	Sat, 17 Oct 2026 17:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259649;
-	bh=HmJ5hXSAhVzo5jwKy40zvTHAyU1dewrvt/QxoMGP7ck=;
+	s=korg; t=1792259652;
+	bh=tlBTBGzCgyIj6rWv1ZMbRctdfwdqumCHw+m9yPFmirs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ep99tbEcYZjnk7I+axvOjJ53h7/hRu/tpwUiHjnP0XT3k4BMyfLYHZgXPNSZ7tNCd
-	 zSUUfdw1Kz3790I9/qoRhBp73xBNn/bk1Li8Nq6rK9C9pXVukyGUbYIiOjUfcN+5no
-	 dL3ZRRSyVXP/iNANGVbzvtw6wPOrNuaH2ye9i/3k=
+	b=Y3HS3VTu765jLustzowJEvHII83YceGF5h81uhFvsOvpfVp6Vx/ZwDeaFOqyX2e+e
+	 Glg7uNQsRt09g8vhiU+CrqXHRaBDoOwgBIUKXw4HFuej55Rgxr8alBlI0St1OhRBF7
+	 aREfmnsXxh+YXTBYIMnCxPph8FMMciLYaGzFuIdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1277/1674] filelock: split common fields into struct file_lock_core
-Date: Sat, 17 Oct 2026 17:59:09 +0200
-Message-ID: <20261017160503.919978295@linuxfoundation.org>
+Subject: [PATCH 6.6 1286/1674] svcrdma: Handle ADDR_CHANGE CM event properly
+Date: Sat, 17 Oct 2026 17:59:18 +0200
+Message-ID: <20261017160504.151058212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,110 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit a69ce85ec9af6bdc0b3511959a7dc1a324e5e16a ]
+[ Upstream commit d1b586e75ec619dde1af47e21a41a6b1b51874c2 ]
 
-In a future patch, we're going to split file leases into their own
-structure. Since a lot of the underlying machinery uses the same fields
-move those into a new file_lock_core, and embed that inside struct
-file_lock.
+Sagi tells me that when a bonded device reports an address change,
+the consumer must destroy its listener IDs and create new ones.
 
-For now, add some macros to ensure that we can continue to build while
-the conversion is in progress.
+See commit a032e4f6d60d ("nvmet-rdma: fix bonding failover possible
+NULL deref").
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20240131-flsplit-v3-17-c6129007ee8d@kernel.org
-Reviewed-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-
-[ Instead of the temporary field macros and the tree-wide conversion,
-  alias the old field names in an anonymous struct overlaying
-  struct file_lock_core, so existing users keep building. Convert the
-  lockd client owner lookup to the new field name. ]
-
-Stable-dep-of: 4c7fc129db06 ("lockd: fix NULL dereference on lockowner allocation failure")
+Suggested-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 0944462247dc ("svcrdma: Reject connection when transport allocation fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/clntproc.c      |  3 ++-
- include/linux/filelock.h | 46 ++++++++++++++++++++++++++++------------
- 2 files changed, 35 insertions(+), 14 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/lockd/clntproc.c b/fs/lockd/clntproc.c
-index fba6c7fa74747..98894f69680d0 100644
---- a/fs/lockd/clntproc.c
-+++ b/fs/lockd/clntproc.c
-@@ -485,7 +485,8 @@ static const struct file_lock_operations nlmclnt_lock_ops = {
- static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
- {
- 	fl->fl_u.nfs_fl.state = 0;
--	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host, fl->fl_owner);
-+	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host,
-+						       fl->c.flc_owner);
- 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
- 	fl->fl_ops = &nlmclnt_lock_ops;
- }
-diff --git a/include/linux/filelock.h b/include/linux/filelock.h
-index 95e868e09e298..03fdaae58de42 100644
---- a/include/linux/filelock.h
-+++ b/include/linux/filelock.h
-@@ -85,23 +85,43 @@ bool opens_in_grace(struct net *);
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index d2659446a1111..7135aa57bf50b 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -277,17 +277,31 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
   *
-  * Obviously, the last two criteria only matter for POSIX locks.
+  * Return values:
+  *     %0: Do not destroy @cma_id
+- *     %1: Destroy @cma_id (never returned here)
++ *     %1: Destroy @cma_id
+  *
+  * NB: There is never a DEVICE_REMOVAL event for INADDR_ANY listeners.
   */
--struct file_lock {
--	struct file_lock *fl_blocker;	/* The lock, that is blocking us */
--	struct list_head fl_list;	/* link into file_lock_context */
--	struct hlist_node fl_link;	/* node in global lists */
--	struct list_head fl_blocked_requests;	/* list of requests with
-+struct file_lock_core {
-+	struct file_lock *flc_blocker;	/* The lock that is blocking us */
-+	struct list_head flc_list;	/* link into file_lock_context */
-+	struct hlist_node flc_link;	/* node in global lists */
-+	struct list_head flc_blocked_requests;	/* list of requests with
- 						 * ->fl_blocker pointing here
- 						 */
--	struct list_head fl_blocked_member;	/* node in
-+	struct list_head flc_blocked_member;	/* node in
- 						 * ->fl_blocker->fl_blocked_requests
- 						 */
--	fl_owner_t fl_owner;
--	unsigned int fl_flags;
--	unsigned char fl_type;
--	unsigned int fl_pid;
--	int fl_link_cpu;		/* what cpu's list is this on? */
--	wait_queue_head_t fl_wait;
--	struct file *fl_file;
-+	fl_owner_t flc_owner;
-+	unsigned int flc_flags;
-+	unsigned char flc_type;
-+	unsigned int flc_pid;
-+	int flc_link_cpu;		/* what cpu's list is this on? */
-+	wait_queue_head_t flc_wait;
-+	struct file *flc_file;
-+};
+ static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
+ 				   struct rdma_cm_event *event)
+ {
++	struct sockaddr *sap = (struct sockaddr *)&cma_id->route.addr.src_addr;
++	struct svcxprt_rdma *cma_xprt = cma_id->context;
++	struct svc_xprt *cma_rdma = &cma_xprt->sc_xprt;
++	struct rdma_cm_id *listen_id;
 +
-+struct file_lock {
-+	union {
-+		struct file_lock_core c;
-+		struct {
-+			struct file_lock *fl_blocker;
-+			struct list_head fl_list;
-+			struct hlist_node fl_link;
-+			struct list_head fl_blocked_requests;
-+			struct list_head fl_blocked_member;
-+			fl_owner_t fl_owner;
-+			unsigned int fl_flags;
-+			unsigned char fl_type;
-+			unsigned int fl_pid;
-+			int fl_link_cpu;
-+			wait_queue_head_t fl_wait;
-+			struct file *fl_file;
-+		};
-+	};
- 	loff_t fl_start;
- 	loff_t fl_end;
- 
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_CONNECT_REQUEST:
+ 		handle_connect_req(cma_id, &event->param.conn);
+ 		break;
++	case RDMA_CM_EVENT_ADDR_CHANGE:
++		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
++						      sap, cma_xprt);
++		if (IS_ERR(listen_id)) {
++			pr_err("Listener dead, address change failed for device %s\n",
++				cma_id->device->name);
++		} else
++			cma_xprt->sc_cm_id = listen_id;
++		return 1;
+ 	default:
+ 		break;
+ 	}
 -- 
 2.53.0
 
