@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECABA3A7F4D;
-	Sat, 17 Oct 2026 18:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942C3B813A;
+	Sat, 17 Oct 2026 18:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260643; cv=none; b=RmWFspxBR2wXWn8H4GdGM5/wWhmxouj2EDtsCT8DhlP6bPa0A2np2b8wEb1uvEsx3Ro/jB3GyhNgHxFz2nI698byMH0zc2OSgyMue81Af9hezkAuvc0oG6pjz6JsFLxVsP6VV3wAOKH6+qm1rwkE7HamuPXZoyxrOSdDWoslbJw=
+	t=1792260644; cv=none; b=SpxDVP4WwPPgbB+Cl91SKmwg4xvuJs0Mfxn7F+/sag1LIlG8pS57mG/iY3F/4SiTJsPYYsdn9PVp/GhdWzcZalod8RFBLVE9obP9En6VJ/Lg+sxGJorXYCLGGoi52LE28oG7WJdagYMr9V1WUL7BcT3MRMzFUwH5Xsj7iycD8ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260643; c=relaxed/simple;
-	bh=wz36gVUCOOAXfQi/iw1n/jO4y6Zxf51wompbrFw/H8g=;
+	s=arc-20240116; t=1792260644; c=relaxed/simple;
+	bh=Xqv3/0oAdca8Hvp8yGoplpFnmpd6dbP7elhUtlwfECU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGdvo5SwZu76pHj59o+iAlePGuSzMtKI5zwTU+wYIil9bJvS73dOlcFtTuCbvhVzwtdJ/Jg3mfzzZZqI15Y9PWXeTZXXgpaCBa3jbcVzSAXIdFfg+FfvClT666ZVj/Uptl4poFM+2dh+0kPJ2HbbzdE8Dyrcqu5zGj7KT2XduzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6XmEymM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SGp8S4CaD4USA4IjErh9bQqABidPWzavxK3tdPMRSapGtu+iZxMGbV5Pf6KtbJJoEt1pOLiRhfV/1kYMa79N4ke+4FrDV2jiVwYFi1MPxqav0B2MVkN792iKlX8K/OVpsQ+2iO2Mzh6bKh1a2R1ruggcRp+FTOVypl0RgJ+/1pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Haq9EANP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6XmEymM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530571F000C4;
-	Sat, 17 Oct 2026 18:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Haq9EANP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322301F000C4;
+	Sat, 17 Oct 2026 18:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260640;
-	bh=4Ku470N6thuZV9CDc9Qc8j6TKjpc++MOo42+M+ZymjA=;
+	s=korg; t=1792260643;
+	bh=jmTxNeAb/qb89MBG5o4a7HUrkmwq9rHArmcgOFVWPMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v6XmEymM9jRvS22KM4tx7V2WoHYARg2m9qJ9oN4zAFt+kNmUPiudDWMmIwkcjrNTJ
-	 +BcBGL5zb6+XoDDphIfQVwajtRnnMpfUp0gfhiy4WRFe+ZdaGD8/2jNO554jZLDs9O
-	 1j/WHQFetYpMsQHyddyAzjR4tf2oB65KPPmKYgFQ=
+	b=Haq9EANPlJs6KDi//WnyiVWoddmnDwWlliQYPKpElOI3eBA/8oyWRLym0HpWmljQS
+	 tAyrN9wiEzAVxjrL3zi+ia3pNt4h9pz7TMfX9C8Jl9p9ly3J+YD4xE9GzaF8QTGz+r
+	 m8HEZI2jQL6e3rbiT1Gce86Uwsl5yEsNLtQ1qquk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1612/1674] net/mlx5e: Move representor vnic reporter to eswitch devlink port
-Date: Sat, 17 Oct 2026 18:04:44 +0200
-Message-ID: <20261017160512.462357749@linuxfoundation.org>
+Subject: [PATCH 6.6 1586/1674] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
+Date: Sat, 17 Oct 2026 18:04:18 +0200
+Message-ID: <20261017160511.799011777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,233 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 7f26a5e8040b4957ef4dbdfcde6cc7ba2db53937 ]
+[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
 
-The representor vnic devlink health reporter is created and destroyed
-along the representor netdev (un)load path, which is not serialized by
-the devlink instance lock. Destroying the reporter from there triggers
-a devl_assert_locked() splat on driver unbind:
-  WARNING: net/devlink/core.c:259 at devl_assert_locked+0x54/0x70, CPU#2: bash/3758
-  Modules linked in: mlx5_vdpa vringh vdpa mlx5_ib mlx5_fwctl mlx5_core ...
-  CPU: 2 UID: 0 PID: 3758 Comm: bash Tainted: G        W           6.19.0+ #1 PREEMPT
-  Tainted: [W]=WARN
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), ...
-  RIP: 0010:devl_assert_locked+0x54/0x70
-  Call Trace:
-   <TASK>
-   devl_health_reporter_destroy+0x3a/0x1b0
-   mlx5e_vport_rep_unload+0x12d/0x2b0 [mlx5_core]
-   mlx5_eswitch_unregister_vport_reps+0x1b8/0x220 [mlx5_core]
-   ? __esw_offloads_unload_rep+0x190/0x190 [mlx5_core]
-   ? kernfs_remove_by_name_ns+0xc3/0xf0
-   device_release_driver_internal+0x3b2/0x560
-   unbind_store+0xce/0xf0
+qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
+vport_slock, takes a vref_count on the matching vport and calls
+qla_update_host_map() to register its port id.
 
-Move the reporter's lifecycle to the eswitch devlink port (un)register
-paths, which are already serialized by the devlink instance lock, and
-store the handle on mlx5_devlink_port. Use the port's mlx5_vport as the
-reporter priv since the diagnose callback only needs a device handle and
-a vport number, and mlx5_vport carries both and is initialized before
-any representor driver probes.
+A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
+qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
+vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
+in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
+but does not touch host_map. In the window in between, report ID
+acquisition can still find the vport on vp_list and call
+qla_update_host_map(); with d_id already zeroed it takes the
+btree_insert32() path and re-inserts the dying vport into host_map.
+Nothing cleans that entry afterwards, so once scsi_host_put() frees the
+vha a later host_map lookup dereferences freed memory.
 
-Fixes: cf14af140a5a ("net/mlx5e: Add vnic devlink health reporter to representors")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260906090700.3761260-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Skip a vport that has VPORT_DELETE set before taking the reference, so it
+is neither re-registered nor scheduled for DPC re-registration. This
+mirrors the existing guard in qla2x00_alert_all_vps().
+
+Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 51 +------------------
- .../net/ethernet/mellanox/mlx5/core/en_rep.h  |  1 -
- .../mellanox/mlx5/core/esw/devlink_port.c     | 34 +++++++++++++
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
- 4 files changed, 36 insertions(+), 51 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 380898125224e..4e299fa313422 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -54,7 +54,6 @@
- #include "lib/vxlan.h"
- #define CREATE_TRACE_POINTS
- #include "diag/en_rep_tracepoint.h"
--#include "diag/reporter_vnic.h"
- #include "en_accel/ipsec.h"
- #include "en/tc/int_port.h"
- #include "en/ptp.h"
-@@ -1364,50 +1363,6 @@ static unsigned int mlx5e_ul_rep_stats_grps_num(struct mlx5e_priv *priv)
- 	return ARRAY_SIZE(mlx5e_ul_rep_stats_grps);
- }
- 
--static int
--mlx5e_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
--				 struct devlink_fmsg *fmsg,
--				 struct netlink_ext_ack *extack)
--{
--	struct mlx5e_rep_priv *rpriv = devlink_health_reporter_priv(reporter);
--	struct mlx5_eswitch_rep *rep = rpriv->rep;
--
--	return mlx5_reporter_vnic_diagnose_counters(rep->esw->dev, fmsg,
--						    rep->vport, true);
--}
--
--static const struct devlink_health_reporter_ops mlx5_rep_vnic_reporter_ops = {
--	.name = "vnic",
--	.diagnose = mlx5e_rep_vnic_reporter_diagnose,
--};
--
--static void mlx5e_rep_vnic_reporter_create(struct mlx5e_priv *priv,
--					   struct devlink_port *dl_port)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--	struct devlink_health_reporter *reporter;
--
--	reporter = devl_port_health_reporter_create(dl_port,
--						    &mlx5_rep_vnic_reporter_ops,
--						    0, rpriv);
--	if (IS_ERR(reporter)) {
--		mlx5_core_err(priv->mdev,
--			      "Failed to create representor vnic reporter, err = %ld\n",
--			      PTR_ERR(reporter));
--		return;
--	}
--
--	rpriv->rep_vnic_reporter = reporter;
--}
--
--static void mlx5e_rep_vnic_reporter_destroy(struct mlx5e_priv *priv)
--{
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--
--	if (!IS_ERR_OR_NULL(rpriv->rep_vnic_reporter))
--		devl_health_reporter_destroy(rpriv->rep_vnic_reporter);
--}
--
- static const struct mlx5e_profile mlx5e_rep_profile = {
- 	.init			= mlx5e_init_rep,
- 	.cleanup		= mlx5e_cleanup_rep,
-@@ -1517,10 +1472,8 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 
- 	dl_port = mlx5_esw_offloads_devlink_port(dev->priv.eswitch,
- 						 rpriv->rep->vport);
--	if (!IS_ERR(dl_port)) {
-+	if (!IS_ERR(dl_port))
- 		SET_NETDEV_DEVLINK_PORT(netdev, dl_port);
--		mlx5e_rep_vnic_reporter_create(priv, dl_port);
--	}
- 
- 	err = register_netdev(netdev);
- 	if (err) {
-@@ -1533,7 +1486,6 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 	return 0;
- 
- err_detach_netdev:
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(netdev_priv(netdev));
- err_cleanup_profile:
- 	priv->profile->cleanup(priv);
-@@ -1591,7 +1543,6 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
- 	}
- 
- 	unregister_netdev(netdev);
--	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(priv);
- 	priv->profile->cleanup(priv);
- 	mlx5e_destroy_netdev(netdev);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-index 70640fa1ad7bc..bcd7b4e814d06 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.h
-@@ -118,7 +118,6 @@ struct mlx5e_rep_priv {
- 	struct rtnl_link_stats64 prev_vf_vport_stats;
- 	struct mlx5_flow_handle *send_to_vport_meta_rule;
- 	struct rhashtable tc_ht;
--	struct devlink_health_reporter *rep_vnic_reporter;
- };
- 
- static inline
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-index 91319b5acd3de..893da3d8c9e64 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
-@@ -3,6 +3,24 @@
- 
- #include <linux/mlx5/driver.h>
- #include "eswitch.h"
-+#include "diag/reporter_vnic.h"
-+
-+static int
-+mlx5_esw_rep_vnic_reporter_diagnose(struct devlink_health_reporter *reporter,
-+				    struct devlink_fmsg *fmsg,
-+				    struct netlink_ext_ack *extack)
-+{
-+	struct mlx5_vport *vport = devlink_health_reporter_priv(reporter);
-+
-+	return mlx5_reporter_vnic_diagnose_counters(vport->dev, fmsg,
-+						    vport->vport, true);
-+}
-+
-+static const
-+struct devlink_health_reporter_ops mlx5_esw_rep_vnic_reporter_ops = {
-+	.name = "vnic",
-+	.diagnose = mlx5_esw_rep_vnic_reporter_diagnose,
-+};
- 
- static void
- mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
-@@ -149,6 +167,7 @@ static const struct devlink_port_ops mlx5_esw_dl_sf_port_ops = {
- 
- int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
- {
-+	struct devlink_health_reporter *reporter;
- 	struct mlx5_core_dev *dev = esw->dev;
- 	const struct devlink_port_ops *ops;
- 	struct mlx5_devlink_port *dl_port;
-@@ -178,6 +197,16 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
- 	if (err)
- 		goto rate_err;
- 
-+	reporter = devl_port_health_reporter_create(
-+		&dl_port->dl_port, &mlx5_esw_rep_vnic_reporter_ops, 0,
-+		vport);
-+	if (IS_ERR(reporter))
-+		mlx5_core_err(dev,
-+			      "Failed to create vnic health reporter for vport %d: %pe\n",
-+			      vport_num, reporter);
-+	else
-+		dl_port->vnic_reporter = reporter;
-+
- 	return 0;
- 
- rate_err:
-@@ -193,6 +222,11 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, struct
- 		return;
- 	dl_port = vport->dl_port;
- 
-+	if (dl_port->vnic_reporter) {
-+		devl_health_reporter_destroy(dl_port->vnic_reporter);
-+		dl_port->vnic_reporter = NULL;
-+	}
-+
- 	mlx5_esw_qos_vport_update_group(esw, vport, NULL, NULL);
- 	devl_rate_leaf_destroy(&dl_port->dl_port);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 48bebc3b8b12c..f5873ac10c021 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -179,6 +179,7 @@ struct mlx5_vport;
- struct mlx5_devlink_port {
- 	struct devlink_port dl_port;
- 	struct mlx5_vport *vport;
-+	struct devlink_health_reporter *vnic_reporter;
- };
- 
- static inline void mlx5_devlink_port_init(struct mlx5_devlink_port *dl_port,
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index 56db436894661..391a69878705b 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
+ 			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			list_for_each_entry(vp, &ha->vp_list, list) {
+ 				if (rptid_entry->vp_idx == vp->vp_idx) {
++					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
++						break;
+ 					found = 1;
+ 					atomic_inc(&vp->vref_count);
+ 					break;
 -- 
 2.53.0
 
