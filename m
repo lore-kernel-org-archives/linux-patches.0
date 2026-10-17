@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238DB3A7F41;
-	Sat, 17 Oct 2026 16:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF9E3AFCF4;
+	Sat, 17 Oct 2026 16:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256317; cv=none; b=cMG7R01cxITRL/O788wVx3/gpoc5AfzSMwXnr2zaQAvmTAcvqPfjs1xYGOk/LHiHFfYinFDF+Jvgit2jHKv7j6f4OsOS9Em2oi//W3rl0VZ/LHAJvrK+yo6e2UPwASKo0KiNbgc3GI7ZndOdsRBnn9NR9qkEQvBXdH5kCKop7aU=
+	t=1792256320; cv=none; b=g+9gCCHeevSXMU3ETFBiRHHBIeCq9XR3cLx9Gijtop198hhdCxq7sUoZTR7yxhTFJC4FOHVhHvFpvkah4XHpDaXJs+dHE+iYHlZ5YHIi2i34LyPoSPxyEZ7bccXDp2CeaMvHuhNuxNivqCc59xWwCfqdczRvWl1VrUUIMLpfDWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256317; c=relaxed/simple;
-	bh=UFRpA23rsnRpYm3XYtvxstbVV3QI0CVXmiGjBv6lwEM=;
+	s=arc-20240116; t=1792256320; c=relaxed/simple;
+	bh=FOqb1N5d8gYUHSW1f7ayilHpkbZnZiyterKtlerK/KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmjQglR1PKQAbCs/FSKYjy+WvU2Reqw8l52/gINNmgCRewazIY6JFlPPWNYXyqPy0MSLNq+Z4Hf9YNFusM1llgsU7wKRaeC2dxuXt02+wkwD+NshTZEbuf6aVWydF4Vm2L80oeNDXk1UXSuE++lheAqOKHgyKZztdwSTU5fIgEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPxTi+Y2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jyiySuMg6wm0zWFwO8eVLY1gYuDjhwA2inHczaHBoThfzWXTmngtHD+zI1UNwD5onJTlvGQWz5aaCsB75bsqvCsFlOPPP1JU5uWjqV+Xw+tYkOPXGEAzqUonCHLn4F9v5Br3guM+5NcYul3dhTWSNpQBF8+E7SI2AOGH4OOnoRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwuEWRvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPxTi+Y2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8501F000C4;
-	Sat, 17 Oct 2026 16:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwuEWRvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705AB1F000C4;
+	Sat, 17 Oct 2026 16:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256316;
-	bh=FiaLDiGRs/dKipkbgUTcqmTMoke9cQXeJ78bGXHzifA=;
+	s=korg; t=1792256319;
+	bh=rH1Bj0UbFNFVoO/d/aHemo8czVLgRONih3qr2S6AGdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPxTi+Y2VtU2/XS2ON7ghILuSlf6V5g2N35ZBzlJY37VndRrNIbyVUCUBbP3Sh2VY
-	 tXMIXDHm6V9Ick4HhP2ADUKdXfV+0wk/1kdHpV8yegDHfH4n+8x55J1Md/i71I5+By
-	 Fzqx4nNykuTtsW6wE5+w1V2CibiuwmCFl7rSyAls=
+	b=OwuEWRvfaBYOdGdB+uLIJz7khd5pacr967aRZk6SMDfV1gdZjcv0YoSX0eM0RBxO3
+	 Qxkxz1zgXzjptzSQQ1YzjItFMigq0aL8jWKsXu4YDwXcXGaXX5/ZRofKV0reU4LV/v
+	 emACgHmIXC770zoeKjd4QuNS4hNxpFQIPUwVPrE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Liu Dalin <liudalin@kylinsec.com.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0195/1674] wifi: ath11k: reset ar->num_stations on hardware start
-Date: Sat, 17 Oct 2026 17:41:07 +0200
-Message-ID: <20261017160436.158447756@linuxfoundation.org>
+Subject: [PATCH 6.6 0196/1674] rtc: dev: zero-initialize struct rtc_wkalrm to prevent information leak
+Date: Sat, 17 Oct 2026 17:41:08 +0200
+Message-ID: <20261017160436.183564293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,56 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Liu Dalin <liudalin@kylinsec.com.cn>
 
-[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
+[ Upstream commit 0ee5c5d804d592a8328a425b9274487d393d3a05 ]
 
-When (multiple) hw restart occurs, we end up in a situation where we
-cannot accept new stations / mesh peers. This seems to be the
-'num_stations' in 'struct ath11k' that did not get reset properly in
-this case. In ath11k_mac_op_start(), it was indeed the only accounting var
-that did not get reset so let's clear it too.
+The struct rtc_wkalrm has padding holes after the 'pending' member.
+When returned to userspace via the RTC_WKALRM_RD ioctl, uninitialized
+kernel stack data residing in these holes may be leaked.
 
-This avoids problems like those:
+Zero-initialize the struct at declaration to eliminate this information
+leak risk.
 
-	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
-	[1248828.088115] Call trace:
-	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
-	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
-	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
-	[1248828.088127]  process_one_work+0x178/0x3c0
-	[1248828.088130]  worker_thread+0x280/0x440
-	[1248828.088133]  kthread+0xe0/0xf8
-	[1248828.088137]  ret_from_fork+0x10/0x20
-	[1248828.088141] ---[ end trace 0000000000000000 ]---
-	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
-	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
+Fixes smatch warnings:
+- drivers/rtc/dev.c:392 rtc_dev_ioctl() warn: check that 'alarm' doesn't
+  leak information (struct has a hole after 'pending')
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 36e14f5fdfdf ("rtc: rename core files")
+Assisted-by: smatch:2.0 [static analysis]
+Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Link: https://patch.msgid.link/B28B7DE18F3A9447+20260827015444.3314227-1-liudalin@kylinsec.com.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 0937d725d4d0b..0e3272d918c1d 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6213,6 +6213,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
- 	ar->num_started_vdevs = 0;
- 	ar->num_created_vdevs = 0;
- 	ar->num_peers = 0;
-+	ar->num_stations = 0;
- 	ar->allocated_vdev_map = 0;
+diff --git a/drivers/rtc/dev.c b/drivers/rtc/dev.c
+index 4aad9bb998683..8ff910017b105 100644
+--- a/drivers/rtc/dev.c
++++ b/drivers/rtc/dev.c
+@@ -207,7 +207,7 @@ static long rtc_dev_ioctl(struct file *file,
+ 	struct rtc_device *rtc = file->private_data;
+ 	const struct rtc_class_ops *ops = rtc->ops;
+ 	struct rtc_time tm;
+-	struct rtc_wkalrm alarm;
++	struct rtc_wkalrm alarm = { 0 };
+ 	struct rtc_param param;
+ 	void __user *uarg = (void __user *)arg;
  
- 	/* Configure monitor status ring with default rx_filter to get rx status
 -- 
 2.53.0
 
