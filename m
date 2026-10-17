@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094F73CA4B2;
-	Sat, 17 Oct 2026 17:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3493C1085;
+	Sat, 17 Oct 2026 17:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258495; cv=none; b=C8Ph/7Zk1su5zeMqt0o5JQIhG2SqxgU525hmavupLn/y4s5UgRNUJM2QsHIRdfdhI370izbJVPFdpX81NzpQr0TYgS2zZC06iQSuBxY4mqZCAitP3WxgN0w/Tlkec6wLADG/qJHe41EPaMAn7kw6DRjXV4zJ0DKgD+WvWE/9994=
+	t=1792258498; cv=none; b=H/UlXUYfdwZPLopulxC0Rv+wXt/eBvpr9ORVFBnIcycEtAp60EP0Iz9C6NxzxVERJttzK0HpBeEv6a7kL3eL1e6xmlpjGeEggv/F5ydcsn0fnwKqkUITWRPezss5Nzfuybb52EN+VYyrAyjbRNmmp1Rneh3lr5X2b5lrwojJ9to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258495; c=relaxed/simple;
-	bh=qfvPqiuOiOyfiw8ku5XNkeiV5kxNJSNt2HT93XQk/Vc=;
+	s=arc-20240116; t=1792258498; c=relaxed/simple;
+	bh=Uwb4+nbhhNVdE+sPwXPNB/92YpOkwM4pzWEreBcJzvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUfM8+QAGMHuh3u6+/rGso3P+ZA1GZNlJkedV59bdgXIqzzD5r//pyzDN8pHVCBcYoTPcjOILYylm9iPKXcr7MRN/TxpSfylViIgp2OvYRWOMlg0pgm3WHgb5mKgARzsE/IBgZTQLmhaMIdJViGZvRcuVG7cpHMeDKOO+trbMxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXIdQpMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oFUBYzBwwrXvp77yrJwoXIvxt18yNuZX5rNWE4W3XqCUpeuuZYJKTK6HIseFLMN765gVQUjB3RJMtAwRoVWDyeFFF2Z0a0OQU2IKH83Bt+KCGdb/OTxKTNO++bHwbMzk1Yr32R9PZEFyjuPZSNVtPbHDDtVHU6gtJe8qUrJ15kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1CpuuUc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXIdQpMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672011F000C4;
-	Sat, 17 Oct 2026 17:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1CpuuUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C5D1F000C4;
+	Sat, 17 Oct 2026 17:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258493;
-	bh=8WGR+jL6uf4BglVi074FMk7+SaU3bxFaCJQzihbICn4=;
+	s=korg; t=1792258497;
+	bh=DRPsZXhw4rGafhRaqoGeIp9Rc97zdrhIk+310bEvJZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXIdQpMgDKT3Q0VoHhXeVCX/klbgXUu1/atIswxAUDpKGDwCX+zjFp+6eY1iFv8b+
-	 hySQIwwpcZICRZmmVi2OOtr9Tbaq45+gM3/4CBZzhWbRa6FYkTsyDYC/2ZEF+skv4o
-	 2ksCHum+JX4Y36xT/IAzRQUo6pn7hRKo0+6DwiXA=
+	b=K1CpuuUcxPNNoI653rMg8G71hxC/rUTLqarPOkr+Cur3bQmPu0Kev/h5UBF3t+66v
+	 XX+YuCjypTXC1UrQmHX/XBErnE9ZnHmbsr12Vi5Jjd+9jRhaJoG9qNv/Fv9rr0ADs9
+	 iDL+M0XYLwSmMtVGJaUE4tN2+WNAswjcmMmu0D4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tatsuya S <tatsuya.s2862@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0903/1674] mpls: add seqcount to protect the platform_label{,s} pair
-Date: Sat, 17 Oct 2026 17:52:55 +0200
-Message-ID: <20261017160454.306441990@linuxfoundation.org>
+Subject: [PATCH 6.6 0904/1674] HID: core: Add reserved item tag for main items
+Date: Sat, 17 Oct 2026 17:52:56 +0200
+Message-ID: <20261017160454.330248028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,123 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Tatsuya S <tatsuya.s2862@gmail.com>
 
-[ Upstream commit 629ec78ef8608d955ce217880cdc3e1873af3a15 ]
+[ Upstream commit c600a55922640b1c4dcfdc5a694cadd2dd9d1599 ]
 
-The RCU-protected codepaths (mpls_forward, mpls_dump_routes) can have
-an inconsistent view of platform_labels vs platform_label in case of a
-concurrent resize (resize_platform_label_table, under
-platform_mutex). This can lead to OOB accesses.
+For main items, separate warning of reserved item tag from
+warning of unknown item tag.
+This comes from 6.2.2.4 Main Items of Device Class Definition
+for HID 1.11 specification.
 
-This patch adds a seqcount, so that we get a consistent snapshot.
-
-Note that mpls_label_ok is also susceptible to this, so the check
-against RTA_DST in rtm_to_route_config, done outside platform_mutex,
-is not sufficient. This value gets passed to mpls_label_ok once more
-in both mpls_route_add and mpls_route_del, so there is no issue, but
-that additional check must not be removed.
-
-Reported-by: Yuan Tan <tanyuan98@outlook.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Fixes: 7720c01f3f590 ("mpls: Add a sysctl to control the size of the mpls label table")
-Fixes: dde1b38e873c ("mpls: Convert mpls_dump_routes() to RCU.")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/cd8fca15e3eb7e212b094064cd83652e20fd9d31.1774284088.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tatsuya S <tatsuya.s2862@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/mpls.h |  2 ++
- net/mpls/af_mpls.c       | 35 ++++++++++++++++++++++++++++-------
- 2 files changed, 30 insertions(+), 7 deletions(-)
+ drivers/hid/hid-core.c | 6 +++++-
+ include/linux/hid.h    | 2 ++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netns/mpls.h b/include/net/netns/mpls.h
-index 19ad2574b267c..9b83b7f43d83b 100644
---- a/include/net/netns/mpls.h
-+++ b/include/net/netns/mpls.h
-@@ -7,6 +7,7 @@
- #define __NETNS_MPLS_H__
- 
- #include <linux/types.h>
-+#include <linux/seqlock.h>
- 
- struct mpls_route;
- struct ctl_table_header;
-@@ -16,6 +17,7 @@ struct netns_mpls {
- 	int default_ttl;
- 	size_t platform_labels;
- 	struct mpls_route __rcu * __rcu *platform_label;
-+	seqcount_t platform_label_seq;
- 
- 	struct ctl_table_header *ctl;
- };
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 9685405d744b9..b94ea43b965d1 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -75,16 +75,31 @@ static void rtmsg_lfib(int event, u32 label, struct mpls_route *rt,
- 		       struct nlmsghdr *nlh, struct net *net, u32 portid,
- 		       unsigned int nlm_flags);
- 
-+static struct mpls_route __rcu **mpls_platform_label_rcu(struct net *net, size_t *platform_labels)
-+{
-+	struct mpls_route __rcu **platform_label;
-+	unsigned int sequence;
-+
-+	do {
-+		sequence = read_seqcount_begin(&net->mpls.platform_label_seq);
-+		platform_label = rcu_dereference_rtnl(net->mpls.platform_label);
-+		*platform_labels = net->mpls.platform_labels;
-+	} while (read_seqcount_retry(&net->mpls.platform_label_seq, sequence));
-+
-+	return platform_label;
-+}
-+
- static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
- {
--	struct mpls_route *rt = NULL;
-+	struct mpls_route __rcu **platform_label;
-+	size_t platform_labels;
- 
--	if (index < net->mpls.platform_labels) {
--		struct mpls_route __rcu **platform_label =
--			rcu_dereference_rtnl(net->mpls.platform_label);
--		rt = rcu_dereference_rtnl(platform_label[index]);
--	}
--	return rt;
-+	platform_label = mpls_platform_label_rcu(net, &platform_labels);
-+
-+	if (index >= platform_labels)
-+		return NULL;
-+
-+	return rcu_dereference_rtnl(platform_label[index]);
- }
- 
- bool mpls_output_possible(const struct net_device *dev)
-@@ -2583,8 +2598,12 @@ static int resize_platform_label_table(struct net *net, size_t limit)
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 9981346d23aac..31c8c7fb9c849 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -635,7 +635,11 @@ static int hid_parser_main(struct hid_parser *parser, struct hid_item *item)
+ 		ret = hid_add_field(parser, HID_FEATURE_REPORT, data);
+ 		break;
+ 	default:
+-		hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
++		if (item->tag >= HID_MAIN_ITEM_TAG_RESERVED_MIN &&
++			item->tag <= HID_MAIN_ITEM_TAG_RESERVED_MAX)
++			hid_warn(parser->device, "reserved main item tag 0x%x\n", item->tag);
++		else
++			hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
+ 		ret = 0;
  	}
  
- 	/* Update the global pointers */
-+	local_bh_disable();
-+	write_seqcount_begin(&net->mpls.platform_label_seq);
- 	net->mpls.platform_labels = limit;
- 	rcu_assign_pointer(net->mpls.platform_label, labels);
-+	write_seqcount_end(&net->mpls.platform_label_seq);
-+	local_bh_enable();
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 9ae229a34d7b8..18a69f6c9d41a 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -81,6 +81,8 @@ struct hid_item {
+ #define HID_MAIN_ITEM_TAG_FEATURE		11
+ #define HID_MAIN_ITEM_TAG_BEGIN_COLLECTION	10
+ #define HID_MAIN_ITEM_TAG_END_COLLECTION	12
++#define HID_MAIN_ITEM_TAG_RESERVED_MIN		13
++#define HID_MAIN_ITEM_TAG_RESERVED_MAX		15
  
- 	rtnl_unlock();
- 
-@@ -2665,6 +2684,8 @@ static int mpls_net_init(struct net *net)
- 	struct ctl_table *table;
- 	int i;
- 
-+	seqcount_init(&net->mpls.platform_label_seq);
-+
- 	net->mpls.platform_labels = 0;
- 	net->mpls.platform_label = NULL;
- 	net->mpls.ip_ttl_propagate = 1;
+ /*
+  * HID report descriptor main item contents
 -- 
 2.53.0
 
