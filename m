@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA7C3382C7;
-	Sat, 17 Oct 2026 16:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F30E3A7F41;
+	Sat, 17 Oct 2026 16:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256356; cv=none; b=igIjfLhuOTyeek5OOuu+wNhv+A3/vN3sxAqCgyWJ9Txx5oZoUiN+e+BoTjvvZ33bH/plzsq49RScr/VDfsJLj5W1U9yYsoDwidtjI7ftTWBofVmpG9nrsX/Jhw2sD4oGujIChMgnHQ+PIZgydbqwH+KuwcG/lYJhWAS7bl1rhQk=
+	t=1792256359; cv=none; b=mMQULQVQGSefJomls2LKhtKXeJhVfu8aQwklbv5t+/cm+KsT7oO1lHAmOGHlenkSgowH1zb/J+I78g/yjIcHKCu2N/YwVFcVmJec7sYVl5dBE20F5JAEE2sOabC1c+dl5AY8u0QKYMIzIYvZd9T08Qn7EbHOfsSHzEfeIv7ypKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256356; c=relaxed/simple;
-	bh=jK0VcA0ZMWvZQ69+0uyI4TAQg4U60rUBUpGG6e2co0I=;
+	s=arc-20240116; t=1792256359; c=relaxed/simple;
+	bh=yWYNKEIX+vTZXZVFa9aNhaWgoccSBZrgQhYuijfgYVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCOxL4doAJF9bCwWvhoOMOw11VtAuaXQsrJ9seNjXePK6yylhBCzoALUKAmBfbLjSeoqFpVDr1HE04sEUCG+5eDXKJtntp2RElQuhw28cVqTbxoFHjzTPBSy40xGRuV5Pj+F6P8H0rJxDY+u6KGCE0Y8zAxclyoOjuNY0SlvZLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/H7hPSk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tnWAo7f000lqz9QcaOsuvbfe1AmYQAlwBlbCEN1gNjtXhVUj3BKY0p+mbUq85e4SMI+7QQx+SpeDBAftETOQGC+JIxLeV2ADC+4EkdZcnpw33Sjt1Vo+z3z1AcNE8yZsQ6+jj18oVXFM3n9ImeMQePaAflToGbtB3sPXS/GZ4M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1D3UNlk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/H7hPSk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF601F000C4;
-	Sat, 17 Oct 2026 16:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1D3UNlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEACC1F000C4;
+	Sat, 17 Oct 2026 16:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256355;
-	bh=Y4TcYZ5Ejid+TFTvyTmCBCHUpU7L/SnIuF5YSDutGnU=;
+	s=korg; t=1792256358;
+	bh=0GnJW8tU6VYbck8Jh/Ykldp4Y0o4sZnnI3IrplUFBJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/H7hPSkOtLqwsXm2ZAp74rwJ+F3nDdsSYGVXqiJ0GlHC9DKUegoqubeVHGYpY4e2
-	 7PYcLbYxpzPMyGLyI7wPC/lDY24FSW0VlVMPej1Qy1N5Ugk1fprrJgtSxJ4Ezxbw/m
-	 R4aEYhQFBjkYcNSV/TdqiO6RNQQmOGkvYuIJTyrI=
+	b=V1D3UNlkVWXHNNwWSonwYYemN2otVo1h5IB11Fb8D1jajUj+/3Sr5ifCyWMZjhM0n
+	 tj+xDy3XZ3xIj5ttp5ALdR2RNn8A9XJR9DwxQ/28XoetdONbUMQW6ik5hKXqSdXQug
+	 OVYO1+BvgoLSrx2zX3MJuOydJTAqWHnmqgbLjVUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.6 0167/1674] of/irq: Fix remaining refcount leaks in of_irq_init()
-Date: Sat, 17 Oct 2026 17:40:39 +0200
-Message-ID: <20261017160435.447467835@linuxfoundation.org>
+Subject: [PATCH 6.6 0168/1674] of/overlay: put property on deadprops only after changeset add succeeds
+Date: Sat, 17 Oct 2026 17:40:40 +0200
+Message-ID: <20261017160435.471411229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,36 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 30724547b221e0e670ddfef140fc7d816b2aaec6 upstream.
+commit 814f2da6995772c07a7c9c2cc6028b6e3f3ecc9c upstream.
 
-Successfully initialized controllers are moved to intc_parent_list,
-but the final cleanup only frees the descriptors. The device node
-references taken with of_node_get() and the interrupt parent
-references are therefore leaked on the normal return path. Drop both
-before kfree(), as the intc_desc_list cleanup already does.
+add_changeset_property() links a new property of a not-yet-live
+target node into the node's deadprops list before handing it to
+of_changeset_add_property(). If that fails, the error path frees the
+property but leaves the freed pointer linked in deadprops, and
+of_node_release() frees it a second time when the aborted overlay's
+node is released.
 
-Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
+Record the changeset entry first and link the property into deadprops
+only on success. of_changeset_add_property() never looks at the
+node's property lists, so the order of the two steps is otherwise
+immaterial, and the error path frees a property that nothing
+references.
+
+Fixes: f96278810150 ("of: overlay: set node fields from properties when add new overlay node")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917124247.2151674-1-vulab@iscas.ac.cn
+Assisted-by: Claude:claude-fable-5 [Claude Code]
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-4-02754604805a@nexthop.ai
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/of/overlay.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -660,6 +660,8 @@ void __init of_irq_init(const struct of_
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -353,12 +353,13 @@ static int add_changeset_property(struct
+ 		return -ENOMEM;
  
- 	list_for_each_entry_safe(desc, temp_desc, &intc_parent_list, list) {
- 		list_del(&desc->list);
-+		of_node_put(desc->interrupt_parent);
-+		of_node_put(desc->dev);
- 		kfree(desc);
- 	}
- err:
+ 	if (!prop) {
+-		if (!target->in_livetree) {
++		ret = of_changeset_add_property(&ovcs->cset, target->np,
++						new_prop);
++		/* the detached node owns the property until the apply */
++		if (!ret && !target->in_livetree) {
+ 			new_prop->next = target->np->deadprops;
+ 			target->np->deadprops = new_prop;
+ 		}
+-		ret = of_changeset_add_property(&ovcs->cset, target->np,
+-						new_prop);
+ 	} else {
+ 		ret = of_changeset_update_property(&ovcs->cset, target->np,
+ 						   new_prop);
 
 
