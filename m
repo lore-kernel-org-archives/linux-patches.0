@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB13377A92;
-	Sat, 17 Oct 2026 16:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2867A3822B7;
+	Sat, 17 Oct 2026 16:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254953; cv=none; b=bC94JhtNf3dcUJCpeBA/IglNIcoXLzRpfw2FV9bz6VJjLML+x75z1yW4BQyTjScX33YYdyDxjB0DAt0D70Ckle2xDQvUYtnxpmH+Zwy+n2v5q6/EVZBdPczBJBnpV+qXbex2t2IasZXTJCKJzIXmrAUyq+ZE9HreCBRV4Da1f9A=
+	t=1792254957; cv=none; b=YoPx5/L2iAXd4Q38EbPMqUura2cS1Ip1PYmpMJzwVdhR1NL67Fv+MpMLoQoeB3hHzMCLxy2TkhDP3mx4y9SAsrRwfqgp3tXUY1o5QCBNHYVRcwkZ/oNU7uBmf0RSm1a2YVlZWEWhrl7J39sm+U4a8QEDisZz/ICZmslgXtLbOd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254953; c=relaxed/simple;
-	bh=hKZ7oW5SXy0KPCHbHvka6hvFSYP55CBQTiv/J86GN9s=;
+	s=arc-20240116; t=1792254957; c=relaxed/simple;
+	bh=jufY+7Qxg8VviDhNPLVcZc/9KbyKDDi4o2q0HjD3ef0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhCVTE4aad3UdKgdqEf3MNce2JhsEnkLcWMD5H9jUgtZTKdE4EdDBymNhdqT5RFX/x6ZDuZDplHluSGQWthVphbbdcSLBCLSHItQRHQVu+QqDxOEoTV4xWFE+gmLsPfXezaGYMfPUWP2R4fBbHmjp7A0xAJ+JJAKpVCKLz3I2Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWx7leIl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qiUqE8QsUGFHpTyctZE2PGoCm+sE1JedMBW39tFN8pa8M4uGHYdxB/6Gwl9m29+6su0AlKjFUsEqmHcoDbps/ojwOB+bJpCA/0oCD33qoUle1uFcSHpqJ7RRfNgKwETW0+cosBDKDzDE6pOO47jxeHIm+lcopn7NcY0nnE+5b5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VG5oHqKW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWx7leIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80551F000C4;
-	Sat, 17 Oct 2026 16:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VG5oHqKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F18B1F000C4;
+	Sat, 17 Oct 2026 16:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254952;
-	bh=AZWrSwR7jGBwP9sNqNy4wJ/rEAt3Qk9ElwCrdzVHrHs=;
+	s=korg; t=1792254956;
+	bh=wAdpGcD3ofPzPvK5E72OkMiHsBsAiCQFZ8BXgfztdEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWx7leIlarY+cxb4+yzjjP56EmvbhmW8U0i1RzJ43sWL/0PsDZN82X8wgTlPnPk/p
-	 8kkajBXbDNXlZPCA3aNx0vLrgKjn6jaDvWiThF8Wbf1vsb0KqXbVPoY7hw5p/L7f6q
-	 GH7ck7Dn4op90+WocGl+0GFJOzZSua/alnwa8nIQ=
+	b=VG5oHqKW6m3AOXDhI+uoMGSKV727ZYeLJFC9PSiRbUYqZEHqhHPI5YG2HAZhdHcrU
+	 O4bSWde0zAcFygI8fldJ9vjO9QXfh2cHve7F1P3LcWhi8VP1iaX42dj/EWH/JufyY2
+	 QuRg4DuHNDCB/zUQyr2wnllDmQbP1tsGZwyZN8VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeuk Kim <jeuk20.kim@samsung.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 617/869] NFSv4/flexfiles: fix NULL dereference for NFSv4.0 data servers
-Date: Sat, 17 Oct 2026 17:57:38 +0200
-Message-ID: <20261017160052.849706652@linuxfoundation.org>
+Subject: [PATCH 6.12 618/869] ksmbd: scope session state changes to bound connections
+Date: Sat, 17 Oct 2026 17:57:39 +0200
+Message-ID: <20261017160052.874721963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,81 +50,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeuk Kim <jeuk20.kim@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2b03ebbf8d5e8f6af4ecd6c65375232dd1ec32cc ]
+[ Upstream commit c50e628122aed077695669e25b842e778511a43d ]
 
-flexfiles accepts NFSv4.0 data servers, but two NFSv4 code paths assume
-the data server client has a session. Unlike NFSv4.1+, an NFSv4.0 client
-has no session (clp->cl_session is NULL; it uses clp->cl_slot_tbl), so
-I/O to a v4.0 flexfiles DS oopses:
+ksmbd_all_conn_set_status() treats every connection whose transient
+binding flag is set as belonging to the target SessionId.  A logoff or
+session replacement can consequently move an unrelated connection to
+NEED_RECONNECT or NEED_SETUP.
 
-  - nfs4_init_ds_session() dereferences clp->cl_session->session_state
-    while seeding the DS lease. It also only seeds cl_lease_time when
-    NFS4_SESSION_INITING is set; without a session that never happens, so
-    cl_lease_time stays 0 and nfs4_renew_state() busy-loops, requeuing
-    every 5 seconds. Seed the lease whenever there is no session and
-    return before touching session state.
+Pass the target session itself and select connections using either the
+connection-local session xarray or the session's permanent channel list.
+Use the same association test while waiting for requests to drain.
 
-  - ff_layout_async_handle_error_v4() dereferences
-    clp->cl_session->fc_slot_table on every DS I/O error. Fall back to the
-    v4.0 transport slot table (clp->cl_slot_tbl) when there is no session.
+Serialize session-wide status changes under request_lock and do not
+overwrite EXITING or RELEASING. Protect the shutdown transition with the
+same lock so a concurrent session update cannot revive a closing
+connection.
 
-Fixes: a7878ca14008 ("nfs: flexfilelayout: remove v3-only data server limitation")
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: abcc506a9a71 ("ksmbd: fix racy issue from smb2 close and logoff with multichannel")
+Fixes: c444139cb747 ("ksmbd: rewrite stop_sessions() with restartable iteration")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c |  3 ++-
- fs/nfs/nfs4session.c                   | 16 +++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ fs/smb/server/connection.c        | 37 ++++++++++++++++++++++++++-----
+ fs/smb/server/connection.h        |  7 ++++--
+ fs/smb/server/mgmt/user_session.c |  8 +++----
+ fs/smb/server/smb2pdu.c           |  6 ++---
+ 4 files changed, 42 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 7de5575f4bee2..61705e7f0be7a 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1154,7 +1154,8 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 	struct pnfs_layout_hdr *lo = lseg->pls_layout;
- 	struct inode *inode = lo->plh_inode;
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
--	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
-+	struct nfs4_slot_table *tbl = nfs4_has_session(clp) ?
-+		&clp->cl_session->fc_slot_table : clp->cl_slot_tbl;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index c5f9705825b87..898e1832ce05a 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -242,15 +242,37 @@ void ksmbd_conn_unlock(struct ksmbd_conn *conn)
+ 	mutex_unlock(&conn->srv_mutex);
+ }
  
- 	switch (op_status) {
- 	case NFS4_OK:
-diff --git a/fs/nfs/nfs4session.c b/fs/nfs/nfs4session.c
-index 5db460476bf2a..c59e710eb7ccc 100644
---- a/fs/nfs/nfs4session.c
-+++ b/fs/nfs/nfs4session.c
-@@ -634,16 +634,22 @@ int nfs4_init_ds_session(struct nfs_client *clp, unsigned long lease_time)
- 	int ret;
- 
- 	spin_lock(&clp->cl_lock);
--	if (test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
--		/*
--		 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
--		 * DS lease to be equal to the MDS lease.
--		 */
-+	/*
-+	 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
-+	 * DS lease to be equal to the MDS lease.
-+	 *
-+	 * A v4.0 DS has no session, so seed the lease every time.
-+	 */
-+	if (!session ||
-+	    test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
- 		clp->cl_lease_time = lease_time;
- 		clp->cl_last_renewal = jiffies;
- 	}
- 	spin_unlock(&clp->cl_lock);
- 
-+	if (!session)
-+		return 0;
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
++static bool ksmbd_session_is_bound_to_conn(struct ksmbd_session *sess,
++					   struct ksmbd_conn *conn)
++{
++	bool found;
 +
- 	ret = nfs41_check_session_ready(clp);
- 	if (ret)
- 		return ret;
++	rcu_read_lock();
++	found = xa_load(&conn->sessions, sess->id) == sess;
++	rcu_read_unlock();
++	if (found)
++		return true;
++
++	down_read(&sess->chann_lock);
++	found = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++	return found;
++}
++
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status)
+ {
+ 	struct ksmbd_conn *conn;
+ 	int bkt;
+ 
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id))
+-			WRITE_ONCE(conn->status, status);
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
++			spin_lock(&conn->request_lock);
++			if (!ksmbd_conn_exiting(conn) &&
++			    !ksmbd_conn_releasing(conn))
++				WRITE_ONCE(conn->status, status);
++			spin_unlock(&conn->request_lock);
++		}
+ 	}
+ 	up_read(&conn_list_lock);
+ }
+@@ -276,7 +298,8 @@ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
+ 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
+ }
+ 
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess)
+ {
+ 	struct ksmbd_conn *conn;
+ 	int rc, retry_count = 0, max_timeout = 120;
+@@ -288,7 +311,7 @@ int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
+ 
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
+ 			rcount = (conn == curr_conn) ? 2 : 1;
+ 			if (atomic_read(&conn->req_running) >= rcount) {
+ 				rc = wait_event_timeout(conn->req_running_q,
+@@ -609,8 +632,10 @@ static void stop_sessions(void)
+ 		 * handler exited its receive loop for an unrelated
+ 		 * reason).
+ 		 */
+-		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
++		spin_lock(&conn->request_lock);
++		if (!ksmbd_conn_releasing(conn))
+ 			ksmbd_conn_set_exiting(conn);
++		spin_unlock(&conn->request_lock);
+ 		target = conn;
+ 		break;
+ 	}
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 96ef441330512..1ddc53d3a8ab1 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -20,6 +20,8 @@
+ #include "smb_common.h"
+ #include "ksmbd_work.h"
+ 
++struct ksmbd_session;
++
+ #define KSMBD_SOCKET_BACKLOG		16
+ 
+ enum {
+@@ -161,7 +163,8 @@ extern struct rw_semaphore conn_list_lock;
+ 
+ bool ksmbd_conn_alive(struct ksmbd_conn *conn);
+ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn);
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id);
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess);
+ struct ksmbd_conn *ksmbd_conn_alloc(void);
+ void ksmbd_conn_free(struct ksmbd_conn *conn);
+ struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
+@@ -266,5 +269,5 @@ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
+ 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status);
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status);
+ #endif /* __CONNECTION_H__ */
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 2b605664ea3d8..0c65a862f8589 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -413,16 +413,16 @@ void destroy_previous_session(struct ksmbd_conn *conn,
+ 	    memcmp(user->passkey, prev_user->passkey, user->passkey_sz))
+ 		goto out;
+ 
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_RECONNECT);
+-	err = ksmbd_conn_wait_idle_sess_id(conn, id);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
++	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
+ 	if (err) {
+-		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 		goto out;
+ 	}
+ 
+ 	ksmbd_destroy_file_table(prev_sess);
+ 	prev_sess->state = SMB2_SESSION_EXPIRED;
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 	ksmbd_launch_ksmbd_durable_scavenger();
+ out:
+ 	up_write(&conn->session_lock);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 892fcc06c1ab0..0785f921aec06 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2264,7 +2264,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	u64 sess_id;
+ 	int err;
+ 
+ 	WORK_BUFFERS(work, req, rsp);
+@@ -2278,8 +2277,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 		smb2_set_err_rsp(work);
+ 		return -ENOENT;
+ 	}
+-	sess_id = le64_to_cpu(req->hdr.SessionId);
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_RECONNECT);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
+ 	ksmbd_conn_unlock(conn);
+ 
+ 	ksmbd_close_session_fds(work);
+@@ -2296,7 +2294,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	sess->state = SMB2_SESSION_EXPIRED;
+ 	up_write(&conn->session_lock);
+ 
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
+ 
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
 -- 
 2.53.0
 
