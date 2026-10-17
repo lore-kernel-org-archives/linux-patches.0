@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C74C17BED0;
-	Sat, 17 Oct 2026 16:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86074370ACE;
+	Sat, 17 Oct 2026 16:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253316; cv=none; b=iZuvAmTEZq5Zlnh5NK0REq29fQRMK42g8MEYa3Kslt1OhTMYO0qVE2LYBnnrHCn4tk/h1CGGttbL8TIrdTndZkBnz+hZ5fnNnIAPv+C9UQXZu2d0Cqu9y8StjvYNOTmhw+bMlLu6QsHuuiwAsE3rkXxJTlVKDS6W4TeWps1WpB4=
+	t=1792253319; cv=none; b=bPHTDiqpDbugY2kl0WJDqxu3IktD78CwJj50iqw61i8AMvtorPUbiJMFjf8k71JqIjN94dqZDzdgcujc7outF4+fuS8nrcpxBa76wNcTcIgZsKa7na0osMsDPGwQ4+sRyUD5a6CMv3w7IWwWHQXpyeyvh9MlIshRDkTETFweiMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253316; c=relaxed/simple;
-	bh=1o9BeHRt54Qr0dfExuQQehWmVIlprklG0rcN7d8QjI8=;
+	s=arc-20240116; t=1792253319; c=relaxed/simple;
+	bh=GMVVwnCDM+gEFoE5PkgpffHaN4s7L7BHTFhea0usLaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WecuNFZhkij/pOaHkg0skj+Ry88oY0ThQ2GQzqiV/nIk4t2ZmxrMYDHk3gxLz16WvPKxxQ175JSpkoJeJg1+vOtetGeDyHV7NRjM2QBHBzWsQuEP4Dj+Zq70i4Pk2hTJ8EOrDEsdjZl3WjeuPYFmJ17fAZ52pLQ94iSCmzNe4KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeaxLXb0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gQS+VMK2CHg1SNbvt3AswOsN0ThAtgHtUaZLFJOEvLWxFMrn9Rnpp+FBK+TyYS55Kfu+NtVgG5mWmqHSLhCSsQX0eQ/BbqITVc8P8/RXnDwC/d3v67Wo2DcSppBsQPy57EO+BGQh+nCNk4OkTZ/S1K+FEw/NZXHzN5I8Q3QdPlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8KSWj9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeaxLXb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607301F000C4;
-	Sat, 17 Oct 2026 16:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8KSWj9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865AD1F000C4;
+	Sat, 17 Oct 2026 16:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253315;
-	bh=qsx0/2fbDpDFrHLQPgi34B4hybGAivLgR0S+wMozgPY=;
+	s=korg; t=1792253318;
+	bh=PimKw8gSwOrwnpj1CddiBa8dmC4bkOxnCL6aJ923B7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeaxLXb0ox+pxF6W/loINkIaiDzKUHvoa0nuu5bzQ/TVedB2gUSHeqt9+E1kM/8iW
-	 i5GUyeWTQpIQYzDPqMPcH0avXC16buOFYB/Bf1NnmAxGEgfrZ1fsMzrCK4emiAV1L1
-	 +zjaBVvULbDgNl75o+Bf8Xj0Fp4fvIFa25H8yB3I=
+	b=f8KSWj9X11Wrzpxy8Wdy+Ncpxi6KSMOokehMk/d8u5EforTlgXgoaKn+MaJoo9d5p
+	 1GSn2kYVdN68f3L+aIezd8ZF6iP7CAR7nshwcA53TwaiN2ctJAKkGtka30dTPqUyvP
+	 R36BPWuIgGPm4Bw3hRFG4aqylq1z0Wbtcvu4QZsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Wang <zhiw@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/869] drm/nouveau: fix a use-after-free in r535_gsp_rpc_push()
-Date: Sat, 17 Oct 2026 17:48:40 +0200
-Message-ID: <20261017160039.054748201@linuxfoundation.org>
+Subject: [PATCH 6.12 080/869] wifi: ath12k: convert struct ath12k_sta::update_wk to use struct wiphy_work
+Date: Sat, 17 Oct 2026 17:48:41 +0200
+Message-ID: <20261017160039.079733265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,75 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi Wang <zhiw@nvidia.com>
+From: Kalle Valo <quic_kvalo@quicinc.com>
 
-[ Upstream commit 9802f0a63b641f4cddb2139c814c2e95cb825099 ]
+[ Upstream commit 58550cdda961dedad8ed08c5abf8367d5c020fb6 ]
 
-The RPC container is released after being passed to r535_gsp_rpc_send().
+For preparation to switch ath12k to use wiphy_lock() we can convert
+ath12k_sta_rc_update_wk() to use wiphy_work_queue() for consistency. To avoid
+any deadlocks do the struct ath12k_sta::update_wk conversion before switching
+to using wiphy_lock() throughout the driver.
 
-When sending the initial fragment of a large RPC and passing the
-caller's RPC container, the container will be freed prematurely. Subsequent
-attempts to send remaining fragments will therefore result in a
-use-after-free.
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Allocate a temporary RPC container for holding the initial fragment of a
-large RPC when sending. Free the caller's container when all fragments
-are successfully sent.
-
-Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
-Signed-off-by: Zhi Wang <zhiw@nvidia.com>
-Link: https://lore.kernel.org/r/20250527163712.3444-1-zhiw@nvidia.com
-[ Rebase onto Blackwell changes. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20241007165932.78081-3-kvalo@kernel.org
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Stable-dep-of: c426497fa205 ("wifi: ath12k: Fix memory leak due to multiple rx_stats allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.h |  2 +-
+ drivers/net/wireless/ath/ath12k/mac.c  | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-index 3ad4f6e9a8ac2..801b0bc676ab2 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -734,12 +734,18 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
- 	mutex_lock(&gsp->cmdq.mutex);
- 	if (rpc_size > max_rpc_size) {
- 		const u32 fn = rpc->function;
-+		void *next;
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 3faf3430effb9..3567150b49ffb 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -452,7 +452,7 @@ struct ath12k_sta {
+ 	u32 smps;
+ 	enum hal_pn_type pn_type;
  
--		/* Adjust length, and send initial RPC. */
--		rpc->length = sizeof(*rpc) + max_rpc_size;
--		cmd->checksum = rpc->length;
-+		/* Send initial RPC. */
-+		next = r535_gsp_rpc_get(gsp, fn, max_rpc_size);
-+		if (IS_ERR(next)) {
-+			repv = next;
-+			goto done;
-+		}
+-	struct work_struct update_wk;
++	struct wiphy_work update_wk;
+ 	struct rate_info txrate;
+ 	struct rate_info last_txrate;
+ 	u64 rx_duration;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 8e8defddc8fa9..e5d3cfade4e1f 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -4271,7 +4271,7 @@ static int ath12k_station_disassoc(struct ath12k *ar,
+ 	return 0;
+ }
  
--		repv = r535_gsp_rpc_send(gsp, argv, false, 0);
-+		memcpy(next, argv, max_rpc_size);
+-static void ath12k_sta_rc_update_wk(struct work_struct *wk)
++static void ath12k_sta_rc_update_wk(struct wiphy *wiphy, struct wiphy_work *wk)
+ {
+ 	struct ath12k *ar;
+ 	struct ath12k_vif *arvif;
+@@ -4287,6 +4287,8 @@ static void ath12k_sta_rc_update_wk(struct work_struct *wk)
+ 	struct ath12k_wmi_peer_assoc_arg peer_arg;
+ 	enum wmi_phy_mode peer_phymode;
+ 
++	lockdep_assert_wiphy(wiphy);
 +
-+		repv = r535_gsp_rpc_send(gsp, next, false, 0);
- 		if (IS_ERR(repv))
- 			goto done;
+ 	arsta = container_of(wk, struct ath12k_sta, update_wk);
+ 	sta = container_of((void *)arsta, struct ieee80211_sta, drv_priv);
+ 	arvif = arsta->arvif;
+@@ -4584,7 +4586,7 @@ static int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 	/* cancel must be done outside the mutex to avoid deadlock */
+ 	if ((old_state == IEEE80211_STA_NONE &&
+ 	     new_state == IEEE80211_STA_NOTEXIST))
+-		cancel_work_sync(&arsta->update_wk);
++		wiphy_work_cancel(hw->wiphy, &arsta->update_wk);
  
-@@ -749,7 +755,6 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
- 		/* Remaining chunks sent as CONTINUATION_RECORD RPCs. */
- 		while (rpc_size) {
- 			u32 size = min(rpc_size, max_rpc_size);
--			void *next;
+ 	ar = ath12k_get_ar_by_vif(hw, vif);
+ 	if (!ar) {
+@@ -4598,7 +4600,7 @@ static int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 	    new_state == IEEE80211_STA_NONE) {
+ 		memset(arsta, 0, sizeof(*arsta));
+ 		arsta->arvif = arvif;
+-		INIT_WORK(&arsta->update_wk, ath12k_sta_rc_update_wk);
++		wiphy_work_init(&arsta->update_wk, ath12k_sta_rc_update_wk);
  
- 			next = r535_gsp_rpc_get(gsp, NV_VGPU_MSG_FUNCTION_CONTINUATION_RECORD, size);
- 			if (IS_ERR(next)) {
-@@ -777,6 +782,8 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *argv, bool wait, u32 repc)
- 		} else {
- 			repv = NULL;
- 		}
-+		if (!IS_ERR(repv))
-+			kvfree(cmd);
- 	} else {
- 		repv = r535_gsp_rpc_send(gsp, argv, wait, repc);
- 	}
+ 		ret = ath12k_mac_station_add(ar, vif, sta);
+ 		if (ret)
+@@ -4809,7 +4811,7 @@ static void ath12k_mac_op_sta_rc_update(struct ieee80211_hw *hw,
+ 
+ 	spin_unlock_bh(&ar->data_lock);
+ 
+-	ieee80211_queue_work(hw, &arsta->update_wk);
++	wiphy_work_queue(hw->wiphy, &arsta->update_wk);
+ }
+ 
+ static int ath12k_conf_tx_uapsd(struct ath12k_vif *arvif,
+@@ -8119,7 +8121,7 @@ static void ath12k_mac_set_bitrate_mask_iter(void *data,
+ 	arsta->changed |= IEEE80211_RC_SUPP_RATES_CHANGED;
+ 	spin_unlock_bh(&ar->data_lock);
+ 
+-	ieee80211_queue_work(ath12k_ar_to_hw(ar), &arsta->update_wk);
++	wiphy_work_queue(ath12k_ar_to_hw(ar)->wiphy, &arsta->update_wk);
+ }
+ 
+ static void ath12k_mac_disable_peer_fixed_rate(void *data,
 -- 
 2.53.0
 
