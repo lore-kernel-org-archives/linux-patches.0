@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85A421FF23;
-	Sat, 17 Oct 2026 17:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC9F3B7770;
+	Sat, 17 Oct 2026 17:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259777; cv=none; b=WebVvHhhV17kQhoKfMklgK7pI3tbOeXcEgHiTUt1kpQ5/kaKs30B4LMDWgm/ciY+OqE8fyZZLh2pCnWQjFlvNVIHxqokVe+gPfABDlGHeKnJCjvrWk/tDd5U8jdvxW73xQ8iX19os/xudoue45f6GLUBF+HJV7u8zPJuHOVBXP8=
+	t=1792259779; cv=none; b=L1b/xJHsWCtHLSCjb/DhKqivVvhRq2xy5YIkbAgODqLSuDoy4/QNPeDG8Zeu5ScgeLV7bo+lMzaJWtBVqBVe7zf9wEhS47xm9oK6LNUXBX/10XvcqLfozOWdUdPZsFcv3TPLPdDmWbXQ6u1YcwKYvbXfjCTcsvie1NYNfGbN4GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259777; c=relaxed/simple;
-	bh=razWOtluQg63Xtn3QQyfg3BGSsZ6kXPMur5GdaZxAcA=;
+	s=arc-20240116; t=1792259779; c=relaxed/simple;
+	bh=I+ABkncaGdvzYa9RXZp45Ocbp2a2mcu9Ps7CN6x3n8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aqk4KaFJnX0w73u04VdY8G8/JNABPQHxJKi6hP036tyRxas2CZN8O94GET8m62QsT+0vgKgwFwn7iGJgX2XiaiEuX7WEdsOdi5yPR60x4/agOI8UnQ+63T8zwqtZMWPkUNG7FjC3Lf9qah6USudonhkORtxNNv9OjhhGONnABEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKgLv4QS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nEr329NYQBjRFxeoe+7o8a0k3evTjTyluI+r4OgMis2kKTssQfKobMqO+kJFVRgX18QKcEGLId//pJn3yFDxynCyjRF9fQNb17C5olus+Z78DMSJubGCLBxaMTZr7fQ5Wooo30v9P8JCjfvmmF35ocyU0u55jQ8UyJ1glPaMO2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4ihky79; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKgLv4QS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408B11F000C4;
-	Sat, 17 Oct 2026 17:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4ihky79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC1B1F000C4;
+	Sat, 17 Oct 2026 17:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259774;
-	bh=8YECYUCy++/0VDHlI2Y+QGjkB44GuDUIUyr3IPJLy0M=;
+	s=korg; t=1792259777;
+	bh=SO3kXsJ0i774xa53HOecBsZU/h6yuch4xM0iUix3wXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SKgLv4QSVI+QwYQ5es7QXaI37zvbyjQkCUgL6iAJhEKpHym82uYstXve68/lF+p/Z
-	 Hn4YR2NR/MnRKN9hqyleAPAPBJ21vBzLWTG8JsIqmUSgZbSSnLa7LGqt8oFcxS8ZEr
-	 areOSXhxVJidzX7pTitx+d7E3rVY97VAzb23oF3A=
+	b=r4ihky79Ds2EIHNCkjFUOo2px9J/w4ARU2j67/4o9mI0yYsoWuO5sqkxspx6v6MEp
+	 LMTMMqZ4dTLCnE2gglE9/4hChgQyYCqmHThtiG3tb3vQtu/kBy/SgKUMXhLwSPEkR0
+	 KICx+cp/745zVa6meBE7QNI8TXhlBhCJ0NDgPjMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1276/1674] power: supply: charger-manager: register regulators before exposing sysfs
-Date: Sat, 17 Oct 2026 17:59:08 +0200
-Message-ID: <20261017160503.895389893@linuxfoundation.org>
+Subject: [PATCH 6.6 1320/1674] NFSD: Add simple u32, u64, and bool encoders
+Date: Sat, 17 Oct 2026 17:59:52 +0200
+Message-ID: <20261017160505.027924595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,160 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c57cb36f76eb7ced45f57af1a890d8f3a6d76342 ]
+[ Upstream commit 6cc58291408bea96787d06ca3f5074fdfb3152ca ]
 
-charger_manager_remove() and the err_reg_extcon probe error path free each
-charger regulator with regulator_put() before tearing down the power_supply
-sysfs entries (power_supply_unregister()). charger_manager_remove() also
-calls try_charger_enable(cm, false) after the regulator_put() loop. A
-concurrent write to a charger's externally_control sysfs attribute that
-lands between regulator_put() and power_supply_unregister() can run
-charger_externally_control_store() and call try_charger_enable(), which,
-when charging is enabled, dereferences the already-freed consumer handle.
-When charging is enabled, try_charger_enable(cm, false) in .remove() also
-dereferences the freed handles directly. Both leave use-after-free windows.
-Symmetrically, probe registers the sysfs entries (power_supply_register)
-before acquiring the regulators (regulator_get, inside
-charger_manager_register_extcon), so userspace can reach externally_control
-before the regulators are available.
+The generic XDR encoders return a length or a negative errno. NFSv4
+encoders want to know simply whether the encode ran out of stream
+buffer space. The return values for server-side encoding are either
+nfs_ok or nfserr_resource.
 
-Split charger_manager_register_extcon() on the sync/async boundary:
-charger_manager_get_regulators() (regulator_get only, no async producer)
-now runs before power_supply_register() so sysfs is not live before
-regulators are available, and charger_manager_register_extcon() keeps only
-the extcon notifier/work setup, still after power_supply_register() so a
-power_supply_register() failure cannot reach extcon setup. This keeps the
-sysfs setup/teardown ordering symmetric without introducing an asynchronous
-producer on the earlier probe-error path.
+So far I've found it adds a lot of duplicate code to try to use the
+generic XDR encoder utilities when encoding the simple data types in
+the NFSv4 operation encoders.
 
-Move power_supply_unregister() and try_charger_enable(cm, false) ahead of
-the regulator_put() loop on both teardown paths, and adjust err_reg_extcon
-(power_supply_unregister() then fall through err_regulator for
-regulator_put(); get_regulators self-rolls back on its own failure).
+Add a set of NFSv4-specific utilities that handle the basic XDR data
+types. These are added in xdr4.h so they might eventually be used by
+the callback server and pNFS driver encoders too.
 
-This does not address the separate extcon-notifier-driven deref of the same
-handles, which needs its own synchronization design.
-
-Found by an in-house static analysis tool.
-
-Fixes: 3950c7865cd7 ("charger-manager: Add support sysfs entry for charger")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260728030123.230202-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: ca94ba361720 ("nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/charger-manager.c | 54 +++++++++++++++++++-------
- 1 file changed, 39 insertions(+), 15 deletions(-)
+ fs/nfsd/xdr4.h | 111 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
 
-diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index 42a7e4f045d82..48b706c876464 100644
---- a/drivers/power/supply/charger-manager.c
-+++ b/drivers/power/supply/charger-manager.c
-@@ -1017,6 +1017,29 @@ static int charger_extcon_init(struct charger_manager *cm,
- 	return 0;
- }
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index a83a52b0f5181..c2bc10051b228 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -50,6 +50,117 @@
+ #define HAS_CSTATE_FLAG(c, f) ((c)->sid_flags & (f))
+ #define CLEAR_CSTATE_FLAG(c, f) ((c)->sid_flags &= ~(f))
  
-+static int charger_manager_get_regulators(struct charger_manager *cm)
++/**
++ * nfsd4_encode_bool - Encode an XDR bool type result
++ * @xdr: target XDR stream
++ * @val: boolean value to encode
++ *
++ * Return values:
++ *    %nfs_ok: @val encoded; @xdr advanced to next position
++ *    %nfserr_resource: stream buffer space exhausted
++ */
++static __always_inline __be32
++nfsd4_encode_bool(struct xdr_stream *xdr, bool val)
 +{
-+	struct charger_desc *desc = cm->desc;
-+	struct charger_regulator *charger;
-+	int i, ret;
++	__be32 *p = xdr_reserve_space(xdr, XDR_UNIT);
 +
-+	for (i = 0; i < desc->num_charger_regulators; i++) {
-+		charger = &desc->charger_regulators[i];
-+		charger->consumer = regulator_get(cm->dev,
-+						  charger->regulator_name);
-+		if (IS_ERR(charger->consumer)) {
-+			dev_err(cm->dev, "Cannot find charger(%s)\n",
-+				charger->regulator_name);
-+			ret = PTR_ERR(charger->consumer);
-+			while (i-- > 0)
-+				regulator_put(desc->charger_regulators[i].consumer);
-+			return ret;
-+		}
-+		charger->cm = cm;
-+	}
-+	return 0;
++	if (unlikely(p == NULL))
++		return nfserr_resource;
++	*p = val ? xdr_one : xdr_zero;
++	return nfs_ok;
 +}
 +
- /**
-  * charger_manager_register_extcon - Register extcon device to receive state
-  *				     of charger cable.
-@@ -1039,15 +1062,6 @@ static int charger_manager_register_extcon(struct charger_manager *cm)
- 	for (i = 0; i < desc->num_charger_regulators; i++) {
- 		charger = &desc->charger_regulators[i];
- 
--		charger->consumer = regulator_get(cm->dev,
--					charger->regulator_name);
--		if (IS_ERR(charger->consumer)) {
--			dev_err(cm->dev, "Cannot find charger(%s)\n",
--				charger->regulator_name);
--			return PTR_ERR(charger->consumer);
--		}
--		charger->cm = cm;
--
- 		for (j = 0; j < charger->num_cables; j++) {
- 			struct charger_cable *cable = &charger->cables[j];
- 
-@@ -1582,13 +1596,23 @@ static int charger_manager_probe(struct platform_device *pdev)
- 	}
- 	psy_cfg.attr_grp = desc->sysfs_groups;
- 
-+	/*
-+	 * Acquire charger regulators before exposing the sysfs entries, so
-+	 * userspace cannot reach externally_control before the regulators
-+	 * (and charger->cm) are available.  Mirrors the order in remove().
-+	 */
-+	ret = charger_manager_get_regulators(cm);
-+	if (ret < 0)
-+		return ret;
++/**
++ * nfsd4_encode_uint32_t - Encode an XDR uint32_t type result
++ * @xdr: target XDR stream
++ * @val: integer value to encode
++ *
++ * Return values:
++ *    %nfs_ok: @val encoded; @xdr advanced to next position
++ *    %nfserr_resource: stream buffer space exhausted
++ */
++static __always_inline __be32
++nfsd4_encode_uint32_t(struct xdr_stream *xdr, u32 val)
++{
++	__be32 *p = xdr_reserve_space(xdr, XDR_UNIT);
 +
- 	cm->charger_psy = power_supply_register(&pdev->dev,
- 						&cm->charger_psy_desc,
- 						&psy_cfg);
- 	if (IS_ERR(cm->charger_psy)) {
- 		dev_err(&pdev->dev, "Cannot register charger-manager with name \"%s\"\n",
- 			cm->charger_psy_desc.name);
--		return PTR_ERR(cm->charger_psy);
-+		ret = PTR_ERR(cm->charger_psy);
-+		goto err_regulator;
- 	}
- 
- 	/* Register extcon device for charger cable */
-@@ -1622,11 +1646,11 @@ static int charger_manager_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_reg_extcon:
-+	power_supply_unregister(cm->charger_psy);
-+err_regulator:
- 	for (i = 0; i < desc->num_charger_regulators; i++)
- 		regulator_put(desc->charger_regulators[i].consumer);
- 
--	power_supply_unregister(cm->charger_psy);
--
- 	return ret;
- }
- 
-@@ -1644,12 +1668,12 @@ static void charger_manager_remove(struct platform_device *pdev)
- 	cancel_work_sync(&setup_polling);
- 	cancel_delayed_work_sync(&cm_monitor_work);
- 
--	for (i = 0 ; i < desc->num_charger_regulators ; i++)
--		regulator_put(desc->charger_regulators[i].consumer);
-+	try_charger_enable(cm, false);
- 
- 	power_supply_unregister(cm->charger_psy);
- 
--	try_charger_enable(cm, false);
-+	for (i = 0 ; i < desc->num_charger_regulators ; i++)
-+		regulator_put(desc->charger_regulators[i].consumer);
- }
- 
- static const struct platform_device_id charger_manager_id[] = {
++	if (unlikely(p == NULL))
++		return nfserr_resource;
++	*p = cpu_to_be32(val);
++	return nfs_ok;
++}
++
++/**
++ * nfsd4_encode_uint64_t - Encode an XDR uint64_t type result
++ * @xdr: target XDR stream
++ * @val: integer value to encode
++ *
++ * Return values:
++ *    %nfs_ok: @val encoded; @xdr advanced to next position
++ *    %nfserr_resource: stream buffer space exhausted
++ */
++static __always_inline __be32
++nfsd4_encode_uint64_t(struct xdr_stream *xdr, u64 val)
++{
++	__be32 *p = xdr_reserve_space(xdr, XDR_UNIT * 2);
++
++	if (unlikely(p == NULL))
++		return nfserr_resource;
++	put_unaligned_be64(val, p);
++	return nfs_ok;
++}
++
++/**
++ * nfsd4_encode_opaque_fixed - Encode a fixed-length XDR opaque type result
++ * @xdr: target XDR stream
++ * @data: pointer to data
++ * @size: length of data in bytes
++ *
++ * Return values:
++ *    %nfs_ok: @data encoded; @xdr advanced to next position
++ *    %nfserr_resource: stream buffer space exhausted
++ */
++static __always_inline __be32
++nfsd4_encode_opaque_fixed(struct xdr_stream *xdr, const void *data,
++			  size_t size)
++{
++	__be32 *p = xdr_reserve_space(xdr, xdr_align_size(size));
++	size_t pad = xdr_pad_size(size);
++
++	if (unlikely(p == NULL))
++		return nfserr_resource;
++	memcpy(p, data, size);
++	if (pad)
++		memset((char *)p + size, 0, pad);
++	return nfs_ok;
++}
++
++/**
++ * nfsd4_encode_opaque - Encode a variable-length XDR opaque type result
++ * @xdr: target XDR stream
++ * @data: pointer to data
++ * @size: length of data in bytes
++ *
++ * Return values:
++ *    %nfs_ok: @data encoded; @xdr advanced to next position
++ *    %nfserr_resource: stream buffer space exhausted
++ */
++static __always_inline __be32
++nfsd4_encode_opaque(struct xdr_stream *xdr, const void *data, size_t size)
++{
++	size_t pad = xdr_pad_size(size);
++	__be32 *p;
++
++	p = xdr_reserve_space(xdr, XDR_UNIT + xdr_align_size(size));
++	if (unlikely(p == NULL))
++		return nfserr_resource;
++	*p++ = cpu_to_be32(size);
++	memcpy(p, data, size);
++	if (pad)
++		memset((char *)p + size, 0, pad);
++	return nfs_ok;
++}
++
+ struct nfsd4_compound_state {
+ 	struct svc_fh		current_fh;
+ 	struct svc_fh		save_fh;
 -- 
 2.53.0
 
