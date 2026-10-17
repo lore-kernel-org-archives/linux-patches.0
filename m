@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015422DF126;
-	Sat, 17 Oct 2026 17:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A672E3C13F9;
+	Sat, 17 Oct 2026 17:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258403; cv=none; b=UWyr0s9YDEr2jqQOF63kffeqp4CiBJK2KzaT477x89dkVCI4XeiU53HBQuitJYddnk5bnIYB54LImgedlVhc15TINWpTQZr2u1RsKkOTqMKqXoODXDRwDgcQ2Y3Xy9Ma+bcqz0r8RpYHBSyKBM5jkoeMGmH0jLNp8qNjhbbDQ6Q=
+	t=1792258404; cv=none; b=rp5XwSVD6uXLMgFg0VLGXErKAs8wmPjsMHFwbLYkBRQi8UzS1Yp84cM9wi1nW4AblhK00bbHsI52cUkYNa8SSx/cOWO/xbgbavQfkfsIb6GcKggGGBMl3nkglhKebNa5b+STUuAfLn+AWLIMp4T3E1IsOHIlLixigEnxpEEyZqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258403; c=relaxed/simple;
-	bh=SyeTRcYJVbXat1rXiWrDXA2h5FVAI8D0GY8EdRQR5h8=;
+	s=arc-20240116; t=1792258404; c=relaxed/simple;
+	bh=4DgFbDUjsBWJuAEg9fYl35dEJYjpsGvufNoLvssP/0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R8JBzN9cXkhzb+jjSsrr+GZMBFSNlGq5HXu6XDacZE8lZ8ymNEVF1r8U2haK0Jv9PFklKL4oF0Uue//9XzFDCQCFnOFiFwnZXo/9LBtBVA7F/qA9z1VmuOg3NEAJH1uGtSJTXtcbKbJEeaPCai3o7g3DAUtpmGtvGWz7ked2lc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooI4rDM8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3UEDMm87c6Zjb/CTsHfVoqqXZK94uNhs2d5BchHiVsYvYR/mL3eXFCl6QEzifQ+tB1eWLcRul6t3lxJxAgvyIMCn6rbbfaEhJr7JKt0J18uE4dwYUG7DRu1NJyWPm8oSKWnZhq6QLNKigb752hDyAhXdXs4RMs45aWwOeJ2b8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPIJFgiA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooI4rDM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109FA1F000C6;
-	Sat, 17 Oct 2026 17:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPIJFgiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F781F000C5;
+	Sat, 17 Oct 2026 17:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258400;
-	bh=45POHuMVUC36hRIb8p6e198GckqWFNhlVYu6Hi8HBkQ=;
+	s=korg; t=1792258403;
+	bh=lEVSIk0VE1SBjlIPVznWjNBZGladKC4pBre0eW+r37s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ooI4rDM8ozDd4x5DnJURlnvxvJ8DT3lEob+coSxidq0Fz0UATYu+wYZB6PvTumdrG
-	 M3jUMgwhL1gf/jclkezfExOWCnOsj655VjIqRStCs/xkMRnns/JNidYbULaTJU8m2q
-	 jLYzxj3lXirw0BYLuQ6tBbE9+UW1cY5Gsoh9cSQg=
+	b=tPIJFgiARBnkH7T+D3L6NTR6q6uPlvBfhLxW5YpD1l7O6zcJcIYKxxhCcfK51PrUa
+	 fVNzMj2/jFOQg3xCDjl4Tl9i2ye2P9PINQXSa1UG3Hkm5qSda1YoCp9n8TmzsZZfG0
+	 GCmViN/yre/yALwFMHBzc/sN2ZTM1VQJjH3mhRP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0871/1674] drm/amdgpu: prevent immediate PASID reuse case
-Date: Sat, 17 Oct 2026 17:52:23 +0200
-Message-ID: <20261017160453.466912206@linuxfoundation.org>
+Subject: [PATCH 6.6 0872/1674] spi: use generic driver_override infrastructure
+Date: Sat, 17 Oct 2026 17:52:24 +0200
+Message-ID: <20261017160453.492967508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,143 +46,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 14b81abe7bdc25f8097906fc2f91276ffedb2d26 ]
+[ Upstream commit cc34d77dd48708d810c12bfd6f5bf03304f6c824 ]
 
-PASID resue could cause interrupt issue when process
-immediately runs into hw state left by previous
-process exited with the same PASID, it's possible that
-page faults are still pending in the IH ring buffer when
-the process exits and frees up its PASID. To prevent the
-case, it uses idr cyclic allocator same as kernel pid's.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8f1de51f49be692de137c8525106e0fce2d1912d)
-Cc: stable@vger.kernel.org
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
+
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
+
+Also note that we do not enable the driver_override feature of struct
+bus_type, as SPI - in contrast to most other buses - passes "" to
+sysfs_emit() when the driver_override pointer is NULL. Thus, printing
+"\n" instead of "(null)\n".
+
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 5039563e7c25 ("spi: Add driver_override SPI device attribute")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260324005919.2408620-12-dakr@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c | 45 ++++++++++++++++++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h |  1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c  |  1 +
- 3 files changed, 34 insertions(+), 13 deletions(-)
+ drivers/spi/spi.c       | 19 +++++++------------
+ include/linux/spi/spi.h |  5 -----
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-index 05344fa5fc0f9..eda45c34646eb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -35,10 +35,13 @@
-  * PASIDs are global address space identifiers that can be shared
-  * between the GPU, an IOMMU and the driver. VMs on different devices
-  * may use the same PASID if they share the same address
-- * space. Therefore PASIDs are allocated using a global IDA. VMs are
-- * looked up from the PASID per amdgpu_device.
-+ * space. Therefore PASIDs are allocated using IDR cyclic allocator
-+ * (similar to kernel PID allocation) which naturally delays reuse.
-+ * VMs are looked up from the PASID per amdgpu_device.
-  */
--static DEFINE_IDA(amdgpu_pasid_ida);
-+
-+static DEFINE_IDR(amdgpu_pasid_idr);
-+static DEFINE_SPINLOCK(amdgpu_pasid_idr_lock);
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 79e68b97dfecd..9a011544d1544 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -51,7 +51,6 @@ static void spidev_release(struct device *dev)
+ 	struct spi_device	*spi = to_spi_device(dev);
  
- /* Helper to free pasid from a fence callback */
- struct amdgpu_pasid_cb {
-@@ -50,8 +53,8 @@ struct amdgpu_pasid_cb {
-  * amdgpu_pasid_alloc - Allocate a PASID
-  * @bits: Maximum width of the PASID in bits, must be at least 1
-  *
-- * Allocates a PASID of the given width while keeping smaller PASIDs
-- * available if possible.
-+ * Uses kernel's IDR cyclic allocator (same as PID allocation).
-+ * Allocates sequentially with automatic wrap-around.
-  *
-  * Returns a positive integer on success. Returns %-EINVAL if bits==0.
-  * Returns %-ENOSPC if no PASID was available. Returns %-ENOMEM on
-@@ -59,14 +62,15 @@ struct amdgpu_pasid_cb {
-  */
- int amdgpu_pasid_alloc(unsigned int bits)
+ 	spi_controller_put(spi->controller);
+-	kfree(spi->driver_override);
+ 	free_percpu(spi->pcpu_statistics);
+ 	kfree(spi);
+ }
+@@ -74,10 +73,9 @@ static ssize_t driver_override_store(struct device *dev,
+ 				     struct device_attribute *a,
+ 				     const char *buf, size_t count)
  {
--	int pasid = -EINVAL;
-+	int pasid;
+-	struct spi_device *spi = to_spi_device(dev);
+ 	int ret;
  
--	for (bits = min(bits, 31U); bits > 0; bits--) {
--		pasid = ida_alloc_range(&amdgpu_pasid_ida, 1U << (bits - 1),
--					(1U << bits) - 1, GFP_KERNEL);
--		if (pasid != -ENOSPC)
--			break;
--	}
-+	if (bits == 0)
-+		return -EINVAL;
-+
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
-+				 1U << bits, GFP_KERNEL);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
+-	ret = driver_set_override(dev, &spi->driver_override, buf, count);
++	ret = __device_set_driver_override(dev, buf, count);
+ 	if (ret)
+ 		return ret;
  
- 	if (pasid >= 0)
- 		trace_amdgpu_pasid_allocated(pasid);
-@@ -81,7 +85,10 @@ int amdgpu_pasid_alloc(unsigned int bits)
- void amdgpu_pasid_free(u32 pasid)
+@@ -87,13 +85,8 @@ static ssize_t driver_override_store(struct device *dev,
+ static ssize_t driver_override_show(struct device *dev,
+ 				    struct device_attribute *a, char *buf)
  {
- 	trace_amdgpu_pasid_freed(pasid);
--	ida_free(&amdgpu_pasid_ida, pasid);
-+
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_remove(&amdgpu_pasid_idr, pasid);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
+-	const struct spi_device *spi = to_spi_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", spi->driver_override ? : "");
+-	device_unlock(dev);
+-	return len;
++	guard(spinlock)(&dev->driver_override.lock);
++	return sysfs_emit(buf, "%s\n", dev->driver_override.name ?: "");
  }
+ static DEVICE_ATTR_RW(driver_override);
  
- static void amdgpu_pasid_free_cb(struct dma_fence *fence,
-@@ -614,3 +621,15 @@ void amdgpu_vmid_mgr_fini(struct amdgpu_device *adev)
- 		}
- 	}
- }
-+
-+/**
-+ * amdgpu_pasid_mgr_cleanup - cleanup PASID manager
-+ *
-+ * Cleanup the IDR allocator.
-+ */
-+void amdgpu_pasid_mgr_cleanup(void)
-+{
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_destroy(&amdgpu_pasid_idr);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
-+}
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-index 240fa67512602..429a072ff8fb6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-@@ -75,6 +75,7 @@ int amdgpu_pasid_alloc(unsigned int bits);
- void amdgpu_pasid_free(u32 pasid);
- void amdgpu_pasid_free_delayed(struct dma_resv *resv,
- 			       u32 pasid);
-+void amdgpu_pasid_mgr_cleanup(void);
+@@ -383,10 +376,12 @@ static int spi_match_device(struct device *dev, struct device_driver *drv)
+ {
+ 	const struct spi_device	*spi = to_spi_device(dev);
+ 	const struct spi_driver	*sdrv = to_spi_driver(drv);
++	int ret;
  
- bool amdgpu_vmid_had_gpu_reset(struct amdgpu_device *adev,
- 			       struct amdgpu_vmid *id);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 5c9c1bbb69f33..c653580cbdd44 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2578,6 +2578,7 @@ void amdgpu_vm_manager_fini(struct amdgpu_device *adev)
- 	xa_destroy(&adev->vm_manager.pasids);
+ 	/* Check override first, and if set, only use the named driver */
+-	if (spi->driver_override)
+-		return strcmp(spi->driver_override, drv->name) == 0;
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
  
- 	amdgpu_vmid_mgr_fini(adev);
-+	amdgpu_pasid_mgr_cleanup();
- }
- 
- /**
+ 	/* Attempt an OF style match */
+ 	if (of_driver_match_device(dev, drv))
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index e5baf43bcfbb6..3f6ca8052f634 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -153,10 +153,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  * @modalias: Name of the driver to use with this device, or an alias
+  *	for that name.  This appears in the sysfs "modalias" attribute
+  *	for driver coldplugging, and in uevents used for hotplugging
+- * @driver_override: If the name of a driver is written to this attribute, then
+- *	the device will bind to the named driver and only the named driver.
+- *	Do not set directly, because core frees it; use driver_set_override() to
+- *	set or clear it.
+  * @cs_gpiod: GPIO descriptor of the chipselect line (optional, NULL when
+  *	not using a GPIO line)
+  * @word_delay: delay to be inserted between consecutive
+@@ -212,7 +208,6 @@ struct spi_device {
+ 	void			*controller_state;
+ 	void			*controller_data;
+ 	char			modalias[SPI_NAME_SIZE];
+-	const char		*driver_override;
+ 	struct gpio_desc	*cs_gpiod;	/* Chip select GPIO descriptor */
+ 	struct spi_delay	word_delay; /* Inter-word delay */
+ 	/* CS delays */
 -- 
 2.53.0
 
