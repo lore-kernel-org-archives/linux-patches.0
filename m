@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA3438424C;
-	Sat, 17 Oct 2026 17:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F0E3A900B;
+	Sat, 17 Oct 2026 17:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256927; cv=none; b=sja01+vCoGO1TXkoJ8ISKGLuOpsTcZaZccEyT/K9BqblwnrxpAz5EzY6U61MdSX1kDgEDTr8uHvxOUHpHf4A/6ew8f4zNlRmKS9yYKp3egYtQCpufSl1ipAbhIf6Mkz8GvfqUbZ8fa1WgfmiaB4ujQgKSD8r/xclthtV4uV0n3c=
+	t=1792256930; cv=none; b=NapEFjwv0J1qsAq9QY1+X4/REkaTwV27aLSfYMvkCictF6m46W/S9BIh7xy0K3ZJrInEbCmm/RLTGLqXpUPS7SysHsvCvELCnRoJ2LwlTZa4b33DMjssoh3D94hZY0dYQwd/vtDZ4dMjyayil/0/N76dNtVwRBxWq1jN6xRgsok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256927; c=relaxed/simple;
-	bh=Rq5NVi6A/6fXtrm/bqnBf5j2vNkKrXVlEB5gN8AJkJI=;
+	s=arc-20240116; t=1792256930; c=relaxed/simple;
+	bh=nzmuGO9D14+uIdPK5vsp9Mae4CrOCQzy05iS0PJfOVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJtOZaROmGa3O+1tpJVK7rMZwqtOssUibSYgykE81ZzaBwmuCknaATDcHSCpoRbyTxzhoBUcCAFNln5PByfJdPVLS8+bWSDPp/LMLh0JDUhI/NG6H9iiorKoiXqleBMxJP9EgEpsKqJqBxhv6dJNpbJux+l7liUhhXApOJjFYgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDsvvF5D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tstDgHABIFYgMi4tI3k8vhM6Jum5LAKHVu0M0ES+tCEu9xKvR4NeRiH6N46saTX7BU3ZlYOGtz8gnuoQECu+U0MCGLFyX573+9Sem0tbARKAFdiwmiJAD1hhF6oOgQHpEipiAgPTXl9H5LJbYwxsO7ejufKpx0HGHUG1ejpli+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hn0CKmJf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDsvvF5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339751F000C4;
-	Sat, 17 Oct 2026 17:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hn0CKmJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACE31F000C4;
+	Sat, 17 Oct 2026 17:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256925;
-	bh=f3VfjrouvxQ/qbcRAm6/6nOdfmXsxDN4Xs+buCy62cI=;
+	s=korg; t=1792256929;
+	bh=ekRVzBoGGnGPdYX+aVf80Dz3c77CaQI6U1EAJTtX+Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DDsvvF5DswQBmVDh4zdq+22ocx9GgnbBHPWraxBUqKsjmgn6phrTmlkat3r+gAK4F
-	 wxvPH147LV6cntFGdENVaUBkJW9jA4ouPyCz6xGfq0z3cMQo+XqkstXVswSyQv7e1/
-	 MIVag6Hk+TOMjUpQ/ApOeSC7B76LBbXcnmUr+NpU=
+	b=Hn0CKmJfuwh4izj0pnh6M6si1FMpTlY5qIDJB6k8udjqFSBjyZevGUqAYsK5pqRd3
+	 uK0XwlK/V3ZRLdU/slXRcpW7NL/pMVfVqN8xF81N0IBoK8DKoo9QDEtjDi8TonhPyW
+	 m4GZkX8f9qUXVA02Naom1wir3TZ+poxX8Vxjg20Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Starke <daniel.starke@siemens.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0397/1674] tty: n_gsm: fix missing modem controls after DLCI open in convergence layer type 2
-Date: Sat, 17 Oct 2026 17:44:29 +0200
-Message-ID: <20261017160441.306536645@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.6 0398/1674] tty: serial: max3100: shut down timer before freeing port
+Date: Sat, 17 Oct 2026 17:44:30 +0200
+Message-ID: <20261017160441.332724933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,178 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 11ea5a63d30ad6d305b1c22301cd99ff45a98c8d ]
+[ Upstream commit db0949bbd06db0a75b4b1076f1e25194be7d956a ]
 
-The current implementation only updates the virtual V.24 control signals
-after DLCI open in basic option mode. In advanced option mode with
-convergence layer type 2 an empty data frame needs to be transmitted to
-inform the peer about the initial virtual V.24 control signals. Not doing
-so has two unwanted side effects:
-1. hardware flow control status is unclear (initial CTS line is unknown)
-2. DLCI user presence is not transmitted (initial DTR line is unknown)
+max3100_shutdown() stops the polling timer but returns early during
+system suspend. If the SPI device is unbound before resume, the serial
+core does not call max3100_shutdown() again, so max3100_remove() frees
+the port while the timer remains armed. max3100_timeout() may then
+access the freed port and re-arm the timer.
 
-Applications waiting on these lines can not start after a DLCI has been
-opened until the first data frame has been transmitted.
+Add final timer teardown to max3100_remove() and use
+timer_shutdown_sync() to prevent a racing callback from re-arming it.
+Also free the IRQ and destroy the workqueue there before freeing the
+port. Keep timer_delete_sync() in max3100_shutdown() so that a
+subsequent open() can re-arm the timer.
 
-Fix this by using gsm_modem_update() thoroughly which handles basic and
-advanced option mode correctly. Add a flag in gsm_modem_update() and the
-delegated gsm_modem_upd_via_msc() to control whether waiting for the MSC
-command response is possible. Remove obsolete gsm_modem_send_initial_msc().
+The workqueue is created before request_irq() and destroyed on both
+request_irq() failure and normal shutdown. Its presence at remove thus
+identifies the IRQ left registered when suspend bypasses shutdown.
 
-Fixes: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://patch.msgid.link/20260826063026.2472-1-daniel.starke@siemens.com
+Free the IRQ before destroying the workqueue, in both
+max3100_shutdown() and max3100_remove(), and cancel the pending work
+in between. free_irq() waits for a running interrupt handler to
+finish and no new handler can start afterwards, so a racing handler
+cannot queue work on a workqueue that is being destroyed; the
+force_end_work check in max3100_dowork() only narrows that window, as
+a handler delayed between the check and queue_work() could still run
+after the teardown has cleared the workqueue pointer. Cancelling the
+work also keeps destroy_workqueue() from waiting on a queued work item
+in case remove() ever runs while the freezable workqueue is still
+frozen, e.g. device removal during the resume window, before
+workqueues are thawed.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7831d56b0a35 ("tty: MAX3100")
+Cc: stable@kernel.org # 6.2+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260927055957.561030-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adjusted context to match the existing @dlci annotation without a colon. ]
+[ sashal: Changed free_irq() arguments from port->irq and s->port.irq to s->irq. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 47 ++++++++++++++-------------------------------
- 1 file changed, 14 insertions(+), 33 deletions(-)
+ drivers/tty/serial/max3100.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 901f5c8311fbf..2c1523b58313a 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -453,14 +453,13 @@ static const u8 gsm_fcs8[256] = {
+diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
+index 3d2b83d6ab51a..ec230c2f081d6 100644
+--- a/drivers/tty/serial/max3100.c
++++ b/drivers/tty/serial/max3100.c
+@@ -567,11 +567,11 @@ static void max3100_shutdown(struct uart_port *port)
+ 		del_timer_sync(&s->timer);
  
- static void gsm_dlci_close(struct gsm_dlci *dlci);
- static int gsmld_output(struct gsm_mux *gsm, u8 *data, int len);
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk);
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait);
- static struct gsm_msg *gsm_data_alloc(struct gsm_mux *gsm, u8 addr, int len,
- 								u8 ctrl);
- static int gsm_send_packet(struct gsm_mux *gsm, struct gsm_msg *msg);
- static struct gsm_dlci *gsm_dlci_alloc(struct gsm_mux *gsm, int addr);
- static void gsmld_write_trigger(struct gsm_mux *gsm);
- static void gsmld_write_task(struct work_struct *work);
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci);
- 
- /**
-  *	gsm_fcs_add	-	update FCS
-@@ -2174,7 +2173,7 @@ static void gsm_dlci_open(struct gsm_dlci *dlci)
- 		pr_debug("DLCI %d goes open.\n", dlci->addr);
- 	/* Send current modem state */
- 	if (dlci->addr) {
--		gsm_modem_send_initial_msc(dlci);
-+		gsm_modem_update(dlci, 0, false);
- 	} else {
- 		/* Start keep-alive control */
- 		gsm->ka_num = 0;
-@@ -4132,9 +4131,10 @@ static void gsm_modem_upd_via_data(struct gsm_dlci *dlci, u8 brk)
-  *	gsm_modem_upd_via_msc	-	send modem bits via control frame
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
-  */
- 
--static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk, bool wait)
- {
- 	u8 modembits[3];
- 	struct gsm_control *ctrl;
-@@ -4151,41 +4151,22 @@ static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
- 		modembits[2] = (brk << 4) | 2 | EA; /* Length, Break, EA */
- 		len++;
+ 	if (s->workqueue) {
++		free_irq(s->irq, s);
++		cancel_work_sync(&s->work);
+ 		destroy_workqueue(s->workqueue);
+ 		s->workqueue = NULL;
  	}
-+	if (!wait)
-+		return gsm_control_command(dlci->gsm, CMD_MSC, modembits, len);
- 	ctrl = gsm_control_send(dlci->gsm, CMD_MSC, modembits, len);
- 	if (ctrl == NULL)
- 		return -ENOMEM;
- 	return gsm_control_wait(dlci->gsm, ctrl);
- }
+-	if (s->irq)
+-		free_irq(s->irq, s);
  
--/**
-- * gsm_modem_send_initial_msc - Send initial modem status message
-- *
-- * @dlci channel
-- *
-- * Send an initial MSC message after DLCI open to set the initial
-- * modem status lines. This is only done for basic mode.
-- * Does not wait for a response as we cannot block the input queue
-- * processing.
-- */
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci)
--{
--	u8 modembits[2];
--
--	if (dlci->adaption != 1 || dlci->gsm->encoding != GSM_BASIC_OPT)
--		return 0;
--
--	modembits[0] = (dlci->addr << 2) | 2 | EA; /* DLCI, Valid, EA */
--	modembits[1] = (gsm_encode_modem(dlci) << 1) | EA;
--	return gsm_control_command(dlci->gsm, CMD_MSC, (const u8 *)&modembits, 2);
--}
--
- /**
-  *	gsm_modem_update	-	send modem status line state
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
-  */
- 
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait)
- {
- 	if (dlci->gsm->dead)
- 		return -EL2HLT;
-@@ -4195,7 +4176,7 @@ static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
- 		return 0;
- 	} else if (dlci->gsm->encoding == GSM_BASIC_OPT) {
- 		/* Send as MSC control message. */
--		return gsm_modem_upd_via_msc(dlci, brk);
-+		return gsm_modem_upd_via_msc(dlci, brk, wait);
- 	}
- 
- 	/* Modem status lines are not supported. */
-@@ -4261,7 +4242,7 @@ static void gsm_dtr_rts(struct tty_port *port, bool active)
- 		modem_tx &= ~(TIOCM_DTR | TIOCM_RTS);
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		gsm_modem_update(dlci, 0);
-+		gsm_modem_update(dlci, 0, true);
- 	}
- }
- 
-@@ -4457,7 +4438,7 @@ static int gsmtty_tiocmset(struct tty_struct *tty,
- 
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		return gsm_modem_update(dlci, 0);
-+		return gsm_modem_update(dlci, 0, true);
- 	}
- 	return 0;
- }
-@@ -4539,7 +4520,7 @@ static void gsmtty_throttle(struct tty_struct *tty)
- 		dlci->modem_tx &= ~TIOCM_RTS;
- 	dlci->throttled = true;
- 	/* Send an MSC with RTS cleared */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static void gsmtty_unthrottle(struct tty_struct *tty)
-@@ -4551,7 +4532,7 @@ static void gsmtty_unthrottle(struct tty_struct *tty)
- 		dlci->modem_tx |= TIOCM_RTS;
- 	dlci->throttled = false;
- 	/* Send an MSC with RTS set */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static int gsmtty_break_ctl(struct tty_struct *tty, int state)
-@@ -4569,7 +4550,7 @@ static int gsmtty_break_ctl(struct tty_struct *tty, int state)
- 		if (encode > 0x0F)
- 			encode = 0x0F;	/* Best effort */
- 	}
--	return gsm_modem_update(dlci, encode);
-+	return gsm_modem_update(dlci, encode, true);
- }
- 
- static void gsmtty_cleanup(struct tty_struct *tty)
+ 	/* set shutdown mode to save power */
+ 	if (s->max3100_hw_suspend)
+@@ -830,6 +830,15 @@ static void max3100_remove(struct spi_device *spi)
+ 		if (max3100s[i] == s) {
+ 			dev_dbg(&spi->dev, "%s: removing port %d\n", __func__, i);
+ 			uart_remove_one_port(&max3100_uart_driver, &max3100s[i]->port);
++
++			s->force_end_work = 1;
++			timer_shutdown_sync(&s->timer);
++			if (s->workqueue) {
++				free_irq(s->irq, s);
++				cancel_work_sync(&s->work);
++				destroy_workqueue(s->workqueue);
++				s->workqueue = NULL;
++			}
+ 			kfree(max3100s[i]);
+ 			max3100s[i] = NULL;
+ 			break;
 -- 
 2.53.0
 
