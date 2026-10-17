@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C57D339365;
-	Sat, 17 Oct 2026 16:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7503418787A;
+	Sat, 17 Oct 2026 16:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253648; cv=none; b=ky+PNivzw/fBJlRL1NVgcjCIgPNjajpfAzJ7rPtUyXVyqwjC6gE9l9RCc/W0SihZeAs8fL1yJD1a11q6FSGOUimeVv/BrSpSbltoi0rZHd1cswIlJ6IYTNFlBzE6wHt/kkTh3mZ+++h6+E9+avJpczIk2jg44jTWsLoOaUGcO04=
+	t=1792253651; cv=none; b=gCkpji1zvc3dJ4wjCao/u4BufxILwintYIPsHkG/stjPYrQiWOhFUifKycS2JdR6RnmubnwiJ1HGTZZrZG4+YEsDOGJsEcnL6FS2HkdrDqXQH1NNBKTKAaICSeEGFf/90ccywuGWm4DCtD1/ua+z2EFunfEsIkbwz9h+LoEX3uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253648; c=relaxed/simple;
-	bh=Vd/J2/CstIEciXwwsOs70PTvrpNxoUl/lmNRaSmnQhs=;
+	s=arc-20240116; t=1792253651; c=relaxed/simple;
+	bh=+0tK6fkXs9eWQkF9+/YlT9GmBDvh1dSECpnBh9nqosY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNV3EJMcRy43dEazXv7wuTaNxrJNpG7y88BiDjIIx99t82rx/mxwf2E7cc+GAvys1L8B0834YKb1D1Rxc0aHnVm/xoxNxRlVz5kKwaxiRSo8USPBlga4uxDF7au5wzLADYnbQr5cjqczuzLzfLbFMmP48auVbSPmdawh2vip/+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoWV61eP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Te2qVUGHyk4b+KcikxqxGRYYWbFc58wQZW5nAghsWNG9BN3N1WDI5w5FJ51oKiO7VPV6P8DWytyyzdRLhKGMsdYoOkRiygjRtoK95sK2C03adQ90UPNffpyhMRrR9IWpvSdcRrRGVtIQYA8LcrPBTwe+P/VJRMgej1b8jwMcduw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ7V9o7o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoWV61eP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB8A1F000C4;
-	Sat, 17 Oct 2026 16:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ7V9o7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF321F000C4;
+	Sat, 17 Oct 2026 16:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253647;
-	bh=WSUzYMhk2BvfNFGL2NzeBkOLfwD17Oc1bGmUHz1wLG8=;
+	s=korg; t=1792253650;
+	bh=+xM+i1+h72s8DseGJtdbxSTACIzxr+uW+Uu1BqtZVlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoWV61eP7uaq8ztY+A+gkgs34t2GegKfVq9cNIgIgpjHFMYycrJtXB1InnRuCLUk/
-	 UUHpXub8jw7MDYG9ZC8H+3438OTQzcYHVtdsuwuUKhvzBOBE/K/g9kRaxTF31hzaMt
-	 T2gaK7Tg1eowBNRwD5pv7Aa0m3bGYprbZXQhDqqg=
+	b=fQ7V9o7oyrj1TKskw9XHi77n9UaU4AA2IGXuQXO0sOBkYMtopuEjz5thnQv/llooC
+	 4+rBaW7Dd+OYbrnZ8nuFfMK6bDEkd5KmiVVQczN9Z5q4ZnnA5lmi51TbvVueoF9Slp
+	 b3TxQo82j05uu5PuraF+/B1RK8OVi3NhFTTac1IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/869] netfilter: nf_tables: clone set on flush only
-Date: Sat, 17 Oct 2026 17:50:27 +0200
-Message-ID: <20261017160041.827081351@linuxfoundation.org>
+Subject: [PATCH 6.12 187/869] serial: rename local uart_port_lock() -> uart_port_ref_lock()
+Date: Sat, 17 Oct 2026 17:50:28 +0200
+Message-ID: <20261017160041.852757849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,139 +50,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit fb7fb4016300ac622c964069e286dc83166a5d52 ]
+[ Upstream commit 31e0b7863c9bf97bc3a6d735cb4956c929134a80 ]
 
-Syzbot with fault injection triggered a failing memory allocation with
-GFP_KERNEL which results in a WARN splat:
+uart_port_lock() and uart_port_unlock() are (at the same time) defined
+as:
+* functions in include/linux/serial_core.h
+* macros in drivers/tty/serial/serial_core.c
 
-iter.err
-WARNING: net/netfilter/nf_tables_api.c:845 at nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845, CPU#0: syz.0.17/5992
-Modules linked in:
-CPU: 0 UID: 0 PID: 5992 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
-RIP: 0010:nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845
-Code: 8b 05 86 5a 4e 09 48 3b 84 24 a0 00 00 00 75 62 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc e8 63 6d fa f7 90 <0f> 0b 90 43
-+80 7c 35 00 00 0f 85 23 fe ff ff e9 26 fe ff ff 89 d9
-RSP: 0018:ffffc900045af780 EFLAGS: 00010293
-RAX: ffffffff89ca45bd RBX: 00000000fffffff4 RCX: ffff888028111e40
-RDX: 0000000000000000 RSI: 00000000fffffff4 RDI: 0000000000000000
-RBP: ffffc900045af870 R08: 0000000000400dc0 R09: 00000000ffffffff
-R10: dffffc0000000000 R11: fffffbfff1d141db R12: ffffc900045af7e0
-R13: 1ffff920008b5f24 R14: dffffc0000000000 R15: ffffc900045af920
-FS:  000055557a6a5500(0000) GS:ffff888125496000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fb5ea271fc0 CR3: 000000003269e000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __nft_release_table+0xceb/0x11f0 net/netfilter/nf_tables_api.c:12115
- nft_rcv_nl_event+0xc25/0xdb0 net/netfilter/nf_tables_api.c:12187
- notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
- blocking_notifier_call_chain+0x6a/0x90 kernel/notifier.c:380
- netlink_release+0x123b/0x1ad0 net/netlink/af_netlink.c:761
- __sock_release net/socket.c:662 [inline]
- sock_close+0xc3/0x240 net/socket.c:1455
+The former are sane uart port lock wrappers.
 
-Restrict set clone to the flush set command in the preparation phase.
-Add NFT_ITER_UPDATE_CLONE and use it for this purpose, update the rbtree
-and pipapo backends to only clone the set when this iteration type is
-used.
+The latter _lock() does something completely different: it inspects
+a uart_state, obtains a uart_port from it, and increases its reference
+count. And if that all succeeded, the port is locked too.
 
-As for the existing NFT_ITER_UPDATE type, update the pipapo backend to
-use the existing set clone if available, otherwise use the existing set
-representation. After this update, there is no need to clone a set that
-is being deleted, this includes bound anonymous set.
+Similarly, the _unlock() counterpart first unlocks and then decrements
+the refcount too.
 
-An alternative approach to NFT_ITER_UPDATE_CLONE is to add a .clone
-interface and call it from the flush set path.
+This state is REALLY CONFUSING.
 
-Reported-by: syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com
-Fixes: 3f1d886cc7c3 ("netfilter: nft_set_pipapo: move cloning of match info to insert/removal path")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+So rename the latter (local .c macros):
+* uart_port_lock() -> uart_port_ref_lock(), and
+* uart_port_unlock() -> uart_port_unlock_deref().
+
+Now, the forbidden while-at-it part: convert from a macro to an inline
+-- do it here as the passed 'flags' have to be pointer to ulong now. So
+we avoid doubled changes on identical LOCs.
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20250425111315.1036184-5-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 455ce986fa35 ("serial: core: fix infinite loop in handle_tx() for PORT_UNKNOWN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     | 10 +++++++++-
- net/netfilter/nft_set_pipapo.c    | 11 +++++++++--
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ drivers/tty/serial/serial_core.c | 75 ++++++++++++++++----------------
+ 1 file changed, 38 insertions(+), 37 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 923b2c0d6e844..d14acbc44b44b 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -306,11 +306,13 @@ static inline void *nft_elem_priv_cast(const struct nft_elem_priv *priv)
-  * @NFT_ITER_UNSPEC: unspecified, to catch errors
-  * @NFT_ITER_READ: read-only iteration over set elements
-  * @NFT_ITER_UPDATE: iteration under mutex to update set element state
-+ * @NFT_ITER_UPDATE_CLONE: clone set before iteration under mutex to update element
-  */
- enum nft_iter_type {
- 	NFT_ITER_UNSPEC,
- 	NFT_ITER_READ,
- 	NFT_ITER_UPDATE,
-+	NFT_ITER_UPDATE_CLONE,
- };
- 
- struct nft_set;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e4325686953e9..f30c4d8029e0c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -701,6 +701,11 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
- 	}
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 2a33ad1e039d0..3d5ad8975bf57 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -75,22 +75,23 @@ static inline void uart_port_deref(struct uart_port *uport)
+ 		wake_up(&uport->state->remove_wait);
  }
  
-+/* Use NFT_ITER_UPDATE iterator even if this may be called from the preparation
-+ * phase, the set clone might already exist from a previous command, or it might
-+ * be a set that is going away and does not require a clone. The netns and
-+ * netlink release paths also need to work on the live set.
-+ */
- static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
- {
- 	struct nft_set_iter iter = {
-@@ -7485,9 +7490,12 @@ static int nft_set_catchall_flush(const struct nft_ctx *ctx,
- 
- static int nft_set_flush(struct nft_ctx *ctx, struct nft_set *set, u8 genmask)
- {
-+	/* The set backend might need to clone the set, do it now from the
-+	 * preparation phase, use NFT_ITER_UPDATE_CLONE iterator type.
-+	 */
- 	struct nft_set_iter iter = {
- 		.genmask	= genmask,
--		.type		= NFT_ITER_UPDATE,
-+		.type		= NFT_ITER_UPDATE_CLONE,
- 		.fn		= nft_setelem_flush,
- 	};
- 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 9d2cfdc94a523..96cd9e17bd64f 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -2188,13 +2188,20 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
- 	const struct nft_pipapo_match *m;
- 
- 	switch (iter->type) {
--	case NFT_ITER_UPDATE:
-+	case NFT_ITER_UPDATE_CLONE:
- 		m = pipapo_maybe_clone(set);
- 		if (!m) {
- 			iter->err = -ENOMEM;
- 			return;
- 		}
+-#define uart_port_lock(state, flags)					\
+-	({								\
+-		struct uart_port *__uport = uart_port_ref(state);	\
+-		if (__uport)						\
+-			uart_port_lock_irqsave(__uport, &flags);	\
+-		__uport;						\
+-	})
 -
-+		nft_pipapo_do_walk(ctx, set, m, iter);
-+		break;
-+	case NFT_ITER_UPDATE:
-+		if (priv->clone)
-+			m = priv->clone;
-+		else
-+			m = rcu_dereference_protected(priv->match,
-+						      nft_pipapo_transaction_mutex_held(set));
- 		nft_pipapo_do_walk(ctx, set, m, iter);
- 		break;
- 	case NFT_ITER_READ:
+-#define uart_port_unlock(uport, flags)					\
+-	({								\
+-		struct uart_port *__uport = uport;			\
+-		if (__uport) {						\
+-			uart_port_unlock_irqrestore(__uport, flags);	\
+-			uart_port_deref(__uport);			\
+-		}							\
+-	})
++static inline struct uart_port *uart_port_ref_lock(struct uart_state *state, unsigned long *flags)
++{
++	struct uart_port *uport = uart_port_ref(state);
++
++	if (uport)
++		uart_port_lock_irqsave(uport, flags);
++
++	return uport;
++}
++
++static inline void uart_port_unlock_deref(struct uart_port *uport, unsigned long flags)
++{
++	if (uport) {
++		uart_port_unlock_irqrestore(uport, flags);
++		uart_port_deref(uport);
++	}
++}
+ 
+ static inline struct uart_port *uart_port_check(struct uart_state *state)
+ {
+@@ -127,10 +128,10 @@ static void uart_stop(struct tty_struct *tty)
+ 	struct uart_port *port;
+ 	unsigned long flags;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	if (port)
+ 		port->ops->stop_tx(port);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ }
+ 
+ static void __uart_start(struct uart_state *state)
+@@ -168,9 +169,9 @@ static void uart_start(struct tty_struct *tty)
+ 	struct uart_port *port;
+ 	unsigned long flags;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	__uart_start(state);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ }
+ 
+ static void
+@@ -258,14 +259,14 @@ static int uart_alloc_xmit_buf(struct tty_port *port)
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+-	uport = uart_port_lock(state, flags);
++	uport = uart_port_ref_lock(state, &flags);
+ 	if (!state->port.xmit_buf) {
+ 		state->port.xmit_buf = (unsigned char *)page;
+ 		kfifo_init(&state->port.xmit_fifo, state->port.xmit_buf,
+ 				PAGE_SIZE);
+-		uart_port_unlock(uport, flags);
++		uart_port_unlock_deref(uport, flags);
+ 	} else {
+-		uart_port_unlock(uport, flags);
++		uart_port_unlock_deref(uport, flags);
+ 		/*
+ 		 * Do not free() the page under the port lock, see
+ 		 * uart_free_xmit_buf().
+@@ -289,11 +290,11 @@ static void uart_free_xmit_buf(struct tty_port *port)
+ 	 * console driver may need to allocate/free a debug object, which
+ 	 * can end up in printk() recursion.
+ 	 */
+-	uport = uart_port_lock(state, flags);
++	uport = uart_port_ref_lock(state, &flags);
+ 	xmit_buf = port->xmit_buf;
+ 	port->xmit_buf = NULL;
+ 	INIT_KFIFO(port->xmit_fifo);
+-	uart_port_unlock(uport, flags);
++	uart_port_unlock_deref(uport, flags);
+ 
+ 	free_page((unsigned long)xmit_buf);
+ }
+@@ -592,15 +593,15 @@ static int uart_put_char(struct tty_struct *tty, u8 c)
+ 	unsigned long flags;
+ 	int ret = 0;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	if (!state->port.xmit_buf) {
+-		uart_port_unlock(port, flags);
++		uart_port_unlock_deref(port, flags);
+ 		return 0;
+ 	}
+ 
+ 	if (port)
+ 		ret = kfifo_put(&state->port.xmit_fifo, c);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ 	return ret;
+ }
+ 
+@@ -623,9 +624,9 @@ static ssize_t uart_write(struct tty_struct *tty, const u8 *buf, size_t count)
+ 	if (WARN_ON(!state))
+ 		return -EL3HLT;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	if (!state->port.xmit_buf) {
+-		uart_port_unlock(port, flags);
++		uart_port_unlock_deref(port, flags);
+ 		return 0;
+ 	}
+ 
+@@ -633,7 +634,7 @@ static ssize_t uart_write(struct tty_struct *tty, const u8 *buf, size_t count)
+ 		ret = kfifo_in(&state->port.xmit_fifo, buf, count);
+ 
+ 	__uart_start(state);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ 	return ret;
+ }
+ 
+@@ -644,9 +645,9 @@ static unsigned int uart_write_room(struct tty_struct *tty)
+ 	unsigned long flags;
+ 	unsigned int ret;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	ret = kfifo_avail(&state->port.xmit_fifo);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ 	return ret;
+ }
+ 
+@@ -657,9 +658,9 @@ static unsigned int uart_chars_in_buffer(struct tty_struct *tty)
+ 	unsigned long flags;
+ 	unsigned int ret;
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	ret = kfifo_len(&state->port.xmit_fifo);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ 	return ret;
+ }
+ 
+@@ -678,13 +679,13 @@ static void uart_flush_buffer(struct tty_struct *tty)
+ 
+ 	pr_debug("uart_flush_buffer(%d) called\n", tty->index);
+ 
+-	port = uart_port_lock(state, flags);
++	port = uart_port_ref_lock(state, &flags);
+ 	if (!port)
+ 		return;
+ 	kfifo_reset(&state->port.xmit_fifo);
+ 	if (port->ops->flush_buffer)
+ 		port->ops->flush_buffer(port);
+-	uart_port_unlock(port, flags);
++	uart_port_unlock_deref(port, flags);
+ 	tty_port_tty_wakeup(&state->port);
+ }
+ 
 -- 
 2.53.0
 
