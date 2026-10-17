@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9548417BED0;
-	Sat, 17 Oct 2026 17:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FD33A59A3;
+	Sat, 17 Oct 2026 17:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258677; cv=none; b=tO0ADad94Cp7J3ObdQbZxprUeMjjJxdb34NAC/+zTTBxcKXpVZ2duDKHmq7Wfs8UTZUUTMwb3BPOruuTqLKBZeIylfCO+9465MRT99Ja6zSgOaw8SusBjfPy8oBt3hoWuH7Tvuti6EidWGVl5EOdwPl31WB1VSaf9xpY7jW4Mbc=
+	t=1792258680; cv=none; b=NhI7YtEh4ZevX7ct8IF7c6Hf6kdwSzqnTdjuZJ6dt/jZi0PLWFL7ZZ1p9rwmk5qs2FWuS6g/oF+HOm+u6p0gephoigf3q3e00SMA+jxiGLD76TywQ5YPXDIv3S4mwt40O2tFXpqblZ9wbNwR6p7yHHz2Nupa711LeA/b/rRTauM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258677; c=relaxed/simple;
-	bh=XT7lz9dJewerP78HEuVOL6w6ymH8ZmP+uWgUt17uE4s=;
+	s=arc-20240116; t=1792258680; c=relaxed/simple;
+	bh=CCBKz3/+0lf/Q2M2L3kC6W+nZm6FJjr3susb/+f9HGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L63GgoPIsNDIt17nKSTuWDyoOqvCl+GuT4cVS1v98nVPTdm7e1+sv2J8+kefZ8Mjv8B7wnf3E6yh+L4+jhzGeAYzOJeRIeNaLNBTt1+OlzjYrxlKXAJel6Ubg9M0wpKSRi+hku81qcuHGCgixDAX5JUEIuPurCTjCorCVS97EIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WA0ifFRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKjkUHLgcLBlisY5WrKWKKwa1LN9yr51ZQNymLyDS7LIiP65VKK2tOp044rai0c9rDc30TEhfWujHNOh+U8dX0RaRoxEABPWfosaKWYYvsGFyOyFDF64u3eT489SW3XNYeQl5Aabdmu+r542jtnBy4lLM6rTNpeVOOHgHHfMzG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAkhZ+zi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WA0ifFRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC411F000C4;
-	Sat, 17 Oct 2026 17:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAkhZ+zi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73BE1F000C4;
+	Sat, 17 Oct 2026 17:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258676;
-	bh=+Vmnw5mmWIhOJeQvvqZtez48IuvGEUcs7RwH87bztAw=;
+	s=korg; t=1792258679;
+	bh=p4nI1gwId9qhYceB38rd2LK1AzvkP1PZ0Q5YD86+T4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WA0ifFRXFIvHFY8xDQY0eAuf6xZ0mM4IyvuA+ZowziD5FjKKzzbcHMUfVA4YTvxt8
-	 JJkrdGoq5rWq2nnFOf3t+Bmkx3X/OP7BMKHMCVBBb32fYynoPn8ApQeGejvnxZV3pq
-	 rgF+uCfjWFIvixR6uTviHrBRhb1+DzWnE9AgJ5bc=
+	b=AAkhZ+ziDmL4djg1JvNUyob5VTe492VRq3/wg+HAeSfWSl1HWdM50Re4+A/vAlKQM
+	 iYC3WSC/CJ7y4OYbPczF7IVj0jGzRapIvVrU4AfSvuyVXLGY+19ZaiEPo4X6pyjqG7
+	 IhObfeYsmHVeLsJZ+B5RXnsL15UPXfSbQEUbYaWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0962/1674] dm-verity-fec: fix reading parity bytes split across blocks (take 3)
-Date: Sat, 17 Oct 2026 17:53:54 +0200
-Message-ID: <20261017160455.817328368@linuxfoundation.org>
+Subject: [PATCH 6.6 0963/1674] spi: microchip-core-qspi: control built-in cs manually
+Date: Sat, 17 Oct 2026 17:53:55 +0200
+Message-ID: <20261017160455.842009858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,178 +51,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 430a05cb926f6bdf53e81460a2c3a553257f3f61 ]
+[ Upstream commit 7672749e1496215e8683ce57cf323119033954cf ]
 
-fec_decode_bufs() assumes that the parity bytes of the first RS codeword
-it decodes are never split across parity blocks.
+The coreQSPI IP supports only a single chip select, which is
+automagically operated by the hardware - set low when the transmit
+buffer first gets written to and set high when the number of bytes
+written to the TOTALBYTES field of the FRAMES register have been sent on
+the bus. Additional devices must use GPIOs for their chip selects.
+It was reported to me that if there are two devices attached to this
+QSPI controller that the in-built chip select is set low while linux
+tries to access the device attached to the GPIO.
 
-This assumption is false.  Consider v->fec->block_size == 4096 &&
-v->fec->roots == 17 && fio->nbufs == 1, for example.  In that case, each
-call to fec_decode_bufs() consumes v->fec->roots * (fio->nbufs <<
-DM_VERITY_FEC_BUF_RS_BITS) = 272 parity bytes.
+This went undetected as the boards that connected multiple devices to
+the SPI controller all exclusively used GPIOs for chip selects, not
+relying on the built-in chip select at all. It turns out that this was
+because the built-in chip select, when controlled automagically, is set
+low when active and high when inactive, thereby ruling out its use for
+active-high devices or devices that need to transmit with the chip
+select disabled.
 
-Considering that the parity data for each message block starts on a
-block boundary, the byte alignment in the parity data will iterate
-through 272*i mod 4096 until the 3 parity blocks have been consumed.  On
-the 16th call (i=15), the alignment will be 4080 bytes into the first
-block.  Only 16 bytes remain in that block, but 17 parity bytes will be
-needed.  The code reads out-of-bounds from the parity block buffer.
+Modify the driver so that it controls chip select directly, retaining
+the behaviour for mem_ops of setting the chip select active for the
+entire duration of the transfer in the exec_op callback. For regular
+transfers, implement the set_cs callback for the core to use.
 
-Fortunately this doesn't normally happen, since it can occur only for
-certain non-default values of fec_roots *and* when the maximum number of
-buffers couldn't be allocated due to low memory.  For example with
-block_size=4096 only the following cases are affected:
+As part of this, the existing setup callback, mchp_coreqspi_setup_op(),
+is removed. Modifying the CLKIDLE field is not safe to do during
+operation when there are multiple devices, so this code is removed
+entirely. Setting the MASTER and ENABLE fields is something that can be
+done once at probe, it doesn't need to be re-run for each device.
+Instead the new setup callback sets the built-in chip select to its
+inactive state for active-low devices, as the reset value of the chip
+select in software controlled mode is low.
 
-    fec_roots=17: nbufs in [1, 3, 5, 15]
-    fec_roots=19: nbufs in [1, 229]
-    fec_roots=21: nbufs in [1, 3, 5, 13, 15, 39, 65, 195]
-    fec_roots=23: nbufs in [1, 89]
-
-Regardless, fix it by refactoring how the parity blocks are read.
-
-Fixes: 6df90c02bae4 ("dm-verity FEC: Fix RS FEC repair for roots unaligned to block size (take 2)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 8f9cf02c88528 ("spi: microchip-core-qspi: Add regular transfers")
+Fixes: 8596124c4c1bc ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260430-hamstring-busload-f941d0347b5e@spud
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-fec.c | 97 +++++++++++++++++---------------------
- 1 file changed, 43 insertions(+), 54 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 79 ++++++++++++++++++++++-----
+ 1 file changed, 65 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
-index 5f646c4bb98a6..5073c93cf962c 100644
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -55,36 +55,6 @@ static int fec_decode_rs8(struct dm_verity *v, struct dm_verity_fec_io *fio,
- 			  fio->erasures, 0, NULL);
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 160861891b460..f8cee68a93479 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -74,6 +74,13 @@
+ #define STATUS_FLAGSX4		BIT(8)
+ #define STATUS_MASK		GENMASK(8, 0)
+ 
++/*
++ * QSPI Direct Access register defines
++ */
++#define DIRECT_ACCESS_EN_SSEL		BIT(0)
++#define DIRECT_ACCESS_OP_SSEL		BIT(1)
++#define DIRECT_ACCESS_OP_SSEL_SHIFT	1
++
+ #define BYTESUPPER_MASK		GENMASK(31, 16)
+ #define BYTESLOWER_MASK		GENMASK(15, 0)
+ 
+@@ -158,6 +165,38 @@ static int mchp_coreqspi_set_mode(struct mchp_coreqspi *qspi, const struct spi_m
+ 	return 0;
  }
  
--/*
-- * Read error-correcting codes for the requested RS block. Returns a pointer
-- * to the data block. Caller is responsible for releasing buf.
-- */
--static u8 *fec_read_parity(struct dm_verity *v, u64 rsb, int index,
--			   unsigned int *offset, unsigned int par_buf_offset,
--			  struct dm_buffer **buf)
++static void mchp_coreqspi_set_cs(struct spi_device *spi, bool enable)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++
++	val &= ~DIRECT_ACCESS_OP_SSEL;
++	val |= !enable << DIRECT_ACCESS_OP_SSEL_SHIFT;
++
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++}
++
++static int mchp_coreqspi_setup(struct spi_device *spi)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	/*
++	 * Active low devices need to be specifically set to their inactive
++	 * states during probe.
++	 */
++	if (spi->mode & SPI_CS_HIGH)
++		return 0;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_OP_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++
++	return 0;
++}
++
+ static inline void mchp_coreqspi_read_op(struct mchp_coreqspi *qspi)
+ {
+ 	u32 control, data;
+@@ -298,19 +337,6 @@ static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_devi
+ 	return 0;
+ }
+ 
+-static int mchp_coreqspi_setup_op(struct spi_device *spi_dev)
 -{
--	u64 position, block, rem;
--	u8 *res;
+-	struct spi_controller *ctlr = spi_dev->master;
+-	struct mchp_coreqspi *qspi = spi_controller_get_devdata(ctlr);
+-	u32 control = readl_relaxed(qspi->regs + REG_CONTROL);
 -
--	/* We have already part of parity bytes read, skip to the next block */
--	if (par_buf_offset)
--		index++;
+-	control |= (CONTROL_MASTER | CONTROL_ENABLE);
+-	control &= ~CONTROL_CLKIDLE;
+-	writel_relaxed(control, qspi->regs + REG_CONTROL);
 -
--	position = (index + rsb) * v->fec->roots;
--	block = div64_u64_rem(position, v->fec->io_size, &rem);
--	*offset = par_buf_offset ? 0 : (unsigned int)rem;
--
--	res = dm_bufio_read(v->fec->bufio, block, buf);
--	if (IS_ERR(res)) {
--		DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
--		      v->data_dev->name, (unsigned long long)rsb,
--		      (unsigned long long)block, PTR_ERR(res));
--		*buf = NULL;
--	}
--
--	return res;
+-	return 0;
 -}
 -
- /* Loop over each preallocated buffer slot. */
- #define fec_for_each_prealloc_buffer(__i) \
- 	for (__i = 0; __i < DM_VERITY_FEC_BUF_PREALLOC; __i++)
-@@ -132,13 +102,27 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
+ static inline void mchp_coreqspi_config_op(struct mchp_coreqspi *qspi, const struct spi_mem_op *op)
  {
- 	int r, corrected = 0, res;
- 	struct dm_buffer *buf;
--	unsigned int n, i, offset, par_buf_offset = 0;
-+	unsigned int n, i, parity_pos, to_copy;
- 	u8 *par, *block, par_buf[DM_VERITY_FEC_RSM - DM_VERITY_FEC_MIN_RSN];
-+	u64 parity_block;
+ 	u32 idle_cycles = 0;
+@@ -409,6 +435,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
  
--	par = fec_read_parity(v, rsb, block_offset, &offset,
--			      par_buf_offset, &buf);
--	if (IS_ERR(par))
-+	/*
-+	 * Compute the index of the first parity block that will be needed and
-+	 * the starting position in that block.  Then read that block.
-+	 *
-+	 * io_size is always a power of 2, but roots might not be.  Note that
-+	 * when it's not, a codeword's parity bytes can span a block boundary.
-+	 */
-+	parity_block = (rsb + block_offset) * v->fec->roots;
-+	parity_pos = parity_block & (v->fec->io_size - 1);
-+	parity_block >>= v->data_dev_block_bits;
-+	par = dm_bufio_read(v->fec->bufio, parity_block, &buf);
-+	if (IS_ERR(par)) {
-+		DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
-+		      v->data_dev->name, (unsigned long long)rsb,
-+		      (unsigned long long)parity_block, PTR_ERR(par));
- 		return PTR_ERR(par);
-+	}
+ 	reinit_completion(&qspi->data_completion);
+ 	mchp_coreqspi_config_op(qspi, op);
++	mchp_coreqspi_set_cs(mem->spi, true);
+ 	if (op->cmd.opcode) {
+ 		qspi->txbuf = &opcode;
+ 		qspi->rxbuf = NULL;
+@@ -449,6 +476,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 		err = -ETIMEDOUT;
  
- 	/*
- 	 * Decode the RS blocks we have in bufs. Each RS block results in
-@@ -146,7 +130,31 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
- 	 */
- 	fec_for_each_buffer_rs_block(fio, n, i) {
- 		block = fec_buffer_rs_block(v, fio, n, i);
--		memcpy(&par_buf[par_buf_offset], &par[offset], v->fec->roots - par_buf_offset);
-+
-+		/*
-+		 * Copy the next 'roots' parity bytes to 'par_buf', reading
-+		 * another parity block if needed.
-+		 */
-+		to_copy = min(v->fec->io_size - parity_pos, v->fec->roots);
-+		memcpy(par_buf, &par[parity_pos], to_copy);
-+		parity_pos += to_copy;
-+		if (to_copy < v->fec->roots) {
-+			parity_block++;
-+			parity_pos = 0;
-+
-+			dm_bufio_release(buf);
-+			par = dm_bufio_read(v->fec->bufio, parity_block, &buf);
-+			if (IS_ERR(par)) {
-+				DMERR("%s: FEC %llu: parity read failed (block %llu): %ld",
-+				      v->data_dev->name, (unsigned long long)rsb,
-+				      (unsigned long long)parity_block,
-+				      PTR_ERR(par));
-+				return PTR_ERR(par);
-+			}
-+			memcpy(&par_buf[to_copy], par, v->fec->roots - to_copy);
-+			parity_pos = v->fec->roots - to_copy;
-+		}
-+
- 		res = fec_decode_rs8(v, fio, block, par_buf, neras);
- 		if (res < 0) {
- 			r = res;
-@@ -159,25 +167,6 @@ static int fec_decode_bufs(struct dm_verity *v, struct dm_verity_fec_io *fio,
- 		block_offset++;
- 		if (block_offset >= 1 << v->data_dev_block_bits)
- 			goto done;
--
--		/* Read the next block when we run out of parity bytes */
--		offset += (v->fec->roots - par_buf_offset);
--		/* Check if parity bytes are split between blocks */
--		if (offset < v->fec->io_size && (offset + v->fec->roots) > v->fec->io_size) {
--			par_buf_offset = v->fec->io_size - offset;
--			memcpy(par_buf, &par[offset], par_buf_offset);
--			offset += par_buf_offset;
--		} else
--			par_buf_offset = 0;
--
--		if (offset >= v->fec->io_size) {
--			dm_bufio_release(buf);
--
--			par = fec_read_parity(v, rsb, block_offset, &offset,
--					      par_buf_offset, &buf);
--			if (IS_ERR(par))
--				return PTR_ERR(par);
--		}
+ error:
++	mchp_coreqspi_set_cs(mem->spi, false);
+ 	mutex_unlock(&qspi->op_lock);
+ 	mchp_coreqspi_disable_ints(qspi);
+ 
+@@ -505,6 +533,7 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	int ret;
++	u32 num_cs, val;
+ 
+ 	ctlr = devm_spi_alloc_master(&pdev->dev, sizeof(*qspi));
+ 	if (!ctlr)
+@@ -538,12 +567,34 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 		return ret;
  	}
- done:
- 	r = corrected;
+ 
++	/*
++	 * The IP core only has a single CS, any more have to be provided via
++	 * gpios
++	 */
++	if (of_property_read_u32(pdev->dev.of_node, "num-cs", &num_cs))
++		num_cs = 1;
++
++	ctlr->num_chipselect = num_cs;
++
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctlr->mem_ops = &mchp_coreqspi_mem_ops;
+-	ctlr->setup = mchp_coreqspi_setup_op;
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_RX_DUAL | SPI_RX_QUAD |
+ 			  SPI_TX_DUAL | SPI_TX_QUAD;
+ 	ctlr->dev.of_node = np;
++	ctlr->setup = mchp_coreqspi_setup;
++	ctlr->set_cs = mchp_coreqspi_set_cs;
++	ctlr->use_gpio_descriptors = true;
++
++	val = readl_relaxed(qspi->regs + REG_CONTROL);
++	val |= (CONTROL_MASTER | CONTROL_ENABLE);
++	writel_relaxed(val, qspi->regs + REG_CONTROL);
++
++	/*
++	 * Put cs into software controlled mode
++	 */
++	val = readl_relaxed(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_EN_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
+ 
+ 	ret = spi_register_controller(ctlr);
+ 	if (ret)
 -- 
 2.53.0
 
