@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AD617BED0;
-	Sat, 17 Oct 2026 16:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780A17BED0;
+	Sat, 17 Oct 2026 16:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253871; cv=none; b=Dl4Xhi3jgfcsX5fCxNJmWBBqB5DTU5HeTcE9BxZdko7gE+ZGHkcohmCnxlxHNWuGQkpVkPb6AN+StRHPB6ivNeGZ04Ul8dqBS/zvEL3k+URuEBIUqqvdoPDyuS36l/yYTTZuX3kczeQVSU7LWZgMDWw1BTJgIeXfpgYVLCvhnoQ=
+	t=1792253874; cv=none; b=oxeEcQv14giTGbjzHnFZm7VOGboZ1LxMx+ju3KAvFlXwZRBZwVBy9qZHiXsokUUN7+oMCEjq0wRS7j0QkstfJ5aPpS9TFUTTI9u4p2hOqbzimT3JfmZ91psXQrUGIj+ctezmw2DsETw6c+VwCKHhv4RXm4Vxi8W9XuCR61U23fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253871; c=relaxed/simple;
-	bh=k80UNzDGyW6PvokT5SzmjeiqJVaBipuWriJy/IlGjv8=;
+	s=arc-20240116; t=1792253874; c=relaxed/simple;
+	bh=kyxeeK9xgkyqQT6qqw/rvPZYcFqvuG+SBno2LMMeqOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAPmuUZSe1YExLKUDcX9a0OYvt9ElQ8Qbv6/YesbyRiCNs8DawvAooOwSHtI94nUS+i4g+nS87D9vJiE7fjg3FCbAo+15YoE0w7NiQawn2ZHLODog6CrN4qKcLHvyLEubcGO6q/iXnVVw66lUCX5mYSBceuPf4te9vYvi8SCyJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5jx5ZCo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o+hZBeFLRc4pNYk/g5AgK724hUwp2K1Bw2vFBUelQKLTdAid+8hy05X/orWBPaZSOZoAIpZ4duNe1DFBU390dQFo/0cwZvi2JibqM/FgacMAXV900c8sH38eIN0ftuXsZcwz3zGBGE8uRKsIHr2X7tzZ5/ibUqLGmDtaEh4x65Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svyk+VhD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5jx5ZCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5961F000C4;
-	Sat, 17 Oct 2026 16:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svyk+VhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5041B1F000C4;
+	Sat, 17 Oct 2026 16:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253869;
-	bh=gTNZ7R4aEb34mUhhNcoajLfTI5jVK3rx8Td79O1La4s=;
+	s=korg; t=1792253872;
+	bh=8sCE1Dw3OlGY7JhNlPahXTyc03IrUCi3lYOemT4kVag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n5jx5ZCokUHiL/4/th+X2LLvy1FHG9KmgNl/8/NlHR5VoZvSJbVKHvviKM5xPu5QO
-	 dLjJT24Q1RO33UzX2kypFtv5YTvIFmt6TrpbUplDEgBy1wK9LJJ1efw/PlOUBFIV4a
-	 Imf03xzJVXdoaNN9tELrCJhlbVkiTZWk3fGHdbqU=
+	b=svyk+VhDoBlfdew0nLul7Z0a3jTPeO9AZ+bKt9nGCYRf81iHTsIstR7Z6tQEwYHx/
+	 +eKo1LAe0+VbaTgzlUisX1YovhHyp/YUmqSh9msdRB2Dv8B+4kU8WN+qZOOJ7h28rf
+	 T21D2n+Bm2cqnCB8Ao9o3S8bOS/4QwywzMBiCsts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Sa <Daniel.Sa@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 261/869] drm/amd/display: Fix NULL pointer dereference in dcn401_init_hw()
-Date: Sat, 17 Oct 2026 17:51:42 +0200
-Message-ID: <20261017160043.752151679@linuxfoundation.org>
+Subject: [PATCH 6.12 262/869] ice: ptp: dont WARN when controlling PF is unavailable
+Date: Sat, 17 Oct 2026 17:51:43 +0200
+Message-ID: <20261017160043.778616102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -58,77 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit e927b36ae18b66b49219eaa9f46edc7b4fdbb25e ]
+[ Upstream commit bb3f21edc7056cdf44a7f7bd7ba65af40741838c ]
 
-dcn401_init_hw() assumes that update_bw_bounding_box() is valid when
-entering the update path. However, the existing condition:
+In VFIO passthrough setups, it is possible to pass through only a PF
+which doesn't own the source timer. In that case the PTP controlling PF
+(adapter->ctrl_pf) is never initialized in the VM, so ice_get_ctrl_ptp()
+returns NULL and triggers WARN_ON() in ice_ptp_setup_pf().
 
-  ((!fams2_enable && update_bw_bounding_box) || freq_changed)
+Since this is an expected behavior in that configuration, replace
+WARN_ON() with an informational message and return -EOPNOTSUPP.
 
-does not guarantee this, as the freq_changed branch can evaluate to true
-independently of the callback pointer.
-
-This can result in calling update_bw_bounding_box() when it is NULL.
-
-Fix this by separating the update condition from the pointer checks and
-ensuring the callback, dc->clk_mgr, and bw_params are validated before
-use.
-
-Fixes the below:
-../dc/hwss/dcn401/dcn401_hwseq.c:367 dcn401_init_hw() error: we previously assumed 'dc->res_pool->funcs->update_bw_bounding_box' could be null (see line 362)
-
-Fixes: ca0fb243c3bb ("drm/amd/display: Underflow Seen on DCN401 eGPU")
-Cc: Daniel Sa <Daniel.Sa@amd.com>
-Cc: Alvin Lee <alvin.lee2@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 86117c5ab42f21562fedb0a64bffea3ee5fcd477)
-Cc: stable@vger.kernel.org
+Fixes: e800654e85b5 ("ice: Use ice_adapter for PTP shared data instead of auxdev")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c   | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 768b756d427c7..be99798cf6ee1 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -225,6 +225,7 @@ void dcn401_init_hw(struct dc *dc)
- 	int edp_num;
- 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
- 	uint32_t user_level = MAX_BACKLIGHT_LEVEL;
-+	bool dchub_ref_freq_changed;
- 	int current_dchub_ref_freq = 0;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index ca0d4ba2b63b2..f0dab91ce831e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -2936,7 +2936,13 @@ static int ice_ptp_setup_pf(struct ice_pf *pf)
+ 	struct ice_ptp *ctrl_ptp = ice_get_ctrl_ptp(pf);
+ 	struct ice_ptp *ptp = &pf->ptp;
  
- 	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks) {
-@@ -445,12 +446,14 @@ void dcn401_init_hw(struct dc *dc)
- 		dc->caps.dmub_caps.mclk_sw = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver > 0;
- 		dc->caps.dmub_caps.fams_ver = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver;
- 		dc->debug.fams2_config.bits.enable &= dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver == 2;
--		if ((!dc->debug.fams2_config.bits.enable && dc->res_pool->funcs->update_bw_bounding_box)
--			|| res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq) {
-+		dchub_ref_freq_changed =
-+			res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq;
-+		if ((!dc->debug.fams2_config.bits.enable || dchub_ref_freq_changed) &&
-+		    dc->res_pool->funcs->update_bw_bounding_box &&
-+		    dc->clk_mgr && dc->clk_mgr->bw_params) {
- 			/* update bounding box if FAMS2 disabled, or if dchub clk has changed */
--			if (dc->clk_mgr)
--				dc->res_pool->funcs->update_bw_bounding_box(dc,
--									    dc->clk_mgr->bw_params);
-+			dc->res_pool->funcs->update_bw_bounding_box(dc,
-+								    dc->clk_mgr->bw_params);
- 		}
- 	}
- }
+-	if (WARN_ON(!ctrl_ptp) || ice_get_phy_model(&pf->hw) == ICE_PHY_UNSUP)
++	if (!ctrl_ptp) {
++		dev_info(ice_pf_to_dev(pf),
++			 "PTP unavailable: no controlling PF\n");
++		return -EOPNOTSUPP;
++	}
++
++	if (ice_get_phy_model(&pf->hw) == ICE_PHY_UNSUP)
+ 		return -ENODEV;
+ 
+ 	INIT_LIST_HEAD(&ptp->port.list_node);
 -- 
 2.53.0
 
