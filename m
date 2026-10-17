@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2613A59A3;
-	Sat, 17 Oct 2026 16:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C3F3A59A3;
+	Sat, 17 Oct 2026 16:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253566; cv=none; b=hHEQD2zjYyphBON5BbceSpaepniRcvermvU3Ktk8SlhFFZrpli2/jzPDM+R7d28KpvzUY+Wqy6dqgzj/Ou3KNHQ7zWkgqD4VcLxH1ujWKc6mKNZnaQQnrVFywXtURDeApp9WngVv9pNX69r8Lic4JUVVMuVK5azK+UL5ObacGAc=
+	t=1792253571; cv=none; b=FcuQ1xDYypgH+QNfbbn+v4aax+REpdyjNmAiFmfborVHaE12pvAJFkPi1xwg1gIfpmwIO9z+WzrJiUl2eoR+oC+7JyxXOzwH7BSjUTnQD/wq6CdvAmZ+FRulLtF0ns4mMnOoce9YwQ3CHHqc+D6BpV2vyj/rgTMWr382Ia7gzpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253566; c=relaxed/simple;
-	bh=ZaumQSDGe7Vr6ut9d0NJqwng7ffbJQXeozqimoI8al0=;
+	s=arc-20240116; t=1792253571; c=relaxed/simple;
+	bh=51/Ojdl/oTqHpPhxKXxzaYDBOmHB9AUFqqt5ufL9AnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIKIaXk0B2BsQ4ciJlDC2bsLMWBCoEEiuBh8yPMsD5YwygRIM1s26UHLPLRFlRUXEgsdaXODS3WFeUsEowmyFLb7GWx3r88RVI+0WqY1DYY0feo0BNhIogIedvg/v5UcwTFBpglo1WbFtJI/4WZWLOmyAlIi9MdNtM9xU5rbnBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkqCCMp2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oo5N5U8Js/1w57EGLDRzlVt/K7xurwbiQnl4dXf80rtHga1dAvtvVNKWQLi0m5QuPq+NgUcuORgQk2h8xhnXhH+I8hV2FJN39yOsX1eal/WB2Tr8VECktIDCAzuejlkgZATO23q8++YMUJ0tV0HsWgRnKAgig8cMQpFvlvifdPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQuSTbL7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkqCCMp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9313D1F000C4;
-	Sat, 17 Oct 2026 16:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQuSTbL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58DF1F000C5;
+	Sat, 17 Oct 2026 16:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253564;
-	bh=frECDcDZYbTHp0MHL3zMkcPrjxuKA5EIGfZ+ncOYY+0=;
+	s=korg; t=1792253567;
+	bh=4KYfop3PQARBY/5TOwTCvoo9kffJz48r5kPeqRAm1ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kkqCCMp2iDb2aedW5vq4oKA2t5kVRvmEx1XYPYT8LI2MHq+k2en+B0QEPzwXMOE2B
-	 ZE/RIpUJZG0shOhOmSbxNhDWIG5wm27bu9jouCJy6slPGoK6m00zlasTWoxUxLV1Qt
-	 PcSAWtz2Mpg3jeifmwVaUu3u9kKYpfLfvXxbLETg=
+	b=OQuSTbL7L55CHPZlKZs0IPjBVWKZ2O8HQCxG2kWUSCs6w+IqHXfsgaXSyr1GtmrHC
+	 H0XAAQcNYGuy6hcSTL47posZdEYxbTSTK7orRxAhOHH4cGEoRkoCTwv7GyMtY5MnGW
+	 KrRKllsVOLqWzJXHef29ET6F/y93g232pD7HKaMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dogaru <vdogaru@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/869] net/mlx5: HWS, Refactor pool implementation
-Date: Sat, 17 Oct 2026 17:49:19 +0200
-Message-ID: <20261017160040.069799296@linuxfoundation.org>
+Subject: [PATCH 6.12 109/869] crypto: x86/aegis128 - improve assembly function prototypes
+Date: Sat, 17 Oct 2026 17:49:10 +0200
+Message-ID: <20261017160039.831072735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -55,761 +52,423 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit d171ce3d988868bed9dc3c9eeb8428f87dd9ac85 ]
+[ Upstream commit 8da94b300f67240fbd8880d918200aa9046fc398 ]
 
-Refactor the pool implementation to remove unused flags and clarify its
-usage. A pool represents a single range of STEs or STCs which are
-allocated at pool creation time.
+Adjust the prototypes of the AEGIS assembly functions:
 
-Pools are used under three patterns:
+- Use proper types instead of 'void *', when applicable.
 
-1. STCs are allocated one at a time from a global pool using a bitmap
-   based implementation.
+- Move the length parameter to after the buffers it describes rather
+  than before, to match the usual convention.  Also shorten its name to
+  just len (which is the name used in the assembly code).
 
-2. Action STEs are allocated in power-of-two blocks using a buddy
-   algorithm.
+- Declare register aliases at the beginning of each function rather than
+  once per file.  This was necessary because len was moved, but also it
+  allows adding some aliases where raw registers were used before.
 
-3. Match STEs do not use allocation, since insertion into these tables
-   is based on hashes or direct addressing. In such cases we use a pool
-   only to create the STE range.
+- Put assoclen and cryptlen in the correct order when declaring the
+  finalization function in the .c file.
 
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/1744312662-356571-5-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 2c0a959bebdc ("net/mlx5: HWS, Fix memory leak in hws_pool_buddy_init error path")
+- Remove the unnecessary "crypto_" prefix.
+
+Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3d9eb180fbe8 ("crypto: x86/aegis - Add missing error checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/steering/hws/mlx5hws_action.c   |   1 -
- .../mlx5/core/steering/hws/mlx5hws_context.c  |   1 -
- .../mlx5/core/steering/hws/mlx5hws_matcher.c  |  19 +-
- .../mlx5/core/steering/hws/mlx5hws_pool.c     | 387 +++++-------------
- .../mlx5/core/steering/hws/mlx5hws_pool.h     |  45 +-
- 5 files changed, 116 insertions(+), 337 deletions(-)
+ arch/x86/crypto/aegis128-aesni-asm.S  | 105 ++++++++++++++++----------
+ arch/x86/crypto/aegis128-aesni-glue.c |  92 +++++++++++-----------
+ 2 files changed, 112 insertions(+), 85 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-index 041b063730bd9..667fa29830b6f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-@@ -1601,7 +1601,6 @@ hws_action_create_dest_match_range_table(struct mlx5hws_context *ctx,
+diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
+index 639ba6f31a90e..6520d0ed98146 100644
+--- a/arch/x86/crypto/aegis128-aesni-asm.S
++++ b/arch/x86/crypto/aegis128-aesni-asm.S
+@@ -19,11 +19,6 @@
+ #define T0	%xmm6
+ #define T1	%xmm7
  
- 	pool_attr.table_type = MLX5HWS_TABLE_TYPE_FDB;
- 	pool_attr.pool_type = MLX5HWS_POOL_TYPE_STE;
--	pool_attr.flags = MLX5HWS_POOL_FLAGS_FOR_STE_ACTION_POOL;
- 	pool_attr.alloc_log_sz = 1;
- 	table_ste->pool = mlx5hws_pool_create(ctx, &pool_attr);
- 	if (!table_ste->pool) {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-index a4cc81849ebe2..876123b0a573d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-@@ -34,7 +34,6 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
- 
- 	/* Create an STC pool per FT type */
- 	pool_attr.pool_type = MLX5HWS_POOL_TYPE_STC;
--	pool_attr.flags = MLX5HWS_POOL_FLAGS_FOR_STC_POOL;
- 	max_log_sz = min(MLX5HWS_POOL_STC_LOG_SZ, ctx->caps->stc_alloc_log_max);
- 	pool_attr.alloc_log_sz = max(max_log_sz, ctx->caps->stc_alloc_log_gran);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-index 270a00b68e614..21d27fad5a330 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-@@ -265,14 +265,6 @@ static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
- 				rtc_attr.match_definer_0 = ctx->caps->linear_match_definer;
- 			}
- 		}
+-#define STATEP	%rdi
+-#define LEN	%esi
+-#define SRC	%rdx
+-#define DST	%rcx
 -
--		/* Match pool requires implicit allocation */
--		ret = mlx5hws_pool_chunk_alloc(ste_pool, ste);
--		if (ret) {
--			mlx5hws_err(ctx, "Failed to allocate STE for %s RTC",
--				    hws_matcher_rtc_type_to_str(rtc_type));
--			return ret;
--		}
- 		break;
+ .section .rodata.cst16.aegis128_const, "aM", @progbits, 32
+ .align 16
+ .Laegis128_const_0:
+@@ -72,6 +67,8 @@
+  *   %r9
+  */
+ SYM_FUNC_START_LOCAL(__load_partial)
++	.set LEN, %ecx
++	.set SRC, %rsi
+ 	xor %r9d, %r9d
+ 	pxor MSG, MSG
  
- 	case HWS_MATCHER_RTC_TYPE_STE_ARRAY:
-@@ -351,23 +343,17 @@ static void hws_matcher_destroy_rtc(struct mlx5hws_matcher *matcher,
- {
- 	struct mlx5hws_matcher_action_ste *action_ste;
- 	struct mlx5hws_table *tbl = matcher->tbl;
--	struct mlx5hws_pool_chunk *ste;
--	struct mlx5hws_pool *ste_pool;
- 	u32 rtc_0_id, rtc_1_id;
+@@ -138,6 +135,8 @@ SYM_FUNC_END(__load_partial)
+  *   %r10
+  */
+ SYM_FUNC_START_LOCAL(__store_partial)
++	.set LEN, %ecx
++	.set DST, %rdx
+ 	mov LEN, %r8d
+ 	mov DST, %r9
  
- 	switch (rtc_type) {
- 	case HWS_MATCHER_RTC_TYPE_MATCH:
- 		rtc_0_id = matcher->match_ste.rtc_0_id;
- 		rtc_1_id = matcher->match_ste.rtc_1_id;
--		ste_pool = matcher->match_ste.pool;
--		ste = &matcher->match_ste.ste;
- 		break;
- 	case HWS_MATCHER_RTC_TYPE_STE_ARRAY:
- 		action_ste = &matcher->action_ste;
- 		rtc_0_id = action_ste->rtc_0_id;
- 		rtc_1_id = action_ste->rtc_1_id;
--		ste_pool = action_ste->pool;
--		ste = &action_ste->ste;
- 		break;
- 	default:
- 		return;
-@@ -377,8 +363,6 @@ static void hws_matcher_destroy_rtc(struct mlx5hws_matcher *matcher,
- 		mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev, rtc_1_id);
+@@ -184,16 +183,21 @@ SYM_FUNC_START_LOCAL(__store_partial)
+ SYM_FUNC_END(__store_partial)
  
- 	mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev, rtc_0_id);
--	if (rtc_type == HWS_MATCHER_RTC_TYPE_MATCH)
--		mlx5hws_pool_chunk_free(ste_pool, ste);
- }
+ /*
+- * void crypto_aegis128_aesni_init(void *state, const void *key, const void *iv);
++ * void aegis128_aesni_init(struct aegis_state *state,
++ *			    const struct aegis_block *key,
++ *			    const u8 iv[AEGIS128_NONCE_SIZE]);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_init)
++SYM_FUNC_START(aegis128_aesni_init)
++	.set STATEP, %rdi
++	.set KEYP, %rsi
++	.set IVP, %rdx
+ 	FRAME_BEGIN
  
- static int
-@@ -551,7 +535,7 @@ static int hws_matcher_bind_at(struct mlx5hws_matcher *matcher)
- 	/* Allocate action STE mempool */
- 	pool_attr.table_type = tbl->type;
- 	pool_attr.pool_type = MLX5HWS_POOL_TYPE_STE;
--	pool_attr.flags = MLX5HWS_POOL_FLAGS_FOR_STE_ACTION_POOL;
-+	pool_attr.flags = MLX5HWS_POOL_FLAG_BUDDY;
- 	pool_attr.alloc_log_sz = ilog2(roundup_pow_of_two(action_ste->max_stes)) +
- 				 matcher->attr.table.sz_row_log;
- 	hws_matcher_set_pool_attr(&pool_attr, matcher);
-@@ -628,7 +612,6 @@ static int hws_matcher_bind_mt(struct mlx5hws_matcher *matcher)
- 	/* Create an STE pool per matcher*/
- 	pool_attr.table_type = matcher->tbl->type;
- 	pool_attr.pool_type = MLX5HWS_POOL_TYPE_STE;
--	pool_attr.flags = MLX5HWS_POOL_FLAGS_FOR_MATCHER_STE_POOL;
- 	pool_attr.alloc_log_sz = matcher->attr.table.sz_col_log +
- 				 matcher->attr.table.sz_row_log;
- 	hws_matcher_set_pool_attr(&pool_attr, matcher);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
-index 4302565b49b5e..2fc0e5dfbaefc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
-@@ -60,10 +60,8 @@ hws_pool_create_one_resource(struct mlx5hws_pool *pool, u32 log_range,
- 		ret = -EINVAL;
- 	}
+ 	/* load IV: */
+-	movdqu (%rdx), T1
++	movdqu (IVP), T1
  
--	if (ret) {
--		mlx5hws_err(pool->ctx, "Failed to allocate resource objects\n");
-+	if (ret)
- 		goto free_resource;
--	}
+ 	/* load key: */
+-	movdqa (%rsi), KEY
++	movdqa (KEYP), KEY
+ 	pxor KEY, T1
+ 	movdqa T1, STATE0
+ 	movdqa KEY, STATE3
+@@ -226,13 +230,16 @@ SYM_FUNC_START(crypto_aegis128_aesni_init)
  
- 	resource->pool = pool;
- 	resource->range = 1 << log_range;
-@@ -76,17 +74,17 @@ hws_pool_create_one_resource(struct mlx5hws_pool *pool, u32 log_range,
- 	return NULL;
- }
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_init)
++SYM_FUNC_END(aegis128_aesni_init)
  
--static int
--hws_pool_resource_alloc(struct mlx5hws_pool *pool, u32 log_range)
-+static int hws_pool_resource_alloc(struct mlx5hws_pool *pool)
- {
- 	struct mlx5hws_pool_resource *resource;
- 	u32 fw_ft_type, opt_log_range;
+ /*
+- * void crypto_aegis128_aesni_ad(void *state, unsigned int length,
+- *                               const void *data);
++ * void aegis128_aesni_ad(struct aegis_state *state, const u8 *data,
++ *			  unsigned int len);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_ad)
++SYM_FUNC_START(aegis128_aesni_ad)
++	.set STATEP, %rdi
++	.set SRC, %rsi
++	.set LEN, %edx
+ 	FRAME_BEGIN
  
- 	fw_ft_type = mlx5hws_table_get_res_fw_ft_type(pool->tbl_type, false);
--	opt_log_range = pool->opt_type == MLX5HWS_POOL_OPTIMIZE_ORIG ? 0 : log_range;
-+	opt_log_range = pool->opt_type == MLX5HWS_POOL_OPTIMIZE_ORIG ?
-+				0 : pool->alloc_log_sz;
- 	resource = hws_pool_create_one_resource(pool, opt_log_range, fw_ft_type);
- 	if (!resource) {
--		mlx5hws_err(pool->ctx, "Failed allocating resource\n");
-+		mlx5hws_err(pool->ctx, "Failed to allocate resource\n");
- 		return -EINVAL;
- 	}
+ 	cmp $0x10, LEN
+@@ -378,7 +385,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_ad)
+ .Lad_out:
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_ad)
++SYM_FUNC_END(aegis128_aesni_ad)
  
-@@ -96,10 +94,11 @@ hws_pool_resource_alloc(struct mlx5hws_pool *pool, u32 log_range)
- 		struct mlx5hws_pool_resource *mirror_resource;
+ .macro encrypt_block a s0 s1 s2 s3 s4 i
+ 	movdq\a (\i * 0x10)(SRC), MSG
+@@ -399,10 +406,14 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
+ .endm
  
- 		fw_ft_type = mlx5hws_table_get_res_fw_ft_type(pool->tbl_type, true);
--		opt_log_range = pool->opt_type == MLX5HWS_POOL_OPTIMIZE_MIRROR ? 0 : log_range;
-+		opt_log_range = pool->opt_type == MLX5HWS_POOL_OPTIMIZE_MIRROR ?
-+					0 : pool->alloc_log_sz;
- 		mirror_resource = hws_pool_create_one_resource(pool, opt_log_range, fw_ft_type);
- 		if (!mirror_resource) {
--			mlx5hws_err(pool->ctx, "Failed allocating mirrored resource\n");
-+			mlx5hws_err(pool->ctx, "Failed to allocate mirrored resource\n");
- 			hws_pool_free_one_resource(resource);
- 			pool->resource = NULL;
- 			return -EINVAL;
-@@ -110,92 +109,58 @@ hws_pool_resource_alloc(struct mlx5hws_pool *pool, u32 log_range)
- 	return 0;
- }
+ /*
+- * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
+- *                                const void *src, void *dst);
++ * void aegis128_aesni_enc(struct aegis_state *state, const u8 *src, u8 *dst,
++ *			   unsigned int len);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_enc)
++SYM_FUNC_START(aegis128_aesni_enc)
++	.set STATEP, %rdi
++	.set SRC, %rsi
++	.set DST, %rdx
++	.set LEN, %ecx
+ 	FRAME_BEGIN
  
--static unsigned long *hws_pool_create_and_init_bitmap(u32 log_range)
--{
--	unsigned long *cur_bmp;
+ 	cmp $0x10, LEN
+@@ -493,13 +504,17 @@ SYM_FUNC_START(crypto_aegis128_aesni_enc)
+ .Lenc_out:
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_enc)
++SYM_FUNC_END(aegis128_aesni_enc)
+ 
+ /*
+- * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
+- *                                     const void *src, void *dst);
++ * void aegis128_aesni_enc_tail(struct aegis_state *state, const u8 *src,
++ *				u8 *dst, unsigned int len);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
++SYM_FUNC_START(aegis128_aesni_enc_tail)
++	.set STATEP, %rdi
++	.set SRC, %rsi
++	.set DST, %rdx
++	.set LEN, %ecx
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+@@ -533,7 +548,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
+ 
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
++SYM_FUNC_END(aegis128_aesni_enc_tail)
+ 
+ .macro decrypt_block a s0 s1 s2 s3 s4 i
+ 	movdq\a (\i * 0x10)(SRC), MSG
+@@ -553,10 +568,14 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
+ .endm
+ 
+ /*
+- * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
+- *                                const void *src, void *dst);
++ * void aegis128_aesni_dec(struct aegis_state *state, const u8 *src, u8 *dst,
++ *			   unsigned int len);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_dec)
++SYM_FUNC_START(aegis128_aesni_dec)
++	.set STATEP, %rdi
++	.set SRC, %rsi
++	.set DST, %rdx
++	.set LEN, %ecx
+ 	FRAME_BEGIN
+ 
+ 	cmp $0x10, LEN
+@@ -647,13 +666,17 @@ SYM_FUNC_START(crypto_aegis128_aesni_dec)
+ .Ldec_out:
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_dec)
++SYM_FUNC_END(aegis128_aesni_dec)
+ 
+ /*
+- * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
+- *                                     const void *src, void *dst);
++ * void aegis128_aesni_dec_tail(struct aegis_state *state, const u8 *src,
++ *				u8 *dst, unsigned int len);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
++SYM_FUNC_START(aegis128_aesni_dec_tail)
++	.set STATEP, %rdi
++	.set SRC, %rsi
++	.set DST, %rdx
++	.set LEN, %ecx
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+@@ -697,14 +720,18 @@ SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
+ 
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_dec_tail)
++SYM_FUNC_END(aegis128_aesni_dec_tail)
+ 
+ /*
+- * void crypto_aegis128_aesni_final(void *state, void *tag_xor,
+- *                                  unsigned int assoclen,
+- *                                  unsigned int cryptlen);
++ * void aegis128_aesni_final(struct aegis_state *state,
++ *			     struct aegis_block *tag_xor,
++ *			     unsigned int assoclen, unsigned int cryptlen);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_final)
++SYM_FUNC_START(aegis128_aesni_final)
++	.set STATEP, %rdi
++	.set TAG_XOR, %rsi
++	.set ASSOCLEN, %edx
++	.set CRYPTLEN, %ecx
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+@@ -715,8 +742,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
+ 	movdqu 0x40(STATEP), STATE4
+ 
+ 	/* prepare length block: */
+-	movd %edx, MSG
+-	pinsrd $2, %ecx, MSG
++	movd ASSOCLEN, MSG
++	pinsrd $2, CRYPTLEN, MSG
+ 	psllq $3, MSG /* multiply by 8 (to get bit count) */
+ 
+ 	pxor STATE3, MSG
+@@ -731,7 +758,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
+ 	aegis128_update; pxor MSG, STATE3
+ 
+ 	/* xor tag: */
+-	movdqu (%rsi), MSG
++	movdqu (TAG_XOR), MSG
+ 
+ 	pxor STATE0, MSG
+ 	pxor STATE1, MSG
+@@ -739,8 +766,8 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
+ 	pxor STATE3, MSG
+ 	pxor STATE4, MSG
+ 
+-	movdqu MSG, (%rsi)
++	movdqu MSG, (TAG_XOR)
+ 
+ 	FRAME_END
+ 	RET
+-SYM_FUNC_END(crypto_aegis128_aesni_final)
++SYM_FUNC_END(aegis128_aesni_final)
+diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
+index 9b52451f6feec..e7a28ccf273bf 100644
+--- a/arch/x86/crypto/aegis128-aesni-glue.c
++++ b/arch/x86/crypto/aegis128-aesni-glue.c
+@@ -23,27 +23,6 @@
+ #define AEGIS128_MIN_AUTH_SIZE 8
+ #define AEGIS128_MAX_AUTH_SIZE 16
+ 
+-asmlinkage void crypto_aegis128_aesni_init(void *state, void *key, void *iv);
 -
--	cur_bmp = bitmap_zalloc(1 << log_range, GFP_KERNEL);
--	if (!cur_bmp)
--		return NULL;
+-asmlinkage void crypto_aegis128_aesni_ad(
+-		void *state, unsigned int length, const void *data);
 -
--	bitmap_fill(cur_bmp, 1 << log_range);
+-asmlinkage void crypto_aegis128_aesni_enc(
+-		void *state, unsigned int length, const void *src, void *dst);
 -
--	return cur_bmp;
--}
+-asmlinkage void crypto_aegis128_aesni_dec(
+-		void *state, unsigned int length, const void *src, void *dst);
 -
--static void hws_pool_buddy_db_put_chunk(struct mlx5hws_pool *pool,
--					struct mlx5hws_pool_chunk *chunk)
-+static int hws_pool_buddy_init(struct mlx5hws_pool *pool)
- {
- 	struct mlx5hws_buddy_mem *buddy;
- 
--	buddy = pool->db.buddy;
-+	buddy = mlx5hws_buddy_create(pool->alloc_log_sz);
- 	if (!buddy) {
--		mlx5hws_err(pool->ctx, "Bad buddy state\n");
--		return;
--	}
+-asmlinkage void crypto_aegis128_aesni_enc_tail(
+-		void *state, unsigned int length, const void *src, void *dst);
 -
--	mlx5hws_buddy_free_mem(buddy, chunk->offset, chunk->order);
--}
+-asmlinkage void crypto_aegis128_aesni_dec_tail(
+-		void *state, unsigned int length, const void *src, void *dst);
 -
--static struct mlx5hws_buddy_mem *
--hws_pool_buddy_get_buddy(struct mlx5hws_pool *pool, u32 order)
--{
--	static struct mlx5hws_buddy_mem *buddy;
--	u32 new_buddy_size;
+-asmlinkage void crypto_aegis128_aesni_final(
+-		void *state, void *tag_xor, unsigned int cryptlen,
+-		unsigned int assoclen);
 -
--	buddy = pool->db.buddy;
--	if (buddy)
--		return buddy;
--
--	new_buddy_size = max(pool->alloc_log_sz, order);
--	buddy = mlx5hws_buddy_create(new_buddy_size);
--	if (!buddy) {
--		mlx5hws_err(pool->ctx, "Failed to create buddy order: %d\n",
--			    new_buddy_size);
--		return NULL;
-+		mlx5hws_err(pool->ctx, "Failed to create buddy order: %zu\n",
-+			    pool->alloc_log_sz);
-+		return -ENOMEM;
- 	}
+ struct aegis_block {
+ 	u8 bytes[AEGIS128_BLOCK_SIZE] __aligned(AEGIS128_BLOCK_ALIGN);
+ };
+@@ -56,6 +35,32 @@ struct aegis_ctx {
+ 	struct aegis_block key;
+ };
  
--	if (hws_pool_resource_alloc(pool, new_buddy_size) != 0) {
--		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %d\n",
--			    pool->type, new_buddy_size);
-+	if (hws_pool_resource_alloc(pool) != 0) {
-+		mlx5hws_err(pool->ctx, "Failed to create resource type: %d size %zu\n",
-+			    pool->type, pool->alloc_log_sz);
- 		mlx5hws_buddy_cleanup(buddy);
--		return NULL;
-+		return -ENOMEM;
- 	}
- 
- 	pool->db.buddy = buddy;
- 
--	return buddy;
-+	return 0;
- }
- 
--static int hws_pool_buddy_get_mem_chunk(struct mlx5hws_pool *pool,
--					int order,
--					int *seg)
-+static int hws_pool_buddy_db_get_chunk(struct mlx5hws_pool *pool,
-+				       struct mlx5hws_pool_chunk *chunk)
- {
--	struct mlx5hws_buddy_mem *buddy;
-+	struct mlx5hws_buddy_mem *buddy = pool->db.buddy;
- 
--	buddy = hws_pool_buddy_get_buddy(pool, order);
--	if (!buddy)
--		return -ENOMEM;
-+	if (!buddy) {
-+		mlx5hws_err(pool->ctx, "Bad buddy state\n");
-+		return -EINVAL;
-+	}
- 
--	*seg = mlx5hws_buddy_alloc_mem(buddy, order);
--	if (*seg >= 0)
-+	chunk->offset = mlx5hws_buddy_alloc_mem(buddy, chunk->order);
-+	if (chunk->offset >= 0)
- 		return 0;
- 
- 	return -ENOMEM;
- }
- 
--static int hws_pool_buddy_db_get_chunk(struct mlx5hws_pool *pool,
--				       struct mlx5hws_pool_chunk *chunk)
-+static void hws_pool_buddy_db_put_chunk(struct mlx5hws_pool *pool,
-+					struct mlx5hws_pool_chunk *chunk)
- {
--	int ret = 0;
-+	struct mlx5hws_buddy_mem *buddy;
- 
--	ret = hws_pool_buddy_get_mem_chunk(pool, chunk->order,
--					   &chunk->offset);
--	if (ret)
--		mlx5hws_err(pool->ctx, "Failed to get free slot for chunk with order: %d\n",
--			    chunk->order);
-+	buddy = pool->db.buddy;
-+	if (!buddy) {
-+		mlx5hws_err(pool->ctx, "Bad buddy state\n");
-+		return;
-+	}
- 
--	return ret;
-+	mlx5hws_buddy_free_mem(buddy, chunk->offset, chunk->order);
- }
- 
- static void hws_pool_buddy_db_uninit(struct mlx5hws_pool *pool)
-@@ -210,15 +175,13 @@ static void hws_pool_buddy_db_uninit(struct mlx5hws_pool *pool)
- 	}
- }
- 
--static int hws_pool_buddy_db_init(struct mlx5hws_pool *pool, u32 log_range)
-+static int hws_pool_buddy_db_init(struct mlx5hws_pool *pool)
- {
--	if (pool->flags & MLX5HWS_POOL_FLAGS_ALLOC_MEM_ON_CREATE) {
--		if (!hws_pool_buddy_get_buddy(pool, log_range)) {
--			mlx5hws_err(pool->ctx,
--				    "Failed allocating memory on create log_sz: %d\n", log_range);
--			return -ENOMEM;
--		}
--	}
-+	int ret;
++asmlinkage void aegis128_aesni_init(struct aegis_state *state,
++				    const struct aegis_block *key,
++				    const u8 iv[AEGIS128_NONCE_SIZE]);
 +
-+	ret = hws_pool_buddy_init(pool);
-+	if (ret)
-+		return ret;
++asmlinkage void aegis128_aesni_ad(struct aegis_state *state, const u8 *data,
++				  unsigned int len);
++
++asmlinkage void aegis128_aesni_enc(struct aegis_state *state, const u8 *src,
++				   u8 *dst, unsigned int len);
++
++asmlinkage void aegis128_aesni_dec(struct aegis_state *state, const u8 *src,
++				   u8 *dst, unsigned int len);
++
++asmlinkage void aegis128_aesni_enc_tail(struct aegis_state *state,
++					const u8 *src, u8 *dst,
++					unsigned int len);
++
++asmlinkage void aegis128_aesni_dec_tail(struct aegis_state *state,
++					const u8 *src, u8 *dst,
++					unsigned int len);
++
++asmlinkage void aegis128_aesni_final(struct aegis_state *state,
++				     struct aegis_block *tag_xor,
++				     unsigned int assoclen,
++				     unsigned int cryptlen);
++
+ static void crypto_aegis128_aesni_process_ad(
+ 		struct aegis_state *state, struct scatterlist *sg_src,
+ 		unsigned int assoclen)
+@@ -75,15 +80,14 @@ static void crypto_aegis128_aesni_process_ad(
+ 			if (pos > 0) {
+ 				unsigned int fill = AEGIS128_BLOCK_SIZE - pos;
+ 				memcpy(buf.bytes + pos, src, fill);
+-				crypto_aegis128_aesni_ad(state,
+-							 AEGIS128_BLOCK_SIZE,
+-							 buf.bytes);
++				aegis128_aesni_ad(state, buf.bytes,
++						  AEGIS128_BLOCK_SIZE);
+ 				pos = 0;
+ 				left -= fill;
+ 				src += fill;
+ 			}
  
- 	pool->p_db_uninit = &hws_pool_buddy_db_uninit;
- 	pool->p_get_chunk = &hws_pool_buddy_db_get_chunk;
-@@ -227,234 +190,105 @@ static int hws_pool_buddy_db_init(struct mlx5hws_pool *pool, u32 log_range)
- 	return 0;
+-			crypto_aegis128_aesni_ad(state, left, src);
++			aegis128_aesni_ad(state, src, left);
+ 
+ 			src += left & ~(AEGIS128_BLOCK_SIZE - 1);
+ 			left &= AEGIS128_BLOCK_SIZE - 1;
+@@ -100,7 +104,7 @@ static void crypto_aegis128_aesni_process_ad(
+ 
+ 	if (pos > 0) {
+ 		memset(buf.bytes + pos, 0, AEGIS128_BLOCK_SIZE - pos);
+-		crypto_aegis128_aesni_ad(state, AEGIS128_BLOCK_SIZE, buf.bytes);
++		aegis128_aesni_ad(state, buf.bytes, AEGIS128_BLOCK_SIZE);
+ 	}
  }
  
--static int hws_pool_create_resource(struct mlx5hws_pool *pool, u32 alloc_size)
--{
--	int ret = hws_pool_resource_alloc(pool, alloc_size);
--
--	if (ret) {
--		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %d\n",
--			    pool->type, alloc_size);
--		return ret;
--	}
--
--	return 0;
--}
--
--static struct mlx5hws_pool_elements *
--hws_pool_element_create_new_elem(struct mlx5hws_pool *pool, u32 order)
-+static unsigned long *hws_pool_create_and_init_bitmap(u32 log_range)
+@@ -110,31 +114,27 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
  {
--	struct mlx5hws_pool_elements *elem;
--	u32 alloc_size;
--
--	alloc_size = pool->alloc_log_sz;
-+	unsigned long *bitmap;
- 
--	elem = kzalloc(sizeof(*elem), GFP_KERNEL);
--	if (!elem)
-+	bitmap = bitmap_zalloc(1 << log_range, GFP_KERNEL);
-+	if (!bitmap)
- 		return NULL;
- 
--	/* Sharing the same resource, also means that all the elements are with size 1 */
--	if ((pool->flags & MLX5HWS_POOL_FLAGS_FIXED_SIZE_OBJECTS) &&
--	    !(pool->flags & MLX5HWS_POOL_FLAGS_RESOURCE_PER_CHUNK)) {
--		 /* Currently all chunks in size 1 */
--		elem->bitmap = hws_pool_create_and_init_bitmap(alloc_size - order);
--		if (!elem->bitmap) {
--			mlx5hws_err(pool->ctx,
--				    "Failed to create bitmap type: %d: size %d\n",
--				    pool->type, alloc_size);
--			goto free_elem;
--		}
--
--		elem->log_size = alloc_size - order;
--	}
--
--	if (hws_pool_create_resource(pool, alloc_size)) {
--		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %d\n",
--			    pool->type, alloc_size);
--		goto free_db;
--	}
--
--	pool->db.element = elem;
-+	bitmap_fill(bitmap, 1 << log_range);
- 
--	return elem;
--
--free_db:
--	bitmap_free(elem->bitmap);
--free_elem:
--	kfree(elem);
--	return NULL;
-+	return bitmap;
- }
- 
--static int hws_pool_element_find_seg(struct mlx5hws_pool_elements *elem, int *seg)
-+static int hws_pool_bitmap_init(struct mlx5hws_pool *pool)
- {
--	unsigned int segment, size;
-+	unsigned long *bitmap;
- 
--	size = 1 << elem->log_size;
--
--	segment = find_first_bit(elem->bitmap, size);
--	if (segment >= size) {
--		elem->is_full = true;
-+	bitmap = hws_pool_create_and_init_bitmap(pool->alloc_log_sz);
-+	if (!bitmap) {
-+		mlx5hws_err(pool->ctx, "Failed to create bitmap order: %zu\n",
-+			    pool->alloc_log_sz);
- 		return -ENOMEM;
+ 	while (walk->nbytes >= AEGIS128_BLOCK_SIZE) {
+ 		if (enc)
+-			crypto_aegis128_aesni_enc(
+-					state,
+-					round_down(walk->nbytes,
+-						   AEGIS128_BLOCK_SIZE),
+-					walk->src.virt.addr,
+-					walk->dst.virt.addr);
++			aegis128_aesni_enc(state, walk->src.virt.addr,
++					   walk->dst.virt.addr,
++					   round_down(walk->nbytes,
++						      AEGIS128_BLOCK_SIZE));
+ 		else
+-			crypto_aegis128_aesni_dec(
+-					state,
+-					round_down(walk->nbytes,
+-						   AEGIS128_BLOCK_SIZE),
+-					walk->src.virt.addr,
+-					walk->dst.virt.addr);
++			aegis128_aesni_dec(state, walk->src.virt.addr,
++					   walk->dst.virt.addr,
++					   round_down(walk->nbytes,
++						      AEGIS128_BLOCK_SIZE));
+ 		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
  	}
  
--	bitmap_clear(elem->bitmap, segment, 1);
--	*seg = segment;
--	return 0;
--}
--
--static int
--hws_pool_onesize_element_get_mem_chunk(struct mlx5hws_pool *pool, u32 order,
--				       int *seg)
--{
--	struct mlx5hws_pool_elements *elem;
--
--	elem = pool->db.element;
--	if (!elem)
--		elem = hws_pool_element_create_new_elem(pool, order);
--	if (!elem)
--		goto err_no_elem;
--
--	if (hws_pool_element_find_seg(elem, seg) != 0) {
--		mlx5hws_err(pool->ctx, "No more resources (last request order: %d)\n", order);
-+	if (hws_pool_resource_alloc(pool) != 0) {
-+		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %zu\n",
-+			    pool->type, pool->alloc_log_sz);
-+		bitmap_free(bitmap);
- 		return -ENOMEM;
+ 	if (walk->nbytes) {
+ 		if (enc)
+-			crypto_aegis128_aesni_enc_tail(state, walk->nbytes,
+-						       walk->src.virt.addr,
+-						       walk->dst.virt.addr);
++			aegis128_aesni_enc_tail(state, walk->src.virt.addr,
++						walk->dst.virt.addr,
++						walk->nbytes);
+ 		else
+-			crypto_aegis128_aesni_dec_tail(state, walk->nbytes,
+-						       walk->src.virt.addr,
+-						       walk->dst.virt.addr);
++			aegis128_aesni_dec_tail(state, walk->src.virt.addr,
++						walk->dst.virt.addr,
++						walk->nbytes);
+ 		skcipher_walk_done(walk, 0);
  	}
- 
--	elem->num_of_elements++;
--	return 0;
-+	pool->db.bitmap = bitmap;
- 
--err_no_elem:
--	mlx5hws_err(pool->ctx, "Failed to allocate element for order: %d\n", order);
--	return -ENOMEM;
-+	return 0;
  }
+@@ -186,10 +186,10 @@ crypto_aegis128_aesni_crypt(struct aead_request *req,
  
--static int hws_pool_general_element_get_mem_chunk(struct mlx5hws_pool *pool,
--						  u32 order, int *seg)
-+static int hws_pool_bitmap_db_get_chunk(struct mlx5hws_pool *pool,
-+					struct mlx5hws_pool_chunk *chunk)
- {
--	int ret;
-+	unsigned long *bitmap, size;
+ 	kernel_fpu_begin();
  
--	if (!pool->resource) {
--		ret = hws_pool_create_resource(pool, order);
--		if (ret)
--			goto err_no_res;
--		*seg = 0; /* One memory slot in that element */
--		return 0;
-+	if (chunk->order != 0) {
-+		mlx5hws_err(pool->ctx, "Pool only supports order 0 allocs\n");
-+		return -EINVAL;
- 	}
+-	crypto_aegis128_aesni_init(&state, ctx->key.bytes, req->iv);
++	aegis128_aesni_init(&state, &ctx->key, req->iv);
+ 	crypto_aegis128_aesni_process_ad(&state, req->src, req->assoclen);
+ 	crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
+-	crypto_aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
++	aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
  
--	mlx5hws_err(pool->ctx, "No more resources (last request order: %d)\n", order);
--	return -ENOMEM;
--
--err_no_res:
--	mlx5hws_err(pool->ctx, "Failed to allocate element for order: %d\n", order);
--	return -ENOMEM;
--}
--
--static int hws_pool_general_element_db_get_chunk(struct mlx5hws_pool *pool,
--						 struct mlx5hws_pool_chunk *chunk)
--{
--	int ret;
--
--	ret = hws_pool_general_element_get_mem_chunk(pool, chunk->order,
--						     &chunk->offset);
--	if (ret)
--		mlx5hws_err(pool->ctx, "Failed to get free slot for chunk with order: %d\n",
--			    chunk->order);
--
--	return ret;
--}
-+	bitmap = pool->db.bitmap;
-+	if (!bitmap) {
-+		mlx5hws_err(pool->ctx, "Bad bitmap state\n");
-+		return -EINVAL;
-+	}
- 
--static void hws_pool_general_element_db_put_chunk(struct mlx5hws_pool *pool,
--						  struct mlx5hws_pool_chunk *chunk)
--{
--	if (pool->flags & MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE)
--		hws_pool_resource_free(pool);
--}
-+	size = 1 << pool->alloc_log_sz;
- 
--static void hws_pool_general_element_db_uninit(struct mlx5hws_pool *pool)
--{
--	(void)pool;
--}
-+	chunk->offset = find_first_bit(bitmap, size);
-+	if (chunk->offset >= size)
-+		return -ENOMEM;
- 
--/* This memory management works as the following:
-- * - At start doesn't allocate no mem at all.
-- * - When new request for chunk arrived:
-- *	allocate resource and give it.
-- * - When free that chunk:
-- *	the resource is freed.
-- */
--static int hws_pool_general_element_db_init(struct mlx5hws_pool *pool)
--{
--	pool->p_db_uninit = &hws_pool_general_element_db_uninit;
--	pool->p_get_chunk = &hws_pool_general_element_db_get_chunk;
--	pool->p_put_chunk = &hws_pool_general_element_db_put_chunk;
-+	bitmap_clear(bitmap, chunk->offset, 1);
- 
- 	return 0;
+ 	kernel_fpu_end();
  }
- 
--static void
--hws_onesize_element_db_destroy_element(struct mlx5hws_pool *pool,
--				       struct mlx5hws_pool_elements *elem)
--{
--	hws_pool_resource_free(pool);
--	bitmap_free(elem->bitmap);
--	kfree(elem);
--	pool->db.element = NULL;
--}
--
--static void hws_onesize_element_db_put_chunk(struct mlx5hws_pool *pool,
--					     struct mlx5hws_pool_chunk *chunk)
-+static void hws_pool_bitmap_db_put_chunk(struct mlx5hws_pool *pool,
-+					 struct mlx5hws_pool_chunk *chunk)
- {
--	struct mlx5hws_pool_elements *elem;
-+	unsigned long *bitmap;
- 
--	elem = pool->db.element;
--	if (!elem) {
--		mlx5hws_err(pool->ctx, "Pool element was not allocated\n");
-+	bitmap = pool->db.bitmap;
-+	if (!bitmap) {
-+		mlx5hws_err(pool->ctx, "Bad bitmap state\n");
- 		return;
- 	}
- 
--	bitmap_set(elem->bitmap, chunk->offset, 1);
--	elem->is_full = false;
--	elem->num_of_elements--;
--
--	if (pool->flags & MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE &&
--	    !elem->num_of_elements)
--		hws_onesize_element_db_destroy_element(pool, elem);
-+	bitmap_set(bitmap, chunk->offset, 1);
- }
- 
--static int hws_onesize_element_db_get_chunk(struct mlx5hws_pool *pool,
--					    struct mlx5hws_pool_chunk *chunk)
-+static void hws_pool_bitmap_db_uninit(struct mlx5hws_pool *pool)
- {
--	int ret = 0;
--
--	ret = hws_pool_onesize_element_get_mem_chunk(pool, chunk->order,
--						     &chunk->offset);
--	if (ret)
--		mlx5hws_err(pool->ctx, "Failed to get free slot for chunk with order: %d\n",
--			    chunk->order);
-+	unsigned long *bitmap;
- 
--	return ret;
-+	bitmap = pool->db.bitmap;
-+	if (bitmap) {
-+		bitmap_free(bitmap);
-+		pool->db.bitmap = NULL;
-+	}
- }
- 
--static void hws_onesize_element_db_uninit(struct mlx5hws_pool *pool)
-+static int hws_pool_bitmap_db_init(struct mlx5hws_pool *pool)
- {
--	struct mlx5hws_pool_elements *elem = pool->db.element;
-+	int ret;
- 
--	if (elem) {
--		bitmap_free(elem->bitmap);
--		kfree(elem);
--		pool->db.element = NULL;
--	}
--}
-+	ret = hws_pool_bitmap_init(pool);
-+	if (ret)
-+		return ret;
- 
--/* This memory management works as the following:
-- * - At start doesn't allocate no mem at all.
-- * - When new request for chunk arrived:
-- *  aloocate the first and only slot of memory/resource
-- *  when it ended return error.
-- */
--static int hws_pool_onesize_element_db_init(struct mlx5hws_pool *pool)
--{
--	pool->p_db_uninit = &hws_onesize_element_db_uninit;
--	pool->p_get_chunk = &hws_onesize_element_db_get_chunk;
--	pool->p_put_chunk = &hws_onesize_element_db_put_chunk;
-+	pool->p_db_uninit = &hws_pool_bitmap_db_uninit;
-+	pool->p_get_chunk = &hws_pool_bitmap_db_get_chunk;
-+	pool->p_put_chunk = &hws_pool_bitmap_db_put_chunk;
- 
- 	return 0;
- }
-@@ -464,15 +298,14 @@ static int hws_pool_db_init(struct mlx5hws_pool *pool,
- {
- 	int ret;
- 
--	if (db_type == MLX5HWS_POOL_DB_TYPE_GENERAL_SIZE)
--		ret = hws_pool_general_element_db_init(pool);
--	else if (db_type == MLX5HWS_POOL_DB_TYPE_ONE_SIZE_RESOURCE)
--		ret = hws_pool_onesize_element_db_init(pool);
-+	if (db_type == MLX5HWS_POOL_DB_TYPE_BITMAP)
-+		ret = hws_pool_bitmap_db_init(pool);
- 	else
--		ret = hws_pool_buddy_db_init(pool, pool->alloc_log_sz);
-+		ret = hws_pool_buddy_db_init(pool);
- 
- 	if (ret) {
--		mlx5hws_err(pool->ctx, "Failed to init general db : %d (ret: %d)\n", db_type, ret);
-+		mlx5hws_err(pool->ctx, "Failed to init pool type: %d (ret: %d)\n",
-+			    db_type, ret);
- 		return ret;
- 	}
- 
-@@ -521,15 +354,10 @@ mlx5hws_pool_create(struct mlx5hws_context *ctx, struct mlx5hws_pool_attr *pool_
- 	pool->tbl_type = pool_attr->table_type;
- 	pool->opt_type = pool_attr->opt_type;
- 
--	/* Support general db */
--	if (pool->flags == (MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE |
--			    MLX5HWS_POOL_FLAGS_RESOURCE_PER_CHUNK))
--		res_db_type = MLX5HWS_POOL_DB_TYPE_GENERAL_SIZE;
--	else if (pool->flags == (MLX5HWS_POOL_FLAGS_ONE_RESOURCE |
--				 MLX5HWS_POOL_FLAGS_FIXED_SIZE_OBJECTS))
--		res_db_type = MLX5HWS_POOL_DB_TYPE_ONE_SIZE_RESOURCE;
--	else
-+	if (pool->flags & MLX5HWS_POOL_FLAG_BUDDY)
- 		res_db_type = MLX5HWS_POOL_DB_TYPE_BUDDY;
-+	else
-+		res_db_type = MLX5HWS_POOL_DB_TYPE_BITMAP;
- 
- 	pool->alloc_log_sz = pool_attr->alloc_log_sz;
- 
-@@ -545,7 +373,7 @@ mlx5hws_pool_create(struct mlx5hws_context *ctx, struct mlx5hws_pool_attr *pool_
- 	return NULL;
- }
- 
--int mlx5hws_pool_destroy(struct mlx5hws_pool *pool)
-+void mlx5hws_pool_destroy(struct mlx5hws_pool *pool)
- {
- 	mutex_destroy(&pool->lock);
- 
-@@ -555,5 +383,4 @@ int mlx5hws_pool_destroy(struct mlx5hws_pool *pool)
- 	hws_pool_db_unint(pool);
- 
- 	kfree(pool);
--	return 0;
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
-index 112a61cd29979..9a781a87f097b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
-@@ -23,29 +23,10 @@ struct mlx5hws_pool_resource {
- };
- 
- enum mlx5hws_pool_flags {
--	/* Only a one resource in that pool */
--	MLX5HWS_POOL_FLAGS_ONE_RESOURCE = 1 << 0,
--	MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE = 1 << 1,
--	/* No sharing resources between chunks */
--	MLX5HWS_POOL_FLAGS_RESOURCE_PER_CHUNK = 1 << 2,
--	/* All objects are in the same size */
--	MLX5HWS_POOL_FLAGS_FIXED_SIZE_OBJECTS = 1 << 3,
--	/* Managed by buddy allocator */
--	MLX5HWS_POOL_FLAGS_BUDDY_MANAGED = 1 << 4,
--	/* Allocate pool_type memory on pool creation */
--	MLX5HWS_POOL_FLAGS_ALLOC_MEM_ON_CREATE = 1 << 5,
--
--	/* These values should be used by the caller */
--	MLX5HWS_POOL_FLAGS_FOR_STC_POOL =
--		MLX5HWS_POOL_FLAGS_ONE_RESOURCE |
--		MLX5HWS_POOL_FLAGS_FIXED_SIZE_OBJECTS,
--	MLX5HWS_POOL_FLAGS_FOR_MATCHER_STE_POOL =
--		MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE |
--		MLX5HWS_POOL_FLAGS_RESOURCE_PER_CHUNK,
--	MLX5HWS_POOL_FLAGS_FOR_STE_ACTION_POOL =
--		MLX5HWS_POOL_FLAGS_ONE_RESOURCE |
--		MLX5HWS_POOL_FLAGS_BUDDY_MANAGED |
--		MLX5HWS_POOL_FLAGS_ALLOC_MEM_ON_CREATE,
-+	/* Managed by a buddy allocator. If this is not set only allocations of
-+	 * order 0 are supported.
-+	 */
-+	MLX5HWS_POOL_FLAG_BUDDY = BIT(0),
- };
- 
- enum mlx5hws_pool_optimize {
-@@ -64,25 +45,16 @@ struct mlx5hws_pool_attr {
- };
- 
- enum mlx5hws_db_type {
--	/* Uses for allocating chunk of big memory, each element has its own resource in the FW*/
--	MLX5HWS_POOL_DB_TYPE_GENERAL_SIZE,
--	/* One resource only, all the elements are with same one size */
--	MLX5HWS_POOL_DB_TYPE_ONE_SIZE_RESOURCE,
-+	/* Uses a bitmap, supports only allocations of order 0. */
-+	MLX5HWS_POOL_DB_TYPE_BITMAP,
- 	/* Entries are managed using a buddy mechanism. */
- 	MLX5HWS_POOL_DB_TYPE_BUDDY,
- };
- 
--struct mlx5hws_pool_elements {
--	u32 num_of_elements;
--	unsigned long *bitmap;
--	u32 log_size;
--	bool is_full;
--};
--
- struct mlx5hws_pool_db {
- 	enum mlx5hws_db_type type;
- 	union {
--		struct mlx5hws_pool_elements *element;
-+		unsigned long *bitmap;
- 		struct mlx5hws_buddy_mem *buddy;
- 	};
- };
-@@ -103,7 +75,6 @@ struct mlx5hws_pool {
- 	enum mlx5hws_pool_optimize opt_type;
- 	struct mlx5hws_pool_resource *resource;
- 	struct mlx5hws_pool_resource *mirror_resource;
--	/* DB */
- 	struct mlx5hws_pool_db db;
- 	/* Functions */
- 	mlx5hws_pool_unint_db p_db_uninit;
-@@ -115,7 +86,7 @@ struct mlx5hws_pool *
- mlx5hws_pool_create(struct mlx5hws_context *ctx,
- 		    struct mlx5hws_pool_attr *pool_attr);
- 
--int mlx5hws_pool_destroy(struct mlx5hws_pool *pool);
-+void mlx5hws_pool_destroy(struct mlx5hws_pool *pool);
- 
- int mlx5hws_pool_chunk_alloc(struct mlx5hws_pool *pool,
- 			     struct mlx5hws_pool_chunk *chunk);
 -- 
 2.53.0
 
