@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E97384CED;
-	Sat, 17 Oct 2026 16:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D38D2C026C;
+	Sat, 17 Oct 2026 16:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254362; cv=none; b=TfdhtpVpI7eDCvQWcWAFwHig9TqHivTCcPGzcDiRTGQvFwb4lpYRwaUkHJWumb4uM8n1r0f36VIv+FTODBxOc97YoiYDyZmrocizWfFlhAHefSdAH+8xKGvkkiWAKhjas/cmhwVqoXkQy2ZoGfB8WCh+lO7GrSKM/E76htQUIHE=
+	t=1792254365; cv=none; b=nRV854PKHZqo4tXBUKHKjZZaJDxGrvH7+x7HWtRxP8CawvWLPAtaN8QgMN8uu+x43+P8XBIWHZ4BQdQHlHt0I1IiriaVDMv3O33aPRN+Wj9Qdz/ZwWhOOQt7Bg8tPOG/3qkNpUguGoKfmnHCrI7Ka8uNenuU6bwyO7iriJPmUmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254362; c=relaxed/simple;
-	bh=VeW5LUwEqV/90vIQyrtUrxGOSq4NDzPsEnlV6C0eNj8=;
+	s=arc-20240116; t=1792254365; c=relaxed/simple;
+	bh=TRza1Y7rofAasCtlHdaR08JtGkQ9WeqJRuLeE97tIWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mh0LngvAhcCtmGKPpHtQYu0rqpVqPgLhZGbIHz+Jz7K6g5GhC2XEbcgCe/U5su+sbWThe3ZCcJ0EXQcaRj0j1a53IpTpmpBPvLk4PlSFhoDa5s3D6jqvjzvjroxw1wEVcc81y8QTahUaBUQJLf+DMS/vbAUTXHgBFlBP7gGHTuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdN92Qhh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hW61md/erTUzCf/FvqkzalfClAvJJSNashRfZ3qK9JJ4ivlwVqwp0uZ9l1p1QS74wlmKCMck0OK8tZAHmqc99XJx5TJttS1CEe1CqjcYPMDq+TV63hosMYuSAx23cLBp5EzAbHwNNOSL65vjf+1G4lx5Pe6Zd1Iuk8rIhRqIENc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YerkKVtL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdN92Qhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26AC1F000C4;
-	Sat, 17 Oct 2026 16:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YerkKVtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5DE1F000C4;
+	Sat, 17 Oct 2026 16:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254361;
-	bh=KcWwselLDHjWyucpXKzMQJtYCnGGAmAju+qi5Bs2pCo=;
+	s=korg; t=1792254364;
+	bh=M7SMkSloQjKR/HN7DMNuSDimzYyIguRXIwV6rbj8PS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LdN92QhheNPNA21vAedr7/WJgc1vGCqYwTipDMN2aAkM5zlnB7GgUIAUlt/s4ZKwS
-	 KwDLFWVuVMAHcsn1qeWp/L2N/BzeAoNjDKWWAhairk0QUDykvGJGfsdEbud3/jxqF5
-	 iDvclKdvc8n1zjFtOSF0Yga+HgsHims4PjZsvapc=
+	b=YerkKVtLrLDyhvU1cn07n5h2kbJn+IDTd9x5WF6HBib+iOHSffLSriuzYwID3Gkky
+	 I0r73kMRABQqrN0RX7BZQdPu8c8Aa3JeHctu9l86Bqh9+0f8LMX1F7197reXeD8D7u
+	 cjD4fbeVppvVEKbUh25HOAV+MTPv3UeRuotrL/lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@h-partners.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 419/869] ata: libata-core: Disable LPM on Silicon Motion MD619{H,G}XCLDE3TC
-Date: Sat, 17 Oct 2026 17:54:20 +0200
-Message-ID: <20261017160047.880063313@linuxfoundation.org>
+Subject: [PATCH 6.12 420/869] ata: libata-core: Add NOLPM quirk for PNY CS900 1TB SSD
+Date: Sat, 17 Oct 2026 17:54:21 +0200
+Message-ID: <20261017160047.906124463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 6ce0dd9f54ea9773c0aedfaab7b858fc68a848ba ]
+[ Upstream commit 462775c620197adaabc983ce847e5b9878ff4cb0 ]
 
-According to a user report, the Silicon Motion MD619HXCLDE3TC SSD and
-the Silicon Motion MD619GXCLDE3TC SSD have problems with LPM.
+The PNY CS900 1TB SSD (Phison PS3111-S11, DRAM-less) drops off the bus
+after entering Device-Initiated Slumber during idle. With the default
+med_power_with_dipm policy the link goes down (SStatus 1 SControl 300)
+and does not recover, forcing the filesystem read-only. Forcing
+max_performance keeps the link stable across prolonged idle.
 
-Reported-by: Yihang Li <liyihang9@h-partners.com>
-Closes: https://lore.kernel.org/linux-ide/20251121073502.3388239-1-liyihang9@h-partners.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Stable-dep-of: 462775c62019 ("ata: libata-core: Add NOLPM quirk for PNY CS900 1TB SSD")
+Add a NOLPM quirk so link power management is disabled for this drive
+specifically, leaving it intact for other devices on the host.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index caf77faf7a33f..e07f82ca68f18 100644
+index e07f82ca68f18..fe3ed016b6d18 100644
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
-@@ -4226,6 +4226,10 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
+@@ -4226,6 +4226,9 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
  	/* Apacer models with LPM issues */
  	{ "Apacer AS340*",		NULL,	ATA_QUIRK_NOLPM },
  
-+	/* Silicon Motion models with LPM issues */
-+	{ "MD619HXCLDE3TC",		"TCVAID", ATA_QUIRK_NOLPM },
-+	{ "MD619GXCLDE3TC",		"TCV35D", ATA_QUIRK_NOLPM },
++	/* PNY CS900 (Phison PS3111-S11, DRAM-less) drops the link on DIPM */
++	{ "PNY CS900 1TB SSD",		NULL,	ATA_QUIRK_NOLPM },
 +
- 	/* These specific Samsung models/firmware-revs do not handle LPM well */
- 	{ "SAMSUNG MZMPC128HBFU-000MV", "CXM14M1Q", ATA_QUIRK_NOLPM },
- 	{ "SAMSUNG SSD PM830 mSATA *",  "CXM13D1Q", ATA_QUIRK_NOLPM },
+ 	/* Silicon Motion models with LPM issues */
+ 	{ "MD619HXCLDE3TC",		"TCVAID", ATA_QUIRK_NOLPM },
+ 	{ "MD619GXCLDE3TC",		"TCV35D", ATA_QUIRK_NOLPM },
 -- 
 2.53.0
 
