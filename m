@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E333A1686;
-	Sat, 17 Oct 2026 15:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE197370ACE;
+	Sat, 17 Oct 2026 15:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252582; cv=none; b=cQHHtsX9MY+5czzmnDF6pnKDrSf/eSsGKJ6+PyMDcbgWmH3uDpfYWlMCc7hZVQzTcrPj+PMyxzIQVYCn++RnGG/9mNjivYA8Vr7qga9H579S+uFj0UidrgOcFAIitEt+dxpkWeTGPjoAS9WRVD4wHps/SfqmZlBVoCmMaIX+/64=
+	t=1792252584; cv=none; b=tLUgTCb1EMuDYTcgWUuq3OCdQu82LiHJV17weJqgkkw5ygydhBLmLIORZ7GrHrJwOPTPHPUypTXQzcilBZvAu0er6lZ+5t/AJ129t5ahKDBv//4+ohywKrHO3xTNNhfCIVYB1pbmvOe8bZScTomKUexb98xtM0uug8pYUQaZ0Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252582; c=relaxed/simple;
-	bh=SN5SoaL6B2JfsK7J98vqJTdNAWUawN88kvUtNno5cYs=;
+	s=arc-20240116; t=1792252584; c=relaxed/simple;
+	bh=NAotRxEtGMKQ3tS9qTISfgXaNlRX6MhhQz3l9pnPVtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDz9ar7Ry2QerRGq7qUL0j9bHA1/FpC2NgsZHOSPUudijjIarx45ZpHWbyaZizHvI6/VJ1948q8VuSpQO3+3WnsbZjuzvFsBJehv5ISfyebYOzkGaQxLqHptAiX/hxQGH0xE5+ny8bbHaQyvD0RaMYe2VLBXsvtaBlFb7TD6w7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pn2kFP7J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MyXDo6vsLrRs3fypDg1Rtkk72ic4BEu3Ici9dDAl92FpyXpRzZkP14PPVO8ClSzFMhFKUwqZWEtMwJUuXHUyAU0y/eMJzxTMTZ9RcxIGksGti8ZyxcTOunVXYVIWQyHFJTkoDhbsAY4BkCZs1P8kowaiuvry/+z6Bdl0bSC5K4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkTu5sW/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pn2kFP7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7FC1F000C4;
-	Sat, 17 Oct 2026 15:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkTu5sW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9001F000C4;
+	Sat, 17 Oct 2026 15:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252580;
-	bh=7lAEST3ePofR2k6P9VP+RmyJtnDTFALMpZJPrOsz8MI=;
+	s=korg; t=1792252583;
+	bh=p/hg6ljOWj2sr8Oxn2uC7IeUwdW6aM0SYQ/X1dD/n/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pn2kFP7JTGFGgpQmbWTNcPaZ8Cih2BgHWU0l/BFrs5kmmv5/6GnRjqHjuLPAWJtgk
-	 ACaSPF6qxyy8C189qT2bjZGgNopCUCHn52RrMsEsth/vRW9m4TwQV8WloI3pr9Z1Dl
-	 MWYaT5MFvO+qAmxFqCNe7yOrKsHO/3ogKsbBbRx0=
+	b=wkTu5sW/1zqN5vN6wN+Pk3ysOjucoptS0/et5JO2dRx7uacIDSFurTP9tEwUqEmyT
+	 x7LDiya6Lth31kRDdqh8VgtkkxZD1Kg0PX+v/pyHKJcQY2dLuNeum1Zw+2O73JtYRN
+	 IYaCUfytn/vabfQvTx2wGXPlCnkuGtmBOe1p21fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 28/52] drm/xe/i2c: cancel the client work on remove
-Date: Sat, 17 Oct 2026 17:54:29 +0200
-Message-ID: <20261017155105.760898736@linuxfoundation.org>
+Subject: [PATCH 6.18 29/52] cifs: fix time_last_write stamp placement in setattr/truncate paths
+Date: Sat, 17 Oct 2026 17:54:30 +0200
+Message-ID: <20261017155105.792601086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -53,76 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 611857adc9e7b0ee1239a0baf38498922ca5a12e ]
+[ Upstream commit ecababf08905958ba8c125979c4e39fc2f1a8a05 ]
 
-xe_i2c_notifier() stores the DesignWare adapter in i2c->adapter and
-schedules i2c->work when the adapter is registered under the xe I2C
-platform device, and xe_i2c_client_work() then instantiates the AMC
-client device on that adapter.
+cifs_file_set_size() calls cifs_setsize() on success, which calls
+i_size_write(), updating i_size to the new value.  The subsequent
+check attrs->ia_size != i_size_read() in both cifs_setattr_unix()
+and cifs_setattr_nounix() therefore always evaluates false after a
+successful cifs_file_set_size(), making the smp_store_release() of
+time_last_write dead code.  The truncate path was unprotected against
+stale readdir size updates.
 
-xe_i2c_remove() tears down the AMC, unregisters the client devices,
-the bus notifier and the adapter platform device, but it never drains
-i2c->work. A work item that is still queued or running when the
-adapter is unregistered dereferences i2c->adapter in
-i2c_new_client_device() after platform_device_unregister() has
-released the adapter. The work item is also embedded in the
-devm-allocated struct xe_i2c, so a work item still queued after the
-drm device devm unwind frees that allocation runs its callback on
-freed memory.
+Move the stamp to before the cifs_file_set_size() RPC call, guarded
+by attrs->ia_size != i_size_read() to exclude no-op same-size
+ftruncate(2) calls from stamping time_last_write unnecessarily.
 
-The bus notifier is the only thing that schedules this work, and it is
-unregistered after the client devices. An instance that is still queued
-when the teardown runs can therefore write
-i2c->client[XE_I2C_CLIENT_AMC] while the loop is unregistering and
-clearing the same array, and an AMC client it instantiates late is only
-cleaned up by the adapter's own child sweep in i2c_del_adapter().
+On the error path the stamp remains rather than being restored:
+restoring a stale snapshot (prev_tlw) could silently erase a
+concurrent _cifsFileInfo_put() close stamp if that close arrived
+between the READ_ONCE and the smp_store_release.  readdir is
+suppressed until the stamp expires, which extends beyond one acregmax
+if the caller retries failed truncations.  stat() is unaffected: the
+cifs_revalidate_dentry_attr() path calls cifs_fattr_to_inode() with
+from_readdir=false, which bypasses the time_last_write check in
+is_size_safe_to_change() entirely and always writes the authoritative
+QUERY_INFO result to i_size.
 
-Move bus_unregister_notifier() in front of the client teardown loop
-and cancel the work right after it, so no new instance can be
-scheduled and a queued instance is drained before the client array is
-touched. A running instance still finds a live adapter, since the
-adapter is unregistered later.
+Remove the now-unreachable stamp from the dead block in both functions.
 
-Fixes: f0e53aadd702 ("drm/xe: Support for I2C attached MCUs")
-Link: https://lore.kernel.org/intel-xe/20260912085932.101598-1-fanwu01@zju.edu.cn/
-Cc: stable@vger.kernel.org
-Assisted-by: LLM, in-house static analysis tool
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260928013030.612592-1-fanwu01@zju.edu.cn
-Link: https://patch.msgid.link/20261006000413.318561-2-rodrigo.vivi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit a23f27d5ec11c3f418c5e5531eea34ccda2b5b20)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[ sashal: Adjusted xe_i2c_remove() context for the older teardown implementation. ]
+Fixes: e8a8d54c2d50 ("cifs: prevent readdir from changing file size due to stale directory metadata")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ sashal: removed the timestamp write from cifs_file_set_size() because the original size-update blocks were already deleted ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_i2c.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/inode.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_i2c.c b/drivers/gpu/drm/xe/xe_i2c.c
-index 25c7eb725ce26..43311886dbf81 100644
---- a/drivers/gpu/drm/xe/xe_i2c.c
-+++ b/drivers/gpu/drm/xe/xe_i2c.c
-@@ -330,10 +330,13 @@ static void xe_i2c_remove(void *data)
- 	struct xe_i2c *i2c = data;
- 	unsigned int i;
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index ec6d27ba4083d..995d6df9304f4 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3135,11 +3135,8 @@ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
+ 	cifs_put_tlink(tlink);
  
-+	/* Stop the notifier from arming the client work before teardown. */
-+	bus_unregister_notifier(&i2c_bus_type, &i2c->bus_notifier);
-+	cancel_work_sync(&i2c->work);
-+
- 	for (i = 0; i < XE_I2C_MAX_CLIENTS; i++)
- 		i2c_unregister_device(i2c->client[i]);
+ set_size_out:
+-	if (rc == 0) {
+-		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
+-		smp_store_release(&cifsInode->time_last_write, jiffies);
++	if (rc == 0)
+ 		cifs_resize_file_locked(inode, size);
+-	}
  
--	bus_unregister_notifier(&i2c_bus_type, &i2c->bus_notifier);
- 	xe_i2c_unregister_adapter(i2c);
- 	xe_i2c_remove_irq(i2c);
+ 	return rc;
  }
+@@ -3202,6 +3199,17 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 	rc = 0;
+ 
+ 	if (attrs->ia_valid & ATTR_SIZE) {
++		if (attrs->ia_size != i_size_read(inode)) {
++			/* Stamp before RPC. On failure the stamp remains: restoring a
++			 * stale snapshot could silently erase a concurrent
++			 * _cifsFileInfo_put() close stamp.  readdir is suppressed
++			 * until the stamp expires; stat() bypasses this via the
++			 * from_readdir=false path in is_size_safe_to_change() and
++			 * always returns an authoritative QUERY_INFO result.
++			 * Pairs with smp_load_acquire() in is_size_safe_to_change().
++			 */
++			smp_store_release(&cifsInode->time_last_write, jiffies);
++		}
+ 		rc = cifs_file_set_size(xid, direntry, full_path,
+ 					open_file, attrs->ia_size);
+ 		if (rc != 0)
+@@ -3378,6 +3386,17 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 	}
+ 
+ 	if (attrs->ia_valid & ATTR_SIZE) {
++		if (attrs->ia_size != i_size_read(inode)) {
++			/* Stamp before RPC. On failure the stamp remains: restoring a
++			 * stale snapshot could silently erase a concurrent
++			 * _cifsFileInfo_put() close stamp.  readdir is suppressed
++			 * until the stamp expires; stat() bypasses this via the
++			 * from_readdir=false path in is_size_safe_to_change() and
++			 * always returns an authoritative QUERY_INFO result.
++			 * Pairs with smp_load_acquire() in is_size_safe_to_change().
++			 */
++			smp_store_release(&cifsInode->time_last_write, jiffies);
++		}
+ 		rc = cifs_file_set_size(xid, direntry, full_path,
+ 					cfile, attrs->ia_size);
+ 		if (rc != 0)
 -- 
 2.53.0
 
