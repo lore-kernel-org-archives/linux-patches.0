@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C6936195A;
-	Sat, 17 Oct 2026 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810F33CC7D8;
+	Sat, 17 Oct 2026 18:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260575; cv=none; b=O8EV8dcUUOC9VZJ8K3KffdDpC+Qxm2X1Nn9ePNHbQEm6WJYe/Nsb0g7CjU0DOq8w3xBzktD7vIq5Cq9derM2qWxacLYNnv1aKF5Di23z4F7xVM5IWenImFZIwhcGF4bpQCxRNfewEwj9joklSy6kOlUrWjYTGXOqByWvIQ2aVtQ=
+	t=1792260578; cv=none; b=Hs+VqWUoq4qvtV4bmbvvxslCav56StxJ7cze2Ih8+PA7I/n3JH2r6AucgrqAJO6Trm0DWd36BxLI05cAjaWLk6/r9QIVYZSlX/330k0iwD35sWshKBf/of+Xc3Yu4KVeKeMveJBaFjV7TLnekVaCAQeegaKgIU6czcCFiZYP6q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260575; c=relaxed/simple;
-	bh=vaBcL72PMuEHcPyz7uA/MseQpClGrKNzwY5wITHT+hM=;
+	s=arc-20240116; t=1792260578; c=relaxed/simple;
+	bh=QaGK3fXpD17KVB7gibRc89ACzndOjCGOrgzE19JYZTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdDWR/l3G6XGeX8eErheXPBVT1rxRWL3ALWar7VThXtDflA3oKcttKVPnU5cUwCoFPoV9lO3j5H4bFGCk0ElGkgzWZJq+I36BtG8eXcqlyntdOooPMrSQr3Qd3chhf7bo6z+mtvXR+q3KC3dirgMAv1Tec2rDUurb2N5FXtdWr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjqw/Gsb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KlaXDSEyGA7gKJp11gwor0yAx0drqt7EvTzFyuWKe2iWUJ0LitWQEUbGk6JFH0VwHB2xIV7tI6hQEF5Sq8wUDbIeIojaPLWjiqAIpnthzDM51oNgLS0nxvBz/cdUaSVVodM+BLWziTTZIUjjZBV6mCY25XbjcS/MJzDdJFpJ+FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfYbblnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjqw/Gsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6788D1F000C4;
-	Sat, 17 Oct 2026 18:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfYbblnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6083C1F000C5;
+	Sat, 17 Oct 2026 18:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260572;
-	bh=vxKFIM3HDi/FA62nXD4EJrxvgMNgah2xGMeS+1uyp30=;
+	s=korg; t=1792260574;
+	bh=MI6iUUTWhO1btSOj2X+/Le9xpdTO1G5hUtoMxiPCaJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rjqw/GsbcgOD44uTDuFRw5JGkcdpVGQjxYao8JDUCzbkdEc6yEIEKEUCI9QVPvyYN
-	 1kTKiaMOU18OaTrxpsZbUJ38zyP3PQZp+EHLvFmGVLmFfaW7RD4Rfb7XjiveLjWBJ7
-	 d70E4xmr0wjYvXW3uXCFlFV9ZLbtOS4d8TgcErqw=
+	b=DfYbblnPyEA2tuCJOZ5nVGfbHI2FkN2AF30foy5fte9G2LNJzjNr6GxnQ6msoIMGG
+	 2+YSsw0yJtvEyikgIjcNOvWl6UHutfTGn7kI2YgWryF0m/3IuRooySSyAy6UAz/GAw
+	 ScgdhiDbxvXk8LWyQAWUQA9NDcZ0T+36j3+dtfO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Chanho Park <chanho61.park@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1548/1674] scsi: ufs: exynos: Disable iocc if dma-coherent property isnt set
-Date: Sat, 17 Oct 2026 18:03:40 +0200
-Message-ID: <20261017160510.841224885@linuxfoundation.org>
+Subject: [PATCH 6.6 1539/1674] drm/amdgpu/atombios: drop empty function
+Date: Sat, 17 Oct 2026 18:03:31 +0200
+Message-ID: <20261017160510.616903228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,82 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit f92bb7436802f8eb7ee72dc911a33c8897fde366 ]
+[ Upstream commit ba7f8eb7e447a8120f5bcb8e8d72964324ee5b84 ]
 
-If dma-coherent property isn't set then descriptors are non-cacheable
-and the iocc shareability bits should be disabled. Without this UFS can
-end up in an incompatible configuration and suffer from random cache
-related stability issues.
+This was leftover from when amdgpu was forked from radeon.
+The function is empty so drop it.
 
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Fixes: cc52e15397cc ("scsi: ufs: ufs-exynos: Support ExynosAuto v9 UFS")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-3-96722cc2ba1b@linaro.org
-Cc: Chanho Park <chanho61.park@samsung.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a99cd231cd92 ("drm/amdgpu: Bound GPIO I2C table entry count from VBIOS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 17 +++++++++++++----
- drivers/ufs/host/ufs-exynos.h |  3 ++-
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 14c1b855e10ad..3e3ec906cb602 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -200,8 +200,8 @@ static int exynosauto_ufs_drv_init(struct device *dev, struct exynos_ufs *ufs)
- 	/* IO Coherency setting */
- 	if (ufs->sysreg) {
- 		return regmap_update_bits(ufs->sysreg,
--					  ufs->shareability_reg_offset,
--					  UFS_SHARABLE, UFS_SHARABLE);
-+					  ufs->iocc_offset,
-+					  UFS_SHARABLE, ufs->iocc_val);
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index a14a54a734c12..31d12c1cf6aeb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -36,13 +36,6 @@
+ #include "atombios_encoders.h"
+ #include "bif/bif_4_1_d.h"
  
- 	attr->tx_dif_p_nsec = 3200000;
-@@ -1102,12 +1102,21 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
- 		ufs->sysreg = NULL;
- 	else {
- 		if (of_property_read_u32_index(np, "samsung,sysreg", 1,
--					       &ufs->shareability_reg_offset)) {
-+					       &ufs->iocc_offset)) {
- 			dev_warn(dev, "can't get an offset from sysreg. Set to default value\n");
--			ufs->shareability_reg_offset = UFS_SHAREABILITY_OFFSET;
-+			ufs->iocc_offset = UFS_SHAREABILITY_OFFSET;
- 		}
- 	}
+-static void amdgpu_atombios_lookup_i2c_gpio_quirks(struct amdgpu_device *adev,
+-					  ATOM_GPIO_I2C_ASSIGMENT *gpio,
+-					  u8 index)
+-{
+-
+-}
+-
+ static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
+ {
+ 	struct amdgpu_i2c_bus_rec i2c;
+@@ -108,9 +101,6 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
  
-+	/*
-+	 * no 'dma-coherent' property means the descriptors are
-+	 * non-cacheable so iocc shareability should be disabled.
-+	 */
-+	if (of_dma_is_coherent(dev->of_node))
-+		ufs->iocc_val = UFS_SHARABLE;
-+	else
-+		ufs->iocc_val = 0;
-+
- 	ufs->pclk_avail_min = PCLK_AVAIL_MIN;
- 	ufs->pclk_avail_max = PCLK_AVAIL_MAX;
+ 		gpio = &i2c_info->asGPIO_Info[0];
+ 		for (i = 0; i < num_indices; i++) {
+-
+-			amdgpu_atombios_lookup_i2c_gpio_quirks(adev, gpio, i);
+-
+ 			if (gpio->sucI2cId.ucAccess == id) {
+ 				i2c = amdgpu_atombios_get_bus_rec_for_i2c_gpio(gpio);
+ 				break;
+@@ -142,8 +132,6 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
  
-diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
-index a4bd6646d7f13..65aa04d41c3eb 100644
---- a/drivers/ufs/host/ufs-exynos.h
-+++ b/drivers/ufs/host/ufs-exynos.h
-@@ -212,7 +212,8 @@ struct exynos_ufs {
- 	ktime_t entry_hibern8_t;
- 	const struct exynos_ufs_drv_data *drv_data;
- 	struct regmap *sysreg;
--	u32 shareability_reg_offset;
-+	u32 iocc_offset;
-+	u32 iocc_val;
+ 		gpio = &i2c_info->asGPIO_Info[0];
+ 		for (i = 0; i < num_indices; i++) {
+-			amdgpu_atombios_lookup_i2c_gpio_quirks(adev, gpio, i);
+-
+ 			i2c = amdgpu_atombios_get_bus_rec_for_i2c_gpio(gpio);
  
- 	u32 opts;
- #define EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL		BIT(0)
+ 			if (i2c.valid) {
 -- 
 2.53.0
 
