@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F11F1419A4;
-	Sat, 17 Oct 2026 16:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84971419A4;
+	Sat, 17 Oct 2026 16:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255406; cv=none; b=GmERe0POOKPhOAi7hQAUQH1Y9NmDFhDLEXP3pLJbeh6bYGxxsUnIjHfqa5hrOjA4XazEwHpZYDbQRUFlP4Hjgz+jZcmaX6dao6eBkPVlvkj6ufY8DYSHpBTUpPUBFQEc+fADu9qxriJwsuGwNTbouBMcoxz60Xc1emC9Voj4igM=
+	t=1792255409; cv=none; b=tcozjuunZmvzMWvIL3FWAkuJV1+2mUMck01QvtoshOTCSVRQRPosI4JvYA8k/IzqQt5hSKVUmM6Ok3T7ZI7GHVXH4OnTbMa2CYVczp4JbUWK/XsV4RtZ/Ixd4yamLKCxROgEgOnLUhpjJdIp//llzgghJ6yh4Gi4VaWwRGLvzwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255406; c=relaxed/simple;
-	bh=tIFsxX8T94p0JV5AI2LA07Exb8YSpW36/jq5vOUeV1Y=;
+	s=arc-20240116; t=1792255409; c=relaxed/simple;
+	bh=E870fS4OHLnKJo+HIhlj8lAo/8/y1QNLk4m67a/Jg3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hGUzY5RxNFPHOpmcu2pj5ESpnhvQ4mTOJ4GGAjkUWWaUwJD0kbEndSYkfKbs5VRp+Q47nG+l9Ik26XERmbURtVmncyyIZw5ujbzl5GAcEUdZ5G3m9QQ78913Qajj+u9tqqr/lKY0jnLYYEsPZiLTnkHyqZ6HjLWCX0XFJraW4kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1c2MA4u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRA+fHyZTxfVMS7CPE4kZTHJUzV+wCKnqn4VY3M8OlKpFFy9LN4sban7WU1K9MD0NN3XkZgM9X1hSQwezEyTDfJC1yjKVIh62IKJqhOpVz7x74ZLbw25AtiFhUTNojnAoY8gBtdzOeSJ4mU84tM7kCqQF5xY120SYIV6E3Z7dxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CL3MCBdr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1c2MA4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657761F000C4;
-	Sat, 17 Oct 2026 16:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CL3MCBdr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C0D1F000C4;
+	Sat, 17 Oct 2026 16:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255405;
-	bh=6ae+6nn6uHszDgITLcESNh7n9Pf2U8SIw++SxPYzbXk=;
+	s=korg; t=1792255407;
+	bh=eyMD6M09OLb8bnbHqCpw5ZFL/h9azk025aNGBqJHumg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1c2MA4udHBwJ1pgBRQ3BiEwtV64wYwG335+USvxTQwlNNLoBFbukaD219+mi4ZeB
-	 MyytYQ6xQF2YWAb9+ZXz7ZSW2ksqbOuurqzUcSaPO9lZWBEBjY3ULCcKpfutAbE2+R
-	 sY3O+wBbcG1pNimRe1AnjkKgzn8zNJIDfvK66+s4=
+	b=CL3MCBdrj4nfxTw3LPFW9Z0uBg8i0C1bxIJAZPYaDPkbWGxab39opGb21kjucfQGN
+	 ccAu6s+KuTsBByfRO4pNuVdnWq5B6MmahNLHj84N5plWNw+atJ47aVPWSYguXA0C9J
+	 gJgULpwCmqCLTS6KlxU+PdwSmCZh/SHxr5f1IPrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 748/869] gpiolib: make value setters have return values
-Date: Sat, 17 Oct 2026 17:59:49 +0200
-Message-ID: <20261017160056.114749824@linuxfoundation.org>
+Subject: [PATCH 6.12 766/869] smb: client: honor forceuid/forcegid when mapping SIDs to uid/gid
+Date: Sat, 17 Oct 2026 18:00:07 +0200
+Message-ID: <20261017160056.562926014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,323 +49,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 8ce258f62f90cb2d339cc39fa43e5634594a9dfb ]
+[ Upstream commit 18a72975e9f35aadecc75b031f693f2d1f49308f ]
 
-Change the in-kernel consumer interface for GPIOs: make all variants of
-value setters that don't have a return value, return a signed integer
-instead. That will allow these routines to indicate failures to callers.
+When the administrator mounts with forceuid or forcegid (uid=/gid=
+mount options), they expect all files to appear owned by the specified
+user/group.  However, several code paths unconditionally called
+sid_to_id() to overwrite cf_uid/cf_gid with server-provided values,
+ignoring the administrator's explicit override:
 
-This doesn't change the implementation just yet, we'll do it in
-subsequent commits.
+  - smb311_posix_info_to_fattr() (stat via POSIX extensions)
+  - cifs_posix_to_fattr() (readdir via POSIX extensions)
+  - parse_sec_desc() (CIFS ACL ownership mapping)
 
-We need to update the gpio-latch module as it passes the address of
-value setters as a function pointer argument and thus cares about its
-type.
+This allowed an untrusted server to dictate local file ownership even
+when the mount was configured to force specific uid/gid values.
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250220-gpio-set-retval-v2-2-bc4cfd38dae3@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: c87c9046c4e0 ("pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction")
+Fix all three call sites to check CIFS_MOUNT_OVERR_UID and
+CIFS_MOUNT_OVERR_GID before calling sid_to_id(), following the
+same pattern already used by cifs_unix_basic_to_fattr() for unix
+extensions.
+
+Closes: https://sashiko.dev/#/patchset/20260906155816.603278-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-latch.c     |  2 +-
- drivers/gpio/gpiolib.c        | 53 ++++++++++++++++++++---------------
- include/linux/gpio.h          |  4 +--
- include/linux/gpio/consumer.h | 22 +++++++++------
- 4 files changed, 46 insertions(+), 35 deletions(-)
+ fs/smb/client/cifsacl.c | 28 ++++++++++++++++++----------
+ fs/smb/client/inode.c   |  9 +++++++--
+ fs/smb/client/readdir.c |  7 +++++--
+ 3 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpio/gpio-latch.c b/drivers/gpio/gpio-latch.c
-index d7c3b20c8482e..e935b3b34117d 100644
---- a/drivers/gpio/gpio-latch.c
-+++ b/drivers/gpio/gpio-latch.c
-@@ -72,7 +72,7 @@ static int gpio_latch_get_direction(struct gpio_chip *gc, unsigned int offset)
- }
- 
- static void gpio_latch_set_unlocked(struct gpio_latch_priv *priv,
--				    void (*set)(struct gpio_desc *desc, int value),
-+				    int (*set)(struct gpio_desc *desc, int value),
- 				    unsigned int offset, bool val)
+diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
+index 102a7abd72748..a9157dbc40bb5 100644
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1315,6 +1315,7 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
  {
- 	int latch = offset / priv->n_latched_gpios;
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 878f9ab4a0982..e73c1e1444f7d 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -3330,13 +3330,13 @@ EXPORT_SYMBOL_GPL(gpiod_get_array_value);
-  * @desc: gpio descriptor whose state need to be set.
-  * @value: Non-zero for setting it HIGH otherwise it will set to LOW.
-  */
--static void gpio_set_open_drain_value_commit(struct gpio_desc *desc, bool value)
-+static int gpio_set_open_drain_value_commit(struct gpio_desc *desc, bool value)
- {
- 	int ret = 0, offset = gpio_chip_hwgpio(desc);
- 
- 	CLASS(gpio_chip_guard, guard)(desc);
- 	if (!guard.gc)
--		return;
-+		return -ENODEV;
- 
- 	if (value) {
- 		ret = guard.gc->direction_input(guard.gc, offset);
-@@ -3350,6 +3350,8 @@ static void gpio_set_open_drain_value_commit(struct gpio_desc *desc, bool value)
- 		gpiod_err(desc,
- 			  "%s: Error in set_value for open drain err %d\n",
- 			  __func__, ret);
+ 	int rc = 0;
+ 	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
+ 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
+ 	char *end_of_acl = ((char *)pntsd) + acl_len;
+ 	__u32 dacloffset;
+@@ -1332,16 +1333,21 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+ 		 le32_to_cpu(pntsd->gsidoffset),
+ 		 le32_to_cpu(pntsd->sacloffset), dacloffset);
+ /*	cifs_dump_mem("owner_sid: ", owner_sid_ptr, 64); */
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
 +
-+	return ret;
+ 	rc = parse_sid(owner_sid_ptr, end_of_acl);
+ 	if (rc) {
+ 		cifs_dbg(FYI, "%s: Error %d parsing Owner SID\n", __func__, rc);
+ 		return rc;
+ 	}
+-	rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
+-	if (rc) {
+-		cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
+-			 __func__, rc);
+-		return rc;
++	if (!(sbflags & CIFS_MOUNT_OVERR_UID)) {
++		rc = sid_to_id(cifs_sb, owner_sid_ptr, fattr, SIDOWNER);
++		if (rc) {
++			cifs_dbg(FYI, "%s: Error %d mapping Owner SID to uid\n",
++				 __func__, rc);
++			return rc;
++		}
+ 	}
+ 
+ 	rc = parse_sid(group_sid_ptr, end_of_acl);
+@@ -1350,11 +1356,13 @@ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+ 			 __func__, rc);
+ 		return rc;
+ 	}
+-	rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
+-	if (rc) {
+-		cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
+-			 __func__, rc);
+-		return rc;
++	if (!(sbflags & CIFS_MOUNT_OVERR_GID)) {
++		rc = sid_to_id(cifs_sb, group_sid_ptr, fattr, SIDGROUP);
++		if (rc) {
++			cifs_dbg(FYI, "%s: Error %d mapping Group SID to gid\n",
++				 __func__, rc);
++			return rc;
++		}
+ 	}
+ 
+ 	if (dacloffset) {
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index e75ac895d3b4a..05f525621e0f6 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -833,6 +833,7 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 	struct smb311_posix_qinfo *info = &data->posix_fi;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
+ 
+ 	memset(fattr, 0, sizeof(*fattr));
+ 
+@@ -877,8 +878,12 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 		fattr->cf_symlink_target = data->symlink_target;
+ 		data->symlink_target = NULL;
+ 	}
+-	sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
+-	sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
++	if (!(sbflags & CIFS_MOUNT_OVERR_UID))
++		sid_to_id(cifs_sb, &data->posix_owner, fattr, SIDOWNER);
++	if (!(sbflags & CIFS_MOUNT_OVERR_GID))
++		sid_to_id(cifs_sb, &data->posix_group, fattr, SIDGROUP);
+ 
+ 	cifs_dbg(FYI, "POSIX query info: mode 0x%x uniqueid 0x%llx nlink %d\n",
+ 		fattr->cf_mode, fattr->cf_uniqueid, fattr->cf_nlink);
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index bdf91737b46ff..f1f7a718f5d58 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -241,6 +241,7 @@ static void
+ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		    struct cifs_sb_info *cifs_sb)
+ {
++	unsigned int sbflags = cifs_sb->mnt_cifs_flags;
+ 	struct smb2_posix_info_parsed parsed;
+ 	int rc;
+ 
+@@ -287,8 +288,10 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
+ 			 __func__, rc);
+ 	} else {
+-		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
+-		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
++		if (!(sbflags & CIFS_MOUNT_OVERR_UID))
++			sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
++		if (!(sbflags & CIFS_MOUNT_OVERR_GID))
++			sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
+ 	}
  }
  
- /*
-@@ -3357,13 +3359,13 @@ static void gpio_set_open_drain_value_commit(struct gpio_desc *desc, bool value)
-  * @desc: gpio descriptor whose state need to be set.
-  * @value: Non-zero for setting it HIGH otherwise it will set to LOW.
-  */
--static void gpio_set_open_source_value_commit(struct gpio_desc *desc, bool value)
-+static int gpio_set_open_source_value_commit(struct gpio_desc *desc, bool value)
- {
- 	int ret = 0, offset = gpio_chip_hwgpio(desc);
- 
- 	CLASS(gpio_chip_guard, guard)(desc);
- 	if (!guard.gc)
--		return;
-+		return -ENODEV;
- 
- 	if (value) {
- 		ret = guard.gc->direction_output(guard.gc, offset, 1);
-@@ -3377,16 +3379,20 @@ static void gpio_set_open_source_value_commit(struct gpio_desc *desc, bool value
- 		gpiod_err(desc,
- 			  "%s: Error in set_value for open source err %d\n",
- 			  __func__, ret);
-+
-+	return ret;
- }
- 
--static void gpiod_set_raw_value_commit(struct gpio_desc *desc, bool value)
-+static int gpiod_set_raw_value_commit(struct gpio_desc *desc, bool value)
- {
- 	CLASS(gpio_chip_guard, guard)(desc);
- 	if (!guard.gc)
--		return;
-+		return -ENODEV;
- 
- 	trace_gpio_value(desc_to_gpio(desc), 0, value);
- 	guard.gc->set(guard.gc, gpio_chip_hwgpio(desc), value);
-+
-+	return 0;
- }
- 
- /*
-@@ -3544,12 +3550,12 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
-  * This function can be called from contexts where we cannot sleep, and will
-  * complain if the GPIO chip functions potentially sleep.
-  */
--void gpiod_set_raw_value(struct gpio_desc *desc, int value)
-+int gpiod_set_raw_value(struct gpio_desc *desc, int value)
- {
--	VALIDATE_DESC_VOID(desc);
-+	VALIDATE_DESC(desc);
- 	/* Should be using gpiod_set_raw_value_cansleep() */
- 	WARN_ON(desc->gdev->can_sleep);
--	gpiod_set_raw_value_commit(desc, value);
-+	return gpiod_set_raw_value_commit(desc, value);
- }
- EXPORT_SYMBOL_GPL(gpiod_set_raw_value);
- 
-@@ -3562,16 +3568,17 @@ EXPORT_SYMBOL_GPL(gpiod_set_raw_value);
-  * different semantic quirks like active low and open drain/source
-  * handling.
-  */
--static void gpiod_set_value_nocheck(struct gpio_desc *desc, int value)
-+static int gpiod_set_value_nocheck(struct gpio_desc *desc, int value)
- {
- 	if (test_bit(FLAG_ACTIVE_LOW, &desc->flags))
- 		value = !value;
-+
- 	if (test_bit(FLAG_OPEN_DRAIN, &desc->flags))
--		gpio_set_open_drain_value_commit(desc, value);
-+		return gpio_set_open_drain_value_commit(desc, value);
- 	else if (test_bit(FLAG_OPEN_SOURCE, &desc->flags))
--		gpio_set_open_source_value_commit(desc, value);
--	else
--		gpiod_set_raw_value_commit(desc, value);
-+		return gpio_set_open_source_value_commit(desc, value);
-+
-+	return gpiod_set_raw_value_commit(desc, value);
- }
- 
- /**
-@@ -3585,12 +3592,12 @@ static void gpiod_set_value_nocheck(struct gpio_desc *desc, int value)
-  * This function can be called from contexts where we cannot sleep, and will
-  * complain if the GPIO chip functions potentially sleep.
-  */
--void gpiod_set_value(struct gpio_desc *desc, int value)
-+int gpiod_set_value(struct gpio_desc *desc, int value)
- {
--	VALIDATE_DESC_VOID(desc);
-+	VALIDATE_DESC(desc);
- 	/* Should be using gpiod_set_value_cansleep() */
- 	WARN_ON(desc->gdev->can_sleep);
--	gpiod_set_value_nocheck(desc, value);
-+	return gpiod_set_value_nocheck(desc, value);
- }
- EXPORT_SYMBOL_GPL(gpiod_set_value);
- 
-@@ -4003,11 +4010,11 @@ EXPORT_SYMBOL_GPL(gpiod_get_array_value_cansleep);
-  *
-  * This function is to be called from contexts that can sleep.
-  */
--void gpiod_set_raw_value_cansleep(struct gpio_desc *desc, int value)
-+int gpiod_set_raw_value_cansleep(struct gpio_desc *desc, int value)
- {
- 	might_sleep();
--	VALIDATE_DESC_VOID(desc);
--	gpiod_set_raw_value_commit(desc, value);
-+	VALIDATE_DESC(desc);
-+	return gpiod_set_raw_value_commit(desc, value);
- }
- EXPORT_SYMBOL_GPL(gpiod_set_raw_value_cansleep);
- 
-@@ -4021,11 +4028,11 @@ EXPORT_SYMBOL_GPL(gpiod_set_raw_value_cansleep);
-  *
-  * This function is to be called from contexts that can sleep.
-  */
--void gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
-+int gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
- {
- 	might_sleep();
--	VALIDATE_DESC_VOID(desc);
--	gpiod_set_value_nocheck(desc, value);
-+	VALIDATE_DESC(desc);
-+	return gpiod_set_value_nocheck(desc, value);
- }
- EXPORT_SYMBOL_GPL(gpiod_set_value_cansleep);
- 
-diff --git a/include/linux/gpio.h b/include/linux/gpio.h
-index 2d105be7bbc33..8bd6e6ac98c1f 100644
---- a/include/linux/gpio.h
-+++ b/include/linux/gpio.h
-@@ -94,7 +94,7 @@ static inline int gpio_get_value_cansleep(unsigned gpio)
- }
- static inline void gpio_set_value_cansleep(unsigned gpio, int value)
- {
--	return gpiod_set_raw_value_cansleep(gpio_to_desc(gpio), value);
-+	gpiod_set_raw_value_cansleep(gpio_to_desc(gpio), value);
- }
- 
- static inline int gpio_get_value(unsigned gpio)
-@@ -103,7 +103,7 @@ static inline int gpio_get_value(unsigned gpio)
- }
- static inline void gpio_set_value(unsigned gpio, int value)
- {
--	return gpiod_set_raw_value(gpio_to_desc(gpio), value);
-+	gpiod_set_raw_value(gpio_to_desc(gpio), value);
- }
- 
- static inline int gpio_to_irq(unsigned gpio)
-diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
-index db2dfbae8edbd..4a87c24686e36 100644
---- a/include/linux/gpio/consumer.h
-+++ b/include/linux/gpio/consumer.h
-@@ -119,7 +119,7 @@ int gpiod_get_array_value(unsigned int array_size,
- 			  struct gpio_desc **desc_array,
- 			  struct gpio_array *array_info,
- 			  unsigned long *value_bitmap);
--void gpiod_set_value(struct gpio_desc *desc, int value);
-+int gpiod_set_value(struct gpio_desc *desc, int value);
- int gpiod_set_array_value(unsigned int array_size,
- 			  struct gpio_desc **desc_array,
- 			  struct gpio_array *array_info,
-@@ -129,7 +129,7 @@ int gpiod_get_raw_array_value(unsigned int array_size,
- 			      struct gpio_desc **desc_array,
- 			      struct gpio_array *array_info,
- 			      unsigned long *value_bitmap);
--void gpiod_set_raw_value(struct gpio_desc *desc, int value);
-+int gpiod_set_raw_value(struct gpio_desc *desc, int value);
- int gpiod_set_raw_array_value(unsigned int array_size,
- 			      struct gpio_desc **desc_array,
- 			      struct gpio_array *array_info,
-@@ -141,7 +141,7 @@ int gpiod_get_array_value_cansleep(unsigned int array_size,
- 				   struct gpio_desc **desc_array,
- 				   struct gpio_array *array_info,
- 				   unsigned long *value_bitmap);
--void gpiod_set_value_cansleep(struct gpio_desc *desc, int value);
-+int gpiod_set_value_cansleep(struct gpio_desc *desc, int value);
- int gpiod_set_array_value_cansleep(unsigned int array_size,
- 				   struct gpio_desc **desc_array,
- 				   struct gpio_array *array_info,
-@@ -151,7 +151,7 @@ int gpiod_get_raw_array_value_cansleep(unsigned int array_size,
- 				       struct gpio_desc **desc_array,
- 				       struct gpio_array *array_info,
- 				       unsigned long *value_bitmap);
--void gpiod_set_raw_value_cansleep(struct gpio_desc *desc, int value);
-+int gpiod_set_raw_value_cansleep(struct gpio_desc *desc, int value);
- int gpiod_set_raw_array_value_cansleep(unsigned int array_size,
- 				       struct gpio_desc **desc_array,
- 				       struct gpio_array *array_info,
-@@ -375,10 +375,11 @@ static inline int gpiod_get_array_value(unsigned int array_size,
- 	WARN_ON(desc_array);
- 	return 0;
- }
--static inline void gpiod_set_value(struct gpio_desc *desc, int value)
-+static inline int gpiod_set_value(struct gpio_desc *desc, int value)
- {
- 	/* GPIO can never have been requested */
- 	WARN_ON(desc);
-+	return 0;
- }
- static inline int gpiod_set_array_value(unsigned int array_size,
- 					struct gpio_desc **desc_array,
-@@ -404,10 +405,11 @@ static inline int gpiod_get_raw_array_value(unsigned int array_size,
- 	WARN_ON(desc_array);
- 	return 0;
- }
--static inline void gpiod_set_raw_value(struct gpio_desc *desc, int value)
-+static inline int gpiod_set_raw_value(struct gpio_desc *desc, int value)
- {
- 	/* GPIO can never have been requested */
- 	WARN_ON(desc);
-+	return 0;
- }
- static inline int gpiod_set_raw_array_value(unsigned int array_size,
- 					    struct gpio_desc **desc_array,
-@@ -434,10 +436,11 @@ static inline int gpiod_get_array_value_cansleep(unsigned int array_size,
- 	WARN_ON(desc_array);
- 	return 0;
- }
--static inline void gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
-+static inline int gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
- {
- 	/* GPIO can never have been requested */
- 	WARN_ON(desc);
-+	return 0;
- }
- static inline int gpiod_set_array_value_cansleep(unsigned int array_size,
- 					    struct gpio_desc **desc_array,
-@@ -463,11 +466,12 @@ static inline int gpiod_get_raw_array_value_cansleep(unsigned int array_size,
- 	WARN_ON(desc_array);
- 	return 0;
- }
--static inline void gpiod_set_raw_value_cansleep(struct gpio_desc *desc,
--						int value)
-+static inline int gpiod_set_raw_value_cansleep(struct gpio_desc *desc,
-+					       int value)
- {
- 	/* GPIO can never have been requested */
- 	WARN_ON(desc);
-+	return 0;
- }
- static inline int gpiod_set_raw_array_value_cansleep(unsigned int array_size,
- 						struct gpio_desc **desc_array,
 -- 
 2.53.0
 
