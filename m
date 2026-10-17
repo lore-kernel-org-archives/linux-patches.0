@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B326E37268A;
-	Sat, 17 Oct 2026 17:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9586C34C98C;
+	Sat, 17 Oct 2026 17:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259269; cv=none; b=BXirXaijqwypHVCHKboxZAPEGFGPo+Czv0E/59MMewcUK1A+pBvke6aHtN0dvxr52cGHim76WFWsse8Dgp8l/uZwP8dJ0DACOonLr60lUf90Y3SwqsSDUSSag+viJXaa8/jQ+7XZf0mhuhP/ghkLPtf06jM05MA+7ioqYXDdZoQ=
+	t=1792259272; cv=none; b=BAm+s3OMP8kTwN4Y1j8xI0cmdvkVEvghkGn1dn98zHRGgt+60WziF4wjYhE9vkIArLQ2Al1TrKqCCrbupmtXyNXycbZUgLwaDzwYhhiDuc78M60c65uUNBJO6Sz+5KlSNybX/j8RBrnwVIOe3lNuNOW3aW43gn3pvLSmEHYKf4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259269; c=relaxed/simple;
-	bh=Ygsakvwocbzov6wCvQBZhx8eCeNBwEv5N3+FQVm2V1o=;
+	s=arc-20240116; t=1792259272; c=relaxed/simple;
+	bh=Mq5gMQfRg/Mi39ktnlokECv63Uxg5EZTTxYqwBnRjeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IG7bOqZXRkusy69bq+hALAoQ34OcIvvDRaa074CX3toNJRc/+WpXN1sxes7FusxFaNn45Z94VvKVDpo4t8dufkXUbGchw+xFIknu/HlMrqqU4RHrsh875czj4x4Ne41v70NsasSn7779uni1GDPtks3o9YiwCnACfw05qGMarvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycf1lu7i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l5ArdVbd90QxGlA/gaj1KoBjM0r+kFcUEvSunCYc9V5V2FsnruhaO8H25s3y/WMs4OaX/yF6EkRi31rclVwtLM0ZHGIVJmUEelvqKEVjTItAqC25h0K0Mj9BvGErVxrZ0gX+V87/Do2I3OdKFbBKM1cQbL4+ag9h8O2QGvcSQxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEicIPqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycf1lu7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FE11F000C4;
-	Sat, 17 Oct 2026 17:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEicIPqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE4B1F000C4;
+	Sat, 17 Oct 2026 17:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259268;
-	bh=ed/OMRksMRpjPqZnowo5IXje8cckIJ68GYi7WOr4urM=;
+	s=korg; t=1792259271;
+	bh=uRO25qogchOvxysu4aFDtilPLDALeRZMYGH3TZoEOQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ycf1lu7i7MfoOxncezpXTboSvRE4O0fXfG4SO3RtB3BzEUHcL3HZHb3AHXlN7majJ
-	 jtNU3a+YNiV44lBJRLusNnBHmaGr1pndExU3FhhmqH11NPNrdnnZuUt0ILdQMLJNiL
-	 5V9Ob0/krbsnZr21QRbMdr/bjMTLxGhrXUwCXVBI=
+	b=fEicIPqvdfFpvML/WkjkMYQqn8CAQQV5nLl8Iq1W8L1+6oYIKDNlWjhzu2boVL3Lj
+	 XEuojz6xOHXbMeMUa+xQKPXSpdBoaI+1hMxDW0YJ6bGU1Qmfvbn+/0JGym8i9J6PnN
+	 eikPLfRMLQV70C5dh7Eg77e/+A5pBhGVc6V9RE/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1158/1674] cxl/region: Block region delete during region creation
-Date: Sat, 17 Oct 2026 17:57:10 +0200
-Message-ID: <20261017160500.876212230@linuxfoundation.org>
+Subject: [PATCH 6.6 1159/1674] ALSA: seq: Drop superfluous filter argument of get_event_dest_client()
+Date: Sat, 17 Oct 2026 17:57:11 +0200
+Message-ID: <20261017160500.900660498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,141 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <djbw@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d91feb88692e81b00cd22f0125cfcd04970b4a0b ]
+[ Upstream commit 3531df81dca2f42accbc11821c5fa28e4104efd5 ]
 
-Expand the range lock, rename it "regions_lock", to disable region deletion
-in the critical period between construct_region() and attach_target(), as
-well as the period between device_add() and registering the remove actions.
+All callers of get_event_dest_clienter() pass 0 to the filter
+argument, and it means that the check there is utterly redundant.
 
-Otherwise, userspace can confuse the kernel. It can violate the assumption
-the region stays registered through the completion of cxl_add_to_region().
-It can violate the assumption that devm_add_action_or_reset() is working
-with a live 'struct cxl_region'.
+Drop the superfluous filter argument and its check as a code cleanup.
 
-It is ok for the region to disappear outside of those windows as that
-mirrors device hotplug flows where the proper locks are held.
-
-Fixes: a32320b71f08 ("cxl/region: Add region autodiscovery")
-Signed-off-by: Dan Williams <djbw@kernel.org>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Tested-by: ALejandro Lucero <alucerop@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260519210158.1499795-2-djbw@kernel.org
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20240819084757.11902-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: efc86691e4d8 ("ALSA: seq: Fix kernel heap address leak in bounce_error_event()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c   |  2 +-
- drivers/cxl/core/region.c | 23 ++++++++++++++++++++---
- drivers/cxl/cxl.h         |  4 ++--
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ sound/core/seq/seq_clientmgr.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index f23b5d6cde070..7746e2691802c 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1707,7 +1707,7 @@ struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
- 	}
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 30dc8310bfa84..7f117d4a369d0 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -70,7 +70,7 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 			      int err, int atomic, int hop);
+ static int snd_seq_deliver_single_event(struct snd_seq_client *client,
+ 					struct snd_seq_event *event,
+-					int filter, int atomic, int hop);
++					int atomic, int hop);
  
- 	cxlrd->calc_hb = calc_hb;
--	mutex_init(&cxlrd->range_lock);
-+	mutex_init(&cxlrd->regions_lock);
+ #if IS_ENABLED(CONFIG_SND_SEQ_UMP)
+ static void free_ump_info(struct snd_seq_client *client);
+@@ -539,10 +539,8 @@ static int check_port_perm(struct snd_seq_client_port *port, unsigned int flags)
  
- 	cxld = &cxlsd->cxld;
- 	cxld->dev.type = &cxl_decoder_root_type;
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 97e4a4755ab2f..5fc2a6a50ae94 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2349,7 +2349,12 @@ static ssize_t create_pmem_region_store(struct device *dev,
- 	if (rc != 1)
- 		return -EINVAL;
- 
-+	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
-+	if (rc)
-+		return rc;
-+
- 	cxlr = __create_region(cxlrd, CXL_DECODER_PMEM, id);
-+	mutex_unlock(&cxlrd->regions_lock);
- 	if (IS_ERR(cxlr))
- 		return PTR_ERR(cxlr);
- 
-@@ -2369,7 +2374,12 @@ static ssize_t create_ram_region_store(struct device *dev,
- 	if (rc != 1)
- 		return -EINVAL;
- 
-+	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
-+	if (rc)
-+		return rc;
-+
- 	cxlr = __create_region(cxlrd, CXL_DECODER_RAM, id);
-+	mutex_unlock(&cxlrd->regions_lock);
- 	if (IS_ERR(cxlr))
- 		return PTR_ERR(cxlr);
- 
-@@ -2417,13 +2427,21 @@ static ssize_t delete_region_store(struct device *dev,
- 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(dev);
- 	struct cxl_port *port = to_cxl_port(dev->parent);
- 	struct cxl_region *cxlr;
-+	int rc;
-+
-+	rc = mutex_lock_interruptible(&cxlrd->regions_lock);
-+	if (rc)
-+		return rc;
- 
- 	cxlr = cxl_find_region_by_name(cxlrd, buf);
--	if (IS_ERR(cxlr))
-+	if (IS_ERR(cxlr)) {
-+		mutex_unlock(&cxlrd->regions_lock);
- 		return PTR_ERR(cxlr);
-+	}
- 
- 	devm_release_action(port->uport_dev, unregister_region, cxlr);
- 	put_device(&cxlr->dev);
-+	mutex_unlock(&cxlrd->regions_lock);
- 
- 	return len;
- }
-@@ -3047,7 +3065,7 @@ int cxl_add_to_region(struct cxl_port *root, struct cxl_endpoint_decoder *cxled)
- 	 * Ensure that if multiple threads race to construct_region() for @hpa
- 	 * one does the construction and the others add to that.
- 	 */
--	mutex_lock(&cxlrd->range_lock);
-+	guard(mutex)(&cxlrd->regions_lock);
- 	region_dev = device_find_child(&cxlrd->cxlsd.cxld.dev, hpa,
- 				       match_region_by_range);
- 	if (!region_dev) {
-@@ -3055,7 +3073,6 @@ int cxl_add_to_region(struct cxl_port *root, struct cxl_endpoint_decoder *cxled)
- 		region_dev = &cxlr->dev;
- 	} else
- 		cxlr = to_cxl_region(region_dev);
--	mutex_unlock(&cxlrd->range_lock);
- 
- 	rc = PTR_ERR_OR_ZERO(cxlr);
- 	if (rc)
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 59e963e39d31b..f3260ca17522a 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -431,7 +431,7 @@ typedef struct cxl_dport *(*cxl_calc_hb_fn)(struct cxl_root_decoder *cxlrd,
-  * @region_id: region id for next region provisioning event
-  * @calc_hb: which host bridge covers the n'th position by granularity
-  * @platform_data: platform specific configuration data
-- * @range_lock: sync region autodiscovery by address range
-+ * @regions_lock: sync region discovery, construction, and deletion
-  * @cxlsd: base cxl switch decoder
+ /*
+  * check if the destination client is available, and return the pointer
+- * if filter is non-zero, client filter bitmap is tested.
   */
- struct cxl_root_decoder {
-@@ -439,7 +439,7 @@ struct cxl_root_decoder {
- 	atomic_t region_id;
- 	cxl_calc_hb_fn calc_hb;
- 	void *platform_data;
--	struct mutex range_lock;
-+	struct mutex regions_lock;
- 	struct cxl_switch_decoder cxlsd;
- };
+-static struct snd_seq_client *get_event_dest_client(struct snd_seq_event *event,
+-						    int filter)
++static struct snd_seq_client *get_event_dest_client(struct snd_seq_event *event)
+ {
+ 	struct snd_seq_client *dest;
  
+@@ -557,8 +555,6 @@ static struct snd_seq_client *get_event_dest_client(struct snd_seq_event *event,
+ 	if ((dest->filter & SNDRV_SEQ_FILTER_USE_EVENT) &&
+ 	    ! test_bit(event->type, dest->event_filter))
+ 		goto __not_avail;
+-	if (filter && !(dest->filter & filter))
+-		goto __not_avail;
+ 
+ 	return dest; /* ok - accessible */
+ __not_avail:
+@@ -602,7 +598,7 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 	bounce_ev.data.quote.origin = event->dest;
+ 	bounce_ev.data.quote.event = event;
+ 	bounce_ev.data.quote.value = -err; /* use positive value */
+-	result = snd_seq_deliver_single_event(NULL, &bounce_ev, 0, atomic, hop + 1);
++	result = snd_seq_deliver_single_event(NULL, &bounce_ev, atomic, hop + 1);
+ 	if (result < 0) {
+ 		client->event_lost++;
+ 		return result;
+@@ -669,7 +665,7 @@ int __snd_seq_deliver_single_event(struct snd_seq_client *dest,
+  */
+ static int snd_seq_deliver_single_event(struct snd_seq_client *client,
+ 					struct snd_seq_event *event,
+-					int filter, int atomic, int hop)
++					int atomic, int hop)
+ {
+ 	struct snd_seq_client *dest = NULL;
+ 	struct snd_seq_client_port *dest_port = NULL;
+@@ -678,7 +674,7 @@ static int snd_seq_deliver_single_event(struct snd_seq_client *client,
+ 
+ 	direct = snd_seq_ev_is_direct(event);
+ 
+-	dest = get_event_dest_client(event, filter);
++	dest = get_event_dest_client(event);
+ 	if (dest == NULL)
+ 		goto __skip;
+ 	dest_port = snd_seq_port_use_ptr(dest, event->dest.port);
+@@ -770,8 +766,7 @@ static int __deliver_to_subscribers(struct snd_seq_client *client,
+ 			/* convert time according to flag with subscription */
+ 			update_timestamp_of_queue(event, subs->info.queue,
+ 						  subs->info.flags & SNDRV_SEQ_PORT_SUBS_TIME_REAL);
+-		err = snd_seq_deliver_single_event(client, event,
+-						   0, atomic, hop);
++		err = snd_seq_deliver_single_event(client, event, atomic, hop);
+ 		if (err < 0) {
+ 			/* save first error that occurs and continue */
+ 			if (!result)
+@@ -852,7 +847,7 @@ static int snd_seq_deliver_event(struct snd_seq_client *client, struct snd_seq_e
+ 	    event->dest.client == SNDRV_SEQ_ADDRESS_SUBSCRIBERS)
+ 		result = deliver_to_subscribers(client, event, atomic, hop);
+ 	else
+-		result = snd_seq_deliver_single_event(client, event, 0, atomic, hop);
++		result = snd_seq_deliver_single_event(client, event, atomic, hop);
+ 
+ 	return result;
+ }
 -- 
 2.53.0
 
