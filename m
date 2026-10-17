@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA01B23394D;
-	Sat, 17 Oct 2026 15:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264D224D6;
+	Sat, 17 Oct 2026 15:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252657; cv=none; b=mRE77UzupCuAwXugX06DmVrUazaNqVRFTbTWvZAog+Ze2uPLUBpBZs3311Wp//kTZbSchmWiOr+0RiI6Lwwi2mLsBgWaXVOww0ZbA8HXUHPwzhSfSyTDpx1nUWTiE9ezGmz3YKFdnovf17DDVqlMQzUuQkFkiLLUuFZ5o3IkvCk=
+	t=1792252660; cv=none; b=ohpUOgNsgDcnvev0O0KF8rfzIIhaBNF2cwg2TPVbaE+j9ooaabIp4Z6AufcHXt3JcMiGfOMfuz031KAPi03D4LiF4PmtEVd1Z4i0PCDgPaPs6UVjqL2DcPLTOcUhgyKuSwIe67Ent+5m8MjgYU+nrJo++5srvnVn3G/BpWzq/WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252657; c=relaxed/simple;
-	bh=jLKoDR96ZDAOCwOIUOieKgAFSqtOd2PqjKWk0sYw1zY=;
+	s=arc-20240116; t=1792252660; c=relaxed/simple;
+	bh=uMGvIkcYS9kY167NU4DT8h4h9OMb6b7h2l9W9ib8jHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ToACeH635/uXu9jPIGaltAy8TlFBhYI22fnMb2C/S48YXsKG6GaAkIxahypcSjzvxS57EAaJ2GPfPUPbOh+efpK7ydCcqyroxS9XuT1cjGcf9xxNIWMA10s9ZRFKahjLwDkXxkXbkEVwJbSuzBoDYm9ufGba3bcTWtLRDVaevqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPJS0j0g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dDQhXHlgis3i88HSPXcSVkakr8nRHmERaTKRjm5y0z91IVuVhMxyBOY5/veuHKEcLLKbuC2EzurXtm9tOc6zOgHCOtL8uSpR1AliLJIy+YGiRxLIo79SKU58Tq/cL1kWqZLhu2506bmbR38T6hHUchGthHJnHK2z+WXqbjxa/vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uxx5EQ4N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPJS0j0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4051F000C4;
-	Sat, 17 Oct 2026 15:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uxx5EQ4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EB81F000C4;
+	Sat, 17 Oct 2026 15:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252656;
-	bh=bydivF7vHbZSOhu2D37ClioEMTirZ0wu8OWLWtdw5nE=;
+	s=korg; t=1792252659;
+	bh=/R/DUmWxRufGXshwFUT0aPwV9riNazBnkTJv0S7Ocak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPJS0j0g9YYAEiDy2d0IOfDrr18EgyE2e4sBtykV3NSvvPA90WmhgKizQnNVJKKUl
-	 4AZa0bGmwu1vN8LyMBF2OabiS5kl08dJpm/aqOC9p1Dh0JdkRQed8P+pdhEsXa0fdN
-	 YYmUvABe5v9UFsx9ViSlfdyORGhf3ZxphUGWxrKs=
+	b=Uxx5EQ4NCpdRFsaIacFEHmCObjNFST8NVCb+HEniynWqoeOlu7cOnTI6J+uCvMchy
+	 seNTq/AM/xWGmx9F+QhCgEsRWJ24B93ePxpb2B/uyslNDagYuMjF1U85oREXg7Xiyg
+	 d7zzsn9+Jht9IQ2VAGsrua+W2Wyv3yu+BW4APDRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattia Meleleo <mattia.meleleo@coralogix.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Mehmet Fide <mehmet.fide@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 51/52] bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
-Date: Sat, 17 Oct 2026 17:54:52 +0200
-Message-ID: <20261017155106.485705794@linuxfoundation.org>
+Subject: [PATCH 6.18 52/52] wifi: atk9k: Revert "wifi: ath9k: reject short WMI command responses"
+Date: Sat, 17 Oct 2026 17:54:53 +0200
+Message-ID: <20261017155106.516015790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -48,101 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mattia Meleleo <mattia.meleleo@coralogix.com>
+From: Toke Høiland-Jørgensen <toke@toke.dk>
 
-[ Upstream commit 04af4efde58a4a4ef4feab7360c46af9ec0b83a0 ]
+[ Upstream commit 90201351a862182bdabfc1ad1c97b1e1b6ed5931 ]
 
-tcp_bpf_ioctl() answers SIOCINQ from psock->msg_tot_len, which only
-counts bytes in ingress_msg. Without a stream/skb verdict program
-nothing is diverted there: data stays in sk_receive_queue, so FIONREAD
-returns 0 even though read() returns data.
+This reverts commit 93ce8ea70451e800601bc9444aa33043de15d67b.
 
-Add tcp_inq() to the reported value when the psock has no verdict
-program. The two queues are disjoint, so bytes redirected into
-ingress_msg from other sockets stay correctly accounted through
-msg_tot_len.
+Mehmet reported that the offending commit breaks his AR9271 USB adapter
+which uses zero-length replies to commands that don't return a value.
+Revert the whole thing to restore the functionality.
 
-Remove unused sk_psock_msg_inq().
-
-Fixes: 929e30f93125 ("bpf, sockmap: Fix FIONREAD for sockmap")
-Signed-off-by: Mattia Meleleo <mattia.meleleo@coralogix.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: stable@vger.kernel.org # the offending commit is in 6.12.113
+Reported-by: Mehmet Fide <mehmet.fide@gmail.com>
+Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h | 14 --------------
- net/ipv4/tcp_bpf.c    | 17 ++++++++++++++++-
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 16 ++--------------
+ drivers/net/wireless/ath/ath9k/wmi.h |  1 -
+ 2 files changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index 4ee7e4680a6e1..718351acd0230 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -561,20 +561,6 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
- 	return !!psock->saved_data_ready;
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 610717fb83f57..805ad31edba2b 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -206,16 +206,9 @@ static void ath9k_wmi_rsp_callback(struct wmi *wmi, struct sk_buff *skb)
+ {
+ 	skb_pull(skb, sizeof(struct wmi_cmd_hdr));
+ 
+-	if (wmi->cmd_rsp_buf && wmi->cmd_rsp_len) {
+-		if (skb->len < wmi->cmd_rsp_len) {
+-			wmi->cmd_rsp_status = -EMSGSIZE;
+-			goto complete;
+-		}
++	if (wmi->cmd_rsp_buf != NULL && wmi->cmd_rsp_len != 0)
+ 		memcpy(wmi->cmd_rsp_buf, skb->data, wmi->cmd_rsp_len);
+-	}
+-	wmi->cmd_rsp_status = 0;
+ 
+-complete:
+ 	complete(&wmi->cmd_wait);
  }
  
--/* for tcp only, sk is locked */
--static inline ssize_t sk_psock_msg_inq(struct sock *sk)
--{
--	struct sk_psock *psock;
--	ssize_t inq = 0;
+@@ -307,7 +300,6 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
+ 	/* record the rsp buffer and length */
+ 	wmi->cmd_rsp_buf = rsp_buf;
+ 	wmi->cmd_rsp_len = rsp_len;
+-	wmi->cmd_rsp_status = 0;
+ 
+ 	wmi->last_seq_id = wmi->tx_seq_id;
+ 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+@@ -364,13 +356,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	spin_lock_irqsave(&wmi->wmi_lock, flags);
+-	ret = wmi->cmd_rsp_status;
+-	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
 -
--	psock = sk_psock_get(sk);
--	if (likely(psock)) {
--		inq = sk_psock_get_msg_len_nolock(psock);
--		sk_psock_put(sk, psock);
--	}
--	return inq;
--}
--
- /* for udp only, sk is not locked */
- static inline ssize_t sk_msg_first_len(struct sock *sk)
- {
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index ca51756d8aa47..6027cd33a9fdc 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -334,6 +334,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 	mutex_unlock(&wmi->op_mutex);
  
- static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- {
-+	struct sk_psock *psock;
- 	bool slow;
+-	return ret;
++	return 0;
  
- 	if (cmd != SIOCINQ)
-@@ -344,7 +345,21 @@ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- 		return -EINVAL;
+ out:
+ 	ath_dbg(common, WMI, "WMI failure for: %s\n", wmi_cmd_to_name(cmd_id));
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.h b/drivers/net/wireless/ath/ath9k/wmi.h
+index 0bb9d31f1a1cc..5c3b710b8f319 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.h
++++ b/drivers/net/wireless/ath/ath9k/wmi.h
+@@ -157,7 +157,6 @@ struct wmi {
+ 	u16 tx_seq_id;
+ 	u8 *cmd_rsp_buf;
+ 	u32 cmd_rsp_len;
+-	int cmd_rsp_status;
+ 	bool stopped;
  
- 	slow = lock_sock_fast(sk);
--	*karg = sk_psock_msg_inq(sk);
-+	psock = sk_psock_get(sk);
-+	if (unlikely(!psock)) {
-+		unlock_sock_fast(sk, slow);
-+		return tcp_ioctl(sk, cmd, karg);
-+	}
-+	*karg = sk_psock_get_msg_len_nolock(psock);
-+	/* Without a verdict program, ingress data is never diverted to
-+	 * ingress_msg: it stays in sk_receive_queue and is read through
-+	 * the fallback to tcp_recvmsg(), so account for it like
-+	 * tcp_ioctl() does.
-+	 */
-+	if (!READ_ONCE(psock->progs.stream_verdict) &&
-+	    !READ_ONCE(psock->progs.skb_verdict))
-+		*karg += tcp_inq(sk);
-+	sk_psock_put(sk, psock);
- 	unlock_sock_fast(sk, slow);
- 
- 	return 0;
+ 	struct list_head pending_tx_events;
 -- 
 2.53.0
 
