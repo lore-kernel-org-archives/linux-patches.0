@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553F232E151;
-	Sat, 17 Oct 2026 17:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1593A6418;
+	Sat, 17 Oct 2026 17:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257335; cv=none; b=AhYTHrxR+ZPXP+HD8R7DHKNoxlpCU29Ea2bKsq62F4aGuQauO0DkqMUKOgW1TROk6HKYf2Dco0zKOoao5ny4Juh4epruYBAo6JZ7/10f/I8XpeyFAMLL0m1ZhJupPuH6h7UnXNoGTwaN0ES9pmdRnaIiVC6INeq+mcwbAqJNgLg=
+	t=1792257337; cv=none; b=kk5dtQdMNcPIHeVmsbyiTZ1wx4gpiVfMVViX4RvV9hf0EyR38m1kGTDehDY8a9onIYsoTQTLqD7H2wG6mbe7CgTQHp+r613uVFeEJ4hmpt0XFOIzUM74Zo88wxHzIX3kW6pNG7avLSXC249mLzO6kcAnPDIZc9NsIlA1ATw4tVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257335; c=relaxed/simple;
-	bh=UjtlkpmnlxWqyq+KkjaXB/QjG3aOBhfjIFBoCABRStw=;
+	s=arc-20240116; t=1792257337; c=relaxed/simple;
+	bh=Uo4ukCMJl3GaKDdXWfgjGunH+jOh8eUeHLxST27UPUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYEKOg46ZhQvW601gE7DlnrSnoKra88Kq8Qzw+lw5HcjfRQSjOZazqpnFdMsVmQnjtCXALvaiI0LT/ImYgXa5NCGnrWFadwgeYJw49iREHFE/EW2FFA58Q0mIkWO2dy0iMRmJo3Qr/Aqt4TOLEWIX/+USB3idJqB3ycMu8G5jAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYLCOeN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AyClYVmcAAM9mKRp9WbE2DfGXNT8s0EVcWh4ZjqfZouXoEkFEIA116DpJVlnW0KpPyI7KYEDvt0xxy/vcPo1egNDsx9gWR1tyR/XLEIGBwSYVIDpvvL0LZmlCKf+/RtBXmjmG/8CSI86F38Q1kTiT49StuffI3RdBNE9ohbxIco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZHygkrH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYLCOeN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE8F1F000C5;
-	Sat, 17 Oct 2026 17:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZHygkrH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8581F000C4;
+	Sat, 17 Oct 2026 17:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257333;
-	bh=fMwABbPuHvYKFYcLrRsIFV9s1Rk2cKG21niyJIylt4w=;
+	s=korg; t=1792257336;
+	bh=xl6Gay5tjatg6zZNgqza+RGVDKp9rec7ywPPNGVU00Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYLCOeN01zvKvIY2a69ilxHm4ZmMmedubonvm2seJOn/ShZVHdzhWmfGCjhnJhYdK
-	 iPbm0iAVSb91Xg6cOurEeeyXJj/bfvJ9gTEwcot3i5ke6rgNFrCUTVH+QPedAZRAir
-	 rbXMgVciAQIEvlhJSMA9rnFjgmq6MEp/V6100pi4=
+	b=GZHygkrHdwvWxrmzu3j6tVpl7EHQvNqhdIsq61dfzniQnuggC1YZbr+KrVob0F+LD
+	 Rv3okjOO6EW4Wm26zmmvEUSyIVmAvlAQpYQzDlYmH0hM1XyUFZwJoHWn6szDB1G3yS
+	 HtXzcGi/qQZgBYrwzBHUC0LfU/mgC7VyCXoYvvdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 0484/1674] selinux: preserve NATIVE_LABELS on already-initialized sb in set_mnt_opts
-Date: Sat, 17 Oct 2026 17:45:56 +0200
-Message-ID: <20261017160443.536532933@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	Hui Peng <benquike@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0485/1674] sctp: copy zeroed stats to user in sctp_getsockopt_pr_streamstatus() when !streamoute
+Date: Sat, 17 Oct 2026 17:45:57 +0200
+Message-ID: <20261017160443.562946265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,67 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit 28b7260548af3d35773477993ad4e4de41578dd7 upstream.
+commit 538b529509c7ab0d909cb65bb7264edca1788d30 upstream.
 
-When an NFSv4 filesystem exported with security_label is mounted a
-second time, sget_fc() returns the existing superblock and
-nfs_get_root() calls security_sb_set_mnt_opts() again on it. Since the
-superblock is already SB_INITIALIZED, selinux_set_mnt_opts() takes an
-early exit without setting SECURITY_LSM_NATIVE_LABELS in
-*set_kern_flags. nfs_get_root() then sees kflags without
-SECURITY_LSM_NATIVE_LABELS set and clears NFS_CAP_SECURITY_LABEL on
-the shared nfs_server, silently disabling per-file labeling for both
-the new and the original mount.
+When an SCTP stream output extension structure (streamoute) has not yet
+been allocated, sctp_getsockopt_pr_streamstatus() sets the local stack
+variables params.sprstat_abandoned_unsent = 0 and
+params.sprstat_abandoned_sent = 0, but then immediately jumps to 'out:',
+bypassing copy_to_user(). As a result, when an uninitialized user buffer
+is passed to getsockopt(SCTP_PR_STREAM_STATUS), the kernel returns
+success (0) without copying the zeroed stats back to user space, leaving
+uninitialized data in the user buffer.
 
-Commit 3815a245b501 ("security/selinux: fix SECURITY_LSM_NATIVE_LABELS
-on reused superblock") fixed the same problem in
-selinux_sb_clone_mnt_opts().  The reused-superblock path for a plain
-second mount now goes through sb_set_mnt_opts rather than
-sb_clone_mnt_opts, so it needs the same treatment: on both
-SE_SBINITIALIZED early exits, set SECURITY_LSM_NATIVE_LABELS in
-*set_kern_flags when the superblock was already using
-SECURITY_FS_USE_NATVE.
+Refactor the !streamoute check into an if-else chain so that when
+streamoute is NULL, params is zeroed and falls through to copy_to_user(),
+copying the zeroed stats to user space and setting retval = 0 once before
+returning.
+
+Tested in QEMU against Linux 7.3.0-rc3 using an uninitialized
+sctp_prstatus user struct passed to getsockopt(SCTP_PR_STREAM_STATUS) on a
+freshly created stream: on the unfixed kernel the user struct contains
+uninitialized stack garbage; whereas with this fix applied, getsockopt()
+copies zeroed stats into user space and returns 0.
 
 Cc: stable@vger.kernel.org
-Closes: https://github.com/SELinuxProject/selinux-kernel/issues/69
-Closes: https://github.com/SELinuxProject/selinux-kernel/issues/70
-Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/91
-Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/92
-Fixes: eb9ae686507b ("SELinux: Add new labeling type native labels")
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Fixes: f952be79cebd ("sctp: introduce struct sctp_stream_out_ext")
+Link: https://patch.msgid.link/20260930044611.204739-1-benquike@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/sctp/socket.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -670,8 +670,12 @@ static int selinux_set_mnt_opts(struct s
- 	 * will be used for both mounts)
- 	 */
- 	if ((sbsec->flags & SE_SBINITIALIZED) && (sb->s_type->fs_flags & FS_BINARY_MOUNTDATA)
--	    && !opts)
-+		&& !opts) {
-+		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
-+		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
-+			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
- 		goto out;
-+	}
- 
- 	root_isec = backing_inode_security_novalidate(root);
- 
-@@ -715,6 +719,9 @@ static int selinux_set_mnt_opts(struct s
- 		/* previously mounted with options, but not on this attempt? */
- 		if ((sbsec->flags & SE_MNTMASK) && !opts)
- 			goto out_double_mount;
-+		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
-+		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
-+			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
- 		rc = 0;
- 		goto out;
- 	}
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -7523,11 +7523,7 @@ static int sctp_getsockopt_pr_streamstat
+ 		/* Not allocated yet, means all stats are 0 */
+ 		params.sprstat_abandoned_unsent = 0;
+ 		params.sprstat_abandoned_sent = 0;
+-		retval = 0;
+-		goto out;
+-	}
+-
+-	if (policy == SCTP_PR_SCTP_ALL) {
++	} else if (policy == SCTP_PR_SCTP_ALL) {
+ 		params.sprstat_abandoned_unsent = 0;
+ 		params.sprstat_abandoned_sent = 0;
+ 		for (policy = 0; policy <= SCTP_PR_INDEX(MAX); policy++) {
 
 
