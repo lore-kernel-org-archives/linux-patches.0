@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997313B9927;
-	Sat, 17 Oct 2026 17:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24973B9927;
+	Sat, 17 Oct 2026 17:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259140; cv=none; b=ioCijeip1rDNh0Lhy0JF/cfIMfzvHNkEqPGWs2gBZCwySoThFzBj+itTIhK9c1vbcIS23uU0O263hQ8WEGpoqXT4PNK1Y3qVQNO0a0OEI8cMieBQEYrX8tXksrNXCY4/5UeFGUwcNI9v6ZJiSzceuTcMzBoSLrAk8U+Lity2bMA=
+	t=1792259143; cv=none; b=Cn1PABxs6A4z2dhMSq5GXw4SVLDbrAumH3CGhpQ1zFFtGtISsTHqKnSP34CyRrPSp6ZpML86f48HFXRFDPlyE3hesv1vIUWf4tXaGbIPWs0WYbTWaV7NIb/dQF+k84gUN0OxQhCBHlSDWRtJGf/AsDJP8/j88RL3Z+S1lMI/jPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259140; c=relaxed/simple;
-	bh=/lifV1ULTQ20PNMFEcI/Ee1buX0LyFnEYF34mKT2Srs=;
+	s=arc-20240116; t=1792259143; c=relaxed/simple;
+	bh=ugLmKX27L73a36FKiUIlEfGSqjGdqSzV3MhXfN2qhMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1h8i7u+LwDPITbb6lxhgQxBNPtV622zm6BVfLUpEmHYew/XpGcBBgzGNp2pCwtFnU1ZS5lYokxjrUyJ79pFevYsgsCbkyMjJ5EZxgEvs4jQ1VkrDGhhb9wJGscS8Xg6MUNxsUxWIEFoSFtJCsgY2ljiRHyg81yN0t8E4eCCfiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIRxUx4o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJhHlQ5LImilZr1n3p4tV/qfiBKKs+oJTQK+kWTyH2n4rw6hO2LoW4k5pANfaetVrwNf7pThWEtByG34KGNx8HfOAOvQi47slXCheNSAYY8T/yMj/gR+WHkbuow5iBVOoQYCyGH9/OZugCjRyt9HDfWrlrkFXbH5C6HfCYTN6YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al8u8R7U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIRxUx4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E674A1F000C4;
-	Sat, 17 Oct 2026 17:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al8u8R7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EC11F000C4;
+	Sat, 17 Oct 2026 17:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259139;
-	bh=zgMxTV20d0nPl4mygI6+MTv8qNo3jRxWrQ1JihLMIoI=;
+	s=korg; t=1792259142;
+	bh=axgwOCwv+xyDFkY+DKQ0YBCE8WF5P+J3a6BHVtgH8qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIRxUx4oiv5fPyasIHV+u/88HYw1WjkiSOuUz8oSm5wWDnrdLXSHg0yyQEbNBhiYn
-	 CtQuWIzs5Nk9jsP41PPMTROtDATfdzJP9ufP9IU66SVU4z3hhTrlNEPENuc/+TvH2x
-	 3aHLkNhFcun6KMriTKLcw6TI8QdZPitQJv6nMlok=
+	b=Al8u8R7UBBis6cdh29Xd1ElMg8GLjAB74ozCy21RnRnipFG5FqwwXz9qm3op00I72
+	 ImwW13cFelXtviAV5oVLOwCvd1saf/neLNuT5YXRVjl13oyXxgiWv/wUWKrFIqNGz2
+	 SDUkMYfHdSkBUzhBL3ywhu6BFltduhjFE2+cMC6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Julian Sun <sunjunchao2870@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1116/1674] nvmet-auth: reject short AUTH_RECEIVE buffers
-Date: Sat, 17 Oct 2026 17:56:28 +0200
-Message-ID: <20261017160459.776687006@linuxfoundation.org>
+Subject: [PATCH 6.6 1117/1674] ocfs2: correct l_next_free_rec in online check
+Date: Sat, 17 Oct 2026 17:56:29 +0200
+Message-ID: <20261017160459.803388596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,84 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Julian Sun <sunjunchao2870@gmail.com>
 
-[ Upstream commit 779575bc35c687697ba69e904f2cd22e60112534 ]
+[ Upstream commit fdbb6cd96ed51da002bd9a5a142586a74a436784 ]
 
-nvmet_execute_auth_receive() trusts the AUTH_RECEIVE allocation length
-after checking only that it is nonzero and matches the transfer length.
-In the SUCCESS1 and FAILURE1/default states, that lets a remote NVMe-oF
-initiator reach the fixed-size DH-HMAC-CHAP response builders with a
-kmalloc() buffer shorter than the response, so nvmet_auth_success1() and
-nvmet_auth_failure1() write past the allocation; both only WARN_ON the
-short length and then format the message anyway.
+Correct the value of l_next_free_rec to l_count during the online check,
+as done in the check_el() function in ocfs2_tools.
 
-Impact: A remote NVMe-oF initiator with access to an auth-enabled target
-can trigger a 16-byte heap out-of-bounds write via a one-byte
-AUTH_RECEIVE allocation length.
-
-Compute the minimum response length for the current DH-HMAC-CHAP step in
-nvmet_auth_receive_data_len() and report a zero data length when the
-host-supplied allocation length is shorter, so the existing zero-length
-check in nvmet_execute_auth_receive() rejects the command before any
-builder runs. The SUCCESS1 minimum is sizeof(struct
-nvmf_auth_dhchap_success1_data) plus the HMAC hash length, because the
-response hash is written into the rval[] flexible-array tail, so the
-minimum is state dependent rather than a flat sizeof. CHALLENGE keeps its
-existing variable-length guard in nvmet_auth_challenge().
-
-This is reachable only when in-band DH-HMAC-CHAP authentication is
-configured on the target.
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://lkml.kernel.org/r/20250106023432.1320904-2-sunjunchao2870@gmail.com
+Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 452a8467be81 ("ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ fs/ocfs2/inode.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 98c8880949c79..935510c377a6a 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -453,7 +453,31 @@ static void nvmet_auth_failure1(struct nvmet_req *req, void *d, int al)
- 
- u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
- {
--	return le32_to_cpu(req->cmd->auth_receive.al);
-+	struct nvmet_ctrl *ctrl = req->sq->ctrl;
-+	u32 al = le32_to_cpu(req->cmd->auth_receive.al);
-+	u32 min_len;
-+
-+	/*
-+	 * Reject too-short al before kmalloc(al), since the SUCCESS1 and
-+	 * FAILURE1/default builders write fixed response headers into it.
-+	 */
-+	switch (req->sq->dhchap_step) {
-+	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
-+		return al;
-+	case NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1:
-+		min_len = sizeof(struct nvmf_auth_dhchap_success1_data);
-+		if (req->sq->dhchap_c2)
-+			min_len += nvme_auth_hmac_hash_len(ctrl->shash_id);
-+		break;
-+	default:
-+		min_len = sizeof(struct nvmf_auth_dhchap_failure_data);
-+		break;
-+	}
-+
-+	if (al < min_len)
-+		return 0;
-+
-+	return al;
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index bbf8dfeeac745..1de709515f031 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -233,6 +233,20 @@ struct inode *ocfs2_iget(struct ocfs2_super *osb, u64 blkno, unsigned flags,
+ 	return inode;
  }
  
- void nvmet_execute_auth_receive(struct nvmet_req *req)
++static int ocfs2_dinode_has_extents(struct ocfs2_dinode *di)
++{
++	/* inodes flagged with other stuff in id2 */
++	if (di->i_flags & (OCFS2_SUPER_BLOCK_FL | OCFS2_LOCAL_ALLOC_FL |
++			   OCFS2_CHAIN_FL | OCFS2_DEALLOC_FL))
++		return 0;
++	/* i_flags doesn't indicate when id2 is a fast symlink */
++	if (S_ISLNK(di->i_mode) && di->i_size && di->i_clusters == 0)
++		return 0;
++	if (di->i_dyn_features & OCFS2_INLINE_DATA_FL)
++		return 0;
++
++	return 1;
++}
+ 
+ /*
+  * here's how inodes get read from disk:
+@@ -1728,6 +1742,16 @@ static int ocfs2_filecheck_repair_inode_block(struct super_block *sb,
+ 		     le32_to_cpu(di->i_fs_generation));
+ 	}
+ 
++	if (ocfs2_dinode_has_extents(di) &&
++	    le16_to_cpu(di->id2.i_list.l_next_free_rec) > le16_to_cpu(di->id2.i_list.l_count)) {
++		di->id2.i_list.l_next_free_rec = di->id2.i_list.l_count;
++		changed = 1;
++		mlog(ML_ERROR,
++		     "Filecheck: reset dinode #%llu: l_next_free_rec to %u\n",
++		     (unsigned long long)bh->b_blocknr,
++		     le16_to_cpu(di->id2.i_list.l_next_free_rec));
++	}
++
+ 	if (changed || ocfs2_validate_meta_ecc(sb, bh->b_data, &di->i_check)) {
+ 		ocfs2_compute_meta_ecc(sb, bh->b_data, &di->i_check);
+ 		mark_buffer_dirty(bh);
 -- 
 2.53.0
 
