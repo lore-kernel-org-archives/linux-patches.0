@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910433B3BEF;
-	Sat, 17 Oct 2026 17:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839FE3BB12D;
+	Sat, 17 Oct 2026 17:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256786; cv=none; b=H7fi5tHxfJsb7UxHFAraITpxyAyCagg8kJcLeRkDtM5TyrGPlThFtT3dLXOo1552gc6F3KAD1ZlsXB7dk8vvhHjadpDCeqRDoBSqNcuzgZKKjWSI+WWBBxTIZeB61WC9sMvALVsOOAtEKTjz2UDE171sokFc6cj6HXosGhxS1LU=
+	t=1792256790; cv=none; b=tsbMjM9iolxKRTjbcAPi6f4Jd9qDeFh9r2ZlR3dkowgNcOtEEg+1KCzYLpKRJYWnAUZL2U63ukGi9xJbIXSzmIkW7icjHtsXTUgMX6r7tq7bW7S5cS+jC/hbQiFkXdWDlmvQnuBVAzS46qojPUGnAtlmywNZ3+hG+2OSvWEsQLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256786; c=relaxed/simple;
-	bh=TgkuHXzoA3YVzgGMC9gRLjP3QdyXb5CgPxs1IpFScXs=;
+	s=arc-20240116; t=1792256790; c=relaxed/simple;
+	bh=cEGD/TgIH3xP69VplqNffE18N5dpV4SXG3/8cK8A7Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hyo5ekXIVeMLmBqCuJgqXbQwGbzCjWpSj+yeYWv7PqS8L42KxGwurAU2BXMjgr1xJMtTZ1tQCuXU3X40FT2JuezWT/EAc72uUnR2GsomvfgdTPlEREDsVPvtZ/NqvMNzUAkgr3l5DWWMASZEZ+NZSxSTocwU0oBeEBR7pG7R1TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSlxrdxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZD1JW3exh228/G4TKy8L8BbaBUogfYI+cdZB1/8/2IcyMdku7Ab3Kbbvanz6fqDn9OpHfjcsFAsRGn8SKUc3RbLLY89JijxCvRVHgdZdk3E9vK5czr70MH3pnvAUiFKRVM9YGYtihfI6w+MUZlEbxAuQLM1vKfYnTkS9UAnEj5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoKRdpq6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSlxrdxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A341F000C5;
-	Sat, 17 Oct 2026 17:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoKRdpq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8636F1F000C4;
+	Sat, 17 Oct 2026 17:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256785;
-	bh=/C1ImObql8N35RwqL9sHN0tda1XG+tpft2CIjT64d2Y=;
+	s=korg; t=1792256788;
+	bh=R39UBOa1zmfNlN1HyYexvLs6VOJDI7uFuXgxXQ20ZCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hSlxrdxKYVMcwplC6VkijdmsJ0H9pmRxux/NMLFFQ+P9ODZ9fYe12oLJzT90S/VGr
-	 MEZYbMm4lEI3XlT/VixMT5rf3ABczQYnMSpCDZDCfetvJEjtHxWtGtgpdyJbW1zt6d
-	 5aRVWz/9QDTfh0uQaAVIM6Ffa0L7NfaGQ1p+Ctqs=
+	b=VoKRdpq6Uodq+h52wsBuESECzyOXgJ+KrgJVUzIsGopd7bpL5P25mHZQfLr1DTOjw
+	 xNkR3pktNYBR3H68ooRlnN9KuqWs9Tk1BkYaLcf9fc8VYfAzo2yXCzdOHG9CgMYPqF
+	 3YOg78ySweDvuBc0U4huxoQ6zaV+7AKPOuwuy6lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Ivan Mikhaylov <fr0st61te@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0352/1674] iio: proximity: vcnl3020: fix ISR bitmask check in IRQ handler
-Date: Sat, 17 Oct 2026 17:43:44 +0200
-Message-ID: <20261017160440.159692142@linuxfoundation.org>
+Subject: [PATCH 6.6 0353/1674] iio: trigger: cancel reenable_work before freeing trigger
+Date: Sat, 17 Oct 2026 17:43:45 +0200
+Message-ID: <20261017160440.184701366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,77 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 7d38af8f20239a66e90de7632a79c9425256c574 upstream.
+commit 2a57b9246cecd5dd797a42eb310d6c8816f26d9e upstream.
 
-The threaded IRQ handler contained multiple issues in handling interrupt
-events and clearing status flags:
+iio_trigger_notify_done_atomic() defers ->reenable() into
+trig->reenable_work on the system workqueue, and the worker dereferences
+the owning trigger through container_of().  Nothing cancels this work
+before iio_trig_release() frees the trigger, so a worker armed by the
+last in-flight IRQ can outlive the free and touch freed memory.
 
-1. ISR bit check: The handler incorrectly checked the Interrupt Status
-   Register (VCNL_ISR) against VCNL_ICR_THRES_EN (BIT(1)), which is a
-   bitmask meant for the Control Register (VCNL_PS_ICR). In VCNL_ISR,
-   BIT(1) corresponds only to low-threshold interrupts. A high-threshold
-   interrupt (VCNL_INT_TH_HI, BIT(0)) on its own was completely ignored and
-   returned IRQ_NONE.
+Cancel it at the top of iio_trig_release(), which every free path
+reaches through the device core's final put_device().
 
-2. Event direction & channel index: The handler unconditionally pushed a
-   RISING event code on channel index 1. The driver only registers a single
-   proximity channel (index 0), and low-threshold interrupts should be
-   reported with IIO_EV_DIR_FALLING.
+Found by an in-house static analysis tool.
 
-3. ISR clearing: The write-back to acknowledge the interrupt only preserved
-   BIT(1) instead of masking against both valid status bits.
-
-Fix this by checking both VCNL_INT_TH_HI and VCNL_INT_TH_LOW bits in
-VCNL_ISR, pushing separate IIO events with the correct direction and
-channel index (0), and properly clearing handled status bits.
-
-Fixes: 3363fbbe19e5 ("iio: proximity: vcnl3020: add periodic mode")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+Fixes: 9020ef659885 ("iio: trigger: Fix a scheduling whilst atomic issue seen on tsc2046")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/vcnl3020.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/iio/industrialio-trigger.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/proximity/vcnl3020.c
-+++ b/drivers/iio/proximity/vcnl3020.c
-@@ -584,16 +584,26 @@ static irqreturn_t vcnl3020_handle_irq_t
- 		return IRQ_HANDLED;
- 	}
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -519,6 +519,8 @@ static void iio_trig_release(struct devi
+ 	struct iio_trigger *trig = to_iio_trigger(device);
+ 	int i;
  
--	if (!(isr & VCNL_ICR_THRES_EN))
-+	if (!(isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW)))
- 		return IRQ_NONE;
- 
--	iio_push_event(indio_dev,
--		       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 1,
--				            IIO_EV_TYPE_THRESH,
--				            IIO_EV_DIR_RISING),
--		       iio_get_time_ns(indio_dev));
-+	if (isr & VCNL_INT_TH_HI) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_RISING),
-+			       iio_get_time_ns(indio_dev));
-+	}
++	cancel_work_sync(&trig->reenable_work);
 +
-+	if (isr & VCNL_INT_TH_LOW) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_FALLING),
-+			       iio_get_time_ns(indio_dev));
-+	}
- 
--	rc = regmap_write(data->regmap, VCNL_ISR, isr & VCNL_ICR_THRES_EN);
-+	rc = regmap_write(data->regmap, VCNL_ISR, isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW));
- 	if (rc)
- 		dev_err(data->dev, "Error (%d) writing in reg (0x%x)\n",
- 			rc, VCNL_ISR);
+ 	if (trig->subirq_base) {
+ 		for (i = 0; i < CONFIG_IIO_CONSUMERS_PER_TRIGGER; i++) {
+ 			irq_modify_status(trig->subirq_base + i,
 
 
