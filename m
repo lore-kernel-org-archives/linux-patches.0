@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4A43B19BA;
-	Sat, 17 Oct 2026 17:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A263A382F25;
+	Sat, 17 Oct 2026 17:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258992; cv=none; b=lUBUGOGC7q70advT9QOf0kuERGA4OtgrPCo8DuFY6+CnXsGf/V8CVM7pp/3BTihnszOW2kvCkFP9PDlaaSEw9sjsvWel0r7qH7m1KCPryV7D6R/8IId8IKBXAO+2LmD0OSatMBoedGCU8vlpcaiVQYhDV+gv3VhdDt23dytRUk8=
+	t=1792258995; cv=none; b=fzTGIKRBdWgwotBmIQgt19IryL5P96DzBeO61XgyxqEEavIgGBmbVSia0TPeUK8qRAO6TBNe2OHtgszk1ZqgYQQMtXFj13uHwEKxtFzI81Gi8iSdzcxNZjINKqhpT+HsEV2QCEpOKAauLDljKHA7gTQM0CxnzgEgbxsq2RCwEyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258992; c=relaxed/simple;
-	bh=4u56aJmsevP6BGUiQy/2sHEdVfh2QOKnFRbVk9c6Ncc=;
+	s=arc-20240116; t=1792258995; c=relaxed/simple;
+	bh=LhqL/fdoElpVAWiQqwOiFSiqkOd2VV44Q7HI2BRWWIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgHKmA3zYxaJ1yinllkM25MINVsgmTv7vOQN12MUpfN6t5W+kyRky3zvqesgIGFJSRCQDWo6zbyjvmahIjzCIJ2z03rg6uyGJJQDMXmL3Mz77pCSTihdYLXdUqpOCRJNoTFq3CA74LPrVMuNf3jKfst3pRkxR79w6aluxRvOGyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEmhkXzv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PmdI3QjaXU/1Ksc1lzehepPIfHel+nuPUoeERdnLZ30K2nUNFRP1BTOFN3dMLPxnaNXO+pp2Wr2sRosPtsxQvt9BEyce9RUh3BvCB6O3wU3eDuKLHpZRX9ViBYyfbLvvOMc22MIUo6gntnc9wXm+MWHi1cjwv7jLucSXbCHxvKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7lMwy+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEmhkXzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51931F000C4;
-	Sat, 17 Oct 2026 17:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7lMwy+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5721F000C4;
+	Sat, 17 Oct 2026 17:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258991;
-	bh=du7r6EBWHrtrmvezbXSVMWX+ZzXm9eBSxMpdj6e6kfc=;
+	s=korg; t=1792258994;
+	bh=kYkqFnRhvgq8F0DVGdyL6VUWhS3adz1VHblAcj3d2Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oEmhkXzvHDmhc9IzOq+gfUy4NUSZP1Oulm7QSmFwZm72I/v6ABtM2Wx976he89M9w
-	 SuS0OJLA6N/uZvfRt9uZjYV3ZyxckjvwoF+PmqhcBZT+p7sJI5+XLsye1kJ1+qKmQK
-	 A4WNLM9geQExJBCkIU31xKOkD35gyaS2J5uPZQBE=
+	b=z7lMwy+rY8b4zWSxDj4mT6naBiIXfs4N8UemIP0xuvRiEbkjg5P3ubEh8GVzJUaO4
+	 bTeYJOgUbhRLScK8UnOvNpZuRa6XbXTGy8GL4xO+imPr/a1Sd6MVrrojY9EvGlY4GJ
+	 alnGczLQKgR4aPNUb/b941dUdEqMI3f0oBuae+dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yue Sun <samsun1006219@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1059/1674] USB: iowarrior: fix use-after-free on disconnect race
-Date: Sat, 17 Oct 2026 17:55:31 +0200
-Message-ID: <20261017160458.310323657@linuxfoundation.org>
+Subject: [PATCH 6.6 1068/1674] net/handshake: Take a long-lived file reference at submit
+Date: Sat, 17 Oct 2026 17:55:40 +0200
+Message-ID: <20261017160458.539658829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,158 +51,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c602254ba4c10f60a73cd99d147874f86a3f485c ]
+[ Upstream commit 09dba37eee70d0596e26645015f1aa95a9848e9d ]
 
-mutex_unlock() may access the mutex structure after releasing the lock
-and therefore cannot be used to manage lifetime of objects directly
-(unlike spinlocks and refcounts). [1][2]
+handshake_nl_accept_doit() needs the file pointer backing
+req->hr_sk->sk_socket to survive the window between
+handshake_req_next() and the subsequent FD_PREPARE() and get_file().
+The submit-side sock_hold() does not provide that.  sk_refcnt keeps
+struct sock alive, but struct socket is owned by sock->file: when
+the consumer fputs the last file reference, sock_release() tears
+the socket down regardless of any sock_hold.
 
-Use a kref to release the driver data to avoid use-after-free in
-mutex_unlock() when release() races with disconnect().
+Add an hr_file pointer to struct handshake_req and acquire an
+explicit reference on sock->file during handshake_req_submit().
+handshake_complete() and handshake_req_cancel() release the
+reference on the completion-bit-winning path.
 
-[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is non-atomic")
-[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
-                   other sleeping locks, can still use the lock object
-                   after it's unlocked")
+The submit error path must also release the file reference, but
+after rhashtable insertion a concurrent handshake_req_cancel() can
+discover the request and race the error path.  Gate the error-path
+cleanup -- sk_destruct restoration, fput, and request destruction
+-- with test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED), the same
+serialization handshake_complete() and handshake_req_cancel()
+already use.  When cancel has already claimed ownership, the submit
+error path returns without touching the request; socket teardown
+handles final destruction.
 
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Cc: stable <stable@kernel.org>
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Link: https://lore.kernel.org/r/20260618080204.38322-1-samsun1006219@gmail.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260622152612.116422-2-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The accept-side dereferences are not yet retargeted; that change
+comes in the next patch.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-4-66c616906ead@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/iowarrior.c | 57 +++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 33 deletions(-)
+ net/handshake/handshake.h |  2 ++
+ net/handshake/netlink.c   |  5 -----
+ net/handshake/request.c   | 42 ++++++++++++++++++++++++++++++++-------
+ 3 files changed, 37 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
-index 5ff51af16a602..3a215e2ae5b4d 100644
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -71,6 +71,7 @@ static struct usb_driver iowarrior_driver;
+diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
+index a48163765a7a1..d35f677d7f3ee 100644
+--- a/net/handshake/handshake.h
++++ b/net/handshake/handshake.h
+@@ -24,6 +24,7 @@ enum hn_flags_bits {
+ 	HANDSHAKE_F_NET_DRAINING,
+ };
  
- /* Structure to hold all of our device specific stuff */
- struct iowarrior {
-+	struct kref kref;
- 	struct mutex mutex;			/* locks this structure */
- 	struct usb_device *udev;		/* save off the usb device pointer */
- 	struct usb_interface *interface;	/* the interface for this device */
-@@ -243,8 +244,10 @@ static void iowarrior_write_callback(struct urb *urb)
- /*
-  *	iowarrior_delete
-  */
--static inline void iowarrior_delete(struct iowarrior *dev)
-+static inline void iowarrior_delete(struct kref *kref)
- {
-+	struct iowarrior *dev = container_of(kref, struct iowarrior, kref);
-+
- 	kfree(dev->int_in_buffer);
- 	usb_free_urb(dev->int_in_urb);
- 	kfree(dev->read_queue);
-@@ -641,6 +644,9 @@ static int iowarrior_open(struct inode *inode, struct file *file)
- 	}
- 	/* increment our usage count for the driver */
- 	++dev->opened;
-+
-+	kref_get(&dev->kref);
-+
- 	/* save our object in the file's private structure */
- 	file->private_data = dev;
- 	retval = 0;
-@@ -656,7 +662,6 @@ static int iowarrior_open(struct inode *inode, struct file *file)
- static int iowarrior_release(struct inode *inode, struct file *file)
- {
- 	struct iowarrior *dev;
--	int retval = 0;
++struct file;
+ struct handshake_proto;
  
- 	dev = file->private_data;
- 	if (!dev)
-@@ -664,29 +669,18 @@ static int iowarrior_release(struct inode *inode, struct file *file)
+ /* One handshake request */
+@@ -32,6 +33,7 @@ struct handshake_req {
+ 	struct rhash_head		hr_rhash;
+ 	unsigned long			hr_flags;
+ 	const struct handshake_proto	*hr_proto;
++	struct file			*hr_file;
+ 	struct sock			*hr_sk;
+ 	void				(*hr_odestruct)(struct sock *sk);
  
- 	/* lock our device */
- 	mutex_lock(&dev->mutex);
-+	dev->opened = 0;	/* we're closing now */
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 3771f00c21e04..c4a76319e1f88 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -217,11 +217,6 @@ static void __net_exit handshake_net_exit(struct net *net)
+ 		sk = req->hr_sk;
+ 		list_del_init(&req->hr_list);
  
--	if (dev->opened <= 0) {
--		retval = -ENODEV;	/* close called more than once */
--		mutex_unlock(&dev->mutex);
--	} else {
--		dev->opened = 0;	/* we're closing now */
--		retval = 0;
--		if (dev->present) {
--			/*
--			   The device is still connected so we only shutdown
--			   pending read-/write-ops.
--			 */
--			usb_kill_urb(dev->int_in_urb);
--			wake_up_interruptible(&dev->read_wait);
--			wake_up_interruptible(&dev->write_wait);
--			mutex_unlock(&dev->mutex);
--		} else {
--			/* The device was unplugged, cleanup resources */
--			mutex_unlock(&dev->mutex);
--			iowarrior_delete(dev);
--		}
-+	if (dev->present) {
-+		usb_kill_urb(dev->int_in_urb);
-+		wake_up_interruptible(&dev->read_wait);
-+		wake_up_interruptible(&dev->write_wait);
- 	}
--	return retval;
-+	mutex_unlock(&dev->mutex);
-+
-+	kref_put(&dev->kref, iowarrior_delete);
-+
-+	return 0;
- }
- 
- static __poll_t iowarrior_poll(struct file *file, poll_table * wait)
-@@ -771,6 +765,7 @@ static int iowarrior_probe(struct usb_interface *interface,
- 	if (!dev)
- 		return retval;
- 
-+	kref_init(&dev->kref);
- 	mutex_init(&dev->mutex);
- 
- 	atomic_set(&dev->intr_idx, 0);
-@@ -889,7 +884,8 @@ static int iowarrior_probe(struct usb_interface *interface,
- 	return retval;
- 
- error:
--	iowarrior_delete(dev);
-+	kref_put(&dev->kref, iowarrior_delete);
-+
- 	return retval;
- }
- 
-@@ -913,19 +909,14 @@ static void iowarrior_disconnect(struct usb_interface *interface)
- 	usb_kill_anchored_urbs(&dev->submitted);
- 
- 	if (dev->opened) {
--		/* There is a process that holds a filedescriptor to the device ,
--		   so we only shutdown read-/write-ops going on.
--		   Deleting the device is postponed until close() was called.
+-		/*
+-		 * Requests on this list have not yet been
+-		 * accepted, so they do not have an fd to put.
 -		 */
- 		usb_kill_urb(dev->int_in_urb);
- 		wake_up_interruptible(&dev->read_wait);
- 		wake_up_interruptible(&dev->write_wait);
--		mutex_unlock(&dev->mutex);
--	} else {
--		/* no process is using the device, cleanup now */
--		mutex_unlock(&dev->mutex);
--		iowarrior_delete(dev);
+-
+ 		handshake_complete(req, -ETIMEDOUT, NULL);
+ 		sock_put(sk);
+ 	}
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index f67f33c318af4..e5285fcf15b06 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -14,6 +14,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/inet.h>
+ #include <linux/fdtable.h>
++#include <linux/file.h>
+ #include <linux/rhashtable.h>
+ 
+ #include <net/sock.h>
+@@ -219,9 +220,16 @@ EXPORT_SYMBOL_IF_KUNIT(handshake_req_next);
+  * A zero return value from handshake_req_submit() means that
+  * exactly one subsequent completion callback is guaranteed.
+  *
+- * A negative return value from handshake_req_submit() means that
+- * no completion callback will be done and that @req has been
+- * destroyed.
++ * A negative return value from handshake_req_submit() guarantees that
++ * no completion callback will occur and that @req is no longer owned by
++ * the caller. If cancellation wins the completion race after the request
++ * has been published, final destruction is deferred until socket teardown.
++ *
++ * The caller must hold a reference on @sock->file for the duration
++ * of this call. Once the request is published to the accept side, a
++ * concurrent completion or cancellation may release the request's pin on
++ * @sock->file; the caller's reference is what keeps @sock->sk valid until
++ * handshake_req_submit() returns.
+  */
+ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 			 gfp_t flags)
+@@ -240,6 +248,14 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 		kfree(req);
+ 		return -EINVAL;
  	}
 +
-+	mutex_unlock(&dev->mutex);
++	/*
++	 * Pin sock->file for the lifetime of the request so the
++	 * accept side does not race a consumer that releases the
++	 * socket while a handshake is pending.
++	 */
++	req->hr_file = get_file(sock->file);
 +
-+	kref_put(&dev->kref, iowarrior_delete);
- }
+ 	req->hr_odestruct = req->hr_sk->sk_destruct;
+ 	req->hr_sk->sk_destruct = handshake_sk_destruct;
  
- /* usb specific object needed to register this driver with the usb subsystem */
+@@ -263,7 +279,11 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	if (!__add_pending_locked(hn, req))
+ 		goto out_unlock;
+ 
+-	/* Prevent socket release while a handshake request is pending */
++	/*
++	 * Pin struct sock so sk_destruct does not run until the
++	 * handshake completion path releases it; struct socket is
++	 * held separately via hr_file above.
++	 */
+ 	sock_hold(req->hr_sk);
+ 	spin_unlock(&hn->hn_lock);
+ 
+@@ -282,10 +302,13 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ out_unlock:
+ 	spin_unlock(&hn->hn_lock);
+ out_err:
+-	/* Restore original destructor so socket teardown still runs on failure */
+-	req->hr_sk->sk_destruct = req->hr_odestruct;
+ 	trace_handshake_submit_err(net, req, req->hr_sk, ret);
+-	handshake_req_destroy(req);
++	if (!test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
++		/* Restore original destructor so socket teardown still runs. */
++		req->hr_sk->sk_destruct = req->hr_odestruct;
++		fput(req->hr_file);
++		handshake_req_destroy(req);
++	}
+ 	return ret;
+ }
+ EXPORT_SYMBOL(handshake_req_submit);
+@@ -297,11 +320,15 @@ void handshake_complete(struct handshake_req *req, unsigned int status,
+ 	struct net *net = sock_net(sk);
+ 
+ 	if (!test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
++		struct file *file = req->hr_file;
++
+ 		trace_handshake_complete(net, req, sk, status);
+ 		req->hr_proto->hp_done(req, status, info);
+ 
+ 		/* Handshake request is no longer pending */
+ 		sock_put(sk);
++
++		fput(file);
+ 	}
+ }
+ EXPORT_SYMBOL_IF_KUNIT(handshake_complete);
+@@ -350,6 +377,7 @@ bool handshake_req_cancel(struct sock *sk)
+ 
+ 	/* Handshake request is no longer pending */
+ 	sock_put(sk);
++	fput(req->hr_file);
+ 	return true;
+ }
+ EXPORT_SYMBOL(handshake_req_cancel);
 -- 
 2.53.0
 
