@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF9D17BED0;
-	Sat, 17 Oct 2026 16:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D21636AB6B;
+	Sat, 17 Oct 2026 16:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253928; cv=none; b=AmEKUXfOd068itkZ5zemQaaTXv056ysb4R1MM0bly2556levCfW1y416Y5mmhS1Fby8onMASSkC/C9pPqpvoz67k6WceEvZhflfSZ+N2ZZMV8tkpZXu0lzDSwHuuJOpzOx6USEIFVqs/LDXU5aWZ2/FZDJLwmA7yYzrfvSrCGJU=
+	t=1792253932; cv=none; b=EZ8kWJuANZEEDUydlmGPKriyhSQiq2N7lS6uSMv7/Mqd/WEXb84LcBQMTETUqQ2fzyL8/X4gAcl+BRomp4drNUS2z2sxK24oacnSAyB17QnKVCCgxDJQTMmMu8hyGpL3n8EV5HjoYa8m5tRfKJITQJQtto7jQXDG4dm0nNdsSmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253928; c=relaxed/simple;
-	bh=EyQyvvFJtIAXXRGifHkYe5ZfJeYkzNAKheU/Jucopko=;
+	s=arc-20240116; t=1792253932; c=relaxed/simple;
+	bh=DcD/qkh0n9Fb8DkeArMV2u0+q4gnm89f1H1LsMYhStw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zq9BZpkNoY0VyHvJGpeR8/85v1actWpWWKd+QBROGni+YhFdCq/rPRcORa3MDXiALFFSacXvH8rU93y2W1J/wT3CvaHSlzLNU8bLKiav+xM4yzBSdZ/eIxlyylzgTfCm16t2mY1hSv8JpAACb3VzNLDt7PzFTNYzBkbI42C/3sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjMLk7t5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5eY1CPAk0W6G8Yv4lOSztiaWAz0XUo8wen77QkhetIsELElenuK2k6blvWwev7Ji7MwRi0r5AgBmsMtYtTve22sl+fJtCvK6Ud+EQXfdMAROP0Bu+MwP+bs9bYIESQxwki+pwkOcVVqZv9+8x1zHgwKrjXZB6GdW/0maT+8H9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVPYS3sI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjMLk7t5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC78B1F000C4;
-	Sat, 17 Oct 2026 16:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVPYS3sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B2E1F000C4;
+	Sat, 17 Oct 2026 16:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253927;
-	bh=rhs9tVtHCLGqQ5fDc4fkXJZtk7is9l2lTpAZGXJTbLI=;
+	s=korg; t=1792253930;
+	bh=GGOnYkxY/RRh6EwQlVE1lnUXNGGQ3G2OW1lkZsXfD4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YjMLk7t5OrAaj59qpt7YRU/at+PxU1acQip10aX9+LbhNNULZnI51KXN3K/HIcuxC
-	 hk71PIvavFhF9Gq+BDJpy++aw1k7sdkoH2rjye5glcBpKA2NaUHmZYtBYMufhu6gGv
-	 WMLdodPMkrqPyXx+erHiQIZz1V27cl4JB+WGTGlE=
+	b=yVPYS3sIBdTw37I0WU2d4+NTTW/viEiuhnmbAI6Ia92JjsMmiEqK1NgdvdWdmrS+0
+	 VE8FU+INlvp66UWm4SsJUzOw7nc7Is0PbYHlskkmYBDa7MlmNgRoEQuYDZuI69VUyD
+	 Cm9qKGWxdNLaO2A2zlZ6TduLii60F2Ngo/pDfh7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiao <252270051@hdu.edu.cn>,
-	Corey Minyard <corey@minyard.net>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 278/869] ipmi:ssif: Clean up kthread on errors
-Date: Sat, 17 Oct 2026 17:51:59 +0200
-Message-ID: <20261017160044.197865072@linuxfoundation.org>
+Subject: [PATCH 6.12 279/869] KVM: x86: Rename "governed features" helpers to use "guest_cpu_cap"
+Date: Sat, 17 Oct 2026 17:52:00 +0200
+Message-ID: <20261017160044.225017269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,65 +52,470 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 ]
+[ Upstream commit 2c5e168e5ce154592667a8e384012117c917d790 ]
 
-If an error occurs after the ssif kthread is created, but before the
-main IPMI code starts the ssif interface, the ssif kthread will not
-be stopped.
+As the first step toward replacing KVM's so-called "governed features"
+framework with a more comprehensive, less poorly named implementation,
+replace the "kvm_governed_feature" function prefix with "guest_cpu_cap"
+and rename guest_can_use() to guest_cpu_cap_has().
 
-So make sure the kthread is stopped on an error condition if it is
-running.
+The "guest_cpu_cap" naming scheme mirrors that of "kvm_cpu_cap", and
+provides a more clear distinction between guest capabilities, which are
+KVM controlled (heh, or one might say "governed"), and guest CPUID, which
+with few exceptions is fully userspace controlled.
 
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
-Reported-by: Li Xiao <<252270051@hdu.edu.cn>
-Cc: stable@vger.kernel.org
-Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Opportunistically rewrite the comment about XSS passthrough for SEV-ES
+guests to avoid referencing so many functions, as such comments are prone
+to becoming stale (case in point...).
+
+No functional change intended.
+
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Link: https://lore.kernel.org/r/20241128013424.4096668-40-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 8d397582f6b5 ("KVM: nSVM: Always use NextRIP as vmcb02's NextRIP after first L2 VMRUN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/x86/kvm/cpuid.c      |  2 +-
+ arch/x86/kvm/cpuid.h      | 16 ++++++++--------
+ arch/x86/kvm/mmu.h        |  2 +-
+ arch/x86/kvm/mmu/mmu.c    |  4 ++--
+ arch/x86/kvm/svm/nested.c | 20 ++++++++++----------
+ arch/x86/kvm/svm/sev.c    | 17 ++++++++---------
+ arch/x86/kvm/svm/svm.c    | 26 +++++++++++++-------------
+ arch/x86/kvm/svm/svm.h    |  4 ++--
+ arch/x86/kvm/vmx/nested.c |  6 +++---
+ arch/x86/kvm/vmx/vmx.c    | 16 ++++++++--------
+ arch/x86/kvm/x86.c        |  4 ++--
+ 11 files changed, 58 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index 7950f13c1ef76..a19184151323c 100644
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1292,6 +1292,7 @@ static void shutdown_ssif(void *send_info)
- 	if (ssif_info->thread) {
- 		complete(&ssif_info->wake_thread);
- 		kthread_stop(ssif_info->thread);
-+		ssif_info->thread = NULL;
- 	}
+diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+index a7a1486ce2704..e2b55b7f64971 100644
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -392,7 +392,7 @@ static void kvm_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 	allow_gbpages = tdp_enabled ? boot_cpu_has(X86_FEATURE_GBPAGES) :
+ 				      guest_cpuid_has(vcpu, X86_FEATURE_GBPAGES);
+ 	if (allow_gbpages)
+-		kvm_governed_feature_set(vcpu, X86_FEATURE_GBPAGES);
++		guest_cpu_cap_set(vcpu, X86_FEATURE_GBPAGES);
+ 
+ 	best = kvm_find_cpuid_entry(vcpu, 1);
+ 	if (best && apic) {
+diff --git a/arch/x86/kvm/cpuid.h b/arch/x86/kvm/cpuid.h
+index f16a7b2c2adcf..1a8cc377d2563 100644
+--- a/arch/x86/kvm/cpuid.h
++++ b/arch/x86/kvm/cpuid.h
+@@ -241,8 +241,8 @@ static __always_inline bool kvm_is_governed_feature(unsigned int x86_feature)
+ 	return kvm_governed_feature_index(x86_feature) >= 0;
  }
  
-@@ -1936,6 +1937,25 @@ static int ssif_probe(struct i2c_client *client)
+-static __always_inline void kvm_governed_feature_set(struct kvm_vcpu *vcpu,
+-						     unsigned int x86_feature)
++static __always_inline void guest_cpu_cap_set(struct kvm_vcpu *vcpu,
++					      unsigned int x86_feature)
+ {
+ 	BUILD_BUG_ON(!kvm_is_governed_feature(x86_feature));
  
-  out:
- 	if (rv) {
-+		/*
-+		 * If ipmi_register_smi() starts the interface, it will
-+		 * call shutdown and that will free the thread and set
-+		 * it to NULL.  Otherwise it must be freed here.
-+		 */
-+		if (ssif_info->thread) {
-+			struct task_struct *thread = ssif_info->thread;
-+
-+			/*
-+			 * The thread exits on its own once it sees
-+			 * stopping, so hold a reference across the stop.
-+			 */
-+			get_task_struct(thread);
-+			ssif_info->stopping = true;
-+			complete(&ssif_info->wake_thread);
-+			kthread_stop(thread);
-+			put_task_struct(thread);
-+			ssif_info->thread = NULL;
-+		}
- 		if (addr_info)
- 			addr_info->client = NULL;
+@@ -250,15 +250,15 @@ static __always_inline void kvm_governed_feature_set(struct kvm_vcpu *vcpu,
+ 		  vcpu->arch.governed_features.enabled);
+ }
  
+-static __always_inline void kvm_governed_feature_check_and_set(struct kvm_vcpu *vcpu,
+-							       unsigned int x86_feature)
++static __always_inline void guest_cpu_cap_check_and_set(struct kvm_vcpu *vcpu,
++							unsigned int x86_feature)
+ {
+ 	if (kvm_cpu_cap_has(x86_feature) && guest_cpuid_has(vcpu, x86_feature))
+-		kvm_governed_feature_set(vcpu, x86_feature);
++		guest_cpu_cap_set(vcpu, x86_feature);
+ }
+ 
+-static __always_inline bool guest_can_use(struct kvm_vcpu *vcpu,
+-					  unsigned int x86_feature)
++static __always_inline bool guest_cpu_cap_has(struct kvm_vcpu *vcpu,
++					      unsigned int x86_feature)
+ {
+ 	BUILD_BUG_ON(!kvm_is_governed_feature(x86_feature));
+ 
+@@ -268,7 +268,7 @@ static __always_inline bool guest_can_use(struct kvm_vcpu *vcpu,
+ 
+ static inline bool kvm_vcpu_is_legal_cr3(struct kvm_vcpu *vcpu, unsigned long cr3)
+ {
+-	if (guest_can_use(vcpu, X86_FEATURE_LAM))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_LAM))
+ 		cr3 &= ~(X86_CR3_LAM_U48 | X86_CR3_LAM_U57);
+ 
+ 	return kvm_vcpu_is_legal_gpa(vcpu, cr3);
+diff --git a/arch/x86/kvm/mmu.h b/arch/x86/kvm/mmu.h
+index 1d9c919c92320..838893f166634 100644
+--- a/arch/x86/kvm/mmu.h
++++ b/arch/x86/kvm/mmu.h
+@@ -126,7 +126,7 @@ static inline unsigned long kvm_get_active_pcid(struct kvm_vcpu *vcpu)
+ 
+ static inline unsigned long kvm_get_active_cr3_lam_bits(struct kvm_vcpu *vcpu)
+ {
+-	if (!guest_can_use(vcpu, X86_FEATURE_LAM))
++	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_LAM))
+ 		return 0;
+ 
+ 	return kvm_read_cr3(vcpu) & (X86_CR3_LAM_U48 | X86_CR3_LAM_U57);
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 1a4d5fa11922d..ab6d3f565b0a1 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -5110,7 +5110,7 @@ static void reset_guest_rsvds_bits_mask(struct kvm_vcpu *vcpu,
+ 	__reset_rsvds_bits_mask(&context->guest_rsvd_check,
+ 				vcpu->arch.reserved_gpa_bits,
+ 				context->cpu_role.base.level, is_efer_nx(context),
+-				guest_can_use(vcpu, X86_FEATURE_GBPAGES),
++				guest_cpu_cap_has(vcpu, X86_FEATURE_GBPAGES),
+ 				is_cr4_pse(context),
+ 				guest_cpuid_is_amd_compatible(vcpu));
+ }
+@@ -5187,7 +5187,7 @@ static void reset_shadow_zero_bits_mask(struct kvm_vcpu *vcpu,
+ 	__reset_rsvds_bits_mask(shadow_zero_check, reserved_hpa_bits(),
+ 				context->root_role.level,
+ 				context->root_role.efer_nx,
+-				guest_can_use(vcpu, X86_FEATURE_GBPAGES),
++				guest_cpu_cap_has(vcpu, X86_FEATURE_GBPAGES),
+ 				is_pse, is_amd);
+ 
+ 	if (!shadow_me_mask)
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 95698c1da833d..08274463ad867 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -111,7 +111,7 @@ static void nested_svm_uninit_mmu_context(struct kvm_vcpu *vcpu)
+ 
+ static bool nested_vmcb_needs_vls_intercept(struct vcpu_svm *svm)
+ {
+-	if (!guest_can_use(&svm->vcpu, X86_FEATURE_V_VMSAVE_VMLOAD))
++	if (!guest_cpu_cap_has(&svm->vcpu, X86_FEATURE_V_VMSAVE_VMLOAD))
+ 		return true;
+ 
+ 	if (!nested_npt_enabled(svm))
+@@ -610,7 +610,7 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
+ 		vmcb_mark_dirty(vmcb02, VMCB_DR);
+ 	}
+ 
+-	if (unlikely(guest_can_use(vcpu, X86_FEATURE_LBRV) &&
++	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+ 		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
+ 		/*
+ 		 * Reserved bits of DEBUGCTL are ignored.  Be consistent with
+@@ -671,7 +671,7 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
+ 	 * exit_int_info, exit_int_info_err, next_rip, insn_len, insn_bytes.
+ 	 */
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_VGIF) &&
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_VGIF) &&
+ 	    (svm->nested.ctl.int_ctl & V_GIF_ENABLE_MASK))
+ 		int_ctl_vmcb12_bits |= (V_GIF_MASK | V_GIF_ENABLE_MASK);
+ 	else
+@@ -710,7 +710,7 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
+ 
+ 	vmcb02->control.tsc_offset = vcpu->arch.tsc_offset;
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_TSCRATEMSR) &&
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_TSCRATEMSR) &&
+ 	    svm->tsc_ratio_msr != kvm_caps.default_tsc_scaling_ratio)
+ 		nested_svm_update_tsc_ratio_msr(vcpu);
+ 
+@@ -731,7 +731,7 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
+ 	 * what a nrips=0 CPU would do (L1 is responsible for advancing RIP
+ 	 * prior to injecting the event).
+ 	 */
+-	if (guest_can_use(vcpu, X86_FEATURE_NRIPS))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
+ 		vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
+ 	else if (boot_cpu_has(X86_FEATURE_NRIPS))
+ 		vmcb02->control.next_rip    = vmcb12_rip;
+@@ -741,7 +741,7 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
+ 		svm->soft_int_injected = true;
+ 		svm->soft_int_csbase = vmcb12_csbase;
+ 		svm->soft_int_old_rip = vmcb12_rip;
+-		if (guest_can_use(vcpu, X86_FEATURE_NRIPS))
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
+ 			svm->soft_int_next_rip = svm->nested.ctl.next_rip;
+ 		else
+ 			svm->soft_int_next_rip = vmcb12_rip;
+@@ -752,11 +752,11 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
+ 	if (!nested_vmcb_needs_vls_intercept(svm))
+ 		vmcb02->control.virt_ext |= VIRTUAL_VMLOAD_VMSAVE_ENABLE_MASK;
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_PAUSEFILTER))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_PAUSEFILTER))
+ 		pause_count12 = svm->nested.ctl.pause_filter_count;
+ 	else
+ 		pause_count12 = 0;
+-	if (guest_can_use(vcpu, X86_FEATURE_PFTHRESHOLD))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_PFTHRESHOLD))
+ 		pause_thresh12 = svm->nested.ctl.pause_filter_thresh;
+ 	else
+ 		pause_thresh12 = 0;
+@@ -1043,7 +1043,7 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
+ 	if (vmcb12->control.exit_code != SVM_EXIT_ERR)
+ 		nested_save_pending_event_to_vmcb12(svm, vmcb12);
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_NRIPS))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
+ 		vmcb12->control.next_rip  = vmcb02->control.next_rip;
+ 
+ 	vmcb12->control.event_inj	  = 0;
+@@ -1082,7 +1082,7 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
+ 	if (!nested_exit_on_intr(svm))
+ 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
+ 
+-	if (unlikely(guest_can_use(vcpu, X86_FEATURE_LBRV) &&
++	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+ 		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK)))
+ 		svm_copy_lbrs(vmcb12, vmcb02);
+ 	else
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 1a766b3d95f23..02d2bd78f8e7b 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4569,16 +4569,15 @@ static void sev_es_vcpu_after_set_cpuid(struct vcpu_svm *svm)
+ 	 * For SEV-ES, accesses to MSR_IA32_XSS should not be intercepted if
+ 	 * the host/guest supports its use.
+ 	 *
+-	 * guest_can_use() checks a number of requirements on the host/guest to
+-	 * ensure that MSR_IA32_XSS is available, but it might report true even
+-	 * if X86_FEATURE_XSAVES isn't configured in the guest to ensure host
+-	 * MSR_IA32_XSS is always properly restored. For SEV-ES, it is better
+-	 * to further check that the guest CPUID actually supports
+-	 * X86_FEATURE_XSAVES so that accesses to MSR_IA32_XSS by misbehaved
+-	 * guests will still get intercepted and caught in the normal
+-	 * kvm_emulate_rdmsr()/kvm_emulated_wrmsr() paths.
++	 * KVM treats the guest as being capable of using XSAVES even if XSAVES
++	 * isn't enabled in guest CPUID as there is no intercept for XSAVES,
++	 * i.e. the guest can use XSAVES/XRSTOR to read/write XSS if XSAVE is
++	 * exposed to the guest and XSAVES is supported in hardware.  Condition
++	 * full XSS passthrough on the guest being able to use XSAVES *and*
++	 * XSAVES being exposed to the guest so that KVM can at least honor
++	 * guest CPUID for RDMSR and WRMSR.
+ 	 */
+-	if (guest_can_use(vcpu, X86_FEATURE_XSAVES) &&
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_XSAVES) &&
+ 	    guest_cpuid_has(vcpu, X86_FEATURE_XSAVES))
+ 		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_XSS, 1, 1);
+ 	else
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 21f74cea2b05b..3e2af127a4e27 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1040,7 +1040,7 @@ void svm_update_lbrv(struct kvm_vcpu *vcpu)
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	bool current_enable_lbrv = svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK;
+ 	bool enable_lbrv = (svm->vmcb->save.dbgctl & DEBUGCTLMSR_LBR) ||
+-			    (is_guest_mode(vcpu) && guest_can_use(vcpu, X86_FEATURE_LBRV) &&
++			    (is_guest_mode(vcpu) && guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+ 			    (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK));
+ 
+ 	if (enable_lbrv && !current_enable_lbrv)
+@@ -2922,7 +2922,7 @@ static int svm_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 	switch (msr_info->index) {
+ 	case MSR_AMD64_TSC_RATIO:
+ 		if (!msr_info->host_initiated &&
+-		    !guest_can_use(vcpu, X86_FEATURE_TSCRATEMSR))
++		    !guest_cpu_cap_has(vcpu, X86_FEATURE_TSCRATEMSR))
+ 			return 1;
+ 		msr_info->data = svm->tsc_ratio_msr;
+ 		break;
+@@ -3082,7 +3082,7 @@ static int svm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
+ 	switch (ecx) {
+ 	case MSR_AMD64_TSC_RATIO:
+ 
+-		if (!guest_can_use(vcpu, X86_FEATURE_TSCRATEMSR)) {
++		if (!guest_cpu_cap_has(vcpu, X86_FEATURE_TSCRATEMSR)) {
+ 
+ 			if (!msr->host_initiated)
+ 				return 1;
+@@ -3104,7 +3104,7 @@ static int svm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
+ 
+ 		svm->tsc_ratio_msr = data;
+ 
+-		if (guest_can_use(vcpu, X86_FEATURE_TSCRATEMSR) &&
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_TSCRATEMSR) &&
+ 		    is_guest_mode(vcpu))
+ 			nested_svm_update_tsc_ratio_msr(vcpu);
+ 
+@@ -4574,11 +4574,11 @@ static void svm_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 	if (boot_cpu_has(X86_FEATURE_XSAVE) &&
+ 	    boot_cpu_has(X86_FEATURE_XSAVES) &&
+ 	    guest_cpuid_has(vcpu, X86_FEATURE_XSAVE))
+-		kvm_governed_feature_set(vcpu, X86_FEATURE_XSAVES);
++		guest_cpu_cap_set(vcpu, X86_FEATURE_XSAVES);
+ 
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_NRIPS);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_TSCRATEMSR);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_LBRV);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_NRIPS);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_TSCRATEMSR);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_LBRV);
+ 
+ 	/*
+ 	 * Intercept VMLOAD if the vCPU model is Intel in order to emulate that
+@@ -4586,12 +4586,12 @@ static void svm_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 	 * SVM on Intel is bonkers and extremely unlikely to work).
+ 	 */
+ 	if (!guest_cpuid_is_intel_compatible(vcpu))
+-		kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_V_VMSAVE_VMLOAD);
++		guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_V_VMSAVE_VMLOAD);
+ 
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_PAUSEFILTER);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_PFTHRESHOLD);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_VGIF);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_VNMI);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_PAUSEFILTER);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_PFTHRESHOLD);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_VGIF);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_VNMI);
+ 
+ 	svm_recalc_instruction_intercepts(vcpu, svm);
+ 
+diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+index 93ad26f3b1a1a..19da3ce2b7668 100644
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -510,7 +510,7 @@ static inline bool svm_is_intercept(struct vcpu_svm *svm, int bit)
+ 
+ static inline bool nested_vgif_enabled(struct vcpu_svm *svm)
+ {
+-	return guest_can_use(&svm->vcpu, X86_FEATURE_VGIF) &&
++	return guest_cpu_cap_has(&svm->vcpu, X86_FEATURE_VGIF) &&
+ 	       (svm->nested.ctl.int_ctl & V_GIF_ENABLE_MASK);
+ }
+ 
+@@ -562,7 +562,7 @@ static inline bool nested_npt_enabled(struct vcpu_svm *svm)
+ 
+ static inline bool nested_vnmi_enabled(struct vcpu_svm *svm)
+ {
+-	return guest_can_use(&svm->vcpu, X86_FEATURE_VNMI) &&
++	return guest_cpu_cap_has(&svm->vcpu, X86_FEATURE_VNMI) &&
+ 	       (svm->nested.ctl.int_ctl & V_NMI_ENABLE_MASK);
+ }
+ 
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index abda07f41b4a1..b2a0e36de0d32 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -6671,7 +6671,7 @@ static int vmx_get_nested_state(struct kvm_vcpu *vcpu,
+ 	vmx = to_vmx(vcpu);
+ 	vmcs12 = get_vmcs12(vcpu);
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_VMX) &&
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_VMX) &&
+ 	    (vmx->nested.vmxon || vmx->nested.smm.vmxon)) {
+ 		kvm_state.hdr.vmx.vmxon_pa = vmx->nested.vmxon_ptr;
+ 		kvm_state.hdr.vmx.vmcs12_pa = vmx->nested.current_vmptr;
+@@ -6812,7 +6812,7 @@ static int vmx_set_nested_state(struct kvm_vcpu *vcpu,
+ 		if (kvm_state->flags & ~KVM_STATE_NESTED_EVMCS)
+ 			return -EINVAL;
+ 	} else {
+-		if (!guest_can_use(vcpu, X86_FEATURE_VMX))
++		if (!guest_cpu_cap_has(vcpu, X86_FEATURE_VMX))
+ 			return -EINVAL;
+ 
+ 		if (!page_address_valid(vcpu, kvm_state->hdr.vmx.vmxon_pa))
+@@ -6846,7 +6846,7 @@ static int vmx_set_nested_state(struct kvm_vcpu *vcpu,
+ 		return -EINVAL;
+ 
+ 	if ((kvm_state->flags & KVM_STATE_NESTED_EVMCS) &&
+-	    (!guest_can_use(vcpu, X86_FEATURE_VMX) ||
++	    (!guest_cpu_cap_has(vcpu, X86_FEATURE_VMX) ||
+ 	     !vmx->nested.enlightened_vmcs_enabled))
+ 			return -EINVAL;
+ 
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 84420bfbcb1bd..7e098fb60bbf7 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -2103,7 +2103,7 @@ int vmx_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 			[msr_info->index - MSR_IA32_SGXLEPUBKEYHASH0];
+ 		break;
+ 	case KVM_FIRST_EMULATED_VMX_MSR ... KVM_LAST_EMULATED_VMX_MSR:
+-		if (!guest_can_use(vcpu, X86_FEATURE_VMX))
++		if (!guest_cpu_cap_has(vcpu, X86_FEATURE_VMX))
+ 			return 1;
+ 		if (vmx_get_vmx_msr(&vmx->nested.msrs, msr_info->index,
+ 				    &msr_info->data))
+@@ -2422,7 +2422,7 @@ int vmx_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 	case KVM_FIRST_EMULATED_VMX_MSR ... KVM_LAST_EMULATED_VMX_MSR:
+ 		if (!msr_info->host_initiated)
+ 			return 1; /* they are read-only */
+-		if (!guest_can_use(vcpu, X86_FEATURE_VMX))
++		if (!guest_cpu_cap_has(vcpu, X86_FEATURE_VMX))
+ 			return 1;
+ 		return vmx_set_vmx_msr(vcpu, msr_index, data);
+ 	case MSR_IA32_RTIT_CTL:
+@@ -4608,7 +4608,7 @@ vmx_adjust_secondary_exec_control(struct vcpu_vmx *vmx, u32 *exec_control,
+ 												\
+ 	if (cpu_has_vmx_##name()) {								\
+ 		if (kvm_is_governed_feature(X86_FEATURE_##feat_name))				\
+-			__enabled = guest_can_use(__vcpu, X86_FEATURE_##feat_name);		\
++			__enabled = guest_cpu_cap_has(__vcpu, X86_FEATURE_##feat_name);		\
+ 		else										\
+ 			__enabled = guest_cpuid_has(__vcpu, X86_FEATURE_##feat_name);		\
+ 		vmx_adjust_secondary_exec_control(vmx, exec_control, SECONDARY_EXEC_##ctrl_name,\
+@@ -7832,10 +7832,10 @@ void vmx_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 	 */
+ 	if (boot_cpu_has(X86_FEATURE_XSAVE) &&
+ 	    guest_cpuid_has(vcpu, X86_FEATURE_XSAVE))
+-		kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_XSAVES);
++		guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_XSAVES);
+ 
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_VMX);
+-	kvm_governed_feature_check_and_set(vcpu, X86_FEATURE_LAM);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_VMX);
++	guest_cpu_cap_check_and_set(vcpu, X86_FEATURE_LAM);
+ 
+ 	vmx_setup_uret_msrs(vmx);
+ 
+@@ -7843,7 +7843,7 @@ void vmx_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 		vmcs_set_secondary_exec_control(vmx,
+ 						vmx_secondary_exec_control(vmx));
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_VMX))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_VMX))
+ 		vmx->msr_ia32_feature_control_valid_bits |=
+ 			FEAT_CTL_VMX_ENABLED_INSIDE_SMX |
+ 			FEAT_CTL_VMX_ENABLED_OUTSIDE_SMX;
+@@ -7852,7 +7852,7 @@ void vmx_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
+ 			~(FEAT_CTL_VMX_ENABLED_INSIDE_SMX |
+ 			  FEAT_CTL_VMX_ENABLED_OUTSIDE_SMX);
+ 
+-	if (guest_can_use(vcpu, X86_FEATURE_VMX))
++	if (guest_cpu_cap_has(vcpu, X86_FEATURE_VMX))
+ 		nested_vmx_cr_fixed1_bits_update(vcpu);
+ 
+ 	if (boot_cpu_has(X86_FEATURE_INTEL_PT) &&
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 842e4af926302..0a28c6346a96a 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -1032,7 +1032,7 @@ void kvm_load_guest_xsave_state(struct kvm_vcpu *vcpu)
+ 		if (vcpu->arch.xcr0 != kvm_host.xcr0)
+ 			xsetbv(XCR_XFEATURE_ENABLED_MASK, vcpu->arch.xcr0);
+ 
+-		if (guest_can_use(vcpu, X86_FEATURE_XSAVES) &&
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_XSAVES) &&
+ 		    vcpu->arch.ia32_xss != kvm_host.xss)
+ 			wrmsrl(MSR_IA32_XSS, vcpu->arch.ia32_xss);
+ 	}
+@@ -1063,7 +1063,7 @@ void kvm_load_host_xsave_state(struct kvm_vcpu *vcpu)
+ 		if (vcpu->arch.xcr0 != kvm_host.xcr0)
+ 			xsetbv(XCR_XFEATURE_ENABLED_MASK, kvm_host.xcr0);
+ 
+-		if (guest_can_use(vcpu, X86_FEATURE_XSAVES) &&
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_XSAVES) &&
+ 		    vcpu->arch.ia32_xss != kvm_host.xss)
+ 			wrmsrl(MSR_IA32_XSS, kvm_host.xss);
+ 	}
 -- 
 2.53.0
 
