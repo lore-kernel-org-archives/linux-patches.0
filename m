@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB42391512;
-	Sat, 17 Oct 2026 17:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FC13AA9F3;
+	Sat, 17 Oct 2026 17:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256569; cv=none; b=WO+NE4avbHLMKIBJ8i66j6ANjqveZMW+gwm31S4GhEUJ92L0pqZnJjBEif0IaGn2zs26VVeASRtdojJ0WbBXfQBXsHEIxprPDYdH8fv2pnTCOfx8E/iTJrvhAbK2U8vgxc1eehhtQKWgw7mG9VLYHYCJx48MW97YkyIenNquGsA=
+	t=1792256572; cv=none; b=P7jA/i0WKa4bf7nVk/bW/xtHcdFKhiNIfuUJZhMrjb0hTTFyeI213ayLtv1i7wk2blsBAu2hGxHGTtq7rrI3/AKKA5ogORfytwHarakd8r4cradORZj0q8F2Jc15AZnyyyz3w4UK8GfdxnImeJJopSeq+lLILBF0fs6T+DzNvjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256569; c=relaxed/simple;
-	bh=aN4FLCTOeVhw6ZP9wB7CkRRzl5GiV4AVE7Gy4VH6Ulo=;
+	s=arc-20240116; t=1792256572; c=relaxed/simple;
+	bh=1EDgHSFkIH1I3trX5FrMG6GZk+BPDck+SLNVWuCTOdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTGSqbjyHxBRhGtoXhvSOzTzrR4U02xAVof3mGjf7VprEjAggk8jZlF5x3SJetGBimJ9FUkw6F3JNwt0ZNFQZAAz2hIMnwn7o03FdHOTQxH29jc7sTNgYOCdZIGwlWswq6w2EQir2Qzoeg7PBnCj5R9U1XgzEcoib1VqBc0e3NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW/8B8CE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nIUEiu7fZjWQN+b7yk0PwoojYWR4Ee6TMe1LVyGT8/mHKGH22BOtVT+SUnimzLuB4qpGbOFmUaQIYC541VqDAsg1S1q6rjLw2TOBtoyf9Lhb2fZmBGhsN/I0+A1B3Sl1R28XlvQMWUs55Mu3UdKmGIRKlnE3olh/2dAFxOlnmJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FbQLSyo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW/8B8CE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20E41F000C4;
-	Sat, 17 Oct 2026 17:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FbQLSyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03121F000C4;
+	Sat, 17 Oct 2026 17:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256568;
-	bh=mALh3UsUq0giDUh3pUV9O2/XecPjNW1hHh5fT4u6YfE=;
+	s=korg; t=1792256571;
+	bh=D0knYL9jBl82qhesrWchCftI7xN59+qn/rNp0dJbnHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RW/8B8CEfFEFZBAis23lj+2dbnFVfKQcWmdUOfNkMyyoHdu+5k4TIWoN/TNhd8J35
-	 Df8+AXfBWR8qAidyrboKfzTVqqVZvVaQ3vXRaNHgmfCIsHrtcH0bIkGyZcA7HQdyC2
-	 SOk/TNGrflyP+nCVJKUP4Ush3Knzz7tXKHD4GkD4=
+	b=2FbQLSyomi4jqB9BZjJp4CvduXSAGgECxcLd1Jn9ukt3I2cEJN9PqsT7ln3JWyul0
+	 lDalrLIKS+KHr9yXWChxh3eLxIdnkX+DeU9d/0KIxcqaD9/Lr8ljEGOs1GyhrgbssP
+	 OHJvP5568Lg6YTyLEOYfaNNwyNLOU7EAgewShUY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Subject: [PATCH 6.6 0279/1674] tty: vt: fix memory leak in vc_allocate()
-Date: Sat, 17 Oct 2026 17:42:31 +0200
-Message-ID: <20261017160438.278457043@linuxfoundation.org>
+	Zhaofeng Chen <zhaofeng.chen@certik.com>,
+	Yuxiao Wang <yuxiao.wang@certik.com>,
+	Alexander Graf <graf@amazon.com>
+Subject: [PATCH 6.6 0253/1674] nitro_enclaves: fix use-after-free on SLOT_ALLOC failure
+Date: Sat, 17 Oct 2026 17:42:05 +0200
+Message-ID: <20261017160437.621079349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,52 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Yuxiao Wang <yuxiao.wang@certik.com>
 
-commit 5b114bfc1dfd88f9d50822d532f7f1fce0f7388a upstream.
+commit 9bc184a2eda8b773c88ecbff934001ad649b9cc1 upstream.
 
-If the screen buffer allocation fails in vc_allocate(), the error handling
-path jumps to `err_free`. However, this path fails to release the unicode
-screen map attached to `vc->uni_pagedict_loc`.
+When ne_create_vm_ioctl() fails the SLOT_ALLOC request after
+anon_inode_getfile() has succeeded, the error path calls
+fput(enclave_file) and then frees ne_enclave.
 
-During the early stages of vc_allocate(), the unicode screen map is either
-newly allocated via con_set_default_unimap() or shares the default unicode
-map from a previously initialized console (which increments its refcount).
-If the subsequent kzalloc() for the screen buffer fails, the err_free path
-frees the vc structure but leaves the attached uni_pagedict with an
-elevated refcount. This results in an unreferenced object memory leak, as
-the reference to the dictionary is lost and its refcount can never reach
-zero.
+In normal userspace context, fput() defers the final __fput() via
+task_work. ne_enclave_release() therefore runs after ne_enclave has
+already been freed and dereferences ne_enclave->slot_uid, causing a
+use-after-free: KASAN: slab-use-after-free in ne_enclave_release.
 
-This issue was discovered by DevGen (an automated virtual device modeling
-fuzzer based on Syzkaller). During fuzzing with kernel fault injection
-(failslab) enabled, the fuzzer forcefully failed the kzalloc() for the
-screen buffer, exposing this error-handling path leak.
+The enclave has no slot allocated and is not yet linked into the
+enclaves list on this error path, so ne_enclave_release() is expected
+to return early when slot_uid is zero. However, reading slot_uid
+already accesses the freed object.
 
-Fix this by checking *vc->uni_pagedict_loc and calling con_free_unimap(vc)
-in the err_free path before kfree(vc). This safely decrements the refcount
-and releases the dictionary memory if this was the last reference. The
-explicit check is added to maintain consistency with other callers.
+Clear enclave_file->private_data before fput() on the error path.
+ne_enclave_release() then returns immediately when private_data is
+NULL, leaving the ioctl error path as the sole owner of ne_enclave.
+This is safe because the file has not been fd_install()'d yet.
 
-Fixes: 34902b7f2754 ("tty: vt, get rid of weird source code flow")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20260803144556.163856-1-25181214217@stu.xidian.edu.cn
+Tested on an AWS EC2 m5.2xlarge with CONFIG_KASAN=y. Without the
+patch, the reproducer triggers a KASAN slab-use-after-free on every
+SLOT_ALLOC failure. With the patch, no KASAN report is produced and
+the SLOT_ALLOC error is still returned. Normal enclave creation and
+teardown are unaffected.
+
+Fixes: 9c8eb50fe9e2 ("nitro_enclaves: Add logic for terminating an enclave")
+Cc: stable@vger.kernel.org
+Co-developed-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
+Signed-off-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
+Signed-off-by: Yuxiao Wang <yuxiao.wang@certik.com>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Link: https://patch.msgid.link/20260909124400.27857-1-graf@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virt/nitro_enclaves/ne_misc_dev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1109,6 +1109,8 @@ int vc_allocate(unsigned int currcons)	/
- 	return 0;
- err_free:
- 	visual_deinit(vc);
-+	if (*vc->uni_pagedict_loc)
-+		con_free_unimap(vc);
- 	kfree(vc);
- 	vc_cons[currcons].d = NULL;
- 	return err;
+--- a/drivers/virt/nitro_enclaves/ne_misc_dev.c
++++ b/drivers/virt/nitro_enclaves/ne_misc_dev.c
+@@ -1710,6 +1710,7 @@ static int ne_create_vm_ioctl(struct ne_
+ 	return enclave_fd;
+ 
+ put_file:
++	enclave_file->private_data = NULL;
+ 	fput(enclave_file);
+ put_fd:
+ 	put_unused_fd(enclave_fd);
 
 
