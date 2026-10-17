@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE82438654F;
-	Sat, 17 Oct 2026 16:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B3B382F25;
+	Sat, 17 Oct 2026 16:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253278; cv=none; b=hN4Ji6ZCz9bRvDUOj4KZbufd/Mm6AL9jfqsXRu3+9XZYBlGrtZ25Caf06gyFjTM8+OMd5zdT2c8GvQQn13B324DIxNCcPKlmLr7PqdHin8mQLzaRxjNoF/i7mog4t5QYwb5N1925v9UrA+fHYOydt0clzwxKMQDl6LlomfgMq1M=
+	t=1792253281; cv=none; b=snj4FxF6wVjhbyrOCI0Nrx9pjjSEaNJGiKo161CEHtu+hC9v24mhzf2O4En+wDpIQ+jbhipi61tq5tOh+zbPsLSJ9NGySsuAWelEsXo8H+Ah67LsSBlBAnk5W15cEZuMlwOBvKD89LEczvXal/Hn1U1HekcydNGrrwACWpAuASk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253278; c=relaxed/simple;
-	bh=WIT4Yf6IAvWQ1lUAAz36ZftlTZ5yDphsGQY32HGVy9Y=;
+	s=arc-20240116; t=1792253281; c=relaxed/simple;
+	bh=WYUcBhnJlFjQRvL/elKu5iRofMaYl54/db0GwxEtX+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zghyzn6Sk2I93HjlmyL+apAn+2sBQdjxXZMbTbENQFGa7qMl0Y07APFaFOsL8mz/mn8XXDP0oI0z56/g+6aQJWKTIT8+64pfBFxBMkFvh+pRH6T1bT9nuXH7AwBC4yXmCgrNzhgy4FQC0p+A1R7F9pz2LXZT39u/ypbePgBuaDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnlftGls; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lRqM0RomLF40SqP3cbDyYyMTucvJ7BBH4TGdgGmSBE8nSTvcT4CI0+0QEuEGDnfOvf9nvFA2GiDjVAL2v/YraY4Cp0HM+vxQNgYHuOmiw47D2B0sC6R5pN3wJaDHGk3SaCTqRo8IHJHWcoCarB+BTmrl12VTsCk8uw3kDO3zyh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c3VmJKJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnlftGls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11821F000C4;
-	Sat, 17 Oct 2026 16:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c3VmJKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203381F000C5;
+	Sat, 17 Oct 2026 16:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253274;
-	bh=ZrHteGo1LJ7qbnNO7tE56zZ9anb5A7hFC5pyBD4/yv4=;
+	s=korg; t=1792253277;
+	bh=jzW0inC6dezCt570oA1EWoQdbwkKe/4IC84a5nDnkZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AnlftGlsqKNqr1grb6t54MR+nhuzI0z5aeGkabLFGiiwlbd1AtKTb+RAqMnQ0lvYy
-	 nD094du2Hm4XbW2NmPxnP8ZnMi22YUjWPXkIHxu+439LgPP3DgXA3I3u24ANt3oVwo
-	 K8wfYdwJ7bpml+A71TUMaMKE00i7QSf2J4MGGrow=
+	b=1c3VmJKJa+MrrY26PtxLr5T2ZtzQjpHJ/pUt6g2TIES8Mn/9d9aXnISkVO95wq8q3
+	 ECsrzXvoDI+0M2pz1iJIXwhSsjkMxZZFs+Nl2ovbytuvc/dkiM8dD7HQaH2gMJmWHM
+	 zNxtUr5nMRZmW2zkX1ej7zPZWTI4wbCA9AdCouds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	co+2cf741c3005abc20@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/869] wifi: ath12k: fix incorrect TID updation in DP monitor status path
-Date: Sat, 17 Oct 2026 17:48:24 +0200
-Message-ID: <20261017160038.638822656@linuxfoundation.org>
+Subject: [PATCH 6.12 023/869] net: team: stop reusing skb after queue override
+Date: Sat, 17 Oct 2026 17:47:44 +0200
+Message-ID: <20261017160037.604052658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,56 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit ebee84cc961cd3947015efbf4a5dbea63b11c5d3 ]
+[ Upstream commit b7454f1940c5e6d92e753853c476a769e452f30a ]
 
-Currently, an incorrect TID value gets populated in the monitor status Rx
-path due to an incorrect bitmap value given to the ffs() built-in helper
-function. Therefore, avoid the decrement and directly provide the TID
-bitmap to the ffs() built-in helper function for the correct TID update
-in the monitor status Rx path.
+A nonzero dev_queue_xmit() result does not return ownership of the skb.
+When an override port's qdisc drops it, the queue override helper used to
+try another port or the mode transmit op with the freed skb.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Return the handoff decision separately from transmit success. Select only
+the first override port under RCU and stop after handing it the skb,
+regardless of the lower transmit result. Keep the existing success and
+drop accounting.
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241217084511.2981515-6-quic_periyasa@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
+  BUG: KASAN: slab-use-after-free in sk_skb_reason_drop
+  Write of size 4 by task poc/5040
+  sk_skb_reason_drop (net/core/skbuff.c:1240)
+  dev_kfree_skb_any_reason (net/core/dev.c:3470)
+  ab_transmit (drivers/net/team/team_mode_activebackup.c:49)
+  team_xmit (drivers/net/team/team_core.c:1849)
+  __dev_direct_xmit (net/core/dev.c:4934)
+  Freed by task 5040:
+  __tcf_kfree_skb_list (net/sched/sch_generic.c:43)
+  __dev_queue_xmit (net/core/dev.c:4831)
+  team_xmit (drivers/net/team/team_core.c:1846)
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+Cc: stable@vger.kernel.org
+Fixes: 8ff5105a2b9d ("team: add support for queue override by setting queue_id for port")
+Reported-by: <co+2cf741c3005abc20@bugs.sh>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20261001182326.572045-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/team/team_core.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 95e9d652c611d..f1377e186518a 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -612,6 +612,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 	case HAL_RX_PPDU_END_USER_STATS: {
- 		struct hal_rx_ppdu_end_user_stats *eu_stats =
- 			(struct hal_rx_ppdu_end_user_stats *)tlv_data;
-+		u32 tid_bitmap;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 29d903de77da0..0cdcff2537c8f 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -821,7 +821,8 @@ static struct list_head *__team_get_qom_list(struct team *team, u16 queue_id)
+ /*
+  * note: already called with rcu_read_lock
+  */
+-static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb)
++static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb,
++					 bool *tx_success)
+ {
+ 	struct list_head *qom_list;
+ 	struct team_port *port;
+@@ -829,11 +830,11 @@ static bool team_queue_override_transmit(struct team *team, struct sk_buff *skb)
+ 	if (!team->queue_override_enabled || !skb->queue_mapping)
+ 		return false;
+ 	qom_list = __team_get_qom_list(team, skb->queue_mapping);
+-	list_for_each_entry_rcu(port, qom_list, qom_list) {
+-		if (!team_dev_queue_xmit(team, port, skb))
+-			return true;
+-	}
+-	return false;
++	port = list_first_or_null_rcu(qom_list, struct team_port, qom_list);
++	if (!port)
++		return false;
++	*tx_success = !team_dev_queue_xmit(team, port, skb);
++	return true;
+ }
  
- 		info[0] = __le32_to_cpu(eu_stats->info0);
- 		info[1] = __le32_to_cpu(eu_stats->info1);
-@@ -624,10 +625,9 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 			u32_get_bits(info[2], HAL_RX_PPDU_END_USER_STATS_INFO2_AST_INDEX);
- 		ppdu_info->fc_valid =
- 			u32_get_bits(info[1], HAL_RX_PPDU_END_USER_STATS_INFO1_FC_VALID);
--		ppdu_info->tid =
--			ffs(u32_get_bits(info[6],
--					 HAL_RX_PPDU_END_USER_STATS_INFO6_TID_BITMAP)
--					 - 1);
-+		tid_bitmap = u32_get_bits(info[6],
-+					  HAL_RX_PPDU_END_USER_STATS_INFO6_TID_BITMAP);
-+		ppdu_info->tid = ffs(tid_bitmap) - 1;
- 		ppdu_info->tcp_msdu_count =
- 			u32_get_bits(info[4],
- 				     HAL_RX_PPDU_END_USER_STATS_INFO4_TCP_MSDU_CNT);
+ static void __team_queue_override_port_del(struct team *team,
+@@ -1753,8 +1754,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	bool tx_success;
+ 	unsigned int len = skb->len;
+ 
+-	tx_success = team_queue_override_transmit(team, skb);
+-	if (!tx_success)
++	if (!team_queue_override_transmit(team, skb, &tx_success))
+ 		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
+ 	if (tx_success) {
+ 		struct team_pcpu_stats *pcpu_stats;
 -- 
 2.53.0
 
