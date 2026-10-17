@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485C63A542B;
-	Sat, 17 Oct 2026 17:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807A8385D7B;
+	Sat, 17 Oct 2026 17:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259231; cv=none; b=Di09llF8XSsyZ5A3XjaYVw8TGEVhu/b8Po1Bm5VRL1qZ5sx8VpISM2G2FAnJ6jgE5T5uQvWeVPPtmRLMzdJ5kMPYTOJ4Z5NaM0iHTv0xYJJuNWfqZD5TWPBaP12DaAQmtz474Q4rtxaOHzuvj20iqBUdQBL9wYPctCGpwSX9VDo=
+	t=1792259234; cv=none; b=r73iYgd4IriSw6oiLlo89AeMnSwYj/rqIdLjRBGVNlHuiQM1rx5tuSe273QMh6h39gl4FFuqoo/zB8pIfxlU1+jZIXgI78A6D0N2gfbHmAML0d6zgXzfafV69B9BH/KejSMgtSnkscN1TFzzheo2HQcUeCHKywdnyweBIFC0TiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259231; c=relaxed/simple;
-	bh=BpgAHIVEGJRtMClDtKSyRjKRlEc/xQ7bGZmDhPUW59g=;
+	s=arc-20240116; t=1792259234; c=relaxed/simple;
+	bh=PyOdLhZGUHxzxhXY2u2pyX8KLQBPiwOLy15FQtASoZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+3KnSiS9vbXz4xzVfzZ881uKnO3bH66qSbfNMFARN8x66NOYSMHc0SMB13r7AYDRWkdHoKdhHErCLwpZBOXekFz+Qr25fy1m8QaZaJpL+PfYFUsCH+ILg4VDMcj/SCFbLJs1Tgt8n5tDoZNSair25X+LMKOGAgNwUwfbyulAF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os46M6vc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0bLOb64KbBNwetGJHVu8Xcs952pEmz24Hny2UQwZPPHUPhtta7jhpgYkMc/dYD3o+H84ejFcNGnaodbz76dN23EGs1Hp2I4Tf3p+/LGw8Qnl7jMQEjyaFtqG+cWeQnN4yo3XmuKTJTJQGB93bJk5aXv8JC/tY1uo4Kfw0560vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+vio3HG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os46M6vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A143B1F000C4;
-	Sat, 17 Oct 2026 17:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+vio3HG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91C61F000C4;
+	Sat, 17 Oct 2026 17:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259230;
-	bh=TZ57N8FgPfr1dTDb+kfwISPm/tVmO04gc+CL+B68gAQ=;
+	s=korg; t=1792259233;
+	bh=NHVI/vHmK6NwsGB7pvdp3A8d8cEjC3yW4XvQjGMI0tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=os46M6vc0elDXpxc+Buh06eIby/kiZtcPOcgEHcDeeg1KHXmgJr+1ck0+ZPFHZMjS
-	 VcZtgilMJWKvLMMkoefZbdZ/3SrIEAKD1y9cIkICX+KMKRfKfj94rVDAl+gTCj+r7V
-	 tDSYBg4/HOs2vr3j1WgrOn7I26aLnJpjl/1KQQ24=
+	b=I+vio3HGPWjMP06ZG7zQKD2KXfxPJIT5bbfpjRpYkXrAvAzMc5D3PGEB11K5IlsOy
+	 xQ2D07DrdlEcebx3XOm4hz8dg23pOXfRQYrPhFnhQvfJFetR+2oL78q1RzInU1Y/2a
+	 00OABTE6Yxi0vhobBAiwGo4st0XXL6bAM336YC68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Baoquan He <bhe@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Eric DeVolder <eric_devolder@yahoo.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1143/1674] md/raid10: fix writes_pending and barrier reference leaks on discard failures
-Date: Sat, 17 Oct 2026 17:56:55 +0200
-Message-ID: <20261017160500.494645973@linuxfoundation.org>
+Subject: [PATCH 6.6 1107/1674] loongarch, kexec: change dependency of object files
+Date: Sat, 17 Oct 2026 17:56:19 +0200
+Message-ID: <20261017160459.540923628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,47 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit 393d687131d8aa8c7e4de2cb494438e145d20fc2 ]
+[ Upstream commit 655fc6cd45521aba4a21c6e607533f1a21e06c2e ]
 
-raid10_make_request() acquires a writes_pending reference with
-md_write_start() before calling raid10_handle_discard(). Several failure
-paths in raid10_handle_discard() complete the bio and return without
-releasing the corresponding reference, causing md_write_end() to be
-skipped.
+Patch series "kexec: fix the incorrect ifdeffery and dependency of
+CONFIG_KEXEC".
 
-Call md_write_end() before returning from these failure paths to keep
-writes_pending accounting balanced.
+The select of KEXEC for CRASH_DUMP in kernel/Kconfig.kexec will be
+dropped, then compiling errors will be triggered if below config items are
+set:
 
-Additionally, discard split allocation failures can occur after
-wait_barrier() succeeds. Those paths return without calling
-allow_barrier(), leaking the associated barrier reference.
+===
+CONFIG_CRASH_CORE=y
+CONFIG_KEXEC_CORE=y
+CONFIG_CRASH_DUMP=y
+===
 
-Release the barrier before returning from those paths.
+E.g on mips, below link error are seen:
+--------------------------------------------------------------------
+mipsel-linux-ld: kernel/kexec_core.o: in function `kimage_free':
+kernel/kexec_core.c:(.text+0x2200): undefined reference to `machine_kexec_cleanup'
+mipsel-linux-ld: kernel/kexec_core.o: in function `__crash_kexec':
+kernel/kexec_core.c:(.text+0x2480): undefined reference to `machine_crash_shutdown'
+mipsel-linux-ld: kernel/kexec_core.c:(.text+0x2488): undefined reference to `machine_kexec'
+mipsel-linux-ld: kernel/kexec_core.o: in function `kernel_kexec':
+kernel/kexec_core.c:(.text+0x29b8): undefined reference to `machine_shutdown'
+mipsel-linux-ld: kernel/kexec_core.c:(.text+0x29c0): undefined reference to `machine_kexec'
+--------------------------------------------------------------------
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Fixes: 4cf58d952909 ("md/raid10: Handle bio_split() errors")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260613182810.1317258-4-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Here, change the incorrect dependency of building kexec_core related
+object files, and the ifdeffery on architectures from CONFIG_KEXEC to
+CONFIG_KEXEC_CORE.
+
+Testing:
+========
+Passed on mips and loognarch with the LKP reproducer.
+
+This patch (of 5):
+
+Currently, in arch/loongarch/kernel/Makefile, building machine_kexec.o
+relocate_kernel.o depends on CONFIG_KEXEC.
+
+Whereas, since we will drop the select of KEXEC for CRASH_DUMP in
+kernel/Kconfig.kexec, compiling error will be triggered if below config
+items are set:
+
+===
+CONFIG_CRASH_CORE=y
+CONFIG_KEXEC_CORE=y
+CONFIG_CRASH_DUMP=y
+===
+
+---------------------------------------------------------------
+loongarch64-linux-ld: kernel/kexec_core.o: in function `.L209':
+>> kexec_core.c:(.text+0x1660): undefined reference to `machine_kexec_cleanup'
+   loongarch64-linux-ld: kernel/kexec_core.o: in function `.L287':
+>> kexec_core.c:(.text+0x1c5c): undefined reference to `machine_crash_shutdown'
+>> loongarch64-linux-ld: kexec_core.c:(.text+0x1c64): undefined reference to `machine_kexec'
+   loongarch64-linux-ld: kernel/kexec_core.o: in function `.L2^B5':
+>> kexec_core.c:(.text+0x2090): undefined reference to `machine_shutdown'
+   loongarch64-linux-ld: kexec_core.c:(.text+0x20a0): undefined reference to `machine_kexec'
+---------------------------------------------------------------
+
+Here, change the dependency of machine_kexec.o relocate_kernel.o to
+CONFIG_KEXEC_CORE can fix above building error.
+
+Link: https://lkml.kernel.org/r/20231208073036.7884-1-bhe@redhat.com
+Link: https://lkml.kernel.org/r/20231208073036.7884-2-bhe@redhat.com
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311300946.kHE9Iu71-lkp@intel.com/
+Cc: Eric DeVolder <eric_devolder@yahoo.com>
+Cc: Ignat Korchagin <ignat@cloudflare.com>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 485ed44db569 ("LoongArch: Fix address space mismatch in kexec command line lookup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/kernel/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 08f59c1ad2751..d055365f91302 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1655,6 +1655,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+diff --git a/arch/loongarch/kernel/Makefile b/arch/loongarch/kernel/Makefile
+index 4fcc168f07323..3c808c6803703 100644
+--- a/arch/loongarch/kernel/Makefile
++++ b/arch/loongarch/kernel/Makefile
+@@ -57,7 +57,7 @@ obj-$(CONFIG_MAGIC_SYSRQ)	+= sysrq.o
  
- 	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
-+		md_write_end(mddev);
- 		return 0;
- 	}
+ obj-$(CONFIG_RELOCATABLE)	+= relocate.o
  
+-obj-$(CONFIG_KEXEC)		+= machine_kexec.o relocate_kernel.o
++obj-$(CONFIG_KEXEC_CORE)	+= machine_kexec.o relocate_kernel.o
+ obj-$(CONFIG_CRASH_DUMP)	+= crash_dump.o
+ 
+ obj-$(CONFIG_UNWINDER_GUESS)	+= unwind_guess.o
 -- 
 2.53.0
 
