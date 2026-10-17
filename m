@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0363ACEE0;
-	Sat, 17 Oct 2026 16:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD8218787A;
+	Sat, 17 Oct 2026 16:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256208; cv=none; b=CMDNqcrhQp3dcOSUkt2A1sDzP2Vmk7j+nzsUCXAWodk5d151rlLwcIgsCcj76D54O3FzP0KBTHKhZqAmDgzJDbBpaWXExgve8dwaZFpix4f4YW42efMr77z6p0om8nPOjMVr9TAUcxnr/joU0cV9i24Mlk02mfaz3bYl53bKuwM=
+	t=1792256212; cv=none; b=gwB7XmZdlqqEgqV0otsQmn102n9y+Mno1wdRpVarNOFYgvdknkktZz7yCWAnQXN7qsYNt8KMwlLG7nFniBIyXHjmTQSFYaQ9Dsh62N/qO/1840st6ChozKB5KIUzNUlo2ZHYrY9dW8OKsF/C0z71zXOF2huCuuZdLiQlEJ2pChY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256208; c=relaxed/simple;
-	bh=YcQjTqYefTFSahPjroO+NZ3unbkS3Y9cQulzxqS1FLw=;
+	s=arc-20240116; t=1792256212; c=relaxed/simple;
+	bh=V9GKNAn6YqFy2Jsq7bBlRYwKbMsCLviFF0EIi1VsglI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQ+ajrQ3nrSmefrdpo76QbKocLbnlZv+os/Byk6yGsA3c7ZAqpdCih6nmeVzGz75ovjZrK2qUO/etUqUj0Bq9mrHPfkCfSKwDEL2ucCcnV0g5pKzLN4IZIQXcsg42UV3ZiIE85ldZBF78/C6Inkol6m8Vx9DuuWbwWel4eWtsNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUUeuA3q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i0HJAyv83rVGh7pmZRYM7L8HkhzjXfK9lsE39R7Q5ooDEjOFxgF9aPGUi6hU/5FNPnv4jDCUMSalFkNH6RNByK/VLkAo/kZATD0XmdSmQPj3uFF7E+drOMBkL1yXDC8DouBTMYXyWnzVuLfow24NzomQd668URIse6RtzIJxxC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lR2cPGzE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUUeuA3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357EA1F000C4;
-	Sat, 17 Oct 2026 16:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lR2cPGzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569AC1F000C4;
+	Sat, 17 Oct 2026 16:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256207;
-	bh=mW4FkFuSdux2RAIRqOGKPOZIwupaoCqyLpRDt6jLLZ0=;
+	s=korg; t=1792256210;
+	bh=wA0BjT+JFnaKdZ4dbVNzKd0n7lJ6iXgAKJ24d8hN6c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUUeuA3qMs/uF7VLRRZhvbfgcMInISB5w6OVFTur2U+LmVt2+8A/rLcRNfpuQk5ok
-	 YDW1Wlf9SQ3EZ7JwmUOL45qyUXgkcynI/Wl4t48zISr+1nzunW74J1Tu5BuED2u8Ds
-	 c4dTJWHxeS2JKJXCmEv166ooTOsDKjEdLNQ9uuiQ=
+	b=lR2cPGzEWcGKK/HKRbwMOFTpH0anTEA8ZJrimjzHbzI10XFSyI5waz5TdEkdrnL4j
+	 V3FY+sUwR2m6fqUKdGN3m49XijC1tydyQTpBrlrVUMKW9GDYE7S74/xF9T19m07zMZ
+	 3U8sCgaHd/oTvCpCEGeTFGLZurCHH9hGKTHwjEIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	April Cardenas <april.cardenas@canonical.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bharath S M <bharathsm@microsoft.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0158/1674] smb/client: use stack-allocated smb2_file_all_info in smb3_query_mf_symlink()
-Date: Sat, 17 Oct 2026 17:40:30 +0200
-Message-ID: <20261017160435.214655420@linuxfoundation.org>
+Subject: [PATCH 6.6 0119/1674] smb/client: send lease break ACKs thru correct session for multiuser mounts
+Date: Sat, 17 Oct 2026 17:39:51 +0200
+Message-ID: <20261017160434.205021569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,65 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: April Cardenas <april.cardenas@canonical.com>
 
-[ Upstream commit fc8789bb57e625e5f32ac57ca2e7d3e7b7fda225 ]
+[ Upstream commit ebc5660132ddd244b57f03ed324922013a3d7363 ]
 
-SMB2_open() only fills the fixed fields, so a stack-allocated
-smb2_file_all_info is sufficient here.
+Currently, when cifs_oplock_break handles a break request from the server
+it searches for the appropriate tlink to handle the request
+but incorrectly uses the current fsuid as the search key, eventually
+causing read errors for users with multiuser mounts on NetApp.
+Fix this by using the tlink from the cfile struct instead to respond
+through the correct session.
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 566820af017e ("smb: client: close handle after create-context parsing failure")
+As breaks are handled in a worker thread, the current fsuid
+isn't guaranteed to match the session that the break is intended for.
+This means that cifs_sb_tlink may search the rbtree using the wrong fsuid,
+and return a tlink with an incorrect session than
+the lease break was intended for. As a result, the breaks
+may be ACKed through an incorrect session.
+
+While it seems that Samba/Windows Servers 2016-2025 ignore this as long as
+the lease key is correct, we ran into a case where if you're using
+NetApp ONTAP or Azure NetApp Files they will reject the ACK
+and return `STATUS_LOCK_NOT_GRANTED` errors on any future read requests
+a user may initiate through their still held open file handle,
+and the server will eventually close the file.
+
+In the dmesg logs, the user may see errors like these:
+
+CIFS: Status code returned 0xc0000128 STATUS_FILE_CLOSED
+CIFS: VFS: Send error in read = -9
+
+With a multiuser mount using NetApp, this issue is really easy
+for users to hit on a wide variety of kernel versions
+by attempting to copy a file from the share
+to the local machine through GNOME Files/Nautilus.
+This copy will always result in Nautilus throwing
+a `Bad File Descriptor` error to the user and fail.
+With this fix, you can copy files through Nautilus without issue.
+
+>From looking at the traces, it seems that glib will
+open the file first, and call listxattr before actually attempting
+to copy the file data. The listxattr call always triggers a break,
+causing the copy to fail.
+
+The proposed fix returns to the way the client grabbed the tlink before
+commit e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break").
+
+The bulk of that commit (checking for list empty) remains untouched, and
+I think the change to using cifs_sb_tlink was intended to avoid a
+NULL/ERR deference on the tlink as well as update the reference count.
+
+I believe this fix should preserve those safety properties, but of course
+I'd appreciate any corrections here.
+
+Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
+Cc: stable@vger.kernel.org
+Signed-off-by: April Cardenas <april.cardenas@canonical.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Bharath S M <bharathsm@microsoft.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ Removed unused cifs_sb and sb declarations because this branch lacks their remaining upstream use. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/link.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ fs/smb/client/file.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
-index 007da0a699cb0..e1b23e7bd1b61 100644
---- a/fs/smb/client/link.c
-+++ b/fs/smb/client/link.c
-@@ -343,7 +343,7 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 	int buf_type = CIFS_NO_BUFFER;
- 	__le16 *utf16_path;
- 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
--	struct smb2_file_all_info *pfile_info = NULL;
-+	struct smb2_file_all_info file_info = {};
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 4fc05271b9d40..75682ef67bc85 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -5146,8 +5146,6 @@ void cifs_oplock_break(struct work_struct *work)
+ 	struct cifsFileInfo *cfile = container_of(work, struct cifsFileInfo,
+ 						  oplock_break);
+ 	struct inode *inode = d_inode(cfile->dentry);
+-	struct super_block *sb = inode->i_sb;
+-	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+ 	struct cifs_tcon *tcon;
+ 	struct TCP_Server_Info *server;
+@@ -5160,8 +5158,8 @@ void cifs_oplock_break(struct work_struct *work)
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
  
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-@@ -359,20 +359,12 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 	if (utf16_path == NULL)
- 		return -ENOMEM;
- 
--	pfile_info = kzalloc(sizeof(struct smb2_file_all_info) + PATH_MAX * 2,
--			     GFP_KERNEL);
--
--	if (pfile_info == NULL) {
--		kfree(utf16_path);
--		return  -ENOMEM;
--	}
--
--	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, pfile_info, NULL,
-+	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, &file_info, NULL,
- 		       NULL, NULL);
- 	if (rc)
- 		goto qmf_out_open_fail;
- 
--	if (pfile_info->EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
-+	if (file_info.EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
- 		/* it's not a symlink */
- 		rc = -ENOENT; /* Is there a better rc to return? */
- 		goto qmf_out;
-@@ -390,7 +382,6 @@ smb3_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 	SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
- qmf_out_open_fail:
- 	kfree(utf16_path);
--	kfree(pfile_info);
- 	return rc;
- }
- 
+-	tlink = cifs_sb_tlink(cifs_sb);
+-	if (IS_ERR(tlink)) {
++	tlink = cifs_get_tlink(cfile->tlink);
++	if (IS_ERR_OR_NULL(tlink)) {
+ 		/* drop the reference taken when the break was queued */
+ 		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 		goto out;
 -- 
 2.53.0
 
