@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9043515E7;
-	Sat, 17 Oct 2026 16:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D033A59BC;
+	Sat, 17 Oct 2026 16:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253297; cv=none; b=TTwTKdERviybGYeizYqJotf3xAdAfPhl5s0j/Ohu/PhdhTend8DBndD21XjGoZ16PfCdAJPMibEIG1Ek0KBLuC0oStpKpTNUOcXtwD0xhl4GxRxT6L5D8aqUZO3Wp8Qwljvhna4gxA6UHv5gyfguzk0BRxuQSl0egoZIsBdvn9s=
+	t=1792253298; cv=none; b=laSuOgxL+xO1FsDuasx8uM3oRqId+YGhSd5SqG0aStzbZlz8M/QP3d9kxd9NrJ0QsK8QSBxBpa4IBF8rCrjQbrXdP9CA/5Keg8MDlBRfHw3gz4bCp33Q1Cyai4VauzGlqLfJUzflLHUn2f9VAeC5hCs6i7WkaKIJX/FRlNHzmeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253297; c=relaxed/simple;
-	bh=8hQRHIiMgcz1KCtWvgYblcTTGWsH+8Z9LX3UADfcKtc=;
+	s=arc-20240116; t=1792253298; c=relaxed/simple;
+	bh=G+Chq4k8FN8FMQpAKJuEFuHtkWVr5BF8qVtsp813s54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSGOnDRPgmoOantac+a302Zi6U/592X6McThd+ykpzqLll1BJKdzBu7USq/OmG21JJDbeq0sW7PUwb/eEB7FqtBSodqi3T18jpD2R4InmYNKCKK5gBe3XRBoJWFc5/zvc9LyE9o7sqBOC0uGYErNFpCBmr5A0m5uRNC+b0vVARU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqvcDVOS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C5+RBr3b0a5bRJOnVxfW6Im8zVr/QfNe3Qt7gp34cmdYDop2SofSd0xCdiwSuFXuIDEMkoQVU+S6Kajzd6aa2e5pJbfbawX5EDPwstv+7s/pUL3rEmmEPfdYFhRtT5/chqRJHCWJqKgvOb2mjndhJQ9Yeycb9bhfnY35ofMqVZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAbvG5wm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqvcDVOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AAC1F000C5;
-	Sat, 17 Oct 2026 16:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAbvG5wm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46BD1F000C4;
+	Sat, 17 Oct 2026 16:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253293;
-	bh=hGcHZUFeqkEhfeZzDvVFXL0WlUt+MOnzbusHW0JleTU=;
+	s=korg; t=1792253296;
+	bh=Ya2I+u83Z7DoOkpl1Alos39YcJG9GWiVbkHb4hmNY8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqvcDVOS4+9syXEFGFDoieNX293Ffol9i3rfFL46zP56pAVb8awSg603L9hwVLTy4
-	 D/u5v2HouCZs8/5HquTDeCSqI8HiBkYpC+jjZxKdlE8tE5MZzxyStc6RwDdUH3/ry4
-	 3Jqz6ztyf3887FbTyL72b2W6K/l9+5mGf8Y0bPWQ=
+	b=jAbvG5wm+cbkhY50tHN7ktMaMMphPCHu3lMTrYA54xnUKFpTapSGBptIBp+RSs/HL
+	 yMoMTakJGShMISpGoPOiepuoi1cuD7TgUSZ4/Xn6EvUSKtOnKHjBcZHQ4o3rc247on
+	 JkpjqpMrcFhPGB/I8Jhx36FgMREmTcdT3+NAiNtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@kernel.org>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/869] mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
-Date: Sat, 17 Oct 2026 17:47:39 +0200
-Message-ID: <20261017160037.475693208@linuxfoundation.org>
+Subject: [PATCH 6.12 065/869] wifi: ath12k: Avoid memory leak while enabling statistics
+Date: Sat, 17 Oct 2026 17:48:26 +0200
+Message-ID: <20261017160038.691420801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -60,228 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 838bb60dc21553e32df90f2f3bac5b905376e7aa ]
+[ Upstream commit ecfc131389923405be8e7a6f4408fd9321e4d19b ]
 
-Patch series "mm/mremap: fix two issues with MREMAP_DONTUNMAP", v2.
+Driver uses monitor destination rings for extended statistics mode and
+standalone monitor mode. In extended statistics mode, TLVs are parsed from
+the buffer received from the monitor destination ring and assigned to the
+ppdu_info structure to update per-packet statistics. In standalone monitor
+mode, along with per-packet statistics, the packet data (payload) is
+captured, and the driver updates per MSDU to mac80211.
 
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
+When the AP interface is enabled, only extended statistics mode is
+activated. As part of enabling monitor rings for collecting statistics,
+the driver subscribes to HAL_RX_MPDU_START TLV in the filter
+configuration. This TLV is received from the monitor destination ring, and
+kzalloc for the mon_mpdu object occurs, which is not freed, leading to a
+memory leak. The kzalloc for the mon_mpdu object is only required while
+enabling the standalone monitor interface. This causes a memory leak while
+enabling extended statistics mode in the driver.
 
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
+Fix this memory leak by removing the kzalloc for the mon_mpdu object in
+the HAL_RX_MPDU_START TLV handling. Additionally, remove the standalone
+monitor mode handlings in the HAL_MON_BUF_ADDR and HAL_RX_MSDU_END TLVs.
+These TLV tags will be handled properly when enabling standalone monitor
+mode in the future.
 
-Commit 397432cab17b ("mm/mremap: account mm->locked_vm correctly for
-MREMAP_DONTUNMAP") fixed an accidentally introduced bug around
-mm->locked_vm accounting, but this wasn't the only issue.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-And thus history repeats itself, as it turns out that mm->locked_vm
-accounting is broken by MREMAP_DONTUNMAP yet again by two further cases,
-and has been broken ever since the feature was introduced.
-
-Both relate to the fact that VMA_LOCKED_BIT is cleared on the source VMA
-(it has to be as all page tables are moved):
-
-1. If an unfaulted VMA_LOCKONFAULT_BIT anonymous VMA self-merges it
-   clears the VMA_LOCKED_BIT flag and permanently leaks mm->locked_vm
-   pages.
-
-2. If a partial mremap() is performed on a locked VMA there is a leak equal
-   to the number of pages not copied.
-
-(Both for MREMAP_DONTUNMAP operations only)
-
-Both issues can be fixed by treating the source range as distinct from the
-destination range, which is the definition of what MREMAP_DONTUNMAP does
-so is appropriate.
-
-In case 1, simply disallow the self-merge, keeping adjacent source and
-destination VMAs distinct.
-
-In case 2, split the source range ahead of time if the VMA is mlock()'d,
-so accounting is always correct.
-
-Both changes were tested locally and confirmed to fix the issues.
-
-For the purposes of a backport, the fixes are kept distinct, a follow-up
-series can add self-tests.
-
-This patch (of 2):
-
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
-
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
-
-Fix another of these - self-merge.
-
-Self-merge occurs when a VMA is moved in front of or behind itself and the
-attributes of the VMA permit such a merge.
-
-Practically this can only happen for unfaulted anonymous VMAs due to the
-page offset equality requirement for merge:
-
-                           |------------|
-                           |            |
-                           |            v
-        |...........||-----------||...........|
-        |           || unfaulted ||           |
-        |...........||-----------||...........|
-              ^            |
-              |            |
-              |------------|
-
-This becomes problematic if the VMA is configured by the user to
-mlock-on-fault, i.e. the VMA_LOCKED_BIT, VMA_LOCKONFAULT_BIT VMA flags are
-set.
-
-MREMAP_DONTUNMAP clears mlock flags for the source VMA and maintains them
-for the destination VMA.
-
-Self-merge makes this impossible (there is only one VMA) and incorrectly
-clears the destination VMA's mlock flags.
-
-This causes a leak in mm->locked_vm as clearing this flag does not
-decrement the counter and the VMA no longer has VMA_LOCKED_BIT set so it
-is not decremented on unmap.
-
-Resolve this by simply disallowing a self-merge in this case - the source
-and destination VMAs are kept distinct and then are able to have distinct
-mlock() flags.
-
-Update dontunmap_complete() to make the now-redundant self-merge check a
-VM_WARN_ON_ONCE() instead to guard against future regressions.
-
-Also update the VMA userland tests to reflect the change.
-
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-0-f388985a0f0a@kernel.org
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-1-f388985a0f0a@kernel.org
-Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: translated can_self_merge logic to the inverse faulted_in_anon_vma flag. ]
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-13-quic_ppranees@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c             |  7 +++++--
- mm/vma.c                | 17 ++++++++++++++++-
- mm/vma.h                |  2 +-
- tools/testing/vma/vma.c |  4 ++--
- 4 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 64 ++++--------------------
+ drivers/net/wireless/ath/ath12k/hal_rx.h |  3 ++
+ 2 files changed, 12 insertions(+), 55 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 2e717cf938aa6..83c37ad39d345 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -759,7 +759,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 	vma_start_write(vma);
- 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
- 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
--			   &need_rmap_locks);
-+			   &need_rmap_locks, flags & MREMAP_DONTUNMAP);
- 	if (!new_vma) {
- 		if (vm_flags & VM_ACCOUNT)
- 			vm_unacct_memory(to_account >> PAGE_SHIFT);
-@@ -820,6 +820,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		untrack_pfn_clear(vma);
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index bc24b8edfaea3..ad276f8605054 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -743,7 +743,6 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 	}
+ 	case HAL_RX_MPDU_START: {
+ 		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
+-		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
+ 		u16 peer_id;
  
- 	if (unlikely(!err && (flags & MREMAP_DONTUNMAP))) {
-+		/* Self-merge is disallowed. */
-+		VM_WARN_ON_ONCE(new_vma == vma);
-+
- 		/* We always clear VM_LOCKED[ONFAULT] on the old vma */
- 		vm_flags_clear(vma, VM_LOCKED_MASK);
+ 		info[1] = __le32_to_cpu(mpdu_start->info1);
+@@ -760,65 +759,17 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO0_PPDU_ID);
+ 		}
  
-@@ -827,7 +830,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		 * anon_vma links of the old vma is no longer needed after its page
- 		 * table has been moved.
- 		 */
--		if (new_vma != vma && vma->vm_start == old_addr &&
-+		if (vma->vm_start == old_addr &&
- 			vma->vm_end == (old_addr + old_len)) {
- 			const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
+-		mon_mpdu = kzalloc(sizeof(*mon_mpdu), GFP_ATOMIC);
+-		if (!mon_mpdu)
+-			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
+-
+ 		break;
+ 	}
+ 	case HAL_RX_MSDU_START:
+ 		/* TODO: add msdu start parsing logic */
+ 		break;
+-	case HAL_MON_BUF_ADDR: {
+-		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
+-		const struct dp_mon_packet_info *packet_info = tlv_data;
+-		int buf_id = u32_get_bits(packet_info->cookie,
+-					  DP_RXDMA_BUF_COOKIE_BUF_ID);
+-		struct sk_buff *msdu;
+-		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
+-		struct ath12k_skb_rxcb *rxcb;
+-
+-		spin_lock_bh(&buf_ring->idr_lock);
+-		msdu = idr_remove(&buf_ring->bufs_idr, buf_id);
+-		spin_unlock_bh(&buf_ring->idr_lock);
+-
+-		if (unlikely(!msdu)) {
+-			ath12k_warn(ab, "monitor destination with invalid buf_id %d\n",
+-				    buf_id);
+-			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
+-		}
+-
+-		rxcb = ATH12K_SKB_RXCB(msdu);
+-		dma_unmap_single(ab->dev, rxcb->paddr,
+-				 msdu->len + skb_tailroom(msdu),
+-				 DMA_FROM_DEVICE);
+-
+-		if (mon_mpdu->tail)
+-			mon_mpdu->tail->next = msdu;
+-		else
+-			mon_mpdu->tail = msdu;
+-
+-		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
+-
+-		break;
+-	}
+-	case HAL_RX_MSDU_END: {
+-		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
+-		bool is_first_msdu_in_mpdu;
+-		u16 msdu_end_info;
+-
+-		msdu_end_info = __le16_to_cpu(msdu_end->info5);
+-		is_first_msdu_in_mpdu = u32_get_bits(msdu_end_info,
+-						     RX_MSDU_END_INFO5_FIRST_MSDU);
+-		if (is_first_msdu_in_mpdu) {
+-			pmon->mon_mpdu->head = pmon->mon_mpdu->tail;
+-			pmon->mon_mpdu->tail = NULL;
+-		}
+-		break;
+-	}
++	case HAL_MON_BUF_ADDR:
++		return HAL_RX_MON_STATUS_BUF_ADDR;
++	case HAL_RX_MSDU_END:
++		return HAL_RX_MON_STATUS_MSDU_END;
+ 	case HAL_RX_MPDU_END:
+-		list_add_tail(&pmon->mon_mpdu->list, &pmon->dp_rx_mon_mpdu_list);
+-		break;
++		return HAL_RX_MON_STATUS_MPDU_END;
+ 	case HAL_DUMMY:
+ 		return HAL_RX_MON_STATUS_BUF_DONE;
+ 	case HAL_RX_PPDU_END_STATUS_DONE:
+@@ -1196,7 +1147,10 @@ ath12k_dp_mon_parse_rx_dest(struct ath12k_base *ab, struct ath12k_mon_data *pmon
+ 		if ((ptr - skb->data) >= DP_RX_BUFFER_SIZE)
+ 			break;
  
-diff --git a/mm/vma.c b/mm/vma.c
-index 55321fe0f7912..b58588cac3aab 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1641,7 +1641,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma)
-  */
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks)
-+	bool *need_rmap_locks, bool keep_source)
- {
- 	struct vm_area_struct *vma = *vmap;
- 	unsigned long vma_start = vma->vm_start;
-@@ -1667,6 +1667,21 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	vmg.vma = NULL; /* New VMA range. */
- 	vmg.pgoff = pgoff;
- 	vmg.next = vma_iter_next_rewind(&vmi, NULL);
-+
-+	/*
-+	 * If the original VMA is kept (MREMAP_DONTUNMAP), the source and
-+	 * destination VMA must be treated distinctly.
-+	 *
-+	 * A merge violates this, so in this case disallow a self-merge.
-+	 */
-+	if (!faulted_in_anon_vma && keep_source) {
-+		if (vmg.prev == vma)
-+			vmg.prev = NULL;
-+		if (vmg.next == vma)
-+			vmg.next = NULL;
-+		faulted_in_anon_vma = true;
-+	}
-+
- 	new_vma = vma_merge_new_range(&vmg);
+-	} while (hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE);
++	} while ((hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE) ||
++		 (hal_status == HAL_RX_MON_STATUS_BUF_ADDR) ||
++		 (hal_status == HAL_RX_MON_STATUS_MPDU_END) ||
++		 (hal_status == HAL_RX_MON_STATUS_MSDU_END));
  
- 	if (new_vma) {
-diff --git a/mm/vma.h b/mm/vma.h
-index c953d4ade1f0d..7c2932ec62356 100644
---- a/mm/vma.h
-+++ b/mm/vma.h
-@@ -333,7 +333,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma);
+ 	return hal_status;
+ }
+diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
+index e12734fd56bca..33fb765628c55 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_rx.h
++++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
+@@ -108,6 +108,9 @@ enum hal_rx_mon_status {
+ 	HAL_RX_MON_STATUS_PPDU_NOT_DONE,
+ 	HAL_RX_MON_STATUS_PPDU_DONE,
+ 	HAL_RX_MON_STATUS_BUF_DONE,
++	HAL_RX_MON_STATUS_BUF_ADDR,
++	HAL_RX_MON_STATUS_MPDU_END,
++	HAL_RX_MON_STATUS_MSDU_END,
+ };
  
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks);
-+	bool *need_rmap_locks, bool keep_source);
- 
- struct anon_vma *find_mergeable_anon_vma(struct vm_area_struct *vma);
- 
-diff --git a/tools/testing/vma/vma.c b/tools/testing/vma/vma.c
-index 9074aaced9c5a..46edffe9c55ac 100644
---- a/tools/testing/vma/vma.c
-+++ b/tools/testing/vma/vma.c
-@@ -1501,7 +1501,7 @@ static bool test_copy_vma(void)
- 	/* Move backwards and do not merge. */
- 
- 	vma = alloc_and_link_vma(&mm, 0x3000, 0x5000, 3, flags);
--	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks);
-+	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks, false);
- 
- 	ASSERT_NE(vma_new, vma);
- 	ASSERT_EQ(vma_new->vm_start, 0);
-@@ -1514,7 +1514,7 @@ static bool test_copy_vma(void)
- 
- 	vma = alloc_and_link_vma(&mm, 0, 0x2000, 0, flags);
- 	vma_next = alloc_and_link_vma(&mm, 0x6000, 0x8000, 6, flags);
--	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks);
-+	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks, false);
- 
- 	ASSERT_EQ(vma_new, vma_next);
- 
+ #define HAL_RX_MAX_MPDU		256
 -- 
 2.53.0
 
