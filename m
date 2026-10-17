@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D05303A04;
-	Sat, 17 Oct 2026 16:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C02A38F253;
+	Sat, 17 Oct 2026 16:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253212; cv=none; b=nf2ZP96tjyEzsx7JjKEI9J1gW1OBDrHT4vFK7GcnF1CmSuiepXFRRXOdUFFMNj5t8aodeN0d78kQJOLC/JEK2UINX7K0k1qO3xc+NsH7wQYXCwYp9TNvH/qdD/NIe80o7/L7EPxobQiIC+KOd4GRo9ObYVRIbyeplUBH5XgBreA=
+	t=1792253215; cv=none; b=UPI7TJLLzHkhKclKF3N0l79S2IvreOQ5TE1beWq3g+W++fKYG3fxpllJtfzzgrb3ZxHB9DmmIIERwZL7q5DMj94YGf0JETshJ3Pg+4U8YDzRrVlwQqrYqAB9u2+szRZs6SS52RiYELhu4BTlJe6iDeBH8Yy1I5DiOn3zQn0Z1rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253212; c=relaxed/simple;
-	bh=5CJ6g6/hR1J9IQ7ndLYmuFjxF26RwL2lT3i39OHxy8c=;
+	s=arc-20240116; t=1792253215; c=relaxed/simple;
+	bh=58El7vIF4mnaYQGZ2BxXDiojevhhPEc4KM4OCPQ9MZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPJl1+KCOP2XFiT1/0fXvyV+KgwAQf0RoAmo1p1CXfp6xNAIAc7xKoB9XNHn/19vjFpIlupGHSgJGK2MoKUJRF/IpeLP1jnuGD4z3MLqfjGP83mZ27FWYsGecXv6PmDbkfMOR6opEsKxltdsdcbBQAYDBaK5Wtw9aPm43T+u+Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeADw7pv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=awI6nO15hbcOFpFuEVrDbjDkZpUxvHMzj/sgNMp7uuMtgyYTwSANxXHptbyo3ZmuULsFDX6NIb1HbjbB4Z6EGX4KixYYnOE7T8Ud6ADcTMtbfFZKg9ori8IGBAHe08EQc2H1NV2CI+qQ1shAH4HtdO7FwXUem/AAvKLzLupIW20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mk423AVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeADw7pv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCCF1F000C4;
-	Sat, 17 Oct 2026 16:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mk423AVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8191F000C4;
+	Sat, 17 Oct 2026 16:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253210;
-	bh=eqbZW07ia0Uy+o+nw0is2CNttmUnozX/tyAafLzbsl8=;
+	s=korg; t=1792253213;
+	bh=VNdvXQ/ng3Jtl9oZa4QhAPdlUFOtlDRyDr9Br0DviHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aeADw7pvY8z7rI6c5XwbtEBPqiM1XeuNWFraBtnqM3sxdPAvhPuPetHog0OfxE/O0
-	 CQjHd/OCo4EbAP4eyDA8PIfG1Xrmvq+39GWkL0vIXPjQYF+sVrsGmtuXv2m6dhljMn
-	 T2aOqujq7OwgoHwnTJagN7AItAn37sAA4BrbN/TI=
+	b=Mk423AVx3tTgvvcu/CtY0i71HnNHJhsiN3MXf8qQNz6BWfpY30KJ5q0ST/SQxROsk
+	 f59RJicsAbtIo0MkoOnzVKJ8xc/0TU4sB3W5ewRgfIyQ61ZGbNIdfyvaSJ7UXyltN2
+	 SINXYl/EzPjY4sE3j0twBLQYF44wBS9R30juESp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/869] namespace: unhash a dentry before detaching the mounts on it
-Date: Sat, 17 Oct 2026 17:48:06 +0200
-Message-ID: <20261017160038.171023552@linuxfoundation.org>
+Subject: [PATCH 6.12 046/869] namespace: check the target before walking it in do_mount_setattr()
+Date: Sat, 17 Oct 2026 17:48:07 +0200
+Message-ID: <20261017160038.197518673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,404 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 528b383dc35d1e5caf64ddf5d35f983ae543b0d0 ]
+[ Upstream commit 08f4288a37ef4b3d19b4a9599ec3048219cac828 ]
 
-unlink(), rmdir() and rename() remove the entry from the filesystem,
-call detach_mounts() on the entry with the inode locked and then call
-d_delete() once the inode is unlocked.
+When mount_setattr() changes the propagation type to MS_SHARED
+do_mount_setattr() takes namespace_sem and calls invent_group_ids()
+which walks the whole target tree with next_mnt() and allocates a peer
+group id for every mount that doesn't have one.
 
-The thing is that between detach_mounts() and d_delete() the dentry is
-still hashed and positive. But after detach_mounts() nothing covers the
-dentry anymore. A lookup that finds this dentry in the dcache can
-uncover what the mounts hid.
+Whether the caller may touch the target at all is only checked
+afterwards under mount_lock. If it may not, cleanup_group_ids() walks
+the tree a second time on the way out to free the ids again.
 
-That's a problem when unlinking files or directories that are
-mountpoints in other mount namespaces. Everybody who had the underlying
-entry covered can race the detach_mount() call until d_delete() has run.
+A detached tree that a file descriptor keeps alive, a mount in another
+mount namespace or a mount below the root of an anonymous mount
+namespace does a bunch of allocation work that is completely useless
+because it will fail and revert right after.
 
-The race window isn't all that small. It encompasses namespace_unlock()
-with a full synchronize_rcu_expedited() grace period and the
-inode_unlock() of the entry.
+Do the right thing and check the target right after taking namespace_sem
+instead. A mount leaves its namespace only under namespace_sem so the
+mount stays stable. The check under mount_lock stays for the case where
+no propagation change is requested and namespace_sem isn't taken.
+Callers get the same EINVAL as before.
 
-In my experiments three walkers that kept trying read an overmounted
-file in 11938 of the 16140 unlinks that removed its mountpoint from a
-bind mount of the filesystem within a minute.
-
-Fun fact, d_invalidate() has the same ordering problem but gets it
-right. It unhashes the dentry first and detaches the mounts afterwards.
-Let's do the same in __detach_mounts():
-
-- A lookup that hasn't found the dentry yet misses it in the dcache and
-  waits for the directory lock that the caller holds until the name is
-  gone for good.
-
-- A lockless lookup that found it already fails the mount_lock check
-  while the dentry still counts as a mountpoint and the d_seq check once
-  it doesn't, and retries.
-
-This fixes the lockless path. We still need to fix the reference count
-lookup in a follow-up patch.
-
-So d_drop() the dentry. The dentry stays positive and held but can't be
-found anymore. Then proceed with the detach and unlink.
-
-Reproducer:
-
-The reads were counted with the program below, three walkers for 60 s
-in a VM with 4 CPUs. The race window is stretched with the debug patch
-pasted here. fs.detach_race_walk_us sleeps in lookup_fast() once it
-found a mountpoint dentry and before its mounts are crossed.
-fs.detach_race_unlink_us sleeps in vfs_unlink() between detach_mounts()
-and d_delete().
-
-  // SPDX-License-Identifier: GPL-2.0
-  /*
-   * unlink_covered: unlink a file that is a mountpoint in a detached copy of
-   * its mount, against lookups that open it through that copy.
-   *
-   * A is a tmpfs with the file f1 (content SECRET_F) and the plain file
-   * MARK_A. A' is an open_tree(OPEN_TREE_CLONE) copy of A with MARK_A bound
-   * on A'/f1, held through an O_PATH fd on its root once the tree fd is
-   * closed. Walkers open f1 through that fd while the driver unlinks A/f1,
-   * where nothing is mounted on it. A walker may read MARK_A or get ENOENT.
-   * A read of SECRET_F is a hit: the name was found after its mount was
-   * gone. The lockless walks use openat2(RESOLVE_CACHED).
-   *
-   * usage: unlink_covered [-t seconds] [-w walkers]
-   */
-  #ifndef _GNU_SOURCE
-  #define _GNU_SOURCE
-  #endif
-  #include <errno.h>
-  #include <fcntl.h>
-  #include <pthread.h>
-  #include <stdatomic.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  #include <unistd.h>
-  #include <sys/mount.h>
-  #include <sys/stat.h>
-  #include <sys/syscall.h>
-  #include <linux/openat2.h>
-
-  #ifndef __NR_open_tree
-  #define __NR_open_tree 428
-  #endif
-  #ifndef __NR_move_mount
-  #define __NR_move_mount 429
-  #endif
-  #ifndef __NR_openat2
-  #define __NR_openat2 437
-  #endif
-  #ifndef OPEN_TREE_CLONE
-  #define OPEN_TREE_CLONE 1
-  #endif
-  #ifndef OPEN_TREE_CLOEXEC
-  #define OPEN_TREE_CLOEXEC O_CLOEXEC
-  #endif
-  #ifndef MOVE_MOUNT_F_EMPTY_PATH
-  #define MOVE_MOUNT_F_EMPTY_PATH 0x00000004
-  #endif
-
-  #define WORK "/tmp/uc"
-  #define ADIR WORK "/A"
-
-  static int duration = 60, nwalkers = 3;
-  static atomic_int stop, writer_waiting;
-  static pthread_rwlock_t cur_lock = PTHREAD_RWLOCK_INITIALIZER;
-  static int cur_fd = -1;		/* the root of A', -1 while there is none */
-  static atomic_long n_unlink, n_walk, n_mark, n_enoent, n_other, n_secret,
-  		   n_secret_cached;
-
-  static void die(const char *what)
-  {
-  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
-  	exit(2);
-  }
-
-  static void put_file(int dfd, const char *name, const char *content)
-  {
-  	int fd = openat(dfd, name, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC,
-  			0644);
-
-  	if (fd < 0 || write(fd, content, strlen(content)) < 0)
-  		die(name);
-  	close(fd);
-  }
-
-  /* "plain/../" @n times, then f1: a longer walk that checks nothing on its way */
-  static char *longpath(int n)
-  {
-  	char *p = malloc(n * 9 + 3), *q = p;
-
-  	for (int i = 0; i < n; i++, q += 9)
-  		memcpy(q, "plain/../", 9);
-  	strcpy(q, "f1");
-  	return p;
-  }
-
-  static void try_read(int dfd, const char *path, int cached)
-  {
-  	struct open_how how = { .flags = O_RDONLY | O_CLOEXEC,
-  				.resolve = RESOLVE_CACHED };
-  	char buf[32] = "";
-  	long n;
-  	int fd;
-
-  	if (cached)
-  		fd = syscall(__NR_openat2, dfd, path, &how, sizeof(how));
-  	else
-  		fd = openat(dfd, path, O_RDONLY | O_CLOEXEC);
-  	atomic_fetch_add(&n_walk, 1);
-  	if (fd < 0) {
-  		if (errno == ENOENT)
-  			atomic_fetch_add(&n_enoent, 1);
-  		else if (!cached || errno != EAGAIN)
-  			atomic_fetch_add(&n_other, 1);
-  		return;
-  	}
-  	n = read(fd, buf, sizeof(buf) - 1);
-  	close(fd);
-  	if (n >= 6 && !strncmp(buf, "SECRET", 6)) {
-  		if (cached)
-  			atomic_fetch_add(&n_secret_cached, 1);
-  		if (!atomic_fetch_add(&n_secret, 1))
-  			printf("HIT: read \"%s\" through %s (%s walk)\n", buf,
-  			       path, cached ? "lockless" : "any");
-  	} else {
-  		atomic_fetch_add(&n_mark, 1);
-  	}
-  }
-
-  static void *walker(void *arg)
-  {
-  	unsigned int r = (long)arg * 2654435761u;
-
-  	while (!atomic_load(&stop)) {
-  		char *p_long, *p_short;
-  		int dfd;
-
-  		while (atomic_load(&writer_waiting) && !atomic_load(&stop))
-  			usleep(20);
-  		pthread_rwlock_rdlock(&cur_lock);
-  		dfd = cur_fd;
-  		if (dfd < 0) {
-  			pthread_rwlock_unlock(&cur_lock);
-  			usleep(100);
-  			continue;
-  		}
-  		r = r * 1103515245u + 12345u;
-  		p_long = longpath(1 + (r >> 8) % 400);
-  		p_short = longpath(0);
-  		try_read(dfd, p_long, 0);
-  		try_read(dfd, p_short, 0);
-  		try_read(dfd, p_long, 1);
-  		pthread_rwlock_unlock(&cur_lock);
-  		free(p_long);
-  		free(p_short);
-  	}
-  	return NULL;
-  }
-
-  /* hand the walkers a new A' (or none), close the old one */
-  static void publish(int fd)
-  {
-  	int old;
-
-  	atomic_fetch_add(&writer_waiting, 1);
-  	pthread_rwlock_wrlock(&cur_lock);
-  	old = cur_fd;
-  	cur_fd = fd;
-  	pthread_rwlock_unlock(&cur_lock);
-  	atomic_fetch_sub(&writer_waiting, 1);
-  	if (old >= 0)
-  		close(old);
-  }
-
-  static void *driver(void *arg __attribute__((unused)))
-  {
-  	int a;
-
-  	if (mkdir(ADIR, 0755) && errno != EEXIST)
-  		die("mkdir A");
-  	if (mount("A", ADIR, "tmpfs", 0, "size=4M"))
-  		die("mount A");
-  	a = open(ADIR, O_PATH | O_DIRECTORY | O_CLOEXEC);
-  	if (a < 0 || mkdirat(a, "plain", 0755))
-  		die("A/plain");
-  	put_file(a, "MARK_A", "MARK_A");
-  	while (!atomic_load(&stop)) {
-  		int t, m, fd_a;
-
-  		put_file(a, "f1", "SECRET_F");
-  		t = syscall(__NR_open_tree, a, "",
-  			    OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC | AT_EMPTY_PATH);
-  		if (t < 0)
-  			die("open_tree A");
-  		m = syscall(__NR_open_tree, a, "MARK_A",
-  			    OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-  		if (m < 0)
-  			die("open_tree MARK_A");
-  		if (syscall(__NR_move_mount, m, "", t, "f1",
-  			    MOVE_MOUNT_F_EMPTY_PATH))
-  			die("move_mount");
-  		close(m);
-  		fd_a = openat(t, ".", O_PATH | O_DIRECTORY | O_CLOEXEC);
-  		if (fd_a < 0)
-  			die("open A'");
-  		publish(fd_a);
-  		usleep(200 + rand() % 1000);
-  		close(t);			/* A' is unmounted, fd_a holds it */
-  		usleep(200 + rand() % 1000);
-  		if (unlinkat(a, "f1", 0))	/* through A, a plain file there */
-  			die("unlink f1");
-  		atomic_fetch_add(&n_unlink, 1);
-  		usleep(rand() % 300);
-  		publish(-1);
-  	}
-  	close(a);
-  	umount2(ADIR, MNT_DETACH);
-  	return NULL;
-  }
-
-  int main(int argc, char **argv)
-  {
-  	pthread_t d, *w;
-  	int c, i;
-
-  	setvbuf(stdout, NULL, _IOLBF, 0);
-  	while ((c = getopt(argc, argv, "t:w:")) != -1) {
-  		switch (c) {
-  		case 't':
-  			duration = atoi(optarg);
-  			break;
-  		case 'w':
-  			nwalkers = atoi(optarg);
-  			break;
-  		default:
-  			fprintf(stderr, "usage: unlink_covered [-t seconds] [-w walkers]\n");
-  			return 2;
-  		}
-  	}
-  	if (unshare(CLONE_NEWNS) ||
-  	    mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
-  		die("unshare");
-  	if (mkdir(WORK, 0755) && errno != EEXIST)
-  		die("mkdir");
-  	w = calloc(nwalkers, sizeof(*w));
-  	for (i = 0; i < nwalkers; i++)
-  		if (pthread_create(&w[i], NULL, walker, (void *)(long)i))
-  			die("pthread_create");
-  	if (pthread_create(&d, NULL, driver, NULL))
-  		die("pthread_create");
-  	sleep(duration);
-  	atomic_store(&stop, 1);
-  	pthread_join(d, NULL);
-  	for (i = 0; i < nwalkers; i++)
-  		pthread_join(w[i], NULL);
-  	printf("unlink_covered: %d s, %d walkers: unlinks %ld walks %ld mark %ld enoent %ld other %ld SECRET %ld (lockless %ld)\n",
-  	       duration, nwalkers, atomic_load(&n_unlink), atomic_load(&n_walk),
-  	       atomic_load(&n_mark), atomic_load(&n_enoent),
-  	       atomic_load(&n_other), atomic_load(&n_secret),
-  	       atomic_load(&n_secret_cached));
-  	return atomic_load(&n_secret) ? 1 : 0;
-  }
-
-#  diff --git a/fs/namei.c b/fs/namei.c
-#  --- a/fs/namei.c
-#  +++ b/fs/namei.c
-#  @@ -35,6 +35,7 @@
-#   #include <linux/fcntl.h>
-#   #include <linux/device_cgroup.h>
-#   #include <linux/fs_struct.h>
-#  +#include <linux/delay.h>
-#   #include <linux/posix_acl.h>
-#   #include <linux/hash.h>
-#   #include <linux/bitops.h>
-#  @@ -1205,9 +1206,26 @@ static int sysctl_protected_symlinks __read_mostly;
-#   static int sysctl_protected_hardlinks __read_mostly;
-#   static int sysctl_protected_fifos __read_mostly;
-#   static int sysctl_protected_regular __read_mostly;
-#  +/* debug: widen the two windows of the detach_mounts() race */
-#  +static int sysctl_detach_race_walk_us __read_mostly;
-#  +static int sysctl_detach_race_unlink_us __read_mostly;
-#
-#   #ifdef CONFIG_SYSCTL
-#   static const struct ctl_table namei_sysctls[] = {
-#  +	{
-#  +		.procname	= "detach_race_walk_us",
-#  +		.data		= &sysctl_detach_race_walk_us,
-#  +		.maxlen		= sizeof(int),
-#  +		.mode		= 0644,
-#  +		.proc_handler	= proc_dointvec,
-#  +	},
-#  +	{
-#  +		.procname	= "detach_race_unlink_us",
-#  +		.data		= &sysctl_detach_race_unlink_us,
-#  +		.maxlen		= sizeof(int),
-#  +		.mode		= 0644,
-#  +		.proc_handler	= proc_dointvec,
-#  +	},
-#   	{
-#   		.procname	= "protected_symlinks",
-#   		.data		= &sysctl_protected_symlinks,
-#  @@ -1878,6 +1896,10 @@ static struct dentry *lookup_fast(struct nameidata *nd)
-#   		dentry = __d_lookup(parent, &nd->last);
-#   		if (unlikely(!dentry))
-#   			return NULL;
-#  +		/* debug: between finding a mountpoint and crossing its mounts */
-#  +		if (unlikely(sysctl_detach_race_walk_us) && d_mountpoint(dentry))
-#  +			usleep_range(sysctl_detach_race_walk_us,
-#  +				     sysctl_detach_race_walk_us + 10);
-#   		status = d_revalidate(nd->inode, &nd->last, dentry, nd->flags);
-#   	}
-#   	if (unlikely(status <= 0)) {
-#  @@ -5693,6 +5715,10 @@ int vfs_unlink(struct mnt_idmap *idmap, struct inode *dir,
-#   			if (!error) {
-#   				dont_mount(dentry);
-#   				detach_mounts(dentry);
-#  +				/* debug: the mounts are gone, d_delete() is still to come */
-#  +				if (unlikely(sysctl_detach_race_unlink_us))
-#  +					usleep_range(sysctl_detach_race_unlink_us,
-#  +						     sysctl_detach_race_unlink_us + 10);
-#   			}
-#   		}
-#   	}
-
-Fixes: 8ed936b5671b ("vfs: Lazily remove mounts on unlinked files and directories.")
+Fixes: 2a1867219c7b ("fs: add mount_setattr()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-1-dd44b89d44ce@kernel.org
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-5-f357abf3d17b@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Adjusted comment context to retain i_mutex wording instead of upstream's i_rwsem. ]
+[ sashal: Replaced unavailable anon_ns_root() with equivalent checks using existing mount and namespace helpers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/namespace.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 2c23537a17d19..5cfceae507098 100644
+index 5cfceae507098..808a8e79a4863 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -1957,6 +1957,9 @@ static int do_umount(struct mount *mnt, int flags)
-  * detach_mounts allows lazily unmounting those mounts instead of
-  * leaking them.
-  *
-+ * The dentry is unhashed before the mounts go so that no lookup finds
-+ * what they covered. The caller removes it for good afterwards.
-+ *
-  * The caller may hold dentry->d_inode->i_mutex.
-  */
- void __detach_mounts(struct dentry *dentry)
-@@ -1970,6 +1973,8 @@ void __detach_mounts(struct dentry *dentry)
- 	if (!mp)
- 		goto out_unlock;
+@@ -4721,6 +4721,13 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr)
+ 		 * propagation.
+ 		 */
+ 		namespace_lock();
++		/* invent_group_ids() walks the tree, only walk a mounted one */
++		if (!is_mounted(&mnt->mnt) ||
++		    ((mnt_has_parent(mnt) || !is_anon_ns(mnt->mnt_ns)) &&
++		     !check_mnt(mnt))) {
++			namespace_unlock();
++			return -EINVAL;
++		}
+ 		if (kattr->propagation == MS_SHARED) {
+ 			err = invent_group_ids(mnt, kattr->recurse);
+ 			if (err) {
+@@ -4733,6 +4740,7 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr)
+ 	err = -EINVAL;
+ 	lock_mount_hash();
  
-+	/* the name goes first, what covered it goes second */
-+	d_drop(dentry);
- 	event++;
- 	while (!hlist_empty(&mp->m_list)) {
- 		mnt = hlist_entry(mp->m_list.first, struct mount, mnt_mp_list);
++	/* Checked under namespace_sem already if the propagation changes. */
+ 	/* Ensure that this isn't anything purely vfs internal. */
+ 	if (!is_mounted(&mnt->mnt))
+ 		goto out;
 -- 
 2.53.0
 
