@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CF938DC44;
-	Sat, 17 Oct 2026 16:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1307D3A0E85;
+	Sat, 17 Oct 2026 16:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255141; cv=none; b=f3aDv/D0EsaZhLZOOxotgczJmTsfeBRFmXBLUyZ8oJmSzYD39tZodJ5M4Vf5Nww4gAl7vM6n1IurIqKnswhoDxGGNXt/lRMUjqSMvVkK3bOqlCZWf+/EVMigaKpjr1xGgKSGs3IzY8Gpe0cnVUjbrryPsiv6AF/XVSW05imDTOY=
+	t=1792255145; cv=none; b=j8wwY3SzMotqFpn4GmqRrHoq4foQ5itOa8rwNhwmv6DuOdXLd4LhlnJBl1eoB7UtLUNvE2fOa+YF3SUZ+bzSfNd1dB2P3dVCJWjKRybxH5huhmAyL9EHwM1x3nD0R3se5MtuC/voYuVFm+KY+SvNiI8dQXVafKhjgyE8xh4/76w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255141; c=relaxed/simple;
-	bh=E6+0wDA05NAAooL0S+u6ZYPsgudLGySnLO+RoNO22n0=;
+	s=arc-20240116; t=1792255145; c=relaxed/simple;
+	bh=bEGrByd/PySgmtsY+kgoKWcMU6NW/ozL/CCUkT432gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8xJMglUImVoYLfCDKknWmVeH/j04LK4XvPOUM4TxGy4IcXhHEqwiH8GhhsvB4TYLo1Xf/DAE37Gmw+r7b+DnKe0pdv9rruBZv+wfKhed/b31QJF2H2XusFjvzK8tt38TnBpTu6Fl5EuK65wsXM6LQeHHZur6P4geHdpFRfLtwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avGAGu3f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdE/wO1hZ6RIYd6bpISLMUyNNd7hlTUs9iHMOJ361tX9Z3Yt0Ys1IjiV6pIMIelSCrhmE7nIvftDrHvBaPxjMRTqUX44fTDCohUg7/0IuXxIHBRCokcxn/cJgkdC4jwY+Smh9kp0uuzbo+kSNhW0OCk4F5/o2IRTzNOj8RDt5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuKZUiyr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avGAGu3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144281F000C4;
-	Sat, 17 Oct 2026 16:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuKZUiyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B12B1F000C6;
+	Sat, 17 Oct 2026 16:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255140;
-	bh=rwUxn0ezVprzOXGqsHYb4ZvbBCxzcipsQ1+PfmKzBrI=;
+	s=korg; t=1792255143;
+	bh=sVS4+qU4LX71avK4eIetVzump6c2rGR0I48iVNwzX24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avGAGu3fpFoxCJ6SNLdevOwxEsrxsUojM1Flu48zJR2UF5VGpxlZ4fKo1OEsaSgz7
-	 +FGyOrdFxrVhCw5RavQm55gB9WTCbnZDWTgnH/gsMpoS5uGNy1fPUVt5idHuHup2uW
-	 qYviCXmcu0VRN4I4a5cLSsqOpSwaRaevaKbhFEPg=
+	b=ZuKZUiyrktqvN/gT646BskHIYZcRFVk3W+OXYY0KhZqwDUTpKkYRhaNyyyg4jfFPb
+	 8gjojse7pABaCYuC7DjYVyC+tIwJkACKVuEiIUOdqCcVSpR4IoAeW2vKSzrtBKKq4P
+	 zNtuQSmruZNHre269V1fW6sbHnzSyXNeaDEpXmYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 678/869] wifi: mt76: mt7996: hold dev->mt76.mutex while disabling tx worker in SER
-Date: Sat, 17 Oct 2026 17:58:39 +0200
-Message-ID: <20261017160054.365957873@linuxfoundation.org>
+Subject: [PATCH 6.12 679/869] wifi: ath12k: fix overreads in ath12k_wmi_process_csa_switch_count_event()
+Date: Sat, 17 Oct 2026 17:58:40 +0200
+Message-ID: <20261017160054.389242232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,49 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 6190db312b8230813f529f014b26247c6d9800d0 ]
+[ Upstream commit 878654eb78c6aa0ff585baf1376567c775ca28ec ]
 
-mt7996_mac_reset_work() parked the tx worker and disabled the RX/TX NAPIs
-before taking dev->mt76.mutex. mt76_worker_disable()/_enable() are plain
-kthread park/unpark, not refcounted, and __mt76_set_channel() toggles the
-same worker and the MT76_RESET bit under the mutex. An L1 SER racing a
-channel switch could therefore have the worker unparked and MT76_RESET
-cleared while the reset path resets the DMA rings, corrupting descriptors
-or tokens. Take the mutex before disabling the worker, as mt7915 does.
+There is no policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT, so
+the parse infrastructure does not enforce a minimum length for the event
+struct. Additionally, the num_vdevs field is taken directly from firmware
+and used as a loop bound over the vdev_ids array without checking that it
+fits within the TLV payload. Either condition can cause an out-of-bounds
+read.
 
-Fixes: 27015b6fbcca ("wifi: mt76: mt7996: enable full system reset support")
-Link: https://patch.msgid.link/20260724124813.3961474-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Add a TLV policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT so
+the parse infrastructure enforces a minimum length for the fixed-size event
+struct. Add a helper ath12k_wmi_tlv_data_len() to recover the payload
+length of a parsed TLV from the header preceding its data pointer. Use it
+in ath12k_wmi_process_csa_switch_count_event() to bound num_vdevs before
+the loop.
+
+Compile tested only.
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260724-ath12k_wmi_process_csa_switch_count_event-cleanup-v2-1-02a45d7246c0@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 24e0346ea3d88..89d8a22e967c3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1916,6 +1916,9 @@ void mt7996_mac_reset_work(struct work_struct *work)
- 		set_bit(MT76_RESET, &phy3->mt76->state);
- 		cancel_delayed_work_sync(&phy3->mt76->mac_work);
- 	}
-+
-+	mutex_lock(&dev->mt76.mutex);
-+
- 	mt76_worker_disable(&dev->mt76.tx_worker);
- 	mt76_for_each_q_rx(&dev->mt76, i) {
- 		if (mtk_wed_device_active(&dev->mt76.mmio.wed) &&
-@@ -1926,8 +1929,6 @@ void mt7996_mac_reset_work(struct work_struct *work)
- 	}
- 	napi_disable(&dev->mt76.tx_napi);
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 598a69f9e6df0..ca359eecb42a9 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -171,6 +171,8 @@ static const struct ath12k_wmi_tlv_policy ath12k_wmi_tlv_policies[] = {
+ 		.min_len = sizeof(struct ath12k_wmi_p2p_noa_info) },
+ 	[WMI_TAG_P2P_NOA_EVENT] = {
+ 		.min_len = sizeof(struct wmi_p2p_noa_event) },
++	[WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT] = {
++		.min_len = sizeof(struct ath12k_wmi_pdev_csa_event) },
+ };
  
--	mutex_lock(&dev->mt76.mutex);
--
- 	mt76_wr(dev, MT_MCU_INT_EVENT, MT_MCU_INT_EVENT_DMA_STOPPED);
+ static __le32 ath12k_wmi_tlv_hdr(u32 cmd, u32 len)
+@@ -384,6 +386,13 @@ ath12k_wmi_tlv_parse_alloc(struct ath12k_base *ab,
+ 	return tb;
+ }
  
- 	if (mt7996_wait_reset_state(dev, MT_MCU_CMD_RESET_DONE)) {
++static u32 ath12k_wmi_tlv_data_len(const void *data)
++{
++	const struct wmi_tlv *tlv = (const struct wmi_tlv *)data - 1;
++
++	return le32_get_bits(tlv->header, WMI_TLV_LEN);
++}
++
+ static int ath12k_wmi_cmd_send_nowait(struct ath12k_wmi_pdev *wmi, struct sk_buff *skb,
+ 				      u32 cmd_id)
+ {
+@@ -6735,6 +6744,8 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
+ 					  const struct ath12k_wmi_pdev_csa_event *ev,
+ 					  const u32 *vdev_ids)
+ {
++	u32 vdev_ids_len = ath12k_wmi_tlv_data_len(vdev_ids);
++	u32 num_vdevs = le32_to_cpu(ev->num_vdevs);
+ 	int i;
+ 	struct ath12k_vif *arvif;
+ 
+@@ -6742,8 +6753,14 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
+ 	if (ev->current_switch_count)
+ 		return;
+ 
++	if (num_vdevs > vdev_ids_len / sizeof(*vdev_ids)) {
++		ath12k_warn(ab, "csa switch count num_vdevs %u exceeds tlv array length %u\n",
++			    num_vdevs, vdev_ids_len);
++		return;
++	}
++
+ 	rcu_read_lock();
+-	for (i = 0; i < le32_to_cpu(ev->num_vdevs); i++) {
++	for (i = 0; i < num_vdevs; i++) {
+ 		arvif = ath12k_mac_get_arvif_by_vdev_id(ab, vdev_ids[i]);
+ 
+ 		if (!arvif) {
 -- 
 2.53.0
 
