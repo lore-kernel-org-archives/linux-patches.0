@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40F5384CED;
-	Sat, 17 Oct 2026 16:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D5C2C026C;
+	Sat, 17 Oct 2026 16:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254407; cv=none; b=h5WihNskl4yu6Ny7n2MBPAj0IgeBNHfJn1/BvxJeIwMXfwOP/nkbgjMwCT89lbmXiHGuTbv0B7Ao2dFrWJC9I/qLPgOmzQLhT6nJVA2IOLE9PKrhVTwPmsGuE5yuoZOCKRZ2RE0dRrTMiD+mch9f874dyOiSySd4uOxUvLKqPz8=
+	t=1792254411; cv=none; b=Yj/Xsdz/a054JwuYDuQvpX4bf1Quwn1eikHkjLQrClWDXitdSBflEcdrOHn5Vvhq1O/wbe4f/Io12HzUhdYpjdmajK9iOH6vSYYHeGvxqjzX995uFcfacpZ1rBoNndtNJ8FaVNVRveaW7rdssMPYVaJ7TG0kc4G4ru0wNqYD0N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254407; c=relaxed/simple;
-	bh=IElImc1xjP01/ULOzQXtk/tfQlSuepre7sqzuGznJpg=;
+	s=arc-20240116; t=1792254411; c=relaxed/simple;
+	bh=pPTaA3jZEQT2buL7G73hsk4+vyD+Wlxg+S9RBXSOnMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NP8KfCKfC8duRF9S09WxTAxiiN4/ot9dlx5Gylwgy6x06ZNMEESYPjAG8emyTJOprxXUIrZz/CGkE2BYUFUpW4MQ+alKeSiVuU+iGOcxmjwydaAgt1Mzq2cKjlHOm2C5HLcqgVXYdwNRM8slcKx+fs6MmIJeVsI3qqlJukWmJnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=107vdq6g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fbCfW/+ElPBk5FQzr9cvy2wwOX6aKdsL+7UhJZFqdM4vuA7VE9FWl7ohP2SkzKEUhE3P5qUroQsCIp50fTtt9AExLi75AI0DV6U2en9JnNXkH6yA6Nm4z6G5ZCqaMTAqQCU2mR5BA3UPhqsqP9GGtZpNMAmZpesF+VGWMnLf3y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq8UeKgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="107vdq6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0276D1F000C4;
-	Sat, 17 Oct 2026 16:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq8UeKgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1231F000C4;
+	Sat, 17 Oct 2026 16:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254406;
-	bh=yl3kqknNpQp4YbchvSLo9bcUiUSdatouqP0LXAxy4Ak=;
+	s=korg; t=1792254409;
+	bh=h8w5sI6/Qlaotq0JrB/x3tLRADF3d/MyVf5027TU8BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=107vdq6g2ke5cL6sUdGpzMwM6vZkV3zGprVPAoKkeLyRfVBc4Z6hwIuYP8ltjwl4E
-	 bJGdFKT7+O63NE20vn4hbdqI058uua4mBW9WSKoCJFP+Q2QebrLP6ChiMF6pVvRSjN
-	 WmqeR+7DlsCeAS3JwxKwWWk0G1RdS8mt0Fl4cBNY=
+	b=Tq8UeKgWT0qW0zmIhVH4wjtkZBQFkby0QKxeVRhoEV3u5Y3be7OQ7BOr2PoOFboMn
+	 bk/A/2c2O72RNET192UX8RZfcWvbSrXeC//iUs0TqUoXRrYRbzCNklzj9fCn0jE22l
+	 MefsEuIt/RvwSx3GQOsU415kV/wiseER4lRjxkEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 437/869] netfs: Use a folio_queue allocation and free functions
-Date: Sat, 17 Oct 2026 17:54:38 +0200
-Message-ID: <20261017160048.342744268@linuxfoundation.org>
+Subject: [PATCH 6.12 438/869] netfs: Add a tracepoint to log the lifespan of folio_queue structs
+Date: Sat, 17 Oct 2026 17:54:39 +0200
+Message-ID: <20261017160048.371172741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,14 +56,15 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit eb1181594417dafad0f75808ead71f6d5170c1ea ]
+[ Upstream commit aabcabf2746062253565b33aa3f8d25999a5ac01 ]
 
-Provide and use folio_queue allocation and free functions to combine the
-allocation, initialisation and stat (un)accounting steps that are repeated
-in several places.
+Add a tracepoint to log the lifespan of folio_queue structs.  For tracing
+illustrative purposes, folio_queues are tagged with the debug ID of
+whatever they're related to (typically a netfs_io_request) and a debug ID
+of their own.
 
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241216204124.3752367-4-dhowells@redhat.com
+Link: https://lore.kernel.org/r/20241216204124.3752367-5-dhowells@redhat.com
 cc: Jeff Layton <jlayton@kernel.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
@@ -71,141 +72,398 @@ Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: dbd6f56d975b ("netfs: Fix netfs_create_write_req() to handle async cache object creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 12 +++---------
- fs/netfs/misc.c          | 38 ++++++++++++++++++++++++++++++++++----
- include/linux/netfs.h    |  5 +++++
- 3 files changed, 42 insertions(+), 13 deletions(-)
+ fs/netfs/buffered_read.c     | 10 ++++++---
+ fs/netfs/internal.h          |  3 ++-
+ fs/netfs/misc.c              | 31 +++++++++++++++++----------
+ fs/netfs/read_collect.c      |  8 +++++--
+ fs/netfs/write_issue.c       |  2 +-
+ fs/smb/client/smb2ops.c      |  2 +-
+ include/linux/folio_queue.h  | 12 ++++++++---
+ include/linux/netfs.h        |  6 ++++--
+ include/trace/events/netfs.h | 41 ++++++++++++++++++++++++++++++++++--
+ lib/kunit_iov_iter.c         |  4 ++--
+ 10 files changed, 91 insertions(+), 28 deletions(-)
 
 diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index ec78ad094cf4a..e0822ecabb342 100644
+index e0822ecabb342..3aa49f6ddde6d 100644
 --- a/fs/netfs/buffered_read.c
 +++ b/fs/netfs/buffered_read.c
-@@ -131,11 +131,9 @@ static ssize_t netfs_prepare_read_iterator(struct netfs_io_subrequest *subreq)
+@@ -131,7 +131,8 @@ static ssize_t netfs_prepare_read_iterator(struct netfs_io_subrequest *subreq)
  			struct folio_queue *tail = rreq->buffer_tail, *new;
  			size_t added;
  
--			new = kmalloc(sizeof(*new), GFP_NOFS);
-+			new = netfs_folioq_alloc(GFP_NOFS);
+-			new = netfs_folioq_alloc(GFP_NOFS);
++			new = netfs_folioq_alloc(rreq->debug_id, GFP_NOFS,
++						 netfs_trace_folioq_alloc_read_prep);
  			if (!new)
  				return -ENOMEM;
--			netfs_stat(&netfs_n_folioq);
--			folioq_init(new);
  			new->prev = tail;
- 			tail->next = new;
- 			rreq->buffer_tail = new;
-@@ -363,11 +361,9 @@ static int netfs_prime_buffer(struct netfs_io_request *rreq)
+@@ -361,9 +362,11 @@ static int netfs_prime_buffer(struct netfs_io_request *rreq)
  	struct folio_batch put_batch;
  	size_t added;
  
--	folioq = kmalloc(sizeof(*folioq), GFP_KERNEL);
-+	folioq = netfs_folioq_alloc(GFP_KERNEL);
+-	folioq = netfs_folioq_alloc(GFP_KERNEL);
++	folioq = netfs_folioq_alloc(rreq->debug_id, GFP_KERNEL,
++				    netfs_trace_folioq_alloc_read_prime);
  	if (!folioq)
  		return -ENOMEM;
--	netfs_stat(&netfs_n_folioq);
--	folioq_init(folioq);
++
  	rreq->buffer = folioq;
  	rreq->buffer_tail = folioq;
  	rreq->submitted = rreq->start;
-@@ -440,12 +436,10 @@ static int netfs_create_singular_buffer(struct netfs_io_request *rreq, struct fo
+@@ -436,7 +439,8 @@ static int netfs_create_singular_buffer(struct netfs_io_request *rreq, struct fo
  {
  	struct folio_queue *folioq;
  
--	folioq = kmalloc(sizeof(*folioq), GFP_KERNEL);
-+	folioq = netfs_folioq_alloc(GFP_KERNEL);
+-	folioq = netfs_folioq_alloc(GFP_KERNEL);
++	folioq = netfs_folioq_alloc(rreq->debug_id, GFP_KERNEL,
++				    netfs_trace_folioq_alloc_read_sing);
  	if (!folioq)
  		return -ENOMEM;
  
--	netfs_stat(&netfs_n_folioq);
--	folioq_init(folioq);
- 	folioq_append(folioq, folio);
- 	BUG_ON(folioq_folio(folioq, 0) != folio);
- 	BUG_ON(folioq_folio_order(folioq, 0) != folio_order(folio));
+diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
+index 668c4b3f78134..b0c7576951c25 100644
+--- a/fs/netfs/internal.h
++++ b/fs/netfs/internal.h
+@@ -58,7 +58,8 @@ static inline void netfs_proc_del_rreq(struct netfs_io_request *rreq) {}
+ /*
+  * misc.c
+  */
+-struct folio_queue *netfs_buffer_make_space(struct netfs_io_request *rreq);
++struct folio_queue *netfs_buffer_make_space(struct netfs_io_request *rreq,
++					    enum netfs_folioq_trace trace);
+ int netfs_buffer_append_folio(struct netfs_io_request *rreq, struct folio *folio,
+ 			      bool needs_put);
+ struct folio_queue *netfs_delete_buffer_head(struct netfs_io_request *wreq);
 diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 8bdacbf15226c..fbd239e6d3114 100644
+index fbd239e6d3114..71a0d553f4d43 100644
 --- a/fs/netfs/misc.c
 +++ b/fs/netfs/misc.c
-@@ -9,6 +9,38 @@
- #include <linux/rmap.h>
- #include "internal.h"
+@@ -11,18 +11,25 @@
  
-+/**
-+ * netfs_folioq_alloc - Allocate a folio_queue struct
-+ * @gfp: Allocation constraints
-+ *
-+ * Allocate, initialise and account the folio_queue struct.
-+ */
-+struct folio_queue *netfs_folioq_alloc(gfp_t gfp)
-+{
-+	struct folio_queue *fq;
-+
-+	fq = kmalloc(sizeof(*fq), gfp);
-+	if (fq) {
-+		netfs_stat(&netfs_n_folioq);
-+		folioq_init(fq);
-+	}
-+	return fq;
-+}
-+EXPORT_SYMBOL(netfs_folioq_alloc);
-+
-+/**
-+ * netfs_folioq_free - Free a folio_queue struct
-+ * @folioq: The object to free
-+ *
-+ * Free and unaccount the folio_queue struct.
-+ */
-+void netfs_folioq_free(struct folio_queue *folioq)
-+{
-+	netfs_stat_d(&netfs_n_folioq);
-+	kfree(folioq);
-+}
-+EXPORT_SYMBOL(netfs_folioq_free);
-+
+ /**
+  * netfs_folioq_alloc - Allocate a folio_queue struct
++ * @rreq_id: Associated debugging ID for tracing purposes
+  * @gfp: Allocation constraints
++ * @trace: Trace tag to indicate the purpose of the allocation
+  *
+- * Allocate, initialise and account the folio_queue struct.
++ * Allocate, initialise and account the folio_queue struct and log a trace line
++ * to mark the allocation.
+  */
+-struct folio_queue *netfs_folioq_alloc(gfp_t gfp)
++struct folio_queue *netfs_folioq_alloc(unsigned int rreq_id, gfp_t gfp,
++				       unsigned int /*enum netfs_folioq_trace*/ trace)
+ {
++	static atomic_t debug_ids;
+ 	struct folio_queue *fq;
+ 
+ 	fq = kmalloc(sizeof(*fq), gfp);
+ 	if (fq) {
+ 		netfs_stat(&netfs_n_folioq);
+-		folioq_init(fq);
++		folioq_init(fq, rreq_id);
++		fq->debug_id = atomic_inc_return(&debug_ids);
++		trace_netfs_folioq(fq, trace);
+ 	}
+ 	return fq;
+ }
+@@ -31,11 +38,14 @@ EXPORT_SYMBOL(netfs_folioq_alloc);
+ /**
+  * netfs_folioq_free - Free a folio_queue struct
+  * @folioq: The object to free
++ * @trace: Trace tag to indicate which free
+  *
+  * Free and unaccount the folio_queue struct.
+  */
+-void netfs_folioq_free(struct folio_queue *folioq)
++void netfs_folioq_free(struct folio_queue *folioq,
++		       unsigned int /*enum netfs_trace_folioq*/ trace)
+ {
++	trace_netfs_folioq(folioq, trace);
+ 	netfs_stat_d(&netfs_n_folioq);
+ 	kfree(folioq);
+ }
+@@ -44,7 +54,8 @@ EXPORT_SYMBOL(netfs_folioq_free);
  /*
   * Make sure there's space in the rolling queue.
   */
-@@ -88,8 +120,7 @@ struct folio_queue *netfs_delete_buffer_head(struct netfs_io_request *wreq)
+-struct folio_queue *netfs_buffer_make_space(struct netfs_io_request *rreq)
++struct folio_queue *netfs_buffer_make_space(struct netfs_io_request *rreq,
++					    enum netfs_folioq_trace trace)
+ {
+ 	struct folio_queue *tail = rreq->buffer_tail, *prev;
+ 	unsigned int prev_nr_slots = 0;
+@@ -60,11 +71,9 @@ struct folio_queue *netfs_buffer_make_space(struct netfs_io_request *rreq)
+ 		prev_nr_slots = folioq_nr_slots(tail);
+ 	}
+ 
+-	tail = kmalloc(sizeof(*tail), GFP_NOFS);
++	tail = netfs_folioq_alloc(rreq->debug_id, GFP_NOFS, trace);
+ 	if (!tail)
+ 		return ERR_PTR(-ENOMEM);
+-	netfs_stat(&netfs_n_folioq);
+-	folioq_init(tail);
+ 	tail->prev = prev;
+ 	if (prev)
+ 		/* [!] NOTE: After we set prev->next, the consumer is entirely
+@@ -99,7 +108,7 @@ int netfs_buffer_append_folio(struct netfs_io_request *rreq, struct folio *folio
+ 	struct folio_queue *tail;
+ 	unsigned int slot, order = folio_order(folio);
+ 
+-	tail = netfs_buffer_make_space(rreq);
++	tail = netfs_buffer_make_space(rreq, netfs_trace_folioq_alloc_append_folio);
+ 	if (IS_ERR(tail))
+ 		return PTR_ERR(tail);
+ 
+@@ -120,7 +129,7 @@ struct folio_queue *netfs_delete_buffer_head(struct netfs_io_request *wreq)
  
  	if (next)
  		next->prev = NULL;
--	netfs_stat_d(&netfs_n_folioq);
--	kfree(head);
-+	netfs_folioq_free(head);
+-	netfs_folioq_free(head);
++	netfs_folioq_free(head, netfs_trace_folioq_delete);
  	wreq->buffer = next;
  	return next;
  }
-@@ -112,8 +143,7 @@ void netfs_clear_buffer(struct netfs_io_request *rreq)
+@@ -143,7 +152,7 @@ void netfs_clear_buffer(struct netfs_io_request *rreq)
  				folio_put(folio);
  			}
  		}
--		netfs_stat_d(&netfs_n_folioq);
--		kfree(p);
-+		netfs_folioq_free(p);
+-		netfs_folioq_free(p);
++		netfs_folioq_free(p, netfs_trace_folioq_clear);
  	}
  }
  
+diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
+index 782d7b7301964..c420c231f8d05 100644
+--- a/fs/netfs/read_collect.c
++++ b/fs/netfs/read_collect.c
+@@ -103,6 +103,7 @@ static bool netfs_consume_read_data(struct netfs_io_subrequest *subreq, bool was
+ 		 subreq->transferred, subreq->len))
+ 		subreq->transferred = subreq->len;
+ 
++	trace_netfs_folioq(folioq, netfs_trace_folioq_read_progress);
+ next_folio:
+ 	fsize = PAGE_SIZE << subreq->curr_folio_order;
+ 	fpos = round_down(subreq->start + subreq->consumed, fsize);
+@@ -119,9 +120,11 @@ static bool netfs_consume_read_data(struct netfs_io_subrequest *subreq, bool was
+ 		if (folioq) {
+ 			struct folio *folio = folioq_folio(folioq, slot);
+ 
+-			pr_err("folioq: orders=%02x%02x%02x%02x\n",
++			pr_err("folioq: fq=%x orders=%02x%02x%02x%02x %px\n",
++			       folioq->debug_id,
+ 			       folioq->orders[0], folioq->orders[1],
+-			       folioq->orders[2], folioq->orders[3]);
++			       folioq->orders[2], folioq->orders[3],
++			       folioq);
+ 			if (folio)
+ 				pr_err("folio: %llx-%llx ix=%llx o=%u qo=%u\n",
+ 				       fpos, fend - 1, folio_pos(folio), folio_order(folio),
+@@ -222,6 +225,7 @@ static bool netfs_consume_read_data(struct netfs_io_subrequest *subreq, bool was
+ 			slot = 0;
+ 			folioq = folioq->next;
+ 			subreq->curr_folioq = folioq;
++			trace_netfs_folioq(folioq, netfs_trace_folioq_read_progress);
+ 		}
+ 		subreq->curr_folioq_slot = slot;
+ 		if (folioq && folioq_folio(folioq, slot))
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 7431c0a4252c4..d1fa5851a7b29 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -161,7 +161,7 @@ static void netfs_prepare_write(struct netfs_io_request *wreq,
+ 	 */
+ 	if (iov_iter_is_folioq(wreq_iter) &&
+ 	    wreq_iter->folioq_slot >= folioq_nr_slots(wreq_iter->folioq)) {
+-		netfs_buffer_make_space(wreq);
++		netfs_buffer_make_space(wreq, netfs_trace_folioq_prep_write);
+ 	}
+ 
+ 	subreq = netfs_alloc_subrequest(wreq);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 95eff9e7c660c..3bf0b25feed9e 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4713,7 +4713,7 @@ static struct folio_queue *cifs_alloc_folioq_buffer(ssize_t size)
+ 			p = kmalloc(sizeof(*p), GFP_NOFS);
+ 			if (!p)
+ 				goto nomem;
+-			folioq_init(p);
++			folioq_init(p, 0);
+ 			if (tail) {
+ 				tail->next = p;
+ 				p->prev = tail;
+diff --git a/include/linux/folio_queue.h b/include/linux/folio_queue.h
+index 3abe614ef5f06..4d3f8074c137a 100644
+--- a/include/linux/folio_queue.h
++++ b/include/linux/folio_queue.h
+@@ -37,16 +37,20 @@ struct folio_queue {
+ #if PAGEVEC_SIZE > BITS_PER_LONG
+ #error marks is not big enough
+ #endif
++	unsigned int		rreq_id;
++	unsigned int		debug_id;
+ };
+ 
+ /**
+  * folioq_init - Initialise a folio queue segment
+  * @folioq: The segment to initialise
++ * @rreq_id: The request identifier to use in tracelines.
+  *
+- * Initialise a folio queue segment.  Note that the folio pointers are
+- * left uninitialised.
++ * Initialise a folio queue segment and set an identifier to be used in traces.
++ *
++ * Note that the folio pointers are left uninitialised.
+  */
+-static inline void folioq_init(struct folio_queue *folioq)
++static inline void folioq_init(struct folio_queue *folioq, unsigned int rreq_id)
+ {
+ 	folio_batch_init(&folioq->vec);
+ 	folioq->next = NULL;
+@@ -54,6 +58,8 @@ static inline void folioq_init(struct folio_queue *folioq)
+ 	folioq->marks = 0;
+ 	folioq->marks2 = 0;
+ 	folioq->marks3 = 0;
++	folioq->rreq_id = rreq_id;
++	folioq->debug_id = 0;
+ }
+ 
+ /**
 diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index f8e0d9fa745a2..5180292bd2d10 100644
+index 5180292bd2d10..2704d3157a165 100644
 --- a/include/linux/netfs.h
 +++ b/include/linux/netfs.h
-@@ -21,6 +21,7 @@
- 
- enum netfs_sreq_ref_trace;
- typedef struct mempool_s mempool_t;
-+struct folio_queue;
- 
- /**
-  * folio_start_private_2 - Start an fscache write on a folio.  [DEPRECATED]
-@@ -455,6 +456,10 @@ void netfs_end_io_write(struct inode *inode);
- int netfs_start_io_direct(struct inode *inode);
+@@ -457,8 +457,10 @@ int netfs_start_io_direct(struct inode *inode);
  void netfs_end_io_direct(struct inode *inode);
  
-+/* Miscellaneous APIs. */
-+struct folio_queue *netfs_folioq_alloc(gfp_t gfp);
-+void netfs_folioq_free(struct folio_queue *folioq);
-+
+ /* Miscellaneous APIs. */
+-struct folio_queue *netfs_folioq_alloc(gfp_t gfp);
+-void netfs_folioq_free(struct folio_queue *folioq);
++struct folio_queue *netfs_folioq_alloc(unsigned int rreq_id, gfp_t gfp,
++				       unsigned int trace /*enum netfs_folioq_trace*/);
++void netfs_folioq_free(struct folio_queue *folioq,
++		       unsigned int trace /*enum netfs_trace_folioq*/);
+ 
  /**
   * netfs_inode - Get the netfs inode context from the inode
-  * @inode: The inode to query
+diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
+index 59452f12dcbee..4abb38b9e9488 100644
+--- a/include/trace/events/netfs.h
++++ b/include/trace/events/netfs.h
+@@ -199,6 +199,16 @@
+ 	EM(netfs_trace_donate_to_next,		"to-next")	\
+ 	E_(netfs_trace_donate_to_deferred_next,	"defer-next")
+ 
++#define netfs_folioq_traces					\
++	EM(netfs_trace_folioq_alloc_append_folio, "alloc-apf")	\
++	EM(netfs_trace_folioq_alloc_read_prep,	"alloc-r-prep")	\
++	EM(netfs_trace_folioq_alloc_read_prime,	"alloc-r-prime") \
++	EM(netfs_trace_folioq_alloc_read_sing,	"alloc-r-sing")	\
++	EM(netfs_trace_folioq_clear,		"clear")	\
++	EM(netfs_trace_folioq_delete,		"delete")	\
++	EM(netfs_trace_folioq_prep_write,	"prep-wr")	\
++	E_(netfs_trace_folioq_read_progress,	"r-progress")
++
+ #ifndef __NETFS_DECLARE_TRACE_ENUMS_ONCE_ONLY
+ #define __NETFS_DECLARE_TRACE_ENUMS_ONCE_ONLY
+ 
+@@ -217,6 +227,7 @@ enum netfs_sreq_ref_trace { netfs_sreq_ref_traces } __mode(byte);
+ enum netfs_folio_trace { netfs_folio_traces } __mode(byte);
+ enum netfs_collect_contig_trace { netfs_collect_contig_traces } __mode(byte);
+ enum netfs_donate_trace { netfs_donate_traces } __mode(byte);
++enum netfs_folioq_trace { netfs_folioq_traces } __mode(byte);
+ 
+ #endif
+ 
+@@ -240,6 +251,7 @@ netfs_sreq_ref_traces;
+ netfs_folio_traces;
+ netfs_collect_contig_traces;
+ netfs_donate_traces;
++netfs_folioq_traces;
+ 
+ /*
+  * Now redefine the EM() and E_() macros to map the enums to the strings that
+@@ -325,6 +337,7 @@ TRACE_EVENT(netfs_sreq,
+ 		    __field(unsigned short,		flags)
+ 		    __field(enum netfs_io_source,	source)
+ 		    __field(enum netfs_sreq_trace,	what)
++		    __field(u8,				slot)
+ 		    __field(size_t,			len)
+ 		    __field(size_t,			transferred)
+ 		    __field(loff_t,			start)
+@@ -340,15 +353,16 @@ TRACE_EVENT(netfs_sreq,
+ 		    __entry->len	= sreq->len;
+ 		    __entry->transferred = sreq->transferred;
+ 		    __entry->start	= sreq->start;
++		    __entry->slot	= sreq->curr_folioq_slot;
+ 			   ),
+ 
+-	    TP_printk("R=%08x[%x] %s %s f=%02x s=%llx %zx/%zx e=%d",
++	    TP_printk("R=%08x[%x] %s %s f=%02x s=%llx %zx/%zx s=%u e=%d",
+ 		      __entry->rreq, __entry->index,
+ 		      __print_symbolic(__entry->source, netfs_sreq_sources),
+ 		      __print_symbolic(__entry->what, netfs_sreq_traces),
+ 		      __entry->flags,
+ 		      __entry->start, __entry->transferred, __entry->len,
+-		      __entry->error)
++		      __entry->slot, __entry->error)
+ 	    );
+ 
+ TRACE_EVENT(netfs_failure,
+@@ -753,6 +767,29 @@ TRACE_EVENT(netfs_donate,
+ 		      __entry->amount)
+ 	    );
+ 
++TRACE_EVENT(netfs_folioq,
++	    TP_PROTO(const struct folio_queue *fq,
++		     enum netfs_folioq_trace trace),
++
++	    TP_ARGS(fq, trace),
++
++	    TP_STRUCT__entry(
++		    __field(unsigned int,		rreq)
++		    __field(unsigned int,		id)
++		    __field(enum netfs_folioq_trace,	trace)
++			     ),
++
++	    TP_fast_assign(
++		    __entry->rreq	= fq ? fq->rreq_id : 0;
++		    __entry->id		= fq ? fq->debug_id : 0;
++		    __entry->trace	= trace;
++			   ),
++
++	    TP_printk("R=%08x fq=%x %s",
++		      __entry->rreq, __entry->id,
++		      __print_symbolic(__entry->trace, netfs_folioq_traces))
++	    );
++
+ #undef EM
+ #undef E_
+ #endif /* _TRACE_NETFS_H */
+diff --git a/lib/kunit_iov_iter.c b/lib/kunit_iov_iter.c
+index 13e15687675a8..10a560feb66e2 100644
+--- a/lib/kunit_iov_iter.c
++++ b/lib/kunit_iov_iter.c
+@@ -392,7 +392,7 @@ static void __init iov_kunit_load_folioq(struct kunit *test,
+ 		if (folioq_full(p)) {
+ 			p->next = kzalloc(sizeof(struct folio_queue), GFP_KERNEL);
+ 			KUNIT_ASSERT_NOT_ERR_OR_NULL(test, p->next);
+-			folioq_init(p->next);
++			folioq_init(p->next, 0);
+ 			p->next->prev = p;
+ 			p = p->next;
+ 		}
+@@ -409,7 +409,7 @@ static struct folio_queue *iov_kunit_create_folioq(struct kunit *test)
+ 	folioq = kzalloc(sizeof(struct folio_queue), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, folioq);
+ 	kunit_add_action_or_reset(test, iov_kunit_destroy_folioq, folioq);
+-	folioq_init(folioq);
++	folioq_init(folioq, 0);
+ 	return folioq;
+ }
+ 
 -- 
 2.53.0
 
