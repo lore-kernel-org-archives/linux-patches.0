@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECC12EA15C;
-	Sat, 17 Oct 2026 17:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B362394470;
+	Sat, 17 Oct 2026 17:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257586; cv=none; b=u1MGQShztmU8lh7E9uSwmxyCBX7qVoI3oXJAMkfEApf5EXgjFebfFdiz7O6o/KTIRk1a4J5nb7VwVx4T/hzwkk7jbkyqdwdW9o4m83wBShwV0LTNKbEJpRNX10BUyt+IYh+/gEvms7SNPOmWVEmlymyUQrfoYoi8SNNLrBTkSdo=
+	t=1792257589; cv=none; b=E0eoIUK4ReTVC3ES08szxT23rMAk32WRheVwPkY+ok5azfeZ0rUlPr8bS5qmhNzjNsMw5jRe/T3Vr/6Pl2PS4l1g8RJxqTlnGzCcCOGI+YufksSfXzqSbE7M04LmNJclkXYHSPM9oRnnvd3SW8Tbji43SMt1EVMAZf+wcZgfhEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257586; c=relaxed/simple;
-	bh=3HDFf3ezsz4ILQ9uJu5ZSrK6qRg47FYNLWoui+rUBBI=;
+	s=arc-20240116; t=1792257589; c=relaxed/simple;
+	bh=+lHZsH7jY64M1K3iqfmQjE0rnzeJBoimDD1hRjPHNz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B72987lj83DSzCbyeJVlayo0vCsJtGNc1OhWAMFQieFD9UKr6DyhBI3xVZRBYhVRmIRWBnEHdrsORLG6wYyjWylc+1G19E/2SccqSZtKqJf3PyNazjW8S2D1UmMZaYXXHdJKVEryzJmdXe6aFbn+BEHvD4n7NHK+e2PW3y/k6Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prN6phq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iBuzC9F2TJVeHXvKzW3lEuxu30aQ0SvuJFaRNE27FsxAjb3ly+3pr+3oDa+IxAa3G6rr6fXIuEvrsU7gTBpqzVeXpQMdcZ/T5nne9CNDSgnJA80V8Nd6+jDk5w52+GGFpnPGYf2X2VVlliRDP5X3W3gmUB4SpEanoED5c3oz/38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrcVaGN8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prN6phq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CE71F000C5;
-	Sat, 17 Oct 2026 17:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrcVaGN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833091F000C4;
+	Sat, 17 Oct 2026 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257585;
-	bh=ZTOI+/Bmr32Iq2UIFBqYpbGgz3a6ssam4qytNhJJOuA=;
+	s=korg; t=1792257588;
+	bh=NJvNkF9CjUMR5NWL6fKT1PF/U7prUZ4YO+BJmcYQBgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=prN6phq7xOoXyoxs27OuQ08tQyffwFIDKxpELlGswKK7FV4rk+HLS4lbHZdRvq8Ms
-	 DMPajfOPI4/BMQa62dCGJxeDyCybw9/Vj9ohrA9zewuwHCzdwsw3K0+SgRkITfugwM
-	 saDCxXTuIeXXlTVRWx0AhODYrJZFjxff/56NQ/uU=
+	b=OrcVaGN8UUOG0erTswqXaDBJq2evNfJYoqzOsy8t4GLMayoUPGxlgkMV8OsGaZ5CC
+	 hqE6NZhOp2KIRTCKXpC9A9vmC4Qr/P07j1FjgX9JtbjV9E4G2OHIo5B/CEPOogUggs
+	 YxhuZMdF46fZm3/dK3/FceIIpi00CvFn+JQ6mxPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
 	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0605/1674] scsi: ufs: core: Add debug log for MCQ command timeout
-Date: Sat, 17 Oct 2026 17:47:57 +0200
-Message-ID: <20261017160446.612710054@linuxfoundation.org>
+Subject: [PATCH 6.6 0606/1674] scsi: ufs: core: Add a comment block above ufshcd_mcq_compl_all_cqes_lock()
+Date: Sat, 17 Oct 2026 17:47:58 +0200
+Message-ID: <20261017160446.637952344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 3abe4113e784b4a1135fe0e89828afecbfebf862 ]
+[ Upstream commit 1373df88d53594a32534fd8960c51d1d09be8ecb ]
 
-It is difficult to debug situations where an MCQ command timeout occurs,
-the corresponding CQ tag response is received, but the request is not
-completed.  Add a one-line log to indicate when the CQ entry is abnormal.
+Document the aspects of ufshcd_mcq_compl_all_cqes_lock() that are
+nontrivial in a comment block above this function.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260210070837.1820710-3-peter.wang@mediatek.com
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20260401202506.1445324-2-bvanassche@acm.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 375f3a5691dd ("scsi: ufs: core: Avoid unsafe MMIO reads in ufshcd_mcq_compl_all_cqes_lock()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ufs/core/ufs-mcq.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index 90314980deed1..846d4c3eb3923 100644
+index 846d4c3eb3923..121601201fcd2 100644
 --- a/drivers/ufs/core/ufs-mcq.c
 +++ b/drivers/ufs/core/ufs-mcq.c
-@@ -280,6 +280,8 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
- 		ufshcd_compl_one_cqe(hba, tag, cqe);
- 		/* After processed the cqe, mark it empty (invalid) entry */
- 		cqe->command_desc_base_addr = 0;
-+	} else {
-+		dev_err(hba->dev, "Abnormal CQ entry!\n");
+@@ -285,6 +285,14 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
  	}
  }
  
++/*
++ * This function is called from the UFS error handler with the UFS host
++ * controller disabled (HCE = 0). Reading host controller registers, e.g. the
++ * CQ tail pointer (CQTPy), may not be safe with the host controller disabled.
++ * Hence, iterate over all completion queue entries. This won't result in
++ * double completions because ufshcd_mcq_process_cqe() clears a CQE after it
++ * has been processed.
++ */
+ void ufshcd_mcq_compl_all_cqes_lock(struct ufs_hba *hba,
+ 				    struct ufs_hw_queue *hwq)
+ {
 -- 
 2.53.0
 
