@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3063A1E96;
-	Sat, 17 Oct 2026 17:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5EA1AAE28;
+	Sat, 17 Oct 2026 17:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257720; cv=none; b=A3pgt+Tg087iWGT++R1wbrB9MMyr7mrbp7a9TBgpsKBOB8L7Hsen9mYG5tagFoPsFJd15w3mV+n9RK8qEDDcBZs+6BEXEf+3FZMIBd/HBildWVUWKb8632x4FjloN3Rqhj0C3BNgcNYhBjhRl0KXAz5ORFsOAmvORNJdGwHDQcw=
+	t=1792257722; cv=none; b=pwxreICmQncpHYrAQG7bHV9HHWjMk56npB52WSICzVI5Y5w2Iz3LX0imZHIo30ioy9zrijhjnbsmv4g8xuPy+mv2FuSfEU1tLXcMDBjKc8Hu2H5b+0WGzdt6xM/xk55W3m7DK0JXtowkCObjZdH01Idh/e1e+XlXz5T+P79EZbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257720; c=relaxed/simple;
-	bh=IDF4cpgpEjO3CZfDFqP47HJv8hslYnEvQli6iIlJyvs=;
+	s=arc-20240116; t=1792257722; c=relaxed/simple;
+	bh=U1ub3M7PetB/HUKUZl3YRyhK35b+2GT6kvBjvofz/Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgtcRWxkc7EstYLLuAqyrVvrFtDEvDtiM4Ihs6dcqq1iK23DAg5nV3dgstKtUti7vdwpleaWR8uIhTHr3hN2sw/M145kwgdXMvVQWKoKtWZJZtnK2BJEVxPVYI/dWclvyl+nCcYCFQEASQZacizEDa9cuNrfj3mJIUyl98SQZu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg5KM8qC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XJHmRCPHAgF4fEOuoA6admKTyyrvdnfPxvveGpJKZJKe/dYKrxP7VbtpoMVDHyGENwrIFDxZlblYYL0ZPImCWkm69q29EjPcmVmPGRLZ3VC5MxSv6gZ9NJc/FPyjreED95AaSk1n8t6OZeHos6Qd0VL9iJ+Qkiw0LdCKdOtvlkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enrYZHSM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg5KM8qC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770C81F000C4;
-	Sat, 17 Oct 2026 17:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enrYZHSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF191F000C4;
+	Sat, 17 Oct 2026 17:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257718;
-	bh=bR3D+KoeiMZdvAmCMhfiivqQnfvJjzjQZ506cDBafJo=;
+	s=korg; t=1792257721;
+	bh=Ri2Ps0r0Fr7F2aiTvXhVlHo8ouye6NCBSBs9Ld2caz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zg5KM8qCcOvx5XA3LOrjHjW5EhvHBMR7AqV5NPQ5I1O0nmZGj7mKKOYGjvq28bSZL
-	 RzF/b3sWdfcfGI0S1WXzD9usQQ5hnwE/HMSVSS5xInrsCcLlukQYU5A37s3i0H4ClP
-	 w0v1v2g0hh5mGKUJEsdZwNdmXpyMYtkH1VXjMoWI=
+	b=enrYZHSMQlJd25vLRpCeKdl44CXCETjZY+bf7MdbAcrLhSBAWix0CHGwE1qm1VApD
+	 d1+trR+df+VlQrvNsK169BoYUZT2T/DEV0hRStj4Vsl44AhePFtJJgcvLxVB7Q9yT9
+	 QVYG9S4HtaGwt9twiKYQJuH84aybBv1Zpru9l2ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@intel.com>,
-	David Rientjes <rientjes@google.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Zac Ecob <zacecob@protonmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0647/1674] mm, slub: avoid zeroing kmalloc redzone
-Date: Sat, 17 Oct 2026 17:48:39 +0200
-Message-ID: <20261017160447.713934161@linuxfoundation.org>
+Subject: [PATCH 6.6 0648/1674] bpf: Fix a sdiv overflow issue
+Date: Sat, 17 Oct 2026 17:48:40 +0200
+Message-ID: <20261017160447.741249133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,203 +53,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 59090e479ac78ae18facd4c58eb332562a23020e ]
+[ Upstream commit 7dd34d7b7dcf9309fc6224caf4dd5b35bedddcb7 ]
 
-Since commit 946fa0dbf2d8 ("mm/slub: extend redzone check to extra
-allocated kmalloc space than requested"), setting orig_size treats
-the wasted space (object_size - orig_size) as a redzone. However with
-init_on_free=1 we clear the full object->size, including the redzone.
+Zac Ecob reported a problem where a bpf program may cause kernel crash due
+to the following error:
+  Oops: divide error: 0000 [#1] PREEMPT SMP KASAN PTI
 
-Additionally we clear the object metadata, including the stored orig_size,
-making it zero, which makes check_object() treat the whole object as a
-redzone.
+The failure is due to the below signed divide:
+  LLONG_MIN/-1 where LLONG_MIN equals to -9,223,372,036,854,775,808.
+LLONG_MIN/-1 is supposed to give a positive number 9,223,372,036,854,775,808,
+but it is impossible since for 64-bit system, the maximum positive
+number is 9,223,372,036,854,775,807. On x86_64, LLONG_MIN/-1 will
+cause a kernel exception. On arm64, the result for LLONG_MIN/-1 is
+LLONG_MIN.
 
-These issues lead to the following BUG report with "slub_debug=FUZ
-init_on_free=1":
+Further investigation found all the following sdiv/smod cases may trigger
+an exception when bpf program is running on x86_64 platform:
+  - LLONG_MIN/-1 for 64bit operation
+  - INT_MIN/-1 for 32bit operation
+  - LLONG_MIN%-1 for 64bit operation
+  - INT_MIN%-1 for 32bit operation
+where -1 can be an immediate or in a register.
 
-[    0.000000] =============================================================================
-[    0.000000] BUG kmalloc-8 (Not tainted): kmalloc Redzone overwritten
-[    0.000000] -----------------------------------------------------------------------------
-[    0.000000]
-[    0.000000] 0xffff000010032858-0xffff00001003285f @offset=2136. First byte 0x0 instead of 0xcc
-[    0.000000] FIX kmalloc-8: Restoring kmalloc Redzone 0xffff000010032858-0xffff00001003285f=0xcc
-[    0.000000] Slab 0xfffffdffc0400c80 objects=36 used=23 fp=0xffff000010032a18 flags=0x3fffe0000000200(workingset|node=0|zone=0|lastcpupid=0x1ffff)
-[    0.000000] Object 0xffff000010032858 @offset=2136 fp=0xffff0000100328c8
-[    0.000000]
-[    0.000000] Redzone  ffff000010032850: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Object   ffff000010032858: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Redzone  ffff000010032860: cc cc cc cc cc cc cc cc                          ........
-[    0.000000] Padding  ffff0000100328b4: 00 00 00 00 00 00 00 00 00 00 00 00              ............
-[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.11.0-rc3-next-20240814-00004-g61844c55c3f4 #144
-[    0.000000] Hardware name: NXP i.MX95 19X19 board (DT)
-[    0.000000] Call trace:
-[    0.000000]  dump_backtrace+0x90/0xe8
-[    0.000000]  show_stack+0x18/0x24
-[    0.000000]  dump_stack_lvl+0x74/0x8c
-[    0.000000]  dump_stack+0x18/0x24
-[    0.000000]  print_trailer+0x150/0x218
-[    0.000000]  check_object+0xe4/0x454
-[    0.000000]  free_to_partial_list+0x2f8/0x5ec
+On arm64, there are no exceptions:
+  - LLONG_MIN/-1 = LLONG_MIN
+  - INT_MIN/-1 = INT_MIN
+  - LLONG_MIN%-1 = 0
+  - INT_MIN%-1 = 0
+where -1 can be an immediate or in a register.
 
-To address the issue, use orig_size to clear the used area. And restore
-the value of orig_size after clear the remaining area.
+Insn patching is needed to handle the above cases and the patched codes
+produced results aligned with above arm64 result. The below are pseudo
+codes to handle sdiv/smod exceptions including both divisor -1 and divisor 0
+and the divisor is stored in a register.
 
-When CONFIG_SLUB_DEBUG not defined, (get_orig_size()' directly returns
-s->object_size. So when using memset to init the area, the size can simply
-be orig_size, as orig_size returns object_size when CONFIG_SLUB_DEBUG not
-enabled. And orig_size can never be bigger than object_size.
+sdiv:
+      tmp = rX
+      tmp += 1 /* [-1, 0] -> [0, 1]
+      if tmp >(unsigned) 1 goto L2
+      if tmp == 0 goto L1
+      rY = 0
+  L1:
+      rY = -rY;
+      goto L3
+  L2:
+      rY /= rX
+  L3:
 
-Fixes: 946fa0dbf2d8 ("mm/slub: extend redzone check to extra allocated kmalloc space than requested")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Feng Tang <feng.tang@intel.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+smod:
+      tmp = rX
+      tmp += 1 /* [-1, 0] -> [0, 1]
+      if tmp >(unsigned) 1 goto L1
+      if tmp == 1 (is64 ? goto L2 : goto L3)
+      rY = 0;
+      goto L2
+  L1:
+      rY %= rX
+  L2:
+      goto L4  // only when !is64
+  L3:
+      wY = wY  // only when !is64
+  L4:
+
+  [1] https://lore.kernel.org/bpf/tPJLTEh7S_DxFEqAI2Ji5MBSoZVg7_G-Py2iaZpAaWtM961fFTWtsnlzwvTbzBzaUzwQAoNATXKUlt0LZOFgnDcIyKCswAnAGdUF3LBrhGQ=@protonmail.com/
+
+Reported-by: Zac Ecob <zacecob@protonmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20240913150326.1187788-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 100 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 53 insertions(+), 47 deletions(-)
+ kernel/bpf/verifier.c | 93 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 89 insertions(+), 4 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 9870dd4238ddc..eeb0aa9e6ce8e 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -647,6 +647,50 @@ static inline bool slab_update_freelist(struct kmem_cache *s, struct slab *slab,
- 	return false;
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8edf578a892cd..65d79d0234bb8 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19173,13 +19173,46 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 	int i, ret, cnt, delta = 0;
  
-+/*
-+ * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
-+ * family will round up the real request size to these fixed ones, so
-+ * there could be an extra area than what is requested. Save the original
-+ * request size in the meta data area, for better debug and sanity check.
-+ */
-+static inline void set_orig_size(struct kmem_cache *s,
-+				void *object, unsigned int orig_size)
-+{
-+	void *p = kasan_reset_tag(object);
-+	unsigned int kasan_meta_size;
+ 	for (i = 0; i < insn_cnt; i++, insn++) {
+-		/* Make divide-by-zero exceptions impossible. */
++		/* Make sdiv/smod divide-by-minus-one exceptions impossible. */
++		if ((insn->code == (BPF_ALU64 | BPF_MOD | BPF_K) ||
++		     insn->code == (BPF_ALU64 | BPF_DIV | BPF_K) ||
++		     insn->code == (BPF_ALU | BPF_MOD | BPF_K) ||
++		     insn->code == (BPF_ALU | BPF_DIV | BPF_K)) &&
++		    insn->off == 1 && insn->imm == -1) {
++			bool is64 = BPF_CLASS(insn->code) == BPF_ALU64;
++			bool isdiv = BPF_OP(insn->code) == BPF_DIV;
++			struct bpf_insn *patchlet;
++			struct bpf_insn chk_and_sdiv[] = {
++				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
++					     BPF_NEG | BPF_K, insn->dst_reg,
++					     0, 0, 0),
++			};
++			struct bpf_insn chk_and_smod[] = {
++				BPF_MOV32_IMM(insn->dst_reg, 0),
++			};
 +
-+	if (!slub_debug_orig_size(s))
-+		return;
++			patchlet = isdiv ? chk_and_sdiv : chk_and_smod;
++			cnt = isdiv ? ARRAY_SIZE(chk_and_sdiv) : ARRAY_SIZE(chk_and_smod);
 +
-+	/*
-+	 * KASAN can save its free meta data inside of the object at offset 0.
-+	 * If this meta data size is larger than 'orig_size', it will overlap
-+	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
-+	 * 'orig_size' to be as at least as big as KASAN's meta data.
-+	 */
-+	kasan_meta_size = kasan_metadata_size(s, true);
-+	if (kasan_meta_size > orig_size)
-+		orig_size = kasan_meta_size;
++			new_prog = bpf_patch_insn_data(env, i + delta, patchlet, cnt);
++			if (!new_prog)
++				return -ENOMEM;
 +
-+	p += get_info_end(s);
-+	p += sizeof(struct track) * 2;
++			delta    += cnt - 1;
++			env->prog = prog = new_prog;
++			insn      = new_prog->insnsi + i + delta;
++			continue;
++		}
 +
-+	*(unsigned int *)p = orig_size;
-+}
-+
-+static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
-+{
-+	void *p = kasan_reset_tag(object);
-+
-+	if (!slub_debug_orig_size(s))
-+		return s->object_size;
-+
-+	p += get_info_end(s);
-+	p += sizeof(struct track) * 2;
-+
-+	return *(unsigned int *)p;
-+}
-+
- #ifdef CONFIG_SLUB_DEBUG
- static unsigned long object_map[BITS_TO_LONGS(MAX_OBJS_PER_PAGE)];
- static DEFINE_SPINLOCK(object_map_lock);
-@@ -860,50 +904,6 @@ static void print_slab_info(const struct slab *slab)
- 	       folio_flags(folio, 0));
- }
++		/* Make divide-by-zero and divide-by-minus-one exceptions impossible. */
+ 		if (insn->code == (BPF_ALU64 | BPF_MOD | BPF_X) ||
+ 		    insn->code == (BPF_ALU64 | BPF_DIV | BPF_X) ||
+ 		    insn->code == (BPF_ALU | BPF_MOD | BPF_X) ||
+ 		    insn->code == (BPF_ALU | BPF_DIV | BPF_X)) {
+ 			bool is64 = BPF_CLASS(insn->code) == BPF_ALU64;
+ 			bool isdiv = BPF_OP(insn->code) == BPF_DIV;
++			bool is_sdiv = isdiv && insn->off == 1;
++			bool is_smod = !isdiv && insn->off == 1;
+ 			struct bpf_insn *patchlet;
+ 			struct bpf_insn chk_and_div[] = {
+ 				/* [R,W]x div 0 -> 0 */
+@@ -19199,10 +19232,62 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
+ 				BPF_MOV32_REG(insn->dst_reg, insn->dst_reg),
+ 			};
++			struct bpf_insn chk_and_sdiv[] = {
++				/* [R,W]x sdiv 0 -> 0
++				 * LLONG_MIN sdiv -1 -> LLONG_MIN
++				 * INT_MIN sdiv -1 -> INT_MIN
++				 */
++				BPF_MOV64_REG(BPF_REG_AX, insn->src_reg),
++				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
++					     BPF_ADD | BPF_K, BPF_REG_AX,
++					     0, 0, 1),
++				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
++					     BPF_JGT | BPF_K, BPF_REG_AX,
++					     0, 4, 1),
++				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
++					     BPF_JEQ | BPF_K, BPF_REG_AX,
++					     0, 1, 0),
++				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
++					     BPF_MOV | BPF_K, insn->dst_reg,
++					     0, 0, 0),
++				/* BPF_NEG(LLONG_MIN) == -LLONG_MIN == LLONG_MIN */
++				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
++					     BPF_NEG | BPF_K, insn->dst_reg,
++					     0, 0, 0),
++				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
++				*insn,
++			};
++			struct bpf_insn chk_and_smod[] = {
++				/* [R,W]x mod 0 -> [R,W]x */
++				/* [R,W]x mod -1 -> 0 */
++				BPF_MOV64_REG(BPF_REG_AX, insn->src_reg),
++				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
++					     BPF_ADD | BPF_K, BPF_REG_AX,
++					     0, 0, 1),
++				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
++					     BPF_JGT | BPF_K, BPF_REG_AX,
++					     0, 3, 1),
++				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
++					     BPF_JEQ | BPF_K, BPF_REG_AX,
++					     0, 3 + (is64 ? 0 : 1), 1),
++				BPF_MOV32_IMM(insn->dst_reg, 0),
++				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
++				*insn,
++				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
++				BPF_MOV32_REG(insn->dst_reg, insn->dst_reg),
++			};
  
--/*
-- * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
-- * family will round up the real request size to these fixed ones, so
-- * there could be an extra area than what is requested. Save the original
-- * request size in the meta data area, for better debug and sanity check.
-- */
--static inline void set_orig_size(struct kmem_cache *s,
--				void *object, unsigned int orig_size)
--{
--	void *p = kasan_reset_tag(object);
--	unsigned int kasan_meta_size;
--
--	if (!slub_debug_orig_size(s))
--		return;
--
--	/*
--	 * KASAN can save its free meta data inside of the object at offset 0.
--	 * If this meta data size is larger than 'orig_size', it will overlap
--	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
--	 * 'orig_size' to be as at least as big as KASAN's meta data.
--	 */
--	kasan_meta_size = kasan_metadata_size(s, true);
--	if (kasan_meta_size > orig_size)
--		orig_size = kasan_meta_size;
--
--	p += get_info_end(s);
--	p += sizeof(struct track) * 2;
--
--	*(unsigned int *)p = orig_size;
--}
--
--static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
--{
--	void *p = kasan_reset_tag(object);
--
--	if (!slub_debug_orig_size(s))
--		return s->object_size;
--
--	p += get_info_end(s);
--	p += sizeof(struct track) * 2;
--
--	return *(unsigned int *)p;
--}
--
- void skip_orig_size_check(struct kmem_cache *s, const void *object)
- {
- 	set_orig_size(s, (void *)object, s->object_size);
-@@ -1771,7 +1771,6 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
- 							int objects) {}
- static inline void dec_slabs_node(struct kmem_cache *s, int node,
- 							int objects) {}
--
- #ifndef CONFIG_SLUB_TINY
- static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
- 			       void **freelist, void *nextfree)
-@@ -1814,14 +1813,21 @@ static __always_inline bool slab_free_hook(struct kmem_cache *s,
- 	 */
- 	if (init) {
- 		int rsize;
--		unsigned int inuse;
-+		unsigned int inuse, orig_size;
+-			patchlet = isdiv ? chk_and_div : chk_and_mod;
+-			cnt = isdiv ? ARRAY_SIZE(chk_and_div) :
+-				      ARRAY_SIZE(chk_and_mod) - (is64 ? 2 : 0);
++			if (is_sdiv) {
++				patchlet = chk_and_sdiv;
++				cnt = ARRAY_SIZE(chk_and_sdiv);
++			} else if (is_smod) {
++				patchlet = chk_and_smod;
++				cnt = ARRAY_SIZE(chk_and_smod) - (is64 ? 2 : 0);
++			} else {
++				patchlet = isdiv ? chk_and_div : chk_and_mod;
++				cnt = isdiv ? ARRAY_SIZE(chk_and_div) :
++					      ARRAY_SIZE(chk_and_mod) - (is64 ? 2 : 0);
++			}
  
- 		inuse = get_info_end(s);
-+		orig_size = get_orig_size(s, x);
- 		if (!kasan_has_integrated_init())
--			memset(kasan_reset_tag(x), 0, s->object_size);
-+			memset(kasan_reset_tag(x), 0, orig_size);
- 		rsize = (s->flags & SLAB_RED_ZONE) ? s->red_left_pad : 0;
- 		memset((char *)kasan_reset_tag(x) + inuse, 0,
- 		       s->size - inuse - rsize);
-+		/*
-+		 * Restore orig_size, otherwize kmalloc redzone overwritten
-+		 * would be reported
-+		 */
-+		set_orig_size(s, x, orig_size);
-+
- 	}
- 	/* KASAN might put x into memory quarantine, delaying its reuse. */
- 	return kasan_slab_free(s, x, init);
+ 			new_prog = bpf_patch_insn_data(env, i + delta, patchlet, cnt);
+ 			if (!new_prog)
 -- 
 2.53.0
 
