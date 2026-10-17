@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9744D384CED;
-	Sat, 17 Oct 2026 17:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9CE3BB690;
+	Sat, 17 Oct 2026 17:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259641; cv=none; b=dkZzjlmOd89qCn2NprHgXUqXRAKH8426FISspQ8pj3sDI+rQ+E0cvejRP83lwyh/CyhEHxjRzOA+VlsOqIjt58Xvm27owqnbELmUbj46rob9RAnc75jj1PkztNwMoxdd3MdV1Cgyc99OPYbhzFWCYq4Oy+ANFLfNFZKiaKgoJsc=
+	t=1792259644; cv=none; b=leH9aNuTGJiFlYgRZv5AmkuHOclGJftaZ3GKI2oPMeCBlTRCLqOHRROaVgW42dHZOyWbTtdEMaEUcp+M7PO9ZD/NJPa282aAo6TB6edVeOICHodBPHY/Rt4RKQs0YXa4XbbXirUbpr9te+y9I9W+RKeHA5ialVcLLbSexXYAbUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259641; c=relaxed/simple;
-	bh=a2MyGlRGepsNFoa1vKhycpjzHYI2Y056o6WFcBfs0Xk=;
+	s=arc-20240116; t=1792259644; c=relaxed/simple;
+	bh=shWONSZUFHdLbPIR947CkDlFihoIna0I/ZpL/WIzJb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwWLvzstwJHMf9FE5yGOOwWv1vmOfGJkvp2Cd6shxpO+zfQEb2B37n/mmkwN/PYGJi6XOtqnA7jBpRTYxKouBUbFZRKvRjcbcYCsbcLC24NxGgGqhIRQbimrN7d4dlb57l0yNhCt6eVSTCdn7OnUwSq6Ei6GWCjIUVN5NEUfX5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bob2GHzl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mg2Ndsdt2OGiwlk/fIFJcum9RmXlujdZvhieU379Fv8syeXzW2w9XSg5TbfP94H1d16yNw6MPfZMuA0RJ2sCP5SJyb0K++3Tw3ZaWenBlKo+JsGr0BIwz/wE5a+FSdgUOJmzzEmZOkPNHOqqv5mxMWWd55204XBhEQYe+GJhthA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7mymXBR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bob2GHzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927CA1F000C4;
-	Sat, 17 Oct 2026 17:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7mymXBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7F21F000C4;
+	Sat, 17 Oct 2026 17:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259640;
-	bh=HOkLf74+14kpiKEMBJxS0rY0MxJGJvkbReVpILOd/Z8=;
+	s=korg; t=1792259643;
+	bh=DZVdLU2DnsAnXYe2h34HqnN06IcuQ5YlK9xi4lOrHHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bob2GHzlf3jnqGtuRVsdfpzs1P2gGJPqgWluRS/EZx1BiJ9f4w4/t0RhA5zjq95a8
-	 dLLS7FVegAJja1DTd+Vre+SNWKE6iRrZ0vsPsKCytUiNSGAfk1iFp1NMCIX9VxvoHn
-	 PeKQHszPdt4ZWHUgirY/BFdFaooqPh6h/ZBq7Q6w=
+	b=h7mymXBRmtzw6pybBHCjIlO9sqr1Hzdqj25yyrzFJzzkfIhofuJoPelDWd71sRdOM
+	 7ca/9wzSkwFwkLjD729NX2VuhV1fWR2rVTP3NGDahgPrwUM2uD6uRbTd4GXWVm3mDX
+	 YLfAramXsyh+PwDg4JkxCzF9bmrTER1mzhDZCuF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	William Palacek <William.Palacek@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1240/1674] drm/amdkfd: Fix infinite loop parsing CRAT with zero subtype length
-Date: Sat, 17 Oct 2026 17:58:32 +0200
-Message-ID: <20261017160502.965130692@linuxfoundation.org>
+Subject: [PATCH 6.6 1241/1674] drm/amdkfd: Add bounds check for CRAT subtype length
+Date: Sat, 17 Oct 2026 17:58:33 +0200
+Message-ID: <20261017160502.990023638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: William Palacek <William.Palacek@amd.com>
 
-[ Upstream commit 961323c26ad4c895e3b0ea1711fc41dfd6368c12 ]
+[ Upstream commit 6e7566ba4739dd573c331adde1c96690f7a567bd ]
 
-Malformed ACPI CRAT tables can advertise a zero or undersized subtype
-length. The parser then fails to advance the cursor and loops forever
-while the remaining image still looks large enough for a generic header.
+The CRAT parser validates that the subtype header fits within the image,
+but does not verify that the advertised subtype length fits. A malformed
+CRAT table with an oversized length field causes out-of-bounds reads when
+kfd_parse_subtype() casts the header to specific subtype structures.
 
-Validate sub_type_hdr->length on each iteration before parsing or
-advancing. Return -EINVAL and warn when length is zero or smaller than
-the generic subtype header.
+Add validation that sub_type_hdr + length does not exceed the image
+boundary before parsing the subtype contents.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 6e7566ba4739 ("drm/amdkfd: Add bounds check for CRAT subtype length")
+(cherry picked from commit 48e1d1e6e8798aef0312e68d8e586021b5b3cf4d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index 29a02c1752289..aadfc8b9e76d1 100644
+index aadfc8b9e76d1..2753e98dac2f8 100644
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1314,6 +1314,14 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
- 	sub_type_hdr = (struct crat_subtype_generic *)(crat_table+1);
- 	while ((char *)sub_type_hdr + sizeof(struct crat_subtype_generic) <
- 			((char *)crat_image) + image_len) {
-+		if (!sub_type_hdr->length ||
-+		    sub_type_hdr->length < sizeof(struct crat_subtype_generic)) {
-+			pr_warn("Invalid CRAT subtype length %u\n",
+@@ -1322,6 +1322,15 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
+ 			break;
+ 		}
+ 
++		/* Validate subtype fits within remaining image */
++		if ((char *)sub_type_hdr + sub_type_hdr->length >
++		    (char *)crat_image + image_len) {
++			pr_warn("CRAT subtype length %u exceeds image bounds\n",
 +				sub_type_hdr->length);
 +			ret = -EINVAL;
 +			break;
