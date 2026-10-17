@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FBD3B19BA;
-	Sat, 17 Oct 2026 17:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F393ADBA4;
+	Sat, 17 Oct 2026 17:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259052; cv=none; b=or9dSGCmHD+enEEOIi9G1ZM0R0PkDoLdHTsUO16vVeuA8/K74ghbKQ9I4Ux6HSG3fcDn6YOMHyCnE2PmTPGbOxBKoW6DFym461PCedzE2BXEOS8bIZUc1n00Q6KYfbc5uhF1RxMzrRP6Gn+tfRaplUn2t4Rs6/QvzCatOpLTdAc=
+	t=1792259055; cv=none; b=j56+RAXHm2TAd7v4vuwtf+ubJkPphCsifYRc2xW1x4b0W2BBC0CiumrKquH8HVbr1Tld9NId0IQLJqH6XwH55oEeTZwVu3F5BeeOtoeAeRWj8D3w8USbzizJuWQAakjhj8KjK7lbkXou5pHoiIfMpl5vcIV9DjM16dlZ3POg+/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259052; c=relaxed/simple;
-	bh=LoYvWOLrXzz5hd89o54zW2N4Q4cK/pqcbvkb6c4s5Ek=;
+	s=arc-20240116; t=1792259055; c=relaxed/simple;
+	bh=e9tBagjCGe3Uex4TMLSHq/cPc3J2KPndcm9rWRQOi8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m+pji2u2z20Z80T+mn1Mb6ShC+5MajSLqvy9n6Q3GkvYEN5V8oXCPiH1YOh516/6kYR5ugXeUC/FifAhQTz2s0+k1JAu95tFgidfL9AW1Is7bV3fqBFVf0YDr6i7WMYKkbTFJQklG6bA7wSGXDRITJQnlr6lBmKxRO42OuKBe3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FA02mM1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eT3zqXfRkeHjbEwHmVoLovkltOaHwroCkjt+GvPruZsJyI++RlbnmlUJz211Fwf1dY0aCZMtbRjPxyvUWgOnrIQF3zp1Uwzi/zfWHpTy/6sUEsyA4+hqAzGkN5kUOzz4NPjSXs8shCVFL1jiw9AvZ1oN4/4Nfgut3s4MjdtSoo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlxWZJBF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FA02mM1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8F11F000C4;
-	Sat, 17 Oct 2026 17:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlxWZJBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA4F1F000C4;
+	Sat, 17 Oct 2026 17:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259051;
-	bh=YdjFM7gBW7/sE14PktFKZXzi6jTM8q9bg4QlH5qs/lo=;
+	s=korg; t=1792259054;
+	bh=F1xSR58+SYD8v3WNr+OlyHVe4qERW87NT46XkDMcAus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FA02mM1n/LWymAYEca3D1zTnp37IZxm8iVdvbD3HpqSVKEH5H9VaCVDjNJcbmTaHF
-	 AawYXJ9UZ1rtojpOuaqnscP7IwDxyYAeidjGWAU4Q4Q2Vu5YC8TkokImiIzJWWq8hv
-	 1ee44zftMmZWyT0VR7zGVNBxcBSrGvU4l7QmXNlA=
+	b=nlxWZJBFpVvTnlJ4/11xdEy8AboLNO/FSABOdf4SrYi3rpnwmkL9TGeC/lWoJPF1P
+	 hJMKujfflEfGQvZFANpkSF+hgwaAqkMU4XyQ1xoSS+v6jxgbVzLuRrj7Xkx1wx95Ma
+	 E/GhBgydCgzYSQj4n+shdYAhRQuYRcXa+LYQzKMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1086/1674] drm/vc4: hvs/v3d: Fix null dereference in unbind
-Date: Sat, 17 Oct 2026 17:55:58 +0200
-Message-ID: <20261017160459.004938906@linuxfoundation.org>
+Subject: [PATCH 6.6 1087/1674] cifs: prevent readdir from changing file size due to stale directory metadata
+Date: Sat, 17 Oct 2026 17:55:59 +0200
+Message-ID: <20261017160459.031081500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,63 +45,288 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 7dc3680b7ffe01add3e9299fde8471d2dd53a8ae ]
+[ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
 
-The hvs and v3d drivers use dev_get_drvdata(master) in their unbind
-functions. Since the vc4-drm gets removed before its dependent drivers
-(vc4_hvs/vc4_v3d) the vc4_hvs_unbind/vc4_v3d_unbind functions try to
-get drvdata of its master and fails with a null dereference error.
+Windows Server's directory enumeration metadata lags behind the actual
+file size after a write+close or rename.  A concurrent readdir() in the
+window between close() returning to userspace and stat() being called
+overwrites the correct cached i_size with the stale server value, causing
+stat() to return the wrong size.
 
-Use the data pointer passed to the unbind functions directly instead of
-dev_get_drvdata(master). This avoids using potentially freed memory.
+Once _cifsFileInfo_put() removes the last writable handle from
+openFileList, is_size_safe_to_change() permits readdir to overwrite
+i_size.  smb2_close_getattr() then stamps cifs_i->time = jiffies, making
+the corrupt cached value appear fresh to the next stat().
 
-Fixes: d3f5168a0810 ("drm/vc4: Bind and initialize the V3D engine.")
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Link: https://patch.msgid.link/20260721-rpi-vc4-fix-v2-1-b813dcd01dc7@linutronix.de
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+The existing check (see Fixes:) only blocked stale size updates while
+an active RW lease was held, not after the last writable handle closes.
+
+Add cifsInodeInfo->time_last_write, written via smp_store_release() at
+writable close and on setattr/truncate.  is_size_safe_to_change() checks
+is_inode_writable() first (acquiring open_file_lock), then rejects a
+readdir size update if time_last_write falls within acregmax jiffies.
+The spinlock release in _cifsFileInfo_put() forms a store-release barrier
+that pairs with the spin_lock() (load-acquire) in is_inode_writable(),
+ensuring the subsequent smp_load_acquire() on time_last_write observes
+any update from a concurrent close().  When a size update is rejected and
+the server value differs from the cached one, cifs_i->time is cleared to
+force a fresh QUERY_INFO on the next stat().
+
+readdir is also blocked from changing i_size while writable handles are
+open or an RW lease is held, even on direct-IO mounts.
+
+For deferred close (closetimeo > 0), time_last_write is refreshed at the
+actual server close in smb2_deferred_work_close() and in the
+cifs_close_deferred_file*() drain paths invoked by lease/oplock breaks
+and tcon teardown, anchoring the protection window to the real close time
+rather than the earlier userspace close.
+
+time_last_write == 0 skips the time_before() check to avoid false
+positives near boot on 32-bit systems where jiffies starts close to
+INITIAL_JIFFIES.
+
+Does not reproduce against Samba or with actimeo=0.
+
+Fixes: e4b61f3b1c67 ("cifs: prevent updating file size from server if we have a read/write lease")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c2f2e83e3bbc ("cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
- drivers/gpu/drm/vc4/vc4_v3d.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsfs.c   |  1 +
+ fs/smb/client/cifsglob.h |  1 +
+ fs/smb/client/file.c     | 70 ++++++++++++++++++++++++++++++++++++----
+ fs/smb/client/inode.c    |  6 ++++
+ fs/smb/client/misc.c     | 27 ++++++++++++++--
+ 5 files changed, 96 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index bea1b3d35cdd3..4e74617e493e0 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -1045,7 +1045,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- static void vc4_hvs_unbind(struct device *dev, struct device *master,
- 			   void *data)
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index a1c5ef3b2f1eb..a3dfeda8144d9 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -401,6 +401,7 @@ cifs_alloc_inode(struct super_block *sb)
+ 		return NULL;
+ 	cifs_inode->cifsAttrs = 0x20;	/* default */
+ 	cifs_inode->time = 0;
++	cifs_inode->time_last_write = 0;
+ 	/*
+ 	 * Until the file is open and we have gotten oplock info back from the
+ 	 * server, can not assume caching of file data or metadata.
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index b490e3f006a34..b6a89d0515757 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1575,6 +1575,7 @@ struct cifsInodeInfo {
+ 	unsigned int writers;		/* Number of writers on this inode */
+ 	unsigned long time;		/* jiffies of last update of inode */
+ 	u64  server_eof;		/* current file size on server -- protected by i_lock */
++	unsigned long time_last_write;	/* jiffies of last writable close or truncate */
+ 	u64  uniqueid;			/* server inode number */
+ 	u64  createtime;		/* creation time on server */
+ 	__u8 lease_key[SMB2_LEASE_KEY_SIZE];	/* lease key for this inode */
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 75682ef67bc85..d329b8a3b756d 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -1207,11 +1207,21 @@ void smb2_deferred_work_close(struct work_struct *work)
  {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
- 	struct vc4_hvs *hvs = vc4->hvs;
- 	struct drm_mm_node *node, *next;
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index 12d091ae07d67..39f37b921ae5f 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -505,7 +505,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
- static void vc4_v3d_unbind(struct device *dev, struct device *master,
- 			   void *data)
- {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
+ 	struct cifsFileInfo *cfile = container_of(work,
+ 			struct cifsFileInfo, deferred.work);
++	struct cifsInodeInfo *cinode = CIFS_I(d_inode(cfile->dentry));
  
- 	/* A straggler vc4_reset() re-enables the interrupt. */
+-	spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
++	spin_lock(&cinode->deferred_lock);
+ 	cifs_del_deferred_close(cfile);
+ 	cfile->deferred_close_scheduled = false;
+-	spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
++	spin_unlock(&cinode->deferred_lock);
++	/*
++	 * Refresh time_last_write immediately before the actual server close
++	 * so the protection window is anchored to the real close time, not
++	 * the earlier userspace close time stored by cifs_close().
++	 */
++	if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cinode->time_last_write, jiffies);
++	}
+ 	_cifsFileInfo_put(cfile, true, false);
+ }
+ 
+@@ -1240,6 +1250,10 @@ int cifs_close(struct inode *inode, struct file *file)
+ 	if (file->private_data != NULL) {
+ 		cfile = file->private_data;
+ 		file->private_data = NULL;
++		if (file->f_mode & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&cinode->time_last_write, jiffies);
++		}
+ 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
+ 		if ((cfile->status_file_deleted == false) &&
+ 		    (smb2_can_defer_close(inode, dclose))) {
+@@ -5001,15 +5015,27 @@ static int is_inode_writable(struct cifsInodeInfo *cifs_inode)
+ bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 end_of_file,
+ 			    bool from_readdir)
+ {
++	struct cifs_sb_info *cifs_sb;
++	unsigned long tlw;
++
+ 	if (!cifsInode)
+ 		return true;
+ 
++	cifs_sb = CIFS_SB(cifsInode->netfs.inode.i_sb);
++
+ 	if (is_inode_writable(cifsInode) ||
+ 		((cifsInode->oplock & CIFS_CACHE_RW_FLG) != 0 && from_readdir)) {
+ 		/* This inode is open for write at least once */
+-		struct cifs_sb_info *cifs_sb;
+ 
+-		cifs_sb = CIFS_SB(cifsInode->netfs.inode.i_sb);
++		/*
++		 * Readdir data is unreliable when we have writable handles or
++		 * an exclusive lease -- never allow it to change i_size, even
++		 * on direct-IO mounts where the server's directory metadata
++		 * can still lag behind the actual file state.
++		 */
++		if (from_readdir)
++			return false;
++
+ 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_DIRECT_IO) {
+ 			/* since no page cache to corrupt on directio
+ 			we can change size safely */
+@@ -5020,8 +5046,40 @@ bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 end_of_file,
+ 			return true;
+ 
+ 		return false;
+-	} else
+-		return true;
++	}
++
++	/*
++	 * No writable handles open. Check whether we are within the attribute
++	 * cache validity window of a recent local modification.
++	 *
++	 * For the close() path: cifs_close() calls smp_store_release() on
++	 * time_last_write before _cifsFileInfo_put() removes the handle under
++	 * open_file_lock. That spin_unlock() is a store-release that pairs
++	 * with the spin_lock() (load-acquire) in is_inode_writable() above,
++	 * so if is_inode_writable() returned false the smp_load_acquire()
++	 * below is guaranteed to observe any time_last_write update from a
++	 * concurrent close().
++	 *
++	 * For the setattr/truncate paths: those callers use smp_store_release()
++	 * directly; the smp_load_acquire() below pairs with that store. There
++	 * is no shared lock between setattr and readdir, so this relies on
++	 * acquire-release semantics alone. The store propagation latency on
++	 * weakly-ordered architectures (nanoseconds) is negligible relative to
++	 * the acregmax window (seconds) and the readdir RPC round-trip
++	 * (milliseconds), making this a sound design choice in practice.
++	 *
++	 * time_last_write == 0 means the inode has never been written locally;
++	 * skip the window check to avoid false positives near boot time when
++	 * jiffies is still close to INITIAL_JIFFIES on 32-bit systems.
++	 */
++	if (from_readdir) {
++		/* Pairs with smp_store_release() at close and truncate sites. */
++		tlw = smp_load_acquire(&cifsInode->time_last_write);
++		if (tlw && time_before(jiffies, tlw + cifs_sb->ctx->acregmax))
++			return false;
++	}
++
++	return true;
+ }
+ 
+ static int cifs_write_begin(struct file *file, struct address_space *mapping,
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index fc76614148900..5db7b2e4a868d 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -227,6 +227,8 @@ cifs_fattr_to_inode(struct inode *inode, struct cifs_fattr *fattr,
+ 		 * calculating num blocks.
+ 		 */
+ 		inode->i_blocks = (512 - 1 + fattr->cf_bytes) >> 9;
++	} else if (from_readdir && i_size_read(inode) != fattr->cf_eof) {
++		cifs_i->time = 0;
+ 	}
+ 
+ 	if (S_ISLNK(fattr->cf_mode) && fattr->cf_symlink_target) {
+@@ -3135,6 +3137,8 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 
+ 	if ((attrs->ia_valid & ATTR_SIZE) &&
+ 	    attrs->ia_size != i_size_read(inode)) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cifsInode->time_last_write, jiffies);
+ 		truncate_setsize(inode, attrs->ia_size);
+ 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+ 	}
+@@ -3353,6 +3357,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 
+ 	if ((attrs->ia_valid & ATTR_SIZE) &&
+ 	    attrs->ia_size != i_size_read(inode)) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cifsInode->time_last_write, jiffies);
+ 		truncate_setsize(inode, attrs->ia_size);
+ 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+ 	}
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 6f426986eec6e..991e960e16b0c 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -799,7 +799,14 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 	spin_unlock(&cifs_inode->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, false, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, false, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
+@@ -832,7 +839,14 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 	spin_unlock(&tcon->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, true, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, true, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
+@@ -908,7 +922,14 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
+ 	spin_unlock(&tcon->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, true, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, true, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
 -- 
 2.53.0
 
