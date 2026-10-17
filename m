@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1610C391E51;
-	Sat, 17 Oct 2026 18:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9963C13E0;
+	Sat, 17 Oct 2026 18:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260071; cv=none; b=dcVL7bCYfA6S9J1P1u85KIfJ4ZGiavj94n9vG7Yx3KYQbbpM530InYdr9+vN9Eyv7KVOPW0Ob6zDP21UfBOJnLUHx0J+/bwt9gx/J+JKYoUrc6MxLMolmHik/zTzEzGH3lhC/g8uy1LU6krsbnDhYcNeFN9F6qdwF3pQf6ydeSY=
+	t=1792260073; cv=none; b=uxvGOEXdyYz2/gi/nE8WmEZyXlfrmXaCXbEW4Q4bSqPkpDTLfsVWdPC3jF8qopfEgAwVjGdLl1t9ytgjDdfghuVO9RMqCfsYscazt2RJkz4NG3gAaYmK6h05Ko6fXoD/habBvHP5o5DyAA5ZzriWiiyEwoNouybPZJzsjVMyTZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260071; c=relaxed/simple;
-	bh=tIx6+qAlSYiD5TCybk0lXj+X9l7oCQ9d3g86ONhTdVY=;
+	s=arc-20240116; t=1792260073; c=relaxed/simple;
+	bh=AT0P7n4+xtTdhZJnbHDrBK58DW50kcl68CWhoubYChY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YaCkFAQXXILhiDrKLJt1tHuQvmPSg6HMqzRfv1SbV4yqKTVz/+8ybNEKRIcdHyZlugz3vOtTobG984AcrWJuUhGJVGnGR6nt18jhrD8KNDfLDBeTgoJKjE3dI7gWsVDy+DGdrXNNFQUaQNaZ3hSO3CoCoDFYCfpxxvl07+UBoTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKfSds6v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sVtbWlnOip1RA8+jRKZZIl68vBDaKBaZjjsTdQPSDQDnDImoZkb+EgmXSH9YvkpevVCQLaGjHG/TH+MMbZO1l9nct2VSXvkFYRUp7xNsmqcvbxIoRks/RCriGjMIVZ01CXDshyAMKSpYncG2ebqNCTal4qsc5ELd74Ili5LoGTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9X+a9ke; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKfSds6v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306C51F000C4;
-	Sat, 17 Oct 2026 18:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9X+a9ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECC11F000C4;
+	Sat, 17 Oct 2026 18:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260069;
-	bh=VypSgOysbiBISf8VEQg02pJxl8q/LDpaO0Mfj8l6r+A=;
+	s=korg; t=1792260072;
+	bh=DR0uKVnjbXXiUZK4DhF21id3nNDoLEGinlM36trRMBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKfSds6vblpcFSwbDJyDIOpPsgI6y/6PVTIApRcxJ3SJdsOH1BdhaMp8/0WQMtpDI
-	 Em+Nj5LbDjUalsm97RJaXvxTJCo6xgQWNUY8wwiE2cyGBBntQt6+Hn6qilaYCXIbBD
-	 g6teiDskqI5uynNVBLQ0J0NfrWc+ihEIF3JvNN5o=
+	b=X9X+a9kezuALrawOb3V7futez/Vkp9YkuOM4PT+kxOP4oBFgJ8Z1Xw3xiSQEf6Leg
+	 Mt1FzD+HXo/lgyy+BzL795/D5raI97knYrco20JHLFsQarse6eP38ugJz9XyaoHkxq
+	 ZR18jO5vZpOGC9JbCjnoi2uaNAyzZ3N5A7pnINHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1424/1674] drm/amd/display: Resize MST HDCP per-connector arrays to 32
-Date: Sat, 17 Oct 2026 18:01:36 +0200
-Message-ID: <20261017160507.729204192@linuxfoundation.org>
+Subject: [PATCH 6.6 1425/1674] module/dups: Fix use-after-free in kmod_dup_req lifetime handling
+Date: Sat, 17 Oct 2026 18:01:37 +0200
+Message-ID: <20261017160507.755435451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,124 +51,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 261e0fe4e2c99f687114b64b10b98db964b475f4 ]
+[ Upstream commit 5eecb11b543f9f417bcf0dea239ff99c6af65dbd ]
 
-AMDGPU_DM_MAX_DISPLAY_INDEX is 31. It suggest a maximum number of
-32 connectors. But the way it's used is like MAX_DISPLAY_COUNT.
-Hence we're off by one with DRM core, which supports a max of 32
-connectors.
+The kmod dups code uses RCU to ensure that a kmod_dup_req instance is freed
+only after it is no longer referenced. When releasing an instance, the
+kmod_dup_request_delete() function removes the kmod_dup_req from the
+dup_kmod_reqs list, waits via synchronize_rcu() and finally frees it.
+However, this doesn't work correctly because parallel users referencing the
+instance in kmod_dup_request_exists_wait() don't enter an RCU read-side
+critical section. This can result in a use-after-free.
 
-Rename AMDGPU_DM_MAX_DISPLAY_INDEX to AMDGPU_DM_MAX_DISPLAY_COUNT
-to match its actual use, and increase the size to 32 to match the
-originally intended size.
+The kmod_dup_request_exists_wait() function may need to hold a valid
+reference to a kmod_dup_req instance across a blocking wait until the
+corresponding modprobe command completes. This makes it unsuitable for RCU.
 
-Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
-Assisted-by: Copilot:claude-opus-4.8
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix the issue by changing the lifecycle management of kmod_dup_req to use
+reference counting.
+
+Fixes: 8660484ed1cf ("module: add debugging auto-load duplicate module support")
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h      |  2 +-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c | 10 +++++-----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h |  8 ++++----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ kernel/module/dups.c | 66 ++++++++++++++++++++++++++++++++------------
+ 1 file changed, 49 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index 8d4f2cadb9157..6fc5b1e4be46a 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -43,7 +43,7 @@
-  * in amdgpu_dm_kms.h file
-  */
+diff --git a/kernel/module/dups.c b/kernel/module/dups.c
+index f3d7ea1e96d82..019545cef7e4a 100644
+--- a/kernel/module/dups.c
++++ b/kernel/module/dups.c
+@@ -31,6 +31,7 @@
+ #include <linux/ptrace.h>
+ #include <linux/async.h>
+ #include <linux/uaccess.h>
++#include <linux/refcount.h>
  
--#define AMDGPU_DM_MAX_DISPLAY_INDEX 31
-+#define AMDGPU_DM_MAX_DISPLAY_COUNT 32
+ #include "internal.h"
  
- #define AMDGPU_DM_MAX_CRTC 6
+@@ -39,13 +40,12 @@
+ static bool enable_dups_trace = IS_ENABLED(CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS_TRACE);
+ module_param(enable_dups_trace, bool_enable_only, 0644);
  
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-index a048022d9865a..98843f38f4147 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-@@ -256,7 +256,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+-/*
+- * Protects dup_kmod_reqs list, adds / removals with RCU.
+- */
++/* A mutex-protected list of active kmod requests. */
+ static DEFINE_MUTEX(kmod_dup_mutex);
+ static LIST_HEAD(dup_kmod_reqs);
  
- 	cancel_delayed_work(&hdcp_w->property_validate_dwork);
+ struct kmod_dup_req {
++	refcount_t refcount;
+ 	struct list_head list;
+ 	char name[MODULE_NAME_LEN];
+ 	struct completion first_req_done;
+@@ -54,12 +54,24 @@ struct kmod_dup_req {
+ 	int dup_ret;
+ };
  
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
- 		hdcp_w->encryption_status[conn_index] =
- 			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
- 		if (hdcp_w->aconnector[conn_index]) {
-@@ -303,7 +303,7 @@ static void event_property_update(struct work_struct *work)
- 	struct drm_connector *connector;
- 	struct drm_connector_state *conn_state;
++static void get_kmod_req(struct kmod_dup_req *kmod_req)
++{
++	refcount_inc(&kmod_req->refcount);
++}
++
++static void put_kmod_req(struct kmod_dup_req *kmod_req)
++{
++	if (refcount_dec_and_test(&kmod_req->refcount))
++		kfree(kmod_req);
++}
++
+ static struct kmod_dup_req *kmod_dup_request_lookup(char *module_name)
+ {
+ 	struct kmod_dup_req *kmod_req;
  
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
- 		aconnector = hdcp_work->aconnector[conn_index];
+-	list_for_each_entry_rcu(kmod_req, &dup_kmod_reqs, list,
+-				lockdep_is_held(&kmod_dup_mutex)) {
++	lockdep_assert_held(&kmod_dup_mutex);
++
++	list_for_each_entry(kmod_req, &dup_kmod_reqs, list) {
+ 		if (strlen(kmod_req->name) == strlen(module_name) &&
+ 		    !memcmp(kmod_req->name, module_name, strlen(module_name))) {
+ 			return kmod_req;
+@@ -88,10 +100,10 @@ static void kmod_dup_request_delete(struct work_struct *work)
+ 	 * just returning 0.
+ 	 */
+ 	mutex_lock(&kmod_dup_mutex);
+-	list_del_rcu(&kmod_req->list);
+-	synchronize_rcu();
++	list_del(&kmod_req->list);
+ 	mutex_unlock(&kmod_dup_mutex);
+-	kfree(kmod_req);
++
++	put_kmod_req(kmod_req);
+ }
  
- 		if (!aconnector)
-@@ -372,7 +372,7 @@ static void event_property_validate(struct work_struct *work)
+ static void kmod_dup_request_complete(struct work_struct *work)
+@@ -100,6 +112,9 @@ static void kmod_dup_request_complete(struct work_struct *work)
  
- 	guard(mutex)(&hdcp_work->mutex);
+ 	kmod_req = container_of(work, struct kmod_dup_req, complete_work);
  
--	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
-+	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT;
- 	     conn_index++) {
- 		aconnector = hdcp_work->aconnector[conn_index];
++	if (completion_done(&kmod_req->first_req_done))
++		goto out;
++
+ 	/*
+ 	 * This will ensure that the kernel will let all the waiters get
+ 	 * informed its time to check the return value. It's time to
+@@ -115,6 +130,9 @@ static void kmod_dup_request_complete(struct work_struct *work)
+ 	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
+ 	 */
+ 	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
++
++out:
++	put_kmod_req(kmod_req);
+ }
  
-@@ -747,10 +747,10 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev,
+ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+@@ -130,6 +148,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ 	if (!new_kmod_req)
+ 		return false;
  
- 		memset(hdcp_work[i].aconnector, 0,
- 		       sizeof(struct amdgpu_dm_connector *) *
--			       AMDGPU_DM_MAX_DISPLAY_INDEX);
-+			       AMDGPU_DM_MAX_DISPLAY_COUNT);
- 		memset(hdcp_work[i].encryption_status, 0,
- 		       sizeof(enum mod_hdcp_encryption_status) *
--			       AMDGPU_DM_MAX_DISPLAY_INDEX);
-+			       AMDGPU_DM_MAX_DISPLAY_COUNT);
++	refcount_set(&new_kmod_req->refcount, 1);
+ 	memcpy(new_kmod_req->name, module_name, strlen(module_name));
+ 	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
+ 	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
+@@ -162,10 +181,12 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ 		 * keep tab on duplicates later.
+ 		 */
+ 		pr_debug("New request_module() for %s\n", module_name);
+-		list_add_rcu(&new_kmod_req->list, &dup_kmod_reqs);
++		list_add(&new_kmod_req->list, &dup_kmod_reqs);
+ 		mutex_unlock(&kmod_dup_mutex);
+ 		return false;
+ 	}
++
++	get_kmod_req(kmod_req);
+ 	mutex_unlock(&kmod_dup_mutex);
+ 
+ 	/* We are dealing with a duplicate request now */
+@@ -195,7 +216,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ 		 * calls bail out right away.
+ 		 */
+ 		*dup_ret = 0;
+-		return true;
++		goto out;
  	}
  
- 	cp_psp->funcs.update_stream_config = update_config;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-index 69b445b011c8c..d18c4cc7d69f3 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
-@@ -43,7 +43,7 @@ struct hdcp_workqueue {
- 	struct delayed_work callback_dwork;
- 	struct delayed_work watchdog_timer_dwork;
- 	struct delayed_work property_validate_dwork;
--	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	struct mutex mutex;
+ 	/*
+@@ -210,12 +231,14 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ 					TASK_UNINTERRUPTIBLE | TASK_KILLABLE);
+ 	if (ret) {
+ 		*dup_ret = ret;
+-		return true;
++		goto out;
+ 	}
  
- 	struct mod_hdcp hdcp;
-@@ -51,7 +51,7 @@ struct hdcp_workqueue {
- 	struct mod_hdcp_display display;
- 	struct mod_hdcp_link link;
+ 	/* Now the duplicate request has the same exact return value as the first request */
+ 	*dup_ret = kmod_req->dup_ret;
  
--	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	/* when display is unplugged from mst hub, connctor will be
- 	 * destroyed within dm_dp_mst_connector_destroy. connector
- 	 * hdcp perperties, like type, undesired, desired, enabled,
-@@ -61,9 +61,9 @@ struct hdcp_workqueue {
- 	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++out:
++	put_kmod_req(kmod_req);
+ 	return true;
+ }
+ 
+@@ -225,12 +248,23 @@ void kmod_dup_request_announce(char *module_name, int ret)
+ 
+ 	mutex_lock(&kmod_dup_mutex);
+ 
++	/*
++	 * Look for a kmod_dup_req previously added in
++	 * kmod_dup_request_exists_wait(). Note that a request_module_nowait()
++	 * without its own kmod_dup_req entry can announce a result of
++	 * a concurrent request_module() call.
++	 */
+ 	kmod_req = kmod_dup_request_lookup(module_name);
+-	if (!kmod_req)
+-		goto out;
++	if (!kmod_req || completion_done(&kmod_req->first_req_done)) {
++		mutex_unlock(&kmod_dup_mutex);
++		return;
++	}
+ 
+ 	kmod_req->dup_ret = ret;
+ 
++	get_kmod_req(kmod_req);
++	mutex_unlock(&kmod_dup_mutex);
++
+ 	/*
+ 	 * If we complete() here we may allow duplicate threads
+ 	 * to continue before the first one that submitted the
+@@ -241,8 +275,6 @@ void kmod_dup_request_announce(char *module_name, int ret)
+ 	 * There is no rush. But we also don't want to hold the
+ 	 * caller up forever or introduce any boot delays.
  	 */
- 	/* un-desired, desired, enabled */
--	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 	/* hdcp1.x, hdcp2.x */
--	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
-+	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_COUNT];
- 
- 	uint8_t max_link;
- 
+-	queue_work(system_wq, &kmod_req->complete_work);
+-
+-out:
+-	mutex_unlock(&kmod_dup_mutex);
++	if (!queue_work(system_wq, &kmod_req->complete_work))
++		put_kmod_req(kmod_req);
+ }
 -- 
 2.53.0
 
