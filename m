@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE862E266C;
-	Sat, 17 Oct 2026 17:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD40C3B2FCA;
+	Sat, 17 Oct 2026 17:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258468; cv=none; b=qkqEBz9lRGrqorxJ8yzzyMdryt7nHJokmrMYiMoMal3/iAj0FsGbARltdK+Zws6PXgO4SjBGbXGfxBCW7WbsDAr1g2cflLF4RVhMSSDIQQ7ziudQD4OkFvsNZlD2iTnaS5ssi8wAkNvFGQDJFzBoD4Je66wEZ+7yWQy48EHLZXY=
+	t=1792258470; cv=none; b=CLWkpTiU1q3Ltm/eNOrSHSgkKzIY7Y5+C4j8wylJTr+nsWQAMhMXmlnPMV1Vh46BR1BwnWPs7ZNPkF5QsX3NtClvhhCG0ARZ2FKUt3AHaVKszfIjwo4NE9PA72mWhdhx5ZdINAG5SDZxvp0bvBn91+Nd9DbHjujjMNsJ232E7BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258468; c=relaxed/simple;
-	bh=aq6WYkpOEp9wk6NBycHi+qqHBhgg1rd4VU82xhZweGo=;
+	s=arc-20240116; t=1792258470; c=relaxed/simple;
+	bh=CWbbas2t2ls1ysZrGTnO3Ba/LlEgagsOz0c9sphvZgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZD+9QZ2xTiyLdETR3aCS6KLPxJIS+BGDU7dUfl70y1C0MrlXq2mZ0cMt6c5PJhikbVclrI23GRT323rPL1BoeFurMyfmquFWL1mbOrl9ZMUW3vHvuABEegVfBXpZu6QOjemPOq3WxMFupBuG1zvDUqsV7dsmExqwYNkTKRBZLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKSwQZcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rAHLI2akHvPN27xRZIckSOxeaYi7G04ldwACJEaqfKTzWLNIBmXNmhbnDU3RQCZdyu8BO/9eUHPCYF3lTOVzR/MWJYMsJEh+YRyHHGGsCRu1WYbqVwcK85OXWmVwFmYntS5eOyDrik+pDGJse/NTOSCwmfGuCYX5EYYrfuivuhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7BLWMJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKSwQZcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4423C1F000C4;
-	Sat, 17 Oct 2026 17:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7BLWMJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BBB1F000C4;
+	Sat, 17 Oct 2026 17:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258466;
-	bh=IstoYmB0QMrv/gnR0tvl+YIbr3x3rh7zCj8lP30O+mo=;
+	s=korg; t=1792258469;
+	bh=mAXTBGydqq0JV7UaaswqGYxzor4pkgQAqOC+36FiMg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKSwQZcHC5gipR1y4y0spKUXWhq4jU31t5QhBL7QqWJ7UjXHgyUbBwpRbIfElaR/4
-	 tOz5tjx2BAhRo+LXmdxoaF5GoMyEJu2tket6vNnThUxuWoFjhvrdDEOofb6TcduU6w
-	 3pF7G9MJqV4qW+5EHYLuhrTqb2C4Ews7wbZlESZs=
+	b=r7BLWMJDQJQGnbCXJtf7aC8wt+zBdy+gTxwEnDwIZpjdTQmoXCZIXvkx+R7m6y105
+	 eWVIMGNKF30xVEnhcYQaWvTAx6qNXvxJFbbKwEDVTOEKOnQfNEA1JBk8msqF5yvWGI
+	 AfurwVIansgvRuJpsM658arUKMgj8gm6wOJ5MoZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleh Konko <security@1seal.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0895/1674] Bluetooth: hci_event: move wake reason storage into validated event handlers
-Date: Sat, 17 Oct 2026 17:52:47 +0200
-Message-ID: <20261017160454.103697166@linuxfoundation.org>
+Subject: [PATCH 6.6 0896/1674] ALSA: ctxfi: Add hw parameter to daio_mgr_dao_init()
+Date: Sat, 17 Oct 2026 17:52:48 +0200
+Message-ID: <20261017160454.128327119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,234 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Harin Lee <me@harin.net>
 
-[ Upstream commit 2b2bf47cd75518c36fa2d41380e4a40641cc89cd ]
+[ Upstream commit 5ebd054272718334c543998a6d0b77a9846c16d9 ]
 
-hci_store_wake_reason() is called from hci_event_packet() immediately
-after stripping the HCI event header but before hci_event_func()
-enforces the per-event minimum payload length from hci_ev_table.
-This means a short HCI event frame can reach bacpy() before any bounds
-check runs.
+Add a hw parameter to the daio_mgr_dao_init() function to provide
+access to model-specific information. This is necessary for proper
+configuration of S/PDIF and I2S output ports on different hardware
+variants.
 
-Rather than duplicating skb parsing and per-event length checks inside
-hci_store_wake_reason(), move wake-address storage into the individual
-event handlers after their existing event-length validation has
-succeeded. Convert hci_store_wake_reason() into a small helper that only
-stores an already-validated bdaddr while the caller holds hci_dev_lock().
-Use the same helper after hci_event_func() with a NULL address to
-preserve the existing unexpected-wake fallback semantics when no
-validated event handler records a wake address.
-
-Annotate the helper with __must_hold(&hdev->lock) and add
-lockdep_assert_held(&hdev->lock) so future call paths keep the lock
-contract explicit.
-
-Call the helper from hci_conn_request_evt(), hci_conn_complete_evt(),
-hci_sync_conn_complete_evt(), le_conn_complete_evt(),
-hci_le_adv_report_evt(), hci_le_ext_adv_report_evt(),
-hci_le_direct_adv_report_evt(), hci_le_pa_sync_established_evt(), and
-hci_le_past_received_evt().
-
-Fixes: 2f20216c1d6f ("Bluetooth: Emit controller suspend and resume events")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleh Konko <security@1seal.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Harin Lee <me@harin.net>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251124180501.2760421-2-me@harin.net
+Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 93 ++++++++++++++-------------------------
- 1 file changed, 34 insertions(+), 59 deletions(-)
+ sound/pci/ctxfi/ctdaio.c     | 2 +-
+ sound/pci/ctxfi/cthardware.h | 2 +-
+ sound/pci/ctxfi/cthw20k1.c   | 2 +-
+ sound/pci/ctxfi/cthw20k2.c   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index d5f2be8783902..4c3fd5631c64e 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -81,6 +81,10 @@ static void *hci_le_ev_skb_pull(struct hci_dev *hdev, struct sk_buff *skb,
- 	return data;
+diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
+index 4e4c780bfa9d3..ea2914c7736ea 100644
+--- a/sound/pci/ctxfi/ctdaio.c
++++ b/sound/pci/ctxfi/ctdaio.c
+@@ -413,7 +413,7 @@ static int dao_rsc_init(struct dao *dao,
+ 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
+ 
+ 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
+-	hw->daio_mgr_dao_init(mgr->mgr.ctrl_blk,
++	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
+ 			daio_device_index(dao->daio.type, hw), conf);
+ 	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
+ 			daio_device_index(dao->daio.type, hw));
+diff --git a/sound/pci/ctxfi/cthardware.h b/sound/pci/ctxfi/cthardware.h
+index 2875cec83b8f2..d29b4e5b3fcc4 100644
+--- a/sound/pci/ctxfi/cthardware.h
++++ b/sound/pci/ctxfi/cthardware.h
+@@ -167,7 +167,7 @@ struct hw {
+ 	int (*daio_mgr_dsb_dai)(void *blk, unsigned int idx);
+ 	int (*daio_mgr_enb_dao)(void *blk, unsigned int idx);
+ 	int (*daio_mgr_dsb_dao)(void *blk, unsigned int idx);
+-	int (*daio_mgr_dao_init)(void *blk, unsigned int idx,
++	int (*daio_mgr_dao_init)(struct hw *hw, void *blk, unsigned int idx,
+ 						unsigned int conf);
+ 	int (*daio_mgr_set_imaparc)(void *blk, unsigned int slot);
+ 	int (*daio_mgr_set_imapnxt)(void *blk, unsigned int next);
+diff --git a/sound/pci/ctxfi/cthw20k1.c b/sound/pci/ctxfi/cthw20k1.c
+index 9edbf5d8c3c70..7b41e1ffda082 100644
+--- a/sound/pci/ctxfi/cthw20k1.c
++++ b/sound/pci/ctxfi/cthw20k1.c
+@@ -1031,7 +1031,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
+ 	return 0;
  }
  
-+static void hci_store_wake_reason(struct hci_dev *hdev,
-+				  const bdaddr_t *bdaddr, u8 addr_type)
-+	__must_hold(&hdev->lock);
-+
- static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
- 				struct sk_buff *skb)
+-static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
++static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
  {
-@@ -3058,6 +3062,7 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 	struct daio_mgr_ctrl_blk *ctl = blk;
  
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
- 
- 	/* Check for existing connection:
- 	 *
-@@ -3232,6 +3237,10 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
- 
- 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
- 
-+	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
-+	hci_dev_unlock(hdev);
-+
- 	/* Reject incoming connection from device with same BD ADDR against
- 	 * CVE-2020-26555
- 	 */
-@@ -4951,6 +4960,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
- 
- 	conn = hci_conn_hash_lookup_ba(hdev, ev->link_type, &ev->bdaddr);
- 	if (!conn) {
-@@ -5652,6 +5662,7 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
- 	u8 addr_type;
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, bdaddr, bdaddr_type);
- 
- 	/* Advertising stops when a connection is created. On a failed
- 	 * connection it keeps running, so leave the state bit alone.
-@@ -6270,6 +6281,8 @@ static void hci_le_adv_report_evt(struct hci_dev *hdev, void *data,
- 					info->length + 1))
- 			break;
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		if (info->length <= max_adv_len(hdev)) {
- 			rssi = info->data[info->length];
- 			process_adv_report(hdev, info->type, &info->bdaddr,
-@@ -6357,6 +6370,8 @@ static void hci_le_ext_adv_report_evt(struct hci_dev *hdev, void *data,
- 					info->length))
- 			break;
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		evt_type = __le16_to_cpu(info->type) & LE_EXT_ADV_EVT_TYPE_MASK;
- 		legacy_evt_type = ext_evt_type_to_legacy(hdev, evt_type);
- 		if (legacy_evt_type != LE_ADV_INVALID) {
-@@ -6392,6 +6407,7 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
- 
- 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
- 
-@@ -6649,6 +6665,8 @@ static void hci_le_direct_adv_report_evt(struct hci_dev *hdev, void *data,
- 	for (i = 0; i < ev->num; i++) {
- 		struct hci_ev_le_direct_adv_info *info = &ev->info[i];
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		process_adv_report(hdev, info->type, &info->bdaddr,
- 				   info->bdaddr_type, &info->direct_addr,
- 				   info->direct_addr_type, info->rssi, NULL, 0,
-@@ -7240,73 +7258,29 @@ static bool hci_get_cmd_complete(struct hci_dev *hdev, u16 opcode,
- 	return true;
+diff --git a/sound/pci/ctxfi/cthw20k2.c b/sound/pci/ctxfi/cthw20k2.c
+index 4d970f25a2c6c..e45c655528f51 100644
+--- a/sound/pci/ctxfi/cthw20k2.c
++++ b/sound/pci/ctxfi/cthw20k2.c
+@@ -985,7 +985,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
+ 	return 0;
  }
  
--static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
--				  struct sk_buff *skb)
-+static void hci_store_wake_reason(struct hci_dev *hdev,
-+				  const bdaddr_t *bdaddr, u8 addr_type)
-+	__must_hold(&hdev->lock)
+-static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
++static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
  {
--	struct hci_ev_le_advertising_info *adv;
--	struct hci_ev_le_direct_adv_info *direct_adv;
--	struct hci_ev_le_ext_adv_info *ext_adv;
--	const struct hci_ev_conn_complete *conn_complete = (void *)skb->data;
--	const struct hci_ev_conn_request *conn_request = (void *)skb->data;
--
--	hci_dev_lock(hdev);
-+	lockdep_assert_held(&hdev->lock);
+ 	struct daio_mgr_ctrl_blk *ctl = blk;
  
- 	/* If we are currently suspended and this is the first BT event seen,
- 	 * save the wake reason associated with the event.
- 	 */
- 	if (!hdev->suspended || hdev->wake_reason)
--		goto unlock;
-+		return;
-+
-+	if (!bdaddr) {
-+		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
-+		return;
-+	}
- 
- 	/* Default to remote wake. Values for wake_reason are documented in the
- 	 * Bluez mgmt api docs.
- 	 */
- 	hdev->wake_reason = MGMT_WAKE_REASON_REMOTE_WAKE;
--
--	/* Once configured for remote wakeup, we should only wake up for
--	 * reconnections. It's useful to see which device is waking us up so
--	 * keep track of the bdaddr of the connection event that woke us up.
--	 */
--	if (event == HCI_EV_CONN_REQUEST) {
--		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
--		hdev->wake_addr_type = BDADDR_BREDR;
--	} else if (event == HCI_EV_CONN_COMPLETE) {
--		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
--		hdev->wake_addr_type = BDADDR_BREDR;
--	} else if (event == HCI_EV_LE_META) {
--		struct hci_ev_le_meta *le_ev = (void *)skb->data;
--		u8 subevent = le_ev->subevent;
--		u8 *ptr = &skb->data[sizeof(*le_ev)];
--		u8 num_reports = *ptr;
--
--		if ((subevent == HCI_EV_LE_ADVERTISING_REPORT ||
--		     subevent == HCI_EV_LE_DIRECT_ADV_REPORT ||
--		     subevent == HCI_EV_LE_EXT_ADV_REPORT) &&
--		    num_reports) {
--			adv = (void *)(ptr + 1);
--			direct_adv = (void *)(ptr + 1);
--			ext_adv = (void *)(ptr + 1);
--
--			switch (subevent) {
--			case HCI_EV_LE_ADVERTISING_REPORT:
--				bacpy(&hdev->wake_addr, &adv->bdaddr);
--				hdev->wake_addr_type = adv->bdaddr_type;
--				break;
--			case HCI_EV_LE_DIRECT_ADV_REPORT:
--				bacpy(&hdev->wake_addr, &direct_adv->bdaddr);
--				hdev->wake_addr_type = direct_adv->bdaddr_type;
--				break;
--			case HCI_EV_LE_EXT_ADV_REPORT:
--				bacpy(&hdev->wake_addr, &ext_adv->bdaddr);
--				hdev->wake_addr_type = ext_adv->bdaddr_type;
--				break;
--			}
--		}
--	} else {
--		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
--	}
--
--unlock:
--	hci_dev_unlock(hdev);
-+	bacpy(&hdev->wake_addr, bdaddr);
-+	hdev->wake_addr_type = addr_type;
- }
- 
- #define HCI_EV_VL(_op, _func, _min_len, _max_len) \
-@@ -7551,14 +7525,15 @@ void hci_event_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	skb_pull(skb, HCI_EVENT_HDR_SIZE);
- 
--	/* Store wake reason if we're suspended */
--	hci_store_wake_reason(hdev, event, skb);
--
- 	bt_dev_dbg(hdev, "event 0x%2.2x", event);
- 
- 	hci_event_func(hdev, event, skb, &opcode, &status, &req_complete,
- 		       &req_complete_skb);
- 
-+	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, NULL, 0);
-+	hci_dev_unlock(hdev);
-+
- 	if (req_complete) {
- 		req_complete(hdev, status, opcode);
- 	} else if (req_complete_skb) {
 -- 
 2.53.0
 
