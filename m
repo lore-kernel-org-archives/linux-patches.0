@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA133A9870;
-	Sat, 17 Oct 2026 16:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B843A6EEB;
+	Sat, 17 Oct 2026 16:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254907; cv=none; b=dl/VufxoC/4lmNvaZMn6r1XRMQfilvucfeSwyjCB5hkO3Kmzc/PRhHusJ7rO9s1LkI6++RE5rmBmfshDCHNZTGEEOgbVskihE2hIFOa1uZ3RRq3f67SsWJ/rSkY9IZHUJNtfsB6euuLUgSa2lzD+0kk/Kd0CKqSm0+6Oetr8jwQ=
+	t=1792254911; cv=none; b=mlZ6wwNaNwKivetubm/7Sgn/PuGYsRGU9bPVVuDN5iMFcscXFzNNs0MwEP4NO+RqzlMN10JA50ws2OmOarBB66exj0Vxv+J2nDrXjXbSD4Yw+I8vpPoiAHbigNsFMz+P5qLC89cgOZxnTaoO3QfVNMC6vjfR7zoN9baanx8tVJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254907; c=relaxed/simple;
-	bh=Vv9A/CQNnV9hA1eWrQBi7uY8VQULBbBA1vCm2+rTJH0=;
+	s=arc-20240116; t=1792254911; c=relaxed/simple;
+	bh=lV6f996qRFY751Qx+X6Yktg8FvtmC+cQ+zkvPJoVrvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuapjYCSVlprYsU/RFLHPzGJq5pjurLDgrJjMtgeb/8BTxdivCzoQRi7bXu5DrGgcK+4mOZnwnMy6WL3Cz1QLTRXOXmHxDrfLOhne/3Ide6TJf1Fug3MRx1AKDSyQ7A450MWzcXWReRPNOBXb1rL+1bTMKT9fNUGYh1O71sMF8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiNTIWZo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qrgEMeaxDDiz8VirdiFK0K/rrqAx5g1eXDObGrusE7Crplhbld3TkrdW1JDEEiGb0gUXN62FrDvN5txZJd4olE/SomKa4hQEsRFyiweiPP7xsOrdXFKlZ8BlD1ZJkFLPYJ3mSEjbsHOb7BB7w+0yhl3NGGedtMFawwh6Y9khxh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfKkn3nV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiNTIWZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CC11F000C4;
-	Sat, 17 Oct 2026 16:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfKkn3nV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117EC1F000C4;
+	Sat, 17 Oct 2026 16:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254906;
-	bh=0snXyyyf3zTz5EW68BruLef1loaafmLUbYwG1yHt8fI=;
+	s=korg; t=1792254909;
+	bh=qPeKVY78tOW/IgDq3LrHYz1viVcvwZGvHLhT+tmtQHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CiNTIWZo6xexQPye0QsJ14KHVoR3B/wfEc/JXWul55xKcnaeIoL5SW3uaNiwzXuZl
-	 6tZiD8ZpfrtAxXnAuTJc5D1vAHtik2mMVsZg32xxr3OyUpA7ioZnGb5zEztlMJKQRR
-	 qd6B3q4ImRUG+Shum/j+7q2JN86Y6CygHrbaSENA=
+	b=KfKkn3nVSMTheim/msWfVbg9I7x5wdK/p2wsu/j03muLOP8yCmhnVl1cijY4G0FXH
+	 vE0OzimONs9VYi8jgJx/YtcflFWCFau6yNDP3vaqfLWjksZBLHzI8poeGD8Ts3IoMJ
+	 PFjYL/2X6eYp5lzB61DzU45AaVdAW/Ku3VhL8V/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	vega@nebusec.ai,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 599/869] net/sched: add qstats_cpu_drop_inc() helper
-Date: Sat, 17 Oct 2026 17:57:20 +0200
-Message-ID: <20261017160052.400092685@linuxfoundation.org>
+Subject: [PATCH 6.12 600/869] net/sched: act_ife: Only operate on Ethernet frames
+Date: Sat, 17 Oct 2026 17:57:21 +0200
+Message-ID: <20261017160052.426888635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,246 +53,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 3f3aa77ff1c8b45ec8c9e40212f1a24a93e00df3 ]
+[ Upstream commit 5b483f7791b079bb97d411f1066652ff659207ff ]
 
-1) Using this_cpu_inc() is better than going through this_cpu_ptr():
+act_ife encapsulates/decapsulates the original Ethernet header and uses
+skb->dev->hard_header_len as the length of that header. That is only
+correct for Ethernet devices: on a device where hard_header_len does not
+match the L2 header that was actually pulled (PPP reports PPP_HDRLEN
+while nothing is stripped on ingress), the ingress skb_push()/skb_pull()
+use the wrong length and can hit skb_under_panic when headroom is tight.
 
-- Single instruction on x86.
-- Store tearing prevention.
+IFE is Ethernet-only by design - it builds an outer ethhdr, rewrites
+h_source/h_dest/h_proto, and calls eth_type_trans() on decode - so
+instead of trying to make the offsets work for arbitrary link types,
+simply drop packets that do not carry an Ethernet header.
 
-2) Change tcf_action_update_stats() to use this_cpu_add().
+Checking skb->dev->type alone is not enough. We have to cater for a
+corner case where mirred can redirect an skb from a non-Ethernet device
+to an Ethernet one, and skb->dev then says nothing about the framing the
+skb actually has: an skb redirected from ppp0 reaches the target's ingress
+hook with mac_len 0 and no Ethernet header at all. So at ingress also
+require mac_len to be ETH_HLEN. On egress mac_len is not maintained, so
+the device type is all we have; a bogus redirect there yields a malformed
+frame rather than an out-of-bounds push, and it would be malformed with or
+without IFE.
 
-3) Add WRITE_ONCE() to __qdisc_qstats_drop() and qstats_drop_inc()
-   in preparation for lockless "tc qdisc show".
+That corner case is not theoretical - redirecting from ppp0 into a veth
+that has an ife encode action on its ingress hook panics without this
+patch:
 
-$ scripts/bloat-o-meter -t vmlinux.old vmlinux.new
-add/remove: 0/0 grow/shrink: 3/17 up/down: 72/-216 (-144)
-Function                                     old     new   delta
-dualpi2_enqueue_skb                          462     511     +49
-tcf_ife_act                                 1061    1077     +16
-taprio_enqueue                               613     620      +7
-codel_qdisc_enqueue                          149     143      -6
-tcf_vlan_act                                 684     676      -8
-tcf_skbedit_act                              626     618      -8
-tcf_police_act                               725     717      -8
-tcf_mpls_act                                1297    1289      -8
-tcf_gate_act                                 310     302      -8
-tcf_gact_act                                 222     214      -8
-tcf_csum_act                                2438    2430      -8
-tcf_bpf_act                                  709     701      -8
-tcf_action_update_stats                      124     115      -9
-pie_qdisc_enqueue                            865     856      -9
-pfifo_enqueue                                116     107      -9
-choke_enqueue                               2069    2059     -10
-plug_enqueue                                 139     128     -11
-bfifo_enqueue                                121     110     -11
-tcf_nat_act                                 1501    1489     -12
-gred_enqueue                                1743    1668     -75
-Total: Before=24388609, After=24388465, chg -0.00%
+  skbuff: skb_under_panic: len:98 put:14 head:ffff88800e410000
+          data:ffff88800e40fff5 tail:0x57 end:0x640 dev:veth3
+  kernel BUG at net/core/skbuff.c:214!
+  Call Trace:
+   skb_push (net/core/skbuff.c:224 net/core/skbuff.c:2657)
+   tcf_ife_act (net/sched/act_ife.c:829 net/sched/act_ife.c:874)
+   tc_run (net/core/dev.c:4463)
+   netif_receive_skb (net/core/dev.c:6463 net/core/dev.c:6522)
+   tcf_mirred_to_dev (net/sched/act_mirred.c:248 net/sched/act_mirred.c:328)
+   tcf_mirred_act (net/sched/act_mirred.c:489)
+   tc_run (net/core/dev.c:4463)
+   process_backlog (net/core/dev.c:6728)
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260501135916.2566766-1-edumazet@google.com
+With Ethernet framing guaranteed, use ETH_HLEN instead of
+hard_header_len.
+
+Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
+Reported-by: vega@nebusec.ai
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260821164031.32824-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5b483f7791b0 ("net/sched: act_ife: Only operate on Ethernet frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/act_api.h     | 2 +-
- include/net/sch_generic.h | 9 +++++++--
- net/sched/act_api.c       | 2 +-
- net/sched/act_bpf.c       | 2 +-
- net/sched/act_ife.c       | 8 ++++----
- net/sched/act_mpls.c      | 2 +-
- net/sched/act_police.c    | 2 +-
- net/sched/act_skbedit.c   | 2 +-
- net/sched/sch_cake.c      | 2 +-
- net/sched/sch_fq_codel.c  | 2 +-
- net/sched/sch_gred.c      | 2 +-
- 11 files changed, 20 insertions(+), 15 deletions(-)
+ net/ife/ife.c       | 14 +++++++-------
+ net/sched/act_ife.c | 32 ++++++++++++++++++++++++++++----
+ 2 files changed, 35 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/act_api.h b/include/net/act_api.h
-index 76c31ce80fe52..29b72635abe71 100644
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -238,7 +238,7 @@ static inline void tcf_action_update_bstats(struct tc_action *a,
- static inline void tcf_action_inc_drop_qstats(struct tc_action *a)
- {
- 	if (likely(a->cpu_qstats)) {
--		qstats_drop_inc(this_cpu_ptr(a->cpu_qstats));
-+		qstats_cpu_drop_inc(a->cpu_qstats);
- 		return;
- 	}
- 	spin_lock(&a->tcfa_lock);
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 016d9cf827069..5f83b4970f792 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -976,12 +976,17 @@ static inline void qdisc_qstats_cpu_requeues_inc(struct Qdisc *sch)
+diff --git a/net/ife/ife.c b/net/ife/ife.c
+index 7a75947a31e31..2ddf725d3389e 100644
+--- a/net/ife/ife.c
++++ b/net/ife/ife.c
+@@ -37,7 +37,7 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
+ 	 * where ORIGDATA = original ethernet header ...
+ 	 */
+ 	int hdrm = metalen + IFE_METAHDRLEN;
+-	int total_push = hdrm + skb->dev->hard_header_len;
++	int total_push = hdrm + ETH_HLEN;
+ 	struct ifeheadr *ifehdr;
+ 	struct ethhdr *iethh;	/* inner ether header */
+ 	int skboff = 0;
+@@ -50,9 +50,9 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
+ 	iethh = (struct ethhdr *) skb->data;
  
- static inline void __qdisc_qstats_drop(struct Qdisc *sch, int count)
- {
--	sch->qstats.drops += count;
-+	WRITE_ONCE(sch->qstats.drops, sch->qstats.drops + count);
- }
+ 	__skb_push(skb, total_push);
+-	memcpy(skb->data, iethh, skb->dev->hard_header_len);
++	memcpy(skb->data, iethh, ETH_HLEN);
+ 	skb_reset_mac_header(skb);
+-	skboff += skb->dev->hard_header_len;
++	skboff += ETH_HLEN;
  
- static inline void qstats_drop_inc(struct gnet_stats_queue *qstats)
- {
--	qstats->drops++;
-+	WRITE_ONCE(qstats->drops, qstats->drops + 1);
-+}
-+
-+static inline void qstats_cpu_drop_inc(struct gnet_stats_queue __percpu *qstats)
-+{
-+	this_cpu_inc(qstats->drops);
- }
+ 	/* total metadata length */
+ 	ifehdr = (struct ifeheadr *) (skb->data + skboff);
+@@ -69,12 +69,12 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
+ 	int total_pull;
+ 	u16 ifehdrln;
  
- static inline void qstats_overlimit_inc(struct gnet_stats_queue *qstats)
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index ca851146f6958..94feb3961dcd2 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1570,7 +1570,7 @@ void tcf_action_update_stats(struct tc_action *a, u64 bytes, u64 packets,
- 	if (a->cpu_bstats) {
- 		_bstats_update(this_cpu_ptr(a->cpu_bstats), bytes, packets);
+-	if (!pskb_may_pull(skb, skb->dev->hard_header_len + IFE_METAHDRLEN))
++	if (!pskb_may_pull(skb, ETH_HLEN + IFE_METAHDRLEN))
+ 		return NULL;
  
--		this_cpu_ptr(a->cpu_qstats)->drops += drops;
-+		this_cpu_add(a->cpu_qstats->drops, drops);
+-	ifehdr = (struct ifeheadr *) (skb->data + skb->dev->hard_header_len);
++	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
+ 	ifehdrln = ntohs(ifehdr->metalen);
+-	total_pull = skb->dev->hard_header_len + ifehdrln;
++	total_pull = ETH_HLEN + ifehdrln;
  
- 		if (hw)
- 			_bstats_update(this_cpu_ptr(a->cpu_bstats_hw),
-diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
-index e99b9269ea1a9..06d8f78b73683 100644
---- a/net/sched/act_bpf.c
-+++ b/net/sched/act_bpf.c
-@@ -76,7 +76,7 @@ TC_INDIRECT_SCOPE int tcf_bpf_act(struct sk_buff *skb,
- 		break;
- 	case TC_ACT_SHOT:
- 		action = filter_res;
--		qstats_drop_inc(this_cpu_ptr(prog->common.cpu_qstats));
-+		qstats_cpu_drop_inc(prog->common.cpu_qstats);
- 		break;
- 	case TC_ACT_UNSPEC:
- 		action = prog->tcf_action;
+ 	if (unlikely(ifehdrln < 2))
+ 		return NULL;
+@@ -82,7 +82,7 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
+ 	if (unlikely(!pskb_may_pull(skb, total_pull + ETH_HLEN)))
+ 		return NULL;
+ 
+-	ifehdr = (struct ifeheadr *)(skb->data + skb->dev->hard_header_len);
++	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
+ 	skb_set_mac_header(skb, total_pull);
+ 	__skb_pull(skb, total_pull);
+ 	*metalen = ifehdrln - IFE_METAHDRLEN;
 diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index a90d7959fc432..3333714b68650 100644
+index 3333714b68650..b0d66ba80baad 100644
 --- a/net/sched/act_ife.c
 +++ b/net/sched/act_ife.c
-@@ -727,7 +727,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+@@ -28,6 +28,7 @@
+ #include <uapi/linux/tc_act/tc_ife.h>
+ #include <net/tc_act/tc_ife.h>
+ #include <linux/etherdevice.h>
++#include <linux/if_arp.h>
+ #include <net/ife.h>
+ #include <net/tc_wrapper.h>
+ 
+@@ -723,7 +724,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 	tcf_lastuse_update(&ife->tcf_tm);
+ 
+ 	if (skb_at_tc_ingress(skb))
+-		skb_push(skb, skb->dev->hard_header_len);
++		skb_push(skb, ETH_HLEN);
  
  	tlv_data = ife_decode(skb, &metalen);
  	if (unlikely(!tlv_data)) {
--		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
-+		qstats_cpu_drop_inc(ife->common.cpu_qstats);
- 		return TC_ACT_SHOT;
+@@ -795,7 +796,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	   where ORIGDATA = original ethernet header ...
+ 	 */
+ 	u16 metalen = ife_get_sz(skb, p);
+-	int hdrm = metalen + skb->dev->hard_header_len + IFE_METAHDRLEN;
++	int hdrm = metalen + ETH_HLEN + IFE_METAHDRLEN;
+ 	unsigned int skboff = 0;
+ 	int new_len = skb->len + hdrm;
+ 	bool exceed_mtu = false;
+@@ -826,7 +827,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
  	}
  
-@@ -740,7 +740,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
- 		curr_data = ife_tlv_meta_decode(tlv_data, ifehdr_end, &mtype,
- 						&dlen, NULL);
- 		if (!curr_data) {
--			qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
-+			qstats_cpu_drop_inc(ife->common.cpu_qstats);
- 			return TC_ACT_SHOT;
- 		}
+ 	if (skb_at_tc_ingress(skb))
+-		skb_push(skb, skb->dev->hard_header_len);
++		skb_push(skb, ETH_HLEN);
  
-@@ -755,7 +755,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
- 	}
+ 	ife_meta = ife_encode(skb, metalen);
+ 	if (!ife_meta)
+@@ -856,11 +857,27 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	oethh->h_proto = htons(p->eth_type);
  
- 	if (WARN_ON(tlv_data != ifehdr_end)) {
--		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
-+		qstats_cpu_drop_inc(ife->common.cpu_qstats);
- 		return TC_ACT_SHOT;
- 	}
+ 	if (skb_at_tc_ingress(skb))
+-		skb_pull(skb, skb->dev->hard_header_len);
++		skb_pull(skb, ETH_HLEN);
  
-@@ -821,7 +821,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 	 * so lets be conservative.. */
- 	if ((action == TC_ACT_SHOT) || exceed_mtu) {
- drop:
--		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
-+		qstats_cpu_drop_inc(ife->common.cpu_qstats);
- 		return TC_ACT_SHOT;
- 	}
- 
-diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
-index 44a37a71ae923..24d9cb7c1c4db 100644
---- a/net/sched/act_mpls.c
-+++ b/net/sched/act_mpls.c
-@@ -125,7 +125,7 @@ TC_INDIRECT_SCOPE int tcf_mpls_act(struct sk_buff *skb,
- 	return ret;
- 
- drop:
--	qstats_drop_inc(this_cpu_ptr(m->common.cpu_qstats));
-+	qstats_cpu_drop_inc(m->common.cpu_qstats);
- 	return TC_ACT_SHOT;
+ 	return action;
  }
  
-diff --git a/net/sched/act_police.c b/net/sched/act_police.c
-index 1ad8a79486902..098eddcd36b6c 100644
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -317,7 +317,7 @@ TC_INDIRECT_SCOPE int tcf_police_act(struct sk_buff *skb,
- 	qstats_overlimit_inc(this_cpu_ptr(police->common.cpu_qstats));
- inc_drops:
- 	if (ret == TC_ACT_SHOT)
--		qstats_drop_inc(this_cpu_ptr(police->common.cpu_qstats));
-+		qstats_cpu_drop_inc(police->common.cpu_qstats);
- end:
- 	return ret;
- }
-diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
-index 4cddf2674373f..c52f25e0c0a09 100644
---- a/net/sched/act_skbedit.c
-+++ b/net/sched/act_skbedit.c
-@@ -85,7 +85,7 @@ TC_INDIRECT_SCOPE int tcf_skbedit_act(struct sk_buff *skb,
- 	return params->action;
++/* IFE encapsulates the original Ethernet header and, on decode, expects to
++ * find one, so it can only ever work on skbs that carry one. Loopback carries
++ * Ethernet header as well, so it qualifies here.
++ * At ingress, also verify that the L2 header about to be pushed back really
++ * is an Ethernet header because the skb could've been redirected with mirred
++ * from a non-Ethernet device.
++ */
++static bool tcf_ife_is_eth_skb(const struct sk_buff *skb)
++{
++	if (skb->dev->type != ARPHRD_ETHER &&
++	    skb->dev->type != ARPHRD_LOOPBACK)
++		return false;
++
++	return !skb_at_tc_ingress(skb) || skb->mac_len == ETH_HLEN;
++}
++
+ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 				  const struct tc_action *a,
+ 				  struct tcf_result *res)
+@@ -869,6 +886,13 @@ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 	struct tcf_ife_params *p;
+ 	int ret;
  
- err:
--	qstats_drop_inc(this_cpu_ptr(d->common.cpu_qstats));
-+	qstats_cpu_drop_inc(d->common.cpu_qstats);
- 	return TC_ACT_SHOT;
- }
- 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 7eb3e7485539f..a60aae42398a3 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1824,7 +1824,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 		if (ack) {
- 			b->ack_drops++;
--			sch->qstats.drops++;
-+			qdisc_qstats_drop(sch);
- 			ack_pkt_len = qdisc_pkt_len(ack);
- 			b->bytes += ack_pkt_len;
- 			q->buffer_used += skb->truesize - ack->truesize;
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 4da7525c3e7cf..d41a55863d165 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -175,7 +175,7 @@ static unsigned int fq_codel_drop(struct Qdisc *sch, unsigned int max_packets,
- 	flow->cvars.count += i;
- 	q->backlogs[idx] -= len;
- 	q->memory_usage -= mem;
--	sch->qstats.drops += i;
-+	__qdisc_qstats_drop(sch, i);
- 	sch->qstats.backlog -= len;
- 	sch->q.qlen -= i;
- 	return idx;
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index 53b348b83c913..26103178a4ce4 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -389,7 +389,7 @@ static int gred_offload_dump_stats(struct Qdisc *sch)
- 		packets += u64_stats_read(&hw_stats->stats.bstats[i].packets);
- 		sch->qstats.qlen += hw_stats->stats.qstats[i].qlen;
- 		sch->qstats.backlog += hw_stats->stats.qstats[i].backlog;
--		sch->qstats.drops += hw_stats->stats.qstats[i].drops;
-+		__qdisc_qstats_drop(sch, hw_stats->stats.qstats[i].drops);
- 		sch->qstats.requeues += hw_stats->stats.qstats[i].requeues;
- 		sch->qstats.overlimits += hw_stats->stats.qstats[i].overlimits;
- 	}
++	if (unlikely(!tcf_ife_is_eth_skb(skb))) {
++		bstats_update(this_cpu_ptr(ife->common.cpu_bstats), skb);
++		tcf_lastuse_update(&ife->tcf_tm);
++		qstats_cpu_drop_inc(ife->common.cpu_qstats);
++		return TC_ACT_SHOT;
++	}
++
+ 	p = rcu_dereference_bh(ife->params);
+ 	if (p->flags & IFE_ENCODE) {
+ 		ret = tcf_ife_encode(skb, a, res, p);
 -- 
 2.53.0
 
