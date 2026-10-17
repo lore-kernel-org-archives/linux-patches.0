@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63A03AFCF4;
-	Sat, 17 Oct 2026 16:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6D73BAD9A;
+	Sat, 17 Oct 2026 16:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255936; cv=none; b=d/hBcXGWopskILt89Oyxoq9+yH4XpVD/AqSlpRA+ZHtjOm7obEdcTYDERuotTO0IO50eBVhhCdMyajmSjGI1I6+lGeq61IiOKq5InkjHiLBUL55YCewByROAobESa43D+CWzuFJaKWWFKPy6iUefOZ2Ivs5j1HUXoYSNFJctEiU=
+	t=1792255940; cv=none; b=Be55i8Cs/toH8s9feQ8840GFz2V6iiY1nxYwh1LrPPvEP6Ka1vNIaSsC5iugguv2G/XsDM2E4E7ZrBTWwvN9U2BTuvJ+1hGD/aJVoET0yxFPLuCVrF1rqDADthlbDGhdXbnhF4OxX7fr5J/DeQRjrXTYb4wPK51vWMZRK3qgm+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255936; c=relaxed/simple;
-	bh=e0PCvh17M8NKK+6DNo7Q35Pj8GKJmOSkmGNnLUuccWo=;
+	s=arc-20240116; t=1792255940; c=relaxed/simple;
+	bh=FdmXsXGMjmFK0wyMCtrMv+MCTZHqkyeyAeE4aoNPP2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgOeviqwDl+SzKSG91iJN/IGJMQw3XRxtb1ToI64OEZ0P6Nx6upN4PdHgMWxFKO0nvMGkOEAGgYN0INA/HVpwBdqv6dHqTbeeGAv2uxTWBIrEH2zjLVMypyiquKC/CxVMitiDkhxAVjBN3dvxZCjRlD1yTQn3AFcupv5J7bwCKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vg+aXt2c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fnMB6oZUGh5RnYz04GHCKhyOTOd5WkjRYDLHOuvyAILgVOWN2kyWrXmPlg2Yz6peMCjEibnq2MSoSpQoiqmCX6T1BHajCv4NkpuoVilqZNyrmEUE/aidpMiTB+oID23njkAuVcmAzvVIWCFnS+PLNf+fQAe4QzGQMyAz5r1O0j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7r1gGGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vg+aXt2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F801F000C4;
-	Sat, 17 Oct 2026 16:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7r1gGGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CE91F000C4;
+	Sat, 17 Oct 2026 16:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255935;
-	bh=CieEBQqN/+mpOITBwDvBaTmDncy5tuSZizkMk9c8QYo=;
+	s=korg; t=1792255938;
+	bh=TxmsUvS56a7lqSxDTXloebiKFUJOphQdltMLxHQY6o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vg+aXt2cdkWSqzNdYW4UXD7848wOIFt5NQO4aZkjAPAPw7wu10ax1jt5MB7PQFliZ
-	 bFTkfgI+0yBgrcLPw0z5K5usnA9DZNA8CbEtpMIMj6wMVIanIcT6WiMlDYdPbcIXiR
-	 5MQ0dJDyW464rmc5S2DscK5JvtyjGivnmqDzZ8Ew=
+	b=Z7r1gGGYppQHpamlGgNmG/3F6MOWgmD8XgjPpKoL3iJloE9Cj42KCBOCl50hdmp2E
+	 V3NL4feVomM1vYKlaLne4cnHo8akL4xHJtC5eIUp8wfY+Hk+rcwHbgTDPDI1V4fWf3
+	 Uo51tVLjgjjCQIuiWd4dR8p6LQAJdt4mnkF8vfUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0028/1674] scsi: qla2xxx: Fix use-after-free of qpair work on queue teardown
-Date: Sat, 17 Oct 2026 17:38:20 +0200
-Message-ID: <20261017160431.864261331@linuxfoundation.org>
+Subject: [PATCH 6.6 0029/1674] scsi: qla2xxx: Validate BSG request_len before reading vendor_cmd[]
+Date: Sat, 17 Oct 2026 17:38:21 +0200
+Message-ID: <20261017160431.890291906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,54 +54,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 19788a55cab61d78e33e0914a5a31d27843e8a4a ]
+[ Upstream commit 4cf38dd9465736141263ebb63375868311a0ec81 ]
 
-The response queue MSI-X handler qla2xxx_msix_rsp_q() schedules
-qla_do_work() via queue_work(ha->wq, &qpair->q_work). qla_do_work()
-dereferences the qpair (vha, rsp) and takes qpair->qp_lock.
+The FC BSG transport allocates job->request via memdup_user() using the
+exact user-supplied request_len. For FC_BSG_HST_VENDOR,
+fc_bsg_host_dispatch() only guarantees request_len covers msgcode and
+vendor_id; it does not account for the vendor_cmd[] flexible array.
 
-During teardown, qla2xxx_delete_qpair() deletes the response queue, which
-calls free_irq() in qla25xx_free_rsp_que(), and then frees the queue and
-the qpair. free_irq() waits for running hardirq handlers but does not
-cancel work already placed on ha->wq. A still-pending q_work then runs
-qla_do_work() against the freed qpair and response queue, causing a
-use-after-free. This is especially likely during full adapter teardown,
-where destroy_workqueue(ha->wq) forces pending work to run after the queue
-pairs have been freed.
+qla2xxx then reads the command selector vendor_cmd[0] and, in several
+sub-handlers, vendor_cmd[1]/[2] or structures overlaid on the vendor
+command area without verifying request_len. A caller holding
+CAP_SYS_RAWIO can submit a short request whose vendor_id matches the
+host, triggering out-of-bounds heap reads (KASAN-detectable, and able to
+mis-select a command or panic).
 
-Flush the work item with cancel_work_sync() in qla25xx_free_rsp_que()
-after free_irq() has released the interrupt (so no new work can be
-queued) and before the response queue and qpair memory are freed (so the
-flushed handler still sees valid memory). Guard on rsp->qpair and ha->wq
-to match the INIT_WORK() condition and avoid operating on an
-uninitialized work_struct.
+Add a central guard in qla2x00_process_vendor_specific() so the selector
+is always in bounds, restrict the early vendor_cmd[0] read in
+qla24xx_bsg_request() to sufficiently long vendor messages, and add
+request_len checks to the sub-handlers that read further:
+qla24xx_proc_fcp_prio_cfg_cmd(), qla2x00_process_loopback(),
+qla84xx_reset(), qla84xx_updatefw(), qla2x00_read_optrom(),
+qla2x00_update_optrom(), qlafx00_mgmt_cmd() and
+qla28xx_validate_flash_image().
 
-Fixes: 68ca949cdb04 ("[SCSI] qla2xxx: Add CPU affinity support.")
-Reported-by: Sashiko <sashiko-dev@google.com>
+Fixes: 01e0e15c8b3b ("scsi: don't use fc_bsg_job::request and fc_bsg_job::reply directly")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-5-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-31-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ adapted hunks to the existing OPTROM helper and absence of qla28xx_validate_flash_image(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_mid.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/qla2xxx/qla_bsg.c | 45 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
-index 61570f032a8ac..44dd9373bfb12 100644
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -606,6 +606,10 @@ qla25xx_free_rsp_que(struct scsi_qla_host *vha, struct rsp_que *rsp)
- 		rsp->msix->handle = NULL;
+diff --git a/drivers/scsi/qla2xxx/qla_bsg.c b/drivers/scsi/qla2xxx/qla_bsg.c
+index 8e859d79bdee1..0fbf6dba5a368 100644
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -158,6 +158,12 @@ qla24xx_proc_fcp_prio_cfg_cmd(struct bsg_job *bsg_job)
+ 		goto exit_fcp_prio_cfg;
  	}
  
-+	/* Flush any queued response work before freeing the queue/qpair. */
-+	if (rsp->qpair && ha->wq)
-+		cancel_work_sync(&rsp->qpair->q_work);
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t)) {
++		ret = -EINVAL;
++		goto exit_fcp_prio_cfg;
++	}
 +
- 	if (rsp->ring)
- 		dma_free_coherent(&ha->pdev->dev,
- 				  (rsp->length + 1) * rsp_entry_size,
+ 	/* Get the sub command */
+ 	oper = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+ 
+@@ -756,6 +762,10 @@ qla2x00_process_loopback(struct bsg_job *bsg_job)
+ 		return -EIO;
+ 	}
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 3 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	memset(&elreq, 0, sizeof(elreq));
+ 
+ 	elreq.req_sg_cnt = dma_map_sg(&ha->pdev->dev,
+@@ -988,6 +998,10 @@ qla84xx_reset(struct bsg_job *bsg_job)
+ 		return -EINVAL;
+ 	}
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	flag = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+ 
+ 	rval = qla84xx_reset_chip(vha, flag == A84_ISSUE_RESET_DIAG_FW);
+@@ -1032,6 +1046,10 @@ qla84xx_updatefw(struct bsg_job *bsg_job)
+ 		return -EINVAL;
+ 	}
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	sg_cnt = dma_map_sg(&ha->pdev->dev, bsg_job->request_payload.sg_list,
+ 		bsg_job->request_payload.sg_cnt, DMA_TO_DEVICE);
+ 	if (!sg_cnt) {
+@@ -1482,6 +1500,10 @@ qla2x00_read_optrom(struct bsg_job *bsg_job)
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	if (ha->flags.nic_core_reset_hdlr_active)
+ 		return -EBUSY;
+ 
+@@ -1519,6 +1541,10 @@ qla2x00_update_optrom(struct bsg_job *bsg_job)
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
++		return -EINVAL;
++
+ 	mutex_lock(&ha->optrom_mutex);
+ 	rval = qla2x00_optrom_setup(bsg_job, vha, 1);
+ 	if (rval) {
+@@ -2010,6 +2036,11 @@ qlafx00_mgmt_cmd(struct bsg_job *bsg_job)
+ 	struct fc_port *fcport;
+ 	char  *type = "FC_BSG_HST_FX_MGMT";
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + sizeof(uint32_t) +
++	    sizeof(struct qla_mt_iocb_rqst_fx00))
++		return -EINVAL;
++
+ 	/* Copy the IOCB specific information */
+ 	piocb_rqst = (struct qla_mt_iocb_rqst_fx00 *)
+ 	    &bsg_request->rqst_data.h_vendor.vendor_cmd[1];
+@@ -2899,6 +2930,13 @@ qla2x00_process_vendor_specific(struct scsi_qla_host *vha, struct bsg_job *bsg_j
+ {
+ 	struct fc_bsg_request *bsg_request = bsg_job->request;
+ 
++	if (bsg_job->request_len <
++	    sizeof(struct fc_bsg_request) + sizeof(uint32_t)) {
++		ql_log(ql_log_warn, vha, 0x7000,
++		       "BSG request too small for vendor cmd.\n");
++		return -EINVAL;
++	}
++
+ 	ql_dbg(ql_dbg_edif, vha, 0x911b, "%s FC_BSG_HST_VENDOR cmd[0]=0x%x\n",
+ 	    __func__, bsg_request->rqst_data.h_vendor.vendor_cmd[0]);
+ 
+@@ -3024,8 +3062,11 @@ qla24xx_bsg_request(struct bsg_job *bsg_job)
+ 	}
+ 
+ 	/* Disable port will bring down the chip, allow enable command */
+-	if (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
+-	    bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS)
++	if (bsg_request->msgcode == FC_BSG_HST_VENDOR &&
++	    bsg_job->request_len >=
++		sizeof(struct fc_bsg_request) + sizeof(uint32_t) &&
++	    (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
++	     bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS))
+ 		goto skip_chip_chk;
+ 
+ 	if (vha->hw->flags.port_isolated) {
 -- 
 2.53.0
 
