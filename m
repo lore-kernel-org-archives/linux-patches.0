@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0F538654F;
-	Sat, 17 Oct 2026 16:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3D92C026C;
+	Sat, 17 Oct 2026 16:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254371; cv=none; b=SvGtbtQBLIC+rqzrgh5w1vivbGYEEs7Rmzram6WK5SiL2zK8YuErJb7se5k/siGSiHToYVC6nioFHG0StEhT4BanjChbbvjT3iUwmJm0spQ3ecdsceeoZXxle47rQROjFlbbV5QKhCG82hiSc1mE6FRUKBHnVBZKpOqkEkfMw3w=
+	t=1792254374; cv=none; b=cZzSyilcEqvlJjuDC53V3jZI/4Serq/nIlNGqxibbYegnBGhRlrSua4Er5Zv5qGNmHSRwyqt2KS13hnTh0lNG2PZ7oWTrH9lQ5aF/3OuZkmdlQjg4AavfY0+AVg7Ob70hIOgtJHgpXdVWl6aS/m3mehzs0aCohEqlx4iaMVIKbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254371; c=relaxed/simple;
-	bh=7IlxLdAEG8Bk0F+GWi77dkpLIri6s+gn6cwjXWu/r9g=;
+	s=arc-20240116; t=1792254374; c=relaxed/simple;
+	bh=94OT/SxDV6rBnUARbUXTfNVje26wH8MKTwhydCO7NDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keEWHJQa8/ffe5za74JM+bR78rdQeJt+Je9tS/lDgo+578cjRjI4kpcxcgiMm6EEnuLtkkPbu+339X0vUZ8B6O4xkhAZ4iuYO8jpn4UKBLZ0A55tMcqspAhuvuJ/nAgbPrBN0JRLdiw2JWXP65i1vruyyrZUhq4LW4O0BscFk5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+JMHVMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JOBiMLN1yWKZp9y6H9YKlA0psJ38UMcoiYWpvBUeWn+UG6VsZlwMThRGxwobObcUimZgoAwMkev3Is7hQQDPXwawN+BJi3a55F+CRUFr7+azOnWcrSymZbd6oqfBgtPV99H7zp8CzVYhVN9GqY60eN+mF0d0vwM7R4SkZ1k+cSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8pzRDzS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+JMHVMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3BC1F000C4;
-	Sat, 17 Oct 2026 16:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8pzRDzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D158E1F000C4;
+	Sat, 17 Oct 2026 16:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254370;
-	bh=dSD6H8xnEjtAapQ0U3gZo/3seYLvO/ZMT8PJmNyYPNA=;
+	s=korg; t=1792254373;
+	bh=z91phwrRWWMb41u6LzE7UWOuRruedmbS9r88sunoFII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+JMHVMnxqceQRiF8XNNVtc+vp7U/pv2SVK7XOnXs4OQCYx/vlxP/fyVl+2tRxuHh
-	 o52pY0vuQBtxe4VKf+EIjonadt2lQ6Zkmisc18R50X8fTw5VAbx+8Tj+l9F8lhuNI+
-	 mYPt/9+r4LdsTb5D2uJe7kmXCYxoGCbB+L5seh80=
+	b=F8pzRDzSDKN06ys2EG+3lAC0tjw8Z3HBdYyvvg0RoU+Yzr52TwdHjx/DfGLvm5M8l
+	 fyWGHZbSnhakaG8l3tX2EdlqfNpW+qsTbdbICK58g+z03adIE4eKfNWMnFdqPTIfa9
+	 zXBeA7GdUtsm5wWqB1qxd/OCgYWgvuJPpkhLkulw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Johan Hovold <johan@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 422/869] mmc: vub300: fix use-after-free on disconnect
-Date: Sat, 17 Oct 2026 17:54:23 +0200
-Message-ID: <20261017160047.956961288@linuxfoundation.org>
+Subject: [PATCH 6.12 383/869] drm/amdgpu: Add wrapper for freeing vbios memory
+Date: Sat, 17 Oct 2026 17:53:44 +0200
+Message-ID: <20261017160046.931570056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,125 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 8f4d20a710225ec7a565f6a0459862d3b1f32330 ]
+[ Upstream commit e986e89659e18ba986db044df58f165042817dc3 ]
 
-The vub300 driver maintains an explicit reference count for the
-controller and its driver data and the last reference can in theory be
-dropped after the driver has been unbound.
+Use bios_release wrapper to release memory allocated for vbios image and
+reset the variables.
 
-This specifically means that the controller allocation must not be
-device managed as that can lead to use-after-free.
+v2:
+	Use the same wrapper for clean up in sw_fini (Alex Deucher)
 
-Note that the lifetime is currently also incorrectly tied the parent USB
-device rather than interface, which can lead to memory leaks if the
-driver is unbound without its device being physically disconnected (e.g.
-on probe deferral).
-
-Fix both issues by reverting to non-managed allocation of the controller.
-
-Fixes: dcfdd698dc52 ("mmc: vub300: Use devm_mmc_alloc_host() helper")
-Cc: stable@vger.kernel.org # 6.17+
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: a3b5f242997a ("mmc: vub300: fix use-after-free on probe failure")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 65bff2661760 ("drm/amdgpu: Release VFCT ACPI table reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/vub300.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c   | 20 ++++++++++++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  3 +--
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
-index 2b0623cf34c90..937b9644f958c 100644
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -369,11 +369,14 @@ struct vub300_mmc_host {
- static void vub300_delete(struct kref *kref)
- {				/* kref callback - softirq */
- 	struct vub300_mmc_host *vub300 = kref_to_vub300_mmc_host(kref);
-+	struct mmc_host *mmc = vub300->mmc;
-+
- 	usb_free_urb(vub300->command_out_urb);
- 	vub300->command_out_urb = NULL;
- 	usb_free_urb(vub300->command_res_urb);
- 	vub300->command_res_urb = NULL;
- 	usb_put_dev(vub300->udev);
-+	mmc_free_host(mmc);
- 	/*
- 	 * and hence also frees vub300
- 	 * which is contained at the end of struct mmc
-@@ -2120,7 +2123,7 @@ static int vub300_probe(struct usb_interface *interface,
- 		goto error1;
- 	}
- 	/* this also allocates memory for our VUB300 mmc host device */
--	mmc = devm_mmc_alloc_host(&udev->dev, sizeof(*vub300));
-+	mmc = mmc_alloc_host(sizeof(*vub300), &udev->dev);
- 	if (!mmc) {
- 		retval = -ENOMEM;
- 		dev_err(&udev->dev, "not enough memory for the mmc_host\n");
-@@ -2277,7 +2280,7 @@ static int vub300_probe(struct usb_interface *interface,
- 		dev_err(&vub300->udev->dev,
- 		    "Could not find two sets of bulk-in/out endpoint pairs\n");
- 		retval = -EINVAL;
--		goto error4;
-+		goto err_free_host;
- 	}
- 	retval =
- 		usb_control_msg(vub300->udev, usb_rcvctrlpipe(vub300->udev, 0),
-@@ -2286,14 +2289,14 @@ static int vub300_probe(struct usb_interface *interface,
- 				0x0000, 0x0000, &vub300->hc_info,
- 				sizeof(vub300->hc_info), 1000);
- 	if (retval < 0)
--		goto error4;
-+		goto err_free_host;
- 	retval =
- 		usb_control_msg(vub300->udev, usb_sndctrlpipe(vub300->udev, 0),
- 				SET_ROM_WAIT_STATES,
- 				USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 				firmware_rom_wait_states, 0x0000, NULL, 0, 1000);
- 	if (retval < 0)
--		goto error4;
-+		goto err_free_host;
- 	dev_info(&vub300->udev->dev,
- 		 "operating_mode = %s %s %d MHz %s %d byte USB packets\n",
- 		 (mmc->caps & MMC_CAP_SDIO_IRQ) ? "IRQs" : "POLL",
-@@ -2308,7 +2311,7 @@ static int vub300_probe(struct usb_interface *interface,
- 				0x0000, 0x0000, &vub300->system_port_status,
- 				sizeof(vub300->system_port_status), 1000);
- 	if (retval < 0) {
--		goto error4;
-+		goto err_free_host;
- 	} else if (sizeof(vub300->system_port_status) == retval) {
- 		vub300->card_present =
- 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
-@@ -2316,7 +2319,7 @@ static int vub300_probe(struct usb_interface *interface,
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
- 		retval = -EINVAL;
--		goto error4;
-+		goto err_free_host;
- 	}
- 	usb_set_intfdata(interface, vub300);
- 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
-@@ -2341,11 +2344,14 @@ static int vub300_probe(struct usb_interface *interface,
- 			 interface_to_InterfaceNumber(interface));
- 	retval = mmc_add_host(mmc);
- 	if (retval)
--		goto error6;
-+		goto err_delete_timer;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index b667da0ec68a3..06b80396c6c96 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -409,6 +409,7 @@ bool amdgpu_get_bios(struct amdgpu_device *adev);
+ bool amdgpu_read_bios(struct amdgpu_device *adev);
+ bool amdgpu_soc15_read_bios_from_rom(struct amdgpu_device *adev,
+ 				     u8 *bios, u32 length_bytes);
++void amdgpu_bios_release(struct amdgpu_device *adev);
+ /*
+  * Clocks
+  */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index 53641234b9cf8..58a23bd19bf5d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -85,6 +85,13 @@ static bool check_atom_bios(struct amdgpu_device *adev, size_t size)
+ 	return false;
+ }
  
- 	return 0;
--error6:
--	del_timer_sync(&vub300->inactivity_timer);
++void amdgpu_bios_release(struct amdgpu_device *adev)
++{
++	kfree(adev->bios);
++	adev->bios = NULL;
++	adev->bios_size = 0;
++}
 +
-+err_delete_timer:
-+	timer_delete_sync(&vub300->inactivity_timer);
-+err_free_host:
-+	mmc_free_host(mmc);
- 	/*
- 	 * and hence also frees vub300
- 	 * which is contained at the end of struct mmc
+ /* If you boot an IGP board with a discrete card as the primary,
+  * the IGP rom is not accessible via the rom bar as the IGP rom is
+  * part of the system bios.  On boot, the system bios puts a
+@@ -122,7 +129,7 @@ static bool amdgpu_read_bios_from_vram(struct amdgpu_device *adev)
+ 	iounmap(bios);
+ 
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
+ 		return false;
+ 	}
+ 
+@@ -150,7 +157,7 @@ bool amdgpu_read_bios(struct amdgpu_device *adev)
+ 	pci_unmap_rom(adev->pdev, bios);
+ 
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
+ 		return false;
+ 	}
+ 
+@@ -190,7 +197,7 @@ static bool amdgpu_read_bios_from_rom(struct amdgpu_device *adev)
+ 	amdgpu_asic_read_bios_from_rom(adev, adev->bios, len);
+ 
+ 	if (!check_atom_bios(adev, len)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
+ 		return false;
+ 	}
+ 
+@@ -226,7 +233,8 @@ static bool amdgpu_read_platform_bios(struct amdgpu_device *adev)
+ 
+ 	return true;
+ free_bios:
+-	kfree(adev->bios);
++	amdgpu_bios_release(adev);
++
+ 	return false;
+ }
+ 
+@@ -328,7 +336,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
+ 	}
+ 
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
+ 		return false;
+ 	}
+ 	adev->bios_size = size;
+@@ -428,7 +436,7 @@ static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
+ 					     GFP_KERNEL);
+ 
+ 			if (!check_atom_bios(adev, vhdr->ImageLength)) {
+-				kfree(adev->bios);
++				amdgpu_bios_release(adev);
+ 				return false;
+ 			}
+ 			adev->bios_size = vhdr->ImageLength;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index cd05ddacd8116..3e74e8dc2e186 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4793,8 +4793,7 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 	if (amdgpu_emu_mode != 1)
+ 		amdgpu_atombios_fini(adev);
+ 
+-	kfree(adev->bios);
+-	adev->bios = NULL;
++	amdgpu_bios_release(adev);
+ 
+ 	kfree(adev->fru_info);
+ 	adev->fru_info = NULL;
 -- 
 2.53.0
 
