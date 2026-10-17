@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F7F339365;
-	Sat, 17 Oct 2026 16:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620FD17BED0;
+	Sat, 17 Oct 2026 16:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253496; cv=none; b=cuQQ2fM8BYhgv1w3p9LgxBndU4OdAko9H7OsMsNakpZtcTdHUdN5NciQeelNeo3oUPrXapTUMuEfxnAou7OmrnBy91PabcGxewI9EFpsGm+ItLWgxmZgRs961XpHygxTbL3DSqhwqX09iEM343FJjMgl/fyLs1uhUcC/Hfkdgj4=
+	t=1792253499; cv=none; b=mdNGgWxapXOcvs4eouQxKch6ssYI0kzjBqPei/++fiFSOIPFWjf4QtxXG4uKIamXtGATXrHt9T6835WIH3ld1PEY685I0/roGZGGg625VZTKQ1HKSoaBLoPog+90KrK3eXoGTjVNEhUzFtWMOjdJFWF3oYPIy+bQ3zwvDlWE1a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253496; c=relaxed/simple;
-	bh=qIEwSPUyQ09J1fyJjnBTtCvAbm5gYk9gwul0sdqz6ms=;
+	s=arc-20240116; t=1792253499; c=relaxed/simple;
+	bh=VDAG2P0mZn9jSM/Ao7ifNWiy0RFAfkwNv/CKO4flH74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjubmrJfeTlrxzBV+b5nG5zh8hMXJzYEqNl6xu1SRzKxmFzH/gVQ6AYPTNoTw9tV4VWsjrSw88I17g/DqQ2XjqJ7P8Korji2iMtVlffWlu+5cElEVPy0KIyp1Snlt5HXJ6suSQAXOTrhkT4fddHrkDXWxxrhMzSl7W2D81ZuGnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODrwkjtk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U0dkfaE+yAzpxL8YHqUVXHUOXDewnGY+e+mB6cBayVrmNsoQTQlXi37wludvImVyFGJvp48zDlaIQhHDZWozX9bz6xe9wxaGBQH7K1oQO8KDpretGfz91x/aWfTQBpthtuE8p2mReaG+cxHlZTEDsedYyyqLLzgxhZtPfue4B6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxWeifV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODrwkjtk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14371F000C5;
-	Sat, 17 Oct 2026 16:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxWeifV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD15A1F000C4;
+	Sat, 17 Oct 2026 16:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253495;
-	bh=Rbe4zSMQwdlgHFLdDyACWMlsVOfSP9v5wv1b+02T+e4=;
+	s=korg; t=1792253498;
+	bh=Y+JM38sD3pNFidJxG+azLkDMghibvTMUS6fWZ0COLs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODrwkjtkv4alwOsmY42GlQjboQOyA7S+IvUJvidG2+3Mp3OqT7YZpNSckNt9QLPLK
-	 qMwBO0zeh6U4HhFijkagLIdT/0Y5/8ptnuLRi7QN9Zzf+dcuU0tPo6x7OcP2AwApbE
-	 NAqh4mxNO/KdlkZZNEc0KhFaARVsQsAAZA4VTmYI=
+	b=wxWeifV7prlDQVqb4JN91Wj4QOngvNiKEXafQOEemh/emzm8G+9CvCvJ2gITOG/LS
+	 imaYg8Sx1zRhs6JMuDNg8eYTLRBxzUNS3XmeuTfpPLaPLoiLpc+Ga1C8tls8Dn/gGf
+	 Zq+RM+mf4uuRSq+TgZxwF/wz6Y4/uhQR4Y7uDCcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/869] crypto: hisilicon/qm - request reserved interrupt for virtual function
-Date: Sat, 17 Oct 2026 17:49:38 +0200
-Message-ID: <20261017160040.556221913@linuxfoundation.org>
+Subject: [PATCH 6.12 138/869] ASoC: Intel: avs: Use topology information for endpoint numbers
+Date: Sat, 17 Oct 2026 17:49:39 +0200
+Message-ID: <20261017160040.582218481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,116 +47,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 9228facb308157ac0bdd264b873187896f7a9c7a ]
+[ Upstream commit e3dc0351d7a0fdcde18ed1719c9149b1a656e7ec ]
 
-The device interrupt vector 3 is an error interrupt for
-physical function and a reserved interrupt for virtual function.
-However, the driver has not registered the reserved interrupt for
-virtual function. When allocating interrupts, the number of interrupts
-is allocated based on powers of two, which includes this interrupt.
-When the system enables GICv4 and the virtual function passthrough
-to the virtual machine, releasing the interrupt in the driver
-triggers a warning.
+Use DAI PCM ID from topology as Front End device endpoint number. This
+allows devices to be more naturally enumerated starting from 0, like
+most cards, instead of values like 1 or 2.
 
-The WARNING report is:
-WARNING: CPU: 62 PID: 14889 at arch/arm64/kvm/vgic/vgic-its.c:852 its_free_ite+0x94/0xb4
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Acked-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://patch.msgid.link/20250407124154.1713039-3-amadeuszx.slawinski@linux.intel.com
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 
-Therefore, register a reserved interrupt for VF and set the
-IRQF_NO_AUTOEN flag to avoid that warning.
+Keep the compatibility parameter local to PCM registration, defaulting
+to topology endpoint numbers. The card-name compatibility option and
+machine-data conversion are not present, so omit those prerequisites
+and describe the parameter in terms of PCM device numbering.
 
-Fixes: 3536cc55cada ("crypto: hisilicon/qm - support get device irq information from hardware registers")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Retain the registration changes needed for the component-name lifetime
+fix to apply without conflicts.
+
+Stable-dep-of: 4dee5c1cc439 ("ASoC: Intel: avs: Do not share the name pointer between components")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 38 +++++++++++++++++++++++++++++------
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ sound/soc/intel/avs/avs.h    |  2 +-
+ sound/soc/intel/avs/pcm.c    | 13 ++++++++++---
+ sound/soc/intel/avs/probes.c |  2 +-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 38c9d633db5f4..32882cc9b18e3 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -4603,6 +4603,15 @@ void hisi_qm_reset_done(struct pci_dev *pdev)
- }
- EXPORT_SYMBOL_GPL(hisi_qm_reset_done);
+diff --git a/sound/soc/intel/avs/avs.h b/sound/soc/intel/avs/avs.h
+index eca6ec0428bbb..bd63676aa7aa5 100644
+--- a/sound/soc/intel/avs/avs.h
++++ b/sound/soc/intel/avs/avs.h
+@@ -339,7 +339,7 @@ struct avs_soc_component {
+ extern const struct snd_soc_dai_ops avs_dai_fe_ops;
  
-+static irqreturn_t qm_rsvd_irq(int irq, void *data)
-+{
-+	struct hisi_qm *qm = data;
+ int avs_soc_component_register(struct device *dev, const char *name,
+-			       const struct snd_soc_component_driver *drv,
++			       struct snd_soc_component_driver *drv,
+ 			       struct snd_soc_dai_driver *cpu_dais, int num_cpu_dais);
+ int avs_dmic_platform_register(struct avs_dev *adev, const char *name);
+ int avs_i2s_platform_register(struct avs_dev *adev, const char *name, unsigned long port_mask,
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index b63a537c3faeb..8889fa7ddd908 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -9,6 +9,7 @@
+ #include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
++#include <linux/module.h>
+ #include <sound/hda_register.h>
+ #include <sound/hdaudio_ext.h>
+ #include <sound/pcm_params.h>
+@@ -21,6 +22,10 @@
+ #include "topology.h"
+ #include "../../codecs/hda.h"
+ 
++static bool obsolete_card_names;
++module_param_named(obsolete_card_names, obsolete_card_names, bool, 0444);
++MODULE_PARM_DESC(obsolete_card_names, "Use obsolete PCM device numbering 0=no, 1=yes");
 +
-+	dev_info(&qm->pdev->dev, "Reserved interrupt, ignore!\n");
-+
-+	return IRQ_HANDLED;
-+}
-+
- static irqreturn_t qm_abnormal_irq(int irq, void *data)
+ struct avs_dma_data {
+ 	struct avs_tplg_path_template *template;
+ 	struct avs_path *path;
+@@ -1274,7 +1279,7 @@ static int avs_component_construct(struct snd_soc_component *component,
+ 	return 0;
+ }
+ 
+-static const struct snd_soc_component_driver avs_component_driver = {
++static struct snd_soc_component_driver avs_component_driver = {
+ 	.name			= "avs-pcm",
+ 	.probe			= avs_component_probe,
+ 	.remove			= avs_component_remove,
+@@ -1289,7 +1294,7 @@ static const struct snd_soc_component_driver avs_component_driver = {
+ };
+ 
+ int avs_soc_component_register(struct device *dev, const char *name,
+-			       const struct snd_soc_component_driver *drv,
++			       struct snd_soc_component_driver *drv,
+ 			       struct snd_soc_dai_driver *cpu_dais, int num_cpu_dais)
  {
- 	struct hisi_qm *qm = data;
-@@ -4887,7 +4896,7 @@ static void qm_unregister_abnormal_irq(struct hisi_qm *qm)
- 	struct pci_dev *pdev = qm->pdev;
- 	u32 irq_vector, val;
+ 	struct avs_soc_component *acomp;
+@@ -1307,6 +1312,8 @@ int avs_soc_component_register(struct device *dev, const char *name,
+ 	acomp->base.name = name;
+ 	INIT_LIST_HEAD(&acomp->node);
  
--	if (qm->fun_type == QM_HW_VF)
-+	if (qm->fun_type == QM_HW_VF && qm->ver < QM_HW_V3)
- 		return;
- 
- 	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
-@@ -4904,17 +4913,28 @@ static int qm_register_abnormal_irq(struct hisi_qm *qm)
- 	u32 irq_vector, val;
- 	int ret;
- 
--	if (qm->fun_type == QM_HW_VF)
--		return 0;
--
- 	val = qm->cap_tables.qm_cap_table[QM_ABN_IRQ_TYPE_CAP_IDX].cap_val;
- 	if (!((val >> QM_IRQ_TYPE_SHIFT) & QM_ABN_IRQ_TYPE_MASK))
- 		return 0;
--
- 	irq_vector = val & QM_IRQ_VECTOR_MASK;
++	drv->use_dai_pcm_id = !obsolete_card_names;
 +
-+	/* For VF, this is a reserved interrupt in V3 version. */
-+	if (qm->fun_type == QM_HW_VF) {
-+		if (qm->ver < QM_HW_V3)
-+			return 0;
-+
-+		ret = request_irq(pci_irq_vector(pdev, irq_vector), qm_rsvd_irq,
-+				  IRQF_NO_AUTOEN, qm->dev_name, qm);
-+		if (ret) {
-+			dev_err(&pdev->dev, "failed to request reserved irq, ret = %d!\n", ret);
-+			return ret;
-+		}
-+		return 0;
-+	}
-+
- 	ret = request_irq(pci_irq_vector(pdev, irq_vector), qm_abnormal_irq, 0, qm->dev_name, qm);
- 	if (ret)
--		dev_err(&qm->pdev->dev, "failed to request abnormal irq, ret = %d", ret);
-+		dev_err(&qm->pdev->dev, "failed to request abnormal irq, ret = %d!\n", ret);
- 
- 	return ret;
+ 	return snd_soc_add_component(&acomp->base, cpu_dais, num_cpu_dais);
  }
-@@ -5253,6 +5273,12 @@ static int hisi_qm_pci_init(struct hisi_qm *qm)
- 	pci_set_master(pdev);
  
- 	num_vec = qm_get_irq_num(qm);
-+	if (!num_vec) {
-+		dev_err(dev, "Device irq num is zero!\n");
-+		ret = -EINVAL;
-+		goto err_get_pci_res;
-+	}
-+	num_vec = roundup_pow_of_two(num_vec);
- 	ret = pci_alloc_irq_vectors(pdev, num_vec, num_vec, PCI_IRQ_MSI);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to enable MSI vectors!\n");
+@@ -1630,7 +1637,7 @@ static int avs_component_hda_open(struct snd_soc_component *component,
+ 	return 0;
+ }
+ 
+-static const struct snd_soc_component_driver avs_hda_component_driver = {
++static struct snd_soc_component_driver avs_hda_component_driver = {
+ 	.name			= "avs-hda-pcm",
+ 	.probe			= avs_component_hda_probe,
+ 	.remove			= avs_component_hda_remove,
+diff --git a/sound/soc/intel/avs/probes.c b/sound/soc/intel/avs/probes.c
+index f0b0109563038..a42736b9aa55b 100644
+--- a/sound/soc/intel/avs/probes.c
++++ b/sound/soc/intel/avs/probes.c
+@@ -284,7 +284,7 @@ static struct snd_soc_dai_driver probe_cpu_dais[] = {
+ },
+ };
+ 
+-static const struct snd_soc_component_driver avs_probe_component_driver = {
++static struct snd_soc_component_driver avs_probe_component_driver = {
+ 	.name			= "avs-probe-compr",
+ 	.compress_ops		= &avs_probe_compress_ops,
+ 	.module_get_upon_open	= 1, /* increment refcount when a stream is opened */
 -- 
 2.53.0
 
