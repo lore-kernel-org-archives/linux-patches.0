@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE85394470;
-	Sat, 17 Oct 2026 18:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C233B3C81BE;
+	Sat, 17 Oct 2026 18:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260479; cv=none; b=YBEoquEp+4LaiTB9yRjl3CANrXgWsVhRU/auQgItqVRPJfCmhaQPujVEjGTW2jOItinHcPOjHpBh/kln4HqDcQlOb/KZWCT/y91xJFF8FB1ydngrDp6tXCjQ25Uwjdc1Vv8i2QTFGVyl4d2V/Zbrle8QofU49yg1fLJtAS6Dft8=
+	t=1792260482; cv=none; b=W0w7jx2lgng5N+Xe7TJC0H5ATT0aMVH+k4tDVFXfB6T8WtDiAFaAcqvECL2xgy+Ln3bFobbJW6W3NXRgVJJd6Miselt+dqcKc/nj0aF7BMzpsASosrRB4u8xaN14EjkExtkSez8kyxRetc4R4ejzuDsnji7OAcbSvo7mVKqh/j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260479; c=relaxed/simple;
-	bh=rQpD91eb9pmZ1zrB5c8g9CAtHUMn4g6u9VgUXih7zpg=;
+	s=arc-20240116; t=1792260482; c=relaxed/simple;
+	bh=OMrhXNyRFHcTfL41ygP9Oa/ZZczg2oMQx40TFz2LZ9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8dQOPj0d731c8LF6KoDD140W3psJkuModezgdmQHA0j3NydolA/TL03LC4SrKikVDXnqDbdaIIDu+BFOQu++2U0GNdl2rmImYil2T9pjdM0vOfMYQxaRUop9v29ckO/F0WZaFonzIaMI11JlXaRYlRr5DTXp2M8VywBcvGlmTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofHoFVc/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gALK35MPTs94dj1zSWyqSKe2DlJax76ZEzWelP5rNtlvrxy2hcUqNFvMKFYx+2l5cw6LMPIA+i97iks5dadPiZ+OufCU82/uM5h5KTfgP7nui9NkF6fsctZ9xxQJjid9OfSffNcwa+FluP7Drld+FkmL6wCJBxHK8wP+DmWbW2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzGOUxzz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofHoFVc/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5501F000C4;
-	Sat, 17 Oct 2026 18:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzGOUxzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253911F000C5;
+	Sat, 17 Oct 2026 18:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260478;
-	bh=YS3CQMjSn8F0q9LfUyUk2FK4jQR5FDX2MIbk4lGmkDM=;
+	s=korg; t=1792260481;
+	bh=Qd4IJ0Th2vKfS+pxH+onHaD30+49tmSBaFk6FL7MU2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ofHoFVc/zTaCcx0rcFoJ88S77kKtMdYSOWnGNQsouha1ZsBXxLxHz9/z49mIASXfi
-	 YX/lgUkdyE5p1aZFjFslv0wK2fD4Aw+dLLO64XjCniFzcnh965LX8aUt+OILaNf4Eu
-	 kxAhbDet1OYdoT+74rvUcuPjJhBHX/10G8AvrIBQ=
+	b=ZzGOUxzz3TviD+3TyH8nYikVIgGYzYmWKx0SjublAnnSu3kZAqomf3b4/VSucqYsu
+	 A5MTDbdQqxEnYXGWfX5Xsm63dU5nG3GfVfpLFkYNVHhR+xwCF4Cfv8ny2f0TaL1Vk2
+	 Uw+U6MS8C6sfSomoXdCepFs+ONZRnJJZeLEUlZYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1541/1674] drm/amdgpu: Bound GPIO I2C table entry count from VBIOS
-Date: Sat, 17 Oct 2026 18:03:33 +0200
-Message-ID: <20261017160510.667986782@linuxfoundation.org>
+Subject: [PATCH 6.6 1559/1674] media: hantro: Disable multicore support
+Date: Sat, 17 Oct 2026 18:03:51 +0200
+Message-ID: <20261017160511.118728295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,68 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit a99cd231cd924b7160fecb9fb3a94b801522323b ]
+[ Upstream commit ccdeb8d57f7fb3e5c05d72cb7dfb9bc78f09f542 ]
 
-Reject undersized tables and cap the derived entry count
-to AMDGPU_MAX_I2C_BUS so we do not overrun adev->i2c_bus[]
-or walk an absurd number of entries on corrupt size fields.
+Avoid exposing equal Hantro video codecs to userspace. Equal video
+codecs allow scheduling work between the cores. For that kernel support
+is required, which does not yet exist. Until that is implemented avoid
+exposing each core separately to userspace so that multicore can be
+added in the future without breaking userspace ABI.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This was written with Rockchip RK3588 in mind (which has 4 Hantro H1
+cores), but applies to all SoCs.
+
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: e0203ddf9af7 ("media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 21 ++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ .../media/platform/verisilicon/hantro_drv.c   | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-index 31d12c1cf6aeb..fd9e4f1054b58 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-@@ -36,6 +36,21 @@
- #include "atombios_encoders.h"
- #include "bif/bif_4_1_d.h"
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index 35833ee8beb51..7892b9f34599a 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -987,6 +987,49 @@ static const struct media_device_ops hantro_m2m_media_ops = {
+ 	.req_queue = v4l2_m2m_request_queue,
+ };
  
-+/* VBIOS-reported table size is unchecked against the image; cap iterations and
-+ * adev->i2c_bus[] indexing to AMDGPU_MAX_I2C_BUS.
++/*
++ * Some SoCs, like RK3588 have multiple identical Hantro cores, but the
++ * kernel is currently missing support for multi-core handling. Exposing
++ * separate devices for each core to userspace is bad, since that does
++ * not allow scheduling tasks properly (and creates ABI). With this workaround
++ * the driver will only probe for the first core and early exit for the other
++ * cores. Once the driver gains multi-core support, the same technique
++ * for detecting the main core can be used to cluster all cores together.
 + */
-+static int amdgpu_atombios_gpio_i2c_num_entries(uint16_t size)
++static int hantro_disable_multicore(struct hantro_dev *vpu)
 +{
-+	u32 bytes;
++	struct device_node *node = NULL;
++	const char *compatible;
++	bool is_main_core;
++	int ret;
 +
-+	if (size < sizeof(ATOM_COMMON_TABLE_HEADER))
-+		return 0;
++	/* Intentionally ignores the fallback strings */
++	ret = of_property_read_string(vpu->dev->of_node, "compatible", &compatible);
++	if (ret)
++		return ret;
 +
-+	bytes = size - sizeof(ATOM_COMMON_TABLE_HEADER);
-+	return (int)min_t(u32, bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT),
-+			  AMDGPU_MAX_I2C_BUS);
++	/* The first compatible and available node found is considered the main core */
++	do {
++		node = of_find_compatible_node(node, NULL, compatible);
++		if (of_device_is_available(node))
++			break;
++	} while (node);
++
++	if (!node)
++		return -EINVAL;
++
++	is_main_core = (vpu->dev->of_node == node);
++
++	of_node_put(node);
++
++	if (!is_main_core) {
++		dev_info(vpu->dev, "missing multi-core support, ignoring this instance\n");
++		return -ENODEV;
++	}
++
++	return 0;
 +}
 +
- static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
+ static int hantro_probe(struct platform_device *pdev)
  {
- 	struct amdgpu_i2c_bus_rec i2c;
-@@ -96,8 +111,7 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	const struct of_device_id *match;
+@@ -1006,6 +1049,10 @@ static int hantro_probe(struct platform_device *pdev)
+ 	match = of_match_node(of_hantro_match, pdev->dev.of_node);
+ 	vpu->variant = match->data;
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -127,8 +141,7 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
- 
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
++	ret = hantro_disable_multicore(vpu);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Support for nxp,imx8mq-vpu is kept for backwards compatibility
+ 	 * but it's deprecated. Please update your DTS file to use
 -- 
 2.53.0
 
