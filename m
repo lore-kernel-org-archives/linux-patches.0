@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C7737DEBE;
-	Sat, 17 Oct 2026 16:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D37139B4A5;
+	Sat, 17 Oct 2026 16:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254710; cv=none; b=DkQU00bW9koQstLMbyxGW5nVQPzlWI+R1/hMqiemYJXZZI/5SzAQQ9KxdEGtFAwJg44KTT86zszwpE3fltQgI+twI6eFsjaF6WyC8f4f3GdUb+K/FtOwwy3TdcPhj9EdF6TZdZ83V5r5lEhuLUMNkyK2UQ6cUidtZLqEdj65Zzw=
+	t=1792254713; cv=none; b=krHpiRYvuQ/xxtAgDxpmHZwvPy/OxgnLdcEpZi99M4ecH7jH7Uok9fJAXEqVeOZ0lac1SKAV8TeVfV+H+TRkalMdwRfd/g9CE3iNyRwDkiRKNmlVuAlG+xP2e6FxbjilXZjnnaguK5boUPlDJId+hPAl7vVJ2m7hpSYQbhv/drI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254710; c=relaxed/simple;
-	bh=YQVoRrCuz/5Lb6g+X7FUhtiZTMTZmqSwspdMCQ7+UJM=;
+	s=arc-20240116; t=1792254713; c=relaxed/simple;
+	bh=CnTE+otAz6hF544uHLa2hF7W0oPnyaxPRuyErFriLsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4nF8UfJJVmt4JtbqkEVIZ/7GXGYugxRZGod2w6ZqvK9FxqNFOfetRi9DovQc27Yz3TijueKXKoZnfohEM/y7sFt9Re7oi8ktgvlnrKtinEWoL6ozVSNBhcjKW1qmeWxVow6usoF5trTzYmCkmBL4eXUEa8+6xrNW2E2Pki72Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE2f7Zlp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DPLAOb6EpIKTfVredpiVgF5szpgB2JvW6eJjJXTdPmgobD9DvzmGU2CEQLwcYHmn5FKDP2kmUPQLNYfGfo0So7DUO+2HcIPdp9+E54ShA6nptHMRBi9iSIt5sWcV2v3m/JegDVMrM4sE0yh3UsgIUf9QTI1N43dqGTo1f3TSBO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI9ZgXGR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE2f7Zlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3E61F000C4;
-	Sat, 17 Oct 2026 16:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI9ZgXGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30901F000C4;
+	Sat, 17 Oct 2026 16:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254709;
-	bh=BARD3Sp5ME1XreI4kd/y8VBKm5V0ORJifaoBjs2GkLY=;
+	s=korg; t=1792254712;
+	bh=uCS+bZBFx1geug6zwQHTwl2RFprHxK0ClixueEx6RpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aE2f7ZlpyZVHVIAj8fJjj+Of9PCwyzj0qaeC6RD6A/9rUi7LccW0XB83hQZCOeR3n
-	 nE6rFbqA/aebM3pqU0PolE8gKIEq+9nQT2Nb3FdtabH/49NZANIhWxYW/Z8T5JgbZ6
-	 WQUrUpJbQWweHnVALTXqyqIthEZ+wpXpE2hbCNWY=
+	b=tI9ZgXGRz5GFIyB9KsccZoqJNAtjbesrzNyiazGv8efCAGOZNXoL23ALUAykv/Pqo
+	 KJeKaZq6Xvy/8U6/PPYRJZdRizQXnEYQtviioq9xPr9mNCpSQXufcsDsedhBbcACqk
+	 /m9irTWbv2OKQ82W057moD8o0biAkjeEKwZt3Wnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orange Kao <orange@aiven.io>,
-	Tony Luck <tony.luck@intel.com>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 536/869] EDAC/igen6: Add polling support
-Date: Sat, 17 Oct 2026 17:56:17 +0200
-Message-ID: <20261017160050.844376098@linuxfoundation.org>
+Subject: [PATCH 6.12 537/869] EDAC/igen6: Skip absent memory controllers
+Date: Sat, 17 Oct 2026 17:56:18 +0200
+Message-ID: <20261017160050.867512123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,97 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orange Kao <orange@aiven.io>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit e14232afa94445e03fc3a0291b07a68f3408c120 ]
+[ Upstream commit 20e190b1c1fd88b21cc5106c12cfe6def5ab849d ]
 
-Some PCs with Intel N100 (with PCI device 8086:461c, DID_ADL_N_SKU4)
-experienced issues with error interrupts not working, even with the
-following configuration in the BIOS.
+Some BIOS versions may fuse off certain memory controllers and set the
+registers of these absent memory controllers to ~0. The current igen6_edac
+mistakenly enumerates these absent memory controllers and registers them
+with the EDAC core.
 
-    In-Band ECC Support: Enabled
-    In-Band ECC Operation Mode: 2 (make all requests protected and
-                                   ignore range checks)
-    IBECC Error Injection Control: Inject Correctable Error on insertion
-                                   counter
-    Error Injection Insertion Count: 251658240 (0xf000000)
+Skip the absent memory controllers to avoid mistakenly enumerating them.
 
-Add polling mode support for these machines to ensure that memory error
-events are handled.
-
-Signed-off-by: Orange Kao <orange@aiven.io>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Link: https://lore.kernel.org/all/20241106114024.941659-3-orange@aiven.io
+Link: https://lore.kernel.org/r/20250408132455.489046-2-qiuxu.zhuo@intel.com
 Stable-dep-of: ab1f9d466c7d ("EDAC/igen6: Fix call trace due to missing release()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ drivers/edac/igen6_edac.c | 78 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 62 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 003db3d9f1913..6eb8bfff1ab0b 100644
+index 6eb8bfff1ab0b..d4b034737e31f 100644
 --- a/drivers/edac/igen6_edac.c
 +++ b/drivers/edac/igen6_edac.c
-@@ -1177,6 +1177,20 @@ static int igen6_pci_setup(struct pci_dev *pdev, u64 *mchbar)
- 	return -ENODEV;
+@@ -127,6 +127,7 @@
+ 
+ static struct res_config {
+ 	bool machine_check;
++	/* The number of present memory controllers. */
+ 	int num_imc;
+ 	u32 imc_base;
+ 	u32 cmf_base;
+@@ -1191,23 +1192,21 @@ static void igen6_check(struct mem_ctl_info *mci)
+ 		irq_work_queue(&ecclog_irq_work);
  }
  
-+static void igen6_check(struct mem_ctl_info *mci)
+-static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
++/* Check whether the memory controller is absent. */
++static bool igen6_imc_absent(void __iomem *window)
 +{
-+	struct igen6_imc *imc = mci->pvt_info;
-+	u64 ecclog;
-+
-+	/* errsts_clear() isn't NMI-safe. Delay it in the IRQ context */
-+	ecclog = ecclog_read_and_clear(imc);
-+	if (!ecclog)
-+		return;
-+
-+	if (!ecclog_gen_pool_add(imc->mc, ecclog))
-+		irq_work_queue(&ecclog_irq_work);
++	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
 +}
 +
- static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
++static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
  {
  	struct edac_mc_layer layers[2];
-@@ -1218,6 +1232,8 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
- 	mci->edac_cap = EDAC_FLAG_SECDED;
- 	mci->mod_name = EDAC_MOD_STR;
- 	mci->dev_name = pci_name(pdev);
-+	if (edac_op_state == EDAC_OPSTATE_POLL)
-+		mci->edac_check = igen6_check;
- 	mci->pvt_info = &igen6_pvt->imc[mc];
+ 	struct mem_ctl_info *mci;
+ 	struct igen6_imc *imc;
+-	void __iomem *window;
+ 	int rc;
  
- 	imc = mci->pvt_info;
-@@ -1357,8 +1373,18 @@ static void unregister_err_handler(void)
- 	unregister_nmi_handler(NMI_SERR, IGEN6_NMI_NAME);
+ 	edac_dbg(2, "\n");
+ 
+-	mchbar += mc * MCHBAR_SIZE;
+-	window = ioremap(mchbar, MCHBAR_SIZE);
+-	if (!window) {
+-		igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx\n", mchbar);
+-		return -ENODEV;
+-	}
+-
+ 	layers[0].type = EDAC_MC_LAYER_CHANNEL;
+ 	layers[0].size = NUM_CHANNELS;
+ 	layers[0].is_virt_csrow = false;
+@@ -1273,7 +1272,6 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
+ fail2:
+ 	edac_mc_free(mci);
+ fail:
+-	iounmap(window);
+ 	return rc;
  }
  
--static void opstate_set(struct res_config *cfg)
-+static void opstate_set(struct res_config *cfg, const struct pci_device_id *ent)
- {
-+	/*
-+	 * Quirk: Certain SoCs' error reporting interrupts don't work.
-+	 *        Force polling mode for them to ensure that memory error
-+	 *        events can be handled.
-+	 */
-+	if (ent->device == DID_ADL_N_SKU4) {
-+		edac_op_state = EDAC_OPSTATE_POLL;
-+		return;
+@@ -1299,6 +1297,56 @@ static void igen6_unregister_mcis(void)
+ 	}
+ }
+ 
++static int igen6_register_mcis(struct pci_dev *pdev, u64 mchbar)
++{
++	void __iomem *window;
++	int lmc, pmc, rc;
++	u64 base;
++
++	for (lmc = 0, pmc = 0; pmc < NUM_IMC; pmc++) {
++		base   = mchbar + pmc * MCHBAR_SIZE;
++		window = ioremap(base, MCHBAR_SIZE);
++		if (!window) {
++			igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx for mc%d\n", base, pmc);
++			rc = -ENOMEM;
++			goto out_unregister_mcis;
++		}
++
++		if (igen6_imc_absent(window)) {
++			iounmap(window);
++			edac_dbg(2, "Skip absent mc%d\n", pmc);
++			continue;
++		}
++
++		rc = igen6_register_mci(lmc, window, pdev);
++		if (rc)
++			goto out_iounmap;
++
++		/* Done, if all present MCs are detected and registered. */
++		if (++lmc >= res_cfg->num_imc)
++			break;
 +	}
 +
- 	/* Set the mode according to the configuration data. */
- 	if (cfg->machine_check)
- 		edac_op_state = EDAC_OPSTATE_INT;
-@@ -1383,7 +1409,7 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (rc)
- 		goto fail;
++	if (!lmc) {
++		igen6_printk(KERN_ERR, "No mc found.\n");
++		return -ENODEV;
++	}
++
++	if (lmc < res_cfg->num_imc)
++		igen6_printk(KERN_WARNING, "Expected %d mcs, but only %d detected.",
++			     res_cfg->num_imc, lmc);
++
++	return 0;
++
++out_iounmap:
++	iounmap(window);
++
++out_unregister_mcis:
++	igen6_unregister_mcis();
++
++	return rc;
++}
++
+ static int igen6_mem_slice_setup(u64 mchbar)
+ {
+ 	struct igen6_imc *imc = &igen6_pvt->imc[0];
+@@ -1395,7 +1443,7 @@ static void opstate_set(struct res_config *cfg, const struct pci_device_id *ent)
+ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	u64 mchbar;
+-	int i, rc;
++	int rc;
  
--	opstate_set(res_cfg);
-+	opstate_set(res_cfg, ent);
+ 	edac_dbg(2, "\n");
  
- 	for (i = 0; i < res_cfg->num_imc; i++) {
- 		rc = igen6_register_mci(i, mchbar, pdev);
+@@ -1411,11 +1459,9 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	opstate_set(res_cfg, ent);
+ 
+-	for (i = 0; i < res_cfg->num_imc; i++) {
+-		rc = igen6_register_mci(i, mchbar, pdev);
+-		if (rc)
+-			goto fail2;
+-	}
++	rc = igen6_register_mcis(pdev, mchbar);
++	if (rc)
++		goto fail;
+ 
+ 	if (res_cfg->num_imc > 1) {
+ 		rc = igen6_mem_slice_setup(mchbar);
 -- 
 2.53.0
 
