@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93C38654F;
-	Sat, 17 Oct 2026 16:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CCB36B93B;
+	Sat, 17 Oct 2026 16:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254196; cv=none; b=Yp3oGl+CGKB6HHN3mVEHH/vR3i4zFnKVDStgS80yS9AZ8nsdLUxgbTYRG1bHDc9i1J/Min3Zh/AF5AxYWnxU0qHYVP3EJlXqIX/8ggS1STIpD8aYw1fGHUWGc7FdjKVUPb3uMAo/K2m4MOGdSWgCgoDBuBmPf0NiiOG1Lgs5LcI=
+	t=1792254200; cv=none; b=sqVO/dLUX62pL9XAgxx6oMs46JoFBLk0dVmWJJ2qD5bH5eBG34LzkIVgchZSGD/tsX4L7vchSvf4DgbavooVZ6/5kstv0SUWsQn+LwgSro5AWOgYeZPETB3XBzeeMuOdl4pGjasRUgOxkor4gvQlLy2zkpvE8tabL9ZC/KBptwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254196; c=relaxed/simple;
-	bh=1G5+BY6TVY6uQehPfJOS/3s98MUlr4LbTZqtw1XDIm8=;
+	s=arc-20240116; t=1792254200; c=relaxed/simple;
+	bh=BlDX3D9Ea9ohCaGBLGDjXvvWmIfetTS8UB+QHTFzUbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfV//aBdUUa4QraV8s7x01lylD9o2YUyg0yO5TbZUwxt8hQ6dqXN/zy8QTew2cbyLiKwdo2WDIoIo0XTuWc7zD9MsthriAM1u4gCEeBSY4ggb5LBVE9LWoKurOnDZ36xtINnZDtSnSQQJyOINzJEz/EdBffHCR8d359Ep5hC+Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VE5KHGam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZGo5v5u+iIIxlj1/jEvKb0q7lKiKCTDXsEGcP5QSzznDXaJo8S0hgz56vzF0C0iTQVSwP9WQop/IpDGz5QmPAQ60nYDyiDb5kNghZ9IJrahpQ627R0syGXDA3kfx6MutWJurZC/+mWwqGT5o2WW2WDGa6Syb2gPRd1gFLkRpwog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+m7QK1t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VE5KHGam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE6F1F000C4;
-	Sat, 17 Oct 2026 16:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+m7QK1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCA51F000C4;
+	Sat, 17 Oct 2026 16:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254195;
-	bh=I3Ej5CSGLie+5Gkv1xjTxV4zDJxqilZ53cjntUuwpVw=;
+	s=korg; t=1792254198;
+	bh=+qlXPr1W7EpiWGCBX0meVDApqNUKqCrnN9Nhqt4sG1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VE5KHGam35EPmFUWpxtf48RvaJoNNoaAmcPXcstXp7YIH8lzzCy5NX9fb5DHwVcmM
-	 Sai3oOagJzfBexGBs6rOmf1tV8eJNqoedmhj8nZZZ7nnz7ktoBKlH8J+8fStUqFKLk
-	 BBCiRB1qO8ZTck8zVaJfi2pBukIhGlOwoSSGDrgI=
+	b=V+m7QK1txczG1FKaTSSOH7VqxEz1oOGbk0qlbyVcBUZet4GjRBQg1EDMRr9ukZIFK
+	 Do6O0JF954lonn+GZ7hVKbSrGjxoq6lyDrPofY2mHjfr1JB4lO0+4Y3ulfwsfgPoS+
+	 Dtj581l46lVB9Z5qL+nnPnr/afNXIXikWp5ghuHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 366/869] hwmon: (lm90) Add lock protection to lm90_alert
-Date: Sat, 17 Oct 2026 17:53:27 +0200
-Message-ID: <20261017160046.492189869@linuxfoundation.org>
+Subject: [PATCH 6.12 367/869] KVM: guest_memfd: Treat memslot binding offset+size as unsigned values
+Date: Sat, 17 Oct 2026 17:53:28 +0200
+Message-ID: <20261017160046.517038668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,56 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 873e919e3101063a7a75989510ccfc125a4391cf ]
+[ Upstream commit eba85fee7fc6cf28fec38a5bf3c378bef9a79ca6 ]
 
-Sashiko reports:
+When binding a memslot to a guest_memfd file, treat the offset and size as
+unsigned values to fix a bug where the sum of the two can result in a false
+negative when checking for overflow against the size of the file.  Passing
+unsigned values also avoids relying on somewhat obscure checks in other
+flows for safety, and tracks the offset and size as they are intended to be
+tracked, as unsigned values.
 
-lm90_alert() executes in the smbus alert context and calls
-lm90_update_confreg() to disable the hardware alert line, without
-acquiring hwmon_lock.
+On 64-bit kernels, the number of pages a memslot contains and thus the size
+(and offset) of its guest_memfd binding are unsigned 64-bit values.  Taking
+the offset+size as an loff_t instead of a uoff_t inadvertently converts
+the unsigned value to a signed value if the offset and/or size is massive.
 
-Concurrently, sysfs write operations (such as lm90_write_convrate) hold
-the hwmon_lock, temporarily modify data->config, and then restore it.
+Locally storing the offset and size as signed values is benign in and of
+itself (though even that is *extremely* difficult to discern), but
+operating on their sum is not.
 
-If an alert interrupt occurs concurrently with a sysfs write, the sysfs
-path will overwrite the alert handler's modifications to data->config
-and the hardware register.
+For the offset, KVM explicitly checks against a negative value, which might
+seem like a bug as KVM could incorrectly reject a legitimate binding, but
+that's not actually the case as KVM_CREATE_GUEST_MEMFD takes a signed value
+for its size, i.e. a would-be-negative offset is also greater than the
+maximum possible size of any guest_memfd file.
 
-This unintentionally re-enables the hardware alert line while the alarm is
-still active, causing an interrupt storm.
+Regarding the size, while KVM lacks an explicit check for a negative value,
+i.e. seemingly has a flawed overflow check, KVM restricts the number of
+pages in a single memslot to the largest positive signed 32-bit value:
 
-Add the missing lock to lm90_alert() to solve the problem.
+        if (id < KVM_USER_MEM_SLOTS &&
+            (mem->memory_size >> PAGE_SHIFT) > KVM_MEM_MAX_NR_PAGES)
+                return -EINVAL;
 
-Fixes: 7a1d220ccb0cc ("hwmon: (lm90) Introduce function to update configuration register")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+and so that maximum "size" will ever be is 0x7fffffff000.
+
+The sum of the two is, however, problematic.  While the size is restricted
+by KVM's memslot logic, the offset is not, i.e. the offset is completely
+unchecked until the "offset + size > i_size_read(inode)" check.  If the
+offset is the (nearly) largest possible _positive_ value, then adding size
+to the offset can result in a signed, negative 64-bit value.  When compared
+against the size of the file (guaranteed to be positive), the negative sum
+is always smaller, and KVM incorrectly allows the absurd offset.
+
+Opportunistically add missing includes in kvm_mm.h (instead of relying on
+its parents).
+
+Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
+Cc: stable@vger.kernel.org
+Cc: Ackerley Tng <ackerleytng@google.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Link: https://patch.msgid.link/20260602170921.1304394-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm90.c | 2 ++
- 1 file changed, 2 insertions(+)
+ virt/kvm/guest_memfd.c | 8 ++++----
+ virt/kvm/kvm_mm.h      | 7 +++++--
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
-index d79f6d091e3ef..581a1d10a1b58 100644
---- a/drivers/hwmon/lm90.c
-+++ b/drivers/hwmon/lm90.c
-@@ -2885,6 +2885,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 		 */
- 		struct lm90_data *data = i2c_get_clientdata(client);
+diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+index e2c7e3d918406..71afb0ca0cc94 100644
+--- a/virt/kvm/guest_memfd.c
++++ b/virt/kvm/guest_memfd.c
+@@ -473,15 +473,16 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
+ }
  
-+		mutex_lock(&data->update_lock);
- 		if (!data->shutdown && (data->flags & LM90_HAVE_BROKEN_ALERT) &&
- 		    (data->current_alarms & data->alert_alarms)) {
- 			if (!(data->config & 0x80)) {
-@@ -2894,6 +2895,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 			schedule_delayed_work(&data->alert_work,
- 				max_t(int, HZ, msecs_to_jiffies(data->update_interval)));
- 		}
-+		mutex_unlock(&data->update_lock);
- 	} else {
- 		dev_dbg(&client->dev, "Everything OK\n");
- 	}
+ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+-		  unsigned int fd, loff_t offset)
++		  unsigned int fd, u64 offset)
+ {
+-	loff_t size = slot->npages << PAGE_SHIFT;
++	u64 size = slot->npages << PAGE_SHIFT;
+ 	unsigned long start, end;
+ 	struct kvm_gmem *gmem;
+ 	struct inode *inode;
+ 	struct file *file;
+ 	int r = -EINVAL;
+ 
++	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
+ 	BUILD_BUG_ON(sizeof(gfn_t) != sizeof(slot->gmem.pgoff));
+ 
+ 	file = fget(fd);
+@@ -497,8 +498,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+ 
+ 	inode = file_inode(file);
+ 
+-	if (offset < 0 || !PAGE_ALIGNED(offset) ||
+-	    offset + size > i_size_read(inode))
++	if (!PAGE_ALIGNED(offset) || offset + size > i_size_read(inode))
+ 		goto err;
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
+diff --git a/virt/kvm/kvm_mm.h b/virt/kvm/kvm_mm.h
+index 715f19669d01f..15b2c728f7dd5 100644
+--- a/virt/kvm/kvm_mm.h
++++ b/virt/kvm/kvm_mm.h
+@@ -3,6 +3,9 @@
+ #ifndef __KVM_MM_H__
+ #define __KVM_MM_H__ 1
+ 
++#include <linux/kvm.h>
++#include <linux/kvm_types.h>
++
+ /*
+  * Architectures can choose whether to use an rwlock or spinlock
+  * for the mmu_lock.  These macros, for use in common code
+@@ -39,7 +42,7 @@ static inline void gfn_to_pfn_cache_invalidate_start(struct kvm *kvm,
+ void kvm_gmem_init(struct module *module);
+ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args);
+ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+-		  unsigned int fd, loff_t offset);
++		  unsigned int fd, u64 offset);
+ void kvm_gmem_unbind(struct kvm_memory_slot *slot);
+ #else
+ static inline void kvm_gmem_init(struct module *module)
+@@ -49,7 +52,7 @@ static inline void kvm_gmem_init(struct module *module)
+ 
+ static inline int kvm_gmem_bind(struct kvm *kvm,
+ 					 struct kvm_memory_slot *slot,
+-					 unsigned int fd, loff_t offset)
++					 unsigned int fd, u64 offset)
+ {
+ 	WARN_ON_ONCE(1);
+ 	return -EIO;
 -- 
 2.53.0
 
