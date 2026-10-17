@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BCE277026;
-	Sat, 17 Oct 2026 16:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479D33A6418;
+	Sat, 17 Oct 2026 16:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256123; cv=none; b=LphmY5GRl8ICUihjzWPgJ0LVhrLFEhF5v7hIzHRQXwU3e0RQ8GaY/Iuh4DjSC7cEL6xLMALy0VsK8QTV5Q+PEO78A2zz468yC2YybqA8Y7wEbm/Co7Lc4cNwafqkfAatJ/vf7KclpkR9Wmvh9c5hQgs+SVQfSEZKKxLFjerfrLs=
+	t=1792256126; cv=none; b=sWLOzS/dZMLShHrQPeHZnuucYMWvkycDg18mmXOx2VA2jV7T/hSie18wxFO4ho+pkio3eS9uKImzNkRWzqtd2YLju7A01rzRyx+qmvkz8N387e9QYOZg5mXptRbL/hgvjEnJu4vL0x76zC9VVv/686DA5KlP5pG0bBpYAhTrv1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256123; c=relaxed/simple;
-	bh=WKFOFSxLH9Rba3O8IBZZ90qMh+TezM0xvHynYpJSMAI=;
+	s=arc-20240116; t=1792256126; c=relaxed/simple;
+	bh=QnMKhPFPmZIIu1JVxt3OSjwlzyvfPiXnpqIzJJpZztU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5ClMHxil/QQuGg+N7DKuDki/bZiTGLTIxrbi17NxWC8YStOesknXrCRPb387pF8IKEGTftw+x+dxTwsnqPD7m5Y5nV2hPTziilRHPiavGTFA0P+MjGOzomwAjKDWyk2vnrvS7CoMcNEANAQUGN85yJjJgKGElMtDKRl/LDXpG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+JLvw/8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jiV9Qa54d5vbalC431XIAm9UrfpxJYON8QI/5QtnFu2lcQIsmI6QsJZOeKjTEbF2Hd9tkvOzpfNOAcAA12aDqfS8mYu8W/WeHWCjZAXUe9SEoUc1a3e4HHpFo80eBByx9mS5/+qc54uFXps9brWy679mq/eBEcH06/q3snMybI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSHls2LL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+JLvw/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AC71F000C4;
-	Sat, 17 Oct 2026 16:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSHls2LL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936381F000C4;
+	Sat, 17 Oct 2026 16:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256122;
-	bh=FZU6TkwNUXPynIADANUql6kAeY5pfHpQDX+m9feqgUw=;
+	s=korg; t=1792256125;
+	bh=QxEDCBc+cvpMeuonQb4bPUvaJ1MQ2VDf55L2RYw0PQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S+JLvw/8o+Hipg4NawxUFq8yS/b2SmyZHr7FoZyJylI04YP/Ep2kCJMJXnJvXm5qa
-	 9sR1/uJtFcBUT/zbQrgG/KFIwG3EMO9LquCsPHRsfKOXSlbgsTIG4g+OxJr+FpvNJX
-	 u2AnN8PyPndhvVCnZdQwK+014wlhjgQL8IiOrU4E=
+	b=ZSHls2LL2XAxvtD98YY894p+TWKfkgyi7FvFqgsGKousnWv48wNEk75sxjAa4ucUH
+	 umzrZccryf5Xw+/dORSlDLqamqiREVF6uLkuUFBZVWzSlNsPG8gccS9jh6q9GKGcuY
+	 OcpGMyD8nNCD7OMQEPoEcAHMlNrTU4onBFGvUDN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
-	Jiakai Xu <jiakaiPeanut@gmail.com>,
-	Anup Patel <anup@brainfault.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0133/1674] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
-Date: Sat, 17 Oct 2026 17:40:05 +0200
-Message-ID: <20261017160434.575329179@linuxfoundation.org>
+Subject: [PATCH 6.6 0116/1674] btrfs: take commit root semaphore when iterating in mark_block_group_to_copy()
+Date: Sat, 17 Oct 2026 17:39:48 +0200
+Message-ID: <20261017160434.126766290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,57 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiakai Xu <jiakaipeanut@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit aeb1d17d1af5924f7357d7204a293bd8fc06ea13 ]
+[ Upstream commit 0594e3423f4ba3137c734371169491f9a98e9af4 ]
 
-Add a null pointer check for imsic_state before dereferencing it in
-kvm_riscv_aia_imsic_rw_attr(). While the function checks that the
-vcpu exists, it doesn't verify that the vcpu's imsic_state has been
-initialized, leading to a null pointer dereference when accessed.
+mark_block_group_to_copy() iterates over the commit root with
+skip_locking=true. A concurrent transaction commit can swap and free
+the commit root during iteration, causing use-after-free when
+accessing extent buffers.
 
-The crash manifests as:
-  Unable to handle kernel paging request at virtual address
-  dfffffff00000006
-  ...
-  kvm_riscv_aia_imsic_rw_attr+0x2d8/0x854 arch/riscv/kvm/aia_imsic.c:958
-  aia_set_attr+0x2ee/0x1726 arch/riscv/kvm/aia_device.c:354
-  kvm_device_ioctl_attr virt/kvm/kvm_main.c:4744 [inline]
-  kvm_device_ioctl+0x296/0x374 virt/kvm/kvm_main.c:4761
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  ...
+Fix it by using path->need_commit_sem to protect the commit root search.
 
-The fix adds a check to return -ENODEV if imsic_state is NULL and moves
-isel assignment after imsic_state NULL check.
-
-Fixes: 5463091a51cfaa ("RISC-V: KVM: Expose IMSIC registers as attributes of AIA irqchip")
-Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
-Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260127072219.3366607-1-xujiakai2025@iscas.ac.cn
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Stable-dep-of: 8ae12ccaec6e ("RISC-V: KVM: Serialize IMSIC attributes with vCPU migration")
+Fixes: 78ce9fc269af ("btrfs: zoned: mark block groups to copy for device-replace")
+CC: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.5
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ changed path->need_commit_sem assignment from true to 1 to match the older unsigned bitfield representation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_imsic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/dev-replace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
-index c1585444f856e..562890ac5d0b0 100644
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -895,8 +895,10 @@ int kvm_riscv_aia_imsic_rw_attr(struct kvm *kvm, unsigned long type,
- 	if (!vcpu)
- 		return -ENODEV;
+diff --git a/fs/btrfs/dev-replace.c b/fs/btrfs/dev-replace.c
+index f77ef719a3b11..4f97a9222b74e 100644
+--- a/fs/btrfs/dev-replace.c
++++ b/fs/btrfs/dev-replace.c
+@@ -506,6 +506,7 @@ static int mark_block_group_to_copy(struct btrfs_fs_info *fs_info,
+ 	path->reada = READA_FORWARD;
+ 	path->search_commit_root = 1;
+ 	path->skip_locking = 1;
++	path->need_commit_sem = 1;
  
--	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 	imsic = vcpu->arch.aia_context.imsic_state;
-+	if (!imsic)
-+		return -ENODEV;
-+	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 
- 	read_lock_irqsave(&imsic->vsfile_lock, flags);
- 
+ 	key.objectid = src_dev->devid;
+ 	key.type = BTRFS_DEV_EXTENT_KEY;
 -- 
 2.53.0
 
