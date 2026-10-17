@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0686F3AFAE3;
-	Sat, 17 Oct 2026 16:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D933AAF69;
+	Sat, 17 Oct 2026 16:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255633; cv=none; b=J0dhtyZ197W60sBLA/73besl5n2Kp6sIoPcYa5GjHulfkOAAJB0T9qgM7Wlqx3lIHoF2NiJMN9WH91p1t4Rn81/3/SK5r00jNqPLsDKBLzWgSSuO/Xt4H4KlTnj4HoiEpi0DPHL2ihD6vyc4b1GosUo77VO0B88vv62IUuIfk2Y=
+	t=1792255636; cv=none; b=ARdxJ0JtRq0Q8yIVWHKCZk19CgMj1C1WiuRnWiygVdkt3HKkOfxOyCHVec2YPtgKuS3SM0b/NjMGhBTFBhJAHBAghotBudvTxnwlUfjYSeQaYurcHvbhKyGDfXi1N6G6s/yVHo7nPfKpkApcCyHQy7kvoeOcG0lg7/hYv9foFfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255633; c=relaxed/simple;
-	bh=yZc5DrwjSaiptEETM9lARjAcAWTeCbsxoiQsxASSSfU=;
+	s=arc-20240116; t=1792255636; c=relaxed/simple;
+	bh=GDPMeHIj/KUGCmahkpbj62piTfFxyY/SvVDaQ7M1AUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yr+r1xQhhFPZzrXmoPfnTDMbDKKym32YXEIT4javt8mHm8IZCFL14KK1vVEdPMNEW9Vn6f5rVJUXgyTag0W/KaCraE3WlIP0F9glQEbqUXwr7f7SLv/qQLrkAx6Q//byfew9RMyNi6cnVIqub4qM4maLtNU4ALyZ5JTm+5ArGXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p625NDf7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ni5lrT18Nk4rG14gB2Nsw6ARByATQLkT2PzYliw63sFb+zr9Ig/uB9MQHoMgiNSckST4qJ+RE2Sy8Fk2fSHkB/I1rp6hvz9w0Xgfo9gmL6bS3DN61HCQV9Ix4Cd/dZXp/QifglbUbsWgT25+RxzYW4ukdh3OESy0TFOuDV3Pow4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8swwsOl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p625NDf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE6D1F000C4;
-	Sat, 17 Oct 2026 16:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8swwsOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651FB1F000C4;
+	Sat, 17 Oct 2026 16:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255631;
-	bh=MYRHkvnar6/LmK4Z/nWh7riSayCq43iABLL8Hyxitl4=;
+	s=korg; t=1792255635;
+	bh=t3ehy8Vi+4sAfSPQAxyXSSFiajIAwRjG/0PjhhgUrYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p625NDf7iO5ikBaowlaInHgSxLuqrZx5AvqPOfpTyWDUAQ8K5p9OqL1xVaCWMsAkF
-	 nUy4+cpADBj4CBfPxRC9hs0CHFBQhDGOgK2brijj2OD93SFB8I13pMhKuRXpZ2YMsR
-	 +Po7obmUQqkiFI31i26Dwnj6suItN78CbgLnx2OU=
+	b=b8swwsOl4l6/0nZPLj9xxSyHC22FsifakX79SR+PuE+LH2ARiN5rwPX950XcR54aR
+	 9aYpXtUUhKefDonTBgO0SMM9MCTaAeaMcSlXPln9yNQB8tCf1GfGzHugwWywHBHDEM
+	 ea5mXXqtQ5aCNJsoSgi5jO3jHLKwKEkuUnmz7DFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 797/869] net: stmmac: fix dma mapping leak in stmmac_tso_xmit()
-Date: Sat, 17 Oct 2026 18:00:38 +0200
-Message-ID: <20261017160057.337598103@linuxfoundation.org>
+Subject: [PATCH 6.12 798/869] bpf: check_cond_jmp_op(): properly infer if register is null
+Date: Sat, 17 Oct 2026 18:00:39 +0200
+Message-ID: <20261017160057.365312257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,173 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit a5d946466a95621fa2769720d59ea336003aa1a5 ]
+[ Upstream commit d3ef6c097ba078e1f8c7239d76a0ce8b61e75095 ]
 
-In stmmac_tso_xmit(), if the DMA mapping of an skb fragment fails, the
-frame is dropped but the DMA mappings already created for the linear
-part and for the fragments mapped before the failure are never
-unmapped, leaking DMA mappings.
+Nicholas Carlini reported a bug when verifier can incorrectly infer
+that a pointer is non-null. The bug occurs when two pointers are
+compared and one of them has a type w/o PTR_MAYBE_NULL flag,
+but which allows a value to be NULL at runtime.
+Here is an example:
 
-Fix the leak by walking back over the descriptors used by the frame and
-releasing each of them with stmmac_free_tx_buffer(). Moreover, release
-the descriptors with stmmac_release_tx_desc() unmapping the DMA buffers.
+  // `a` is PTR_TO_MEM | MEM_RDONLY | PTR_UNTRUSTED
+  // `a` is 0 at runtime.
+  // `b` is PTR_TO_MAP_VALUE | PTR_MAYBE_NULL
+  void *a = bpf_rdonly_cast(0, 0);
+  int  *b = bpf_map_lookup_elem(...);
 
-Fixes: f748be531d70 ("stmmac: support new GMAC4")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260826-stmmac_dma_unmap_tso-v1-1-a2753d1576ba@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  if (a == b)
+    *b = 42;  // verifier does not catch null pointer dereference
+
+This happens because of a special case in check_cond_jmp_op(),
+which attempts to strip PTR_MAYBE_NULL flags from pointer types,
+when processing comparisons like `rA == rB`, if either rA or rB can't
+be null.
+
+The non-null property is derived based on the absence of
+PTR_MAYBE_NULL flag on rA's or rB's type. But that is not sufficient
+for types like PTR_TO_MEM, as in the example.
+
+This patch replaces type_may_be_null() call with reg_not_null(),
+which contains an allowlist of types for which absence of
+PTR_MAYBE_NULL actually means that the value can't be NULL at runtime.
+
+At the moment, the list in the reg_not_null() omits two types for
+which PTR_MAYBE_NULL is applicable: PTR_TO_XDP_SOCK and PTR_TO_BUF.
+In order to remain backward compatible, and assuming that only
+comparison between pointers of the same type makes sense,
+this commit extends reg_not_null(). W/o such an extension e.g.
+verifier_jeq_infer_not_null/null_ptr_to_map_value fails.
+
+reg_not_null() can be extended further, but I deem that out of scope
+for the fix at hand. Explicit base_type(...) != PTR_TO_BTF_ID
+checks in the check_cond_jmp_op() can be removed with migration to
+reg_not_null(), but that is a behavioural change, as the special case
+would start matching for PTR_TO_BTF_ID that is also is_trusted_reg().
+I omit the behavioural change from this commit.
+
+Fixes: befae75856ab ("bpf: propagate nullness information for reg to reg comparisons")
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260826-bug-029-bad-non-null-inference-v2-1-136789ace9e9@localhost
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 67 ++++++++++++-------
- 1 file changed, 43 insertions(+), 24 deletions(-)
+ kernel/bpf/verifier.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 73f079a7cb537..057d23c8d8906 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4087,6 +4087,7 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
- /**
-  *  stmmac_tso_allocator - close entry point of the driver
-  *  @priv: driver private structure
-+ *  @entry: TX queue buffer index
-  *  @des: buffer start address
-  *  @total_len: total length to fill in descriptors
-  *  @last_segment: condition for the last descriptor
-@@ -4095,8 +4096,9 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
-  *  This function fills descriptor and request new descriptors according to
-  *  buffer length to fill
-  */
--static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
--				 int total_len, bool last_segment, u32 queue)
-+static void stmmac_tso_allocator(struct stmmac_priv *priv, u32 *entry,
-+				 dma_addr_t des, int total_len,
-+				 bool last_segment, u32 queue)
- {
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct dma_desc *desc;
-@@ -4108,14 +4110,13 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
- 	while (tmp_len > 0) {
- 		dma_addr_t curr_addr;
- 
--		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
--						priv->dma_conf.dma_tx_size);
--		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
-+		*entry = STMMAC_NEXT_ENTRY(*entry, priv->dma_conf.dma_tx_size);
-+		WARN_ON(tx_q->tx_skbuff[*entry]);
- 
- 		if (tx_q->tbs & STMMAC_TBS_AVAIL)
--			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
-+			desc = &tx_q->dma_entx[*entry].basic;
- 		else
--			desc = &tx_q->dma_tx[tx_q->cur_tx];
-+			desc = &tx_q->dma_tx[*entry];
- 
- 		curr_addr = des + (total_len - tmp_len);
- 		stmmac_set_desc_addr(priv, desc, curr_addr);
-@@ -4240,7 +4241,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct dma_desc *desc, *first, *mss_desc = NULL;
- 	struct stmmac_priv *priv = netdev_priv(dev);
--	unsigned int first_entry, tx_packets;
-+	unsigned int first_entry, entry, tx_packets;
- 	struct stmmac_txq_stats *txq_stats;
- 	int i, first_tx, nfrags, ndesc;
- 	struct stmmac_tx_queue *tx_q;
-@@ -4315,22 +4316,24 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 
- 	first_entry = tx_q->cur_tx;
--	WARN_ON(tx_q->tx_skbuff[first_entry]);
-+	entry = first_entry;
-+
-+	WARN_ON(tx_q->tx_skbuff[entry]);
- 
- 	if (tx_q->tbs & STMMAC_TBS_AVAIL)
--		desc = &tx_q->dma_entx[first_entry].basic;
-+		desc = &tx_q->dma_entx[entry].basic;
- 	else
--		desc = &tx_q->dma_tx[first_entry];
-+		desc = &tx_q->dma_tx[entry];
- 	first = desc;
- 
- 	/* first descriptor: fill Headers on Buf1 */
- 	des = dma_map_single(priv->device, skb->data, skb_headlen(skb),
- 			     DMA_TO_DEVICE);
- 	if (dma_mapping_error(priv->device, des))
--		goto dma_map_err;
-+		goto error;
- 
- 	stmmac_set_desc_addr(priv, first, des);
--	stmmac_tso_allocator(priv, des + proto_hdr_len, pay_len,
-+	stmmac_tso_allocator(priv, &entry, des + proto_hdr_len, pay_len,
- 			     (nfrags == 0), queue);
- 
- 	/* In case two or more DMA transmit descriptors are allocated for this
-@@ -4345,10 +4348,10 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	 * this DMA buffer right after the DMA engine completely finishes the
- 	 * full buffer transmission.
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index dd766eefbf027..ecd8595bd5450 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -405,6 +405,8 @@ static bool reg_not_null(const struct bpf_reg_state *reg)
+ 	type = base_type(type);
+ 	return type == PTR_TO_SOCKET ||
+ 		type == PTR_TO_TCP_SOCK ||
++		type == PTR_TO_XDP_SOCK ||
++		type == PTR_TO_BUF ||
+ 		type == PTR_TO_MAP_VALUE ||
+ 		type == PTR_TO_MAP_KEY ||
+ 		type == PTR_TO_SOCK_COMMON ||
+@@ -16057,7 +16059,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
  	 */
--	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
--	tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_headlen(skb);
--	tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = false;
--	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-+	tx_q->tx_skbuff_dma[entry].buf = des;
-+	tx_q->tx_skbuff_dma[entry].len = skb_headlen(skb);
-+	tx_q->tx_skbuff_dma[entry].map_as_page = false;
-+	tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
- 
- 	/* Prepare fragments */
- 	for (i = 0; i < nfrags; i++) {
-@@ -4358,16 +4361,17 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 				       skb_frag_size(frag),
- 				       DMA_TO_DEVICE);
- 		if (dma_mapping_error(priv->device, des))
--			goto dma_map_err;
-+			goto error_dma_unmap;
- 
--		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
-+		stmmac_tso_allocator(priv, &entry, des, skb_frag_size(frag),
- 				     (i == nfrags - 1), queue);
- 
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_frag_size(frag);
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-+		tx_q->tx_skbuff_dma[entry].buf = des;
-+		tx_q->tx_skbuff_dma[entry].len = skb_frag_size(frag);
-+		tx_q->tx_skbuff_dma[entry].map_as_page = true;
-+		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
+ 	if (!is_jmp32 && BPF_SRC(insn->code) == BPF_X &&
+ 	    __is_pointer_value(false, src_reg) && __is_pointer_value(false, dst_reg) &&
+-	    type_may_be_null(src_reg->type) != type_may_be_null(dst_reg->type) &&
+ 	    base_type(src_reg->type) != PTR_TO_BTF_ID &&
+ 	    base_type(dst_reg->type) != PTR_TO_BTF_ID) {
+ 		eq_branch_regs = NULL;
+@@ -16073,9 +16074,11 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 			break;
+ 		}
+ 		if (eq_branch_regs) {
+-			if (type_may_be_null(src_reg->type))
++			/* src == dst && dst != NULL => src != NULL */
++			if (reg_not_null(dst_reg) && type_may_be_null(src_reg->type))
+ 				mark_ptr_not_null_reg(&eq_branch_regs[insn->src_reg]);
+-			else
++			/* src == dst && src != NULL => dst != NULL */
++			if (reg_not_null(src_reg) && type_may_be_null(dst_reg->type))
+ 				mark_ptr_not_null_reg(&eq_branch_regs[insn->dst_reg]);
+ 		}
  	}
-+	tx_q->cur_tx = entry;
- 
- 	tx_q->tx_skbuff_dma[tx_q->cur_tx].last_segment = true;
- 
-@@ -4464,7 +4468,22 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	return NETDEV_TX_OK;
- 
--dma_map_err:
-+error_dma_unmap:
-+	for (;;) {
-+		if (tx_q->tbs & STMMAC_TBS_AVAIL)
-+			desc = &tx_q->dma_entx[first_entry].basic;
-+		else
-+			desc = &tx_q->dma_tx[first_entry];
-+		stmmac_release_tx_desc(priv, desc, priv->mode);
-+		stmmac_free_tx_buffer(priv, &priv->dma_conf, queue,
-+				      first_entry);
-+		if (first_entry == entry)
-+			break;
-+
-+		first_entry = STMMAC_NEXT_ENTRY(first_entry,
-+						priv->dma_conf.dma_tx_size);
-+	}
-+error:
- 	dev_err(priv->device, "Tx dma map failed\n");
- 	dev_kfree_skb(skb);
- 	priv->xstats.tx_dropped++;
 -- 
 2.53.0
 
