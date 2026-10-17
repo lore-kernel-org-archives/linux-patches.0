@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487AF374E60;
-	Sat, 17 Oct 2026 17:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A161374E60;
+	Sat, 17 Oct 2026 17:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257617; cv=none; b=ted45s4RVzJE3xvtQE33o3z9wANSkOlCGNaslqDa8hRdgYpe+JJYlwjc6CagFgNyq2qf4Pas2YVY/o6Qye1DR4E8YGXWeHQ7zjTBqJhc0Ezo/9UGhB2TFIfNxIJuRRLKdXgNESXh6fGLB6YVv+6RGN0UpWM/+y99tXm8ZhnB8KQ=
+	t=1792257620; cv=none; b=fPk+tf+DhFdTtD2JrmCWABKlQNx3vwBSMoYpm13CU1H3mZQOLm3z5hGrE1PBXg1yzjDcrtKaoAr19KbB6Dghso/mSr6pxkteMXSzM1+tttMR6mq2o7eSIKgJ/IpxTfTtPfRr2IesrtOoJnm+4UkfJkX0+Jinb7oMvG8RACMp4Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257617; c=relaxed/simple;
-	bh=m5YFDB830duRBKdUlbp2H/Wf5Shu2Ghkqq3j3dR3Nws=;
+	s=arc-20240116; t=1792257620; c=relaxed/simple;
+	bh=GZMKvpMZ36yq4c4TAgR3cTeUV6XJm/76qP/+jyp3/ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCapSSnt9U4jYVXRwUEemUWiQtA8TA+Xmu0Lyr+cNjAS/i0PDUAIgfOMu5fFy/aZwjtKW/Kiu89CKQkbDbiGjNSm6Ooditl6K9IKVi/p55yxUQRRJAwyJffzpnvj0v4MD7PuBdqVuApoIWG8JpzFhkwz+XnbMHQBEiCzFCwu/cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqiWkMKV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RTdwDDfkvqtb00kvgngLJqrE0heunxHm/tHjS24ovr2ZHb7SF1ItbHwqEXfTF+mu4WVth/gJdK4Eo7KUUGksEP/aK5ALNZWXHzTqt/jmtUwKvUrj7ljaDgfm1ohsOBMCUaqJPIobamVrm5OuI5og/qj8AJfrXs/KU3Lzq3QKO78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QrNPxnc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqiWkMKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955AC1F000C4;
-	Sat, 17 Oct 2026 17:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QrNPxnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A451F000C4;
+	Sat, 17 Oct 2026 17:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257616;
-	bh=e6PiSmKZQh18UIMBD96luVT20PIwbMdkp/RtDFrwPEw=;
+	s=korg; t=1792257619;
+	bh=px7xKM7F/B9B/5WzB+LVGItQS9OBG42eALYhrn8jKxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqiWkMKVXPJKQwIEdG79R9o8A07q6nTSe/oEDhwNsnQkKzLAK2Tt09oQ35RZFFCq5
-	 Nl9wYptCqJvxRhZUaFtyTf40nuf8Dr6O2D9eBQj7Jz9HnBj0KHlXTJDelWCclxVfmV
-	 E/luGOpxYNwpZanrA7vOtf0VNcsm13PePcMSSu58=
+	b=0QrNPxncik8+G0VY/jNqCzfP1I3yua8xVVeLaRwcCPVjwqB4UsA0XklcwMi5yYE1t
+	 ahHOnzOzATlYnyg/EoijoqU4wYxZ9/qI/hKq+Lopz8JcCx7f2eXlWy44k2E9UQn8DF
+	 HK8dNlV/IEEU/vTSoqdeWX6EkYn38FrMEehANAFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0574/1674] nvme-tcp: sanitize request list handling
-Date: Sat, 17 Oct 2026 17:47:26 +0200
-Message-ID: <20261017160445.827251024@linuxfoundation.org>
+Subject: [PATCH 6.6 0575/1674] ALSA: pcm: oss: Fix setup list UAF on proc write error
+Date: Sat, 17 Oct 2026 17:47:27 +0200
+Message-ID: <20261017160445.852609865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,77 +47,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 0bf04c874fcb1ae46a863034296e4b33d8fbd66c ]
+[ Upstream commit 4cc54bdd54b337e77115be5b55577d1c58608eae ]
 
-Validate the request in nvme_tcp_handle_r2t() to ensure it's not part of
-any list, otherwise a malicious R2T PDU might inject a loop in request
-list processing.
+snd_pcm_oss_proc_write() links a newly allocated setup entry into the
+OSS setup list before duplicating the task name. If the task-name
+allocation fails, the error path frees the already linked entry and
+leaves setup_list pointing at freed memory.
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+A later OSS device open can then walk the stale list entry in
+snd_pcm_oss_look_for_setup() and dereference freed memory.
+
+Allocate the task name and initialize the setup entry before publishing
+the entry on setup_list. Also fetch the initial proc read iterator only
+after taking setup_mutex, so all setup_list traversal follows the same
+list lifetime rules.
+
+Reported-by: syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a1062b7.170a0220.35b2b7.0003.GAE@google.com
+Closes: https://syzkaller.appspot.com/bug?extid=8e498074a794999eb41c
+Fixes: 060d77b9c04a ("[ALSA] Fix / clean up PCM-OSS setup hooks")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260522-alsa-pcm-oss-setup-uaf-v1-1-40bdcc4d17e8@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Assisted-by: LLM
+[ Backport to 6.6.y: Keep the target's explicit setup_mutex unlocks on
+  allocation failure and before continuing; upstream releases that mutex
+  through its scoped guard. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/core/oss/pcm_oss.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 88489a787e677..e270024fe5490 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -385,7 +385,8 @@ nvme_tcp_fetch_request(struct nvme_tcp_queue *queue)
- 			return NULL;
- 	}
- 
--	list_del(&req->entry);
-+	list_del_init(&req->entry);
-+	init_llist_node(&req->lentry);
- 	return req;
- }
- 
-@@ -493,6 +494,8 @@ static int nvme_tcp_init_request(struct blk_mq_tag_set *set,
- 	req->queue = queue;
- 	nvme_req(rq)->ctrl = &ctrl->ctrl;
- 	nvme_req(rq)->cmd = &pdu->cmd;
-+	init_llist_node(&req->lentry);
-+	INIT_LIST_HEAD(&req->entry);
- 
- 	return 0;
- }
-@@ -739,6 +742,14 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
- 		return -EPROTO;
- 	}
- 
-+	if (llist_on_list(&req->lentry) ||
-+	    !list_empty(&req->entry)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"req %d unexpected r2t while processing request\n",
-+			rq->tag);
-+		return -EPROTO;
-+	}
+diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
+index 23ecbd70ccf65..25f7e585bc7b9 100644
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -2964,8 +2964,10 @@ static void snd_pcm_oss_proc_read(struct snd_info_entry *entry,
+ 				  struct snd_info_buffer *buffer)
+ {
+ 	struct snd_pcm_str *pstr = entry->private_data;
+-	struct snd_pcm_oss_setup *setup = pstr->oss.setup_list;
++	struct snd_pcm_oss_setup *setup;
 +
- 	req->pdu_len = 0;
- 	req->h2cdata_left = r2t_length;
- 	req->h2cdata_offset = r2t_offset;
-@@ -2374,6 +2385,8 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
- 	ctrl->async_req.offset = 0;
- 	ctrl->async_req.curr_bio = NULL;
- 	ctrl->async_req.data_len = 0;
-+	init_llist_node(&ctrl->async_req.lentry);
-+	INIT_LIST_HEAD(&ctrl->async_req.entry);
- 
- 	nvme_tcp_queue_request(&ctrl->async_req, true, true);
- }
+ 	mutex_lock(&pstr->oss.setup_mutex);
++	setup = pstr->oss.setup_list;
+ 	while (setup) {
+ 		snd_iprintf(buffer, "%s %u %u%s%s%s%s%s%s\n",
+ 			    setup->task_name,
+@@ -3053,6 +3055,14 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
+ 				mutex_unlock(&pstr->oss.setup_mutex);
+ 				return;
+ 			}
++			template.task_name = kstrdup(task_name, GFP_KERNEL);
++			if (!template.task_name) {
++				kfree(setup);
++				buffer->error = -ENOMEM;
++				mutex_unlock(&pstr->oss.setup_mutex);
++				return;
++			}
++			*setup = template;
+ 			if (pstr->oss.setup_list == NULL)
+ 				pstr->oss.setup_list = setup;
+ 			else {
+@@ -3060,13 +3070,8 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
+ 				     setup1->next; setup1 = setup1->next);
+ 				setup1->next = setup;
+ 			}
+-			template.task_name = kstrdup(task_name, GFP_KERNEL);
+-			if (! template.task_name) {
+-				kfree(setup);
+-				buffer->error = -ENOMEM;
+-				mutex_unlock(&pstr->oss.setup_mutex);
+-				return;
+-			}
++			mutex_unlock(&pstr->oss.setup_mutex);
++			continue;
+ 		}
+ 		*setup = template;
+ 		mutex_unlock(&pstr->oss.setup_mutex);
 -- 
 2.53.0
 
