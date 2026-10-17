@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8839635E93B;
-	Sat, 17 Oct 2026 17:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCA02E266C;
+	Sat, 17 Oct 2026 17:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258354; cv=none; b=BzM+WWiFRKTAiiFVgrt44sqL8hydO1kniDn8WslvF6WQ+Q4/fE8Xe0ejL0sxotLcEt14OCWYr0cYqEnd2TBZoWN9hSi5YM94DqAf3zeuf/kDsA1D4VXAs2Vu4S//pz9Lk2Gamssgm43YlXkROws/zbnGOg1zGbpFUU1mGJVdcik=
+	t=1792258357; cv=none; b=CFjl4iJpSmDCCM7t6YAttMsHq+qyHp3b7Ua+dvzcpbSR9CdoAka3AwQf7nHJXPz1XM3Bxp1GVNEEFycMlw/FIYjLTMCpY+GhRxO8HtUocqp7JK4rXhFsID9WH5fCunP0WVLpDpV5L2j9xC9i22/grQY5B2VLc2iIoIBdLUbQxYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258354; c=relaxed/simple;
-	bh=5jFJy2ooZ4iGn/gDvlpXGNfQT/L3tddfpz7/FuyqbfI=;
+	s=arc-20240116; t=1792258357; c=relaxed/simple;
+	bh=df6iYoYlkR+stXWvpkEI0MnJWz7MUBkcM3ZrOhNaHF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qX+wEjemdNoq8oQaLWSgCIvj/oVeUhk9WxBx0XgbvBB7KrzN4kApGUTkVzxAqWO20TgkLD0kWnez90Rrl+8raJ4Ms5dlBwDJjJhkHP13AOMsZ20slYeoiiK79uLxE5s84n3FdqxwygNTpBSwijsIPOoS0vqJyDjPcDj/GPAEno8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEusocH+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d69zWYk163i+GAzs+UCjGibY1zUPxugkEgUeuUCbbHl2X0yeaba6huxl4bykXQL3An/OoIzVIhtXeCwRc3O8tc8aEKYMZYRVptLT5tVA3DPdbF5/UTcOdj/oVf9BMZROFIUilKDxt1AzSV20HcXjJN/MltLd6UG+KkpaMyWx8LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEgU93fR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEusocH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98C91F000C4;
-	Sat, 17 Oct 2026 17:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEgU93fR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70E61F000C4;
+	Sat, 17 Oct 2026 17:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258353;
-	bh=F00rZ5tClf69s8Kv4nBPkkCES+KyXJBKuzEI7v1pbFY=;
+	s=korg; t=1792258356;
+	bh=aYZa8v3SQg0XN63lvE4hXtpQaIxD1BU7GFbuVCvXf2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEusocH+CzJFB3kkl3stuNXXZDBesqElsqliIJZNd2GoMq2CAdEAz3IvB/fHUnQTd
-	 A7OCdRt4lP7mZj+bewOeeyh3EfIlXAo4kkzlJ0kegzImLR9C1vmNaAp//LXFaZU1B4
-	 6PPDXtKQANmM8Tx5/QF5oWF0aoq2Q4vIx5kzGPvI=
+	b=bEgU93fRV3I4HyjoyYD0Vv1IHPZfrvLNNjsaK96xOw6U1NS/vrTViUDnt29sDEWww
+	 ZiTgOnXA0qgccu0BA84oy/enxlX3N6EB38lbKPLUrp1QSU6YT2bZZhJRCvHegUtHt9
+	 t/1WACHG0YVVUo2KpVGKu73D1fG1P5tRaEpR9VsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Igor Stepansky <igor.stepansky@orca.security>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0857/1674] btrfs: reject new transactions if the fs is fully read-only
-Date: Sat, 17 Oct 2026 17:52:09 +0200
-Message-ID: <20261017160453.118564860@linuxfoundation.org>
+Subject: [PATCH 6.6 0858/1674] ksmbd: add chann_lock to protect ksmbd_chann_list xarray
+Date: Sat, 17 Oct 2026 17:52:10 +0200
+Message-ID: <20261017160453.144038625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,140 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1972f44c189c8aacde308fa9284e474c1a5cbd9f ]
+[ Upstream commit 4f3a06cc57976cafa8c6f716646be6c79a99e485 ]
 
-[BUG]
-There is a bug report where a heavily fuzzed fs is mounted with all
-rescue mount options, which leads to the following warnings during
-unmount:
+ksmbd_chann_list xarray lacks synchronization, allowing use-after-free in
+multi-channel sessions (between lookup_chann_list() and ksmbd_chann_del).
 
-  BTRFS: Transaction aborted (error -22)
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 9758 Comm: repro.out Not tainted
-  6.19.0-rc5-00002-gb71e635feefc #7 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:find_free_extent_update_loop fs/btrfs/extent-tree.c:4208 [inline]
-  RIP: 0010:find_free_extent+0x52f0/0x5d20 fs/btrfs/extent-tree.c:4611
-  Call Trace:
-   <TASK>
-   btrfs_reserve_extent+0x2cd/0x790 fs/btrfs/extent-tree.c:4705
-   btrfs_alloc_tree_block+0x1e1/0x10e0 fs/btrfs/extent-tree.c:5157
-   btrfs_force_cow_block+0x578/0x2410 fs/btrfs/ctree.c:517
-   btrfs_cow_block+0x3c4/0xa80 fs/btrfs/ctree.c:708
-   btrfs_search_slot+0xcad/0x2b50 fs/btrfs/ctree.c:2130
-   btrfs_truncate_inode_items+0x45d/0x2350 fs/btrfs/inode-item.c:499
-   btrfs_evict_inode+0x923/0xe70 fs/btrfs/inode.c:5628
-   evict+0x5f4/0xae0 fs/inode.c:837
-   __dentry_kill+0x209/0x660 fs/dcache.c:670
-   finish_dput+0xc9/0x480 fs/dcache.c:879
-   shrink_dcache_for_umount+0xa0/0x170 fs/dcache.c:1661
-   generic_shutdown_super+0x67/0x2c0 fs/super.c:621
-   kill_anon_super+0x3b/0x70 fs/super.c:1289
-   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2127
-   deactivate_locked_super+0xbc/0x130 fs/super.c:474
-   cleanup_mnt+0x425/0x4c0 fs/namespace.c:1318
-   task_work_run+0x1d4/0x260 kernel/task_work.c:233
-   exit_task_work include/linux/task_work.h:40 [inline]
-   do_exit+0x694/0x22f0 kernel/exit.c:971
-   do_group_exit+0x21c/0x2d0 kernel/exit.c:1112
-   __do_sys_exit_group kernel/exit.c:1123 [inline]
-   __se_sys_exit_group kernel/exit.c:1121 [inline]
-   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1121
-   x64_sys_call+0x2210/0x2210 arch/x86/include/generated/asm/syscalls_64.h:232
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xe8/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x44f639
-  Code: Unable to access opcode bytes at 0x44f60f.
-  RSP: 002b:00007ffc15c4e088 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-  RAX: ffffffffffffffda RBX: 00000000004c32f0 RCX: 000000000044f639
-  RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-  RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004c32f0
-  R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
-   </TASK>
+Adds rw_semaphore chann_lock to struct ksmbd_session and protects
+all xa_load/xa_store/xa_erase accesses.
 
-Since rescue mount options will mark the full fs read-only, there should
-be no new transaction triggered.
-
-But during unmount we will evict all inodes, which can trigger a new
-transaction, and triggers warnings on a heavily corrupted fs.
-
-[CAUSE]
-Btrfs allows new transaction even on a read-only fs, this is to allow
-log replay happen even on read-only mounts, just like what ext4/xfs do.
-
-However with rescue mount options, the fs is fully read-only and cannot
-be remounted read-write, thus in that case we should also reject any new
-transactions.
-
-[FIX]
-If we find the fs has rescue mount options, we should treat the fs as
-error, so that no new transaction can be started.
-
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CANypQFYw8Nt8stgbhoycFojOoUmt+BoZ-z8WJOZVxcogDdwm=Q@mail.gmail.com/
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Reported-by: Igor Stepansky <igor.stepansky@orca.security>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 13 +++++++++++++
- fs/btrfs/fs.h      |  6 ++++++
- 2 files changed, 19 insertions(+)
+ fs/smb/server/mgmt/user_session.c |  5 +++++
+ fs/smb/server/mgmt/user_session.h |  1 +
+ fs/smb/server/smb2pdu.c           | 12 +++++++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index adf649ec60beb..d2f9c5be175ea 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3155,6 +3155,15 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 64f6ff2a7a8b3..26c1bfff242a5 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -32,12 +32,14 @@ static void free_channel_list(struct ksmbd_session *sess)
+ 	struct channel *chann;
+ 	unsigned long index;
+ 
++	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
+ 		kfree(chann);
+ 	}
+ 
+ 	xa_destroy(&sess->ksmbd_chann_list);
++	up_write(&sess->chann_lock);
  }
  
-+static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
-+{
-+	if (!sb_rdonly(fs_info->sb))
-+		return false;
-+	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-+		return true;
-+	return false;
-+}
-+
- int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
- 		      char *options)
+ static void __session_rpc_close(struct ksmbd_session *sess,
+@@ -220,7 +222,9 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
  {
-@@ -3298,6 +3307,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	struct channel *chann;
+ 
++	down_write(&sess->chann_lock);
+ 	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
++	up_write(&sess->chann_lock);
+ 	if (!chann)
+ 		return -ENOENT;
+ 
+@@ -469,6 +473,7 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
+ 	init_rwsem(&sess->rpc_lock);
++	init_rwsem(&sess->chann_lock);
+ 
+ 	ret = __init_smb2_session(sess);
  	if (ret)
- 		goto fail_alloc;
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index 523b68c4ca40e..525650d6876c3 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -49,6 +49,7 @@ struct ksmbd_session {
+ 	char				sess_key[CIFS_KEY_SIZE];
  
-+	/* If the fs has any rescue options, no transaction is allowed. */
-+	if (fs_is_full_ro(fs_info))
-+		WRITE_ONCE(fs_info->fs_error, -EROFS);
-+
- 	ret = btrfs_check_features(fs_info, !sb_rdonly(sb));
- 	if (ret < 0)
- 		goto fail_alloc;
-diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
-index b8b9ce8921baf..415f867dd1252 100644
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -186,6 +186,12 @@ enum {
- 	BTRFS_MOUNT_NODISCARD			= (1UL << 31),
- };
+ 	struct hlist_node		hlist;
++	struct rw_semaphore		chann_lock;
+ 	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b9b0ea3701c27..b6b67a9e09a98 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -79,7 +79,13 @@ static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
  
-+/* These mount options require a full read-only fs, no new transaction is allowed. */
-+#define BTRFS_MOUNT_FULL_RO_MASK		\
-+	(BTRFS_MOUNT_NOLOGREPLAY |		\
-+	 BTRFS_MOUNT_IGNOREBADROOTS |		\
-+	 BTRFS_MOUNT_IGNOREDATACSUMS)
+ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ {
+-	return xa_load(&sess->ksmbd_chann_list, (long)conn);
++	struct channel *chann;
 +
- /*
-  * Compat flags that we support.  If any incompat flags are set other than the
-  * ones specified below then we will fail to mount
++	down_read(&sess->chann_lock);
++	chann = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++
++	return chann;
+ }
+ 
+ /**
+@@ -1563,7 +1569,9 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
++			up_write(&sess->chann_lock);
+ 		}
+ 	}
+ 
+@@ -1656,7 +1664,9 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
++			up_write(&sess->chann_lock);
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
