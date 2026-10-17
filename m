@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FD63B2FD8;
-	Sat, 17 Oct 2026 17:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752EE34C98C;
+	Sat, 17 Oct 2026 17:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259278; cv=none; b=TwRUHwnZcQDJyN6XjrGGVDUBBADxXf8KQc3c/sRCQgtFWngJGOXi6O9TuEC+CZHVOL022slh9f5gv2PvteIYM1Uz4dx+p5FlspQTNKIxmhvx3ckqJFs+A4+l0SPuFTFnMFolDTmewsvZEIaGdV5IydkdxVNoK7mtlC4Ek8s4u9k=
+	t=1792259281; cv=none; b=YUHEqob+XJwpKvI8unYsZekn0/QfPeIcJIgmCRpLLADzw6O9skz6Bu8BEz51QBtOftKy4lFUrP9C7wM/yopvR8MbOajCRWHXMWJM5RycsB9ZNhkuVnsfgl6wPmQfqK1BjveUTIy8lwVsB0/muxMUBixx4rvbNei55vf0sCw/3Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259278; c=relaxed/simple;
-	bh=xBP42CYxRnEu9og0KM6wmvLHOzn/DPLauMVI+aPqjMw=;
+	s=arc-20240116; t=1792259281; c=relaxed/simple;
+	bh=CqQ5MMG0p9d1WwgCzLadgaMi4XMhgnqBcHtzIWxZoz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQ+EQdl8Cgr0gytPTUxpsQ5epLqNIDZatGiqPN8IBLQZ73vUCIcLR2JYLYPyQqTJ8cDix2gFWFTiCOMlvtU8useAK1q6Y9p6riXBvIy7GC4dFJaG6czQgX0KaiG7Vm+5ealVQ7QE998AkuXnC+shySPPmzrcgL8WVbKFPpPeShE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMmyhjQR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PwK4E/AI94xqlgC0ddxW6UhD9XRiT8TTOVoU3jUkJ9vsYzNPOCoZ/zt2Ivn4b6zQVVo88G4OHGkZ0dB/BJH1eLW7yOuDxyvyJ2ss7SryY31oTdh89tXrrqGE/Apgy9pwd+l13VF+FA4ZGxC5lMx6dDOITE+nFF6VAgf6xF1bImk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOY4x/pW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMmyhjQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCE41F000C4;
-	Sat, 17 Oct 2026 17:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOY4x/pW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D350E1F000C4;
+	Sat, 17 Oct 2026 17:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259277;
-	bh=R2UhIB9oItK/E2WlD3tqjiV8DABsKfLClrdg6kzQhwk=;
+	s=korg; t=1792259280;
+	bh=1ik3QZuHi+ay4EfHn/xXIqBYYwxm+zZIKiQ7+eowqug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AMmyhjQR2ADclM9iqdaNf69B1cCelJ/Lxn7c7M1BejQOQa1DNeVaNMg9JZ5f9N+YJ
-	 v9m0KSHog1fHCRxl3nkRovCjk8Nr1R3Ry3UqqgfQvgBa7Rc7CIpfAdRsbBh1MW6Dpb
-	 Pyz5fwlQwuvUdu9UySM0u3vBh9Nb+V7aO5c0UzZA=
+	b=xOY4x/pWVtQFxT2vrA7nOQj9i82jaz98e5EoXhp3A36F9jMiDBcmoh4HJi/4RqTuz
+	 2sDfOEZ+aKxwHAx1aUVEw8PbpZA8555IX0mxCDwbII5bmPPoihB2y1Dp3Q795iY0vw
+	 e5u9g6WF3AXjvdgMmOeLUFhjWbRweRJN3D4nLl0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ad6118a7584b607c67f2@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1161/1674] ext4: validate donor file superblock early in EXT4_IOC_MOVE_EXT
-Date: Sat, 17 Oct 2026 17:57:13 +0200
-Message-ID: <20261017160500.950840855@linuxfoundation.org>
+Subject: [PATCH 6.6 1162/1674] ixgbe: do not configure xps for XDP queues
+Date: Sat, 17 Oct 2026 17:57:14 +0200
+Message-ID: <20261017160500.974936407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,70 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit c143957520c6c9b5cd72e0de8b52b814f0c576fe ]
+[ Upstream commit 7bd4355272de34c2e90e34b72c5613736d03c32b ]
 
-Reject the EXT4_IOC_MOVE_EXT ioctl early if the donor file does not
-belong to the same superblock as the original file.  Currently, this
-validation is performed inside ext4_move_extents() by
-mext_check_validity(), but only after lock_two_nondirectories() has
-already acquired the inode locks.  When the donor fd refers to a file
-on a different filesystem (e.g., overlayfs), this late validation
-creates a circular lock dependency:
+netif_set_xps_queue() should not be called for an XDP Tx queue, since such
+queues are not netdev-exposed. On systems with number of CPUs >=64, on E610
+adapter, netdev is configured with maximum number queue pairs being 63
+(due to MSI-X assignment), but configuring XDP results in 64 XDP queues.
 
-  CPU0 (overlayfs write)            CPU1 (ext4 ioctl)
-  ----                              ----
-  inode_lock(ovl_inode)
-                                    mnt_want_write_file(filp)
-                                      sb_start_write(ext4_sb)   [sb_writers]
-    backing_file_write_iter()
-      vfs_iter_write(real_file)
-        file_start_write(real_file)
-          sb_start_write(ext4_sb)   [blocked by freeze]
-                                    lock_two_nondirectories()
-                                      inode_lock(ovl_inode)     [blocked]
+So, during XDP program load, when netif_set_xps_queue() is called for the
+last XDP queue, we get a WARNING with a call trace and KASAN report
+afterwards (if enabled).
 
-With a concurrent freeze operation holding sb_writers write side, this
-forms a deadlock cycle: CPU0 waits for freeze to complete, freeze waits
-for CPU1's sb_writers reader to exit, CPU1 waits for CPU0's inode lock.
+[ 2012.699800] WARNING: net/core/dev.c:2854 at __netif_set_xps_queue+0x116a/0x1e40, CPU#36: xdpsock/103668
+[...]
+[ 2012.700029] RIP: 0010:__netif_set_xps_queue+0x116a/0x1e40
+[ 2012.700035] Code: b6 34 06 48 89 f8 83 e0 07 83 c0 01 40 38 f0 7c 09 40 84 f6 0f 85 03 0a 00 00 0f b7 44 24 40 66 43 89 44 6a 18 e9 01 fb ff ff <0f> 0b e9 f2 ee ff ff 44 8b 44 24 44 45 85 c0 74 50 4d 85 e4 0f 84
+[ 2012.700040] RSP: 0018:ffff8882369aeb28 EFLAGS: 00010246
+[ 2012.700046] RAX: 0000000000000000 RBX: 000000000000003f RCX: 0000000000000000
+[ 2012.700050] RDX: 1ffff1111da3d891 RSI: ffff888120e34250 RDI: ffff8888ed1ec488
+[ 2012.700054] RBP: ffff888913281560 R08: 0000000000000000 R09: ffff8888ed1ec000
+[ 2012.700058] R10: ffff8888a2e83180 R11: 0000000000000000 R12: 0000000000007fa8
+[ 2012.700061] R13: 000000000000003f R14: ffff888120e34854 R15: ffff8889132817c8
+[ 2012.700065] FS:  00007fc8ea9ff740(0000) GS:ffff88884cefe000(0000) knlGS:0000000000000000
+[ 2012.700069] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 2012.700073] CR2: 00007f81c8000020 CR3: 00000002299f8006 CR4: 00000000007726f0
+[ 2012.700077] PKRU: 55555554
+[ 2012.700080] Call Trace:
+[ 2012.700084]  <TASK>
+[ 2012.700087]  ? ktime_get+0x61/0x150
+[ 2012.700097]  ? usleep_range_state+0x133/0x1b0
+[ 2012.700108]  ? __pfx_usleep_range_state+0x10/0x10
+[ 2012.700114]  netif_set_xps_queue+0x31/0x50
+[ 2012.700119]  ixgbe_configure_tx_ring+0x472/0x920 [ixgbe]
+[...]
+[ 2012.700486]  ixgbe_xdp+0x38f/0x750 [ixgbe]
 
-Since EXT4_IOC_MOVE_EXT exchanges physical extents between two files,
-it fundamentally requires both files to reside on the same ext4
-filesystem.  Moving the superblock check before any lock acquisition
-is both semantically correct and eliminates the circular dependency
-by ensuring that cross-filesystem donor fds are rejected before
-sb_writers or inode locks are taken.
+[...]
 
-Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
-Reported-by: syzbot+ad6118a7584b607c67f2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ad6118a7584b607c67f2
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20260608152521.1292656-1-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[ 2012.701094] BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1ac5/0x1e40
+[ 2012.701100] Write of size 4 at addr ffff88888d43cff8 by task xdpsock/103668
+
+Skip XPS configuration for XDP Tx queues.
+
+Fixes: 33fdc82f0883 ("ixgbe: add support for XDP_TX action")
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ioctl.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index e27eae7f163df..242974bf3c0aa 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1373,6 +1373,11 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 			goto mext_out;
- 		}
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 4787aa85febad..3f990136d05c1 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -3514,7 +3514,8 @@ void ixgbe_configure_tx_ring(struct ixgbe_adapter *adapter,
+ 	}
  
-+		if (file_inode(filp)->i_sb != file_inode(donor.file)->i_sb) {
-+			err = -EXDEV;
-+			goto mext_out;
-+		}
-+
- 		err = mnt_want_write_file(filp);
- 		if (err)
- 			goto mext_out;
+ 	/* initialize XPS */
+-	if (!test_and_set_bit(__IXGBE_TX_XPS_INIT_DONE, &ring->state)) {
++	if (!ring_is_xdp(ring) &&
++	    !test_and_set_bit(__IXGBE_TX_XPS_INIT_DONE, &ring->state)) {
+ 		struct ixgbe_q_vector *q_vector = ring->q_vector;
+ 
+ 		if (q_vector)
 -- 
 2.53.0
 
