@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38173ADB9A;
-	Sat, 17 Oct 2026 16:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB0B17BED0;
+	Sat, 17 Oct 2026 16:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255709; cv=none; b=RziIlU/rrS2Qhk7qRBR1xc2SyzXfNtjuJ1X9f5+gG+nVaxTnMOeP5K5xYluWlZlUKW64fxKdcmx+BVBvdqrGeHezZbIiOyg61C90+VGO56MQJx/vIlfz8YoZ4Jxq9TsMd2sAbiZrZchIlOOF0VD5wlNahcBri2zHPHR2t2holxQ=
+	t=1792255711; cv=none; b=EhTICkX5gjeAgHOnZX69L432JAxPWWKcbod43DitDMF8xNk6z5DYHzRWrOAOcLHU6zFL5F0/KpO4pXPolG4LmFZQBbzBpqEhEoP6ii7LQ1om5JBGlSS55zNJGcvbkVogwDaH5tafphlqb/bo0ZZunDnBmqCHvm7gSmKMzhxVZ3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255709; c=relaxed/simple;
-	bh=q4aHTx8/13zRd8gOA+0WoIAPpvjxomL1z9uep1o2mA0=;
+	s=arc-20240116; t=1792255711; c=relaxed/simple;
+	bh=NY4oqUtEJcB4vVvy4FunWMq8m9c20O1yYv77O52uswM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/F6hd1HQSIg7nutcVE+HWxNaI6pyV1NUayJCa/410P4tSRJJcWjZBXTWd7gEz1m8eHgjkdZo71evrhQLsq3AHwtc/0nibuOWXXKF3n+nIHlkRpaTP3PvQxDDgeBTNNsXSa1jvo/EBunTNIL+SD+J0BsOH1SsPnylnRkpMrIPtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iP+EPBME; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLdDq1bcDbYjqVWXnY3oZVORPr3EzD0q304rbqSNICzQICiQjkysxE0fkNPrgZ0TfwbzZNVgTkhlcwFaSXi3KFUWKqn3iVjtSkcgRBibong9SsplRlDq50WR4v0+N4uax4ZHUqb5OygAlm0T6ID00yKP7hJV3r5aMyTH3XUGzK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjZDnp59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iP+EPBME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9131F000C4;
-	Sat, 17 Oct 2026 16:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjZDnp59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2961F1F000C4;
+	Sat, 17 Oct 2026 16:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255707;
-	bh=4lvdd3obTVr+2mJup3mRjJtbE3KfWtUwOONyadUg8Qc=;
+	s=korg; t=1792255710;
+	bh=EDurl6TPfU3vHHwYyfCO+fid9zgq2fzBvpQGECWIwgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iP+EPBMEGWPPzVYRUnTflH0bRIQq9aEjHqf2WJEmzO0hhCzR8qU1lagqq4obJxf/S
-	 aNliu8buHJCJV1zmiYJfG4dB1uOYJayHDCK6uRnwJt/hOCcOeV9Q8q+BIYIzClKXkS
-	 3fErIuGmxbmmDCU3KosGprtseDG5d6+XWPje8BXk=
+	b=ZjZDnp59vPf26vQqi319f5Efl+T6GaiE7z4upK2lub/F2BWkPFMZBAQ3C51zbWivg
+	 kiDLRviLaqRFW5AMmFudaSkTJN4UQXdujqoJ1KEMbh4AUuEkIeHsyK8BMTW7/6Iyk4
+	 SrFOkKB2BhN8m8JgKMTxpCvAo1kmLIjS+anCvQ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mattia Meleleo <mattia.meleleo@coralogix.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 865/869] irqwork: Move data struct to a types header
-Date: Sat, 17 Oct 2026 18:01:46 +0200
-Message-ID: <20261017160059.034672390@linuxfoundation.org>
+Subject: [PATCH 6.12 866/869] bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
+Date: Sat, 17 Oct 2026 18:01:47 +0200
+Message-ID: <20261017160059.060890644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,72 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Mattia Meleleo <mattia.meleleo@coralogix.com>
 
-[ Upstream commit c809f081fe400cb1b9898f4791c0d33146315161 ]
+[ Upstream commit 04af4efde58a4a4ef4feab7360c46af9ec0b83a0 ]
 
-... to avoid header recursion hell.
+tcp_bpf_ioctl() answers SIOCINQ from psock->msg_tot_len, which only
+counts bytes in ingress_msg. Without a stream/skb verdict program
+nothing is diverted there: data stays in sk_receive_queue, so FIONREAD
+returns 0 even though read() returns data.
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20251119172550.152813625@linutronix.de
+Add tcp_inq() to the reported value when the psock has no verdict
+program. The two queues are disjoint, so bytes redirected into
+ingress_msg from other sockets stay correctly accounted through
+msg_tot_len.
+
+Remove unused sk_psock_msg_inq().
+
+Fixes: 929e30f93125 ("bpf, sockmap: Fix FIONREAD for sockmap")
+Signed-off-by: Mattia Meleleo <mattia.meleleo@coralogix.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/irq_work.h       |  9 ++-------
- include/linux/irq_work_types.h | 14 ++++++++++++++
- 2 files changed, 16 insertions(+), 7 deletions(-)
- create mode 100644 include/linux/irq_work_types.h
+ include/linux/skmsg.h | 14 --------------
+ net/ipv4/tcp_bpf.c    | 17 ++++++++++++++++-
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/irq_work.h b/include/linux/irq_work.h
-index 136f2980cba30..c5afd053ae32c 100644
---- a/include/linux/irq_work.h
-+++ b/include/linux/irq_work.h
-@@ -2,8 +2,9 @@
- #ifndef _LINUX_IRQ_WORK_H
- #define _LINUX_IRQ_WORK_H
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index ce8464324d42f..ae2b34cc10eea 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -561,20 +561,6 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
+ 	return !!psock->saved_data_ready;
+ }
  
--#include <linux/smp_types.h>
-+#include <linux/irq_work_types.h>
- #include <linux/rcuwait.h>
-+#include <linux/smp_types.h>
- 
- /*
-  * An entry can be in one of four states:
-@@ -14,12 +15,6 @@
-  * busy      NULL, 2 -> {free, claimed} : callback in progress, can be claimed
-  */
- 
--struct irq_work {
--	struct __call_single_node node;
--	void (*func)(struct irq_work *);
--	struct rcuwait irqwait;
--};
+-/* for tcp only, sk is locked */
+-static inline ssize_t sk_psock_msg_inq(struct sock *sk)
+-{
+-	struct sk_psock *psock;
+-	ssize_t inq = 0;
 -
- #define __IRQ_WORK_INIT(_func, _flags) (struct irq_work){	\
- 	.node = { .u_flags = (_flags), },			\
- 	.func = (_func),					\
-diff --git a/include/linux/irq_work_types.h b/include/linux/irq_work_types.h
-new file mode 100644
-index 0000000000000..73abec5bb06ed
---- /dev/null
-+++ b/include/linux/irq_work_types.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _LINUX_IRQ_WORK_TYPES_H
-+#define _LINUX_IRQ_WORK_TYPES_H
-+
-+#include <linux/smp_types.h>
-+#include <linux/types.h>
-+
-+struct irq_work {
-+	struct __call_single_node	node;
-+	void				(*func)(struct irq_work *);
-+	struct rcuwait			irqwait;
-+};
-+
-+#endif
+-	psock = sk_psock_get(sk);
+-	if (likely(psock)) {
+-		inq = sk_psock_get_msg_len_nolock(psock);
+-		sk_psock_put(sk, psock);
+-	}
+-	return inq;
+-}
+-
+ /* for udp only, sk is not locked */
+ static inline ssize_t sk_msg_first_len(struct sock *sk)
+ {
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 0e7e121179134..4d3315ff45227 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -335,6 +335,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 
+ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
+ {
++	struct sk_psock *psock;
+ 	bool slow;
+ 
+ 	if (cmd != SIOCINQ)
+@@ -345,7 +346,21 @@ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
+ 		return -EINVAL;
+ 
+ 	slow = lock_sock_fast(sk);
+-	*karg = sk_psock_msg_inq(sk);
++	psock = sk_psock_get(sk);
++	if (unlikely(!psock)) {
++		unlock_sock_fast(sk, slow);
++		return tcp_ioctl(sk, cmd, karg);
++	}
++	*karg = sk_psock_get_msg_len_nolock(psock);
++	/* Without a verdict program, ingress data is never diverted to
++	 * ingress_msg: it stays in sk_receive_queue and is read through
++	 * the fallback to tcp_recvmsg(), so account for it like
++	 * tcp_ioctl() does.
++	 */
++	if (!READ_ONCE(psock->progs.stream_verdict) &&
++	    !READ_ONCE(psock->progs.skb_verdict))
++		*karg += tcp_inq(sk);
++	sk_psock_put(sk, psock);
+ 	unlock_sock_fast(sk, slow);
+ 
+ 	return 0;
 -- 
 2.53.0
 
