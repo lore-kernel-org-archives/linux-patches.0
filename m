@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EA434C98C;
-	Sat, 17 Oct 2026 18:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10373A6F00;
+	Sat, 17 Oct 2026 18:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260582; cv=none; b=ZO2BHEmmVCMTersrWW6xUAIJB2FF8XurOEAWg2t3v+sDek1aH7FtYkGMNZ66tVprZVfDwKqPCwRHwIMOJe6E9+cRJrd8QgjMU6HwxM9+D9NfE1SUUXS51Sg3H1F7wiu08cXe59MbywAozOfDFIjT2cXsLdVNl7i7Qa/YVfiMVdE=
+	t=1792260584; cv=none; b=p0LYrce4TF2sVezxlchmSpy5N/LSz4sOq3HzcpkVOhBcUqAK38A82PiQmnUUdQ5S2cViJwq644XP96/1A5fQuY4QYuH4uPhfB5Xne/x67ZFFXipAMi2aew+ipuQ5mip9clrK8gtIx3P5YsexLyS4EDJD+PrVLTqRRR7r1zcbL0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260582; c=relaxed/simple;
-	bh=jVW5VMIZwsRbzqTFHspbJfxXhjkpxzkGdbNVZz8mHhc=;
+	s=arc-20240116; t=1792260584; c=relaxed/simple;
+	bh=Z4qrTQAQCtOz3HSX7WmhDSPSOhZ7TukyP/smQHrL62U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phzbVg2ZvyU3W1o2vhnCuVc0grrUiGZPznd4P5ETWyj03tuEskK4Ssoy4xp0WoXx3WXIPwiaW4BnesjZ4VE8kBVBqZbzsSYkVA5ReI2pofJumrnlbPixpePnRo+pDmOHmJrnMko/p4iSqAdDnQYm5hbX9F1iChAnpe2+diplgXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5N1Ixez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bNJpGghwB7Ysj0elCNSyIYi8AO7Zgj0RFVSFsv4riewhPVyrPQB2K3drLc1blGn+TSUadrF3nyXCeTuuoMrsByxb3ZTuMzdL5G6sTJFmi6HRFzjjldF/hC7LjCOJv29RUghLkStJ4lImvTja2Nd95uL1/GPuTgasm1WNzaSNoBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDMIobYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5N1Ixez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A0A1F000C4;
-	Sat, 17 Oct 2026 18:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDMIobYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8D01F000C4;
+	Sat, 17 Oct 2026 18:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260580;
-	bh=bbefEYxzoG5vrgm4AxeeEHGuhN27p0xtoHEaEIV6tIk=;
+	s=korg; t=1792260583;
+	bh=QziS2h/5EhOIbP7ISudqYnsvPVZ6y9ODU2Y/MIqQ7Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5N1IxezsHhZl9pCa6ZjnBbzgVAZ3iUEV6QCFIsjC7d930yOE10maW1nzZa8gMscS
-	 ogvvQ+J+B8JMiK8x9e8TGheYzqwJsFxPTwSUxtqmiApYYrTEKBmctq4t54wpKwhwVY
-	 DokwXEMOMAtvWRbf02szwD1QTZ7DfdzZwPDK15TE=
+	b=hDMIobYiUiO90qcEvpVJRRB+bOewbJFKe09sQR3TYObfOpOg5L0mzFs8GLXypV2BR
+	 bQoMivbl36zsguYd5gxK2ltf0MQtMAqb5V+NhE8eB5aYJ4ngbhGqXoQljRXwvVDEfx
+	 +f497FUqyqBO63xALOiA+RBYycmG2McYUXnlzVls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	stable@kernel.org,
-	Paul Walmsley <pjw@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1593/1674] perf: RISC-V: store available counter mask as bitmap
-Date: Sat, 17 Oct 2026 18:04:25 +0200
-Message-ID: <20261017160511.979859865@linuxfoundation.org>
+Subject: [PATCH 6.6 1594/1674] ipv6: flowlabel: cap duplicate leases per socket
+Date: Sat, 17 Oct 2026 18:04:26 +0200
+Message-ID: <20261017160512.003977626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,211 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 6809da6e9c08ccc9a09cb0a48c61471679274aaa ]
+[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
 
-The available-counter mask was a single unsigned long, but iteration
-uses RISCV_MAX_COUNTERS, which is 64. On RV32 that reads past the object.
-Filling with an unsigned-long bit at index 32 and above is also wrong.
+ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
+successful GET. The recheck path for a compatible existing flowlabel
+links another lease without applying any lease admission check. Repeated
+GET requests for one shareable label can therefore grow a socket's lease
+list without bound.
 
-Use DECLARE_BITMAP and set_bit/bitmap helpers. Walk each bitmap word
-into CFG_MATCH when checking events, when allocating an index, and when
-stopping all counters. Set the counter base to i times BITS_PER_LONG.
-Share the CFG_MATCH ecall through a small helper so the 32-bit argument
-split is not duplicated. On qemu-system-riscv32 the probe bitmap has bits
-above XLEN set, so the first word alone is not enough.
+Reject a new unprivileged lease once the socket already holds
+FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
+of a globally interned label, including the fl_intern() collision path,
+is covered as well. New-label admission remains under the existing
+mem_check() policy.
 
-Fixes: e9991434596f ("RISC-V: Add perf platform driver based on SBI PMU extension")
-Assisted-by: DeepSeek:deepseek-v3
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/prpmask02cmap.v2.1786434000.git.liuxixin@kylinos.cn
-Cc: stable@kernel.org
-[pjw@kernel.org: updated to apply; fixed checkpatch.pl issues]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
+mem_check(). An unprivileged user must not bypass the cap by creating a
+user namespace and a netns where they have CAP_NET_ADMIN, which would
+still consume host memory.
+
+Check the capability only when the socket reaches the limit, so
+successful unprivileged GET requests below the cap do not generate a
+capability audit. Do the admission check before updating linger and
+expires so a rejected GET does not refresh the shared label, matching
+the existing socket-list allocation failure path.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_legacy.c |  5 ++-
- drivers/perf/riscv_pmu_sbi.c    | 67 +++++++++++++++++++++++----------
- include/linux/perf/riscv_pmu.h  |  2 +-
- 3 files changed, 52 insertions(+), 22 deletions(-)
+ net/ipv6/ip6_flowlabel.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/perf/riscv_pmu_legacy.c b/drivers/perf/riscv_pmu_legacy.c
-index fa0bccf4edf2e..4b25e0a76eae7 100644
---- a/drivers/perf/riscv_pmu_legacy.c
-+++ b/drivers/perf/riscv_pmu_legacy.c
-@@ -111,8 +111,9 @@ static void pmu_legacy_init(struct riscv_pmu *pmu)
- {
- 	pr_info("Legacy PMU implementation is available\n");
- 
--	pmu->cmask = BIT(RISCV_PMU_LEGACY_CYCLE) |
--		BIT(RISCV_PMU_LEGACY_INSTRET);
-+	bitmap_zero(pmu->cmask, RISCV_MAX_COUNTERS);
-+	set_bit(RISCV_PMU_LEGACY_CYCLE, pmu->cmask);
-+	set_bit(RISCV_PMU_LEGACY_INSTRET, pmu->cmask);
- 	pmu->ctr_start = pmu_legacy_ctr_start;
- 	pmu->ctr_stop = NULL;
- 	pmu->event_map = pmu_legacy_event_map;
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 901da688ea3f8..6b826e7d9dd44 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -64,7 +64,7 @@ static unsigned int riscv_pmu_irq_num;
- static unsigned int riscv_pmu_irq;
- 
- /* Cache the available counters in a bitmask */
--static unsigned long cmask;
-+static DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
- 
- struct sbi_pmu_event_data {
- 	union {
-@@ -265,6 +265,21 @@ static const struct sbi_pmu_event_data pmu_cache_event_map[PERF_COUNT_HW_CACHE_M
- 	},
- };
- 
-+static struct sbiret pmu_sbi_ctr_cfg_match(unsigned long cbase,
-+					   unsigned long ctr_mask,
-+					   unsigned long cflags,
-+					   unsigned long event_idx,
-+					   u64 config)
-+{
-+#if defined(CONFIG_32BIT)
-+	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
-+			 ctr_mask, cflags, event_idx, config, config >> 32);
-+#else
-+	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
-+			 ctr_mask, cflags, event_idx, config, 0);
-+#endif
-+}
-+
- static int pmu_sbi_ctr_get_width(int idx)
- {
- 	return pmu_ctr_list[idx].width;
-@@ -292,10 +307,10 @@ int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr)
- 	union sbi_pmu_ctr_info *info;
- 	u32 hpm_width = 0, hpm_count = 0;
- 
--	if (!cmask)
-+	if (bitmap_empty(cmask, RISCV_MAX_COUNTERS))
- 		return -EINVAL;
- 
--	for_each_set_bit(i, &cmask, RISCV_MAX_COUNTERS) {
-+	for_each_set_bit(i, cmask, RISCV_MAX_COUNTERS) {
- 		info = &pmu_ctr_list[i];
- 		if (!info)
- 			continue;
-@@ -344,8 +359,8 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- 	struct riscv_pmu *rvpmu = to_riscv_pmu(event->pmu);
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(rvpmu->hw_events);
- 	struct sbiret ret;
--	int idx;
--	uint64_t cbase = 0, cmask = rvpmu->cmask;
-+	int idx, i;
-+	u64 cbase = 0, cmask = 0;
- 	unsigned long cflags = 0;
- 
- 	cflags = pmu_sbi_get_filter_flags(event);
-@@ -366,14 +381,21 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- 	}
- 
- 	/* retrieve the available counter index */
--#if defined(CONFIG_32BIT)
--	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
--			cmask, cflags, hwc->event_base, hwc->config,
--			hwc->config >> 32);
--#else
--	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
--			cmask, cflags, hwc->event_base, hwc->config, 0);
--#endif
-+	if (cmask) {
-+		ret = pmu_sbi_ctr_cfg_match(cbase, cmask, cflags, hwc->event_base,
-+					    hwc->config);
-+	} else {
-+		ret.error = SBI_ERR_NOT_SUPPORTED;
-+		for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
-+			if (!rvpmu->cmask[i])
-+				continue;
-+			cbase = i * BITS_PER_LONG;
-+			ret = pmu_sbi_ctr_cfg_match(cbase, rvpmu->cmask[i], cflags,
-+						    hwc->event_base, hwc->config);
-+			if (!ret.error)
-+				break;
-+		}
-+	}
- 	if (ret.error) {
- 		pr_debug("Not able to find a counter for event %lx config %llx\n",
- 			hwc->event_base, hwc->config);
-@@ -381,7 +403,7 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- 	}
- 
- 	idx = ret.value;
--	if (!test_bit(idx, &rvpmu->cmask) || !pmu_ctr_list[idx].value)
-+	if (!test_bit(idx, rvpmu->cmask) || !pmu_ctr_list[idx].value)
- 		return -ENOENT;
- 
- 	/* Additional sanity check for the counter id */
-@@ -589,7 +611,7 @@ static int pmu_sbi_get_ctrinfo(int nctr, unsigned long *mask)
- 			/* The logical counter ids are not expected to be contiguous */
- 			continue;
- 
--		*mask |= BIT(i);
-+		set_bit(i, mask);
- 
- 		cinfo.value = ret.value;
- 		if (cinfo.type == SBI_PMU_CTR_TYPE_FW)
-@@ -606,12 +628,19 @@ static int pmu_sbi_get_ctrinfo(int nctr, unsigned long *mask)
- 
- static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu)
- {
-+	int i;
-+
- 	/*
- 	 * No need to check the error because we are disabling all the counters
- 	 * which may include counters that are not enabled yet.
- 	 */
--	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
--		  0, pmu->cmask, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
-+	for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
-+		if (!pmu->cmask[i])
-+			continue;
-+		sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
-+			  i * BITS_PER_LONG, pmu->cmask[i],
-+			  SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
-+	}
+diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
+index bf909fa69a977..f6f2e25215c5c 100644
+--- a/net/ipv6/ip6_flowlabel.c
++++ b/net/ipv6/ip6_flowlabel.c
+@@ -463,6 +463,22 @@ fl_create(struct net *net, struct sock *sk, struct in6_flowlabel_req *freq,
+ 	return NULL;
  }
  
- static inline void pmu_sbi_stop_hw_ctrs(struct riscv_pmu *pmu)
-@@ -1043,7 +1072,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
- 	}
- 
- 	/* cache all the information about counters now */
--	if (pmu_sbi_get_ctrinfo(num_counters, &cmask))
-+	if (pmu_sbi_get_ctrinfo(num_counters, cmask))
- 		goto out_free;
- 
- 	ret = pmu_sbi_setup_irqs(pmu, pdev);
-@@ -1054,7 +1083,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
- 	}
- 
- 	pmu->pmu.attr_groups = riscv_pmu_attr_groups;
--	pmu->cmask = cmask;
-+	bitmap_copy(pmu->cmask, cmask, RISCV_MAX_COUNTERS);
- 	pmu->ctr_start = pmu_sbi_ctr_start;
- 	pmu->ctr_stop = pmu_sbi_ctr_stop;
- 	pmu->event_map = pmu_sbi_event_map;
-diff --git a/include/linux/perf/riscv_pmu.h b/include/linux/perf/riscv_pmu.h
-index 43282e22ebe1d..b8146420425e9 100644
---- a/include/linux/perf/riscv_pmu.h
-+++ b/include/linux/perf/riscv_pmu.h
-@@ -47,7 +47,7 @@ struct riscv_pmu {
- 
- 	irqreturn_t	(*handle_irq)(int irq_num, void *dev);
- 
--	unsigned long	cmask;
-+	DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
- 	u64		(*ctr_read)(struct perf_event *event);
- 	int		(*ctr_get_idx)(struct perf_event *event);
- 	int		(*ctr_get_width)(int idx);
++static bool fl_sock_at_lease_limit(const struct sock *sk)
++{
++	const struct ipv6_pinfo *np = inet6_sk(sk);
++	const struct ipv6_fl_socklist *sfl;
++	int count = 0;
++
++	rcu_read_lock();
++	for_each_sk_fl_rcu(np, sfl) {
++		if (++count >= FL_MAX_PER_SOCK)
++			break;
++	}
++	rcu_read_unlock();
++
++	return count >= FL_MAX_PER_SOCK;
++}
++
+ static int mem_check(struct sock *sk)
+ {
+ 	struct ipv6_pinfo *np = inet6_sk(sk);
+@@ -673,6 +689,10 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
+ 			err = -ENOMEM;
+ 			if (!sfl1)
+ 				goto release;
++			err = -ENOBUFS;
++			if (fl_sock_at_lease_limit(sk) &&
++			    !capable(CAP_NET_ADMIN))
++				goto release;
+ 			if (fl->linger > fl1->linger)
+ 				fl1->linger = fl->linger;
+ 			if ((long)(fl->expires - fl1->expires) > 0)
 -- 
 2.53.0
 
