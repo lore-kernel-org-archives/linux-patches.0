@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF0039EF2C;
-	Sat, 17 Oct 2026 17:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADE337C109;
+	Sat, 17 Oct 2026 17:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259484; cv=none; b=dC6vNQDcu260W6Llix+7s8ZcqTEX6FT0+xUiyU8xap/+yJP+6joeXWrDy+UNFySpCwlNIBL7lvhQhY8gGw/FbBoXyOz2are+GJ6JVqmQ3B1Tj2Yh+l6BhcNG6GX+D3kUonAxA2jXJeS6Tvh6D2N69z/Vd5bkORGn4mhWbkXxrrI=
+	t=1792259487; cv=none; b=dN1L+cNar2rfw93Jydmq60yjsUe3ioKq5et2P2YmbbAwAhOGcbIwCm7f229UiY03J5+OG+4WNSLZ097oriuZhDjGG76dsgHZWOn1bnNj/jB8Rkcc97M9aBaYmdOWDSPNdAj+alPQU+wOzAtcw941LgrD9BlxwqgRzzfiPZ21bPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259484; c=relaxed/simple;
-	bh=k3cEXD/E8TiJnoAjKUCBYFSslHPLnntN7XSmDQSD69o=;
+	s=arc-20240116; t=1792259487; c=relaxed/simple;
+	bh=nNtmScPMOkFYog55SQEAvy9AqRp04fCnUI800k9oNhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dC8EJTSXMIFc6kxCodeK3otPdUTh9rjiTtHnilwrRDjzX/N5+7LSvY+zWnJ2OE3xxlEvWO/KUpnQIJlFUEW9oGUMCZoK+BkNnhJPNJqhNNST7Ke+a14APhXmMnrHBrNtqZs86JEkpHwG7+CAbLbtGM37Crvdfo7raRzbm57Ht4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpWAWXbX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Jt/OskrD+LlslEQEFM1EoOpMHiJMsp0/6Zf7KJMQvbAprY+rE9W7g2EH9LFPfy0d1tYTdDdPepTpRaVxMfWO8PzfdP8ro/Hp/+AB1+WNQ02dE86dO7skMkAl/7mXxsktZZKeDi3rxYM00FBt3XL2Mz+dMlcNoPApIjZvv7kHBnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNqmVvXu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpWAWXbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6420C1F000C4;
-	Sat, 17 Oct 2026 17:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNqmVvXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C53F1F000C4;
+	Sat, 17 Oct 2026 17:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259483;
-	bh=cd0+IX9+egYu6oJMDbpyc+RFvJAcves7hbMe+/7wBk8=;
+	s=korg; t=1792259485;
+	bh=Hj5pQTW8N1YssIZPW6M79Jfh//iz6hERN45Kq+X0KbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpWAWXbXmJAc4+GRX2HZH/Y6ekY53rwLkxfPKa1A4Xz+zoODQCUKqxMmv0R1LHFI5
-	 a9Xj9YXryW7neoOGx5WffaXLvjKvAjzpp7eMXnvbnqof2RFIvgXBFsQpXh7leh7sut
-	 gCuzov/TD2wLWUQ0+DNokJjvKZwk9aGbYRoveXJw=
+	b=GNqmVvXuc1bQRf0/qeD8aHhzdqGo7ols6fgEx3MvCXjMisuHCYFuJyzjnPmg4I1nz
+	 PcP4WUC680e0hh2+dgWNZkPnCluB/8dlQ+Yqaczgu44tF9furlX+X+4AGFEgfZ/lrQ
+	 7EZ9RLDxe9d4VCs59jyjpFK1l1w3Hnn1JpGftUeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1192/1674] eventfs: Use children field for rcu head and add memory barriers
-Date: Sat, 17 Oct 2026 17:57:44 +0200
-Message-ID: <20261017160501.735900781@linuxfoundation.org>
+Subject: [PATCH 6.6 1228/1674] soc/xilinx: zynqmp_power: Convert to platform remove callback returning void
+Date: Sat, 17 Oct 2026 17:58:20 +0200
+Message-ID: <20261017160502.659516926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,106 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit f0ece16ffca7384787b692431961ce202907acf5 ]
+[ Upstream commit f1013d8405af0f4fe1812b5901cbac9ce4d1fb6f ]
 
-When an eventfs inode is freed, it sets ei->is_freed and then uses its
-ei->list to add it to the srcu link list as the list field is a union with
-the rcu list head. As the ei->list is used to iterate over an SRCU
-protected list without taking the eventfs_mutex, there's nothing stopping
-the iteration over that list to see the ei->rcu instead of the ei->list
-and it will read a corrupt target.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-To fix this, change the union of the rcu list head with the children list.
-On freeing the eventfs inode, set the is_free and execute a smp_wmb()
-before adding the eventfs inode to the SRCU list.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-On iteration of the ei->children list, at the start, execute a smp_rmb()
-and then read the is_freed of the ei to see if the children list is still
-valid. If is_freed is set, then the ei_child read is not valid and the
-loop should exit immediately.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260808094215.4252430d@robin
-Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230925095532.1984344-41-u.kleine-koenig@pengutronix.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Stable-dep-of: fdee7c66c0d7 ("soc: xilinx: Shutdown and free rx mailbox channel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c | 24 ++++++++++++++++++++++++
- fs/tracefs/internal.h    |  4 ++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ drivers/soc/xilinx/zynqmp_power.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
-index c4a9009cb56ae..df1d571144d6d 100644
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -125,7 +125,17 @@ static inline void put_ei(struct eventfs_inode *ei)
- static inline void free_ei(struct eventfs_inode *ei)
- {
- 	if (ei) {
-+		/* The ei should have no children if it is being freed. */
-+		WARN_ON_ONCE(!list_empty(&ei->children));
- 		ei->is_freed = 1;
-+		/*
-+		 * The SRCU iteration has a smp_rmb() to make sure it
-+		 * sees a child (that may have already been freed)
-+		 * before it reads is_free. If is_free is set, it must
-+		 * not use the child it acquired from ei->children, as
-+		 * the list may be used for SRCU.
-+		 */
-+		smp_wmb();
- 		put_ei(ei);
- 	}
+diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
+index d7c784d77208c..6f6484eafeb45 100644
+--- a/drivers/soc/xilinx/zynqmp_power.c
++++ b/drivers/soc/xilinx/zynqmp_power.c
+@@ -277,7 +277,7 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
+ 	return 0;
  }
-@@ -719,6 +729,20 @@ static int eventfs_iterate(struct file *file, struct dir_context *ctx)
- 	list_for_each_entry_srcu(ei_child, &ei->children, list,
- 				 srcu_read_lock_held(&eventfs_srcu)) {
  
-+		/*
-+		 * If the ei is being freed, then the ei->children may be
-+		 * being used as the rcu list, which means the next element
-+		 * may be garbage. The ei->is_free is set before switching
-+		 * the ei->children over to ei->rcu. The read memory barrier
-+		 * here makes sure the ei_child is read before is_free is
-+		 * updated.
-+		 *
-+		 * Matches the smp_wmb() in free_ei()
-+		 */
-+		smp_rmb();
-+		if (ei->is_freed)
-+			return -EINVAL;
-+
- 		if (c > 0) {
- 			c--;
- 			continue;
-diff --git a/fs/tracefs/internal.h b/fs/tracefs/internal.h
-index a4a7f8431affb..c61481d04c8ee 100644
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -46,11 +46,11 @@ struct eventfs_attr {
-  * @ino:	The saved inode number
-  */
- struct eventfs_inode {
-+	struct list_head	list;
- 	union {
--		struct list_head	list;
-+		struct list_head	children;
- 		struct rcu_head		rcu;
- 	};
--	struct list_head		children;
- 	const struct eventfs_entry	*entries;
- 	const char			*name;
- 	struct eventfs_attr		*entry_attrs;
+-static int zynqmp_pm_remove(struct platform_device *pdev)
++static void zynqmp_pm_remove(struct platform_device *pdev)
+ {
+ 	sysfs_remove_file(&pdev->dev.kobj, &dev_attr_suspend_mode.attr);
+ 	if (event_registered)
+@@ -285,8 +285,6 @@ static int zynqmp_pm_remove(struct platform_device *pdev)
+ 
+ 	if (!rx_chan)
+ 		mbox_free_channel(rx_chan);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id pm_of_match[] = {
+@@ -297,7 +295,7 @@ MODULE_DEVICE_TABLE(of, pm_of_match);
+ 
+ static struct platform_driver zynqmp_pm_platform_driver = {
+ 	.probe = zynqmp_pm_probe,
+-	.remove = zynqmp_pm_remove,
++	.remove_new = zynqmp_pm_remove,
+ 	.driver = {
+ 		.name = "zynqmp_power",
+ 		.of_match_table = pm_of_match,
 -- 
 2.53.0
 
