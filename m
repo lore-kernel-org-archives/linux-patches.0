@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6198B4CF477;
-	Sat, 17 Oct 2026 16:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4864CF477;
+	Sat, 17 Oct 2026 16:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254148; cv=none; b=jX2a9gWhap0xdDPvIO7bzv+gjgt9FB3CbWGpePkipmBoCDKQahGNd5z74vZJsJZkI33aJxh4Z30iT9psSAhtwk/dvifzJbkzfc+U0ASKKcHhrttCMni2vc1Gp3Ipwo8GbBgmam9kTW6yz7j8w1iEJEhLQPlaQoxd5+DeEBWedJk=
+	t=1792254151; cv=none; b=rtpU795AAsinya8nd1BExZZp4A9BlLiW2IKcWfoBkB0q8VgpKajAiJzPqgxr4pSTfUIx48xPxiddrUrfNKVTpXIqE5pQtYm9JNOVKk4Hp9uk6x5C9Iqb9XxHEXOXgdefAWj8CM7x1x16rzIsvpR6dmFcu3D3Q9KPKz931tuJ3cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254148; c=relaxed/simple;
-	bh=DOvP2VJStZIY5znzpr6Epq7aDLRQhWzdx2qqTDqVtdI=;
+	s=arc-20240116; t=1792254151; c=relaxed/simple;
+	bh=8H1wDK8mF0AGl+TlfjCvX58sv155IlZKyG7x7xUWxy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DECeNBTtrB9ojivMgMHDYWbabIha6k9DqDBoQRY1p140dYSwVTQRjNM6RJV0HEKWF7RXt0In4pra3ANyxrx7TrXhWduq8CIfmEgg6rK0pcMO1CKocm+BDgC/okizM13KySMlMW52afza/PxLgG/YlrkjOa+aivbxr7PKgvG95T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HedVF7rt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vu3DzOSrRHZ3e3ojo9W8zAS1WCZMMLuKkp29BH6/AJ+RvTRuQtiAGD8xovmqGiBQ8hbkDDqIVWZBHUronPwb5M5FF6jTDw5NVGebfZZVyLsQPyEBPw9u39VWU24kfYD6qm7oW5MpgxywTZ5p9NL+jG/hbeXfKIeOxBPyaulzSBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+bHDXyP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HedVF7rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CFA1F000C4;
-	Sat, 17 Oct 2026 16:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+bHDXyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFED1F000C4;
+	Sat, 17 Oct 2026 16:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254147;
-	bh=KbGXpZj2YQVaQgA5evEscxO3XfoJNOJlfLX/IckBWH0=;
+	s=korg; t=1792254150;
+	bh=ymhSVe/Ai8CLfkEnZhUk1df/NeYMyVxnLxTnhn15w7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HedVF7rt8IKwmhkX2j7Q89HorP7FlDkOUZ8Yj5zgP2lr7x5P1Q+in+OOpAQWnoIVi
-	 lCz6J8aaW8qkFuQrmKT6hGnZx3V9y8Lxoo7+khvBPSoL8vH7NxvCbbXVD020V5Re4E
-	 J7lSaP0xBEEqsSKr4GuhbJTZIe3rPhqEGwgJp3vc=
+	b=F+bHDXyPaY0I3ydQJm4FPOf6hUDGMfR3N+7WjlDlDeHWEx39LLFvuzUZQHFwFaNoZ
+	 aksNy+ObiN7vMBd0ufYP0qBTBjLRJn8PBwF4NRMZJnhQYjTnCFXKYaDRjOtI9wvDNQ
+	 0GTPnrlEp6jGT2u1k9Ki8YU2+8K7hoKbiano6zRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qing Ming <a0yami@mailbox.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 352/869] tcp: fix stale per-CPU tcp_tw_isn leak enabling ISN prediction
-Date: Sat, 17 Oct 2026 17:53:13 +0200
-Message-ID: <20261017160046.127738840@linuxfoundation.org>
+Subject: [PATCH 6.12 353/869] cgroup/rstat: validate cpu before css_rstat_cpu() access
+Date: Sat, 17 Oct 2026 17:53:14 +0200
+Message-ID: <20261017160046.153098561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,197 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Qing Ming <a0yami@mailbox.org>
 
-[ Upstream commit 1bbf0ced1d9db73ac7893c2187f3459288603e0d ]
+[ Upstream commit 8817005efbdfdf5d4e4814cb5dc52b53d12917d7 ]
 
-Blamed commit moved the TIME_WAIT-derived ISN from the skb control
-block to a per-CPU variable, assuming the value would always be consumed
-by tcp_conn_request() for the same packet that wrote it. That assumption
-is violated by multiple drop paths between the producer
-(__this_cpu_write(tcp_tw_isn, isn) in tcp_v{4,6}_rcv()) and the consumer
-(tcp_conn_request()):
+css_rstat_updated() is exposed as a BPF kfunc and accepts a
+caller-provided cpu argument. The function uses cpu for per-cpu rstat
+lookups without checking whether it refers to a valid possible CPU.
 
- - min_ttl / min_hopcount check
- - xfrm policy check
- - tcp_inbound_hash() MD5/AO mismatch
- - tcp_filter() eBPF/SO_ATTACH_FILTER drop
- - th->syn && th->fin discard in tcp_rcv_state_process() TCP_LISTEN
- - psp_sk_rx_policy_check() in tcp_v{4,6}_do_rcv()
- - tcp_checksum_complete() in tcp_v{4,6}_do_rcv()
- - tcp_v{4,6}_cookie_check() returning NULL
+A BPF iter/cgroup program with CAP_BPF and CAP_PERFMON can pass an
+invalid cpu value. On an unfixed UBSCAN_BOUNDS test kernel, cpu ==
+0x7fffffff triggers:
 
-When a packet is dropped on any of these paths, tcp_tw_isn is left set.
+  UBSAN: array-index-out-of-bounds in kernel/cgroup/rstat.c:31:9
+  index 2147483647 is out of range for type 'long unsigned int [64]'
+  Call Trace:
+    css_rstat_updated
+    bpf_iter_run_prog
+    cgroup_iter_seq_show
+    bpf_seq_read
 
-The next SYN processed on the same CPU then consumes the non zero value in
-tcp_conn_request(), receiving a potentially predictable ISN.
+Add cpu validation to the BPF-facing css_rstat_updated() kfunc and
+move the common implementation to __css_rstat_updated() for in-kernel
+callers.
 
-This patch moves back tcp_tw_isn to skb->cb[], getting rid of the per-cpu
-variable.
-
-Note that tcp_v{4,6}_fill_cb() do not set it.
-
-Very litle impact on overall code size/complexity:
-
-$ scripts/bloat-o-meter -t vmlinux.old vmlinux.new
-add/remove: 0/0 grow/shrink: 2/1 up/down: 8/-15 (-7)
-Function                                     old     new   delta
-tcp_v6_rcv                                  3038    3042      +4
-tcp_v4_rcv                                  3035    3039      +4
-tcp_conn_request                            2938    2923     -15
-Total: Before=24436060, After=24436053, chg -0.00%
-
-Fixes: 41eecbd712b7 ("tcp: replace TCP_SKB_CB(skb)->tcp_tw_isn with a per-cpu field")
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260519084611.2485277-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a319185be9f5 ("cgroup: bpf: enable bpf programs to integrate with rstat")
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    |  7 ++++---
- net/ipv4/tcp.c       |  3 ---
- net/ipv4/tcp_input.c | 15 ++++++---------
- net/ipv4/tcp_ipv4.c  |  3 ++-
- net/ipv6/tcp_ipv6.c  |  3 ++-
- 5 files changed, 14 insertions(+), 17 deletions(-)
+ block/blk-cgroup.c     |  2 +-
+ include/linux/cgroup.h |  1 +
+ kernel/cgroup/rstat.c  | 19 ++++++++++++++++---
+ mm/memcontrol.c        |  2 +-
+ 4 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 115f878540768..77f6c40ead438 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -64,8 +64,6 @@ static inline void tcp_orphan_count_dec(void)
- 	this_cpu_dec(tcp_orphan_count);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index d89da7e067f42..cc882dc2db7f6 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -2189,7 +2189,7 @@ void blk_cgroup_bio_start(struct bio *bio)
+ 	}
+ 
+ 	u64_stats_update_end_irqrestore(&bis->sync, flags);
+-	cgroup_rstat_updated(blkcg->css.cgroup, cpu);
++	__cgroup_rstat_updated(blkcg->css.cgroup, cpu);
+ 	put_cpu();
  }
  
--DECLARE_PER_CPU(u32, tcp_tw_isn);
--
- void tcp_time_wait(struct sock *sk, int state, int timeo);
+diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
+index 2a510dbbfe623..66a283527fa98 100644
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -688,6 +688,7 @@ static inline void cgroup_path_from_kernfs_id(u64 id, char *buf, size_t buflen)
+ /*
+  * cgroup scalable recursive statistics.
+  */
++void __cgroup_rstat_updated(struct cgroup *cgrp, int cpu);
+ void cgroup_rstat_updated(struct cgroup *cgrp, int cpu);
+ void cgroup_rstat_flush(struct cgroup *cgrp);
+ void cgroup_rstat_flush_hold(struct cgroup *cgrp);
+diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
+index c4ce2f5a9745f..d8bdebdeac023 100644
+--- a/kernel/cgroup/rstat.c
++++ b/kernel/cgroup/rstat.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include "cgroup-internal.h"
  
- #define MAX_TCP_HEADER	L1_CACHE_ALIGN(128 + MAX_HEADER)
-@@ -947,10 +945,13 @@ struct tcp_skb_cb {
- 	__u32		seq;		/* Starting sequence number	*/
- 	__u32		end_seq;	/* SEQ + FIN + SYN + datalen	*/
- 	union {
--		/* Note :
-+		/* Notes :
-+		 *	tcp_tw_isn is used in input path only
-+		 *	(isn chosen by tcp_timewait_state_process())
- 		 * 	  tcp_gso_segs/size are used in write queue only,
- 		 *	  cf tcp_skb_pcount()/tcp_skb_mss()
- 		 */
-+		u32		tcp_tw_isn;
- 		struct {
- 			u16	tcp_gso_segs;
- 			u16	tcp_gso_size;
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 2ab07164eba19..7df7ce86b6904 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -297,9 +297,6 @@ enum {
- DEFINE_PER_CPU(unsigned int, tcp_orphan_count);
- EXPORT_PER_CPU_SYMBOL_GPL(tcp_orphan_count);
++#include <linux/cpumask.h>
+ #include <linux/sched/cputime.h>
  
--DEFINE_PER_CPU(u32, tcp_tw_isn);
--EXPORT_PER_CPU_SYMBOL_GPL(tcp_tw_isn);
--
- long sysctl_tcp_mem[3] __read_mostly;
- EXPORT_IPV6_MOD(sysctl_tcp_mem);
+ #include <linux/bpf.h>
+@@ -74,7 +75,7 @@ void _cgroup_rstat_cpu_unlock(raw_spinlock_t *cpu_lock, int cpu,
+ }
  
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 5c581d4821c1d..96eb6d2421413 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7242,6 +7242,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 		     struct sock *sk, struct sk_buff *skb)
+ /**
+- * cgroup_rstat_updated - keep track of updated rstat_cpu
++ * __cgroup_rstat_updated - keep track of updated rstat_cpu
+  * @cgrp: target cgroup
+  * @cpu: cpu on which rstat_cpu was updated
+  *
+@@ -82,7 +83,7 @@ void _cgroup_rstat_cpu_unlock(raw_spinlock_t *cpu_lock, int cpu,
+  * rstat_cpu->updated_children list.  See the comment on top of
+  * cgroup_rstat_cpu definition for details.
+  */
+-__bpf_kfunc void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
++void __cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
  {
- 	struct tcp_fastopen_cookie foc = { .len = -1 };
-+	u32 isn = TCP_SKB_CB(skb)->tcp_tw_isn;
- 	struct tcp_options_received tmp_opt;
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct net *net = sock_net(sk);
-@@ -7252,20 +7253,16 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 	struct dst_entry *dst;
- 	struct flowi fl;
- 	u8 syncookies;
--	u32 isn;
+ 	raw_spinlock_t *cpu_lock = per_cpu_ptr(&cgroup_rstat_cpu_lock, cpu);
+ 	unsigned long flags;
+@@ -129,6 +130,18 @@ __bpf_kfunc void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
+ 	_cgroup_rstat_cpu_unlock(cpu_lock, cpu, cgrp, flags, true);
+ }
  
- #ifdef CONFIG_TCP_AO
- 	const struct tcp_ao_hdr *aoh;
- #endif
++/*
++ * BPF-facing wrapper for __cgroup_rstat_updated(). Validate the
++ * caller-provided CPU before passing it to the internal rstat updater.
++ */
++__bpf_kfunc void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
++{
++	if (unlikely(cpu < 0 || cpu >= nr_cpu_ids || !cpu_possible(cpu)))
++		return;
++
++	__cgroup_rstat_updated(cgrp, cpu);
++}
++
+ /**
+  * cgroup_rstat_push_children - push children cgroups into the given list
+  * @head: current head of the list (= subtree root)
+@@ -511,7 +524,7 @@ static void cgroup_base_stat_cputime_account_end(struct cgroup *cgrp,
+ 						 unsigned long flags)
+ {
+ 	u64_stats_update_end_irqrestore(&rstatc->bsync, flags);
+-	cgroup_rstat_updated(cgrp, smp_processor_id());
++	__cgroup_rstat_updated(cgrp, smp_processor_id());
+ 	put_cpu_ptr(rstatc);
+ }
  
--	isn = __this_cpu_read(tcp_tw_isn);
--	if (isn) {
--		/* TW buckets are converted to open requests without
--		 * limitations, they conserve resources and peer is
--		 * evidently real one.
--		 */
--		__this_cpu_write(tcp_tw_isn, 0);
--	} else {
-+	/* If isn is non-zero, this SYN originally matched a TIME_WAIT socket.
-+	 * TW sockets are converted to open requests without limitations,
-+	 * we skip the queue limits and syncookie checks in the block below.
-+	 */
-+	if (!isn) {
- 		syncookies = READ_ONCE(net->ipv4.sysctl_tcp_syncookies);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 50a1fd9087fae..8b0635ed1d208 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -569,7 +569,7 @@ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
+ 	if (!val)
+ 		return;
  
- 		if (syncookies == 2 || inet_csk_reqsk_queue_is_full(sk)) {
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 48af4b0d77f26..c32ec598930b1 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2311,6 +2311,7 @@ int tcp_v4_rcv(struct sk_buff *skb)
- 		}
- 	}
- 
-+	isn = 0;
- process:
- 	if (static_branch_unlikely(&ip4_min_ttl)) {
- 		/* min_ttl can be changed concurrently from do_ip_setsockopt() */
-@@ -2340,6 +2341,7 @@ int tcp_v4_rcv(struct sk_buff *skb)
- 	th = (const struct tcphdr *)skb->data;
- 	iph = ip_hdr(skb);
- 	tcp_v4_fill_cb(skb, iph, th);
-+	TCP_SKB_CB(skb)->tcp_tw_isn = isn;
- 
- 	skb->dev = NULL;
- 
-@@ -2424,7 +2426,6 @@ int tcp_v4_rcv(struct sk_buff *skb)
- 			sk = sk2;
- 			tcp_v4_restore_cb(skb);
- 			refcounted = false;
--			__this_cpu_write(tcp_tw_isn, isn);
- 			goto process;
- 		}
- 	}
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 69e37c3d4b1c8..ae2a91e3f15c9 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1853,6 +1853,7 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 		}
- 	}
- 
-+	isn = 0;
- process:
- 	if (static_branch_unlikely(&ip6_min_hopcount)) {
- 		/* min_hopcount can be changed concurrently from do_ipv6_setsockopt() */
-@@ -1882,6 +1883,7 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 	th = (const struct tcphdr *)skb->data;
- 	hdr = ipv6_hdr(skb);
- 	tcp_v6_fill_cb(skb, hdr, th);
-+	TCP_SKB_CB(skb)->tcp_tw_isn = isn;
- 
- 	skb->dev = NULL;
- 
-@@ -1968,7 +1970,6 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 			sk = sk2;
- 			tcp_v6_restore_cb(skb);
- 			refcounted = false;
--			__this_cpu_write(tcp_tw_isn, isn);
- 			goto process;
- 		}
- 	}
+-	cgroup_rstat_updated(memcg->css.cgroup, cpu);
++	__cgroup_rstat_updated(memcg->css.cgroup, cpu);
+ 	statc = this_cpu_ptr(memcg->vmstats_percpu);
+ 	for (; statc; statc = statc->parent) {
+ 		stats_updates = READ_ONCE(statc->stats_updates) + abs(val);
 -- 
 2.53.0
 
