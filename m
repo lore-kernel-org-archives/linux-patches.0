@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5EA1AAE28;
-	Sat, 17 Oct 2026 17:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCCF3A1E96;
+	Sat, 17 Oct 2026 17:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257722; cv=none; b=pwxreICmQncpHYrAQG7bHV9HHWjMk56npB52WSICzVI5Y5w2Iz3LX0imZHIo30ioy9zrijhjnbsmv4g8xuPy+mv2FuSfEU1tLXcMDBjKc8Hu2H5b+0WGzdt6xM/xk55W3m7DK0JXtowkCObjZdH01Idh/e1e+XlXz5T+P79EZbQ=
+	t=1792257725; cv=none; b=tOpWGaMKafc0UMQ3VR1DouD+0F9a/sWIK0H9ublWeKxCklIzxIY+knzpGvnnqCVd5PMne2vMxMdz74jirYF2y6nBFy4lwPVI/Sio1YW792uYchsyrtZ9Q/RU4hbaHr727+3oIUeG4o1W1IgwyYnMF1PZCyar8ntAEqgp5NszA/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257722; c=relaxed/simple;
-	bh=U1ub3M7PetB/HUKUZl3YRyhK35b+2GT6kvBjvofz/Oc=;
+	s=arc-20240116; t=1792257725; c=relaxed/simple;
+	bh=iOnL3ZjOVVG4/hqhcYYTQhZYTwdIltkOZ2qQsLathnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJHmRCPHAgF4fEOuoA6admKTyyrvdnfPxvveGpJKZJKe/dYKrxP7VbtpoMVDHyGENwrIFDxZlblYYL0ZPImCWkm69q29EjPcmVmPGRLZ3VC5MxSv6gZ9NJc/FPyjreED95AaSk1n8t6OZeHos6Qd0VL9iJ+Qkiw0LdCKdOtvlkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enrYZHSM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gl4QzfHk+SGYG4RV4LJGgIEKa1UE3xYM+0J9GKDWggfpF02EXHkJO8yNxQXIZbXyYHmDv5gx6JxUkkT2JjKlEAfYCi3+OPVPix35FhCdilBlqjZ+QZRG583NC3Yv9Zp9EcpWJhP5SYYRYD7qGFArXJPzf8uTSDupexCJJ+D1Jz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw4RaxU8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enrYZHSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF191F000C4;
-	Sat, 17 Oct 2026 17:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw4RaxU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EC21F000C4;
+	Sat, 17 Oct 2026 17:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257721;
-	bh=Ri2Ps0r0Fr7F2aiTvXhVlHo8ouye6NCBSBs9Ld2caz4=;
+	s=korg; t=1792257724;
+	bh=XnESRqVkC+jVmlfsQgu9ManShV96LvRO1Dne0ZAOQfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=enrYZHSMQlJd25vLRpCeKdl44CXCETjZY+bf7MdbAcrLhSBAWix0CHGwE1qm1VApD
-	 d1+trR+df+VlQrvNsK169BoYUZT2T/DEV0hRStj4Vsl44AhePFtJJgcvLxVB7Q9yT9
-	 QVYG9S4HtaGwt9twiKYQJuH84aybBv1Zpru9l2ck=
+	b=qw4RaxU8XbqGVhQPY9NCe8K1A4by5d82eHlRh/TUD2Q4QP8VlzD2pANNC/g1mhxa5
+	 /mxbGly9rT1pfdjZklaKkOzAKDjmYT3OMH9RU8i1i6ZuVHOhMXdSvdxkQf0qy8gJL7
+	 p5kYG909CPpGWv6sCD/2SZsX2QPou4pqK6lDA9qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zac Ecob <zacecob@protonmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0648/1674] bpf: Fix a sdiv overflow issue
-Date: Sat, 17 Oct 2026 17:48:40 +0200
-Message-ID: <20261017160447.741249133@linuxfoundation.org>
+Subject: [PATCH 6.6 0649/1674] drm/amd/display: Add null check for head_pipe in dcn32_acquire_idle_pipe_for_head_pipe_in_layer
+Date: Sat, 17 Oct 2026 17:48:41 +0200
+Message-ID: <20261017160447.767792598@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,200 +58,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 7dd34d7b7dcf9309fc6224caf4dd5b35bedddcb7 ]
+[ Upstream commit ac2140449184a26eac99585b7f69814bd3ba8f2d ]
 
-Zac Ecob reported a problem where a bpf program may cause kernel crash due
-to the following error:
-  Oops: divide error: 0000 [#1] PREEMPT SMP KASAN PTI
+This commit addresses a potential null pointer dereference issue in the
+`dcn32_acquire_idle_pipe_for_head_pipe_in_layer` function. The issue
+could occur when `head_pipe` is null.
 
-The failure is due to the below signed divide:
-  LLONG_MIN/-1 where LLONG_MIN equals to -9,223,372,036,854,775,808.
-LLONG_MIN/-1 is supposed to give a positive number 9,223,372,036,854,775,808,
-but it is impossible since for 64-bit system, the maximum positive
-number is 9,223,372,036,854,775,807. On x86_64, LLONG_MIN/-1 will
-cause a kernel exception. On arm64, the result for LLONG_MIN/-1 is
-LLONG_MIN.
+The fix adds a check to ensure `head_pipe` is not null before asserting
+it. If `head_pipe` is null, the function returns NULL to prevent a
+potential null pointer dereference.
 
-Further investigation found all the following sdiv/smod cases may trigger
-an exception when bpf program is running on x86_64 platform:
-  - LLONG_MIN/-1 for 64bit operation
-  - INT_MIN/-1 for 32bit operation
-  - LLONG_MIN%-1 for 64bit operation
-  - INT_MIN%-1 for 32bit operation
-where -1 can be an immediate or in a register.
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn32/dcn32_resource.c:2690 dcn32_acquire_idle_pipe_for_head_pipe_in_layer() error: we previously assumed 'head_pipe' could be null (see line 2681)
 
-On arm64, there are no exceptions:
-  - LLONG_MIN/-1 = LLONG_MIN
-  - INT_MIN/-1 = INT_MIN
-  - LLONG_MIN%-1 = 0
-  - INT_MIN%-1 = 0
-where -1 can be an immediate or in a register.
-
-Insn patching is needed to handle the above cases and the patched codes
-produced results aligned with above arm64 result. The below are pseudo
-codes to handle sdiv/smod exceptions including both divisor -1 and divisor 0
-and the divisor is stored in a register.
-
-sdiv:
-      tmp = rX
-      tmp += 1 /* [-1, 0] -> [0, 1]
-      if tmp >(unsigned) 1 goto L2
-      if tmp == 0 goto L1
-      rY = 0
-  L1:
-      rY = -rY;
-      goto L3
-  L2:
-      rY /= rX
-  L3:
-
-smod:
-      tmp = rX
-      tmp += 1 /* [-1, 0] -> [0, 1]
-      if tmp >(unsigned) 1 goto L1
-      if tmp == 1 (is64 ? goto L2 : goto L3)
-      rY = 0;
-      goto L2
-  L1:
-      rY %= rX
-  L2:
-      goto L4  // only when !is64
-  L3:
-      wY = wY  // only when !is64
-  L4:
-
-  [1] https://lore.kernel.org/bpf/tPJLTEh7S_DxFEqAI2Ji5MBSoZVg7_G-Py2iaZpAaWtM961fFTWtsnlzwvTbzBzaUzwQAoNATXKUlt0LZOFgnDcIyKCswAnAGdUF3LBrhGQ=@protonmail.com/
-
-Reported-by: Zac Ecob <zacecob@protonmail.com>
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240913150326.1187788-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 93 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 89 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8edf578a892cd..65d79d0234bb8 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -19173,13 +19173,46 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 	int i, ret, cnt, delta = 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index ddc0a444a0545..c7f259e265f4d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -2647,8 +2647,10 @@ static struct pipe_ctx *dcn32_acquire_idle_pipe_for_head_pipe_in_layer(
+ 	struct resource_context *old_ctx = &stream->ctx->dc->current_state->res_ctx;
+ 	int head_index;
  
- 	for (i = 0; i < insn_cnt; i++, insn++) {
--		/* Make divide-by-zero exceptions impossible. */
-+		/* Make sdiv/smod divide-by-minus-one exceptions impossible. */
-+		if ((insn->code == (BPF_ALU64 | BPF_MOD | BPF_K) ||
-+		     insn->code == (BPF_ALU64 | BPF_DIV | BPF_K) ||
-+		     insn->code == (BPF_ALU | BPF_MOD | BPF_K) ||
-+		     insn->code == (BPF_ALU | BPF_DIV | BPF_K)) &&
-+		    insn->off == 1 && insn->imm == -1) {
-+			bool is64 = BPF_CLASS(insn->code) == BPF_ALU64;
-+			bool isdiv = BPF_OP(insn->code) == BPF_DIV;
-+			struct bpf_insn *patchlet;
-+			struct bpf_insn chk_and_sdiv[] = {
-+				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
-+					     BPF_NEG | BPF_K, insn->dst_reg,
-+					     0, 0, 0),
-+			};
-+			struct bpf_insn chk_and_smod[] = {
-+				BPF_MOV32_IMM(insn->dst_reg, 0),
-+			};
-+
-+			patchlet = isdiv ? chk_and_sdiv : chk_and_smod;
-+			cnt = isdiv ? ARRAY_SIZE(chk_and_sdiv) : ARRAY_SIZE(chk_and_smod);
-+
-+			new_prog = bpf_patch_insn_data(env, i + delta, patchlet, cnt);
-+			if (!new_prog)
-+				return -ENOMEM;
-+
-+			delta    += cnt - 1;
-+			env->prog = prog = new_prog;
-+			insn      = new_prog->insnsi + i + delta;
-+			continue;
-+		}
-+
-+		/* Make divide-by-zero and divide-by-minus-one exceptions impossible. */
- 		if (insn->code == (BPF_ALU64 | BPF_MOD | BPF_X) ||
- 		    insn->code == (BPF_ALU64 | BPF_DIV | BPF_X) ||
- 		    insn->code == (BPF_ALU | BPF_MOD | BPF_X) ||
- 		    insn->code == (BPF_ALU | BPF_DIV | BPF_X)) {
- 			bool is64 = BPF_CLASS(insn->code) == BPF_ALU64;
- 			bool isdiv = BPF_OP(insn->code) == BPF_DIV;
-+			bool is_sdiv = isdiv && insn->off == 1;
-+			bool is_smod = !isdiv && insn->off == 1;
- 			struct bpf_insn *patchlet;
- 			struct bpf_insn chk_and_div[] = {
- 				/* [R,W]x div 0 -> 0 */
-@@ -19199,10 +19232,62 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
- 				BPF_MOV32_REG(insn->dst_reg, insn->dst_reg),
- 			};
-+			struct bpf_insn chk_and_sdiv[] = {
-+				/* [R,W]x sdiv 0 -> 0
-+				 * LLONG_MIN sdiv -1 -> LLONG_MIN
-+				 * INT_MIN sdiv -1 -> INT_MIN
-+				 */
-+				BPF_MOV64_REG(BPF_REG_AX, insn->src_reg),
-+				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
-+					     BPF_ADD | BPF_K, BPF_REG_AX,
-+					     0, 0, 1),
-+				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
-+					     BPF_JGT | BPF_K, BPF_REG_AX,
-+					     0, 4, 1),
-+				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
-+					     BPF_JEQ | BPF_K, BPF_REG_AX,
-+					     0, 1, 0),
-+				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
-+					     BPF_MOV | BPF_K, insn->dst_reg,
-+					     0, 0, 0),
-+				/* BPF_NEG(LLONG_MIN) == -LLONG_MIN == LLONG_MIN */
-+				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
-+					     BPF_NEG | BPF_K, insn->dst_reg,
-+					     0, 0, 0),
-+				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
-+				*insn,
-+			};
-+			struct bpf_insn chk_and_smod[] = {
-+				/* [R,W]x mod 0 -> [R,W]x */
-+				/* [R,W]x mod -1 -> 0 */
-+				BPF_MOV64_REG(BPF_REG_AX, insn->src_reg),
-+				BPF_RAW_INSN((is64 ? BPF_ALU64 : BPF_ALU) |
-+					     BPF_ADD | BPF_K, BPF_REG_AX,
-+					     0, 0, 1),
-+				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
-+					     BPF_JGT | BPF_K, BPF_REG_AX,
-+					     0, 3, 1),
-+				BPF_RAW_INSN((is64 ? BPF_JMP : BPF_JMP32) |
-+					     BPF_JEQ | BPF_K, BPF_REG_AX,
-+					     0, 3 + (is64 ? 0 : 1), 1),
-+				BPF_MOV32_IMM(insn->dst_reg, 0),
-+				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
-+				*insn,
-+				BPF_JMP_IMM(BPF_JA, 0, 0, 1),
-+				BPF_MOV32_REG(insn->dst_reg, insn->dst_reg),
-+			};
+-	if (!head_pipe)
++	if (!head_pipe) {
+ 		ASSERT(0);
++		return NULL;
++	}
  
--			patchlet = isdiv ? chk_and_div : chk_and_mod;
--			cnt = isdiv ? ARRAY_SIZE(chk_and_div) :
--				      ARRAY_SIZE(chk_and_mod) - (is64 ? 2 : 0);
-+			if (is_sdiv) {
-+				patchlet = chk_and_sdiv;
-+				cnt = ARRAY_SIZE(chk_and_sdiv);
-+			} else if (is_smod) {
-+				patchlet = chk_and_smod;
-+				cnt = ARRAY_SIZE(chk_and_smod) - (is64 ? 2 : 0);
-+			} else {
-+				patchlet = isdiv ? chk_and_div : chk_and_mod;
-+				cnt = isdiv ? ARRAY_SIZE(chk_and_div) :
-+					      ARRAY_SIZE(chk_and_mod) - (is64 ? 2 : 0);
-+			}
- 
- 			new_prog = bpf_patch_insn_data(env, i + delta, patchlet, cnt);
- 			if (!new_prog)
+ 	/*
+ 	 * Modified from dcn20_acquire_idle_pipe_for_layer
 -- 
 2.53.0
 
