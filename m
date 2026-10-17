@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE991F16B;
-	Sat, 17 Oct 2026 17:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D003CAE9B;
+	Sat, 17 Oct 2026 17:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258537; cv=none; b=rw6pf5oHrc4FsGYWIoMgoaPhalNXcV2+eGMSmbCPPYXtWsLNx+6qDwQmt0YvnH4r9GwUrtv6bA+ek9QBttr91ehGyvfAnbVmgrerIGHyTKyCBXiFsBmVNvkhdIHZLrecWG8pWT/AcNLoEzFo3y5l8t1jylD2b9z1MefqJTbMyKQ=
+	t=1792258540; cv=none; b=B1Hu7PpJ/Zg6ODaEbKIK7/tuKkM3IzXbQ/kvBzxEK117h+yJ8tl0CNI4OyAT29VhPchKzUm2+lUjwvrygVNHuE4ZrV9zkpz+8TtZQ2nxnkfMIN+0LVtCwoefwJv5hacFfJk8csqFp91OdMchVWKYAhJfGq2sycMT8ymAROmJNgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258537; c=relaxed/simple;
-	bh=oBdyfdkg0ueWrdvQkbycr1XX+Oj1p+5F29OzoGvqIZ8=;
+	s=arc-20240116; t=1792258540; c=relaxed/simple;
+	bh=a4uCFiaW9lEUP19Z+V8Ounr3Tj7mIEQjYt9hWJf/Cnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5RflZTsBRI4kmvTZmlJu/jUz4U6vHhDFFeaSstJMH3OG61JslIPn5ZVArOXUwofjy71SBidAuAkC0VoScveDHebGbSMSLisVKw25T8plQcUldPLVEPpQ2eyMMWgS9VhNEo60oaqeCu1WSesNpgJDN63LDKqZZnp1A8mYUl0ixI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asdSXSkR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnyYV6oxnHTZORJEpbQoVVOnb1OFjrVAiIvp+Ry376QVrZY00hCqrp10ZubkpbcxXrGM1dv+G8GbVRQB7C6QaYnIBS2adYHPn50z4cagzRl25MFBpvYU3E+ep+oy5tobSO6hyTQ6NXGu0yTQ0seO/R7MDoRZcISoIkfq7TdSnZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHbiMvKB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asdSXSkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B571F000C4;
-	Sat, 17 Oct 2026 17:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHbiMvKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76541F000C4;
+	Sat, 17 Oct 2026 17:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258536;
-	bh=BlkZhnOj+AStasrz4cpx2PINXceDim76e/exX4SmnIo=;
+	s=korg; t=1792258539;
+	bh=tZvEMr0DwIDnUl5E7FxZA3ZpK4bCvIw9DP3W1qvc0QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=asdSXSkRmRc7e7d+eDKsN9OocLJ2RElWz7xQaOIhiyvdSx1bsWG2dW+BobxgBbHZZ
-	 t8tDw34ZT7NvZo6udr+2DE7N6mw1LD6EnezaTYaPpRg12c+q4tJMkgOcqxnihuP4gM
-	 D0l+fqyo23VnvGgk9VDKPjTA78Cdr69ndAsi5ufk=
+	b=hHbiMvKBwduaALMRmrJN7P+nzeh6pJsgfYfRHs0dWrTfHAtt/DDgUdt4cSVsXusn4
+	 p1SVWdSxNM5gcFP3/KJg1fHPUXODDU+sTeR2y9014B+4hKTB2soHzNCxkE+WuUBkZ9
+	 gtZe8w9JKYajShKQQpvtKwEz/W96X5xjM2AdiMpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0916/1674] btrfs: fix zero size inode with non-zero size after log replay
-Date: Sat, 17 Oct 2026 17:53:08 +0200
-Message-ID: <20261017160454.644631325@linuxfoundation.org>
+Subject: [PATCH 6.6 0917/1674] fs/ntfs3: Accumulated refactoring changes
+Date: Sat, 17 Oct 2026 17:53:09 +0200
+Message-ID: <20261017160454.669665309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,216 +50,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 5254d4181add9dfaa5e3519edd71cc8f752b2f85 ]
+[ Upstream commit bac89bb33d91cdd75092e15cf59fe6be34571142 ]
 
-When logging that an inode exists, as part of logging a new name or
-logging new dir entries for a directory, we always set the generation of
-the logged inode item to 0. This is to signal during log replay (in
-overwrite_item()), that we should not set the i_size since we only logged
-that an inode exists, so the i_size of the inode in the subvolume tree
-must be preserved (as when we log new names or that an inode exists, we
-don't log extents).
+Changes made to improve readability and debuggability.
 
-This works fine except when we have already logged an inode in full mode
-or it's the first time we are logging an inode created in a past
-transaction, that inode has a new i_size of 0 and then we log a new name
-for the inode (due to a new hardlink or a rename), in which case we log
-an i_size of 0 for the inode and a generation of 0, which causes the log
-replay code to not update the inode's i_size to 0 (in overwrite_item()).
-
-An example scenario:
-
-  mkdir /mnt/dir
-  xfs_io -f -c "pwrite 0 64K" /mnt/dir/foo
-
-  sync
-
-  xfs_io -c "truncate 0" -c "fsync" /mnt/dir/foo
-
-  ln /mnt/dir/foo /mnt/dir/bar
-
-  xfs_io -c "fsync" /mnt/dir
-
-  <power fail>
-
-After log replay the file remains with a size of 64K. This is because when
-we first log the inode, when we fsync file foo, we log its current i_size
-of 0, and then when we create a hard link we log again the inode in exists
-mode (LOG_INODE_EXISTS) but we set a generation of 0 for the inode item we
-add to the log tree, so during log replay overwrite_item() sees that the
-generation is 0 and i_size is 0 so we skip updating the inode's i_size
-from 64K to 0.
-
-Fix this by making sure at fill_inode_item() we always log the real
-generation of the inode if it was logged in the current transaction with
-the i_size we logged before. Also if an inode created in a previous
-transaction is logged in exists mode only, make sure we log the i_size
-stored in the inode item located from the commit root, so that if we log
-multiple times that the inode exists we get the correct i_size.
-
-A test case for fstests will follow soon.
-
-Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/af8c15fa-4e41-4bb2-885c-0bc4e97532a6@gmail.com/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: 08ce2fee1b86 ("ntfs3: fix circular locking dependency in run_unpack_ex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 98 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 65 insertions(+), 33 deletions(-)
+ fs/ntfs3/bitmap.c  | 62 +++++++++++++---------------------------------
+ fs/ntfs3/frecord.c |  1 -
+ fs/ntfs3/fsntfs.c  |  2 +-
+ fs/ntfs3/run.c     |  6 ++---
+ 4 files changed, 21 insertions(+), 50 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 1d5a2c129a876..651a742f71915 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4252,21 +4252,32 @@ static void fill_inode_item(struct btrfs_trans_handle *trans,
- 			    struct inode *inode, int log_inode_only,
- 			    u64 logged_isize)
+diff --git a/fs/ntfs3/bitmap.c b/fs/ntfs3/bitmap.c
+index 29b585f443f3e..65d05e6a05665 100644
+--- a/fs/ntfs3/bitmap.c
++++ b/fs/ntfs3/bitmap.c
+@@ -710,20 +710,17 @@ int wnd_set_free(struct wnd_bitmap *wnd, size_t bit, size_t bits)
  {
-+	u64 gen = BTRFS_I(inode)->generation;
- 	u64 flags;
+ 	int err = 0;
+ 	struct super_block *sb = wnd->sb;
+-	size_t bits0 = bits;
+ 	u32 wbits = 8 * sb->s_blocksize;
+ 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
+ 	u32 wbit = bit & (wbits - 1);
+ 	struct buffer_head *bh;
++	u32 op;
  
- 	if (log_inode_only) {
--		/* set the generation to zero so the recover code
--		 * can tell the difference between an logging
--		 * just to say 'this inode exists' and a logging
--		 * to say 'update this inode with these values'
-+		/*
-+		 * Set the generation to zero so the recover code can tell the
-+		 * difference between a logging just to say 'this inode exists'
-+		 * and a logging to say 'update this inode with these values'.
-+		 * But only if the inode was not already logged before.
-+		 * We access ->logged_trans directly since it was already set
-+		 * up in the call chain by btrfs_log_inode(), and data_race()
-+		 * to avoid false alerts from KCSAN and since it was set already
-+		 * and one can set it to 0 since that only happens on eviction
-+		 * and we are holding a ref on the inode.
- 		 */
--		btrfs_set_inode_generation(leaf, item, 0);
-+		ASSERT(data_race(BTRFS_I(inode)->logged_trans) > 0);
-+		if (data_race(BTRFS_I(inode)->logged_trans) < trans->transid)
-+			gen = 0;
-+
- 		btrfs_set_inode_size(leaf, item, logged_isize);
- 	} else {
--		btrfs_set_inode_generation(leaf, item, BTRFS_I(inode)->generation);
- 		btrfs_set_inode_size(leaf, item, inode->i_size);
+-	while (iw < wnd->nwnd && bits) {
+-		u32 tail, op;
+-
++	for (; iw < wnd->nwnd && bits; iw++, bit += op, bits -= op, wbit = 0) {
+ 		if (iw + 1 == wnd->nwnd)
+ 			wbits = wnd->bits_last;
+ 
+-		tail = wbits - wbit;
+-		op = min_t(u32, tail, bits);
++		op = min_t(u32, wbits - wbit, bits);
+ 
+ 		bh = wnd_map(wnd, iw);
+ 		if (IS_ERR(bh)) {
+@@ -736,20 +733,15 @@ int wnd_set_free(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 		ntfs_bitmap_clear_le(bh->b_data, wbit, op);
+ 
+ 		wnd->free_bits[iw] += op;
++		wnd->total_zeroes += op;
+ 
+ 		set_buffer_uptodate(bh);
+ 		mark_buffer_dirty(bh);
+ 		unlock_buffer(bh);
+ 		put_bh(bh);
+ 
+-		wnd->total_zeroes += op;
+-		bits -= op;
+-		wbit = 0;
+-		iw += 1;
++		wnd_add_free_ext(wnd, bit, op, false);
  	}
- 
-+	btrfs_set_inode_generation(leaf, item, gen);
-+
- 	btrfs_set_inode_uid(leaf, item, i_uid_read(inode));
- 	btrfs_set_inode_gid(leaf, item, i_gid_read(inode));
- 	btrfs_set_inode_mode(leaf, item, inode->i_mode);
-@@ -5071,42 +5082,63 @@ static int btrfs_log_changed_extents(struct btrfs_trans_handle *trans,
- 	return 0;
+-
+-	wnd_add_free_ext(wnd, bit, bits0, false);
+-
+ 	return err;
  }
  
--static int logged_inode_size(struct btrfs_root *log, struct btrfs_inode *inode,
--			     struct btrfs_path *path, u64 *size_ret)
-+static int get_inode_size_to_log(struct btrfs_trans_handle *trans,
-+				 struct btrfs_inode *inode,
-+				 struct btrfs_path *path, u64 *size_ret)
+@@ -760,20 +752,17 @@ int wnd_set_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
  {
- 	struct btrfs_key key;
-+	struct btrfs_inode_item *item;
- 	int ret;
+ 	int err = 0;
+ 	struct super_block *sb = wnd->sb;
+-	size_t bits0 = bits;
+ 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
+ 	u32 wbits = 8 * sb->s_blocksize;
+ 	u32 wbit = bit & (wbits - 1);
+ 	struct buffer_head *bh;
++	u32 op;
  
- 	key.objectid = btrfs_ino(inode);
- 	key.type = BTRFS_INODE_ITEM_KEY;
- 	key.offset = 0;
+-	while (iw < wnd->nwnd && bits) {
+-		u32 tail, op;
+-
++	for (; iw < wnd->nwnd && bits; iw++, bit += op, bits -= op, wbit = 0) {
+ 		if (unlikely(iw + 1 == wnd->nwnd))
+ 			wbits = wnd->bits_last;
  
--	ret = btrfs_search_slot(NULL, log, &key, path, 0, 0);
--	if (ret < 0) {
--		return ret;
--	} else if (ret > 0) {
--		*size_ret = 0;
--	} else {
--		struct btrfs_inode_item *item;
-+	/*
-+	 * Our caller called inode_logged(), so logged_trans is up to date.
-+	 * Use data_race() to silence any warning from KCSAN. Once logged_trans
-+	 * is set, it can only be reset to 0 after inode eviction.
-+	 */
-+	if (data_race(inode->logged_trans) == trans->transid) {
-+		ret = btrfs_search_slot(NULL, inode->root->log_root, &key, path, 0, 0);
-+	} else if (inode->generation < trans->transid) {
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
-+		ret = btrfs_search_slot(NULL, inode->root, &key, path, 0, 0);
-+		path->search_commit_root = false;
-+		path->skip_locking = false;
+-		tail = wbits - wbit;
+-		op = min_t(u32, tail, bits);
++		op = min_t(u32, wbits - wbit, bits);
  
--		item = btrfs_item_ptr(path->nodes[0], path->slots[0],
--				      struct btrfs_inode_item);
--		*size_ret = btrfs_inode_size(path->nodes[0], item);
--		/*
--		 * If the in-memory inode's i_size is smaller then the inode
--		 * size stored in the btree, return the inode's i_size, so
--		 * that we get a correct inode size after replaying the log
--		 * when before a power failure we had a shrinking truncate
--		 * followed by addition of a new name (rename / new hard link).
--		 * Otherwise return the inode size from the btree, to avoid
--		 * data loss when replaying a log due to previously doing a
--		 * write that expands the inode's size and logging a new name
--		 * immediately after.
--		 */
--		if (*size_ret > inode->vfs_inode.i_size)
--			*size_ret = inode->vfs_inode.i_size;
-+	} else {
-+		*size_ret = 0;
-+		return 0;
+ 		bh = wnd_map(wnd, iw);
+ 		if (IS_ERR(bh)) {
+@@ -785,21 +774,16 @@ int wnd_set_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 
+ 		ntfs_bitmap_set_le(bh->b_data, wbit, op);
+ 		wnd->free_bits[iw] -= op;
++		wnd->total_zeroes -= op;
+ 
+ 		set_buffer_uptodate(bh);
+ 		mark_buffer_dirty(bh);
+ 		unlock_buffer(bh);
+ 		put_bh(bh);
+ 
+-		wnd->total_zeroes -= op;
+-		bits -= op;
+-		wbit = 0;
+-		iw += 1;
++		if (!RB_EMPTY_ROOT(&wnd->start_tree))
++			wnd_remove_free_ext(wnd, bit, op);
  	}
- 
-+	/*
-+	 * If the inode was logged before or is from a past transaction, then
-+	 * its inode item must exist in the log root or in the commit root.
-+	 */
-+	ASSERT(ret <= 0);
-+	if (WARN_ON_ONCE(ret > 0))
-+		ret = -ENOENT;
-+
-+	if (ret < 0)
-+		return ret;
-+
-+	item = btrfs_item_ptr(path->nodes[0], path->slots[0],
-+			      struct btrfs_inode_item);
-+	*size_ret = btrfs_inode_size(path->nodes[0], item);
-+	/*
-+	 * If the in-memory inode's i_size is smaller then the inode size stored
-+	 * in the btree, return the inode's i_size, so that we get a correct
-+	 * inode size after replaying the log when before a power failure we had
-+	 * a shrinking truncate followed by addition of a new name (rename / new
-+	 * hard link). Otherwise return the inode size from the btree, to avoid
-+	 * data loss when replaying a log due to previously doing a write that
-+	 * expands the inode's size and logging a new name immediately after.
-+	 */
-+	if (*size_ret > inode->vfs_inode.i_size)
-+		*size_ret = inode->vfs_inode.i_size;
-+
- 	btrfs_release_path(path);
- 	return 0;
+-
+-	if (!RB_EMPTY_ROOT(&wnd->start_tree))
+-		wnd_remove_free_ext(wnd, bit, bits0);
+-
+ 	return err;
  }
-@@ -6623,7 +6655,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
- 			ret = drop_inode_items(trans, log, path, inode,
- 					       BTRFS_XATTR_ITEM_KEY);
- 	} else {
--		if (inode_only == LOG_INODE_EXISTS && ctx->logged_before) {
-+		if (inode_only == LOG_INODE_EXISTS) {
- 			/*
- 			 * Make sure the new inode item we write to the log has
- 			 * the same isize as the current one (if it exists).
-@@ -6637,7 +6669,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
- 			 * (zeroes), as if an expanding truncate happened,
- 			 * instead of getting a file of 4Kb only.
- 			 */
--			ret = logged_inode_size(log, inode, path, &logged_isize);
-+			ret = get_inode_size_to_log(trans, inode, path, &logged_isize);
- 			if (ret)
- 				goto out_unlock;
+ 
+@@ -852,15 +836,13 @@ static bool wnd_is_free_hlp(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
+ 	u32 wbits = 8 * sb->s_blocksize;
+ 	u32 wbit = bit & (wbits - 1);
++	u32 op;
+ 
+-	while (iw < wnd->nwnd && bits) {
+-		u32 tail, op;
+-
++	for (; iw < wnd->nwnd && bits; iw++, bits -= op, wbit = 0) {
+ 		if (unlikely(iw + 1 == wnd->nwnd))
+ 			wbits = wnd->bits_last;
+ 
+-		tail = wbits - wbit;
+-		op = min_t(u32, tail, bits);
++		op = min_t(u32, wbits - wbit, bits);
+ 
+ 		if (wbits != wnd->free_bits[iw]) {
+ 			bool ret;
+@@ -875,10 +857,6 @@ static bool wnd_is_free_hlp(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 			if (!ret)
+ 				return false;
  		}
+-
+-		bits -= op;
+-		wbit = 0;
+-		iw += 1;
+ 	}
+ 
+ 	return true;
+@@ -928,6 +906,7 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 	size_t iw = bit >> (sb->s_blocksize_bits + 3);
+ 	u32 wbits = 8 * sb->s_blocksize;
+ 	u32 wbit = bit & (wbits - 1);
++	u32 op;
+ 	size_t end;
+ 	struct rb_node *n;
+ 	struct e_node *e;
+@@ -945,14 +924,11 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 		return false;
+ 
+ use_wnd:
+-	while (iw < wnd->nwnd && bits) {
+-		u32 tail, op;
+-
++	for (; iw < wnd->nwnd && bits; iw++, bits -= op, wbit = 0) {
+ 		if (unlikely(iw + 1 == wnd->nwnd))
+ 			wbits = wnd->bits_last;
+ 
+-		tail = wbits - wbit;
+-		op = min_t(u32, tail, bits);
++		op = min_t(u32, wbits - wbit, bits);
+ 
+ 		if (wnd->free_bits[iw]) {
+ 			bool ret;
+@@ -966,10 +942,6 @@ bool wnd_is_used(struct wnd_bitmap *wnd, size_t bit, size_t bits)
+ 			if (!ret)
+ 				goto out;
+ 		}
+-
+-		bits -= op;
+-		wbit = 0;
+-		iw += 1;
+ 	}
+ 	ret = true;
+ 
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 7952ef0c585bb..00faacc33b088 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1975,7 +1975,6 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	if (end > alloc_size)
+ 		end = alloc_size;
+ 
+-
+ 	while (vbo < end) {
+ 		if (idx == -1) {
+ 			ok = run_lookup_entry(&run, vcn, &lcn, &clen, &idx);
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 3909c95d9bedd..513c04be1caf8 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2711,4 +2711,4 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ out:
+ 	kfree(uni);
+ 	return err;
+-}
+\ No newline at end of file
++}
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 535a094e822ee..8d05f3f276db4 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -1131,9 +1131,9 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+ 		err = wnd_set_used_safe(wnd, lcn, len, &done);
+ 		if (zone) {
+ 			/* Restore zone. Lock mft run. */
+-			struct rw_semaphore *lock;
+-			lock = is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
+-						 NULL;
++			struct rw_semaphore *lock =
++				is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
++						  NULL;
+ 			if (lock)
+ 				down_read(lock);
+ 			ntfs_refresh_zone(sbi);
 -- 
 2.53.0
 
