@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F4517BED0;
-	Sat, 17 Oct 2026 17:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0538F233;
+	Sat, 17 Oct 2026 17:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258837; cv=none; b=ELin17MyeRAqFpFoaNpAlRQy4uEhCB8Z55tS0BuX6GFBzovImZOgaXurmt/u3qK7SPXC3nWePZ7Vhk2JNFYSkNQvinelqTZH1zZBLxUWshcWilh4rRUwHoZznCjVBxK98Orq01CoB6QJDlsW0V0Wmg1SJS6+LgJyh2owqs1uzJ8=
+	t=1792258841; cv=none; b=nVDzflT7EJfiLVW73rK/F+MUJW+8uPnYjjGQd2RiJ/EUGXsep8UHs2hdpPf29n4WQhYlTjc6/8H/IV/ke7xMiImwo2VqQ65ZuT7nwJOXEQtXywPmPCd5f3YbphRkgbUcGAaGwECesx7jvMQkxebor8a/k3Zk5h34r2t1fx3RGLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258837; c=relaxed/simple;
-	bh=RYVmon5iTqGNevJU8FS4McIPMGyRkCri8yUu4WgR4tE=;
+	s=arc-20240116; t=1792258841; c=relaxed/simple;
+	bh=/Z+hwohgb+R3BZqkSqCCN4laDDG3FDSgNaW+cRzu9+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IuCw8hiw+1SUhieFf+gFjKmotsizYtnu/WSE/h/A7/f+ZBQ97srGKO1bQCkZ0i1bNVX8D7TCvSRAPVKHklXr78qSeBjeGZGQiRhrr/RYVTyRMUHEEeVPdAiP8kP14Qm8mY6rHC5UHG/YIap62Gk4K+i/xtUTNJo5zlq8YSietmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsLJasVC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jSnHZMUlMHxTkp8sGlhvytcIHzT7w20votUQCQCKsnSAf8oKK2GR5DeUVVeETx7f2zYTMuGbrdONP+okAwAmbVTGQuRj6Hk2VLeqhZX4ukiV9fzWnTnt63+7yt1TmsPPOCvJJuAcJOZzbBLXXhst0pPcosAgOv29k9h/w4CFR2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJG0toMB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsLJasVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AE51F000C4;
-	Sat, 17 Oct 2026 17:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJG0toMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA641F000C4;
+	Sat, 17 Oct 2026 17:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258836;
-	bh=DX3raB/J3SknjcF1n1RSPiwfYObySOz9jhnMwN2GyY0=;
+	s=korg; t=1792258839;
+	bh=EXRDZUBEgY0hUUjnoLx/grHGJyBmm6t+0GWxPJYh6u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HsLJasVCZlKPBb03bNq/rIJ5ueYk/YZUKTz5dEhgsrdIpS6EEySqqq67sYj1xvUCR
-	 PDCCdfulpStyjLjh8MfeTae52LyDszAl79VfoNBEDfoZV1IDwSvkoq63vg9xQnNlG9
-	 XPGpl2Dnyb7d/gsF+GVTfUOON/fqnokQlBPpCOk8=
+	b=DJG0toMBd6Cl6J5Q/QnevTUWjpzJ9lhd0JLq/RUutvwSX2FT6KuLMIC8jpLL8aIl/
+	 2wQaYqNgHxwtyMLQMCdGcX3J883JfbeFP+36d+o/AzEu4w/r6YXDuqUV8DPFWPugIk
+	 MIr+DtF1KP6hu2FNNW4dMRCmZdlpE3M6X8/gg5Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Salman Alghamdi <me@cipherat.com>,
-	Luka Gejak <luka.gejak@linux.dev>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1013/1674] staging: rtl8723bs: rtw_mlme: add bounds checks before ie_length subtraction
-Date: Sat, 17 Oct 2026 17:54:45 +0200
-Message-ID: <20261017160457.136746444@linuxfoundation.org>
+Subject: [PATCH 6.6 0976/1674] selinux: allow multiple opens of /sys/fs/selinux/policy
+Date: Sat, 17 Oct 2026 17:54:08 +0200
+Message-ID: <20261017160456.177563803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,58 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salman Alghamdi <me@cipherat.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-[ Upstream commit 88e994c57a79f62d5338231d8d37ee8dd98baffe ]
+[ Upstream commit a02cd6805562305f936e807da83e253b719dd965 ]
 
-Add guards to ensure ie_length is large enough before subtracting
-fixed IE offsets to prevent unsigned integer underflow.
+Currently there can only be a single open of /sys/fs/selinux/policy at
+any time. This allows any process to block any other process from
+reading the kernel policy. The original motivation seems to have been
+a mix of preventing an inconsistent view of the policy size and
+preventing userspace from allocating kernel memory without bound, but
+this is arguably equally bad. Eliminate the policy_opened flag and
+shrink the critical section that the policy mutex is held. While we
+are making changes here, drop a couple of extraneous BUG_ONs.
 
-Fixes: 2038fe84b8bd ("staging: rtl8723bs: fix spacing around operators")
-Fixes: d3fcee1b78a5 ("staging: rtl8723bs: fix camel case in struct wlan_bssid_ex")
-Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Salman Alghamdi <me@cipherat.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260513203455.31792-1-me@cipherat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/selinux/20100726193414.19538.64028.stgit@paris.rdu.redhat.com/
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ security/selinux/selinuxfs.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-index 6994c7081476c..5ee859ecd6d2b 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -649,6 +649,8 @@ int rtw_is_desired_network(struct adapter *adapter, struct wlan_network *pnetwor
- 	privacy = pnetwork->network.privacy;
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index 3e28fa2444fbd..d425137c0d1bb 100644
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -74,7 +74,6 @@ struct selinux_fs_info {
+ 	int *bool_pending_values;
+ 	struct dentry *class_dir;
+ 	unsigned long last_class_ino;
+-	bool policy_opened;
+ 	struct dentry *policycap_dir;
+ 	unsigned long last_ino;
+ 	struct super_block *sb;
+@@ -343,44 +342,31 @@ struct policy_load_memory {
  
- 	if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS)) {
-+		if (pnetwork->network.ie_length < _FIXED_IE_LENGTH_)
-+			return false;
- 		if (rtw_get_wps_ie(pnetwork->network.ies+_FIXED_IE_LENGTH_, pnetwork->network.ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen))
- 			return true;
- 		else
-@@ -663,11 +665,15 @@ int rtw_is_desired_network(struct adapter *adapter, struct wlan_network *pnetwor
- 			bselected = false;
+ static int sel_open_policy(struct inode *inode, struct file *filp)
+ {
+-	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
+ 	struct policy_load_memory *plm = NULL;
+ 	int rc;
  
- 		if (psecuritypriv->ndisauthtype == Ndis802_11AuthModeWPA2PSK) {
--			p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
--			if (p && ie_len > 0)
--				bselected = true;
--			else
-+			if (pnetwork->network.ie_length < _BEACON_IE_OFFSET_) {
- 				bselected = false;
-+			} else {
-+				p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
-+				if (p && ie_len > 0)
-+					bselected = true;
-+				else
-+					bselected = false;
-+			}
- 		}
+-	BUG_ON(filp->private_data);
+-
+-	mutex_lock(&selinux_state.policy_mutex);
+-
+ 	rc = avc_has_perm(current_sid(), SECINITSID_SECURITY,
+ 			  SECCLASS_SECURITY, SECURITY__READ_POLICY, NULL);
+ 	if (rc)
+-		goto err;
+-
+-	rc = -EBUSY;
+-	if (fsi->policy_opened)
+-		goto err;
++		return rc;
+ 
+-	rc = -ENOMEM;
+ 	plm = kzalloc(sizeof(*plm), GFP_KERNEL);
+ 	if (!plm)
+-		goto err;
++		return -ENOMEM;
+ 
++	mutex_lock(&selinux_state.policy_mutex);
+ 	rc = security_read_policy(&plm->data, &plm->len);
+ 	if (rc)
+ 		goto err;
+-
+ 	if ((size_t)i_size_read(inode) != plm->len) {
+ 		inode_lock(inode);
+ 		i_size_write(inode, plm->len);
+ 		inode_unlock(inode);
  	}
+-
+-	fsi->policy_opened = 1;
++	mutex_unlock(&selinux_state.policy_mutex);
+ 
+ 	filp->private_data = plm;
+ 
+-	mutex_unlock(&selinux_state.policy_mutex);
+-
+ 	return 0;
+ err:
+ 	mutex_unlock(&selinux_state.policy_mutex);
+@@ -393,13 +379,8 @@ static int sel_open_policy(struct inode *inode, struct file *filp)
+ 
+ static int sel_release_policy(struct inode *inode, struct file *filp)
+ {
+-	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
+ 	struct policy_load_memory *plm = filp->private_data;
+ 
+-	BUG_ON(!plm);
+-
+-	fsi->policy_opened = 0;
+-
+ 	vfree(plm->data);
+ 	kfree(plm);
  
 -- 
 2.53.0
