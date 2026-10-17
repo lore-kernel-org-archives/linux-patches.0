@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5073436AB6B;
-	Sat, 17 Oct 2026 16:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EADE37DEBE;
+	Sat, 17 Oct 2026 16:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255043; cv=none; b=VSEp2X/9fIo9IlmHt3f7LKDQ2BDAXgx0sJCay3dAMkORGSl+YIbkuE5xIrDgx6mwNrbAUVLkeNA9NUpYgtg965EHEe3BaPuXG7JbwPSHfG5pvr0cZPGR+Cffih/g98KKT3FPghLt1iZDKvFcGcaP/fDP4KDiodEj0TYruL1SvOg=
+	t=1792255046; cv=none; b=b9KEoceCRI/IJFPF6T1PSlb08zSqbb+0YkvOCmdOuJypHldGUHdogb437MNFpOTCaGSXATmRLWFrGyG/8o2KfWLShM7Gete9OZqVfunYQsdjBnI8QM9BKp0RDGvWhgV1JpPNH9u98kx4BDcb+kPeX68tU2KwY6rzMJ1aPybxzJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255043; c=relaxed/simple;
-	bh=m7ZzvycBdfzEJzSv5d6dPKSJqHIqa6ZKM23i6yvvrrM=;
+	s=arc-20240116; t=1792255046; c=relaxed/simple;
+	bh=/lHbooIkpIlygnfM1B/R0nbaNOma+N6/c3kVF1oNn+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7FPogt3HIGxdmimR0Q64RCJIYqWIQyeBOQBUWMHkfeRMbid/K6puJLGydjirOfyI8y8zWCZ0lCha2V6llN+eb/dX0ClsaH1jIIa2Vn2oSJcZxsgH1N22s9TX1iIQKNhlYt84VcD1KcjvVgmo+tHhiB48/V2KUgSOHhYjp3rSmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flK7g7nx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2Q+VJ6ujqHtPqSkujI4VWoMxI4H44K8/u3ECu9sqxmxBOtOhLe9Cw+U4W31anTIiTESySHt3dO9Y9bvtoooS9TViTjOMyw52x4k6zZo81lV5+MoNU3bAKFNlJLTJahq0Thiaqh8pFLDc8Rbx26Q0EVlWwBtLS2bvmbVjNnpiRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TeCWeun; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flK7g7nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3151F000C4;
-	Sat, 17 Oct 2026 16:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TeCWeun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9431F000C4;
+	Sat, 17 Oct 2026 16:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255042;
-	bh=QFwmFp+y2mq/Fn21dVOII2ci3iemIqd5r/dbqSz4geY=;
+	s=korg; t=1792255045;
+	bh=p/t3eEf2anaNwlGL5v9QluGyWgyfVnl2EW/TX2RZDOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=flK7g7nxWRDE3LTQWvtu/IeocM17JLeoXlo3o2fU9tHZxVpHTIrY3UxyOhUldLOam
-	 EgmkPfrR/J7x9/PLYuhcX3s5kCblf24VcvctunQTy9HNPgRTsRLuqBNgZxa3UVTMH1
-	 Vci24h0DtK12AqD+FhudtzuyEvua1RjyT3SasJFA=
+	b=1TeCWeun8Y6kOnCGFWLsSi8IgNU199E2RhaBnP+9wsCN49dZXdQQ4WnJ25lxuy8AT
+	 7f9hYpk6xZRs9zFvFtyc055wzr58+BN7ZCoMtuiqyo11s4EHKNFQ3K3ByqY+BjLB/s
+	 /g7MQlVF2kIv2OUVGMh14ok4slUHszzTrCoc1nVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Sun YangKai <sunyangkai@fnnas.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 644/869] btrfs: zoned: dont clobber the extent buffer when zeroing it out
-Date: Sat, 17 Oct 2026 17:58:05 +0200
-Message-ID: <20261017160053.525180461@linuxfoundation.org>
+Subject: [PATCH 6.12 645/869] btrfs: check if root is readonly when setting posix acl
+Date: Sat, 17 Oct 2026 17:58:06 +0200
+Message-ID: <20261017160053.550663453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,162 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Sun YangKai <sunyangkai@fnnas.com>
 
-[ Upstream commit db4b9eefc8ee0bcaeee4d5e6a7313905f6a2fe7c ]
+[ Upstream commit 01c2f41fc441f75b3f9326443372faceb1cb6638 ]
 
-On a zoned filesystem a freed-but-still-dirty tree block is written out
-as zeros (EXTENT_BUFFER_ZONED_ZEROOUT) only to keep the zone write
-pointer advancing. btree_csum_one_bio() implemented this by memzeroing
-the extent buffer's own folios before submission.
+For a filesystem which has btrfs read-only property set to true, all
+write operations including acl and xattr should be denied. However, acl
+can still be set even if btrfs ro property is true.
 
-That destroys the in-memory buffer while it may still be referenced. In
-particular btrfs_free_tree_block() can run on it afterwards and reads
-the header to add a delayed reference; once the header has been zeroed
-it frees bytenr 0 and corrupts the extent tree (the
-btrfs_header_bytenr(buf) != 0 ASSERT in btrfs_free_tree_block(), or an
-"unable to find ref" abort). It is flaky and reproduces under fsstress,
-e.g. generic/461 and generic/013.
+This happens because no function on the set_acl code path checks the root
+is readonly or not. It was checked in btrfs_setxattr_trans() but got
+removed in commit 353c2ea735e4 ("btrfs: remove redundant readonly root
+check in btrfs_setxattr_trans")
 
-Write the zeros to disk from the shared zero page instead and leave the
-extent buffer content untouched, so any later reference - including the
-delayed reference from btrfs_free_tree_block() - still sees a valid
-header. end_bbio_meta_write() now clears writeback on the buffer's own
-folios, as the bio no longer carries them.
+That commit didn't check if all the callers properly check the root's
+read-only flag. A previous fix is commit b51111271b03 ("btrfs: check if
+root is readonly while setting security xattr").
 
-Fixes: aa6313e6ff2b ("btrfs: zoned: don't clear dirty flag of extent buffer")
-Assisted-by: LLM (debugging, commit message)
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Always check if the root is read-only before performing the set acl
+operation.
+
+Fixes: 353c2ea735e4 ("btrfs: remove redundant readonly root check in btrfs_setxattr_trans")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Sun YangKai <sunyangkai@fnnas.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c   | 13 +++++-----
- fs/btrfs/extent_io.c | 58 +++++++++++++++++++++++++++++++++++---------
- 2 files changed, 53 insertions(+), 18 deletions(-)
+ fs/btrfs/acl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 74af70897bcb0..d1f245ef1911f 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -272,14 +272,15 @@ blk_status_t btree_csum_one_bio(struct btrfs_bio *bbio)
- 		return BLK_STS_IOERR;
+diff --git a/fs/btrfs/acl.c b/fs/btrfs/acl.c
+index e0ba00d64ea0b..d1c67faacc187 100644
+--- a/fs/btrfs/acl.c
++++ b/fs/btrfs/acl.c
+@@ -14,6 +14,7 @@
+ #include "ctree.h"
+ #include "xattr.h"
+ #include "acl.h"
++#include "btrfs_inode.h"
  
- 	/*
--	 * If an extent_buffer is marked as EXTENT_BUFFER_ZONED_ZEROOUT, don't
--	 * checksum it but zero-out its content. This is done to preserve
--	 * ordering of I/O without unnecessarily writing out data.
-+	 * An extent_buffer marked EXTENT_BUFFER_ZONED_ZEROOUT is written out as
-+	 * zeros to preserve ordering of I/O without persisting the now
-+	 * unnecessary block. The bio is fed from the shared zero page (see
-+	 * write_one_eb()), so there is nothing to checksum here. Crucially, the
-+	 * buffer's own content is left intact: it may still be referenced, e.g.
-+	 * btrfs_free_tree_block() reads its header to add a delayed reference.
- 	 */
--	if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags)) {
--		memzero_extent_buffer(eb, 0, eb->len);
-+	if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags))
- 		return BLK_STS_OK;
--	}
+ struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
+ {
+@@ -116,6 +117,9 @@ int btrfs_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	struct inode *inode = d_inode(dentry);
+ 	umode_t old_mode = inode->i_mode;
  
- 	if (WARN_ON_ONCE(found_start != eb->start))
- 		return BLK_STS_IOERR;
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 8753ce416c5c6..dbb81c58a2e3c 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1839,18 +1839,21 @@ static void end_bbio_meta_write(struct btrfs_bio *bbio)
- 	struct extent_buffer *eb = bbio->private;
- 	struct btrfs_fs_info *fs_info = eb->fs_info;
- 	bool uptodate = !bbio->bio.bi_status;
--	struct folio_iter fi;
- 	u32 bio_offset = 0;
- 
- 	if (!uptodate)
- 		set_btree_ioerr(eb);
- 
--	bio_for_each_folio_all(fi, &bbio->bio) {
--		u64 start = eb->start + bio_offset;
--		struct folio *folio = fi.folio;
--		u32 len = fi.length;
-+	/*
-+	 * Clear writeback on the buffer's own folios. The bio may carry the
-+	 * shared zero page instead (EXTENT_BUFFER_ZONED_ZEROOUT), so iterate
-+	 * the extent buffer folios rather than the bio folios.
-+	 */
-+	for (int i = 0; i < num_extent_folios(eb); i++) {
-+		u32 len = min(eb->len - bio_offset, (u32)eb->folio_size);
- 
--		btrfs_folio_clear_writeback(fs_info, folio, start, len);
-+		btrfs_folio_clear_writeback(fs_info, eb->folios[i],
-+					    eb->start + bio_offset, len);
- 		bio_offset += len;
- 	}
- 
-@@ -1895,7 +1898,8 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
- 	struct btrfs_fs_info *fs_info = eb->fs_info;
- 	struct btrfs_bio *bbio;
- 
--	prepare_eb_write(eb);
-+	if (!test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags))
-+		prepare_eb_write(eb);
- 
- 	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
- 			       REQ_OP_WRITE | REQ_META | wbc_to_write_flags(wbc),
-@@ -1916,9 +1920,23 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
- 			folio_clear_dirty_for_io(folio);
- 			wbc->nr_to_write--;
- 		}
--		ret = bio_add_folio(&bbio->bio, folio, eb->len,
--				    eb->start - folio_pos(folio));
--		ASSERT(ret);
-+		if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags)) {
-+			u32 off = 0;
++	if (btrfs_root_readonly(BTRFS_I(inode)->root))
++		return -EROFS;
 +
-+			while (off < eb->len) {
-+				u32 add = min_t(u32, PAGE_SIZE, eb->len - off);
-+
-+				ret = bio_add_folio(&bbio->bio,
-+						    page_folio(ZERO_PAGE(0)),
-+						    add, 0);
-+				ASSERT(ret);
-+				off += add;
-+			}
-+		} else {
-+			ret = bio_add_folio(&bbio->bio, folio, eb->len,
-+					    eb->start - folio_pos(folio));
-+			ASSERT(ret);
-+		}
- 		wbc_account_cgroup_owner(wbc, folio, eb->len);
- 		folio_unlock(folio);
- 	} else {
-@@ -1931,8 +1949,24 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
- 			folio_lock(folio);
- 			folio_clear_dirty_for_io(folio);
- 			folio_start_writeback(folio);
--			ret = bio_add_folio(&bbio->bio, folio, eb->folio_size, 0);
--			ASSERT(ret);
-+			if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags)) {
-+				u32 off = 0;
-+
-+				while (off < eb->folio_size) {
-+					u32 add = min_t(u32, PAGE_SIZE,
-+							eb->folio_size - off);
-+
-+					ret = bio_add_folio(&bbio->bio,
-+							page_folio(ZERO_PAGE(0)),
-+							add, 0);
-+					ASSERT(ret);
-+					off += add;
-+				}
-+			} else {
-+				ret = bio_add_folio(&bbio->bio, folio,
-+						    eb->folio_size, 0);
-+				ASSERT(ret);
-+			}
- 			wbc_account_cgroup_owner(wbc, folio, eb->folio_size);
- 			wbc->nr_to_write -= folio_nr_pages(folio);
- 			folio_unlock(folio);
+ 	if (type == ACL_TYPE_ACCESS && acl) {
+ 		ret = posix_acl_update_mode(idmap, inode,
+ 					    &inode->i_mode, &acl);
 -- 
 2.53.0
 
