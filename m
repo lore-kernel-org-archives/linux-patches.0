@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0F7356A12;
-	Sat, 17 Oct 2026 17:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693103B4404;
+	Sat, 17 Oct 2026 17:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257545; cv=none; b=md9ZQI2pVBWAg6Ls2oac6hl1wbgG7M/Z2XRd0eYeLxCHRDO5azObkz2MHIKRE1CrFZdMqcWzdCUyYABEZh0Vol1+C2iHFRlo1OZYzomw7Edic5mnAjFIMnIJetgiYryb2ZWw8DyRaqdvMZQOEsJ6RoS3R72MzT/iGwlWAEVuf70=
+	t=1792257549; cv=none; b=LbX0RaiY/MsG2o0AQqu4WjbOphBf/WlzP+dVq8ctA9WuP4K7fyY7S4virpTWN4Z7lUzuNblzJoorG8PYejq1sehMCtea9kxfThN+UxbzYUHgMTzlgaG0izHJHT6GlRX3t80KZH2tOestrqfO3CIwA1nbPNH+lc/20HvoyrAJtuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257545; c=relaxed/simple;
-	bh=llw0XjIis9ziLf7wJfl29+VwfdCmHBNc12/1stVEm80=;
+	s=arc-20240116; t=1792257549; c=relaxed/simple;
+	bh=pWZTTtZr9YcJdj6RII55Dw3tGD7xTn8rTCaUargQTDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skBmL8DYpgP7hyq9KsrJUTMmx88e8UhZpPeq+2VMd/pe9uZ7IOQxMfbH9K1tqZV2qF9ZE2TzPJ3CMfzuPPgK1RbhDRMdmc5M56GzneSqshy74tVjYUgOHNRIJUN5q2tggErJKzqwLDcimq+wbu8z+tyGIXMoeeJuS09ch/azy8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbRcV4YM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RyUv31Jy2nbS1zf2JWSas1sV6SAYadrpDUERide3yjbJQkY1YYkmiuOz+62SGqOt6XABYdHEXH57Cab3N72VDEaBlDI/4xWCKyC9tL+QyXUVboAwq14cHl1oRB9B7F3ia6oVyQOxbULfX2FGQRhKaPMdWK4RKXRw81j2uyaWT/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKutGgtU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbRcV4YM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A11F000C4;
-	Sat, 17 Oct 2026 17:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKutGgtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6D61F000C4;
+	Sat, 17 Oct 2026 17:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257544;
-	bh=5Xq7uTckApp4gy8huc8TAsLpWM2+iuHEefZq2I0ClUE=;
+	s=korg; t=1792257547;
+	bh=JDU6RKZhPozXJO00PpBffc7SFJSCcm3qbjGnBS4LqFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbRcV4YMME8BMG+K5vjVetTb2kLL/u5p2NVb5AiHv2vIQaifb/VPYwIrDxrb6DSls
-	 3cBUs/OSqQ28WrxtbwNmmv10FBxEIPwyj+8H3Sy0ElX8MpGemvDzdvYyBgav3acPJT
-	 R8RCgCl+bf7qAOxje61hn+ssWfOmE7pYVhhbbfXA=
+	b=wKutGgtU50sB41SS5LDDdhm6fpyaWxcHEyD3Mxo0QSD7If6udFTPWRM/fEcWPCC9t
+	 dMPi5GODXqMH1GTgBz13/YXytDw8JH5ld97YDSZpchm9wCsbEYiZZ0XV8hkb3vNpWP
+	 lOePKGO1dOBjbmZ2O+mY8v5YxV3lKIGwCIJvr2VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	lihuisong@huawei.com,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0593/1674] net/mlx5e: Pass netdev to mlx5e_destroy_netdev instead of priv
-Date: Sat, 17 Oct 2026 17:47:45 +0200
-Message-ID: <20261017160446.303596234@linuxfoundation.org>
+Subject: [PATCH 6.6 0594/1674] ACPI: processor_idle: Mark LPI enter functions as __cpuidle
+Date: Sat, 17 Oct 2026 17:47:46 +0200
+Message-ID: <20261017160446.327901767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,160 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 4ef8512e1427111f7ba92b4a847d181ff0aeec42 ]
+[ Upstream commit 956ca5d72c76504824c8eb601879da9476973e15 ]
 
-mlx5e_priv is an unstable structure that can be memset(0) if profile
-attaching fails.
+When function tracing or Kprobes is enabled, entering an ACPI Low
+Power Idle (LPI) state triggers the following RCU splat:
 
-Pass netdev to mlx5e_destroy_netdev() to guarantee it will work on a
-valid netdev.
+  RCU not on for: acpi_idle_lpi_enter+0x4/0xd8
+  WARNING: CPU: 8 PID: 0 at include/linux/trace_recursion.h:162 function_trace_call+0x1e8/0x228
 
-On mlx5e_remove: Check validity of priv->profile, before attempting
-to cleanup any resources that might be not there.
+The acpi_idle_lpi_enter() function is invoked within the cpuidle
+path after RCU has already been disabled for the current local CPU.
+Consequently, ftrace's function_trace_call() expects RCU to be
+actively watching before recording trace data, emitting a warning
+if it is not.
 
-This fixes a kernel oops in mlx5e_remove when switchdev mode fails due
-to change profile failure.
+Fix this by annotating acpi_idle_lpi_enter(), the generic __weak
+stub, and the RISC-V implementation of acpi_processor_ffh_lpi_enter()
+with __cpuidle. This moves these functions into the '.cpuidle.text'
+section, implicitly disabling ftrace instrumentation (notrace) along
+this sensitive path and preventing trace-induced RCU warnings during
+idle entry.
 
-$ devlink dev eswitch set pci/0000:00:03.0 mode switchdev
-Error: mlx5_core: Failed setting eswitch to offloads.
-dmesg:
-workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
-mlx5_core 0012:03:00.1: mlx5e_netdev_init_profile:6214:(pid 37199): mlx5e_priv_init failed, err=-12
-mlx5_core 0012:03:00.1 gpu3rdma1: mlx5e_netdev_change_profile: new profile init failed, -12
-workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
-mlx5_core 0012:03:00.1: mlx5e_netdev_init_profile:6214:(pid 37199): mlx5e_priv_init failed, err=-12
-mlx5_core 0012:03:00.1 gpu3rdma1: mlx5e_netdev_change_profile: failed to rollback to orig profile, -12
-
-$ devlink dev reload pci/0000:00:03.0 ==> oops
-
-BUG: kernel NULL pointer dereference, address: 0000000000000370
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 15 UID: 0 PID: 520 Comm: devlink Not tainted 6.18.0-rc5+ #115 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
-RIP: 0010:mlx5e_dcbnl_dscp_app+0x23/0x100
-RSP: 0018:ffffc9000083f8b8 EFLAGS: 00010286
-RAX: ffff8881126fc380 RBX: ffff8881015ac400 RCX: ffffffff826ffc45
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff8881035109c0
-RBP: ffff8881035109c0 R08: ffff888101e3e838 R09: ffff888100264e10
-R10: ffffc9000083f898 R11: ffffc9000083f8a0 R12: ffff888101b921a0
-R13: ffff888101b921a0 R14: ffff8881015ac9a0 R15: ffff8881015ac400
-FS:  00007f789a3c8740(0000) GS:ffff88856aa59000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000370 CR3: 000000010b6c0001 CR4: 0000000000370ef0
-Call Trace:
- <TASK>
- mlx5e_remove+0x57/0x110
- device_release_driver_internal+0x19c/0x200
- bus_remove_device+0xc6/0x130
- device_del+0x160/0x3d0
- ? devl_param_driverinit_value_get+0x2d/0x90
- mlx5_detach_device+0x89/0xe0
- mlx5_unload_one_devl_locked+0x3a/0x70
- mlx5_devlink_reload_down+0xc8/0x220
- devlink_reload+0x7d/0x260
- devlink_nl_reload_doit+0x45b/0x5a0
- genl_family_rcv_msg_doit+0xe8/0x140
-
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260108212657.25090-4-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Acked-by: lihuisong@huawei.com
+Link: https://patch.msgid.link/20260616072617.2272-1-lirongqing@baidu.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Assisted-by: LLM
+[ Backport to 6.6.y: Omit the RISC-V hunk because this target has no
+  RISC-V ACPI LPI implementation. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h      |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 15 +++++++++------
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c  |  4 ++--
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ drivers/acpi/processor_idle.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index ee671e16f344c..0b10e86b508ca 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -1202,7 +1202,7 @@ struct net_device *
- mlx5e_create_netdev(struct mlx5_core_dev *mdev, const struct mlx5e_profile *profile);
- int mlx5e_attach_netdev(struct mlx5e_priv *priv);
- void mlx5e_detach_netdev(struct mlx5e_priv *priv);
--void mlx5e_destroy_netdev(struct mlx5e_priv *priv);
-+void mlx5e_destroy_netdev(struct net_device *netdev);
- int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
- 				const struct mlx5e_profile *new_profile, void *new_ppriv);
- void mlx5e_netdev_attach_nic_profile(struct mlx5e_priv *priv);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index a296a73771c07..191a152d62b6c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5984,11 +5984,12 @@ void mlx5e_netdev_attach_nic_profile(struct mlx5e_priv *priv)
- 	mlx5e_netdev_change_profile(priv, &mlx5e_nic_profile, NULL);
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index d755c266e3586..5db34356328c7 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1175,7 +1175,7 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
+ 	return 0;
  }
  
--void mlx5e_destroy_netdev(struct mlx5e_priv *priv)
-+void mlx5e_destroy_netdev(struct net_device *netdev)
+-int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
++int __weak __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
  {
--	struct net_device *netdev = priv->netdev;
-+	struct mlx5e_priv *priv = netdev_priv(netdev);
- 
--	mlx5e_priv_cleanup(priv);
-+	if (priv->profile)
-+		mlx5e_priv_cleanup(priv);
- 	free_netdev(netdev);
+ 	return -ENODEV;
  }
- 
-@@ -6116,7 +6117,7 @@ static int mlx5e_probe(struct auxiliary_device *adev,
- err_profile_cleanup:
- 	profile->cleanup(priv);
- err_destroy_netdev:
--	mlx5e_destroy_netdev(priv);
-+	mlx5e_destroy_netdev(netdev);
- err_devlink_port_unregister:
- 	mlx5e_devlink_port_unregister(mlx5e_dev);
- err_devlink_unregister:
-@@ -6134,13 +6135,15 @@ static void mlx5e_remove(struct auxiliary_device *adev)
- 	pm_message_t state = {};
- 
- 	mlx5_core_uplink_netdev_set(mdev, NULL);
--	mlx5e_dcbnl_delete_app(priv);
-+
-+	if (priv->profile)
-+		mlx5e_dcbnl_delete_app(priv);
- 	unregister_netdev(netdev);
- 	mlx5e_suspend(adev, state);
- 	/* Avoid cleanup if profile rollback failed. */
- 	if (priv->profile)
- 		priv->profile->cleanup(priv);
--	mlx5e_destroy_netdev(priv);
-+	mlx5e_destroy_netdev(netdev);
- 	mlx5e_devlink_port_unregister(mlx5e_dev);
- 	mlx5e_destroy_devlink(mlx5e_dev);
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 656a7b65f4c7b..380898125224e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -1539,7 +1539,7 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
- 	priv->profile->cleanup(priv);
- 
- err_destroy_netdev:
--	mlx5e_destroy_netdev(netdev_priv(netdev));
-+	mlx5e_destroy_netdev(netdev);
- 	return err;
- }
- 
-@@ -1594,7 +1594,7 @@ mlx5e_vport_rep_unload(struct mlx5_eswitch_rep *rep)
- 	mlx5e_rep_vnic_reporter_destroy(priv);
- 	mlx5e_detach_netdev(priv);
- 	priv->profile->cleanup(priv);
--	mlx5e_destroy_netdev(priv);
-+	mlx5e_destroy_netdev(netdev);
- free_ppriv:
- 	kvfree(ppriv); /* mlx5e_rep_priv */
- }
+@@ -1188,7 +1188,7 @@ int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
+  *
+  * Return: 0 for success or negative value for error
+  */
+-static int acpi_idle_lpi_enter(struct cpuidle_device *dev,
++static int __cpuidle acpi_idle_lpi_enter(struct cpuidle_device *dev,
+ 			       struct cpuidle_driver *drv, int index)
+ {
+ 	struct acpi_processor *pr;
 -- 
 2.53.0
 
