@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAFB385D7B;
-	Sat, 17 Oct 2026 17:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384313A1E92;
+	Sat, 17 Oct 2026 17:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258858; cv=none; b=B3oqmBBcTRMoNqxn1ft85hmkiWyya9p2Prflt5AMYghu7QTmC3ah9a3LMEBO7RvikE3gWTHDc66FqUfRCF0U8IGoJQRxWSZsGBX4m89q/DhoS95OACCGIgh+Y3ZpmqFo7QHWgrAOJBMVfy1I4qjjpUcVgDYU/HuqSuWbvPUV8iU=
+	t=1792258861; cv=none; b=PqTkswfBzzr2u4reHyJ6zcdygYQVznWA6t7nsFu2eQO6uNhe1rr86SgCL5TK6WjelGh+nBsI0A6dGcVVcJBRbQ1Z1tIjObTfCqp7cxaU4KXKfwqww8W+3gvvaas9EDwlYbIUebncbUH9iBRqlrrFOUGyH5EXgVvrJmucNNfJjZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258858; c=relaxed/simple;
-	bh=XZJO4htN0hAEqBQCm5STOb7O4t5NNobZ9M3h2jcY+J4=;
+	s=arc-20240116; t=1792258861; c=relaxed/simple;
+	bh=wrLKz12o7a3zlhUdxhRfa8FfH0RDTzXwrX5NgQOyBxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyhEzQi/VXOMPFwb3iiYrCymsP7VhmgoicR0xxNi4NwgamxuaJZ/k6jmEl/Ek1LhR0miy/kHUjtOjd8IH3wZnflGAwpZ7mRt2ensL9FtTRzeaxia98ISX9D5FmYb4pbmLWFAB8BvKuUY05Dh0tRX73bZEJPdEfPNPcEEtbzpP6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IplS9YYh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mgoMQFT1OaeVuYM1x95L4lKAj3Iot+Q0FKMPJHOEx+K/f8TYOddpLxvH+fwzMBhmQigmDiYb57z+D+qkP2WxeglxyWK/hp11QJCireBOowH55N0jwReOEVNdKMme4ulrFT0X54o1s3CK7GbdnK44brGYCBGrZLoWe/axyMVWAwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zq9ubYJP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IplS9YYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABD91F000C4;
-	Sat, 17 Oct 2026 17:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zq9ubYJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9001C1F000C4;
+	Sat, 17 Oct 2026 17:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258857;
-	bh=74+UI+I6N0o6tACwbDO6N0mceX1cizYv++QCT1gFWi4=;
+	s=korg; t=1792258860;
+	bh=wKe3w0DwaFAhvYIKnYKv4fJC4YkkKXd+G2OIaWyajH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IplS9YYhyJhV4F4BdTsiGJUEeysDZ8JOtFjnOkZg4u9eqsEhH4EQHvvR7scPhKNtW
-	 Cf7/YOsUMGKDwCezjYw8VomPyNo5z/MHfWIHnDRTMZwb1S1gdC0AoBspo3naN4yYgE
-	 EJ3pUwXmkz6iQh+0rXwXyP7j8xAc6G9CzaEbUfXs=
+	b=zq9ubYJPrMiebh1lO6o4nizGMeX8xPfT2GqciGMy6oMpwXhfVbCXWAuoD3WaZIk5O
+	 M9T0fRR5y4fJBPhqR/RveIavuSTTWcgL+biLjaiCl/5W2op1YasdKemE0Zt53/jm0r
+	 EXf93Brnt9KLn5FsTbIQ+9gbmgCjw6U/cJzSvrD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meir Elisha <meir6264@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1015/1674] Staging: rtl8723bs: Delete dead code from update_current_network()
-Date: Sat, 17 Oct 2026 17:54:47 +0200
-Message-ID: <20261017160457.185829844@linuxfoundation.org>
+Subject: [PATCH 6.6 1024/1674] btrfs: only release the dirty pages io tree after successful writes
+Date: Sat, 17 Oct 2026 17:54:56 +0200
+Message-ID: <20261017160457.416843828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,276 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meir Elisha <meir6264@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit e945c43df60b50bda05800ef83d380ec34e391e2 ]
+[ Upstream commit 4066c55e109475a06d18a1f127c939d551211956 ]
 
-Remove dead code from rtw_mlme.c in order to improve code readability.
+[WARNING]
+With extra warning on dirty extent buffers at umount (aka, the next
+patch in the series), test case generic/388 can trigger the following
+warning about dirty extent buffers at unmount time:
 
-Signed-off-by: Meir Elisha <meir6264@gmail.com>
-Link: https://lore.kernel.org/r/20240407123836.115055-1-meir6264@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 514ab9836459 ("staging: rtl8723bs: fix buffer over-read in rtw_update_protection")
+  BTRFS critical (device dm-2 state E): emergency shutdown
+  BTRFS error (device dm-2 state E): error while writing out transaction: -30
+  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
+  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
+  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
+  BTRFS info (device dm-2 state EA): forced readonly
+  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
+  ------------[ cut here ]------------
+  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
+  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
+  Call Trace:
+   <TASK>
+   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   generic_shutdown_super+0x89/0x1a0
+   kill_anon_super+0x16/0x40
+   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   deactivate_locked_super+0x2d/0xb0
+   cleanup_mnt+0xdc/0x140
+   task_work_run+0x5a/0xa0
+   exit_to_user_mode_loop+0x123/0x4b0
+   do_syscall_64+0x243/0x7c0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
+
+I'm using a stripped down version, which seems to trigger the warning
+more reliably:
+
+  _fsstress_pid=""
+  workload()
+  {
+  	dmesg -C
+  	mkfs.btrfs -f -K $dev > /dev/null
+  	echo 1 > /sys/kernel/debug/clear_warn_once
+  	mount $dev $mnt
+  	$fsstress -w -n 1024 -p 4 -d $mnt &
+  	_fsstress_pid=$!
+  	sleep 0
+  	$godown $mnt
+  	pkill --echo -PIPE fsstress > /dev/null
+  	wait $_fsstress_pid
+  	unset _fsstress_pid
+  	umount $mnt
+
+  	if dmesg | grep -q "WARNING"; then
+  		fail
+  	fi
+  }
+
+  for (( i = 0; i < $runtime; i++ )); do
+  	echo "=== $i/$runtime ==="
+  	workload
+  done
+
+[CAUSE]
+Inside btrfs_write_and_wait_transaction(), we first try to write all
+dirty ebs, then wait for them to finish.
+
+After that we call btrfs_extent_io_tree_release() to free all
+extent states from dirty_pages io tree.
+
+However if we hit an error from btrfs_write_marked_extent(), then we
+still call btrfs_extent_io_tree_release() to clear that dirty_pages io
+tree, which may contain dirty records that we haven't yet submitted.
+
+Furthermore, the later transaction cleanup path will utilize that
+dirty_pages io tree to properly cleanup those dirty ebs, but since it's
+already empty, no dirty ebs are properly cleaned up, thus will later
+trigger the warnings inside invalidate_btree_folios().
+
+[FIX]
+Normally such dirty ebs won't cause problems, as when the iput() is
+called on the btree inode, the dirty ebs will be forcibly written back,
+and since the fs is already in an error status, such writeback will not
+reach disk and finish immediately.
+
+But it's still better to get rid of such dirty ebs, if we ended up with
+dirty ebs but the fs is not in an error status, then such writeback at
+iput() time will be too late, as all workers are already stopped but
+writeback will utilize workers, which will lead to NULL pointer
+dereferences.
+
+Instead of unconditionally calling btrfs_extent_io_tree_release(), only
+call it if btrfs_write_and_wait_transaction() finished successfully, so
+that @dirty_pages extent io tree is kept untouched for transaction
+cleanup.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c | 92 ++---------------------
- 1 file changed, 5 insertions(+), 87 deletions(-)
+ fs/btrfs/disk-io.c     | 1 +
+ fs/btrfs/transaction.c | 9 ++++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-index b5fb0ad08f384..2422bf30ab757 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -22,7 +22,6 @@ int	rtw_init_mlme_priv(struct adapter *padapter)
- 
- 	pmlmepriv->pscanned = NULL;
- 	pmlmepriv->fw_state = WIFI_STATION_STATE; /*  Must sync with rtw_wdev_alloc() */
--	/*  wdev->iftype = NL80211_IFTYPE_STATION */
- 	pmlmepriv->cur_network.network.infrastructure_mode = Ndis802_11AutoUnknown;
- 	pmlmepriv->scan_mode = SCAN_ACTIVE;/*  1: active, 0: passive. Maybe someday we should rename this varable to "active_mode" (Jeff) */
- 
-@@ -109,32 +108,6 @@ void _rtw_free_mlme_priv(struct mlme_priv *pmlmepriv)
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index d2f9c5be175ea..e025399abce97 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4795,6 +4795,7 @@ static void btrfs_destroy_marked_extents(struct btrfs_fs_info *fs_info,
+ 			free_extent_buffer_stale(eb);
+ 		}
  	}
++	extent_io_tree_release(dirty_pages);
  }
  
--/*
--struct	wlan_network *_rtw_dequeue_network(struct __queue *queue)
--{
--	_irqL irqL;
+ static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 5e7b8d47c3c87..769dfed15f00e 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1241,14 +1241,13 @@ static int btrfs_write_and_wait_transaction(struct btrfs_trans_handle *trans)
+ 	blk_finish_plug(&plug);
+ 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
+ 
+-	extent_io_tree_release(&trans->transaction->dirty_pages);
 -
--	struct wlan_network *pnetwork;
--
--	spin_lock_bh(&queue->lock);
--
--	if (list_empty(&queue->queue))
--
--		pnetwork = NULL;
--
+ 	if (ret)
+ 		return ret;
+-	else if (ret2)
++	if (ret2)
+ 		return ret2;
 -	else
--	{
--		pnetwork = container_of(get_next(&queue->queue), struct wlan_network, list);
--
--		list_del_init(&(pnetwork->list));
--	}
--
--	spin_unlock_bh(&queue->lock);
--
--	return pnetwork;
--}
--*/
--
- struct	wlan_network *rtw_alloc_network(struct	mlme_priv *pmlmepriv)
- {
- 	struct	wlan_network	*pnetwork;
-@@ -207,13 +180,9 @@ void _rtw_free_network_nolock(struct	mlme_priv *pmlmepriv, struct wlan_network *
- 	if (pnetwork->fixed)
- 		return;
- 
--	/* spin_lock_irqsave(&free_queue->lock, irqL); */
--
- 	list_del_init(&(pnetwork->list));
- 
- 	list_add_tail(&(pnetwork->list), get_list_head(free_queue));
--
--	/* spin_unlock_irqrestore(&free_queue->lock, irqL); */
+-		return 0;
++
++	extent_io_tree_release(&trans->transaction->dirty_pages);
++	return 0;
  }
  
  /*
-@@ -231,8 +200,6 @@ struct wlan_network *_rtw_find_network(struct __queue *scanned_queue, u8 *addr)
- 		goto exit;
- 	}
- 
--	/* spin_lock_bh(&scanned_queue->lock); */
--
- 	phead = get_list_head(scanned_queue);
- 	list_for_each(plist, phead) {
- 		pnetwork = list_entry(plist, struct wlan_network, list);
-@@ -244,8 +211,6 @@ struct wlan_network *_rtw_find_network(struct __queue *scanned_queue, u8 *addr)
- 	if (plist == phead)
- 		pnetwork = NULL;
- 
--	/* spin_unlock_bh(&scanned_queue->lock); */
--
- exit:
- 	return pnetwork;
- }
-@@ -320,16 +285,6 @@ void rtw_free_mlme_priv(struct mlme_priv *pmlmepriv)
- 	_rtw_free_mlme_priv(pmlmepriv);
- }
- 
--/*
--static struct	wlan_network *rtw_dequeue_network(struct __queue *queue)
--{
--	struct wlan_network *pnetwork;
--
--	pnetwork = _rtw_dequeue_network(queue);
--	return pnetwork;
--}
--*/
--
- void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork);
- void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork)
- {
-@@ -494,12 +449,9 @@ static void update_current_network(struct adapter *adapter, struct wlan_bssid_ex
- 		&(pmlmepriv->cur_network.network));
- 
- 	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&(pmlmepriv->cur_network.network), pnetwork, 0))) {
--		/* if (pmlmepriv->cur_network.network.ie_length<= pnetwork->ie_length) */
--		{
--			update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
--			rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
--									pmlmepriv->cur_network.network.ie_length);
--		}
-+		update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
-+		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
-+								pmlmepriv->cur_network.network.ie_length);
- 	}
- }
- 
-@@ -540,7 +492,6 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
- 
- 	/* If we didn't find a match, then get a new network slot to initialize
- 	 * with this beacon's information */
--	/* if (phead == plist) { */
- 	if (!target_find) {
- 		if (list_empty(&pmlmepriv->free_bss_pool.queue)) {
- 			/* If there are no more slots, expire the oldest */
-@@ -613,15 +564,8 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
- void rtw_add_network(struct adapter *adapter, struct wlan_bssid_ex *pnetwork);
- void rtw_add_network(struct adapter *adapter, struct wlan_bssid_ex *pnetwork)
- {
--	/* struct __queue	*queue	= &(pmlmepriv->scanned_queue); */
--
--	/* spin_lock_bh(&queue->lock); */
--
- 	update_current_network(adapter, pnetwork);
--
- 	rtw_update_scanned_network(adapter, pnetwork);
--
--	/* spin_unlock_bh(&queue->lock); */
- }
- 
- /* select the desired network based on the capability of the (i)bss. */
-@@ -637,10 +581,7 @@ int rtw_is_desired_network(struct adapter *adapter, struct wlan_network *pnetwor
- 	struct mlme_priv *pmlmepriv = &adapter->mlmepriv;
- 	u32 desired_encmode;
- 	u32 privacy;
--
--	/* u8 wps_ie[512]; */
- 	uint wps_ielen;
--
- 	int bselected = true;
- 
- 	desired_encmode = psecuritypriv->ndisencryptstatus;
-@@ -1060,9 +1001,8 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
- 			memset((u8 *)&psta->dot11rxpn, 0, sizeof(union pn48));
- 		}
- 
--		/* 	Commented by Albert 2012/07/21 */
--		/* 	When doing the WPS, the wps_ie_len won't equal to 0 */
--		/* 	And the Wi-Fi driver shouldn't allow the data packet to be transmitted. */
-+		/* When doing the WPS, the wps_ie_len won't equal to 0 */
-+		/* And the Wi-Fi driver shouldn't allow the data packet to be transmitted. */
- 		if (padapter->securitypriv.wps_ie_len != 0) {
- 			psta->ieee8021x_blocked = true;
- 			padapter->securitypriv.wps_ie_len = 0;
-@@ -1072,7 +1012,6 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
- 		/* if A-MPDU Rx is enabled, resetting  rx_ordering_ctrl wstart_b(indicate_seq) to default value = 0xffff */
- 		/* todo: check if AP can send A-MPDU packets */
- 		for (i = 0; i < 16 ; i++) {
--			/* preorder_ctrl = &precvpriv->recvreorder_ctrl[i]; */
- 			preorder_ctrl = &psta->recvreorder_ctrl[i];
- 			preorder_ctrl->enable = false;
- 			preorder_ctrl->indicate_seq = 0xffff;
-@@ -1083,7 +1022,6 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
- 		bmc_sta = rtw_get_bcmc_stainfo(padapter);
- 		if (bmc_sta) {
- 			for (i = 0; i < 16 ; i++) {
--				/* preorder_ctrl = &precvpriv->recvreorder_ctrl[i]; */
- 				preorder_ctrl = &bmc_sta->recvreorder_ctrl[i];
- 				preorder_ctrl->enable = false;
- 				preorder_ctrl->indicate_seq = 0xffff;
-@@ -1247,8 +1185,6 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
- 		rtw_reset_securitypriv(adapter);
- 		_set_timer(&pmlmepriv->assoc_timer, 1);
- 
--		/* rtw_free_assoc_resources(adapter, 1); */
--
- 		if ((check_fwstate(pmlmepriv, _FW_UNDER_LINKING)) == true)
- 			_clr_fwstate_(pmlmepriv, _FW_UNDER_LINKING);
- 
-@@ -1270,7 +1206,6 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
- 		#endif
- 
- 			_set_timer(&pmlmepriv->assoc_timer, 1);
--			/* rtw_free_assoc_resources(adapter, 1); */
- 			_clr_fwstate_(pmlmepriv, _FW_UNDER_LINKING);
- 
- 		#ifdef REJOIN
-@@ -1365,7 +1300,6 @@ void rtw_stassoc_event_callback(struct adapter *adapter, u8 *pbuf)
- 	/* to do : init sta_info variable */
- 	psta->qos_option = 0;
- 	psta->mac_id = (uint)pstassoc->cam_id;
--	/* psta->aid = (uint)pstassoc->cam_id; */
- 
- 	/* for ad-hoc mode */
- 	rtw_hal_set_odm_var(adapter, HAL_ODM_STA_INFO, psta, true);
-@@ -1480,10 +1414,8 @@ void rtw_stadel_event_callback(struct adapter *adapter, u8 *pbuf)
- 
- 		if (adapter->stapriv.asoc_sta_count == 1) {/* a sta + bc/mc_stainfo (not Ibss_stainfo) */
- 			u8 ret = _SUCCESS;
--			/* rtw_indicate_disconnect(adapter);removed@20091105 */
- 			spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
- 			/* free old ibss network */
--			/* pwlan = rtw_find_network(&pmlmepriv->scanned_queue, pstadel->macaddr); */
- 			pwlan = rtw_find_network(&pmlmepriv->scanned_queue, tgt_network->network.mac_address);
- 			if (pwlan) {
- 				pwlan->fixed = false;
-@@ -2102,14 +2034,6 @@ signed int rtw_restruct_sec_ie(struct adapter *adapter, u8 *in_ie, u8 *out_ie, u
- 	} else if ((authmode == WLAN_EID_VENDOR_SPECIFIC) || (authmode == WLAN_EID_RSN)) {
- 		/* copy RSN or SSN */
- 		memcpy(&out_ie[ielength], &psecuritypriv->supplicant_ie[0], psecuritypriv->supplicant_ie[1]+2);
--		/* debug for CONFIG_IEEE80211W
--		{
--			int jj;
--			printk("supplicant_ie_length =%d &&&&&&&&&&&&&&&&&&&\n", psecuritypriv->supplicant_ie[1]+2);
--			for (jj = 0; jj < psecuritypriv->supplicant_ie[1]+2; jj++)
--				printk(" %02x ", psecuritypriv->supplicant_ie[jj]);
--			printk("\n");
--		}*/
- 		ielength += psecuritypriv->supplicant_ie[1]+2;
- 		rtw_report_sec_ie(adapter, authmode, psecuritypriv->supplicant_ie);
- 	}
-@@ -2146,7 +2070,6 @@ void rtw_update_registrypriv_dev_network(struct adapter *adapter)
- 	struct wlan_bssid_ex    *pdev_network = &pregistrypriv->dev_network;
- 	struct	security_priv *psecuritypriv = &adapter->securitypriv;
- 	struct	wlan_network	*cur_network = &adapter->mlmepriv.cur_network;
--	/* struct	xmit_priv *pxmitpriv = &adapter->xmitpriv; */
- 
- 	pdev_network->privacy = (psecuritypriv->dot11PrivacyAlgrthm > 0 ? 1 : 0) ; /*  adhoc no 802.1x */
- 
-@@ -2395,7 +2318,6 @@ unsigned int rtw_restructure_ht_ie(struct adapter *padapter, u8 *in_ie, u8 *out_
- 		rtw_hal_get_def_var(padapter, HW_VAR_MAX_RX_AMPDU_FACTOR,
- 				    &max_rx_ampdu_factor);
- 
--	/* rtw_hal_get_def_var(padapter, HW_VAR_MAX_RX_AMPDU_FACTOR, &max_rx_ampdu_factor); */
- 	ht_capie.ampdu_params_info = (max_rx_ampdu_factor&0x03);
- 
- 	if (padapter->securitypriv.dot11PrivacyAlgrthm == _AES_)
-@@ -2425,14 +2347,10 @@ void rtw_update_ht_cap(struct adapter *padapter, u8 *pie, uint ie_len, u8 channe
- {
- 	u8 *p, max_ampdu_sz;
- 	int len;
--	/* struct sta_info *bmc_sta, *psta; */
- 	struct ieee80211_ht_cap *pht_capie;
--	/* struct recv_reorder_ctrl *preorder_ctrl; */
- 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
- 	struct ht_priv 	*phtpriv = &pmlmepriv->htpriv;
--	/* struct recv_priv *precvpriv = &padapter->recvpriv; */
- 	struct registry_priv *pregistrypriv = &padapter->registrypriv;
--	/* struct wlan_network *pcur_network = &(pmlmepriv->cur_network);; */
- 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
- 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
- 	u8 cbw40_enable = 0;
 -- 
 2.53.0
 
