@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E94935C1BC;
-	Sat, 17 Oct 2026 16:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F2738E8BB;
+	Sat, 17 Oct 2026 16:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253831; cv=none; b=V66/heQVYBw8TWvvzbjZqpfjQ0i9zGTEPwscoP9rhLwl46BoOVgNqui1BgWsOrOyrFozuEINox3iV4XCEEASqja0N7MUQa1tRLNoDQajauOuCujEmway0SdJFZSKDvAt7J+yf0nUHNhJRc1XWAD7Ilnlj1Z8Vs6zgBHfw3N0Y2o=
+	t=1792253834; cv=none; b=g6fN25nhakhfy//9DLrK50NvPP+jpudCOhLEZDnUyjib/XK7giPgSXGst7sh3kTQFu0wOCHxN3ubAlhTie0BNpDfTujjPoJZIcvei99eeunYEUY3qj0LbNGiWWf9Hwc4p9RNW9aiMHzAl6bGdbFKvNx8LUSM3qEzupJoYdO1EM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253831; c=relaxed/simple;
-	bh=g4Gn1f63//6A4x64NlGSI4xpZkaZnwWDX5FRBV41Bwk=;
+	s=arc-20240116; t=1792253834; c=relaxed/simple;
+	bh=AjUW8/9N45Vi/GXR2OLoJKr+UJcNxFOeOujSqQL9Xwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8/RWZiq1A/BR+ghNx1LuDowuKgEnCXhX2ElV87cVWLMC1AFNEJjoVpKQ5yjbMyXsXu4WeBxzHcLFIniIi7nrulMqVPMh490ctroQE4an8wfJZWPaPi/CjI5oYmJCKcNZaL2xAeu9xdsXJ8vMgdn9VhvX986kRqm0BW4qasWe3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6jIVhfg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrKs1ouTF+DE1mNXycre7vP0pV0ES/OBSG9nsib6s/A6zscWsLa1gh9h4OHDNid5EwIXLEUVf06ZQfPLX1YXzvhom34dqfSmjTkuECrDKbA2lFMbkG/2YWoC2hF+iK/zX/ythiM3zboyJQv6oXq1wEIBWpsvunDAwc7zChNC0aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9bFNglx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6jIVhfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795AC1F000C4;
-	Sat, 17 Oct 2026 16:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9bFNglx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3CD1F000C4;
+	Sat, 17 Oct 2026 16:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253830;
-	bh=QaOvW5YIkKb9kPrKeGxyaoiBjeKBcWHMy/Svj8bAoAU=;
+	s=korg; t=1792253833;
+	bh=+AVbdjsOK68IbrdGGnd2VM0JoqyX5iYrfU2/hrNUA04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6jIVhfg3cKIthqt4qe2gGI3Z89oE3VYGkpGJ2KblZ9wTRrY9Z7VcRCH8bYf2zyYk
-	 Oy6Tpm7bmUoy4M3oUQ5tWYPYHSgDVMEu6LcrJFwCwEZEfJr7aOjY6Evz0bIp7lTku0
-	 CiFmmk3ujWQ1AiqZRfKPKHq9hWD5fyYiGlJ3fLmU=
+	b=j9bFNglxjl3nkifNK0islSNelGUBRcZb49YPyXwQt6yaDER+03CJ1S9skaAX5Eej5
+	 CZWcVTLcl3BThYYBmiBAZfYcjyLTuKK5cXm2Up36tyacf8poD9Q2k3Lopw1KUButqG
+	 w1XD3tNRwNfBue+SPHKvsZBZaGTdxrEXMa4WAYYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peilin Ye <yepeilin@google.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/869] bpf: Factor out atomic_ptr_type_ok()
-Date: Sat, 17 Oct 2026 17:50:48 +0200
-Message-ID: <20261017160042.362738909@linuxfoundation.org>
+Subject: [PATCH 6.12 208/869] bpf: Factor out check_atomic_rmw()
+Date: Sat, 17 Oct 2026 17:50:49 +0200
+Message-ID: <20261017160042.388827443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,63 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Peilin Ye <yepeilin@google.com>
 
-[ Upstream commit 66faaea94e1a8e8197d98de6e9d07591970837d6 ]
+[ Upstream commit 2626ffe9f33f9e27aa0a60b2761c2d0760dbcca4 ]
 
-Factor out atomic_ptr_type_ok() as a helper function to be used later.
+Currently, check_atomic() only handles atomic read-modify-write (RMW)
+instructions.  Since we are planning to introduce other types of atomic
+instructions (i.e., atomic load/store), extract the existing RMW
+handling logic into its own function named check_atomic_rmw().
+
+Remove the @insn_idx parameter as it is not really necessary.  Use
+'env->insn_idx' instead, as in other places in verifier.c.
 
 Signed-off-by: Peilin Ye <yepeilin@google.com>
-Link: https://lore.kernel.org/r/e5ef8b3116f3fffce78117a14060ddce05eba52a.1740978603.git.yepeilin@google.com
+Link: https://lore.kernel.org/r/6323ac8e73a10a1c8ee547c77ed68cf8eb6b90e1.1740978603.git.yepeilin@google.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: 179ee84a8911 ("bpf: Fix incorrect pruning due to atomic fetch precision tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ kernel/bpf/verifier.c | 53 +++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 24 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4978c1d68bd98..1f5c8b5b74ffb 100644
+index 1f5c8b5b74ffb..fdeb3948467d1 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -5986,6 +5986,26 @@ static bool is_arena_reg(struct bpf_verifier_env *env, int regno)
- 	return reg->type == PTR_TO_ARENA;
+@@ -7403,28 +7403,12 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
+ static int save_aux_ptr_type(struct bpf_verifier_env *env, enum bpf_reg_type type,
+ 			     bool allow_trust_mismatch);
+ 
+-static int check_atomic(struct bpf_verifier_env *env, int insn_idx, struct bpf_insn *insn)
++static int check_atomic_rmw(struct bpf_verifier_env *env,
++			    struct bpf_insn *insn)
+ {
+ 	int load_reg;
+ 	int err;
+ 
+-	switch (insn->imm) {
+-	case BPF_ADD:
+-	case BPF_ADD | BPF_FETCH:
+-	case BPF_AND:
+-	case BPF_AND | BPF_FETCH:
+-	case BPF_OR:
+-	case BPF_OR | BPF_FETCH:
+-	case BPF_XOR:
+-	case BPF_XOR | BPF_FETCH:
+-	case BPF_XCHG:
+-	case BPF_CMPXCHG:
+-		break;
+-	default:
+-		verbose(env, "BPF_ATOMIC uses invalid atomic opcode %02x\n", insn->imm);
+-		return -EINVAL;
+-	}
+-
+ 	if (BPF_SIZE(insn->code) != BPF_W && BPF_SIZE(insn->code) != BPF_DW) {
+ 		verbose(env, "invalid atomic operand size\n");
+ 		return -EINVAL;
+@@ -7486,12 +7470,12 @@ static int check_atomic(struct bpf_verifier_env *env, int insn_idx, struct bpf_i
+ 	/* Check whether we can read the memory, with second call for fetch
+ 	 * case to simulate the register fill.
+ 	 */
+-	err = check_mem_access(env, insn_idx, insn->dst_reg, insn->off,
++	err = check_mem_access(env, env->insn_idx, insn->dst_reg, insn->off,
+ 			       BPF_SIZE(insn->code), BPF_READ, -1, true, false);
+ 	if (!err && load_reg >= 0)
+-		err = check_mem_access(env, insn_idx, insn->dst_reg, insn->off,
+-				       BPF_SIZE(insn->code), BPF_READ, load_reg,
+-				       true, false);
++		err = check_mem_access(env, env->insn_idx, insn->dst_reg,
++				       insn->off, BPF_SIZE(insn->code),
++				       BPF_READ, load_reg, true, false);
+ 	if (err)
+ 		return err;
+ 
+@@ -7501,13 +7485,34 @@ static int check_atomic(struct bpf_verifier_env *env, int insn_idx, struct bpf_i
+ 			return err;
+ 	}
+ 	/* Check whether we can write into the same memory. */
+-	err = check_mem_access(env, insn_idx, insn->dst_reg, insn->off,
++	err = check_mem_access(env, env->insn_idx, insn->dst_reg, insn->off,
+ 			       BPF_SIZE(insn->code), BPF_WRITE, -1, true, false);
+ 	if (err)
+ 		return err;
+ 	return 0;
  }
  
-+/* Return false if @regno contains a pointer whose type isn't supported for
-+ * atomic instruction @insn.
-+ */
-+static bool atomic_ptr_type_ok(struct bpf_verifier_env *env, int regno,
-+			       struct bpf_insn *insn)
++static int check_atomic(struct bpf_verifier_env *env, struct bpf_insn *insn)
 +{
-+	if (is_ctx_reg(env, regno))
-+		return false;
-+	if (is_pkt_reg(env, regno))
-+		return false;
-+	if (is_flow_key_reg(env, regno))
-+		return false;
-+	if (is_sk_reg(env, regno))
-+		return false;
-+	if (is_arena_reg(env, regno))
-+		return bpf_jit_supports_insn(insn, true);
-+
-+	return true;
++	switch (insn->imm) {
++	case BPF_ADD:
++	case BPF_ADD | BPF_FETCH:
++	case BPF_AND:
++	case BPF_AND | BPF_FETCH:
++	case BPF_OR:
++	case BPF_OR | BPF_FETCH:
++	case BPF_XOR:
++	case BPF_XOR | BPF_FETCH:
++	case BPF_XCHG:
++	case BPF_CMPXCHG:
++		return check_atomic_rmw(env, insn);
++	default:
++		verbose(env, "BPF_ATOMIC uses invalid atomic opcode %02x\n",
++			insn->imm);
++		return -EINVAL;
++	}
 +}
 +
- static u32 *reg2btf_ids[__BPF_REG_TYPE_MAX] = {
- #ifdef CONFIG_NET
- 	[PTR_TO_SOCKET] = &btf_sock_ids[BTF_SOCK_TYPE_SOCK],
-@@ -7439,11 +7459,7 @@ static int check_atomic(struct bpf_verifier_env *env, int insn_idx, struct bpf_i
- 		return -EACCES;
- 	}
+ /* When register 'regno' is used to read the stack (either directly or through
+  * a helper function) make sure that it's within stack boundary and, depending
+  * on the access type and privileges, that all elements of the stack are
+@@ -18916,7 +18921,7 @@ static int do_check(struct bpf_verifier_env *env)
+ 			enum bpf_reg_type dst_reg_type;
  
--	if (is_ctx_reg(env, insn->dst_reg) ||
--	    is_pkt_reg(env, insn->dst_reg) ||
--	    is_flow_key_reg(env, insn->dst_reg) ||
--	    is_sk_reg(env, insn->dst_reg) ||
--	    (is_arena_reg(env, insn->dst_reg) && !bpf_jit_supports_insn(insn, true))) {
-+	if (!atomic_ptr_type_ok(env, insn->dst_reg, insn)) {
- 		verbose(env, "BPF_ATOMIC stores into R%d %s is not allowed\n",
- 			insn->dst_reg,
- 			reg_type_str(env, reg_state(env, insn->dst_reg)->type));
+ 			if (BPF_MODE(insn->code) == BPF_ATOMIC) {
+-				err = check_atomic(env, env->insn_idx, insn);
++				err = check_atomic(env, insn);
+ 				if (err)
+ 					return err;
+ 				env->insn_idx++;
 -- 
 2.53.0
 
