@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C449F3A1D01;
-	Sat, 17 Oct 2026 17:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7045E47F762;
+	Sat, 17 Oct 2026 17:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258447; cv=none; b=IbTvuam/ECDoUv5aVtJdQyswp/tmj7+rXFcgEMcqXgExkTK9zexuc4ANDSYhGYrweu5RKGfkhb/Vggff25opChnR6ZUZfvWuikVr9yZ2PuVdiDZrHjzTQtMHF8d9t2Ybs95ZC4D6JaYa+JU7kxiqYX+xXf2iLk86fNBVhJ/5814=
+	t=1792258449; cv=none; b=R+2P1utP7qWZis1Dv79qvS05UtCEOFkiaqDFdBqAHPujqe//e/7kXxEBkBCDc9/ybsJCPcWu4xlzzA/3oAGhZ0EeiCVlr8kcI7u0mw1ESGtlJRrg6LMH3v/Q1oKsHymmgmvanqtDl4iiC9oWkrHDNNncTh1R7kbjR3vnWsFa39g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258447; c=relaxed/simple;
-	bh=XvjJ8V1Ex9xRgWH8gXPOBDFalES8lWpVX4j2xwecHt0=;
+	s=arc-20240116; t=1792258449; c=relaxed/simple;
+	bh=wHz6jHc3HUax2xlnVh+Cx38z2y2+Zsx+0+tCKP8p3gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBzYaIWzVEu8BcCpDOTVaER6L10mXu965S3HC3wH2TdgxVLvbEbleOpaBXvFMTLXIauGHQbvpiw7EhJ1/MvwkAq/CDiycfBTV9SApxh6gPYWnKIT3m9nUzjAYTgGYMSa2Jw0RhHD2mcXc7mkZkevciSlmy9nu00f6MaNPTG7WFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVtYACyh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZIKCAQCZVuVY1t/ui2QCCUb8/F7RnInERjmqV4RqsXliofPHRDmxlPb2ayiF1xN7w8HRvVh7Tf1pnAt/ayV8CNzpitL+8nMMGP3f68CyM0eJeFsMRo/ecBz9cmmngsMfcgk/G9XGFD15+5lTl+1aMvPKR2gidfx7RJDy++bXrHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt8S4np3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVtYACyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FEF1F000C4;
-	Sat, 17 Oct 2026 17:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt8S4np3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67E21F000C4;
+	Sat, 17 Oct 2026 17:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258445;
-	bh=zPLK2jD5ltwnGn8xpCFhD57RER/v0+X3fh2vdbMTIU0=;
+	s=korg; t=1792258448;
+	bh=GLK6yVktluFY2ND4EdrTyunscm1BGJFZWgJLwlS41Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LVtYACyh0rxf7UDdOiORyLh0JcEhnRXkKfr7qXThiIFIAMf3+SLvI4jPJdNM/o5Vk
-	 vFoC6j3PbjG0c0cbcazORCgft+NI+gMoKNEFwX5WJvEEgq+2OMNtzBStUWkwE+RsdB
-	 AvSNG7qLrCSXkx20R9nxT0NC6RtZvI0eZE6fo4mA=
+	b=mt8S4np3DIIGa22l2AvAT2VC1xYFWlD0ERcdvIc0UKds+mGZiXwnZIr4esi7/QTvb
+	 ZTryw4upwte86z3LK3WNv+pFLqM4jYQBSGAjUEqJtjQlO6yiZt/hjkDIzeT00vTjsI
+	 8Afb/oVW5g+ySb8snb1qoEyUVU+0ED4EqtYlztbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0847/1674] wifi: rtw88: debugfs: support multiple adapters debugging
-Date: Sat, 17 Oct 2026 17:51:59 +0200
-Message-ID: <20261017160452.865892075@linuxfoundation.org>
+Subject: [PATCH 6.6 0848/1674] wifi: rtw88: Use devm_kmemdup() in rtw_set_supported_band()
+Date: Sat, 17 Oct 2026 17:52:00 +0200
+Message-ID: <20261017160452.890464249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,465 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 8db6c1ca64664ef9b071e6eeb646023ac5b240a8 ]
+[ Upstream commit 2ba12401cc1f2d970fa2e7d5b15abde3f5abd40d ]
 
-Originally in order to read partial registers from large area, we write
-a range value stored into a static variable and read registers according
-to the static variable.
+Simplify the code by using device managed memory allocations.
 
-However, if we install more than one adapters supported by this driver,
-the static variables will be overwritten by latter adapters. To resolve
-the problem, move the static variables to struct rtw_dev for each adapter.
+This also fixes a memory leak in rtw_register_hw(). The supported bands
+were not freed in the error path.
 
-With changes, smatch spends too much time to parse rtw_debugfs_init():
-    debug.c:1289 rtw_debugfs_init() parse error: turning off implications
-    after 60 seconds
-Move stuffs of adding debugfs entries to three rtw_debugfs_add_xxx()
-functions.
+Copied from commit 145df52a8671 ("wifi: rtw89: Convert
+rtw89_core_set_supported_band to use devm_*").
 
-Reported-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/cd6a2acf3c2c36d938b40140b52a779516f446a9.camel@realtek.com/T/#m27662022c70d9f893ba96f6c6a8dd8fce2434dfe
-Tested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240718064155.38955-1-pkshih@realtek.com
-Stable-dep-of: 2ba12401cc1f ("wifi: rtw88: Use devm_kmemdup() in rtw_set_supported_band()")
+Link: https://patch.msgid.link/1aa7fdef-2d5b-4a31-a4e9-fac8257ed30d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 303 ++++++++++++---------
- drivers/net/wireless/realtek/rtw88/debug.h |   2 +
- drivers/net/wireless/realtek/rtw88/main.c  |   1 +
- drivers/net/wireless/realtek/rtw88/main.h  |   3 +-
- 4 files changed, 180 insertions(+), 129 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index 35bc37a3c469d..83376a6c9abb1 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -43,6 +43,62 @@ struct rtw_debugfs_priv {
- 	};
- };
- 
-+struct rtw_debugfs {
-+	struct rtw_debugfs_priv mac_0;
-+	struct rtw_debugfs_priv mac_1;
-+	struct rtw_debugfs_priv mac_2;
-+	struct rtw_debugfs_priv mac_3;
-+	struct rtw_debugfs_priv mac_4;
-+	struct rtw_debugfs_priv mac_5;
-+	struct rtw_debugfs_priv mac_6;
-+	struct rtw_debugfs_priv mac_7;
-+	struct rtw_debugfs_priv mac_10;
-+	struct rtw_debugfs_priv mac_11;
-+	struct rtw_debugfs_priv mac_12;
-+	struct rtw_debugfs_priv mac_13;
-+	struct rtw_debugfs_priv mac_14;
-+	struct rtw_debugfs_priv mac_15;
-+	struct rtw_debugfs_priv mac_16;
-+	struct rtw_debugfs_priv mac_17;
-+	struct rtw_debugfs_priv bb_8;
-+	struct rtw_debugfs_priv bb_9;
-+	struct rtw_debugfs_priv bb_a;
-+	struct rtw_debugfs_priv bb_b;
-+	struct rtw_debugfs_priv bb_c;
-+	struct rtw_debugfs_priv bb_d;
-+	struct rtw_debugfs_priv bb_e;
-+	struct rtw_debugfs_priv bb_f;
-+	struct rtw_debugfs_priv bb_18;
-+	struct rtw_debugfs_priv bb_19;
-+	struct rtw_debugfs_priv bb_1a;
-+	struct rtw_debugfs_priv bb_1b;
-+	struct rtw_debugfs_priv bb_1c;
-+	struct rtw_debugfs_priv bb_1d;
-+	struct rtw_debugfs_priv bb_1e;
-+	struct rtw_debugfs_priv bb_1f;
-+	struct rtw_debugfs_priv bb_2c;
-+	struct rtw_debugfs_priv bb_2d;
-+	struct rtw_debugfs_priv bb_40;
-+	struct rtw_debugfs_priv bb_41;
-+	struct rtw_debugfs_priv rf_dump;
-+	struct rtw_debugfs_priv tx_pwr_tbl;
-+	struct rtw_debugfs_priv write_reg;
-+	struct rtw_debugfs_priv h2c;
-+	struct rtw_debugfs_priv rf_write;
-+	struct rtw_debugfs_priv rf_read;
-+	struct rtw_debugfs_priv read_reg;
-+	struct rtw_debugfs_priv fix_rate;
-+	struct rtw_debugfs_priv dump_cam;
-+	struct rtw_debugfs_priv rsvd_page;
-+	struct rtw_debugfs_priv phy_info;
-+	struct rtw_debugfs_priv coex_enable;
-+	struct rtw_debugfs_priv coex_info;
-+	struct rtw_debugfs_priv edcca_enable;
-+	struct rtw_debugfs_priv fw_crash;
-+	struct rtw_debugfs_priv force_lowest_basic_rate;
-+	struct rtw_debugfs_priv dm_cap;
-+};
-+
- static const char * const rtw_dm_cap_strs[] = {
- 	[RTW_DM_CAP_NA] = "NA",
- 	[RTW_DM_CAP_TXGAPK] = "TXGAPK",
-@@ -541,7 +597,7 @@ static int rtw_debug_get_bb_page(struct seq_file *m, void *v)
- 	return 0;
- }
- 
--static int rtw_debug_get_rf_dump(struct seq_file *m, void *v)
-+static int rtw_debugfs_get_rf_dump(struct seq_file *m, void *v)
- {
- 	struct rtw_debugfs_priv *debugfs_priv = m->private;
- 	struct rtw_dev *rtwdev = debugfs_priv->rtwdev;
-@@ -1102,139 +1158,102 @@ static int rtw_debugfs_get_dm_cap(struct seq_file *m, void *v)
- 	return 0;
- }
- 
--#define rtw_debug_impl_mac(page, addr)				\
--static struct rtw_debugfs_priv rtw_debug_priv_mac_ ##page = {	\
-+#define rtw_debug_priv_mac(addr)				\
-+{								\
- 	.cb_read = rtw_debug_get_mac_page,			\
- 	.cb_data = addr,					\
- }
- 
--rtw_debug_impl_mac(0, 0x0000);
--rtw_debug_impl_mac(1, 0x0100);
--rtw_debug_impl_mac(2, 0x0200);
--rtw_debug_impl_mac(3, 0x0300);
--rtw_debug_impl_mac(4, 0x0400);
--rtw_debug_impl_mac(5, 0x0500);
--rtw_debug_impl_mac(6, 0x0600);
--rtw_debug_impl_mac(7, 0x0700);
--rtw_debug_impl_mac(10, 0x1000);
--rtw_debug_impl_mac(11, 0x1100);
--rtw_debug_impl_mac(12, 0x1200);
--rtw_debug_impl_mac(13, 0x1300);
--rtw_debug_impl_mac(14, 0x1400);
--rtw_debug_impl_mac(15, 0x1500);
--rtw_debug_impl_mac(16, 0x1600);
--rtw_debug_impl_mac(17, 0x1700);
--
--#define rtw_debug_impl_bb(page, addr)			\
--static struct rtw_debugfs_priv rtw_debug_priv_bb_ ##page = {	\
-+#define rtw_debug_priv_bb(addr)					\
-+{								\
- 	.cb_read = rtw_debug_get_bb_page,			\
- 	.cb_data = addr,					\
- }
- 
--rtw_debug_impl_bb(8, 0x0800);
--rtw_debug_impl_bb(9, 0x0900);
--rtw_debug_impl_bb(a, 0x0a00);
--rtw_debug_impl_bb(b, 0x0b00);
--rtw_debug_impl_bb(c, 0x0c00);
--rtw_debug_impl_bb(d, 0x0d00);
--rtw_debug_impl_bb(e, 0x0e00);
--rtw_debug_impl_bb(f, 0x0f00);
--rtw_debug_impl_bb(18, 0x1800);
--rtw_debug_impl_bb(19, 0x1900);
--rtw_debug_impl_bb(1a, 0x1a00);
--rtw_debug_impl_bb(1b, 0x1b00);
--rtw_debug_impl_bb(1c, 0x1c00);
--rtw_debug_impl_bb(1d, 0x1d00);
--rtw_debug_impl_bb(1e, 0x1e00);
--rtw_debug_impl_bb(1f, 0x1f00);
--rtw_debug_impl_bb(2c, 0x2c00);
--rtw_debug_impl_bb(2d, 0x2d00);
--rtw_debug_impl_bb(40, 0x4000);
--rtw_debug_impl_bb(41, 0x4100);
--
--static struct rtw_debugfs_priv rtw_debug_priv_rf_dump = {
--	.cb_read = rtw_debug_get_rf_dump,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_tx_pwr_tbl = {
--	.cb_read = rtw_debugfs_get_tx_pwr_tbl,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_write_reg = {
--	.cb_write = rtw_debugfs_set_write_reg,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_h2c = {
--	.cb_write = rtw_debugfs_set_h2c,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_rf_write = {
--	.cb_write = rtw_debugfs_set_rf_write,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_rf_read = {
--	.cb_write = rtw_debugfs_set_rf_read,
--	.cb_read = rtw_debugfs_get_rf_read,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_read_reg = {
--	.cb_write = rtw_debugfs_set_read_reg,
--	.cb_read = rtw_debugfs_get_read_reg,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_fix_rate = {
--	.cb_write = rtw_debugfs_set_fix_rate,
--	.cb_read = rtw_debugfs_get_fix_rate,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_dump_cam = {
--	.cb_write = rtw_debugfs_set_single_input,
--	.cb_read = rtw_debugfs_get_dump_cam,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_rsvd_page = {
--	.cb_write = rtw_debugfs_set_rsvd_page,
--	.cb_read = rtw_debugfs_get_rsvd_page,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_phy_info = {
--	.cb_read = rtw_debugfs_get_phy_info,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_coex_enable = {
--	.cb_write = rtw_debugfs_set_coex_enable,
--	.cb_read = rtw_debugfs_get_coex_enable,
--};
--
--static struct rtw_debugfs_priv rtw_debug_priv_coex_info = {
--	.cb_read = rtw_debugfs_get_coex_info,
--};
-+#define rtw_debug_priv_get(name)				\
-+{								\
-+	.cb_read = rtw_debugfs_get_ ##name,			\
-+}
- 
--static struct rtw_debugfs_priv rtw_debug_priv_edcca_enable = {
--	.cb_write = rtw_debugfs_set_edcca_enable,
--	.cb_read = rtw_debugfs_get_edcca_enable,
--};
-+#define rtw_debug_priv_set(name)				\
-+{								\
-+	.cb_write = rtw_debugfs_set_ ##name,			\
-+}
- 
--static struct rtw_debugfs_priv rtw_debug_priv_fw_crash = {
--	.cb_write = rtw_debugfs_set_fw_crash,
--	.cb_read = rtw_debugfs_get_fw_crash,
--};
-+#define rtw_debug_priv_set_and_get(name)			\
-+{								\
-+	.cb_write = rtw_debugfs_set_ ##name,			\
-+	.cb_read = rtw_debugfs_get_ ##name,			\
-+}
- 
--static struct rtw_debugfs_priv rtw_debug_priv_force_lowest_basic_rate = {
--	.cb_write = rtw_debugfs_set_force_lowest_basic_rate,
--	.cb_read = rtw_debugfs_get_force_lowest_basic_rate,
--};
-+#define rtw_debug_priv_set_single_and_get(name)			\
-+{								\
-+	.cb_write = rtw_debugfs_set_single_input,		\
-+	.cb_read = rtw_debugfs_get_ ##name,			\
-+}
- 
--static struct rtw_debugfs_priv rtw_debug_priv_dm_cap = {
--	.cb_write = rtw_debugfs_set_dm_cap,
--	.cb_read = rtw_debugfs_get_dm_cap,
-+static const struct rtw_debugfs rtw_debugfs_templ = {
-+	.mac_0 = rtw_debug_priv_mac(0x0000),
-+	.mac_1 = rtw_debug_priv_mac(0x0100),
-+	.mac_2 = rtw_debug_priv_mac(0x0200),
-+	.mac_3 = rtw_debug_priv_mac(0x0300),
-+	.mac_4 = rtw_debug_priv_mac(0x0400),
-+	.mac_5 = rtw_debug_priv_mac(0x0500),
-+	.mac_6 = rtw_debug_priv_mac(0x0600),
-+	.mac_7 = rtw_debug_priv_mac(0x0700),
-+	.mac_10 = rtw_debug_priv_mac(0x1000),
-+	.mac_11 = rtw_debug_priv_mac(0x1100),
-+	.mac_12 = rtw_debug_priv_mac(0x1200),
-+	.mac_13 = rtw_debug_priv_mac(0x1300),
-+	.mac_14 = rtw_debug_priv_mac(0x1400),
-+	.mac_15 = rtw_debug_priv_mac(0x1500),
-+	.mac_16 = rtw_debug_priv_mac(0x1600),
-+	.mac_17 = rtw_debug_priv_mac(0x1700),
-+	.bb_8 = rtw_debug_priv_bb(0x0800),
-+	.bb_9 = rtw_debug_priv_bb(0x0900),
-+	.bb_a = rtw_debug_priv_bb(0x0a00),
-+	.bb_b = rtw_debug_priv_bb(0x0b00),
-+	.bb_c = rtw_debug_priv_bb(0x0c00),
-+	.bb_d = rtw_debug_priv_bb(0x0d00),
-+	.bb_e = rtw_debug_priv_bb(0x0e00),
-+	.bb_f = rtw_debug_priv_bb(0x0f00),
-+	.bb_18 = rtw_debug_priv_bb(0x1800),
-+	.bb_19 = rtw_debug_priv_bb(0x1900),
-+	.bb_1a = rtw_debug_priv_bb(0x1a00),
-+	.bb_1b = rtw_debug_priv_bb(0x1b00),
-+	.bb_1c = rtw_debug_priv_bb(0x1c00),
-+	.bb_1d = rtw_debug_priv_bb(0x1d00),
-+	.bb_1e = rtw_debug_priv_bb(0x1e00),
-+	.bb_1f = rtw_debug_priv_bb(0x1f00),
-+	.bb_2c = rtw_debug_priv_bb(0x2c00),
-+	.bb_2d = rtw_debug_priv_bb(0x2d00),
-+	.bb_40 = rtw_debug_priv_bb(0x4000),
-+	.bb_41 = rtw_debug_priv_bb(0x4100),
-+	.rf_dump = rtw_debug_priv_get(rf_dump),
-+	.tx_pwr_tbl = rtw_debug_priv_get(tx_pwr_tbl),
-+	.write_reg = rtw_debug_priv_set(write_reg),
-+	.h2c = rtw_debug_priv_set(h2c),
-+	.rf_write = rtw_debug_priv_set(rf_write),
-+	.rf_read = rtw_debug_priv_set_and_get(rf_read),
-+	.read_reg = rtw_debug_priv_set_and_get(read_reg),
-+	.fix_rate = rtw_debug_priv_set_and_get(fix_rate),
-+	.dump_cam = rtw_debug_priv_set_single_and_get(dump_cam),
-+	.rsvd_page = rtw_debug_priv_set_and_get(rsvd_page),
-+	.phy_info = rtw_debug_priv_get(phy_info),
-+	.coex_enable = rtw_debug_priv_set_and_get(coex_enable),
-+	.coex_info = rtw_debug_priv_get(coex_info),
-+	.edcca_enable = rtw_debug_priv_set_and_get(edcca_enable),
-+	.fw_crash = rtw_debug_priv_set_and_get(fw_crash),
-+	.force_lowest_basic_rate = rtw_debug_priv_set_and_get(force_lowest_basic_rate),
-+	.dm_cap = rtw_debug_priv_set_and_get(dm_cap),
- };
- 
- #define rtw_debugfs_add_core(name, mode, fopname, parent)		\
- 	do {								\
--		rtw_debug_priv_ ##name.rtwdev = rtwdev;			\
-+		struct rtw_debugfs_priv *priv = &rtwdev->debugfs->name;	\
-+		priv->rtwdev = rtwdev;					\
- 		if (IS_ERR(debugfs_create_file(#name, mode,		\
--					 parent, &rtw_debug_priv_ ##name,\
-+					 parent, priv,			\
- 					 &file_ops_ ##fopname)))	\
- 			pr_debug("Unable to initialize debugfs:%s\n",	\
- 			       #name);					\
-@@ -1247,12 +1266,9 @@ static struct rtw_debugfs_priv rtw_debug_priv_dm_cap = {
- #define rtw_debugfs_add_r(name)						\
- 	rtw_debugfs_add_core(name, S_IFREG | 0444, single_r, debugfs_topdir)
- 
--void rtw_debugfs_init(struct rtw_dev *rtwdev)
-+static
-+void rtw_debugfs_add_basic(struct rtw_dev *rtwdev, struct dentry *debugfs_topdir)
- {
--	struct dentry *debugfs_topdir;
--
--	debugfs_topdir = debugfs_create_dir("rtw88",
--					    rtwdev->hw->wiphy->debugfsdir);
- 	rtw_debugfs_add_w(write_reg);
- 	rtw_debugfs_add_rw(read_reg);
- 	rtw_debugfs_add_w(rf_write);
-@@ -1264,6 +1280,17 @@ void rtw_debugfs_init(struct rtw_dev *rtwdev)
- 	rtw_debugfs_add_r(coex_info);
- 	rtw_debugfs_add_rw(coex_enable);
- 	rtw_debugfs_add_w(h2c);
-+	rtw_debugfs_add_r(rf_dump);
-+	rtw_debugfs_add_r(tx_pwr_tbl);
-+	rtw_debugfs_add_rw(edcca_enable);
-+	rtw_debugfs_add_rw(fw_crash);
-+	rtw_debugfs_add_rw(force_lowest_basic_rate);
-+	rtw_debugfs_add_rw(dm_cap);
-+}
-+
-+static
-+void rtw_debugfs_add_sec0(struct rtw_dev *rtwdev, struct dentry *debugfs_topdir)
-+{
- 	rtw_debugfs_add_r(mac_0);
- 	rtw_debugfs_add_r(mac_1);
- 	rtw_debugfs_add_r(mac_2);
-@@ -1280,6 +1307,11 @@ void rtw_debugfs_init(struct rtw_dev *rtwdev)
- 	rtw_debugfs_add_r(bb_d);
- 	rtw_debugfs_add_r(bb_e);
- 	rtw_debugfs_add_r(bb_f);
-+}
-+
-+static
-+void rtw_debugfs_add_sec1(struct rtw_dev *rtwdev, struct dentry *debugfs_topdir)
-+{
- 	rtw_debugfs_add_r(mac_10);
- 	rtw_debugfs_add_r(mac_11);
- 	rtw_debugfs_add_r(mac_12);
-@@ -1302,14 +1334,29 @@ void rtw_debugfs_init(struct rtw_dev *rtwdev)
- 		rtw_debugfs_add_r(bb_40);
- 		rtw_debugfs_add_r(bb_41);
- 	}
--	rtw_debugfs_add_r(rf_dump);
--	rtw_debugfs_add_r(tx_pwr_tbl);
--	rtw_debugfs_add_rw(edcca_enable);
--	rtw_debugfs_add_rw(fw_crash);
--	rtw_debugfs_add_rw(force_lowest_basic_rate);
--	rtw_debugfs_add_rw(dm_cap);
- }
- 
-+void rtw_debugfs_init(struct rtw_dev *rtwdev)
-+{
-+	struct dentry *debugfs_topdir;
-+
-+	rtwdev->debugfs = kmemdup(&rtw_debugfs_templ, sizeof(rtw_debugfs_templ),
-+				  GFP_KERNEL);
-+	if (!rtwdev->debugfs)
-+		return;
-+
-+	debugfs_topdir = debugfs_create_dir("rtw88",
-+					    rtwdev->hw->wiphy->debugfsdir);
-+
-+	rtw_debugfs_add_basic(rtwdev, debugfs_topdir);
-+	rtw_debugfs_add_sec0(rtwdev, debugfs_topdir);
-+	rtw_debugfs_add_sec1(rtwdev, debugfs_topdir);
-+}
-+
-+void rtw_debugfs_deinit(struct rtw_dev *rtwdev)
-+{
-+	kfree(rtwdev->debugfs);
-+}
- #endif /* CONFIG_RTW88_DEBUGFS */
- 
- #ifdef CONFIG_RTW88_DEBUG
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.h b/drivers/net/wireless/realtek/rtw88/debug.h
-index a9149c6c2b48c..92d589ba002c1 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.h
-+++ b/drivers/net/wireless/realtek/rtw88/debug.h
-@@ -32,11 +32,13 @@ enum rtw_debug_mask {
- #ifdef CONFIG_RTW88_DEBUGFS
- 
- void rtw_debugfs_init(struct rtw_dev *rtwdev);
-+void rtw_debugfs_deinit(struct rtw_dev *rtwdev);
- void rtw_debugfs_get_simple_phy_info(struct seq_file *m);
- 
- #else
- 
- static inline void rtw_debugfs_init(struct rtw_dev *rtwdev) {}
-+static inline void rtw_debugfs_deinit(struct rtw_dev *rtwdev) {}
- 
- #endif /* CONFIG_RTW88_DEBUGFS */
- 
 diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 9a4c23163fba4..126c449c911d5 100644
+index 126c449c911d5..2afb273ff7a60 100644
 --- a/drivers/net/wireless/realtek/rtw88/main.c
 +++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -2283,6 +2283,7 @@ void rtw_unregister_hw(struct rtw_dev *rtwdev, struct ieee80211_hw *hw)
+@@ -1633,11 +1633,13 @@ static u16 rtw_get_max_scan_ie_len(struct rtw_dev *rtwdev)
+ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 				   const struct rtw_chip_info *chip)
+ {
+-	struct rtw_dev *rtwdev = hw->priv;
+ 	struct ieee80211_supported_band *sband;
++	struct rtw_dev *rtwdev = hw->priv;
++	struct device *dev = rtwdev->dev;
  
+ 	if (chip->band & RTW_BAND_2G) {
+-		sband = kmemdup(&rtw_band_2ghz, sizeof(*sband), GFP_KERNEL);
++		sband = devm_kmemdup(dev, &rtw_band_2ghz, sizeof(*sband),
++				     GFP_KERNEL);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
+@@ -1646,7 +1648,8 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 	}
+ 
+ 	if (chip->band & RTW_BAND_5G) {
+-		sband = kmemdup(&rtw_band_5ghz, sizeof(*sband), GFP_KERNEL);
++		sband = devm_kmemdup(dev, &rtw_band_5ghz, sizeof(*sband),
++				     GFP_KERNEL);
+ 		if (!sband)
+ 			goto err_out;
+ 		if (chip->ht_supported)
+@@ -1662,13 +1665,6 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
+ 	rtw_err(rtwdev, "failed to set supported band\n");
+ }
+ 
+-static void rtw_unset_supported_band(struct ieee80211_hw *hw,
+-				     const struct rtw_chip_info *chip)
+-{
+-	kfree(hw->wiphy->bands[NL80211_BAND_2GHZ]);
+-	kfree(hw->wiphy->bands[NL80211_BAND_5GHZ]);
+-}
+-
+ static void rtw_vif_smps_iter(void *data, u8 *mac,
+ 			      struct ieee80211_vif *vif)
+ {
+@@ -2279,10 +2275,7 @@ EXPORT_SYMBOL(rtw_register_hw);
+ 
+ void rtw_unregister_hw(struct rtw_dev *rtwdev, struct ieee80211_hw *hw)
+ {
+-	const struct rtw_chip_info *chip = rtwdev->chip;
+-
  	ieee80211_unregister_hw(hw);
- 	rtw_unset_supported_band(hw, chip);
-+	rtw_debugfs_deinit(rtwdev);
+-	rtw_unset_supported_band(hw, chip);
+ 	rtw_debugfs_deinit(rtwdev);
  }
  EXPORT_SYMBOL(rtw_unregister_hw);
- 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
-index 6e0e1c9c28f70..17d417ce0aa43 100644
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -50,6 +50,7 @@ extern const struct ieee80211_ops rtw_ops;
- #define RTW_MAX_CHANNEL_NUM_5G 49
- 
- struct rtw_dev;
-+struct rtw_debugfs;
- 
- enum rtw_hci_type {
- 	RTW_HCI_TYPE_PCIE,
-@@ -2038,7 +2039,7 @@ struct rtw_dev {
- 	bool beacon_loss;
- 	struct completion lps_leave_check;
- 
--	struct dentry *debugfs;
-+	struct rtw_debugfs *debugfs;
- 
- 	u8 sta_cnt;
- 	u32 rts_threshold;
 -- 
 2.53.0
 
