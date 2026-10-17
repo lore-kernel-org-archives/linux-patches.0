@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135D93B2FCA;
-	Sat, 17 Oct 2026 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E0637C109;
+	Sat, 17 Oct 2026 17:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259478; cv=none; b=oCewE874rUwN98iqYt233co5NyBVOiPudvmhXYxq1HxCS68EnTUgi8tVJYkCckAGnznIGnJz+3clLl7gu/9ftpnemcmKDVddbYBk6qWl6dLAFeh+FEBViPjQAofz6TTqspZF6w6s9HTMuwFZ/43pRor3Lh2+N4fCC4/yiR5Gopo=
+	t=1792259481; cv=none; b=IBAFXubTaZcnWaLfg0Diilt2Y0R0dm8rs62iNoutAM4S5Fa7PenayfpScbWue7uH9xvTUhDRNwmgVazAlFubJYF3+tamVsZCKsAm1z27uK7Qh1zmp4Bawk1Q9M5DD8J7ikwtKW2QP/w5j3if5BZDlnHWxvP1aYvKPP+oRSiGU0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259478; c=relaxed/simple;
-	bh=eZy69FkP00abrBqIvTYU42NiEY7O/U3MO5ZjTEDbHHg=;
+	s=arc-20240116; t=1792259481; c=relaxed/simple;
+	bh=TxA47sqTMD2xc2fHAUapuvnL7Rdz+abHWiCTW2VxiVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3m/VOsD85+6dTs+PKk2+xah6Qyyji42o2oiMn2+krt46zWrK/f9GoOfj+QypymiylEVkBk8vpzJIs4E78gNMvKrNyAN5uQNnLtjrTqSpvoIVnT0ImtqRcAXcp/QAyzWniWu9uB2T3O5+UzzEbXAN4un1IeRRda+PYEVRZsdW7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFSBhe29; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rBSINz5NyaYctxynzdlgpBM1OO6YSRF8mDk217qhRAzyCiMh6PO3Hoq47FKzGFpVL4SYJ2hj7QXU/XT6sDz1CMCN7drwJyRWm5DKHwwr3KZ5yaCIXhL2nt6KIYnBfGawUJOVkX5jsabUIAQrCZJkPYD4tws/NjLRrIKg0MuCe1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWfdNidG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFSBhe29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627021F000C4;
-	Sat, 17 Oct 2026 17:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWfdNidG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCBE1F000C4;
+	Sat, 17 Oct 2026 17:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259477;
-	bh=qHZT8cAGVO7+psJ7aqtqkROc2AuojeHSPYqnCjmvU1g=;
+	s=korg; t=1792259479;
+	bh=Q87pbwjUzy1JNgre7J6FXJgsL9vE0SgL4t5jfE4kprY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFSBhe29NHGkU+1zTyHiPU/5bmpywcfFzpUZ+rgNauVjUgEtiDh1IjItRAiRgEqQA
-	 +Gdi7eWVhjV2BexUTaiAOp8hoMRI9Yv34LLgfbUtkbxTyspaPZH8snFRqph00gxjIv
-	 n+AzE+qqHKyDGzCzDVohvJG8ejrBXrX2P0+GnpwQ=
+	b=gWfdNidGsuQkSibdveU3On/6eXtCWz87u04jQ/bevmdKj7Fkbrw1DIA5pEVcDZ7cC
+	 iG32KnHK40wKNIKlapOaOqaTjozJfjnxIicwtxHT0+65CwbuWKPa8DN17WkEs8i0DE
+	 7FZ3siDntc3ROVMpOdT6J7G+fS2Mzmt4SxeS1eSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Yihang Li <liyihang9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1226/1674] media: atomisp: gc2235: fix UAF and memory leak
-Date: Sat, 17 Oct 2026 17:58:18 +0200
-Message-ID: <20261017160502.609375503@linuxfoundation.org>
+Subject: [PATCH 6.6 1227/1674] scsi: hisi_sas: Add slave_destroy interface for v3 hw
+Date: Sat, 17 Oct 2026 17:58:19 +0200
+Message-ID: <20261017160502.635382901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,100 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 628f763aee0047ff44974388d6f70f75a763026b ]
+[ Upstream commit 67b85a88265df19f049241d8c00571a5408f4eeb ]
 
-gc2235_probe() handles its error paths incorrectly.
+WARNING is triggered when executing link reset of remote PHY and rmmod
+SAS driver simultaneously. Following is the WARNING log:
 
-If media_entity_pads_init() fails, gc2235_remove() is called, which
-tears down the subdev and frees dev, but then still falls through to
-atomisp_register_i2c_module(). This results in use-after-free.
+WARNING: CPU: 61 PID: 21818 at drivers/base/core.c:1347 __device_links_no_driver+0xb4/0xc0
+ Call trace:
+  __device_links_no_driver+0xb4/0xc0
+  device_links_driver_cleanup+0xb0/0xfc
+  __device_release_driver+0x198/0x23c
+  device_release_driver+0x38/0x50
+  bus_remove_device+0x130/0x140
+  device_del+0x184/0x434
+  __scsi_remove_device+0x118/0x150
+  scsi_remove_target+0x1bc/0x240
+  sas_rphy_remove+0x90/0x94
+  sas_rphy_delete+0x24/0x3c
+  sas_destruct_devices+0x64/0xa0 [libsas]
+  sas_revalidate_domain+0xe4/0x150 [libsas]
+  process_one_work+0x1e0/0x46c
+  worker_thread+0x15c/0x464
+  kthread+0x160/0x170
+  ret_from_fork+0x10/0x20
+ ---[ end trace 71e059eb58f85d4a ]---
 
-If atomisp_register_i2c_module() fails, the media entity and control
-handler are left initialized and dev is leaked.
+During SAS phy up, link->status is set to DL_STATE_AVAILABLE in
+device_links_driver_bound, then this setting influences
+__device_links_no_driver() before driver rmmod and caused WARNING.
 
-gc2235_remove() unconditionally calls media_entity_cleanup() and
-v4l2_ctrl_handler_free(), but these are not initialized at every
-error path in gc2235_probe().
+Add the slave_destroy interface to make sure link is removed after flush
+workque.
 
-Replace gc2235_remove() calls in the probe error paths with explicit
-unwind labels that free only the resources initialized at each point
-of failure, in reverse order of initialization.
-
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 16fd4a7c5917 ("scsi: hisi_sas: Add device link between SCSI devices and hisi_hba")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://patch.msgid.link/20260425082056.2749910-1-liyihang9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/atomisp/i2c/atomisp-gc2235.c        | 29 ++++++++++++-------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-index 9fa390fbc5f31..1130d514891f7 100644
---- a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-+++ b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-@@ -813,7 +813,7 @@ static int gc2235_probe(struct i2c_client *client)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index d386672d59e4a..30cad657bb570 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -2977,7 +2977,7 @@ static int slave_configure_v3_hw(struct scsi_device *sdev)
+ 		return 0;
  
- 	ret = gc2235_s_config(&dev->sd, client->irq, gcpdev);
- 	if (ret)
--		goto out_free;
-+		goto err_unregister_subdev;
- 
- 	dev->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
- 	dev->pad.flags = MEDIA_PAD_FL_SOURCE;
-@@ -822,18 +822,16 @@ static int gc2235_probe(struct i2c_client *client)
- 	ret =
- 	    v4l2_ctrl_handler_init(&dev->ctrl_handler,
- 				   ARRAY_SIZE(gc2235_controls));
--	if (ret) {
--		gc2235_remove(client);
--		return ret;
--	}
-+	if (ret)
-+		goto err_csi_cfg;
- 
- 	for (i = 0; i < ARRAY_SIZE(gc2235_controls); i++)
- 		v4l2_ctrl_new_custom(&dev->ctrl_handler, &gc2235_controls[i],
- 				     NULL);
- 
- 	if (dev->ctrl_handler.error) {
--		gc2235_remove(client);
--		return dev->ctrl_handler.error;
-+		ret = dev->ctrl_handler.error;
-+		goto err_ctrl_handler;
- 	}
- 
- 	/* Use same lock for controls as for everything else. */
-@@ -842,14 +840,23 @@ static int gc2235_probe(struct i2c_client *client)
- 
- 	ret = media_entity_pads_init(&dev->sd.entity, 1, &dev->pad);
- 	if (ret)
--		gc2235_remove(client);
-+		goto err_ctrl_handler;
-+
-+	ret = atomisp_register_i2c_module(&dev->sd, gcpdev, RAW_CAMERA);
-+	if (ret)
-+		goto err_media_cleanup;
- 
--	return atomisp_register_i2c_module(&dev->sd, gcpdev, RAW_CAMERA);
-+	return 0;
- 
--out_free:
-+err_media_cleanup:
-+	media_entity_cleanup(&dev->sd.entity);
-+err_ctrl_handler:
-+	v4l2_ctrl_handler_free(&dev->ctrl_handler);
-+err_csi_cfg:
-+	dev->platform_data->csi_cfg(&dev->sd, 0);
-+err_unregister_subdev:
- 	v4l2_device_unregister_subdev(&dev->sd);
- 	kfree(dev);
--
- 	return ret;
+ 	if (!device_link_add(&sdev->sdev_gendev, dev,
+-			     DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)) {
++			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE)) {
+ 		if (pm_runtime_enabled(dev)) {
+ 			dev_info(dev, "add device link failed, disable runtime PM for the host\n");
+ 			pm_runtime_disable(dev);
+@@ -2987,6 +2987,15 @@ static int slave_configure_v3_hw(struct scsi_device *sdev)
+ 	return 0;
  }
  
++static void hisi_sas_sdev_destroy(struct scsi_device *sdev)
++{
++	struct Scsi_Host *shost = dev_to_shost(&sdev->sdev_gendev);
++	struct hisi_hba *hisi_hba = shost_priv(shost);
++	struct device *dev = hisi_hba->dev;
++
++	device_link_remove(&sdev->sdev_gendev, dev);
++}
++
+ static struct attribute *host_v3_hw_attrs[] = {
+ 	&dev_attr_phy_event_threshold.attr,
+ 	&dev_attr_intr_conv_v3_hw.attr,
+@@ -3407,6 +3416,7 @@ static const struct scsi_host_template sht_v3_hw = {
+ 	.eh_device_reset_handler = sas_eh_device_reset_handler,
+ 	.eh_target_reset_handler = sas_eh_target_reset_handler,
+ 	.slave_alloc		= hisi_sas_slave_alloc,
++	.slave_destroy		= hisi_sas_sdev_destroy,
+ 	.target_destroy		= sas_target_destroy,
+ 	.ioctl			= sas_ioctl,
+ #ifdef CONFIG_COMPAT
 -- 
 2.53.0
 
