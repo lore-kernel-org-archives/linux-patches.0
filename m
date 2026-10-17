@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0D635C1BC;
-	Sat, 17 Oct 2026 16:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6799A35C1BC;
+	Sat, 17 Oct 2026 16:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253904; cv=none; b=CxapphrDfyO/oQWbV7d9KIjiMhoPU/9Q/SzvUoeHN+TUhPCoMCh0kSUxnuv2qZsoxywZfuJlgzCfG5L8t9NWaRD83d4wfIYq+P6vozdL+/rx/rqG48+aJlf/RFz9+I+r/quVHycGs7Ip6ZqPZgwdbShfT9BfpD6PaGwZKXgudsU=
+	t=1792253907; cv=none; b=WTHZwgZDhwXCCokyHJEM4jBvqwPAYFfgyAWqfQtJ2Nl6UxcLlmNrrTNmcrb56yqzlCxpMsRoBifuNlUF+KAEQUj+nT9coU+VtS0qP9KPnj0xRj5xD+x1LpD2FGuyXejUpxrOuc/oUNKoSp+QZNJw+upa3V4ZF0Gi7tGtdJqi34k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253904; c=relaxed/simple;
-	bh=295mwifI7GQBz2EA7m71/1leQqz+HOq2m4DFYzG43qI=;
+	s=arc-20240116; t=1792253907; c=relaxed/simple;
+	bh=rZ2jCnQj8zQ1CAhOC9XWeDSy7yQEGeJguhrfaa6cjkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y18BIot+QvmETYn4j6C4p5bx4FC15Z1SuEslkL2InewM9r0YIJRLQ1obBX4Vcz2cVytL1s0dEP1bCCOERJuLrJf+YUNs2ehLQUBfY99E0YX/rBMn77odUw4TPAk7NHIX0Qvr16HHGjAuQ5p9fRiNvnH3dMHjTnN951i8eLgAewk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZM/5GcI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NYplKYClBWSH+J1PU6hD8qXlrzHZteMjurF1ryeuFUaXIR2GWtJN+hdmn/irTuIpiE0+VJFVPE3uYRh3DJhwLH4elyXqRHq9m7csY3HT2T1gwTr7rJrMU7y7yA8kKOmAlpsSeMyIyQ1F1QQm1GypBYIKdEmDC6XQF94ENx2p+PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrHbtjhL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZM/5GcI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905091F000C4;
-	Sat, 17 Oct 2026 16:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrHbtjhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35F31F000C4;
+	Sat, 17 Oct 2026 16:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253903;
-	bh=epD2/28OULz8wy7GCy9W+QATdOi0h/LH6y6I02gduJ4=;
+	s=korg; t=1792253906;
+	bh=upB3XXscFaJ/05d/rSIFJFnPjwumWuFRpJb3mTq1x2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZM/5GcIoTCpegptWHG1TSNlNQCnq5mvhSZ5mrYgcuV5nat12cNjBZaxWKOVHkM8S
-	 ofT3R4F3HU+cH9r76A7tbfgbddXgWelG5YApT/6Vk4H/yI6O8c600XEamkSjIMs08B
-	 PRiPTbrGs0s3DQQJI9b4AVaEYpWXOyRzKZ1ntplA=
+	b=HrHbtjhLHlQ3RL69TXanjTFTFEso3AAXsxmCaiSJmJ3plls/BopW66ZaePCKhp0MV
+	 BvK9k4qOI20kHgCO6OwjTQuDsJnM02qoKJg1/HQhmqyq+2SlTxaafJJAR0lbuTu9ro
+	 klCT+PJfEZYdFWLiG2XO1Ietd5d3fmkPAxgWNTtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Guillaume Gonnet <ggonnet.linux@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/869] nouveau/gsp: drop WARN_ON in ACPI probes
-Date: Sat, 17 Oct 2026 17:51:52 +0200
-Message-ID: <20261017160044.016010518@linuxfoundation.org>
+Subject: [PATCH 6.12 272/869] bpf: Fix tcx/netkit detach permissions when prog fd isnt given
+Date: Sat, 17 Oct 2026 17:51:53 +0200
+Message-ID: <20261017160044.042880565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,61 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Guillaume Gonnet <ggonnet.linux@gmail.com>
 
-[ Upstream commit 9478c166c46934160135e197b049b5a05753f2ad ]
+[ Upstream commit ae23bc81ddf7c17b663c4ed1b21e35527b0a7131 ]
 
-These WARN_ONs seem to trigger a lot, and we don't seem to have a
-plan to fix them, so just drop them, as they are most likely
-harmless.
+This commit fixes a security issue where BPF_PROG_DETACH on tcx or
+netkit devices could be executed by any user when no program fd was
+provided, bypassing permission checks. The fix adds a capability
+check for CAP_NET_ADMIN or CAP_SYS_ADMIN in this case.
 
-Cc: stable@vger.kernel.org
-Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20241121014601.229391-1-airlied@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: e420bed02507 ("bpf: Add fd-based tcx multi-prog infra with link support")
+Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
+Link: https://lore.kernel.org/r/20260127160200.10395-1-ggonnet.linux@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/linux/bpf.h       |  5 +++++
+ include/linux/bpf_mprog.h | 10 ++++++++++
+ kernel/bpf/syscall.c      |  7 ++-----
+ 3 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-index 801b0bc676ab2..5952f0abc070c 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -1476,8 +1476,8 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
- 	if (!obj)
- 		goto done;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index a63fd54ac6b4f..8bdb4ba4df7ee 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2999,6 +2999,11 @@ static inline void bpf_dynptr_set_rdonly(struct bpf_dynptr_kern *ptr)
+ }
+ #endif /* CONFIG_BPF_SYSCALL */
  
--	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
--	    WARN_ON(obj->buffer.length != 4))
-+	if (obj->type != ACPI_TYPE_BUFFER ||
-+	    obj->buffer.length != 4)
- 		goto done;
++static inline bool bpf_net_capable(void)
++{
++	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
++}
++
+ static __always_inline int
+ bpf_probe_read_kernel_common(void *dst, u32 size, const void *unsafe_ptr)
+ {
+diff --git a/include/linux/bpf_mprog.h b/include/linux/bpf_mprog.h
+index 929225f7b0959..0b9f4caeeb0a3 100644
+--- a/include/linux/bpf_mprog.h
++++ b/include/linux/bpf_mprog.h
+@@ -340,4 +340,14 @@ static inline bool bpf_mprog_supported(enum bpf_prog_type type)
+ 		return false;
+ 	}
+ }
++
++static inline bool bpf_mprog_detach_empty(enum bpf_prog_type type)
++{
++	switch (type) {
++	case BPF_PROG_TYPE_SCHED_CLS:
++		return bpf_net_capable();
++	default:
++		return false;
++	}
++}
+ #endif /* __BPF_MPROG_H */
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 857285a48d433..43081a7fb283a 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1206,11 +1206,6 @@ static int map_check_btf(struct bpf_map *map, struct bpf_token *token,
+ 	return ret;
+ }
  
- 	caps->status = 0;
-@@ -1512,8 +1512,8 @@ r535_gsp_acpi_jt(acpi_handle handle, JT_METHOD_DATA *jt)
- 	if (!obj)
- 		goto done;
- 
--	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
--	    WARN_ON(obj->buffer.length != 4))
-+	if (obj->type != ACPI_TYPE_BUFFER ||
-+	    obj->buffer.length != 4)
- 		goto done;
- 
- 	jt->status = 0;
-@@ -1600,8 +1600,8 @@ r535_gsp_acpi_dod(acpi_handle handle, DOD_METHOD_DATA *dod)
- 
- 	_DOD = output.pointer;
- 
--	if (WARN_ON(_DOD->type != ACPI_TYPE_PACKAGE) ||
--	    WARN_ON(_DOD->package.count > ARRAY_SIZE(dod->acpiIdList)))
-+	if (_DOD->type != ACPI_TYPE_PACKAGE ||
-+	    _DOD->package.count > ARRAY_SIZE(dod->acpiIdList))
- 		return;
- 
- 	for (int i = 0; i < _DOD->package.count; i++) {
+-static bool bpf_net_capable(void)
+-{
+-	return capable(CAP_NET_ADMIN) || capable(CAP_SYS_ADMIN);
+-}
+-
+ #define BPF_MAP_CREATE_LAST_FIELD map_token_fd
+ /* called via syscall */
+ static int map_create(union bpf_attr *attr)
+@@ -4177,6 +4172,8 @@ static int bpf_prog_detach(const union bpf_attr *attr)
+ 			prog = bpf_prog_get_type(attr->attach_bpf_fd, ptype);
+ 			if (IS_ERR(prog))
+ 				return PTR_ERR(prog);
++		} else if (!bpf_mprog_detach_empty(ptype)) {
++			return -EPERM;
+ 		}
+ 	} else if (is_cgroup_prog_type(ptype, 0, false)) {
+ 		if (attr->attach_flags || attr->relative_fd)
 -- 
 2.53.0
 
