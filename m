@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332A03A9D84;
-	Sat, 17 Oct 2026 16:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2BB3A5459;
+	Sat, 17 Oct 2026 16:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255031; cv=none; b=BOCMY0vbt5Xen8jld7gdEdmc4Lh8y6VtvdIxX+L26kyOuPdOkbTJ4GbkgYFmjmtxsfQohd3RPpfAGd7gokOEa0EEf0xP+8jjMIgNUIgVKmXpA2CpRyC24Os+d6eG+USpm50R0vt1F+c8LdvL77u/fhSEbwV+Uppr4Eb3eSkTwhg=
+	t=1792255034; cv=none; b=Y0AhT75TWxEWyEpCpRZ8RoCIw5BgGGgakJwxkpMdYUxpJbpLVA6Y6LvJi2hqB1Ja9b2mA7MTZ+rIYLmFNbwrvBD8qsWPRF1UB3WkKDdlXt1W5FTXh7BVI96Enxo0AsIUJPvv74UJerQEOuKxAgUEw/V51DN8SaPi19ra9eDhKFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255031; c=relaxed/simple;
-	bh=6r3sZJcLQgYU9hWBcDimFPDxQB8fwBgb7AfJGUkWl+M=;
+	s=arc-20240116; t=1792255034; c=relaxed/simple;
+	bh=qx4t6hTm0Ykd82DwvqjOjM9DSa699I3UkaMNPEvtcfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGcdGrtLH6Z2TTxw3j8PqrRpGEpAHuuXxfD0HYWnaefHCF4wWd90v14bBuZ1+IxKNYmpgtE6s2Y8h696r4j3rxrOfKbBxIAD50ziPSfqvXkAz6DGmrXGo4HsJg9bL4pnXU9yErfxSAGKGItolTLrEmcDO5Za91BwmjX7Det6R3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NjFN+Lm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X5vndti6BP+ouArAjQhmTU7iE49TYg+q6nOqQz3RM0rsFaxF1zJE+VPdeg9PJjHnglBUit3JGO8oJPmIwLFZq5m92mK9060Jq2xv3BDmGiefz9v0W7L3CbLb3i0VUWlFS6kbZoNrjtJCMr9YXjjzsZBppgLGRPPgZuvQY5HV+I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4G67moL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NjFN+Lm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEED1F000C4;
-	Sat, 17 Oct 2026 16:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4G67moL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739DA1F000C4;
+	Sat, 17 Oct 2026 16:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255030;
-	bh=eEfxSxvVnhAARHZmxeYJODswR0POCINQ7D7ewDqerGo=;
+	s=korg; t=1792255033;
+	bh=EYyJiueuoKUeHFNkt67lUA3wRZ6vvbQqrqjfV50tAow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NjFN+Lm34ZHhyJqpXhSz0fFj4YBnONqD9ledaOnGU4ILQDxIltJTjRtk2s9uRIxe
-	 qo81zmNei1Uolw1BNWYxy4B2dRjJiiTAg3z9q7/O3wwpVjpzqqr+ryCXbdH6Iqtq31
-	 F+HX0yC16//oRSzlOMQG+QO22uz7PTW/KmaXIaZ0=
+	b=y4G67moLq/n7UvAx5oVK2Tp84jwX99lMKkQQ94llcjzPR/z2GnXYXjmfrHXYhwC6m
+	 mez2xOzvrR7T3gl0IMl4HSeooCUIQs84wWljeXaffQDgUYwALdArf6HkWn8xc8PAER
+	 Q84XYmOvlXM4pQha1NULhV0zjvbhP6HNyniGt2aE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 641/869] Bluetooth: ISO: fix race of kfree vs kref_get_unless_zero
-Date: Sat, 17 Oct 2026 17:58:02 +0200
-Message-ID: <20261017160053.451037269@linuxfoundation.org>
+Subject: [PATCH 6.12 642/869] Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind
+Date: Sat, 17 Oct 2026 17:58:03 +0200
+Message-ID: <20261017160053.475221018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,59 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit af24e338bf5dafb80f42baa9a0b9e9b57b1c5d9c ]
+[ Upstream commit 2b66c83ff1751d6bd3201b3017206262ab46dc05 ]
 
-hci_conn::iso_data is accessed and modified without lock or RCU.
-This leads to a race
+hci_conn::l2cap_data is accessed without locks in l2cap_disconn_ind via
+hci_conn_timeout (disc_work) -> hci_proto_disconn_ind ->
+l2cap_disconn_ind.  This is UAF if the l2cap_conn is deleted
+concurrently.
 
-    [Task hdev->workqueue]                 	[Task 2]
-    iso_recv                                    iso_conn_put(conn)
-      conn = LOAD hcon->iso_data                  iso_conn_free(conn)
-      iso_conn_hold_unless_zero(conn)               hcon->iso_data = NULL
-                                                    kfree(conn)
-        kref_get_unless_zero(&conn->ref) /* UAF */
+disc_work is disabled sync in hci_conn_del(), so we cannot take
+hci_dev_lock in disc_work.
 
-and also to races in iso_conn_add() vs. iso_conn_free().
+Fix by using proto_lock to guard l2cap_data, in addition to hdev->lock
+which is held in other access paths.
 
-Fix by adding spinlock hci_conn::proto_lock and using it to guard
-hci_conn::iso_data.
-
-Fixes: dc26097bdb86 ("Bluetooth: ISO: Use kref to track lifetime of iso_conn")
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Reported-by: syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9c40ad7c6ed7165e46e8
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 2b66c83ff175 ("Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 2 ++
- net/bluetooth/hci_conn.c         | 2 ++
- 2 files changed, 4 insertions(+)
+ net/bluetooth/l2cap_core.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 763f003ac29e3..f846865db0ca4 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -751,6 +751,8 @@ struct hci_conn {
- 	struct dentry	*debugfs;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 12d39f1e822b3..61914f280d6fa 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1843,7 +1843,10 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 	hci_chan_del(conn->hchan);
+ 	conn->hchan = NULL;
  
- 	struct hci_dev	*hdev;
++	spin_lock(&hcon->proto_lock);
+ 	hcon->l2cap_data = NULL;
++	spin_unlock(&hcon->proto_lock);
 +
-+	spinlock_t	proto_lock; /* lock guarding protocol data */
- 	void		*l2cap_data;
- 	void		*sco_data;
- 	void		*iso_data;
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 48d28c79e2992..602b5be7eccc8 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1052,6 +1052,8 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t
- 	INIT_DELAYED_WORK(&conn->idle_work, hci_conn_idle);
- 	INIT_DELAYED_WORK(&conn->le_conn_timeout, le_conn_timeout);
+ 	mutex_unlock(&conn->lock);
+ 	l2cap_conn_put(conn);
+ }
+@@ -7167,8 +7170,6 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 	}
  
-+	spin_lock_init(&conn->proto_lock);
+ 	kref_init(&conn->ref);
+-	hcon->l2cap_data = conn;
+-	conn->hcon = hci_conn_get(hcon);
+ 	conn->hchan = hchan;
+ 
+ 	BT_DBG("hcon %p conn %p hchan %p", hcon, conn, hchan);
+@@ -7197,6 +7198,11 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 
+ 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 
++	spin_lock(&hcon->proto_lock);
++	conn->hcon = hci_conn_get(hcon);
++	hcon->l2cap_data = conn;
++	spin_unlock(&hcon->proto_lock);
 +
- 	atomic_set(&conn->refcnt, 0);
+ 	return conn;
+ }
  
- 	hci_dev_hold(hdev);
+@@ -7585,13 +7591,18 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
+ 
+ int l2cap_disconn_ind(struct hci_conn *hcon)
+ {
+-	struct l2cap_conn *conn = hcon->l2cap_data;
++	struct l2cap_conn *conn;
++	int ret = HCI_ERROR_REMOTE_USER_TERM;
+ 
+ 	BT_DBG("hcon %p", hcon);
+ 
+-	if (!conn)
+-		return HCI_ERROR_REMOTE_USER_TERM;
+-	return conn->disc_reason;
++	spin_lock(&hcon->proto_lock);
++	conn = hcon->l2cap_data;
++	if (conn)
++		ret = conn->disc_reason;
++	spin_unlock(&hcon->proto_lock);
++
++	return ret;
+ }
+ 
+ static void l2cap_disconn_cfm(struct hci_conn *hcon, u8 reason)
 -- 
 2.53.0
 
