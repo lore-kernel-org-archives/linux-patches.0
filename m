@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7AC4CF461;
-	Sat, 17 Oct 2026 18:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AF43A7F4D;
+	Sat, 17 Oct 2026 18:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260505; cv=none; b=fbihNksgYyeTKInCxIqSFj2xm8mRvxfRKErBMHl8tpJ2CV0VYOslWwghy90A0UhtktxCp3PSwvaWIv5tsuT72HKAEbigPASDlw7CJYzs4+CeTiyz5hPjWopZly+eJsDXTMJaZUPibw3b7k0SywXK2WMmLNQhIfEKTp2KqyDIIi4=
+	t=1792260507; cv=none; b=MgIGvqk3uWV2oniv+FVwqblzXDvjKntab6h7qbugzEhXLs9jxoN1UOSVkQxggV2Hh5tbbUlpw+hvgrFJ+a/vzCyhtlPMOcOFM2Ougl0jtdt/+eZAU2aJtuj13T2QeM8wAptu2OULOSK/yzlHK+xGEJRV3lnDNWAhz5Ky/pkTTOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260505; c=relaxed/simple;
-	bh=L7ik1qojJSRP4Q/4zVrcw51cJh1Rv14dZi7n0hWD6so=;
+	s=arc-20240116; t=1792260507; c=relaxed/simple;
+	bh=a5dqQuJ10ULsQ+tllw0AlFvM4Cify/+dnoWnborgBSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JQBbJih+to87dTvxgYjUC8GVi/6/DEwgGbgivI5116IkpG7nwKf+9lyFMjKRMbvNoU+FZcpcH+7wzMYDmsD2u92L41WdUNrcQOc9s0733q74NBkmVR4NsvMap5aDLaXb74qG6SUeUFjvTWqfUEA5RPoDt03LOMWhdahSIxPl4rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzkQyrPn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hXQc+XwUTDnJ5P1HQMAcb+PY9XXFdLC0F09TXS9AiHJcXLPF4anPe5vEfz4jReJIiGs2IgsODljCastQf3uYFt6wwYKRlhi3LO7cOWVtNYuqAbVLgSbFnQymsaZay7Zqg2VNkx8L8Ph0lsSHcz/tcKbBjuH0oC+kadScV1OZaLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7n3LfiW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzkQyrPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DDD1F000C4;
-	Sat, 17 Oct 2026 18:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7n3LfiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACC71F000C4;
+	Sat, 17 Oct 2026 18:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260503;
-	bh=VD/b6rp+rNH5zAiO1/oKk9mF85jBYI1y57FM7wlAGNU=;
+	s=korg; t=1792260505;
+	bh=Mb7i8ExHY6nf648ES4Rye1CPZ9JdQjYnL3hWCHg6SUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzkQyrPn8cC7GVeZQiT5i6H3mtq5+rfMRjoatG6RmsK/jmdocjpR6Glv1eek5mQPW
-	 zVk56H+Il1XTpPa34duyzCzqHap51nCiyk46Qn8QPQ0JTpCX0rdLzYEO3BeALRgvPZ
-	 ILp2caS48c4F6A7rc+pPLuKpMRbuK71g6XVmf4QA=
+	b=B7n3LfiW4Uynk2RX10icVg9itVg1Veb1vWHgemLNubeTY3EF6ZN24wb+XXm+OZFr3
+	 C6dVjnLUZuprX2IME2mMeXUQZIvpBG2Qz/eG8CvA5Vs3N09fXxSYFbARSO2fAeO51Z
+	 YMQNyGI81L9EdvZ3Tazw4x39XLSqSYpGxxvuwbU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1566/1674] greybus: raw: fix use-after-free if write is called after disconnect
-Date: Sat, 17 Oct 2026 18:03:58 +0200
-Message-ID: <20261017160511.297857069@linuxfoundation.org>
+Subject: [PATCH 6.6 1567/1674] netfilter: revalidate bridge ports
+Date: Sat, 17 Oct 2026 18:03:59 +0200
+Message-ID: <20261017160511.323735742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,116 +46,244 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Riégel <damien.riegel@silabs.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 84265cbd96b97058ef67e3f8be3933667a000835 ]
+[ Upstream commit ccb9fd4b87538ccf19ccff78ee26700526d94867 ]
 
-If a user writes to the chardev after disconnect has been called, the
-kernel panics with the following trace (with
-CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
+ebt_redirect_tg() dereferences br_port_get_rcu() return without a
+NULL check, causing a kernel panic when the bridge port has been
+removed between the original hook invocation and an NFQUEUE
+reinject.
 
-        BUG: kernel NULL pointer dereference, address: 0000000000000218
-         ...
-        Call Trace:
-         <TASK>
-         gb_operation_create_common+0x61/0x180
-         gb_operation_create_flags+0x28/0xa0
-         gb_operation_sync_timeout+0x6f/0x100
-         raw_write+0x7b/0xc7 [gb_raw]
-         vfs_write+0xcf/0x420
-         ? task_mm_cid_work+0x136/0x220
-         ksys_write+0x63/0xe0
-         do_syscall_64+0xa4/0x290
-         entry_SYSCALL_64_after_hwframe+0x77/0x7f
+A mere NULL check isn't sufficient, however.  As sashiko review
+points out userspace can not only remove the port from the bridge,
+it could also place the device in a different virtual device, e.g.
+macvlan.
 
-Disconnect calls gb_connection_destroy, which ends up freeing the
-connection object. When gb_operation_sync is called in the write file
-operations, its gets a freed connection as parameter and the kernel
-panics.
+If this happens, we must drop the packet, there is no way for us to
+reinject it into the bridge path.
 
-The gb_connection_destroy cannot be moved out of the disconnect
-function, as the Greybus subsystem expect all connections belonging to a
-bundle to be destroyed when disconnect returns.
+Switch to _upper API, we don't need the bridge port structure.
+Also, this fix keeps another bug intact:
 
-To prevent this bug, use a rw lock to synchronize access between write
-and disconnect. This guarantees that the write function doesn't try
-to use a disconnected connection.
+Both nfnetlink_log and nfnetlink_queue use CONFIG_BRIDGE_NETFILTER
+too aggressive, which prevents certain logging features when queueing
+in bridge family: NETFILTER_FAMILY_BRIDGE can be enabled while the old
+CONFIG_BRIDGE_NETFILTER cruft is off.
 
-Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
-Link: https://patch.msgid.link/20260324140039.40001-2-damien.riegel@silabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes tag is a common ancestor, this was always broken.
+
+Fixes: f350a0a87374 ("bridge: use rx_handler_data pointer to store net_bridge_port pointer")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/raw.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/ebt_dnat.c     |  4 +-
+ net/bridge/netfilter/ebt_redirect.c | 16 +++++---
+ net/netfilter/nfnetlink_log.c       | 23 +++++++++--
+ net/netfilter/nfnetlink_queue.c     | 64 +++++++++++++++++++++++++----
+ 4 files changed, 89 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index f74c09527d05c..685ff55e58945 100644
---- a/drivers/staging/greybus/raw.c
-+++ b/drivers/staging/greybus/raw.c
-@@ -21,6 +21,8 @@ struct gb_raw {
- 	struct list_head list;
- 	int list_data;
- 	struct mutex list_lock;
-+	struct rw_semaphore disconnect_lock;
-+	bool disconnected;
- 	struct cdev cdev;
- 	struct device dev;
- };
-@@ -197,6 +199,7 @@ static int gb_raw_probe(struct gb_bundle *bundle,
+diff --git a/net/bridge/netfilter/ebt_dnat.c b/net/bridge/netfilter/ebt_dnat.c
+index 3fda71a8579d1..73f185cccd63d 100644
+--- a/net/bridge/netfilter/ebt_dnat.c
++++ b/net/bridge/netfilter/ebt_dnat.c
+@@ -39,7 +39,9 @@ ebt_dnat_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 			dev = xt_in(par);
+ 			break;
+ 		case NF_BR_PRE_ROUTING:
+-			dev = br_port_get_rcu(xt_in(par))->br->dev;
++			dev = netdev_master_upper_dev_get_rcu(xt_in(par));
++			if (!dev) /* bridge port removed? */
++				return EBT_DROP;
+ 			break;
+ 		default:
+ 			dev = NULL;
+diff --git a/net/bridge/netfilter/ebt_redirect.c b/net/bridge/netfilter/ebt_redirect.c
+index 307790562b492..83486cd4d564b 100644
+--- a/net/bridge/netfilter/ebt_redirect.c
++++ b/net/bridge/netfilter/ebt_redirect.c
+@@ -24,12 +24,18 @@ ebt_redirect_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 	if (skb_ensure_writable(skb, 0))
+ 		return EBT_DROP;
  
- 	INIT_LIST_HEAD(&raw->list);
- 	mutex_init(&raw->list_lock);
-+	init_rwsem(&raw->disconnect_lock);
- 
- 	raw->connection = connection;
- 	greybus_set_drvdata(bundle, raw);
-@@ -232,6 +235,11 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 	struct raw_data *temp;
- 
- 	cdev_device_del(&raw->cdev, &raw->dev);
+-	if (xt_hooknum(par) != NF_BR_BROUTING)
+-		/* rcu_read_lock()ed by nf_hook_thresh */
+-		ether_addr_copy(eth_hdr(skb)->h_dest,
+-				br_port_get_rcu(xt_in(par))->br->dev->dev_addr);
+-	else
++	if (xt_hooknum(par) != NF_BR_BROUTING) {
++		const struct net_device *dev;
 +
-+	down_write(&raw->disconnect_lock);
-+	raw->disconnected = true;
-+	up_write(&raw->disconnect_lock);
++		dev = netdev_master_upper_dev_get_rcu(xt_in(par));
++		if (!dev)
++			return EBT_DROP;
 +
- 	gb_connection_disable(connection);
- 	gb_connection_destroy(connection);
- 
-@@ -274,11 +282,22 @@ static ssize_t raw_write(struct file *file, const char __user *buf,
- 	if (count > MAX_PACKET_SIZE)
- 		return -E2BIG;
- 
-+	down_read(&raw->disconnect_lock);
-+
-+	if (raw->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
++		ether_addr_copy(eth_hdr(skb)->h_dest, dev->dev_addr);
++	} else {
+ 		ether_addr_copy(eth_hdr(skb)->h_dest, xt_in(par)->dev_addr);
 +	}
 +
- 	retval = gb_raw_send(raw, count, buf);
- 	if (retval)
--		return retval;
-+		goto exit;
- 
--	return count;
-+	retval = count;
-+exit:
-+	up_read(&raw->disconnect_lock);
-+
-+	return retval;
+ 	skb->pkt_type = PACKET_HOST;
+ 	return info->target;
+ }
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index abae76685a048..c0c8935dbcbb6 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -455,6 +455,23 @@ static int nfulnl_put_bridge(struct nfulnl_instance *inst, const struct sk_buff
+ 	return -1;
  }
  
- static ssize_t raw_read(struct file *file, char __user *buf, size_t count,
++#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++static int nflog_put_master_ifindex(struct sk_buff *nlskb, int attr,
++				    const struct net_device *dev)
++{
++	const struct net_device *upper;
++
++	if (dev && !netif_is_bridge_port(dev))
++		return 0;
++
++	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
++	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
++		return -EMSGSIZE;
++
++	return 0;
++}
++#endif
++
+ /* This is an inline function, we don't really care about a long
+  * list of arguments */
+ static inline int
+@@ -509,8 +526,7 @@ __build_packet_message(struct nfnl_log_net *log,
+ 			/* rcu_read_lock()ed by nf_hook_thresh or
+ 			 * nf_log_packet.
+ 			 */
+-			    nla_put_be32(inst->skb, NFULA_IFINDEX_INDEV,
+-					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
++			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_INDEV, indev))
+ 				goto nla_put_failure;
+ 		} else {
+ 			int physinif;
+@@ -546,8 +562,7 @@ __build_packet_message(struct nfnl_log_net *log,
+ 			/* rcu_read_lock()ed by nf_hook_thresh or
+ 			 * nf_log_packet.
+ 			 */
+-			    nla_put_be32(inst->skb, NFULA_IFINDEX_OUTDEV,
+-					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
++			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_OUTDEV, outdev))
+ 				goto nla_put_failure;
+ 		} else {
+ 			struct net_device *physoutdev;
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 56c16fa0ba227..719f7b009a68a 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -253,11 +253,48 @@ static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_
+ 	return false;
+ }
+ 
++static bool nf_bridge_port_valid(const struct net_device *dev)
++{
++	if (!dev)
++		return true;
++
++	return netif_is_bridge_port(dev);
++}
++
++/* queued skbs leave rcu protection.  We bump device refcount so that
++ * the device cannot go away.  However, while packet was out the port
++ * could have been removed from the bridge.
++ *
++ * Ensure in+outdev are still part of a bridge at reinject time.
++ *
++ * The device rx_handler_data could even be pointing at data that is
++ * not a net_bridge_port structure.
++ */
++static bool nf_bridge_ports_valid(const struct nf_queue_entry *entry)
++{
++#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	if (!nf_bridge_port_valid(entry->physin) ||
++	    !nf_bridge_port_valid(entry->physout))
++		return false;
++#endif
++	if (entry->state.pf != PF_BRIDGE)
++		return true;
++
++	if (!nf_bridge_port_valid(entry->state.in) ||
++	    !nf_bridge_port_valid(entry->state.out))
++		return false;
++
++	return true;
++}
++
+ static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
+ {
+ 	const struct nf_ct_hook *ct_hook;
+ 	int err;
+ 
++	if (!nf_bridge_ports_valid(entry))
++		verdict = NF_DROP;
++
+ 	if (verdict == NF_ACCEPT ||
+ 	    verdict == NF_REPEAT ||
+ 	    verdict == NF_STOP) {
+@@ -446,6 +483,23 @@ static int nf_queue_checksum_help(struct sk_buff *entskb)
+ 	return skb_checksum_help(entskb);
+ }
+ 
++#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++static int nfqnl_put_master_ifindex(struct sk_buff *nlskb, int attr,
++				    const struct net_device *dev)
++{
++	const struct net_device *upper;
++
++	if (dev && !netif_is_bridge_port(dev))
++		return 0;
++
++	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
++	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
++		return -EMSGSIZE;
++
++	return 0;
++}
++#endif
++
+ static struct sk_buff *
+ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 			   struct nf_queue_entry *entry,
+@@ -579,10 +633,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 			 * netfilter_bridge) */
+ 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSINDEV,
+ 					 htonl(indev->ifindex)) ||
+-			/* this is the bridge group "brX" */
+-			/* rcu_read_lock()ed by __nf_queue */
+-			    nla_put_be32(skb, NFQA_IFINDEX_INDEV,
+-					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
++			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_INDEV, indev))
+ 				goto nla_put_failure;
+ 		} else {
+ 			int physinif;
+@@ -613,10 +664,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
+ 			 * netfilter_bridge) */
+ 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSOUTDEV,
+ 					 htonl(outdev->ifindex)) ||
+-			/* this is the bridge group "brX" */
+-			/* rcu_read_lock()ed by __nf_queue */
+-			    nla_put_be32(skb, NFQA_IFINDEX_OUTDEV,
+-					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
++			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_OUTDEV, outdev))
+ 				goto nla_put_failure;
+ 		} else {
+ 			int physoutif;
 -- 
 2.53.0
 
