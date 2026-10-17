@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182FF4CF477;
-	Sat, 17 Oct 2026 16:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012554CF477;
+	Sat, 17 Oct 2026 16:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253738; cv=none; b=pK9Bpti/HWfVIzUfPKrMrTSazX41ULx4GLm85oQHhUEQT9hKfN3zDkDApsCS0dTS3f6xE7EH+97pCBNhyxLH6CBdN91kEbervfQN909sc576AgkU2IIikIfF8jGFOxKh9f/+Ofin5aIZicC4gA88mruiS3GRgPWMzUYhKf68VCc=
+	t=1792253741; cv=none; b=sgwGytD3ZWpQxHGyyb61WC98/iC2qALj0iGttYN41kMUy1Dr8Ic9Be6rcwFxsXAq6w4u8AE5+5eyH+JH2XfNkQh8ctzp+5Bijbon28qn/ZkFE8TW4fM8V+5IKw8yCY7D2FNTOfMNJZrhwCcTZsQsykfsf2282kF+McE0a02vQ68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253738; c=relaxed/simple;
-	bh=KtTVz0njUR6/zXXTW03YvNI7RquJyTTQ0IeANIulUP0=;
+	s=arc-20240116; t=1792253741; c=relaxed/simple;
+	bh=4Gr6xSNhATGj+e2yAU4lg2J2xvQE5V4YFz3FMXb9CyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kblcIEpSoMZ3V3uLuRqJLw626m6agE0Gt8v6Mpj3RwhJFoznSjI+YTFGw3te+jrvnsAVl+V4wdEKP2MFpPWsC+O8OboHDXXbezZvUaWeU4r0BJ7DZcZoUbn0CB0uh8FUBsjWfDgpwtFr0IFI111xbe84pQyydYZ7M7tvNwO3ysA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqovKFbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PmEoK+BkEiPZBMZTcQDL0f3eH0E5sr97BIKTUltLVHnRVuTGVan1XnWzi0ghTa4lau4XTxykv99GRvi+wK2w5eWLwJxiFD9lxlGdf9AOMiFN46veALsPCKIRJ2bEPVQ5A1+vpdxdsFGCXqHnkGDxsGuWLJHZx0GU0lIj1GIRdGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xi84uNrr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqovKFbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE901F000C4;
-	Sat, 17 Oct 2026 16:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xi84uNrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BB71F000C4;
+	Sat, 17 Oct 2026 16:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253737;
-	bh=B3R0LcRYT+98w/+9Fg3X8+g84Poh14+RGdBA8rr+EiQ=;
+	s=korg; t=1792253739;
+	bh=5VgyT5/2MeuTZfhi6FIJLAuXMP63l4fQz85+cFwX8Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RqovKFbwOSgH+XZQOmllNnrrlpNx74DnwjWmwa1+kRqX8gvmyCCRmQ82nlwapMLs4
-	 7PZ12jrGxF8b8MvBHi0tzltrbtdfP8GkdhXdcK6/K20m0nKhlUdXXs0+dfRAlfmj2M
-	 3FXN75HvXi3HUXo5eZ24JTEUbqOOPGudQ7bolr/k=
+	b=xi84uNrrchtH668o4qbcO6pBEcgTAHJ+ybWyXdQyLdpgpXBmsN0D2tHZfckRu+Aht
+	 GOkzxicykcfUx8xPkfm+gAN07572ZzKVNpiLH+/XYQCIGc9S2VagUJimHEAJHRZwoH
+	 Yx9/BgRstdcGzWkhvnRDP7/2VNYL1yUUO0vigIUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/869] bnxt_en: Update firmware interface spec to 1.10.3.85
-Date: Sat, 17 Oct 2026 17:50:58 +0200
-Message-ID: <20261017160042.616540874@linuxfoundation.org>
+Subject: [PATCH 6.12 218/869] bnxt_en: set backing store type from query type
+Date: Sat, 17 Oct 2026 17:50:59 +0200
+Message-ID: <20261017160042.642547975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,348 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ff00bcc9ecccf4a1ce3a06eb38a9b4592f870f80 ]
+[ Upstream commit 4ee937107d52f9e5c350e4b5e629760e328b3d9f ]
 
-The major change is the new firmware command to flush the FW debug
-logs to the host backing store context memory buffers.
+bnxt_hwrm_func_backing_store_qcaps_v2() stores resp->type from the
+firmware response in ctxm->type and later uses that value to index
+fixed backing-store metadata arrays such as ctx_arr[] and
+bnxt_bstore_to_trace[].
 
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20241115151438.550106-2-michael.chan@broadcom.com
+ctxm->type is fixed by the current backing-store query type and matches
+the array index of ctx->ctx_arr. Set ctxm->type from the current loop
+variable instead of depending on resp->type.
+
+Also update the loop to advance type from next_valid_type in the for
+statement, which keeps the control flow simpler for non-valid and
+unchanged entries.
+
+Fixes: 6a4d0774f02d ("bnxt_en: Add support for new backing store query firmware API")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Tested-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260328234357.43669-1-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4ee937107d52 ("bnxt_en: set backing store type from query type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h | 173 ++++++++++++++----
- 1 file changed, 136 insertions(+), 37 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-index f8ef6f1a1964e..5f8de16343788 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-@@ -42,6 +42,10 @@ struct hwrm_resp_hdr {
- #define TLV_TYPE_MODIFY_ROCE_CC_GEN1             0x5UL
- #define TLV_TYPE_QUERY_ROCE_CC_GEN2              0x6UL
- #define TLV_TYPE_MODIFY_ROCE_CC_GEN2             0x7UL
-+#define TLV_TYPE_QUERY_ROCE_CC_GEN1_EXT          0x8UL
-+#define TLV_TYPE_MODIFY_ROCE_CC_GEN1_EXT         0x9UL
-+#define TLV_TYPE_QUERY_ROCE_CC_GEN2_EXT          0xaUL
-+#define TLV_TYPE_MODIFY_ROCE_CC_GEN2_EXT         0xbUL
- #define TLV_TYPE_ENGINE_CKV_ALIAS_ECC_PUBLIC_KEY 0x8001UL
- #define TLV_TYPE_ENGINE_CKV_IV                   0x8003UL
- #define TLV_TYPE_ENGINE_CKV_AUTH_TAG             0x8004UL
-@@ -509,6 +513,7 @@ struct cmd_nums {
- 	#define HWRM_TFC_IF_TBL_GET                       0x399UL
- 	#define HWRM_TFC_TBL_SCOPE_CONFIG_GET             0x39aUL
- 	#define HWRM_TFC_RESC_USAGE_QUERY                 0x39bUL
-+	#define HWRM_TFC_GLOBAL_ID_FREE                   0x39cUL
- 	#define HWRM_SV                                   0x400UL
- 	#define HWRM_DBG_SERDES_TEST                      0xff0eUL
- 	#define HWRM_DBG_LOG_BUFFER_FLUSH                 0xff0fUL
-@@ -624,8 +629,8 @@ struct hwrm_err_output {
- #define HWRM_VERSION_MAJOR 1
- #define HWRM_VERSION_MINOR 10
- #define HWRM_VERSION_UPDATE 3
--#define HWRM_VERSION_RSVD 68
--#define HWRM_VERSION_STR "1.10.3.68"
-+#define HWRM_VERSION_RSVD 85
-+#define HWRM_VERSION_STR "1.10.3.85"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index ef2462e94b3f7..867be7b4142b2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8379,7 +8379,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 	struct hwrm_func_backing_store_qcaps_v2_output *resp;
+ 	struct hwrm_func_backing_store_qcaps_v2_input *req;
+ 	struct bnxt_ctx_mem_info *ctx = bp->ctx;
+-	u16 type;
++	u16 type, next_type = 0;
+ 	int rc;
  
- /* hwrm_ver_get_input (size:192b/24B) */
- struct hwrm_ver_get_input {
-@@ -1302,6 +1307,43 @@ struct hwrm_async_event_cmpl_error_report {
- 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_EVENT_DATA1_ERROR_TYPE_SFT 0
- };
+ 	rc = hwrm_req_init(bp, req, HWRM_FUNC_BACKING_STORE_QCAPS_V2);
+@@ -8395,7 +8395,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
  
-+/* hwrm_async_event_cmpl_dbg_buf_producer (size:128b/16B) */
-+struct hwrm_async_event_cmpl_dbg_buf_producer {
-+	__le16	type;
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_MASK            0x3fUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_SFT             0
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_HWRM_ASYNC_EVENT  0x2eUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_LAST             ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_TYPE_HWRM_ASYNC_EVENT
-+	__le16	event_id;
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_DBG_BUF_PRODUCER 0x4cUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_LAST            ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_ID_DBG_BUF_PRODUCER
-+	__le32	event_data2;
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA2_CURR_OFF_MASK 0xffffffffUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA2_CURR_OFF_SFT 0
-+	u8	opaque_v;
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_V          0x1UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_OPAQUE_MASK 0xfeUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_OPAQUE_SFT 1
-+	u8	timestamp_lo;
-+	__le16	timestamp_hi;
-+	__le32	event_data1;
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_MASK               0xffffUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SFT                0
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SRT_TRACE            0x0UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_SRT2_TRACE           0x1UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CRT_TRACE            0x2UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CRT2_TRACE           0x3UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_RIGP0_TRACE          0x4UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_L2_HWRM_TRACE        0x5UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_ROCE_HWRM_TRACE      0x6UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA0_TRACE            0x7UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA1_TRACE            0x8UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_CA2_TRACE            0x9UL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_RIGP1_TRACE          0xaUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_AFM_KONG_HWRM_TRACE  0xbUL
-+	#define ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_LAST                ASYNC_EVENT_CMPL_DBG_BUF_PRODUCER_EVENT_DATA1_TYPE_AFM_KONG_HWRM_TRACE
-+};
-+
- /* hwrm_async_event_cmpl_hwrm_error (size:128b/16B) */
- struct hwrm_async_event_cmpl_hwrm_error {
- 	__le16	type;
-@@ -1864,7 +1906,10 @@ struct hwrm_func_qcaps_output {
- 	__le32	roce_vf_max_gid;
- 	__le32	flags_ext3;
- 	#define FUNC_QCAPS_RESP_FLAGS_EXT3_RM_RSV_WHILE_ALLOC_CAP     0x1UL
--	u8	unused_3[7];
-+	#define FUNC_QCAPS_RESP_FLAGS_EXT3_REQUIRE_L2_FILTER          0x2UL
-+	#define FUNC_QCAPS_RESP_FLAGS_EXT3_MAX_ROCE_VFS_SUPPORTED     0x4UL
-+	__le16	max_roce_vfs;
-+	u8	unused_3[5];
- 	u8	valid;
- };
+ 	resp = hwrm_req_hold(bp, req);
  
-@@ -2253,17 +2298,18 @@ struct hwrm_func_cfg_input {
- 	#define FUNC_CFG_REQ_FLAGS2_KTLS_KEY_CTX_ASSETS_TEST     0x1UL
- 	#define FUNC_CFG_REQ_FLAGS2_QUIC_KEY_CTX_ASSETS_TEST     0x2UL
- 	__le32	enables2;
--	#define FUNC_CFG_REQ_ENABLES2_KDNET                   0x1UL
--	#define FUNC_CFG_REQ_ENABLES2_DB_PAGE_SIZE            0x2UL
--	#define FUNC_CFG_REQ_ENABLES2_QUIC_TX_KEY_CTXS        0x4UL
--	#define FUNC_CFG_REQ_ENABLES2_QUIC_RX_KEY_CTXS        0x8UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_AV_PER_VF      0x10UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_CQ_PER_VF      0x20UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_MRW_PER_VF     0x40UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_QP_PER_VF      0x80UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_SRQ_PER_VF     0x100UL
--	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_GID_PER_VF     0x200UL
--	#define FUNC_CFG_REQ_ENABLES2_XID_PARTITION_CFG       0x400UL
-+	#define FUNC_CFG_REQ_ENABLES2_KDNET                    0x1UL
-+	#define FUNC_CFG_REQ_ENABLES2_DB_PAGE_SIZE             0x2UL
-+	#define FUNC_CFG_REQ_ENABLES2_QUIC_TX_KEY_CTXS         0x4UL
-+	#define FUNC_CFG_REQ_ENABLES2_QUIC_RX_KEY_CTXS         0x8UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_AV_PER_VF       0x10UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_CQ_PER_VF       0x20UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_MRW_PER_VF      0x40UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_QP_PER_VF       0x80UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_SRQ_PER_VF      0x100UL
-+	#define FUNC_CFG_REQ_ENABLES2_ROCE_MAX_GID_PER_VF      0x200UL
-+	#define FUNC_CFG_REQ_ENABLES2_XID_PARTITION_CFG        0x400UL
-+	#define FUNC_CFG_REQ_ENABLES2_PHYSICAL_SLOT_NUMBER     0x800UL
- 	u8	port_kdnet_mode;
- 	#define FUNC_CFG_REQ_PORT_KDNET_MODE_DISABLED 0x0UL
- 	#define FUNC_CFG_REQ_PORT_KDNET_MODE_ENABLED  0x1UL
-@@ -2281,7 +2327,7 @@ struct hwrm_func_cfg_input {
- 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_2MB   0x9UL
- 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_4MB   0xaUL
- 	#define FUNC_CFG_REQ_DB_PAGE_SIZE_LAST FUNC_CFG_REQ_DB_PAGE_SIZE_4MB
--	u8	unused_1[2];
-+	__le16	physical_slot_number;
- 	__le32	num_ktls_tx_key_ctxs;
- 	__le32	num_ktls_rx_key_ctxs;
- 	__le32	num_quic_tx_key_ctxs;
-@@ -3683,7 +3729,7 @@ struct hwrm_func_ptp_ext_qcfg_output {
- 	u8	valid;
- };
+-	for (type = 0; type < BNXT_CTX_V2_MAX; ) {
++	for (type = 0; type < BNXT_CTX_V2_MAX; type = next_type) {
+ 		struct bnxt_ctx_mem_type *ctxm = &ctx->ctx_arr[type];
+ 		u8 init_val, init_off, i;
+ 		__le32 *p;
+@@ -8406,11 +8406,11 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 		if (rc)
+ 			goto ctx_done;
+ 		flags = le32_to_cpu(resp->flags);
+-		type = le16_to_cpu(resp->next_valid_type);
++		next_type = le16_to_cpu(resp->next_valid_type);
+ 		if (!(flags & FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_TYPE_VALID))
+ 			continue;
  
--/* hwrm_func_backing_store_cfg_v2_input (size:448b/56B) */
-+/* hwrm_func_backing_store_cfg_v2_input (size:512b/64B) */
- struct hwrm_func_backing_store_cfg_v2_input {
- 	__le16	req_type;
- 	__le16	cmpl_ring;
-@@ -3721,6 +3767,7 @@ struct hwrm_func_backing_store_cfg_v2_input {
- 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_CA1_TRACE           0x27UL
- 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_CA2_TRACE           0x28UL
- 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
-+	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
- 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_INVALID             0xffffUL
- 	#define FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_CFG_V2_REQ_TYPE_INVALID
- 	__le16	instance;
-@@ -3752,6 +3799,9 @@ struct hwrm_func_backing_store_cfg_v2_input {
- 	__le32	split_entry_1;
- 	__le32	split_entry_2;
- 	__le32	split_entry_3;
-+	__le32	enables;
-+	#define FUNC_BACKING_STORE_CFG_V2_REQ_ENABLES_NEXT_BS_OFFSET     0x1UL
-+	__le32	next_bs_offset;
- };
- 
- /* hwrm_func_backing_store_cfg_v2_output (size:128b/16B) */
-@@ -3802,6 +3852,7 @@ struct hwrm_func_backing_store_qcfg_v2_input {
- 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_CA1_TRACE           0x27UL
- 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_CA2_TRACE           0x28UL
- 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
-+	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
- 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_INVALID             0xffffUL
- 	#define FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_QCFG_V2_REQ_TYPE_INVALID
- 	__le16	instance;
-@@ -3963,6 +4014,7 @@ struct hwrm_func_backing_store_qcaps_v2_input {
- 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA1_TRACE           0x27UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA2_TRACE           0x28UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_RIGP1_TRACE         0x29UL
-+	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_INVALID             0xffffUL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_LAST               FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_INVALID
- 	u8	rsvd[6];
-@@ -4005,6 +4057,7 @@ struct hwrm_func_backing_store_qcaps_v2_output {
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_CA1_TRACE           0x27UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_CA2_TRACE           0x28UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_RIGP1_TRACE         0x29UL
-+	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_AFM_KONG_HWRM_TRACE 0x2aUL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_INVALID             0xffffUL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_LAST               FUNC_BACKING_STORE_QCAPS_V2_RESP_TYPE_INVALID
- 	__le16	entry_size;
-@@ -4014,6 +4067,8 @@ struct hwrm_func_backing_store_qcaps_v2_output {
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_DRIVER_MANAGED_MEMORY           0x4UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_ROCE_QP_PSEUDO_STATIC_ALLOC     0x8UL
- 	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_FW_DBG_TRACE                    0x10UL
-+	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_FW_BIN_DBG_TRACE                0x20UL
-+	#define FUNC_BACKING_STORE_QCAPS_V2_RESP_FLAGS_NEXT_BS_OFFSET                  0x40UL
- 	__le32	instance_bit_map;
- 	u8	ctx_init_value;
- 	u8	ctx_init_offset;
-@@ -4034,7 +4089,8 @@ struct hwrm_func_backing_store_qcaps_v2_output {
- 	__le32	split_entry_1;
- 	__le32	split_entry_2;
- 	__le32	split_entry_3;
--	u8	rsvd3[3];
-+	__le16	max_instance_count;
-+	u8	rsvd3;
- 	u8	valid;
- };
- 
-@@ -4535,11 +4591,12 @@ struct hwrm_port_phy_qcfg_output {
- 	#define PORT_PHY_QCFG_RESP_PHY_TYPE_800G_BASEDR8     0x3dUL
- 	#define PORT_PHY_QCFG_RESP_PHY_TYPE_LAST            PORT_PHY_QCFG_RESP_PHY_TYPE_800G_BASEDR8
- 	u8	media_type;
--	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_UNKNOWN 0x0UL
--	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_TP      0x1UL
--	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_DAC     0x2UL
--	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE   0x3UL
--	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_LAST   PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_UNKNOWN   0x0UL
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_TP        0x1UL
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_DAC       0x2UL
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_FIBRE     0x3UL
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_BACKPLANE 0x4UL
-+	#define PORT_PHY_QCFG_RESP_MEDIA_TYPE_LAST     PORT_PHY_QCFG_RESP_MEDIA_TYPE_BACKPLANE
- 	u8	xcvr_pkg_type;
- 	#define PORT_PHY_QCFG_RESP_XCVR_PKG_TYPE_XCVR_INTERNAL 0x1UL
- 	#define PORT_PHY_QCFG_RESP_XCVR_PKG_TYPE_XCVR_EXTERNAL 0x2UL
-@@ -4654,7 +4711,8 @@ struct hwrm_port_phy_qcfg_output {
- 	#define PORT_PHY_QCFG_RESP_LINK_PARTNER_PAM4_ADV_SPEEDS_100GB     0x2UL
- 	#define PORT_PHY_QCFG_RESP_LINK_PARTNER_PAM4_ADV_SPEEDS_200GB     0x4UL
- 	u8	link_down_reason;
--	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_RF     0x1UL
-+	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_RF                      0x1UL
-+	#define PORT_PHY_QCFG_RESP_LINK_DOWN_REASON_OTP_SPEED_VIOLATION     0x2UL
- 	__le16	support_speeds2;
- 	#define PORT_PHY_QCFG_RESP_SUPPORT_SPEEDS2_1GB                0x1UL
- 	#define PORT_PHY_QCFG_RESP_SUPPORT_SPEEDS2_10GB               0x2UL
-@@ -9241,20 +9299,22 @@ struct hwrm_fw_set_time_output {
- /* hwrm_struct_hdr (size:128b/16B) */
- struct hwrm_struct_hdr {
- 	__le16	struct_id;
--	#define STRUCT_HDR_STRUCT_ID_LLDP_CFG           0x41bUL
--	#define STRUCT_HDR_STRUCT_ID_DCBX_ETS           0x41dUL
--	#define STRUCT_HDR_STRUCT_ID_DCBX_PFC           0x41fUL
--	#define STRUCT_HDR_STRUCT_ID_DCBX_APP           0x421UL
--	#define STRUCT_HDR_STRUCT_ID_DCBX_FEATURE_STATE 0x422UL
--	#define STRUCT_HDR_STRUCT_ID_LLDP_GENERIC       0x424UL
--	#define STRUCT_HDR_STRUCT_ID_LLDP_DEVICE        0x426UL
--	#define STRUCT_HDR_STRUCT_ID_POWER_BKUP         0x427UL
--	#define STRUCT_HDR_STRUCT_ID_PEER_MMAP          0x429UL
--	#define STRUCT_HDR_STRUCT_ID_AFM_OPAQUE         0x1UL
--	#define STRUCT_HDR_STRUCT_ID_PORT_DESCRIPTION   0xaUL
--	#define STRUCT_HDR_STRUCT_ID_RSS_V2             0x64UL
--	#define STRUCT_HDR_STRUCT_ID_MSIX_PER_VF        0xc8UL
--	#define STRUCT_HDR_STRUCT_ID_LAST              STRUCT_HDR_STRUCT_ID_MSIX_PER_VF
-+	#define STRUCT_HDR_STRUCT_ID_LLDP_CFG              0x41bUL
-+	#define STRUCT_HDR_STRUCT_ID_DCBX_ETS              0x41dUL
-+	#define STRUCT_HDR_STRUCT_ID_DCBX_PFC              0x41fUL
-+	#define STRUCT_HDR_STRUCT_ID_DCBX_APP              0x421UL
-+	#define STRUCT_HDR_STRUCT_ID_DCBX_FEATURE_STATE    0x422UL
-+	#define STRUCT_HDR_STRUCT_ID_LLDP_GENERIC          0x424UL
-+	#define STRUCT_HDR_STRUCT_ID_LLDP_DEVICE           0x426UL
-+	#define STRUCT_HDR_STRUCT_ID_POWER_BKUP            0x427UL
-+	#define STRUCT_HDR_STRUCT_ID_PEER_MMAP             0x429UL
-+	#define STRUCT_HDR_STRUCT_ID_AFM_OPAQUE            0x1UL
-+	#define STRUCT_HDR_STRUCT_ID_PORT_DESCRIPTION      0xaUL
-+	#define STRUCT_HDR_STRUCT_ID_RSS_V2                0x64UL
-+	#define STRUCT_HDR_STRUCT_ID_MSIX_PER_VF           0xc8UL
-+	#define STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_COUNT 0x12cUL
-+	#define STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_BOUND 0x12dUL
-+	#define STRUCT_HDR_STRUCT_ID_LAST                 STRUCT_HDR_STRUCT_ID_UDCC_RTT_BUCKET_BOUND
- 	__le16	len;
- 	u8	version;
- 	u8	count;
-@@ -9756,6 +9816,7 @@ struct hwrm_dbg_qcaps_output {
- 	#define DBG_QCAPS_RESP_FLAGS_COREDUMP_HOST_DDR         0x10UL
- 	#define DBG_QCAPS_RESP_FLAGS_COREDUMP_HOST_CAPTURE     0x20UL
- 	#define DBG_QCAPS_RESP_FLAGS_PTRACE                    0x40UL
-+	#define DBG_QCAPS_RESP_FLAGS_REG_ACCESS_RESTRICTED     0x80UL
- 	u8	unused_1[3];
- 	u8	valid;
- };
-@@ -9996,6 +10057,43 @@ struct hwrm_dbg_ring_info_get_output {
- 	u8	valid;
- };
- 
-+/* hwrm_dbg_log_buffer_flush_input (size:192b/24B) */
-+struct hwrm_dbg_log_buffer_flush_input {
-+	__le16	req_type;
-+	__le16	cmpl_ring;
-+	__le16	seq_id;
-+	__le16	target_id;
-+	__le64	resp_addr;
-+	__le16	type;
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_SRT_TRACE           0x0UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_SRT2_TRACE          0x1UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CRT_TRACE           0x2UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CRT2_TRACE          0x3UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP0_TRACE         0x4UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_L2_HWRM_TRACE       0x5UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ROCE_HWRM_TRACE     0x6UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA0_TRACE           0x7UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA1_TRACE           0x8UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA2_TRACE           0x9UL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP1_TRACE         0xaUL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE 0xbUL
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_TYPE_LAST               DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE
-+	u8	unused_1[2];
-+	__le32	flags;
-+	#define DBG_LOG_BUFFER_FLUSH_REQ_FLAGS_FLUSH_ALL_BUFFERS     0x1UL
-+};
-+
-+/* hwrm_dbg_log_buffer_flush_output (size:128b/16B) */
-+struct hwrm_dbg_log_buffer_flush_output {
-+	__le16	error_code;
-+	__le16	req_type;
-+	__le16	seq_id;
-+	__le16	resp_len;
-+	__le32	current_buffer_offset;
-+	u8	unused_1[3];
-+	u8	valid;
-+};
-+
- /* hwrm_nvm_read_input (size:320b/40B) */
- struct hwrm_nvm_read_input {
- 	__le16	req_type;
-@@ -10080,6 +10178,7 @@ struct hwrm_nvm_write_input {
- 	#define NVM_WRITE_REQ_FLAGS_KEEP_ORIG_ACTIVE_IMG     0x1UL
- 	#define NVM_WRITE_REQ_FLAGS_BATCH_MODE               0x2UL
- 	#define NVM_WRITE_REQ_FLAGS_BATCH_LAST               0x4UL
-+	#define NVM_WRITE_REQ_FLAGS_SKIP_CRID_CHECK          0x8UL
- 	__le32	dir_item_length;
- 	__le32	offset;
- 	__le32	len;
+-		ctxm->type = le16_to_cpu(resp->type);
++		ctxm->type = type;
+ 		ctxm->entry_size = le16_to_cpu(resp->entry_size);
+ 		ctxm->flags = flags;
+ 		ctxm->instance_bmap = le32_to_cpu(resp->instance_bit_map);
 -- 
 2.53.0
 
