@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04F617BED0;
-	Sat, 17 Oct 2026 16:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE161E520A;
+	Sat, 17 Oct 2026 16:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253956; cv=none; b=Zihf5dXERAKh4ckVcEHNgGVUb+BKzDjVbJjiFYtfsdvHOHRIE23RU4mV9N8n8O4U/bF+2zLd9Z1VLqHKpT/K/HhrRw8BqRrx39GyW3o7SrxWZRg8O/lUgPEYfD9fJmeLSBfipv0eI9CiAvZkGwjW7kHLKTXe6lfVU3zHctsOtEI=
+	t=1792253958; cv=none; b=fmYf/ZI6pzukqn3NuHg7+xg+BuLDRsVExeNsbQ50Nstj1TxHZ15sZu4OzNAkiv8Th6fg7VjRwfdxNQ+6DvzRnJBc0ZXXEGYJgSb/yJvuO97q/2v6g8zSmWXQjf4c1R9lGXCUVWrgxOIQMnc0yr2ySstgmHB5mJh9qSECMi1XqaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253956; c=relaxed/simple;
-	bh=c/YAFXMQGKDSjzc3k968lI/3zaBzt64Wn4AHjI/Hm5w=;
+	s=arc-20240116; t=1792253958; c=relaxed/simple;
+	bh=MQrTPWGsfk333/TIbd5d7Ft5GJxmg3lmFCE2xIPbWqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=saIptisi4SUJP8qoJ772CnUDTfaFH/GQCw0tAk2ZudM1w8scnj2dZqkPjyu/YzH3MCdZ/mAJ5Dw9gUA2ujRbRHMvFBYfpn/ipIeljYzwKZHppWrdkIuiIoXgI7jdVAiCi6L3NU3r4QycBAYDhvLphQG25QgX8mSA9at6uD41x8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKa0kUzs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bF4OKToEx+p7ZWi+QxfyICxqhLWQaiEBnkfeQwFCm5eQsKH1mIGSiSaFEZZFwwNC3JCPxT2qGqilJLsuOX94JV+UP8dliCOpBezoMeXrT0JVVywCeoVaUiYM6RExjwfzsJJNtseewRFuQb+YjSHFelqTndYF1iy5KhQUyTYGI0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE4EmmNl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKa0kUzs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D971F000C4;
-	Sat, 17 Oct 2026 16:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE4EmmNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DC51F000C4;
+	Sat, 17 Oct 2026 16:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253954;
-	bh=sJWW12iijXWqiS9Am2hy8/3Pu4C3FMkEtrgJ9WhcPoE=;
+	s=korg; t=1792253957;
+	bh=1hEBXOaGI+GS3gxxTmIHyIUyy7D7HtACSwMd6wfv0jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKa0kUzs4aUaCLr4H5am5dnmAQ2bXcbXReJthQZTB+cNCJ22bYvLPzscnkRbOvw35
-	 E2sxXvfotUrKIN3GN7Y0O3satDieNtEhcFSwtX1HRuO5z+5vXgJq3g1dIU1o4KbJHr
-	 pBSmWLm6/9XVicURTeptPectgm4irO1AR1b+13Ms=
+	b=GE4EmmNlMuFVclznr+ownDD7Oq9y+ajAjOw0vv6kx8efyDTjPbeNMtJOa/yMom4Q1
+	 SnKxYdRBpIBSUeaV6WDi9g9vWbc8DJ3wGeM08nLRb4y2ttS71l72C4bP7NlkujrP84
+	 5Qe5jXxF+KLp1nKh7w+/51wV/OmuFrV6mCOU+bxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 248/869] ring-buffer: Fix possible dereference of uninitialized pointer
-Date: Sat, 17 Oct 2026 17:51:29 +0200
-Message-ID: <20261017160043.416552141@linuxfoundation.org>
+Subject: [PATCH 6.12 249/869] drm: renesas: rz-du: mipi_dsi: fix kernel panic when rebooting for some panels
+Date: Sat, 17 Oct 2026 17:51:30 +0200
+Message-ID: <20261017160043.442628934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,56 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit f1547779402c4cd67755c33616b7203baa88420b ]
+[ Upstream commit 64aa8b3a60a825134f7d866adf05c024bbe0c24c ]
 
-There is a pointer head_page in rb_meta_validate_events() which is not
-initialized at the beginning of a function. This pointer can be dereferenced
-if there is a failure during reader page validation. In this case the control
-is passed to "invalid" label where the pointer is dereferenced in a loop.
+Since commit 56de5e305d4b ("clk: renesas: r9a07g044: Add MSTOP for RZ/G2L")
+we may get the following kernel panic, for some panels, when rebooting:
 
-To fix the issue initialize orig_head and head_page before calling
-rb_validate_buffer.
+  systemd-shutdown[1]: Rebooting.
+  Call trace:
+   ...
+   do_serror+0x28/0x68
+   el1h_64_error_handler+0x34/0x50
+   el1h_64_error+0x6c/0x70
+   rzg2l_mipi_dsi_host_transfer+0x114/0x458 (P)
+   mipi_dsi_device_transfer+0x44/0x58
+   mipi_dsi_dcs_set_display_off_multi+0x9c/0xc4
+   ili9881c_unprepare+0x38/0x88
+   drm_panel_unprepare+0xbc/0x108
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This happens for panels that need to send MIPI-DSI commands in their
+unprepare() callback. Since the MIPI-DSI interface is stopped at that
+point, rzg2l_mipi_dsi_host_transfer() triggers the kernel panic.
 
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://patch.msgid.link/20260213100130.2013839-1-d.dulov@aladdin.ru
-Closes: https://lore.kernel.org/r/202406130130.JtTGRf7W-lkp@intel.com/
-Fixes: 5f3b6e839f3c ("ring-buffer: Validate boot range memory events")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fix by moving rzg2l_mipi_dsi_stop() to new callback function
+rzg2l_mipi_dsi_atomic_post_disable().
+
+With this change we now have the correct power-down/stop sequence:
+
+  systemd-shutdown[1]: Rebooting.
+  rzg2l-mipi-dsi 10850000.dsi: rzg2l_mipi_dsi_atomic_disable(): entry
+  ili9881c-dsi 10850000.dsi.0: ili9881c_unprepare(): entry
+  rzg2l-mipi-dsi 10850000.dsi: rzg2l_mipi_dsi_atomic_post_disable(): entry
+  reboot: Restarting system
+
+Suggested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patch.msgid.link/20260112154333.655352-1-hugo@hugovil.com
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index c54e7e910b436..ca6a4d0f3ef37 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1888,6 +1888,8 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 	if (!meta || !meta->head_buffer)
- 		return;
+diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
+index a9216a99b2be1..5b8da2b6cbd0f 100644
+--- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
++++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
+@@ -574,6 +574,13 @@ static void rzg2l_mipi_dsi_atomic_disable(struct drm_bridge *bridge,
  
-+	head_page = cpu_buffer->head_page;
+ 	rzg2l_mipi_dsi_stop_video(dsi);
+ 	rzg2l_mipi_dsi_stop_hs_clock(dsi);
++}
 +
- 	/* Do the reader page first */
- 	ret = rb_validate_buffer(cpu_buffer->reader_page->page, cpu_buffer->cpu);
- 	if (ret < 0) {
-@@ -1898,8 +1900,6 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 	entry_bytes += local_read(&cpu_buffer->reader_page->page->commit);
- 	local_set(&cpu_buffer->reader_page->entries, ret);
++static void rzg2l_mipi_dsi_atomic_post_disable(struct drm_bridge *bridge,
++					       struct drm_bridge_state *old_bridge_state)
++{
++	struct rzg2l_mipi_dsi *dsi = bridge_to_rzg2l_mipi_dsi(bridge);
++
+ 	rzg2l_mipi_dsi_stop(dsi);
+ }
  
--	head_page = cpu_buffer->head_page;
--
- 	/* If the commit_buffer is the reader page, update the commit page */
- 	if (meta->commit_buffer == (unsigned long)cpu_buffer->reader_page->page) {
- 		cpu_buffer->commit_page = cpu_buffer->reader_page;
+@@ -598,6 +605,7 @@ static const struct drm_bridge_funcs rzg2l_mipi_dsi_bridge_ops = {
+ 	.atomic_reset = drm_atomic_helper_bridge_reset,
+ 	.atomic_enable = rzg2l_mipi_dsi_atomic_enable,
+ 	.atomic_disable = rzg2l_mipi_dsi_atomic_disable,
++	.atomic_post_disable = rzg2l_mipi_dsi_atomic_post_disable,
+ 	.mode_valid = rzg2l_mipi_dsi_bridge_mode_valid,
+ };
+ 
 -- 
 2.53.0
 
