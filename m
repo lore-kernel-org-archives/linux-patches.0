@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6486391512;
-	Sat, 17 Oct 2026 17:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB85C22F767;
+	Sat, 17 Oct 2026 17:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258170; cv=none; b=Mnut2ifxqnAizA/qKVvL+AnCqAI2k/MzM9PxtMYjclUTcq7TUYjkaxllOlBH+ajgqxktqrjgdpl01BfvBEkexV0ScAvfIxQOYGCYoQvrv9msDtWPqwcJaez+CR/sKQmtWFyqwyxlFk1MLsVBjZpHfG03asEHNkT47wQpaF93Ok0=
+	t=1792258172; cv=none; b=m1E3nLWaPmmds9c1Wgp4+0myGeoW7SgrG/FYocKznx4QTx0QtnAYj60QsxcZD9zIoaRf4L4uyCBFjsUeQE23tlN7qwPhBgQ6eaz7wmEcsJbhe0nk9MFKDedfMKdlXPJpNMgKnVcnaZurULvzktJUBS9DPFmfqMc9rYL8E5Fr5LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258170; c=relaxed/simple;
-	bh=dHg4tKrHf/9uCyUt+Zhv5+mXP3X0FRkOkHHdZw6z7uE=;
+	s=arc-20240116; t=1792258172; c=relaxed/simple;
+	bh=BVvxck37E0fRGQcqnINslUph/ILb4eRn7BwPXjHT6YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggOV2oPhTBDRjgtMEQbwnTJdOPeO804MgjvfycLele7SwWmvmrG6wG6RGrEBIKzXnrpYagM1RapKdDFy+kty6E4fJLj7fVJCyMqFZ6GZ/D4sz4UfBqS+I/NL7arX2+3HDXG+2xR3cTiOpdzkbtpYgWIdB8HGCnGseV6BUAuT7RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeufT9iY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uqzeq6rLM/CtQnT4kY6kgt05/1xOVhNoK+AHPOE9rdNCB2ikzWepMdPkEr1xBrPi89Q9OQMUEkf8L+eBCPyI9jEJPE/Q6TZNOvOD13aJpXul54lpqFkq855WsZu0fOWfvl4fai0X+FkUuOXjVmI0aCM6CaQCmSJsaYoXe9VW+7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOmdhMwC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeufT9iY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AB41F000C4;
-	Sat, 17 Oct 2026 17:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOmdhMwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AD51F000C4;
+	Sat, 17 Oct 2026 17:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258168;
-	bh=NtKRDTaQrivzhoVJxhREupVN6yaFXCBmudeSTuR7HRk=;
+	s=korg; t=1792258171;
+	bh=NEN+haWmd7U0FNBGRWO6T/HV+VOg/TU12LWpAm4Np+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xeufT9iYpCvoicQbhAY7Pk0fA17ijg1NgEkLSx+uYsE3qtD7qFqsx+9iqYZhWCxJp
-	 riPmufBs3L9TrvSst3DdFKDIkox1HURI2uEfVRCxmUPdTixvKaWU/CMLJSXnVGs3rr
-	 ouYXs5HyIHnxqiEXysioyMRxPCvyKQaM3DChRxZM=
+	b=vOmdhMwCMAU8CfK2KVYxN7ANoN6t9qCvQQydEtAaxULP1r1o8NSyCs8RYnMupvI+4
+	 qPthQvY9v95NYWDTA+KjT1l8a48pVdauuDn/BHAPWkJNa1XV3WYn4SonA1tDdkKz60
+	 4zet94ggxW9PTaUj2E4TtF7ieP8p1GMEvEkF69WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Petrausch <christoph.petrausch@deepl.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Priya Singh <priyax.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 0793/1674] ice: fix Rx page leak on multi-buffer frames
-Date: Sat, 17 Oct 2026 17:51:05 +0200
-Message-ID: <20261017160451.461393542@linuxfoundation.org>
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0794/1674] iommu/s390: Make attach succeed when the device was surprise removed
+Date: Sat, 17 Oct 2026 17:51:06 +0200
+Message-ID: <20261017160451.487384283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -57,272 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 84bf1ac85af84d354c7a2fdbdc0d4efc8aaec34b ]
+[ Upstream commit 9ffaf5229055fcfbb3b3d6f1c7e58d63715c3f73 ]
 
-The ice_put_rx_mbuf() function handles calling ice_put_rx_buf() for each
-buffer in the current frame. This function was introduced as part of
-handling multi-buffer XDP support in the ice driver.
+When a PCI device is removed with surprise hotplug, there may still be
+attempts to attach the device to the default domain as part of tear down
+via (__iommu_release_dma_ownership()), or because the removal happens
+during probe (__iommu_probe_device()). In both cases zpci_register_ioat()
+fails with a cc value indicating that the device handle is invalid. This
+is because the device is no longer part of the instance as far as the
+hypervisor is concerned.
 
-It works by iterating over the buffers from first_desc up to 1 plus the
-total number of fragments in the frame, cached from before the XDP program
-was executed.
+Currently this leads to an error return and s390_iommu_attach_device()
+fails. This triggers the WARN_ON() in __iommu_group_set_domain_nofail()
+because attaching to the default domain must never fail.
 
-If the hardware posts a descriptor with a size of 0, the logic used in
-ice_put_rx_mbuf() breaks. Such descriptors get skipped and don't get added
-as fragments in ice_add_xdp_frag. Since the buffer isn't counted as a
-fragment, we do not iterate over it in ice_put_rx_mbuf(), and thus we don't
-call ice_put_rx_buf().
+With the device fenced by the hypervisor no DMAs to or from memory are
+possible and the IOMMU translations have no effect. Proceed as if the
+registration was successful and let the hotplug event handling clean up
+the device.
 
-Because we don't call ice_put_rx_buf(), we don't attempt to re-use the
-page or free it. This leaves a stale page in the ring, as we don't
-increment next_to_alloc.
+This is similar to how devices in the error state are handled since
+commit 59bbf596791b ("iommu/s390: Make attach succeed even if the device
+is in error state") except that for removal the domain will not be
+registered later. This approach was also previously discussed at the
+link.
 
-The ice_reuse_rx_page() assumes that the next_to_alloc has been incremented
-properly, and that it always points to a buffer with a NULL page. Since
-this function doesn't check, it will happily recycle a page over the top
-of the next_to_alloc buffer, losing track of the old page.
+Handle both cases, error state and removal, in a helper which checks if
+the error needs to be propagated or ignored. Avoid magic number
+condition codes by using the pre-existing, but never used, defines for
+PCI load/store condition codes and rename them to reflect that they
+apply to all PCI instructions.
 
-Note that this leak only occurs for multi-buffer frames. The
-ice_put_rx_mbuf() function always handles at least one buffer, so a
-single-buffer frame will always get handled correctly. It is not clear
-precisely why the hardware hands us descriptors with a size of 0 sometimes,
-but it happens somewhat regularly with "jumbo frames" used by 9K MTU.
-
-To fix ice_put_rx_mbuf(), we need to make sure to call ice_put_rx_buf() on
-all buffers between first_desc and next_to_clean. Borrow the logic of a
-similar function in i40e used for this same purpose. Use the same logic
-also in ice_get_pgcnts().
-
-Instead of iterating over just the number of fragments, use a loop which
-iterates until the current index reaches to the next_to_clean element just
-past the current frame. Unlike i40e, the ice_put_rx_mbuf() function does
-call ice_put_rx_buf() on the last buffer of the frame indicating the end of
-packet.
-
-For non-linear (multi-buffer) frames, we need to take care when adjusting
-the pagecnt_bias. An XDP program might release fragments from the tail of
-the frame, in which case that fragment page is already released. Only
-update the pagecnt_bias for the first descriptor and fragments still
-remaining post-XDP program. Take care to only access the shared info for
-fragmented buffers, as this avoids a significant cache miss.
-
-The xdp_xmit value only needs to be updated if an XDP program is run, and
-only once per packet. Drop the xdp_xmit pointer argument from
-ice_put_rx_mbuf(). Instead, set xdp_xmit in the ice_clean_rx_irq() function
-directly. This avoids needing to pass the argument and avoids an extra
-bit-wise OR for each buffer in the frame.
-
-Move the increment of the ntc local variable to ensure its updated *before*
-all calls to ice_get_pgcnts() or ice_put_rx_mbuf(), as the loop logic
-requires the index of the element just after the current frame.
-
-Now that we use an index pointer in the ring to identify the packet, we no
-longer need to track or cache the number of fragments in the rx_ring.
-
-Cc: Christoph Petrausch <christoph.petrausch@deepl.com>
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Reported-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
-Closes: https://lore.kernel.org/netdev/CAK8fFZ4hY6GUJNENz3wY9jaYLZXGfpr7dnZxzGMYoE44caRbgw@mail.gmail.com/
-Fixes: 743bbd93cf29 ("ice: put Rx buffers after being done with current frame")
-Tested-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Tested-by: Priya Singh <priyax.singh@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: stable@vger.kernel.org # v6.2
+Link: https://lore.kernel.org/linux-iommu/20240808194155.GD1985367@ziepe.ca/
+Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250904-iommu_succeed_attach_removed-v1-1-e7f333d2f80f@linux.ibm.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 80 ++++++++++-------------
- drivers/net/ethernet/intel/ice/ice_txrx.h |  1 -
- 2 files changed, 34 insertions(+), 47 deletions(-)
+ arch/s390/include/asm/pci_insn.h | 10 +++++-----
+ drivers/iommu/s390-iommu.c       | 23 ++++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 3d4caf0475545..bdb9af52eb757 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -865,10 +865,6 @@ ice_add_xdp_frag(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp,
- 	__skb_fill_page_desc_noacc(sinfo, sinfo->nr_frags++, rx_buf->page,
- 				   rx_buf->page_offset, size);
- 	sinfo->xdp_frags_size += size;
--	/* remember frag count before XDP prog execution; bpf_xdp_adjust_tail()
--	 * can pop off frags but driver has to handle it on its own
--	 */
--	rx_ring->nr_frags = sinfo->nr_frags;
+diff --git a/arch/s390/include/asm/pci_insn.h b/arch/s390/include/asm/pci_insn.h
+index e5f57cfe1d458..5b2ed051f4322 100644
+--- a/arch/s390/include/asm/pci_insn.h
++++ b/arch/s390/include/asm/pci_insn.h
+@@ -16,11 +16,11 @@
+ #define ZPCI_PCI_ST_FUNC_NOT_AVAIL		40
+ #define ZPCI_PCI_ST_ALREADY_IN_RQ_STATE		44
  
- 	if (page_is_pfmemalloc(rx_buf->page))
- 		xdp_buff_set_frag_pfmemalloc(xdp);
-@@ -939,20 +935,20 @@ ice_get_rx_buf(struct ice_rx_ring *rx_ring, const unsigned int size,
- /**
-  * ice_get_pgcnts - grab page_count() for gathered fragments
-  * @rx_ring: Rx descriptor ring to store the page counts on
-+ * @ntc: the next to clean element (not included in this frame!)
-  *
-  * This function is intended to be called right before running XDP
-  * program so that the page recycling mechanism will be able to take
-  * a correct decision regarding underlying pages; this is done in such
-  * way as XDP program can change the refcount of page
-  */
--static void ice_get_pgcnts(struct ice_rx_ring *rx_ring)
-+static void ice_get_pgcnts(struct ice_rx_ring *rx_ring, unsigned int ntc)
- {
--	u32 nr_frags = rx_ring->nr_frags + 1;
- 	u32 idx = rx_ring->first_desc;
- 	struct ice_rx_buf *rx_buf;
- 	u32 cnt = rx_ring->count;
+-/* Load/Store return codes */
+-#define ZPCI_PCI_LS_OK				0
+-#define ZPCI_PCI_LS_ERR				1
+-#define ZPCI_PCI_LS_BUSY			2
+-#define ZPCI_PCI_LS_INVAL_HANDLE		3
++/* PCI instruction condition codes */
++#define ZPCI_CC_OK				0
++#define ZPCI_CC_ERR				1
++#define ZPCI_CC_BUSY			2
++#define ZPCI_CC_INVAL_HANDLE		3
  
--	for (int i = 0; i < nr_frags; i++) {
-+	while (idx != ntc) {
- 		rx_buf = &rx_ring->rx_buf[idx];
- 		rx_buf->pgcnt = page_count(rx_buf->page);
- 
-@@ -1126,62 +1122,51 @@ ice_put_rx_buf(struct ice_rx_ring *rx_ring, struct ice_rx_buf *rx_buf)
+ /* Load/Store address space identifiers */
+ #define ZPCI_PCIAS_MEMIO_0			0
+diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+index fbf59a8db29b1..9328ada882b7a 100644
+--- a/drivers/iommu/s390-iommu.c
++++ b/drivers/iommu/s390-iommu.c
+@@ -101,6 +101,23 @@ static void __s390_iommu_detach_device(struct zpci_dev *zdev)
+ 	zdev->dma_table = NULL;
  }
  
- /**
-- * ice_put_rx_mbuf - ice_put_rx_buf() caller, for all frame frags
-+ * ice_put_rx_mbuf - ice_put_rx_buf() caller, for all buffers in frame
-  * @rx_ring: Rx ring with all the auxiliary data
-  * @xdp: XDP buffer carrying linear + frags part
-- * @xdp_xmit: XDP_TX/XDP_REDIRECT verdict storage
-- * @ntc: a current next_to_clean value to be stored at rx_ring
-+ * @ntc: the next to clean element (not included in this frame!)
-  * @verdict: return code from XDP program execution
-  *
-- * Walk through gathered fragments and satisfy internal page
-- * recycle mechanism; we take here an action related to verdict
-- * returned by XDP program;
-+ * Called after XDP program is completed, or on error with verdict set to
-+ * ICE_XDP_CONSUMED.
-+ *
-+ * Walk through buffers from first_desc to the end of the frame, releasing
-+ * buffers and satisfying internal page recycle mechanism. The action depends
-+ * on verdict from XDP program.
-  */
- static void ice_put_rx_mbuf(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp,
--			    u32 *xdp_xmit, u32 ntc, u32 verdict)
-+			    u32 ntc, u32 verdict)
- {
--	u32 nr_frags = rx_ring->nr_frags + 1;
- 	u32 idx = rx_ring->first_desc;
- 	u32 cnt = rx_ring->count;
--	u32 post_xdp_frags = 1;
- 	struct ice_rx_buf *buf;
--	int i;
-+	u32 xdp_frags = 0;
-+	int i = 0;
- 
- 	if (unlikely(xdp_buff_has_frags(xdp)))
--		post_xdp_frags += xdp_get_shared_info_from_buff(xdp)->nr_frags;
-+		xdp_frags = xdp_get_shared_info_from_buff(xdp)->nr_frags;
- 
--	for (i = 0; i < post_xdp_frags; i++) {
-+	while (idx != ntc) {
- 		buf = &rx_ring->rx_buf[idx];
-+		if (++idx == cnt)
-+			idx = 0;
- 
--		if (verdict & (ICE_XDP_TX | ICE_XDP_REDIR)) {
-+		/* An XDP program could release fragments from the end of the
-+		 * buffer. For these, we need to keep the pagecnt_bias as-is.
-+		 * To do this, only adjust pagecnt_bias for fragments up to
-+		 * the total remaining after the XDP program has run.
-+		 */
-+		if (verdict != ICE_XDP_CONSUMED)
- 			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
--			*xdp_xmit |= verdict;
--		} else if (verdict & ICE_XDP_CONSUMED) {
-+		else if (i++ <= xdp_frags)
- 			buf->pagecnt_bias++;
--		} else if (verdict == ICE_XDP_PASS) {
--			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
--		}
- 
- 		ice_put_rx_buf(rx_ring, buf);
--
--		if (++idx == cnt)
--			idx = 0;
--	}
--	/* handle buffers that represented frags released by XDP prog;
--	 * for these we keep pagecnt_bias as-is; refcount from struct page
--	 * has been decremented within XDP prog and we do not have to increase
--	 * the biased refcnt
--	 */
--	for (; i < nr_frags; i++) {
--		buf = &rx_ring->rx_buf[idx];
--		ice_put_rx_buf(rx_ring, buf);
--		if (++idx == cnt)
--			idx = 0;
- 	}
- 
- 	xdp->data = NULL;
- 	rx_ring->first_desc = ntc;
--	rx_ring->nr_frags = 0;
- }
- 
- /**
-@@ -1262,6 +1247,10 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- 		/* retrieve a buffer from the ring */
- 		rx_buf = ice_get_rx_buf(rx_ring, size, ntc);
- 
-+		/* Increment ntc before calls to ice_put_rx_mbuf() */
-+		if (++ntc == cnt)
-+			ntc = 0;
++static bool reg_ioat_propagate_error(int cc, u8 status)
++{
++	/*
++	 * If the device is in the error state the reset routine
++	 * will register the IOAT of the newly set domain on re-enable
++	 */
++	if (cc == ZPCI_CC_ERR && status == ZPCI_PCI_ST_FUNC_NOT_AVAIL)
++		return false;
++	/*
++	 * If the device was removed treat registration as success
++	 * and let the subsequent error event trigger tear down.
++	 */
++	if (cc == ZPCI_CC_INVAL_HANDLE)
++		return false;
++	return cc != ZPCI_CC_OK;
++}
 +
- 		if (!xdp->data) {
- 			void *hard_start;
+ static int s390_iommu_attach_device(struct iommu_domain *domain,
+ 				    struct device *dev)
+ {
+@@ -124,11 +141,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
  
-@@ -1270,24 +1259,23 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- 			xdp_prepare_buff(xdp, hard_start, offset, size, !!offset);
- 			xdp_buff_clear_frags_flag(xdp);
- 		} else if (ice_add_xdp_frag(rx_ring, xdp, rx_buf, size)) {
--			ice_put_rx_mbuf(rx_ring, xdp, NULL, ntc, ICE_XDP_CONSUMED);
-+			ice_put_rx_mbuf(rx_ring, xdp, ntc, ICE_XDP_CONSUMED);
- 			break;
- 		}
--		if (++ntc == cnt)
--			ntc = 0;
+ 	cc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+ 				virt_to_phys(s390_domain->dma_table), &status);
+-	/*
+-	 * If the device is undergoing error recovery the reset code
+-	 * will re-establish the new domain.
+-	 */
+-	if (cc && status != ZPCI_PCI_ST_FUNC_NOT_AVAIL)
++	if (reg_ioat_propagate_error(cc, status))
+ 		return -EIO;
+ 	zdev->dma_table = s390_domain->dma_table;
  
- 		/* skip if it is NOP desc */
- 		if (ice_is_non_eop(rx_ring, rx_desc))
- 			continue;
- 
--		ice_get_pgcnts(rx_ring);
-+		ice_get_pgcnts(rx_ring, ntc);
- 		xdp_verdict = ice_run_xdp(rx_ring, xdp, xdp_prog, xdp_ring, rx_desc);
- 		if (xdp_verdict == ICE_XDP_PASS)
- 			goto construct_skb;
- 		total_rx_bytes += xdp_get_buff_len(xdp);
- 		total_rx_pkts++;
- 
--		ice_put_rx_mbuf(rx_ring, xdp, &xdp_xmit, ntc, xdp_verdict);
-+		ice_put_rx_mbuf(rx_ring, xdp, ntc, xdp_verdict);
-+		xdp_xmit |= xdp_verdict & (ICE_XDP_TX | ICE_XDP_REDIR);
- 
- 		continue;
- construct_skb:
-@@ -1300,7 +1288,7 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- 			rx_ring->ring_stats->rx_stats.alloc_buf_failed++;
- 			xdp_verdict = ICE_XDP_CONSUMED;
- 		}
--		ice_put_rx_mbuf(rx_ring, xdp, &xdp_xmit, ntc, xdp_verdict);
-+		ice_put_rx_mbuf(rx_ring, xdp, ntc, xdp_verdict);
- 
- 		if (!skb)
- 			break;
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
-index 53a155dde3e32..f2f86b90a003c 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.h
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
-@@ -344,7 +344,6 @@ struct ice_rx_ring {
- 	struct ice_tx_ring *xdp_ring;
- 	struct ice_rx_ring *next;	/* pointer to next ring in q_vector */
- 	struct xsk_buff_pool *xsk_pool;
--	u32 nr_frags;
- 	dma_addr_t dma;			/* physical address of ring */
- 	u64 cached_phctime;
- 	u16 rx_buf_len;
 -- 
 2.53.0
 
