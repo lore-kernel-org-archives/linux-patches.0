@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D424E3AB286;
-	Sat, 17 Oct 2026 16:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65B73AE713;
+	Sat, 17 Oct 2026 16:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255481; cv=none; b=LHaxG2dHP8oDthamx5nIMd0NbsYvwvBQw2ZFzsA2FifWnq4RX5rUovGIu1yyeQHEmLjWsX/wgJcAdllM6r35XFrf82fbmYeWHpCRtU4LvEy5d1JOj7UTQ68cO8b4/CSzT1au6NDMHcWZPwaVzE9C2k/PZF5emjSFlEwtMS+OPb4=
+	t=1792255484; cv=none; b=tJQFrwf+QtKZQWhLTXG/M4rsK9qhbH3dK29t5ZFslv2juKn/n0E9EYgaiSnnncGyuPs2G2N7mgNFf5+QP9UIcS1q79vuy0dkKjdMMLhmV2yujWNOYKyTvkLjQde2vZ5wRQeA9IlwnAgAvPgMwC/TeUgb17TBB1JF29axC0uyb2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255481; c=relaxed/simple;
-	bh=CTu9HmQqdHzwN5asvOMrGmVIu4Q4hRA9hI7QHfTzX2o=;
+	s=arc-20240116; t=1792255484; c=relaxed/simple;
+	bh=m95gHLazXjwUtOSk6Zck8dhXjFoQANAoHSNwU6ATxpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J3/qeo1EGeZctKoWOufLs5HntSV7ObvsKtnOEdmiXbkc1jggPANHrr++AmCaY3n0jCGGMbB+BHFjVFh4sDDH6fiSdpBJj7Iuqf3UV6UGEaAtwf5OPwKLTSsrCv3iRpuW9fD/OvxjUotCLZvIFjTpd53gzv1A0Ap73jyRRmf8lY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSoAnXZq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DCtNXViJUG44I09XnxdSv0W9s0g42q3w63HoC148seOJPbEPR7H3Iynli5m+kWSxuYzD9Eq+0MoZ/efysCKdiRfK5koN5VcJKPGBBJGJRCW/MDH2x66Cio+LUgkORuBeDfKJ2Noc3BFHG68FrsVwan4UAY9SM943d4I1Jz62jns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeVKb0cs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSoAnXZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8A91F000C4;
-	Sat, 17 Oct 2026 16:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeVKb0cs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D901F000C4;
+	Sat, 17 Oct 2026 16:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255479;
-	bh=jEpV9bYzNUYQDUy8DVKfThLaSDaEI6rnJD3ZXaQBv8c=;
+	s=korg; t=1792255482;
+	bh=2hocj6bOKqYECgPkMM/e5qjhzsH90q+vOKRRZACanaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSoAnXZq6mSt2yOifyHEGjXQYo/oK9/zX5exMevVX+L6qKlK7bzmR4pKeBSV8t/ui
-	 YIX7WvLZWILP68iALfGpyqzb09gpBN8lAPlft9lMf1sAU2YWCIEhhU6gENeUF8sgq0
-	 7v7IOXkaGtlBhbQ7/97uFQocskxgBIChzx0OOcik=
+	b=IeVKb0cs5rrnxcdPdtZy7x0HRRO033m945mgpGOoA3RI01N1vnoL+xAoftL/Ni2aR
+	 ht60j23+9G3q7OQTmAn2uCgZXZDK5vQoiTwUseog04ojezMNepM5s+VTv9/fUSHju8
+	 A0fII+roCdxu/C+dz1nR/Axzfr9F471/3h9jT9wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Walther, Jens-Uwe" <waltju@amazon.de>,
-	Yann Collet <yann.collet.73@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 788/869] erofs: disable LZ4 rolling decompression for now
-Date: Sat, 17 Oct 2026 18:00:29 +0200
-Message-ID: <20261017160057.112828459@linuxfoundation.org>
+Subject: [PATCH 6.12 789/869] net: rename netns_local to netns_immutable
+Date: Sat, 17 Oct 2026 18:00:30 +0200
+Message-ID: <20261017160057.137562719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,254 +47,560 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit 82e664cf1219c459c33aae931b222cf951af9cb7 ]
+[ Upstream commit 0c493da86374dffff7505e67289ad75b21f5b301 ]
 
-LZ4 rolling decompression [1] was introduced to reduce the memory
-footprint of temporary pages:
+The name 'netns_local' is confusing. A following commit will export it via
+netlink, so let's use a more explicit name.
 
- For many cases, it is needed for users to read small data within
- a compressed extent (pcluster), either due to random small read, or
- since uptodate folios (typically order-0) cannot be reused for
- decompression again since decompression algorithm refills
- already-uptodate folios.
+Reported-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 
-Rolling decompression works because LZ4 is LZ77-based and only refers
-to the most recent 64 KiB of decompressed data, so in theory only a
-bounded rolling window of temporary pages is needed when decompressing.
+Adapted to the older tree: the net_cachelines documentation is in the older
+format and only the netns_local row is renamed there, the ieee802154
+switch_netns hunk keeps the existing WARN_ON condition, and the missed
+ip6_vti user of the flag is converted as well.
 
-It can save a lot of temporary memory, e.g.
- 601,960-byte data can be compressed into a 256k LZ4 compressed extent,
- which means it needs 146 extra pages per request in the worst case if
- rolling decompression is disabled.
-
-However, the upstream LZ4 implementation is not under EROFS' control:
-For example, the literal copy memmove() may still **copy long literals
-backward** on x86 based on the address comparison even when the source
-and destination ranges do not overlap (IOWs, inline decompression
-doesn't need to be considered here). That breaks the rolling assumption
-and makes the optimization broken.
-
-Disable it for now to make sure the data correctness first since EROFS
-is used everywhere now: The rolling window approach can be revived once
-we either ensure that the official LZ4 code always copies forward for
-non-overlapping ranges or maintain our own LZ4 implementation in EROFS.
-
-The main impact is a higher runtime memory footprint; However, recent
-commit 0f6273ab4637 ("erofs: add a reserved buffer pool for lz4
-decompression") helps mitigate this when enabled but it's still not
-perfect.
-
-[1] https://www.usenix.org/conference/atc19/presentation/gao
-    § 3.3 Decompression
-
-Reported-by: "Walther, Jens-Uwe" <waltju@amazon.de>
-Closes: https://lore.kernel.org/r/BEZP281MB2102E57CD31862B8D958B33DD2AC2@BEZP281MB2102.DEUP281.PROD.OUTLOOK.COM
-Fixes: 8e6c8fa9f2e9 ("erofs: enable big pcluster feature")
-Cc: Yann Collet <yann.collet.73@gmail.com>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Stable-dep-of: debac3a20dec ("net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor.c | 60 +++++++++--------------------------------
- fs/erofs/internal.h     |  6 +----
- fs/erofs/zdata.c        | 18 +++----------
- 3 files changed, 16 insertions(+), 68 deletions(-)
+ Documentation/networking/net_cachelines/net_device.rst |  2 +-
+ Documentation/networking/switchdev.rst                 |  2 +-
+ drivers/net/amt.c                                      |  2 +-
+ drivers/net/bonding/bond_main.c                        |  2 +-
+ drivers/net/ethernet/adi/adin1110.c                    |  2 +-
+ drivers/net/ethernet/marvell/prestera/prestera_main.c  |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c      |  4 ++--
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c       |  2 +-
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c         |  2 +-
+ drivers/net/ethernet/rocker/rocker_main.c              |  2 +-
+ drivers/net/ethernet/ti/cpsw_new.c                     |  2 +-
+ drivers/net/loopback.c                                 |  2 +-
+ drivers/net/net_failover.c                             |  2 +-
+ drivers/net/team/team_core.c                           |  2 +-
+ drivers/net/vrf.c                                      |  2 +-
+ include/linux/netdevice.h                              |  4 ++--
+ net/batman-adv/soft-interface.c                        |  2 +-
+ net/bridge/br_device.c                                 |  2 +-
+ net/core/dev.c                                         |  4 ++--
+ net/hsr/hsr_device.c                                   |  2 +-
+ net/ieee802154/6lowpan/core.c                          |  2 +-
+ net/ieee802154/core.c                                  | 10 +++++-----
+ net/ipv4/ip_tunnel.c                                   |  2 +-
+ net/ipv4/ipmr.c                                        |  2 +-
+ net/ipv6/ip6_gre.c                                     |  2 +-
+ net/ipv6/ip6_tunnel.c                                  |  2 +-
+ net/ipv6/ip6_vti.c                                     |  2 +-
+ net/ipv6/ip6mr.c                                       |  2 +-
+ net/ipv6/sit.c                                         |  2 +-
+ net/openvswitch/vport-internal_dev.c                   |  2 +-
+ net/wireless/core.c                                    | 10 +++++-----
+ tools/testing/selftests/net/forwarding/README          |  2 +-
+ 32 files changed, 43 insertions(+), 43 deletions(-)
 
-diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
-index d965a3f3073b7..933347416513b 100644
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -7,11 +7,6 @@
- #include "compress.h"
- #include <linux/lz4.h>
+diff --git a/Documentation/networking/net_cachelines/net_device.rst b/Documentation/networking/net_cachelines/net_device.rst
+index 22b07c814f4a4..ce8666529fc58 100644
+--- a/Documentation/networking/net_cachelines/net_device.rst
++++ b/Documentation/networking/net_cachelines/net_device.rst
+@@ -166,7 +166,7 @@ unsigned:1                          wol_enabled
+ unsigned:1                          threaded                -                   -                   napi_poll(napi_enable,dev_set_threaded)
+ unsigned_long:1                     see_all_hwtstamp_requests                                       
+ unsigned_long:1                     change_proto_down                                               
+-unsigned_long:1                     netns_local                                                     
++unsigned_long:1                     netns_immutable                                                     
+ unsigned_long:1                     fcoe_mtu                                                        
+ struct_list_head                    net_notifier_list                                               
+ struct_macsec_ops*                  macsec_ops                                                      
+diff --git a/Documentation/networking/switchdev.rst b/Documentation/networking/switchdev.rst
+index f355f0166f1b4..2966b7122f050 100644
+--- a/Documentation/networking/switchdev.rst
++++ b/Documentation/networking/switchdev.rst
+@@ -137,7 +137,7 @@ would be sub-port 0 on port 1 on switch 1.
+ Port Features
+ ^^^^^^^^^^^^^
  
--#ifndef LZ4_DISTANCE_MAX	/* history window size */
--#define LZ4_DISTANCE_MAX 65535	/* set to maximum value by default */
--#endif
--
--#define LZ4_MAX_DISTANCE_PAGES	(DIV_ROUND_UP(LZ4_DISTANCE_MAX, PAGE_SIZE) + 1)
- #ifndef LZ4_DECOMPRESS_INPLACE_MARGIN
- #define LZ4_DECOMPRESS_INPLACE_MARGIN(srcsize)  (((srcsize) >> 8) + 32)
- #endif
-@@ -21,15 +16,12 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
- {
- 	struct erofs_sb_info *sbi = EROFS_SB(sb);
- 	struct z_erofs_lz4_cfgs *lz4 = data;
--	u16 distance;
+-dev->netns_local
++dev->netns_immutable
  
- 	if (lz4) {
- 		if (size < sizeof(struct z_erofs_lz4_cfgs)) {
- 			erofs_err(sb, "invalid lz4 cfgs, size=%u", size);
- 			return -EINVAL;
- 		}
--		distance = le16_to_cpu(lz4->max_distance);
--
- 		sbi->lz4.max_pclusterblks = le16_to_cpu(lz4->max_pclusterblks);
- 		if (!sbi->lz4.max_pclusterblks) {
- 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
-@@ -40,48 +32,27 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
- 			return -EINVAL;
- 		}
+ If the switchdev driver (and device) only supports offloading of the default
+ network namespace (netns), the driver should set this private flag to prevent
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index bf890f90f51e2..54199c3babccb 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3126,7 +3126,7 @@ static void amt_link_setup(struct net_device *dev)
+ 	dev->addr_len		= 0;
+ 	dev->priv_flags		|= IFF_NO_QUEUE;
+ 	dev->lltx		= true;
+-	dev->netns_local	= true;
++	dev->netns_immutable	= true;
+ 	dev->features		|= NETIF_F_GSO_SOFTWARE;
+ 	dev->hw_features	|= NETIF_F_SG | NETIF_F_HW_CSUM;
+ 	dev->hw_features	|= NETIF_F_FRAGLIST | NETIF_F_RXCSUM;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index d10bbe4c35718..a6f3ed0bd86a3 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -6088,7 +6088,7 @@ void bond_setup(struct net_device *bond_dev)
+ 	bond_dev->lltx = true;
+ 
+ 	/* Don't allow bond devices to change network namespaces. */
+-	bond_dev->netns_local = true;
++	bond_dev->netns_immutable = true;
+ 
+ 	/* By default, we declare the bond to be fully
+ 	 * VLAN hardware accelerated capable. Special
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index 4352444ec6f6f..71a2397edf2bb 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -1602,7 +1602,7 @@ static int adin1110_probe_netdevs(struct adin1110_priv *priv)
+ 		netdev->netdev_ops = &adin1110_netdev_ops;
+ 		netdev->ethtool_ops = &adin1110_ethtool_ops;
+ 		netdev->priv_flags |= IFF_UNICAST_FLT;
+-		netdev->netns_local = true;
++		netdev->netns_immutable = true;
+ 
+ 		port_priv->phydev = get_phy_device(priv->mii_bus, i + 1, false);
+ 		if (IS_ERR(port_priv->phydev)) {
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_main.c b/drivers/net/ethernet/marvell/prestera/prestera_main.c
+index 3f7cc04a873b2..ebd42fc263fce 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_main.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_main.c
+@@ -634,7 +634,7 @@ static int prestera_port_create(struct prestera_switch *sw, u32 id)
+ 		goto err_dl_port_register;
+ 
+ 	dev->features |= NETIF_F_HW_TC;
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
+ 	dev->netdev_ops = &prestera_netdev_ops;
+ 	dev->ethtool_ops = &prestera_ethtool_ops;
+ 	SET_NETDEV_DEV(dev, sw->dev->dev);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index fd3cf53ff17a9..1f46eae73319d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4401,9 +4401,9 @@ static netdev_features_t mlx5e_fix_features(struct net_device *netdev,
+ 
+ 	if (mlx5e_is_uplink_rep(priv)) {
+ 		features = mlx5e_fix_uplink_rep_features(netdev, features);
+-		netdev->netns_local = true;
++		netdev->netns_immutable = true;
  	} else {
--		distance = le16_to_cpu(dsb->u1.lz4_max_distance);
- 		sbi->lz4.max_pclusterblks = 1;
+-		netdev->netns_local = false;
++		netdev->netns_immutable = false;
  	}
--
--	sbi->lz4.max_distance_pages = distance ?
--					DIV_ROUND_UP(distance, PAGE_SIZE) + 1 :
--					LZ4_MAX_DISTANCE_PAGES;
- 	return z_erofs_gbuf_growsize(sbi->lz4.max_pclusterblks);
+ 
+ 	mutex_unlock(&priv->state_lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 82ef5d252161e..e07e2f5f84435 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -903,7 +903,7 @@ static void mlx5e_build_rep_netdev(struct net_device *netdev,
+ 
+ 	netdev->features |= netdev->hw_features;
+ 
+-	netdev->netns_local = true;
++	netdev->netns_immutable = true;
  }
  
- /*
-- * Fill all gaps with bounce pages if it's a sparse page list. Also check if
-- * all physical pages are consecutive, which can be seen for moderate CR.
-+ * Fill all gaps with bounce pages if it's a sparse page list (for example some
-+ * folios are already uptodate and thus can be mapped into userspace). Also
-+ * check if pages are physically consecutive, which can be seen for moderate CR.
-  */
--static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
--					struct page **pagepool)
-+static int z_erofs_oneshot_prepare_dstpages(struct z_erofs_decompress_req *rq,
-+					    struct page **pagepool)
- {
--	struct page *availables[LZ4_MAX_DISTANCE_PAGES] = { NULL };
--	unsigned long bounced[DIV_ROUND_UP(LZ4_MAX_DISTANCE_PAGES,
--					   BITS_PER_LONG)] = { 0 };
--	unsigned int lz4_max_distance_pages =
--				EROFS_SB(rq->sb)->lz4.max_distance_pages;
- 	void *kaddr = NULL;
--	unsigned int i, j, top;
--
--	top = 0;
--	for (i = j = 0; i < rq->outpages; ++i, ++j) {
--		struct page *const page = rq->out[i];
--		struct page *victim;
--
--		if (j >= lz4_max_distance_pages)
--			j = 0;
-+	unsigned int i;
+ static int mlx5e_init_rep(struct mlx5_core_dev *mdev,
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+index 81164f12cad36..12377cb1669a4 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -1680,7 +1680,7 @@ static int mlxsw_sp_port_create(struct mlxsw_sp *mlxsw_sp, u16 local_port,
+ 			 NETIF_F_HW_TC;
+ 	dev->hw_features |= NETIF_F_HW_TC | NETIF_F_LOOPBACK;
+ 	dev->lltx = true;
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
  
--		/* 'valid' bounced can only be tested after a complete round */
--		if (!rq->fillgaps && test_bit(j, bounced)) {
--			DBG_BUGON(i < lz4_max_distance_pages);
--			DBG_BUGON(top >= lz4_max_distance_pages);
--			availables[top++] = rq->out[i - lz4_max_distance_pages];
--		}
-+	for (i = 0; i < rq->outpages; ++i) {
-+		struct page *page, *victim;
+ 	dev->min_mtu = ETH_MIN_MTU;
+ 	dev->max_mtu = MLXSW_PORT_MAX_MTU - MLXSW_PORT_ETH_FRAME_HDR;
+diff --git a/drivers/net/ethernet/rocker/rocker_main.c b/drivers/net/ethernet/rocker/rocker_main.c
+index 23b20d5fd0168..2794f75df8fcb 100644
+--- a/drivers/net/ethernet/rocker/rocker_main.c
++++ b/drivers/net/ethernet/rocker/rocker_main.c
+@@ -2575,7 +2575,7 @@ static int rocker_probe_port(struct rocker *rocker, unsigned int port_number)
+ 	rocker_carrier_init(rocker_port);
  
-+		page = rq->out[i];
- 		if (page) {
--			__clear_bit(j, bounced);
- 			if (!PageHighMem(page)) {
- 				if (!i) {
- 					kaddr = page_address(page);
-@@ -93,21 +64,14 @@ static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
- 					continue;
- 				}
- 			}
--			kaddr = NULL;
--			continue;
--		}
--		kaddr = NULL;
--		__set_bit(j, bounced);
--
--		if (top) {
--			victim = availables[--top];
- 		} else {
- 			victim = __erofs_allocpage(pagepool, rq->gfp, true);
- 			if (!victim)
- 				return -ENOMEM;
- 			set_page_private(victim, Z_EROFS_SHORTLIVED_PAGE);
-+			rq->out[i] = victim;
- 		}
--		rq->out[i] = victim;
-+		kaddr = NULL;
- 	}
- 	return kaddr ? 1 : 0;
- }
-@@ -279,7 +243,7 @@ static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq,
- 		dst_maptype = 0;
- 	} else {
- 		/* general decoding path which can be used for all cases */
--		ret = z_erofs_lz4_prepare_dstpages(rq, pagepool);
-+		ret = z_erofs_oneshot_prepare_dstpages(rq, pagepool);
- 		if (ret < 0)
- 			return ret;
- 		if (ret > 0) {
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index 89dfb3736daa4..ed023f14acd3c 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -77,12 +77,8 @@ struct erofs_dev_context {
- 	bool flatdev;
- };
+ 	dev->features |= NETIF_F_SG;
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
  
--/* all filesystem-wide lz4 configurations */
- struct erofs_sb_lz4_info {
--	/* # of pages needed for EROFS lz4 rolling decompression */
--	u16 max_distance_pages;
--	/* maximum possible blocks for pclusters in the filesystem */
--	u16 max_pclusterblks;
-+	u16 max_pclusterblks;	/* maximum physical blocks for LZ4 pclusters */
- };
+ 	/* MTU range: 68 - 9000 */
+ 	dev->min_mtu = ROCKER_PORT_MIN_MTU;
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index c2041e46b83d6..d6f19cfd10b75 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -1427,7 +1427,7 @@ static int cpsw_create_ports(struct cpsw_common *cpsw)
  
- struct erofs_domain {
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index d36562c4afff7..08720efbb1a17 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1237,7 +1237,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
- 	unsigned int pclusterpages = z_erofs_pclusterpages(pcl);
- 	const struct z_erofs_decompressor *decomp =
- 				z_erofs_decomp[pcl->algorithmformat];
--	int i, j, jtop, err2, err = eio ? -EIO : 0;
-+	int i, err2, err = eio ? -EIO : 0;
- 	struct page *page;
- 	bool overlapped;
- 	bool try_free = true;
-@@ -1314,7 +1314,6 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
- 	    be->compressed_pages >= be->onstack_pages + Z_EROFS_ONSTACK_PAGES)
- 		kvfree(be->compressed_pages);
+ 		ndev->features |= NETIF_F_HW_VLAN_CTAG_FILTER |
+ 				  NETIF_F_HW_VLAN_CTAG_RX | NETIF_F_HW_TC;
+-		ndev->netns_local = true;
++		ndev->netns_immutable = true;
  
--	jtop = 0;
- 	z_erofs_fill_other_copies(be, err);
- 	for (i = 0; i < be->nr_pages; ++i) {
- 		page = be->decompressed_pages[i];
-@@ -1322,22 +1321,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 		ndev->xdp_features = NETDEV_XDP_ACT_BASIC |
+ 				     NETDEV_XDP_ACT_REDIRECT |
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 491e56b3263fd..63b236efb3b70 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -172,7 +172,7 @@ static void gen_lo_setup(struct net_device *dev,
+ 	dev->flags		= IFF_LOOPBACK;
+ 	dev->priv_flags		|= IFF_LIVE_ADDR_CHANGE | IFF_NO_QUEUE;
+ 	dev->lltx		= true;
+-	dev->netns_local	= true;
++	dev->netns_immutable	= true;
+ 	netif_keep_dst(dev);
+ 	dev->hw_features	= NETIF_F_GSO_SOFTWARE;
+ 	dev->features		= NETIF_F_SG | NETIF_F_FRAGLIST
+diff --git a/drivers/net/net_failover.c b/drivers/net/net_failover.c
+index 54c8b9d5b5fcf..5b50d9186f121 100644
+--- a/drivers/net/net_failover.c
++++ b/drivers/net/net_failover.c
+@@ -734,7 +734,7 @@ struct failover *net_failover_create(struct net_device *standby_dev)
+ 	failover_dev->lltx = true;
+ 
+ 	/* Don't allow failover devices to change network namespaces. */
+-	failover_dev->netns_local = true;
++	failover_dev->netns_immutable = true;
+ 
+ 	failover_dev->hw_features = FAILOVER_VLAN_FEATURES |
+ 				    NETIF_F_HW_VLAN_CTAG_TX |
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index a83f996f0f2e7..1645a7a2e0767 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2305,7 +2305,7 @@ static void team_setup(struct net_device *dev)
+ 	dev->lltx = true;
+ 
+ 	/* Don't allow team devices to change network namespaces. */
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
+ 
+ 	dev->features |= NETIF_F_GRO;
+ 
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index c071b3ccd8cb9..e48a15ad4a16a 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1624,7 +1624,7 @@ static void vrf_setup(struct net_device *dev)
+ 	dev->lltx = true;
+ 
+ 	/* don't allow vrf devices to change network namespaces. */
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
+ 
+ 	/* does not make sense for a VLAN to be added to a vrf device */
+ 	dev->features   |= NETIF_F_VLAN_CHALLENGED;
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 58e2f366dfe4d..97db4c477170d 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1976,7 +1976,7 @@ enum netdev_reg_state {
+  *			regardless of source, even if those aren't
+  *			HWTSTAMP_SOURCE_NETDEV
+  *	@change_proto_down: device supports setting carrier via IFLA_PROTO_DOWN
+- *	@netns_local: interface can't change network namespaces
++ *	@netns_immutable: interface can't change network namespaces
+  *	@fcoe_mtu:	device supports maximum FCoE MTU, 2158 bytes
+  *
+  *	@net_notifier_list:	List of per-net netdev notifier block
+@@ -2373,7 +2373,7 @@ struct net_device {
+ 	/* priv_flags_slow, ungrouped to save space */
+ 	unsigned long		see_all_hwtstamp_requests:1;
+ 	unsigned long		change_proto_down:1;
+-	unsigned long		netns_local:1;
++	unsigned long		netns_immutable:1;
+ 	unsigned long		fcoe_mtu:1;
+ 
+ 	struct list_head	net_notifier_list;
+diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
+index 47715a612320a..72fbf415dc2b5 100644
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -1031,7 +1031,7 @@ static void batadv_softif_init_early(struct net_device *dev)
+ 	dev->features |= NETIF_F_HW_VLAN_CTAG_FILTER;
+ 	dev->priv_flags |= IFF_NO_QUEUE;
+ 	dev->lltx = true;
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
+ 
+ 	/* can't call min_mtu, because the needed variables
+ 	 * have not been initialized yet
+diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
+index 446761da4e549..339b9be9653d3 100644
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -488,7 +488,7 @@ void br_dev_setup(struct net_device *dev)
+ 	SET_NETDEV_DEVTYPE(dev, &br_type);
+ 	dev->priv_flags = IFF_EBRIDGE | IFF_NO_QUEUE;
+ 	dev->lltx = true;
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
+ 
+ 	dev->features = COMMON_FEATURES | NETIF_F_HW_VLAN_CTAG_TX |
+ 			NETIF_F_HW_VLAN_STAG_TX;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 8f507292f8ba4..1c406b150477f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -11749,7 +11749,7 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+ 
+ 	/* Don't allow namespace local devices to be moved. */
+ 	err = -EINVAL;
+-	if (dev->netns_local)
++	if (dev->netns_immutable)
+ 		goto out;
+ 
+ 	/* Ensure the device has been registered */
+@@ -12219,7 +12219,7 @@ static void __net_exit default_device_exit_net(struct net *net)
+ 		char fb_name[IFNAMSIZ];
+ 
+ 		/* Ignore unmoveable devices (i.e. loopback) */
+-		if (dev->netns_local)
++		if (dev->netns_immutable)
  			continue;
  
- 		DBG_BUGON(z_erofs_page_is_invalidated(page));
--		if (!z_erofs_is_shortlived_page(page)) {
-+		if (!z_erofs_is_shortlived_page(page))
- 			erofs_onlinefolio_end(page_folio(page), err, true);
--			continue;
--		}
--		if (pcl->algorithmformat != Z_EROFS_COMPRESSION_LZ4) {
-+		else
- 			erofs_pagepool_add(be->pagepool, page);
--			continue;
--		}
--		for (j = 0; j < jtop && be->decompressed_pages[j] != page; ++j)
--			;
--		if (j >= jtop)	/* this bounce page is newly detected */
--			be->decompressed_pages[jtop++] = page;
- 	}
--	while (jtop)
--		erofs_pagepool_add(be->pagepool,
--				   be->decompressed_pages[--jtop]);
- 	if (be->decompressed_pages != be->onstack_pages)
- 		kvfree(be->decompressed_pages);
+ 		/* Leave virtual devices for the generic cleanup */
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 988d35866d043..3ef9e8e8f3a97 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -653,7 +653,7 @@ void hsr_dev_setup(struct net_device *dev)
+ 	/* Not sure about this. Taken from bridge code. netdevice.h says
+ 	 * it means "Does not change network namespaces".
+ 	 */
+-	dev->netns_local = true;
++	dev->netns_immutable = true;
  
+ 	dev->needs_free_netdev = true;
+ 
+diff --git a/net/ieee802154/6lowpan/core.c b/net/ieee802154/6lowpan/core.c
+index b200e1a03c17e..75ad8638c2d78 100644
+--- a/net/ieee802154/6lowpan/core.c
++++ b/net/ieee802154/6lowpan/core.c
+@@ -116,7 +116,7 @@ static void lowpan_setup(struct net_device *ldev)
+ 	ldev->netdev_ops	= &lowpan_netdev_ops;
+ 	ldev->header_ops	= &lowpan_header_ops;
+ 	ldev->needs_free_netdev	= true;
+-	ldev->netns_local	= true;
++	ldev->netns_immutable	= true;
+ }
+ 
+ static int lowpan_validate(struct nlattr *tb[], struct nlattr *data[],
+diff --git a/net/ieee802154/core.c b/net/ieee802154/core.c
+index 9b807f78a3105..edfbd57aebc2c 100644
+--- a/net/ieee802154/core.c
++++ b/net/ieee802154/core.c
+@@ -226,11 +226,11 @@ int cfg802154_switch_netns(struct cfg802154_registered_device *rdev,
+ 	list_for_each_entry(wpan_dev, &rdev->wpan_dev_list, list) {
+ 		if (!wpan_dev->netdev)
+ 			continue;
+-		wpan_dev->netdev->netns_local = false;
++		wpan_dev->netdev->netns_immutable = false;
+ 		err = dev_change_net_namespace(wpan_dev->netdev, net, "wpan%d");
+ 		if (err)
+ 			break;
+-		wpan_dev->netdev->netns_local = true;
++		wpan_dev->netdev->netns_immutable = true;
+ 	}
+ 
+ 	if (err) {
+@@ -242,11 +242,11 @@ int cfg802154_switch_netns(struct cfg802154_registered_device *rdev,
+ 						     list) {
+ 			if (!wpan_dev->netdev)
+ 				continue;
+-			wpan_dev->netdev->netns_local = false;
++			wpan_dev->netdev->netns_immutable = false;
+ 			err = dev_change_net_namespace(wpan_dev->netdev, net,
+ 						       "wpan%d");
+ 			WARN_ON(err && err != -ENOMEM);
+-			wpan_dev->netdev->netns_local = true;
++			wpan_dev->netdev->netns_immutable = true;
+ 		}
+ 
+ 		return err;
+@@ -291,7 +291,7 @@ static int cfg802154_netdev_notifier_call(struct notifier_block *nb,
+ 	switch (state) {
+ 		/* TODO NETDEV_DEVTYPE */
+ 	case NETDEV_REGISTER:
+-		dev->netns_local = true;
++		dev->netns_immutable = true;
+ 		wpan_dev->identifier = ++rdev->wpan_dev_id;
+ 		list_add_rcu(&wpan_dev->list, &rdev->wpan_dev_list);
+ 		rdev->devlist_generation++;
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 87cc6dca894cc..ed7bcd70f0c84 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -1148,7 +1148,7 @@ int ip_tunnel_init_net(struct net *net, unsigned int ip_tnl_net_id,
+ 	 * Allowing to move it to another netns is clearly unsafe.
+ 	 */
+ 	if (!IS_ERR(itn->fb_tunnel_dev)) {
+-		itn->fb_tunnel_dev->netns_local = true;
++		itn->fb_tunnel_dev->netns_immutable = true;
+ 		itn->fb_tunnel_dev->mtu = ip_tunnel_bind_dev(itn->fb_tunnel_dev);
+ 		ip_tunnel_add(itn, netdev_priv(itn->fb_tunnel_dev));
+ 		itn->type = itn->fb_tunnel_dev->type;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index e37853d70db61..c3aa025362510 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -549,7 +549,7 @@ static void reg_vif_setup(struct net_device *dev)
+ 	dev->flags		= IFF_NOARP;
+ 	dev->netdev_ops		= &reg_vif_netdev_ops;
+ 	dev->needs_free_netdev	= true;
+-	dev->netns_local	= true;
++	dev->netns_immutable	= true;
+ }
+ 
+ static struct net_device *ipmr_reg_vif(struct net *net, struct mr_table *mrt)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 0cc0e1113845a..b737731dbcba4 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1624,7 +1624,7 @@ static int __net_init ip6gre_init_net(struct net *net)
+ 	/* FB netdevice is special: we have one, and only one per netns.
+ 	 * Allowing to move it to another netns is clearly unsafe.
+ 	 */
+-	ign->fb_tunnel_dev->netns_local = true;
++	ign->fb_tunnel_dev->netns_immutable = true;
+ 
+ 	ip6gre_fb_tunnel_init(ign->fb_tunnel_dev);
+ 	ign->fb_tunnel_dev->rtnl_link_ops = &ip6gre_link_ops;
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 7eb2e67842f4a..4053ba5b1a139 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -2264,7 +2264,7 @@ static int __net_init ip6_tnl_init_net(struct net *net)
+ 	/* FB netdevice is special: we have one, and only one per netns.
+ 	 * Allowing to move it to another netns is clearly unsafe.
+ 	 */
+-	ip6n->fb_tnl_dev->netns_local = true;
++	ip6n->fb_tnl_dev->netns_immutable = true;
+ 
+ 	err = ip6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
+ 	if (err < 0)
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 3880662b6bc38..a5ad9fb38966d 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -1162,7 +1162,7 @@ static int __net_init vti6_init_net(struct net *net)
+ 		goto err_alloc_dev;
+ 	dev_net_set(ip6n->fb_tnl_dev, net);
+ 	ip6n->fb_tnl_dev->rtnl_link_ops = &vti6_link_ops;
+-	ip6n->fb_tnl_dev->netns_local = true;
++	ip6n->fb_tnl_dev->netns_immutable = true;
+ 
+ 	err = vti6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
+ 	if (err < 0)
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index d95b988be4afe..47afc8cef6880 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -654,7 +654,7 @@ static void reg_vif_setup(struct net_device *dev)
+ 	dev->flags		= IFF_NOARP;
+ 	dev->netdev_ops		= &reg_vif_netdev_ops;
+ 	dev->needs_free_netdev	= true;
+-	dev->netns_local	= true;
++	dev->netns_immutable	= true;
+ }
+ 
+ static struct net_device *ip6mr_reg_vif(struct net *net, struct mr_table *mrt)
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 1f980e827d042..614f7267dc9f8 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1861,7 +1861,7 @@ static int __net_init sit_init_net(struct net *net)
+ 	/* FB netdevice is special: we have one, and only one per netns.
+ 	 * Allowing to move it to another netns is clearly unsafe.
+ 	 */
+-	sitn->fb_tunnel_dev->netns_local = true;
++	sitn->fb_tunnel_dev->netns_immutable = true;
+ 
+ 	t = netdev_priv(sitn->fb_tunnel_dev);
+ 	t->net = net;
+diff --git a/net/openvswitch/vport-internal_dev.c b/net/openvswitch/vport-internal_dev.c
+index 5858d65ea1a9b..7b05a423a9ab9 100644
+--- a/net/openvswitch/vport-internal_dev.c
++++ b/net/openvswitch/vport-internal_dev.c
+@@ -149,7 +149,7 @@ static struct vport *internal_dev_create(const struct vport_parms *parms)
+ 
+ 	/* Restrict bridge port to current netns. */
+ 	if (vport->port_no == OVSP_LOCAL)
+-		vport->dev->netns_local = true;
++		vport->dev->netns_immutable = true;
+ 
+ 	rtnl_lock();
+ 	err = register_netdevice(vport->dev);
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index c485cd6fbc825..a0c0de4948428 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -165,11 +165,11 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 	list_for_each_entry(wdev, &rdev->wiphy.wdev_list, list) {
+ 		if (!wdev->netdev)
+ 			continue;
+-		wdev->netdev->netns_local = false;
++		wdev->netdev->netns_immutable = false;
+ 		err = dev_change_net_namespace(wdev->netdev, net, "wlan%d");
+ 		if (err)
+ 			break;
+-		wdev->netdev->netns_local = true;
++		wdev->netdev->netns_immutable = true;
+ 	}
+ 
+ 	if (err) {
+@@ -181,11 +181,11 @@ int cfg80211_switch_netns(struct cfg80211_registered_device *rdev,
+ 						     list) {
+ 			if (!wdev->netdev)
+ 				continue;
+-			wdev->netdev->netns_local = false;
++			wdev->netdev->netns_immutable = false;
+ 			err = dev_change_net_namespace(wdev->netdev, net,
+ 							"wlan%d");
+ 			WARN_ON(err);
+-			wdev->netdev->netns_local = true;
++			wdev->netdev->netns_immutable = true;
+ 		}
+ 
+ 		return err;
+@@ -1549,7 +1549,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
+ 		SET_NETDEV_DEVTYPE(dev, &wiphy_type);
+ 		wdev->netdev = dev;
+ 		/* can only change netns with wiphy */
+-		dev->netns_local = true;
++		dev->netns_immutable = true;
+ 
+ 		cfg80211_init_wdev(wdev);
+ 		break;
+diff --git a/tools/testing/selftests/net/forwarding/README b/tools/testing/selftests/net/forwarding/README
+index a652429bfd53c..7b41cff993adb 100644
+--- a/tools/testing/selftests/net/forwarding/README
++++ b/tools/testing/selftests/net/forwarding/README
+@@ -6,7 +6,7 @@ to easily create and test complex environments.
+ 
+ Unfortunately, these namespaces can not be used with actual switching
+ ASICs, as their ports can not be migrated to other network namespaces
+-(dev->netns_local) and most of them probably do not support the
++(dev->netns_immutable) and most of them probably do not support the
+ L1-separation provided by namespaces.
+ 
+ However, a similar kind of flexibility can be achieved by using VRFs and
 -- 
 2.53.0
 
