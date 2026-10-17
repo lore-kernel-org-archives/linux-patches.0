@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5159392829;
-	Sat, 17 Oct 2026 17:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F13A1A3F;
+	Sat, 17 Oct 2026 17:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258651; cv=none; b=Iwb7NPtVqULX318R/xaumhhlkEpyN+3FOJtrGCVycYCWMDVR25EZAlvuHqbQT3kEurl5fOsdX08CjLcxSJu/tN9V9rwzHn21IhOwjcqBZVd5rLxxnp++wOhGf2+MgXLCqDSkxDBzLyleOfmVl6DrUcHRWe4TU7RDBHWpC19Mp8o=
+	t=1792258653; cv=none; b=WJFl/szZeISl/f+4c/LmGPtRUHJJk5FWg2zZOUtzGhMGN3ZXthBwsvsQLexCsfZgEsT9c06mXFjx+bRze3/q+29Z0oi2MG9lyC5ToHS0LMOz13Bj21BBCWmfeWj9qTdQ+G0upXDysftlPJH8pYyjOAnJbMSJHcgcMW9lgVJPaBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258651; c=relaxed/simple;
-	bh=H2oNiFGFZPoCxKlBDeGi3Yr1TmOd3FB9SdVQfeywvrA=;
+	s=arc-20240116; t=1792258653; c=relaxed/simple;
+	bh=drtjf5d5TAsCM0lHCGYn9TOHvf431AKtjhpaZLcUauo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqYWAa0TUQf9cYCV8qElADlMgS4IBF9N+6uLSezSPS/k9vzkVGETTdzWeF88z5YZvCaFVMx5CTt6FFd/3uWf2Kiv0kmkK3sU5gBUlCmVT/d00yQXStFPnerlW8YahsmZzDx2byOIuBp62xy8uRvDp/pGVKX1NaISd2ia3XTTe/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHOjCu5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WS1OPCmIEKqhuQawBbnqI4uL+Luxmy8uD8hcoRmSxLUg0eWJZ47ES5orD482J14wbI/9Wpf/zcaZ6Re4hZMfb/ZNwAD+vVIDgLydxd3jEJuE40PpJaIKne4UGQazcYG0TEKsIN5aTEK2sCNUoYmuHs1gnskOqONlOdcpByTOI18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p81LZPVU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHOjCu5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5141F000C4;
-	Sat, 17 Oct 2026 17:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p81LZPVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293A21F000C4;
+	Sat, 17 Oct 2026 17:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258649;
-	bh=WaSDynTbGGvXyLLDnr6B2j29QauBns/rtyvGWYL7/NU=;
+	s=korg; t=1792258652;
+	bh=I/FPCOlO31ZVB+uKyGVE4u21llGDXaiXZm/GED8Lcs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CHOjCu5q4bDCnuoxI9um6rR0ezy/QGrELqcjKrycWutCp8SQVUczTkZow8ho7BsgF
-	 7qLX2U5DptGxc5hA3nGYs05XKqYye4JOl0Dri5d3M+Qj4P+Rs45EQ2Fvw76zep5nE0
-	 fWOG5+EcFuxgDC3ajM9LVPFmWGI5FA2P4nXzZkFM=
+	b=p81LZPVUT1jzsjl19czOf9ZUBbSX1moIWS2sFpMH6C8KGmN+X4Lnjn+bpjqHQa6sS
+	 HcwpWIeQ8HTjsQijjkI98nl+A9zp7YqXA+G+K1qCieiZxV65nu6FL3nxI7UWmrwxTo
+	 O9fKwcd+JqfE2mNrGACMb623ZRV0H1pszgfqVnlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0954/1674] erofs: fix inline data read failure for ztailpacking pclusters
-Date: Sat, 17 Oct 2026 17:53:46 +0200
-Message-ID: <20261017160455.614263654@linuxfoundation.org>
+Subject: [PATCH 6.6 0955/1674] iommu/vt-d: Clear Present bit before tearing down context entry
+Date: Sat, 17 Oct 2026 17:53:47 +0200
+Message-ID: <20261017160455.640770407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,121 +48,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit c134a40f86efb8d6b5a949ef70e06d5752209be5 ]
+[ Upstream commit c1e4f1dccbe9d7656d1c6872ebeadb5992d0aaa2 ]
 
-Compressed folios for ztailpacking pclusters must be valid before adding
-these pclusters to I/O chains. Otherwise, z_erofs_decompress_pcluster()
-may assume they are already valid and then trigger a NULL pointer
-dereference.
+When tearing down a context entry, the current implementation zeros the
+entire 128-bit entry using multiple 64-bit writes. This creates a window
+where the hardware can fetch a "torn" entry — where some fields are
+already zeroed while the 'Present' bit is still set — leading to
+unpredictable behavior or spurious faults.
 
-It is somewhat hard to reproduce because the inline data is in the same
-block as the tail of the compressed indexes, which are usually read just
-before. However, it may still happen if a fatal signal arrives while
-read_mapping_folio() is running, as shown below:
+While x86 provides strong write ordering, the compiler may reorder writes
+to the two 64-bit halves of the context entry. Even without compiler
+reordering, the hardware fetch is not guaranteed to be atomic with
+respect to multiple CPU writes.
 
- erofs: (device dm-1): z_erofs_pcluster_begin: failed to get inline data -4
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+Align with the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
 
- ...
+1. Clear only the 'Present' (P) bit of the context entry first to
+   signal the transition of ownership from hardware to software.
+2. Use dma_wmb() to ensure the cleared bit is visible to the IOMMU.
+3. Perform the required cache and context-cache invalidation to ensure
+   hardware no longer has cached references to the entry.
+4. Fully zero out the entry only after the invalidation is complete.
 
- pc : z_erofs_decompress_queue+0x4c8/0xa14
- lr : z_erofs_decompress_queue+0x160/0xa14
- sp : ffffffc08b3eb3a0
- x29: ffffffc08b3eb570 x28: ffffffc08b3eb418 x27: 0000000000001000
- x26: ffffff8086ebdbb8 x25: ffffff8086ebdbb8 x24: 0000000000000001
- x23: 0000000000000008 x22: 00000000fffffffb x21: dead000000000700
- x20: 00000000000015e7 x19: ffffff808babb400 x18: ffffffc089edc098
- x17: 00000000c006287d x16: 00000000c006287d x15: 0000000000000004
- x14: ffffff80ba8f8000 x13: 0000000000000004 x12: 00000006589a77c9
- x11: 0000000000000015 x10: 0000000000000000 x9 : 0000000000000000
- x8 : 0000000000000000 x7 : 0000000000000000 x6 : 000000000000003f
- x5 : 0000000000000040 x4 : ffffffffffffffe0 x3 : 0000000000000020
- x2 : 0000000000000008 x1 : 0000000000000000 x0 : 0000000000000000
- Call trace:
-  z_erofs_decompress_queue+0x4c8/0xa14
-  z_erofs_runqueue+0x908/0x97c
-  z_erofs_read_folio+0x128/0x228
-  filemap_read_folio+0x68/0x128
-  filemap_get_pages+0x44c/0x8b4
-  filemap_read+0x12c/0x5b8
-  generic_file_read_iter+0x4c/0x15c
-  do_iter_readv_writev+0x188/0x1e0
-  vfs_iter_read+0xac/0x1a4
-  backing_file_read_iter+0x170/0x34c
-  ovl_read_iter+0xf0/0x140
-  vfs_read+0x28c/0x344
-  ksys_read+0x80/0xf0
-  __arm64_sys_read+0x24/0x34
-  invoke_syscall+0x60/0x114
-  el0_svc_common+0x88/0xe4
-  do_el0_svc+0x24/0x30
-  el0_svc+0x40/0xa8
-  el0t_64_sync_handler+0x70/0xbc
-  el0t_64_sync+0x1bc/0x1c0
+Also, add a dma_wmb() to context_set_present() to ensure the entry
+is fully initialized before the 'Present' bit becomes visible.
 
-Fix this by reading the inline data before allocating and adding
-the pclusters to the I/O chains.
-
-Fixes: cecf864d3d76 ("erofs: support inline data decompression")
-Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-and-tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: ba39592764ed2 ("Intel IOMMU: Intel IOMMU driver")
+Reported-by: Dmytro Maluka <dmaluka@chromium.org>
+Closes: https://lore.kernel.org/all/aTG7gc7I5wExai3S@google.com/
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260120061816.2132558-3-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/iommu/intel/iommu.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 5b3eb4a227934..08af755ebd8e4 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -863,9 +863,20 @@ static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index d68bf9231bd5c..53a0ba5badc91 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -170,7 +170,26 @@ static phys_addr_t root_entry_uctp(struct root_entry *re)
  
- 	if (!(map->m_flags & EROFS_MAP_META)) {
- 		grp = erofs_find_workgroup(sb, blknr);
--	} else if ((map->m_pa & ~PAGE_MASK) + map->m_plen > PAGE_SIZE) {
--		DBG_BUGON(1);
--		return -EFSCORRUPTED;
-+	} else {
-+		void *mptr;
+ static inline void context_set_present(struct context_entry *context)
+ {
+-	context->lo |= 1;
++	u64 val;
 +
-+		if ((map->m_pa & ~PAGE_MASK) + map->m_plen > PAGE_SIZE) {
-+			DBG_BUGON(1);
-+			return -EFSCORRUPTED;
-+		}
++	dma_wmb();
++	val = READ_ONCE(context->lo) | 1;
++	WRITE_ONCE(context->lo, val);
++}
 +
-+		mptr = erofs_read_metabuf(&map->buf, sb, blknr, EROFS_NO_KMAP);
-+		if (IS_ERR(mptr)) {
-+			ret = PTR_ERR(mptr);
-+			erofs_err(sb, "failed to get inline data %d", ret);
-+			return ret;
-+		}
++/*
++ * Clear the Present (P) bit (bit 0) of a context table entry. This initiates
++ * the transition of the entry's ownership from hardware to software. The
++ * caller is responsible for fulfilling the invalidation handshake recommended
++ * by the VT-d spec, Section 6.5.3.3 (Guidance to Software for Invalidations).
++ */
++static inline void context_clear_present(struct context_entry *context)
++{
++	u64 val;
++
++	val = READ_ONCE(context->lo) & GENMASK_ULL(63, 1);
++	WRITE_ONCE(context->lo, val);
++	dma_wmb();
+ }
+ 
+ static inline void context_set_fault_enable(struct context_entry *context)
+@@ -2324,7 +2343,7 @@ static void domain_context_clear_one(struct device_domain_info *info, u8 bus, u8
+ 		did_old = context_domain_id(context);
  	}
  
- 	if (grp) {
-@@ -888,14 +899,6 @@ static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
- 		/* bind cache first when cached decompression is preferred */
- 		z_erofs_bind_cache(fe);
- 	} else {
--		void *mptr;
--
--		mptr = erofs_read_metabuf(&map->buf, sb, blknr, EROFS_NO_KMAP);
--		if (IS_ERR(mptr)) {
--			ret = PTR_ERR(mptr);
--			erofs_err(sb, "failed to get inline data %d", ret);
--			return ret;
--		}
- 		get_page(map->buf.page);
- 		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, map->buf.page);
- 		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
+-	context_clear_entry(context);
++	context_clear_present(context);
+ 	__iommu_flush_cache(iommu, context, sizeof(*context));
+ 	spin_unlock(&iommu->lock);
+ 	iommu->flush.flush_context(iommu,
+@@ -2343,6 +2362,9 @@ static void domain_context_clear_one(struct device_domain_info *info, u8 bus, u8
+ 				 DMA_TLB_DSI_FLUSH);
+ 
+ 	__iommu_flush_dev_iotlb(info, 0, MAX_AGAW_PFN_WIDTH);
++
++	context_clear_entry(context);
++	__iommu_flush_cache(iommu, context, sizeof(*context));
+ }
+ 
+ static int domain_setup_first_level(struct intel_iommu *iommu,
 -- 
 2.53.0
 
