@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D2D3C73F6;
-	Sat, 17 Oct 2026 17:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF23B9927;
+	Sat, 17 Oct 2026 17:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258101; cv=none; b=ZEz5oHCSk/ftyXvqGaL8saYfSe307SVdv3unMKJVWEnp78KV6VMyY7g1wUpX0tayx0ES0S0HeRsYEx4sb4PgGWg7DBg9PIGjEfOPhTTQnWV/rNR51mlUe+0EXTFUGzVSsgntknIW/B6H0ZaK4HVzSIKNBdcvzbwj0EGLjTl3+TQ=
+	t=1792258104; cv=none; b=jbXNSy7VkJdysktYQasj6Mft3iZ8OyECFrkvFTQHvgbsG35F0i6pdJdBvJiDC4aHPHXTSCf4kjdj8aOJZVH+mdmOuk/lBioHoOIRH2GrpQnXpcB55YHQoMhI8mBz40Wmt5ypP36zaPdS4E58mFZBY0qdu0Ueeu0qblnOXpnNjxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258101; c=relaxed/simple;
-	bh=72G5847381cQjb2V4pCGNOxhd4LAoqCuVbAN/Qy5z0M=;
+	s=arc-20240116; t=1792258104; c=relaxed/simple;
+	bh=xjh9QRWy3VYRTODhZosvyN4/ZKyxYL3H7laeE1tm1LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SX3nYMDvgF+SfP75hKaGBgchP6IT0tl0/a5WSZknLdhOFvfMvw6Ql7+1SDng2L4ccU1mhfiCgxiro9FXetFsKfzG48qMs+RxyOudQ+wXssdYxtJOOFaSxDiT8FhyAwssrEwghF3jUAj8kYoRIxUEob41cICFx/QTWPQkYCfknQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBojN6GG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cpq2IGVXRJ6REXGXgJFypCPC1Tb6rx6+KY71QHoBKen6Zm/jqwjTCufjcDDSHWPYOz67pdD9s7uXe9XF2blS28MluyUzpmTS4iD+ltVNhF2pShr25LSrDgEeMmp4Wi5CU1EUti4IlqHz90Goa6C2jfbV20MVxgr5XKOArWSb2Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijgGzmCq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBojN6GG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB7A1F000C4;
-	Sat, 17 Oct 2026 17:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijgGzmCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275C11F000C4;
+	Sat, 17 Oct 2026 17:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258099;
-	bh=jzlJPBltqDMxbJcFH7ix0BUw5oKm+fKgf5d7T86czcM=;
+	s=korg; t=1792258102;
+	bh=CDqMxcNzWwRGWQVA8Oj0SmEVj6w3Jqglnap4avfNY/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CBojN6GGaSZoWMAzYyzQ/FcL4bv/9yBze4N4RuS19wYmJfsjjQb59Y4s3xey1T8DQ
-	 n6Bs030zbw5+tdR63EM8fn8GkBWqzJdJ/Oo4jHGsV40+tbKZUWH/DFwzUqR9MdYwFU
-	 PwS7DcAk7moiIByrDzt619uO/kIwdS1m7VIA0/j8=
+	b=ijgGzmCqXNv6eFj+rl2/7dztoj6vjzPp/tFhwGJvSrcbh0HKJ0pkdlKHYfChB/FPo
+	 DMkb2VryUAfhjJ6qg89thWVfTGFAKvuktEg1FjgF4+7nRIyiR0QBdosZpzwl8w1KhW
+	 X7uCvoF5zSZ/al8FSAigCANaRuIbM5hjD/YqvhnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0772/1674] wifi: ath10k: replace ENOTSUPP with EOPNOTSUPP
-Date: Sat, 17 Oct 2026 17:50:44 +0200
-Message-ID: <20261017160450.920129035@linuxfoundation.org>
+Subject: [PATCH 6.6 0773/1674] wifi: ath10k: shutdown driver when hardware is unreliable
+Date: Sat, 17 Oct 2026 17:50:45 +0200
+Message-ID: <20261017160450.945650442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,232 +52,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit bc2ef64931c263104532723e9d8d923cfb357ab6 ]
+[ Upstream commit c256a94d1b1b15109740306f7f2a7c2173e12072 ]
 
-ENOTSUPP is not a standard error code, don't use it. Replace with
-EOPNOTSUPP instead.
+In rare cases, ath10k may lose connection with the PCIe bus due to
+some unknown reasons, which could further lead to system crashes during
+resuming due to watchdog timeout:
 
-No functional changes, compile tested only.
+ath10k_pci 0000:01:00.0: wmi command 20486 timeout, restarting hardware
+ath10k_pci 0000:01:00.0: already restarting
+ath10k_pci 0000:01:00.0: failed to stop WMI vdev 0: -11
+ath10k_pci 0000:01:00.0: failed to stop vdev 0: -11
+ieee80211 phy0: PM: **** DPM device timeout ****
+Call Trace:
+ panic+0x125/0x315
+ dpm_watchdog_set+0x54/0x54
+ dpm_watchdog_handler+0x57/0x57
+ call_timer_fn+0x31/0x13c
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240117080431.2907471-4-quic_periyasa@quicinc.com
-Stable-dep-of: c256a94d1b1b ("wifi: ath10k: shutdown driver when hardware is unreliable")
+At this point, all WMI commands will timeout and attempt to restart
+device. So set a threshold for consecutive restart failures. If the
+threshold is exceeded, consider the hardware is unreliable and all
+ath10k operations should be skipped to avoid system crash.
+
+fail_cont_count and pending_recovery are atomic variables, and
+do not involve complex conditional logic. Therefore, even if recovery
+check and reconfig complete are executed concurrently, the recovery
+mechanism will not be broken.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
+
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250623022731.509-1-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c    |  4 ++--
- drivers/net/wireless/ath/ath10k/htt.c     |  3 ++-
- drivers/net/wireless/ath/ath10k/mac.c     |  6 +++---
- drivers/net/wireless/ath/ath10k/pci.c     | 10 +++++-----
- drivers/net/wireless/ath/ath10k/wmi-tlv.c |  7 ++++---
- drivers/net/wireless/ath/ath10k/wmi.c     | 12 ++++++------
- 6 files changed, 22 insertions(+), 20 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c | 48 +++++++++++++++++++++++---
+ drivers/net/wireless/ath/ath10k/core.h | 11 ++++--
+ drivers/net/wireless/ath/ath10k/mac.c  |  7 +++-
+ drivers/net/wireless/ath/ath10k/wmi.c  |  6 ++++
+ 4 files changed, 63 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index c3a8b3496be2a..83e0efe0e3d90 100644
+index 83e0efe0e3d90..0fb56246d4624 100644
 --- a/drivers/net/wireless/ath/ath10k/core.c
 +++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -3,7 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
+@@ -2469,12 +2469,50 @@ static int ath10k_init_hw_params(struct ath10k *ar)
+ 	return 0;
+ }
+ 
++static bool ath10k_core_needs_recovery(struct ath10k *ar)
++{
++	long time_left;
++
++	/* Sometimes the recovery will fail and then the next all recovery fail,
++	 * so avoid infinite recovery.
++	 */
++	if (atomic_read(&ar->fail_cont_count) >= ATH10K_RECOVERY_MAX_FAIL_COUNT) {
++		ath10k_err(ar, "consecutive fail %d times, will shutdown driver!",
++			   atomic_read(&ar->fail_cont_count));
++		ar->state = ATH10K_STATE_WEDGED;
++		return false;
++	}
++
++	ath10k_dbg(ar, ATH10K_DBG_BOOT, "total recovery count: %d", ++ar->recovery_count);
++
++	if (atomic_read(&ar->pending_recovery)) {
++		/* Sometimes it happened another recovery work before the previous one
++		 * completed, then the second recovery work will destroy the previous
++		 * one, thus below is to avoid that.
++		 */
++		time_left = wait_for_completion_timeout(&ar->driver_recovery,
++							ATH10K_RECOVERY_TIMEOUT_HZ);
++		if (time_left) {
++			ath10k_warn(ar, "previous recovery succeeded, skip this!\n");
++			return false;
++		}
++
++		/* Record the continuous recovery fail count when recovery failed. */
++		atomic_inc(&ar->fail_cont_count);
++
++		/* Avoid having multiple recoveries at the same time. */
++		return false;
++	}
++
++	atomic_inc(&ar->pending_recovery);
++
++	return true;
++}
++
+ void ath10k_core_start_recovery(struct ath10k *ar)
+ {
+-	if (test_and_set_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags)) {
+-		ath10k_warn(ar, "already restarting\n");
++	if (!ath10k_core_needs_recovery(ar))
+ 		return;
+-	}
+ 
+ 	queue_work(ar->workqueue, &ar->restart_work);
+ }
+@@ -2510,6 +2548,8 @@ static void ath10k_core_restart(struct work_struct *work)
+ 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
+ 	int ret;
+ 
++	reinit_completion(&ar->driver_recovery);
++
+ 	set_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
+ 
+ 	/* Place a barrier to make sure the compiler doesn't reorder
+@@ -2574,8 +2614,6 @@ static void ath10k_core_restart(struct work_struct *work)
+ 	if (ret)
+ 		ath10k_warn(ar, "failed to send firmware crash dump via devcoredump: %d",
+ 			    ret);
+-
+-	complete(&ar->driver_recovery);
+ }
+ 
+ static void ath10k_core_set_coverage_class_work(struct work_struct *work)
+diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
+index cb2359d2ee0b0..91f3466f9ccba 100644
+--- a/drivers/net/wireless/ath/ath10k/core.h
++++ b/drivers/net/wireless/ath/ath10k/core.h
+@@ -4,6 +4,7 @@
   * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
   * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
   */
  
- #include <linux/module.h>
-@@ -3600,7 +3600,7 @@ struct ath10k *ath10k_core_create(size_t priv_size, struct device *dev,
- 	default:
- 		ath10k_err(ar, "unsupported core hardware revision %d\n",
- 			   hw_rev);
--		ret = -ENOTSUPP;
-+		ret = -EOPNOTSUPP;
- 		goto err_free_mac;
- 	}
+ #ifndef _CORE_H_
+@@ -86,6 +87,8 @@
+ 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
+ #define ATH10K_ITER_RESUME_FLAGS (IEEE80211_IFACE_ITER_RESUME_ALL |\
+ 				  IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER)
++#define ATH10K_RECOVERY_TIMEOUT_HZ			(5 * HZ)
++#define ATH10K_RECOVERY_MAX_FAIL_COUNT			4
  
-diff --git a/drivers/net/wireless/ath/ath10k/htt.c b/drivers/net/wireless/ath/ath10k/htt.c
-index 907e1e13871ac..dbaf262cd7c1e 100644
---- a/drivers/net/wireless/ath/ath10k/htt.c
-+++ b/drivers/net/wireless/ath/ath10k/htt.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+ struct ath10k;
  
- #include <linux/slab.h>
-@@ -381,7 +382,7 @@ static int ath10k_htt_verify_version(struct ath10k_htt *htt)
- 	    htt->target_version_major != 3) {
- 		ath10k_err(ar, "unsupported htt major version %d. supported versions are 2 and 3\n",
- 			   htt->target_version_major);
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
+@@ -864,9 +867,6 @@ enum ath10k_dev_flags {
+ 	/* Per Station statistics service */
+ 	ATH10K_FLAG_PEER_STATS,
  
- 	return 0;
+-	/* Indicates that ath10k device is during recovery process and not complete */
+-	ATH10K_FLAG_RESTARTING,
+-
+ 	/* protected by conf_mutex */
+ 	ATH10K_FLAG_NAPI_ENABLED,
+ };
+@@ -1208,6 +1208,11 @@ struct ath10k {
+ 	struct work_struct bundle_tx_work;
+ 	struct work_struct tx_complete_work;
+ 
++	atomic_t pending_recovery;
++	unsigned int recovery_count;
++	/* continuous recovery fail count */
++	atomic_t fail_cont_count;
++
+ 	/* cycle count is reported twice for each visited channel during scan.
+ 	 * access protected by data_lock
+ 	 */
 diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 233e5c619fa4e..842edfcfef262 100644
+index 842edfcfef262..27f6cc05bf9aa 100644
 --- a/drivers/net/wireless/ath/ath10k/mac.c
 +++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -3,7 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "mac.h"
-@@ -4071,7 +4071,7 @@ static int ath10k_mac_tx(struct ath10k *ar,
- 		    !(skb_cb->flags & ATH10K_SKB_F_RAW_TX)) {
- 			WARN_ON_ONCE(1);
- 			ieee80211_free_txskb(hw, skb);
--			return -ENOTSUPP;
-+			return -EOPNOTSUPP;
- 		}
- 	}
- 
-@@ -7073,7 +7073,7 @@ static int ath10k_mac_set_tid_config(struct ath10k *ar, struct ieee80211_sta *st
- 
- 	if (sta) {
- 		if (!sta->wme)
--			return -ENOTSUPP;
-+			return -EOPNOTSUPP;
- 
- 		arsta = (struct ath10k_sta *)sta->drv_priv;
- 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index aaa240f3c08a9..398113a4408fc 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/pci.h>
-@@ -889,7 +889,7 @@ static u32 ath10k_pci_targ_cpu_to_ce_addr(struct ath10k *ar, u32 addr)
- 	struct ath10k_pci *ar_pci = ath10k_pci_priv(ar);
- 
- 	if (WARN_ON_ONCE(!ar_pci->targ_cpu_to_ce_addr))
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 
- 	return ar_pci->targ_cpu_to_ce_addr(ar, addr);
- }
-@@ -2668,7 +2668,7 @@ static int ath10k_pci_safe_chip_reset(struct ath10k *ar)
- 	struct ath10k_pci *ar_pci = ath10k_pci_priv(ar);
- 
- 	if (!ar_pci->pci_soft_reset)
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 
- 	return ar_pci->pci_soft_reset(ar);
- }
-@@ -2808,7 +2808,7 @@ static int ath10k_pci_chip_reset(struct ath10k *ar)
- 	struct ath10k_pci *ar_pci = ath10k_pci_priv(ar);
- 
- 	if (WARN_ON(!ar_pci->pci_hard_reset))
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 
- 	return ar_pci->pci_hard_reset(ar);
- }
-@@ -3594,7 +3594,7 @@ static int ath10k_pci_probe(struct pci_dev *pdev,
- 		break;
- 	default:
- 		WARN_ON(1);
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
- 
- 	ar = ath10k_core_create(sizeof(*ar_pci), &pdev->dev, ATH10K_BUS_PCI,
-diff --git a/drivers/net/wireless/ath/ath10k/wmi-tlv.c b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-index 8318740b12725..11f555e12969b 100644
---- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #include "core.h"
- #include "debug.h"
-@@ -1351,7 +1352,7 @@ static int ath10k_wmi_tlv_op_pull_svc_rdy_ev(struct ath10k *ar,
- 	    __le32_to_cpu(ev->abi.abi_ver_ns1) != WMI_TLV_ABI_VER_NS1 ||
- 	    __le32_to_cpu(ev->abi.abi_ver_ns2) != WMI_TLV_ABI_VER_NS2 ||
- 	    __le32_to_cpu(ev->abi.abi_ver_ns3) != WMI_TLV_ABI_VER_NS3) {
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
- 
- 	arg->min_tx_power = ev->hw_min_tx_power;
-@@ -2123,9 +2124,9 @@ static int ath10k_wmi_tlv_op_get_vdev_subtype(struct ath10k *ar,
- 	case WMI_VDEV_SUBTYPE_MESH_11S:
- 		return WMI_TLV_VDEV_SUBTYPE_MESH_11S;
- 	case WMI_VDEV_SUBTYPE_MESH_NON_11S:
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static struct sk_buff *
+@@ -8132,7 +8132,12 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
+ 		ath10k_info(ar, "device successfully recovered\n");
+ 		ar->state = ATH10K_STATE_ON;
+ 		ieee80211_wake_queues(ar->hw);
+-		clear_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags);
++
++		/* Clear recovery state. */
++		complete(&ar->driver_recovery);
++		atomic_set(&ar->fail_cont_count, 0);
++		atomic_set(&ar->pending_recovery, 0);
++
+ 		if (ar->hw_params.hw_restart_disconnect) {
+ 			list_for_each_entry(arvif, &ar->arvifs, list) {
+ 				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
 diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index ee41f45b3426c..3c4bf7e78818d 100644
+index 3c4bf7e78818d..172dc55375552 100644
 --- a/drivers/net/wireless/ath/ath10k/wmi.c
 +++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -3,7 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
+@@ -4,6 +4,7 @@
   * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
   * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
   */
  
  #include <linux/skbuff.h>
-@@ -8755,9 +8755,9 @@ int ath10k_wmi_op_get_vdev_subtype(struct ath10k *ar,
- 		return WMI_VDEV_SUBTYPE_LEGACY_PROXY_STA;
- 	case WMI_VDEV_SUBTYPE_MESH_11S:
- 	case WMI_VDEV_SUBTYPE_MESH_NON_11S:
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
+@@ -1942,6 +1943,11 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
  	}
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
  
- static int ath10k_wmi_10_2_4_op_get_vdev_subtype(struct ath10k *ar,
-@@ -8777,9 +8777,9 @@ static int ath10k_wmi_10_2_4_op_get_vdev_subtype(struct ath10k *ar,
- 	case WMI_VDEV_SUBTYPE_MESH_11S:
- 		return WMI_VDEV_SUBTYPE_10_2_4_MESH_11S;
- 	case WMI_VDEV_SUBTYPE_MESH_NON_11S:
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
+ 	wait_event_timeout(ar->wmi.tx_credits_wq, ({
++		if (ar->state == ATH10K_STATE_WEDGED) {
++			ret = -ESHUTDOWN;
++			ath10k_dbg(ar, ATH10K_DBG_WMI,
++				   "drop wmi command %d, hardware is wedged\n", cmd_id);
++		}
+ 		/* try to send pending beacons first. they take priority */
+ 		ath10k_wmi_tx_beacons_nowait(ar);
  
- static int ath10k_wmi_10_4_op_get_vdev_subtype(struct ath10k *ar,
-@@ -8801,7 +8801,7 @@ static int ath10k_wmi_10_4_op_get_vdev_subtype(struct ath10k *ar,
- 	case WMI_VDEV_SUBTYPE_MESH_NON_11S:
- 		return WMI_VDEV_SUBTYPE_10_4_MESH_NON_11S;
- 	}
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static struct sk_buff *
 -- 
 2.53.0
 
