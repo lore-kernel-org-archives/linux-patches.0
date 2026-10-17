@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8968370ACE;
-	Sat, 17 Oct 2026 16:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C226370ACE;
+	Sat, 17 Oct 2026 16:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253368; cv=none; b=Hn1fJwafdTndAPAmKAEsmLTLrpQV8MuSoCaLNTwyrmZxbc2v5KI5M1Wl788yrm6Z570c13pC311j700PY/kJe+TkjL/9nrT+dm0bOXAmSCqjOpbMvSj2CDz+3U/JLdM06hulbk5mjHwPi0XBMR1Ym8ykvu4cOC9FmC/4dqqLljc=
+	t=1792253371; cv=none; b=gNZMOHYNTNGG0zD7oIWQVgrNz1CUQQ6NMSME5gxHFu0f3OtfkJuWE3WERWhMTv7bcD+FSO/QBDtoyFkVsd2U12GMD2nBYiaAkz+l9zRQuIH7LC96aHx5Q1w7Vd8et9DatncLwxcLFydQNMnUktSv0B2p7+35XyH/rhqAv589uM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253368; c=relaxed/simple;
-	bh=jLjvkKgYzr/6faVKEaDgX4WfiLmGBMS+6XLE/VS1FCQ=;
+	s=arc-20240116; t=1792253371; c=relaxed/simple;
+	bh=el4/Si9vcVmxaTXPzq2hXsyL2p8xZeWvalcH4XGsq/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAPqYFQiyRmA0d0D9r7j7JT7pDGb5KWGkoSBoLDd19cHEQ0iRCBGrhb+3/O+R5nT5cJquawMQDvCbe0ynijeJJcK8bLkj+yTxqzSBmGjB481260p9FbZH8Iq3M5lmvOXLaBGtWcCESWQ4s75dQ3bpF5aWlOd3Fa+//87HQN94Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tK+nt7mF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fsB3Vw/TPWP40/nUZ+H8DoFE2ttFh7ov0KMrRpp/j/Jw4OPkDoFbZjqcUAOfon0zlsbBBF7ja44bzeTCvv3gBe2d8hrazV5cWv4U/juMEldQUN1IqUzb0SdGmv5PMq4WorvtxAEEuG2m6PfUVCFYL0oUBoqbd4v9KksfS1EMtE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G48iYLSo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tK+nt7mF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D430A1F000C5;
-	Sat, 17 Oct 2026 16:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G48iYLSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42951F000C4;
+	Sat, 17 Oct 2026 16:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253367;
-	bh=2c53FjLPkuh7y7FBQAvxd1KyRU1dIobjCJh0TQ0h4JY=;
+	s=korg; t=1792253370;
+	bh=W+msq27S+S7NQreixuYCSpgkI7K2JaDwUrlNdGuvyoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tK+nt7mFx8F5nuewjz8+aRt2ST+zNBDb7BsG0x3l6owDhsJFsXaPpr4HzRkVItapo
-	 ahT56Wzlwa6kxS8OWo3A2Y9dd3LHlUUIe15TabGVW9RmYfK+FJLtKPKpHnys9vWJDW
-	 87dRceLogC8rm9EHilfbYLD8jURJu42PQP7r3tqw=
+	b=G48iYLSo7gVmWWdsr2127TOQql5NGU7/nK63o5Z1X256hsMyO5mnX36EGV7Cr6Kki
+	 tGxdFMTgZbUnoq36SIkEoMb8tr4fR3ui6GRC34zkMsqQzec8467MwQecpOgLPO2vE2
+	 EJvXVonPWg1W76C9CgP6AxB+LAE1qzwd1qTV/JCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/869] s390/mm: Fix in_atomic() handling in do_secure_storage_access()
-Date: Sat, 17 Oct 2026 17:48:55 +0200
-Message-ID: <20261017160039.447394421@linuxfoundation.org>
+Subject: [PATCH 6.12 095/869] platform/x86/amd/pmf: Switch to platform_get_resource() and devm_ioremap_resource()
+Date: Sat, 17 Oct 2026 17:48:56 +0200
+Message-ID: <20261017160039.473262145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,78 +46,206 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit 11709abccf93b08adde95ef313c300b0d4bc28f1 ]
+[ Upstream commit ba6ad33d5c870d8b1d22388292c872ba4af98ea1 ]
 
-Kernel user spaces accesses to not exported pages in atomic context
-incorrectly try to resolve the page fault.
-With debug options enabled call traces like this can be seen:
+Use platform_get_resource() to fetch the memory resource instead of
+acpi_walk_resources() and devm_ioremap_resource() for mapping the
+resources.
 
-BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1523
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 419074, name: qemu-system-s39
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-Preemption disabled at:
-[<00000383ea47cfa2>] copy_page_from_iter_atomic+0xa2/0x8a0
-CPU: 12 UID: 0 PID: 419074 Comm: qemu-system-s39
-Tainted: G        W           6.16.0-20250531.rc0.git0.69b3a602feac.63.fc42.s390x+debug #1 PREEMPT
-Tainted: [W]=WARN
-Hardware name: IBM 3931 A01 703 (LPAR)
-Call Trace:
- [<00000383e990d282>] dump_stack_lvl+0xa2/0xe8
- [<00000383e99bf152>] __might_resched+0x292/0x2d0
- [<00000383eaa7c374>] down_read+0x34/0x2d0
- [<00000383e99432f8>] do_secure_storage_access+0x108/0x360
- [<00000383eaa724b0>] __do_pgm_check+0x130/0x220
- [<00000383eaa842e4>] pgm_check_handler+0x114/0x160
- [<00000383ea47d028>] copy_page_from_iter_atomic+0x128/0x8a0
-([<00000383ea47d016>] copy_page_from_iter_atomic+0x116/0x8a0)
- [<00000383e9c45eae>] generic_perform_write+0x16e/0x310
- [<00000383e9eb87f4>] ext4_buffered_write_iter+0x84/0x160
- [<00000383e9da0de4>] vfs_write+0x1c4/0x460
- [<00000383e9da123c>] ksys_write+0x7c/0x100
- [<00000383eaa7284e>] __do_syscall+0x15e/0x280
- [<00000383eaa8417e>] system_call+0x6e/0x90
-INFO: lockdep is turned off.
+PS: We cannot use resource_size() here because it adds an extra byte to
+round off the size. In the case of PMF ResourceTemplate(), this rounding
+is already handled within the _CRS. Using resource_size() would increase
+the resource size by 1, causing a mismatch with the length field and
+leading to issues. Therefore, simply use end-start of the ACPI resource to
+obtain the actual length.
 
-It is not allowed to take the mmap_lock while in atomic context. Therefore
-handle such a secure storage access fault as if the accessed page is not
-mapped: the uaccess function will return -EFAULT, and the caller has to
-deal with this. Usually this means that the access is retried in process
-context, which allows to resolve the page fault (or in this case export the
-page).
+Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
+Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20241104054829.620858-4-Shyam-sundar.S-k@amd.com
+[ij: added a cast to resource_size_t printing]
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250603134936.1314139-1-hca@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Keep the existing staged error unwinding after a policy mapping failure.
+Also carry the callback mutex storage and its initialization and
+destruction so the follow-up device-managed allocation conversion
+applies cleanly without importing custom BIOS input support.
+
+Stable-dep-of: d9db3a941270 ("platform/x86/amd: pmf: Use device managed allocations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/amd/pmf/Kconfig  |  1 +
+ drivers/platform/x86/amd/pmf/acpi.c   | 46 +++++++++++----------------
+ drivers/platform/x86/amd/pmf/core.c   |  2 ++
+ drivers/platform/x86/amd/pmf/pmf.h    |  7 ++--
+ drivers/platform/x86/amd/pmf/tee-if.c |  8 ++---
+ 5 files changed, 31 insertions(+), 33 deletions(-)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index 93ae097ef0e08..f907e916aa20d 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -448,6 +448,8 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		if (rc)
- 			BUG();
- 	} else {
-+		if (faulthandler_disabled())
-+			return handle_fault_error_nolock(regs, 0);
- 		mm = current->mm;
- 		mmap_read_lock(mm);
- 		vma = find_vma(mm, addr);
+diff --git a/drivers/platform/x86/amd/pmf/Kconfig b/drivers/platform/x86/amd/pmf/Kconfig
+index f4fa8bd8bda83..99d67cdbd91e5 100644
+--- a/drivers/platform/x86/amd/pmf/Kconfig
++++ b/drivers/platform/x86/amd/pmf/Kconfig
+@@ -11,6 +11,7 @@ config AMD_PMF
+ 	select ACPI_PLATFORM_PROFILE
+ 	depends on TEE && AMDTEE
+ 	depends on AMD_SFH_HID
++	depends on HAS_IOMEM
+ 	help
+ 	  This driver provides support for the AMD Platform Management Framework.
+ 	  The goal is to enhance end user experience by making AMD PCs smarter,
+diff --git a/drivers/platform/x86/amd/pmf/acpi.c b/drivers/platform/x86/amd/pmf/acpi.c
+index d5b496433d697..1b9c7acf0ddf5 100644
+--- a/drivers/platform/x86/amd/pmf/acpi.c
++++ b/drivers/platform/x86/amd/pmf/acpi.c
+@@ -433,37 +433,29 @@ int apmf_install_handler(struct amd_pmf_dev *pmf_dev)
+ 	return 0;
+ }
+ 
+-static acpi_status apmf_walk_resources(struct acpi_resource *res, void *data)
++int apmf_check_smart_pc(struct amd_pmf_dev *pmf_dev)
+ {
+-	struct amd_pmf_dev *dev = data;
++	struct platform_device *pdev = to_platform_device(pmf_dev->dev);
+ 
+-	switch (res->type) {
+-	case ACPI_RESOURCE_TYPE_ADDRESS64:
+-		dev->policy_addr = res->data.address64.address.minimum;
+-		dev->policy_sz = res->data.address64.address.address_length;
+-		break;
+-	case ACPI_RESOURCE_TYPE_FIXED_MEMORY32:
+-		dev->policy_addr = res->data.fixed_memory32.address;
+-		dev->policy_sz = res->data.fixed_memory32.address_length;
+-		break;
+-	}
+-
+-	if (!dev->policy_addr || dev->policy_sz > POLICY_BUF_MAX_SZ || dev->policy_sz == 0) {
+-		pr_err("Incorrect Policy params, possibly a SBIOS bug\n");
+-		return AE_ERROR;
++	pmf_dev->res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!pmf_dev->res) {
++		dev_dbg(pmf_dev->dev, "Failed to get I/O memory resource\n");
++		return -EINVAL;
+ 	}
+ 
+-	return AE_OK;
+-}
+-
+-int apmf_check_smart_pc(struct amd_pmf_dev *pmf_dev)
+-{
+-	acpi_handle ahandle = ACPI_HANDLE(pmf_dev->dev);
+-	acpi_status status;
+-
+-	status = acpi_walk_resources(ahandle, METHOD_NAME__CRS, apmf_walk_resources, pmf_dev);
+-	if (ACPI_FAILURE(status)) {
+-		dev_dbg(pmf_dev->dev, "acpi_walk_resources failed :%d\n", status);
++	pmf_dev->policy_addr = pmf_dev->res->start;
++	/*
++	 * We cannot use resource_size() here because it adds an extra byte to round off the size.
++	 * In the case of PMF ResourceTemplate(), this rounding is already handled within the _CRS.
++	 * Using resource_size() would increase the resource size by 1, causing a mismatch with the
++	 * length field and leading to issues. Therefore, simply use end-start of the ACPI resource
++	 * to obtain the actual length.
++	 */
++	pmf_dev->policy_sz = pmf_dev->res->end - pmf_dev->res->start;
++
++	if (!pmf_dev->policy_addr || pmf_dev->policy_sz > POLICY_BUF_MAX_SZ ||
++	    pmf_dev->policy_sz == 0) {
++		dev_err(pmf_dev->dev, "Incorrect policy params, possibly a SBIOS bug\n");
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
+index 2e352e475b562..e45a207c7425b 100644
+--- a/drivers/platform/x86/amd/pmf/core.c
++++ b/drivers/platform/x86/amd/pmf/core.c
+@@ -530,6 +530,7 @@ static int amd_pmf_probe(struct platform_device *pdev)
+ 
+ 	mutex_init(&dev->lock);
+ 	mutex_init(&dev->update_mutex);
++	mutex_init(&dev->cb_mutex);
+ 
+ 	amd_pmf_quirks_init(dev);
+ 	apmf_acpi_init(dev);
+@@ -556,6 +557,7 @@ static void amd_pmf_remove(struct platform_device *pdev)
+ 	amd_pmf_dbgfs_unregister(dev);
+ 	mutex_destroy(&dev->lock);
+ 	mutex_destroy(&dev->update_mutex);
++	mutex_destroy(&dev->cb_mutex);
+ 	kfree(dev->buf);
+ }
+ 
+diff --git a/drivers/platform/x86/amd/pmf/pmf.h b/drivers/platform/x86/amd/pmf/pmf.h
+index b857ef4498903..8e9a07a082b78 100644
+--- a/drivers/platform/x86/amd/pmf/pmf.h
++++ b/drivers/platform/x86/amd/pmf/pmf.h
+@@ -13,6 +13,7 @@
+ 
+ #include <linux/acpi.h>
+ #include <linux/input.h>
++#include <linux/platform_device.h>
+ #include <linux/platform_profile.h>
+ 
+ #define POLICY_BUF_MAX_SZ		0x4b000
+@@ -364,19 +365,21 @@ struct amd_pmf_dev {
+ 	/* Smart PC solution builder */
+ 	struct dentry *esbin;
+ 	unsigned char *policy_buf;
+-	u32 policy_sz;
++	resource_size_t policy_sz;
+ 	struct tee_context *tee_ctx;
+ 	struct tee_shm *fw_shm_pool;
+ 	u32 session_id;
+ 	void *shbuf;
+ 	struct delayed_work pb_work;
+ 	struct pmf_action_table *prev_data;
+-	u64 policy_addr;
++	resource_size_t policy_addr;
+ 	void __iomem *policy_base;
+ 	bool smart_pc_enabled;
+ 	u16 pmf_if_version;
+ 	struct input_dev *pmf_idev;
+ 	size_t mtable_size;
++	struct resource *res;
++	struct mutex cb_mutex;
+ };
+ 
+ struct apmf_sps_prop_granular_v2 {
+diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
+index 6254423d05b06..0ddd76149425a 100644
+--- a/drivers/platform/x86/amd/pmf/tee-if.c
++++ b/drivers/platform/x86/amd/pmf/tee-if.c
+@@ -256,7 +256,7 @@ static int amd_pmf_invoke_cmd_init(struct amd_pmf_dev *dev)
+ 		return -ENODEV;
+ 	}
+ 
+-	dev_dbg(dev->dev, "Policy Binary size: %u bytes\n", dev->policy_sz);
++	dev_dbg(dev->dev, "Policy Binary size: %llu bytes\n", (unsigned long long)dev->policy_sz);
+ 	memset(dev->shbuf, 0, dev->policy_sz);
+ 	ta_sm = dev->shbuf;
+ 	in = &ta_sm->pmf_input.init_table;
+@@ -528,9 +528,9 @@ int amd_pmf_init_smart_pc(struct amd_pmf_dev *dev)
+ 	if (ret)
+ 		goto err_cancel_work;
+ 
+-	dev->policy_base = devm_ioremap(dev->dev, dev->policy_addr, dev->policy_sz);
+-	if (!dev->policy_base) {
+-		ret = -ENOMEM;
++	dev->policy_base = devm_ioremap_resource(dev->dev, dev->res);
++	if (IS_ERR(dev->policy_base)) {
++		ret = PTR_ERR(dev->policy_base);
+ 		goto err_free_dram_buf;
+ 	}
+ 
 -- 
 2.53.0
 
