@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DB03BB67F;
-	Sat, 17 Oct 2026 17:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8676C392829;
+	Sat, 17 Oct 2026 17:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258308; cv=none; b=JFK1iBZKznVeLIfbiz3wQfGydSEcllzs66aeU7AEjL2w6kgDK4swlb4GiX/4e10U0pPhlAerG9S/Q5j+CV0a5pOiGsdWDtxk6wM6st0/xnas3wqVIJmtkh6Wnbxq40QbPyZmfs11bJisVfwJEcW+hNxz3gCIyI4KA2oXR0ViEPg=
+	t=1792258311; cv=none; b=DgUx381eo9LYwZWfTGpvGtAOC9FRWjoNLFhdWlnQ6vFtuuCK9jrzlGgo88EKztwlhue7aIK9aXFnjVDGhrJMJaYnRqX0Mgw8nMd8TvUYJfXjWq3jtNfElp4D2A46odvP893GDLVYz1aQDIRhHPs1406XJN2xbZoTRX5bUMHIBDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258308; c=relaxed/simple;
-	bh=YCJ/bhINO1TloNZETBdqDo7W9VsIpw8KaKxSQGwMKsg=;
+	s=arc-20240116; t=1792258311; c=relaxed/simple;
+	bh=/TVi6kgIZ/KGwRbg6LPUgSnUlJd2kAOuzuTcU/mbBlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXLp8xjv/eOPo2yRhDpsUN/ZbKNNKEaxCH2MOikyNvemGvl3hLIWIVd+qKfEAQSc8/EC1647tS8UjtIqMIUjNQZpcB6E3wMsloGbBBm9xo6VNM0zocdCMYAbxKK5IyvEoaNfQhMvX7R4YjfQXW/nqiUuXh7nxwnHGYwx82Dn2pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfoZ856E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PLtarABnWJw5HcAdZK7/uDZeeh4XYQa2il9L9Oxkj+7Ym1k8PMhuWNOnbOr9wHCdGUBYt1jepopk8eqc0NWLcn1z+kIuHPfS3xcbV+5zulSzMzXjqpVSzyY1WZDguGB3ITvoUVO4vJ9mGBED69/BqrReHgPT9K+Im6954gd270U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvtL3E70; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfoZ856E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA741F000C5;
-	Sat, 17 Oct 2026 17:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvtL3E70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88821F000C4;
+	Sat, 17 Oct 2026 17:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258307;
-	bh=eEmGT5x6exy+gOg4J5jl+KvZf3J+uj60IV09QrmyeBY=;
+	s=korg; t=1792258310;
+	bh=v7QGJ+FNbY0K00cJniTqar0Ro1yJI+mnURYmXs5LPJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfoZ856EwPeljyFuuaC3QoDnM10YdL6qCVISqoW0IxuqaG0kbRvAADIxlgAM5p13o
-	 xVwOYG/BbXI2FOvt5HaY9FvAnkXSWFF1oFyRLRnQLK1rMSpnr71Z/PgehNvFFKE4Bk
-	 xIfH6f67Q+dSRE5oNj8g40TndCLtDFaaLTgEnVPI=
+	b=uvtL3E709bmIWEt76IR8u/nV0ONzUUtYdw5nxcYhf9FpMjz01ndWRIgX94FFlmf6i
+	 KJKpbWDfl/3B5dVRHwPzmZpqI2e557L51gB0r+mb9vqeiIf3Ygg8uasgXAZ6sOimrM
+	 zaLvjVyC9G5qQjljmJEDSuhf/UviKXE6q570NLGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0839/1674] usb: gadget: functionfs: Factorize wait-for-endpoint code
-Date: Sat, 17 Oct 2026 17:51:51 +0200
-Message-ID: <20261017160452.665603670@linuxfoundation.org>
+Subject: [PATCH 6.6 0801/1674] tcp_metrics: use dst_dev_net_rcu()
+Date: Sat, 17 Oct 2026 17:51:13 +0200
+Message-ID: <20261017160451.672378723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,100 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 799970a5b15deec8bbcb098b11a73d8acc55d075 ]
+[ Upstream commit 50c127a69cd6285300931853b352a1918cfa180f ]
 
-This exact same code was duplicated in two different places.
+Replace three dst_dev() with a lockdep enabled helper.
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://lore.kernel.org/r/20240130122340.54813-3-paul@crapouillou.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e5bf5ee26663 ("functionfs: fix the open/removal races")
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 48 +++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ net/ipv4/tcp_metrics.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 47aaa33d091fa..f2705e22ed732 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -952,31 +952,44 @@ static ssize_t __ffs_epfile_read_data(struct ffs_epfile *epfile,
- 	return ret;
- }
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 49983d864e4f3..ca88ba261ea1e 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -170,7 +170,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 	struct net *net;
  
--static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
-+static struct ffs_ep *ffs_epfile_wait_ep(struct file *file)
- {
- 	struct ffs_epfile *epfile = file->private_data;
--	struct usb_request *req;
- 	struct ffs_ep *ep;
--	char *data = NULL;
--	ssize_t ret, data_len = -EINVAL;
--	int halt;
--
--	/* Are we still active? */
--	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
--		return -ENODEV;
-+	int ret;
+ 	spin_lock_bh(&tcp_metrics_lock);
+-	net = dev_net(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
  
- 	/* Wait for endpoint to be enabled */
- 	ep = epfile->ep;
- 	if (!ep) {
- 		if (file->f_flags & O_NONBLOCK)
--			return -EAGAIN;
-+			return ERR_PTR(-EAGAIN);
- 
- 		ret = wait_event_interruptible(
- 				epfile->ffs->wait, (ep = epfile->ep));
- 		if (ret)
--			return -EINTR;
-+			return ERR_PTR(-EINTR);
+ 	/* While waiting for the spin-lock the cache might have been populated
+ 	 * with this entry and so we have to check again.
+@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
+ 		return NULL;
  	}
  
-+	return ep;
-+}
-+
-+static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
-+{
-+	struct ffs_epfile *epfile = file->private_data;
-+	struct usb_request *req;
-+	struct ffs_ep *ep;
-+	char *data = NULL;
-+	ssize_t ret, data_len = -EINVAL;
-+	int halt;
-+
-+	/* Are we still active? */
-+	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
-+		return -ENODEV;
-+
-+	ep = ffs_epfile_wait_ep(file);
-+	if (IS_ERR(ep))
-+		return PTR_ERR(ep);
-+
- 	/* Do we halt? */
- 	halt = (!io_data->read == !epfile->in);
- 	if (halt && epfile->isoc)
-@@ -1308,16 +1321,9 @@ static long ffs_epfile_ioctl(struct file *file, unsigned code,
- 		return -ENODEV;
+-	net = dev_net(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
  
- 	/* Wait for endpoint to be enabled */
--	ep = epfile->ep;
--	if (!ep) {
--		if (file->f_flags & O_NONBLOCK)
--			return -EAGAIN;
--
--		ret = wait_event_interruptible(
--				epfile->ffs->wait, (ep = epfile->ep));
--		if (ret)
--			return -EINTR;
--	}
-+	ep = ffs_epfile_wait_ep(file);
-+	if (IS_ERR(ep))
-+		return PTR_ERR(ep);
+@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
+ 	else
+ 		return NULL;
  
- 	spin_lock_irq(&epfile->ffs->eps_lock);
+-	net = dev_net(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
  
 -- 
 2.53.0
