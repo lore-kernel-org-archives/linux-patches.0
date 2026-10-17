@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9CE3BB690;
-	Sat, 17 Oct 2026 17:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B4F3939A4;
+	Sat, 17 Oct 2026 17:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259644; cv=none; b=leH9aNuTGJiFlYgRZv5AmkuHOclGJftaZ3GKI2oPMeCBlTRCLqOHRROaVgW42dHZOyWbTtdEMaEUcp+M7PO9ZD/NJPa282aAo6TB6edVeOICHodBPHY/Rt4RKQs0YXa4XbbXirUbpr9te+y9I9W+RKeHA5ialVcLLbSexXYAbUA=
+	t=1792259647; cv=none; b=H44yIkMCH/dH0Deafr8KX7a2ZRG9Mmc9QcFyHHYUxxCu6KoZDmWtMlnWob1mg5as/4kMn3urS17w3jbfvKf8Np22Tap5PGmWSiNSeG5dSOSH4sSRrcfdOp6yCcGOYhqbyJjcO6kEYMHBXsn3g0hWs/kDd/p57O6ngQVfTJGOIBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259644; c=relaxed/simple;
-	bh=shWONSZUFHdLbPIR947CkDlFihoIna0I/ZpL/WIzJb0=;
+	s=arc-20240116; t=1792259647; c=relaxed/simple;
+	bh=dwzUIxposYONLfDfAv7d/pSevZOpPZMCUqIZDOoLiUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mg2Ndsdt2OGiwlk/fIFJcum9RmXlujdZvhieU379Fv8syeXzW2w9XSg5TbfP94H1d16yNw6MPfZMuA0RJ2sCP5SJyb0K++3Tw3ZaWenBlKo+JsGr0BIwz/wE5a+FSdgUOJmzzEmZOkPNHOqqv5mxMWWd55204XBhEQYe+GJhthA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7mymXBR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cOTgXaa+Lz3ncCFvWnZ9hx0uay79Xf9q39PNg4U4gT4TsAnDZtwwOowjEPbxxgU1g9/IH0EV8gHO5UGKCYZ9sCmZIOLNp7AXnXRGEhNoCSq0rmoYwvIlY+q8EdyTmplXf3CZN9bPQ+8JUB9eMnIJv7NG+EmuYQ5D/KLkbf7B6eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1qHVtGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7mymXBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7F21F000C4;
-	Sat, 17 Oct 2026 17:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1qHVtGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E881F000C4;
+	Sat, 17 Oct 2026 17:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259643;
-	bh=DZVdLU2DnsAnXYe2h34HqnN06IcuQ5YlK9xi4lOrHHk=;
+	s=korg; t=1792259646;
+	bh=5WuSQzHihPdFR98T3MXdX9eVDWr3hhJKpDWMliGn2qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7mymXBRmtzw6pybBHCjIlO9sqr1Hzdqj25yyrzFJzzkfIhofuJoPelDWd71sRdOM
-	 7ca/9wzSkwFwkLjD729NX2VuhV1fWR2rVTP3NGDahgPrwUM2uD6uRbTd4GXWVm3mDX
-	 YLfAramXsyh+PwDg4JkxCzF9bmrTER1mzhDZCuF8=
+	b=n1qHVtGdn1FuvT0SB3mp515hgRnwcpxNnFBgQvNQhxmiwl7mHRnEm6t7Iwjva/XLF
+	 qOxek2gc1IFFOc3SY/X+trzHUc9TZdUETg+bh5bellMLvG24x/eTXPJqMdwniIREsT
+	 /f4Is9+eLk5BrTezxuT7ClRMGkVZgl7PmYXVVUhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Kan Liang <kan.liang@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1241/1674] drm/amdkfd: Add bounds check for CRAT subtype length
-Date: Sat, 17 Oct 2026 17:58:33 +0200
-Message-ID: <20261017160502.990023638@linuxfoundation.org>
+Subject: [PATCH 6.6 1232/1674] perf tools: Use perf_env__get_cpu_topology() in machine__resolve()
+Date: Sat, 17 Oct 2026 17:58:24 +0200
+Message-ID: <20261017160502.761916184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,48 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6e7566ba4739dd573c331adde1c96690f7a567bd ]
+[ Upstream commit 5484b43a0ec8231c36fba6ead654cb72dbba8b8f ]
 
-The CRAT parser validates that the subtype header fits within the image,
-but does not verify that the advertised subtype length fits. A malformed
-CRAT table with an oversized length field causes out-of-bounds reads when
-kfd_parse_subtype() casts the header to specific subtype structures.
+machine__resolve() accesses env->cpu[al->cpu].socket_id after checking
+al->cpu >= 0 and env->cpu != NULL, but without validating al->cpu
+against env->nr_cpus_avail.  Since al->cpu comes from the untrusted
+perf.data sample, a crafted file with a large CPU index causes an
+out-of-bounds heap read.
 
-Add validation that sub_type_hdr + length does not exceed the image
-boundary before parsing the subtype contents.
+Use perf_env__get_cpu_topology() which validates both NULL and bounds.
+Also bounds-check al->cpu before the cast to struct perf_cpu (int16_t):
+without this, values like 65536 silently truncate to 0, bypassing the
+accessor's internal check and returning CPU 0's topology.
 
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 48e1d1e6e8798aef0312e68d8e586021b5b3cf4d)
-Cc: stable@vger.kernel.org
+Fixes: 0c4c4debb0adda4c ("perf tools: Add processor socket info to hist_entry and addr_location")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Kan Liang <kan.liang@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/perf/util/event.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index aadfc8b9e76d1..2753e98dac2f8 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1322,6 +1322,15 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
- 			break;
- 		}
+diff --git a/tools/perf/util/event.c b/tools/perf/util/event.c
+index 68f45e9e63b6e..b118766c16e65 100644
+--- a/tools/perf/util/event.c
++++ b/tools/perf/util/event.c
+@@ -12,6 +12,7 @@
+ #include <linux/zalloc.h>
+ #include "cpumap.h"
+ #include "dso.h"
++#include "env.h"
+ #include "event.h"
+ #include "debug.h"
+ #include "hist.h"
+@@ -743,8 +744,18 @@ int machine__resolve(struct machine *machine, struct addr_location *al,
+ 	if (al->cpu >= 0) {
+ 		struct perf_env *env = machine->env;
  
-+		/* Validate subtype fits within remaining image */
-+		if ((char *)sub_type_hdr + sub_type_hdr->length >
-+		    (char *)crat_image + image_len) {
-+			pr_warn("CRAT subtype length %u exceeds image bounds\n",
-+				sub_type_hdr->length);
-+			ret = -EINVAL;
-+			break;
-+		}
+-		if (env && env->cpu)
+-			al->socket = env->cpu[al->cpu].socket_id;
++		/*
++		 * Bounds-check al->cpu (s32) before casting to struct perf_cpu
++		 * (int16_t): without this, e.g. 65536 truncates to 0 and silently
++		 * returns CPU 0's topology.  Can go once perf_cpu.cpu is widened.
++		 */
++		if (env && al->cpu < env->nr_cpus_avail) {
++			struct cpu_topology_map *topo;
 +
- 		if (sub_type_hdr->flags & CRAT_SUBTYPE_FLAGS_ENABLED) {
- 			ret = kfd_parse_subtype(sub_type_hdr, device_list);
- 			if (ret)
++			topo = perf_env__get_cpu_topology(env, (struct perf_cpu){ al->cpu });
++			if (topo)
++				al->socket = topo->socket_id;
++		}
+ 	}
+ 
+ 	if (al->map) {
 -- 
 2.53.0
 
