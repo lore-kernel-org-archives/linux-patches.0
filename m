@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C023A7D63;
-	Sat, 17 Oct 2026 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68672374E60;
+	Sat, 17 Oct 2026 17:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258263; cv=none; b=I34fuMJ4Cu2wFFXJFDMK197zjQqs1SWCt0vYNR7i3uDB6MXo6i2hXeBUw75c+G6Y1TppGZXZZZR/NTZV2KlDrU8i1Xy/1WZMmJ8pMVsvq8WCoEcFU5Q3gI9zQDTShm4+eSZ8ZOwk/i4W8UvQox3xZevttCByCwzb81qg9GwcSgc=
+	t=1792258267; cv=none; b=rOJvtTlfuxK+7Yrube7YxT3TrJ/d+WCNPGQs1Fg6qanP/7+7lbDfOCrjo2RrCIKEeEmVz7N0Z9Spgt23ArobFpKIFU+8BbKuTMGCE8oajR59vTfKu+S1NG9lwt0M4aICRbfJpaClbDO7BhXHJHmkYGCBhWls7hUhYm3COHRjUeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258263; c=relaxed/simple;
-	bh=D9DcC2AF5kMDOLqEaJr/NZlTE9PPNCmFpSFQ/9UKQmc=;
+	s=arc-20240116; t=1792258267; c=relaxed/simple;
+	bh=jDsoeizQPdOu2407Zw+MHXTjf4oVn4MGDWkpMnJtww0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LJHNtJuHtJIygQ6P07zpaJj58dfqDB27brSyeIAPAV9BaFvwzTqx2E0rm9072E9XCnt/cd6fu6qZNN1mHlwEiALpzk5FCvyEr8XkhY9k4jmlXr6Z2UuuksMS6fsvV++tGu5KK8X4cbWD+I2gnjdiyjFhc5qfETlVOLl5r9N28ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kW4iyleN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IeHDQldrncujZNb8M5dZ6nQl3jDM2hQ5lIhTxDIz29adU0SjMvVnU4HFu3r7Eex3T9/L0URvkXu/wRFSfWOj5wvr6miZotFcDENj9NUT//LJ5qAZ101BSpLAoSM3a5GPH8OWjWpHXzx1rFf0N14YtfDI2s6Ti3ygb3Zdc7EVE1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHZVLMIz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW4iyleN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE631F000C4;
-	Sat, 17 Oct 2026 17:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHZVLMIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24171F000C4;
+	Sat, 17 Oct 2026 17:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258262;
-	bh=cYmHx+YrHkfAvS8Ndvqd6BDhKJ3pUZgE2IBnwD8kSbM=;
+	s=korg; t=1792258265;
+	bh=BFLyWswKz5jWThxxBvMrIpn1gUZsWiqtDBUeQwaOl3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kW4iyleNBD9yctwqEPalZzN0nVLxbzO5CSAttJYCE+1xVH2CndGWxTBeWxKfqffAi
-	 OkG67U2iUxRbGZLe0HFuG94tvhzhoUaYoX1Un0LWMfq02uT8OHwqQAdBtGMqO9scMF
-	 5GQ/Vg6zjKyi+I0M1URttAADAtVltRZGsmBQqP0o=
+	b=hHZVLMIzl1l2DaJKMqVWgibSkt9hN98LdNxD2rH5umzZYKKuJRVdhRlKKDExS8kkD
+	 hYdXRyoQAU7Im+Rfa7k8GySFq///tqeVd/jeBRglI/SfQsf9Ziv/gNYLB4ES9XJK5C
+	 D5Z3H/bN/qT6Ig45a1bsOJLr5QDZOQhkl/v0e65s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com,
-	I Viswanath <viswanathiyyappan@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0799/1674] ptp: Add a upper bound on max_vclocks
-Date: Sat, 17 Oct 2026 17:51:11 +0200
-Message-ID: <20261017160451.620236167@linuxfoundation.org>
+Subject: [PATCH 6.6 0826/1674] scsi: imm: Fix use-after-free bug caused by unfinished delayed work
+Date: Sat, 17 Oct 2026 17:51:38 +0200
+Message-ID: <20261017160452.331694702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,56 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: I Viswanath <viswanathiyyappan@gmail.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit e9f35294e18da82162004a2f35976e7031aaf7f9 ]
+[ Upstream commit ab58153ec64fa3fc9aea09ca09dc9322e0b54a7c ]
 
-syzbot reported WARNING in max_vclocks_store.
+The delayed work item 'imm_tq' is initialized in imm_attach() and
+scheduled via imm_queuecommand() for processing SCSI commands.  When the
+IMM parallel port SCSI host adapter is detached through imm_detach(),
+the imm_struct device instance is deallocated.
 
-This occurs when the argument max is too large for kcalloc to handle.
+However, the delayed work might still be pending or executing
+when imm_detach() is called, leading to use-after-free bugs
+when the work function imm_interrupt() accesses the already
+freed imm_struct memory.
 
-Extend the guard to guard against values that are too large for
-kcalloc
+The race condition can occur as follows:
 
-Reported-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=94d20db923b9f51be0df
-Tested-by: syzbot+94d20db923b9f51be0df@syzkaller.appspotmail.com
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250925155908.5034-1-viswanathiyyappan@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CPU 0(detach thread)   | CPU 1
+                       | imm_queuecommand()
+                       |   imm_queuecommand_lck()
+imm_detach()           |     schedule_delayed_work()
+  kfree(dev) //FREE    | imm_interrupt()
+                       |   dev = container_of(...) //USE
+                           dev-> //USE
+
+Add disable_delayed_work_sync() in imm_detach() to guarantee proper
+cancellation of the delayed work item before imm_struct is deallocated.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://patch.msgid.link/20251028100149.40721-1-duoming@zju.edu.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_private.h | 1 +
- drivers/ptp/ptp_sysfs.c   | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/imm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index baf05d55376dd..855dddee694f5 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -20,6 +20,7 @@
- #define PTP_MAX_TIMESTAMPS 128
- #define PTP_BUF_TIMESTAMPS 30
- #define PTP_DEFAULT_MAX_VCLOCKS 20
-+#define PTP_MAX_VCLOCKS_LIMIT (KMALLOC_MAX_SIZE/(sizeof(int)))
- 
- enum {
- 	PTP_LOCK_PHYSICAL = 0,
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 952d3e968bdf9..d975531f290d8 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -286,7 +286,7 @@ static ssize_t max_vclocks_store(struct device *dev,
- 	size_t size;
- 	u32 max;
- 
--	if (kstrtou32(buf, 0, &max) || max == 0)
-+	if (kstrtou32(buf, 0, &max) || max == 0 || max > PTP_MAX_VCLOCKS_LIMIT)
- 		return -EINVAL;
- 
- 	if (max == ptp->max_vclocks)
+diff --git a/drivers/scsi/imm.c b/drivers/scsi/imm.c
+index 07db98161a036..dbe0598ce4bf4 100644
+--- a/drivers/scsi/imm.c
++++ b/drivers/scsi/imm.c
+@@ -1269,6 +1269,7 @@ static void imm_detach(struct parport *pb)
+ 		if (dev->dev->port == pb) {
+ 			list_del_init(&dev->list);
+ 			scsi_remove_host(dev->host);
++			cancel_delayed_work_sync(&dev->imm_tq);
+ 			scsi_host_put(dev->host);
+ 			parport_unregister_device(dev->dev);
+ 			kfree(dev);
 -- 
 2.53.0
 
