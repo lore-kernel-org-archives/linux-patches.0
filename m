@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0511332E151;
-	Sat, 17 Oct 2026 17:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6293AFCF0;
+	Sat, 17 Oct 2026 17:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256849; cv=none; b=DJMECUr5ZFNWRITJi7pJLv0YxbV7FAjje8xJ96sR4IPgz6PVsXEKa+gksxPFvJGZBtnh/xwBcvNLzHsVAXtNiIYx+G4IOZ6SjX8Om+BlirvEYgQ7QhKdPKmnycbfv3PTE9rCtpbYICGE3Clxg/e1T+B9am1cAYK4W5kCoR1/VMU=
+	t=1792256851; cv=none; b=N0aGwffuTVU335iz8iG4xxriz2+dpCCjjNDQmRKJ5m85obLC3GIdVIzLd7p6TcTkzzz0JPfVJ9dq/Acu7xueWH+ce5hQvgRCKIZVujiW2PQaVfnSSyfarnBCTmJV7w9H2CF4Z+17mcv9W6G2LFPDrvdKoUpodzjQwW7u8J7j0nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256849; c=relaxed/simple;
-	bh=GQ9R2bEtvna1RCvLQTDJongCcKsoFmKK3e5adtR9pwY=;
+	s=arc-20240116; t=1792256851; c=relaxed/simple;
+	bh=WXzqHjKdI6MrFD9Ea8cSY5Uq+o2z4gxn2YuUrtzF0EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEW+GC7+p4T89Fk07O6LN27ITHeGzjk5kBNtPfhZLXQLhlTVEY03peB0WG44Q/G7HOYy9ZtHoCBrvFDIybKhlkVqa+Y6LuJrA6cvw/JzmYRw58PSDSbjJbIRxLODYKpGYyRDRgMTEhQdBRdy5Jcz/gtNketB2glG2wTwRJBe/Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LqBcd5u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UY5rlLZCKmIv+OGNJXfiLrGeFb9/CbZhDpMlJs+sJ5LHbFE20hUQYwZfYV9q+Dx2VDYNgF7+PIuP/htMeqJzcElzh6TyMdgCmoaLogrDKnT6cwLpObXJJs7uuwOUQgPonzXYKfGNiX6DDjmTOuF7Id2i4uELskfMlsuludC5AwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVEKSFx2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LqBcd5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499AE1F000C4;
-	Sat, 17 Oct 2026 17:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVEKSFx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687B11F000C4;
+	Sat, 17 Oct 2026 17:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256847;
-	bh=d2MhqoV8LTzTA03kh5m4RaFPZAz/oa6j4Bb2wRzCZ3c=;
+	s=korg; t=1792256850;
+	bh=vuGJPj7eIJ1Fy1WoAIQ35iuRt0cng1XScu6F3MnfiPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2LqBcd5uD4hY/ayLKy1+vHHm6xZmWt+13ANs6wvGFrpwXuthWm9Y3UTWNokLO1SBp
-	 PDLnNjJYDRION8mCkgYwRZVXn/3afVfO6Tnp0TXTZQyuUnVdhgy6cLIP0RJAhB3+r+
-	 sOz3mNUf68GIyeNiTLb3OEoudpkE4uzTfh6M35Xg=
+	b=lVEKSFx2EAKcUNpaiOnkUCTxp/Qs0JTSHmWoHx5mldkVaYbhQtOlE1u3znkgttP5m
+	 IaMNDX7YcHEGrgvGmv7AEqxRXFwtpOiP2elVN9s9gQXqxCENxHKYFJmi9Rdu+DJubT
+	 QAieASKJEPCkXrIqxOm8KX+ih26TuiG4s7CCAF3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Prostitis <prostitisgabriel@gmail.com>,
+	Xingyu Jin <xingyuj@google.com>,
+	Neill Kapron <nkapron@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0370/1674] USB: gadget: ffs: fix mm lifetime handling
-Date: Sat, 17 Oct 2026 17:44:02 +0200
-Message-ID: <20261017160440.616786736@linuxfoundation.org>
+Subject: [PATCH 6.6 0371/1674] usb: gadget: f_fs: Fix Use-After-Free in AIO error path
+Date: Sat, 17 Oct 2026 17:44:03 +0200
+Message-ID: <20261017160440.640680224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,94 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Prostitis <prostitisgabriel@gmail.com>
+From: Neill Kapron <nkapron@google.com>
 
-[ Upstream commit 5eb5c72c72fef76cb765ef1669b62b6a3ba1bfc8 ]
+[ Upstream commit e78dcb1f7ec271449c54984dc90c62a5ba272de7 ]
 
-io_data stores a pointer to the submitting task's mm_struct,
-but does not currently hold a reference to it while async
-requests are pending.
+In ffs_epfile_write_iter() and ffs_epfile_read_iter(), when ffs_epfile_io()
+fails with an error other than -EIOCBQUEUED, the io_data structure (`p`) is
+freed. However, for AIO operations, the kiocb cancel function was already
+armed and kiocb->private was set to `p`.
 
-This can result in a use-after-free if the task exits before
-completion handling finishes.
+If a concurrent cancel operation (such as sys_io_cancel()) executes after
+ffs_epfile_io() fails but before the function frees `p`, a Use-After-Free
+can occur when the cancellation handler accesses the freed pointer.
 
-Take a reference with mmgrab() when queuing the read request
-and release it with mmdrop() on request completion.
+To securely fix this race condition, we must properly un-arm the
+cancellation. Invoking `kiocb->ki_complete()` does exactly this by
+acquiring `ctx->ctx_lock` and safely removing the kiocb from the active
+sequence. In doing so, it ensures that a parallel io_cancel can no longer
+discover the kiocb, effectively closing the race window.
 
-Reported-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Signed-off-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Link: https://patch.msgid.link/20260601-mm-uaf-fix-v2-1-3c942a707bce@gmail.com
+We then return -EIOCBQUEUED to notify the VFS layer that the kiocb has been
+consumed and it should avoid attempting to complete the request again or
+triggering subsequent completion handlers.
+
+Fixes: de2080d41b5d ("gadget/function/f_fs.c: close leaks")
+Cc: stable@vger.kernel.org
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260724235100.106011-1-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e78dcb1f7ec2 ("usb: gadget: f_fs: Fix Use-After-Free in AIO error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/usb/gadget/function/f_fs.c
 +++ b/drivers/usb/gadget/function/f_fs.c
-@@ -831,9 +831,15 @@ static void ffs_user_copy_worker(struct
- 	unsigned long flags;
- 
- 	if (io_data->read && ret > 0) {
--		kthread_use_mm(io_data->mm);
--		ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
--		kthread_unuse_mm(io_data->mm);
-+		if (mmget_not_zero(io_data->mm)) {
-+			kthread_use_mm(io_data->mm);
-+			ret = ffs_copy_to_iter(io_data->buf, ret, &io_data->data);
-+			kthread_unuse_mm(io_data->mm);
-+			mmput(io_data->mm);
-+		} else {
-+			ret = -EFAULT;
-+		}
-+		mmdrop(io_data->mm);
- 	}
- 
- 	io_data->kiocb->ki_complete(io_data->kiocb, ret);
-@@ -1210,16 +1216,20 @@ static ssize_t ffs_epfile_write_iter(str
- 
- 	kiocb->private = p;
- 
--	if (p->aio)
-+	if (p->aio) {
-+		mmgrab(p->mm);
- 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
-+	}
- 
- 	res = ffs_epfile_io(kiocb->ki_filp, p);
+@@ -1225,8 +1225,10 @@ static ssize_t ffs_epfile_write_iter(str
  	if (res == -EIOCBQUEUED)
  		return res;
--	if (p->aio)
-+	if (p->aio) {
-+		mmdrop(p->mm);
+ 	if (p->aio) {
++		kiocb->ki_complete(kiocb, res);
+ 		mmdrop(p->mm);
  		kfree(p);
--	else
-+	} else {
++		return -EIOCBQUEUED;
+ 	} else {
  		*from = p->data;
-+	}
- 	return res;
- }
- 
-@@ -1254,14 +1264,17 @@ static ssize_t ffs_epfile_read_iter(stru
- 
- 	kiocb->private = p;
- 
--	if (p->aio)
-+	if (p->aio) {
-+		mmgrab(p->mm);
- 		kiocb_set_cancel_fn(kiocb, ffs_aio_cancel);
-+	}
- 
- 	res = ffs_epfile_io(kiocb->ki_filp, p);
- 	if (res == -EIOCBQUEUED)
+ 	}
+@@ -1274,9 +1276,11 @@ static ssize_t ffs_epfile_read_iter(stru
  		return res;
  
  	if (p->aio) {
-+		mmdrop(p->mm);
++		kiocb->ki_complete(kiocb, res);
+ 		mmdrop(p->mm);
  		kfree(p->to_free);
  		kfree(p);
++		return -EIOCBQUEUED;
  	} else {
+ 		*to = p->data;
+ 	}
 
 
