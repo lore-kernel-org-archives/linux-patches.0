@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AEB3939A2;
-	Sat, 17 Oct 2026 16:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D953AC0F3;
+	Sat, 17 Oct 2026 16:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255151; cv=none; b=RcakkJHRgs16cDpDxKcIf4TMNdJlWb2TwP2SkZXQqUkwAVCu8dzv3ctFg2JJjKNf1nuhwDGcAtaWvjm2nDq4Roo2CVVpB/aieaCVTlN6yznIQQdP3JczYUhqCP7XMz0sBb82jpNJNE0qbzR2/rqnTcw3uwHYAes5kitWDbiSalE=
+	t=1792255154; cv=none; b=YYAfKmSLbLkIdllO5vXaUEetVh73B9M6cm6sX0tol0ABk/QeUqZvUu1ackFfpu5UhUrp0xS8WT7JTIMRFRJjUOwDVyuHI7/CijWoblJSx9Dr264xGkcoboPSVFb4e17WG7Va6+Y1ukS1rsi9P3j91lrT68pXOkLXzo9OS2F0w88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255151; c=relaxed/simple;
-	bh=gTeo7UEgzhDDyFubfXSGbomdUGPAPikOTFbbOIp1SAs=;
+	s=arc-20240116; t=1792255154; c=relaxed/simple;
+	bh=xu+swF2kLEe09kqDcf/HejtARdP6JN7BpXv1P7JzUY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NkapHlVXKCzldQZYdbx1MLytqLi1myqFTPJ+z7aTvZ5PlfzCPjLr35KjM9w+/c5m5CzcpOLY6/GBjp4r5hLf97fCzolj2vBFEFnkzj/es3ru6i/KJwo630Nr7NoCQfPFRE+W8Z/E33a+NqvqQztQW070Tf1GNiR/SeMUpgaLfY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9a70JhA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Em2cjQVFrGCPjqPnAvczjFjmKMUvS4iGCTqBe5M67l/XYBeB/udJMFCCpdMyAMnOOjw5YlYy3qm12H1P5RWDeKe57qYomo9UWODB79uw32Qv0Hs/KbQ/USjuXrAzciQhPkXXfBMn5putXw0QuoedV/8ut0CAuPI3ltcEFZ01L8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LadfUH5V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9a70JhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463051F000C7;
-	Sat, 17 Oct 2026 16:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LadfUH5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398121F000C4;
+	Sat, 17 Oct 2026 16:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255149;
-	bh=f0c/J5XEtOl53ztCf8nOiIlger4QEvAcYia5CGuUKjw=;
+	s=korg; t=1792255152;
+	bh=ktynenPazvLSslV/su1/OpibAVXjLWDqHrCeOZ5SgO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9a70JhA6Y1m1PJbph1hiaXCW/0gTA8gAcA4trw3CgOEzdRskge7Nmf/O8qN11fnD
-	 629BaCuEFEKheRWzYdQ+yR4Li2mBuZAG34HzpLKGR+w1nn2Xn4pnmF6yeC2btttUpH
-	 byhNcb6HdqahAhq/mTXr1aqnL+fGpm4KYYViZN4c=
+	b=LadfUH5VsoVEAJuF+6zMX2Euj7EuJBFdr+DXGWWjigx82QlfQ6oGIKUVorrMJXvop
+	 gLDyukF44tSm7PasjyA1hMyztCB0bFGi+0BJwcpTEdbO8p0C84XX4RNbSqrnYBVHg4
+	 R0W5w5oid4Pm18Q48h1JgNd8YxyfwShjCPgmVU3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	linux-hardening@vger.kernel.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 681/869] drm/i915: document range_overflows() and range_end_overflows() macros
-Date: Sat, 17 Oct 2026 17:58:42 +0200
-Message-ID: <20261017160054.437893487@linuxfoundation.org>
+Subject: [PATCH 6.12 655/869] bpf: Remove trace_in argument from __bpf_get_stack
+Date: Sat, 17 Oct 2026 17:58:16 +0200
+Message-ID: <20261017160053.794952987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -48,106 +45,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 59bf37add1d2223d699d1855354277b7330765e4 ]
+[ Upstream commit 58cfc2201d964163fe9c4a703136eb64db799f08 ]
 
-Document the macros in preparation for making them more generally
-available.
+Now with the new callchain_* helper functions we can process trace_in
+case directly in bpf_get_stack_pe function and remove it from
+__bpf_get_stack which makes things easier for preemption fix in
+following change.
 
-Cc: Kees Cook <kees@kernel.org>
-Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-hardening@vger.kernel.org
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Link: https://lore.kernel.org/r/20250829174601.2163064-2-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Stable-dep-of: 985f5e12f3cd ("drm/panthor: Add vm_bind region with kbo range overlap check")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-9-jolsa@kernel.org
+Stable-dep-of: f5d242825ca4 ("bpf: Clear buf on error in __bpf_get_task_stack")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_utils.h | 46 +++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ kernel/bpf/stackmap.c | 49 ++++++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_utils.h b/drivers/gpu/drm/i915/i915_utils.h
-index 61e561d6996d6..a53d8a59ce19a 100644
---- a/drivers/gpu/drm/i915/i915_utils.h
-+++ b/drivers/gpu/drm/i915/i915_utils.h
-@@ -69,6 +69,18 @@ bool i915_error_injected(void);
- 		drm_err(&(i915)->drm, fmt, ##__VA_ARGS__); \
- })
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 7818b124d9d6e..49f724e63e38a 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -527,7 +527,6 @@ static long callchain_finalize(void *buf, u32 size, u32 trace_nr, u32 elem_size,
+ }
  
-+/**
-+ * range_overflows() - Check if a range is out of bounds
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * A strict check to determine if the range [@start, @start + @size) is
-+ * invalid with respect to the allowable range [0, @max). Any range
-+ * starting at or beyond @max is considered an overflow, even if @size is 0.
-+ *
-+ * Returns: true if the range is out of bounds.
-+ */
- #define range_overflows(start, size, max) ({ \
- 	typeof(start) start__ = (start); \
- 	typeof(size) size__ = (size); \
-@@ -78,9 +90,32 @@ bool i915_error_injected(void);
- 	start__ >= max__ || size__ > max__ - start__; \
- })
+ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+-			    struct perf_callchain_entry *trace_in,
+ 			    void *buf, u32 size, u64 flags, bool may_fault)
+ {
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+@@ -567,10 +566,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	if (may_fault)
+ 		rcu_read_lock(); /* need RCU for perf's callchain below */
  
-+/**
-+ * range_overflows_t() - Check if a range is out of bounds
-+ * @type:  Data type to use.
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Same as range_overflows() but forcing the parameters to @type.
-+ *
-+ * Returns: true if the range is out of bounds.
-+ */
- #define range_overflows_t(type, start, size, max) \
- 	range_overflows((type)(start), (type)(size), (type)(max))
+-	if (trace_in) {
+-		trace = trace_in;
+-		trace->nr = min_t(u32, trace->nr, max_depth);
+-	} else if (kernel && task) {
++	if (kernel && task) {
+ 		trace = get_callchain_entry_for_task(task, max_depth);
+ 	} else {
+ 		trace = get_perf_callchain(regs, kernel, user, max_depth,
+@@ -603,7 +599,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ BPF_CALL_4(bpf_get_stack, struct pt_regs *, regs, void *, buf, u32, size,
+ 	   u64, flags)
+ {
+-	return __bpf_get_stack(regs, NULL, NULL, buf, size, flags, false /* !may_fault */);
++	return __bpf_get_stack(regs, NULL, buf, size, flags, false /* !may_fault */);
+ }
  
-+/**
-+ * range_end_overflows() - Check if a range's endpoint is out of bounds
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Checks only if the endpoint of a range (@start + @size) exceeds @max.
-+ * Unlike range_overflows(), a zero-sized range at the boundary (@start == @max)
-+ * is not considered an overflow. Useful for iterator-style checks.
-+ *
-+ * Returns: true if the endpoint exceeds the boundary.
-+ */
- #define range_end_overflows(start, size, max) ({ \
- 	typeof(start) start__ = (start); \
- 	typeof(size) size__ = (size); \
-@@ -90,6 +125,17 @@ bool i915_error_injected(void);
- 	start__ > max__ || size__ > max__ - start__; \
- })
+ const struct bpf_func_proto bpf_get_stack_proto = {
+@@ -619,7 +615,7 @@ const struct bpf_func_proto bpf_get_stack_proto = {
+ BPF_CALL_4(bpf_get_stack_sleepable, struct pt_regs *, regs, void *, buf, u32, size,
+ 	   u64, flags)
+ {
+-	return __bpf_get_stack(regs, NULL, NULL, buf, size, flags, true /* may_fault */);
++	return __bpf_get_stack(regs, NULL, buf, size, flags, true /* may_fault */);
+ }
  
-+/**
-+ * range_end_overflows_t() - Check if a range's endpoint is out of bounds
-+ * @type:  Data type to use.
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Same as range_end_overflows() but forcing the parameters to @type.
-+ *
-+ * Returns: true if the endpoint exceeds the boundary.
-+ */
- #define range_end_overflows_t(type, start, size, max) \
- 	range_end_overflows((type)(start), (type)(size), (type)(max))
+ const struct bpf_func_proto bpf_get_stack_sleepable_proto = {
+@@ -644,7 +640,7 @@ static long __bpf_get_task_stack(struct task_struct *task, void *buf, u32 size,
  
+ 	regs = task_pt_regs(task);
+ 	if (regs)
+-		res = __bpf_get_stack(regs, task, NULL, buf, size, flags, may_fault);
++		res = __bpf_get_stack(regs, task, buf, size, flags, may_fault);
+ 	put_task_stack(task);
+ 
+ 	return res;
+@@ -685,6 +681,32 @@ const struct bpf_func_proto bpf_get_task_stack_sleepable_proto = {
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+ 
++static int __bpf_get_stack_pe(struct perf_callchain_entry *trace, void *buf, u32 size,
++			      u64 flags)
++{
++	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
++	u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
++	bool user = flags & BPF_F_USER_STACK;
++	u32 elem_size, max_depth, nr_trace;
++	bool kernel = !user;
++
++	if (kernel && user_build_id)
++		return -EINVAL;
++
++	elem_size = user_build_id ? sizeof(struct bpf_stack_build_id) : sizeof(u64);
++	if (unlikely(size % elem_size))
++		return -EINVAL;
++
++	max_depth = stack_map_calculate_max_depth(size, elem_size, flags);
++	trace->nr = min_t(u32, trace->nr, max_depth);
++
++	if (trace->nr < skip)
++		return -EFAULT;
++
++	nr_trace = callchain_store(trace, buf, elem_size, flags);
++	return callchain_finalize(buf, size, nr_trace, elem_size, flags, false /* !may_fault */);
++}
++
+ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	   void *, buf, u32, size, u64, flags)
+ {
+@@ -696,7 +718,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	__u64 nr_kernel;
+ 
+ 	if (!(event->attr.sample_type & PERF_SAMPLE_CALLCHAIN))
+-		return __bpf_get_stack(regs, NULL, NULL, buf, size, flags, false /* !may_fault */);
++		return __bpf_get_stack(regs, NULL, buf, size, flags, false /* !may_fault */);
+ 
+ 	if (unlikely(flags & ~(BPF_F_SKIP_FIELD_MASK | BPF_F_USER_STACK |
+ 			       BPF_F_USER_BUILD_ID)))
+@@ -716,7 +738,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 		__u64 nr = trace->nr;
+ 
+ 		trace->nr = nr_kernel;
+-		err = __bpf_get_stack(regs, NULL, trace, buf, size, flags, false /* !may_fault */);
++		err = __bpf_get_stack_pe(trace, buf, size, flags);
+ 
+ 		/* restore nr */
+ 		trace->nr = nr;
+@@ -726,14 +748,13 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 		skip += nr_kernel;
+ 		if (skip > BPF_F_SKIP_FIELD_MASK)
+ 			goto clear;
+-
+ 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
+-		err = __bpf_get_stack(regs, NULL, trace, buf, size, flags, false /* !may_fault */);
++		err = __bpf_get_stack_pe(trace, buf, size, flags);
+ 	}
+-	return err;
+ 
+ clear:
+-	memset(buf, 0, size);
++	if (err < 0)
++		memset(buf, 0, size);
+ 	return err;
+ 
+ }
 -- 
 2.53.0
 
