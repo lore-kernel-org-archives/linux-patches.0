@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2AC3C73EC;
-	Sat, 17 Oct 2026 17:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135D93B2FCA;
+	Sat, 17 Oct 2026 17:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259475; cv=none; b=H/taEefWtJH6BLVulpsZq9C0jWkueN8y6us5wOtOIcuGq6erZZGMkd8Q99b+VZrh3QBk0Co2PSoOUP2cFvjF6nLdSVxV19MhQ0fumc6OQJjhG4mJK4kgj57Qe/bSE2x2GOpKcWPwUsUUqj1oZwHNGjfbu2eKp8thmP2ai2H0ddE=
+	t=1792259478; cv=none; b=oCewE874rUwN98iqYt233co5NyBVOiPudvmhXYxq1HxCS68EnTUgi8tVJYkCckAGnznIGnJz+3clLl7gu/9ftpnemcmKDVddbYBk6qWl6dLAFeh+FEBViPjQAofz6TTqspZF6w6s9HTMuwFZ/43pRor3Lh2+N4fCC4/yiR5Gopo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259475; c=relaxed/simple;
-	bh=tETb4JYVieMBBwUVkzPitoqeiBXzzmiMn0eFFBclRxc=;
+	s=arc-20240116; t=1792259478; c=relaxed/simple;
+	bh=eZy69FkP00abrBqIvTYU42NiEY7O/U3MO5ZjTEDbHHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej05k0AEsomH+iVCQxJp/oTP/YaNTes27tOcBoQAZwzuSGvjpWsE+adC3xFP7Y3QB9nyMZ5PRCuBWwsHFMhF6bzYXALquZ0MR1cAB36JBcAv4mPSkho8WY/rg3kzfUGt7MKltpW71NRPjUbRB5GckkYeKWSx/DHbN+uK4Ol3z7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i24ArsTO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g3m/VOsD85+6dTs+PKk2+xah6Qyyji42o2oiMn2+krt46zWrK/f9GoOfj+QypymiylEVkBk8vpzJIs4E78gNMvKrNyAN5uQNnLtjrTqSpvoIVnT0ImtqRcAXcp/QAyzWniWu9uB2T3O5+UzzEbXAN4un1IeRRda+PYEVRZsdW7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFSBhe29; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i24ArsTO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6FD1F000C4;
-	Sat, 17 Oct 2026 17:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFSBhe29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627021F000C4;
+	Sat, 17 Oct 2026 17:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259473;
-	bh=+byrqr9HczyBan/L5vlGCdkwLaPScvn4IRiX2YYwrjc=;
+	s=korg; t=1792259477;
+	bh=qHZT8cAGVO7+psJ7aqtqkROc2AuojeHSPYqnCjmvU1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i24ArsTOGfXuaQRi/ZqoRhrAKraZboUsVNDQ9rH3NxgxaOWaUc3QHFpKWFVu05w23
-	 U+hKN1hI/0vl9tnQxWV+2aJoSkLt5BQpXGZrSr6qWoyQz3zkrH0xr+PIyjM298J3dE
-	 /1cRsaaZiofs0v6zEGABK2E8rZ+hyBPPnWsCOKto=
+	b=VFSBhe29NHGkU+1zTyHiPU/5bmpywcfFzpUZ+rgNauVjUgEtiDh1IjItRAiRgEqQA
+	 +Gdi7eWVhjV2BexUTaiAOp8hoMRI9Yv34LLgfbUtkbxTyspaPZH8snFRqph00gxjIv
+	 n+AzE+qqHKyDGzCzDVohvJG8ejrBXrX2P0+GnpwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1225/1674] EDAC/igen6: Fix call trace due to missing release()
-Date: Sat, 17 Oct 2026 17:58:17 +0200
-Message-ID: <20261017160502.584287459@linuxfoundation.org>
+Subject: [PATCH 6.6 1226/1674] media: atomisp: gc2235: fix UAF and memory leak
+Date: Sat, 17 Oct 2026 17:58:18 +0200
+Message-ID: <20261017160502.609375503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,61 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit ab1f9d466c7d83ab0d2a529e07984e53b5960dcd ]
+[ Upstream commit 628f763aee0047ff44974388d6f70f75a763026b ]
 
-When unloading the igen6_edac driver, there is a call trace:
+gc2235_probe() handles its error paths incorrectly.
 
-  Device '(null)' does not have a release() function, it is broken and must be fixed.
-  See Documentation/core-api/kobject.rst.
-  WARNING: drivers/base/core.c:2567 at device_release+0x84/0x90, CPU#5: rmmod/127209
-  ...
-  RIP: 0010:device_release+0x84/0x90
-  Call Trace:
-   <TASK>
-   kobject_put+0x8c/0x220
-   put_device+0x17/0x30
-   igen6_unregister_mcis+0xa2/0xe0 [igen6_edac]
-   igen6_remove+0x82/0xb0 [igen6_edac]
-   ...
+If media_entity_pads_init() fails, gc2235_remove() is called, which
+tears down the subdev and frees dev, but then still falls through to
+atomisp_register_i2c_module(). This results in use-after-free.
 
-Fix the call trace by providing empty release() functions for the
-memory controller devices.
+If atomisp_register_i2c_module() fails, the media entity and control
+handler are left initialized and dev is leaked.
 
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260403054029.3950383-2-qiuxu.zhuo@intel.com
+gc2235_remove() unconditionally calls media_entity_cleanup() and
+v4l2_ctrl_handler_free(), but these are not initialized at every
+error path in gc2235_probe().
+
+Replace gc2235_remove() calls in the probe error paths with explicit
+unwind labels that free only the resources initialized at each point
+of failure, in reverse order of initialization.
+
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../media/atomisp/i2c/atomisp-gc2235.c        | 29 ++++++++++++-------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 34a25103402e3..766cd1a0cfa3c 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -1007,6 +1007,11 @@ static int igen6_pci_setup(struct pci_dev *pdev, u64 *mchbar)
- 	return -ENODEV;
+diff --git a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
+index 9fa390fbc5f31..1130d514891f7 100644
+--- a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
++++ b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
+@@ -813,7 +813,7 @@ static int gc2235_probe(struct i2c_client *client)
+ 
+ 	ret = gc2235_s_config(&dev->sd, client->irq, gcpdev);
+ 	if (ret)
+-		goto out_free;
++		goto err_unregister_subdev;
+ 
+ 	dev->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+ 	dev->pad.flags = MEDIA_PAD_FL_SOURCE;
+@@ -822,18 +822,16 @@ static int gc2235_probe(struct i2c_client *client)
+ 	ret =
+ 	    v4l2_ctrl_handler_init(&dev->ctrl_handler,
+ 				   ARRAY_SIZE(gc2235_controls));
+-	if (ret) {
+-		gc2235_remove(client);
+-		return ret;
+-	}
++	if (ret)
++		goto err_csi_cfg;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(gc2235_controls); i++)
+ 		v4l2_ctrl_new_custom(&dev->ctrl_handler, &gc2235_controls[i],
+ 				     NULL);
+ 
+ 	if (dev->ctrl_handler.error) {
+-		gc2235_remove(client);
+-		return dev->ctrl_handler.error;
++		ret = dev->ctrl_handler.error;
++		goto err_ctrl_handler;
+ 	}
+ 
+ 	/* Use same lock for controls as for everything else. */
+@@ -842,14 +840,23 @@ static int gc2235_probe(struct i2c_client *client)
+ 
+ 	ret = media_entity_pads_init(&dev->sd.entity, 1, &dev->pad);
+ 	if (ret)
+-		gc2235_remove(client);
++		goto err_ctrl_handler;
++
++	ret = atomisp_register_i2c_module(&dev->sd, gcpdev, RAW_CAMERA);
++	if (ret)
++		goto err_media_cleanup;
+ 
+-	return atomisp_register_i2c_module(&dev->sd, gcpdev, RAW_CAMERA);
++	return 0;
+ 
+-out_free:
++err_media_cleanup:
++	media_entity_cleanup(&dev->sd.entity);
++err_ctrl_handler:
++	v4l2_ctrl_handler_free(&dev->ctrl_handler);
++err_csi_cfg:
++	dev->platform_data->csi_cfg(&dev->sd, 0);
++err_unregister_subdev:
+ 	v4l2_device_unregister_subdev(&dev->sd);
+ 	kfree(dev);
+-
+ 	return ret;
  }
  
-+static void imc_release(struct device *dev)
-+{
-+	/* Nothing to do, the 'imc' owns the 'dev' and will also release it. */
-+}
-+
- static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
- {
- 	struct edac_mc_layer layers[2];
-@@ -1051,6 +1056,7 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
- 	mci->pvt_info = &igen6_pvt->imc[mc];
- 
- 	imc = mci->pvt_info;
-+	imc->dev.release = imc_release;
- 	device_initialize(&imc->dev);
- 	/*
- 	 * EDAC core uses mci->pdev(pointer of structure device) as
 -- 
 2.53.0
 
