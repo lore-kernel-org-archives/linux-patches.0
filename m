@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E963BBFAE;
-	Sat, 17 Oct 2026 16:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6C38654F;
+	Sat, 17 Oct 2026 16:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255572; cv=none; b=OTw4YeizPmsdc31j4phf9Z+d9A8ptFYHMvf2R3aO6ar7bbgciJ7LziBSUrXvtZmL3X9gRNFwXkfMqC1TDXS3/CH2HaTJjpLtQ/cjZWZVM6rh63sGpgEvv0HNAvjuejYDt3nRqiAZE32XM3vEaWqQAoY3OA4vG02bl3EMjGdHqHo=
+	t=1792255575; cv=none; b=kVJ64KeThmUSgBLukoxTWl8d5d7aZkRTBoIcAyeQcRo/6+nXtZZcY3MetOSLYcaP8ACsMLG058pKkBjayysAG6tfP1veFGO9H2w+uNLM9Pf9rIwX8WXcRnDMlnkHZERhnhhxyWaGkS98aSauwKFwmXOrO4okqMPomCVE4dxYyEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255572; c=relaxed/simple;
-	bh=DwC599DGYRzJj9bvxB6bT+Jv03VvBQtTXgsFZG3fmws=;
+	s=arc-20240116; t=1792255575; c=relaxed/simple;
+	bh=Mvs4FV36A25qUcBsl7gKVDMZUKQNvQ8zkFLKRnoRJw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szJF0Xc/nZrSbylIFTe0Ql4UKI/GjAgF1knvC+XvJrZuWA3U0JeLLAZCAx6euJvxSI0Rp/VzGPQnTVjsr1xExbtZlHBTRr38LkDcbinQE7lv7l3JwhQM30aCKhrvTnHgp+32UkKpmWldnZlGjXlc8DztGigls5ROg7QaOTHtJig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUMof6E3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=junvERsEqNAPrgZGMFe31rHfVp9Iij1nJrrS0MEQ8LV66crVvvXVa9dtK3lDZNHyMueAQdt3x7YDDR0HScPu5vq9RpeUhtVKyVPOpsoOEqU7H9DsIJYhxHygg3h0dywpCS9Pjc0wjE6Msg2gwE8tdltnMzCi+CXsmb/Z1sy9vzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M16X2VcJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUMof6E3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251AA1F000C4;
-	Sat, 17 Oct 2026 16:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M16X2VcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F691F000C4;
+	Sat, 17 Oct 2026 16:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255571;
-	bh=1qcoDKQVehc2ezgorZCaDsz/ua/etqLpvmUdNYuJBzQ=;
+	s=korg; t=1792255574;
+	bh=8uziPAEEE0h5N/hvdtoPl9pEqb5UYvK2bJYFQnwspQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUMof6E3aYFu5YQTRuf/6K1nNUOlVdikF5CULxZXf9441eAGa09qvUKeH48R6Kei7
-	 p1NpjqYzc3dEQ7V6n+8nfqmZqC/I5ic7rJmywdlp4dpzH77NHo6N5uFadSfe4MJ+Ls
-	 JeCUp2tu8AHA2rmOAbfOft4PUzDks8wTaKTopm5A=
+	b=M16X2VcJMxI5J8Ii1TCwO/m6PRYQenoLLDQJNmTK9xn5gMmGwC/U77ibHfhL80/CU
+	 UHn9bvZGBpLlMeVyuyKcgyeNsqm5v7PDVf6vOhBXfUPFTItzSc3XmftNhlCB7BFAuj
+	 bQP3H7uXLPB6I5dUTzKEZ0/Ula0eCVXalWTiXo5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyril Bur <cyrilbur@tenstorrent.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 820/869] riscv: uaccess: Only restore the CSR_STATUS SUM bit
-Date: Sat, 17 Oct 2026 18:01:01 +0200
-Message-ID: <20261017160057.909825479@linuxfoundation.org>
+Subject: [PATCH 6.12 794/869] bpf: backtrack_insn(): Handle ld_{abs,ind} subprog exit edge
+Date: Sat, 17 Oct 2026 18:00:35 +0200
+Message-ID: <20261017160057.264239100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,89 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyril Bur <cyrilbur@tenstorrent.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 265d6aba165c500389c80d394ac247460c443ef5 ]
+[ Upstream commit 387b1baefbb776e3f48dc2261e77a49213f470f7 ]
 
-During switch to csrs will OR the value of the register into the
-corresponding csr. In this case we're only interested in restoring the
-SUM bit not the entire register.
+Nicholas Carlini reported a bug in precision backtracking mechanism
+for BPF_LD | BPF_{IND,ABS} instructions. These instructions are
+modelled as two branches:
+- fallthrough;
+- implicit exit from current subprogram.
 
-Signed-off-by: Cyril Bur <cyrilbur@tenstorrent.com>
-Link: https://lore.kernel.org/r/20250522160954.429333-1-cyrilbur@tenstorrent.com
-Co-developed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Fixes: 788aa64c01f1 ("riscv: save the SR_SUM status over switches")
-Link: https://lore.kernel.org/r/20250602121543.1544278-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+The implicit exit case was not handled by the backtrack_insn()
+function. When backtracking such a path backtrack_insn() did not
+call bt_subprog_enter(), which meant that backtracking continued
+manipulating precision marks in a caller frame, while looking at
+instructions in a callee frame.
+
+This lead to segmentation faults during verification (see the
+selftest), or unsound state pruning.
+
+Fixes: ee861486e377 ("bpf: Fix ld_{abs,ind} failure path analysis in subprogs")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260901-bug-016-backtrack-ld-abs-v1-1-59368f1be435@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/processor.h | 2 +-
- arch/riscv/kernel/asm-offsets.c    | 6 +++---
- arch/riscv/kernel/entry.S          | 9 +++++----
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/arch/riscv/include/asm/processor.h b/arch/riscv/include/asm/processor.h
-index 8b00833d24937..25a1385dcd3fd 100644
---- a/arch/riscv/include/asm/processor.h
-+++ b/arch/riscv/include/asm/processor.h
-@@ -103,7 +103,7 @@ struct thread_struct {
- 	struct __riscv_d_ext_state fstate;
- 	unsigned long bad_cause;
- 	unsigned long envcfg;
--	unsigned long status;
-+	unsigned long sum;
- 	u32 riscv_v_flags;
- 	u32 vstate_ctrl;
- 	struct __riscv_v_ext_state vstate;
-diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
-index 1b575ddcb26ac..1d93658825f77 100644
---- a/arch/riscv/kernel/asm-offsets.c
-+++ b/arch/riscv/kernel/asm-offsets.c
-@@ -35,7 +35,7 @@ void asm_offsets(void)
- 	OFFSET(TASK_THREAD_S9, task_struct, thread.s[9]);
- 	OFFSET(TASK_THREAD_S10, task_struct, thread.s[10]);
- 	OFFSET(TASK_THREAD_S11, task_struct, thread.s[11]);
--	OFFSET(TASK_THREAD_STATUS, task_struct, thread.status);
-+	OFFSET(TASK_THREAD_SUM, task_struct, thread.sum);
- 
- 	OFFSET(TASK_TI_CPU, task_struct, thread_info.cpu);
- 	OFFSET(TASK_TI_FLAGS, task_struct, thread_info.flags);
-@@ -349,8 +349,8 @@ void asm_offsets(void)
- 		  offsetof(struct task_struct, thread.s[11])
- 		- offsetof(struct task_struct, thread.ra)
- 	);
--	DEFINE(TASK_THREAD_STATUS_RA,
--		  offsetof(struct task_struct, thread.status)
-+	DEFINE(TASK_THREAD_SUM_RA,
-+		  offsetof(struct task_struct, thread.sum)
- 		- offsetof(struct task_struct, thread.ra)
- 	);
- 
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index c4d7a9ece593b..d8f74743134a7 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -404,14 +404,15 @@ SYM_FUNC_START(__switch_to)
- 	REG_S s11, TASK_THREAD_S11_RA(a3)
- 
- 	/* save the user space access flag */
--	li    s0, SR_SUM
--	csrr  s1, CSR_STATUS
--	REG_S s1, TASK_THREAD_STATUS_RA(a3)
-+	csrr  s0, CSR_STATUS
-+	REG_S s0, TASK_THREAD_SUM_RA(a3)
- 
- 	/* Save the kernel shadow call stack pointer */
- 	scs_save_current
- 	/* Restore context from next->thread */
--	REG_L s0,  TASK_THREAD_STATUS_RA(a4)
-+	REG_L s0,  TASK_THREAD_SUM_RA(a4)
-+	li    s1,  SR_SUM
-+	and   s0,  s0, s1
- 	csrs  CSR_STATUS, s0
- 	REG_L ra,  TASK_THREAD_RA_RA(a4)
- 	REG_L sp,  TASK_THREAD_SP_RA(a4)
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 76868b01727f5..dd766eefbf027 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4207,16 +4207,29 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			  */
+ 		}
+ 	} else if (class == BPF_LD) {
+-		if (!bt_is_reg_set(bt, dreg))
+-			return 0;
+-		bt_clear_reg(bt, dreg);
+ 		/* It's ld_imm64 or ld_abs or ld_ind.
+ 		 * For ld_imm64 no further tracking of precision
+ 		 * into parent is necessary
+ 		 */
+-		if (mode == BPF_IND || mode == BPF_ABS)
+-			/* to be analyzed */
+-			return -ENOTSUPP;
++		if (mode == BPF_IMM) {
++			bt_clear_reg(bt, dreg);
++			return 0;
++		}
++		/*
++		 * BPF_{IND,ABS} are modelled as two branches:
++		 * - fallthrough;
++		 * - implicit subprogram exit.
++		 * It is necessary to switch current frame if
++		 * implicit subprogram exit branch is backtracked.
++		 */
++		if (mode == BPF_IND || mode == BPF_ABS) {
++			if (bt_is_reg_set(bt, dreg))
++				return -ENOTSUPP;
++			if (subseq_idx != idx + 1)
++				if (bt_subprog_enter(bt))
++					return -EFAULT;
++			return 0;
++		}
+ 	}
+ 	/* Propagate precision marks to linked registers, to account for
+ 	 * registers marked as precise in this function.
 -- 
 2.53.0
 
