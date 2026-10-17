@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A897038F658;
-	Sat, 17 Oct 2026 16:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750D2C026C;
+	Sat, 17 Oct 2026 16:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254181; cv=none; b=eQ5mHE+iUQ8F/xjHNPyTC++en/gSxXfqJPYNe3SSUSwgHQ2KZ8DU/uIvGW8Qe/E//2sSPUP99qIQycOBSK86YXrtsXJZ2LhEYzEgvWHKreme7xSmSwa9nkYCIawhwxKBosGrZNPU36CccwMOC9cLA6SKvcv8rMLtOZbJSZZ3Iz4=
+	t=1792254184; cv=none; b=tPuVlZutcGmBonmkugRrX+d1/5s/sBScCHrB+7ZFW5ItfhIV8zLIJZgroxHXF+LGxpP8miw8Y6AW0AynCa2AN2s+m9JmgdsVzHbXHw49MEjNdHxX7NgpD6L8R3eVwQ5h9S//PnpHw88pOGJGaPL4jAPkmi0QAegyEFeURHFrdEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254181; c=relaxed/simple;
-	bh=kqlJdcMD9+B4NQz5teMtVWWIfI/zhVWE5WUyzsiC9os=;
+	s=arc-20240116; t=1792254184; c=relaxed/simple;
+	bh=5pUDS6zJD1v7AkHliI3k+pWpEHUwzYQyJvX5FKXeC+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvqZuG0kFUYAF521kLvOw1t8NR7NE+iIfk6FXLWM/BJtPMX8zweciV0l+kSjylz7DKBVVlsdVuhCfJCydYTSrF3/QFv6UI2wEhi7CoAnP89tndQTT2qb8b7P+O5hjufuwqyAfV9/0RnZzd4FW51rKkdhvAQA8r2nz+FMh6PxivY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PB29k/cU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPYZwZJ57IFXDJ2QhrPFl4W+2D2WVB/pMEAKNkhAmnZHMe1VgnMsR6EsbDm8FhNV4+uM4bMX72WR8iQGIkS8vgsweYtKlAmG8d3cc/Nj/yc4hMTRpB6RLDxrCJKyUC01rbh8lDpAyQrNp8zhP+p2gPzWsoy6NzjqHPo+uSZGjwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b000DPYt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB29k/cU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABCF1F000C4;
-	Sat, 17 Oct 2026 16:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b000DPYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDE01F000C4;
+	Sat, 17 Oct 2026 16:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254180;
-	bh=TF6s5bl0ZE1Q/INIHTCIdOEngftv2CBJQNJFBF+MG4M=;
+	s=korg; t=1792254183;
+	bh=SoJsVRUtSvd+TWMePM4frUSqaOw9juHAHfT9yzZDuoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PB29k/cUHUFmTy/Uk97B2yBZLpE0jIV9dWzOIsFGDS4uLnLdkHlnd7GnC6LjebhLq
-	 QTn1oZmfWMH4Dx8938nVrCkBul/ZtibZnup/HrtFbmy6L99CWBoXoP5/XL0DqNCPVd
-	 h5o8KXLgCLm6QYCKCXVg/EptWRc7bToWRk4SCWZc=
+	b=b000DPYt2Pf1SOwSdJyxyyIlrd8p/iVzyS4T62YMWjnFqR8RQCjejt6AEzNIwinIl
+	 ADOsq3MCwkK8NV+FdtOTeweMp19h0WCk3OnJThL1wIzMqbWNmF33rGJxu3r7kpH4L2
+	 wQLmIotpitxcu4O3CzHG0Tgr+g0db/WryhnI2Sss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/869] wifi: mac80211: capture fast-RX rate before mesh reuses skb->cb
-Date: Sat, 17 Oct 2026 17:53:23 +0200
-Message-ID: <20261017160046.390789238@linuxfoundation.org>
+Subject: [PATCH 6.12 363/869] erofs: fix metabuf leak in inode xattr initialization
+Date: Sat, 17 Oct 2026 17:53:24 +0200
+Message-ID: <20261017160046.414575661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,67 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Jia Zhu <zhujia.zj@bytedance.com>
 
-[ Upstream commit d71c841be5d9e586ee7f36c0dc8ed4db0d9a1349 ]
+[ Upstream commit 79b09c54c6563df9846ca3094bcfd72082c3e1d7 ]
 
-ieee80211_invoke_fast_rx() reads RX status through
-IEEE80211_SKB_RXCB(skb), which aliases the same skb->cb storage
-that ieee80211_rx_mesh_data() reuses as IEEE80211_TX_INFO.  In the
-unicast forward path, mesh_data does:
+commit bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+converted xattr operations to use on-stack erofs_buf instances.
+erofs_init_inode_xattrs() uses such a metabuf while reading the inline
+xattr header and shared xattr id array.
 
-	info = IEEE80211_SKB_CB(fwd_skb);
-	memset(info, 0, sizeof(*info));
+Some error paths after erofs_read_metabuf() leave through out_unlock
+without dropping the metabuf, so the folio reference can leak.
 
-on the same skb the caller still names via rx->skb, then either
-queues the skb for TX (success) or kfree_skb()'s it (no-route)
-before returning RX_QUEUED.  The caller's RX_QUEUED arm then
-calls sta_stats_encode_rate(status) on memory that is either
-zeroed (success path) or freed (no-route path).  The latter is
-KASAN slab-use-after-free in ieee80211_prepare_and_rx_handle.
+Consolidate the cleanup at out_unlock. erofs_put_metabuf() is a
+no-op if no folio has been acquired, and this keeps all paths after
+taking EROFS_I_BL_XATTR_BIT covered by a single cleanup site.
 
-Fix by encoding the rate from status before invoking
-ieee80211_rx_mesh_data(), so the RX_QUEUED arm consumes a value
-captured while status was still backed by valid memory.
-
-Fixes: 3468e1e0c639 ("wifi: mac80211: add mesh fast-rx support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260509043427.60322-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/erofs/xattr.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 7b4528e858bb8..e7f940a890dd4 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4897,6 +4897,7 @@ static bool ieee80211_invoke_fast_rx(struct ieee80211_rx_data *rx,
- 		u8 sa[ETH_ALEN];
- 	} addrs __aligned(2);
- 	struct ieee80211_sta_rx_stats *stats;
-+	u32 encoded_rate;
+diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
+index 60d2cf26e837e..9753df4e95a24 100644
+--- a/fs/erofs/xattr.c
++++ b/fs/erofs/xattr.c
+@@ -47,6 +47,8 @@ static int erofs_init_inode_xattrs(struct inode *inode)
+ 	if (wait_on_bit_lock(&vi->flags, EROFS_I_BL_XATTR_BIT, TASK_KILLABLE))
+ 		return -ERESTARTSYS;
  
- 	/* for parallel-rx, we need to have DUP_VALIDATED, otherwise we write
- 	 * to a common data structure; drivers can implement that per queue
-@@ -5004,11 +5005,14 @@ static bool ieee80211_invoke_fast_rx(struct ieee80211_rx_data *rx,
- 	/* push the addresses in front */
- 	memcpy(skb_push(skb, sizeof(addrs)), &addrs, sizeof(addrs));
- 
-+	/* capture before mesh forward may memset or free skb->cb */
-+	encoded_rate = sta_stats_encode_rate(status);
++	it.buf = __EROFS_BUF_INITIALIZER;
 +
- 	res = ieee80211_rx_mesh_data(rx->sdata, rx->sta, rx->skb);
- 	switch (res) {
- 	case RX_QUEUED:
- 		stats->last_rx = jiffies;
--		stats->last_rate = sta_stats_encode_rate(status);
-+		stats->last_rate = encoded_rate;
- 		return true;
- 	case RX_CONTINUE:
- 		break;
+ 	/* someone has initialized xattrs for us? */
+ 	if (test_bit(EROFS_I_EA_INITED_BIT, &vi->flags))
+ 		goto out_unlock;
+@@ -76,7 +78,6 @@ static int erofs_init_inode_xattrs(struct inode *inode)
+ 		goto out_unlock;
+ 	}
+ 
+-	it.buf = __EROFS_BUF_INITIALIZER;
+ 	erofs_init_metabuf(&it.buf, sb);
+ 	it.pos = erofs_iloc(inode) + vi->inode_isize;
+ 
+@@ -93,7 +94,6 @@ static int erofs_init_inode_xattrs(struct inode *inode)
+ 	vi->xattr_shared_xattrs = kmalloc_array(vi->xattr_shared_count,
+ 						sizeof(uint), GFP_KERNEL);
+ 	if (!vi->xattr_shared_xattrs) {
+-		erofs_put_metabuf(&it.buf);
+ 		ret = -ENOMEM;
+ 		goto out_unlock;
+ 	}
+@@ -112,13 +112,13 @@ static int erofs_init_inode_xattrs(struct inode *inode)
+ 		vi->xattr_shared_xattrs[i] = le32_to_cpu(*(__le32 *)it.kaddr);
+ 		it.pos += sizeof(__le32);
+ 	}
+-	erofs_put_metabuf(&it.buf);
+ 
+ 	/* paired with smp_mb() at the beginning of the function. */
+ 	smp_mb();
+ 	set_bit(EROFS_I_EA_INITED_BIT, &vi->flags);
+ 
+ out_unlock:
++	erofs_put_metabuf(&it.buf);
+ 	clear_and_wake_up_bit(EROFS_I_BL_XATTR_BIT, &vi->flags);
+ 	return ret;
+ }
 -- 
 2.53.0
 
