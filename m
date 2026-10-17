@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2471419A4;
-	Sat, 17 Oct 2026 16:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB8F3A7F57;
+	Sat, 17 Oct 2026 16:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254621; cv=none; b=VJ/d3kYioGVwRlbcW28uITR8Lr0php94jnIqm5eKUORH4pgPMkZ9ipgI1EN3P6HB9SYXHG7zBues62bx7pzvMclW3pTZL5iSnC44DBR5g2DpUN9PsNvZl3XVONV8y+bTuk/eidZMUYkvrnPrLfn15N+ZSwHB/xPobVm4UGZhL/0=
+	t=1792254624; cv=none; b=MhFJQE4UJQzzeu0G6lRcaBO2yhhSwvcaftG/UwSqGceLjzS9Ybvrq9ykEhaFm4vNtHQCezCUTL+fjic8FxKJsZIlEtcsHf9jlhu3hcRPNaY2TypVflpUtO1KOp1VGs1ENjvkjGRYJ+EONBD5Hej02rAARJnr9bOssdrtU6a/5ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254621; c=relaxed/simple;
-	bh=ObnlzmFj9/ywBWAMPQvwaoO1Oqou3g3eY5xj/vkNsO0=;
+	s=arc-20240116; t=1792254624; c=relaxed/simple;
+	bh=DCSQLiyuHQZvgpmVVdjBlDV52x94hBsvY7peJauiDOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU17DfVQLbBLyT0j88L8dOcB6Pyd1nJ9y0LFuoMPfu4p+0XwHdRhvJw9RxWer0He2W7b987x4bsKrjrw/acdeFOU78+6gnZMkhpgTaG+27mzdE426LT/yKyYvWTBLl4k0bnjd5g+Ye6kM9zB1EKpEREge6a9aavvvAJWP4K0ivc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwLe7G6g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YLH0io///6vjGUhqQA5nYUZxirNDPeRfuFm25w7lxyxQj5yisBGaDptqXtp4L3uHevwJknjqrtuYi15D3cfu7V6jbXzc8eMc5fqdF3ugz8o8DJKmT/ah9nPyPke+RirVUXPQXIJTu+0QABv2xHRgHuvKjiErGS5Hca097OU3PZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXhiNXPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwLe7G6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568561F000C4;
-	Sat, 17 Oct 2026 16:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXhiNXPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E4A1F000C4;
+	Sat, 17 Oct 2026 16:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254619;
-	bh=0n5i/2YSshwj/4drPXV+w7Sg0fCl0rebPAIU2Lfy7Ok=;
+	s=korg; t=1792254622;
+	bh=Wo3KDmfYqrwgxx2ubdtcCZtjS3c35yPNXkJWHhMXRZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwLe7G6glzbNb0WR1Is+grpcMtIz6LKh5ZhE9cFB5gghgV0t2wKHVI3Wn4TqJTgiM
-	 AtUJXXP2XY53N+Saic3CPRtQ3E0DZ3WzY3JfaoUnLHf7Hi7S9aa61ebGp7E7QM6MgC
-	 UZlN5J3onq1QHJJxkJnzPdLX8fW+AyVB3Ry3zp2U=
+	b=wXhiNXPi//qRA3XitAQepAPmivQS32wWJvHaPQjFbgbX7AzSbWO91H1CAytqFGVP8
+	 GRW5VtbJPYLcM/S/4rUd/rY6TnY11mnkwy+qIL59PTxibyTkxzaO31ZNGbCP7KqnG1
+	 MUcdDJfa/GwIX6u5IT63bfvFCxJS67zlbUAc1I5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Windsor <dwindsor@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 470/869] bpf: Reject sleepable BPF_LSM_CGROUP programs at load time
-Date: Sat, 17 Oct 2026 17:55:11 +0200
-Message-ID: <20261017160049.178428083@linuxfoundation.org>
+Subject: [PATCH 6.12 506/869] tls: rx: restore msg_iter before TLS 1.3 optimistic retry
+Date: Sat, 17 Oct 2026 17:55:47 +0200
+Message-ID: <20261017160050.076526802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,77 +45,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Windsor <dwindsor@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 5b038319be442c620f774e6fc9e9283deeca1c75 ]
+[ Upstream commit 1c8629651cb54f7b51db8fc0b1a9944e4a4b0f5e ]
 
-The cgroup shim runs under rcu_read_lock_dont_migrate(), so we should
-not attach any sleepable BPF programs there. Add support to the verifier
-to explicitly reject attempts to load sleepable BPF programs destined
-for LSM cgroup attachment.
+tls_decrypt_sg() advances msg->msg_iter when it maps user pages for
+the optimistic TLS 1.3 zero-copy path. If the decrypted record turns
+out not to be unpadded application data, tls_decrypt_sw() retries into
+a kernel skb, but leaves the iterator advanced.
 
-Without this, we get the following splat from a BPF_LSM_CGROUP
-program marked BPF_F_SLEEPABLE attached to file_open when it calls
-bpf_get_dentry_xattr():
+The subsequent copy from the skb then writes decrypted bytes again at
+a later point in the caller iovecs while recvmsg() reports only the
+post-retry length. A TLS peer can trigger this after the receiver
+enables TLS_RX_EXPECT_NO_PAD.
 
-  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1567
-  in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 34317, name: load
-  preempt_count: 0, expected: 0
-  RCU nest depth: 2, expected: 0
-  Call Trace:
-   down_read+0x76/0x480
-   ext4_xattr_get+0x11f/0x700
-   __vfs_getxattr+0xf0/0x150
-   bpf_get_dentry_xattr+0xbb/0xf0
-   bpf_prog_e76a298dac9218c6_test_open+0x6a/0x85
-   __cgroup_bpf_run_lsm_current+0x326/0x840
-   bpf_trampoline_6442534646+0x62/0x14d
-   security_file_open+0x34/0x60
-   do_dentry_open+0x340/0x1260
-   vfs_open+0x7a/0x440
-   path_openat+0x1bac/0x30a0
+Revert the iterator by the number of bytes consumed by the optimistic
+mapping before retrying without zero-copy.
 
-libbpf provides a .s named section variant for every sleepable
-program type except lsm_cgroup, reflecting that per-cgroup LSM programs
-are intended to only run in a non-sleepable context.
+Add a selftest which sends a TLS 1.3 control record with
+TLS_RX_EXPECT_NO_PAD enabled and verifies that recvmsg() does not
+overwrite later iovecs beyond the returned length.
 
-The above splat was obtained by bypassing libbpf by using bpf(2)
-directly.
-
-Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
-Signed-off-by: David Windsor <dwindsor@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20260605145707.608579-1-dwindsor@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: ce61327ce989 ("tls: rx: support optimistic decrypt to user buffer with TLS 1.3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260804125528.2139928-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c                  |  2 ++
+ tools/testing/selftests/net/tls.c | 57 +++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 5a1c8733f3222..03d5e7db3df76 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -22800,8 +22800,10 @@ static bool can_be_sleepable(struct bpf_prog *prog)
- 			return false;
- 		}
- 	}
--	return prog->type == BPF_PROG_TYPE_LSM ||
--	       prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
-+	if (prog->type == BPF_PROG_TYPE_LSM)
-+		return prog->expected_attach_type != BPF_LSM_CGROUP;
-+
-+	return prog->type == BPF_PROG_TYPE_KPROBE /* only for uprobes */ ||
- 	       prog->type == BPF_PROG_TYPE_STRUCT_OPS;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 323ac8b1ad0c8..dad093a3a793d 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1753,6 +1753,8 @@ tls_decrypt_sw(struct sock *sk, struct tls_context *tls_ctx,
+ 	/* If opportunistic TLS 1.3 ZC failed retry without ZC */
+ 	if (unlikely(darg->zc && prot->version == TLS_1_3_VERSION &&
+ 		     darg->tail != TLS_RECORD_TYPE_DATA)) {
++		iov_iter_revert(&msg->msg_iter, strp_msg(darg->skb)->full_len -
++				prot->overhead_size);
+ 		darg->zc = false;
+ 		if (!darg->tail)
+ 			TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSRXNOPADVIOL);
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index 1264a20c1a04e..9388e77a1b21a 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -1650,6 +1650,63 @@ TEST_F(tls, recv_efault)
  }
  
+ #define TLS_RECORD_TYPE_HANDSHAKE      0x16
++
++TEST_F(tls_basic, recvmsg_nopad_retry_iov)
++{
++	char payload[32];
++	char first_iov[sizeof(payload)];
++	char later_iov[sizeof(payload) * 2];
++	char expected_later_iov[sizeof(later_iov)];
++	char cbuf[CMSG_SPACE(sizeof(char))];
++	struct tls_crypto_info_keys tls13;
++	struct iovec iov[] = {
++		{ .iov_base = first_iov, .iov_len = sizeof(first_iov) },
++		{ .iov_base = later_iov, .iov_len = sizeof(later_iov) },
++	};
++	struct msghdr msg = {
++		.msg_iov = iov,
++		.msg_iovlen = ARRAY_SIZE(iov),
++		.msg_control = cbuf,
++		.msg_controllen = sizeof(cbuf),
++	};
++	int one = 1;
++	int ret;
++	int i;
++
++	if (self->notls)
++		SKIP(return, "no TLS support");
++
++	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
++			     &tls13, 0);
++
++	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX_EXPECT_NO_PAD,
++			 &one, sizeof(one));
++	ASSERT_EQ(ret, 0);
++
++	for (i = 0; i < sizeof(payload); i++)
++		payload[i] = 0x40 + i;
++	memset(first_iov, 0xa5, sizeof(first_iov));
++	memset(later_iov, 0x5a, sizeof(later_iov));
++	memset(expected_later_iov, 0x5a, sizeof(expected_later_iov));
++
++	/* A control record forces optimistic TLS 1.3 RX to retry. */
++	ret = tls_send_cmsg(self->fd, TLS_RECORD_TYPE_HANDSHAKE,
++			    payload, sizeof(payload), 0);
++	ASSERT_EQ(ret, sizeof(payload));
++
++	ret = recvmsg(self->cfd, &msg, 0);
++	ASSERT_EQ(ret, sizeof(payload));
++	EXPECT_EQ(memcmp(first_iov, payload, sizeof(payload)), 0);
++	EXPECT_EQ(memcmp(later_iov, expected_later_iov,
++			 sizeof(later_iov)), 0);
++}
++
+ /* key_update, length 1, update_not_requested */
+ static const char key_update_msg[] = "\x18\x00\x00\x01\x00";
+ static void tls_send_keyupdate(struct __test_metadata *_metadata, int fd)
 -- 
 2.53.0
 
