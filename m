@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FE73D3321;
-	Sat, 17 Oct 2026 16:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10123C1085;
+	Sat, 17 Oct 2026 16:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255376; cv=none; b=bLsLCP8OGfg1u89pRqaqnw1G6HfZ1bF6pXhNERAk6pOOtw9LMKcOSR3EuCFE47skGGPRg3X9bbHCJfJwtaipAHdr0qGSkuGUNbB0XKnUCIVGF4Tfhy827U3I0zj/13lTcuXxW4J4rnWL3SpJwT4zWUGlC6eB1sYhCOilDHozN+M=
+	t=1792255379; cv=none; b=mvCz9R1HYwiYcK1wwEltcMly4Y8faxdxB3RLdQ02hWInOCf6wPvEfElzCCGqkWdvUnrP/8lFFeLzQGmr2bxPJxh1Tao85jZoBgIF6DlolGjyuI2O3SWUvBe0lEQpnAFjPnPXj6oMxkI4eBjdC/GoPTFh7ZDrlu8K+HgY1N5im+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255376; c=relaxed/simple;
-	bh=8AdJElvEOnPZ+9Gn2nQ7rHyMCVAWj8qKHks+uNmzxk8=;
+	s=arc-20240116; t=1792255379; c=relaxed/simple;
+	bh=Domi25pwu6lahWR5UsOWVR73YbrucP3fwRBL1FnI1IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xm9k8HejBxZnJoZrwi4fHtZBF8sE4pJlh2PudqJOtZi1I6gSXIGd9xD/fT1VLV+zgExeT1/tdVdWi06OJSsuhSxuPtvA+s+u4OmyhYQTHGWMVN5e2U1Un1rbW2ogwgnav3YpCGfTw+AgpfSiVAsDSZZOEYHekaUOuHfkGwDQyJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=le1Pe9LO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rkd4QDIq23hRCod1o9NfyBimfdEErCiavHKpS3JrKxa59k13vX+WR0JsOrB8/oIl4VXwTDloiNB35DIChXOVuexYyBEq0O2fpywJA/Eu8e57fz+gIyxXpgnPDdUXkLIg4RgJDl7pQjQwQOtmQ+5S2qu9+JHH3xrWhwQHjH8hmK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgQDrcem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="le1Pe9LO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BAC1F000C8;
-	Sat, 17 Oct 2026 16:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgQDrcem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E861F000CF;
+	Sat, 17 Oct 2026 16:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255374;
-	bh=uy5JhmZ1NMN7wpxMAf1jF8hYWtlnNGSYaf12hV70ZnA=;
+	s=korg; t=1792255377;
+	bh=A4vercVOJMpr98+XJqI37otTCk6XRyH9jA/VmUeVyKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=le1Pe9LOTk/4t+Qt7bb5iom+pamUEIj114CQfKqeFKeBsE5ot4QcTPXCt4OjKVZBS
-	 rzlM5r4Bsc89J9//6rnzqnGyYsjYYK0JizZ+upj4SAY8BlfVISSyk9mM2R7ajjASZ+
-	 nRdE4Jp7RullsuiAyqEDQ0QVSr6jUOYdwFxMcxk4=
+	b=wgQDrcemgWzCYCvlbpt0rzUU99qLQ2QTGdLRs63mg4kk2NRJ3zX1kfE12Ic76+AUN
+	 6IKj+iGCQXkwAXMagULXFnrVsvwgdyxXAZDeSX/hsVAPq/i9SRy6xyAJiXt1F2mUzG
+	 3X1yNUrl/6uY6Nh/6tCjBQpc3luy1ZT8+RNibakw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 756/869] genirq: Consistently use %u format specifier for unsigned int variables
-Date: Sat, 17 Oct 2026 17:59:57 +0200
-Message-ID: <20261017160056.314392078@linuxfoundation.org>
+Subject: [PATCH 6.12 757/869] genirq/proc: Size interrupt directory names for 10-digit interrupt numbers
+Date: Sat, 17 Oct 2026 17:59:58 +0200
+Message-ID: <20261017160056.338110836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,64 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 47af06c9d31fe558493de4e04f9a07847dc4992f ]
+[ Upstream commit c2c7983c93f5d86962318be7e7298f1bc3feb1a6 ]
 
-There are three cases in the genirq code when the irq, as an unsigned
-integer variable, is converted to text representation by sprintf().
-In two cases it uses '%d' specifier which is for signed values. While
-it's not a problem right now, potentially it might be in the future
-in case too big (> INT_MAX) number will appear there.
+/proc/irq/<n>/ directory names are built in `char name[10]` buffers
+with `sprintf(name, "%u", irq)`.
 
-Consistently use '%u' format specifier for @irq which is declared as
-unsigned int in all these cases.
+Ten-digit IRQ numbers already need 11 bytes including the trailing NUL, and
+current sparse-IRQ configurations allow interrupt numbers in that range.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250509154643.1499171-1-andriy.shevchenko@linux.intel.com
-Stable-dep-of: c2c7983c93f5 ("genirq/proc: Size interrupt directory names for 10-digit interrupt numbers")
+Size the temporary name buffer for the current decimal form and switch
+to bounded formatting when creating or removing the proc entry.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260404101001.1-genirq-proc-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/debugfs.c | 2 +-
- kernel/irq/proc.c    | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ kernel/irq/proc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/irq/debugfs.c b/kernel/irq/debugfs.c
-index c6ffb97966bed..8bcde325b05c0 100644
---- a/kernel/irq/debugfs.c
-+++ b/kernel/irq/debugfs.c
-@@ -231,7 +231,7 @@ void irq_add_debugfs_entry(unsigned int irq, struct irq_desc *desc)
- 	if (!irq_dir || !desc || desc->debugfs_file)
- 		return;
- 
--	sprintf(name, "%d", irq);
-+	sprintf(name, "%u", irq);
- 	desc->debugfs_file = debugfs_create_file(name, 0644, irq_dir, desc,
- 						 &dfs_irq_ops);
- }
 diff --git a/kernel/irq/proc.c b/kernel/irq/proc.c
-index 24fe3bd56d86f..6cb9e19e710cf 100644
+index 6cb9e19e710cf..2ad08b9a41016 100644
 --- a/kernel/irq/proc.c
 +++ b/kernel/irq/proc.c
-@@ -309,7 +309,7 @@ static bool name_unique(unsigned int irq, struct irqaction *new_action)
+@@ -10,6 +10,7 @@
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ #include <linux/interrupt.h>
++#include <linux/kernel.h>
+ #include <linux/kernel_stat.h>
+ #include <linux/mutex.h>
  
- void register_handler_proc(unsigned int irq, struct irqaction *action)
+@@ -323,7 +324,7 @@ void register_handler_proc(unsigned int irq, struct irqaction *action)
+ 
+ #undef MAX_NAMELEN
+ 
+-#define MAX_NAMELEN 10
++#define MAX_NAMELEN 11
+ 
+ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
  {
--	char name [MAX_NAMELEN];
-+	char name[MAX_NAMELEN];
- 	struct irq_desc *desc = irq_to_desc(irq);
- 
- 	if (!desc->dir || action->dir || !action->name || !name_unique(irq, action))
-@@ -345,7 +345,7 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
+@@ -345,7 +346,7 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
  		return;
  
  	/* create /proc/irq/1234 */
--	sprintf(name, "%d", irq);
-+	sprintf(name, "%u", irq);
+-	sprintf(name, "%u", irq);
++	snprintf(name, MAX_NAMELEN, "%u", irq);
  	desc->dir = proc_mkdir(name, root_irq_dir);
  	if (!desc->dir)
  		return;
+@@ -398,7 +399,7 @@ void unregister_irq_proc(unsigned int irq, struct irq_desc *desc)
+ #endif
+ 	remove_proc_entry("spurious", desc->dir);
+ 
+-	sprintf(name, "%u", irq);
++	snprintf(name, MAX_NAMELEN, "%u", irq);
+ 	remove_proc_entry(name, root_irq_dir);
+ }
+ 
 -- 
 2.53.0
 
