@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2CF3B774F;
-	Sat, 17 Oct 2026 17:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7C339EF01;
+	Sat, 17 Oct 2026 17:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257788; cv=none; b=Vi/9PH1WSZMNvZq6xfWDSL0QQ0OnP1Vx/WEg5dplqFFtWlykxmO3Y7yCGUvCHu3xOyauxjN9h3E9AFABfFj3mopHi7qDh9YPxseWR2GGPzxNvvDrBo9byBKdHdRuTwtxwuCQ7AhV7Iq7Tq3cT/qQWuf4wu7wBevN7e6Sk6Cx3EU=
+	t=1792257790; cv=none; b=sQk/9wG4JO/lqNq6kouks9keCxrnPA9KV+rbd0ZEPpRRjyzb8SngasLpvbede9b0YCPxpqyHwEoh0M/JR4z05agTU0tisl/hUmt3nTLemnnENlRvJJCPO9AMGYMlWMiGfog9srj63Rou9J3OrdLX9WiRli/UNOG3SmclT2Mdugs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257788; c=relaxed/simple;
-	bh=NbNazYZCv+v6x6f65BFPE2/Bqf2ObtYMCVm3PUf54mQ=;
+	s=arc-20240116; t=1792257790; c=relaxed/simple;
+	bh=plECTbmYOkj9gKYeaOkvkCC3rQIYMoC1qFA6UDLSEec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n9aHJ1WrCdw9hBPpFigX3xXZ4ToquyAylQq9rlt+rZtAeM2DVH6sJhOHxrqmOnG2cBod5YgYuPIYA3DFpFgF6XJPt3to6UUlgjkrDtTDekIKUioNRgpZ77uXkWO86pFPQgi2cPBmuJGaw245z1AjvXYzgalGBvH4Wohu21F3lvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fioJR1to; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJROcDz6czc0gECRqGYc4AmYgzVuLY3vzNtQj8s57TB8dIjVTi7kRm6mxbRJHVUpVczMJGL6ZRBK1enKE6IUpl/SJvnhSy120Yx7oeWhJRVcuP/P/dfQnwgkOotp7xPYcQryFcy8tzPNEIMiU2FUeZocjhaKpQHfJJyydi4QpSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3Rgi5Yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fioJR1to"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADDD1F000C4;
-	Sat, 17 Oct 2026 17:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3Rgi5Yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9424F1F000C5;
+	Sat, 17 Oct 2026 17:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257786;
-	bh=GqL2+D0hvl9bTjOXZ1FhbH0aqS8JWzn15x4l7/f1W+0=;
+	s=korg; t=1792257789;
+	bh=bX+4vz4aNwnxMVPhpYRii45ErXg0Y6cgH3gk+BV6cuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fioJR1toJET3HlKGYmgE7/9npRZSmJIDr702ilMEFvRHeCG1LQtkWfcNtLkGpKam3
-	 UXV7DWZ9t+cMogJu6mlvMIX/65U1jaL4EoSzCO2p9CZ9EKKaJAekCvRoOnGG2WBcnp
-	 YoNXsUf56l75bOwisEXqrg0zulfrXt1U42QtTQ3I=
+	b=d3Rgi5YkClZ9gMqwkCCytyRzTZ5wyt6vZqnd4GCxvWjNVdiFg3ztPj+q4M3L7knXm
+	 Nf3zyNGd+EGKZMpCVfc+4pbH7V+jx1RB3kTJncjeWLf+3Nn/AXQ+2vAQxBeZ8HULrO
+	 +fzKK899dAztZqTazZ3ui+nZbptdVM+J7oHOQ0VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0671/1674] PCI: dwc: ep: Prevent changing BAR size/flags in pci_epc_set_bar()
-Date: Sat, 17 Oct 2026 17:49:03 +0200
-Message-ID: <20261017160448.331851993@linuxfoundation.org>
+Subject: [PATCH 6.6 0672/1674] rds: sysctl: rds_tcp_{rcv,snd}buf: avoid using current->nsproxy
+Date: Sat, 17 Oct 2026 17:49:04 +0200
+Message-ID: <20261017160448.357265155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,87 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 3708acbd5f169ebafe1faa519cb28adc56295546 ]
+[ Upstream commit 7f5611cbc4871c7fb1ad36c2e5a9edad63dca95c ]
 
-In commit 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update
-inbound map address") set_bar() was modified to support dynamically
-changing the backing physical address of a BAR that was already configured.
+As mentioned in a previous commit of this series, using the 'net'
+structure via 'current' is not recommended for different reasons:
 
-This means that set_bar() can be called twice, without ever calling
-clear_bar() (as calling clear_bar() would clear the BAR's PCI address
-assigned by the host).
+- Inconsistency: getting info from the reader's/writer's netns vs only
+  from the opener's netns.
 
-This can only be done if the new BAR size/flags does not differ from the
-existing BAR configuration. Add these missing checks.
+- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
+  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
+  syzbot [1] using acct(2).
 
-If we allow set_bar() to set e.g. a new BAR size that differs from the
-existing BAR size, the new address translation range will be smaller than
-the BAR size already determined by the host, which would mean that a read
-past the new BAR size would pass the iATU untranslated, which could allow
-the host to read memory not belonging to the new struct pci_epf_bar.
+The per-netns structure can be obtained from the table->data using
+container_of(), then the 'net' one can be retrieved from the listen
+socket (if available).
 
-While at it, add comments which clarifies the support for dynamically
-changing the physical address of a BAR. (Which was also missing.)
-
-Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
-Link: https://lore.kernel.org/r/20241213143301.4158431-10-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: c6a58ffed536 ("RDS: TCP: Add sysctl tunables for sndbuf/rcvbuf on rds-tcp socket")
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-9-5df34b2083e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ net/rds/tcp.c | 39 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 26ad643fb4248..120ce2d472aa8 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -247,6 +247,23 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 245c4c48c56d7..69ebc4334cc2b 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -53,8 +53,10 @@ static atomic_t rds_tcp_unloading = ATOMIC_INIT(0);
  
- 	reg = PCI_BASE_ADDRESS_0 + (4 * bar) + func_offset;
+ static struct kmem_cache *rds_tcp_conn_slab;
  
-+	/*
-+	 * Certain EPF drivers dynamically change the physical address of a BAR
-+	 * (i.e. they call set_bar() twice, without ever calling clear_bar(), as
-+	 * calling clear_bar() would clear the BAR's PCI address assigned by the
-+	 * host).
-+	 */
-+	if (ep->epf_bar[bar]) {
-+		/*
-+		 * We can only dynamically change a BAR if the new BAR size and
-+		 * BAR flags do not differ from the existing configuration.
-+		 */
-+		if (ep->epf_bar[bar]->barno != bar ||
-+		    ep->epf_bar[bar]->size != size ||
-+		    ep->epf_bar[bar]->flags != flags)
-+			return -EINVAL;
+-static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
+-				 void *buffer, size_t *lenp, loff_t *fpos);
++static int rds_tcp_sndbuf_handler(struct ctl_table *ctl, int write,
++				  void *buffer, size_t *lenp, loff_t *fpos);
++static int rds_tcp_rcvbuf_handler(struct ctl_table *ctl, int write,
++				  void *buffer, size_t *lenp, loff_t *fpos);
+ 
+ static int rds_tcp_min_sndbuf = SOCK_MIN_SNDBUF;
+ static int rds_tcp_min_rcvbuf = SOCK_MIN_RCVBUF;
+@@ -66,7 +68,7 @@ static struct ctl_table rds_tcp_sysctl_table[] = {
+ 		/* data is per-net pointer */
+ 		.maxlen         = sizeof(int),
+ 		.mode           = 0644,
+-		.proc_handler   = rds_tcp_skbuf_handler,
++		.proc_handler   = rds_tcp_sndbuf_handler,
+ 		.extra1		= &rds_tcp_min_sndbuf,
+ 	},
+ #define	RDS_TCP_RCVBUF	1
+@@ -75,7 +77,7 @@ static struct ctl_table rds_tcp_sysctl_table[] = {
+ 		/* data is per-net pointer */
+ 		.maxlen         = sizeof(int),
+ 		.mode           = 0644,
+-		.proc_handler   = rds_tcp_skbuf_handler,
++		.proc_handler   = rds_tcp_rcvbuf_handler,
+ 		.extra1		= &rds_tcp_min_rcvbuf,
+ 	},
+ 	{ }
+@@ -758,10 +760,10 @@ static void rds_tcp_sysctl_reset(struct net *net)
+ 	spin_unlock_irq(&rds_tcp_conn_lock);
+ }
+ 
+-static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
++static int rds_tcp_skbuf_handler(struct rds_tcp_net *rtn,
++				 struct ctl_table *ctl, int write,
+ 				 void *buffer, size_t *lenp, loff_t *fpos)
+ {
+-	struct net *net = current->nsproxy->net_ns;
+ 	int err;
+ 
+ 	err = proc_dointvec_minmax(ctl, write, buffer, lenp, fpos);
+@@ -770,11 +772,34 @@ static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
+ 			*(int *)(ctl->extra1));
+ 		return err;
+ 	}
+-	if (write)
++
++	if (write && rtn->rds_tcp_listen_sock && rtn->rds_tcp_listen_sock->sk) {
++		struct net *net = sock_net(rtn->rds_tcp_listen_sock->sk);
++
+ 		rds_tcp_sysctl_reset(net);
 +	}
 +
- 	if (!(flags & PCI_BASE_ADDRESS_SPACE))
- 		type = PCIE_ATU_TYPE_MEM;
- 	else
-@@ -256,6 +273,10 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	if (ret)
- 		return ret;
+ 	return 0;
+ }
  
-+	/*
-+	 * When dynamically changing a BAR, skip writing the BAR reg, as
-+	 * that would clear the BAR's PCI address assigned by the host.
-+	 */
- 	if (ep->epf_bar[bar])
- 		return 0;
- 
++static int rds_tcp_sndbuf_handler(struct ctl_table *ctl, int write,
++				  void *buffer, size_t *lenp, loff_t *fpos)
++{
++	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
++					       sndbuf_size);
++
++	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
++}
++
++static int rds_tcp_rcvbuf_handler(struct ctl_table *ctl, int write,
++				  void *buffer, size_t *lenp, loff_t *fpos)
++{
++	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
++					       rcvbuf_size);
++
++	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
++}
++
+ static void rds_tcp_exit(void)
+ {
+ 	rds_tcp_set_unloading();
 -- 
 2.53.0
 
