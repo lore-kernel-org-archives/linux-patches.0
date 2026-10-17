@@ -1,54 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B23451DA;
-	Sat, 17 Oct 2026 17:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184FB3A1E92;
+	Sat, 17 Oct 2026 17:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259788; cv=none; b=K7G/y7gWINCPaahDGjxjQJt/XiJJL5klRx/juyTzGExHDqcTAf9vy8fpg0ZPpb6xA4TK/1ZLHXDF2vYytr+zWYpk1H9kQihuUIa9mTwujAeu4H895LGcMUtJ0IVGl8DS14BoaHmqGVgzyyU1pW/+OBYzX6CQxevGPOvN1qEAsm8=
+	t=1792259791; cv=none; b=UoElSBnZchRpLKXrGKbLwyjtFCuXISUATJ4CVXCE2G7W5AktneDvy4901j1x963+dJVAz98kbNcji0Q4AZdf/GQNpEe/EomjJSywePEJ5iFjEQKIg23K7W+9RAYRzocx5Y5uB1ktgi5O3C1SBF1+zxMvq2udqgymm3zsu/LwTLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259788; c=relaxed/simple;
-	bh=BcWQjcW3QGgselkXAJUk71Zy45KjgFWuBo9c4A0Z3+I=;
+	s=arc-20240116; t=1792259791; c=relaxed/simple;
+	bh=jriZ5Ciu3hYlfNorsTaRL7SI6eTxLWzcN/+tk5KlHjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cplhZyjugrqxDtFYsQN1374Lm0Qc9fmrJUPW84ySj4td2kMrvHBS4N+a0q44DlkltNHLBIcTBOk7ojQ2gC7Y6/Ba3A82QKb01BnaoxKn2fZjApf6YHrUqCBI2o7dGg2M8oXJYt9Mv6fC1ry+HEBqf0MB2t7N6/X5sM0tJ2t1X4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaVAklnd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KOJQ66Uocv26dCVCTJJXWEpsvJGzs9y1BtcFNVk/KY9GuYIXT011sR6ZBIGZHADZtDy9isVByzjXxRyiDMC1MkayBA2pDPkI4NIts6AuM3Ri39zwavGvJ1epJESEo4vTbyxgWH5ep850ZAr7IlRTlfvUsIxcPaXZ4LmWW4zFAmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfgAo8Dw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaVAklnd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFE41F000C4;
-	Sat, 17 Oct 2026 17:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfgAo8Dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFBF1F000C4;
+	Sat, 17 Oct 2026 17:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259786;
-	bh=4LuvCWpXNuVSa5V2QEu8fqY/XVft0W0TkvMAwh+Whhw=;
+	s=korg; t=1792259790;
+	bh=EKaLV9jRXgFmNEWC9OFaufRq+JSryBhbjDOWO1/Nh+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaVAklndj8I+66hB2s8+SkKgsGwDHomMJTis6tAs8LTpvHYhkpVJwq8R4JVpgG4NO
-	 Y+ySOQeje5dBxN2nBC1olyBGH5LtAKT3g3KbAIYTtba8W+AYL/MDffnG4cw3KUtOTh
-	 J7YzHGkLOkJRpfiDnPK3YZFFPBDLpecEXdQj2EM0=
+	b=DfgAo8DwNgJJalbsjt3uSyXTPg8HSH5VqV1g9sXom7KUdP+lLDE3QEd3lC5u3KOB8
+	 uI5Q0CzEgTizLtWTafPqPQj7HZMiJyI5DKDU0m7rxFUHHhysB4tjuyfIQgFCJFvTWz
+	 ME8KKXWUD4+JAVFo69h5nVnFra3Ynu9aSjk6Apm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Lance Yang <lance.yang@linux.dev>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Qian Cai <cai@lca.pw>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1331/1674] mm/mglru: fix and remove redundant unevictable folio handling
-Date: Sat, 17 Oct 2026 18:00:03 +0200
-Message-ID: <20261017160505.310943059@linuxfoundation.org>
+Subject: [PATCH 6.6 1332/1674] mm/kmemleak: avoid soft lockup when scanning task stacks
+Date: Sat, 17 Oct 2026 18:00:04 +0200
+Message-ID: <20261017160505.336851220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -67,105 +57,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f7e698e326b239a91ea15844817551921209e826 ]
+[ Upstream commit 5d10d4e19e6daa487f0cd0ea6cba472325de92f9 ]
 
-sort_folio() has a shortcut for moving folios that are no longer evictable
-but are still sitting on a generation list.  However, this shortcut is
-buggy.  It does not follow the PG_lru usage convention, and it has a more
-serious issue.
+Patch series "mm/kmemleak: avoid soft lockup when scanning task", v3.
 
-Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
-folio->lru can be reused to hold folio->mlock_count (see the comment in
-lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
-and every other place that turns a folio unevictable initialises
-mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
-__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
-sets nothing, and the lru_gen_del_folio() right above it may have already
-poisoned folio->lru via list_del(), so mlock_count ends up aliasing
-LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
-visible.  On munlock, __munlock_folio() decrements that bogus count, finds
-it still non-zero and bails out before clearing PG_mlocked, so the folio
-remains unevictable and the Mlocked accounting stays inflated until the
-folio is freed.
+kmemleak_scan() scans every task stack under one rcu_read_lock() with no
+reschedule point, which can trip the soft lockup watchdog on hosts with
+very many threads.
 
-The shortcut also touches the LRU flags in the wrong order.  It calls
-lru_gen_del_folio() while PG_lru is still set, so a concurrent
-folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
-on a folio that has already been taken off the generation list, which may
-lead to unexpected behavior.
+That prints the following message, depending on the workload+host
+configuration:
 
-So fix it by isolating them as common folios and letting the generic
-shrink path cull them.  This matches the classical LRU behavior, and there
-should be no visible effect on the generic eviction or isolation behavior.
+      watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
+       scan_block
+       kmemleak_scan
+       kmemleak_scan_thread
+       kthread
 
-There is no performance concern either, such a folio goes through this
-once, and then it is off the generation lists for good.
+Patch 1 walks the tasks with find_ge_pid() so the scan reschedules between
+tasks
 
-Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
+Patches 2-3 let the scan loops stop early once a scan is interrupted.
+
+This patch (of 3):
+
+kmemleak_scan() walks every thread and scans its kernel stack under a
+single rcu_read_lock() with no reschedule point.  On a host with very many
+threads -- amplified by KASAN/lockdep in debug builds -- this loop can hog
+a CPU long enough to trip the soft lockup watchdog:
+
+  watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
+   scan_block
+   kmemleak_scan
+   kmemleak_scan_thread
+   kthread
+
+A cond_resched() cannot be added directly: the loop runs inside an RCU
+read-side critical section.
+
+Walk the tasks one PID at a time with find_ge_pid(), taking the RCU read
+lock only to look up and pin each task.  The stack is then scanned with no
+lock held, so cond_resched() runs between tasks and the scan stops early
+on scan_should_stop().  This follows the next_tgid()/task_seq_get_next()
+iteration pattern and keeps each RCU critical section short.
+
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-0-acecd7d7fd92@debian.org
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-1-acecd7d7fd92@debian.org
+Fixes: c4b28963fd79 ("mm/kmemleak: rely on rcu for task stack scanning")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Qian Cai <cai@lca.pw>
+Cc: SeongJae Park <sj@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ mm/kmemleak.c | 51 ++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 6455bbf4a63c8..e2674399268a0 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4222,15 +4222,9 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index e2e41de55c02b..fceb28690f2fc 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1516,6 +1516,42 @@ static void kmemleak_cond_resched(struct kmemleak_object *object)
+ 	put_object(object);
+ }
  
- 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
- 
--	/* unevictable */
--	if (!folio_evictable(folio)) {
--		success = lru_gen_del_folio(lruvec, folio, true);
--		VM_WARN_ON_ONCE_FOLIO(!success, folio);
--		folio_set_unevictable(folio);
--		lruvec_add_folio(lruvec, folio);
--		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
--		return true;
--	}
-+	/* unevictable: let it through and the generic path will cull it */
-+	if (!folio_evictable(folio))
-+		return false;
- 
- 	/* dirty lazyfree */
- 	if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
-@@ -4511,11 +4505,9 @@ static int evict_folios(struct lruvec *lruvec, struct scan_control *sc, int swap
- 	sc->nr_reclaimed += reclaimed;
- 
- 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
--		if (!folio_evictable(folio)) {
--			list_del(&folio->lru);
--			folio_putback_lru(folio);
-+		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
-+		if (!folio_evictable(folio))
- 			continue;
++/*
++ * Scan all task kernel stacks, rescheduling between tasks. Each task is looked
++ * up and pinned within its own RCU read-side section, so no lock is held across
++ * the scan and the walk cannot trip the soft lockup watchdog.
++ */
++static void kmemleak_scan_task_stacks(void)
++{
++	struct pid *pid;
++	int nr = 1;
++
++	do {
++		struct task_struct *p = NULL;
++
++		rcu_read_lock();
++		pid = find_ge_pid(nr, &init_pid_ns);
++		if (pid) {
++			nr = pid_nr(pid) + 1;
++			p = pid_task(pid, PIDTYPE_PID);
++			if (p)
++				get_task_struct(p);
++		}
++		rcu_read_unlock();
++
++		if (p) {
++			void *stack = try_get_task_stack(p);
++
++			if (stack) {
++				scan_block(stack, stack + THREAD_SIZE, NULL);
++				put_task_stack(p);
++			}
++			put_task_struct(p);
++		}
++		cond_resched();
++	} while (pid && !scan_should_stop());
++}
++
+ /*
+  * Scan data sections and all the referenced memory blocks allocated via the
+  * kernel's standard allocators. This function must be called with the
+@@ -1607,19 +1643,8 @@ static void kmemleak_scan(void)
+ 	/*
+ 	 * Scanning the task stacks (may introduce false negatives).
+ 	 */
+-	if (kmemleak_stack_scan) {
+-		struct task_struct *p, *g;
+-
+-		rcu_read_lock();
+-		for_each_process_thread(g, p) {
+-			void *stack = try_get_task_stack(p);
+-			if (stack) {
+-				scan_block(stack, stack + THREAD_SIZE, NULL);
+-				put_task_stack(p);
+-			}
 -		}
+-		rcu_read_unlock();
+-	}
++	if (kmemleak_stack_scan)
++		kmemleak_scan_task_stacks();
  
- 		if (folio_test_reclaim(folio) &&
- 		    (folio_test_dirty(folio) || folio_test_writeback(folio))) {
+ 	/*
+ 	 * Scan the objects already referenced from the sections scanned
 -- 
 2.53.0
 
