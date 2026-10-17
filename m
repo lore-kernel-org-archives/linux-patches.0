@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849843B19BA;
-	Sat, 17 Oct 2026 17:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7755637C109;
+	Sat, 17 Oct 2026 17:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259320; cv=none; b=uN4UyjR4FaAGuvWODfrxyrC8wOGyBzLaHaYQ8QcNrVWqWtOMKkjTFDIkM7rT/xhID2uapLCh4nYO7QVdtkFwip3KdE9g0jGWNm/eOa4jKc/VHREPuRartWiz4/I5wOdN/l0UuF+AXzP2comvcms1JK5Ljw3TMWYjINsc5+JQx8o=
+	t=1792259323; cv=none; b=IjdmxDK0Iwv93py1RtL2X/h1tzXwuNu6i0G6jl4xQa6a8IuoeqAVcA9NULBu//vKgMNETSlt1osexKTQSo+XeSCsOaVmHatokV6EYDtcLHtn8m2ltpOrcbA0zELxM0H951exrX+70r4p1NEVIHGTrA30Y0Hn7VkhJbDRLaqOmok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259320; c=relaxed/simple;
-	bh=u9DmcvCZ3mNlk5c0ZBjIZxbIQ1FuvIW6czuwZby6/jY=;
+	s=arc-20240116; t=1792259323; c=relaxed/simple;
+	bh=FRXYEFrENRu0K87MDig75+tD8PAt50QyR2sJ6gNNhJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPvkkdqshcxKs6hZodBEzRz4kSUVrz9PZi+Pv6nhIAUhdmtDuixX5GRRqeoimMrb/Q9NwMJaWPFiBJvEtMpsb0dILiGKC7VtsaUwvJuYnJgAl1tMY3hUuYZt2RqqHVal/tNd85S62CeP5R8kSTWdeNwP48GW+XrInEV7vq9Z0KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vL0SmAPi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PRljqe8SUjiHXacapWYPzKKpsjS9lYeo9Nw6qlnRGJeL6PuQpa/YIZaBubmeGkTwMx0jNombNrrGP/IZoyZ9/31A72V2uso3SyHjVuVFFcfwacC5T25swO9IIXUx+AOIbdE0fnNQsnVU3VxtX9olDwVjcdKfgkck0O0q8E+4UV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmq0mcHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vL0SmAPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8325A1F000C4;
-	Sat, 17 Oct 2026 17:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmq0mcHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCFF1F000C4;
+	Sat, 17 Oct 2026 17:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259319;
-	bh=ZKlfYzajf6u4WDgs2hNBdiLgtSzDJWc2yHX4mpbgHMY=;
+	s=korg; t=1792259322;
+	bh=mnK2LUpDSP2bKwEVuum+986BlE17yKSVNOGv+esXwWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vL0SmAPiq50Pg7P8esmkPoO26D9VWmXovQdqyy1uc64W469DkdMp4XjIYolc7T2Wd
-	 x0y15MvSSV2iNJo6c0PA+AM1XSuaKeB4gpt3slsFO5VrDhA7bNKmtotG2n7wLnSLI8
-	 Gc2Q0CkHBcYs+GzYl0eMPcQnRxRnnfcN7b8r07jA=
+	b=mmq0mcHL1ylyHkuUNtCgdINBUzqL8MygMjMf223Ns+f6WkygA/FeEs0S15vio/G+9
+	 ueEauxj+oeL/hc1XEGGEGaVoogv0eckUNNLdjvl6w81dDZFZrIzXkDnRdCrd0JZsiZ
+	 xe20vPJZKFAEvUie8Hn8uRJ+BPGbCq/NAj2RQP+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Xiao Ni <xiao@kernel.org>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1147/1674] xprtrdma: Fix ep kref imbalance on ADDR_CHANGE
-Date: Sat, 17 Oct 2026 17:56:59 +0200
-Message-ID: <20261017160500.594052938@linuxfoundation.org>
+Subject: [PATCH 6.6 1174/1674] md/raid1,raid10: fix deadlock in read error recovery path
+Date: Sat, 17 Oct 2026 17:57:26 +0200
+Message-ID: <20261017160501.285017356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,75 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit af9b65b29af341932625c4283dc7a23cdb62688a ]
+[ Upstream commit 7b15c24f805339a585cfe7d72f446b7e88b9bcc0 ]
 
-rpcrdma_cm_event_handler() falls through to the disconnected: label
-on RDMA_CM_EVENT_ADDR_CHANGE and calls rpcrdma_ep_put() with no
-matching get when the event arrives before RDMA_CM_EVENT_ESTABLISHED.
-The kref then underflows during connect teardown and
-rpcrdma_xprt_disconnect() operates on a freed ep.
+raid1d and raid10d may resubmit a split md cloned bio while handling
+a read error. In this case, resubmitting the bio can lead to a deadlock
+if the array is suspended before md_handle_request() acquires an
+active_io reference via percpu_ref_tryget_live().
 
-Reference counts across a normal connection lifecycle:
+Since the cloned bio already holds an active_io reference,
+trying to acquire another reference via percpu_ref_tryget_live()
+can lead to a deadlock while the array is suspended.
 
-    rpcrdma_ep_create()             kref_init     ->1
-    rpcrdma_xprt_connect()          ep_get        ->2  (before post_recvs)
-    RDMA_CM_EVENT_ESTABLISHED       ep_get        ->3
-    RDMA_CM_EVENT_DISCONNECTED      ep_put        ->2
-    rpcrdma_xprt_drain()            ep_put        ->1
-    rpcrdma_xprt_disconnect() tail  ep_put        ->0  (ep_destroy)
+Fix this by using percpu_ref_get() for md cloned bios.
 
-The connect-time get in rpcrdma_xprt_connect(), taken just before
-rpcrdma_post_recvs() "while there are outstanding Receives," is
-balanced by rpcrdma_xprt_drain. ADDR_CHANGE before ESTABLISHED has
-no get to consume, so its put drops the count to 1 and the drain
-put then frees the ep while rpcrdma_xprt_disconnect() still holds a
-pointer to it.
-
-Fix by dispatching on the prior re_connect_status via xchg(): for
-prev == 0 (pre-ESTABLISHED) wake the connect waiter and return with
-no put; for prev == 1 call rpcrdma_force_disconnect() and return.
-The case-1 arm relies on the subsequent RDMA_CM_EVENT_DISCONNECTED
-event -- reliably delivered when rdma_disconnect() is called on a
-still-connected cm_id -- to balance the ESTABLISHED get;
-rpcrdma_xprt_drain() continues to balance only that connect-time
-get. Any other prior value means teardown is already in flight.
-
-Fixes: 2acc5cae2923 ("xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed")
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
+Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Reviewed-by: Xiao Ni <xiao@kernel.org>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260501114652.590037-2-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/md/md.c | 41 ++++++++++++++++++++++++-----------------
+ drivers/md/md.h |  5 +++++
+ 2 files changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 34a3c08a82fba..4990e37bcdc00 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -256,8 +256,17 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index c8cb2a83e2f54..83b53e02b1382 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -371,25 +371,32 @@ static bool is_suspended(struct mddev *mddev, struct bio *bio)
+ void md_handle_request(struct mddev *mddev, struct bio *bio)
+ {
+ check_suspended:
+-	if (is_suspended(mddev, bio)) {
+-		DEFINE_WAIT(__wait);
+-		/* Bail out if REQ_NOWAIT is set for the bio */
+-		if (bio->bi_opf & REQ_NOWAIT) {
+-			bio_wouldblock_error(bio);
+-			return;
+-		}
+-		for (;;) {
+-			prepare_to_wait(&mddev->sb_wait, &__wait,
+-					TASK_UNINTERRUPTIBLE);
+-			if (!is_suspended(mddev, bio))
+-				break;
+-			schedule();
++	if (unlikely(md_cloned_bio(mddev, bio))) {
++		/*
++		 * This bio is an MD cloned bio and already holds an
++		 * active_io reference, so percpu_ref_get() is safe here.
++		 */
++		percpu_ref_get(&mddev->active_io);
++	} else {
++		if (is_suspended(mddev, bio)) {
++			DEFINE_WAIT(__wait);
++			/* Bail out if REQ_NOWAIT is set for the bio */
++			if (bio->bi_opf & REQ_NOWAIT) {
++				bio_wouldblock_error(bio);
++				return;
++			}
++			for (;;) {
++				prepare_to_wait(&mddev->sb_wait, &__wait,
++						TASK_UNINTERRUPTIBLE);
++				if (!is_suspended(mddev, bio))
++					break;
++				schedule();
++			}
++			finish_wait(&mddev->sb_wait, &__wait);
  		}
- 		return 0;
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
--		ep->re_connect_status = -ENODEV;
--		goto disconnected;
-+		switch (xchg(&ep->re_connect_status, -ENODEV)) {
-+		case 0:
-+			goto wake_connect_worker;
-+		case 1:
-+			/* The later DISCONNECTED event balances the
-+			 * ESTABLISHED get; do not put here.
-+			 */
-+			rpcrdma_force_disconnect(ep);
-+			return 0;
-+		}
-+		return 0;
- 	case RDMA_CM_EVENT_ESTABLISHED:
- 		rpcrdma_ep_get(ep);
- 		ep->re_connect_status = 1;
+-		finish_wait(&mddev->sb_wait, &__wait);
++		if (!percpu_ref_tryget_live(&mddev->active_io))
++			goto check_suspended;
+ 	}
+-	if (!percpu_ref_tryget_live(&mddev->active_io))
+-		goto check_suspended;
+-
+ 	if (!mddev->pers->make_request(mddev, bio)) {
+ 		percpu_ref_put(&mddev->active_io);
+ 		goto check_suspended;
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index a2e480ad3861e..337efde4b3e34 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -908,4 +908,9 @@ int do_md_run(struct mddev *mddev);
+ 
+ extern const struct block_device_operations md_fops;
+ 
++static inline bool md_cloned_bio(struct mddev *mddev, struct bio *bio)
++{
++	return bio->bi_pool == &mddev->io_clone_set;
++}
++
+ #endif /* _MD_MD_H */
 -- 
 2.53.0
 
