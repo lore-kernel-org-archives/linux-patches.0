@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC3C2E8DEB;
-	Sat, 17 Oct 2026 17:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575522E8DEB;
+	Sat, 17 Oct 2026 17:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256752; cv=none; b=AsIQyFTUs+Aob/ItMFkfF5WYPgIHPRw6t7AEfddVB4BsAbISPtplfnA5BkdjNiF64TEFRMJnaWiOyW7KwSH8dBq9J1St1ot+0+R0rA3EYjn98qSl7z73P4nPaQtlpu0iINpNSGIpTzlhpMli4mkpsxbeDCCw8f5x8Ad3u3GLjoo=
+	t=1792256755; cv=none; b=ZN6O7nfK6RRwizwC3L+jWpSNcRK/8jg15Tm7qTwIRI2XCmpHN9rnfVL58IGK7NntVY8HZu2Do/wYHIY9vvY8NlO6V2fDkkmQYYY3cNkHU3njUJow4WL4CkJ1KOtFPu1XdjRolxMBzxQ/X7rDLTWylkjtavpz2trJgw4lREuEFm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256752; c=relaxed/simple;
-	bh=wKiIvnhvxrgfoz6eMZs7/kCji0cTappUraHfYFJofuE=;
+	s=arc-20240116; t=1792256755; c=relaxed/simple;
+	bh=MtQmyZKajJxquWFSldt9WeX3vGAV5+D7vs7zEQ4gj0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZaUY6GvzPNJzj08/1fLnFYzg6Bh32yyCHg80r1jYGIulynpZ6EPD7aaeHN+ysneOd9Pt/9vWc7KkmJNhYArUe+AmhY43rucjFVaCl+P/Xod386H70GbaBHSkx/hpA279Gwbji+OF/51AHskohVbGh/hU2nTZ/5X1gp5JrTQZec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBSjSRBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Av8T3EGYf4bg+X0zumBi38epC3UAb1yYAa+O48KwghESvWkZd5wr2gxwcYu6HiWD3LTyUExLz532zDHsV2+l0bwIBnK60BeNZs8wdJzv/nqQiRvz4Ay9V43HQsPvizvUVdn1a3c2c1BCSVbXtfhX2g2bZykFRgJmfRUSPCI8gJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpOOX6xT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBSjSRBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6491F000C4;
-	Sat, 17 Oct 2026 17:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpOOX6xT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32961F000C4;
+	Sat, 17 Oct 2026 17:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256751;
-	bh=ODHmCTPMWe90MSc7PpMw1zDnGChKJXs/FXO6oy5cIpE=;
+	s=korg; t=1792256754;
+	bh=PuCySJMBAQmE2B6vweg5iU+d2SBbudSK4WSBonAQZtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QBSjSRBbQ3CDVkxVobbwWTwexnoR7Fq0oIIasSetuMuSOJEHJuBp96pgQ8RTkKKiO
-	 AQW21flxe3eOqWWX6z8i16x3Gp470rQOulPTAAilM35VIcxMilTSEckexGwozTpbLe
-	 CJabJ4KnfkCS2QeJU47LU0UeMt3q239RnfQmfVSM=
+	b=QpOOX6xTfKGvHWlfueHDB8ogOY+92QEmSQRtxEOhjmEUe4Ic8w4wnEeKKlxiBJgso
+	 EI3N76hpmue5KN1HfOD6KsGAhJ1ycVWvA2qpY2EVOK2z6TTSG+8NMI2nzrvJ0yi8Tr
+	 6vhutdOM1R2fsFPXvLYeIvdYkQT9V5eGlyQcJsh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Gu <ustc.gu@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0338/1674] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
-Date: Sat, 17 Oct 2026 17:43:30 +0200
-Message-ID: <20261017160439.801094973@linuxfoundation.org>
+Subject: [PATCH 6.6 0339/1674] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
+Date: Sat, 17 Oct 2026 17:43:31 +0200
+Message-ID: <20261017160439.827785930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,38 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
+commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
 
-If devm_thermal_of_zone_register() fails, probe returns without
-unregistering the IIO map array or disabling runtime PM.
+Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
+ever holds a runtime PM usage count. So the pm_runtime_put() in both
+places always triggers the "Runtime PM usage count underflow!" warning
+on every failed probe and every unbind.
 
-Jump to err_map to release them.
+Drop both calls.
 
-Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
+Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
+ 1 file changed, 2 deletions(-)
 
 --- a/drivers/iio/adc/sun4i-gpadc-iio.c
 +++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -644,10 +644,10 @@ static int sun4i_gpadc_probe(struct plat
- 		 * thermal because no thermal DT node is found.
- 		 */
- 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
--			dev_err(&pdev->dev,
--				"could not register thermal sensor: %ld\n",
--				PTR_ERR(info->tzd));
--			return PTR_ERR(info->tzd);
-+			ret = dev_err_probe(&pdev->dev,
-+					    PTR_ERR(info->tzd),
-+					    "could not register thermal sensor\n");
-+			goto err_map;
- 		}
- 	}
+@@ -663,7 +663,6 @@ err_map:
+ 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
+ 		iio_map_array_unregister(indio_dev);
  
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	return ret;
+@@ -674,7 +673,6 @@ static int sun4i_gpadc_remove(struct pla
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
+ 
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
 
 
