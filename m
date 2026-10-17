@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7573A1E96;
-	Sat, 17 Oct 2026 16:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316E33AA9F3;
+	Sat, 17 Oct 2026 16:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256275; cv=none; b=KnPjtyjAFe1tXPDrkTZvYz5MzjX+oor/E5Yp4QafXezQuFAmR8Zt0FFT+EoArWU5CJpVbe0ki4/WcSWg0M/GbmQTc+mV8/Djx8T+9iQrujK6LIUzstfgk5QMmYtmIfNq+I76PspGoZ1zTiGCW6ubofnyl/vec7g9vH6+OsSRCII=
+	t=1792256278; cv=none; b=WScPtrhyuzbYTBIYg0BMJ5PXfNW4BFa+Vzr+Yx/1swEsr4ZA3H4wVR87YNSbKzCHUKLWQx1J2/gKzj7cm2dgI4p6V6IqbbXZdyu8PJB4bjEN+WYv7pXaS8RfY+0MG0pSZqGp5j+K3MLLZJflMqQHsRlCNsUKs6T8Wc55sYpRGg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256275; c=relaxed/simple;
-	bh=iVwLL4+1fMwFbGEVjG4zJRu1yzGkXNgrRuLms6U9mRM=;
+	s=arc-20240116; t=1792256278; c=relaxed/simple;
+	bh=QvVaU22aErlavJjovCNLu3xp8sLFD3Mw4I/9+dBL0cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCuQRTnppNmN6s2upPK62JO3KSUaJbrXTAKQvA9YAPFV/K4OYdx1TdjzO0wWOmJImWxtI50CANBnrxZLRY9k37vgJt4V6k1y/my5QEF6OAMYXLcUC30XS6R/VbrdfMI7RENSGQ/a0PgU4Z1kKg2NpKZQwytN+q/1Mqw9pv1cWlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQLFSkWH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6GF5+MJMNPfUdO+B/jEizDv4m4j1P7uz7WfKUhz9pj1lo0QQDlV+qL7lupbrYVIZMZCdr0gzx7w/sBz01avdKsYSg26n3LFyF8Y1IADot89CvFEytUHWEXvQ8lczOcyeufuh10NSQxl9nwVoLeVNkCwdkujo2dzBYe7SOJBauQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmh7mbSp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQLFSkWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8723E1F000C4;
-	Sat, 17 Oct 2026 16:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmh7mbSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8194D1F000C4;
+	Sat, 17 Oct 2026 16:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256274;
-	bh=xjHLe1Fc8XyDiSecMD6/6j0Iq/1yYPVxLWJ70EVzF2s=;
+	s=korg; t=1792256277;
+	bh=B0yBqjGx+iH4OtkQ99vt67wEekrrwAz63BtV+c4ADDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQLFSkWHTcw0lGxfLW4Bu3WQsTDfzBeLZp3VN1iLCGVeWhR3sv9jBIXUNbCVUXGyO
-	 +7pjPwWC5Lehy4QxphVqAyF4YZIf229vQRGHEJ3Bw9zhlSZ+uS3MJC3NrKS230HNJV
-	 wXJzmit5xp7JHGOLOm5VKkQz1wKKzKTOhDWSlQ4M=
+	b=Bmh7mbSpZNsBBe17asKITboJMH5acB22EY43N6GVSxiJeGfhAQS0UgrE/cUCAEaw1
+	 RTDVtl8VkHgegowdrnLIO/h+VpqbDg3piOhSdVNBj1W/SGFCvaFBUrb8p1qAZzpkc6
+	 9t2kjuZKo8LVd+httKXj6NUcVe53nrd5cqmNBOrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	co+be8fa7ea6f77fdce@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0182/1674] ALSA: caiaq: unregister the input device when probe fails
-Date: Sat, 17 Oct 2026 17:40:54 +0200
-Message-ID: <20261017160435.823436843@linuxfoundation.org>
+Subject: [PATCH 6.6 0183/1674] ALSA: line6: reject oversized playback packets
+Date: Sat, 17 Oct 2026 17:40:55 +0200
+Message-ID: <20261017160435.847544747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,56 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 0b7bd20f6379bc5e431fd74d866390f5b5b63f3c upstream.
+commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
 
-setup_card() registers the input device, whose name and phys point into
-struct snd_usb_caiaqdev, and then goes on to snd_card_register() and
-snd_usb_caiaq_control_init(). If either fails, snd_probe() calls
-snd_card_free(), which frees the device state but leaves the input
-device registered: card_free() only clears the pointer, and the input
-device is unregistered from snd_disconnect() alone. Reading its "uevent"
-attribute afterwards dereferences freed memory:
+Each playback URB is handed a slice of out.buffer that is exactly
+LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
+endpoint, but the number of bytes written into that slice is never
+compared against it.
 
-  BUG: KASAN: slab-use-after-free in string+0x4a9/0x4f0
-  Read of size 1 at addr ffff8880208f5043 by task caiaq/4967
-   add_uevent_var+0x183/0x3a0
-   input_dev_uevent+0x162/0x900
-   dev_uevent+0x2f1/0x870
-   uevent_show+0x1ca/0x3a0
-   ...
+submit_audio_out_urb() takes the frame count from prev_fsize, which
+audio_in_callback() derived from the *IN* endpoint's received packet
+length, and rescales it with the playback frame size; when prev_fsize is
+still zero it synthesizes a length from the sample rate instead.  On a
+device declaring a large IN wMaxPacketSize and a small OUT
+wMaxPacketSize, the resulting memcpy(), or the memset() when the
+playback stream is idle, runs past its slice and, as the reproducer
+below shows, beyond the allocation.
 
-Unregister the input device on the probe error path, as
-snd_disconnect() does. snd_usb_caiaq_input_disconnect() is a no-op when
-no input device was registered.
+usb_submit_urb() is not a backstop.  max_packet_size_out comes from
+usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
+while USB core validates a high-speed isochronous length against that
+base scaled by usb_endpoint_maxp_mult().  A length of up to three times
+the allocated slice is therefore accepted, and even a rejected URB is
+only rejected after the write.
 
-Reproduced with a raw-gadget Audio Kontrol 1 and a temporary hack that
-makes snd_usb_caiaq_control_init() fail.
+Reject a packet that does not fit the slice the driver allocated for it.
+Clamping it instead would silently shorten the capture-derived rate
+feedback and desynchronize the two streams.
 
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
+  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
+  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
+  Workqueue: events line6_startup_work
+  Call Trace:
+   __asan_memcpy (mm/kasan/shadow.c:106)
+   submit_audio_out_urb (sound/usb/line6/playback.c:229)
+   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
+   line6_stream_start (sound/usb/line6/pcm.c:194)
+   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
+   line6_startup_work (sound/usb/line6/driver.c:728)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+  The buggy address belongs to the object at ffff888100bbd400
+   which belongs to the cache kmalloc-256 of size 256
+  The buggy address is located 0 bytes inside of
+   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
+
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+2a123f6269da57ffefaa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2a123f6269da57ffefaa
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20260925170717.22462-1-ngocthang2710.1999@gmail.com
+Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
+Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/line6/playback.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -562,6 +562,9 @@ static int snd_probe(struct usb_interfac
- 	ret = init_card(caiaqdev(card));
- 	if (ret < 0) {
- 		dev_err(&usb_dev->dev, "unable to init card! (ret=%d)\n", ret);
-+#ifdef CONFIG_SND_USB_CAIAQ_INPUT
-+		snd_usb_caiaq_input_disconnect(caiaqdev(card));
-+#endif
- 		snd_card_free(card);
- 		return ret;
- 	}
+--- a/sound/usb/line6/playback.c
++++ b/sound/usb/line6/playback.c
+@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
+ 
+ 		fsize *= bytes_per_frame;
+ 
++		if (fsize > line6pcm->max_packet_size_out) {
++			dev_err(line6pcm->line6->ifcdev,
++				"playback packet too large: %d > %d\n",
++				fsize, line6pcm->max_packet_size_out);
++			return -EMSGSIZE;
++		}
++
+ 		fout->offset = urb_size;
+ 		fout->length = fsize;
+ 		urb_size += fsize;
 
 
