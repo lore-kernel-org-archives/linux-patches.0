@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9963C13E0;
-	Sat, 17 Oct 2026 18:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EB84CF461;
+	Sat, 17 Oct 2026 18:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260073; cv=none; b=uxvGOEXdyYz2/gi/nE8WmEZyXlfrmXaCXbEW4Q4bSqPkpDTLfsVWdPC3jF8qopfEgAwVjGdLl1t9ytgjDdfghuVO9RMqCfsYscazt2RJkz4NG3gAaYmK6h05Ko6fXoD/habBvHP5o5DyAA5ZzriWiiyEwoNouybPZJzsjVMyTZM=
+	t=1792260076; cv=none; b=EY01Sdyr4B4zfdQPWwErUskulAD02I+bKwV5/DB78+dh1lBhaTWhujoqplBce0Skwp92uIEqJzfpf2Q+agFGwFrTUXDFCZ15RSLpNNs9iFrr1u0oR91KOf/xIuOijap8Qq/cGAlqemVGxTIWDM445K1u05ZcMjNHoKsg1dpao3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260073; c=relaxed/simple;
-	bh=AT0P7n4+xtTdhZJnbHDrBK58DW50kcl68CWhoubYChY=;
+	s=arc-20240116; t=1792260076; c=relaxed/simple;
+	bh=iAXnfMNCGhWwyuwDyrXVLWy6ntITpjIe4vhPklvKCOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVtbWlnOip1RA8+jRKZZIl68vBDaKBaZjjsTdQPSDQDnDImoZkb+EgmXSH9YvkpevVCQLaGjHG/TH+MMbZO1l9nct2VSXvkFYRUp7xNsmqcvbxIoRks/RCriGjMIVZ01CXDshyAMKSpYncG2ebqNCTal4qsc5ELd74Ili5LoGTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9X+a9ke; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GXsnXh0pFP0+iDsjB1eQnwUdUUXfzNrdtWpBF+15vQaABv7ONxDWKXTrjIVuFpckzXTlfXS2//CXoaNqpv2BiyLIXobM+QVdMUqwxUCOv1YfHV7ZMZmwoykRiAbSwVRGCCSMuxTDV+disH3HaT21G1Twb0K/W+nTr+4XhiUu17c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7xuIiKE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9X+a9ke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECC11F000C4;
-	Sat, 17 Oct 2026 18:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7xuIiKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB751F000C4;
+	Sat, 17 Oct 2026 18:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260072;
-	bh=DR0uKVnjbXXiUZK4DhF21id3nNDoLEGinlM36trRMBc=;
+	s=korg; t=1792260075;
+	bh=cXqYo9YpiHjp9vNgGNRgqXLhi/pEesLrrV+YKCRMpAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X9X+a9kezuALrawOb3V7futez/Vkp9YkuOM4PT+kxOP4oBFgJ8Z1Xw3xiSQEf6Leg
-	 Mt1FzD+HXo/lgyy+BzL795/D5raI97knYrco20JHLFsQarse6eP38ugJz9XyaoHkxq
-	 ZR18jO5vZpOGC9JbCjnoi2uaNAyzZ3N5A7pnINHk=
+	b=K7xuIiKEAoFxK+4rsOo3zHB8WDjSDCHiOJOXWaMPmmh3L4VlDATIedPSnticWviLx
+	 mIwbiqaxwPuViNVjhDI1v5PLX5ZUEWCuHvzLzFy/TAy8GjX66bov5uQenaKNKX95Tu
+	 GjdsYm8T3IfOtJi/xsInhshIaCz0VJxMMahmpoVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1425/1674] module/dups: Fix use-after-free in kmod_dup_req lifetime handling
-Date: Sat, 17 Oct 2026 18:01:37 +0200
-Message-ID: <20261017160507.755435451@linuxfoundation.org>
+Subject: [PATCH 6.6 1426/1674] bpf: Clear buf on error in __bpf_get_task_stack
+Date: Sat, 17 Oct 2026 18:01:38 +0200
+Message-ID: <20261017160507.785932639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,206 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 5eecb11b543f9f417bcf0dea239ff99c6af65dbd ]
+[ Upstream commit f5d242825ca417bb6afe35fde6e8880f97ca43fb ]
 
-The kmod dups code uses RCU to ensure that a kmod_dup_req instance is freed
-only after it is no longer referenced. When releasing an instance, the
-kmod_dup_request_delete() function removes the kmod_dup_req from the
-dup_kmod_reqs list, waits via synchronize_rcu() and finally frees it.
-However, this doesn't work correctly because parallel users referencing the
-instance in kmod_dup_request_exists_wait() don't enter an RCU read-side
-critical section. This can result in a use-after-free.
+Both bpf_get_task_stack and bpf_get_task_stack_sleepable helpers that
+use __bpf_get_task_stack have buf defined as ARG_PTR_TO_UNINIT_MEM
+argument and we should initialize the buf on every return path.
 
-The kmod_dup_request_exists_wait() function may need to hold a valid
-reference to a kmod_dup_req instance across a blocking wait until the
-corresponding modprobe command completes. This makes it unsuitable for RCU.
+Adding missing buf memset for __bpf_get_task_stack fail paths. This
+provides deterministic buffer contents, which is useful when the buffer
+is used directly as a map key.
 
-Fix the issue by changing the lifecycle management of kmod_dup_req to use
-reference counting.
-
-Fixes: 8660484ed1cf ("module: add debugging auto-load duplicate module support")
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Fixes: 06ab134ce8ec ("bpf: Refcount task stack in bpf_get_task_stack")
+Fixes: b992f01e6615 ("bpf: Guard against accessing NULL pt_regs in bpf_get_task_stack()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-10-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/dups.c | 66 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 49 insertions(+), 17 deletions(-)
+ kernel/bpf/stackmap.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-index f3d7ea1e96d82..019545cef7e4a 100644
---- a/kernel/module/dups.c
-+++ b/kernel/module/dups.c
-@@ -31,6 +31,7 @@
- #include <linux/ptrace.h>
- #include <linux/async.h>
- #include <linux/uaccess.h>
-+#include <linux/refcount.h>
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 648e9cebb517d..4db255334617c 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -493,14 +493,17 @@ BPF_CALL_4(bpf_get_task_stack, struct task_struct *, task, void *, buf,
+ 	struct pt_regs *regs;
+ 	long res = -EINVAL;
  
- #include "internal.h"
- 
-@@ -39,13 +40,12 @@
- static bool enable_dups_trace = IS_ENABLED(CONFIG_MODULE_DEBUG_AUTOLOAD_DUPS_TRACE);
- module_param(enable_dups_trace, bool_enable_only, 0644);
- 
--/*
-- * Protects dup_kmod_reqs list, adds / removals with RCU.
-- */
-+/* A mutex-protected list of active kmod requests. */
- static DEFINE_MUTEX(kmod_dup_mutex);
- static LIST_HEAD(dup_kmod_reqs);
- 
- struct kmod_dup_req {
-+	refcount_t refcount;
- 	struct list_head list;
- 	char name[MODULE_NAME_LEN];
- 	struct completion first_req_done;
-@@ -54,12 +54,24 @@ struct kmod_dup_req {
- 	int dup_ret;
- };
- 
-+static void get_kmod_req(struct kmod_dup_req *kmod_req)
-+{
-+	refcount_inc(&kmod_req->refcount);
-+}
-+
-+static void put_kmod_req(struct kmod_dup_req *kmod_req)
-+{
-+	if (refcount_dec_and_test(&kmod_req->refcount))
-+		kfree(kmod_req);
-+}
-+
- static struct kmod_dup_req *kmod_dup_request_lookup(char *module_name)
- {
- 	struct kmod_dup_req *kmod_req;
- 
--	list_for_each_entry_rcu(kmod_req, &dup_kmod_reqs, list,
--				lockdep_is_held(&kmod_dup_mutex)) {
-+	lockdep_assert_held(&kmod_dup_mutex);
-+
-+	list_for_each_entry(kmod_req, &dup_kmod_reqs, list) {
- 		if (strlen(kmod_req->name) == strlen(module_name) &&
- 		    !memcmp(kmod_req->name, module_name, strlen(module_name))) {
- 			return kmod_req;
-@@ -88,10 +100,10 @@ static void kmod_dup_request_delete(struct work_struct *work)
- 	 * just returning 0.
- 	 */
- 	mutex_lock(&kmod_dup_mutex);
--	list_del_rcu(&kmod_req->list);
--	synchronize_rcu();
-+	list_del(&kmod_req->list);
- 	mutex_unlock(&kmod_dup_mutex);
--	kfree(kmod_req);
-+
-+	put_kmod_req(kmod_req);
- }
- 
- static void kmod_dup_request_complete(struct work_struct *work)
-@@ -100,6 +112,9 @@ static void kmod_dup_request_complete(struct work_struct *work)
- 
- 	kmod_req = container_of(work, struct kmod_dup_req, complete_work);
- 
-+	if (completion_done(&kmod_req->first_req_done))
-+		goto out;
-+
- 	/*
- 	 * This will ensure that the kernel will let all the waiters get
- 	 * informed its time to check the return value. It's time to
-@@ -115,6 +130,9 @@ static void kmod_dup_request_complete(struct work_struct *work)
- 	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
- 	 */
- 	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
-+
-+out:
-+	put_kmod_req(kmod_req);
- }
- 
- bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
-@@ -130,6 +148,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 	if (!new_kmod_req)
- 		return false;
- 
-+	refcount_set(&new_kmod_req->refcount, 1);
- 	memcpy(new_kmod_req->name, module_name, strlen(module_name));
- 	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
- 	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
-@@ -162,10 +181,12 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 		 * keep tab on duplicates later.
- 		 */
- 		pr_debug("New request_module() for %s\n", module_name);
--		list_add_rcu(&new_kmod_req->list, &dup_kmod_reqs);
-+		list_add(&new_kmod_req->list, &dup_kmod_reqs);
- 		mutex_unlock(&kmod_dup_mutex);
- 		return false;
- 	}
-+
-+	get_kmod_req(kmod_req);
- 	mutex_unlock(&kmod_dup_mutex);
- 
- 	/* We are dealing with a duplicate request now */
-@@ -195,7 +216,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 		 * calls bail out right away.
- 		 */
- 		*dup_ret = 0;
--		return true;
-+		goto out;
- 	}
- 
- 	/*
-@@ -210,12 +231,14 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 					TASK_UNINTERRUPTIBLE | TASK_KILLABLE);
- 	if (ret) {
- 		*dup_ret = ret;
--		return true;
-+		goto out;
- 	}
- 
- 	/* Now the duplicate request has the same exact return value as the first request */
- 	*dup_ret = kmod_req->dup_ret;
- 
-+out:
-+	put_kmod_req(kmod_req);
- 	return true;
- }
- 
-@@ -225,12 +248,23 @@ void kmod_dup_request_announce(char *module_name, int ret)
- 
- 	mutex_lock(&kmod_dup_mutex);
- 
-+	/*
-+	 * Look for a kmod_dup_req previously added in
-+	 * kmod_dup_request_exists_wait(). Note that a request_module_nowait()
-+	 * without its own kmod_dup_req entry can announce a result of
-+	 * a concurrent request_module() call.
-+	 */
- 	kmod_req = kmod_dup_request_lookup(module_name);
--	if (!kmod_req)
--		goto out;
-+	if (!kmod_req || completion_done(&kmod_req->first_req_done)) {
-+		mutex_unlock(&kmod_dup_mutex);
-+		return;
+-	if (!try_get_task_stack(task))
++	if (!try_get_task_stack(task)) {
++		memset(buf, 0, size);
+ 		return -EFAULT;
 +	}
  
- 	kmod_req->dup_ret = ret;
- 
-+	get_kmod_req(kmod_req);
-+	mutex_unlock(&kmod_dup_mutex);
-+
- 	/*
- 	 * If we complete() here we may allow duplicate threads
- 	 * to continue before the first one that submitted the
-@@ -241,8 +275,6 @@ void kmod_dup_request_announce(char *module_name, int ret)
- 	 * There is no rush. But we also don't want to hold the
- 	 * caller up forever or introduce any boot delays.
- 	 */
--	queue_work(system_wq, &kmod_req->complete_work);
+ 	regs = task_pt_regs(task);
+ 	if (regs)
+ 		res = __bpf_get_stack(regs, task, NULL, buf, size, flags);
++	else
++		memset(buf, 0, size);
+ 	put_task_stack(task);
 -
--out:
--	mutex_unlock(&kmod_dup_mutex);
-+	if (!queue_work(system_wq, &kmod_req->complete_work))
-+		put_kmod_req(kmod_req);
+ 	return res;
  }
+ 
 -- 
 2.53.0
 
