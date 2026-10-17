@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588B3C6A5C;
-	Sat, 17 Oct 2026 17:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C447F3B6BFE;
+	Sat, 17 Oct 2026 17:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258819; cv=none; b=YcqvqrH75b7dlEPCS4yjJuJpAOQiQ6mNZIf2y/9rmCWEpFx8455H6VnKkv8DXc5TxYur2oYMmumNcya7yc6P52V0ZLAtwRXGIIwaRyWnvzrBWaCn+a/WuEbsPAqu6J22xsASBAKDPexWQ0Uz4qusplJdsYxzKxg2yYhwuoPz9UU=
+	t=1792258823; cv=none; b=GhUf3ntxSWqymJOBcS0C0jXWDnBYuCQaLE6VIqU0tGepwSjEvVURz3vmiLwej9QRe/GuVdySuvCfNuFic0zoJV/3ftcWhERMAmgmPWsv+di78PQFtQK6Ur4e2jx+CYRuIF/Yabz54R9fTpXvK0rLzY4iaswPmCm6HhsMnHAPzk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258819; c=relaxed/simple;
-	bh=9DVOCBwYc9jvQWLwcAGx2N/X2wX2h5HmwykolNHRhyw=;
+	s=arc-20240116; t=1792258823; c=relaxed/simple;
+	bh=/k22a7khlX+pEZWdD71MK6ro71xODe/UlFbOjoJoH0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M7Uu75tHHbvYECPtPUY15l7wl5DcaBwmCzJ98RNI3UiVp0iDGxEFboWC8QTbxP8dTZdgRZbO7/jMOCljovdtnMhd9nXhe79rjNzFtYFWXrV5+DOj+TIKMIoddc756kG+o1V/8F8Vf+eILWew/NjXFJcwjlnSpDHohSFeiAP86W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR7e7spD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T9F6sXEfEioUPW4NUwl+6odfDEajUWy5cXIRRAiGLcdRXQL5dnv4BsW1f/7lhGapWiY94o2aoHTTglUx2ePigImKel0ajaOJPlnJW02LUFsmv/s9+ZEbF7LnYZSxANz+XYKnyGFvIRyW/fGYUi0s9ivOzCXM9aeEMMgnNGAffuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTXumsFy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR7e7spD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC9D1F000C4;
-	Sat, 17 Oct 2026 17:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTXumsFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E082D1F000C4;
+	Sat, 17 Oct 2026 17:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258818;
-	bh=WnGNOOzELhTWmpwEIbD32F3gkSstH3IAkNJ/YCAzH9Q=;
+	s=korg; t=1792258821;
+	bh=FobVFVoewGMrS03zLJEUCbFi848yEOcn4rZAJ9kUfdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tR7e7spDJlOGQXmpGxy0AWWwPYtjK3Pf8SbkogtFqFTYYlSpaptxUOSlCzL+y/mmZ
-	 GJz9XHL0BepXiW0x6MONVu8o/GvR2/uwNJRicHQo2d2nDoK2C5z7RJtkCTvrkoQ5VQ
-	 RVNVBejKSFS3KtaTmeJ75gO5qn6dWUPTSC1gMPYw=
+	b=DTXumsFyImJ4v+LGpG9//MpCWZCMFZ8zA6owXTunMMI+6sT4c1UY3/xS6qufU8N7V
+	 RKxFTm7FprMUwk0Jw6fzXf5trNooYND3cUn7/X0Tp5qLKuVLVIkZ3I/iaG6dWcQ+bW
+	 qqqNaWICoRNg/v4nChNareRLw0hPXnwK/BOwQ0YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	virtualization@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1008/1674] vsock/virtio: fix potential unbounded skb queue
-Date: Sat, 17 Oct 2026 17:54:40 +0200
-Message-ID: <20261017160457.007728876@linuxfoundation.org>
+Subject: [PATCH 6.6 1009/1674] of: device: Export of_device_make_bus_id()
+Date: Sat, 17 Oct 2026 17:54:41 +0200
+Message-ID: <20261017160457.030707562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,62 +46,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 ]
+[ Upstream commit 7f38b70042fcaa49219045bd1a9a2836e27a58ac ]
 
-virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
+This helper is really handy to create unique device names based on their
+device tree path, we may need it outside of the OF core (in the NVMEM
+subsystem) so let's export it. As this helper has nothing patform
+specific, let's move it to of/device.c instead of of/platform.c so we
+can add its prototype to of_device.h.
 
-virtio_transport_recv_enqueue() skips coalescing for packets
-with VIRTIO_VSOCK_SEQ_EOM.
-
-If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
-a very large number of packets can be queued
-because vvs->rx_bytes stays at 0.
-
-Fix this by estimating the skb metadata size:
-
-	(Number of skbs in the queue) * SKB_TRUESIZE(0)
-
-Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: "Eugenio Pérez" <eperezma@redhat.com>
-Cc: virtualization@lists.linux.dev
-Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231215111536.316972-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5b6b6fc49189 ("nvmem: core: fix use-after-free bugs in error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/of/device.c       | 41 +++++++++++++++++++++++++++++++++++++++
+ drivers/of/platform.c     | 40 --------------------------------------
+ include/linux/of_device.h |  6 ++++++
+ 3 files changed, 47 insertions(+), 40 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index e2a5803c0bbb7..24aa9194e6862 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -283,7 +283,9 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
- 					u32 len)
- {
--	if (vvs->buf_used + len > vvs->buf_alloc)
-+	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+diff --git a/drivers/of/device.c b/drivers/of/device.c
+index 1ca42ad9dd159..6e9572c4af83b 100644
+--- a/drivers/of/device.c
++++ b/drivers/of/device.c
+@@ -304,3 +304,44 @@ int of_device_uevent_modalias(const struct device *dev, struct kobj_uevent_env *
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(of_device_uevent_modalias);
 +
-+	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
- 		return false;
++/**
++ * of_device_make_bus_id - Use the device node data to assign a unique name
++ * @dev: pointer to device structure that is linked to a device tree node
++ *
++ * This routine will first try using the translated bus address to
++ * derive a unique name. If it cannot, then it will prepend names from
++ * parent nodes until a unique name can be derived.
++ */
++void of_device_make_bus_id(struct device *dev)
++{
++	struct device_node *node = dev->of_node;
++	const __be32 *reg;
++	u64 addr;
++	u32 mask;
++
++	/* Construct the name, using parent nodes if necessary to ensure uniqueness */
++	while (node->parent) {
++		/*
++		 * If the address can be translated, then that is as much
++		 * uniqueness as we need. Make it the first component and return
++		 */
++		reg = of_get_property(node, "reg", NULL);
++		if (reg && (addr = of_translate_address(node, reg)) != OF_BAD_ADDR) {
++			if (!of_property_read_u32(node, "mask", &mask))
++				dev_set_name(dev, dev_name(dev) ? "%llx.%x.%pOFn:%s" : "%llx.%x.%pOFn",
++					     addr, ffs(mask) - 1, node, dev_name(dev));
++
++			else
++				dev_set_name(dev, dev_name(dev) ? "%llx.%pOFn:%s" : "%llx.%pOFn",
++					     addr, node, dev_name(dev));
++			return;
++		}
++
++		/* format arguments only used if dev_name() resolves to NULL */
++		dev_set_name(dev, dev_name(dev) ? "%s:%s" : "%s",
++			     kbasename(node->full_name), dev_name(dev));
++		node = node->parent;
++	}
++}
++EXPORT_SYMBOL_GPL(of_device_make_bus_id);
+diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+index d1dfd857f2cd0..3a36678cf05e1 100644
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -97,46 +97,6 @@ static const struct of_device_id of_skipped_node_table[] = {
+  * mechanism for creating devices from device tree nodes.
+  */
  
- 	vvs->rx_bytes += len;
+-/**
+- * of_device_make_bus_id - Use the device node data to assign a unique name
+- * @dev: pointer to device structure that is linked to a device tree node
+- *
+- * This routine will first try using the translated bus address to
+- * derive a unique name. If it cannot, then it will prepend names from
+- * parent nodes until a unique name can be derived.
+- */
+-static void of_device_make_bus_id(struct device *dev)
+-{
+-	struct device_node *node = dev->of_node;
+-	const __be32 *reg;
+-	u64 addr;
+-	u32 mask;
+-
+-	/* Construct the name, using parent nodes if necessary to ensure uniqueness */
+-	while (node->parent) {
+-		/*
+-		 * If the address can be translated, then that is as much
+-		 * uniqueness as we need. Make it the first component and return
+-		 */
+-		reg = of_get_property(node, "reg", NULL);
+-		if (reg && (addr = of_translate_address(node, reg)) != OF_BAD_ADDR) {
+-			if (!of_property_read_u32(node, "mask", &mask))
+-				dev_set_name(dev, dev_name(dev) ? "%llx.%x.%pOFn:%s" : "%llx.%x.%pOFn",
+-					     addr, ffs(mask) - 1, node, dev_name(dev));
+-
+-			else
+-				dev_set_name(dev, dev_name(dev) ? "%llx.%pOFn:%s" : "%llx.%pOFn",
+-					     addr, node, dev_name(dev));
+-			return;
+-		}
+-
+-		/* format arguments only used if dev_name() resolves to NULL */
+-		dev_set_name(dev, dev_name(dev) ? "%s:%s" : "%s",
+-			     kbasename(node->full_name), dev_name(dev));
+-		node = node->parent;
+-	}
+-}
+-
+ /**
+  * of_device_alloc - Allocate and initialize an of_device
+  * @np: device node to assign to device
+diff --git a/include/linux/of_device.h b/include/linux/of_device.h
+index 2c7a3d4bc775b..a72661e47faa5 100644
+--- a/include/linux/of_device.h
++++ b/include/linux/of_device.h
+@@ -40,6 +40,9 @@ static inline int of_dma_configure(struct device *dev,
+ {
+ 	return of_dma_configure_id(dev, np, force_dma, NULL);
+ }
++
++void of_device_make_bus_id(struct device *dev);
++
+ #else /* CONFIG_OF */
+ 
+ static inline int of_driver_match_device(struct device *dev,
+@@ -82,6 +85,9 @@ static inline int of_dma_configure(struct device *dev,
+ {
+ 	return 0;
+ }
++
++static inline void of_device_make_bus_id(struct device *dev) {}
++
+ #endif /* CONFIG_OF */
+ 
+ #endif /* _LINUX_OF_DEVICE_H */
 -- 
 2.53.0
 
