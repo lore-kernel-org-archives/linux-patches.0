@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B257404E;
-	Sat, 17 Oct 2026 16:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D24342CBA;
+	Sat, 17 Oct 2026 16:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254704; cv=none; b=IkeEc2mMQQ70jO2Z+kkV4zLfQPpCbZ8nXRe7L1uzqfvt27V53pe7Ihk2sMmB6BAHWNlfyAvHLfgthEa44exrqZCviGKt+wn77cg33h4PSgZS9ivus6ebfo/cuZesMyTMt9aL5RGqlcjaImy6gHBkMZoAx30oy8gsXihCAnJDu0o=
+	t=1792254707; cv=none; b=WDbPXpOk0Qw8Yvk0um9VF/ruBza4JinvGLVZV9MlCsbc8NtedKfjk7e/X+pSJHKszWx5gv1qiGqD0rX5HcoLyvxq5OQQ90aNsOqvGIwDNkE/PpOz0ESLZNQcdvGx+i3hntDKZZeCsYDlvyvWpWFtmKwAO5AcyMptstO9m35cfN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254704; c=relaxed/simple;
-	bh=c2IXWzvBN8g46VQJmYoqThXa/9BsTtNvs2hBl3U1MlU=;
+	s=arc-20240116; t=1792254707; c=relaxed/simple;
+	bh=Mcv1Vjrwc92diqd3KFyUfdjp8YHPEIzOQOGALQ1gJ8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRcxhKiE21g4x9b1gt/rA2URKDO05JsI91B5QYNW6kxFI59c2o7cnOqDsJ/RxRU3nP/vUkkKDyMtMKfNYhscpB9RIU3TsjSv5/BB5I31asaFcvLW1iT1ApcYza2XPhCJf0NOAnPKA8RdkH2YO6B4BUqzNeXNGkrFJJvVQXm8Uuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8V763xl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aEBMkHGKw2YnDCC/5jRRk7uHxoLD1J1/MCrv/NwiTQeq1Rs24SzZTr398s1Hl3+ES8Z76TzQOCUKASoLymfAo9boL82QNmgXLP26rryObl8M28t0r+/Nt6pLq6duDlCt1hx/X85FndyFjonr7PHtE240ISvHwmqRXdaE68Pz0Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/z27wP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8V763xl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A691F000C4;
-	Sat, 17 Oct 2026 16:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/z27wP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09AD1F000C5;
+	Sat, 17 Oct 2026 16:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254703;
-	bh=6uImR8M/yCLpEcjEyo9xib2ld1FiW/VZfkvSzlTyvnY=;
+	s=korg; t=1792254706;
+	bh=JRT+kvqagVgq0JIu7DMb27Kyq6kCnWxVNGlLU1+a+dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x8V763xlro9/G0Sl5xanOOJ9m0tD6xht4pKthThcM4TTwwyvdYZPIhfd7D6GJoef7
-	 F1rJkMGtVg3CNpPn2UuaQRVFKkAYQJtBzkFR7xXuOjLZIKnYobn4vnikZpW6CsGFF9
-	 EFH3HPkHvsnAEEq+lsmhAG3+g5FrC2QVyR+XHCLI=
+	b=b/z27wP84MRcDPWJoI+2Bk2QNapX5HLeywcLkZi1IeOLmetXZhlmch2ef7Z25rNDK
+	 sT7SZfLdts1R9GTcO+Qfjkwywe6mgli1YRWl8JFjZrDrLwzh1x11ddPE2Q6i3NdLzH
+	 wIyCdHbztul+Xt2hD6Ug+mTa6puuB135BjUdhhBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 534/869] netfilter: flowtable: avoid num_encaps underflow on bridge VLAN untag
-Date: Sat, 17 Oct 2026 17:56:15 +0200
-Message-ID: <20261017160050.794914400@linuxfoundation.org>
+Subject: [PATCH 6.12 535/869] EDAC/igen6: Initialize edac_op_state according to the configuration data
+Date: Sat, 17 Oct 2026 17:56:16 +0200
+Message-ID: <20261017160050.819024928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,52 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit e052f920773b73be49eb4d8702a9f85de7464363 ]
+[ Upstream commit 1d512b1aa5a88f93170b0b9360de4fff7a2f8a0a ]
 
-The DEV_PATH_BR_VLAN_UNTAG case post-decrements info->num_encaps
-inside WARN_ON_ONCE(). num_encaps is u8, so if it's already 0 the
-decrement still happens and wraps it to 255. The break only leaves
-the inner switch -- a later path entry can set info->indev back to
-a real device, and we end up returning with num_encaps == 255.
+Currently, igen6_edac sets edac_op_state to EDAC_OPSTATE_NMI, while the
+driver also supports memory errors reported from Machine Check. Initialize
+edac_op_state to the correct value according to the configuration data
+that the driver probed.
 
-nft_dev_forward_path() then walks info.encap[] (size 2) up to
-num_encaps, which means an OOB stack read and a bogus count copied
-into the route descriptor.
-
-Should only happen on a malformed bridge path stack, hence the WARN,
-but worth handling sanely. Move the decrement out of the WARN.
-
-[ While at this, remove the WARN_ON_ONCE since this can only happen
-  with a buggy bridge path stack --pablo ].
-
-Fixes: e990cef6516d ("netfilter: flowtable: add bridge vlan filtering support")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/all/20241106114024.941659-2-orange@aiven.io
+Stable-dep-of: ab1f9d466c7d ("EDAC/igen6: Fix call trace due to missing release()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/edac/igen6_edac.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 4ddf3eb002259..99d3454f9e3b1 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -150,10 +150,11 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
- 				info->num_encaps++;
- 				break;
- 			case DEV_PATH_BR_VLAN_UNTAG:
--				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
-+				if (info->num_encaps == 0) {
- 					info->indev = NULL;
- 					break;
- 				}
-+				info->num_encaps--;
- 				break;
- 			case DEV_PATH_BR_VLAN_KEEP:
- 				break;
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 63a61932e67fd..003db3d9f1913 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -1357,6 +1357,15 @@ static void unregister_err_handler(void)
+ 	unregister_nmi_handler(NMI_SERR, IGEN6_NMI_NAME);
+ }
+ 
++static void opstate_set(struct res_config *cfg)
++{
++	/* Set the mode according to the configuration data. */
++	if (cfg->machine_check)
++		edac_op_state = EDAC_OPSTATE_INT;
++	else
++		edac_op_state = EDAC_OPSTATE_NMI;
++}
++
+ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	u64 mchbar;
+@@ -1374,6 +1383,8 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (rc)
+ 		goto fail;
+ 
++	opstate_set(res_cfg);
++
+ 	for (i = 0; i < res_cfg->num_imc; i++) {
+ 		rc = igen6_register_mci(i, mchbar, pdev);
+ 		if (rc)
+@@ -1457,8 +1468,6 @@ static int __init igen6_init(void)
+ 	if (owner && strncmp(owner, EDAC_MOD_STR, sizeof(EDAC_MOD_STR)))
+ 		return -EBUSY;
+ 
+-	edac_op_state = EDAC_OPSTATE_NMI;
+-
+ 	rc = pci_register_driver(&igen6_driver);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
