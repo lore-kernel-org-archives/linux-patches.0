@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3227D3563E1;
-	Sat, 17 Oct 2026 16:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494F53563E1;
+	Sat, 17 Oct 2026 16:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253155; cv=none; b=u8RLOdxUCu6iWfRU3SAkZMjfqly17rsmNVNreeAZobSDX5L1XhmFQvp2myoOSNw0qMS83d8aQz1AOgvBc17NIeHJr8EgMaxUmqTem1ImRGbFiA0EBYHnuElmwvFbPq4+vD8Wvy77FRYqVnHqqyuqKEO74fGA86YdvhPWqMFYitY=
+	t=1792253158; cv=none; b=kAq70IALAh8a4DrfzQ3JbwCeS624tSlSqCJop4dHa3S/PciogRJ6qP8CHHb3IaN7R0ois3QTL8yvYagMnP/WIqMVY4fFSbbZaQlCP8nnBbLMJJWJDagfdsxkIGMY9LT7+Fb+WjADDMUso5P05jjgGeysfzAYlg6RsyQgFy+ZiSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253155; c=relaxed/simple;
-	bh=ggDbX/N3EWV9kgYxT60ih8HYRBYUhbCsFdAfYNU4uq8=;
+	s=arc-20240116; t=1792253158; c=relaxed/simple;
+	bh=YnrqNX8hrJw0yG2s6Lku8moHASNw4Vr9L6QXnuJ1nlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMkuZr9T5HIpPxGt16i+vUYziQS7mVLo9FPMI34oC9kCKfdtGihYHFXS010vsOnLkXENPsckHhV0jdjlfeNG3auBCerQxkh99SATLayvRq8Bt+3wt33ra0tiHZlfBW83DItZkmv95lzQIYJFOMzUthq3wyr0FC1R42LNvc5+QW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyJt3Imy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=maJGmuWw8i/8R2edw316hXS+KZ2BTW3BQwkMf1LwMRhKroZHJIxQuhMW0qBOLjBNtqiILsQxmZj2gfvYt4aDQEFHpZkJhiGXqDB9ias/h+kzSf+EBVA0cWA0XqhJy/jm8IMVu0xvZIVBuS5spwoiO9AKmoaaSLhWIC3E/aHmihE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNLYuel4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyJt3Imy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB241F000C6;
-	Sat, 17 Oct 2026 16:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNLYuel4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937831F000C4;
+	Sat, 17 Oct 2026 16:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253154;
-	bh=Y4jCN2l93vdC61pIaVmv4w86AzUsWGs8BPvenlYlfsw=;
+	s=korg; t=1792253157;
+	bh=4OnTUG4kDwyCko3IfIS75m+rTr8hNtj4RVZtydSRcag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XyJt3ImygYA3wpQNxoe4dutGzqGX6HCioauNZWQ380huzNSFql8tvtoMpVJoqbRaI
-	 rCc4aEfOXMx+4vGA0WPu4PvM/IMWLbDo3QoekQrNIKC99I1fhla2VaGjzx1EpUw9Kn
-	 u8A3YuAz5GYFV9P89+MxWNLtL5+T+Yn/e6i7hwoY=
+	b=dNLYuel4bM84O6EZUPvV3YB0JAP0vTEMTasjFne3QSpVX0he3kZZZ6vdggD+A8Bsf
+	 p9mciILgSkQRcYGNY1I7zGpQA9z5mHSp25E+QAHwr7OQVBHHJZU7HTSbD23Y4GQwxh
+	 MXheLwulFwAqkFCxOGq2krpVT/AUDNi1JHi4O3/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youness HFA <hfa.youness@gmail.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/869] drm/vmwgfx: validate pitch coming from userspace
-Date: Sat, 17 Oct 2026 17:47:49 +0200
-Message-ID: <20261017160037.733272306@linuxfoundation.org>
+Subject: [PATCH 6.12 029/869] namespace: dont inherit MNT_UMOUNT in clone_mnt()
+Date: Sat, 17 Oct 2026 17:47:50 +0200
+Message-ID: <20261017160037.760990735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,88 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 21bc51cb89ced74d6645a138cc2f21184bc75094 ]
+[ Upstream commit e2c6d326216642011da318b9edfd5d57ebd5a56f ]
 
-Validate the pitch, alongside the box dimensions before trying
-to copy data from the underlying surface. Fixes possible
-out of bounds reads with cursor snooping.
+MNT_UMOUNT gets raised on a mount that umount_tree() or umount_one() has
+taken out of its namespace. It's never cleared. __detach_mounts()
+unhooks a mount that carries it instead of unmounting it.
 
-Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
+disconnect_mount() lets an unmounted child stay attached only if its
+parent carries it. propagate_umount() takes it as the sign that a mount
+is going to be unmounted when it decides what else can be unmounted,
+where a chain of locked mounts ends and where a for reparenting an
+overmount.
+
+clone_mnt() copies the flags of the source and only masks
+MNT_INTERNAL_FLAGS which doesn't include MNT_UMOUNT. A mount that was
+lazily unmounted but is kept alive by a file descriptor can still be
+copied when its root is an nsfs or pidfs file because may_copy_tree()
+accepts those before checking whether the source is mounted at all:
+
+  mount --bind /proc/self/ns/net /tmp/x
+  exec 3< /tmp/x
+  umount -l /tmp/x
+  mount --bind /proc/self/fd/3 /tmp/y
+
+The mount on /tmp/y is attached to the caller's namespace with
+MNT_UMOUNT already set and every copy of it inherits the flag again.
+
+That causes a number of bugs:
+
+- Unlink its mountpoint from a mount namespace where it isn't one.
+  __detach_mounts() takes it for a mount that was unmounted earlier,
+  unhooks it from its parent and drops the reference the namespace
+  holds on it. It stays in the namespace with one reference too few
+  and as its own parent, so it can't be unmounted through the file
+  descriptor anymore and the namespace never finds it again. When the
+  namespace goes away it's leaked and points to a freed struct
+  mnt_namespace that may_change_propagation() and anon_ns_root() read
+  on the next propagation change or mount_setattr() through the file
+  descriptor.
+
+- Make it shared and unmount a peer. trace_transfers() follows the
+  flag from the peer into it and strips it from its peer group.
+
+- Let a propagated umount reach it. gather_candidates() marks it with
+  T_UMOUNT_CANDIDATE but never puts it on the candidate list, so the
+  mark is never cleared and every later propagated umount skips it. If
+  it's the parent of a locked mount handle_locked() takes it as the
+  cutoff and commits the locked child that should have stayed and
+  disconnect_mount() leaves that child attached to it, unmounted under
+  a mounted parent, which is what disconnect_mount() exists to
+  prevent. When the namespace goes away umount_tree() visits the child
+  a second time. And once __detach_mounts() has made it its own parent
+  reparent() never finds the end of the chain of unmounted parents.
+
+A clone is a new mount that has never been unmounted. Add MNT_UMOUNT
+to MNT_INTERNAL_FLAGS so clone_mnt() never copies it. And warn when
+umount_tree() reaches a mount that already has it set.
+
+Fixes: 590ce4bcbfb4 ("mnt: Add MNT_UMOUNT flag")
 Cc: stable@vger.kernel.org
-Reported-by: Youness HFA <hfa.youness@gmail.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Link: https://patch.msgid.link/20260809204515.211045-1-zack.rusin@broadcom.com
-[ sashal: Applied the changes to vmw_kms_cursor_snoop() in its original location because the cursor refactor is absent. ]
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-3-f357abf3d17b@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adapted mount flags to macro definitions and an explicit clone_mnt() mask while replacing VFS_WARN_ON_ONCE() with WARN_ON_ONCE(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ fs/namespace.c        | 4 +++-
+ include/linux/mount.h | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 800a79e035ed6..985774f22a130 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -382,6 +382,7 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
- 	unsigned long kmap_num;
- 	SVGA3dCopyBox *box;
- 	unsigned box_count;
-+	u64 src_extent;
- 	void *virtual;
- 	bool is_iomem;
- 	struct vmw_dma_cmd {
-@@ -393,6 +394,8 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
- 		vmw_surface_get_desc(VMW_CURSOR_SNOOP_FORMAT);
- 	const u32 image_pitch = VMW_CURSOR_SNOOP_WIDTH * desc->pitchBytesPerBlock;
- 
-+	BUILD_BUG_ON(sizeof(*srf->snooper.image) != desc->pitchBytesPerBlock);
-+
- 	cmd = container_of(header, struct vmw_dma_cmd, header);
- 
- 	/* No snooper installed, nothing to copy */
-@@ -430,8 +433,19 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
- 		return;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index f87bdff661664..11e6ddce877d5 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1311,7 +1311,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
  	}
  
-+	if (box->w == 0 || box->h == 0)
-+		return;
-+
-+	src_extent = (u64)(box->h - 1) * cmd->dma.guest.pitch +
-+		     (u64)box->w * desc->pitchBytesPerBlock;
-+	if (src_extent > bo->base.size) {
-+		DRM_ERROR("Cursor snoop source of %llu bytes exceeds the %zu byte buffer\n",
-+			  src_extent, bo->base.size);
-+		return;
-+	}
-+
- 	kmap_offset = cmd->dma.guest.ptr.offset >> PAGE_SHIFT;
--	kmap_num = (VMW_CURSOR_SNOOP_HEIGHT*image_pitch) >> PAGE_SHIFT;
-+	kmap_num = PFN_UP(src_extent);
+ 	mnt->mnt.mnt_flags = old->mnt.mnt_flags;
+-	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL);
++	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL|MNT_UMOUNT);
  
- 	ret = ttm_bo_reserve(bo, true, false, NULL);
- 	if (unlikely(ret != 0)) {
-@@ -445,14 +459,16 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
+ 	atomic_inc(&sb->s_active);
+ 	mnt->mnt.mnt_idmap = mnt_idmap_get(mnt_idmap(&old->mnt));
+@@ -1778,6 +1778,8 @@ static void umount_tree(struct mount *mnt, enum umount_tree_flags how)
  
- 	virtual = ttm_kmap_obj_virtual(&map, &is_iomem);
+ 	/* Gather the mounts to umount */
+ 	for (p = mnt; p; p = next_mnt(p, mnt)) {
++		/* A mount is unmounted once. */
++		WARN_ON_ONCE(p->mnt.mnt_flags & MNT_UMOUNT);
+ 		p->mnt.mnt_flags |= MNT_UMOUNT;
+ 		if (mnt_ns_attached(p))
+ 			move_from_ns(p, &tmp_list);
+diff --git a/include/linux/mount.h b/include/linux/mount.h
+index 04213d8ef8376..fdc14f5d154d7 100644
+--- a/include/linux/mount.h
++++ b/include/linux/mount.h
+@@ -50,7 +50,8 @@ struct path;
+ #define MNT_ATIME_MASK (MNT_NOATIME | MNT_NODIRATIME | MNT_RELATIME )
  
--	if (box->w == VMW_CURSOR_SNOOP_WIDTH && cmd->dma.guest.pitch == image_pitch) {
-+	if (box->w == VMW_CURSOR_SNOOP_WIDTH &&
-+	    box->h == VMW_CURSOR_SNOOP_HEIGHT &&
-+	    cmd->dma.guest.pitch == image_pitch) {
- 		memcpy(srf->snooper.image, virtual,
- 		       VMW_CURSOR_SNOOP_HEIGHT*image_pitch);
- 	} else {
--		/* Image is unsigned pointer. */
-+		/* The destination stride is in pixels. */
- 		for (i = 0; i < box->h; i++)
--			memcpy(srf->snooper.image + i * image_pitch,
--			       virtual + i * cmd->dma.guest.pitch,
-+			memcpy(srf->snooper.image + i * VMW_CURSOR_SNOOP_WIDTH,
-+			       virtual + (size_t)i * cmd->dma.guest.pitch,
- 			       box->w * desc->pitchBytesPerBlock);
- 	}
+ #define MNT_INTERNAL_FLAGS (MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL | \
+-			    MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED)
++			    MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED | \
++			    MNT_UMOUNT)
+ 
+ #define MNT_INTERNAL	0x4000
  
 -- 
 2.53.0
