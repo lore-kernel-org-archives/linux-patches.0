@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8073B2FD8;
-	Sat, 17 Oct 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66793C0A1F;
+	Sat, 17 Oct 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259186; cv=none; b=dkpa7bbl5wmxxpwil7YICFM1F4auMMofAeIM9SjVe3/eviGOO8qyHvdYrv3cNR6XRtX/iYvkrpqsgvRlg0CeWtXZazITxibbZzml2KXf9Cbh8NfbplUvU71zXWNTWd/7iAbLOnmzlGN9CzsnxH44GdQRNxzNkn6lXr2IOJun0n4=
+	t=1792259190; cv=none; b=iRDvwCpHR42xJyfwR1WufBMgIi/wuT/ggzsXPw/5N8Ygy6E62d+y4WB1qV3FdA7Au9aH1yFGaHYWyvZLPvqayrw5NOKi4P/qswJNUUiqvjDcIe0lvd4q2t+oDl/0orlAa+JFi9gQkYpq282HJwXtCMWvoTJ7/EN7zf7htbBnJvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259186; c=relaxed/simple;
-	bh=XHbMtrvJGMlfHx+yTR2YCgqANWFuBn3Q+aSJ6i0mwuU=;
+	s=arc-20240116; t=1792259190; c=relaxed/simple;
+	bh=/GCrDC1RSnDXDGf6SW7XfMXDxrAf7In+xBrI9VOHxto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBoNsngugdFmruIbU59E474r+0+xrP69+pFXsYCZrM7BkMfc4OYW1A76bvCiAggWRbm0qiuzgnDo2+mN/g5YtEWbkfSqFFKxJq+8OwzmwnNZJPxI4KvONUgD37CE2C0VTu8A0si9JvftUf0/l01PE92MfQa/t0faeJ+AT9KFcB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmexX43S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LnNjvIdFwJsBF6c27WCJFQqpWrbW3lAtr7SMgo1wim7qSWecQ407BAnKTf3N7V2XaVm8zsiCpniKFKFh80C0eVUebukiubxJTZgKeGLh3WnHKbqHyF8v97GFr5NjVEVVOe4p2qHytH5Hr+4uHoyZKevfJc2pgkZdqPJ0ZfBATGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUF5qSIT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmexX43S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240201F000C5;
-	Sat, 17 Oct 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUF5qSIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1138C1F000C5;
+	Sat, 17 Oct 2026 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259185;
-	bh=DNrpBsvb2Z6H5c5vAhuGYhxDcaTcrhnXrxG51CBeKko=;
+	s=korg; t=1792259188;
+	bh=eBsFQTezEId6M9RGmBxNWclaiCvb2X4lespG5rQegHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmexX43ShhbPkC+3dcymYm4XerfiEbQFmqwaBRoGri9rkdchKY/pudIQnDb9HUsQa
-	 hg4c/z/JuQGEEx0Yg3WzQCEmIk+f5DIi33UQrPZLP3s/5GUuwu2C7wwWWEWM943Rky
-	 +qnxbbnrU7rotn+a24iB4PBI0vHknam5kUdJHhcY=
+	b=HUF5qSITxudUUPjm0JvBWEg/b1AVugpkmLOC+pPT/galC0Jj8xRrS7wV+YCy7Hni2
+	 ELoONQn8T2MXM2Ft3qJjYol7K4hRZm1pa3jO6SlTx84qno9C88ps9RcNEsWGPdAdKo
+	 NVAgxmgXiAFi25Dgkh7FIRlo5z9b8VVTrnED1Zbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Feng Liu <feliu@nvidia.com>,
+	Eran Ben Elisha <eranbe@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1130/1674] Bluetooth: 6lowpan: avoid untracked enable work
-Date: Sat, 17 Oct 2026 17:56:42 +0200
-Message-ID: <20261017160500.161811540@linuxfoundation.org>
+Subject: [PATCH 6.6 1131/1674] net/mlx5e: Fix publication race for priv->channel_stats[]
+Date: Sat, 17 Oct 2026 17:56:43 +0200
+Message-ID: <20261017160500.188340223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,106 +55,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 352a59dc1f4a41314b6f827c17e16af7ca88271a ]
+[ Upstream commit 5a799714e8ca0bce9ea40694f49914cf1adbbaa9 ]
 
-lowpan_enable_set() allocates a temporary work item and schedules
-do_enable_set() on system_wq, then returns to debugfs. The debugfs active
-operation has ended at that point, but the worker still executes module
-text and manipulates enable_6lowpan and listen_chan.
+mlx5e_channel_stats_alloc() publishes a new entry to
+priv->channel_stats[] and then increments priv->stats_nch as a
+publication token, but neither store carries any memory barrier:
 
-bt_6lowpan_exit() removes the debugfs files and immediately closes and
-puts listen_chan. It has no pointer to the queued work item, so it cannot
-cancel or flush it before tearing down the state that the worker uses.
+	priv->channel_stats[ix] = kvzalloc_node(...);
+	if (!priv->channel_stats[ix])
+		return -ENOMEM;
+	priv->stats_nch++;
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
+Concurrent readers compute the loop bound from priv->stats_nch and
+then dereference priv->channel_stats[i] using plain accesses, e.g.
 
-debugfs enable write              module exit
-1. lowpan_enable_set() allocates  1. bt_6lowpan_exit() removes
-   set_enable work                   the debugfs file
-2. schedule_work() queues         2. bt_6lowpan_exit() closes
-   do_enable_set()                   and puts listen_chan
-3. the write operation returns    3. module teardown can continue
-4. do_enable_set() later runs
-   against stale state
+	for (i = 0; i < priv->stats_nch; i++) {
+		struct mlx5e_channel_stats *cs = priv->channel_stats[i];
+		... cs->rq.packets ...
+	}
 
-Run the enable state transition synchronously in lowpan_enable_set()
-instead. The simple debugfs setter can sleep, and this file already handles
-the 6LoWPAN control write synchronously under the same set_lock. Once the
-setter returns, debugfs removal covers the whole operation and exit can no
-longer race with an untracked work item.
+On weakly-ordered architectures (ARM, PowerPC, RISC-V) the writes to
+channel_stats[ix] and stats_nch may become visible to other CPUs out
+of program order. A reader can observe stats_nch == N while still
+seeing channel_stats[N-1] == NULL, leading to a NULL pointer
+dereference in the channel_stats loop.
 
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in do_enable_set+0x113/0x2e0
-Workqueue: events do_enable_set [bluetooth_6lowpan]
-The buggy address belongs to the object at ffff888109cb8000
+This has been observed in production on BlueField-3 DPUs (arm64),
+where ovs-vswitchd queries netdev statistics over netlink during NIC
+bringup, racing mlx5e_open_channel() -> mlx5e_channel_stats_alloc()
+on another CPU:
 
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Unable to handle kernel NULL pointer dereference at virtual address 0x840
+  Hardware name: BlueField-3 DPU
+  pc : mlx5e_fold_sw_stats64+0x30/0x180 [mlx5_core]
+  Call trace:
+   mlx5e_fold_sw_stats64+0x30/0x180 [mlx5_core]
+   dev_get_stats+0x50/0xc0
+   ovs_vport_get_stats+0x38/0xac [openvswitch]
+   ovs_vport_cmd_fill_info+0x194/0x290 [openvswitch]
+   ovs_vport_cmd_get+0xbc/0x10c [openvswitch]
+   genl_family_rcv_msg_doit+0xd0/0x160
+   genl_rcv_msg+0xec/0x1f0
+   netlink_rcv_skb+0x64/0x130
+   genl_rcv+0x40/0x60
+   netlink_unicast+0x2fc/0x370
+   netlink_sendmsg+0x1dc/0x454
+   ...
+   __arm64_sys_sendmsg+0x2c/0x40
+
+Add mlx5e_stats_nch_write() and mlx5e_stats_nch_read() helpers in en.h
+that wrap the smp_store_release()/smp_load_acquire() pair on stats_nch.
+The release/acquire pair establishes the contract:
+
+  stats_nch == N  =>  channel_stats[0..N-1] are visible and non-NULL.
+
+Publish the stats_nch increment via mlx5e_stats_nch_write() in the
+writer (mlx5e_channel_stats_alloc()), and read stats_nch via
+mlx5e_stats_nch_read() in all readers: mlx5e RX/TX queue stats,
+mlx5e_get_base_stats(), ethtool channels stats, IPoIB stats, the
+sw_stats fold and the HV VHCA stats agent.
+
+Fixes: fa691d0c9c08 ("net/mlx5e: Allocate per-channel stats dynamically at first usage")
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Reviewed-by: Eran Ben Elisha <eranbe@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260630115151.729219-4-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 27 ++++-----------------------
- 1 file changed, 4 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h         | 12 ++++++++++++
+ .../ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c   | 10 ++++++----
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c    |  5 +++--
+ drivers/net/ethernet/mellanox/mlx5/core/en_stats.c   |  9 +++++----
+ .../net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c    |  3 ++-
+ 5 files changed, 28 insertions(+), 11 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 8625d3db24422..53b09639cba52 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1065,23 +1065,15 @@ static void disconnect_all_peers(void)
- 	} while (nchans);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index 0b10e86b508ca..8b6c086e32937 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -944,6 +944,18 @@ struct mlx5e_priv {
+ 	struct dentry             *dfs_root;
+ };
+ 
++static inline u16 mlx5e_stats_nch_read(const struct mlx5e_priv *priv)
++{
++	/* Pairs with smp_store_release in mlx5e_stats_nch_write(). */
++	return smp_load_acquire(&priv->stats_nch);
++}
++
++static inline void mlx5e_stats_nch_write(struct mlx5e_priv *priv, u16 n)
++{
++	/* Pairs with smp_load_acquire in mlx5e_stats_nch_read(). */
++	smp_store_release(&priv->stats_nch, n);
++}
++
+ struct mlx5e_dev {
+ 	struct net_device *netdev;
+ 	struct devlink_port dl_port;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
+index 1856d211339f2..adfb49ff42aa9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
+@@ -33,9 +33,10 @@ mlx5e_hv_vhca_fill_ring_stats(struct mlx5e_priv *priv, int ch,
+ static void mlx5e_hv_vhca_fill_stats(struct mlx5e_priv *priv, void *data,
+ 				     int buf_len)
+ {
++	u16 nch = mlx5e_stats_nch_read(priv);
+ 	int ch, i = 0;
+ 
+-	for (ch = 0; ch < priv->stats_nch; ch++) {
++	for (ch = 0; ch < nch; ch++) {
+ 		void *buf = data + i;
+ 
+ 		if (WARN_ON_ONCE(buf +
+@@ -50,8 +51,9 @@ static void mlx5e_hv_vhca_fill_stats(struct mlx5e_priv *priv, void *data,
+ 
+ static int mlx5e_hv_vhca_stats_buf_size(struct mlx5e_priv *priv)
+ {
+-	return (sizeof(struct mlx5e_hv_vhca_per_ring_stats) *
+-		priv->stats_nch);
++	u16 nch = mlx5e_stats_nch_read(priv);
++
++	return sizeof(struct mlx5e_hv_vhca_per_ring_stats) * nch;
  }
  
--struct set_enable {
--	struct work_struct work;
--	bool flag;
--};
--
--static void do_enable_set(struct work_struct *work)
-+static void do_enable_set(bool flag)
- {
--	struct set_enable *set_enable = container_of(work,
--						     struct set_enable, work);
--
--	if (!set_enable->flag || enable_6lowpan != set_enable->flag)
-+	if (!flag || enable_6lowpan != flag)
- 		/* Disconnect existing connections if 6lowpan is
- 		 * disabled
- 		 */
- 		disconnect_all_peers();
+ static int mlx5e_hv_vhca_stats_buf_max_size(struct mlx5e_priv *priv)
+@@ -106,7 +108,7 @@ static void mlx5e_hv_vhca_stats_control(struct mlx5_hv_vhca_agent *agent,
+ 	sagent = &priv->stats_agent;
  
--	enable_6lowpan = set_enable->flag;
-+	enable_6lowpan = flag;
+ 	block->version = MLX5_HV_VHCA_STATS_VERSION;
+-	block->rings   = priv->stats_nch;
++	block->rings   = mlx5e_stats_nch_read(priv);
  
- 	mutex_lock(&set_lock);
- 	if (listen_chan) {
-@@ -1091,22 +1083,11 @@ static void do_enable_set(struct work_struct *work)
- 
- 	listen_chan = bt_6lowpan_listen();
- 	mutex_unlock(&set_lock);
--
--	kfree(set_enable);
- }
- 
- static int lowpan_enable_set(void *data, u64 val)
- {
--	struct set_enable *set_enable;
--
--	set_enable = kzalloc(sizeof(*set_enable), GFP_KERNEL);
--	if (!set_enable)
--		return -ENOMEM;
--
--	set_enable->flag = !!val;
--	INIT_WORK(&set_enable->work, do_enable_set);
--
--	schedule_work(&set_enable->work);
-+	do_enable_set(!!val);
+ 	if (!block->command) {
+ 		cancel_delayed_work_sync(&priv->stats_agent.work);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 13c0faa1e5cb7..a35594fe3bd11 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -2421,7 +2421,7 @@ static int mlx5e_channel_stats_alloc(struct mlx5e_priv *priv, int ix, int cpu)
+ 						GFP_KERNEL, cpu_to_node(cpu));
+ 	if (!priv->channel_stats[ix])
+ 		return -ENOMEM;
+-	priv->stats_nch++;
++	mlx5e_stats_nch_write(priv, priv->stats_nch + 1);
  
  	return 0;
  }
+@@ -3685,9 +3685,10 @@ static int mlx5e_setup_tc(struct net_device *dev, enum tc_setup_type type,
+ 
+ void mlx5e_fold_sw_stats64(struct mlx5e_priv *priv, struct rtnl_link_stats64 *s)
+ {
++	u16 nch = mlx5e_stats_nch_read(priv);
+ 	int i;
+ 
+-	for (i = 0; i < priv->stats_nch; i++) {
++	for (i = 0; i < nch; i++) {
+ 		struct mlx5e_channel_stats *channel_stats = priv->channel_stats[i];
+ 		struct mlx5e_rq_stats *xskrq_stats = &channel_stats->xskrq;
+ 		struct mlx5e_rq_stats *rq_stats = &channel_stats->rq;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+index 1c69244e00d75..9f3ccf68b267d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+@@ -517,6 +517,7 @@ static void mlx5e_stats_update_stats_rq_page_pool(struct mlx5e_channel *c)
+ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(sw)
+ {
+ 	struct mlx5e_sw_stats *s = &priv->stats.sw;
++	u16 nch = mlx5e_stats_nch_read(priv);
+ 	int i;
+ 
+ 	memset(s, 0, sizeof(*s));
+@@ -524,7 +525,7 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(sw)
+ 	for (i = 0; i < priv->channels.num; i++) /* for active channels only */
+ 		mlx5e_stats_update_stats_rq_page_pool(priv->channels.c[i]);
+ 
+-	for (i = 0; i < priv->stats_nch; i++) {
++	for (i = 0; i < nch; i++) {
+ 		struct mlx5e_channel_stats *channel_stats =
+ 			priv->channel_stats[i];
+ 
+@@ -2358,7 +2359,7 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(ptp) { return; }
+ 
+ static MLX5E_DECLARE_STATS_GRP_OP_NUM_STATS(channels)
+ {
+-	int max_nch = priv->stats_nch;
++	int max_nch = mlx5e_stats_nch_read(priv);
+ 
+ 	return (NUM_RQ_STATS * max_nch) +
+ 	       (NUM_CH_STATS * max_nch) +
+@@ -2371,8 +2372,8 @@ static MLX5E_DECLARE_STATS_GRP_OP_NUM_STATS(channels)
+ 
+ static MLX5E_DECLARE_STATS_GRP_OP_FILL_STRS(channels)
+ {
++	int max_nch = mlx5e_stats_nch_read(priv);
+ 	bool is_xsk = priv->xsk.ever_used;
+-	int max_nch = priv->stats_nch;
+ 	int i, j, tc;
+ 
+ 	for (i = 0; i < max_nch; i++)
+@@ -2413,8 +2414,8 @@ static MLX5E_DECLARE_STATS_GRP_OP_FILL_STRS(channels)
+ 
+ static MLX5E_DECLARE_STATS_GRP_OP_FILL_STATS(channels)
+ {
++	int max_nch = mlx5e_stats_nch_read(priv);
+ 	bool is_xsk = priv->xsk.ever_used;
+-	int max_nch = priv->stats_nch;
+ 	int i, j, tc;
+ 
+ 	for (i = 0; i < max_nch; i++)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+index baa7ef8123139..e46755f0ef39d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+@@ -114,10 +114,11 @@ void mlx5i_cleanup(struct mlx5e_priv *priv)
+ 
+ static void mlx5i_grp_sw_update_stats(struct mlx5e_priv *priv)
+ {
++	u16 nch = mlx5e_stats_nch_read(priv);
+ 	struct rtnl_link_stats64 s = {};
+ 	int i, j;
+ 
+-	for (i = 0; i < priv->stats_nch; i++) {
++	for (i = 0; i < nch; i++) {
+ 		struct mlx5e_channel_stats *channel_stats;
+ 		struct mlx5e_rq_stats *rq_stats;
+ 
 -- 
 2.53.0
 
