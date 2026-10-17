@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACF635E93B;
-	Sat, 17 Oct 2026 18:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059B836195A;
+	Sat, 17 Oct 2026 18:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260618; cv=none; b=LsbJAjlJ3Iogxck22QHqqBT5T3bI27PtopGx8x+iWKAs+JmzgFSDvjU1mYk/wK7Ge2q9yBqD62taXGlPL1YYjMh/mAaIH3gAwJ9BC9AnJrSv8DLdAKRwnJlyDVh/ObsW5Ed/JKLAZPP7hJ0yyR41OTAPYQw5uox7zgu9a5M4fIQ=
+	t=1792260624; cv=none; b=gmzdtwjsXvyGYjESbE0izcOlZ7/MNyYkBjFILrlFB4Qyj8Rvj8i9cnacQdAEsLK0qG5J9gBUIU5BuUM+DCG1A08qFcvksnjNwe/HgUWS2PzMIcPsmvpN1kNskeSV7ZudDGsp+5bDQgI5BtaRKLpY5kXPXKCNkvz+zEni6Odmflw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260618; c=relaxed/simple;
-	bh=hw4to64Y0q4erfCEM2NxzKGiBVQGjbdlfXdRHKXhoMQ=;
+	s=arc-20240116; t=1792260624; c=relaxed/simple;
+	bh=nzUJwX9tW9BoQabireRNJ+t7xiOst+IMhQ4lg9Z0nmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9BNaY0ZLzvpRzuk9OBQykMcuXF/4csS8plIICfoX6WrgnTOjIwmvXwPOG6B3L/FKtlIPF3YjLjBEJwQlxDhhBDKyWrY0QSPM52csDJTyt0cHca2QSBi+K2P/eBIDPALIN0/l9vJJAs5aRBG27+IGUdw+ognjuk7tTvBxEcSnpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xY6JRI/0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SowBXz2PPWuiS6rAwojHQwS1QJtYqBl7/5AoLUlDJmSi/UTvqorgkFMHlOh8TlJ21WtfqNMAw33V9B2+LUjoNWhIzTSDObg5UevqcydT8991bktx44JY1HgvyKAaFq0Ct4bbcDedOnH42OeJUmYuC+KLyElNPHC+sDt52ZI43kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdLqP1jQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xY6JRI/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22ECF1F000C4;
-	Sat, 17 Oct 2026 18:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdLqP1jQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546E71F000C5;
+	Sat, 17 Oct 2026 18:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260616;
-	bh=viiwiE0NqxQBYD9ZHxxSxJdbM/HJOVo5IYdocXBg6i0=;
+	s=korg; t=1792260622;
+	bh=l76VFmBE4bimihkgC4t6/NRp7kVZKhRUnJNRROK+rrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xY6JRI/0Is4BVTRhaaHO5aXYKtSI5Odydz5o8gcwNJnTcUWrQgIiQ6eTF0v87CpNd
-	 BjfIW+qmG/ZdurwQxQvLRJndSYwRIx1JvXdTcC8ObzN7H7WYI+a3KbWu8k2EMnZkaj
-	 TwrM2p5OqVBM9FUExsIt1xbrIWdjsTWH7py7dlqU=
+	b=jdLqP1jQogxasSXJobKCBUO68e3fuaTMdFE1iBV6q9ENRLuwhyAoqVAOkLbXBwyNG
+	 /bMA2xs3naAm7WA5Qjt4bLv9yk1Yv1gVPwBlEgQl3Ezcw/0KhlwoPIBA+0L2CnpHLA
+	 muYTUG8inStyxVgtyyeOiDkNCmhUqyGGj0Lph0UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Steven Rostedt <rostedt@goodmis.org>,
+	syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com,
+	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1604/1674] tracing: Take trace_array reference when opening a tracer options file
-Date: Sat, 17 Oct 2026 18:04:36 +0200
-Message-ID: <20261017160512.258120198@linuxfoundation.org>
+Subject: [PATCH 6.6 1606/1674] configfs: unhash the dentry before dropping the item in rmdir
+Date: Sat, 17 Oct 2026 18:04:38 +0200
+Message-ID: <20261017160512.308706373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,134 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-[ Upstream commit ed0aff60f83a9bdc2f6556376ac79c96b3ce7e80 ]
+[ Upstream commit f06c2d26d1999d37e93299db0ecead04ca7d0b9f ]
 
-When a tracer option file is opened, it is passed a descriptor that points
-to an element on the trace_array's topts array. This element has
-information to find the trace array and other information. It uses this
-element to take a reference of the trace_array so that the trace_array
-does not get removed while this file is opened.
+configfs_get_config_item() treats a hashed dentry as proof that
+sd->s_element is a live config_item.  configfs_rmdir() breaks that:
+simple_rmdir() leaves the dentry hashed, the last reference to the item is
+dropped right after, and the dentry is only unhashed by d_delete() once
+->rmdir() has returned.  configfs_symlink() resolves its target holding no
+lock on it, so get_target() can land in that window:
 
-Unfortunately, there's a race condition where the element itself could be
-freed by the removal of the instance the trace_array represents causing a
-use-after-free as this element that is used to find the trace_array to
-increment its reference counter is also freed when the instance is
-removed.
+  BUG: KASAN: slab-use-after-free in config_item_get+0x26/0x90
+   get_target fs/configfs/symlink.c:128 [inline]
+   configfs_symlink+0x4ab/0x1030 fs/configfs/symlink.c:185
 
-To solve this, add a trace_array_tracer_options_get() helper function that
-will take the address of the element that is passed to the open function
-by the inode->i_private pointer and search all the trace_arrays under a
-lock to find the one that the element's address is in the range of the
-trace_arrays topts array elements. When a match happens, that trace_array's
-reference would be increased.
+Unhash in configfs_remove_dir(), while the item is still guaranteed to be
+there.  A reference obtained just before that stays harmless, as
+create_link() rechecks CONFIGFS_USET_DROPPING, already set by
+configfs_detach_prep().  Both configfs_unregister_subsystem() paths
+d_drop() after detaching, so this only makes rmdir match them.
 
-Note, there's a race where if an admin was deleting and creating trace
-instances at the same time and the memory of the old trace_array's array
-matched the memory of the new trace_array that it could in theory open the
-option from the wrong trace array. But we do not care because it would be
-stupid to perform that kind of action. As long as the only thing that can
-happen is that the option from the wrong trace array is used and doesn't
-crash the kernel it will only make the user confused. But if they are
-doing something stupid like this, they are already confused, so no harm
-done.
-
+Reported-by: syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6b16e3d085833cbf3e25
+Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260910221209.62dad8d3@robin
-Fixes: 7e2cfbd2d3c86 ("tracing: Have option files inc the trace array ref count")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-trace-kernel/20260902121918.5a9e9d1b@gandalf.local.home/
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+Tested-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260730093435.195441-3-vasilisalmpanis@gmail.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 48 +++++++++++++++++++++++++++++++++++++++++++-
- kernel/trace/trace.h |  1 +
- 2 files changed, 48 insertions(+), 1 deletion(-)
+ fs/configfs/dir.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index c21133901f1bf..9ab20e1a936fa 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8902,12 +8902,57 @@ trace_options_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 	return cnt;
- }
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 46540846d815c..e7ca50f119969 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -395,8 +395,17 @@ static void remove_dir(struct dentry * d)
  
-+static bool tr_option_match(struct trace_array *tr, void *topt)
-+{
-+	for (int i = 0; i < tr->nr_topts; i++) {
-+		struct trace_options *tr_topts = &tr->topts[i];
-+
-+		if (topt >= (void *)&tr_topts->topts[0] &&
-+		    topt < (void *)&tr_topts->topts[tr_topts->nr_topts])
-+			return true;
+ 	configfs_remove_dirent(d);
+ 
+-	if (d_really_is_positive(d))
+-		simple_rmdir(d_inode(parent),d);
++	if (d_really_is_positive(d)) {
++		if (!simple_rmdir(d_inode(parent), d))
++			/*
++			 * configfs_get_config_item() takes a hashed dentry as
++			 * proof that ->s_element is still alive.  Our caller
++			 * is about to drop the last reference to the item and
++			 * the VFS will not unhash until after we return, so
++			 * unhash it here.
++			 */
++			d_drop(d);
 +	}
-+	return false;
-+}
-+
-+/*
-+ * The topt is the address of a trace_array->topts[] element that holds the
-+ * the tracer options descriptor. But since the trace_array reference has not
-+ * been taken yet, it cannot be dereferenced as it could have been freed by
-+ * a rmdir of the instance the trace_array represents.
-+ *
-+ * Search the list of trace_arrays and compare the topt to the address of
-+ * the entire trace_array topts array for each trace_array in the list.
-+ * If one is matched, then take the reference and return it. If not, the
-+ * trace_array no longer exits.
-+ */
-+static int trace_array_tracer_options_get(void *topt)
-+{
-+	struct trace_array *tr;
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_TRACEFS);
-+	if (ret)
-+		return ret;
-+
-+	if (tracing_disabled)
-+		return -ENODEV;
-+
-+	guard(mutex)(&trace_types_lock);
-+	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
-+		if (tr_option_match(tr, topt)) {
-+			tr->ref++;
-+			return 0;
-+		}
-+	}
-+	return -ENODEV;
-+}
-+
- static int tracing_open_options(struct inode *inode, struct file *filp)
- {
- 	struct trace_option_dentry *topt = inode->i_private;
- 	int ret;
  
--	ret = tracing_check_open_get_tr(topt->tr);
-+	ret = trace_array_tracer_options_get(topt);
- 	if (ret)
- 		return ret;
+ 	pr_debug(" o %pd removing done (%d)\n", d, d_count(d));
  
-@@ -9191,6 +9236,7 @@ create_trace_option_files(struct trace_array *tr, struct tracer *tracer)
- 	tr->topts = tr_topts;
- 	tr->topts[tr->nr_topts].tracer = tracer;
- 	tr->topts[tr->nr_topts].topts = topts;
-+	tr->topts[tr->nr_topts].nr_topts = cnt;
- 	tr->nr_topts++;
- 
- 	for (cnt = 0; opts[cnt].name; cnt++) {
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index fc1d5874356f5..640257a8405d7 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -223,6 +223,7 @@ struct array_buffer {
- struct trace_options {
- 	struct tracer			*tracer;
- 	struct trace_option_dentry	*topts;
-+	int				nr_topts;
- };
- 
- struct trace_pid_list *trace_pid_list_alloc(void);
 -- 
 2.53.0
 
