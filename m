@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B057D3AA4E8;
-	Sat, 17 Oct 2026 17:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10AA2D73A6;
+	Sat, 17 Oct 2026 17:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256967; cv=none; b=WFepU2vUsSydWmMe+2ahwcL6BuN8V1vgf0PzA2PUMYvjhzZToi9W5Q70Bx9iMI1ySvZtIm9NvXbhLq3a/0Qb6uRIOPlViUh3igvp4vSTGz1yzqx467YAVhsS9cU5OsA33jOCbkgjGRkZXwOT0IhvpmcJNc7P9Ht84DkB2v3P58A=
+	t=1792256970; cv=none; b=BLoP/EX3UQwyR7KabVlvPVDvcGNjpngu3u0ZSjvSVIcDRTwouIsYJmBxJfWGFcx9JE6d0wB4U24YxLnbs9Ek44D9himBdmYOCdoMMYXS0fWd3iATnxygNA4uwVaTN+iJmEJzVJ2xA+UOkFM5kHd8YmFdRuDW8Q+n66WkvwqeOwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256967; c=relaxed/simple;
-	bh=sD1+GjkPw6T3UgovOBWO4zl7aH0HG65pnZ+ZA5IJZ28=;
+	s=arc-20240116; t=1792256970; c=relaxed/simple;
+	bh=b3wYStnuJCAFF/ilDyiyt2j/jPWj4lhvHxjWKIlpNEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rd7juR1EA+0iy2ubA6JHXPeo6ahlj/UnNmJ0Ml5g7EUJZHP4lPi61t6xbXj6jKw194cwtUn3dKewaF+c/bx9lwgTubuZVsYANnD3mollmjedkRWVW0uUg5NaQth1NxPSfbODQ2UklordvvFAxWY77d0ONI9vzYSkspX6sVPSnzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNIY/AsP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OW6bf+iWKgvrOZm+SgVGH0onSp43hSOSpn39RVs4MKlMm97zP8+WZL5Kp/YsmWSBa2zePh/STS8rHOHPVMgJj63HkFUMmBtrbhIZoSN0dSSZXhE1pf5zEJ/lCHh2QtUJ8Kl+nbdVEDGmEq0tqH08ZiYjaCuRiaCkJcbrdo3QRPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ip0OL80j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNIY/AsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083941F000C4;
-	Sat, 17 Oct 2026 17:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ip0OL80j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D361F000C4;
+	Sat, 17 Oct 2026 17:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256966;
-	bh=D6+I8f76iUpEuSEu7+iiJYydK9UrUimGz3hy5tcuhmc=;
+	s=korg; t=1792256969;
+	bh=wdDCloyzCjFi1oEJjrgInnGkvlqyk7y/YOlj5t9QCHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNIY/AsPagRELx+OzMx5XsaZdsfQUgCYupu6AO1DJIrpSCcdlNXkh+qY4yQlqsBPi
-	 UKdlvVKjg+7ZQvE4UnOwwlabW/bLD5Tubq2pcP0cwAVPYDtVNNFBzsvNeWG6MnNW+a
-	 Lzut6c2y/i8tHVSTpXnfiZERMtRqAWbhesApn97E=
+	b=Ip0OL80j+5WOsMAVOoDfElwW/fzQMXOm8QlbYOkLHuRg2qTQT7lxD80AJ53bxgs+G
+	 2F/YPwADTFi0/VTXSsesCB6egzIqSEOXuIcPlf1TFv/UhkO1g0J7tfHIE1rvuybOD/
+	 qpLUo5iE3ynFwal9D9A3v5zEKxFVNiw1G+lLf3sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.6 0409/1674] wifi: mac80211: shut down RX BA session timer on teardown
-Date: Sat, 17 Oct 2026 17:44:41 +0200
-Message-ID: <20261017160441.618591539@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0410/1674] wifi: mac80211: keep fallback association elements alive
+Date: Sat, 17 Oct 2026 17:44:42 +0200
+Message-ID: <20261017160441.646605813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,48 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e ]
+[ Upstream commit a10a2f80476d166fd81c361ec0319493671b694e ]
 
-Tearing down an RX BA session can leave the session timer queued on a
-freed tid_rx. Later timer-wheel processing and the timer callback itself
-then run against freed memory.
+Associating to a non-transmitted MBSSID profile reads freed memory while
+determining the operating channel and applying HT capabilities.
 
-An RX BAR handler can dereference tid_rx under RCU before teardown
-unpublishes it and stay in its read-side critical section while teardown
-deletes the session timer. The stale handler can then rearm the timer
-after timer_delete_sync() returns and before the RCU callback frees
-tid_rx.
+When an association response omits WMM, HT, or VHT information,
+ieee80211_assoc_config_link() parses the cached BSS IEs and copies the
+missing element pointers out of that fallback parse. For a
+non-transmitted MBSSID profile those pointers refer to merged-profile
+storage owned by the parse object, and the fallback block frees that
+object at its end. The copied pointers are used afterwards to determine
+the operating channel, configure bandwidth, and apply HT capabilities.
 
-Use timer_shutdown_sync() so rearm attempts become ineffective once
-teardown starts. Keep reorder_timer unchanged: teardown marks the session
-removed under reorder_lock and its release path checks that state before
-rearming. session_timer has no equivalent guard because
-ieee80211_rx_h_ctrl() rearms it before taking reorder_lock.
+Keep the fallback parse result alive until association setup finishes.
 
-Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
-Cc: stable@kernel.org # 5.15+
+Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
+Cc: stable@kernel.org
 Assisted-by: LLM sparse kasan
+[reorder variable declaration]
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: adapted the timer replacement to target del_timer_sync() instead of timer_delete_sync() ]
+[ sashal: Adjusted context for existing conn_flags-based HT/VHT conditionals. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/agg-rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mlme.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/agg-rx.c b/net/mac80211/agg-rx.c
-index c6fa532304500..32c1be3096b3d 100644
---- a/net/mac80211/agg-rx.c
-+++ b/net/mac80211/agg-rx.c
-@@ -103,7 +103,7 @@ void ___ieee80211_stop_rx_ba_session(struct sta_info *sta, u16 tid,
- 	if (!tid_rx)
- 		return;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index ac3c2c3334fdf..9f67290e7fe58 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -4026,6 +4026,7 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	bool is_6ghz = cbss->channel->band == NL80211_BAND_6GHZ;
+ 	bool is_s1g = cbss->channel->band == NL80211_BAND_S1GHZ;
+ 	const struct cfg80211_bss_ies *bss_ies = NULL;
++	struct ieee802_11_elems *bss_elems = NULL;
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee802_11_elems *elems;
+ 	const __le16 prof_bss_param_ch_present =
+@@ -4103,7 +4104,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	     (!(link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_VHT) &&
+ 	      (!elems->vht_cap_elem || !elems->vht_operation)))) {
+ 		const struct cfg80211_bss_ies *ies;
+-		struct ieee802_11_elems *bss_elems;
  
--	del_timer_sync(&tid_rx->session_timer);
-+	timer_shutdown_sync(&tid_rx->session_timer);
+ 		rcu_read_lock();
+ 		ies = rcu_dereference(cbss->ies);
+@@ -4160,8 +4160,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 			sdata_info(sdata,
+ 				   "AP bug: VHT operation missing from AssocResp\n");
+ 		}
+-
+-		kfree(bss_elems);
+ 	}
  
- 	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
- 	spin_lock_bh(&tid_rx->reorder_lock);
+ 	/*
+@@ -4389,6 +4387,7 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	ret = true;
+ out:
+ 	kfree(elems);
++	kfree(bss_elems);
+ 	kfree(bss_ies);
+ 	return ret;
+ }
 -- 
 2.53.0
 
