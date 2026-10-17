@@ -1,38 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCF33382C7;
-	Sat, 17 Oct 2026 16:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F961FDE31;
+	Sat, 17 Oct 2026 16:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256099; cv=none; b=V5+dnMCvTc693vEGTBf6yEfVSXfh3/GKgLfaUmIUdXILFVnkbJ9qeEwa5MMGMYMt7sITf77Qbr/5MLuB9BSemlZFkHBAsm9IV7B2Sf7uHn9fXIXVLk1ZwrnYdo8TZDyISCl0yTs6VOgR162kbLkRTH0jrgLgzHzMd+ualdPoXFk=
+	t=1792256102; cv=none; b=V7ZrEXwnsm4lJm3xxk6nRN4WhGav6ErCUnfO2lhCjLPTYWN0wLkl/U4VQSHaCTwjGS7WEvXjAmn27ELc6CrTPzZ1JQwPb/I55jMbsc+Sr/a+UdNC8DGKrDjvt0eio+/Bx2Ou8fbBVDz5tiRp8GGonEGVJzMo8j1D1fOvXUccIf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256099; c=relaxed/simple;
-	bh=ry0FN0v33/dGd9xD/M1H2qfpd2VorPlZZiJi5Fns5nQ=;
+	s=arc-20240116; t=1792256102; c=relaxed/simple;
+	bh=QCgczWfGDNpNYx+uFHOhd9z7Rqjhs8oINloZT+3O2V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qrUTz7nyApVpNP6vIlhpQnTovBAqd0lM+HY/3D9g8uIGoBhz6oYJZzDUvaZ1Rl+/lEBiYX1VftQYi3v9PJmdMjEgdcq5FpT+S5yT32SxdAJTGoKdHaT1BcfPvvsrM49wacHUo9YBugnjSolivsVHCtECgVuaF5Zq0Cv/aqaiTVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaNfI+i1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rse5EngSq76PrK4ApBiX1YalZkETqR8JVobU5Xe2WsXimI76JKqz/2ldQX7p8PlrQIrkAvkv9qJgfpph7LNkJ+Uz977FRWGQloaIsVcnahsPOMKW9YuO0KXis+8TovobAC2FMqGzJyxC9RlZUPl5qkOek8m4qxjkX2uH4dmHUCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aM38YkRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaNfI+i1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFA21F000C4;
-	Sat, 17 Oct 2026 16:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aM38YkRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F391F000C4;
+	Sat, 17 Oct 2026 16:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256098;
-	bh=HUJrpDawEb3uIc93w0LmSV+IUYNkW9ijGEU+yINZHMo=;
+	s=korg; t=1792256101;
+	bh=0Fbl7Jd4/yodt9XLYYYtD9roG/QGU6OCqBa4S9bdv7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QaNfI+i1t9xMXYayMRrEueXl9JGQ7mbl8KZxwl30pnaouuiiu35hk8uKVtYI5qHLe
-	 HQWo/mgsHQrapdhb7dJRno4/T2kIBcupfNAFF7UdZbwIDpnUiD2Fu1ISqFovE9dtCF
-	 SqnGR4EvhTrXcFEDK8aTCh+nApRA7Rs9YA5rgYnE=
+	b=aM38YkRXs8QbFABIfk14IckZPj3LEY87VFUGGVngXIVltVhXZ6KyV7p1pHAH0UNwM
+	 j2E7fD02buup+kuFofGcf/ACkhI/jj1MuRi+7bPxGCyNiDnL6tTd3N2bNXDowugo/a
+	 N1wfkyYn6IXueqP7Qty0g3THXxFt/zxb+OZKoupY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Lyude Paul <lyude@redhat.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Jann Horn <jannh@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Larry Woodman <lwoodman@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Rik van Riel <riel@surriel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0125/1674] drm/nouveau/uvmm: fix UAF in nouveau_uvmm_sm when BO is in TTM_PL_SYSTEM
-Date: Sat, 17 Oct 2026 17:39:57 +0200
-Message-ID: <20261017160434.364560590@linuxfoundation.org>
+Subject: [PATCH 6.6 0126/1674] mm/rmap: fix missing barrier between anon_vma init and vma->anon_vma publish
+Date: Sat, 17 Oct 2026 17:39:58 +0200
+Message-ID: <20261017160434.392371944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,174 +64,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 3359a372efb6d585c97019ee1b7f1874442bcebe ]
+[ Upstream commit b6ac0b3f6013c168f22cad97e79967accacb08e1 ]
 
-nouveau_uvmm_sm() calls op_map(), which passes bo->resource through
-nouveau_mem() to nouveau_uvma_map(). nouveau_uvmm_vmm_map() then reads
-mem->mem.type.
+On arm64 server, we find that a task trying to grab the anon_vma lock
+triggers hungtask.
 
-But this is only valid when bo->resource is backed by struct nouveau_mem,
-as is the case for VRAM and TT resources. If the BO is left in
-TTM_PL_SYSTEM, bo->resource is only a struct ttm_resource. Treating it
-as struct nouveau_mem makes the mem->mem.type read past the end of the
-resource, causing a KASAN: slab-use-after-free Read in nouveau_uvmm_sm
-report:
+INFO: task main:2354726 blocked for more than 120 seconds.
+      Tainted: G            E     5.10.0-0021.aarch64 #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:main            state:D stack:    0 pid:2354726 ppid:2350673 flags:0x00000a01
+Call trace:
+ __switch_to+0x7c/0xbc
+ __schedule+0x3b4/0x8a0
+ schedule+0x50/0xe0
+ rwsem_down_write_slowpath+0x3cc/0x6cc
+ down_write+0x60/0x260
+ __anon_vma_prepare+0x6c/0x210
+ do_anonymous_page+0x258/0x660
+ handle_pte_fault+0x188/0x214
+ __handle_mm_fault+0x1b0/0x380
+ handle_mm_fault+0xf4/0x284
+ do_page_fault+0x19c/0x494
+ do_translation_fault+0xcc/0xf8
+ do_mem_abort+0x48/0xac
+ el0_da+0x44/0x80
+ el0_sync_handler+0x88/0xb4
+ el0_sync+0x160/0x180
 
-BUG: KASAN: slab-use-after-free in nouveau_uvmm_vmm_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:152 [inline]
-BUG: KASAN: slab-use-after-free in nouveau_uvma_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:199 [inline]
-BUG: KASAN: slab-use-after-free in op_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:849 [inline]
-BUG: KASAN: slab-use-after-free in nouveau_uvmm_sm.constprop.0+0x6ab/0x900 drivers/gpu/drm/nouveau/nouveau_uvmm.c:903
-Read of size 1 at addr ffff888127d3e3a0 by task kworker/0:1/11
+After analyzing the vmcore, we found the anon_vma->root->rwsem.count is
+-1.  There is another anon_vma whose anon_vma->root->rwsem.count is 1, the
+anon_vma->root->rwsem.owner shows the lock is held, but the stack of the
+task shows the task doesn't hold the anon_vma lock.
 
-CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 7.2.0 #5 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nouveau_sched_wq_2224 drm_sched_run_job_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x95/0xe0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xcb/0x5a0 mm/kasan/report.c:482
- kasan_report+0xca/0x100 mm/kasan/report.c:595
- nouveau_uvmm_vmm_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:152 [inline]
- nouveau_uvma_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:199 [inline]
- op_map drivers/gpu/drm/nouveau/nouveau_uvmm.c:849 [inline]
- nouveau_uvmm_sm.constprop.0+0x6ab/0x900 drivers/gpu/drm/nouveau/nouveau_uvmm.c:903
- nouveau_uvmm_sm_unmap drivers/gpu/drm/nouveau/nouveau_uvmm.c:932 [inline]
- nouveau_uvmm_bind_job_run+0xd6/0x250 drivers/gpu/drm/nouveau/nouveau_uvmm.c:1532
- nouveau_job_run drivers/gpu/drm/nouveau/nouveau_sched.c:350 [inline]
- nouveau_sched_run_job+0x62/0xd0 drivers/gpu/drm/nouveau/nouveau_sched.c:364
- drm_sched_run_job_work+0x356/0xa10 drivers/gpu/drm/scheduler/sched_main.c:1061
- process_one_work+0x8a5/0x1900 kernel/workqueue.c:3322
- process_scheduled_works kernel/workqueue.c:3405 [inline]
- worker_thread+0x5dd/0xd80 kernel/workqueue.c:3486
- kthread+0x31d/0x420 kernel/kthread.c:436
- ret_from_fork+0x662/0x940 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+After adding more debugging info, we found __anon_vma_prepare() reuses
+anon_vma and triggers the UAF of anon_vma->root due to missing memory
+barrier, leading to locking and unlocking two different anon_vma->root,
+thus leading to an anon_vma will never be unlocked, and another anon_vma
+couldn't be locked anymore.
 
-Allocated by task 2224 on cpu 0 at 66.550027s:
- kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
- kasan_save_track+0x17/0x60 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5334 [inline]
- __kmalloc_noprof+0x304/0x7c0 mm/slub.c:5359
- _kmalloc_noprof include/linux/slab.h:992 [inline]
- dma_resv_list_alloc+0x27/0x90 drivers/dma-buf/dma-resv.c:106
- dma_resv_reserve_fences+0x60e/0xa30 drivers/dma-buf/dma-resv.c:205
- ttm_bo_alloc_resource+0x12c/0xbd0 drivers/gpu/drm/ttm/ttm_bo.c:721
- ttm_bo_validate+0x1bc/0x4a0 drivers/gpu/drm/ttm/ttm_bo.c:856
- ttm_bo_init_reserved+0x2c3/0x570 drivers/gpu/drm/ttm/ttm_bo.c:970
- nouveau_bo_init+0x159/0x2c0 drivers/gpu/drm/nouveau/nouveau_bo.c:359
- nouveau_gem_new+0x234/0x5f0 drivers/gpu/drm/nouveau/nouveau_gem.c:272
- nouveau_gem_ioctl_new+0x1eb/0x420 drivers/gpu/drm/nouveau/nouveau_gem.c:352
- drm_ioctl_kernel+0x192/0x350 drivers/gpu/drm/drm_ioctl.c:817
- drm_ioctl+0x4f8/0xb40 drivers/gpu/drm/drm_ioctl.c:914
- nouveau_drm_ioctl+0xea/0x2c0 drivers/gpu/drm/nouveau/nouveau_drm.c:1338
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x180/0x1d0 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This race requires two adjacent VMAs that are not merged but are
+anon_vma-compatible (e.g., they differ in VMA_ACCESS_FLAGS that can be
+changed by mprotect()).  Two threads fault on each VMA concurrently, both
+calling __anon_vma_prepare() with only mmap_lock held for reading.
 
-Freed by task 2223 on cpu 0 at 66.554063s:
- kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
- kasan_save_track+0x17/0x60 mm/kasan/common.c:78
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x61/0x80 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2677 [inline]
- __rcu_free_sheaf_prepare+0xb6/0x2e0 mm/slub.c:2928
- rcu_free_sheaf+0x1b/0x120 mm/slub.c:5978
- rcu_do_batch kernel/rcu/tree.c:2645 [inline]
- rcu_core+0x521/0x1490 kernel/rcu/tree.c:2897
- handle_softirqs+0x1b1/0x8a0 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
- irq_exit_rcu+0x9/0x20 kernel/softirq.c:752
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062 [inline]
- sysvec_apic_timer_interrupt+0x70/0x80 arch/x86/kernel/apic/apic.c:1062
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:674
+    THREAD A                             THREAD B
+__anon_vma_prepare                __anon_vma_prepare
+ find_mergeable_anon_vma() -> NULL
+ anon_vma = anon_vma_alloc();
+   anon_vma->root = anon_vma;
+ // the two stores may be reordered
+ vma->anon_vma = anon_vma;
+                                   // finds A's anon_vma
+                                   anon_vma = find_mergeable_anon_vma(vma);
+                                   anon_vma_lock_write(anon_vma);
+                                     // may still see the old root
+                                     down_write(&anon_vma->root->rwsem);
+                                   anon_vma_unlock_write(anon_vma);
+                                     // see the new root, never unlock old
+                                     up_write(&anon_vma->root->rwsem);
 
-The buggy address belongs to the object at ffff888127d3e380
- which belongs to the cache kmalloc-96 of size 96
-The buggy address is located 32 bytes inside of
- freed 96-byte region [ffff888127d3e380, ffff888127d3e3e0)
+thread A triggers page fault and calls __anon_vma_prepare() to prepare
+anon_vma for the faulting vma.  __anon_vma_prepare() allocates and
+initializes a new anon_vma, and then publishes it to the vma with a plain
+store.  anon_vma_prepare() only requires the mmap_lock to be held for
+reading, so two threads can fault on adjacent VMAs at the same time.
+While thread A publishes a new anon_vma, thread B could find the anon_vma
+via find_mergeable_anon_vma() and then locks anon_vma->root->rwsem.
 
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x127d3e
-flags: 0x200000000000000(node=0|zone=2)
-page_type: f5(slab)
-raw: 0200000000000000 ffff888100041280 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-page dumped because: kasan: bad access detected
+The store to anon_vma->root in anon_vma_alloc() and the store to
+vma->anon_vma can be reordered.  The anon_vma_lock_write() and spin_lock()
+only provide acquire semantics, which do not prevent prior stores from
+being reordered after them.  The release semantics of the corresponding
+spin_unlock() and anon_vma_unlock_write() come too late, the store to
+vma->anon_vma is already published before they take effect.  As a result,
+thread B can observe the following order:
 
-Memory state around the buggy address:
- ffff888127d3e280: 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc
- ffff888127d3e300: 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc
->ffff888127d3e380: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-                               ^
- ffff888127d3e400: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
- ffff888127d3e480: 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc
+    vma->anon_vma = anon_vma;
+    anon_vma->root = anon_vma;
 
-Fix by resetting the placement to the BO's valid domains before
-calling nouveau_bo_validate(), matching the handling in
-nouveau_uvmm_bo_validate(), so map jobs do not run for SYSTEM resources;
-Reject BO that cannot reside in VRAM or GART;
-Also skip op_map() when the GPUVA has been invalidated, matching the
-handling in the unmap and remap paths.
+The anon_vma slab is SLAB_TYPESAFE_BY_RCU, so a newly allocated anon_vma
+may reuse memory from a previously freed one.  The constructor
+(anon_vma_ctor) does not reset anon_vma->root, and __put_anon_vma()
+doesn't clear it either, so the old root value persists until
+anon_vma_alloc() overwrites it.  If that store isn't visible, thread B
+reads a root that points to the old anon_vma and locks it.
 
-Found when fuzzing the nouveau driver with a modified Syzkaller.
+As a result, thread B can call anon_vma_lock_write() with the old root,
+and call anon_vma_unlock_write() with the new root, leading to an anon_vma
+will never be unlocked, and another anon_vma couldn't be locked anymore
+(its count is dropped from 0 to -1 due to wrong unlock).
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/0D77BEC410CE0129+20260907052204.1431488-1-peiyang_he@smail.nju.edu.cn
-[ adapted bind_lock_validate() changes to nouveau_uvmm_bind_job_submit() using its existing unwind path. ]
+To fix it, change the plain store `vma->anon_vma = anon_vma` to store
+release, so that the fields of anon_vma are visible before anon_vma is
+published to vma->anon_vma.
+
+At read side, the load of anon_vma and anon_vma->root have address
+dependency.  According to Documentation/memory-barriers.txt and some
+investigations, only Alpha needs address-dependency barriers and it has
+been handled by READ_ONCE() in reusable_anon_vma().
+
+We reproduced this issue in v5.10 with KSM enabled.  The kernel doesn't
+merge commit cf7e7a3503df ("mm: prevent KSM from breaking VMA merging for
+new VMAs"), so there are many adjacent VMAs that aren't merged but are
+compatible for anon_vma.
+
+Without this fix, our production environment could reproduce this issue
+about 2-5 times each month.  After adding a smp_mb() before
+anon_vma_lock_write(anon_vma) in __anon_vma_prepare(), which is different
+to this patch, this issue hasn't been reproduced for one month.
+
+Link: https://lore.kernel.org/20260908122924.554373-1-tujinjiang@huawei.com
+Fixes: 5c341ee1dfc8 ("mm: track the root (oldest) anon_vma")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Larry Woodman <lwoodman@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: <stable@vger.kernel.org>
+[ adjusted context for mm/mmap.c and the existing anon_vma_chain_link() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ mm/mmap.c | 8 ++++++++
+ mm/rmap.c | 6 +++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-index 1310ee5f4973f..a56d6adf42958 100644
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -772,6 +772,9 @@ op_map(struct nouveau_uvma *uvma)
+diff --git a/mm/mmap.c b/mm/mmap.c
+index 8cf23a07ae500..1b7e295128312 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1081,6 +1081,13 @@ static int anon_vma_compatible(struct vm_area_struct *a, struct vm_area_struct *
+  * acceptable for merging, so we can do all of this optimistically. But
+  * we do that READ_ONCE() to make sure that we never re-load the pointer.
+  *
++ * The READ_ONCE() establishes an address dependency between anon_vma and
++ * any access to its fields, which pairs with the assignment to
++ * vma->anon_vma performed with release semantics in __anon_vma_prepare().
++ *
++ * This is especially important as anon_vma's are SLAB_TYPESAFE_BY_RCU so
++ * accessing an uninitialised anon_vma's fields may result in a UAF.
++ *
+  * IOW: that the "list_is_singular()" test on the anon_vma_chain only
+  * matters for the 'stable anon_vma' case (ie the thing we want to avoid
+  * is to return an anon_vma that is "complex" due to having gone through
+@@ -1093,6 +1100,7 @@ static int anon_vma_compatible(struct vm_area_struct *a, struct vm_area_struct *
+ static struct anon_vma *reusable_anon_vma(struct vm_area_struct *old, struct vm_area_struct *a, struct vm_area_struct *b)
  {
- 	struct nouveau_bo *nvbo = nouveau_gem_object(uvma->va.gem.obj);
+ 	if (anon_vma_compatible(a, b)) {
++		/* Paired with a memory barrier in __anon_vma_prepare(). */
+ 		struct anon_vma *anon_vma = READ_ONCE(old->anon_vma);
  
-+	if (drm_gpuva_invalidated(&uvma->va))
-+		return;
-+
- 	nouveau_uvma_map(uvma, nouveau_mem(nvbo->bo.resource));
- }
- 
-@@ -1334,6 +1337,13 @@ nouveau_uvmm_bind_job_submit(struct nouveau_job *job)
- 				continue;
- 
- 			nvbo = nouveau_gem_object(obj);
-+			if (!(nvbo->valid_domains &
-+			      (NOUVEAU_GEM_DOMAIN_VRAM | NOUVEAU_GEM_DOMAIN_GART))) {
-+				ret = -EINVAL;
-+				op = list_last_op(&bind_job->ops);
-+				goto unwind;
-+			}
-+
- 			nouveau_bo_placement_set(nvbo, nvbo->valid_domains, 0);
- 			ret = nouveau_bo_validate(nvbo, true, false);
- 			if (ret) {
+ 		if (anon_vma && list_is_singular(&old->anon_vma_chain))
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 0a88928c410a0..531d6c813027d 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -211,7 +211,11 @@ int __anon_vma_prepare(struct vm_area_struct *vma)
+ 	/* page_table_lock to protect against threads */
+ 	spin_lock(&mm->page_table_lock);
+ 	if (likely(!vma->anon_vma)) {
+-		vma->anon_vma = anon_vma;
++		/*
++		 * Make anon_vma fields visible before anon_vma is published.
++		 * Paired with an address dependency in reusable_anon_vma().
++		 */
++		smp_store_release(&vma->anon_vma, anon_vma);
+ 		anon_vma_chain_link(vma, avc, anon_vma);
+ 		anon_vma->num_active_vmas++;
+ 		allocated = NULL;
 -- 
 2.53.0
 
