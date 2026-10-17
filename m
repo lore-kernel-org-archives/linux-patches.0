@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264D224D6;
-	Sat, 17 Oct 2026 15:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD70224D6;
+	Sat, 17 Oct 2026 15:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252660; cv=none; b=ohpUOgNsgDcnvev0O0KF8rfzIIhaBNF2cwg2TPVbaE+j9ooaabIp4Z6AufcHXt3JcMiGfOMfuz031KAPi03D4LiF4PmtEVd1Z4i0PCDgPaPs6UVjqL2DcPLTOcUhgyKuSwIe67Ent+5m8MjgYU+nrJo++5srvnVn3G/BpWzq/WM=
+	t=1792252663; cv=none; b=bc7z3xNTfBhTKwmn+etp/+rCAalwsYAuwLqzMGhH9Mfxst95lc8aKnjOM8Kq0j4/IGJ+HwAGt0Eq7JawmwK9iOIq4kHlhQTvIXR33mj63eBHjrgC7/V/3yTSV3PFQLpDt1tCQW6Mc58t9y1DvowgMInhXfqAFQrvkg+O+8xVuRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252660; c=relaxed/simple;
-	bh=uMGvIkcYS9kY167NU4DT8h4h9OMb6b7h2l9W9ib8jHg=;
+	s=arc-20240116; t=1792252663; c=relaxed/simple;
+	bh=nS3heG/01e9dvDf5m9ACdAziJ/fnrHkKSioo4N1Cksg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dDQhXHlgis3i88HSPXcSVkakr8nRHmERaTKRjm5y0z91IVuVhMxyBOY5/veuHKEcLLKbuC2EzurXtm9tOc6zOgHCOtL8uSpR1AliLJIy+YGiRxLIo79SKU58Tq/cL1kWqZLhu2506bmbR38T6hHUchGthHJnHK2z+WXqbjxa/vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uxx5EQ4N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D7Y8NtyHvDFyaq5g9xBLJXcjWtQBf2vOPSkchU7Y2aCh64Zha7ZSTMDyTDMr4+9GKnklPkdzVb2o++jUvLKYAmmCvQP4+cexNX7fKIgBojRt8sRSTvgkAsNMCrYnU5sEZVK5CDSTuvy8qeiIMFHcjIxYT82Q4JP5xbhUB4i9uYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8+xL3B0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uxx5EQ4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EB81F000C4;
-	Sat, 17 Oct 2026 15:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8+xL3B0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBB51F000C4;
+	Sat, 17 Oct 2026 15:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252659;
-	bh=/R/DUmWxRufGXshwFUT0aPwV9riNazBnkTJv0S7Ocak=;
+	s=korg; t=1792252662;
+	bh=sGEZe5KLglu0u/1RwAm7htla5sHxteI1PeDfvmImcUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uxx5EQ4NCpdRFsaIacFEHmCObjNFST8NVCb+HEniynWqoeOlu7cOnTI6J+uCvMchy
-	 seNTq/AM/xWGmx9F+QhCgEsRWJ24B93ePxpb2B/uyslNDagYuMjF1U85oREXg7Xiyg
-	 d7zzsn9+Jht9IQ2VAGsrua+W2Wyv3yu+BW4APDRw=
+	b=M8+xL3B0frkaX8KKp7gCVtLy4h29I5kFrB9BsuFLzUTDBa4vYUgGk1lvSaFO7a2t7
+	 HGCXrDN5VKRRZ2x4aba+MNxPscWbh/lk0mR+zKhH5iX/YBolcesJ0QTjtL9Blh1xvV
+	 CXfnc2B6kCT60ndxGTFJ1ynoUd4a7CgsuXflThb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 52/52] wifi: atk9k: Revert "wifi: ath9k: reject short WMI command responses"
-Date: Sat, 17 Oct 2026 17:54:53 +0200
-Message-ID: <20261017155106.516015790@linuxfoundation.org>
+Subject: [PATCH 6.18 22/52] scsi: ufs: core: Decouple CQ sweep from request iterator in MCQ
+Date: Sat, 17 Oct 2026 17:54:23 +0200
+Message-ID: <20261017155105.571929121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -46,90 +47,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 90201351a862182bdabfc1ad1c97b1e1b6ed5931 ]
+[ Upstream commit 469fa055664bfd8717b087a80d59c03055789c17 ]
 
-This reverts commit 93ce8ea70451e800601bc9444aa33043de15d67b.
+In MCQ mode, ufshcd_mcq_compl_pending_transfer() uses
+blk_mq_tagset_busy_iter() to iterate over busy requests during error
+recovery and host reset. However, both iterator callbacks perform
+whole-queue operations redundantly for each visited request:
 
-Mehmet reported that the offending commit breaks his AR9271 USB adapter
-which uses zero-length replies to commands that don't return a value.
-Revert the whole thing to restore the functionality.
+ - force_compl == true: ufshcd_mcq_force_compl_one() calls
+   ufshcd_mcq_compl_all_cqes_lock() on every busy request, sweeping the
+   entire completion ring (hwq->max_entries slots) once per active request
+   under spin_lock_irqsave even though the first sweep already cleared all
+   completion entries.
 
-Cc: stable@vger.kernel.org # the offending commit is in 6.12.113
-Reported-by: Mehmet Fide <mehmet.fide@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+ - force_compl == false: ufshcd_mcq_compl_one() acquires cq_lock and polls
+   CQTPy over MMIO via ufshcd_mcq_poll_cqe_lock() for every busy request
+   without doing any per-request work.
+
+Sweep or poll each hardware queue (hba->uhq[i]) once at the start of
+ufshcd_mcq_compl_pending_transfer(). When force_compl is true, run
+blk_mq_tagset_busy_iter() afterward to complete residual in-flight
+requests with DID_REQUEUE, and remove the now-unused
+ufshcd_mcq_compl_one() callback.
+
+Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20260928035816.1294326-3-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 16 ++--------------
- drivers/net/wireless/ath/ath9k/wmi.h |  1 -
- 2 files changed, 2 insertions(+), 15 deletions(-)
+ drivers/ufs/core/ufshcd.c | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 610717fb83f57..805ad31edba2b 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -206,16 +206,9 @@ static void ath9k_wmi_rsp_callback(struct wmi *wmi, struct sk_buff *skb)
- {
- 	skb_pull(skb, sizeof(struct wmi_cmd_hdr));
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 9d32e658ad60e..52df1df6333aa 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5743,7 +5743,17 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
+ 	struct ufshcd_lrb *lrbp;
+ 	struct scsi_cmnd *cmd;
+ 	unsigned long flags;
+-	int tag;
++	int tag, i;
++
++	for (i = 0; i < hba->nr_hw_queues; i++) {
++		if (force_compl)
++			ufshcd_mcq_compl_all_cqes_lock(hba, &hba->uhq[i]);
++		else
++			ufshcd_mcq_poll_cqe_lock(hba, &hba->uhq[i]);
++	}
++
++	if (!force_compl)
++		return;
  
--	if (wmi->cmd_rsp_buf && wmi->cmd_rsp_len) {
--		if (skb->len < wmi->cmd_rsp_len) {
--			wmi->cmd_rsp_status = -EMSGSIZE;
--			goto complete;
--		}
-+	if (wmi->cmd_rsp_buf != NULL && wmi->cmd_rsp_len != 0)
- 		memcpy(wmi->cmd_rsp_buf, skb->data, wmi->cmd_rsp_len);
--	}
--	wmi->cmd_rsp_status = 0;
+ 	for (tag = 0; tag < hba->nutrs; tag++) {
+ 		lrbp = &hba->lrb[tag];
+@@ -5756,22 +5766,17 @@ static void ufshcd_mcq_compl_pending_transfer(struct ufs_hba *hba,
+ 		if (!hwq)
+ 			continue;
  
--complete:
- 	complete(&wmi->cmd_wait);
+-		if (force_compl) {
+-			ufshcd_mcq_compl_all_cqes_lock(hba, hwq);
+-			/*
+-			 * For those cmds of which the cqes are not present
+-			 * in the cq, complete them explicitly.
+-			 */
+-			spin_lock_irqsave(&hwq->cq_lock, flags);
+-			if (cmd && !test_bit(SCMD_STATE_COMPLETE, &cmd->state)) {
+-				set_host_byte(cmd, DID_REQUEUE);
+-				ufshcd_release_scsi_cmd(hba, lrbp);
+-				scsi_done(cmd);
+-			}
+-			spin_unlock_irqrestore(&hwq->cq_lock, flags);
+-		} else {
+-			ufshcd_mcq_poll_cqe_lock(hba, hwq);
++		/*
++		 * For those cmds of which the cqes are not present
++		 * in the cq, complete them explicitly.
++		 */
++		spin_lock_irqsave(&hwq->cq_lock, flags);
++		if (cmd && !test_bit(SCMD_STATE_COMPLETE, &cmd->state)) {
++			set_host_byte(cmd, DID_REQUEUE);
++			ufshcd_release_scsi_cmd(hba, lrbp);
++			scsi_done(cmd);
+ 		}
++		spin_unlock_irqrestore(&hwq->cq_lock, flags);
+ 	}
  }
  
-@@ -307,7 +300,6 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	/* record the rsp buffer and length */
- 	wmi->cmd_rsp_buf = rsp_buf;
- 	wmi->cmd_rsp_len = rsp_len;
--	wmi->cmd_rsp_status = 0;
- 
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-@@ -364,13 +356,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		return -ETIMEDOUT;
- 	}
- 
--	spin_lock_irqsave(&wmi->wmi_lock, flags);
--	ret = wmi->cmd_rsp_status;
--	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
--
- 	mutex_unlock(&wmi->op_mutex);
- 
--	return ret;
-+	return 0;
- 
- out:
- 	ath_dbg(common, WMI, "WMI failure for: %s\n", wmi_cmd_to_name(cmd_id));
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.h b/drivers/net/wireless/ath/ath9k/wmi.h
-index 0bb9d31f1a1cc..5c3b710b8f319 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.h
-+++ b/drivers/net/wireless/ath/ath9k/wmi.h
-@@ -157,7 +157,6 @@ struct wmi {
- 	u16 tx_seq_id;
- 	u8 *cmd_rsp_buf;
- 	u32 cmd_rsp_len;
--	int cmd_rsp_status;
- 	bool stopped;
- 
- 	struct list_head pending_tx_events;
 -- 
 2.53.0
 
