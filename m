@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860FC3AEF2D;
-	Sat, 17 Oct 2026 17:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD691F16B;
+	Sat, 17 Oct 2026 17:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258342; cv=none; b=Z2YQoFSwcQdzS0WKQsB3c13Xxpj7ED9YFgNAbUZKrbJRaIOGsahoBPZE29O3cyg3zM3LKK2IaEKG41nwkU3DO71XF8xTsJdTc8k5JO9xqT5j5T0zloluFz8s/DtSrdf1k0Pv7y8OtQ82OeMnPo/r78kHXFLSONgO2zdJKEylNMs=
+	t=1792258345; cv=none; b=B+xMHSwuFPDnFmdY6CTiKVqJMRjMGztS1wn0yHtkzBJS67/3d4xv27E+lYlOZXcvl8T9Qf1SXt5BZLYVa7PVomEcukCeQrWVAgllcVrjwzfDaVNkvo9Zs5H7Jz8O0K/3FHtlyadtnbXOfXlmgGB6SF0OjyWSWMhzqeDW5UOodt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258342; c=relaxed/simple;
-	bh=csqHF9VTi8E3vJDC0zn1ZCyLkjs98CR3bzxkBhBXwlo=;
+	s=arc-20240116; t=1792258345; c=relaxed/simple;
+	bh=gUQ4rhjBs5JrOd3fp1uMUs9qSLYV+c77W2y5zBbfp2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvzjXDI6R2zCUjp6gw/4QPtuEAIPQYzX7C8qoxPPOE81zxWnxIckVCa6JMPfxxIQ+M9VUSrqnKlPs8Fgzo3ktdPoF2zQtrWuMvz7zg7cKF/AB2FnRWdIdnReLG8N/gs3geDp38KFT0InmBpIUfIxyer7pRzuLtnE0cd38fsVP38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5YtmHiS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eszT9tYEeRQZgHZbh5e2+J1mt1dBk/cwuSszXKezU1KsIlf9KIbjQDNriiiUOEmPujdaoJYjPHIv+TBbW1ew1xIjtOlXlIgPUYDG91SknDovGIfKi98T3GwcH/yN8LRhsQjSmw/1tI5R5xZXseJrH7MmLvmt9nQUS31PdFBxMu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7meusQt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5YtmHiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC7F1F000C4;
-	Sat, 17 Oct 2026 17:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7meusQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C414A1F000C4;
+	Sat, 17 Oct 2026 17:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258341;
-	bh=qm8WxS9fkfjD9Lk91NFAfi/CtfrZoAGDiSOFz1dFZKc=;
+	s=korg; t=1792258344;
+	bh=4+ZIzXFK1hTlXSrxtGMJS+kUJlESTbEpFMqX9B4wSU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w5YtmHiS4O4AYUCnM+3F0TGbSE4ojK1dGCqe0B40W1P8xX9uJBbZrW8HcpwhMUPE5
-	 wdg1vz3eISNIbyHgC0G31qj5sYjHZDKysYU9GnldJxYzWCUJvBgPz71FNW8PqIOUjV
-	 5bX/x8Wpc3LQ0DnmjscS4881UzMFiNrLpiRika0U=
+	b=Y7meusQtGK8sSRuZlX3dcmuLX6dOtZWKdYBGBXOzeS/BHEssd+m2IT7LzkOgg67fY
+	 OkIpL+HcbVV/7acxYB7silQ02HEvK+V9+PMnyVNZ7FzqHE1QRGynGN4q0ozG6mRl5Y
+	 OgWC9fq07bMeJH7XnyQv1i8CplJWHww1DU2D47Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Breno Leitao <leitao@debian.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0853/1674] of: unittest: Fix memory leak in unittest_data_add()
-Date: Sat, 17 Oct 2026 17:52:05 +0200
-Message-ID: <20261017160453.017956478@linuxfoundation.org>
+Subject: [PATCH 6.6 0854/1674] spi: tegra210-quad: Protect curr_xfer check in IRQ handler
+Date: Sat, 17 Oct 2026 17:52:06 +0200
+Message-ID: <20261017160453.043082186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,81 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
+[ Upstream commit edf9088b6e1d6d88982db7eb5e736a0e4fbcc09e ]
 
-In unittest_data_add(), if of_resolve_phandles() fails, the allocated
-unittest_data is not freed, leading to a memory leak.
+Now that all other accesses to curr_xfer are done under the lock,
+protect the curr_xfer NULL check in tegra_qspi_isr_thread() with the
+spinlock. Without this protection, the following race can occur:
 
-Fix this by using scope-based cleanup helper __free(kfree) for automatic
-resource cleanup. This ensures unittest_data is automatically freed when
-it goes out of scope in error paths.
+  CPU0 (ISR thread)              CPU1 (timeout path)
+  ----------------               -------------------
+  if (!tqspi->curr_xfer)
+    // sees non-NULL
+                                 spin_lock()
+                                 tqspi->curr_xfer = NULL
+                                 spin_unlock()
+  handle_*_xfer()
+    spin_lock()
+    t = tqspi->curr_xfer  // NULL!
+    ... t->len ...        // NULL dereference!
 
-For the success path, use retain_and_null_ptr() to transfer ownership
-of the memory to the device tree and prevent double freeing.
+With this patch, all curr_xfer accesses are now properly synchronized.
 
-Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
-Suggested-by: Rob Herring <robh@kernel.org>
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Although all accesses to curr_xfer are done under the lock, in
+tegra_qspi_isr_thread() it checks for NULL, releases the lock and
+reacquires it later in handle_cpu_based_xfer()/handle_dma_based_xfer().
+There is a potential for an update in between, which could cause a NULL
+pointer dereference.
+
+To handle this, add a NULL check inside the handlers after acquiring
+the lock. This ensures that if the timeout path has already cleared
+curr_xfer, the handler will safely return without dereferencing the
+NULL pointer.
+
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-6-6d2115e4f387@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 9af9d3f7418f1..9109667a35105 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -1636,7 +1636,6 @@ static void attach_node_and_children(struct device_node *np)
-  */
- static int __init unittest_data_add(void)
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index f7677b960c342..8af5892ac738e 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1351,6 +1351,11 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
+ 	spin_lock_irqsave(&tqspi->lock, flags);
+ 	t = tqspi->curr_xfer;
+ 
++	if (!t) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
++		return IRQ_HANDLED;
++	}
++
+ 	if (tqspi->tx_status ||  tqspi->rx_status) {
+ 		tegra_qspi_handle_error(tqspi);
+ 		complete(&tqspi->xfer_completion);
+@@ -1419,6 +1424,11 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
+ 	spin_lock_irqsave(&tqspi->lock, flags);
+ 	t = tqspi->curr_xfer;
+ 
++	if (!t) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
++		return IRQ_HANDLED;
++	}
++
+ 	if (err) {
+ 		tegra_qspi_dma_unmap_xfer(tqspi, t);
+ 		tegra_qspi_handle_error(tqspi);
+@@ -1457,6 +1467,7 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
+ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
  {
--	void *unittest_data;
- 	void *unittest_data_align;
- 	struct device_node *unittest_data_node = NULL, *np;
+ 	struct tegra_qspi *tqspi = context_data;
++	unsigned long flags;
+ 	u32 status;
+ 
  	/*
-@@ -1655,7 +1654,7 @@ static int __init unittest_data_add(void)
- 	}
+@@ -1474,7 +1485,9 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
+ 	 * If no transfer is in progress, check if this was a real interrupt
+ 	 * that the timeout handler already processed, or a spurious one.
+ 	 */
++	spin_lock_irqsave(&tqspi->lock, flags);
+ 	if (!tqspi->curr_xfer) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
+ 		/* Spurious interrupt - transfer not ready */
+ 		if (!(status & QSPI_RDY))
+ 			return IRQ_NONE;
+@@ -1491,7 +1504,14 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
+ 		tqspi->rx_status = tqspi->status_reg & (QSPI_RX_FIFO_OVF | QSPI_RX_FIFO_UNF);
  
- 	/* creating copy */
--	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
-+	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
- 	if (!unittest_data)
- 		return -ENOMEM;
+ 	tegra_qspi_mask_clear_irq(tqspi);
++	spin_unlock_irqrestore(&tqspi->lock, flags);
  
-@@ -1665,12 +1664,10 @@ static int __init unittest_data_add(void)
- 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
- 	if (!ret) {
- 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 	if (!unittest_data_node) {
- 		pr_warn("%s: testcases tree is empty\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 
-@@ -1693,6 +1690,7 @@ static int __init unittest_data_add(void)
- 		of_aliases = of_find_node_by_path("/aliases");
- 		of_chosen = of_find_node_by_path("/chosen");
- 		of_overlay_mutex_unlock();
-+		(void)no_free_ptr(unittest_data);
- 		return 0;
- 	}
- 
-@@ -1715,6 +1713,7 @@ static int __init unittest_data_add(void)
- 
- 	of_overlay_mutex_unlock();
- 
-+	(void)no_free_ptr(unittest_data);
- 	return 0;
- }
++	/*
++	 * Lock is released here but handlers safely re-check curr_xfer under
++	 * lock before dereferencing.
++	 * DMA handler also needs to sleep in wait_for_completion_*(), which
++	 * cannot be done while holding spinlock.
++	 */
+ 	if (!tqspi->is_curr_dma_xfer)
+ 		return handle_cpu_based_xfer(tqspi);
  
 -- 
 2.53.0
