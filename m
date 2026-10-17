@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F193939A4;
-	Sat, 17 Oct 2026 18:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF71C3939A4;
+	Sat, 17 Oct 2026 18:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260102; cv=none; b=SjP934UXRz160QV5moyQEFvi0U8xFWgbVbIHh+FrTAKbzKb9iCq+qKP18GgC3xiymqU/afH5tsWZ0fIRi4w5V8afycZxIdeDATYFK4JQritiVlPJP8dUrXCjNQg2xaSBLK72IQtznpveeCwLcgEpcdLZ/F3fQ+bEnOWJ8ULjpU4=
+	t=1792260105; cv=none; b=cdLDBayBB/wRAmdXsYBy5TRZMsdEkEwwqVIbLnaK73pJ2pWigTHub1XdoZ9YBG6I1sD1a/kY7BuZT7HVctBTY3Y5eEG58MXMl6JS30KVKKNrLHK85zx/1Vf3n7KwWc1LxjSaN2SCMvhg8CEy5UDRB/d6lmLRSPD/CzIAbJKTfW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260102; c=relaxed/simple;
-	bh=y7OXbrFqRo7bsiCvfh10CvFLlfjiuicK9X/CfmWQbqQ=;
+	s=arc-20240116; t=1792260105; c=relaxed/simple;
+	bh=QuaEmnKEERwsv9M3ecQBnKneWQN1YRZDvsVPGmptvq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6HN/nPMnr6wL+kMvA33a+yQd6TeRP32NaQAiH0Ao9GnWokMHX7kpl1NcIG9o96/DUc1pk7zMYD6daFi6ak5L7cnVK5KbAdlupuj79TIlzyP6blf9qaXJgjZzI/IAvRdF9tin+5O9w5gjx09W0uYcnux/pfDOHLtHTLBky3C6Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwXjYCnr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hrADudr0HFMWvMKjwnKLOcwR9FyrlDEtNKgWvSevvYAoRu6zsw4Z08NIlh+mJXMnMSZXbDOrmBu5fbnMxn/0g//5FNQIwJ1njH5nW9TvNPAHDV2tlr/rhQT+gq8pMWU4MOY9lGOP250uy911vFh1S3NLm65E1be6SL0+2IAnLVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pg3af/xE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwXjYCnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2497B1F000C4;
-	Sat, 17 Oct 2026 18:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pg3af/xE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C25F1F000C4;
+	Sat, 17 Oct 2026 18:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260101;
-	bh=WhVQ9P82oGAOLTsTuYy0h4yXb2BcW9OIocoawmyeBkg=;
+	s=korg; t=1792260104;
+	bh=W5dfDjEVEr51Yy1m2vX+JzFRY1dl2XBXOBaoEtQlkBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FwXjYCnrHAcP36YQnr2CzEthzAlN2TESmEynQWhX8NiYsiStBm3IXoJ/1MzR7b3Qe
-	 qw60UPQcr6cBMduHlWeG6AUoVZNqtf2ReCkvc3hGtcNSVIvqbxL7uWavVf/sYNpYvz
-	 +kCnR6XSnMFcet49aCKMO4QnDzptI6vtwyEnP7YA=
+	b=pg3af/xEwzLgggoCP1qGDN5fM9SF9N7SPM4IJnK2OUqlKcFxU7bxWUIp/WuJX3+T8
+	 bwvvzYw0T873NXEZPihGnnGstRko5GcopMgARQi712CCXSvjvIph3w3NPGHk2fcpBm
+	 08Kja65IEL33sz7aSmo8FvV7ZSZQ3Od4VvUrfVQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Tang Yizhou <yizhou.tang@shopee.com>,
-	Yu Kuai <yukuai@fygo.io>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com,
+	Vicki Pfau <vi@endrift.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1434/1674] blk-cgroup: fix race between policy activation and blkg destruction
-Date: Sat, 17 Oct 2026 18:01:46 +0200
-Message-ID: <20261017160507.991201319@linuxfoundation.org>
+Subject: [PATCH 6.6 1435/1674] HID: steam: Reject short reads
+Date: Sat, 17 Oct 2026 18:01:47 +0200
+Message-ID: <20261017160508.016434806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,74 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit 5313d4d41739b0cb63000747c97bb1217ac45f3e ]
+[ Upstream commit 33ff7b49c38b39b1f3d27db508ac0720fb25c08a ]
 
-When switching an IO scheduler on a block device, blkcg_activate_policy()
-allocates blkg_policy_data (pd) for all blkgs attached to the queue.
-However, blkcg_activate_policy() may race with concurrent blkcg deletion,
-leading to use-after-free and memory leak issues.
+Steam Controller FEATURE reports encode the size of the message in the
+message itself. Previously we were trusting that the size reported matched
+the size we actually read, leading to a potential issue with short reads.
+Instead, we should actually verify the length of the read.
 
-The use-after-free occurs in the following race:
+Fixes: c164d6abf384 ("HID: add driver for Valve Steam Controller")
+Reported-by: syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
 
-T1 (blkcg_activate_policy):
-  - Successfully allocates pd for blkg1 (loop0->queue, blkcgA)
-  - Fails to allocate pd for blkg2 (loop0->queue, blkcgB)
-  - Enters the enomem rollback path to release blkg1 resources
-
-T2 (blkcg deletion):
-  - blkcgA is deleted concurrently
-  - blkg1 is freed via blkg_free_workfn()
-  - blkg1->pd is freed
-
-T1 (continued):
-  - Rollback path accesses blkg1->pd->online after pd is freed
-  - Triggers use-after-free
-
-In addition, blkg_free_workfn() frees pd before removing the blkg from
-q->blkg_list. This allows blkcg_activate_policy() to allocate a new pd
-for a blkg that is being destroyed, leaving the newly allocated pd
-unreachable when the blkg is finally freed.
-
-Fix these races by extending blkcg_mutex coverage to serialize
-blkcg_activate_policy() rollback and blkg destruction, ensuring pd
-lifecycle is synchronized with blkg list visibility.
-
-Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Tang Yizhou <yizhou.tang@shopee.com>
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260802112525.3933753-3-yukuai@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Link: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-steam.c | 34 +++++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index f23d5f8c6ef22..83bbc0c5448f3 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1574,6 +1574,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
+index 61e8070bed3f8..9086bef42be56 100644
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -323,6 +323,13 @@ static int steam_recv_report(struct steam_device *steam,
+ 	u8 *buf;
+ 	int ret;
  
- 	if (queue_is_mq(q))
- 		blk_mq_freeze_queue(q);
++	/*
++	 * All reports start with a two byte header.
++	 * We must read at least two bytes to get a sensible output.
++	 */
++	if (size < 2)
++		return -EINVAL;
 +
-+	mutex_lock(&q->blkcg_mutex);
- retry:
- 	spin_lock_irq(&q->queue_lock);
+ 	r = steam->hdev->report_enum[HID_FEATURE_REPORT].report_id_hash[0];
+ 	if (!r) {
+ 		hid_err(steam->hdev, "No HID_FEATURE_REPORT submitted -  nothing to read\n");
+@@ -345,10 +352,31 @@ static int steam_recv_report(struct steam_device *steam,
+ 	ret = hid_hw_raw_request(steam->hdev, 0x00,
+ 			buf, hid_report_len(r) + 1,
+ 			HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
+-	if (ret > 0)
+-		memcpy(data, buf + 1, min(size, ret - 1));
++	if (ret > 0) {
++		/* Remove the report ID from the return buffer */
++		ret--;
++		size = min(size, ret);
++		memcpy(data, buf + 1, size);
++	}
+ 	kfree(buf);
+-	return ret;
++
++	if (ret < 0)
++		hid_err(steam->hdev, "%s: error %d\n", __func__, ret);
++	else
++		hid_dbg(steam->hdev, "Received report %*ph\n", size, data);
++	if (ret < 0)
++		return ret;
++
++	if (ret < 2) {
++		hid_err(steam->hdev, "%s: reply too short\n", __func__);
++		return -EPROTO;
++	}
++	if (ret < data[1] + 2) {
++		hid_err(steam->hdev, "%s: expected %u bytes, read %i\n",
++				__func__, data[1] + 2, ret);
++		return -EPROTO;
++	}
++	return size;
+ }
  
-@@ -1638,6 +1640,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 
- 	spin_unlock_irq(&q->queue_lock);
- out:
-+	mutex_unlock(&q->blkcg_mutex);
- 	if (queue_is_mq(q))
- 		blk_mq_unfreeze_queue(q);
- 	if (pinned_blkg)
+ static int steam_send_report(struct steam_device *steam,
 -- 
 2.53.0
 
