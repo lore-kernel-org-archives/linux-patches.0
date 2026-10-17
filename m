@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1312E357D0A;
-	Sat, 17 Oct 2026 17:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38F032E151;
+	Sat, 17 Oct 2026 17:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257411; cv=none; b=AzFTElOPNA0kA04pGGu86i4VGjtxueODVht6EjSG3fmH3ylxJ8/4Pm1R2f+Le3hCFtFRopXyk3Xjo5UHRsh46ADxmj7GuAnhtc4U93AixOk1cHSKRk+EsP9D9/ekCtMslJPi3nH/6h6b7hl0LbPR2POPFTNXdcDEdpTtlQKQP08=
+	t=1792257414; cv=none; b=sGDC2Wj7YVyKoHWAKf2PSzcgAandTe00+SYTvH8nWiQ27QkNt6wYfrrSN4jylx0bgnAy+BTfMUArdeD4qeHYGxn146R+f1dLXq0Kn2XFoRtwjB843WLyRcwfh+Ni0UsKVkutMjc0jaiCkdbdWKH/l9uFSRSOP6NaAdCQy24u9RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257411; c=relaxed/simple;
-	bh=rbzaHqdfu8ipyNWoTBDe41z+zpeIGSf8Yt/8I58hpE0=;
+	s=arc-20240116; t=1792257414; c=relaxed/simple;
+	bh=hr9OyXeSRXjus2FOPiE3khFRSIRsCvcR4nVwsSAJeDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LH+qlS7+BS6FTztoUDA4UQdrlgww4JOsatzLVz5oyu64ca/h3/tIrxvpTA71YgpCi2dnQB6xMNqm8JBnLQCYqN2BD6RKpJ0ZFJBYunMtPS9G8i0lcUv4isDWWnGFBS8apWbZ2NqByxA26sC3nrYMxTT14GcLljyvD9DIjzIFTOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbry/UNX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O2rfSNEPIYHnvZVGSRJl7MYke8cCNCb3OS8393onsQEEIbqHTWsxXuLK32Hyj7s3cifcWf/IBDFZrNuQsi2TWoeOzwWXwWX5DTFUxXX38SNqQhBKo1LYLIW3uowPdEw/296CcDIGkHcW4FBeQfu+vKJIl5ZdsgR6CFKRiR7c/9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI+wssHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbry/UNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6EC1F000C4;
-	Sat, 17 Oct 2026 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI+wssHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4135F1F000C4;
+	Sat, 17 Oct 2026 17:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257409;
-	bh=RoAzhtVZDW+bWALz0GR9lqBGH/zLP53QRcS+XoepHHQ=;
+	s=korg; t=1792257412;
+	bh=8Vrf9oHqHe5BUGmxayyWcK6cMvyT9oayaMS0LlGafQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbry/UNX9mErb029XazTUj008n1binLHadJgGKoYxnBBJwheup/eiJ/zKa/s4yM+U
-	 6VyI9UdFcwiAhmNkObBBcJmPyFqtXiRfBJcsLybZp/g8qmvsmIjLSBd/ZtLZNQ+cwO
-	 WBA2X35FH4+yioE3HUsLKxsc7pDWkCHIhJ97y8Ac=
+	b=ZI+wssHyzrlvh/FF5GlOO8L1XHN3FwJm8E91Ld2riRAgy3jxGl8K1a/aX7YHsjeID
+	 vt2rtAQSP+VxeDIdpw6+E5DV7ZvcmPEYFXpMPzSYThis6i/I044/3s/4DoZ5lfTC1N
+	 GcncE1QrL8Lv6I7CBAgGQZHWNvFceO5xHFHQEvR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0550/1674] flow_dissector: avoid u16 truncation of skb->len when computing thoff
-Date: Sat, 17 Oct 2026 17:47:02 +0200
-Message-ID: <20261017160445.213869799@linuxfoundation.org>
+Subject: [PATCH 6.6 0551/1674] net/sched: cls_route: reject change with no routing attribute
+Date: Sat, 17 Oct 2026 17:47:03 +0200
+Message-ID: <20261017160445.238193347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,77 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 99bda1ecbd56905f8bd934b9cdccd3bd251192b1 ]
+[ Upstream commit b72e025ac556984766392001e74b7587e145bcd0 ]
 
-__skb_flow_dissect() computes key_control->thoff using:
+route4_change on a filter change that supplies no routing attribute
+at all (no to/from/iif) reaches route4_set_parms with fold set, so the
+handle-mismatch check -- which only fires when creating -- is skipped.
+nhandle is built as the all-wildcard bucket (0x8000 | 0xFFFF << 16) and
+the filter is rekeyed to 0xFFFF8000, so the handle userspace already
+stored no longer addresses the filter. (The netlink reply carries the
+new handle; what goes stale is the handle the caller holds.)
 
-  key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
+The rekey actually misclassifies the packets. The new handle's from_hash
+is the wildcard chain (route4_hash_wild), whose filters route4_classify
+applies without any id/iif comparison, and its bucket (256) is reached
+by every packet through the h < 256 restart. A filter that matched only
+a specific realm therefore becomes an unconditional catch-all that applies
+its classid and actions to all otherwise-unmatched traffic.
 
-min_t(u16, ...) casts both arguments to u16 before comparing them.
-Whenever skb->len (or hlen) modulo 65536 is smaller than nhoff, the
-truncated length wins and thoff is set to a bogus small value, even
-when the dissection succeeded. For example, an IPv4/TCP frame with
-skb->len == 65540 and nhoff == 34 gets thoff == 4, so callers such as
-skb_probe_transport_header() point the transport header inside the
-Ethernet header.
+Reject a change that would rekey the filter this way, with the
+routing-attributes-required error. A change that names at least one of
+to/from/iif, and an in-place replace that keeps the routing identity via
+a supplied attribute, are unaffected. A change of a filter that already
+sits at the wildcard handle is a metadata-only update and remains valid,
+so only a change that actually moves the handle is rejected.
 
-Such skbs are not exotic:
-- At the time of commit d0c081b49137 ("flow_dissector: properly cap
-  thoff field"), AF_PACKET with PACKET_VNET_HDR could already build GSO
-  skbs larger than 64KB (MTU checks are skipped for GSO, and
-  alloc_skb_with_frags() accepted up to MAX_SKB_FRAGS (17) order-0
-  pages on top of the linear part).
-- BIG TCP now makes skbs larger than 64KB common.
-- The following patch makes tun_get_user() dissect IFF_TAP frames
-  before eth_type_trans() pulls the Ethernet header, so a GSO frame
-  carrying a 65522..65535 byte L3 packet will be dissected with
-  skb->len in [65536, 65549].
+This is a follow-up to commit 41e85e54e564 ("net/sched: cls_route: Fix
+in-place replace"); this patch closes the no-routing-attribute variant
+that the parent series did not address.
 
-Compare as u32 instead. If the resulting offset cannot be represented
-in the u16 key_control->thoff, cap it to U16_MAX and report the
-dissection as failed rather than silently returning a wrong transport
-offset. thoff is still set on failure, as some callers (such as
-eth_get_headlen()) use it regardless of the return value.
+Conditions to recreate the bug:
+  tc qdisc add dev lo clsact
+  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
+  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
+      route classid 1:2
+  tc filter show dev lo ingress   # handle became 0xffff8000; iproute2's
+                                  # stored 0x10001 no longer addresses it
 
-Fixes: d0c081b49137 ("flow_dissector: properly cap thoff field")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261001191140.2818991-2-edumazet@kernel.org
+A change of a filter already at the wildcard handle, e.g. one created by
+"tc filter add dev lo ingress protocol ip pref 100 route classid 1:1"
+(iproute2 defaults the handle to 0xffff8000), stays a valid metadata-only
+update.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260907192133.2639067-1-victor@mojatatu.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-0JB3.v1.20260929143022@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/sched/cls_route.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 00364d07ff6b1..37864578e8687 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1047,6 +1047,7 @@ bool __skb_flow_dissect(const struct net *net,
- 	int mpls_lse = 0;
- 	int num_hdrs = 0;
- 	u8 ip_proto = 0;
-+	u32 thoff;
- 	bool ret;
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 233bfba3bc812..54f5f7857ee0c 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -434,6 +434,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
+ 	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
+ 		nhandle |= handle & 0x7F00;
  
- 	if (!data) {
-@@ -1668,7 +1669,13 @@ bool __skb_flow_dissect(const struct net *net,
- 	ret = true;
- 
- out:
--	key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
-+	thoff = min_t(u32, nhoff, skb ? skb->len : hlen);
-+	if (unlikely(thoff > U16_MAX)) {
-+		/* Cannot be represented in key_control->thoff. */
-+		thoff = U16_MAX;
-+		ret = false;
++	if (fold && !tb[TCA_ROUTE4_TO] && !tb[TCA_ROUTE4_FROM] &&
++	    !tb[TCA_ROUTE4_IIF] && nhandle != fold->handle) {
++		NL_SET_ERR_MSG(extack, "Routing attributes required");
++		return -EINVAL;
 +	}
-+	key_control->thoff = thoff;
- 	key_basic->n_proto = proto;
- 	key_basic->ip_proto = ip_proto;
- 
++
+ 	if (handle && !fold && nhandle != handle) {
+ 		NL_SET_ERR_MSG_FMT(extack,
+ 				   "Handle mismatch constructed: %x (expected: %x)",
 -- 
 2.53.0
 
