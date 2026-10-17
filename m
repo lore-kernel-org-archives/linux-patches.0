@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906B438424C;
-	Sat, 17 Oct 2026 17:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F553803DC;
+	Sat, 17 Oct 2026 17:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258336; cv=none; b=GC0xtWGAHiEHdw0JSBL9Zgd8bchFlA8X79qkF26Ab3jPHbLRbPwtQEollTfxJSIQ1kM2VUT/ndfJsztc90OgYnQw9k7C9MHLfr9PKjzsbteuFIv9j6TdDWV8bmjyMojmOJCLOAWHzKf3WYkfRoBbt8g1GTK4TTQbLXUdviZu2uY=
+	t=1792258339; cv=none; b=AXAlK4Nd9gC1JcphNHGy+0TbZP2nVHACdJaR6+rbzV5kwlD4JRSrRI7CiT8BvhGvsWFx00XCj3zgEXC/QmdeEWyL1R5MPvvXQ9WYrGaFgvniT9Yq7vEgX2ZjmgN7kgj9X86uOWhSatlQrp9KBvgSt4pUMwWSs42q/TOoXQDMxQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258336; c=relaxed/simple;
-	bh=xMFaCESWP9iRORJfxO1lAWkgpbAB0FGPPALmg8ruKxk=;
+	s=arc-20240116; t=1792258339; c=relaxed/simple;
+	bh=tUOTnCPbWs+FVD+duUW5574WihJuJI1WiMNHYBz0ulA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGi5mPMO8YSgrkKIA+RguiLAn4EjmmvA9riT3KLGPT7FRwFg/HrHVwXtfO2MQs+UAj+0OHwbix+El/P9UD41KlOK0KKspKcwwA6WfOZVRbLUY/BGzUb+rEGKXCoFCRCUrdkfrx1jqnz7+l0uys5T75Z2WhGj+e2rU0dtsbpZz1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJRx3g9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fICbQWcRwldXekfw1CSsgN8U8yfII+XeYfkTYW/MhuqTDEk/T6q8Ei164UQixnBoKTWTE9d4HLMeMz3QG4tuuQoFCjLvlcEaqRjSza1TCKnFfcle480EhoLhcvlDR52IdDnLXKu035svhZEZr6fRvmt/6oCoQcH2KOBVGNh8shI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1S5xNsB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJRx3g9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A3B1F000C4;
-	Sat, 17 Oct 2026 17:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1S5xNsB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FFB1F000C4;
+	Sat, 17 Oct 2026 17:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258335;
-	bh=ww6FUyng8jOW2BZiTZMGrExR1cAJNFP41d3uEaAvHe4=;
+	s=korg; t=1792258338;
+	bh=1hgtpazSVvPXX7gYBAfGtqVQWOoSP9FhtEiKlJDGCys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hJRx3g9b8WLGcgqc1tNB9DAEHONJS5mLX8/DY0cZMnI3FQFD7jEki01uqikl/aKu2
-	 fc4ZKYOP2dU3mT5HyuCJEDndrgW4f+tSRtTt6gqWH5MDr4rLFwULVIPDPGDTFD4S/G
-	 NQ5o1s08CsfVGDrCZBpus64XGEeN8WHLztgwVyKQ=
+	b=K1S5xNsBLva9M87GzgydLxhKVm6v+zxr368Pr0+xUOOkh1fuyVtdWfb4uCCJ1U0ps
+	 XCUNd11KGIWHDdMM9x4rg1MvrxTDrIYxXfg9oXfzI49ZmBcsfrUnOhWfLOHSKI1iSJ
+	 63MCprQzwSs8XUKL9IISs165xth9QmNnVy+Kza5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0851/1674] bpf: Mark bpf_refcount field as unique
-Date: Sat, 17 Oct 2026 17:52:03 +0200
-Message-ID: <20261017160452.969328194@linuxfoundation.org>
+Subject: [PATCH 6.6 0852/1674] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
+Date: Sat, 17 Oct 2026 17:52:04 +0200
+Message-ID: <20261017160452.993302209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,43 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 61e655391cb19c31f94ecd4354f624c81ce4cf75 ]
+[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
 
-BPF_REFCOUNT is not marked as a unique field, while it should be. Fix
-this oversight.
+issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
+xmit_frame together with its xmit_buf from the driver's fixed-size
+management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
+is handed to dump_mgntframe(), which transfers ownership and eventually
+returns both objects to their pools (the frame and, for beacons, the buf
+in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
+path).
 
-Fixes: d54730b50bae ("bpf: Introduce opaque bpf_refcount struct and add btf_record plumbing")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://patch.msgid.link/20260719153634.2908692-4-memxor@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Several error/edge paths return early after a successful
+alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
+transferred and neither object is freed:
+
+  - issue_beacon(): beacon larger than 512 bytes
+  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
+  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
+  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+
+Because alloc_mgtxmitframe() removes the frame and buf from their free
+lists (list_del_init) without placing them on any pending list, an
+orphaned pair is on no list and referenced by nobody, so it is only
+reclaimed at driver teardown. Repeated hits progressively exhaust the
+management-TX pools until alloc_mgtxmitframe() returns NULL and the
+interface can no longer send beacons or probe/assoc responses.
+
+Free the frame and buffer on these paths, matching the existing correct
+error handling in issue_assocreq().
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 60018b87589de..0bf8f1fc648e8 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -3424,7 +3424,15 @@ static int btf_get_field_type(const char *name, u32 field_mask, u32 *seen_mask,
- 	field_mask_test_name(BPF_LIST_NODE, "bpf_list_node");
- 	field_mask_test_name(BPF_RB_ROOT,   "bpf_rb_root");
- 	field_mask_test_name(BPF_RB_NODE,   "bpf_rb_node");
--	field_mask_test_name(BPF_REFCOUNT,  "bpf_refcount");
-+	if (field_mask & BPF_REFCOUNT) {
-+		if (!strcmp(name, "bpf_refcount")) {
-+			if (*seen_mask & BPF_REFCOUNT)
-+				return -E2BIG;
-+			*seen_mask |= BPF_REFCOUNT;
-+			type = BPF_REFCOUNT;
-+			goto end;
-+		}
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+index 98b46182afd63..9125b6fed82bc 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -2259,8 +2259,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
+ 
+ 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
+ 
+-	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
++	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
 +	}
  
- 	/* Only return BPF_KPTR when all other types with matchable names fail */
- 	if (field_mask & BPF_KPTR) {
+ 	pattrib->last_txcmdsz = pattrib->pktlen;
+ 
+@@ -2323,8 +2326,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+ 	pframe += pattrib->hdrlen;
+ 
+ 
+-	if (cur_network->ie_length > MAX_IE_SZ)
++	if (cur_network->ie_length > MAX_IE_SZ) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
+ 
+ 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
+ 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
+@@ -2371,8 +2377,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+ 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
+ 
+ 			buf = rtw_zmalloc(MAX_IE_SZ);
+-			if (!buf)
++			if (!buf) {
++				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++				rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 				return;
++			}
+ 
+ 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
+ 				(pframe-ies)-_FIXED_IE_LENGTH_);
+@@ -2765,10 +2774,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
+ 
+ 	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
+ 	pmlmeext->mgnt_seq++;
+-	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
++	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
+ 		SetFrameSubType(pwlanhdr, pkt_type);
+-	else
++	} else {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
+ 
+ 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
+ 	pattrib->pktlen += pattrib->hdrlen;
 -- 
 2.53.0
 
