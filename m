@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898543AEF2D;
-	Sat, 17 Oct 2026 17:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B3635E93B;
+	Sat, 17 Oct 2026 17:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258284; cv=none; b=cHWNXNlELy7XOMu1UgRa7+OrgYkHXhFDasykaVOMPyTNY4PGaux5LkRlYe1cHs1rArG+JfITYcCIdb0HL0h9VLz74tPctRuBDmTFVLwUHJGvTZFJl1R1ltNGRYydNa2sX++e6WKc3HnVJLGDSFtUbffSTjC2momfHaHgaMt+c4I=
+	t=1792258287; cv=none; b=tI5tSAgPv+WoM8mqsVzxNO886ZiTZiwBsLlNh14L0kUzVAenOF6u8Qi8WVoux6DfRyZ8YGKBYLbHee1NN2VBIMJEvQs23sFYkoWRKcsYQcOdxt+KWg+Ol6Dv2lYznrAKI/GoQninEbYRub+gdx535kSwL5hfs+JUmuUKxbr+BXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258284; c=relaxed/simple;
-	bh=9RTLjTuWzWJnPhDCC5nmcVfo/MV+xn/oV4x9Psnf6fY=;
+	s=arc-20240116; t=1792258287; c=relaxed/simple;
+	bh=9naDOFUKAXSrXg/ZmorUcxP5AlNFUViuKa+KEx07zdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lW4QRqeom6Ys1jseuqj925rHiMzfxmzzqyK6T2zJ8gr1R+Qe3Lly/mjffkkv/rQpyKQGjT5DeQeJaiK7/6QJX23Xqz6oCyG7UjsH/GS6UpLGV/hnWamjBg0HZfgxafptbzRBaQ5Wgd/e302JIUU67QYzPlsh8o8dic31Vq3+XFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GS4bd7th; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZs+LNHZexmaPws/fdD3k+x/A/1J1y6HqEmdra2oXTk9+ceE091yVQKgpnZRDDAJj0kc0YVxd6ih1Fg+StLGftzxvpcMUDUvW0RwQJ4wvc3jVnZCPBnp+sZAm6Wj5B1KHf0dsgkBZuOyCLknWcKuq1osGOw7qEIQUV3K6sVxmjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOBb8mh5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GS4bd7th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10ED1F000C5;
-	Sat, 17 Oct 2026 17:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOBb8mh5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0D31F000C4;
+	Sat, 17 Oct 2026 17:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258283;
-	bh=aYU4ItMHy9goKMmwMRXkWJcbtFnNd9EslEw9spqpBdc=;
+	s=korg; t=1792258286;
+	bh=8CqXAdYN+7qakezaKqgP+NHxKqrYgRZVXeBKzvneBoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GS4bd7thGFB36XqyOtC7XCwcJNT6K90pGpq12AN6rqe/pnl6wvFqGRxq0i9lCJhM2
-	 x9in/CqUEvuckii/xIeqKkjsP1gaKXPPxShCsENPbz6n4LYpDd5F0cDvowfKSN2htZ
-	 W720ndeSJ5A3D4XF1Aox+IDh6O+74yWW7dMHVQUs=
+	b=NOBb8mh5Nyuj0RGMZMpviVBXkRbNqUgeVrbN0su4FbWjLiLUjipKIjxLmJlxUopwU
+	 31EtFlJUEE+jjCRC7LbUGw3cQqfbLi8xI3IkawYCPGf29G//xl4nhB+tuCBkAHpq9T
+	 7unux+UXywlqnu2vcXu+RwnN0R9FcqKsJrSMeLyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0832/1674] wifi: ath12k: Fix MSDU buffer types handling in RX error path
-Date: Sat, 17 Oct 2026 17:51:44 +0200
-Message-ID: <20261017160452.484975180@linuxfoundation.org>
+Subject: [PATCH 6.6 0833/1674] scsi: qla2xxx: Clear cmds after chip reset
+Date: Sat, 17 Oct 2026 17:51:45 +0200
+Message-ID: <20261017160452.511250768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,162 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
+[ Upstream commit d46c69a087aa3d1513f7a78f871b80251ea0c1ae ]
 
-Currently, packets received on the REO exception ring from
-unassociated peers are of MSDU buffer type, while the driver expects
-link descriptor type packets. These packets are not parsed further due
-to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
-but the associated skb is not freed. This may lead to kernel
-crashes and buffer leaks.
+Commit aefed3e5548f ("scsi: qla2xxx: target: Fix offline port handling
+and host reset handling") caused two problems:
 
-Hence to fix, update the RX error handler to explicitly drop
-MSDU buffer type packets received on the REO exception ring.
-This prevents further processing of invalid packets and ensures
-stability in the RX error handling path.
+1. Commands sent to FW, after chip reset got stuck and never freed as FW
+   is not going to respond to them anymore.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+2. BUG_ON(cmd->sg_mapped) in qlt_free_cmd().  Commit 26f9ce53817a
+   ("scsi: qla2xxx: Fix missed DMA unmap for aborted commands")
+   attempted to fix this, but introduced another bug under different
+   circumstances when two different CPUs were racing to call
+   qlt_unmap_sg() at the same time: BUG_ON(!valid_dma_direction(dir)) in
+   dma_unmap_sg_attrs().
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+So revert "scsi: qla2xxx: Fix missed DMA unmap for aborted commands" and
+partially revert "scsi: qla2xxx: target: Fix offline port handling and
+host reset handling" at __qla2x00_abort_all_cmds.
+
+Fixes: aefed3e5548f ("scsi: qla2xxx: target: Fix offline port handling and host reset handling")
+Fixes: 26f9ce53817a ("scsi: qla2xxx: Fix missed DMA unmap for aborted commands")
+Co-developed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://patch.msgid.link/0e7e5d26-e7a0-42d1-8235-40eeb27f3e98@cybernetics.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 59 +++++++++++++++++++++++-
- drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
- 2 files changed, 60 insertions(+), 9 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c     | 20 ++++++++++++++++++--
+ drivers/scsi/qla2xxx/qla_target.c |  5 +----
+ drivers/scsi/qla2xxx/qla_target.h |  1 +
+ 3 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index a957b57eab1dc..c849728732254 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/ieee80211.h>
-@@ -3411,6 +3411,50 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
- 	return 0;
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 33395b471e8ba..cac01f733492b 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -1888,10 +1888,26 @@ __qla2x00_abort_all_cmds(struct qla_qpair *qp, int res)
+ 					continue;
+ 				}
+ 				cmd = (struct qla_tgt_cmd *)sp;
+-				cmd->aborted = 1;
++
++				if (cmd->sg_mapped)
++					qlt_unmap_sg(vha, cmd);
++
++				if (cmd->state == QLA_TGT_STATE_NEED_DATA) {
++					cmd->aborted = 1;
++					cmd->write_data_transferred = 0;
++					cmd->state = QLA_TGT_STATE_DATA_IN;
++					ha->tgt.tgt_ops->handle_data(cmd);
++				} else {
++					ha->tgt.tgt_ops->free_cmd(cmd);
++				}
+ 				break;
+ 			case TYPE_TGT_TMCMD:
+-				/* Skip task management functions. */
++				/*
++				 * Currently, only ABTS response gets on the
++				 * outstanding_cmds[]
++				 */
++				ha->tgt.tgt_ops->free_mcmd(
++					(struct qla_tgt_mgmt_cmd *) sp);
+ 				break;
+ 			default:
+ 				break;
+diff --git a/drivers/scsi/qla2xxx/qla_target.c b/drivers/scsi/qla2xxx/qla_target.c
+index d7551b1443e4a..ed9a60a292c3b 100644
+--- a/drivers/scsi/qla2xxx/qla_target.c
++++ b/drivers/scsi/qla2xxx/qla_target.c
+@@ -2487,7 +2487,7 @@ static int qlt_pci_map_calc_cnt(struct qla_tgt_prm *prm)
+ 	return -1;
  }
  
-+static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
-+					struct hal_reo_dest_ring *desc)
-+{
-+	struct ath12k_rx_desc_info *desc_info;
-+	struct ath12k_skb_rxcb *rxcb;
-+	struct sk_buff *msdu;
-+	u64 desc_va;
-+
-+	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
-+		  le32_to_cpu(desc->buf_va_lo);
-+	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
-+	if (!desc_info) {
-+		u32 cookie;
-+
-+		cookie = le32_get_bits(desc->buf_addr_info.info1,
-+				       BUFFER_ADDR_INFO1_SW_COOKIE);
-+		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
-+		if (!desc_info) {
-+			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
-+				    cookie);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
-+		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
-+			    desc_info->magic);
-+		return -EINVAL;
-+	}
-+
-+	msdu = desc_info->skb;
-+	desc_info->skb = NULL;
-+	spin_lock_bh(&ab->dp.rx_desc_lock);
-+	list_move_tail(&desc_info->list, &ab->dp.rx_desc_free_list);
-+	spin_unlock_bh(&ab->dp.rx_desc_lock);
-+
-+	rxcb = ATH12K_SKB_RXCB(msdu);
-+	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
-+			 DMA_FROM_DEVICE);
-+	dev_kfree_skb_any(msdu);
-+
-+	return 0;
-+}
-+
- int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			     int budget)
+-static void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd)
++void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd)
  {
-@@ -3448,6 +3492,18 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 	while (budget &&
- 	       (reo_desc = ath12k_hal_srng_dst_get_next_entry(ab, srng))) {
- 		ab->soc_stats.err_ring_pkts++;
-+
-+		/* Below case is added to handle data packet from un-associated clients.
-+		 * As it is expected that AST lookup will fail for
-+		 * un-associated station's data packets.
-+		 */
-+		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
-+		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
-+			if (!ath12k_dp_h_msdu_buffer_type(ab, reo_desc))
-+				tot_n_bufs_reaped++;
-+			goto next_desc;
-+		}
-+
- 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
- 						    &desc_bank);
- 		if (ret) {
-@@ -3494,6 +3550,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 				tot_n_bufs_reaped++;
- 		}
+ 	struct qla_hw_data *ha;
+ 	struct qla_qpair *qpair;
+@@ -3817,9 +3817,6 @@ int qlt_abort_cmd(struct qla_tgt_cmd *cmd)
  
-+next_desc:
- 		if (tot_n_bufs_reaped >= quota) {
- 			tot_n_bufs_reaped = quota;
- 			goto exit;
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
-index 4d1b89cdffe12..bc72b9c966ce2 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include "debug.h"
-@@ -320,7 +320,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- {
- 	enum hal_reo_dest_ring_push_reason push_reason;
- 	enum hal_reo_dest_ring_error_code err_code;
--	u32 cookie, val;
-+	u32 cookie;
- 
- 	push_reason = le32_get_bits(desc->info0,
- 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
-@@ -335,12 +335,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- 		return -EINVAL;
- 	}
- 
--	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
--	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
--		ath12k_warn(ab, "expected buffer type link_desc");
--		return -EINVAL;
--	}
+ 	spin_lock_irqsave(&cmd->cmd_lock, flags);
+ 	if (cmd->aborted) {
+-		if (cmd->sg_mapped)
+-			qlt_unmap_sg(vha, cmd);
 -
- 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
- 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
- 
+ 		spin_unlock_irqrestore(&cmd->cmd_lock, flags);
+ 		/*
+ 		 * It's normal to see 2 calls in this path:
+diff --git a/drivers/scsi/qla2xxx/qla_target.h b/drivers/scsi/qla2xxx/qla_target.h
+index 354fca2e7feb2..3644ab140ff94 100644
+--- a/drivers/scsi/qla2xxx/qla_target.h
++++ b/drivers/scsi/qla2xxx/qla_target.h
+@@ -1059,6 +1059,7 @@ extern int qlt_abort_cmd(struct qla_tgt_cmd *);
+ extern void qlt_xmit_tm_rsp(struct qla_tgt_mgmt_cmd *);
+ extern void qlt_free_mcmd(struct qla_tgt_mgmt_cmd *);
+ extern void qlt_free_cmd(struct qla_tgt_cmd *cmd);
++extern void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd);
+ extern void qlt_async_event(uint16_t, struct scsi_qla_host *, uint16_t *);
+ extern void qlt_enable_vha(struct scsi_qla_host *);
+ extern void qlt_vport_create(struct scsi_qla_host *, struct qla_hw_data *);
 -- 
 2.53.0
 
