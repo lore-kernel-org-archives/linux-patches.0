@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB336B93B;
-	Sat, 17 Oct 2026 16:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31925384CED;
+	Sat, 17 Oct 2026 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254284; cv=none; b=QW+kv5BhUygIup6vl5wVRKBxpmtyNEiJOr8u/FPIvwMcs8r2JRlRCGrhP5ofIJ8vIatsenOXX6lxgTSNwG5MKROzeoTwv+vCsW6Rgky/QwxGFYwrMs4JTCEf2laiw0yMerQ08Xi0Hw3I6kYwpLe7DyDo4KAgcnF/TN/QHagXRK8=
+	t=1792254287; cv=none; b=Gx5PJHPa05WEmBs0p56ZcF0xPdtYUz3VI/lpUBWb57evvKTjOiFItDGWeGaY9WFyADpSE2ucaQFvrMJUqdaktN2YRwle9o8DiiaFlyfuYy8MkrW/6uyHZzaq1Y/y6a0CaU7eUr2Tzpk6Ed6xf+xyqGrKrKn+bZelM5Akk1XFz5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254284; c=relaxed/simple;
-	bh=/tuBMznIxUXMEGw/U05nGgIEoWM77zJwP2vLr+PxBdM=;
+	s=arc-20240116; t=1792254287; c=relaxed/simple;
+	bh=BE9Z1g2QSCRQTZDi6oAvfKOSgTIDv6PfRkqfaL2bY3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M64yCpARri2qAN5EkeKV73RdzQ+eyMqQ47/yujsu8mriVNYSjFNPY/EUtiyyJQCnZK8F6Zbbay1ctBklGPzxvRgphOqSMBR9RvTZDvAzbJhfwxtvMnNDeVxTOh0AqWv3xgqzCFcq0gJT+hb+f77143cvxjNdob2OCGjWoPJP5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6oOA4hC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z2yovblQQ3hlitLk0K2wZRkn1siE8MEHNYkxC1f+Z0v+9bAReSzVbhCPd+gVix31LSMCECfgkEqGinlr7O3p7JMSSVGrfmRkHH3XM7CUQ90T69s9BoK9EgiAEU0oh0d2R2jZz/xipxgMy0BIifagXQA2+49FVFV2fNjk6thGrr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7GxHSoc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6oOA4hC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63ABA1F000C4;
-	Sat, 17 Oct 2026 16:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7GxHSoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755751F000C4;
+	Sat, 17 Oct 2026 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254282;
-	bh=f9VNG6sjEhIosvjR9YgR3mikO/4qkw9kwVNsrmq2GYY=;
+	s=korg; t=1792254286;
+	bh=xETWutDLSas0L7syuvd3o1r9xBEtWNt35CB4G+bqSX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6oOA4hCNglLiREeEOb82mqhYF9fHVUpXsUnnj3c+77oGw/df5nx7o3w0apsqTzKf
-	 f1jax0Dir+oxnEzthFvOIm6BQzY+5npI1yPIsdFegzws+5jCo9Egs8Q7bNrjOZRR/G
-	 y9x9Yx8vV6t+5X/2uO/bax7VK0sNj7Sm4d9HTkGs=
+	b=M7GxHSocJVZDqgGAXPk1BLIl1qPyIGQ1c6Bd1Kz5iVD+ZFwAfH3BAlZKlmJvBasah
+	 X7dcmHcmY2/s2mbPQCrS5I7BF8oOFwcT8NC8LXffxhhrdwkZMA6XGzrfQnlIh6ATbL
+	 1V130zZqppWlq2gsnD3tZc3MoSXHazni22rEbLQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 397/869] bpf: Disable migration when destroying sock storage
-Date: Sat, 17 Oct 2026 17:53:58 +0200
-Message-ID: <20261017160047.298761985@linuxfoundation.org>
+Subject: [PATCH 6.12 380/869] media: stm32-dcmipp: Return queued buffers on start_streaming() failure
+Date: Sat, 17 Oct 2026 17:53:41 +0200
+Message-ID: <20261017160046.857641047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,60 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-[ Upstream commit 7d1032d1e3031ef38d1a360380d755f75cb639b8 ]
+[ Upstream commit ffc8eec06378a340d708c889184ab3e14b57d540 ]
 
-When destroying sock storage, it invokes bpf_local_storage_destroy() to
-remove all storage elements saved in the sock storage. The destroy
-procedure will call bpf_selem_free() to free the element, and
-bpf_selem_free() calls bpf_obj_free_fields() to free the special fields
-in map value (e.g., kptr). Since kptrs may be allocated from bpf memory
-allocator, migrate_{disable|enable} pairs are necessary for the freeing
-of these kptrs.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-To simplify reasoning about when migrate_disable() is needed for the
-freeing of these dynamically-allocated kptrs, let the caller to
-guarantee migration is disabled before invoking bpf_obj_free_fields().
-Therefore, the patch adds migrate_{disable|enable} pair in
-bpf_sock_storage_free(). The migrate_{disable|enable} pairs in the
-underlying implementation of bpf_obj_free_fields() will be removed by
-The following patch.
+dcmipp_bytecap_start_streaming() returned -EINVAL when the source
+subdevice could not be resolved from the media graph, before
+pm_runtime_resume_and_get() and media_pipeline_start() had been called.
+The remaining error paths already converge on the err_buffer_done
+label, which calls dcmipp_bytecap_all_buffers_done(...,
+VB2_BUF_STATE_QUEUED).  Jump to that label directly: the intermediate
+err_pm_put / err_media_pipeline_stop labels are skipped, which is
+correct because nothing they would undo has happened yet.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250108010728.207536-8-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 7cbd0c4cebe4 ("bpf: Fix UAF in sock clone early bailouts")
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
+
+Fixes: 28e0f3772296 ("media: stm32-dcmipp: STM32 DCMIPP camera interface driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/bpf_sk_storage.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c   | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
-index bc01b3aa6b0fa..5cd1220cc7a5e 100644
---- a/net/core/bpf_sk_storage.c
-+++ b/net/core/bpf_sk_storage.c
-@@ -50,15 +50,16 @@ void bpf_sk_storage_free(struct sock *sk)
- {
- 	struct bpf_local_storage *sk_storage;
- 
-+	migrate_disable();
- 	rcu_read_lock();
- 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
--	if (!sk_storage) {
--		rcu_read_unlock();
--		return;
--	}
-+	if (!sk_storage)
-+		goto out;
- 
- 	bpf_local_storage_destroy(sk_storage);
-+out:
- 	rcu_read_unlock();
-+	migrate_enable();
- }
- 
- static void bpf_sk_storage_map_free(struct bpf_map *map)
+diff --git a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
+index 2b323dd6cf6bf..b1e35df41a9c0 100644
+--- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
++++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
+@@ -381,8 +381,10 @@ static int dcmipp_bytecap_start_streaming(struct vb2_queue *vq,
+ 	 */
+ 	if (!vcap->s_subdev) {
+ 		pad = media_pad_remote_pad_first(&vcap->vdev.entity.pads[0]);
+-		if (!pad || !is_media_entity_v4l2_subdev(pad->entity))
+-			return -EINVAL;
++		if (!pad || !is_media_entity_v4l2_subdev(pad->entity)) {
++			ret = -EINVAL;
++			goto err_buffer_done;
++		}
+ 		vcap->s_subdev = media_entity_to_v4l2_subdev(pad->entity);
+ 		vcap->s_subdev_pad_nb = pad->index;
+ 	}
 -- 
 2.53.0
 
