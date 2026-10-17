@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305D73911B8;
-	Sat, 17 Oct 2026 16:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217B63AFCF4;
+	Sat, 17 Oct 2026 16:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255400; cv=none; b=uBBzDNuqCgpN6UYAgwbJk4h7Kch8db5onHI6hLDl/hNHmAkUPO2K/lGhZCFsDr3ptRldi5V1Xkjg3fKHB86alNSP8P3KIm9CmBGIANF2FvgohXhhMFoLR3voVa/B+vwEfufbUNYblrRcl6VnBq+6RK91iSbiLlJ4BaVC0bjHUCA=
+	t=1792255403; cv=none; b=ZLDG+c/zdTPJuzFLPeoIInyW2qtEhxpPi2t552fltn6bCfBlCAHtZHCMNfiG7cdBnDCPAGj7oKFN+z8AJeVDLDDcnvITZBsMkL4DGLapgNq/JjuD0y0jZy/33I0CDjYYL6W6FDzVHNMfN+w3JjBC44lYubS0pBfJpKpaQvJdVQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255400; c=relaxed/simple;
-	bh=Wki4R5jAFo+S8YH8N5EDqMsKYaF226Y1GvDviJuYfeg=;
+	s=arc-20240116; t=1792255403; c=relaxed/simple;
+	bh=lhHQ7H7u2rVmaEAxv85akS4h8IxzQmVtqNXYDm14pnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPbuOB6TOgXjZ8hDSaPAsniAYCSh5sOZwnzg7zT+5ldKvxegfxnS4FD/0YYq+jPlA64T9WWk3fC61EJsY6wis7udRmr+aw63utVyeIjJd9pyq//pUk88pDjkxUgn98CR9uvwQr/YGj4a3fA215LrPhqX3m3aSufsDIZb35B0O0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkmii+2N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ptOu1PKEbUO+O+c7r7cyq9CT2sL5K92bE37D+KHdAsouucQu54r2HWrgIdkpjTXXtKO9ZFcPHtQMVlkUMBvdIIgnQLNXZuDq0F7aZ4kH0+hyxJXjXSuuu8yuB+rObtg8B/yDDxgFmds2qJM+cb2sN20nmYwi71fmcuoPfpPZEII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1Udxivg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkmii+2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB671F000C4;
-	Sat, 17 Oct 2026 16:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1Udxivg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2C81F000C4;
+	Sat, 17 Oct 2026 16:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255399;
-	bh=Xsh8C2CUZcPge3fvkvbteYghdFtzkpBnjh2whW2rVLU=;
+	s=korg; t=1792255402;
+	bh=290fbdJqDFZIaE5FN93ff9jgJ40RuusMglGaBe+q0F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xkmii+2NFyDv9YknyArFkA5qnity8GDoppznRYzyf03bbQMWiw7UJFXHQvfa+p3z6
-	 Uc62WQi9yGJauTb976b6E/CQmT2SfaeV/V/CgnvDWz7FK5OnksKTIfE/fKcX9cQhEO
-	 WLIaNlbSxG4d/FAH9gdhsx6qI1M3SHBzdMBqnPtQ=
+	b=F1UdxivgPw3gM+gplSpTFslKBPx3Uxdi0LmHklx24zFGuXoP2On7oR4HyZ2Xzd439
+	 EKflvY387corGj4p9sofdKV5MqlNmyTYeYDdaVPQ7Yl6MYagbFbNYn5IR5LuPdoQ30
+	 PDEO7dnQfjI7qno4VJQXQTcyzt5lq7Bok+nFGmzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Arie Miller <renari@arimil.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 764/869] hwmon: (asus_rog_ryujin) Validate HID report lengths
-Date: Sat, 17 Oct 2026 18:00:05 +0200
-Message-ID: <20261017160056.513890090@linuxfoundation.org>
+Subject: [PATCH 6.12 765/869] smb: client: avoid using uninitialized SIDs in cifs_posix_to_fattr()
+Date: Sat, 17 Oct 2026 18:00:06 +0200
+Message-ID: <20261017160056.538452886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,82 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arie Miller <renari@arimil.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 8042312e73c50de82634ce63eae7cf219464b481 ]
+[ Upstream commit da6e25842431982d5a53cf00d925b98c690f4467 ]
 
-rog_ryujin_raw_event() parses response headers and payload fields without
-first checking that they are present in the received report. A short report
-can therefore make the driver consume uninitialized bytes from the HID
-transport buffer and expose them as sensor values through sysfs.
+cifs_posix_to_fattr() ignores the return value of posix_info_parse().
+When a malformed POSIX directory entry is encountered (e.g. invalid
+SID lengths from an untrusted server), posix_info_parse() returns -1
+without populating the 'parsed' struct.  The uninitialized stack
+memory in parsed.owner and parsed.group is then passed to
+sid_to_id(), which processes the garbage bytes and passes them to
+request_key() to construct a SID string, potentially leaking kernel
+stack contents to the userspace idmap daemon.
 
-Validate the response header and the fields used by each response type
-before parsing them.
+Fix this by checking the return value and skipping the SID-to-id
+mapping when parsing fails.  The remaining fattr fields (timestamps,
+mode, etc.) are populated directly from the 'info' pointer so they
+are unaffected.
 
-Fixes: ed3e03790c5c ("hwmon: Add driver for ASUS ROG RYUJIN II 360 AIO cooler")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hwmon/20260812104617.858D01F000E9@smtp.kernel.org/
+Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol sparse
-Signed-off-by: Arie Miller <renari@arimil.com>
-Link: https://patch.msgid.link/20260904022129.97896-2-renari@arimil.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus_rog_ryujin.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/smb/client/readdir.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
-index 80563ce38519d..593950802b39d 100644
---- a/drivers/hwmon/asus_rog_ryujin.c
-+++ b/drivers/hwmon/asus_rog_ryujin.c
-@@ -411,10 +411,15 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index 6b619506b7a1c..bdf91737b46ff 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -242,8 +242,9 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		    struct cifs_sb_info *cifs_sb)
  {
- 	struct rog_ryujin_data *priv = hid_get_drvdata(hdev);
+ 	struct smb2_posix_info_parsed parsed;
++	int rc;
  
--	if (data[0] != RYUJIN_CMD_PREFIX)
-+	if (size < 2 || data[0] != RYUJIN_CMD_PREFIX)
- 		return 0;
+-	posix_info_parse(info, NULL, &parsed);
++	rc = posix_info_parse(info, NULL, &parsed);
  
- 	if (data[1] == RYUJIN_GET_COOLER_STATUS_CMD_RESPONSE) {
-+		if (size <= priv->info->temp_offset + 1 ||
-+		    size <= priv->info->pump_speed_offset + 1 ||
-+		    size <= priv->info->fan_speed_offset + 1)
-+			return 0;
-+
- 		/* Received coolant temp and speeds of pump and internal fan */
- 		priv->temp_input[0] = data[priv->info->temp_offset] * 1000 +
- 			data[priv->info->temp_offset + 1] * 100;
-@@ -426,6 +431,9 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 		if (!completion_done(&priv->cooler_status_received))
- 			complete_all(&priv->cooler_status_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_SPEED_CMD_RESPONSE) {
-+		if (size <= RYUJIN_CONTROLLER_SPEED_3 + 1)
-+			return 0;
-+
- 		/* Received speeds of four fans attached to the controller */
- 		priv->speed_input[2] = get_unaligned_le16(data + RYUJIN_CONTROLLER_SPEED_1);
- 		priv->speed_input[3] = get_unaligned_le16(data + RYUJIN_CONTROLLER_SPEED_2);
-@@ -435,6 +443,9 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 		if (!completion_done(&priv->controller_status_received))
- 			complete_all(&priv->controller_status_received);
- 	} else if (data[1] == RYUJIN_GET_COOLER_DUTY_CMD_RESPONSE) {
-+		if (size <= RYUJIN_INTERNAL_FAN_DUTY)
-+			return 0;
-+
- 		/* Received report for pump and internal fan duties (in %) */
- 		if (data[RYUJIN_PUMP_DUTY] == 0 && data[RYUJIN_INTERNAL_FAN_DUTY] == 0) {
- 			/*
-@@ -461,6 +472,9 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 		if (!completion_done(&priv->cooler_duty_received))
- 			complete_all(&priv->cooler_duty_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_DUTY_CMD_RESPONSE) {
-+		if (size <= RYUJIN_CONTROLLER_DUTY)
-+			return 0;
-+
- 		/* Received report for controller duty for fans (in PWM) */
- 		if (data[RYUJIN_CONTROLLER_DUTY] == 0) {
- 			/*
+ 	memset(fattr, 0, sizeof(*fattr));
+ 	fattr->cf_uniqueid = le64_to_cpu(info->Inode);
+@@ -280,8 +281,15 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		 le32_to_cpu(info->ReparseTag),
+ 		 le32_to_cpu(info->Mode));
+ 
+-	sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
+-	sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
++	if (rc < 0) {
++		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
++			 __func__, rc);
++	} else {
++		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
++		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
++	}
+ }
+ 
+ static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
 -- 
 2.53.0
 
