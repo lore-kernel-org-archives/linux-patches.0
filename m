@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A413451DA;
-	Sat, 17 Oct 2026 17:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97FF3C8C65;
+	Sat, 17 Oct 2026 17:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259864; cv=none; b=Rf5gOoXsqcCkNRRxgs2isyjrQbq35Gi4zMgHQTjvR06eK8yd6gv+y8V3WFxdJf6HOtOtTZDwIDqMzR9/MlhaLU9Fg76XlfXZdkY5O3cwsm4mEXScBQX1pc0FhQtTqAoaxtzLu1ei/qFlFZE7D/nidD06cyPAxmKIN5D9i3CpIgs=
+	t=1792259867; cv=none; b=BFjUoFvlRlEMR7Qz1qDaBZTfPHrQDA09ITbnT38QJ+Bq5wsEdRgsY8yJ2Z8AKqnCDYPMP4VU2nPgGVZALyjamLoCgRKvlC0BVOmCb1ibQNUSEq+1zE6hAXP0CzqDNcCAa6T8kCehj4CjB6rQlE6MdrQZY5+BU7bDNVZmt05uEZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259864; c=relaxed/simple;
-	bh=UDc95Eit/cH4odf8PCbES8CM9mhC05xJ72NdbUhAH34=;
+	s=arc-20240116; t=1792259867; c=relaxed/simple;
+	bh=IBR0EAwbJ/iVWths+f0JE4+gWcDtwyVAqK51XQWajt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4r+EF3iC+cpG/omi9jVxdzwoLazXHUK8hUAzNmkAmZfePDPNRXW5LLYeaUHbzvzFWZWPxY65AAkM+IN7HQ5TktDfdEXEROC51QFq+DExJaX/u7eLlAinLLOXdq/14EK3XiJlskMFcNTdEXpyBnXcmG4a+nd53dW/pzIHrO48sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPYiBA74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VpmI2L++dQM7e0m9Ihgu5w/Nyo2tg3AOQ6X921jzgDwQFl2L2ZcPewfIkm1I1AqkodfaY4wKxJ0JfVgbie2CAaxeSAE9PV2L+6gR4HYlRIs8FLajnCILn8Zifb1DrLxF4k39JgR6C2J7O1xKCq0j/Unbjd0Er3dW0OFUs+HUaKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL1F86iN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPYiBA74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8881F000C5;
-	Sat, 17 Oct 2026 17:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL1F86iN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017AA1F000C4;
+	Sat, 17 Oct 2026 17:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259863;
-	bh=dOdXblx4mpux5CZ/d7kQrWdTe3PTy9U+DeIdTETqV0w=;
+	s=korg; t=1792259866;
+	bh=S3gjpr6L1m1EJsW9vR2lmPIA+fDPfXmGquAaMkImLQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPYiBA74C7OJa4/v0X90wj7dgcIl7g743ay9prifX5Ou/VTi36zbDbKJ9N2VdRUHq
-	 D+z67m8UYNczPiRJFvHlaBiw/Z567/oBAqDoctxzE3UX4eAaY+REPsk2s4iOZsFC+t
-	 tfvqrM87eyULTJBh/VaulfHWQt7HNqejMKkzWgNc=
+	b=UL1F86iNX3R7KGeiPUf8ysSw0Mri4AOIxdMQQMaNVMrwWydRa19npc7NGzb6fcB9Y
+	 nnJ6oyb0hiH/eK8ZmjjQ/FaYBtVxe9bv6LmqCKihLyy1Fxr3KykNzcoFs68xfz/1nb
+	 pw7pjTz6YwqjnuMRdUyYdRMf33D/dyWNVOlQzbSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Shreeya Patel <shreeya.patel@collabora.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1354/1674] KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU
-Date: Sat, 17 Oct 2026 18:00:26 +0200
-Message-ID: <20261017160505.919766723@linuxfoundation.org>
+Subject: [PATCH 6.6 1355/1674] iio: light: ltrf216a: Return floating point values
+Date: Sat, 17 Oct 2026 18:00:27 +0200
+Message-ID: <20261017160505.943733721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,100 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Shreeya Patel <shreeya.patel@collabora.com>
 
-[ Upstream commit 6d00e67326d831e6e610933a3800712f4ffe6ec1 ]
+[ Upstream commit 00799564bafdd73db1bb0482eefbe1aba7d5e15f ]
 
-When emulating INVVPID, KVM executes INVVPID on the physical CPU using
-vpid02 (instead of the L1 assigned VPID), after doing some validations
-on the operands. However, it is possible that the physical CPU KVM
-executes INVVPID on is different from the CPU L2 is running on.
+For better precision of input light intesity, return floating point
+values through sysfs instead of an integer value
 
-For example, in the following scenario:
-- L2 runs on CPU #1 and exits to L1 (vmx->nested.vmcs02.cpu=1)
-- L1 migrates to CPU #2 and executes INVVPID
-- KVM executes INVVPID on CPU #2
-- L1 migrates back to CPU #1 and runs L2 (vmx->nested.vmcs02.cpu=1)
-
-The TLB entries on CPU #1 are never invalidated, because INVVPID was
-executed on CPU #2, and vmcs02 never ran on a different pCPU (i.e.
-vmx_vcpu_load_vmcs() will *not* request KVM_REQ_TLB_FLUSH).
-
-Ensure that INVVPID is being executed on the same pCPU that L2 last ran
-on, and if not, fallback to clearing last_vpid=0 to trigger a full VPID
-flush on the next nested VM-Enter (as KVM will detect L1 using a
-different VPID for L2). If L2 ends up running on a different pCPU, KVM
-will flush the TLB anyway through vmx_vcpu_load_vmcs().
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260616214652.2157032-4-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Shreeya Patel <shreeya.patel@collabora.com>
+Link: https://lore.kernel.org/r/20231107192005.285534-1-shreeya.patel@collabora.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: c132aef0e757 ("iio: light: ltrf216a: fix runtime PM reference leak in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ drivers/iio/light/ltrf216a.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 2561f2288dc1b..2d9cfdfa78061 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -5855,6 +5855,7 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
- 	} operand;
- 	u16 vpid02;
- 	int r, gpr_index;
-+	int cpu;
+diff --git a/drivers/iio/light/ltrf216a.c b/drivers/iio/light/ltrf216a.c
+index 8de4dd849936d..68dc48420a886 100644
+--- a/drivers/iio/light/ltrf216a.c
++++ b/drivers/iio/light/ltrf216a.c
+@@ -234,7 +234,7 @@ static int ltrf216a_read_data(struct ltrf216a_data *data, u8 addr)
+ static int ltrf216a_get_lux(struct ltrf216a_data *data)
+ {
+ 	int ret, greendata;
+-	u64 lux, div;
++	u64 lux;
  
- 	if (!(vmx->nested.msrs.secondary_ctls_high &
- 	      SECONDARY_EXEC_ENABLE_VPID) ||
-@@ -5896,6 +5897,10 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
- 	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
- 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
- 	 * irrelevant (and there may not be a loaded vmcs12).
-+	 *
-+	 * If vmcs02 was last loaded on a different pCPU, then defer the flush
-+	 * by invalidating the nested VPID tracking to ensure that KVM performs
-+	 * the invalidation on the correct pCPU.
- 	 */
- 	vpid02 = nested_get_vpid02(vcpu);
- 	switch (type) {
-@@ -5904,17 +5909,32 @@ static int handle_invvpid(struct kvm_vcpu *vcpu)
- 		    is_noncanonical_address(operand.gla, vcpu))
- 			return nested_vmx_fail(vcpu,
- 				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
--		vpid_sync_vcpu_addr(vpid02, operand.gla);
-+		cpu = get_cpu();
-+		if (cpu != vmx->nested.vmcs02.cpu)
-+			vmx->nested.last_vpid = 0;
-+		else
-+			vpid_sync_vcpu_addr(vpid02, operand.gla);
-+		put_cpu();
- 		break;
- 	case VMX_VPID_EXTENT_SINGLE_CONTEXT:
- 	case VMX_VPID_EXTENT_SINGLE_NON_GLOBAL:
- 		if (!operand.vpid)
- 			return nested_vmx_fail(vcpu,
- 				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
--		vpid_sync_context(vpid02);
-+		cpu = get_cpu();
-+		if (cpu != vmx->nested.vmcs02.cpu)
-+			vmx->nested.last_vpid = 0;
-+		else
-+			vpid_sync_context(vpid02);
-+		put_cpu();
- 		break;
- 	case VMX_VPID_EXTENT_ALL_CONTEXT:
--		vpid_sync_context(vpid02);
-+		cpu = get_cpu();
-+		if (cpu != vmx->nested.vmcs02.cpu)
-+			vmx->nested.last_vpid = 0;
-+		else
-+			vpid_sync_context(vpid02);
-+		put_cpu();
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
+ 	ret = ltrf216a_set_power_state(data, true);
+ 	if (ret)
+@@ -246,10 +246,9 @@ static int ltrf216a_get_lux(struct ltrf216a_data *data)
+ 
+ 	ltrf216a_set_power_state(data, false);
+ 
+-	lux = greendata * 45 * LTRF216A_WIN_FAC * 100;
+-	div = data->als_gain_fac * data->int_time_fac * 100;
++	lux = greendata * 45 * LTRF216A_WIN_FAC;
+ 
+-	return div_u64(lux, div);
++	return lux;
+ }
+ 
+ static int ltrf216a_read_raw(struct iio_dev *indio_dev,
+@@ -279,7 +278,8 @@ static int ltrf216a_read_raw(struct iio_dev *indio_dev,
+ 		if (ret < 0)
+ 			return ret;
+ 		*val = ret;
+-		return IIO_VAL_INT;
++		*val2 = data->als_gain_fac * data->int_time_fac;
++		return IIO_VAL_FRACTIONAL;
+ 	case IIO_CHAN_INFO_INT_TIME:
+ 		mutex_lock(&data->lock);
+ 		ret = ltrf216a_get_int_time(data, val, val2);
 -- 
 2.53.0
 
