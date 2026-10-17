@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C538F233;
-	Sat, 17 Oct 2026 17:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0140D35E93B;
+	Sat, 17 Oct 2026 17:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258518; cv=none; b=KJauoYpcIXACpwMGYCYxRr+UHG92CMHichUgGNBwJ7IlxLGOAmRoaqe2kUuiV/fXRMxrSgzBNv1ZYU0V3nX1KjZ487RA1jMB3GwZVJb80++hlYvka1TuW5/nv6uxhw+xN7icXJJBL4f20nagFFmy/TGiOLq33oKh3XVIcwdBSRg=
+	t=1792258522; cv=none; b=fjHRI8rX801ieCa/BrfCHZ0B6OkcXnVpTl0bKYvSeil+BW9gBtj0GC8PZSHqiZ9DqZwmlxUmGHtqaTurE1lRkqsxS8dhsfLr3ccx5jDDZkLANsVXWvWDLqJIWNEXdM7004hzTQxEXqWQhmKoOuGLWSYtzoATlX00O1mlOgqqznA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258518; c=relaxed/simple;
-	bh=YNxLGhyrAx/K5pKZ61tIe9qF53+bHG06nGOgQKadlqc=;
+	s=arc-20240116; t=1792258522; c=relaxed/simple;
+	bh=nhMDEAxLuDSqanmBqb9f+wjeMs/NljxHP1TA7LczaZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=az3+aTuw4WTovCEnZZptNee3mar1+S2VThtUBkhALGdZisU06i72nFC6BuihVWPy4rDP1Gh5L2sj4ArbviP5icwD7FmNL8ZcOkiyCAh45GzXPovr1+FdX+uOiRlkDC4SYz5MFgJmupImnQBx7qRDqGCQtat++Vr1bQCsA219mTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsjJn2pu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CYyOhREUclikHTAuBe/Crr2+lMfdOZLySQPcZGLumIJbnv2VC0290jX3YU/MjG/zlqzCt5/XCgbr85agnoufs6rRmQMY8AT8G9U/Sp1J5OxY45McLe0gAGzeQWepHSKNyXJDZMzuzSjsmpm4nkojiTHfM4ZsS2qoJzf94MJIZqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLblY/BU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsjJn2pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418B51F000C5;
-	Sat, 17 Oct 2026 17:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLblY/BU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB761F000C4;
+	Sat, 17 Oct 2026 17:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258517;
-	bh=0MbZgBaRMu1Z4/Vfy0YtzJslEQJb/tl/PKaGmnyAEmQ=;
+	s=korg; t=1792258520;
+	bh=cZzDDMyJmtq4/oVisvmHJ6EZ+Yzbnt104d8uHe3tD4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KsjJn2pu+2cRwwBuqBTO+UOrlqZLgdFCMt+BiotqwZhZ5ejUuwfs6REkm1MT40SZA
-	 JnGJK8cfbQdVtPG4qI8XeIwGiqJqHAezdI6zs7dO9rPfFU6Q73x1JaedqJ3lg8RYsg
-	 Cy9wPKwQNmzU2dvgXeWuQeaXZwbbp5k0bpyrZfaU=
+	b=wLblY/BUBXUa6xRyTfkFDpqzYyfEOCLGmExQUg3/F2ZrXAI5v7cxfXDOG203RXvg6
+	 XrNcpMcnz2R2WXms62P/U3zvbY+IltSkKNMXOwBdmWkWDDqVPm9uymn+7F6iYUUk/Q
+	 zaDhpLnJwIQ/gctJoMji+f9WwMAyrFpvdqZ2Tuo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0911/1674] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
-Date: Sat, 17 Oct 2026 17:53:03 +0200
-Message-ID: <20261017160454.517495983@linuxfoundation.org>
+Subject: [PATCH 6.6 0912/1674] xfrm: account XFRMA_IF_ID in aevent size calculation
+Date: Sat, 17 Oct 2026 17:53:04 +0200
+Message-ID: <20261017160454.543282888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,116 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
+[ Upstream commit 7081d46d32312f1a31f0e0e99c6835a394037599 ]
 
-We need to check __in6_dev_get() for possible NULL value, as
-suggested by Yiming Qian.
+xfrm_get_ae() allocates the reply skb with xfrm_aevent_msgsize(), then
+build_aevent() appends attributes including XFRMA_IF_ID when x->if_id is
+set.
 
-Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
-and two missing READ_ONCE().
+xfrm_aevent_msgsize() does not include space for XFRMA_IF_ID. For states
+with if_id, build_aevent() can fail with -EMSGSIZE and hit BUG_ON(err < 0)
+in xfrm_get_ae(), turning a malformed netlink interaction into a kernel
+panic.
 
-Note that @dev can't be NULL.
+Account XFRMA_IF_ID in the size calculation unconditionally and replace
+the BUG_ON with normal error unwinding.
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7e6526404ade ("xfrm: Add a new lookup key to match xfrm interfaces.")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/xfrm/xfrm_user.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index 9bf3be3a26c5b..05d8d9a5b3537 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -650,6 +650,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_schema *sc,
- 				    unsigned int sclen, bool is_input)
- {
-+	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
-+	struct net_device *dev = skb_dst_dev_rcu(skb);
-+	struct inet6_dev *i_skb_dev, *idev;
- 	struct timespec64 ts;
- 	ktime_t tstamp;
- 	u64 raw64;
-@@ -660,13 +663,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index b926d4651c068..2f84d8ddc46d4 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2404,7 +2404,8 @@ static inline unsigned int xfrm_aevent_msgsize(struct xfrm_state *x)
+ 	       + nla_total_size_64bit(sizeof(struct xfrm_lifetime_cur))
+ 	       + nla_total_size(sizeof(struct xfrm_mark))
+ 	       + nla_total_size(4) /* XFRM_AE_RTHR */
+-	       + nla_total_size(4); /* XFRM_AE_ETHR */
++	       + nla_total_size(4) /* XFRM_AE_ETHR */
++	       + nla_total_size(sizeof(x->if_id)); /* XFRMA_IF_ID */
+ }
  
- 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
+ static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct km_event *c)
+@@ -2505,7 +2506,12 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	c.portid = nlh->nlmsg_pid;
  
-+	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
-+	idev = __in6_dev_get(dev);
-+
- 	/* hop_lim and node_id */
- 	if (trace->type.bit0) {
- 		byte = ipv6_hdr(skb)->hop_limit;
- 		if (is_input)
- 			byte--;
+ 	err = build_aevent(r_skb, x, &c);
+-	BUG_ON(err < 0);
++	if (err < 0) {
++		spin_unlock_bh(&x->lock);
++		xfrm_state_put(x);
++		kfree_skb(r_skb);
++		return err;
++	}
  
--		raw32 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id;
-+		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
- 
- 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
- 		data += sizeof(__be32);
-@@ -674,18 +680,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id */
- 	if (trace->type.bit1) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
- 
--		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
-@@ -765,7 +771,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 		if (is_input)
- 			byte--;
- 
--		raw64 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id_wide;
-+		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
- 
- 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
- 		data += sizeof(__be64);
-@@ -773,18 +779,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id (wide) */
- 	if (trace->type.bit9) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
- 
--		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
+ 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
+ 	spin_unlock_bh(&x->lock);
 -- 
 2.53.0
 
