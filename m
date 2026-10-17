@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B13A8753;
-	Sat, 17 Oct 2026 18:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E467735DA41;
+	Sat, 17 Oct 2026 18:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260249; cv=none; b=WQD9cxtbTFoj34f5RiZckmZapWuAjOLRYCgowJjLNyBb80Y4TCdgay8y0vB34tozgbiGo/C1fiIYa6vmxbwngR7vceOBD7f/53SR8Hcvob4m5WHaO7KDscBudrrHUiVGbMefIGFnMSKNpXRT4facRvzlJr+A/GUsQB1tZzjR5Dg=
+	t=1792260252; cv=none; b=LoHBMBlkUocYoVAs6Gu7d5SpzR7JSpKO/VIawnhzgfzjAWHNn8FbblhqluuQYKXG7m39MpKxtFy8CknFU3TuNKeiOl8KoqeiJ8GXGTJrujrF9hfuxiOpwBOjcc5PbFGKVwJzbI7CLVopBSLrDhDB3ND0Q2Ln8U5MKi1ab5iEzmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260249; c=relaxed/simple;
-	bh=jYx9fdix2cey4ScuMsS/eaCl1A57mR7lnsjYn1tcKH8=;
+	s=arc-20240116; t=1792260252; c=relaxed/simple;
+	bh=Nb/Zwo2SRrhgkuwpbrk6Dmno1Zmr/2FB97gZOMF6RrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9FjOPQBBaR1CDykkaEXUfS5xYa9xZygh+riFBWPRGlaaEkI1J50MIw3dpkdXlV1k0kX/X1OyFpqQTrIX1zwtFrw+YkrN6OXWE5W0MVr5xGFBxeQEfs+r9rN41GGNQeazv4xiyspuauLbNtuI+NvQ9gCOyuGk48qSkG5X1D3mT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu1u3Xml; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jVSkHYSncSa+1BHdJk0knXNpZzx7Crsd3XGN/93c74fk4N6z+8R1R5IBsG/0xKQ1NmNRCbPbfOQrKJPjUFFAX0paScoOyPY3wUPdOhvr2vW23vgOKAAPlRZ3Yr0ga7xGh/7hwuqfTr7qRST6/Cak+sSsvuiSWe2/rXneh1R476Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtbn4sRG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu1u3Xml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C471F000C4;
-	Sat, 17 Oct 2026 18:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtbn4sRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4963C1F000C4;
+	Sat, 17 Oct 2026 18:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260247;
-	bh=WNxIshRqN3V9x4Qb7fNWI7fBNU7UENrWi1ipluCKq68=;
+	s=korg; t=1792260250;
+	bh=iGNxIV3oYCUc0M3jpNcokroodPWjBMIFcA4HcGRPrpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iu1u3XmlLN6wiRHWEwcn+zN8f3oEVVJl0F/426MB8GUktqCzgQ6bdWGGZlGPDz7wA
-	 LSAaiO3IWlCL1C4hcXdHTybKCnRlJlU0PPi0ogRFZFLbRR1JaxvPyiVnC5hZD21NW0
-	 2vZXg+1qAojHogLCrkVXQS37skDGvXRYqZXExeLw=
+	b=wtbn4sRGAWthXs5ICIQr1WymVu+IQCLJuyt5Caz+BX3l5HXJueegWX/T0+UMsnAFO
+	 tlgDdaL9Xu8Z7evovOXewegolxy8RiiBCMUP8MYbcL18Sraf0Ee5amXnNhfmhOEJgz
+	 5AzLy5pilm0xys3XO3cHh6Rp8aaOg1Bvmzr9cbHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Philip Mueller <philm@manjaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1481/1674] esp: do not unref managed frag pages in esp_ssg_unref()
-Date: Sat, 17 Oct 2026 18:02:33 +0200
-Message-ID: <20261017160509.166106757@linuxfoundation.org>
+Subject: [PATCH 6.6 1482/1674] platform/x86: asus-wmi: disable USB0 hub on ROG Ally before suspend
+Date: Sat, 17 Oct 2026 18:02:34 +0200
+Message-ID: <20261017160509.190491673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,84 +47,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Azzouzi <maherazz04@gmail.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit 21697720ff43b8dfa25b8e8d9ca7f56f4597fc80 ]
+[ Upstream commit e0894ff038d86f30614ec16ec26dacb88c8d2bd4 ]
 
-esp_ssg_unref() releases the page references held on the source
-scatterlist after the AEAD operation completes.  It calls
-skb_page_unref() on every frag page for an out-of-place transform
-(req->src != req->dst), and in the error path of esp_output_tail()
-(already_unref == true) on the request's own scatterlist.
+ASUS have worked around an issue in XInput where it doesn't support USB
+selective suspend, which causes suspend issues in Windows. They worked
+around this by adjusting the MCU firmware to disable the USB0 hub when
+the screen is switched off during the Microsoft DSM suspend path in ACPI.
 
-This is wrong when the skb carries managed frags
-(SKBFL_MANAGED_FRAG_REFS).  Managed frags are owned by a zerocopy ubuf
-and the skb does not hold a per-frag page reference; io_uring SEND_ZC
-with a registered buffer attaches the bvec pages this way via
-io_sg_from_iter().  The rest of the stack honours this invariant:
-skb_release_data() skips the per-frag unref when SKBFL_MANAGED_FRAG_REFS
-is set, and skb_zcopy_managed() is the guard used at the other unref
-sites.
+The issue we have with this however is one of timing - the call the tells
+the MCU to this isn't able to complete before suspend is done so we call
+this in a prepare() and add a small msleep() to ensure it is done. This
+must be done before the screen is switched off to prevent a variety of
+possible races.
 
-esp_ssg_unref() is missing that guard, so for a managed-frag skb it
-drops a page reference the skb never acquired.  This can underflow the
-page reference count and free a page that is still in use.
+Further to this the MCU powersave option must also be disabled as it can
+cause a number of issues such as:
+- unreliable resume connection of N-Key
+- complete loss of N-Key if the power is plugged in while suspended
+Disabling the powersave option prevents this.
 
-Guard the function with skb_zcopy_managed() so both unref paths are
-skipped for managed-frag skbs, matching skb_release_data().
+Without this the MCU is unable to initialise itself correctly on resume.
 
-Fixes: cac2661c53f3 ("esp4: Avoid skb_cow_data whenever possible")
-Fixes: 03e2a30f6a27 ("esp6: Avoid skb_cow_data whenever possible")
-Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: "Luke D. Jones" <luke@ljones.dev>
+Tested-by: Philip Mueller <philm@manjaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231126230521.125708-2-luke@ljones.dev
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: ef3daa2b84a2 ("platform/x86: asus-wmi: fix resource leaks on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 7 +++++++
- net/ipv6/esp6.c | 7 +++++++
- 2 files changed, 14 insertions(+)
+ drivers/platform/x86/asus-wmi.c            | 50 ++++++++++++++++++++++
+ include/linux/platform_data/x86/asus-wmi.h |  3 ++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 8850a1dc8c339..ec7415e3dba08 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -103,6 +103,13 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- 	struct aead_request *req;
- 	struct scatterlist *sg;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index b56be64fcc631..a7af32723a089 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -16,6 +16,7 @@
+ #include <linux/acpi.h>
+ #include <linux/backlight.h>
+ #include <linux/debugfs.h>
++#include <linux/delay.h>
+ #include <linux/dmi.h>
+ #include <linux/fb.h>
+ #include <linux/hwmon.h>
+@@ -133,6 +134,11 @@ module_param(fnlock_default, bool, 0444);
+ #define NVIDIA_TEMP_MIN		75
+ #define NVIDIA_TEMP_MAX		87
  
-+	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
-+	 * per-frag page reference, so we must not drop one here.  Mirrors
-+	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
-+	 */
-+	if (skb_zcopy_managed(skb))
-+		return;
++/* Controls the power state of the USB0 hub on ROG Ally which input is on */
++#define ASUS_USB0_PWR_EC0_CSEE "\\_SB.PCI0.SBRG.EC0.CSEE"
++/* 300ms so far seems to produce a reliable result on AC and battery */
++#define ASUS_USB0_PWR_EC0_CSEE_WAIT 300
 +
- 	if (x->props.flags & XFRM_STATE_ESN)
- 		extralen += sizeof(struct esp_output_extra);
+ static const char * const ashs_ids[] = { "ATK4001", "ATK4002", NULL };
  
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 66a4d37bc0f9a..de29dd1489f74 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -120,6 +120,13 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- 	struct aead_request *req;
- 	struct scatterlist *sg;
+ static int throttle_thermal_policy_write(struct asus_wmi *);
+@@ -300,6 +306,9 @@ struct asus_wmi {
  
-+	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
-+	 * per-frag page reference, so we must not drop one here.  Mirrors
-+	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
-+	 */
-+	if (skb_zcopy_managed(skb))
-+		return;
+ 	bool fnlock_locked;
+ 
++	/* The ROG Ally device requires the MCU USB device be disconnected before suspend */
++	bool ally_mcu_usb_switch;
 +
- 	if (x->props.flags & XFRM_STATE_ESN)
- 		extralen += sizeof(struct esp_output_extra);
+ 	struct asus_wmi_debug debug;
  
+ 	struct asus_wmi_driver *driver;
+@@ -4367,6 +4376,8 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 	asus->nv_temp_tgt_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_NV_THERM_TARGET);
+ 	asus->panel_overdrive_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_PANEL_OD);
+ 	asus->mini_led_mode_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_MINI_LED_MODE);
++	asus->ally_mcu_usb_switch = acpi_has_method(NULL, ASUS_USB0_PWR_EC0_CSEE)
++						&& dmi_match(DMI_BOARD_NAME, "RC71L");
+ 
+ 	if (asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY))
+ 		asus->throttle_thermal_policy_dev = ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY;
+@@ -4531,6 +4542,43 @@ static int asus_hotk_resume(struct device *device)
+ 		asus_wmi_fnlock_update(asus);
+ 
+ 	asus_wmi_tablet_mode_get_state(asus);
++
++	return 0;
++}
++
++static int asus_hotk_resume_early(struct device *device)
++{
++	struct asus_wmi *asus = dev_get_drvdata(device);
++
++	if (asus->ally_mcu_usb_switch) {
++		if (ACPI_FAILURE(acpi_execute_simple_method(NULL, ASUS_USB0_PWR_EC0_CSEE, 0xB8)))
++			dev_err(device, "ROG Ally MCU failed to connect USB dev\n");
++		else
++			msleep(ASUS_USB0_PWR_EC0_CSEE_WAIT);
++	}
++	return 0;
++}
++
++static int asus_hotk_prepare(struct device *device)
++{
++	struct asus_wmi *asus = dev_get_drvdata(device);
++	int result, err;
++
++	if (asus->ally_mcu_usb_switch) {
++		/* When powersave is enabled it causes many issues with resume of USB hub */
++		result = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_MCU_POWERSAVE);
++		if (result == 1) {
++			dev_warn(device, "MCU powersave enabled, disabling to prevent resume issues");
++			err = asus_wmi_set_devstate(ASUS_WMI_DEVID_MCU_POWERSAVE, 0, &result);
++			if (err || result != 1)
++				dev_err(device, "Failed to set MCU powersave mode: %d\n", err);
++		}
++		/* sleep required to ensure USB0 is disabled before sleep continues */
++		if (ACPI_FAILURE(acpi_execute_simple_method(NULL, ASUS_USB0_PWR_EC0_CSEE, 0xB7)))
++			dev_err(device, "ROG Ally MCU failed to disconnect USB dev\n");
++		else
++			msleep(ASUS_USB0_PWR_EC0_CSEE_WAIT);
++	}
+ 	return 0;
+ }
+ 
+@@ -4578,6 +4626,8 @@ static const struct dev_pm_ops asus_pm_ops = {
+ 	.thaw = asus_hotk_thaw,
+ 	.restore = asus_hotk_restore,
+ 	.resume = asus_hotk_resume,
++	.resume_early = asus_hotk_resume_early,
++	.prepare = asus_hotk_prepare,
+ };
+ 
+ /* Registration ***************************************************************/
+diff --git a/include/linux/platform_data/x86/asus-wmi.h b/include/linux/platform_data/x86/asus-wmi.h
+index 8e48bdeb55493..5fa03fbe536a5 100644
+--- a/include/linux/platform_data/x86/asus-wmi.h
++++ b/include/linux/platform_data/x86/asus-wmi.h
+@@ -111,6 +111,9 @@
+ /* Charging mode - 1=Barrel, 2=USB */
+ #define ASUS_WMI_DEVID_CHARGE_MODE	0x0012006C
+ 
++/* MCU powersave mode */
++#define ASUS_WMI_DEVID_MCU_POWERSAVE   0x001200E2
++
+ /* epu is connected? 1 == true */
+ #define ASUS_WMI_DEVID_EGPU_CONNECTED	0x00090018
+ /* egpu on/off */
 -- 
 2.53.0
 
