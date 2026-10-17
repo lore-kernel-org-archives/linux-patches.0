@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9572717BED0;
-	Sat, 17 Oct 2026 17:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B837A2D7D3A;
+	Sat, 17 Oct 2026 17:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257972; cv=none; b=ipZz4RLOUjAmTdzyj7iT6pU0w6dOtsvDs8BiIdhXPB2gIBaiIgQ+i34oeNp1h9BphRAX158FgFKmMxgiRfA7V5XMzMzKgU1apSVZLoXleuEZf/F0R1s0ybeZAUkkrj0ns30vMEV/mHGQjcOs8hceBL2+Rt7jkHm8glV+2l6yFoQ=
+	t=1792257975; cv=none; b=qAlMaKlm0rh5alkAR6EIkBY2NrSgroWFaklgvsG2SmGIgPu+C+WRvu3KEG9/SlxUrc1dTpvaIFnwU1OJbAheARuGRBbWPgVwUE/UO4SbY78fB6DW5p1JaJFaLorLxMmza4LjkkbFzFmxYZQNmLbcmYEyOXDoAKNGB4WWblktQ9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257972; c=relaxed/simple;
-	bh=MQ2Hr+QRZfM2unundhuZDhPg1i0UPDjfOr5Xjf79p3g=;
+	s=arc-20240116; t=1792257975; c=relaxed/simple;
+	bh=IOKps5CU1dbKsGAoQZOrAQrJBsjExCS3BETn7Qqg3Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kxu3Q7yRakn3YU8pFvNAm3QTPowOiycKLTX1EZ/zRkCDgtm8EMdHi/hjkwbdWL2OqMt6KUAkdaPAaFbbm3ixhH8fova8B80lz7JOC25t6ucVMSjtDHeYnVeRxIgVLWsuNF+OmwzXGyERe1Lf1NtwpxOlp47C43b/nFOVgFQ+qH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6jib0Dj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CNx3OFjgMwpzhYrAZPdmqqIzUYEho83Sjishg0ey/55WB9P/VCn4yb/1LyrVioxIs1nsYOdHHAdr9In5W1/1whGvvS495gsGF3R7Z3xsXBFOoacg616q9/UIK85FkcywxF87XRHWpFm68AO6oCNldJVe72BUHy4jHVM5Ztwbj48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaGpTfc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6jib0Dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E301F000C4;
-	Sat, 17 Oct 2026 17:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaGpTfc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D0D1F000C4;
+	Sat, 17 Oct 2026 17:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257971;
-	bh=6T+kgZ2nfb8VaH17tEgLHA2sakwLO8UW8ps3Yrx5O64=;
+	s=korg; t=1792257974;
+	bh=6eO6DtOwyFuSk3o831aobu/1rHtj1tCUEs8SRctjyDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6jib0Djntn0DrykFKmKIkkCRGAZP0CpTDgC+xkGBvuU0xWgJxIbb0IDPkm9JLfIi
-	 /7ggpNiJbSmvfxkOZZoQNCj9zsCK0Hpg1IuPG0jyyl7/ZTPLPvHsS33601MYW9BGIz
-	 8c0wXkiJ0hfagsUi6JqzZXC5IbE7UN+/2PE5e3Fc=
+	b=eaGpTfc4aIsrmubkUTi84+1II9wK5+C3FnQ7QzbN5pjRDCHgIjA4e1QEF7G2O7Am/
+	 bq6JTbyBJMj8LEd/jaWc4nAxFB7Fc9jiq6Tmk0rVAI37FrzFFQ0nllEirKrnina1cc
+	 8zzqmwMP5IGeoQ0IByeyOgZ1t7hukaSa4MQPV6fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0730/1674] btrfs: stop reserving excessive space for block group item insertions
-Date: Sat, 17 Oct 2026 17:50:02 +0200
-Message-ID: <20261017160449.843657356@linuxfoundation.org>
+Subject: [PATCH 6.6 0731/1674] btrfs: harden block_group::bg_list against list_del() races
+Date: Sat, 17 Oct 2026 17:50:03 +0200
+Message-ID: <20261017160449.867586027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,137 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 9ef17228e1096e7e75bdde752ae1f0e9a5bcc8ab ]
+[ Upstream commit 7511e29cf1355b2c47d0effb39e463119913e2f6 ]
 
-Space for block group item insertions, necessary after allocating a new
-block group, is reserved in the delayed refs block reserve. Currently we
-do this by incrementing the transaction handle's delayed_ref_updates
-counter and then calling btrfs_update_delayed_refs_rsv(), which will
-increase the size of the delayed refs block reserve by an amount that
-corresponds to the same amount we use for delayed refs, given by
-btrfs_calc_delayed_ref_bytes().
+As far as I can tell, these calls of list_del_init() on bg_list cannot
+run concurrently with btrfs_mark_bg_unused() or btrfs_mark_bg_to_reclaim(),
+as they are in transaction error paths and situations where the block
+group is readonly.
 
-That is an excessive amount because it corresponds to the amount of space
-needed to insert one item in a btree (btrfs_calc_insert_metadata_size())
-times 2 when the free space tree feature is enabled. All we need is an
-amount as given by btrfs_calc_insert_metadata_size(), since we only need to
-insert a block group item in the extent tree (or block group tree if this
-feature is enabled). By using btrfs_calc_insert_metadata_size() we will
-need to reserve 2 times less space when using the free space tree, putting
-less pressure on space reservation.
+However, if there is any chance at all of racing with mark_bg_unused(),
+or a different future user of bg_list, better to be safe than sorry.
 
-So use helpers to reserve and release space for block group item
-insertions that use btrfs_calc_insert_metadata_size() for calculation of
-the space.
+Otherwise we risk the following interleaving (bg_list refcount in parens)
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+T1 (some random op)                       T2 (btrfs_mark_bg_unused)
+                                        !list_empty(&bg->bg_list); (1)
+list_del_init(&bg->bg_list); (1)
+                                        list_move_tail (1)
+btrfs_put_block_group (0)
+                                        btrfs_delete_unused_bgs
+                                             bg = list_first_entry
+                                             list_del_init(&bg->bg_list);
+                                             btrfs_put_block_group(bg); (-1)
+
+Ultimately, this results in a broken ref count that hits zero one deref
+early and the real final deref underflows the refcount, resulting in a WARNING.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 7511e29cf135 ("btrfs: harden block_group::bg_list against list_del() races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c |  5 ++---
- fs/btrfs/delayed-ref.c | 35 +++++++++++++++++++++++++++++++++++
- fs/btrfs/delayed-ref.h |  2 ++
- fs/btrfs/transaction.c |  2 +-
- 4 files changed, 40 insertions(+), 4 deletions(-)
+ fs/btrfs/extent-tree.c |  8 ++++++++
+ fs/btrfs/transaction.c | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index c2c29bb9468f2..4ea1fb222ba90 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2799,7 +2799,7 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 163f73538cf76..7c4e3b87f608e 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2884,7 +2884,15 @@ int btrfs_finish_extent_commit(struct btrfs_trans_handle *trans)
+ 						   block_group->length,
+ 						   &trimmed);
  
- 		/* Already aborted the transaction if it failed. */
- next:
--		btrfs_delayed_refs_rsv_release(fs_info, 1, 0);
-+		btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
- 
- 		spin_lock(&fs_info->unused_bgs_lock);
++		/*
++		 * Not strictly necessary to lock, as the block_group should be
++		 * read-only from btrfs_delete_unused_bgs().
++		 */
++		ASSERT(block_group->ro);
++		spin_lock(&fs_info->unused_bgs_lock);
  		list_del_init(&block_group->bg_list);
-@@ -2912,8 +2912,7 @@ struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *tran
- #endif
- 
- 	list_add_tail(&cache->bg_list, &trans->new_bgs);
--	trans->delayed_ref_updates++;
--	btrfs_update_delayed_refs_rsv(trans);
-+	btrfs_inc_delayed_refs_rsv_bg_inserts(fs_info);
- 
- 	set_avail_alloc_bits(fs_info, type);
- 	return cache;
-diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
-index 39c3e2d9d401a..29e0a22e3d678 100644
---- a/fs/btrfs/delayed-ref.c
-+++ b/fs/btrfs/delayed-ref.c
-@@ -106,6 +106,41 @@ void btrfs_update_delayed_refs_rsv(struct btrfs_trans_handle *trans)
- 	trans->delayed_ref_csum_deletions = 0;
- }
- 
-+/*
-+ * Adjust the size of the delayed refs block reserve for 1 block group item
-+ * insertion, used after allocating a block group.
-+ */
-+void btrfs_inc_delayed_refs_rsv_bg_inserts(struct btrfs_fs_info *fs_info)
-+{
-+	struct btrfs_block_rsv *delayed_rsv = &fs_info->delayed_refs_rsv;
++		spin_unlock(&fs_info->unused_bgs_lock);
 +
-+	spin_lock(&delayed_rsv->lock);
-+	/*
-+	 * Inserting a block group item does not require changing the free space
-+	 * tree, only the extent tree or the block group tree, so this is all we
-+	 * need.
-+	 */
-+	delayed_rsv->size += btrfs_calc_insert_metadata_size(fs_info, 1);
-+	delayed_rsv->full = false;
-+	spin_unlock(&delayed_rsv->lock);
-+}
-+
-+/*
-+ * Adjust the size of the delayed refs block reserve to release space for 1
-+ * block group item insertion.
-+ */
-+void btrfs_dec_delayed_refs_rsv_bg_inserts(struct btrfs_fs_info *fs_info)
-+{
-+	struct btrfs_block_rsv *delayed_rsv = &fs_info->delayed_refs_rsv;
-+	const u64 num_bytes = btrfs_calc_insert_metadata_size(fs_info, 1);
-+	u64 released;
-+
-+	released = btrfs_block_rsv_release(fs_info, delayed_rsv, num_bytes, NULL);
-+	if (released > 0)
-+		trace_btrfs_space_reservation(fs_info, "delayed_refs_rsv",
-+					      0, released, 0);
-+}
-+
- /*
-  * Adjust the size of the delayed refs block reserve for 1 block group item
-  * update.
-diff --git a/fs/btrfs/delayed-ref.h b/fs/btrfs/delayed-ref.h
-index fb2eebb13184f..5dc4f2dc4f59b 100644
---- a/fs/btrfs/delayed-ref.h
-+++ b/fs/btrfs/delayed-ref.h
-@@ -415,6 +415,8 @@ int btrfs_check_delayed_seq(struct btrfs_fs_info *fs_info, u64 seq);
+ 		btrfs_unfreeze_block_group(block_group);
+ 		btrfs_put_block_group(block_group);
  
- void btrfs_delayed_refs_rsv_release(struct btrfs_fs_info *fs_info, int nr_refs, int nr_csums);
- void btrfs_update_delayed_refs_rsv(struct btrfs_trans_handle *trans);
-+void btrfs_inc_delayed_refs_rsv_bg_inserts(struct btrfs_fs_info *fs_info);
-+void btrfs_dec_delayed_refs_rsv_bg_inserts(struct btrfs_fs_info *fs_info);
- void btrfs_inc_delayed_refs_rsv_bg_updates(struct btrfs_fs_info *fs_info);
- void btrfs_dec_delayed_refs_rsv_bg_updates(struct btrfs_fs_info *fs_info);
- int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
 diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 615500dd37374..3fbf85cf3ad97 100644
+index 3fbf85cf3ad97..6dce8c299d699 100644
 --- a/fs/btrfs/transaction.c
 +++ b/fs/btrfs/transaction.c
-@@ -2112,7 +2112,7 @@ static void btrfs_cleanup_pending_block_groups(struct btrfs_trans_handle *trans)
-        struct btrfs_block_group *block_group, *tmp;
+@@ -164,7 +164,13 @@ void btrfs_put_transaction(struct btrfs_transaction *transaction)
+ 			cache = list_first_entry(&transaction->deleted_bgs,
+ 						 struct btrfs_block_group,
+ 						 bg_list);
++			/*
++			 * Not strictly necessary to lock, as no other task will be using a
++			 * block_group on the deleted_bgs list during a transaction abort.
++			 */
++			spin_lock(&transaction->fs_info->unused_bgs_lock);
+ 			list_del_init(&cache->bg_list);
++			spin_unlock(&transaction->fs_info->unused_bgs_lock);
+ 			btrfs_unfreeze_block_group(cache);
+ 			btrfs_put_block_group(cache);
+ 		}
+@@ -2113,7 +2119,13 @@ static void btrfs_cleanup_pending_block_groups(struct btrfs_trans_handle *trans)
  
         list_for_each_entry_safe(block_group, tmp, &trans->new_bgs, bg_list) {
--               btrfs_delayed_refs_rsv_release(fs_info, 1, 0);
-+               btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
+                btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
++		/*
++		* Not strictly necessary to lock, as no other task will be using a
++		* block_group on the new_bgs list during a transaction abort.
++		*/
++	       spin_lock(&fs_info->unused_bgs_lock);
                 list_del_init(&block_group->bg_list);
++	       spin_unlock(&fs_info->unused_bgs_lock);
         }
  }
+ 
 -- 
 2.53.0
 
