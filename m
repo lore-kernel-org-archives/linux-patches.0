@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBC140B11F;
-	Sat, 17 Oct 2026 07:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2790242DFE6;
+	Sat, 17 Oct 2026 07:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792222355; cv=none; b=eGOIU7+osICAvCF5vPnS750Y6q3z4tJipGDjPuHUVNTGiOEYxNmUpKsZS8ImT0udxVT46L+wJEAm7a2BIgmSb1KWEjsldQrIjOnL2tGeREhjjzx/ikF9ekBN1QncMjmORgX+JAANikZWkJXP2z785VxciXBw/jqtZ/cdFWS9W7U=
+	t=1792222363; cv=none; b=G6WWijwPmJ5KZwMbqYCIqiqjQHcq2Cx3SdT4Cw/DY94Dx5GMQ0MEqa9jW5X1NEpM/h3MEjS9DOZ40yH4m7YPCaytEZRPjUq6IHHgqtQJXjQMiwr8UPfc82TTm9emKhIhup+hHsFi6ZtiSn03vU7sCGwP1lzgkqMiA3i8WFysOK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792222355; c=relaxed/simple;
-	bh=JfxCjDFg4IerbLzgO4uquCB2H/xB/9+RQBQMX/GujkA=;
+	s=arc-20240116; t=1792222363; c=relaxed/simple;
+	bh=DHbgnnBF8Chn7ND95xcMfI+fgwD0hcosjMZu9s1L2Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VH7EEOrUaWmpquqx24n3Zk2oB9Lau5gU5n2JmdXu+6hQDOpqIWsjQuxf/X6x/K4RhRIIcAYnOReZSchGsqh7rZ9In/Dfrib5JhwnVlpqYxCaqYLy9c66HNHJvI+bv6PYnmpCMQIcvcq+8Q5ZQJCSCkDhMj/TCYh/ugFpz8Ia1sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aHKfzdoq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JWr+ksFfT+75QVHggF3svUht3K7gkeVLOlsuST3kmIwJ/M8r9iAyEdos81U/6svleIqtuGGnT/03wawCNRePeeSeOmDHSfaI1/YqkxjpvXU47yv4K/0mAaRYRi/iDu/X1mh3sgxcf7K2pwwHofRHpahzmMNd3FrELVJ4I68goN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LdP/d8pj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aHKfzdoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6641F000C4;
-	Sat, 17 Oct 2026 07:32:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LdP/d8pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5812E1F000C5;
+	Sat, 17 Oct 2026 07:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792222353;
-	bh=TZjBl2dAOVfDI9Efx8Hvdr7TmXSsAIRVPzW9BJfE8LU=;
+	s=k20260515; t=1792222361;
+	bh=5SRO9rR/pY5NU2Xjv8KPBYCPdeYN2G2tXDUKxxKH3qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aHKfzdoqw+Y6vfDqctwtUaQYBmW56p4ln6iqdXehlzf6zwIaeyRY4tN7YznQU0iGT
-	 Y3H6i48Hn2Wz1BImasDnSb9WZuOfZ0iRmt3vhHPZ6WSCFlPl8p3NyojMBOGBEHr/MA
-	 4dnLN6Jjrm0YFhf98Im59hMa14nDQe7DC+eDTPq6wmm7MGGPXRkzusoRKHOKRqjwe/
-	 H/rAHFMfUnh0owmNx088puUzMuiC9ppyPjd5nJcG/T9zIOeWMrBrD2z7bqaVmDnWwW
-	 4YXNAfhoGN3s4zkxyA1W3m4dLmus3wqUcMPEcvp7tRHNotPLAxwzwFubaE0SYBfVDQ
-	 5L1VimD+0VWLQ==
+	b=LdP/d8pjDGv9EI3q+AOONfRRIzVneQTHgH+8436jyhcBVOp57mkOz+mwRs2P4w98r
+	 psI1mjIxhxj32t0i6vIrd1pBZBlhXSB8X3oeri7labU7MWe1Yj7qE8dBRS7ylMX6or
+	 m8VX48hKx3wwTNq6SusHK+lisKCEe3joVfMB7Y8i/OmGLEpDgzUoxWK5veB+85V8av
+	 1SVw5efspkncAFba94r1eSW0RBpISIg1SKH1gvy16wikcaWbgDP2feXzE9yl+gO1mS
+	 DFCwz1qJGyQxychZnZqzVYuHh/maNVA8cKo/l8hi59zBdTyrLZWS0rO60rvGKKhs6X
+	 VPmjkHUtEeiEQ==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -49,9 +49,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v2 04/13] KVM: guest_memfd: Add device provider access callbacks
-Date: Sat, 17 Oct 2026 13:01:40 +0530
-Message-ID: <20261017073149.1303738-5-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v2 05/13] vfio/pci: Track userspace BAR mappings
+Date: Sat, 17 Oct 2026 13:01:41 +0530
+Message-ID: <20261017073149.1303738-6-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
 References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
@@ -63,194 +63,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Expose callbacks for device providers to check whether a range is shared,
-query whether private ranges remain, and invalidate shared guest mappings.
+Track userspace mappings of PCI BARs so a later patch can reject
+guest_memfd attachment while such mappings exist.
 
-Use a nonblocking acquisition of the inode invalidate lock for host
-access checks, avoiding deadlock with conversion while a provider holds
-its memory lock. Invalidate shared mappings under SRCU and the KVM MMU
-lock, advancing the MMU invalidation sequence so concurrent faults retry.
+Count the initial mmap explicitly because vm_ops->open() is not called
+for it. Use the VMA open and close callbacks to track duplication and
+unmapping, keeping the count nonzero until the last mapping is unmapped.
 
-Initialize callback state before attaching the provider and publish the
-guest_memfd file after creation completes.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alex Williamson <alex@shazbot.org>
 Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: David Hildenbrand <david@kernel.org>
 Cc: kvm@vger.kernel.org
 Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h |   6 ++
- virt/kvm/guest_memfd.c      | 117 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 123 insertions(+)
+ drivers/vfio/pci/vfio_pci_core.c | 19 +++++++++++++++++++
+ include/linux/vfio_pci_core.h    |  2 ++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 7ae8df07a26e..f0c62889f823 100644
---- a/include/linux/guest_memfd.h
-+++ b/include/linux/guest_memfd.h
-@@ -26,6 +26,12 @@ struct guest_memfd {
- 	struct kvm *kvm;
- 	u64 size;
- 	u64 flags;
-+	struct file *gmem_file;
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 6757054e9d87..795b4ab1174e 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -1806,7 +1806,23 @@ static vm_fault_t vfio_pci_mmap_page_fault(struct vm_fault *vmf)
+ 	return vfio_pci_mmap_huge_fault(vmf, 0);
+ }
+ 
++static void vfio_pci_mmap_open(struct vm_area_struct *vma)
++{
++	struct vfio_pci_core_device *vdev = vma->vm_private_data;
 +
-+	/* Revoke shared guest translations synchronously. */
-+	void (*invalidate)(struct guest_memfd *gmem);
-+	bool (*has_private)(struct guest_memfd *gmem);
-+	bool (*host_accessible)(struct guest_memfd *gmem, u64 offset, u64 size);
++	atomic_inc(&vdev->mmap_count);
++}
++
++static void vfio_pci_mmap_close(struct vm_area_struct *vma)
++{
++	struct vfio_pci_core_device *vdev = vma->vm_private_data;
++
++	atomic_dec(&vdev->mmap_count);
++}
++
+ static const struct vm_operations_struct vfio_pci_mmap_ops = {
++	.open = vfio_pci_mmap_open,
++	.close = vfio_pci_mmap_close,
+ 	.fault = vfio_pci_mmap_page_fault,
+ #ifdef CONFIG_ARCH_SUPPORTS_HUGE_PFNMAP
+ 	.huge_fault = vfio_pci_mmap_huge_fault,
+@@ -1888,6 +1904,8 @@ int vfio_pci_core_mmap(struct vfio_device *core_vdev, struct vm_area_struct *vma
+ 	vm_flags_set(vma, VM_ALLOW_ANY_UNCACHED | VM_IO | VM_PFNMAP |
+ 			VM_DONTEXPAND | VM_DONTDUMP);
+ 	vma->vm_ops = &vfio_pci_mmap_ops;
++	/* Initial mmap does not invoke vm_ops->open(). */
++	vfio_pci_mmap_open(vma);
+ 
+ 	return 0;
+ }
+@@ -2197,6 +2215,7 @@ int vfio_pci_core_init_dev(struct vfio_device *core_vdev)
+ 		return ret;
+ 	INIT_LIST_HEAD(&vdev->dmabufs);
+ 	init_rwsem(&vdev->memory_lock);
++	atomic_set(&vdev->mmap_count, 0);
+ 	xa_init(&vdev->ctx);
+ 
+ 	return 0;
+diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+index 9a1674c152aa..dc15b462126e 100644
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -8,6 +8,7 @@
+  * Author: Tom Lyon, pugs@cisco.com
+  */
+ 
++#include <linux/atomic.h>
+ #include <linux/mutex.h>
+ #include <linux/pci.h>
+ #include <linux/vfio.h>
+@@ -148,6 +149,7 @@ struct vfio_pci_core_device {
+ 	struct vfio_pci_core_device	*sriov_pf_core_dev;
+ 	struct notifier_block	nb;
+ 	struct rw_semaphore	memory_lock;
++	atomic_t		mmap_count;
+ 	struct list_head	dmabufs;
  };
  
- /**
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index b2782e64e9c8..d2b1e2e9dfee 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -1066,6 +1066,118 @@ int __weak kvm_arch_gmem_device_unmap(struct kvm *kvm, u64 gpa, u64 size)
- 	return -EOPNOTSUPP;
- }
- 
-+static bool gmem_device_host_accessible(struct guest_memfd *gdev,
-+		u64 offset, u64 size)
-+{
-+	struct file *file = READ_ONCE(gdev->gmem_file);
-+	struct inode *inode;
-+	pgoff_t first, last;
-+	bool shared;
-+
-+	if (!file)
-+		return false;
-+
-+	/* Unwrapped BAR offsets have no private guest_memfd mappings. */
-+	if (offset >= gdev->size)
-+		return true;
-+
-+	size = min(size, gdev->size - offset);
-+	if (!size)
-+		return false;
-+
-+	first = offset >> PAGE_SHIFT;
-+	last = ((offset + size - 1) >> PAGE_SHIFT) + 1;
-+	inode = file_inode(file);
-+	/*
-+	 * Keep guest_memfd attributes stable against conversion while checking
-+	 * host access. This check only reads attributes, so a shared lock lets
-+	 * other access checks run concurrently.
-+	 *
-+	 * VFIO callers hold memory_lock, but conversion takes the invalidate
-+	 * lock exclusively before taking memory_lock for writing.
-+	 * Waiting here could deadlock with conversion. Try the shared lock and
-+	 * deny access if it cannot be acquired.
-+	 */
-+	if (!filemap_invalidate_trylock_shared(inode->i_mapping))
-+		return false;
-+
-+	shared = __kvm_gmem_range_has_attributes(inode, first, last - first, 0);
-+	filemap_invalidate_unlock_shared(inode->i_mapping);
-+	return shared;
-+}
-+
-+/**
-+ * gmem_device_invalidate() - invalidate shared guest mappings of device memory
-+ * @gdev: device guest_memfd whose provider is revoking access
-+ *
-+ * VFIO invokes this callback when zapping BAR mappings. Removing host BAR
-+ * mappings alone leaves guest stage-2 mappings intact, so unmap the shared
-+ * ranges in memslots backed by this guest_memfd and flush guest TLBs as needed.
-+ * Advance the MMU invalidation sequence so faults that obtained a provider PFN
-+ * before revocation retry instead of installing a stale mapping.
-+ *
-+ * SRCU protects memslot traversal, and the KVM MMU lock serializes unmapping
-+ * with guest faults. Do not acquire the inode invalidate lock: conversion may
-+ * already hold it, and VFIO callers hold memory_lock in the reverse order.
-+ *
-+ * Caller holds the provider memory lock to exclude new provider PFN
-+ * lookups during invalidation.
-+ */
-+static void gmem_device_invalidate(struct guest_memfd *gdev)
-+{
-+	struct file *file = gdev->gmem_file;
-+	struct kvm *kvm = gdev->kvm;
-+	struct kvm_memory_slot *slot;
-+	struct kvm_memslots *slots;
-+	int srcu_idx, bkt, as;
-+	bool flush = false, found_memslot = false;
-+
-+	if (!file)
-+		return;
-+
-+	srcu_idx = srcu_read_lock(&kvm->srcu);
-+	KVM_MMU_LOCK(kvm);
-+
-+	for (as = 0; as < kvm_arch_nr_memslot_as_ids(kvm); as++) {
-+		slots = __kvm_memslots(kvm, as);
-+		kvm_for_each_memslot(slot, bkt, slots) {
-+			struct kvm_gfn_range range = {
-+				.slot = slot,
-+				.start = slot->base_gfn,
-+				.end = slot->base_gfn + slot->npages,
-+				.attr_filter = KVM_FILTER_SHARED,
-+				.may_block = false,
-+			};
-+
-+			if (READ_ONCE(slot->gmem.file) != file)
-+				continue;
-+
-+			if (!found_memslot) {
-+				found_memslot = true;
-+				kvm_mmu_invalidate_start(kvm);
-+			}
-+
-+			flush |= kvm_mmu_unmap_gfn_range(kvm, &range);
-+		}
-+	}
-+	if (flush)
-+		kvm_flush_remote_tlbs(kvm);
-+
-+	if (found_memslot)
-+		kvm_mmu_invalidate_end(kvm);
-+
-+	KVM_MMU_UNLOCK(kvm);
-+	srcu_read_unlock(&kvm->srcu, srcu_idx);
-+}
-+
-+/* The attribute tree owns mapping state; this summary is read under provider locks. */
-+static bool gmem_device_has_private(struct guest_memfd *gdev)
-+{
-+	struct gmem_inode *gi = container_of(gdev, struct gmem_inode, device);
-+
-+	return READ_ONCE(gi->device_has_private);
-+}
-+
- static void kvm_gmem_device_update_private(struct gmem_inode *gi)
- {
- 	MA_STATE(mas, &gi->attributes, 0, 0);
-@@ -1291,6 +1403,9 @@ static int kvm_gmem_attach_resource(struct kvm *kvm,
- 	gi->device.size = i_size_read(inode);
- 	/* The provider needs creation flags before attachment is published. */
- 	gi->device.flags = gi->flags;
-+	gi->device.invalidate = gmem_device_invalidate;
-+	gi->device.host_accessible = gmem_device_host_accessible;
-+	gi->device.has_private = gmem_device_has_private;
- 	provider = ops->attach(resource_file, &gi->device);
- 	if (IS_ERR(provider)) {
- 		ret = PTR_ERR(provider);
-@@ -1359,6 +1474,7 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags, int resour
- 	xa_init(&f->bindings);
- 	list_add(&f->entry, &GMEM_I(inode)->gmem_file_list);
- 
-+	WRITE_ONCE(GMEM_I(inode)->device.gmem_file, file);
- 	fd_install(fd, file);
- 	return fd;
- 
-@@ -1743,6 +1859,7 @@ static struct inode *kvm_gmem_alloc_inode(struct super_block *sb)
- 	gi->provider = NULL;
- 	gi->provider_ops = NULL;
- 	gi->device_has_private = false;
-+	memset(&gi->device, 0, sizeof(gi->device));
- 	INIT_LIST_HEAD(&gi->gmem_file_list);
- 	return &gi->vfs_inode;
- }
 -- 
 2.43.0
 
