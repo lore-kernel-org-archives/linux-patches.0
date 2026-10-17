@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA383ABDB3;
-	Sat, 17 Oct 2026 16:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38763AAF60;
+	Sat, 17 Oct 2026 16:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255166; cv=none; b=Ci6fOiRfSt/l6Xh1p4aclLDoYK+D8tbZvg5tEqlglGhIZGao/Lbgsea5GjsamsQpYVEZ4GcjuuieYsc8/DxI/WmPlqlttdb7Ufi2QK15DNyYr2WOx/D39h11YhhJXgm1R1oJcBCFfdPHbLn7YdLKceiJh/fo1d5VsEjUaaHnm88=
+	t=1792255169; cv=none; b=FPvag5O6pob2vSVVAcbvdFXyRU+BE9yYSk4w0CI9OgxX9S8HWwhFl8Rx1DCmS1lailrLwVq4GcNs8KHbCFBNjiML/D0I9lwvKRjo1T2NJyauiq9G4buz0tVrBcU+HGJT1JXMFs0IhlvrGhVD7tgw4Xw5OVg8AW0Xgj6+gTlT448=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255166; c=relaxed/simple;
-	bh=cpj+coRpM3cHUzQ8qwWhUzVLNvlbkPEYff7DXYaM3pg=;
+	s=arc-20240116; t=1792255169; c=relaxed/simple;
+	bh=OBhKC3/Zmu4KWHFxzp0rxThi/zxk1pEELT3pvDOCGn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUPxTCxAfPczPQ22xvSuviyUmABtGnI28MXwkNv0NZgaOTE2qC1hHXCtpTdE/ZCGuJOdQfOlPzJf7kr4bi3VUHXux7hWxMvIE4yx7+rIdhCxrcSmN0hny/nJsRhfoPB2k826yxbQVCC8B2CZNnvP6owZxkgXOrESPpTEmmQnGr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH+0cps5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOskvG3YZ9UjaJ0w7A/3mgFymgcfUyQYbzmD9tcU3oxpCVyvKt+4iLTvACGh6ymCqjd9voQGZe10s5gBcpEdnwUqiMUkR2j28ZVSfiGWmVdKvSq1nLPqlUElLHrxxp2Wo6Q4qc342oebB1W1yvihTjgUvfzgKq8NYCuHEAGHZ3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BInREpsW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH+0cps5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1101C1F000C4;
-	Sat, 17 Oct 2026 16:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BInREpsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B3E1F000C6;
+	Sat, 17 Oct 2026 16:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255164;
-	bh=e2DCPk8x7zA2hcmpCO6I/M4Pl5nK6ln1Xi2BzmwIlnE=;
+	s=korg; t=1792255167;
+	bh=LcdCA84i8Mwmb6CJd+H4EpPORIWKsg0x/NoQdKWSpNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IH+0cps5Icye9xiUSAGyEq6NB9IQXRJt5tWwvJZRmHrgfnMV4q7ztjClwIoARRDGa
-	 1I40/oD+56Ayh8dB+rCxtkDqXZ4kXhejnfqYwGMZ8CN956WP8x3odyRNA0Tb0pGLVU
-	 oXLfAX7MenUoY2eiGYs8Rkk7qTx2rn/2h4BeGk1E=
+	b=BInREpsW53sORMEOA1enWfHIUwNcbWM3IKFx4sxb6xABHtlA/dBzbp4N7lrWHSrdO
+	 tKhKnkaS4p2cDJ49MSuD7AZcXzWPwT1O4D+5eyxLL/JqdA3WKMIPgOJ5g13t0O+ltM
+	 2M79674Kd4/ejzGoyr/qwuWLirDaVU/ddLhQ3ijk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 685/869] PCI: Make pci_match_one_device() match on ID instead of device
-Date: Sat, 17 Oct 2026 17:58:46 +0200
-Message-ID: <20261017160054.540103977@linuxfoundation.org>
+Subject: [PATCH 6.12 686/869] PCI: Fix dyn_id add TOCTOU
+Date: Sat, 17 Oct 2026 17:58:47 +0200
+Message-ID: <20261017160054.565439223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,195 +54,258 @@ Content-Transfer-Encoding: 8bit
 
 From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit c967b365d7b51c2297d9be5df39ac3e20638faf4 ]
+[ Upstream commit 04fde70f782b6ce984f9f80c2023786caea28287 ]
 
-PCI dynamic ID needs to match IDs against a new ID to see if it already
-exists. Existing APIs can only match IDs against devices, so the dynamic ID
-insertion code creates a temporary device only for matching purposes.
-Rename pci_match_one_device() to pci_match_one_id() so it can be used for
-this purpose instead; add a pci_id_from_device() helper to make it easy to
-convert users.
+Currently there is a TOCTOU issue in new_id_store() as the dyn ID insertion
+in pci_add_dynid() and the pci_match_device() are in separate critical
+sections.
 
-Similarly, convert pci_match_id() to do_pci_match_id(). But keep the
-existing API because there are many users.
+Fix this by moving the existing ID check to inside pci_add_dynid() and only
+check against the static ID table outside the critical section.
 
+Fixes: 3853f9123c18 ("PCI: Avoid duplicate IDs in driver dynamic IDs list")
 Signed-off-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-7-3580726844e1@garyguo.net
+Link: https://patch.msgid.link/20260723-pci_id_fix-v4-8-3580726844e1@garyguo.net
 Stable-dep-of: 3ffc4c9690c3 ("PCI: Fix UAF when probe runs concurrent to dyn ID removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 38 +++++++++++++++++++++++++----------
- drivers/pci/pci.h        | 43 +++++++++++++++++++++++++++++-----------
- drivers/pci/search.c     |  8 +++++---
- 3 files changed, 64 insertions(+), 25 deletions(-)
+ drivers/pci/pci-driver.c | 142 ++++++++++++++++++++-------------------
+ 1 file changed, 73 insertions(+), 69 deletions(-)
 
 diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 0eb246a07c87a..943162501c8e4 100644
+index 943162501c8e4..d684106184c0b 100644
 --- a/drivers/pci/pci-driver.c
 +++ b/drivers/pci/pci-driver.c
-@@ -90,6 +90,27 @@ static void pci_free_dynids(struct pci_driver *drv)
- 	spin_unlock(&drv->dynids.lock);
- }
+@@ -29,6 +29,47 @@ struct pci_dynid {
+ 	struct pci_device_id id;
+ };
  
 +/**
-+ * do_pci_match_id - See if a PCI ID matches a given pci_id table
-+ * @ids: array of PCI device ID structures to search in
-+ * @dev_id: the actual PCI device ID structure to match against.
++ * do_pci_add_dynid - Add a new PCI device ID to this driver and re-probe
++ * @drv: target PCI driver
++ * @id: ID to be added
++ * @check_dup: whether to check if matching ID is already present
 + *
-+ * Return: the matching pci_device_id structure or %NULL if there is no match.
++ * Add a new dynamic PCI device ID to this driver and causes the driver to
++ * probe for all devices again.  @drv must have been registered prior to calling
++ * this function.
++ *
++ * Context: Does GFP_KERNEL allocation.
++ *
++ * Return: 0 on success, -errno on failure.
 + */
-+static const struct pci_device_id *
-+do_pci_match_id(const struct pci_device_id *ids,
-+		const struct pci_device_id *dev_id)
++static int do_pci_add_dynid(struct pci_driver *drv,
++			    const struct pci_device_id *id,
++			    bool check_dup)
 +{
-+	if (ids) {
-+		while (ids->vendor || ids->subvendor || ids->class_mask) {
-+			if (pci_match_one_id(ids, dev_id))
-+				return ids;
-+			ids++;
++	struct pci_dynid *dynid, *existing_dynid;
++
++	dynid = kzalloc(sizeof(*dynid), GFP_KERNEL);
++	if (!dynid)
++		return -ENOMEM;
++
++	dynid->id = *id;
++
++	scoped_guard(spinlock, &drv->dynids.lock) {
++		if (check_dup) {
++			list_for_each_entry(existing_dynid, &drv->dynids.list, node) {
++				if (pci_match_one_id(&existing_dynid->id, id)) {
++					kfree(dynid);
++					return -EEXIST;
++				}
++			}
 +		}
++		list_add_tail(&dynid->node, &drv->dynids.list);
 +	}
-+	return NULL;
++
++	return driver_attach(&drv->driver);
 +}
 +
  /**
-  * pci_match_id - See if a PCI device matches a given pci_id table
-  * @ids: array of PCI device ID structures to search in
-@@ -105,14 +126,9 @@ static void pci_free_dynids(struct pci_driver *drv)
- const struct pci_device_id *pci_match_id(const struct pci_device_id *ids,
- 					 struct pci_dev *dev)
+  * pci_add_dynid - add a new PCI device ID to this driver and re-probe devices
+  * @drv: target pci driver
+@@ -56,25 +97,17 @@ int pci_add_dynid(struct pci_driver *drv,
+ 		  unsigned int class, unsigned int class_mask,
+ 		  unsigned long driver_data)
  {
--	if (ids) {
--		while (ids->vendor || ids->subvendor || ids->class_mask) {
--			if (pci_match_one_device(ids, dev))
--				return ids;
--			ids++;
--		}
--	}
--	return NULL;
-+	struct pci_device_id dev_id = pci_id_from_device(dev);
+-	struct pci_dynid *dynid;
+-
+-	dynid = kzalloc(sizeof(*dynid), GFP_KERNEL);
+-	if (!dynid)
+-		return -ENOMEM;
+-
+-	dynid->id.vendor = vendor;
+-	dynid->id.device = device;
+-	dynid->id.subvendor = subvendor;
+-	dynid->id.subdevice = subdevice;
+-	dynid->id.class = class;
+-	dynid->id.class_mask = class_mask;
+-	dynid->id.driver_data = driver_data;
+-
+-	spin_lock(&drv->dynids.lock);
+-	list_add_tail(&dynid->node, &drv->dynids.list);
+-	spin_unlock(&drv->dynids.lock);
+-
+-	return driver_attach(&drv->driver);
++	struct pci_device_id id = {
++		.vendor = vendor,
++		.device = device,
++		.subvendor = subvendor,
++		.subdevice = subdevice,
++		.class = class,
++		.class_mask = class_mask,
++		.driver_data = driver_data,
++	};
 +
-+	return do_pci_match_id(ids, &dev_id);
++	return do_pci_add_dynid(drv, &id, false);
+ }
+ EXPORT_SYMBOL_GPL(pci_add_dynid);
+ 
+@@ -94,16 +127,20 @@ static void pci_free_dynids(struct pci_driver *drv)
+  * do_pci_match_id - See if a PCI ID matches a given pci_id table
+  * @ids: array of PCI device ID structures to search in
+  * @dev_id: the actual PCI device ID structure to match against.
++ * @include_override_only: also match against device ID entries marked as
++ *                         override only.
+  *
+  * Return: the matching pci_device_id structure or %NULL if there is no match.
+  */
+ static const struct pci_device_id *
+ do_pci_match_id(const struct pci_device_id *ids,
+-		const struct pci_device_id *dev_id)
++		const struct pci_device_id *dev_id,
++		bool include_override_only)
+ {
+ 	if (ids) {
+ 		while (ids->vendor || ids->subvendor || ids->class_mask) {
+-			if (pci_match_one_id(ids, dev_id))
++			if ((!ids->override_only || include_override_only) &&
++			    pci_match_one_id(ids, dev_id))
+ 				return ids;
+ 			ids++;
+ 		}
+@@ -128,7 +165,7 @@ const struct pci_device_id *pci_match_id(const struct pci_device_id *ids,
+ {
+ 	struct pci_device_id dev_id = pci_id_from_device(dev);
+ 
+-	return do_pci_match_id(ids, &dev_id);
++	return do_pci_match_id(ids, &dev_id, true);
  }
  EXPORT_SYMBOL(pci_match_id);
  
-@@ -138,6 +154,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+@@ -153,7 +190,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 						    struct pci_dev *dev)
  {
  	struct pci_dynid *dynid;
- 	const struct pci_device_id *found_id = NULL, *ids;
-+	struct pci_device_id dev_id;
+-	const struct pci_device_id *found_id = NULL, *ids;
++	const struct pci_device_id *found_id = NULL;
+ 	struct pci_device_id dev_id;
  	int ret;
  
- 	/* When driver_override is set, only bind to the matching driver */
-@@ -145,10 +162,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 	if (ret == 0)
- 		return NULL;
- 
-+	dev_id = pci_id_from_device(dev);
- 	/* Look at the dynamic ids first, before the static ones */
- 	spin_lock(&drv->dynids.lock);
- 	list_for_each_entry(dynid, &drv->dynids.list, node) {
--		if (pci_match_one_device(&dynid->id, dev)) {
-+		if (pci_match_one_id(&dynid->id, &dev_id)) {
- 			found_id = &dynid->id;
- 			break;
- 		}
-@@ -158,7 +176,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+@@ -176,20 +213,9 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
  	if (found_id)
  		return found_id;
  
--	for (ids = drv->id_table; (found_id = pci_match_id(ids, dev));
-+	for (ids = drv->id_table; (found_id = do_pci_match_id(ids, &dev_id));
- 	     ids = found_id + 1) {
- 		/*
- 		 * The match table is split based on driver_override.
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 7b3d45f243264..f60d0eb600645 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -289,21 +289,40 @@ extern unsigned long pci_hotplug_mmio_pref_size;
- extern unsigned long pci_hotplug_bus_size;
+-	for (ids = drv->id_table; (found_id = do_pci_match_id(ids, &dev_id));
+-	     ids = found_id + 1) {
+-		/*
+-		 * The match table is split based on driver_override.
+-		 * In case override_only was set, enforce driver_override
+-		 * matching.
+-		 */
+-		if (found_id->override_only) {
+-			if (ret > 0)
+-				return found_id;
+-		} else {
+-			return found_id;
+-		}
+-	}
++	found_id = do_pci_match_id(drv->id_table, &dev_id, ret > 0);
++	if (found_id)
++		return found_id;
  
- /**
-- * pci_match_one_device - Tell if a PCI device structure has a matching
-- *			  PCI device id structure
-- * @id: single PCI device id structure to match
-- * @dev: the PCI device structure to match against
-+ * pci_id_from_device - Obtain a pci_device_id from a PCI device
-+ * @dev: the PCI device
-  *
-- * Returns the matching pci_device_id structure or %NULL if there is no match.
-+ * Return: a pci_device_id filled.
-  */
--static inline const struct pci_device_id *
--pci_match_one_device(const struct pci_device_id *id, const struct pci_dev *dev)
-+static inline struct pci_device_id pci_id_from_device(const struct pci_dev *dev)
- {
--	if ((id->vendor == PCI_ANY_ID || id->vendor == dev->vendor) &&
--	    (id->device == PCI_ANY_ID || id->device == dev->device) &&
--	    (id->subvendor == PCI_ANY_ID || id->subvendor == dev->subsystem_vendor) &&
--	    (id->subdevice == PCI_ANY_ID || id->subdevice == dev->subsystem_device) &&
--	    !((id->class ^ dev->class) & id->class_mask))
-+	return (struct pci_device_id) {
-+		.vendor = dev->vendor,
-+		.device = dev->device,
-+		.subvendor = dev->subsystem_vendor,
-+		.subdevice = dev->subsystem_device,
-+		.class = dev->class,
-+	};
-+}
-+
-+/**
-+ * pci_match_one_id - Tell if a PCI device ID matches a needle PCI device ID
-+ * @id: single PCI device id structure to match against (needle)
-+ * @dev_id: the actual ID from the PCI device
-+ *
-+ * ID can be retrieved from device using pci_id_from_device().
-+ *
-+ * Return: the matching pci_device_id structure or %NULL if there is no match.
-+ */
-+static inline const struct pci_device_id *
-+pci_match_one_id(const struct pci_device_id *id,
-+		 const struct pci_device_id *dev_id)
-+{
-+	if ((id->vendor == PCI_ANY_ID || id->vendor == dev_id->vendor) &&
-+	    (id->device == PCI_ANY_ID || id->device == dev_id->device) &&
-+	    (id->subvendor == PCI_ANY_ID || id->subvendor == dev_id->subvendor) &&
-+	    (id->subdevice == PCI_ANY_ID || id->subdevice == dev_id->subdevice) &&
-+	    !((id->class ^ dev_id->class) & id->class_mask))
- 		return id;
+ 	/* driver_override will always match, send a dummy id */
+ 	if (ret > 0)
+@@ -197,11 +223,6 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
  	return NULL;
  }
-diff --git a/drivers/pci/search.c b/drivers/pci/search.c
-index 53840634fbfc2..705ab725321a8 100644
---- a/drivers/pci/search.c
-+++ b/drivers/pci/search.c
-@@ -243,8 +243,10 @@ static int match_pci_dev_by_id(struct device *dev, const void *data)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
- 	const struct pci_device_id *id = data;
-+	struct pci_device_id dev_id;
  
--	if (pci_match_one_device(id, pdev))
-+	dev_id = pci_id_from_device(pdev);
-+	if (pci_match_one_id(id, &dev_id))
- 		return 1;
- 	return 0;
- }
-@@ -368,9 +370,9 @@ EXPORT_SYMBOL(pci_get_class);
-  * @class: search for a PCI device with this base class code
-  * @from: Previous PCI device found in search, or %NULL for new search.
-  *
-- * Iterates through the list of known PCI devices. If a PCI device is found
-+ * Iterate through the list of known PCI devices. If a PCI device is found
-  * with a matching base class code, the reference count to the device is
-- * incremented. See pci_match_one_device() to figure out how does this works.
-+ * incremented. See pci_match_one_id() to figure out how this works.
-  * A new search is initiated by passing %NULL as the @from argument.
-  * Otherwise if @from is not %NULL, searches continue from next device on the
-  * global list. The reference count for @from is always decremented if it is
+-static void _pci_free_device(struct device *dev)
+-{
+-	kfree(to_pci_dev(dev));
+-}
+-
+ /**
+  * new_id_store - sysfs frontend to pci_add_dynid()
+  * @driver: target device driver
+@@ -215,38 +236,22 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
+ {
+ 	struct pci_driver *pdrv = to_pci_driver(driver);
+ 	const struct pci_device_id *ids = pdrv->id_table;
+-	u32 vendor, device, subvendor = PCI_ANY_ID,
+-		subdevice = PCI_ANY_ID, class = 0, class_mask = 0;
+-	unsigned long driver_data = 0;
++	struct pci_device_id id = {
++		.subvendor = PCI_ANY_ID,
++		.subdevice = PCI_ANY_ID
++	};
+ 	int fields;
+ 	int retval = 0;
+ 
+ 	fields = sscanf(buf, "%x %x %x %x %x %x %lx",
+-			&vendor, &device, &subvendor, &subdevice,
+-			&class, &class_mask, &driver_data);
++			&id.vendor, &id.device, &id.subvendor, &id.subdevice,
++			&id.class, &id.class_mask, &id.driver_data);
+ 	if (fields < 2)
+ 		return -EINVAL;
+ 
+ 	if (fields != 7) {
+-		struct pci_dev *pdev = kzalloc(sizeof(*pdev), GFP_KERNEL);
+-		if (!pdev)
+-			return -ENOMEM;
+-
+-		pdev->vendor = vendor;
+-		pdev->device = device;
+-		pdev->subsystem_vendor = subvendor;
+-		pdev->subsystem_device = subdevice;
+-		pdev->class = class;
+-		pdev->dev.release = _pci_free_device;
+-
+-		device_initialize(&pdev->dev);
+-		if (pci_match_device(pdrv, pdev))
+-			retval = -EEXIST;
+-
+-		put_device(&pdev->dev);
+-
+-		if (retval)
+-			return retval;
++		if (do_pci_match_id(pdrv->id_table, &id, false))
++			return -EEXIST;
+ 	}
+ 
+ 	/* Only accept driver_data values that match an existing id_table
+@@ -254,7 +259,7 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
+ 	if (ids) {
+ 		retval = -EINVAL;
+ 		while (ids->vendor || ids->subvendor || ids->class_mask) {
+-			if (driver_data == ids->driver_data) {
++			if (id.driver_data == ids->driver_data) {
+ 				retval = 0;
+ 				break;
+ 			}
+@@ -264,8 +269,7 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
+ 			return retval;
+ 	}
+ 
+-	retval = pci_add_dynid(pdrv, vendor, device, subvendor, subdevice,
+-			       class, class_mask, driver_data);
++	retval = do_pci_add_dynid(pdrv, &id, fields != 7);
+ 	if (retval)
+ 		return retval;
+ 	return count;
 -- 
 2.53.0
 
