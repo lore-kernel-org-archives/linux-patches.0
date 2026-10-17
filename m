@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6478938F658;
-	Sat, 17 Oct 2026 17:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCF22D73A6;
+	Sat, 17 Oct 2026 17:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257052; cv=none; b=eevOYxkBzCoXQcTeduz/SubhY4oAUuXtJdJ54ZTgjTEo3LieWT2OeUDpblTf/ncGlj/zL8emo5uTpngsl6GHTxPvLIvgrFEr9hiqVTKEucg00IVUTrM7Yl5LY+gGZAoQLyP6x0OFAN57FRAXEW6HAuk679/JiqW1zvw4pVTmAYo=
+	t=1792257055; cv=none; b=kIeHNJ/et/pOeBZ/n9gb5qKaXlvbbycZOQa9rTGVsax4bDugqLOGCD21sIFTws8Qy0kC3xkoYXDhvlIoW0Kpy0FuIJRwHCCOpKslSPzuXakNOc+OrSj0hl3dgFaVOVfirQ/Bn/Td8tLAa55D/EOHGGHyTFVim3wY2flxjdc6Mck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257052; c=relaxed/simple;
-	bh=93W2YDmYkdy8MFTdOw9brjlrueaxXS2ooY0BfgGOpMs=;
+	s=arc-20240116; t=1792257055; c=relaxed/simple;
+	bh=8HKs9D513Nh5F3G14ypYfbeSl0t0pgcKLPytZu4PTZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZlgLLbwh7nXglAvYtbQq81AMyZCaN/dFoLld7d0ohVzdDhPmo344Zgoa4fIfPEcTH71Qjdc4T0qIlA0RFapj+Gn1Lhwg160+bYTvYIyY8Yvxxx2cMILucI2DtwSN4DnojnuwFz5/XW6FgNYjMpfQEXT0QJ/5wpLeDOk+K9v91Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwQUlFJd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y72VUxxpgsrgG/jRQQ3MJyhTeedWlLbjKfmuFsFLt6p/13WXkSyk3SMODfY51Ms9ADDg4PwFdRjuIG+s0Z2L13fJfZ/xQrdlBCMwzLnsT/dzufPlvgt+RC2OQOzJMiB9MTZ9dUWdHfq4ffdSUJnj5lfecrcS2grkRF3z+eqLioA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIVz0Ksa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwQUlFJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A791F1F000C4;
-	Sat, 17 Oct 2026 17:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIVz0Ksa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27491F000C4;
+	Sat, 17 Oct 2026 17:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257051;
-	bh=FMhR3MWH2CvDol1z0/wtlS0/QFpJB7/29RWbXqMl1W4=;
+	s=korg; t=1792257054;
+	bh=AsvhGIQtRmJSo2g+vkWh/ve4teUPVOsHcf4xJSFS9N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwQUlFJdp5tgUgKNTnq1ZjofnOHZUyjUIT+DR0hbpYa++bsekcdF9qeRPUMeOg2Ag
-	 XfulbFYCNhZGbXfhAC/Dk/1HUZ5nedK61Iro/tIDidNFAJ2Du8C+HCVffipjnrPNvW
-	 7wPkewgYOTsMtgcFkdU/8/vmsaudb2qYWwPqfnbc=
+	b=nIVz0Ksa9HbvBYFgHGtKaA1d36VZrhtRqAbJtXNYt2WYzY1tZ+/Xf9/yISL9OZlQA
+	 5Hm7iFxjxWG5nBw8CqOhUeF4QkrfoL0d3l7RTTEkoyEpkQCqfijjvDjOPAZv8YOgVB
+	 htygGVOAbSSj1i5hOCW/uZpTdeF4wJ4lVh8tZ3k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	George Zhang <george.zhang@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Arthur Heymans <arthur@aheymans.xyz>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0393/1674] USB: dwc2: shut down wakeup timer before freeing HCD state
-Date: Sat, 17 Oct 2026 17:44:25 +0200
-Message-ID: <20261017160441.195911944@linuxfoundation.org>
+Subject: [PATCH 6.6 0394/1674] drm/amd/display: Preserve eDP mode on initial ASSR failure
+Date: Sat, 17 Oct 2026 17:44:26 +0200
+Message-ID: <20261017160441.222449050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,52 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Arthur Heymans <arthur@aheymans.xyz>
 
-[ Upstream commit fd772af9512cdecb83de34a461801533828e77fd ]
+[ Upstream commit 5e08102d1d336593160d1434261d50b0c0f6cbe6 ]
 
-dwc2_wakeup_detected() accesses the DWC2 host state and can rearm the
-wakeup timer.  dwc2_hcd_free() currently deletes the timer only after
-freeing host-owned state, and timer_delete() does not synchronize a
-callback or prevent it from being queued again.
+Commit 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when
+reinitializing hardware") made ASSR failure fall back to the default panel
+mode unless eDP mode had previously been applied.
 
-Stop and shut down the timer in dwc2_hcd_release(), before the HCD
-resources are freed.  This covers both the HCD initialization error path
-and normal HCD removal.
+However, dc_link is zero-initialized and DP_PANEL_MODE_DEFAULT is zero.
+Before the first call to dp_set_panel_mode(), panel_mode therefore looks
+like a previously applied default mode. If ASSR setup fails during the
+first link training attempt, the driver incorrectly trains the eDP link
+using the default scrambling mode.
 
-Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260904065323.4047026-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adapted the timer_delete() removal to the existing del_timer() call. ]
+On a Google Vilboz Chromebook running self-built coreboot firmware and
+PSP verstage, this leaves the panel mostly black with corrupted output
+along the top edge.
+
+Track whether panel_mode has actually been initialized, and only consult
+the saved mode after it has been applied. This retains the recovery
+behavior while preserving eDP mode during initial link training.
+
+Fixes: 56d8ce9d8c17 ("drm/amd/display: Apply correct panel mode when reinitializing hardware")
+Assisted-by: Pi:gpt-5.6-sol
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Arthur Heymans <arthur@aheymans.xyz>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ccb6c2702033f1002b45807fb3cc938760f26f78)
+Cc: stable@vger.kernel.org # 6.4.x
+[ sashal: Applied the ASSR guard in perform_link_training_with_retries() instead of the absent edp_set_panel_assr() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                            | 1 +
+ .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c   | 3 ++-
+ .../drm/amd/display/dc/link/protocols/link_edp_panel_control.c | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index e0f84726f4b1d..5e71094a22b2f 100644
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -5082,14 +5082,13 @@ static void dwc2_hcd_free(struct dwc2_hsotg *hsotg)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 88e64b280c90f..1f4292336692e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1512,6 +1512,7 @@ struct dc_link {
+ 	struct ddc_service *ddc;
+ 
+ 	enum dp_panel_mode panel_mode;
++	bool panel_mode_initialized;
+ 	bool aux_mode;
+ 
+ 	/* Private to DC core */
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 539f57858dfec..aa46e0e84ce4f 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -1608,7 +1608,8 @@ bool perform_link_training_with_retries(
+ 				 */
+ 				bool result;
+ 				result = cp_psp->funcs.enable_assr(cp_psp->handle, link);
+-				if (!result && link->panel_mode != DP_PANEL_MODE_EDP)
++				if (!result && link->panel_mode_initialized &&
++				    link->panel_mode != DP_PANEL_MODE_EDP)
+ 					panel_mode = DP_PANEL_MODE_DEFAULT;
+ 			}
+ 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+index d4d92da153ece..9f7ace40092ba 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+@@ -88,6 +88,7 @@ void dp_set_panel_mode(struct dc_link *link, enum dp_panel_mode panel_mode)
  	}
  
- 	cancel_work_sync(&hsotg->phy_reset_work);
--
--	del_timer(&hsotg->wkp_timer);
- }
- 
- static void dwc2_hcd_release(struct dwc2_hsotg *hsotg)
- {
- 	/* Turn off all host-specific interrupts */
- 	dwc2_disable_host_interrupts(hsotg);
-+	timer_shutdown_sync(&hsotg->wkp_timer);
- 
- 	dwc2_hcd_free(hsotg);
- }
+ 	link->panel_mode = panel_mode;
++	link->panel_mode_initialized = true;
+ 	DC_LOG_DETECTION_DP_CAPS("Link: %d eDP panel mode supported: %d "
+ 		 "eDP panel mode enabled: %d \n",
+ 		 link->link_index,
 -- 
 2.53.0
 
