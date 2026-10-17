@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1AD3909B5;
-	Sat, 17 Oct 2026 16:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FB336B93B;
+	Sat, 17 Oct 2026 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254281; cv=none; b=hp8XKCbxKarrDQ2KBOj+oIHk0Fh55zN3HAsowecURN1+rB1rWgPXEIfs6Oqrw7EWQ3Eg7Os1iJbNxynvOLIoZXQ3QzLaVuE/3M+mFgnyRC5a47RIroqyp5WEUnE+J0FlJPrz2iZ+bAxT5F4bmZwCiC4E3RqJkXvJFv4DaCjxYTQ=
+	t=1792254284; cv=none; b=QW+kv5BhUygIup6vl5wVRKBxpmtyNEiJOr8u/FPIvwMcs8r2JRlRCGrhP5ofIJ8vIatsenOXX6lxgTSNwG5MKROzeoTwv+vCsW6Rgky/QwxGFYwrMs4JTCEf2laiw0yMerQ08Xi0Hw3I6kYwpLe7DyDo4KAgcnF/TN/QHagXRK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254281; c=relaxed/simple;
-	bh=75S7nZg7Egiv0ZPuOA1ol23rkjuL4jmJFYS4GYS8vSQ=;
+	s=arc-20240116; t=1792254284; c=relaxed/simple;
+	bh=/tuBMznIxUXMEGw/U05nGgIEoWM77zJwP2vLr+PxBdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWnnfv9w35LySG3tzhEf4UD990mtZdd8aJzTXIDAcXuC5yR81ISFD0ve0HbNOXBdmzI0bJIIbBDTJrZz/afbj70USQ380jz13MX0grNUXzfv9HJ+ADiZBgyhKshT66Y3FO+Dc5mTfmihVxfvcqP0F/VPg/LTqD0M8xJ4B1VJ89s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaTNmX/l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M64yCpARri2qAN5EkeKV73RdzQ+eyMqQ47/yujsu8mriVNYSjFNPY/EUtiyyJQCnZK8F6Zbbay1ctBklGPzxvRgphOqSMBR9RvTZDvAzbJhfwxtvMnNDeVxTOh0AqWv3xgqzCFcq0gJT+hb+f77143cvxjNdob2OCGjWoPJP5eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6oOA4hC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaTNmX/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EB11F000C4;
-	Sat, 17 Oct 2026 16:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6oOA4hC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63ABA1F000C4;
+	Sat, 17 Oct 2026 16:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254280;
-	bh=paUReEtg3BMcC6ak8i+S/+WujvBFbcggNcSwXS5sZ7k=;
+	s=korg; t=1792254282;
+	bh=f9VNG6sjEhIosvjR9YgR3mikO/4qkw9kwVNsrmq2GYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SaTNmX/lXhcbaNCE52siSSLzL8Y0z7ygrZhMNnHJkAaEuVIXpGc8tDBem4P0e3Uv2
-	 hpdqW3TUcvmIHjOXkgjtU6Gh26lBZbOZkidD6ZeaNc4KwWVXHdY0UKzXUuqsKY9tw2
-	 vKGZWncm6lhIiJaDY2GTyvN3J6+wMx1WhQQSTZSw=
+	b=O6oOA4hCNglLiREeEOb82mqhYF9fHVUpXsUnnj3c+77oGw/df5nx7o3w0apsqTzKf
+	 f1jax0Dir+oxnEzthFvOIm6BQzY+5npI1yPIsdFegzws+5jCo9Egs8Q7bNrjOZRR/G
+	 y9x9Yx8vV6t+5X/2uO/bax7VK0sNj7Sm4d9HTkGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 396/869] Bluetooth: hci_sync: extend conn_hash lookup critical sections
-Date: Sat, 17 Oct 2026 17:53:57 +0200
-Message-ID: <20261017160047.271754284@linuxfoundation.org>
+Subject: [PATCH 6.12 397/869] bpf: Disable migration when destroying sock storage
+Date: Sat, 17 Oct 2026 17:53:58 +0200
+Message-ID: <20261017160047.298761985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,191 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit d5efd6e4b8b0634af6843178fe1a7dd2b2178a3d ]
+[ Upstream commit 7d1032d1e3031ef38d1a360380d755f75cb639b8 ]
 
-Using RCU-protected pointers outside the critical sections without
-refcount is incorrect and may result to UAF.
+When destroying sock storage, it invokes bpf_local_storage_destroy() to
+remove all storage elements saved in the sock storage. The destroy
+procedure will call bpf_selem_free() to free the element, and
+bpf_selem_free() calls bpf_obj_free_fields() to free the special fields
+in map value (e.g., kptr). Since kptrs may be allocated from bpf memory
+allocator, migrate_{disable|enable} pairs are necessary for the freeing
+of these kptrs.
 
-Extend critical section to cover both hci_conn_hash lookup and use of
-the returned conn.
+To simplify reasoning about when migrate_disable() is needed for the
+freeing of these dynamically-allocated kptrs, let the caller to
+guarantee migration is disabled before invoking bpf_obj_free_fields().
+Therefore, the patch adds migrate_{disable|enable} pair in
+bpf_sock_storage_free(). The migrate_{disable|enable} pairs in the
+underlying implementation of bpf_obj_free_fields() will be removed by
+The following patch.
 
-Add surrounding rcu_read_lock() also when return value is not used, in
-preparation for RCU lockdep requirement to hci_lookup_le_connect().
-
-This avoids concurrent deletion of the conn before we are done
-dereferencing it.
-
-Also, make sure to hold hdev->lock when accessing hdev->accept_list.
-
-Fixes: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250108010728.207536-8-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 7cbd0c4cebe4 ("bpf: Fix UAF in sock clone early bailouts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 42 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 39 insertions(+), 3 deletions(-)
+ net/core/bpf_sk_storage.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index b0ab43145e47f..3e3706231458d 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1077,14 +1077,19 @@ static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
- 	 * In this kind of scenario skip the update and let the random
- 	 * address be updated at the next cycle.
- 	 */
-+	rcu_read_lock();
-+
- 	if (bacmp(&hdev->random_addr, BDADDR_ANY) &&
- 	    (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
- 	    hci_lookup_le_connect(hdev))) {
- 		bt_dev_dbg(hdev, "Deferring random address update");
- 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
-+		rcu_read_unlock();
- 		return 0;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_RANDOM_ADDR,
- 				     6, rpa, HCI_CMD_TIMEOUT);
- }
-@@ -2757,12 +2762,17 @@ static int hci_pause_addr_resolution(struct hci_dev *hdev)
- 	/* Cannot disable addr resolution if scanning is enabled or
- 	 * when initiating an LE connection.
- 	 */
-+	rcu_read_lock();
-+
- 	if (hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
- 	    hci_lookup_le_connect(hdev)) {
-+		rcu_read_unlock();
- 		bt_dev_err(hdev, "Command not allowed when scan/LE connect");
- 		return -EPERM;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	/* Cannot disable addr resolution if advertising is enabled. */
- 	err = hci_pause_advertising_sync(hdev);
- 	if (err) {
-@@ -2900,6 +2910,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	if (hci_dev_test_flag(hdev, HCI_PA_SYNC)) {
- 		struct hci_conn *conn;
- 
-+		rcu_read_lock();
-+
- 		conn = hci_conn_hash_lookup_create_pa_sync(hdev);
- 		if (conn) {
- 			struct conn_params pa;
-@@ -2909,6 +2921,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 			bacpy(&pa.addr, &conn->dst);
- 			pa.addr_type = conn->dst_type;
- 
-+			rcu_read_unlock();
-+
- 			/* Clear first since there could be addresses left
- 			 * behind.
- 			 */
-@@ -2918,6 +2932,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 			err = hci_le_add_accept_list_sync(hdev, &pa,
- 							  &num_entries);
- 			goto done;
-+		} else {
-+			rcu_read_unlock();
- 		}
- 	}
- 
-@@ -2928,10 +2944,13 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	 * the controller.
- 	 */
- 	list_for_each_entry_safe(b, t, &hdev->le_accept_list, list) {
--		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type))
-+		rcu_read_lock();
-+
-+		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type)) {
-+			rcu_read_unlock();
- 			continue;
-+		}
- 
--		/* Pointers not dereferenced, no locks needed */
- 		pend_conn = hci_pend_le_action_lookup(&hdev->pend_le_conns,
- 						      &b->bdaddr,
- 						      b->bdaddr_type);
-@@ -2939,6 +2958,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 							&b->bdaddr,
- 							b->bdaddr_type);
- 
-+		rcu_read_unlock();
-+
- 		/* If the device is not likely to connect or report,
- 		 * remove it from the acceptlist.
- 		 */
-@@ -3071,6 +3092,8 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
- 		if (sent) {
- 			struct hci_conn *conn;
- 
-+			rcu_read_lock();
-+
- 			conn = hci_conn_hash_lookup_ba(hdev, PA_LINK,
- 						       &bdaddr);
- 			if (conn) {
-@@ -3095,8 +3118,12 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
- 					phy++;
- 				}
- 
-+				rcu_read_unlock();
-+
- 				if (num_phy)
- 					goto done;
-+			} else {
-+				rcu_read_unlock();
- 			}
- 		}
- 	}
-@@ -3347,12 +3374,16 @@ int hci_update_passive_scan_sync(struct hci_dev *hdev)
- 		/* If there is at least one pending LE connection, we should
- 		 * keep the background scan running.
- 		 */
-+		bool exists;
- 
- 		/* If controller is connecting, we should not start scanning
- 		 * since some controllers are not able to scan and connect at
- 		 * the same time.
- 		 */
--		if (hci_lookup_le_connect(hdev))
-+		rcu_read_lock();
-+		exists = hci_lookup_le_connect(hdev);
-+		rcu_read_unlock();
-+		if (exists)
- 			return 0;
- 
- 		bt_dev_dbg(hdev, "start background scanning");
-@@ -3570,6 +3601,7 @@ int hci_write_fast_connectable_sync(struct hci_dev *hdev, bool enable)
- }
- 
- static bool disconnected_accept_list_entries(struct hci_dev *hdev)
-+	__must_hold(&hdev->lock)
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index bc01b3aa6b0fa..5cd1220cc7a5e 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -50,15 +50,16 @@ void bpf_sk_storage_free(struct sock *sk)
  {
- 	struct bdaddr_list *b;
+ 	struct bpf_local_storage *sk_storage;
  
-@@ -3610,12 +3642,16 @@ int hci_update_scan_sync(struct hci_dev *hdev)
- 	if (hdev->scanning_paused)
- 		return 0;
++	migrate_disable();
+ 	rcu_read_lock();
+ 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
+-	if (!sk_storage) {
+-		rcu_read_unlock();
+-		return;
+-	}
++	if (!sk_storage)
++		goto out;
  
-+	hci_dev_lock(hdev);
-+
- 	if (hci_dev_test_flag(hdev, HCI_CONNECTABLE) ||
- 	    disconnected_accept_list_entries(hdev))
- 		scan = SCAN_PAGE;
- 	else
- 		scan = SCAN_DISABLED;
+ 	bpf_local_storage_destroy(sk_storage);
++out:
+ 	rcu_read_unlock();
++	migrate_enable();
+ }
  
-+	hci_dev_unlock(hdev);
-+
- 	if (hci_dev_test_flag(hdev, HCI_DISCOVERABLE))
- 		scan |= SCAN_INQUIRY;
- 
+ static void bpf_sk_storage_map_free(struct bpf_map *map)
 -- 
 2.53.0
 
