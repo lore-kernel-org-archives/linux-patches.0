@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AFF4CF49A;
-	Sat, 17 Oct 2026 16:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EA930EF8F;
+	Sat, 17 Oct 2026 16:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253672; cv=none; b=ZyjoKqr0Uy86Ux+ZxlTdhTrYUxMPp55y+Aw2kulSN5WpfK2asgjvSIN1f+zJi2Uo1Ty6iZB8dq9LvDsNwvPA7D3WVsegYNVmCNFA+4k8yf0FnHxHLk0r1B5RKfCFibTUe/q3cVBaNRWUMOxyPjvoe6mosdQX4SR7bEl45jWHydE=
+	t=1792253676; cv=none; b=biWSNgChMfBtKmG4eR8YfT8Hqpvpa/1gxXr7qLWT3CPmmMZHhmQIEEiXWyDxMtOcaCiL9TK+vqehBKRhCEmvClgvalA6uEoQpnZaB8mUkc5UAFunbWolZUmCtsUC9yZbvSrISlzPtlwuCkN8mNS32UylRkKTH4/XXGevBZu+HOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253672; c=relaxed/simple;
-	bh=yDtPMzpHHvJA574xsTXTJXDGy/jtUpQUaI5HF9695XE=;
+	s=arc-20240116; t=1792253676; c=relaxed/simple;
+	bh=6yjPbxnIiLpqYtfZUOinnvPclEEwQVmbgV/RYvS9Fi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECvUGUcyWewFVz2imwmHnWfMmGoWZZ7cllEn1gNlakiLh8D9aZeGk8AEFWWjrnZ2nCcfd9V0bBtVgBLkCT3avJ0OVl0dMx3sP3Osz8/cNau+Rb42ZeLyYO+5Y8sx7NL0sChDehuroE5yjK0OzMLHPQ6IUx1JMTuEJpT8OdJoSoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+3S1xh2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1dJT6cQBeVfthuZ1gyKFtQTMCI45cf630Z1ATzJ7YtOZUYPkfdDLWsFiiCT5pSRFtqcRVCAXzcCqKJ7X3z7rS8285tqc6SOUzY3HTWtVAbrrtAjap9kaY2udI0QPvNSSl4vdI0QRwi1+omJSuykPKZq6ARA1P2K3NMNcdYwLLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9gF/YRy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+3S1xh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6631F000C4;
-	Sat, 17 Oct 2026 16:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9gF/YRy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB64D1F000C4;
+	Sat, 17 Oct 2026 16:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253671;
-	bh=3O0XqSitaFV/ZCqT9nrWlVYdAyG2MCraoOuiIcS3C7U=;
+	s=korg; t=1792253674;
+	bh=0OTmu2QGMgWpT8KiPeCUjGPqAcKPOYRnW6TYGaPVobA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l+3S1xh2MZujWuu10xW78wG3EFv0fSJ1gUdYNC3V8c9fd6hAVz82nHg/Oi9PhrQDT
-	 1EGvLesECedi4Qqd/4JDG64SCJW4242I+KQdUrOjV9Ga4w4Ig++HCOTtvlaXL55+47
-	 DswRnoa85ud/+OB3DY9GXE7BTGhStBEH8a9ivCCk=
+	b=t9gF/YRyqQlQ+krbdwQI/G7SbJlA2xdNupLMChKS4xYJ0fcHK0YpwHqQhvm5XS6WO
+	 C/GaKtryvJblLMNKVfN2v0gGqoq7tT5lZidZujk1G2HVtJxcUlvgTtLHcIxQwSfXUM
+	 zaCSZEwDYrF+ooFUkRBoI9TK54ljBPEWkhOYoNJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
+	"Kory Maincent (TI.com)" <kory.maincent@bootlin.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 158/869] coresight: ETR: Fix ETR buffer use-after-free issue
-Date: Sat, 17 Oct 2026 17:49:59 +0200
-Message-ID: <20261017160041.095712622@linuxfoundation.org>
+Subject: [PATCH 6.12 194/869] drm/tilcdc: Fix removal actions in case of failed probe
+Date: Sat, 17 Oct 2026 17:50:35 +0200
+Message-ID: <20261017160042.029898609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,48 +52,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
+From: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
 
-[ Upstream commit 35501ac3c7d40a7bb9568c2f89d6b56beaf9bed3 ]
+[ Upstream commit a585c7ef9cabda58088916baedc6573e9a5cd2a7 ]
 
-When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
-and enabled again, currently sysfs_buf will point to the newly
-allocated memory(buf_new) and free the old memory(buf_old). But the
-etr_buf that is being used by the ETR remains pointed to buf_old, not
-updated to buf_new. In this case, it will result in a memory
-use-after-free issue.
+The drm_kms_helper_poll_fini() and drm_atomic_helper_shutdown() helpers
+should only be called when the device has been successfully registered.
+Currently, these functions are called unconditionally in tilcdc_fini(),
+which causes warnings during probe deferral scenarios.
 
-Fix this by checking ETR's mode before updating and releasing buf_old,
-if the mode is CS_MODE_SYSFS, then skip updating and releasing it.
+[    7.972317] WARNING: CPU: 0 PID: 23 at drivers/gpu/drm/drm_atomic_state_helper.c:175 drm_atomic_helper_crtc_duplicate_state+0x60/0x68
+...
+[    8.005820]  drm_atomic_helper_crtc_duplicate_state from drm_atomic_get_crtc_state+0x68/0x108
+[    8.005858]  drm_atomic_get_crtc_state from drm_atomic_helper_disable_all+0x90/0x1c8
+[    8.005885]  drm_atomic_helper_disable_all from drm_atomic_helper_shutdown+0x90/0x144
+[    8.005911]  drm_atomic_helper_shutdown from tilcdc_fini+0x68/0xf8 [tilcdc]
+[    8.005957]  tilcdc_fini [tilcdc] from tilcdc_pdev_probe+0xb0/0x6d4 [tilcdc]
 
-Fixes: bd2767ec3df2 ("coresight: Fix run time warnings while reusing ETR buffer")
-Signed-off-by: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Tested-by: Leo Yan <leo.yan@arm.com>
-Link: https://lore.kernel.org/r/20251021-fix_etr_issue-v3-1-99a2d066fee2@oss.qualcomm.com
+Fix this by rewriting the failed probe cleanup path using the standard
+goto error handling pattern, which ensures that cleanup functions are
+only called on successfully initialized resources. Additionally, remove
+the now-unnecessary is_registered flag.
+
+Cc: stable@vger.kernel.org
+Fixes: 3c4babae3c4a ("drm: Call drm_atomic_helper_shutdown() at shutdown/remove time for misc drivers")
+Signed-off-by: Kory Maincent (TI.com) <kory.maincent@bootlin.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251125090546.137193-1-kory.maincent@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/tilcdc/tilcdc_crtc.c |  2 +-
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c  | 53 ++++++++++++++++++----------
+ drivers/gpu/drm/tilcdc/tilcdc_drv.h  |  2 +-
+ 3 files changed, 37 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index a0a90ce7333e9..25f0335e2db05 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -1177,6 +1177,13 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
- 	 * with the lock released.
- 	 */
- 	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
-+
-+	/*
-+	 * If the ETR is already enabled, continue with the existing buffer.
-+	 */
-+	if (coresight_get_mode(csdev) == CS_MODE_SYSFS)
-+		goto out;
-+
- 	sysfs_buf = READ_ONCE(drvdata->sysfs_buf);
- 	if (!sysfs_buf || (sysfs_buf->size != drvdata->size)) {
- 		raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
+diff --git a/drivers/gpu/drm/tilcdc/tilcdc_crtc.c b/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
+index b5f60b2b2d0e7..41802c9bd1475 100644
+--- a/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
++++ b/drivers/gpu/drm/tilcdc/tilcdc_crtc.c
+@@ -586,7 +586,7 @@ static void tilcdc_crtc_recover_work(struct work_struct *work)
+ 	drm_modeset_unlock(&crtc->mutex);
+ }
+ 
+-static void tilcdc_crtc_destroy(struct drm_crtc *crtc)
++void tilcdc_crtc_destroy(struct drm_crtc *crtc)
+ {
+ 	struct tilcdc_drm_private *priv = crtc->dev->dev_private;
+ 
+diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+index cd5eefa06060d..322e02f5a763a 100644
+--- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
++++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+@@ -171,8 +171,7 @@ static void tilcdc_fini(struct drm_device *dev)
+ 	if (priv->crtc)
+ 		tilcdc_crtc_shutdown(priv->crtc);
+ 
+-	if (priv->is_registered)
+-		drm_dev_unregister(dev);
++	drm_dev_unregister(dev);
+ 
+ 	drm_kms_helper_poll_fini(dev);
+ 	drm_atomic_helper_shutdown(dev);
+@@ -219,21 +218,21 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
+ 	priv->wq = alloc_ordered_workqueue("tilcdc", 0);
+ 	if (!priv->wq) {
+ 		ret = -ENOMEM;
+-		goto init_failed;
++		goto put_drm;
+ 	}
+ 
+ 	priv->mmio = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(priv->mmio)) {
+ 		dev_err(dev, "failed to request / ioremap\n");
+ 		ret = PTR_ERR(priv->mmio);
+-		goto init_failed;
++		goto free_wq;
+ 	}
+ 
+ 	priv->clk = clk_get(dev, "fck");
+ 	if (IS_ERR(priv->clk)) {
+ 		dev_err(dev, "failed to get functional clock\n");
+ 		ret = -ENODEV;
+-		goto init_failed;
++		goto free_wq;
+ 	}
+ 
+ 	pm_runtime_enable(dev);
+@@ -312,7 +311,7 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
+ 	ret = tilcdc_crtc_create(ddev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to create crtc\n");
+-		goto init_failed;
++		goto disable_pm;
+ 	}
+ 	modeset_init(ddev);
+ 
+@@ -323,46 +322,46 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
+ 	if (ret) {
+ 		dev_err(dev, "failed to register cpufreq notifier\n");
+ 		priv->freq_transition.notifier_call = NULL;
+-		goto init_failed;
++		goto destroy_crtc;
+ 	}
+ #endif
+ 
+ 	if (priv->is_componentized) {
+ 		ret = component_bind_all(dev, ddev);
+ 		if (ret < 0)
+-			goto init_failed;
++			goto unregister_cpufreq_notif;
+ 
+ 		ret = tilcdc_add_component_encoder(ddev);
+ 		if (ret < 0)
+-			goto init_failed;
++			goto unbind_component;
+ 	} else {
+ 		ret = tilcdc_attach_external_device(ddev);
+ 		if (ret)
+-			goto init_failed;
++			goto unregister_cpufreq_notif;
+ 	}
+ 
+ 	if (!priv->external_connector &&
+ 	    ((priv->num_encoders == 0) || (priv->num_connectors == 0))) {
+ 		dev_err(dev, "no encoders/connectors found\n");
+ 		ret = -EPROBE_DEFER;
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	ret = drm_vblank_init(ddev, 1);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to initialize vblank\n");
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+-		goto init_failed;
++		goto unbind_component;
+ 	priv->irq = ret;
+ 
+ 	ret = tilcdc_irq_install(ddev, priv->irq);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to install IRQ handler\n");
+-		goto init_failed;
++		goto unbind_component;
+ 	}
+ 
+ 	drm_mode_config_reset(ddev);
+@@ -371,15 +370,33 @@ static int tilcdc_init(const struct drm_driver *ddrv, struct device *dev)
+ 
+ 	ret = drm_dev_register(ddev, 0);
+ 	if (ret)
+-		goto init_failed;
+-	priv->is_registered = true;
++		goto stop_poll;
+ 
+ 	drm_fbdev_dma_setup(ddev, bpp);
+ 	return 0;
+ 
+-init_failed:
+-	tilcdc_fini(ddev);
++stop_poll:
++	drm_kms_helper_poll_fini(ddev);
++	tilcdc_irq_uninstall(ddev);
++unbind_component:
++	if (priv->is_componentized)
++		component_unbind_all(dev, ddev);
++unregister_cpufreq_notif:
++#ifdef CONFIG_CPU_FREQ
++	cpufreq_unregister_notifier(&priv->freq_transition,
++				    CPUFREQ_TRANSITION_NOTIFIER);
++destroy_crtc:
++#endif
++	tilcdc_crtc_destroy(priv->crtc);
++disable_pm:
++	pm_runtime_disable(dev);
++	clk_put(priv->clk);
++free_wq:
++	destroy_workqueue(priv->wq);
++put_drm:
+ 	platform_set_drvdata(pdev, NULL);
++	ddev->dev_private = NULL;
++	drm_dev_put(ddev);
+ 
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.h b/drivers/gpu/drm/tilcdc/tilcdc_drv.h
+index b818448c83f61..58b276f82a669 100644
+--- a/drivers/gpu/drm/tilcdc/tilcdc_drv.h
++++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.h
+@@ -82,7 +82,6 @@ struct tilcdc_drm_private {
+ 	struct drm_encoder *external_encoder;
+ 	struct drm_connector *external_connector;
+ 
+-	bool is_registered;
+ 	bool is_componentized;
+ 	bool irq_enabled;
+ };
+@@ -164,6 +163,7 @@ void tilcdc_crtc_set_panel_info(struct drm_crtc *crtc,
+ void tilcdc_crtc_set_simulate_vesa_sync(struct drm_crtc *crtc,
+ 					bool simulate_vesa_sync);
+ void tilcdc_crtc_shutdown(struct drm_crtc *crtc);
++void tilcdc_crtc_destroy(struct drm_crtc *crtc);
+ int tilcdc_crtc_update_fb(struct drm_crtc *crtc,
+ 		struct drm_framebuffer *fb,
+ 		struct drm_pending_vblank_event *event);
 -- 
 2.53.0
 
