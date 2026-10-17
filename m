@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD0D3A2551;
-	Sat, 17 Oct 2026 16:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B503A6B9D;
+	Sat, 17 Oct 2026 16:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253591; cv=none; b=d7WO9G4tpz6LKv0KoYA5KcQ3qAjvxE83mAdYtyo1vUfMg2AMgK4zPPlYMlCiaHTxwtovxTQUM3LP32AIBOcWFC5h1ZLdyQZjJzGL/kmlkHWWjcrl2EwmZu+1rpLVjf5RxK28IgOA1WmcOJb+WVXTFE/XRWGrQ1vdCtlojEv05e4=
+	t=1792253596; cv=none; b=gL3hzkuByBrRCEVb0PDUKo50xuBdrabIJLZQKGjJLxJTJmkggYZi2xH5fE37qMe7kpF/qFCaSRT6kLCw3wQ7P2jSyO2aeZW25c7+ucgTbefx+RfsXA7zJZ/ZS1vBD6y+tI49afydtedG3U0Rhch1Ne0VtohFPvmy6MY6z+UilJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253591; c=relaxed/simple;
-	bh=qEArexgESgYCXUryHg6G6knuBPAoAn3Isf9xWvCbh9Q=;
+	s=arc-20240116; t=1792253596; c=relaxed/simple;
+	bh=cor68JfNMm4mdeLtTvm7/Cao7MB4MH26Y9Or0fVaCME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSP0jzaTKYtgiXyJDm887rFwlfm/sQfVuJ/hfOZ9yPdZ4ycjSN1ZKoG+w3byf5rzFBq+Dxo4tExSty8F2xiEqrpaDkob2DvdM4wjbEtf6cvUHNP3MAXkD0ycNCH2S614eIP6UxP6DPyI+vH0IUpp2j3Ju7LuqfgrooqU4nWPi60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc3oq1Tl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U+2WWNv7tay3pgmsxm0kgPcHzTutBlJJjM1iqJKcFI8vTBH7SsfEeY6ydJnrh0rRcWq9QLl/GzjDDvTfEju35pLQttLO2gPIOmedJbD59+zzF+HPGHFbQKuBSzGxDH3zLtrwTay7AyXGofbCicAtLd6gh0Ri0LkSc7ui/NwDOd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hW4xGcLD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc3oq1Tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9763D1F000C6;
-	Sat, 17 Oct 2026 16:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hW4xGcLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822281F000C5;
+	Sat, 17 Oct 2026 16:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253589;
-	bh=3UPGvxxY8pJTKmLQqyk1+DM2jREqAiIJ5P5oLezf+iA=;
+	s=korg; t=1792253592;
+	bh=vJp73kTW+jyWmOEPfUOKiTvbCHjtwKrbx637NNsm6oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uc3oq1TlP265cQrZXIQlMXXiv8lGcO/+EWeftNF0bNY3vj3oToRifkeeoh26rDevT
-	 jC2oSupO602mmP5J7t4WrkjKbwhejtGo5akkWpB1cjs2KYhK8TMV1J2gwBOyhg10u+
-	 09AGxJyfxrPvUFBoKtciy3UBlfkKbGs4o4TP63CM=
+	b=hW4xGcLDQA9mQUtiLcz8OJMkd9MSPQEfQ8V3viNJj/QnJUgER/vbmVljDDMKhsnk2
+	 GYItrLBmV6pwx/duQxPB/jqRUxZyyvGB5Gn8C3oQeLCSIYkJ8aWcT04ASwBx8I88FH
+	 n1jLiHIVEDCV3mFZBzfQw4HZ4XQ2YL73EWAc0N0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 169/869] wifi: mac80211: dont WARN for connections on invalid channels
-Date: Sat, 17 Oct 2026 17:50:10 +0200
-Message-ID: <20261017160041.383751119@linuxfoundation.org>
+Subject: [PATCH 6.12 170/869] accel/qaic: Add config structs for supported cards
+Date: Sat, 17 Oct 2026 17:50:11 +0200
+Message-ID: <20261017160041.409596214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,44 +52,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
+[ Upstream commit 5bbe412bc7937b5cabfe38aa186a2c6890f70df0 ]
 
-It's not clear (to me) how exactly syzbot managed to hit this,
-but it seems conceivable that e.g. regulatory changed and has
-disabled a channel between scanning (channel is checked to be
-usable by cfg80211_get_ies_channel_number) and connecting on
-the channel later.
+As the number of cards supported by the driver grows, their
+configurations will differ. The driver needs to become more dynamic
+to support these configurations. Currently, each card may differ in
+the exposed BARs, the regions they map to, and the family.
 
-With one scenario that isn't covered elsewhere described above,
-the warning isn't good, replace it with a (more informative)
-error message.
+Create config structs for each card, and let the driver configure the
+qaic_device struct based on the configurations passed to the driver.
 
-Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250117170943.2643280-7-quic_jhugo@quicinc.com
+Stable-dep-of: 51731792a25c ("net: qrtr: Drop the MHI auto_queue feature for IPCR DL channels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/accel/qaic/qaic.h          | 13 +++--
+ drivers/accel/qaic/qaic_drv.c      | 76 ++++++++++++++++++++----------
+ drivers/accel/qaic/qaic_timesync.c |  2 +-
+ 3 files changed, 61 insertions(+), 30 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 4cde4792aede9..7fd8fbe3400d3 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -917,7 +917,10 @@ ieee80211_determine_chan_mode(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index 2d7b3af09e284..06aa35b7a4843 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -32,6 +32,11 @@
+ #define to_accel_kdev(qddev) (to_drm(qddev)->accel->kdev) /* Return Linux device of accel node */
+ #define to_qaic_device(dev) (to_qaic_drm_device((dev))->qdev)
  
- 	while (!ieee80211_chandef_usable(sdata, &chanreq->oper,
- 					 IEEE80211_CHAN_DISABLED)) {
--		if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
-+		if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
-+			link_id_info(sdata, link_id,
-+				     "unusable channel (%d MHz) for connection\n",
-+				     chanreq->oper.chan->center_freq);
- 			ret = -EINVAL;
- 			goto free;
- 		}
++enum aic_families {
++	FAMILY_AIC100,
++	FAMILY_MAX,
++};
++
+ enum __packed dev_states {
+ 	/* Device is offline or will be very soon */
+ 	QAIC_OFFLINE,
+@@ -115,10 +120,10 @@ struct qaic_device {
+ 	struct pci_dev		*pdev;
+ 	/* Req. ID of request that will be queued next in MHI control device */
+ 	u32			next_seq_num;
+-	/* Base address of bar 0 */
+-	void __iomem		*bar_0;
+-	/* Base address of bar 2 */
+-	void __iomem		*bar_2;
++	/* Base address of the MHI bar */
++	void __iomem		*bar_mhi;
++	/* Base address of the DBCs bar */
++	void __iomem		*bar_dbc;
+ 	/* Controller structure for MHI devices */
+ 	struct mhi_controller	*mhi_cntrl;
+ 	/* MHI control channel device */
+diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+index cb606c4bb8511..dda1ca4bcbfc5 100644
+--- a/drivers/accel/qaic/qaic_drv.c
++++ b/drivers/accel/qaic/qaic_drv.c
+@@ -34,13 +34,38 @@
+ 
+ MODULE_IMPORT_NS(DMA_BUF);
+ 
+-#define PCI_DEV_AIC080			0xa080
+-#define PCI_DEV_AIC100			0xa100
++#define PCI_DEVICE_ID_QCOM_AIC080	0xa080
++#define PCI_DEVICE_ID_QCOM_AIC100	0xa100
+ #define QAIC_NAME			"qaic"
+ #define QAIC_DESC			"Qualcomm Cloud AI Accelerators"
+ #define CNTL_MAJOR			5
+ #define CNTL_MINOR			0
+ 
++struct qaic_device_config {
++	/* Indicates the AIC family the device belongs to */
++	int family;
++	/* A bitmask representing the available BARs */
++	int bar_mask;
++	/* An index value used to identify the MHI controller BAR */
++	unsigned int mhi_bar_idx;
++	/* An index value used to identify the DBCs BAR */
++	unsigned int dbc_bar_idx;
++};
++
++static const struct qaic_device_config aic080_config = {
++	.family = FAMILY_AIC100,
++	.bar_mask = BIT(0) | BIT(2) | BIT(4),
++	.mhi_bar_idx = 0,
++	.dbc_bar_idx = 2,
++};
++
++static const struct qaic_device_config aic100_config = {
++	.family = FAMILY_AIC100,
++	.bar_mask = BIT(0) | BIT(2) | BIT(4),
++	.mhi_bar_idx = 0,
++	.dbc_bar_idx = 2,
++};
++
+ bool datapath_polling;
+ module_param(datapath_polling, bool, 0400);
+ MODULE_PARM_DESC(datapath_polling, "Operate the datapath in polling mode");
+@@ -353,7 +378,8 @@ void qaic_dev_reset_clean_local_state(struct qaic_device *qdev)
+ 		release_dbc(qdev, i);
+ }
+ 
+-static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_device_id *id)
++static struct qaic_device *create_qdev(struct pci_dev *pdev,
++				       const struct qaic_device_config *config)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct qaic_drm_device *qddev;
+@@ -366,12 +392,10 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
+ 		return NULL;
+ 
+ 	qdev->dev_state = QAIC_OFFLINE;
+-	if (id->device == PCI_DEV_AIC080 || id->device == PCI_DEV_AIC100) {
+-		qdev->num_dbc = 16;
+-		qdev->dbc = devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc), GFP_KERNEL);
+-		if (!qdev->dbc)
+-			return NULL;
+-	}
++	qdev->num_dbc = 16;
++	qdev->dbc = devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc), GFP_KERNEL);
++	if (!qdev->dbc)
++		return NULL;
+ 
+ 	qddev = devm_drm_dev_alloc(&pdev->dev, &qaic_accel_driver, struct qaic_drm_device, drm);
+ 	if (IS_ERR(qddev))
+@@ -430,7 +454,8 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
+ 	return qdev;
+ }
+ 
+-static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
++static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev,
++		    const struct qaic_device_config *config)
+ {
+ 	int bars;
+ 	int ret;
+@@ -438,9 +463,9 @@ static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
+ 	bars = pci_select_bars(pdev, IORESOURCE_MEM) & 0x3f;
+ 
+ 	/* make sure the device has the expected BARs */
+-	if (bars != (BIT(0) | BIT(2) | BIT(4))) {
+-		pci_dbg(pdev, "%s: expected BARs 0, 2, and 4 not found in device. Found 0x%x\n",
+-			__func__, bars);
++	if (bars != config->bar_mask) {
++		pci_dbg(pdev, "%s: expected BARs %#x not found in device. Found %#x\n",
++			__func__, config->bar_mask, bars);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -453,13 +478,13 @@ static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
+ 		return ret;
+ 	dma_set_max_seg_size(&pdev->dev, UINT_MAX);
+ 
+-	qdev->bar_0 = devm_ioremap_resource(&pdev->dev, &pdev->resource[0]);
+-	if (IS_ERR(qdev->bar_0))
+-		return PTR_ERR(qdev->bar_0);
++	qdev->bar_mhi = devm_ioremap_resource(&pdev->dev, &pdev->resource[config->mhi_bar_idx]);
++	if (IS_ERR(qdev->bar_mhi))
++		return PTR_ERR(qdev->bar_mhi);
+ 
+-	qdev->bar_2 = devm_ioremap_resource(&pdev->dev, &pdev->resource[2]);
+-	if (IS_ERR(qdev->bar_2))
+-		return PTR_ERR(qdev->bar_2);
++	qdev->bar_dbc = devm_ioremap_resource(&pdev->dev, &pdev->resource[config->dbc_bar_idx]);
++	if (IS_ERR(qdev->bar_dbc))
++		return PTR_ERR(qdev->bar_dbc);
+ 
+ 	/* Managed release since we use pcim_enable_device above */
+ 	pci_set_master(pdev);
+@@ -519,21 +544,22 @@ static int init_msi(struct qaic_device *qdev, struct pci_dev *pdev)
+ 
+ static int qaic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
++	struct qaic_device_config *config = (struct qaic_device_config *)id->driver_data;
+ 	struct qaic_device *qdev;
+ 	int mhi_irq;
+ 	int ret;
+ 	int i;
+ 
+-	qdev = create_qdev(pdev, id);
++	qdev = create_qdev(pdev, config);
+ 	if (!qdev)
+ 		return -ENOMEM;
+ 
+-	ret = init_pci(qdev, pdev);
++	ret = init_pci(qdev, pdev, config);
+ 	if (ret)
+ 		return ret;
+ 
+ 	for (i = 0; i < qdev->num_dbc; ++i)
+-		qdev->dbc[i].dbc_base = qdev->bar_2 + QAIC_DBC_OFF(i);
++		qdev->dbc[i].dbc_base = qdev->bar_dbc + QAIC_DBC_OFF(i);
+ 
+ 	mhi_irq = init_msi(qdev, pdev);
+ 	if (mhi_irq < 0)
+@@ -543,7 +569,7 @@ static int qaic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (ret)
+ 		return ret;
+ 
+-	qdev->mhi_cntrl = qaic_mhi_register_controller(pdev, qdev->bar_0, mhi_irq,
++	qdev->mhi_cntrl = qaic_mhi_register_controller(pdev, qdev->bar_mhi, mhi_irq,
+ 						       qdev->single_msi);
+ 	if (IS_ERR(qdev->mhi_cntrl)) {
+ 		ret = PTR_ERR(qdev->mhi_cntrl);
+@@ -611,8 +637,8 @@ static struct mhi_driver qaic_mhi_driver = {
+ };
+ 
+ static const struct pci_device_id qaic_ids[] = {
+-	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC080), },
+-	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC100), },
++	{ PCI_DEVICE_DATA(QCOM, AIC080, (kernel_ulong_t)&aic080_config), },
++	{ PCI_DEVICE_DATA(QCOM, AIC100, (kernel_ulong_t)&aic100_config), },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(pci, qaic_ids);
+diff --git a/drivers/accel/qaic/qaic_timesync.c b/drivers/accel/qaic/qaic_timesync.c
+index 301f4462d51bd..2473c66309d40 100644
+--- a/drivers/accel/qaic/qaic_timesync.c
++++ b/drivers/accel/qaic/qaic_timesync.c
+@@ -201,7 +201,7 @@ static int qaic_timesync_probe(struct mhi_device *mhi_dev, const struct mhi_devi
+ 		goto free_sync_msg;
+ 
+ 	/* Qtimer register pointer */
+-	mqtsdev->qtimer_addr = qdev->bar_0 + QTIMER_REG_OFFSET;
++	mqtsdev->qtimer_addr = qdev->bar_mhi + QTIMER_REG_OFFSET;
+ 	timer_setup(timer, qaic_timesync_timer, 0);
+ 	timer->expires = jiffies + msecs_to_jiffies(timesync_delay_ms);
+ 	add_timer(timer);
 -- 
 2.53.0
 
