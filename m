@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F152917BED0;
-	Sat, 17 Oct 2026 17:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0C017BED0;
+	Sat, 17 Oct 2026 17:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257945; cv=none; b=slOtAPYjdY20HDj+Mc2W6kPh92OswR0x83aIQI/SejANSW3MXJT7fbVPufkUMr76lIL1mrzc3ymKhGxT32aMLf+hI7fAvNjh+XOPO1S106U/IBcqyBYgmB3O+kybhl1KHGgF97GX/vy/9JfY7GKl5AmWHdm6aMIxNLSJEAu17BU=
+	t=1792257948; cv=none; b=tgNbVHx8XPUKS8OX/+ccG8IbWhKXGjH2BSJTSJT8Mquk9+Fpr2KMIuOShMPtVySRf7MczejcCQL36zBSnIhnArHa4HKXe0nSZaK2/BiOx7dzYk83/PXEY9hDjAnwIQLEfCb/EIxk2kF0TcAjbyz7fJmhqXoxwkSKgpvN2V6w6s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257945; c=relaxed/simple;
-	bh=ZQGSyTpSJnNmF8Zkhrw7C1hh+F4M+WKzsPDn9P72x4o=;
+	s=arc-20240116; t=1792257948; c=relaxed/simple;
+	bh=kzwMYzv97+NhIxayVOP1YMrhHKAGYBc9vHTj/yKKJ4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1Wi1e3l4xWNPABaJs9oMI9aeH7URrph6kv6KROK3Oh5SEh8YCDEfsykEwFlUObWfUOWbx6DeX/nZCuxs64gFqasqGcGgLqR/RL/X0vE1Pu2zg0az++P1kd7ngh/vT2AhLlNy9VgU5SIsIYari+f6THHv2mGmw82BkCiGHRjIpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMsSgLus; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OaZUFtYFFGzZGYXdjTo2LSOpcCPKTr5Urn97h/sZVVw15rJxTq+HG8Ncz7GEx7Y3HJtgV6CnXGtdVO3tSoFCOH5D1zAHoHCckYXoUIx/xyZO/av61nn6V73DW2gFQtvtqAYpZDVmdaaXgWoP/0mr1fR3sZLH7BdLRHo2oK5cRV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qkphsw21; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMsSgLus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558CE1F000C4;
-	Sat, 17 Oct 2026 17:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qkphsw21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664B71F000C4;
+	Sat, 17 Oct 2026 17:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257943;
-	bh=d8Uf2strwM42MBJR/KwqkF+hfgzMbBSgFrK+ynMPRqo=;
+	s=korg; t=1792257947;
+	bh=HYfSEUUCyNtM1B1dxBLinoB0gMyqsVU7yMOq+2/BhIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMsSgLusbfFzDd01Mm8jVk0JAxNgAOMLRzJlQHJlV74Mf4lmunMiOaAKOqgB+qqoa
-	 kNGM0oElD9exlGwPQWU0tLBoHK/eaEAPinHRbSoctLAeLl7InkbsGXqPsQVHOUlTRV
-	 /iN9onpdIwt8CvEYyyi31miIJ6LA1Z2+DMRYCZd0=
+	b=Qkphsw21tx67l/yPE6uj/EMT0xv9SS+8Rv4mEzI4jYAZiOoN/fKRfDZcQhcZGiP4A
+	 XrjWxDI2nLUgXDIA8PuCdJoR6O1pj67aBnSiN2d8gPYWCSFc/OUiySblUYSjiw9oB3
+	 T/L9CYug385J3zSFhXIj1Id87cqTWqCIlbj9AJxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gong <quic_wgong@quicinc.com>,
-	Kang Yang <quic_kangyang@quicinc.com>,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0704/1674] wifi: ath11k: update channel list in reg notifier instead reg worker
-Date: Sat, 17 Oct 2026 17:49:36 +0200
-Message-ID: <20261017160449.176754759@linuxfoundation.org>
+Subject: [PATCH 6.6 0722/1674] fs/ntfs3: Keep write operations atomic
+Date: Sat, 17 Oct 2026 17:49:54 +0200
+Message-ID: <20261017160449.641013107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,106 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gong <quic_wgong@quicinc.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit 933ab187e679e6fbdeea1835ae39efcc59c022d2 ]
+[ Upstream commit 285cec318bf5a7a6c8ba999b2b6ec96f9a20590f ]
 
-Currently when ath11k gets a new channel list, it will be processed
-according to the following steps:
-1. update new channel list to cfg80211 and queue reg_work.
-2. cfg80211 handles new channel list during reg_work.
-3. update cfg80211's handled channel list to firmware by
-ath11k_reg_update_chan_list().
+syzbot reported a NULL pointer dereference in __generic_file_write_iter. [1]
 
-But ath11k will immediately execute step 3 after reg_work is just
-queued. Since step 2 is asynchronous, cfg80211 may not have completed
-handling the new channel list, which may leading to an out-of-bounds
-write error:
-BUG: KASAN: slab-out-of-bounds in ath11k_reg_update_chan_list
-Call Trace:
-    ath11k_reg_update_chan_list+0xbfe/0xfe0 [ath11k]
-    kfree+0x109/0x3a0
-    ath11k_regd_update+0x1cf/0x350 [ath11k]
-    ath11k_regd_update_work+0x14/0x20 [ath11k]
-    process_one_work+0xe35/0x14c0
+Before the write operation is completed, the user executes ioctl[2] to clear
+the compress flag of the file, which causes the is_compressed() judgment to
+return 0, further causing the program to enter the wrong process and call the
+wrong ops ntfs_aops_cmpr, which triggers the null pointer dereference of
+write_begin.
 
-Should ensure step 2 is completely done before executing step 3. Thus
-Wen raised patch[1]. When flag NL80211_REGDOM_SET_BY_DRIVER is set,
-cfg80211 will notify ath11k after step 2 is done.
+Use inode lock to synchronize ioctl and write to avoid this case.
 
-So enable the flag NL80211_REGDOM_SET_BY_DRIVER then cfg80211 will
-notify ath11k after step 2 is done. At this time, there will be no
-KASAN bug during the execution of the step 3.
+[1]
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Mem abort info:
+  ESR = 0x0000000086000006
+  EC = 0x21: IABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x06: level 2 translation fault
+user pgtable: 4k pages, 48-bit VAs, pgdp=000000011896d000
+[0000000000000000] pgd=0800000118b44403, p4d=0800000118b44403, pud=0800000117517403, pmd=0000000000000000
+Internal error: Oops: 0000000086000006 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 0 UID: 0 PID: 6427 Comm: syz-executor347 Not tainted 6.13.0-rc3-syzkaller-g573067a5a685 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : 0x0
+lr : generic_perform_write+0x29c/0x868 mm/filemap.c:4055
+sp : ffff80009d4978a0
+x29: ffff80009d4979c0 x28: dfff800000000000 x27: ffff80009d497bc8
+x26: 0000000000000000 x25: ffff80009d497960 x24: ffff80008ba71c68
+x23: 0000000000000000 x22: ffff0000c655dac0 x21: 0000000000001000
+x20: 000000000000000c x19: 1ffff00013a92f2c x18: ffff0000e183aa1c
+x17: 0004060000000014 x16: ffff800083275834 x15: 0000000000000001
+x14: 0000000000000000 x13: 0000000000000001 x12: ffff0000c655dac0
+x11: 0000000000ff0100 x10: 0000000000ff0100 x9 : 0000000000000000
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : ffff80009d497980 x4 : ffff80009d497960 x3 : 0000000000001000
+x2 : 0000000000000000 x1 : ffff0000e183a928 x0 : ffff0000d60b0fc0
+Call trace:
+ 0x0 (P)
+ __generic_file_write_iter+0xfc/0x204 mm/filemap.c:4156
+ ntfs_file_write_iter+0x54c/0x630 fs/ntfs3/file.c:1267
+ new_sync_write fs/read_write.c:586 [inline]
+ vfs_write+0x920/0xcf4 fs/read_write.c:679
+ ksys_write+0x15c/0x26c fs/read_write.c:731
+ __do_sys_write fs/read_write.c:742 [inline]
+ __se_sys_write fs/read_write.c:739 [inline]
+ __arm64_sys_write+0x7c/0x90 fs/read_write.c:739
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
 
-[1] https://patchwork.kernel.org/project/linux-wireless/patch/20230201065313.27203-1-quic_wgong@quicinc.com/
+[2]
+ioctl$FS_IOC_SETFLAGS(r0, 0x40086602, &(0x7f00000000c0)=0x20)
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
-
-Fixes: f45cb6b29cd3 ("wifi: ath11k: avoid deadlock during regulatory update in ath11k_regd_update()")
-Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Link: https://patch.msgid.link/20250117061737.1921-2-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5d0bdc98770e6c55a0fd
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/reg.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ fs/ntfs3/file.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/wireless/ath/ath11k/reg.c
-index 72b0eb588c06e..9d30928588bae 100644
---- a/drivers/net/wireless/ath/ath11k/reg.c
-+++ b/drivers/net/wireless/ath/ath11k/reg.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #include <linux/rtnetlink.h>
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 490225b30e600..7ef52eec6f8aa 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1103,21 +1103,22 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	ssize_t ret;
+ 	int err;
  
-@@ -56,6 +56,19 @@ ath11k_reg_notifier(struct wiphy *wiphy, struct regulatory_request *request)
- 	ath11k_dbg(ar->ab, ATH11K_DBG_REG,
- 		   "Regulatory Notification received for %s\n", wiphy_name(wiphy));
- 
-+	if (request->initiator == NL80211_REGDOM_SET_BY_DRIVER) {
-+		ath11k_dbg(ar->ab, ATH11K_DBG_REG,
-+			   "driver initiated regd update\n");
-+		if (ar->state != ATH11K_STATE_ON)
-+			return;
-+
-+		ret = ath11k_reg_update_chan_list(ar, true);
-+		if (ret)
-+			ath11k_warn(ar->ab, "failed to update channel list: %d\n", ret);
-+
-+		return;
-+	}
-+
- 	/* Currently supporting only General User Hints. Cell base user
- 	 * hints to be handled later.
- 	 * Hints from other sources like Core, Beacons are not expected for
-@@ -295,12 +308,6 @@ int ath11k_regd_update(struct ath11k *ar)
- 	if (ret)
- 		goto err;
- 
--	if (ar->state == ATH11K_STATE_ON) {
--		ret = ath11k_reg_update_chan_list(ar, true);
--		if (ret)
--			goto err;
+-	err = check_write_restriction(inode);
+-	if (err)
+-		return err;
+-
+-	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
+-		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
+-		return -EOPNOTSUPP;
 -	}
 -
- 	return 0;
- err:
- 	ath11k_warn(ab, "failed to perform regd update : %d\n", ret);
-@@ -807,6 +814,7 @@ void ath11k_regd_update_work(struct work_struct *work)
- void ath11k_reg_init(struct ath11k *ar)
- {
- 	ar->hw->wiphy->regulatory_flags = REGULATORY_WIPHY_SELF_MANAGED;
-+	ar->hw->wiphy->flags |= WIPHY_FLAG_NOTIFY_REGDOM_BY_DRIVER;
- 	ar->hw->wiphy->reg_notifier = ath11k_reg_notifier;
- }
+ 	if (!inode_trylock(inode)) {
+ 		if (iocb->ki_flags & IOCB_NOWAIT)
+ 			return -EAGAIN;
+ 		inode_lock(inode);
+ 	}
  
++	ret = check_write_restriction(inode);
++	if (ret)
++		goto out;
++
++	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
++		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	ret = generic_write_checks(iocb, from);
+ 	if (ret <= 0)
+ 		goto out;
 -- 
 2.53.0
 
