@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121C33B6C16;
-	Sat, 17 Oct 2026 16:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06653ADBA4;
+	Sat, 17 Oct 2026 16:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255337; cv=none; b=IfwOKgorS6tjILU3mGqEbCj8vM5bHvDcrSeToTREIMKh9UYiwjUXPvGwIwNvMFFFefLypbHI6+1aIbZCFms9BD2VZ9douKQavfLHbVrxQ9BS1i5RJFO1twcVN8p1fym6l6nyt4xNFE028aEdlxt7RWduP6+a7p3UBbcBYGfDvNw=
+	t=1792255340; cv=none; b=GzuTnm+1BGPOtB52bRprrlmPP/YemDR2945NO1dpXhUpmqKCFp9pg79W+R2YzKk9hVrfAaBpUKlNOGKT2S+T5H3QtKMPKLO9slfbyY04E9g6x/9I1gCh7/Np553s1pfJ9HXyI51bxpf8owEZtXCJD5/7JFXX1eorrOEw5xo18k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255337; c=relaxed/simple;
-	bh=EbaA03Nr2zNmbOMEDzvRYYk2SjhhIC2L/hrMjBGvpug=;
+	s=arc-20240116; t=1792255340; c=relaxed/simple;
+	bh=2U6jcy5qXUSnZGdSCfz/gDpLDID/lbPokWUI94wzJX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7r0gCtqeMYUGFUqSU5LLCx1flWoNL1tPP9hgj2BOEjg8CXh3AWhfBBFi+Q64gsz++s7e4l8u/Lsw3vsQTkUIUNAS8ug/+Zi8I93Bu+XBeLPK5q682iwYuHDJKOMGle/1vufp6EJW1E2yQWRCNjB+wEX8EY5C09iZHi3s5lHEeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bPmN2Ir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d4DeQMzHHWWQDeFg4PHp1RmFVlk043lAAI9EcJ1HOZ+m0WqBrHi04NsFM6mp8pyVd1E2OPC1ofUSdzARbEKx/b73lDkx7t9A2ZjE+LF344rUwSFmQT8aYikxQOXElspITNDI7Dgsdylof1lLF7EAlt0mJvS+3F1mI1ub/CsAc8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1V8l5nS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bPmN2Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568531F000C4;
-	Sat, 17 Oct 2026 16:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1V8l5nS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536EF1F000C4;
+	Sat, 17 Oct 2026 16:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255335;
-	bh=Wt/D2xCLgDLQNK+ei6RyohIMUNpfsYlcXvzXDriSDNo=;
+	s=korg; t=1792255338;
+	bh=5d6N/vQkbuJ/sqGuDF2gXaZXWujpWYuEC3HCzh/XLeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bPmN2IrbGS4Mt6wV0fh2hhUi6GIA6mPF0OGadOKmDYtftwWMPUCV3zbMLc6dnFcu
-	 ZdKhJrLxwLpGPJjo2+vkei2iFpggWRLg2xJGC8uNIOJsAiJgq0uv8dt7VVemIbwTSd
-	 JvSB8cnBm5qga/dcNwjQRWUkVXBg2MIx+jQ1gzc4=
+	b=n1V8l5nSDFd6nzHtvIDs5Lflimsph/FYk6a69NWMlx1XyhaOoYSN77jF9q3wwyF5K
+	 ne3qpCJylwxEGDbqPiZ0zEkqEpqY5xof2THc/yPiskF9wbVT6Qv8cjctr9kxo+7AzW
+	 6LQGcTo8qmc8lB6VzPz2aoLyMkij9HbgDtsE3cMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 740/869] driver core: Add device_link_test() for testing device link flags
-Date: Sat, 17 Oct 2026 17:59:41 +0200
-Message-ID: <20261017160055.916623536@linuxfoundation.org>
+Subject: [PATCH 6.12 741/869] driver core: Avoid warning when removing a device while its supplier is unbinding
+Date: Sat, 17 Oct 2026 17:59:42 +0200
+Message-ID: <20261017160055.941760039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,368 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit b29929b819f35503024c6a7e6ad442f6e36c68a0 ]
+[ Upstream commit 36d74f17e03f7e60e1b08fbe16cfad6e69cc3aa9 ]
 
-To avoid coding mistakes like the one fixed by commit 3860cbe23963 ("PM:
-sleep: Fix bit masking operation"), introduce device_link_test() for
-testing device link flags and use it where applicable.
+During driver removal, the following warning can appear:
+   WARNING: CPU: 1 PID: 139 at drivers/base/core.c:1497 __device_links_no_driver+0xcc/0xfc
+   ...
+   Call trace:
+     __device_links_no_driver+0xcc/0xfc (P)
+     device_links_driver_cleanup+0xa8/0xf0
+     device_release_driver_internal+0x208/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     driver_detach+0xa0/0x12c
+     bus_remove_driver+0x6c/0xbc
+     driver_unregister+0x30/0x60
+     pci_unregister_driver+0x20/0x9c
+     lan966x_pci_driver_exit+0x18/0xa90 [lan966x_pci]
 
-No intentional functional impact.
+This warning is triggered when a consumer is removed because the links
+status of its supplier is not DL_DEV_DRIVER_BOUND and the link flag
+DL_FLAG_SYNC_STATE_ONLY is not set.
 
-Signed-off-by: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/2793309.mvXUDI8C0e@rjwysocki.net
+The topology in terms of consumers/suppliers used was the following
+(consumer ---> supplier):
+
+      i2c -----------> OIC ----> PCI device
+       |                ^
+       |                |
+       +---> pinctrl ---+
+
+When the PCI device is removed, the OIC (interrupt controller) has to be
+removed. In order to remove the OIC, pinctrl and i2c need to be removed
+and to remove pinctrl, i2c need to be removed. The removal order is:
+  1) i2c
+  2) pinctrl
+  3) OIC
+  4) PCI device
+
+In details, the removal sequence is the following (with 0000:01:00.0 the
+PCI device):
+  driver_detach: call device_release_driver_internal(0000:01:00.0)...
+    device_links_busy(0000:01:00.0):
+      links->status = DL_DEV_UNBINDING
+    device_links_unbind_consumers(0000:01:00.0):
+      0000:01:00.0--oic link->status = DL_STATE_SUPPLIER_UNBIND
+      call device_release_driver_internal(oic)...
+        device_links_busy(oic):
+          links->status = DL_DEV_UNBINDING
+        device_links_unbind_consumers(oic):
+          oic--pinctrl link->status = DL_STATE_SUPPLIER_UNBIND
+          call device_release_driver_internal(pinctrl)...
+            device_links_busy(pinctrl):
+              links->status = DL_DEV_UNBINDING
+            device_links_unbind_consumers(pinctrl):
+              pinctrl--i2c link->status = DL_STATE_SUPPLIER_UNBIND
+              call device_release_driver_internal(i2c)...
+                device_links_busy(i2c): links->status = DL_DEV_UNBINDING
+                __device_links_no_driver(i2c)...
+                  pinctrl--i2c link->status is DL_STATE_SUPPLIER_UNBIND
+                  oic--i2c link->status is DL_STATE_ACTIVE
+                  oic--i2c link->supplier->links.status is DL_DEV_UNBINDING
+
+The warning is triggered by the i2c removal because the OIC (supplier)
+links status is not DL_DEV_DRIVER_BOUND. Its links status is indeed set
+to DL_DEV_UNBINDING.
+
+It is perfectly legit to have the links status set to DL_DEV_UNBINDING
+in that case. Indeed we had started to unbind the OIC which triggered
+the consumer unbinding and didn't finish yet when the i2c is unbound.
+
+Avoid the warning when the supplier links status is set to
+DL_DEV_UNBINDING and thus support this removal sequence without any
+warnings.
+
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Link: https://patch.msgid.link/20260511155755.34428-4-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 36d74f17e03f ("driver core: Avoid warning when removing a device while its supplier is unbinding")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c          | 73 ++++++++++++++++++------------------
- drivers/base/power/main.c    |  2 +-
- drivers/base/power/runtime.c |  6 +--
- include/linux/device.h       |  5 +++
- 4 files changed, 45 insertions(+), 41 deletions(-)
+ drivers/base/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index a6134a5e5e110..ca874afa9aa5f 100644
+index ca874afa9aa5f..130354f898e7e 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -533,9 +533,9 @@ static ssize_t auto_remove_on_show(struct device *dev,
- 	struct device_link *link = to_devlink(dev);
- 	const char *output;
- 
--	if (link->flags & DL_FLAG_AUTOREMOVE_SUPPLIER)
-+	if (device_link_test(link, DL_FLAG_AUTOREMOVE_SUPPLIER))
- 		output = "supplier unbind";
--	else if (link->flags & DL_FLAG_AUTOREMOVE_CONSUMER)
-+	else if (device_link_test(link, DL_FLAG_AUTOREMOVE_CONSUMER))
- 		output = "consumer unbind";
- 	else
- 		output = "never";
-@@ -549,7 +549,7 @@ static ssize_t runtime_pm_show(struct device *dev,
- {
- 	struct device_link *link = to_devlink(dev);
- 
--	return sysfs_emit(buf, "%d\n", !!(link->flags & DL_FLAG_PM_RUNTIME));
-+	return sysfs_emit(buf, "%d\n", device_link_test(link, DL_FLAG_PM_RUNTIME));
- }
- static DEVICE_ATTR_RO(runtime_pm);
- 
-@@ -558,8 +558,7 @@ static ssize_t sync_state_only_show(struct device *dev,
- {
- 	struct device_link *link = to_devlink(dev);
- 
--	return sysfs_emit(buf, "%d\n",
--			  !!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
-+	return sysfs_emit(buf, "%d\n", device_link_test(link, DL_FLAG_SYNC_STATE_ONLY));
- }
- static DEVICE_ATTR_RO(sync_state_only);
- 
-@@ -865,12 +864,12 @@ struct device_link *device_link_add(struct device *consumer,
- 		if (link->consumer != consumer)
- 			continue;
- 
--		if (link->flags & DL_FLAG_INFERRED &&
-+		if (device_link_test(link, DL_FLAG_INFERRED) &&
- 		    !(flags & DL_FLAG_INFERRED))
- 			link->flags &= ~DL_FLAG_INFERRED;
- 
- 		if (flags & DL_FLAG_PM_RUNTIME) {
--			if (!(link->flags & DL_FLAG_PM_RUNTIME)) {
-+			if (!device_link_test(link, DL_FLAG_PM_RUNTIME)) {
- 				pm_runtime_new_link(consumer);
- 				link->flags |= DL_FLAG_PM_RUNTIME;
- 			}
-@@ -880,8 +879,8 @@ struct device_link *device_link_add(struct device *consumer,
- 
- 		if (flags & DL_FLAG_STATELESS) {
- 			kref_get(&link->kref);
--			if (link->flags & DL_FLAG_SYNC_STATE_ONLY &&
--			    !(link->flags & DL_FLAG_STATELESS)) {
-+			if (device_link_test(link, DL_FLAG_SYNC_STATE_ONLY) &&
-+			    !device_link_test(link, DL_FLAG_STATELESS)) {
- 				link->flags |= DL_FLAG_STATELESS;
- 				goto reorder;
- 			} else {
-@@ -896,7 +895,7 @@ struct device_link *device_link_add(struct device *consumer,
- 		 * update the existing link to stay around longer.
- 		 */
- 		if (flags & DL_FLAG_AUTOREMOVE_SUPPLIER) {
--			if (link->flags & DL_FLAG_AUTOREMOVE_CONSUMER) {
-+			if (device_link_test(link, DL_FLAG_AUTOREMOVE_CONSUMER)) {
- 				link->flags &= ~DL_FLAG_AUTOREMOVE_CONSUMER;
- 				link->flags |= DL_FLAG_AUTOREMOVE_SUPPLIER;
- 			}
-@@ -904,12 +903,12 @@ struct device_link *device_link_add(struct device *consumer,
- 			link->flags &= ~(DL_FLAG_AUTOREMOVE_CONSUMER |
- 					 DL_FLAG_AUTOREMOVE_SUPPLIER);
- 		}
--		if (!(link->flags & DL_FLAG_MANAGED)) {
-+		if (!device_link_test(link, DL_FLAG_MANAGED)) {
- 			kref_get(&link->kref);
- 			link->flags |= DL_FLAG_MANAGED;
- 			device_link_init_status(link, consumer, supplier);
- 		}
--		if (link->flags & DL_FLAG_SYNC_STATE_ONLY &&
-+		if (device_link_test(link, DL_FLAG_SYNC_STATE_ONLY) &&
- 		    !(flags & DL_FLAG_SYNC_STATE_ONLY)) {
- 			link->flags &= ~DL_FLAG_SYNC_STATE_ONLY;
- 			goto reorder;
-@@ -1013,7 +1012,7 @@ static void __device_link_del(struct kref *kref)
- 
- static void device_link_put_kref(struct device_link *link)
- {
--	if (link->flags & DL_FLAG_STATELESS)
-+	if (device_link_test(link, DL_FLAG_STATELESS))
- 		kref_put(&link->kref, __device_link_del);
- 	else if (!device_is_registered(link->consumer))
- 		__device_link_del(&link->kref);
-@@ -1077,7 +1076,7 @@ static void device_links_missing_supplier(struct device *dev)
+@@ -1500,7 +1500,8 @@ static void __device_links_no_driver(struct device *dev)
  		if (link->supplier->links.status == DL_DEV_DRIVER_BOUND) {
  			WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
  		} else {
--			WARN_ON(!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
-+			WARN_ON(!device_link_test(link, DL_FLAG_SYNC_STATE_ONLY));
+-			WARN_ON(!device_link_test(link, DL_FLAG_SYNC_STATE_ONLY));
++			WARN_ON(link->supplier->links.status != DL_DEV_UNBINDING &&
++				!device_link_test(link, DL_FLAG_SYNC_STATE_ONLY));
  			WRITE_ONCE(link->status, DL_STATE_DORMANT);
  		}
  	}
-@@ -1145,14 +1144,14 @@ int device_links_check_suppliers(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry(link, &dev->links.suppliers, c_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		if (link->status != DL_STATE_AVAILABLE &&
--		    !(link->flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+		    !device_link_test(link, DL_FLAG_SYNC_STATE_ONLY)) {
- 
- 			if (dev_is_best_effort(dev) &&
--			    link->flags & DL_FLAG_INFERRED &&
-+			    device_link_test(link, DL_FLAG_INFERRED) &&
- 			    !link->supplier->can_match) {
- 				ret = -EAGAIN;
- 				continue;
-@@ -1201,7 +1200,7 @@ static void __device_links_queue_sync_state(struct device *dev,
- 		return;
- 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 		if (link->status != DL_STATE_ACTIVE)
- 			return;
-@@ -1341,7 +1340,7 @@ void device_links_force_bind(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry_safe(link, ln, &dev->links.suppliers, c_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		if (link->status != DL_STATE_AVAILABLE) {
-@@ -1394,7 +1393,7 @@ void device_links_driver_bound(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		/*
-@@ -1410,7 +1409,7 @@ void device_links_driver_bound(struct device *dev)
- 		WARN_ON(link->status != DL_STATE_DORMANT);
- 		WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
- 
--		if (link->flags & DL_FLAG_AUTOPROBE_CONSUMER)
-+		if (device_link_test(link, DL_FLAG_AUTOPROBE_CONSUMER))
- 			driver_deferred_probe_add(link->consumer);
- 	}
- 
-@@ -1422,11 +1421,11 @@ void device_links_driver_bound(struct device *dev)
- 	list_for_each_entry_safe(link, ln, &dev->links.suppliers, c_node) {
- 		struct device *supplier;
- 
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		supplier = link->supplier;
--		if (link->flags & DL_FLAG_SYNC_STATE_ONLY) {
-+		if (device_link_test(link, DL_FLAG_SYNC_STATE_ONLY)) {
- 			/*
- 			 * When DL_FLAG_SYNC_STATE_ONLY is set, it means no
- 			 * other DL_MANAGED_LINK_FLAGS have been set. So, it's
-@@ -1434,7 +1433,7 @@ void device_links_driver_bound(struct device *dev)
- 			 */
- 			device_link_drop_managed(link);
- 		} else if (dev_is_best_effort(dev) &&
--			   link->flags & DL_FLAG_INFERRED &&
-+			   device_link_test(link, DL_FLAG_INFERRED) &&
- 			   link->status != DL_STATE_CONSUMER_PROBE &&
- 			   !link->supplier->can_match) {
- 			/*
-@@ -1486,10 +1485,10 @@ static void __device_links_no_driver(struct device *dev)
- 	struct device_link *link, *ln;
- 
- 	list_for_each_entry_safe_reverse(link, ln, &dev->links.suppliers, c_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
--		if (link->flags & DL_FLAG_AUTOREMOVE_CONSUMER) {
-+		if (device_link_test(link, DL_FLAG_AUTOREMOVE_CONSUMER)) {
- 			device_link_drop_managed(link);
- 			continue;
- 		}
-@@ -1501,7 +1500,7 @@ static void __device_links_no_driver(struct device *dev)
- 		if (link->supplier->links.status == DL_DEV_DRIVER_BOUND) {
- 			WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
- 		} else {
--			WARN_ON(!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
-+			WARN_ON(!device_link_test(link, DL_FLAG_SYNC_STATE_ONLY));
- 			WRITE_ONCE(link->status, DL_STATE_DORMANT);
- 		}
- 	}
-@@ -1526,7 +1525,7 @@ void device_links_no_driver(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		/*
-@@ -1563,10 +1562,10 @@ void device_links_driver_cleanup(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry_safe(link, ln, &dev->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
--		WARN_ON(link->flags & DL_FLAG_AUTOREMOVE_CONSUMER);
-+		WARN_ON(device_link_test(link, DL_FLAG_AUTOREMOVE_CONSUMER));
- 		WARN_ON(link->status != DL_STATE_SUPPLIER_UNBIND);
- 
- 		/*
-@@ -1575,7 +1574,7 @@ void device_links_driver_cleanup(struct device *dev)
- 		 * has moved to DL_STATE_SUPPLIER_UNBIND.
- 		 */
- 		if (link->status == DL_STATE_SUPPLIER_UNBIND &&
--		    link->flags & DL_FLAG_AUTOREMOVE_SUPPLIER)
-+		    device_link_test(link, DL_FLAG_AUTOREMOVE_SUPPLIER))
- 			device_link_drop_managed(link);
- 
- 		WRITE_ONCE(link->status, DL_STATE_DORMANT);
-@@ -1609,7 +1608,7 @@ bool device_links_busy(struct device *dev)
- 	device_links_write_lock();
- 
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
--		if (!(link->flags & DL_FLAG_MANAGED))
-+		if (!device_link_test(link, DL_FLAG_MANAGED))
- 			continue;
- 
- 		if (link->status == DL_STATE_CONSUMER_PROBE
-@@ -1651,8 +1650,8 @@ void device_links_unbind_consumers(struct device *dev)
- 	list_for_each_entry(link, &dev->links.consumers, s_node) {
- 		enum device_link_state status;
- 
--		if (!(link->flags & DL_FLAG_MANAGED) ||
--		    link->flags & DL_FLAG_SYNC_STATE_ONLY)
-+		if (!device_link_test(link, DL_FLAG_MANAGED) ||
-+		    device_link_test(link, DL_FLAG_SYNC_STATE_ONLY))
- 			continue;
- 
- 		status = link->status;
-@@ -1808,7 +1807,7 @@ static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
- 
- static void fw_devlink_relax_link(struct device_link *link)
- {
--	if (!(link->flags & DL_FLAG_INFERRED))
-+	if (!device_link_test(link, DL_FLAG_INFERRED))
- 		return;
- 
- 	if (device_link_flag_is_sync_state_only(link->flags))
-@@ -1844,7 +1843,7 @@ static int fw_devlink_dev_sync_state(struct device *dev, void *data)
- 	struct device_link *link = to_devlink(dev);
- 	struct device *sup = link->supplier;
- 
--	if (!(link->flags & DL_FLAG_MANAGED) ||
-+	if (!device_link_test(link, DL_FLAG_MANAGED) ||
- 	    link->status == DL_STATE_ACTIVE || sup->state_synced ||
- 	    !dev_has_sync_state(sup))
- 		return 0;
-@@ -2126,7 +2125,7 @@ static bool __fw_devlink_relax_cycles(struct fwnode_handle *con_handle,
- 		 * such due to a cycle.
- 		 */
- 		if (device_link_flag_is_sync_state_only(dev_link->flags) &&
--		    !(dev_link->flags & DL_FLAG_CYCLE))
-+		    !device_link_test(dev_link, DL_FLAG_CYCLE))
- 			continue;
- 
- 		if (__fw_devlink_relax_cycles(con_handle,
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 89f0da18c98fe..fab8df1e29e62 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -1817,7 +1817,7 @@ static void device_prepare_smart_suspend(struct device *dev)
- 	idx = device_links_read_lock();
- 
- 	list_for_each_entry_rcu_locked(link, &dev->links.suppliers, c_node) {
--		if (!(link->flags & DL_FLAG_PM_RUNTIME))
-+		if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
- 			continue;
- 
- 		if (!dev_pm_smart_suspend(link->supplier) &&
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index d189d88937753..b0b72fa2a1202 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -290,7 +290,7 @@ static int rpm_get_suppliers(struct device *dev)
- 				device_links_read_lock_held()) {
- 		int retval;
- 
--		if (!(link->flags & DL_FLAG_PM_RUNTIME))
-+		if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
- 			continue;
- 
- 		retval = pm_runtime_get_sync(link->supplier);
-@@ -1900,7 +1900,7 @@ void pm_runtime_get_suppliers(struct device *dev)
- 
- 	list_for_each_entry_rcu(link, &dev->links.suppliers, c_node,
- 				device_links_read_lock_held())
--		if (link->flags & DL_FLAG_PM_RUNTIME) {
-+		if (device_link_test(link, DL_FLAG_PM_RUNTIME)) {
- 			link->supplier_preactivated = true;
- 			pm_runtime_get_sync(link->supplier);
- 		}
-@@ -1954,7 +1954,7 @@ static void pm_runtime_drop_link_count(struct device *dev)
-  */
- void pm_runtime_drop_link(struct device_link *link)
- {
--	if (!(link->flags & DL_FLAG_PM_RUNTIME))
-+	if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
- 		return;
- 
- 	pm_runtime_drop_link_count(link->consumer);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 971ae3bdc1aca..cc2ef7f0539cd 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1262,6 +1262,11 @@ void device_links_supplier_sync_state_pause(void);
- void device_links_supplier_sync_state_resume(void);
- void device_link_wait_removal(void);
- 
-+static inline bool device_link_test(const struct device_link *link, u32 flags)
-+{
-+	return !!(link->flags & flags);
-+}
-+
- /* Create alias, so I can be autoloaded. */
- #define MODULE_ALIAS_CHARDEV(major,minor) \
- 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
 -- 
 2.53.0
 
