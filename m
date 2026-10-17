@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFAD2DF126;
-	Sat, 17 Oct 2026 17:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237193C73CC;
+	Sat, 17 Oct 2026 17:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259605; cv=none; b=QYKBmoDFi65MLjo2V2tOOIeXzbhaOyzdkClEKw7jSy51/HzBXcmylWz5Y/5ZYAkXyTcSnO7SSxi+aSVatJDLZujP/HuOHqnvGfYhumPAoK2BssmU1AYSPC6IANgdJKmYXSWHCZkQQdoYGHqkHMptvzmJcnTNNPpsYnFOmGz77I4=
+	t=1792259608; cv=none; b=CPcVceHuGUe5JaUjcHZarqYzO+BVpJJpyaypT7nRnDGVYhVS1Sx8B3ZgM7jeunyWs20pRPxgwlaqa/r1QXbN0RcGXYH+fmLzUScg2vw9cSuPkp+cJZiedCxDha4e76gJMArly5WnNeZ1J+wcTvUkSt+3q616yQKFWRPGQXcIB0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259605; c=relaxed/simple;
-	bh=4Us0wE6FMMpxlrtpWMRtSl0WQtALFOVoucxEDRdMftE=;
+	s=arc-20240116; t=1792259608; c=relaxed/simple;
+	bh=z9nD1zxxbbJC7kZJ+aoll8JC7cLa/KfpW7f1+6V+eoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qUwhnjYnwLjplfQNxxKRUuAaCaXNcfctCV/Di3ljo4HsSDf0GoZsUfL4ptwNrPi+3MBt+iVgbFFrDzVtiIkAH6djb0tlGvjf8NSeMMfIm7LieLssfxxKvcwB/BfBdb43gHGiNUet4GicgoGj0HNJaPmZvHEOmMZW7lof3g2WAsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8iZ3gBI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LuvWpdebTsSJk/nqFTOcTo3LWYks48zwmhGXseNZynM6iDuEaUYdVuxu+FAs3CjyH00TGaqdSJOlUVX6Zcig9RYTWU3Eao/LruCbqHCdZWOzY4O9p8FWmpCY3IXIKKweArGkvB6StEJfD96oyRUUfNoazWQjBwUbgWAmK2vdyEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahoaOMB0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8iZ3gBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678961F000C4;
-	Sat, 17 Oct 2026 17:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahoaOMB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7217E1F000C4;
+	Sat, 17 Oct 2026 17:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259604;
-	bh=93zUpIurksaBfCqgnWk5ZXkyrIypB1zvZcYGu7VLCgY=;
+	s=korg; t=1792259607;
+	bh=JSvCTdYj8cPC/tsL5Rm2HKX5pXsJ6h1cECc3ySq6Aos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8iZ3gBIBrN+1yWbcnjS56PRMTiXNz6JrEvTXd1dtE1AzOaeRp23TGcOYXFqfrimn
-	 YvssWjTYJIy0WcC9klwIlw4yxVgyWNPRE3D+u8u60SrsPIDmin9X9AXhK+FI8wWBhk
-	 Zdf0821apeQIJW4Qf7mTdVNhIaTDZo37p9FX9ls0=
+	b=ahoaOMB0euROgLuxT2JtFY2gEzx0TZXIyLSvUvERVXWymrRvYsWWIv59uVtBWstj8
+	 //6hpbVcwn+H7A5NVip3OhxTQvg5no2+1dfrS7qeWStZlwx9icDk/axuevrsswyban
+	 u2FA5f/4tVpyRJ0XGWZvFY7LhAOsC/BwH6JoB/pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1268/1674] platform/x86: int1092: Fix potential memory leak in sar_probe()
-Date: Sat, 17 Oct 2026 17:59:00 +0200
-Message-ID: <20261017160503.690446236@linuxfoundation.org>
+Subject: [PATCH 6.6 1269/1674] platform/x86: ISST: Add a NULL check for sst_inst[]
+Date: Sat, 17 Oct 2026 17:59:01 +0200
+Message-ID: <20261017160503.714985394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,108 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 30c906cff490c3601ee9ff110fe8115fabe75fd4 ]
+[ Upstream commit 3de2776e9d7073765c10c2326c2bda5926811ea6 ]
 
-The memory allocated for device_mode_info in parse_package() called by
-sar_get_data() is not freed in some of the error paths in sar_probe().
-Fix that by converting to use device managed allocations.
+To be consistent with other places, add a NULL check for failed socket
+loading by checking isst_common.sst_inst[].
 
-Fixes: dcfbd31ef4bc ("platform/x86: BIOS SAR driver for Intel M.2 Modem")
+Fixes: d805456c712f ("platform/x86: ISST: Enumerate TPMI SST and create framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260723-platx86-v4-1-93b4a178b595@cse.iitm.ac.in
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260811222134.3912626-3-srinivas.pandruvada@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/intel/int1092/intel_sar.c    | 32 ++++++-------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ .../platform/x86/intel/speed_select_if/isst_tpmi_core.c    | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/int1092/intel_sar.c b/drivers/platform/x86/intel/int1092/intel_sar.c
-index 926be7d9086a1..1cfb268f6b71f 100644
---- a/drivers/platform/x86/intel/int1092/intel_sar.c
-+++ b/drivers/platform/x86/intel/int1092/intel_sar.c
-@@ -91,8 +91,10 @@ static acpi_status parse_package(struct wwan_sar_context *context, union acpi_ob
- 	    item->package.count <= data->total_dev_mode)
- 		return AE_ERROR;
+diff --git a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+index db45ddf9637d2..30f4f047ef5a2 100644
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -1153,9 +1153,12 @@ static int isst_if_get_tpmi_instance_count(void __user *argp)
+ 	if (tpmi_inst.socket_id >= topology_max_packages())
+ 		return -EINVAL;
  
--	data->device_mode_info = kmalloc_array(data->total_dev_mode,
--					       sizeof(struct wwan_device_mode_info), GFP_KERNEL);
-+	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
-+						    data->total_dev_mode,
-+						    sizeof(*data->device_mode_info),
-+						    GFP_KERNEL);
- 	if (!data->device_mode_info)
- 		return AE_ERROR;
- 
-@@ -253,7 +255,7 @@ static int sar_probe(struct platform_device *device)
- 	if (!handle)
- 		return -ENODEV;
- 
--	context = kzalloc(sizeof(*context), GFP_KERNEL);
-+	context = devm_kzalloc(&device->dev, sizeof(*context), GFP_KERNEL);
- 	if (!context)
- 		return -ENOMEM;
- 
-@@ -264,7 +266,7 @@ static int sar_probe(struct platform_device *device)
- 	result = guid_parse(SAR_DSM_UUID, &context->guid);
- 	if (result) {
- 		dev_err(&device->dev, "SAR UUID parse error: %d\n", result);
--		goto r_free;
-+		return result;
- 	}
- 
- 	for (reg = 0; reg < MAX_REGULATORY; reg++)
-@@ -272,43 +274,29 @@ static int sar_probe(struct platform_device *device)
- 
- 	if (sar_get_device_mode(device) != AE_OK) {
- 		dev_err(&device->dev, "Failed to get device mode\n");
--		result = -EIO;
--		goto r_free;
-+		return -EIO;
- 	}
- 
- 	result = sysfs_create_group(&device->dev.kobj, &intcsar_group);
- 	if (result) {
- 		dev_err(&device->dev, "sysfs creation failed\n");
--		goto r_free;
-+		return result;
- 	}
- 
- 	if (acpi_install_notify_handler(ACPI_HANDLE(&device->dev), ACPI_DEVICE_NOTIFY,
- 					sar_notify, (void *)device) != AE_OK) {
- 		dev_err(&device->dev, "Failed acpi_install_notify_handler\n");
--		result = -EIO;
--		goto r_sys;
-+		sysfs_remove_group(&device->dev.kobj, &intcsar_group);
-+		return -EIO;
- 	}
- 	return 0;
+-	tpmi_inst.count = isst_common.sst_inst[tpmi_inst.socket_id]->number_of_power_domains;
 -
--r_sys:
--	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
--r_free:
--	kfree(context);
--	return result;
- }
- 
- static void sar_remove(struct platform_device *device)
- {
--	struct wwan_sar_context *context = dev_get_drvdata(&device->dev);
--	int reg;
--
- 	acpi_remove_notify_handler(ACPI_HANDLE(&device->dev),
- 				   ACPI_DEVICE_NOTIFY, sar_notify);
- 	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
--	for (reg = 0; reg < MAX_REGULATORY; reg++)
--		kfree(context->config_data[reg].device_mode_info);
--
--	kfree(context);
- }
- 
- static struct platform_driver sar_driver = {
+ 	sst_inst = isst_common.sst_inst[tpmi_inst.socket_id];
++	if (!sst_inst)
++		return -EINVAL;
++
++	tpmi_inst.count = sst_inst->number_of_power_domains;
++
+ 	tpmi_inst.valid_mask = 0;
+ 	for (i = 0; i < sst_inst->number_of_power_domains; ++i) {
+ 		struct tpmi_per_power_domain_info *pd_info;
 -- 
 2.53.0
 
