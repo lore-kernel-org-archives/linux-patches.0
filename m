@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121FB2D73A6;
-	Sat, 17 Oct 2026 15:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DCD360745;
+	Sat, 17 Oct 2026 15:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252594; cv=none; b=VI7CE8igbUU49oN8Ppv/HrvC+tQwvmYOKZ7ovJjuAidQ2jhmXEuKLg7qgb51LgHy88+xw3GgL423ydGifjsmO1sw5fs7a8t2lx5rr+8arHaStjuKp3aY0P4fd4LYVWy9kg8fWZ6vgaze7oyUx1Ndcn5eJnt65x3rCfoSGGI1muE=
+	t=1792252597; cv=none; b=I6zEsVPRp8B8SWZeHBmlxXVC6Y3aXor/v6iUuNRsMzCnIhNf/1OCVSlTkmwPSH3daxyaaPWSaYPUZ74/hYFeMIAZDiXoW46/hxaPD0RNEbriR4hgw2Mnw5ajxQeFEiLQQN/ZHa7lX1yQJ4gk8z9FAJg2c7VDpsdV6YqRhZRvOG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252594; c=relaxed/simple;
-	bh=lHFWOcCKauamkE0jyTkc1b/hN5W2SI/D9CIDPuMh/cA=;
+	s=arc-20240116; t=1792252597; c=relaxed/simple;
+	bh=cJ0mAehzVqYHbBkerv/hs/RGaQGYQaVR6+ly6qfzkjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7NtNWBuWhOUCEbm4mHfjvw15Eg/Lr1xDYaMZ1SqdybP4fAVZzId384rUXCVJ+rxOha56VcwnUnnZFtiXYE8luYKTpob31qV2iAdItsvATV52LYuIu+pEC3XcmMDZs+3OgwQWZpI4tlnqxktW73yde6ZKvTFKhy0CZFvRwOM+dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAeLVa4V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T/sV/wQN1+olLDx0uw86g0/hjP29UXmcjqhVWNw8driKc6uiP3PW4oJe1RZIQ33F28q55Y8OpYLlJPAQSp3gDOoevoHgTuhbM+tcXWnBXwBeo0F6LBb2ob/0eDJI5pNw0JvKGBXqfixPZBnyYdpYMhFoT1ueSeIamtoclnAS650=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZlNhojo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAeLVa4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC881F000C4;
-	Sat, 17 Oct 2026 15:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZlNhojo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2582E1F000C4;
+	Sat, 17 Oct 2026 15:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252592;
-	bh=VfivRKY04lb3SfGrA5shwuYrea4uM2GfH747UyLwze4=;
+	s=korg; t=1792252595;
+	bh=9/RZIyLoqE8BqR1xcwqd6c9G9zfqFxiTKel9nmTWQus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAeLVa4VeAVylCBL2NAf5hP6xuWSQ2JTyaRoeFZcdurz1qvMxVBLsoS7GfNkOYWiM
-	 lct75cMwQm598FMPrIOi5PhwMdGdWaUn3owQFym4Ii2ZLXbnPUumgZVwzTQcdAWewp
-	 /a2Yqp9H+BGOqTGANfvyBBB4xpFw+CAmGidRW+bo=
+	b=2ZlNhojomTjOvfHM2enyEEMoz7UtNGpduxbfeB2k2byKsMt5ha5Grv8vJg7nGEkVy
+	 qKUGtvRKfdUiDoF1afLntrIuCkOe4ZEKGeYQcaBprPcJpDJlbsjkpCSxFTBKyM5Ioh
+	 K5+GGVEgvJ+Tt5FnGdL6AK/9Er9E+niWdOlRazgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris J Arges <carges@cloudflare.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 32/52] ima: Fix stack-out-of-bounds in is_bprm_creds_for_exec()
-Date: Sat, 17 Oct 2026 17:54:33 +0200
-Message-ID: <20261017155105.881049384@linuxfoundation.org>
+Subject: [PATCH 6.18 33/52] ice: remove legacy Rx and construct SKB
+Date: Sat, 17 Oct 2026 17:54:34 +0200
+Message-ID: <20261017155105.915063592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -51,194 +54,408 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris J Arges <carges@cloudflare.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 377cae9851e8559e9d8b82a78c1ac0abeb18839c ]
+[ Upstream commit 9e314a3c525c91c1e918546f472585cdbd44fbd1 ]
 
-KASAN reported a stack-out-of-bounds access in ima_appraise_measurement
-from is_bprm_creds_for_exec:
+The commit 53844673d555 ("iavf: kill 'legacy-rx' for good") removed
+the legacy Rx path in the iavf driver. This change applies the same
+rationale to the ice driver.
 
-BUG: KASAN: stack-out-of-bounds in ima_appraise_measurement+0x12dc/0x16a0
- Read of size 1 at addr ffffc9000160f940 by task sudo/550
-The buggy address belongs to stack of task sudo/550
-and is located at offset 24 in frame:
-  ima_appraise_measurement+0x0/0x16a0
-This frame has 2 objects:
-  [48, 56) 'file'
-  [80, 148) 'hash'
+The legacy Rx path relied on manual skb allocation and header copying,
+which has become increasingly inefficient and difficult to maintain.
+With the stabilization of build_skb() and the growing adoption of
+features like XDP, page_pool, and multi-buffer support, the legacy
+approach is no longer viable.
 
-This is caused by using container_of on the *file pointer. This offset
-calculation is what triggers the stack-out-of-bounds error.
+Key drawbacks of the legacy path included:
+- Higher memory pressure due to direct page allocations and splitting;
+- Redundant memcpy() operations for packet headers;
+- CPU overhead from eth_get_headlen() and Flow Dissector usage;
+- Compatibility issues with XDP, which imposes strict headroom and
+  tailroom requirements.
 
-In order to fix this, pass in a bprm_is_check boolean which can be set
-depending on how process_measurement is called. If the caller has a
-linux_binprm pointer and the function is BPRM_CHECK we can determine
-is_check and set it then. Otherwise set it to false.
+The ice driver, like iavf, does not benefit from the minimal headroom
+savings that legacy Rx once offered, as it already splits pages into
+fixed halves. Removing this path simplifies the Rx logic, eliminates
+unnecessary branches in the hotpath, and prepares the driver for
+upcoming enhancements.
 
-Fixes: 95b3cdafd7cb7 ("ima: instantiate the bprm_creds_for_exec() hook")
+In addition to removing the legacy Rx path, this change also eliminates
+the custom construct_skb() functions from both the standard and
+zero-copy (ZC) Rx paths. These are replaced with the build_skb()
+and standardized xdp_build_skb_from_zc() helpers, aligning the driver
+with the modern XDP infrastructure and reducing code duplication.
 
-Signed-off-by: Chris J Arges <carges@cloudflare.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+This cleanup also reduces code complexity and improves maintainability
+as we move toward a more unified and modern Rx model across drivers.
+
+Co-developed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: e142dc4ef0f4 ("ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima.h          |  6 ++++--
- security/integrity/ima/ima_appraise.c | 16 +++-------------
- security/integrity/ima/ima_main.c     | 22 +++++++++++++---------
- 3 files changed, 20 insertions(+), 24 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h         |  1 -
+ drivers/net/ethernet/intel/ice/ice_base.c    | 23 +-----
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |  5 --
+ drivers/net/ethernet/intel/ice/ice_main.c    | 11 +--
+ drivers/net/ethernet/intel/ice/ice_txrx.c    | 86 +-------------------
+ drivers/net/ethernet/intel/ice/ice_txrx.h    | 16 ----
+ drivers/net/ethernet/intel/ice/ice_xsk.c     | 72 +---------------
+ 7 files changed, 6 insertions(+), 208 deletions(-)
 
-diff --git a/security/integrity/ima/ima.h b/security/integrity/ima/ima.h
-index e3d71d8d56e38..89ebe98ffc5e5 100644
---- a/security/integrity/ima/ima.h
-+++ b/security/integrity/ima/ima.h
-@@ -441,7 +441,8 @@ int ima_check_blacklist(struct ima_iint_cache *iint,
- int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
- 			     struct file *file, const unsigned char *filename,
- 			     struct evm_ima_xattr_data *xattr_value,
--			     int xattr_len, const struct modsig *modsig);
-+			     int xattr_len, const struct modsig *modsig,
-+			     bool bprm_is_check);
- int ima_must_appraise(struct mnt_idmap *idmap, struct inode *inode,
- 		      int mask, enum ima_hooks func);
- void ima_update_xattr(struct ima_iint_cache *iint, struct file *file);
-@@ -466,7 +467,8 @@ static inline int ima_appraise_measurement(enum ima_hooks func,
- 					   const unsigned char *filename,
- 					   struct evm_ima_xattr_data *xattr_value,
- 					   int xattr_len,
--					   const struct modsig *modsig)
-+					   const struct modsig *modsig,
-+					   bool bprm_is_check)
- {
- 	return INTEGRITY_UNKNOWN;
- }
-diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
-index a87ef7c05f11e..a3bdb7a0ab121 100644
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -480,17 +480,6 @@ int ima_check_blacklist(struct ima_iint_cache *iint,
- 	return rc;
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 2b285ffa9d4b4..02c6e77db5447 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -509,7 +509,6 @@ enum ice_pf_flags {
+ 	ICE_FLAG_MOD_POWER_UNSUPPORTED,
+ 	ICE_FLAG_PHY_FW_LOAD_FAILED,
+ 	ICE_FLAG_ETHTOOL_CTXT,		/* set when ethtool holds RTNL lock */
+-	ICE_FLAG_LEGACY_RX,
+ 	ICE_FLAG_VF_TRUE_PROMISC_ENA,
+ 	ICE_FLAG_MDD_AUTO_RESET_VF,
+ 	ICE_FLAG_VF_VLAN_PRUNING,
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 2d35a278c555c..b3eb9f5125003 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -461,19 +461,6 @@ u16 ice_calc_ts_ring_count(struct ice_tx_ring *tx_ring)
+ 	return tx_ring->count + max_fetch_desc;
  }
  
--static bool is_bprm_creds_for_exec(enum ima_hooks func, struct file *file)
+-/**
+- * ice_rx_offset - Return expected offset into page to access data
+- * @rx_ring: Ring we are requesting offset of
+- *
+- * Returns the offset value for ring into the data buffer.
+- */
+-static unsigned int ice_rx_offset(struct ice_rx_ring *rx_ring)
 -{
--	struct linux_binprm *bprm;
--
--	if (func == BPRM_CHECK) {
--		bprm = container_of(&file, struct linux_binprm, file);
--		return bprm->is_check;
--	}
--	return false;
+-	if (ice_ring_uses_build_skb(rx_ring))
+-		return ICE_SKB_PAD;
+-	return 0;
 -}
 -
- /*
-  * ima_appraise_measurement - appraise file measurement
-  *
-@@ -502,7 +491,8 @@ static bool is_bprm_creds_for_exec(enum ima_hooks func, struct file *file)
- int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
- 			     struct file *file, const unsigned char *filename,
- 			     struct evm_ima_xattr_data *xattr_value,
--			     int xattr_len, const struct modsig *modsig)
-+			     int xattr_len, const struct modsig *modsig,
-+			     bool bprm_is_check)
- {
- 	static const char op[] = "appraise_data";
- 	int audit_msgno = AUDIT_INTEGRITY_DATA;
-@@ -524,7 +514,7 @@ int ima_appraise_measurement(enum ima_hooks func, struct ima_iint_cache *iint,
- 	 * of the script interpreter(userspace). Differentiate kernel and
- 	 * userspace enforced integrity audit messages.
- 	 */
--	if (is_bprm_creds_for_exec(func, file))
-+	if (bprm_is_check)
- 		audit_msgno = AUDIT_INTEGRITY_USERSPACE;
+ /**
+  * ice_setup_rx_ctx - Configure a receive ring context
+  * @ring: The Rx ring to configure
+@@ -586,13 +573,7 @@ static int ice_setup_rx_ctx(struct ice_rx_ring *ring)
+ 	if (vsi->type == ICE_VSI_VF)
+ 		return 0;
  
- 	/* If reading the xattr failed and there's no modsig, error out. */
-diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
-index cda897267230d..d2a31b655822a 100644
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -236,7 +236,8 @@ static void ima_file_free(struct file *file)
- static int process_measurement(struct file *file, const struct cred *cred,
- 			       struct lsm_prop *prop, char *buf, loff_t size,
- 			       int mask, enum ima_hooks func,
--			       enum kernel_read_file_id read_id)
-+			       enum kernel_read_file_id read_id,
-+			       bool bprm_is_check)
+-	/* configure Rx buffer alignment */
+-	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags))
+-		ice_clear_ring_build_skb_ena(ring);
+-	else
+-		ice_set_ring_build_skb_ena(ring);
+-
+-	ring->rx_offset = ice_rx_offset(ring);
++	ring->rx_offset = ICE_SKB_PAD;
+ 
+ 	/* init queue specific tail register */
+ 	ring->tail = hw->hw_addr + QRX_TAIL(pf_q);
+@@ -753,7 +734,7 @@ int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx)
+  */
+ static void ice_vsi_cfg_frame_size(struct ice_vsi *vsi, struct ice_rx_ring *ring)
  {
- 	struct inode *real_inode, *inode = file_inode(file);
- 	struct ima_iint_cache *iint = NULL;
-@@ -426,7 +427,8 @@ static int process_measurement(struct file *file, const struct cred *cred,
- 			inode_lock(inode);
- 			rc = ima_appraise_measurement(func, iint, file,
- 						      pathname, xattr_value,
--						      xattr_len, modsig);
-+						      xattr_len, modsig,
-+						      bprm_is_check);
- 			inode_unlock(inode);
+-	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags)) {
++	if (!vsi->netdev) {
+ 		ring->max_frame = ICE_MAX_FRAME_LEGACY_RX;
+ 		ring->rx_buf_len = ICE_RXBUF_1664;
+ #if (PAGE_SIZE < 8192)
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index ec33586b6da52..706e9a5e83755 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -340,7 +340,6 @@ static const struct ice_priv_flag ice_gstrings_priv_flags[] = {
+ 		      ICE_FLAG_VF_TRUE_PROMISC_ENA),
+ 	ICE_PRIV_FLAG("mdd-auto-reset-vf", ICE_FLAG_MDD_AUTO_RESET_VF),
+ 	ICE_PRIV_FLAG("vf-vlan-pruning", ICE_FLAG_VF_VLAN_PRUNING),
+-	ICE_PRIV_FLAG("legacy-rx", ICE_FLAG_LEGACY_RX),
+ };
+ 
+ #define ICE_PRIV_FLAG_ARRAY_SIZE	ARRAY_SIZE(ice_gstrings_priv_flags)
+@@ -1848,10 +1847,6 @@ static int ice_set_priv_flags(struct net_device *netdev, u32 flags)
+ 			ice_nway_reset(netdev);
  		}
- 		if (!rc)
-@@ -493,14 +495,15 @@ static int ima_file_mmap(struct file *file, unsigned long reqprot,
+ 	}
+-	if (test_bit(ICE_FLAG_LEGACY_RX, change_flags)) {
+-		/* down and up VSI so that changes of Rx cfg are reflected. */
+-		ice_down_up(vsi);
+-	}
+ 	/* don't allow modification of this flag when a single VF is in
+ 	 * promiscuous mode because it's not supported
+ 	 */
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index f85051072ba2c..b6bbbaa85c925 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2957,10 +2957,7 @@ int ice_vsi_determine_xdp_res(struct ice_vsi *vsi)
+  */
+ static int ice_max_xdp_frame_size(struct ice_vsi *vsi)
+ {
+-	if (test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags))
+-		return ICE_RXBUF_1664;
+-	else
+-		return ICE_RXBUF_3072;
++	return ICE_RXBUF_3072;
+ }
  
- 	if (reqprot & PROT_EXEC) {
- 		ret = process_measurement(file, current_cred(), &prop, NULL,
--					  0, MAY_EXEC, MMAP_CHECK_REQPROT, 0);
-+					  0, MAY_EXEC, MMAP_CHECK_REQPROT, 0,
-+					  false);
- 		if (ret)
- 			return ret;
+ /**
+@@ -7879,12 +7876,6 @@ int ice_change_mtu(struct net_device *netdev, int new_mtu)
+ 				   frame_size - ICE_ETH_PKT_HDR_PAD);
+ 			return -EINVAL;
+ 		}
+-	} else if (test_bit(ICE_FLAG_LEGACY_RX, pf->flags)) {
+-		if (new_mtu + ICE_ETH_PKT_HDR_PAD > ICE_MAX_FRAME_LEGACY_RX) {
+-			netdev_err(netdev, "Too big MTU for legacy-rx; Max is %d\n",
+-				   ICE_MAX_FRAME_LEGACY_RX - ICE_ETH_PKT_HDR_PAD);
+-			return -EINVAL;
+-		}
  	}
  
- 	if (prot & PROT_EXEC)
- 		return process_measurement(file, current_cred(), &prop, NULL,
--					   0, MAY_EXEC, MMAP_CHECK, 0);
-+					   0, MAY_EXEC, MMAP_CHECK, 0, false);
- 
- 	return 0;
- }
-@@ -584,7 +587,8 @@ static int ima_bprm_check(struct linux_binprm *bprm)
- 
- 	security_current_getlsmprop_subj(&prop);
- 	return process_measurement(bprm->file, current_cred(),
--				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK, 0);
-+				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK, 0,
-+				   bprm->is_check);
+ 	/* if a reset is in progress, wait for some time for it to complete */
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 4831b9a5ac83b..9494fccf95a09 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -1170,87 +1170,6 @@ ice_build_skb(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
+ 	return skb;
  }
  
+-/**
+- * ice_construct_skb - Allocate skb and populate it
+- * @rx_ring: Rx descriptor ring to transact packets on
+- * @xdp: xdp_buff pointing to the data
+- *
+- * This function allocates an skb. It then populates it with the page
+- * data from the current receive descriptor, taking care to set up the
+- * skb correctly.
+- */
+-static struct sk_buff *
+-ice_construct_skb(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
+-{
+-	unsigned int size = xdp->data_end - xdp->data;
+-	struct skb_shared_info *sinfo = NULL;
+-	struct ice_rx_buf *rx_buf;
+-	unsigned int nr_frags = 0;
+-	unsigned int headlen;
+-	struct sk_buff *skb;
+-
+-	/* prefetch first cache line of first page */
+-	net_prefetch(xdp->data);
+-
+-	if (unlikely(xdp_buff_has_frags(xdp))) {
+-		sinfo = xdp_get_shared_info_from_buff(xdp);
+-		nr_frags = sinfo->nr_frags;
+-	}
+-
+-	/* allocate a skb to store the frags */
+-	skb = napi_alloc_skb(&rx_ring->q_vector->napi, ICE_RX_HDR_SIZE);
+-	if (unlikely(!skb))
+-		return NULL;
+-
+-	rx_buf = &rx_ring->rx_buf[rx_ring->first_desc];
+-	skb_record_rx_queue(skb, rx_ring->q_index);
+-	/* Determine available headroom for copy */
+-	headlen = size;
+-	if (headlen > ICE_RX_HDR_SIZE)
+-		headlen = eth_get_headlen(skb->dev, xdp->data, ICE_RX_HDR_SIZE);
+-
+-	/* align pull length to size of long to optimize memcpy performance */
+-	memcpy(__skb_put(skb, headlen), xdp->data, ALIGN(headlen,
+-							 sizeof(long)));
+-
+-	/* if we exhaust the linear part then add what is left as a frag */
+-	size -= headlen;
+-	if (size) {
+-		/* besides adding here a partial frag, we are going to add
+-		 * frags from xdp_buff, make sure there is enough space for
+-		 * them
+-		 */
+-		if (unlikely(nr_frags >= MAX_SKB_FRAGS - 1)) {
+-			dev_kfree_skb(skb);
+-			return NULL;
+-		}
+-		skb_add_rx_frag(skb, 0, rx_buf->page,
+-				rx_buf->page_offset + headlen, size,
+-				xdp->frame_sz);
+-	} else {
+-		/* buffer is unused, restore biased page count in Rx buffer;
+-		 * data was copied onto skb's linear part so there's no
+-		 * need for adjusting page offset and we can reuse this buffer
+-		 * as-is
+-		 */
+-		rx_buf->pagecnt_bias++;
+-	}
+-
+-	if (unlikely(xdp_buff_has_frags(xdp))) {
+-		struct skb_shared_info *skinfo = skb_shinfo(skb);
+-
+-		memcpy(&skinfo->frags[skinfo->nr_frags], &sinfo->frags[0],
+-		       sizeof(skb_frag_t) * nr_frags);
+-
+-		xdp_update_skb_frags_info(skb, skinfo->nr_frags + nr_frags,
+-					  sinfo->xdp_frags_size,
+-					  nr_frags * xdp->frame_sz,
+-					  xdp_buff_get_skb_flags(xdp));
+-	}
+-
+-	return skb;
+-}
+-
  /**
-@@ -614,7 +618,7 @@ static int ima_creds_check(struct linux_binprm *bprm, const struct file *file)
+  * ice_put_rx_buf - Clean up used buffer and either recycle or free
+  * @rx_ring: Rx descriptor ring to transact packets on
+@@ -1465,10 +1384,7 @@ static int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
  
- 	security_current_getlsmprop_subj(&prop);
- 	return process_measurement((struct file *)file, bprm->cred, &prop, NULL,
--				   0, MAY_EXEC, CREDS_CHECK, 0);
-+				   0, MAY_EXEC, CREDS_CHECK, 0, false);
+ 		continue;
+ construct_skb:
+-		if (likely(ice_ring_uses_build_skb(rx_ring)))
+-			skb = ice_build_skb(rx_ring, xdp);
+-		else
+-			skb = ice_construct_skb(rx_ring, xdp);
++		skb = ice_build_skb(rx_ring, xdp);
+ 		/* exit if we failed to retrieve a buffer */
+ 		if (!skb) {
+ 			rx_ring->ring_stats->rx_stats.alloc_buf_failed++;
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.h b/drivers/net/ethernet/intel/ice/ice_txrx.h
+index 51b23ec1953ed..c8f6c976a7db4 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.h
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.h
+@@ -381,7 +381,6 @@ struct ice_rx_ring {
+ 	dma_addr_t dma;			/* physical address of ring */
+ 	u8 dcb_tc;			/* Traffic class of ring */
+ 	u8 ptp_rx;
+-#define ICE_RX_FLAGS_RING_BUILD_SKB	BIT(1)
+ #define ICE_RX_FLAGS_CRC_STRIP_DIS	BIT(2)
+ #define ICE_RX_FLAGS_MULTIDEV		BIT(3)
+ #define ICE_RX_FLAGS_RING_GCS		BIT(4)
+@@ -439,21 +438,6 @@ struct ice_tx_ring {
+ 	__cacheline_group_end_aligned(cold);
+ } ____cacheline_internodealigned_in_smp;
+ 
+-static inline bool ice_ring_uses_build_skb(struct ice_rx_ring *ring)
+-{
+-	return !!(ring->flags & ICE_RX_FLAGS_RING_BUILD_SKB);
+-}
+-
+-static inline void ice_set_ring_build_skb_ena(struct ice_rx_ring *ring)
+-{
+-	ring->flags |= ICE_RX_FLAGS_RING_BUILD_SKB;
+-}
+-
+-static inline void ice_clear_ring_build_skb_ena(struct ice_rx_ring *ring)
+-{
+-	ring->flags &= ~ICE_RX_FLAGS_RING_BUILD_SKB;
+-}
+-
+ static inline bool ice_ring_ch_enabled(struct ice_tx_ring *ring)
+ {
+ 	return !!ring->ch;
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 575fd48f485f1..b25bc5ba40abf 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -392,69 +392,6 @@ bool ice_alloc_rx_bufs_zc(struct ice_rx_ring *rx_ring,
+ 	return __ice_alloc_rx_bufs_zc(rx_ring, xsk_pool, leftover);
  }
  
+-/**
+- * ice_construct_skb_zc - Create an sk_buff from zero-copy buffer
+- * @rx_ring: Rx ring
+- * @xdp: Pointer to XDP buffer
+- *
+- * This function allocates a new skb from a zero-copy Rx buffer.
+- *
+- * Returns the skb on success, NULL on failure.
+- */
+-static struct sk_buff *
+-ice_construct_skb_zc(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp)
+-{
+-	unsigned int totalsize = xdp->data_end - xdp->data_meta;
+-	unsigned int metasize = xdp->data - xdp->data_meta;
+-	struct skb_shared_info *sinfo = NULL;
+-	struct sk_buff *skb;
+-	u32 nr_frags = 0;
+-
+-	if (unlikely(xdp_buff_has_frags(xdp))) {
+-		sinfo = xdp_get_shared_info_from_buff(xdp);
+-		nr_frags = sinfo->nr_frags;
+-	}
+-	net_prefetch(xdp->data_meta);
+-
+-	skb = napi_alloc_skb(&rx_ring->q_vector->napi, totalsize);
+-	if (unlikely(!skb))
+-		return NULL;
+-
+-	memcpy(__skb_put(skb, totalsize), xdp->data_meta,
+-	       ALIGN(totalsize, sizeof(long)));
+-
+-	if (metasize) {
+-		skb_metadata_set(skb, metasize);
+-		__skb_pull(skb, metasize);
+-	}
+-
+-	if (likely(!xdp_buff_has_frags(xdp)))
+-		goto out;
+-
+-	for (int i = 0; i < nr_frags; i++) {
+-		struct skb_shared_info *skinfo = skb_shinfo(skb);
+-		skb_frag_t *frag = &sinfo->frags[i];
+-		struct page *page;
+-		void *addr;
+-
+-		page = dev_alloc_page();
+-		if (!page) {
+-			dev_kfree_skb(skb);
+-			return NULL;
+-		}
+-		addr = page_to_virt(page);
+-
+-		memcpy(addr, skb_frag_page(frag), skb_frag_size(frag));
+-
+-		__skb_fill_page_desc_noacc(skinfo, skinfo->nr_frags++,
+-					   addr, 0, skb_frag_size(frag));
+-	}
+-
+-out:
+-	xsk_buff_free(xdp);
+-	return skb;
+-}
+-
  /**
-@@ -662,7 +666,7 @@ static int ima_file_check(struct file *file, int mask)
- 	security_current_getlsmprop_subj(&prop);
- 	return process_measurement(file, current_cred(), &prop, NULL, 0,
- 				   mask & (MAY_READ | MAY_WRITE | MAY_EXEC |
--					   MAY_APPEND), FILE_CHECK, 0);
-+					   MAY_APPEND), FILE_CHECK, 0, false);
- }
+  * ice_clean_xdp_irq_zc - produce AF_XDP descriptors to CQ
+  * @xdp_ring: XDP Tx ring
+@@ -757,20 +694,15 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
  
- /*
-@@ -918,7 +922,7 @@ static int ima_read_file(struct file *file, enum kernel_read_file_id read_id,
- 	func = read_idmap[read_id] ?: FILE_CHECK;
- 	security_current_getlsmprop_subj(&prop);
- 	return process_measurement(file, current_cred(), &prop, NULL, 0,
--				   MAY_READ, func, 0);
-+				   MAY_READ, func, 0, false);
- }
+ construct_skb:
+ 		/* XDP_PASS path */
+-		skb = ice_construct_skb_zc(rx_ring, first);
++		skb = xdp_build_skb_from_zc(first);
+ 		if (!skb) {
++			xsk_buff_free(first);
+ 			rx_ring->ring_stats->rx_stats.alloc_buf_failed++;
+ 			break;
+ 		}
  
- const int read_idmap[READING_MAX_ID] = {
-@@ -962,7 +966,7 @@ static int ima_post_read_file(struct file *file, char *buf, loff_t size,
- 	func = read_idmap[read_id] ?: FILE_CHECK;
- 	security_current_getlsmprop_subj(&prop);
- 	return process_measurement(file, current_cred(), &prop, buf, size,
--				   MAY_READ, func, read_id);
-+				   MAY_READ, func, read_id, false);
- }
+ 		first = NULL;
+ 		rx_ring->first_desc = ntc;
+-
+-		if (eth_skb_pad(skb)) {
+-			skb = NULL;
+-			continue;
+-		}
+-
+ 		total_rx_bytes += skb->len;
+ 		total_rx_packets++;
  
- /**
 -- 
 2.53.0
 
