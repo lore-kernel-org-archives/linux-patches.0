@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFCF38654F;
-	Sat, 17 Oct 2026 16:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5B739F18A;
+	Sat, 17 Oct 2026 16:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254099; cv=none; b=gaOTI9MUXEpbtdy55y8ud6nHnYB6UkWYqLx9FoX+ZGD71fFX3yzgrC6KRHZb+dN74GtFJiGdYyKO84IM4nobI+JQQiWgqhPuo4WEV3d7/fvvbRvDQtV7agiTUOFzNQioU5Nl86XhLlXRdxzWfcwdW5TxWxv1o0Zdx/6QkLIk7p4=
+	t=1792254103; cv=none; b=hmXbNfoUeTxZp3QjRs4zbOgbAlwqZ2B4wnss510LqDmS6meHZ+FcQW6lxhKClqsBsUWooFGfx3SNuct5/5htw5urwjMWUfSA7Tl+oI4ilzzUfyoOBHOMuyCAQdpE2tcbG8Albweo6XmnaAEvDsjCgOn5z7/CqXbf2/98NqjaZuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254099; c=relaxed/simple;
-	bh=bCahez76MnYa1JPcVecP2eiV8mr2ypP9j2xNc10zK0U=;
+	s=arc-20240116; t=1792254103; c=relaxed/simple;
+	bh=lRekRPJ3TyY2m9aay/y8g6ReYWxAhm5XcZfZYg3xiYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0Uu599wQPecfgYecYcO2Ay532d4C5CkFj83BsiVLzdpqsQTaczbLEbT1OjWoo8PhaZjuqJysomlApaTS9RxCOTkK7+4AFp0qCeKvvWoT+GP6CcadSMDvOR0OnidmJxOZUhjpjgfWi/mCLBP19Q3r7kMcQlz/4ZVSDner3IrR/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0zXj8cw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eMMdDBkMcAeBCTKfqDkO0W/9Z5G4+TxahLgC6X8qrI6M8mlUIRCn//vnATXf0HB1yb29b/JUAeNwwoX638BAL6nSGF4ctlGqAcTqiZglWQkrT8o7984dMmuvNzgJNoDJ+8IVjDCbsMCUiQX8IZ0Tm7x2JYn1sRrveKqIDkJUjvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfyyI6yJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0zXj8cw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B511F000C4;
-	Sat, 17 Oct 2026 16:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfyyI6yJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886211F000C4;
+	Sat, 17 Oct 2026 16:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254098;
-	bh=vyu5e3D5bBxZscKS7aRnQryx2pq32X8b5MF9cbZmLL0=;
+	s=korg; t=1792254101;
+	bh=ugizB9H65qAcie4fRdgnI9qlETJpzf2yXkEIWDGMKfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0zXj8cw5hgpzO+et+Lhe6SlSATYskL7LSsqF51lMixnxvMZl00+4OWNWWUlqUv6G
-	 6fwT3InQgVTI9XtMQ2Fv1HgyNX+l61vQxW1krtthO3QYpHtC/3PCa/gBYNGXcqv3Sa
-	 iRNS0aeivTP7d1QW1IVgV7U+yrUt0oXmsJBVQ3jE=
+	b=vfyyI6yJnFh7QwREGlCc39fni8xVJgTEjXiSsBOkU52MAvcBJcfS+HM54bUR9D4B2
+	 vvv+K6NtbaR0EZTGoF7FruN7ImkW4kZ3TkZBc87UImZ+iZNFrlQmLNSTz1AEXn/6YB
+	 2vDNxecJx7UXBx2fYLxGzC0SJJrR5/DtKdky9AcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Langlois <olivier@trillion01.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/869] io_uring/napi: clean up __io_napi_do_busy_loop
-Date: Sat, 17 Oct 2026 17:52:54 +0200
-Message-ID: <20261017160045.617169710@linuxfoundation.org>
+Subject: [PATCH 6.12 291/869] spi: microchip-core-qspi: control built-in cs manually
+Date: Sat, 17 Oct 2026 17:52:12 +0200
+Message-ID: <20261017160044.533195166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,79 +51,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Langlois <olivier@trillion01.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 71afd926f292bb8f3ca86e6c3c40123037f109c6 ]
+[ Upstream commit 7672749e1496215e8683ce57cf323119033954cf ]
 
-__io_napi_do_busy_loop now requires to have loop_end in its parameters.
-This makes the code cleaner and also has the benefit of removing a
-branch since the only caller not passing NULL for loop_end_arg is also
-setting the value conditionally.
+The coreQSPI IP supports only a single chip select, which is
+automagically operated by the hardware - set low when the transmit
+buffer first gets written to and set high when the number of bytes
+written to the TOTALBYTES field of the FRAMES register have been sent on
+the bus. Additional devices must use GPIOs for their chip selects.
+It was reported to me that if there are two devices attached to this
+QSPI controller that the in-built chip select is set low while linux
+tries to access the device attached to the GPIO.
 
-Signed-off-by: Olivier Langlois <olivier@trillion01.com>
-Link: https://lore.kernel.org/r/d5b9bb91b1a08fff50525e1c18d7b4709b9ca100.1728828877.git.olivier@trillion01.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: df8599ee18c0 ("io_uring/napi: cap busy_poll_to 10 msec")
+This went undetected as the boards that connected multiple devices to
+the SPI controller all exclusively used GPIOs for chip selects, not
+relying on the built-in chip select at all. It turns out that this was
+because the built-in chip select, when controlled automagically, is set
+low when active and high when inactive, thereby ruling out its use for
+active-high devices or devices that need to transmit with the chip
+select disabled.
+
+Modify the driver so that it controls chip select directly, retaining
+the behaviour for mem_ops of setting the chip select active for the
+entire duration of the transfer in the exec_op callback. For regular
+transfers, implement the set_cs callback for the core to use.
+
+As part of this, the existing setup callback, mchp_coreqspi_setup_op(),
+is removed. Modifying the CLKIDLE field is not safe to do during
+operation when there are multiple devices, so this code is removed
+entirely. Setting the MASTER and ENABLE fields is something that can be
+done once at probe, it doesn't need to be re-run for each device.
+Instead the new setup callback sets the built-in chip select to its
+inactive state for active-low devices, as the reset value of the chip
+select in software controlled mode is low.
+
+Fixes: 8f9cf02c88528 ("spi: microchip-core-qspi: Add regular transfers")
+Fixes: 8596124c4c1bc ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260430-hamstring-busload-f941d0347b5e@spud
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/napi.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 77 ++++++++++++++++++++++-----
+ 1 file changed, 63 insertions(+), 14 deletions(-)
 
-diff --git a/io_uring/napi.c b/io_uring/napi.c
-index 6d5fdd397f2f4..1de1543d80344 100644
---- a/io_uring/napi.c
-+++ b/io_uring/napi.c
-@@ -137,15 +137,12 @@ static bool io_napi_busy_loop_should_end(void *data,
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 1d24aee26dac5..bc5e4e4e558a0 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -74,6 +74,13 @@
+ #define STATUS_FLAGSX4		BIT(8)
+ #define STATUS_MASK		GENMASK(8, 0)
+ 
++/*
++ * QSPI Direct Access register defines
++ */
++#define DIRECT_ACCESS_EN_SSEL		BIT(0)
++#define DIRECT_ACCESS_OP_SSEL		BIT(1)
++#define DIRECT_ACCESS_OP_SSEL_SHIFT	1
++
+ #define BYTESUPPER_MASK		GENMASK(31, 16)
+ #define BYTESLOWER_MASK		GENMASK(15, 0)
+ 
+@@ -158,6 +165,38 @@ static int mchp_coreqspi_set_mode(struct mchp_coreqspi *qspi, const struct spi_m
+ 	return 0;
  }
  
- static bool __io_napi_do_busy_loop(struct io_ring_ctx *ctx,
-+				   bool (*loop_end)(void *, unsigned long),
- 				   void *loop_end_arg)
++static void mchp_coreqspi_set_cs(struct spi_device *spi, bool enable)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++
++	val &= ~DIRECT_ACCESS_OP_SSEL;
++	val |= !enable << DIRECT_ACCESS_OP_SSEL_SHIFT;
++
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++}
++
++static int mchp_coreqspi_setup(struct spi_device *spi)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	/*
++	 * Active low devices need to be specifically set to their inactive
++	 * states during probe.
++	 */
++	if (spi->mode & SPI_CS_HIGH)
++		return 0;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_OP_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++
++	return 0;
++}
++
+ static inline void mchp_coreqspi_read_op(struct mchp_coreqspi *qspi)
  {
- 	struct io_napi_entry *e;
--	bool (*loop_end)(void *, unsigned long) = NULL;
- 	bool is_stale = false;
+ 	u32 control, data;
+@@ -299,19 +338,6 @@ static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_devi
+ 	return 0;
+ }
  
--	if (loop_end_arg)
--		loop_end = io_napi_busy_loop_should_end;
+-static int mchp_coreqspi_setup_op(struct spi_device *spi_dev)
+-{
+-	struct spi_controller *ctlr = spi_dev->controller;
+-	struct mchp_coreqspi *qspi = spi_controller_get_devdata(ctlr);
+-	u32 control = readl_relaxed(qspi->regs + REG_CONTROL);
 -
- 	list_for_each_entry_rcu(e, &ctx->napi_list, list) {
- 		napi_busy_loop_rcu(e->napi_id, loop_end, loop_end_arg,
- 				   ctx->napi_prefer_busy_poll, BUSY_POLL_BUDGET);
-@@ -161,18 +158,22 @@ static void io_napi_blocking_busy_loop(struct io_ring_ctx *ctx,
- 				       struct io_wait_queue *iowq)
+-	control |= (CONTROL_MASTER | CONTROL_ENABLE);
+-	control &= ~CONTROL_CLKIDLE;
+-	writel_relaxed(control, qspi->regs + REG_CONTROL);
+-
+-	return 0;
+-}
+-
+ static inline void mchp_coreqspi_config_op(struct mchp_coreqspi *qspi, const struct spi_mem_op *op)
  {
- 	unsigned long start_time = busy_loop_current_time();
-+	bool (*loop_end)(void *, unsigned long) = NULL;
- 	void *loop_end_arg = NULL;
- 	bool is_stale = false;
+ 	u32 idle_cycles = 0;
+@@ -410,6 +436,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
  
- 	/* Singular lists use a different napi loop end check function and are
- 	 * only executed once.
- 	 */
--	if (list_is_singular(&ctx->napi_list))
-+	if (list_is_singular(&ctx->napi_list)) {
-+		loop_end = io_napi_busy_loop_should_end;
- 		loop_end_arg = iowq;
-+	}
+ 	reinit_completion(&qspi->data_completion);
+ 	mchp_coreqspi_config_op(qspi, op);
++	mchp_coreqspi_set_cs(mem->spi, true);
+ 	if (op->cmd.opcode) {
+ 		qspi->txbuf = &opcode;
+ 		qspi->rxbuf = NULL;
+@@ -450,6 +477,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 		err = -ETIMEDOUT;
  
- 	scoped_guard(rcu) {
- 		do {
--			is_stale = __io_napi_do_busy_loop(ctx, loop_end_arg);
-+			is_stale = __io_napi_do_busy_loop(ctx, loop_end,
-+							  loop_end_arg);
- 		} while (!io_napi_busy_loop_should_end(iowq, start_time) &&
- 			 !loop_end_arg);
+ error:
++	mchp_coreqspi_set_cs(mem->spi, false);
+ 	mutex_unlock(&qspi->op_lock);
+ 	mchp_coreqspi_disable_ints(qspi);
+ 
+@@ -522,6 +550,7 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	int ret;
++	u32 num_cs, val;
+ 
+ 	ctlr = devm_spi_alloc_host(&pdev->dev, sizeof(*qspi));
+ 	if (!ctlr)
+@@ -555,14 +584,34 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 		return ret;
  	}
-@@ -308,7 +309,7 @@ int io_napi_sqpoll_busy_poll(struct io_ring_ctx *ctx)
- 		return 0;
  
- 	scoped_guard(rcu) {
--		is_stale = __io_napi_do_busy_loop(ctx, NULL);
-+		is_stale = __io_napi_do_busy_loop(ctx, NULL, NULL);
- 	}
++	/*
++	 * The IP core only has a single CS, any more have to be provided via
++	 * gpios
++	 */
++	if (of_property_read_u32(pdev->dev.of_node, "num-cs", &num_cs))
++		num_cs = 1;
++
++	ctlr->num_chipselect = num_cs;
++
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctlr->mem_ops = &mchp_coreqspi_mem_ops;
+ 	ctlr->mem_caps = &mchp_coreqspi_mem_caps;
+-	ctlr->setup = mchp_coreqspi_setup_op;
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_RX_DUAL | SPI_RX_QUAD |
+ 			  SPI_TX_DUAL | SPI_TX_QUAD;
+ 	ctlr->dev.of_node = np;
+ 	ctlr->min_speed_hz = clk_get_rate(qspi->clk) / 30;
++	ctlr->setup = mchp_coreqspi_setup;
++
++	val = readl_relaxed(qspi->regs + REG_CONTROL);
++	val |= (CONTROL_MASTER | CONTROL_ENABLE);
++	writel_relaxed(val, qspi->regs + REG_CONTROL);
++
++	/*
++	 * Put cs into software controlled mode
++	 */
++	val = readl_relaxed(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_EN_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
  
- 	io_napi_remove_stale(ctx, is_stale);
+ 	ret = spi_register_controller(ctlr);
+ 	if (ret)
 -- 
 2.53.0
 
