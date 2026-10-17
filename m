@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6621B3B8BBB;
-	Sat, 17 Oct 2026 17:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF713BFE3C;
+	Sat, 17 Oct 2026 17:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259150; cv=none; b=EtiEfuyyVpBduk2Z61ZArKd1kvYXqcornkl4JSIZ3Am21tIDQekxTEoaUVc7mubGV0VhWg8jO3U87DpgB+D8+8Ls/s4A3LJaVO89h66aywzBJDnZUi9XHOJAFs1RysuvZuaCX7cDBqcHSs5txGFcKt96UZWeMVYk8uD6XCXmkIE=
+	t=1792259152; cv=none; b=QNUZx1EOGzE9B9Kgz6QOgHJeySird3mkXQDmQs1iwAb/ia5hRRQD6gcnvdw+l+zS1eKlxkm+nfOyAEq6PHUDSXuYKWi0h2Z92ievD3MgZJbhlVUJaXvGOr4RTD96k7rJYi22uLf3a5T9/5bKe1ndDQJmAiFRxmdWYkuckdYGV20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259150; c=relaxed/simple;
-	bh=q8l+kOda2sNJr85mEIJzLBx1j03+2bLxmH1XnWplhJM=;
+	s=arc-20240116; t=1792259152; c=relaxed/simple;
+	bh=PQzqVdaGuNhFilNmUNdvRSZJwarMC9o+i0wmUkpKe8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4opdZ4cW70HMAaNdVc1pvv31Ctk4S9pT/UgAZkwLa7qhJlDiPHLjRX16dDHB8qXg6LqW3hesykhE5jdrGM4xFqgWjKYx+Pv9/yYykUWS9Z2j1BzbVJj/fYFtnRjW6OuDPW4MBXdMfePHP1UqKPUncDBtNkl510gcwDW+tsgyYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiMMMu//; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TcP+89lGW09WG7IFu1/PP5bIYJjmJESEbJwsen1ynE021l9g4GbYndpGEU7Xy6dpVn2Xmy1Rl655D0WH9FEfsa/XpxjOI2k1pIDBD3fX3OARsFSLtLyJlkDnKH6lhUOVIH8VgGzX/uy2aBaflOsCv3Dasa3y+z/36SGx1BJSA+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX3qNDNP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiMMMu//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6F41F000C4;
-	Sat, 17 Oct 2026 17:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX3qNDNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C491F000C4;
+	Sat, 17 Oct 2026 17:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259148;
-	bh=FQJospv8AFSrua3kdeRjvyO0bpZ4vUsmc/wY8V0sk9s=;
+	s=korg; t=1792259151;
+	bh=F47CZGpyuDrv3iQgZUI7UbU2nbJGg33j+uJ9Xxfytu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LiMMMu//0+KUZasq7E06ISzcj9i1d429KN2HE3xHsTJm5BX5vble5F4xq6n9eQm8m
-	 MbRRw9iyAPyL78Q3pHqunr8DB87EZszqeeiEYpa9dQ5MNrsIse8SvKbpONQcZO3Z6i
-	 ULaIZI7iTCpvf9DOpUvBiFBkujFBBRMC4nFiKPXU=
+	b=XX3qNDNPsP0Z+pdi8WLqKWy5mwIG4UcRZqyg5js+e6sx5WmtERT5mk+23/ApU5Ymg
+	 r4G/7mE9P+8fW2B79nhIjgFbdr75wvpN9rPIvMAiwWHvXLsqozV+i+vzMK5i+G2TMB
+	 1wjwjtXTKHqEJc1+pA0K1cNmrdqOcZEOWmiCQuRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+6d832e79d3efe1c46743@syzkaller.appspotmail.com,
+	Ian Bridges <icb@fastmail.org>,
+	syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1119/1674] ocfs2: validate i_refcount_loc when refcount flag is set
-Date: Sat, 17 Oct 2026 17:56:31 +0200
-Message-ID: <20261017160459.854216586@linuxfoundation.org>
+Subject: [PATCH 6.6 1120/1674] ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec
+Date: Sat, 17 Oct 2026 17:56:32 +0200
+Message-ID: <20261017160459.882795918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -59,26 +59,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 688dab01c3bb14cb559878aaf7019bfba4a79275 ]
+[ Upstream commit 452a8467be8143747292218212671deeb186d2ae ]
 
-Add validation in ocfs2_validate_inode_block() to check that if an inode
-has OCFS2_HAS_REFCOUNT_FL set, it must also have a valid i_refcount_loc.
-A corrupted filesystem image can have this inconsistent state, which later
-triggers a BUG_ON in ocfs2_remove_refcount_tree() when the inode is being
-wiped during unlink.
+[BUG]
+On-disk corruption setting l_next_free_rec to 0 in an inode's embedded
+extent list triggers a UBSAN panic on the next write to that file.
 
-Catch this corruption early during inode validation to fail gracefully
-instead of crashing the kernel.
+[CAUSE]
+ocfs2_sum_rightmost_rec() computes
+i = le16_to_cpu(el->l_next_free_rec) - 1
+and accesses el->l_recs[i] without validating i. When l_next_free_rec
+is 0, i becomes -1; when l_next_free_rec exceeds l_count, i falls
+past the end of the array. Either case violates the
+__counted_by_le(l_count) annotation on l_recs[] and triggers UBSAN.
 
-Link: https://lkml.kernel.org/r/20251212055826.20929-1-kartikey406@gmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+6d832e79d3efe1c46743@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6d832e79d3efe1c46743
-Tested-by: syzbot+6d832e79d3efe1c46743@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/20251208084407.3021466-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20251212045646.9988-1-kartikey406@gmail.com/T/ [v2]
+[FIX]
+Validate the inode's embedded extent list when the inode is read, in
+ocfs2_validate_inode_block(): l_count must be non-zero and no larger
+than the inode block can hold, and l_next_free_rec must not exceed
+l_count. A corrupt list is rejected at read time, before the b-tree
+code can index l_recs[] out of bounds.
+
+Link: https://lore.kernel.org/ain_780qc0P4ypNd@dev
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=be16e33db01e6644db7a
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -86,42 +93,51 @@ Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-has OCFS2_HAS_REFCOUNT_FL set, it must also have a valid i_refcount_loc.
-A corrupted filesystem image can have this inconsistent state, which later
-triggers a BUG_ON in ocfs2_remove_refcount_tree() when the inode is being
-wiped during unlink.
-
-Catch this corruption early during inode validation to fail gracefully
-instead of crashing the kernel.
-
-[ Dropped the context-dependent inline-data and chain-list checks that
-  precede this hunk upstream but are absent here; only the i_refcount_loc
-  validation is kept. ]
-
-Stable-dep-of: 452a8467be81 ("ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-
-# Conflicts:
-#	fs/ocfs2/inode.c
 ---
- fs/ocfs2/inode.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ocfs2/inode.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 937d149417a1d..569ef52fe116a 100644
+index 569ef52fe116a..10cfe0fef98da 100644
 --- a/fs/ocfs2/inode.c
 +++ b/fs/ocfs2/inode.c
-@@ -1585,6 +1585,13 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+@@ -1592,6 +1592,38 @@ int ocfs2_validate_inode_block(struct super_block *sb,
  		goto bail;
  	}
  
-+	if ((le16_to_cpu(di->i_dyn_features) & OCFS2_HAS_REFCOUNT_FL) &&
-+	    !di->i_refcount_loc) {
-+		rc = ocfs2_error(sb, "Inode #%llu has refcount flag but no i_refcount_loc\n",
-+				(unsigned long long)bh->b_blocknr);
-+		goto bail;
++	if (ocfs2_dinode_has_extents(di)) {
++		struct ocfs2_extent_list *el = &di->id2.i_list;
++		u16 count = le16_to_cpu(el->l_count);
++		u16 next_free = le16_to_cpu(el->l_next_free_rec);
++
++		if (count == 0) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: extent list l_count is zero\n",
++					 (unsigned long long)bh->b_blocknr);
++			goto bail;
++		}
++		/*
++		 * The exact capacity depends on i_xattr_inline_size, another
++		 * unvalidated on-disk field. Inline xattrs only shrink the
++		 * list, so the no-xattr maximum is a safe upper bound that a
++		 * valid l_count never exceeds.
++		 */
++		if (count > ocfs2_extent_recs_per_inode(sb)) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: extent list l_count %u exceeds max %u\n",
++					 (unsigned long long)bh->b_blocknr, count,
++					 ocfs2_extent_recs_per_inode(sb));
++			goto bail;
++		}
++		if (next_free > count) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: extent list l_next_free_rec %u exceeds l_count %u\n",
++					 (unsigned long long)bh->b_blocknr, next_free, count);
++			goto bail;
++		}
 +	}
 +
  	rc = 0;
