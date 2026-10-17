@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7CD3A380C;
-	Sat, 17 Oct 2026 18:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA05F3A542B;
+	Sat, 17 Oct 2026 18:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260812; cv=none; b=bzPN2Ua1UG7mWmFYLlk4v8sSYwui5Ifz+rvzRrIOqJCgvvmWC1TPsOY12q3ffaXXWzbpZ0Db2tgM3PknxdRICUwIjDW4jwhltwoP2IvOewe9hU7At/U4G/SD5e7i6WncPHOlNA+MTRXKFkUX82d0nhSMYDQr+wns80LXEw1Z1iQ=
+	t=1792260815; cv=none; b=ejCC5zZF9r0Aiy5EalSkHN98TdVlynhxT4kvoevKQA8rasONSbxu0DbzKFZPVOGO/uSsOhtp7W5YmDm2W1lYwRzJ+7aoqLLlet/chsFPAMupfOaPLWmkMrMm+CpM5zkpbX5XdY/b3nsiNf22f4ScI77vQqGt4y2y+XjWO8MFBso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260812; c=relaxed/simple;
-	bh=Z3VGq9L7gcDWxg0tKvYfA4TyH/IhvgfdE/3SQnSnb08=;
+	s=arc-20240116; t=1792260815; c=relaxed/simple;
+	bh=rvKU6iQVqqNxBaXg98suTgClbio4XZPHGnt0DHFRcZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBYKXHXePCoS9YYNEU7ggMb3XKiDnfzPD3KE/ffEsn4BcDbedichNhXD4Yhuix4pfgMiNMU+m8S2xEquiMGOj4LqDSRyWBudIA72fT03Ly+W7G7v6IhpRYqwsesmk5kUleLCz8bGPfFYHspKNshlGYFBnNNHuMUbRMyF0cOkbGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc7VvpVO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jWO7aH9CGmkZD5Si8r0zcHILuSgq/qkKzvvA3+KE5eG1xGpFMxovTOOOmS2/uj6NlkRrcuAOeR5GZvAxyzc4qE6oJzF2WQqM1Ul8FRmxxAvK5LvQ+Pe6yOhM/HLEnmH58JBc9ZadwgZQBL+0jiCUuGENWn4uELzg0z5w/JqfhVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/6gYbi2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc7VvpVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C231F000C4;
-	Sat, 17 Oct 2026 18:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/6gYbi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B981F000C4;
+	Sat, 17 Oct 2026 18:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260811;
-	bh=WT7WkfD5QQ5MN36438u4AO72XuAxzAXpiODp1kX528g=;
+	s=korg; t=1792260814;
+	bh=zv37XjJTHF2WCLQ/ABW9SF1a9AE6vVFKoZoShh+gnxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cc7VvpVOFXgz/HezqjdsFfQRQI42dLc/Bt+VyncFUawwQe/GKIhlt8xDVvqJSojfN
-	 21bCy0hGGJojeDjIff3PVv68PQ1dvEjo96ipnXoXeMGPgIzxJ/+LV80gjkcnxGxyaJ
-	 HKvI2k2lvCJdTUdGMVrodEShDd3CVZyr5umtbmHc=
+	b=Z/6gYbi2eKW6hT0ArfcM5/QkQ4ifv9VgeaPPpRTgShuCypmfUspM0rk5TykAQ/2mD
+	 9gNmeQvzP+/EUYni+jB8Xt7cPC0g8jGwr3YVNb3TgsCwTZPxVI3EOu99ylvI/9qObx
+	 JsvMU6t3b6G/h/hvZDvL+RR300l6IwNmJcmMa7Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1631/1674] bpf: generalize is_branch_taken to handle all conditional jumps in one place
-Date: Sat, 17 Oct 2026 18:05:03 +0200
-Message-ID: <20261017160512.944735236@linuxfoundation.org>
+Subject: [PATCH 6.6 1667/1674] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
+Date: Sat, 17 Oct 2026 18:05:39 +0200
+Message-ID: <20261017160513.857173871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,101 +54,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit b74c2a842bba941945279027083fcee1e9aaa73f ]
+[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
 
-Make is_branch_taken() a single entry point for branch pruning decision
-making, handling both pointer vs pointer, pointer vs scalar, and scalar
-vs scalar cases in one place. This also nicely cleans up check_cond_jmp_op().
+Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
+-> IFLUSHING, except for the last inode in the cluster that is
+triggering the free. In that case, the lock order is ILOCK ->
+cluster buffer -> IFLUSHING.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231102033759.2541186-15-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e51179a4e098 ("bpf: Don't predict JMP32 pointer vs zero comparisons")
+xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
+so this can safely run concurrently with xfs_ifree_cluster().
+
+xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
+cannot race with xfs_ifree_cluster() so being in a different order
+will not trigger a deadlock.
+
+xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
+IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
+this deadlocks against xfs_ifree_cluster() like so:
+
+ sysrq: Show Blocked State
+ task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
+ Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x8b/0x180
+  schedule_timeout_uninterruptible+0x1e/0x30
+  xfs_ifree+0x326/0x730
+  xfs_inactive_ifree+0xcb/0x230
+  xfs_inactive+0x2c8/0x380
+  xfs_inodegc_worker+0xaa/0x180
+  process_scheduled_works+0x1d4/0x400
+  worker_thread+0x234/0x2e0
+  kthread+0x147/0x170
+  ret_from_fork+0x3e/0x50
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x31/0x180
+  __down_common+0xbe/0x1f0
+  __down+0x1d/0x30
+  down+0x48/0x50
+  xfs_buf_lock+0x3d/0xe0
+  xfs_iflush_shutdown_abort+0x51/0x1e0
+  xfs_icwalk_ag+0x386/0x690
+  xfs_reclaim_inodes_nr+0x114/0x160
+  xfs_fs_free_cached_objects+0x19/0x20
+  super_cache_scan+0x17b/0x1a0
+  do_shrink_slab+0x180/0x350
+  shrink_slab+0xf8/0x430
+  drop_slab+0x97/0xf0
+  drop_caches_sysctl_handler+0x59/0xc0
+  proc_sys_call_handler+0x189/0x280
+  proc_sys_write+0x13/0x20
+  vfs_write+0x33d/0x3f0
+  ksys_write+0x7c/0xf0
+  __x64_sys_write+0x1b/0x30
+  x64_sys_call+0x271d/0x2ee0
+  do_syscall_64+0x68/0x130
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
+and XFS_IFLUSHING are serialised through to journal IO completion
+by the cluster buffer lock being held.
+
+There's quite a few asserts in the code that check that XFS_ISTALE
+does not occur out of sync with buffer locking (e.g. in
+xfs_iflush_cluster). There's also a dependency on the inode log item
+being removed from the buffer before XFS_IFLUSHING is cleared, also
+with asserts that trigger on this.
+
+Further, we don't have a requirement for the inode to be locked when
+completing or aborting inode flushing because all the inode state
+updates are serialised by holding the cluster buffer lock across the
+IO to completion.
+
+We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
+skip the inode, because there is no guarantee that the inode will be
+reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
+whether reclaim is preparing to free that inode. Similarly, we can't
+check for IFLUSHING before locking the inode because that would
+result in dirty inodes not being marked with ISTALE in the event of
+racing with XFS_IRECLAIM.
+
+Hence we have to address this issue from the xfs_reclaim_inode()
+side. It is clear that we cannot hold the inode locked here when
+calling xfs_iflush_shutdown_abort() because it is the inode->buffer
+lock order that causes the deadlock against xfs_ifree_cluster().
+
+Hence we need to drop the ILOCK before aborting the inode in the
+shutdown case. Once we've aborted the inode, we can grab the ILOCK
+again and then immediately reclaim it as it is now guaranteed to be
+clean.
+
+Note that dropping the ILOCK in xfs_reclaim_inode() means that it
+can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
+this state. This is safe because we have left the XFS_IFLUSHING flag
+on the inode and so xfs_ifree_mark_inode_stale() will simply set
+XFS_ISTALE and move to the next inode. An ASSERT check in this path
+needs to be tweaked to take into account this new shutdown
+interaction.
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 49 ++++++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 24 deletions(-)
+ fs/xfs/xfs_icache.c | 8 ++++++++
+ fs/xfs/xfs_inode.c  | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index da8ab195600cc..749d050e72e0f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14076,6 +14076,19 @@ static void find_good_pkt_pointers(struct bpf_verifier_state *vstate,
- 	}));
- }
- 
-+/* check if register is a constant scalar value */
-+static bool is_reg_const(struct bpf_reg_state *reg, bool subreg32)
-+{
-+	return reg->type == SCALAR_VALUE &&
-+	       tnum_is_const(subreg32 ? tnum_subreg(reg->var_off) : reg->var_off);
-+}
-+
-+/* assuming is_reg_const() is true, return constant value of a register */
-+static u64 reg_const_value(struct bpf_reg_state *reg, bool subreg32)
-+{
-+	return subreg32 ? tnum_subreg(reg->var_off).value : reg->var_off.value;
-+}
-+
- /*
-  * <reg1> <op> <reg2>, currently assuming reg2 is a constant
-  */
-@@ -14317,12 +14330,20 @@ static int is_pkt_ptr_branch_taken(struct bpf_reg_state *dst_reg,
- static int is_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_state *reg2,
- 			   u8 opcode, bool is_jmp32)
- {
--	struct tnum reg2_tnum = is_jmp32 ? tnum_subreg(reg2->var_off) : reg2->var_off;
- 	u64 val;
- 
--	if (!tnum_is_const(reg2_tnum))
-+	if (reg_is_pkt_pointer_any(reg1) && reg_is_pkt_pointer_any(reg2) && !is_jmp32)
-+		return is_pkt_ptr_branch_taken(reg1, reg2, opcode);
-+
-+	/* try to make sure reg2 is a constant SCALAR_VALUE */
-+	if (!is_reg_const(reg2, is_jmp32)) {
-+		opcode = flip_opcode(opcode);
-+		swap(reg1, reg2);
-+	}
-+	/* for now we expect reg2 to be a constant to make any useful decisions */
-+	if (!is_reg_const(reg2, is_jmp32))
- 		return -1;
--	val = reg2_tnum.value;
-+	val = reg_const_value(reg2, is_jmp32);
- 
- 	if (__is_pointer_value(false, reg1)) {
- 		if (!reg_not_null(reg1))
-@@ -14879,27 +14900,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
+index be44c7477c16a..ea743699ae6f2 100644
+--- a/fs/xfs/xfs_icache.c
++++ b/fs/xfs/xfs_icache.c
+@@ -879,7 +879,15 @@ xfs_reclaim_inode(
+ 	 */
+ 	if (xlog_is_shutdown(ip->i_mount->m_log)) {
+ 		xfs_iunpin_wait(ip);
++		/*
++		 * Avoid a ABBA deadlock on the inode cluster buffer vs
++		 * concurrent xfs_ifree_cluster() trying to mark the inode
++		 * stale. We don't need the inode locked to run the flush abort
++		 * code, but the flush abort needs to lock the cluster buffer.
++		 */
++		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		xfs_iflush_shutdown_abort(ip);
++		xfs_ilock(ip, XFS_ILOCK_EXCL);
+ 		goto reclaim;
+ 	}
+ 	if (xfs_ipincount(ip))
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index e1adad91dba66..a9fa5b1fd208c 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -2235,7 +2235,7 @@ xfs_ifree_mark_inode_stale(
+ 	iip = ip->i_itemp;
+ 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
+ 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
+-		ASSERT(iip->ili_last_fields);
++		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
+ 		goto out_iunlock;
  	}
  
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
--
--	if (BPF_SRC(insn->code) == BPF_K) {
--		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
--	} else if (src_reg->type == SCALAR_VALUE &&
--		   is_jmp32 && tnum_is_const(tnum_subreg(src_reg->var_off))) {
--		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
--	} else if (src_reg->type == SCALAR_VALUE &&
--		   !is_jmp32 && tnum_is_const(src_reg->var_off)) {
--		pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
--	} else if (dst_reg->type == SCALAR_VALUE &&
--		   is_jmp32 && tnum_is_const(tnum_subreg(dst_reg->var_off))) {
--		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
--	} else if (dst_reg->type == SCALAR_VALUE &&
--		   !is_jmp32 && tnum_is_const(dst_reg->var_off)) {
--		pred = is_branch_taken(src_reg, dst_reg, flip_opcode(opcode), is_jmp32);
--	} else if (reg_is_pkt_pointer_any(dst_reg) &&
--		   reg_is_pkt_pointer_any(src_reg) &&
--		   !is_jmp32) {
--		pred = is_pkt_ptr_branch_taken(dst_reg, src_reg, opcode);
--	}
--
-+	pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
- 	if (pred >= 0) {
- 		/* If we get here with a dst_reg pointer type it is because
- 		 * above is_branch_taken() special cased the 0 comparison.
 -- 
 2.53.0
 
