@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8032B9460;
-	Sat, 17 Oct 2026 17:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D543B7767;
+	Sat, 17 Oct 2026 17:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258751; cv=none; b=fwB2I7tK6K+tjrBZH4M9DOzgzabfwyhOvrROoGGPTISmoTSDeREgK2GS0zJXSfDrP3uvlI09QwqzqfL8jvPcqBmsXtvlffSu1SMNZZCLjQc+qz5WrdMjvUwWXsV3eK0Aj/ZXoCLr0ocH46Aa39R7Kbex+G6y8QauxarQjBjCknc=
+	t=1792258754; cv=none; b=KFcEwOc5Ef2H/r0jQ4ESAHMHqlz5oyg6OuC6M91UB0xlp+YTJI5Srlc2yuRgbHLIUj6tJ4AICFR7zTluiA0YTT3jXFXeVvqFk+EoP/7BX+xZQJWcZvCefyYbFjv1Hn+TtIXun6b1qXK+HNIlH5v32xyj/ek+I1Qdn+7xb/xW9IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258751; c=relaxed/simple;
-	bh=JI6u/5xOzs9/eV23GVTje1z+jCpyvFRoMjDxr7r8OCM=;
+	s=arc-20240116; t=1792258754; c=relaxed/simple;
+	bh=VubfvyBgWOjSHEmRdeYzbynbXa8OYw8CzKj1p9zYxrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dIXkrBdR/HoEQVn9MpdU23oG5fzqlaNxUW3oNpyuKZd1nH5OWQhS3g5Hi1qjg5t9Ur1z+pHaS/gZ9pxlcGCzUvVIDONzHUv49rNXwmKE4B8FQNjGxNKP/I7IBbUBwqybg12KHgon27DpfSwo8hJ91L0j5t3h5FYSsQzknMlrCnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih2vNtMK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZIEiYmpvBNPDn1QHZCN7avT9dCwMfib6z175B4xT+8E5RYqTmO3u/lf8fPDuO8vflYZqnorAu+mu/EPm9Z25n+VESFTfKIqV1dsYJhQERVEQSHRF4rAuN3uYqtLY1JkSYyl4+zrPISLfqyLZ8Pfy5g9LYyF3g1oOCxGDE0ENtgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9Czby7u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih2vNtMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F361F000C4;
-	Sat, 17 Oct 2026 17:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9Czby7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E066E1F000C4;
+	Sat, 17 Oct 2026 17:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258750;
-	bh=Sgi50bqnDvL0bHZNUqMaULsFQyNZJ7Wp31NH8MYRB2k=;
+	s=korg; t=1792258753;
+	bh=V2FCReb92mzx20o6RQ4V4Rf9vxj2wA4RinPRK/06iDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ih2vNtMK00V/GsP70A01cSR66R1ZLCA60xmrUgbCu/TH6HhysPlq1NYjQ4GbSOORE
-	 NGVg2ZixpVh8CPNVJDH4tF6cy1rhRDsIi5CMMnOCAfSs1Xf2FYxgrab+uHOO+mIbyq
-	 ZfGxpPJgpBWaAat9IaNhk60Fmv8K6g6h4EAz3p88=
+	b=X9Czby7uJzz/ULlFtVhftEToURZtZaROFrOgjObjArD6hsnCEAn5OLH9lXJXJ86Sl
+	 Re+g1EwXsHgJlLoaAenZX9Gm4JAmTX4SysORk00/W5o9AjVW4rkr+yK59F/CMyVrQP
+	 2zNxbRPax4OHd9NzSkrvD3JMDBm7t85qG70763NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0988/1674] greybus: raw: fix use-after-free on cdev close
-Date: Sat, 17 Oct 2026 17:54:20 +0200
-Message-ID: <20261017160456.481229268@linuxfoundation.org>
+Subject: [PATCH 6.6 0989/1674] iommu/amd: Fix clone_alias() to use the original devices devid
+Date: Sat, 17 Oct 2026 17:54:21 +0200
+Message-ID: <20261017160456.505563431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,192 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Riégel <damien.riegel@silabs.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 983cc2c7efbce04ecbf6328448d895044dd6ab31 ]
+[ Upstream commit faad224fe0f0857a04ff2eb3c90f0de57f47d0f3 ]
 
-This addresses a use-after-free bug when a raw bundle is disconnected
-but its chardev is still opened by an application. When the application
-releases the cdev, it causes the following panic when init on free is
-enabled (CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
+Currently clone_alias() assumes first argument (pdev) is always the
+original device pointer. This function is called by
+pci_for_each_dma_alias() which based on topology decides to send
+original or alias device details in first argument.
 
-        refcount_t: underflow; use-after-free.
-        WARNING: CPU: 0 PID: 139 at lib/refcount.c:28 refcount_warn_saturate+0xd0/0x130
-         ...
-        Call Trace:
-         <TASK>
-         cdev_put+0x18/0x30
-         __fput+0x255/0x2a0
-         __x64_sys_close+0x3d/0x80
-         do_syscall_64+0xa4/0x290
-         entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This meant that the source devid used to look up and copy the DTE
+may be incorrect, leading to wrong or stale DTE entries being
+propagated to alias device.
 
-The cdev is contained in the "gb_raw" structure, which is freed in the
-disconnect operation. When the cdev is released at a later time,
-cdev_put gets an address that points to freed memory.
+Fix this by passing the original pdev as the opaque data argument to
+both the direct clone_alias() call and pci_for_each_dma_alias(). Inside
+clone_alias(), retrieve the original device from data and compute devid
+from it.
 
-To fix this use-after-free, convert the struct device from a pointer to
-being embedded, that makes the lifetime of the cdev and of this device
-the same. Then, use cdev_device_add, which guarantees that the device
-won't be released until all references to the cdev have been released.
-Finally, delegate the freeing of the structure to the device release
-function, instead of freeing immediately in the disconnect callback.
-
-Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
-Link: https://patch.msgid.link/20260324140039.40001-1-damien.riegel@silabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3332364e4ebc ("iommu/amd: Support multiple PCI DMA aliases in device table")
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/raw.c | 67 +++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 34 deletions(-)
+ drivers/iommu/amd/iommu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index 8bca8cb12cc6f..f74c09527d05c 100644
---- a/drivers/staging/greybus/raw.c
-+++ b/drivers/staging/greybus/raw.c
-@@ -21,9 +21,8 @@ struct gb_raw {
- 	struct list_head list;
- 	int list_data;
- 	struct mutex list_lock;
--	dev_t dev;
- 	struct cdev cdev;
--	struct device *device;
-+	struct device dev;
- };
- 
- struct raw_data {
-@@ -145,6 +144,15 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
- 	return retval;
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 695cfb2e56aa7..c267dc7f92be5 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -217,10 +217,11 @@ static struct iommu_dev_data *search_dev_data(struct amd_iommu *iommu, u16 devid
+ 	return NULL;
  }
  
-+static void raw_dev_release(struct device *dev)
-+{
-+	struct gb_raw *raw = container_of(dev, struct gb_raw, dev);
-+
-+	ida_simple_remove(&minors, MINOR(raw->dev.devt));
-+
-+	kfree(raw);
-+}
-+
- static int gb_raw_probe(struct gb_bundle *bundle,
- 			const struct greybus_bundle_id *id)
+-static int clone_alias(struct pci_dev *pdev, u16 alias, void *data)
++static int clone_alias(struct pci_dev *pdev_origin, u16 alias, void *data)
  {
-@@ -161,15 +169,30 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	if (cport_desc->protocol_id != GREYBUS_PROTOCOL_RAW)
- 		return -ENODEV;
+ 	struct amd_iommu *iommu;
+ 	struct dev_table_entry *dev_table;
++	struct pci_dev *pdev = data;
+ 	u16 devid = pci_dev_id(pdev);
  
-+	minor = ida_simple_get(&minors, 0, 0, GFP_KERNEL);
-+	if (minor < 0)
-+		return minor;
-+
- 	raw = kzalloc(sizeof(*raw), GFP_KERNEL);
--	if (!raw)
-+	if (!raw) {
-+		ida_simple_remove(&minors, minor);
- 		return -ENOMEM;
-+	}
-+
-+	device_initialize(&raw->dev);
-+	raw->dev.devt = MKDEV(raw_major, minor);
-+	raw->dev.class = raw_class;
-+	raw->dev.parent = &bundle->dev;
-+	raw->dev.release = raw_dev_release;
-+	retval = dev_set_name(&raw->dev, "gb!raw%d", minor);
-+	if (retval)
-+		goto error_put_device;
+ 	if (devid == alias)
+@@ -252,9 +253,9 @@ static void clone_aliases(struct amd_iommu *iommu, struct device *dev)
+ 	 * part of the PCI DMA aliases if it's bus differs
+ 	 * from the original device.
+ 	 */
+-	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], NULL);
++	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], pdev);
  
- 	connection = gb_connection_create(bundle, le16_to_cpu(cport_desc->id),
- 					  gb_raw_request_handler);
- 	if (IS_ERR(connection)) {
- 		retval = PTR_ERR(connection);
--		goto error_free;
-+		goto error_put_device;
- 	}
- 
- 	INIT_LIST_HEAD(&raw->list);
-@@ -178,46 +201,26 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	raw->connection = connection;
- 	greybus_set_drvdata(bundle, raw);
- 
--	minor = ida_simple_get(&minors, 0, 0, GFP_KERNEL);
--	if (minor < 0) {
--		retval = minor;
--		goto error_connection_destroy;
--	}
--
--	raw->dev = MKDEV(raw_major, minor);
- 	cdev_init(&raw->cdev, &raw_fops);
- 
- 	retval = gb_connection_enable(connection);
- 	if (retval)
--		goto error_remove_ida;
-+		goto error_connection_destroy;
- 
--	retval = cdev_add(&raw->cdev, raw->dev, 1);
-+	retval = cdev_device_add(&raw->cdev, &raw->dev);
- 	if (retval)
- 		goto error_connection_disable;
- 
--	raw->device = device_create(raw_class, &connection->bundle->dev,
--				    raw->dev, raw, "gb!raw%d", minor);
--	if (IS_ERR(raw->device)) {
--		retval = PTR_ERR(raw->device);
--		goto error_del_cdev;
--	}
--
- 	return 0;
- 
--error_del_cdev:
--	cdev_del(&raw->cdev);
--
- error_connection_disable:
- 	gb_connection_disable(connection);
- 
--error_remove_ida:
--	ida_simple_remove(&minors, minor);
--
- error_connection_destroy:
- 	gb_connection_destroy(connection);
- 
--error_free:
--	kfree(raw);
-+error_put_device:
-+	put_device(&raw->dev);
- 	return retval;
+-	pci_for_each_dma_alias(pdev, clone_alias, NULL);
++	pci_for_each_dma_alias(pdev, clone_alias, pdev);
  }
  
-@@ -228,11 +231,8 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 	struct raw_data *raw_data;
- 	struct raw_data *temp;
- 
--	// FIXME - handle removing a connection when the char device node is open.
--	device_destroy(raw_class, raw->dev);
--	cdev_del(&raw->cdev);
-+	cdev_device_del(&raw->cdev, &raw->dev);
- 	gb_connection_disable(connection);
--	ida_simple_remove(&minors, MINOR(raw->dev));
- 	gb_connection_destroy(connection);
- 
- 	mutex_lock(&raw->list_lock);
-@@ -241,8 +241,7 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 		kfree(raw_data);
- 	}
- 	mutex_unlock(&raw->list_lock);
--
--	kfree(raw);
-+	put_device(&raw->dev);
- }
- 
- /*
+ static void setup_aliases(struct amd_iommu *iommu, struct device *dev)
 -- 
 2.53.0
 
