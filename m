@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFD738654F;
-	Sat, 17 Oct 2026 16:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFEB2C026C;
+	Sat, 17 Oct 2026 16:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254389; cv=none; b=jeP3XpPM4g19vWBp6Kse2F8rL4tdaQuFdAeYiaeDLuMaK1oNag8ZSzJ+VO8zkEjsf/XzskJ/1Nr6uhLruQdKp83SNlTnYdhaQErzFl02A+ukhVXHIGXQfC9czD0T+/WmWMc7RP+tAmOyzxI9LFmWjmvtfU4vGspLg/CIx9Jp/5U=
+	t=1792254392; cv=none; b=SG6dKOw2UKM/afMJWUZuIzDl+j0SLb4VgEI1JgfDKmJKynvk7UbMd367vJkjYDwrkv6BcS8gBwQNAMiFIyBR7WyPtaLODGe8OEWb3pJ0VXgtelre4oz6jDWxNGeWjgkgMqapBA3dXhI9zt4phw4q1XRfTRLuQ3HjTb1lTuKxIsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254389; c=relaxed/simple;
-	bh=l888a/LxHS97Gk0TfcyYFJIQCjELjcVZKNsFr0WNB4A=;
+	s=arc-20240116; t=1792254392; c=relaxed/simple;
+	bh=3FvqShD5jfxYyoRUEx004toswO0a35O1moSLAbplkks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQXuuHs1W3xvLYnGneP5e4y1MYNsr0mjJ+9v5KtsS6UOdhSBCrM3H2ii+KeFR8cSkMIqsEaDqylk0kYbxRWJmJQ88Av5VBhoirMLMHzVZti8sWfgWL/chO2tolWE6Ti/JI/tcHMr5O1hrtYHv+4krNolRIcKU+gJlbl/xzs17sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDvpKHVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eyuLBTmypUo8FFvgPkJE7954+1kZAn5I6hGFsD0lSE4RvzdX9xfdxJTvIm+9j/UBZgJV/RSYcM7+UwJiLlJBdOq78d5Knwz8sSoFsctMAbAKTlbb8Mr7BPfP5zM68mHAkL1kNFaXNmWAglDYcripf2vs7gkeQe6qD/2pCM9kc9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdCJMW2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDvpKHVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AB71F000C4;
-	Sat, 17 Oct 2026 16:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdCJMW2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12431F000C4;
+	Sat, 17 Oct 2026 16:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254388;
-	bh=DEFo2+m2Ia9Q442jo0oOq4FkxmCZkJjxLg6yOJsvnN4=;
+	s=korg; t=1792254391;
+	bh=aARMyRJRu7h9AOwuHpKmxJmPrF93bR+ukfCi2rWPNAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDvpKHVoYUVEumlh8AV+9X7sWD+fKHGYUf/kDu/Vkb8gqqurKKiY7tjDkPFsy9NrG
-	 AlyGyToVhwSf42yluYaFsDuZHSQOHTIgZbFgwrmmqmQS+v59U+judkNFcKDQHdzscx
-	 N85nC70KSV/OKl7gENBjt+aqy7Q9LmxuvuMszNYw=
+	b=mdCJMW2+MAuAEd8IPJqo4u1ptdgA8XPOBnXwfnNNvnUsROflCPzo6yP9derHs8qUR
+	 6d4jLA/UZznUdp6AqaothNNy0Jh8/iOUoV9KcuvXv7kLSkq7ELAbP0RQZyCY+u1CH8
+	 jgvMsYRJrgMEVrQGY9JniZqHWYx34pi0p/Rajl1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/869] media: stm32: dcmipp: use v4l2_subdev_is_streaming
-Date: Sat, 17 Oct 2026 17:53:39 +0200
-Message-ID: <20261017160046.807697595@linuxfoundation.org>
+Subject: [PATCH 6.12 424/869] mmc: vub300: fix use-after-free on probe failure
+Date: Sat, 17 Oct 2026 17:54:25 +0200
+Message-ID: <20261017160048.007884686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,86 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 255e0cc62b9b1afad9b9ba7738d5c53cd0d157fb ]
+[ Upstream commit a3b5f242997a3be7404112fd48784881560aea57 ]
 
-Rely on v4l2_subdev_is_streaming in order to know if the subdev
-is streaming or not instead of relying on a local variable.
+The vub300 driver lifetime-manages its controller state using
+vub300->kref, with vub300_delete() freeing the mmc host when the last
+reference is dropped. The probe error path after the inactivity timer has
+been armed still bypasses that lifetime rule, however, and falls through
+to mmc_free_host() directly if mmc_add_host() fails.
 
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Stable-dep-of: ffc8eec06378 ("media: stm32-dcmipp: Return queued buffers on start_streaming() failure")
+The race window is between arming the inactivity timer and reaching the
+probe error unwind after mmc_add_host() fails:
+
+        probe thread                     timer/workqueue
+        ------------                     ---------------
+        kref_init(&vub300->kref)         ref = 1
+        kref_get(&vub300->kref)          ref = 2, timer ref
+        add_timer(inactivity_timer)      fires after one second
+        |
+        |   race window
+        |<---------------------------------------------------->
+        |
+        mmc_add_host(mmc)
+                                         inactivity timer fires
+                                         vub300_queue_dead_work()
+                                           kref_get()          ref = 3
+                                           queue_work(deadwork)
+        mmc_add_host() fails
+        timer_delete_sync()
+        mmc_free_host(mmc)
+          frees vub300
+                                         deadwork runs
+                                           use-after-free
+
+The inactivity timeout is one second, so this would require
+mmc_add_host() to both fail and take more than one second to do so. This
+is unlikely to happen in practice, but the error path is still wrong.
+
+timer_delete_sync() only waits for the timer callback itself. It does
+not flush deadwork that the callback may already have queued. As a
+result, queued deadwork can still hold a kref while the probe error path
+directly frees the backing mmc host, including the vub300 storage.
+
+Fix this by using the same lifetime mechanism as disconnect. Clear
+vub300->interface so that the timer callback and any queued deadwork
+return early and drop their references, then drop the initial probe
+reference and return without falling through to err_free_host.
+
+Fixes: 0613ad2401f8 ("mmc: vub300: fix return value check of mmc_add_host()")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/st/stm32/stm32-dcmipp/dcmipp-byteproc.c  | 6 +-----
- .../media/platform/st/stm32/stm32-dcmipp/dcmipp-parallel.c  | 5 +----
- 2 files changed, 2 insertions(+), 9 deletions(-)
+ drivers/mmc/host/vub300.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-byteproc.c b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-byteproc.c
-index 5a361ad6b0234..50500112eab9a 100644
---- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-byteproc.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-byteproc.c
-@@ -78,7 +78,6 @@ struct dcmipp_byteproc_device {
- 	struct v4l2_subdev sd;
- 	struct device *dev;
- 	void __iomem *regs;
--	bool streaming;
- };
+diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
+index 73d4af7e9b32c..63989479ae838 100644
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2344,12 +2344,16 @@ static int vub300_probe(struct usb_interface *interface,
+ 			 interface_to_InterfaceNumber(interface));
+ 	retval = mmc_add_host(mmc);
+ 	if (retval)
+-		goto err_delete_timer;
++		goto err_stop_io;
  
- static const struct v4l2_mbus_framefmt fmt_default = {
-@@ -239,11 +238,10 @@ static int dcmipp_byteproc_set_fmt(struct v4l2_subdev *sd,
- 				   struct v4l2_subdev_state *sd_state,
- 				   struct v4l2_subdev_format *fmt)
- {
--	struct dcmipp_byteproc_device *byteproc = v4l2_get_subdevdata(sd);
- 	struct v4l2_mbus_framefmt *mf;
- 	struct v4l2_rect *crop, *compose;
- 
--	if (byteproc->streaming)
-+	if (v4l2_subdev_is_streaming(sd))
- 		return -EBUSY;
- 
- 	mf = v4l2_subdev_state_get_format(sd_state, fmt->pad);
-@@ -495,8 +493,6 @@ static int dcmipp_byteproc_s_stream(struct v4l2_subdev *sd, int enable)
- 		}
- 	}
- 
--	byteproc->streaming = enable;
--
  	return 0;
- }
  
-diff --git a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-parallel.c b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-parallel.c
-index 62c5c3331cfec..05e8897ae37a4 100644
---- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-parallel.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-parallel.c
-@@ -129,7 +129,6 @@ struct dcmipp_par_device {
- 	struct v4l2_subdev sd;
- 	struct device *dev;
- 	void __iomem *regs;
--	bool streaming;
- };
- 
- static const struct v4l2_mbus_framefmt fmt_default = {
-@@ -230,7 +229,7 @@ static int dcmipp_par_set_fmt(struct v4l2_subdev *sd,
- 	struct dcmipp_par_device *par = v4l2_get_subdevdata(sd);
- 	struct v4l2_mbus_framefmt *mf;
- 
--	if (par->streaming)
-+	if (v4l2_subdev_is_streaming(sd))
- 		return -EBUSY;
- 
- 	mf = v4l2_subdev_state_get_format(sd_state, fmt->pad);
-@@ -370,8 +369,6 @@ static int dcmipp_par_s_stream(struct v4l2_subdev *sd, int enable)
- 		reg_clear(par, DCMIPP_PRCR, DCMIPP_PRCR_ENABLE);
- 	}
- 
--	par->streaming = enable;
--
- 	return ret;
- }
- 
+-err_delete_timer:
+-	timer_delete_sync(&vub300->inactivity_timer);
++err_stop_io:
++	vub300->interface = NULL;
++	kref_put(&vub300->kref, vub300_delete);
++
++	return retval;
++
+ err_free_host:
+ 	mmc_free_host(mmc);
+ 	/*
 -- 
 2.53.0
 
