@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA8837BE64;
-	Sat, 17 Oct 2026 16:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733E93D994;
+	Sat, 17 Oct 2026 16:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254943; cv=none; b=j1u2/mbrXgF+WtF0/PsIG8laaqybph++tDJFN4IHV+T2aTixPTBdfAm7avKkfZGkh02spPUj9kf4MzGeTy+WW12HGxL167j0LxIVOduE9nqp37Uw1pTdLNfaFzLT6CwV3F6Zxl/JB2DLk/wtiGYgcwqeWWDTQ2BTQL22EvCGOx4=
+	t=1792254946; cv=none; b=RrjThCi9QRtfu4ZgXuHnN3exyH2nrH9aBosUwRgehhZkGiPPMQK1ABX/NThuKFdWNajittqPSBFlMM7Bm4qGPTBHVDvl6lytszdd3VfxuJOHmlC0cEJb/hwK9sDZvYMmpNXX2kJwYLGiC021qEE4mEO4kJ2cAZOtQpZTGi6R104=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254943; c=relaxed/simple;
-	bh=4anEhKvVIqJIbqqsi76/5+7uW5m0HScPRAwcm+tfPB4=;
+	s=arc-20240116; t=1792254946; c=relaxed/simple;
+	bh=EJkwh6CtMlbCq50D6EeF+5lSWo9DzYTYmWqufp0K628=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpNGtoKdLksqJkK3XyN2ie/y2DvBWmKE8H4OLVh9Wf40c43hKNt5Srp5dPJETcDBJ/0mKG1thccic8PmSfZ4t4P2615+mQHUuoi/P2E3np5LUUrQqDXYm8bB5Hu48ObUfLPyLi9GGj0ZL9BYTehtdfO5kl8o0J2uFr6SNz0xKyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKI9p8cW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtKV7a7Kf2rHRGpBcxwUENray4UnAX/fd4J6GviK4QLCyD6k2h2N25sRcgIgzkAVSN8JHki73IrBF2w8bDAebQb6fEpjdtXFoY3lDZn9QdZApBSsrfcPWeFKQo8U5HXRRHoQt0p7IAEJAog5BA9wlQmhYTluY+CcSOmLevWT7DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdEPSNxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKI9p8cW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56201F000C4;
-	Sat, 17 Oct 2026 16:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdEPSNxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA6A1F000C4;
+	Sat, 17 Oct 2026 16:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254942;
-	bh=EAT6356LK6+eCHe6FPQcV+pug0jaom3ToYWQ3DeoAgw=;
+	s=korg; t=1792254945;
+	bh=SVY+w5BeNuTFwOK7lH7+nbCEV6NBSeKtIoJnvy/d3Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKI9p8cWUTDjwQfDZ18HjkNUoOqltWXBeWq2NEJfWWhfjoh7DNSK6ibP2ZUMMXZUb
-	 CJJfagtrNQkMGJtYfwkk11o5UxGs1qB2CXuwE9w/6Z6wCxLqDDPTz1CLLOo7eMpM3P
-	 Qnmb1Dl1EOVb/+qax0ylobAWyEmVstdtTO2LUhI4=
+	b=vdEPSNxlOmcuq7RBeXAbIpezOY5PZaPwMslNpGHZbZpoffKSGSS4l+ifBPISCvd20
+	 kMJxzmhyAVlvPeNSgj3IkFbKtIDqwtdIJWEwO4CI5BE92+q/IHxmi7uZ2kOuA5D0u1
+	 auhG1w8G++xFkwwKk1Klwdz3UU/tiQdlXdWNRfqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 614/869] virtio_net: Fix resize of the RX ring
-Date: Sat, 17 Oct 2026 17:57:35 +0200
-Message-ID: <20261017160052.776857868@linuxfoundation.org>
+Subject: [PATCH 6.12 615/869] dpll: fix NULL deref in dpll_device_ops() during teardown race
+Date: Sat, 17 Oct 2026 17:57:36 +0200
+Message-ID: <20261017160052.801655240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,64 +53,321 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit d09c98a6da215bce2173a292e4b95c8de6ea5d51 ]
+[ Upstream commit 33f016b23a219fe034213849b51436b8e79df251 ]
 
-When a AF_XDP socket is attached, the virtnet_rx_resize
-should resize the rq->xsk_buffs XSK buffer array. Otherwise,
-when the size grows, the virtnet_rx_resume() causes a write
-past the end of the array. This is easily reproducable with
+When the last owner of a dpll device unregisters while a foreign driver
+still holds a pin on it via dpll_pin_on_pin_register(), the dpll object
+stays alive with an empty registration list. A pin notification queued
+before the unregister (e.g. ice reacting to zl3073x_i2c removal) then
+walks pin->dpll_refs into dpll_device_ops(), which trips the WARN_ON and
+dereferences the missing registration. dpll_lock cannot help because the
+notification work was queued before the unregistering driver took the
+lock.
 
-    ethtool -G ens3 rx 32
-    ./xdpsock -i eth0 -q 0 -r -z &
-    ethtool -G eth0 rx 256
+Treat the empty registration list as a legitimate transient state. Make
+dpll_priv() and dpll_device_ops() return NULL in that case and make
+every pin netlink path that resolves a device from a pin skip such
+dplls. dpll_cmd_pin_get_one() picks a ref with a live registration and
+returns -ENODEV when there is none, the pin dumpit skips such a pin
+instead of aborting the dump, dpll_msg_add_pin_dplls() and the
+frequency, esync, reference sync and phase adjust set paths skip dead
+refs, and dpll_pin_parent_device_set() validates the parent with
+dpll_device_get_by_id(). dpll_pin_register() is the last caller that
+dereferenced the device ops without a check, so move its frequency
+monitor validation under dpll_lock and tolerate a missing registration
+there as well.
 
-Fixes: e9f3962441c0 ("virtio_net: xsk: rx: support fill with xsk buffer")
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Link: https://patch.msgid.link/20260810120728.47445-1-a.s.protopopov@gmail.com
+The empty registration list is equivalent to a cleared DPLL_REGISTERED
+mark, both transitions happen under dpll_lock in dpll_device_register()
+and dpll_device_unregister(). A pin notification for a pin whose dplls
+are all gone is now dropped with -ENODEV instead of crashing, all
+callers in the core ignore that return value.
+
+ WARNING: drivers/dpll/dpll_core.c:1092 at dpll_device_ops+0x24/0x40,
+ CPU#83: kworker/u576:3/23471
+ Modules linked in: ... ice ... zl3073x_i2c(-) ... zl3073x ...
+ Workqueue: ice_dpll_wq ice_dpll_pin_notify_work [ice]
+ RIP: 0010:dpll_device_ops+0x24/0x40
+ Call Trace:
+  <TASK>
+  dpll_cmd_pin_get_one+0x336/0x520
+  dpll_pin_event_send+0x82/0x140
+  dpll_pin_on_pin_unregister+0xbb/0x160
+  ice_dpll_pin_notify_work+0x1bc/0x1f0 [ice]
+  process_one_work+0x19e/0x370
+  worker_thread+0x1a6/0x310
+  kthread+0xe4/0x120
+  ret_from_fork+0x1a1/0x270
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
+ BUG: kernel NULL pointer dereference, address: 0000000000000010
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+
+Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260813140817.1051388-1-poros@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/dpll/dpll_core.c    | 12 +++----
+ drivers/dpll/dpll_netlink.c | 68 +++++++++++++++++++++++++++++++++++--
+ 2 files changed, 71 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 851defa105e04..2c62371666cd5 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3220,17 +3220,31 @@ static void virtnet_rx_resume(struct virtnet_info *vi, struct receive_queue *rq)
- static int virtnet_rx_resize(struct virtnet_info *vi,
- 			     struct receive_queue *rq, u32 ring_num)
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 6fa6a0d8e430d..0a8db4dc25786 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -1009,12 +1009,8 @@ EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
+ static struct dpll_device_registration *
+ dpll_device_registration_first(struct dpll_device *dpll)
  {
-+	unsigned int old_ring_num = virtqueue_get_vring_size(rq->vq);
-+	struct xdp_buff **tmp_xsk_buffs = NULL;
- 	int err, qindex;
- 
- 	qindex = rq - vi->rq;
- 
-+	if (rq->xsk_pool && ring_num > old_ring_num) {
-+		tmp_xsk_buffs = kvzalloc_objs(*tmp_xsk_buffs, ring_num);
-+		if (!tmp_xsk_buffs)
-+			return -ENOMEM;
-+	}
-+
- 	virtnet_rx_pause(vi, rq);
- 
- 	err = virtqueue_resize(rq->vq, ring_num, virtnet_rq_unmap_free_buf, NULL);
-+
-+	/* virtqueue_resize may have changed the size even if err != 0 */
-+	if (tmp_xsk_buffs && virtqueue_get_vring_size(rq->vq) > old_ring_num)
-+		swap(rq->xsk_buffs, tmp_xsk_buffs);
-+
- 	if (err)
- 		netdev_err(vi->dev, "resize rx fail: rx queue index: %d err: %d\n", qindex, err);
- 
- 	virtnet_rx_resume(vi, rq);
-+	kvfree(tmp_xsk_buffs);
- 	return err;
+-	struct dpll_device_registration *reg;
+-
+-	reg = list_first_entry_or_null((struct list_head *)&dpll->registration_list,
+-				       struct dpll_device_registration, list);
+-	WARN_ON(!reg);
+-	return reg;
++	return list_first_entry_or_null((struct list_head *)&dpll->registration_list,
++					struct dpll_device_registration, list);
  }
  
+ void *dpll_priv(struct dpll_device *dpll)
+@@ -1022,6 +1018,8 @@ void *dpll_priv(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
+ 
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->priv;
+ }
+ 
+@@ -1030,6 +1028,8 @@ const struct dpll_device_ops *dpll_device_ops(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
+ 
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->ops;
+ }
+ 
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index 270ea8f7248a4..3939f03620396 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -66,6 +66,22 @@ static bool dpll_pin_available(struct dpll_pin *pin)
+ 	return false;
+ }
+ 
++static bool dpll_device_registered(struct dpll_device *dpll)
++{
++	return dpll_device_ops(dpll);
++}
++
++static struct dpll_pin_ref *dpll_pin_first_registered_ref(struct dpll_pin *pin)
++{
++	struct dpll_pin_ref *ref;
++	unsigned long i;
++
++	xa_for_each(&pin->dpll_refs, i, ref)
++		if (dpll_device_registered(ref->dpll))
++			return ref;
++	return NULL;
++}
++
+ /**
+  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
+  * @msg: pointer to sk_buff message to attach a pin handle
+@@ -534,6 +550,8 @@ dpll_msg_add_pin_dplls(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, index, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		attr = nla_nest_start(msg, DPLL_A_PIN_PARENT_DEVICE);
+ 		if (!attr)
+ 			return -EMSGSIZE;
+@@ -571,7 +589,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
+-	ASSERT_NOT_NULL(ref);
++	if (!ref || !dpll_device_registered(ref->dpll))
++		ref = dpll_pin_first_registered_ref(pin);
++	if (!ref)
++		return -ENODEV;
+ 
+ 	ret = dpll_msg_add_pin_handle(msg, pin);
+ 	if (ret)
+@@ -817,6 +838,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 	}
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->frequency_set || !ops->frequency_get) {
+ 			NL_SET_ERR_MSG(extack, "frequency set not supported by the device");
+@@ -824,6 +847,10 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->frequency_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
+@@ -836,6 +863,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		return 0;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -855,6 +884,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->frequency_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -878,6 +909,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->esync_set || !ops->esync_get) {
+ 			NL_SET_ERR_MSG(extack,
+@@ -886,6 +919,10 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
+@@ -908,6 +945,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		void *pin_dpll_priv;
+ 
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
+@@ -931,6 +970,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
+@@ -966,7 +1007,10 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 		return -EINVAL;
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
+-	ASSERT_NOT_NULL(ref);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	if (!ops->ref_sync_set || !ops->ref_sync_get) {
+ 		NL_SET_ERR_MSG(extack, "reference sync not supported by this pin");
+@@ -984,6 +1028,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	if (state == old_state)
+ 		return 0;
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1006,6 +1052,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1185,6 +1233,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	}
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->phase_adjust_set || !ops->phase_adjust_get) {
+ 			NL_SET_ERR_MSG(extack, "phase adjust not supported");
+@@ -1192,6 +1242,10 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		}
+ 	}
+ 	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
++	if (!ref || !dpll_device_registered(ref->dpll)) {
++		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
++		return -ENODEV;
++	}
+ 	ops = dpll_pin_ops(ref);
+ 	dpll = ref->dpll;
+ 	ret = ops->phase_adjust_get(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1205,6 +1259,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		return 0;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		ret = ops->phase_adjust_set(pin,
+@@ -1227,6 +1283,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		dpll = ref->dpll;
+ 		if (ops->phase_adjust_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
+@@ -1256,7 +1314,7 @@ dpll_pin_parent_device_set(struct dpll_pin *pin, struct nlattr *parent_nest,
+ 		return -EINVAL;
+ 	}
+ 	pdpll_idx = nla_get_u32(tb[DPLL_A_PIN_PARENT_ID]);
+-	dpll = xa_load(&dpll_device_xa, pdpll_idx);
++	dpll = dpll_device_get_by_id(pdpll_idx);
+ 	if (!dpll) {
+ 		NL_SET_ERR_MSG(extack, "parent device not found");
+ 		return -EINVAL;
+@@ -1546,6 +1604,10 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
+ 		ret = dpll_cmd_pin_get_one(skb, pin, cb->extack);
+ 		if (ret) {
+ 			genlmsg_cancel(skb, hdr);
++			if (ret == -ENODEV) {
++				ret = 0;
++				continue;
++			}
+ 			break;
+ 		}
+ 		genlmsg_end(skb, hdr);
 -- 
 2.53.0
 
