@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE9A38F658;
-	Sat, 17 Oct 2026 16:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09FA3911A9;
+	Sat, 17 Oct 2026 16:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254500; cv=none; b=ZOnbcXGCOYtTbxpNoCLJZqYNbKAC0OS8tNMY/HHnEwd7RDXyMT9qtABl2qLEd6RqL2V13Rxhl//p33UgMNt43KpWtob4bE5TNOlvARzOXjZRn+zRIelW+tE00qHZ+SospLqFSj6No6KO8AOjGWFU/O4H/tnJsvr/7d/uBj05FEQ=
+	t=1792254503; cv=none; b=EXyuQooNFNrvslGRs5t4o0/f3ms8+/CEl/mFABG8ggwi7fKZj9g2mf+ZSS1uTdYrYfPEXXIOHUWdIALhs81RdxV3+tx4rZrIdYAYzXATtDgTc+orutp5vYWASCxzM2NODtgw6qF5sSXq04PGPAzw9mphTxnLKgvvokFwuiZ5lRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254500; c=relaxed/simple;
-	bh=fP+S4MwD6BHyfvbM2yBVjMvRH5CiZo3RSWGfzy4e3JE=;
+	s=arc-20240116; t=1792254503; c=relaxed/simple;
+	bh=P3fLtRLCUKcvEUgTxq/lTx2X0eQQsNTUasvlE9jDS3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXXGQQdHrRweb2+furpcjUFr6iPeu8gvEDG0d8A7I9B0/IB+2YhqmZzCOxNl5V9eWF7j+v/hXd9iFETzHkRyA8SeYREN8CeVU2e34MqSvXN9ulqgjb3Zc0EvdvVeC5RvXOa94dbycDox0qhXzQ4uWuhyEnFARo5J3bm946aWwMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkrnD+su; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYXHzypmnhh4EjaW9qdfjMdwOo046vauxc1OgTNqFDjg0nHgMWiWZ37Lcx0+ksV11+fZHgkiihitZgjGVBZxla0pxz0eVWSt1oZfdf9TzMAasWEEc6Iof6Fp0Ao8VKEvf0t/XMJLcUVYhnRH624dZy+Ulgud9YDDV4qattfJ+NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOCgIf25; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkrnD+su"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AFC1F000C4;
-	Sat, 17 Oct 2026 16:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOCgIf25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421881F000C4;
+	Sat, 17 Oct 2026 16:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254499;
-	bh=H0C8QIKHd0/VNguML4zHP5TUz4pLsobpAR8jB8gLBKI=;
+	s=korg; t=1792254501;
+	bh=/xThDJFeVJoPOqKpmaW0LaYyhdrjYn0aJBItNUOqeLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nkrnD+su/vTocsaFUyWS8+Kth+g5ei1snjy4/8NBqTyzFznjwMBpwPoIHe3xev9XX
-	 CTAssyGHa1ytmCHDziBX3SnUQRe4JHeaZdoe4oNrYvWvbEhbXbmutqLt80sYocZvzz
-	 Y2kfJF0yE8Vy+4z3k3i/7fgoMRguFE29WjNjE5ds=
+	b=kOCgIf25C7jcCu3Ltz5HNDGnfWw2jKI7g0EytMgyw8Vq/UfVRyTk/pfgSs1YWYofM
+	 nLWve2EaaMrkznudfCafsNlCuovHOLDdl58ZpO5uI0yYN8g92a4N1ZgR/3scKDovPl
+	 e7CogqsvdeS3xla7guGZMWfU7OXCSBEEZXgnXUho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+77026564530dbc29b854@syzkaller.appspotmail.com,
+	syzbot+5054473a31f78f735416@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 465/869] ALSA: seq: avoid stale FIFO cells during resize
-Date: Sat, 17 Oct 2026 17:55:06 +0200
-Message-ID: <20261017160049.053666468@linuxfoundation.org>
+Subject: [PATCH 6.12 428/869] ocfs2: add extra consistency checks for chain allocator dinodes
+Date: Sat, 17 Oct 2026 17:54:29 +0200
+Message-ID: <20261017160048.112583931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,176 +60,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit e546128291f8d688dcb931827e2efd2aa6c0734d ]
+[ Upstream commit e1c70505ee8158c1108340d9cd67182ade93af4a ]
 
-snd_seq_fifo_resize() still needs to publish the replacement pool
-before it waits for FIFO users. A blocking snd_seq_read() holds
-f->use_lock while it sleeps, so concurrent senders must be able to
-queue to the new pool and wake that reader instead of failing against a
-closing old pool.
+When validating chain allocator dinode in 'ocfs2_validate_inode_block()',
+add an extra checks whether a) the maximum amount of chain records in
+'struct ocfs2_chain_list' matches the value calculated based on the
+filesystem block size, and b) the next free slot index is within the valid
+range.
 
-However, snd_seq_fifo_event_in() duplicates an event before it takes
-f->lock, and snd_seq_read() can dequeue a cell and later call
-snd_seq_fifo_cell_putback() if copy_to_user() or
-snd_seq_expand_var_event() fails. If resize swaps f->pool and detaches
-oldhead in between, either path can relink an old-pool cell after the
-snapshot. That stale cell sits outside the drained oldhead list, keeps
-oldpool->counter elevated, and can leave snd_seq_pool_delete() waiting
-for the retired pool to drain.
+Link: https://lkml.kernel.org/r/20251030153003.1934585-1-dmantipov@yandex.ru
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+77026564530dbc29b854@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=77026564530dbc29b854
+Reported-by: syzbot+5054473a31f78f735416@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5054473a31f78f735416
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Deepanshu Kartikey <kartikey406@gmail.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 
-Keep the existing swap-before-wait ordering in snd_seq_fifo_resize(),
-but reject stale cells before any FIFO relink. Revalidate event-in cells
-under f->lock and retry them against the published replacement pool, and
-free stale putback cells instead of linking them back into the FIFO.
+Adapted for this tree: the inline-data i_clusters check this change sits
+next to is already present earlier in ocfs2_validate_inode_block(), so only
+the new chain allocator dinode checks are added.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
-
-resize path:                    relink path:
-1. Allocate newpool.             1. Take f->use_lock.
-2. Swap f->pool to newpool and   2. Duplicate or dequeue an old-pool
-   detach oldhead.                  cell before oldpool closes.
-3. Mark oldpool closing and      3. Reach a later relink point after
-   wait for FIFO users.             resize published newpool.
-4. Free oldhead and delete       4. Relink the old-pool cell after
-   oldpool.                         resize detached oldhead.
-                                 5. Drop f->use_lock.
-
-The reproducer reports a resize ioctl blocked in the expected pool
-teardown path:
-
-signal: resize iteration=98 target_pool=4 exceeded 250ms
-        (elapsed=251ms)
-diagnostic: resize_tid=651 wchan=snd_seq_pool_done
-diagnostic: resize_tid=651 stack=
-  snd_seq_pool_done+0x5b/0x140
-  snd_seq_pool_delete+0x7a/0x90
-  snd_seq_fifo_resize+0x193/0x1e0
-  snd_seq_ioctl_set_client_pool+0x214/0x260
-  snd_seq_ioctl+0x119/0x540
-  __x64_sys_ioctl+0xd1/0x120
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-A second run with larger pools hit the same target path:
-
-signal: resize iteration=32 target_pool=64 exceeded 250ms
-        (elapsed=251ms)
-diagnostic: resize_tid=663 wchan=snd_seq_pool_done
-diagnostic: resize_tid=663 stack=
-  snd_seq_pool_done+0x5b/0x140
-  snd_seq_pool_delete+0x7a/0x90
-  snd_seq_fifo_resize+0x193/0x1e0
-  snd_seq_ioctl_set_client_pool+0x214/0x260
-  snd_seq_ioctl+0x119/0x540
-  __x64_sys_ioctl+0xd1/0x120
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 2d7d54002e39 ("ALSA: seq: Fix race during FIFO resize")
-
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260614004801.3507773-2-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 452a8467be81 ("ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_fifo.c | 52 ++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 15 deletions(-)
+ fs/ocfs2/inode.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
-index f23c6b7ae2403..c3dfe04c3883d 100644
---- a/sound/core/seq/seq_fifo.c
-+++ b/sound/core/seq/seq_fifo.c
-@@ -101,13 +101,17 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
- 			  struct snd_seq_event *event)
- {
- 	struct snd_seq_event_cell *cell;
-+	struct snd_seq_pool *pool;
-+	bool linked;
- 	int err;
- 
- 	if (snd_BUG_ON(!f))
- 		return -EINVAL;
- 
- 	guard(snd_seq_fifo)(f);
--	err = snd_seq_event_dup(f->pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
-+retry:
-+	pool = READ_ONCE(f->pool);
-+	err = snd_seq_event_dup(pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
- 	if (err < 0) {
- 		if ((err == -ENOMEM) || (err == -EAGAIN))
- 			atomic_inc(&f->overflow);
-@@ -115,14 +119,24 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 9104f088c86d8..e3aba593e189f 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1585,6 +1585,23 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
  	}
- 		
- 	/* append new cells to fifo */
-+	linked = false;
- 	scoped_guard(spinlock_irqsave, &f->lock) {
--		if (f->tail != NULL)
--			f->tail->next = cell;
--		f->tail = cell;
--		if (f->head == NULL)
--			f->head = cell;
--		cell->next = NULL;
--		f->cells++;
-+		if (cell->pool == f->pool) {
-+			if (f->tail)
-+				f->tail->next = cell;
-+			f->tail = cell;
-+			if (!f->head)
-+				f->head = cell;
-+			cell->next = NULL;
-+			f->cells++;
-+			linked = true;
+ 
++	if (le32_to_cpu(di->i_flags) & OCFS2_CHAIN_FL) {
++		struct ocfs2_chain_list *cl = &di->id2.i_chain;
++
++		if (le16_to_cpu(cl->cl_count) != ocfs2_chain_recs_per_inode(sb)) {
++			rc = ocfs2_error(sb, "Invalid dinode %llu: chain list count %u\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(cl->cl_count));
++			goto bail;
++		}
++		if (le16_to_cpu(cl->cl_next_free_rec) > le16_to_cpu(cl->cl_count)) {
++			rc = ocfs2_error(sb, "Invalid dinode %llu: chain list index %u\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(cl->cl_next_free_rec));
++			goto bail;
 +		}
 +	}
 +
-+	if (!linked) {
-+		/* Retry against the replacement pool after resize publishes it. */
-+		snd_seq_cell_free(cell);
-+		goto retry;
- 	}
+ 	rc = 0;
  
- 	/* wakeup client */
-@@ -194,13 +208,21 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
- void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
- 			       struct snd_seq_event_cell *cell)
- {
-+	bool linked = false;
-+
- 	if (cell) {
--		guard(spinlock_irqsave)(&f->lock);
--		cell->next = f->head;
--		f->head = cell;
--		if (!f->tail)
--			f->tail = cell;
--		f->cells++;
-+		scoped_guard(spinlock_irqsave, &f->lock) {
-+			if (cell->pool == f->pool) {
-+				cell->next = f->head;
-+				f->head = cell;
-+				if (!f->tail)
-+					f->tail = cell;
-+				f->cells++;
-+				linked = true;
-+			}
-+		}
-+		if (!linked)
-+			snd_seq_cell_free(cell);
- 	}
- }
- 
-@@ -236,7 +258,7 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
- 		oldpool = f->pool;
- 		oldhead = f->head;
- 		/* exchange pools */
--		f->pool = newpool;
-+		WRITE_ONCE(f->pool, newpool);
- 		f->head = NULL;
- 		f->tail = NULL;
- 		f->cells = 0;
+ bail:
 -- 
 2.53.0
 
