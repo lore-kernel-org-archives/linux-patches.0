@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FBD3CAE99;
-	Sat, 17 Oct 2026 17:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707E23CB91E;
+	Sat, 17 Oct 2026 17:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257237; cv=none; b=gm3PVksW+eLsC2YRAnlYChNd2YY75nuRRl0R3kDkLAyqLVWo3HeXREGi8DwGnrxjd3uaqbHLM/DhVko0CHwLv5z66HRWGh3qX2+WOyvm6Q4eKs0UnpUZEGSqTxP5OXciwz9JYNf9YwXDzt4jZIC07r43cd5fmQUNHZt3pTlSONg=
+	t=1792257240; cv=none; b=DX6vwnQN207B6gpqdZrX9+fo30c93x02lvmm86zqHhlvWH9vUz4Fa8bqwp8dXbV1qQKBCpT/piazmDMkTRJ4oZeryFhbNdCszqPK0feaYt52o3F5xT8T1+5QRtL/Zc+j36o0yK7iWDioZEsYpBhtiKn5fnC9TQS2T4oaJ2qjS4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257237; c=relaxed/simple;
-	bh=HlCBAJlLfh4fjYJRkQzuOQR2Gxx9NzzHpo6fzrSoM8w=;
+	s=arc-20240116; t=1792257240; c=relaxed/simple;
+	bh=809l+5rK6Nzp8TyYTCGVrIEQIDUPKJzAZ0oFAUK3cR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOPRHcsuwnkV7o1Ym0X8hoeq0Y1qJbxCQVp0UFVzWGrx1vK9G53FPvsWKFjv4hEoBSeIIGPjJ0SWQeem2JBQBWYxNtRONHZoEcWP/A7z5izjgbWzlWb8Tn2fSRHrXa1I027DaB/gyxngeXBK8V6YbsHNahSDqBeIvQSECAHxXTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejnllFq/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pecBkK40GlktCNw9o4eO4XT67nSBswdwVtT+lRBKsxhYamOPL4SoylKpX2o/LtJRW7IBswZNv1sVnzmTGeq4PmnHjRhjuinl7YxrZrN/ZMqNxg33mZCfqFj1/OqnJNPNFH2ArAzxo+8h/uyl6aRNQ5ABEpjNgtYr1RVLeaxurmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewtG3j1/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejnllFq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4331F000C5;
-	Sat, 17 Oct 2026 17:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewtG3j1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B603A1F000C4;
+	Sat, 17 Oct 2026 17:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257236;
-	bh=Wqa6JNGEOM84G3zmDAWfTYTcuoUrl7FReLfqLxUJesE=;
+	s=korg; t=1792257239;
+	bh=S8D0x5R1URmfjn1q8OLteumWeVKZWvPJTXwYPGUdqlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejnllFq/oDc6FaFS6PAPmVdD0u95C2UUTKH/oq6z4DbawfjWAZidCASjJjbvko7a/
-	 d4HAfMPLVsyvSZq73kAb2IFT3+Ki9F9k+CZPtc18upF+/DsDiE8Rmmu1pv8r3VwD8c
-	 B0Ou7faAB5rCRmaNlyH0e0YlHMZaUFkdYTB1c17E=
+	b=ewtG3j1/fFIJsuBplJUkuOQqnlwYwhZX4LnRiGCrUh5nq0VG0mxPDbtKjWQB8ZfJr
+	 E0PxfGowTH3M3aj5WPiugcUTyAMDtRC48Qa7zd1fkXQOccVoKf/EiJgsCH2xHx7RNm
+	 zN+KkSWBAKUpBh1cTARQtgHvs1RKO8jIfznVWlmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 0496/1674] dm: fix reading free memory in do_resume
-Date: Sat, 17 Oct 2026 17:46:08 +0200
-Message-ID: <20261017160443.847325255@linuxfoundation.org>
+	Andreas Greve <andreas.greve@a-greve.de>,
+	James Dingwall <james@dingwall.me.uk>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	"Claude Opus 5.5 (1M context)" <noreply@anthropic.com>
+Subject: [PATCH 6.6 0479/1674] swiotlb: fix default_swiotlb_limit() for non-growable default pool
+Date: Sat, 17 Oct 2026 17:45:51 +0200
+Message-ID: <20261017160443.409965171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,61 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 upstream.
+commit 911655ab1dfb9d526978a75df3b210132620d30a upstream.
 
-When do_resume calls dm_table_get_mode(new_map), the call is done without
-holding any locks (it only holds a reference to the md). It may be
-possible that another concurrent ioctl on the same device will swap table
-after dm_swap_table and before dm_table_get_mode. In this case,
-dm_table_get_mode(new_map) reads freed memory.
+Commit ad96ce3252db ("swiotlb: determine potential physical address
+limit") changed default_swiotlb_limit() to return the maximum physical
+address that could ever be used by dynamically allocated pools, so that
+the value stays constant when CONFIG_SWIOTLB_DYNAMIC=y. However,
+io_tlb_default_mem.phys_limit is returned even when the default pool
+cannot grow, e.g. when swiotlb_init_remap() is called with a remap
+callback.
 
-This race condition was triggered by syzbot.
+This breaks Xen dom0 on x86: pci_xen_swiotlb_init() passes SWIOTLB_ANY
+and xen_swiotlb_fixup(), so phys_limit is set to the top of dom0 memory,
+although xen_swiotlb_fixup() makes the default pool below the 32-bit
+boundary. xen_swiotlb_dma_supported() then rejects 32-bit DMA masks,
+even though the bounce buffer is perfectly usable by such devices.
 
-This commit fixes the race by reading mode of the new table before
-dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
-but this function doesn't attempt to dereference it, so this call should
-be safe.
+Return phys_limit only if the default pool can actually grow, otherwise
+report the real end of the default pool, like in the
+!CONFIG_SWIOTLB_DYNAMIC case.
 
-Note that this is not a security bug because only root can trigger it and
-the commonly used tools such as lvm or cryptsetup do not call the ioctls
-concurrently, so that they can't trigger it acceidentally.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
+Reported-by: Andreas Greve <andreas.greve@a-greve.de>
+Reported-by: James Dingwall <james@dingwall.me.uk>
+Fixes: ad96ce3252db ("swiotlb: determine potential physical address limit")
+Closes: https://lore.kernel.org/xen-devel/f74668db-52fd-4575-8372-7bfdf10d62ac@a-greve.de/
 Cc: stable@vger.kernel.org
+Assisted-by: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+Tested-by: James Dingwall <james@dingwall.me.uk>
+Link: https://lore.kernel.org/all/20261005070518.1590097-1-m.szyprowski@samsung.com/
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/dma/swiotlb.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1181,6 +1181,7 @@ static int do_resume(struct dm_ioctl *pa
- 	/* Do we need to load a new map ? */
- 	if (new_map) {
- 		sector_t old_size, new_size;
-+		blk_mode_t new_map_mode;
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -1594,10 +1594,10 @@ phys_addr_t default_swiotlb_base(void)
+ phys_addr_t default_swiotlb_limit(void)
+ {
+ #ifdef CONFIG_SWIOTLB_DYNAMIC
+-	return io_tlb_default_mem.phys_limit;
+-#else
+-	return io_tlb_default_mem.defpool.end - 1;
++	if (io_tlb_default_mem.can_grow)
++		return io_tlb_default_mem.phys_limit;
+ #endif
++	return io_tlb_default_mem.defpool.end - 1;
+ }
  
- 		/* Suspend if it isn't already suspended */
- 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
-@@ -1208,6 +1209,7 @@ static int do_resume(struct dm_ioctl *pa
- 			}
- 		}
- 
-+		new_map_mode = dm_table_get_mode(new_map);
- 		old_size = dm_get_size(md);
- 		old_map = dm_swap_table(md, new_map);
- 		if (IS_ERR(old_map)) {
-@@ -1220,7 +1222,7 @@ static int do_resume(struct dm_ioctl *pa
- 		if (old_size && new_size && old_size != new_size)
- 			need_resize_uevent = true;
- 
--		if (dm_table_get_mode(new_map) & BLK_OPEN_WRITE)
-+		if (new_map_mode & BLK_OPEN_WRITE)
- 			set_disk_ro(dm_disk(md), 0);
- 		else
- 			set_disk_ro(dm_disk(md), 1);
+ #ifdef CONFIG_DEBUG_FS
 
 
