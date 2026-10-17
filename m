@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F5C3B8412;
-	Sat, 17 Oct 2026 17:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BF73587DE;
+	Sat, 17 Oct 2026 17:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256414; cv=none; b=ntijfFpvIjSQsDJ/gHu5WGQ8nSeZw29aawvv6mrSLyQXfi7VI1Gbk9GSpOOUfp5GXH9SXMYPRqvOF8jNlyYKh3RQTXadyBbjBJ+rZVqmSSkxnMaW78PXKMhVtVYopndEczgtxijNeq+QvVVJTfCTcIX+uI5bEMhZeGP/VgzE1t0=
+	t=1792256417; cv=none; b=DWHy5tiY5tpZq2rvyDlQ0W9b+sEhvQPGx7Qdw5fVPt0Nku9GZr1kpRTChCjkDJtoYfqtMmliztLOD2Y+DjINWVrMULfqYTTuUHcqMyMR7SBk2py9p66CyBdn4piu9pFslVEbgKdBtKvbn85Mg8Veij+0wLUCZSy+Pc7DawXoE9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256414; c=relaxed/simple;
-	bh=HW32jj5UeL4UmQZ+o8fVbf0mhkem6LSOCf6RXRi7gKM=;
+	s=arc-20240116; t=1792256417; c=relaxed/simple;
+	bh=i/ug4V3bZ6NGQOiycgXAdAiwwD7NeGJlWsIX8P87l5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGVvoUPUHmD/WZjLSdNefmnc+0Y6qg6wppTB5Nrn+zzQUMt+5efsXC5IYbg7vT9Oue42o7jfZvyYWMQrE1rNLGPumrhfHvkBdoUcnPdwkLKTh5rlIBnnnTWXFYvF1y7ci0max8w5g50CBFIcDwgTAahrTWR3e1f0J5v7ltwHrqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEaFboiz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFlfWzkFQ4qYtiEgiLFor5AZQYn480f6YFUqKjux5Pk1DQMhrpEsg1dYw3PXF2aM+BX/Lr3E26xcWALu7Mu6SDF9D8f9rHcAc2W6x1fhWAI2ICoi4EzQdpSiHvydB962V8l62JPwncWra8ECCNdu9w2+Vz0vp7mYqPGhfKf6hw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZeF/m44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEaFboiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22DA1F000C4;
-	Sat, 17 Oct 2026 17:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZeF/m44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87A91F000C4;
+	Sat, 17 Oct 2026 17:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256413;
-	bh=BPVSrBH+TEi6t2J6mz4kmKWvzYtcykUMSc/plH8NaW0=;
+	s=korg; t=1792256416;
+	bh=WpQk9G45N70Y+dQshn6g6pELsQuIoGZFPxacehP6Uok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hEaFboizz2Q5Lt+AEiZ3HpSXHesPn0LEKEOvUNgym4TaWzhckZ04H6RDwZ1nAddZo
-	 a3OVWsh5RnMK0k0MtZ9p/2disp3kabngpEfJfzBb+WAqEhrR0xBaeRvS4TnVG8Vldp
-	 x/LYw0GHHxKCACY665m7Tu7XelctN1vCNld/rnFU=
+	b=KZeF/m44DtHkLkO+lhSa7dBBI/NjS0XM2PkZOf0pgL2ajg12GGHgETuM/pxGUaygv
+	 NzP7Vd2c+lrEtxUGbKsQRM+/+oOKj+Bg/kp6ryJjH5oXCtim8+KgHhhJn+l6tZlbdb
+	 RSywaBAAMu2qs7a8RRe+QuORMXsDqzfK5in6BVLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Freimanis <quentin@q-lab.dev>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0228/1674] net: sparx5: make ports inherit the switch base mac address type
-Date: Sat, 17 Oct 2026 17:41:40 +0200
-Message-ID: <20261017160436.992936841@linuxfoundation.org>
+Subject: [PATCH 6.6 0229/1674] net: add and use skb_get_hash_net
+Date: Sat, 17 Oct 2026 17:41:41 +0200
+Message-ID: <20261017160437.018326944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,74 +54,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Freimanis <quentin@q-lab.dev>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 5642b1648d5c4561d8ed7a410d0a7017f706604d ]
+[ Upstream commit b975d3ee5962237c1e2f5d5aeeaaf0dc2173486c ]
 
-When the switch uses a random base MAC address it does not mark each
-port's address as random:
+Years ago flow dissector gained ability to delegate flow dissection
+to a bpf program, scoped per netns.
 
-  $ dmesg | grep "MAC addr"
-  sparx5-switch e00c0000.switch: MAC addr was not set, use random MAC
-  $ cat /sys/class/net/eth0/addr_assign_type
-  0
+Unfortunately, skb_get_hash() only gets an sk_buff argument instead
+of both net+skb.  This means the flow dissector needs to obtain the
+netns pointer from somewhere else.
 
-0 is NET_ADDR_PERM, so userspace thinks this is a stable address.
+The netns is derived from skb->dev, and if that is not available, from
+skb->sk.  If neither is set, we hit a (benign) WARN_ON_ONCE().
 
-With a random MAC reported as NET_ADDR_PERM, systemd's
-MACAddressPolicy=persistent [1] leaves it unchanged, so a DHCP client
-gets a new IP address every boot and a static reservation can't be used.
-Reporting it as NET_ADDR_RANDOM makes systemd replace it with a stable
-address derived from the interface name and machine-id.
+Trying both dev and sk covers most cases, but not all, as recently
+reported by Christoph Paasch.
 
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Quentin Freimanis <quentin@q-lab.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260928045012.30178-1-quentin@q-lab.dev
+In case of nf-generated tcp reset, both sk and dev are NULL:
+
+WARNING: .. net/core/flow_dissector.c:1104
+ skb_flow_dissect_flow_keys include/linux/skbuff.h:1536 [inline]
+ skb_get_hash include/linux/skbuff.h:1578 [inline]
+ nft_trace_init+0x7d/0x120 net/netfilter/nf_tables_trace.c:320
+ nft_do_chain+0xb26/0xb90 net/netfilter/nf_tables_core.c:268
+ nft_do_chain_ipv4+0x7a/0xa0 net/netfilter/nft_chain_filter.c:23
+ nf_hook_slow+0x57/0x160 net/netfilter/core.c:626
+ __ip_local_out+0x21d/0x260 net/ipv4/ip_output.c:118
+ ip_local_out+0x26/0x1e0 net/ipv4/ip_output.c:127
+ nf_send_reset+0x58c/0x700 net/ipv4/netfilter/nf_reject_ipv4.c:308
+ nft_reject_ipv4_eval+0x53/0x90 net/ipv4/netfilter/nft_reject_ipv4.c:30
+ [..]
+
+syzkaller did something like this:
+table inet filter {
+  chain input {
+    type filter hook input priority filter; policy accept;
+    meta nftrace set 1
+    tcp dport 42 reject with tcp reset
+   }
+   chain output {
+    type filter hook output priority filter; policy accept;
+    # empty chain is enough
+   }
+}
+
+... then sends a tcp packet to port 42.
+
+Initial attempt to simply set skb->dev from nf_reject_ipv4 doesn't cover
+all cases: skbs generated via ipv4 igmp_send_report trigger similar splat.
+
+Moreover, Pablo Neira found that nft_hash.c uses __skb_get_hash_symmetric()
+which would trigger same warn splat for such skbs.
+
+Lets allow callers to pass the current netns explicitly.
+The nf_trace infrastructure is adjusted to use the new helper.
+
+__skb_get_hash_symmetric is handled in the next patch.
+
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/494
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240608221057.16070-2-fw@strlen.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8ec454dcd00c ("ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
- drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 1 +
- 3 files changed, 3 insertions(+)
+ include/linux/skbuff.h          | 12 ++++++++++--
+ net/core/flow_dissector.c       | 15 +++++++++++----
+ net/netfilter/nf_tables_trace.c |  2 +-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 98bee953234ba..524601201b6f3 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -843,6 +843,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
- 		dev_info(sparx5->dev, "MAC addr was not set, use random MAC\n");
- 		eth_random_addr(sparx5->base_mac);
- 		sparx5->base_mac[5] = 0;
-+		sparx5->base_mac_assign_type = NET_ADDR_RANDOM;
- 	}
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 60462d64c6e0e..171775202bd93 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1500,7 +1500,7 @@ __skb_set_sw_hash(struct sk_buff *skb, __u32 hash, bool is_l4)
+ 	__skb_set_hash(skb, hash, true, is_l4);
+ }
  
- 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index 316fed5f27355..40a3e9c62cfdc 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -257,6 +257,7 @@ struct sparx5 {
- 	struct notifier_block switchdev_blocking_nb;
- 	/* Switch state */
- 	u8 base_mac[ETH_ALEN];
-+	u8 base_mac_assign_type;
- 	/* Associated bridge device (when bridged) */
- 	struct net_device *hw_bridge_dev;
- 	/* Bridged interfaces */
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-index 705a004b324fd..62025aba558cd 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-@@ -281,6 +281,7 @@ struct net_device *sparx5_create_netdev(struct sparx5 *sparx5, u32 portno)
- 	ndev->ethtool_ops = &sparx5_ethtool_ops;
+-void __skb_get_hash(struct sk_buff *skb);
++void __skb_get_hash_net(const struct net *net, struct sk_buff *skb);
+ u32 __skb_get_hash_symmetric(const struct sk_buff *skb);
+ u32 skb_get_poff(const struct sk_buff *skb);
+ u32 __skb_get_poff(const struct sk_buff *skb, const void *data,
+@@ -1580,10 +1580,18 @@ void skb_flow_dissect_hash(const struct sk_buff *skb,
+ 			   struct flow_dissector *flow_dissector,
+ 			   void *target_container);
  
- 	eth_hw_addr_gen(ndev, sparx5->base_mac, portno + 1);
-+	ndev->addr_assign_type = sparx5->base_mac_assign_type;
++static inline __u32 skb_get_hash_net(const struct net *net, struct sk_buff *skb)
++{
++	if (!skb->l4_hash && !skb->sw_hash)
++		__skb_get_hash_net(net, skb);
++
++	return skb->hash;
++}
++
+ static inline __u32 skb_get_hash(struct sk_buff *skb)
+ {
+ 	if (!skb->l4_hash && !skb->sw_hash)
+-		__skb_get_hash(skb);
++		__skb_get_hash_net(NULL, skb);
  
- 	return ndev;
+ 	return skb->hash;
+ }
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 5ac4cd4f3c683..00364d07ff6b1 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1853,7 +1853,8 @@ u32 __skb_get_hash_symmetric(const struct sk_buff *skb)
+ EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
+ 
+ /**
+- * __skb_get_hash: calculate a flow hash
++ * __skb_get_hash_net: calculate a flow hash
++ * @net: associated network namespace, derived from @skb if NULL
+  * @skb: sk_buff to calculate flow hash from
+  *
+  * This function calculates a flow hash based on src/dst addresses
+@@ -1861,18 +1862,24 @@ EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
+  * on success, zero indicates no valid hash.  Also, sets l4_hash in skb
+  * if hash is a canonical 4-tuple hash over transport ports.
+  */
+-void __skb_get_hash(struct sk_buff *skb)
++void __skb_get_hash_net(const struct net *net, struct sk_buff *skb)
+ {
+ 	struct flow_keys keys;
+ 	u32 hash;
+ 
++	memset(&keys, 0, sizeof(keys));
++
++	__skb_flow_dissect(net, skb, &flow_keys_dissector,
++			   &keys, NULL, 0, 0, 0,
++			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
++
+ 	__flow_hash_secret_init();
+ 
+-	hash = ___skb_get_hash(skb, &keys, &hashrnd);
++	hash = __flow_hash_from_keys(&keys, &hashrnd);
+ 
+ 	__skb_set_sw_hash(skb, hash, flow_keys_have_l4(&keys));
+ }
+-EXPORT_SYMBOL(__skb_get_hash);
++EXPORT_SYMBOL(__skb_get_hash_net);
+ 
+ __u32 skb_get_hash_perturb(const struct sk_buff *skb,
+ 			   const siphash_key_t *perturb)
+diff --git a/net/netfilter/nf_tables_trace.c b/net/netfilter/nf_tables_trace.c
+index 6d41c0bd3d787..6eedb84b552e5 100644
+--- a/net/netfilter/nf_tables_trace.c
++++ b/net/netfilter/nf_tables_trace.c
+@@ -313,7 +313,7 @@ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
+ 	net_get_random_once(&trace_key, sizeof(trace_key));
+ 
+ 	info->skbid = (u32)siphash_3u32(hash32_ptr(skb),
+-					skb_get_hash(skb),
++					skb_get_hash_net(nft_net(pkt), skb),
+ 					skb->skb_iif,
+ 					&trace_key);
  }
 -- 
 2.53.0
