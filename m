@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004E93AEF3F;
-	Sat, 17 Oct 2026 17:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC63BAD9A;
+	Sat, 17 Oct 2026 17:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257921; cv=none; b=XtSyfBaz7XOL0eIM8Y1lvE/KMVBWXRggJx0/EplMU5c5BM+raOB0FFvibs3T/6XCo3wpW/1u/UsVWm0Jjx3j+HQBe3PSineyZkzKed98m6w7pd4kTLuyBwSACebcssjE7SkcgMSdZX837e3uwTgWlTJjn4rvL9mQuwejOE+5nqw=
+	t=1792257924; cv=none; b=ZYyOPbW/ka/wQ6zhgfowqHC93GAyKhqnrRD7n71oZcBWPfRGry5WLzIAr0LjgHjkqXyi9S4ta7TIz5KwowtxyC3EE01JOy0J5SbRrQoPIYN5moc6tZNXpO9XpjDtnyGfAzOnUEs9TBqY+YoxG2kazflnYqzdN6LvmVD1G3KRXoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257921; c=relaxed/simple;
-	bh=zEdNcuHAeKUVsYTUldiP4huvZyan8HEVjnxfN3I2CNI=;
+	s=arc-20240116; t=1792257924; c=relaxed/simple;
+	bh=ks8yyPew0oB58o2/HGy85W3hBa8nPuST7Twi0vTQ/A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSedDWjEJdGFezZpxt0sv1uj1Ti/xCQhsFJyjrM2iMTVGj9eSEmmzIBvFP+KR9y/NaiF3XtF4hmE3o+pqXc/GSYeDhGg+QJvG2Nscf8JymEt2DmKBCBKP/zZmc0npZsOEzpS2zfI0bcqfgukIbk3DxCE84umMJkUxMEWmtqFLBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDeXSxX8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fZBD+ewm4XrXnj2AIR46zRX9FVSwLnR8WNCbYi6kUkuni4JSPZ34vdn0LzPqQa4jkCYYlDOHd1grPsH/zAxrU9SrfypXlanUQAWcVcmzzfkIg0xMpUoU+NRN1P6BXQOZXMbbCIn9PJt4sWMyua5O6WP9QA8hm7J2zdHGvUYZjXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7ETXcfa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDeXSxX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F7F1F000C4;
-	Sat, 17 Oct 2026 17:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7ETXcfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C62A1F000C4;
+	Sat, 17 Oct 2026 17:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257919;
-	bh=lBMRSPZqsx6Clbv1L+1BooSwCOOuFPKV8GfwdL+KgZI=;
+	s=korg; t=1792257922;
+	bh=uCWOisVprwlkV1Nde8g3Ds9CYVeCX5odVpE6+iX2qcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDeXSxX8ypqAVUt5TLO8+ycrYt+QvfexAEw/QgJfX5EJ9eGEjPnHhrW6O7Aug+MPA
-	 Qccc8uOWHh5Dfc7r23hwY9t+lNv1kohyrj2SvcAwxcbkHIQHwH5YhiJJ6cjdsRJXB8
-	 EmogxBbwP28el7R134W4ZhYQUBf9CYlviUohkwG4=
+	b=D7ETXcfa4Mev29C9Gg2Scd82T0b5UJx2yvyzOv3E/osCKUeCYFpdmeVvT5f3HY9PN
+	 vVNwPXvefR2wAR9SnOZCNJGSnKR2aZb7yVH0E9ZXyTKS5lylD0jcBgzUU47UB6+Q3N
+	 fQ4kftY3YqUPwBg0e1yQ0k5q0756MYXIfhM1Vdh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	P Praneesh <quic_ppranees@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0714/1674] wifi: ath12k: Avoid explicit type cast in monitor status parse handler
-Date: Sat, 17 Oct 2026 17:49:46 +0200
-Message-ID: <20261017160449.435182976@linuxfoundation.org>
+Subject: [PATCH 6.6 0715/1674] wifi: ath12k: Avoid memory leak while enabling statistics
+Date: Sat, 17 Oct 2026 17:49:47 +0200
+Message-ID: <20261017160449.460838325@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,408 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 8534c42397ed8f05257dbddcd305a351ad40add1 ]
+[ Upstream commit ecfc131389923405be8e7a6f4408fd9321e4d19b ]
 
-Currently, monitor status parse procedure handles all the supported TLV
-tags. Each TLV tag has its own data structure for parsing. Now, this
-handler is passed the tlv_data as a u8 pointer, so explicit type cast
-conversion happens for every TLV tag parsing. Therefore, avoid the
-explicit type conversion by changing the tlv_data type from a u8 pointer
-to a const void pointer.
+Driver uses monitor destination rings for extended statistics mode and
+standalone monitor mode. In extended statistics mode, TLVs are parsed from
+the buffer received from the monitor destination ring and assigned to the
+ppdu_info structure to update per-packet statistics. In standalone monitor
+mode, along with per-packet statistics, the packet data (payload) is
+captured, and the driver updates per MSDU to mac80211.
+
+When the AP interface is enabled, only extended statistics mode is
+activated. As part of enabling monitor rings for collecting statistics,
+the driver subscribes to HAL_RX_MPDU_START TLV in the filter
+configuration. This TLV is received from the monitor destination ring, and
+kzalloc for the mon_mpdu object occurs, which is not freed, leading to a
+memory leak. The kzalloc for the mon_mpdu object is only required while
+enabling the standalone monitor interface. This causes a memory leak while
+enabling extended statistics mode in the driver.
+
+Fix this memory leak by removing the kzalloc for the mon_mpdu object in
+the HAL_RX_MPDU_START TLV handling. Additionally, remove the standalone
+monitor mode handlings in the HAL_MON_BUF_ADDR and HAL_RX_MSDU_END TLVs.
+These TLV tags will be handled properly when enabling standalone monitor
+mode in the future.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241217084511.2981515-9-quic_periyasa@quicinc.com
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-13-quic_ppranees@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 126 +++++++++--------------
- 1 file changed, 47 insertions(+), 79 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 64 ++++--------------------
+ drivers/net/wireless/ath/ath12k/hal_rx.h |  3 ++
+ 2 files changed, 12 insertions(+), 55 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 650266d206671..90fc77250581c 100644
+index 90fc77250581c..0116fa963a36a 100644
 --- a/drivers/net/wireless/ath/ath12k/dp_mon.c
 +++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -10,11 +10,10 @@
- #include "dp_tx.h"
- #include "peer.h"
- 
--static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
--					       struct hal_rx_user_status *rx_user_status)
-+static void
-+ath12k_dp_mon_rx_handle_ofdma_info(const struct hal_rx_ppdu_end_user_stats *ppdu_end_user,
-+				   struct hal_rx_user_status *rx_user_status)
- {
--	struct hal_rx_ppdu_end_user_stats *ppdu_end_user = rx_tlv;
--
- 	rx_user_status->ul_ofdma_user_v0_word0 =
- 		__le32_to_cpu(ppdu_end_user->usr_resp_ref);
- 	rx_user_status->ul_ofdma_user_v0_word1 =
-@@ -38,7 +37,7 @@ ath12k_dp_mon_rx_populate_byte_count(const struct hal_rx_ppdu_end_user_stats *st
- }
- 
- static void
--ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
-+ath12k_dp_mon_rx_populate_mu_user_info(const struct hal_rx_ppdu_end_user_stats *rx_tlv,
- 				       struct hal_rx_mon_ppdu_info *ppdu_info,
- 				       struct hal_rx_user_status *rx_user_status)
- {
-@@ -76,11 +75,9 @@ ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
- 	ath12k_dp_mon_rx_populate_byte_count(rx_tlv, ppdu_info, rx_user_status);
- }
- 
--static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_vht_sig_a(const struct hal_rx_vht_sig_a_info *vht_sig,
- 					  struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_vht_sig_a_info *vht_sig =
--			(struct hal_rx_vht_sig_a_info *)tlv_data;
- 	u32 nsts, group_id, info0, info1;
- 	u8 gi_setting;
- 
-@@ -122,11 +119,9 @@ static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
- 		u32_get_bits(info1, HAL_RX_VHT_SIG_A_INFO_INFO1_SU_MU_CODING);
- }
- 
--static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_ht_sig(const struct hal_rx_ht_sig_info *ht_sig,
- 				       struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_ht_sig_info *ht_sig =
--			(struct hal_rx_ht_sig_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(ht_sig->info0);
- 	u32 info1 = __le32_to_cpu(ht_sig->info1);
- 
-@@ -139,11 +134,9 @@ static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_l_sig_b(const struct hal_rx_lsig_b_info *lsigb,
- 					struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_lsig_b_info *lsigb =
--			(struct hal_rx_lsig_b_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(lsigb->info0);
- 	u8 rate;
- 
-@@ -173,11 +166,9 @@ static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_l_sig_a(const struct hal_rx_lsig_a_info *lsiga,
- 					struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_lsig_a_info *lsiga =
--			(struct hal_rx_lsig_a_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(lsiga->info0);
- 	u8 rate;
- 
-@@ -215,14 +206,13 @@ static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
--						struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b2_ofdma(const struct hal_rx_he_sig_b2_ofdma_info *ofdma,
-+				    struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b2_ofdma_info *he_sig_b2_ofdma =
--			(struct hal_rx_he_sig_b2_ofdma_info *)tlv_data;
- 	u32 info0, value;
- 
--	info0 = __le32_to_cpu(he_sig_b2_ofdma->info0);
-+	info0 = __le32_to_cpu(ofdma->info0);
- 
- 	ppdu_info->he_data1 |= HE_MCS_KNOWN | HE_DCM_KNOWN | HE_CODING_KNOWN;
- 
-@@ -253,11 +243,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_OFDMA;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
--					     struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b2_mu(const struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu,
-+				 struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu =
--			(struct hal_rx_he_sig_b2_mu_info *)tlv_data;
- 	u32 info0, value;
- 
- 	info0 = __le32_to_cpu(he_sig_b2_mu->info0);
-@@ -280,11 +269,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
- 	ppdu_info->nss = u32_get_bits(info0, HAL_RX_HE_SIG_B2_MU_INFO_INFO0_STA_NSTS);
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
--					     struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b1_mu(const struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu,
-+				 struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu =
--			(struct hal_rx_he_sig_b1_mu_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(he_sig_b1_mu->info0);
- 	u16 ru_tones;
- 
-@@ -295,11 +283,10 @@ static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
--					  struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_mu(const struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl,
-+			      struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl =
--			(struct hal_rx_he_sig_a_mu_dl_info *)tlv_data;
- 	u32 info0, info1, value;
- 	u16 he_gi = 0, he_ltf = 0;
- 
-@@ -430,11 +417,9 @@ static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_he_sig_su(const struct hal_rx_he_sig_a_su_info *he_sig_a,
- 					  struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_a_su_info *he_sig_a =
--			(struct hal_rx_he_sig_a_su_info *)tlv_data;
- 	u32 info0, info1, value;
- 	u32 dcm;
- 	u8 he_dcm = 0, he_stbc = 0;
-@@ -583,15 +568,15 @@ static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
- static enum hal_rx_mon_status
- ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 				  struct ath12k_mon_data *pmon,
--				  u32 tlv_tag, u8 *tlv_data, u32 userid)
-+				  u32 tlv_tag, const void *tlv_data,
-+				  u32 userid)
- {
- 	struct hal_rx_mon_ppdu_info *ppdu_info = &pmon->mon_ppdu_info;
- 	u32 info[7];
- 
- 	switch (tlv_tag) {
- 	case HAL_RX_PPDU_START: {
--		struct hal_rx_ppdu_start *ppdu_start =
--			(struct hal_rx_ppdu_start *)tlv_data;
-+		const struct hal_rx_ppdu_start *ppdu_start = tlv_data;
- 
- 		info[0] = __le32_to_cpu(ppdu_start->info0);
- 
-@@ -610,8 +595,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_PPDU_END_USER_STATS: {
--		struct hal_rx_ppdu_end_user_stats *eu_stats =
--			(struct hal_rx_ppdu_end_user_stats *)tlv_data;
-+		const struct hal_rx_ppdu_end_user_stats *eu_stats = tlv_data;
- 		u32 tid_bitmap;
- 
- 		info[0] = __le32_to_cpu(eu_stats->info0);
-@@ -668,8 +652,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 				&ppdu_info->userstats[userid];
- 			ppdu_info->num_users += 1;
- 
--			ath12k_dp_mon_rx_handle_ofdma_info(tlv_data, rxuser_stats);
--			ath12k_dp_mon_rx_populate_mu_user_info(tlv_data, ppdu_info,
-+			ath12k_dp_mon_rx_handle_ofdma_info(eu_stats, rxuser_stats);
-+			ath12k_dp_mon_rx_populate_mu_user_info(eu_stats, ppdu_info,
- 							       rxuser_stats);
- 		}
- 		ppdu_info->mpdu_fcs_ok_bitmap[0] = __le32_to_cpu(eu_stats->rsvd1[0]);
-@@ -677,8 +661,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_PPDU_END_USER_STATS_EXT: {
--		struct hal_rx_ppdu_end_user_stats_ext *eu_stats =
--			(struct hal_rx_ppdu_end_user_stats_ext *)tlv_data;
-+		const struct hal_rx_ppdu_end_user_stats_ext *eu_stats = tlv_data;
-+
- 		ppdu_info->mpdu_fcs_ok_bitmap[2] = __le32_to_cpu(eu_stats->info1);
- 		ppdu_info->mpdu_fcs_ok_bitmap[3] = __le32_to_cpu(eu_stats->info2);
- 		ppdu_info->mpdu_fcs_ok_bitmap[4] = __le32_to_cpu(eu_stats->info3);
-@@ -724,8 +708,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 
- 	case HAL_PHYRX_RSSI_LEGACY: {
--		struct hal_rx_phyrx_rssi_legacy_info *rssi =
--			(struct hal_rx_phyrx_rssi_legacy_info *)tlv_data;
-+		const struct hal_rx_phyrx_rssi_legacy_info *rssi = tlv_data;
- 
- 		info[0] = __le32_to_cpu(rssi->info0);
- 		info[1] = __le32_to_cpu(rssi->info1);
-@@ -743,8 +726,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RXPCU_PPDU_END_INFO: {
--		struct hal_rx_ppdu_end_duration *ppdu_rx_duration =
--			(struct hal_rx_ppdu_end_duration *)tlv_data;
-+		const struct hal_rx_ppdu_end_duration *ppdu_rx_duration = tlv_data;
- 
- 		info[0] = __le32_to_cpu(ppdu_rx_duration->info0);
- 		ppdu_info->rx_duration =
-@@ -755,8 +737,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
+@@ -738,7 +738,6 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
  	}
  	case HAL_RX_MPDU_START: {
--		struct hal_rx_mpdu_start *mpdu_start =
--			(struct hal_rx_mpdu_start *)tlv_data;
-+		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
- 		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
+ 		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
+-		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
  		u16 peer_id;
  
-@@ -785,8 +766,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	case HAL_MON_BUF_ADDR: {
- 		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
--		struct dp_mon_packet_info *packet_info =
--			(struct dp_mon_packet_info *)tlv_data;
-+		const struct dp_mon_packet_info *packet_info = tlv_data;
- 		int buf_id = u32_get_bits(packet_info->cookie,
- 					  DP_RXDMA_BUF_COOKIE_BUF_ID);
- 		struct sk_buff *msdu;
-@@ -818,8 +798,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		info[1] = __le32_to_cpu(mpdu_start->info1);
+@@ -755,65 +754,17 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO1_PEERID);
+ 		}
+ 
+-		mon_mpdu = kzalloc(sizeof(*mon_mpdu), GFP_ATOMIC);
+-		if (!mon_mpdu)
+-			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
+-
  		break;
  	}
- 	case HAL_RX_MSDU_END: {
--		struct rx_msdu_end_qcn9274 *msdu_end =
--			(struct rx_msdu_end_qcn9274 *)tlv_data;
-+		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
- 		bool is_first_msdu_in_mpdu;
- 		u16 msdu_end_info;
- 
-@@ -1583,7 +1562,7 @@ ath12k_dp_mon_tx_gen_prot_frame(struct dp_mon_tx_ppdu_info *tx_ppdu_info)
- static enum dp_mon_tx_tlv_status
- ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 				  struct ath12k_mon_data *pmon,
--				  u16 tlv_tag, u8 *tlv_data, u32 userid)
-+				  u16 tlv_tag, const void *tlv_data, u32 userid)
- {
- 	struct dp_mon_tx_ppdu_info *tx_ppdu_info;
- 	enum dp_mon_tx_tlv_status status = DP_MON_TX_STATUS_PPDU_NOT_DONE;
-@@ -1593,8 +1572,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 
- 	switch (tlv_tag) {
- 	case HAL_TX_FES_SETUP: {
--		struct hal_tx_fes_setup *tx_fes_setup =
--					(struct hal_tx_fes_setup *)tlv_data;
-+		const struct hal_tx_fes_setup *tx_fes_setup = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_setup->info0);
- 		tx_ppdu_info->ppdu_id = __le32_to_cpu(tx_fes_setup->schedule_id);
-@@ -1605,8 +1583,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_END: {
--		struct hal_tx_fes_status_end *tx_fes_status_end =
--			(struct hal_tx_fes_status_end *)tlv_data;
-+		const struct hal_tx_fes_status_end *tx_fes_status_end = tlv_data;
- 		u32 tst_15_0, tst_31_16;
- 
- 		info[0] = __le32_to_cpu(tx_fes_status_end->info0);
-@@ -1623,8 +1600,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_RX_RESPONSE_REQUIRED_INFO: {
--		struct hal_rx_resp_req_info *rx_resp_req_info =
--			(struct hal_rx_resp_req_info *)tlv_data;
-+		const struct hal_rx_resp_req_info *rx_resp_req_info = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
- 
-@@ -1669,8 +1645,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_PCU_PPDU_SETUP_INIT: {
--		struct hal_tx_pcu_ppdu_setup_init *ppdu_setup =
--			(struct hal_tx_pcu_ppdu_setup_init *)tlv_data;
-+		const struct hal_tx_pcu_ppdu_setup_init *ppdu_setup = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
- 
-@@ -1716,8 +1691,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_QUEUE_EXTENSION: {
--		struct hal_tx_queue_exten *tx_q_exten =
--			(struct hal_tx_queue_exten *)tlv_data;
-+		const struct hal_tx_queue_exten *tx_q_exten = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_q_exten->info0);
- 
-@@ -1729,8 +1703,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_START: {
--		struct hal_tx_fes_status_start *tx_fes_start =
--			(struct hal_tx_fes_status_start *)tlv_data;
-+		const struct hal_tx_fes_status_start *tx_fes_start = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_start->info0);
- 
-@@ -1741,8 +1714,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_PROT: {
--		struct hal_tx_fes_status_prot *tx_fes_status =
--			(struct hal_tx_fes_status_prot *)tlv_data;
-+		const struct hal_tx_fes_status_prot *tx_fes_status = tlv_data;
- 		u32 start_timestamp;
- 		u32 end_timestamp;
- 
-@@ -1769,8 +1741,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 
- 	case HAL_TX_FES_STATUS_START_PPDU:
- 	case HAL_TX_FES_STATUS_START_PROT: {
--		struct hal_tx_fes_status_start_prot *tx_fes_stat_start =
--			(struct hal_tx_fes_status_start_prot *)tlv_data;
-+		const struct hal_tx_fes_status_start_prot *tx_fes_stat_start = tlv_data;
- 		u64 ppdu_ts;
- 
- 		info[0] = __le32_to_cpu(tx_fes_stat_start->info0);
-@@ -1785,8 +1756,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_USER_PPDU: {
--		struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu =
--			(struct hal_tx_fes_status_user_ppdu *)tlv_data;
-+		const struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_usr_ppdu->info0);
- 
-@@ -1829,8 +1799,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
+ 	case HAL_RX_MSDU_START:
+ 		/* TODO: add msdu start parsing logic */
  		break;
+-	case HAL_MON_BUF_ADDR: {
+-		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
+-		const struct dp_mon_packet_info *packet_info = tlv_data;
+-		int buf_id = u32_get_bits(packet_info->cookie,
+-					  DP_RXDMA_BUF_COOKIE_BUF_ID);
+-		struct sk_buff *msdu;
+-		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
+-		struct ath12k_skb_rxcb *rxcb;
+-
+-		spin_lock_bh(&buf_ring->idr_lock);
+-		msdu = idr_remove(&buf_ring->bufs_idr, buf_id);
+-		spin_unlock_bh(&buf_ring->idr_lock);
+-
+-		if (unlikely(!msdu)) {
+-			ath12k_warn(ab, "monitor destination with invalid buf_id %d\n",
+-				    buf_id);
+-			return HAL_RX_MON_STATUS_PPDU_NOT_DONE;
+-		}
+-
+-		rxcb = ATH12K_SKB_RXCB(msdu);
+-		dma_unmap_single(ab->dev, rxcb->paddr,
+-				 msdu->len + skb_tailroom(msdu),
+-				 DMA_FROM_DEVICE);
+-
+-		if (mon_mpdu->tail)
+-			mon_mpdu->tail->next = msdu;
+-		else
+-			mon_mpdu->tail = msdu;
+-
+-		ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
+-
+-		break;
+-	}
+-	case HAL_RX_MSDU_END: {
+-		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
+-		bool is_first_msdu_in_mpdu;
+-		u16 msdu_end_info;
+-
+-		msdu_end_info = __le16_to_cpu(msdu_end->info5);
+-		is_first_msdu_in_mpdu = u32_get_bits(msdu_end_info,
+-						     RX_MSDU_END_INFO5_FIRST_MSDU);
+-		if (is_first_msdu_in_mpdu) {
+-			pmon->mon_mpdu->head = pmon->mon_mpdu->tail;
+-			pmon->mon_mpdu->tail = NULL;
+-		}
+-		break;
+-	}
++	case HAL_MON_BUF_ADDR:
++		return HAL_RX_MON_STATUS_BUF_ADDR;
++	case HAL_RX_MSDU_END:
++		return HAL_RX_MON_STATUS_MSDU_END;
+ 	case HAL_RX_MPDU_END:
+-		list_add_tail(&pmon->mon_mpdu->list, &pmon->dp_rx_mon_mpdu_list);
+-		break;
++		return HAL_RX_MON_STATUS_MPDU_END;
+ 	case HAL_DUMMY:
+ 		return HAL_RX_MON_STATUS_BUF_DONE;
+ 	case HAL_RX_PPDU_END_STATUS_DONE:
+@@ -1190,7 +1141,10 @@ ath12k_dp_mon_parse_rx_dest(struct ath12k_base *ab, struct ath12k_mon_data *pmon
+ 		if ((ptr - skb->data) >= DP_RX_BUFFER_SIZE)
+ 			break;
  
- 	case HAL_RX_FRAME_BITMAP_ACK: {
--		struct hal_rx_frame_bitmap_ack *fbm_ack =
--			(struct hal_rx_frame_bitmap_ack *)tlv_data;
-+		const struct hal_rx_frame_bitmap_ack *fbm_ack = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
+-	} while (hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE);
++	} while ((hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE) ||
++		 (hal_status == HAL_RX_MON_STATUS_BUF_ADDR) ||
++		 (hal_status == HAL_RX_MON_STATUS_MPDU_END) ||
++		 (hal_status == HAL_RX_MON_STATUS_MSDU_END));
  
-@@ -1848,8 +1817,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
+ 	return hal_status;
+ }
+diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
+index e9dd121aa4459..e99aa5b4b6526 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_rx.h
++++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
+@@ -107,6 +107,9 @@ enum hal_rx_mon_status {
+ 	HAL_RX_MON_STATUS_PPDU_NOT_DONE,
+ 	HAL_RX_MON_STATUS_PPDU_DONE,
+ 	HAL_RX_MON_STATUS_BUF_DONE,
++	HAL_RX_MON_STATUS_BUF_ADDR,
++	HAL_RX_MON_STATUS_MPDU_END,
++	HAL_RX_MON_STATUS_MSDU_END,
+ };
  
- 	case HAL_MACTX_PHY_DESC: {
--		struct hal_tx_phy_desc *tx_phy_desc =
--			(struct hal_tx_phy_desc *)tlv_data;
-+		const struct hal_tx_phy_desc *tx_phy_desc = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_phy_desc->info0);
- 		info[1] = __le32_to_cpu(tx_phy_desc->info1);
+ #define HAL_RX_MAX_MPDU		256
 -- 
 2.53.0
 
