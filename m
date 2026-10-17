@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3156F3905EB;
-	Sat, 17 Oct 2026 16:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516987404E;
+	Sat, 17 Oct 2026 16:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254813; cv=none; b=ZopvGEvcpk6WIxsiByANomPTwaf9hVaW+2YdmIg5b6TvvOB5cjYdbX60Cje9TNbkcSyPWE0byz5EIQEmBKsnvQHnmDOR4idjb+YtmTNtwltJs6IHaZMyioXR0NWCJypy22msLnxruWxedFZD82J3h80+DMkqCDsnw9Ogj1SEp/8=
+	t=1792254816; cv=none; b=K+lRsNsAkELF+H7viSsgnlsGQPJXJoS7zMSe80oaS08IE7LL7Qt6z51AcEwPLvm5L8NQAk8yrGcSUu7n8Xj1yD7mP7H8U3FLYDwasNyFnRHidSkdUAIwYvC/S6xycvybcF1FmD5Kwl+gosj9lJyygPD29c6FToDs7OdGA1guQuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254813; c=relaxed/simple;
-	bh=1e5/BeL9WVU1+Qsa6+VsZ55Bm0KqbRcIJ+lt+UCT5j0=;
+	s=arc-20240116; t=1792254816; c=relaxed/simple;
+	bh=dkEiIWkNlMG0iMCsneqpGFyHEdJDXM2zza5sFMjaa70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYW/Ko6bDtVz/gaX7KNuR/OPnlNb7c9EVbPQe0MlRYrjNYacu5TEphd5k4y0nRAN+uu3fY2AOHdXMwRaenaXc3qK7So2s6aGe5ukaOWYrL2sbKPPb7Ike8MNdF8MwQyd4tFwrFumdKDIpGeHvKVuqz840J82RKNNDV2XYTpoLoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAXbK06V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ARUC2lkYRKZP8l6iWjk8aGGcokuy/uDmp6SpQUPoSsEtn8i9uTFzOV3Bl/7KEaJJwspZ9+KZ9KoggJzeVS4kGlNfg6R/20FwxpyIVIyMhUpBGLJCCZA0kOY/Zvpx15kkQZEflP2SQFbLiaCjgnLmEQ4HqNRBzKrPGggAvDa9F18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8jd/6uE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAXbK06V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887D41F000C4;
-	Sat, 17 Oct 2026 16:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8jd/6uE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2121F000C4;
+	Sat, 17 Oct 2026 16:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254812;
-	bh=ZW7/lJaWP2887+F2ACFRrQAVnr/C1vGCaC1ZzUPOCuk=;
+	s=korg; t=1792254815;
+	bh=3thE/FtDnYH8CGtk7Kshc/d7K5FtlYheBEjKcqVcTQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sAXbK06VVeFGMr2JOBdUTor1kDLkMBm+S7ZXE+qzQU+QYrFiEAi6r8w5PIdygstxD
-	 qet1pSfjQ0+6mpuCvmq0jgDokk8ywFzDp2Q7IOgkEyKNFQT+oFvwVQ2pKjlGYVWK7k
-	 VlaCWFUJGzYJDNpXY02DbRXGAPeVFP959INOkxOA=
+	b=W8jd/6uEwcnxEAhXQnK4AtgtfNF3r8Ul4KsUPKg5G9BU99Kkf8XWRFFkMe8joOBKj
+	 Zq7ol0ptNReUTgcahIyIxkciGwCjHhaEyARChAhvv/ZuB0xlZ+DJ7HVdTVVbjvsXU0
+	 Z6L4VY5bZsvyeaS/3LUi1SPzj49QD9CTv182FuKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 571/869] ceph: cap delegated inode count in ceph_parse_deleg_inos()
-Date: Sat, 17 Oct 2026 17:56:52 +0200
-Message-ID: <20261017160051.708073358@linuxfoundation.org>
+Subject: [PATCH 6.12 572/869] ceph: fix UAF in check_new_map() on session freed during unlock
+Date: Sat, 17 Oct 2026 17:56:53 +0200
+Message-ID: <20261017160051.732896146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,219 +46,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 4bd3158bd62466d57ed72a3f7bc5f205fedd6919 ]
+[ Upstream commit ee611a7509554c4ca1f54f6aefe592fb1df7ea70 ]
 
-ceph_parse_deleg_inos() decodes interval sets of delegated inode numbers
-from an MDS create-with-delegation reply. For each set it reads a 64-bit
-start and a 64-bit len with ceph_decode_64_safe(), which only validates
-that the eight bytes are present in the message, not the value, and then
-loops over len while inserting entries into s_delegated_inos.
+check_new_map() iterates mdsc->sessions[] and for each active session
+drops mdsc->mutex to perform per-session operations.  The forced-close
+path (rank removed from map) correctly takes a reference on s via
+ceph_get_mds_session() before releasing mdsc->mutex, but three other
+paths do not:
 
-len is fully attacker controlled. A malicious or compromised MDS can send
-one huge interval, many intervals in one reply, duplicate intervals, or
-repeated replies that accumulate delegated inodes on the same session.
-The original code bounded none of these and could spin the insert loop or
-grow the xarray without limit.
+  Path A (address changed):  mutex_unlock → mutex_lock(&s->s_mutex)
+  Path B (reconnect):        mutex_unlock → send_mds_reconnect(mdsc, s)
+  Path C (active transition): mutex_unlock → mutex_lock(&s->s_mutex)
 
-Bound both dimensions with a single enforcement point. Track the number
-of delegated inodes held by each MDS session in an atomic counter and
-grow it only in ceph_insert_deleg_ino(), which uses atomic_add_unless()
-to refuse to push the count past CEPH_MAX_DELEG_INOS. Because that helper
-is the only place the counter grows, the per-session population can never
-exceed the cap, so no separate per-session pre-check is needed. The
-counter is decremented when async create consumes a delegated inode or
-when an insert fails, incremented when a delegated inode is restored,
-initialized with the session xarray, and reset when reconnect destroys
-the xarray.
+Without the extra reference, another thread can acquire mdsc->mutex
+during the unlock window, call __unregister_session() which drops the
+last reference on s, and free it.  The original thread then accesses
+freed memory via s->s_mutex.
 
-A per-session cap alone still lets one reply spin the insert loop on
-duplicate ranges without growing the counter, so also cap the aggregate
-interval length accepted from a single reply. Together these bound both
-the loop trip count per reply and the xarray population across replies.
+Fix by adding ceph_get_mds_session(s) before each mutex_unlock and
+ceph_put_mds_session(s) after the corresponding mutex_lock, matching
+the pattern already used in the forced-close path.
 
-The cap is a fixed, client-chosen constant rather than a value derived
-from the MDS. mds_client_prealloc_inos is a userspace MDS configuration
-option; it is never sent to the kernel client on the wire, and a
-server-supplied bound could not be trusted for a defensive limit in any
-case. The constant is set well above that option's documented default of
-1000 (a generous multiple), so legitimate refill behavior is unaffected
-while the CPU and xarray memory a malformed delegation stream can consume
-stays bounded.
+Race timeline (Path A):
 
-Impact: a malicious or compromised Ceph MDS can no longer make a client
-spin through an unbounded delegated-inode interval or grow one session's
-delegated-inode xarray without limit.
+  Thread A (check_new_map)             Thread B (another map update
+    holds mdsc->mutex                      or session teardown)
+  --------------------------           --------------------------
+  s = mdsc->sessions[i]
+  (refcount == 1, held only by
+   sessions[] array)
+
+  mutex_unlock(&mdsc->mutex)
+                               --->    acquires mdsc->mutex
+                                       __unregister_session(mdsc, s)
+                                         sessions[i] = NULL
+                                         ceph_put_mds_session(s)
+                                           refcount: 1 -> 0
+                                           kfree(s)  <--- freed!
+
+  mutex_lock(&s->s_mutex)
+  UAF on freed s->s_mutex
 
 Cc: stable@vger.kernel.org
-Fixes: d48464878708 ("ceph: decode interval_sets for delegated inos")
-Suggested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 59 +++++++++++++++++++++++++++++++++++++++-----
- fs/ceph/mds_client.h |  1 +
- fs/ceph/super.h      |  9 +++++++
- 3 files changed, 63 insertions(+), 6 deletions(-)
+ fs/ceph/mds_client.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index bc1d4386b349f..144483d932300 100644
+index 144483d932300..6694aac76a2dd 100644
 --- a/fs/ceph/mds_client.c
 +++ b/fs/ceph/mds_client.c
-@@ -574,10 +574,36 @@ static int parse_reply_info_filelock(void **p, void *end,
+@@ -5219,9 +5219,11 @@ static void check_new_map(struct ceph_mds_client *mdsc,
+ 			   ceph_mdsmap_get_addr(newmap, i),
+ 			   sizeof(struct ceph_entity_addr))) {
+ 			/* just close it */
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			mutex_lock(&s->s_mutex);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
+ 			ceph_con_close(&s->s_con);
+ 			mutex_unlock(&s->s_mutex);
+ 			s->s_state = CEPH_MDS_SESSION_RESTARTING;
+@@ -5236,6 +5238,7 @@ static void check_new_map(struct ceph_mds_client *mdsc,
+ 		    newstate >= CEPH_MDS_STATE_RECONNECT) {
+ 			int rc;
  
- #define DELEGATED_INO_AVAILABLE		xa_mk_value(1)
- 
-+static int ceph_insert_deleg_ino(struct ceph_mds_session *s, u64 ino)
-+{
-+	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	int err;
-+
-+	/*
-+	 * Cap how many delegated inodes a single session may hold. This is
-+	 * the only place that grows the count, so atomic_add_unless() bounds
-+	 * it at exactly CEPH_MAX_DELEG_INOS; s_num_deleg_inos can never exceed
-+	 * that.
-+	 */
-+	if (!atomic_add_unless(&s->s_num_deleg_inos, 1, CEPH_MAX_DELEG_INOS)) {
-+		pr_warn_ratelimited_client(cl,
-+			"MDS session already holds %d delegated inodes\n",
-+			CEPH_MAX_DELEG_INOS);
-+		return -EOVERFLOW;
-+	}
-+
-+	err = xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
-+			GFP_KERNEL);
-+	if (err)
-+		atomic_dec(&s->s_num_deleg_inos);
-+	return err;
-+}
-+
- static int ceph_parse_deleg_inos(void **p, void *end,
- 				 struct ceph_mds_session *s)
- {
- 	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	u64 msg_deleg_inos = 0;
- 	u32 sets;
- 
- 	ceph_decode_32_safe(p, end, sets, bad);
-@@ -595,16 +621,34 @@ static int ceph_parse_deleg_inos(void **p, void *end,
- 				start, len);
- 			continue;
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			clear_bit(i, targets);
+ 			rc = send_mds_reconnect(mdsc, s);
+@@ -5244,6 +5247,7 @@ static void check_new_map(struct ceph_mds_client *mdsc,
+ 					       "mds%d reconnect failed: %d\n",
+ 					       i, rc);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
  		}
-+
-+		/*
-+		 * Bound the number of inodes one reply may delegate.
-+		 * ceph_insert_deleg_ino() separately caps the per-session
-+		 * population, so this only has to stop one reply from spinning
-+		 * the insert loop under an attacker-controlled len.
-+		 */
-+		if (len > (u64)CEPH_MAX_DELEG_INOS ||
-+		    msg_deleg_inos > (u64)CEPH_MAX_DELEG_INOS - len) {
-+			pr_warn_ratelimited_client(cl,
-+				"MDS reply delegates too many inodes (have %llu, +%llu, max %d)\n",
-+				msg_deleg_inos, len, CEPH_MAX_DELEG_INOS);
-+			return -EIO;
-+		}
-+		msg_deleg_inos += len;
-+
- 		while (len--) {
--			int err = xa_insert(&s->s_delegated_inos, start++,
--					    DELEGATED_INO_AVAILABLE,
--					    GFP_KERNEL);
-+			int err = ceph_insert_deleg_ino(s, start++);
-+
- 			if (!err) {
- 				doutc(cl, "added delegated inode 0x%llx\n", start - 1);
- 			} else if (err == -EBUSY) {
- 				pr_warn_client(cl,
- 					"MDS delegated inode 0x%llx more than once.\n",
- 					start - 1);
-+			} else if (err == -EOVERFLOW) {
-+				/* ceph_insert_deleg_ino() already warned. */
-+				return -EIO;
- 			} else {
- 				return err;
- 			}
-@@ -622,16 +666,17 @@ u64 ceph_get_deleg_ino(struct ceph_mds_session *s)
  
- 	xa_for_each(&s->s_delegated_inos, ino, val) {
- 		val = xa_erase(&s->s_delegated_inos, ino);
--		if (val == DELEGATED_INO_AVAILABLE)
-+		if (val == DELEGATED_INO_AVAILABLE) {
-+			atomic_dec(&s->s_num_deleg_inos);
- 			return ino;
-+		}
- 	}
- 	return 0;
- }
- 
- int ceph_restore_deleg_ino(struct ceph_mds_session *s, u64 ino)
- {
--	return xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
--			 GFP_KERNEL);
-+	return ceph_insert_deleg_ino(s, ino);
- }
- #else /* BITS_PER_LONG == 64 */
- /*
-@@ -1015,6 +1060,7 @@ static struct ceph_mds_session *register_session(struct ceph_mds_client *mdsc,
- 	INIT_LIST_HEAD(&s->s_waiting);
- 	INIT_LIST_HEAD(&s->s_unsafe);
- 	xa_init(&s->s_delegated_inos);
-+	atomic_set(&s->s_num_deleg_inos, 0);
- 	INIT_LIST_HEAD(&s->s_cap_releases);
- 	INIT_WORK(&s->s_cap_release_work, ceph_cap_release_work);
- 
-@@ -4923,6 +4969,7 @@ static int send_mds_reconnect(struct ceph_mds_client *mdsc,
- 
- 	/* Serialized by s_mutex against concurrent ceph_get_deleg_ino(). */
- 	xa_destroy(&session->s_delegated_inos);
-+	atomic_set(&session->s_num_deleg_inos, 0);
- 	if (session->s_state == CEPH_MDS_SESSION_CLOSED ||
- 	    session->s_state == CEPH_MDS_SESSION_REJECTED) {
- 		pr_info_client(cl, "mds%d skipping reconnect, session %s\n",
-diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
-index 0e82e61e19c4c..a1629e61e75bf 100644
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -252,6 +252,7 @@ struct ceph_mds_session {
- 	struct list_head  s_waiting;  /* waiting requests */
- 	struct list_head  s_unsafe;   /* unsafe requests */
- 	struct xarray	  s_delegated_inos;
-+	atomic_t	  s_num_deleg_inos;
- };
- 
- /*
-diff --git a/fs/ceph/super.h b/fs/ceph/super.h
-index c0763e2f54d7d..83ddd61e16475 100644
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -623,6 +623,15 @@ static inline int ceph_ino_compare(struct inode *inode, void *data)
- #define CEPH_MDS_INO_LOG_OFFSET		(2 * CEPH_MAX_MDS)
- #define CEPH_INO_SYSTEM_BASE		((6*CEPH_MAX_MDS) + (CEPH_MAX_MDS * CEPH_NUM_STRAY))
- 
-+/*
-+ * Upper bound on the number of delegated inodes a single MDS session may
-+ * hold. The MDS normally hands out a small preallocation window (the
-+ * userspace mds_client_prealloc_inos option defaults to 1000) and refills
-+ * it as the client consumes entries. This leaves generous headroom while
-+ * bounding the CPU and memory a malformed delegation interval can consume.
-+ */
-+#define CEPH_MAX_DELEG_INOS		8192
-+
- static inline bool ceph_vino_is_reserved(const struct ceph_vino vino)
- {
- 	if (vino.ino >= CEPH_INO_SYSTEM_BASE ||
+ 		/*
+@@ -5256,9 +5260,11 @@ static void check_new_map(struct ceph_mds_client *mdsc,
+ 				pr_info_client(cl, "mds%d recovery completed\n",
+ 					       s->s_mds);
+ 			kick_requests(mdsc, i);
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			mutex_lock(&s->s_mutex);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
+ 			ceph_kick_flushing_caps(mdsc, s);
+ 			mutex_unlock(&s->s_mutex);
+ 			wake_up_session_caps(s, RECONNECT);
 -- 
 2.53.0
 
