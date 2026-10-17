@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A8D392829;
-	Sat, 17 Oct 2026 17:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A686374E60;
+	Sat, 17 Oct 2026 17:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257871; cv=none; b=sygYSHoSBehElmZAD7yRHFNg5gP8AqSiFhZl4FV8vULB3RtrGut/tQPP9QsOmcVkopORIfLl0KX1SLn73k5N5W6p+DMDB0a8BQMTM6+WEJwEFCrPmo4l2d7lS9K05T/4UUIhoCTFnp9bQ4zSHpko6jmKPHyhjdwivn7aAHdB8uc=
+	t=1792257875; cv=none; b=PrglEMlazcYe1kHK9aebz/mObDk6E+si6JDSxmEF18w14NZcNBPStV5vnHq7oTZHPQ3WQ8+5gYq05vKIpEDmAQoigd4ffFW4Yw/ojiUBw/trNy/hqzyCnxIDEnQ4OteKi1EZjrTlDnvFTp5sL2wmMvSwW8LGoy5LPkm4g81VDSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257871; c=relaxed/simple;
-	bh=xO90S9VT/bjXFeV40A1sV9Afomnxa4k0ZMIl+zyPkGU=;
+	s=arc-20240116; t=1792257875; c=relaxed/simple;
+	bh=w/plh+mAeJwIZjeP4iUyJsrILRPJh/Hew1eecS0lJZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdthimsrkVYZNwODn+RZ2NLzNSuBxFoIkqa0bTO/ra/UEe9fm5I+RHqCxm9R2rtJLvleMa14ijhcmy+EY5+euJjVRt0YjEup4g9JDcsLc4K2zRzpAXD3xax+3as36tu+jcVnrVcXW5LH+DlEA/KerZkA6OGdR+zvwD1Oh4g+Xc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOOQARYc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V31lBkwsa6W3NgDTahH6gUVT83m030uYoj/a7pGKUf49dE8SngZYQ0XqUVcfq0sFYjhgJYMHsBsWnUJHMSnmbQjbcUpdfG4VHdVGgVDyK9bOXE+hF4+irCKQJf0E7cnp/1FwIOINnESsC72HVOhIWbbJd7mxuek3JG6FT8ENRp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wm7r3D+2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOOQARYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B441F000C5;
-	Sat, 17 Oct 2026 17:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wm7r3D+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40A51F000C7;
+	Sat, 17 Oct 2026 17:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257870;
-	bh=8di175ovLW8WdJeNRrvj2nkpTyS/1S2o5lZScnCsW9s=;
+	s=korg; t=1792257873;
+	bh=w4vlfD3i86V7HeFNr4V7aRHksnXwdiXoxkieMPmD/LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HOOQARYclnyb4byj9NeJP02gTVWXwiyMetXXtVdxKcZM5jjeHa9GL/92O0dAFa6vQ
-	 ah0G0ARimLDN/DJbjhi4W2gfBoAzk4ANBLpd4xyLmz5040WFpfknD1achQkUdAfGgh
-	 aAAaqbQbe1y6iEYK8owecw0YWgIUHrnwUaZnzhPw=
+	b=wm7r3D+29Y0ogaGzdEC9OT10jV54mEy3XzhVIMAEOLtnyPxkSuVpEaw826+fkkb93
+	 opheYB8S0RvGBM2QZnPfUSVX0BY+QJtJqhqm7zwlY0R9dU9ORygeAas1FzHWvYVwA1
+	 TEF3DccWMDKhDDPaOHHhfWRu2wOdE7aWlVpHmosU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hou Tao <houtao1@huawei.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0696/1674] ax25: Remove broken autobind
-Date: Sat, 17 Oct 2026 17:49:28 +0200
-Message-ID: <20261017160448.968065142@linuxfoundation.org>
+Subject: [PATCH 6.6 0661/1674] virtiofs: use pages instead of pointer for kernel direct IO
+Date: Sat, 17 Oct 2026 17:48:53 +0200
+Message-ID: <20261017160448.078918289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,231 +52,289 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
+[ Upstream commit 41748675c0bf252b3c5f600a95830f0936d366c1 ]
 
-Binding AX25 socket by using the autobind feature leads to memory leaks
-in ax25_connect() and also refcount leaks in ax25_release(). Memory
-leak was detected with kmemleak:
+When trying to insert a 10MB kernel module kept in a virtio-fs with cache
+disabled, the following warning was reported:
 
-================================================================
-unreferenced object 0xffff8880253cd680 (size 96):
-backtrace:
-__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
-kmemdup_noprof (mm/util.c:136)
-ax25_rt_autobind (net/ax25/ax25_route.c:428)
-ax25_connect (net/ax25/af_ax25.c:1282)
-__sys_connect_file (net/socket.c:2045)
-__sys_connect (net/socket.c:2064)
-__x64_sys_connect (net/socket.c:2067)
-do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-================================================================
+  ------------[ cut here ]------------
+  WARNING: CPU: 1 PID: 404 at mm/page_alloc.c:4551 ......
+  Modules linked in:
+  CPU: 1 PID: 404 Comm: insmod Not tainted 6.9.0-rc5+ #123
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996) ......
+  RIP: 0010:__alloc_pages+0x2bf/0x380
+  ......
+  Call Trace:
+   <TASK>
+   ? __warn+0x8e/0x150
+   ? __alloc_pages+0x2bf/0x380
+   __kmalloc_large_node+0x86/0x160
+   __kmalloc+0x33c/0x480
+   virtio_fs_enqueue_req+0x240/0x6d0
+   virtio_fs_wake_pending_and_unlock+0x7f/0x190
+   queue_request_and_unlock+0x55/0x60
+   fuse_simple_request+0x152/0x2b0
+   fuse_direct_io+0x5d2/0x8c0
+   fuse_file_read_iter+0x121/0x160
+   __kernel_read+0x151/0x2d0
+   kernel_read+0x45/0x50
+   kernel_read_file+0x1a9/0x2a0
+   init_module_from_file+0x6a/0xe0
+   idempotent_init_module+0x175/0x230
+   __x64_sys_finit_module+0x5d/0xb0
+   x64_sys_call+0x1c3/0x9e0
+   do_syscall_64+0x3d/0xc0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   ......
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
 
-When socket is bound, refcounts must be incremented the way it is done
-in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
-autobind, the refcounts are not incremented.
+The warning is triggered as follows:
 
-This bug leads to the following issue reported by Syzkaller:
+1) syscall finit_module() handles the module insertion and it invokes
+kernel_read_file() to read the content of the module first.
 
-================================================================
-ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
-------------[ cut here ]------------
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-Modules linked in:
-CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-...
-Call Trace:
- <TASK>
- __refcount_dec include/linux/refcount.h:336 [inline]
- refcount_dec include/linux/refcount.h:351 [inline]
- ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
- netdev_tracker_free include/linux/netdevice.h:4302 [inline]
- netdev_put include/linux/netdevice.h:4319 [inline]
- ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
- __sock_release net/socket.c:647 [inline]
- sock_close+0xbc/0x240 net/socket.c:1398
- __fput+0x3e9/0x9f0 fs/file_table.c:464
- __do_sys_close fs/open.c:1580 [inline]
- __se_sys_close fs/open.c:1565 [inline]
- __x64_sys_close+0x7f/0x110 fs/open.c:1565
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- ...
- </TASK>
-================================================================
+2) kernel_read_file() allocates a 10MB buffer by using vmalloc() and
+passes it to kernel_read(). kernel_read() constructs a kvec iter by
+using iov_iter_kvec() and passes it to fuse_file_read_iter().
 
-Considering the issues above and the comments left in the code that say:
-"check if we can remove this feature. It is broken."; "autobinding in this
-may or may not work"; - it is better to completely remove this feature than
-to fix it because it is broken and leads to various kinds of memory bugs.
+3) virtio-fs disables the cache, so fuse_file_read_iter() invokes
+fuse_direct_io(). As for now, the maximal read size for kvec iter is
+only limited by fc->max_read. For virtio-fs, max_read is UINT_MAX, so
+fuse_direct_io() doesn't split the 10MB buffer. It saves the address and
+the size of the 10MB-sized buffer in out_args[0] of a fuse request and
+passes the fuse request to virtio_fs_wake_pending_and_unlock().
 
-Now calling connect() without first binding socket will result in an
-error (-EINVAL). Userspace software that relies on the autobind feature
-might get broken. However, this feature does not seem widely used with
-this specific driver as it was not reliable at any point of time, and it
-is already broken anyway. E.g. ax25-tools and ax25-apps packages for
-popular distributions do not use the autobind feature for AF_AX25.
+4) virtio_fs_wake_pending_and_unlock() uses virtio_fs_enqueue_req() to
+queue the request. Because virtiofs need DMA-able address, so
+virtio_fs_enqueue_req() uses kmalloc() to allocate a bounce buffer for
+all fuse args, copies these args into the bounce buffer and passed the
+physical address of the bounce buffer to virtiofsd. The total length of
+these fuse args for the passed fuse request is about 10MB, so
+copy_args_to_argbuf() invokes kmalloc() with a 10MB size parameter and
+it triggers the warning in __alloc_pages():
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+	if (WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp))
+		return NULL;
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+5) virtio_fs_enqueue_req() will retry the memory allocation in a
+kworker, but it won't help, because kmalloc() will always return NULL
+due to the abnormal size and finit_module() will hang forever.
+
+A feasible solution is to limit the value of max_read for virtio-fs, so
+the length passed to kmalloc() will be limited. However it will affect
+the maximal read size for normal read. And for virtio-fs write initiated
+from kernel, it has the similar problem but now there is no way to limit
+fc->max_write in kernel.
+
+So instead of limiting both the values of max_read and max_write in
+kernel, introducing use_pages_for_kvec_io in fuse_conn and setting it as
+true in virtiofs. When use_pages_for_kvec_io is enabled, fuse will use
+pages instead of pointer to pass the KVEC_IO data.
+
+After switching to pages for KVEC_IO data, these pages will be used for
+DMA through virtio-fs. If these pages are backed by vmalloc(),
+{flush|invalidate}_kernel_vmap_range() are necessary to flush or
+invalidate the cache before the DMA operation. So add two new fields in
+fuse_args_pages to record the base address of vmalloc area and the
+condition indicating whether invalidation is needed. Perform the flush
+in fuse_get_user_pages() for write operations and the invalidation in
+fuse_release_user_pages() for read operations.
+
+It may seem necessary to introduce another field in fuse_conn to
+indicate that these KVEC_IO pages are used for DMA, However, considering
+that virtio-fs is currently the only user of use_pages_for_kvec_io, just
+reuse use_pages_for_kvec_io to indicate that these pages will be used
+for DMA.
+
+Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Tested-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ax25.h    |  1 -
- net/ax25/af_ax25.c    | 30 ++++++------------
- net/ax25/ax25_route.c | 74 -------------------------------------------
- 3 files changed, 10 insertions(+), 95 deletions(-)
+ fs/fuse/file.c      | 62 +++++++++++++++++++++++++++++++--------------
+ fs/fuse/fuse_i.h    |  6 +++++
+ fs/fuse/virtio_fs.c |  1 +
+ 3 files changed, 50 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/ax25.h b/include/net/ax25.h
-index ef79023f1a286..df3515e43da58 100644
---- a/include/net/ax25.h
-+++ b/include/net/ax25.h
-@@ -416,7 +416,6 @@ void ax25_rt_device_down(struct net_device *);
- int ax25_rt_ioctl(unsigned int, void __user *);
- extern const struct seq_operations ax25_rt_seqops;
- ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
--int ax25_rt_autobind(ax25_cb *, ax25_address *);
- struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
- 				   ax25_address *, ax25_digi *);
- void ax25_rt_free(void);
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 4a16142ac58a9..8b86f05c1dea4 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
- 		}
- 	}
- 
--	/*
--	 *	Must bind first - autobinding in this may or may not work. If
--	 *	the socket is already bound, check to see if the device has
--	 *	been filled in, error if it hasn't.
--	 */
-+	/* Must bind first - autobinding does not work. */
- 	if (sock_flag(sk, SOCK_ZAPPED)) {
--		/* check if we can remove this feature. It is broken. */
--		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
--			current->comm);
--		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
--			kfree(digi);
--			goto out_release;
--		}
-+		kfree(digi);
-+		err = -EINVAL;
-+		goto out_release;
-+	}
- 
--		ax25_fillin_cb(ax25, ax25->ax25_dev);
--		ax25_cb_add(ax25);
--	} else {
--		if (ax25->ax25_dev == NULL) {
--			kfree(digi);
--			err = -EHOSTUNREACH;
--			goto out_release;
--		}
-+	/* Check to see if the device has been filled in, error if it hasn't. */
-+	if (ax25->ax25_dev == NULL) {
-+		kfree(digi);
-+		err = -EHOSTUNREACH;
-+		goto out_release;
- 	}
- 
- 	if (sk->sk_type == SOCK_SEQPACKET &&
-diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index 69de75db0c9c2..10577434f40bf 100644
---- a/net/ax25/ax25_route.c
-+++ b/net/ax25/ax25_route.c
-@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
- 	return ax25_rt;
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 8a8c0aa82b866..13257bfd6ca47 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -658,7 +658,7 @@ void fuse_read_args_fill(struct fuse_io_args *ia, struct file *file, loff_t pos,
+ 	args->out_args[0].size = count;
  }
  
--/*
-- *	Adjust path: If you specify a default route and want to connect
-- *      a target on the digipeater path but w/o having a special route
-- *	set before, the path has to be truncated from your target on.
-- */
--static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
--{
--	int k;
--
--	for (k = 0; k < digipeat->ndigi; k++) {
--		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
--			break;
--	}
--
--	digipeat->ndigi = k;
--}
--
--
--/*
-- *	Find which interface to use.
-- */
--int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
--{
--	ax25_uid_assoc *user;
--	ax25_route *ax25_rt;
--	int err = 0;
--
--	ax25_route_lock_use();
--	ax25_rt = ax25_get_route(addr, NULL);
--	if (!ax25_rt) {
--		ax25_route_lock_unuse();
--		return -EHOSTUNREACH;
--	}
--	rcu_read_lock();
--	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
--		err = -EHOSTUNREACH;
--		goto put;
--	}
--
--	user = ax25_findbyuid(current_euid());
--	if (user) {
--		ax25->source_addr = user->call;
--		ax25_uid_put(user);
--	} else {
--		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
--			err = -EPERM;
--			goto put;
--		}
--		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
--	}
--
--	if (ax25_rt->digipeat != NULL) {
--		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
--					 GFP_ATOMIC);
--		if (ax25->digipeat == NULL) {
--			err = -ENOMEM;
--			goto put;
--		}
--		ax25_adjust_path(addr, ax25->digipeat);
--	}
--
--	if (ax25->sk != NULL) {
--		local_bh_disable();
--		bh_lock_sock(ax25->sk);
--		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
--		bh_unlock_sock(ax25->sk);
--		local_bh_enable();
--	}
--
--put:
--	rcu_read_unlock();
--	ax25_route_lock_unuse();
--	return err;
--}
+-static void fuse_release_user_pages(struct fuse_args_pages *ap,
++static void fuse_release_user_pages(struct fuse_args_pages *ap, ssize_t nres,
+ 				    bool should_dirty)
+ {
+ 	unsigned int i;
+@@ -669,6 +669,9 @@ static void fuse_release_user_pages(struct fuse_args_pages *ap,
+ 		if (ap->args.is_pinned)
+ 			unpin_user_page(ap->pages[i]);
+ 	}
++
++	if (nres > 0 && ap->args.invalidate_vmap)
++		invalidate_kernel_vmap_range(ap->args.vmap_base, nres);
+ }
  
- struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
- 	ax25_address *dest, ax25_digi *digi)
+ static void fuse_io_release(struct kref *kref)
+@@ -767,25 +770,29 @@ static void fuse_aio_complete_req(struct fuse_mount *fm, struct fuse_args *args,
+ 	struct fuse_io_args *ia = container_of(args, typeof(*ia), ap.args);
+ 	struct fuse_io_priv *io = ia->io;
+ 	ssize_t pos = -1;
+-
+-	fuse_release_user_pages(&ia->ap, io->should_dirty);
++	size_t nres;
+ 
+ 	if (err) {
+ 		/* Nothing */
+ 	} else if (io->write) {
+ 		if (ia->write.out.size > ia->write.in.size) {
+ 			err = -EIO;
+-		} else if (ia->write.in.size != ia->write.out.size) {
+-			pos = ia->write.in.offset - io->offset +
+-				ia->write.out.size;
++		} else {
++			nres = ia->write.out.size;
++			if (ia->write.in.size != ia->write.out.size)
++				pos = ia->write.in.offset - io->offset +
++				      ia->write.out.size;
+ 		}
+ 	} else {
+ 		u32 outsize = args->out_args[0].size;
+ 
++		nres = outsize;
+ 		if (ia->read.in.size != outsize)
+ 			pos = ia->read.in.offset - io->offset + outsize;
+ 	}
+ 
++	fuse_release_user_pages(&ia->ap, err ?: nres, io->should_dirty);
++
+ 	fuse_aio_complete(io, err, pos);
+ 	fuse_io_free(ia);
+ }
+@@ -1402,24 +1409,37 @@ static inline size_t fuse_get_frag_size(const struct iov_iter *ii,
+ 
+ static int fuse_get_user_pages(struct fuse_args_pages *ap, struct iov_iter *ii,
+ 			       size_t *nbytesp, int write,
+-			       unsigned int max_pages)
++			       unsigned int max_pages,
++			       bool use_pages_for_kvec_io)
+ {
++	bool flush_or_invalidate = false;
+ 	size_t nbytes = 0;  /* # bytes already packed in req */
+ 	ssize_t ret = 0;
+ 
+-	/* Special case for kernel I/O: can copy directly into the buffer */
++	/* Special case for kernel I/O: can copy directly into the buffer.
++	 * However if the implementation of fuse_conn requires pages instead of
++	 * pointer (e.g., virtio-fs), use iov_iter_extract_pages() instead.
++	 */
+ 	if (iov_iter_is_kvec(ii)) {
+-		unsigned long user_addr = fuse_get_user_addr(ii);
+-		size_t frag_size = fuse_get_frag_size(ii, *nbytesp);
++		void *user_addr = (void *)fuse_get_user_addr(ii);
+ 
+-		if (write)
+-			ap->args.in_args[1].value = (void *) user_addr;
+-		else
+-			ap->args.out_args[0].value = (void *) user_addr;
++		if (!use_pages_for_kvec_io) {
++			size_t frag_size = fuse_get_frag_size(ii, *nbytesp);
+ 
+-		iov_iter_advance(ii, frag_size);
+-		*nbytesp = frag_size;
+-		return 0;
++			if (write)
++				ap->args.in_args[1].value = user_addr;
++			else
++				ap->args.out_args[0].value = user_addr;
++
++			iov_iter_advance(ii, frag_size);
++			*nbytesp = frag_size;
++			return 0;
++		}
++
++		if (is_vmalloc_addr(user_addr)) {
++			ap->args.vmap_base = user_addr;
++			flush_or_invalidate = true;
++		}
+ 	}
+ 
+ 	while (nbytes < *nbytesp && ap->num_pages < max_pages) {
+@@ -1448,6 +1468,10 @@ static int fuse_get_user_pages(struct fuse_args_pages *ap, struct iov_iter *ii,
+ 			(PAGE_SIZE - ret) & (PAGE_SIZE - 1);
+ 	}
+ 
++	if (write && flush_or_invalidate)
++		flush_kernel_vmap_range(ap->args.vmap_base, nbytes);
++
++	ap->args.invalidate_vmap = !write && flush_or_invalidate;
+ 	ap->args.is_pinned = iov_iter_extract_will_pin(ii);
+ 	ap->args.user_pages = true;
+ 	if (write)
+@@ -1516,7 +1540,7 @@ ssize_t fuse_direct_io(struct fuse_io_priv *io, struct iov_iter *iter,
+ 		size_t nbytes = min(count, nmax);
+ 
+ 		err = fuse_get_user_pages(&ia->ap, iter, &nbytes, write,
+-					  max_pages);
++					  max_pages, fc->use_pages_for_kvec_io);
+ 		if (err && !nbytes)
+ 			break;
+ 
+@@ -1530,7 +1554,7 @@ ssize_t fuse_direct_io(struct fuse_io_priv *io, struct iov_iter *iter,
+ 		}
+ 
+ 		if (!io->async || nres < 0) {
+-			fuse_release_user_pages(&ia->ap, io->should_dirty);
++			fuse_release_user_pages(&ia->ap, nres, io->should_dirty);
+ 			fuse_io_free(ia);
+ 		}
+ 		ia = NULL;
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index 83dc806d72056..c4cbc0befc000 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -290,9 +290,12 @@ struct fuse_args {
+ 	bool may_block:1;
+ 	bool is_ext:1;
+ 	bool is_pinned:1;
++	bool invalidate_vmap:1;
+ 	struct fuse_in_arg in_args[3];
+ 	struct fuse_arg out_args[2];
+ 	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
++	/* Used for kvec iter backed by vmalloc address */
++	void *vmap_base;
+ };
+ 
+ struct fuse_args_pages {
+@@ -835,6 +838,9 @@ struct fuse_conn {
+ 	/* Is statx not implemented by fs? */
+ 	unsigned int no_statx:1;
+ 
++	/* Use pages instead of pointer for kernel I/O */
++	unsigned int use_pages_for_kvec_io:1;
++
+ 	/** The number of requests waiting for completion */
+ 	atomic_t num_waiting;
+ 
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index a6814bea0e0ad..b1028a4dbb991 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -1461,6 +1461,7 @@ static int virtio_fs_get_tree(struct fs_context *fsc)
+ 	fc->delete_stale = true;
+ 	fc->auto_submounts = true;
+ 	fc->sync_fs = true;
++	fc->use_pages_for_kvec_io = true;
+ 
+ 	/* Tell FUSE to split requests that exceed the virtqueue's size */
+ 	fc->max_pages_limit = min_t(unsigned int, fc->max_pages_limit,
 -- 
 2.53.0
 
