@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEC93C0A1E;
-	Sat, 17 Oct 2026 17:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06B8362154;
+	Sat, 17 Oct 2026 17:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259100; cv=none; b=RZgAGeHzM7oO8RNsYe4c2HGhDCoN09UrXERha3d3ObPjyNGNoK6lvynRLfhrzkPNQxwdo/Rm4meeOSIbiuzl9CBF2x6WO4pYc9Afa2fFNZ8LsBCu8j4VCJoLrjzt9SOXhBWD3LWB9J7u42s/A/VYxPSAh4GPugP+jVqiF5KEwpI=
+	t=1792259103; cv=none; b=QlwasM4HOgmbvD1FYh6S1LhZ2/Cgi4ZcCO1TZBoDdnEVoDnL/72XDSVnonvyoNmXA7Uw5iT6+UHgoH/YZY43nJpk3CF3tq+PjTqWt8ihJRA8tQ2PoF7iPdXBaDZAeMtu3aBGnQvZv5XxZXZ2mVsu6/f9xz49biPTdssw1zHTXCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259100; c=relaxed/simple;
-	bh=YR4wEtL3po6UlQqi8hif6zKFOotgJRpDj5XHvRRsWyk=;
+	s=arc-20240116; t=1792259103; c=relaxed/simple;
+	bh=vBQvazhcKTh2lyCrA4xxBrt4/fX425O0kf388TMVP6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNG4tHRREiKDsmWCwDZypcHyU9sWYRrHh/I7ejR7lVKxCEMQvuO3J6WveLThNLcGSIErMalDkdlSoOhZTAUL+wIiQNfxr70qVVTvvgAOTY6WK0LcU37cXfqhGTOYu8XdA/nL2mZt4EPnSTFOLeDpTWSj2Cte3J8yCFbkRV5FtGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1kkGyxR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HktbJuLViHkhLIkCq45Jbji591AMXQVQdl4oLqlGJTUm3imNzPVtjwWstoCO3itfOa/U8j2aa4wHwIn9pwZSFp41KhIvd2Vvc5N/1PoahApEsUVqUlgzQcFkt+wWv8WinCf3EXTjoE/BoLqusAcAoHwEQyNEANfVSxN91lRWuKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ngSORV3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1kkGyxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE481F000C4;
-	Sat, 17 Oct 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ngSORV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0B81F000C4;
+	Sat, 17 Oct 2026 17:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259099;
-	bh=6bSPlc/1l/zWgg4y5tzA73Vp+bIm+WeFx2VCmb3vhtI=;
+	s=korg; t=1792259102;
+	bh=BJHUfqHNiNqLA9uprm6xoBgXCyfR87jChkueI6Rqk7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d1kkGyxRKT3EgxSZIKTWw5/f71dp9H0qDkfShZm/0odlIwThf0TD1wrOolN4KE3Yy
-	 mcpyDOvi+vXtN3fY+WUgFf3KrP/H49YZV549SdYNDjjrkJBLwR5GyWZWCuPc3atzxZ
-	 QaF4yo7adO3ATbLk1EGe52wS/cBOhTiCCS8f2iDA=
+	b=2ngSORV36dR6qvNHSY4YeZ99S0ZvSka5yT0b4wOjoDwxpCug+Qq2eeGL8DFX2ZmHS
+	 g4CqEbkHNFbmAX8UdEeIIXTFgsCdZfbxZ4JYKSh5wdb0qYZvBidBUvNRDoyWWIq/Li
+	 O3XPbvQ35pvLoF1XAJf/C6XZfROVn53Fw0Xy3n+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1100/1674] wifi: cfg80211: use wiphy work for socket owner autodisconnect
-Date: Sat, 17 Oct 2026 17:56:12 +0200
-Message-ID: <20261017160459.364006128@linuxfoundation.org>
+Subject: [PATCH 6.6 1101/1674] wifi: cfg80211: convert pmsr_free_wk to wiphy_work to fix deadlock
+Date: Sat, 17 Oct 2026 17:56:13 +0200
+Message-ID: <20261017160459.391784178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,143 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
 
-[ Upstream commit 0c2ed186bbe14304415476d6707b747dddcd8583 ]
+[ Upstream commit 2b0eab425e1f658d8fe1df7590e3b9af5959505e ]
 
-nl80211_netlink_notify() walks the cfg80211 wireless device list when a
-NETLINK_GENERIC socket is released. If the socket owns a connection, the
-notifier queues the embedded wdev->disconnect_wk work item.
+When a netlink socket that owns a PMSR session is closed,
+cfg80211_release_pmsr() clears the request's nl_portid and queues
+pmsr_free_wk to call cfg80211_pmsr_process_abort() asynchronously.
 
-That work is a plain work_struct today. NETDEV_GOING_DOWN cancels it, but a
-NETLINK_URELEASE notifier that already observed conn_owner_nlportid can
-queue it after that cancel returns. _cfg80211_unregister_wdev() then
-removes the wdev from the list and waits for RCU readers, but
-synchronize_net() does not drain work queued by such a reader.
+If the interface tears down concurrently, cfg80211_pmsr_wdev_down()
+is called under wiphy_lock and calls cancel_work_sync(&pmsr_free_wk)
+to wait for any running work. The work function acquires wiphy_lock
+via guard(wiphy) before calling process_abort.
 
-Make the autodisconnect work a wiphy_work instead. The callback already
-needs the wiphy mutex, and wiphy_work runs under that mutex. This lets
-teardown cancel pending autodisconnect work while holding the mutex,
-without a cancel_work_sync() vs. worker locking concern.
+This is a deadlock: wdev_down holds wiphy_lock and blocks inside
+cancel_work_sync(); pmsr_free_wk blocks trying to acquire that same
+wiphy_lock. Neither thread can proceed.
 
-Also cancel the wiphy work after list_del_rcu() and synchronize_net(). Any
-NETLINK_URELEASE notifier that had already reached the wdev list has then
-either queued the work and it is removed, or can no longer find the wdev.
+The same deadlock is reachable from cfg80211_leave_locked(), which
+calls cfg80211_pmsr_wdev_down() for all interface types under
+wiphy_lock.
 
-Fixes: bd2522b16884 ("cfg80211: NL80211_ATTR_SOCKET_OWNER support for CMD_CONNECT")
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260706152418.779226-1-zzzccc427@gmail.com
+Fix this by converting pmsr_free_wk from a plain work_struct to a
+wiphy_work. The wiphy_work dispatcher holds wiphy_lock when running
+work items, so the explicit guard(wiphy) in the work function is no
+longer needed. wiphy_work_cancel() can be called safely while holding
+wiphy_lock - since wiphy_lock prevents the work from running
+concurrently, wiphy_work_cancel() never blocks, eliminating the
+deadlock.
+
+Remove the cancel_work_sync() for pmsr_free_wk from the
+NETDEV_GOING_DOWN handler. cfg80211_leave(), called unconditionally
+just before it, already cancels any pending work under wiphy_lock
+via wiphy_work_cancel() inside cfg80211_pmsr_wdev_down().
+
+Fixes: 6dccbc9f3e1d ("wifi: cfg80211: cancel pmsr_free_wk in cfg80211_pmsr_wdev_down")
+Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260703082523.2629324-1-peddolla.reddy@oss.qualcomm.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  include/net/cfg80211.h | 2 +-
- net/wireless/core.c    | 7 ++++---
+ net/wireless/core.c    | 3 +--
  net/wireless/core.h    | 2 +-
- net/wireless/nl80211.c | 3 ++-
- net/wireless/sme.c     | 6 ++----
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ net/wireless/pmsr.c    | 8 +++-----
+ 4 files changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index cda0b2907f329..d6270cdb64485 100644
+index d6270cdb64485..720181902f1fd 100644
 --- a/include/net/cfg80211.h
 +++ b/include/net/cfg80211.h
-@@ -6000,7 +6000,7 @@ struct wireless_dev {
- 	enum ieee80211_bss_type conn_bss_type;
- 	u32 conn_owner_nlportid;
+@@ -6042,7 +6042,7 @@ struct wireless_dev {
  
--	struct work_struct disconnect_wk;
-+	struct wiphy_work disconnect_wk;
- 	u8 disconnect_bssid[ETH_ALEN];
+ 	struct list_head pmsr_list;
+ 	spinlock_t pmsr_lock;
+-	struct work_struct pmsr_free_wk;
++	struct wiphy_work pmsr_free_wk;
  
- 	struct list_head event_list;
+ 	unsigned long unprot_beacon_reported;
+ 
 diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 800fbfd591949..f283d74a3ba02 100644
+index f283d74a3ba02..622192eeb7834 100644
 --- a/net/wireless/core.c
 +++ b/net/wireless/core.c
-@@ -1220,6 +1220,7 @@ static void _cfg80211_unregister_wdev(struct wireless_dev *wdev,
- 	list_del_rcu(&wdev->list);
- 	synchronize_net();
- 	rdev->devlist_generation++;
-+	wiphy_work_cancel(wdev->wiphy, &wdev->disconnect_wk);
+@@ -1387,7 +1387,7 @@ void cfg80211_init_wdev(struct wireless_dev *wdev)
+ 	INIT_LIST_HEAD(&wdev->mgmt_registrations);
+ 	INIT_LIST_HEAD(&wdev->pmsr_list);
+ 	spin_lock_init(&wdev->pmsr_lock);
+-	INIT_WORK(&wdev->pmsr_free_wk, cfg80211_pmsr_free_wk);
++	wiphy_work_init(&wdev->pmsr_free_wk, cfg80211_pmsr_free_wk);
  
- 	cfg80211_mlme_purge_registrations(wdev);
- 
-@@ -1408,7 +1409,7 @@ void cfg80211_init_wdev(struct wireless_dev *wdev)
- 	     wdev->iftype == NL80211_IFTYPE_ADHOC) && !wdev->use_4addr)
- 		wdev->netdev->priv_flags |= IFF_DONT_BRIDGE;
- 
--	INIT_WORK(&wdev->disconnect_wk, cfg80211_autodisconnect_wk);
-+	wiphy_work_init(&wdev->disconnect_wk, cfg80211_autodisconnect_wk);
- }
- 
- void cfg80211_register_wdev(struct cfg80211_registered_device *rdev,
-@@ -1516,9 +1517,9 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
- 		wiphy_lock(&rdev->wiphy);
- 		cfg80211_leave(rdev, wdev);
- 		cfg80211_remove_links(wdev);
--		wiphy_unlock(&rdev->wiphy);
+ #ifdef CONFIG_CFG80211_WEXT
+ 	wdev->wext.default_key = -1;
+@@ -1520,7 +1520,6 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
  		/* since we just did cfg80211_leave() nothing to do there */
--		cancel_work_sync(&wdev->disconnect_wk);
-+		wiphy_work_cancel(wdev->wiphy, &wdev->disconnect_wk);
-+		wiphy_unlock(&rdev->wiphy);
- 		cancel_work_sync(&wdev->pmsr_free_wk);
+ 		wiphy_work_cancel(wdev->wiphy, &wdev->disconnect_wk);
+ 		wiphy_unlock(&rdev->wiphy);
+-		cancel_work_sync(&wdev->pmsr_free_wk);
  		break;
  	case NETDEV_DOWN:
+ 		wiphy_lock(&rdev->wiphy);
 diff --git a/net/wireless/core.h b/net/wireless/core.h
-index f0a3a23176385..735ca87ffa17d 100644
+index 735ca87ffa17d..3ba403698f415 100644
 --- a/net/wireless/core.h
 +++ b/net/wireless/core.h
-@@ -427,7 +427,7 @@ void __cfg80211_port_authorized(struct wireless_dev *wdev, const u8 *bssid,
- 				const u8 *td_bitmap, u8 td_bitmap_len);
- int cfg80211_mgd_wext_connect(struct cfg80211_registered_device *rdev,
- 			      struct wireless_dev *wdev);
--void cfg80211_autodisconnect_wk(struct work_struct *work);
-+void cfg80211_autodisconnect_wk(struct wiphy *wiphy, struct wiphy_work *work);
+@@ -575,7 +575,7 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
  
- /* SME implementation */
- void cfg80211_conn_work(struct work_struct *work);
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index e4cd5503ae119..c4af4cc443676 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -20029,7 +20029,8 @@ static int nl80211_netlink_notify(struct notifier_block * nb,
- 				wdev->nl_owner_dead = true;
- 				schedule_work(&rdev->destroy_work);
- 			} else if (wdev->conn_owner_nlportid == notify->portid) {
--				schedule_work(&wdev->disconnect_wk);
-+				wiphy_work_queue(wdev->wiphy,
-+						 &wdev->disconnect_wk);
- 			}
+ void cfg80211_release_pmsr(struct wireless_dev *wdev, u32 portid);
+ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev);
+-void cfg80211_pmsr_free_wk(struct work_struct *work);
++void cfg80211_pmsr_free_wk(struct wiphy *wiphy, struct wiphy_work *work);
  
- 			cfg80211_release_pmsr(wdev, notify->portid);
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index 6f116ae5442bf..eb0434783f9fb 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -1584,13 +1584,12 @@ int cfg80211_disconnect(struct cfg80211_registered_device *rdev,
-  * Used to clean up after the connection / connection attempt owner socket
-  * disconnects
-  */
--void cfg80211_autodisconnect_wk(struct work_struct *work)
-+void cfg80211_autodisconnect_wk(struct wiphy *wiphy, struct wiphy_work *work)
+ void cfg80211_remove_link(struct wireless_dev *wdev, unsigned int link_id);
+ void cfg80211_remove_links(struct wireless_dev *wdev);
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index 678bbe5bf455f..88aade01cd068 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -634,16 +634,14 @@ static void cfg80211_pmsr_process_abort(struct wireless_dev *wdev)
+ 	}
+ }
+ 
+-void cfg80211_pmsr_free_wk(struct work_struct *work)
++void cfg80211_pmsr_free_wk(struct wiphy *wiphy, struct wiphy_work *work)
  {
- 	struct wireless_dev *wdev =
- 		container_of(work, struct wireless_dev, disconnect_wk);
--	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
+ 	struct wireless_dev *wdev = container_of(work, struct wireless_dev,
+ 						 pmsr_free_wk);
  
 -	wiphy_lock(wdev->wiphy);
  	wdev_lock(wdev);
- 
- 	if (wdev->conn_owner_nlportid) {
-@@ -1629,5 +1628,4 @@ void cfg80211_autodisconnect_wk(struct work_struct *work)
- 	}
- 
+ 	cfg80211_pmsr_process_abort(wdev);
  	wdev_unlock(wdev);
 -	wiphy_unlock(wdev->wiphy);
  }
+ 
+ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
+@@ -658,7 +656,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
+ 	}
+ 	spin_unlock_bh(&wdev->pmsr_lock);
+ 
+-	cancel_work_sync(&wdev->pmsr_free_wk);
++	wiphy_work_cancel(wdev->wiphy, &wdev->pmsr_free_wk);
+ 	if (found)
+ 		cfg80211_pmsr_process_abort(wdev);
+ 
+@@ -673,7 +671,7 @@ void cfg80211_release_pmsr(struct wireless_dev *wdev, u32 portid)
+ 	list_for_each_entry(req, &wdev->pmsr_list, list) {
+ 		if (req->nl_portid == portid) {
+ 			req->nl_portid = 0;
+-			schedule_work(&wdev->pmsr_free_wk);
++			wiphy_work_queue(wdev->wiphy, &wdev->pmsr_free_wk);
+ 		}
+ 	}
+ 	spin_unlock_bh(&wdev->pmsr_lock);
 -- 
 2.53.0
 
