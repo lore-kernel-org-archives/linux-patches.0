@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9EB4CF49B;
-	Sat, 17 Oct 2026 16:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8141334B437;
+	Sat, 17 Oct 2026 16:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256187; cv=none; b=qauCuAA9V3dtZdq6xhY+npDebR2oP97GDiWeTlWPr7X91Ow8zTVQj2Jc/mdZY4gur51/fv/iO9KQQLIdzRMijXvim6SNw8017Z1YBVlqEPa2E/lC7qF03vd8NarG1QjzEtkenSWLlm07fbR1E+Xrl7pBTVKY9AEFs+Oufqoiy70=
+	t=1792256190; cv=none; b=SnlCnyHgstuNwFzkBkCrJIFDYPWhB3gQor7Jtg+j6ZSFgiLtESXMFeoWQcgfj5f2OtWqIjpgFCC6qH5hZcIYl4U+Yw1AnWEN2chs4Cedk5g3k3ijPV0CXr6SmTQNXiii88VhBhIIuQB4KMCHR8rGh9FBkiPY5cT7Aua2qEbV5ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256187; c=relaxed/simple;
-	bh=l/Gmjms7Zb+yAZaQcnjBWSxRGG/9OI5H9pZhkrq1e1M=;
+	s=arc-20240116; t=1792256190; c=relaxed/simple;
+	bh=C3zFGq/cNYnighre8Qx7hOGqc8lgfZAad4RX5meEjcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI36Yfqy9GgpfHAsEqgfCBbeywu/p8/aKFelh1zCzYlQlmRwkhIxjZ43MKCXNpuPZtXFjbUkjrPARXiippq3k+2tiZCmxiUmVUJM0QmlaCnu6KADivh9mukGV6Bc6I9Lw68drJve2XrId3izMkcovhAdVeiJk0JAZULRLWLLuTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXthyOaR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PhhB/BKYwT+sB6YOZoMQ0D2AbSbV70EKHaeNSqv0wIQIlBVwG9qORMKK7FzXorsJkMXCwKk3I/Okh9TRIDOI7JZF2VdKx8FbAb1cwkYjeRqnOvoMMUWkMywnnykBy0hn0CrtFnXypYdEqw2KB9A52URFWPajScZh0INaQD6j+LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZb/oShM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXthyOaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65901F000C4;
-	Sat, 17 Oct 2026 16:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZb/oShM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BAC1F000C4;
+	Sat, 17 Oct 2026 16:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256186;
-	bh=y8mWKCjiww+kWlgdbS7WYFC1+Rkhs0pDIuo+dPAeEfk=;
+	s=korg; t=1792256189;
+	bh=LJoeLQ+Z1E60o3+liJ1+0bfAoillXWrcYwPNLFNOX0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXthyOaRM7LFcugK0wDhwBi17I96Vvj///QIy5qTUrdcott/dlRPhtDWg/dE5yrPR
-	 IR4ogw1llHgn8YKNljOT35jXckHujb9ajiXKTwLcG7U93nm4chPp1KnpSRNwEiaxGk
-	 ZE9AwMccEd90sosxhw7T6O+MWB4vMUeiUR5+hwpQ=
+	b=uZb/oShMxT0XoK96lOCaxzMD8R3ZV8Pr5cw8EnYCVpsetzsOLql2FUME/NsuQ0qg7
+	 71dsQ+qeoHHJDBuvCCXK2u+303kNBtLugvKFexbgBs2GDkeEu5hB1YNOzOOxC+ljwq
+	 GTka3UINGqZIiV1zUYctAF3P80LhmR/+YYMyMYTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
-	Jiakai Xu <jiakaiPeanut@gmail.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Anup Patel <anup@brainfault.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0152/1674] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
-Date: Sat, 17 Oct 2026 17:40:24 +0200
-Message-ID: <20261017160435.065249935@linuxfoundation.org>
+Subject: [PATCH 6.6 0153/1674] bpf, xdp: move offload check into dev_xdp_install()
+Date: Sat, 17 Oct 2026 17:40:25 +0200
+Message-ID: <20261017160435.091474483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,68 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiakai Xu <jiakaipeanut@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 11366ead4f1412befea660777576c89a1bac0c1e ]
+[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
 
-Add a null pointer check for imsic_state before dereferencing it in
-kvm_riscv_aia_imsic_has_attr(). While the function checks that the
-vcpu exists, it doesn't verify that the vcpu's imsic_state has been
-initialized, leading to a null pointer dereference when accessed.
+bpf_xdp_link_update() calls dev_xdp_install() directly and skips
+dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
+make an XDP link with a normal program and then swap in an offloaded or
+device-bound program with BPF_LINK_UPDATE, which puts it on the software
+path.
 
-This issue was discovered during fuzzing of RISC-V KVM code. The
-crash occurs when userspace calls KVM_HAS_DEVICE_ATTR ioctl on an
-AIA IMSIC device before the IMSIC state has been fully initialized
-for a vcpu.
+dev_xdp_install() is the one place all three paths go through:
+"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
+BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
+bound to another device, device-bound in generic mode, native vs generic,
+DEVMAP and CPUMAP) there, and keep only the netlink-flag check
+(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
 
-The crash manifests as:
-  Unable to handle kernel paging request at virtual address
-  dfffffff00000001
-  ...
-  epc : kvm_riscv_aia_imsic_has_attr+0x464/0x50e
-  arch/riscv/kvm/aia_imsic.c:998
-  ...
-  kvm_riscv_aia_imsic_has_attr+0x464/0x50e arch/riscv/kvm/aia_imsic.c:998
-  aia_has_attr+0x128/0x2bc arch/riscv/kvm/aia_device.c:471
-  kvm_device_ioctl_attr virt/kvm/kvm_main.c:4722 [inline]
-  kvm_device_ioctl+0x296/0x374 virt/kvm/kvm_main.c:4739
-  ...
-
-The fix adds a check to return -ENODEV if imsic_state is NULL, which
-is consistent with other error handling in the function and prevents
-the null pointer dereference.
-
-Fixes: 5463091a51cf ("RISC-V: KVM: Expose IMSIC registers as attributes of AIA irqchip")
-Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
-Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260125143344.2515451-1-xujiakai2025@iscas.ac.cn
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_imsic.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/dev.c |   59 +++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 31 insertions(+), 28 deletions(-)
 
-diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
-index 22782b009e370..9e8785e67b6db 100644
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -945,8 +945,11 @@ int kvm_riscv_aia_imsic_has_attr(struct kvm *kvm, unsigned long type)
- 	if (!vcpu)
- 		return -ENODEV;
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9304,6 +9304,37 @@ static int dev_xdp_install(struct net_de
+ 	struct netdev_bpf xdp;
+ 	int err;
  
--	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 	imsic = vcpu->arch.aia_context.imsic_state;
-+	if (!imsic)
-+		return -ENODEV;
++	if (prog) {
++		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
++					       ? XDP_MODE_DRV : XDP_MODE_SKB;
++		bool offload = mode == XDP_MODE_HW;
 +
-+	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
- 	return imsic_mrif_isel_check(imsic->nr_eix, isel);
- }
++		if (!offload && dev_xdp_prog(dev, other_mode)) {
++			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
++			return -EEXIST;
++		}
++		if (!offload && bpf_prog_is_offloaded(prog->aux)) {
++			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
++			return -EINVAL;
++		}
++		if (bpf_prog_is_dev_bound(prog->aux) && !bpf_offload_dev_match(prog, dev)) {
++			NL_SET_ERR_MSG(extack, "Program bound to different device");
++			return -EINVAL;
++		}
++		if (bpf_prog_is_dev_bound(prog->aux) && mode == XDP_MODE_SKB) {
++			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++	}
++
+ 	memset(&xdp, 0, sizeof(xdp));
+ 	xdp.command = mode == XDP_MODE_HW ? XDP_SETUP_PROG_HW : XDP_SETUP_PROG;
+ 	xdp.extack = extack;
+@@ -9432,38 +9463,10 @@ static int dev_xdp_attach(struct net_dev
+ 		new_prog = link->link.prog;
  
--- 
-2.53.0
-
+ 	if (new_prog) {
+-		bool offload = mode == XDP_MODE_HW;
+-		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
+-					       ? XDP_MODE_DRV : XDP_MODE_SKB;
+-
+ 		if ((flags & XDP_FLAGS_UPDATE_IF_NOEXIST) && cur_prog) {
+ 			NL_SET_ERR_MSG(extack, "XDP program already attached");
+ 			return -EBUSY;
+ 		}
+-		if (!offload && dev_xdp_prog(dev, other_mode)) {
+-			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
+-			return -EEXIST;
+-		}
+-		if (!offload && bpf_prog_is_offloaded(new_prog->aux)) {
+-			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
+-			return -EINVAL;
+-		}
+-		if (bpf_prog_is_dev_bound(new_prog->aux) && !bpf_offload_dev_match(new_prog, dev)) {
+-			NL_SET_ERR_MSG(extack, "Program bound to different device");
+-			return -EINVAL;
+-		}
+-		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
+-			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
+-			return -EINVAL;
+-		}
+-		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
+-			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
+-			return -EINVAL;
+-		}
+-		if (new_prog->expected_attach_type == BPF_XDP_CPUMAP) {
+-			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
+-			return -EINVAL;
+-		}
+ 	}
+ 
+ 	/* don't call drivers if the effective program didn't change */
 
 
