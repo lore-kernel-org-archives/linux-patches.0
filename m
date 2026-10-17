@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF33390C8A;
-	Sat, 17 Oct 2026 16:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F843391E6D;
+	Sat, 17 Oct 2026 16:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254922; cv=none; b=ITXPK7ypXktslEjVpEeucCIUT8OppjVb5ifZxCjZSFcoTLqUakng8uou4mF6z03s7GXIiEvviZDMRKxOrdyXSZTanjlHoZAp+sLXJl+r1f9zQsogg9mNXdoR1o3idotf9+MHIAwk0yc8xTLtZwzqYSNhd7ijjT5LhN6NrZ4cOk0=
+	t=1792254925; cv=none; b=UGGvAo+e/l8jQlOBaI3joYikDZUiyyvph6sOvOIZR8rlF1+RFcSZJKViY7JUARxi1GFLR4heDOA56ufXGcNsPgmIOEyYPe64DiCHWwVZ4R0HatmtsqL+tm/6qpfZoh3H34FiMTysaK4xkF48EAaSEWEHjibUspmWfNH92d8TepA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254922; c=relaxed/simple;
-	bh=vTBDld3SiJKu651lKuFcM6S6O5kvJD/EhyjHU26vAbk=;
+	s=arc-20240116; t=1792254925; c=relaxed/simple;
+	bh=6d1ZJMjDkW0h4Ooj8RMBbxDzf7Ma6qIrmiHrwI1SKcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrVl/MwU3MEfMk+2S5tWRB8RoJ7tVq1cZ+x45OIZ1e1B2ajRdJ7f/kbVweRwHcSXIF/XP9/yUz8csvGK4+H+9uO6sTVpT0A9tHTRPRpaX38RDNNrflZu9dynOxc2If42EGWTJxqXAwgFFyI2m6yckig5VtimnyGHOiRajKyyPm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlk3jhw4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PiOV+gSENYXcjsSza3NaMVbxQHCisPX2eNWFafEGF/HXTx021QCLLyHjWDzsuME6pj7gA7M2gTdLU0dj/FvF2Ldj7QaJXCriSLA9uzSznYbE1TWPYgxCqScqZrWzysCCzOLPlwjK5W59Ed0AD5UjBNeHSKAG3tWgAyCmQCRccuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIbJcGL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlk3jhw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16AC1F000C4;
-	Sat, 17 Oct 2026 16:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIbJcGL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A427B1F000C5;
+	Sat, 17 Oct 2026 16:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254921;
-	bh=ENFrTjt91W+rEaPLQSFtk/m2YEfjG/JuXBi8Ki0r1ho=;
+	s=korg; t=1792254924;
+	bh=rrMSmnzmj9318jvdANFkP0ezXzPHnr4BBu56OIX0K34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rlk3jhw4rAFXL8GyDiz0//qYKzEg2MzT6pipVbOQS+Y7KZsk/5WHQ+35ZNavg5FqE
-	 Zk65z+bCmTDtJW9szR8H7KNrPnF4eNDbbiv3lbL+Zio+6O2HybgLY9cO18kjx+xrwT
-	 b7AxyzCh5ZI8q8BTjbt8Nh6/nMLRP2zp03GhNdJY=
+	b=NIbJcGL0KhdufUKStdw73E12cMhYhbqyv28B91nCZCI4tyFxki6/4ieQJgONdl76Y
+	 02Fkd4os+rreFBpU/5GgNWnaaUOg4nbRCnfoxYRdi+sJj3ItpQY2eLatq8uhXWwALy
+	 YlnLZy7EXmWi40z6Y/8BZ+wTXkRbFbWhPrfYs1lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 563/869] svcrdma: Reject Read lists that exceed the page budget
-Date: Sat, 17 Oct 2026 17:56:44 +0200
-Message-ID: <20261017160051.510268253@linuxfoundation.org>
+Subject: [PATCH 6.12 564/869] svcrdma: Add Write chunk WRs to the RPCs Send WR chain
+Date: Sat, 17 Oct 2026 17:56:45 +0200
+Message-ID: <20261017160051.533471977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,62 +52,285 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0ca487abb3bdf581851664b5db21f364caf57682 ]
+[ Upstream commit d16f060f3ee297424c0aba047b1d49208adb9318 ]
 
-Individual Read segment lengths are validated at decode time, but
-nothing prevents a requester from sending multiple segments whose
-cumulative length exceeds the rq_pages array budget. When one
-segment fills the page array exactly, the runtime guard in
-svc_rdma_build_read_segment() is bypassed because len reaches zero.
-A subsequent segment then accesses the NULL sentinel slot at
-rq_pages[rq_maxpages], resulting in a NULL pointer dereference during
-DMA mapping.
+Previously, Write chunk RDMA Writes were posted via a separate
+ib_post_send() call with their own completion handler. Each Write
+chunk incurred a doorbell and generated a completion event.
 
-Accumulate pages across all Read segments and reject the message at
-decode time when the total would overflow the page budget.
+Link Write chunk WRs onto the RPC Reply's Send WR chain so that a
+single ib_post_send() call posts both the RDMA Writes and the Send
+WR. A single completion event signals that all operations have
+finished. This reduces both doorbell rate and completion rate, as
+well as eliminating the latency of a round-trip between the Write
+chunk completion and the subsequent Send WR posting.
 
-Fixes: 026d958b38c6 ("svcrdma: Add recvfrom helpers to svc_rdma_rw.c")
-Cc: stable@vger.kernel.org
+The lifecycle of Write chunk resources changes: previously, the
+svc_rdma_write_done() completion handler released Write chunk
+resources when RDMA Writes completed. With WR chaining, resources
+remain live until the Send completion. A new sc_write_info_list
+tracks Write chunk metadata attached to each Send context, and
+svc_rdma_write_chunk_release() frees these resources when the
+Send context is released.
+
+The svc_rdma_write_done() handler now handles only error cases.
+On success it returns immediately since the Send completion handles
+resource release. On failure (WR flush), it closes the connection
+to signal to the client that the RPC Reply is incomplete.
+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 01500306e1d5 ("svcrdma: Clear sc_cm_id when ADDR_CHANGE replacement fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ include/linux/sunrpc/svc_rdma.h       | 13 +++-
+ net/sunrpc/xprtrdma/svc_rdma_rw.c     | 94 ++++++++++++++++++++-------
+ net/sunrpc/xprtrdma/svc_rdma_sendto.c | 10 ++-
+ 3 files changed, 91 insertions(+), 26 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index 68a0aa627455d..1588363f76ac3 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -430,11 +430,14 @@ static void svc_rdma_build_arg_xdr(struct svc_rqst *rqstp,
-  *	    to the first byte past the Read list. rc_read_pcl and
-  *	    rc_call_pcl cl_count fields are set to the number of
-  *	    Read segments in the list.
-- *  %false: Read list is corrupt. @rctxt's xdr_stream is left in an
-- *	    unknown state.
-+ *  %false: Read list is corrupt or exceeds the page budget. @rctxt's
-+ *	    xdr_stream is left in an unknown state.
+diff --git a/include/linux/sunrpc/svc_rdma.h b/include/linux/sunrpc/svc_rdma.h
+index 1016f2feddc4b..c6f358a6e1597 100644
+--- a/include/linux/sunrpc/svc_rdma.h
++++ b/include/linux/sunrpc/svc_rdma.h
+@@ -213,6 +213,7 @@ struct svc_rdma_recv_ctxt {
   */
- static bool xdr_count_read_segments(struct svc_rdma_recv_ctxt *rctxt, __be32 *p)
- {
-+	unsigned int maxlen = (rctxt->rc_maxpages - 2) << PAGE_SHIFT;
-+	unsigned int total_len = 0;
-+
- 	rctxt->rc_call_pcl.cl_count = 0;
- 	rctxt->rc_read_pcl.cl_count = 0;
- 	while (xdr_item_is_present(p)) {
-@@ -448,6 +451,12 @@ static bool xdr_count_read_segments(struct svc_rdma_recv_ctxt *rctxt, __be32 *p)
+ struct svc_rdma_write_info {
+ 	struct svcxprt_rdma	*wi_rdma;
++	struct list_head	wi_list;
  
- 		xdr_decode_read_segment(p, &position, &handle,
- 					    &length, &offset);
-+		if (length > maxlen)
-+			return false;
-+		total_len += length;
-+		if (PAGE_ALIGN(total_len + rctxt->rc_byte_len -
-+			       xdr_stream_pos(&rctxt->rc_stream)) > maxlen)
-+			return false;
- 		if (position) {
- 			if (position & 3)
- 				return false;
+ 	const struct svc_rdma_chunk	*wi_chunk;
+ 
+@@ -241,7 +242,10 @@ struct svc_rdma_send_ctxt {
+ 	struct ib_cqe		sc_cqe;
+ 	struct xdr_buf		sc_hdrbuf;
+ 	struct xdr_stream	sc_stream;
++
++	struct list_head	sc_write_info_list;
+ 	struct svc_rdma_write_info sc_reply_info;
++
+ 	void			*sc_xprt_buf;
+ 	int			sc_page_count;
+ 	int			sc_cur_sge_no;
+@@ -273,11 +277,14 @@ extern void svc_rdma_cc_init(struct svcxprt_rdma *rdma,
+ extern void svc_rdma_cc_release(struct svcxprt_rdma *rdma,
+ 				struct svc_rdma_chunk_ctxt *cc,
+ 				enum dma_data_direction dir);
++extern void svc_rdma_write_chunk_release(struct svcxprt_rdma *rdma,
++					 struct svc_rdma_send_ctxt *ctxt);
+ extern void svc_rdma_reply_chunk_release(struct svcxprt_rdma *rdma,
+ 					 struct svc_rdma_send_ctxt *ctxt);
+-extern int svc_rdma_send_write_list(struct svcxprt_rdma *rdma,
+-				    const struct svc_rdma_recv_ctxt *rctxt,
+-				    const struct xdr_buf *xdr);
++extern int svc_rdma_prepare_write_list(struct svcxprt_rdma *rdma,
++				       const struct svc_rdma_recv_ctxt *rctxt,
++				       struct svc_rdma_send_ctxt *sctxt,
++				       const struct xdr_buf *xdr);
+ extern int svc_rdma_prepare_reply_chunk(struct svcxprt_rdma *rdma,
+ 					const struct svc_rdma_pcl *write_pcl,
+ 					const struct svc_rdma_pcl *reply_pcl,
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+index 448d3ee936a5b..ac6f6d15c8335 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+@@ -230,6 +230,28 @@ static void svc_rdma_write_info_free(struct svc_rdma_write_info *info)
+ 	queue_work(svcrdma_wq, &info->wi_work);
+ }
+ 
++/**
++ * svc_rdma_write_chunk_release - Release Write chunk I/O resources
++ * @rdma: controlling transport
++ * @ctxt: Send context that is being released
++ *
++ * Write chunk resources remain live until Send completion because
++ * Write WRs are chained to the Send WR. This function releases all
++ * write_info structures accumulated on @ctxt->sc_write_info_list.
++ */
++void svc_rdma_write_chunk_release(struct svcxprt_rdma *rdma,
++				  struct svc_rdma_send_ctxt *ctxt)
++{
++	struct svc_rdma_write_info *info;
++
++	while (!list_empty(&ctxt->sc_write_info_list)) {
++		info = list_first_entry(&ctxt->sc_write_info_list,
++					struct svc_rdma_write_info, wi_list);
++		list_del(&info->wi_list);
++		svc_rdma_write_info_free(info);
++	}
++}
++
+ /**
+  * svc_rdma_reply_chunk_release - Release Reply chunk I/O resources
+  * @rdma: controlling transport
+@@ -286,13 +308,11 @@ static void svc_rdma_write_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	struct ib_cqe *cqe = wc->wr_cqe;
+ 	struct svc_rdma_chunk_ctxt *cc =
+ 			container_of(cqe, struct svc_rdma_chunk_ctxt, cc_cqe);
+-	struct svc_rdma_write_info *info =
+-			container_of(cc, struct svc_rdma_write_info, wi_cc);
+ 
+ 	switch (wc->status) {
+ 	case IB_WC_SUCCESS:
+ 		trace_svcrdma_wc_write(&cc->cc_cid);
+-		break;
++		return;
+ 	case IB_WC_WR_FLUSH_ERR:
+ 		trace_svcrdma_wc_write_flush(wc, &cc->cc_cid);
+ 		break;
+@@ -300,12 +320,11 @@ static void svc_rdma_write_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		trace_svcrdma_wc_write_err(wc, &cc->cc_cid);
+ 	}
+ 
+-	svc_rdma_wake_send_waiters(rdma, cc->cc_sqecount);
+-
+-	if (unlikely(wc->status != IB_WC_SUCCESS))
+-		svc_xprt_deferred_close(&rdma->sc_xprt);
+-
+-	svc_rdma_write_info_free(info);
++	/* The RDMA Write has flushed, so the client won't get
++	 * some of the outgoing RPC message. Signal the loss
++	 * to the client by closing the connection.
++	 */
++	svc_xprt_deferred_close(&rdma->sc_xprt);
+ }
+ 
+ /**
+@@ -601,13 +620,27 @@ static int svc_rdma_xb_write(const struct xdr_buf *xdr, void *data)
+ 	return xdr->len;
+ }
+ 
+-static int svc_rdma_send_write_chunk(struct svcxprt_rdma *rdma,
+-				     const struct svc_rdma_chunk *chunk,
+-				     const struct xdr_buf *xdr)
++/*
++ * svc_rdma_prepare_write_chunk - Link Write WRs for @chunk onto @sctxt's chain
++ *
++ * Write WRs are prepended to the Send WR chain so that a single
++ * ib_post_send() posts both RDMA Writes and the final Send. Only
++ * the first WR in each chunk gets a CQE for error detection;
++ * subsequent WRs complete without individual completion events.
++ * The Send WR's signaled completion indicates all chained
++ * operations have finished.
++ */
++static int svc_rdma_prepare_write_chunk(struct svcxprt_rdma *rdma,
++					struct svc_rdma_send_ctxt *sctxt,
++					const struct svc_rdma_chunk *chunk,
++					const struct xdr_buf *xdr)
+ {
+ 	struct svc_rdma_write_info *info;
+ 	struct svc_rdma_chunk_ctxt *cc;
++	struct ib_send_wr *first_wr;
+ 	struct xdr_buf payload;
++	struct list_head *pos;
++	struct ib_cqe *cqe;
+ 	int ret;
+ 
+ 	if (xdr_buf_subsegment(xdr, &payload, chunk->ch_position,
+@@ -623,10 +656,25 @@ static int svc_rdma_send_write_chunk(struct svcxprt_rdma *rdma,
+ 	if (ret != payload.len)
+ 		goto out_err;
+ 
+-	trace_svcrdma_post_write_chunk(&cc->cc_cid, cc->cc_sqecount);
+-	ret = svc_rdma_post_chunk_ctxt(rdma, cc);
+-	if (ret < 0)
++	ret = -EINVAL;
++	if (unlikely(sctxt->sc_sqecount + cc->cc_sqecount > rdma->sc_sq_depth))
+ 		goto out_err;
++
++	first_wr = sctxt->sc_wr_chain;
++	cqe = &cc->cc_cqe;
++	list_for_each(pos, &cc->cc_rwctxts) {
++		struct svc_rdma_rw_ctxt *rwc;
++
++		rwc = list_entry(pos, struct svc_rdma_rw_ctxt, rw_list);
++		first_wr = rdma_rw_ctx_wrs(&rwc->rw_ctx, rdma->sc_qp,
++					   rdma->sc_port_num, cqe, first_wr);
++		cqe = NULL;
++	}
++	sctxt->sc_wr_chain = first_wr;
++	sctxt->sc_sqecount += cc->cc_sqecount;
++	list_add(&info->wi_list, &sctxt->sc_write_info_list);
++
++	trace_svcrdma_post_write_chunk(&cc->cc_cid, cc->cc_sqecount);
+ 	return 0;
+ 
+ out_err:
+@@ -635,17 +683,19 @@ static int svc_rdma_send_write_chunk(struct svcxprt_rdma *rdma,
+ }
+ 
+ /**
+- * svc_rdma_send_write_list - Send all chunks on the Write list
++ * svc_rdma_prepare_write_list - Construct WR chain for sending Write list
+  * @rdma: controlling RDMA transport
+  * @rctxt: Write list provisioned by the client
++ * @sctxt: Send WR resources
+  * @xdr: xdr_buf containing an RPC Reply message
+  *
+- * Returns zero on success, or a negative errno if one or more
+- * Write chunks could not be sent.
++ * Returns zero on success, or a negative errno if WR chain
++ * construction fails for one or more Write chunks.
+  */
+-int svc_rdma_send_write_list(struct svcxprt_rdma *rdma,
+-			     const struct svc_rdma_recv_ctxt *rctxt,
+-			     const struct xdr_buf *xdr)
++int svc_rdma_prepare_write_list(struct svcxprt_rdma *rdma,
++				const struct svc_rdma_recv_ctxt *rctxt,
++				struct svc_rdma_send_ctxt *sctxt,
++				const struct xdr_buf *xdr)
+ {
+ 	struct svc_rdma_chunk *chunk;
+ 	int ret;
+@@ -653,7 +703,7 @@ int svc_rdma_send_write_list(struct svcxprt_rdma *rdma,
+ 	pcl_for_each_chunk(chunk, &rctxt->rc_write_pcl) {
+ 		if (!chunk->ch_payload_length)
+ 			break;
+-		ret = svc_rdma_send_write_chunk(rdma, chunk, xdr);
++		ret = svc_rdma_prepare_write_chunk(rdma, sctxt, chunk, xdr);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_sendto.c b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+index 02aed4932f57d..cdc3f7a1cef53 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+@@ -142,6 +142,7 @@ svc_rdma_send_ctxt_alloc(struct svcxprt_rdma *rdma)
+ 	ctxt->sc_send_wr.sg_list = ctxt->sc_sges;
+ 	ctxt->sc_send_wr.send_flags = IB_SEND_SIGNALED;
+ 	ctxt->sc_cqe.done = svc_rdma_wc_send;
++	INIT_LIST_HEAD(&ctxt->sc_write_info_list);
+ 	ctxt->sc_xprt_buf = buffer;
+ 	xdr_buf_init(&ctxt->sc_hdrbuf, ctxt->sc_xprt_buf,
+ 		     rdma->sc_max_req_size);
+@@ -227,6 +228,7 @@ static void svc_rdma_send_ctxt_release(struct svcxprt_rdma *rdma,
+ 	struct ib_device *device = rdma->sc_cm_id->device;
+ 	unsigned int i;
+ 
++	svc_rdma_write_chunk_release(rdma, ctxt);
+ 	svc_rdma_reply_chunk_release(rdma, ctxt);
+ 
+ 	if (ctxt->sc_page_count)
+@@ -983,6 +985,12 @@ void svc_rdma_send_error_msg(struct svcxprt_rdma *rdma,
+ 	sctxt->sc_send_wr.num_sge = 1;
+ 	sctxt->sc_send_wr.opcode = IB_WR_SEND;
+ 	sctxt->sc_sges[0].length = sctxt->sc_hdrbuf.len;
++
++	/* Ensure only the error message is posted, not any previously
++	 * prepared Write chunk WRs.
++	 */
++	sctxt->sc_wr_chain = &sctxt->sc_send_wr;
++	sctxt->sc_sqecount = 1;
+ 	if (svc_rdma_post_send(rdma, sctxt))
+ 		goto put_ctxt;
+ 	return;
+@@ -1030,7 +1038,7 @@ int svc_rdma_sendto(struct svc_rqst *rqstp)
+ 	if (!p)
+ 		goto put_ctxt;
+ 
+-	ret = svc_rdma_send_write_list(rdma, rctxt, &rqstp->rq_res);
++	ret = svc_rdma_prepare_write_list(rdma, rctxt, sctxt, &rqstp->rq_res);
+ 	if (ret < 0)
+ 		goto put_ctxt;
+ 
 -- 
 2.53.0
 
