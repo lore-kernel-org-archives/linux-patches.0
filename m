@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C05F359A9B;
-	Sat, 17 Oct 2026 16:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641CD3A0E8B;
+	Sat, 17 Oct 2026 16:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254898; cv=none; b=qumwFVxPz9Pr6B+qOOphdMYHx0YVWL9NdtKm9DCkPxAA2oXwUSs+4OXSCEF/4t18cHfyLHQPX95GCpJ8ZrAmHFmx/kt+xZtUaBH5iemm6glSZ1/FTnXV/Xj1EvDTcjW/IV6tNC1raXMnwDYgs8oCE1Iu2yc9oNF0TyeOB4aMxuc=
+	t=1792254901; cv=none; b=NGgMFhB2gYB/1CXNbM+2JHtVFwrWR9gZRSu1+/lA6MYumM12TWryMN+LMx4HKfetOgt+wP3eLWLVclBAQPJWx1ZKRjJXIuE40OxfkwAkrhUlm2F4Dnf8xam0UnF94FTwNv8Qq/aveOsZST9uRTwv+MI8MrTm5tFsAC5LU/5GC0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254898; c=relaxed/simple;
-	bh=VyZ+r0KZwPkDpEGu6O4c0Zdue1CxgyX/HywPtDQoweU=;
+	s=arc-20240116; t=1792254901; c=relaxed/simple;
+	bh=xfhY2i2qzS6FakajqXN54O/x2SzKfMiSJ3s9vmDanos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMV6w9i4JSMdErWFTIL1OhYcySUTiz4oML3zOQ2E1ycPlMKF8iKgAjvD5Y5eaqWtIt9nO0URQjULZWNoDA+z3Gq2BUXL4rHWc4oRTt2Ejck2TKrta3HxbwNiGkpvzHchebxgy5IWiHYXiJDVHzhGEpamtuPZkvWG/Ys0zHBGC/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgWlcfA3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E7ahI+1fCvm0isFtBWnYswHl/qiKrClm4X/omgNXjGi4a9syoViX6gEbcu7gFf42cmeR4e07r5f9CTCPiv1N0TWCOcLDClVVZ7Uq35bdr/Bh9VcVVoKvT39rzs2WKHP+1bqLeFry/L94bA9bemZolJodQyXKbiUkkWQe1P1M0jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMGddmdR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgWlcfA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90A61F000C4;
-	Sat, 17 Oct 2026 16:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMGddmdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91BE1F000C4;
+	Sat, 17 Oct 2026 16:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254897;
-	bh=2KqpEoWe3geNWhFb/78tmjRs9uE8koiw+orbC2D5r5Q=;
+	s=korg; t=1792254900;
+	bh=6aBBBYwdFF0lXzbgqJ2WfKkSQF1rOeVvboO9UTidSjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JgWlcfA3ZGMK7wu+TGvndwMjoluMRFqeLQ/IjDrRClp/UaSZS6YycuQEuakuF1QCd
-	 08nvFjQD85nXx1LyRWJqaRlh+VMH2a1Sj5dFAg4VVkzx+0GJ7w8DPC91J7C2lBzlEz
-	 uiuxmaP8bj5Ibzvm0pDl8ZIIviA1WboYc2jE7q9c=
+	b=HMGddmdRh4/ITzXbNa2JIDltiM2+V6Mf373FNIiKYPLTyXbhPUqPw5BNesOdACeP9
+	 lU55K4wIUvnVQ2pigdGrjbsW/5AYRJSfUOvX7twVcVgGUEjA/A6eLsqHzGULyQrx/6
+	 KvrFKpO41+++BPxpdPKM8v2w4sKttV2l+VyR/vog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 561/869] wifi: iwlwifi: dvm: pair transport op-mode enter/leave
-Date: Sat, 17 Oct 2026 17:56:42 +0200
-Message-ID: <20261017160051.460266737@linuxfoundation.org>
+Subject: [PATCH 6.12 597/869] netfilter: nf_tables: skip double clone set expressions on element insert
+Date: Sat, 17 Oct 2026 17:57:18 +0200
+Message-ID: <20261017160052.353062745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,52 +51,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6b340a694cee9e7a24b2be827c738b5b6cb13c84 ]
+[ Upstream commit 43559058d21e0493aa220ac167e0279334dea5f9 ]
 
-If there's a failure and the op-mode didn't actually fully
-initialize, it should leave the transport again. Fix that.
+Both the dynset and newsetelem path clone the existing set expressions
+when setting set element expressions if no override expressions are
+provided. This results in a double clone, once to clone the template set
+expressions then another clone on the new element. Add a flag to
+annotate if userspace provides a override expression (ie. expression of
+the same type of the set but different configuration), otherwise borrow
+the existing expression from the set. Add conditionals to release
+expression iif they represent an override. Use this new override_exprs
+flag to dump the dynset expression override to userspace.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250504132447.714c3517548b.I49557e7ba8c03be2b558cc9fb5efa2a9fbab890e@changeid
-Stable-dep-of: 67105abd6195 ("wifi: iwlwifi: dvm: fix memory leak in iwl_op_mode_dvm_start()")
+This simplifies the existing logic and it also fixes a bug with the
+connlimit expression which results in a module refcount imbalance
+WARNING splat when resorting on the default set expressions.
+
+Fixes: 65038428b2c6 ("netfilter: nf_tables: allow to specify stateful expression in set definition")
+Fixes: fca05d4d61e6 ("netfilter: nft_dynset: honor stateful expressions in set definition")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |  2 --
+ net/netfilter/nf_tables_api.c     | 56 ++++++++++---------------------
+ net/netfilter/nft_dynset.c        | 25 ++++++++------
+ 3 files changed, 33 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-index a4f6e5a8f3a9d..ee8f588465e61 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-@@ -1386,14 +1386,14 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index d440915addd6e..eaddf2aacb2f4 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -867,8 +867,6 @@ struct nft_elem_priv *nft_set_elem_init(const struct nft_set *set,
+ 					const u32 *key, const u32 *key_end,
+ 					const u32 *data,
+ 					u64 timeout, u64 expiration, gfp_t gfp);
+-int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+-			    struct nft_expr *expr_array[]);
+ void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 92a86e81084b1..4b6cb990ab743 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6573,39 +6573,11 @@ static void nft_trans_elems_destroy(const struct nft_ctx *ctx,
+ 		nf_tables_set_elem_destroy(ctx, te->set, te->elems[i].priv);
+ }
  
- 	err = iwl_trans_start_hw(priv->trans);
- 	if (err)
--		goto out_free_hw;
-+		goto out_leave_trans;
+-int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+-			    struct nft_expr *expr_array[])
+-{
+-	struct nft_expr *expr;
+-	int err, i, k;
+-
+-	for (i = 0; i < set->num_exprs; i++) {
+-		expr = kzalloc(set->exprs[i]->ops->size, GFP_KERNEL_ACCOUNT);
+-		if (!expr)
+-			goto err_expr;
+-
+-		err = nft_expr_clone(expr, set->exprs[i], GFP_KERNEL_ACCOUNT);
+-		if (err < 0) {
+-			kfree(expr);
+-			goto err_expr;
+-		}
+-		expr_array[i] = expr;
+-	}
+-
+-	return 0;
+-
+-err_expr:
+-	for (k = i - 1; k >= 0; k--)
+-		nft_expr_destroy(ctx, expr_array[k]);
+-
+-	return -ENOMEM;
+-}
+-
+ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
+ 				   const struct nft_set_ext_tmpl *tmpl,
+ 				   const struct nft_set_ext *ext,
+ 				   struct nft_expr *expr_array[],
+-				   u32 num_exprs)
++				   u32 num_exprs, bool override_exprs)
+ {
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
+ 	u32 len = sizeof(struct nft_set_elem_expr);
+@@ -6628,7 +6600,8 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
+ 			goto err_elem_expr_setup;
  
- 	/* Read the EEPROM */
- 	err = iwl_read_eeprom(priv->trans, &priv->eeprom_blob,
- 			      &priv->eeprom_blob_size);
- 	if (err) {
- 		IWL_ERR(priv, "Unable to init EEPROM\n");
--		goto out_free_hw;
-+		goto out_leave_trans;
+ 		elem_expr->size += expr_array[i]->ops->size;
+-		nft_expr_destroy(ctx, expr_array[i]);
++		if (override_exprs)
++			nft_expr_destroy(ctx, expr_array[i]);
+ 		expr_array[i] = NULL;
  	}
  
- 	/* Reset chip to save power until we load uCode during "up". */
-@@ -1516,6 +1516,8 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	kfree(priv->eeprom_blob);
- out_free_eeprom:
- 	kfree(priv->nvm_data);
-+out_leave_trans:
-+	iwl_trans_op_mode_leave(priv->trans);
- out_free_hw:
- 	ieee80211_free_hw(priv->hw);
- out:
+@@ -6636,7 +6609,9 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
+ 
+ err_elem_expr_setup:
+ 	for (; i < num_exprs; i++) {
+-		nft_expr_destroy(ctx, expr_array[i]);
++		if (override_exprs)
++			nft_expr_destroy(ctx, expr_array[i]);
++
+ 		expr_array[i] = NULL;
+ 	}
+ 
+@@ -6918,6 +6893,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	struct nft_set_binding *binding;
+ 	struct nft_elem_priv *elem_priv;
+ 	struct nft_object *obj = NULL;
++	bool override_exprs = false;
+ 	struct nft_userdata *udata;
+ 	struct nft_data_desc desc;
+ 	enum nft_registers dreg;
+@@ -7024,6 +7000,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 
+ 		expr_array[0] = expr;
+ 		num_exprs = 1;
++		override_exprs = true;
+ 
+ 		if (set->num_exprs && set->exprs[0]->ops != expr->ops) {
+ 			err = -EOPNOTSUPP;
+@@ -7052,6 +7029,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			}
+ 			expr_array[i] = expr;
+ 			num_exprs++;
++			override_exprs = true;
+ 
+ 			if (set->num_exprs && expr->ops != set->exprs[i]->ops) {
+ 				err = -EOPNOTSUPP;
+@@ -7065,9 +7043,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		}
+ 	} else if (set->num_exprs > 0 &&
+ 		   !(flags & NFT_SET_ELEM_INTERVAL_END)) {
+-		err = nft_set_elem_expr_clone(ctx, set, expr_array);
+-		if (err < 0)
+-			goto err_set_elem_expr_clone;
++		for (i = 0; i < set->num_exprs; i++)
++			expr_array[i] = set->exprs[i];
+ 
+ 		num_exprs = set->num_exprs;
+ 	}
+@@ -7206,7 +7183,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		udata->len = ulen - 1;
+ 		nla_memcpy(&udata->data, nla[NFTA_SET_ELEM_USERDATA], ulen);
+ 	}
+-	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs);
++	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs,
++				      override_exprs);
+ 	if (err < 0)
+ 		goto err_elem_free;
+ 
+@@ -7308,9 +7286,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ err_parse_key:
+ 	nft_data_release(&elem.key.val, NFT_DATA_VALUE);
+ err_set_elem_expr:
+-	for (i = 0; i < num_exprs && expr_array[i]; i++)
+-		nft_expr_destroy(ctx, expr_array[i]);
+-err_set_elem_expr_clone:
++	if (override_exprs) {
++		for (i = 0; i < num_exprs && expr_array[i]; i++)
++			nft_expr_destroy(ctx, expr_array[i]);
++	}
++
+ 	return err;
+ }
+ 
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 0d78de9d2d754..59b14e6a2ca82 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -19,7 +19,8 @@ struct nft_dynset {
+ 	u8				sreg_key;
+ 	u8				sreg_data;
+ 	bool				invert;
+-	bool				expr;
++	bool				expr:1,
++					override_exprs:1;
+ 	u8				num_exprs;
+ 	u64				timeout;
+ 	struct nft_expr			*expr_array[NFT_SET_EXPR_MAX];
+@@ -257,6 +258,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 
+ 		priv->num_exprs++;
+ 		priv->expr_array[0] = dynset_expr;
++		priv->override_exprs = true;
+ 
+ 		if (set->num_exprs > 1 ||
+ 		    (set->num_exprs == 1 &&
+@@ -289,6 +291,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			}
+ 			priv->expr_array[i] = dynset_expr;
+ 			priv->num_exprs++;
++			priv->override_exprs = true;
+ 
+ 			if (set->num_exprs) {
+ 				if (i >= set->num_exprs) {
+@@ -307,9 +310,8 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			goto err_expr_free;
+ 		}
+ 	} else if (set->num_exprs > 0) {
+-		err = nft_set_elem_expr_clone(ctx, set, priv->expr_array);
+-		if (err < 0)
+-			return err;
++		for (i = 0; i < set->num_exprs; i++)
++			priv->expr_array[i] = set->exprs[i];
+ 
+ 		priv->num_exprs = set->num_exprs;
+ 	}
+@@ -339,8 +341,10 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 	return 0;
+ 
+ err_expr_free:
+-	for (i = 0; i < priv->num_exprs; i++)
+-		nft_expr_destroy(ctx, priv->expr_array[i]);
++	if (priv->override_exprs) {
++		for (i = 0; i < priv->num_exprs; i++)
++			nft_expr_destroy(ctx, priv->expr_array[i]);
++	}
+ 	return err;
+ }
+ 
+@@ -367,9 +371,10 @@ static void nft_dynset_destroy(const struct nft_ctx *ctx,
+ 	struct nft_dynset *priv = nft_expr_priv(expr);
+ 	int i;
+ 
+-	for (i = 0; i < priv->num_exprs; i++)
+-		nft_expr_destroy(ctx, priv->expr_array[i]);
+-
++	if (priv->override_exprs) {
++		for (i = 0; i < priv->num_exprs; i++)
++			nft_expr_destroy(ctx, priv->expr_array[i]);
++	}
+ 	nf_tables_destroy_set(ctx, priv->set);
+ }
+ 
+@@ -393,7 +398,7 @@ static int nft_dynset_dump(struct sk_buff *skb,
+ 			 nf_jiffies64_to_msecs(priv->timeout),
+ 			 NFTA_DYNSET_PAD))
+ 		goto nla_put_failure;
+-	if (priv->set->num_exprs == 0) {
++	if (priv->set->num_exprs == 0 || priv->override_exprs) {
+ 		if (priv->num_exprs == 1) {
+ 			if (nft_expr_dump(skb, NFTA_DYNSET_EXPR,
+ 					  priv->expr_array[0], reset))
 -- 
 2.53.0
 
