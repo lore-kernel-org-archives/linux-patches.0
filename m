@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D813B774F;
-	Sat, 17 Oct 2026 17:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24EB3B7B98;
+	Sat, 17 Oct 2026 17:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258055; cv=none; b=FY2+SsKU/9Q6jF1+AVwT6H4/8bjktI0LJjSvPX17svDX+GjNv8SSEpZpcIl48SdcKvq/3VnJTwkPK2eJ3Ad0R1BlDUoI0DpCq2Adv4sbuAhgSM0QUpSB/wzSZnx9ELdyQkRKC2r6hTxLBFvGm5w2XPSOqoevfYIYQOJwPasG7ys=
+	t=1792258058; cv=none; b=AYd+dxnzF/9LZB00lpAFe3znWhPA9W26gel9zbTAN96golYK8p7kFxXE1IItBLCPFxcEbEhmCSz1er+wU5z8RTQdRj4HAjtJLYc+hCnjDIeJm4w+di3vjlPzlKfHpTg2JH5sH6Qo0e4BWeiZ5TSA973xe5M+b5JlsRMjRRxhvL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258055; c=relaxed/simple;
-	bh=YsdIwxQL+snCnn8kTY253iZmdganlPUjSLJkVaPdnJ0=;
+	s=arc-20240116; t=1792258058; c=relaxed/simple;
+	bh=EvSxdVQmNE2krcyp1vhORRrIaamgwDkoYlbtDudRrVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0CjD6CChsPkHXvU9b4zbjSzqLI1ochFLaDz6BWvvI2YLvZCK5/XyNAlCHGtMyy6RQbloe7auFNGoe69ywjuPwPbSqtSdhgZApcv4cjxkMCfSWCV72iXo/jZdMo1mtopHq0Z2Qs/jnl+m7ySNOcAHdPwZAhfOBPx/psBTgstIuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvXLC6+J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=co2UonaojXQ4vrvjSzCpvlQqJcNnU0EiVWLguPUK5k4rpYNUk8Uzt330WpDJ+aT0YN9vfJhDyfhwLiVQtqCwouupVe8vjDIa5NLmnBMs8COv2dMbyv44q+8qWfAeN/mGOXc1180ONzSZbjCdR2q6882dqX+KNEOJJiZRv83PO0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TV6zm77B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvXLC6+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEBF1F000C4;
-	Sat, 17 Oct 2026 17:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TV6zm77B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AC41F000C4;
+	Sat, 17 Oct 2026 17:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258054;
-	bh=/HQ2qyrj8CQzukk7vn11lx9WIhphiuKSm7LbbgGjJ7U=;
+	s=korg; t=1792258057;
+	bh=KCc3/w0sS8+gdG7vTNDO3hARKrJ9cqBxx7D2Dv3OA7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvXLC6+J3i5DQiAbpwoAimtK4lEgKo+ZV3JbevuZXAa0tMzZZ8i5uZLwQwLjpMeA/
-	 HB54Xy1SMZFiV9Es+3ZCu/Nnjkp5B3H4/87FCJgSf7YNeglxUOGJd5A2vjCpLlgbPx
-	 piB2sBRSmxennNXXNdKSdRnyPOoDrWdz7NPOB7Tc=
+	b=TV6zm77BlZiCs5ag5XWpOgNhKzj5HaU3+gQILTphdooZkMJUxsx5fGuzun0sj2wMw
+	 cD3klbkhBCi4KyDkNIM8dCqPueTaRFPbPiYDXIwJq2urLYaZEXaUH2WrrO5fhJ+h5w
+	 Xy2uhD0Iz299UdxvTF9KCITq/D1hg80/XFcs1oLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gong <quic_wgong@quicinc.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0702/1674] wifi: ath11k: add support to select 6 GHz regulatory type
-Date: Sat, 17 Oct 2026 17:49:34 +0200
-Message-ID: <20261017160449.122794932@linuxfoundation.org>
+Subject: [PATCH 6.6 0751/1674] wifi: iwlwifi: dont warn when if there is a FW error
+Date: Sat, 17 Oct 2026 17:50:23 +0200
+Message-ID: <20261017160450.380288579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,158 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gong <quic_wgong@quicinc.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit e3d373ec4f02bf41379d91707e3e3f2a46464cd7 ]
+[ Upstream commit c7f50d0433a016d43681592836a3d484817bfb34 ]
 
-There are 3 types of regulatory rules for AP mode and 6 type for
-station mode. Add wmi_vdev_type and ieee80211_ap_reg_power to
-select the exact reg rules.
+iwl_trans_reclaim is warning if it is called when the FW is not alive.
+But if it is called when there is a pending restart, i.e. after a FW
+error, there is no need to warn, instead - return silently.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
-
-Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20231218085844.2658-2-quic_bqiang@quicinc.com
-Stable-dep-of: 933ab187e679 ("wifi: ath11k: update channel list in reg notifier instead reg worker")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308231427.ba3d90b22c25.I9332506af1997faefcf0bdb51d98d5e874051722@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/reg.c | 70 +++++++++++++++++++++------
- drivers/net/wireless/ath/ath11k/reg.h |  6 ++-
- drivers/net/wireless/ath/ath11k/wmi.c |  3 +-
- 3 files changed, 62 insertions(+), 17 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/reg.c b/drivers/net/wireless/ath/ath11k/reg.c
-index c9e8bbc4896f3..72b0eb588c06e 100644
---- a/drivers/net/wireless/ath/ath11k/reg.c
-+++ b/drivers/net/wireless/ath/ath11k/reg.c
-@@ -608,25 +608,68 @@ ath11k_reg_update_weather_radar_band(struct ath11k_base *ab,
- 	*rule_idx = i;
- }
- 
-+enum wmi_reg_6ghz_ap_type
-+ath11k_reg_ap_pwr_convert(enum ieee80211_ap_reg_power power_type)
-+{
-+	switch (power_type) {
-+	case IEEE80211_REG_LPI_AP:
-+		return WMI_REG_INDOOR_AP;
-+	case IEEE80211_REG_SP_AP:
-+		return WMI_REG_STANDARD_POWER_AP;
-+	case IEEE80211_REG_VLP_AP:
-+		return WMI_REG_VERY_LOW_POWER_AP;
-+	default:
-+		return WMI_REG_MAX_AP_TYPE;
-+	}
-+}
-+
- struct ieee80211_regdomain *
- ath11k_reg_build_regd(struct ath11k_base *ab,
--		      struct cur_regulatory_info *reg_info, bool intersect)
-+		      struct cur_regulatory_info *reg_info, bool intersect,
-+		      enum wmi_vdev_type vdev_type,
-+		      enum ieee80211_ap_reg_power power_type)
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index e8f48cb8d2da1..8c0762d2dc000 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -1276,6 +1276,9 @@ static inline void iwl_trans_reclaim(struct iwl_trans *trans, int queue,
+ 				     int ssn, struct sk_buff_head *skbs,
+ 				     bool is_flush)
  {
- 	struct ieee80211_regdomain *tmp_regd, *default_regd, *new_regd = NULL;
--	struct cur_reg_rule *reg_rule;
-+	struct cur_reg_rule *reg_rule, *reg_rule_6ghz;
- 	u8 i = 0, j = 0, k = 0;
- 	u8 num_rules;
- 	u16 max_bw;
--	u32 flags;
-+	u32 flags, reg_6ghz_number, max_bw_6ghz;
- 	char alpha2[3];
- 
- 	num_rules = reg_info->num_5ghz_reg_rules + reg_info->num_2ghz_reg_rules;
- 
--	/* FIXME: Currently taking reg rules for 6 GHz only from Indoor AP mode list.
--	 * This can be updated after complete 6 GHz regulatory support is added.
--	 */
--	if (reg_info->is_ext_reg_event)
--		num_rules += reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP];
-+	if (reg_info->is_ext_reg_event) {
-+		if (vdev_type == WMI_VDEV_TYPE_STA) {
-+			enum wmi_reg_6ghz_ap_type ap_type;
++	if (unlikely(test_bit(STATUS_FW_ERROR, &trans->status)))
++		return;
 +
-+			ap_type = ath11k_reg_ap_pwr_convert(power_type);
-+
-+			if (ap_type == WMI_REG_MAX_AP_TYPE)
-+				ap_type = WMI_REG_INDOOR_AP;
-+
-+			reg_6ghz_number = reg_info->num_6ghz_rules_client
-+					[ap_type][WMI_REG_DEFAULT_CLIENT];
-+
-+			if (reg_6ghz_number == 0) {
-+				ap_type = WMI_REG_INDOOR_AP;
-+				reg_6ghz_number = reg_info->num_6ghz_rules_client
-+						[ap_type][WMI_REG_DEFAULT_CLIENT];
-+			}
-+
-+			reg_rule_6ghz = reg_info->reg_rules_6ghz_client_ptr
-+					[ap_type][WMI_REG_DEFAULT_CLIENT];
-+			max_bw_6ghz = reg_info->max_bw_6ghz_client
-+					[ap_type][WMI_REG_DEFAULT_CLIENT];
-+		} else {
-+			reg_6ghz_number = reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP];
-+			reg_rule_6ghz =
-+				reg_info->reg_rules_6ghz_ap_ptr[WMI_REG_INDOOR_AP];
-+			max_bw_6ghz = reg_info->max_bw_6ghz_ap[WMI_REG_INDOOR_AP];
-+		}
-+
-+		num_rules += reg_6ghz_number;
-+	}
- 
- 	if (!num_rules)
- 		goto ret;
-@@ -673,13 +716,10 @@ ath11k_reg_build_regd(struct ath11k_base *ab,
- 			 * per other BW rule flags we pass from here
- 			 */
- 			flags = NL80211_RRF_AUTO_BW;
--		} else if (reg_info->is_ext_reg_event &&
--			   reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP] &&
--			   (k < reg_info->num_6ghz_rules_ap[WMI_REG_INDOOR_AP])) {
--			reg_rule = reg_info->reg_rules_6ghz_ap_ptr[WMI_REG_INDOOR_AP] +
--				   k++;
--			max_bw = min_t(u16, reg_rule->max_bw,
--				       reg_info->max_bw_6ghz_ap[WMI_REG_INDOOR_AP]);
-+		} else if (reg_info->is_ext_reg_event && reg_6ghz_number &&
-+			   k < reg_6ghz_number) {
-+			reg_rule = reg_rule_6ghz + k++;
-+			max_bw = min_t(u16, reg_rule->max_bw, max_bw_6ghz);
- 			flags = NL80211_RRF_AUTO_BW;
- 		} else {
- 			break;
-diff --git a/drivers/net/wireless/ath/ath11k/reg.h b/drivers/net/wireless/ath/ath11k/reg.h
-index d873b9cf7fc4f..30fce1411d1ff 100644
---- a/drivers/net/wireless/ath/ath11k/reg.h
-+++ b/drivers/net/wireless/ath/ath11k/reg.h
-@@ -31,7 +31,11 @@ void ath11k_reg_free(struct ath11k_base *ab);
- void ath11k_regd_update_work(struct work_struct *work);
- struct ieee80211_regdomain *
- ath11k_reg_build_regd(struct ath11k_base *ab,
--		      struct cur_regulatory_info *reg_info, bool intersect);
-+		      struct cur_regulatory_info *reg_info, bool intersect,
-+		      enum wmi_vdev_type vdev_type,
-+		      enum ieee80211_ap_reg_power power_type);
- int ath11k_regd_update(struct ath11k *ar);
- int ath11k_reg_update_chan_list(struct ath11k *ar, bool wait);
-+enum wmi_reg_6ghz_ap_type
-+ath11k_reg_ap_pwr_convert(enum ieee80211_ap_reg_power power_type);
- #endif
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 4db48d02a8f34..f3879a552e1f5 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -7171,7 +7171,8 @@ static int ath11k_reg_chan_list_event(struct ath11k_base *ab,
- 	    !ath11k_reg_is_world_alpha((char *)reg_info->alpha2))
- 		intersect = true;
- 
--	regd = ath11k_reg_build_regd(ab, reg_info, intersect);
-+	regd = ath11k_reg_build_regd(ab, reg_info, intersect,
-+				     WMI_VDEV_TYPE_AP, IEEE80211_REG_LPI_AP);
- 	if (!regd) {
- 		ath11k_warn(ab, "failed to build regd from reg_info\n");
- 		goto fallback;
+ 	if (WARN_ON_ONCE(trans->state != IWL_TRANS_FW_ALIVE)) {
+ 		IWL_ERR(trans, "%s bad state = %d\n", __func__, trans->state);
+ 		return;
 -- 
 2.53.0
 
