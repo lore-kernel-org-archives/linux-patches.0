@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9AF22F767;
-	Sat, 17 Oct 2026 16:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D12339365;
+	Sat, 17 Oct 2026 16:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253535; cv=none; b=gbJdAP/u2k1wLO6G7OeC6MRPFVxehXTaR1/x6XNEhhXFXq1FtrXkrDTY4rTcBu0neuChXbFqQCmEzobaAzIpIdhG8c/LxIx6ngbc3nHg1DdLeb1aICAjSeAxr7EcFNqG69STyQi9QlspWAl3kGN2nNWrAIpmz2nm7oRep8hulW8=
+	t=1792253538; cv=none; b=AeyKVHpjmosTSgWmqv+DCX59lmCSGs4SEDC4rzNVAN1yZafL51Pn5V2FJPo3brP2GdhsrZXp9MBccA3uT2cWz9K/0r3QAh8z/3BPxuNeKp9USI1+8aWiG8FAo3AGEjfmBYXkT4EK5OHUXWyhnh/eFhES4Er5U1BAtYqRaAGvbTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253535; c=relaxed/simple;
-	bh=ggObSA2FTb/chdFYMUMQoH4DOtUf8FM6dW4Wgm3c6fU=;
+	s=arc-20240116; t=1792253538; c=relaxed/simple;
+	bh=vJiel4P75A36mewi5GSwFZ9W4oSHBo3Slq+uunmL5rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ge3XVAGKY9dIVqQo4NyKEfXvn/fESSRvG1MVPrcoha9ITtOL5/DqjnptT3N5lekaxnKaoGr0upkm1fZ6BPXN90m4xCG8Io71zFa/p1Hoqx4Fo/EgBFtwk43QQzrAWJOR7XRXbgNrWjmFiGTYiK1rIuZ/ItFQXOnFKLrb90ijrMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQgzS+T2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TkLBvQMuUahts1BHevpFv+pyNGohP/171Wb9i6HIPe1bI5gDNGE2EGVETiAH52v4N104aoZsyW5ntLZekzUSRYVflo64nTC/6U0FdHnesk3Z5/7CoaQKtYEmCpB6t/ogaTjAYJLBwNRtTtoQs1gRj0smvmxEGAyFY3hRwd2ZiPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSYSEb7a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQgzS+T2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BA61F000C4;
-	Sat, 17 Oct 2026 16:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSYSEb7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF5B1F000C4;
+	Sat, 17 Oct 2026 16:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253534;
-	bh=oVy8cuPUcZcx1qiQMIPV8YaJM69UFmX/mpwum8W/Ir0=;
+	s=korg; t=1792253537;
+	bh=7cKrQJ52OJzosHRsl8Xlvv/thUFajozzQ28WLGPATbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQgzS+T2veO14fL7zGoeUIGDNUSmBBmQW8/cd4NG6OwxL+ErFahk5bFjD7UlMgrok
-	 VuFv1mH3BXeitcm8iKnEPObH3uWEDTdIw+06AtfHcL8iqxDSTxsA2ZQp+ql20wyaWJ
-	 VVEFofiPBmaA2bHTdG5V9NXwQ0vLQnSeDrQ1sdgw=
+	b=BSYSEb7aW9pEYYvI7Yw3LMl8lT01ja9xwGA5YhUPiSJWvyqwvcQ9RDlsz4B2za/gM
+	 VKvzZSxX0OgB0sLxLRlVdMTFWNjYxpOR4fDkZkZ2cjyatrSrzqAQ3mRjKHVWSj/s7w
+	 ltg0QT0AEZSGLxj1zR62FlJeN1XDr60MX1H118Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Erez Shitrit <erezsh@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/869] net/mlx5: HWS, simplify allocations as we support only FDB
-Date: Sat, 17 Oct 2026 17:49:14 +0200
-Message-ID: <20261017160039.937302456@linuxfoundation.org>
+Subject: [PATCH 6.12 149/869] scsi: ufs: qcom : Refactor phy_power_on/off calls
+Date: Sat, 17 Oct 2026 17:49:50 +0200
+Message-ID: <20261017160040.859259566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,535 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
 
-[ Upstream commit c86963aae5b83a865a552408b40e743c3610bd9f ]
+[ Upstream commit 77d2fa54a94574f767d5fb296b6b8e011eba0c8e ]
 
-In pools, STCs and actions: no need to allocate array for various
-table types, as HWS is used to manage only FDB flow tables.
+Commit 3f6d1767b1a0 ("phy: ufs-qcom: Refactor all init steps into
+phy_poweron") moved the phy_power_on/off from ufs_qcom_setup_clocks
+to suspend/resume func.
 
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Erez Shitrit <erezsh@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250102181415.1477316-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 2c0a959bebdc ("net/mlx5: HWS, Fix memory leak in hws_pool_buddy_init error path")
+To have a better power saving, remove the phy_power_on/off calls from
+resume/suspend path and put them back to ufs_qcom_setup_clocks, so that
+PHY regulators & clks can be turned on/off along with UFS's clocks.
+
+Since phy phy_power_on is separated out from phy calibrate, make
+separate calls to phy_power_on calls from ufs qcom driver.
+
+Co-developed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Link: https://lore.kernel.org/r/20250526153821.7918-11-quic_nitirawa@quicinc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 5127be409c6c ("scsi: ufs: ufs-qcom: Fix UFS OCP issue during UFS power down (PC=3)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/steering/hws/mlx5hws_action.c   | 107 +++++++++---------
- .../mlx5/core/steering/hws/mlx5hws_action.h   |   2 +-
- .../mlx5/core/steering/hws/mlx5hws_cmd.c      |   2 +-
- .../mlx5/core/steering/hws/mlx5hws_context.c  |  29 ++---
- .../mlx5/core/steering/hws/mlx5hws_context.h  |   4 +-
- .../mlx5/core/steering/hws/mlx5hws_debug.c    |  36 +++---
- .../mlx5/core/steering/hws/mlx5hws_matcher.c  |   4 +-
- .../mlx5/core/steering/hws/mlx5hws_rule.c     |   2 +-
- .../mlx5/core/steering/hws/mlx5hws_table.c    |  13 +--
- 9 files changed, 87 insertions(+), 112 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 58 +++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-index b27bb41065326..ef3e5caf75495 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
-@@ -11,31 +11,29 @@
- /* This is the longest supported action sequence for FDB table:
-  * DECAP, POP_VLAN, MODIFY, CTR, ASO, PUSH_VLAN, MODIFY, ENCAP, Term.
-  */
--static const u32 action_order_arr[MLX5HWS_TABLE_TYPE_MAX][MLX5HWS_ACTION_TYP_MAX] = {
--	[MLX5HWS_TABLE_TYPE_FDB] = {
--		BIT(MLX5HWS_ACTION_TYP_REMOVE_HEADER) |
--		BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L2_TO_L2) |
--		BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L3_TO_L2),
--		BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
--		BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
--		BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
--		BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
--		BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
--		BIT(MLX5HWS_ACTION_TYP_INSERT_HEADER) |
--		BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L2) |
--		BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L3),
--		BIT(MLX5HWS_ACTION_TYP_CTR),
--		BIT(MLX5HWS_ACTION_TYP_TAG),
--		BIT(MLX5HWS_ACTION_TYP_ASO_METER),
--		BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
--		BIT(MLX5HWS_ACTION_TYP_TBL) |
--		BIT(MLX5HWS_ACTION_TYP_VPORT) |
--		BIT(MLX5HWS_ACTION_TYP_DROP) |
--		BIT(MLX5HWS_ACTION_TYP_SAMPLER) |
--		BIT(MLX5HWS_ACTION_TYP_RANGE) |
--		BIT(MLX5HWS_ACTION_TYP_DEST_ARRAY),
--		BIT(MLX5HWS_ACTION_TYP_LAST),
--	},
-+static const u32 action_order_arr[MLX5HWS_ACTION_TYP_MAX] = {
-+	BIT(MLX5HWS_ACTION_TYP_REMOVE_HEADER) |
-+	BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L2_TO_L2) |
-+	BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L3_TO_L2),
-+	BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
-+	BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
-+	BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
-+	BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
-+	BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
-+	BIT(MLX5HWS_ACTION_TYP_INSERT_HEADER) |
-+	BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L2) |
-+	BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L3),
-+	BIT(MLX5HWS_ACTION_TYP_CTR),
-+	BIT(MLX5HWS_ACTION_TYP_TAG),
-+	BIT(MLX5HWS_ACTION_TYP_ASO_METER),
-+	BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
-+	BIT(MLX5HWS_ACTION_TYP_TBL) |
-+	BIT(MLX5HWS_ACTION_TYP_VPORT) |
-+	BIT(MLX5HWS_ACTION_TYP_DROP) |
-+	BIT(MLX5HWS_ACTION_TYP_SAMPLER) |
-+	BIT(MLX5HWS_ACTION_TYP_RANGE) |
-+	BIT(MLX5HWS_ACTION_TYP_DEST_ARRAY),
-+	BIT(MLX5HWS_ACTION_TYP_LAST),
- };
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index a715f377d0a80..5d93aa7067a68 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -561,26 +561,17 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+ 	enum ufs_notify_change_status status)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	struct phy *phy = host->generic_phy;
  
- static const char * const mlx5hws_action_type_str[] = {
-@@ -83,8 +81,8 @@ static int hws_action_get_shared_stc_nic(struct mlx5hws_context *ctx,
- 	int ret;
- 
- 	mutex_lock(&ctx->ctrl_lock);
--	if (ctx->common_res[tbl_type].shared_stc[stc_type]) {
--		ctx->common_res[tbl_type].shared_stc[stc_type]->refcount++;
-+	if (ctx->common_res.shared_stc[stc_type]) {
-+		ctx->common_res.shared_stc[stc_type]->refcount++;
- 		mutex_unlock(&ctx->ctrl_lock);
+ 	if (status == PRE_CHANGE)
  		return 0;
- 	}
-@@ -124,8 +122,8 @@ static int hws_action_get_shared_stc_nic(struct mlx5hws_context *ctx,
- 		goto free_shared_stc;
- 	}
  
--	ctx->common_res[tbl_type].shared_stc[stc_type] = shared_stc;
--	ctx->common_res[tbl_type].shared_stc[stc_type]->refcount = 1;
-+	ctx->common_res.shared_stc[stc_type] = shared_stc;
-+	ctx->common_res.shared_stc[stc_type]->refcount = 1;
+-	if (ufs_qcom_is_link_off(hba)) {
+-		/*
+-		 * Disable the tx/rx lane symbol clocks before PHY is
+-		 * powered down as the PLL source should be disabled
+-		 * after downstream clocks are disabled.
+-		 */
++	if (!ufs_qcom_is_link_active(hba))
+ 		ufs_qcom_disable_lane_clks(host);
+-		phy_power_off(phy);
  
- 	mutex_unlock(&ctx->ctrl_lock);
+-		/* reset the connected UFS device during power down */
+-		ufs_qcom_device_reset_ctrl(hba, true);
  
-@@ -178,16 +176,16 @@ static void hws_action_put_shared_stc(struct mlx5hws_action *action,
- 	}
- 
- 	mutex_lock(&ctx->ctrl_lock);
--	if (--ctx->common_res[tbl_type].shared_stc[stc_type]->refcount) {
-+	if (--ctx->common_res.shared_stc[stc_type]->refcount) {
- 		mutex_unlock(&ctx->ctrl_lock);
- 		return;
- 	}
- 
--	shared_stc = ctx->common_res[tbl_type].shared_stc[stc_type];
-+	shared_stc = ctx->common_res.shared_stc[stc_type];
- 
- 	mlx5hws_action_free_single_stc(ctx, tbl_type, &shared_stc->stc_chunk);
- 	kfree(shared_stc);
--	ctx->common_res[tbl_type].shared_stc[stc_type] = NULL;
-+	ctx->common_res.shared_stc[stc_type] = NULL;
- 	mutex_unlock(&ctx->ctrl_lock);
- }
- 
-@@ -206,10 +204,10 @@ bool mlx5hws_action_check_combo(struct mlx5hws_context *ctx,
- 				enum mlx5hws_action_type *user_actions,
- 				enum mlx5hws_table_type table_type)
- {
--	const u32 *order_arr = action_order_arr[table_type];
-+	const u32 *order_arr = action_order_arr;
-+	bool valid_combo;
- 	u8 order_idx = 0;
- 	u8 user_idx = 0;
--	bool valid_combo;
- 
- 	if (table_type >= MLX5HWS_TABLE_TYPE_MAX) {
- 		mlx5hws_err(ctx, "Invalid table_type %d", table_type);
-@@ -321,8 +319,8 @@ int mlx5hws_action_alloc_single_stc(struct mlx5hws_context *ctx,
- __must_hold(&ctx->ctrl_lock)
- {
- 	struct mlx5hws_cmd_stc_modify_attr cleanup_stc_attr = {0};
--	struct mlx5hws_pool *stc_pool = ctx->stc_pool[table_type];
- 	struct mlx5hws_cmd_stc_modify_attr fixup_stc_attr = {0};
-+	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
- 	bool use_fixup;
- 	u32 obj_0_id;
- 	int ret;
-@@ -387,8 +385,8 @@ void mlx5hws_action_free_single_stc(struct mlx5hws_context *ctx,
- 				    struct mlx5hws_pool_chunk *stc)
- __must_hold(&ctx->ctrl_lock)
- {
--	struct mlx5hws_pool *stc_pool = ctx->stc_pool[table_type];
- 	struct mlx5hws_cmd_stc_modify_attr stc_attr = {0};
-+	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
- 	u32 obj_id;
- 
- 	/* Modify the STC not to point to an object */
-@@ -561,7 +559,7 @@ hws_action_create_stcs(struct mlx5hws_action *action, u32 obj_id)
- 	if (action->flags & MLX5HWS_ACTION_FLAG_HWS_FDB) {
- 		ret = mlx5hws_action_alloc_single_stc(ctx, &stc_attr,
- 						      MLX5HWS_TABLE_TYPE_FDB,
--						      &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
-+						      &action->stc);
- 		if (ret)
- 			goto out_err;
- 	}
-@@ -585,7 +583,7 @@ hws_action_destroy_stcs(struct mlx5hws_action *action)
- 
- 	if (action->flags & MLX5HWS_ACTION_FLAG_HWS_FDB)
- 		mlx5hws_action_free_single_stc(ctx, MLX5HWS_TABLE_TYPE_FDB,
--					       &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
-+					       &action->stc);
- 
- 	mutex_unlock(&ctx->ctrl_lock);
- }
-@@ -1639,8 +1637,8 @@ hws_action_create_dest_match_range_table(struct mlx5hws_context *ctx,
- 	rtc_attr.table_type = mlx5hws_table_get_res_fw_ft_type(MLX5HWS_TABLE_TYPE_FDB, false);
- 
- 	/* STC is a single resource (obj_id), use any STC for the ID */
--	stc_pool = ctx->stc_pool[MLX5HWS_TABLE_TYPE_FDB];
--	default_stc = ctx->common_res[MLX5HWS_TABLE_TYPE_FDB].default_stc;
-+	stc_pool = ctx->stc_pool;
-+	default_stc = ctx->common_res.default_stc;
- 	obj_id = mlx5hws_pool_chunk_get_base_id(stc_pool, &default_stc->default_hit);
- 	rtc_attr.stc_base = obj_id;
- 
-@@ -1731,7 +1729,7 @@ hws_action_create_dest_match_range_fill_table(struct mlx5hws_context *ctx,
- 	ste_attr.used_id_rtc_0 = &used_rtc_0_id;
- 	ste_attr.used_id_rtc_1 = &used_rtc_1_id;
- 
--	common_res = &ctx->common_res[MLX5HWS_TABLE_TYPE_FDB];
-+	common_res = &ctx->common_res;
- 
- 	/* init an empty match STE which will always hit */
- 	ste_attr.wqe_ctrl = &wqe_ctrl;
-@@ -1750,7 +1748,7 @@ hws_action_create_dest_match_range_fill_table(struct mlx5hws_context *ctx,
- 	wqe_ctrl.stc_ix[MLX5HWS_ACTION_STC_IDX_CTRL] |=
- 		htonl(MLX5HWS_ACTION_STC_IDX_LAST_COMBO2 << 29);
- 	wqe_ctrl.stc_ix[MLX5HWS_ACTION_STC_IDX_HIT] =
--		htonl(hit_ft_action->stc[MLX5HWS_TABLE_TYPE_FDB].offset);
-+		htonl(hit_ft_action->stc.offset);
- 
- 	wqe_data_arr = (__force __be32 *)&range_wqe_data;
- 
-@@ -1843,7 +1841,7 @@ mlx5hws_action_create_dest_match_range(struct mlx5hws_context *ctx,
- 	stc_attr.ste_table.match_definer_id = ctx->caps->trivial_match_definer;
- 
- 	ret = mlx5hws_action_alloc_single_stc(ctx, &stc_attr, MLX5HWS_TABLE_TYPE_FDB,
--					      &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
-+					      &action->stc);
- 	if (ret)
- 		goto error_unlock;
- 
-@@ -1970,8 +1968,8 @@ __must_hold(&ctx->ctrl_lock)
- 	struct mlx5hws_action_default_stc *default_stc;
- 	int ret;
- 
--	if (ctx->common_res[tbl_type].default_stc) {
--		ctx->common_res[tbl_type].default_stc->refcount++;
-+	if (ctx->common_res.default_stc) {
-+		ctx->common_res.default_stc->refcount++;
- 		return 0;
- 	}
- 
-@@ -2023,8 +2021,8 @@ __must_hold(&ctx->ctrl_lock)
- 		goto free_nop_dw7;
- 	}
- 
--	ctx->common_res[tbl_type].default_stc = default_stc;
--	ctx->common_res[tbl_type].default_stc->refcount++;
-+	ctx->common_res.default_stc = default_stc;
-+	ctx->common_res.default_stc->refcount++;
- 
- 	return 0;
- 
-@@ -2046,9 +2044,7 @@ __must_hold(&ctx->ctrl_lock)
- {
- 	struct mlx5hws_action_default_stc *default_stc;
- 
--	default_stc = ctx->common_res[tbl_type].default_stc;
--
--	default_stc = ctx->common_res[tbl_type].default_stc;
-+	default_stc = ctx->common_res.default_stc;
- 	if (--default_stc->refcount)
- 		return;
- 
-@@ -2058,7 +2054,7 @@ __must_hold(&ctx->ctrl_lock)
- 	mlx5hws_action_free_single_stc(ctx, tbl_type, &default_stc->nop_dw5);
- 	mlx5hws_action_free_single_stc(ctx, tbl_type, &default_stc->nop_ctr);
- 	kfree(default_stc);
--	ctx->common_res[tbl_type].default_stc = NULL;
-+	ctx->common_res.default_stc = NULL;
- }
- 
- static void hws_action_modify_write(struct mlx5hws_send_engine *queue,
-@@ -2150,8 +2146,7 @@ hws_action_apply_stc(struct mlx5hws_actions_apply_data *apply,
- {
- 	struct mlx5hws_action *action = apply->rule_action[action_idx].action;
- 
--	apply->wqe_ctrl->stc_ix[stc_idx] =
--		htonl(action->stc[apply->tbl_type].offset);
-+	apply->wqe_ctrl->stc_ix[stc_idx] = htonl(action->stc.offset);
- }
- 
- static void
-@@ -2181,7 +2176,7 @@ hws_action_setter_modify_header(struct mlx5hws_actions_apply_data *apply,
- 	rule_action = &apply->rule_action[setter->idx_double];
- 	action = rule_action->action;
- 
--	stc_idx = htonl(action->stc[apply->tbl_type].offset);
-+	stc_idx = htonl(action->stc.offset);
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
- 
-@@ -2240,7 +2235,7 @@ hws_action_setter_insert_ptr(struct mlx5hws_actions_apply_data *apply,
- 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW6] = 0;
- 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW7] = htonl(arg_idx);
- 
--	stc_idx = htonl(action->stc[apply->tbl_type].offset);
-+	stc_idx = htonl(action->stc.offset);
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
- 
-@@ -2272,7 +2267,7 @@ hws_action_setter_tnl_l3_to_l2(struct mlx5hws_actions_apply_data *apply,
- 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW6] = 0;
- 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW7] = htonl(arg_idx);
- 
--	stc_idx = htonl(action->stc[apply->tbl_type].offset);
-+	stc_idx = htonl(action->stc.offset);
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
- 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
-index 2de7c3c842f64..2283eefeb2233 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
-@@ -124,7 +124,7 @@ struct mlx5hws_action {
- 	struct mlx5hws_context *ctx;
- 	union {
- 		struct {
--			struct mlx5hws_pool_chunk stc[MLX5HWS_TABLE_TYPE_MAX];
-+			struct mlx5hws_pool_chunk stc;
- 			union {
- 				struct {
- 					u32 pat_id;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
-index 2c7b14172049b..7b8eefead1a02 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
-@@ -359,7 +359,7 @@ void mlx5hws_cmd_set_attr_connect_miss_tbl(struct mlx5hws_context *ctx,
- 	ft_attr->type = fw_ft_type;
- 	ft_attr->table_miss_action = MLX5_IFC_MODIFY_FLOW_TABLE_MISS_ACTION_GOTO_TBL;
- 
--	default_miss_tbl = ctx->common_res[type].default_miss->ft_id;
-+	default_miss_tbl = ctx->common_res.default_miss->ft_id;
- 	if (!default_miss_tbl) {
- 		pr_warn("HWS: no flow table ID for default miss\n");
- 		return;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-index 00e4fdf4a558b..a4cc81849ebe2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
-@@ -23,7 +23,6 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
- 	struct mlx5hws_pool_attr pool_attr = {0};
- 	u8 max_log_sz;
- 	int ret;
--	int i;
- 
- 	ret = mlx5hws_pat_init_pattern_cache(&ctx->pattern_cache);
- 	if (ret)
-@@ -39,23 +38,17 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
- 	max_log_sz = min(MLX5HWS_POOL_STC_LOG_SZ, ctx->caps->stc_alloc_log_max);
- 	pool_attr.alloc_log_sz = max(max_log_sz, ctx->caps->stc_alloc_log_gran);
- 
--	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
--		pool_attr.table_type = i;
--		ctx->stc_pool[i] = mlx5hws_pool_create(ctx, &pool_attr);
--		if (!ctx->stc_pool[i]) {
--			mlx5hws_err(ctx, "Failed to allocate STC pool [%d]", i);
--			ret = -ENOMEM;
--			goto free_stc_pools;
--		}
-+	pool_attr.table_type = MLX5HWS_TABLE_TYPE_FDB;
-+	ctx->stc_pool = mlx5hws_pool_create(ctx, &pool_attr);
-+	if (!ctx->stc_pool) {
-+		mlx5hws_err(ctx, "Failed to allocate STC pool\n");
-+		ret = -ENOMEM;
-+		goto uninit_cache;
- 	}
- 
- 	return 0;
- 
--free_stc_pools:
--	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++)
--		if (ctx->stc_pool[i])
--			mlx5hws_pool_destroy(ctx->stc_pool[i]);
--
-+uninit_cache:
- 	mlx5hws_definer_uninit_cache(ctx->definer_cache);
- uninit_pat_cache:
- 	mlx5hws_pat_uninit_pattern_cache(ctx->pattern_cache);
-@@ -64,12 +57,8 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
- 
- static void hws_context_pools_uninit(struct mlx5hws_context *ctx)
- {
--	int i;
--
--	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
--		if (ctx->stc_pool[i])
--			mlx5hws_pool_destroy(ctx->stc_pool[i]);
+-	} else if (!ufs_qcom_is_link_active(hba)) {
+-		ufs_qcom_disable_lane_clks(host);
 -	}
-+	if (ctx->stc_pool)
-+		mlx5hws_pool_destroy(ctx->stc_pool);
++	/* reset the connected UFS device during power down */
++	if (ufs_qcom_is_link_off(hba) && host->device_reset)
++		ufs_qcom_device_reset_ctrl(hba, true);
  
- 	mlx5hws_definer_uninit_cache(ctx->definer_cache);
- 	mlx5hws_pat_uninit_pattern_cache(ctx->pattern_cache);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
-index 8ab548aa402be..6cd3c613eac18 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
-@@ -37,8 +37,8 @@ struct mlx5hws_context {
- 	struct mlx5_core_dev *mdev;
- 	struct mlx5hws_cmd_query_caps *caps;
- 	u32 pd_num;
--	struct mlx5hws_pool *stc_pool[MLX5HWS_TABLE_TYPE_MAX];
--	struct mlx5hws_context_common_res common_res[MLX5HWS_TABLE_TYPE_MAX];
-+	struct mlx5hws_pool *stc_pool;
-+	struct mlx5hws_context_common_res common_res;
- 	struct mlx5hws_pattern_cache *pattern_cache;
- 	struct mlx5hws_definer_cache *definer_cache;
- 	struct mutex ctrl_lock; /* control lock to protect the whole context */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-index 2b8c5a4e1c4c0..0ec60c25596dd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-@@ -368,9 +368,10 @@ static int hws_debug_dump_context_info(struct seq_file *f, struct mlx5hws_contex
- 
- static int hws_debug_dump_context_stc_resource(struct seq_file *f,
- 					       struct mlx5hws_context *ctx,
--					       u32 tbl_type,
- 					       struct mlx5hws_pool_resource *resource)
+ 	return ufs_qcom_ice_suspend(host);
+ }
+@@ -588,26 +579,11 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
  {
-+	u32 tbl_type = MLX5HWS_TABLE_TYPE_BASE + MLX5HWS_TABLE_TYPE_FDB;
-+
- 	seq_printf(f, "%d,0x%llx,%u,%u\n",
- 		   MLX5HWS_DEBUG_RES_TYPE_CONTEXT_STC,
- 		   HWS_PTR_TO_ID(ctx),
-@@ -382,31 +383,22 @@ static int hws_debug_dump_context_stc_resource(struct seq_file *f,
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	struct phy *phy = host->generic_phy;
+ 	int err;
  
- static int hws_debug_dump_context_stc(struct seq_file *f, struct mlx5hws_context *ctx)
- {
--	struct mlx5hws_pool *stc_pool;
--	u32 table_type;
-+	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
- 	int ret;
--	int i;
+-	if (ufs_qcom_is_link_off(hba)) {
+-		err = phy_power_on(phy);
+-		if (err) {
+-			dev_err(hba->dev, "%s: failed PHY power on: %d\n",
+-				__func__, err);
+-			return err;
+-		}
 -
--	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
--		stc_pool = ctx->stc_pool[i];
--		table_type = MLX5HWS_TABLE_TYPE_BASE + i;
+-		err = ufs_qcom_enable_lane_clks(host);
+-		if (err)
+-			return err;
+-
+-	} else if (!ufs_qcom_is_link_active(hba)) {
+-		err = ufs_qcom_enable_lane_clks(host);
+-		if (err)
+-			return err;
+-	}
++	err = ufs_qcom_enable_lane_clks(host);
++	if (err)
++		return err;
  
--		if (!stc_pool)
--			continue;
-+	if (!stc_pool)
-+		return 0;
- 
--		if (stc_pool->resource[0]) {
--			ret = hws_debug_dump_context_stc_resource(f, ctx, table_type,
--								  stc_pool->resource[0]);
--			if (ret)
--				return ret;
--		}
-+	if (stc_pool->resource[0]) {
-+		ret = hws_debug_dump_context_stc_resource(f, ctx, stc_pool->resource[0]);
-+		if (ret)
-+			return ret;
-+	}
- 
--		if (i == MLX5HWS_TABLE_TYPE_FDB && stc_pool->mirror_resource[0]) {
--			ret = hws_debug_dump_context_stc_resource(f, ctx, table_type,
--								  stc_pool->mirror_resource[0]);
--			if (ret)
--				return ret;
--		}
-+	if (stc_pool->mirror_resource[0]) {
-+		ret = hws_debug_dump_context_stc_resource(f, ctx, stc_pool->mirror_resource[0]);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-index ce541c60c5b49..e4b24996bb74c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-@@ -310,8 +310,8 @@ static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
- 	hws_matcher_set_rtc_attr_sz(matcher, &rtc_attr, rtc_type, false);
- 
- 	/* STC is a single resource (obj_id), use any STC for the ID */
--	stc_pool = ctx->stc_pool[tbl->type];
--	default_stc = ctx->common_res[tbl->type].default_stc;
-+	stc_pool = ctx->stc_pool;
-+	default_stc = ctx->common_res.default_stc;
- 	obj_id = mlx5hws_pool_chunk_get_base_id(stc_pool, &default_stc->default_hit);
- 	rtc_attr.stc_base = obj_id;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-index 8a011b958b431..a40c66410585b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-@@ -315,7 +315,7 @@ static void hws_rule_create_init(struct mlx5hws_rule *rule,
- 
- 	/* Init default action apply */
- 	apply->tbl_type = tbl->type;
--	apply->common_res = &ctx->common_res[tbl->type];
-+	apply->common_res = &ctx->common_res;
- 	apply->jump_to_action_stc = matcher->action_ste[0].stc.offset;
- 	apply->require_dep = 0;
+ 	return ufs_qcom_ice_resume(host);
  }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
-index 6544d2fcb48ba..0f413547e89b8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
-@@ -49,8 +49,8 @@ __must_hold(&tbl->ctx->ctrl_lock)
- 	if (tbl->type != MLX5HWS_TABLE_TYPE_FDB)
- 		return 0;
- 
--	if (ctx->common_res[tbl_type].default_miss) {
--		ctx->common_res[tbl_type].default_miss->refcount++;
-+	if (ctx->common_res.default_miss) {
-+		ctx->common_res.default_miss->refcount++;
- 		return 0;
- 	}
- 
-@@ -71,8 +71,8 @@ __must_hold(&tbl->ctx->ctrl_lock)
- 		return -EINVAL;
- 	}
- 
--	ctx->common_res[tbl_type].default_miss = default_miss;
--	ctx->common_res[tbl_type].default_miss->refcount++;
-+	ctx->common_res.default_miss = default_miss;
-+	ctx->common_res.default_miss->refcount++;
- 
- 	return 0;
- }
-@@ -83,17 +83,16 @@ __must_hold(&tbl->ctx->ctrl_lock)
+@@ -933,12 +909,20 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+  * @on: If true, enable clocks else disable them.
+  * @status: PRE_CHANGE or POST_CHANGE notify
+  *
++ * There are certain clocks which comes from the PHY so it needs
++ * to be managed together along with controller clocks which also
++ * provides a better power saving. Hence keep phy_power_off/on calls
++ * in ufs_qcom_setup_clocks, so that PHY's regulators & clks can be
++ * turned on/off along with UFS's clocks.
++ *
+  * Return: 0 on success, non-zero on failure.
+  */
+ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 				 enum ufs_notify_change_status status)
  {
- 	struct mlx5hws_cmd_forward_tbl *default_miss;
- 	struct mlx5hws_context *ctx = tbl->ctx;
--	u8 tbl_type = tbl->type;
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct phy *phy = host->generic_phy;
++	int err;
  
- 	if (tbl->type != MLX5HWS_TABLE_TYPE_FDB)
- 		return;
- 
--	default_miss = ctx->common_res[tbl_type].default_miss;
-+	default_miss = ctx->common_res.default_miss;
- 	if (--default_miss->refcount)
- 		return;
- 
- 	mlx5hws_cmd_forward_tbl_destroy(ctx->mdev, default_miss);
--	ctx->common_res[tbl_type].default_miss = NULL;
-+	ctx->common_res.default_miss = NULL;
- }
- 
- static int hws_table_connect_to_default_miss_tbl(struct mlx5hws_table *tbl, u32 ft_id)
+ 	/*
+ 	 * In case ufs_qcom_init() is not yet done, simply ignore.
+@@ -957,10 +941,22 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 				/* disable device ref_clk */
+ 				ufs_qcom_dev_ref_clk_ctrl(host, false);
+ 			}
++
++			err = phy_power_off(phy);
++			if (err) {
++				dev_err(hba->dev, "phy power off failed, ret=%d\n", err);
++				return err;
++			}
+ 		}
+ 		break;
+ 	case POST_CHANGE:
+ 		if (on) {
++			err = phy_power_on(phy);
++			if (err) {
++				dev_err(hba->dev, "phy power on failed, ret = %d\n", err);
++				return err;
++			}
++
+ 			/* enable the device ref clock for HS mode*/
+ 			if (ufshcd_is_hs_mode(&hba->pwr_info))
+ 				ufs_qcom_dev_ref_clk_ctrl(host, true);
 -- 
 2.53.0
 
