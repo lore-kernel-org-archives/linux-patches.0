@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001843A7189;
-	Sat, 17 Oct 2026 17:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B1F374E60;
+	Sat, 17 Oct 2026 17:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257772; cv=none; b=hotak6GhroxXyyFGtqRZTmz0a6nMa++dkeNpg4Iy0LMii3I2A2DmL0j9U+++OSSB/XB/jtlD2SRwr35I332fujkU2ACsR0mJUjEQNcAU0ldZG2t1BboDiqV4pHHQr8AZUHMLEmutxtO/WwuTflUCFaRFqJvOvV30/3Fr7x3lZXM=
+	t=1792257775; cv=none; b=lPiUJEuTCbQSWxeD87swVgjgVMndwPrsQY2eKKMmMfZi1/yxOIyvV9BunDCTr8YLcOFcSi312PV0HS+pwBLVGz2eZwQt/shGiAPyD9iIBXZPCG3oBQ1h3PXMnj0eC9+J7E1EErzCMtp5v9k0zZft4OG5YZRC0lBAQpsIbsoeDIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257772; c=relaxed/simple;
-	bh=NejZLF61qkUnMxKtTKREwEOBPauIk11qxNfYGyJl/5I=;
+	s=arc-20240116; t=1792257775; c=relaxed/simple;
+	bh=IgZ4KfCz1s+6wpQ+LkyMeqdiJMTm6iWMig/CsTxqanE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejLaNhnlyKG5b52oRy/jqrliQxLNCvWgR9BM7xTCruZXtgO8sHD+ZD6LlZtWb5Mq7KAoqBtvtZpg9wmTlDVYZdmhDyTug6Z9Lqm9w8EB6NSJg3sqsGArRKZOjiY8S/+hbqw53ZRwZU488J4f3+VrCwnPlGFPwuVNduFkzImPQ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nre/FvVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mn4nB2rB/wz4CLrD4Jvl9gRX4RAw1U77xTfLuh9YII4UKCfjeDwrll5vBJ7ixocM9aCdH2anA8Wek1GfVh0/15wOuJc8Rzf77DxolNQGEC5rEuJNCCgstnvmE3l09N8BHg92rwoD0Gee2Jq98TwwI9bu81Dz15c6ngFV++araWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Loj6tPxT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nre/FvVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9181F000C4;
-	Sat, 17 Oct 2026 17:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Loj6tPxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AB51F000C4;
+	Sat, 17 Oct 2026 17:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257770;
-	bh=KPYV1nAfiKXZAadGFqIilfewiT26VW2iqXfxxKvbTJw=;
+	s=korg; t=1792257773;
+	bh=3rP7vZIEI42ZIMvf3QngxV1p9AqIkRaeNtXhSp7mJGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nre/FvVI6QDUi+pxjBEWpuKBNKTxBu3Mef64r9tfZG9oCdgdeUlf8trwY/BAbaozG
-	 ZdLlQsneUdR894su2d6TchBwru/P4ABRUyE5Od6qal9GaERKCVgVlES9240pOBpNFo
-	 se812jzjCHFEWJh/7bhpuIcV+UKvKm8tVZ6Lcrhw=
+	b=Loj6tPxTQerNQq1rIf231TWMHWwWPkeM6fDJSyt4zFaSeVhQ5gezY9ffUGzwq2zDo
+	 i9sdN1iKjh9CyNTG3P6IzHpKftp9XG1vUIW2IrxMCzq8zCKUY9EvDuwIVx4gFnLWLy
+	 OWrXrSM10tbAF06LhgJrybkF79DqTTvth254oH1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0658/1674] io_uring: check for overflows in io_pin_pages
-Date: Sat, 17 Oct 2026 17:48:50 +0200
-Message-ID: <20261017160448.001683563@linuxfoundation.org>
+Subject: [PATCH 6.6 0667/1674] RDMA/siw: Remove direct link to net_device
+Date: Sat, 17 Oct 2026 17:48:59 +0200
+Message-ID: <20261017160448.228374540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,53 +53,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Bernard Metzler <bmt@zurich.ibm.com>
 
-[ Upstream commit 0c0a4eae26ac78379d0c1db053de168a8febc6c9 ]
+[ Upstream commit 16b87037b48889d21854c8e97aec8a1baf2642b3 ]
 
-WARNING: CPU: 0 PID: 5834 at io_uring/memmap.c:144 io_pin_pages+0x149/0x180 io_uring/memmap.c:144
-CPU: 0 UID: 0 PID: 5834 Comm: syz-executor825 Not tainted 6.12.0-next-20241118-syzkaller #0
-Call Trace:
- <TASK>
- __io_uaddr_map+0xfb/0x2d0 io_uring/memmap.c:183
- io_rings_map io_uring/io_uring.c:2611 [inline]
- io_allocate_scq_urings+0x1c0/0x650 io_uring/io_uring.c:3470
- io_uring_create+0x5b5/0xc00 io_uring/io_uring.c:3692
- io_uring_setup io_uring/io_uring.c:3781 [inline]
- ...
- </TASK>
+Do not manage a per device direct link to net_device. Rely
+on associated ib_devices net_device management, not doubling
+the effort locally. A badly managed local link to net_device
+was causing a 'KASAN: slab-use-after-free' exception during
+siw_query_port() call.
 
-io_pin_pages()'s uaddr parameter came directly from the user and can be
-garbage. Don't just add size to it as it can overflow.
-
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2159cbb522b02847c053@syzkaller.appspotmail.com
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/1b7520ddb168e1d537d64be47414a0629d0d8f8f.1732581026.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: bdcf26bf9b3a ("rdma/siw: network and RDMA core interface")
+Reported-by: syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b87489410b4efd181bf
+Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
+Link: https://patch.msgid.link/20241212151848.564872-1-bmt@zurich.ibm.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw.h       |  7 +++---
+ drivers/infiniband/sw/siw/siw_cm.c    | 27 ++++++++++++++++-----
+ drivers/infiniband/sw/siw/siw_main.c  | 15 +-----------
+ drivers/infiniband/sw/siw/siw_verbs.c | 35 ++++++++++++++++++---------
+ 4 files changed, 49 insertions(+), 35 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 712c724a7444c..910cd75753df9 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2718,7 +2718,12 @@ struct page **io_pin_pages(unsigned long uaddr, unsigned long len, int *npages)
- 	struct page **pages;
- 	int ret;
+diff --git a/drivers/infiniband/sw/siw/siw.h b/drivers/infiniband/sw/siw/siw.h
+index 58dddb143b9f0..b79dad8704239 100644
+--- a/drivers/infiniband/sw/siw/siw.h
++++ b/drivers/infiniband/sw/siw/siw.h
+@@ -46,6 +46,9 @@
+  */
+ #define SIW_IRQ_MAXBURST_SQ_ACTIVE 4
  
--	end = (uaddr + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	if (check_add_overflow(uaddr, len, &end))
-+		return ERR_PTR(-EOVERFLOW);
-+	if (check_add_overflow(end, PAGE_SIZE - 1, &end))
-+		return ERR_PTR(-EOVERFLOW);
++/* There is always only a port 1 per siw device */
++#define SIW_PORT 1
 +
-+	end = end >> PAGE_SHIFT;
- 	start = uaddr >> PAGE_SHIFT;
- 	nr_pages = end - start;
- 	if (WARN_ON_ONCE(!nr_pages))
+ struct siw_dev_cap {
+ 	int max_qp;
+ 	int max_qp_wr;
+@@ -69,16 +72,12 @@ struct siw_pd {
+ 
+ struct siw_device {
+ 	struct ib_device base_dev;
+-	struct net_device *netdev;
+ 	struct siw_dev_cap attrs;
+ 
+ 	u32 vendor_part_id;
+ 	int numa_node;
+ 	char raw_gid[ETH_ALEN];
+ 
+-	/* physical port state (only one port per device) */
+-	enum ib_port_state state;
+-
+ 	spinlock_t lock;
+ 
+ 	struct xarray qp_xa;
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 3551824e371a6..565fe7bd5a2d5 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1771,6 +1771,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ {
+ 	struct socket *s;
+ 	struct siw_cep *cep = NULL;
++	struct net_device *ndev = NULL;
+ 	struct siw_device *sdev = to_siw_dev(id->device);
+ 	int addr_family = id->local_addr.ss_family;
+ 	int rv = 0;
+@@ -1791,9 +1792,15 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		struct sockaddr_in *laddr = &to_sockaddr_in(id->local_addr);
+ 
+ 		/* For wildcard addr, limit binding to current device only */
+-		if (ipv4_is_zeronet(laddr->sin_addr.s_addr))
+-			s->sk->sk_bound_dev_if = sdev->netdev->ifindex;
+-
++		if (ipv4_is_zeronet(laddr->sin_addr.s_addr)) {
++			ndev = ib_device_get_netdev(id->device, SIW_PORT);
++			if (ndev) {
++				s->sk->sk_bound_dev_if = ndev->ifindex;
++			} else {
++				rv = -ENODEV;
++				goto error;
++			}
++		}
+ 		rv = s->ops->bind(s, (struct sockaddr *)laddr,
+ 				  sizeof(struct sockaddr_in));
+ 	} else {
+@@ -1809,9 +1816,15 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		}
+ 
+ 		/* For wildcard addr, limit binding to current device only */
+-		if (ipv6_addr_any(&laddr->sin6_addr))
+-			s->sk->sk_bound_dev_if = sdev->netdev->ifindex;
+-
++		if (ipv6_addr_any(&laddr->sin6_addr)) {
++			ndev = ib_device_get_netdev(id->device, SIW_PORT);
++			if (ndev) {
++				s->sk->sk_bound_dev_if = ndev->ifindex;
++			} else {
++				rv = -ENODEV;
++				goto error;
++			}
++		}
+ 		rv = s->ops->bind(s, (struct sockaddr *)laddr,
+ 				  sizeof(struct sockaddr_in6));
+ 	}
+@@ -1872,6 +1885,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 	}
+ 	list_add_tail(&cep->listenq, (struct list_head *)id->provider_data);
+ 	cep->state = SIW_EPSTATE_LISTENING;
++	dev_put(ndev);
+ 
+ 	siw_dbg(id->device, "Listen at laddr %pISp\n", &id->local_addr);
+ 
+@@ -1891,6 +1905,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		siw_cep_set_free_and_put(cep);
+ 	}
+ 	sock_release(s);
++	dev_put(ndev);
+ 
+ 	return rv;
+ }
+diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
+index d4b6e0106851d..c82f0af046afa 100644
+--- a/drivers/infiniband/sw/siw/siw_main.c
++++ b/drivers/infiniband/sw/siw/siw_main.c
+@@ -289,7 +289,6 @@ static struct siw_device *siw_device_create(struct net_device *netdev)
+ 		return NULL;
+ 
+ 	base_dev = &sdev->base_dev;
+-	sdev->netdev = netdev;
+ 
+ 	if (netdev->addr_len) {
+ 		memcpy(sdev->raw_gid, netdev->dev_addr,
+@@ -416,7 +415,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+ 
+ 	switch (event) {
+ 	case NETDEV_UP:
+-		sdev->state = IB_PORT_ACTIVE;
+ 		siw_port_event(sdev, 1, IB_EVENT_PORT_ACTIVE);
+ 		break;
+ 
+@@ -425,7 +423,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+ 		break;
+ 
+ 	case NETDEV_DOWN:
+-		sdev->state = IB_PORT_DOWN;
+ 		siw_port_event(sdev, 1, IB_EVENT_PORT_ERR);
+ 		break;
+ 
+@@ -446,12 +443,8 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+ 		siw_port_event(sdev, 1, IB_EVENT_LID_CHANGE);
+ 		break;
+ 	/*
+-	 * Todo: Below netdev events are currently not handled.
++	 * All other events are not handled
+ 	 */
+-	case NETDEV_CHANGEMTU:
+-	case NETDEV_CHANGE:
+-		break;
+-
+ 	default:
+ 		break;
+ 	}
+@@ -481,12 +474,6 @@ static int siw_newlink(const char *basedev_name, struct net_device *netdev)
+ 	sdev = siw_device_create(netdev);
+ 	if (sdev) {
+ 		dev_dbg(&netdev->dev, "siw: new device\n");
+-
+-		if (netif_running(netdev) && netif_carrier_ok(netdev))
+-			sdev->state = IB_PORT_ACTIVE;
+-		else
+-			sdev->state = IB_PORT_DOWN;
+-
+ 		rv = siw_device_register(sdev, basedev_name);
+ 		if (rv)
+ 			ib_dealloc_device(&sdev->base_dev);
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 40e0e0a2486db..236b42fc9761f 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -165,21 +165,29 @@ int siw_query_device(struct ib_device *base_dev, struct ib_device_attr *attr,
+ int siw_query_port(struct ib_device *base_dev, u32 port,
+ 		   struct ib_port_attr *attr)
+ {
+-	struct siw_device *sdev = to_siw_dev(base_dev);
++	struct net_device *ndev;
+ 	int rv;
+ 
+ 	memset(attr, 0, sizeof(*attr));
+ 
+ 	rv = ib_get_eth_speed(base_dev, port, &attr->active_speed,
+ 			 &attr->active_width);
++	if (rv)
++		return rv;
++
++	ndev = ib_device_get_netdev(base_dev, SIW_PORT);
++	if (!ndev)
++		return -ENODEV;
++
+ 	attr->gid_tbl_len = 1;
+ 	attr->max_msg_sz = -1;
+-	attr->max_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
+-	attr->active_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
+-	attr->phys_state = sdev->state == IB_PORT_ACTIVE ?
++	attr->max_mtu = ib_mtu_int_to_enum(ndev->max_mtu);
++	attr->active_mtu = ib_mtu_int_to_enum(READ_ONCE(ndev->mtu));
++	attr->phys_state = (netif_running(ndev) && netif_carrier_ok(ndev)) ?
+ 		IB_PORT_PHYS_STATE_LINK_UP : IB_PORT_PHYS_STATE_DISABLED;
++	attr->state = attr->phys_state == IB_PORT_PHYS_STATE_LINK_UP ?
++		IB_PORT_ACTIVE : IB_PORT_DOWN;
+ 	attr->port_cap_flags = IB_PORT_CM_SUP | IB_PORT_DEVICE_MGMT_SUP;
+-	attr->state = sdev->state;
+ 	/*
+ 	 * All zero
+ 	 *
+@@ -193,6 +201,7 @@ int siw_query_port(struct ib_device *base_dev, u32 port,
+ 	 * attr->subnet_timeout = 0;
+ 	 * attr->init_type_repy = 0;
+ 	 */
++	dev_put(ndev);
+ 	return rv;
+ }
+ 
+@@ -503,20 +512,23 @@ int siw_query_qp(struct ib_qp *base_qp, struct ib_qp_attr *qp_attr,
+ 		 int qp_attr_mask, struct ib_qp_init_attr *qp_init_attr)
+ {
+ 	struct siw_qp *qp;
+-	struct siw_device *sdev;
++	struct net_device *ndev;
+ 
+-	if (base_qp && qp_attr && qp_init_attr) {
++	if (base_qp && qp_attr && qp_init_attr)
+ 		qp = to_siw_qp(base_qp);
+-		sdev = to_siw_dev(base_qp->device);
+-	} else {
++	else
+ 		return -EINVAL;
+-	}
++
++	ndev = ib_device_get_netdev(base_qp->device, SIW_PORT);
++	if (!ndev)
++		return -ENODEV;
++
+ 	qp_attr->cap.max_inline_data = SIW_MAX_INLINE;
+ 	qp_attr->cap.max_send_wr = qp->attrs.sq_size;
+ 	qp_attr->cap.max_send_sge = qp->attrs.sq_max_sges;
+ 	qp_attr->cap.max_recv_wr = qp->attrs.rq_size;
+ 	qp_attr->cap.max_recv_sge = qp->attrs.rq_max_sges;
+-	qp_attr->path_mtu = ib_mtu_int_to_enum(sdev->netdev->mtu);
++	qp_attr->path_mtu = ib_mtu_int_to_enum(READ_ONCE(ndev->mtu));
+ 	qp_attr->max_rd_atomic = qp->attrs.irq_size;
+ 	qp_attr->max_dest_rd_atomic = qp->attrs.orq_size;
+ 
+@@ -531,6 +543,7 @@ int siw_query_qp(struct ib_qp *base_qp, struct ib_qp_attr *qp_attr,
+ 
+ 	qp_init_attr->cap = qp_attr->cap;
+ 
++	dev_put(ndev);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
