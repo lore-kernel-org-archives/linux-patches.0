@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45E636AB6B;
-	Sat, 17 Oct 2026 16:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C0436AB6B;
+	Sat, 17 Oct 2026 16:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255095; cv=none; b=ZYzm9wK8OOcpSE0M4LcIsStBqIlK5nhIT/6vOtkbIXQDRp/ZUoKvLMJJmeq2bwx9Fcorva/7aYUg3FGAD0pxWbGHVl3wdskO1LOmDkIpEPpKxFLg44N/ITe3GhMvqIEOtdk31OerLBN3z+4g9SyzF9oUABBIenafpmL7yD4ucWc=
+	t=1792255098; cv=none; b=Hce0MrfMytIGc2woshwmFzn/h0cUeJKe95ZGtpCTIFo7cA0QByQfjyPbyT9oyk36AiQ/85V7CvA67Q0JtjGA/Nwyr43pbd98rW+6owHwXx0MnZbK96tMqP7//U8O1vxJte+K1D9uP9OlP9VYhcBqQ6+1Jm1LlmUrGRhQzfAxkJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255095; c=relaxed/simple;
-	bh=V9WGJ7+bTSoAMwRQ5f8B1via7X8VnKFQZwL7vz2D+7M=;
+	s=arc-20240116; t=1792255098; c=relaxed/simple;
+	bh=8knnFvGXTVdq/qh61d8fGazHQt+5efQdndl06EpdibM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzWAqE8BEJ+J/o4nWAExtJNfC4Bnx5/d+IzJ+YaIzeh1GcKdUJgrFiqnRQN3DiJp+2bB6ISFBCpLBCrPldSaPjX7uV7/eULf4Y0qxr1hQsN/5d6jjZoHAL4Y20OMkPFkUIkUk5ic646T0RclXfa29UaK+kcbYygWZtuKMJarFaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cogkqvRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cFZzhvcwLX9k/RZNmiezYj4YB75+sLxOZezR/FlOdeeXl3zffmz9d9UoAmv/q5r8wLQQC91jPN4GME4KH2pr4hB2NH/4uvwzrBF1niCGeXP1PineKNqEbTdzd8BOjjINuMnO/VhGyb5Rn1DpgOuuBb86Yi7u+uAMawjDQjJSCS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qR4Q6gOe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cogkqvRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CB91F000C4;
-	Sat, 17 Oct 2026 16:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qR4Q6gOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DCA1F000C4;
+	Sat, 17 Oct 2026 16:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255093;
-	bh=D+UKx5JcWlUedkvE4IQ2ueghuDGho8aTbD7qS/BHcv8=;
+	s=korg; t=1792255096;
+	bh=64AEkFHhp/qgfLw28IVKgtG5tIen8Uy0NRpABy5PLt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cogkqvRJl+9T0RvJgS+fsW5Iew+pi27COzCjnOKdu3IhiHNmMgotfci523xSaeVh6
-	 j76hEGdpg9r1xHa5vMRBJ2QAS8iBv56XR4r8fGrXnTWXjAPWvD89OrRKNFAI7gGTNs
-	 nVsbv+DVfJ04C/OxpsKQukP7JYKe1oWLiNUYIGjI=
+	b=qR4Q6gOeCx3B7rN9LoG/KQPRkFd3+zFtq6/kQEa4dFKLZvHvO1fAEnu75qVkghM8e
+	 2A90Q5giTgYLrT8MPAfyI+3MqcpVZPYH4k1ViPbiIxCkiChgrymqVrZS4iilVr8cly
+	 +KZZumznR0+UM3zEnEW6YKJ9GgbHxqQim+7kBlA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com,
-	Vicki Pfau <vi@endrift.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Bastien Nocera <hadess@hadess.net>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 664/869] HID: steam: Reject short reads
-Date: Sat, 17 Oct 2026 17:58:25 +0200
-Message-ID: <20261017160054.018651238@linuxfoundation.org>
+Subject: [PATCH 6.12 665/869] HID: logitech-hidpp: Fix FF device cleanup on init failure
+Date: Sat, 17 Oct 2026 17:58:26 +0200
+Message-ID: <20261017160054.042381757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,79 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 33ff7b49c38b39b1f3d27db508ac0720fb25c08a ]
+[ Upstream commit dd5be4d9ce2dfc4d4a4527ef7d31d21a78e3cdac ]
 
-Steam Controller FEATURE reports encode the size of the message in the
-message itself. Previously we were trusting that the size reported matched
-the size we actually read, leading to a potential issue with short reads.
-Instead, we should actually verify the length of the read.
+hidpp_ff_init() creates the input force-feedback device with
+input_ff_create(), then allocates the HID++ FF private data,
+effect ID array, and workqueue.
 
-Fixes: c164d6abf384 ("HID: add driver for Valve Steam Controller")
-Reported-by: syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
+If any of those allocations fail after input_ff_create() succeeds,
+the function returns an error without destroying the FF device.
+Add an unwind path that frees the private allocations made by
+hidpp_ff_init() and calls input_ff_destroy() for failures after
+input_ff_create() succeeds.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
+Fixes: ff21a635dd1a ("HID: logitech-hidpp: Force feedback support for the Logitech G920")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 0f826acfbf275..4283219275a3d 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -324,6 +324,13 @@ static int steam_recv_report(struct steam_device *steam,
- 	u8 *buf;
- 	int ret;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 9926ab6e808eb..c84bd26faea96 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -2878,18 +2878,19 @@ static int hidpp_ff_init(struct hidpp_device *hidpp,
+ 	 * ownership to FF core
+ 	 */
+ 	data = kmemdup(data, sizeof(*data), GFP_KERNEL);
+-	if (!data)
+-		return -ENOMEM;
++	if (!data) {
++		error = -ENOMEM;
++		goto err_destroy_ff;
++	}
+ 	data->effect_ids = kcalloc(num_slots, sizeof(int), GFP_KERNEL);
+ 	if (!data->effect_ids) {
+-		kfree(data);
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_free_data;
+ 	}
+ 	data->wq = create_singlethread_workqueue("hidpp-ff-sendqueue");
+ 	if (!data->wq) {
+-		kfree(data->effect_ids);
+-		kfree(data);
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_free_effect_ids;
+ 	}
  
-+	/*
-+	 * All reports start with a two byte header.
-+	 * We must read at least two bytes to get a sensible output.
-+	 */
-+	if (size < 2)
-+		return -EINVAL;
+ 	data->hidpp = hidpp;
+@@ -2919,6 +2920,14 @@ static int hidpp_ff_init(struct hidpp_device *hidpp,
+ 		 version);
+ 
+ 	return 0;
 +
- 	r = steam->hdev->report_enum[HID_FEATURE_REPORT].report_id_hash[0];
- 	if (!r) {
- 		hid_err(steam->hdev, "No HID_FEATURE_REPORT submitted -  nothing to read\n");
-@@ -346,10 +353,30 @@ static int steam_recv_report(struct steam_device *steam,
- 	ret = hid_hw_raw_request(steam->hdev, 0x00,
- 			buf, hid_report_len(r) + 1,
- 			HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
--	if (ret > 0)
--		memcpy(data, buf + 1, min(size, ret - 1));
-+	if (ret > 0) {
-+		/* Remove the report ID from the return buffer */
-+		ret--;
-+		size = min(size, ret);
-+		memcpy(data, buf + 1, size);
-+	}
- 	kfree(buf);
--	return ret;
-+
-+	if (ret < 0) {
-+		hid_err(steam->hdev, "%s: error %d\n", __func__, ret);
-+		return ret;
-+	}
-+
-+	if (ret < 2) {
-+		hid_err(steam->hdev, "%s: reply too short\n", __func__);
-+		return -EPROTO;
-+	}
-+	if (ret < data[1] + 2) {
-+		hid_err(steam->hdev, "%s: expected %u bytes, read %i\n",
-+				__func__, data[1] + 2, ret);
-+		return -EPROTO;
-+	}
-+	hid_dbg(steam->hdev, "Received report %*ph\n", size, data);
-+	return size;
++err_free_effect_ids:
++	kfree(data->effect_ids);
++err_free_data:
++	kfree(data);
++err_destroy_ff:
++	input_ff_destroy(dev);
++	return error;
  }
  
- static int steam_send_report(struct steam_device *steam,
+ /* ************************************************************************** */
 -- 
 2.53.0
 
