@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A23356A12;
-	Sat, 17 Oct 2026 17:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037BC3A8753;
+	Sat, 17 Oct 2026 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257439; cv=none; b=fNO5izWumFHkygEx1DKUjOeRYB1FYouycQgCMh6CMsSgZpdG+8sTlXNMFJxW2MQLwfb/z/ZLguEdSvsAjOSBkkDot/tVJcRycg8FtTMbHM3nNZNDBZsCFFF9c6wCWzghoV4gm9gArpnqmdHaBcvD2Zp7qxrt/lA9EwcPJyx+7mM=
+	t=1792257442; cv=none; b=p5xetKOGMONpd+gY+bwxQAq19mPeNfJih2PrCkwQ4ETJcScQUaJ8gLuY33AoBQy0xSi2MH7RHE59dGAvN5S+BiFU8mxcbCOBlqgBDfBl3jhpUoGMdoeoXQ0PAlkwmZJWKOChUm/XzF3nyOZpseC5Um3K9QOuqm5jM++ctuwPlkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257439; c=relaxed/simple;
-	bh=TIlL0Pxj8HbvBUYYQyfr603n4xgJl6F51wBgI/FFDzA=;
+	s=arc-20240116; t=1792257442; c=relaxed/simple;
+	bh=HV4aZHtEqGOo8/HrYWlWpbO4qFT0N9iE2uXPsR6ivBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXIDcwps+Ya5EYWXc1P0u+Lvj1FHJp9xWob+sP4q+PHrFQWgI3TUAztrQY0P0Je8zn0YAOfSGbsiDOtqWm5Kht2EPm4ouDbmaTMFdAkcNO9ojmH2EijMkDc1927HQD4kcgAVK3JSrEFmJaYQa9cGh7z4ANEWKVpFphHAr0TnP1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHUztawY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5HpJuwJ6FVEB4+YF7QiC/6loClqCytaKzAFN1G2Arb3sg7Y3FC3te3ETGXBfl6fhCt2h+qTVLQavpVdgw8oH8WCdH/ZE+Y+F6hnxsqScCocCDdumAU6cpPjJS37vmVB9DYbN1aA+EyWbNIT4MwAF0Wu57xGgVSBUFkY1DeDG6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOY6zbZY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHUztawY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365241F000C5;
-	Sat, 17 Oct 2026 17:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOY6zbZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523661F000C5;
+	Sat, 17 Oct 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257437;
-	bh=dD6VogE4mGOEUSQQePnZAmO0mFuVOS0H9+W6lxE6myw=;
+	s=korg; t=1792257440;
+	bh=HILhJVclVo8R6IUQ5h0WWC3ospfxSocBSHkfFj212OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHUztawYdz5NIZNmvejrncOXJm/7j1HEKqo2uauPcO1jcIGemhWSU2khjbJh3PoGs
-	 R2ROjeT9edmEKcB+5cJ5JDcI3m9r3wDgUCAyM5eNk9djnaUFD4XrnT40sabq65X3iz
-	 68qJ+DOtWAZIHSEnmvlcJW6fTCUKwi3sf94LAEUw=
+	b=nOY6zbZYGketmHC4stb2fnV4qnqCPiqZ2DMTLH8/yE4wGGktC+/utp0dITTEegy+3
+	 Y4Eid/o3Xxqz4MjhLi7KfzA2PUE0M24WlYdVb7zHzoKE6pmy4lCsAyG+HxwRwBKvJd
+	 no4qr1wIPmbqhhfV6BbxQiMZSXD5g5C6wkTEKnJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Adrian Bente <adibente@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 0558/1674] netfilter: flowtable: fix offloaded ct timeout never being extended
-Date: Sat, 17 Oct 2026 17:47:10 +0200
-Message-ID: <20261017160445.420155271@linuxfoundation.org>
+	Cristian Papa <pcristian292@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0559/1674] wifi: mt76: mt7603: initialize global station WCID
+Date: Sat, 17 Oct 2026 17:47:11 +0200
+Message-ID: <20261017160445.444319188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,81 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Bente <adibente@gmail.com>
+From: Cristian Papa <pcristian292@gmail.com>
 
-commit 53b3e60edb674b442b2b3bbdba484667b0f47a5d upstream.
+commit 456de496b53ae73e6e3020fec815dbdc88aa7c07 upstream.
 
-OpenWrt has recently migrated many platforms to kernel 6.18. On the
-MediaTek platform, which supports hardware network offloading, WiFi
-connections accelerated via the WED path were observed to drop after
-roughly 300 seconds.
+mt7603 uses a driver-private global station WCID for frames that have
+neither a station nor a vif, including frames injected through a monitor
+interface. Unlike the core global WCID initialized by
+mt76_register_device(), this WCID is published without ever being passed
+to mt76_wcid_init().
 
-After several debugging sessions, assisted by the Claude LLM, the
-problem was narrowed down as follows:
+Since commit 0335c034e726 ("wifi: mt76: fix race condition related to
+checking tx queue fill status"), mt76_tx() queues every such frame on the
+WCID's tx_pending or tx_offchannel queue and links its tx_list. The first
+injected frame therefore reaches __skb_queue_tail() with an uninitialized
+sk_buff_head and dereferences a NULL prev pointer.
 
-nf_flow_table_extend_ct_timeout() extends ct->timeout for offloaded
-flows using:
+Initialize the WCID before publishing it.
 
-	cmpxchg(&ct->timeout, expires, new_timeout);
+The fix was tested on an MT7603 PCIe device. Three wildcard probe requests
+were injected through a monitor interface. The hardware queue head and tail
+advanced from 0 to 3 and a second radio captured the third request over the
+air. No oops or reset occurred. After restoring AP mode, a 150 MB transfer
+also completed without a reset.
 
-'expires' comes from nf_ct_expires(ct) and is a relative value, while
-ct->timeout holds an absolute timestamp. The two are never equal, so
-the cmpxchg always fails and the timeout is never extended.
-
-This goes unnoticed for most flows, but a long-lived hardware (WED)
-offloaded flow on MediaTek MT7986 eventually has ct->timeout decay to
-zero, the conntrack entry is reaped and the connection breaks.
-
-Open-code the relative value from a single READ_ONCE(ct->timeout)
-snapshot and compare against that same absolute snapshot in the
-cmpxchg, so the timeout extension actually takes effect while the
-datapath remains authoritative if it updates ct->timeout concurrently.
-
-Fixes: 03428ca5cee9 ("netfilter: conntrack: rework offload nf_conn timeout extension logic")
+Fixes: 0335c034e726 ("wifi: mt76: fix race condition related to checking tx queue fill status")
 Cc: stable@vger.kernel.org
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Adrian Bente <adibente@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Link: https://patch.msgid.link/20260904010702.16306-1-pcristian292@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ mt76_wcid_init() takes no band index in this tree; drop the argument. ]
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7603/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -468,8 +468,13 @@ static u32 nf_flow_table_tcp_timeout(con
-  */
- static void nf_flow_table_extend_ct_timeout(struct nf_conn *ct)
- {
--	static const u32 min_timeout = 5 * 60 * HZ;
--	u32 expires = nf_ct_expires(ct);
-+	static const s32 min_timeout = 5 * 60 * HZ;
-+	u32 ct_timeout = READ_ONCE(ct->timeout);
-+	s32 expires;
-+
-+	expires = ct_timeout - nfct_time_stamp;
-+	if (expires <= 0) /* already expired */
-+		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/init.c b/drivers/net/wireless/mediatek/mt76/mt7603/init.c
+index 0762de3ce5ac4..02d7b36ea786b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/init.c
+@@ -222,6 +222,7 @@ mt7603_mac_init(struct mt7603_dev *dev)
  
- 	/* normal case: large enough timeout, nothing to do. */
- 	if (likely(expires >= min_timeout))
-@@ -487,7 +492,7 @@ static void nf_flow_table_extend_ct_time
- 	if (nf_ct_is_confirmed(ct) &&
- 	    test_bit(IPS_OFFLOAD_BIT, &ct->status)) {
- 		u8 l4proto = nf_ct_protonum(ct);
--		u32 new_timeout = true;
-+		u32 new_timeout = 1;
- 
- 		switch (l4proto) {
- 		case IPPROTO_UDP:
-@@ -512,7 +517,7 @@ static void nf_flow_table_extend_ct_time
- 		 */
- 		if (new_timeout) {
- 			new_timeout += nfct_time_stamp;
--			cmpxchg(&ct->timeout, expires, new_timeout);
-+			cmpxchg(&ct->timeout, ct_timeout, new_timeout);
- 		}
- 	}
- 
+ 	eth_broadcast_addr(bc_addr);
+ 	mt7603_wtbl_init(dev, MT7603_WTBL_RESERVED, -1, bc_addr);
++	mt76_wcid_init(&dev->global_sta.wcid);
+ 	dev->global_sta.wcid.idx = MT7603_WTBL_RESERVED;
+ 	rcu_assign_pointer(dev->mt76.wcid[MT7603_WTBL_RESERVED],
+ 			   &dev->global_sta.wcid);
+-- 
+2.53.0
+
 
 
