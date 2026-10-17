@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CB53806DA;
-	Sat, 17 Oct 2026 17:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA0E3B8412;
+	Sat, 17 Oct 2026 17:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257119; cv=none; b=nnP6eJEz3KD0YWDyc13tsOvVHyOfWGo42D670ASe7N+8Ky5339PPcfBS1ihH6fojl17xJ4dP8077rbqzWYxw9dGDh7FwMHYLzIayhcoFkoKG/pmERWI91kQ4WJD+jbskXUJF6e7QlD5S4pmhn1z4M5xRrdFhkfb1wUHEEQp39ZM=
+	t=1792257122; cv=none; b=bEFzvAd431UUleA0wcd0fJrWi6fSUnkwVW5rS1SpVpKy6LPkNbvSIM5vShhUa5dR78AylQICzfhu2VskkshsyN87CNCIxAEkZIHj0Y5d1d6iNx1+UEO44lC70sETs5BJXQLTo9xv5HPpc3KcjRM1WVFVC40phI23wllJC8hGNAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257119; c=relaxed/simple;
-	bh=XKNyjbQfefmsdSS8j+Jq/myo+iMWj1FGKkBdq4polMw=;
+	s=arc-20240116; t=1792257122; c=relaxed/simple;
+	bh=oIHusSJoj1p8P1d91PYNWZCezFLIb9xfCgK5lhvjg10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miskXu+GB0ptVIMSoV0rXDw0w4eC6KJfBvyNjJ58lEPn0gHBCOMWaUb+W0uoKCCAnOKhV2zFd4NmJh8NEXvmDapxB5WKVISX96oejphS6EEmXE3VVEmaxg4epCY2d2VUmtfnPQe9cX0InYKuIohdn8Y+8CNzDLiORIdMZzpbVAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZYa6Ia8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=guj/5WCG5BfRQNHMTtFX4TPYBp7P71qfqIDTUT1oREIAP+dnJ1C1tG6cuLxL+455RzYijDQT1UqPnSJI2BDYUUGt8zyqVnHYcs7JkdsFNivr5n4/sG5XsMOWot7lIWoZ76peKVtPHR9Z4TV/Zxxb1dwlsTGadsUWqSsHICF5Dmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ex6SofZI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZYa6Ia8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6996F1F000C4;
-	Sat, 17 Oct 2026 17:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ex6SofZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DD61F000C4;
+	Sat, 17 Oct 2026 17:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257118;
-	bh=ATfW7gxkAqU6WKVk+my6wtqWJjpRXkutmtJmoA8+E8o=;
+	s=korg; t=1792257121;
+	bh=xuIJ/gH6zkt0eQeZml/S9vs2vy17Dm7BcUrbG72AGgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZYa6Ia89Ad5Db4q2DZMWtL4Swpmh5tPAQoNp3tLd3boQ+55MXfxwLi9Q9zg7iuvA
-	 7U+e8pgse5xmpU4sPyPCNgQuX3vPVfdX8CNGH5tgzLDcW/Y5neC8YQ2eNAg8P/tG/O
-	 o8J/6wAOOJHYfTWV5Mnr4/HG0ILeKq5/l9MjCw9E=
+	b=ex6SofZIaKsHrJ57YKjXflfTOatqkWOTUThy1/3gQihee41YOkPCsPPMylNbM8YbZ
+	 vSulkQskPIZ5G80osyULRL0bvnwn/aFP6+7dP9CXHiRPcPa9lrE36f1YWMHC0HeNt7
+	 Bkd8+hwtt5ra4hWS3wEpnFJAgzr5fvPicolL2Bt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0457/1674] f2fs: fix to reset all pinned status during fggc
-Date: Sat, 17 Oct 2026 17:45:29 +0200
-Message-ID: <20261017160442.844812521@linuxfoundation.org>
+Subject: [PATCH 6.6 0458/1674] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+Date: Sat, 17 Oct 2026 17:45:30 +0200
+Message-ID: <20261017160442.870974750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,37 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 2b8704b6a8b2896ccad1f5941d9a3e2c5031a470 ]
+[ Upstream commit 1745ccbd2907db2bdaa843e4abccde4fdaccbe5d ]
 
-Otherwise, the pinned status may affect latter flow of fggc.
+kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
+safe for deallocation of the region inside the loop.  However, the loop
+internal logic does not deallocate regions.  Hence it is only wasting the
+next pointer.  Also, it causes a problem.
 
-Cc: stable@kernel.org
-Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Chao Yu <chao@kernel.org>
+When an address filter is applied, and there is a region that intersects
+with the filter, the filter splits the region on the filter boundary.  The
+intention is to let DAMOS apply action to only filtered-in address ranges.
+However, it is using damon_for_each_region_safe(), which sets the next
+region before the execution of the iteration.  Hence, the region that
+split and now will be next to the previous region, is simply ignored.  As
+a result, DAMOS applies the action to target regions bit slower than
+expected, when the address filter is used.  Shouldn't be a big problem but
+definitely better to be fixed.  damos_skip_charged_region() was working
+around the issue using a double pointer hack.
+
+Use damon_for_each_region(), which is safe for this use case.  And drop
+the work around in damos_skip_charged_region().
+
+Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/damon/core.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index f1e1ee8e4c44c..d8e247cb60a25 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2058,6 +2058,9 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
- 						dry_run_sections == 0);
- 		put_gc_inode(&gc_list);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index bd46a63b611cf..bdc63286f699e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -871,16 +871,17 @@ static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+  * This function checks if a given region should be skipped or not for the
+  * reason.  If only the starting part of the region has previously charged,
+  * this function splits the region into two so that the second one covers the
+- * area that not charged in the previous charge widnow and saves the second
+- * region in *rp and returns false, so that the caller can apply DAMON action
+- * to the second one.
++ * area that not charged in the previous charge widnow, and return true.  The
++ * caller can see the second one on the next iteration of the region walk.
++ * Note that this means the caller should use damon_for_each_region() instead
++ * of damon_for_each_region_safe().  If damon_for_each_region_safe() is used,
++ * the second region will just be ignored.
+  *
+- * Return: true if the region should be entirely skipped, false otherwise.
++ * Return: true if the region should be skipped, false otherwise.
+  */
+ static bool damos_skip_charged_region(struct damon_target *t,
+-		struct damon_region **rp, struct damos *s)
++		struct damon_region *r, struct damos *s)
+ {
+-	struct damon_region *r = *rp;
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
  
-+		/* reset all pinned status during fggc */
-+		f2fs_unpin_all_sections(sbi, true);
-+
- 		if (!dry_run && get_valid_blocks(sbi, segno, true)) {
- 			err = -EAGAIN;
- 			goto next;
+@@ -907,8 +908,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 				sz_to_skip = DAMON_MIN_REGION;
+ 			}
+ 			damon_split_region_at(t, r, sz_to_skip);
+-			r = damon_next_region(r);
+-			*rp = r;
++			return true;
+ 		}
+ 		quota->charge_target_from = NULL;
+ 		quota->charge_addr_from = 0;
+@@ -1045,7 +1045,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (quota->esz && quota->charged_sz >= quota->esz)
+ 			continue;
+ 
+-		if (damos_skip_charged_region(t, &r, s))
++		if (damos_skip_charged_region(t, r, s))
+ 			continue;
+ 
+ 		if (!damos_valid_target(c, t, r, s))
+@@ -1134,7 +1134,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ static void kdamond_apply_schemes(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+-	struct damon_region *r, *next_r;
++	struct damon_region *r;
+ 	struct damos *s;
+ 	unsigned long sample_interval = c->attrs.sample_interval ?
+ 		c->attrs.sample_interval : 1;
+@@ -1156,7 +1156,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 		return;
+ 
+ 	damon_for_each_target(t, c) {
+-		damon_for_each_region_safe(r, next_r, t)
++		damon_for_each_region(r, t)
+ 			damon_do_apply_schemes(c, t, r);
+ 	}
+ 
 -- 
 2.53.0
 
