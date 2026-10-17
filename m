@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9EE36B93B;
-	Sat, 17 Oct 2026 16:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8DB17BED0;
+	Sat, 17 Oct 2026 16:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254072; cv=none; b=Uxf0H521XCgrEp/R94WbdSU6RUMlGt/ZRcPrpew0nQ1eC+z0Ea2MUoDy1iiJVIzmiOpCIGX4FThfGYk7IMerJKO6yOL1IfcWavirYO1DoTEshBUE9jlU6d4JOekWuPNPlgOUBukrmbkTMSKcPVbSef8nYuvX8N6s4i3tc8W/fgQ=
+	t=1792254075; cv=none; b=FWrpfzN2kqHu+rSe2akuzysp2zg7xdSWdFukpX6Sx4bTqmuJaehbWeei3mzaVp3lmrbZJ7G+nVZTgfJyp0l77MrbrH+mGJvqOogWkuOyX874/9pOrTz5i3EvtAzepzd3gqQCrTmVi4+2bjdqVzuZA4XeXBI8K7mr39EJeKKUp8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254072; c=relaxed/simple;
-	bh=0ShyCY5riUl41YXFQhQSGXEEDK5xezOjE0UgHSsTi9s=;
+	s=arc-20240116; t=1792254075; c=relaxed/simple;
+	bh=DHvR+wtmEdBf+2+PDFW163dgbDQZ9yaafqNHJJP2NDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHRQNPHA6D0S9TohWkuxOoJV6KuZCPNxpmUBUQVp11DwDHEcrAdSiRtbgEm1U7UlIsOsbqOBnUdl+dgdQ9458KQ3WQYiFtRmi1e4NFtnhwGu+lFTO3/6B1Y6dhPhcyeAUiCLfc4TxblEW3fu0MZpliKgyAStwhf9BoSbh1rIjuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiWrG//h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rOVUUJ1j5Etmgm7mriSUX+wyZcxI4DYwet+FeF32yDvL977fFmUV34ZcmKmzuyrPriq7c9P0sIvEr2n+8cqAR5RBBow6aIQSH/2nvrnPZaR+0EzgkXyGVQCfhkGQIMqGSfBOqnZsY3Jhl3exFofKAB49d8K5Io7ICE3mf5TVCqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Igtu6Xql; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiWrG//h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B671F000C4;
-	Sat, 17 Oct 2026 16:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Igtu6Xql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709BB1F000C4;
+	Sat, 17 Oct 2026 16:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254071;
-	bh=CX3lQ1yqP5093Xs/obcg7KYLOY0keHqr1ZqwBrOKU7c=;
+	s=korg; t=1792254074;
+	bh=rhaURqi8OprAspzOGGbLT4aBJ6Zh9o8/DL8/LawwE8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiWrG//hASGXVIrAXqruEdJDLcHGYYGUys/QcLWodZfxnUvBKyvZkRmYA/luImF6K
-	 0Zln8zfuTYW0b5WNH9jsP8OnHzqp1YBRjRnGewupTdndbcEN7vYT3WxV06RTT/SOao
-	 bB3ZIzsOhoGLrmyQrd+0HGyFIsLDAmldWl24Jxig=
+	b=Igtu6Xql7H72ax0BU30KL9CGYXJw+mSgeOrjPUjkhOzmxzex+ejg0pVZtr90nIIjp
+	 VWtcn29qIUT+Sk7+6EZ+NYubM8DHZV0tn74YoZp8uHMl2GFGmleDsslmx/5/vEDqPs
+	 2j0kejhvPLQNL1REHtzhVhugABKLlYVPwqgQC63E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Zhenzhong Duan <zhenzhong.duan@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 325/869] iommu/vt-d: Avoid NULL pointer dereference or refcount corruption
-Date: Sat, 17 Oct 2026 17:52:46 +0200
-Message-ID: <20261017160045.409874604@linuxfoundation.org>
+Subject: [PATCH 6.12 290/869] spi: microchip-core-qspi: remove unused param from mchp_coreqspi_write_op()
+Date: Sat, 17 Oct 2026 17:52:11 +0200
+Message-ID: <20261017160044.507878851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,60 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 79ea2feb917b05366b49d85573c9c5331f043b2c ]
+[ Upstream commit 75ca45c472dac206df2ebbc1c0f1f9c3bbdace50 ]
 
-Commit 60f030f7418d ("iommu/vt-d: Avoid use of NULL after WARN_ON_ONCE")
-fixed a NULL pointer dereference in an unlikely situation partly.
+"word" is unused in mchp_coreqspi_write_op(), so delete it.
 
-If dev_pasid is not found in the dev_pasids list, it remains NULL.
-However, the teardown operations are executed unconditionally, this lead
-to a NULL pointer dereference or refcount corruption.
-
-If the domain was never attached to this IOMMU, info will be NULL, which
-would cause an immediate dereference when checking --info->refcnt.
-
-Even if info is not NULL, decrementing the refcount without having removed
-a valid PASID might unbalance the count. This could lead to premature
-dropping of the refcount to 0, potentially causing a use-after-free for the
-remaining active devices sharing the domain.
-
-Fix it by returning early if dev_pasid is NULL, before executing the
-teardown operations.
-
-Issue found by AI review and suggested by Kevin Tian.
-https://sashiko.dev/#/patchset/20260421031347.1408890-1-zhenzhong.duan%40intel.com
-
-Fixes: 60f030f7418d ("iommu/vt-d: Avoid use of NULL after WARN_ON_ONCE")
-Cc: stable@vger.kernel.org
-Suggested-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260422033538.95000-1-zhenzhong.duan@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20250620-starry-excusably-25e6be957d9d@spud
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7672749e1496 ("spi: microchip-core-qspi: control built-in cs manually")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 39742525e1a89..9da974068b828 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4339,9 +4339,9 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 8bce9aeb259a4..1d24aee26dac5 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -194,7 +194,7 @@ static inline void mchp_coreqspi_read_op(struct mchp_coreqspi *qspi)
  	}
- 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
+ }
  
--	cache_tag_unassign_domain(dmar_domain, dev, pasid);
--	domain_detach_iommu(dmar_domain, iommu);
- 	if (!WARN_ON_ONCE(!dev_pasid)) {
-+		cache_tag_unassign_domain(dmar_domain, dev, pasid);
-+		domain_detach_iommu(dmar_domain, iommu);
- 		intel_iommu_debugfs_remove_dev_pasid(dev_pasid);
- 		kfree(dev_pasid);
+-static inline void mchp_coreqspi_write_op(struct mchp_coreqspi *qspi, bool word)
++static inline void mchp_coreqspi_write_op(struct mchp_coreqspi *qspi)
+ {
+ 	u32 control, data;
+ 
+@@ -415,7 +415,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 		qspi->rxbuf = NULL;
+ 		qspi->tx_len = op->cmd.nbytes;
+ 		qspi->rx_len = 0;
+-		mchp_coreqspi_write_op(qspi, false);
++		mchp_coreqspi_write_op(qspi);
  	}
+ 
+ 	qspi->txbuf = &opaddr[0];
+@@ -426,7 +426,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 		qspi->rxbuf = NULL;
+ 		qspi->tx_len = op->addr.nbytes;
+ 		qspi->rx_len = 0;
+-		mchp_coreqspi_write_op(qspi, false);
++		mchp_coreqspi_write_op(qspi);
+ 	}
+ 
+ 	if (op->data.nbytes) {
+@@ -435,7 +435,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 			qspi->rxbuf = NULL;
+ 			qspi->rx_len = 0;
+ 			qspi->tx_len = op->data.nbytes;
+-			mchp_coreqspi_write_op(qspi, true);
++			mchp_coreqspi_write_op(qspi);
+ 		} else {
+ 			qspi->txbuf = NULL;
+ 			qspi->rxbuf = (u8 *)op->data.buf.in;
 -- 
 2.53.0
 
