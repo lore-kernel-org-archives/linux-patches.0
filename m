@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD0A3A900B;
-	Sat, 17 Oct 2026 17:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6132A356A12;
+	Sat, 17 Oct 2026 17:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257403; cv=none; b=KQHKPjURpYAdL4tuzi+uJjo9WL4pAfrLd/lFFD/Hz2layGwrl0oQSlVfS+bQ699KxvElQuObrrTikRVh6UhdNfXcc/8OZa5hvv0VDkm7BKlWsiJimF7geB2nb1i3bsvxoYvOARR/YbhgIJNu4c75BKikVlcYMYE7N4x20PG/DPI=
+	t=1792257407; cv=none; b=LESoKHU7jtGrOoCzFo9C1FpdgK7TiOio95I1bZE+AeyIjtylns+xpHKBaSc4anUqMacwmVbsn6VvB/MZ6yHoLu8LsqjlddbsxbSkpLb4imn54UXk9dJ7A3oGTxVcc49rPZtW0sZCetxJ5wQXQi/Vor9KK4wsy/Ty+BFqZq2910U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257403; c=relaxed/simple;
-	bh=zL4oSEC89bDFFRl6kuRlNgQ5FkUlht+FKJCJt+HrIBk=;
+	s=arc-20240116; t=1792257407; c=relaxed/simple;
+	bh=v06eJIMVlmxmpn/QfjJNA5v2CF8rtwjZ8TqCYbp99ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WccrbllEQNbuvStbpeXTvi3OnfO+JWzmfYskZNeWVwtIfllZ/7kLn4j6GO1soOSBSP2RlMSzg4S1JWy0hztFExuU/lWaojYQGmsi9brYo+hJcl0E8DfT+oM4Sy0xklmJ6pX7zhbHZiNq5dEDmMoVFElv8WqhCJopK2D/V73AlMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGdrU++2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByOXyKxQNW3s3Dx8aom33xmKmi0KuJCwerPdUAyNIX8Bbj/YZSy4YPkCAABMetc/IdoOBVwDtlfSm29EUrZVh/eGvxO8EjW+Pn26hmM3LTv4gJSY7NZ0oq8KNkCnseh7GUxWqtsUirWezEV95hQs0KSPLDAdtdHPCujdsPn/s0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvMDuD3n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGdrU++2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FDC1F000C4;
-	Sat, 17 Oct 2026 17:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvMDuD3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F021F000C4;
+	Sat, 17 Oct 2026 17:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257401;
-	bh=CLYnF6gDCRx2DSmgIUzWXRyO4PgPZ/vlgewUw/v7/Y8=;
+	s=korg; t=1792257406;
+	bh=urqNQ0caW++vZZc8lNcFK58tzvMXLseIQN0RzcB9Eq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGdrU++24GEiaRk297PB17is6hpzIRwk8iG0WdOf0/N/MO35tMgOYO7djnJUW/s6u
-	 ch9XmbbgyHmDnIFVbogIkUydhSv+260X0TkTkXLPzYQL5Xg0UbAGSoFKeBCLl8HbB/
-	 +rnAVX4YpLzVSXhgHeo1s1J97TIg1tg5bE4Vg1h0=
+	b=WvMDuD3nGiKzwjX8vfXVgbH+RAI7qcbIGXa4jy9HJxrtD8ELF4BeeDKPruM8G8OYD
+	 lCJdkRqELa3MuJ4rvaeGkGojLg2OTmLjmhvE6ruZyidAvTSpIYyM90yJG2cbPdi/Q9
+	 tzkSVTkmohchZDA906NqrrB5uB8gsgoHVdxaxBPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0548/1674] ASoC: adau1372: fix invalid default state of output ASRC and DAC muxes
-Date: Sat, 17 Oct 2026 17:47:00 +0200
-Message-ID: <20261017160445.164427473@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 6.6 0549/1674] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
+Date: Sat, 17 Oct 2026 17:47:01 +0200
+Message-ID: <20261017160445.188794252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,83 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alvin.sipraga@analog.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 36d0e05815ce84266c8b138cd4f84c3feeaf15f4 ]
+[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
 
-The chip has strange power-on reset values for the registers that
-control the output ASRC and DAC source muxes - the values are actually
-marked "Reserved" in the datasheet [1]. This means that until the
-underlying kcontrols are modified, the codec will not function as
-expected.
+The probe function puts the device into the runtime PM active state with
+only the "iis" bus clock enabled, but it also sets priv->op_clk to the
+parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
+callback disables both clocks, so the first runtime suspend after probe
+disables op_clk once more than it was enabled.
 
-The registers in question are:
+On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
+so this triggers the following warning during boot:
 
-  register / field       reset value       valid values
+ WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
+ i2s_bus already disabled
+ ...
+ Workqueue: pm pm_runtime_work
+ Call trace:
+  ...
+  clk_core_disable from clk_disable+0x28/0x34
+  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
+  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
+  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
+  __rpm_callback from rpm_callback+0x4c/0x50
+  rpm_callback from rpm_suspend+0xf4/0x718
+  rpm_suspend from pm_runtime_work+0x9c/0xa0
+  ...
 
-  ASRCO_SOURCE_0_1       0x10
-   ASRC_OUT_SOURCE0      0                 4 .. 16
-   ASRC_OUT_SOURCE1      1                 4 .. 16
-  ASRCO_SOURCE_2_3       0x10
-   ASRC_OUT_SOURCE2      2                 4 .. 16
-   ASRC_OUT_SOURCE3      3                 4 .. 16
-  DAC_SOURCE_0_1         0x10
-   DAC_SOURCE_0          0                 12 .. 13
-   DAC_SOURCE_1          1                 12 .. 13
+Fix this by enabling op_clk in probe right after getting it, so the clock
+state matches the runtime PM active state, and by disabling it in remove.
 
-Set some sane defaults during the driver probe:
-
-  ADC Decimator0 -> Output ASRC0
-  ADC Decimator1 -> Output ASRC1
-  ADC Decimator2 -> Output ASRC2
-  ADC Decimator3 -> Output ASRC3
-  Input ASRC0 -> DAC0
-  Input ASRC1 -> DAC1
-
-With this, the chip will behave as advertised by the default kcontrol
-state exposed by the driver.
-
-[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADAU1372.pdf
-
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-2-599cc17fb5f6@analog.com
+Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/samsung/i2s.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index b758213471ec0..5f85edb33f663 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -1002,6 +1002,17 @@ int adau1372_probe(struct device *dev, struct regmap *regmap,
+diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
+index 925782e676730..6dae7f06234ae 100644
+--- a/sound/soc/samsung/i2s.c
++++ b/sound/soc/samsung/i2s.c
+@@ -1547,9 +1547,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
  
- 	regmap_write(regmap, ADAU1372_REG_OP_STAGE_MUTE, 0x0);
+ 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
++	ret = clk_prepare_enable(priv->op_clk);
++	if (ret < 0) {
++		priv->op_clk = NULL;
++		goto err_unregister_clk;
++	}
  
-+	/*
-+	 * Set sane default values for the Output ASRC and DAC input muxes,
-+	 * since the power-on reset defaults are invalid "Reserved" states.
-+	 */
-+	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_0_1,
-+		     0x54); /* Decimator0, Decimator1 */
-+	regmap_write(regmap, ADAU1372_REG_ASRCO_SOURCE_2_3,
-+		     0x76); /* Decimator2, Decimator3 */
-+	regmap_write(regmap, ADAU1372_REG_DAC_SOURCE,
-+		     0xdc); /* Input ASRC0, Input ASRC1 */
-+
- 	regmap_write(regmap, 0x7, 0x01); /* CLOCK OUT */
+ 	return 0;
  
- 	return  devm_snd_soc_register_component(dev, &adau1372_driver, &adau1372_dai_driver, 1);
++err_unregister_clk:
++	i2s_unregister_clock_provider(priv);
+ err_disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
+ err_del_sec:
+@@ -1572,6 +1579,7 @@ static void samsung_i2s_remove(struct platform_device *pdev)
+ 
+ 	i2s_unregister_clock_provider(priv);
+ 	i2s_delete_secondary_device(priv);
++	clk_disable_unprepare(priv->op_clk);
+ 	clk_disable_unprepare(priv->clk);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
 -- 
 2.53.0
 
