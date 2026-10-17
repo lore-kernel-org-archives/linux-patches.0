@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DB917BED0;
-	Sat, 17 Oct 2026 16:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9628B3515E7;
+	Sat, 17 Oct 2026 16:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253410; cv=none; b=sx/m1MQAJUwROxzHs6uEJiWchetCSYKrTokddhuB+X5SrBSJ+H0v+K9BTbuW654RQUqM8FMvbil44roGPPZl1PzQXIlKRLtE3CEXX9wDO5VB6Ah6/hahQMnPLZkoLn215Orpnojqy2gAQ9vU4baE2ss2Nl4MNbXjPuPWKE7onlY=
+	t=1792253413; cv=none; b=ZXsrol/+CBugTiKxWPwxMQ7d0mXpLo1830JIGcu+EqFAs9dn+pwnlTY5HHx7P0akejmurpFSPcfvEpDbp1jXIAiXMrqazQcQ3HTnHQ2h1D9hroNTVlj+fse2fAdh+BxFLTTc1NdY+EWcHsNFJjhMJ/rfxpLFHM4Ata/ebOoiNQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253410; c=relaxed/simple;
-	bh=ssQ5mNvxtFZa/XwE1WPaEWn3BDdkGfyQcyVxvNnPREE=;
+	s=arc-20240116; t=1792253413; c=relaxed/simple;
+	bh=oOAHTnGW+E4fl6fjgxnohYrl2DsAOXfrfo/H7yY7FzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYNeJ/XQcVgOWg1H6PfObJB3Kwi4xmO/A7gZ4R971aSBOPbeNVymgI6TpFZHvvMiKRg9EGfrNZJ5Ujc51zVMQl+ifT5qjKGFQ5cEmR6V6WnmiHnhciE8W7GRPqwEz9dOfXqph4Xj6EI3/Ik7jgcy/8qQFFwnwrj4LflmWZGTAAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka/wt+pn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkUoO0cg0LkT87ZQaXXTZ/uRDMujRajZC+Y1pSJn3TDP8oZ8Ag46mOkfiC7/W7BFwaEdoC6z+wyrxt5m50o3o0ESA1RLf6W9/wSeQQ3g2/jAU+AjF5ZRmcIZyXejWSB7QF0CtRLFl5q9zqzMr8JBtdYRlU59vkHmB7spWuvHqYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1zAZ367; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka/wt+pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AA91F000C5;
-	Sat, 17 Oct 2026 16:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1zAZ367"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE86A1F000C4;
+	Sat, 17 Oct 2026 16:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253409;
-	bh=scmFqb7bsyXr4a8+pubH+yk/ivUrTMoTfKAXqaSAuaA=;
+	s=korg; t=1792253412;
+	bh=MG2zrs8axjVaZTqjMQZe3yT8PgCJ53kpJOQuk+5uSRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ka/wt+pnEhXA+1tvCoHHfAcXJ1TtKmcfkWxrZtH6Cwig8jqmKY59a78s9Xzd/+eFy
-	 WQkS/pgsn6ghuOSINuDEFzGFAZSJEyuP0nD2jAYDzP4WbNCahYsJVuWKubs198HBZS
-	 J8CjvKfMggi9llDQ6RR3hSfGrWJOrP4nx89uHcrI=
+	b=L1zAZ367f5dBDDPt8QS20Rr2UJcEC/MqOYtyNOLqaNVd/sppTNyyRfiHNFR7LL150
+	 EMeja05Sj3gqv0nZF+FSvoH+L4XPy0PoP2lk9e0nuFQFownNhH4kJHpHONZ3nlCjT/
+	 VjHmcx5CXdFG27LykKWzxf8KI9/7IjAoZL7hWTWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/869] crypto: x86/aegis128 - eliminate some indirect calls
-Date: Sat, 17 Oct 2026 17:49:08 +0200
-Message-ID: <20261017160039.779586807@linuxfoundation.org>
+Subject: [PATCH 6.12 108/869] crypto: x86/aegis128 - optimize length block preparation using SSE4.1
+Date: Sat, 17 Oct 2026 17:49:09 +0200
+Message-ID: <20261017160039.805337130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,17 +54,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit b8d2e7bac3f768e5ab0b52a4a6dd65aa130113be ]
+[ Upstream commit af2aff7caf8afb7abbe219a838d61b4c17d88a47 ]
 
-Instead of using a struct of function pointers to decide whether to call
-the encryption or decryption assembly functions, use a conditional
-branch on a bool.  Force-inline the functions to avoid actually
-generating the branch.  This improves performance slightly since
-indirect calls are slow.  Remove the now-unnecessary CFI stubs.
+Start using SSE4.1 instructions in the AES-NI AEGIS code, with the first
+use case being preparing the length block in fewer instructions.
 
-Note that just force-inlining the existing functions might cause the
-compiler to optimize out the indirect branches, but that would not be a
-reliable way to do it and the CFI stubs would still be required.
+In practice this does not reduce the set of CPUs on which the code can
+run, because all Intel and AMD CPUs with AES-NI also have SSE4.1.
+
+Upgrade the existing SSE2 feature check to SSE4.1, though it seems this
+check is not strictly necessary; the aesni-intel module has been getting
+away with using SSE4.1 despite checking for AES-NI only.
 
 Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
@@ -72,200 +72,86 @@ Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: 3d9eb180fbe8 ("crypto: x86/aegis - Add missing error checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aegis128-aesni-asm.S  |  9 ++--
- arch/x86/crypto/aegis128-aesni-glue.c | 74 +++++++++++++--------------
- 2 files changed, 40 insertions(+), 43 deletions(-)
+ arch/x86/crypto/Kconfig               | 4 ++--
+ arch/x86/crypto/aegis128-aesni-asm.S  | 6 ++----
+ arch/x86/crypto/aegis128-aesni-glue.c | 6 +++---
+ 3 files changed, 7 insertions(+), 9 deletions(-)
 
+diff --git a/arch/x86/crypto/Kconfig b/arch/x86/crypto/Kconfig
+index 46b53ab061657..0cf89264db08c 100644
+--- a/arch/x86/crypto/Kconfig
++++ b/arch/x86/crypto/Kconfig
+@@ -366,7 +366,7 @@ config CRYPTO_CHACHA20_X86_64
+ 	  - AVX-512VL (Advanced Vector Extensions-512VL)
+ 
+ config CRYPTO_AEGIS128_AESNI_SSE2
+-	tristate "AEAD ciphers: AEGIS-128 (AES-NI/SSE2)"
++	tristate "AEAD ciphers: AEGIS-128 (AES-NI/SSE4.1)"
+ 	depends on X86 && 64BIT
+ 	select CRYPTO_AEAD
+ 	select CRYPTO_SIMD
+@@ -375,7 +375,7 @@ config CRYPTO_AEGIS128_AESNI_SSE2
+ 
+ 	  Architecture: x86_64 using:
+ 	  - AES-NI (AES New Instructions)
+-	  - SSE2 (Streaming SIMD Extensions 2)
++	  - SSE4.1 (Streaming SIMD Extensions 4.1)
+ 
+ config CRYPTO_NHPOLY1305_SSE2
+ 	tristate "Hash functions: NHPoly1305 (SSE2)"
 diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
-index 2de859173940e..1b57558548c78 100644
+index 1b57558548c78..639ba6f31a90e 100644
 --- a/arch/x86/crypto/aegis128-aesni-asm.S
 +++ b/arch/x86/crypto/aegis128-aesni-asm.S
-@@ -7,7 +7,6 @@
-  */
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * AES-NI + SSE2 implementation of AEGIS-128
++ * AES-NI + SSE4.1 implementation of AEGIS-128
+  *
+  * Copyright (c) 2017-2018 Ondrej Mosnacek <omosnacek@gmail.com>
+  * Copyright (C) 2017-2018 Red Hat, Inc. All rights reserved.
+@@ -716,9 +716,7 @@ SYM_FUNC_START(crypto_aegis128_aesni_final)
  
- #include <linux/linkage.h>
--#include <linux/cfi_types.h>
- #include <asm/frame.h>
+ 	/* prepare length block: */
+ 	movd %edx, MSG
+-	movd %ecx, T0
+-	pslldq $8, T0
+-	pxor T0, MSG
++	pinsrd $2, %ecx, MSG
+ 	psllq $3, MSG /* multiply by 8 (to get bit count) */
  
- #define STATE0	%xmm0
-@@ -403,7 +402,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
-  * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
-  *                                const void *src, void *dst);
-  */
--SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc)
-+SYM_FUNC_START(crypto_aegis128_aesni_enc)
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -500,7 +499,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc)
-  * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
-  *                                     const void *src, void *dst);
-  */
--SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc_tail)
-+SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
- 	FRAME_BEGIN
- 
- 	/* load the state: */
-@@ -557,7 +556,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
-  * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
-  *                                const void *src, void *dst);
-  */
--SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec)
-+SYM_FUNC_START(crypto_aegis128_aesni_dec)
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -654,7 +653,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec)
-  * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
-  *                                     const void *src, void *dst);
-  */
--SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec_tail)
-+SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
- 	FRAME_BEGIN
- 
- 	/* load the state: */
+ 	pxor STATE3, MSG
 diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
-index 4623189000d89..6c4c2cda2c2d1 100644
+index 6c4c2cda2c2d1..9b52451f6feec 100644
 --- a/arch/x86/crypto/aegis128-aesni-glue.c
 +++ b/arch/x86/crypto/aegis128-aesni-glue.c
-@@ -56,16 +56,6 @@ struct aegis_ctx {
- 	struct aegis_block key;
- };
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ /*
+  * The AEGIS-128 Authenticated-Encryption Algorithm
+- *   Glue for AES-NI + SSE2 implementation
++ *   Glue for AES-NI + SSE4.1 implementation
+  *
+  * Copyright (c) 2017-2018 Ondrej Mosnacek <omosnacek@gmail.com>
+  * Copyright (C) 2017-2018 Red Hat, Inc. All rights reserved.
+@@ -265,7 +265,7 @@ static struct simd_aead_alg *simd_alg;
  
--struct aegis_crypt_ops {
--	int (*skcipher_walk_init)(struct skcipher_walk *walk,
--				  struct aead_request *req, bool atomic);
--
--	void (*crypt_blocks)(void *state, unsigned int length, const void *src,
--			     void *dst);
--	void (*crypt_tail)(void *state, unsigned int length, const void *src,
--			   void *dst);
--};
--
- static void crypto_aegis128_aesni_process_ad(
- 		struct aegis_state *state, struct scatterlist *sg_src,
- 		unsigned int assoclen)
-@@ -114,20 +104,37 @@ static void crypto_aegis128_aesni_process_ad(
- 	}
- }
- 
--static void crypto_aegis128_aesni_process_crypt(
--		struct aegis_state *state, struct skcipher_walk *walk,
--		const struct aegis_crypt_ops *ops)
-+static __always_inline void
-+crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
-+				    struct skcipher_walk *walk, bool enc)
+ static int __init crypto_aegis128_aesni_module_init(void)
  {
- 	while (walk->nbytes >= AEGIS128_BLOCK_SIZE) {
--		ops->crypt_blocks(state,
--				  round_down(walk->nbytes, AEGIS128_BLOCK_SIZE),
--				  walk->src.virt.addr, walk->dst.virt.addr);
-+		if (enc)
-+			crypto_aegis128_aesni_enc(
-+					state,
-+					round_down(walk->nbytes,
-+						   AEGIS128_BLOCK_SIZE),
-+					walk->src.virt.addr,
-+					walk->dst.virt.addr);
-+		else
-+			crypto_aegis128_aesni_dec(
-+					state,
-+					round_down(walk->nbytes,
-+						   AEGIS128_BLOCK_SIZE),
-+					walk->src.virt.addr,
-+					walk->dst.virt.addr);
- 		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
- 	}
+-	if (!boot_cpu_has(X86_FEATURE_XMM2) ||
++	if (!boot_cpu_has(X86_FEATURE_XMM4_1) ||
+ 	    !boot_cpu_has(X86_FEATURE_AES) ||
+ 	    !cpu_has_xfeatures(XFEATURE_MASK_SSE, NULL))
+ 		return -ENODEV;
+@@ -284,6 +284,6 @@ module_exit(crypto_aegis128_aesni_module_exit);
  
- 	if (walk->nbytes) {
--		ops->crypt_tail(state, walk->nbytes, walk->src.virt.addr,
--				walk->dst.virt.addr);
-+		if (enc)
-+			crypto_aegis128_aesni_enc_tail(state, walk->nbytes,
-+						       walk->src.virt.addr,
-+						       walk->dst.virt.addr);
-+		else
-+			crypto_aegis128_aesni_dec_tail(state, walk->nbytes,
-+						       walk->src.virt.addr,
-+						       walk->dst.virt.addr);
- 		skcipher_walk_done(walk, 0);
- 	}
- }
-@@ -162,23 +169,26 @@ static int crypto_aegis128_aesni_setauthsize(struct crypto_aead *tfm,
- 	return 0;
- }
- 
--static void crypto_aegis128_aesni_crypt(struct aead_request *req,
--					struct aegis_block *tag_xor,
--					unsigned int cryptlen,
--					const struct aegis_crypt_ops *ops)
-+static __always_inline void
-+crypto_aegis128_aesni_crypt(struct aead_request *req,
-+			    struct aegis_block *tag_xor,
-+			    unsigned int cryptlen, bool enc)
- {
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
- 	struct aegis_ctx *ctx = crypto_aegis128_aesni_ctx(tfm);
- 	struct skcipher_walk walk;
- 	struct aegis_state state;
- 
--	ops->skcipher_walk_init(&walk, req, true);
-+	if (enc)
-+		skcipher_walk_aead_encrypt(&walk, req, true);
-+	else
-+		skcipher_walk_aead_decrypt(&walk, req, true);
- 
- 	kernel_fpu_begin();
- 
- 	crypto_aegis128_aesni_init(&state, ctx->key.bytes, req->iv);
- 	crypto_aegis128_aesni_process_ad(&state, req->src, req->assoclen);
--	crypto_aegis128_aesni_process_crypt(&state, &walk, ops);
-+	crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
- 	crypto_aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
- 
- 	kernel_fpu_end();
-@@ -186,18 +196,12 @@ static void crypto_aegis128_aesni_crypt(struct aead_request *req,
- 
- static int crypto_aegis128_aesni_encrypt(struct aead_request *req)
- {
--	static const struct aegis_crypt_ops OPS = {
--		.skcipher_walk_init = skcipher_walk_aead_encrypt,
--		.crypt_blocks = crypto_aegis128_aesni_enc,
--		.crypt_tail = crypto_aegis128_aesni_enc_tail,
--	};
--
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
- 	struct aegis_block tag = {};
- 	unsigned int authsize = crypto_aead_authsize(tfm);
- 	unsigned int cryptlen = req->cryptlen;
- 
--	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, &OPS);
-+	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, true);
- 
- 	scatterwalk_map_and_copy(tag.bytes, req->dst,
- 				 req->assoclen + cryptlen, authsize, 1);
-@@ -208,12 +212,6 @@ static int crypto_aegis128_aesni_decrypt(struct aead_request *req)
- {
- 	static const struct aegis_block zeros = {};
- 
--	static const struct aegis_crypt_ops OPS = {
--		.skcipher_walk_init = skcipher_walk_aead_decrypt,
--		.crypt_blocks = crypto_aegis128_aesni_dec,
--		.crypt_tail = crypto_aegis128_aesni_dec_tail,
--	};
--
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
- 	struct aegis_block tag;
- 	unsigned int authsize = crypto_aead_authsize(tfm);
-@@ -222,7 +220,7 @@ static int crypto_aegis128_aesni_decrypt(struct aead_request *req)
- 	scatterwalk_map_and_copy(tag.bytes, req->src,
- 				 req->assoclen + cryptlen, authsize, 0);
- 
--	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, &OPS);
-+	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, false);
- 
- 	return crypto_memneq(tag.bytes, zeros.bytes, authsize) ? -EBADMSG : 0;
- }
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Ondrej Mosnacek <omosnacek@gmail.com>");
+-MODULE_DESCRIPTION("AEGIS-128 AEAD algorithm -- AESNI+SSE2 implementation");
++MODULE_DESCRIPTION("AEGIS-128 AEAD algorithm -- AESNI+SSE4.1 implementation");
+ MODULE_ALIAS_CRYPTO("aegis128");
+ MODULE_ALIAS_CRYPTO("aegis128-aesni");
 -- 
 2.53.0
 
