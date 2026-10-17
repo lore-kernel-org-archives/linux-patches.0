@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4D83A542B;
-	Sat, 17 Oct 2026 18:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF743C0601;
+	Sat, 17 Oct 2026 18:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260763; cv=none; b=OHb+7XMmyIsEHHMS1KFAt24Q1fpcCcB+mt68bKnDA7jyxFYydg36JpZXfbD31MWVAsnGHd8mgR5BPOZKgWW8BtmobVYYMvj1v9aM2b76S2iWoiwL9eRt/BwST53k6S/9aQtuwmlQrae+VtQeW5Z+WQV+oQraQLNNcWLOYupy9kE=
+	t=1792260766; cv=none; b=iYR2g0LKtLSDScVFWmIFOiKP2cnbcE3idD5ClQ+e9snSMOsEMh3IATLbrhktxxC3hzJTXpJ+XzXdpOg2md8Cdym3L7SsbgVOQ0gmYsVmkUz93vxCFJYveT+E13YMBelukOGy5SHey0gT31q4pogi1/44PboJlTISJY00K05PMkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260763; c=relaxed/simple;
-	bh=ztbznIGYXloT6DofN81bqt3Twe5gzCzzYYi76EtGHGg=;
+	s=arc-20240116; t=1792260766; c=relaxed/simple;
+	bh=O/k1QOp36FGSwxdoloil3yg7WB5TuwICAyvtZOt9lGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+HpB9gNQMBXkUYiI9tZ/tGX/wmX2wyYujarR0XxbwveYzIiuxLZiqYb7K45yeVGxvQKJfh5TvtB2DZjJindO80hYMSAe0Ln+4peG9+gP73v4Kvd5G0ScxlXl+7YV8WhQ6CcnIYLP1vvPuixwVWvumHXgPh0zdaF56n55AsO6Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0liFmUQM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NA9htaUh9/UlkbtS+Z21fXZOo7KdHupzGePNs/JpWm/QBe8mxahnXBSBs+5z9FbRjE1G9ybvwxbaFQXo+n+mj3t5pb990crUtmtR5L8tPuTU8CLNimRsWM6Hc/mwEdYhAbEirq+Lsu5oHfJFdqgBzI3mIFz1r93ZO/9KMuV6Tzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6lFMOEz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0liFmUQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F28F1F000C4;
-	Sat, 17 Oct 2026 18:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6lFMOEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E7A1F000C4;
+	Sat, 17 Oct 2026 18:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260762;
-	bh=c0xq/DCw9rhI5Q7QiakP2KetduF6BK0kxg61gYusVZw=;
+	s=korg; t=1792260764;
+	bh=W06FcbU1tw516SaPfCvexPE+XEcohhaB29k8z9LrZV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0liFmUQMxzwl+4XOvZJktR3I+0PylD1FQJDSeBAvsqPU5esN8YMl5JkLAsSpa7IsH
-	 Z4Fldf+uymqKgn4pnUoyBZtACFRjPtCuJr4O8g2qX/0xE1fjrpspqeEz2TF81awpYA
-	 J7erNRq1/slkdaH4KiS88nNRaC4QSvG9fKXvkgEU=
+	b=N6lFMOEzBdY+mlS8L14iPtZYcQL8ZKVvdzIGmqE29D2PSwNmXDx5UIn1KNhtGEZxV
+	 3jiYxktLVtSlsjvwAxBKwFFHKOWwxxpvt63NjGbjf4NQ96QyD9cxptrG1jZQxTNcIt
+	 DU5MvV19G7PLwjIcAfeMutbzMG6KFE7ZnvR3Mhog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1652/1674] smb/client: fix stale page cache in insert/collapse range
-Date: Sat, 17 Oct 2026 18:05:24 +0200
-Message-ID: <20261017160513.476604598@linuxfoundation.org>
+Subject: [PATCH 6.6 1653/1674] smb/client: validate new EOF for zero range
+Date: Sat, 17 Oct 2026 18:05:25 +0200
+Message-ID: <20261017160513.503075087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,110 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 01261a6fa48b62f5ead8e88aaca1e27cb9ab9032 ]
+[ Upstream commit 88972e35750792e717af287dc71f42a03b5cbce4 ]
 
-smb3_insert_range() and smb3_collapse_range() use
-truncate_pagecache_range() to invalidate the affected page cache.
-However, if off or old_eof is not page-aligned, the boundary pages are
-only partially zeroed and remain uptodate. As a result, the client may
-return stale data after a successful insert/collapse range operation.
+When FALLOC_FL_ZERO_RANGE is used without FALLOC_FL_KEEP_SIZE,
+smb3_zero_range() may extend EOF without checking RLIMIT_FSIZE, allowing
+the file to grow beyond the caller's file-size limit.
 
-For example, with 4K pages:
+Fix this by calling inode_newsize_ok() before sending the zero-range
+request when the operation would extend EOF.
 
-    page 0          page 1          page 2
-    0------4K       4K------8K      8K------12K
-       ^                                ^
-    off=2K                       old_eof=10K
+Reproducer, using a file on a CIFS mount:
 
-Page 1 is removed from the page cache, while the boundary pages are
-only partially zeroed. After COPYCHUNK moves the data on the server,
-these cached pages may still return stale data.
+	bash -c '
+	        FILE=/mnt/cifs/repro
 
-This can be reproduced on a CIFS mount:
+	        trap "" SIGXFSZ
+	        ulimit -f 3072
 
-    bash -c '
-            FILE=/mnt/scratch/repro
+	        truncate -s 2M "$FILE"
+	        fallocate --zero-range -o 0 -l 4M "$FILE"
+	        echo "fallocate rc=$?"
+	        stat -c "file size=%s" "$FILE"
+	'
 
-            # Use a 6 KiB file so EOF is not page-aligned.
-            dd if=/dev/urandom of=/tmp/src bs=1K count=6 status=none
+Before this change, the operation succeeds despite the 3 MiB limit:
 
-            # Expected: a 4 KiB hole followed by the original data.
-            rm -f /tmp/expected
-            truncate -s 4K /tmp/expected
-            cat /tmp/src >> /tmp/expected
+	fallocate rc=0
+	file size=4194304
 
-            cp /tmp/src "$FILE"
+After this change, fallocate fails and leaves the file at 2 MiB.
 
-            # Prime the page cache before moving data on the server.
-            cat "$FILE" > /dev/null
-
-            fallocate --insert-range -o 0 -l 4K "$FILE"
-
-            if cmp -s /tmp/expected "$FILE"; then
-                    echo "readback: OK"
-            else
-                    echo "readback: STALE DATA"
-            fi
-    '
-
-Fix this by writing back dirty data and discarding the page cache from
-the start of the page containing off to EOF before moving data on the
-server.
-
-Fixes: 9c8b7a293f50 ("smb3: fix temporary data corruption in insert range")
-Fixes: fa30a81f255a ("smb3: fix temporary data corruption in collapse range")
+Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
 Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2ops.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index a55c4745fd63c..3efd0fff38dd1 100644
+index 3efd0fff38dd1..1f3d1f8219b64 100644
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3703,11 +3703,17 @@ static long smb3_collapse_range(struct file *file, struct cifs_tcon *tcon,
- 	}
+@@ -3268,6 +3268,14 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 			      ses->Suid, offset, len);
  
+ 	inode_lock(inode);
++
++	new_size = offset + len;
++	if (!keep_size && i_size_read(inode) < new_size) {
++		rc = inode_newsize_ok(inode, new_size);
++		if (rc)
++			goto out;
++	}
++
  	filemap_invalidate_lock(inode->i_mapping);
--	rc = filemap_write_and_wait_range(inode->i_mapping, off, old_eof - 1);
-+	rc = filemap_write_and_wait_range(inode->i_mapping,
-+					  round_down(off, PAGE_SIZE),
-+					  old_eof - 1);
- 	if (rc < 0)
- 		goto out_2;
  
--	truncate_pagecache_range(inode, off, old_eof);
-+	/*
-+	 * Invalidate cached folios from the page containing off to EOF before
-+	 * moving data on the server, so subsequent reads do not see stale data.
-+	 */
-+	truncate_pagecache_range(inode, round_down(off, PAGE_SIZE), -1);
- 	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
+ 	i_size = i_size_read(inode);
+@@ -3304,7 +3312,6 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	/*
+ 	 * do we also need to change the size of the file?
+ 	 */
+-	new_size = offset + len;
+ 	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
+ 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 				  cfile->fid.volatile_fid, cfile->pid, new_size);
+@@ -3316,6 +3323,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
  
- 	rc = smb2_copychunk_range(xid, cfile, cfile, off + len,
-@@ -3762,10 +3768,16 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
- 		goto out;
- 
- 	filemap_invalidate_lock(inode->i_mapping);
--	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
-+	rc = filemap_write_and_wait_range(inode->i_mapping,
-+					  round_down(off, PAGE_SIZE),
-+					  old_eof - 1);
- 	if (rc < 0)
- 		goto out_2;
--	truncate_pagecache_range(inode, off, old_eof);
-+	/*
-+	 * Invalidate cached folios from the page containing off to EOF before
-+	 * moving data on the server, so subsequent reads do not see stale data.
-+	 */
-+	truncate_pagecache_range(inode, round_down(off, PAGE_SIZE), -1);
- 	fscache_invalidate(cifs_inode_cookie(inode), NULL, old_eof, 0);
- 
- 	rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+  zero_range_exit:
+ 	filemap_invalidate_unlock(inode->i_mapping);
++ out:
+ 	inode_unlock(inode);
+ 	free_xid(xid);
+ 	if (rc)
 -- 
 2.53.0
 
