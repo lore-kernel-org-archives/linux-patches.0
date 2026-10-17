@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86985277026;
-	Sat, 17 Oct 2026 16:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692C73A6418;
+	Sat, 17 Oct 2026 16:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256039; cv=none; b=KbX5MDg/+HXJbjwdxzJZzK3OUEnwStM6UGOdlzaj3Vdibex+7R5qPeDea8dOa1CrO3uFPHgROtIbryGe5xTSWEKZaRimPiBsy/GSoSfFLq9s0y8l0CX7zbxueFcl7uxvX/EN2s2Yc3fAQ64mb/D0LmRKvCfOKvAZVzeQrgeGygI=
+	t=1792256042; cv=none; b=KFQhWyAVe8NcQLhV2ZP+nZp1zi3ZtuPSXLFcSP3/r1i///4SoSHGQyI32HokaLukSzwD3rfZ3T8m1MQIC+jtweV58sJdLk9KjtB2Mec0FqQ6aT3eJNZoexBOm7nRL2FJTFKndS0IpyzAyS2dZI+I26dLYp63O1ntelwz1ey3fU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256039; c=relaxed/simple;
-	bh=Vlv9SQZGPP6j1xyYvs47zcOlWxfM/N5Az56lBtLwGBk=;
+	s=arc-20240116; t=1792256042; c=relaxed/simple;
+	bh=87eYEdhu5YD0ernu/2nXzLEYL9hXSeX8OCOjYRSS2XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iq5iMwjy3ClFVU5DFMToosyywjcD95+nQr2nexFUEkPnH5PPZmDraZdnrIPTltSXrClD18p2cHIUgSsNHpT2fCXqqG1OkmoW6o8+eamYpvxREhoS05LFgomPiX0BnO6FHPwGScmkpC2Xk3K5597yqiu266CahNbM5synwePI3kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxYIO+Kd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sf3bWxvNoOlgno79Z+jSNWnGhR6Dbd7iF3322MVD0wvs+bZV+GBfN8IlWPX6rYf+xkYiIlufUCXAn22HxEMc0xi/UMnhjy15USEufktjuxtBXJEyaWthFdPhbjQuvY3hFR+lNPUkbs4hdNEfQ87JlJybdSP+4iOn5RhFWG+r84c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bv9PGXSd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxYIO+Kd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87251F000C5;
-	Sat, 17 Oct 2026 16:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bv9PGXSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EC11F000C4;
+	Sat, 17 Oct 2026 16:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256038;
-	bh=b36Qhil7kguvxNPfnAfUKpsoRqhjTTtkFuVfLXh0xbo=;
+	s=korg; t=1792256041;
+	bh=PZzqfiSxWfVP/4nVSFzx3IRJa0BzYthfpOZrzfpnPug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OxYIO+Kd8mOHdU61K9CqxlqDllG9IYrxTuvxE4niRzUQQhxbwEt/oakBEP8g1EnoI
-	 SXLe2zY94yMDXdrzTrvfZn+oN4O7gFSeujQQhhQyLEw+VOfpFr/AjPP9WfTRg6jZH5
-	 9mCiIw9X2O0bxniiCJ2bwDHYqXpfILIcNCC/Jyrw=
+	b=Bv9PGXSdqEf405OT8ouNSdnzodLeakt3MpzwoeYb0OwdfLHwogCajWsKJ/Pf4g18G
+	 8JfCOvaez4dcReEhCIO/0kdkKW+3LOP0WHgP0hr0I6Rl0hbuqKG7mTzaOAcT0c9yQK
+	 a8e2UZcYXt9InPqdaGlm5RHCFU/0XMK2gj+0Z084=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0103/1674] ipmr: account multicast table and route memory
-Date: Sat, 17 Oct 2026 17:39:35 +0200
-Message-ID: <20261017160433.791284177@linuxfoundation.org>
+Subject: [PATCH 6.6 0104/1674] virtio-mmio: Remove virtqueue list from mmio device
+Date: Sat, 17 Oct 2026 17:39:36 +0200
+Message-ID: <20261017160433.818148854@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,82 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit b7ee18725f2292ab554aa96a101ae42d45f008bd ]
+[ Upstream commit 564a69ad90d15c782176e1a8c9e1c95661e1aed0 ]
 
-A netadmin in a user+net namespace can create many IPv4 and IPv6
-multicast routing tables with MRT_TABLE and MRT6_TABLE. Each unseen
-id allocates an mr_table via the shared mr_table_alloc(), links it
-into the per-net list, and leaves it until netns teardown. Those
-objects were not charged to memcg, so the host unreclaimable slab
-grows with the table count.
+The MMIO transport implementation creates a list of virtqueues for a
+virtio device, while the same is already available in the struct
+virtio_device.
 
-Account mr_table allocations with GFP_KERNEL_ACCOUNT and mark the
-IPv4/IPv6 MFC caches SLAB_ACCOUNT. This matches the established
-handling of IP addresses, routes and alternate interface names.
+Don't create a duplicate list, and use the other one instead.
 
-Unresolved MFC entries are still allocated from softIRQ with
-GFP_ATOMIC and are not charged. They expire after 10 seconds and are
-bounded by the socket receive queue; see commit 0079ad8e8dc3
-("ipmr: remove hard code cache_resolve_queue_len limit").
+While at it, fix the virtio_device_for_each_vq() macro to accept an
+argument like "&vm_dev->vdev" (which currently fails to build).
 
-Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
-Fixes: d1db275dd3f6 ("ipv6: ip6mr: support multiple tables")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/050b58f7fc6b45da0fb12768ebb62d18fa46133d.1788784801.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted upstream allocation helpers to existing kzalloc() and kmem_cache_create() calls. ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Message-Id: <3e56c6f74002987e22f364d883cbad177cd9ad9c.1747827066.git.viresh.kumar@linaro.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Stable-dep-of: d14d693adb05 ("virtio_mmio: disable IRQ wake before free_irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c      | 3 ++-
- net/ipv4/ipmr_base.c | 2 +-
- net/ipv6/ip6mr.c     | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/virtio/virtio_mmio.c | 52 +++---------------------------------
+ include/linux/virtio.h       |  2 +-
+ 2 files changed, 4 insertions(+), 50 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index f39cd565569a5..127473aeb7e32 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -3159,7 +3159,8 @@ int __init ip_mr_init(void)
+diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
+index 049c4f4ee56fa..33da642ea962a 100644
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -65,7 +65,6 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+ #include <linux/slab.h>
+-#include <linux/spinlock.h>
+ #include <linux/virtio.h>
+ #include <linux/virtio_config.h>
+ #include <uapi/linux/virtio_mmio.h>
+@@ -88,22 +87,8 @@ struct virtio_mmio_device {
  
- 	mrt_cachep = kmem_cache_create("ip_mrt_cache",
- 				       sizeof(struct mfc_cache),
--				       0, SLAB_HWCACHE_ALIGN | SLAB_PANIC,
-+				       0, SLAB_HWCACHE_ALIGN | SLAB_PANIC |
-+				       SLAB_ACCOUNT,
- 				       NULL);
+ 	void __iomem *base;
+ 	unsigned long version;
+-
+-	/* a list of queues so we can dispatch IRQs */
+-	spinlock_t lock;
+-	struct list_head virtqueues;
+-};
+-
+-struct virtio_mmio_vq_info {
+-	/* the actual virtqueue */
+-	struct virtqueue *vq;
+-
+-	/* the list node for the virtqueues list */
+-	struct list_head node;
+ };
  
- 	err = register_pernet_subsys(&ipmr_net_ops);
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 28d77d454d442..66fe1a253b9ff 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -38,7 +38,7 @@ mr_table_alloc(struct net *net, u32 id,
- 	struct mr_table *mrt;
+-
+-
+ /* Configuration interface */
+ 
+ static u64 vm_get_features(struct virtio_device *vdev)
+@@ -300,9 +285,8 @@ static bool vm_notify_with_data(struct virtqueue *vq)
+ static irqreturn_t vm_interrupt(int irq, void *opaque)
+ {
+ 	struct virtio_mmio_device *vm_dev = opaque;
+-	struct virtio_mmio_vq_info *info;
++	struct virtqueue *vq;
+ 	unsigned long status;
+-	unsigned long flags;
+ 	irqreturn_t ret = IRQ_NONE;
+ 
+ 	/* Read and acknowledge interrupts */
+@@ -315,10 +299,8 @@ static irqreturn_t vm_interrupt(int irq, void *opaque)
+ 	}
+ 
+ 	if (likely(status & VIRTIO_MMIO_INT_VRING)) {
+-		spin_lock_irqsave(&vm_dev->lock, flags);
+-		list_for_each_entry(info, &vm_dev->virtqueues, node)
+-			ret |= vring_interrupt(irq, info->vq);
+-		spin_unlock_irqrestore(&vm_dev->lock, flags);
++		virtio_device_for_each_vq(&vm_dev->vdev, vq)
++			ret |= vring_interrupt(irq, vq);
+ 	}
+ 
+ 	return ret;
+@@ -329,14 +311,8 @@ static irqreturn_t vm_interrupt(int irq, void *opaque)
+ static void vm_del_vq(struct virtqueue *vq)
+ {
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vq->vdev);
+-	struct virtio_mmio_vq_info *info = vq->priv;
+-	unsigned long flags;
+ 	unsigned int index = vq->index;
+ 
+-	spin_lock_irqsave(&vm_dev->lock, flags);
+-	list_del(&info->node);
+-	spin_unlock_irqrestore(&vm_dev->lock, flags);
+-
+ 	/* Select and deactivate the queue */
+ 	writel(index, vm_dev->base + VIRTIO_MMIO_QUEUE_SEL);
+ 	if (vm_dev->version == 1) {
+@@ -347,8 +323,6 @@ static void vm_del_vq(struct virtqueue *vq)
+ 	}
+ 
+ 	vring_del_virtqueue(vq);
+-
+-	kfree(info);
+ }
+ 
+ static void vm_del_vqs(struct virtio_device *vdev)
+@@ -375,9 +349,7 @@ static struct virtqueue *vm_setup_vq(struct virtio_device *vdev, unsigned int in
+ {
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+ 	bool (*notify)(struct virtqueue *vq);
+-	struct virtio_mmio_vq_info *info;
+ 	struct virtqueue *vq;
+-	unsigned long flags;
+ 	unsigned int num;
  	int err;
  
--	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL);
-+	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL_ACCOUNT);
- 	if (!mrt)
- 		return ERR_PTR(-ENOMEM);
- 	mrt->id = id;
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 18451dfeae682..a7fa0d1d82b08 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -1389,7 +1389,7 @@ int __init ip6_mr_init(void)
+@@ -399,13 +371,6 @@ static struct virtqueue *vm_setup_vq(struct virtio_device *vdev, unsigned int in
+ 		goto error_available;
+ 	}
  
- 	mrt_cachep = kmem_cache_create("ip6_mrt_cache",
- 				       sizeof(struct mfc6_cache),
--				       0, SLAB_HWCACHE_ALIGN,
-+				       0, SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT,
- 				       NULL);
- 	if (!mrt_cachep)
- 		return -ENOMEM;
+-	/* Allocate and fill out our active queue description */
+-	info = kmalloc(sizeof(*info), GFP_KERNEL);
+-	if (!info) {
+-		err = -ENOMEM;
+-		goto error_kmalloc;
+-	}
+-
+ 	num = readl(vm_dev->base + VIRTIO_MMIO_QUEUE_NUM_MAX);
+ 	if (num == 0) {
+ 		err = -ENOENT;
+@@ -463,13 +428,6 @@ static struct virtqueue *vm_setup_vq(struct virtio_device *vdev, unsigned int in
+ 		writel(1, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
+ 	}
+ 
+-	vq->priv = info;
+-	info->vq = vq;
+-
+-	spin_lock_irqsave(&vm_dev->lock, flags);
+-	list_add(&info->node, &vm_dev->virtqueues);
+-	spin_unlock_irqrestore(&vm_dev->lock, flags);
+-
+ 	return vq;
+ 
+ error_bad_pfn:
+@@ -481,8 +439,6 @@ static struct virtqueue *vm_setup_vq(struct virtio_device *vdev, unsigned int in
+ 		writel(0, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
+ 		WARN_ON(readl(vm_dev->base + VIRTIO_MMIO_QUEUE_READY));
+ 	}
+-	kfree(info);
+-error_kmalloc:
+ error_available:
+ 	return ERR_PTR(err);
+ }
+@@ -627,8 +583,6 @@ static int virtio_mmio_probe(struct platform_device *pdev)
+ 	vm_dev->vdev.dev.release = virtio_mmio_release_dev;
+ 	vm_dev->vdev.config = &virtio_mmio_config_ops;
+ 	vm_dev->pdev = pdev;
+-	INIT_LIST_HEAD(&vm_dev->virtqueues);
+-	spin_lock_init(&vm_dev->lock);
+ 
+ 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(vm_dev->base)) {
+diff --git a/include/linux/virtio.h b/include/linux/virtio.h
+index 4cc614a383765..73b95651fe57f 100644
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -158,7 +158,7 @@ void virtio_reset_device(struct virtio_device *dev);
+ size_t virtio_max_dma_size(const struct virtio_device *vdev);
+ 
+ #define virtio_device_for_each_vq(vdev, vq) \
+-	list_for_each_entry(vq, &vdev->vqs, list)
++	list_for_each_entry(vq, &(vdev)->vqs, list)
+ 
+ /**
+  * struct virtio_driver - operations for a virtio I/O driver
 -- 
 2.53.0
 
