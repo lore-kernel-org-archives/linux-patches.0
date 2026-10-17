@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40BE386C3D;
-	Sat, 17 Oct 2026 18:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDDE35E93B;
+	Sat, 17 Oct 2026 18:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260346; cv=none; b=cDto+tKT/PVNisQ8MugZzdd73MiTU0qqJW6Z4wTaAfSOSndRZWbKtKjiby/FLucR2ABaySHMEla73SrSJoe39wn24fjjMGD8twSK23apyIk14R/xCAWFAarFLTPwS4Q/JhlS0iix6q5VuL56B0n1esmqo/sfwTugyJvokGFU+ZU=
+	t=1792260349; cv=none; b=TGCOO/hW5L0Gh5Uva2UDccdruRWm4b+JwHKPR3M7x9Ll/ta6Tv4XZxJ6UdhKOrSf4j9IiDPxFuHqfU3Heb1LPlYkYSgcvGlyJR6vl77bJB4wE+oSmma6qGYjq5ah4Hi9SUk2RSA1tvw2zBvhmKN/v1e6q3pnp9zuGE6j82rxpXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260346; c=relaxed/simple;
-	bh=AlLOyW0d3lnfD14UHsqaXP+PJkIeVz2D2cUNKxtTuRM=;
+	s=arc-20240116; t=1792260349; c=relaxed/simple;
+	bh=cY//FTYtqZRuzb7slawNegUS//1MOrMW4Eq40sWkt3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwPN6GVgw69cH9OzvEcsMijoGpdG5639Ny41DNdZ96yHbXtnwId/iR81wDjcqjkoS4HL/mVIpiOAYUOXpOWO6TBhnCF1DwS7TIm/dj6Bh+S+BXfKHxJhmn6MW71Dy2McUv6HTskhUH3OM4qsO5L3qCoHP6gr7BrUuZVVBtspaVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mk6E2KzD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xsfx9hAPYWInhjfQvhjMW4P5kB2dgak89MszwMhJ8hmUWw2DmPZ99nSyGpfmXk/of67TudMRn8xI9QIIv0/2pRMPwPjAgFxtgDqNd8Mjs2pvJ92SNvVx+VMOoNIcrQJ/YjgW3r9ZC77AdEGODvVborveSWkh7Rx4e1MAkkO74BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0ddtkgJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mk6E2KzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74C01F000C4;
-	Sat, 17 Oct 2026 18:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0ddtkgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DC11F000C4;
+	Sat, 17 Oct 2026 18:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260344;
-	bh=/ZkLH+C/ryPTWlTnHgQbYr0iHzH12yM6vCuN9qUEaOA=;
+	s=korg; t=1792260347;
+	bh=hX/3pg9Pr3adTRXWn3sIWX/7P/v9zL5LlsMiW9lB+PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mk6E2KzDxdMLETa9gIcATPefOKOeFUDyMnmwwu8wBsYEKzsrS1xzJ8p8G1sdvsrWP
-	 +ACyBTJWAdLkDLcLxLzlV0WHzSRCRxN/fTna0kboc2++i+IQQpFGmM3R3iHCUliaX6
-	 W5jkZGV7B34EZATtcGa7HoxQTssqraPVWHMmG/jY=
+	b=O0ddtkgJlyBX1K4/4dVLCIxFZOpk24A29SqTD4eEUXKeJ5xr+9MS1QzKdSfRpTu79
+	 cqWKYUwVBDo0fJHu2C9iJXrmNRgRqyyRnZPlao0tUTP/fSEC799thqRA1P6pMGt+cM
+	 DBY3mfENEgo0TAZKD2FZ7A69hJI0MAvCo1d8sTpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	"David Hildenbrand (arm)" <david@kernel.org>,
-	Ben Cheatham <benjamin.cheatham@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Yi Lai <yi1.lai@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1497/1674] mm: name the anonymous MMOP enum as enum mmop
-Date: Sat, 17 Oct 2026 18:02:49 +0200
-Message-ID: <20261017160509.565478381@linuxfoundation.org>
+Subject: [PATCH 6.6 1515/1674] perf/x86/intel/pt: Fix stop/start with no update
+Date: Sat, 17 Oct 2026 18:03:07 +0200
+Message-ID: <20261017160510.008608161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -64,196 +52,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit c5c48345135ff04e039377020df23294d59aa59a ]
+[ Upstream commit 2e17bf3a469a41457a3bc31b1f8fd66b6ce94a6d ]
 
-Give the MMOP enum (MMOP_OFFLINE, MMOP_ONLINE, etc) a proper type name so
-the compiler can help catch invalid values being assigned to variables of
-this type.
+If pt_event_stop() is called without PERF_EF_UPDATE flag, then
+perf_aux_output_end() is not called.  A subsequent call to pt_event_start()
+will call perf_aux_output_begin() again which violates the rule against
+nesting and triggers a WARNING in perf_aux_output_begin().
 
-Leave the existing functions returning int alone to allow for
-value-or-error pattern to remain unchanged without churn.
+Originally, pt_event_stop() was never called without PERF_EF_UPDATE,
+because the only code paths to do so are from event overflow, and Intel PT
+does not do that.
 
-mmop_default_online_type is left as int because it uses the -1 sentinal
-value to signal it hasn't been initialized yet.
+However the introduction of group throttling by commit 9734e25fbf5ae
+("perf: Fix the throttle logic for a group") meant that an Intel PT event
+could be throttled if it was part of a group.  Throttling calls PMU
+ ->stop() / ->start() callbacks without flags.
 
-Keep the uint8_t buffer in offline_and_remove_memory() as-is for space
-efficiency, with an explicit cast when we consume the value.
+An example is when AUX area sampling is used. The following commands
+hit the issue:
 
-Move the enum definition before the CONFIG_MEMORY_HOTPLUG guard so it is
-unconditionally available for struct memory_block in memory.h.
+  echo 10000 > /proc/sys/kernel/perf_event_max_sample_rate
 
-No functional change.
+  perf record -F32000 --aux-sample -e '{intel_pt//u,cycles:u}' \
+  -- bash -c 'for i in `seq 1 100000` ; do true ; done'
 
-Link: https://lore.kernel.org/linux-mm/3424eba7-523b-4351-abd0-3a888a3e5e61@kernel.org/
-Link: https://lkml.kernel.org/r/20260211215447.2194189-1-gourry@gourry.net
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Suggested-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Suggested-by: "David Hildenbrand (arm)" <david@kernel.org>
-Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Use PERF_HES_UPTODATE to track whether perf_aux_output_begin() and
+perf_aux_output_end() are balanced.  A cleared PERF_HES_UPTODATE bit
+indicates that an AUX output context is still open.
 
-Adapt to this tree: the preceding change in struct memory_block already
-uses enum memory_block_state, which does not exist here, so define it
-in memory.h with the existing MEM_* values in place of the macros. Drop
-the mhp_get/set_default_online_type hunks, which have no counterpart
-here, and keep the enum definition ahead of the CONFIG_MEMORY_HOTPLUG
-guard so it is always available to struct memory_block.
+Amend pt_event_start() / pt_event_stop() accordingly so that begin/end
+stay balanced:
 
-Stable-dep-of: 2ebce860bdd7 ("mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug")
+ - In non-snapshot mode, stop() always closes the buffer (the buffer may
+   have run out of space, and that accounting is done by the update), so
+   a following start() opens a fresh one as before.
+
+ - In snapshot/overwrite mode, stop() without PERF_EF_UPDATE leaves the
+   buffer open so that pt_event_snapshot_aux() can still copy from it,
+   and start() then only re-enables tracing instead of calling
+   perf_aux_output_begin() again.
+
+Note that pt_event_del() calls pt_event_stop() with PERF_EF_UPDATE flag set
+(as is required by the documentation), so a final call to
+perf_aux_output_end() is assured.
+
+Fixes: 52ca9ced3f707 ("perf/x86/intel/pt: Add Intel PT PMU driver")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Link: https://patch.msgid.link/20260721070254.13557-4-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/memory.c          |  2 +-
- include/linux/memory.h         | 21 ++++++++++++---------
- include/linux/memory_hotplug.h | 12 ++++++------
- mm/memory_hotplug.c            |  6 +++---
- 4 files changed, 22 insertions(+), 19 deletions(-)
+ arch/x86/events/intel/pt.c | 56 ++++++++++++++++++++++++++++----------
+ 1 file changed, 42 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/base/memory.c b/drivers/base/memory.c
-index 2858a2165d960..b92690a8e2b48 100644
---- a/drivers/base/memory.c
-+++ b/drivers/base/memory.c
-@@ -414,7 +414,7 @@ static ssize_t phys_device_show(struct device *dev,
- static int print_allowed_zone(char *buf, int len, int nid,
- 			      struct memory_group *group,
- 			      unsigned long start_pfn, unsigned long nr_pages,
--			      int online_type, struct zone *default_zone)
-+			      enum mmop online_type, struct zone *default_zone)
- {
- 	struct zone *zone;
+diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
+index 7ee8dc80a3593..57ed4e052167a 100644
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1506,12 +1506,14 @@ void intel_pt_interrupt(void)
  
-diff --git a/include/linux/memory.h b/include/linux/memory.h
-index 1028d42406cce..11dbf013b0993 100644
---- a/include/linux/memory.h
-+++ b/include/linux/memory.h
-@@ -19,6 +19,7 @@
- #include <linux/node.h>
- #include <linux/compiler.h>
- #include <linux/mutex.h>
-+#include <linux/memory_hotplug.h>
+ 	perf_aux_output_end(&pt->handle, local_xchg(&buf->data_size, 0));
  
- #define MIN_MEMORY_BLOCK_SIZE     (1UL << SECTION_SIZE_BITS)
- 
-@@ -64,10 +65,20 @@ struct memory_group {
- 	};
- };
- 
-+enum memory_block_state {
-+	/* These states are exposed to userspace as text strings in sysfs */
-+	MEM_ONLINE		= (1<<0), /* exposed to userspace */
-+	MEM_GOING_OFFLINE	= (1<<1), /* exposed to userspace */
-+	MEM_OFFLINE		= (1<<2), /* exposed to userspace */
-+	MEM_GOING_ONLINE	= (1<<3),
-+	MEM_CANCEL_ONLINE	= (1<<4),
-+	MEM_CANCEL_OFFLINE	= (1<<5),
-+};
+-	if (!event->hw.state) {
++	event->hw.state |= PERF_HES_UPTODATE;
 +
- struct memory_block {
- 	unsigned long start_section_nr;
- 	enum memory_block_state state;	/* serialized by the dev->lock */
--	int online_type;		/* for passing data to online routine */
-+	enum mmop online_type;	/* for passing data to online routine */
- 	int nid;			/* NID for this memory block */
- 	/*
- 	 * The single zone of this memory block if all PFNs of this memory block
-@@ -89,14 +100,6 @@ int arch_get_memory_phys_device(unsigned long start_pfn);
- unsigned long memory_block_size_bytes(void);
- int set_memory_block_size_order(unsigned int order);
++	if (!(event->hw.state & PERF_HES_STOPPED)) {
+ 		int ret;
  
--/* These states are exposed to userspace as text strings in sysfs */
--#define	MEM_ONLINE		(1<<0) /* exposed to userspace */
--#define	MEM_GOING_OFFLINE	(1<<1) /* exposed to userspace */
--#define	MEM_OFFLINE		(1<<2) /* exposed to userspace */
--#define	MEM_GOING_ONLINE	(1<<3)
--#define	MEM_CANCEL_ONLINE	(1<<4)
--#define	MEM_CANCEL_OFFLINE	(1<<5)
--
- struct memory_notify {
- 	unsigned long start_pfn;
- 	unsigned long nr_pages;
-diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
-index 7d20765834941..3777d10038c52 100644
---- a/include/linux/memory_hotplug.h
-+++ b/include/linux/memory_hotplug.h
-@@ -64,11 +64,8 @@ static inline void arch_refresh_nodedata(int nid, pg_data_t *pgdat)
- #endif /* CONFIG_NUMA */
- #endif /* CONFIG_HAVE_ARCH_NODEDATA_EXTENSION */
+ 		buf = perf_aux_output_begin(&pt->handle, event);
+ 		if (!buf) {
+-			event->hw.state = PERF_HES_STOPPED;
++			event->hw.state |= PERF_HES_STOPPED;
+ 			return;
+ 		}
  
--#ifdef CONFIG_MEMORY_HOTPLUG
--struct page *pfn_to_online_page(unsigned long pfn);
--
- /* Types for control the zone type of onlined and offlined memory */
--enum {
-+enum mmop {
- 	/* Offline the memory. */
- 	MMOP_OFFLINE = 0,
- 	/* Online the memory. Zone depends, see default_zone_for_pfn(). */
-@@ -79,6 +76,9 @@ enum {
- 	MMOP_ONLINE_MOVABLE,
- };
+@@ -1525,6 +1527,8 @@ void intel_pt_interrupt(void)
  
-+#ifdef CONFIG_MEMORY_HOTPLUG
-+struct page *pfn_to_online_page(unsigned long pfn);
+ 		pt_config_buffer(buf);
+ 		pt_config_start(event);
 +
- /* Flags for add_memory() and friends to specify memory hotplug details. */
- typedef int __bitwise mhp_t;
- 
-@@ -350,8 +350,8 @@ extern void sparse_remove_section(unsigned long pfn, unsigned long nr_pages,
- 				  struct vmem_altmap *altmap);
- extern struct page *sparse_decode_mem_map(unsigned long coded_mem_map,
- 					  unsigned long pnum);
--extern struct zone *zone_for_pfn_range(int online_type, int nid,
--		struct memory_group *group, unsigned long start_pfn,
-+extern struct zone *zone_for_pfn_range(enum mmop online_type,
-+		int nid, struct memory_group *group, unsigned long start_pfn,
- 		unsigned long nr_pages);
- extern int arch_create_linear_mapping(int nid, u64 start, u64 size,
- 				      struct mhp_params *params);
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index 4498855daed8f..349e34b924af6 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1044,7 +1044,7 @@ static inline struct zone *default_zone_for_pfn(int nid, unsigned long start_pfn
- 	return movable_node_enabled ? movable_zone : kernel_zone;
++		event->hw.state &= ~PERF_HES_UPTODATE;
+ 	}
  }
  
--struct zone *zone_for_pfn_range(int online_type, int nid,
-+struct zone *zone_for_pfn_range(enum mmop online_type, int nid,
- 		struct memory_group *group, unsigned long start_pfn,
- 		unsigned long nr_pages)
- {
-@@ -2267,7 +2267,7 @@ EXPORT_SYMBOL_GPL(remove_memory);
+@@ -1574,6 +1578,19 @@ static void pt_event_start(struct perf_event *event, int mode)
+ 	struct pt *pt = this_cpu_ptr(&pt_ctx);
+ 	struct pt_buffer *buf;
  
- static int try_offline_memory_block(struct memory_block *mem, void *arg)
- {
--	uint8_t online_type = MMOP_ONLINE_KERNEL;
-+	enum mmop online_type = MMOP_ONLINE_KERNEL;
- 	uint8_t **online_types = arg;
- 	struct page *page;
- 	int rc;
-@@ -2300,7 +2300,7 @@ static int try_reonline_memory_block(struct memory_block *mem, void *arg)
- 	int rc;
++	/*
++	 * Re-start subsequent to a call to pt_event_stop() without the
++	 * PERF_EF_UPDATE flag. Absence of PERF_HES_UPTODATE indicates that
++	 * perf_aux_output_begin() has already been called. This path can
++	 * come about only in snapshot/overwrite mode - see pt_event_stop().
++	 */
++	if (!(hwc->state & PERF_HES_UPTODATE)) {
++		hwc->state &= ~PERF_HES_STOPPED;
++		WRITE_ONCE(pt->handle_nmi, 1);
++		pt_config_start(event);
++		return;
++	}
++
+ 	buf = perf_aux_output_begin(&pt->handle, event);
+ 	if (!buf)
+ 		goto fail_stop;
+@@ -1585,7 +1602,7 @@ static void pt_event_start(struct perf_event *event, int mode)
+ 	}
  
- 	if (**online_types != MMOP_OFFLINE) {
--		mem->online_type = **online_types;
-+		mem->online_type = (enum mmop)**online_types;
- 		rc = device_online(&mem->dev);
- 		if (rc < 0)
- 			pr_warn("%s: Failed to re-online memory: %d",
+ 	WRITE_ONCE(pt->handle_nmi, 1);
+-	hwc->state = 0;
++	hwc->state &= ~(PERF_HES_STOPPED | PERF_HES_UPTODATE);
+ 
+ 	pt_config_buffer(buf);
+ 	pt_config(event);
+@@ -1595,12 +1612,13 @@ static void pt_event_start(struct perf_event *event, int mode)
+ fail_end_stop:
+ 	perf_aux_output_end(&pt->handle, 0);
+ fail_stop:
+-	hwc->state = PERF_HES_STOPPED;
++	hwc->state |= PERF_HES_STOPPED | PERF_HES_UPTODATE;
+ }
+ 
+ static void pt_event_stop(struct perf_event *event, int mode)
+ {
+ 	struct pt *pt = this_cpu_ptr(&pt_ctx);
++	struct pt_buffer *buf;
+ 
+ 	/*
+ 	 * Protect against the PMI racing with disabling wrmsr,
+@@ -1611,17 +1629,24 @@ static void pt_event_stop(struct perf_event *event, int mode)
+ 
+ 	pt_config_stop(event);
+ 
+-	if (event->hw.state == PERF_HES_STOPPED)
+-		return;
++	event->hw.state |= PERF_HES_STOPPED;
+ 
+-	event->hw.state = PERF_HES_STOPPED;
+-
+-	if (mode & PERF_EF_UPDATE) {
+-		struct pt_buffer *buf = perf_get_aux(&pt->handle);
++	if (event->hw.state & PERF_HES_UPTODATE)
++		return;
+ 
+-		if (!buf)
+-			return;
++	buf = perf_get_aux(&pt->handle);
++	if (!buf)
++		return;
+ 
++	/*
++	 * When not in snapshot/overwrite mode, there is a possibility that the
++	 * buffer has run out of space. The accounting for that is handled by
++	 * the update, so always update in that case. Snapshot/overwrite mode is
++	 * treated differently to allow for pt_event_snapshot_aux() which can
++	 * still get called if the AUX-sampling event is not stopped until after
++	 * PT is stopped.
++	 */
++	if ((mode & PERF_EF_UPDATE) || !buf->snapshot) {
+ 		if (WARN_ON_ONCE(pt->handle.event != event))
+ 			return;
+ 
+@@ -1636,6 +1661,7 @@ static void pt_event_stop(struct perf_event *event, int mode)
+ 				local_xchg(&buf->data_size,
+ 					   buf->nr_pages << PAGE_SHIFT);
+ 		perf_aux_output_end(&pt->handle, local_xchg(&buf->data_size, 0));
++		event->hw.state |= PERF_HES_UPTODATE;
+ 	}
+ }
+ 
+@@ -1697,13 +1723,15 @@ static int pt_event_add(struct perf_event *event, int mode)
+ 	if (pt->handle.event)
+ 		goto fail;
+ 
++	event->hw.state |= PERF_HES_UPTODATE;
++
+ 	if (mode & PERF_EF_START) {
+ 		pt_event_start(event, 0);
+ 		ret = -EINVAL;
+-		if (hwc->state == PERF_HES_STOPPED)
++		if (hwc->state & PERF_HES_STOPPED)
+ 			goto fail;
+ 	} else {
+-		hwc->state = PERF_HES_STOPPED;
++		hwc->state |= PERF_HES_STOPPED;
+ 	}
+ 
+ 	ret = 0;
 -- 
 2.53.0
 
