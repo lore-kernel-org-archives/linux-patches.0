@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D897C3AEF36;
-	Sat, 17 Oct 2026 16:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB13F3AF665;
+	Sat, 17 Oct 2026 16:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255435; cv=none; b=cMRnwrA9UvTTkCj2bosajl1tmkJ7efdfbsCrQcbcwjn39KMvcrWCERkqqE2qtJrQ+2fmZAZPqGolBQ41fEhXJ8IdvnF5jmNoATOC3IRCtNkPn0AIB4hLRPzBCfEdoaa4SptedzVb1AsKUbk0/Vw5QOyCTdZzq6z1ZP0JTEsTlks=
+	t=1792255438; cv=none; b=J+6XJPwRFJyuG8CoPKG6fhBm6+uF/NN6np1hA8wyN4rjOrgRk3D6gWTWUcGNa62qcpCMLCdCEzm0RpAaPMskfRQ73QHLPUdMGQtraB3fkhoq8lmqFDBXqb7RpzyZxkpLSgp4R9qGBT0d9r6B/AvlykVbgJdeZHHQvK/CcGcrUtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255435; c=relaxed/simple;
-	bh=nMpRJbo06HYK9hVvZwEU2S17KAPrkpW8nFwXfLRecZU=;
+	s=arc-20240116; t=1792255438; c=relaxed/simple;
+	bh=fKvdv2AzVc3q7h1IZCwXEWbQxac7x0R0nYShica7vk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtdfnxhUUSjRNFtlDCYghYKUPpw+/y/u/f9cwHoIttutYxNUl9bzG2saqV/w+6Xi54Ewz4qL0vkvkO/EDmfHOqS7P4cNFL2yTAbJUqxab3qpDNZ1CAZIJxtHeyb/vSaZRfgX93NypY+dO7LBuBK34J0MQDehx2PNIjIV050CLAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I98gs7Pz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=duRKgTS7uMH3d4eC8lBOUPlN3JWIL+FuYfdQO1DacJfH5OfOHI7V074mIUv8xpY8bVProM/qdbd3bSWEXBkIv++MKKDbgu2vyvcGuVpF/LmuFGU3o3zpCD3h16TdQTK9wzKGh9FuUShpSkSs4afHFcfdVGGiH4mVeGNv60SB8/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3SAdSga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I98gs7Pz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C111F000C4;
-	Sat, 17 Oct 2026 16:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3SAdSga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9E21F000C4;
+	Sat, 17 Oct 2026 16:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255434;
-	bh=6CJsvVJbWawZ+gXd0a2d8xNrodbt8XJ9S4dTCHQnXNE=;
+	s=korg; t=1792255437;
+	bh=37BJhOT8x1/3cLqEXLEp7FNMZjRUqniitnRn0vHFh9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I98gs7Pz50bpYvuQsDTpH25mdrZmMObhM7fZQ29lwEX6ut9vsd2e+PzudKNQIARbs
-	 TlWmxveaw8WVNE7HvQDpunad4TtXh6O8M2ki19Kun2a5NUpm6Rx78mVq0SWqqTllT9
-	 270gTpX2hEU3ZHwMSTfuPCapalMfWNgl/7/IO4L8=
+	b=v3SAdSga9ixW4+TVmM/k9l755dViAWtaiNXrpBj8J8MFH746Lnsv4KGoTI488rdwX
+	 +mPUeKwMuYgxRhzDBUtFIG0MJVHs2W+r26B1PVm75Lu4wxkzZnoEkGLvBQM4LrCUEN
+	 h+YlAdfGqAVLUpQEKCt7UuUHSQBrwNG/2T2ohzjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 775/869] bpf: mark a NULL call argument precise
-Date: Sat, 17 Oct 2026 18:00:16 +0200
-Message-ID: <20261017160056.789428765@linuxfoundation.org>
+Subject: [PATCH 6.12 749/869] gpiolib: wrap gpio_chip::set()
+Date: Sat, 17 Oct 2026 17:59:50 +0200
+Message-ID: <20261017160056.138744030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,108 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 1a3a10b030c96ea88868ccc060a16827c01eaa5a ]
+[ Upstream commit d36058b89a4aa30865d4cfeb101bbfd1d1dcb22f ]
 
-check_func_arg() allows bpf_register_is_null() for nullable arguments
-w/o marking the underlying scalar register precise. Hence a checkpoint
-created on such a path would prune against arbitrary scalar value.
+We have three places where we dereference the gpio_chip::set() callback.
+In order to make it easier to incorporate the upcoming new variant of
+this callback (one returning an integer value), wrap it in a helper so
+that the dereferencing only happens once.
 
-check_helper_call() enforces second parameter of the
-bpf_get_local_storage() to be zero, w/o marking the underlying scalar
-register precise. Hence a checkpoint created on such a path would
-prune against arbitrary scalar value.
-
-Grouping these two into one patch, as they share the same fixes tag.
-
-Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260904-register-is-null-precise-fixes-v1-1-0f5a360ff15d@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250220-gpio-set-retval-v2-3-bc4cfd38dae3@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: c87c9046c4e0 ("pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                                |  9 ++++++++-
- .../selftests/bpf/progs/verifier_subprog_precision.c | 12 ++++++------
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ drivers/gpio/gpiolib.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9f5eed4a7290a..67a250c439035 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9172,11 +9172,15 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			return err;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index e73c1e1444f7d..68fa92b79137c 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2722,6 +2722,17 @@ int gpiod_direction_input(struct gpio_desc *desc)
+ }
+ EXPORT_SYMBOL_GPL(gpiod_direction_input);
+ 
++static int gpiochip_set(struct gpio_chip *gc, unsigned int offset, int value)
++{
++	lockdep_assert_held(&gc->gpiodev->srcu);
++
++	if (WARN_ON(unlikely(!gc->set)))
++		return -EOPNOTSUPP;
++
++	gc->set(gc, offset, value);
++	return 0;
++}
++
+ static int gpiod_direction_output_raw_commit(struct gpio_desc *desc, int value)
+ {
+ 	int val = !!value, ret = 0;
+@@ -2758,7 +2769,9 @@ static int gpiod_direction_output_raw_commit(struct gpio_desc *desc, int value)
+ 		 * If we can't actively set the direction, we are some
+ 		 * output-only chip, so just drive the output as desired.
+ 		 */
+-		guard.gc->set(guard.gc, gpio_chip_hwgpio(desc), val);
++		ret = gpiochip_set(guard.gc, gpio_chip_hwgpio(desc), val);
++		if (ret)
++			return ret;
  	}
  
--	if (register_is_null(reg) && type_may_be_null(arg_type))
-+	if (register_is_null(reg) && type_may_be_null(arg_type)) {
- 		/* A NULL register has a SCALAR_VALUE type, so skip
- 		 * type checking.
- 		 */
-+		err = mark_chain_precision(env, regno);
-+		if (err)
-+			return err;
- 		goto skip_type_check;
-+	}
+ 	if (!ret)
+@@ -3390,9 +3403,7 @@ static int gpiod_set_raw_value_commit(struct gpio_desc *desc, bool value)
+ 		return -ENODEV;
  
- 	/* arg_btf_id and arg_size are in a union. */
- 	if (base_type(arg_type) == ARG_PTR_TO_BTF_ID ||
-@@ -10961,6 +10965,9 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 			verbose(env, "get_local_storage() doesn't support non-zero flags\n");
- 			return -EINVAL;
- 		}
-+		err = mark_chain_precision(env, BPF_REG_2);
-+		if (err)
-+			return err;
- 		break;
- 	case BPF_FUNC_for_each_map_elem:
- 		err = push_callback_call(env, insn, insn_idx, meta.subprogno,
-diff --git a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-index 9d415f7ce599b..8fcbb2ef5a533 100644
---- a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-@@ -287,9 +287,9 @@ __msg("17: (b7) r0 = 0")
- __msg("18: (95) exit")
- __msg("returning from callee:")
- __msg("to caller at 9:")
--__msg("frame 0: propagating r1,r4")
-+__msg("frame 0: propagating r1,r3,r4")
- __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
--__msg("mark_precise: frame0: regs=r1,r4 stack= before 18: (95) exit")
-+__msg("mark_precise: frame0: regs=r1,r3,r4 stack= before 18: (95) exit")
- __msg("from 18 to 9: safe")
- __naked int callback_result_precise(void)
- {
-@@ -419,9 +419,9 @@ __msg("to caller at 9:")
- /* r1, r4 are always precise for bpf_loop(),
-  * r6 was marked before backtracking to callback body.
-  */
--__msg("frame 0: propagating r1,r4,r6")
-+__msg("frame 0: propagating r1,r3,r4,r6")
- __msg("mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1")
--__msg("mark_precise: frame0: regs=r1,r4,r6 stack= before 16: (95) exit")
-+__msg("mark_precise: frame0: regs=r1,r3,r4,r6 stack= before 16: (95) exit")
- __msg("mark_precise: frame1: regs= stack= before 15: (b7) r0 = 0")
- __msg("mark_precise: frame1: regs= stack= before 9: (85) call bpf_loop")
- __msg("mark_precise: frame0: parent state regs= stack=:")
-@@ -575,9 +575,9 @@ __msg("to caller at 10:")
- /* r1, r4 are always precise for bpf_loop(),
-  * fp-8 was marked before backtracking to callback body.
-  */
--__msg("frame 0: propagating r1,r4,fp-8")
-+__msg("frame 0: propagating r1,r3,r4,fp-8")
- __msg("mark_precise: frame0: last_idx 10 first_idx 10 subseq_idx -1")
--__msg("mark_precise: frame0: regs=r1,r4 stack=-8 before 18: (95) exit")
-+__msg("mark_precise: frame0: regs=r1,r3,r4 stack=-8 before 18: (95) exit")
- __msg("mark_precise: frame1: regs= stack= before 17: (b7) r0 = 0")
- __msg("mark_precise: frame1: regs= stack= before 10: (85) call bpf_loop#181")
- __msg("mark_precise: frame0: parent state regs= stack=:")
+ 	trace_gpio_value(desc_to_gpio(desc), 0, value);
+-	guard.gc->set(guard.gc, gpio_chip_hwgpio(desc), value);
+-
+-	return 0;
++	return gpiochip_set(guard.gc, gpio_chip_hwgpio(desc), value);
+ }
+ 
+ /*
+@@ -3417,7 +3428,7 @@ static void gpio_chip_set_multiple(struct gpio_chip *gc,
+ 
+ 		/* set outputs if the corresponding mask bit is set */
+ 		for_each_set_bit(i, mask, gc->ngpio)
+-			gc->set(gc, i, test_bit(i, bits));
++			gpiochip_set(gc, i, test_bit(i, bits));
+ 	}
+ }
+ 
 -- 
 2.53.0
 
