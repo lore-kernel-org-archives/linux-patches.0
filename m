@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BF73BB665;
-	Sat, 17 Oct 2026 17:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25BA3BBA04;
+	Sat, 17 Oct 2026 17:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257219; cv=none; b=TX7ONeE4N0KNYEVqamcFQfBbdioznmp5FmSIRCecFAIRtT5Dvkv2ivq9OvxiuZ6ZJ75vBzpL8hTzeKQxaq2wPZvbUD2X/OiUIR7B6idOsjK+Y8O0bJkJadsitniHtQQFr9Z53lBI2erpbayOgalxC1xvN1wrZRBZxL+OyBY/2GY=
+	t=1792257221; cv=none; b=Rhmfax4tWCX0wJ764aY/VEhFYraLXIhmhPI4PVWfDKxtR0PEy8QpPA/9zQT31H/duE0nQmKW/gqdaJNSvimXvAm74p+0Y2E+t4DRbqarddaS+QlmmGv80lhJQ7cLDqjuCWFyGM7/epVN2WXJy7Ubssrjl94wfRaJZnC0cMS6cNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257219; c=relaxed/simple;
-	bh=xoedqfA7NtW/axkOloXkRDDrvyq/qdQxd1+9jV1cY/c=;
+	s=arc-20240116; t=1792257221; c=relaxed/simple;
+	bh=8TcDeBFEamYNbSgOJ4SdyLJNBpQfQYxaH/SAvSemDi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBRiUBMTQbq06Fd+N7T0suA5KwQXWbcv90DQ9dZkG+HFS1GxXRwdyubeOKR5TrNcbH+744GvkJrnYZ8LD+ASZGCbJCHDcTg9THf6Y6vjG5u0Tf3el9q6yXmcbiNEsAozLvztIMffedmkY7ukdMluCHGxr3xSFBmQQ1sakOl2I3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQg8aLvV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IKcOKM9XKyz/ar/FaBPHKjBCRfBdW8hYHfDdLjsXXlZDtOMmnlX1vqv9KoFLEOp+reJqneYq20jDsoQwxuhMK/I5qLpA7IaXXdrZWx22D+ch9r23EzsluloD2gXANHzmcIjY8WzSUPBr+7MRbmRBSSXjMmf+tPjXoYys45FCbr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBXl0R+X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQg8aLvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08451F000C4;
-	Sat, 17 Oct 2026 17:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBXl0R+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC4F1F000C4;
+	Sat, 17 Oct 2026 17:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257217;
-	bh=fDzbEyxMoHptx4r4eqM/rb/Wc1Mb97rjzf6JRKfvHSM=;
+	s=korg; t=1792257220;
+	bh=08zU1pzbR/PGZrMd+w7tipStjMomerSBCrVsduUK3fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dQg8aLvVUac1/peH81mUhMTGKfNS9Za1e/vVDDmTlvPXkocEpCeVkQ3hxrCGwL+x1
-	 BTrff3D9W9m4SlOORc2NfEelPMEjWYovOY7SnzftbFvH0XHuq0bHdtqP02GuvozyBC
-	 Z87UZZ9DcZfhwfEMp8wuiVw8fe/u7u8Jq/cA1VBU=
+	b=pBXl0R+XmUbwMe248Uw9onylzmjR7aP3cn2yehQdaLVkJ8gR9FSoXOiXu+jZyNeX8
+	 R/NBS7soD/aWsaTzCn+vyiPVgsSuc1N3AWzKlzNBhXzU8ohOGBVN3U/nxbJFTChEGh
+	 LbaKlTLGbgaYB4Ozx7HTDmqnrD0O0wtD7ZiY7bOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	=?UTF-8?q?=EC=84=B1=EB=B3=91=EC=B0=AC?= <tjdqudcks0424@naver.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 0490/1674] keys: finalize persistent keyring timeout after link attempt
-Date: Sat, 17 Oct 2026 17:46:02 +0200
-Message-ID: <20261017160443.690866880@linuxfoundation.org>
+Subject: [PATCH 6.6 0491/1674] KEYS: Fix add_key() race with keyring restriction
+Date: Sat, 17 Oct 2026 17:46:03 +0200
+Message-ID: <20261017160443.717912885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -44,149 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: 성병찬 <tjdqudcks0424@naver.com>
 
-commit 25bf14f817168079f731975b8998fc2af380f29e upstream.
+commit dd3ea3fcba7c75493760cdbccd35f029597e8d5e upstream.
 
-When no keyring exists for the requested UID, KEYCTL_GET_PERSISTENT
-creates and registers one before linking it to the requested destination.
-The configured timeout is set only after the destination link succeeds.
+__key_create_or_update() snapshots keyring->restrict_link before taking
+the destination keyring's semaphore.  keyring_restrict() installs a
+restriction while holding that semaphore.
 
-A destination restricted with KEYCTL_RESTRICT_KEYRING makes that link fail
-with -EPERM. With persistent_keyring_expiry set to 60 seconds, /proc/keys
-still reports the registered keyring's expiry as "perm".
-The failed call therefore leaves a quota-exempt keyring in the namespace's
-hidden register, where it may remain until namespace teardown.
+This allows a writer to observe no restriction, wait for the keyring
+owner to install a reject-all restriction and return successfully, and
+then link a key using the stale NULL snapshot.  The writer only needs
+write permission on the destination keyring.
 
-Rename the write-locked helper to key_get_or_create_persistent() and return
-the key reference through a result parameter. Return 0 when it creates a
-keyring and 1 when the retry finds an existing one. Return a negative error
-on failure. Another caller may create the keyring between the initial
-read-locked lookup and the retry under the write lock.
+Move the restrict_link read after __key_link_lock() and
+__key_link_begin().  The read and the subsequent restriction check are
+then serialized with restriction installation by keyring->sem.
 
-Set the timeout after permission checking and linking. Do this on success,
-or on failure if the call allocated the keyring. This leaves a new keyring
-collectible after failure without starting its timeout while linking is
-still in progress.
+The race was reproduced on v7.2.8 in 19 executions where restriction
+installation returned before the link completed.  All 19 linked the key
+despite the reject-all restriction.  With this change, 312 executions
+reached the same ordering and every add_key() call failed with -EPERM.
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: f36f8c75ae2e ("KEYS: Add per-user_namespace registers for persistent per-UID kerberos caches")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/r/20260912095440.79864-1-kmehltretter@gmail.com
+The issue was found by manual concurrency analysis assisted by AI-based
+analysis and independently verified with a QEMU reproducer and kernel
+instrumentation.
+
+Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
+Cc: stable@vger.kernel.org
+Signed-off-by: 성병찬 <tjdqudcks0424@naver.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260930041802.6114-1-tjdqudcks0424@naver.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/persistent.c |   55 ++++++++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 23 deletions(-)
+ security/keys/key.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/security/keys/persistent.c
-+++ b/security/keys/persistent.c
-@@ -33,25 +33,31 @@ static int key_create_persistent_registe
- }
+--- a/security/keys/key.c
++++ b/security/keys/key.c
+@@ -825,9 +825,6 @@ static key_ref_t __key_create_or_update(
  
- /*
-- * Create the persistent keyring for the specified user.
-+ * Get or create the persistent keyring for the specified user.
-  *
-  * Called with the namespace's sem locked for writing.
-+ *
-+ * Returns a boolean indicating whether the keyring already existed,
-+ * or a negative error. On success, *persistent_ref holds a reference
-+ * to the keyring.
-  */
--static key_ref_t key_create_persistent(struct user_namespace *ns, kuid_t uid,
--				       struct keyring_index_key *index_key)
-+static int key_get_or_create_persistent(struct user_namespace *ns, kuid_t uid,
-+					struct keyring_index_key *index_key,
-+					key_ref_t *persistent_ref)
- {
- 	struct key *persistent;
--	key_ref_t reg_ref, persistent_ref;
-+	key_ref_t reg_ref;
+ 	key_check(keyring);
  
- 	if (!ns->persistent_keyring_register) {
--		long err = key_create_persistent_register(ns);
-+		int err = key_create_persistent_register(ns);
-+
- 		if (err < 0)
--			return ERR_PTR(err);
-+			return err;
- 	} else {
- 		reg_ref = make_key_ref(ns->persistent_keyring_register, true);
--		persistent_ref = find_key_to_update(reg_ref, index_key);
--		if (persistent_ref)
--			return persistent_ref;
-+		*persistent_ref = find_key_to_update(reg_ref, index_key);
-+		if (*persistent_ref)
-+			return 1;
+-	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
+-		restrict_link = keyring->restrict_link;
+-
+ 	key_ref = ERR_PTR(-ENOTDIR);
+ 	if (keyring->type != &key_type_keyring)
+ 		goto error_put_type;
+@@ -865,6 +862,9 @@ static key_ref_t __key_create_or_update(
+ 		goto error_link_end;
  	}
  
- 	persistent = keyring_alloc(index_key->description,
-@@ -61,9 +67,10 @@ static key_ref_t key_create_persistent(s
- 				   KEY_ALLOC_NOT_IN_QUOTA, NULL,
- 				   ns->persistent_keyring_register);
- 	if (IS_ERR(persistent))
--		return ERR_CAST(persistent);
-+		return PTR_ERR(persistent);
- 
--	return make_key_ref(persistent, true);
-+	*persistent_ref = make_key_ref(persistent, true);
-+	return 0;
- }
- 
- /*
-@@ -78,6 +85,7 @@ static long key_get_persistent(struct us
- 	key_ref_t reg_ref, persistent_ref;
- 	char buf[32];
- 	long ret;
-+	bool created = false;
- 
- 	/* Look in the register if it exists */
- 	memset(&index_key, 0, sizeof(index_key));
-@@ -100,23 +108,24 @@ static long key_get_persistent(struct us
- 	 * also need to create the register.
- 	 */
- 	down_write(&ns->keyring_sem);
--	persistent_ref = key_create_persistent(ns, uid, &index_key);
-+	ret = key_get_or_create_persistent(ns, uid, &index_key,
-+					   &persistent_ref);
- 	up_write(&ns->keyring_sem);
--	if (!IS_ERR(persistent_ref))
--		goto found;
--
--	return PTR_ERR(persistent_ref);
-+	if (ret < 0)
-+		return ret;
-+	created = ret == 0;
- 
- found:
-+	persistent = key_ref_to_ptr(persistent_ref);
- 	ret = key_task_permission(persistent_ref, current_cred(), KEY_NEED_LINK);
--	if (ret == 0) {
--		persistent = key_ref_to_ptr(persistent_ref);
-+	if (ret == 0)
- 		ret = key_link(key_ref_to_ptr(dest_ref), persistent);
--		if (ret == 0) {
--			key_set_timeout(persistent, persistent_keyring_expiry);
--			ret = persistent->serial;
--		}
--	}
++	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
++		restrict_link = keyring->restrict_link;
 +
-+	if (ret == 0 || created)
-+		key_set_timeout(persistent, persistent_keyring_expiry);
-+
-+	if (ret == 0)
-+		ret = persistent->serial;
- 
- 	key_ref_put(persistent_ref);
- 	return ret;
+ 	if (restrict_link && restrict_link->check) {
+ 		ret = restrict_link->check(keyring, index_key.type,
+ 					   &prep.payload, restrict_link->key);
 
 
