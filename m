@@ -1,455 +1,332 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2392AD32;
-	Sat, 17 Oct 2026 15:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC4D34EEF3;
+	Sat, 17 Oct 2026 15:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252572; cv=none; b=CzcBW0wSOY7/BUCP/pHTY+255Iz7wnP4jjTCbrQ1WGFp4iDJYlEA7285uimN2Fljwf3P3j14I/8U263WvBzuxTJz410x6c2GsJfAor0PMvJp+8Q+PYxuMk6nbczdE5zDsMxRrLgqGVxTfNmBp8LSt8thF7u9enaaANl0cgAKTpg=
+	t=1792252576; cv=none; b=oM+iPgjHSAGryL5ctRa0UzLz5r3swMW7x3q09dyY/2s4t45ICl4gxJSYv+cd+oQPJmBtQyszAcNGf1wQFEO298cIJ4YwUxVc+0qdgV1tA8ERuDtNwT0FIxT0XwTNfN3+VJSd8QR5BjVxHtJKfv+aYUluoIJq/7ZwAouy0YK1BXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252572; c=relaxed/simple;
-	bh=y7dR1JSA5i+Vl8SWQuj1zrFHcfDo0B/V1XC87iBgEnM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=En/pllH2EBFw7tzXfaaPOYHhOEVT1hm3Y7CqLkGE4JVIKjHo8Irr2UhpGTGdNPORZmZOGQ79waa0Wm7Oh2WGq8m8z2AV2dyBxWUsUYNsF/nmE1T0pX6pZdxAubHXq2O1+wTa5m453SFO1A1lW2BEf2pce9/CntslYSHVnvIScFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cq8RfzBq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792252576; c=relaxed/simple;
+	bh=RjNMlg2IO7dnkjshfCv/58OuvCALFUNDpcpvFDqEZn4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=S0g0asDuFrQi1vT858x9B8JviEYvXm8vT2zK48Q7PPkZf8bGLmqBETC733AIyyTR1uAlUDlyuKJJSHtwjfIlZUn2nCvEAXLiU18FRTUZUY3Ox00bGCDbfPIPqyvdOjfBaanISmFj6BAE3TTA1mkTMhwzXysq0+HXxOK6VTn+1Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ub4P5jd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cq8RfzBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF691F000C4;
-	Sat, 17 Oct 2026 15:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub4P5jd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615941F000C4;
+	Sat, 17 Oct 2026 15:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252571;
-	bh=WDKcK9Q/nbxnP0vDPU8hbwrI+bdci00uoTXCqHo+Zn0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cq8RfzBqwloT5zTFIAHKgwfgf729q2MAouxIrS8vDu9Q1MOcDm1S1WFoje7ofJbAl
-	 qQ5VFkpImYbf0gOg7wu6tZ/aUtXlQBG4KR/j7CzJefP5K/YGdY6n4Qqij0pENRnA9q
-	 It47idSaDPPOn143pEAn/UEkw/f5zHF/IeZMNOwk=
+	s=korg; t=1792252574;
+	bh=2XOJvniou8r0h52hRCQ7CYGc/YiASAB4UTfI51FTZmc=;
+	h=From:To:Cc:Subject:Date;
+	b=ub4P5jd9d44UTMBBYItXFBFj214eVre0slzTctnJF8nKJ2NxcrWICOHBDguEmMhya
+	 nUDDvh0EK/cK88Xpt102QVm/0Ry6Gq7kgI7vCagez/sYe8GR/kv7cWrKmQpVuAEHUa
+	 CyARBQz2UnKH1OjOJuK+JPd19a1j6fClW2D9ZIz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 09/52] iavf: send MAC change request synchronously
-Date: Sat, 17 Oct 2026 17:54:10 +0200
-Message-ID: <20261017155105.152286098@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.18 00/52] 6.18.58-rc1 review
+Date: Sat, 17 Oct 2026 17:54:01 +0200
+Message-ID: <20261017155104.830766652@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
-References: <20261017155104.830766652@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.58-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.18.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.18.58-rc1
+X-KernelTest-Deadline: 2026-10-19T15:51+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.18.58 release.
+There are 52 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Mon, 19 Oct 2026 15:50:51 +0000.
+Anything received after that time might be too late.
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.58-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+and the diffstat can be found below.
 
-[ Upstream commit 436729a56dd4dac611d10b569c5359d2cf705b19 ]
+thanks,
 
-After commit ad7c7b2172c3 ("net: hold netdev instance lock during sysfs
-operations"), iavf_set_mac() is called with the netdev instance lock
-already held.
+greg k-h
 
-The function queues a MAC address change request via
-iavf_replace_primary_mac() and then waits for completion. However, in
-the current flow, the actual virtchnl message is sent by the watchdog
-task, which also needs to acquire the netdev lock to run. Additionally,
-the adminq_task which processes virtchnl responses also needs the netdev
-lock.
+-------------
+Pseudo-Shortlog of commits:
 
-This creates a deadlock scenario:
-1. iavf_set_mac() holds netdev lock and waits for MAC change
-2. Watchdog needs netdev lock to send the request -> blocked
-3. Even if request is sent, adminq_task needs netdev lock to process
-   PF response -> blocked
-4. MAC change times out after 2.5 seconds
-5. iavf_set_mac() returns -EAGAIN
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.18.58-rc1
 
-This particularly affects VFs during bonding setup when multiple VFs are
-enslaved in quick succession.
+Toke Høiland-Jørgensen <toke@toke.dk>
+    wifi: atk9k: Revert "wifi: ath9k: reject short WMI command responses"
 
-Fix by implementing a synchronous MAC change operation similar to the
-approach used in commit fdadbf6e84c4 ("iavf: fix incorrect reset handling
-in callbacks").
+Mattia Meleleo <mattia.meleleo@coralogix.com>
+    bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
 
-The solution:
-1. Send the virtchnl ADD_ETH_ADDR message directly (not via watchdog)
-2. Poll the admin queue hardware directly for responses
-3. Process all received messages (including non-MAC messages)
-4. Return when MAC change completes or times out
+Pratyush Yadav <pratyush@kernel.org>
+    kho: free chunks using free_page() instead of kfree()
 
-A new generic function iavf_poll_virtchnl_response() is introduced that
-can be reused for any future synchronous virtchnl operations. It takes a
-callback to check completion, allowing flexible condition checking.
+Jens Axboe <axboe@kernel.dk>
+    io_uring/kbuf: don't charge provided buffer rings to RLIMIT_MEMLOCK
 
-This allows the operation to complete synchronously while holding
-netdev_lock, without relying on watchdog or adminq_task. The function
-can sleep for up to 2.5 seconds polling hardware, but this is acceptable
-since netdev_lock is per-device and only serializes operations on the
-same interface.
+Hengyu Liang <hengyul@cs.unc.edu>
+    io_uring: do not charge the SQ/CQ rings to RLIMIT_MEMLOCK
 
-To support this, change iavf_add_ether_addrs() to return an error code
-instead of void, allowing callers to detect failures. Additionally,
-export iavf_mac_add_reject() to enable proper rollback on local failures
-(timeouts, send errors) - PF rejections are already handled automatically
-by iavf_virtchnl_completion().
+Bernard Pidoux <bernard.f6bvp@gmail.com>
+    rose: hold a reference on incoming sockets queued for accept()
 
-Remove vc_waitqueue entirely because iavf_set_mac was the only waiter on
-this waitqueue and after the changes it is not needed.
+Alexander Lobakin <aleksander.lobakin@intel.com>
+    ice: fix broken Rx on VFs
 
-Fixes: ad7c7b2172c3 ("net: hold netdev instance lock during sysfs operations")
-cc: stable@vger.kernel.org
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/intel/iavf/iavf.h        | 11 ++-
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 85 ++++++++++++----
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 99 +++++++++++++++++--
- 3 files changed, 165 insertions(+), 30 deletions(-)
+Johan Hovold <johan@kernel.org>
+    USB: iowarrior: fix use-after-free on disconnect race
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index 050f8241ef5e6..5fcbfa0ca8553 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -259,7 +259,6 @@ struct iavf_adapter {
- 	struct work_struct adminq_task;
- 	struct work_struct finish_config;
- 	wait_queue_head_t down_waitqueue;
--	wait_queue_head_t vc_waitqueue;
- 	struct iavf_q_vector *q_vectors;
- 	struct list_head vlan_filter_list;
- 	int num_vlan_filters;
-@@ -588,8 +587,9 @@ void iavf_configure_queues(struct iavf_adapter *adapter);
- void iavf_enable_queues(struct iavf_adapter *adapter);
- void iavf_disable_queues(struct iavf_adapter *adapter);
- void iavf_map_queues(struct iavf_adapter *adapter);
--void iavf_add_ether_addrs(struct iavf_adapter *adapter);
-+int iavf_add_ether_addrs(struct iavf_adapter *adapter);
- void iavf_del_ether_addrs(struct iavf_adapter *adapter);
-+void iavf_mac_add_reject(struct iavf_adapter *adapter);
- void iavf_add_vlans(struct iavf_adapter *adapter);
- void iavf_del_vlans(struct iavf_adapter *adapter);
- void iavf_set_promiscuous(struct iavf_adapter *adapter);
-@@ -606,6 +606,13 @@ void iavf_disable_vlan_stripping(struct iavf_adapter *adapter);
- void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			      enum virtchnl_ops v_opcode,
- 			      enum iavf_status v_retval, u8 *msg, u16 msglen);
-+int iavf_poll_virtchnl_response(struct iavf_adapter *adapter,
-+				struct iavf_arq_event_info *event,
-+				bool (*condition)(struct iavf_adapter *adapter,
-+						  const void *data,
-+						  enum virtchnl_ops v_op),
-+				const void *cond_data,
-+				unsigned int timeout_ms);
- int iavf_config_rss(struct iavf_adapter *adapter);
- void iavf_cfg_queues_bw(struct iavf_adapter *adapter);
- void iavf_cfg_queues_quanta_size(struct iavf_adapter *adapter);
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index d09add9a110ea..0c99e3909952e 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1029,6 +1029,60 @@ static bool iavf_is_mac_set_handled(struct net_device *netdev,
- 	return ret;
- }
- 
-+/**
-+ * iavf_mac_change_done - Check if MAC change completed
-+ * @adapter: board private structure
-+ * @data: MAC address being checked (as const void *)
-+ * @v_op: virtchnl opcode from processed message
-+ *
-+ * Callback for iavf_poll_virtchnl_response() to check if MAC change completed.
-+ *
-+ * Return: true if MAC change completed, false otherwise
-+ */
-+static bool iavf_mac_change_done(struct iavf_adapter *adapter,
-+				 const void *data, enum virtchnl_ops v_op)
-+{
-+	const u8 *addr = data;
-+
-+	return iavf_is_mac_set_handled(adapter->netdev, addr);
-+}
-+
-+/**
-+ * iavf_set_mac_sync - Synchronously change MAC address
-+ * @adapter: board private structure
-+ * @addr: MAC address to set
-+ *
-+ * Send MAC change request to PF and poll admin queue for response.
-+ * Caller must hold netdev_lock. This can sleep for up to 2.5 seconds.
-+ * Event buffer is allocated before sending to avoid state mismatch if
-+ * allocation fails after message is sent to PF.
-+ *
-+ * Return: 0 on success, negative on failure
-+ */
-+static int iavf_set_mac_sync(struct iavf_adapter *adapter, const u8 *addr)
-+{
-+	struct iavf_arq_event_info event;
-+	int ret;
-+
-+	netdev_assert_locked(adapter->netdev);
-+
-+	event.buf_len = IAVF_MAX_AQ_BUF_SIZE;
-+	event.msg_buf = kzalloc(event.buf_len, GFP_KERNEL);
-+	if (!event.msg_buf)
-+		return -ENOMEM;
-+
-+	ret = iavf_add_ether_addrs(adapter);
-+	if (ret)
-+		goto out;
-+
-+	ret = iavf_poll_virtchnl_response(adapter, &event,
-+					  iavf_mac_change_done, addr, 2500);
-+
-+out:
-+	kfree(event.msg_buf);
-+	return ret;
-+}
-+
- /**
-  * iavf_set_mac - NDO callback to set port MAC address
-  * @netdev: network interface device structure
-@@ -1046,25 +1100,23 @@ static int iavf_set_mac(struct net_device *netdev, void *p)
- 		return -EADDRNOTAVAIL;
- 
- 	ret = iavf_replace_primary_mac(adapter, addr->sa_data);
--
- 	if (ret)
- 		return ret;
- 
--	ret = wait_event_interruptible_timeout(adapter->vc_waitqueue,
--					       iavf_is_mac_set_handled(netdev, addr->sa_data),
--					       msecs_to_jiffies(2500));
--
--	/* If ret < 0 then it means wait was interrupted.
--	 * If ret == 0 then it means we got a timeout.
--	 * else it means we got response for set MAC from PF,
--	 * check if netdev MAC was updated to requested MAC,
--	 * if yes then set MAC succeeded otherwise it failed return -EACCES
--	 */
--	if (ret < 0)
-+	ret = iavf_set_mac_sync(adapter, addr->sa_data);
-+	if (ret) {
-+		/* Rollback only if send failed (message never reached PF).
-+		 * Don't rollback on timeout (-EAGAIN) because the message was
-+		 * sent and PF will eventually respond. When the response arrives,
-+		 * iavf_virtchnl_completion() will handle rollback (on PF error)
-+		 * or acceptance (on PF success) automatically.
-+		 */
-+		if (ret != -EAGAIN) {
-+			iavf_mac_add_reject(adapter);
-+			ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
-+		}
- 		return ret;
--
--	if (!ret)
--		return -EAGAIN;
-+	}
- 
- 	if (!ether_addr_equal(netdev->dev_addr, addr->sa_data))
- 		return -EACCES;
-@@ -5388,9 +5440,6 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	/* Setup the wait queue for indicating transition to down status */
- 	init_waitqueue_head(&adapter->down_waitqueue);
- 
--	/* Setup the wait queue for indicating virtchannel events */
--	init_waitqueue_head(&adapter->vc_waitqueue);
--
- 	INIT_LIST_HEAD(&adapter->ptp.aq_cmds);
- 	init_waitqueue_head(&adapter->ptp.phc_time_waitqueue);
- 	mutex_init(&adapter->ptp.aq_cmd_lock);
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index ad906baa759d5..6cf963b9c9109 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -2,6 +2,7 @@
- /* Copyright(c) 2013 - 2018 Intel Corporation. */
- 
- #include <linux/net/intel/libie/rx.h>
-+#include <net/netdev_lock.h>
- 
- #include "iavf.h"
- #include "iavf_ptp.h"
-@@ -555,20 +556,23 @@ iavf_set_mac_addr_type(struct virtchnl_ether_addr *virtchnl_ether_addr,
-  * @adapter: adapter structure
-  *
-  * Request that the PF add one or more addresses to our filters.
-- **/
--void iavf_add_ether_addrs(struct iavf_adapter *adapter)
-+ *
-+ * Return: 0 on success, negative on failure
-+ */
-+int iavf_add_ether_addrs(struct iavf_adapter *adapter)
- {
- 	struct virtchnl_ether_addr_list *veal;
- 	struct iavf_mac_filter *f;
- 	int i = 0, count = 0;
- 	bool more = false;
- 	size_t len;
-+	int ret;
- 
- 	if (adapter->current_op != VIRTCHNL_OP_UNKNOWN) {
- 		/* bail because we already have a command pending */
- 		dev_err(&adapter->pdev->dev, "Cannot add filters, command %d pending\n",
- 			adapter->current_op);
--		return;
-+		return -EBUSY;
- 	}
- 
- 	spin_lock_bh(&adapter->mac_vlan_list_lock);
-@@ -580,7 +584,7 @@ void iavf_add_ether_addrs(struct iavf_adapter *adapter)
- 	if (!count) {
- 		adapter->aq_required &= ~IAVF_FLAG_AQ_ADD_MAC_FILTER;
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
--		return;
-+		return 0;
- 	}
- 	adapter->current_op = VIRTCHNL_OP_ADD_ETH_ADDR;
- 
-@@ -594,8 +598,9 @@ void iavf_add_ether_addrs(struct iavf_adapter *adapter)
- 
- 	veal = kzalloc(len, GFP_ATOMIC);
- 	if (!veal) {
-+		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
--		return;
-+		return -ENOMEM;
- 	}
- 
- 	veal->vsi_id = adapter->vsi_res->vsi_id;
-@@ -615,8 +620,15 @@ void iavf_add_ether_addrs(struct iavf_adapter *adapter)
- 
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 
--	iavf_send_pf_msg(adapter, VIRTCHNL_OP_ADD_ETH_ADDR, (u8 *)veal, len);
-+	ret = iavf_send_pf_msg(adapter, VIRTCHNL_OP_ADD_ETH_ADDR, (u8 *)veal, len);
- 	kfree(veal);
-+	if (ret) {
-+		dev_err(&adapter->pdev->dev,
-+			"Unable to send ADD_ETH_ADDR message to PF, error %d\n", ret);
-+		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
-+	}
-+
-+	return ret;
- }
- 
- /**
-@@ -712,8 +724,8 @@ static void iavf_mac_add_ok(struct iavf_adapter *adapter)
-  * @adapter: adapter structure
-  *
-  * Remove filters from list based on PF response.
-- **/
--static void iavf_mac_add_reject(struct iavf_adapter *adapter)
-+ */
-+void iavf_mac_add_reject(struct iavf_adapter *adapter)
- {
- 	struct net_device *netdev = adapter->netdev;
- 	struct iavf_mac_filter *f, *ftmp;
-@@ -2360,7 +2372,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			iavf_mac_add_reject(adapter);
- 			/* restore administratively set MAC address */
- 			ether_addr_copy(adapter->hw.mac.addr, netdev->dev_addr);
--			wake_up(&adapter->vc_waitqueue);
- 			break;
- 		case VIRTCHNL_OP_DEL_ETH_ADDR:
- 			dev_err(&adapter->pdev->dev, "Failed to delete MAC filter, error %s\n",
-@@ -2551,7 +2562,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			eth_hw_addr_set(netdev, adapter->hw.mac.addr);
- 			netif_addr_unlock_bh(netdev);
- 		}
--		wake_up(&adapter->vc_waitqueue);
- 		break;
- 	case VIRTCHNL_OP_GET_STATS: {
- 		struct iavf_eth_stats *stats =
-@@ -2946,3 +2956,72 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 	} /* switch v_opcode */
- 	adapter->current_op = VIRTCHNL_OP_UNKNOWN;
- }
-+
-+/**
-+ * iavf_poll_virtchnl_response - Poll admin queue for virtchnl response
-+ * @adapter: adapter structure
-+ * @event: pre-allocated event buffer to use for polling
-+ * @condition: callback to check if desired response received
-+ * @cond_data: context data passed to condition callback
-+ * @timeout_ms: maximum time to wait in milliseconds
-+ *
-+ * Polls the admin queue and processes all incoming virtchnl messages.
-+ * After processing each valid message, calls the condition callback to check
-+ * if the expected response has been received. The callback receives the opcode
-+ * of the processed message to identify which response was received. Continues
-+ * polling until the callback returns true or timeout expires.
-+ *
-+ * Caller must allocate event buffer before sending any messages to PF to avoid
-+ * state mismatch if allocation fails after message is sent.
-+ *
-+ * Caller must hold netdev_lock. This can sleep for up to timeout_ms while
-+ * polling hardware.
-+ *
-+ * Return: 0 on success (condition met), -EAGAIN on timeout, or error code
-+ */
-+int iavf_poll_virtchnl_response(struct iavf_adapter *adapter,
-+				struct iavf_arq_event_info *event,
-+				bool (*condition)(struct iavf_adapter *adapter,
-+						  const void *data,
-+						  enum virtchnl_ops v_op),
-+				const void *cond_data,
-+				unsigned int timeout_ms)
-+{
-+	struct iavf_hw *hw = &adapter->hw;
-+	enum virtchnl_ops received_op;
-+	unsigned long timeout;
-+	int ret = -EAGAIN;
-+	u16 pending = 0;
-+	u32 v_retval;
-+
-+	netdev_assert_locked(adapter->netdev);
-+
-+	timeout = jiffies + msecs_to_jiffies(timeout_ms);
-+	do {
-+		if (!pending)
-+			usleep_range(50, 75);
-+
-+		if (iavf_clean_arq_element(hw, event, &pending) == IAVF_SUCCESS) {
-+			received_op = (enum virtchnl_ops)le32_to_cpu(event->desc.cookie_high);
-+			if (received_op != VIRTCHNL_OP_UNKNOWN) {
-+				v_retval = le32_to_cpu(event->desc.cookie_low);
-+
-+				iavf_virtchnl_completion(adapter, received_op,
-+							 (enum iavf_status)v_retval,
-+							 event->msg_buf, event->msg_len);
-+
-+				if (condition(adapter, cond_data, received_op)) {
-+					ret = 0;
-+					break;
-+				}
-+			}
-+
-+			memset(event->msg_buf, 0, IAVF_MAX_AQ_BUF_SIZE);
-+
-+			if (pending)
-+				continue;
-+		}
-+	} while (time_before(jiffies, timeout));
-+
-+	return ret;
-+}
--- 
-2.53.0
+Oliver Neukum <oneukum@suse.com>
+    usb: iowarrior: remove inherent race with minor number
 
+Stephen Smalley <stephen.smalley.work@gmail.com>
+    selinux: allow multiple opens of /sys/fs/selinux/policy
+
+SeongJae Park <sj@kernel.org>
+    mm/damon/core: fix damos_walk() vs kdamond_fn() exit race
+
+SeongJae Park <sj@kernel.org>
+    mm/damon/core: cancel damos_walk() before damon_ctx->kdamond reset
+
+Long Li <leo.lilong@huawei.com>
+    xfs: close crash window in attr dabtree inactivation
+
+Long Li <leo.lilong@huawei.com>
+    xfs: factor out xfs_attr3_leaf_init
+
+Long Li <leo.lilong@huawei.com>
+    xfs: factor out xfs_attr3_node_entry_remove
+
+Larysa Zaremba <larysa.zaremba@intel.com>
+    ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz
+
+Larysa Zaremba <larysa.zaremba@intel.com>
+    ice: fix rxq info registering in mbuf packets
+
+Michal Schmidt <mschmidt@redhat.com>
+    ice: fix crash in ethtool offline loopback test
+
+Michal Kubiak <michal.kubiak@intel.com>
+    ice: drop page splitting and recycling
+
+Michal Kubiak <michal.kubiak@intel.com>
+    ice: remove legacy Rx and construct SKB
+
+Chris J Arges <carges@cloudflare.com>
+    ima: Fix stack-out-of-bounds in is_bprm_creds_for_exec()
+
+Coiby Xu <coxu@redhat.com>
+    ima: Access decompressed kernel module to verify appended signature
+
+Matteo Croce <technoboy85@gmail.com>
+    fat: stop reading directory entries past the end-of-directory marker
+
+Frank Sorenson <sorenson@redhat.com>
+    cifs: fix time_last_write stamp placement in setattr/truncate paths
+
+Fan Wu <fanwu01@zju.edu.cn>
+    drm/xe/i2c: cancel the client work on remove
+
+Stanley Jhu <stanleyjhu@google.com>
+    scsi: ufs: core: Avoid unsafe MMIO reads in ufshcd_mcq_compl_all_cqes_lock()
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: ufs: core: Add a comment block above ufshcd_mcq_compl_all_cqes_lock()
+
+Peter Wang <peter.wang@mediatek.com>
+    scsi: ufs: core: Add debug log for MCQ command timeout
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: ufs: core: Move an assignment in ufshcd_mcq_process_cqe()
+
+Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>
+    scsi: ch: Do not keep references to data transfer element devices
+
+Stanley Jhu <stanleyjhu@google.com>
+    scsi: ufs: core: Decouple CQ sweep from request iterator in MCQ
+
+Wei-Jie Hung <imbigking12@gmail.com>
+    riscv: patch: fix handling of bpf-jit execmem addresses
+
+Vivian Wang <wangruikang@iscas.ac.cn>
+    riscv: patch: Avoid early phys_to_page()
+
+Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+    net: mana: reserve RX buffer headroom to fix forwarding performance
+
+Suraj Gupta <suraj.gupta2@amd.com>
+    net: xilinx: axienet: Free outstanding DMA buffers on dmaengine stop
+
+Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+    Bluetooth: RFCOMM: connect the session socket without rfcomm_mutex
+
+Tejun Heo <tj@kernel.org>
+    sched_ext: Fix CPU hotplug hang when a dying CPU's tasks sit in the BPF scheduler
+
+Mikulas Patocka <mpatocka@redhat.com>
+    dm-integrity: validate the superblock on resume
+
+Mikulas Patocka <mpatocka@redhat.com>
+    dm-integrity: fix NULL pointer dereference when the 'R' flag is used
+
+Sean Wang <sean.wang@mediatek.com>
+    wifi: mt76: connac: tolerate inactive BSS deactivation
+
+Lubos Rendek <l.rendek@proxmox.com>
+    nfsd: fix all-zero stateid in CB_OFFLOAD for async COPY
+
+Lorenzo Stoakes (ARM) <ljs@kernel.org>
+    mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
+
+Lorenzo Stoakes (ARM) <ljs@kernel.org>
+    mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
+
+Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+    iavf: send MAC change request synchronously
+
+Corinna Vinschen <vinschen@redhat.com>
+    iavf: iavf_virtchnl_completion: drop duplicate ether_addr_equal() test
+
+Mario Limonciello <mario.limonciello@amd.com>
+    drm/amd: Create a device link between APU display and XHCI devices
+
+Daehyeon Ko <4ncienth@gmail.com>
+    ip6_gre: remove obsolete ERSPAN PMTU update
+
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+    PCI: dwc: Return -EIO from dw_pcie_wait_for_link() if device is not active
+
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+    PCI: dwc: Return -ENODEV from dw_pcie_wait_for_link() if device is not found
+
+Cheng Xu <chengyou@linux.alibaba.com>
+    RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables
+
+Ethan Tidmore <ethantidmore06@gmail.com>
+    usb: gadget: f_hid: Add missing error code
+
+Johan Hovold <johan@kernel.org>
+    spi: mpc52xx: clean up interrupt handling
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/riscv/kernel/patch.c                          |  21 +-
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c          |  12 ++
+ drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h      |  10 +
+ .../gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c   |  45 ++++
+ drivers/gpu/drm/xe/xe_i2c.c                        |   5 +-
+ drivers/infiniband/hw/erdma/erdma_main.c           |   4 +-
+ drivers/infiniband/hw/erdma/erdma_verbs.c          |  18 +-
+ drivers/md/dm-integrity.c                          |  55 +++++
+ drivers/net/ethernet/intel/iavf/iavf.h             |  11 +-
+ drivers/net/ethernet/intel/iavf/iavf_main.c        |  85 ++++++--
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c    | 111 ++++++++--
+ drivers/net/ethernet/intel/ice/ice.h               |   3 +-
+ drivers/net/ethernet/intel/ice/ice_base.c          |  79 ++-----
+ drivers/net/ethernet/intel/ice/ice_ethtool.c       |  10 +-
+ drivers/net/ethernet/intel/ice/ice_lib.c           |  15 +-
+ drivers/net/ethernet/intel/ice/ice_main.c          |  11 +-
+ drivers/net/ethernet/intel/ice/ice_txrx.c          | 233 ++-------------------
+ drivers/net/ethernet/intel/ice/ice_txrx.h          |  88 --------
+ drivers/net/ethernet/intel/ice/ice_xsk.c           |  75 +------
+ drivers/net/ethernet/intel/ice/virt/queues.c       |   6 +-
+ drivers/net/ethernet/microsoft/mana/mana_bpf.c     |   8 +-
+ drivers/net/ethernet/microsoft/mana/mana_en.c      |  26 ++-
+ drivers/net/ethernet/xilinx/xilinx_axienet.h       |   7 +-
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c  |  53 ++++-
+ drivers/net/wireless/ath/ath9k/wmi.c               |  16 +-
+ drivers/net/wireless/ath/ath9k/wmi.h               |   1 -
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c   |   9 +-
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.h   |  23 ++
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c    |   6 +-
+ drivers/pci/controller/dwc/pcie-designware.c       |  31 ++-
+ drivers/scsi/ch.c                                  |  30 +--
+ drivers/spi/spi-mpc52xx.c                          |  26 ++-
+ drivers/ufs/core/ufs-mcq.c                         |  35 +++-
+ drivers/ufs/core/ufshcd.c                          |  37 ++--
+ drivers/usb/gadget/function/f_hid.c                |   4 +-
+ drivers/usb/misc/iowarrior.c                       |  74 +++----
+ fs/fat/dir.c                                       |  44 +++-
+ fs/nfsd/nfs4proc.c                                 |   2 +
+ fs/smb/client/inode.c                              |  27 ++-
+ fs/xfs/libxfs/xfs_attr_leaf.c                      |  22 ++
+ fs/xfs/libxfs/xfs_attr_leaf.h                      |   3 +
+ fs/xfs/libxfs/xfs_da_btree.c                       |  53 ++++-
+ fs/xfs/libxfs/xfs_da_btree.h                       |   2 +
+ fs/xfs/xfs_attr_inactive.c                         |  99 +++++----
+ include/linux/damon.h                              |   1 +
+ include/linux/kernel_read_file.h                   |   1 +
+ include/linux/skmsg.h                              |  14 --
+ include/net/bluetooth/rfcomm.h                     |   1 +
+ include/net/mana/mana.h                            |   4 +-
+ io_uring/io_uring.c                                |  12 +-
+ io_uring/kbuf.c                                    |   6 +-
+ io_uring/memmap.c                                  |  29 ++-
+ io_uring/memmap.h                                  |   6 +-
+ io_uring/register.c                                |  15 +-
+ io_uring/zcrx.c                                    |   4 +-
+ kernel/kexec_handover.c                            |   2 +-
+ kernel/module/main.c                               |  17 +-
+ kernel/sched/ext.c                                 |  29 ++-
+ kernel/sched/sched.h                               |   5 +-
+ mm/damon/core.c                                    |  24 ++-
+ mm/mremap.c                                        |  38 +++-
+ mm/vma.c                                           |  21 +-
+ mm/vma.h                                           |   7 +-
+ net/bluetooth/rfcomm/core.c                        | 134 ++++++++----
+ net/ipv4/tcp_bpf.c                                 |  17 +-
+ net/ipv6/ip6_gre.c                                 |   7 -
+ net/rose/af_rose.c                                 |  44 +++-
+ net/rose/rose_timer.c                              |   5 +
+ security/integrity/ima/ima.h                       |   6 +-
+ security/integrity/ima/ima_appraise.c              |  16 +-
+ security/integrity/ima/ima_main.c                  |  30 ++-
+ security/integrity/ima/ima_policy.c                |   3 +-
+ security/ipe/hooks.c                               |   1 +
+ security/selinux/hooks.c                           |   5 +-
+ security/selinux/selinuxfs.c                       |  27 +--
+ tools/testing/vma/vma.c                            |   4 +-
+ 77 files changed, 1160 insertions(+), 914 deletions(-)
 
 
