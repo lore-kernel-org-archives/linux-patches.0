@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FF23C4B8D;
-	Sat, 17 Oct 2026 18:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34463A380C;
+	Sat, 17 Oct 2026 18:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260753; cv=none; b=cEeMiUuyfg6HoZhnYEu1j+WUN1aQs6N36UJs64cTcSkPl0z0sFe+91MBiJORGaUgKB6wHWZ8eeMVnq7SVMw4DVfoUdnc5KAzA9tN/o/o41VtdYSo4Nd+pVQM0cfqQw7VINcvlVtYKB/QJqP6AFEwQ58N1DIhDIZZXcrOLogaFYk=
+	t=1792260756; cv=none; b=AG+ByNumq9ssTc5V4h1ttuNTINaDAe4wKGjM46bFV6uehxoh/vhmx6wC8qLWoYTslaRVu65ulrPUD79EPLpQXTzEOlc2sXK818y2mEAqXN1ti57jJ5Aqfjz7v6wZyOOXzcNn8+VBawuVvW21RcFVEVTvMGvKtu71iQyzAyiQyYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260753; c=relaxed/simple;
-	bh=s/5C/HOcYaDzj1DD99024WNbinNip6jqiYbHyuOC6H4=;
+	s=arc-20240116; t=1792260756; c=relaxed/simple;
+	bh=2H3Gg+yWwB/0Rsym0UAV+cvBQ3IbcUbQs1Q4LxFc5G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUTsNBxwv/IV2vSSOMPkaLx03iCroMm3+WeJjGKnAVmZvdIrTqf6xF1tl7VESuLmP0SZwnSkrvplLsQHYvv8BNjLhaz0s/OTXUg0hh1aJ4LmwM/CKNHIC5SdyOSQ0SmxKIAqq6zP5xncxI59f2zf0sgfmsNeZTlNp6taNWbIEvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps4kt3QO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nj3z/kId3AqEmVNO6EfNjV/nGz82za5J6IT0eiVN/5QCFtKdgGZkjR9UETut/Z2GQKxZEokcONWaSPA3ZeE4VbEMKniQ1rPPu3Hi33xawCJzKZ1FNp2HCs8dhWVhneYmcWVWBg1UGEk3+ZaguM7mrm6KVvyuIvbV/5EGDv3kydg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGsYjpqK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps4kt3QO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0FB1F000C4;
-	Sat, 17 Oct 2026 18:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGsYjpqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CAE1F000C4;
+	Sat, 17 Oct 2026 18:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260752;
-	bh=2TkwcYDSVX1NyCbpALW9KlZYcvxNVaQcIbxmro7zo0I=;
+	s=korg; t=1792260755;
+	bh=yX4NsP1RXPuSQQX7M3VyK6MoXk9+GN6HJmAX9NHuF9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ps4kt3QOjmilPkExNMOGF1mWF4W+RES8PuCKvM7bF7NyDT55HsNr4FJjCFCsin3HE
-	 9XfwxYCV3mgI6ZoAA/l3UykNj2nI8hR/xwfNkKr7l9BVsaOVgsOF9L5jBIHE6S9Hg8
-	 7GDjsvEoJajwBSf+ovcoi3k/tc+KCY8CjCxsyDv0=
+	b=rGsYjpqKZz4UbczOLZR/M6FBZsSMy2qPmE9w0FUmT7M+DEpWtS/k16kZFHroRbLRP
+	 RZlP8oqM3mTouKHXPQLAVsoBQn/q35XK0grYXDIedRZSnGiGTVmFoi8z6Z7EE9U6IS
+	 IY0OAaS5WGiR/QJdPHUvgrbuKT8duwGBbk/luWeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Cheryl Babcock <cheryl@renat.io>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1649/1674] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
-Date: Sat, 17 Oct 2026 18:05:21 +0200
-Message-ID: <20261017160513.396983197@linuxfoundation.org>
+Subject: [PATCH 6.6 1650/1674] ksmbd: propagate DACL parsing errors
+Date: Sat, 17 Oct 2026 18:05:22 +0200
+Message-ID: <20261017160513.422544630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,98 +51,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
+[ Upstream commit c61dc7b1b4a3234b4aa3965502908a292238805c ]
 
-l2cap_chan_connect() tries to ensure there are no more than
-L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
-same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
+parse_dacl() silently accepts truncated ACEs and allocation failures,
+allowing set_info_sec() to continue with an incomplete ACL conversion.
 
-However, the check only counts deferred channels.  If 6 L2CAP sockets
-are connected at the same time in order DDDDND (D=deferred,
-N=non-deferred), the last can bump the total to max+1.  It results to
-one __le16 written out of bounds of the scid array, and an invalid
-ECRED_CONN_REQ being sent.
+Return parsing and allocation errors to parse_sec_desc() so malformed
+security descriptors are rejected before inode attributes or ACL xattrs
+are updated.
 
-Fix by leaving room for the non-deferred pending ECRED channels in the
-counting in l2cap_chan_connect(), so the limit can't be exceeded.
-
-Move counting under same critical section where the channel is added.
-Although race conditions involving this appear unreachable, it's easier
-to see.
-
-Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
-less brittle.
-
-Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Cheryl Babcock <cheryl@renat.io>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ fs/smb/server/smbacl.c | 63 +++++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 260031e59d646..c2bd2b25a809c 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1325,7 +1325,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
- struct l2cap_ecred_conn_data {
- 	struct {
- 		struct l2cap_ecred_conn_req req;
--		__le16 scid[5];
-+		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
- 	} __packed pdu;
- 	struct l2cap_chan *chan;
- 	struct pid *pid;
-@@ -1356,6 +1356,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
- 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
- 		return;
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 8f206061c91a0..da7bf23a2db0d 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -380,10 +380,10 @@ void free_acl_state(struct posix_acl_state *state)
+ 	kfree(state->groups);
+ }
  
-+	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
-+	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
-+		return;
-+
- 	l2cap_ecred_init(chan, 0);
+-static void parse_dacl(struct mnt_idmap *idmap,
+-		       struct smb_acl *pdacl, char *end_of_acl,
+-		       struct smb_sid *pownersid, struct smb_sid *pgrpsid,
+-		       struct smb_fattr *fattr)
++static int parse_dacl(struct mnt_idmap *idmap,
++		      struct smb_acl *pdacl, char *end_of_acl,
++		      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
++		      struct smb_fattr *fattr)
+ {
+ 	int i, ret;
+ 	u16 num_aces = 0;
+@@ -397,13 +397,13 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	bool owner_found = false, group_found = false, others_found = false;
  
- 	/* Set the same ident so we can match on the rsp */
-@@ -7304,6 +7308,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		goto done;
+ 	if (!pdacl)
+-		return;
++		return 0;
+ 
+ 	/* validate that we do not go past end of acl */
+ 	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
+ 	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
+ 		pr_err("ACL too small to parse DACL\n");
+-		return;
++		return -EINVAL;
  	}
  
-+	mutex_lock(&conn->lock);
-+	l2cap_chan_lock(chan);
-+
- 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
- 		struct l2cap_chan_data data;
+ 	ksmbd_debug(SMB, "DACL revision %d size %d num aces %d\n",
+@@ -415,31 +415,31 @@ static void parse_dacl(struct mnt_idmap *idmap,
  
-@@ -7311,19 +7318,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		data.pid = chan->ops->get_peer_pid(chan);
- 		data.count = 1;
+ 	num_aces = le16_to_cpu(pdacl->num_aces);
+ 	if (num_aces <= 0)
+-		return;
++		return 0;
  
--		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
-+		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
-+
-+		/* Leave room for non-deferred channel that ends the group. */
-+		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
-+			data.count += 1;
+ 	dacl_size = le16_to_cpu(pdacl->size);
+ 	if (dacl_size < sizeof(struct smb_acl))
+-		return;
++		return -EINVAL;
  
- 		/* Check if there isn't too many channels being connected */
- 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
- 			hci_conn_drop(hcon);
- 			err = -EPROTO;
--			goto done;
-+			goto chan_unlock;
+ 	if (num_aces > (dacl_size - sizeof(struct smb_acl)) /
+ 			(offsetof(struct smb_ace, sid) +
+ 			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
+-		return;
++		return -EINVAL;
+ 
+ 	ret = init_acl_state(&acl_state, num_aces);
+ 	if (ret)
+-		return;
++		return ret;
+ 	ret = init_acl_state(&default_acl_state, num_aces);
+ 	if (ret) {
+ 		free_acl_state(&acl_state);
+-		return;
++		return ret;
+ 	}
+ 
+ 	ppace = kmalloc_array(num_aces, sizeof(struct smb_ace *), GFP_KERNEL);
+ 	if (!ppace) {
+ 		free_acl_state(&default_acl_state);
+ 		free_acl_state(&acl_state);
+-		return;
++		return -ENOMEM;
+ 	}
+ 
+ 	/*
+@@ -448,8 +448,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 	 * user/group/other have no permissions
+ 	 */
+ 	for (i = 0; i < num_aces; ++i) {
+-		if (end_of_acl - acl_base < acl_size)
+-			break;
++		if (end_of_acl - acl_base < acl_size) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		ppace[i] = (struct smb_ace *)(acl_base + acl_size);
+ 		acl_base = (char *)ppace[i];
+@@ -462,8 +464,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 		    (end_of_acl - acl_base <
+ 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
+ 		    (le16_to_cpu(ppace[i]->size) <
+-		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth))
+-			break;
++		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		acl_size = le16_to_cpu(ppace[i]->size);
+ 		ppace[i]->access_req =
+@@ -538,7 +542,6 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 				((acl_mode & 0700) >> 6) | 0004;
+ 		}
+ 	}
+-	kfree(ppace);
+ 
+ 	if (owner_found) {
+ 		/* The owner must be set to at least read-only. */
+@@ -581,10 +584,12 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_acls =
+ 				posix_acl_alloc(acl_state.users->n +
+ 					acl_state.groups->n + 4, GFP_KERNEL);
+-			if (fattr->cf_acls) {
+-				cf_pace = fattr->cf_acls->a_entries;
+-				posix_state_to_acl(&acl_state, cf_pace);
++			if (!fattr->cf_acls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pace = fattr->cf_acls->a_entries;
++			posix_state_to_acl(&acl_state, cf_pace);
  		}
  	}
  
--	mutex_lock(&conn->lock);
--	l2cap_chan_lock(chan);
--
- 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
- 		hci_conn_drop(hcon);
- 		err = -EBUSY;
+@@ -595,14 +600,20 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ 			fattr->cf_dacls =
+ 				posix_acl_alloc(default_acl_state.users->n +
+ 				default_acl_state.groups->n + 4, GFP_KERNEL);
+-			if (fattr->cf_dacls) {
+-				cf_pdace = fattr->cf_dacls->a_entries;
+-				posix_state_to_acl(&default_acl_state, cf_pdace);
++			if (!fattr->cf_dacls) {
++				ret = -ENOMEM;
++				goto out;
+ 			}
++			cf_pdace = fattr->cf_dacls->a_entries;
++			posix_state_to_acl(&default_acl_state, cf_pdace);
+ 		}
+ 	}
++	ret = 0;
++out:
++	kfree(ppace);
+ 	free_acl_state(&acl_state);
+ 	free_acl_state(&default_acl_state);
++	return ret;
+ }
+ 
+ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+@@ -963,8 +974,10 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
+ 		if (dacloffset < sizeof(struct smb_ntsd))
+ 			return -EINVAL;
+ 
+-		parse_dacl(idmap, dacl_ptr, end_of_acl,
+-			   owner_sid_ptr, group_sid_ptr, fattr);
++		rc = parse_dacl(idmap, dacl_ptr, end_of_acl,
++				owner_sid_ptr, group_sid_ptr, fattr);
++		if (rc)
++			return rc;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
