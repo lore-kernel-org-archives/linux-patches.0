@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372F737BE64;
-	Sat, 17 Oct 2026 16:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D597404E;
+	Sat, 17 Oct 2026 16:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254822; cv=none; b=EJ6DTmg1xbkN7QdG84FutnQ9zf7e9XwbozX8G0gC7+/fEAjwPCNyYgdI4yU0f5Q8XzRuX6BsfPEuzrY6CZ/Eup3K5Hu5b78Xxw0DHWC2ZbHlh0jil8aGuoPgaFvr1ssLS2tGgmu/1Jcu/KDdGKMEzcBfSpz0wzEWG1mYXZ8ODss=
+	t=1792254825; cv=none; b=JQ4YgSzzGr6+KgYNWlr3xetVuPVSTYCUHyKpPtNNx9Kyqk7+Rp+Pr97JtWAWCGvoEMhKEdEFTYj2CmsNQVfRo0ZAhlC9DpZK2CqCUOzAiPXfZOw9PL/l17ztn2SGEnXqc6lYgwUEl3W+LibdHkST7VJBl6mukWLXZF3vHWfZ23c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254822; c=relaxed/simple;
-	bh=qblh2ciCyFZj9SjMHKkAHMPUAn6zaDPROBQXF+imPk0=;
+	s=arc-20240116; t=1792254825; c=relaxed/simple;
+	bh=QYtOxTw4P5GaYice/y4f4aoFEP8eGAcRLUJ8UYVbd+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGailff83AHNGjxNATvEMULRNukLHtor+LAJFZ5KBIhLBMxjP/FfA1gCQsjdMW41GcJ1NaWNsVYRiIXqdoKv+hqqSRZZqV/pkoojh93Fg4sJ6MZ3vX/E0LGZGL/Vgo5eEsCUcHb8ltYDnZmRUkwxxX8Vei8sFjU+JVOnhZH+4zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXt0lYjj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nMBdJ+2SvEcx7FYnL0cEDUrBGCTU8zb9dymfukSCgDWhKhSPz4/Qx4Ss3AUEgbTGuyru5T7C0MA1CHmCmlAKmsJyHvvGMJOgErT75PwSo5iAtqvUzzx0FL3esecQe17Obdjm0y53ihlfF28/YCBL4rtz3Z7HaLzN6KvistAnZ90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkfNOxB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXt0lYjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875C11F000C4;
-	Sat, 17 Oct 2026 16:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkfNOxB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767651F000C4;
+	Sat, 17 Oct 2026 16:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254821;
-	bh=y9N5ndZoL1c3lIiiN0nJ6cPuLuuvmncrte+m/fCg0JY=;
+	s=korg; t=1792254824;
+	bh=mtCRAIwSxSpVkknq0t+IhyPjcs6hzJKSIGakPiYXNoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vXt0lYjjV6jdkdBqPnPbiS/Bvydh55+DvhkX15Q/nhxJU6PbbcxWBFpNrRPfs1ehs
-	 zPeR6UQhbM6zjjpJpXHv0BKtw1/c+GqurtpiC5D/ZYaP891+TUdqhNLFzsJQe5WzCE
-	 fJWgM+J5Ln2tLW7b8fOWxtPd0blRjrQ0wnIjZd+o=
+	b=nkfNOxB3igIy+kmHTkAKnzLveuU4nuv8BZ1cwc6XiEUAJCbIaTbr3DQYwVAwsmadC
+	 Zmlz7vK/g0Hw/YTts9OWua8Xzqh6M99WMmXB7HbpbhKkeX4BYBCMt3qe6VMWK4EKMS
+	 imbhXqwQPBZ+UYUqS38Ki1tpiBIQO2FLpvwhY2rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 574/869] nfsd: restore rq_status_counter to even on all nfsd_dispatch() exit paths
-Date: Sat, 17 Oct 2026 17:56:55 +0200
-Message-ID: <20261017160051.780834142@linuxfoundation.org>
+Subject: [PATCH 6.12 575/869] lockd, nfsd: RCU-protect nlmsvc_ops dispatch
+Date: Sat, 17 Oct 2026 17:56:56 +0200
+Message-ID: <20261017160051.805328232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,96 +53,238 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit f6045886fe3f14f269f683d64021b004a50d0efa ]
+[ Upstream commit 641e5e20852359b8c31149be4598884e30652f60 ]
 
-nfsd_dispatch() sets rq_status_counter to an odd value once a request has
-been decoded, and back to an even value once it has been fully processed,
-forming a seq-lock like protocol with the lockless reader in
-nfsd_nl_rpc_status_get_dumpit().
+nlmsvc_ops is published by nfsd_lockd_init() and cleared by
+nfsd_lockd_shutdown() with plain stores, while lockd dereferences
+it unguarded from dispatch sites in fs/lockd/svcsubs.c. The pointer
+targets nfsd's .rodata and the fopen/fclose callbacks live in nfsd's
+.text, so a stale load after rmmod nfsd results in either a NULL
+deref or a module-text use-after-free.
 
-Only the fully successful path restored the counter to even. The cache-hit
-(RC_REPLY), drop (RC_DROPIT / RQ_DROPME) and encode-error paths all return
-after the odd-valued store without ever bringing the counter back to even.
-Once one of those paths is taken, rq_status_counter is left odd: the next
-request's decode ORs in 1 (still odd) and only a subsequent successful
-encode restores even. While stuck odd, the dumpit reader treats the rqstp
-fields as stable and its retry check compares against the same unchanging
-odd value, so it never detects concurrent mutation. This exposes actively
-mutating fields (e.g. args->ops / args->opcnt during compound decode and
-release) to the lockless reader, which can read past the end of the
-8-element inline ops array.
+Declare nlmsvc_ops as __rcu, publish via rcu_assign_pointer(), clear
+via RCU_INIT_POINTER() + synchronize_rcu(). Add a struct module
+*owner field to nlmsvc_binding and pin the module across indirect
+calls with try_module_get/module_put. When the binding is torn down,
+fall back to fput() to avoid leaking struct file references.
 
-Add a helper that advances the counter to the next even value and call it
-on every return path that follows the odd-valued store. The decode-error
-path is left untouched as it is reached before the counter is set odd.
-
-Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-19-5b90e276f2d9@kernel.org
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-16-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ fs/lockd/svc.c             |  4 ++--
+ fs/lockd/svc4proc.c        |  4 ++--
+ fs/lockd/svcproc.c         |  4 ++--
+ fs/lockd/svcsubs.c         | 45 +++++++++++++++++++++++++++++++++-----
+ fs/nfsd/lockd.c            |  6 +++--
+ include/linux/lockd/bind.h | 12 +++++++---
+ 6 files changed, 59 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 421f474b75ce8..57754dfacf9cb 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -974,6 +974,20 @@ nfsd(void *vrqstp)
- 	return 0;
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 4ec22c2f2ea3c..87f20d1edb2c2 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -47,7 +47,7 @@
+ 
+ static struct svc_program	nlmsvc_program;
+ 
+-const struct nlmsvc_binding	*nlmsvc_ops;
++const struct nlmsvc_binding __rcu *nlmsvc_ops;
+ EXPORT_SYMBOL_GPL(nlmsvc_ops);
+ 
+ static DEFINE_MUTEX(nlmsvc_mutex);
+@@ -142,7 +142,7 @@ lockd(void *vrqstp)
+ 		nlmsvc_retry_blocked(rqstp);
+ 		svc_recv(rqstp);
+ 	}
+-	if (nlmsvc_ops)
++	if (rcu_access_pointer(nlmsvc_ops))
+ 		nlmsvc_invalidate_all();
+ 	nlm_shutdown_hosts();
+ 	cancel_delayed_work_sync(&ln->grace_period_end);
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 3f633bb24623a..ea3b689f8b93a 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -29,7 +29,7 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 	__be32			error = 0;
+ 
+ 	/* nfsd callbacks must have been installed for this procedure */
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return nlm_lck_denied_nolocks;
+ 
+ 	if (lock->lock_start > OFFSET_MAX ||
+@@ -487,7 +487,7 @@ nlm4svc_proc_granted_res(struct svc_rqst *rqstp)
+ {
+ 	struct nlm_res *argp = rqstp->rq_argp;
+ 
+-        if (!nlmsvc_ops)
++        if (!rcu_access_pointer(nlmsvc_ops))
+                 return rpc_success;
+ 
+         dprintk("lockd: GRANTED_RES   called\n");
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index 8cda2aba82d25..44da63392a09d 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -59,7 +59,7 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 	__be32			error = 0;
+ 
+ 	/* nfsd callbacks must have been installed for this procedure */
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return nlm_lck_denied_nolocks;
+ 
+ 	/* Obtain host handle */
+@@ -521,7 +521,7 @@ nlmsvc_proc_granted_res(struct svc_rqst *rqstp)
+ {
+ 	struct nlm_res *argp = rqstp->rq_argp;
+ 
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return rpc_success;
+ 
+ 	dprintk("lockd: GRANTED_RES   called\n");
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index 90c6527ad712c..3e3cd67e167a2 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -86,12 +86,23 @@ int lock_to_openmode(struct file_lock *lock)
+ static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
+ 			   struct nlm_file *file, int mode)
+ {
++	const struct nlmsvc_binding *ops;
+ 	struct file **fp = &file->f_file[mode];
+ 	__be32	nfserr;
+ 
+ 	if (*fp)
+ 		return 0;
+-	nfserr = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, mode);
++
++	rcu_read_lock();
++	ops = rcu_dereference(nlmsvc_ops);
++	if (!ops || !try_module_get(ops->owner)) {
++		rcu_read_unlock();
++		return nlm_lck_denied_nolocks;
++	}
++	rcu_read_unlock();
++
++	nfserr = ops->fopen(rqstp, &file->f_handle, fp, mode);
++	module_put(ops->owner);
+ 	if (nfserr)
+ 		dprintk("lockd: open failed (error %d)\n", nfserr);
+ 	return nfserr;
+@@ -159,6 +170,33 @@ nlm_lookup_file(struct svc_rqst *rqstp, struct nlm_file **result,
+ 	goto out_unlock;
  }
  
 +/*
-+ * Set rq_status_counter back to an even value, indicating that the rqstp
-+ * fields are no longer meaningful to a lockless reader. This pairs with the
-+ * odd-valued store made once the request has been decoded, and must run on
-+ * every return path that follows it so that the seq-lock like protocol used
-+ * by nfsd_nl_rpc_status_get_dumpit() is not left permanently odd. The store
-+ * also advances the counter so a concurrent reader detects the transition.
++ * Release the struct file references held by a nlm_file.
 + */
-+static void nfsd_status_counter_set_idle(struct svc_rqst *rqstp)
++static void nlm_release_files(struct nlm_file *file)
 +{
-+	smp_store_release(&rqstp->rq_status_counter,
-+			  (rqstp->rq_status_counter | 1) + 1);
++	const struct nlmsvc_binding *ops;
++	bool have_ops;
++
++	rcu_read_lock();
++	ops = rcu_dereference(nlmsvc_ops);
++	have_ops = ops && try_module_get(ops->owner);
++	rcu_read_unlock();
++
++	if (have_ops) {
++		if (file->f_file[O_RDONLY])
++			ops->fclose(file->f_file[O_RDONLY]);
++		if (file->f_file[O_WRONLY])
++			ops->fclose(file->f_file[O_WRONLY]);
++		module_put(ops->owner);
++	} else {
++		if (file->f_file[O_RDONLY])
++			fput(file->f_file[O_RDONLY]);
++		if (file->f_file[O_WRONLY])
++			fput(file->f_file[O_WRONLY]);
++	}
 +}
 +
- /**
-  * nfsd_dispatch - Process an NFS or NFSACL or LOCALIO Request
-  * @rqstp: incoming request
-@@ -1035,14 +1049,9 @@ int nfsd_dispatch(struct svc_rqst *rqstp)
- 	if (!proc->pc_encode(rqstp, &rqstp->rq_res_stream))
- 		goto out_encode_err;
- 
--	/*
--	 * Release rq_status_counter setting it to an even value after the rpc
--	 * request has been properly processed.
--	 */
--	smp_store_release(&rqstp->rq_status_counter, rqstp->rq_status_counter + 1);
--
- 	nfsd_cache_update(rqstp, rp, rqstp->rq_cachetype, nfs_reply);
- out_cached_reply:
-+	nfsd_status_counter_set_idle(rqstp);
- 	return 1;
- 
- out_decode_err:
-@@ -1053,12 +1062,14 @@ int nfsd_dispatch(struct svc_rqst *rqstp)
- out_update_drop:
- 	nfsd_cache_update(rqstp, rp, RC_NOCACHE, NULL);
- out_dropit:
-+	nfsd_status_counter_set_idle(rqstp);
- 	return 0;
- 
- out_encode_err:
- 	trace_nfsd_cant_encode_err(rqstp);
- 	nfsd_cache_update(rqstp, rp, RC_NOCACHE, NULL);
- 	*statp = rpc_system_err;
-+	nfsd_status_counter_set_idle(rqstp);
- 	return 1;
+ /*
+  * Delete a file after having released all locks, blocks and shares
+  */
+@@ -168,10 +206,7 @@ nlm_delete_file(struct nlm_file *file)
+ 	nlm_debug_print_file("closing file", file);
+ 	if (!hlist_unhashed(&file->f_list)) {
+ 		hlist_del(&file->f_list);
+-		if (file->f_file[O_RDONLY])
+-			nlmsvc_ops->fclose(file->f_file[O_RDONLY]);
+-		if (file->f_file[O_WRONLY])
+-			nlmsvc_ops->fclose(file->f_file[O_WRONLY]);
++		nlm_release_files(file);
+ 		kfree(file);
+ 	} else {
+ 		printk(KERN_WARNING "lockd: attempt to release unknown file!\n");
+diff --git a/fs/nfsd/lockd.c b/fs/nfsd/lockd.c
+index 6b042218668b8..e933788e7a350 100644
+--- a/fs/nfsd/lockd.c
++++ b/fs/nfsd/lockd.c
+@@ -88,6 +88,7 @@ nlm_fclose(struct file *filp)
  }
  
+ static const struct nlmsvc_binding nfsd_nlm_ops = {
++	.owner		= THIS_MODULE,
+ 	.fopen		= nlm_fopen,		/* open file for locking */
+ 	.fclose		= nlm_fclose,		/* close file */
+ };
+@@ -96,11 +97,12 @@ void
+ nfsd_lockd_init(void)
+ {
+ 	dprintk("nfsd: initializing lockd\n");
+-	nlmsvc_ops = &nfsd_nlm_ops;
++	rcu_assign_pointer(nlmsvc_ops, &nfsd_nlm_ops);
+ }
+ 
+ void
+ nfsd_lockd_shutdown(void)
+ {
+-	nlmsvc_ops = NULL;
++	RCU_INIT_POINTER(nlmsvc_ops, NULL);
++	synchronize_rcu();
+ }
+diff --git a/include/linux/lockd/bind.h b/include/linux/lockd/bind.h
+index c53c81242e727..e25943e485c5c 100644
+--- a/include/linux/lockd/bind.h
++++ b/include/linux/lockd/bind.h
+@@ -21,11 +21,17 @@
+ struct svc_rqst;
+ struct rpc_task;
+ struct rpc_clnt;
++struct module;
+ 
+-/*
+- * This is the set of functions for lockd->nfsd communication
++/**
++ * struct nlmsvc_binding - lockd -> nfsd callback table
++ * @owner:  module that provides this binding.
++ * @fopen:  open a file by NFS file handle on behalf of an NLM request.
++ * @fclose: close a file that was previously opened via @fopen.
++ *          Implementations MUST be semantically equivalent to fput().
+  */
+ struct nlmsvc_binding {
++	struct module		*owner;
+ 	__be32			(*fopen)(struct svc_rqst *,
+ 						struct nfs_fh *,
+ 						struct file **,
+@@ -33,7 +39,7 @@ struct nlmsvc_binding {
+ 	void			(*fclose)(struct file *);
+ };
+ 
+-extern const struct nlmsvc_binding *nlmsvc_ops;
++extern const struct nlmsvc_binding __rcu *nlmsvc_ops;
+ 
+ /*
+  * Similar to nfs_client_initdata, but without the NFS-specific
 -- 
 2.53.0
 
