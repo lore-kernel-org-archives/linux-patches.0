@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF941DFDA1;
-	Sat, 17 Oct 2026 18:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4355B324B32;
+	Sat, 17 Oct 2026 18:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260144; cv=none; b=HQJZiUXsBL9ttFTR8esxyDQDVHOvLUUnRGwl31iiIU3qMz/nRxo9eYsWRoirM3W8BURzROGFQFGBqFhKYjWRY51df1t1hhiYXBJIg+7Dy2TwEK5ZpnjV+AheZLAfTiSAZ0gfahVvWTjli3CO8gz5XYEgywlP1fDHw5N40Q3RWy0=
+	t=1792260147; cv=none; b=ZoHwI8ynipKb+3phVVLowMw/BiavRW5fdJEJau/C9sz/Vm6UzGj+z/bQtqmfb5imzVl2YjF3gsXCA79xewToAMPpKG0c6zTy0qnU0YyWdbyAPG8QN+hl+ZEQmmdEd4lpAhnX0GWceGhtsDhzxHUR4TL/M5wXzJ7lxvse1d6RgPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260144; c=relaxed/simple;
-	bh=C7aQthvf0LajoIgz0U8q+1c4hPBQEm8SGp23UYLXXMs=;
+	s=arc-20240116; t=1792260147; c=relaxed/simple;
+	bh=x2qVX163to8InMAGgHK5m676v3ypYSHCBCg3NobZJxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FGcGvLxuG3/h/yuA2ZJcCZZf0k0QacIHRtmgWwN0UFv39bHTKLIiXgwBucGfmSMPMESJHBram1PQuSzSlC9OVkAauTOuU0H9PmzowDPG83xoT7SGbjO6KopYuu/tWMTPJCZ7eAX/jjBZjeHz7p7Rwt+zX+YQolDKdKrBx6CuaaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsywM2PA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdD+5wqQbAnyJh1Jz20Am46mX/glV+Bg3IgN/VRM04jIVWf7JbhWvC+P3tcgnozIgQFqcIJplDdHrUf67bvObEyzz5x4KQHF2onmR5zADfazlq+oHf4748CPuYTTPBtEcZR2TwjTKHh+QbEF3hxzttovLtnWrKuyn9OBI8y8OuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0+tn0Oi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsywM2PA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D571F000C4;
-	Sat, 17 Oct 2026 18:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0+tn0Oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9656B1F000C4;
+	Sat, 17 Oct 2026 18:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260143;
-	bh=XrMvhX8FSSGNPbzt6rI+AQloZm/gWphAquzRG7//nfQ=;
+	s=korg; t=1792260146;
+	bh=KWtOi1zGM6YFpKXIQYxEnP8VVqLtp/Gj0CAZci1AGFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsywM2PAC58gIaKRHoKFbtNeaZpLc4m3yJcSFEwp/ittq5+IIeJxj43lo0tj4v8cR
-	 yV/Wi1nAJCDlhBOb8RLoX2CPtymeYp5eQfqcQzjvlwpAJ0KuKav2diDb7xicdj2R6T
-	 vKJiO3eJlAR1RHQJ9saaNkA+JPWPi0jfZj11VNBM=
+	b=Y0+tn0Oi9eGbK0uQ1hV4pONoqG4MJAcNtV/zQcArwlYCtBcCCwiLFtQDcCy87TyQO
+	 sSXjKjzJqt9DC1SFe1DxF/sXU5WlqSbuUXWBE0fq0RioaCLZGqvF9LzE6B2aSYqA7N
+	 BpZLdqGgVBx9FJybYvnu4S02KY+hMHQ4gZuDppnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1411/1674] clocksource/drivers/samsung_pwm: Switch to raw_spinlock_t type
-Date: Sat, 17 Oct 2026 18:01:23 +0200
-Message-ID: <20261017160507.397699950@linuxfoundation.org>
+Subject: [PATCH 6.6 1447/1674] wifi: mt76: mt7996: hold dev->mt76.mutex while disabling tx worker in SER
+Date: Sat, 17 Oct 2026 18:01:59 +0200
+Message-ID: <20261017160508.325677013@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -48,249 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 3b212f9d70805d91febae01d618868f4860e267c ]
+[ Upstream commit 6190db312b8230813f529f014b26247c6d9800d0 ]
 
-Samsung PWM timer might be used as a clock source on some legacy systems.
-When PREEMPT_RT is enabled on ARM, regular spinlock is converted to a
-sleeping lock (mutex-based), which must not be used in atomic context
-such as hard interrupt handlers. Switch the samsung_pwm_lock to the
-raw_spinlock, which remains a true non-sleeping spinlock even
-under PREEMPT_RT.
+mt7996_mac_reset_work() parked the tx worker and disabled the RX/TX NAPIs
+before taking dev->mt76.mutex. mt76_worker_disable()/_enable() are plain
+kthread park/unpark, not refcounted, and __mt76_set_channel() toggles the
+same worker and the MT76_RESET bit under the mutex. An L1 SER racing a
+channel switch could therefore have the worker unparked and MT76_RESET
+cleared while the reset path resets the DMA rings, corrupting descriptors
+or tokens. Take the mutex before disabling the worker, as mt7915 does.
 
-Fixes: 7aac482e6290 ("clocksource: samsung_pwm_timer: Make PWM spinlock global")
-Fixes: f11899894c0a ("clocksource: add samsung pwm timer driver")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Uwe Kleine-König <ukleinek@kernel.org>
-Link: https://patch.msgid.link/20260713085653.1145015-1-m.szyprowski@samsung.com
+Fixes: 27015b6fbcca ("wifi: mt76: mt7996: enable full system reset support")
+Link: https://patch.msgid.link/20260724124813.3961474-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/samsung_pwm_timer.c | 22 +++++++++++-----------
- drivers/pwm/pwm-samsung.c               | 22 +++++++++++-----------
- include/clocksource/samsung_pwm.h       |  2 +-
- 3 files changed, 23 insertions(+), 23 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/samsung_pwm_timer.c b/drivers/clocksource/samsung_pwm_timer.c
-index b9561e3f196c4..0544124cf5cea 100644
---- a/drivers/clocksource/samsung_pwm_timer.c
-+++ b/drivers/clocksource/samsung_pwm_timer.c
-@@ -56,7 +56,7 @@
- #define TCON_AUTORELOAD(chan)		\
- 	((chan < 5) ? _TCON_AUTORELOAD(chan) : _TCON_AUTORELOAD4(chan))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 74ba07577bfd4..596ae2b6cbe98 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -1845,13 +1845,14 @@ void mt7996_mac_reset_work(struct work_struct *work)
+ 		set_bit(MT76_RESET, &phy3->mt76->state);
+ 		cancel_delayed_work_sync(&phy3->mt76->mac_work);
+ 	}
++
++	mutex_lock(&dev->mt76.mutex);
++
+ 	mt76_worker_disable(&dev->mt76.tx_worker);
+ 	mt76_for_each_q_rx(&dev->mt76, i)
+ 		napi_disable(&dev->mt76.napi[i]);
+ 	napi_disable(&dev->mt76.tx_napi);
  
--DEFINE_SPINLOCK(samsung_pwm_lock);
-+DEFINE_RAW_SPINLOCK(samsung_pwm_lock);
- EXPORT_SYMBOL(samsung_pwm_lock);
+-	mutex_lock(&dev->mt76.mutex);
+-
+ 	mt76_wr(dev, MT_MCU_INT_EVENT, MT_MCU_INT_EVENT_DMA_STOPPED);
  
- struct samsung_pwm_clocksource {
-@@ -87,14 +87,14 @@ static void samsung_timer_set_prescale(unsigned int channel, u16 prescale)
- 	if (channel >= 2)
- 		shift = TCFG0_PRESCALER1_SHIFT;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	reg = readl(pwm.base + REG_TCFG0);
- 	reg &= ~(TCFG0_PRESCALER_MASK << shift);
- 	reg |= (prescale - 1) << shift;
- 	writel(reg, pwm.base + REG_TCFG0);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static void samsung_timer_set_divisor(unsigned int channel, u8 divisor)
-@@ -106,14 +106,14 @@ static void samsung_timer_set_divisor(unsigned int channel, u8 divisor)
- 
- 	bits = (fls(divisor) - 1) - pwm.variant.div_base;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	reg = readl(pwm.base + REG_TCFG1);
- 	reg &= ~(TCFG1_MUX_MASK << shift);
- 	reg |= bits << shift;
- 	writel(reg, pwm.base + REG_TCFG1);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static void samsung_time_stop(unsigned int channel)
-@@ -124,13 +124,13 @@ static void samsung_time_stop(unsigned int channel)
- 	if (channel > 0)
- 		++channel;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl_relaxed(pwm.base + REG_TCON);
- 	tcon &= ~TCON_START(channel);
- 	writel_relaxed(tcon, pwm.base + REG_TCON);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
-@@ -142,7 +142,7 @@ static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
- 	if (tcon_chan > 0)
- 		++tcon_chan;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl_relaxed(pwm.base + REG_TCON);
- 
-@@ -153,7 +153,7 @@ static void samsung_time_setup(unsigned int channel, unsigned long tcnt)
- 	writel_relaxed(tcnt, pwm.base + REG_TCMPB(channel));
- 	writel_relaxed(tcon, pwm.base + REG_TCON);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static void samsung_time_start(unsigned int channel, bool periodic)
-@@ -164,7 +164,7 @@ static void samsung_time_start(unsigned int channel, bool periodic)
- 	if (channel > 0)
- 		++channel;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl_relaxed(pwm.base + REG_TCON);
- 
-@@ -178,7 +178,7 @@ static void samsung_time_start(unsigned int channel, bool periodic)
- 
- 	writel_relaxed(tcon, pwm.base + REG_TCON);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static int samsung_set_next_event(unsigned long cycles,
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index 7d0966b07dffb..0b83af3e86552 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -102,7 +102,7 @@ struct samsung_pwm_chip {
-  * IP. Should this change, both drivers will need to be modified to
-  * properly synchronize accesses to particular instances.
-  */
--static DEFINE_SPINLOCK(samsung_pwm_lock);
-+static DEFINE_RAW_SPINLOCK(samsung_pwm_lock);
- #endif
- 
- static inline
-@@ -141,14 +141,14 @@ static void pwm_samsung_set_divisor(struct samsung_pwm_chip *pwm,
- 
- 	bits = (fls(divisor) - 1) - pwm->variant.div_base;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	reg = readl(pwm->base + REG_TCFG1);
- 	reg &= ~(TCFG1_MUX_MASK << shift);
- 	reg |= bits << shift;
- 	writel(reg, pwm->base + REG_TCFG1);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static int pwm_samsung_is_tdiv(struct samsung_pwm_chip *chip, unsigned int chan)
-@@ -258,7 +258,7 @@ static int pwm_samsung_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	unsigned long flags;
- 	u32 tcon;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl(our_chip->base + REG_TCON);
- 
-@@ -272,7 +272,7 @@ static int pwm_samsung_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- 	our_chip->disabled_mask &= ~BIT(pwm->hwpwm);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- 
- 	return 0;
- }
-@@ -284,7 +284,7 @@ static void pwm_samsung_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	unsigned long flags;
- 	u32 tcon;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl(our_chip->base + REG_TCON);
- 	tcon &= ~TCON_AUTORELOAD(tcon_chan);
-@@ -299,7 +299,7 @@ static void pwm_samsung_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- 	our_chip->disabled_mask |= BIT(pwm->hwpwm);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static void pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
-@@ -307,11 +307,11 @@ static void pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
- {
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	__pwm_samsung_manual_update(chip, pwm);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
-@@ -400,7 +400,7 @@ static void pwm_samsung_set_invert(struct samsung_pwm_chip *chip,
- 	unsigned long flags;
- 	u32 tcon;
- 
--	spin_lock_irqsave(&samsung_pwm_lock, flags);
-+	raw_spin_lock_irqsave(&samsung_pwm_lock, flags);
- 
- 	tcon = readl(chip->base + REG_TCON);
- 
-@@ -414,7 +414,7 @@ static void pwm_samsung_set_invert(struct samsung_pwm_chip *chip,
- 
- 	writel(tcon, chip->base + REG_TCON);
- 
--	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
-+	raw_spin_unlock_irqrestore(&samsung_pwm_lock, flags);
- }
- 
- static int pwm_samsung_set_polarity(struct pwm_chip *chip,
-diff --git a/include/clocksource/samsung_pwm.h b/include/clocksource/samsung_pwm.h
-index 9b435caa95fef..36f6f246e5594 100644
---- a/include/clocksource/samsung_pwm.h
-+++ b/include/clocksource/samsung_pwm.h
-@@ -15,7 +15,7 @@
-  * spinlock is not shared between both drivers.
-  */
- #ifdef CONFIG_CLKSRC_SAMSUNG_PWM
--extern spinlock_t samsung_pwm_lock;
-+extern raw_spinlock_t samsung_pwm_lock;
- #endif
- 
- struct samsung_pwm_variant {
+ 	if (mt7996_wait_reset_state(dev, MT_MCU_CMD_RESET_DONE)) {
 -- 
 2.53.0
 
