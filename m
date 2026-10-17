@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559D38F950;
-	Sat, 17 Oct 2026 17:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6B63C09EF;
+	Sat, 17 Oct 2026 17:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259397; cv=none; b=TaIfbpwgrmh5BANA/ucugkWX91UayiuoE2Mii6vvnqEa0x1q9w6i8Zbtd9f7JDYA8fPnHUdCZn6yZlBqz5fypX+tjGzW0anME/prfVHI0o5TAEi9myGz/7bQDcBPIn5CGQJmmwCnkAAKLNdkaIetA+IroVvD7WVV1q2k7D7tKLs=
+	t=1792259400; cv=none; b=JTKgIwO0fLH38liOyH1ML4Sc7cxDQ2f+llgA9NTfzDYkKcRbBzlxFIVXMUM4Q0ag/DV2Es88qzEG1/nDcfsiUiP10QQL/8ba/TjM7Z/BeAnktczN1SFNhvI16A44DDiOVmJWBVKW73DhBEhlqhywXCeQSs82gl3bmZWH+DDSvBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259397; c=relaxed/simple;
-	bh=ozUIspASpEcq0fqoayuIAAVVHt5q583GagHURrm59Lg=;
+	s=arc-20240116; t=1792259400; c=relaxed/simple;
+	bh=IScOnR2kwtcto8vgcuNoz5fyB3tg8Cw+wPrUAGkHW7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKvsItyB5xs0/sl055fysxBe5YEii/ilyIoovHtjbvCnJlzGf/alpa5auEGMNzE/qx/8Q877kYRNHGugVN6gk+K5oPJhJyiX6e/fsQQr+sFTzIDrowdSPRwIbcCe2SuAEPmeAy3KuETCHQ9Wc/84SvDzbPuh7RDazU93JuOk9ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASnXV3B7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PGgEJi4l7V9JH2+DzIrEU8n5sxOBVwYTxrW8k0IhE5AUIgJj5PI7zbFcr7/JlURjWI3DOqbq8tZ9yEDYcLSC/NRYlXzeVOalq0xaxtGqQ7KrxkJ8y1dqPs3a3Iu5Uf28k8zSQVNhwIHhVekk0Tal2d9oQ2frOOSbtmVEKYTbBCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQuvP7dg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASnXV3B7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66851F000C4;
-	Sat, 17 Oct 2026 17:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQuvP7dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41051F000C4;
+	Sat, 17 Oct 2026 17:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259396;
-	bh=VK8y5FfX+Ar6j35dx5Mn6gnLDD6qL+nv8OJywOZkCiM=;
+	s=korg; t=1792259399;
+	bh=yE3ijDxii+6rKzmnfeegVgMFieXeaUxh3H3OksZ0l7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ASnXV3B7xfpRTrvOX43m8q9IfJxdEmBTpFl+9kc2GWH5rdD2tpVUcha163D86AKI8
-	 O3ieNrFcy+ota4D1jTJHgSGFft4u5eQOMXhy0jb0AGr+Z2t1n4E0e7tRl7jyWrDdfH
-	 ag8N5XvqRx0Xyznd1s8zq7bmTZPXTCWbCfn+FgNk=
+	b=VQuvP7dgZmcmw6bfD5YMhcaxo49KLp9riKo7JCU7p7eVDQc6pzruabiaw6qiT+mTl
+	 ix4tkK+0RZh27cnrqHgyreNsvV08OgU/A14PB7mkcZbJcIf92rFkFvcv/g+KVj8E33
+	 AT3uSAZAiIPO716umJeYqvfoyjhGPsG5IlXNd8wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Guenter Roeck <linux@roeck-us.net>,
+	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1201/1674] hwmon: (pmbus) Fix type confusion in notification logic
-Date: Sat, 17 Oct 2026 17:57:53 +0200
-Message-ID: <20261017160501.965709127@linuxfoundation.org>
+Subject: [PATCH 6.6 1202/1674] vhost_iotlb: bound map allocation in add_range
+Date: Sat, 17 Oct 2026 17:57:54 +0200
+Message-ID: <20261017160501.992093407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,236 +45,322 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
 
-[ Upstream commit 59bd68ab05a8f9c9a60b6ec44682084184803ff4 ]
+[ Upstream commit 1ed35ac7f3fe2b4396bdd29ac3a7f0ebc0829e94 ]
 
-Sashiko reports:
+vhost_iotlb_add_range_ctx() only retires an old entry when the table
+has a non-zero limit, has exactly reached that limit and has
+VHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating
+entries after reaching their configured limit.
 
-At the start of the loop in pmbus_notify(), the code unconditionally casts
-every attribute to a struct sensor_device_attribute:
+Existing vhost devices allocate their IOTLB with max_iotlb_entries from
+vhost.c, which defaults to 2048 and is tunable by module parameter. Use
+the caller-provided limit at the allocation point instead of adding a
+separate default in the common IOTLB helper, and reject non-positive
+values in vhost paths that can report an error.
 
-drivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {
-    for (i = 0; i < data->num_attributes; i++) {
-        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
-        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-        int index = attr->index;
-...
-}
+Other vhost IOTLB users should not create zero-limit tables when entries
+can be populated from userspace or guest-controlled requests. Add
+caller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and
+vhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require
+at least two entries for vdpa_sim and mlx5 vDPA paths that install
+full-range mappings, since those mappings are split into two IOTLB
+entries.
 
-However, data->group.attrs can contain other types like struct
-pmbus_samples_reg or struct pmbus_sensor, which only embed a base
-struct device_attribute.
+Handle full-range mappings in the common helper by checking that the
+IOTLB can hold both split entries before inserting the first half. This
+avoids returning an error after leaving a half mapping behind.
 
-If da is a struct pmbus_samples_reg, dev_attr is the last member. Casting
-it to struct sensor_device_attribute and reading the index field appears
-to access memory past the end of the allocation, which might trigger a
-slab-out-of-bounds read.
+When the table is full, keep the existing retire behavior for retiring
+tables and return -ENOSPC for non-retiring tables. Reuse the retired map
+node instead of freeing it and allocating a replacement, so a stream of
+IOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table
+has reached its limit. If a zero-limit IOTLB still reaches the common
+helper, treat it as a configuration error and return -EINVAL.
 
-Additionally, if da is a struct pmbus_sensor, casting it causes the index
-field to overlap with the page, phase, and reg fields. Could this produce
-a garbage mask on little-endian systems that spuriously matches the target
-reg, page, and flags during an alert?
+I found this bug myself, though the patch was written with AI assistance.
 
-Fix the problem by using struct sensor_device_attr in struct pmbus_sensor
-and struct pmbus_label. Since those attributes never trigger a
-notification, set the value of attr->index to -1 for them. Use this value
-to distinguish from boolean attributes which _can_ trigger a notification
-and use the index field to encode mask, page, and register values.
-
-Fixes: f469bde9afd1 ("hwmon: (pmbus/core) Notify hwmon events")
-Cc: Vincent Jardin <vjardin@free.fr>
-Tested-by: Vincent Jardin <vjardin@free.fr>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0bbe30668d89 ("vhost: factor out IOTLB")
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
+Message-ID: <AMYAtgAiKmgYcSQT5ukl-4qq.3.1781960405943.Hmail.241270009@hdu.edu.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 59 +++++++++++++++++++-------------
- 1 file changed, 36 insertions(+), 23 deletions(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h   |  2 ++
+ drivers/vdpa/mlx5/core/resources.c   | 11 ++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim.c     |  4 ++-
+ drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++-
+ drivers/vhost/iotlb.c                | 47 +++++++++++++++++++---------
+ drivers/vhost/vdpa.c                 |  9 +++++-
+ drivers/vhost/vhost.c                |  8 +++++
+ 7 files changed, 74 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index e763ecf2f3c1e..45720413e4099 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -34,7 +34,7 @@
- struct pmbus_sensor {
- 	struct pmbus_sensor *next;
- 	char name[PMBUS_NAME_SIZE];	/* sysfs sensor name */
--	struct device_attribute attribute;
-+	struct sensor_device_attribute attribute;
- 	u8 page;		/* page number */
- 	u8 phase;		/* phase number, 0xff for all phases */
- 	u16 reg;		/* register */
-@@ -58,7 +58,7 @@ struct pmbus_boolean {
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index ca56242972b3a..869219529ff12 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -11,6 +11,8 @@
  
- struct pmbus_label {
- 	char name[PMBUS_NAME_SIZE];	/* sysfs label name */
--	struct device_attribute attribute;
-+	struct sensor_device_attribute attribute;
- 	char label[PMBUS_NAME_SIZE];	/* label */
- };
- #define to_pmbus_label(_attr) \
-@@ -1170,7 +1170,8 @@ static ssize_t pmbus_show_sensor(struct device *dev,
- 				 struct device_attribute *devattr, char *buf)
+ #define MLX5V_ETH_HARD_MTU (ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN)
+ 
++extern int mlx5_vdpa_max_iotlb_entries;
++
+ struct mlx5_vdpa_direct_mr {
+ 	u64 start;
+ 	u64 end;
+diff --git a/drivers/vdpa/mlx5/core/resources.c b/drivers/vdpa/mlx5/core/resources.c
+index d5a59c9035fbe..00b66438ab530 100644
+--- a/drivers/vdpa/mlx5/core/resources.c
++++ b/drivers/vdpa/mlx5/core/resources.c
+@@ -3,8 +3,14 @@
+ 
+ #include <linux/iova.h>
+ #include <linux/mlx5/driver.h>
++#include <linux/moduleparam.h>
+ #include "mlx5_vdpa.h"
+ 
++int mlx5_vdpa_max_iotlb_entries = 2048;
++module_param_named(max_iotlb_entries, mlx5_vdpa_max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid)
  {
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 	ssize_t ret;
+ 	struct mlx5_core_dev *mdev = dev->mdev;
+@@ -229,7 +235,10 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey)
  
-@@ -1190,7 +1191,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
  {
- 	struct i2c_client *client = to_i2c_client(dev->parent);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
--	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
- 	ssize_t rv = count;
- 	s64 val;
- 	int ret;
-@@ -1213,7 +1215,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
- static ssize_t pmbus_show_label(struct device *dev,
- 				struct device_attribute *da, char *buf)
- {
--	struct pmbus_label *label = to_pmbus_label(da);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-+	struct pmbus_label *label = to_pmbus_label(attr);
+-	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
++	if (mlx5_vdpa_max_iotlb_entries < 2)
++		return -EINVAL;
++
++	mvdev->cvq.iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
+ 	if (!mvdev->cvq.iotlb)
+ 		return -ENOMEM;
  
- 	return sysfs_emit(buf, "%s\n", label->label);
- }
-@@ -1366,8 +1369,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 					     bool update, bool readonly,
- 					     bool convert)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_sensor *sensor;
--	struct device_attribute *a;
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index d6aeaeb6c17b5..20edde71280e9 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -34,7 +34,7 @@ MODULE_PARM_DESC(batch_mapping, "Batched mapping 1 -Enable; 0 - Disable");
+ static int max_iotlb_entries = 2048;
+ module_param(max_iotlb_entries, int, 0444);
+ MODULE_PARM_DESC(max_iotlb_entries,
+-		 "Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048)");
++		 "Maximum number of iotlb entries for each address space. (default: 2048)");
  
- 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
- 	if (!sensor)
-@@ -1391,11 +1394,10 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 	sensor->update = update;
- 	sensor->convert = convert;
- 	sensor->data = -ENODATA;
--	pmbus_dev_attr_init(a, sensor->name,
--			    readonly ? 0444 : 0644,
--			    pmbus_show_sensor, pmbus_set_sensor);
-+	pmbus_attr_init(a, sensor->name, readonly ? 0444 : 0644,
-+			pmbus_show_sensor, pmbus_set_sensor, -1);
+ static bool use_va = true;
+ module_param(use_va, bool, 0444);
+@@ -199,6 +199,8 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
  
--	if (pmbus_add_attribute(data, &a->attr))
-+	if (pmbus_add_attribute(data, &a->dev_attr.attr))
+ 	if (!dev_attr->alloc_size)
+ 		return ERR_PTR(-EINVAL);
++	if (max_iotlb_entries < 2)
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (config->mask & BIT_ULL(VDPA_ATTR_DEV_FEATURES)) {
+ 		if (config->device_features &
+diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
+index cc8d26b97187e..cc230af339e53 100644
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -12,11 +12,17 @@
+ #include <linux/file.h>
+ #include <linux/anon_inodes.h>
+ #include <linux/highmem.h>
++#include <linux/moduleparam.h>
+ #include <linux/vmalloc.h>
+ #include <linux/vdpa.h>
+ 
+ #include "iova_domain.h"
+ 
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int vduse_iotlb_add_range(struct vduse_iova_domain *domain,
+ 				 u64 start, u64 last,
+ 				 u64 addr, unsigned int perm,
+@@ -608,11 +614,14 @@ vduse_domain_create(unsigned long iova_limit, size_t bounce_size)
+ 	if (iova_limit <= bounce_size)
  		return NULL;
  
- 	sensor->next = data->sensors;
-@@ -1412,8 +1414,8 @@ static int pmbus_add_label(struct pmbus_data *data,
- 			   const char *name, int seq,
- 			   const char *lstring, int index, int phase)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_label *label;
--	struct device_attribute *a;
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+ 	if (!domain)
+ 		return NULL;
  
- 	label = devm_kzalloc(data->dev, sizeof(*label), GFP_KERNEL);
- 	if (!label)
-@@ -1438,8 +1440,8 @@ static int pmbus_add_label(struct pmbus_data *data,
- 				 lstring, index, phase);
+-	domain->iotlb = vhost_iotlb_alloc(0, 0);
++	domain->iotlb = vhost_iotlb_alloc(max_iotlb_entries, 0);
+ 	if (!domain->iotlb)
+ 		goto err_iotlb;
+ 
+diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
+index ea61330a34310..a6228dd249316 100644
+--- a/drivers/vhost/iotlb.c
++++ b/drivers/vhost/iotlb.c
+@@ -20,6 +20,14 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ 		     rb, __u64, __subtree_last,
+ 		     START, LAST, static inline, vhost_iotlb_itree);
+ 
++static void vhost_iotlb_map_unlink(struct vhost_iotlb *iotlb,
++				   struct vhost_iotlb_map *map)
++{
++	vhost_iotlb_itree_remove(map, &iotlb->root);
++	list_del(&map->link);
++	iotlb->nmaps--;
++}
++
+ /**
+  * vhost_iotlb_map_free - remove a map node and free it
+  * @iotlb: the IOTLB
+@@ -28,10 +36,8 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
+ 			  struct vhost_iotlb_map *map)
+ {
+-	vhost_iotlb_itree_remove(map, &iotlb->root);
+-	list_del(&map->link);
++	vhost_iotlb_map_unlink(iotlb, map);
+ 	kfree(map);
+-	iotlb->nmaps--;
+ }
+ EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
+ 
+@@ -57,14 +63,25 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 	if (last < start)
+ 		return -EFAULT;
+ 
++	if (!iotlb->limit)
++		return -EINVAL;
++
+ 	/* If the range being mapped is [0, ULONG_MAX], split it into two entries
+ 	 * otherwise its size would overflow u64.
+ 	 */
+ 	if (start == 0 && last == ULONG_MAX) {
+ 		u64 mid = last / 2;
+-		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
+-				perm, opaque);
++		int err;
++
++		if (iotlb->limit < 2)
++			return -ENOSPC;
+ 
++		if (!(iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) &&
++		    iotlb->nmaps > iotlb->limit - 2)
++			return -ENOSPC;
++
++		err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
++						perm, opaque);
+ 		if (err)
+ 			return err;
+ 
+@@ -72,17 +89,19 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 		start = mid + 1;
  	}
  
--	pmbus_dev_attr_init(a, label->name, 0444, pmbus_show_label, NULL);
--	return pmbus_add_attribute(data, &a->attr);
-+	pmbus_attr_init(a, label->name, 0444, pmbus_show_label, NULL, -1);
-+	return pmbus_add_attribute(data, &a->dev_attr.attr);
- }
- 
- /*
-@@ -2283,7 +2285,7 @@ struct pmbus_samples_attr {
- struct pmbus_samples_reg {
- 	int page;
- 	struct pmbus_samples_attr *attr;
--	struct device_attribute dev_attr;
-+	struct sensor_device_attribute attribute;
- };
- 
- static struct pmbus_samples_attr pmbus_samples_registers[] = {
-@@ -2305,14 +2307,15 @@ static struct pmbus_samples_attr pmbus_samples_registers[] = {
+-	if (iotlb->limit &&
+-	    iotlb->nmaps == iotlb->limit &&
+-	    iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
+-		map = list_first_entry(&iotlb->list, typeof(*map), link);
+-		vhost_iotlb_map_free(iotlb, map);
++	if (iotlb->nmaps >= iotlb->limit) {
++		if (iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
++			map = list_first_entry(&iotlb->list, typeof(*map), link);
++			vhost_iotlb_map_unlink(iotlb, map);
++		} else {
++			return -ENOSPC;
++		}
++	} else {
++		map = kmalloc(sizeof(*map), GFP_ATOMIC);
++		if (!map)
++			return -ENOMEM;
  	}
- };
  
--#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, dev_attr)
-+#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, attribute)
+-	map = kmalloc(sizeof(*map), GFP_ATOMIC);
+-	if (!map)
+-		return -ENOMEM;
+-
+ 	map->start = start;
+ 	map->size = last - start + 1;
+ 	map->last = last;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 846c70b6942d4..1a3f90cd3c5ed 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -34,6 +34,11 @@ enum {
  
- static ssize_t pmbus_show_samples(struct device *dev,
- 				  struct device_attribute *devattr, char *buf)
- {
- 	int val;
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_samples_reg *reg = to_samples_reg(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
+ #define VHOST_VDPA_DEV_MAX (1U << MINORBITS)
  
- 	mutex_lock(&data->update_lock);
-@@ -2331,7 +2334,8 @@ static ssize_t pmbus_set_samples(struct device *dev,
- 	int ret;
- 	long val;
- 	struct i2c_client *client = to_i2c_client(dev->parent);
--	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
-+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-+	struct pmbus_samples_reg *reg = to_samples_reg(attr);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 
- 	if (kstrtol(buf, 0, &val) < 0)
-@@ -2347,6 +2351,7 @@ static ssize_t pmbus_set_samples(struct device *dev,
- static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
- 				  struct pmbus_samples_attr *attr)
- {
-+	struct sensor_device_attribute *a;
- 	struct pmbus_samples_reg *reg;
- 
- 	reg = devm_kzalloc(data->dev, sizeof(*reg), GFP_KERNEL);
-@@ -2356,10 +2361,12 @@ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
- 	reg->attr = attr;
- 	reg->page = page;
- 
--	pmbus_dev_attr_init(&reg->dev_attr, attr->name, 0644,
--			    pmbus_show_samples, pmbus_set_samples);
-+	a = &reg->attribute;
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
 +
-+	pmbus_attr_init(a, attr->name, 0644,
-+			pmbus_show_samples, pmbus_set_samples, -1);
+ #define VHOST_VDPA_IOTLB_BUCKETS 16
  
--	return pmbus_add_attribute(data, &reg->dev_attr.attr);
-+	return pmbus_add_attribute(data, &a->dev_attr.attr);
+ struct vhost_vdpa_as {
+@@ -109,12 +114,14 @@ static struct vhost_vdpa_as *vhost_vdpa_alloc_as(struct vhost_vdpa *v, u32 asid)
+ 
+ 	if (asid >= v->vdpa->nas)
+ 		return NULL;
++	if (max_iotlb_entries <= 0)
++		return NULL;
+ 
+ 	as = kmalloc(sizeof(*as), GFP_KERNEL);
+ 	if (!as)
+ 		return NULL;
+ 
+-	vhost_iotlb_init(&as->iotlb, 0, 0);
++	vhost_iotlb_init(&as->iotlb, max_iotlb_entries, 0);
+ 	as->id = asid;
+ 	hlist_add_head(&as->hash_link, head);
+ 
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index cd618bfbb1705..d452a3e73859c 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -977,6 +977,9 @@ EXPORT_SYMBOL_GPL(vhost_dev_set_owner);
+ 
+ static struct vhost_iotlb *iotlb_alloc(void)
+ {
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	return vhost_iotlb_alloc(max_iotlb_entries,
+ 				 VHOST_IOTLB_FLAG_RETIRE);
  }
+@@ -1820,6 +1823,8 @@ static long vhost_set_memory(struct vhost_dev *d, struct vhost_memory __user *m)
+ 		return -EOPNOTSUPP;
+ 	if (mem.nregions > max_mem_regions)
+ 		return -E2BIG;
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
+ 	newmem = kvzalloc(struct_size(newmem, regions, mem.nregions),
+ 			GFP_KERNEL);
+ 	if (!newmem)
+@@ -2122,6 +2127,9 @@ int vhost_init_device_iotlb(struct vhost_dev *d)
+ 	struct vhost_iotlb *niotlb, *oiotlb;
+ 	int i;
  
- static int pmbus_add_samples_attributes(struct i2c_client *client,
-@@ -2814,9 +2821,15 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
- 		struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
- 		struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
- 		int index = attr->index;
--		u16 smask = pb_index_to_mask(index);
--		u8 spage = pb_index_to_page(index);
--		u16 sreg = pb_index_to_reg(index);
-+		u16 smask, sreg;
-+		u8 spage;
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
 +
-+		if (index == -1)
-+			continue;
-+
-+		smask = pb_index_to_mask(index);
-+		spage = pb_index_to_page(index);
-+		sreg = pb_index_to_reg(index);
- 
- 		if (reg == sreg && page == spage && (smask & flags)) {
- 			dev_dbg(data->dev, "sysfs notify: %s", da->attr.name);
+ 	niotlb = iotlb_alloc();
+ 	if (!niotlb)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
