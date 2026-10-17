@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10122384CED;
-	Sat, 17 Oct 2026 16:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047782C026C;
+	Sat, 17 Oct 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254344; cv=none; b=fL5bjkvT1nN5b5nl9Z5AV+WxzvdKRaEulWVDPAGJ5P1O+1ziAv8+hMUkkIYLNm9JxsesnFo5qMamTBAnPrSp4hm/+sPZ5N7EHmJpTwWMevFDubLbVxpDAoXbBy8gAnll6ldDxUkLvt5DfYeD3YQSxxEJae3eiKG1FvUg178zFAk=
+	t=1792254347; cv=none; b=hnMQ3h7B15l2OWywarTl8mhqUxbv8PRsLcnZSLX9aHkAM7VnCOEJCLBpRNW89j/ZA4Y7IvP/c1m88au36pphjKME2A3a5jx4Wr4FKXKM+hQq4iXnuO3FosH/UArVq1/4ZAOCSF6vL8Z1tyJS+XrhQpzuiLMBda7gLxsUvJTo/QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254344; c=relaxed/simple;
-	bh=rFS1ZLf/3jHIjaA1NV212VFJLNwEGvJSIsfwG+ze6Sw=;
+	s=arc-20240116; t=1792254347; c=relaxed/simple;
+	bh=8B+sKYIBhQy0lz7F8bpHawgkPWVQIeohTrmWDqUqxxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nc6F+oIYDpIXArapxSpU4NYVaLLL2iD/hXjA1OH21eP1aCH2ps0Z6i8hIXT8j5v7wgfq22RPlDRF9UhO/9zzMqNSQoWx/D5Ljg4/mifKdKC+02jZMEC+VVtsWigZdWB1TYwvHFBnQvHapUCdqv25MLsEqOTY8H5ckyDyX0WHZe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss5fVjey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHJPNxGkjqaAWmfvHlOzxRhvq+MUQKCoGvm8BAvhPLM03aHbzXlXouwjvL1fSwasBP7bU0qVch6A94PJsYdxbMkeh6N5VUV1z5xTzuRXf0XcAwitXnYVVCb0Et/yPy6TsJDmYqfbvcpORNSP5UYJ541OeG+txWeu61LwTvCdNfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7PL4rLL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss5fVjey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB0C1F000C4;
-	Sat, 17 Oct 2026 16:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7PL4rLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFA91F000C4;
+	Sat, 17 Oct 2026 16:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254343;
-	bh=jKwPJbgRNLoJE52X2uJG4josyaA/Xnh7dx3fKv6ovnU=;
+	s=korg; t=1792254345;
+	bh=rzoY8ecH18TaqC8iC3FUAowNve8InHsSfyNqqOL46+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ss5fVjeycD9VmbMPTll+n1Vtm4Hieh/S+EYCFmjO2r+8zO2umRWQHEvq+lm13w2dK
-	 tWrgSd5h1iJgacDZTnZdJWPSEZ4IXrpIjJUOVYwvttFULy7zDzTL3ObaeJwkJ1W0CL
-	 Gx3MHVBxonR62GiZrTLeBZNPY/QXFxrpXZ/8wIcY=
+	b=D7PL4rLL4H3CreKsnFl67BGvmdLgFZ5beLZ28FRSQrLjVg9fsIl6PsJo+eKxKMIo0
+	 44BFBB6DyfET2nODr+g2IrYtw1/yR6rJc1HPRXP3/FsHJPiXtcMGRtqhMlmR78UDqs
+	 O1OcolhfxHZfcmjyvIIgCiqfqQb0Nl5p0i/zzD9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 414/869] drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size
-Date: Sat, 17 Oct 2026 17:54:15 +0200
-Message-ID: <20261017160047.748465960@linuxfoundation.org>
+Subject: [PATCH 6.12 415/869] ovl: check access to copy_file_range source with src mounter creds
+Date: Sat, 17 Oct 2026 17:54:16 +0200
+Message-ID: <20261017160047.775569420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,71 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 426ffae6ecc7ec77d32bf8be065c21a1b881b084 ]
+[ Upstream commit a1e0eb8f55cfe09bb31a202a388babc411292656 ]
 
-CRIU checkpoint copies the MQD control stack using cp_hqd_cntl_stack_size
-from hardware without bounding it to the allocated BO region. If the HW
-field is larger than the queue's control stack allocation, memcpy reads
-past the BO into adjacent GTT memory and can leak kernel data to userspace.
+Commit 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+allowed filesystems that implement the copy_file_range() f_op to decide
+if they want to access cross-sb copy from/to the same fs type.
 
-Store the page-aligned control stack BO size in mqd_manager and clamp
-checkpoint copies and reported checkpoint sizes to
-min(cp_hqd_cntl_stack_size, mm->ctl_stack_size). Apply the same bound
-for multi-XCC v9.4.3 checkpoint layout.
+The same commit added checks to verify same sb copy for filesystems that
+implement ->copy_file_range() and do not support cross-sb copy at the
+time, namely, to ceph, fuse and nfs.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Reviewed-by: David Francis <David.Francis@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6c2abd0ec09e86c6323010673766f76050e28aa3)
-Cc: stable@vger.kernel.org
+The two remaining fs which implement ->copy_file_range(), cifs and
+overlayfs started to support cross-sb copy from this time.
+
+While overlayfs does support cross-sb copy when the two underlying files
+are on the same base fs, the copy operation on the two real files from
+two different overalyfs filesystems is performed with the mounter
+creds of the destination overlayfs and the read permission access hook
+for the source file was called with the wrong creds.
+
+This could cause either deny of access to copy which would otherwise be
+allowed (e.g. with splice) or allow read access to file which would
+otherwise be denied.
+
+Fix the latter case by explicitly verifying read access to source file
+with the source overlayfs mounter creds.
+
+The former case remains a quirk of cross-sb overlayfs copy, but
+userspace could fall back to regular copy so no harm done.
+
+Fixes: 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260712122421.203113-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/overlayfs/file.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index 6a69988b2d4fc..194a1c79cf042 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -27,6 +27,7 @@
- #include <linux/uaccess.h>
- #include "kfd_priv.h"
- #include "kfd_mqd_manager.h"
-+#include "kfd_topology.h"
- #include "v9_structs.h"
- #include "gc/gc_9_0_offset.h"
- #include "gc/gc_9_0_sh_mask.h"
-@@ -375,20 +376,26 @@ static int get_wave_state(struct mqd_manager *mm, void *mqd,
- static void get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 3765e1defa198..3a1f120b2af66 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -488,6 +488,7 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 			    struct file *file_out, loff_t pos_out,
+ 			    loff_t len, unsigned int flags, enum ovl_copyop op)
  {
- 	struct v9_mqd *m = get_mqd(mqd);
-+	struct kfd_topology_device *topo_dev = kfd_topology_device_by_id(mm->dev->id);
-+	u32 bo_size = topo_dev ? ALIGN(topo_dev->node_props.ctl_stack_size, PAGE_SIZE) : 0;
++	struct inode *inode_in = file_inode(file_in);
+ 	struct inode *inode_out = file_inode(file_out);
+ 	struct fd real_in, real_out;
+ 	const struct cred *old_cred;
+@@ -512,7 +513,20 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 		goto out_unlock;
+ 	}
  
--	*ctl_stack_size = m->cp_hqd_cntl_stack_size;
-+	*ctl_stack_size = min_t(u32, m->cp_hqd_cntl_stack_size, bo_size);
- }
+-	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
++	/*
++	 * For cross-sb copy, vfs_copy_file_range() will verify read access with
++	 * the mounter creds of the dest fs mounter, so we need to explicitly
++	 * verify read access with the source mounter creds.
++	 */
++	if (unlikely(inode_in->i_sb != inode_out->i_sb)) {
++		old_cred = ovl_override_creds(inode_in->i_sb);
++		ret = rw_verify_area(READ, fd_file(real_in), &pos_in, len);
++		revert_creds(old_cred);
++		if (unlikely(ret))
++			goto out_fdput;
++	}
++
++	old_cred = ovl_override_creds(inode_out->i_sb);
+ 	switch (op) {
+ 	case OVL_COPY:
+ 		ret = vfs_copy_file_range(fd_file(real_in), pos_in,
+@@ -535,6 +549,7 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 	/* Update size */
+ 	ovl_file_modified(file_out);
  
- static void checkpoint_mqd(struct mqd_manager *mm, void *mqd, void *mqd_dst, void *ctl_stack_dst)
- {
- 	struct v9_mqd *m;
-+	struct kfd_topology_device *topo_dev = kfd_topology_device_by_id(mm->dev->id);
-+	u32 bo_size = topo_dev ? ALIGN(topo_dev->node_props.ctl_stack_size, PAGE_SIZE) : 0;
-+	u32 ctl_stack_copy_size;
- 	/* Control stack is located one page after MQD. */
- 	void *ctl_stack = (void *)((uintptr_t)mqd + PAGE_SIZE);
++out_fdput:
+ 	fdput(real_in);
+ 	fdput(real_out);
  
- 	m = get_mqd(mqd);
-+	ctl_stack_copy_size = min_t(u32, m->cp_hqd_cntl_stack_size, bo_size);
- 
- 	memcpy(mqd_dst, m, sizeof(struct v9_mqd));
--	memcpy(ctl_stack_dst, ctl_stack, m->cp_hqd_cntl_stack_size);
-+	memcpy(ctl_stack_dst, ctl_stack, ctl_stack_copy_size);
- }
- 
- static void restore_mqd(struct mqd_manager *mm, void **mqd,
 -- 
 2.53.0
 
