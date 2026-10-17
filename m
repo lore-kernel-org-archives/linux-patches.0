@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD743391E51;
-	Sat, 17 Oct 2026 16:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2D83AF665;
+	Sat, 17 Oct 2026 16:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255978; cv=none; b=eS9oTiPdSQsJMwKxY/chx2lyy/qFLEHBNMU2BPHHtFqDZQsVQeTjjTWIOT9aU9eM70kYjdcMXcNScgyDocd+WlR3h39CujIBfEdpAkjOsJHiVZRk7JC5NRwznmP5TFl+MAn6nRj4NFKKxE0ojDrD1FMA/O+FUlzoM+4uGWX6hmA=
+	t=1792255982; cv=none; b=m7w0VUwUMVB2aQ/e4iU0kWz2NVxD5sEh+vGBjQJY2Q4CKnz08jT/8pjltE7Kpw4TogNQU7o7Us05EzaFck1izYGcHz6jW94b6UdZ7sHx/gCf47zmxTNJAsUWXVwrTmtZPgAgxmlrJWP/TPzlGKqsmVQM9Hih72GHUhVC5orJFko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255978; c=relaxed/simple;
-	bh=DWEqpdiAPVsiHdcfMlu6sr4ZwP/5g3UW9v+1pNz4HrU=;
+	s=arc-20240116; t=1792255982; c=relaxed/simple;
+	bh=Ju4f6/zJo7nvstPziG+45QWu8+n6ZMhJIacztWDq2rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8COhBuGPo2lxLVNSzZD0Nw9mEnydjrszb5XUq5CXhNT3fIUOK6AYl7N2US4BlhON7blV17zNZP3havR1on/rXcWCXzEUUqZWCdq4sezt64B2XUYYkXOcNeTjeEhv5aSKOWPn22vb+8nYqenF2JcjIJcyx32vpUVE+6JCVpzc5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZf6Q4sz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BKdtjtfNO/3/uVWhxQgOvoYAJDG9flHGfHMYfUyiEPRCVnXeoWKo+oW9KoehpNVCUZ7FxFCemOAL0fU3IW68f+zwBIxiu7iUBtsEtNwrQP2VC2h+qzGZQGEM/hH5ahvEh4rqAiwadm1mAJPbwZHvwO2240sXh4xl2j4dcUyghW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5nlxWwk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZf6Q4sz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CAE1F000C4;
-	Sat, 17 Oct 2026 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5nlxWwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589441F000C4;
+	Sat, 17 Oct 2026 16:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255977;
-	bh=FDsQFiaH+zJvGi9XeMHVinTemXrddDlQ/D+SUSSQFb8=;
+	s=korg; t=1792255980;
+	bh=6WhaBi5n5z9EIJKOe7G/n4g8vdrxTBG7Ic2BnLl4Yt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QZf6Q4szAs3gJEa6DC5NSNe3sVFb55S5Ca7YvRfM679P8zAL/lKst6RUCg+e4OXMT
-	 B8HEmcrgEX+ssSQt+5o34oY6E+RMAMn3prJUsvQj0OH5btZnXogkx3SPrr3H+Rv80y
-	 r3fA0VrE91QO9wGOJENHVpHw2UkyeawMt3gefdAQ=
+	b=u5nlxWwkKOf5mKr793fn536/ntaxiFmKlzKjFyH+WCamiabDr89YwBtGcjr8dhyTT
+	 bwkBNEfg66lQUytilAyZ9L3/9y9lQ7S6kiS2gw4InN9C8/SagKIqcwpzD7BwAGBMiN
+	 ihM8PtpLmbkxSlSOuTyOvkfM9RnUPqS6SnBKHPBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0085/1674] ftrace: Synchronize the initialization of ftrace_ops
-Date: Sat, 17 Oct 2026 17:39:17 +0200
-Message-ID: <20261017160433.316670339@linuxfoundation.org>
+Subject: [PATCH 6.6 0086/1674] rtc: rzn1: Handle unset alarm weekday in rzn1_rtc_read_alarm
+Date: Sat, 17 Oct 2026 17:39:18 +0200
+Message-ID: <20261017160433.344026945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,69 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 4617721c502b2ddaa4e324e86da4997edf738fa5 ]
+[ Upstream commit 457b5dbce31209e65e1184716ed3af59cb1c0372 ]
 
-There's some internal state that ftrace_ops needs to have set, but since
-it can be declared outside of the ftrace.c code, it calls
-ftrace_ops_init() on the ops in every global function. The issue is that
-if two tasks call it on the same ops at the same time it is possible to
-have the initialization of one corrupt the initialization of the other
-call.
+RZN1_RTC_ALW is a weekday bitmask where bit N represents weekday N.
+When no alarm has been configured, the register has its power-on-reset
+value of zero.
 
-Create a ops_mutex to use to synchronize every initialization of the
-ftrace_ops. The mutex is taken within checking the ftrace_ops flag that
-states it was initializied but the flag is checked again after the mutex
-has been taken. Checking first outside the mutex allows it to shortcut
-having to take the mutex. But then the check needs to be done again after
-the mute is taken in case of races.
+rzn1_rtc_read_alarm() uses fls() to convert the weekday bitmask into a
+weekday number. When RZN1_RTC_ALW is zero, fls(0) returns zero and
+fls(wday) - 1 evaluates to -1. This invalid weekday is then used to
+calculate the alarm date and can either leave tm_wday set to -1 or
+produce a fabricated alarm date.
 
+Treat a zero RZN1_RTC_ALW value as an unset alarm weekday and return
+without calculating the alarm date. Move reading RZN1_RTC_CTL1 before
+this check so that alrm->enabled is updated for both configured and
+unconfigured alarms.
+
+Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260902095501.6b59af20@gandalf.local.home
-Fixes: f04f24fb7e48d ("ftrace, kprobes: Fix a deadlock on ftrace_regex_lock")
-Reported-by: sashiko-bot@kernel.org
-Close: https://lore.kernel.org/all/20260829025528.49A831F000E9@smtp.kernel.org/
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ adjusted INIT_OPS_HASH macro context for the missing subop_list member. ]
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260821211032.13554-5-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[ retained the ALME-only enable check because RZN1_RTC_CTL1_1SE is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-rzn1.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 115f4232d688d..ad61bd1cba551 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -75,6 +75,8 @@
- #define INIT_OPS_HASH(opsname)	\
- 	.func_hash		= &opsname.local_hash,			\
- 	.local_hash.regex_lock	= __MUTEX_INITIALIZER(opsname.local_hash.regex_lock),
-+/* Used only to synchronize the initialization of ftrace_ops */
-+static DEFINE_MUTEX(ops_mutex);
- #else
- #define INIT_OPS_HASH(opsname)
- #endif
-@@ -159,10 +161,17 @@ const struct ftrace_ops ftrace_nop_ops = {
- static inline void ftrace_ops_init(struct ftrace_ops *ops)
- {
- #ifdef CONFIG_DYNAMIC_FTRACE
--	if (!(ops->flags & FTRACE_OPS_FL_INITIALIZED)) {
-+	unsigned long flags = smp_load_acquire(&ops->flags);
+diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
+index c64eaf50bb39a..668935dbcefec 100644
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -193,13 +193,24 @@ static int rzn1_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+ 	if (ret)
+ 		return ret;
+ 
++	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
++	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
 +
-+	if (!(flags & FTRACE_OPS_FL_INITIALIZED)) {
-+		guard(mutex)(&ops_mutex);
-+		/* Could have been initialized before lock taken */
-+		if (unlikely(ops->flags & FTRACE_OPS_FL_INITIALIZED))
-+			return;
- 		mutex_init(&ops->local_hash.regex_lock);
- 		ops->func_hash = &ops->local_hash;
--		ops->flags |= FTRACE_OPS_FL_INITIALIZED;
-+		flags = ops->flags | FTRACE_OPS_FL_INITIALIZED;
-+		smp_store_release(&ops->flags, flags);
+ 	min = readl(rtc->base + RZN1_RTC_ALM);
+ 	hour = readl(rtc->base + RZN1_RTC_ALH);
+-	wday = readl(rtc->base + RZN1_RTC_ALW);
+ 
+ 	tm->tm_sec = 0;
+ 	tm->tm_min = bcd2bin(min);
+ 	tm->tm_hour = bcd2bin(hour);
++
++	/*
++	 * If wday is zero, no bit is set in RZN1_RTC_ALW. This is the
++	 * register's power-on reset value.
++	 */
++	wday = readl(rtc->base + RZN1_RTC_ALW);
++	if (!wday)
++		return 0;
++
+ 	delta_days = ((fls(wday) - 1) - tm->tm_wday + 7) % 7;
+ 	tm->tm_wday = fls(wday) - 1;
+ 
+@@ -208,9 +219,6 @@ static int rzn1_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+ 		rtc_time64_to_tm(alarm, tm);
  	}
- #endif
+ 
+-	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
+-	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
+-
+ 	return 0;
  }
+ 
 -- 
 2.53.0
 
