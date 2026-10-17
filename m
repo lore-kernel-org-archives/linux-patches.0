@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5DF3A7D63;
-	Sat, 17 Oct 2026 17:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACE13A5430;
+	Sat, 17 Oct 2026 17:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259463; cv=none; b=XwrJS2+05BHLyL+Xs05q46MPvDUE0t9SMTJZJtU8xpRqOK9n0j/sQJP+hvtZ5F+q5I+fAwGSVKqfCAjghJG1dCoWNXed9MQglibjAwRBgs0/lahcDAhOiruIQOONah4MZMUtsQD+j+N18G6A81rDY4XO+2KdQkfyPpJNRvn0+iI=
+	t=1792259466; cv=none; b=Q8L/KHlw4VXA6v6nUFzKPT6Stz8+PCyaFN8g7EgMAxd4Nb+ejkUOM+x+akm1OC0E6cHDdjGgNxmY6IaVMNmm24OedDV0EeD/WMYaNhAopQ/aRaZCFXE8oUXiLIW5vTaS1apBRrl5E5ZRUBmxi+TFK/OupFX9a6ZGSMlvMsl+1Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259463; c=relaxed/simple;
-	bh=jwkZ91wJM/dATEBHxFWHuEAVBXiCU1raztTfCK0RsKE=;
+	s=arc-20240116; t=1792259466; c=relaxed/simple;
+	bh=Ha2ZXI77N8uDMfYWPctjYKCE723jRHivnY3io9gEB9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGNIjm8r6ZGXGRyVP7c7NLiIfcIttFi/bUu7tEmf/JfTh++kVuVy8/GwF1oJBf51oL4CAGozej5ayXAuOOcZZwm8/OLPBuhf1XvWN0Y+Iv25IMnZ5klRb/wIwpBhdF2RJfY877Rwwhn3bva5lQK2hvRZVXre/hldhEWStHPOIRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+KAvWpU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J6NIKgoNaMKjMq2BPo7FKXQGdCGHdOxrehIw9+btfPIBYPDLkObGsn/SkxlQpp8ZkDjDhtQ2IkEkc+iPI8xv8Q5dU0o1RediD7h+7yq8o2+PkLZN1FFTM/whXOCQ04k/hXjbFOHZYNVpRYow0t6Ucm+ksFmwQ5gt2YfWgC2zDIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imNtFdVy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+KAvWpU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4B31F000C5;
-	Sat, 17 Oct 2026 17:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imNtFdVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F0B1F000C4;
+	Sat, 17 Oct 2026 17:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259461;
-	bh=ewy4eiZQX3k72eeRos5mJSihqLiFAjQTT1FI9opP6Dg=;
+	s=korg; t=1792259464;
+	bh=IKdPay1MiKV4fZZ9SatKaJspK0ojHEnX9DpfTC1Y9zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+KAvWpU1Pe13+hJuBoQgCm90ewmxe0GaoxZuJKo6gVkeMP817QayULHgvtQ6eHc8
-	 KwKhUQAHqvAWLGZrDI0xNwvNS9MjYm8dPgplUYTUgGVpthE28zPojwJambd0Ds/5GT
-	 u+RZG+GTE0pzBsoTNLGTPZ+7AWB7LTRRVultZVOQ=
+	b=imNtFdVy5jf7edvuOpHAPgUmAKq808lDyLJU1tfHdhaEPCZ5T5zASdo+LShtuEBuv
+	 wokMN07gPYWHK3eiPz/1yXCtPVT1ecd0G00aC0IxF8U9/vmISgiQghgLImuLVlN0gl
+	 Bu+sUkI+nTiVpl//bnFpkAJbWxNTmr6OqYGZbgrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1221/1674] netfilter: make nftables drops visible in net dropmonitor
-Date: Sat, 17 Oct 2026 17:58:13 +0200
-Message-ID: <20261017160502.484331761@linuxfoundation.org>
+Subject: [PATCH 6.6 1222/1674] netfilter: synproxy: drop packets if timestamp adjustment fails
+Date: Sat, 17 Oct 2026 17:58:14 +0200
+Message-ID: <20261017160502.509092086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,98 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit e0d4593140b01b8da513a0c88c26da28b4906413 ]
+[ Upstream commit 63d29ee95c4ab5976d660182d2e4733bb4a091d8 ]
 
-net_dropmonitor blames core.c:nf_hook_slow.
-Add NF_DROP_REASON() helper and use it in nft_do_chain().
+If a packet was malformed or if skb_ensure_writable() failed, the
+synproxy_tstamp_adjust() function returned 0 indicating an error but it
+was ignored on the callers.
 
-The helper releases the skb, so exact drop location becomes
-available. Calling code will observe the NF_STOLEN verdict
-instead.
+Make the function return a boolean instead to clarify the result and
+drop the packet if synproxy_tstamp_adjust() failed due to ENOMEM from
+skb_ensure_writable(). In addition, if there are malformed options, skip
+the tstamp update but do not drop the packet as that should be done by
+the policy directly.
 
-Adjust nf_hook_slow so we can embed an erro value wih
-NF_STOLEN verdicts, just like we do for NF_DROP.
-
-After this, drop in nftables can be pinpointed to a drop due
-to a rule or the chain policy.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 992c20bc8a4a ("netfilter: synproxy: fix unaligned memory access in timestamp adjustment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter.h      | 10 ++++++++++
- net/netfilter/core.c           |  6 +++---
- net/netfilter/nf_tables_core.c |  6 +++++-
- 3 files changed, 18 insertions(+), 4 deletions(-)
+ net/netfilter/nf_synproxy_core.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
-index cef210d5ec086..278efb0ab6965 100644
---- a/include/linux/netfilter.h
-+++ b/include/linux/netfilter.h
-@@ -22,6 +22,16 @@ static inline int NF_DROP_GETERR(int verdict)
- 	return -(verdict >> NF_VERDICT_QBITS);
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index 500a90311ed50..fb071401d5c33 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -183,7 +183,7 @@ synproxy_check_timestamp_cookie(struct synproxy_options *opts)
+ 	opts->options |= opts->tsecr & (1 << 5) ? NF_SYNPROXY_OPT_ECN : 0;
  }
  
-+static __always_inline int
-+NF_DROP_REASON(struct sk_buff *skb, enum skb_drop_reason reason, u32 err)
-+{
-+	BUILD_BUG_ON(err > 0xffff);
-+
-+	kfree_skb_reason(skb, reason);
-+
-+	return ((err << 16) | NF_STOLEN);
-+}
-+
- static inline int nf_inet_addr_cmp(const union nf_inet_addr *a1,
- 				   const union nf_inet_addr *a2)
- {
-diff --git a/net/netfilter/core.c b/net/netfilter/core.c
-index 7bae43b00ebbe..b00fc285b3349 100644
---- a/net/netfilter/core.c
-+++ b/net/netfilter/core.c
-@@ -639,10 +639,10 @@ int nf_hook_slow(struct sk_buff *skb, struct nf_hook_state *state,
- 			if (ret == 1)
- 				continue;
- 			return ret;
-+		case NF_STOLEN:
-+			return NF_DROP_GETERR(verdict);
- 		default:
--			/* Implicit handling for NF_STOLEN, as well as any other
--			 * non conventional verdicts.
--			 */
-+			WARN_ON_ONCE(1);
- 			return 0;
+-static unsigned int
++static bool
+ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 		       struct tcphdr *th, struct nf_conn *ct,
+ 		       enum ip_conntrack_info ctinfo,
+@@ -193,13 +193,13 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 	__be32 *ptr, old;
+ 
+ 	if (synproxy->tsoff == 0)
+-		return 1;
++		return true;
+ 
+ 	optoff = protoff + sizeof(struct tcphdr);
+ 	optend = protoff + th->doff * 4;
+ 
+ 	if (skb_ensure_writable(skb, optend))
+-		return 0;
++		return false;
+ 
+ 	th = (struct tcphdr *)(skb->data + protoff);
+ 
+@@ -208,7 +208,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 
+ 		switch (op[0]) {
+ 		case TCPOPT_EOL:
+-			return 1;
++			return true;
+ 		case TCPOPT_NOP:
+ 			optoff++;
+ 			continue;
+@@ -216,7 +216,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 			if (optoff + 1 == optend ||
+ 			    optoff + op[1] > optend ||
+ 			    op[1] < 2)
+-				return 0;
++				return true;
+ 			if (op[0] == TCPOPT_TIMESTAMP &&
+ 			    op[1] == TCPOLEN_TIMESTAMP) {
+ 				if (CTINFO2DIR(ctinfo) == IP_CT_DIR_REPLY) {
+@@ -232,12 +232,12 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 				}
+ 				inet_proto_csum_replace4(&th->check, skb,
+ 							 old, *ptr, false);
+-				return 1;
++				return true;
+ 			}
+ 			optoff += op[1];
  		}
  	}
-diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
-index 711c22ab701dd..4b0d2b3a7bcaf 100644
---- a/net/netfilter/nf_tables_core.c
-+++ b/net/netfilter/nf_tables_core.c
-@@ -308,10 +308,11 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+-	return 1;
++	return true;
+ }
  
- 	switch (regs.verdict.code & NF_VERDICT_MASK) {
- 	case NF_ACCEPT:
--	case NF_DROP:
- 	case NF_QUEUE:
- 	case NF_STOLEN:
- 		return regs.verdict.code;
-+	case NF_DROP:
-+		return NF_DROP_REASON(pkt->skb, SKB_DROP_REASON_NETFILTER_DROP, EPERM);
+ #ifdef CONFIG_PROC_FS
+@@ -748,7 +748,9 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		break;
  	}
  
- 	switch (regs.verdict.code) {
-@@ -342,6 +343,9 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
- 	if (static_branch_unlikely(&nft_counters_enabled))
- 		nft_update_chain_stats(basechain, pkt);
- 
-+	if (nft_base_chain(basechain)->policy == NF_DROP)
-+		return NF_DROP_REASON(pkt->skb, SKB_DROP_REASON_NETFILTER_DROP, EPERM);
+-	synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy);
++	if (!synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy))
++		return NF_DROP_REASON(skb, SKB_DROP_REASON_NETFILTER_DROP, ENOMEM);
 +
- 	return nft_base_chain(basechain)->policy;
+ 	return NF_ACCEPT;
  }
- EXPORT_SYMBOL_GPL(nft_do_chain);
+ EXPORT_SYMBOL_GPL(ipv4_synproxy_hook);
+@@ -1176,7 +1178,9 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		break;
+ 	}
+ 
+-	synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy);
++	if (!synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy))
++		return NF_DROP_REASON(skb, SKB_DROP_REASON_NETFILTER_DROP, ENOMEM);
++
+ 	return NF_ACCEPT;
+ }
+ EXPORT_SYMBOL_GPL(ipv6_synproxy_hook);
 -- 
 2.53.0
 
