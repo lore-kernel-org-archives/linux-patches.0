@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A7437BE64;
-	Sat, 17 Oct 2026 16:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0E5390C8A;
+	Sat, 17 Oct 2026 16:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254892; cv=none; b=AeRtJqKOYhJFSWGZX6ZlEN38OxJd21Bv93P2ov5G2s34ROlxszM3fREJfEUuRYRyBqqguulzmay56EHXE9pOqbn97UqV0wyq0/+YFgYKMbvgX6O1A1wVptL37Ip4Nj0FxfgT8NKzZhP5l9Fm6K0Z9Go3uv4FXq7SuN0ENp/7fJs=
+	t=1792254895; cv=none; b=mSJbGfp4pZ3ZFTl1OjmwpBhcngSyOWsixll2mHiIwelLI461zsJ//7BaOCqfZKNLRwY8YvX+peOkETWYEH6b72yopPFNsjBA6clEU/GJe1U7HWY85C8EGSnIwJWuBplLKckmivP8duYgVqaRKXzQoY3yqfw0bkoFQGhXCxrxN2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254892; c=relaxed/simple;
-	bh=hU9cdCf9YFUfENVNmgMxPtYtEZ2dhRwYZpmF6xpFQ34=;
+	s=arc-20240116; t=1792254895; c=relaxed/simple;
+	bh=bjXaiksTnV922MNMq46NkymRCcBZ6I8zbV3QUHclCmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSuLwelx5Qgwc1AwAaq1u+oKYaZISZ7NlykZADQjnqDgcezAbsTu5Pgd/QMO32Q7twXq8DbZaVTEdE2YJBQjzexDXs/VeD0f+QKWpZerMqa9oFzJDoij/zeHeK+/Vz2q5HK+mBUiD6DFB+BXaCjUJx9vpqL0IYzUJt0i6TgSkEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIvlh1G1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FMgui6BkJGLmiQ146QMbgO9NDsLLaJ33VS2GQL956Eyg/u8PtbFwDURl4RzCO5UNQuSdzinV0FcG5Jc7sTOF9vPsFTlxlID/0kn+5bF8p0rvjb9H+QUdzxmfT5qg6SyLbj51F7mbMPcm1loBiyTqsaPHW03vlH+pE7aydymn7fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNsminEe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIvlh1G1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9AA1F000C4;
-	Sat, 17 Oct 2026 16:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNsminEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6931F000C4;
+	Sat, 17 Oct 2026 16:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254891;
-	bh=biAk9YHxn55a8499zjykq2nBAEDwU5lwAR/pHMKWKKE=;
+	s=korg; t=1792254894;
+	bh=bbE4EcrXQnhPSUp0YsT/gExIF4vDBaASnE+EjvOq7TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JIvlh1G1qKef45RgLkytQsikAvcdq1mn9d8y4O886X0Ry/cfwOOD9C9atd+HW9WAU
-	 8xDGfFhtu949LeJrEawzM4nKqssSauZWFcsHepAOMvAw++DYnT9xduPnYpOyybMD3Z
-	 D+xBfm0kHSgDGQZwPDVpWahkemdxWZMC8Bq45oTg=
+	b=eNsminEeNcEgj3dcJOCE6uN+zo/nU1d08ckVoloVbVQmLenUA7yHqpg+d8sAkoP32
+	 L9JsoLZk2XA+6WZqbm27R+bEcS+2+UyVSXHinijhD8riJaNI6fTdmVL5a66S0enLK+
+	 dhJoRRnYZ2VA84p1oCq/MsDj8JyKc+I5WQ6FN4wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 595/869] netfilter: nf_tables: add nft_trans_commit_list_add_elem helper
-Date: Sat, 17 Oct 2026 17:57:16 +0200
-Message-ID: <20261017160052.304581886@linuxfoundation.org>
+Subject: [PATCH 6.12 596/869] netfilter: nf_tables: prepare for multiple elements in nft_trans_elem structure
+Date: Sat, 17 Oct 2026 17:57:17 +0200
+Message-ID: <20261017160052.328615030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,93 +53,469 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 4ee29181216d2acb7be210126324ec3bc0e3bd01 ]
+[ Upstream commit a8ee6b900c147d3bedced6c52ba6cb603226aaa3 ]
 
-Add and use a wrapper to append trans_elem structures to the
-transaction log.
+Add helpers to release the individual elements contained in the
+trans_elem container structure.
 
-Unlike the existing helper, pass a gfp_t to indicate if sleeping
-is allowed.
+No functional change intended.
 
-This will be used by a followup patch to realloc nft_trans_elem
-structures after they gain a flexible array member to reduce
-number of such container structures on the transaction list.
+Followup patch will add 'nelems' member and will turn 'priv' into
+a flexible array.
+
+These helpers can then loop over all elements.
+Care needs to be taken to handle a mix of new elements and existing
+elements that are being updated (e.g. timeout refresh).
+
+Before this patch, NEWSETELEM transaction with update is released
+early so nft_trans_set_elem_destroy() won't get called, so we need
+to skip elements marked as update.
 
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 43559058d21e ("netfilter: nf_tables: skip double clone set expressions on element insert")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ include/net/netfilter/nf_tables.h |  21 ++-
+ net/netfilter/nf_tables_api.c     | 228 +++++++++++++++++++++---------
+ 2 files changed, 173 insertions(+), 76 deletions(-)
 
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 99cc25c233b8e..d440915addd6e 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1774,28 +1774,25 @@ enum nft_trans_elem_flags {
+ 	NFT_TRANS_UPD_EXPIRATION	= (1 << 1),
+ };
+ 
+-struct nft_trans_elem {
+-	struct nft_trans		nft_trans;
+-	struct nft_set			*set;
+-	struct nft_elem_priv		*elem_priv;
++struct nft_trans_one_elem {
++	struct nft_elem_priv		*priv;
+ 	u64				timeout;
+ 	u64				expiration;
+ 	u8				update_flags;
++};
++
++struct nft_trans_elem {
++	struct nft_trans		nft_trans;
++	struct nft_set			*set;
+ 	bool				bound;
++	unsigned int			nelems;
++	struct nft_trans_one_elem	elems[] __counted_by(nelems);
+ };
+ 
+ #define nft_trans_container_elem(t)			\
+ 	container_of(t, struct nft_trans_elem, nft_trans)
+ #define nft_trans_elem_set(trans)			\
+ 	nft_trans_container_elem(trans)->set
+-#define nft_trans_elem_priv(trans)			\
+-	nft_trans_container_elem(trans)->elem_priv
+-#define nft_trans_elem_update_flags(trans)		\
+-	nft_trans_container_elem(trans)->update_flags
+-#define nft_trans_elem_timeout(trans)			\
+-	nft_trans_container_elem(trans)->timeout
+-#define nft_trans_elem_expiration(trans)		\
+-	nft_trans_container_elem(trans)->expiration
+ #define nft_trans_elem_set_bound(trans)			\
+ 	nft_trans_container_elem(trans)->bound
+ 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b5e5eae856fe7..0e2c5052977cd 100644
+index 0e2c5052977cd..92a86e81084b1 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -440,6 +440,17 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- 	}
+@@ -6372,13 +6372,17 @@ static struct nft_trans *nft_trans_elem_alloc(const struct nft_ctx *ctx,
+ 					      int msg_type,
+ 					      struct nft_set *set)
+ {
++	struct nft_trans_elem *te;
+ 	struct nft_trans *trans;
+ 
+-	trans = nft_trans_alloc(ctx, msg_type, sizeof(struct nft_trans_elem));
++	trans = nft_trans_alloc(ctx, msg_type, struct_size(te, elems, 1));
+ 	if (trans == NULL)
+ 		return NULL;
+ 
+-	nft_trans_elem_set(trans) = set;
++	te = nft_trans_container_elem(trans);
++	te->nelems = 1;
++	te->set = set;
++
+ 	return trans;
  }
  
-+static void nft_trans_commit_list_add_elem(struct net *net, struct nft_trans *trans,
-+					   gfp_t gfp)
+@@ -6500,28 +6504,51 @@ void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ }
+ 
+ /* Drop references and destroy. Called from gc, dynset and abort path. */
+-void nft_set_elem_destroy(const struct nft_set *set,
+-			  const struct nft_elem_priv *elem_priv,
+-			  bool destroy_expr)
++static void __nft_set_elem_destroy(const struct nft_ctx *ctx,
++				   const struct nft_set *set,
++				   const struct nft_elem_priv *elem_priv,
++				   bool destroy_expr)
+ {
+ 	struct nft_set_ext *ext = nft_set_elem_ext(set, elem_priv);
+-	struct nft_ctx ctx = {
+-		.net	= read_pnet(&set->net),
+-		.family	= set->table->family,
+-	};
+ 
+ 	nft_data_release(nft_set_ext_key(ext), NFT_DATA_VALUE);
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_DATA))
+ 		nft_data_release(nft_set_ext_data(ext), set->dtype);
+ 	if (destroy_expr && nft_set_ext_exists(ext, NFT_SET_EXT_EXPRESSIONS))
+-		nft_set_elem_expr_destroy(&ctx, nft_set_ext_expr(ext));
++		nft_set_elem_expr_destroy(ctx, nft_set_ext_expr(ext));
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_OBJREF))
+ 		nft_use_dec(&(*nft_set_ext_obj(ext))->use);
+ 
+ 	kfree(elem_priv);
+ }
++
++/* Drop references and destroy. Called from gc and dynset. */
++void nft_set_elem_destroy(const struct nft_set *set,
++			  const struct nft_elem_priv *elem_priv,
++			  bool destroy_expr)
 +{
-+	WARN_ON_ONCE(trans->msg_type != NFT_MSG_NEWSETELEM &&
-+		     trans->msg_type != NFT_MSG_DELSETELEM);
++	struct nft_ctx ctx = {
++		.net	= read_pnet(&set->net),
++		.family	= set->table->family,
++	};
 +
-+	might_alloc(gfp);
++	__nft_set_elem_destroy(&ctx, set, elem_priv, destroy_expr);
++}
+ EXPORT_SYMBOL_GPL(nft_set_elem_destroy);
+ 
++/* Drop references and destroy. Called from abort path. */
++static void nft_trans_set_elem_destroy(const struct nft_ctx *ctx, struct nft_trans_elem *te)
++{
++	int i;
 +
-+	nft_trans_commit_list_add_tail(net, trans);
++	for (i = 0; i < te->nelems; i++) {
++		if (te->elems[i].update_flags)
++			continue;
++
++		__nft_set_elem_destroy(ctx, te->set, te->elems[i].priv, true);
++	}
 +}
 +
- static int nft_trans_table_add(struct nft_ctx *ctx, int msg_type)
+ /* Destroy element. References have been already dropped in the preparation
+  * path via nft_setelem_data_deactivate().
+  */
+@@ -6537,6 +6564,15 @@ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+ 	kfree(elem_priv);
+ }
+ 
++static void nft_trans_elems_destroy(const struct nft_ctx *ctx,
++				    const struct nft_trans_elem *te)
++{
++	int i;
++
++	for (i = 0; i < te->nelems; i++)
++		nf_tables_set_elem_destroy(ctx, te->set, te->elems[i].priv);
++}
++
+ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[])
  {
- 	struct nft_trans *trans;
-@@ -7167,7 +7178,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+@@ -6696,6 +6732,36 @@ static void nft_setelem_activate(struct net *net, struct nft_set *set,
+ 	}
+ }
+ 
++static void nft_trans_elem_update(const struct nft_set *set,
++				  const struct nft_trans_one_elem *elem)
++{
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++
++	if (elem->update_flags & NFT_TRANS_UPD_TIMEOUT)
++		WRITE_ONCE(nft_set_ext_timeout(ext)->timeout, elem->timeout);
++
++	if (elem->update_flags & NFT_TRANS_UPD_EXPIRATION)
++		WRITE_ONCE(nft_set_ext_timeout(ext)->expiration, get_jiffies_64() + elem->expiration);
++}
++
++static void nft_trans_elems_add(const struct nft_ctx *ctx,
++				struct nft_trans_elem *te)
++{
++	int i;
++
++	for (i = 0; i < te->nelems; i++) {
++		const struct nft_trans_one_elem *elem = &te->elems[i];
++
++		if (elem->update_flags)
++			nft_trans_elem_update(te->set, elem);
++		else
++			nft_setelem_activate(ctx->net, te->set, elem->priv);
++
++		nf_tables_setelem_notify(ctx, te->set, elem->priv,
++					 NFT_MSG_NEWSETELEM);
++	}
++}
++
+ static int nft_setelem_catchall_deactivate(const struct net *net,
+ 					   struct nft_set *set,
+ 					   struct nft_set_elem *elem)
+@@ -6781,6 +6847,24 @@ static void nft_setelem_remove(const struct net *net,
+ 		set->ops->remove(net, set, elem_priv);
+ }
+ 
++static void nft_trans_elems_remove(const struct nft_ctx *ctx,
++				   const struct nft_trans_elem *te)
++{
++	int i;
++
++	for (i = 0; i < te->nelems; i++) {
++		nf_tables_setelem_notify(ctx, te->set,
++					 te->elems[i].priv,
++					 te->nft_trans.msg_type);
++
++		nft_setelem_remove(ctx->net, te->set, te->elems[i].priv);
++		if (!nft_setelem_is_catchall(te->set, te->elems[i].priv)) {
++			atomic_dec(&te->set->nelems);
++			te->set->ndeact--;
++		}
++	}
++}
++
+ static bool nft_setelem_valid_key_end(const struct nft_set *set,
+ 				      struct nlattr **nla, u32 flags)
+ {
+@@ -7162,22 +7246,26 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			else if (!(nlmsg_flags & NLM_F_EXCL)) {
+ 				err = 0;
+ 				if (nft_set_ext_exists(ext2, NFT_SET_EXT_TIMEOUT)) {
++					struct nft_trans_one_elem *update;
++
++					update = &nft_trans_container_elem(trans)->elems[0];
++
+ 					update_flags = 0;
+ 					if (timeout != nft_set_ext_timeout(ext2)->timeout) {
+-						nft_trans_elem_timeout(trans) = timeout;
++						update->timeout = timeout;
+ 						if (expiration == 0)
+ 							expiration = timeout;
+ 
+ 						update_flags |= NFT_TRANS_UPD_TIMEOUT;
+ 					}
+ 					if (expiration) {
+-						nft_trans_elem_expiration(trans) = expiration;
++						update->expiration = expiration;
+ 						update_flags |= NFT_TRANS_UPD_EXPIRATION;
+ 					}
+ 
  					if (update_flags) {
- 						nft_trans_elem_priv(trans) = elem_priv;
- 						nft_trans_elem_update_flags(trans) = update_flags;
--						nft_trans_commit_list_add_tail(ctx->net, trans);
-+						nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
+-						nft_trans_elem_priv(trans) = elem_priv;
+-						nft_trans_elem_update_flags(trans) = update_flags;
++						update->priv = elem_priv;
++						update->update_flags = update_flags;
+ 						nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
  						goto err_set_size;
  					}
- 				}
-@@ -7187,7 +7198,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+@@ -7197,7 +7285,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		goto err_element_clash;
  	}
  
- 	nft_trans_elem_priv(trans) = elem.priv;
--	nft_trans_commit_list_add_tail(ctx->net, trans);
-+	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
+-	nft_trans_elem_priv(trans) = elem.priv;
++	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
+ 	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
  
  	return set_full ? -ENFILE : 0;
+@@ -7337,6 +7425,50 @@ void nft_setelem_data_deactivate(const struct net *net,
+ 		nft_use_dec(&(*nft_set_ext_obj(ext))->use);
+ }
  
-@@ -7406,7 +7417,7 @@ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
++/* similar to nft_trans_elems_remove, but called from abort path to undo newsetelem.
++ * No notifications and no ndeact changes.
++ *
++ * Returns true if set had been added to (i.e., elements need to be removed again).
++ */
++static bool nft_trans_elems_new_abort(const struct nft_ctx *ctx,
++				      const struct nft_trans_elem *te)
++{
++	bool removed = false;
++	int i;
++
++	for (i = 0; i < te->nelems; i++) {
++		if (te->elems[i].update_flags)
++			continue;
++
++		if (!te->set->ops->abort || nft_setelem_is_catchall(te->set, te->elems[i].priv))
++			nft_setelem_remove(ctx->net, te->set, te->elems[i].priv);
++
++		if (!nft_setelem_is_catchall(te->set, te->elems[i].priv))
++			atomic_dec(&te->set->nelems);
++
++		removed = true;
++	}
++
++	return removed;
++}
++
++/* Called from abort path to undo DELSETELEM/DESTROYSETELEM. */
++static void nft_trans_elems_destroy_abort(const struct nft_ctx *ctx,
++					  const struct nft_trans_elem *te)
++{
++	int i;
++
++	for (i = 0; i < te->nelems; i++) {
++		if (!nft_setelem_active_next(ctx->net, te->set, te->elems[i].priv)) {
++			nft_setelem_data_activate(ctx->net, te->set, te->elems[i].priv);
++			nft_setelem_activate(ctx->net, te->set, te->elems[i].priv);
++		}
++
++		if (!nft_setelem_is_catchall(te->set, te->elems[i].priv))
++			te->set->ndeact--;
++	}
++}
++
+ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
+ 			   const struct nlattr *attr)
+ {
+@@ -7416,7 +7548,7 @@ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
+ 
  	nft_setelem_data_deactivate(ctx->net, set, elem.priv);
  
- 	nft_trans_elem_priv(trans) = elem.priv;
--	nft_trans_commit_list_add_tail(ctx->net, trans);
-+	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
+-	nft_trans_elem_priv(trans) = elem.priv;
++	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
+ 	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
  	return 0;
  
- fail_ops:
-@@ -7442,7 +7453,7 @@ static int nft_setelem_flush(const struct nft_ctx *ctx,
+@@ -7443,7 +7575,8 @@ static int nft_setelem_flush(const struct nft_ctx *ctx,
+ 		return 0;
+ 
+ 	trans = nft_trans_alloc_gfp(ctx, NFT_MSG_DELSETELEM,
+-				    sizeof(struct nft_trans_elem), GFP_ATOMIC);
++				    struct_size_t(struct nft_trans_elem, elems, 1),
++				    GFP_ATOMIC);
+ 	if (!trans)
+ 		return -ENOMEM;
+ 
+@@ -7452,7 +7585,8 @@ static int nft_setelem_flush(const struct nft_ctx *ctx,
+ 
  	nft_setelem_data_deactivate(ctx->net, set, elem_priv);
  	nft_trans_elem_set(trans) = set;
- 	nft_trans_elem_priv(trans) = elem_priv;
--	nft_trans_commit_list_add_tail(ctx->net, trans);
-+	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_ATOMIC);
+-	nft_trans_elem_priv(trans) = elem_priv;
++	nft_trans_container_elem(trans)->nelems = 1;
++	nft_trans_container_elem(trans)->elems[0].priv = elem_priv;
+ 	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_ATOMIC);
  
  	return 0;
- }
-@@ -7459,7 +7470,7 @@ static int __nft_set_catchall_flush(const struct nft_ctx *ctx,
+@@ -7469,7 +7603,7 @@ static int __nft_set_catchall_flush(const struct nft_ctx *ctx,
+ 		return -ENOMEM;
  
  	nft_setelem_data_deactivate(ctx->net, set, elem_priv);
- 	nft_trans_elem_priv(trans) = elem_priv;
--	nft_trans_commit_list_add_tail(ctx->net, trans);
-+	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
+-	nft_trans_elem_priv(trans) = elem_priv;
++	nft_trans_container_elem(trans)->elems[0].priv = elem_priv;
+ 	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
  
  	return 0;
- }
+@@ -9619,9 +9753,7 @@ static void nft_commit_release(struct nft_trans *trans)
+ 		break;
+ 	case NFT_MSG_DELSETELEM:
+ 	case NFT_MSG_DESTROYSETELEM:
+-		nf_tables_set_elem_destroy(&ctx,
+-					   nft_trans_elem_set(trans),
+-					   nft_trans_elem_priv(trans));
++		nft_trans_elems_destroy(&ctx, nft_trans_container_elem(trans));
+ 		break;
+ 	case NFT_MSG_DELOBJ:
+ 	case NFT_MSG_DESTROYOBJ:
+@@ -10464,25 +10596,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 		case NFT_MSG_NEWSETELEM:
+ 			te = nft_trans_container_elem(trans);
+ 
+-			if (te->update_flags) {
+-				const struct nft_set_ext *ext =
+-					nft_set_elem_ext(te->set, te->elem_priv);
++			nft_trans_elems_add(&ctx, te);
+ 
+-				if (te->update_flags & NFT_TRANS_UPD_TIMEOUT) {
+-					WRITE_ONCE(nft_set_ext_timeout(ext)->timeout,
+-						   te->timeout);
+-				}
+-				if (te->update_flags & NFT_TRANS_UPD_EXPIRATION) {
+-					WRITE_ONCE(nft_set_ext_timeout(ext)->expiration,
+-						   get_jiffies_64() + te->expiration);
+-				}
+-			} else {
+-				nft_setelem_activate(net, te->set, te->elem_priv);
+-			}
+-
+-			nf_tables_setelem_notify(&ctx, te->set,
+-						 te->elem_priv,
+-						 NFT_MSG_NEWSETELEM);
+ 			if (te->set->ops->commit &&
+ 			    list_empty(&te->set->pending_update)) {
+ 				list_add_tail(&te->set->pending_update,
+@@ -10494,14 +10609,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 		case NFT_MSG_DESTROYSETELEM:
+ 			te = nft_trans_container_elem(trans);
+ 
+-			nf_tables_setelem_notify(&ctx, te->set,
+-						 te->elem_priv,
+-						 trans->msg_type);
+-			nft_setelem_remove(net, te->set, te->elem_priv);
+-			if (!nft_setelem_is_catchall(te->set, te->elem_priv)) {
+-				atomic_dec(&te->set->nelems);
+-				te->set->ndeact--;
+-			}
++			nft_trans_elems_remove(&ctx, te);
++
+ 			if (te->set->ops->commit &&
+ 			    list_empty(&te->set->pending_update)) {
+ 				list_add_tail(&te->set->pending_update,
+@@ -10623,8 +10732,7 @@ static void nf_tables_abort_release(struct nft_trans *trans)
+ 		nft_set_destroy(&ctx, nft_trans_set(trans));
+ 		break;
+ 	case NFT_MSG_NEWSETELEM:
+-		nft_set_elem_destroy(nft_trans_elem_set(trans),
+-				     nft_trans_elem_priv(trans), true);
++		nft_trans_set_elem_destroy(&ctx, nft_trans_container_elem(trans));
+ 		break;
+ 	case NFT_MSG_NEWOBJ:
+ 		nft_obj_destroy(&ctx, nft_trans_obj(trans));
+@@ -10781,18 +10889,15 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
+-			if (nft_trans_elem_update_flags(trans) ||
+-			    nft_trans_elem_set_bound(trans)) {
++			if (nft_trans_elem_set_bound(trans)) {
+ 				nft_trans_destroy(trans);
+ 				break;
+ 			}
+ 			te = nft_trans_container_elem(trans);
+-			if (!te->set->ops->abort ||
+-			    nft_setelem_is_catchall(te->set, te->elem_priv))
+-				nft_setelem_remove(net, te->set, te->elem_priv);
+-
+-			if (!nft_setelem_is_catchall(te->set, te->elem_priv))
+-				atomic_dec(&te->set->nelems);
++			if (!nft_trans_elems_new_abort(&ctx, te)) {
++				nft_trans_destroy(trans);
++				break;
++			}
+ 
+ 			if (te->set->ops->abort &&
+ 			    list_empty(&te->set->pending_update)) {
+@@ -10804,12 +10909,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 		case NFT_MSG_DESTROYSETELEM:
+ 			te = nft_trans_container_elem(trans);
+ 
+-			if (!nft_setelem_active_next(net, te->set, te->elem_priv)) {
+-				nft_setelem_data_activate(net, te->set, te->elem_priv);
+-				nft_setelem_activate(net, te->set, te->elem_priv);
+-			}
+-			if (!nft_setelem_is_catchall(te->set, te->elem_priv))
+-				te->set->ndeact--;
++			nft_trans_elems_destroy_abort(&ctx, te);
+ 
+ 			if (te->set->ops->abort &&
+ 			    list_empty(&te->set->pending_update)) {
 -- 
 2.53.0
 
