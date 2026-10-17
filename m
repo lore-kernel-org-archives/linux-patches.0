@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6223BFAD1;
-	Sat, 17 Oct 2026 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E283B3B2FCA;
+	Sat, 17 Oct 2026 17:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257429; cv=none; b=Nocg32B9J8oecIFV4aQr+tQtf31rZKH/cV9xrF8K3jWJaxviZkQTvZiQqC5vf4UPUreL3EmXjm57R3TmtApCJxrptgECcWJIl4T4SLFGkvDgTTAPLibFTa08YVOCirhpAgfw9aTBTE0hlzJdHH2lW44AjJxFdY6dtyotTf6eJ8g=
+	t=1792257433; cv=none; b=pUs4SGZaL9RajQ2Bwu/mV4hEEwfooKqNbUsO9e6YLqVYcTjq150u46OBqVdNt1+xLUXDY5VDB4xTW9QCWdzTUZTPnAmMdYoasELb8ZgAfRYmjeOeB2zgyeUXayj414wi0LUlkJQ7w0V9w/WFdE3c72BceAleta2HnbT/eP0hTGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257429; c=relaxed/simple;
-	bh=Pod4c1LGuOzAs001iVN3lvp2Svp5V+Pty4TtDJKQkGM=;
+	s=arc-20240116; t=1792257433; c=relaxed/simple;
+	bh=guQgo2F+sLAEA8bVeQi8+59p0b2rG5gUlcGIy0OBdbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKE4hU1LoG9wjpLJYeEPXNeVO57qUHb6bPqZy51zTFm+QmbyV30YLhD260srsKPXlDS6mIXEs9gHrX/w4v9InbUnC9SIvxUBXjUUdgGoXBLW5ROEdgqBoGSeL/ryhhUbXw/0HsRnCbF63xB3RQqoY34xqM/chqJ8D2Ozlj0Qqqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiRvlx7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFfELGnmmRV0/EpWZkCsBXbaDgnCFanpxA8sDHgojsmsApdeJzfB06NIqy+TqFskNWahoZZcXgtY3MgoHZKYBgiJbhFz1uk2CjDPpqutjlqzky3SKxO2NR6icwz/ylWK59sHfrNi02RX88n+IIo5lcg2c5fO8AlJmtuOumi6CzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNmgz61s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiRvlx7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A7C1F000C5;
-	Sat, 17 Oct 2026 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNmgz61s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52EE1F000C5;
+	Sat, 17 Oct 2026 17:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257428;
-	bh=uk9nV16O7twOE3h0OblWAEdiz5ax81HUJP0kvrYxM9g=;
+	s=korg; t=1792257431;
+	bh=xqy8C552EHqNHNmRML9JutEopO38s4BPaM/ZoBooPPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AiRvlx7H75DUzanO7dx1r/ULQ1oy9R64SjRLBtOCF4K0WTMbYWSyfXJrW3PNHV49n
-	 VFMUgWFQyLwIr0meo79Xa+zvuwS6lZmo+CddW9MYDwLE39LHEBpMvpb9umukBv62+v
-	 LSpoYs8yTne8NaEDaXEQSlRE0mkzpM7EMau1c2nc=
+	b=mNmgz61szKfxD1rT7LbR0b7HZxKBzHy2lLQISS1YBWgnkw2hbFClBGGrpxiSYJ/qA
+	 KQUv0OxtX7Qkb9+Y6/DYRlPX/PJfCq/3w0FGjIZ+ft2qoe2WlHE/fHoA/gVC3Uxoll
+	 lR9H0cw1OS1S7DbpXCGhxYATRvRb4OYRgd6evaMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	syzbot+4cc63fcfb3845e149969@syzkaller.appspotmail.com,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0555/1674] mlxsw: spectrum_flower: Fix port range register leak in tmplt_create()
-Date: Sat, 17 Oct 2026 17:47:07 +0200
-Message-ID: <20261017160445.341173065@linuxfoundation.org>
+Subject: [PATCH 6.6 0556/1674] net: openvswitch: validate transport header presence in set_ipv6_addr
+Date: Sat, 17 Oct 2026 17:47:08 +0200
+Message-ID: <20261017160445.367601324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,106 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 7ea07afb230f1342ab0f9365edd0aae137f425d3 ]
+[ Upstream commit 3c6a4b11330fe424557538a98fca9f0a4c5bf313 ]
 
-mlxsw_sp_flower_tmplt_create() parses a flow_cls_offload template
-into a stack-local struct mlxsw_sp_acl_rule_info purely to compute
-rulei.values.elusage. Parsing can acquire port range registers via
-mlxsw_sp_flower_parse_ports_range(), but since this rulei never goes
-through mlxsw_sp_acl_rulei_destroy(), those registers were never
-released, including through chain template deletion.
+When executing IPv6 address rewrite actions on IPv6 fragments,
+set_ipv6_addr() calls update_ipv6_checksum(). If parse_ipv6hdr()
+processes a non-first IPv6 fragment, it sets key->ip.proto to
+NEXTHDR_FRAGMENT and returns early without calling
+skb_set_transport_header().
 
-Factor out of mlxsw_sp_acl_rulei_destroy() the code to actually
-release the necessary resources and call from
-mlxsw_sp_flower_tmplt_create() to plug the leak.
+update_ipv6_checksum() unconditionally evaluates skb_transport_offset()
+on entry before checking l4_proto.  Because skb->transport_header is
+uninitialized, this triggers a warning under CONFIG_DEBUG_NET=y although
+it is completely harmless.
 
-The issue was found during a review of Wentao Liang's patch referenced
-below.
+Fix this by returning early in update_ipv6_checksum() if l4_proto is
+NEXTHDR_FRAGMENT. This avoids reading the uninitialized transport offset
+for fragments while preserving the debug warning for any other protocol
+where the transport header is unexpectedly missing.
 
-Fixes: fe22f7410527 ("mlxsw: spectrum_flower: Add ability to match on port ranges")
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
-Closes: https://lore.kernel.org/netdev/20260917113236.2149095-1-vulab@iscas.ac.cn/
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/95339cf970ce78e1a74aa86ffcc104ecf7c7762c.1791294384.git.petrm@nvidia.com
+See the syzbot trace:
+
+!skb_transport_header_was_set(skb)
+WARNING: ./include/linux/skbuff.h:3075 at skb_transport_header include/linux/skbuff.h:3075 [inline], CPU#1: syz-executor463/5635
+WARNING: ./include/linux/skbuff.h:3075 at skb_transport_offset include/linux/skbuff.h:3250 [inline], CPU#1: syz-executor463/5635
+WARNING: ./include/linux/skbuff.h:3075 at update_ipv6_checksum net/openvswitch/actions.c:361 [inline], CPU#1: syz-executor463/5635
+WARNING: ./include/linux/skbuff.h:3075 at set_ipv6_addr+0x462/0x660 net/openvswitch/actions.c:399, CPU#1: syz-executor463/5635
+[...]
+RIP: 0010:skb_transport_header include/linux/skbuff.h:3075 [inline]
+RIP: 0010:skb_transport_offset include/linux/skbuff.h:3250 [inline]
+RIP: 0010:update_ipv6_checksum net/openvswitch/actions.c:361 [inline]
+RIP: 0010:set_ipv6_addr+0x462/0x660 net/openvswitch/actions.c:399
+[...]
+Call Trace:
+ <TASK>
+ set_ipv6 net/openvswitch/actions.c:531 [inline]
+ do_execute_actions+0x557e/0x8600 net/openvswitch/actions.c:1366
+ ovs_execute_actions+0xde/0x520 net/openvswitch/actions.c:1592
+ ovs_packet_cmd_execute+0xb4f/0xf10 net/openvswitch/datapath.c:705
+ genl_family_rcv_msg_doit+0x233/0x340 net/netlink/genetlink.c:1114
+ genl_rcv_msg+0x614/0x7a0 net/netlink/genetlink.c:1209
+ netlink_rcv_skb+0x226/0x4a0 net/netlink/af_netlink.c:2572
+ genl_rcv+0x28/0x40 net/netlink/genetlink.c:1218
+ netlink_unicast+0x7bd/0x940 net/netlink/af_netlink.c:1361
+ netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1916
+ sock_sendmsg_nosec+0x14e/0x190 net/socket.c:800
+
+Reported-by: syzbot+4cc63fcfb3845e149969@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4cc63fcfb3845e149969
+Fixes: 3fdbd1ce11e5 ("openvswitch: add ipv6 'set' action")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261008104135.4722-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.h        |  2 ++
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c    | 10 ++++++++--
- drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c |  9 +++++++--
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ net/openvswitch/actions.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.h b/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-index 02ca2871b6f9f..1422ffaff856a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.h
-@@ -998,6 +998,8 @@ void mlxsw_sp_acl_ruleset_prio_get(struct mlxsw_sp_acl_ruleset *ruleset,
- struct mlxsw_sp_acl_rule_info *
- mlxsw_sp_acl_rulei_create(struct mlxsw_sp_acl *acl,
- 			  struct mlxsw_afa_block *afa_block);
-+void mlxsw_sp_acl_rulei_free(struct mlxsw_sp *mlxsw_sp,
-+			     const struct mlxsw_sp_acl_rule_info *rulei);
- void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
- 				struct mlxsw_sp_acl_rule_info *rulei);
- int mlxsw_sp_acl_rulei_commit(struct mlxsw_sp_acl_rule_info *rulei);
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-index b01b000bc71c1..eac09cd6ecd47 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl.c
-@@ -340,8 +340,8 @@ mlxsw_sp_acl_rulei_create(struct mlxsw_sp_acl *acl,
- 	return ERR_PTR(err);
- }
- 
--void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
--				struct mlxsw_sp_acl_rule_info *rulei)
-+void mlxsw_sp_acl_rulei_free(struct mlxsw_sp *mlxsw_sp,
-+			     const struct mlxsw_sp_acl_rule_info *rulei)
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 4cdf0f09d4884..c525eb456609a 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -382,7 +382,12 @@ static void set_ip_addr(struct sk_buff *skb, struct iphdr *nh,
+ static void update_ipv6_checksum(struct sk_buff *skb, u8 l4_proto,
+ 				 __be32 addr[4], const __be32 new_addr[4])
  {
- 	if (rulei->action_created)
- 		mlxsw_afa_block_destroy(rulei->act_block);
-@@ -351,6 +351,12 @@ void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
- 	if (rulei->dst_port_range_reg_valid)
- 		mlxsw_sp_port_range_reg_put(mlxsw_sp,
- 					    rulei->dst_port_range_reg_index);
-+}
+-	int transport_len = skb->len - skb_transport_offset(skb);
++	int transport_len;
 +
-+void mlxsw_sp_acl_rulei_destroy(struct mlxsw_sp *mlxsw_sp,
-+				struct mlxsw_sp_acl_rule_info *rulei)
-+{
-+	mlxsw_sp_acl_rulei_free(mlxsw_sp, rulei);
- 	kfree(rulei);
- }
- 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-index fba545938fd7d..7892c4d222cee 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-@@ -848,14 +848,19 @@ int mlxsw_sp_flower_tmplt_create(struct mlxsw_sp *mlxsw_sp,
- 	memset(&rulei, 0, sizeof(rulei));
- 	err = mlxsw_sp_flower_parse(mlxsw_sp, block, &rulei, f);
- 	if (err)
--		return err;
-+		goto out;
++	if (l4_proto == NEXTHDR_FRAGMENT)
++		return;
 +
- 	ruleset = mlxsw_sp_acl_ruleset_get(mlxsw_sp, block,
- 					   f->common.chain_index,
- 					   MLXSW_SP_ACL_PROFILE_FLOWER,
- 					   &rulei.values.elusage);
-+	err = PTR_ERR_OR_ZERO(ruleset);
-+
-+out:
-+	mlxsw_sp_acl_rulei_free(mlxsw_sp, &rulei);
++	transport_len = skb->len - skb_transport_offset(skb);
  
- 	/* keep the reference to the ruleset */
--	return PTR_ERR_OR_ZERO(ruleset);
-+	return err;
- }
- 
- void mlxsw_sp_flower_tmplt_destroy(struct mlxsw_sp *mlxsw_sp,
+ 	if (l4_proto == NEXTHDR_TCP) {
+ 		if (likely(transport_len >= sizeof(struct tcphdr)))
 -- 
 2.53.0
 
