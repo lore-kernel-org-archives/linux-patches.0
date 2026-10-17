@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305B038C2C0;
-	Sat, 17 Oct 2026 16:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF383876BA;
+	Sat, 17 Oct 2026 16:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253511; cv=none; b=a3RTP9iF7zPEcBQncpqruY42MFtHMa0pWOt9OpNgTt+7D/hLeuWpWfY1v1F6CSV4YmqHN8wzOBhE86Kf7Cj5FkHzIbxTX/FF1U51LwT9qqgKG72zaIdlYxXEk+9986yFE6NWocNSQEBQFayygpmWf/DAJq3eUyvdM2wFoDBCZOc=
+	t=1792253514; cv=none; b=GieGXmZh2dA1TomGJOKVHtMU/0wynaBNAXaURP/ipXHgyFJJUmbtpW4K1vjG+Opn/3zD/RVk6IiZEHnZYbkFNHqKuyGPuMfeuBvLRV2vdqPAglXMGDlTPst/Rh9PJ7erMx+d+Zuoy1xjn3W4Ed69QTdfO8SiZResuWQsl/rleNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253511; c=relaxed/simple;
-	bh=QCCd2mpes704WUmnHd46cUHLCLgbiZgS7SeABLRfrzQ=;
+	s=arc-20240116; t=1792253514; c=relaxed/simple;
+	bh=89h/ZESUzp/6ixkPJJDHKxX8fwITPtotXzDMCR/1FhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tF07W/p9in67iFCjUClXBakBbD5mYXhuunsdqIxEszmaCZt3t0BpH3tDMrKi2iNdN1Um7eT360nVcFQ9G5zi3gc69a5hw/vxWJe+WoKIwqqdSSEd72m4a0nCXwk90/0DdfnCngvBhc6Q0lUR107Yh23PI19x+b99wKeorXcZ44w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7MatKIx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmmlj/WpqWQOdc18/oGc4BbedabI7xOUaCMGfH7BY7uSOTJIBU58UHwcYlSVZVZXrlz0MYZnH3NtgFakvjYomC4VRJdRR+8hkGzvglZzA4fsdcGxezqjSG1jshH+ModsLDdX2HuJW/xYUa7ioijkouHdvp8U+dD51amUVB1B+LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxkXaV2X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7MatKIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AF81F000C4;
-	Sat, 17 Oct 2026 16:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxkXaV2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998661F000C5;
+	Sat, 17 Oct 2026 16:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253510;
-	bh=e4zrsgAOdWLX823hyHJSqdR9Gla4WdZ+KuY/oyiXeW0=;
+	s=korg; t=1792253513;
+	bh=eZ7jGy+S2nO7JFQWCCBQ5yyRjaBVFi3t4Zlnp+OEBdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7MatKIxIuTYClXbPChLlFCwnlOGqniO/zglP51QbmvljhMGiOj+kqottWKH4ncJ5
-	 rV0KBRdb3qL6rxTDzVtofquSTd9ZtxNwb6v7PF5uqXi8v9gdhc2GPPE0oIwbIQdqYn
-	 3dp37UXemCJjDlXGdh//S6YrKkzmX4FDDz+3cDtA=
+	b=MxkXaV2X7KxsyF1YdqXWXhVMmjHm+I1CTuPeNqDMd7yqhDMJubJxYg7lTIQZmwDf9
+	 4BgeAG02ZqoOe4FIlTz1FdFifJIq9K3qvw7LSFhk/tBtiehVFqaKcFGvT2BY42bEkB
+	 KctgS4AgYIFa4oOT/xGB9a0Z6IEDlUVmjonXKliU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	"Philip.Yang" <Philip.Yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Summers Stuart <stuart.summers@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/869] amd/amdkfd: enhance kfd process check in switch partition
-Date: Sat, 17 Oct 2026 17:49:42 +0200
-Message-ID: <20261017160040.656050518@linuxfoundation.org>
+Subject: [PATCH 6.12 142/869] drm/xe/guc: Add devm release action to safely tear down CT
+Date: Sat, 17 Oct 2026 17:49:43 +0200
+Message-ID: <20261017160040.681830519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,197 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
 
-[ Upstream commit 45da20e00d5da842e17dfc633072b127504f0d0e ]
+[ Upstream commit ee4b32220a6b41e71512e8804585325e685456ba ]
 
-current switch partition only check if kfd_processes_table is empty.
-kfd_prcesses_table entry is deleted in kfd_process_notifier_release, but
-kfd_process tear down is in kfd_process_wq_release.
+When a buffer object (BO) is allocated with the XE_BO_FLAG_GGTT_INVALIDATE
+flag, the driver initiates TLB invalidation requests via the CTB mechanism
+while releasing the BO. However a premature release of the CTB BO can lead
+to system crashes, as observed in:
 
-consider two processes:
+Oops: Oops: 0000 [#1] SMP NOPTI
+RIP: 0010:h2g_write+0x2f3/0x7c0 [xe]
+Call Trace:
+ guc_ct_send_locked+0x8b/0x670 [xe]
+ xe_guc_ct_send_locked+0x19/0x60 [xe]
+ send_tlb_invalidation+0xb4/0x460 [xe]
+ xe_gt_tlb_invalidation_ggtt+0x15e/0x2e0 [xe]
+ ggtt_invalidate_gt_tlb.part.0+0x16/0x90 [xe]
+ ggtt_node_remove+0x110/0x140 [xe]
+ xe_ggtt_node_remove+0x40/0xa0 [xe]
+ xe_ggtt_remove_bo+0x87/0x250 [xe]
 
-Process A (workqueue) -> kfd_process_wq_release -> Access kfd_node member
-Process B switch partition -> amdgpu_xcp_pre_partition_switch -> amdgpu_amdkfd_device_fini_sw
--> kfd_node tear down.
+Introduce a devm-managed release action during xe_guc_ct_init() and
+xe_guc_ct_init_post_hwconfig() to ensure proper CTB disablement before
+resource deallocation, preventing the use-after-free scenario.
 
-Process A and B may trigger a race as shown in dmesg log.
-
-This patch is to resolve the race by adding an atomic kfd_process counter
-kfd_processes_count, it increment as create kfd process, decrement as
-finish kfd_process_wq_release.
-
-v2: Put kfd_processes_count per kfd_dev, move decrement to kfd_process_destroy_pdds
-and bug fix. (Philip Yang)
-
-[3966658.307702] divide error: 0000 [#1] SMP NOPTI
-[3966658.350818]  i10nm_edac
-[3966658.356318] CPU: 124 PID: 38435 Comm: kworker/124:0 Kdump: loaded Tainted
-[3966658.356890] Workqueue: kfd_process_wq kfd_process_wq_release [amdgpu]
-[3966658.362839]  nfit
-[3966658.366457] RIP: 0010:kfd_get_num_sdma_engines+0x17/0x40 [amdgpu]
-[3966658.366460] Code: 00 00 e9 ac 81 02 00 66 66 2e 0f 1f 84 00 00 00 00 00 90 0f 1f 44 00 00 48 8b 4f 08 48 8b b7 00 01 00 00 8b 81 58 26 03 00 99 <f7> be b8 01 00 00 80 b9 70 2e 00 00 00 74 0b 83 f8 02 ba 02 00 00
-[3966658.380967]  x86_pkg_temp_thermal
-[3966658.391529] RSP: 0018:ffffc900a0edfdd8 EFLAGS: 00010246
-[3966658.391531] RAX: 0000000000000008 RBX: ffff8974e593b800 RCX: ffff888645900000
-[3966658.391531] RDX: 0000000000000000 RSI: ffff888129154400 RDI: ffff888129151c00
-[3966658.391532] RBP: ffff8883ad79d400 R08: 0000000000000000 R09: ffff8890d2750af4
-[3966658.391532] R10: 0000000000000018 R11: 0000000000000018 R12: 0000000000000000
-[3966658.391533] R13: ffff8883ad79d400 R14: ffffe87ff662ba00 R15: ffff8974e593b800
-[3966658.391533] FS:  0000000000000000(0000) GS:ffff88fe7f600000(0000) knlGS:0000000000000000
-[3966658.391534] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[3966658.391534] CR2: 0000000000d71000 CR3: 000000dd0e970004 CR4: 0000000002770ee0
-[3966658.391535] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[3966658.391535] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[3966658.391536] PKRU: 55555554
-[3966658.391536] Call Trace:
-[3966658.391674]  deallocate_sdma_queue+0x38/0xa0 [amdgpu]
-[3966658.391762]  process_termination_cpsch+0x1ed/0x480 [amdgpu]
-[3966658.399754]  intel_powerclamp
-[3966658.402831]  kfd_process_dequeue_from_all_devices+0x5b/0xc0 [amdgpu]
-[3966658.402908]  kfd_process_wq_release+0x1a/0x1a0 [amdgpu]
-[3966658.410516]  coretemp
-[3966658.434016]  process_one_work+0x1ad/0x380
-[3966658.434021]  worker_thread+0x49/0x310
-[3966658.438963]  kvm_intel
-[3966658.446041]  ? process_one_work+0x380/0x380
-[3966658.446045]  kthread+0x118/0x140
-[3966658.446047]  ? __kthread_bind_mask+0x60/0x60
-[3966658.446050]  ret_from_fork+0x1f/0x30
-[3966658.446053] Modules linked in: kpatch_20765354(OEK)
-[3966658.455310]  kvm
-[3966658.464534]  mptcp_diag xsk_diag raw_diag unix_diag af_packet_diag netlink_diag udp_diag act_pedit act_mirred act_vlan cls_flower kpatch_21951273(OEK) kpatch_18424469(OEK) kpatch_19749756(OEK)
-[3966658.473462]  idxd_mdev
-[3966658.482306]  kpatch_17971294(OEK) sch_ingress xt_conntrack amdgpu(OE) amdxcp(OE) amddrm_buddy(OE) amd_sched(OE) amdttm(OE) amdkcl(OE) intel_ifs iptable_mangle tcm_loop target_core_pscsi tcp_diag target_core_file inet_diag target_core_iblock target_core_user target_core_mod coldpgs kpatch_18383292(OEK) ip6table_nat ip6table_filter ip6_tables ip_set_hash_ipportip ip_set_hash_ipportnet ip_set_hash_ipport ip_set_bitmap_port xt_comment iptable_nat nf_nat iptable_filter ip_tables ip_set ip_vs_sh ip_vs_wrr ip_vs_rr ip_vs nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 sn_core_odd(OE) i40e overlay binfmt_misc tun bonding(OE) aisqos(OE) aisqos_hotfixes(OE) rfkill uio_pci_generic uio cuse fuse nf_tables nfnetlink intel_rapl_msr intel_rapl_common intel_uncore_frequency intel_uncore_frequency_common i10nm_edac nfit x86_pkg_temp_thermal intel_powerclamp coretemp kvm_intel kvm idxd_mdev
-[3966658.491237]  vfio_pci
-[3966658.501196]  vfio_pci vfio_virqfd mdev vfio_iommu_type1 vfio iax_crypto intel_pmt_telemetry iTCO_wdt intel_pmt_class iTCO_vendor_support irqbypass crct10dif_pclmul crc32_pclmul ghash_clmulni_intel rapl intel_cstate snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_seq
-[3966658.508537]  vfio_virqfd
-[3966658.517569]  snd_seq_device ipmi_ssif isst_if_mbox_pci isst_if_mmio pcspkr snd_pcm idxd intel_uncore ses isst_if_common intel_vsec idxd_bus enclosure snd_timer mei_me snd i2c_i801 i2c_smbus mei i2c_ismt soundcore joydev acpi_ipmi ipmi_si ipmi_devintf ipmi_msghandler acpi_power_meter acpi_pad vfat fat
-[3966658.526851]  mdev
-[3966658.536096]  nfsd auth_rpcgss nfs_acl lockd grace slb_vtoa(OE) sunrpc dm_mod hookers mlx5_ib(OE) ast i2c_algo_bit drm_vram_helper drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys_fops drm_ttm_helper ttm mlx5_core(OE) mlxfw(OE)
-[3966658.540381]  vfio_iommu_type1
-[3966658.544341]  nvme mpt3sas tls drm nvme_core pci_hyperv_intf raid_class psample libcrc32c crc32c_intel mlxdevm(OE) i2c_core
-[3966658.551254]  vfio
-[3966658.558742]  scsi_transport_sas wmi pinctrl_emmitsburg sd_mod t10_pi sg ahci libahci libata rdma_ucm(OE) ib_uverbs(OE) rdma_cm(OE) iw_cm(OE) ib_cm(OE) ib_umad(OE) ib_core(OE) ib_ucm(OE) mlx_compat(OE)
-[3966658.563004]  iax_crypto
-[3966658.570988]  [last unloaded: diagnose]
-[3966658.571027] ---[ end trace cc9dbb180f9ae537 ]---
-
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Philip.Yang<Philip.Yang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Summers Stuart <stuart.summers@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://lore.kernel.org/r/20250901072541.31461-1-satyanarayana.k.v.p@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c |  2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h |  4 ++--
- drivers/gpu/drm/amd/amdkfd/kfd_device.c    | 13 ++++++++++++-
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h      |  2 ++
- drivers/gpu/drm/amd/amdkfd/kfd_process.c   |  4 ++++
- 5 files changed, 21 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_guc.c    |  8 +++----
+ drivers/gpu/drm/xe/xe_guc_ct.c | 41 +++++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/xe/xe_guc_ct.h |  1 +
+ 3 files changed, 45 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index a89172a696e4c..1a92f04c63ace 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -805,7 +805,7 @@ int amdgpu_amdkfd_send_close_event_drain_irq(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index bedd9894e182e..d4c8a782e7e56 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -289,10 +289,6 @@ static int xe_guc_realloc_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
+ 		return ret;
  
- int amdgpu_amdkfd_check_and_lock_kfd(struct amdgpu_device *adev)
- {
--	return kgd2kfd_check_and_lock_kfd();
-+	return kgd2kfd_check_and_lock_kfd(adev->kfd.dev);
- }
- 
- void amdgpu_amdkfd_unlock_kfd(struct amdgpu_device *adev)
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-index d7de6fe404940..d79c431de2234 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
-@@ -423,7 +423,7 @@ int kgd2kfd_post_reset(struct kfd_dev *kfd);
- void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry);
- void kgd2kfd_set_sram_ecc_flag(struct kfd_dev *kfd);
- void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask);
--int kgd2kfd_check_and_lock_kfd(void);
-+int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd);
- void kgd2kfd_unlock_kfd(void);
- int kgd2kfd_start_sched(struct kfd_dev *kfd, uint32_t node_id);
- int kgd2kfd_stop_sched(struct kfd_dev *kfd, uint32_t node_id);
-@@ -489,7 +489,7 @@ void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask)
- {
- }
- 
--static inline int kgd2kfd_check_and_lock_kfd(void)
-+static inline int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd)
- {
+-	ret = xe_managed_bo_reinit_in_vram(xe, tile, &guc->ct.bo);
+-	if (ret)
+-		return ret;
+-
  	return 0;
  }
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index b536ec72cffb7..fa95bde45f3c3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -487,6 +487,7 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf)
- 	mutex_init(&kfd->doorbell_mutex);
  
- 	ida_init(&kfd->doorbell_ida);
-+	atomic_set(&kfd->kfd_processes_count, 0);
+@@ -397,6 +393,10 @@ int xe_guc_init_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
+ 		return ret;
  
- 	return kfd;
++	ret = xe_guc_ct_init_post_hwconfig(&guc->ct);
++	if (ret)
++		return ret;
++
+ 	guc_init_params_post_hwconfig(guc);
+ 
+ 	ret = xe_guc_submit_init(guc, ~0);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 7619b48dbfe43..e9da1b478cb3d 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -36,6 +36,8 @@ static void receive_g2h(struct xe_guc_ct *ct);
+ static void g2h_worker_func(struct work_struct *w);
+ static void safe_mode_worker_func(struct work_struct *w);
+ static void ct_exit_safe_mode(struct xe_guc_ct *ct);
++static void xe_guc_ct_set_state(struct xe_guc_ct *ct,
++				enum xe_guc_ct_state state);
+ 
+ #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
+ enum {
+@@ -206,6 +208,13 @@ static void primelockdep(struct xe_guc_ct *ct)
+ 	fs_reclaim_release(GFP_KERNEL);
  }
-@@ -1430,9 +1431,19 @@ unsigned int kfd_get_num_xgmi_sdma_engines(struct kfd_node *node)
- 		kfd_get_num_sdma_engines(node);
- }
  
--int kgd2kfd_check_and_lock_kfd(void)
-+int kgd2kfd_check_and_lock_kfd(struct kfd_dev *kfd)
++static void guc_action_disable_ct(void *arg)
++{
++	struct xe_guc_ct *ct = arg;
++
++	xe_guc_ct_set_state(ct, XE_GUC_CT_STATE_DISABLED);
++}
++
+ int xe_guc_ct_init(struct xe_guc_ct *ct)
  {
- 	mutex_lock(&kfd_processes_mutex);
-+
-+	/* kfd_processes_count is per kfd_dev, return -EBUSY without
-+	 * further check
-+	 */
-+	if (!!atomic_read(&kfd->kfd_processes_count)) {
-+		pr_debug("process_wq_release not finished\n");
-+		mutex_unlock(&kfd_processes_mutex);
-+		return -EBUSY;
-+	}
-+
- 	if (!hash_empty(kfd_processes_table) || kfd_is_locked()) {
- 		mutex_unlock(&kfd_processes_mutex);
- 		return -EBUSY;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 74bd33a9bd092..8f7e44afba635 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -386,6 +386,8 @@ struct kfd_dev {
+ 	struct xe_device *xe = ct_to_xe(ct);
+@@ -252,7 +261,37 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
  
- 	/* bitmap for dynamic doorbell allocation from doorbell object */
- 	unsigned long *doorbell_bitmap;
+ 	xe_gt_assert(gt, ct->state == XE_GUC_CT_STATE_NOT_INITIALIZED);
+ 	ct->state = XE_GUC_CT_STATE_DISABLED;
+-	return 0;
 +
-+	atomic_t kfd_processes_count;
- };
- 
- enum kfd_mempool {
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 64f3a0687f8a2..b9f00b756c509 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1091,6 +1091,8 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
- 			pdd->runtime_inuse = false;
- 		}
- 
-+		atomic_dec(&pdd->dev->kfd->kfd_processes_count);
++	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
++}
 +
- 		kfree(pdd);
- 		p->pdds[i] = NULL;
- 	}
-@@ -1662,6 +1664,8 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	/* Init idr used for memory handle translation */
- 	idr_init(&pdd->alloc_idr);
- 
-+	atomic_inc(&dev->kfd->kfd_processes_count);
++/**
++ * xe_guc_ct_init_post_hwconfig - Reinitialize the GuC CTB in VRAM
++ * @ct: the &xe_guc_ct
++ *
++ * Allocate a new BO in VRAM and free the previous BO that was allocated
++ * in system memory (SMEM). Applicable only for DGFX products.
++ *
++ * Return: 0 on success, or a negative errno on failure.
++ */
++int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct)
++{
++	struct xe_device *xe = ct_to_xe(ct);
++	struct xe_gt *gt = ct_to_gt(ct);
++	struct xe_tile *tile = gt_to_tile(gt);
++	int ret;
 +
- 	return pdd;
++	xe_assert(xe, !xe_guc_ct_enabled(ct));
++
++	if (!IS_DGFX(xe))
++		return 0;
++
++	ret = xe_managed_bo_reinit_in_vram(xe, tile, &ct->bo);
++	if (ret)
++		return ret;
++
++	devm_release_action(xe->drm.dev, guc_action_disable_ct, ct);
++	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
  }
  
+ #define desc_read(xe_, guc_ctb__, field_)			\
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.h b/drivers/gpu/drm/xe/xe_guc_ct.h
+index c7ac9407b861e..398e3adf49c73 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.h
++++ b/drivers/gpu/drm/xe/xe_guc_ct.h
+@@ -11,6 +11,7 @@
+ struct drm_printer;
+ 
+ int xe_guc_ct_init(struct xe_guc_ct *ct);
++int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct);
+ int xe_guc_ct_enable(struct xe_guc_ct *ct);
+ void xe_guc_ct_disable(struct xe_guc_ct *ct);
+ void xe_guc_ct_stop(struct xe_guc_ct *ct);
 -- 
 2.53.0
 
