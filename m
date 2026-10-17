@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA05F3A542B;
-	Sat, 17 Oct 2026 18:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEE63A542B;
+	Sat, 17 Oct 2026 18:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260815; cv=none; b=ejCC5zZF9r0Aiy5EalSkHN98TdVlynhxT4kvoevKQA8rasONSbxu0DbzKFZPVOGO/uSsOhtp7W5YmDm2W1lYwRzJ+7aoqLLlet/chsFPAMupfOaPLWmkMrMm+CpM5zkpbX5XdY/b3nsiNf22f4ScI77vQqGt4y2y+XjWO8MFBso=
+	t=1792260818; cv=none; b=KF6GZHKtnYCk73eHnYqoFKp1FtNxKuJDlc2W0C9i/k1ltgGieed4rD/nmy0M29Y8O9AS9FuWfvNX9BaEBD2jDtOVBCqYaT/SDrgtrqRLaMFTj7La/4JRO3xbS77PjFNylUcKm/jufXx5OLMPANXRdi+7xlBkQoVaZbjz7cr1HNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260815; c=relaxed/simple;
-	bh=rvKU6iQVqqNxBaXg98suTgClbio4XZPHGnt0DHFRcZc=;
+	s=arc-20240116; t=1792260818; c=relaxed/simple;
+	bh=wKJbgMjKwUGmZauyxFQTbDcMTCi7l78NVbgNUBpjnlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWO7aH9CGmkZD5Si8r0zcHILuSgq/qkKzvvA3+KE5eG1xGpFMxovTOOOmS2/uj6NlkRrcuAOeR5GZvAxyzc4qE6oJzF2WQqM1Ul8FRmxxAvK5LvQ+Pe6yOhM/HLEnmH58JBc9ZadwgZQBL+0jiCUuGENWn4uELzg0z5w/JqfhVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/6gYbi2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cx8D2CDs7cpYVNlcKUwfrx4eZcM8nzDQFPdMTTmzHhWcZKGQs7mjvAs0QxOM79HhEghFjG288qUcjqNWtmBTV6GHNY8iMvW6CANZJ6dfYKP5qU40I86/uiUL0S9fLV1nDPS1PDdc7aXnpIQRY3+6SMWVj/CDs6bd+vOcUxpi6hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYZSSN+A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/6gYbi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B981F000C4;
-	Sat, 17 Oct 2026 18:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYZSSN+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3DA1F000C4;
+	Sat, 17 Oct 2026 18:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260814;
-	bh=zv37XjJTHF2WCLQ/ABW9SF1a9AE6vVFKoZoShh+gnxk=;
+	s=korg; t=1792260817;
+	bh=b9FQGGBALdAOXk4dJPsLmZhKmAeCK5S7XJTl/KJWaUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/6gYbi2eKW6hT0ArfcM5/QkQ4ifv9VgeaPPpRTgShuCypmfUspM0rk5TykAQ/2mD
-	 9gNmeQvzP+/EUYni+jB8Xt7cPC0g8jGwr3YVNb3TgsCwTZPxVI3EOu99ylvI/9qObx
-	 JsvMU6t3b6G/h/hvZDvL+RR300l6IwNmJcmMa7Gw=
+	b=KYZSSN+A1nOZ6mSv474iQwuIh0RIjKZJzaFbLmMBlPfMp+mQIHX/zEUftCPX3Bd7D
+	 s1ztfyUSEpBznyRPqQuJKrDB7DjnYfzw0wqLk3pjuBu/+evua44QN543uFzYiiAj+G
+	 h9JxPQ4GjIGLMFm3FKurNmBkPc1deubO0kzzBuYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cmaiolino@redhat.com>,
 	Carlos Maiolino <cem@kernel.org>,
 	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1667/1674] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
-Date: Sat, 17 Oct 2026 18:05:39 +0200
-Message-ID: <20261017160513.857173871@linuxfoundation.org>
+Subject: [PATCH 6.6 1668/1674] xfs: catch stale AGF/AGF metadata
+Date: Sat, 17 Oct 2026 18:05:40 +0200
+Message-ID: <20261017160513.882579590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -56,156 +55,255 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
+[ Upstream commit db6a2274162de615ff74b927d38942fe3134d298 ]
 
-Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
--> IFLUSHING, except for the last inode in the cluster that is
-triggering the free. In that case, the lock order is ILOCK ->
-cluster buffer -> IFLUSHING.
+There is a race condition that can trigger in dmflakey fstests that
+can result in asserts in xfs_ialloc_read_agi() and
+xfs_alloc_read_agf() firing. The asserts look like this:
 
-xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
-so this can safely run concurrently with xfs_ifree_cluster().
+ XFS: Assertion failed: pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks), file: fs/xfs/libxfs/xfs_alloc.c, line: 3440
+.....
+ Call Trace:
+  <TASK>
+  xfs_alloc_read_agf+0x2ad/0x3a0
+  xfs_alloc_fix_freelist+0x280/0x720
+  xfs_alloc_vextent_prepare_ag+0x42/0x120
+  xfs_alloc_vextent_iterate_ags+0x67/0x260
+  xfs_alloc_vextent_start_ag+0xe4/0x1c0
+  xfs_bmapi_allocate+0x6fe/0xc90
+  xfs_bmapi_convert_delalloc+0x338/0x560
+  xfs_map_blocks+0x354/0x580
+  iomap_writepages+0x52b/0xa70
+  xfs_vm_writepages+0xd7/0x100
+  do_writepages+0xe1/0x2c0
+  __writeback_single_inode+0x44/0x340
+  writeback_sb_inodes+0x2d0/0x570
+  __writeback_inodes_wb+0x9c/0xf0
+  wb_writeback+0x139/0x2d0
+  wb_workfn+0x23e/0x4c0
+  process_scheduled_works+0x1d4/0x400
+  worker_thread+0x234/0x2e0
+  kthread+0x147/0x170
+  ret_from_fork+0x3e/0x50
+  ret_from_fork_asm+0x1a/0x30
 
-xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
-cannot race with xfs_ifree_cluster() so being in a different order
-will not trigger a deadlock.
+I've seen the AGI variant from scrub running on the filesysetm
+after unmount failed due to systemd interference:
 
-xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
-IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
-this deadlocks against xfs_ifree_cluster() like so:
+ XFS: Assertion failed: pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) || xfs_is_shutdown(pag->pag_mount), file: fs/xfs/libxfs/xfs_ialloc.c, line: 2804
+.....
+ Call Trace:
+  <TASK>
+  xfs_ialloc_read_agi+0xee/0x150
+  xchk_perag_drain_and_lock+0x7d/0x240
+  xchk_ag_init+0x34/0x90
+  xchk_inode_xref+0x7b/0x220
+  xchk_inode+0x14d/0x180
+  xfs_scrub_metadata+0x2e2/0x510
+  xfs_ioc_scrub_metadata+0x62/0xb0
+  xfs_file_ioctl+0x446/0xbf0
+  __se_sys_ioctl+0x6f/0xc0
+  __x64_sys_ioctl+0x1d/0x30
+  x64_sys_call+0x1879/0x2ee0
+  do_syscall_64+0x68/0x130
+  ? exc_page_fault+0x62/0xc0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
- sysrq: Show Blocked State
- task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
- Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
+Essentially, it is the same problem. When _flakey_drop_and_remount()
+loads the drop-writes table, it makes all writes silently fail. Writes
+are reported to the fs as completed successfully, but they are not
+issued to the backing store. The filesystem sees the successful
+write completion and marks the metadata buffer clean and removes it
+from the AIL.
+
+If this happens at the same time as memory pressure is occuring,
+the now-clean AGF and/or AGI buffers can be reclaimed from memory.
+
+Shortly afterwards, but before _flakey_drop_and_remount() runs
+unmount, background writeback is kicked and it tries to allocate
+blocks for the dirty pages in memory. This then tries to access the
+AGF buffer we just turfed out of memory. It's not found, so it gets
+read in from disk.
+
+This is all fine, except for the fact that the last writeback of the
+AGF did not actually reach disk. The AGF on disk is stale compared
+to the in-memory state held by the perag, and so they don't match
+and the assert fires.
+
+Then other operations on that inode hang because the task was killed
+whilst holding inode locks. e.g:
+
+ Workqueue: xfs-conv/dm-12 xfs_end_io
  Call Trace:
   <TASK>
   __schedule+0x650/0xb10
   schedule+0x6d/0xf0
-  schedule_timeout+0x8b/0x180
-  schedule_timeout_uninterruptible+0x1e/0x30
-  xfs_ifree+0x326/0x730
-  xfs_inactive_ifree+0xcb/0x230
-  xfs_inactive+0x2c8/0x380
-  xfs_inodegc_worker+0xaa/0x180
+  schedule_preempt_disabled+0x15/0x30
+  rwsem_down_write_slowpath+0x31a/0x5f0
+  down_write+0x43/0x60
+  xfs_ilock+0x1a8/0x210
+  xfs_trans_alloc_inode+0x9c/0x240
+  xfs_iomap_write_unwritten+0xe3/0x300
+  xfs_end_ioend+0x90/0x130
+  xfs_end_io+0xce/0x100
   process_scheduled_works+0x1d4/0x400
   worker_thread+0x234/0x2e0
   kthread+0x147/0x170
   ret_from_fork+0x3e/0x50
   ret_from_fork_asm+0x1a/0x30
   </TASK>
- task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x31/0x180
-  __down_common+0xbe/0x1f0
-  __down+0x1d/0x30
-  down+0x48/0x50
-  xfs_buf_lock+0x3d/0xe0
-  xfs_iflush_shutdown_abort+0x51/0x1e0
-  xfs_icwalk_ag+0x386/0x690
-  xfs_reclaim_inodes_nr+0x114/0x160
-  xfs_fs_free_cached_objects+0x19/0x20
-  super_cache_scan+0x17b/0x1a0
-  do_shrink_slab+0x180/0x350
-  shrink_slab+0xf8/0x430
-  drop_slab+0x97/0xf0
-  drop_caches_sysctl_handler+0x59/0xc0
-  proc_sys_call_handler+0x189/0x280
-  proc_sys_write+0x13/0x20
-  vfs_write+0x33d/0x3f0
-  ksys_write+0x7c/0xf0
-  __x64_sys_write+0x1b/0x30
-  x64_sys_call+0x271d/0x2ee0
-  do_syscall_64+0x68/0x130
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
-and XFS_IFLUSHING are serialised through to journal IO completion
-by the cluster buffer lock being held.
+and it's all down hill from there.
 
-There's quite a few asserts in the code that check that XFS_ISTALE
-does not occur out of sync with buffer locking (e.g. in
-xfs_iflush_cluster). There's also a dependency on the inode log item
-being removed from the buffer before XFS_IFLUSHING is cleared, also
-with asserts that trigger on this.
+Memory pressure is one way to trigger this, another is to run "echo
+3 > /proc/sys/vm/drop_caches" randomly while tests are running.
 
-Further, we don't have a requirement for the inode to be locked when
-completing or aborting inode flushing because all the inode state
-updates are serialised by holding the cluster buffer lock across the
-IO to completion.
+Regardless of how it is triggered, this effectively takes down the
+system once umount hangs because it's holding a sb->s_umount lock
+exclusive and now every sync(1) call gets stuck on it.
 
-We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
-skip the inode, because there is no guarantee that the inode will be
-reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
-whether reclaim is preparing to free that inode. Similarly, we can't
-check for IFLUSHING before locking the inode because that would
-result in dirty inodes not being marked with ISTALE in the event of
-racing with XFS_IRECLAIM.
-
-Hence we have to address this issue from the xfs_reclaim_inode()
-side. It is clear that we cannot hold the inode locked here when
-calling xfs_iflush_shutdown_abort() because it is the inode->buffer
-lock order that causes the deadlock against xfs_ifree_cluster().
-
-Hence we need to drop the ILOCK before aborting the inode in the
-shutdown case. Once we've aborted the inode, we can grab the ILOCK
-again and then immediately reclaim it as it is now guaranteed to be
-clean.
-
-Note that dropping the ILOCK in xfs_reclaim_inode() means that it
-can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
-this state. This is safe because we have left the XFS_IFLUSHING flag
-on the inode and so xfs_ifree_mark_inode_stale() will simply set
-XFS_ISTALE and move to the next inode. An ASSERT check in this path
-needs to be tweaked to take into account this new shutdown
-interaction.
+Fix this by replacing the asserts with a corruption detection check
+and a shutdown.
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
+
+6.12:
+
+Fixed conflict due to the following missing commit:
+	e9c4d8bfb26c ("xfs: factor out a generic xfs_group structure")
+
+6.6:
+
+Fixed conflict due to the following missing commit:
+	e45ea3645178 ("xfs: split the agf_roots and agf_levels arrays")
+
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_icache.c | 8 ++++++++
- fs/xfs/xfs_inode.c  | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_alloc.c  | 46 +++++++++++++++++++++++++++++---------
+ fs/xfs/libxfs/xfs_ialloc.c | 32 ++++++++++++++++++++++----
+ 2 files changed, 64 insertions(+), 14 deletions(-)
 
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index be44c7477c16a..ea743699ae6f2 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -879,7 +879,15 @@ xfs_reclaim_inode(
- 	 */
- 	if (xlog_is_shutdown(ip->i_mount->m_log)) {
- 		xfs_iunpin_wait(ip);
-+		/*
-+		 * Avoid a ABBA deadlock on the inode cluster buffer vs
-+		 * concurrent xfs_ifree_cluster() trying to mark the inode
-+		 * stale. We don't need the inode locked to run the flush abort
-+		 * code, but the flush abort needs to lock the cluster buffer.
-+		 */
-+		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		xfs_iflush_shutdown_abort(ip);
-+		xfs_ilock(ip, XFS_ILOCK_EXCL);
- 		goto reclaim;
+diff --git a/fs/xfs/libxfs/xfs_alloc.c b/fs/xfs/libxfs/xfs_alloc.c
+index ad2fa3c26f8a9..0383216e39dce 100644
+--- a/fs/xfs/libxfs/xfs_alloc.c
++++ b/fs/xfs/libxfs/xfs_alloc.c
+@@ -26,6 +26,7 @@
+ #include "xfs_ag.h"
+ #include "xfs_ag_resv.h"
+ #include "xfs_bmap.h"
++#include "xfs_health.h"
+ 
+ struct kmem_cache	*xfs_extfree_item_cache;
+ 
+@@ -3240,18 +3241,43 @@ xfs_alloc_read_agf(
+ 
+ 		set_bit(XFS_AGSTATE_AGF_INIT, &pag->pag_opstate);
  	}
- 	if (xfs_ipincount(ip))
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index e1adad91dba66..a9fa5b1fd208c 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -2235,7 +2235,7 @@ xfs_ifree_mark_inode_stale(
- 	iip = ip->i_itemp;
- 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
- 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
--		ASSERT(iip->ili_last_fields);
-+		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
- 		goto out_iunlock;
++
+ #ifdef DEBUG
+-	else if (!xfs_is_shutdown(pag->pag_mount)) {
+-		ASSERT(pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks));
+-		ASSERT(pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks));
+-		ASSERT(pag->pagf_flcount == be32_to_cpu(agf->agf_flcount));
+-		ASSERT(pag->pagf_longest == be32_to_cpu(agf->agf_longest));
+-		ASSERT(pag->pagf_levels[XFS_BTNUM_BNOi] ==
+-		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]));
+-		ASSERT(pag->pagf_levels[XFS_BTNUM_CNTi] ==
+-		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]));
++	/*
++	 * It's possible for the AGF to be out of sync if the block device is
++	 * silently dropping writes. This can happen in fstests with dmflakey
++	 * enabled, which allows the buffer to be cleaned and reclaimed by
++	 * memory pressure and then re-read from disk here. We will get a
++	 * stale version of the AGF from disk, and nothing good can happen from
++	 * here. Hence if we detect this situation, immediately shut down the
++	 * filesystem.
++	 *
++	 * This can also happen if we are already in the middle of a forced
++	 * shutdown, so don't bother checking if we are already shut down.
++	 */
++	if (!xfs_is_shutdown(pag->pag_mount)) {
++		bool	ok = true;
++
++		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
++		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
++		ok &= pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks);
++		ok &= pag->pagf_flcount == be32_to_cpu(agf->agf_flcount);
++		ok &= pag->pagf_longest == be32_to_cpu(agf->agf_longest);
++		ok &= pag->pagf_levels[XFS_BTNUM_BNOi] ==
++		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]);
++		ok &= pag->pagf_levels[XFS_BTNUM_CNTi] ==
++		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]);
++
++		if (XFS_IS_CORRUPT(pag->pag_mount, !ok)) {
++			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGF);
++			xfs_trans_brelse(tp, agfbp);
++			xfs_force_shutdown(pag->pag_mount,
++					SHUTDOWN_CORRUPT_ONDISK);
++			return -EFSCORRUPTED;
++		}
+ 	}
+-#endif
++#endif /* DEBUG */
++
+ 	if (agfbpp)
+ 		*agfbpp = agfbp;
+ 	else
+diff --git a/fs/xfs/libxfs/xfs_ialloc.c b/fs/xfs/libxfs/xfs_ialloc.c
+index b83e54c709069..dee46010702dc 100644
+--- a/fs/xfs/libxfs/xfs_ialloc.c
++++ b/fs/xfs/libxfs/xfs_ialloc.c
+@@ -27,6 +27,7 @@
+ #include "xfs_log.h"
+ #include "xfs_rmap.h"
+ #include "xfs_ag.h"
++#include "xfs_health.h"
+ 
+ /*
+  * Lookup a record by ino in the btree given by cur.
+@@ -2634,12 +2635,35 @@ xfs_ialloc_read_agi(
+ 		set_bit(XFS_AGSTATE_AGI_INIT, &pag->pag_opstate);
  	}
  
++#ifdef DEBUG
+ 	/*
+-	 * It's possible for these to be out of sync if
+-	 * we are in the middle of a forced shutdown.
++	 * It's possible for the AGF to be out of sync if the block device is
++	 * silently dropping writes. This can happen in fstests with dmflakey
++	 * enabled, which allows the buffer to be cleaned and reclaimed by
++	 * memory pressure and then re-read from disk here. We will get a
++	 * stale version of the AGF from disk, and nothing good can happen from
++	 * here. Hence if we detect this situation, immediately shut down the
++	 * filesystem.
++	 *
++	 * This can also happen if we are already in the middle of a forced
++	 * shutdown, so don't bother checking if we are already shut down.
+ 	 */
+-	ASSERT(pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) ||
+-		xfs_is_shutdown(pag->pag_mount));
++	if (!xfs_is_shutdown(pag->pag_mount)) {
++		bool	ok = true;
++
++		ok &= pag->pagi_freecount == be32_to_cpu(agi->agi_freecount);
++		ok &= pag->pagi_count == be32_to_cpu(agi->agi_count);
++
++		if (XFS_IS_CORRUPT(pag->pag_mount, !ok)) {
++			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGI);
++			xfs_trans_brelse(tp, agibp);
++			xfs_force_shutdown(pag->pag_mount,
++					SHUTDOWN_CORRUPT_ONDISK);
++			return -EFSCORRUPTED;
++		}
++	}
++#endif /* DEBUG */
++
+ 	if (agibpp)
+ 		*agibpp = agibp;
+ 	else
 -- 
 2.53.0
 
