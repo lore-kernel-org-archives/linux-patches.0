@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB3F3A6F00;
-	Sat, 17 Oct 2026 18:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB8B35E93B;
+	Sat, 17 Oct 2026 18:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260593; cv=none; b=pUZCQeB0SFnTKgcP1IDkhcprx4x9P/CNzmpdq0babSJUAmSXZr+vnQhcOtKVv0/DIl1WeoWcZSpz0nnRQTYHJVgXNbum2c/lSvaoa+uvU6wpLB5nwuwJ5kYvPq6mvS1Ey5BVSbNstql/rnSNb/enyhK9l1D25bLd29X3To/Z+NM=
+	t=1792260597; cv=none; b=UhHvwQrqBEyNb5qO6MPtwH+lwFWfIclaVzNrU1g+yGOkUWZckd5tOab9doG4jmnoRw69BB7dInwKQarvMaPZeDglqtvRfQ2MIW1Cv86GzDxLiZW3PYMuYvsThBDKiFw90iLfN3pekg8VcvX/UEfNTCPR8aJJCNUxrLxAImxrBag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260593; c=relaxed/simple;
-	bh=JhNE25fgrirs3SrWMssk+kARihp1xl3Hje8SNTyGdcg=;
+	s=arc-20240116; t=1792260597; c=relaxed/simple;
+	bh=2LEHfk+dy40ZdGMe/y0kwN0XSL5/RPMORQOn91I3SuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0ZrqT02vFS5hBZelAhieCWGX/pPhdsCoyPvA6ukyhd+hndi32o4E/hhlSTmi3AIIF8Ch+XBH147tpBjsT9bCcHKWvtaxHdDsc5xz8iPxZC0Qv27uCpP183TRTsaFrMJMQbv1yHBncbizTNJneQCqgxh6F2EeCUfs+PaEqc5Srs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awcU/lWs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tlrQbOv4PYpJno/NkX4n2ki4k7lxacQ3dEE2URd9ey1qtIFpSRXf+4yUFs2gRfH9WrCl1hUlh8ARmRe2NDqCaqF00ObE0s4NwiNMvTkplLPXi9JnAQN85nmcnSHMYkt8xNNfhl4obpQUzwjDIb0cOUikNFpX1/UUNNGyLZqLCXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5Lp/GNv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awcU/lWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227901F000C4;
-	Sat, 17 Oct 2026 18:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5Lp/GNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295881F000C4;
+	Sat, 17 Oct 2026 18:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260592;
-	bh=IeArbMCUVYh1iGjkoz3rvUvh/nNQShYQbLxOgPr2Yvc=;
+	s=korg; t=1792260595;
+	bh=RcCXaNec28KyIA1mwoQfJadz/vGhXazkGDRFXUS14kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=awcU/lWs2NE+OHPiDI8z57auoy59My3r/KF8XchbMWCzZybyDzym66hnu+xnH+fEi
-	 1oYP37PzpKQBIme3TGoF/gT3KQTFa3mnGq2+YKfP9B1LZnyFkwqANHqM+F9mL8M+tL
-	 4qzyb6C3vgLt5F1UzS00LPO72UvWFbv5I28vAjds=
+	b=K5Lp/GNve54rScfIE5TPbe6ptwDMXowgY5DAa+7LL6y2mENEhyDAm4Y3IGU1O4zFr
+	 m1Hk36IRwVc+P4ikAja8dajO7auAIPQzGoYF6j0QA6s7FTJIRSxeKdv7+pFxrjazmQ
+	 EXNXWR8UpAmOFManelGRVUB9SfeCDkD8lcyBiroc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
+	Magdalena Schulfer <magdalena.schulfer@intel.com>,
 	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
 	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1597/1674] accel/ivpu: Limit firmware log name prints to field size
-Date: Sat, 17 Oct 2026 18:04:29 +0200
-Message-ID: <20261017160512.078319909@linuxfoundation.org>
+Subject: [PATCH 6.6 1598/1674] accel/ivpu: Validate firmware log buffer metadata
+Date: Sat, 17 Oct 2026 18:04:30 +0200
+Message-ID: <20261017160512.104169106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,77 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Magdalena Schulfer <magdalena.schulfer@intel.com>
 
-[ Upstream commit 95bf070f3225dc7175725438c916ad321d42fe45 ]
+[ Upstream commit 0724afc55c77c36c7feb9a7264b02aa7593c5c2d ]
 
-The name in struct vpu_tracing_buffer_header is a fixed-size array
-populated by the NPU firmware. It is expected to be NUL-terminated,
-but nothing on the host side enforces this, so printing it with an
-unbounded string conversion would read past the field if the
-terminator is ever missing and expose adjacent bytes of the shared
-tracing BO through dmesg and the debugfs FW log output.
+The tracing log headers parsed by fw_log_print_buffer() reside in
+DMA-shared BOs that the NPU firmware can write to.
 
-Print at most as many characters as the name field holds, so the output
-never runs past it even if the string is not NUL-terminated.
+fw_log_from_bo() validated log->header_size and log->size, but
+fw_log_print_buffer() re-read those same fields from shared memory
+afterwards, allowing a TOCTOU where firmware changes them between the
+check and the use, and making the host dereference out-of-bounds
+addresses while printing logs.
+
+Snapshot the validated values once with READ_ONCE() and pass them down
+explicitly in a new struct ivpu_fw_log_desc instead of re-reading them
+from the shared struct.
 
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260827102339.281799-1-dawid.osuchowski@linux.intel.com?part=2
 Fixes: d4e4257afa6e ("accel/ivpu: Add firmware tracing support")
+Signed-off-by: Magdalena Schulfer <magdalena.schulfer@intel.com>
 Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
 Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260901125749.404338-4-dawid.osuchowski@linux.intel.com
+Link: https://patch.msgid.link/20260901125749.404338-3-dawid.osuchowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_fw_log.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/accel/ivpu/ivpu_fw_log.c | 62 +++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/accel/ivpu/ivpu_fw_log.c b/drivers/accel/ivpu/ivpu_fw_log.c
-index ccad9aa99e5d6..1894ecb0237ca 100644
+index 1894ecb0237ca..b51a2f9e8065a 100644
 --- a/drivers/accel/ivpu/ivpu_fw_log.c
 +++ b/drivers/accel/ivpu/ivpu_fw_log.c
-@@ -56,9 +56,10 @@ static int fw_log_ptr(struct ivpu_device *vdev, struct ivpu_bo *bo, u32 *offset,
- 	*offset += log->size;
+@@ -26,10 +26,17 @@ MODULE_PARM_DESC(ivpu_log_level,
+ 		 " error=" __stringify(IVPU_FW_LOG_ERROR)
+ 		 " fatal=" __stringify(IVPU_FW_LOG_FATAL));
+ 
++struct ivpu_fw_log_desc {
++	struct vpu_tracing_buffer_header *log;
++	u32 header_size;
++	u32 size;
++};
++
+ static int fw_log_ptr(struct ivpu_device *vdev, struct ivpu_bo *bo, u32 *offset,
+-		      struct vpu_tracing_buffer_header **log_header)
++		      struct ivpu_fw_log_desc *desc)
+ {
+ 	struct vpu_tracing_buffer_header *log;
++	u32 header_size, size;
+ 
+ 	if ((*offset + sizeof(*log)) > bo->base.size)
+ 		return -EINVAL;
+@@ -39,26 +46,32 @@ static int fw_log_ptr(struct ivpu_device *vdev, struct ivpu_bo *bo, u32 *offset,
+ 	if (log->vpu_canary_start != VPU_TRACING_BUFFER_CANARY)
+ 		return -EINVAL;
+ 
+-	if (log->header_size < sizeof(*log) || log->header_size > 1024) {
+-		ivpu_dbg(vdev, FW_BOOT, "Invalid header size 0x%x\n", log->header_size);
++	header_size = READ_ONCE(log->header_size);
++	size = READ_ONCE(log->size);
++
++	if (header_size < sizeof(*log) || header_size > 1024) {
++		ivpu_dbg(vdev, FW_BOOT, "Invalid header size 0x%x\n", header_size);
+ 		return -EINVAL;
+ 	}
+-	if (log->size < log->header_size) {
+-		ivpu_dbg(vdev, FW_BOOT, "Invalid log size 0x%x\n", log->size);
++	if ((char *)log + size > (char *)bo->kvaddr + bo->base.size) {
++		ivpu_dbg(vdev, FW_BOOT, "Invalid log size 0x%x\n", size);
+ 		return -EINVAL;
+ 	}
+-	if ((char *)log + log->size > (char *)bo->kvaddr + bo->base.size) {
+-		ivpu_dbg(vdev, FW_BOOT, "Invalid log size 0x%x\n", log->size);
++	if (size < header_size) {
++		ivpu_dbg(vdev, FW_BOOT, "Invalid log size 0x%x < header size 0x%x\n",
++			 size, header_size);
+ 		return -EINVAL;
+ 	}
+ 
+-	*log_header = log;
+-	*offset += log->size;
++	desc->log = log;
++	desc->header_size = header_size;
++	desc->size = size;
++	*offset += size;
  
  	ivpu_dbg(vdev, FW_BOOT,
--		 "FW log name \"%s\", write offset 0x%x size 0x%x, wrap count %d, hdr version %d size %d format %d, alignment %d",
--		 log->name, log->write_index, log->size, log->wrap_count, log->header_version,
--		 log->header_size, log->format, log->alignment);
-+		 "FW log name \"%.*s\", write offset 0x%x size 0x%x, wrap count %d, hdr version %d size %d format %d, alignment %d",
-+		 (int)ARRAY_SIZE(log->name), log->name, log->write_index, log->size,
-+		 log->wrap_count, log->header_version, log->header_size, log->format,
-+		 log->alignment);
+ 		 "FW log name \"%.*s\", write offset 0x%x size 0x%x, wrap count %d, hdr version %d size %d format %d, alignment %d",
+-		 (int)ARRAY_SIZE(log->name), log->name, log->write_index, log->size,
+-		 log->wrap_count, log->header_version, log->header_size, log->format,
++		 (int)ARRAY_SIZE(log->name), log->name, log->write_index, size,
++		 log->wrap_count, log->header_version, header_size, log->format,
+ 		 log->alignment);
  
  	return 0;
+@@ -95,11 +108,12 @@ static void buffer_print(char *buffer, u32 size, struct drm_printer *p)
+ 		drm_printf(p, "%s\n", line);
  }
-@@ -104,11 +105,13 @@ static void fw_log_print_buffer(struct ivpu_device *vdev, struct vpu_tracing_buf
  
- 	if (!(log->write_index || log->wrap_count) ||
- 	    (log->write_index == log->read_index && only_new_msgs)) {
--		drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
-+		drm_printf(p, "==== %s \"%.*s\" log empty ====\n", prefix,
-+			   (int)ARRAY_SIZE(log->name), log->name);
- 		return;
- 	}
+-static void fw_log_print_buffer(struct ivpu_device *vdev, struct vpu_tracing_buffer_header *log,
++static void fw_log_print_buffer(struct ivpu_device *vdev, struct ivpu_fw_log_desc *desc,
+ 				const char *prefix, bool only_new_msgs, struct drm_printer *p)
+ {
+-	char *log_buffer = (void *)log + log->header_size;
+-	u32 log_size = log->size - log->header_size;
++	struct vpu_tracing_buffer_header *log = desc->log;
++	char *log_buffer = (void *)log + desc->header_size;
++	u32 log_size = desc->size - desc->header_size;
+ 	u32 log_start = log->read_index;
+ 	u32 log_end = log->write_index;
  
--	drm_printf(p, "==== %s \"%s\" log start ====\n", prefix, log->name);
-+	drm_printf(p, "==== %s \"%.*s\" log start ====\n", prefix, (int)ARRAY_SIZE(log->name),
-+		   log->name);
- 	if (log->write_index > log->read_index) {
- 		buffer_print(log_buffer + log_start, log_end - log_start, p);
- 	} else {
-@@ -116,7 +119,8 @@ static void fw_log_print_buffer(struct ivpu_device *vdev, struct vpu_tracing_buf
- 		buffer_print(log_buffer, log_end, p);
- 	}
- 	drm_printf(p, "\x1b[0m");
--	drm_printf(p, "==== %s \"%s\" log end   ====\n", prefix, log->name);
-+	drm_printf(p, "==== %s \"%.*s\" log end   ====\n", prefix, (int)ARRAY_SIZE(log->name),
-+		   log->name);
- }
+@@ -125,26 +139,26 @@ static void fw_log_print_buffer(struct ivpu_device *vdev, struct vpu_tracing_buf
  
  void ivpu_fw_log_print(struct ivpu_device *vdev, bool only_new_msgs, struct drm_printer *p)
+ {
+-	struct vpu_tracing_buffer_header *log_header;
++	struct ivpu_fw_log_desc desc;
+ 	u32 next = 0;
+ 
+-	while (fw_log_ptr(vdev, vdev->fw->mem_log_crit, &next, &log_header) == 0)
+-		fw_log_print_buffer(vdev, log_header, "VPU critical", only_new_msgs, p);
++	while (fw_log_ptr(vdev, vdev->fw->mem_log_crit, &next, &desc) == 0)
++		fw_log_print_buffer(vdev, &desc, "VPU critical", only_new_msgs, p);
+ 
+ 	next = 0;
+-	while (fw_log_ptr(vdev, vdev->fw->mem_log_verb, &next, &log_header) == 0)
+-		fw_log_print_buffer(vdev, log_header, "VPU verbose", only_new_msgs, p);
++	while (fw_log_ptr(vdev, vdev->fw->mem_log_verb, &next, &desc) == 0)
++		fw_log_print_buffer(vdev, &desc, "VPU verbose", only_new_msgs, p);
+ }
+ 
+ void ivpu_fw_log_clear(struct ivpu_device *vdev)
+ {
+-	struct vpu_tracing_buffer_header *log_header;
++	struct ivpu_fw_log_desc desc;
+ 	u32 next = 0;
+ 
+-	while (fw_log_ptr(vdev, vdev->fw->mem_log_crit, &next, &log_header) == 0)
+-		log_header->read_index = log_header->write_index;
++	while (fw_log_ptr(vdev, vdev->fw->mem_log_crit, &next, &desc) == 0)
++		desc.log->read_index = desc.log->write_index;
+ 
+ 	next = 0;
+-	while (fw_log_ptr(vdev, vdev->fw->mem_log_verb, &next, &log_header) == 0)
+-		log_header->read_index = log_header->write_index;
++	while (fw_log_ptr(vdev, vdev->fw->mem_log_verb, &next, &desc) == 0)
++		desc.log->read_index = desc.log->write_index;
+ }
 -- 
 2.53.0
 
