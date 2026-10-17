@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE433AE198;
-	Sat, 17 Oct 2026 17:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0646D3A48E4;
+	Sat, 17 Oct 2026 17:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256901; cv=none; b=lSRG5dbNdfwJduZXBwlseVjc5kijE7QmOhZMYech/wtLLNq+BNgf0gbdOcbITal2y1WmxF4QTJ/kuGiPzj83xEj+ynrt0yMMPP3o+kvu7dzI87C3z1ycEDQ/RVaqF+LQQDEhbCcFHoA0RrDB0VXleWfQVTpVxX5462QhWN6EoHQ=
+	t=1792256905; cv=none; b=U1vGGnBFeVIDmfBwDElErtY0eRB7P0XDP2Pflo2iDbOwYExeOXnq3cLV0WedY7WRTo2rhn40KpiGOoUPumporolNSTrH+Mc0D7/K+hJ5gHZcZELP6Dl99sdnkJ8riUx5P8FP8JgzYq5/DBVv9bndqOZgGUfZjIaOv3pn7t4PXCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256901; c=relaxed/simple;
-	bh=IHP0TJRH3xa+mL0RbNu8Ujq2c76jsehA06xUWZzUxCc=;
+	s=arc-20240116; t=1792256905; c=relaxed/simple;
+	bh=9j97Dj0MGXsTHHwigL8epJW412F/4lhzZa1l6R3uxG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdNbbEMcrapiSW5hWNc9GezH5umGivGeYyMMHcxCcmtHs881qHZ7E3Buc/cTICy6m0Yea9SEtUAEjrMhAsmTmCuOy7NINVNGhQL1iALjkEL0vKCG6BmStPzBJSLdvd9BmO9E//ey1TWGjJ0kJA3CstpP2DdFhpDSDQr0tXX/PLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KT4EPD0r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pyx0cvk72Z24L7UXRS0fTJSxS0pl52PRqeStQ1OUk5F5EKfiCuuIbTNxtKvq6FZ9gxW0QXuKexOp5njlsNvLtnhurKTCOmfPyXfYv80fh2cToZMF/RrO5zK6JAZjCvI2W7iiuMXK1aYcHjv0QQ9TWwfZl/veYOcdEt7JHr+e3vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6kSJORs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT4EPD0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C381F000C4;
-	Sat, 17 Oct 2026 17:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6kSJORs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544981F000C5;
+	Sat, 17 Oct 2026 17:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256900;
-	bh=uxzhabPhbR20S+zjGYpNRRzIP94l1I7g4ueTQoe3Ijo=;
+	s=korg; t=1792256903;
+	bh=cmBh51My96gghprL68AtbCG6uN2Azo2oxRW5tZ+Mmpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KT4EPD0rX2jl7bfOCFYOm/sbTOT2q6qdPBM90lGmgT5wxA1cbOUd+LEqsPUzEp7AV
-	 BrzXZkEfbrpHvyI9WMwxIhDV6LlaoSUT/QjKqeONda+ghidFlWHvRM3Yl2akKzhxic
-	 OHdFPoGim29HOYzNaKETJSx/8/qIXNFAjlfBe0FM=
+	b=O6kSJORsz08YYMuD0JHGRG/r8JmgYBGUyhnSwoWuTwnf7Fc+nrhrYQ5PB9LyA7MJd
+	 ClD4tS0csLD0U9XcmBhDtOgUVB3Wr2Z50x5k6OFcmdvUAHiwG49cBwRj+FwDwyG0iA
+	 qWk/W1qUmmE3hLoMhgZlZ7HKw/7LITP+GR/RxsYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arka Mondal <arkamondalofficial@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0345/1674] iio: imu: adis16400: fix unprotected debugfs reads
-Date: Sat, 17 Oct 2026 17:43:37 +0200
-Message-ID: <20261017160439.985035238@linuxfoundation.org>
+Subject: [PATCH 6.6 0346/1674] iio: imu: adis16480: fix unprotected debugfs reads
+Date: Sat, 17 Oct 2026 17:43:38 +0200
+Message-ID: <20261017160440.010316866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,42 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Arka Mondal <arkamondalofficial@gmail.com>
 
-commit d94787287a113a1326211647d5e0deed1e9de105 upstream.
+commit e1dea54496f90a62318cf4eeaa1e9ef8316e92b6 upstream.
 
-adis16400_serial_number_fops is open coded and never calls
-debugfs_file_get(), so debugfs_remove_recursive() does not wait for a
-read in progress and unbind frees the iio_dev underneath it.
+The firmware_revision and firmware_date file operations are open coded
+and never call debugfs_file_get(), which debugfs_create_file_unsafe()
+requires. debugfs_remove_recursive() therefore does not wait for a read
+in progress, and unbind frees the iio_dev underneath it.
 
-Commit ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE
-instead of DEFINE_SIMPLE_ATTRIBUTE") converted product_id and
-flash_count to DEFINE_DEBUGFS_ATTRIBUTE, which protects itself, but
-moved all three files to debugfs_create_file_unsafe().
+Use debugfs_create_file() instead.
 
-serial_number prints three registers as "%.4x-%.4x-%.4x" and
-DEFINE_DEBUGFS_ATTRIBUTE() formats a single u64, so it cannot be
-converted without changing what the file returns. adis16475 and
-adis16550 already use debugfs_create_file() for their open coded
-files. Use it here too.
-
-Fixes: ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE instead of DEFINE_SIMPLE_ATTRIBUTE")
+Fixes: 9bf94f836e32 ("imu:adis16480: fix debugfs_simple_attr.cocci warnings")
 Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/adis16400.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/adis16480.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -279,7 +279,7 @@ static int adis16400_debugfs_init(struct
+--- a/drivers/iio/imu/adis16480.c
++++ b/drivers/iio/imu/adis16480.c
+@@ -302,9 +302,9 @@ static int adis16480_debugfs_init(struct
+ 	struct adis16480 *adis16480 = iio_priv(indio_dev);
  	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
  
- 	if (st->variant->flags & ADIS16400_HAS_SERIAL_NUMBER)
--		debugfs_create_file_unsafe("serial_number", 0400,
-+		debugfs_create_file("serial_number", 0400,
- 				d, st, &adis16400_serial_number_fops);
- 	if (st->variant->flags & ADIS16400_HAS_PROD_ID)
- 		debugfs_create_file_unsafe("product_id", 0400,
+-	debugfs_create_file_unsafe("firmware_revision", 0400,
++	debugfs_create_file("firmware_revision", 0400,
+ 		d, adis16480, &adis16480_firmware_revision_fops);
+-	debugfs_create_file_unsafe("firmware_date", 0400,
++	debugfs_create_file("firmware_date", 0400,
+ 		d, adis16480, &adis16480_firmware_date_fops);
+ 	debugfs_create_file_unsafe("serial_number", 0400,
+ 		d, adis16480, &adis16480_serial_number_fops);
 
 
