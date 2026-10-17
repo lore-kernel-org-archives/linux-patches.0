@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016AE3B5319;
-	Sat, 17 Oct 2026 17:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3063A1E96;
+	Sat, 17 Oct 2026 17:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257716; cv=none; b=j7ks+/gRcIUAG7pjK3xTHVvdogTS5QDXSxF+Ax3pc62Uvmm6nq5KI4P68g9Pf+zFUJ3WGhD2nierG7jqq7VH6oZjnybXN8HKBtNdRwAeeC2lUqgYVnwvi+jalg0hIAfM++K/0uR5qmc6CLDQUZOUHeb1EtoWqB5aMeROc+E1gjo=
+	t=1792257720; cv=none; b=A3pgt+Tg087iWGT++R1wbrB9MMyr7mrbp7a9TBgpsKBOB8L7Hsen9mYG5tagFoPsFJd15w3mV+n9RK8qEDDcBZs+6BEXEf+3FZMIBd/HBildWVUWKb8632x4FjloN3Rqhj0C3BNgcNYhBjhRl0KXAz5ORFsOAmvORNJdGwHDQcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257716; c=relaxed/simple;
-	bh=EH2zQ+Nd7oveNI0hTugQiwZbOGvRDMSgVUh/mblG7WI=;
+	s=arc-20240116; t=1792257720; c=relaxed/simple;
+	bh=IDF4cpgpEjO3CZfDFqP47HJv8hslYnEvQli6iIlJyvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuPhnpNdBpghzd8fMhyBGNYE2COF71S8SrAcCEO57efiWKPG+9Qy50QoREw82pv8TRUP5yv5cQmMrW4j1V1MoaOIuxHVT7XMo6gBnFPTa3IotP54wO3GuHi+vA+md/Lux80N8szr+4uhWbdl/RQdBpW4kvNYXv9M3JFqpFXfhac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pU6HBRa9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SgtcRWxkc7EstYLLuAqyrVvrFtDEvDtiM4Ihs6dcqq1iK23DAg5nV3dgstKtUti7vdwpleaWR8uIhTHr3hN2sw/M145kwgdXMvVQWKoKtWZJZtnK2BJEVxPVYI/dWclvyl+nCcYCFQEASQZacizEDa9cuNrfj3mJIUyl98SQZu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg5KM8qC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pU6HBRa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0D61F000C5;
-	Sat, 17 Oct 2026 17:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg5KM8qC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770C81F000C4;
+	Sat, 17 Oct 2026 17:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257714;
-	bh=lAI0+f+hjD8aoxFVovPYoySlInuCKU/yEy4szEqQ1W8=;
+	s=korg; t=1792257718;
+	bh=bR3D+KoeiMZdvAmCMhfiivqQnfvJjzjQZ506cDBafJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pU6HBRa9MS0mlMQnS4oz0pwZHsiqhRBy7Af8glsT98MZqAd41ltcIFtmA4k0O9JA6
-	 ddGiMB76mHzff3cOAazMDcx7391A16WSLFPdJGqFze3JQp4w7NQyeftZzyidDZperk
-	 TOPS6TrQc1VjgPla8Ig84JGIxQTCBJZOMeDMvN7E=
+	b=Zg5KM8qCcOvx5XA3LOrjHjW5EhvHBMR7AqV5NPQ5I1O0nmZGj7mKKOYGjvq28bSZL
+	 RzF/b3sWdfcfGI0S1WXzD9usQQ5hnwE/HMSVSS5xInrsCcLlukQYU5A37s3i0H4ClP
+	 w0v1v2g0hh5mGKUJEsdZwNdmXpyMYtkH1VXjMoWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
+	Feng Tang <feng.tang@intel.com>,
+	David Rientjes <rientjes@google.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0646/1674] mm/slub: avoid zeroing outside-object freepointer for single free
-Date: Sat, 17 Oct 2026 17:48:38 +0200
-Message-ID: <20261017160447.687610550@linuxfoundation.org>
+Subject: [PATCH 6.6 0647/1674] mm, slub: avoid zeroing kmalloc redzone
+Date: Sat, 17 Oct 2026 17:48:39 +0200
+Message-ID: <20261017160447.713934161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,151 +53,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 8f828aa48812ced28aa39cb3cfe55ef2444d03dd ]
+[ Upstream commit 59090e479ac78ae18facd4c58eb332562a23020e ]
 
-Commit 284f17ac13fe ("mm/slub: handle bulk and single object freeing
-separately") splits single and bulk object freeing in two functions
-slab_free() and slab_free_bulk() which leads slab_free() to call
-slab_free_hook() directly instead of slab_free_freelist_hook().
+Since commit 946fa0dbf2d8 ("mm/slub: extend redzone check to extra
+allocated kmalloc space than requested"), setting orig_size treats
+the wasted space (object_size - orig_size) as a redzone. However with
+init_on_free=1 we clear the full object->size, including the redzone.
 
-If `init_on_free` is set, slab_free_hook() zeroes the object.
-Afterward, if `slub_debug=F` and `CONFIG_SLAB_FREELIST_HARDENED` are
-set, the do_slab_free() slowpath executes freelist consistency
-checks and try to decode a zeroed freepointer which leads to a
-"Freepointer corrupt" detection in check_object().
+Additionally we clear the object metadata, including the stored orig_size,
+making it zero, which makes check_object() treat the whole object as a
+redzone.
 
-During bulk free, slab_free_freelist_hook() isn't affected as it always
-sets it objects freepointer using set_freepointer() to maintain its
-reconstructed freelist after `init_on_free`.
+These issues lead to the following BUG report with "slub_debug=FUZ
+init_on_free=1":
 
-For single free, object's freepointer thus needs to be avoided when
-stored outside the object if `init_on_free` is set. The freepointer left
-as is, check_object() may later detect an invalid pointer value due to
-objects overflow.
+[    0.000000] =============================================================================
+[    0.000000] BUG kmalloc-8 (Not tainted): kmalloc Redzone overwritten
+[    0.000000] -----------------------------------------------------------------------------
+[    0.000000]
+[    0.000000] 0xffff000010032858-0xffff00001003285f @offset=2136. First byte 0x0 instead of 0xcc
+[    0.000000] FIX kmalloc-8: Restoring kmalloc Redzone 0xffff000010032858-0xffff00001003285f=0xcc
+[    0.000000] Slab 0xfffffdffc0400c80 objects=36 used=23 fp=0xffff000010032a18 flags=0x3fffe0000000200(workingset|node=0|zone=0|lastcpupid=0x1ffff)
+[    0.000000] Object 0xffff000010032858 @offset=2136 fp=0xffff0000100328c8
+[    0.000000]
+[    0.000000] Redzone  ffff000010032850: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Object   ffff000010032858: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Redzone  ffff000010032860: cc cc cc cc cc cc cc cc                          ........
+[    0.000000] Padding  ffff0000100328b4: 00 00 00 00 00 00 00 00 00 00 00 00              ............
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.11.0-rc3-next-20240814-00004-g61844c55c3f4 #144
+[    0.000000] Hardware name: NXP i.MX95 19X19 board (DT)
+[    0.000000] Call trace:
+[    0.000000]  dump_backtrace+0x90/0xe8
+[    0.000000]  show_stack+0x18/0x24
+[    0.000000]  dump_stack_lvl+0x74/0x8c
+[    0.000000]  dump_stack+0x18/0x24
+[    0.000000]  print_trailer+0x150/0x218
+[    0.000000]  check_object+0xe4/0x454
+[    0.000000]  free_to_partial_list+0x2f8/0x5ec
 
-To reproduce, set `slub_debug=FU init_on_free=1 log_level=7` on the
-command line of a kernel build with `CONFIG_SLAB_FREELIST_HARDENED=y`.
+To address the issue, use orig_size to clear the used area. And restore
+the value of orig_size after clear the remaining area.
 
-dmesg sample log:
-[   10.708715] =============================================================================
-[   10.710323] BUG kmalloc-rnd-05-32 (Tainted: G    B           T ): Freepointer corrupt
-[   10.712695] -----------------------------------------------------------------------------
-[   10.712695]
-[   10.712695] Slab 0xffffd8bdc400d580 objects=32 used=4 fp=0xffff9d9a80356f80 flags=0x200000000000a00(workingset|slab|node=0|zone=2)
-[   10.716698] Object 0xffff9d9a80356600 @offset=1536 fp=0x7ee4f480ce0ecd7c
-[   10.716698]
-[   10.716698] Bytes b4 ffff9d9a803565f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[   10.720703] Object   ffff9d9a80356600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[   10.720703] Object   ffff9d9a80356610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[   10.724696] Padding  ffff9d9a8035666c: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[   10.724696] Padding  ffff9d9a8035667c: 00 00 00 00                                      ....
-[   10.724696] FIX kmalloc-rnd-05-32: Object at 0xffff9d9a80356600 not freed
+When CONFIG_SLUB_DEBUG not defined, (get_orig_size()' directly returns
+s->object_size. So when using memset to init the area, the size can simply
+be orig_size, as orig_size returns object_size when CONFIG_SLUB_DEBUG not
+enabled. And orig_size can never be bigger than object_size.
 
-Fixes: 284f17ac13fe ("mm/slub: handle bulk and single object freeing separately")
+Fixes: 946fa0dbf2d8 ("mm/slub: extend redzone check to extra allocated kmalloc space than requested")
 Cc: <stable@vger.kernel.org>
-Co-developed-by: Chengming Zhou <chengming.zhou@linux.dev>
-Signed-off-by: Chengming Zhou <chengming.zhou@linux.dev>
-Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+Reviewed-by: Feng Tang <feng.tang@intel.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Stable-dep-of: 59090e479ac7 ("mm, slub: avoid zeroing kmalloc redzone")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 52 +++++++++++++++++++++++++++++-----------------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+ mm/slub.c | 100 +++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 53 insertions(+), 47 deletions(-)
 
 diff --git a/mm/slub.c b/mm/slub.c
-index c27bf00f3f275..9870dd4238ddc 100644
+index 9870dd4238ddc..eeb0aa9e6ce8e 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -452,6 +452,26 @@ static inline void set_freepointer(struct kmem_cache *s, void *object, void *fp)
- 	*(freeptr_t *)freeptr_addr = freelist_ptr_encode(s, fp, freeptr_addr);
+@@ -647,6 +647,50 @@ static inline bool slab_update_freelist(struct kmem_cache *s, struct slab *slab,
+ 	return false;
  }
  
 +/*
-+ * See comment in calculate_sizes().
++ * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
++ * family will round up the real request size to these fixed ones, so
++ * there could be an extra area than what is requested. Save the original
++ * request size in the meta data area, for better debug and sanity check.
 + */
-+static inline bool freeptr_outside_object(struct kmem_cache *s)
++static inline void set_orig_size(struct kmem_cache *s,
++				void *object, unsigned int orig_size)
 +{
-+	return s->offset >= s->inuse;
++	void *p = kasan_reset_tag(object);
++	unsigned int kasan_meta_size;
++
++	if (!slub_debug_orig_size(s))
++		return;
++
++	/*
++	 * KASAN can save its free meta data inside of the object at offset 0.
++	 * If this meta data size is larger than 'orig_size', it will overlap
++	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
++	 * 'orig_size' to be as at least as big as KASAN's meta data.
++	 */
++	kasan_meta_size = kasan_metadata_size(s, true);
++	if (kasan_meta_size > orig_size)
++		orig_size = kasan_meta_size;
++
++	p += get_info_end(s);
++	p += sizeof(struct track) * 2;
++
++	*(unsigned int *)p = orig_size;
 +}
 +
-+/*
-+ * Return offset of the end of info block which is inuse + free pointer if
-+ * not overlapping with object.
-+ */
-+static inline unsigned int get_info_end(struct kmem_cache *s)
++static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
 +{
-+	if (freeptr_outside_object(s))
-+		return s->inuse + sizeof(void *);
-+	else
-+		return s->inuse;
++	void *p = kasan_reset_tag(object);
++
++	if (!slub_debug_orig_size(s))
++		return s->object_size;
++
++	p += get_info_end(s);
++	p += sizeof(struct track) * 2;
++
++	return *(unsigned int *)p;
 +}
 +
- /* Loop over all objects in a slab */
- #define for_each_object(__p, __s, __addr, __objects) \
- 	for (__p = fixup_red_left(__s, __addr); \
-@@ -740,26 +760,6 @@ static void print_section(char *level, char *text, u8 *addr,
- 	metadata_access_disable();
+ #ifdef CONFIG_SLUB_DEBUG
+ static unsigned long object_map[BITS_TO_LONGS(MAX_OBJS_PER_PAGE)];
+ static DEFINE_SPINLOCK(object_map_lock);
+@@ -860,50 +904,6 @@ static void print_slab_info(const struct slab *slab)
+ 	       folio_flags(folio, 0));
  }
  
 -/*
-- * See comment in calculate_sizes().
+- * kmalloc caches has fixed sizes (mostly power of 2), and kmalloc() API
+- * family will round up the real request size to these fixed ones, so
+- * there could be an extra area than what is requested. Save the original
+- * request size in the meta data area, for better debug and sanity check.
 - */
--static inline bool freeptr_outside_object(struct kmem_cache *s)
+-static inline void set_orig_size(struct kmem_cache *s,
+-				void *object, unsigned int orig_size)
 -{
--	return s->offset >= s->inuse;
+-	void *p = kasan_reset_tag(object);
+-	unsigned int kasan_meta_size;
+-
+-	if (!slub_debug_orig_size(s))
+-		return;
+-
+-	/*
+-	 * KASAN can save its free meta data inside of the object at offset 0.
+-	 * If this meta data size is larger than 'orig_size', it will overlap
+-	 * the data redzone in [orig_size+1, object_size]. Thus, we adjust
+-	 * 'orig_size' to be as at least as big as KASAN's meta data.
+-	 */
+-	kasan_meta_size = kasan_metadata_size(s, true);
+-	if (kasan_meta_size > orig_size)
+-		orig_size = kasan_meta_size;
+-
+-	p += get_info_end(s);
+-	p += sizeof(struct track) * 2;
+-
+-	*(unsigned int *)p = orig_size;
 -}
 -
--/*
-- * Return offset of the end of info block which is inuse + free pointer if
-- * not overlapping with object.
-- */
--static inline unsigned int get_info_end(struct kmem_cache *s)
+-static inline unsigned int get_orig_size(struct kmem_cache *s, void *object)
 -{
--	if (freeptr_outside_object(s))
--		return s->inuse + sizeof(void *);
--	else
--		return s->inuse;
+-	void *p = kasan_reset_tag(object);
+-
+-	if (!slub_debug_orig_size(s))
+-		return s->object_size;
+-
+-	p += get_info_end(s);
+-	p += sizeof(struct track) * 2;
+-
+-	return *(unsigned int *)p;
 -}
 -
- static struct track *get_track(struct kmem_cache *s, void *object,
- 	enum track_item alloc)
+ void skip_orig_size_check(struct kmem_cache *s, const void *object)
  {
-@@ -1808,15 +1808,20 @@ static __always_inline bool slab_free_hook(struct kmem_cache *s,
- 	 *
- 	 * The initialization memset's clear the object and the metadata,
- 	 * but don't touch the SLAB redzone.
-+	 *
-+	 * The object's freepointer is also avoided if stored outside the
-+	 * object.
+ 	set_orig_size(s, (void *)object, s->object_size);
+@@ -1771,7 +1771,6 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
+ 							int objects) {}
+ static inline void dec_slabs_node(struct kmem_cache *s, int node,
+ 							int objects) {}
+-
+ #ifndef CONFIG_SLUB_TINY
+ static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
+ 			       void **freelist, void *nextfree)
+@@ -1814,14 +1813,21 @@ static __always_inline bool slab_free_hook(struct kmem_cache *s,
  	 */
  	if (init) {
  		int rsize;
-+		unsigned int inuse;
+-		unsigned int inuse;
++		unsigned int inuse, orig_size;
  
-+		inuse = get_info_end(s);
+ 		inuse = get_info_end(s);
++		orig_size = get_orig_size(s, x);
  		if (!kasan_has_integrated_init())
- 			memset(kasan_reset_tag(x), 0, s->object_size);
+-			memset(kasan_reset_tag(x), 0, s->object_size);
++			memset(kasan_reset_tag(x), 0, orig_size);
  		rsize = (s->flags & SLAB_RED_ZONE) ? s->red_left_pad : 0;
--		memset((char *)kasan_reset_tag(x) + s->inuse, 0,
--		       s->size - s->inuse - rsize);
-+		memset((char *)kasan_reset_tag(x) + inuse, 0,
-+		       s->size - inuse - rsize);
+ 		memset((char *)kasan_reset_tag(x) + inuse, 0,
+ 		       s->size - inuse - rsize);
++		/*
++		 * Restore orig_size, otherwize kmalloc redzone overwritten
++		 * would be reported
++		 */
++		set_orig_size(s, x, orig_size);
++
  	}
  	/* KASAN might put x into memory quarantine, delaying its reuse. */
  	return kasan_slab_free(s, x, init);
-@@ -3463,7 +3468,8 @@ static void *__slab_alloc_node(struct kmem_cache *s,
- static __always_inline void maybe_wipe_obj_freeptr(struct kmem_cache *s,
- 						   void *obj)
- {
--	if (unlikely(slab_want_init_on_free(s)) && obj)
-+	if (unlikely(slab_want_init_on_free(s)) && obj &&
-+	    !freeptr_outside_object(s))
- 		memset((void *)((char *)kasan_reset_tag(obj) + s->offset),
- 			0, sizeof(void *));
- }
 -- 
 2.53.0
 
