@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF841F16B;
-	Sat, 17 Oct 2026 17:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0402C1F16B;
+	Sat, 17 Oct 2026 17:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258513; cv=none; b=RK4z4bHpLnncXrsE1RAOWXuDLvnkqEP+6z/y4kIpvm+gOSWIrAqSI0F8fJgkXDCjx/K1wW3mI9kX5KmUDV6hwvInDv5KYuPMYGc1Mz+XfuAJc2NlmTXaicvCPN60Q8DR2DbZl68c1yUnGYAgcEDV67iKtBGFDRbr5vja7Z5Q8n8=
+	t=1792258516; cv=none; b=Ln90QnSiPHOtIyPhu3BGxRxmwRTOcl2RQfpBD6PdRGZud2IN72Pw5hMPGIjjxnZnVi3HgNQ3Ga/AOP4j3RTRoqPyeg0+1QDmR/Nl/fbM2UAFSX4f6ESnur+GOVkCtqAK+1A53HDQoW1D6cIclXT8CEhrK7MKNl/YKN4gYSO64yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258513; c=relaxed/simple;
-	bh=1Fa5dkvCn7BHRVCuZxm+ouMnDK7csWfNEKXnH34bi84=;
+	s=arc-20240116; t=1792258516; c=relaxed/simple;
+	bh=nZoI3tgowUf+JTgSvHSI/fsk2i8ib1JjfJsAk2sllHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FB1PK2pnfGuuEyS/7bsA8Unqt40ZoXRjnhq3TOcBpj3grSmQfjJr+3tyag27qYDIqSfHkBiLmlRuAFZWih1caHCbBbhpAuOPqNF4mRy2bB15sGXS0h9dFKrbVmj4vs62rM28zWdK7DAtmKYv+tZK1AGkj50UoDco6M5io1L6kT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2HMb6Pc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QWxktiVnLxb0Fgs22S85mRRyLCrunSbbwfKmH0r1xfiGJkm1fDGcJslJN791RhBJYOFsL1oRe0JYs6ptcEiTkIeFuA5hiPyzoVFBtXfq8ocQuGIkklXKTnVw59dLTbJ+ATS81FguAottExPHo9c9nA5Qr+4iqebuL39AoJLXGgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsdtKAkD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2HMb6Pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F571F000C5;
-	Sat, 17 Oct 2026 17:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsdtKAkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBF11F000C4;
+	Sat, 17 Oct 2026 17:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258512;
-	bh=m2exQHG5hiZEUMIftxd0n7v2HmM1tV+6x5kGVHCaLSE=;
+	s=korg; t=1792258514;
+	bh=QZ1U2v2y13yXbDH4xzDpfvEHzDfs2bZnkpK7qWFxvx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2HMb6PcHzN42/o779psaGf9l+ZmgQ6CvEFFu5TKq64+c9vh5D1/eU2SoQW8ADY9F
-	 1SwzrX6QGGF3tQ+RZir/pXeyTcYytTg/AvaafbgquyTxnlkJMydLj88PP6of7sZ5cC
-	 /I6+M+xomAewnHEERNu1unMSZrc6PMWgdLRa3S1g=
+	b=fsdtKAkDZeg6//pLEf0zNxv/fa+SC7uoysu3ntUANh/pgR8Gkhm//jRwMrgyffWYZ
+	 MpqYcCIlOVF1h7Bw+bz+pvFuJPY/Z8M082i1Lgcei9uDX3yppdd70tAvwVtc0G1rgr
+	 cmjq1zKOEPlssiw6KeODPIOxMcTtsX5U5piZpO/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0909/1674] x86-64: rename misleadingly named __copy_user_nocache() function
-Date: Sat, 17 Oct 2026 17:53:01 +0200
-Message-ID: <20261017160454.465280391@linuxfoundation.org>
+Subject: [PATCH 6.6 0910/1674] net: ioam6: fix OOB and missing lock
+Date: Sat, 17 Oct 2026 17:53:02 +0200
+Message-ID: <20261017160454.490622617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,180 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-[ Upstream commit d187a86de793f84766ea40b9ade7ac60aabbb4fe ]
+[ Upstream commit b30b1675aa2bcf0491fd3830b051df4e08a7c8ca ]
 
-This function was a masterclass in bad naming, for various historical
-reasons.
+When trace->type.bit6 is set:
 
-It claimed to be a non-cached user copy.  It is literally _neither_ of
-those things.  It's a specialty memory copy routine that uses
-non-temporal stores for the destination (but not the source), and that
-does exception handling for both source and destination accesses.
+    if (trace->type.bit6) {
+        ...
+        queue = skb_get_tx_queue(dev, skb);
+        qdisc = rcu_dereference(queue->qdisc);
 
-Also note that while it works for unaligned targets, any unaligned parts
-(whether at beginning or end) will not use non-temporal stores, since
-only words and quadwords can be non-temporal on x86.
+This code can lead to an out-of-bounds access of the dev->_tx[] array
+when is_input is true. In such a case, the packet is on the RX path and
+skb->queue_mapping contains the RX queue index of the ingress device. If
+the ingress device has more RX queues than the egress device (dev) has
+TX queues, skb_get_queue_mapping(skb) will exceed dev->num_tx_queues.
+Add a check to avoid this situation since skb_get_tx_queue() does not
+clamp the index. This issue has also revealed that per queue visibility
+cannot be accurate and will be replaced later as a new feature.
 
-The exception handling means that it _can_ be used for user space
-accesses, but not on its own - it needs all the normal "start user space
-access" logic around it.
+While at it, add missing lock around qdisc_qstats_qlen_backlog(). The
+function __ioam6_fill_trace_data() is called from both softirq and
+process contexts, hence the use of spin_lock_bh() here.
 
-But typically the user space access would be the source, not the
-non-temporal destination.  That was the original intention of this,
-where the destination was some fragile persistent memory target that
-needed non-temporal stores in order to catch machine check exceptions
-synchronously and deal with them gracefully.
-
-Thus that non-descriptive name: one use case was to copy from user space
-into a non-cached kernel buffer.  However, the existing users are a mix
-of that intended use-case, and a couple of random drivers that just did
-this as a performance tweak.
-
-Some of those random drivers then actively misused the user copying
-version (with STAC/CLAC and all) to do kernel copies without ever even
-caring about the exception handling, _just_ for the non-temporal
-destination.
-
-Rename it as a first small step to actually make it halfway sane, and
-change the prototype to be more normal: it doesn't take a user pointer
-unless the caller has done the proper conversion, and the argument size
-is the full size_t (it still won't actually copy more than 4GB in one
-go, but there's also no reason to silently truncate the size argument in
-the caller).
-
-Finally, use this now sanely named function in the NTB code, which
-mis-used a user copy version (with STAC/CLAC and all) of this interface
-despite it not actually being a user copy at all.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: b63c5478e9cb ("ipv6: ioam: Support for Queue depth data field")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260403214418.2233266-2-kuba@kernel.org/
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404134137.24553-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/uaccess_64.h    | 5 +++--
- arch/x86/lib/copy_user_uncached_64.S | 6 +++---
- arch/x86/lib/usercopy_64.c           | 4 ++--
- drivers/infiniband/sw/rdmavt/qp.c    | 8 +++-----
- drivers/ntb/ntb_transport.c          | 7 ++++---
- tools/objtool/check.c                | 2 +-
- 6 files changed, 16 insertions(+), 16 deletions(-)
+ net/ipv6/ioam6.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
-index f2c02e4469ccc..68417f5db5dca 100644
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -133,7 +133,8 @@ raw_copy_to_user(void __user *dst, const void *src, unsigned long size)
- 	return copy_user_generic((__force void *)dst, src, size);
- }
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index fee1e23c3ae19..9bf3be3a26c5b 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -737,12 +737,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		struct Qdisc *qdisc;
+ 		__u32 qlen, backlog;
  
--extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
-+#define copy_to_nontemporal copy_to_nontemporal
-+extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
- extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
++		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK ||
++		    skb_get_queue_mapping(skb) >= skb_dst(skb)->dev->num_tx_queues) {
+ 			*(__be32 *)data = cpu_to_be32(IOAM6_U32_UNAVAILABLE);
+ 		} else {
+ 			queue = skb_get_tx_queue(skb_dst(skb)->dev, skb);
+ 			qdisc = rcu_dereference(queue->qdisc);
++
++			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_qstats_qlen_backlog(qdisc, &qlen, &backlog);
++			spin_unlock_bh(qdisc_lock(qdisc));
  
- static inline int
-@@ -143,7 +144,7 @@ __copy_from_user_inatomic_nocache(void *dst, const void __user *src,
- 	long ret;
- 	kasan_check_write(dst, size);
- 	stac();
--	ret = __copy_user_nocache(dst, src, size);
-+	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
- 	return ret;
- }
-diff --git a/arch/x86/lib/copy_user_uncached_64.S b/arch/x86/lib/copy_user_uncached_64.S
-index 5c5f38d326724..b37a6f084c4c3 100644
---- a/arch/x86/lib/copy_user_uncached_64.S
-+++ b/arch/x86/lib/copy_user_uncached_64.S
-@@ -26,7 +26,7 @@
-  * Output:
-  * rax uncopied bytes or 0 if successful.
-  */
--SYM_FUNC_START(__copy_user_nocache)
-+SYM_FUNC_START(copy_to_nontemporal)
- 	/* If destination is not 7-byte aligned, we'll have to align it */
- 	testb $7,%dil
- 	jne .Lalign
-@@ -238,5 +238,5 @@ _ASM_EXTABLE_UA(95b, .Ldone)
- _ASM_EXTABLE_UA(52b, .Ldone0)
- _ASM_EXTABLE_UA(53b, .Ldone0)
- 
--SYM_FUNC_END(__copy_user_nocache)
--EXPORT_SYMBOL(__copy_user_nocache)
-+SYM_FUNC_END(copy_to_nontemporal)
-+EXPORT_SYMBOL(copy_to_nontemporal)
-diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
-index e9251b89a9e93..1f1fb2ab14963 100644
---- a/arch/x86/lib/usercopy_64.c
-+++ b/arch/x86/lib/usercopy_64.c
-@@ -49,11 +49,11 @@ long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
- 	long rc;
- 
- 	stac();
--	rc = __copy_user_nocache(dst, src, size);
-+	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
- 
- 	/*
--	 * __copy_user_nocache() uses non-temporal stores for the bulk
-+	 * copy_to_nontemporal() uses non-temporal stores for the bulk
- 	 * of the transfer, but we need to manually flush if the
- 	 * transfer is unaligned. A cached memory copy is used when
- 	 * destination or size is not naturally aligned. That is:
-diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
-index dc83d0ac6a38a..d77ada17e9db6 100644
---- a/drivers/infiniband/sw/rdmavt/qp.c
-+++ b/drivers/infiniband/sw/rdmavt/qp.c
-@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
- static void cacheless_memcpy(void *dst, void *src, size_t n)
- {
- 	/*
--	 * Use the only available X64 cacheless copy.  Add a __user cast
--	 * to quiet sparse.  The src agument is already in the kernel so
--	 * there are no security issues.  The extra fault recovery machinery
--	 * is not invoked.
-+	 * Use the only available X64 cacheless copy.
-+	 * The extra fault recovery machinery is not invoked.
- 	 */
--	__copy_user_nocache(dst, (void __user *)src, n);
-+	copy_to_nontemporal(dst, src, n);
- }
- 
- void rvt_wss_exit(struct rvt_dev_info *rdi)
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index f62110713d77d..43785f02f310d 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1805,12 +1805,13 @@ static void ntb_tx_copy_callback(void *data,
- 
- static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
- {
--#ifdef ARCH_HAS_NOCACHE_UACCESS
-+#ifdef copy_to_nontemporal
- 	/*
- 	 * Using non-temporal mov to improve performance on non-cached
--	 * writes, even though we aren't actually copying from user space.
-+	 * writes. This only works if __iomem is strictly memory-like,
-+	 * but that is the case on x86-64
- 	 */
--	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
-+	copy_to_nontemporal(offset, entry->buf, entry->len);
- #else
- 	memcpy_toio(offset, entry->buf, entry->len);
- #endif
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 2c7b09c8415f0..c54d531f73d9f 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -1236,7 +1236,7 @@ static const char *uaccess_safe_builtin[] = {
- 	"copy_mc_enhanced_fast_string",
- 	"rep_stos_alternative",
- 	"rep_movs_alternative",
--	"__copy_user_nocache",
-+	"copy_to_nontemporal",
- 	NULL
- };
- 
+ 			*(__be32 *)data = cpu_to_be32(backlog);
+ 		}
 -- 
 2.53.0
 
