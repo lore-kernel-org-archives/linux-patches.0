@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE9C384CED;
-	Sat, 17 Oct 2026 16:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8943905EB;
+	Sat, 17 Oct 2026 16:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254353; cv=none; b=oWXZT9BmCkf/DigG3ldOagfg7hl41dG0el/u1NHyi0RdnSeIObd9nCcsd0ob5wZoZtnmsSnTcjDdt/0fBMJ1BbtqCNXdh8M0Bvuj9fqwfMtGfXJOlUjT+0kRdcpyBpsutel8K1oR16TGSkdMVOoPFevBOh6P0Qu/ezcBKnPVA+Y=
+	t=1792254356; cv=none; b=GsvMNW2OtWGrs32lOhrg9eIUdEgrfCVm1KPUyGO+tA+EDx0xid2UcuDxKm+gBqCDNPeRiK8yr0S/4/3FQEl1ypgHu9VcepqAxoaZNOim6amHALkQY8oI6nvNbCvBEUtrwhPncdyoIaKOkx+eWwMgFny3U7EJisZCkjIMusjwZJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254353; c=relaxed/simple;
-	bh=Ybpz9bcHCBb1raa2Zybyl0xb96FSCzPJ39q/EVqljqE=;
+	s=arc-20240116; t=1792254356; c=relaxed/simple;
+	bh=j3EPuKE5dMQFypeao3fad91yaiJ9BM+Ghj+SLzLcsi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbEadgZ0L4dhfe1plM5T8FGE7EyNRBPWHNO1SqCSDTAPCwNb2PiEmKO+dTTjBhNaK12GusbolGIppZT283g73uCkgjsu41jf5LFx02VAVbuTmPL1PsqUZnGbfzlc2+bsxRYblZvLXqnpW+K4h5jFWbJFsxVgyeKJeYqTiv+6emM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrmNNfKR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MpAWAfghWIHmTlXL1D+GNXTF6e8NM1h+wQFh1rV5KfFfPEim2WmVwB/wmyNHftaK2NexOcHFWKevmEAXQqVHt5y5mLzfn/rUsuDIK+X35CXVhBbCyJ9HMjXHq9j6Boefhr+WHFl5zGjLf/2i/pWQryXNhHRoE2Keqx0TvWpuoLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZUHitjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrmNNfKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9E91F000C4;
-	Sat, 17 Oct 2026 16:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZUHitjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530621F000C4;
+	Sat, 17 Oct 2026 16:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254352;
-	bh=aJyr/HlaJw3qq44YXTavdfCeRPL06UswX90ZJaDR/pc=;
+	s=korg; t=1792254354;
+	bh=tCYtPKzTGGHojQJ7jDsbNbTPX/jibzB7gTZ22PhX89o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JrmNNfKRyCjlVXJWf3Cu5ELh5QCS2wTfUbcGBfkfV+s8wEphwrgAgMKOxZTlW6rKt
-	 R41uTSHMLpGvgyC5nL8+R0tpa7R4uwEDnvCTyk0G7m6vcrIsrVhlvr4B84jTy1hAa5
-	 HWvi0+tgalotZo6BMHOErTcuc1lM8uuxCq2ISD+4=
+	b=OZUHitjCYJ5zvE7Kghb/5q3uq+NtuJKdLtJLAFwKn37RXB1GShI/AbwxwO6ItGO5A
+	 JEBcqP+/LJ2yOgtDkqSRz4nDNw5qhZ9YffH8kuPkesDMD/yLUEqOsUsPW/8W8WsZko
+	 6Q0BMOV4n+4TwqPAK7/ghO/WthJ4zwC3lYkrOdts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 417/869] wifi: mac80211: validate extension-frame layout before RX
-Date: Sat, 17 Oct 2026 17:54:18 +0200
-Message-ID: <20261017160047.827235965@linuxfoundation.org>
+Subject: [PATCH 6.12 382/869] drm/amdgpu: Use dbg level for VBIOS check messages
+Date: Sat, 17 Oct 2026 17:53:43 +0200
+Message-ID: <20261017160046.907911724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,128 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 57d503ce32eccfa7650065ca4c560f7e29a2e676 ]
+[ Upstream commit 635c659fceed82f934623188471ff604e098aab7 ]
 
-Extension frames only have the extension header at the regular 802.11
-header offset. The generic RX path can still reach helpers and interface
-dispatch code that read regular header address fields before unsupported
-extension subtypes are dropped.
+Driver has different ways to fetch VBIOS. If one of the methods doesn't
+find an authentic one, it will show misleading info messages eventhough
+a subsequent method finds a valid VBIOS. Keep the message level at debug
+and add device context.
 
-mac80211 currently only handles S1G beacon extension frames. Drop other
-extension subtypes before they can reach regular-header RX processing.
-For S1G beacons, linearize the SKB with the management-frame path and
-require the fixed S1G beacon header, including optional fixed fields
-indicated by frame control, before generic RX dispatch.
-
-Route S1G beacons through the station/default-link RX path without
-regular-header station lookup. Avoid regular-header address reads in the
-mac80211 RX paths that process S1G extension beacons, including
-accept-frame, duplicate-detection, address-copy, and MLO
-address-translation paths.
-
-Also make ieee80211_get_bssid() length-safe before returning the S1G
-source-address pointer.
-
-Fixes: 09a740ce352e ("mac80211: receive and process S1G beacons")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260611161943.91069-5-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 65bff2661760 ("drm/amdgpu: Release VFCT ACPI table reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c   | 34 ++++++++++++++++++++++++++++++++--
- net/mac80211/util.c |  3 +++
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 26 +++++++++++++-----------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index e7f940a890dd4..261add4790307 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1425,6 +1425,9 @@ ieee80211_rx_h_check_dup(struct ieee80211_rx_data *rx)
- 	if (status->flag & RX_FLAG_DUP_VALIDATED)
- 		return RX_CONTINUE;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index e665430898244..53641234b9cf8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -48,35 +48,37 @@
+ /* Check if current bios is an ATOM BIOS.
+  * Return true if it is ATOM BIOS. Otherwise, return false.
+  */
+-static bool check_atom_bios(uint8_t *bios, size_t size)
++static bool check_atom_bios(struct amdgpu_device *adev, size_t size)
+ {
+ 	uint16_t tmp, bios_header_start;
++	uint8_t *bios = adev->bios;
  
-+	if (ieee80211_is_ext(hdr->frame_control))
-+		return RX_CONTINUE;
-+
- 	/*
- 	 * Drop duplicate 802.11 retransmissions
- 	 * (IEEE 802.11-2012: 9.3.2.10 "Duplicate detection and recovery")
-@@ -4447,8 +4450,12 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
- 	struct ieee80211_hdr *hdr = (void *)skb->data;
- 	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
- 	u8 *bssid = ieee80211_get_bssid(hdr, skb->len, sdata->vif.type);
--	bool multicast = is_multicast_ether_addr(hdr->addr1) ||
--			 ieee80211_is_s1g_beacon(hdr->frame_control);
-+	bool multicast;
-+
-+	if (ieee80211_is_s1g_beacon(hdr->frame_control))
-+		return sdata->vif.type == NL80211_IFTYPE_STATION && bssid;
-+
-+	multicast = is_multicast_ether_addr(hdr->addr1);
- 
- 	switch (sdata->vif.type) {
- 	case NL80211_IFTYPE_STATION:
-@@ -5087,6 +5094,11 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
- 		hdr = (struct ieee80211_hdr *)rx->skb->data;
+ 	if (!bios || size < 0x49) {
+-		DRM_INFO("vbios mem is null or mem size is wrong\n");
++		dev_dbg(adev->dev, "VBIOS mem is null or mem size is wrong\n");
+ 		return false;
  	}
  
-+	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
-+		ieee80211_invoke_rx_handlers(rx);
-+		return true;
-+	}
-+
- 	if (unlikely(rx->sta && rx->sta->sta.mlo) &&
- 	    is_unicast_ether_addr(hdr->addr1) &&
- 	    !ieee80211_is_probe_resp(hdr->frame_control) &&
-@@ -5171,6 +5183,13 @@ static bool ieee80211_rx_for_interface(struct ieee80211_rx_data *rx,
- 	struct sta_info *sta;
- 	int link_id = -1;
- 
-+	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
-+		if (!ieee80211_rx_data_set_sta(rx, NULL, -1))
-+			return false;
-+
-+		return ieee80211_prepare_and_rx_handle(rx, skb, consume);
-+	}
-+
- 	/*
- 	 * Look up link station first, in case there's a
- 	 * chance that they might have a link address that
-@@ -5230,6 +5249,17 @@ static void __ieee80211_rx_handle_packet(struct ieee80211_hw *hw,
- 			err = -ENOBUFS;
- 		else
- 			err = skb_linearize(skb);
-+	} else if (ieee80211_is_s1g_beacon(fc)) {
-+		size_t s1g_hdr_len = offsetof(struct ieee80211_ext,
-+					      u.s1g_beacon.variable) +
-+				     ieee80211_s1g_optional_len(fc);
-+
-+		if (skb->len < s1g_hdr_len)
-+			err = -ENOBUFS;
-+		else
-+			err = skb_linearize(skb);
-+	} else if (ieee80211_is_ext(fc)) {
-+		err = -EINVAL;
- 	} else {
- 		err = !pskb_may_pull(skb, ieee80211_hdrlen(fc));
- 	}
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 2dfb9c089b470..091a1f51eb15f 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -73,6 +73,9 @@ u8 *ieee80211_get_bssid(struct ieee80211_hdr *hdr, size_t len,
- 	if (ieee80211_is_s1g_beacon(fc)) {
- 		struct ieee80211_ext *ext = (void *) hdr;
- 
-+		if (len < offsetofend(struct ieee80211_ext, u.s1g_beacon.sa))
-+			return NULL;
-+
- 		return ext->u.s1g_beacon.sa;
+ 	if (!AMD_IS_VALID_VBIOS(bios)) {
+-		DRM_INFO("BIOS signature incorrect %x %x\n", bios[0], bios[1]);
++		dev_dbg(adev->dev, "VBIOS signature incorrect %x %x\n", bios[0],
++			bios[1]);
+ 		return false;
  	}
  
+ 	bios_header_start = bios[0x48] | (bios[0x49] << 8);
+ 	if (!bios_header_start) {
+-		DRM_INFO("Can't locate bios header\n");
++		dev_dbg(adev->dev, "Can't locate VBIOS header\n");
+ 		return false;
+ 	}
+ 
+ 	tmp = bios_header_start + 4;
+ 	if (size < tmp) {
+-		DRM_INFO("BIOS header is broken\n");
++		dev_dbg(adev->dev, "VBIOS header is broken\n");
+ 		return false;
+ 	}
+ 
+ 	if (!memcmp(bios + tmp, "ATOM", 4) ||
+ 	    !memcmp(bios + tmp, "MOTA", 4)) {
+-		DRM_DEBUG("ATOMBIOS detected\n");
++		dev_dbg(adev->dev, "ATOMBIOS detected\n");
+ 		return true;
+ 	}
+ 
+@@ -119,7 +121,7 @@ static bool amdgpu_read_bios_from_vram(struct amdgpu_device *adev)
+ 	memcpy_fromio(adev->bios, bios, size);
+ 	iounmap(bios);
+ 
+-	if (!check_atom_bios(adev->bios, size)) {
++	if (!check_atom_bios(adev, size)) {
+ 		kfree(adev->bios);
+ 		return false;
+ 	}
+@@ -147,7 +149,7 @@ bool amdgpu_read_bios(struct amdgpu_device *adev)
+ 	memcpy_fromio(adev->bios, bios, size);
+ 	pci_unmap_rom(adev->pdev, bios);
+ 
+-	if (!check_atom_bios(adev->bios, size)) {
++	if (!check_atom_bios(adev, size)) {
+ 		kfree(adev->bios);
+ 		return false;
+ 	}
+@@ -187,7 +189,7 @@ static bool amdgpu_read_bios_from_rom(struct amdgpu_device *adev)
+ 	/* read complete BIOS */
+ 	amdgpu_asic_read_bios_from_rom(adev, adev->bios, len);
+ 
+-	if (!check_atom_bios(adev->bios, len)) {
++	if (!check_atom_bios(adev, len)) {
+ 		kfree(adev->bios);
+ 		return false;
+ 	}
+@@ -217,7 +219,7 @@ static bool amdgpu_read_platform_bios(struct amdgpu_device *adev)
+ 	memcpy_fromio(adev->bios, bios, romlen);
+ 	iounmap(bios);
+ 
+-	if (!check_atom_bios(adev->bios, romlen))
++	if (!check_atom_bios(adev, romlen))
+ 		goto free_bios;
+ 
+ 	adev->bios_size = romlen;
+@@ -325,7 +327,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
+ 			break;
+ 	}
+ 
+-	if (!check_atom_bios(adev->bios, size)) {
++	if (!check_atom_bios(adev, size)) {
+ 		kfree(adev->bios);
+ 		return false;
+ 	}
+@@ -425,7 +427,7 @@ static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
+ 					     vhdr->ImageLength,
+ 					     GFP_KERNEL);
+ 
+-			if (!check_atom_bios(adev->bios, vhdr->ImageLength)) {
++			if (!check_atom_bios(adev, vhdr->ImageLength)) {
+ 				kfree(adev->bios);
+ 				return false;
+ 			}
 -- 
 2.53.0
 
