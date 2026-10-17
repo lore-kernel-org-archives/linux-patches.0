@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAAE3C0630;
-	Sat, 17 Oct 2026 17:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C9B3BF699;
+	Sat, 17 Oct 2026 17:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258980; cv=none; b=PGA94oHBQ/XCwKF9oTyNZlaDe7EnMeFEZI7RAwVub2zMJ2cbZsJZdxYu26IugRpIjTlHf43kLcCVFd+tJNCFjungK2RL9d6bCc2jucU/Nv3P2YRu5d0hNcNHxV7lyUCmRFfJA/WRuatqHBZbWDW1oBgSUWN06em5twWivOke/i0=
+	t=1792258983; cv=none; b=Ppy1Lp2rtjMFhvnikQzodb9wbGjrx9/ebXdPZO2jT5owW+TUpo3wYNcQD6iSHhq9AjB9ssNm46pWKTyEOi7OhHR3T/0Fj4nK9Duv3hbvMGDiJcJ8daTF4tq1TBB2IcEgyG2v5BJOtzaQiDaTRmCxD2sJvDvNjDCls13oQWeR4Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258980; c=relaxed/simple;
-	bh=F6wstA/Oc7n/rosHligzpbZFq4rTVRG93BI5LbZvzNg=;
+	s=arc-20240116; t=1792258983; c=relaxed/simple;
+	bh=ENbOO1q1q1kltjSo966feNH3nEmYFyAOJE5drJ+pToI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MX1At22bOMFahgPUQvcCXmvbCxQjnvnqRTY3RCOaMQ8Ni7UniiGJJLxAEyJm4rVGsqOLDCtOPQCOnDtdAwbBQDL/Vmyz0VT4AnG1Y+J4VWF4ISWkh051SHKOtTA5swd8ChcHOy6JOmsacBbb7kkjjWmgz2TwGpAsePTbQWcsmPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQSwf1oh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Prv6UKTjAqwGYsGqdGb0BCIH3G2Rl8jUl2y4NCTWMs1dZ2w6om7lrDMAL80BqTWm8QmTveuo/1zFgvlHqwz43G2p3P+J4uZIXGaMoRzaUY5AlVyepMGidYQxOaEVYgznkVfWsXyeIrU0sV+MBZNaQDzrwKUiSdWLdFP9D6pFlws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiEbbFAg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQSwf1oh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895ED1F000C4;
-	Sat, 17 Oct 2026 17:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiEbbFAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0441F000C4;
+	Sat, 17 Oct 2026 17:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258979;
-	bh=wE9S76Wa6IBCHtG1SsY2OUGgsNLHytGxqMl9Fe/N3P4=;
+	s=korg; t=1792258982;
+	bh=EJDw2kaVi/trylBcYlCIcrYC2uMKTIeqCLJM/mHUgGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZQSwf1ohDxSEmJV6J63to4w+z8oAuiArhPcsLdSsC5hoBQFV6ZOFzEC7XEhObuu+x
-	 wpPaqagqLtm8f0UZoxDGyqYJhpvKppoo4vdujtso+dI2V/3WkjI7r8nvgzQJERmKva
-	 6qSk10LLv+68+l6WIKs9nGF9PChD2vGlV2ZqjoOs=
+	b=AiEbbFAgKBQ0NhC7X8o6DH2xtleo1F2eTvDRletA2k7ziNHjuzYLF2HsYm2W2LT55
+	 piCrwl5KNlbU0zTW2cal03RPZOHBc4mmDoZ/UpFLMN0ncq1PuTOMi+xPab4yZIYMgx
+	 F2i9JjB/PoCtVlqKXMaXg+42AKVuZtobT8lnjIT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1021/1674] net/mlx5e: xsk: Fix DMA and xdp_frame leak on XDP_TX xmit failure
-Date: Sat, 17 Oct 2026 17:54:53 +0200
-Message-ID: <20261017160457.341399961@linuxfoundation.org>
+Subject: [PATCH 6.6 1022/1674] wifi: fix leak if split 6 GHz scanning fails
+Date: Sat, 17 Oct 2026 17:54:54 +0200
+Message-ID: <20261017160457.364935618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,67 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit b69004f5a6ad32da84d8aa5b23b9c0caafe6252e ]
+[ Upstream commit e8694f7cc29287e843648d1075177b9a2000d957 ]
 
-In the XSK branch of mlx5e_xmit_xdp_buff(), when sq->xmit_xdp_frame()
-returns false (e.g. XDPSQ is full), the function returns without
-unmapping the DMA address or freeing the xdp_frame allocated by
-xdp_convert_zc_to_xdp_frame(). The xdpi_fifo push only happens on
-success, so the completion path cannot recover these entries.
+rdev->int_scan_req is leaked if cfg80211_scan() fails.  Note that it's
+supposed to be released at ___cfg80211_scan_done() but this doesn't happen
+as rdev->scan_req is NULL at that point, too, leading to the early return
+from the freeing function.
 
-With CONFIG_DMA_API_DEBUG=y, the leak surfaces on driver unbind:
+unreferenced object 0xffff8881161d0800 (size 512):
+  comm "wpa_supplicant", pid 379, jiffies 4294749765
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 f0 81 13 16 81 88 ff ff  ................
+  backtrace (crc c867fdb6):
+    kmemleak_alloc+0x89/0x90
+    __kmalloc_noprof+0x2fd/0x410
+    cfg80211_scan+0x133/0x730
+    nl80211_trigger_scan+0xc69/0x1cc0
+    genl_family_rcv_msg_doit+0x204/0x2f0
+    genl_rcv_msg+0x431/0x6b0
+    netlink_rcv_skb+0x143/0x3f0
+    genl_rcv+0x27/0x40
+    netlink_unicast+0x4f6/0x820
+    netlink_sendmsg+0x797/0xce0
+    __sock_sendmsg+0xc4/0x160
+    ____sys_sendmsg+0x5e4/0x890
+    ___sys_sendmsg+0xf8/0x180
+    __sys_sendmsg+0x136/0x1e0
+    __x64_sys_sendmsg+0x76/0xc0
+    x64_sys_call+0x13f0/0x17d0
 
-  DMA-API: pci 0000:08:00.0: device driver has pending DMA
-  allocations while released from device [count=1116]
-  One of leaked entries details: [device address=0x000000010ffd7028]
-  [size=1534 bytes] [mapped with DMA_TO_DEVICE] [mapped as phy]
-  WARNING: kernel/dma/debug.c:881 at dma_debug_device_change+0x127/0x180
-  ...
-  DMA-API: Mapped at:
-   debug_dma_map_phys+0x4b/0xd0
-   dma_map_phys+0xfd/0x2d0
-   mlx5e_xdp_handle+0x5ae/0xac0 [mlx5_core]
-   mlx5e_xsk_skb_from_cqe_mpwrq_linear+0xc4/0x170 [mlx5_core]
-   mlx5e_handle_rx_cqe_mpwrq+0xc1/0x290 [mlx5_core]
+Found by Linux Verification Center (linuxtesting.org).
 
-Add the missing unmap + xdp_return_frame, matching the cleanup already
-done in mlx5e_xdp_xmit(). has_frags is rejected earlier in this branch,
-so no per-frag unmap is needed.
-
-Fixes: 84a0a2310d6d ("net/mlx5e: XDP_TX from UMEM support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260604135446.456119-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c8cb5b854b40 ("nl80211/cfg80211: support 6 GHz scanning")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260601094157.92703-1-pchelkin@ispras.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/wireless/scan.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 13c7ed1bb37e9..17ef61700a01c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -102,9 +102,15 @@ mlx5e_xmit_xdp_buff(struct mlx5e_xdpsq *sq, struct mlx5e_rq *rq,
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index c215c82f399e7..d10d2dfd8b8d9 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1028,6 +1028,7 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
+ 	struct cfg80211_scan_request *request;
+ 	struct cfg80211_scan_request *rdev_req = rdev->scan_req;
+ 	u32 n_channels = 0, idx, i;
++	int err;
  
- 		xdptxd->dma_addr = dma_addr;
+ 	if (!(rdev->wiphy.flags & WIPHY_FLAG_SPLIT_SCAN_6GHZ))
+ 		return rdev_scan(rdev, rdev_req);
+@@ -1054,8 +1055,14 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
+ 	}
  
--		if (unlikely(!INDIRECT_CALL_2(sq->xmit_xdp_frame, mlx5e_xmit_xdp_frame_mpwqe,
--					      mlx5e_xmit_xdp_frame, sq, xdptxd, 0)))
-+		if (unlikely(!INDIRECT_CALL_2(sq->xmit_xdp_frame,
-+					      mlx5e_xmit_xdp_frame_mpwqe,
-+					      mlx5e_xmit_xdp_frame,
-+					      sq, xdptxd, 0))) {
-+			dma_unmap_single(sq->pdev, dma_addr, xdptxd->len,
-+					 DMA_TO_DEVICE);
-+			xdp_return_frame(xdpf);
- 			return false;
-+		}
+ 	rdev_req->scan_6ghz = false;
++	err = rdev_scan(rdev, request);
++	if (err) {
++		kfree(request);
++		return err;
++	}
++
+ 	rdev->int_scan_req = request;
+-	return rdev_scan(rdev, request);
++	return 0;
+ }
  
- 		/* xmit_mode == MLX5E_XDP_XMIT_MODE_FRAME */
- 		mlx5e_xdpi_fifo_push(&sq->db.xdpi_fifo,
+ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
 -- 
 2.53.0
 
