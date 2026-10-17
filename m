@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902223451DA;
-	Sat, 17 Oct 2026 16:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE9D3AA9D8;
+	Sat, 17 Oct 2026 16:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253612; cv=none; b=mJ0LXU6C+IMqC63S6KB0aTUm7NHrNujdXPALzCVQUm4L1A9PO0Y07YAmhshKCWpXg7IkqMrype6bibRqBLpRQF/vzRHCQGHm7yiz+YhZdgilYecc3VecmhcQBBCjRYbxhgURxAh/DTUvZrk7/5ug0M1xoQov00a7VT1tyJLYCkE=
+	t=1792253616; cv=none; b=IqVCs+DP0GI5/TUQ5Iez4FfugH+CPOLdF5DdJdk1he7CicM+Tw+2wfgjcVPWvBHN1KiBH1QzLKQzmZygqTfMV+UQk7Nnk+kLPhPpfiMmx8ql3Zu/tiNgIlJqveeUmRQiHUNGJAFWpkursRimj01CPiCYW0EokN9gqbQECDZZpfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253612; c=relaxed/simple;
-	bh=H66vhADbBDmH/UUS8GYU5JZuNj4hDl2dDp30ixwsLGI=;
+	s=arc-20240116; t=1792253616; c=relaxed/simple;
+	bh=iGDLiCZNlXTn7uPB5/vyv6/5om6MQe8wJIoJOTamKt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeCiVefXuorTRSwd/+IjnVyDv3QAsrh2K9qq3pV/n8S1M4g5LoTuC61/xK8Ow1ZeynP/uHqNzaLgqLfff7MyY7m+q0qjv5J3FREJtWEkYWF3RvVCE41FmVg7QxLz/uTQwFx68kmXAVUQOU7CtkIe0RiL8GXahCTREwzH7afmaMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnLLTF3o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=szSCgrMpWTxlQa/9sSzPPnEnEAaGMFPDPymtwaad5O/kK81CL5oHg/z/BB9z19zEOmaIixqxpkRr9MsosOcqP1g/rNvfkdB718CuHUVrJBiYl0sV2lg40ujaqw5feFlMgcNrQ11aQ8Ly3VAQf3JXR/0/trH+BnfztRgGIEgfgtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yeh/jM06; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnLLTF3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79601F000C5;
-	Sat, 17 Oct 2026 16:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yeh/jM06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB3E1F000C4;
+	Sat, 17 Oct 2026 16:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253610;
-	bh=fata6QCrQLwhM26dquBzttj241sXlRjYbnOLjpR6fjg=;
+	s=korg; t=1792253607;
+	bh=FXga8nPyqFu0sz/WkwlWG9ni24qzeY7GM8fF8JJ5xjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnLLTF3ogxUgxWL3+5/bZ9ef+TH8+nR5vEasxo3ZhoJmaSQ4H9eJRYdd95aMpHxmY
-	 sRq3P01sS/kTXyYWe+zfzymcr3L8soLK8kaijNixHAVvRzn6hmaQKkdYCcTgOaFlck
-	 9BqWlOspQsAON1PAjCIYdkH8fiU00b9jSmdjp4B4=
+	b=Yeh/jM06pkzt+BfgQH00S42D2uXc34AZaWxPWHXhTPzTqUSsGsOVdNgkU3Bc7mlAE
+	 oVzhB0askVHLCTzIfrdP2X0RCi7mAofw8dQWgsv+m5jbry2vG1r4JbK2ZZZ0KuY0HC
+	 a/zFjPS82GqlL3t7Cx4uEwMtbj0QRi6xFPMRvxP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhang <jie.zhang@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/869] drm/msm: Recover HW before retire hung submit
-Date: Sat, 17 Oct 2026 17:50:16 +0200
-Message-ID: <20261017160041.540257547@linuxfoundation.org>
+Subject: [PATCH 6.12 174/869] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
+Date: Sat, 17 Oct 2026 17:50:15 +0200
+Message-ID: <20261017160041.514057535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,48 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jie.zhang@oss.qualcomm.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit b303e1d52811de7d1bcf793560754d4df68d4a1c ]
+[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
 
-During recovery, it is not safe to retire the hung submit before we
-recover the GPU. Retiring the submit triggers BO free and that can
-result in GPU pagefaults since the GPU may be actively accessing those
-BOs.
+issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
+xmit_frame together with its xmit_buf from the driver's fixed-size
+management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
+is handed to dump_mgntframe(), which transfers ownership and eventually
+returns both objects to their pools (the frame and, for beacons, the buf
+in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
+path).
 
-To fix this, retire the submits after gpu recovery is complete in
-recover_worker().
+Several error/edge paths return early after a successful
+alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
+transferred and neither object is freed:
 
-Fixes: 1a370be9ac51 ("drm/msm: restart queued submits after hang")
-Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/730655/
-Message-ID: <20260605-assorted-fixes-june-v1-2-2caa04f7287c@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+  - issue_beacon(): beacon larger than 512 bytes
+  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
+  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
+  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+
+Because alloc_mgtxmitframe() removes the frame and buf from their free
+lists (list_del_init) without placing them on any pending list, an
+orphaned pair is on no list and referenced by nobody, so it is only
+reclaimed at driver teardown. Repeated hits progressively exhaust the
+management-TX pools until alloc_mgtxmitframe() returns NULL and the
+interface can no longer send beacons or probe/assoc responses.
+
+Free the frame and buffer on these paths, matching the existing correct
+error handling in issue_assocreq().
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index a274b84664237..ffb91e45aefde 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -422,11 +422,11 @@ static void recover_worker(struct kthread_work *work)
- 	}
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+index 22c29d1955f5b..740868a156dcd 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -2258,8 +2258,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
  
- 	if (msm_gpu_active(gpu)) {
-+		gpu->funcs->recover(gpu);
-+
- 		/* retire completed submits, plus the one that hung: */
- 		retire_submits(gpu);
+ 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
  
--		gpu->funcs->recover(gpu);
--
- 		/*
- 		 * Replay all remaining submits starting with highest priority
- 		 * ring
+-	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
++	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
+ 
+ 	pattrib->last_txcmdsz = pattrib->pktlen;
+ 
+@@ -2322,8 +2325,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+ 	pframe += pattrib->hdrlen;
+ 
+ 
+-	if (cur_network->ie_length > MAX_IE_SZ)
++	if (cur_network->ie_length > MAX_IE_SZ) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
+ 
+ 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
+ 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
+@@ -2370,8 +2376,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+ 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
+ 
+ 			buf = rtw_zmalloc(MAX_IE_SZ);
+-			if (!buf)
++			if (!buf) {
++				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++				rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 				return;
++			}
+ 
+ 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
+ 				(pframe-ies)-_FIXED_IE_LENGTH_);
+@@ -2764,10 +2773,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
+ 
+ 	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
+ 	pmlmeext->mgnt_seq++;
+-	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
++	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
+ 		SetFrameSubType(pwlanhdr, pkt_type);
+-	else
++	} else {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
+ 
+ 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
+ 	pattrib->pktlen += pattrib->hdrlen;
 -- 
 2.53.0
 
