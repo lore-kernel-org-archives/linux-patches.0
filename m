@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A161374E60;
-	Sat, 17 Oct 2026 17:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6683803DC;
+	Sat, 17 Oct 2026 17:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257620; cv=none; b=fPk+tf+DhFdTtD2JrmCWABKlQNx3vwBSMoYpm13CU1H3mZQOLm3z5hGrE1PBXg1yzjDcrtKaoAr19KbB6Dghso/mSr6pxkteMXSzM1+tttMR6mq2o7eSIKgJ/IpxTfTtPfRr2IesrtOoJnm+4UkfJkX0+Jinb7oMvG8RACMp4Cw=
+	t=1792257623; cv=none; b=OzJ+dpvj4QEkfhuuVHcJavrWk2AOnDGADwSEheX1XnMTepqNHNgm8rQZIUY6aV+Qormiy1QiuEx3P58P0XC/yHtgwmAqsAsOUeCFUXdC+vopwIZgGwU0BaALLtA6Sv3u0sLZ3c3GD8HxBfyAvFHVPhf9THw9fug0uHNzJh49zsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257620; c=relaxed/simple;
-	bh=GZMKvpMZ36yq4c4TAgR3cTeUV6XJm/76qP/+jyp3/ns=;
+	s=arc-20240116; t=1792257623; c=relaxed/simple;
+	bh=7yzDLjUn6gGIYRZx3fE+OR4pir9Uf9YYduiX4U2gjiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RTdwDDfkvqtb00kvgngLJqrE0heunxHm/tHjS24ovr2ZHb7SF1ItbHwqEXfTF+mu4WVth/gJdK4Eo7KUUGksEP/aK5ALNZWXHzTqt/jmtUwKvUrj7ljaDgfm1ohsOBMCUaqJPIobamVrm5OuI5og/qj8AJfrXs/KU3Lzq3QKO78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QrNPxnc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EhtFrHnZCkoHnxLkLWWxIpVIrzJuuWHQFKYR3CeolPZEAS9kmJX7X+Ni1ZtyM1EL0LQVVQ1uJE9ieWbQtxl2F0DfIhOhyXrtjeIt+DSD6dv2J/SVtN7S0K4Has/svPg0wEualz8U6xzCJ+wCrv6X/QQZv2oWuzo9+uDwwfhxkBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njL1lEFD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QrNPxnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A451F000C4;
-	Sat, 17 Oct 2026 17:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njL1lEFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0261F000C4;
+	Sat, 17 Oct 2026 17:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257619;
-	bh=px7xKM7F/B9B/5WzB+LVGItQS9OBG42eALYhrn8jKxM=;
+	s=korg; t=1792257622;
+	bh=WsYnbQB56N0iuyhwLCzrW++nhqqA8Bc2xbkTbzV5Z7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QrNPxncik8+G0VY/jNqCzfP1I3yua8xVVeLaRwcCPVjwqB4UsA0XklcwMi5yYE1t
-	 ahHOnzOzATlYnyg/EoijoqU4wYxZ9/qI/hKq+Lopz8JcCx7f2eXlWy44k2E9UQn8DF
-	 HK8dNlV/IEEU/vTSoqdeWX6EkYn38FrMEehANAFo=
+	b=njL1lEFDNbsmhKziMDj3uI+WPDTx/1lWSc2/2Q5HAYj8tQIVRXiclTjD0K46DUEPn
+	 RVY9y4kxnRGIqZOpe8n5jZ3WZyWG7+a716oNYUXJIxI83O9VEKpFRRnJbUDOK49EqV
+	 A6Yc2TRioHvC0RrMsw48d3UfsGWbO5VrU0B/6cfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Artem Dinaburg <artem@trailofbits.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0575/1674] ALSA: pcm: oss: Fix setup list UAF on proc write error
-Date: Sat, 17 Oct 2026 17:47:27 +0200
-Message-ID: <20261017160445.852609865@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>
+Subject: [PATCH 6.6 0576/1674] ALSA: pcm: oss: Fix data race at accessing runtime.oss.trigger
+Date: Sat, 17 Oct 2026 17:47:28 +0200
+Message-ID: <20261017160445.877676064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,94 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 4cc54bdd54b337e77115be5b55577d1c58608eae ]
+[ Upstream commit 901ac0ff15edf9503162e2cf6579bd11a30f1ed4 ]
 
-snd_pcm_oss_proc_write() links a newly allocated setup entry into the
-OSS setup list before duplicating the task name. If the task-name
-allocation fails, the error path frees the already linked entry and
-leaves setup_list pointing at freed memory.
+Currently the runtime.oss.trigger field may be accessed concurrently
+without protection, which may lead to the data race.  And, in this
+case, it may lead to more severe problem because it's a bit field; as
+writing the data, it may overwrite other bit fields as well, which
+confuses the operation completely, as spotted by fuzzing.
 
-A later OSS device open can then walk the stale list entry in
-snd_pcm_oss_look_for_setup() and dereference freed memory.
+Fix it by covering runtime.oss.trigger bit fled also with the existing
+params_lock mutex in both snd_pcm_oss_get_trigger() and
+snd_pcm_oss_poll().
 
-Allocate the task name and initialize the setup entry before publishing
-the entry on setup_list. Also fetch the initial proc read iterator only
-after taking setup_mutex, so all setup_list traversal follows the same
-list lifetime rules.
-
-Reported-by: syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a1062b7.170a0220.35b2b7.0003.GAE@google.com
-Closes: https://syzkaller.appspot.com/bug?extid=8e498074a794999eb41c
-Fixes: 060d77b9c04a ("[ALSA] Fix / clean up PCM-OSS setup hooks")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260522-alsa-pcm-oss-setup-uaf-v1-1-40bdcc4d17e8@gmail.com
+Reported-and-tested-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Closes: https://lore.kernel.org/20260423145330.210035-1-jjy600901@snu.ac.kr
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260424112205.123703-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Assisted-by: LLM
-[ Backport to 6.6.y: Keep the target's explicit setup_mutex unlocks on
-  allocation failure and before continuing; upstream releases that mutex
-  through its scoped guard. ]
+[ Backport to 6.6.y: Replace upstream mutex guards with explicit
+  params_lock operations and matching unlocks; the target has no scoped
+  locking helpers. ]
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/pcm_oss.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ sound/core/oss/pcm_oss.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
 diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
-index 23ecbd70ccf65..25f7e585bc7b9 100644
+index 25f7e585bc7b9..15683237c7ee7 100644
 --- a/sound/core/oss/pcm_oss.c
 +++ b/sound/core/oss/pcm_oss.c
-@@ -2964,8 +2964,10 @@ static void snd_pcm_oss_proc_read(struct snd_info_entry *entry,
- 				  struct snd_info_buffer *buffer)
- {
- 	struct snd_pcm_str *pstr = entry->private_data;
--	struct snd_pcm_oss_setup *setup = pstr->oss.setup_list;
-+	struct snd_pcm_oss_setup *setup;
+@@ -2161,10 +2161,18 @@ static int snd_pcm_oss_get_trigger(struct snd_pcm_oss_file *pcm_oss_file)
+ 
+ 	psubstream = pcm_oss_file->streams[SNDRV_PCM_STREAM_PLAYBACK];
+ 	csubstream = pcm_oss_file->streams[SNDRV_PCM_STREAM_CAPTURE];
+-	if (psubstream && psubstream->runtime && psubstream->runtime->oss.trigger)
+-		result |= PCM_ENABLE_OUTPUT;
+-	if (csubstream && csubstream->runtime && csubstream->runtime->oss.trigger)
+-		result |= PCM_ENABLE_INPUT;
++	if (psubstream && psubstream->runtime) {
++		mutex_lock(&psubstream->runtime->oss.params_lock);
++		if (psubstream->runtime->oss.trigger)
++			result |= PCM_ENABLE_OUTPUT;
++		mutex_unlock(&psubstream->runtime->oss.params_lock);
++	}
++	if (csubstream && csubstream->runtime) {
++		mutex_lock(&csubstream->runtime->oss.params_lock);
++		if (csubstream->runtime->oss.trigger)
++			result |= PCM_ENABLE_INPUT;
++		mutex_unlock(&csubstream->runtime->oss.params_lock);
++	}
+ 	return result;
+ }
+ 
+@@ -2839,6 +2847,18 @@ static int snd_pcm_oss_capture_ready(struct snd_pcm_substream *substream)
+ 						runtime->oss.period_frames;
+ }
+ 
++static bool need_input_retrigger(struct snd_pcm_runtime *runtime)
++{
++	bool ret;
 +
- 	mutex_lock(&pstr->oss.setup_mutex);
-+	setup = pstr->oss.setup_list;
- 	while (setup) {
- 		snd_iprintf(buffer, "%s %u %u%s%s%s%s%s%s\n",
- 			    setup->task_name,
-@@ -3053,6 +3055,14 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				mutex_unlock(&pstr->oss.setup_mutex);
- 				return;
- 			}
-+			template.task_name = kstrdup(task_name, GFP_KERNEL);
-+			if (!template.task_name) {
-+				kfree(setup);
-+				buffer->error = -ENOMEM;
-+				mutex_unlock(&pstr->oss.setup_mutex);
-+				return;
-+			}
-+			*setup = template;
- 			if (pstr->oss.setup_list == NULL)
- 				pstr->oss.setup_list = setup;
- 			else {
-@@ -3060,13 +3070,8 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				     setup1->next; setup1 = setup1->next);
- 				setup1->next = setup;
- 			}
--			template.task_name = kstrdup(task_name, GFP_KERNEL);
--			if (! template.task_name) {
--				kfree(setup);
--				buffer->error = -ENOMEM;
--				mutex_unlock(&pstr->oss.setup_mutex);
--				return;
--			}
-+			mutex_unlock(&pstr->oss.setup_mutex);
-+			continue;
++	mutex_lock(&runtime->oss.params_lock);
++	ret = runtime->oss.trigger;
++	if (ret)
++		runtime->oss.trigger = 0;
++	mutex_unlock(&runtime->oss.params_lock);
++	return ret;
++}
++
+ static __poll_t snd_pcm_oss_poll(struct file *file, poll_table * wait)
+ {
+ 	struct snd_pcm_oss_file *pcm_oss_file;
+@@ -2871,11 +2891,11 @@ static __poll_t snd_pcm_oss_poll(struct file *file, poll_table * wait)
+ 		    snd_pcm_oss_capture_ready(csubstream))
+ 			mask |= EPOLLIN | EPOLLRDNORM;
+ 		snd_pcm_stream_unlock_irq(csubstream);
+-		if (ostate != SNDRV_PCM_STATE_RUNNING && runtime->oss.trigger) {
++		if (ostate != SNDRV_PCM_STATE_RUNNING &&
++		    need_input_retrigger(runtime)) {
+ 			struct snd_pcm_oss_file ofile;
+ 			memset(&ofile, 0, sizeof(ofile));
+ 			ofile.streams[SNDRV_PCM_STREAM_CAPTURE] = pcm_oss_file->streams[SNDRV_PCM_STREAM_CAPTURE];
+-			runtime->oss.trigger = 0;
+ 			snd_pcm_oss_set_trigger(&ofile, PCM_ENABLE_INPUT);
  		}
- 		*setup = template;
- 		mutex_unlock(&pstr->oss.setup_mutex);
+ 	}
 -- 
 2.53.0
 
