@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74033803DC;
-	Sat, 17 Oct 2026 17:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E10A3A48E4;
+	Sat, 17 Oct 2026 17:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256798; cv=none; b=ecZEWa0sAznsBOQkMj5PaEQyMGj6K0kHfxHx/CZToJFeJrsS64TyXOKIMmSFd1Ehzs/idCtouepP2LwvK+y/mmlyX7/HtH3Wkuv/k4skwH+Lk4jzz/3xhtwtmNEvOg8/A7q1/yRlV+TROv4owTF/gKuxfMHTKyT9YEvkVFfrKhs=
+	t=1792256800; cv=none; b=um5K07jSoT/nRWo8J4jZD1eNVBpXM2FKxhktvcWIhs33k5UywDhzGdf11BkUnwEbL71RERJAnxNLPBsQva+/aPu4y31Mk6SOkmIqdErmJ9oityFeSKgIIO2TIQbGUPzvmB8yPaWS6hhQiUF2XgwYRBRRhGrky0CwxaoD7PJgyII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256798; c=relaxed/simple;
-	bh=53bUs+FXeYjSSelM3798Mgd8s/5ZuBTTGgzOMZG4nMA=;
+	s=arc-20240116; t=1792256800; c=relaxed/simple;
+	bh=K1S8WqJSgS2+efB0AKiwjv4m5ftDE49K4GVALSdNnVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9UK8ipq76KGXbm5B4+EMnu7P16WVHBKv3uV6lXTZkCgiZFU/DTiHZqQVpKfQigJKw2vAftAUWv6SeXiImdkOxeL4OZeMdrbvh0DghCGt/jvTAzguoMmuMf/9NEKmCIJI7Ld9FxpqeRvJsZUyKcqjYY3Gen9NopEBLADtQLr62Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnGw1Rlv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cx0LgMjw6UvSaDj/ypeMQIIcfmjqna+MXENNqbtNZfQc4wmPYBibdicwJjibu6wSyu2VJEZVnJIEmX1dyDf5FW+ouvrJ8wgKjWRe3ZqBa6ysneB6LsJgKAkRATeIDKTj6xKkzghTNKfiiJlyWwjxcw0UwbJIsuMMRqamowvqi6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWFV3v9/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnGw1Rlv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1255B1F000C4;
-	Sat, 17 Oct 2026 17:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWFV3v9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443C61F000C5;
+	Sat, 17 Oct 2026 17:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256795;
-	bh=SVwEl9Bcd7imwtkjsOsHjm8pOLsuLKtXC/2sQaZGhoo=;
+	s=korg; t=1792256798;
+	bh=+UHqae8zNM+7MOls6wXjN1rucRYoL/ow4WPuoJg5f8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnGw1RlvlHNyJswsth/u4BABxRYX+qyqFWJUd5xdEurt36Qahqzuw8xWQ8jALvyiq
-	 iFnkOPbGUDBy+Kc/aTxodz2hfr6aaY2JzdOmEuTHpVlzBOjLIiuUYBKhbDC/oNhdiC
-	 13mlKfvU55+QmK7LEiHt0jz9DvHNgdeBduS4Oc5E=
+	b=lWFV3v9/tU/uqijbLoki162CnO4gGWgPqp/HxuJIuIM8hswc2gdgSOKAA6e+yi11G
+	 OnIYQyJ/K4r5tjeKiZGDhRdvMSi43N9gUh04sl74yBlcZZZ3MnXjWI+CgdCzFYxigm
+	 98BcKEMF39yXpnpiRL3f8SPSXHBoZtzs2MAngDFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Oliver Upton <oupton@kernel.org>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0355/1674] KVM: arm64: vgic-its: Dont dereference a NULL collection on ITT save
-Date: Sat, 17 Oct 2026 17:43:47 +0200
-Message-ID: <20261017160440.233423536@linuxfoundation.org>
+Subject: [PATCH 6.6 0356/1674] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
+Date: Sat, 17 Oct 2026 17:43:48 +0200
+Message-ID: <20261017160440.257301575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,51 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit c6c156d931c33b92362383cf76f6d6e1291dcbfe ]
+[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
 
-MAPC with V=0 drops ite->collection but leaves the ITE on the device's
-ITT list, and vgic_its_save_ite() dereferences it unconditionally. A
-guest that issues MAPD, MAPTI and then MAPC(V=0) therefore oopses the
-host when the VMM issues KVM_DEV_ARM_ITS_SAVE_TABLES to migrate it.
-That sequence is UNPREDICTABLE per the architecture, but KVM already
-handles the resulting state in the translate, MOVI and DISCARD paths.
+Reject voltage objects whose usSize is smaller than the header or would
+advance the cursor past the table end, preventing an infinite loop or
+heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
 
-Save a zeroed entry, which vgic_its_restore_ite() reads back as
-invalid. Skipping the ITE instead would leave the ITT slot holding
-whatever is in guest memory, and restore rejects an entry naming a
-collection the restored collection table does not have.
-
-Fixes: eff484e0298da ("KVM: arm64: vgic-its: ITT save and restore")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260807104102.2410744-2-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
+Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index e6c5e18664cd5..efc556b196826 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2256,6 +2256,14 @@ static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
- 	u32 next_offset;
- 	u64 val;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 7e37354a03411..640350bbd9085 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -269,15 +269,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
+ 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
+ 	uint8_t *start = (uint8_t *)voltage_object_info_table;
  
-+	/*
-+	 * MAPC with V=0 keeps the ITEs mapped but drops their collection,
-+	 * and with it the ICID. Save a zeroed entry, which the restore path
-+	 * reads back as invalid.
-+	 */
-+	if (!ite->collection)
-+		return vgic_its_write_entry_lock(its, gpa, 0ULL, ite);
+-	while (offset < size) {
++	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
+ 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
+ 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
++		u16 obj_size;
 +
- 	next_offset = compute_next_eventid_offset(&dev->itt_head, ite);
- 	val = ((u64)next_offset << KVM_ITS_ITE_NEXT_SHIFT) |
- 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
++		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
++		    offset + obj_size > size)
++			break;
+ 
+ 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
+ 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+index a47a47238e2b9..e5aa787182025 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
+ 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
+ 	unsigned long start = (unsigned long)voltage_object_info_table;
+ 
+-	while (offset < size) {
++	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
+ 		const union atom_voltage_object_v4 *voltage_object =
+ 			(const union atom_voltage_object_v4 *)(start + offset);
++		u16 obj_size;
++
++		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
++		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
++		    offset + obj_size > size)
++			break;
+ 
+ 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
+ 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
+-
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
 -- 
 2.53.0
 
