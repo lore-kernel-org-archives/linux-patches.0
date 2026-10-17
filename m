@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7133BED30;
-	Sat, 17 Oct 2026 17:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3F43976BA;
+	Sat, 17 Oct 2026 17:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257457; cv=none; b=JZFaxMgTRNbovF7Mmn/ADiwbTH5aiTWe2572mYMJvlWpB94s4x4EmNpM/nS593jrtHyP7KpyVSE8jIBoBHS6wOxGRxqYqJJSDm7ankjrA/KGPDEmn/Bv4iHQAxGLLUc04TvhpyKy5wg2/tJ2kD9271605eqknkgHegkst9aJXvU=
+	t=1792257461; cv=none; b=U8455UFNDdr5YPMIClQvBsQzvbDB4wvt4D+nxNoIYNSZfFwfihe7CBxBetwE9autN4cOjogkUsinrPWYgopmMBQMqotUuvpfvW7wT5fQ4TnEznNjDaxrQuMXpC1Mr9+Uu38U5WGZHCwQ3uFVP3mKyONgbLFEx1pHYRmSKZxPVig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257457; c=relaxed/simple;
-	bh=URerZM68h8ESlAPn8e/oqDIaSn3pZsNbWMRlQA99vSY=;
+	s=arc-20240116; t=1792257461; c=relaxed/simple;
+	bh=9LslZKzhBKOWtRu4gAt8ZoNIjWXuzXIi3xmAhXG3oZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEe/WB1Uapfa+BxfyZxC0IV1foWR+cmJMLgdVd8u88gLnLLUt94JQt8LEXMoiwa/nwE1+3FTdOOtz9jIHsk8O6RWp7GfUJAZwUwoXv0uNaTV+EhluHcugXZgqGVAbOBZAOkUWvZz6Ffu8dWLJaN0R8bu6fufiYj2BZDu6yGz+xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh+iHFno; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nW07d091fXpEpcUXMTD9WQ3jXciNoue+iQ176sVucvXyphVtWsIG2T8urwP2oKTZCHQ8dLBlwZ+9eQkKCTnjbH5Lw6xl287ntK7yKU40soCA9gPdvDS7Fqf+vsjWpSTiY7PQBqgmGPMbmML3tyqMuksQuOs/42WSJ3442i0/R6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReF68G2Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh+iHFno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E519D1F000C4;
-	Sat, 17 Oct 2026 17:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReF68G2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF1B1F000C4;
+	Sat, 17 Oct 2026 17:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257456;
-	bh=7fvs+U5spgcUjCmnpa/63ggAAggPlpJzo2vgnCwBP6I=;
+	s=korg; t=1792257459;
+	bh=yMICWQLcjKBmbUkOEPN7WoVM9UGyNB2ToK1kMB4zI+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xh+iHFnoF4VzMFDALk8CbUPzQcBbZVDfUqehmqe7mU+N4eBSU9M47/G8LE1vubJoE
-	 RrPPsH70aWSlGge/zLDoewJQMR/m++8/Ylhu6qcyFRbbfuuKc0RemQQj80e2FSP1ZX
-	 Qk11cSp3dqJ/5kJWd1w7rk27M1IPa3ZQ8NBUhB9Q=
+	b=ReF68G2YH1367ld1IbNToVCLf5PNxnzJc+mRUSgZhgymW9BGedJqvmYHkGuGjCLUi
+	 8swgnGYlsjlyl3RdnqbDwJl3wEFjIXoYiuM5WqHXEuDJDG4tcSmLyHKMBgN2vijvh+
+	 317f3g6XA4pjG6HjFG1E7+FiWNfuy923TtqEXQvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0563/1674] HID: hid-steam: Make client_opened a counter
-Date: Sat, 17 Oct 2026 17:47:15 +0200
-Message-ID: <20261017160445.545823472@linuxfoundation.org>
+Subject: [PATCH 6.6 0564/1674] HID: steam: Fully unregister controller when hidraw is opened
+Date: Sat, 17 Oct 2026 17:47:16 +0200
+Message-ID: <20261017160445.570323693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,71 +54,216 @@ Content-Transfer-Encoding: 8bit
 
 From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit 555b818adb97eca70210a49ba3f1d27882dde092 ]
+[ Upstream commit cd33a91d37eb4d7c6ce56aa7f4688066309808eb ]
 
-The client_opened variable was used to track if the hidraw was opened by any
-clients to silence keyboard/mouse events while opened. However, there was no
-counting of how many clients were opened, so opening two at the same time and
-then closing one would fool the driver into thinking it had no remaining opened
-clients.
+To avoid conflicts between anything touching the hidraw and the driver we
+had previously detached the evdev nodes when the hidraw is opened. However,
+this isn't sufficient to avoid FEATURE reports from conflicting, so we
+change to fully unregistering the controller internally, leaving only the
+hidraw active until it's closed.
+
+This also unifies the unregister and connect callbacks, as now the logic
+between these two callbacks is identical.
 
 Signed-off-by: Vicki Pfau <vi@endrift.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[Lee: Omit coalesce_rumble_work cancellation as 1d4549fd1115 ("HID:
+      steam: Coalesce rumble packets") is not present]
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/hid/hid-steam.c | 73 +++++++++++++++--------------------------
+ 1 file changed, 27 insertions(+), 46 deletions(-)
 
 diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 29ff4eb5194b7..d390ac5aee0da 100644
+index d390ac5aee0da..59e39bdf34ed9 100644
 --- a/drivers/hid/hid-steam.c
 +++ b/drivers/hid/hid-steam.c
-@@ -294,7 +294,7 @@ struct steam_device {
- 	spinlock_t lock;
- 	struct hid_device *hdev, *client_hdev;
- 	struct mutex report_mutex;
--	bool client_opened;
-+	unsigned long client_opened;
- 	struct input_dev __rcu *input;
- 	struct input_dev __rcu *sensors;
- 	unsigned long quirks;
-@@ -952,7 +952,7 @@ static void steam_battery_unregister(struct steam_device *steam)
+@@ -312,7 +312,6 @@ struct steam_device {
+ 	u16 rumble_left;
+ 	u16 rumble_right;
+ 	unsigned int sensor_timestamp_us;
+-	struct work_struct unregister_work;
+ };
+ 
+ static int steam_recv_report(struct steam_device *steam,
+@@ -694,6 +693,7 @@ static int steam_battery_register(struct steam_device *steam)
+ 			&steam->battery_desc, &battery_cfg);
+ 	if (IS_ERR(battery)) {
+ 		ret = PTR_ERR(battery);
++		devm_kfree(&steam->hdev->dev, steam->battery_desc.name);
+ 		hid_err(steam->hdev,
+ 				"%s:power_supply_register failed with error %d\n",
+ 				__func__, ret);
+@@ -947,6 +947,7 @@ static void steam_battery_unregister(struct steam_device *steam)
+ 	RCU_INIT_POINTER(steam->battery, NULL);
+ 	synchronize_rcu();
+ 	power_supply_unregister(battery);
++	devm_kfree(&steam->hdev->dev, steam->battery_desc.name);
+ }
+ 
  static int steam_register(struct steam_device *steam)
- {
+@@ -954,6 +955,7 @@ static int steam_register(struct steam_device *steam)
  	int ret;
--	bool client_opened;
-+	unsigned long client_opened;
+ 	unsigned long client_opened;
  	unsigned long flags;
++	bool do_add;
  
  	/*
-@@ -1138,7 +1138,7 @@ static int steam_client_ll_open(struct hid_device *hdev)
- 	unsigned long flags;
+ 	 * This function can be called several times in a row with the
+@@ -977,10 +979,7 @@ static int steam_register(struct steam_device *steam)
+ 		if (steam->quirks & STEAM_QUIRK_WIRELESS)
+ 			steam_battery_register(steam);
+ 
+-		mutex_lock(&steam_devices_lock);
+-		if (list_empty(&steam->list))
+-			list_add(&steam->list, &steam_devices);
+-		mutex_unlock(&steam_devices_lock);
++		do_add = true;
+ 	}
  
  	spin_lock_irqsave(&steam->lock, flags);
--	steam->client_opened = true;
-+	steam->client_opened++;
+@@ -996,6 +995,13 @@ static int steam_register(struct steam_device *steam)
+ 		if (ret != 0)
+ 			goto steam_register_sensors_fail;
+ 	}
++
++	if (do_add) {
++		mutex_lock(&steam_devices_lock);
++		if (list_empty(&steam->list))
++			list_add(&steam->list, &steam_devices);
++		mutex_unlock(&steam_devices_lock);
++	}
+ 	return 0;
+ 
+ steam_register_sensors_fail:
+@@ -1006,38 +1012,41 @@ static int steam_register(struct steam_device *steam)
+ 
+ static void steam_unregister(struct steam_device *steam)
+ {
++	if (!steam->serial_no[0])
++		return;
++
++	hid_info(steam->hdev, "Steam Controller '%s' disconnected",
++			steam->serial_no);
+ 	steam_battery_unregister(steam);
+ 	steam_sensors_unregister(steam);
+ 	steam_input_unregister(steam);
+-	if (steam->serial_no[0]) {
+-		hid_info(steam->hdev, "Steam Controller '%s' disconnected",
+-				steam->serial_no);
+-		mutex_lock(&steam_devices_lock);
+-		list_del_init(&steam->list);
+-		mutex_unlock(&steam_devices_lock);
+-		steam->serial_no[0] = 0;
+-	}
++	mutex_lock(&steam_devices_lock);
++	list_del_init(&steam->list);
++	mutex_unlock(&steam_devices_lock);
++	steam->serial_no[0] = 0;
+ }
+ 
+ static void steam_work_connect_cb(struct work_struct *work)
+ {
+ 	struct steam_device *steam = container_of(work, struct steam_device,
+ 							work_connect);
++
+ 	unsigned long flags;
+ 	bool connected;
++	bool opened;
+ 	int ret;
+ 
+ 	spin_lock_irqsave(&steam->lock, flags);
++	opened = steam->client_opened;
+ 	connected = steam->connected;
  	spin_unlock_irqrestore(&steam->lock, flags);
  
- 	schedule_work(&steam->unregister_work);
-@@ -1154,7 +1154,7 @@ static void steam_client_ll_close(struct hid_device *hdev)
- 	bool connected;
+-	if (connected) {
++	if (connected && !opened) {
+ 		ret = steam_register(steam);
+-		if (ret) {
++		if (ret)
+ 			hid_err(steam->hdev,
+ 				"%s:steam_register failed with error %d\n",
+ 				__func__, ret);
+-		}
+ 	} else {
+ 		steam_unregister(steam);
+ 	}
+@@ -1071,31 +1080,6 @@ static void steam_mode_switch_cb(struct work_struct *work)
+ 	}
+ }
  
- 	spin_lock_irqsave(&steam->lock, flags);
--	steam->client_opened = false;
-+	steam->client_opened--;
+-static void steam_work_unregister_cb(struct work_struct *work)
+-{
+-	struct steam_device *steam = container_of(work, struct steam_device,
+-							unregister_work);
+-	unsigned long flags;
+-	bool connected;
+-	bool opened;
+-
+-	spin_lock_irqsave(&steam->lock, flags);
+-	opened = steam->client_opened;
+-	connected = steam->connected;
+-	spin_unlock_irqrestore(&steam->lock, flags);
+-
+-	if (connected) {
+-		if (opened) {
+-			steam_sensors_unregister(steam);
+-			steam_input_unregister(steam);
+-		} else {
+-			steam_set_lizard_mode(steam, lizard_mode);
+-			steam_input_register(steam);
+-			steam_sensors_register(steam);
+-		}
+-	}
+-}
+-
+ static bool steam_is_valve_interface(struct hid_device *hdev)
+ {
+ 	struct hid_report_enum *rep_enum;
+@@ -1141,7 +1125,7 @@ static int steam_client_ll_open(struct hid_device *hdev)
+ 	steam->client_opened++;
+ 	spin_unlock_irqrestore(&steam->lock, flags);
+ 
+-	schedule_work(&steam->unregister_work);
++	schedule_work(&steam->work_connect);
+ 
+ 	return 0;
+ }
+@@ -1158,7 +1142,7 @@ static void steam_client_ll_close(struct hid_device *hdev)
  	connected = steam->connected && !steam->client_opened;
  	spin_unlock_irqrestore(&steam->lock, flags);
  
-@@ -1331,7 +1331,7 @@ static void steam_remove(struct hid_device *hdev)
+-	schedule_work(&steam->unregister_work);
++	schedule_work(&steam->work_connect);
+ }
+ 
+ static int steam_client_ll_raw_request(struct hid_device *hdev,
+@@ -1250,7 +1234,6 @@ static int steam_probe(struct hid_device *hdev,
+ 	INIT_LIST_HEAD(&steam->list);
+ 	INIT_WORK(&steam->rumble_work, steam_haptic_rumble_cb);
+ 	steam->sensor_timestamp_us = 0;
+-	INIT_WORK(&steam->unregister_work, steam_work_unregister_cb);
+ 
+ 	/*
+ 	 * With the real steam controller interface, do not connect hidraw.
+@@ -1311,7 +1294,6 @@ static int steam_probe(struct hid_device *hdev,
+ 	cancel_work_sync(&steam->work_connect);
+ 	cancel_delayed_work_sync(&steam->mode_switch);
  	cancel_work_sync(&steam->rumble_work);
- 	cancel_work_sync(&steam->unregister_work);
+-	cancel_work_sync(&steam->unregister_work);
+ 
+ 	return ret;
+ }
+@@ -1329,7 +1311,6 @@ static void steam_remove(struct hid_device *hdev)
+ 	cancel_delayed_work_sync(&steam->mode_switch);
+ 	cancel_work_sync(&steam->work_connect);
+ 	cancel_work_sync(&steam->rumble_work);
+-	cancel_work_sync(&steam->unregister_work);
  	steam->client_hdev = NULL;
--	steam->client_opened = false;
-+	steam->client_opened = 0;
+ 	steam->client_opened = 0;
  	if (steam->quirks & STEAM_QUIRK_WIRELESS) {
- 		hid_info(hdev, "Steam wireless receiver disconnected");
- 	}
 -- 
 2.53.0
 
