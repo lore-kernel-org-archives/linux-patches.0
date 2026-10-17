@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678BF381B0D;
-	Sat, 17 Oct 2026 16:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0457404E;
+	Sat, 17 Oct 2026 16:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254695; cv=none; b=hFD080yV8gmynpK3y2gsS2Y/4ZDxVQl/CG8Rlb2/pMStxy2gVNcPxF765Qk9TQlSrwSevPEtvzd4DQYuicWUQGZAQC7YLDI3ImbZjCUxiQkJk2TggaiBCK55aZ1i1JWgWd6Kox9yEj5UaFD1MmmaqzNQ1vntp7AhvMnL1jS75rM=
+	t=1792254698; cv=none; b=jZcf7WknTmB7p4ng3kc81n6jiALXVy1z9xULyDmijh9pSpKjrkIPq4cFgwWa5glR7XX+KKUYoPejj+tWdADLWJZgVW3DLf2TkeVm2Q2y71kIvQq9cKj1ZPu6uj50YLExGUAsPiNKgle7RU/fJeLA+80utlu9bBfubbsOcacafoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254695; c=relaxed/simple;
-	bh=VTI+ml/RlznqkQxGTUAm8do+KCd+XOewWRDfmwSBnbo=;
+	s=arc-20240116; t=1792254698; c=relaxed/simple;
+	bh=XGMqXt2FkCSzQQ74nYZM2D02idiVMM48QGeuGqGyZyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhUDzVjnt8CaNfgmie46j4nHYORlR0o4x5YUe0cLvgwDtYEijZPwAB7rsbYZb13uhzvhtWuR4USDxmTjILx39g2s4XQoQbAt08iQASDQhs41182irA+Ag9eYzRBg0X9aexE9aFaEYhvBt9LrCdLNY4jwJiMqt3FdLcM4jFE/uKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpBilvvG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tFgyC0yod/BTG+IsYt9cgV0+jyBAMLFNYiLelTdbL3iriA6aRyS6jpuAEbpnjnILUZhR4Ypu55D8cGqfLj0OSZRp3os0P2lUvySKP/OWybR4Kcogm159sJlLb1vJGAm1zp8LMFeVrMNHY7KT+01zsTIs+UL3uCZvusXi1kvd1m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcHBCdKS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpBilvvG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2121F000C4;
-	Sat, 17 Oct 2026 16:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcHBCdKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0441F000C4;
+	Sat, 17 Oct 2026 16:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254694;
-	bh=HlIbuYbYjWlFNUyD3OaHZqaRKCVM8KNz79iu8Mc//M8=;
+	s=korg; t=1792254697;
+	bh=hCUzC1hoJqXUE850S1hJCniRYF/IYVGA+kVQgmc2lmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpBilvvGqYCyOW44nwXh4354SbILMRliiCeIbCR6v5vNdDRwT9e5k1pDxvqIDxe5g
-	 lPLgHNGpK0DY1FwZ8bC77/HztJ3sHaaHIFFIdmD8vUP40SAhXRDkF+0jW+wIPEK0eX
-	 pJuK1w0sdH/SUn9zhttTqrEukLMNepfURoPVnf4E=
+	b=GcHBCdKSHXXXwYj0HTGqFNDRtfeuL3AI4lAbJ97s2oGyzAVa1jwRZJxy7vE4W42Lw
+	 jpjhPUCe5nEIL85Bod6fd47N7l2ngAgcTpatjNdXHTGEshNvoMKSp+mvuaEEQ4VmRv
+	 DDfBnU43vNEREuaa6c8uUcQR2clIHVXRF2gJJ/a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 514/869] btrfs: lzo: reject inline extents without valid headers
-Date: Sat, 17 Oct 2026 17:55:55 +0200
-Message-ID: <20261017160050.279299246@linuxfoundation.org>
+Subject: [PATCH 6.12 532/869] ALSA: seq: oss: Serialize readq reset state with q->lock
+Date: Sat, 17 Oct 2026 17:56:13 +0200
+Message-ID: <20261017160050.746160593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,88 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 0fa78ef637deb5dbe341582f88553a4bce496de0 ]
+[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
 
-[BUG]
-For a crafted btrfs image, the following KASAN can be triggered when
-reading an inline lzo compressed file extent:
+snd_seq_oss_readq_clear() resets qlen, head, and tail without
+q->lock even though the normal reader and producer paths serialize the
+same ring state under that spinlock. A reset can therefore race
+snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
+stale records in the queue, drop freshly queued ones, or report the
+wrong readiness after wakeup. KCSAN reports a data race between
+snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
 
-  BUG: KASAN: slab-out-of-bounds in lzo_decompress+0x57d/0x700
-  Read of size 4 at addr ffff888006f2e644 by task btrfs_lzo_inlin/77
+Take q->lock while clearing the ring and resetting input_time. Factor
+the enqueue logic into a caller-locked helper so
+snd_seq_oss_readq_put_timestamp() updates its suppression state under
+the same lock instead of racing the reset path.
 
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5b/0x70
-   print_report+0xd1/0x610
-   kasan_report+0xe0/0x110
-   __asan_report_load_n_noabort+0x13/0x20
-   lzo_decompress+0x57d/0x700
-   btrfs_decompress+0x140/0x1c0
-   uncompress_inline+0x147/0x1b0
-   btrfs_get_extent+0xb23/0x10a0
-   btrfs_do_readpage.constprop.0+0x538/0x1ac0
-   btrfs_readahead+0x32f/0x5f0
-   read_pages+0x16f/0x850
-   page_cache_ra_unbounded+0x296/0x490
-   do_page_cache_ra+0xd9/0x130
-   page_cache_sync_ra+0x3ee/0x6f0
-   filemap_get_pages+0x306/0x15c0
-   filemap_read+0x329/0xd00
-   btrfs_file_read_iter+0x1f8/0x2b0
-   vfs_read+0x4ef/0x720
-   ksys_read+0xf8/0x1d0
-   __x64_sys_read+0x71/0xb0
-   x64_sys_call+0x1ab0/0x1b70
-   do_syscall_64+0x61/0x470
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
+The buggy scenario involves two paths, with each column showing the
+order within that path:
 
-[CAUSE]
-For an inline lzo compressed file extent, there should always be one lzo
-header, recording the total length of the compressed data, followed by
-one segment header, recording the compressed lzo payload.
+reset path:                      locked readq updater:
+1. snd_seq_oss_reset() or        1. A reader or callback producer
+   release reaches                  takes q->lock on the same queue.
+   snd_seq_oss_readq_clear().
+2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
+   resets qlen, head, tail,         qlen, head, and tail.
+   and input_time.
+3. snd_seq_oss_readq_clear()     3. The updater completes its
+   wakes sleepers on                read-modify-write sequence.
+   q->midi_sleep.
+4. Without q->lock, the reset    4. The resulting ring state drives
+   can overlap the locked           later reads and readiness.
+   update.
 
-But if a crafted inline lzo compressed file extent contains only an lzo
-header, without the segment header or payload, lzo_decompress() will
-still try to read the segment header, causing a read beyond the item
-boundary.
+KCSAN reports:
 
-Furthermore if the inline lzo compressed file extent is the first item
-of the leaf, it will be at the extent buffer boundary. The above
-out-of-boundary read will go beyond the extent buffer boundary,
-triggering the above KASAN report.
+BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
+snd_seq_oss_readq_free
 
-[FIX]
-Validate the total length of the inlined lzo compressed file extent, to
-make sure there is at least one LZO header and one segment header, and a
-non-zero payload.
+write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
+  snd_seq_oss_readq_free+0x6c/0x80
+  snd_seq_oss_read+0xcb/0x250
+  odev_read+0x38/0x60
+  vfs_read+0xff/0x600
+  ksys_read+0xb4/0x140
+  __x64_sys_read+0x46/0x60
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: a6fa6fae40ec ("btrfs: Add lzo compression support")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-[ Rework the commit message to remove slop ]
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
+  snd_seq_oss_readq_clear+0x1f/0x90
+  snd_seq_oss_reset+0xa7/0xf0
+  snd_seq_oss_ioctl+0x6f6/0x7e0
+  odev_ioctl+0x56/0xc0
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+value changed: 0x00000001 -> 0x00000000
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/lzo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/oss/seq_oss_readq.c | 83 +++++++++++++++++++-----------
+ 1 file changed, 52 insertions(+), 31 deletions(-)
 
-diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
-index 72856f6775f7f..0d136da8b6be1 100644
---- a/fs/btrfs/lzo.c
-+++ b/fs/btrfs/lzo.c
-@@ -449,7 +449,7 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
- 	size_t max_segment_len = WORKSPACE_BUF_LENGTH;
- 	int ret = 0;
+diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
+index f0db5d3dcba47..b7cdb1c61f265 100644
+--- a/sound/core/seq/oss/seq_oss_readq.c
++++ b/sound/core/seq/oss/seq_oss_readq.c
+@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
+ void
+ snd_seq_oss_readq_clear(struct seq_oss_readq *q)
+ {
+-	if (q->qlen) {
+-		q->qlen = 0;
+-		q->head = q->tail = 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (q->qlen) {
++			q->qlen = 0;
++			q->head = 0;
++			q->tail = 0;
++		}
++		q->input_time = (unsigned long)-1;
+ 	}
++
+ 	/* if someone sleeping, wake'em up */
+ 	wake_up(&q->midi_sleep);
+-	q->input_time = (unsigned long)-1;
+ }
  
--	if (srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)
-+	if (srclen <= LZO_LEN * 2 || srclen > max_segment_len + LZO_LEN * 2)
- 		return -EUCLEAN;
+ /*
+@@ -136,28 +140,37 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
+ /*
+  * copy an event to input queue:
+  * return zero if enqueued
++ * caller must hold lock
+  */
+-int
+-snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
++					      union evrec *ev)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&q->lock, flags);
+-	if (q->qlen >= q->maxlen - 1) {
+-		spin_unlock_irqrestore(&q->lock, flags);
++	if (q->qlen >= q->maxlen - 1)
+ 		return -ENOMEM;
+-	}
  
- 	in_len = read_compress_length(data_in);
+ 	memcpy(&q->q[q->tail], ev, sizeof(*ev));
+ 	q->tail = (q->tail + 1) % q->maxlen;
+ 	q->qlen++;
+ 
+-	/* wake up sleeper */
+-	wake_up(&q->midi_sleep);
++	return 0;
++}
+ 
+-	spin_unlock_irqrestore(&q->lock, flags);
++/*
++ * copy an event to input queue:
++ * return zero if enqueued
++ */
++int
++snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++{
++	int rc;
+ 
+-	return 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		rc = snd_seq_oss_readq_put_event_locked(q, ev);
++		if (!rc)
++			wake_up(&q->midi_sleep);
++	}
++
++	return rc;
+ }
+ 
+ 
+@@ -215,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
+ int
+ snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
+ {
+-	if (curt != q->input_time) {
+-		union evrec rec;
+-		memset(&rec, 0, sizeof(rec));
+-		switch (seq_mode) {
+-		case SNDRV_SEQ_OSS_MODE_SYNTH:
+-			rec.echo = (curt << 8) | SEQ_WAIT;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
+-		case SNDRV_SEQ_OSS_MODE_MUSIC:
+-			rec.t.code = EV_TIMING;
+-			rec.t.cmd = TMR_WAIT_ABS;
+-			rec.t.time = curt;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
++	int queued = 0;
++
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (curt != q->input_time) {
++			union evrec rec;
++
++			memset(&rec, 0, sizeof(rec));
++			switch (seq_mode) {
++			case SNDRV_SEQ_OSS_MODE_SYNTH:
++				rec.echo = (curt << 8) | SEQ_WAIT;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			case SNDRV_SEQ_OSS_MODE_MUSIC:
++				rec.t.code = EV_TIMING;
++				rec.t.cmd = TMR_WAIT_ABS;
++				rec.t.time = curt;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			}
++			q->input_time = curt;
+ 		}
+-		q->input_time = curt;
+ 	}
++	if (queued)
++		wake_up(&q->midi_sleep);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
