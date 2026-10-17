@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0394C37DEBE;
-	Sat, 17 Oct 2026 16:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70173909B5;
+	Sat, 17 Oct 2026 16:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254078; cv=none; b=erJRyXob7iomuzmXSegSbr8fT0aXTYOX6XtaILsGvuclc0d6IP8bd5sYIB9rvm7rxD3sCJCilMuvh3gDVE7Sjf/ZQZAq0f/x4Ay+SeUXT+15OIBvUK5oidGcK3fKD7kU0hVoi3CF8F3n4oWZWLJATUzZwU7fHNbphqhMsPjQVYU=
+	t=1792254080; cv=none; b=CrjQEeRxoFAQ8AyV0X183X0QsWWbVryHwkCjvZbe27sCgduTSKHWgPq1F3vexShj+8mr8jaY5vfreqHSf0ozosYzMHEqqAtwx4uL1vl7I1cABoZhSrIt7k9eMz83PFm6QULad7gxvAGutrfHomShiIp/b/zXODyBJE4nRW2s6yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254078; c=relaxed/simple;
-	bh=ET7cuSvCoo6sH5iBoJ1XHXFDiKvuy8vYYf7YPQQ9Skg=;
+	s=arc-20240116; t=1792254080; c=relaxed/simple;
+	bh=sp7yLAAVgTJEmYfud4q6/OpXT4y1V36gAfhKNtI3vho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/nqXzAwGN1cvC+wyAf0C3YI0pe0nqAW9+pqnVcmuwPYwqlTK3xOXt4nppHvP9BwATZeQqHJOcfW4E7r4r5UF1Cmzbt8DmaAURrbeNA3diBfHVcBUm32wvdLGx67de6/iEnPVAZ6oCxf0jujrT/13OWVKR7LPcXplXLMaAq/At0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns9VMjtI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+GcmEjbi6QhprAEcTtNZHrltFP6+tUp9/uVrm61wRKe/qfvkDvdhD1WoJ/+15ZjlpP45KfuMKMUqx+UdkwKD9bRnlty4mxrrBk6QGTuXiuqBsXiHFW+hTc67AC9DXucX6H7QQRKNXmyUe4q5l0iEkN6FhxYiK6Se0xysleLqrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdsPYk8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns9VMjtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4C41F000C4;
-	Sat, 17 Oct 2026 16:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdsPYk8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A861F000C4;
+	Sat, 17 Oct 2026 16:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254076;
-	bh=0eCWtz/uLUA0Eww/lTK124UfCrsZkZ3WwT1wO73LYQ4=;
+	s=korg; t=1792254079;
+	bh=PvNM06ab/NBmEcDz1SEbuj5GfRWwCJO8ha/akPM25QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ns9VMjtIxoH0Ld581Eq3BUaa3o3817N+EtlkGUVhVjU9HIYXlpj464IAfq3o43j5w
-	 G456qPvhpjx4kXODj+VkqL+IsuAxK795SU8iUpadr+B8bpuQxauuwA7xLBPHYGGOhf
-	 xPnmXv/CoZzSO3Vb0hCfHZLVglzoYGEd7K0ONR+E=
+	b=fdsPYk8GpHm84qibrxn0htP4m1Ps/dH7HN8E8Kqk03AocC5jC+TJQaZlc8EGh1kw9
+	 dC6na+dPHVegeSw2N+PV5AOrBcpD5rSTjG+GSSyg35iS1woP1fiSMtiSL0CZyNnEQ2
+	 RfjnfUIJcTa3p3RZiz9wcv6Yz30LBHObNtR8KVw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	James Lin <pinglei.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 326/869] btrfs: only release the dirty pages io tree after successful writes
-Date: Sat, 17 Oct 2026 17:52:47 +0200
-Message-ID: <20261017160045.436532464@linuxfoundation.org>
+Subject: [PATCH 6.12 327/869] drm/amd/display: Wrap DCN32 phantom-plane allocation in DC_RUN_WITH_PREEMPTION_ENABLED
+Date: Sat, 17 Oct 2026 17:52:48 +0200
+Message-ID: <20261017160045.462218897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,157 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 4066c55e109475a06d18a1f127c939d551211956 ]
+[ Upstream commit 183182235f6d53bac62c6c39014738a54a68dfa6 ]
 
-[WARNING]
-With extra warning on dirty extent buffers at umount (aka, the next
-patch in the series), test case generic/388 can trigger the following
-warning about dirty extent buffers at unmount time:
+[Why]
+dcn32_validate_bandwidth() wraps dcn32_internal_validate_bw() with
+DC_FP_START()/DC_FP_END(). In x86 non-RT, DC_FP_START takes fpregs_lock(),
+which disables local softirqs.
 
-  BTRFS critical (device dm-2 state E): emergency shutdown
-  BTRFS error (device dm-2 state E): error while writing out transaction: -30
-  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
-  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
-  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
-  BTRFS info (device dm-2 state EA): forced readonly
-  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
-  ------------[ cut here ]------------
-  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
-  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
-  Call Trace:
-   <TASK>
-   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
-   generic_shutdown_super+0x89/0x1a0
-   kill_anon_super+0x16/0x40
-   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
-   deactivate_locked_super+0x2d/0xb0
-   cleanup_mnt+0xdc/0x140
-   task_work_run+0x5a/0xa0
-   exit_to_user_mode_loop+0x123/0x4b0
-   do_syscall_64+0x243/0x7c0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
+The DML1 path through dcn32_enable_phantom_plane() calls kvzalloc() to
+allocate ~335 KiB for dc_plane_state. This triggers the vmalloc path,
+which calls BUG_ON(in_interrupt()) because it's invoked within the
+FPU-enabled (softirq disabled) region, leading to a kernel crash.
 
-I'm using a stripped down version, which seems to trigger the warning
-more reliably:
+[How]
+Wrap the dc_state_create_phantom_plane() call with the
+DC_RUN_WITH_PREEMPTION_ENABLED() macro to allow preemption during
+this memory allocation.
 
-  _fsstress_pid=""
-  workload()
-  {
-  	dmesg -C
-  	mkfs.btrfs -f -K $dev > /dev/null
-  	echo 1 > /sys/kernel/debug/clear_warn_once
-  	mount $dev $mnt
-  	$fsstress -w -n 1024 -p 4 -d $mnt &
-  	_fsstress_pid=$!
-  	sleep 0
-  	$godown $mnt
-  	pkill --echo -PIPE fsstress > /dev/null
-  	wait $_fsstress_pid
-  	unset _fsstress_pid
-  	umount $mnt
-
-  	if dmesg | grep -q "WARNING"; then
-  		fail
-  	fi
-  }
-
-  for (( i = 0; i < $runtime; i++ )); do
-  	echo "=== $i/$runtime ==="
-  	workload
-  done
-
-[CAUSE]
-Inside btrfs_write_and_wait_transaction(), we first try to write all
-dirty ebs, then wait for them to finish.
-
-After that we call btrfs_extent_io_tree_release() to free all
-extent states from dirty_pages io tree.
-
-However if we hit an error from btrfs_write_marked_extent(), then we
-still call btrfs_extent_io_tree_release() to clear that dirty_pages io
-tree, which may contain dirty records that we haven't yet submitted.
-
-Furthermore, the later transaction cleanup path will utilize that
-dirty_pages io tree to properly cleanup those dirty ebs, but since it's
-already empty, no dirty ebs are properly cleaned up, thus will later
-trigger the warnings inside invalidate_btree_folios().
-
-[FIX]
-Normally such dirty ebs won't cause problems, as when the iput() is
-called on the btree inode, the dirty ebs will be forcibly written back,
-and since the fs is already in an error status, such writeback will not
-reach disk and finish immediately.
-
-But it's still better to get rid of such dirty ebs, if we ended up with
-dirty ebs but the fs is not in an error status, then such writeback at
-iput() time will be too late, as all workers are already stopped but
-writeback will utilize workers, which will lead to NULL pointer
-dereferences.
-
-Instead of unconditionally calling btrfs_extent_io_tree_release(), only
-call it if btrfs_write_and_wait_transaction() finished successfully, so
-that @dirty_pages extent io tree is kept untouched for transaction
-cleanup.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 235c67634230 ("drm/amd/display: add DCN32/321 specific files for Display Core")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/4470
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 885ccbef7b94a8b38f69c4211c679021aa27ad11)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c     | 1 +
- fs/btrfs/transaction.c | 9 ++++-----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ .../drm/amd/display/dc/resource/dcn32/dcn32_resource.c    | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index b0035d13286a4..2c98dd8c126e8 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4693,6 +4693,7 @@ static void btrfs_destroy_marked_extents(struct btrfs_fs_info *fs_info,
- 			free_extent_buffer_stale(eb);
- 		}
- 	}
-+	extent_io_tree_release(dirty_pages);
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+index ccfdca7c83f66..1fa4d32ce0be7 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+@@ -90,9 +90,14 @@
+ #include "dml/dcn32/dcn32_fpu.h"
  
- static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 76842ed54335d..4cf852f531847 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1281,14 +1281,13 @@ static int btrfs_write_and_wait_transaction(struct btrfs_trans_handle *trans)
- 	blk_finish_plug(&plug);
- 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
+ #include "dc_state_priv.h"
++#include "dc_fpu.h"
  
--	extent_io_tree_release(&trans->transaction->dirty_pages);
--
- 	if (ret)
- 		return ret;
--	else if (ret2)
-+	if (ret2)
- 		return ret2;
--	else
--		return 0;
+ #include "dml2/dml2_wrapper.h"
+ 
++#if !defined(DC_RUN_WITH_PREEMPTION_ENABLED)
++#define DC_RUN_WITH_PREEMPTION_ENABLED(code) code
++#endif
 +
-+	extent_io_tree_release(&trans->transaction->dirty_pages);
-+	return 0;
- }
+ #define DC_LOGGER_INIT(logger)
  
- /*
+ enum dcn32_clk_src_array_id {
+@@ -1649,7 +1654,8 @@ static void dcn32_enable_phantom_plane(struct dc *dc,
+ 		if (curr_pipe->top_pipe && curr_pipe->top_pipe->plane_state == curr_pipe->plane_state)
+ 			phantom_plane = prev_phantom_plane;
+ 		else
+-			phantom_plane = dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state);
++			DC_RUN_WITH_PREEMPTION_ENABLED(phantom_plane =
++				dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state));
+ 
+ 		if (!phantom_plane)
+ 			continue;
 -- 
 2.53.0
 
