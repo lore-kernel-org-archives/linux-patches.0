@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F17374E60;
-	Sat, 17 Oct 2026 17:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B333AEF2D;
+	Sat, 17 Oct 2026 17:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258888; cv=none; b=dEUA6OL1faM/7VYdMiLCgStx3WgxiriUhU+TVsQ5uBwUdV+gQXxW2jGCVMBi/n+bdJqLhjTC+MCPSAqmJDlDjBbNi5tR/D8p+NllVAABAG1NVXCW34GOUFAjlZN/td4gC8LsMffU4/59WGkdv4uaiJYmhDNngHpL6a9l3SeGHDQ=
+	t=1792258891; cv=none; b=upTrH4Li88yNR4LPZ6xYh1/15eDhL2/bEjnYnH14xfkbUpSh7s7B+V6g1A051p5MP4Ykxa/V+oojOFduBxlZKjof3cOoabPc56duMFBKw76AOB1Wrw3uy9SB3o1AOImDPTYlO5OJwRR6GKqarEE39NZVEFLd+OuSNs/qJVC3b8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258888; c=relaxed/simple;
-	bh=zASKD1lu4ESVWStmvt6UfhjObPTu/FADjn0efVACQVE=;
+	s=arc-20240116; t=1792258891; c=relaxed/simple;
+	bh=UfwZflY6GjjQWqTNOk63b2ocLz5q1WGNKRKMAbTsvmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAkR8YwmI5idtHIPVU6omT8GkHVf9/MTVLYQgMi2G04NkKzuz/jCxCJOred/q5shFcFxyMufTNf24FPzGFl4ze4L5mNMrqTjqcgv/kSPK+iA4ZifWjDWZbxs/rjTyMESUX+NRZknYOTdvSlZGlkCo3FWg5SmOELc4wW0vqfJrkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WlTSnRb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ml0A/t8iTBmmQL/yaW5mtVhRcJIU68O2FgWGhRvix4Neqy6MfuSGOO5oOL39crjg+amkQ//JAH7Jk5jUEgNQmYAPvXn8AT9I+nZ4hnJTLTIEIIwfdcr09PtVU5cAVPDBwH/LVxhEArbYyzLsuObAw3/2OSMFCfMcK6IRkir+g2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxX1kgEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WlTSnRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE801F000C4;
-	Sat, 17 Oct 2026 17:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxX1kgEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D75B1F000C4;
+	Sat, 17 Oct 2026 17:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258887;
-	bh=4BxiqwrVNTsnDVXLSxfHLHv/IUzJQeXigWFXFvKcQew=;
+	s=korg; t=1792258890;
+	bh=dzGbphZSLEQtSx2bMri6TU4AKO33z8JY55kx70uqtoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WlTSnRb6xeXVyQLcQRblfspNhwPAHPcS8ZNR78cEyvZIq6N5FyMYs8zMx42VkBm6
-	 BOR7v8zQ3MWUdCjlbYZGoJGNS2djxDpAxvj0GSYPaHJUoGzIGzdji6CR2w2AcIzS11
-	 ED8lZdUcIof38EReP3V9w3BV6BF6Fldr0dOZECbQ=
+	b=GxX1kgEBKBexHH4I5ofL52vk8zj+m0ITrGb7XovC6PZboH5xApB9nzsBqxG0kdUKa
+	 1A4EqF7MQQFp4bEQaiNCRvTgsGWa4ikk8ZPTACeXww2vwvsSHrQyFjZ8TUCQLZ0FI2
+	 mTY/o9Q3SkwG0jsFtL0kuZUf5zgn641pLFs9tbzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosa.ru>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Vivek BalachandharTN <vivek.balachandhar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1033/1674] f2fs: read COW data with the original inode during atomic write
-Date: Sat, 17 Oct 2026 17:55:05 +0200
-Message-ID: <20261017160457.647569126@linuxfoundation.org>
+Subject: [PATCH 6.6 1016/1674] staging: rtl8723bs: clean up redundant & parentheses
+Date: Sat, 17 Oct 2026 17:54:48 +0200
+Message-ID: <20261017160457.210787283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,141 +50,476 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosa.ru>
+From: Vivek BalachandharTN <vivek.balachandhar@gmail.com>
 
-[ Upstream commit a41075acde0124d2f8a5f563068a5d63e8ffd57b ]
+[ Upstream commit 400a23b2e0ca9325f7c2c418d804591622cc4f61 ]
 
-When updating an atomic-write file, f2fs_write_begin() may read the
-previously written data back from the COW inode:
-prepare_atomic_write_begin() locates the block in the COW inode and sets
-use_cow, and the read bio is then built with the COW inode:
+Cleaned up redundant parentheses around the '&' (address-of)
+operator in various expressions to improve code readability
+and comply with kernel coding style guidelines.
 
-	f2fs_submit_page_read(use_cow ? F2FS_I(inode)->cow_inode : inode,
-			      ...);
-
-and f2fs_grab_read_bio() decides whether to schedule fs-layer decryption
-(STEP_DECRYPT) for the bio based on that inode via
-fscrypt_inode_uses_fs_layer_crypto().
-
-However, the folio being filled belongs to the original inode
-(folio->mapping->host == inode), and the data stored in the COW block was
-encrypted (or left as plaintext) using the original inode's context, not
-the COW inode's -- see f2fs_encrypt_one_page(), which keys off
-fio->page->mapping->host.  fscrypt_decrypt_pagecache_blocks() likewise
-operates on folio->mapping->host.
-
-The COW inode is created as a tmpfile in the parent directory and inherits
-its encryption policy from there.  With test_dummy_encryption the newly
-created COW inode gets the dummy policy and becomes encrypted, while a
-pre-existing regular file -- created before the policy applied, e.g.
-already present in the on-disk image -- stays unencrypted.  The read
-path then sets STEP_DECRYPT based on the encrypted COW inode and calls
-fscrypt_decrypt_pagecache_blocks() on a folio whose host (the unencrypted
-original inode) has a NULL ->i_crypt_info, dereferencing it:
-
-  Oops: general protection fault, probably for non-canonical address ...
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:fscrypt_decrypt_pagecache_blocks+0xa0/0x310
-  Workqueue: f2fs_post_read_wq f2fs_post_read_work
-  Call Trace:
-   fscrypt_decrypt_bio+0x1eb/0x340
-   f2fs_post_read_work+0xba/0x140
-   process_one_work+0x91c/0x1a40
-   worker_thread+0x677/0xe90
-   kthread+0x2bc/0x3a0
-
-The COW inode is only needed to locate the on-disk block, and that block
-address is already resolved into @blkaddr by prepare_atomic_write_begin()
-via __find_data_block(cow_inode, ...); f2fs_submit_page_read() then reads
-from that physical @blkaddr directly, so the inode argument only selects
-the post-read crypto context, not which block is fetched.  Reading with
-@inode therefore returns the same (latest, not-yet-committed) COW data,
-while making both the fs-layer decryption decision and the inline crypto
-path use the correct (original inode's) key.
-
-With the COW inode no longer used at the read site, the use_cow flag has no
-remaining consumer; drop it from f2fs_write_begin() and
-prepare_atomic_write_begin().
-
-Fixes: 591fc34e1f98 ("f2fs: use cow inode data when updating atomic write")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Vivek BalachandharTN <vivek.balachandhar@gmail.com>
+Link: https://lore.kernel.org/r/20250720092125.246844-1-vivek.balachandhar@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 514ab9836459 ("staging: rtl8723bs: fix buffer over-read in rtw_update_protection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c | 128 +++++++++++-----------
+ 1 file changed, 64 insertions(+), 64 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 5c47b0eed887d..b0c633c5deb75 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3551,7 +3551,7 @@ static int __reserve_data_block(struct inode *inode, pgoff_t index,
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index 2422bf30ab757..8dd0251956732 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -120,7 +120,7 @@ struct	wlan_network *rtw_alloc_network(struct	mlme_priv *pmlmepriv)
+ 		pnetwork = NULL;
+ 		goto exit;
+ 	}
+-	plist = get_next(&(free_queue->queue));
++	plist = get_next(&free_queue->queue);
  
- static int prepare_atomic_write_begin(struct f2fs_sb_info *sbi,
- 			struct page *page, loff_t pos, unsigned int len,
--			block_t *blk_addr, bool *node_changed, bool *use_cow)
-+			block_t *blk_addr, bool *node_changed)
+ 	pnetwork = container_of(plist, struct wlan_network, list);
+ 
+@@ -142,7 +142,7 @@ void _rtw_free_network(struct	mlme_priv *pmlmepriv, struct wlan_network *pnetwor
  {
- 	struct inode *inode = page->mapping->host;
- 	struct inode *cow_inode = F2FS_I(inode)->cow_inode;
-@@ -3566,14 +3566,14 @@ static int prepare_atomic_write_begin(struct f2fs_sb_info *sbi,
+ 	unsigned int delta_time;
+ 	u32 lifetime = SCANQUEUE_LIFETIME;
+-	struct __queue *free_queue = &(pmlmepriv->free_bss_pool);
++	struct __queue *free_queue = &pmlmepriv->free_bss_pool;
  
- 	/* Look for the block in COW inode first */
- 	err = __find_data_block(cow_inode, index, blk_addr);
--	if (err) {
-+	if (err)
- 		return err;
--	} else if (__is_valid_data_blkaddr(*blk_addr)) {
--		*use_cow = true;
-+
-+	if (__is_valid_data_blkaddr(*blk_addr))
- 		return 0;
--	} else if (*blk_addr == NEW_ADDR) {
-+
-+	if (*blk_addr == NEW_ADDR)
- 		cow_has_reserved_block = true;
--	}
+ 	if (!pnetwork)
+ 		return;
+@@ -162,9 +162,9 @@ void _rtw_free_network(struct	mlme_priv *pmlmepriv, struct wlan_network *pnetwor
  
- 	if (is_inode_flag_set(inode, FI_ATOMIC_REPLACE))
- 		goto reserve_block;
-@@ -3606,7 +3606,6 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
- 	struct page *page = NULL;
- 	pgoff_t index = ((unsigned long long) pos) >> PAGE_SHIFT;
- 	bool need_balance = false;
--	bool use_cow = false;
- 	block_t blkaddr = NULL_ADDR;
- 	int err = 0;
+ 	spin_lock_bh(&free_queue->lock);
  
-@@ -3666,7 +3665,7 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
+-	list_del_init(&(pnetwork->list));
++	list_del_init(&pnetwork->list);
  
- 	if (f2fs_is_atomic_file(inode))
- 		err = prepare_atomic_write_begin(sbi, page, pos, len,
--					&blkaddr, &need_balance, &use_cow);
-+					&blkaddr, &need_balance);
- 	else
- 		err = prepare_write_begin(sbi, page, pos, len,
- 					&blkaddr, &need_balance);
-@@ -3706,9 +3705,15 @@ static int f2fs_write_begin(struct file *file, struct address_space *mapping,
- 			f2fs_handle_error(sbi, ERROR_INVALID_BLKADDR);
- 			goto fail;
+-	list_add_tail(&(pnetwork->list), &(free_queue->queue));
++	list_add_tail(&pnetwork->list, &free_queue->queue);
+ 
+ 	spin_unlock_bh(&free_queue->lock);
+ }
+@@ -172,7 +172,7 @@ void _rtw_free_network(struct	mlme_priv *pmlmepriv, struct wlan_network *pnetwor
+ void _rtw_free_network_nolock(struct	mlme_priv *pmlmepriv, struct wlan_network *pnetwork)
+ {
+ 
+-	struct __queue *free_queue = &(pmlmepriv->free_bss_pool);
++	struct __queue *free_queue = &pmlmepriv->free_bss_pool;
+ 
+ 	if (!pnetwork)
+ 		return;
+@@ -180,9 +180,9 @@ void _rtw_free_network_nolock(struct	mlme_priv *pmlmepriv, struct wlan_network *
+ 	if (pnetwork->fixed)
+ 		return;
+ 
+-	list_del_init(&(pnetwork->list));
++	list_del_init(&pnetwork->list);
+ 
+-	list_add_tail(&(pnetwork->list), get_list_head(free_queue));
++	list_add_tail(&pnetwork->list, get_list_head(free_queue));
+ }
+ 
+ /*
+@@ -288,7 +288,7 @@ void rtw_free_mlme_priv(struct mlme_priv *pmlmepriv)
+ void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork);
+ void rtw_free_network_nolock(struct adapter *padapter, struct wlan_network *pnetwork)
+ {
+-	_rtw_free_network_nolock(&(padapter->mlmepriv), pnetwork);
++	_rtw_free_network_nolock(&padapter->mlmepriv, pnetwork);
+ 	rtw_cfg80211_unlink_bss(padapter, pnetwork);
+ }
+ 
+@@ -405,7 +405,7 @@ void update_network(struct wlan_bssid_ex *dst, struct wlan_bssid_ex *src,
+ 	long rssi_final;
+ 
+ 	/* The rule below is 1/5 for sample value, 4/5 for history value */
+-	if (check_fwstate(&padapter->mlmepriv, _FW_LINKED) && is_same_network(&(padapter->mlmepriv.cur_network.network), src, 0)) {
++	if (check_fwstate(&padapter->mlmepriv, _FW_LINKED) && is_same_network(&padapter->mlmepriv.cur_network.network, src, 0)) {
+ 		/* Take the recvpriv's value for the connected AP*/
+ 		ss_final = padapter->recvpriv.signal_strength;
+ 		sq_final = padapter->recvpriv.signal_qual;
+@@ -441,15 +441,15 @@ void update_network(struct wlan_bssid_ex *dst, struct wlan_bssid_ex *src,
+ 
+ static void update_current_network(struct adapter *adapter, struct wlan_bssid_ex *pnetwork)
+ {
+-	struct	mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 
+-	rtw_bug_check(&(pmlmepriv->cur_network.network),
+-		&(pmlmepriv->cur_network.network),
+-		&(pmlmepriv->cur_network.network),
+-		&(pmlmepriv->cur_network.network));
++	rtw_bug_check(&pmlmepriv->cur_network.network,
++		&pmlmepriv->cur_network.network,
++		&pmlmepriv->cur_network.network,
++		&pmlmepriv->cur_network.network);
+ 
+-	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&(pmlmepriv->cur_network.network), pnetwork, 0))) {
+-		update_network(&(pmlmepriv->cur_network.network), pnetwork, adapter, true);
++	if ((check_fwstate(pmlmepriv, _FW_LINKED) == true) && (is_same_network(&pmlmepriv->cur_network.network, pnetwork, 0))) {
++		update_network(&pmlmepriv->cur_network.network, pnetwork, adapter, true);
+ 		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
+ 								pmlmepriv->cur_network.network.ie_length);
+ 	}
+@@ -462,8 +462,8 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ {
+ 	struct list_head	*plist, *phead;
+ 	u32 bssid_ex_sz;
+-	struct mlme_priv *pmlmepriv = &(adapter->mlmepriv);
+-	struct __queue	*queue	= &(pmlmepriv->scanned_queue);
++	struct mlme_priv *pmlmepriv = &adapter->mlmepriv;
++	struct __queue	*queue	= &pmlmepriv->scanned_queue;
+ 	struct wlan_network	*pnetwork = NULL;
+ 	struct wlan_network	*oldest = NULL;
+ 	int target_find = 0;
+@@ -476,7 +476,7 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 
+ 		rtw_bug_check(pnetwork, pnetwork, pnetwork, pnetwork);
+ 
+-		if (is_same_network(&(pnetwork->network), target, feature)) {
++		if (is_same_network(&pnetwork->network, target, feature)) {
+ 			target_find = 1;
+ 			break;
  		}
--		err = f2fs_submit_page_read(use_cow ?
--				F2FS_I(inode)->cow_inode : inode, page,
--				blkaddr, 0, true);
-+		/*
-+		 * Although the block may be stored in the COW inode, the folio
-+		 * belongs to @inode and its data was encrypted (or not) using
-+		 * @inode's context (see f2fs_encrypt_one_page()).  Read with
-+		 * @inode so the post-read decryption decision matches the
-+		 * folio's owner; otherwise an unencrypted @inode whose COW inode
-+		 * is encrypted hits a NULL ->i_crypt_info on decryption.
-+		 */
-+		err = f2fs_submit_page_read(inode, page, blkaddr, 0, true);
- 		if (err)
- 			goto fail;
+@@ -500,7 +500,7 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 			if (!pnetwork)
+ 				goto exit;
  
+-			memcpy(&(pnetwork->network), target,  get_wlan_bssid_ex_sz(target));
++			memcpy(&pnetwork->network, target,  get_wlan_bssid_ex_sz(target));
+ 			/*  variable initialize */
+ 			pnetwork->fixed = false;
+ 			pnetwork->last_scanned = jiffies;
+@@ -522,7 +522,7 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 
+ 			bssid_ex_sz = get_wlan_bssid_ex_sz(target);
+ 			target->length = bssid_ex_sz;
+-			memcpy(&(pnetwork->network), target, bssid_ex_sz);
++			memcpy(&pnetwork->network, target, bssid_ex_sz);
+ 
+ 			pnetwork->last_scanned = jiffies;
+ 
+@@ -530,7 +530,7 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 			if (pnetwork->network.phy_info.signal_quality == 101)
+ 				pnetwork->network.phy_info.signal_quality = 0;
+ 
+-			list_add_tail(&(pnetwork->list), &(queue->queue));
++			list_add_tail(&pnetwork->list, &queue->queue);
+ 
+ 		}
+ 	} else {
+@@ -554,7 +554,7 @@ void rtw_update_scanned_network(struct adapter *adapter, struct wlan_bssid_ex *t
+ 			update_ie = false;
+ 		}
+ 
+-		update_network(&(pnetwork->network), target, adapter, update_ie);
++		update_network(&pnetwork->network, target, adapter, update_ie);
+ 	}
+ 
+ exit:
+@@ -636,7 +636,7 @@ void rtw_survey_event_callback(struct adapter	*adapter, u8 *pbuf)
+ {
+ 	u32 len;
+ 	struct wlan_bssid_ex *pnetwork;
+-	struct	mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 
+ 	pnetwork = (struct wlan_bssid_ex *)pbuf;
+ 
+@@ -648,18 +648,18 @@ void rtw_survey_event_callback(struct adapter	*adapter, u8 *pbuf)
+ 
+ 	/*  update IBSS_network 's timestamp */
+ 	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE)) == true) {
+-		if (!memcmp(&(pmlmepriv->cur_network.network.mac_address), pnetwork->mac_address, ETH_ALEN)) {
++		if (!memcmp(&pmlmepriv->cur_network.network.mac_address, pnetwork->mac_address, ETH_ALEN)) {
+ 			struct wlan_network *ibss_wlan = NULL;
+ 
+ 			memcpy(pmlmepriv->cur_network.network.ies, pnetwork->ies, 8);
+-			spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 			ibss_wlan = rtw_find_network(&pmlmepriv->scanned_queue,  pnetwork->mac_address);
+ 			if (ibss_wlan) {
+ 				memcpy(ibss_wlan->network.ies, pnetwork->ies, 8);
+-				spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++				spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 				goto exit;
+ 			}
+-			spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 		}
+ 	}
+ 
+@@ -677,7 +677,7 @@ void rtw_survey_event_callback(struct adapter	*adapter, u8 *pbuf)
+ 
+ void rtw_surveydone_event_callback(struct adapter	*adapter, u8 *pbuf)
+ {
+-	struct	mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 
+ 	spin_lock_bh(&pmlmepriv->lock);
+ 	if (pmlmepriv->wps_probe_req_ie) {
+@@ -704,7 +704,7 @@ void rtw_surveydone_event_callback(struct adapter	*adapter, u8 *pbuf)
+ 					_set_timer(&pmlmepriv->assoc_timer, MAX_JOIN_TIMEOUT);
+ 				} else {
+ 					u8 ret = _SUCCESS;
+-					struct wlan_bssid_ex    *pdev_network = &(adapter->registrypriv.dev_network);
++					struct wlan_bssid_ex    *pdev_network = &adapter->registrypriv.dev_network;
+ 					u8 *pibss = adapter->registrypriv.dev_network.mac_address;
+ 
+ 					/* pmlmepriv->fw_state ^= _FW_UNDER_SURVEY;because don't set assoc_timer */
+@@ -932,8 +932,8 @@ inline void rtw_indicate_scan_done(struct adapter *padapter, bool aborted)
+ void rtw_scan_abort(struct adapter *adapter)
+ {
+ 	unsigned long start;
+-	struct mlme_priv *pmlmepriv = &(adapter->mlmepriv);
+-	struct mlme_ext_priv *pmlmeext = &(adapter->mlmeextpriv);
++	struct mlme_priv *pmlmepriv = &adapter->mlmepriv;
++	struct mlme_ext_priv *pmlmeext = &adapter->mlmeextpriv;
+ 
+ 	start = jiffies;
+ 	pmlmeext->scan_abort = true;
+@@ -1039,8 +1039,8 @@ static struct sta_info *rtw_joinbss_update_stainfo(struct adapter *padapter, str
+ /* ptarget_wlan: found from scanned_queue */
+ static void rtw_joinbss_update_network(struct adapter *padapter, struct wlan_network *ptarget_wlan, struct wlan_network  *pnetwork)
+ {
+-	struct mlme_priv *pmlmepriv = &(padapter->mlmepriv);
+-	struct wlan_network  *cur_network = &(pmlmepriv->cur_network);
++	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
++	struct wlan_network  *cur_network = &pmlmepriv->cur_network;
+ 
+ 	/*  why not use ptarget_wlan?? */
+ 	memcpy(&cur_network->network, &pnetwork->network, pnetwork->network.length);
+@@ -1096,9 +1096,9 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 	static u8 __maybe_unused retry;
+ 	struct sta_info *ptarget_sta = NULL, *pcur_sta = NULL;
+ 	struct	sta_priv *pstapriv = &adapter->stapriv;
+-	struct	mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 	struct wlan_network	*pnetwork	= (struct wlan_network *)pbuf;
+-	struct wlan_network	*cur_network = &(pmlmepriv->cur_network);
++	struct wlan_network	*cur_network = &pmlmepriv->cur_network;
+ 	struct wlan_network	*pcur_wlan = NULL, *ptarget_wlan = NULL;
+ 	unsigned int		the_same_macaddr = false;
+ 
+@@ -1116,7 +1116,7 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 	pmlmepriv->LinkDetectInfo.LowPowerTransitionCount = 0;
+ 
+ 	if (pnetwork->join_res > 0) {
+-		spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++		spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 		retry = 0;
+ 		if (check_fwstate(pmlmepriv, _FW_UNDER_LINKING)) {
+ 			/* s1. find ptarget_wlan */
+@@ -1153,7 +1153,7 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 			} else {
+ 				netdev_dbg(adapter->pnetdev,
+ 					   "Can't find ptarget_wlan when joinbss_event callback\n");
+-				spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++				spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 				goto ignore_joinbss_callback;
+ 			}
+ 
+@@ -1161,7 +1161,7 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 			if (check_fwstate(pmlmepriv, WIFI_STATION_STATE) == true) {
+ 				ptarget_sta = rtw_joinbss_update_stainfo(adapter, pnetwork);
+ 				if (!ptarget_sta) {
+-					spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++					spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 					goto ignore_joinbss_callback;
+ 				}
+ 			}
+@@ -1179,7 +1179,7 @@ void rtw_joinbss_event_prehandle(struct adapter *adapter, u8 *pbuf)
+ 			del_timer_sync(&pmlmepriv->assoc_timer);
+ 			spin_lock_bh(&pmlmepriv->lock);
+ 		} else {
+-			spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 		}
+ 	} else if (pnetwork->join_res == -4) {
+ 		rtw_reset_securitypriv(adapter);
+@@ -1243,9 +1243,9 @@ void rtw_sta_media_status_rpt(struct adapter *adapter, struct sta_info *psta, u3
+ void rtw_stassoc_event_callback(struct adapter *adapter, u8 *pbuf)
+ {
+ 	struct sta_info *psta;
+-	struct mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 	struct stassoc_event	*pstassoc	= (struct stassoc_event *)pbuf;
+-	struct wlan_network	*cur_network = &(pmlmepriv->cur_network);
++	struct wlan_network	*cur_network = &pmlmepriv->cur_network;
+ 	struct wlan_network	*ptarget_wlan = NULL;
+ 
+ 	if (rtw_access_ctrl(adapter, pstassoc->macaddr) == false)
+@@ -1316,12 +1316,12 @@ void rtw_stassoc_event_callback(struct adapter *adapter, u8 *pbuf)
+ 	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE) == true) ||
+ 		(check_fwstate(pmlmepriv, WIFI_ADHOC_STATE) == true)) {
+ 		if (adapter->stapriv.asoc_sta_count == 2) {
+-			spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 			ptarget_wlan = rtw_find_network(&pmlmepriv->scanned_queue, cur_network->network.mac_address);
+ 			pmlmepriv->cur_network_scanned = ptarget_wlan;
+ 			if (ptarget_wlan)
+ 				ptarget_wlan->fixed = true;
+-			spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 			/*  a sta + bc/mc_stainfo (not Ibss_stainfo) */
+ 			rtw_indicate_connect(adapter);
+ 		}
+@@ -1339,11 +1339,11 @@ void rtw_stadel_event_callback(struct adapter *adapter, u8 *pbuf)
+ 	struct wlan_network *pwlan = NULL;
+ 	struct wlan_bssid_ex    *pdev_network = NULL;
+ 	u8 *pibss = NULL;
+-	struct	mlme_priv *pmlmepriv = &(adapter->mlmepriv);
++	struct	mlme_priv *pmlmepriv = &adapter->mlmepriv;
+ 	struct	stadel_event *pstadel	= (struct stadel_event *)pbuf;
+-	struct wlan_network *tgt_network = &(pmlmepriv->cur_network);
++	struct wlan_network *tgt_network = &pmlmepriv->cur_network;
+ 	struct mlme_ext_priv *pmlmeext = &adapter->mlmeextpriv;
+-	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
++	struct mlme_ext_info *pmlmeinfo = &pmlmeext->mlmext_info;
+ 
+ 	psta = rtw_get_stainfo(&adapter->stapriv, pstadel->macaddr);
+ 	if (psta)
+@@ -1395,14 +1395,14 @@ void rtw_stadel_event_callback(struct adapter *adapter, u8 *pbuf)
+ 		rtw_free_assoc_resources(adapter, 1);
+ 		rtw_indicate_disconnect(adapter);
+ 
+-		spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++		spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 		/*  remove the network entry in scanned_queue */
+ 		pwlan = rtw_find_network(&pmlmepriv->scanned_queue, tgt_network->network.mac_address);
+ 		if (pwlan) {
+ 			pwlan->fixed = false;
+ 			rtw_free_network_nolock(adapter, pwlan);
+ 		}
+-		spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++		spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 
+ 		_rtw_roaming(adapter, roam_target);
+ 	}
+@@ -1414,16 +1414,16 @@ void rtw_stadel_event_callback(struct adapter *adapter, u8 *pbuf)
+ 
+ 		if (adapter->stapriv.asoc_sta_count == 1) {/* a sta + bc/mc_stainfo (not Ibss_stainfo) */
+ 			u8 ret = _SUCCESS;
+-			spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 			/* free old ibss network */
+ 			pwlan = rtw_find_network(&pmlmepriv->scanned_queue, tgt_network->network.mac_address);
+ 			if (pwlan) {
+ 				pwlan->fixed = false;
+ 				rtw_free_network_nolock(adapter, pwlan);
+ 			}
+-			spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++			spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 			/* re-create ibss */
+-			pdev_network = &(adapter->registrypriv.dev_network);
++			pdev_network = &adapter->registrypriv.dev_network;
+ 			pibss = adapter->registrypriv.dev_network.mac_address;
+ 
+ 			memcpy(pdev_network, &tgt_network->network, get_wlan_bssid_ex_sz(&tgt_network->network));
+@@ -1531,7 +1531,7 @@ void rtw_mlme_reset_auto_scan_int(struct adapter *adapter)
+ {
+ 	struct mlme_priv *mlme = &adapter->mlmepriv;
+ 	struct mlme_ext_priv *pmlmeext = &adapter->mlmeextpriv;
+-	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
++	struct mlme_ext_info *pmlmeinfo = &pmlmeext->mlmext_info;
+ 
+ 	if (pmlmeinfo->VHT_enable) /* disable auto scan when connect to 11AC AP */
+ 		mlme->auto_scan_int_ms = 0;
+@@ -1673,7 +1673,7 @@ int rtw_select_roaming_candidate(struct mlme_priv *mlme)
+ {
+ 	int ret = _FAIL;
+ 	struct list_head	*phead;
+-	struct __queue	*queue	= &(mlme->scanned_queue);
++	struct __queue	*queue	= &mlme->scanned_queue;
+ 	struct	wlan_network	*pnetwork = NULL;
+ 	struct	wlan_network	*candidate = NULL;
+ 
+@@ -1682,7 +1682,7 @@ int rtw_select_roaming_candidate(struct mlme_priv *mlme)
+ 		return ret;
+ 	}
+ 
+-	spin_lock_bh(&(mlme->scanned_queue.lock));
++	spin_lock_bh(&mlme->scanned_queue.lock);
+ 	phead = get_list_head(queue);
+ 
+ 	list_for_each(mlme->pscanned, phead) {
+@@ -1706,7 +1706,7 @@ int rtw_select_roaming_candidate(struct mlme_priv *mlme)
+ 
+ 	ret = _SUCCESS;
+ exit:
+-	spin_unlock_bh(&(mlme->scanned_queue.lock));
++	spin_unlock_bh(&mlme->scanned_queue.lock);
+ 
+ 	return ret;
+ }
+@@ -1767,13 +1767,13 @@ int rtw_select_and_join_from_scanned_queue(struct mlme_priv *pmlmepriv)
+ 	int ret;
+ 	struct list_head	*phead;
+ 	struct adapter *adapter;
+-	struct __queue	*queue	= &(pmlmepriv->scanned_queue);
++	struct __queue	*queue	= &pmlmepriv->scanned_queue;
+ 	struct	wlan_network	*pnetwork = NULL;
+ 	struct	wlan_network	*candidate = NULL;
+ 
+ 	adapter = (struct adapter *)pmlmepriv->nic_hdl;
+ 
+-	spin_lock_bh(&(pmlmepriv->scanned_queue.lock));
++	spin_lock_bh(&pmlmepriv->scanned_queue.lock);
+ 
+ 	if (pmlmepriv->roam_network) {
+ 		candidate = pmlmepriv->roam_network;
+@@ -1811,7 +1811,7 @@ int rtw_select_and_join_from_scanned_queue(struct mlme_priv *pmlmepriv)
+ 	ret = rtw_joinbss_cmd(adapter, candidate);
+ 
+ exit:
+-	spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
++	spin_unlock_bh(&pmlmepriv->scanned_queue.lock);
+ 	return ret;
+ }
+ 
+@@ -1819,7 +1819,7 @@ signed int rtw_set_auth(struct adapter *adapter, struct security_priv *psecurity
+ {
+ 	struct	cmd_obj *pcmd;
+ 	struct	setauth_parm *psetauthparm;
+-	struct	cmd_priv *pcmdpriv = &(adapter->cmdpriv);
++	struct	cmd_priv *pcmdpriv = &adapter->cmdpriv;
+ 	signed int		res = _SUCCESS;
+ 
+ 	pcmd = rtw_zmalloc(sizeof(struct cmd_obj));
+@@ -1856,7 +1856,7 @@ signed int rtw_set_key(struct adapter *adapter, struct security_priv *psecurityp
+ 	u8 keylen;
+ 	struct cmd_obj		*pcmd;
+ 	struct setkey_parm	*psetkeyparm;
+-	struct cmd_priv 	*pcmdpriv = &(adapter->cmdpriv);
++	struct cmd_priv 	*pcmdpriv = &adapter->cmdpriv;
+ 	signed int	res = _SUCCESS;
+ 
+ 	psetkeyparm = rtw_zmalloc(sizeof(struct setkey_parm));
+@@ -1879,11 +1879,11 @@ signed int rtw_set_key(struct adapter *adapter, struct security_priv *psecurityp
+ 
+ 	case _WEP40_:
+ 		keylen = 5;
+-		memcpy(&(psetkeyparm->key[0]), &(psecuritypriv->dot11DefKey[keyid].skey[0]), keylen);
++		memcpy(&psetkeyparm->key[0], &psecuritypriv->dot11DefKey[keyid].skey[0], keylen);
+ 		break;
+ 	case _WEP104_:
+ 		keylen = 13;
+-		memcpy(&(psetkeyparm->key[0]), &(psecuritypriv->dot11DefKey[keyid].skey[0]), keylen);
++		memcpy(&psetkeyparm->key[0], &psecuritypriv->dot11DefKey[keyid].skey[0], keylen);
+ 		break;
+ 	case _TKIP_:
+ 		keylen = 16;
+@@ -2352,7 +2352,7 @@ void rtw_update_ht_cap(struct adapter *padapter, u8 *pie, uint ie_len, u8 channe
+ 	struct ht_priv 	*phtpriv = &pmlmepriv->htpriv;
+ 	struct registry_priv *pregistrypriv = &padapter->registrypriv;
+ 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
+-	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
++	struct mlme_ext_info *pmlmeinfo = &pmlmeext->mlmext_info;
+ 	u8 cbw40_enable = 0;
+ 
+ 	if (!phtpriv->ht_option)
 -- 
 2.53.0
 
