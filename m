@@ -1,45 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC7B2E266C;
-	Sat, 17 Oct 2026 17:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C95A2E266C;
+	Sat, 17 Oct 2026 17:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257580; cv=none; b=gbW/UL/552hj4/LsJSYja1k0q4ahW6acikQ7pia38seYjiaPkIWkW314z/FSPls51y+HYIEIz4KCdeI5EeT4LTMb3dEB1EpYeiTFWqkuVFVUSEOY9VM6OxuPyF2wWAVFuffHpzSdArvzt7xgyg8J7Be0yakvxOlGvmSzEF9W+cE=
+	t=1792257582; cv=none; b=KTK2E11XWpcvpJwrqZwj008rMzYTmgTIjPQeFepp9Ke3dzdOHsXxLKUTilNhbk0/Oa7PR/eWEQagQyLEkz8AsURio7XbgO4QIO85wvrwVegM078EgQ73gW4rzZ3YjgbzmJs8TGQ/NCGXWPnXhXZUuNhLacJ/ChTslFCQQfhe0BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257580; c=relaxed/simple;
-	bh=iC1RVh1eiJIeqf1IGlv8VgdjifT9KE+FHm/Sl6QJAog=;
+	s=arc-20240116; t=1792257582; c=relaxed/simple;
+	bh=Cuq6VB79jeewMrn/6ie1vLqofFE7P5DTeN/B8+BbCR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/yIuvgYaH3lXaxcWtvU+H2Mk1TZnJFfOWyi4tHMqLyf7L9V9aC5ieEkaVggxoM9gYQgwz3igsEFNXauZodBrGSvQxODo3IJkHF60Spyz2GRYNFrFRSH/U7HW+St1ukIptUb8GADydSieWrynxoEztBUVgvwsWVJyjRb2phQ8Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvVqwqrT; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvVqwqrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208931F000C5;
-	Sat, 17 Oct 2026 17:19:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257578;
-	bh=l90FgmkIwPZ+mai15FxlleObHbA89SGmqmtbegT/HKA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvVqwqrTM2CmVTP7XrqeVumk0qI9Rk6v0yQYdZ86GSX1j1AA8tjebbDUTlN/7dWVw
-	 56Cbqy+1vztAENe2jqgrgyaVKZqpQOYpBdeYu20qHGntTRbZjHtsAr/xu7fhaqL66s
-	 0oJQyoi6rrRubt0qJm47XRxPljtvJZPovXZ8xUBQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=dFobq7lsIxCmOR1aYIRU/krXdYFyyTBwqKdWG4hdZa4FRGZqV45ZtV19qGt6xs8ioi8c8+oXKLX8aHFdEfg47U3pgbqvqAPry5/+iIp/iAFffi1YDYX6C/cFAdJeeOgKwcxqgvTMWMTv+phgVMXpBQENgrG550kn7IwXdsY863c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	ChanWoo Lee <cw9316.lee@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0603/1674] scsi: ufs: mcq: Remove unused parameters
-Date: Sat, 17 Oct 2026 17:47:55 +0200
-Message-ID: <20261017160446.561866324@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
-References: <20261017160431.119607952@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.18 00/52] 6.18.58-rc1 review
+Date: Sat, 17 Oct 2026 17:19:24 +0000
+Message-ID: <20261017171928.501474-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
+References: <20261017155104.830766652@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,52 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+044/044 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: ChanWoo Lee <cw9316.lee@samsung.com>
+CPU/kernel: Linux auntie 6.18.58-rc1-g73d1ddb7c097 #1 SMP PREEMPT_DYNAMIC Sat Oct 17 16:43:32 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 01f256228c0f89c4b48fbc7c67b64a26cdcfd740 ]
-
-The 'hwq' parameter is not used in this function. Remove unused parameters.
-
-Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
-Link: https://lore.kernel.org/r/20240105021041.20400-3-cw9316.lee@samsung.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 375f3a5691dd ("scsi: ufs: core: Avoid unsafe MMIO reads in ufshcd_mcq_compl_all_cqes_lock()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/ufs/core/ufs-mcq.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index cb8f0652a4bee..02e3b41694e0b 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -255,9 +255,7 @@ EXPORT_SYMBOL_GPL(ufshcd_mcq_write_cqis);
-  * Current MCQ specification doesn't provide a Task Tag or its equivalent in
-  * the Completion Queue Entry. Find the Task Tag using an indirect method.
-  */
--static int ufshcd_mcq_get_tag(struct ufs_hba *hba,
--				     struct ufs_hw_queue *hwq,
--				     struct cq_entry *cqe)
-+static int ufshcd_mcq_get_tag(struct ufs_hba *hba, struct cq_entry *cqe)
- {
- 	u64 addr;
- 
-@@ -275,7 +273,7 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
- 				   struct ufs_hw_queue *hwq)
- {
- 	struct cq_entry *cqe = ufshcd_mcq_cur_cqe(hwq);
--	int tag = ufshcd_mcq_get_tag(hba, hwq, cqe);
-+	int tag = ufshcd_mcq_get_tag(hba, cqe);
- 
- 	if (cqe->command_desc_base_addr) {
- 		ufshcd_compl_one_cqe(hba, tag, cqe);
--- 
-2.53.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
