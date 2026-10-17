@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E213B71A7;
-	Sat, 17 Oct 2026 18:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27DB37F01B;
+	Sat, 17 Oct 2026 18:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260300; cv=none; b=W+Uy/G69SxUoA3fJCGo65YbKeLu/K2E8xB7VOqNKWyaWsrbBVJuwWMET6mKcTiq1vL9ZlwMpEn+iKY/QL06M24O/aeVS6KKV87jL5KGYmRINRy6ElJC8zM3vm5HdFd/j200L8R2g/wWdulxbB1eTyLQxNeydhg1mMgBoRVfvQtA=
+	t=1792260304; cv=none; b=PecYvHGPWNzyyqxHfrCTsQY3V9x42l4hUhlY0D3NZUcmIn3/BESK7DGX0z5oY4+CEo+dxkRtm7UWwpxGPgYimnfozgV2RZc6Az1Fp1z/L03B5Guv01W58LPykPQuHDuHoEvGHLR1qNTpQt5Qu0xVAMO5WeI8+bE2LJrGjpEioaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260300; c=relaxed/simple;
-	bh=jJ5dHPDswJYIfUrX8sn/7V6JL3HRm3avmryhlp/f1y0=;
+	s=arc-20240116; t=1792260304; c=relaxed/simple;
+	bh=vBMP8E138zwIsG8oRH2zuhQjj+cMkjZAIe1f2rDW0bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQeY8jIJCwaumNbBPfZJt8JwZ9RwGtuoA56hv5Rc9VnafPbJ/2z88GRTLXQEluvg/UmkwP4VuOKEdf/DnHDUxgUCzKMqN5drJ8ah54ashWXuMJc7DYQMWxeCKq5mOTAzoP+YWwPkkS71grou9RdXT2H9WzEQR7id1lQwWKrzzas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rmprxdiq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rZyl1WH8PBCDOzxr9IoQP6mWU/VXyJOJr0XeYZVRov0x2yEcCyz0K2LE24jAj06jyNpyWtzAJsNrFmd2paYwGIuZbVF70KN4of9Q13rJFKm+e9/VO0f4ix/vagenwAfgfEK5FX42yicGp2ftFN4eS9YgkMOCGuRrGHhdDmIpOdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi9ETN+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rmprxdiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABA91F000C4;
-	Sat, 17 Oct 2026 18:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi9ETN+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082F91F000C4;
+	Sat, 17 Oct 2026 18:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260299;
-	bh=PMDhl+Aa32WQuup9iy6lidiMUWmyxgKk9jwKtDIBipg=;
+	s=korg; t=1792260302;
+	bh=tbRHQ/rmAaaEF1vHPOE0OrPdF27xyuxgaTiVHI7u8XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmprxdiqR6tKQSx40q6NtecY0qjfXKxe0Evg5D+Ouc9nFq2xjgBA3moxeMql1VuPN
-	 J2tm7zhk+wo61NNUeop9VahKsXGNTPHereL/gSA8vaddETgQ38Z6du3f9KGocpPDnb
-	 OlF/JXVRzacquAK04qF078Ir4FPrbU8NcoGAy1oQ=
+	b=pi9ETN+fPQlKfEXugXk3oKeyqrQhxCkk/l6rSIjM3QLxCwlwv5UihcpO0woZvE3TO
+	 126MIXc8mf67CQNmudwPBRNiNCFOc0XwH0jYLpcDvlOjxMmJi3gHXgb3LPTnTo2eL9
+	 q0s7bOvIEseOEiK3juUr+lk4cb7oxjzL2KIYQhSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1458/1674] wifi: ath12k: fix overreads in ath12k_wmi_process_csa_switch_count_event()
-Date: Sat, 17 Oct 2026 18:02:10 +0200
-Message-ID: <20261017160508.595824334@linuxfoundation.org>
+Subject: [PATCH 6.6 1459/1674] RDMA/cxgb4: Fix dereg_skb leak and double free in write_tpt_entry()
+Date: Sat, 17 Oct 2026 18:02:11 +0200
+Message-ID: <20261017160508.619013062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,86 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 878654eb78c6aa0ff585baf1376567c775ca28ec ]
+[ Upstream commit 373f3716a2de7adc739269ebb4d87e5bf4dc180c ]
 
-There is no policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT, so
-the parse infrastructure does not enforce a minimum length for the event
-struct. Additionally, the num_vdevs field is taken directly from firmware
-and used as a loop bound over the vdev_ids array without checking that it
-fits within the TLV payload. Either condition can cause an out-of-bounds
-read.
+When the device is in the fatal error state, write_tpt_entry() returns -EIO
+before handing the caller's preallocated skb to the transmit path; its
+allocation-failure returns do the same. c4iw_dereg_mr() ignores the error
+and frees mhp, leaking mhp->dereg_skb. c4iw_get_dma_mr() instead frees the
+skb a second time after dereg_mem() already consumed it, a double free.
 
-Add a TLV policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT so
-the parse infrastructure enforces a minimum length for the fixed-size event
-struct. Add a helper ath12k_wmi_tlv_data_len() to recover the payload
-length of a parsed TLV from the header preceding its data pointer. Use it
-in ath12k_wmi_process_csa_switch_count_event() to bound num_vdevs before
-the loop.
+Make write_tpt_entry() the sole owner of a non-NULL skb, freeing it on
+every return preceding handoff to c4iw_ofld_send(): fatal error, tpt and
+stag allocation failure. c4iw_ofld_send() consumes the skb on success and
+error alike, so drop the redundant kfree_skb() in c4iw_get_dma_mr() after
+dereg_mem().
 
-Compile tested only.
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260724-ath12k_wmi_process_csa_switch_count_event-cleanup-v2-1-02a45d7246c0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 0f8ab0b6e91b ("RDMA/iw_cxgb4: Low resource fixes for Memory registration")
+Link: https://patch.msgid.link/20260726-leaked-mhp-dereg-skb-in-c4iw-dereg-m-v1-1-ebd6df364d53@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/infiniband/hw/cxgb4/mem.c | 46 ++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 3bf807908ea2a..183ac212bb037 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -160,6 +160,8 @@ static const struct ath12k_wmi_tlv_policy ath12k_wmi_tlv_policies[] = {
- 		.min_len = sizeof(struct wmi_probe_resp_tx_status_event) },
- 	[WMI_TAG_VDEV_DELETE_RESP_EVENT] = {
- 		.min_len = sizeof(struct wmi_vdev_delete_resp_event) },
-+	[WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT] = {
-+		.min_len = sizeof(struct ath12k_wmi_pdev_csa_event) },
- };
+diff --git a/drivers/infiniband/hw/cxgb4/mem.c b/drivers/infiniband/hw/cxgb4/mem.c
+index 9c24789bbb54b..9ed43d23c1835 100644
+--- a/drivers/infiniband/hw/cxgb4/mem.c
++++ b/drivers/infiniband/hw/cxgb4/mem.c
+@@ -199,7 +199,8 @@ static int _c4iw_write_mem_dma(struct c4iw_rdev *rdev, u32 addr, u32 len,
  
- static __le32 ath12k_wmi_tlv_hdr(u32 cmd, u32 len)
-@@ -376,6 +378,13 @@ ath12k_wmi_tlv_parse_alloc(struct ath12k_base *ab, const void *ptr,
- 	return tb;
+ 	daddr = dma_map_single(&rdev->lldi.pdev->dev, data, len, DMA_TO_DEVICE);
+ 	if (dma_mapping_error(&rdev->lldi.pdev->dev, daddr))
+-		return -1;
++		return _c4iw_write_mem_inline(rdev, addr, len, data, skb,
++					      wr_waitp);
+ 	save = daddr;
+ 
+ 	while (remain > inline_threshold) {
+@@ -235,30 +236,12 @@ static int write_adapter_mem(struct c4iw_rdev *rdev, u32 addr, u32 len,
+ 			     void *data, struct sk_buff *skb,
+ 			     struct c4iw_wr_wait *wr_waitp)
+ {
+-	int ret;
+-
+-	if (!rdev->lldi.ulptx_memwrite_dsgl || !use_dsgl) {
+-		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
+-					      wr_waitp);
+-		goto out;
+-	}
+-
+-	if (len <= inline_threshold) {
+-		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
++	if (!rdev->lldi.ulptx_memwrite_dsgl || !use_dsgl ||
++	    len <= inline_threshold)
++		return _c4iw_write_mem_inline(rdev, addr, len, data, skb,
+ 					      wr_waitp);
+-		goto out;
+-	}
+-
+-	ret = _c4iw_write_mem_dma(rdev, addr, len, data, skb, wr_waitp);
+-	if (ret) {
+-		pr_warn_ratelimited("%s: dma map failure (non fatal)\n",
+-				    pci_name(rdev->lldi.pdev));
+-		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
+-					      wr_waitp);
+-	}
+-out:
+-	return ret;
+ 
++	return _c4iw_write_mem_dma(rdev, addr, len, data, skb, wr_waitp);
  }
  
-+static u32 ath12k_wmi_tlv_data_len(const void *data)
-+{
-+	const struct wmi_tlv *tlv = (const struct wmi_tlv *)data - 1;
-+
-+	return le32_get_bits(tlv->header, WMI_TLV_LEN);
-+}
-+
- static int ath12k_wmi_cmd_send_nowait(struct ath12k_wmi_pdev *wmi, struct sk_buff *skb,
- 				      u32 cmd_id)
- {
-@@ -6449,6 +6458,8 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
- 					  const struct ath12k_wmi_pdev_csa_event *ev,
- 					  const u32 *vdev_ids)
- {
-+	u32 vdev_ids_len = ath12k_wmi_tlv_data_len(vdev_ids);
-+	u32 num_vdevs = le32_to_cpu(ev->num_vdevs);
- 	int i;
- 	struct ath12k_vif *arvif;
+ /*
+@@ -280,12 +263,16 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
+ 	bool stag_idx_allocated = false;
+ 	static atomic_t key;
  
-@@ -6456,6 +6467,12 @@ ath12k_wmi_process_csa_switch_count_event(struct ath12k_base *ab,
- 	if (ev->current_switch_count)
- 		return;
- 
-+	if (num_vdevs > vdev_ids_len / sizeof(*vdev_ids)) {
-+		ath12k_warn(ab, "csa switch count num_vdevs %u exceeds tlv array length %u\n",
-+			    num_vdevs, vdev_ids_len);
-+		return;
+-	if (c4iw_fatal_error(rdev))
++	if (c4iw_fatal_error(rdev)) {
++		kfree_skb(skb);
+ 		return -EIO;
 +	}
-+
- 	rcu_read_lock();
- 	for (i = 0; i < le32_to_cpu(ev->num_vdevs); i++) {
- 		arvif = ath12k_mac_get_arvif_by_vdev_id(ab, vdev_ids[i]);
+ 
+ 	tpt = kmalloc(sizeof(*tpt), GFP_KERNEL);
+-	if (!tpt)
++	if (!tpt) {
++		kfree_skb(skb);
+ 		return -ENOMEM;
++	}
+ 
+ 	stag_state = stag_state > 0;
+ 	stag_idx = (*stag) >> 8;
+@@ -297,6 +284,7 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
+ 			rdev->stats.stag.fail++;
+ 			mutex_unlock(&rdev->stats.lock);
+ 			kfree(tpt);
++			kfree_skb(skb);
+ 			return -ENOMEM;
+ 		}
+ 		mutex_lock(&rdev->stats.lock);
+@@ -471,8 +459,10 @@ struct ib_mr *c4iw_get_dma_mr(struct ib_pd *pd, int acc)
+ 			      FW_RI_STAG_NSMR, mhp->attr.perms,
+ 			      mhp->attr.mw_bind_enable, 0, 0, ~0ULL, 0, 0, 0,
+ 			      NULL, mhp->wr_waitp);
+-	if (ret)
+-		goto err_free_skb;
++	if (ret) {
++		kfree_skb(mhp->dereg_skb);
++		goto err_free_wr_wait;
++	}
+ 
+ 	ret = finish_mem_reg(mhp, stag);
+ 	if (ret)
+@@ -481,8 +471,6 @@ struct ib_mr *c4iw_get_dma_mr(struct ib_pd *pd, int acc)
+ err_dereg_mem:
+ 	dereg_mem(&rhp->rdev, mhp->attr.stag, mhp->attr.pbl_size,
+ 		  mhp->attr.pbl_addr, mhp->dereg_skb, mhp->wr_waitp);
+-err_free_skb:
+-	kfree_skb(mhp->dereg_skb);
+ err_free_wr_wait:
+ 	c4iw_put_wr_wait(mhp->wr_waitp);
+ err_free_mhp:
 -- 
 2.53.0
 
