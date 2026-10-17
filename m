@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FE13C4B8D;
-	Sat, 17 Oct 2026 18:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3DB3CC7D8;
+	Sat, 17 Oct 2026 18:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260693; cv=none; b=uE4Bof+fHAEjmVKmJJ1YJYuz8+XQ2GReROwSXq3H+VWSoxn22m+glO6jtMNkyAFXqhA9rxqKguWbdRGx+bwdCjLNDdnkAPGwSUIqrqe/BLmk+woZTtdYXaDmX+aRw5zbTqPok7vwfCKTrIupXAp3zC3iwIx2OgGYp7lAapJx25A=
+	t=1792260698; cv=none; b=RqGdupKQG1U1nAfgvY01zakg+VpGobH9WLobnJ8UzZbKtCGXQ848fneG/5kl0EZb9qEH/BAEA1XRtszTLEGAkk3Oi+Vay9l0tnrCHLP1LwJ+6M/EJfucxVmxc8nl4jUHNoQyv96MQp1pWNpW0367qylQoLb+GYACaAQeMSZuOmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260693; c=relaxed/simple;
-	bh=C9Q/dgrWw6N91ssPHAwIqrycYaeZU8iwnCYh5lk/pSg=;
+	s=arc-20240116; t=1792260698; c=relaxed/simple;
+	bh=A5Mr2hzAwkGxl+ZhDwzdFGJffC7T9rtOZtStwRaBTv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVs2Bgag+J/oAgpyHy1LqwGRuIvHMR3LDtRxN/msDy/pnkYAsKJRgW54wYCHt+H6mJBky8maLfI3wi2z9aigFiptO2Xg6nWKG4tfGrqyqzn4BAbWf6hK7WFJxxgaVD3/F4SWIm8dURsNoFjhu5/7T+HokZEHXqSiVsMTywNBO1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKaPmDEt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eG9jbHfUrtJ3sIWbWymEovzzvKPWs9N11U/L6TSkpobFfT6wLARr+IFskD36A0z7y5WpunBmFGJ+U0CgZnAlL5qMY445rTkVb7v2iphBcQfidPNbXZfP+x3usZUS8vEDqoOWs6hbtJt0nujH5EIE27n43+moTSp3iRdkPCQTsNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYU270BQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKaPmDEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B97F1F000C4;
-	Sat, 17 Oct 2026 18:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYU270BQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23FE1F000C4;
+	Sat, 17 Oct 2026 18:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260692;
-	bh=/dxZ1jLppDqOcc3dE/CeRmcDc4JNAbIMotCNDPvxj/8=;
+	s=korg; t=1792260695;
+	bh=ZCzmwQNzzUQ/ZV1/KgBGIUxY4cS7GBOT/HgOIrzDBJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aKaPmDEtkKT8u5BX5UP988V6Pbn+F2VTjgrhJsL0WrZjb5+4zDmEBJIasnNV34Z2E
-	 uEwSYDFHzHqLYhiNwkOn7sqMS76zEQLes6atfe+7UeXEEr26g6wXTNCcrH9BvefisG
-	 8VqRaj1A35vcgrA7G/J3XW9bDu+CELYGXL7ANTTc=
+	b=AYU270BQQYSrWMMfBXX1Hle0QU1oHfH2P+zMz3S+HQTt5r+lDLq1rwtSIWCiuawP4
+	 D4n/WbyfARz4gB0Iyp3kCowfz+6mzeJABE9YFjvo8+co5teuoKcBlr5NeBUa+Bkwd8
+	 sWdJTsQ80QI/4nZgWRyWrgh+EFMIl2Q5wpZQbkgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1588/1674] scsi: qla2xxx: Bound VP index against VP_CTRL IOCB bitmap size
-Date: Sat, 17 Oct 2026 18:04:20 +0200
-Message-ID: <20261017160511.850634970@linuxfoundation.org>
+Subject: [PATCH 6.6 1589/1674] smb: client: avoid using uninitialized SIDs in cifs_posix_to_fattr()
+Date: Sat, 17 Oct 2026 18:04:21 +0200
+Message-ID: <20261017160511.875749641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,76 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 878613ecb5a36db26859c4fd83daf9283a334fa2 ]
+[ Upstream commit da6e25842431982d5a53cf00d925b98c690f4467 ]
 
-The VP control IOCB selects its target virtual port by setting one bit
-in vp_idx_map, a fixed 16-byte (128-bit) array in both
-vp_ctrl_entry_24xx and vp_ctrl_entry_24xx_ext. qla25xx_ctrlvp_iocb()
-computes map = (vp_index - 1) / 8 and writes vce->vp_idx_map[map]
-without checking that map stays within the array.
+cifs_posix_to_fattr() ignores the return value of posix_info_parse().
+When a malformed POSIX directory entry is encountered (e.g. invalid
+SID lengths from an untrusted server), posix_info_parse() returns -1
+without populating the 'parsed' struct.  The uninitialized stack
+memory in parsed.owner and parsed.group is then passed to
+sid_to_id(), which processes the garbage bytes and passes them to
+request_key() to construct a SID string, potentially leaking kernel
+stack contents to the userspace idmap daemon.
 
-max_npiv_vports is taken from firmware and only sanitized to a
-MIN_MULTI_ID_FABRIC-aligned boundary, so it can legitimately be 191 or
-255, and qla24xx_control_vp() only rejects vp_index >= max_npiv_vports.
-A vp_index above 128 therefore yields map >= 16 and an out-of-bounds
-write of up to 16 bytes past vp_idx_map, corrupting the trailing IOCB
-fields (or the adjacent request-ring slot on the 64-byte layout).
+Fix this by checking the return value and skipping the SID-to-id
+mapping when parsing fails.  The remaining fattr fields (timestamps,
+mode, etc.) are populated directly from the 'info' pointer so they
+are unaffected.
 
-Reject a vp_index that cannot be represented in the IOCB bitmap in
-qla24xx_control_vp(), and add a defensive ARRAY_SIZE() guard in
-qla25xx_ctrlvp_iocb() before the write. Adapters that report the usual
-63 or 127 NPIV vports are unaffected.
-
-Fixes: 2853192e154b ("scsi: qla2xxx: Use IOCB path to submit Control VP MBX command")
+Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-49-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 6 ++++++
- drivers/scsi/qla2xxx/qla_mid.c  | 8 ++++++++
- 2 files changed, 14 insertions(+)
+ fs/smb/client/readdir.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 0a013f34143af..c8a44969a6c30 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -3833,6 +3833,12 @@ qla25xx_ctrlvp_iocb(srb_t *sp, struct vp_ctrl_entry_24xx *vce)
- 	 */
- 	map = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) / 8;
- 	pos = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) & 7;
-+	if (map >= ARRAY_SIZE(vce->vp_idx_map)) {
-+		ql_log(ql_log_warn, sp->vha, 0x307c,
-+		       "ctrlvp: vp_index %u exceeds vp_idx_map capacity\n",
-+		       sp->u.iocb_cmd.u.ctrlvp.vp_index);
-+		return;
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index d6f3f9a3c5730..434d5f74b2ef7 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -242,8 +242,9 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		    struct cifs_sb_info *cifs_sb)
+ {
+ 	struct smb2_posix_info_parsed parsed;
++	int rc;
+ 
+-	posix_info_parse(info, NULL, &parsed);
++	rc = posix_info_parse(info, NULL, &parsed);
+ 
+ 	memset(fattr, 0, sizeof(*fattr));
+ 	fattr->cf_uniqueid = le64_to_cpu(info->Inode);
+@@ -280,8 +281,15 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
+ 		 le32_to_cpu(info->ReparseTag),
+ 		 le32_to_cpu(info->Mode));
+ 
+-	sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
+-	sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
++	if (rc < 0) {
++		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
++			 __func__, rc);
++		fattr->cf_uid = cifs_sb->ctx->linux_uid;
++		fattr->cf_gid = cifs_sb->ctx->linux_gid;
++	} else {
++		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
++		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
 +	}
- 	vce->vp_idx_map[map] |= 1 << pos;
  }
  
-diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
-index 44dd9373bfb12..86c0217d1763e 100644
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -962,6 +962,14 @@ int qla24xx_control_vp(scsi_qla_host_t *vha, int cmd)
- 	if (vp_index == 0 || vp_index >= ha->max_npiv_vports)
- 		return QLA_PARAMETER_ERROR;
- 
-+	/*
-+	 * The VP_CTRL IOCB selects the target VP through a fixed 128-bit
-+	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
-+	 * if firmware advertises more NPIV vports.
-+	 */
-+	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
-+		return QLA_PARAMETER_ERROR;
-+
- 	/* ref: INIT */
- 	sp = qla2x00_get_sp(base_vha, NULL, GFP_KERNEL);
- 	if (!sp)
+ static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
 -- 
 2.53.0
 
