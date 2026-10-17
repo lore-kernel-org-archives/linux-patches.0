@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7B23C0601;
-	Sat, 17 Oct 2026 18:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DB3BB67F;
+	Sat, 17 Oct 2026 18:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260498; cv=none; b=EMyXDf7oC5C4SJPkHxZHO/GSBaxTl0ibpUcHyIVxrhmUkGrsJmIJXcnXEWaRFIItNyi80boHwauRuBdzJ2+WxpscvYdgocT855w6J7Vu+gwihXqJcWm6TuDMTkI7CdqGbCL09+GPBCJUfWrlKNPMx9pv0TFHIm1eO5TcDOwhgpg=
+	t=1792260501; cv=none; b=rIoNq6qFdIccnGIvvzDeCfG00ZbJ+PVIhRDEwpsTDUOis7BnbR2IdxatMzD2JqKgF9lregdEnkNxDYVJj6yspDgQ+m3OCxLrdPKxlxAUupR2Yr69HyATGarDgg9ZXCyW/qX6QsPfYUfBI7humwo/pf+Js/l7QMWcvH7xHBLLVtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260498; c=relaxed/simple;
-	bh=5NjXOHxM6WZcDDHDXvQa+BYz/7IFsZnDKJbEA7NqcQY=;
+	s=arc-20240116; t=1792260501; c=relaxed/simple;
+	bh=dz2hyhKpLfAiqkMTnXuGeDood4L8o1AYMCdzwe9navI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZpdEvrrOP/MHX74kQx3bNH7XyLqwXGbpwXK/z44HHC4vWexdxgA7aHVKD1C81eHSnwz+b26GEKT1YUS09l/a64jEexsy/59bc7yqL6z9TPcaXdnV7Bjtw66hCuGLb/Xvm1shFpk7c/6bruv43flJO4FgBvfmzAbxGjoNn7ppec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYwEQ12A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hO/+9pW7ueRdGNG5Mlh3oIMYD4IsqYOMnblRbZaLEM5J9ncFVBXIg6hIIpGcYM057FfYui504kEVxcdEgy51iRt8iRZEJGy9MHtWOat1Fcv7bRF2fpwm2Uvlp/q5vsatv5MU8I3yG00Kc+hFOgCYRz9ydRtlYA+RTYcg/43Xyq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMIEqC7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYwEQ12A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418801F000C4;
-	Sat, 17 Oct 2026 18:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMIEqC7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2E41F000C4;
+	Sat, 17 Oct 2026 18:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260496;
-	bh=kbE1Yjve5xop9oOLboSVyHwwkEW/+TRvkzqclXhVzIU=;
+	s=korg; t=1792260499;
+	bh=5MaKxl6faHqUHp1qgQMhJDPac6zbDbHpWtTAKrxVKp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xYwEQ12ATlb0ftfuZuDwgTOerypmslYNYeCMo8JGYj4NQOmSOBdETWJIqzsCAK5bf
-	 orx4qDVOFGAzk8cEbbI4kSsW6Vn8+aBY4HpWoiJiOpqdHRR5e3EN8JqvYpxe6sDPYS
-	 vGxqUTWbXVgKnVCdt7zeMicF47tnAnVs7NdoU3fM=
+	b=cMIEqC7RTa+4nAYLBYi4NLKuW520YDZBUt6mYLMeS7DRZ2Ycfe64DjjLRooJvmpAY
+	 conx3UAAgwO+SKHx1wNJWiIdRYOuU2NhunWuULxucZya7GjF19BNyX+82p02NHHUsx
+	 Hn68iz6KLREHEgUGXuyH67DD9nbga2KVOcqntew4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Sam Edwards <CFSworks@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1564/1674] KVM: SVM: Add missing save/restore handling of LBR MSRs
-Date: Sat, 17 Oct 2026 18:03:56 +0200
-Message-ID: <20261017160511.243652577@linuxfoundation.org>
+Subject: [PATCH 6.6 1565/1674] ceph: fix num_ops off-by-one when crypto allocation fails
+Date: Sat, 17 Oct 2026 18:03:57 +0200
+Message-ID: <20261017160511.269885609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,161 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Sam Edwards <cfsworks@gmail.com>
 
-[ Upstream commit 3700f0788da6acf73b2df56690f4b201aa4aefd2 ]
+[ Upstream commit a0d9555bf9eaeba34fe6b6bb86f442fe08ba3842 ]
 
-MSR_IA32_DEBUGCTLMSR and LBR MSRs are currently not enumerated by
-KVM_GET_MSR_INDEX_LIST, and LBR MSRs cannot be set with KVM_SET_MSRS. So
-save/restore is completely broken.
+move_dirty_folio_in_page_array() may fail if the file is encrypted, the
+dirty folio is not the first in the batch, and it fails to allocate a
+bounce buffer to hold the ciphertext. When that happens,
+ceph_process_folio_batch() simply redirties the folio and flushes the
+current batch -- it can retry that folio in a future batch.
 
-Fix it by adding the MSRs to msrs_to_save_base, and allowing writes to
-LBR MSRs from userspace only (as they are read-only MSRs) if LBR
-virtualization is enabled.  Additionally, to correctly restore L1's LBRs
-while L2 is running, make sure the LBRs are copied from the captured
-VMCB01 save area in svm_copy_vmrun_state().
+However, if this failed folio is not contiguous with the last folio that
+did make it into the batch, then ceph_process_folio_batch() has already
+incremented `ceph_wbc->num_ops`; because it doesn't follow through and
+add the discontiguous folio to the array, ceph_submit_write() -- which
+expects that `ceph_wbc->num_ops` accurately reflects the number of
+contiguous ranges (and therefore the required number of "write extent"
+ops) in the writeback -- will panic the kernel:
 
-Note, for VMX, this also fixes a flaw where MSR_IA32_DEBUGCTLMSR isn't
-reported as an MSR to save/restore.
+    BUG_ON(ceph_wbc->op_idx + 1 != req->r_num_ops);
 
-Note #2, over-reporting MSR_IA32_LASTxxx on Intel is ok, as KVM already
-handles unsupported reads and writes thanks to commit b5e2fec0ebc3 ("KVM:
-Ignore DEBUGCTL MSRs with no effect") (kvm_do_msr_access() will morph the
-unsupported userspace write into a nop).
+This issue can be reproduced on affected kernels by writing to
+fscrypt-enabled CephFS file(s) with a 4KiB-written/4KiB-skipped/repeat
+pattern (total filesize should not matter) and gradually increasing the
+system's memory pressure until a bounce buffer allocation fails.
 
-Fixes: 24e09cbf480a ("KVM: SVM: enable LBR virtualization")
+Fix this crash by decrementing `ceph_wbc->num_ops` back to the correct
+value when move_dirty_folio_in_page_array() fails, but the folio already
+started counting a new (i.e. still-empty) extent.
+
+The defect corrected by this patch has existed since 2022 (see first
+`Fixes:`), but another bug blocked multi-folio encrypted writeback until
+recently (see second `Fixes:`). The second commit made it into 6.18.16,
+6.19.6, and 7.0-rc1, unmasking the panic in those versions. This patch
+therefore fixes a regression (panic) introduced by cac190c7674f.
+
 Cc: stable@vger.kernel.org
-Reported-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-4-yosry@kernel.org
-[sean: guard with lbrv checks, massage changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
+Fixes: cac190c7674f ("ceph: fix write storm on fscrypted files")
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |  9 +++++++++
- arch/x86/kvm/svm/svm.c    | 42 ++++++++++++++++++++++++++++++++++-----
- arch/x86/kvm/x86.c        | 13 ++++++++++++
- 3 files changed, 59 insertions(+), 5 deletions(-)
+ fs/ceph/addr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 432d188b2f3c9..2e4db6602db11 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -973,6 +973,15 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
- 	to_save->rsp = from_save->rsp;
- 	to_save->rip = from_save->rip;
- 	to_save->cpl = 0;
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 7d04b301ea3cf..a5b21f4481946 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1160,6 +1160,10 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 					/* better not fail on first page! */
+ 					BUG_ON(locked_pages == 0);
+ 					pages[locked_pages] = NULL;
++					/* Did we just begin a new contiguous op? Nevermind! */
++					if (len == 0)
++						num_ops--;
 +
-+	if (kvm_cpu_cap_has(X86_FEATURE_LBRV)) {
-+		to_save->dbgctl		= from_save->dbgctl;
-+		to_save->br_from	= from_save->br_from;
-+		to_save->br_to		= from_save->br_to;
-+		to_save->last_excp_from	= from_save->last_excp_from;
-+		to_save->last_excp_to	= from_save->last_excp_to;
-+		to_save->dbgctl &= ~DEBUGCTL_RESERVED_BITS;
-+	}
- }
- 
- void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 8844f49d3e7f8..832886bec53d3 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2903,19 +2903,19 @@ static int svm_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
- 		msr_info->data = svm->tsc_aux;
- 		break;
- 	case MSR_IA32_DEBUGCTLMSR:
--		msr_info->data = svm->vmcb->save.dbgctl;
-+		msr_info->data = lbrv ? svm->vmcb->save.dbgctl : 0;
- 		break;
- 	case MSR_IA32_LASTBRANCHFROMIP:
--		msr_info->data = svm->vmcb->save.br_from;
-+		msr_info->data = lbrv ? svm->vmcb->save.br_from : 0;
- 		break;
- 	case MSR_IA32_LASTBRANCHTOIP:
--		msr_info->data = svm->vmcb->save.br_to;
-+		msr_info->data = lbrv ? svm->vmcb->save.br_to : 0;
- 		break;
- 	case MSR_IA32_LASTINTFROMIP:
--		msr_info->data = svm->vmcb->save.last_excp_from;
-+		msr_info->data = lbrv ? svm->vmcb->save.last_excp_from : 0;
- 		break;
- 	case MSR_IA32_LASTINTTOIP:
--		msr_info->data = svm->vmcb->save.last_excp_to;
-+		msr_info->data = lbrv ? svm->vmcb->save.last_excp_to : 0;
- 		break;
- 	case MSR_VM_HSAVE_PA:
- 		msr_info->data = svm->nested.hsave_msr;
-@@ -3191,6 +3191,38 @@ static int svm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
- 		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
- 		svm_update_lbrv(vcpu);
- 		break;
-+	case MSR_IA32_LASTBRANCHFROMIP:
-+		if (!lbrv)
-+			return KVM_MSR_RET_UNSUPPORTED;
-+		if (!msr->host_initiated)
-+			return 1;
-+		svm->vmcb->save.br_from = data;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
-+		break;
-+	case MSR_IA32_LASTBRANCHTOIP:
-+		if (!lbrv)
-+			return KVM_MSR_RET_UNSUPPORTED;
-+		if (!msr->host_initiated)
-+			return 1;
-+		svm->vmcb->save.br_to = data;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
-+		break;
-+	case MSR_IA32_LASTINTFROMIP:
-+		if (!lbrv)
-+			return KVM_MSR_RET_UNSUPPORTED;
-+		if (!msr->host_initiated)
-+			return 1;
-+		svm->vmcb->save.last_excp_from = data;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
-+		break;
-+	case MSR_IA32_LASTINTTOIP:
-+		if (!lbrv)
-+			return KVM_MSR_RET_UNSUPPORTED;
-+		if (!msr->host_initiated)
-+			return 1;
-+		svm->vmcb->save.last_excp_to = data;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
-+		break;
- 	case MSR_VM_HSAVE_PA:
- 		/*
- 		 * Old kernels did not validate the value written to
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 313fce77e0589..cb659d04d07ee 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -1473,6 +1473,9 @@ static const u32 msrs_to_save_base[] = {
- 	MSR_IA32_UMWAIT_CONTROL,
- 
- 	MSR_IA32_XFD, MSR_IA32_XFD_ERR,
-+	MSR_IA32_DEBUGCTLMSR,
-+	MSR_IA32_LASTBRANCHFROMIP, MSR_IA32_LASTBRANCHTOIP,
-+	MSR_IA32_LASTINTFROMIP, MSR_IA32_LASTINTTOIP,
- };
- 
- static const u32 msrs_to_save_pmu[] = {
-@@ -1914,6 +1917,16 @@ static int kvm_set_msr_ignored_check(struct kvm_vcpu *vcpu,
- {
- 	int ret = __kvm_set_msr(vcpu, index, data, host_initiated);
- 
-+	if (ret == KVM_MSR_RET_UNSUPPORTED && host_initiated && !data) {
-+		switch (index) {
-+		case MSR_IA32_LASTBRANCHFROMIP:
-+		case MSR_IA32_LASTBRANCHTOIP:
-+		case MSR_IA32_LASTINTFROMIP:
-+		case MSR_IA32_LASTINTTOIP:
-+			return 0;
-+		}
-+	}
-+
- 	if (ret == KVM_MSR_RET_UNSUPPORTED)
- 		if (kvm_msr_ignored_check(index, data, true))
- 			ret = 0;
+ 					redirty_page_for_writepage(wbc, page);
+ 					unlock_page(page);
+ 					break;
 -- 
 2.53.0
 
