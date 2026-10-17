@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B509D3AAF60;
-	Sat, 17 Oct 2026 17:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4BD9460;
+	Sat, 17 Oct 2026 17:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258788; cv=none; b=qJf5kxHq8K8qxEfqfFmsxnd3vSqMQ3dE9Ikdh2yqBwMy6dDQSf7ojSXaguds0bYmLWLPVihCHpyVsvBAg51S2Ade/P2myWxvmLlZ4+ZoTIrTzwhS4YqYnFrfZcm093azJ9Tc86C6zSjH0Ji/Fjr/S+MVcj+396iq0tL9c2BlDTU=
+	t=1792258791; cv=none; b=sx9CVm0pu1H7dH2+crssg2NeSXToBG46GFJDAaF+auZh7Plxgj4XJGkNL/Eix20dsGu+rsYxnidoS64bFeKXfJMIlqwedR6YoQsl2L6gzw65dq27/0UvYXo8hF+6UATyZ739amwQwntvkB34qNmPhFr7hd4LmQgaZQE6xvmjwHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258788; c=relaxed/simple;
-	bh=rPOV7heykiCqo9ovB4ZyKr3h5dWVqg233zjF+KbQ3Xw=;
+	s=arc-20240116; t=1792258791; c=relaxed/simple;
+	bh=gJoEAkBsLXXnYoviiAuyxN4qyjBLI8id6wkO1h0hl8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dnp5TRqV5QnRPs95TrTkfWnSbIj0DU7K0ZRRPKvFAbcp7rxf+Z3kIzqpTByL8kbzMmnoY2Cv0nZ+LmA2juTJaNTxg2ol/LybfEVppQH6TLwIcc3igLvHD4qzt0eHweLkkgak1maMSp17ucW7d67bcBv1Gx2toubkl6qBZcklRVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeQ3GTT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cIRiCfVZC+aitSkvjAIIqnloFTEQ16WWYoHkDBE3wPxMEHVquem/JNe1oBxGgC88SpkZ25/D9oifJqnwQ51l9VnSd2NKG0kNz6iFLw8dzyb/z7Ag/RzB33tjy7b9Fwvym+9E9gYBBP1hW25QTg43lrEaEyUT+O2UTm7wA3a69fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP1xLEsW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeQ3GTT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163581F000C4;
-	Sat, 17 Oct 2026 17:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP1xLEsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237821F000C4;
+	Sat, 17 Oct 2026 17:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258786;
-	bh=W/JytXgjzg5lT36DYslQx4ZNn/O54GBZhlsIwv8Bcws=;
+	s=korg; t=1792258789;
+	bh=MDTtIK+TiweSMbjkFEBrJLXhV+m/HN1ZzuIPu8o2ViI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qeQ3GTT5OE/e0rPrmYSQgV0FgyYyWtnG4DI+N6Ji5NVHEPPsr/nPQt4kTfyZoHw3c
-	 IhzWD+W/TgBWuEosUMzTwrcpGeKei1V+nXweJxq1j0jTPb1AZ8yJVdD7jsyg2DT5z9
-	 tHDf4JBf4CfGgqDVpdZtWEJV9AVomv8paVnJ0TFs=
+	b=dP1xLEsW7j85CYaA83uTqP8KH6xloyY/32uNNlmVPQk0aMuw6UqR3aSHEnpO7Cel1
+	 G0W0ng2vTJbHK5zRtZ6bGJ0agfjtj0SeahczlgkcJPz6FndjGJ6xgexE0G/pX3Jkkp
+	 0iVDOUiHMK7TfCtxYoWhT46GTB3LJ/wb4XgYBj0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0999/1674] PCI: use generic driver_override infrastructure
-Date: Sat, 17 Oct 2026 17:54:31 +0200
-Message-ID: <20261017160456.758225023@linuxfoundation.org>
+Subject: [PATCH 6.6 1000/1674] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
+Date: Sat, 17 Oct 2026 17:54:32 +0200
+Message-ID: <20261017160456.786465547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,206 +53,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 10a4206a24013be4d558d476010cbf2eb4c9fa64 ]
+[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+When using the flushoncommit mount option, we can have a deadlock between
+a transaction commit and a reflink operation that copied an inline extent
+to an offset beyond the current i_size of the destination node.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+The deadlock happens like this:
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+1) Task A clones an inline extent from inode X to an offset of inode Y
+   that is beyond Y's current i_size. This means we copied the inline
+   extent's data to a folio of inode Y that is beyond its EOF, using a
+   call to copy_inline_to_page();
 
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 782a985d7af2 ("PCI: Introduce new device binding path using pci_dev.driver_override")
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Alex Williamson <alex@shazbot.org>
-Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260324005919.2408620-6-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+2) Task B starts a transaction commit and calls
+   btrfs_start_delalloc_flush() to flush delalloc;
+
+3) The delalloc flushing sees the new dirty folio of inode Y and when it
+   attempts to flush it, it ends up at extent_writepage() and sees that
+   the offset of the folio is beyond the i_size of inode Y, so it attempts
+   to invalidate the folio by calling folio_invalidate(), which ends up at
+   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
+   tries to lock the folio's range in inode Y's extent io tree, but it
+   blocks since it's currently locked by task A - during a reflink we lock
+   the inodes and the source and destination ranges after flushing all
+   delalloc and waiting for ordered extent completion - after that we
+   don't expect to have dirty folios in the ranges, the exception is if
+   we have to copy an inline extent's data (because the destination offset
+   is not zero);
+
+4) Task A then attempts to start a transaction to update the inode item,
+   and then it's blocked since the current transaction is in the
+   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
+   current transaction to become unblocked (its state >=
+   TRANS_STATE_UNBLOCKED).
+
+   So task A is waiting for the transaction commit done by task B, and
+   the later waiting on the extent lock of inode Y that is currently
+   held by task A.
+
+Syzbot recently reported this with the following stack traces:
+
+  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
+  Workqueue: writeback wb_workfn (flush-btrfs-46)
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
+   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
+   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
+   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
+   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
+   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
+   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
+   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
+   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
+   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
+   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
+   wb_do_writeback fs/fs-writeback.c:2374 [inline]
+   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
+   process_one_work kernel/workqueue.c:3276 [inline]
+   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
+   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
+   kthread+0x388/0x470 kernel/kthread.c:436
+   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+   </TASK>
+  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
+   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
+   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
+   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
+   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
+   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
+   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
+   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
+   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
+  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
+  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
+  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
+   </TASK>
+  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
+   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
+   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
+   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
+   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
+   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
+  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
+  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
+   </TASK>
+
+Fix this by updating the i_size of the destination inode of a reflink
+operation after we copy an inline extent's data to an offset beyond the
+i_size and before attempting to start a transaction to update the inode's
+item.
+
+Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
+Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c           | 11 +++++++----
- drivers/pci/pci-sysfs.c            | 28 ----------------------------
- drivers/pci/probe.c                |  1 -
- drivers/vfio/pci/vfio_pci_core.c   |  4 ++--
- drivers/xen/xen-pciback/pci_stub.c |  6 ++++--
- include/linux/pci.h                |  6 ------
- 6 files changed, 13 insertions(+), 43 deletions(-)
+ fs/btrfs/reflink.c | 52 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 47 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index cfb8b81250db6..9b4a8bc416453 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -138,9 +138,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- {
- 	struct pci_dynid *dynid;
- 	const struct pci_device_id *found_id = NULL, *ids;
-+	int ret;
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index 0a919f76ee00a..c28279a51d97b 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -180,11 +180,8 @@ static int clone_copy_inline_extent(struct inode *dst,
+ 	int ret;
+ 	struct btrfs_key key;
  
- 	/* When driver_override is set, only bind to the matching driver */
--	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
-+	ret = device_match_driver_override(&dev->dev, &drv->driver);
-+	if (ret == 0)
- 		return NULL;
+-	if (new_key->offset > 0) {
+-		ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
+-					  inline_data, size, datal, comp_type);
+-		goto out;
+-	}
++	if (new_key->offset > 0)
++		goto copy_to_page;
  
- 	/* Look at the dynamic ids first, before the static ones */
-@@ -164,7 +166,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 		 * matching.
- 		 */
- 		if (found_id->override_only) {
--			if (dev->driver_override)
-+			if (ret > 0)
- 				return found_id;
- 		} else {
- 			return found_id;
-@@ -172,7 +174,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 	}
+ 	key.objectid = btrfs_ino(BTRFS_I(dst));
+ 	key.type = BTRFS_EXTENT_DATA_KEY;
+@@ -316,6 +313,51 @@ static int clone_copy_inline_extent(struct inode *dst,
  
- 	/* driver_override will always match, send a dummy id */
--	if (dev->driver_override)
-+	if (ret > 0)
- 		return &pci_device_id_any;
- 	return NULL;
- }
-@@ -432,7 +434,7 @@ void __weak pcibios_free_irq(struct pci_dev *dev)
- static inline bool pci_device_can_probe(struct pci_dev *pdev)
- {
- 	return (!pdev->is_virtfn || pdev->physfn->sriov->drivers_autoprobe ||
--		pdev->driver_override);
-+		device_has_driver_override(&pdev->dev));
- }
- #else
- static inline bool pci_device_can_probe(struct pci_dev *pdev)
-@@ -1683,6 +1685,7 @@ static void pci_dma_cleanup(struct device *dev)
- 
- struct bus_type pci_bus_type = {
- 	.name		= "pci",
-+	.driver_override = true,
- 	.match		= pci_bus_match,
- 	.uevent		= pci_uevent,
- 	.probe		= pci_device_probe,
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index 346630f3a6f28..857bfe349cf5c 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -608,33 +608,6 @@ static ssize_t devspec_show(struct device *dev,
- static DEVICE_ATTR_RO(devspec);
- #endif
- 
--static ssize_t driver_override_store(struct device *dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct pci_dev *pdev = to_pci_dev(dev);
--	int ret;
--
--	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--
--static ssize_t driver_override_show(struct device *dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct pci_dev *pdev = to_pci_dev(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", pdev->driver_override);
--	device_unlock(dev);
--	return len;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- static struct attribute *pci_dev_attrs[] = {
- 	&dev_attr_power_state.attr,
- 	&dev_attr_resource.attr,
-@@ -662,7 +635,6 @@ static struct attribute *pci_dev_attrs[] = {
- #ifdef CONFIG_OF
- 	&dev_attr_devspec.attr,
- #endif
--	&dev_attr_driver_override.attr,
- 	&dev_attr_ari_enabled.attr,
- 	NULL,
- };
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index d90ffbb47f0e2..9701917ce8380 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -2371,7 +2371,6 @@ static void pci_release_dev(struct device *dev)
- 	pci_release_of_node(pci_dev);
- 	pcibios_release_device(pci_dev);
- 	pci_bus_put(pci_dev->bus);
--	kfree(pci_dev->driver_override);
- 	bitmap_free(pci_dev->dma_alias_mask);
- 	dev_dbg(dev, "device released\n");
- 	kfree(pci_dev);
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index db31aeb9df70c..76c252bf999fc 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -1938,8 +1938,8 @@ static int vfio_pci_bus_notifier(struct notifier_block *nb,
- 	    pdev->is_virtfn && physfn == vdev->pdev) {
- 		pci_info(vdev->pdev, "Captured SR-IOV VF %s driver_override\n",
- 			 pci_name(pdev));
--		pdev->driver_override = kasprintf(GFP_KERNEL, "%s",
--						  vdev->vdev.ops->name);
-+		WARN_ON(device_set_driver_override(&pdev->dev,
-+						   vdev->vdev.ops->name));
- 	} else if (action == BUS_NOTIFY_BOUND_DRIVER &&
- 		   pdev->is_virtfn && physfn == vdev->pdev) {
- 		struct pci_driver *drv = pci_dev_driver(pdev);
-diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback/pci_stub.c
-index e34b623e4b41f..42e630239b9b0 100644
---- a/drivers/xen/xen-pciback/pci_stub.c
-+++ b/drivers/xen/xen-pciback/pci_stub.c
-@@ -555,6 +555,8 @@ static int pcistub_seize(struct pci_dev *dev,
- 	return err;
- }
- 
-+static struct pci_driver xen_pcibk_pci_driver;
+ 	ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
+ 				  inline_data, size, datal, comp_type);
 +
- /* Called when 'bind'. This means we must _NOT_ call pci_reset_function or
-  * other functions that take the sysfs lock. */
- static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
-@@ -566,8 +568,8 @@ static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
++	/*
++	 * If we copied the inline extent data to a page/folio beyond the i_size
++	 * of the destination inode, then we need to increase the i_size before
++	 * we start a transaction to update the inode item. This is to prevent a
++	 * deadlock when the flushoncommit mount option is used, which happens
++	 * like this:
++	 *
++	 * 1) Task A clones an inline extent from inode X to an offset of inode
++	 *    Y that is beyond Y's current i_size. This means we copied the
++	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
++	 *    using the call above to copy_inline_to_page();
++	 *
++	 * 2) Task B starts a transaction commit and calls
++	 *    btrfs_start_delalloc_flush() to flush delalloc;
++	 *
++	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
++	 *    it attempts to flush it, it ends up at extent_writepage() and sees
++	 *    that the offset of the folio is beyond the i_size of inode Y, so
++	 *    it attempts to invalidate the folio by calling folio_invalidate(),
++	 *    which ends up at btrfs' folio invalidate callback -
++	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
++	 *    in inode Y's extent io tree, but it blocks since it's currently
++	 *    locked by task A - during reflink we lock the inodes and the
++	 *    source and destination ranges after flushing all delalloc and
++	 *    waiting for ordered extent completion - after that we don't expect
++	 *    to have dirty folios in the ranges, the exception is if we have to
++	 *    copy an inline extent's data (because the destination offset is
++	 *    not zero);
++	 *
++	 * 4) Task A then does the 'goto out' below and attempts to start a
++	 *    transaction to update the inode item, and then it's blocked since
++	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
++	 *    Therefore task A has to wait for the current transaction to become
++	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
++	 *
++	 * This leads to a deadlock - the task committing the transaction
++	 * waiting for the delalloc flushing which is blocked during folio
++	 * invalidation on the inode's extent lock and the reflink task waiting
++	 * for the current transaction to be unblocked so that it can start a
++	 * a new one to update the inode item (while holding the extent lock).
++	 */
++	if (ret == 0 && new_key->offset + datal > i_size_read(dst))
++		i_size_write(dst, new_key->offset + datal);
++
+ 	goto out;
+ }
  
- 	match = pcistub_match(dev);
- 
--	if ((dev->driver_override &&
--	     !strcmp(dev->driver_override, PCISTUB_DRIVER_NAME)) ||
-+	if (device_match_driver_override(&dev->dev,
-+					 &xen_pcibk_pci_driver.driver) > 0 ||
- 	    match) {
- 
- 		if (dev->hdr_type != PCI_HEADER_TYPE_NORMAL
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index db4d82aae1343..bef23297fb801 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -529,12 +529,6 @@ struct pci_dev {
- 	u16		acs_cap;	/* ACS Capability offset */
- 	phys_addr_t	rom;		/* Physical address if not from BAR */
- 	size_t		romlen;		/* Length if not from BAR */
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char	*driver_override;
--
- 	unsigned long	priv_flags;	/* Private flags for the PCI driver */
- 
- 	/* These methods index pci_reset_fn_methods[] */
 -- 
 2.53.0
 
