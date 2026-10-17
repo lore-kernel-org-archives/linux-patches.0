@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4026A35C1BC;
-	Sat, 17 Oct 2026 16:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E2230216D;
+	Sat, 17 Oct 2026 16:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253822; cv=none; b=OMt+L7UWVICWn6I88WtO9xJtIN6jTVcVaKvguGtKSMRli5nblDpW9esVq5fpA0wfEWV8KZYvAsElV+CEVBRvc9j0EkHfUu7obkdLKtsORIdGVycfZz/Urrwzxrkzns8NcMSmKYqDAcXUjJOuWr3GpLlbp2Bxk9ZQRxtNckEEgx0=
+	t=1792253825; cv=none; b=WbhI1wsGIl6VOmTtaYZVTh/7NVA1UZiVEHwJhypfhsa6cJgfQuV4IR1TUlWEOyGKeCc6wbfGVRkl+zQqq50Oxg/0t0u0pZKGfXjZDMU9JMYt/2Pl8wpBgy2iawVIIFYmf51/WxVcCMi0y/B3NfxS5LTEMh7a0qgouHw77OQeGAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253822; c=relaxed/simple;
-	bh=3GU9lxImVo/aFCDSS3SXrZK1VxER7W//R/P8bA3ARPU=;
+	s=arc-20240116; t=1792253825; c=relaxed/simple;
+	bh=3s0kocANtCJZhUJpHjwXHb8eXzgkUyd57X7bKC0xUiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYDy8XZMCohC+3ASvkfU2+zN0tWyjyavwbQrs4v1wz9AXIKAjSDlSoU792MDJ1t2Y/mgCqtD4XgXOfI1tly7Te3BoVww9pnsrXlB/kWN6w7bqTSxIFhkilnWES5ffXkw3z7RcN/q8D+AJndqaL0Gk+viSXvmBTPVqz4x/lLvgiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrcwV/Do; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jzQGPW9pbJegBKHoT5QZMcTofPk4Zc1se9k978Ou6Ngl3J8YsUENSYdQKes/mA0ffZxWGNGlwMgkIUpUBokKqAqqlwCWycuUh+v1uom6nnvmbtY6zK5yIjeeG9Ppptc8bOowUueV2qCQz9bJ059ahnF79i60AGUls+LLcpdIQDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvlWN89Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrcwV/Do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1011F000C4;
-	Sat, 17 Oct 2026 16:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvlWN89Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2DC1F000C4;
+	Sat, 17 Oct 2026 16:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253821;
-	bh=5ShFhOttLEPtpBytHn1/l866QrIDJQZCQeBugro1ADQ=;
+	s=korg; t=1792253824;
+	bh=HxwacNmxKbsF7RTEaVqY5xMY728DTR/KtaEeNTKiE+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LrcwV/DoCPLLwB4L9LpmKiYw1Pc+0na/sExhs11djLUR/PNNg1sivHjqmE5aGwRCq
-	 ZjhK9EgWr0QT8BddWuROllR3rwhQxADWy5xQQpXf+M17/nbiOMCyMojnEJ0hSymbbP
-	 HQz6VxlQYU/mJsNaxEefXO53xbtN1VAJt109FeAw=
+	b=zvlWN89Ya7QYfXyFzMzEZM9DXOi/nM/HbTR/Yo7VIJm+kFfTrysQBRZebBgKZ0Vv7
+	 PmEuEwUIfZmK/0nFyD3hBd5QOC4WRBJQo8dhFCrTw55uzJKymgZd4SSf+QgMTgA+B1
+	 gnnrt45QYJ0WNJlW5lPzj9Vb7KIlQ+mY5CCgQhG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihan Zhu <yihan.zhu@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 242/869] drm/amd/display: Adjust PHY FSM transition to TX_EN-to-PLL_ON for TMDS on DCN35
-Date: Sat, 17 Oct 2026 17:51:23 +0200
-Message-ID: <20261017160043.264607348@linuxfoundation.org>
+Subject: [PATCH 6.12 205/869] ALSA: ctxfi: Refactor resource alloc for sparse mappings
+Date: Sat, 17 Oct 2026 17:50:46 +0200
+Message-ID: <20261017160042.310502519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,127 +51,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Harin Lee <me@harin.net>
 
-[ Upstream commit 75372d75a4e23783583998ed99d5009d555850da ]
+[ Upstream commit a2dbaeb5c61ef110ceefe0d48fe94d428d3bcf16 ]
 
-[Why]
-A backport of the change made for DCN401 that addresses an issue where
-we turn off the PHY PLL when disabling TMDS output, which causes the
-OTG to remain stuck.
+Refactor atc_get_resources(), atc_connect_resources(), and
+atc_release_resources() to allocate resources based on maximum type
+definitions.
 
-The OTG being stuck can lead to a hang in the DCHVM's ability to ACK
-invalidations when it thinks the HUBP is still on but it's not receiving
-global sync.
+This allows specific resources to be conditionally skipped based on
+capabilities. This is necessary for hardware variants where resource
+allocations do not follow a sequential order.
 
-The transition to PLL_ON needs to be atomic as there's no guarantee
-that the thread isn't pre-empted or is able to complete before the
-IOMMU watchdog times out.
-
-[How]
-Backport the implementation from dcn401 back to dcn35.
-
-There's a functional difference in when the eDP output is disabled in
-dcn401 code so we don't want to utilize it directly.
-
-Reviewed-by: Yihan Zhu <yihan.zhu@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Harin Lee <me@harin.net>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251124180501.2760421-5-me@harin.net
+Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hwss/dcn35/dcn35_hwseq.c   | 52 +++++++++++++++++++
- .../amd/display/dc/hwss/dcn35/dcn35_hwseq.h   |  4 ++
- .../amd/display/dc/hwss/dcn35/dcn35_init.c    |  2 +-
- 3 files changed, 57 insertions(+), 1 deletion(-)
+ sound/pci/ctxfi/ctatc.c | 60 ++++++++++++++++++++++++-----------------
+ sound/pci/ctxfi/ctatc.h |  4 ---
+ 2 files changed, 35 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-index c739e5b2c5595..0745980483898 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -1617,3 +1617,55 @@ bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx)
+diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
+index fa70c4504db5f..6f0695efaafc8 100644
+--- a/sound/pci/ctxfi/ctatc.c
++++ b/sound/pci/ctxfi/ctatc.c
+@@ -25,6 +25,9 @@
+ #include <sound/control.h>
+ #include <sound/asoundef.h>
  
- 	return false;
- }
++#define NUM_ATC_SRCS	6
++#define NUM_ATC_PCM		(2 * 4)
 +
-+static void disable_link_output_symclk_on_tx_off(struct dc_link *link, enum dp_link_encoding link_encoding)
-+{
-+	struct dc *dc = link->ctx->dc;
-+	struct pipe_ctx *pipe_ctx = NULL;
-+	uint8_t i;
-+
-+	for (i = 0; i < MAX_PIPES; i++) {
-+		pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[i];
-+		if (pipe_ctx->stream && pipe_ctx->stream->link == link && pipe_ctx->top_pipe == NULL) {
-+			pipe_ctx->clock_source->funcs->program_pix_clk(
-+					pipe_ctx->clock_source,
-+					&pipe_ctx->stream_res.pix_clk_params,
-+					link_encoding,
-+					&pipe_ctx->pll_settings);
-+			break;
-+		}
-+	}
-+}
-+
-+void dcn35_disable_link_output(struct dc_link *link,
-+		const struct link_resource *link_res,
-+		enum signal_type signal)
-+{
-+	struct dc *dc = link->ctx->dc;
-+	const struct link_hwss *link_hwss = get_link_hwss(link, link_res);
-+	struct dmcu *dmcu = dc->res_pool->dmcu;
-+
-+	if (signal == SIGNAL_TYPE_EDP &&
-+			link->dc->hwss.edp_backlight_control &&
-+			!link->skip_implict_edp_power_control)
-+		link->dc->hwss.edp_backlight_control(link, false);
-+	else if (dmcu != NULL && dmcu->funcs->lock_phy)
-+		dmcu->funcs->lock_phy(dmcu);
-+
-+	if (dc_is_tmds_signal(signal) && link->phy_state.symclk_ref_cnts.otg > 0) {
-+		disable_link_output_symclk_on_tx_off(link, DP_UNKNOWN_ENCODING);
-+		link->phy_state.symclk_state = SYMCLK_ON_TX_OFF;
-+	} else {
-+		link_hwss->disable_link_output(link, link_res, signal);
-+		link->phy_state.symclk_state = SYMCLK_OFF_TX_OFF;
-+	}
-+	/*
-+	 * Add the logic to extract BOTH power up and power down sequences
-+	 * from enable/disable link output and only call edp panel control
-+	 * in enable_link_dp and disable_link_dp once.
-+	 */
-+	if (dmcu != NULL && dmcu->funcs->unlock_phy)
-+		dmcu->funcs->unlock_phy(dmcu);
-+
-+	dc->link_srv->dp_trace_source_sequence(link, DPCD_SOURCE_SEQ_AFTER_DISABLE_LINK_PHY);
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-index e27b3609020ff..45e762f99119f 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-@@ -99,4 +99,8 @@ void dcn35_set_long_vblank(struct pipe_ctx **pipe_ctx,
+ #define MONO_SUM_SCALE	0x19a8	/* 2^(-0.5) in 14-bit floating format */
+ #define MAX_MULTI_CHN	8
  
- bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx);
+@@ -1164,8 +1167,10 @@ static int atc_release_resources(struct ct_atc *atc)
  
-+void dcn35_disable_link_output(struct dc_link *link,
-+		const struct link_resource *link_res,
-+		enum signal_type signal);
-+
- #endif /* __DC_HWSS_DCN35_H__ */
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-index 2bbf1fef94fd2..e34f292f5c41a 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-@@ -107,7 +107,7 @@ static const struct hw_sequencer_funcs dcn35_funcs = {
- 	.enable_lvds_link_output = dce110_enable_lvds_link_output,
- 	.enable_tmds_link_output = dce110_enable_tmds_link_output,
- 	.enable_dp_link_output = dce110_enable_dp_link_output,
--	.disable_link_output = dcn32_disable_link_output,
-+	.disable_link_output = dcn35_disable_link_output,
- 	.z10_restore = dcn35_z10_restore,
- 	.z10_save_init = dcn31_z10_save_init,
- 	.set_disp_pattern_generator = dcn30_set_disp_pattern_generator,
+ 	if (atc->daios) {
+ 		daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
+-		for (i = 0; i < atc->n_daio; i++) {
++		for (i = 0; i < NUM_DAIOTYP; i++) {
+ 			daio = atc->daios[i];
++			if (!daio)
++				continue;
+ 			if (daio->output) {
+ 				dao = container_of(daio, struct dao, daio);
+ 				dao->ops->clear_left_input(dao);
+@@ -1179,8 +1184,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->pcm) {
+ 		sum_mgr = atc->rsc_mgrs[SUM];
+-		for (i = 0; i < atc->n_pcm; i++)
+-			sum_mgr->put_sum(sum_mgr, atc->pcm[i]);
++		for (i = 0; i < NUM_ATC_PCM; i++)
++			if (atc->pcm[i])
++				sum_mgr->put_sum(sum_mgr, atc->pcm[i]);
+ 
+ 		kfree(atc->pcm);
+ 		atc->pcm = NULL;
+@@ -1188,8 +1194,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->srcs) {
+ 		src_mgr = atc->rsc_mgrs[SRC];
+-		for (i = 0; i < atc->n_src; i++)
+-			src_mgr->put_src(src_mgr, atc->srcs[i]);
++		for (i = 0; i < NUM_ATC_SRCS; i++)
++			if (atc->srcs[i])
++				src_mgr->put_src(src_mgr, atc->srcs[i]);
+ 
+ 		kfree(atc->srcs);
+ 		atc->srcs = NULL;
+@@ -1197,7 +1204,9 @@ static int atc_release_resources(struct ct_atc *atc)
+ 
+ 	if (atc->srcimps) {
+ 		srcimp_mgr = atc->rsc_mgrs[SRCIMP];
+-		for (i = 0; i < atc->n_srcimp; i++) {
++		for (i = 0; i < NUM_ATC_SRCS; i++) {
++			if (!atc->srcimps[i])
++				continue;
+ 			srcimp = atc->srcimps[i];
+ 			srcimp->ops->unmap(srcimp);
+ 			srcimp_mgr->put_srcimp(srcimp_mgr, atc->srcimps[i]);
+@@ -1370,30 +1379,32 @@ static int atc_get_resources(struct ct_atc *atc)
+ 	struct srcimp_mgr *srcimp_mgr;
+ 	struct sum_desc sum_dsc = {0};
+ 	struct sum_mgr *sum_mgr;
+-	int err, i, num_srcs, num_daios;
++	struct capabilities cap;
++	int err, i;
+ 
+-	num_daios = ((atc->model == CTSB1270) ? 8 : 7);
+-	num_srcs = ((atc->model == CTSB1270) ? 6 : 4);
++	cap = atc->capabilities(atc);
+ 
+-	atc->daios = kcalloc(num_daios, sizeof(void *), GFP_KERNEL);
++	atc->daios = kcalloc(NUM_DAIOTYP, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->daios)
+ 		return -ENOMEM;
+ 
+-	atc->srcs = kcalloc(num_srcs, sizeof(void *), GFP_KERNEL);
++	atc->srcs = kcalloc(NUM_ATC_SRCS, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->srcs)
+ 		return -ENOMEM;
+ 
+-	atc->srcimps = kcalloc(num_srcs, sizeof(void *), GFP_KERNEL);
++	atc->srcimps = kcalloc(NUM_ATC_SRCS, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->srcimps)
+ 		return -ENOMEM;
+ 
+-	atc->pcm = kcalloc(2 * 4, sizeof(void *), GFP_KERNEL);
++	atc->pcm = kcalloc(NUM_ATC_PCM, sizeof(void *), GFP_KERNEL);
+ 	if (!atc->pcm)
+ 		return -ENOMEM;
+ 
+ 	daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
+ 	da_desc.msr = atc->msr;
+-	for (i = 0, atc->n_daio = 0; i < num_daios; i++) {
++	for (i = 0; i < NUM_DAIOTYP; i++) {
++		if ((i == MIC) && !cap.dedicated_mic)
++			continue;
+ 		da_desc.type = (atc->model != CTSB073X) ? i :
+ 			     ((i == SPDIFIO) ? SPDIFI1 : i);
+ 		da_desc.output = i < LINEIM;
+@@ -1405,42 +1416,39 @@ static int atc_get_resources(struct ct_atc *atc)
+ 				i);
+ 			return err;
+ 		}
+-		atc->n_daio++;
+ 	}
+ 
+ 	src_mgr = atc->rsc_mgrs[SRC];
+ 	src_dsc.multi = 1;
+ 	src_dsc.msr = atc->msr;
+ 	src_dsc.mode = ARCRW;
+-	for (i = 0, atc->n_src = 0; i < num_srcs; i++) {
++	for (i = 0; i < NUM_ATC_SRCS; i++) {
++		if (((i > 3) && !cap.dedicated_mic))
++			continue;
+ 		err = src_mgr->get_src(src_mgr, &src_dsc,
+ 					(struct src **)&atc->srcs[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_src++;
+ 	}
+ 
+ 	srcimp_mgr = atc->rsc_mgrs[SRCIMP];
+ 	srcimp_dsc.msr = 8;
+-	for (i = 0, atc->n_srcimp = 0; i < num_srcs; i++) {
++	for (i = 0; i < NUM_ATC_SRCS; i++) {
++		if (((i > 3) && !cap.dedicated_mic))
++			continue;
+ 		err = srcimp_mgr->get_srcimp(srcimp_mgr, &srcimp_dsc,
+ 					(struct srcimp **)&atc->srcimps[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_srcimp++;
+ 	}
+ 
+ 	sum_mgr = atc->rsc_mgrs[SUM];
+ 	sum_dsc.msr = atc->msr;
+-	for (i = 0, atc->n_pcm = 0; i < (2*4); i++) {
++	for (i = 0; i < NUM_ATC_PCM; i++) {
+ 		err = sum_mgr->get_sum(sum_mgr, &sum_dsc,
+ 					(struct sum **)&atc->pcm[i]);
+ 		if (err)
+ 			return err;
+-
+-		atc->n_pcm++;
+ 	}
+ 
+ 	return 0;
+@@ -1493,9 +1501,11 @@ static void atc_connect_resources(struct ct_atc *atc)
+ 	struct sum *sum;
+ 	struct ct_mixer *mixer;
+ 	struct rsc *rscs[2] = {NULL};
++	struct capabilities cap;
+ 	int i, j;
+ 
+ 	mixer = atc->mixer;
++	cap = atc->capabilities(atc);
+ 
+ 	for (i = MIX_WAVE_FRONT, j = LINEO1; i <= MIX_SPDIF_OUT; i++, j++) {
+ 		mixer->get_output_ports(mixer, i, &rscs[0], &rscs[1]);
+@@ -1513,7 +1523,7 @@ static void atc_connect_resources(struct ct_atc *atc)
+ 	src = atc->srcs[3];
+ 	mixer->set_input_right(mixer, MIX_LINE_IN, &src->rsc);
+ 
+-	if (atc->model == CTSB1270) {
++	if (cap.dedicated_mic) {
+ 		/* Titanium HD has a dedicated ADC for the Mic. */
+ 		dai = container_of(atc->daios[MIC], struct dai, daio);
+ 		atc_connect_dai(atc->rsc_mgrs[SRC], dai,
+diff --git a/sound/pci/ctxfi/ctatc.h b/sound/pci/ctxfi/ctatc.h
+index 0bc7b71d910b0..671edc46bd503 100644
+--- a/sound/pci/ctxfi/ctatc.h
++++ b/sound/pci/ctxfi/ctatc.h
+@@ -132,10 +132,6 @@ struct ct_atc {
+ 	void **pcm;		/* SUMs for collecting all pcm stream */
+ 	void **srcs;		/* Sample Rate Converters for input signal */
+ 	void **srcimps;		/* input mappers for SRCs */
+-	unsigned char n_daio;
+-	unsigned char n_src;
+-	unsigned char n_srcimp;
+-	unsigned char n_pcm;
+ 
+ 	struct ct_timer *timer;
+ 
 -- 
 2.53.0
 
