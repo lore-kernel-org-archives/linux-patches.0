@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903F73B0AF0;
-	Sat, 17 Oct 2026 16:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538FB3AF666;
+	Sat, 17 Oct 2026 16:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256072; cv=none; b=iNZCkv50SmEmXsfmvwKbY4Rc7y2DeOkIpOVE/gOf5x2MyWsBTyUUMyWYHdfi6JmUeOqvM48YufmmD22WcJ9uzgWXKTTZhQ6XtCKrwz4Y9VG3VDooFB8076ggKZkzMwEJR4XaMT/dQjXWz5Ukjlpi6j4qX322oCNMXI06XKLMzBY=
+	t=1792256075; cv=none; b=qcDUoHW8rwOKsoiLj0DmSTMwtAU/irOnNR98Ti8OwS8gDC+vYzEj275KDTplONoHPK7zE8fxCbULNps2/goCAaXQlDSv/EIGWHmfFx2oFpdUohJ8UCkm2Eb3u+km4YTmhDUK1trgSCTw03bI8Ppn9TNeNR4R+6fJPPWHmmsZe3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256072; c=relaxed/simple;
-	bh=tAlUNX88uOKTi62UTk8hOBBWrluCnMbbSMkB84DX0hc=;
+	s=arc-20240116; t=1792256075; c=relaxed/simple;
+	bh=gQgRqcztmVnalLb0/XhDpluEK6hPYFbl04j0DXc6V/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qplVSu8mbj1PCBpvxWS9IMcQ4OaF+Orb0hQk/NDrzQDVgfd/6X4XWT+J2GY4f7HqZYkYXTCdjXSccgHMWdmeRyinJgKN+33wvg52CObs02DWyyHCroeoD7J+MFFZVkwpg7sK9fvquz11k92/GJTAK8MYn3IFTKd8ILzBR7riocc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JD95zcVi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OMrwxZG3WYf7ADs/KgPCYcoAEsjz+Z7/RJa5z4Z+RAJkhVUew5n2F+L4W/s63l4hT13SyEtSBAocjsYWF7Z1zCdfbd9udtjZ2cO5CC/oW9yJaU6Lo5Wiy20RgdBPgwaHZ5fR1lH+5/U/BkhPDfc12WxV4X8QMie8VjJqjWdW7ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMNPpwy1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD95zcVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82AA1F000C4;
-	Sat, 17 Oct 2026 16:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMNPpwy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DC71F000C4;
+	Sat, 17 Oct 2026 16:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256071;
-	bh=DqxgInjFmI9jJKmwYRXnNzv2CwCkmcXwhtTkXbKPLUc=;
+	s=korg; t=1792256074;
+	bh=HVkZl7C+7YvXkc4O5dHq4Dz2Gj6O/xLGdDMk1gNbCCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JD95zcVinBTRdet3S1J80EdLoceT/9dfiSWdyKVNPgC+idfh6fJ6Y2WwtqaeXEptF
-	 LN6AJr5R5lVKq7KY8c5tzb0Sl4jm3B4ShFl9Mot/guo0nTgKJPcHnKrppXcCzyvwY9
-	 Q0XV3c5Z45r3/P3+sa+CeUmgQwhDNe025NaSqZxo=
+	b=MMNPpwy1FAGfptx+LVIOQgfu1wruVkF+paj1WzPqyH4W2NGCH3LTQwnQZEx8ziLFt
+	 KT7hSasME2FQvmkKL9oTJDcilowGduxVowsMWbrfcgPpDZ3XUfSyQqYFgsrxzzbCUe
+	 ULcqhaFjAHCJn7Ov0dGYrlisTzyQVu8A4qS0azl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oscar Ou <oscarou@synology.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0113/1674] mptcp: pm: reset retrans_time when ADD_ADDR entry is reused
-Date: Sat, 17 Oct 2026 17:39:45 +0200
-Message-ID: <20261017160434.050281002@linuxfoundation.org>
+Subject: [PATCH 6.6 0073/1674] lockd: fix swapped arguments in nlmsvc_match_ip()
+Date: Sat, 17 Oct 2026 17:39:05 +0200
+Message-ID: <20261017160433.007284501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,47 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Oscar Ou <oscarou@synology.com>
 
-[ Upstream commit f968190c0b42ea2004dc1426359a53ec365a7a37 ]
+[ Upstream commit b9060689f49dc663e9a3d069c4a65ff63a836e66 ]
 
-When an ADD_ADDR entry is reused, the timer is re-armed, because the
-goal is to re-announce an ADD_ADDR, and eventually retransmit it if
-needed.
+When releasing locks by server IP address via /proc/fs/nfsd/unlock_ip,
+nlmsvc_unlock_all_by_ip() calls nlm_traverse_files() with the server
+sockaddr as the opaque @data argument:
 
-In this case, the retransmission counter should be reset as well, so the
-re-announced address gets its retransmissions back instead of relying on
-what was left before, and possibly not being able to retransmit it.
+	nlm_traverse_files(server_addr, nlmsvc_match_ip, NULL);
 
-Fixes: 304ab97f4c7c ("mptcp: allow ADD_ADDR reissuance by userspace PMs")
+The match callback is later invoked from nlm_traverse_locks() as:
+
+	match(lockhost, host);
+
+where the first argument is the nlm_host that owns the lock, and the
+second argument is the @data that was originally passed down (here the
+server sockaddr).  This is the convention every other match callback
+relies on (nlmsvc_mark_host(), nlmsvc_same_host(), nlmsvc_is_client()):
+arg1 is the real nlm_host, arg2 is the caller-supplied reference value.
+
+nlmsvc_match_ip() has had these two arguments reversed ever since the
+unlock-by-IP feature was introduced in commit 4373ea84c84d ("lockd:
+unlock lockd locks associated with a given server ip"):
+
+	return rpc_cmp_addr(nlm_srcaddr(host), datap);
+
+Here @host is actually the server sockaddr, so nlm_srcaddr(host)
+dereferences a struct sockaddr as a struct nlm_host and reads garbage
+at the offset of h_srcaddr; meanwhile @datap is actually the lock
+owner's nlm_host but is compared as a sockaddr.  As a result the
+comparison practically never matches and locks are not released for the
+requested IP.
+
+Swap the arguments so the lock owner's source address is compared
+against the requested server address:
+
+	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+
+Fixes: 4373ea84c84d ("lockd: unlock lockd locks associated with a given server ip")
 Cc: stable@vger.kernel.org
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-0-b8f496d71664%40kernel.org?part=4
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-9-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted mptcp_pm_announced_alloc() in pm.c to mptcp_pm_alloc_anno_list() in pm_netlink.c. ]
+Signed-off-by: Oscar Ou <oscarou@synology.com>
+[ cel: fix the misleading typedef parameter names too ]
+Link: https://patch.msgid.link/20260617075738.1151797-1-oscarou@synology.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/lockd/svcsubs.c          | 2 +-
+ include/linux/lockd/lockd.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 2be19e1877c88..2e5eb51d6ee09 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -418,10 +418,10 @@ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index 9e2a67bfd0702..bba701e1a6089 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -493,7 +493,7 @@ EXPORT_SYMBOL_GPL(nlmsvc_unlock_all_by_sb);
+ static int
+ nlmsvc_match_ip(void *datap, struct nlm_host *host)
+ {
+-	return rpc_cmp_addr(nlm_srcaddr(host), datap);
++	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+ }
  
- 	add_entry->addr = *addr;
- 	add_entry->sock = msk;
--	add_entry->retrans_times = 0;
+ /**
+diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
+index 0f016d69c996e..e1920a67d6572 100644
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -268,7 +268,7 @@ void		  nsm_release(struct nsm_handle *nsm);
+  * This is used in garbage collection and resource reclaim
+  * A return value != 0 means destroy the lock/block/share
+  */
+-typedef int	  (*nlm_host_match_fn_t)(void *cur, struct nlm_host *ref);
++typedef int	  (*nlm_host_match_fn_t)(void *owner, struct nlm_host *ref);
  
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
- reset_timer:
-+	add_entry->retrans_times = 0;
- 	add_entry->timer_done = false;
- 	timeout = mptcp_get_add_addr_timeout(net);
- 	if (timeout)
+ /*
+  * Server-side lock handling
 -- 
 2.53.0
 
