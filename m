@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F00A3BB665;
-	Sat, 17 Oct 2026 17:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF153D3CE4;
+	Sat, 17 Oct 2026 17:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257309; cv=none; b=HjKj1Ngs8wNL25sC4A8DyZyH9CHTF0QTbcooyFutCIEPezXecD7UW89CnMXs241CPtHVBJHgzg1jkgwjOFUcwlpnFJjMB9Jat5wk9kXhA/lIX5nW8q7JnI+6WNMtoPEE5wCDsfHKaliPyHQelwFJbWx92dmWwEgmMdDZ6KnwUI8=
+	t=1792257313; cv=none; b=GTanzssO22P6roLTim5tiyM5lY/HnCPDVaVMbPrHN0xY5FPfxyOIcMYcnDshmqffgJzHcTMSKwjHvqIeyDy4l4+3RH7W0fl52+/uQfbXd4UwpfsuT0PNPGM2DI1g3+ffK9Hud17P0307ZOtv6trjtfNx6mg1S3I+awl5p078MnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257309; c=relaxed/simple;
-	bh=454Nr3t8W6sqjdHigra3JXc7DDuLBnNSzECRbl/pMSg=;
+	s=arc-20240116; t=1792257313; c=relaxed/simple;
+	bh=+v4mN3dgz9PZfOZaaMNuZ6mxabJCcnodLjxppsPANpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+Zz8zi/Y1tGswSZEVVas+1vGk5+nN5ReQ+ynZLC483V0yfleRnuexc5Io8N5BuMlKtTCbcOz2YYhL1dc+Pc1tjg2JBxQUTlknELjYtfV19/xxC7pRAaG9eERgev9A8WxYzgXQfyYE57k0uaD+tKAas/ZNGF6qVoMqvy4/GOBns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY4LQQJK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OWANN6XFM3YyrJxDu0d+9n2X2xQe7as1wkK7UxQxeMhXdBmkM12/Ck7SNSE06DZXXl4IIUr2eaykBpo1KymwYZDfQc4sa8RFFIqJQipQbwue7sW+z5gwBGEG3kHouLuRHFlGv40JbO5NXZmYH2Lxm1uHEW/1qcs6KLK9x9ogIX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3fvrHvl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY4LQQJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9987A1F000C4;
-	Sat, 17 Oct 2026 17:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3fvrHvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE101F000C4;
+	Sat, 17 Oct 2026 17:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257308;
-	bh=p2win/wFMXpvg23W65bcbfZyYz09YG29qF8cI91KoaM=;
+	s=korg; t=1792257311;
+	bh=8Jqw0DBsacqzOoNKekbnNDHZKrEaRer/vSkrdoCCyOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YY4LQQJKZyfDDrxTddw4XJ+AIXgkH7e1RQI8J8zqwIJYn+DnSeV+b5oVNr3OlPraO
-	 6QvMy9eHaXGIVZxUeWrE88BxPUfNXxCwRVokSqTezXG9zUeo4XwIvBLfbl5/mwmeAy
-	 2wj2SR9IPbyllsYWfWd7oNAi6rlhS2Wa6imp01cE=
+	b=D3fvrHvlj0gyKDxwM1iavVEaNQ/FMBGWpx8DpnR11nj64G1aJbaE+H/wn+qWT0VN/
+	 UD4ZOFYNScW5Knioa3m82ZNeBYjPpN/zO8jIHlckx4vYbvQU2nk9isHvD53xkhb3xg
+	 I2imOIwtZYptjjROzGetvO3Au/vmXSOCqYLwgm90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0481/1674] tipc: hold a reference to nodes found by link name
-Date: Sat, 17 Oct 2026 17:45:53 +0200
-Message-ID: <20261017160443.459571879@linuxfoundation.org>
+	Iaroslav Voitovych <yaroslav.voytovych@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0517/1674] Bluetooth: MGMT: Fix status of pending commands flushed on power off
+Date: Sat, 17 Oct 2026 17:46:29 +0200
+Message-ID: <20261017160444.374553273@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,119 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
 
-commit 17e73bae400f6a434dc006e3bee92c94cf781954 upstream.
+commit 86ef0f58bdecdedb3a1240971c56d71b7e4ce3fc upstream.
 
-tipc_node_find_by_name() returns a node after dropping its RCU read lock
-without taking a reference.  The LINK_SET, LINK_GET and LINK_RESET_STATS
-handlers then lock and access the node, racing with timer-driven cleanup of
-a down peer.  Generic netlink serialization does not exclude the node
-timer.
+cmd_complete_rsp() receives a struct cmd_lookup and, for a pending
+command that has no cmd_complete callback, falls through to
+cmd_status_rsp(cmd, data). cmd_status_rsp() reads data as a u8 *, so
+the status sent comes from the first byte of match->sk's
+representation, not from match->mgmt_status.
 
-The following interleaving can leave a handler using a freed node:
+commit f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on
+mgmt_index_removed") changed the callers' data from &status to &match
+and updated the cmd_complete branch to match->mgmt_status, but left
+the fall-through passing data unchanged.
 
-  CPU 0: find the node under RCU and release the node read lock
-  CPU 1: tipc_node_timeout() clears the links and unlinks the down node
-  CPU 1: drop the list and timer references, queuing tipc_node_free()
-  CPU 0: leave the RCU read-side critical section
-  CPU 1: complete the grace period and free the node
-  CPU 0: acquire the node lock through the stale pointer
+In mgmt_index_removed() match->sk is NULL, so every such command is
+answered with status 0x00 (Success) instead of
+MGMT_STATUS_INVALID_INDEX. In __mgmt_power_off() it is NULL too,
+unless a Set Powered command was pending: then settings_rsp() has
+stored that command's socket in match->sk, and the byte sent comes
+from the socket pointer. Either way the status the caller set,
+MGMT_STATUS_NOT_POWERED (or MGMT_STATUS_INVALID_INDEX when the device
+is being unregistered), is lost.
 
-LINK_SET also uses the node's media address after releasing the node lock,
-when passing queued packets to tipc_bearer_xmit().
+Pass the status the callers set.
 
-KASAN on v7.3-rc5 reported:
+This was seen on a QCA9377 laptop: bluetoothd's Start Discovery,
+pending when the adapter was powered off, was answered with Command
+Status 0x00 and no parameters, and bluetoothd 5.72 crashed on the
+zero-length success. BlueZ master has since added the length check
+on that path ("adapter: Fix crash on short start discovery reply",
+BlueZ a734b06059cb), but userspace should still be told Not Powered,
+not Success.
 
-  BUG: KASAN: slab-use-after-free in _raw_read_lock_bh
-  Write of size 4 at addr ffff88807e06f008 by task poc/92
-  Call Trace:
-   _raw_read_lock_bh                 kernel/locking/spinlock.c:287
-   tipc_nl_node_set_link             net/tipc/node.c:2475
-   genl_family_rcv_msg_doit          net/netlink/genetlink.c:1114
-   genl_rcv_msg                      net/netlink/genetlink.c:1209
-   netlink_rcv_skb                   net/netlink/af_netlink.c:2575
+Tested on Ubuntu 7.0.0-31 with a virtual controller (hci_vhci):
+power off is held in HCI Write Scan Enable while a Start Discovery is
+submitted, and the flush answers it with status 0x00 before this
+change and 0x0f (Not Powered) after.
 
-  Allocated by task 0:
-   tipc_node_create                  net/tipc/node.c:539
-   tipc_node_check_dest              net/tipc/node.c:1196
-   tipc_disc_rcv                     net/tipc/discover.c:252
-
-  Freed by task 92:
-   kfree                             mm/slub.c:6801
-   rcu_core                          kernel/rcu/tree.c:2919
-
-  Last potentially related work creation:
-   __call_rcu_common.constprop.0     kernel/rcu/tree.c:3181
-   tipc_node_timeout                 net/tipc/node.c:814
-
-Acquire a reference to the selected node with kref_get_unless_zero() before
-leaving RCU, returning NULL if the node has already been released.  Release
-that reference on every caller exit after the last node access, including
-transmission in LINK_SET.  Keep the existing link lookup order and locking
-so concurrent link removal still takes the existing error paths.
-
-Fixes: 6a939f365bdb ("tipc: Auto removal of peer down node instance")
+Fixes: f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on mgmt_index_removed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://patch.msgid.link/20260928161246.1895273-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/bluetooth/mgmt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -2421,8 +2421,11 @@ static struct tipc_node *tipc_node_find_
- 			}
- 		}
- 		tipc_node_read_unlock(n);
--		if (found_node)
-+		if (found_node) {
-+			if (!kref_get_unless_zero(&found_node->kref))
-+				found_node = NULL;
- 			break;
-+		}
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -1462,7 +1462,7 @@ static void cmd_complete_rsp(struct mgmt
+ 		return;
  	}
- 	rcu_read_unlock();
  
-@@ -2507,6 +2510,7 @@ out:
- 	tipc_node_read_unlock(node);
- 	tipc_bearer_xmit(net, bearer_id, &xmitq, &node->links[bearer_id].maddr,
- 			 NULL);
-+	tipc_node_put(node);
- 	return res;
+-	cmd_status_rsp(cmd, data);
++	cmd_status_rsp(cmd, &match->mgmt_status);
  }
  
-@@ -2558,12 +2562,14 @@ int tipc_nl_node_get_link(struct sk_buff
- 		link = node->links[bearer_id].link;
- 		if (!link) {
- 			tipc_node_read_unlock(node);
-+			tipc_node_put(node);
- 			err = -EINVAL;
- 			goto err_free;
- 		}
- 
- 		err = __tipc_nl_add_link(net, &msg, link, 0);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		if (err)
- 			goto err_free;
- 	}
-@@ -2634,11 +2640,13 @@ int tipc_nl_node_reset_link_stats(struct
- 	if (!link) {
- 		spin_unlock_bh(&le->lock);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		return -EINVAL;
- 	}
- 	tipc_link_reset_stats(link);
- 	spin_unlock_bh(&le->lock);
- 	tipc_node_read_unlock(node);
-+	tipc_node_put(node);
- 	return 0;
- }
- 
+ static int generic_cmd_complete(struct mgmt_pending_cmd *cmd, u8 status)
 
 
