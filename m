@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FF117BED0;
-	Sat, 17 Oct 2026 16:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0B6355F49;
+	Sat, 17 Oct 2026 16:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253490; cv=none; b=L0vxuisie3FZNWKu2zTRcPzIXUwFXkdF04kqdVJnJ7xWVmumqBWzzX63NMblf7ViPq0Vj7EUMr3spkIEF6oXwhxkSITWwdBAQxjjRdJxdGsLfWh4uZZvO7rmyyVz5CX4CtKd1TIqthSRuyEi8qwR2BI2sJQmg5jsM84LPFW5/cA=
+	t=1792253493; cv=none; b=gK816bZ75bkeaKB+gsE62iCG2fgiT8Tur4+gkAjDfNJf4Cc5xVJa30Mb5EpGu/JSgsRf44CgrWFwGFpqvQegYJatNx0CPMa04oCmP9RMB5pTI791gs+cliqAoy2qMfawXQ+eCtsGEc9wW14cbNmnP7t9Ib5Fa1Nxe+ErNUQmuSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253490; c=relaxed/simple;
-	bh=g5ZbLBeSavoGeyvrxRlq2a9kJxluDwZQ2f2/l9OQte4=;
+	s=arc-20240116; t=1792253493; c=relaxed/simple;
+	bh=GVB44WrJwqgbe/xQVi3/Q6rpd5HUBY51X/kjiibyDvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDcCOHgVjmeYy0BHYKXESno8NyBhZsHrLyJkb193IrYkBtBwLnqcp+9j8eemK+Vo3WWFXh+90OUeqA5RltZBJXPM9vbzDZm0EbbvRICbDkQUryvZU00N/Mv+1ut4K/Nyjs1OI2gSacDOipFSlMgZwe4/9KIpi1zgKrKsNI5YjzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNYtkfqO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E+Ie942cMTtzGB+2ZOc2dmv7bEE8XuuB8NI00cxZBexNFRooYU6XndLPAy6XFhAZl1AWfB6pAOYK7/WfdNjXD6WbBB7vzTdqILiDoop0Gr/+dTM4uSUwWym/AF0ceSjPLeIFHmSFO+nhi3JRjqcTcaGDE2QM+SgnVCz8kWLO/sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbjeGIyb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNYtkfqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D45B1F000C5;
-	Sat, 17 Oct 2026 16:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbjeGIyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D061F000C4;
+	Sat, 17 Oct 2026 16:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253489;
-	bh=TmOoe5u7PV5mu4Bi0sSVXN53vcI0cD5xnbVMEG//fqY=;
+	s=korg; t=1792253492;
+	bh=LUC1CXgl0VTjXM5NRz8FU9EAZKy4HACNOwHI9gXPmrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DNYtkfqO7XfdaX0IsSRni4fV4f69ZsKu7oN+7Iy6tqP/Uqxu7IRrFfmcirP4/NEMg
-	 NAb2ctvEr50pm6zZRJXP3JplfOmqPLcsG9zSKV3TZMBgWDAl1mFHmI4+AtpXx63O1c
-	 zVWY8H9ke5BqYObw0tIFQEFK7cA0MIsVV7rPL3cw=
+	b=QbjeGIybZ16J+CU0w2qHCscNe3wgR8fSo4topb2NKZFNW/bNA0x7GETvI4a8DI4tU
+	 sdfuAyrOlDwwzA6FYDu0yXXERrXCq/pOcs8FQICpqIYUv56MBfNxXRTuPiuRVdgjRe
+	 T2nsp0b56O9w8dBN0jCeSUpdaf1HbmgvczN+cvbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Huan Tang <tanghuan@vivo.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/869] scsi: ufs: core: Fix data race in CPU latency PM QoS request handling
-Date: Sat, 17 Oct 2026 17:49:36 +0200
-Message-ID: <20261017160040.504926769@linuxfoundation.org>
+Subject: [PATCH 6.12 136/869] crypto: hisilicon/hpre - enable all clusters clock gating
+Date: Sat, 17 Oct 2026 17:49:37 +0200
+Message-ID: <20261017160040.530018276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,135 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 79dde5f7dc7c038eec903745dc1550cd4139980e ]
+[ Upstream commit c62db61a416ff832481bccdfdee146f5272864b3 ]
 
-The cpu_latency_qos_add/remove/update_request interfaces lack internal
-synchronization by design, requiring the caller to ensure thread safety.
-The current implementation relies on the 'pm_qos_enabled' flag, which is
-insufficient to prevent concurrent access and cannot serve as a proper
-synchronization mechanism. This has led to data races and list
-corruption issues.
+Currently, the driver enables clock gating for only one cluster.
+However, the new hardware has three clusters. Therefore, clock
+gating needs to be enabled based on the number of clusters on the
+current hardware.
 
-A typical race condition call trace is:
-
-[Thread A]
-ufshcd_pm_qos_exit()
-  --> cpu_latency_qos_remove_request()
-    --> cpu_latency_qos_apply();
-      --> pm_qos_update_target()
-        --> plist_del              <--(1) delete plist node
-    --> memset(req, 0, sizeof(*req));
-  --> hba->pm_qos_enabled = false;
-
-[Thread B]
-ufshcd_devfreq_target
-  --> ufshcd_devfreq_scale
-    --> ufshcd_scale_clks
-      --> ufshcd_pm_qos_update     <--(2) pm_qos_enabled is true
-        --> cpu_latency_qos_update_request
-          --> pm_qos_update_target
-            --> plist_del          <--(3) plist node use-after-free
-
-Introduces a dedicated mutex to serialize PM QoS operations, preventing
-data races and ensuring safe access to PM QoS resources, including sysfs
-interface reads.
-
-Fixes: 2777e73fc154 ("scsi: ufs: core: Add CPU latency QoS support for UFS driver")
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Tested-by: Huan Tang <tanghuan@vivo.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 9228facb3081 ("crypto: hisilicon/qm - request reserved interrupt for virtual function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-sysfs.c | 2 ++
- drivers/ufs/core/ufshcd.c    | 9 +++++++++
- include/ufs/ufshcd.h         | 3 +++
- 3 files changed, 14 insertions(+)
+ drivers/crypto/hisilicon/hpre/hpre_main.c | 40 +++++++++++++++--------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-sysfs.c b/drivers/ufs/core/ufs-sysfs.c
-index f8397ef3cf8df..5d4f23bb6ab10 100644
---- a/drivers/ufs/core/ufs-sysfs.c
-+++ b/drivers/ufs/core/ufs-sysfs.c
-@@ -426,6 +426,8 @@ static ssize_t pm_qos_enable_show(struct device *dev,
- {
- 	struct ufs_hba *hba = dev_get_drvdata(dev);
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
+index a11fe5e276773..6eeaa00e07b25 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_main.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
+@@ -593,6 +593,8 @@ static void hpre_close_sva_prefetch(struct hisi_qm *qm)
  
-+	guard(mutex)(&hba->pm_qos_mutex);
+ static void hpre_enable_clock_gate(struct hisi_qm *qm)
+ {
++	unsigned long offset;
++	u8 clusters_num, i;
+ 	u32 val;
+ 
+ 	if (qm->ver < QM_HW_V3)
+@@ -606,17 +608,23 @@ static void hpre_enable_clock_gate(struct hisi_qm *qm)
+ 	val |= HPRE_PEH_CFG_AUTO_GATE_EN;
+ 	writel(val, qm->io_base + HPRE_PEH_CFG_AUTO_GATE);
+ 
+-	val = readl(qm->io_base + HPRE_CLUSTER_DYN_CTL);
+-	val |= HPRE_CLUSTER_DYN_CTL_EN;
+-	writel(val, qm->io_base + HPRE_CLUSTER_DYN_CTL);
+-
+-	val = readl_relaxed(qm->io_base + HPRE_CORE_SHB_CFG);
+-	val |= HPRE_CORE_GATE_EN;
+-	writel(val, qm->io_base + HPRE_CORE_SHB_CFG);
++	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
++	for (i = 0; i < clusters_num; i++) {
++		offset = (unsigned long)i * HPRE_CLSTR_ADDR_INTRVL;
++		val = readl(qm->io_base + offset + HPRE_CLUSTER_DYN_CTL);
++		val |= HPRE_CLUSTER_DYN_CTL_EN;
++		writel(val, qm->io_base + offset + HPRE_CLUSTER_DYN_CTL);
 +
- 	return sysfs_emit(buf, "%d\n", hba->pm_qos_enabled);
++		val = readl(qm->io_base + offset + HPRE_CORE_SHB_CFG);
++		val |= HPRE_CORE_GATE_EN;
++		writel(val, qm->io_base + offset + HPRE_CORE_SHB_CFG);
++	}
  }
  
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 9c2f407da28a1..44c84090496d6 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -1023,6 +1023,7 @@ EXPORT_SYMBOL_GPL(ufshcd_is_hba_active);
-  */
- void ufshcd_pm_qos_init(struct ufs_hba *hba)
+ static void hpre_disable_clock_gate(struct hisi_qm *qm)
  {
-+	guard(mutex)(&hba->pm_qos_mutex);
++	unsigned long offset;
++	u8 clusters_num, i;
+ 	u32 val;
  
- 	if (hba->pm_qos_enabled)
- 		return;
-@@ -1039,6 +1040,8 @@ void ufshcd_pm_qos_init(struct ufs_hba *hba)
-  */
- void ufshcd_pm_qos_exit(struct ufs_hba *hba)
- {
-+	guard(mutex)(&hba->pm_qos_mutex);
+ 	if (qm->ver < QM_HW_V3)
+@@ -630,13 +638,17 @@ static void hpre_disable_clock_gate(struct hisi_qm *qm)
+ 	val &= ~HPRE_PEH_CFG_AUTO_GATE_EN;
+ 	writel(val, qm->io_base + HPRE_PEH_CFG_AUTO_GATE);
+ 
+-	val = readl(qm->io_base + HPRE_CLUSTER_DYN_CTL);
+-	val &= ~HPRE_CLUSTER_DYN_CTL_EN;
+-	writel(val, qm->io_base + HPRE_CLUSTER_DYN_CTL);
+-
+-	val = readl_relaxed(qm->io_base + HPRE_CORE_SHB_CFG);
+-	val &= ~HPRE_CORE_GATE_EN;
+-	writel(val, qm->io_base + HPRE_CORE_SHB_CFG);
++	clusters_num = qm->cap_tables.dev_cap_table[HPRE_CLUSTER_NUM_CAP_IDX].cap_val;
++	for (i = 0; i < clusters_num; i++) {
++		offset = (unsigned long)i * HPRE_CLSTR_ADDR_INTRVL;
++		val = readl(qm->io_base + offset + HPRE_CLUSTER_DYN_CTL);
++		val &= ~HPRE_CLUSTER_DYN_CTL_EN;
++		writel(val, qm->io_base + offset + HPRE_CLUSTER_DYN_CTL);
 +
- 	if (!hba->pm_qos_enabled)
- 		return;
++		val = readl(qm->io_base + offset + HPRE_CORE_SHB_CFG);
++		val &= ~HPRE_CORE_GATE_EN;
++		writel(val, qm->io_base + offset + HPRE_CORE_SHB_CFG);
++	}
+ }
  
-@@ -1053,6 +1056,8 @@ void ufshcd_pm_qos_exit(struct ufs_hba *hba)
-  */
- static void ufshcd_pm_qos_update(struct ufs_hba *hba, bool on)
- {
-+	guard(mutex)(&hba->pm_qos_mutex);
-+
- 	if (!hba->pm_qos_enabled)
- 		return;
- 
-@@ -10545,6 +10550,9 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	 */
- 	spin_lock_init(&hba->clk_gating.lock);
- 
-+	/* Initialize mutex for PM QoS request synchronization */
-+	mutex_init(&hba->pm_qos_mutex);
-+
- 	/*
- 	 * Set the default power management level for runtime and system PM.
- 	 * Host controller drivers can override them in their
-@@ -10630,6 +10638,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	mutex_init(&hba->ee_ctrl_mutex);
- 
- 	mutex_init(&hba->wb_mutex);
-+
- 	init_rwsem(&hba->clk_scaling_lock);
- 
- 	ufshcd_init_clk_gating(hba);
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index e68ce42eaff4d..175ce70758bbc 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -968,6 +968,7 @@ enum ufshcd_mcq_opr {
-  * @ufs_rtc_update_work: A work for UFS RTC periodic update
-  * @pm_qos_req: PM QoS request handle
-  * @pm_qos_enabled: flag to check if pm qos is enabled
-+ * @pm_qos_mutex: synchronizes PM QoS request and status updates
-  */
- struct ufs_hba {
- 	void __iomem *mmio_base;
-@@ -1138,6 +1139,8 @@ struct ufs_hba {
- 	struct delayed_work ufs_rtc_update_work;
- 	struct pm_qos_request pm_qos_req;
- 	bool pm_qos_enabled;
-+	/* synchronizes PM QoS request and status updates */
-+	struct mutex pm_qos_mutex;
- };
- 
- /**
+ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
 -- 
 2.53.0
 
