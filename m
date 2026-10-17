@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA18224D6;
-	Sat, 17 Oct 2026 16:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FB9374E60;
+	Sat, 17 Oct 2026 16:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253142; cv=none; b=rkSrOIuXA7oFgo91x+BstBblzzy4CArlTi0Iz0HlBAf2msyqUhul7r94+twQJiUV/GAE9oXsNigucDz3gwDLKz+nQ9APwCEWhTWcg4mEF0bf6R/ch166WaIbLZkE+9rNvw+pdGpUYbOOzBGjsID+d73hAFCKzJwcur1doJD4rd8=
+	t=1792253145; cv=none; b=C4pz/HSUHS7xuHkIymg0hSbTQ22rt2lVbLQwHTLoFxg1PZxwt7LwgoS9nqT0NcnTiZeqRv3jERUoAYGOXRZZYZdeoraFPbKR9LxO4Aj9iyddIYjQ1Z/vlvYdu9BF5ofwYj/z0m7XVRdYHcTwe00S56/hhQjDaihgtXZhMM36DYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253142; c=relaxed/simple;
-	bh=VIofS0UYhuwJHlg5L8fmtwcq5KBtucHVeSUhqOvE/Gc=;
+	s=arc-20240116; t=1792253145; c=relaxed/simple;
+	bh=rPePBl1Lh0+rDZDof0pkMzBrVGzrlux4IU2gDS0bOZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8IJW5TygoKHbCDk881NQm5VzJ470qxDM5qnOGfFhoK6lNzka6OPP18lUb3NTF0WI6t6SL7CFIB9mfcWPBbKZcbaaob5HugUNDRBv+U0LWF1JDYlBcA3+b9OaBw/BnsqKW+5sXaNTanjlLE8U3DmtVbTJ1/5KKIqhBZWG4f3Obc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROfUaEcd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CGgxk1YLWGjU3ztOTly53AHZzHw9BB2UEE96fe8AtcUvzI4XhRsXQqcYWoY22OdQkXUyRBHH03RJyL6X9G2yJWHka3f5OTuFnPW18fX27du4WqI1g68Pod/SGMIAUEiCOrV/M5DcoZJOwUksIcIf/+rgLE65D5xjDCvBueklaeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGueqVDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROfUaEcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB2E1F000C4;
-	Sat, 17 Oct 2026 16:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGueqVDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766501F000C4;
+	Sat, 17 Oct 2026 16:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253140;
-	bh=u0SQ25Hh+5LnHIq/fUgokyu4Af3IuVistxfNh6pHF8w=;
+	s=korg; t=1792253144;
+	bh=hSPk175bQg9Gr7T81NKYW6/tFgE7BtT81600sw2x/DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROfUaEcdDZbR328tvSSKlxDtVi0o4fQd4Zt80scdNOiLI7+ZmBu5j4XrrrDEKxX5r
-	 Qm0s6osjQGOZbvOityrZ80maJbzuEAFyXzqx8HzZO5EnOJjHghaCzm3MEQ6Na8CAqH
-	 pS4+t5iTGmaqrHCOnIFAeWPy6x1n7KUCr8sqbv6w=
+	b=PGueqVDeoHBcJ2pxu95/qM071FRpQ9loMpiGSKYaJVDjDMmwPyzdFuSvQPSo/AcE1
+	 +EBzTAhXZaErGRaSaAyoLG5Tl9mEXQja7dJRIQ+bR5KYf5P0+Prc4aO5J0TftrVsDz
+	 f0W1N8WGYq/uoCP/mPRYMVNZe4UBkqG+PlvVmGXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/869] ip6_gre: remove obsolete ERSPAN PMTU update
-Date: Sat, 17 Oct 2026 17:47:29 +0200
-Message-ID: <20261017160037.213659687@linuxfoundation.org>
+Subject: [PATCH 6.12 009/869] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
+Date: Sat, 17 Oct 2026 17:47:30 +0200
+Message-ID: <20261017160037.240804167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,69 +54,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
+[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
 
-A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
-and mirred can redirect it to a native ip6erspan device. The legacy PMTU
-update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
-Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
+Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
+-> IFLUSHING, except for the last inode in the cluster that is
+triggering the free. In that case, the lock order is ILOCK ->
+cluster buffer -> IFLUSHING.
 
-On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
-self-created user and network namespaces to trigger:
+xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
+so this can safely run concurrently with xfs_ifree_cluster().
 
-  KASAN: null-ptr-deref
-  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
-  Kernel panic - not syncing: Fatal exception in interrupt
+xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
+cannot race with xfs_ifree_cluster() so being in a different order
+will not trigger a deadlock.
 
-The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
-in a better way") changed IPv6 GRE Too Big handling to update the
-underlay route and removed the equivalent block from __gre6_xmit().
-ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
+xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
+IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
+this deadlocks against xfs_ifree_cluster() like so:
 
-Remove the stale ERSPAN copy and its now-unused dst variable. This
-eliminates the metadata-dst dereference and keeps ERSPAN aligned with
-IPv6 GRE PMTU handling.
+ sysrq: Show Blocked State
+ task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
+ Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x8b/0x180
+  schedule_timeout_uninterruptible+0x1e/0x30
+  xfs_ifree+0x326/0x730
+  xfs_inactive_ifree+0xcb/0x230
+  xfs_inactive+0x2c8/0x380
+  xfs_inodegc_worker+0xaa/0x180
+  process_scheduled_works+0x1d4/0x400
+  worker_thread+0x234/0x2e0
+  kthread+0x147/0x170
+  ret_from_fork+0x3e/0x50
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x31/0x180
+  __down_common+0xbe/0x1f0
+  __down+0x1d/0x30
+  down+0x48/0x50
+  xfs_buf_lock+0x3d/0xe0
+  xfs_iflush_shutdown_abort+0x51/0x1e0
+  xfs_icwalk_ag+0x386/0x690
+  xfs_reclaim_inodes_nr+0x114/0x160
+  xfs_fs_free_cached_objects+0x19/0x20
+  super_cache_scan+0x17b/0x1a0
+  do_shrink_slab+0x180/0x350
+  shrink_slab+0xf8/0x430
+  drop_slab+0x97/0xf0
+  drop_caches_sysctl_handler+0x59/0xc0
+  proc_sys_call_handler+0x189/0x280
+  proc_sys_write+0x13/0x20
+  vfs_write+0x33d/0x3f0
+  ksys_write+0x7c/0xf0
+  __x64_sys_write+0x1b/0x30
+  x64_sys_call+0x271d/0x2ee0
+  do_syscall_64+0x68/0x130
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
-Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted the removal to match dst6_mtu() instead of dst_mtu() ]
+We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
+and XFS_IFLUSHING are serialised through to journal IO completion
+by the cluster buffer lock being held.
+
+There's quite a few asserts in the code that check that XFS_ISTALE
+does not occur out of sync with buffer locking (e.g. in
+xfs_iflush_cluster). There's also a dependency on the inode log item
+being removed from the buffer before XFS_IFLUSHING is cleared, also
+with asserts that trigger on this.
+
+Further, we don't have a requirement for the inode to be locked when
+completing or aborting inode flushing because all the inode state
+updates are serialised by holding the cluster buffer lock across the
+IO to completion.
+
+We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
+skip the inode, because there is no guarantee that the inode will be
+reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
+whether reclaim is preparing to free that inode. Similarly, we can't
+check for IFLUSHING before locking the inode because that would
+result in dirty inodes not being marked with ISTALE in the event of
+racing with XFS_IRECLAIM.
+
+Hence we have to address this issue from the xfs_reclaim_inode()
+side. It is clear that we cannot hold the inode locked here when
+calling xfs_iflush_shutdown_abort() because it is the inode->buffer
+lock order that causes the deadlock against xfs_ifree_cluster().
+
+Hence we need to drop the ILOCK before aborting the inode in the
+shutdown case. Once we've aborted the inode, we can grab the ILOCK
+again and then immediately reclaim it as it is now guaranteed to be
+clean.
+
+Note that dropping the ILOCK in xfs_reclaim_inode() means that it
+can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
+this state. This is safe because we have left the XFS_IFLUSHING flag
+on the inode and so xfs_ifree_mark_inode_stale() will simply set
+XFS_ISTALE and move to the next inode. An ASSERT check in this path
+needs to be tweaked to take into account this new shutdown
+interaction.
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 7 -------
- 1 file changed, 7 deletions(-)
+ fs/xfs/xfs_icache.c | 8 ++++++++
+ fs/xfs/xfs_inode.c  | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index ce1ba9d2af405..0cc0e1113845a 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -951,7 +951,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- {
- 	struct ip_tunnel_info *tun_info = NULL;
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct dst_entry *dst = skb_dst(skb);
- 	IP_TUNNEL_DECLARE_FLAGS(flags) = { };
- 	bool truncate = false;
- 	int encap_limit = -1;
-@@ -1087,12 +1086,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	gre_build_header(skb, 8, flags, proto, 0,
- 			 htonl(atomic_fetch_inc(&t->o_seqno)));
+diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
+index 08689839dd77e..e22d103f5f827 100644
+--- a/fs/xfs/xfs_icache.c
++++ b/fs/xfs/xfs_icache.c
+@@ -923,7 +923,15 @@ xfs_reclaim_inode(
+ 	 */
+ 	if (xlog_is_shutdown(ip->i_mount->m_log)) {
+ 		xfs_iunpin_wait(ip);
++		/*
++		 * Avoid a ABBA deadlock on the inode cluster buffer vs
++		 * concurrent xfs_ifree_cluster() trying to mark the inode
++		 * stale. We don't need the inode locked to run the flush abort
++		 * code, but the flush abort needs to lock the cluster buffer.
++		 */
++		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		xfs_iflush_shutdown_abort(ip);
++		xfs_ilock(ip, XFS_ILOCK_EXCL);
+ 		goto reclaim;
+ 	}
+ 	if (xfs_ipincount(ip))
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 266fcc7890987..3b487341348a0 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -1624,7 +1624,7 @@ xfs_ifree_mark_inode_stale(
+ 	iip = ip->i_itemp;
+ 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
+ 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
+-		ASSERT(iip->ili_last_fields);
++		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
+ 		goto out_iunlock;
+ 	}
  
--	/* TooBig packet may have updated dst->dev's mtu */
--	if (!t->parms.collect_md && dst) {
--		mtu = READ_ONCE(dst_dev(dst)->mtu);
--		if (dst6_mtu(dst) > mtu)
--			dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
--	}
- 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
- 			   NEXTHDR_GRE);
- 	if (err != 0) {
 -- 
 2.53.0
 
