@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46102342532;
-	Sat, 17 Oct 2026 16:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3984637DEBE;
+	Sat, 17 Oct 2026 16:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253117; cv=none; b=kCE4LX7AReXz8AEcfPqbAb1l0UeF+6nznYCd7U6kdo9IbH7NluW96EDpN3ce2LWkAQewyjusGwR8xAIocpn52kkOqld94NEkNy4i4yrEVK2epT9WZv/gv/dASmaV50BThxbvSR654hb+ZOU7nt+hVL63DUZTK7mCEjdBgL+BG6E=
+	t=1792253120; cv=none; b=aF70PhYjBpDq9PXDgag4sXrGZz/rmwk1+y7TLaIUXpuxfZXGdUrILdDP9deosZs8PIKTEC+4sm/Jjt+X9d83+FZuKJQ8+u1a4rZ3B+ZeirhtIFkIjADIwFqHOg/sXbZxiD7b5eHpEw5xXFNDAOs8KQk7/3NMimh5sPF1aa4IJVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253117; c=relaxed/simple;
-	bh=UI/1fSaZTwa/iFPeM2xmZYXkKlmnWjrmelWkC79lKEY=;
+	s=arc-20240116; t=1792253120; c=relaxed/simple;
+	bh=h4ANy34ctrYTQ6G0+69hIxvBZQCK7RAW7ONH+MCopXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePuPBRiokA0c1S3/thV53b6G/sn/n4qcOn2RCu1cB80CLoDW5Pcd/yyZ7h1Ldl4yARZX1Nl4g2ezBiaqDL8uQJHUO3oS+PrLG0djAb0o8IP+JXPN+BV+/us5+jPKOVjXmZ9qwz7qkYotsCouLMGxt0qP2aupWN8YAbLtpd7vzBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZf1BC7+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CF5QBpLKYzYJKSeUKdrrznVCdTuWC/FUOjFX9q+SzZ9HOINqpS0UpHgOK8EQciY8wmCky08f8o0ZD+i0Bf1enMahHo4xGsp+MFX2R90Z2VhzdkOYJ0/zpJ51o99V64kBRfY/Z7IXqgI/7cDxt0PMHqI6JQ1ai5boleDfOd+huAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+kZVm55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZf1BC7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AB11F000C4;
-	Sat, 17 Oct 2026 16:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+kZVm55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4491F000C4;
+	Sat, 17 Oct 2026 16:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253116;
-	bh=dNEZqfk6vvmOWoxRHa3ox1tBPQEupdi8NxDbWe5dws8=;
+	s=korg; t=1792253119;
+	bh=I9t9diaFvGil48PjqeRC9aqEb+1jwZnZu3gwdFNM17g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZf1BC7+/E52vXHT/buP5/KqIZ9rYaW3I76BHl3Un6Pb2Mz/AgPhMi+3PVjT1xUNr
-	 k06ENjgqRFw/T904p7bIYv7hx2CjwWs6P2LjwfTp70cXp6NFTEWnbeza338UzfN06m
-	 e78+wp3AYGnSiXkkyANEH/nd1NDwJTCKOIA4RekY=
+	b=T+kZVm55LpIoFiSie6ODukm5foqiR+cPypQaxaufzk1A+HCbrHHk1IkrsbeK2Dv9C
+	 I9ESre1wST5ukcAzXrVYvufcgl4wnlysgQjR1qBC9hfxpGkdXnofGwNKTa5QUXargk
+	 Hbo+w398eC009UI988+IZCqIBwSNLgkJsve8kdpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/869] ata: libata-scsi: do not lose CHECK CONDITION for failed ATAPI commands
-Date: Sat, 17 Oct 2026 17:47:37 +0200
-Message-ID: <20261017160037.426110443@linuxfoundation.org>
+Subject: [PATCH 6.12 017/869] mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
+Date: Sat, 17 Oct 2026 17:47:38 +0200
+Message-ID: <20261017160037.450545481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,75 +60,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit bc8ce2cea5f77c4bd1a5184705e300e83546c0c4 ]
+[ Upstream commit 597e4b9ab48a3f841080f627722064853d3f650e ]
 
-Since commit 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands
-on time out"), atapi_qc_complete() sets SAM_STAT_CHECK_CONDITION for a
-failed command only if cmd->result is zero, so that the DID_TIME_OUT or
-DID_REQUEUE host byte of a terminated command is preserved.
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
 
-However, cmd->result can also be non-zero for a regular failed ATAPI
-command completed through libata EH: ata_eh_analyze_tf() calls
-ata_eh_decide_disposition(), that is, scsi_check_sense(), on the sense
-data obtained with REQUEST SENSE, and scsi_check_sense() sets the SCSI
-midlayer internal byte of the result for some sense codes, e.g.
-SCSIML_STAT_TGT_FAILURE for ILLEGAL REQUEST with ASC 0x20 (INVALID
-COMMAND OPERATION CODE) or 0x24 (INVALID FIELD IN CDB), or
-SCSIML_STAT_MED_ERROR for MEDIUM ERROR with ASC 0x11 (UNRECOVERED READ
-ERROR). For such commands, atapi_qc_complete() keeps the result as is and
-the command completes with a GOOD status byte, even though it failed and
-valid sense data is available.
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
 
-As a result, passthrough users see these failed ATAPI commands as
-successful. For example, with the emulated IDE CD-ROM drive of QEMU and
-no medium loaded, a PLAY AUDIO MSF command issued with SG_IO completes
-with status 0x00 (and no DRIVER_SENSE) instead of 0x02 (CHECK CONDITION)
-with sense key ILLEGAL REQUEST, ASC/ASCQ 0x20/0x00, and the CDROM ioctls
-CDROMPLAYTRKIND, CDROMSUBCHNL, CDROMPAUSE, CDROMRESUME, CDROMPLAYMSF and
-CDROM_GET_MCN return 0 instead of -ENOMEDIUM or -EOPNOTSUPP.
+Fix another of these - partial copies.
 
-Fix this by setting the status byte to SAM_STAT_CHECK_CONDITION whenever
-the host byte is not set. Use set_status_byte() rather than overwriting
-the whole result, so that the SCSI midlayer internal byte set by
-scsi_check_sense() is preserved, as ata_scsi_qc_complete() already does
-for ATA commands.
+The long-standing mremap() partial VMA logic has the baked-in assumption
+that the originating VMA is unmapped and thus moved.
 
-Fixes: 2e1d2e65e773 ("ata: libata-scsi: terminate deferred commands on time out")
-Cc: stable@vger.kernel.org
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260929164135.266708-1-hengyul@cs.unc.edu
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-[ sashal: adapted completion handling to use ata_qc_done() with an immediate return ]
+However MREMAP_DONTUNMAP defeats this by performing a partial copy
+instead since it keeps the source VMA around.
+
+An mremap(..., MREMAP_DONTUNMAP) operation disallows resizing of the VMA,
+but the operation can be performed partially:
+
+                           |-----------------|
+                           |                 |
+                           |                 v
+                        <------>          <------>
+                        .new_sz.           new_sz
+                     |--.------.--|       |------|
+                     |  .source.  |       | dest |
+                     |--.------.--|       |------|
+                     <------------>
+                         old_sz
+
+The page tables in the specified range are moved, but the original VMA is
+kept intact.
+
+This interacts poorly with mlock()'d VMAs, as the VMA_LOCKED_BIT flag is
+cleared for the entire source VMA and set for the entire destination VMA.
+
+This results in an mm->locked_vm leak as the change is therefore not
+accounted correctly.
+
+The clear solution here is to make the portion of the source VMA which is
+mremap()'d distinct from the rest of it, a.k.a. split it.
+
+Therefore resolve this issue by splitting it ahead of the rest of the
+mremap() operation if the VMA is mlock()'d.
+
+This is valid, as the source VMA will lose its VMA_LOCKED_BIT flag, so if a
+partial remap it will become distinct from the rest of the VMA.
+
+In order to make this change re-expose split_vma() in vma.h for
+CONFIG_MMU (nommu doesn't compile mremap.c and uses a static helper
+instead).
+
+Finally, update the sys_map_count check to account for this case.
+
+Note that the early check does not use needs_pre_split() - this is because
+the VMA has not been looked up by this point, so be conservative and assume
+that the VMA is mlock()'d in this case for the purposes of the
+sys_map_count check.
+
+Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-2-f388985a0f0a@kernel.org
+Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: Moved the VMA splitting sequence from prep_move_vma() into the existing move_vma(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/mremap.c | 21 +++++++++++++++++++--
+ mm/vma.c    |  4 ++--
+ mm/vma.h    |  5 +++++
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index d2777255129c5..d4f6d82fd9085 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3030,8 +3030,14 @@ static void atapi_qc_complete(struct ata_queued_cmd *qc)
- 		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
- 			qc->dev->sdev->locked = 0;
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 9685ea816fde1..2e717cf938aa6 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -702,6 +702,8 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 	int err = 0;
+ 	bool need_rmap_locks;
+ 	struct vma_iterator vmi;
++	const bool split_before = vma->vm_start != old_addr;
++	const bool split_after = vma->vm_end != old_addr + old_len;
  
--		if (!cmd->result)
--			cmd->result = SAM_STAT_CHECK_CONDITION;
-+		/*
-+		 * Report CHECK CONDITION unless the command was terminated
-+		 * with a host byte set. Only set the status byte, so that the
-+		 * SCSI midlayer internal byte, which scsi_check_sense() may
-+		 * have set from the sense data, is preserved.
-+		 */
-+		if (get_host_byte(cmd) == DID_OK)
-+			set_status_byte(cmd, SAM_STAT_CHECK_CONDITION);
- 		ata_qc_done(qc);
- 		return;
- 	}
+ 	/*
+ 	 * We'd prefer to avoid failure later on in do_munmap:
+@@ -714,9 +716,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		to_account = new_len;
+ 
+ 	if (vma->vm_ops && vma->vm_ops->may_split) {
+-		if (vma->vm_start != old_addr)
++		if (split_before)
+ 			err = vma->vm_ops->may_split(vma, old_addr);
+-		if (!err && vma->vm_end != old_addr + old_len)
++		if (!err && split_after)
+ 			err = vma->vm_ops->may_split(vma, old_addr + old_len);
+ 		if (err)
+ 			return err;
+@@ -734,6 +736,21 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 	if (err)
+ 		return err;
+ 
++	/*
++	 * To account mlock()'d pages correctly in the MREMAP_DONTUNMAP
++	 * case perform any split ahead of time for an mlock()'d VMA.
++	 */
++	if ((flags & MREMAP_DONTUNMAP) && (vma->vm_flags & VM_LOCKED)) {
++		vma_iter_init(&vmi, mm, old_addr);
++
++		if (split_before)
++			err = split_vma(&vmi, vma, old_addr, 1);
++		if (!err && split_after)
++			err = split_vma(&vmi, vma, old_addr + old_len, 0);
++		if (err)
++			return err;
++	}
++
+ 	if (vm_flags & VM_ACCOUNT) {
+ 		if (security_vm_enough_memory_mm(mm, to_account >> PAGE_SHIFT))
+ 			return -ENOMEM;
+diff --git a/mm/vma.c b/mm/vma.c
+index 3df4cf796c7ff..55321fe0f7912 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -457,8 +457,8 @@ static int __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+  * Split a vma into two pieces at address 'addr', a new vma is allocated
+  * either for the first part or the tail.
+  */
+-static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+-		     unsigned long addr, int new_below)
++int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
++	      unsigned long addr, int new_below)
+ {
+ 	if (vma->vm_mm->map_count >= sysctl_max_map_count)
+ 		return -ENOMEM;
+diff --git a/mm/vma.h b/mm/vma.h
+index 729fe3741e897..c953d4ade1f0d 100644
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -343,6 +343,11 @@ bool vma_wants_writenotify(struct vm_area_struct *vma, pgprot_t vm_page_prot);
+ int mm_take_all_locks(struct mm_struct *mm);
+ void mm_drop_all_locks(struct mm_struct *mm);
+ 
++#ifdef CONFIG_MMU
++int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
++	      unsigned long addr, int new_below);
++#endif
++
+ static inline bool vma_wants_manual_pte_write_upgrade(struct vm_area_struct *vma)
+ {
+ 	/*
 -- 
 2.53.0
 
