@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D9617BED0;
-	Sat, 17 Oct 2026 17:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F053B385D7B;
+	Sat, 17 Oct 2026 17:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258671; cv=none; b=nbeL6HJadHhIRS8w6TGRVojxhxvCtc2vUnyqHRdGaPki0ZIutVqFli5wc1nN0rMMFOaw9dIUn4jYPI+pMpkxKZDCmm8laRzJQYrMXU5ylwXbRSqe1Mo3H+WrdFBXASlH71bJ1KpR1CqBa6vV55DT6MfvN82LycoPQDO/zrvnrNE=
+	t=1792258675; cv=none; b=AtTm5rRUutk72p1JbA80pjx+ox69IPBucr8phpa1g/nuwY5/Jc6bAivL5147nW1Zgtcq3uHWjsqtGf6cXc78cKgMO3GfKqr+XyIoz8ClEfE4JzxVufY/R+QPZjNA2yWtGT8maqUHD1DndJtQHou2PsvvNCNT9aOOWfAtmi9KrDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258671; c=relaxed/simple;
-	bh=pwPdNt/AnVPb+v39PNWIhPD3Y9X5ThVKzkg+CcnODQc=;
+	s=arc-20240116; t=1792258675; c=relaxed/simple;
+	bh=szvWzYQ7dQtYfX3YgqtUBoMJvEe7Kn/ERRm5zPBwMUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihw2cm9CXQNQzcHwCZr2AgvppVte2vc3HO5zC6YjUB3skdT+768FMVbPkSB4ovk933lVM1GV3lF8A/Lbf76BTOTuu0LSjUHxGv4HQ9gy2Eb9Ihi7sp0p4AvZ4+iSMhNXQmsg66P3bI2UNuGmgQUPChn0yJcJQzI0FgjWePz/21k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWaLdZOE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=poqP8N+VUxfbsdLDZdiv0H9N/Qn/7M72Q9Judnftr/PspIh68QQw21ubDrpB7D9fLYG2r9RS7Yc1ZtYXuVVrE0jlSmdiKe0MPtNiXDjtsnuL41s0oxjtdxY3NAlhIrCR8uJgtR1e0OK1vEqDQQV75xR9KSPBsohxHgNsIvK11HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWv3X7O9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWaLdZOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DEC1F000C4;
-	Sat, 17 Oct 2026 17:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWv3X7O9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB9D1F000C4;
+	Sat, 17 Oct 2026 17:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258670;
-	bh=Xf1lgiUMcsp2pCnlFczgN3TgUAbCF5f7D0s4ARrru6M=;
+	s=korg; t=1792258673;
+	bh=Em76Xug7tI59DrALxCgmKUROI7tC6YtONOpFbfWJbh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWaLdZOEl/0eQOfAMEkI2HcjV76g44KGt2OViUewT03rK4nq55tJTrhbGVFPJmy79
-	 AKtLbP1XiAyJL7uh+R6V4DKE/AcptaA4QL0BfZ9lXNBAwReg5wkQk7oebU1csENMAi
-	 CibETkP1sUwtemh4O95Ezx2XzBPw9qEBCgtVjYoE=
+	b=oWv3X7O9D/kipqmj4zZHDKBvVkPn/a3fH67jpkZVPrwzJFWd+eRHsK47yRcio2ko1
+	 dUrt9XKN30Vjf8E2XAZ+SovxRzwCwGcamPSbC3feQ1sRzOx6nWtTuElpsYTo5gknVI
+	 FU4BWR/FjA44UCUYMPVIS63UoxZeGmI/dPlRD+tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Kevin Cheng <chengkev@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0960/1674] KVM: nSVM: Avoid clearing VMCB_LBR in vmcb12
-Date: Sat, 17 Oct 2026 17:53:52 +0200
-Message-ID: <20261017160455.768577284@linuxfoundation.org>
+Subject: [PATCH 6.6 0961/1674] KVM: nSVM: Raise #UD if unhandled VMMCALL isnt intercepted by L1
+Date: Sat, 17 Oct 2026 17:53:53 +0200
+Message-ID: <20261017160455.792244189@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,70 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Kevin Cheng <chengkev@google.com>
 
-[ Upstream commit b53ab5167a81537777ac780bbd93d32613aa3bda ]
+[ Upstream commit c36991c6f8d2ab56ee67aff04e3c357f45cfc76c ]
 
-svm_copy_lbrs() always marks VMCB_LBR dirty in the destination VMCB.
-However, nested_svm_vmexit() uses it to copy LBRs to vmcb12, and
-clearing clean bits in vmcb12 is not architecturally defined.
+Explicitly synthesize a #UD for VMMCALL if L2 is active, L1 does NOT want
+to intercept VMMCALL, nested_svm_l2_tlb_flush_enabled() is true, and the
+hypercall is something other than one of the supported Hyper-V hypercalls.
+When all of the above conditions are met, KVM will intercept VMMCALL but
+never forward it to L1, i.e. will let L2 make hypercalls as if it were L1.
 
-Move vmcb_mark_dirty() to callers and drop it for vmcb12.
+The TLFS says a whole lot of nothing about this scenario, so go with the
+architectural behavior, which says that VMMCALL #UDs if it's not
+intercepted.
 
-This also facilitates incoming refactoring that does not pass the entire
-VMCB to svm_copy_lbrs().
+Opportunistically do a 2-for-1 stub trade by stub-ifying the new API
+instead of the helpers it uses.  The last remaining "single" stub will
+soon be dropped as well.
 
-Fixes: d20c796ca370 ("KVM: x86: nSVM: implement nested LBR virtualization")
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Fixes: 3f4a812edf5c ("KVM: nSVM: hyper-v: Enable L2 TLB flush")
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-2-yosry@kernel.org
+Signed-off-by: Kevin Cheng <chengkev@google.com>
+Link: https://patch.msgid.link/20260228033328.2285047-5-chengkev@google.com
+[sean: rewrite changelog and comment, tag for stable, remove defunct stubs]
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/20260304002223.1105129-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 7 +++++--
- arch/x86/kvm/svm/svm.c    | 2 --
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/hyperv.h |  7 +++++++
+ arch/x86/kvm/svm/nested.c |  4 +---
+ arch/x86/kvm/svm/svm.c    | 19 ++++++++++++++++++-
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
+diff --git a/arch/x86/kvm/svm/hyperv.h b/arch/x86/kvm/svm/hyperv.h
+index 02f4784b5d446..1970f09fce9f4 100644
+--- a/arch/x86/kvm/svm/hyperv.h
++++ b/arch/x86/kvm/svm/hyperv.h
+@@ -40,6 +40,13 @@ static inline bool nested_svm_l2_tlb_flush_enabled(struct kvm_vcpu *vcpu)
+ 	return hv_vcpu->vp_assist_page.nested_control.features.directhypercall;
+ }
+ 
++static inline bool nested_svm_is_l2_tlb_flush_hcall(struct kvm_vcpu *vcpu)
++{
++	return guest_hv_cpuid_has_l2_tlb_flush(vcpu) &&
++	       nested_svm_l2_tlb_flush_enabled(vcpu) &&
++	       kvm_hv_is_tlb_flush_hcall(vcpu);
++}
++
+ void svm_hv_inject_synthetic_vmexit_post_tlb_flush(struct kvm_vcpu *vcpu);
+ 
+ #endif /* __ARCH_X86_KVM_SVM_HYPERV_H__ */
 diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index a4d5b79811330..bdcfcc492dec8 100644
+index bdcfcc492dec8..432d188b2f3c9 100644
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -626,6 +626,7 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
- 	} else {
- 		svm_copy_lbrs(vmcb02, vmcb01);
+@@ -1548,9 +1548,7 @@ int nested_svm_exit_special(struct vcpu_svm *svm)
  	}
-+	vmcb_mark_dirty(vmcb02, VMCB_LBR);
- 	svm_update_lbrv(&svm->vcpu);
- }
- 
-@@ -1088,10 +1089,12 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
- 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
- 
- 	if (unlikely(guest_can_use(vcpu, X86_FEATURE_LBRV) &&
--		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK)))
-+		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
- 		svm_copy_lbrs(vmcb12, vmcb02);
--	else
-+	} else {
- 		svm_copy_lbrs(vmcb01, vmcb02);
-+		vmcb_mark_dirty(vmcb01, VMCB_LBR);
-+	}
- 
- 	svm_update_lbrv(vcpu);
- 
+ 	case SVM_EXIT_VMMCALL:
+ 		/* Hyper-V L2 TLB flush hypercall is handled by L0 */
+-		if (guest_hv_cpuid_has_l2_tlb_flush(vcpu) &&
+-		    nested_svm_l2_tlb_flush_enabled(vcpu) &&
+-		    kvm_hv_is_tlb_flush_hcall(vcpu))
++		if (nested_svm_is_l2_tlb_flush_hcall(vcpu))
+ 			return NESTED_EXIT_HOST;
+ 		break;
+ 	default:
 diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 961ac6b55e4f8..df8bc8def019b 100644
+index df8bc8def019b..8844f49d3e7f8 100644
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -1003,8 +1003,6 @@ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
- 	to_vmcb->save.br_to		= from_vmcb->save.br_to;
- 	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
- 	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
--
--	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
+@@ -49,6 +49,7 @@
+ #include "svm.h"
+ #include "svm_ops.h"
+ 
++#include "hyperv.h"
+ #include "kvm_onhyperv.h"
+ #include "svm_onhyperv.h"
+ 
+@@ -3300,6 +3301,22 @@ static int invpcid_interception(struct kvm_vcpu *vcpu)
+ 	return kvm_handle_invpcid(vcpu, type, gva);
  }
  
- static void svm_recalc_lbr_msr_intercepts(struct kvm_vcpu *vcpu)
++static int vmmcall_interception(struct kvm_vcpu *vcpu)
++{
++	/*
++	 * Inject a #UD if L2 is active and the VMMCALL isn't a Hyper-V TLB
++	 * hypercall, as VMMCALL #UDs if it's not intercepted, and this path is
++	 * reachable if and only if L1 doesn't want to intercept VMMCALL or has
++	 * enabled L0 (KVM) handling of Hyper-V L2 TLB flush hypercalls.
++	 */
++	if (is_guest_mode(vcpu) && !nested_svm_is_l2_tlb_flush_hcall(vcpu)) {
++		kvm_queue_exception(vcpu, UD_VECTOR);
++		return 1;
++	}
++
++	return kvm_emulate_hypercall(vcpu);
++}
++
+ static int (*const svm_exit_handlers[])(struct kvm_vcpu *vcpu) = {
+ 	[SVM_EXIT_READ_CR0]			= cr_interception,
+ 	[SVM_EXIT_READ_CR3]			= cr_interception,
+@@ -3350,7 +3367,7 @@ static int (*const svm_exit_handlers[])(struct kvm_vcpu *vcpu) = {
+ 	[SVM_EXIT_TASK_SWITCH]			= task_switch_interception,
+ 	[SVM_EXIT_SHUTDOWN]			= shutdown_interception,
+ 	[SVM_EXIT_VMRUN]			= vmrun_interception,
+-	[SVM_EXIT_VMMCALL]			= kvm_emulate_hypercall,
++	[SVM_EXIT_VMMCALL]			= vmmcall_interception,
+ 	[SVM_EXIT_VMLOAD]			= vmload_interception,
+ 	[SVM_EXIT_VMSAVE]			= vmsave_interception,
+ 	[SVM_EXIT_STGI]				= stgi_interception,
 -- 
 2.53.0
 
