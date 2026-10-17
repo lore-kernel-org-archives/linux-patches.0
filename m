@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641CD3A0E8B;
-	Sat, 17 Oct 2026 16:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4D63AA4F1;
+	Sat, 17 Oct 2026 16:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254901; cv=none; b=NGgMFhB2gYB/1CXNbM+2JHtVFwrWR9gZRSu1+/lA6MYumM12TWryMN+LMx4HKfetOgt+wP3eLWLVclBAQPJWx1ZKRjJXIuE40OxfkwAkrhUlm2F4Dnf8xam0UnF94FTwNv8Qq/aveOsZST9uRTwv+MI8MrTm5tFsAC5LU/5GC0E=
+	t=1792254904; cv=none; b=qb+KFzRhCtuLRuHFCpEDmj9irYWxcIHmFWxJwLxXkSLg52bd3lR0E257HOENRzW/0V/Z2zlVf+yXn3BVz4PPFYm9VlZTQLb70wNR456D6wrn9Q9cxeRoQxI4Our4uX+AJabt0NGyZ4vn/h9ZGxdSTYnx07Dhxq6tVnwO1evLa7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254901; c=relaxed/simple;
-	bh=xfhY2i2qzS6FakajqXN54O/x2SzKfMiSJ3s9vmDanos=;
+	s=arc-20240116; t=1792254904; c=relaxed/simple;
+	bh=+BcTQ139Q966FJOaGy8mnHoFx/x6nQ8HpyuINuQIZ6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7ahI+1fCvm0isFtBWnYswHl/qiKrClm4X/omgNXjGi4a9syoViX6gEbcu7gFf42cmeR4e07r5f9CTCPiv1N0TWCOcLDClVVZ7Uq35bdr/Bh9VcVVoKvT39rzs2WKHP+1bqLeFry/L94bA9bemZolJodQyXKbiUkkWQe1P1M0jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMGddmdR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dUauIQHnL2ld9dVPSlCEW5e0dyJNeWmBQ0LhedgEE6mq76C0piuqaV5eKjwP3k3pDRHS2MzQNh/Yxbi1L+oLJknJQwMkz8Gv0BAp72HJik809dypAvOBTiePV1XeGWV6sejzo5hu9PofbzGC7qmp9G1bXGR7xa2etghNbY3YmVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRKL77qo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMGddmdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91BE1F000C4;
-	Sat, 17 Oct 2026 16:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRKL77qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F6B1F000C6;
+	Sat, 17 Oct 2026 16:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254900;
-	bh=6aBBBYwdFF0lXzbgqJ2WfKkSQF1rOeVvboO9UTidSjc=;
+	s=korg; t=1792254903;
+	bh=2FP6wr2LRI+8grclvEvXXg2TpGghv1xwl4EDRApUo58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMGddmdRh4/ITzXbNa2JIDltiM2+V6Mf373FNIiKYPLTyXbhPUqPw5BNesOdACeP9
-	 lU55K4wIUvnVQ2pigdGrjbsW/5AYRJSfUOvX7twVcVgGUEjA/A6eLsqHzGULyQrx/6
-	 KvrFKpO41+++BPxpdPKM8v2w4sKttV2l+VyR/vog=
+	b=hRKL77qouOvfvjfF369wVNUuNEZzJWY+ZiZ2FWcnfSRwRPn+FCMViBf4jXQUwmvIx
+	 qqX2RwJYJbPDm3bimT96/0OYlD9bKlqwFcSroDPvbWJT5nHdKSyl69bGeCKnoxEyJJ
+	 vawy5oSpbAlerF0gccSOCTvL2bS1/JtCc4FpRSas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 597/869] netfilter: nf_tables: skip double clone set expressions on element insert
-Date: Sat, 17 Oct 2026 17:57:18 +0200
-Message-ID: <20261017160052.353062745@linuxfoundation.org>
+Subject: [PATCH 6.12 598/869] net_sched: sch_fq: add three drop_reason
+Date: Sat, 17 Oct 2026 17:57:19 +0200
+Message-ID: <20261017160052.376712508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,259 +48,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 43559058d21e0493aa220ac167e0279334dea5f9 ]
+[ Upstream commit 5765c7f6e3173eb894889a29963a497aeb721c5e ]
 
-Both the dynset and newsetelem path clone the existing set expressions
-when setting set element expressions if no override expressions are
-provided. This results in a double clone, once to clone the template set
-expressions then another clone on the new element. Add a flag to
-annotate if userspace provides a override expression (ie. expression of
-the same type of the set but different configuration), otherwise borrow
-the existing expression from the set. Add conditionals to release
-expression iif they represent an override. Use this new override_exprs
-flag to dump the dynset expression override to userspace.
+Add three new drop_reason, more precise than generic QDISC_DROP:
 
-This simplifies the existing logic and it also fixes a bug with the
-connlimit expression which results in a module refcount imbalance
-WARNING splat when resorting on the default set expressions.
+"tc -s qd" show aggregate counters, it might be more useful
+to use drop_reason infrastructure for bug hunting.
 
-Fixes: 65038428b2c6 ("netfilter: nf_tables: allow to specify stateful expression in set definition")
-Fixes: fca05d4d61e6 ("netfilter: nft_dynset: honor stateful expressions in set definition")
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+1) SKB_DROP_REASON_FQ_BAND_LIMIT
+   Whenever a packet is added while its band limit is hit.
+   Corresponding value in "tc -s qd" is bandX_drops XXXX
+
+2) SKB_DROP_REASON_FQ_HORIZON_LIMIT
+   Whenever a packet has a timestamp too far in the future.
+   Corresponding value in "tc -s qd" is horizon_drops XXXX
+
+3) SKB_DROP_REASON_FQ_FLOW_LIMIT
+   Whenever a flow has reached its limit.
+   Corresponding value in "tc -s qd" is flows_plimit XXXX
+
+Tested:
+tc qd replace dev eth1 root fq flow_limit 10 limit 100000
+perf record -a -e skb:kfree_skb sleep 1; perf script
+
+      udp_stream   12329 [004]   216.929492: skb:kfree_skb: skbaddr=0xffff888eabe17e00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
+      udp_stream   12385 [006]   216.929593: skb:kfree_skb: skbaddr=0xffff888ef8827f00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
+      udp_stream   12389 [005]   216.929871: skb:kfree_skb: skbaddr=0xffff888ecb9ba500 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
+      udp_stream   12316 [009]   216.930398: skb:kfree_skb: skbaddr=0xffff888eca286b00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
+      udp_stream   12400 [008]   216.930490: skb:kfree_skb: skbaddr=0xffff888eabf93d00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_FLOW_LIMIT
+
+tc qd replace dev eth1 root fq flow_limit 100 limit 10000
+perf record -a -e skb:kfree_skb sleep 1; perf script
+
+      udp_stream   18074 [001]  1058.318040: skb:kfree_skb: skbaddr=0xffffa23c881fc000 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
+      udp_stream   18126 [005]  1058.320651: skb:kfree_skb: skbaddr=0xffffa23c6aad4000 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
+      udp_stream   18118 [006]  1058.321065: skb:kfree_skb: skbaddr=0xffffa23df0d48a00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
+      udp_stream   18074 [001]  1058.321126: skb:kfree_skb: skbaddr=0xffffa23c881ffa00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
+      udp_stream   15815 [003]  1058.321224: skb:kfree_skb: skbaddr=0xffffa23c9835db00 rx_sk=(nil) protocol=34525 location=__dev_queue_xmit+0x9d9 reason: FQ_BAND_LIMIT
+
+tc -s -d qd sh dev eth1
+qdisc fq 8023: root refcnt 257 limit 10000p flow_limit 100p buckets 1024 orphan_mask 1023
+ bands 3 priomap 1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1 weights 589824 196608 65536 quantum 18Kb
+ initial_quantum 92120b low_rate_threshold 550Kbit refill_delay 40ms
+ timer_slack 10us horizon 10s horizon_drop
+ Sent 492439603330 bytes 336953991 pkt (dropped 61724094, overlimits 0 requeues 4463)
+ backlog 14611228b 9995p requeues 4463
+  flows 2965 (inactive 1151 throttled 0) band0_pkts 0 band1_pkts 9993 band2_pkts 0
+  gc 6347 highprio 0 fastpath 30 throttled 5 latency 2.32us flows_plimit 7403693
+ band1_drops 54320401
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20241204171950.89829-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5b483f7791b0 ("net/sched: act_ife: Only operate on Ethernet frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 --
- net/netfilter/nf_tables_api.c     | 56 ++++++++++---------------------
- net/netfilter/nft_dynset.c        | 25 ++++++++------
- 3 files changed, 33 insertions(+), 50 deletions(-)
+ include/net/dropreason-core.h | 18 ++++++++++++++++++
+ include/net/sch_generic.h     |  8 ++++++++
+ net/sched/sch_fq.c            | 14 ++++++++++----
+ 3 files changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index d440915addd6e..eaddf2aacb2f4 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -867,8 +867,6 @@ struct nft_elem_priv *nft_set_elem_init(const struct nft_set *set,
- 					const u32 *key, const u32 *key_end,
- 					const u32 *data,
- 					u64 timeout, u64 expiration, gfp_t gfp);
--int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
--			    struct nft_expr *expr_array[]);
- void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
- 			       struct nft_set_elem_expr *elem_expr);
- void nft_set_elem_destroy(const struct nft_set *set,
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 92a86e81084b1..4b6cb990ab743 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6573,39 +6573,11 @@ static void nft_trans_elems_destroy(const struct nft_ctx *ctx,
- 		nf_tables_set_elem_destroy(ctx, te->set, te->elems[i].priv);
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index f8f4d2b77e6ac..31e0cc1b64ff1 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -60,6 +60,9 @@
+ 	FN(TC_EGRESS)			\
+ 	FN(SECURITY_HOOK)		\
+ 	FN(QDISC_DROP)			\
++	FN(FQ_BAND_LIMIT)		\
++	FN(FQ_HORIZON_LIMIT)		\
++	FN(FQ_FLOW_LIMIT)		\
+ 	FN(CPU_BACKLOG)			\
+ 	FN(XDP)				\
+ 	FN(TC_INGRESS)			\
+@@ -316,6 +319,21 @@ enum skb_drop_reason {
+ 	 * failed to enqueue to current qdisc)
+ 	 */
+ 	SKB_DROP_REASON_QDISC_DROP,
++	/**
++	 * @SKB_DROP_REASON_FQ_BAND_LIMIT: dropped by fq qdisc when per band
++	 * limit is reached.
++	 */
++	SKB_DROP_REASON_FQ_BAND_LIMIT,
++	/**
++	 * @SKB_DROP_REASON_FQ_HORIZON_LIMIT: dropped by fq qdisc when packet
++	 * timestamp is too far in the future.
++	 */
++	SKB_DROP_REASON_FQ_HORIZON_LIMIT,
++	/**
++	 * @SKB_DROP_REASON_FQ_FLOW_LIMIT: dropped by fq qdisc when a flow
++	 * exceeds its limits.
++	 */
++	SKB_DROP_REASON_FQ_FLOW_LIMIT,
+ 	/**
+ 	 * @SKB_DROP_REASON_CPU_BACKLOG: failed to enqueue the skb to the per CPU
+ 	 * backlog queue. This can be caused by backlog queue full (see
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index d174283373470..016d9cf827069 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1320,6 +1320,14 @@ static inline int qdisc_drop(struct sk_buff *skb, struct Qdisc *sch,
+ 	return NET_XMIT_DROP;
  }
  
--int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
--			    struct nft_expr *expr_array[])
--{
--	struct nft_expr *expr;
--	int err, i, k;
--
--	for (i = 0; i < set->num_exprs; i++) {
--		expr = kzalloc(set->exprs[i]->ops->size, GFP_KERNEL_ACCOUNT);
--		if (!expr)
--			goto err_expr;
--
--		err = nft_expr_clone(expr, set->exprs[i], GFP_KERNEL_ACCOUNT);
--		if (err < 0) {
--			kfree(expr);
--			goto err_expr;
--		}
--		expr_array[i] = expr;
--	}
--
--	return 0;
--
--err_expr:
--	for (k = i - 1; k >= 0; k--)
--		nft_expr_destroy(ctx, expr_array[k]);
--
--	return -ENOMEM;
--}
--
- static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 				   const struct nft_set_ext_tmpl *tmpl,
- 				   const struct nft_set_ext *ext,
- 				   struct nft_expr *expr_array[],
--				   u32 num_exprs)
-+				   u32 num_exprs, bool override_exprs)
++static inline int qdisc_drop_reason(struct sk_buff *skb, struct Qdisc *sch,
++				    struct sk_buff **to_free,
++				    enum skb_drop_reason reason)
++{
++	tcf_set_drop_reason(skb, reason);
++	return qdisc_drop(skb, sch, to_free);
++}
++
+ static inline int qdisc_drop_all(struct sk_buff *skb, struct Qdisc *sch,
+ 				 struct sk_buff **to_free)
  {
- 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
- 	u32 len = sizeof(struct nft_set_elem_expr);
-@@ -6628,7 +6600,8 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 			goto err_elem_expr_setup;
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index d06e12d16b0e5..cf70468b67607 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -535,6 +535,8 @@ static bool fq_packet_beyond_horizon(const struct sk_buff *skb,
+ 	return unlikely((s64)skb->tstamp > (s64)(now + q->horizon));
+ }
  
- 		elem_expr->size += expr_array[i]->ops->size;
--		nft_expr_destroy(ctx, expr_array[i]);
-+		if (override_exprs)
-+			nft_expr_destroy(ctx, expr_array[i]);
- 		expr_array[i] = NULL;
- 	}
- 
-@@ -6636,7 +6609,9 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
- 
- err_elem_expr_setup:
- 	for (; i < num_exprs; i++) {
--		nft_expr_destroy(ctx, expr_array[i]);
-+		if (override_exprs)
-+			nft_expr_destroy(ctx, expr_array[i]);
++#define FQDR(reason) SKB_DROP_REASON_FQ_##reason
 +
- 		expr_array[i] = NULL;
+ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		      struct sk_buff **to_free)
+ {
+@@ -546,7 +548,8 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	band = fq_prio2band(q->prio2band, skb->priority & TC_PRIO_MAX);
+ 	if (unlikely(q->band_pkt_count[band] >= sch->limit)) {
+ 		q->stat_band_drops[band]++;
+-		return qdisc_drop(skb, sch, to_free);
++		return qdisc_drop_reason(skb, sch, to_free,
++					 FQDR(BAND_LIMIT));
  	}
  
-@@ -6918,6 +6893,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_set_binding *binding;
- 	struct nft_elem_priv *elem_priv;
- 	struct nft_object *obj = NULL;
-+	bool override_exprs = false;
- 	struct nft_userdata *udata;
- 	struct nft_data_desc desc;
- 	enum nft_registers dreg;
-@@ -7024,6 +7000,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 
- 		expr_array[0] = expr;
- 		num_exprs = 1;
-+		override_exprs = true;
- 
- 		if (set->num_exprs && set->exprs[0]->ops != expr->ops) {
- 			err = -EOPNOTSUPP;
-@@ -7052,6 +7029,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	now = ktime_get_ns();
+@@ -556,8 +559,9 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		/* Check if packet timestamp is too far in the future. */
+ 		if (fq_packet_beyond_horizon(skb, q, now)) {
+ 			if (q->horizon_drop) {
+-					q->stat_horizon_drops++;
+-					return qdisc_drop(skb, sch, to_free);
++				q->stat_horizon_drops++;
++				return qdisc_drop_reason(skb, sch, to_free,
++							 FQDR(HORIZON_LIMIT));
  			}
- 			expr_array[i] = expr;
- 			num_exprs++;
-+			override_exprs = true;
- 
- 			if (set->num_exprs && expr->ops != set->exprs[i]->ops) {
- 				err = -EOPNOTSUPP;
-@@ -7065,9 +7043,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			q->stat_horizon_caps++;
+ 			skb->tstamp = now + q->horizon;
+@@ -570,7 +574,8 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	if (f != &q->internal) {
+ 		if (unlikely(f->qlen >= q->flow_plimit)) {
+ 			q->stat_flows_plimit++;
+-			return qdisc_drop(skb, sch, to_free);
++			return qdisc_drop_reason(skb, sch, to_free,
++						 FQDR(FLOW_LIMIT));
  		}
- 	} else if (set->num_exprs > 0 &&
- 		   !(flags & NFT_SET_ELEM_INTERVAL_END)) {
--		err = nft_set_elem_expr_clone(ctx, set, expr_array);
--		if (err < 0)
--			goto err_set_elem_expr_clone;
-+		for (i = 0; i < set->num_exprs; i++)
-+			expr_array[i] = set->exprs[i];
  
- 		num_exprs = set->num_exprs;
- 	}
-@@ -7206,7 +7183,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		udata->len = ulen - 1;
- 		nla_memcpy(&udata->data, nla[NFTA_SET_ELEM_USERDATA], ulen);
- 	}
--	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs);
-+	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs,
-+				      override_exprs);
- 	if (err < 0)
- 		goto err_elem_free;
+ 		if (fq_flow_is_detached(f)) {
+@@ -595,6 +600,7 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  
-@@ -7308,9 +7286,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- err_parse_key:
- 	nft_data_release(&elem.key.val, NFT_DATA_VALUE);
- err_set_elem_expr:
--	for (i = 0; i < num_exprs && expr_array[i]; i++)
--		nft_expr_destroy(ctx, expr_array[i]);
--err_set_elem_expr_clone:
-+	if (override_exprs) {
-+		for (i = 0; i < num_exprs && expr_array[i]; i++)
-+			nft_expr_destroy(ctx, expr_array[i]);
-+	}
-+
- 	return err;
+ 	return NET_XMIT_SUCCESS;
  }
++#undef FQDR
  
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index 0d78de9d2d754..59b14e6a2ca82 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -19,7 +19,8 @@ struct nft_dynset {
- 	u8				sreg_key;
- 	u8				sreg_data;
- 	bool				invert;
--	bool				expr;
-+	bool				expr:1,
-+					override_exprs:1;
- 	u8				num_exprs;
- 	u64				timeout;
- 	struct nft_expr			*expr_array[NFT_SET_EXPR_MAX];
-@@ -257,6 +258,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 
- 		priv->num_exprs++;
- 		priv->expr_array[0] = dynset_expr;
-+		priv->override_exprs = true;
- 
- 		if (set->num_exprs > 1 ||
- 		    (set->num_exprs == 1 &&
-@@ -289,6 +291,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 			}
- 			priv->expr_array[i] = dynset_expr;
- 			priv->num_exprs++;
-+			priv->override_exprs = true;
- 
- 			if (set->num_exprs) {
- 				if (i >= set->num_exprs) {
-@@ -307,9 +310,8 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 			goto err_expr_free;
- 		}
- 	} else if (set->num_exprs > 0) {
--		err = nft_set_elem_expr_clone(ctx, set, priv->expr_array);
--		if (err < 0)
--			return err;
-+		for (i = 0; i < set->num_exprs; i++)
-+			priv->expr_array[i] = set->exprs[i];
- 
- 		priv->num_exprs = set->num_exprs;
- 	}
-@@ -339,8 +341,10 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 	return 0;
- 
- err_expr_free:
--	for (i = 0; i < priv->num_exprs; i++)
--		nft_expr_destroy(ctx, priv->expr_array[i]);
-+	if (priv->override_exprs) {
-+		for (i = 0; i < priv->num_exprs; i++)
-+			nft_expr_destroy(ctx, priv->expr_array[i]);
-+	}
- 	return err;
- }
- 
-@@ -367,9 +371,10 @@ static void nft_dynset_destroy(const struct nft_ctx *ctx,
- 	struct nft_dynset *priv = nft_expr_priv(expr);
- 	int i;
- 
--	for (i = 0; i < priv->num_exprs; i++)
--		nft_expr_destroy(ctx, priv->expr_array[i]);
--
-+	if (priv->override_exprs) {
-+		for (i = 0; i < priv->num_exprs; i++)
-+			nft_expr_destroy(ctx, priv->expr_array[i]);
-+	}
- 	nf_tables_destroy_set(ctx, priv->set);
- }
- 
-@@ -393,7 +398,7 @@ static int nft_dynset_dump(struct sk_buff *skb,
- 			 nf_jiffies64_to_msecs(priv->timeout),
- 			 NFTA_DYNSET_PAD))
- 		goto nla_put_failure;
--	if (priv->set->num_exprs == 0) {
-+	if (priv->set->num_exprs == 0 || priv->override_exprs) {
- 		if (priv->num_exprs == 1) {
- 			if (nft_expr_dump(skb, NFTA_DYNSET_EXPR,
- 					  priv->expr_array[0], reset))
+ static void fq_check_throttled(struct fq_sched_data *q, u64 now)
+ {
 -- 
 2.53.0
 
