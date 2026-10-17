@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE797356A12;
-	Sat, 17 Oct 2026 18:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A013B71A7;
+	Sat, 17 Oct 2026 18:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260394; cv=none; b=Ce0xiFffHXf4OkQWtRTuCGfqoNqmx+nfb7nAQ7LdnDqBAM2wz6BVvm7lFjNngjStodJ++RSW9QeMUWgK/Shz7T9kSDIWvCcFpZJ6FoGp4l2c10LC4inEC3CViTWZTOZ7TdQZggNidHg+jriHGR974V06H1cbd4YmR6rj2xXVXdI=
+	t=1792260397; cv=none; b=QD6Y5omz/xsVV0BFTc5E0LqOHqrxTwHYqbLRrSSYVzvWFhLG/If8jfwWv3TIsR0eTz6yKaZ0jiu7rdoSMzXCXnA6A52CsltWi7ToSDVq820zPK5O8YbhR+VRCUUClt4fVC8sP4Z+5DmkeRE/k9ol76z+Rjhm+68Ip+KbE67gfc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260394; c=relaxed/simple;
-	bh=8wFmnirUh/yuReI2/uycejDgbaQUCFOwx97pXP6ix7o=;
+	s=arc-20240116; t=1792260397; c=relaxed/simple;
+	bh=/FXmi3lo91SHiig89bgFKXGh3dJ5/C2COCfTWyMkw5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZagYaj6UPH99AoQoZKcv7JLuFw6hYOjboV1qtaBVT+Pk5t1Um20QzN2SYoQMvCgZeRvDDbIr6/rmYDqa+cWvpRfM+J7KbuRFC3Xd7n13uzRL5/Fv6NevOySaPic+NBMvS0/8NtFLBggqNufyNsaBM0zUv4umYwhqOOulKAiMhBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFFq81rZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TwCSPtCjyuBgZVEzdEYIbBsTTO4FSjBPdiM0vBZLUDBe3anCpjNh7UNBXY+CDwB0RUo4fZrFmM7Jn2b1t5KaT1Nem5THnvBzh/NFmqvKL1sSB+sMzkctHWwxySCUaXTJ8JUxGzZJtjmm5xxg2vmiwmtrkXthEA3H8rPEo3g66sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmuKhLFy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFFq81rZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A721F000C4;
-	Sat, 17 Oct 2026 18:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmuKhLFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5C31F000C4;
+	Sat, 17 Oct 2026 18:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260392;
-	bh=8plhqLXXhV/uBe04dmhSlrfxvfkjjebp9UhIcWuBgQ8=;
+	s=korg; t=1792260396;
+	bh=P1cKNCLscsoCNB1RXjftSeFVUyi9EcBTAmT4dV+eb5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rFFq81rZkk+L7J/w4r1dJKTdVZQu9Qo+66hHYjrFslatK3qevJuSVQQ/CNeyVDIpG
-	 wnBHBGzheosYo553FIff0Ss5/9Q4RybAONx1uNTCRLXdZGybJKNhBBne1y7L2pQp5/
-	 RKq4g+/1+ytVVQbH/ZDIlsGCkoU670WjCqQyPnkY=
+	b=mmuKhLFyTA3ik1yJs0qfKiWvgD0eR9tFI6y7xlYF85r5UaiVgg5giuPEdzPEhgaH9
+	 73j3q47yiDyDS0fE8HVDJNT95hhrRHR5ylAcQnuNKc8zeetqkoYm03HExzUA1IZu7y
+	 NrKd21AFrBGbtZcyCGCeM6fh9Ojq57fcBhauRkXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	"Stanley.Yang" <Stanley.Yang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1529/1674] drm/amdgpu: Refactor FRU product information
-Date: Sat, 17 Oct 2026 18:03:21 +0200
-Message-ID: <20261017160510.366473243@linuxfoundation.org>
+Subject: [PATCH 6.6 1530/1674] drm/amdgpu: harden FRU PIA parsing with bounded helpers
+Date: Sat, 17 Oct 2026 18:03:22 +0200
+Message-ID: <20261017160510.392314927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,276 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Stanley.Yang <Stanley.Yang@amd.com>
 
-[ Upstream commit 8a2b51392ac4a5ecc310c6dddd6cb70c71f0ddeb ]
+[ Upstream commit c990c05eb6c74c98d1ff3acf67a19015312820b7 ]
 
-Keep FRU related information together in a separate structure.
+Replace the open-coded TLV walk with fru_pia_advance()
+and fru_pia_copy_field() helpers that bound every read
+by the actual EEPROM data length, preventing out-of-bounds
+reads on truncated or malformed FRU data.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: c990c05eb6c7 ("drm/amdgpu: harden FRU PIA parsing with bounded helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h           |  8 +---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    |  3 ++
- .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c    | 46 +++++++++++--------
- .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h    |  9 ++++
- .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c |  4 --
- .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   |  2 -
- .../drm/amd/pm/swsmu/smu13/aldebaran_ppt.c    |  2 -
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  |  2 -
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c  |  2 -
- 9 files changed, 42 insertions(+), 36 deletions(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c    | 74 ++++++++++++++-----
+ 1 file changed, 55 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-index 84c0a051474f9..975c362f2b22a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -758,8 +758,8 @@ struct amdgpu_mqd {
- 
- #define AMDGPU_RESET_MAGIC_NUM 64
- #define AMDGPU_MAX_DF_PERFMONS 4
--#define AMDGPU_PRODUCT_NAME_LEN 64
- struct amdgpu_reset_domain;
-+struct amdgpu_fru_info;
- 
- /*
-  * Non-zero (true) if the GPU has VRAM. Zero (false) otherwise.
-@@ -1037,11 +1037,7 @@ struct amdgpu_device {
- 
- 	bool                            ucode_sysfs_en;
- 
--	/* Chip product information */
--	char				product_number[20];
--	char				product_name[AMDGPU_PRODUCT_NAME_LEN];
--	char				serial[20];
--
-+	struct amdgpu_fru_info		*fru_info;
- 	atomic_t			throttling_logging_enabled;
- 	struct ratelimit_state		throttling_logging_rs;
- 	uint32_t                        ras_hw_enabled;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index c9aff16f05481..bb1dde51c6fe0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4172,6 +4172,9 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- 
- 	amdgpu_bios_release(adev);
- 
-+	kfree(adev->fru_info);
-+	adev->fru_info = NULL;
-+
- 	px = amdgpu_device_supports_px(adev_to_drm(adev));
- 
- 	if (amdgpu_device_should_register_switcheroo(adev, px))
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
-index 7cd0dfaeee206..ba62ddeaa31f9 100644
+index ba62ddeaa31f9..b3b87b6edeb89 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
-@@ -99,6 +99,7 @@ static bool is_fru_eeprom_supported(struct amdgpu_device *adev, u32 *fru_addr)
+@@ -97,6 +97,43 @@ static bool is_fru_eeprom_supported(struct amdgpu_device *adev, u32 *fru_addr)
+ 	}
+ }
  
++/*
++ * IPMI FRU Product Info Area fields are TLV: one type/length byte
++ * (low 6 bits = data length) followed by that many data bytes. These
++ * helpers walk the cursor and copy a single field while bounding all
++ * accesses to the actual buffer length read from the EEPROM.
++ */
++#define FRU_FIELD_LEN(p, a)	((p)[a] & 0x3F)
++
++/* Advance cursor past the current TLV. Returns false if no more data. */
++static bool fru_pia_advance(u32 *addr, const unsigned char *pia, int len)
++{
++	if (*addr >= (u32)len)
++		return false;
++	*addr += 1 + FRU_FIELD_LEN(pia, *addr);
++	return true;
++}
++
++/*
++ * Copy the current TLV's data into dst (NUL-terminated). Returns false if
++ * the TLV header or data would read past the end of pia.
++ */
++static bool fru_pia_copy_field(char *dst, size_t dst_size,
++			       const unsigned char *pia, u32 addr, int len)
++{
++	size_t fl;
++
++	if (addr + 1 >= (u32)len)
++		return false;
++
++	fl = min3((size_t)FRU_FIELD_LEN(pia, addr),
++			  dst_size - 1,
++			  (size_t)(len - addr - 1));
++	memcpy(dst, pia + addr + 1, fl);
++	dst[fl] = '\0';
++	return true;
++}
++
  int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
  {
-+	struct amdgpu_fru_info *fru_info;
- 	unsigned char buf[8], *pia;
- 	u32 addr, fru_addr;
- 	int size, len;
-@@ -107,6 +108,19 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
- 	if (!is_fru_eeprom_supported(adev, &fru_addr))
- 		return 0;
- 
-+	if (!adev->fru_info) {
-+		adev->fru_info = kzalloc(sizeof(*adev->fru_info), GFP_KERNEL);
-+		if (!adev->fru_info)
-+			return -ENOMEM;
-+	}
-+
-+	fru_info = adev->fru_info;
-+	/* For Arcturus-and-later, default value of serial_number is unique_id
-+	 * so convert it to a 16-digit HEX string for convenience and
-+	 * backwards-compatibility.
-+	 */
-+	sprintf(fru_info->serial, "%llx", adev->unique_id);
-+
- 	/* If algo exists, it means that the i2c_adapter's initialized */
- 	if (!adev->pm.fru_eeprom_i2c_bus || !adev->pm.fru_eeprom_i2c_bus->algo) {
- 		DRM_WARN("Cannot access FRU, EEPROM accessor not initialized");
-@@ -182,21 +196,18 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
- 	addr = 3 + 1 + (pia[3] & 0x3F);
- 	if (addr + 1 >= len)
+ 	struct amdgpu_fru_info *fru_info;
+@@ -193,32 +230,31 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 	 * Skip the Manufacturer Name at [3] and go directly to
+ 	 * the Product Name field.
+ 	 */
+-	addr = 3 + 1 + (pia[3] & 0x3F);
+-	if (addr + 1 >= len)
++	addr = 3;
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->product_name,
++				sizeof(fru_info->product_name),
++				pia, addr, len))
  		goto Out;
--	memcpy(adev->product_name, pia + addr + 1,
--	       min_t(size_t,
--		     sizeof(adev->product_name),
--		     pia[addr] & 0x3F));
--	adev->product_name[sizeof(adev->product_name) - 1] = '\0';
-+	memcpy(fru_info->product_name, pia + addr + 1,
-+	       min_t(size_t, sizeof(fru_info->product_name), pia[addr] & 0x3F));
-+	fru_info->product_name[sizeof(fru_info->product_name) - 1] = '\0';
+-	memcpy(fru_info->product_name, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->product_name), pia[addr] & 0x3F));
+-	fru_info->product_name[sizeof(fru_info->product_name) - 1] = '\0';
  
  	/* Go to the Product Part/Model Number field. */
- 	addr += 1 + (pia[addr] & 0x3F);
- 	if (addr + 1 >= len)
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if (addr + 1 >= len)
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->product_number,
++				sizeof(fru_info->product_number),
++				pia, addr, len))
  		goto Out;
--	memcpy(adev->product_number, pia + addr + 1,
--	       min_t(size_t,
--		     sizeof(adev->product_number),
-+	memcpy(fru_info->product_number, pia + addr + 1,
-+	       min_t(size_t, sizeof(fru_info->product_number),
- 		     pia[addr] & 0x3F));
--	adev->product_number[sizeof(adev->product_number) - 1] = '\0';
-+	fru_info->product_number[sizeof(fru_info->product_number) - 1] = '\0';
+-	memcpy(fru_info->product_number, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->product_number),
+-		     pia[addr] & 0x3F));
+-	fru_info->product_number[sizeof(fru_info->product_number) - 1] = '\0';
  
- 	/* Go to the Product Version field. */
- 	addr += 1 + (pia[addr] & 0x3F);
-@@ -205,10 +216,9 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
- 	addr += 1 + (pia[addr] & 0x3F);
- 	if (addr + 1 >= len)
+-	/* Go to the Product Version field. */
+-	addr += 1 + (pia[addr] & 0x3F);
++	/* Skip the Product Version field. */
++	if (!fru_pia_advance(&addr, pia, len))
++		goto Out;
+ 
+-	/* Go to the Product Serial Number field. */
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if (addr + 1 >= len)
++	/* Read the Product Serial Number field. */
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->serial,
++				sizeof(fru_info->serial),
++				pia, addr, len))
  		goto Out;
--	memcpy(adev->serial, pia + addr + 1, min_t(size_t,
--						   sizeof(adev->serial),
--						   pia[addr] & 0x3F));
--	adev->serial[sizeof(adev->serial) - 1] = '\0';
-+	memcpy(fru_info->serial, pia + addr + 1,
-+	       min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
-+	fru_info->serial[sizeof(fru_info->serial) - 1] = '\0';
+-	memcpy(fru_info->serial, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
+-	fru_info->serial[sizeof(fru_info->serial) - 1] = '\0';
++
  Out:
  	kfree(pia);
  	return 0;
-@@ -231,7 +241,7 @@ static ssize_t amdgpu_fru_product_name_show(struct device *dev,
- 	struct drm_device *ddev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(ddev);
- 
--	return sysfs_emit(buf, "%s\n", adev->product_name);
-+	return sysfs_emit(buf, "%s\n", adev->fru_info->product_name);
- }
- 
- static DEVICE_ATTR(product_name, 0444, amdgpu_fru_product_name_show, NULL);
-@@ -253,7 +263,7 @@ static ssize_t amdgpu_fru_product_number_show(struct device *dev,
- 	struct drm_device *ddev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(ddev);
- 
--	return sysfs_emit(buf, "%s\n", adev->product_number);
-+	return sysfs_emit(buf, "%s\n", adev->fru_info->product_number);
- }
- 
- static DEVICE_ATTR(product_number, 0444, amdgpu_fru_product_number_show, NULL);
-@@ -275,7 +285,7 @@ static ssize_t amdgpu_fru_serial_number_show(struct device *dev,
- 	struct drm_device *ddev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(ddev);
- 
--	return sysfs_emit(buf, "%s\n", adev->serial);
-+	return sysfs_emit(buf, "%s\n", adev->fru_info->serial);
- }
- 
- static DEVICE_ATTR(serial_number, 0444, amdgpu_fru_serial_number_show, NULL);
-@@ -289,7 +299,7 @@ static const struct attribute *amdgpu_fru_attributes[] = {
- 
- int amdgpu_fru_sysfs_init(struct amdgpu_device *adev)
- {
--	if (!is_fru_eeprom_supported(adev, NULL))
-+	if (!is_fru_eeprom_supported(adev, NULL) || !adev->fru_info)
- 		return 0;
- 
- 	return sysfs_create_files(&adev->dev->kobj, amdgpu_fru_attributes);
-@@ -297,7 +307,7 @@ int amdgpu_fru_sysfs_init(struct amdgpu_device *adev)
- 
- void amdgpu_fru_sysfs_fini(struct amdgpu_device *adev)
- {
--	if (!is_fru_eeprom_supported(adev, NULL))
-+	if (!is_fru_eeprom_supported(adev, NULL) || !adev->fru_info)
- 		return;
- 
- 	sysfs_remove_files(&adev->dev->kobj, amdgpu_fru_attributes);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
-index c817db17cfa75..c99c74811c78a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.h
-@@ -24,6 +24,15 @@
- #ifndef __AMDGPU_FRU_EEPROM_H__
- #define __AMDGPU_FRU_EEPROM_H__
- 
-+#define AMDGPU_PRODUCT_NAME_LEN 64
-+
-+/* FRU product information */
-+struct amdgpu_fru_info {
-+	char				product_number[20];
-+	char				product_name[AMDGPU_PRODUCT_NAME_LEN];
-+	char				serial[20];
-+};
-+
- int amdgpu_fru_get_product_info(struct amdgpu_device *adev);
- int amdgpu_fru_sysfs_init(struct amdgpu_device *adev);
- void amdgpu_fru_sysfs_fini(struct amdgpu_device *adev);
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-index a47898487de09..cb4f7f1649115 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -2237,10 +2237,6 @@ static void arcturus_get_unique_id(struct smu_context *smu)
- 
- 	id = ((uint64_t)bottom32 << 32) | top32;
- 	adev->unique_id = id;
--	/* For Arcturus-and-later, unique_id == serial_number, so convert it to a
--	 * 16-digit HEX string for convenience and backwards-compatibility
--	 */
--	sprintf(adev->serial, "%llx", id);
- }
- 
- static int arcturus_set_df_cstate(struct smu_context *smu,
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-index 2fdb982e70ef7..0da0b6792cdf5 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -1989,8 +1989,6 @@ static void sienna_cichlid_get_unique_id(struct smu_context *smu)
- out:
- 
- 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
--	if (adev->serial[0] == '\0')
--		sprintf(adev->serial, "%016llx", adev->unique_id);
- }
- 
- static int sienna_cichlid_get_uclk_dpm_states(struct smu_context *smu, uint32_t *clocks_in_khz, uint32_t *num_states)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-index d1fd643e7a48c..337e7722d25ed 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -1622,8 +1622,6 @@ static void aldebaran_get_unique_id(struct smu_context *smu)
- 
- out:
- 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
--	if (adev->serial[0] == '\0')
--		sprintf(adev->serial, "%016llx", adev->unique_id);
- }
- 
- static bool aldebaran_is_baco_supported(struct smu_context *smu)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index 7d9470778a991..6ef3140edacd1 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -1931,8 +1931,6 @@ static void smu_v13_0_0_get_unique_id(struct smu_context *smu)
- 
- out:
- 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
--	if (adev->serial[0] == '\0')
--		sprintf(adev->serial, "%016llx", adev->unique_id);
- }
- 
- static int smu_v13_0_0_get_fan_speed_pwm(struct smu_context *smu,
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index 4edb631461223..ac2b60512e2d4 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -1858,8 +1858,6 @@ static void smu_v13_0_6_get_unique_id(struct smu_context *smu)
- 		(struct PPTable_t *)smu_table->driver_pptable;
- 
- 	adev->unique_id = pptable->PublicSerialNumber_AID;
--	if (adev->serial[0] == '\0')
--		sprintf(adev->serial, "%016llx", adev->unique_id);
- }
- 
- static bool smu_v13_0_6_is_baco_supported(struct smu_context *smu)
 -- 
 2.53.0
 
