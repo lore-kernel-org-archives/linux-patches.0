@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EE53A6B92;
-	Sat, 17 Oct 2026 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7923A382F25;
+	Sat, 17 Oct 2026 16:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253200; cv=none; b=bcQQalYQ3b0Xznrd0PhgYBdo+IvoQyxX/9rdnHR1nJJ5j5TNaR6gYO8kXFwqMhCHjlg9Oq/EDAcv4J92IWZ9qDjdsw09YsLg+BsgQ8RwnxKYAQwvNGkLGRH4Hv8QbtqIesMQbQXe7b8HdUD74Np3rCHdyd0dw7iVKCCUyt6LBaA=
+	t=1792253202; cv=none; b=au14hVuj6pTk73viQLD25ClogM4aVhylvY0Spu8FBYY7YFJhZWXZ5qDYs7JwpC9s9Cbsfq2uAupV2dLGFz9sWYbowINNnSYcDlLy2bfTh7bf/q0mr5zNEr+9tNfQqwZRo1pwDDfj0o5KI67NVbKvJrQIoJeQ+6fX+OyyGHNDOWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253200; c=relaxed/simple;
-	bh=a2QwBSpKs7kLK06B/x9QiKw4JdtRbs3cY65RKTxTjsQ=;
+	s=arc-20240116; t=1792253202; c=relaxed/simple;
+	bh=WppSZrPP6uD7r1elImMceHGpmQ7T9h4UgcWvWp75UKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpesUQ5TIzUwzzvf3oG+RB77jby4aOtSVtkGCHDYxe3xx17/0WETLP8tfMQKSmwjjvcPnxSCe+C1mx4JkRnS+kXB+Re10PVjeJ/YdPSUBkqBfKzFvloDYA+H56f1Y/Rvn9FoLOSrN7nTjrB3fd/KIhmBbwFCbyxuZgoacryBKU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkCY0dbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mvDSXmspJ4poIU2I1+whykXDfb4f9O/qIUMGJmGynmKUJhVpuA9U3WRGSolkfnzMK0zQVs++OURr4CTeuDYD1Y9e9RzvQDPbJs1rPWnTw7bXRpMyIO/pLQm/BJQ4Su/SpunyaVI7GoECr//ysRYvsbP7+UP31qHuqkBUXRv2+ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZopCh2s8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkCY0dbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08461F000C5;
-	Sat, 17 Oct 2026 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZopCh2s8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46E31F000C4;
+	Sat, 17 Oct 2026 16:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253198;
-	bh=3R4SSqaN5llpFzAeCwSHRtgUXPYtUbqoUbJuX7l5Vpw=;
+	s=korg; t=1792253201;
+	bh=F1qJ6gR3cYVGcqAX1+qCBJRNLjZXUoJBv/eQMzBZ9lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PkCY0dbLUclbkmnzwXP1i7U58o9F0hyoKF2XIijkFbZ9U5QOinEjZgk1YEwFIoIjJ
-	 ZXOg+20b7qYKjErIAuJFmJ+XAhw0BbysAcHYDh8E3a4KUP41RI754wxlOBo7CwAe0D
-	 ud0k7IvomZu1yK47gUQmWdNmIOpfntCH0v4FKkDY=
+	b=ZopCh2s8UHDP07rHPXlptA8TVh4OwV0ih6aYtvPM+ujsMbbkHLe145AiHZ+RRmDYl
+	 Kiq80rnaz+y+h6DhkZZqmAGxFz+hYr+Xq29C7cQIUZ/TJd0nLa/GrGZi84jEqO1GDn
+	 TtQ9KnHJRQAelgNVyS7ZjsAR1K6/U+olYF9hAZWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
 	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/869] scsi: ufs: core: Add a comment block above ufshcd_mcq_compl_all_cqes_lock()
-Date: Sat, 17 Oct 2026 17:48:02 +0200
-Message-ID: <20261017160038.069628235@linuxfoundation.org>
+Subject: [PATCH 6.12 042/869] scsi: ufs: core: Avoid unsafe MMIO reads in ufshcd_mcq_compl_all_cqes_lock()
+Date: Sat, 17 Oct 2026 17:48:03 +0200
+Message-ID: <20261017160038.094039369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,42 +53,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 1373df88d53594a32534fd8960c51d1d09be8ecb ]
+[ Upstream commit 375f3a5691dd46b5d05b90a8968872ec8b2248c5 ]
 
-Document the aspects of ufshcd_mcq_compl_all_cqes_lock() that are
-nontrivial in a comment block above this function.
+During MCQ host reset, ufshcd_host_reset_and_restore() stops the host
+controller via ufshcd_hba_stop() (HCE = 0) before calling
+ufshcd_complete_requests(hba, true) ->
+ufshcd_mcq_compl_pending_transfer(hba, true) ->
+ufshcd_mcq_force_compl_one() -> ufshcd_mcq_compl_all_cqes_lock().  Because
+ufshcd_mcq_force_compl_one() is its sole caller,
+ufshcd_mcq_compl_all_cqes_lock() always runs with HCE = 0.
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Despite the comment above ufshcd_mcq_compl_all_cqes_lock() stating that
+reading CQTPy may not be safe with the controller disabled, the function
+still calls ufshcd_mcq_update_cq_tail_slot() at the end of its sweep:
+
+ 1. Unsafe CQTPy MMIO read:
+    Calling ufshcd_mcq_update_cq_tail_slot() at the end of the sweep reads
+    CQTPy over MMIO while HCE = 0, directly contradicting the function's
+    documented contract (commit 1373df88d535 ("scsi: ufs: core: Add a
+    comment block above ufshcd_mcq_compl_all_cqes_lock()")) that reading
+    CQTPy may not be safe with the controller disabled.
+
+ 2. Spurious error logs on empty slots:
+    Sweeping all max_entries slots visits empty entries where
+    command_desc_base_addr is 0, causing ufshcd_mcq_process_cqe() to log
+    unguarded dev_err(hba->dev, "Abnormal CQ entry!\n") messages.
+
+Fix both issues in ufshcd_mcq_compl_all_cqes_lock():
+
+ - Remove the ufshcd_mcq_update_cq_tail_slot() call and the redundant
+   hwq->cq_head_slot = hwq->cq_tail_slot assignment without replacement.
+   The two indices are already equal after the sweep: they are equal when
+   the sweep starts, since ufshcd_mcq_poll_cqe_lock() consumes entries
+   until cq_head_slot reaches cq_tail_slot, and the sweep advances
+   cq_head_slot by exactly one full ring. Both indices are also
+   reinitialized before the queue is reused.
+
+ - Extract ufshcd_mcq_compl_cqe() and invoke it only on non-empty slots
+   during full-ring sweeps, keeping "Abnormal CQ entry!" logging strictly
+   for unexpected empty entries in ufshcd_mcq_poll_cqe_lock().
+
+Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
+Cc: stable@vger.kernel.org
 Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260401202506.1445324-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 375f3a5691dd ("scsi: ufs: core: Avoid unsafe MMIO reads in ufshcd_mcq_compl_all_cqes_lock()")
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260928035816.1294326-2-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/ufs/core/ufs-mcq.c | 30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index d4129ceaede6c..09c40308789a6 100644
+index 09c40308789a6..b6514a8b268fb 100644
 --- a/drivers/ufs/core/ufs-mcq.c
 +++ b/drivers/ufs/core/ufs-mcq.c
-@@ -315,6 +315,14 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
- 	}
+@@ -299,20 +299,24 @@ static int ufshcd_mcq_get_tag(struct ufs_hba *hba, struct cq_entry *cqe)
+ 	return div_u64(addr, ufshcd_get_ucd_size(hba));
  }
  
-+/*
-+ * This function is called from the UFS error handler with the UFS host
-+ * controller disabled (HCE = 0). Reading host controller registers, e.g. the
-+ * CQ tail pointer (CQTPy), may not be safe with the host controller disabled.
-+ * Hence, iterate over all completion queue entries. This won't result in
-+ * double completions because ufshcd_mcq_process_cqe() clears a CQE after it
-+ * has been processed.
-+ */
- void ufshcd_mcq_compl_all_cqes_lock(struct ufs_hba *hba,
- 				    struct ufs_hw_queue *hwq)
++static void ufshcd_mcq_compl_cqe(struct ufs_hba *hba, struct cq_entry *cqe)
++{
++	int tag = ufshcd_mcq_get_tag(hba, cqe);
++
++	ufshcd_compl_one_cqe(hba, tag, cqe);
++	/* After processing the CQE, mark it as an empty (invalid) entry. */
++	cqe->command_desc_base_addr = 0;
++}
++
+ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
+ 				   struct ufs_hw_queue *hwq)
  {
+ 	struct cq_entry *cqe = ufshcd_mcq_cur_cqe(hwq);
+ 
+-	if (cqe->command_desc_base_addr) {
+-		int tag = ufshcd_mcq_get_tag(hba, cqe);
+-
+-		ufshcd_compl_one_cqe(hba, tag, cqe);
+-		/* After processed the cqe, mark it empty (invalid) entry */
+-		cqe->command_desc_base_addr = 0;
+-	} else {
++	if (cqe->command_desc_base_addr)
++		ufshcd_mcq_compl_cqe(hba, cqe);
++	else
+ 		dev_err(hba->dev, "Abnormal CQ entry!\n");
+-	}
+ }
+ 
+ /*
+@@ -320,7 +324,7 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
+  * controller disabled (HCE = 0). Reading host controller registers, e.g. the
+  * CQ tail pointer (CQTPy), may not be safe with the host controller disabled.
+  * Hence, iterate over all completion queue entries. This won't result in
+- * double completions because ufshcd_mcq_process_cqe() clears a CQE after it
++ * double completions because ufshcd_mcq_compl_cqe() clears a CQE after it
+  * has been processed.
+  */
+ void ufshcd_mcq_compl_all_cqes_lock(struct ufs_hba *hba,
+@@ -331,13 +335,13 @@ void ufshcd_mcq_compl_all_cqes_lock(struct ufs_hba *hba,
+ 
+ 	spin_lock_irqsave(&hwq->cq_lock, flags);
+ 	while (entries > 0) {
+-		ufshcd_mcq_process_cqe(hba, hwq);
++		struct cq_entry *cqe = ufshcd_mcq_cur_cqe(hwq);
++
++		if (cqe->command_desc_base_addr)
++			ufshcd_mcq_compl_cqe(hba, cqe);
+ 		ufshcd_mcq_inc_cq_head_slot(hwq);
+ 		entries--;
+ 	}
+-
+-	ufshcd_mcq_update_cq_tail_slot(hwq);
+-	hwq->cq_head_slot = hwq->cq_tail_slot;
+ 	spin_unlock_irqrestore(&hwq->cq_lock, flags);
+ }
+ 
 -- 
 2.53.0
 
