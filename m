@@ -1,53 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1025835DA41;
-	Sat, 17 Oct 2026 17:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50203A1A3B;
+	Sat, 17 Oct 2026 17:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259883; cv=none; b=HmoUq7G8SSYN1rtQdXm0ttDHlSA21NbTLERU6u+cSlIO52iAdjdxanOkqqaXSL95rZPHLqsbr2/1rr7K9h1N7CMbLhjfNSz1q9OGNrSjbmLz4J7wJWGe4uN9ZxGIu5QYUjtoph9cBqTyJp5XWoTfw39OSuAei25fi0tYzmgiUoM=
+	t=1792259886; cv=none; b=ek+pmzRSN69bIzapWHKQ64V62+aZdTHyjrrePhKvRjviSij3ja0yvFIoaoJ1SX0NX+gBgaviMUzxREu88KnjFR05GQXpoQUT4r+aRDFqV1wUu3h6F58hh+mJVj+oCKsIG4tmCs7TSs6nMhbW/4xwk/OcR5gVU39nbhuz4Vae+yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259883; c=relaxed/simple;
-	bh=lpWjKphIi+E25aJuMoRaMpgzfFV3wzf9VEhxfmBFs44=;
+	s=arc-20240116; t=1792259886; c=relaxed/simple;
+	bh=hbvLzvOi5Nh2/mfBcOt4HGcQdSrKnSEN8qTAlubiC00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2AZpdKI81wdcX6V3e7p5k60EvMx2ugnr+fN4G2A0+kAosh+SP9MUEed2G2ersn5hXDOcDQTNzlE69Vj1IvxAp+taq9+R2d2Y41CQwmUF/Fymf+WRuQ5dFe72VEAwMBddiALpSam72dj53wUbLdvIBnW2+ivnVSZrzm3VTzcSH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTDZI5kn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XGnzLfzHdXPPc62zUgkGm0H86S31PjKGb1TTM/sQYbWtfHZZj8wux2PGybotErO4QJRqs+pCS1nH3EGhpScB79xICt+UxV8JkE8pC87YVjWF6xyLMny4/4X43BHrYj1jlZiY1Ymzdqxm+RuXpG7YvdJSot9K5NTRqI+DafD3K24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3CC1OF/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTDZI5kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDE41F000C4;
-	Sat, 17 Oct 2026 17:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3CC1OF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4790B1F000C4;
+	Sat, 17 Oct 2026 17:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259881;
-	bh=FETIF+EGlwx0BqJzo7SebU8by4en9Z2plEBM7n9ZzTQ=;
+	s=korg; t=1792259884;
+	bh=d5fptLnotUEQiarar9QSJmCF5jBhJN39ff/cUVp6za0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oTDZI5knlmuj0+cgOav8QBGrPP+Cd01d0uWCaOAjqCrgimIML3rpB1Cb6KmX4sGd+
-	 pqqST5Eo8otBx0zsbyNVyxSnF+gA8nkq9A/ONT0rINtTzjPVGTwdYUJ3WBWsopZODv
-	 fYMsM6NQokm+Uz5QWig0nJKMvLvcIzI0x49zMny8=
+	b=b3CC1OF/cGHFur75nI49scY+2c6he3ABWsT9VDL9ORdtmIBup7G4HyI+PRlFdruMN
+	 TtNgyKTTCdWgjx4IDeiCVYSySifIbJph+Ao9LfLPlr+pBtcYqugq4g+W4RtMsz4VAA
+	 KS9doruwW4rq3B7US38K4WsXYYneHbSC5f6xLi8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Baineng Shou <shoubaineng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1359/1674] mm/huge_memory: transfer the pmd dirty bit to the folio on zap
-Date: Sat, 17 Oct 2026 18:00:31 +0200
-Message-ID: <20261017160506.042262812@linuxfoundation.org>
+Subject: [PATCH 6.6 1360/1674] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
+Date: Sat, 17 Oct 2026 18:00:32 +0200
+Message-ID: <20261017160506.066016918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -60,109 +47,251 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Baineng Shou <shoubaineng@gmail.com>
 
-[ Upstream commit fe6cf984939d8e12cb33a99673c8d026c5135e68 ]
+[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
 
-zap_huge_pmd_folio() propagates the pmd young bit to the folio for the
-file case, but not the dirty bit.  The pte path does propagate it, in
-zap_present_folio_ptes() and so does the pmd split path, in
-__split_huge_pmd_locked().
+DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
+caller's fd table via dma_buf_fd() -> fd_install() before
+dma_heap_ioctl() copies the result back to userspace.  If the trailing
+copy_to_user() fails, userspace never learns the fd number, but the
+fd (and the underlying dma-buf reference) are already visible to
+other threads in the same process and are leaked for the lifetime of
+the process.
 
-For most file mappings the omission is harmless, because writing to a
-shared file mapping goes through page_mkwrite(), which dirties the folio.
-tmpfs is different: it has no page_mkwrite(), and vma_wants_writenotify()
-is false for it, so a *read* fault on a MAP_SHARED tmpfs mapping installs
-a writable pmd via do_read_fault().  do_read_fault() does not call
-fault_dirty_shared_page(), so subsequent stores through that mapping set
-only the hardware dirty bit in the pmd and never call folio_mark_dirty().
-A shmem folio allocated by a fault is marked uptodate but not dirty (see
-the clear: block in shmem_get_folio_gfp()), so PG_dirty is never set at
-all.
+The obvious "close it on the failure path" fix is unsafe: once
+fd_install() has run, another thread can already dup() the fd, send
+it via SCM_RIGHTS, or close() it and let its number be reused, so a
+subsequent close_fd() from the ioctl path can operate on an unrelated
+file.  This was pointed out by Christian König on v1 [1].
 
-Unmapping such a folio - munmap(), or exit_mmap() when the process dies -
-then loses the only record that it was written, because zap_huge_pmd()
-drops the pmd without transferring the dirty bit.  Reclaim afterwards sees
-a clean shmem folio: the whole swap-out block in shrink_folio_list() is
-inside "if (folio_test_dirty(folio))", so pageout() is skipped and the
-folio falls into __remove_mapping().  There, folio_is_file_lru() is false
-for a swapbacked folio, so no shadow entry is created and
-__filemap_remove_folio(folio, NULL) simply empties the i_pages slot.  The
-data is freed without ever being written to swap, and the next fault on
-that index returns a freshly zeroed folio.
+Restructure the allocation path so that fd_install() is the last,
+unfailable step of a successful ioctl:
 
-This is silent data loss for any process that keeps state in a MAP_SHARED
-tmpfs segment across an unmap - for example a cache handed from one
-process generation to the next through /dev/shm.  It requires the folio to
-be PMD-mapped, so it only shows up once shmem THP is enabled (which is
-what we did in Meta fleet and started noticing crashes); with THP off the
-pte path transfers the dirty bit correctly.  It also only becomes visible
-when swap is enabled, because with no swap device shmem folios (which are
-on the anon LRU) are not scanned by reclaim at all, so the clean folio is
-never dropped.
+  1. heap->ops->allocate()      creates the dma_buf.
+  2. get_unused_fd_flags()      reserves an fd number in the caller's
+                                fd table without publishing it, so
+                                no other thread can observe it.
+  3. copy_to_user()             delivers the fd number to userspace;
+                                on failure the fd is returned with
+                                put_unused_fd() and the dma_buf
+                                reference is dropped with
+                                dma_buf_put(), leaving no user-
+                                visible state behind.
+  4. dma_buf_fd_install()       publishes the fd and emits the
+                                trace_dma_buf_fd tracepoint -- from
+                                here on the ioctl cannot fail.
 
-Reproduced on x86_64 with a tmpfs mounted huge=within_size: read-fault a
-2MB-backed region, write a known pattern through the resulting mapping,
-munmap, force reclaim of the cgroup, then re-map and read back.  Without
-this patch the region reads back as zeros and vmstat shows zswpout 0 - the
-data was discarded rather than swapped.  With this patch the region reads
-back correctly and the pages are swapped out as expected.  With
-huge=never, or when the first touch is a write, the test passes either
-way.
+A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
+fd_install() together with the DMA_BUF_TRACE() call, preserving the
+export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
+is refactored to return the struct dma_buf * directly (returning
+ERR_PTR on failure) so the caller holds the dmabuf reference across
+steps 3 and 4.
 
-Link: https://lore.kernel.org/20260819101222.3732660-1-usama.arif@linux.dev
-Fixes: b5072380eb61 ("thp: support file pages in zap_huge_pmd()")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The failure at step 3 is easily reachable from userspace: pass a
+struct dma_heap_allocation_data that lives in a page whose protection
+is flipped to PROT_READ between copy_from_user() and copy_to_user()
+(e.g. via mprotect()).  Before this change each such ioctl leaks one
+dmabuf fd; after it, the fd table is unchanged on failure and only
+/dev/dma_heap/<name> remains open.
 
-shared file mapping goes through page_mkwrite(), which dirties the folio.
-tmpfs is different: it has no page_mkwrite(), and vma_wants_writenotify()
-is false for it, so a *read* fault on a MAP_SHARED tmpfs mapping installs
-a writable pmd via do_read_fault().  do_read_fault() does not call
-fault_dirty_shared_page(), so subsequent stores through that mapping set
-only the hardware dirty bit in the pmd and never call folio_mark_dirty().
+No UAPI or heap-driver interface change.
 
+[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
+
+Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
+Cc: stable@vger.kernel.org
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma-buf/dma-buf.c  | 15 +++++++
+ drivers/dma-buf/dma-heap.c | 80 +++++++++++++++++++-------------------
+ include/linux/dma-buf.h    |  1 +
+ 3 files changed, 56 insertions(+), 40 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 1646eead7c3fe..28502c539cabb 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1737,6 +1737,9 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 			if (arch_needs_pgtable_deposit())
- 				zap_deposited_table(tlb->mm, pmd);
- 			add_mm_counter(tlb->mm, mm_counter_file(page), -HPAGE_PMD_NR);
-+
-+			if (pmd_present(orig_pmd) && pmd_dirty(orig_pmd))
-+				folio_mark_dirty(page_folio(page));
- 		}
+diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
+index 21916bba77d58..47783225ed021 100644
+--- a/drivers/dma-buf/dma-buf.c
++++ b/drivers/dma-buf/dma-buf.c
+@@ -714,6 +714,21 @@ int dma_buf_fd(struct dma_buf *dmabuf, int flags)
+ }
+ EXPORT_SYMBOL_NS_GPL(dma_buf_fd, DMA_BUF);
  
- 		spin_unlock(ptl);
++/**
++ * dma_buf_fd_install - install a reserved fd for a dma-buf
++ * @dmabuf:	[in]	pointer to dma_buf
++ * @fd:		[in]	fd reserved with get_unused_fd_flags()
++ *
++ * Publishes a previously reserved fd into the caller's fd table.
++ * Must only be called after all fallible work (e.g. copy_to_user)
++ * has succeeded, as it cannot be undone safely once called.
++ */
++void dma_buf_fd_install(struct dma_buf *dmabuf, int fd)
++{
++	fd_install(fd, dmabuf->file);
++}
++EXPORT_SYMBOL_NS_GPL(dma_buf_fd_install, DMA_BUF);
++
+ /**
+  * dma_buf_get - returns the struct dma_buf related to an fd
+  * @fd:	[in]	fd associated with the struct dma_buf to be returned
+diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
+index 84ae708fafe75..baeb3b629eadd 100644
+--- a/drivers/dma-buf/dma-heap.c
++++ b/drivers/dma-buf/dma-heap.c
+@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
+ static struct class *dma_heap_class;
+ static DEFINE_XARRAY_ALLOC(dma_heap_minors);
+ 
+-static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
+-				 unsigned int fd_flags,
+-				 unsigned int heap_flags)
+-{
+-	struct dma_buf *dmabuf;
+-	int fd;
+-
+-	/*
+-	 * Allocations from all heaps have to begin
+-	 * and end on page boundaries.
+-	 */
+-	len = PAGE_ALIGN(len);
+-	if (!len)
+-		return -EINVAL;
+-
+-	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
+-	if (IS_ERR(dmabuf))
+-		return PTR_ERR(dmabuf);
+-
+-	fd = dma_buf_fd(dmabuf, fd_flags);
+-	if (fd < 0) {
+-		dma_buf_put(dmabuf);
+-		/* just return, as put will call release and that will free */
+-	}
+-	return fd;
+-}
+-
+ static int dma_heap_open(struct inode *inode, struct file *file)
+ {
+ 	struct dma_heap *heap;
+@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *inode, struct file *file)
+ 	return 0;
+ }
+ 
+-static long dma_heap_ioctl_allocate(struct file *file, void *data)
++static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
+ {
+ 	struct dma_heap_allocation_data *heap_allocation = data;
+ 	struct dma_heap *heap = file->private_data;
++	struct dma_buf *dmabuf;
+ 	int fd;
++	size_t len;
+ 
+ 	if (heap_allocation->fd)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
++
++	len = PAGE_ALIGN(heap_allocation->len);
++	if (!len)
++		return ERR_PTR(-EINVAL);
++
++	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
++				     heap_allocation->heap_flags);
+ 
+-	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
+-				   heap_allocation->fd_flags,
+-				   heap_allocation->heap_flags);
+-	if (fd < 0)
+-		return fd;
++	if (IS_ERR(dmabuf))
++		return dmabuf;
++
++	fd = get_unused_fd_flags(heap_allocation->fd_flags);
++	if (fd < 0) {
++		dma_buf_put(dmabuf);
++		return ERR_PTR(fd);
++	}
+ 
+ 	heap_allocation->fd = fd;
+ 
+-	return 0;
++	return dmabuf;
+ }
+ 
+ static unsigned int dma_heap_ioctl_cmds[] = {
+@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
+ 	unsigned int in_size, out_size, drv_size, ksize;
+ 	int nr = _IOC_NR(ucmd);
+ 	int ret = 0;
++	int fd;
++	struct dma_buf *dmabuf;
+ 
+ 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
+ 		return -EINVAL;
+@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
+ 
+ 	switch (kcmd) {
+ 	case DMA_HEAP_IOCTL_ALLOC:
+-		ret = dma_heap_ioctl_allocate(file, kdata);
++		dmabuf = dma_heap_ioctl_allocate(file, kdata);
++
++		if (IS_ERR(dmabuf)) {
++			ret = PTR_ERR(dmabuf);
++			break;
++		}
++
++		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
++		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
++			put_unused_fd(fd);
++			dma_buf_put(dmabuf);
++			ret = -EFAULT;
++		} else {
++			dma_buf_fd_install(dmabuf, fd);
++		}
++
+ 		break;
+ 	default:
+ 		ret = -ENOTTY;
+ 		goto err;
+ 	}
+ 
+-	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
+-		ret = -EFAULT;
+ err:
+ 	if (kdata != stack_kdata)
+ 		kfree(kdata);
+diff --git a/include/linux/dma-buf.h b/include/linux/dma-buf.h
+index 3f31baa3293f9..e29dcab1d2d10 100644
+--- a/include/linux/dma-buf.h
++++ b/include/linux/dma-buf.h
+@@ -606,6 +606,7 @@ void dma_buf_unpin(struct dma_buf_attachment *attach);
+ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
+ 
+ int dma_buf_fd(struct dma_buf *dmabuf, int flags);
++void dma_buf_fd_install(struct dma_buf *dmabuf, int fd);
+ struct dma_buf *dma_buf_get(int fd);
+ void dma_buf_put(struct dma_buf *dmabuf);
+ 
 -- 
 2.53.0
 
