@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F303B71A7;
-	Sat, 17 Oct 2026 18:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F98D3BF684;
+	Sat, 17 Oct 2026 18:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260549; cv=none; b=TDtAVqEOs5Lx0ipdsJISirP5RaT63TuOLNXfUSj8WimL8H9v6ldyqyUJm29ZnXScp3B1YyLb7m5mzZy+0ltK3nTG6jnvEjIUwQEFyFbzv4OaWXkpOPDNFHaq8NbmMnK0WO8/qG7bZvaNZB/g7/afbVw0YpOFz/v6LvHPZ3nexj4=
+	t=1792260551; cv=none; b=PEzwuazWh3/TtkprwtweFS3hDfnurFRKxi56FJFRZEQ2Yw/dE9yhGcHXzcRi1M3v+JUseqv20c3cXfk1WZBTYsiBEFPHehmhb5Zi8jjeLA/Di3ga+g31B0aiK7bEXYHXanAIAm2a0U604B+U5KtSIchRbIuB2XJJwGnshDc8Gr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260549; c=relaxed/simple;
-	bh=AQytIGa3YzsOg4r9H4UB81LK13CZWEeE1ejEMGgNbEA=;
+	s=arc-20240116; t=1792260551; c=relaxed/simple;
+	bh=cYE9OMmoY3s6DBX4ALjFg2tTR/XlGcVOw5U6cGRQmIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGyA0qPM+VB1HtrhSvjHcCQw6aPsKapN23Ovrbkt34060P4fZ12CI728DzqRQBjjvYebXreZHry9fyZWrbiyR20tr4D6zUY6rAfiFCckHKji6MxZk4LlPC1BnqvGpzcEsCkK9NDKeYf5wmmA/1yqqs94FttPNN2T29HC/XKc6FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8ur3Duw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+onqATGKBXONPQfLh/15sos0grTJj/PUVlnQoNIdol2ks7AYh/Nc9NZIzEA84OOdFQ6BBoJhIYgNMyHTcqMZLQg0HWEFP4e9cVmv9sAtpQ+XCk2I16mwTK8xjICyuzjiAkddgGQLMngocBPgLwLQUt8D8KKtEQt2Oik7uXVI1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmfS+G0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8ur3Duw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B381F000C4;
-	Sat, 17 Oct 2026 18:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmfS+G0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FDD1F000C4;
+	Sat, 17 Oct 2026 18:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260547;
-	bh=nPUhIEPlivJtbwOoOZ9kLj3j+xUoTtE/NgZH/Kfexus=;
+	s=korg; t=1792260550;
+	bh=WWFNoiAOR4yDzufp/zvC8vGL19Wq+qXJKsPBpD6Jdbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N8ur3DuwdbmeQoCq3DcZREX9btcxtE+2+JlFqrN8myTPHmEgkVlWTxZUMHg46EVFT
-	 jt/nbLlUJqTeeQFA1yHnH731bxRwJbljdFuTnOjVQrYhbplJbRZ0fG3rAEBY2N7L4M
-	 UY4HRvRikB8O3Lc4VqxGIMS+bnRzyE4dVmHebwqQ=
+	b=rmfS+G0JVtP4iJqftRz/f8KsDJ2PL+qEirRun8cVlP8NEF8Hotj2VUUqsm44QEmIs
+	 epZiHDyHY9BYKCLYSeLVIDERzu0awr/zfM9MSh80IpPRod3b8tUswKITk5i5dEAmOK
+	 rs+74sANr5GgUZu0LF7llhPbL4dzLiVWtc6+BqtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1579/1674] firewire: core: fix memory leak in error path of build_tree()
-Date: Sat, 17 Oct 2026 18:04:11 +0200
-Message-ID: <20261017160511.623677722@linuxfoundation.org>
+Subject: [PATCH 6.6 1580/1674] ocfs2: validate external xattr entries when reading metadata
+Date: Sat, 17 Oct 2026 18:04:12 +0200
+Message-ID: <20261017160511.647994047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,112 +58,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 05bfb1327dc5fb61528bab31cd8f0c1e4bddec23 ]
+[ Upstream commit 2cf82b46d5e43be0dfbaac7fa1073cec2fc1f5e6 ]
 
-In the error path of build_tree(), node instances can remain in the local
-linked list when the function returns.
+ocfs2_validate_xattr_block() checks the xattr block header before the
+block reaches higher-level xattr users, but it does not verify that a
+non-indexed block's xh_count and entry offsets fit inside the block.
+Indexed buckets likewise reach list/get consumers after ECC without an
+entry-bounds check.
 
-Whenever an invalid value is detected in the self ID sequence, each
-allocated node instance is either an entry in the linked list or an
-entry in the ports array of its parent node. Therefore, the allocate
-node instances can be safely released by traversing the linked list from
-its head.
+Use the flat xattr entry validator for non-indexed external xattr blocks,
+and use a bucket-specific validator for indexed buckets at metadata read
+time.  The bucket validator keeps the entry array bounded by the first
+bucket block while checking name/value offsets against the bucket block
+they target.
 
-Release the remaining node instances with for_each_fw_node() before
-returning to the caller.
+Reject corrupted external xattr metadata before listxattr() or getxattr()
+can walk out-of-range entry arrays or name/value offsets.
 
-Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
-Reported-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://lore.kernel.org/all/20260727095955.104972-1-nihaal@cse.iitm.ac.in/
-Link: https://lore.kernel.org/r/20260811120928.700577-4-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Validation reproduced this kernel report:
+BUG: KASAN: use-after-free in ocfs2_xattr_list_entries+0xd7/0x190
+Read of size 1 at addr ffff88810a654007 by task ocfs2_xattr_lis/630
+Call Trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  kasan_report+0xe0/0x110
+  ocfs2_xattr_list_entries+0xd7/0x190
+  ocfs2_listxattr+0x3f6/0x610
+  listxattr+0x90/0xe0
+  path_listxattrat+0xed/0x220
+  do_syscall_64+0x115/0x6a0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lore.kernel.org/20260705025311.3429854-3-zzzccc427@gmail.com
+Fixes: cf1d6c763fbc ("ocfs2: Add extended attribute support")
+Fixes: 0c044f0b24b9 ("ocfs2: Add xattr bucket iteration for large numbers of EAs")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: Codex:gpt-5.5
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-topology.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fs/ocfs2/xattr.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
 
-diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
-index f40c815343812..99a2fc88ccd2e 100644
---- a/drivers/firewire/core-topology.c
-+++ b/drivers/firewire/core-topology.c
-@@ -161,6 +161,17 @@ static inline struct fw_node *fw_node(struct list_head *l)
- 	return list_entry(l, struct fw_node, link);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 61ee0fb0c2a04..72b6b73d8372d 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -386,6 +386,12 @@ static int ocfs2_init_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
+ 	return rc;
  }
  
-+typedef void (*fw_node_callback_t)(struct fw_card *card, struct fw_node *node,
-+				   struct fw_node *parent);
++static int ocfs2_validate_xattr_entries_flat(struct super_block *sb, u64 blkno,
++					     struct ocfs2_xattr_header *xh,
++					     size_t region_size);
++static int ocfs2_validate_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
++				       u64 blkno);
 +
-+static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
-+			     fw_node_callback_t callback);
+ /* Read the xattr bucket at xb_blkno */
+ static int ocfs2_read_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
+ 				   u64 xb_blkno)
+@@ -404,6 +410,8 @@ static int ocfs2_read_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
+ 		spin_unlock(&OCFS2_SB(bucket->bu_inode->i_sb)->osb_xattr_lock);
+ 		if (rc)
+ 			mlog_errno(rc);
++		else
++			rc = ocfs2_validate_xattr_bucket(bucket, xb_blkno);
+ 	}
+ 
+ 	if (rc)
+@@ -505,6 +513,22 @@ static int ocfs2_validate_xattr_block(struct super_block *sb,
+ 				   le32_to_cpu(xb->xb_fs_generation));
+ 	}
+ 
++	if (!(le16_to_cpu(xb->xb_flags) & OCFS2_XATTR_INDEXED)) {
++		size_t region_offset =
++			offsetof(struct ocfs2_xattr_block, xb_attrs.xb_header);
 +
-+static void free_fw_node(struct fw_card *card, struct fw_node *node, struct fw_node *parent)
++		if (bh->b_size < region_offset)
++			return ocfs2_error(sb,
++					   "Invalid xattr block %llu: block size %zu is too small\n",
++					   (unsigned long long)bh->b_blocknr,
++					   bh->b_size);
++
++		return ocfs2_validate_xattr_entries_flat(sb, bh->b_blocknr,
++							 &xb->xb_attrs.xb_header,
++							 bh->b_size -
++							 region_offset);
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1071,6 +1095,79 @@ int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
+ 	return ocfs2_validate_xattr_entries_flat(sb, blkno, xh, inline_size);
+ }
+ 
++static int ocfs2_validate_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
++				       u64 blkno)
 +{
-+	fw_node_put(node);
++	struct super_block *sb = bucket->bu_inode->i_sb;
++	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
++	u16 xattr_count = le16_to_cpu(xh->xh_count);
++	size_t region_size = (size_t)sb->s_blocksize * bucket->bu_blocks;
++	size_t entries_limit = sb->s_blocksize;
++	size_t nv_limit = sb->s_blocksize;
++	size_t max_entries;
++	int i;
++
++	if (region_size < sizeof(*xh))
++		return ocfs2_error(sb,
++				   "Invalid xattr bucket %llu: region size %zu is too small\n",
++				   (unsigned long long)blkno, region_size);
++
++	if (entries_limit < sizeof(*xh))
++		return ocfs2_error(sb,
++				   "Invalid xattr bucket %llu: entries limit %zu is too small\n",
++				   (unsigned long long)blkno,
++				   entries_limit);
++
++	max_entries = (entries_limit - sizeof(*xh)) /
++		      sizeof(struct ocfs2_xattr_entry);
++
++	if (xattr_count > max_entries)
++		return ocfs2_error(sb,
++				   "Invalid xattr bucket %llu: entry count %u exceeds maximum %zu\n",
++				   (unsigned long long)blkno,
++				   xattr_count, max_entries);
++
++	for (i = 0; i < xattr_count; i++) {
++		struct ocfs2_xattr_entry *xe = &xh->xh_entries[i];
++		size_t name_offset = le16_to_cpu(xe->xe_name_offset);
++		size_t block_off = name_offset >> sb->s_blocksize_bits;
++		size_t block_offset = name_offset % nv_limit;
++		size_t value_offset;
++
++		if (name_offset >= region_size || block_off >= bucket->bu_blocks)
++			return ocfs2_error(sb,
++					   "Invalid xattr bucket %llu: entry %d name is out of bounds\n",
++					   (unsigned long long)blkno, i);
++
++		if (xe->xe_name_len > nv_limit - block_offset)
++			return ocfs2_error(sb,
++					   "Invalid xattr bucket %llu: entry %d name crosses block boundary\n",
++					   (unsigned long long)blkno, i);
++
++		value_offset = block_offset + OCFS2_XATTR_SIZE(xe->xe_name_len);
++		if (value_offset > nv_limit)
++			return ocfs2_error(sb,
++					   "Invalid xattr bucket %llu: entry %d value starts out of bounds\n",
++					   (unsigned long long)blkno, i);
++
++		if (ocfs2_xattr_is_local(xe)) {
++			if (le64_to_cpu(xe->xe_value_size) >
++			    nv_limit - value_offset)
++				return ocfs2_error(sb,
++						   "Invalid xattr bucket %llu: entry %d value is out of bounds\n",
++						   (unsigned long long)blkno,
++						   i);
++		} else if (sizeof(struct ocfs2_xattr_value_root) >
++			   nv_limit - value_offset) {
++			return ocfs2_error(sb,
++					   "Invalid xattr bucket %llu: entry %d value root is out of bounds\n",
++					   (unsigned long long)blkno, i);
++		}
++	}
++
++	return 0;
 +}
 +
- /*
-  * This function builds the tree representation of the topology given
-  * by the self IDs from the latest bus reset.  During the construction
-@@ -193,19 +204,19 @@ static struct fw_node *build_tree(struct fw_card *card,
- 
- 		if (next_sid == NULL) {
- 			fw_err(card, "inconsistent extended self IDs\n");
--			return NULL;
-+			goto error;
- 		}
- 
- 		q = *sid;
- 		if (phy_id != SELF_ID_PHY_ID(q)) {
- 			fw_err(card, "PHY ID mismatch in self ID: %d != %d\n",
- 			       phy_id, SELF_ID_PHY_ID(q));
--			return NULL;
-+			goto error;
- 		}
- 
- 		if (child_port_count > stack_depth) {
- 			fw_err(card, "topology stack underflow\n");
--			return NULL;
-+			goto error;
- 		}
- 
- 		/*
-@@ -223,7 +234,7 @@ static struct fw_node *build_tree(struct fw_card *card,
- 		node = fw_node_create(q, port_count, card->color);
- 		if (node == NULL) {
- 			fw_err(card, "out of memory while building topology\n");
--			return NULL;
-+			goto error;
- 		}
- 
- 		if (phy_id == (card->node_id & 0x3f))
-@@ -273,7 +284,7 @@ static struct fw_node *build_tree(struct fw_card *card,
- 		    (next_sid < end && parent_count != 1)) {
- 			fw_err(card, "parent port inconsistency for node %d: "
- 			       "parent_count=%d\n", phy_id, parent_count);
--			return NULL;
-+			goto error;
- 		}
- 
- 		/* Pop the child nodes off the stack and push the new node. */
-@@ -304,12 +315,13 @@ static struct fw_node *build_tree(struct fw_card *card,
- 	card->beta_repeaters_present = beta_repeaters_present;
- 
- 	return local_node;
-+error:
-+	++card->color;
-+	list_for_each_entry_safe(node, child, &stack, link)
-+		for_each_fw_node(card, node, free_fw_node);
-+	return NULL;
- }
- 
--typedef void (*fw_node_callback_t)(struct fw_card * card,
--				   struct fw_node * node,
--				   struct fw_node * parent);
--
- static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
- 			     fw_node_callback_t callback)
+ int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
+ 					 struct ocfs2_dinode *di)
  {
 -- 
 2.53.0
