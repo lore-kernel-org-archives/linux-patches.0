@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4795938654F;
-	Sat, 17 Oct 2026 16:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8635C1BC;
+	Sat, 17 Oct 2026 16:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253816; cv=none; b=Dth4NsOsuo/oqXsswsQTPnZdICdP93Lov+WBi0Q3yvHTsm+kGgb/+LVqhX74W3nbu3waUiqrskswu4JVmHiJC5xvU7uiguoFQnRmeuRZZ/XfC2q307CAAZY9bApsXr4PLIZ83ntzhsdREXymQmZUS8BTaW1ZOFlOovdpgT/UPfE=
+	t=1792253820; cv=none; b=r/w/ikiFtv4I5hYyYVlbSYeg8rHGmmoy0RGF4O/pLXVDMwiIMpSqSjCDikbjgATX3bEN1ukzVKuoPUvG/VR/Q/AEY002Dhy73R9+4SUi7zvks1S0NeF21c+BovOX0y3jb3emPO+0d5uToQvQC/GrXj5lMurCwFW6fB+v7Y/iE98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253816; c=relaxed/simple;
-	bh=vWhImizEagXuaZG+7iD8osrrHBQoijdHN0g70rd8KPo=;
+	s=arc-20240116; t=1792253820; c=relaxed/simple;
+	bh=fMdMWUybbVv3VtpgaiIFsgpAO4JRvBEdNIv6RarpRaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLsedCI2epV0YpCvOnb6ezRxoqbV5GcOyUI208LuimwNVW25MywdFLmkwCtVsMH0x/9KbxMhC+YW1xM1FuwsAqele/4yy7F9YDt1pfupli/1Td1VjYnL31AGYQXZpXzu0nizbJcp8dq3LYMF3O87lf13Hr14KehrDQFPi1J94ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdWQX413; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aZevvtXglZ4Xy098NRHMduOPqNriUH49AMQYoKmXE4o20CEcVFh8K1K01y0j7T+LE761tN9yijG9Ev3+mvo2evsViHyb11B5XHTem0ToTSh0U8VzEXqhTNgrRovw7DtrajNt6W09/mFbD2zQb/xFB0ELS0DzZzH/2rJ2J1C0Wms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RACaEC8o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdWQX413"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9149C1F000C4;
-	Sat, 17 Oct 2026 16:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RACaEC8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B46F1F000C4;
+	Sat, 17 Oct 2026 16:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253815;
-	bh=hguJJk9R3ebUwGOULIhSnCvcOTkB3prYpXjOZMqu6pM=;
+	s=korg; t=1792253818;
+	bh=ti2y8AHhDPr/gRHqMp3hiMpVqEkx+rqXptlx0j4n5Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdWQX413nlck1wu6DNRcMj9xnaCMpY0YEhgRSEmOaeND31BBGODYLBTnnN955r3Fe
-	 frvXkuRBP9nkgUtFM31wWkPPcSb0wPJNZBouAtxOK25c3ig7K3TiJrtADTDm7GAsiE
-	 YISl2dxc2OQl7PVMnU5BmG0N8i79hyGVWBHpz3mk=
+	b=RACaEC8ocuwF2smIXqxcZryfCgaCr4ktrgyfpj8mOgFXMfn1Jyp7EuIHDzAJDJPzM
+	 +0BMwLBwgWEXwgc8ZNz1Kl8ThOvy4PJ+Bhdz5nsJt90+qIyGIAAGXxH4Xcqe6V5NF5
+	 /XvQ2n92qyxvtF0GyW3KVz8idyTLTAinQ9/jJXR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Nicholas Carlini <nicholas@carlini.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/869] wifi: iwlwifi: fix 22000 series SMEM parsing
-Date: Sat, 17 Oct 2026 17:51:21 +0200
-Message-ID: <20261017160043.208698410@linuxfoundation.org>
+Subject: [PATCH 6.12 241/869] ksmbd: fix signededness bug in smb_direct_prepare_negotiation()
+Date: Sat, 17 Oct 2026 17:51:22 +0200
+Message-ID: <20261017160043.236525895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,46 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-[ Upstream commit 58192b9ce09b0f0f86e2036683bd542130b91a98 ]
+[ Upstream commit 6b4f875aac344cdd52a1f34cc70ed2f874a65757 ]
 
-If the firmware were to report three LMACs (which doesn't
-exist in hardware) then using "fwrt->smem_cfg.lmac[2]" is
-an overrun of the array. Reject such and use IWL_FW_CHECK
-instead of WARN_ON in this function.
+smb_direct_prepare_negotiation() casts an unsigned __u32 value
+from sp->max_recv_size and req->preferred_send_size to a signed
+int before computing min_t(int, ...). A maliciously provided
+preferred_send_size of 0x80000000 will return as smaller than
+max_recv_size, and then be used to set the maximum allowed
+alowed receive size for the next message.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251110150012.16e8c2d70c26.Iadfcc1aedf43c5175b3f0757bea5aa232454f1ac@changeid
+By sending a second message with a large value (>1420 bytes)
+the attacker can then achieve a heap buffer overflow.
+
+This fix replaces min_t(int, ...) with min_t(u32)
+
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Reviewed-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/smem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_rdma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/smem.c b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
-index 3f1272014dafb..50ebc81a3748c 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/smem.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
-@@ -6,6 +6,7 @@
-  */
- #include "iwl-drv.h"
- #include "runtime.h"
-+#include "dbg.h"
- #include "fw/api/commands.h"
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 3976009596d99..585617595727b 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1977,9 +1977,9 @@ static int smb_direct_prepare(struct ksmbd_transport *t)
+ 		goto out;
  
- static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
-@@ -17,7 +18,9 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
- 	u8 api_ver = iwl_fw_lookup_notif_ver(fwrt->fw, SYSTEM_GROUP,
- 					     SHARED_MEM_CFG_CMD, 0);
- 
--	if (WARN_ON(lmac_num > ARRAY_SIZE(mem_cfg->lmac_smem)))
-+	/* Note: notification has 3 entries, but we only expect 2 */
-+	if (IWL_FW_CHECK(fwrt, lmac_num > ARRAY_SIZE(fwrt->smem_cfg.lmac),
-+			 "FW advertises %d LMACs\n", lmac_num))
- 		return;
- 
- 	fwrt->smem_cfg.num_lmacs = lmac_num;
+ 	req = (struct smb_direct_negotiate_req *)recvmsg->packet;
+-	st->max_recv_size = min_t(int, st->max_recv_size,
++	st->max_recv_size = min_t(u32, st->max_recv_size,
+ 				  le32_to_cpu(req->preferred_send_size));
+-	st->max_send_size = min_t(int, st->max_send_size,
++	st->max_send_size = min_t(u32, st->max_send_size,
+ 				  le32_to_cpu(req->max_receive_size));
+ 	st->max_fragmented_send_size =
+ 		le32_to_cpu(req->max_fragmented_size);
 -- 
 2.53.0
 
