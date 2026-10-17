@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8D63BB9ED;
-	Sat, 17 Oct 2026 16:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1973B388C;
+	Sat, 17 Oct 2026 16:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255465; cv=none; b=R+THj+BIjnslrmvLUt4+v0vBrSs3B20Xcp/gr/BRNZQFgX1f2gXsMIomHgZ89n8TujH2WkFHUOkstI3GNYQULt1+mI1tAH0ZFi0ox2y2E7P23Wc5cMb6sH4uqgsFE2XGUaEuyu3tAaQ0SXkF/XZ0Evsqsaf7lFLeIrNABXUSlDc=
+	t=1792255468; cv=none; b=uLB3dgQaiHs54b0HfZihtIuYVLl9kuGu6jYCS+COYUG27O4t85lEgCEuAXHtxoTvOE3wlc3aeXH4q90Z+9SglKoNTasxyAIkZECt7RtlQKJNmvh9TvehfW/+XKZw1Z2lvuJxfiq04Jyc7cA2vHDfUWnjaWurXu1dyrJ4YFp9KS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255465; c=relaxed/simple;
-	bh=3FkyEoUhFafE7GcAoBwg7rJx7SXxCWIkP6pv54J19tg=;
+	s=arc-20240116; t=1792255468; c=relaxed/simple;
+	bh=c+GLFVpvS2134sja49you+x2rwhmf1xsNoVZmZ8q9Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5J9CTPNcqsrfEFiZacvMaxM+1Hjiq0BixL+OEj4Ff8ZocqrXzJhNuAjeqSEmkFHoMpNJtQsmwZY5bwkxQvn5J6v7n21WwjyegxaGCePTs3QrRdcKk16bJCh7P439wgDVT5UjhUrUw92qFPxC2hPPWfFmwAiLIq9sv53mD/+PK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5qC1HwU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RM0d1NRRsuqCXO/0itGgCnr9bM2pOM+Vmmwisa/emybEMXJjpLIpRtIWXp578dYBDGtIaOae4gxKnINj8IJfHO5Xd5/FWeyssB7INOg8AbCRpboe44U5RpgQv6fpkW9WsPZ4I+CpLdhmbu8/AtOLSFdRIwTLWPOqxxBTpAwEeb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDqme8vd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5qC1HwU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018841F000C4;
-	Sat, 17 Oct 2026 16:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDqme8vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B211F000C4;
+	Sat, 17 Oct 2026 16:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255464;
-	bh=cgVhfhdtZDttTm0NFGj7+uUKE3xAMyuFffqMQQ7JM/c=;
+	s=korg; t=1792255467;
+	bh=95J47cGZ1gyq7Pgqs2N3oVpbeYYqV8uLh9jxUc/sYpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5qC1HwU9Yh3VIJcYM5liynwu6KkLNirqoMA9l7QoM8ouccyLtC+OhsMKalN02p1g
-	 utzdnvucz4ksAGKVrWzNxhdqcYtvHKlrG2Eu07GWxjqc9KtKC78S9aItJ9Z6m8N9SJ
-	 6ob08cn252R8+AFHkiMsnjOu9t3wO2H9i9q9ePfU=
+	b=MDqme8vditw3Uo9CevVA6207Qt1T3MlyoNyHszM2+/cdyBQfvQFEG0QGr6Ys5n9bH
+	 DgTZOzZmgxlGjo4p62f6d8JokG4BicUWuqCPGrtFXuE8lq5U2+G6/Oc+9i0NetTtMG
+	 OlhC3abYSYqlA+h1dbRcf8izVorIpueExCrk2ylg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 784/869] bpf: zero extend the result of an arena 32-bit cmpxchg
-Date: Sat, 17 Oct 2026 18:00:25 +0200
-Message-ID: <20261017160057.013293084@linuxfoundation.org>
+Subject: [PATCH 6.12 785/869] ASoC: Intel: avs: Refactor and fix init_config access
+Date: Sat, 17 Oct 2026 18:00:26 +0200
+Message-ID: <20261017160057.040059517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,57 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 4814ed6406f3493bd554ad046da5f7fc04833571 ]
+[ Upstream commit 681e91035dc794896a904852040837190e5041f5 ]
 
-bpf_convert_ctx_accesses() rewrites an atomic on an arena pointer from
-BPF_STX | BPF_ATOMIC to BPF_STX | BPF_PROBE_ATOMIC, and it runs before
-bpf_opt_subreg_zext_lo32_rnd_hi32().
+Existing code accesses enties found in ->init_configs array through
+indexes that are part of ->config_ids array.  Those two are limited by:
+->num_init_configs and ->num_config_ids respectively.  Using ID larger
+or equal to ->num_init_configs leads to out-of-bounds access:
 
-That pass emits an explicit zero extension for a 32-bit cmpxchg even
-when bpf_jit_needs_zext() is false. This is done because on some
-architectures 32-bit cmpxchg requires explicit zero extension for the
-dst register. E.g. on x86-64 'lock cmpxchg' does not change the %eax
-if comparison is successful, while BPF semantics declare that each
-operation on a 32-bit register zero extends it's upper half.
+avs_path_module_send_init_configs()
+loop:
+	(...) &acomp->tplg->init_configs[ids[i]]
+					^ out-of-bounds candidate
 
-is_cmpxchg_insn() matches BPF_MODE == BPF_ATOMIC only, so an arena
-cmpxchg misses said zero extension adjustment. This patch adjusts
-is_cmpxchg_insn() to match BPF_PROBE_ATOMIC alongside BPF_ATOMIC.
+Rather than adding another if-statement, refactor the code.  There is no
+need to store the IDs, have a list of pointers to actual config-entries
+instead.  As the verification of ->init_config entries does not differ from
+verification of other types that are part of the topology.c file, simply
+reuse the code.
 
-Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260903171542.1438050-1-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8a49ef789b1b ("ASoC: Intel: avs: Send initial config to module if present")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260902081814.1590883-10-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/intel/avs/path.c     | 11 +++-----
+ sound/soc/intel/avs/topology.c | 47 +++++++++++++++++++---------------
+ sound/soc/intel/avs/topology.h |  4 +--
+ 3 files changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1becf8f07415e..60fc4935288c8 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -578,10 +578,15 @@ static bool helper_multiple_ref_obj_use(enum bpf_func_id func_id,
- 	return ref_obj_uses > 1;
- }
+diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
+index f31d5e2caa7b0..05892b0176acc 100644
+--- a/sound/soc/intel/avs/path.c
++++ b/sound/soc/intel/avs/path.c
+@@ -548,15 +548,10 @@ static int avs_path_module_type_create(struct avs_dev *adev, struct avs_path_mod
  
-+/*
-+ * Matches BPF_PROBE_ATOMIC too: convert_ctx_accesses() rewrites arena
-+ * atomics before opt_subreg_zext_lo32_rnd_hi32() runs.
-+ */
- static bool is_cmpxchg_insn(const struct bpf_insn *insn)
+ static int avs_path_module_send_init_configs(struct avs_dev *adev, struct avs_path_module *mod)
  {
- 	return BPF_CLASS(insn->code) == BPF_STX &&
--	       BPF_MODE(insn->code) == BPF_ATOMIC &&
-+	       (BPF_MODE(insn->code) == BPF_ATOMIC ||
-+		BPF_MODE(insn->code) == BPF_PROBE_ATOMIC) &&
- 	       insn->imm == BPF_CMPXCHG;
- }
+-	struct avs_soc_component *acomp;
+-
+-	acomp = to_avs_soc_component(mod->template->owner->owner->owner->owner->comp);
+-
+-	u32 num_ids = mod->template->num_config_ids;
+-	u32 *ids = mod->template->config_ids;
++	struct avs_tplg_module *template = mod->template;
  
+-	for (int i = 0; i < num_ids; i++) {
+-		struct avs_tplg_init_config *config = &acomp->tplg->init_configs[ids[i]];
++	for (int i = 0; i < template->num_init_configs; i++) {
++		struct avs_tplg_init_config *config = template->init_configs[i];
+ 		size_t len = config->length;
+ 		void *data = config->data;
+ 		u32 param = config->param;
+diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
+index 9d49e248cfb22..88618351b75e6 100644
+--- a/sound/soc/intel/avs/topology.c
++++ b/sound/soc/intel/avs/topology.c
+@@ -350,6 +350,7 @@ AVS_DEFINE_PTR_PARSER(modcfg_base, struct avs_tplg_modcfg_base, modcfgs_base);
+ AVS_DEFINE_PTR_PARSER(modcfg_ext, struct avs_tplg_modcfg_ext, modcfgs_ext);
+ AVS_DEFINE_PTR_PARSER(pplcfg, struct avs_tplg_pplcfg, pplcfgs);
+ AVS_DEFINE_PTR_PARSER(binding, struct avs_tplg_binding, bindings);
++AVS_DEFINE_PTR_PARSER(init_config, struct avs_tplg_init_config, init_configs);
+ 
+ static int
+ parse_audio_format_bitfield(struct snd_soc_component *comp, void *elem, void *object, u32 offset)
+@@ -1121,7 +1122,7 @@ static const struct avs_tplg_token_parser module_parsers[] = {
+ 	{
+ 		.token = AVS_TKN_MOD_INIT_CONFIG_NUM_IDS_U32,
+ 		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
+-		.offset = offsetof(struct avs_tplg_module, num_config_ids),
++		.offset = offsetof(struct avs_tplg_module, num_init_configs),
+ 		.parse = avs_parse_byte_token,
+ 	},
+ };
+@@ -1131,10 +1132,32 @@ static const struct avs_tplg_token_parser init_config_parsers[] = {
+ 		.token = AVS_TKN_MOD_INIT_CONFIG_ID_U32,
+ 		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
+ 		.offset = 0,
+-		.parse = avs_parse_word_token,
++		.parse = avs_parse_init_config_ptr,
+ 	},
+ };
+ 
++static int avs_tplg_module_init_configs(struct snd_soc_component *comp,
++					struct avs_tplg_module *module,
++					struct snd_soc_tplg_vendor_array *tuples, u32 block_size)
++{
++	struct avs_tplg_init_config **cfgs;
++	int ret;
++
++	if (!module->num_init_configs)
++		return -EINVAL;
++
++	cfgs = devm_kcalloc(comp->card->dev, module->num_init_configs, sizeof(*cfgs), GFP_KERNEL);
++	if (!cfgs)
++		return -ENOMEM;
++
++	ret = parse_dictionary_entries(comp, tuples, block_size, cfgs, module->num_init_configs,
++				       sizeof(*cfgs), AVS_TKN_MOD_INIT_CONFIG_ID_U32,
++				       init_config_parsers, ARRAY_SIZE(init_config_parsers));
++	if (!ret)
++		module->init_configs = cfgs;
++	return ret;
++}
++
+ static struct avs_tplg_module *
+ avs_tplg_module_create(struct snd_soc_component *comp, struct avs_tplg_pipeline *owner,
+ 		       struct snd_soc_tplg_vendor_array *tuples, u32 block_size)
+@@ -1161,27 +1184,11 @@ avs_tplg_module_create(struct snd_soc_component *comp, struct avs_tplg_pipeline
+ 	block_size -= esize;
+ 	/* Parse trailing config ids if any. */
+ 	if (block_size) {
+-		u32 num_config_ids = module->num_config_ids;
+-		u32 *config_ids;
+-
+-		if (!num_config_ids)
+-			return ERR_PTR(-EINVAL);
+-
+-		config_ids = devm_kcalloc(comp->card->dev, num_config_ids, sizeof(*config_ids),
+-					   GFP_KERNEL);
+-		if (!config_ids)
+-			return ERR_PTR(-ENOMEM);
+-
+ 		tuples = avs_tplg_vendor_array_at(tuples, esize);
+-		ret = parse_dictionary_entries(comp, tuples, block_size,
+-					       config_ids, num_config_ids, sizeof(*config_ids),
+-					       AVS_TKN_MOD_INIT_CONFIG_ID_U32,
+-					       init_config_parsers,
+-					       ARRAY_SIZE(init_config_parsers));
++
++		ret = avs_tplg_module_init_configs(comp, module, tuples, block_size);
+ 		if (ret)
+ 			return ERR_PTR(ret);
+-
+-		module->config_ids = config_ids;
+ 	}
+ 
+ 	module->owner = owner;
+diff --git a/sound/soc/intel/avs/topology.h b/sound/soc/intel/avs/topology.h
+index 409abdb239779..5d68418da8d8a 100644
+--- a/sound/soc/intel/avs/topology.h
++++ b/sound/soc/intel/avs/topology.h
+@@ -194,8 +194,8 @@ struct avs_tplg_module {
+ 	u8 domain;
+ 	struct avs_tplg_modcfg_ext *cfg_ext;
+ 	u32 ctl_id;
+-	u32 num_config_ids;
+-	u32 *config_ids;
++	u32 num_init_configs;
++	struct avs_tplg_init_config **init_configs;
+ 
+ 	struct avs_tplg_pipeline *owner;
+ 	/* Pipeline modules management. */
 -- 
 2.53.0
 
