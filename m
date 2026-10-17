@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C490360745;
-	Sat, 17 Oct 2026 16:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEAD22F767;
+	Sat, 17 Oct 2026 16:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253282; cv=none; b=fTQq3gRWdqePKg7HDL7CNVx8OO5e/7RobGv7jrpHAD0cpaGbCsVu4DjiM5hn0DQhMLhUuQai3pIzQgJNiYGn31xYdr+vyfXDtNmAJiwzPaE4dVQ4CThXfEJB4IqIV85Cle/XTKFqMMPB4MXqN/2DDtDkx/gfr3q413LQ9/kV5t8=
+	t=1792253285; cv=none; b=RnuUIVzGjiiW3v0xNY0tYDIQoCDq9OHMYTvb6U2dd4M+MJo5MKY0p8xGeRHdUjPHXFMO/d6AMHQdQL2DYChrkcESE8P54OqYMxk+zf5Gld06MgKU4ekTQHyny72iei96dycZgjyqraPJlgKYwWtlPdSdok/XQbV9woMJkjwAENQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253282; c=relaxed/simple;
-	bh=/AdnSSk+xu0oRjJE7cgbw94/wOLQMU+l/xiQ/1ysTJY=;
+	s=arc-20240116; t=1792253285; c=relaxed/simple;
+	bh=Su9TTtUq0m4DHM61ml2Q5q/aTSKwu9kickqYYr+kGCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4pHIO/R7nsojJk7qVd+IKHzp9FzKmwjiT0urUteUCJoZmNXZ73d9Ai2whS2T+caMb10TGPYJ+VghlFZ4vVG3OhsUp1Mct91ipHuLgK1TgPMPoYDJuzeOB3fXUu4Zsp90M9o4080evG2u8Mm75wNPtoWla36qZIJ80SdvgkQFK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY0dJmBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=apK3z+6VBam8pZi2SeOG6nYLJTM+q2IbJ57yqLR8hegJDIBNclgIbAPj5qL+bSg6vIAuVzu+bNfbs8SV6QkDS9u90E6xBNEGJqN1RvhYRGv4zW8mvntu2wj5EUBO/NXtW12lPv3iiWyrt3W6CgVgKApfUlC1FZMFfysXiBLyU/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6GM9vx+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY0dJmBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4510C1F000C4;
-	Sat, 17 Oct 2026 16:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6GM9vx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B77F1F000C4;
+	Sat, 17 Oct 2026 16:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253280;
-	bh=Ipz17hy+1vQs8KPjRHe9ezukjRNB2+ImZQHuPZjCffY=;
+	s=korg; t=1792253284;
+	bh=4/9eZYfaJZ/iXfb6XWLQrigY4EUvzK6OV/Oxog+MYwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uY0dJmBSiUm1/OWYmj2oxpYqAcP+jJv5qbz2JI20s1Ydn3KsHJ5SPKwgkJgaSJwYX
-	 KPWkWuBBHqPzRhOl7KE9EDQ2NbIxme8Z3WGqmVMx7hLXArSFNTO4qBznniZ7EXr1Vi
-	 /Jk5acmWygeES2SqJWMwQmWRTC9uFM8yAEaYeTX8=
+	b=z6GM9vx+ZbZiFgzXf3jHRx9qmXGyq4UpIA6moJ5S7lwdgj+BRh7AfF8SbjOR3Eo3j
+	 inZ/OEvjzYKRAlcpPeZ+PEAqL9jq0pV2yPhEEClfH65HpSw//cDB5YXq80cTmxtlaT
+	 mBdX1s74jHzyYhbYMYZJpRUUZ2gnptCTY4vDRoso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alap Mohan <mohaalap@meta.com>,
-	Joonwoo Park <joonwoo@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/869] sched_ext: Fix CPU hotplug hang when a dying CPUs tasks sit in the BPF scheduler
-Date: Sat, 17 Oct 2026 17:47:45 +0200
-Message-ID: <20261017160037.630441368@linuxfoundation.org>
+Subject: [PATCH 6.12 025/869] Bluetooth: hci_sync: Fix command skb lifetime during scan setup
+Date: Sat, 17 Oct 2026 17:47:46 +0200
+Message-ID: <20261017160037.656043919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,113 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit d35a535d3e3e71f92a051d94e415f43612c4edfc ]
+[ Upstream commit 9af12272061d206af8bc3e40215cb694421ab73a ]
 
-A CPU going down has to empty its own rq. Its hotplug thread waits in
-sched_cpu_wait_empty() until nothing else is left, and the only thing that
-wakes it is balance_push(), which runs from __schedule() on the dying CPU
-and pushes off the migratable tasks the CPU picks.
+During PA sync scan setup, hci_le_set_ext_scan_param_sync() gets the
+address used for the PA_LINK lookup from hci_sent_cmd_data(). The
+returned pointer borrows storage from sent_cmd or req_skb, without
+holding a reference to either skb.
 
-sched_ext breaks this. A task sitting on a user DSQ or held by the BPF
-scheduler is still counted on its rq, but an inactive CPU no longer calls
-ops.dispatch() and can't pull the task back. The dying CPU goes idle with
-the task still counted, and one of two things happens:
+The scan worker runs on req_workqueue while hci_cmd_work() runs on the
+separate device workqueue. After the scan worker loads sent_cmd, the
+command worker can free and replace it before hci_sent_cmd_data()
+dereferences the skb. The command payload can also be freed between
+returning from the helper and comparing the address. The connection
+lookup's RCU critical section does not protect the command skb.
 
-- Another CPU consumes the task. The rq empties without a __schedule() on
-  the dying CPU, so the hotplug thread is never woken and cpu_down() hangs
-  holding cpu_hotplug_lock.
-- The task is affine only to the dying CPU. Nothing can move it, and the
-  offline stalls until the watchdog ejects the BPF scheduler.
+KASAN reported:
 
-When the rq goes offline, re-enqueue every task on it that isn't already on
-the local DSQ. An enqueue on an offline rq lands on the local DSQ, so the
-dying CPU itself picks the tasks and balance_push() pushes them off, the
-same as for the other sched classes. From then on no sched_ext path on
-another CPU can pull a task off the rq.
+  BUG: KASAN: slab-use-after-free in hci_sent_cmd_data+0x27c/0x2f0
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_sent_cmd_data+0x27c/0x2f0
+   hci_le_set_scan_param_sync+0x43a/0x850
+   hci_passive_scan_sync+0xb09/0x1460
+   hci_update_passive_scan_sync+0x47c/0x6e0
+   hci_le_pa_create_sync+0x200/0xa70
+   hci_cmd_sync_work+0x13c/0x290
 
-ops.dispatch() currently stops as soon as the CPU goes inactive, and CPU
-hotplug then waits for an RCU grace period before taking the rq offline. A
-BPF-held task affine only to the dying CPU and preempted inside an RCU
-read-side critical section would block that grace period, and the rq would
-never go offline. Test SCX_RQ_ONLINE directly so that ops.dispatch() keeps
-running until the rq goes offline. Only the dying CPU's own hotplug thread
-clears the flag during teardown, and task_can_run_on_remote_rq() still keeps
-other rqs' tasks off the CPU.
+  Allocated by task 95:
+   skb_clone+0x13f/0x340
+   hci_cmd_work+0x2a9/0x7e0
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Fixes: 991ef53a4832 ("sched_ext: Make scx_rq_online() also test cpu_active() in addition to SCX_RQ_ONLINE")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Alap Mohan <mohaalap@meta.com>
-Reported-by: Joonwoo Park <joonwoo@meta.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ sashal: Replaced guard(sched_change) with the existing sched_deq_and_put_task() and sched_enq_and_set_task() helper pair. ]
+  Freed by task 95:
+   kmem_cache_free+0xba/0x3a0
+   hci_cmd_work+0x29c/0x7e0
+
+Use hdev->lock to serialize the address snapshot with sent_cmd
+replacement. Protect req_skb replacement and completion cleanup with
+the same lock because the helper falls back to that skb. Copy the
+address before releasing the lock and use the copy for the existing
+RCU-protected connection lookup. Release the mutex before sending or
+waiting for commands, preserving the lookup and completion ordering.
+
+Fixes: 22cbf4f84c00 ("Bluetooth: hci_sync: Use QoS to determine which PHY to scan")
+Cc: stable@vger.kernel.org
+Assisted-by: GPT-6 Astra
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c |  4 ++++
+ net/bluetooth/hci_sync.c | 10 +++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 3a1983ef278fc..39dc9d3cfc079 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2113,8 +2113,8 @@ static void set_task_runnable(struct rq *rq, struct task_struct *p)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 95900c2325631..ff3ccb33da0c7 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4155,9 +4155,11 @@ static int hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 	bt_dev_dbg(hdev, "skb %p", skb);
+ 
++	hci_dev_lock(hdev);
+ 	kfree_skb(hdev->sent_cmd);
+ 
+ 	hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
++	hci_dev_unlock(hdev);
+ 	if (!hdev->sent_cmd) {
+ 		skb_queue_head(&hdev->cmd_q, skb);
+ 		queue_work(hdev->workqueue, &hdev->cmd_work);
+@@ -4178,8 +4180,10 @@ static int hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND &&
+ 	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
++		hci_dev_lock(hdev);
+ 		kfree_skb(hdev->req_skb);
+ 		hdev->req_skb = skb_get(hdev->sent_cmd);
++		hci_dev_unlock(hdev);
  	}
  
- 	/*
--	 * list_add_tail() must be used. scx_ops_bypass() depends on tasks being
--	 * appened to the runnable_list.
-+	 * list_add_tail() must be used. scx_ops_bypass() and rq_offline_scx()
-+	 * depend on tasks being appended to the runnable_list.
+ 	return err;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index f4dea6fffa727..6d7caf00fc897 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -32,8 +32,10 @@ static void hci_cmd_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ 	WRITE_ONCE(hdev->req_status, HCI_REQ_DONE);
+ 
+ 	/* Free the request command so it is not used as response */
++	hci_dev_lock(hdev);
+ 	kfree_skb(hdev->req_skb);
+ 	hdev->req_skb = NULL;
++	hci_dev_unlock(hdev);
+ 
+ 	if (skb) {
+ 		struct sock *sk = hci_skb_sk(skb);
+@@ -3058,13 +3060,19 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
  	 */
- 	list_add_tail(&p->scx.runnable_node, &rq->scx.runnable_list);
- }
-@@ -2823,7 +2823,14 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 	if (consume_global_dsq(rq))
- 		goto has_tasks;
+ 	if (hci_dev_test_flag(hdev, HCI_PA_SYNC)) {
+ 		struct hci_cp_le_add_to_accept_list *sent;
++		bdaddr_t bdaddr;
  
--	if (!SCX_HAS_OP(dispatch) || scx_rq_bypassing(rq) || !scx_rq_online(rq))
-+	/*
-+	 * scx_rq_online() can't be used. Its cpu_active() test goes false
-+	 * before CPU hotplug waits for an RCU grace period, and
-+	 * rq_offline_scx() moves this CPU's tasks to the local DSQ only after
-+	 * the wait. The grace period can depend on those tasks running.
-+	 */
-+	if (!SCX_HAS_OP(dispatch) || scx_rq_bypassing(rq) ||
-+	    !(rq->scx.flags & SCX_RQ_ONLINE))
- 		goto no_tasks;
++		hci_dev_lock(hdev);
+ 		sent = hci_sent_cmd_data(hdev, HCI_OP_LE_ADD_TO_ACCEPT_LIST);
++		if (sent)
++			bacpy(&bdaddr, &sent->bdaddr);
++		hci_dev_unlock(hdev);
++
+ 		if (sent) {
+ 			struct hci_conn *conn;
  
- 	dspc->rq = rq;
-@@ -3514,7 +3521,27 @@ static void rq_online_scx(struct rq *rq)
+ 			conn = hci_conn_hash_lookup_ba(hdev, PA_LINK,
+-						       &sent->bdaddr);
++						       &bdaddr);
+ 			if (conn) {
+ 				struct bt_iso_qos *qos = &conn->iso_qos;
  
- static void rq_offline_scx(struct rq *rq)
- {
-+	struct task_struct *p, *n;
-+
- 	rq->scx.flags &= ~SCX_RQ_ONLINE;
-+
-+	/* sched domain rebuilds call rq_offline with the CPU staying alive */
-+	if (cpu_active(cpu_of(rq)))
-+		return;
-+
-+	/*
-+	 * An offline CPU no longer calls ops.dispatch(). Re-enqueue its tasks
-+	 * onto the local DSQ so that they run here and balance_push() moves
-+	 * them off.
-+	 */
-+	list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list, scx.runnable_node) {
-+		struct sched_enq_and_set_ctx ctx;
-+
-+		if (p->scx.dsq == &rq->scx.local_dsq)
-+			continue;
-+		sched_deq_and_put_task(p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK, &ctx);
-+		sched_enq_and_set_task(&ctx);
-+	}
- }
- 
- #else	/* CONFIG_SMP */
 -- 
 2.53.0
 
