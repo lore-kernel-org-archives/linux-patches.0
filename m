@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927D394785;
-	Sat, 17 Oct 2026 17:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB00A39B4A5;
+	Sat, 17 Oct 2026 17:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257106; cv=none; b=mblWZ4duT7rb0wKBUF7QrKiwt9IQgY2j550KwLtuNSHdtjPQ+KMjHPBjOB+hgZaFaJMxXUAiI3pXXl+bsecrVwHJpa1A5SbvbQaFotkZTKdAFqVKrIXLCXCDc/jIFs0akw2tITTEZFjR3VwTgJ3683XGFhrWYaEWjNrKdtU+3VU=
+	t=1792257109; cv=none; b=ALSwgHMWJucuuFMdTlnpOlLK9f8HAOXUCgPo2xhdSJJxxYC76PR/OsWi257y/psXrJ8YzEd+PcR7lVJrYq2+HyIjZjukPbOZhlyBYhnHOg162EfZs64IosCDPZX91YZ8DwS4RGPHTflGDhIje1agf/IvAK6P4WpQXg9tin5r9mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257106; c=relaxed/simple;
-	bh=YJd/YD1z/OqBgbaK1SNcIUc0DBUIpAFP43Szluz+e9U=;
+	s=arc-20240116; t=1792257109; c=relaxed/simple;
+	bh=KiVx7fmkrmC5m5xYcz/G0o/+BgGGz+fSywSEVzF1bUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g92Nu1WfHqo5Jl3r0Q5h/6KCBRJVLO75gqGPMV/wLNiVYGwYsuHzdHrC+tIi0GET+sV9VnMvt3tOJIlJkycyuP8hQV+RzaNs+U15UOvYAs6+0c6c9swqNvqLXuqLNcCyBtZ9xOlAcF/MDqHm2KLL3EPN4MAihw+NHCTCS82TkuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6ZdL+tn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IrDHYEHJuIQMfhq02P/oqwbYaWXmlPQsj14ID62+eUk3BsDTv6Dh29AEIXH8wKRXgNxNm7NLnl/1tOjS4wLb4D2cYtpilgE/qNdSqMJ06Wyg2wFxQxfBNQRcW5ZE9/jEH0yPAw1x0lQP9aA1olxIT6EbU7f4B01RodFFF00D/oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzxXun2h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6ZdL+tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AF91F000C4;
-	Sat, 17 Oct 2026 17:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzxXun2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0269C1F000C4;
+	Sat, 17 Oct 2026 17:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257105;
-	bh=DVKhI3HZu0zb2j5xkg5CQFXRPKPT5XlgpICvSPjz02Y=;
+	s=korg; t=1792257108;
+	bh=QDraoRzp+gpdXLhzqkqsiafUkl+BQUaIyKzYZ03ggxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6ZdL+tn5XFAt2+ixZfOJ9aazY+dDvGtRGK6RvnTNjmYqw9vxFkBcV6hILXZp/S+L
-	 vmsYSATq4IpxfYFypcIYVxnPzX0vkeQ/WmynDqjvdtBgL1KrnhsLQzLSgbY0H9n0Xo
-	 Ifm9pydDxLfVl2Y3oqPYDZgtIJFQqccENP+GrQQs=
+	b=FzxXun2hbaQFB5irXgRje7Oak8Gnu5t+xQ8Z0IDAhuKZW3Ote00QeOwoI+ISm0mWN
+	 x6EL0QJZVOtXUTTshdBYAdZKu6MyWukXAIAWcL1z4C4gipDAQzrf8qZ5TYTmrQtMnO
+	 m591VH6n6fKqovVB/iWtBbKmq532Psu5zobECJHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Carlos Llamas <cmllamas@google.com>,
+	Lee Jones <lee@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 0453/1674] HID: core: introduce hid_safe_input_report()
-Date: Sat, 17 Oct 2026 17:45:25 +0200
-Message-ID: <20261017160442.745523843@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0454/1674] HID: uhid: convert to hid_safe_input_report()
+Date: Sat, 17 Oct 2026 17:45:26 +0200
+Message-ID: <20261017160442.770177996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,149 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 206342541fc887ae919774a43942dc883161fece ]
+[ Upstream commit 63a694c51bf120a37550890b8e7736b4888985e9 ]
 
-hid_input_report() is used in too many places to have a commit that
-doesn't cross subsystem borders. Instead of changing the API, introduce
-a new one when things matters in the transport layers:
-- usbhid
-- i2chid
+Commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
+bogus memset()"), added a check in hid_report_raw_event() to reject
+reports if the received data size is smaller than expected. This was
+intended to prevent OOB errors by no longer allowing zeroing-out of
+shorter reports due to the lack of buffer size information.
 
-This effectively revert to the old behavior for those two transport
-layers.
+However, this leads to regressions in hid_report_raw_event(), where
+shorter than expected reports are rejected, even though their buffers
+are sufficiently large to be zero-padded.
 
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+To solve this issue, Benjamin introduced a safer alternative in commit
+206342541fc8 ("HID: core: introduce hid_safe_input_report()"), which
+forwards the buffer size and allows hid_report_raw_event() to safely
+zero-pad the data.
+
+Convert uhid to use hid_safe_input_report() and pass UHID_DATA_MAX as
+the buffer size. This prevents the reported regressions [1], allowing
+hid core to zero-pad the shorter reports safely as expected.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/ [1]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-(cherry picked from commit a9527c32cc9d98252dc975d6fcb29f2013d0f63a)
-[Lee: Implement hid_safe_input_report() directly and wrap it from
-      hid_input_report() as 67eccf151d76 ("HID: add source argument to
-      HID low level functions") is not present]
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c             | 26 ++++++++++++++++++++++++--
- drivers/hid/i2c-hid/i2c-hid-core.c |  7 ++++---
- drivers/hid/usbhid/hid-core.c      | 11 ++++++-----
- include/linux/hid.h                |  2 ++
- 4 files changed, 36 insertions(+), 10 deletions(-)
+ drivers/hid/uhid.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 446ed394dc488..9981346d23aac 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2082,14 +2082,36 @@ EXPORT_SYMBOL_GPL(hid_report_raw_event);
-  * @interrupt: distinguish between interrupt and control transfers
-  *
-  * This is data entry for lower layers.
-+ * Legacy, please use hid_safe_input_report() instead.
-  */
- int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
- 		     u32 size, int interrupt)
-+{
-+	return hid_safe_input_report(hid, type, data, size, size, interrupt);
-+}
-+EXPORT_SYMBOL_GPL(hid_input_report);
-+
-+/**
-+ * hid_safe_input_report - report data from lower layer (usb, bt...)
-+ *
-+ * @hid: hid device
-+ * @type: HID report type (HID_*_REPORT)
-+ * @data: report contents
-+ * @bufsize: allocated size of the data buffer
-+ * @size: useful size of data parameter
-+ * @interrupt: distinguish between interrupt and control transfers
-+ *
-+ * This is data entry for lower layers.
-+ * Please use this function instead of the non safe version because we provide
-+ * here the size of the buffer, allowing hid-core to make smarter decisions
-+ * regarding the incoming buffer.
-+ */
-+int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			  size_t bufsize, u32 size, int interrupt)
- {
- 	struct hid_report_enum *report_enum;
- 	struct hid_driver *hdrv;
- 	struct hid_report *report;
--	size_t bufsize = size;
- 	int ret = 0;
+diff --git a/drivers/hid/uhid.c b/drivers/hid/uhid.c
+index 4588d2cd4ea44..9027bb23f247a 100644
+--- a/drivers/hid/uhid.c
++++ b/drivers/hid/uhid.c
+@@ -596,8 +596,8 @@ static int uhid_dev_input(struct uhid_device *uhid, struct uhid_event *ev)
+ 	if (!READ_ONCE(uhid->running))
+ 		return -EINVAL;
  
- 	if (!hid)
-@@ -2140,7 +2162,7 @@ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data
- 	up(&hid->driver_input_lock);
- 	return ret;
+-	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data,
+-			 min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
++	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data, UHID_DATA_MAX,
++			      min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
+ 
+ 	return 0;
  }
--EXPORT_SYMBOL_GPL(hid_input_report);
-+EXPORT_SYMBOL_GPL(hid_safe_input_report);
+@@ -607,8 +607,8 @@ static int uhid_dev_input2(struct uhid_device *uhid, struct uhid_event *ev)
+ 	if (!READ_ONCE(uhid->running))
+ 		return -EINVAL;
  
- bool hid_match_one_id(const struct hid_device *hdev,
- 		      const struct hid_device_id *id)
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index b36284e2d5cbf..1760f2693d31b 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -544,9 +544,10 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 		if (ihid->hid->group != HID_GROUP_RMI)
- 			pm_wakeup_event(&ihid->client->dev, 0);
+-	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data,
+-			 min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
++	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data, UHID_DATA_MAX,
++			      min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
  
--		hid_input_report(ihid->hid, HID_INPUT_REPORT,
--				ihid->inbuf + sizeof(__le16),
--				ret_size - sizeof(__le16), 1);
-+		hid_safe_input_report(ihid->hid, HID_INPUT_REPORT,
-+				      ihid->inbuf + sizeof(__le16),
-+				      ihid->bufsize - sizeof(__le16),
-+				      ret_size - sizeof(__le16), 1);
- 	}
- 
- 	return;
-diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
-index 415d44ac14807..f8287774c6971 100644
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -281,9 +281,9 @@ static void hid_irq_in(struct urb *urb)
- 			break;
- 		usbhid_mark_busy(usbhid);
- 		if (!test_bit(HID_RESUME_RUNNING, &usbhid->iofl)) {
--			hid_input_report(urb->context, HID_INPUT_REPORT,
--					 urb->transfer_buffer,
--					 urb->actual_length, 1);
-+			hid_safe_input_report(urb->context, HID_INPUT_REPORT,
-+					      urb->transfer_buffer, urb->transfer_buffer_length,
-+					      urb->actual_length, 1);
- 			/*
- 			 * autosuspend refused while keys are pressed
- 			 * because most keyboards don't wake up when
-@@ -480,9 +480,10 @@ static void hid_ctrl(struct urb *urb)
- 	switch (status) {
- 	case 0:			/* success */
- 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
--			hid_input_report(urb->context,
-+			hid_safe_input_report(urb->context,
- 				usbhid->ctrl[usbhid->ctrltail].report->type,
--				urb->transfer_buffer, urb->actual_length, 0);
-+				urb->transfer_buffer, urb->transfer_buffer_length,
-+				urb->actual_length, 0);
- 		break;
- 	case -ESHUTDOWN:	/* unplug */
- 		unplug = 1;
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 55c7061be2690..9ae229a34d7b8 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -976,6 +976,8 @@ extern void hidinput_disconnect(struct hid_device *);
- int hid_set_field(struct hid_field *, unsigned, __s32);
- int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
- 		     int interrupt);
-+int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			  size_t bufsize, u32 size, int interrupt);
- struct hid_field *hidinput_get_led_field(struct hid_device *hid);
- unsigned int hidinput_count_leds(struct hid_device *hid);
- __s32 hidinput_calc_abs_res(const struct hid_field *field, __u16 code);
+ 	return 0;
+ }
 -- 
 2.53.0
 
