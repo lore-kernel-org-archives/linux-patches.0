@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D56C277026;
-	Sat, 17 Oct 2026 16:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2A38DC44;
+	Sat, 17 Oct 2026 16:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255811; cv=none; b=QtHpxSk/Na3636V9qHeK/sCAazxqk1jk0Hda6wj0v4xVu597uzKqENVzGg/qA+jpVm8Z/eUBorAlm99nZ/0ZbP8G6Ex3VY3NjjANnG+UN14VnIDDiiowCH8zU+mL2Jx+sln7BY65T/p7eSH5J+Twz5F6hkokXVnQqFRok4+6sN0=
+	t=1792255817; cv=none; b=jRNIa1+J9qKnWLFa4bafdegJgZJEcFcViuF6yfrlvZpCK/fc+zaFDo4Bx0nFRyYMutvNave5ZzQGg9Ue1tF/IYfDTYAs9uP9i0DNyoM1BToWAEA6dC3fA5Edu4b+sO203Xa5ho5ozwmJSMxha8+TV8s/HsmNtt7nkeiEOLxdokk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255811; c=relaxed/simple;
-	bh=cVKnJNx5M41c8lFQkhEkHUoS4mUxROWdnTe4vRYNNyQ=;
+	s=arc-20240116; t=1792255817; c=relaxed/simple;
+	bh=5e2N0+N6XUeawJJS7ah977IMSXWLM2v3DRyvkhG2u1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mwEbG9HmsxjvjUGBoXvOzM09ykGfEUL3yZ/kJK1ruws6DFB9zFQi+GlY3XTeYh/CkyMaOgNzp7grLLAn1GxozpLk84o3ol/xaj3oJCsB3sy0XyH/7k9xn5/GNsf6m8Ih7zYBZZivUWAU8gR0J2ju6uiJE0oI4bCfK61X+tjaV3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBdaLfHY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xhbb/Q/kO73Y6vXPrCUZpHwiLCCtgpMWu43hbKVLqKxMHCMLMLc9nOmwbtAhCaN7WyNwpywsMDA43NhhYpHee2cjMYDn9gJ0iRmiT6DwgZ6WkTcgnGkxqQZ17YZAqoijvMlTadiHWuUoI/Yrdud1wl3sQfCmw3V1N3AIEJZnwck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3bZ4T8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBdaLfHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868EB1F000C4;
-	Sat, 17 Oct 2026 16:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3bZ4T8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329E81F000C5;
+	Sat, 17 Oct 2026 16:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255810;
-	bh=nDRMaRcfKSFgcGY3jwiPIReuqgapbUaMF+Vv8++ft5g=;
+	s=korg; t=1792255816;
+	bh=u2LThS4bYvhixDEYdGelMsO0SvDS2mQjxrd0tZZ8YmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBdaLfHYTozO35LbDd825sulDjy4tenvM4sFSamy9HF+5OFD5aXAngEzcCUtNTyrm
-	 4vViCbwZfQN5FCpGrDRHM5Au34f6Fx4flZWVoXya2CHiWV9mjYSa2DW4r/LkdlP4oM
-	 pWWxL9F+HbtlTGuAyOJWBlpskQIUA3CjkoCaxEQc=
+	b=X3bZ4T8dsNgMkJxIqtB2B+elUxENQSXH2FkH3b83DpGUy1kfFdN9rRhSBwdFWOxOU
+	 Z/tiJjPcdOPioipxLvTEi4LwZDDixwhdosu2mo/58Bop0VpJtobZFP35IwJdRgPRK/
+	 oS4bUw0yoGg3ttUUMtXM3b15tRCD6M9TCS3TyqsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0009/1674] xen/balloon: improve accuracy of initial balloon target for dom0
-Date: Sat, 17 Oct 2026 17:38:01 +0200
-Message-ID: <20261017160431.379829999@linuxfoundation.org>
+Subject: [PATCH 6.6 0024/1674] nvme: add missing SRCU grace period in error path
+Date: Sat, 17 Oct 2026 17:38:16 +0200
+Message-ID: <20261017160431.760420093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,83 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit b13cd24c15d74f6dfcddf0d53ae6efb58d3f0461 ]
+[ Upstream commit ef248d5de4469fb6bbaf8dbe0c4c47800080d648 ]
 
-The dom0 balloon target set by the toolstack is the value returned by
-XENMEM_current_reservation.  Do the same in the kernel balloon driver and
-set the current allocation to the value returned by
-XENMEM_current_reservation.  On my test system this causes the kernel
-balloon driver target to exactly match the value set by the toolstack in
-xenstore.
+nvme_alloc_ns() error path at out_unlink_ns removes ns from the
+namespace head siblings list with list_del_rcu(&ns->siblings) but
+does not wait for SRCU readers before freeing the namespace struct.
+Multipath code iterates the head->list under srcu_read_lock() in
+nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent
+reader can still hold a reference to ns when kfree(ns) runs.
 
-Note this approach can be used by both PV and PVH dom0s, as the toolstack
-always uses XENMEM_current_reservation to set the initial target regardless
-of the dom0 type.
+The normal removal path in nvme_ns_remove() correctly calls
+synchronize_srcu(&ns->head->srcu) after list_del_rcu() to wait for
+in-progress readers. Add the same grace period in the error path.
 
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260128110510.46425-3-roger.pau@citrix.com>
-Stable-dep-of: 5d00a11d484e ("x86/xen: fix init of balloon stats again")
+Fixes: ed754e5deeb1 ("nvme: track shared namespaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ Adjusted patch context to account for missing last_path reference-counting code. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/balloon.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/nvme/host/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
-index a76d5530533ff..1fb5dbce0b66c 100644
---- a/drivers/xen/balloon.c
-+++ b/drivers/xen/balloon.c
-@@ -716,7 +716,8 @@ static int __init balloon_add_regions(void)
- static int __init balloon_init(void)
- {
- 	struct task_struct *task;
--	unsigned long current_pages;
-+	long current_pages = 0;
-+	domid_t domid = DOMID_SELF;
- 	int rc;
- 
- 	if (!xen_domain())
-@@ -724,15 +725,21 @@ static int __init balloon_init(void)
- 
- 	pr_info("Initialising balloon driver\n");
- 
--	if (xen_pv_domain()) {
--		if (xen_released_pages >= xen_start_info->nr_pages)
--			goto underflow;
--		current_pages = min(xen_start_info->nr_pages -
--		                    xen_released_pages, max_pfn);
--	} else {
--		if (xen_unpopulated_pages >= get_num_physpages())
--			goto underflow;
--		current_pages = get_num_physpages() - xen_unpopulated_pages;
-+	if (xen_initial_domain())
-+		current_pages = HYPERVISOR_memory_op(XENMEM_current_reservation,
-+		                                     &domid);
-+	if (current_pages <= 0) {
-+		if (xen_pv_domain()) {
-+			if (xen_released_pages >= xen_start_info->nr_pages)
-+				goto underflow;
-+			current_pages = min(xen_start_info->nr_pages -
-+			                    xen_released_pages, max_pfn);
-+		} else {
-+			if (xen_unpopulated_pages >= get_num_physpages())
-+				goto underflow;
-+			current_pages = get_num_physpages() -
-+			                xen_unpopulated_pages;
-+		}
- 	}
- 
- 	balloon_stats.current_pages = current_pages;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index d02ca033db439..c34ecb2c96562 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3699,6 +3699,9 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, struct nvme_ns_info *info)
+ 	if (list_empty(&ns->head->list))
+ 		list_del_init(&ns->head->entry);
+ 	mutex_unlock(&ctrl->subsys->lock);
++
++	/* guarantee not available in head->list */
++	synchronize_srcu(&ns->head->srcu);
+ 	nvme_put_ns_head(ns->head);
+  out_cleanup_disk:
+ 	put_disk(disk);
 -- 
 2.53.0
 
