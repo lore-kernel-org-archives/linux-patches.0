@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245843B14A9;
-	Sat, 17 Oct 2026 16:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9C23BBFC7;
+	Sat, 17 Oct 2026 16:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255648; cv=none; b=NxMUeziFeMKOEL70ZrS1MILRG6vmoseiHORVnsiUTp8S7X7jxi/mWnR9AKLhtEXpuY0hM8PHXoKLJrzpeHHj6UDEFbzspF69x6ABAnhP5wdVI9neykstYWAYyNHpa5MOBifcuIfDkIsynERF1lNaHGfneLHoi4OyWv6Ds4zOxW4=
+	t=1792255651; cv=none; b=ODVJ50Kat2vA3MbAIDAJY1SpHSg+GtAQzKl912b3TA1syyctmvQhUAca+MUPaAtFb+/WANDUuVoKMvnCBes6fLOf0iTzrx5XzISTsYFlGZPeQGZe4FQ13FyNkgP48t824YiZQBPtQ5SQWgRfEAVH34EvNGxiiYl9cf+CoDhS32I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255648; c=relaxed/simple;
-	bh=CefsxHZ2BQNrpcST9avEVjMZ/6/SMIuom1pUwjizpOU=;
+	s=arc-20240116; t=1792255651; c=relaxed/simple;
+	bh=CECMdUD4hW2Ct/ioV/e86V4/txM43Xl7RLVACSy2cJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxReZELK4osPwUQospewmdjlS0h/LaSQbO0IU5fsYkqMbvcOhoyVRuY2sOaySjF8bNLRtcsp0NlaUtpI3IbbNdzPdDye4QNmygkewhc4u9PAcnm+rOGXyB8RidCtg/M8msZvDKcIlsKlt70U7qgMj1ElKrtPIkfPh2cS28LnSgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUKsjwQJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aNUCCdZdl3OOqTzJzeMbUZQlpb1JfZDiOixIAsFXWDEWXWWGjHq7toP+C1eNGA9n9blT2gfCSPjhNOmNa37fAPqNZO6cQeV7RsZmVkePxVRk7963bWPzcqrDRaccIUOkmji2jtQMAGYBIE33mgGBP3a1OdRx6Dj6VPhizNgFsx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFS0/oHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUKsjwQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F431F000C4;
-	Sat, 17 Oct 2026 16:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFS0/oHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6E91F000C4;
+	Sat, 17 Oct 2026 16:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255647;
-	bh=ziZBdqYTqLSOtbrXRqki45+WPReTavQWQ13S4cMk4zw=;
+	s=korg; t=1792255650;
+	bh=AVnK8Vf6lOnxvzCWgb61I9yuDy+tftEdn7e2z478o1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUKsjwQJJwk0mLHPq0SBkz8iT/zclfg7RPJy+J1kHx9H33iVtDzuQSLWVP8TuSRec
-	 FZzYE0Q2dJ7Luefp23BWMDTeChhVnzN7AP2owiKSMXAugUoHTtUmw6pmyGiKW5bBJY
-	 JZ1IfPdW3AIpLS6Q+xUWuibSNSrkkf0frvF3aSH0=
+	b=mFS0/oHjsycINgMCHRm+ACC3LLIEK27bhj+DCmJkFHCNFAb8AtwUv5/9/Z3swkax6
+	 jcHvwHjzxeXtsCj+qYqssq77t6NzrAEtdpGR0JDU8JML0ve5Ni16Vin+PdFDIlaOfs
+	 Pfg9LC6RfHnHlowDdKUAbywgp/Ai6qCfIfM9FA6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hristo Venev <hristo@venev.name>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 838/869] ceph: do not skip the first folio of the next object in writeback
-Date: Sat, 17 Oct 2026 18:01:19 +0200
-Message-ID: <20261017160058.360128321@linuxfoundation.org>
+Subject: [PATCH 6.12 847/869] net: do not acquire dev->tx_global_lock in netdev_watchdog_up()
+Date: Sat, 17 Oct 2026 18:01:28 +0200
+Message-ID: <20261017160058.581365431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,43 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hristo Venev <hristo@venev.name>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 081a0b78ef30f5746cda3e92e28b4d4ae92901d1 ]
+[ Upstream commit d09a78a2a469e4fab75108325efb813c49520809 ]
 
-When `ceph_process_folio_batch` encounters a folio past the end of the
-current object, it should leave it in the batch so that it is picked up
-in the next iteration.
+Marek Szyprowski reported a deadlock during system resume when virtio_net
+driver is used.
 
-Removing the folio from the batch means that it does not get written
-back and remains dirty instead. This makes `fsync()` silently skip some
-of the data, delays capability release, and breaks coherence with
-`O_DIRECT`.
+The deadlock occurs because netif_device_attach() is called while holding
+dev->tx_global_lock (via netif_tx_lock_bh() in virtnet_restore_up()).
+netif_device_attach() calls __netdev_watchdog_up(), which now also tries
+to acquire dev->tx_global_lock to synchronize with dev_watchdog().
 
-The link below contains instructions for reproducing the bug.
+This recursive lock acquisition results in a deadlock.
 
-Cc: stable@vger.kernel.org
-Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
-Link: https://tracker.ceph.com/issues/75156
-Signed-off-by: Hristo Venev <hristo@venev.name>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fix this by removing the tx_global_lock acquisition from netdev_watchdog_up().
+
+The critical state (watchdog_timer and watchdog_ref_held) is already
+protected by dev->watchdog_lock, which was introduced in the blamed commit.
+
+Fixes: 8eed5519e496 ("net: watchdog: fix refcount tracking races")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/netdev/a443376e-5187-4268-93b3-58047ef113a8@samsung.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260622110108.69541-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/sched/sch_generic.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 13508fee6293b..c20ef77bb6f0c 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1326,7 +1326,6 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 		} else if (rc == -E2BIG) {
- 			rc = 0;
- 			folio_unlock(folio);
--			ceph_wbc->fbatch.folios[i] = NULL;
- 			break;
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 7ec650ff9daae..681e0ab6019fb 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -568,9 +568,8 @@ void __netdev_watchdog_up(struct net_device *dev)
+ 		return;
+ 	if (dev->watchdog_timeo <= 0)
+ 		dev->watchdog_timeo = 5*HZ;
+-	spin_lock_bh(&dev->tx_global_lock);
+ 
+-	spin_lock(&dev->watchdog_lock);
++	spin_lock_bh(&dev->watchdog_lock);
+ 	if (!mod_timer(&dev->watchdog_timer,
+ 		       round_jiffies(jiffies + dev->watchdog_timeo))) {
+ 		if (!dev->watchdog_ref_held) {
+@@ -579,9 +578,7 @@ void __netdev_watchdog_up(struct net_device *dev)
+ 			dev->watchdog_ref_held = true;
  		}
+ 	}
+-	spin_unlock(&dev->watchdog_lock);
+-
+-	spin_unlock_bh(&dev->tx_global_lock);
++	spin_unlock_bh(&dev->watchdog_lock);
+ }
+ EXPORT_SYMBOL_GPL(__netdev_watchdog_up);
  
 -- 
 2.53.0
