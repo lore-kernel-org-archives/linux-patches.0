@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA3E3B9D86;
-	Sat, 17 Oct 2026 17:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0993B8412;
+	Sat, 17 Oct 2026 17:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256708; cv=none; b=Kauco64PRnjHYLL0at1BvJ6pkE+Da2qTOjDeEor2nlxybyIEIls3Fo87r6XXJD1tg7D4Qn39ky9sVqHu/QmQhXa9W0qZH1DOYnx539CCf0zw1cRvL8HHP2dKUm2Cs6JO/mL+875FoGLEpLAW11rD41ImEw5pYorhTBWotJnQ5io=
+	t=1792256711; cv=none; b=Ohbpaxf+/6wTjSl1okNG+mYQCgh2wNin0omZHuGT0UqazDGtKIKR8d0SeP8pJ2Z/eEhOP6UhFdsw8XUBnOmDm8hc4UqQsQ7ftfQuCE8/6c7BezhqudGGNoWWupmKeWRhUSPbHUuQa9zb/lUaFCoAw67QVFOBInkQ6A9HpRWQ0pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256708; c=relaxed/simple;
-	bh=8c/ul2Ts8QKeGYdl0gAwgowdW92AsUnLVbpC6asdwUg=;
+	s=arc-20240116; t=1792256711; c=relaxed/simple;
+	bh=apCvMPcB6zwvG1vn7BS+LbfNpMp6dXNBwafQacOwj64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yn/qWOfNgRCiUvXzo+BgCKshkczJzHvle4HrunD0rdc/LakUNVvPabKAv8LtBG7hlNm/9UPZQTdzcPg9fvNyU70r9XFFMwBOmxS0LwpX66CGWP4klz+Nx2uSg6RrnVOw5tgHE4kV4LTVVRyV+CfpjJLaerc0Txnxq44FhO9NyXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBqiAI3P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZxAVXFaczvIJq1kfzyNFoRRMxHM/kbKkuBH6fTpwddZFV46BFhN8mZ5Xe9ArHdmfFTLV6D5ZCc/PpYvrA6ZEJVJqjOD3fPGXD0TIGTxHpTInE9HfPT/DaBhgWNV4fkEWVp40E/YMZ2lqzbERobPGpdYqO971CWUMrcdX9CKQuP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZkLMxWJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBqiAI3P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D771F000C4;
-	Sat, 17 Oct 2026 17:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZkLMxWJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE941F000C5;
+	Sat, 17 Oct 2026 17:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256706;
-	bh=u6pFVGfEs08fy8QwGGTeQncZhJbw3m5cQhId/SSFhe4=;
+	s=korg; t=1792256709;
+	bh=C57mZrkUvQ51DBChc8a29xlhscpSdlVwqa+xTvSsXYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBqiAI3PxYWB4mZz1XfVKpX5+PP/xf9EpnZtxOOreGFYxSvkFzM/JUoqxYIFjQ+DM
-	 7GfKdWPrMEkm3Y7NBXV5ySU7qiNGLbkXQxmToVaVHpljperVpDnm5gCJpEr6BwLNqM
-	 MZJbW/WqYs9SUrd/3K04hT9QFHyQvPzQVaDFEa9Q=
+	b=QZkLMxWJw1xo5FAhSThK9FIL7PMG/Fsml76401ibE+EJ7Kh7yYT6EgKCZoaa8xvr0
+	 Q6XKjtGs0AF0MoDzaE8vCBlUqANL+KmMxyUTkeaZpchavSmcZ4rB/er0AAMbU1xXvw
+	 gkdvSmaXVlVFvJxm2dl2mnD/gBthvcVo4176+5mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0298/1674] Bluetooth: hci_core: Serialize ACL scheduling with channel deletion
-Date: Sat, 17 Oct 2026 17:42:50 +0200
-Message-ID: <20261017160438.768584587@linuxfoundation.org>
+	Nick Bowler <nbowler@draconx.ca>,
+	syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0325/1674] USB: serial: fix ioctl hangup race
+Date: Sat, 17 Oct 2026 17:43:17 +0200
+Message-ID: <20261017160439.470291850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,97 +51,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit f4845ab191a4f686a5da481fbba90ed73bb693b0 upstream.
+commit ae0e61d95677efa778379853e495d748e6efbf95 upstream.
 
-hci_chan_sent() selects a channel under RCU but drops the read lock before
-accessing chan->conn and returning the channel. The ACL and LE schedulers
-then use its packet queue and update its transmit counters without any
-protection against channel deletion.
+The tty ioctls can race with hangup and end up calling into a tty driver
+for a device that is already gone or powered down.
 
-After TX selects a channel and releases RCU, a disconnect command timeout
-on the separate request workqueue can run hci_conn_failed() and
-l2cap_conn_del(). hci_chan_del() can then unlink the channel, complete
-synchronize_rcu(), purge its queue and free it before TX resumes. This
-causes use-after-free both in hci_chan_sent() and in its callers.
+Serialise the callbacks using the tty port mutex and add the missing
+checks to make sure the port has not been hung up before accessing port
+driver data or hardware.
 
-KASAN reported:
+This specifically avoids dereferencing a NULL-pointer if a device is
+disconnected during lengthy break signalling.
 
-  BUG: KASAN: slab-use-after-free in hci_chan_sent+0x892/0x9b0
-  Workqueue: hci0 hci_tx_work
-  Call Trace:
-   hci_chan_sent+0x892/0x9b0
-   hci_tx_work+0x5e6/0xb70
-  Allocated by task 91:
-   hci_chan_create+0xe3/0x350
-   l2cap_conn_add.part.0+0x12/0xa30
-   l2cap_chan_connect+0x110d/0x1b60
-   l2cap_sock_connect+0x310/0x530
-  Freed by task 99:
-   hci_chan_del+0x11f/0x170
-   l2cap_conn_del+0x4f1/0x800
-   l2cap_connect_cfm+0x88c/0xd30
-   hci_conn_failed+0x150/0x250
-   hci_abort_conn_sync+0x3e3/0x800
-   hci_cmd_sync_run+0x7e/0xc0
-   hci_abort_conn+0x105/0x1f0
-   disconnect_sync+0x157/0x290
-   hci_cmd_sync_work+0x13c/0x290
+Note that TIOCGICOUNT and TIOCMIWAIT do not access port driver data or
+hardware and are therefore not affected by the race.
 
-Hold the existing device mutex across channel selection and transmission
-in both schedulers to serialize them with channel teardown. Keep timeout
-handling outside the critical sections because hci_link_tx_to() acquires
-the same mutex. This also permits the transmit path to sleep, unlike
-extending the RCU read-side critical section across packet submission.
-
-Fixes: 3eff45eaf817 ("Bluetooth: convert tx_task to workqueue")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f34d7a5b7010 ("tty: The big operations rework")
+Reported-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://lore.kernel.org/all/CADyTPExB2kYOOwkO0JqGhKaYVDqO9uS9WCw0J=MCTdVhcGOogA@mail.gmail.com/
+Reported-by: syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6a9087a4.4d659fcc.734b4.0013.GAE@google.com
+Cc: stable@vger.kernel.org	# 2.6.26
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/serial/generic.c    |   10 +++-
+ drivers/usb/serial/usb-serial.c |   94 +++++++++++++++++++++++++++++++---------
+ drivers/usb/serial/xr_serial.c  |   10 +---
+ 3 files changed, 86 insertions(+), 28 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3611,6 +3611,8 @@ static void hci_sched_acl_pkt(struct hci
- 
- 	__check_timeout(hdev, cnt, ACL_LINK);
- 
-+	hci_dev_lock(hdev);
+--- a/drivers/usb/serial/generic.c
++++ b/drivers/usb/serial/generic.c
+@@ -268,6 +268,7 @@ EXPORT_SYMBOL_GPL(usb_serial_generic_cha
+ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	unsigned int bps;
+ 	unsigned long period;
+ 	unsigned long expire;
+@@ -287,7 +288,14 @@ void usb_serial_generic_wait_until_sent(
+ 					__func__, jiffies_to_msecs(timeout),
+ 					jiffies_to_msecs(period));
+ 	expire = jiffies + timeout;
+-	while (!port->serial->type->tx_empty(port)) {
++	for (;;) {
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty) || port->serial->type->tx_empty(port)) {
++			mutex_unlock(&tport->mutex);
++			break;
++		}
++		mutex_unlock(&tport->mutex);
 +
- 	while (hdev->acl_cnt &&
- 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -3642,6 +3644,8 @@ static void hci_sched_acl_pkt(struct hci
+ 		schedule_timeout_interruptible(period);
+ 		if (signal_pending(current))
+ 			break;
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -403,17 +403,13 @@ static unsigned int serial_chars_in_buff
+ static void serial_wait_until_sent(struct tty_struct *tty, int timeout)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
+-	struct usb_serial *serial = port->serial;
  
- 	if (cnt != hdev->acl_cnt)
- 		hci_prio_recalculate(hdev, ACL_LINK);
-+
-+	hci_dev_unlock(hdev);
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+ 	if (!port->serial->type->wait_until_sent)
+ 		return;
+ 
+-	mutex_lock(&serial->disc_mutex);
+-	if (!serial->disconnected)
+-		port->serial->type->wait_until_sent(tty, timeout);
+-	mutex_unlock(&serial->disc_mutex);
++	port->serial->type->wait_until_sent(tty, timeout);
  }
  
- static void hci_sched_acl(struct hci_dev *hdev)
-@@ -3670,6 +3674,8 @@ static void hci_sched_le(struct hci_dev
+ static void serial_throttle(struct tty_struct *tty)
+@@ -441,8 +437,13 @@ static int serial_get_serial(struct tty_
+ 	struct usb_serial_port *port = tty->driver_data;
+ 	struct tty_port *tport = &port->port;
+ 	unsigned int close_delay, closing_wait;
++	int ret = 0;
  
- 	__check_timeout(hdev, *cnt, LE_LINK);
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
  
-+	hci_dev_lock(hdev);
-+
- 	tmp = *cnt;
- 	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -3698,6 +3704,8 @@ static void hci_sched_le(struct hci_dev
+ 	close_delay = jiffies_to_msecs(tport->close_delay) / 10;
+ 	closing_wait = tport->closing_wait;
+@@ -455,10 +456,10 @@ static int serial_get_serial(struct tty_
  
- 	if (*cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
-+
-+	hci_dev_unlock(hdev);
+ 	if (port->serial->type->get_serial)
+ 		port->serial->type->get_serial(tty, ss);
+-
++out_unlock:
+ 	mutex_unlock(&tport->mutex);
+ 
+-	return 0;
++	return ret;
  }
  
- /* Schedule CIS */
+ static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
+@@ -474,6 +475,10 @@ static int serial_set_serial(struct tty_
+ 		closing_wait = msecs_to_jiffies(closing_wait * 10);
+ 
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
+ 
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		if (close_delay != tport->close_delay ||
+@@ -501,6 +506,7 @@ static int serial_ioctl(struct tty_struc
+ 					unsigned int cmd, unsigned long arg)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	int retval = -ENOIOCTLCMD;
+ 
+ 	dev_dbg(&port->dev, "%s - cmd 0x%04x\n", __func__, cmd);
+@@ -511,8 +517,21 @@ static int serial_ioctl(struct tty_struc
+ 			retval = port->serial->type->tiocmiwait(tty, arg);
+ 		break;
+ 	default:
+-		if (port->serial->type->ioctl)
++		if (!port->serial->type->ioctl)
++			break;
++
++		if (cmd == TIOCSRS485)
++			down_write(&tty->termios_rwsem);
++
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty))
++			retval = -EIO;
++		else
+ 			retval = port->serial->type->ioctl(tty, cmd, arg);
++		mutex_unlock(&tport->mutex);
++
++		if (cmd == TIOCSRS485)
++			up_write(&tty->termios_rwsem);
+ 	}
+ 
+ 	return retval;
+@@ -522,25 +541,40 @@ static void serial_set_termios(struct tt
+ 		               const struct ktermios *old)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->set_termios)
+-		port->serial->type->set_termios(tty, port, old);
+-	else
++	if (!port->serial->type->set_termios) {
+ 		tty_termios_copy_hw(&tty->termios, old);
++		return;
++	}
++
++	mutex_lock(&tport->mutex);
++	if (!tty_io_error(tty))
++		port->serial->type->set_termios(tty, port, old);
++	mutex_unlock(&tport->mutex);
+ }
+ 
+ static int serial_break(struct tty_struct *tty, int break_state)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->break_ctl)
+-		return port->serial->type->break_ctl(tty, break_state);
++	if (!port->serial->type->break_ctl)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->break_ctl(tty, break_state);
++	mutex_unlock(&tport->mutex);
+ 
+-	return -ENOTTY;
++	return ret;
+ }
+ 
+ static int serial_proc_show(struct seq_file *m, void *v)
+@@ -581,24 +615,44 @@ static int serial_proc_show(struct seq_f
+ static int serial_tiocmget(struct tty_struct *tty)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmget)
+-		return port->serial->type->tiocmget(tty);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmget)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmget(tty);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_tiocmset(struct tty_struct *tty,
+ 			    unsigned int set, unsigned int clear)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmset)
+-		return port->serial->type->tiocmset(tty, set, clear);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmset)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmset(tty, set, clear);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_get_icount(struct tty_struct *tty,
+--- a/drivers/usb/serial/xr_serial.c
++++ b/drivers/usb/serial/xr_serial.c
+@@ -849,12 +849,9 @@ static int xr_get_rs485_config(struct tt
+ 	struct usb_serial_port *port = tty->driver_data;
+ 	struct xr_data *data = usb_get_serial_port_data(port);
+ 
+-	down_read(&tty->termios_rwsem);
+-	if (copy_to_user(argp, &data->rs485, sizeof(data->rs485))) {
+-		up_read(&tty->termios_rwsem);
++	/* core holds port mutex */
++	if (copy_to_user(argp, &data->rs485, sizeof(data->rs485)))
+ 		return -EFAULT;
+-	}
+-	up_read(&tty->termios_rwsem);
+ 
+ 	return 0;
+ }
+@@ -870,10 +867,9 @@ static int xr_set_rs485_config(struct tt
+ 		return -EFAULT;
+ 	xr_sanitize_serial_rs485(&rs485);
+ 
+-	down_write(&tty->termios_rwsem);
++	/* core holds termios rwsem and port mutex */
+ 	data->rs485 = rs485;
+ 	xr_set_flow_mode(tty, port, NULL);
+-	up_write(&tty->termios_rwsem);
+ 
+ 	if (copy_to_user(argp, &rs485, sizeof(rs485)))
+ 		return -EFAULT;
 
 
