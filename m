@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10123C1085;
-	Sat, 17 Oct 2026 16:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25213DF00B;
+	Sat, 17 Oct 2026 16:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255379; cv=none; b=mvCz9R1HYwiYcK1wwEltcMly4Y8faxdxB3RLdQ02hWInOCf6wPvEfElzCCGqkWdvUnrP/8lFFeLzQGmr2bxPJxh1Tao85jZoBgIF6DlolGjyuI2O3SWUvBe0lEQpnAFjPnPXj6oMxkI4eBjdC/GoPTFh7ZDrlu8K+HgY1N5im+A=
+	t=1792255381; cv=none; b=ZgFHXfgzQU9S6hghMYX6Q+ogDvWrveroSjkArSy7isKoybhXw0nd6Adc9wvQedxms+9ZSsBSvKU14sCn6sfVl+C8B7B0YEW/0X4vveaiMfOCB6DnG+ZjQZ9u6yMfuli3bvuATwycY+dbScXkntmHrVnhWsbF81zPjtsVjG+Jdco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255379; c=relaxed/simple;
-	bh=Domi25pwu6lahWR5UsOWVR73YbrucP3fwRBL1FnI1IU=;
+	s=arc-20240116; t=1792255381; c=relaxed/simple;
+	bh=xTKonb7UMwFoYflpHp/eXPT7vMnobcANVcU9XlxCJog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rkd4QDIq23hRCod1o9NfyBimfdEErCiavHKpS3JrKxa59k13vX+WR0JsOrB8/oIl4VXwTDloiNB35DIChXOVuexYyBEq0O2fpywJA/Eu8e57fz+gIyxXpgnPDdUXkLIg4RgJDl7pQjQwQOtmQ+5S2qu9+JHH3xrWhwQHjH8hmK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgQDrcem; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jjx/1xUksHYw1Nc59ezwb2ixMJgXEt2gBKP7jwFYFtCZWKekWgAv2x76ncEDimQtjpTViIEl101MpBJyKbgR+952bZ+AoMG+0gzFrf9HfsfZ5KGyN9HlakZvbbcSwsEYaEJ3bp+Bwfw0o5h0pPPKqrAkCQ3WmgplLw1vzougEdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FyLv2Gc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgQDrcem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E861F000CF;
-	Sat, 17 Oct 2026 16:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FyLv2Gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CFF1F000C4;
+	Sat, 17 Oct 2026 16:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255377;
-	bh=A4vercVOJMpr98+XJqI37otTCk6XRyH9jA/VmUeVyKM=;
+	s=korg; t=1792255380;
+	bh=pyO7yHoW5SWOwVNscIfQMhQseF9c8RFWYbk+TI0+H50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wgQDrcemgWzCYCvlbpt0rzUU99qLQ2QTGdLRs63mg4kk2NRJ3zX1kfE12Ic76+AUN
-	 6IKj+iGCQXkwAXMagULXFnrVsvwgdyxXAZDeSX/hsVAPq/i9SRy6xyAJiXt1F2mUzG
-	 3X1yNUrl/6uY6Nh/6tCjBQpc3luy1ZT8+RNibakw=
+	b=0FyLv2Gc6dqgQg8rNKgCJs6aBbOe9vzxo0oIfvMwAIfhhhDBes9lXtU9rUDHizJMI
+	 gflBwLVBREiiZb/A8kNip2dC3AIMuKcw9DLBwF+Rq8++rCb9tlTsAo7zn11Jn5Kd89
+	 MHx/DZlfhScIyMkWc60P+T4VSIIiGY0oU3fsv3gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 757/869] genirq/proc: Size interrupt directory names for 10-digit interrupt numbers
-Date: Sat, 17 Oct 2026 17:59:58 +0200
-Message-ID: <20261017160056.338110836@linuxfoundation.org>
+Subject: [PATCH 6.12 758/869] media: chips-media: wave5: Release m2m_ctx after Instance Removed from List
+Date: Sat, 17 Oct 2026 17:59:59 +0200
+Message-ID: <20261017160056.363442949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,65 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Brandon Brnich <b-brnich@ti.com>
 
-[ Upstream commit c2c7983c93f5d86962318be7e7298f1bc3feb1a6 ]
+[ Upstream commit 7cdbd7bb21949a8fda10c7104a2b12ee363cbf5c ]
 
-/proc/irq/<n>/ directory names are built in `char name[10]` buffers
-with `sprintf(name, "%u", irq)`.
+Possible use after free if IRQ thread manages to obtain spinlock between
+m2m_ctx release and wave5_release function removing stream instance from
+list of active instances. The IRQ thread looks for the m2m_ctx which is
+freed so null pointer dereference occurs.
 
-Ten-digit IRQ numbers already need 11 bytes including the trailing NUL, and
-current sparse-IRQ configurations allow interrupt numbers in that range.
-
-Size the temporary name buffer for the current decimal form and switch
-to bounded formatting when creating or removing the proc entry.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260404101001.1-genirq-proc-pengpeng@iscas.ac.cn
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/proc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq/proc.c b/kernel/irq/proc.c
-index 6cb9e19e710cf..2ad08b9a41016 100644
---- a/kernel/irq/proc.c
-+++ b/kernel/irq/proc.c
-@@ -10,6 +10,7 @@
- #include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/interrupt.h>
-+#include <linux/kernel.h>
- #include <linux/kernel_stat.h>
- #include <linux/mutex.h>
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-helper.c b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+index 56914c749c045..f5deae9480923 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-helper.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-helper.c
+@@ -67,7 +67,6 @@ int wave5_vpu_release_device(struct file *filp,
+ 	int ret = 0;
+ 	unsigned long flags;
  
-@@ -323,7 +324,7 @@ void register_handler_proc(unsigned int irq, struct irqaction *action)
- 
- #undef MAX_NAMELEN
- 
--#define MAX_NAMELEN 10
-+#define MAX_NAMELEN 11
- 
- void register_irq_proc(unsigned int irq, struct irq_desc *desc)
- {
-@@ -345,7 +346,7 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
- 		return;
- 
- 	/* create /proc/irq/1234 */
--	sprintf(name, "%u", irq);
-+	snprintf(name, MAX_NAMELEN, "%u", irq);
- 	desc->dir = proc_mkdir(name, root_irq_dir);
- 	if (!desc->dir)
- 		return;
-@@ -398,7 +399,7 @@ void unregister_irq_proc(unsigned int irq, struct irq_desc *desc)
- #endif
- 	remove_proc_entry("spurious", desc->dir);
- 
--	sprintf(name, "%u", irq);
-+	snprintf(name, MAX_NAMELEN, "%u", irq);
- 	remove_proc_entry(name, root_irq_dir);
- }
+-	v4l2_m2m_ctx_release(inst->v4l2_fh.m2m_ctx);
+ 	/*
+ 	 * To prevent Null reference exception, the existing irq handler were
+ 	 * separated to two modules.
+@@ -88,6 +87,9 @@ int wave5_vpu_release_device(struct file *filp,
+ 	list_del_init(&inst->list);
+ 	spin_unlock_irqrestore(&inst->dev->irq_spinlock, flags);
+ 	mutex_unlock(&inst->dev->irq_lock);
++
++	v4l2_m2m_ctx_release(inst->v4l2_fh.m2m_ctx);
++
+ 	if (inst->state != VPU_INST_STATE_NONE) {
+ 		u32 fail_res;
  
 -- 
 2.53.0
