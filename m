@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E85385D7B;
-	Sat, 17 Oct 2026 17:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C9B3B2FCA;
+	Sat, 17 Oct 2026 17:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259519; cv=none; b=f+0WdzpmpYNdv7PHwbq4HVp3ni9VSzFbE5FnMW8x18KXvXxQ8lKYWBwGCWY4UtqpFbzykzrGoBg+fJpq6ti8tXwcHhXoTfs26ST0pR0MJk2DW5kOuec9DUpHEV2ZJCmRPAEdhtLaSLQUoXhWl6Fmu5tlHxzgi9w7HRP7yqJPP5I=
+	t=1792259522; cv=none; b=cmhyzzgxJkFoBTGJKz+tqnWl42V+KgmiuAH8VEPTCZcJLpY3j9ukIAmlIy1DmWs+xaPqFQVdGAsTC5+jTNUp3S6jB1YPmoy1I0fqke5imrltx7Tyq9Xx0JWdHt8G+LGQ2BRE+xXFyZ95upm7yc3IMSOT1kQyQKg++ZCIQca3iFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259519; c=relaxed/simple;
-	bh=2QGz0Mjy0X6WqdRXYxtZAycRm6e+kXj3Ae4aLC/LIa0=;
+	s=arc-20240116; t=1792259522; c=relaxed/simple;
+	bh=isivq/kt+7Cemr/koxKXPoFnEW/9Z2jR5FOrNjcAr4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUE4JUrhwov3UVRe1PUxIlAftmrCuVdvhrGO9JrWdpVbXoE/kgHRXQ/8+8+Ol/kLdzYpe5KZ2pHpd3Dxz+jumSfMsMNC9m8zZpzZEYDBIkUhsmGho5m27lL1mcoXdsiS+mLm2hGjGdgGMMEXRzzHaT9RzUqIqUo9NzjUgtzSfQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhZv7mjr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kBBNT/HDgfW/NaiSdTl4XFlrgGTU1XT3Fj0zoX383X5ZDa6K5bJjC2I/wo6SyZP4M3a3Ni7tvLIlwIIE7QKzMArKiV+d90NdWiK9gddYRqv5Gydowp92LqBxGr73JZ0xVsZRUP2f5Blw2dKSl7T4bOohxQMM4a/m4jOv5n8cZeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpEzeMtY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhZv7mjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F671F000C4;
-	Sat, 17 Oct 2026 17:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpEzeMtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10031F000C4;
+	Sat, 17 Oct 2026 17:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259518;
-	bh=u2VlUnAaNuybBQqPcHLSbXVWDQHUUAnzBE+bB2bhMew=;
+	s=korg; t=1792259521;
+	bh=NXkNLQYZ/SyyldxKv5hsCUiDUSmT18Svoxm2SE+lS6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhZv7mjrmQu4sNvHGyZa4pxk66xH7DzeSsniMr+PvTXiplXKr3lj3Y2dNNjXsaZJW
-	 SXWr7mOV3/8S0HDmMQvtMtaGp0AcWxVNzC1Y3y/qS9Pr5mBp9qLtLEWP1qf6JiuDEs
-	 F/J89qoE7qwwIbDepnJm+zGMr89XjxGtBdvucV8g=
+	b=MpEzeMtYrVZkQwa2DMvYWnmxEfFfpNJ69KnBxnEGg9pk/sOQ4CkvvopO9kFlgaiuZ
+	 CcGVdDzqe3lSe/7X04QIRGCFB68wQGxh5uJwznkLTwUJN5CnfdwrKKVGAL5Cgyh4Tf
+	 eX1E/15Ox4qZ4igtuXwMH2Zf6ANu9wBnZOFdGJ1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1242/1674] selinux: reject a permission value exceeding the class permission count
-Date: Sat, 17 Oct 2026 17:58:34 +0200
-Message-ID: <20261017160503.015610352@linuxfoundation.org>
+Subject: [PATCH 6.6 1243/1674] Bluetooth: ISO: zero the sockaddr before returning it in getname
+Date: Sat, 17 Oct 2026 17:58:35 +0200
+Message-ID: <20261017160503.040767296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,47 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit d14b5d0e97fccd27974fedc03b903408872907fd ]
+[ Upstream commit 884cf2cc957da7ac178a0e6c6c69ddfec0481cc8 ]
 
-perm_read() bounds a permission value by SEL_VEC_MAX but never by the
-nprim of the owning class or common, which is taken verbatim from the
-policy image.  security_get_permissions() then writes perms[value - 1]
-into an nprim-sized kcalloc() array, so a class declaring fewer
-permissions than its largest permission value drives an out-of-bounds
-heap write.  The top-level symbol tables are validated this way; the
-nested per-class permission table is not.
+iso_sock_getname() fills a struct sockaddr_iso in place and returns its
+size without clearing it first, so bytes it does not write are copied to
+user space from the kernel stack. The getsockname(2) and getpeername(2)
+paths both run through do_getsockname(), which hands getname() an
+uninitialized sockaddr_storage on the stack and copies back up to the
+number of bytes getname() returns, so the driver has to initialize every
+byte it accounts for.
 
-Reject a permission whose value exceeds nprim, which is already set when
-perm_read() runs.  Well-formed policies are unaffected.
+Two ranges are left uninitialized:
 
+  - struct sockaddr_iso is 10 bytes but only 9 are written (family,
+    iso_bdaddr, iso_bdaddr_type), leaking the trailing pad byte on every
+    call.
+
+  - for a broadcast peer (BIS_LINK or PA_LINK) the returned length grows
+    by sizeof(struct sockaddr_iso_bc), but only bc_sid, bc_num_bis and
+    bc_bis are filled; bc_bdaddr and bc_bdaddr_type, the first 7 bytes of
+    that structure, are never written.
+
+An unprivileged process can open a BTPROTO_ISO socket and reach the pad
+leak with getsockname(); the broadcast leak needs an established BIS/PA
+connection. l2cap and rfcomm already memset their sockaddr in getname
+for the same reason; do the same here.
+
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Fixes: 0a766a0affb5 ("Bluetooth: ISO: Fix getpeername not returning sockaddr_iso_bc fields")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: tweak comment for line length]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/policydb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
-index 81e910aaf22a3..9e55c2c532435 100644
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1127,6 +1127,10 @@ static int perm_read(struct policydb *p, struct symtab *s, void *fp)
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 0bce3f1759dd2..217ba98b053b1 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1221,6 +1221,7 @@ static int iso_sock_getname(struct socket *sock, struct sockaddr *addr,
  
- 	len = le32_to_cpu(buf[0]);
- 	perdatum->value = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	/* indexes an nprim-sized array in security_get_permissions() */
-+	if (perdatum->value > s->nprim)
-+		goto bad;
+ 	BT_DBG("sock %p, sk %p", sock, sk);
  
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
++	memset(sa, 0, sizeof(struct sockaddr_iso));
+ 	addr->sa_family = AF_BLUETOOTH;
+ 
+ 	if (peer) {
 -- 
 2.53.0
 
