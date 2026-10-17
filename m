@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DC138654F;
-	Sat, 17 Oct 2026 16:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0B3905EB;
+	Sat, 17 Oct 2026 16:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254464; cv=none; b=ATYJLrba9GK3sckfJX5Q8Az+T21EOfE3eC5UkxiPG1Hf6jlynGKBosf9aKVot/tZlObg225e5oYDmfmS/C7N+cZxkVu2GRvFrvm6U4VxH88vOpG8afdskMTqCew3er8TyVK/psfahAL3PgMKHfrXtDRgTm+RNCknPCHMfq5YmQg=
+	t=1792254467; cv=none; b=EeHlEn3s5RKAKvTdbZNPETBNpsINEcKkIAmRQ1ziOihXXAeR9XS09n2gYyT7zwChMNS41Ns+ET0fwHYjGKu5UDHo65E38bOPVO7uU8I2vWOBt0igEKSzSSJkZzPiC4FPzAIBp+VIJfsQcd0z6zoT3eyyohYzFYvs93BieZUDZr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254464; c=relaxed/simple;
-	bh=owSUUUUcRSPdd6FTgX/qSeZD1o6ak25Moa/V7y2Bsq4=;
+	s=arc-20240116; t=1792254467; c=relaxed/simple;
+	bh=9V6Og64V8KXws5HsRn5rsEwl9GxV/lh8dKkt/wFwuIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZBA/UX/xaE/z8/8PPW35iPEKHX4c4OhzIDalwkdXf2+1kG4p3SieX4EO8CJsFG/m33q+Lf20RjSaGHskk7v63SQ0y3wrQLss+KixKrt/gPI/hTzTj3cn9Ak+c1zcoCk+J53azOck60BUVfsXA6zNhPtFpP/5ZJqwUIn/MnHlWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZN3QCnaY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n6mEkHxnZv5c2ZyCoeRvihkAQwcHl2pQ/7XWGC7IQ4qZkxjKn/O/LIG2qTeClwZBSLa4Sf4bByan1cnR7eUfxNKaJnxElAELKHm8v5frmPjzG+KKUKb0+tFE+tjB4ImAvSsilzjkl+7v7ExKJJKWAGYzr8d9sEcsxrQy0W4Zs7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQfHEcIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZN3QCnaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867631F000C4;
-	Sat, 17 Oct 2026 16:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQfHEcIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9E1F000C4;
+	Sat, 17 Oct 2026 16:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254463;
-	bh=dobHPcC+J+X+KufTTUmXrxkBVtwCNdAOtLhqzvLbaOI=;
+	s=korg; t=1792254466;
+	bh=dMCdDWvFWaBC2cowUttiZ0rLCuW9mWEcUFpvvKf2DWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZN3QCnaYzXyr/ThpXBG4QHbwUJ/S1ukxDHG6Lij33qPFrUOtQqZe3xMh5U0fy0mIa
-	 81gX+5cPUAP3M7Y1Z2Xdx3+TZ8UU8RiVCZZ6uxCu9jfvax+w5eklMegOi6kL4INuTv
-	 jBU7ooIhZPd0MehOfauOi4Oces+kDXiP28OibW5c=
+	b=mQfHEcIjzAwvIBmYuBpUmwbiQ+43QJiUkdyyyXdx6anqHiUw2y21QMfyA39mQti+v
+	 M4jn5gPtd4jPtn2CRm111CFd6qR3tXydul5VpDnY767pIux0gSWKISuez4Fl9O67IF
+	 EXEOr89Zxhs6HYSlq9TNaUpUcevW5B0ndXpTHpUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+965506b59a2de0b6905c@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 454/869] net: serialize netif_running() check in enqueue_to_backlog()
-Date: Sat, 17 Oct 2026 17:54:55 +0200
-Message-ID: <20261017160048.778513519@linuxfoundation.org>
+Subject: [PATCH 6.12 455/869] RDMA/irdma: Replace waitqueue and flag with completion
+Date: Sat, 17 Oct 2026 17:54:56 +0200
+Message-ID: <20261017160048.803641326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,72 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 46762cefe7f4e5bffc1eb467810a7bbb02e461d7 ]
+[ Upstream commit d9c8c45e6d2f438a3c8e643ae78b59454fa0fadd ]
 
-Syzbot reported a KASAN slab-use-after-free in fib_rules_lookup().
+The driver previously used a waitqueue along with an explicit
+request_done flag, but without proper barriers around request_done.
 
-The root cause is a race condition where packets can escape the backlog
-flushing during device unregistration (e.g., during netns exit).
+An earlier patch by Gui-Dong Han <hanguidong02@gmail.com> attempted
+to fix this by adding the missing memory barriers. Rather than
+adding the barriers, this patch replaces the waitqueue+flag with
+a completion, which is designed for this exact purpose.
 
-Commit e9e4dd3267d0 ("net: do not process device backlog during unregistration")
-introduced a lockless netif_running() check in enqueue_to_backlog() to
-prevent queuing packets to an unregistering device.
-
-However, this creates a TOCTOU race window.
-
-A lockless transmitter (like veth_xmit) can pass
-the check before dev_close() clears IFF_UP. If the transmitter is then
-delayed, flush_all_backlogs() can run and finish before the transmitter
-grabs the backlog lock and queues the packet. The packet then escapes
-the flush and triggers UAF later when processed.
-
-Fix this by moving the netif_running() check inside the backlog lock.
-This serializes the check with the flush work (which also grabs the lock).
-We then either queue the packet before the flush runs (so it gets flushed),
-or check netif_running() after the flush/close completes (so it gets dropped).
-
-Fixes: e9e4dd3267d0 ("net: do not process device backlog during unregistration")
-Reported-by: syzbot+965506b59a2de0b6905c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a315824.b0403584.28d0ff.0000.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Julian Anastasov <ja@ssi.bg>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260616141317.407791-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
+Link: https://patch.msgid.link/r/20260616155601.1081448-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c    |  7 +++----
+ drivers/infiniband/hw/irdma/main.h  |  3 +--
+ drivers/infiniband/hw/irdma/utils.c | 12 +++++-------
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 388770b88b449..2c058f6a59159 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5041,10 +5041,6 @@ static int enqueue_to_backlog(struct sk_buff *skb, int cpu,
- 	int max_backlog;
- 	u32 tail;
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index ad50b77282f8a..c1e5bcf6ab604 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -1001,9 +1001,9 @@ static int irdma_create_cqp(struct irdma_pci_f *rf)
+ 	INIT_LIST_HEAD(&cqp->cqp_avail_reqs);
+ 	INIT_LIST_HEAD(&cqp->cqp_pending_reqs);
  
--	reason = SKB_DROP_REASON_DEV_READY;
--	if (!netif_running(skb->dev))
--		goto bad_dev;
--
- 	reason = SKB_DROP_REASON_CPU_BACKLOG;
- 	sd = &per_cpu(softnet_data, cpu);
+-	/* init the waitqueue of the cqp_requests and add them to the list */
++	/* init the completion of the cqp_requests and add them to the list */
+ 	for (i = 0; i < sqsize; i++) {
+-		init_waitqueue_head(&cqp->cqp_requests[i].waitq);
++		init_completion(&cqp->cqp_requests[i].comp);
+ 		list_add_tail(&cqp->cqp_requests[i].list, &cqp->cqp_avail_reqs);
+ 	}
+ 	init_waitqueue_head(&cqp->remove_wq);
+@@ -2103,8 +2103,7 @@ void irdma_cqp_ce_handler(struct irdma_pci_f *rf, struct irdma_sc_cq *cq)
+ 			cqp_request->compl_info.error = info.error;
  
-@@ -5055,6 +5051,11 @@ static int enqueue_to_backlog(struct sk_buff *skb, int cpu,
- 	backlog_lock_irq_save(sd, &flags);
- 	qlen = skb_queue_len(&sd->input_pkt_queue);
- 	if (qlen <= max_backlog && !skb_flow_limit(skb, qlen)) {
-+		if (unlikely(!netif_running(skb->dev))) {
-+			backlog_unlock_irq_restore(sd, &flags);
-+			reason = SKB_DROP_REASON_DEV_READY;
-+			goto bad_dev;
-+		}
- 		if (!qlen) {
- 			/* Schedule NAPI for backlog device. We can use
- 			 * non atomic operation as we own the queue lock.
+ 			if (cqp_request->waiting) {
+-				WRITE_ONCE(cqp_request->request_done, true);
+-				wake_up(&cqp_request->waitq);
++				complete_all(&cqp_request->comp);
+ 				irdma_put_cqp_request(&rf->cqp, cqp_request);
+ 			} else {
+ 				if (cqp_request->callback_fcn)
+diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
+index e5dc43442dff7..47b95efd51cea 100644
+--- a/drivers/infiniband/hw/irdma/main.h
++++ b/drivers/infiniband/hw/irdma/main.h
+@@ -155,13 +155,12 @@ struct irdma_cqp_compl_info {
+ 
+ struct irdma_cqp_request {
+ 	struct cqp_cmds_info info;
+-	wait_queue_head_t waitq;
++	struct completion comp;
+ 	struct list_head list;
+ 	refcount_t refcnt;
+ 	void (*callback_fcn)(struct irdma_cqp_request *cqp_request);
+ 	void *param;
+ 	struct irdma_cqp_compl_info compl_info;
+-	bool request_done; /* READ/WRITE_ONCE macros operate on it */
+ 	bool waiting:1;
+ 	bool dynamic:1;
+ };
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index 45c3f82887eff..1a73e1b740745 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -445,7 +445,7 @@ struct irdma_cqp_request *irdma_alloc_and_get_cqp_request(struct irdma_cqp *cqp,
+ 		if (cqp_request) {
+ 			cqp_request->dynamic = true;
+ 			if (wait)
+-				init_waitqueue_head(&cqp_request->waitq);
++				init_completion(&cqp_request->comp);
+ 		}
+ 	}
+ 	if (!cqp_request) {
+@@ -482,7 +482,7 @@ void irdma_free_cqp_request(struct irdma_cqp *cqp,
+ 	if (cqp_request->dynamic) {
+ 		kfree(cqp_request);
+ 	} else {
+-		WRITE_ONCE(cqp_request->request_done, false);
++		reinit_completion(&cqp_request->comp);
+ 		cqp_request->callback_fcn = NULL;
+ 		cqp_request->waiting = false;
+ 
+@@ -516,8 +516,7 @@ irdma_free_pending_cqp_request(struct irdma_cqp *cqp,
+ {
+ 	if (cqp_request->waiting) {
+ 		cqp_request->compl_info.error = true;
+-		WRITE_ONCE(cqp_request->request_done, true);
+-		wake_up(&cqp_request->waitq);
++		complete_all(&cqp_request->comp);
+ 	}
+ 	wait_event_timeout(cqp->remove_wq,
+ 			   refcount_read(&cqp_request->refcnt) == 1, 1000);
+@@ -571,9 +570,8 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
+ 	cqp_timeout.compl_cqp_cmds = atomic64_read(&rf->sc_dev.cqp->completed_ops);
+ 	do {
+ 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
+-		if (wait_event_timeout(cqp_request->waitq,
+-				       READ_ONCE(cqp_request->request_done),
+-				       msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
++		if (wait_for_completion_timeout(&cqp_request->comp,
++					msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
+ 			break;
+ 
+ 		irdma_check_cqp_progress(&cqp_timeout, &rf->sc_dev);
 -- 
 2.53.0
 
