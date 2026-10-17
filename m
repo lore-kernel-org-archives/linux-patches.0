@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4780356A12;
-	Sat, 17 Oct 2026 17:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC27374E60;
+	Sat, 17 Oct 2026 17:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257741; cv=none; b=FQfA18b+e9PGAa/USIzwek4a6R3O/oK5iOit1UNz33X38z//HfSPhseFQY0SR67TnQkO8Zc5LD1sL6Tq9ql7ZDKnUqxbv7Xvp6ZeK2Imed0NjBYseZ9pAmuY7Yytpr0gViXl/yrgoPWQONUHmEmEHig4J7rDac6B54Lm5hHMwu8=
+	t=1792257743; cv=none; b=VNqg2n7eT/9e26NXRNMcxI6H4bq5Axj26A9T40IE0RhAnQtOC/XVFdFkox/Ftdmejsx5lo3NUCUPHMEZs5zP3k7NSbcEZfkajKFrn3ucHxG+35YN1177HbQ7EJ3ZX0IwAU+aCMGdXqUCDFip6teINY/EPPEUSHRBmqRu4wwbNE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257741; c=relaxed/simple;
-	bh=Ay2gPq9pdGlZKZWP6xy9sr5SuFyyfgQbpIAcyT5UVFk=;
+	s=arc-20240116; t=1792257743; c=relaxed/simple;
+	bh=0J7S1YbDb+VJBB+71PRTVw+f5+qrmrfYl0xbkQ3AxaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VB6ZiYdt7EiAAgZAPmVtUBod2e2Mn3orYRQY9N8dPqjkDyp4d8AYry5GXsmO+qR1H/VEXjCO4nhIlBSX+NejI4iSNiT8rt2+hDf1OvdBViJvjsNX3nI6DR1vfKNjbg1U1hSSBd8tneisjwJ0tB/pwVNd5vIDUrDXr6uf1/Hs7Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjCvov8z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ivrk3auoaTy/ThTIVFC84XypzoE/gB44O7psSDGUO6P5wouwAxoNscPpofRfBbovw70jrQd0y73PkxKJahw6y+S7WTqqErhOQliVs5p7sNR+5gI8ORmE0ls5OLgb88YceMoXHV5/9yJ3Kks8frdNMjhWC1SVC5kpfSdglVFbDpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBAiEDY0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjCvov8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F000F1F000C4;
-	Sat, 17 Oct 2026 17:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBAiEDY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD87E1F000C4;
+	Sat, 17 Oct 2026 17:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257739;
-	bh=EQxMtoUlBS+gSXyoN4pX8+JhUTWIuebROLQUW/alcWw=;
+	s=korg; t=1792257742;
+	bh=i3EYT1b1dTyMuNwr3KPPNdSK3KbrCcF1RG/TYvlJRjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YjCvov8zfkdeuc+G8zBTUToHvnbkexgyxq+D3WBy23ELkCTKxQhO5Ws6ntAU4LAKO
-	 aErT1H8uhiPSFblSYbcLLpy0Z2xDMkQiBj8FCtAL4beW9qhsa1/CmYWRi9iSwN5AOQ
-	 5uqSK0zkS1BT4JdSdF5eP1XjP43Kn2VLPvJARq8w=
+	b=OBAiEDY0EeQYRRYM4xM95UyMI8uQXndbgCIqwa7Co9marDxRNtzb5WG4z6dESjZAW
+	 oCQIM9DRSuX2mgxe9ZTiVjtOVLuYTUsaBmrjiOZKEhkLHUfVA+/npCBYjiL9z7AhZa
+	 gazb+ixu0G9PhY7hlrzr3dKCBGA1KuqAcIYRuLD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0653/1674] net/ncsi: Disable the ncsi work before freeing the associated structure
-Date: Sat, 17 Oct 2026 17:48:45 +0200
-Message-ID: <20261017160447.872448406@linuxfoundation.org>
+Subject: [PATCH 6.6 0654/1674] drm/amd/display: Implement bounds check for stream encoder creation in DCN401
+Date: Sat, 17 Oct 2026 17:48:46 +0200
+Message-ID: <20261017160447.898365089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,35 +58,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit a0ffa68c70b367358b2672cdab6fa5bc4c40de2c ]
+[ Upstream commit bdf606810210e8e07a0cdf1af3c467291363b295 ]
 
-The work function can run after the ncsi device is freed, resulting
-in use-after-free bugs or kernel panic.
+'stream_enc_regs' array is an array of dcn10_stream_enc_registers
+structures. The array is initialized with four elements, corresponding
+to the four calls to stream_enc_regs() in the array initializer. This
+means that valid indices for this array are 0, 1, 2, and 3.
 
-Fixes: 2d283bdd079c ("net/ncsi: Resource management")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Link: https://patch.msgid.link/20240925155523.1017097-1-eajames@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The error message 'stream_enc_regs' 4 <= 5 below, is indicating that
+there is an attempt to access this array with an index of 5, which is
+out of bounds. This could lead to undefined behavior
+
+Here, eng_id is used as an index to access the stream_enc_regs array. If
+eng_id is 5, this would result in an out-of-bounds access on the
+stream_enc_regs array.
+
+Thus fixing Buffer overflow error in dcn401_stream_encoder_create
+
+Found by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn401/dcn401_resource.c:1209 dcn401_stream_encoder_create() error: buffer overflow 'stream_enc_regs' 4 <= 5
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-manage.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index a5d3615d7996e..16a44079cda16 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -1967,6 +1967,8 @@ void ncsi_unregister_dev(struct ncsi_dev *nd)
- 	list_del_rcu(&ndp->node);
- 	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
+index 4289cd1643ece..e02920969c325 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
+@@ -1197,7 +1197,7 @@ static struct stream_encoder *dcn321_stream_encoder_create(
+ 	vpg = dcn321_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn321_afmt_create(ctx, afmt_inst);
  
-+	cancel_work_sync(&ndp->work);
-+
- 	kfree(ndp);
- }
- EXPORT_SYMBOL_GPL(ncsi_unregister_dev);
+-	if (!enc1 || !vpg || !afmt) {
++	if (!enc1 || !vpg || !afmt || eng_id >= ARRAY_SIZE(stream_enc_regs)) {
+ 		kfree(enc1);
+ 		kfree(vpg);
+ 		kfree(afmt);
 -- 
 2.53.0
 
