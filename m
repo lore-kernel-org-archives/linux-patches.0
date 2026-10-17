@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FB9374E60;
-	Sat, 17 Oct 2026 16:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5C33D994;
+	Sat, 17 Oct 2026 16:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253145; cv=none; b=C4pz/HSUHS7xuHkIymg0hSbTQ22rt2lVbLQwHTLoFxg1PZxwt7LwgoS9nqT0NcnTiZeqRv3jERUoAYGOXRZZYZdeoraFPbKR9LxO4Aj9iyddIYjQ1Z/vlvYdu9BF5ofwYj/z0m7XVRdYHcTwe00S56/hhQjDaihgtXZhMM36DYU=
+	t=1792253152; cv=none; b=MiRGRxT5F+3O0wgH6T9/9aA3BaXuOwOsDZThg4mj+6r0ogLeRDlWU0BWOddoTvjRXvjD7hPSWzdfH5uhwCbzlJDXErrFSJgzVDoFmfQ7s7/uFXUONA/aUR5cNcdvRNBVzeVq6toHg8ZPeXkAZy1k0V/YuAXdoVZsnYXohknqymg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253145; c=relaxed/simple;
-	bh=rPePBl1Lh0+rDZDof0pkMzBrVGzrlux4IU2gDS0bOZk=;
+	s=arc-20240116; t=1792253152; c=relaxed/simple;
+	bh=YQfKBc6QA8P0d5H21lU49exbFoL7clU9oF9V+NyUL9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGgxk1YLWGjU3ztOTly53AHZzHw9BB2UEE96fe8AtcUvzI4XhRsXQqcYWoY22OdQkXUyRBHH03RJyL6X9G2yJWHka3f5OTuFnPW18fX27du4WqI1g68Pod/SGMIAUEiCOrV/M5DcoZJOwUksIcIf/+rgLE65D5xjDCvBueklaeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGueqVDe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DDEkDvRShv9zQswYRJUOtKo7c8e3RU49Wy5iw0uKHilg05s8u90xatrhRCEBEYBYHlpuTI8XwYN75LVBqMWFhUBaCfJmfPsfcKA7ZqnaKbmHPnLcJ+PpeoFPLbYrWhMlTX0kV8xWf79DKz1gHPK1nsSiK5h6cv5tGIuFGeFqMaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2VwXKKD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGueqVDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766501F000C4;
-	Sat, 17 Oct 2026 16:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2VwXKKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594261F000C5;
+	Sat, 17 Oct 2026 16:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253144;
-	bh=hSPk175bQg9Gr7T81NKYW6/tFgE7BtT81600sw2x/DM=;
+	s=korg; t=1792253150;
+	bh=hi6xJvZva7w3naJqIcZLwj6w+oWSNl66DeR79ocSRyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGueqVDeoHBcJ2pxu95/qM071FRpQ9loMpiGSKYaJVDjDMmwPyzdFuSvQPSo/AcE1
-	 +EBzTAhXZaErGRaSaAyoLG5Tl9mEXQja7dJRIQ+bR5KYf5P0+Prc4aO5J0TftrVsDz
-	 f0W1N8WGYq/uoCP/mPRYMVNZe4UBkqG+PlvVmGXI=
+	b=m2VwXKKDyUgAT9FdXiqlwUKUIfp3cPneqf2YgI86oEoOlK06LMSWmu//2nWBWP11H
+	 4ZeAEuxgnyWTa9Q/x+BWCvUIEqBopCCsZowOpivMmCbveRaNJDVOaGAOD0SxZEah+t
+	 Og3OKGBa5Nj6wQU703AC+GpiO1ve70kqZxwzs89A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/869] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
-Date: Sat, 17 Oct 2026 17:47:30 +0200
-Message-ID: <20261017160037.240804167@linuxfoundation.org>
+Subject: [PATCH 6.12 019/869] wifi: mt76: connac: tolerate inactive BSS deactivation
+Date: Sat, 17 Oct 2026 17:47:40 +0200
+Message-ID: <20261017160037.501443006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,158 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
+[ Upstream commit 04222f980301561edd77917edac570b1393ec45d ]
 
-Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
--> IFLUSHING, except for the last inode in the cluster that is
-triggering the free. In that case, the lock order is ILOCK ->
-cluster buffer -> IFLUSHING.
+Firmware may return wlan_failure when deactivating a BSS that is already
+inactive. This is a valid teardown case and should not fail the remove
+path.
 
-xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
-so this can safely run concurrently with xfs_ifree_cluster().
+Keep activation failures unchanged since they still indicate that firmware
+failed to create or activate the BSS state.
 
-xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
-cannot race with xfs_ifree_cluster() so being in a different order
-will not trigger a deadlock.
-
-xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
-IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
-this deadlocks against xfs_ifree_cluster() like so:
-
- sysrq: Show Blocked State
- task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
- Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x8b/0x180
-  schedule_timeout_uninterruptible+0x1e/0x30
-  xfs_ifree+0x326/0x730
-  xfs_inactive_ifree+0xcb/0x230
-  xfs_inactive+0x2c8/0x380
-  xfs_inodegc_worker+0xaa/0x180
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x31/0x180
-  __down_common+0xbe/0x1f0
-  __down+0x1d/0x30
-  down+0x48/0x50
-  xfs_buf_lock+0x3d/0xe0
-  xfs_iflush_shutdown_abort+0x51/0x1e0
-  xfs_icwalk_ag+0x386/0x690
-  xfs_reclaim_inodes_nr+0x114/0x160
-  xfs_fs_free_cached_objects+0x19/0x20
-  super_cache_scan+0x17b/0x1a0
-  do_shrink_slab+0x180/0x350
-  shrink_slab+0xf8/0x430
-  drop_slab+0x97/0xf0
-  drop_caches_sysctl_handler+0x59/0xc0
-  proc_sys_call_handler+0x189/0x280
-  proc_sys_write+0x13/0x20
-  vfs_write+0x33d/0x3f0
-  ksys_write+0x7c/0xf0
-  __x64_sys_write+0x1b/0x30
-  x64_sys_call+0x271d/0x2ee0
-  do_syscall_64+0x68/0x130
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
-and XFS_IFLUSHING are serialised through to journal IO completion
-by the cluster buffer lock being held.
-
-There's quite a few asserts in the code that check that XFS_ISTALE
-does not occur out of sync with buffer locking (e.g. in
-xfs_iflush_cluster). There's also a dependency on the inode log item
-being removed from the buffer before XFS_IFLUSHING is cleared, also
-with asserts that trigger on this.
-
-Further, we don't have a requirement for the inode to be locked when
-completing or aborting inode flushing because all the inode state
-updates are serialised by holding the cluster buffer lock across the
-IO to completion.
-
-We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
-skip the inode, because there is no guarantee that the inode will be
-reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
-whether reclaim is preparing to free that inode. Similarly, we can't
-check for IFLUSHING before locking the inode because that would
-result in dirty inodes not being marked with ISTALE in the event of
-racing with XFS_IRECLAIM.
-
-Hence we have to address this issue from the xfs_reclaim_inode()
-side. It is clear that we cannot hold the inode locked here when
-calling xfs_iflush_shutdown_abort() because it is the inode->buffer
-lock order that causes the deadlock against xfs_ifree_cluster().
-
-Hence we need to drop the ILOCK before aborting the inode in the
-shutdown case. Once we've aborted the inode, we can grab the ILOCK
-again and then immediately reclaim it as it is now guaranteed to be
-clean.
-
-Note that dropping the ILOCK in xfs_reclaim_inode() means that it
-can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
-this state. This is safe because we have left the XFS_IFLUSHING flag
-on the inode and so xfs_ifree_mark_inode_stale() will simply set
-XFS_ISTALE and move to the next inode. An ASSERT check in this path
-needs to be tweaked to take into account this new shutdown
-interaction.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260425195011.790265-13-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_icache.c | 8 ++++++++
- fs/xfs/xfs_inode.c  | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ .../wireless/mediatek/mt76/mt76_connac_mcu.c  |  9 +++++++-
+ .../wireless/mediatek/mt76/mt76_connac_mcu.h  | 23 +++++++++++++++++++
+ .../net/wireless/mediatek/mt76/mt7925/mcu.c   |  6 +++--
+ 3 files changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index 08689839dd77e..e22d103f5f827 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -923,7 +923,15 @@ xfs_reclaim_inode(
- 	 */
- 	if (xlog_is_shutdown(ip->i_mount->m_log)) {
- 		xfs_iunpin_wait(ip);
-+		/*
-+		 * Avoid a ABBA deadlock on the inode cluster buffer vs
-+		 * concurrent xfs_ifree_cluster() trying to mark the inode
-+		 * stale. We don't need the inode locked to run the flush abort
-+		 * code, but the flush abort needs to lock the cluster buffer.
-+		 */
-+		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		xfs_iflush_shutdown_abort(ip);
-+		xfs_ilock(ip, XFS_ILOCK_EXCL);
- 		goto reclaim;
- 	}
- 	if (xfs_ipincount(ip))
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 266fcc7890987..3b487341348a0 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1624,7 +1624,7 @@ xfs_ifree_mark_inode_stale(
- 	iip = ip->i_itemp;
- 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
- 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
--		ASSERT(iip->ili_last_fields);
-+		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
- 		goto out_iunlock;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index f60fe27ab3f9d..800d1073df27d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -1220,6 +1220,9 @@ int mt76_connac_mcu_uni_add_dev(struct mt76_phy *phy,
+ 	len = enable ? sizeof(dev_req) : sizeof(basic_req);
  
+ 	err = mt76_mcu_send_msg(dev, cmd, data, len, true);
++	if (err && cmd == MCU_UNI_CMD(BSS_INFO_UPDATE))
++		err = mt76_connac_mcu_bss_deact_err(dev, err, enable);
++
+ 	if (err < 0)
+ 		return err;
+ 
+@@ -1227,7 +1230,11 @@ int mt76_connac_mcu_uni_add_dev(struct mt76_phy *phy,
+ 	data = enable ? (void *)&basic_req : (void *)&dev_req;
+ 	len = enable ? sizeof(basic_req) : sizeof(dev_req);
+ 
+-	return mt76_mcu_send_msg(dev, cmd, data, len, true);
++	err = mt76_mcu_send_msg(dev, cmd, data, len, true);
++	if (err && cmd == MCU_UNI_CMD(BSS_INFO_UPDATE))
++		err = mt76_connac_mcu_bss_deact_err(dev, err, enable);
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(mt76_connac_mcu_uni_add_dev);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+index 6901971f5da6b..051523090ea7c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+@@ -1876,6 +1876,29 @@ mt76_connac_mcu_get_wlan_idx(struct mt76_dev *dev, struct mt76_wcid *wcid,
+ 	}
+ }
+ 
++#define MT76_CONNAC_MCU_STATUS_WLAN_FAILURE	0xc0000001
++
++static inline int
++mt76_connac_mcu_bss_deact_err(struct mt76_dev *mdev, int err, bool enable)
++{
++	if (err != (int)MT76_CONNAC_MCU_STATUS_WLAN_FAILURE)
++		return err;
++
++	/* Ignore wlan_failure state false alarm when deactivating an
++	 * inactive network. It does not harm the firmware state.
++	 */
++	if (!enable) {
++		dev_dbg(mdev->dev,
++			"ignore wlan_failure when bss is deactivated\n");
++		return 0;
++	}
++
++	dev_warn(mdev->dev,
++		 "wlan_failure when bss is activated\n");
++
++	return err;
++}
++
+ struct sk_buff *
+ __mt76_connac_mcu_alloc_sta_req(struct mt76_dev *dev, struct mt76_vif *mvif,
+ 				struct mt76_wcid *wcid, int len);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 789acc53d8a8b..d6437a0fff6a2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2788,6 +2788,7 @@ int mt7925_mcu_add_bss_info(struct mt792x_phy *phy,
+ 	struct mt792x_dev *dev = phy->dev;
+ 	struct mt792x_link_sta *mlink_bc;
+ 	struct sk_buff *skb;
++	int err;
+ 
+ 	skb = __mt7925_mcu_alloc_bss_req(&dev->mt76, &mconf->mt76,
+ 					 MT7925_BSS_UPDATE_MAX_SIZE);
+@@ -2813,8 +2814,9 @@ int mt7925_mcu_add_bss_info(struct mt792x_phy *phy,
+ 	if (enable)
+ 		mt7925_mcu_bss_rlm_tlv(skb, phy->mt76, link_conf, ctx);
+ 
+-	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
+-				     MCU_UNI_CMD(BSS_INFO_UPDATE), true);
++	err = mt76_mcu_skb_send_msg(&dev->mt76, skb,
++				    MCU_UNI_CMD(BSS_INFO_UPDATE), true);
++	return mt76_connac_mcu_bss_deact_err(&dev->mt76, err, enable);
+ }
+ 
+ int mt7925_mcu_set_dbdc(struct mt76_phy *phy, bool enable)
 -- 
 2.53.0
 
