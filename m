@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45233914E1;
-	Sat, 17 Oct 2026 15:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FD223394D;
+	Sat, 17 Oct 2026 15:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252588; cv=none; b=qiW1WqRukadqxVPfLTgfI00jEDWpG7XEZT41NstCNkoAfnMT5ZQoAmOeNwhgzluq5RmLbs8G2T1LWgAwK1m1Zz+ZyIgKI7X3wwDgyw9Dr99349649tJ8mZQ+U5PFg3/dSf9arU75/isO33+Y13IEC/1VAhvZHOh0zcHLm3gID/k=
+	t=1792252591; cv=none; b=IIxwYwTqUckiCRNOm7znxLIQd6ngVAzuOBzAEJpw5DW4pEhneV4sEfkCD1jprg4yr4f2EPA3L7K4txIyT+LpnxVsc7zKnahg8ehPPtB3pHkuIqNSY7g3WRwFlPBuWjbzxv32iCFfOQHBSfxf0sDqg9oGv41RHWUyzSEJNpacLWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252588; c=relaxed/simple;
-	bh=NaBZbkodI/cMAi+7hLrVNOCkDqYX/Jm785EWBmoZBQY=;
+	s=arc-20240116; t=1792252591; c=relaxed/simple;
+	bh=2AthjvnBSHiEfTZEBwruM1K8WNw+9la5SnHkeRFkpxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a55Fkpg8C9+nLRVmnVJFq+uyyO2mgDdKstkGTy4mLDrjvdG0yWdECYDHKu0tHKrLpq3LDC1eCgRZEZ3Ym05mZwcVW7njhOcPXcR7FFGH/HkldkfUoVamjQvfAUUjKZnzhzp06J4azTkMcaDOSjOuTu3NKJ93qNCYFytHyD/goqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0WsCTRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0gJM4EiutUGl3SyM0zjiwQFVr4vJuJWZPl8XfqAnSdSK30geWahmK1GCH3vlrSPJ8yNKWdAJG7r/NkI5kx4M7u/aRmmHwha+HxJSa1zINi48YXbwCwZ68bVzxldYxM8zo4VTrK51h0Xunf0vsf2UrTW5DLZsU7bQW+rrHb9Hag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zu+Cv6L2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0WsCTRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9101F000C4;
-	Sat, 17 Oct 2026 15:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zu+Cv6L2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED59E1F000C4;
+	Sat, 17 Oct 2026 15:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252586;
-	bh=N4XFGfamAz1YAouM/vbP/QTWL53q2h/gTawUSsRFERA=;
+	s=korg; t=1792252589;
+	bh=LiTlOMqFvKuYbeuKCeM3XtXrD72whUe0GXpe7i/j+UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0WsCTRXuEvUKHLgNXhwoSFSSjvnQ3HiD+KWSAMCJgvjNxIkvp5Cy33SS5KfhOtjd
-	 wbrr2jYYG5GW7rbsKRJ5dh/k3Z4k0hAt3T7zz1Vb/4ozlR9EOXGveN1TodCri432jp
-	 dYDgYzzU6MyJh8YYhPnlqNUztBTIs3D9Bf6W6btc=
+	b=zu+Cv6L28dRj01LcuZCiTQ7i8sC+0Qy3ys//xQN3o66vReg5sXpNRJpFYcLtplnJk
+	 CKnueEvaCIobvIfe1YRc7M+j/sEOzwlk5Nb5Gv1voFEYussrBSzPlqFxV8Ec9iArph
+	 KRDDJyyYBwg//R7RsbReN6HLo3cCQb3xFfJjWPso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Redaelli <tredaelli@redhat.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Matteo Croce <teknoraver@meta.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Nicolai Buchwitz <nb@tipi-net.de>
-Subject: [PATCH 6.18 30/52] fat: stop reading directory entries past the end-of-directory marker
-Date: Sat, 17 Oct 2026 17:54:31 +0200
-Message-ID: <20261017155105.821614266@linuxfoundation.org>
+	Karel Srot <ksrot@redhat.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Coiby Xu <coxu@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 31/52] ima: Access decompressed kernel module to verify appended signature
+Date: Sat, 17 Oct 2026 17:54:32 +0200
+Message-ID: <20261017155105.851092003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -53,185 +53,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matteo Croce <technoboy85@gmail.com>
+From: Coiby Xu <coxu@redhat.com>
 
-commit 6a2875517c778ac1111b6920e94cbab91cda8724 upstream.
+[ Upstream commit c200892b46ba3df3dd210b7117a463ec283600c3 ]
 
-The FAT specification[1] (FAT Directory Structure -> "DIR_Name[0]") states:
+Currently, when in-kernel module decompression (CONFIG_MODULE_DECOMPRESS)
+is enabled, IMA has no way to verify the appended module signature as it
+can't decompress the module.
 
-    If DIR_Name[0] == 0x00, then the directory entry is free (same as for
-    0xE5), and there are no allocated directory entries after this one
-    (all of the DIR_Name[0] bytes in all of the entries after this one
-    are also set to 0).
+Define a new kernel_read_file_id enumerate READING_MODULE_COMPRESSED so
+IMA can calculate the compressed kernel module data hash on
+READING_MODULE_COMPRESSED and defer appraising/measuring it until on
+READING_MODULE when the module has been decompressed.
 
-    The special 0 value, rather than the 0xE5 value, indicates to FAT
-    file system driver code that the rest of the entries in this
-    directory do not need to be examined because they are all free.
+Before enabling in-kernel module decompression, a kernel module in
+initramfs can still be loaded with ima_policy=secure_boot. So adjust the
+kernel module rule in secure_boot policy to allow either an IMA
+signature OR an appended signature i.e. to use
+"appraise func=MODULE_CHECK appraise_type=imasig|modsig".
 
-Linux did not honour this. fat_get_entry() kept advancing past the 0x00
-terminator; if the trailing on-disk slots were not zero-filled (buggy
-formatters, read-only media written by other operating systems, on-disk
-corruption) the driver surfaced arbitrary bytes as real directory
-entries. On a typical affected image, `ls /mnt` returns ~150 bogus
-entries with random binary names, multi-gigabyte sizes, dates ranging
-from 1980 to 2106, and a flood of -EIO from stat().
-
-Earlier attempts (v1..v3, see [2][3][4]) added `de->name[0] == 0` guards
-at each call site. As Hirofumi pointed out on v3, those guards reject
-the entry but fat_get_entry() has already advanced *pos past it; the
-next readdir() resumes after the marker and walks straight back into
-the garbage. His suggestion was to centralise the check.
-
-This patch:
-
-  * Adds fat_get_entry_eod(), a small wrapper around fat_get_entry()
-    that returns -1 when name[0] == 0 and seeks *pos to dir->i_size.
-    Per spec every slot after the 0x00 marker is also zero, so jumping
-    to the end of the directory is correct: subsequent reads return -1
-    from fat_bmap() without re-fetching trailing zero slots, and
-    callers persisting *pos across invocations (notably readdir's
-    ctx->pos) keep reporting end-of-directory on re-entry.
-
-  * Converts the read/search paths to use the new wrapper:
-      fat_parse_long(), fat_search_long(), __fat_readdir(),
-      and fat_get_short_entry() -- the last covers
-      fat_get_dotdot_entry(), fat_dir_empty(), fat_subdirs(),
-      fat_scan(), and fat_scan_logstart() transitively.
-
-  * Leaves fat_add_entries() and __fat_remove_entries() on raw
-    fat_get_entry(): the write paths legitimately need to operate on
-    free/zero slots. fat_add_entries() additionally detects an
-    allocated entry past a 0x00 marker (the spec violation that
-    produces the garbage) and treats it as filesystem corruption:
-    fat_fs_error_ratelimit() is called -- which honours the configured
-    errors= mount option (panic / remount-ro / continue) -- and the
-    operation returns -EIO so we don't write fresh entries into an
-    already-corrupt directory.
-
-[1] https://download.microsoft.com/download/1/6/1/161ba512-40e2-4cc9-843a-923143f3456c/fatgen103.doc
-[2] https://lore.kernel.org/lkml/20181207013410.7050-1-mcroce@redhat.com/
-[3] https://lore.kernel.org/lkml/20181216231510.26854-1-mcroce@redhat.com/
-[4] https://lore.kernel.org/lkml/20190201001408.7453-1-mcroce@redhat.com/
-
-Reported-by: Timothy Redaelli <tredaelli@redhat.com>
-Suggested-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Signed-off-by: Matteo Croce <teknoraver@meta.com>
-Link: https://patch.msgid.link/20260616163346.32603-1-technoboy85@gmail.com
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Cc: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Karel Srot <ksrot@redhat.com>
+Suggested-by: Mimi Zohar <zohar@linux.ibm.com>
+Suggested-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Coiby Xu <coxu@redhat.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Stable-dep-of: 377cae9851e8 ("ima: Fix stack-out-of-bounds in is_bprm_creds_for_exec()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/dir.c |   44 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 4 deletions(-)
+ include/linux/kernel_read_file.h    |  1 +
+ kernel/module/main.c                | 17 ++++++++++++++---
+ security/integrity/ima/ima_main.c   | 24 ++++++++++++++++--------
+ security/integrity/ima/ima_policy.c |  3 ++-
+ security/ipe/hooks.c                |  1 +
+ security/selinux/hooks.c            |  5 +++--
+ 6 files changed, 37 insertions(+), 14 deletions(-)
 
---- a/fs/fat/dir.c
-+++ b/fs/fat/dir.c
-@@ -129,6 +129,31 @@ static inline int fat_get_entry(struct i
+diff --git a/include/linux/kernel_read_file.h b/include/linux/kernel_read_file.h
+index 90451e2e12bd1..d613a7b4dd35a 100644
+--- a/include/linux/kernel_read_file.h
++++ b/include/linux/kernel_read_file.h
+@@ -14,6 +14,7 @@
+ 	id(KEXEC_INITRAMFS, kexec-initramfs)	\
+ 	id(POLICY, security-policy)		\
+ 	id(X509_CERTIFICATE, x509-certificate)	\
++	id(MODULE_COMPRESSED, kernel-module-compressed) \
+ 	id(MAX_ID, )
+ 
+ #define __fid_enumify(ENUM, dummy) READING_ ## ENUM,
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 769463d2b254b..fc5b17befb0b8 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -3692,24 +3692,35 @@ static int idempotent_wait_for_completion(struct idempotent *u)
+ 
+ static int init_module_from_file(struct file *f, const char __user * uargs, int flags)
+ {
++	bool compressed = !!(flags & MODULE_INIT_COMPRESSED_FILE);
+ 	struct load_info info = { };
+ 	void *buf = NULL;
+ 	int len;
++	int err;
+ 
+-	len = kernel_read_file(f, 0, &buf, INT_MAX, NULL, READING_MODULE);
++	len = kernel_read_file(f, 0, &buf, INT_MAX, NULL,
++			       compressed ? READING_MODULE_COMPRESSED :
++					    READING_MODULE);
+ 	if (len < 0) {
+ 		mod_stat_inc(&failed_kreads);
+ 		return len;
+ 	}
+ 
+-	if (flags & MODULE_INIT_COMPRESSED_FILE) {
+-		int err = module_decompress(&info, buf, len);
++	if (compressed) {
++		err = module_decompress(&info, buf, len);
+ 		vfree(buf); /* compressed data is no longer needed */
+ 		if (err) {
+ 			mod_stat_inc(&failed_decompress);
+ 			mod_stat_add_long(len, &invalid_decompress_bytes);
+ 			return err;
+ 		}
++		err = security_kernel_post_read_file(f, (char *)info.hdr, info.len,
++						     READING_MODULE);
++		if (err) {
++			mod_stat_inc(&failed_kreads);
++			free_copy(&info, flags);
++			return err;
++		}
+ 	} else {
+ 		info.hdr = buf;
+ 		info.len = len;
+diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
+index e51b53b7789b1..cda897267230d 100644
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -235,7 +235,8 @@ static void ima_file_free(struct file *file)
+ 
+ static int process_measurement(struct file *file, const struct cred *cred,
+ 			       struct lsm_prop *prop, char *buf, loff_t size,
+-			       int mask, enum ima_hooks func)
++			       int mask, enum ima_hooks func,
++			       enum kernel_read_file_id read_id)
+ {
+ 	struct inode *real_inode, *inode = file_inode(file);
+ 	struct ima_iint_cache *iint = NULL;
+@@ -406,6 +407,12 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 	if (rc != 0 && rc != -EBADF && rc != -EINVAL)
+ 		goto out_locked;
+ 
++	/* Defer measuring/appraising kernel modules to READING_MODULE */
++	if (read_id == READING_MODULE_COMPRESSED) {
++		must_appraise = 0;
++		goto out_locked;
++	}
++
+ 	if (!pathbuf)	/* ima_rdwr_violation possibly pre-fetched */
+ 		pathname = ima_d_path(&file->f_path, &pathbuf, filename);
+ 
+@@ -486,14 +493,14 @@ static int ima_file_mmap(struct file *file, unsigned long reqprot,
+ 
+ 	if (reqprot & PROT_EXEC) {
+ 		ret = process_measurement(file, current_cred(), &prop, NULL,
+-					  0, MAY_EXEC, MMAP_CHECK_REQPROT);
++					  0, MAY_EXEC, MMAP_CHECK_REQPROT, 0);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+ 	if (prot & PROT_EXEC)
+ 		return process_measurement(file, current_cred(), &prop, NULL,
+-					   0, MAY_EXEC, MMAP_CHECK);
++					   0, MAY_EXEC, MMAP_CHECK, 0);
+ 
+ 	return 0;
+ }
+@@ -577,7 +584,7 @@ static int ima_bprm_check(struct linux_binprm *bprm)
+ 
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(bprm->file, current_cred(),
+-				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK);
++				   &prop, NULL, 0, MAY_EXEC, BPRM_CHECK, 0);
+ }
+ 
+ /**
+@@ -607,7 +614,7 @@ static int ima_creds_check(struct linux_binprm *bprm, const struct file *file)
+ 
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement((struct file *)file, bprm->cred, &prop, NULL,
+-				   0, MAY_EXEC, CREDS_CHECK);
++				   0, MAY_EXEC, CREDS_CHECK, 0);
+ }
+ 
+ /**
+@@ -655,7 +662,7 @@ static int ima_file_check(struct file *file, int mask)
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, NULL, 0,
+ 				   mask & (MAY_READ | MAY_WRITE | MAY_EXEC |
+-					   MAY_APPEND), FILE_CHECK);
++					   MAY_APPEND), FILE_CHECK, 0);
  }
  
  /*
-+ * Like fat_get_entry(), but honour the FAT end-of-directory marker:
-+ * a dirent whose first name byte is NUL terminates iteration per the
-+ * spec, which also guarantees that every following slot is zeroed.
-+ * Skip straight to the end of the directory so the next call returns
-+ * -1 from fat_bmap() without re-reading the trailing zero slots, and
-+ * so callers that persist *pos across invocations (e.g. readdir's
-+ * ctx->pos) keep reporting EOD.  Release *bh and set it to NULL to
-+ * match fat_get_entry()'s contract that *bh is NULL on the -1 return.
-+ */
-+static int fat_get_entry_eod(struct inode *dir, loff_t *pos,
-+			     struct buffer_head **bh,
-+			     struct msdos_dir_entry **de)
-+{
-+	int err = fat_get_entry(dir, pos, bh, de);
-+
-+	if (err == 0 && (*de)->name[0] == 0) {
-+		brelse(*bh);
-+		*bh = NULL;
-+		*pos = dir->i_size;
-+		return -1;
-+	}
-+	return err;
-+}
-+
-+/*
-  * Convert Unicode 16 to UTF-8, translated Unicode, or ASCII.
-  * If uni_xlate is enabled and we can't get a 1:1 conversion, use a
-  * colon as an escape character since it is normally invalid on the vfat
-@@ -325,7 +350,7 @@ parse_long:
+@@ -911,12 +918,13 @@ static int ima_read_file(struct file *file, enum kernel_read_file_id read_id,
+ 	func = read_idmap[read_id] ?: FILE_CHECK;
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, NULL, 0,
+-				   MAY_READ, func);
++				   MAY_READ, func, 0);
+ }
  
- 		if (ds->id & 0x40)
- 			(*unicode)[offset + 13] = 0;
--		if (fat_get_entry(dir, pos, bh, de) < 0)
-+		if (fat_get_entry_eod(dir, pos, bh, de) < 0)
- 			return PARSE_EOF;
- 		if (slot == 0)
- 			break;
-@@ -487,7 +512,7 @@ int fat_search_long(struct inode *inode,
+ const int read_idmap[READING_MAX_ID] = {
+ 	[READING_FIRMWARE] = FIRMWARE_CHECK,
+ 	[READING_MODULE] = MODULE_CHECK,
++	[READING_MODULE_COMPRESSED] = MODULE_CHECK,
+ 	[READING_KEXEC_IMAGE] = KEXEC_KERNEL_CHECK,
+ 	[READING_KEXEC_INITRAMFS] = KEXEC_INITRAMFS_CHECK,
+ 	[READING_POLICY] = POLICY_CHECK
+@@ -954,7 +962,7 @@ static int ima_post_read_file(struct file *file, char *buf, loff_t size,
+ 	func = read_idmap[read_id] ?: FILE_CHECK;
+ 	security_current_getlsmprop_subj(&prop);
+ 	return process_measurement(file, current_cred(), &prop, buf, size,
+-				   MAY_READ, func);
++				   MAY_READ, func, read_id);
+ }
  
- 	err = -ENOENT;
- 	while (1) {
--		if (fat_get_entry(inode, &cpos, &bh, &de) == -1)
-+		if (fat_get_entry_eod(inode, &cpos, &bh, &de) == -1)
- 			goto end_of_dir;
- parse_record:
- 		nr_slots = 0;
-@@ -599,7 +624,7 @@ static int __fat_readdir(struct inode *i
+ /**
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index db6d55af5a80b..d63af617d4586 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -241,7 +241,8 @@ static struct ima_rule_entry build_appraise_rules[] __ro_after_init = {
  
- 	bh = NULL;
- get_new:
--	if (fat_get_entry(inode, &cpos, &bh, &de) == -1)
-+	if (fat_get_entry_eod(inode, &cpos, &bh, &de) == -1)
- 		goto end_of_dir;
- parse_record:
- 	nr_slots = 0;
-@@ -882,7 +907,7 @@ static int fat_get_short_entry(struct in
- 			       struct buffer_head **bh,
- 			       struct msdos_dir_entry **de)
+ static struct ima_rule_entry secure_boot_rules[] __ro_after_init = {
+ 	{.action = APPRAISE, .func = MODULE_CHECK,
+-	 .flags = IMA_FUNC | IMA_DIGSIG_REQUIRED},
++	 .flags = IMA_FUNC | IMA_DIGSIG_REQUIRED | IMA_MODSIG_ALLOWED |
++		  IMA_CHECK_BLACKLIST},
+ 	{.action = APPRAISE, .func = FIRMWARE_CHECK,
+ 	 .flags = IMA_FUNC | IMA_DIGSIG_REQUIRED},
+ 	{.action = APPRAISE, .func = KEXEC_KERNEL_CHECK,
+diff --git a/security/ipe/hooks.c b/security/ipe/hooks.c
+index d3092933abe21..7cbb1df0a76bc 100644
+--- a/security/ipe/hooks.c
++++ b/security/ipe/hooks.c
+@@ -119,6 +119,7 @@ int ipe_kernel_read_file(struct file *file, enum kernel_read_file_id id,
+ 		op = IPE_OP_FIRMWARE;
+ 		break;
+ 	case READING_MODULE:
++	case READING_MODULE_COMPRESSED:
+ 		op = IPE_OP_KERNEL_MODULE;
+ 		break;
+ 	case READING_KEXEC_INITRAMFS:
+diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
+index 86c82a6df54c7..03ecfc6de2c3e 100644
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -4514,7 +4514,7 @@ static int selinux_kernel_read_file(struct file *file,
  {
--	while (fat_get_entry(dir, pos, bh, de) >= 0) {
-+	while (fat_get_entry_eod(dir, pos, bh, de) >= 0) {
- 		/* free entry or long name entry or volume label */
- 		if (!IS_FREE((*de)->name) && !((*de)->attr & ATTR_VOLUME))
- 			return 0;
-@@ -1298,6 +1323,7 @@ int fat_add_entries(struct inode *dir, v
- 	struct msdos_dir_entry *de;
- 	int err, free_slots, i, nr_bhs;
- 	loff_t pos;
-+	bool saw_eod;
+ 	int rc = 0;
  
- 	sinfo->nr_slots = nr_slots;
+-	BUILD_BUG_ON_MSG(READING_MAX_ID > 7,
++	BUILD_BUG_ON_MSG(READING_MAX_ID > 8,
+ 			 "New kernel_read_file_id introduced; update SELinux!");
  
-@@ -1306,12 +1332,15 @@ int fat_add_entries(struct inode *dir, v
- 	bh = prev = NULL;
- 	pos = 0;
- 	err = -ENOSPC;
-+	saw_eod = false;
- 	while (fat_get_entry(dir, &pos, &bh, &de) > -1) {
- 		/* check the maximum size of directory */
- 		if (pos >= FAT_MAX_DIR_SIZE)
- 			goto error;
+ 	switch (id) {
+@@ -4522,6 +4522,7 @@ static int selinux_kernel_read_file(struct file *file,
+ 		rc = selinux_kernel_load_from_file(file, SYSTEM__FIRMWARE_LOAD);
+ 		break;
+ 	case READING_MODULE:
++	case READING_MODULE_COMPRESSED:
+ 		rc = selinux_kernel_load_from_file(file, SYSTEM__MODULE_LOAD);
+ 		break;
+ 	case READING_KEXEC_IMAGE:
+@@ -4550,7 +4551,7 @@ static int selinux_kernel_load_data(enum kernel_load_data_id id, bool contents)
+ {
+ 	int rc = 0;
  
- 		if (IS_FREE(de->name)) {
-+			if (de->name[0] == 0)
-+				saw_eod = true;
- 			if (prev != bh) {
- 				get_bh(bh);
- 				bhs[nr_bhs] = prev = bh;
-@@ -1321,6 +1350,13 @@ int fat_add_entries(struct inode *dir, v
- 			if (free_slots == nr_slots)
- 				goto found;
- 		} else {
-+			if (saw_eod) {
-+				fat_fs_error_ratelimit(sb,
-+					"allocated dir entry found after end-of-directory marker (i_pos %lld)",
-+					MSDOS_I(dir)->i_pos);
-+				err = -EIO;
-+				goto error;
-+			}
- 			for (i = 0; i < nr_bhs; i++)
- 				brelse(bhs[i]);
- 			prev = NULL;
+-	BUILD_BUG_ON_MSG(LOADING_MAX_ID > 7,
++	BUILD_BUG_ON_MSG(LOADING_MAX_ID > 8,
+ 			 "New kernel_load_data_id introduced; update SELinux!");
+ 
+ 	switch (id) {
+-- 
+2.53.0
+
 
 
