@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D688235E93B;
-	Sat, 17 Oct 2026 17:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA3838F950;
+	Sat, 17 Oct 2026 17:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259435; cv=none; b=FYxd5dLpmkxnKzFyZEKkooc3yon4RpP8KviqB6QWx/emwQcSQ7e5CX23R6AvEdh1aQYSWkPdO1LzfUTToW1atY04X94NpPY9FUoG7zuaqDFzNLVLv9NnBNwUmvQ0r4fDAi8qKPw4hGbHYRH9NVcTikeKddVVirpW9voLanoGoMg=
+	t=1792259439; cv=none; b=mPXx7so0jHzBKKqKZcVPfOnoxpLcwDzaXxcis3gVtrh3bim4xf8+ln+/fATWdSb0r2xr4+iytwEHe8QuJ8kV4qk/ivCBaLBdJSeAL7zU5ilk844aNMNoYCQHdY0NqveJfFNAzdFT2VaYGs7UwXRXyQPwRc5CdECcztoAhG0Mho4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259435; c=relaxed/simple;
-	bh=QUQhiaEbNULRvL2NBMI5mVZKAFmOJLYfNQrsxyPyBnY=;
+	s=arc-20240116; t=1792259439; c=relaxed/simple;
+	bh=1dB+KrQ9JIjgG4dE7MKUHmZ6EXnLWHvr43yMqwrrBuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gVL0YOSxdKehm4UKgqBm48WG7wt73MGoQLEVSo/EwIVpY9ybiwkNPA3f60KhI9AI9BDeqhrfEViQhKiRWtrPXCu4/FRrLZbFkCgsxEm6e26aj2E4aFXIz7LRNyM7Pw/X50SpcTf30JxxZuU972IBWUv3fVpQLVY4oABKGHtz0NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJxyjud2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TusWQ+xsRifbR7SsrNGYgRcQMMRvO0X1Lg5eOYZlfSVsY/XFCxsPhn/eu+Vt6++FJAyy0uguswTir/X/xa0fp/P/wLGpBmIQGK+YMM0YxacGW2aIfyOdR6G81UOBSuT3c92ja1J6ZcnS/Ub8LfzVal8vowRxWTtSJd0NtgWEOuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzGCUNAZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJxyjud2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3064B1F000C4;
-	Sat, 17 Oct 2026 17:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzGCUNAZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF511F000C4;
+	Sat, 17 Oct 2026 17:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259434;
-	bh=wjbktsCm3imA3h/tMGvXoQAyJNqu7mCJmPQLxXdOF7E=;
+	s=korg; t=1792259437;
+	bh=fq84v+zVvkolJwfZujLRanTDDQi3/zuAGTy00Cititc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJxyjud2RQHZOR2A3xtyj4tz7MOP6GsBiOFnc14dAfjueZrJP6j3cY58aG6yCi53W
-	 oVUsR81sKBQthGHCqfnVLPgleqZT6lpftVW8fzOp1hiPwGONz1Sj+QqFZ/440ROyn2
-	 USqmmGjm+nrgbIu6nFkuiMUUDZqKCnmN3Pv2RBnM=
+	b=MzGCUNAZ1kniNA+Rr2anB6oAzO/QyUVn8tDgtQKP610EX7x6FxofqfUa4n92Vo/rn
+	 cTVyvGMd5w4RQFNE2Ew7fnzkQLjoUPMtRjSdnHWoYCxq+CGiHhVB3CdgmY4ZwiqXPi
+	 YHNCGJ1AS9x+G8KswSkOYLNjIl6pnRVJzPk228IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1213/1674] drm/amdgpu: reject oversized IBs with per-ring packet limits
-Date: Sat, 17 Oct 2026 17:58:05 +0200
-Message-ID: <20261017160502.278367455@linuxfoundation.org>
+Subject: [PATCH 6.6 1214/1674] tracing/probes: Remove WARN_ON_ONCE from parse_btf_arg
+Date: Sat, 17 Oct 2026 17:58:06 +0200
+Message-ID: <20261017160502.303722002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,81 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit fd37f9dd5b5ab70a46fa7bc76623c0528d602b27 ]
+[ Upstream commit 251a8fe1b9aedccd298b77bc28426d564c5a923f ]
 
-On GFX rings, amdgpu_cs_p2_ib() passed user-supplied ib_bytes through
-to ib->length_dw without a limit, while ring_emit_ib() encodes length
-into packet fields. Oversized values can corrupt adjacent control bits
-and destabilize command submission.
+Sashiko found that user can cause this WARN_ON_ONCE() easily
+with adding a kprobe event based on a raw address with BTF
+parameter.
 
-Add a per-ring IB packet size limit helper and reject command
-submissions exceeding the corresponding dword limit before IB
-allocation. Use the documented 20-bit limit for GFX/compute/SDMA/VPE,
-and apply the MM fallback limit for other ring types.
+Since this is not an unexpected condition, remove the
+WARN_ON_ONCE().
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7f48fa2cf62e3fa6c9c3870aa74988f773247e52)
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/178177265367.2059927.13789953014706792126.stgit@mhiramat.tok.corp.google.com/
+
+Link: https://sashiko.dev/#/patchset/178165816303.269421.7302603996990753309.stgit%40devnote2
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: b576e09701c7 ("tracing/probes: Support function parameters if BTF is available")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ kernel/trace/trace_probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index a5ede9ab877de..df7a5775d361e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -41,6 +41,25 @@
- #include "amdgpu_gem.h"
- #include "amdgpu_ras.h"
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index afae842009d12..a43d974fbccc7 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -620,7 +620,7 @@ static int parse_btf_arg(char *varname,
+ 	int i, is_ptr, ret;
+ 	u32 tid;
  
-+/*
-+ * Maximum IB length (dwords) for rings whose emit_ib packet format
-+ * documents a 20-bit size field.
-+ */
-+#define AMDGPU_GFX_SDMA_IB_PACKET_SIZE_MAX_DW	0xFFFFF
-+#define AMDGPU_MM_IB_PACKET_SIZE_MAX_DW	0x7FFFF0
-+
-+static u32 amdgpu_cs_ib_packet_size_max_dw(enum amdgpu_ring_type type)
-+{
-+	switch (type) {
-+	case AMDGPU_RING_TYPE_GFX:
-+	case AMDGPU_RING_TYPE_COMPUTE:
-+	case AMDGPU_RING_TYPE_SDMA:
-+		return AMDGPU_GFX_SDMA_IB_PACKET_SIZE_MAX_DW;
-+	default:
-+		return AMDGPU_MM_IB_PACKET_SIZE_MAX_DW;
-+	}
-+}
-+
- static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p,
- 				 struct amdgpu_device *adev,
- 				 struct drm_file *filp,
-@@ -354,7 +373,6 @@ static int amdgpu_cs_p2_ib(struct amdgpu_cs_parser *p,
+-	if (WARN_ON_ONCE(!ctx->funcname))
++	if (!ctx->funcname)
+ 		return -EINVAL;
  
- 	job = p->jobs[r];
- 	ring = amdgpu_job_ring(job);
--	ib = &job->ibs[job->num_ibs++];
- 
- 	/* MM engine doesn't support user fences */
- 	if (p->uf_bo && ring->funcs->no_user_fence)
-@@ -373,6 +391,12 @@ static int amdgpu_cs_p2_ib(struct amdgpu_cs_parser *p,
- 			return -EINVAL;
- 	}
- 
-+	if (chunk_ib->ib_bytes / 4 >
-+	    amdgpu_cs_ib_packet_size_max_dw(ring->funcs->type))
-+		return -EINVAL;
-+
-+	ib = &job->ibs[job->num_ibs++];
-+
- 	if (chunk_ib->flags & AMDGPU_IB_FLAG_PREAMBLE)
- 		job->preamble_status |= AMDGPU_PREAMBLE_IB_PRESENT;
- 
+ 	is_ptr = split_next_field(varname, &field, ctx);
 -- 
 2.53.0
 
