@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9E83AFB1B;
-	Sat, 17 Oct 2026 17:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D653AFB1B;
+	Sat, 17 Oct 2026 17:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257523; cv=none; b=c2W4jTiR+hQYex/UbXJyC/fhNYfkYoqTRge6gEkp1jbj5sgFIxOc8YkpcA/1Fu5Z5PM/eqN7S6Apakk7Qe8mVCK1n6DqIl3ureIkxBqsSquVNj+XaCBg3HGQexwLiXKqExG1X+l6USMqu/Wa26kOt+4l9ZE+48NkO+bTIcUgN8E=
+	t=1792257526; cv=none; b=DZsNJz258sIiBj78khQp4Vg836ptdRyVHkcoRYnRTIFgbuNppxUccgIMaXo6ADcwpPOLGk6qm0aBy1APGtyT0pVRYWnIj7wtRHpB7a19EDse27pfMrdYQ+2HnrXY7z5fHaaJe1CVOqePh2+gRegwZ+/2nTpbHNpH0hw27ixvWfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257523; c=relaxed/simple;
-	bh=ea2tQX/3FV8xsPhdDnPD6132wXqvzMCLZSbMg7SRhPE=;
+	s=arc-20240116; t=1792257526; c=relaxed/simple;
+	bh=6JSfbSe1YSCaftW2ivCqYXUat6sy7OQQ1PBREQ3NPJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWocBJ7Wl8zRpFnNDBPE6Ei+7wBAPRq2NKU8Slkes6YrIL9TJE+jolElQqe7sL67z7QubPLzzlj12ckONLRjFa8FIyasTfgUEUqTbv+6N//jT5S6aySYDSEfQocRxJKdsXQdNzJQl5FmeaC//QSmosdepR5KdMpWVygqtCEY/yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiK+MV3C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eYXgDfRv+dSx28CRno+oPxaadATiwVmSO4FhQKJ/OvKNMaM04JBKDHhx7T1d6dyfiX9yV2DpVTskCl8I0tRAFFiCM/MSkfwuPzY4BKcfJaUs+eEwumfyylXOtF1H6p5oMZWfJzO9zMMXcfQlfQsr52sJ9/J9840dw+idIpPQzMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVPXEaGg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiK+MV3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D2F1F000C4;
-	Sat, 17 Oct 2026 17:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVPXEaGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1471F000C4;
+	Sat, 17 Oct 2026 17:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257522;
-	bh=8tjMOCQDeqjUzNpwgNNIuBW1DQIYHIStlF09gL9lzoE=;
+	s=korg; t=1792257525;
+	bh=bMzRt3omIcllpFiKEyvBaAiSd7Gvo510rxgjMT/TrLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MiK+MV3CLy/RV5t3xyW2urbSYN6npYObJ9Exo9hkI7on5cDrANyQkbx7KXEDgPhD3
-	 Hw+NikDckqEBWc7kmFEKIzn+SScgindaJ8B1HczhiAxk4J/5Z2DTmrQYFz7dSZ/cu1
-	 8B3CYnQXRy7zLNCDbX5UQMKnOThxr5rTyQObsyag=
+	b=mVPXEaGgkwat8owzGTEkwYiNHy4W4whN0MIaJs6OKleFRGseJjh3GtnR7tVsGux5U
+	 vvnn+ce0ZwMveE+pCRXX1rA5ZZ78YyKwVIai/wE02jsnCrLjPqxbHU11vOJ+yZGMQn
+	 /aBWaa/WNn8h+1/zjTB2MEY88xirAtXsXL4WHM3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0569/1674] ip6_gre: remove obsolete ERSPAN PMTU update
-Date: Sat, 17 Oct 2026 17:47:21 +0200
-Message-ID: <20261017160445.698936931@linuxfoundation.org>
+Subject: [PATCH 6.6 0587/1674] Bluetooth: ISO: Serialize concurrent connect calls
+Date: Sat, 17 Oct 2026 17:47:39 +0200
+Message-ID: <20261017160446.152386860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,67 +52,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
+[ Upstream commit e32d80293a0e1a160d5e5101daa8c82148c07510 ]
 
-A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
-and mirred can redirect it to a native ip6erspan device. The legacy PMTU
-update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
-Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
+iso_sock_connect() checks the socket state before taking the socket lock
+and drops the lock again before setting up a connection. Two callers can
+both pass the admission check while the socket is open or bound.
 
-On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
-self-created user and network namespaces to trigger:
+Caller A can copy its destination for route selection, then caller B can
+replace the socket destination before A binds or connects the CIS. A
+then uses B's destination with the route selected for its own request.
+B can also proceed after A attaches a connection and sets BT_CONNECT.
+For deferred BIS setup, B can bind a second BIS and overwrite
+iso_pi(sk)->conn, leaving the first connection's reference and conn->sk
+back-pointer stranded. Concurrent CIS connects can likewise replace the
+socket's connection. Later teardown only detaches the current connection,
+so a callback on the old connection can race with socket release and
+access a freed socket.
 
-  KASAN: null-ptr-deref
-  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
-  Kernel panic - not syncing: Fatal exception in interrupt
+KASAN reported:
 
-The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
-in a better way") changed IPv6 GRE Too Big handling to update the
-underlay route and removed the equivalent block from __gre6_xmit().
-ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
+  BUG: KASAN: slab-use-after-free in iso_sock_hold+0xf7/0x1b0
+  Call Trace:
+   iso_sock_hold+0xf7/0x1b0
+   iso_conn_del+0x7b/0x1d0
+   iso_connect_cfm+0x186/0x16a0
+   hci_conn_failed+0x154/0x280
+   hci_abort_conn_sync+0x3dc/0x7d0
+   hci_cmd_sync_work+0x173/0x300
 
-Remove the stale ERSPAN copy and its now-unused dst variable. This
-eliminates the metadata-dst dereference and keeps ERSPAN aligned with
-IPv6 GRE PMTU handling.
+  Allocated by task 121:
+   sk_alloc+0x2b/0x6d0
+   bt_sock_alloc+0x29/0x370
+   iso_sock_alloc.constprop.0+0x19/0x300
+   iso_sock_create+0x94/0x100
 
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+  Freed by task 121:
+   kfree+0x121/0x3c0
+   __sk_destruct+0x42b/0x540
+   iso_sock_release+0x29d/0x340
+   __sock_release+0xa1/0x260
+
+Check admission under the socket lock and mark the connect operation in
+progress before publishing its destination. Keep that flag set across
+route lookup and connection setup, rejecting another connect with
+-EBADFD before it can change the destination or attach a connection.
+Clear the flag after either helper returns, including on failure, so a
+failed setup can be retried.
+
+A separate flag is needed because the socket lock must be released before
+acquiring the HCI device lock, while BT_CONNECT requires an attached
+connection. Keep the existing state transitions and the deferred CIS
+completion through iso_sock_recvmsg().
+
+Reject an existing socket attachment in __iso_chan_add() before taking
+a new reference or publishing either pointer, so every caller preserves
+the connection association. Keep the same-socket, same-connection success
+case for deferred CIS setup. Reject an attached socket before BIS setup
+so a reusable BIS is not claimed before the attachment is rejected.
+
+In CIS setup, reject a different HCI connection before iso_conn_add()
+and drop the per-attempt HCI hold directly. An unowned iso_conn may still
+carry another reference after detachment, so its destruction cannot be
+relied on to release that hold.
+
+iso_listen_bis() creates a fresh PA HCI/ISO pair under the device lock,
+so the temporary iso_conn_put() frees the ISO candidate and drops its
+HCI hold on rejection. iso_conn_ready() uses a freshly allocated,
+unpublished child with no connection, making the socket-side rejection
+unreachable.
+
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
 Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adapted the removal to the shorter PMTU block using dst->dev->mtu. ]
+Suggested-by: Pauli Virtanen <pav@iki.fi>
+Assisted-by: GPT-6 Astra
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Moved socket locking earlier in the connection helpers to provide the locking coverage assumed by upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/bluetooth/iso.c | 67 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 43 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 06a1657755382..5e8c7071c638d 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -942,7 +942,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- {
- 	struct ip_tunnel_info *tun_info = NULL;
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct dst_entry *dst = skb_dst(skb);
- 	bool truncate = false;
- 	int encap_limit = -1;
- 	__u8 dsfield = false;
-@@ -1074,10 +1073,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	/* Push GRE header. */
- 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 23bd4d8c397f7..2dd8e6e6beac5 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -55,6 +55,7 @@ enum {
+ 	BT_SK_BIG_SYNC,
+ 	BT_SK_PA_SYNC,
+ 	BT_SK_PA_SYNC_TERM,
++	BT_SK_CONNECTING,
+ };
  
--	/* TooBig packet may have updated dst->dev's mtu */
--	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
--		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
+ struct iso_pinfo {
+@@ -277,6 +278,9 @@ static int __iso_chan_add(struct iso_conn *conn, struct sock *sk,
+ 		return -EBUSY;
+ 	}
+ 
++	if (iso_pi(sk)->conn)
++		return -EISCONN;
++
+ 	iso_pi(sk)->conn = conn;
+ 	conn->sk = sk;
+ 
+@@ -321,6 +325,12 @@ static int iso_connect_bis(struct sock *sk)
+ 		return -EHOSTUNREACH;
+ 
+ 	hci_dev_lock(hdev);
++	lock_sock(sk);
++
++	if (iso_pi(sk)->conn) {
++		err = -EISCONN;
++		goto unlock;
++	}
+ 
+ 	if (!bis_capable(hdev)) {
+ 		err = -EOPNOTSUPP;
+@@ -367,13 +377,9 @@ static int iso_connect_bis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
+-	lock_sock(sk);
 -
- 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
- 			   NEXTHDR_GRE);
- 	if (err != 0) {
+ 	err = iso_chan_add(conn, sk, NULL);
+-	if (err) {
+-		release_sock(sk);
++	if (err)
+ 		goto unlock;
+-	}
+ 
+ 	/* Update source addr of the socket */
+ 	bacpy(&iso_pi(sk)->src, &hcon->src);
+@@ -389,9 +395,8 @@ static int iso_connect_bis(struct sock *sk)
+ 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
+ 	}
+ 
+-	release_sock(sk);
+-
+ unlock:
++	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 	return err;
+@@ -412,6 +417,7 @@ static int iso_connect_cis(struct sock *sk)
+ 		return -EHOSTUNREACH;
+ 
+ 	hci_dev_lock(hdev);
++	lock_sock(sk);
+ 
+ 	if (!cis_central_capable(hdev)) {
+ 		err = -EOPNOTSUPP;
+@@ -450,6 +456,13 @@ static int iso_connect_cis(struct sock *sk)
+ 		}
+ 	}
+ 
++	/* The socket lock keeps the current attachment and its hcon stable. */
++	if (iso_pi(sk)->conn && iso_pi(sk)->conn->hcon != hcon) {
++		hci_conn_drop(hcon);
++		err = -EISCONN;
++		goto unlock;
++	}
++
+ 	conn = iso_conn_add(hcon);
+ 	if (!conn) {
+ 		hci_conn_drop(hcon);
+@@ -457,13 +470,9 @@ static int iso_connect_cis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
+-	lock_sock(sk);
+-
+ 	err = iso_chan_add(conn, sk, NULL);
+-	if (err) {
+-		release_sock(sk);
++	if (err)
+ 		goto unlock;
+-	}
+ 
+ 	/* Update source addr of the socket */
+ 	bacpy(&iso_pi(sk)->src, &hcon->src);
+@@ -479,9 +488,8 @@ static int iso_connect_cis(struct sock *sk)
+ 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
+ 	}
+ 
+-	release_sock(sk);
+-
+ unlock:
++	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 	return err;
+@@ -1000,17 +1008,26 @@ static int iso_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 	    addr->sa_family != AF_BLUETOOTH)
+ 		return -EINVAL;
+ 
+-	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND)
+-		return -EBADFD;
++	lock_sock(sk);
+ 
+-	if (sk->sk_type != SOCK_SEQPACKET)
+-		return -EINVAL;
++	if ((sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) ||
++	    test_bit(BT_SK_CONNECTING, &iso_pi(sk)->flags)) {
++		err = -EBADFD;
++		goto done;
++	}
++
++	if (sk->sk_type != SOCK_SEQPACKET) {
++		err = -EINVAL;
++		goto done;
++	}
+ 
+ 	/* Check if the address type is of LE type */
+-	if (!bdaddr_type_is_le(sa->iso_bdaddr_type))
+-		return -EINVAL;
++	if (!bdaddr_type_is_le(sa->iso_bdaddr_type)) {
++		err = -EINVAL;
++		goto done;
++	}
+ 
+-	lock_sock(sk);
++	set_bit(BT_SK_CONNECTING, &iso_pi(sk)->flags);
+ 
+ 	bacpy(&iso_pi(sk)->dst, &sa->iso_bdaddr);
+ 	iso_pi(sk)->dst_type = sa->iso_bdaddr_type;
+@@ -1022,16 +1039,18 @@ static int iso_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 	else
+ 		err = iso_connect_bis(sk);
+ 
+-	if (err)
+-		return err;
+-
+ 	lock_sock(sk);
+ 
++	clear_bit(BT_SK_CONNECTING, &iso_pi(sk)->flags);
++	if (err)
++		goto done;
++
+ 	if (!test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
+ 		err = bt_sock_wait_state(sk, BT_CONNECTED,
+ 					 sock_sndtimeo(sk, flags & O_NONBLOCK));
+ 	}
+ 
++done:
+ 	release_sock(sk);
+ 	return err;
+ }
 -- 
 2.53.0
 
