@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B57E37F01B;
-	Sat, 17 Oct 2026 17:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF6737F01B;
+	Sat, 17 Oct 2026 17:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258230; cv=none; b=lAwBdYihluaMeDMoDX8BdwxBmxVOx92NKTHs90nnmlv8a+VTNddpz3tYGkQCUNtp1/yh6W9bxh8wHxLHuqShoplkmjOQhRXJ+uL6RMaRB5Jj2I1fd9Qp2wQklH19xNtWdnu9ZiLqwSkNszh2fnhyeGjBiSTd+PGW6jH2qWVkTuQ=
+	t=1792258233; cv=none; b=ZsgHW4j5kSPg7+HwFKBSStDK12QiMOD02+Oy5I+Zc9h4PCBfpEimL6/utpGy7BAZNwHp1humCZ7zaJEZCNo4MIZWd+bOx4jwvKt5cjtoMMYEfVks5DV+hQHGJsdQxNbysfjJIrxu/ggNW4k3SPujbxaQfS1QCJ7LtpDDgOxRmas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258230; c=relaxed/simple;
-	bh=P2u+nxKS9qvzZraeCpxaRhsVLbku4RfkFwT1MvwMO80=;
+	s=arc-20240116; t=1792258233; c=relaxed/simple;
+	bh=0U0yxdi43bsa7CFQvitTGK7jO8wLXM+qFDQACk76/n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcUsl8P7MkIz7NVnfXFzPIp5IbbAq2GTOBhnX7gfk9unyO/ca0+jfkSmx91dB/ZkA0J3BSSu8DVznV8I0GO5baNQF99LrdVDxh4gRXoN8vamcoDSX4NB2YqaNK/45GlSKC5A86FUmuWhJRsPtHy11UaJXo8YGFfgbxhxuj8T8QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyUkBFg7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OpMWDQqHyk+ixhKz59TKoaNQLJJL7C1TRZQOjTqs3g8Z91J6Wo8+sbma0MAqHFJJ6AikLlbE/77wnwFEd/O3yjRtUSAJyuBXv2OMvG+uCbggVrb5+v1zBo2ddTLXn8G/TkYO1xxHRR6RSS893RbEUVj5m+RGvQ+4x6sm6EtwsyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrBR54+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyUkBFg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B5A1F000C4;
-	Sat, 17 Oct 2026 17:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrBR54+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BD51F000C4;
+	Sat, 17 Oct 2026 17:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258229;
-	bh=+Zuh9IC0kZQyl9SJ+13PNBJeELcD6/RTZISWZ+/AA5I=;
+	s=korg; t=1792258232;
+	bh=eI2iQKJLiQVH5pZgZw7LLTImgK8GSgiK50uM9xK1sGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyUkBFg7raiBfwp28WfaVQ4ym0Fu58EBuS7FBBP7o3JiGa1cv6QwCw9iJWNh4HXOa
-	 7uIuScVpHbtch1I8l3T9f83Q9ZhZiMr7jxvCYsgk+wSvTHU4Xl5RCHPPLfSKZvfauj
-	 UQGUv+wbOl8S1CLNvra202vktyNrQE3DidCHJOh8=
+	b=QrBR54+yT3DqQ83aTHZvaKg2hceVybroVJ+WnD9PyAXo6bX4PNBXvvgnl9sLhxQT+
+	 Tj01j6HwgI1vmK1tO9ufySfWipFP/BCuGizd4eUSL9UIonKquDMdGnM85L7dGkwjKf
+	 /6vQdlOHImAFez+HXvFDuzJdv0QuvMb8QFJ9+zAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xabier Marquiegui <reibax@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Richard Leitner <richard.leitner@linux.dev>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0798/1674] ptp: Replace timestamp event queue with linked list
-Date: Sat, 17 Oct 2026 17:51:10 +0200
-Message-ID: <20261017160451.592704789@linuxfoundation.org>
+Subject: [PATCH 6.6 0816/1674] media: nxp: imx8-isi: Fix streaming cleanup on release
+Date: Sat, 17 Oct 2026 17:51:28 +0200
+Message-ID: <20261017160452.067460871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,191 +52,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xabier Marquiegui <reibax@gmail.com>
+From: Richard Leitner <richard.leitner@linux.dev>
 
-[ Upstream commit d26ab5a35ad9920940a9e07665130d501b2ae1a3 ]
+[ Upstream commit 47773031a148ad7973b809cc7723cba77eda2b42 ]
 
-Introduce linked lists to access the timestamp event queue.
+The current implementation unconditionally calls
+mxc_isi_video_cleanup_streaming() in mxc_isi_video_release(). This can
+lead to situations where any release call (like from a simple
+"v4l2-ctl -l") may release a currently streaming queue when called on
+such a device.
 
-Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
-Suggested-by: Richard Cochran <richardcochran@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e9f35294e18d ("ptp: Add a upper bound on max_vclocks")
+This is reproducible on an i.MX8MP board by streaming from an ISI
+capture device using gstreamer:
+
+	gst-launch-1.0 -v v4l2src device=/dev/videoX ! \
+	    video/x-raw,format=GRAY8,width=1280,height=800,framerate=1/120 ! \
+	    fakesink
+
+While this stream is running, querying the caps of the same device
+provokes the error state:
+
+	v4l2-ctl -l -d /dev/videoX
+
+This results in the following trace:
+
+[  155.452152] ------------[ cut here ]------------
+[  155.452163] WARNING: CPU: 0 PID: 1708 at drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c:713 mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi]
+[  157.004248] Modules linked in: cfg80211 rpmsg_ctrl rpmsg_char rpmsg_tty virtio_rpmsg_bus rpmsg_ns rpmsg_core rfkill nft_ct nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables mcp251x6
+[  157.053499] CPU: 0 UID: 0 PID: 1708 Comm: python3 Not tainted 6.15.4-00114-g1f61ca5cad76 #1 PREEMPT
+[  157.064369] Hardware name: imx8mp_board_01 (DT)
+[  157.068205] pstate: 400000c5 (nZcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  157.075169] pc : mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi]
+[  157.081195] lr : mxc_isi_pipe_irq_handler+0x38/0x1b0 [imx8_isi]
+[  157.087126] sp : ffff800080003ee0
+[  157.090438] x29: ffff800080003ee0 x28: ffff0000c3688000 x27: 0000000000000000
+[  157.097580] x26: 0000000000000000 x25: ffff0000c1e7ac00 x24: ffff800081b5ad50
+[  157.104723] x23: 00000000000000d1 x22: 0000000000000000 x21: ffff0000c25e4000
+[  157.111866] x20: 0000000060000200 x19: ffff80007a0608d0 x18: 0000000000000000
+[  157.119008] x17: ffff80006a4e3000 x16: ffff800080000000 x15: 0000000000000000
+[  157.126146] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+[  157.133287] x11: 0000000000000040 x10: ffff0000c01445f0 x9 : ffff80007a053a38
+[  157.140425] x8 : ffff0000c04004b8 x7 : 0000000000000000 x6 : 0000000000000000
+[  157.147567] x5 : ffff0000c0400490 x4 : ffff80006a4e3000 x3 : ffff0000c25e4000
+[  157.154706] x2 : 0000000000000000 x1 : ffff8000825c0014 x0 : 0000000060000200
+[  157.161850] Call trace:
+[  157.164296]  mxc_isi_pipe_irq_handler+0x19c/0x1b0 [imx8_isi] (P)
+[  157.170319]  __handle_irq_event_percpu+0x58/0x218
+[  157.175029]  handle_irq_event+0x54/0xb8
+[  157.178867]  handle_fasteoi_irq+0xac/0x248
+[  157.182968]  handle_irq_desc+0x48/0x68
+[  157.186723]  generic_handle_domain_irq+0x24/0x38
+[  157.191346]  gic_handle_irq+0x54/0x120
+[  157.195098]  call_on_irq_stack+0x24/0x30
+[  157.199027]  do_interrupt_handler+0x88/0x98
+[  157.203212]  el0_interrupt+0x44/0xc0
+[  157.206792]  __el0_irq_handler_common+0x18/0x28
+[  157.211328]  el0t_64_irq_handler+0x10/0x20
+[  157.215429]  el0t_64_irq+0x198/0x1a0
+[  157.219009] ---[ end trace 0000000000000000 ]---
+
+Address this issue by moving the streaming preparation and cleanup to
+the vb2 .prepare_streaming() and .unprepare_streaming() operations. This
+also simplifies the driver by allowing direct usage of the
+vb2_ioctl_streamon() and vb2_ioctl_streamoff() helpers, and removal of
+the manual cleanup from mxc_isi_video_release().
+
+Link: https://lore.kernel.org/r/20250813212451.22140-2-laurent.pinchart@ideasonboard.com
+Signed-off-by: Richard Leitner <richard.leitner@linux.dev>
+Co-developed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Richard Leitner <richard.leitner@linux.dev> # i.MX8MP
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c | 12 ++++++++++--
- drivers/ptp/ptp_clock.c   | 26 ++++++++++++++++++++++++--
- drivers/ptp/ptp_private.h |  4 +++-
- drivers/ptp/ptp_sysfs.c   |  6 +++++-
- 4 files changed, 42 insertions(+), 6 deletions(-)
+ .../platform/nxp/imx8-isi/imx8-isi-video.c    | 156 +++++++-----------
+ 1 file changed, 58 insertions(+), 98 deletions(-)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index 1ed12e86ee000..92f9447d41b0c 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -460,10 +460,14 @@ __poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
- {
- 	struct ptp_clock *ptp =
- 		container_of(pccontext->clk, struct ptp_clock, clock);
-+	struct timestamp_event_queue *queue;
- 
- 	poll_wait(fp, &ptp->tsev_wq, wait);
- 
--	return queue_cnt(&ptp->tsevq) ? EPOLLIN : 0;
-+	/* Extract only the first element in the queue list */
-+	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue, qlist);
-+
-+	return queue_cnt(queue) ? EPOLLIN : 0;
+diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+index cb032738ef95a..c2a507c3da6eb 100644
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+@@ -937,6 +937,49 @@ static void mxc_isi_video_init_channel(struct mxc_isi_video *video)
+ 	mxc_isi_channel_set_output_format(pipe, video->fmtinfo, &video->pix);
  }
  
- #define EXTTS_BUFSIZE (PTP_BUF_TIMESTAMPS * sizeof(struct ptp_extts_event))
-@@ -473,12 +477,16 @@ ssize_t ptp_read(struct posix_clock_context *pccontext, uint rdflags,
- {
- 	struct ptp_clock *ptp =
- 		container_of(pccontext->clk, struct ptp_clock, clock);
--	struct timestamp_event_queue *queue = &ptp->tsevq;
-+	struct timestamp_event_queue *queue;
- 	struct ptp_extts_event *event;
- 	unsigned long flags;
- 	size_t qcnt, i;
- 	int result;
- 
-+	/* Extract only the first element in the queue list */
-+	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
-+				 qlist);
++static int mxc_isi_vb2_prepare_streaming(struct vb2_queue *q)
++{
++	struct mxc_isi_video *video = vb2_get_drv_priv(q);
++	struct media_device *mdev = &video->pipe->isi->media_dev;
++	struct media_pipeline *pipe;
++	int ret;
 +
- 	if (cnt % sizeof(struct ptp_extts_event) != 0)
- 		return -EINVAL;
- 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index d252d018bfe77..2eac19e231d5b 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -183,12 +183,21 @@ static struct posix_clock_operations ptp_clock_ops = {
- static void ptp_clock_release(struct device *dev)
++	/* Get a pipeline for the video node and start it. */
++	scoped_guard(mutex, &mdev->graph_mutex) {
++		ret = mxc_isi_pipe_acquire(video->pipe,
++					   &mxc_isi_video_frame_write_done);
++		if (ret)
++			return ret;
++
++		pipe = media_entity_pipeline(&video->vdev.entity)
++		     ? : &video->pipe->pipe;
++
++		ret = __video_device_pipeline_start(&video->vdev, pipe);
++		if (ret)
++			goto err_release;
++	}
++
++	/* Verify that the video format matches the output of the subdev. */
++	ret = mxc_isi_video_validate_format(video);
++	if (ret)
++		goto err_stop;
++
++	/* Allocate buffers for discard operation. */
++	ret = mxc_isi_video_alloc_discard_buffers(video);
++	if (ret)
++		goto err_stop;
++
++	video->is_streaming = true;
++
++	return 0;
++
++err_stop:
++	video_device_pipeline_stop(&video->vdev);
++err_release:
++	mxc_isi_pipe_release(video->pipe);
++	return ret;
++}
++
+ static int mxc_isi_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
  {
- 	struct ptp_clock *ptp = container_of(dev, struct ptp_clock, dev);
-+	struct timestamp_event_queue *tsevq;
-+	unsigned long flags;
- 
- 	ptp_cleanup_pin_groups(ptp);
- 	kfree(ptp->vclock_index);
- 	mutex_destroy(&ptp->tsevq_mux);
- 	mutex_destroy(&ptp->pincfg_mux);
- 	mutex_destroy(&ptp->n_vclocks_mux);
-+	/* Delete first entry */
-+	tsevq = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
-+				 qlist);
-+	spin_lock_irqsave(&tsevq->lock, flags);
-+	list_del(&tsevq->qlist);
-+	spin_unlock_irqrestore(&tsevq->lock, flags);
-+	kfree(tsevq);
- 	ida_free(&ptp_clocks_map, ptp->index);
- 	kfree(ptp);
+ 	struct mxc_isi_video *video = vb2_get_drv_priv(q);
+@@ -985,6 +1028,17 @@ static void mxc_isi_vb2_stop_streaming(struct vb2_queue *q)
+ 	mxc_isi_video_return_buffers(video, VB2_BUF_STATE_ERROR);
  }
-@@ -225,6 +234,7 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
- 				     struct device *parent)
- {
- 	struct ptp_clock *ptp;
-+	struct timestamp_event_queue *queue = NULL;
- 	int err = 0, index, major = MAJOR(ptp_devt);
- 	size_t size;
  
-@@ -247,7 +257,12 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
- 	ptp->info = info;
- 	ptp->devid = MKDEV(major, index);
- 	ptp->index = index;
--	spin_lock_init(&ptp->tsevq.lock);
-+	INIT_LIST_HEAD(&ptp->tsevqs);
-+	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
-+	if (!queue)
-+		goto no_memory_queue;
-+	spin_lock_init(&queue->lock);
-+	list_add_tail(&queue->qlist, &ptp->tsevqs);
- 	mutex_init(&ptp->tsevq_mux);
- 	mutex_init(&ptp->pincfg_mux);
- 	mutex_init(&ptp->n_vclocks_mux);
-@@ -355,6 +370,9 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
- 	mutex_destroy(&ptp->tsevq_mux);
- 	mutex_destroy(&ptp->pincfg_mux);
- 	mutex_destroy(&ptp->n_vclocks_mux);
-+	list_del(&queue->qlist);
-+	kfree(queue);
-+no_memory_queue:
- 	ida_free(&ptp_clocks_map, index);
- no_slot:
- 	kfree(ptp);
-@@ -397,6 +415,7 @@ EXPORT_SYMBOL(ptp_clock_unregister);
- 
- void ptp_clock_event(struct ptp_clock *ptp, struct ptp_clock_event *event)
- {
-+	struct timestamp_event_queue *tsevq;
- 	struct pps_event_time evt;
- 
- 	switch (event->type) {
-@@ -405,7 +424,10 @@ void ptp_clock_event(struct ptp_clock *ptp, struct ptp_clock_event *event)
- 		break;
- 
- 	case PTP_CLOCK_EXTTS:
--		enqueue_external_timestamp(&ptp->tsevq, event);
-+		/* Enqueue timestamp on all queues */
-+		list_for_each_entry(tsevq, &ptp->tsevqs, qlist) {
-+			enqueue_external_timestamp(tsevq, event);
-+		}
- 		wake_up_interruptible(&ptp->tsev_wq);
- 		break;
- 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index e25be08fa6ae9..baf05d55376dd 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -15,6 +15,7 @@
- #include <linux/ptp_clock.h>
- #include <linux/ptp_clock_kernel.h>
- #include <linux/time.h>
-+#include <linux/list.h>
- 
- #define PTP_MAX_TIMESTAMPS 128
- #define PTP_BUF_TIMESTAMPS 30
-@@ -30,6 +31,7 @@ struct timestamp_event_queue {
- 	int head;
- 	int tail;
- 	spinlock_t lock;
-+	struct list_head qlist;
++static void mxc_isi_vb2_unprepare_streaming(struct vb2_queue *q)
++{
++	struct mxc_isi_video *video = vb2_get_drv_priv(q);
++
++	mxc_isi_video_free_discard_buffers(video);
++	video_device_pipeline_stop(&video->vdev);
++	mxc_isi_pipe_release(video->pipe);
++
++	video->is_streaming = false;
++}
++
+ static const struct vb2_ops mxc_isi_vb2_qops = {
+ 	.queue_setup		= mxc_isi_vb2_queue_setup,
+ 	.buf_init		= mxc_isi_vb2_buffer_init,
+@@ -992,8 +1046,10 @@ static const struct vb2_ops mxc_isi_vb2_qops = {
+ 	.buf_queue		= mxc_isi_vb2_buffer_queue,
+ 	.wait_prepare		= vb2_ops_wait_prepare,
+ 	.wait_finish		= vb2_ops_wait_finish,
++	.prepare_streaming	= mxc_isi_vb2_prepare_streaming,
+ 	.start_streaming	= mxc_isi_vb2_start_streaming,
+ 	.stop_streaming		= mxc_isi_vb2_stop_streaming,
++	.unprepare_streaming	= mxc_isi_vb2_unprepare_streaming,
  };
  
- struct ptp_clock {
-@@ -40,7 +42,7 @@ struct ptp_clock {
- 	int index; /* index into clocks.map */
- 	struct pps_device *pps_source;
- 	long dialed_frequency; /* remembers the frequency adjustment */
--	struct timestamp_event_queue tsevq; /* simple fifo for time stamps */
-+	struct list_head tsevqs; /* timestamp fifo list */
- 	struct mutex tsevq_mux; /* one process at a time reading the fifo */
- 	struct mutex pincfg_mux; /* protect concurrent info->pin_config access */
- 	wait_queue_head_t tsev_wq;
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index aefc06ae5d099..952d3e968bdf9 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -75,12 +75,16 @@ static ssize_t extts_fifo_show(struct device *dev,
- 			       struct device_attribute *attr, char *page)
+ /* -----------------------------------------------------------------------------
+@@ -1147,97 +1203,6 @@ static int mxc_isi_video_s_fmt(struct file *file, void *priv,
+ 	return 0;
+ }
+ 
+-static int mxc_isi_video_streamon(struct file *file, void *priv,
+-				  enum v4l2_buf_type type)
+-{
+-	struct mxc_isi_video *video = video_drvdata(file);
+-	struct media_device *mdev = &video->pipe->isi->media_dev;
+-	struct media_pipeline *pipe;
+-	int ret;
+-
+-	if (vb2_queue_is_busy(&video->vb2_q, file))
+-		return -EBUSY;
+-
+-	/*
+-	 * Get a pipeline for the video node and start it. This must be done
+-	 * here and not in the queue .start_streaming() handler, so that
+-	 * pipeline start errors can be reported from VIDIOC_STREAMON and not
+-	 * delayed until subsequent VIDIOC_QBUF calls.
+-	 */
+-	mutex_lock(&mdev->graph_mutex);
+-
+-	ret = mxc_isi_pipe_acquire(video->pipe, &mxc_isi_video_frame_write_done);
+-	if (ret) {
+-		mutex_unlock(&mdev->graph_mutex);
+-		return ret;
+-	}
+-
+-	pipe = media_entity_pipeline(&video->vdev.entity) ? : &video->pipe->pipe;
+-
+-	ret = __video_device_pipeline_start(&video->vdev, pipe);
+-	if (ret) {
+-		mutex_unlock(&mdev->graph_mutex);
+-		goto err_release;
+-	}
+-
+-	mutex_unlock(&mdev->graph_mutex);
+-
+-	/* Verify that the video format matches the output of the subdev. */
+-	ret = mxc_isi_video_validate_format(video);
+-	if (ret)
+-		goto err_stop;
+-
+-	/* Allocate buffers for discard operation. */
+-	ret = mxc_isi_video_alloc_discard_buffers(video);
+-	if (ret)
+-		goto err_stop;
+-
+-	ret = vb2_streamon(&video->vb2_q, type);
+-	if (ret)
+-		goto err_free;
+-
+-	video->is_streaming = true;
+-
+-	return 0;
+-
+-err_free:
+-	mxc_isi_video_free_discard_buffers(video);
+-err_stop:
+-	video_device_pipeline_stop(&video->vdev);
+-err_release:
+-	mxc_isi_pipe_release(video->pipe);
+-	return ret;
+-}
+-
+-static void mxc_isi_video_cleanup_streaming(struct mxc_isi_video *video)
+-{
+-	lockdep_assert_held(&video->lock);
+-
+-	if (!video->is_streaming)
+-		return;
+-
+-	mxc_isi_video_free_discard_buffers(video);
+-	video_device_pipeline_stop(&video->vdev);
+-	mxc_isi_pipe_release(video->pipe);
+-
+-	video->is_streaming = false;
+-}
+-
+-static int mxc_isi_video_streamoff(struct file *file, void *priv,
+-				   enum v4l2_buf_type type)
+-{
+-	struct mxc_isi_video *video = video_drvdata(file);
+-	int ret;
+-
+-	ret = vb2_ioctl_streamoff(file, priv, type);
+-	if (ret)
+-		return ret;
+-
+-	mxc_isi_video_cleanup_streaming(video);
+-
+-	return 0;
+-}
+-
+ static int mxc_isi_video_enum_framesizes(struct file *file, void *priv,
+ 					 struct v4l2_frmsizeenum *fsize)
  {
- 	struct ptp_clock *ptp = dev_get_drvdata(dev);
--	struct timestamp_event_queue *queue = &ptp->tsevq;
-+	struct timestamp_event_queue *queue;
- 	struct ptp_extts_event event;
- 	unsigned long flags;
- 	size_t qcnt;
- 	int cnt = 0;
+@@ -1293,9 +1258,8 @@ static const struct v4l2_ioctl_ops mxc_isi_video_ioctl_ops = {
+ 	.vidioc_expbuf			= vb2_ioctl_expbuf,
+ 	.vidioc_prepare_buf		= vb2_ioctl_prepare_buf,
+ 	.vidioc_create_bufs		= vb2_ioctl_create_bufs,
+-
+-	.vidioc_streamon		= mxc_isi_video_streamon,
+-	.vidioc_streamoff		= mxc_isi_video_streamoff,
++	.vidioc_streamon		= vb2_ioctl_streamon,
++	.vidioc_streamoff		= vb2_ioctl_streamoff,
  
-+	/* The sysfs fifo will always draw from the fist queue */
-+	queue = list_first_entry(&ptp->tsevqs, struct timestamp_event_queue,
-+				 qlist);
-+
- 	memset(&event, 0, sizeof(event));
+ 	.vidioc_enum_framesizes		= mxc_isi_video_enum_framesizes,
  
- 	if (mutex_lock_interruptible(&ptp->tsevq_mux))
+@@ -1334,10 +1298,6 @@ static int mxc_isi_video_release(struct file *file)
+ 	if (ret)
+ 		dev_err(video->pipe->isi->dev, "%s fail\n", __func__);
+ 
+-	mutex_lock(&video->lock);
+-	mxc_isi_video_cleanup_streaming(video);
+-	mutex_unlock(&video->lock);
+-
+ 	pm_runtime_put(video->pipe->isi->dev);
+ 	return ret;
+ }
 -- 
 2.53.0
 
