@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5232E151;
-	Sat, 17 Oct 2026 17:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D5B280331;
+	Sat, 17 Oct 2026 17:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256666; cv=none; b=RFbKvBsWwbDiSe0r8DaVjZCH+eTSXKlwPswpAZajNqq8AVN+I3V2YHh+Vato+6WIsHnfHyj2fzcgrU+mz9b7HEH6dYXk5YwlF89H6C/xr6VWLgO/1kTAs8osX09gyERCQgbJcuj1LpspvHn7Rs4F6TL2tABhNVZK4LAgX8BMGh0=
+	t=1792256668; cv=none; b=Du3WK2xQSR8Iyw/nYObAqBPuySeEpjPC8BawsTmcECbLwl/Yp4cjQzI+ngoMRIGgtsrTqfyNpWTReplRSRq3HKqfnuA+DFXrK65YmVwT5T2uKLo1ycSkdJjKBux7EFr6QoxtDD4BwVFtpL2gHTrG4UvTef/weqt/s1c+kS8igzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256666; c=relaxed/simple;
-	bh=lAOWDcoaQeJ/l7nuisz77nDi2IlQ5ffgo+vV/19pke8=;
+	s=arc-20240116; t=1792256668; c=relaxed/simple;
+	bh=E9ZT6C11+0XZVGkhjIrEckczGCdvvbZPkfyD6KxgxDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZC1YeGMDqcP8S42jcgumRC6O1dK6lEh92132GHGIO3mmUMkwvxF04Ffurol/cykGIh/s/dqSx2vbIeYrTstXQWKoIsql/kj08UFGfzUhN6+qfrUBquytWOfLD9ROYsHMRFphh0S4WyOxNfr+sbySO+W68V/X1RI+LuCHhirlSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W2VmAY4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VcjRvrkAEXa5ZLqPNYiKk+C1jDfXadfO2DysXz8Wvejl8+KzVMx8SbZ/WbB0iN400sQwKKhOKqSmwUW1blJdYicAxvg35mFHO1iOd8nYF/njkGPo3/u1GMo673mRRRQRH1xP8bcEDaRlvv/FKweooPT6jl3Jsfw/m7wtoXYY5rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDmlzHT9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W2VmAY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED611F000C4;
-	Sat, 17 Oct 2026 17:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDmlzHT9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276E1F000C4;
+	Sat, 17 Oct 2026 17:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256664;
-	bh=rBvFw6DESzq656iUzIRA+2g6+A4dgg23xMTcpoxquAg=;
+	s=korg; t=1792256667;
+	bh=ZW9uopkEmemBo+jKTfFtqzUIBvdQq8QknS/kHf8QDuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0W2VmAY4NEbfNf1MCG3Fac1Vts9YbMe9p/7UfHT5CUOnQIHzEJ8QwMgLLpALKxwOd
-	 5zyR6olbjRs1Xl23L42zDx/Ue9pz+EKmu5MlHUFi6OyK+5gR/O7tdAcfKBAR0w5kcx
-	 F+nCnLum7Y2F4iHcyM0n3NnNEuEfrvsPioKyNUDc=
+	b=sDmlzHT9FYj3NcfHrr+K10sdQoDW3TFsJFVlAEqi/gB+cJLdBTT9UIAQ8PFGijNbd
+	 mSoL9JdSuoWhFnaG8tcKmjRWIi4G73wsiqpwKzvINp4WbmuiD2BlLHRos2Uw4RtbUT
+	 HaS1r3PixQ48fSqx1Yw3+1q+hc9fBw+nU+58Emnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0312/1674] wifi: cw1200: fix TX padding OOB read leaking heap data to device
-Date: Sat, 17 Oct 2026 17:43:04 +0200
-Message-ID: <20261017160439.127082516@linuxfoundation.org>
+Subject: [PATCH 6.6 0313/1674] wifi: iwlegacy: 3945: free EEPROM data on remove
+Date: Sat, 17 Oct 2026 17:43:05 +0200
+Message-ID: <20261017160439.154032151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -50,109 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 7c1611780823b76219cb1478db53dfd890c4a9a2 upstream.
+commit f8ebe286394c0bbb4a6dbacb182a34ab6376922d upstream.
 
-The TX path rounds the transfer size up to the bus alignment
-(align_size(), up to 511 bytes for SDIO, 1 byte for SPI) but sends
-the padded length straight from the frame buffer, which has no room
-reserved for the padding.  cw1200_data_write() therefore reads past
-the end of the frame and the bus transfer carries those bytes to the
-device.  A bogus device can collect up to 511 bytes of kernel heap
-data per TX frame.
+il3945_pci_probe() calls il_eeprom_init(), which allocates memory for
+the EEPROM data. The probe failure paths release this allocation with
+il_eeprom_free(), but the remove path does not free it after a
+successful probe.
 
-The RX path does not have this problem: it allocates the skb with
-the aligned length (alloc_len) before reading.
+As a result, the EEPROM data is leaked when the PCI device is removed.
 
-Compute the exact padding with the bus align_size() callback, make
-sure queued TX frames have tailroom for it, and zero the padding
-bytes before the transfer so nothing past the frame is exposed.
+Free the EEPROM data in il3945_pci_remove() before releasing the
+mac80211 hardware structure.
 
-This is not expected to change driver behavior on most cases: frame
-contents and transfer sizes are unchanged, only the content of the
-padding bytes (previously undefined stale memory, now zero), which
-the device never reads since the WSM header carries the real frame
-length.  The skb expansion can only fail under memory exhaustion,
-in which case the frame is dropped like on the existing error paths
-of cw1200_tx().
+This issue was found by manual code inspection.
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Fixes: 073d3f5f1b3b ("iwlwifi: changing EEPROM layout handling")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/7982b4a7e64f74e2068790ec389ca680a081f730@linux.dev
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260916073736.2952028-1-lgs201920130244@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/st/cw1200/bh.c   |    8 +++++++-
- drivers/net/wireless/st/cw1200/txrx.c |   14 ++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlegacy/3945-mac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/st/cw1200/bh.c
-+++ b/drivers/net/wireless/st/cw1200/bh.c
-@@ -343,6 +343,7 @@ static int cw1200_bh_tx_helper(struct cw
- 			       int *tx_burst)
- {
- 	size_t tx_len;
-+	size_t aligned_len;
- 	u8 *data;
- 	int ret;
- 	struct wsm_hdr *wsm;
-@@ -375,9 +376,14 @@ static int cw1200_bh_tx_helper(struct cw
+--- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
+@@ -3840,6 +3840,7 @@ il3945_pci_remove(struct pci_dev *pdev)
  
- 	atomic_inc(&priv->bh_tx);
- 
--	tx_len = priv->hwbus_ops->align_size(
-+	aligned_len = priv->hwbus_ops->align_size(
- 		priv->hwbus_priv, tx_len);
- 
-+	/* Zero the bus alignment padding so no stale data is sent. */
-+	if (aligned_len > tx_len)
-+		memset(data + tx_len, 0, aligned_len - tx_len);
-+	tx_len = aligned_len;
-+
- 	/* Check if not exceeding CW1200 capabilities */
- 	if (WARN_ON_ONCE(tx_len > EFFECTIVE_BUF_SIZE))
- 		pr_debug("Write aligned len: %zu\n", tx_len);
---- a/drivers/net/wireless/st/cw1200/txrx.c
-+++ b/drivers/net/wireless/st/cw1200/txrx.c
-@@ -14,6 +14,7 @@
- #include "wsm.h"
- #include "bh.h"
- #include "sta.h"
-+#include "hwbus.h"
- #include "debug.h"
- 
- #define CW1200_INVALID_RATE_ID (0xFF)
-@@ -716,6 +717,7 @@ void cw1200_tx(struct ieee80211_hw *dev,
- 	struct ieee80211_sta *sta;
- 	struct wsm_tx *wsm;
- 	bool tid_update = false;
-+	size_t pad_len;
- 	u8 flags = 0;
- 	int ret;
- 
-@@ -764,6 +766,18 @@ void cw1200_tx(struct ieee80211_hw *dev,
- 
- 	sta = t.sta;
- 
-+	/*
-+	 * The bus transfer is padded up to the bus alignment and the
-+	 * padding is transferred from the frame buffer.  Make sure the
-+	 * buffer has room for the padding so the device never receives
-+	 * data past the end of the frame.
-+	 */
-+	pad_len = priv->hwbus_ops->align_size(priv->hwbus_priv, skb->len) -
-+		skb->len;
-+	if (skb_tailroom(skb) < pad_len &&
-+	    pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC))
-+		goto drop;
-+
- 	spin_lock_bh(&priv->ps_state_lock);
- 	{
- 		tid_update = cw1200_tx_h_pm_state(priv, &t);
+ 	il_free_channel_map(il);
+ 	il_free_geos(il);
++	il_eeprom_free(il);
+ 	kfree(il->scan_cmd);
+ 	dev_kfree_skb(il->beacon_skb);
+ 	ieee80211_free_hw(il->hw);
 
 
