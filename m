@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A01C3515E7;
-	Sat, 17 Oct 2026 16:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C702E8DEB;
+	Sat, 17 Oct 2026 16:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253433; cv=none; b=ZKwAZ+49eSUOLnQ1bMNaCo2t3COW/Sx3+cmXPcQslMiveXZgxZYm9p15DfD0eeM9JhMm2nG9spYumpEi3QJTQwg7iWLCPiC2LOIjmL1rBvVOJAn1KY4R0SXW9B90R546A7amwtRensCSAwe/TpfeNw5dFsmHScQuYt4UIpCkcig=
+	t=1792253436; cv=none; b=cUGPMCDuXrHFx915jnMkeTPuS4JI6dM8Ky0iuXO5HEMgK38AD9jHsYnDeCSv8bQqd6jp3hpIg1+N+rJx1GvmNU2+UTPJUZPg1WMMujoVTM1eBwr2wa0pnS/UdXYr8V+37Hg/1119Asd9JV4+tCmXwGV6l0lw3oae4XhbGkzocNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253433; c=relaxed/simple;
-	bh=HHlfRHRLFIZqW5LdtIvml+Eh/S3y9TkxMyc5pVtshgc=;
+	s=arc-20240116; t=1792253436; c=relaxed/simple;
+	bh=ILiGXp1Sp7SdTj48LS2/HifYQJYYCWozqhBhLe1IUXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3hrysARPbuTU1mUSBz1b39on8iZP8vsPKtSL8mkWSCgL1v3dpUEXsFuTxgGITWhjIVJ7VQGItzSlG7lQihDGv7qcclgp96HVntuC408HZwxQWqYCBNjVaMdY1twrSKEovcunRaFFh28+M2Z/EXmAdne+ayHBrsbNboJMubSwmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6wIkHdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNhSDko9nBxcDDr6kbzQzRVfb5siEfNJ0dksdX5IGEWVHjmfv9jMkEe4lg3mo6/rVPpEfePLhvz9CbqjRstDpFQkpx3hFXTVk1TRhs9BXQaAcV3d5izxAZfyFAotmygxXhbUBbXhsGDvXa9R1UOQgSfg2sUiiDHnhSYWnnLDEgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbVHKutx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6wIkHdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5855D1F000C4;
-	Sat, 17 Oct 2026 16:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbVHKutx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D571F000C4;
+	Sat, 17 Oct 2026 16:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253431;
-	bh=02OlaB0Q7c6ecvtt6QaXX+YIpHfdEp3kX6pRN6UKmGc=;
+	s=korg; t=1792253435;
+	bh=xVqxxct19EMQnMGQkYqGr3UKdTZRao9jb7Fo46NJZVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6wIkHdSUCg6MuFr64w3MVVtCyqOcSzyDjsHV3rWimrKfaCHr4FJnWbA87ty8793o
-	 X2cOwb81RvaWcfsOvtBF59AlM+rM3yMPcXuH7DKzDdslsz7RxbkuWyt01tGJl5QXKz
-	 9arouytUHEhIZxslrHr4k5B3dqv+PUMWTbSGB8JA=
+	b=kbVHKutxjTtG/3KHvtvpAg06fFmKPZ/2viCulvwDln1FI7tYGZcx4vkWsnTq2U4cX
+	 DdFCe32qx9SeT2f05sA6cBEKGeX2mjtD8sFvr0hMpNNLUnkwt8AW6+5U4Rt5yu1Tdx
+	 cwMvxYu4zb28e7ZieX26RVYofM/Geen0oUD91R0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/869] wifi: ath12k: Avoid explicit type cast in monitor status parse handler
-Date: Sat, 17 Oct 2026 17:48:25 +0200
-Message-ID: <20261017160038.666008486@linuxfoundation.org>
+Subject: [PATCH 6.12 110/869] crypto: x86/aegis - Fix sleeping when disallowed on PREEMPT_RT
+Date: Sat, 17 Oct 2026 17:49:11 +0200
+Message-ID: <20261017160039.857660653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,408 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 8534c42397ed8f05257dbddcd305a351ad40add1 ]
+[ Upstream commit c7f49dadfcdf27e1f747442e874e9baa52ab7674 ]
 
-Currently, monitor status parse procedure handles all the supported TLV
-tags. Each TLV tag has its own data structure for parsing. Now, this
-handler is passed the tlv_data as a u8 pointer, so explicit type cast
-conversion happens for every TLV tag parsing. Therefore, avoid the
-explicit type conversion by changing the tlv_data type from a u8 pointer
-to a const void pointer.
+skcipher_walk_done() can call kfree(), which takes a spinlock, which
+makes it incorrect to call while preemption is disabled on PREEMPT_RT.
+Therefore, end the kernel-mode FPU section before calling
+skcipher_walk_done(), and restart it afterwards.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Moreover, pass atomic=false to skcipher_walk_aead_encrypt() instead of
+atomic=true.  The point of atomic=true was to make skcipher_walk_done()
+safe to call while in a kernel-mode FPU section, but that does not
+actually work.  So just use the usual atomic=false.
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241217084511.2981515-9-quic_periyasa@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: ecfc13138992 ("wifi: ath12k: Avoid memory leak while enabling statistics")
+Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3d9eb180fbe8 ("crypto: x86/aegis - Add missing error checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 126 +++++++++--------------
- 1 file changed, 47 insertions(+), 79 deletions(-)
+ arch/x86/crypto/aegis128-aesni-glue.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index f1377e186518a..bc24b8edfaea3 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -10,11 +10,10 @@
- #include "dp_tx.h"
- #include "peer.h"
+diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
+index e7a28ccf273bf..de0aab6997d41 100644
+--- a/arch/x86/crypto/aegis128-aesni-glue.c
++++ b/arch/x86/crypto/aegis128-aesni-glue.c
+@@ -123,7 +123,9 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
+ 					   walk->dst.virt.addr,
+ 					   round_down(walk->nbytes,
+ 						      AEGIS128_BLOCK_SIZE));
++		kernel_fpu_end();
+ 		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
++		kernel_fpu_begin();
+ 	}
  
--static void ath12k_dp_mon_rx_handle_ofdma_info(void *rx_tlv,
--					       struct hal_rx_user_status *rx_user_status)
-+static void
-+ath12k_dp_mon_rx_handle_ofdma_info(const struct hal_rx_ppdu_end_user_stats *ppdu_end_user,
-+				   struct hal_rx_user_status *rx_user_status)
- {
--	struct hal_rx_ppdu_end_user_stats *ppdu_end_user = rx_tlv;
--
- 	rx_user_status->ul_ofdma_user_v0_word0 =
- 		__le32_to_cpu(ppdu_end_user->usr_resp_ref);
- 	rx_user_status->ul_ofdma_user_v0_word1 =
-@@ -38,7 +37,7 @@ ath12k_dp_mon_rx_populate_byte_count(const struct hal_rx_ppdu_end_user_stats *st
+ 	if (walk->nbytes) {
+@@ -135,7 +137,9 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
+ 			aegis128_aesni_dec_tail(state, walk->src.virt.addr,
+ 						walk->dst.virt.addr,
+ 						walk->nbytes);
++		kernel_fpu_end();
+ 		skcipher_walk_done(walk, 0);
++		kernel_fpu_begin();
+ 	}
  }
  
- static void
--ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
-+ath12k_dp_mon_rx_populate_mu_user_info(const struct hal_rx_ppdu_end_user_stats *rx_tlv,
- 				       struct hal_rx_mon_ppdu_info *ppdu_info,
- 				       struct hal_rx_user_status *rx_user_status)
- {
-@@ -76,11 +75,9 @@ ath12k_dp_mon_rx_populate_mu_user_info(void *rx_tlv,
- 	ath12k_dp_mon_rx_populate_byte_count(rx_tlv, ppdu_info, rx_user_status);
- }
+@@ -180,9 +184,9 @@ crypto_aegis128_aesni_crypt(struct aead_request *req,
+ 	struct aegis_state state;
  
--static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_vht_sig_a(const struct hal_rx_vht_sig_a_info *vht_sig,
- 					  struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_vht_sig_a_info *vht_sig =
--			(struct hal_rx_vht_sig_a_info *)tlv_data;
- 	u32 nsts, group_id, info0, info1;
- 	u8 gi_setting;
+ 	if (enc)
+-		skcipher_walk_aead_encrypt(&walk, req, true);
++		skcipher_walk_aead_encrypt(&walk, req, false);
+ 	else
+-		skcipher_walk_aead_decrypt(&walk, req, true);
++		skcipher_walk_aead_decrypt(&walk, req, false);
  
-@@ -122,11 +119,9 @@ static void ath12k_dp_mon_parse_vht_sig_a(u8 *tlv_data,
- 		u32_get_bits(info1, HAL_RX_VHT_SIG_A_INFO_INFO1_SU_MU_CODING);
- }
+ 	kernel_fpu_begin();
  
--static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_ht_sig(const struct hal_rx_ht_sig_info *ht_sig,
- 				       struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_ht_sig_info *ht_sig =
--			(struct hal_rx_ht_sig_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(ht_sig->info0);
- 	u32 info1 = __le32_to_cpu(ht_sig->info1);
- 
-@@ -139,11 +134,9 @@ static void ath12k_dp_mon_parse_ht_sig(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_l_sig_b(const struct hal_rx_lsig_b_info *lsigb,
- 					struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_lsig_b_info *lsigb =
--			(struct hal_rx_lsig_b_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(lsigb->info0);
- 	u8 rate;
- 
-@@ -173,11 +166,9 @@ static void ath12k_dp_mon_parse_l_sig_b(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_l_sig_a(const struct hal_rx_lsig_a_info *lsiga,
- 					struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_lsig_a_info *lsiga =
--			(struct hal_rx_lsig_a_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(lsiga->info0);
- 	u8 rate;
- 
-@@ -215,14 +206,13 @@ static void ath12k_dp_mon_parse_l_sig_a(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_SU;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
--						struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b2_ofdma(const struct hal_rx_he_sig_b2_ofdma_info *ofdma,
-+				    struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b2_ofdma_info *he_sig_b2_ofdma =
--			(struct hal_rx_he_sig_b2_ofdma_info *)tlv_data;
- 	u32 info0, value;
- 
--	info0 = __le32_to_cpu(he_sig_b2_ofdma->info0);
-+	info0 = __le32_to_cpu(ofdma->info0);
- 
- 	ppdu_info->he_data1 |= HE_MCS_KNOWN | HE_DCM_KNOWN | HE_CODING_KNOWN;
- 
-@@ -253,11 +243,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_ofdma(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_OFDMA;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
--					     struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b2_mu(const struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu,
-+				 struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b2_mu_info *he_sig_b2_mu =
--			(struct hal_rx_he_sig_b2_mu_info *)tlv_data;
- 	u32 info0, value;
- 
- 	info0 = __le32_to_cpu(he_sig_b2_mu->info0);
-@@ -280,11 +269,10 @@ static void ath12k_dp_mon_parse_he_sig_b2_mu(u8 *tlv_data,
- 	ppdu_info->nss = u32_get_bits(info0, HAL_RX_HE_SIG_B2_MU_INFO_INFO0_STA_NSTS);
- }
- 
--static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
--					     struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_b1_mu(const struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu,
-+				 struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_b1_mu_info *he_sig_b1_mu =
--			(struct hal_rx_he_sig_b1_mu_info *)tlv_data;
- 	u32 info0 = __le32_to_cpu(he_sig_b1_mu->info0);
- 	u16 ru_tones;
- 
-@@ -295,11 +283,10 @@ static void ath12k_dp_mon_parse_he_sig_b1_mu(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
--					  struct hal_rx_mon_ppdu_info *ppdu_info)
-+static void
-+ath12k_dp_mon_parse_he_sig_mu(const struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl,
-+			      struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_a_mu_dl_info *he_sig_a_mu_dl =
--			(struct hal_rx_he_sig_a_mu_dl_info *)tlv_data;
- 	u32 info0, info1, value;
- 	u16 he_gi = 0, he_ltf = 0;
- 
-@@ -430,11 +417,9 @@ static void ath12k_dp_mon_parse_he_sig_mu(u8 *tlv_data,
- 	ppdu_info->reception_type = HAL_RX_RECEPTION_TYPE_MU_MIMO;
- }
- 
--static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
-+static void ath12k_dp_mon_parse_he_sig_su(const struct hal_rx_he_sig_a_su_info *he_sig_a,
- 					  struct hal_rx_mon_ppdu_info *ppdu_info)
- {
--	struct hal_rx_he_sig_a_su_info *he_sig_a =
--			(struct hal_rx_he_sig_a_su_info *)tlv_data;
- 	u32 info0, info1, value;
- 	u32 dcm;
- 	u8 he_dcm = 0, he_stbc = 0;
-@@ -583,15 +568,15 @@ static void ath12k_dp_mon_parse_he_sig_su(u8 *tlv_data,
- static enum hal_rx_mon_status
- ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 				  struct ath12k_mon_data *pmon,
--				  u32 tlv_tag, u8 *tlv_data, u32 userid)
-+				  u32 tlv_tag, const void *tlv_data,
-+				  u32 userid)
- {
- 	struct hal_rx_mon_ppdu_info *ppdu_info = &pmon->mon_ppdu_info;
- 	u32 info[7];
- 
- 	switch (tlv_tag) {
- 	case HAL_RX_PPDU_START: {
--		struct hal_rx_ppdu_start *ppdu_start =
--			(struct hal_rx_ppdu_start *)tlv_data;
-+		const struct hal_rx_ppdu_start *ppdu_start = tlv_data;
- 
- 		info[0] = __le32_to_cpu(ppdu_start->info0);
- 
-@@ -610,8 +595,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_PPDU_END_USER_STATS: {
--		struct hal_rx_ppdu_end_user_stats *eu_stats =
--			(struct hal_rx_ppdu_end_user_stats *)tlv_data;
-+		const struct hal_rx_ppdu_end_user_stats *eu_stats = tlv_data;
- 		u32 tid_bitmap;
- 
- 		info[0] = __le32_to_cpu(eu_stats->info0);
-@@ -673,8 +657,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 
- 			ppdu_info->num_users += 1;
- 
--			ath12k_dp_mon_rx_handle_ofdma_info(tlv_data, rxuser_stats);
--			ath12k_dp_mon_rx_populate_mu_user_info(tlv_data, ppdu_info,
-+			ath12k_dp_mon_rx_handle_ofdma_info(eu_stats, rxuser_stats);
-+			ath12k_dp_mon_rx_populate_mu_user_info(eu_stats, ppdu_info,
- 							       rxuser_stats);
- 		}
- 		ppdu_info->mpdu_fcs_ok_bitmap[0] = __le32_to_cpu(eu_stats->rsvd1[0]);
-@@ -682,8 +666,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_PPDU_END_USER_STATS_EXT: {
--		struct hal_rx_ppdu_end_user_stats_ext *eu_stats =
--			(struct hal_rx_ppdu_end_user_stats_ext *)tlv_data;
-+		const struct hal_rx_ppdu_end_user_stats_ext *eu_stats = tlv_data;
-+
- 		ppdu_info->mpdu_fcs_ok_bitmap[2] = __le32_to_cpu(eu_stats->info1);
- 		ppdu_info->mpdu_fcs_ok_bitmap[3] = __le32_to_cpu(eu_stats->info2);
- 		ppdu_info->mpdu_fcs_ok_bitmap[4] = __le32_to_cpu(eu_stats->info3);
-@@ -729,8 +713,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 
- 	case HAL_PHYRX_RSSI_LEGACY: {
--		struct hal_rx_phyrx_rssi_legacy_info *rssi =
--			(struct hal_rx_phyrx_rssi_legacy_info *)tlv_data;
-+		const struct hal_rx_phyrx_rssi_legacy_info *rssi = tlv_data;
- 
- 		info[0] = __le32_to_cpu(rssi->info0);
- 		info[1] = __le32_to_cpu(rssi->info1);
-@@ -748,8 +731,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RXPCU_PPDU_END_INFO: {
--		struct hal_rx_ppdu_end_duration *ppdu_rx_duration =
--			(struct hal_rx_ppdu_end_duration *)tlv_data;
-+		const struct hal_rx_ppdu_end_duration *ppdu_rx_duration = tlv_data;
- 
- 		info[0] = __le32_to_cpu(ppdu_rx_duration->info0);
- 		ppdu_info->rx_duration =
-@@ -760,8 +742,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_MPDU_START: {
--		struct hal_rx_mpdu_start *mpdu_start =
--			(struct hal_rx_mpdu_start *)tlv_data;
-+		const struct hal_rx_mpdu_start *mpdu_start = tlv_data;
- 		struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
- 		u16 peer_id;
- 
-@@ -790,8 +771,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	case HAL_MON_BUF_ADDR: {
- 		struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
--		struct dp_mon_packet_info *packet_info =
--			(struct dp_mon_packet_info *)tlv_data;
-+		const struct dp_mon_packet_info *packet_info = tlv_data;
- 		int buf_id = u32_get_bits(packet_info->cookie,
- 					  DP_RXDMA_BUF_COOKIE_BUF_ID);
- 		struct sk_buff *msdu;
-@@ -823,8 +803,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 	}
- 	case HAL_RX_MSDU_END: {
--		struct rx_msdu_end_qcn9274 *msdu_end =
--			(struct rx_msdu_end_qcn9274 *)tlv_data;
-+		const struct rx_msdu_end_qcn9274 *msdu_end = tlv_data;
- 		bool is_first_msdu_in_mpdu;
- 		u16 msdu_end_info;
- 
-@@ -1589,7 +1568,7 @@ ath12k_dp_mon_tx_gen_prot_frame(struct dp_mon_tx_ppdu_info *tx_ppdu_info)
- static enum dp_mon_tx_tlv_status
- ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 				  struct ath12k_mon_data *pmon,
--				  u16 tlv_tag, u8 *tlv_data, u32 userid)
-+				  u16 tlv_tag, const void *tlv_data, u32 userid)
- {
- 	struct dp_mon_tx_ppdu_info *tx_ppdu_info;
- 	enum dp_mon_tx_tlv_status status = DP_MON_TX_STATUS_PPDU_NOT_DONE;
-@@ -1599,8 +1578,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 
- 	switch (tlv_tag) {
- 	case HAL_TX_FES_SETUP: {
--		struct hal_tx_fes_setup *tx_fes_setup =
--					(struct hal_tx_fes_setup *)tlv_data;
-+		const struct hal_tx_fes_setup *tx_fes_setup = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_setup->info0);
- 		tx_ppdu_info->ppdu_id = __le32_to_cpu(tx_fes_setup->schedule_id);
-@@ -1611,8 +1589,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_END: {
--		struct hal_tx_fes_status_end *tx_fes_status_end =
--			(struct hal_tx_fes_status_end *)tlv_data;
-+		const struct hal_tx_fes_status_end *tx_fes_status_end = tlv_data;
- 		u32 tst_15_0, tst_31_16;
- 
- 		info[0] = __le32_to_cpu(tx_fes_status_end->info0);
-@@ -1629,8 +1606,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_RX_RESPONSE_REQUIRED_INFO: {
--		struct hal_rx_resp_req_info *rx_resp_req_info =
--			(struct hal_rx_resp_req_info *)tlv_data;
-+		const struct hal_rx_resp_req_info *rx_resp_req_info = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
- 
-@@ -1675,8 +1651,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_PCU_PPDU_SETUP_INIT: {
--		struct hal_tx_pcu_ppdu_setup_init *ppdu_setup =
--			(struct hal_tx_pcu_ppdu_setup_init *)tlv_data;
-+		const struct hal_tx_pcu_ppdu_setup_init *ppdu_setup = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
- 
-@@ -1722,8 +1697,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_QUEUE_EXTENSION: {
--		struct hal_tx_queue_exten *tx_q_exten =
--			(struct hal_tx_queue_exten *)tlv_data;
-+		const struct hal_tx_queue_exten *tx_q_exten = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_q_exten->info0);
- 
-@@ -1735,8 +1709,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_START: {
--		struct hal_tx_fes_status_start *tx_fes_start =
--			(struct hal_tx_fes_status_start *)tlv_data;
-+		const struct hal_tx_fes_status_start *tx_fes_start = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_start->info0);
- 
-@@ -1747,8 +1720,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_PROT: {
--		struct hal_tx_fes_status_prot *tx_fes_status =
--			(struct hal_tx_fes_status_prot *)tlv_data;
-+		const struct hal_tx_fes_status_prot *tx_fes_status = tlv_data;
- 		u32 start_timestamp;
- 		u32 end_timestamp;
- 
-@@ -1775,8 +1747,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 
- 	case HAL_TX_FES_STATUS_START_PPDU:
- 	case HAL_TX_FES_STATUS_START_PROT: {
--		struct hal_tx_fes_status_start_prot *tx_fes_stat_start =
--			(struct hal_tx_fes_status_start_prot *)tlv_data;
-+		const struct hal_tx_fes_status_start_prot *tx_fes_stat_start = tlv_data;
- 		u64 ppdu_ts;
- 
- 		info[0] = __le32_to_cpu(tx_fes_stat_start->info0);
-@@ -1791,8 +1762,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_TX_FES_STATUS_USER_PPDU: {
--		struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu =
--			(struct hal_tx_fes_status_user_ppdu *)tlv_data;
-+		const struct hal_tx_fes_status_user_ppdu *tx_fes_usr_ppdu = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_fes_usr_ppdu->info0);
- 
-@@ -1835,8 +1805,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 		break;
- 
- 	case HAL_RX_FRAME_BITMAP_ACK: {
--		struct hal_rx_frame_bitmap_ack *fbm_ack =
--			(struct hal_rx_frame_bitmap_ack *)tlv_data;
-+		const struct hal_rx_frame_bitmap_ack *fbm_ack = tlv_data;
- 		u32 addr_32;
- 		u16 addr_16;
- 
-@@ -1854,8 +1823,7 @@ ath12k_dp_mon_tx_parse_status_tlv(struct ath12k_base *ab,
- 	}
- 
- 	case HAL_MACTX_PHY_DESC: {
--		struct hal_tx_phy_desc *tx_phy_desc =
--			(struct hal_tx_phy_desc *)tlv_data;
-+		const struct hal_tx_phy_desc *tx_phy_desc = tlv_data;
- 
- 		info[0] = __le32_to_cpu(tx_phy_desc->info0);
- 		info[1] = __le32_to_cpu(tx_phy_desc->info1);
 -- 
 2.53.0
 
