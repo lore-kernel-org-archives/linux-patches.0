@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B181E520A;
-	Sat, 17 Oct 2026 16:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C81D17BED0;
+	Sat, 17 Oct 2026 16:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253934; cv=none; b=LhdjSs2EacR5Q6tYwMzdc4c02zEERkf4E2PMJb4h9NMf+QqrNaX9T1ToNNAXvXnpEDCqdLC7ABm7mIYiVxGgBvbpw7fDi6SolVGzc5zyTVMeyqgf/IFxABRr6enMficbf5mCntA7aIwsPVgxvat0jHxgETEbgbwK+P6piW+nens=
+	t=1792253937; cv=none; b=LP6H9lhLh5WgPPxiYVL9PTXsDA8QY3rtCzsc47f9ROcrBZOkr81jlPbu/+VYjYlmIYlcZ0ukGr2pgQtMfJeSGiEhTHtd0Jb5AChNhSlJ/3Wbt/tl39Dag5QFygpnZUogPoecrCHGDJfvkaTsLRv/ygoUCba7LEa73/nXJkimyvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253934; c=relaxed/simple;
-	bh=927OrWPIk67pCCmfeR1NZVZ1fbseJVANPHs3xRwCaEI=;
+	s=arc-20240116; t=1792253937; c=relaxed/simple;
+	bh=dJ7AyRFjKEKkDoJwgVPd+hDW9n4qBgZjMLE0wcQAv8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aj2bHYO4ZEm3yYDUE/LqnwvUdz1j1qTzd3qyGfk8hvxquP68Vwzb5JbDImALAlfpF+UkC66r2Ctxr0oYTrb+vR7rrrs7xODmu86TXRUAIUZD4W/OrSMuICfL1/TPDsunPwW4bi8ZLU9AoAjyn3rNDl1bNBkbdD5Qs1cDM9ZTu2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRmb4AQR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EoNFIN9skN8pWzbTgtp+LIv4fbuUuME/hlhcn//3FZxAAE/eMB1mrTmMT1pY5H97XjMr1VZZWW+TY5Ul75H6J5zwuCDkrv16zwyWBTT7EMtCbYaB9T1xIqE/O9FTiTN6ruMf2aaeYNhi4mpuRwEFuS2+Z/KrVlvrgmxamzUM568=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQMy76rQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRmb4AQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00C31F000C4;
-	Sat, 17 Oct 2026 16:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQMy76rQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95B01F000C4;
+	Sat, 17 Oct 2026 16:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253933;
-	bh=AQN7gkTu1w/o9WIeXyGXvPScKUkCx6koqlD9jUTtem0=;
+	s=korg; t=1792253936;
+	bh=STsG7LSr8AzK7l6HsbXGgi0qSQm1DvOFlvaz6NUNnTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TRmb4AQR2cWHoksLqO9gx4aYg2HEOLtuVFYaB0qwztoQZityDoFZZui8OSYcxXV1h
-	 ts7HrKj/jFTtLa6IX/xChzmk6fZs9+p9zp0hMA8bPGZws0tVbzfMJghvXyyr5GiOFX
-	 ZOtQA89lt5pgpLYaFdeMtnxG+q5m9gP8FH30Oces=
+	b=PQMy76rQCgW5bs/dj7A/QviwZFY5plOyZrEyvIVNUCmOIrrUT58hAyjTCmxGNBymI
+	 gMtyoe1z44FQ27cq6SZVLoQbVn0FQDqrVX4oJuAgVcOmqpHhX9Ql4uAdrq4tiuQq3s
+	 jhJEHRvOoFteGm1ChsVGvAOouAdvmNwu4gBEbjU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 280/869] KVM: nSVM: Always use NextRIP as vmcb02s NextRIP after first L2 VMRUN
-Date: Sat, 17 Oct 2026 17:52:01 +0200
-Message-ID: <20261017160044.251423103@linuxfoundation.org>
+Subject: [PATCH 6.12 281/869] ceph: Remove call to PagePrivate2()
+Date: Sat, 17 Oct 2026 17:52:02 +0200
+Message-ID: <20261017160044.277649220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,79 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 8d397582f6b5e9fbcf09781c7c934b4910e94a50 ]
+[ Upstream commit fd15ba4cb00a43fb4df42e1f95f94857ad122eea ]
 
-For guests with NRIPS disabled, L1 does not provide NextRIP when running
-an L2 with an injected soft interrupt, instead it advances the current RIP
-before running it. KVM uses the current RIP as the NextRIP in vmcb02 to
-emulate a CPU without NRIPS.
+Use the folio that we already have to call folio_test_private_2()
+instead.  This is the last call to PagePrivate2(), so replace its
+PAGEFLAG() definition with FOLIO_FLAG().
 
-However, after L2 runs the first time, NextRIP will be updated by the CPU
-and/or KVM, and the current RIP is no longer the correct value to use in
-vmcb02.  Hence, after save/restore, use the current RIP if and only if a
-nested run is pending, otherwise use NextRIP.  Give soft_int_next_rip the
-same treatment, as it's the same logic, just for a narrower use case.
-
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260225005950.3739782-6-yosry@kernel.org
-[sean: give soft_int_next_rip the same treatment]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20241002040111.1023018-6-willy@infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: a0d9555bf9ea ("ceph: fix num_ops off-by-one when crypto allocation fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ fs/ceph/addr.c             | 20 ++++++++++----------
+ include/linux/page-flags.h |  2 +-
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 08274463ad867..2f98a90537d28 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -724,24 +724,32 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
- 	vmcb02->control.event_inj_err       = svm->nested.ctl.event_inj_err;
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index e5ea8fb6d9a6f..674aa886a66e3 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1052,7 +1052,9 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 		if (!nr_folios && !locked_pages)
+ 			break;
+ 		for (i = 0; i < nr_folios && locked_pages < max_pages; i++) {
+-			page = &fbatch.folios[i]->page;
++			struct folio *folio = fbatch.folios[i];
++
++			page = &folio->page;
+ 			doutc(cl, "? %p idx %lu\n", page, page->index);
+ 			if (locked_pages == 0)
+ 				lock_page(page);  /* first page */
+@@ -1079,8 +1081,6 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 				continue;
+ 			}
+ 			if (page_offset(page) >= ceph_wbc.i_size) {
+-				struct folio *folio = page_folio(page);
+-
+ 				doutc(cl, "folio at %lu beyond eof %llu\n",
+ 				      folio->index, ceph_wbc.i_size);
+ 				if ((ceph_wbc.size_stable ||
+@@ -1096,16 +1096,16 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 				unlock_page(page);
+ 				break;
+ 			}
+-			if (PageWriteback(page) ||
+-			    PagePrivate2(page) /* [DEPRECATED] */) {
++			if (folio_test_writeback(folio) ||
++			    folio_test_private_2(folio) /* [DEPRECATED] */) {
+ 				if (wbc->sync_mode == WB_SYNC_NONE) {
+-					doutc(cl, "%p under writeback\n", page);
+-					unlock_page(page);
++					doutc(cl, "%p under writeback\n", folio);
++					folio_unlock(folio);
+ 					continue;
+ 				}
+-				doutc(cl, "waiting on writeback %p\n", page);
+-				wait_on_page_writeback(page);
+-				folio_wait_private_2(page_folio(page)); /* [DEPRECATED] */
++				doutc(cl, "waiting on writeback %p\n", folio);
++				folio_wait_writeback(folio);
++				folio_wait_private_2(folio); /* [DEPRECATED] */
+ 			}
  
- 	/*
--	 * next_rip is consumed on VMRUN as the return address pushed on the
-+	 * NextRIP is consumed on VMRUN as the return address pushed on the
- 	 * stack for injected soft exceptions/interrupts.  If nrips is exposed
--	 * to L1, take it verbatim from vmcb12.  If nrips is supported in
--	 * hardware but not exposed to L1, stuff the actual L2 RIP to emulate
--	 * what a nrips=0 CPU would do (L1 is responsible for advancing RIP
--	 * prior to injecting the event).
-+	 * to L1, take it verbatim from vmcb12.
-+	 *
-+	 * If nrips is supported in hardware but not exposed to L1, stuff the
-+	 * actual L2 RIP to emulate what a nrips=0 CPU would do (L1 is
-+	 * responsible for advancing RIP prior to injecting the event). This is
-+	 * only the case for the first L2 run after VMRUN. After that (e.g.
-+	 * during save/restore), NextRIP is updated by the CPU and/or KVM, and
-+	 * the value of the L2 RIP from vmcb12 should not be used.
- 	 */
--	if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
--		vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
--	else if (boot_cpu_has(X86_FEATURE_NRIPS))
--		vmcb02->control.next_rip    = vmcb12_rip;
-+	if (boot_cpu_has(X86_FEATURE_NRIPS)) {
-+		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS) ||
-+		    !svm->nested.nested_run_pending)
-+			vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
-+		else
-+			vmcb02->control.next_rip    = vmcb12_rip;
-+	}
+ 			if (!clear_page_dirty_for_io(page)) {
+diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+index 4e8c6d0511c56..53171d714ac6d 100644
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -543,7 +543,7 @@ FOLIO_FLAG(swapbacked, FOLIO_HEAD_PAGE)
+  * - PG_private and PG_private_2 cause release_folio() and co to be invoked
+  */
+ PAGEFLAG(Private, private, PF_ANY)
+-PAGEFLAG(Private2, private_2, PF_ANY) TESTSCFLAG(Private2, private_2, PF_ANY)
++FOLIO_FLAG(private_2, FOLIO_HEAD_PAGE)
  
- 	svm->nmi_l1_to_l2 = is_evtinj_nmi(vmcb02->control.event_inj);
- 	if (is_evtinj_soft(vmcb02->control.event_inj)) {
- 		svm->soft_int_injected = true;
- 		svm->soft_int_csbase = vmcb12_csbase;
- 		svm->soft_int_old_rip = vmcb12_rip;
--		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
-+		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS) ||
-+		    !svm->nested.nested_run_pending)
- 			svm->soft_int_next_rip = svm->nested.ctl.next_rip;
- 		else
- 			svm->soft_int_next_rip = vmcb12_rip;
+ /* owner_2 can be set on tail pages for anon memory */
+ FOLIO_FLAG(owner_2, FOLIO_HEAD_PAGE)
 -- 
 2.53.0
 
