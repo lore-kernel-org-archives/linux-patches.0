@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA1135DA41;
-	Sat, 17 Oct 2026 17:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084DA3B9616;
+	Sat, 17 Oct 2026 17:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258971; cv=none; b=eUA+WnLwm9IZ6S4Km/W/23rAJD5uTkZvz5QMoGhvy6UuK1/4Sj5o7IjPmq1NTV+tJ0HzYsGeNAJ56sgEfH09dnEkHsFW4kvBPDgzBxWkdV72louAVD3xOPKO076yV1/GIxIsO8+AqqxVQUlJk5IfOzyB2ycL7nkAV8TNxMe0n0s=
+	t=1792258974; cv=none; b=kkM19zU2zIHbfNqc7rasd+X6/l/939sOBZBHdINWJuXJn08uQNWjrs8BSW2IOOWqRkq084NByH6pl9jOjXMqfrGIcDxVtPjOnBDVmEB5vZHuMzAicytOhB+ywcB8zMe3TfTKEVePuveIi/oCoi+PtmbQA+cf3WFXUxbWNHoLBAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258971; c=relaxed/simple;
-	bh=+VAnGCmlqB0AAnH7FPOb/MlW8whqfAXob6pcaBIW5AM=;
+	s=arc-20240116; t=1792258974; c=relaxed/simple;
+	bh=zAcNSF9NXfYRdVLYuA651wLj1YveIAbUesA3p0dzfkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNB0CbGzu0GpUcaGz80tV7JbTkCKyuciJL7WQJt/Ie0a+q8vUJQ/ZAOCs2OBmwPKoNQ0SBk1lphYl5Y8+mi4AAFaVdRySMZ/EkkuVoThJ3XDDpyOWkfS2VOTB+o6Av9LUcusd0XW4mtOBmWnuR6wE/WEFo5H/WoyrzbgQ90OecM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwROdjtd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pZi2NvZ2+UShxdkdBSRJtIT4MzoZoT/TqJS4Kow/NwONKs4OlzgxF0zEX9z3Syp197jpxFFFIa/bb4HFU+EmcgQRqgJKQzXWsO9aXp1Q43HgLzHc0Gi2qawePhsSAAK0NCuvioTPeTEYAY7ZCDBjmTzEkKrGysyo1rdHdfPHnXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCyduE1c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwROdjtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6331E1F000C4;
-	Sat, 17 Oct 2026 17:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCyduE1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606181F000C4;
+	Sat, 17 Oct 2026 17:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258970;
-	bh=QGK0FIn/Hqmfq/tEdM67M+lzNFLqFFj3X87dTioIcNg=;
+	s=korg; t=1792258972;
+	bh=L7ZW1L3kMLvIXx2XJ3hJ+1FddkEVjq+j2WIovfWvCug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwROdjtdbyqlUWE2a4/FdUKgVpubAJCtSfMQelTJgU4E0hE9eXYasyNWs3rLutB3+
-	 KUxUuU2WK2YU4FKQQ8qDb4tlKe6kHvHAxJBPUku2DL/SkfpEnquCw+BMbYATzxm2Hw
-	 7JUy115LOOHUlbybyAukNbSt/ZgrdzTiWqrDTm9Q=
+	b=pCyduE1c11x1PW20nVICJ1pq3tEgd7MbpsfudILMmDGgHvLo2BU3xEiWvJ1vQk1YV
+	 S9KGjJ7rlXBVIxN2uhRXsByRr5ibjHIsGpOi5KfARZPuABprONwmdaw1hoIhHLNMt+
+	 LQHRNuvGtnTktvQOxTdLkXvudZ0wfTktsKMUolQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Maksim Lukoshkov <maksim.lukoshkov@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	netdev@vger.kernel.org,
+	Willem de Bruijn <willemb@google.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1057/1674] crypto: qat - protect service table iterations with service_lock
-Date: Sat, 17 Oct 2026 17:55:29 +0200
-Message-ID: <20261017160458.258764135@linuxfoundation.org>
+Subject: [PATCH 6.6 1019/1674] bpf: make it easier to add new metadata kfunc
+Date: Sat, 17 Oct 2026 17:54:51 +0200
+Message-ID: <20261017160457.287623687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,147 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 5c6f845e77ec35f9b7b047cc8f9789bf397cdd3e ]
+[ Upstream commit fc45c5b642dbcac3bb10f4f904e4b863233e5369 ]
 
-The service_table list is protected by service_lock when entries are
-added or removed (in adf_service_add() and adf_service_remove()), but
-several functions iterate over the list without holding this lock.
+No functional changes.
 
-A concurrent adf_service_register() or adf_service_unregister() call
-could modify the list during traversal, leading to list corruption or
-a use-after-free.
+Instead of having hand-crafted code in bpf_dev_bound_resolve_kfunc,
+move kfunc <> xmo handler relationship into XDP_METADATA_KFUNC_xxx.
+This way, any time new kfunc is added, we don't have to touch
+bpf_dev_bound_resolve_kfunc.
 
-Fix this by holding service_lock across all list_for_each_entry()
-iterations of service_table in adf_dev_init(), adf_dev_start(),
-adf_dev_stop(), adf_dev_shutdown(), adf_dev_restarting_notify(),
-adf_dev_restarted_notify(), and adf_error_notifier().
+Also document XDP_METADATA_KFUNC_xxx arguments since we now have
+more than two and it might be confusing what is what.
 
-The lock ordering is safe: callers of the static helpers (adf_dev_up()
-and adf_dev_down()) acquire state_lock before service_lock, and no
-event_hld callback or service_lock holder ever acquires state_lock in
-the reverse order.
-
-Cc: stable@vger.kernel.org
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Co-developed-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
-Signed-off-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: netdev@vger.kernel.org
+Cc: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20230913171350.369987-2-sdf@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Stable-dep-of: b69004f5a6ad ("net/mlx5e: xsk: Fix DMA and xdp_frame leak on XDP_TX xmit failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_init.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/net/xdp.h    | 16 ++++++++++++----
+ kernel/bpf/offload.c |  9 +++++----
+ net/core/xdp.c       |  4 ++--
+ 3 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
-index 9c1b587a87e5b..718bedff9c16e 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -140,16 +140,19 @@ static int adf_dev_init(struct adf_accel_dev *accel_dev)
- 	 * This is to facilitate any ordering dependencies between services
- 	 * prior to starting any of the accelerators.
- 	 */
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (service->event_hld(accel_dev, ADF_EVENT_INIT)) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to initialise service %s\n",
- 				service->name);
-+			mutex_unlock(&service_lock);
- 			return -EFAULT;
- 		}
- 		set_bit(accel_dev->accel_id, service->init_status);
- 	}
-+	mutex_unlock(&service_lock);
+diff --git a/include/net/xdp.h b/include/net/xdp.h
+index 3d8989096b5d2..59c12ca580396 100644
+--- a/include/net/xdp.h
++++ b/include/net/xdp.h
+@@ -388,14 +388,22 @@ void xdp_attachment_setup(struct xdp_attachment_info *info,
  
- 	return 0;
- }
-@@ -212,16 +215,19 @@ static int adf_dev_start(struct adf_accel_dev *accel_dev)
+ #define DEV_MAP_BULK_SIZE XDP_BULK_QUEUE_SIZE
  
- 	adf_heartbeat_start(accel_dev);
++/* Define the relationship between xdp-rx-metadata kfunc and
++ * various other entities:
++ * - xdp_rx_metadata enum
++ * - kfunc name
++ * - xdp_metadata_ops field
++ */
+ #define XDP_METADATA_KFUNC_xxx	\
+ 	XDP_METADATA_KFUNC(XDP_METADATA_KFUNC_RX_TIMESTAMP, \
+-			   bpf_xdp_metadata_rx_timestamp) \
++			   bpf_xdp_metadata_rx_timestamp, \
++			   xmo_rx_timestamp) \
+ 	XDP_METADATA_KFUNC(XDP_METADATA_KFUNC_RX_HASH, \
+-			   bpf_xdp_metadata_rx_hash) \
++			   bpf_xdp_metadata_rx_hash, \
++			   xmo_rx_hash) \
  
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (service->event_hld(accel_dev, ADF_EVENT_START)) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Failed to start service %s\n",
- 				service->name);
-+			mutex_unlock(&service_lock);
- 			return -EFAULT;
- 		}
- 		set_bit(accel_dev->accel_id, service->start_status);
- 	}
-+	mutex_unlock(&service_lock);
+-enum {
+-#define XDP_METADATA_KFUNC(name, _) name,
++enum xdp_rx_metadata {
++#define XDP_METADATA_KFUNC(name, _, __) name,
+ XDP_METADATA_KFUNC_xxx
+ #undef XDP_METADATA_KFUNC
+ MAX_XDP_METADATA_KFUNC,
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index 3345de2da15dd..ae0c8e7894586 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -847,10 +847,11 @@ void *bpf_dev_bound_resolve_kfunc(struct bpf_prog *prog, u32 func_id)
+ 	if (!ops)
+ 		goto out;
  
- 	clear_bit(ADF_STATUS_STARTING, &accel_dev->status);
- 	set_bit(ADF_STATUS_STARTED, &accel_dev->status);
-@@ -289,6 +295,7 @@ static void adf_dev_stop(struct adf_accel_dev *accel_dev)
- 		qat_comp_algs_unregister();
- 	clear_bit(ADF_STATUS_COMP_ALGS_REGISTERED, &accel_dev->status);
+-	if (func_id == bpf_xdp_metadata_kfunc_id(XDP_METADATA_KFUNC_RX_TIMESTAMP))
+-		p = ops->xmo_rx_timestamp;
+-	else if (func_id == bpf_xdp_metadata_kfunc_id(XDP_METADATA_KFUNC_RX_HASH))
+-		p = ops->xmo_rx_hash;
++#define XDP_METADATA_KFUNC(name, _, xmo) \
++	if (func_id == bpf_xdp_metadata_kfunc_id(name)) p = ops->xmo;
++	XDP_METADATA_KFUNC_xxx
++#undef XDP_METADATA_KFUNC
++
+ out:
+ 	up_read(&bpf_devs_lock);
  
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (!test_bit(accel_dev->accel_id, service->start_status))
-@@ -301,6 +308,7 @@ static void adf_dev_stop(struct adf_accel_dev *accel_dev)
- 			clear_bit(accel_dev->accel_id, service->start_status);
- 		}
- 	}
-+	mutex_unlock(&service_lock);
+diff --git a/net/core/xdp.c b/net/core/xdp.c
+index 672d971ce4eac..0b312aa7adf5e 100644
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -737,7 +737,7 @@ __bpf_kfunc int bpf_xdp_metadata_rx_hash(const struct xdp_md *ctx, u32 *hash,
+ __diag_pop();
  
- 	if (hw_data->stop_timer)
- 		hw_data->stop_timer(accel_dev);
-@@ -349,6 +357,7 @@ static void adf_dev_shutdown(struct adf_accel_dev *accel_dev)
- 				  &accel_dev->status);
- 	}
+ BTF_SET8_START(xdp_metadata_kfunc_ids)
+-#define XDP_METADATA_KFUNC(_, name) BTF_ID_FLAGS(func, name, KF_TRUSTED_ARGS)
++#define XDP_METADATA_KFUNC(_, name, __) BTF_ID_FLAGS(func, name, KF_TRUSTED_ARGS)
+ XDP_METADATA_KFUNC_xxx
+ #undef XDP_METADATA_KFUNC
+ BTF_SET8_END(xdp_metadata_kfunc_ids)
+@@ -748,7 +748,7 @@ static const struct btf_kfunc_id_set xdp_metadata_kfunc_set = {
+ };
  
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (!test_bit(accel_dev->accel_id, service->init_status))
-@@ -360,6 +369,7 @@ static void adf_dev_shutdown(struct adf_accel_dev *accel_dev)
- 		else
- 			clear_bit(accel_dev->accel_id, service->init_status);
- 	}
-+	mutex_unlock(&service_lock);
- 
- 	adf_heartbeat_shutdown(accel_dev);
- 
-@@ -390,6 +400,7 @@ int adf_dev_restarting_notify(struct adf_accel_dev *accel_dev)
- 	struct service_hndl *service;
- 	struct list_head *list_itr;
- 
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTING))
-@@ -397,6 +408,7 @@ int adf_dev_restarting_notify(struct adf_accel_dev *accel_dev)
- 				"Failed to restart service %s.\n",
- 				service->name);
- 	}
-+	mutex_unlock(&service_lock);
- 	return 0;
- }
- 
-@@ -405,6 +417,7 @@ int adf_dev_restarted_notify(struct adf_accel_dev *accel_dev)
- 	struct service_hndl *service;
- 	struct list_head *list_itr;
- 
-+	mutex_lock(&service_lock);
- 	list_for_each(list_itr, &service_table) {
- 		service = list_entry(list_itr, struct service_hndl, list);
- 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTED))
-@@ -412,6 +425,7 @@ int adf_dev_restarted_notify(struct adf_accel_dev *accel_dev)
- 				"Failed to restart service %s.\n",
- 				service->name);
- 	}
-+	mutex_unlock(&service_lock);
- 	return 0;
- }
+ BTF_ID_LIST(xdp_metadata_kfunc_ids_unsorted)
+-#define XDP_METADATA_KFUNC(name, str) BTF_ID(func, str)
++#define XDP_METADATA_KFUNC(name, str, _) BTF_ID(func, str)
+ XDP_METADATA_KFUNC_xxx
+ #undef XDP_METADATA_KFUNC
  
 -- 
 2.53.0
