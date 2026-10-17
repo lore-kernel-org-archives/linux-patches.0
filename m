@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4FA385D7B;
-	Sat, 17 Oct 2026 17:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B6D3939B1;
+	Sat, 17 Oct 2026 17:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259525; cv=none; b=nStr/aDa+jExplGW2oabasQLVsdtosndD9pv6CTSWDagsgYY1tqucbPlOp7KB2SFfPuVSpH6cpHsuDrh1Rg6s/vVpAEjv26zHXxJVxUazPcIdW16s+KxhF/95aDOW4dzVeSRPZHlphtgP3f50d+uu77FqZ3M+FyMhmnNXuGLQiU=
+	t=1792259528; cv=none; b=oU/WEHIph0pn3o8qzCSe7lJifxV0FT1ezEWaVATY8ABaGH6j2UrFgb10QWLkMhdxhklNz8gjx0LLN4iQfbUI7GBj9Vg9FPpc27q5epnyNVxbJ9GWycNjtdXz8Zpm0uznRzy1Qgx33ezelsCgZCfdo54vN5PBoTF2VexYQdNELTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259525; c=relaxed/simple;
-	bh=rjjqdq+fGCgrmRYicWWIHibErTmiYpx1G3NBA7H4Q+8=;
+	s=arc-20240116; t=1792259528; c=relaxed/simple;
+	bh=0AToHc6rrdsJTz6+0/XcRoXcsFAdhYJ5Gf9TTGo1Giw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUlgDto4thABkoVGjadrAX3SpVNBcfXBrTFWkEHNyau3I6/UWPZmZdCy04m9gBLYW7r7mpD9jrxrK2852B4bJTt/8mkzDz72UJxFV7wF5/mMX479lE18SAZwDYFWxIKnhk40vywm/WvVDGspSirgSQ0xVBqpM3szRL2JySUQTd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nd3opKmy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYiZUfp0wCmRLYcHNG0G84A0tpPEe0SgIGa/LaXmc35ZcCSjvF7UMA62f/Ov4s5kgOaxeAW0qOLyTnaGcxCT2KCpBbmDEtqs4WV65jWbIyqNbNz+2/TH6amSFIqPscGw0A4Mbn4vPq2kCiesbtptSvzidSIf7KcLz+PeyfyKIUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gqtAzNH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nd3opKmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57C71F000C4;
-	Sat, 17 Oct 2026 17:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gqtAzNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68B31F000C4;
+	Sat, 17 Oct 2026 17:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259524;
-	bh=94C0J5dP7IJQH+fBOsUiWMiqPYlOUxweJcCBCTmyUzQ=;
+	s=korg; t=1792259527;
+	bh=AmlFaROSG1PLfYKdsUKN5r7ssZ6D7xJoU1n0vcbPcRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nd3opKmyVZaFf2uoww/G56E4Ze+rc+aGAQls+0roukizgl5oC3JTqx6YStmtrnjrR
-	 k1ZttpswIHjcEcIKjRan5k8LPGEVTDZnorQ20F2RX4nZPcqwQ6WG08V2s2CuR/jBJ+
-	 CHl7tC361Vw3mF2uXgIE/r+HXWKlbppaamBsAMnY=
+	b=1gqtAzNHTXXx4lTR7U1CKJ5Fwv9ampu0nRaZ9fUWz55X2sx+prxGYCpLIjAwRU+uD
+	 UN8MAnbp/5urQ3sQjFByPR+mdUN7ihkml5No6GFpaWkK8K281Uh/3O05j8nYhWiaQK
+	 Z7yTrkJMqtRs7za3nh9RtEMZFuojXC/Obwo1YbEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Vega <vega@nebusec.ai>,
+	Yong Wang <edragain@163.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1244/1674] fbdev: Wrap user-invoked calls to fb_set_var() in helper
-Date: Sat, 17 Oct 2026 17:58:36 +0200
-Message-ID: <20261017160503.065080608@linuxfoundation.org>
+Subject: [PATCH 6.6 1245/1674] tcp: clamp route advmss to TCP_MIN_MSS
+Date: Sat, 17 Oct 2026 17:58:37 +0200
+Message-ID: <20261017160503.091064532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,171 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Yong Wang <edragain@163.com>
 
-[ Upstream commit 6f611e5e5f3327cf2e2daabe6ee5acac58cc784e ]
+[ Upstream commit 870a9e42ecc6fe1b8c25d87af043cb0d9c178fe1 ]
 
-Handle fbcon during display updates in fb_set_var_from_user(). Check
-with fbcon if the mode change is possible, update hardware state and
-finally update fbcon. Update all callers.
+tcp_select_initial_window() assumes that callers never pass an MSS
+smaller than 1, but route-derived advmss values can violate that
+assumption.
 
-Only the FBIOPUT_VSCREENINFO ioctl currently does all steps. Other
-mode-changes callers in sysfs and driver code are missing fbcon-related
-steps.
+A too-small explicit RTAX_ADVMSS is one way to get there, but it is not
+the only one. The same divide-by-zero can also be reached through the
+"default advmss" path when RTAX_ADVMSS is left at 0 and the effective
+advmss is later driven down by route MTU and min_adv_mss.
 
-With the new helper, ps3fb and sh_mobile_lcdcfb no longer maintain
-fbcon state themselves.
+Introduce a tcp_dst_advmss() helper that clamps route advmss to
+TCP_MIN_MSS before TCP consumes it, and use it in the TCP paths that
+derive advmss from dst metrics. This keeps the effective MSS from
+dropping to zero before tcp_select_initial_window() rounds the receive
+window.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Yong Wang <edragain@163.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Link: https://patch.msgid.link/251eaf8277fa7c66364c9815c5da01662d269181.1787074852.git.edragain@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_chrdev.c   |  6 +-----
- drivers/video/fbdev/core/fbcon.c       |  2 --
- drivers/video/fbdev/core/fbmem.c       | 13 +++++++++++++
- drivers/video/fbdev/core/fbsysfs.c     |  4 +---
- drivers/video/fbdev/ps3fb.c            |  5 +----
- drivers/video/fbdev/sh_mobile_lcdcfb.c |  5 +----
- include/linux/fb.h                     |  2 ++
- 7 files changed, 19 insertions(+), 18 deletions(-)
+ include/net/tcp.h        | 5 +++++
+ net/ipv4/tcp_ipv4.c      | 2 +-
+ net/ipv4/tcp_minisocks.c | 2 +-
+ net/ipv4/tcp_output.c    | 6 +++---
+ net/ipv6/tcp_ipv6.c      | 2 +-
+ 5 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fb_chrdev.c b/drivers/video/fbdev/core/fb_chrdev.c
-index eadb81f53a821..fa28da74ae14c 100644
---- a/drivers/video/fbdev/core/fb_chrdev.c
-+++ b/drivers/video/fbdev/core/fb_chrdev.c
-@@ -85,11 +85,7 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
- 		var.activate &= ~FB_ACTIVATE_KD_TEXT;
- 		console_lock();
- 		lock_fb_info(info);
--		ret = fbcon_modechange_possible(info, &var);
--		if (!ret)
--			ret = fb_set_var(info, &var);
--		if (!ret)
--			fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
-+		ret = fb_set_var_from_user(info, &var);
- 		unlock_fb_info(info);
- 		console_unlock();
- 		if (!ret && copy_to_user(argp, &var, sizeof(var)))
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 6bb86a415c6cf..97642a95faa78 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2770,7 +2770,6 @@ void fbcon_update_vcs(struct fb_info *info, bool all)
- 	else
- 		fbcon_modechanged(info);
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index ee4d1edd2e804..1df0e2d66bfc1 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1479,6 +1479,11 @@ static inline int tcp_full_space(const struct sock *sk)
+ 	return tcp_win_from_space(sk, READ_ONCE(sk->sk_rcvbuf));
  }
--EXPORT_SYMBOL(fbcon_update_vcs);
  
- /* let fbcon check if it supports a new screen resolution */
- int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *var)
-@@ -2798,7 +2797,6 @@ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *va
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(fbcon_modechange_possible);
- 
- int fbcon_mode_deleted(struct fb_info *info,
- 		       struct fb_videomode *mode)
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index d4e41c6116ff2..581bc616e4183 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -881,6 +881,19 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
- }
- EXPORT_SYMBOL(fb_set_var);
- 
-+int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var)
++static inline u32 tcp_dst_advmss(const struct dst_entry *dst)
 +{
-+	int ret = fbcon_modechange_possible(info, var);
-+
-+	if (!ret)
-+		ret = fb_set_var(info, var);
-+	if (!ret)
-+		fbcon_update_vcs(info, var->activate & FB_ACTIVATE_ALL);
-+
-+	return ret;
++	return max_t(u32, dst_metric_advmss(dst), TCP_MIN_MSS);
 +}
-+EXPORT_SYMBOL(fb_set_var_from_user);
 +
- int
- fb_blank(struct fb_info *info, int blank)
+ static inline void __tcp_adjust_rcv_ssthresh(struct sock *sk, u32 new_ssthresh)
  {
-diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
-index 10c3cfb959f4f..572bf45d9d980 100644
---- a/drivers/video/fbdev/core/fbsysfs.c
-+++ b/drivers/video/fbdev/core/fbsysfs.c
-@@ -22,9 +22,7 @@ static int activate(struct fb_info *fb_info, struct fb_var_screeninfo *var)
- 	var->activate |= FB_ACTIVATE_FORCE;
- 	console_lock();
- 	lock_fb_info(fb_info);
--	err = fb_set_var(fb_info, var);
--	if (!err)
--		fbcon_update_vcs(fb_info, var->activate & FB_ACTIVATE_ALL);
-+	err = fb_set_var_from_user(fb_info, var);
- 	unlock_fb_info(fb_info);
- 	console_unlock();
- 	if (err)
-diff --git a/drivers/video/fbdev/ps3fb.c b/drivers/video/fbdev/ps3fb.c
-index 64d291d6b1532..a76b1101ef60d 100644
---- a/drivers/video/fbdev/ps3fb.c
-+++ b/drivers/video/fbdev/ps3fb.c
-@@ -29,7 +29,6 @@
- #include <linux/freezer.h>
- #include <linux/uaccess.h>
- #include <linux/fb.h>
--#include <linux/fbcon.h>
- #include <linux/init.h>
+ 	int unused_mem = sk_unused_reserved_mem(sk);
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 272190f9dc2c3..0b055eaacf3ab 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1629,7 +1629,7 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 	tcp_ca_openreq_child(newsk, dst);
  
- #include <asm/cell-regs.h>
-@@ -828,9 +827,7 @@ static int ps3fb_ioctl(struct fb_info *info, unsigned int cmd,
- 				/* Force, in case only special bits changed */
- 				var.activate |= FB_ACTIVATE_FORCE;
- 				par->new_mode_id = val;
--				retval = fb_set_var(info, &var);
--				if (!retval)
--					fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
-+				retval = fb_set_var_from_user(info, &var);
- 				console_unlock();
- 			}
- 			break;
-diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-index 2a4794ec19473..e5a0706765047 100644
---- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
-+++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-@@ -15,7 +15,6 @@
- #include <linux/ctype.h>
- #include <linux/dma-mapping.h>
- #include <linux/delay.h>
--#include <linux/fbcon.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/ioctl.h>
-@@ -1769,11 +1768,9 @@ static void sh_mobile_fb_reconfig(struct fb_info *info)
- 	var.height = ch->display.height;
- 	var.activate = FB_ACTIVATE_NOW;
+ 	tcp_sync_mss(newsk, dst_mtu(dst));
+-	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
++	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
  
--	if (fb_set_var(info, &var) < 0)
-+	if (fb_set_var_from_user(info, &var) < 0)
- 		/* Couldn't reconfigure, hopefully, can continue as before */
- 		return;
--
--	fbcon_update_vcs(info, true);
- }
+ 	tcp_initialize_rcv_mss(newsk);
  
- /*
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index 8a9d949cc7e2d..452bbb6c523cc 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -527,6 +527,8 @@ extern int fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var);
- extern int fb_pan_display(struct fb_info *info, struct fb_var_screeninfo *var);
- extern int fb_blank(struct fb_info *info, int blank);
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index d6d64697ce896..b89fd89c3c959 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -403,7 +403,7 @@ void tcp_openreq_init_rwin(struct request_sock *req,
+ 	u32 rcv_wnd;
+ 	int mss;
  
-+int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
-+
- /*
-  * Helpers for framebuffers in I/O memory
-  */
+-	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
++	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
+ 	window_clamp = READ_ONCE(tp->window_clamp);
+ 	/* Set this up on the first call only */
+ 	req->rsk_window_clamp = window_clamp ? : dst_metric(dst, RTAX_WINDOW);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 7d446106cbcf0..088f28fa3b75a 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -125,7 +125,7 @@ static __u16 tcp_advertise_mss(struct sock *sk)
+ 	int mss = tp->advmss;
+ 
+ 	if (dst) {
+-		unsigned int metric = dst_metric_advmss(dst);
++		unsigned int metric = tcp_dst_advmss(dst);
+ 
+ 		if (metric < mss) {
+ 			mss = metric;
+@@ -3701,7 +3701,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	}
+ 	skb_dst_set(skb, dst);
+ 
+-	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
++	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	now = tcp_clock_ns();
+@@ -3813,7 +3813,7 @@ static void tcp_connect_init(struct sock *sk)
+ 
+ 	if (!tp->window_clamp)
+ 		WRITE_ONCE(tp->window_clamp, dst_metric(dst, RTAX_WINDOW));
+-	tp->advmss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
++	tp->advmss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
+ 
+ 	tcp_initialize_rcv_mss(sk);
+ 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 6a2e348396a72..7adeb623cfb2b 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1324,7 +1324,7 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ 	tcp_ca_openreq_child(newsk, dst);
+ 
+ 	tcp_sync_mss(newsk, dst_mtu(dst));
+-	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
++	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
+ 
+ 	tcp_initialize_rcv_mss(newsk);
+ 
 -- 
 2.53.0
 
