@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206ED394470;
-	Sat, 17 Oct 2026 18:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49A23A8753;
+	Sat, 17 Oct 2026 18:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260364; cv=none; b=ImciDwfRb/nITH3HmOep25iKDZ1PqqDJ9cUMbjYHMqaqn1Tvx68dPGG/kZycFk7trMABDloEWSLLh+ddyPJLPE3j8XWxFscik5o+HzAakN2XDuLtfllvwVxDCLvZgM3G2TUlVQ18+7RVoDMyrypEfklsyvVUeUgbT70YxjS7e3c=
+	t=1792260366; cv=none; b=iOnkEWRtTmOe6/9hpkZi/ls/RkEo3aKt2tuhONBxYw+hJyPUeJ8Qhl4DWgJMzr8ovbP0jLbmTTpoEvHkdKxcHaE13VckUyubfmhxrHuGRV9j6tkX4lKj2kMWjQqkzNTZyxBN4eOWt05UYM5LkVjWvDjR00u0Xvc9Cz94+SirdtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260364; c=relaxed/simple;
-	bh=DTFJ7x3bsZIgy5q31QpcOqy0+ge6Ie1y3yODldnyTMQ=;
+	s=arc-20240116; t=1792260366; c=relaxed/simple;
+	bh=K8AVZCL62dz+CG3ARirhbK0BN38MOVzPX6pR74ZrC/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLs4tgdX12YH5B1uF1mkiafAYDkKKEX7/4SRXDALR4cMDDfiLHxhWQh74cxMlMWpRKOxEDLEwZLlUOJAcgYl0gkMCipKtbiApwIaAdaHqDp2N6OSGXC45wfhh7+CLWf0l26XLtxp33YetKxHOJvuzNwy2oqt+tVV91C25sE+6K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdygzAlH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=seby9jxCAEU2UlGGtOorj0Sw9vR428NLaHv69WnfimrfIksL9FHFnAH1+9GcT7WJRamx2IL6c8m1nXXQFzs8GAymwIlRkeHNFNXqLXvcQK1zF4cHUXQBHYYkqa080XX095nbDYhegSvslzU6TM6hPU+M1vtlF4qHMQnt93s7gls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6du9LR5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdygzAlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5660C1F000C4;
-	Sat, 17 Oct 2026 18:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6du9LR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534181F000C4;
+	Sat, 17 Oct 2026 18:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260362;
-	bh=5UCwqSG+Q8m6eD/dPsFlyhDRKEFd7YaCdFiChsSfNYw=;
+	s=korg; t=1792260365;
+	bh=Sy2UAVwmnUhCl1hxxGwVfsUGkhNq2diiPiSE6kfFK1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdygzAlHTz2W09ocp/xqNAxBJvno64bgG/+mKvlheM37o0XRQnUF0zqFrvltZcTvF
-	 N4E2R/kyB5VuoPnwupbqsQl6Z7a0SVCin2HjcirvlFPooZYIEv7rDzf36h8HVA1SZe
-	 SFy5rkBqbkQh/51G3RA4dNZ7ObBs48JZHPHXMYy0=
+	b=V6du9LR5z5O4371YxVfmISsAygVqEMDYYcMbubaMtE3w/hreaUQ0LlgF67Vi3RPDW
+	 +Mhd26udSR5vyo4HS3K1h97MKv6tk9e+uqgQ4n6igwzKTGWL1BFFBJCiEX75rMcsKc
+	 0xiZufMgzb5zLP8IJbKt3oMvyQHc9a2uhIBf7Bio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1520/1674] wifi: iwlwifi: pcie: null RX pointers after free
-Date: Sat, 17 Oct 2026 18:03:12 +0200
-Message-ID: <20261017160510.135940949@linuxfoundation.org>
+Subject: [PATCH 6.6 1521/1674] smb/client: zero-initialize stack-allocated cifs_open_info_data
+Date: Sat, 17 Oct 2026 18:03:13 +0200
+Message-ID: <20261017160510.161143636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,57 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 2c79d7a7b583050c9f58041465cb46fe3483ab5d ]
+[ Upstream commit 8fce4cf4369c766a3293a05419500cbfde72e60d ]
 
-When iwl_pcie_tx_init() fails after RX init, nic init unwinds via
-iwl_pcie_rx_free().
+Stack-allocated cifs_open_info_data may contain random data.
+This can make some fields have wrong value if they are not set later.
 
-The freed RX members stayed non-NULL on the live transport object,
-so later teardown or retry could touch stale RX state.
-Set rx_pool, global_table, rxq, and alloc_page to NULL after free
-to make repeated cleanup and retry paths safe.
-
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.33e8978d8b36.Ibaedd4b0ce01405b940de7b90223b6d2c5136ffd@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/smb/client/link.c    | 2 +-
+ fs/smb/client/smb1ops.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-index be9b5a19e2a7c..618d8eac37d64 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2003-2014, 2018-2023 Intel Corporation
-+ * Copyright (C) 2003-2014, 2018-2023, 2026 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -1236,11 +1236,16 @@ void iwl_pcie_rx_free(struct iwl_trans *trans)
- 		}
- 	}
- 	kfree(trans_pcie->rx_pool);
-+	trans_pcie->rx_pool = NULL;
- 	kfree(trans_pcie->global_table);
-+	trans_pcie->global_table = NULL;
- 	kfree(trans_pcie->rxq);
-+	trans_pcie->rxq = NULL;
+diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
+index 221585e846c1f..a8664328701e8 100644
+--- a/fs/smb/client/link.c
++++ b/fs/smb/client/link.c
+@@ -257,7 +257,7 @@ cifs_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 	struct cifs_open_parms oparms;
+ 	struct cifs_io_parms io_parms = {0};
+ 	int buf_type = CIFS_NO_BUFFER;
+-	struct cifs_open_info_data query_data;
++	struct cifs_open_info_data query_data = {};
  
--	if (trans_pcie->alloc_page)
-+	if (trans_pcie->alloc_page) {
- 		__free_pages(trans_pcie->alloc_page, trans_pcie->rx_page_order);
-+		trans_pcie->alloc_page = NULL;
-+	}
- }
- 
- static void iwl_pcie_rx_move_to_allocator(struct iwl_rxq *rxq,
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index ef71c0eb8704a..c43b75128e0c8 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -990,7 +990,7 @@ smb_set_file_info(struct inode *inode, const char *full_path,
+ 	struct cifs_open_parms oparms;
+ 	struct cifsFileInfo *open_file;
+ 	FILE_BASIC_INFO new_buf;
+-	struct cifs_open_info_data query_data;
++	struct cifs_open_info_data query_data = {};
+ 	__le64 write_time = buf->LastWriteTime;
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
 -- 
 2.53.0
 
