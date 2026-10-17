@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037BC3A8753;
-	Sat, 17 Oct 2026 17:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634F3A6B65;
+	Sat, 17 Oct 2026 17:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257442; cv=none; b=p5xetKOGMONpd+gY+bwxQAq19mPeNfJih2PrCkwQ4ETJcScQUaJ8gLuY33AoBQy0xSi2MH7RHE59dGAvN5S+BiFU8mxcbCOBlqgBDfBl3jhpUoGMdoeoXQ0PAlkwmZJWKOChUm/XzF3nyOZpseC5Um3K9QOuqm5jM++ctuwPlkc=
+	t=1792257445; cv=none; b=Zi1RyV8p0/v8KR4wuhuJqiYcJFpr5znaa3ALhUo/YRRujT8OKzXZULFBHZHVEjg08G1zs/N0U3j/siKT1z7Tbi29I8wukbmU//pruBYWnaHDuOZ5ajH3v996ncG3poofcGwWi4kAbnw1+cYvPsTiivzZbbX0M/5GI0axCcjCYvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257442; c=relaxed/simple;
-	bh=HV4aZHtEqGOo8/HrYWlWpbO4qFT0N9iE2uXPsR6ivBM=;
+	s=arc-20240116; t=1792257445; c=relaxed/simple;
+	bh=PJW+l8uwC3mfD7Sn/+Db0LsLgHj9vcS7kwiv7xkD5CQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5HpJuwJ6FVEB4+YF7QiC/6loClqCytaKzAFN1G2Arb3sg7Y3FC3te3ETGXBfl6fhCt2h+qTVLQavpVdgw8oH8WCdH/ZE+Y+F6hnxsqScCocCDdumAU6cpPjJS37vmVB9DYbN1aA+EyWbNIT4MwAF0Wu57xGgVSBUFkY1DeDG6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOY6zbZY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LhHZOqVzJWeYTW+Ybpnfi9QZfkqsBHDe4OUJ4vG8zdzOZbsOUmNYi+QyMcF1J5LlU0Xlk/A03PLHerrNQzXsDnGFghjXK7gCLH88ViqCp2tujh1L9ApDE4DGHHUj2bdUnfUXwzIJLFZxGEUT2WmQWMzIgR+8HzKzkdsHhap/PAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WO0mJEjA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOY6zbZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523661F000C5;
-	Sat, 17 Oct 2026 17:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WO0mJEjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B48C1F000C5;
+	Sat, 17 Oct 2026 17:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257440;
-	bh=HILhJVclVo8R6IUQ5h0WWC3ospfxSocBSHkfFj212OA=;
+	s=korg; t=1792257444;
+	bh=+muDtd16iXDnz3g3UAFq5MIM6X59OvlcNIY0QvlWwQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOY6zbZYGketmHC4stb2fnV4qnqCPiqZ2DMTLH8/yE4wGGktC+/utp0dITTEegy+3
-	 Y4Eid/o3Xxqz4MjhLi7KfzA2PUE0M24WlYdVb7zHzoKE6pmy4lCsAyG+HxwRwBKvJd
-	 no4qr1wIPmbqhhfV6BbxQiMZSXD5g5C6wkTEKnJQ=
+	b=WO0mJEjAdJExwQHIDAatojdUhWItdpOJ606U48pzlk33wRbZSdEskxhoa1MY/7aHQ
+	 3CYZzC5QQ55Wl0FFHzGExxk0j0gXe2pxWjQ+N8xePp54O5ezYcEd6y1Ny/kg4/BC4H
+	 RoCYO/J+HChXpBrPeV4ZJAzbXRKGJp+4hzMgtwRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Papa <pcristian292@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Ezrak1e <ezrakiez@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Srikanth C S <srikanth.c.s@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0559/1674] wifi: mt76: mt7603: initialize global station WCID
-Date: Sat, 17 Oct 2026 17:47:11 +0200
-Message-ID: <20261017160445.444319188@linuxfoundation.org>
+Subject: [PATCH 6.6 0560/1674] dlm: validate length in dlm_search_rsb_tree
+Date: Sat, 17 Oct 2026 17:47:12 +0200
+Message-ID: <20261017160445.468593302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,55 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Papa <pcristian292@gmail.com>
+From: Ezrak1e <ezrakiez@gmail.com>
 
-commit 456de496b53ae73e6e3020fec815dbdc88aa7c07 upstream.
+[ Upstream commit 080e5563f878c64e697b89e7439d730d0daad882 ]
 
-mt7603 uses a driver-private global station WCID for frames that have
-neither a station nor a vif, including frames injected through a monitor
-interface. Unlike the core global WCID initialized by
-mt76_register_device(), this WCID is published without ever being passed
-to mt76_wcid_init().
+The len parameter in dlm_dump_rsb_name() is not validated and comes
+from network messages. When it exceeds DLM_RESNAME_MAXLEN, it can
+cause out-of-bounds write in dlm_search_rsb_tree().
 
-Since commit 0335c034e726 ("wifi: mt76: fix race condition related to
-checking tx queue fill status"), mt76_tx() queues every such frame on the
-WCID's tx_pending or tx_offchannel queue and links its tx_list. The first
-injected frame therefore reaches __skb_queue_tail() with an uninitialized
-sk_buff_head and dereferences a NULL prev pointer.
+Add length validation to prevent potential buffer overflow.
 
-Initialize the WCID before publishing it.
-
-The fix was tested on an MT7603 PCIe device. Three wildcard probe requests
-were injected through a monitor interface. The hardware queue head and tail
-advanced from 0 to 3 and a second radio captured the third request over the
-air. No oops or reset occurred. After restoring AP mode, a 150 MB transfer
-also completed without a reset.
-
-Fixes: 0335c034e726 ("wifi: mt76: fix race condition related to checking tx queue fill status")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cristian Papa <pcristian292@gmail.com>
-Link: https://patch.msgid.link/20260904010702.16306-1-pcristian292@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ mt76_wcid_init() takes no band index in this tree; drop the argument. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Signed-off-by: Ezrak1e <ezrakiez@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+[ Contextual conflict due to dlm_search_rsb_tree() using the RB-tree
+implementation instead of rhashtable.]
+Signed-off-by: Srikanth C S <srikanth.c.s@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7603/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/dlm/lock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/init.c b/drivers/net/wireless/mediatek/mt76/mt7603/init.c
-index 0762de3ce5ac4..02d7b36ea786b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/init.c
-@@ -222,6 +222,7 @@ mt7603_mac_init(struct mt7603_dev *dev)
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index 6712d733fc90b..dd2fa54f2b7dd 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -444,6 +444,8 @@ int dlm_search_rsb_tree(struct rb_root *tree, const void *name, int len,
+ 	struct dlm_rsb *r;
+ 	int rc;
  
- 	eth_broadcast_addr(bc_addr);
- 	mt7603_wtbl_init(dev, MT7603_WTBL_RESERVED, -1, bc_addr);
-+	mt76_wcid_init(&dev->global_sta.wcid);
- 	dev->global_sta.wcid.idx = MT7603_WTBL_RESERVED;
- 	rcu_assign_pointer(dev->mt76.wcid[MT7603_WTBL_RESERVED],
- 			   &dev->global_sta.wcid);
++	if (len > DLM_RESNAME_MAXLEN)
++		return -EINVAL;
+ 	while (node) {
+ 		r = rb_entry(node, struct dlm_rsb, res_hashnode);
+ 		rc = rsb_cmp(r, name, len);
 -- 
 2.53.0
 
