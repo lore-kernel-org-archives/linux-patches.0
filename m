@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C1A3AF66D;
-	Sat, 17 Oct 2026 17:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500FD3B9DAE;
+	Sat, 17 Oct 2026 17:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257206; cv=none; b=ZC0XpY5Yyn+bHonOf5KQOFS65NGBT98E2wTMLP8CXm+2R3o5TSBx2aLwFV9/LZyhDKj8PneiCPZ/OSfKpJTJp592EaVN6pAAGk08p9GjecSNBbztFFgC0FG2RDlH8PNSi/lPAn6+ulqC4J7+SBgHkcdabjleP2oWrcphSf3NsuM=
+	t=1792257209; cv=none; b=IwM2TUtNTzzcsOVHqckeV+dCv/wOwDBwhLZYb0zRZ9EC5D2RxfiXzr0WJhweQVxJzt+jx4RCW8Xs6WaZ16vqHxecU8dD6agKfIuV/G5no9Z3edGQsq+1mR61xaDIcisv3tRNudu8pFI5lU5bvkWBB29dDc1WBFKb5Wo6nRGLYvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257206; c=relaxed/simple;
-	bh=0boz6A6VsTnzzfjMwYCx+ILtR488IJ/ktDAwfhCECzE=;
+	s=arc-20240116; t=1792257209; c=relaxed/simple;
+	bh=XiL72hamsyqAIbFEv3AslMD+roNiLFwuCB77VFvZXoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liSB5w0O1zCM6rDUYcfp8DDlhk5CfSaD7oecudyse+GUrN4IlybO+i+zn9nu0jH3pkMbhK0Q1RXT66boLYNPeCdPPps53Domgs+PzsStZsUYpH3CEeRRmbLMB5kRk0eBbnFvu6J8edbt8Cv/EEYgIyE3fceJHVFrxFl/pm+jACE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCFrcuAY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DO37lJWZ/SP8qLg97ODTrB/AIz2YWE4bCBFmkUjm5J5DjtOags4OeIxtQtAV/7dEmUy7H3+uchd2qsBg+qOYZpMHnKMJFJS6J6rTVQ97Jp7W7z8uKC3qTLyl+8612PadKnrQnwi/yBOoqICGYvabNvSeNAb0YcxLsjVSy7RQlRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHUDAaYr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCFrcuAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876491F000C4;
-	Sat, 17 Oct 2026 17:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHUDAaYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9581F000C7;
+	Sat, 17 Oct 2026 17:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257205;
-	bh=vuJtz/lfhB+9NwUrlmvG/d6OXqdf1l0JIQxbLjjg1T8=;
+	s=korg; t=1792257208;
+	bh=CPFOv5PQbXqX+GYPj97rFB5R22nYbB5vVljorFauaY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kCFrcuAY9l9R+/NHq35l7KG+zLgO/A/OJz3/M3sW5vv2jlVD43PqP9isTan9l3XbF
-	 87heTZc0Xtl6/IGqBTk/QrhoGRSJWwoThCDD12jpIRwt4VoPnFIW1hf8oqQtmiRlBS
-	 9hLtpeB4pAasMAcgLImPw/1QdRZw6WqcXjKFI+y4=
+	b=cHUDAaYrJfgM/ZzQ3NsfqeWutG2lCMeftdcMHnlzHlNMG1lzBhOsfWZNY+nmC3ZAP
+	 Wt6S3L0E+WvnJ/ojQMDGVPId3QQebH700bGrhFQCT3HgDVz6Fdh7WtSUI2tLlDJb0j
+	 Gq9Vo0igTwYHyUjOrBtWqbCAie4LNXXBzL4kSeyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0478/1674] strparser: make sure __strp_recv isnt running before tearing down the parser
-Date: Sat, 17 Oct 2026 17:45:50 +0200
-Message-ID: <20261017160443.383045865@linuxfoundation.org>
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 0487/1674] gpio: xilinx: fix runtime PM leak on request error path
+Date: Sat, 17 Oct 2026 17:45:59 +0200
+Message-ID: <20261017160443.616204523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,100 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-commit 0984ebc631792acf8fff105112ee74a6b8f1efcc upstream.
+commit ff82fc3a4a1d417dee1229681cc5285986edb1fa upstream.
 
-The comment above strp_done() claims that if strp is stopped,
-strp_recv will no longer be called. That's only true if the caller has
-a mechanism (eg locking) to guarantee that strp_recv() calls that
-started before strp_stop() have completed by the time we call
-strp_done().
+pm_runtime_get_sync() leaves the usage counter incremented even when it
+fails, and xgpio_request() returns the error without dropping it.
 
-This adds a dummy lock_sock/release_sock pair to guarantee that any
-in-flight strp_recv() (which runs under either bh_lock_sock or
-lock_sock, depending if it's called from ->sk_data_ready or strp_work)
-has completed.
+gpiolib does not call ->free() when ->request() fails, so xgpio_free(),
+which holds the only matching pm_runtime_put(), never runs. The reference
+is leaked and the controller can no longer runtime-suspend, so its clock
+stays enabled.
 
-Only espintcp can be affected by this race condition, but this patch
-makes sure no future user of strp can have the bug.
+Switch to pm_runtime_resume_and_get(), which only increments the usage
+counter on success.
 
-This could crash on strp->sk ("general mode" of strp), but this mode
-has been here for 9 years and has never been used. It'll be gone soon,
-no point worrying about it.
-
-Switch the stopped/paused/etc bits to u8's to avoid races between
-strp_stop() and strp_pause/unpause().
-
-A reproducer has been published and turns the possible UAF into an
-exploit [1].
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/all/aZLn2Faeg1FB7XOf@v4bel/
-Link: https://lore.kernel.org/all/aZgpkyTDU3aXe_V0@v4bel/
-Link: https://github.com/m0x41nos/RustyTux [1]
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Fixes: 26b04774621e ("gpio: gpio-xilinx: Add support for suspend and resume")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/425d9d926709b542ed5331110c19fee4aee1f28d.1791206940.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260923113905.1409290-1-khurana.ridham222@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/strparser.rst |    2 +-
- include/net/strparser.h                |   10 +++++-----
- net/strparser/strparser.c              |    6 +++++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-xilinx.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/Documentation/networking/strparser.rst
-+++ b/Documentation/networking/strparser.rst
-@@ -77,7 +77,7 @@ Functions
+--- a/drivers/gpio/gpio-xilinx.c
++++ b/drivers/gpio/gpio-xilinx.c
+@@ -293,14 +293,7 @@ static void xgpio_save_regs(struct xgpio
  
-      strp_done is called to release any resources held by the stream
-      parser instance. This must be called after the stream processor
--     has been stopped.
-+     has been stopped. The socket lock must not be held.
- 
-      ::
- 
---- a/include/net/strparser.h
-+++ b/include/net/strparser.h
-@@ -91,11 +91,11 @@ static inline struct strp_msg *strp_msg(
- struct strparser {
- 	struct sock *sk;
- 
--	u32 stopped : 1;
--	u32 paused : 1;
--	u32 aborted : 1;
--	u32 interrupted : 1;
--	u32 unrecov_intr : 1;
-+	u8 stopped;
-+	u8 paused;
-+	u8 aborted;
-+	u8 interrupted;
-+	u8 unrecov_intr;
- 
- 	struct sk_buff **skb_nextp;
- 	struct sk_buff *skb_head;
---- a/net/strparser/strparser.c
-+++ b/net/strparser/strparser.c
-@@ -518,12 +518,16 @@ void strp_unpause(struct strparser *strp
- EXPORT_SYMBOL_GPL(strp_unpause);
- 
- /* strp must already be stopped so that strp_recv will no longer be called.
-- * Note that strp_done is not called with the lower socket held.
-+ * Note that strp_done must not be called with the lower socket held.
-  */
- void strp_done(struct strparser *strp)
+ static int xgpio_request(struct gpio_chip *chip, unsigned int offset)
  {
- 	WARN_ON(!strp->stopped);
+-	int ret;
+-
+-	ret = pm_runtime_get_sync(chip->parent);
+-	/*
+-	 * If the device is already active pm_runtime_get() will return 1 on
+-	 * success, but gpio_request still needs to return 0.
+-	 */
+-	return ret < 0 ? ret : 0;
++	return pm_runtime_resume_and_get(chip->parent);
+ }
  
-+	lock_sock(strp->sk);
-+	/* sync with pending strp_recv */
-+	release_sock(strp->sk);
-+
- 	cancel_delayed_work_sync(&strp->msg_timer_work);
- 	cancel_work_sync(&strp->work);
- 
+ static void xgpio_free(struct gpio_chip *chip, unsigned int offset)
 
 
