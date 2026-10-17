@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F387215E5BB;
-	Sat, 17 Oct 2026 17:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77C117BED0;
+	Sat, 17 Oct 2026 17:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257936; cv=none; b=t7yq2Xsi7smOX2v3tHteQSKiML448FR4pMBdrpK5zrYFJRiCC7+uYOtkJ8hucitVH0vxKk3e7qEQxsYhuXHjx3hpxBvPRBBI4PWhZmOc7po9ZF4PS04tnKvYVkLr1mb0SxqhHIg7dKVkxjoTNrHW+zbBZE5pmLaxNr7Ti5sGowM=
+	t=1792257938; cv=none; b=Z11VpxTD9gKrZhIEm8O4gdqQOroHuK1z7OF/avLGUZo0L+rKu2pSIgxj/mSwuhX4n3RzIq8iy+beAodh8C1A2HYYviG65KLB2sppX+Ud0Ra2uTq98BN4OcoF31WJZO5T/KBQXj45r9221QK7ct9z7OfH+dGFdMQGjnzRWKSPcqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257936; c=relaxed/simple;
-	bh=KlfZ0lGXqdtK/PXlD69ql8xXxGU56t9zWtl2UIAnzGE=;
+	s=arc-20240116; t=1792257938; c=relaxed/simple;
+	bh=daVlqO3idxh92rSHe6L3m6YDvS/cnR34W8OyF7E16W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYVgqW9sIX6UL6cZiFcqCtDpkNuI2R3jnbr3iCnEPw9kMQCsLveeckIdcd2yf/T5ZybnnYnkcRV0oCjbgOBjOEx/NJWQjQb42qOMSEFWb75y4fdNfT2IaLOiAS00YYuwWStcI+r6rSgJV8TA+Qm/mC6fT6jSKNuymHUjR2g520o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RL3stMkg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jiMaZkmPC2lip01YN+zr5GG4TqeBOcrq3b/Qk00QDeb9ZEIB0erd5fAxEWs2wahVAZnUGRQJqCrBjkl4CZgulX7VjCOzu/CoHhXQ6tx+/+F7A42GOyCJpwqKoDMoyKnavv/nEBd++HLREus+kqkDu2HpIbPLsMkthNCaltaMcYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmMAeF/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RL3stMkg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9C61F000C4;
-	Sat, 17 Oct 2026 17:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmMAeF/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480DF1F000C4;
+	Sat, 17 Oct 2026 17:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257934;
-	bh=UgmQLWLDUPEaGUMGzslke5zv2PSvn2rxnwCOO8NmJ/Q=;
+	s=korg; t=1792257937;
+	bh=0gT7d0cI30L9fXuNh1C4Doh3dbJsDlEguVJrPQca09Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RL3stMkghobM55pUK9derS2dWLeiXSD3usPpe/C//OWVSKQJA/NXUHT94YVKoA1B/
-	 evJiHwkSJaffYpk9dh7OJgezLTqKIU4mqhmCf/johB1TjBIcjdCcNsPgpvtXlm5arQ
-	 yYv6BJcyn8MMUG8bwvsWChz+UF+vpuacmjQtXLFQ=
+	b=TmMAeF/uP6qzXzk5w0LNSBa7jaf0ICMGl+i2uYsL2FYU8PogwsFI1t6puEsaO914v
+	 ZwSN+wJS2+DJpVGbpEfFREYuZ9EYypgfsIU8MPUN9aXucVFhMDVzKUllAfzeEGuri1
+	 SM2JlfRiiVx66/oyoJqU4zOdTq2ZpPdMUaAlGmi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0719/1674] ublk: fix handling recovery & reissue in ublk_abort_queue()
-Date: Sat, 17 Oct 2026 17:49:51 +0200
-Message-ID: <20261017160449.562967753@linuxfoundation.org>
+Subject: [PATCH 6.6 0720/1674] fs/ntfs3: Use function file_inode to get inode from file
+Date: Sat, 17 Oct 2026 17:49:52 +0200
+Message-ID: <20261017160449.589502161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,102 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 6ee6bd5d4fce502a5b5a2ea805e9ff16e6aa890f ]
+[ Upstream commit b9906f8162478c778c5212720efb19633a458ade ]
 
-Commit 8284066946e6 ("ublk: grab request reference when the request is handled
-by userspace") doesn't grab request reference in case of recovery reissue.
-Then the request can be requeued & re-dispatch & failed when canceling
-uring command.
-
-If it is one zc request, the request can be freed before io_uring
-returns the zc buffer back, then cause kernel panic:
-
-[  126.773061] BUG: kernel NULL pointer dereference, address: 00000000000000c8
-[  126.773657] #PF: supervisor read access in kernel mode
-[  126.774052] #PF: error_code(0x0000) - not-present page
-[  126.774455] PGD 0 P4D 0
-[  126.774698] Oops: Oops: 0000 [#1] SMP NOPTI
-[  126.775034] CPU: 13 UID: 0 PID: 1612 Comm: kworker/u64:55 Not tainted 6.14.0_blk+ #182 PREEMPT(full)
-[  126.775676] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39 04/01/2014
-[  126.776275] Workqueue: iou_exit io_ring_exit_work
-[  126.776651] RIP: 0010:ublk_io_release+0x14/0x130 [ublk_drv]
-
-Fixes it by always grabbing request reference for aborting the request.
-
-Reported-by: Caleb Sander Mateos <csander@purestorage.com>
-Closes: https://lore.kernel.org/linux-block/CADUfDZodKfOGUeWrnAxcZiLT+puaZX8jDHoj_sfHZCOZwhzz6A@mail.gmail.com/
-Fixes: 8284066946e6 ("ublk: grab request reference when the request is handled by userspace")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250409011444.2142010-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: 285cec318bf5 ("fs/ntfs3: Keep write operations atomic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 37 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 5 deletions(-)
+ fs/ntfs3/file.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 356f32b6f1803..c39eab406978e 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1134,13 +1134,37 @@ static inline void __ublk_complete_rq(struct request *req)
- 	ublk_end_request(req, res);
- }
- 
-+static void ublk_do_fail_rq(struct request *req)
-+{
-+	struct ublk_queue *ubq = req->mq_hctx->driver_data;
-+
-+	if (ublk_queue_can_use_recovery_reissue(ubq))
-+		blk_mq_requeue_request(req, false);
-+	else
-+		__ublk_complete_rq(req);
-+}
-+
-+static void ublk_fail_rq_fn(struct kref *ref)
-+{
-+	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
-+			ref);
-+	struct request *req = blk_mq_rq_from_pdu(data);
-+
-+	ublk_do_fail_rq(req);
-+}
-+
- static void ublk_complete_rq(struct kref *ref)
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 3eee810c69e2f..18753121159c5 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -253,8 +253,7 @@ static int ntfs_zero_range(struct inode *inode, u64 vbo, u64 vbo_to)
+  */
+ static int ntfs_file_mmap(struct file *file, struct vm_area_struct *vma)
  {
- 	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
- 			ref);
- 	struct request *req = blk_mq_rq_from_pdu(data);
-+	struct ublk_queue *ubq = req->mq_hctx->driver_data;
+-	struct address_space *mapping = file->f_mapping;
+-	struct inode *inode = mapping->host;
++	struct inode *inode = file_inode(file);
+ 	struct ntfs_inode *ni = ntfs_i(inode);
+ 	u64 from = ((u64)vma->vm_pgoff << PAGE_SHIFT);
+ 	bool rw = vma->vm_flags & VM_WRITE;
+@@ -430,7 +429,7 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
+  */
+ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
+ {
+-	struct inode *inode = file->f_mapping->host;
++	struct inode *inode = file_inode(file);
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+@@ -736,7 +735,7 @@ int ntfs3_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ static ssize_t ntfs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
+ {
+ 	struct file *file = iocb->ki_filp;
+-	struct inode *inode = file->f_mapping->host;
++	struct inode *inode = file_inode(file);
+ 	struct ntfs_inode *ni = ntfs_i(inode);
  
--	__ublk_complete_rq(req);
-+	/* the abort path's reference may be dropped by another holder last */
-+	if (ubq->ios[req->tag].flags & UBLK_IO_FLAG_ABORTED)
-+		ublk_do_fail_rq(req);
-+	else
-+		__ublk_complete_rq(req);
- }
+ 	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
+@@ -773,7 +772,7 @@ static ssize_t ntfs_file_splice_read(struct file *in, loff_t *ppos,
+ 				     struct pipe_inode_info *pipe, size_t len,
+ 				     unsigned int flags)
+ {
+-	struct inode *inode = in->f_mapping->host;
++	struct inode *inode = file_inode(in);
+ 	struct ntfs_inode *ni = ntfs_i(inode);
  
- /*
-@@ -1158,10 +1182,13 @@ static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
- 
- 	if (!(io->flags & UBLK_IO_FLAG_ABORTED)) {
- 		io->flags |= UBLK_IO_FLAG_ABORTED;
--		if (ublk_queue_can_use_recovery_reissue(ubq))
--			blk_mq_requeue_request(req, false);
--		else
--			ublk_put_req_ref(ubq, req);
-+		if (ublk_need_req_ref(ubq)) {
-+			struct ublk_rq_data *data = blk_mq_rq_to_pdu(req);
-+
-+			kref_put(&data->ref, ublk_fail_rq_fn);
-+		} else {
-+			ublk_do_fail_rq(req);
-+		}
- 	}
- }
- 
+ 	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
+@@ -1071,8 +1070,7 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
+ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ {
+ 	struct file *file = iocb->ki_filp;
+-	struct address_space *mapping = file->f_mapping;
+-	struct inode *inode = mapping->host;
++	struct inode *inode = file_inode(file);
+ 	ssize_t ret;
+ 	int err;
+ 	struct ntfs_inode *ni = ntfs_i(inode);
 -- 
 2.53.0
 
