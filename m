@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CF33A6418;
-	Sat, 17 Oct 2026 16:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871143A5E6C;
+	Sat, 17 Oct 2026 16:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253577; cv=none; b=i9ggQxrD7PtzXD+lWzDi7HrfwPRf+Xxwa+aBZMhSNrc7o+FHnWw/9Zbx7wJGDwgSfWojf7EEopUhBcAaFXNpCKt+tcSk/C1goMbqhwb5VhI+v3bMPHK7Qnwv/n7x/yBb8EPXzAWKgIfTppws3ccQiSDwQzBP+eBirbZIXxzh6Iw=
+	t=1792253578; cv=none; b=TIIBBN9mmN2uc68TFCCpdEHGGjX+pDoBLsodfs3MlMws4ARjG6S6JvirQl78VQNjgKLdzWjMJH3jUHPLUbJxHsHVQxmYkwSZZspEGF/IkaMIxnZKh7V9w+nx2ioPzGAxsTxtWrDGT+a7zSxN6o3YlNw9aIrOKq086uNVHJ3IOI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253577; c=relaxed/simple;
-	bh=w9FxjYN7InHpWm1w/afcEF+dMbFQByw75NTo+uBNRc4=;
+	s=arc-20240116; t=1792253578; c=relaxed/simple;
+	bh=5EKreQpsa0RO8fOMBYQunZMYBVdJ3JyjbpWT3/01yQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQs3EAuq8z8Mh5nAR310Z1hDsbdxM28LJTHbJyszbNGZpjuNykfp7LQZ8oh1BdMNlV+i/Z7czRwpToto2ZdS2qp1TCYvnf1coGQw6rev2mICnWizsYna7lhOv9SgEuDFSkcNi47eTKvS0I3rgUhneGIlsjSf11ui/wMzB1E8fkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihvMYmqK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jp7Y/3/yuXnlG96+2htn5E7AjCoW8jbD+RVA6MNMQcviezJAC9KptjL6iYrceSFlDniyahU+OiFdwuydn3z1i7cngUdCq4R5FBCHq6Fe9cg1BwME3HVF83gZ82tho25+2OsksMJ9v5F1Jw+M0W8SRM9eRDZZkrKtmKEaIQSyVd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2wbAbFy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihvMYmqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12A31F000C4;
-	Sat, 17 Oct 2026 16:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2wbAbFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE4E1F000C6;
+	Sat, 17 Oct 2026 16:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253573;
-	bh=XFctcmYq1ZZnzcJvuhkJimBo8ERIlXZflJNoqpg10Xs=;
+	s=korg; t=1792253570;
+	bh=CqU5FV0YEveDSSFElKi3s8JKHckQQ4UdVqt0KpHKQeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihvMYmqKawQReiatE5J25jthtSE3cLyGvNiWMYMvQx4Sl77pVXpVlpzB7KPjRU6Xi
-	 HFzUuvqRFivGo6scmfnWz4E/vpJNCMGrQIPhYAEeQiblsNCMVrVyNXuRT/1job7rec
-	 ZZD3vsbh03aSTihyVcMqM2qo5ABNHd9ho4ZX1etc=
+	b=N2wbAbFy8OUdvOFcsC4MUVEU1N9/p2kcfXmTi5rUiTOC+ZJB5WDuOtEfAdoBIgZlB
+	 Vbd5qU1ChclTLa7vPT88i8/iJ42yHpeshpDeIJmWzYgDywMFVN8zLKbjv5/Ys8pHMg
+	 qfzZvsr766Mw2Ou6vrNKsUshlgGCOD5+qYWEgeOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Tony Battersby <tonyb@cybernetics.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniel Pawlik <pawlik.dan@gmail.com>,
+	Matteo Croce <teknoraver@meta.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/869] scsi: qla2xxx: Clear cmds after chip reset
-Date: Sat, 17 Oct 2026 17:50:05 +0200
-Message-ID: <20261017160041.251553598@linuxfoundation.org>
+Subject: [PATCH 6.12 155/869] wifi: mt76: wed: use proper wed reference in mt76 wed driver callabacks
+Date: Sat, 17 Oct 2026 17:49:56 +0200
+Message-ID: <20261017160041.015819896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,109 +53,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit d46c69a087aa3d1513f7a78f871b80251ea0c1ae ]
+[ Upstream commit 385aab8fccd7a8746b9f1a17f3c1e38498a14bc7 ]
 
-Commit aefed3e5548f ("scsi: qla2xxx: target: Fix offline port handling
-and host reset handling") caused two problems:
+MT7996 driver can use both wed and wed_hif2 devices to offload traffic
+from/to the wireless NIC. In the current codebase we assume to always
+use the primary wed device in wed callbacks resulting in the following
+crash if the hw runs wed_hif2 (e.g. 6GHz link).
 
-1. Commands sent to FW, after chip reset got stuck and never freed as FW
-   is not going to respond to them anymore.
+[  297.455876] Unable to handle kernel read from unreadable memory at virtual address 000000000000080a
+[  297.464928] Mem abort info:
+[  297.467722]   ESR = 0x0000000096000005
+[  297.471461]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  297.476766]   SET = 0, FnV = 0
+[  297.479809]   EA = 0, S1PTW = 0
+[  297.482940]   FSC = 0x05: level 1 translation fault
+[  297.487809] Data abort info:
+[  297.490679]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[  297.496156]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[  297.501196]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[  297.506500] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000107480000
+[  297.512927] [000000000000080a] pgd=08000001097fb003, p4d=08000001097fb003, pud=08000001097fb003, pmd=0000000000000000
+[  297.523532] Internal error: Oops: 0000000096000005 [#1] SMP
+[  297.715393] CPU: 2 UID: 0 PID: 45 Comm: kworker/u16:2 Tainted: G           O       6.12.50 #0
+[  297.723908] Tainted: [O]=OOT_MODULE
+[  297.727384] Hardware name: Banana Pi BPI-R4 (2x SFP+) (DT)
+[  297.732857] Workqueue: nf_ft_offload_del nf_flow_rule_route_ipv6 [nf_flow_table]
+[  297.740254] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  297.747205] pc : mt76_wed_offload_disable+0x64/0xa0 [mt76]
+[  297.752688] lr : mtk_wed_flow_remove+0x58/0x80
+[  297.757126] sp : ffffffc080fe3ae0
+[  297.760430] x29: ffffffc080fe3ae0 x28: ffffffc080fe3be0 x27: 00000000deadbef7
+[  297.767557] x26: ffffff80c5ebca00 x25: 0000000000000001 x24: ffffff80c85f4c00
+[  297.774683] x23: ffffff80c1875b78 x22: ffffffc080d42cd0 x21: ffffffc080660018
+[  297.781809] x20: ffffff80c6a076d0 x19: ffffff80c6a043c8 x18: 0000000000000000
+[  297.788935] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
+[  297.796060] x14: 0000000000000019 x13: ffffff80c0ad8ec0 x12: 00000000fa83b2da
+[  297.803185] x11: ffffff80c02700c0 x10: ffffff80c0ad8ec0 x9 : ffffff81fef96200
+[  297.810311] x8 : ffffff80c02700c0 x7 : ffffff80c02700d0 x6 : 0000000000000002
+[  297.817435] x5 : 0000000000000400 x4 : 0000000000000000 x3 : 0000000000000000
+[  297.824561] x2 : 0000000000000001 x1 : 0000000000000800 x0 : ffffff80c6a063c8
+[  297.831686] Call trace:
+[  297.834123]  mt76_wed_offload_disable+0x64/0xa0 [mt76]
+[  297.839254]  mtk_wed_flow_remove+0x58/0x80
+[  297.843342]  mtk_flow_offload_cmd+0x434/0x574
+[  297.847689]  mtk_wed_setup_tc_block_cb+0x30/0x40
+[  297.852295]  nf_flow_offload_ipv6_hook+0x7f4/0x964 [nf_flow_table]
+[  297.858466]  nf_flow_rule_route_ipv6+0x438/0x4a4 [nf_flow_table]
+[  297.864463]  process_one_work+0x174/0x300
+[  297.868465]  worker_thread+0x278/0x430
+[  297.872204]  kthread+0xd8/0xdc
+[  297.875251]  ret_from_fork+0x10/0x20
+[  297.878820] Code: 928b5ae0 8b000273 91400a60 f943fa61 (79401421)
+[  297.884901] ---[ end trace 0000000000000000 ]---
 
-2. BUG_ON(cmd->sg_mapped) in qlt_free_cmd().  Commit 26f9ce53817a
-   ("scsi: qla2xxx: Fix missed DMA unmap for aborted commands")
-   attempted to fix this, but introduced another bug under different
-   circumstances when two different CPUs were racing to call
-   qlt_unmap_sg() at the same time: BUG_ON(!valid_dma_direction(dir)) in
-   dma_unmap_sg_attrs().
+Fix the issue detecting the proper wed reference to use running wed
+callabacks.
 
-So revert "scsi: qla2xxx: Fix missed DMA unmap for aborted commands" and
-partially revert "scsi: qla2xxx: target: Fix offline port handling and
-host reset handling" at __qla2x00_abort_all_cmds.
-
-Fixes: aefed3e5548f ("scsi: qla2xxx: target: Fix offline port handling and host reset handling")
-Fixes: 26f9ce53817a ("scsi: qla2xxx: Fix missed DMA unmap for aborted commands")
-Co-developed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/0e7e5d26-e7a0-42d1-8235-40eeb27f3e98@cybernetics.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
+Tested-by: Daniel Pawlik <pawlik.dan@gmail.com>
+Tested-by: Matteo Croce <teknoraver@meta.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251008-wed-fixes-v1-1-8f7678583385@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c     | 20 ++++++++++++++++++--
- drivers/scsi/qla2xxx/qla_target.c |  5 +----
- drivers/scsi/qla2xxx/qla_target.h |  1 +
- 3 files changed, 20 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h        |  9 +++++++++
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c |  1 +
+ drivers/net/wireless/mediatek/mt76/wed.c         | 10 +++++-----
+ include/linux/soc/mediatek/mtk_wed.h             |  1 +
+ 4 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
-index 457fb3458ca7c..56330f6a396e1 100644
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1888,10 +1888,26 @@ __qla2x00_abort_all_cmds(struct qla_qpair *qp, int res)
- 					continue;
- 				}
- 				cmd = (struct qla_tgt_cmd *)sp;
--				cmd->aborted = 1;
-+
-+				if (cmd->sg_mapped)
-+					qlt_unmap_sg(vha, cmd);
-+
-+				if (cmd->state == QLA_TGT_STATE_NEED_DATA) {
-+					cmd->aborted = 1;
-+					cmd->write_data_transferred = 0;
-+					cmd->state = QLA_TGT_STATE_DATA_IN;
-+					ha->tgt.tgt_ops->handle_data(cmd);
-+				} else {
-+					ha->tgt.tgt_ops->free_cmd(cmd);
-+				}
- 				break;
- 			case TYPE_TGT_TMCMD:
--				/* Skip task management functions. */
-+				/*
-+				 * Currently, only ABTS response gets on the
-+				 * outstanding_cmds[]
-+				 */
-+				ha->tgt.tgt_ops->free_mcmd(
-+					(struct qla_tgt_mgmt_cmd *) sp);
- 				break;
- 			default:
- 				break;
-diff --git a/drivers/scsi/qla2xxx/qla_target.c b/drivers/scsi/qla2xxx/qla_target.c
-index 11eadb3bd36e5..a1f913fb84cb0 100644
---- a/drivers/scsi/qla2xxx/qla_target.c
-+++ b/drivers/scsi/qla2xxx/qla_target.c
-@@ -2487,7 +2487,7 @@ static int qlt_pci_map_calc_cnt(struct qla_tgt_prm *prm)
- 	return -1;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index ffcd4509dfcae..8addbffa97c55 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1161,6 +1161,15 @@ static inline int mt76_wed_dma_setup(struct mt76_dev *dev, struct mt76_queue *q,
+ 	for (i = 0; i < ARRAY_SIZE((dev)->q_rx); i++)	\
+ 		if ((dev)->q_rx[i].ndesc)
  
--static void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd)
-+void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd)
++static inline struct mt76_dev *mt76_wed_to_dev(struct mtk_wed_device *wed)
++{
++#ifdef CONFIG_NET_MEDIATEK_SOC_WED
++	if (wed->wlan.hif2)
++		return container_of(wed, struct mt76_dev, mmio.wed_hif2);
++#endif /* CONFIG_NET_MEDIATEK_SOC_WED */
++	return container_of(wed, struct mt76_dev, mmio.wed);
++}
++
+ struct mt76_dev *mt76_alloc_device(struct device *pdev, unsigned int size,
+ 				   const struct ieee80211_ops *ops,
+ 				   const struct mt76_driver_ops *drv_ops);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index 01d4b54a1acc6..11e9c71e9b17a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -410,6 +410,7 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ 
+ 	wed->wlan.nbuf = MT7996_HW_TOKEN_SIZE;
+ 	wed->wlan.token_start = MT7996_TOKEN_SIZE - wed->wlan.nbuf;
++	wed->wlan.hif2 = hif2;
+ 
+ 	wed->wlan.amsdu_max_subframes = 8;
+ 	wed->wlan.amsdu_max_len = 1536;
+diff --git a/drivers/net/wireless/mediatek/mt76/wed.c b/drivers/net/wireless/mediatek/mt76/wed.c
+index f89e4537555c5..6798b56bc5554 100644
+--- a/drivers/net/wireless/mediatek/mt76/wed.c
++++ b/drivers/net/wireless/mediatek/mt76/wed.c
+@@ -8,7 +8,7 @@
+ 
+ void mt76_wed_release_rx_buf(struct mtk_wed_device *wed)
  {
- 	struct qla_hw_data *ha;
- 	struct qla_qpair *qpair;
-@@ -3817,9 +3817,6 @@ int qlt_abort_cmd(struct qla_tgt_cmd *cmd)
+-	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
++	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+ 	int i;
  
- 	spin_lock_irqsave(&cmd->cmd_lock, flags);
- 	if (cmd->aborted) {
--		if (cmd->sg_mapped)
--			qlt_unmap_sg(vha, cmd);
--
- 		spin_unlock_irqrestore(&cmd->cmd_lock, flags);
- 		/*
- 		 * It's normal to see 2 calls in this path:
-diff --git a/drivers/scsi/qla2xxx/qla_target.h b/drivers/scsi/qla2xxx/qla_target.h
-index 354fca2e7feb2..3644ab140ff94 100644
---- a/drivers/scsi/qla2xxx/qla_target.h
-+++ b/drivers/scsi/qla2xxx/qla_target.h
-@@ -1059,6 +1059,7 @@ extern int qlt_abort_cmd(struct qla_tgt_cmd *);
- extern void qlt_xmit_tm_rsp(struct qla_tgt_mgmt_cmd *);
- extern void qlt_free_mcmd(struct qla_tgt_mgmt_cmd *);
- extern void qlt_free_cmd(struct qla_tgt_cmd *cmd);
-+extern void qlt_unmap_sg(struct scsi_qla_host *vha, struct qla_tgt_cmd *cmd);
- extern void qlt_async_event(uint16_t, struct scsi_qla_host *, uint16_t *);
- extern void qlt_enable_vha(struct scsi_qla_host *);
- extern void qlt_vport_create(struct scsi_qla_host *, struct qla_hw_data *);
+ 	for (i = 0; i < dev->rx_token_size; i++) {
+@@ -31,8 +31,8 @@ EXPORT_SYMBOL_GPL(mt76_wed_release_rx_buf);
+ #ifdef CONFIG_NET_MEDIATEK_SOC_WED
+ u32 mt76_wed_init_rx_buf(struct mtk_wed_device *wed, int size)
+ {
+-	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
+ 	struct mtk_wed_bm_desc *desc = wed->rx_buf_ring.desc;
++	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+ 	struct mt76_queue *q = &dev->q_rx[MT_RXQ_MAIN];
+ 	int i, len = SKB_WITH_OVERHEAD(q->buf_size);
+ 	struct mt76_txwi_cache *t = NULL;
+@@ -84,7 +84,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_init_rx_buf);
+ 
+ int mt76_wed_offload_enable(struct mtk_wed_device *wed)
+ {
+-	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
++	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+ 
+ 	spin_lock_bh(&dev->token_lock);
+ 	dev->token_size = wed->wlan.token_start;
+@@ -168,7 +168,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_dma_setup);
+ 
+ void mt76_wed_offload_disable(struct mtk_wed_device *wed)
+ {
+-	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
++	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+ 
+ 	spin_lock_bh(&dev->token_lock);
+ 	dev->token_size = dev->drv->token_size;
+@@ -178,7 +178,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_offload_disable);
+ 
+ void mt76_wed_reset_complete(struct mtk_wed_device *wed)
+ {
+-	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
++	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+ 
+ 	complete(&dev->mmio.wed_reset_complete);
+ }
+diff --git a/include/linux/soc/mediatek/mtk_wed.h b/include/linux/soc/mediatek/mtk_wed.h
+index a476648858a66..9b569b1300b93 100644
+--- a/include/linux/soc/mediatek/mtk_wed.h
++++ b/include/linux/soc/mediatek/mtk_wed.h
+@@ -154,6 +154,7 @@ struct mtk_wed_device {
+ 		bool wcid_512;
+ 		bool hw_rro;
+ 		bool msi;
++		bool hif2;
+ 
+ 		u16 token_start;
+ 		unsigned int nbuf;
 -- 
 2.53.0
 
