@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7503418787A;
-	Sat, 17 Oct 2026 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483444CF49A;
+	Sat, 17 Oct 2026 16:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253651; cv=none; b=gCkpji1zvc3dJ4wjCao/u4BufxILwintYIPsHkG/stjPYrQiWOhFUifKycS2JdR6RnmubnwiJ1HGTZZrZG4+YEsDOGJsEcnL6FS2HkdrDqXQH1NNBKTKAaICSeEGFf/90ccywuGWm4DCtD1/ua+z2EFunfEsIkbwz9h+LoEX3uA=
+	t=1792253654; cv=none; b=eFXR0X3sa+d91WDuJ/t9rORmKlrLF3P8i5/GJZ9VkTJSHHdc9mQqUDkmHYZV4YPzFCPAQXPSPEh6bvO+ryqGOj9piubJdMwZyjvcUDFpgxMyXFFdOEL7dON6PxdNX9fdghnCKAeQhm51ps+h6eqcSH0KDygcSEYGvg84Ok+yuAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253651; c=relaxed/simple;
-	bh=+0tK6fkXs9eWQkF9+/YlT9GmBDvh1dSECpnBh9nqosY=;
+	s=arc-20240116; t=1792253654; c=relaxed/simple;
+	bh=8wibhijurDDSCNVfdLO7bmJpc73NJL4nYjeDGbIoTIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Te2qVUGHyk4b+KcikxqxGRYYWbFc58wQZW5nAghsWNG9BN3N1WDI5w5FJ51oKiO7VPV6P8DWytyyzdRLhKGMsdYoOkRiygjRtoK95sK2C03adQ90UPNffpyhMRrR9IWpvSdcRrRGVtIQYA8LcrPBTwe+P/VJRMgej1b8jwMcduw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ7V9o7o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nhLcxOiEJC70HHz6bPta9eRp7nf0SZCuhnT1YsiSYsYolbleS5WFuw17lvzUVU4VrXUCSkgxQKVhVg6v1by5PuWWHMQY77kmISD+36zgA26Dxk9iLrlGfD3XR6GxdGqPyhgtF0hx3wXjbY6PC97d+5cRJJWSigS14RjAuPANC2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYQKaLml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ7V9o7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF321F000C4;
-	Sat, 17 Oct 2026 16:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYQKaLml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962DE1F000C4;
+	Sat, 17 Oct 2026 16:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253650;
-	bh=+xM+i1+h72s8DseGJtdbxSTACIzxr+uW+Uu1BqtZVlM=;
+	s=korg; t=1792253653;
+	bh=s8UUKOE+MOx2HsCxBVRl21rKgND3+RdlAg0rG0zQ5/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQ7V9o7oyrj1TKskw9XHi77n9UaU4AA2IGXuQXO0sOBkYMtopuEjz5thnQv/llooC
-	 4+rBaW7Dd+OYbrnZ8nuFfMK6bDEkd5KmiVVQczN9Z5q4ZnnA5lmi51TbvVueoF9Slp
-	 b3TxQo82j05uu5PuraF+/B1RK8OVi3NhFTTac1IU=
+	b=WYQKaLmlUW+ktv0PIr24tQ553knnA9ESVjIo4/MeHE9GAKb6wM626ZGwv+ZTIURPv
+	 Tli5YT0X3DshzPMM8jOzFiBXQIFpe7wm4VacOas2iyBWAW+zEclklNpj+QuM5Z1Ioi
+	 z3OKPMbRHO/0UAFqmoYhuuAgmAvTtHJCZL2SjOFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	stable <stable@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 187/869] serial: rename local uart_port_lock() -> uart_port_ref_lock()
-Date: Sat, 17 Oct 2026 17:50:28 +0200
-Message-ID: <20261017160041.852757849@linuxfoundation.org>
+Subject: [PATCH 6.12 188/869] serial: core: fix infinite loop in handle_tx() for PORT_UNKNOWN
+Date: Sat, 17 Oct 2026 17:50:29 +0200
+Message-ID: <20261017160041.878656725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -50,224 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 31e0b7863c9bf97bc3a6d735cb4956c929134a80 ]
+[ Upstream commit 455ce986fa356ff43a43c0d363ba95fa152f21d5 ]
 
-uart_port_lock() and uart_port_unlock() are (at the same time) defined
-as:
-* functions in include/linux/serial_core.h
-* macros in drivers/tty/serial/serial_core.c
+uart_write_room() and uart_write() behave inconsistently when
+xmit_buf is NULL (which happens for PORT_UNKNOWN ports that were
+never properly initialized):
 
-The former are sane uart port lock wrappers.
+- uart_write_room() returns kfifo_avail() which can be > 0
+- uart_write() checks xmit_buf and returns 0 if NULL
 
-The latter _lock() does something completely different: it inspects
-a uart_state, obtains a uart_port from it, and increases its reference
-count. And if that all succeeded, the port is locked too.
+This inconsistency causes an infinite loop in drivers that rely on
+tty_write_room() to determine if they can write:
 
-Similarly, the _unlock() counterpart first unlocks and then decrements
-the refcount too.
+  while (tty_write_room(tty) > 0) {
+      written = tty->ops->write(...);
+      // written is always 0, loop never exits
+  }
 
-This state is REALLY CONFUSING.
+For example, caif_serial's handle_tx() enters an infinite loop when
+used with PORT_UNKNOWN serial ports, causing system hangs.
 
-So rename the latter (local .c macros):
-* uart_port_lock() -> uart_port_ref_lock(), and
-* uart_port_unlock() -> uart_port_unlock_deref().
+Fix by making uart_write_room() also check xmit_buf and return 0 if
+it's NULL, consistent with uart_write().
 
-Now, the forbidden while-at-it part: convert from a macro to an inline
--- do it here as the passed 'flags' have to be pointer to ulong now. So
-we avoid doubled changes on identical LOCs.
+Reproducer: https://gist.github.com/mrpre/d9a694cc0e19828ee3bc3b37983fde13
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20250425111315.1036184-5-jirislaby@kernel.org
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260204074327.226165-1-jiayuan.chen@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 455ce986fa35 ("serial: core: fix infinite loop in handle_tx() for PORT_UNKNOWN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 75 ++++++++++++++++----------------
- 1 file changed, 38 insertions(+), 37 deletions(-)
+ drivers/tty/serial/serial_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 2a33ad1e039d0..3d5ad8975bf57 100644
+index 3d5ad8975bf57..816f83141afd3 100644
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -75,22 +75,23 @@ static inline void uart_port_deref(struct uart_port *uport)
- 		wake_up(&uport->state->remove_wait);
- }
- 
--#define uart_port_lock(state, flags)					\
--	({								\
--		struct uart_port *__uport = uart_port_ref(state);	\
--		if (__uport)						\
--			uart_port_lock_irqsave(__uport, &flags);	\
--		__uport;						\
--	})
--
--#define uart_port_unlock(uport, flags)					\
--	({								\
--		struct uart_port *__uport = uport;			\
--		if (__uport) {						\
--			uart_port_unlock_irqrestore(__uport, flags);	\
--			uart_port_deref(__uport);			\
--		}							\
--	})
-+static inline struct uart_port *uart_port_ref_lock(struct uart_state *state, unsigned long *flags)
-+{
-+	struct uart_port *uport = uart_port_ref(state);
-+
-+	if (uport)
-+		uart_port_lock_irqsave(uport, flags);
-+
-+	return uport;
-+}
-+
-+static inline void uart_port_unlock_deref(struct uart_port *uport, unsigned long flags)
-+{
-+	if (uport) {
-+		uart_port_unlock_irqrestore(uport, flags);
-+		uart_port_deref(uport);
-+	}
-+}
- 
- static inline struct uart_port *uart_port_check(struct uart_state *state)
- {
-@@ -127,10 +128,10 @@ static void uart_stop(struct tty_struct *tty)
- 	struct uart_port *port;
- 	unsigned long flags;
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	if (port)
- 		port->ops->stop_tx(port);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- }
- 
- static void __uart_start(struct uart_state *state)
-@@ -168,9 +169,9 @@ static void uart_start(struct tty_struct *tty)
- 	struct uart_port *port;
- 	unsigned long flags;
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	__uart_start(state);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- }
- 
- static void
-@@ -258,14 +259,14 @@ static int uart_alloc_xmit_buf(struct tty_port *port)
- 	if (!page)
- 		return -ENOMEM;
- 
--	uport = uart_port_lock(state, flags);
-+	uport = uart_port_ref_lock(state, &flags);
- 	if (!state->port.xmit_buf) {
- 		state->port.xmit_buf = (unsigned char *)page;
- 		kfifo_init(&state->port.xmit_fifo, state->port.xmit_buf,
- 				PAGE_SIZE);
--		uart_port_unlock(uport, flags);
-+		uart_port_unlock_deref(uport, flags);
- 	} else {
--		uart_port_unlock(uport, flags);
-+		uart_port_unlock_deref(uport, flags);
- 		/*
- 		 * Do not free() the page under the port lock, see
- 		 * uart_free_xmit_buf().
-@@ -289,11 +290,11 @@ static void uart_free_xmit_buf(struct tty_port *port)
- 	 * console driver may need to allocate/free a debug object, which
- 	 * can end up in printk() recursion.
- 	 */
--	uport = uart_port_lock(state, flags);
-+	uport = uart_port_ref_lock(state, &flags);
- 	xmit_buf = port->xmit_buf;
- 	port->xmit_buf = NULL;
- 	INIT_KFIFO(port->xmit_fifo);
--	uart_port_unlock(uport, flags);
-+	uart_port_unlock_deref(uport, flags);
- 
- 	free_page((unsigned long)xmit_buf);
- }
-@@ -592,15 +593,15 @@ static int uart_put_char(struct tty_struct *tty, u8 c)
- 	unsigned long flags;
- 	int ret = 0;
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	if (!state->port.xmit_buf) {
--		uart_port_unlock(port, flags);
-+		uart_port_unlock_deref(port, flags);
- 		return 0;
- 	}
- 
- 	if (port)
- 		ret = kfifo_put(&state->port.xmit_fifo, c);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- 	return ret;
- }
- 
-@@ -623,9 +624,9 @@ static ssize_t uart_write(struct tty_struct *tty, const u8 *buf, size_t count)
- 	if (WARN_ON(!state))
- 		return -EL3HLT;
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	if (!state->port.xmit_buf) {
--		uart_port_unlock(port, flags);
-+		uart_port_unlock_deref(port, flags);
- 		return 0;
- 	}
- 
-@@ -633,7 +634,7 @@ static ssize_t uart_write(struct tty_struct *tty, const u8 *buf, size_t count)
- 		ret = kfifo_in(&state->port.xmit_fifo, buf, count);
- 
- 	__uart_start(state);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- 	return ret;
- }
- 
-@@ -644,9 +645,9 @@ static unsigned int uart_write_room(struct tty_struct *tty)
- 	unsigned long flags;
+@@ -646,7 +646,10 @@ static unsigned int uart_write_room(struct tty_struct *tty)
  	unsigned int ret;
  
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	ret = kfifo_avail(&state->port.xmit_fifo);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
+ 	port = uart_port_ref_lock(state, &flags);
+-	ret = kfifo_avail(&state->port.xmit_fifo);
++	if (!state->port.xmit_buf)
++		ret = 0;
++	else
++		ret = kfifo_avail(&state->port.xmit_fifo);
+ 	uart_port_unlock_deref(port, flags);
  	return ret;
  }
- 
-@@ -657,9 +658,9 @@ static unsigned int uart_chars_in_buffer(struct tty_struct *tty)
- 	unsigned long flags;
- 	unsigned int ret;
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	ret = kfifo_len(&state->port.xmit_fifo);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- 	return ret;
- }
- 
-@@ -678,13 +679,13 @@ static void uart_flush_buffer(struct tty_struct *tty)
- 
- 	pr_debug("uart_flush_buffer(%d) called\n", tty->index);
- 
--	port = uart_port_lock(state, flags);
-+	port = uart_port_ref_lock(state, &flags);
- 	if (!port)
- 		return;
- 	kfifo_reset(&state->port.xmit_fifo);
- 	if (port->ops->flush_buffer)
- 		port->ops->flush_buffer(port);
--	uart_port_unlock(port, flags);
-+	uart_port_unlock_deref(port, flags);
- 	tty_port_tty_wakeup(&state->port);
- }
- 
 -- 
 2.53.0
 
