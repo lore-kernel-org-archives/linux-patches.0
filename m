@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B955522F767;
-	Sat, 17 Oct 2026 17:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD182387373;
+	Sat, 17 Oct 2026 17:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258176; cv=none; b=fsr8iyCaH+4gcT9HrbysAtd6KIy8hk01svR+zdNs1dIWKZvTRjJc9DyBGCl4YSRaygcWjRziRv07jrM/FbzXkRoYxPq3yJEuxlqBIFPz0HyH7XspmNAFMgTmFaJhd3r7cYZeQRWyqkDSuqUir0DbRHQBVKUXTA0gLfxHpkFxOWs=
+	t=1792258178; cv=none; b=PInURGpQ1awIqORkHc7F4tseXPiWoxlrvBdfsvKMioHA60g4QAfYZ09oIq3OW7VZIEDnpMY7IAA2MnBuJXOI1d3y/8uR7GEPCO286z2v8Yydk/B2TkFooWWq8bhSrn2n3kqmrXTrkIowG+X13YuXoI4caLJ5DwFQMMUUYaoOi3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258176; c=relaxed/simple;
-	bh=ansHSaFTvk0NV1+2ASwl8DUtb4gOoCYMnfchWzAeYog=;
+	s=arc-20240116; t=1792258178; c=relaxed/simple;
+	bh=uyNylWrThbpSLq6R8ENSGgTuyal//uGpOZ1lH3nu3eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xel6UwD/RMapP1AGrUL3LAN/MOgLEac+IcVApCu+fhVQ+p0hAUm2fAAgTWwtrvJNUx8NXgOBXSU1yWjzQ2NnTFhR3irBan+xAEXMONDQ/yIt/yasuIfjJlL+LoPhpvNrhhHR3Bdqhu55Kma8JC78Vh1ky6ICm4ZKWyONHQ4dkgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSDbyDjN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IL1/n7Sa4uSezw1mtBHRAcdsoLCyOR9qyd1y6vD5hxMYW6JVDoIWlg7G4kPXbRQLShAGKX9jNxdkJl08VlnVEvl+KcbfTzjzX5SDzRXEC8m+m/DtDsBIfTTJJ2j7mZgsTzuo7/SdRsWsVpJcMLRXEDhKdgb8qfWkUEQqAKTXnmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuFIWaI+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSDbyDjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143E61F000C4;
-	Sat, 17 Oct 2026 17:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuFIWaI+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2979C1F000C4;
+	Sat, 17 Oct 2026 17:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258174;
-	bh=CBwl67Vsvj2/8Lyzv7WukbsF3D1D97azShfplbRv16c=;
+	s=korg; t=1792258177;
+	bh=FmHvvOPaD0ZeI1++mP/L+KQgH/Gwfh7rzvX674SijCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSDbyDjNRPNchYZJvrYOyjus/sFRoOwgDkg3LzyxmtVB0QdzXq2orMyCzflOSDygw
-	 rN4EZFukypqRIbuUge9yOfsfSLva2vc2MPArxL5brIIxjBIkPNXgHfa495xvuUaQ6V
-	 fen2qcvVu/S4uNO7HLP0DwOzQihgDml4o0bb09dM=
+	b=PuFIWaI+/G+po+4tCDej4w5I9zL3qs8+pGSBX6+sBS/yu0YXMcyaGM86QWyHlAYxq
+	 DUsvyjzWCeJR1M0Eh5btQiTiIPbdYJN+UhGkF0WOCC2545zN5cPRbC/rATjnf7/NPh
+	 sgq65QvD+LzjQRFB7ou09YSOmmLX++APSDXLQXfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0795/1674] bpf: improve error message for unsupported helper
-Date: Sat, 17 Oct 2026 17:51:07 +0200
-Message-ID: <20261017160451.514958883@linuxfoundation.org>
+Subject: [PATCH 6.6 0755/1674] wifi: ath12k: fix invalid access to memory
+Date: Sat, 17 Oct 2026 17:50:27 +0200
+Message-ID: <20261017160450.481170542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,140 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit 786bf0e7e2ec90b349a7bab6e97947982ab31f2c ]
+[ Upstream commit 9f17747fbda6fca934854463873c4abf8061491d ]
 
-BPF verifier emits "unknown func" message when given BPF program type
-does not support BPF helper. This message may be confusing for users, as
-important context that helper is unknown only to current program type is
-not provided.
+In ath12k_dp_rx_msdu_coalesce(), rxcb is fetched from skb and boolean
+is_continuation is part of rxcb.
+Currently, after freeing the skb, the rxcb->is_continuation accessed
+again which is wrong since the memory is already freed.
+This might lead use-after-free error.
 
-This patch changes message to "program of this type cannot use helper "
-and aligns dependent code in libbpf and tests. Any suggestions on
-improving/changing this message are welcome.
+Hence, fix by locally defining bool is_continuation from rxcb,
+so that after freeing skb, is_continuation can be used.
 
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20240325152210.377548-1-yatsenko@meta.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e4414b01c1cd ("bpf: Check the helper function is valid in get_helper_proto")
+Compile tested only.
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250408045327.1632222-1-quic_sarishar@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                                     | 4 ++--
- tools/bpf/bpftool/feature.c                               | 3 ++-
- tools/lib/bpf/libbpf_probes.c                             | 6 ++++--
- tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c       | 2 +-
- .../selftests/bpf/progs/verifier_helper_restricted.c      | 8 ++++----
- 5 files changed, 13 insertions(+), 10 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 58ce6c90e99c0..c693e6fabe403 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10095,8 +10095,8 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 	if (env->ops->get_func_proto)
- 		fn = env->ops->get_func_proto(func_id, env->prog);
- 	if (!fn) {
--		verbose(env, "unknown func %s#%d\n", func_id_name(func_id),
--			func_id);
-+		verbose(env, "program of this type cannot use helper %s#%d\n",
-+			func_id_name(func_id), func_id);
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 02e93f1627b95..a957b57eab1dc 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1765,6 +1765,7 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
+ 	struct hal_rx_desc *ldesc;
+ 	int space_extra, rem_len, buf_len;
+ 	u32 hal_rx_desc_sz = ar->ab->hw_params->hal_desc_sz;
++	bool is_continuation;
+ 
+ 	/* As the msdu is spread across multiple rx buffers,
+ 	 * find the offset to the start of msdu for computing
+@@ -1813,7 +1814,8 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
+ 	rem_len = msdu_len - buf_first_len;
+ 	while ((skb = __skb_dequeue(msdu_list)) != NULL && rem_len > 0) {
+ 		rxcb = ATH12K_SKB_RXCB(skb);
+-		if (rxcb->is_continuation)
++		is_continuation = rxcb->is_continuation;
++		if (is_continuation)
+ 			buf_len = DP_RX_BUFFER_SIZE - hal_rx_desc_sz;
+ 		else
+ 			buf_len = rem_len;
+@@ -1831,7 +1833,7 @@ static int ath12k_dp_rx_msdu_coalesce(struct ath12k *ar,
+ 		dev_kfree_skb_any(skb);
+ 
+ 		rem_len -= buf_len;
+-		if (!rxcb->is_continuation)
++		if (!is_continuation)
+ 			break;
  	}
  
-diff --git a/tools/bpf/bpftool/feature.c b/tools/bpf/bpftool/feature.c
-index edda4fc2c4d03..e36ace0d4c007 100644
---- a/tools/bpf/bpftool/feature.c
-+++ b/tools/bpf/bpftool/feature.c
-@@ -668,7 +668,8 @@ probe_helper_ifindex(enum bpf_func_id id, enum bpf_prog_type prog_type,
- 
- 	probe_prog_load_ifindex(prog_type, insns, ARRAY_SIZE(insns), buf,
- 				sizeof(buf), ifindex);
--	res = !grep(buf, "invalid func ") && !grep(buf, "unknown func ");
-+	res = !grep(buf, "invalid func ") && !grep(buf, "unknown func ") &&
-+		!grep(buf, "program of this type cannot use helper ");
- 
- 	switch (get_vendor_id(ifindex)) {
- 	case 0x19ee: /* Netronome specific */
-diff --git a/tools/lib/bpf/libbpf_probes.c b/tools/lib/bpf/libbpf_probes.c
-index 9c4db90b92b6b..8cb1691017d3d 100644
---- a/tools/lib/bpf/libbpf_probes.c
-+++ b/tools/lib/bpf/libbpf_probes.c
-@@ -435,7 +435,8 @@ int libbpf_probe_bpf_helper(enum bpf_prog_type prog_type, enum bpf_func_id helpe
- 	/* If BPF verifier doesn't recognize BPF helper ID (enum bpf_func_id)
- 	 * at all, it will emit something like "invalid func unknown#181".
- 	 * If BPF verifier recognizes BPF helper but it's not supported for
--	 * given BPF program type, it will emit "unknown func bpf_sys_bpf#166".
-+	 * given BPF program type, it will emit "unknown func bpf_sys_bpf#166"
-+	 * or "program of this type cannot use helper bpf_sys_bpf#166".
- 	 * In both cases, provided combination of BPF program type and BPF
- 	 * helper is not supported by the kernel.
- 	 * In all other cases, probe_prog_load() above will either succeed (e.g.,
-@@ -444,7 +445,8 @@ int libbpf_probe_bpf_helper(enum bpf_prog_type prog_type, enum bpf_func_id helpe
- 	 * that), or we'll get some more specific BPF verifier error about
- 	 * some unsatisfied conditions.
- 	 */
--	if (ret == 0 && (strstr(buf, "invalid func ") || strstr(buf, "unknown func ")))
-+	if (ret == 0 && (strstr(buf, "invalid func ") || strstr(buf, "unknown func ") ||
-+			 strstr(buf, "program of this type cannot use helper ")))
- 		return 0;
- 	return 1; /* assume supported */
- }
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c b/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c
-index d0d9a02415454..1202b33627f2b 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c
-@@ -319,7 +319,7 @@ static void test_rel_setsockopt(void)
- 	struct bpf_dctcp_release *rel_skel;
- 	libbpf_print_fn_t old_print_fn;
- 
--	err_str = "unknown func bpf_setsockopt";
-+	err_str = "program of this type cannot use helper bpf_setsockopt";
- 	found = false;
- 
- 	old_print_fn = libbpf_set_print(libbpf_debug_print);
-diff --git a/tools/testing/selftests/bpf/progs/verifier_helper_restricted.c b/tools/testing/selftests/bpf/progs/verifier_helper_restricted.c
-index 0ede0ccd090c4..059aa716e3d0b 100644
---- a/tools/testing/selftests/bpf/progs/verifier_helper_restricted.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_helper_restricted.c
-@@ -30,7 +30,7 @@ struct {
- 
- SEC("kprobe")
- __description("bpf_ktime_get_coarse_ns is forbidden in BPF_PROG_TYPE_KPROBE")
--__failure __msg("unknown func bpf_ktime_get_coarse_ns")
-+__failure __msg("program of this type cannot use helper bpf_ktime_get_coarse_ns")
- __naked void in_bpf_prog_type_kprobe_1(void)
- {
- 	asm volatile ("					\
-@@ -44,7 +44,7 @@ __naked void in_bpf_prog_type_kprobe_1(void)
- 
- SEC("tracepoint")
- __description("bpf_ktime_get_coarse_ns is forbidden in BPF_PROG_TYPE_TRACEPOINT")
--__failure __msg("unknown func bpf_ktime_get_coarse_ns")
-+__failure __msg("program of this type cannot use helper bpf_ktime_get_coarse_ns")
- __naked void in_bpf_prog_type_tracepoint_1(void)
- {
- 	asm volatile ("					\
-@@ -58,7 +58,7 @@ __naked void in_bpf_prog_type_tracepoint_1(void)
- 
- SEC("perf_event")
- __description("bpf_ktime_get_coarse_ns is forbidden in BPF_PROG_TYPE_PERF_EVENT")
--__failure __msg("unknown func bpf_ktime_get_coarse_ns")
-+__failure __msg("program of this type cannot use helper bpf_ktime_get_coarse_ns")
- __naked void bpf_prog_type_perf_event_1(void)
- {
- 	asm volatile ("					\
-@@ -72,7 +72,7 @@ __naked void bpf_prog_type_perf_event_1(void)
- 
- SEC("raw_tracepoint")
- __description("bpf_ktime_get_coarse_ns is forbidden in BPF_PROG_TYPE_RAW_TRACEPOINT")
--__failure __msg("unknown func bpf_ktime_get_coarse_ns")
-+__failure __msg("program of this type cannot use helper bpf_ktime_get_coarse_ns")
- __naked void bpf_prog_type_raw_tracepoint_1(void)
- {
- 	asm volatile ("					\
 -- 
 2.53.0
 
