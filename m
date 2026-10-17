@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE197370ACE;
-	Sat, 17 Oct 2026 15:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45233914E1;
+	Sat, 17 Oct 2026 15:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252584; cv=none; b=tLUgTCb1EMuDYTcgWUuq3OCdQu82LiHJV17weJqgkkw5ygydhBLmLIORZ7GrHrJwOPTPHPUypTXQzcilBZvAu0er6lZ+5t/AJ129t5ahKDBv//4+ohywKrHO3xTNNhfCIVYB1pbmvOe8bZScTomKUexb98xtM0uug8pYUQaZ0Xo=
+	t=1792252588; cv=none; b=qiW1WqRukadqxVPfLTgfI00jEDWpG7XEZT41NstCNkoAfnMT5ZQoAmOeNwhgzluq5RmLbs8G2T1LWgAwK1m1Zz+ZyIgKI7X3wwDgyw9Dr99349649tJ8mZQ+U5PFg3/dSf9arU75/isO33+Y13IEC/1VAhvZHOh0zcHLm3gID/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252584; c=relaxed/simple;
-	bh=NAotRxEtGMKQ3tS9qTISfgXaNlRX6MhhQz3l9pnPVtk=;
+	s=arc-20240116; t=1792252588; c=relaxed/simple;
+	bh=NaBZbkodI/cMAi+7hLrVNOCkDqYX/Jm785EWBmoZBQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyXDo6vsLrRs3fypDg1Rtkk72ic4BEu3Ici9dDAl92FpyXpRzZkP14PPVO8ClSzFMhFKUwqZWEtMwJUuXHUyAU0y/eMJzxTMTZ9RcxIGksGti8ZyxcTOunVXYVIWQyHFJTkoDhbsAY4BkCZs1P8kowaiuvry/+z6Bdl0bSC5K4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkTu5sW/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a55Fkpg8C9+nLRVmnVJFq+uyyO2mgDdKstkGTy4mLDrjvdG0yWdECYDHKu0tHKrLpq3LDC1eCgRZEZ3Ym05mZwcVW7njhOcPXcR7FFGH/HkldkfUoVamjQvfAUUjKZnzhzp06J4azTkMcaDOSjOuTu3NKJ93qNCYFytHyD/goqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0WsCTRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkTu5sW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9001F000C4;
-	Sat, 17 Oct 2026 15:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0WsCTRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9101F000C4;
+	Sat, 17 Oct 2026 15:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252583;
-	bh=p/hg6ljOWj2sr8Oxn2uC7IeUwdW6aM0SYQ/X1dD/n/o=;
+	s=korg; t=1792252586;
+	bh=N4XFGfamAz1YAouM/vbP/QTWL53q2h/gTawUSsRFERA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkTu5sW/1zqN5vN6wN+Pk3ysOjucoptS0/et5JO2dRx7uacIDSFurTP9tEwUqEmyT
-	 x7LDiya6Lth31kRDdqh8VgtkkxZD1Kg0PX+v/pyHKJcQY2dLuNeum1Zw+2O73JtYRN
-	 IYaCUfytn/vabfQvTx2wGXPlCnkuGtmBOe1p21fU=
+	b=y0WsCTRXuEvUKHLgNXhwoSFSSjvnQ3HiD+KWSAMCJgvjNxIkvp5Cy33SS5KfhOtjd
+	 wbrr2jYYG5GW7rbsKRJ5dh/k3Z4k0hAt3T7zz1Vb/4ozlR9EOXGveN1TodCri432jp
+	 dYDgYzzU6MyJh8YYhPnlqNUztBTIs3D9Bf6W6btc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 29/52] cifs: fix time_last_write stamp placement in setattr/truncate paths
-Date: Sat, 17 Oct 2026 17:54:30 +0200
-Message-ID: <20261017155105.792601086@linuxfoundation.org>
+	Timothy Redaelli <tredaelli@redhat.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Matteo Croce <teknoraver@meta.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>
+Subject: [PATCH 6.18 30/52] fat: stop reading directory entries past the end-of-directory marker
+Date: Sat, 17 Oct 2026 17:54:31 +0200
+Message-ID: <20261017155105.821614266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -52,100 +53,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Matteo Croce <technoboy85@gmail.com>
 
-[ Upstream commit ecababf08905958ba8c125979c4e39fc2f1a8a05 ]
+commit 6a2875517c778ac1111b6920e94cbab91cda8724 upstream.
 
-cifs_file_set_size() calls cifs_setsize() on success, which calls
-i_size_write(), updating i_size to the new value.  The subsequent
-check attrs->ia_size != i_size_read() in both cifs_setattr_unix()
-and cifs_setattr_nounix() therefore always evaluates false after a
-successful cifs_file_set_size(), making the smp_store_release() of
-time_last_write dead code.  The truncate path was unprotected against
-stale readdir size updates.
+The FAT specification[1] (FAT Directory Structure -> "DIR_Name[0]") states:
 
-Move the stamp to before the cifs_file_set_size() RPC call, guarded
-by attrs->ia_size != i_size_read() to exclude no-op same-size
-ftruncate(2) calls from stamping time_last_write unnecessarily.
+    If DIR_Name[0] == 0x00, then the directory entry is free (same as for
+    0xE5), and there are no allocated directory entries after this one
+    (all of the DIR_Name[0] bytes in all of the entries after this one
+    are also set to 0).
 
-On the error path the stamp remains rather than being restored:
-restoring a stale snapshot (prev_tlw) could silently erase a
-concurrent _cifsFileInfo_put() close stamp if that close arrived
-between the READ_ONCE and the smp_store_release.  readdir is
-suppressed until the stamp expires, which extends beyond one acregmax
-if the caller retries failed truncations.  stat() is unaffected: the
-cifs_revalidate_dentry_attr() path calls cifs_fattr_to_inode() with
-from_readdir=false, which bypasses the time_last_write check in
-is_size_safe_to_change() entirely and always writes the authoritative
-QUERY_INFO result to i_size.
+    The special 0 value, rather than the 0xE5 value, indicates to FAT
+    file system driver code that the rest of the entries in this
+    directory do not need to be examined because they are all free.
 
-Remove the now-unreachable stamp from the dead block in both functions.
+Linux did not honour this. fat_get_entry() kept advancing past the 0x00
+terminator; if the trailing on-disk slots were not zero-filled (buggy
+formatters, read-only media written by other operating systems, on-disk
+corruption) the driver surfaced arbitrary bytes as real directory
+entries. On a typical affected image, `ls /mnt` returns ~150 bogus
+entries with random binary names, multi-gigabyte sizes, dates ranging
+from 1980 to 2106, and a flood of -EIO from stat().
 
-Fixes: e8a8d54c2d50 ("cifs: prevent readdir from changing file size due to stale directory metadata")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ sashal: removed the timestamp write from cifs_file_set_size() because the original size-update blocks were already deleted ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Earlier attempts (v1..v3, see [2][3][4]) added `de->name[0] == 0` guards
+at each call site. As Hirofumi pointed out on v3, those guards reject
+the entry but fat_get_entry() has already advanced *pos past it; the
+next readdir() resumes after the marker and walks straight back into
+the garbage. His suggestion was to centralise the check.
+
+This patch:
+
+  * Adds fat_get_entry_eod(), a small wrapper around fat_get_entry()
+    that returns -1 when name[0] == 0 and seeks *pos to dir->i_size.
+    Per spec every slot after the 0x00 marker is also zero, so jumping
+    to the end of the directory is correct: subsequent reads return -1
+    from fat_bmap() without re-fetching trailing zero slots, and
+    callers persisting *pos across invocations (notably readdir's
+    ctx->pos) keep reporting end-of-directory on re-entry.
+
+  * Converts the read/search paths to use the new wrapper:
+      fat_parse_long(), fat_search_long(), __fat_readdir(),
+      and fat_get_short_entry() -- the last covers
+      fat_get_dotdot_entry(), fat_dir_empty(), fat_subdirs(),
+      fat_scan(), and fat_scan_logstart() transitively.
+
+  * Leaves fat_add_entries() and __fat_remove_entries() on raw
+    fat_get_entry(): the write paths legitimately need to operate on
+    free/zero slots. fat_add_entries() additionally detects an
+    allocated entry past a 0x00 marker (the spec violation that
+    produces the garbage) and treats it as filesystem corruption:
+    fat_fs_error_ratelimit() is called -- which honours the configured
+    errors= mount option (panic / remount-ro / continue) -- and the
+    operation returns -EIO so we don't write fresh entries into an
+    already-corrupt directory.
+
+[1] https://download.microsoft.com/download/1/6/1/161ba512-40e2-4cc9-843a-923143f3456c/fatgen103.doc
+[2] https://lore.kernel.org/lkml/20181207013410.7050-1-mcroce@redhat.com/
+[3] https://lore.kernel.org/lkml/20181216231510.26854-1-mcroce@redhat.com/
+[4] https://lore.kernel.org/lkml/20190201001408.7453-1-mcroce@redhat.com/
+
+Reported-by: Timothy Redaelli <tredaelli@redhat.com>
+Suggested-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Signed-off-by: Matteo Croce <teknoraver@meta.com>
+Link: https://patch.msgid.link/20260616163346.32603-1-technoboy85@gmail.com
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Cc: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ fs/fat/dir.c |   44 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index ec6d27ba4083d..995d6df9304f4 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3135,11 +3135,8 @@ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
- 	cifs_put_tlink(tlink);
- 
- set_size_out:
--	if (rc == 0) {
--		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
--		smp_store_release(&cifsInode->time_last_write, jiffies);
-+	if (rc == 0)
- 		cifs_resize_file_locked(inode, size);
--	}
- 
- 	return rc;
+--- a/fs/fat/dir.c
++++ b/fs/fat/dir.c
+@@ -129,6 +129,31 @@ static inline int fat_get_entry(struct i
  }
-@@ -3202,6 +3199,17 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
- 	rc = 0;
  
- 	if (attrs->ia_valid & ATTR_SIZE) {
-+		if (attrs->ia_size != i_size_read(inode)) {
-+			/* Stamp before RPC. On failure the stamp remains: restoring a
-+			 * stale snapshot could silently erase a concurrent
-+			 * _cifsFileInfo_put() close stamp.  readdir is suppressed
-+			 * until the stamp expires; stat() bypasses this via the
-+			 * from_readdir=false path in is_size_safe_to_change() and
-+			 * always returns an authoritative QUERY_INFO result.
-+			 * Pairs with smp_load_acquire() in is_size_safe_to_change().
-+			 */
-+			smp_store_release(&cifsInode->time_last_write, jiffies);
-+		}
- 		rc = cifs_file_set_size(xid, direntry, full_path,
- 					open_file, attrs->ia_size);
- 		if (rc != 0)
-@@ -3378,6 +3386,17 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
- 	}
+ /*
++ * Like fat_get_entry(), but honour the FAT end-of-directory marker:
++ * a dirent whose first name byte is NUL terminates iteration per the
++ * spec, which also guarantees that every following slot is zeroed.
++ * Skip straight to the end of the directory so the next call returns
++ * -1 from fat_bmap() without re-reading the trailing zero slots, and
++ * so callers that persist *pos across invocations (e.g. readdir's
++ * ctx->pos) keep reporting EOD.  Release *bh and set it to NULL to
++ * match fat_get_entry()'s contract that *bh is NULL on the -1 return.
++ */
++static int fat_get_entry_eod(struct inode *dir, loff_t *pos,
++			     struct buffer_head **bh,
++			     struct msdos_dir_entry **de)
++{
++	int err = fat_get_entry(dir, pos, bh, de);
++
++	if (err == 0 && (*de)->name[0] == 0) {
++		brelse(*bh);
++		*bh = NULL;
++		*pos = dir->i_size;
++		return -1;
++	}
++	return err;
++}
++
++/*
+  * Convert Unicode 16 to UTF-8, translated Unicode, or ASCII.
+  * If uni_xlate is enabled and we can't get a 1:1 conversion, use a
+  * colon as an escape character since it is normally invalid on the vfat
+@@ -325,7 +350,7 @@ parse_long:
  
- 	if (attrs->ia_valid & ATTR_SIZE) {
-+		if (attrs->ia_size != i_size_read(inode)) {
-+			/* Stamp before RPC. On failure the stamp remains: restoring a
-+			 * stale snapshot could silently erase a concurrent
-+			 * _cifsFileInfo_put() close stamp.  readdir is suppressed
-+			 * until the stamp expires; stat() bypasses this via the
-+			 * from_readdir=false path in is_size_safe_to_change() and
-+			 * always returns an authoritative QUERY_INFO result.
-+			 * Pairs with smp_load_acquire() in is_size_safe_to_change().
-+			 */
-+			smp_store_release(&cifsInode->time_last_write, jiffies);
-+		}
- 		rc = cifs_file_set_size(xid, direntry, full_path,
- 					cfile, attrs->ia_size);
- 		if (rc != 0)
--- 
-2.53.0
-
+ 		if (ds->id & 0x40)
+ 			(*unicode)[offset + 13] = 0;
+-		if (fat_get_entry(dir, pos, bh, de) < 0)
++		if (fat_get_entry_eod(dir, pos, bh, de) < 0)
+ 			return PARSE_EOF;
+ 		if (slot == 0)
+ 			break;
+@@ -487,7 +512,7 @@ int fat_search_long(struct inode *inode,
+ 
+ 	err = -ENOENT;
+ 	while (1) {
+-		if (fat_get_entry(inode, &cpos, &bh, &de) == -1)
++		if (fat_get_entry_eod(inode, &cpos, &bh, &de) == -1)
+ 			goto end_of_dir;
+ parse_record:
+ 		nr_slots = 0;
+@@ -599,7 +624,7 @@ static int __fat_readdir(struct inode *i
+ 
+ 	bh = NULL;
+ get_new:
+-	if (fat_get_entry(inode, &cpos, &bh, &de) == -1)
++	if (fat_get_entry_eod(inode, &cpos, &bh, &de) == -1)
+ 		goto end_of_dir;
+ parse_record:
+ 	nr_slots = 0;
+@@ -882,7 +907,7 @@ static int fat_get_short_entry(struct in
+ 			       struct buffer_head **bh,
+ 			       struct msdos_dir_entry **de)
+ {
+-	while (fat_get_entry(dir, pos, bh, de) >= 0) {
++	while (fat_get_entry_eod(dir, pos, bh, de) >= 0) {
+ 		/* free entry or long name entry or volume label */
+ 		if (!IS_FREE((*de)->name) && !((*de)->attr & ATTR_VOLUME))
+ 			return 0;
+@@ -1298,6 +1323,7 @@ int fat_add_entries(struct inode *dir, v
+ 	struct msdos_dir_entry *de;
+ 	int err, free_slots, i, nr_bhs;
+ 	loff_t pos;
++	bool saw_eod;
+ 
+ 	sinfo->nr_slots = nr_slots;
+ 
+@@ -1306,12 +1332,15 @@ int fat_add_entries(struct inode *dir, v
+ 	bh = prev = NULL;
+ 	pos = 0;
+ 	err = -ENOSPC;
++	saw_eod = false;
+ 	while (fat_get_entry(dir, &pos, &bh, &de) > -1) {
+ 		/* check the maximum size of directory */
+ 		if (pos >= FAT_MAX_DIR_SIZE)
+ 			goto error;
+ 
+ 		if (IS_FREE(de->name)) {
++			if (de->name[0] == 0)
++				saw_eod = true;
+ 			if (prev != bh) {
+ 				get_bh(bh);
+ 				bhs[nr_bhs] = prev = bh;
+@@ -1321,6 +1350,13 @@ int fat_add_entries(struct inode *dir, v
+ 			if (free_slots == nr_slots)
+ 				goto found;
+ 		} else {
++			if (saw_eod) {
++				fat_fs_error_ratelimit(sb,
++					"allocated dir entry found after end-of-directory marker (i_pos %lld)",
++					MSDOS_I(dir)->i_pos);
++				err = -EIO;
++				goto error;
++			}
+ 			for (i = 0; i < nr_bhs; i++)
+ 				brelse(bhs[i]);
+ 			prev = NULL;
 
 
