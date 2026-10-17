@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B35BE555;
-	Sat, 17 Oct 2026 17:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF841F16B;
+	Sat, 17 Oct 2026 17:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258510; cv=none; b=HwDFk6xTQsEbTpQfdJQmf/uQhEFQ9TK8CLwLj5WnwHF786WOg3ArVDttPBLTcWaf/0opMhAciWWZs+vivTRG8NnfBonj8zh/yKfK/bRMCSsT2JNWYbSofWjY81e10MPti+SJbXmac2hlvK6sPYWE8ezGx1ADyXQb4LHnnqyQrjo=
+	t=1792258513; cv=none; b=RK4z4bHpLnncXrsE1RAOWXuDLvnkqEP+6z/y4kIpvm+gOSWIrAqSI0F8fJgkXDCjx/K1wW3mI9kX5KmUDV6hwvInDv5KYuPMYGc1Mz+XfuAJc2NlmTXaicvCPN60Q8DR2DbZl68c1yUnGYAgcEDV67iKtBGFDRbr5vja7Z5Q8n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258510; c=relaxed/simple;
-	bh=rQY5svG3XCRziJEBr0YoMktNoHPFyN8IWeRIIc2qroU=;
+	s=arc-20240116; t=1792258513; c=relaxed/simple;
+	bh=1Fa5dkvCn7BHRVCuZxm+ouMnDK7csWfNEKXnH34bi84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhKlVxsseiAOaGsVSPw8Hjio/gt35hKfhiiFCk1tXKG7iVFrmC2vnnZwgsQRiPtIsEbLW/SWggzACOBI7rmZFpyOt5pVPZXpusMLeqKymtAbG2eMOaFLSsNu80ybUmx2KLEh2CihY/k27QQqwP59vCF84XVeDkuAqm9fxBM+1cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UT+NwasF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FB1PK2pnfGuuEyS/7bsA8Unqt40ZoXRjnhq3TOcBpj3grSmQfjJr+3tyag27qYDIqSfHkBiLmlRuAFZWih1caHCbBbhpAuOPqNF4mRy2bB15sGXS0h9dFKrbVmj4vs62rM28zWdK7DAtmKYv+tZK1AGkj50UoDco6M5io1L6kT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2HMb6Pc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UT+NwasF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7935A1F000C4;
-	Sat, 17 Oct 2026 17:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2HMb6Pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F571F000C5;
+	Sat, 17 Oct 2026 17:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258509;
-	bh=2JnHflYbyp3UeW2WGmww3lFOUxGGA1hqL0MSM6S8JUQ=;
+	s=korg; t=1792258512;
+	bh=m2exQHG5hiZEUMIftxd0n7v2HmM1tV+6x5kGVHCaLSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UT+NwasFMQUoL0aq/3+3vctOPaOEAuyzIElrW38RmFt94pkr+nKn85WEdWwTsr5WK
-	 aJw0PH+rUM9Qgdv7VByoG9HWYR+tks9g0CJwXmPv04c4i5+uKEtlHD/wI7xDjOPj2w
-	 mQNj8mM0LiqWH9lPOwUg+CEuftxMLHRUPOnsFfUQ=
+	b=p2HMb6PcHzN42/o779psaGf9l+ZmgQ6CvEFFu5TKq64+c9vh5D1/eU2SoQW8ADY9F
+	 1SwzrX6QGGF3tQ+RZir/pXeyTcYytTg/AvaafbgquyTxnlkJMydLj88PP6of7sZ5cC
+	 /I6+M+xomAewnHEERNu1unMSZrc6PMWgdLRa3S1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Tao <wangtao554@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0908/1674] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
-Date: Sat, 17 Oct 2026 17:53:00 +0200
-Message-ID: <20261017160454.439653988@linuxfoundation.org>
+Subject: [PATCH 6.6 0909/1674] x86-64: rename misleadingly named __copy_user_nocache() function
+Date: Sat, 17 Oct 2026 17:53:01 +0200
+Message-ID: <20261017160454.465280391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,64 +50,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Tao <wangtao554@huawei.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 17f89341cb4281d1da0e2fb0de5406ab7c4e25ef ]
+[ Upstream commit d187a86de793f84766ea40b9ade7ac60aabbb4fe ]
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
-mgmt_pending_valid(), which not only validates the pending command but
-also unlinks it from the pending list if it is valid. This change in
-semantics requires updates to several completion handlers to avoid list
-corruption and memory safety issues.
+This function was a masterclass in bad naming, for various historical
+reasons.
 
-This patch addresses two left-over issues from the aforementioned rework:
+It claimed to be a non-cached user copy.  It is literally _neither_ of
+those things.  It's a specialty memory copy routine that uses
+non-temporal stores for the destination (but not the source), and that
+does exception handling for both source and destination accesses.
 
-1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
-is replaced with mgmt_pending_free() in the success path. Since
-mgmt_pending_valid() already unlinks the command at the beginning of
-the function, calling mgmt_pending_remove() leads to a double list_del()
-and subsequent list corruption/kernel panic.
+Also note that while it works for unaligned targets, any unaligned parts
+(whether at beginning or end) will not use non-temporal stores, since
+only words and quadwords can be non-temporal on x86.
 
-2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
-path is removed. Since the current command is already unlinked by
-mgmt_pending_valid(), this foreach loop would incorrectly target other
-pending mesh commands, potentially freeing them while they are still being
-processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
-is also simplified to use cmd->opcode directly.
+The exception handling means that it _can_ be used for user space
+accesses, but not on its own - it needs all the normal "start user space
+access" logic around it.
 
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+But typically the user space access would be the source, not the
+non-temporal destination.  That was the original intention of this,
+where the destination was some fragile persistent memory target that
+needed non-temporal stores in order to catch machine check exceptions
+synchronously and deal with them gracefully.
+
+Thus that non-descriptive name: one use case was to copy from user space
+into a non-cached kernel buffer.  However, the existing users are a mix
+of that intended use-case, and a couple of random drivers that just did
+this as a performance tweak.
+
+Some of those random drivers then actively misused the user copying
+version (with STAC/CLAC and all) to do kernel copies without ever even
+caring about the exception handling, _just_ for the non-temporal
+destination.
+
+Rename it as a first small step to actually make it halfway sane, and
+change the prototype to be more normal: it doesn't take a user pointer
+unless the caller has done the proper conversion, and the argument size
+is the full size_t (it still won't actually copy more than 4GB in one
+go, but there's also no reason to silently truncate the size argument in
+the caller).
+
+Finally, use this now sanely named function in the NTB code, which
+mis-used a user copy version (with STAC/CLAC and all) of this interface
+despite it not actually being a user copy at all.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/uaccess_64.h    | 5 +++--
+ arch/x86/lib/copy_user_uncached_64.S | 6 +++---
+ arch/x86/lib/usercopy_64.c           | 4 ++--
+ drivers/infiniband/sw/rdmavt/qp.c    | 8 +++-----
+ drivers/ntb/ntb_transport.c          | 7 ++++---
+ tools/objtool/check.c                | 2 +-
+ 6 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 30c797eb84fe7..20984813a145d 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2162,10 +2162,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index f2c02e4469ccc..68417f5db5dca 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -133,7 +133,8 @@ raw_copy_to_user(void __user *dst, const void *src, unsigned long size)
+ 	return copy_user_generic((__force void *)dst, src, size);
+ }
  
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
--				status);
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
- 		goto done;
- 	}
+-extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
++#define copy_to_nontemporal copy_to_nontemporal
++extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
+ extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
  
-@@ -5434,7 +5431,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ static inline int
+@@ -143,7 +144,7 @@ __copy_from_user_inatomic_nocache(void *dst, const void __user *src,
+ 	long ret;
+ 	kasan_check_write(dst, size);
+ 	stac();
+-	ret = __copy_user_nocache(dst, src, size);
++	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 	return ret;
+ }
+diff --git a/arch/x86/lib/copy_user_uncached_64.S b/arch/x86/lib/copy_user_uncached_64.S
+index 5c5f38d326724..b37a6f084c4c3 100644
+--- a/arch/x86/lib/copy_user_uncached_64.S
++++ b/arch/x86/lib/copy_user_uncached_64.S
+@@ -26,7 +26,7 @@
+  * Output:
+  * rax uncopied bytes or 0 if successful.
+  */
+-SYM_FUNC_START(__copy_user_nocache)
++SYM_FUNC_START(copy_to_nontemporal)
+ 	/* If destination is not 7-byte aligned, we'll have to align it */
+ 	testb $7,%dil
+ 	jne .Lalign
+@@ -238,5 +238,5 @@ _ASM_EXTABLE_UA(95b, .Ldone)
+ _ASM_EXTABLE_UA(52b, .Ldone0)
+ _ASM_EXTABLE_UA(53b, .Ldone0)
  
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
+-SYM_FUNC_END(__copy_user_nocache)
+-EXPORT_SYMBOL(__copy_user_nocache)
++SYM_FUNC_END(copy_to_nontemporal)
++EXPORT_SYMBOL(copy_to_nontemporal)
+diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
+index e9251b89a9e93..1f1fb2ab14963 100644
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -49,11 +49,11 @@ long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
+ 	long rc;
  
- 	hci_dev_unlock(hdev);
- 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
+ 	stac();
+-	rc = __copy_user_nocache(dst, src, size);
++	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 
+ 	/*
+-	 * __copy_user_nocache() uses non-temporal stores for the bulk
++	 * copy_to_nontemporal() uses non-temporal stores for the bulk
+ 	 * of the transfer, but we need to manually flush if the
+ 	 * transfer is unaligned. A cached memory copy is used when
+ 	 * destination or size is not naturally aligned. That is:
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index dc83d0ac6a38a..d77ada17e9db6 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
+ static void cacheless_memcpy(void *dst, void *src, size_t n)
+ {
+ 	/*
+-	 * Use the only available X64 cacheless copy.  Add a __user cast
+-	 * to quiet sparse.  The src agument is already in the kernel so
+-	 * there are no security issues.  The extra fault recovery machinery
+-	 * is not invoked.
++	 * Use the only available X64 cacheless copy.
++	 * The extra fault recovery machinery is not invoked.
+ 	 */
+-	__copy_user_nocache(dst, (void __user *)src, n);
++	copy_to_nontemporal(dst, src, n);
+ }
+ 
+ void rvt_wss_exit(struct rvt_dev_info *rdi)
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index f62110713d77d..43785f02f310d 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1805,12 +1805,13 @@ static void ntb_tx_copy_callback(void *data,
+ 
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
+ {
+-#ifdef ARCH_HAS_NOCACHE_UACCESS
++#ifdef copy_to_nontemporal
+ 	/*
+ 	 * Using non-temporal mov to improve performance on non-cached
+-	 * writes, even though we aren't actually copying from user space.
++	 * writes. This only works if __iomem is strictly memory-like,
++	 * but that is the case on x86-64
+ 	 */
+-	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
++	copy_to_nontemporal(offset, entry->buf, entry->len);
+ #else
+ 	memcpy_toio(offset, entry->buf, entry->len);
+ #endif
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 2c7b09c8415f0..c54d531f73d9f 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1236,7 +1236,7 @@ static const char *uaccess_safe_builtin[] = {
+ 	"copy_mc_enhanced_fast_string",
+ 	"rep_stos_alternative",
+ 	"rep_movs_alternative",
+-	"__copy_user_nocache",
++	"copy_to_nontemporal",
+ 	NULL
+ };
+ 
 -- 
 2.53.0
 
