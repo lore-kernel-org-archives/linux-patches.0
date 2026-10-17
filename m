@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E963A9879;
-	Sat, 17 Oct 2026 16:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC2E3A7F4C;
+	Sat, 17 Oct 2026 16:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254856; cv=none; b=L5BnEuCeP9aq4eYZgQfEJygdkiLZUkSmTVXb8W+rESsXKlge2JSlF9Qbkx7bA9xJJ3/cucSptWNA8TNhS/MLj+eRfbXYfEfTzxPY0R+tJvs7aQNHfmHLA+kA72rEoS4WPhP8zq4jgecAHKkc6NA4u+x7y41P2r+K4g2px7ltEVk=
+	t=1792254858; cv=none; b=VZxmdctKFrd32dWePlsKoSn3a2xeGJdUvrahOV9xuRIZt58I3egcGNSLp01JFd1b2tf3/XCQrbc9u4eSavQcX/XepAOJetVPHj+Fh7HUHRH7Qn73U0BoylzeE3RMs9dyacCKT7QlVpKAoOTovd4mJwIeObzcv0/zLTZJcMEfZzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254856; c=relaxed/simple;
-	bh=0g1arqZ+bnlZkkXb7siYp4i+v5QhPSElB/3STiFtFj0=;
+	s=arc-20240116; t=1792254858; c=relaxed/simple;
+	bh=d0jxRah7nW0UNxpKSPkY+KWrRXocmNuoeVjCOcn+tfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMHGUGtRtjESPxiEbhgdRf59GhbJlCoxHmNTvzS/bUQltQ0pAo5BrGzt28cCCNzoo8kKBkwC5Q9SEO2blH35IESZtv1kYRoNU1AavYZRqU6sKAh2HL4OqZmAilU3qZYYbFSFm+rpYrWBe0zokRYA6umfzy5wXnDtw6xCauh2u2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGMOITJc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+4H2/Eff0mqWxGiA2HlUquf0T+BSAqxqjARxdWXM7YRl8NjJq+McON5aejjb+961DHvQMgu55xJmq/FybejvIYt7cu5XhvsRgQZ41vrVhttcgx3UUGj8jiMUuNm0az3EkQVOuUe5sFicoz7SlHdPx0+89/XMWabLfP51pD5ltQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4GK3dlo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGMOITJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5FB1F000C5;
-	Sat, 17 Oct 2026 16:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4GK3dlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155881F000C4;
+	Sat, 17 Oct 2026 16:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254854;
-	bh=uAppw1wrv3QPKtRe6/OkUcfBaIJMXDX9+kVV8j9ApKs=;
+	s=korg; t=1792254857;
+	bh=MIt3DnGKHsZWJrWEgyAilXiLDlzQyXAA5YSrWCYKQLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGMOITJc/fYiKfFkkUsBeU5YyKQsOSceAodS5dGcJqWDpZJkxbasOlrINVtY1mOyE
-	 c73bctxLXRG2cm4fctGajcLqI04GKf+PhswkO3c5bQDCPHPi6/+Ykc8x9AEXHW0EBa
-	 tMCuVDm2e6p8cELFSWtL5YoDYNF7A15yeSzmvddU=
+	b=o4GK3dloxTPLL8Jq91Tu96jigPspBODSs1k6Miz+LyL4jxYhJ3F60wqNdyJGLWTfl
+	 6WLGTfJOYiio+YPllvBzUZqfyg65dpYNRM8HJZYQnV2pDsrfI+EtpkX47m0RFvmCta
+	 LOccPgHnZ7RAbzdaOjczsA3LWo5idoh8iyl5/jqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Zhu <James.Zhu@amd.com>,
+	Xiaogang Chen <xiaogang.chen@amd.com>,
 	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 584/869] drm/amdkfd: return migration pages from copy function - again
-Date: Sat, 17 Oct 2026 17:57:05 +0200
-Message-ID: <20261017160052.031302870@linuxfoundation.org>
+Subject: [PATCH 6.12 585/869] drm/amdkfd: Fix error path at svm_migrate_copy_to_ram
+Date: Sat, 17 Oct 2026 17:57:06 +0200
+Message-ID: <20261017160052.054788225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,262 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Zhu <James.Zhu@amd.com>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit bd6093e2f1601c0c83906f5115a2efb6b93050b1 ]
+[ Upstream commit 960c4a8069bfd352c48cc88592618f1ebe24c69e ]
 
-dst MIGRATE_PFN_VALID bit and src MIGRATE_PFN_MIGRATE bit
-should always be set when migration success. cpage includes
-src MIGRATE_PFN_MIGRATE bit set and MIGRATE_PFN_VALID bit
-unset pages for both ram and vram when memory is only allocated
-without being populated before migration, those ram pages should
-be counted as migrate pages and those vram pages should not be
-counted as migrate pages. Here migration pages refer to how many
-vram pages involved.
+If page migration from device to sys ram fails for some reasons driver needs
+release and unlock allocated system pages. To do that driver should use page
+physical address, or pfn, then get struct page*. Current driver uses dma
+address(for adev) that is not correct with IOMMU enabled, or even in general.
 
--v2 use dst to check MIGRATE_PFN_VALID bit (suggested-by Philip)
--v3 add warning when vram pages is less than migration pages
-    return migration pages directly from copy function
--v4 correct comments and copy function return mpage (suggested-by Felix)
+The patch releases and unlocks allocated system pages based on where migration
+failed by struct page* of sys ram pages. Also dma_unmap correspodent system
+ram pages at error path.
 
-Signed-off-by: James Zhu <James.Zhu@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Xiaogang Chen <xiaogang.chen@amd.com>
 Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-
-[ Dropped the leftover svm_migrate_unsuccessful_pages() call in the
-  no-collected-pages path of svm_migrate_vma_to_ram(), since the helper
-  and upages no longer exist after this change. ]
-
-[ Kept the forward unwind loop in svm_migrate_copy_to_vram() so the page
-  at the failing index is released too. ]
-
-Stable-dep-of: 960c4a8069bf ("drm/amdkfd: Fix error path at svm_migrate_copy_to_ram")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 73 ++++++++++++------------
- 1 file changed, 36 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 47 +++++++++++++++---------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-index bdfba8b3faffa..b8e11ffc72204 100644
+index b8e11ffc72204..39bc24e86c2a2 100644
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-@@ -261,20 +261,7 @@ static void svm_migrate_put_sys_page(unsigned long addr)
- 	put_page(page);
+@@ -252,15 +252,6 @@ svm_migrate_get_sys_page(struct vm_area_struct *vma, unsigned long addr)
+ 	return page;
  }
  
--static unsigned long svm_migrate_unsuccessful_pages(struct migrate_vma *migrate)
+-static void svm_migrate_put_sys_page(unsigned long addr)
 -{
--	unsigned long upages = 0;
--	unsigned long i;
+-	struct page *page;
 -
--	for (i = 0; i < migrate->npages; i++) {
--		if (migrate->src[i] & MIGRATE_PFN_VALID &&
--		    !(migrate->src[i] & MIGRATE_PFN_MIGRATE))
--			upages++;
--	}
--	return upages;
+-	page = pfn_to_page(addr >> PAGE_SHIFT);
+-	unlock_page(page);
+-	put_page(page);
 -}
 -
--static int
-+static long
+ static long
  svm_migrate_copy_to_vram(struct kfd_node *node, struct svm_range *prange,
  			 struct migrate_vma *migrate, struct dma_fence **mfence,
- 			 dma_addr_t *scratch, u64 ttm_res_offset)
-@@ -283,7 +270,7 @@ svm_migrate_copy_to_vram(struct kfd_node *node, struct svm_range *prange,
- 	struct amdgpu_device *adev = node->adev;
- 	struct device *dev = adev->dev;
- 	struct amdgpu_res_cursor cursor;
--	u64 mpages = 0;
-+	long mpages;
- 	dma_addr_t *src;
- 	u64 *dst;
- 	u64 i, j;
-@@ -297,6 +284,7 @@ svm_migrate_copy_to_vram(struct kfd_node *node, struct svm_range *prange,
- 
- 	amdgpu_res_first(prange->ttm_res, ttm_res_offset,
- 			 npages << PAGE_SHIFT, &cursor);
-+	mpages = 0;
- 	for (i = j = 0; (i < npages) && (mpages < migrate->cpages); i++) {
- 		struct page *spage;
- 
-@@ -367,6 +355,7 @@ svm_migrate_copy_to_vram(struct kfd_node *node, struct svm_range *prange,
- 			migrate->dst[i] = 0;
- 			mpages--;
- 		}
-+		mpages = r;
- 	}
- 
- #ifdef DEBUG_FORCE_MIXED_DOMAINS
-@@ -384,7 +373,7 @@ svm_migrate_copy_to_vram(struct kfd_node *node, struct svm_range *prange,
- 	}
- #endif
- 
--	return r;
-+	return mpages;
- }
- 
- static long
-@@ -399,7 +388,7 @@ svm_migrate_vma_to_vram(struct kfd_node *node, struct svm_range *prange,
- 	struct dma_fence *mfence = NULL;
- 	struct migrate_vma migrate = { 0 };
- 	unsigned long cpages = 0;
--	unsigned long mpages = 0;
-+	long mpages = 0;
- 	dma_addr_t *scratch;
- 	void *buf;
- 	int r = -ENOMEM;
-@@ -445,15 +434,17 @@ svm_migrate_vma_to_vram(struct kfd_node *node, struct svm_range *prange,
- 	else
- 		pr_debug("0x%lx pages collected\n", cpages);
- 
--	r = svm_migrate_copy_to_vram(node, prange, &migrate, &mfence, scratch, ttm_res_offset);
-+	mpages = svm_migrate_copy_to_vram(node, prange, &migrate, &mfence, scratch, ttm_res_offset);
- 	migrate_vma_pages(&migrate);
- 
- 	svm_migrate_copy_done(adev, mfence);
- 	migrate_vma_finalize(&migrate);
- 
--	mpages = cpages - svm_migrate_unsuccessful_pages(&migrate);
--	pr_debug("successful/cpages/npages 0x%lx/0x%lx/0x%lx\n",
--		 mpages, cpages, migrate.npages);
-+	if (mpages >= 0)
-+		pr_debug("migrated/collected/requested 0x%lx/0x%lx/0x%lx\n",
-+			 mpages, cpages, migrate.npages);
-+	else
-+		r = mpages;
- 
- 	kfd_smi_event_migration_end(node, p->lead_thread->pid,
- 				    start >> PAGE_SHIFT, end >> PAGE_SHIFT,
-@@ -464,14 +455,13 @@ svm_migrate_vma_to_vram(struct kfd_node *node, struct svm_range *prange,
- out_free:
- 	kvfree(buf);
- out:
--	if (!r && mpages) {
-+	if (!r && mpages > 0) {
- 		pdd = svm_range_get_pdd_by_node(prange, node);
- 		if (pdd)
- 			WRITE_ONCE(pdd->page_in, pdd->page_in + mpages);
--
--		return mpages;
- 	}
--	return r;
-+
-+	return r ? r : mpages;
- }
- 
- /**
-@@ -582,7 +572,7 @@ static void svm_migrate_page_free(struct page *page)
- 	}
- }
- 
--static int
-+static long
- svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
- 			struct migrate_vma *migrate, struct dma_fence **mfence,
+@@ -578,10 +569,11 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
  			dma_addr_t *scratch, u64 npages)
-@@ -591,6 +581,7 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
- 	u64 *src;
+ {
+ 	struct device *dev = adev->dev;
+-	u64 *src;
++	struct page *dpage = NULL;
  	dma_addr_t *dst;
- 	struct page *dpage;
-+	long mpages;
+-	struct page *dpage;
++	u64 *src;
+ 	long mpages;
++
  	u64 i = 0, j;
  	u64 addr;
  	int r = 0;
-@@ -603,6 +594,7 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
- 	src = (u64 *)(scratch + npages);
- 	dst = scratch;
+@@ -636,6 +628,7 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
+ 		r = dma_mapping_error(dev, dst[i]);
+ 		if (r) {
+ 			dev_err(adev->dev, "%s: fail %d dma_map_page\n", __func__, r);
++			dst[i] = 0;
+ 			goto out_oom;
+ 		}
  
-+	mpages = 0;
- 	for (i = 0, j = 0; i < npages; i++, addr += PAGE_SIZE) {
- 		struct page *spage;
- 
-@@ -651,6 +643,7 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
- 				     dst[i] >> PAGE_SHIFT, page_to_pfn(dpage));
+@@ -644,19 +637,39 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
  
  		migrate->dst[i] = migrate_pfn(page_to_pfn(dpage));
-+		mpages++;
+ 		mpages++;
++
++		dpage = NULL;
  		j++;
  	}
  
-@@ -660,13 +653,17 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, struct svm_range *prange,
+-	r = svm_migrate_copy_memory_gart(adev, dst + i - j, src + i - j, j,
+-					 FROM_VRAM_TO_RAM, mfence);
+-
++	if (j > 0)
++		r = svm_migrate_copy_memory_gart(adev, dst + i - j, src + i - j, j,
++						 FROM_VRAM_TO_RAM, mfence);
  out_oom:
  	if (r) {
  		pr_debug("failed %d copy to ram\n", r);
--		while (i--) {
-+		while (i-- && mpages) {
-+			if (!migrate->dst[i])
-+				continue;
- 			svm_migrate_put_sys_page(dst[i]);
+-		while (i-- && mpages) {
+-			if (!migrate->dst[i])
++
++		/* first release current dpage when dma_map_page fail */
++		if (dpage) {
++			unlock_page(dpage);
++			put_page(dpage);
++		}
++
++		/* release previous allocated sys pages and unmap dma address */
++		while (i--) {
++
++			if (dst[i]) {
++				dma_unmap_page(dev, dst[i], PAGE_SIZE,
++					       DMA_BIDIRECTIONAL);
++				dst[i] = 0;
++			}
++
++			dpage = migrate_pfn_to_page(migrate->dst[i]);
++			if (!dpage)
+ 				continue;
+-			svm_migrate_put_sys_page(dst[i]);
++
++			unlock_page(dpage);
++			put_page(dpage);
  			migrate->dst[i] = 0;
-+			mpages--;
+ 			mpages--;
  		}
-+		mpages = r;
- 	}
- 
--	return r;
-+	return mpages;
- }
- 
- /**
-@@ -693,9 +690,8 @@ svm_migrate_vma_to_ram(struct kfd_node *node, struct svm_range *prange,
- {
- 	struct kfd_process *p = container_of(prange->svms, struct kfd_process, svms);
- 	u64 npages = (end - start) >> PAGE_SHIFT;
--	unsigned long upages = npages;
- 	unsigned long cpages = 0;
--	unsigned long mpages = 0;
-+	long mpages = 0;
- 	struct amdgpu_device *adev = node->adev;
- 	struct kfd_process_device *pdd;
- 	struct dma_fence *mfence = NULL;
-@@ -741,7 +737,6 @@ svm_migrate_vma_to_ram(struct kfd_node *node, struct svm_range *prange,
- 	if (!cpages) {
- 		pr_debug("failed collect migrate device pages [0x%lx 0x%lx]\n",
- 			 prange->start, prange->last);
--		upages = svm_migrate_unsuccessful_pages(&migrate);
- 		goto out_free;
- 	}
- 	if (cpages != npages)
-@@ -750,13 +745,15 @@ svm_migrate_vma_to_ram(struct kfd_node *node, struct svm_range *prange,
- 	else
- 		pr_debug("0x%lx pages collected\n", cpages);
- 
--	r = svm_migrate_copy_to_ram(adev, prange, &migrate, &mfence,
-+	mpages = svm_migrate_copy_to_ram(adev, prange, &migrate, &mfence,
- 				    scratch, npages);
- 	migrate_vma_pages(&migrate);
- 
--	upages = svm_migrate_unsuccessful_pages(&migrate);
--	pr_debug("unsuccessful/cpages/npages 0x%lx/0x%lx/0x%lx\n",
--		 upages, cpages, migrate.npages);
-+	if (mpages >= 0)
-+		pr_debug("migrated/collected/requested 0x%lx/0x%lx/0x%lx\n",
-+		 mpages, cpages, migrate.npages);
-+	else
-+		r = mpages;
- 
- 	svm_migrate_copy_done(adev, mfence);
- 	migrate_vma_finalize(&migrate);
-@@ -770,8 +767,7 @@ svm_migrate_vma_to_ram(struct kfd_node *node, struct svm_range *prange,
- out_free:
- 	kvfree(buf);
- out:
--	if (!r && cpages) {
--		mpages = cpages - upages;
-+	if (!r && mpages > 0) {
- 		pdd = svm_range_get_pdd_by_node(prange, node);
- 		if (pdd)
- 			WRITE_ONCE(pdd->page_out, pdd->page_out + mpages);
-@@ -854,6 +850,9 @@ int svm_migrate_vram_to_ram(struct svm_range *prange, struct mm_struct *mm,
- 	}
- 
- 	if (r >= 0) {
-+		WARN_ONCE(prange->vram_pages < mpages,
-+			"Recorded vram pages(0x%llx) should not be less than migration pages(0x%lx).",
-+			prange->vram_pages, mpages);
- 		prange->vram_pages -= mpages;
- 
- 		/* prange does not have vram page set its actual_loc to system
 -- 
 2.53.0
 
