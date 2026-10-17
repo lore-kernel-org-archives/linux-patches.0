@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD8A3B2FD9;
-	Sat, 17 Oct 2026 16:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49B23B47F4;
+	Sat, 17 Oct 2026 16:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255717; cv=none; b=fkKz6THZr31y0vyv+aJvhKA+MB60V9Rtr4rV/o5lq7bDYe0OlSGclV/RQIzPoLpiwl0fmBfELD1YfJ1lgmRko+JzU1iBaIUIiiE4aakyH/NnZG0qBilhZ5LIfR4XtmkzwIQCLZVs2YMRqrmRNm+WO9rtbJoCeJqov6UQnipRScE=
+	t=1792255720; cv=none; b=ljS1v62QZ6nxjaXwO9G9vT4n9oD0NIUrM3wqrFX4tvSW+T5W0s9AP2m5r1QTrxXo0x+D9FxQGtXZCV/KPAxw02VyJ085jP3AUGXAFRoOKwUCNZ7vF6gasA7+Cq7ro8QvC1CK3BvPwonDGD6niXVuKq2uxbih9XEB7Gcdwhp1zw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255717; c=relaxed/simple;
-	bh=Texg7uaqxvJS5/5KvPN7t3EWcfobNEIMxWj4V0LcRHU=;
+	s=arc-20240116; t=1792255720; c=relaxed/simple;
+	bh=E3tZV6eD3HT1HvlpKr7dORN4haXFF6sk2RX8DdwJb9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o6Mzj1VTvlCnmZtpaVaFwr7W+HshsY2lTbmnLL9xx9aTHl2BIv+BhoA+RIPQyklxKSsb57qHxSgTiJarbl+BOafW9RnIHVrTDboTsMF33hO7H1mQEDpWZA9TbbzkHeK65g/7glu/HbIv1n7upXUofiDRv7+5r3/fMGgqhRUvXEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuGVbbDk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mEYPf8R4QI8X/tWCvXPBGdKZjYiMcPKI1MzgSc92jwRWDhGi86qK3mq4TUijvb5OXV8jOPA6OoRykiJKQ0z8Xms3A7/1mNQN+iwHx5K8clUkzUxd/Yyxdj9D6kU08ho5iaXdUYAdVrKC7UUb4v6+b/TjZHHOfchhvgpFs3t7EQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9hBNp5g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuGVbbDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A1E1F000C4;
-	Sat, 17 Oct 2026 16:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9hBNp5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA981F000C4;
+	Sat, 17 Oct 2026 16:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255716;
-	bh=6XVSDSzMLR8l/SRljHcuur6vVCZjyQ+n+wEe9eFSk/E=;
+	s=korg; t=1792255719;
+	bh=O4aN5Vai3vi+n8x4im10+PGeiANYFA689itPmvpd6w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuGVbbDklNBGMZ6M7h5iUKGxE8ulcb29XCx9nIkEtDHDTZnZpFssO/C35rZshjtmT
-	 ra82kLwnWjAl6YhQQyCapHrTXpPkX33xJt55+gL0d49516or3N8/vAyPWamnkrTu+s
-	 yLjDace26XsAjHUzyjIe8G9htMUpPjaQJvDE9bUw=
+	b=R9hBNp5gIc1jmhdWJjs9HJcv2lnZEjdEatBVjLaDbYsowa0683R96EPTd3vAPM3aB
+	 fz6S6Ra7aPZaNlKRQHAIBQZtgBhxZ94qxASjILkESpcOZ0lywVQLuYF/6kedqZ6j0f
+	 U8bB/09AJr8Mia1OiFvQg6bIdUm6rETw97gl558Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 867/869] wifi: atk9k: Revert "wifi: ath9k: reject short WMI command responses"
-Date: Sat, 17 Oct 2026 18:01:48 +0200
-Message-ID: <20261017160059.085705078@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 6.12 868/869] s390/uv: Dont return 0 from make_hva_secure() if the operation was not successful
+Date: Sat, 17 Oct 2026 18:01:49 +0200
+Message-ID: <20261017160059.112719890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -46,85 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 90201351a862182bdabfc1ad1c97b1e1b6ed5931 ]
+commit 3ec8a8330a1aa846dffbf1d64479213366c55b54 upstream.
 
-This reverts commit 93ce8ea70451e800601bc9444aa33043de15d67b.
+If s390_wiggle_split_folio() returns 0 because splitting a large folio
+succeeded, we will return 0 from make_hva_secure() even though a retry
+is required. Return -EAGAIN in that case.
 
-Mehmet reported that the offending commit breaks his AR9271 USB adapter
-which uses zero-length replies to commands that don't return a value.
-Revert the whole thing to restore the functionality.
+Otherwise, we'll return 0 from gmap_make_secure(), and consequently from
+unpack_one(). In kvm_s390_pv_unpack(), we assume that unpacking
+succeeded and skip unpacking this page. Later on, we run into issues
+and fail booting the VM.
 
-Cc: stable@vger.kernel.org # the offending commit is in 6.12.113
-Reported-by: Mehmet Fide <mehmet.fide@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So far, this issue was only observed with follow-up patches where we
+split large pagecache XFS folios. Maybe it can also be triggered with
+shmem?
+
+We'll cleanup s390_wiggle_split_folio() a bit next, to also return 0
+if no split was required.
+
+Fixes: d8dfda5af0be ("KVM: s390: pv: fix race when making a page secure")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20250516123946.1648026-2-david@redhat.com
+Message-ID: <20250516123946.1648026-2-david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c |   16 ++--------------
- drivers/net/wireless/ath/ath9k/wmi.h |    1 -
- 2 files changed, 2 insertions(+), 15 deletions(-)
+ arch/s390/kernel/uv.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -206,16 +206,9 @@ static void ath9k_wmi_rsp_callback(struc
- {
- 	skb_pull(skb, sizeof(struct wmi_cmd_hdr));
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -393,8 +393,11 @@ int make_hva_secure(struct mm_struct *mm
+ 	folio_walk_end(&fw, vma);
+ 	mmap_read_unlock(mm);
  
--	if (wmi->cmd_rsp_buf && wmi->cmd_rsp_len) {
--		if (skb->len < wmi->cmd_rsp_len) {
--			wmi->cmd_rsp_status = -EMSGSIZE;
--			goto complete;
--		}
-+	if (wmi->cmd_rsp_buf != NULL && wmi->cmd_rsp_len != 0)
- 		memcpy(wmi->cmd_rsp_buf, skb->data, wmi->cmd_rsp_len);
--	}
--	wmi->cmd_rsp_status = 0;
+-	if (rc == -E2BIG || rc == -EBUSY)
++	if (rc == -E2BIG || rc == -EBUSY) {
+ 		rc = s390_wiggle_split_folio(mm, folio, rc == -E2BIG);
++		if (!rc)
++			rc = -EAGAIN;
++	}
+ 	folio_put(folio);
  
--complete:
- 	complete(&wmi->cmd_wait);
- }
- 
-@@ -307,7 +300,6 @@ static int ath9k_wmi_cmd_issue(struct wm
- 	/* record the rsp buffer and length */
- 	wmi->cmd_rsp_buf = rsp_buf;
- 	wmi->cmd_rsp_len = rsp_len;
--	wmi->cmd_rsp_status = 0;
- 
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
-@@ -364,13 +356,9 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum
- 		return -ETIMEDOUT;
- 	}
- 
--	spin_lock_irqsave(&wmi->wmi_lock, flags);
--	ret = wmi->cmd_rsp_status;
--	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
--
- 	mutex_unlock(&wmi->op_mutex);
- 
--	return ret;
-+	return 0;
- 
- out:
- 	ath_dbg(common, WMI, "WMI failure for: %s\n", wmi_cmd_to_name(cmd_id));
---- a/drivers/net/wireless/ath/ath9k/wmi.h
-+++ b/drivers/net/wireless/ath/ath9k/wmi.h
-@@ -157,7 +157,6 @@ struct wmi {
- 	u16 tx_seq_id;
- 	u8 *cmd_rsp_buf;
- 	u32 cmd_rsp_len;
--	int cmd_rsp_status;
- 	bool stopped;
- 
- 	struct list_head pending_tx_events;
+ 	return rc;
 
 
