@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD32248B3;
-	Sat, 17 Oct 2026 16:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F614384CED;
+	Sat, 17 Oct 2026 16:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254134; cv=none; b=PqYTL9zDZpmC5BEOAQ/6tAhlfWy/Rr6OFh3kGtSGGt//mQ1iY8TsG/WwesY/KeKvvne26mpWwROkaQoTqJdwQCa5jLir25z9O8vWYnzSN97djFmPKntzuDfH1APX7viT7bqY8IjKudaJp87Jb2i7uZewIbslflz24uvAe1jdcvs=
+	t=1792254136; cv=none; b=O3Vktab26Me+0imgibqM2781B7lniFGgxIALs1NlCTru7OULRJODpEJRF8HXHuWhze986MXvhspmMTFVZCIOTdZzBF0P/j3ZE2qWKMUGlSIVmV6A4jRXkGJXsOuF4KEyp/f55ZY7z/JBIka3B6GR2nCBDrVWaB954ZvTZgq8SdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254134; c=relaxed/simple;
-	bh=kS2eVcAh0OTxqgMiRPGTLBMcK831maqhkghvRJW6OE4=;
+	s=arc-20240116; t=1792254136; c=relaxed/simple;
+	bh=8qQ3uYj/gZ2g9XWyI+5mFAWetH3x1Sn6UelEtYMhA3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAZ4iDr3jmzxTvhyexCw6BuNpTGgZKS+t2DmnZqs2C/nBnbdaVCAKGMwbevja0T0qMD7NiuG4PIz8zWjxO4kMHCghA4L+ZcISE312gZBJ6fG5//UyLZhtCFkJv6v94V80stWW4W79QtzbrTGEj0g/huraiAKxVcj2CWrkZbA4Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx3Zed3Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KugWsf/VlUOCQ3qScsJ6PInLgrZcz+pd8z8omYAtnWtEl1JnNk6FPszuF4k+KkNJaBFnK4tbMWUATuB3lKFFpGtHmhUXIPgogUmXlz1c/1C7ojsl91WuI7OL4kvodJc+Pta4P09zOWPvqjQptucpa+f3TnEWiwrFZGUEQ9DZD5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6yZsNzU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx3Zed3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EB61F000C4;
-	Sat, 17 Oct 2026 16:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6yZsNzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743B01F000C4;
+	Sat, 17 Oct 2026 16:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254132;
-	bh=VoWkFVi4IfQBXnRpMNHxhI7+aOwKcHLQNwD5BHyk1gQ=;
+	s=korg; t=1792254135;
+	bh=gsZgP9pAuMqYzYrUVuBR+DfddTupbJtgGSdBRe/Mm3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zx3Zed3YfLuY2efshHm3lqVlt+R1xhhIxi3hdbRET2ctxEyjhDB5O2LERA+HqdGW7
-	 g6HqG4D60+rggIxfeEmknNyRO+NUMo0I5RdmasRp194CPJhIIOR9s3BYksF0piJEtc
-	 CfrR6ra9yfHgvNdOzGafulnl/lePHpyrOI+43Qzw=
+	b=y6yZsNzUAQqhooHXx5mfTBqK0XQCdJXeEJaweuqEVl1vm+YqX1xsblz44TyZgZf82
+	 R7eYFBkOM33u26xWE77qq9yA/wI1wVKaEdd/PaxN1TcBSch7uHeXStBUD9GWxxlT+K
+	 Sno/u3+XW6yu+OhmGK7n8OV9ishq/gxPlQx8X9tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 347/869] net/handshake: hand off the pinned file reference to accept_doit
-Date: Sat, 17 Oct 2026 17:53:08 +0200
-Message-ID: <20261017160045.996397518@linuxfoundation.org>
+Subject: [PATCH 6.12 348/869] ethtool: module: call ethnl_ops_complete() on module flash errors
+Date: Sat, 17 Oct 2026 17:53:09 +0200
+Message-ID: <20261017160046.022651409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,155 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f4251190e58b209999c1ba9e6d2976136a1be055 ]
+[ Upstream commit 84371fb58423f997939aacdcbc02d128d76a54e5 ]
 
-handshake_req_next() removes the request from the per-net
-pending list and drops hn_lock before handshake_nl_accept_doit()
-reads req->hr_sk->sk_socket and dereferences sock->file (once in
-FD_PREPARE() and again in get_file()).  In that window a
-consumer running tls_handshake_cancel() followed by sockfd_put()
-(svc_sock_free) or __fput_sync() (xs_reset_transport) releases
-sock->file.  sock_release() then runs sock_orphan(), zeroing
-sk_socket, and frees the struct socket.  The accept-side code
-either reads NULL through sk_socket or chases freed memory.
+When validate() fails we are skipping over ethnl_ops_complete()
+even tho we already called ethnl_ops_begin().
 
-The submit-side sock_hold() does not prevent this.  sk_refcnt
-protects struct sock, but struct socket and sock->file are
-independently refcounted via the file descriptor the consumer
-owns.  Pinning sk leaves sock and sock->file unprotected.
-
-Retarget the accept-side dereferences at req->hr_file, which was
-pinned at submit time, instead of req->hr_sk->sk_socket->file.
-Pinning on its own is not sufficient: a consumer that cancels
-between handshake_req_next() returning and accept_doit reaching
-FD_PREPARE() takes the !remove_pending() branch in
-handshake_req_cancel() and drops hr_file before the accept side
-takes its own reference.  Hand off an additional file reference
-inside handshake_req_next(), under hn_lock, so the accept side
-operates on a reference that no concurrent handshake_req_cancel()
-can revoke.  FD_PREPARE() consumes that handed-off reference,
-either by transferring it to the new fd in fd_publish() or by
-dropping it in the cleanup destructor on error; the explicit
-get_file() that previously balanced FD_PREPARE() is therefore
-redundant and goes away.
-
-Update handshake_req_cancel_test2 and _test3 to simulate the
-FD_PREPARE() consumption with an fput() so the kunit file-count
-assertions stay balanced.
-
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-5-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/20260522231312.1710836-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/handshake-test.c |  8 ++++++++
- net/handshake/netlink.c        |  6 +++---
- net/handshake/request.c        | 18 ++++++++++++++++++
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ net/ethtool/module.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
-index a331b308aaa24..d66b133f59d12 100644
---- a/net/handshake/handshake-test.c
-+++ b/net/handshake/handshake-test.c
-@@ -375,6 +375,10 @@ static void handshake_req_cancel_test2(struct kunit *test)
- 	/* Pretend to accept this request */
- 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
- 	KUNIT_ASSERT_PTR_EQ(test, req, next);
-+	/* Simulate FD_PREPARE() consuming the file reference handed
-+	 * off by handshake_req_next(); see handshake_nl_accept_doit().
-+	 */
-+	fput(filp);
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index 5a08c320b4660..e01275103bcd0 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -425,10 +425,11 @@ int ethnl_act_module_fw_flash(struct sk_buff *skb, struct genl_info *info)
  
- 	/* Act */
- 	result = handshake_req_cancel(sock->sk);
-@@ -417,6 +421,10 @@ static void handshake_req_cancel_test3(struct kunit *test)
- 	/* Pretend to accept this request */
- 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
- 	KUNIT_ASSERT_PTR_EQ(test, req, next);
-+	/* Simulate FD_PREPARE() consuming the file reference handed
-+	 * off by handshake_req_next(); see handshake_nl_accept_doit().
-+	 */
-+	fput(filp);
+ 	ret = ethnl_module_fw_flash_validate(dev, info->extack);
+ 	if (ret < 0)
+-		goto out_rtnl;
++		goto out_complete;
  
- 	/* Pretend to complete this request */
- 	handshake_complete(next, -ETIMEDOUT, NULL);
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index e49041cc0f9d7..d36f069549f93 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -92,7 +92,6 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	struct net *net = sock_net(skb->sk);
- 	struct handshake_net *hn = handshake_pernet(net);
- 	struct handshake_req *req = NULL;
--	struct socket *sock;
- 	int class, fd, err;
+ 	ret = module_flash_fw(dev, tb, skb, info);
  
- 	err = -EOPNOTSUPP;
-@@ -109,9 +108,9 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (!req)
- 		goto out_status;
++out_complete:
+ 	ethnl_ops_complete(dev);
  
--	sock = req->hr_sk->sk_socket;
- 	fd = get_unused_fd_flags(O_CLOEXEC);
- 	if (fd < 0) {
-+		fput(req->hr_file); /* drop ref from handshake_req_next() */
- 		err = fd;
- 		goto out_complete;
- 	}
-@@ -119,10 +118,11 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	err = req->hr_proto->hp_accept(req, info, fd);
- 	if (err) {
- 		put_unused_fd(fd);
-+		fput(req->hr_file); /* drop ref from handshake_req_next() */
- 		goto out_complete;
- 	}
- 
--	fd_install(fd, get_file(sock->file));
-+	fd_install(fd, req->hr_file);
- 
- 	trace_handshake_cmd_accept(net, req, req->hr_sk, fd);
- 	return 0;
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 96f80e0df67b5..670e0f9793825 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -181,6 +181,17 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
- 	return ret;
- }
- 
-+/**
-+ * handshake_req_next - Return the next queued handshake request
-+ * @hn: per-net handshake state
-+ * @class: handler class to match
-+ *
-+ * On a non-NULL return, the caller owns an extra reference
-+ * on @req->hr_file.  FD_PREPARE() consumes it on success; on
-+ * the FD_PREPARE() failure path the caller must fput() it.
-+ *
-+ * Return: pointer to a removed handshake_req, or NULL.
-+ */
- struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
- {
- 	struct handshake_req *req, *pos;
-@@ -191,6 +202,13 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
- 		if (pos->hr_proto->hp_handler_class != class)
- 			continue;
- 		__remove_pending_locked(hn, pos);
-+		/* Hand off a file reference to the accept side under
-+		 * hn_lock.  A concurrent handshake_req_cancel() can drop
-+		 * hr_file before accept reaches FD_PREPARE(); this extra
-+		 * reference keeps the file alive until FD_PREPARE() takes
-+		 * ownership.
-+		 */
-+		get_file(pos->hr_file);
- 		req = pos;
- 		break;
- 	}
+ out_rtnl:
 -- 
 2.53.0
 
