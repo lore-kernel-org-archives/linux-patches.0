@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D823C73EC;
-	Sat, 17 Oct 2026 17:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32413C3F7C;
+	Sat, 17 Oct 2026 17:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259430; cv=none; b=TTwNbsXmZiB320x2rCZolzptHvBQa5yx2P4ECYtn1DvTtjwZhm51PK/BXtKz/8NWiUQez+iuO7bE4hycJpf33s+JEoaGvuANdntpgwZkW3cWYua2ahjo7tU0USKd8GZIie2DgmgvaftVB8BMm0kLy/k/pwdCaPFDKi10vwwOA6Q=
+	t=1792259432; cv=none; b=D/AiWrAZ59RXa4zrmLH6aXW55Gy05f6qTMRuIMKbhZcmzvEKQSmIWZZyg8FzRLu3sCnHgxLbAQPTtDemZQdqQtFnJQn0oArYD5QqZuI9BSUJ4QpiJ1ClUMAoNoirvbCBjVra0X5a4u/0mQ2xhgHMG7bSWfu6yzUz6IMnF/+2fDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259430; c=relaxed/simple;
-	bh=k4SkJbKOGjSl4nN+I5v5cU3RcuvwvQhkWGetEF5CC74=;
+	s=arc-20240116; t=1792259432; c=relaxed/simple;
+	bh=DqHh2PWOCsMCSadK9zhmMhM56wCnrzMhUdokUCHE2cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sp4hNPh6dYo1ccbzCLziFYc4U3yhflcHr8x9I82hE7ANfGua6eiVrHZs2a8kiuHijIhHI8K7u2BK/pzWQaYFTSVAfjR62N8kKOhSN0v2V3Zpn5ytr+ZonITwD7MiLDBlNdj91FaBYF5OGfzl6T+VkrQhyP37GzLvAi8ZpMziSIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufZHpuVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V53pc4EVIFthhcNv0AJPk8acqj5F6vX6Wkv15x5bERXn3jDJB7KPlabpIcI7l9Xxnppll25zJv4hWHKcdX/OcEZyC9L9yBobi1zgreq5E5iwcnwdLsG6jKzg0Jpmn4F/fQ6a+I8FI1OBNK4xV6DtVKLziniLe1jxp8MDtjTYfDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bud+zEbl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufZHpuVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564181F000C5;
-	Sat, 17 Oct 2026 17:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bud+zEbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261641F000C4;
+	Sat, 17 Oct 2026 17:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259422;
-	bh=8ThlddT0rwqZPSjFwkDmqj0k2BmPjVZGypkGqSItfRM=;
+	s=korg; t=1792259431;
+	bh=9I8hyRNzhL1rJmA4DSvP6nau6VvbDWqE6/warXaR538=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ufZHpuVFAK3aMFrs08hKjNK3qptvCwdeRjfLkdrAHqNgWj+vjGMkDSbIZjOBKhNtC
-	 E5+SXVcC93w/uk55lKgSdu/ay4ymYVreJyNo9LyyTtGw2WGLHkkovR20oQkRp2Vgoi
-	 HcWXTB9rmPDcPXnP79tqyAYdQJjs5E1IWhuCXrKc=
+	b=bud+zEbl4B75RgaHHJ47pciVvDkP7oLI1qEIVjYUkFpipgkFSNrPdaJ/VQPc2aBVg
+	 BkR5NFyEpOrFe86K30WYhn9ec4VdDV6jut610ZI20Fw7JUKXoItiNMi5t+862/XjCk
+	 CtZnMkBbXZsrGsBOuNBn7pho9rVoT/hfNozWSQcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1209/1674] ipvs: revalidate ihl to prevent out-of-bounds access
-Date: Sat, 17 Oct 2026 17:58:01 +0200
-Message-ID: <20261017160502.171661271@linuxfoundation.org>
+Subject: [PATCH 6.6 1212/1674] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
+Date: Sat, 17 Oct 2026 17:58:04 +0200
+Message-ID: <20261017160502.246869347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,103 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
+[ Upstream commit c125ee35a49a0518521b52b27631eef061b8719a ]
 
-While the outer IP header is already pulled into the skb head,
-we must be careful and revalidate the embedded headers after
-reading them from the skb frags to prevent out-of-bounds
-access.
+In atmci_probe, &host->bh_work is bound with atmci_work_func, and
+atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
+queue this work on system_bh_wq.
 
-One such place reported by Sashiko is ip_vs_nat_icmp() where
-local process can change the ihl field and after
-skb_ensure_writable() we can see larger value which is a
-problem for the ip_send_check(cih) calls.
+If we remove the module, atmci_remove makes cleanup and the memory
+allocated for host with devm_kzalloc() is released after the remove
+callback returns, while the work mentioned above may still be pending
+or running. The sequence of operations that may lead to a UAF bug is
+as follows:
 
-Add check to drop the packet if the ihl field is changed.
+CPU0                                      CPU1
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+                                          | atmci_interrupt
+                                          | queue_work(system_bh_wq,
+                                          |            &host->bh_work)
+atmci_remove                              |
+atmci_cleanup_slot(...)                   |
+atmci_writel(host, ATMCI_IDR, ~0UL)       |
+timer_delete_sync(&host->timer)           |
+dma_release_channel(host->dma.chan)       |
+free_irq(platform_get_irq(pdev, 0), host) |
+                                          | atmci_work_func
+                                          | // use host
+// devm resources released after          |
+// remove returns, host is freed          |
+                                          | // use host (use-after-free)
+
+Fix it by canceling the work after all the sources that can schedule
+it (IRQ handler, timeout timer and DMA completion callback) have been
+stopped, and before proceeding with the remaining cleanup in
+atmci_remove.
+
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             |  2 +-
- net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
- net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/mmc/host/atmel-mci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 35f012f620150..d2bfc9f67082c 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1713,7 +1713,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
- 	return fwd;
- }
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index 45cda1248816c..8953244a4aea6 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2658,6 +2658,8 @@ static void atmci_remove(struct platform_device *pdev)
  
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph);
+ 	free_irq(platform_get_irq(pdev, 0), host);
  
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index a7b495bf1985d..81aa3e07a7616 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -745,7 +745,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
-  * Packet has been made sufficiently writable in caller
-  * - inout: 1=in->out, 0=out->in
-  */
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph)
- {
-@@ -753,6 +753,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
- 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
++	cancel_work_sync(&host->bh_work);
++
+ 	clk_disable_unprepare(host->mck);
  
-+	/* Before now we may used ihl from skb frag, revalidate it after
-+	 * copying it into skb head to prevent out-of-bounds access
-+	 */
-+	if (cih->ihl * 4 != ciph->len - ciph->off)
-+		return false;
- 	if (inout) {
- 		iph->saddr = cp->vaddr.ip;
- 		ip_send_check(iph);
-@@ -786,6 +791,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	else
- 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
- 			      "Forwarding altered incoming ICMP");
-+	return true;
- }
- 
- #ifdef CONFIG_IP_VS_IPV6
-@@ -877,7 +883,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
- 	else
- #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
-+		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
-+			goto out;
- 
- 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
- 		goto out;
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index f78944efa1697..863d48624c6aa 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1577,7 +1577,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
- 
--	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
-+	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
-+		goto tx_error;
- 
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
