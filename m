@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA1017BED0;
-	Sat, 17 Oct 2026 16:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B41922F767;
+	Sat, 17 Oct 2026 16:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253472; cv=none; b=YRx/+mRf7SM7+QGPtAwCi4J09KGY2egNMGqH5DkijpejZ/l/8dnMIzPUNhSYIN4GLnb8VMC5fRJXAX0RT7S372RbHIHBIEd2QR8OYYsKJoESE32/W11EDHIedZ1kk6moIochg2aTi3bG2BLkLcBZ7krDtn50PpiNhfyJnhhEqhQ=
+	t=1792253475; cv=none; b=g2d8yinT6GU0EqH8AFOd5SlLtytb4ez6yeTtR3m/jAwvmsch1b819wVw28LjXq3nayI6+EA+tNSXESe32hTkLx6h+Yn8p1Imtt36iZcOq2k58OutUXWZDvu/PxIAVq7AWgPNxUKam6du8cwjWYj13QEDucmyzQHAWHqwTUW/1pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253472; c=relaxed/simple;
-	bh=4IMI+XlXKAFPJkyJM7t943fbKLgynNNxR3C3ziS8A1Q=;
+	s=arc-20240116; t=1792253475; c=relaxed/simple;
+	bh=ARreJWno0fH/ZsDWdSBoDI7knxf3ZHN9pWaKEwB/jpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sYyUNOUf53gBPYYXpMpvMmAUgCNfvqcFjdn5hy72iyIZx5ZSL7xnIW1G8O8jrFR0CJqgcnJBoQzB+xFf2k1n+vgtZoXbHoCe9LZxvvDiXW+uTyDR+0/tnBvkz+79QsfYtqm0+2kefsnlYQflQYlHUKUV2GdHgGoWN0L6WUFuk6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDFMON3b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=P9uDzLl6tNl5AzFBRPQRzU/YEMKWXNZmSWdBA8lNWTrHz7ntX9bdJbKcIytrMHu05MuZXhJ/unJszr8r+knVxkG0zuBrwEifgnoP9d0Ntc2JDisd6cTLynSKQDvMqTOv9OSVD/muFE16y+xf45yJcQtWY3GhmKoKZmKtu5/NCa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu1eKkya; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDFMON3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727661F000C4;
-	Sat, 17 Oct 2026 16:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu1eKkya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825271F000C4;
+	Sat, 17 Oct 2026 16:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253471;
-	bh=r/3vnWurkluDBSkdUnv5Qgm90b/5SNNMNBKg+ydq+jE=;
+	s=korg; t=1792253474;
+	bh=w6x2YP6TqFHos3eg9jF0Vuxjb3JO8Q+jC8R6aOMbGD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDFMON3bAFcG9/X48WXR7jT/NVZb9dQpGW7AzHoQHtOZzrdqXdOvhi044DFzPuSWy
-	 ZxxbRHjmR7dYONbU793SB7VTvRmhrIkQyVf79+Ksh1C5wvTIVAqsE83oRAatOhhype
-	 rjYNyIgmRc0OGuibU3U5X545H5nTT5wQs4qW+rPY=
+	b=Fu1eKkyaKrlFkakTlGUw86ATa1sYsl+AB6bhK/hU4XvDI6n4aTryOGPqwUj44Iod1
+	 /omwxMiUdCT/YUcrT6c9ZAThX7DjmqE2HfqehBAjl4x1fKJso6p6PYpK/Bv4MF+GYB
+	 ZMFxFwYgmfWkj0c8izZ2+Tr4vzbc02wm0CjWDUqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Zanoni <paulo.r.zanoni@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/869] drm/xe: Dont allow evicting of BOs in same VM in array of VM binds
-Date: Sat, 17 Oct 2026 17:49:30 +0200
-Message-ID: <20261017160040.349917136@linuxfoundation.org>
+Subject: [PATCH 6.12 130/869] remoteproc: Switch back to struct platform_driver::remove()
+Date: Sat, 17 Oct 2026 17:49:31 +0200
+Message-ID: <20261017160040.377607146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,150 +52,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 7ac74613e5f2ef3450f44fd2127198662c2563a9 ]
+[ Upstream commit ad64a7c4a49d30c5d909a35e2c7882d3870ddafc ]
 
-An array of VM binds can potentially evict other buffer objects (BOs)
-within the same VM under certain conditions, which may lead to NULL
-pointer dereferences later in the bind pipeline. To prevent this, clear
-the allow_res_evict flag in the xe_bo_validate call.
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers.
 
-v2:
- - Invert polarity of no_res_evict (Thomas)
- - Add comment in code explaining issue (Thomas)
+Convert all platform drivers below drivers/remoteproc to use .remove(),
+with the eventual goal to drop struct platform_driver::remove_new(). As
+.remove() and .remove_new() have the same prototypes, conversion is done
+by just changing the structure member name in the driver initializer.
 
-Cc: stable@vger.kernel.org
-Reported-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6268
-Fixes: 774b5fa509a9 ("drm/xe: Avoid evicting object of the same vm in none fault mode")
-Fixes: 77f2ef3f16f5 ("drm/xe: Lock all gpuva ops during VM bind IOCTL")
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Tested-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://lore.kernel.org/r/20251009110618.3481870-1-matthew.brost@intel.com
-(cherry picked from commit 8b9ba8d6d95fe75fed6b0480bb03da4b321bea08)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20241025131340.258233-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Stable-dep-of: 142964960c7c ("remoteproc: qcom: pas: Shutdown lite ADSP DTB on X1E")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c       | 31 ++++++++++++++++++++++---------
- drivers/gpu/drm/xe/xe_vm_types.h |  3 +++
- 2 files changed, 25 insertions(+), 9 deletions(-)
+ drivers/remoteproc/da8xx_remoteproc.c     | 2 +-
+ drivers/remoteproc/imx_dsp_rproc.c        | 2 +-
+ drivers/remoteproc/imx_rproc.c            | 2 +-
+ drivers/remoteproc/keystone_remoteproc.c  | 2 +-
+ drivers/remoteproc/meson_mx_ao_arc.c      | 2 +-
+ drivers/remoteproc/mtk_scp.c              | 2 +-
+ drivers/remoteproc/pru_rproc.c            | 2 +-
+ drivers/remoteproc/qcom_q6v5_adsp.c       | 2 +-
+ drivers/remoteproc/qcom_q6v5_mss.c        | 2 +-
+ drivers/remoteproc/qcom_q6v5_pas.c        | 2 +-
+ drivers/remoteproc/qcom_q6v5_wcss.c       | 2 +-
+ drivers/remoteproc/qcom_wcnss.c           | 2 +-
+ drivers/remoteproc/rcar_rproc.c           | 2 +-
+ drivers/remoteproc/remoteproc_virtio.c    | 2 +-
+ drivers/remoteproc/st_remoteproc.c        | 2 +-
+ drivers/remoteproc/stm32_rproc.c          | 2 +-
+ drivers/remoteproc/ti_k3_dsp_remoteproc.c | 2 +-
+ drivers/remoteproc/wkup_m3_rproc.c        | 2 +-
+ 18 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index fa0d7c6414022..da148df421057 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -2469,7 +2469,7 @@ static void vm_bind_ioctl_ops_unwind(struct xe_vm *vm,
- }
+diff --git a/drivers/remoteproc/da8xx_remoteproc.c b/drivers/remoteproc/da8xx_remoteproc.c
+index 8770d0cf1255f..fe0179f4044f3 100644
+--- a/drivers/remoteproc/da8xx_remoteproc.c
++++ b/drivers/remoteproc/da8xx_remoteproc.c
+@@ -378,7 +378,7 @@ MODULE_DEVICE_TABLE(of, davinci_rproc_of_match);
  
- static int vma_lock_and_validate(struct drm_exec *exec, struct xe_vma *vma,
--				 bool validate)
-+				 bool res_evict, bool validate)
- {
- 	struct xe_bo *bo = xe_vma_bo(vma);
- 	int err = 0;
-@@ -2478,7 +2478,7 @@ static int vma_lock_and_validate(struct drm_exec *exec, struct xe_vma *vma,
- 		if (!bo->vm)
- 			err = drm_exec_lock_obj(exec, &bo->ttm.base);
- 		if (!err && validate)
--			err = xe_bo_validate(bo, xe_vma_vm(vma), true);
-+			err = xe_bo_validate(bo, xe_vma_vm(vma), res_evict);
- 	}
+ static struct platform_driver da8xx_rproc_driver = {
+ 	.probe = da8xx_rproc_probe,
+-	.remove_new = da8xx_rproc_remove,
++	.remove = da8xx_rproc_remove,
+ 	.driver = {
+ 		.name = "davinci-rproc",
+ 		.of_match_table = of_match_ptr(davinci_rproc_of_match),
+diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
+index 713a57200cf09..427c200a175c3 100644
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -1267,7 +1267,7 @@ MODULE_DEVICE_TABLE(of, imx_dsp_rproc_of_match);
  
- 	return err;
-@@ -2500,13 +2500,22 @@ static int check_ufence(struct xe_vma *vma)
- }
+ static struct platform_driver imx_dsp_rproc_driver = {
+ 	.probe = imx_dsp_rproc_probe,
+-	.remove_new = imx_dsp_rproc_remove,
++	.remove = imx_dsp_rproc_remove,
+ 	.driver = {
+ 		.name = "imx-dsp-rproc",
+ 		.of_match_table = imx_dsp_rproc_of_match,
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 2797b7e971429..4f73b1ea05ffb 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -1202,7 +1202,7 @@ MODULE_DEVICE_TABLE(of, imx_rproc_of_match);
  
- static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
--			    struct xe_vma_op *op)
-+			    struct xe_vma_ops *vops, struct xe_vma_op *op)
- {
- 	int err = 0;
-+	bool res_evict;
-+
-+	/*
-+	 * We only allow evicting a BO within the VM if it is not part of an
-+	 * array of binds, as an array of binds can evict another BO within the
-+	 * bind.
-+	 */
-+	res_evict = !(vops->flags & XE_VMA_OPS_ARRAY_OF_BINDS);
+ static struct platform_driver imx_rproc_driver = {
+ 	.probe = imx_rproc_probe,
+-	.remove_new = imx_rproc_remove,
++	.remove = imx_rproc_remove,
+ 	.driver = {
+ 		.name = "imx-rproc",
+ 		.of_match_table = imx_rproc_of_match,
+diff --git a/drivers/remoteproc/keystone_remoteproc.c b/drivers/remoteproc/keystone_remoteproc.c
+index 8f0f7a4cfef26..6e54093d17323 100644
+--- a/drivers/remoteproc/keystone_remoteproc.c
++++ b/drivers/remoteproc/keystone_remoteproc.c
+@@ -490,7 +490,7 @@ MODULE_DEVICE_TABLE(of, keystone_rproc_of_match);
  
- 	switch (op->base.op) {
- 	case DRM_GPUVA_OP_MAP:
- 		err = vma_lock_and_validate(exec, op->map.vma,
-+					    res_evict,
- 					    !xe_vm_in_fault_mode(vm) ||
- 					    op->map.immediate);
- 		break;
-@@ -2517,11 +2526,13 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ static struct platform_driver keystone_rproc_driver = {
+ 	.probe	= keystone_rproc_probe,
+-	.remove_new = keystone_rproc_remove,
++	.remove = keystone_rproc_remove,
+ 	.driver	= {
+ 		.name = "keystone-rproc",
+ 		.of_match_table = keystone_rproc_of_match,
+diff --git a/drivers/remoteproc/meson_mx_ao_arc.c b/drivers/remoteproc/meson_mx_ao_arc.c
+index f6744b5383230..7dfdf11b00368 100644
+--- a/drivers/remoteproc/meson_mx_ao_arc.c
++++ b/drivers/remoteproc/meson_mx_ao_arc.c
+@@ -246,7 +246,7 @@ MODULE_DEVICE_TABLE(of, meson_mx_ao_arc_rproc_match);
  
- 		err = vma_lock_and_validate(exec,
- 					    gpuva_to_vma(op->base.remap.unmap->va),
--					    false);
-+					    res_evict, false);
- 		if (!err && op->remap.prev)
--			err = vma_lock_and_validate(exec, op->remap.prev, true);
-+			err = vma_lock_and_validate(exec, op->remap.prev,
-+						    res_evict, true);
- 		if (!err && op->remap.next)
--			err = vma_lock_and_validate(exec, op->remap.next, true);
-+			err = vma_lock_and_validate(exec, op->remap.next,
-+						    res_evict, true);
- 		break;
- 	case DRM_GPUVA_OP_UNMAP:
- 		err = check_ufence(gpuva_to_vma(op->base.unmap.va));
-@@ -2530,7 +2541,7 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ static struct platform_driver meson_mx_ao_arc_rproc_driver = {
+ 	.probe = meson_mx_ao_arc_rproc_probe,
+-	.remove_new = meson_mx_ao_arc_rproc_remove,
++	.remove = meson_mx_ao_arc_rproc_remove,
+ 	.driver = {
+ 		.name = "meson-mx-ao-arc-rproc",
+ 		.of_match_table = meson_mx_ao_arc_rproc_match,
+diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
+index 81ca0fc3820f9..b3613802730c1 100644
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -1591,7 +1591,7 @@ static const struct dev_pm_ops scp_pm_ops = {
  
- 		err = vma_lock_and_validate(exec,
- 					    gpuva_to_vma(op->base.unmap.va),
--					    false);
-+					    res_evict, false);
- 		break;
- 	case DRM_GPUVA_OP_PREFETCH:
- 	{
-@@ -2541,7 +2552,7 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ static struct platform_driver mtk_scp_driver = {
+ 	.probe = scp_probe,
+-	.remove_new = scp_remove,
++	.remove = scp_remove,
+ 	.driver = {
+ 		.name = "mtk-scp",
+ 		.of_match_table = mtk_scp_of_match,
+diff --git a/drivers/remoteproc/pru_rproc.c b/drivers/remoteproc/pru_rproc.c
+index 7ffbae209a31f..985daf6945dd4 100644
+--- a/drivers/remoteproc/pru_rproc.c
++++ b/drivers/remoteproc/pru_rproc.c
+@@ -1133,7 +1133,7 @@ static struct platform_driver pru_rproc_driver = {
+ 		.suppress_bind_attrs = true,
+ 	},
+ 	.probe  = pru_rproc_probe,
+-	.remove_new = pru_rproc_remove,
++	.remove = pru_rproc_remove,
+ };
+ module_platform_driver(pru_rproc_driver);
  
- 		err = vma_lock_and_validate(exec,
- 					    gpuva_to_vma(op->base.prefetch.va),
--					    false);
-+					    res_evict, false);
- 		if (!err && !xe_vma_has_no_bo(vma))
- 			err = xe_bo_migrate(xe_vma_bo(vma),
- 					    region_to_mem_type[region]);
-@@ -2566,7 +2577,7 @@ static int vm_bind_ioctl_ops_lock_and_prep(struct drm_exec *exec,
- 		return err;
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 0345940268126..13c9898447b2d 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -848,7 +848,7 @@ MODULE_DEVICE_TABLE(of, adsp_of_match);
  
- 	list_for_each_entry(op, &vops->list, link) {
--		err = op_lock_and_prep(exec, vm, op);
-+		err = op_lock_and_prep(exec, vm, vops, op);
- 		if (err)
- 			return err;
- 	}
-@@ -3163,6 +3174,8 @@ int xe_vm_bind_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
- 	}
+ static struct platform_driver adsp_pil_driver = {
+ 	.probe = adsp_probe,
+-	.remove_new = adsp_remove,
++	.remove = adsp_remove,
+ 	.driver = {
+ 		.name = "qcom_q6v5_adsp",
+ 		.of_match_table = adsp_of_match,
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index e19081d530226..5ddc146435cda 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -2546,7 +2546,7 @@ MODULE_DEVICE_TABLE(of, q6v5_of_match);
  
- 	xe_vma_ops_init(&vops, vm, q, syncs, num_syncs);
-+	if (args->num_binds > 1)
-+		vops.flags |= XE_VMA_OPS_ARRAY_OF_BINDS;
- 	for (i = 0; i < args->num_binds; ++i) {
- 		u64 range = bind_ops[i].range;
- 		u64 addr = bind_ops[i].addr;
-diff --git a/drivers/gpu/drm/xe/xe_vm_types.h b/drivers/gpu/drm/xe/xe_vm_types.h
-index b280e335c5bb4..e75dc50446164 100644
---- a/drivers/gpu/drm/xe/xe_vm_types.h
-+++ b/drivers/gpu/drm/xe/xe_vm_types.h
-@@ -377,6 +377,9 @@ struct xe_vma_ops {
- 	u32 num_syncs;
- 	/** @pt_update_ops: page table update operations */
- 	struct xe_vm_pgtable_update_ops pt_update_ops[XE_MAX_TILES_PER_DEVICE];
-+	/** @flags: signify the properties within xe_vma_ops */
-+#define XE_VMA_OPS_ARRAY_OF_BINDS	 BIT(2)
-+	u32 flags;
- #ifdef TEST_VM_OPS_ERROR
- 	/** @inject_error: inject error to test error handling */
- 	bool inject_error;
+ static struct platform_driver q6v5_driver = {
+ 	.probe = q6v5_probe,
+-	.remove_new = q6v5_remove,
++	.remove = q6v5_remove,
+ 	.driver = {
+ 		.name = "qcom-q6v5-mss",
+ 		.of_match_table = q6v5_of_match,
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 23f928323bcfd..bc1d56a2684e6 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1510,7 +1510,7 @@ MODULE_DEVICE_TABLE(of, adsp_of_match);
+ 
+ static struct platform_driver adsp_driver = {
+ 	.probe = adsp_probe,
+-	.remove_new = adsp_remove,
++	.remove = adsp_remove,
+ 	.driver = {
+ 		.name = "qcom_q6v5_pas",
+ 		.of_match_table = adsp_of_match,
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index c560b81b72631..a89faabc11ce1 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -1111,7 +1111,7 @@ MODULE_DEVICE_TABLE(of, q6v5_wcss_of_match);
+ 
+ static struct platform_driver q6v5_wcss_driver = {
+ 	.probe = q6v5_wcss_probe,
+-	.remove_new = q6v5_wcss_remove,
++	.remove = q6v5_wcss_remove,
+ 	.driver = {
+ 		.name = "qcom-q6v5-wcss-pil",
+ 		.of_match_table = q6v5_wcss_of_match,
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index a2ae6adf0053a..2c7e519a2254b 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -702,7 +702,7 @@ MODULE_DEVICE_TABLE(of, wcnss_of_match);
+ 
+ static struct platform_driver wcnss_driver = {
+ 	.probe = wcnss_probe,
+-	.remove_new = wcnss_remove,
++	.remove = wcnss_remove,
+ 	.driver = {
+ 		.name = "qcom-wcnss-pil",
+ 		.of_match_table = wcnss_of_match,
+diff --git a/drivers/remoteproc/rcar_rproc.c b/drivers/remoteproc/rcar_rproc.c
+index cc17e8421f65b..921d853594f42 100644
+--- a/drivers/remoteproc/rcar_rproc.c
++++ b/drivers/remoteproc/rcar_rproc.c
+@@ -214,7 +214,7 @@ MODULE_DEVICE_TABLE(of, rcar_rproc_of_match);
+ 
+ static struct platform_driver rcar_rproc_driver = {
+ 	.probe = rcar_rproc_probe,
+-	.remove_new = rcar_rproc_remove,
++	.remove = rcar_rproc_remove,
+ 	.driver = {
+ 		.name = "rcar-rproc",
+ 		.of_match_table = rcar_rproc_of_match,
+diff --git a/drivers/remoteproc/remoteproc_virtio.c b/drivers/remoteproc/remoteproc_virtio.c
+index d3f39009b28ed..25a655f33ec0e 100644
+--- a/drivers/remoteproc/remoteproc_virtio.c
++++ b/drivers/remoteproc/remoteproc_virtio.c
+@@ -593,7 +593,7 @@ static void rproc_virtio_remove(struct platform_device *pdev)
+ /* Platform driver */
+ static struct platform_driver rproc_virtio_driver = {
+ 	.probe		= rproc_virtio_probe,
+-	.remove_new	= rproc_virtio_remove,
++	.remove		= rproc_virtio_remove,
+ 	.driver		= {
+ 		.name	= "rproc-virtio",
+ 	},
+diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
+index 1340be9d01101..5df99bae7131a 100644
+--- a/drivers/remoteproc/st_remoteproc.c
++++ b/drivers/remoteproc/st_remoteproc.c
+@@ -457,7 +457,7 @@ static void st_rproc_remove(struct platform_device *pdev)
+ 
+ static struct platform_driver st_rproc_driver = {
+ 	.probe = st_rproc_probe,
+-	.remove_new = st_rproc_remove,
++	.remove = st_rproc_remove,
+ 	.driver = {
+ 		.name = "st-rproc",
+ 		.of_match_table = of_match_ptr(st_rproc_match),
+diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rproc.c
+index 8c7f7950b80ee..b02b36a3f5156 100644
+--- a/drivers/remoteproc/stm32_rproc.c
++++ b/drivers/remoteproc/stm32_rproc.c
+@@ -946,7 +946,7 @@ static DEFINE_SIMPLE_DEV_PM_OPS(stm32_rproc_pm_ops,
+ 
+ static struct platform_driver stm32_rproc_driver = {
+ 	.probe = stm32_rproc_probe,
+-	.remove_new = stm32_rproc_remove,
++	.remove = stm32_rproc_remove,
+ 	.driver = {
+ 		.name = "stm32-rproc",
+ 		.pm = pm_ptr(&stm32_rproc_pm_ops),
+diff --git a/drivers/remoteproc/ti_k3_dsp_remoteproc.c b/drivers/remoteproc/ti_k3_dsp_remoteproc.c
+index 73be3d2167914..f48146e8077f5 100644
+--- a/drivers/remoteproc/ti_k3_dsp_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_dsp_remoteproc.c
+@@ -783,7 +783,7 @@ MODULE_DEVICE_TABLE(of, k3_dsp_of_match);
+ 
+ static struct platform_driver k3_dsp_rproc_driver = {
+ 	.probe	= k3_dsp_rproc_probe,
+-	.remove_new = k3_dsp_rproc_remove,
++	.remove = k3_dsp_rproc_remove,
+ 	.driver	= {
+ 		.name = "k3-dsp-rproc",
+ 		.of_match_table = k3_dsp_of_match,
+diff --git a/drivers/remoteproc/wkup_m3_rproc.c b/drivers/remoteproc/wkup_m3_rproc.c
+index c39bd2bf2c1e7..35c2145b12db7 100644
+--- a/drivers/remoteproc/wkup_m3_rproc.c
++++ b/drivers/remoteproc/wkup_m3_rproc.c
+@@ -251,7 +251,7 @@ static const struct dev_pm_ops wkup_m3_rproc_pm_ops = {
+ 
+ static struct platform_driver wkup_m3_rproc_driver = {
+ 	.probe = wkup_m3_rproc_probe,
+-	.remove_new = wkup_m3_rproc_remove,
++	.remove = wkup_m3_rproc_remove,
+ 	.driver = {
+ 		.name = "wkup_m3_rproc",
+ 		.of_match_table = wkup_m3_rproc_of_match,
 -- 
 2.53.0
 
