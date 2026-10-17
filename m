@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9203A1E92;
-	Sat, 17 Oct 2026 17:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF835321445;
+	Sat, 17 Oct 2026 17:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258546; cv=none; b=nF1kvBB51RLo6nuEa2+MOdKe684xxNHgmtzovlTiLSMPWioHQ0y28ayiMn4FX/KFfRzW70Xl7oX2CiTwbaV2pfqVjSnu+4TGD7RdbL4Ki1UUSJZv9vFg+AfyCtRlSkLxGb3HpdNceM/754COUIGbfH3qwbhRVGWN1XXr12FCDjg=
+	t=1792258549; cv=none; b=J9wP6loNV5rwmMWuXSNFs6V6Yfo80dZcyYMP/9pg0f8gp1OnnWCoqpjaI0rDYeE+kjzJ8MXBWVH9lLADibpmyVLfY67lkxaRE+vxKzMz10wrqVcbgw/1YzI9rytUFo6uONXea2+fey4kCOO/bDfl+UgnMxeGUmldS11DkcmZ81U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258546; c=relaxed/simple;
-	bh=l3/4fen2Qf8HYk/vcZ1cuK860sydqLqMX+Cvokt+rSw=;
+	s=arc-20240116; t=1792258549; c=relaxed/simple;
+	bh=ugqM3oKLd9p5VnT/7OZ1DpB1b7miMgQhblJhWd77Z6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mv1Fw6YzQ7v/e1mWya9s0sazZcRBaPEmbM+GR+xrZ/TzAd84Fqq8KDrWxbJRSUiDUH/mQ3xoPVCorWwxPXuhZXYfePPrmyzP+YMorKDFDEoEgqCtt27JrpW3nWJlM7O76jas8feJ5pjTY6jq7F2V8UDfUPGByvjsd/CpNQXUdrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGgI+Pm3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Imzr0jLPP45g+eD2vvteke4x1nKLgv0anhUDeJG8maZuukAKbpW0ryy9OdoBjxLg14DKvB5mP8qILeOxP3xUSQdSbFGK7FXRITrnK6T2isZp6RKQxo4cPY18kYMl52H0Bh44y1OmZPu9g1nzdW7uPh/BHaVV5Y8CO1Dtwyl+KDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSJWmRU/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGgI+Pm3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51561F000C4;
-	Sat, 17 Oct 2026 17:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSJWmRU/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12921F000C4;
+	Sat, 17 Oct 2026 17:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258545;
-	bh=4PnmgSsUTeR+Wm4Mq0YJaEQPCkVcRg2J7dySHUnSzKk=;
+	s=korg; t=1792258548;
+	bh=PfoLzgnLIBy4RT+fjdfpDanDn7Qebi3iMusuSN6MlrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGgI+Pm3R45SDH+GX5dY2I5zzKRO6ZBXQw53X3/5dT9cL3SpQ8huPz2BnteKJulk6
-	 vFFiHcssROjR2DNbVXwhRFV2TcmGdcbw1bj6rwpFKGKGrMZX99cLliFWL/GUKk582X
-	 Sq5NGsmHYLAsIPxRSFxFlvYxGbXgkquUn4eBU+r8=
+	b=MSJWmRU/FDaxh0NPB/m8Qi3HnqDjOSQU+p9rZY90c6ZHcENDOKaL1gn/7aWpyfQdx
+	 K/5StXo++Y60WvMnlC0uxH/+b3KEPxXrGHiPFFFIsNswnIyVS0tz1Okc6rEIIc4Cas
+	 yR/RLNLbiYnr2XkgEIp6YWCHxwt8lMnkStMRQE/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tinguely <mark.tinguely@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0919/1674] xfs: remove xfs_attr_leaf_hasname
-Date: Sat, 17 Oct 2026 17:53:11 +0200
-Message-ID: <20261017160454.721327467@linuxfoundation.org>
+Subject: [PATCH 6.6 0920/1674] wifi: iwlwifi: fix 22000 series SMEM parsing
+Date: Sat, 17 Oct 2026 17:53:12 +0200
+Message-ID: <20261017160454.750281538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,156 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3a65ea768b8094e4699e72f9ab420eb9e0f3f568 ]
+[ Upstream commit 58192b9ce09b0f0f86e2036683bd542130b91a98 ]
 
-The calling convention of xfs_attr_leaf_hasname() is problematic, because
-it returns a NULL buffer when xfs_attr3_leaf_read fails, a valid buffer
-when xfs_attr3_leaf_lookup_int returns -ENOATTR or -EEXIST, and a
-non-NULL buffer pointer for an already released buffer when
-xfs_attr3_leaf_lookup_int fails with other error values.
+If the firmware were to report three LMACs (which doesn't
+exist in hardware) then using "fwrt->smem_cfg.lmac[2]" is
+an overrun of the array. Reject such and use IWL_FW_CHECK
+instead of WARN_ON in this function.
 
-Fix this by simply open coding xfs_attr_leaf_hasname in the callers, so
-that the buffer release code is done by each caller of
-xfs_attr3_leaf_read.
-
-Cc: stable@vger.kernel.org # v5.19+
-Fixes: 07120f1abdff ("xfs: Add xfs_has_attr and subroutines")
-Reported-by: Mark Tinguely <mark.tinguely@oracle.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110150012.16e8c2d70c26.Iadfcc1aedf43c5175b3f0757bea5aa232454f1ac@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_attr.c | 74 +++++++++++++---------------------------
- 1 file changed, 23 insertions(+), 51 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.h  | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/fw/smem.c | 8 ++++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_attr.c b/fs/xfs/libxfs/xfs_attr.c
-index 50172bb8026fd..024e9734c0b66 100644
---- a/fs/xfs/libxfs/xfs_attr.c
-+++ b/fs/xfs/libxfs/xfs_attr.c
-@@ -49,7 +49,6 @@ STATIC int xfs_attr_shortform_addname(xfs_da_args_t *args);
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.h b/drivers/net/wireless/intel/iwlwifi/fw/dbg.h
+index 4227fbd2b9771..27568a07ff06f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.h
+@@ -331,14 +331,14 @@ void iwl_send_dbg_dump_complete_cmd(struct iwl_fw_runtime *fwrt,
+ 				    u32 timepoint_data);
+ 
+ #define IWL_FW_CHECK_FAILED(_obj, _fmt, ...)				\
+-	IWL_ERR_LIMIT(_obj, _fmt, __VA_ARGS__)
++	IWL_ERR_LIMIT(_obj, _fmt, ##__VA_ARGS__)
+ 
+ #define IWL_FW_CHECK(_obj, _cond, _fmt, ...)				\
+ 	({								\
+ 		bool __cond = (_cond);					\
+ 									\
+ 		if (unlikely(__cond))					\
+-			IWL_FW_CHECK_FAILED(_obj, _fmt, __VA_ARGS__);	\
++			IWL_FW_CHECK_FAILED(_obj, _fmt, ##__VA_ARGS__);	\
+ 									\
+ 		unlikely(__cond);					\
+ 	})
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/smem.c b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+index 3f1272014dafb..e2fc2f5de4426 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/smem.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+@@ -6,6 +6,7 @@
   */
- STATIC int xfs_attr_leaf_get(xfs_da_args_t *args);
- STATIC int xfs_attr_leaf_removename(xfs_da_args_t *args);
--STATIC int xfs_attr_leaf_hasname(struct xfs_da_args *args, struct xfs_buf **bp);
+ #include "iwl-drv.h"
+ #include "runtime.h"
++#include "dbg.h"
+ #include "fw/api/commands.h"
  
- /*
-  * Internal routines when attribute list is more than one block.
-@@ -917,11 +916,11 @@ xfs_attr_lookup(
- 		return xfs_attr_sf_findname(args, NULL, NULL);
+ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+@@ -17,7 +18,9 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+ 	u8 api_ver = iwl_fw_lookup_notif_ver(fwrt->fw, SYSTEM_GROUP,
+ 					     SHARED_MEM_CFG_CMD, 0);
  
- 	if (xfs_attr_is_leaf(dp)) {
--		error = xfs_attr_leaf_hasname(args, &bp);
--
--		if (bp)
--			xfs_trans_brelse(args->trans, bp);
--
-+		error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+		if (error)
-+			return error;
-+		error = xfs_attr3_leaf_lookup_int(bp, args);
-+		xfs_trans_brelse(args->trans, bp);
- 		return error;
+-	if (WARN_ON(lmac_num > ARRAY_SIZE(mem_cfg->lmac_smem)))
++	/* Note: notification has 3 entries, but we only expect 2 */
++	if (IWL_FW_CHECK(fwrt, lmac_num > ARRAY_SIZE(fwrt->smem_cfg.lmac),
++			 "FW advertises %d LMACs\n", lmac_num))
+ 		return;
+ 
+ 	fwrt->smem_cfg.num_lmacs = lmac_num;
+@@ -26,7 +29,8 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+ 	fwrt->smem_cfg.rxfifo2_size = le32_to_cpu(mem_cfg->rxfifo2_size);
+ 
+ 	if (api_ver >= 4 &&
+-	    !WARN_ON_ONCE(iwl_rx_packet_payload_len(pkt) < sizeof(*mem_cfg))) {
++	    !IWL_FW_CHECK(fwrt, iwl_rx_packet_payload_len(pkt) < sizeof(*mem_cfg),
++			  "bad shared mem notification size\n")) {
+ 		fwrt->smem_cfg.rxfifo2_control_size =
+ 			le32_to_cpu(mem_cfg->rxfifo2_control_size);
  	}
- 
-@@ -1215,27 +1214,6 @@ xfs_attr_shortform_addname(
-  * External routines when attribute list is one block
-  *========================================================================*/
- 
--/*
-- * Return EEXIST if attr is found, or ENOATTR if not
-- */
--STATIC int
--xfs_attr_leaf_hasname(
--	struct xfs_da_args	*args,
--	struct xfs_buf		**bp)
--{
--	int                     error = 0;
--
--	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, bp);
--	if (error)
--		return error;
--
--	error = xfs_attr3_leaf_lookup_int(*bp, args);
--	if (error != -ENOATTR && error != -EEXIST)
--		xfs_trans_brelse(args->trans, *bp);
--
--	return error;
--}
--
- /*
-  * Remove a name from the leaf attribute list structure
-  *
-@@ -1246,25 +1224,22 @@ STATIC int
- xfs_attr_leaf_removename(
- 	struct xfs_da_args	*args)
- {
--	struct xfs_inode	*dp;
--	struct xfs_buf		*bp;
-+	struct xfs_inode	*dp = args->dp;
- 	int			error, forkoff;
-+	struct xfs_buf		*bp;
- 
- 	trace_xfs_attr_leaf_removename(args);
- 
--	/*
--	 * Remove the attribute.
--	 */
--	dp = args->dp;
--
--	error = xfs_attr_leaf_hasname(args, &bp);
--	if (error == -ENOATTR) {
-+	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+	if (error)
-+		return error;
-+	error = xfs_attr3_leaf_lookup_int(bp, args);
-+	if (error != -EEXIST) {
- 		xfs_trans_brelse(args->trans, bp);
--		if (args->op_flags & XFS_DA_OP_RECOVERY)
-+		if (error == -ENOATTR && (args->op_flags & XFS_DA_OP_RECOVERY))
- 			return 0;
- 		return error;
--	} else if (error != -EEXIST)
--		return error;
-+	}
- 
- 	xfs_attr3_leaf_remove(bp, args);
- 
-@@ -1288,23 +1263,20 @@ xfs_attr_leaf_removename(
-  * Returns 0 on successful retrieval, otherwise an error.
-  */
- STATIC int
--xfs_attr_leaf_get(xfs_da_args_t *args)
-+xfs_attr_leaf_get(
-+	struct xfs_da_args	*args)
- {
--	struct xfs_buf *bp;
--	int error;
-+	struct xfs_buf		*bp;
-+	int			error;
- 
- 	trace_xfs_attr_leaf_get(args);
- 
--	error = xfs_attr_leaf_hasname(args, &bp);
--
--	if (error == -ENOATTR)  {
--		xfs_trans_brelse(args->trans, bp);
--		return error;
--	} else if (error != -EEXIST)
-+	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+	if (error)
- 		return error;
--
--
--	error = xfs_attr3_leaf_getvalue(bp, args);
-+	error = xfs_attr3_leaf_lookup_int(bp, args);
-+	if (error == -EEXIST)
-+		error = xfs_attr3_leaf_getvalue(bp, args);
- 	xfs_trans_brelse(args->trans, bp);
- 	return error;
- }
 -- 
 2.53.0
 
