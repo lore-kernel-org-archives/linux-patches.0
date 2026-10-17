@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76B43BB9F1;
-	Sat, 17 Oct 2026 17:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB109460;
+	Sat, 17 Oct 2026 17:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258769; cv=none; b=Bo9AfA7ZCAYte/POGPHKwBk8pvN2XZ53ctomnnRyoBZNeoUFRpAmtA0lwPaK+tt9gQmZ3vN9z+tp7qdeEHTYRnvnDdxnWU9LreA9ABbAf1zFaLSilw+wuoSlhRIfU6bTr67FBM8oQItNm/lOsaWuLSqjUTF3X0lN6/UZr6/dAj8=
+	t=1792258772; cv=none; b=ZnbA/SO7DCs5zdc0YrnRu/CIaUYPDC1zSEnX638Rqr4ggRfiSODLxoLjdbCTXIaIbQZYrv19x8wXAD3zJoEfqErO/fzMw3Lc/TIKiqOxhLfa8BNMtTjmciCxz20W3pw/p4r/JYXp6DiVmr0qG4YbykLTxIL3ytryzrPvIcz3/oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258769; c=relaxed/simple;
-	bh=/AA5c5OHm8Y/ZL4RCrreT3XPwq0j56SpLfBY3Vrw1kE=;
+	s=arc-20240116; t=1792258772; c=relaxed/simple;
+	bh=jMwF+qfqv8ib1Hvy9SRgiR2Do6c368bwI9dD9MfgQbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6WV3e/dXQ/H8oeiBi8Yl+obuxywlEbZ+CcvlR7Sh6fPyHSVV0CYd36u/e8Y0t7M8kWLH6XQgUg6vpyxyHhf1RMq71lPnI+Ev0OWR87SM8dSBOwfezikRW2brtIlj16Ne42MrKMdbsGaga+3KA4sJWDntj9RbtrXtvF8Cb1dG74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arXcExSv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWNXTnlCIE+Dp/HPL6vLPtox7oERUzueIPjGjopl4O2m25BwOT/OAhDoGSGD3t4mQyyMyDeounuBwDSbCQgyBqry9htcfQw0LEpDF/PsMeiL+79NALLo6F+eF7UJuRqEQ3C9airXt0r2lyCTSsGKYTutzYkFjALkEhGViBC+IMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8PpMEJn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arXcExSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105051F000C4;
-	Sat, 17 Oct 2026 17:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8PpMEJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C3C1F000C4;
+	Sat, 17 Oct 2026 17:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258768;
-	bh=h/6xen5+gWQYx+oj8J/TfeZXSGKFn+lIsGgsDaQtiKI=;
+	s=korg; t=1792258771;
+	bh=8XkM6i/KBtj1H3iGConY+2FQPv6pmTlpHIbywqkLecs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arXcExSvzvaeqMIL1Cy+s/ZvEYRtSvFmlKgNJqrff4zx3pI49qy/m35vCeM7S/zOH
-	 o+XuMOm5wJCfc05Q6feE9STrQ3bzdyq/h5uMLRXYU/n2sVrM7YQtC7S/3BveKx3Xoy
-	 ZI5BRW1EM+02iWF083eNpFxlztJg9uvtfyYpkneI=
+	b=e8PpMEJnoysFRJGV+3PmB5eoRiJZEU0gcyGw/jgTnj0kC+0XJZvoq/gYMeFLfU0fX
+	 P2Xy6g5jC0x1bl9fy/LeoKkL24MWQJFPnb5Q53J5ZzfGrAENE3CkuhDvuavzucb1hb
+	 i8wGi5/Ijl7+tZmt2YucPehJE2TllU05sha8TyL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Pavithra Prakash <pavrampu@linux.vnet.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0993/1674] wifi: mt76: Fix memory leak after mt76_connac_mcu_alloc_sta_req()
-Date: Sat, 17 Oct 2026 17:54:25 +0200
-Message-ID: <20261017160456.607011944@linuxfoundation.org>
+Subject: [PATCH 6.6 0994/1674] powerpc/64s: Fix unmap race with PMD migration entries
+Date: Sat, 17 Oct 2026 17:54:26 +0200
+Message-ID: <20261017160456.631351208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,102 +53,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit c41075ce8cf05ed8c0e7b7efef000dce548ffc42 ]
+[ Upstream commit bbcbf045d6c778e82b47a35fc8728387708e9a3d ]
 
-mt76_connac_mcu_alloc_sta_req() allocates an skb which is expected to
-be freed eventually by mt76_mcu_skb_send_msg(). However, currently if
-an intermediate function fails before sending, the allocated skb is
-leaked.
+The following race is possible with migration swap entries or
+device-private THP entries. e.g. when move_pages is called on a PMD THP
+page, then there maybe an intermediate state, where PMD entry acts as
+a migration swap entry (pmd_present() is true). Then if an munmap
+happens at the same time, then this VM_BUG_ON() can happen in
+pmdp_huge_get_and_clear_full().
 
-Specifically, mt76_connac_mcu_sta_wed_update() and
-mt76_connac_mcu_sta_key_tlv() may fail, leading to an immediate memory
-leak in the error path.
+This patch fixes that.
 
-Fix this by explicitly freeing the skb in these error paths.
-Commit 7c0f63fe37a5 ("wifi: mt76: mt7996: fix memory leak on
-mt7996_mcu_sta_key_tlv error") made a similar change.
+Thread A: move_pages() syscall
+  add_folio_for_migration()
+    mmap_read_lock(mm)
+    folio_isolate_lru(folio)
+    mmap_read_unlock(mm)
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+  do_move_pages_to_node()
+    migrate_pages()
+      try_to_migrate_one()
+        spin_lock(ptl)
+        set_pmd_migration_entry()
+          pmdp_invalidate()     # PMD: _PAGE_INVALID | _PAGE_PTE | pfn
+          set_pmd_at()          # PMD: migration swap entry (pmd_present=0)
+        spin_unlock(ptl)
+        [page copy phase]       # <--- RACE WINDOW -->
 
-Fixes: d1369e515efe ("wifi: mt76: connac: introduce mt76_connac_mcu_sta_wed_update utility routine")
-Fixes: 6683d988089c ("mt76: connac: move mt76_connac_mcu_add_key in connac module")
-Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260116144919.1482558-1-zilin@seu.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Thread B: munmap()
+  mmap_write_downgrade(mm)
+  unmap_vmas() -> zap_pmd_range()
+    zap_huge_pmd()
+      __pmd_trans_huge_lock()
+        pmd_is_huge():          # !pmd_present && !pmd_none -> TRUE (swap entry)
+        pmd_lock() -> 		# spin_lock(ptl), waits for Thread A to release ptl
+      pmdp_huge_get_and_clear_full()
+        VM_BUG_ON(!pmd_present(*pmdp))  # HITS!
+
+[  287.738700][ T1867] ------------[ cut here ]------------
+[  287.743843][ T1867] kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:187!
+cpu 0x0: Vector: 700 (Program Check) at [c00000044037f4f0]
+    pc: c000000000094ca4: pmdp_huge_get_and_clear_full+0x6c/0x23c
+    lr: c000000000645dec: zap_huge_pmd+0xb0/0x868
+    sp: c00000044037f790
+   msr: 800000000282b033
+  current = 0xc0000004032c1a00
+  paca    = 0xc000000004fe0000   irqmask: 0x03   irq_happened: 0x09
+    pid   = 1867, comm = a.out
+kernel BUG at :187!
+Linux version 6.19.0-12136-g14360d4f917c-dirty (powerpc64le-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #27 SMP PREEMPT Sun Feb 22 10:38:56 IST 2026
+enter ? for help
+[link register   ] c000000000645dec zap_huge_pmd+0xb0/0x868
+[c00000044037f790] c00000044037f7d0 (unreliable)
+[c00000044037f7d0] c000000000645dcc zap_huge_pmd+0x90/0x868
+[c00000044037f840] c0000000005724cc unmap_page_range+0x176c/0x1f40
+[c00000044037fa00] c000000000572ea0 unmap_vmas+0xb0/0x1d8
+[c00000044037fa90] c0000000005af254 unmap_region+0xb4/0x128
+[c00000044037fb50] c0000000005af400 vms_complete_munmap_vmas+0x138/0x310
+[c00000044037fbe0] c0000000005b0f1c do_vmi_align_munmap+0x1ec/0x238
+[c00000044037fd30] c0000000005b3688 __vm_munmap+0x170/0x1f8
+[c00000044037fdf0] c000000000587f74 sys_munmap+0x2c/0x40
+[c00000044037fe10] c000000000032668 system_call_exception+0x128/0x350
+[c00000044037fe50] c00000000000d05c system_call_vectored_common+0x15c/0x2ec
+---- Exception: 3000 (System Call Vectored) at 0000000010064a2c
+SP (7fff9b1ee9c0) is in userspace
+0:mon> zh
+
+commit a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages"),
+enabled migration for device-private PMD entries. Hence this is one
+other path where this warning could get trigger from.
+
+ ------------[ cut here ]------------
+ WARNING: arch/powerpc/mm/book3s64/hash_pgtable.c:199 at hash__pmd_hugepage_update+0x48/0x284, CPU#3: hmm-tests/1905
+ Modules linked in: test_hmm
+ CPU: 3 UID: 0 PID: 1905 Comm: hmm-tests Tainted: G    B   W    L   N  7.0.0-rc1-01438-g7e2f0ee7581c #21 PREEMPT
+ Tainted: [B]=BAD_PAGE, [W]=WARN, [L]=SOFTLOCKUP, [N]=TEST
+ Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries
+ NIP [c000000000096b70] hash__pmd_hugepage_update+0x48/0x284
+ LR [c000000000096e7c] hash__pmdp_huge_get_and_clear+0xd0/0xd4
+ Call Trace:
+ [c000000604707670] [c000000004e102b8] 0xc000000004e102b8 (unreliable)
+ [c000000604707700] [c00000000064ec3c] set_pmd_migration_entry+0x414/0x498
+ [c000000604707760] [c00000000063e5a4] migrate_vma_collect_pmd+0x12e8/0x16c4
+ [c000000604707890] [c00000000059282c] walk_pgd_range+0x7fc/0xd2c
+ [c000000604707990] [c000000000592e40] __walk_page_range+0xe4/0x2ac
+ [c000000604707a10] [c000000000593534] walk_page_range_mm_unsafe+0x204/0x2a4
+ [c000000604707ab0] [c00000000063af10] migrate_vma_setup+0x1dc/0x2e8
+ [c000000604707b10] [c008000006a21838] dmirror_migrate_to_system.constprop.0+0x210/0x4b0 [test_hmm]
+ [c000000604707c30] [c008000006a245b0] dmirror_fops_unlocked_ioctl+0x454/0xa5c [test_hmm]
+ [c000000604707d20] [c0000000006aab84] sys_ioctl+0x4ec/0x1178
+ [c000000604707e10] [c0000000000326a8] system_call_exception+0x128/0x350
+ [c000000604707e50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
+ ---- interrupt: 3000 at 0x7fffbe44f50c
+
+Fixes: 75358ea359e7c ("powerpc/mm/book3s64: Fix MADV_DONTNEED and parallel page fault race")
+Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
+Reported-by: Pavithra Prakash <pavrampu@linux.vnet.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/9437e5ef28d1e2f5cbdd7f8286350ce93c1d43c5.1773078178.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt76_connac_mcu.c | 16 ++++++++++++----
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c  |  4 +++-
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ arch/powerpc/include/asm/book3s/64/pgtable.h | 16 ++++++++++++++++
+ arch/powerpc/mm/book3s64/pgtable.c           | 13 +++++++++----
+ 2 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index ef1e68154bb61..c459b18ddc140 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1261,8 +1261,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
- 				    wtbl_hdr);
- 
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
+diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
+index 8a6e6b6daa906..224205eeeff1d 100644
+--- a/arch/powerpc/include/asm/book3s/64/pgtable.h
++++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
+@@ -1328,6 +1328,22 @@ extern int pudp_test_and_clear_young(struct vm_area_struct *vma,
+ static inline pmd_t pmdp_huge_get_and_clear(struct mm_struct *mm,
+ 					    unsigned long addr, pmd_t *pmdp)
+ {
++	pmd_t old_pmd;
++
++	/*
++	 * Non-present PMDs can be migration entries or device-private THP
++	 * entries. This can happen at 2 places:
++	 * - When the address space is being unmapped zap_huge_pmd(), and we
++	 *   encounter non-present pmds.
++	 * - migrate_vma_collect_huge_pmd() could calls this during migration
++	 *   of device-private pmd entries.
++	 */
++	if (!pmd_present(*pmdp)) {
++		old_pmd = READ_ONCE(*pmdp);
++		pmd_clear(pmdp);
++		return old_pmd;
 +	}
- 
- 	ret = mt76_mcu_skb_send_msg(dev, skb, cmd, true);
- 	if (ret)
-@@ -1275,8 +1277,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
- 	mt76_connac_mcu_sta_ba_tlv(skb, params, enable, tx);
- 
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(dev, skb, cmd, true);
++
+ 	if (radix_enabled())
+ 		return radix__pmdp_huge_get_and_clear(mm, addr, pmdp);
+ 	return hash__pmdp_huge_get_and_clear(mm, addr, pmdp);
+diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
+index 5b4cbb25d9cf7..bddb96dad73d6 100644
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -180,16 +180,21 @@ pmd_t pmdp_huge_get_and_clear_full(struct vm_area_struct *vma,
+ 				   unsigned long addr, pmd_t *pmdp, int full)
+ {
+ 	pmd_t pmd;
++	bool was_present = pmd_present(*pmdp);
++
+ 	VM_BUG_ON(addr & ~HPAGE_PMD_MASK);
+-	VM_BUG_ON((pmd_present(*pmdp) && !pmd_trans_huge(*pmdp) &&
+-		   !pmd_devmap(*pmdp)) || !pmd_present(*pmdp));
++	VM_BUG_ON(was_present && !pmd_trans_huge(*pmdp) && !pmd_devmap(*pmdp));
++	/*
++	 * Check pmdp_huge_get_and_clear() for non-present pmd case.
++	 */
+ 	pmd = pmdp_huge_get_and_clear(vma->vm_mm, addr, pmdp);
+ 	/*
+ 	 * if it not a fullmm flush, then we can possibly end up converting
+ 	 * this PMD pte entry to a regular level 0 PTE by a parallel page fault.
+-	 * Make sure we flush the tlb in this case.
++	 * Make sure we flush the tlb in this case. TLB flush not needed for
++	 * non-present case.
+ 	 */
+-	if (!full)
++	if (was_present && !full)
+ 		flush_pmd_tlb_range(vma, addr, addr + HPAGE_PMD_SIZE);
+ 	return pmd;
  }
-@@ -2775,12 +2779,16 @@ int mt76_connac_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 		return PTR_ERR(skb);
- 
- 	ret = mt76_connac_mcu_sta_key_tlv(sta_key_conf, skb, key, cmd);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 6c0ae5715ca6c..e74ff483f2e18 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -1717,8 +1717,10 @@ int mt7915_mcu_add_sta(struct mt7915_dev *dev, struct ieee80211_vif *vif,
- 	}
- out:
- 	ret = mt76_connac_mcu_sta_wed_update(&dev->mt76, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
- 				     MCU_EXT_CMD(STA_REC_UPDATE), true);
 -- 
 2.53.0
 
