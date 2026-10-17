@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710EC3A9879;
-	Sat, 17 Oct 2026 17:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D77394785;
+	Sat, 17 Oct 2026 17:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256453; cv=none; b=Llb6Bz/bJci9fYTWLI7C164Z9Olii7xEA06Y/blgqy+VUVL98GksKA9HjHUdLghKdXmwo9GBUU40S+wV7jzZGdRx07wV53ADe+VFP33g80Bo9J54eLIFKzyuHZbW7BDlXn1H4I3GDVEDffc/pZ+hla6l5ywgMY3VPf9fgEgW338=
+	t=1792256456; cv=none; b=FUuwa5uaBb6RmsfCJitaKIwCiF6/50JLcq84JbNT6RnlNz3GCYq/9pbH8c2bndIgl01Fb7rmkrGc4yI4fZ7fRTXz0ITqTrZS4h4oJQlCvmBDS2+ZFu2PzIfCBS4VJ/5e7N7lRkaZCEDpjfscYnL5PGjHrRdDwIELsLGIGZWtlPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256453; c=relaxed/simple;
-	bh=a5yLBvDP3WOe8he7v7au4nTfPazSkbLHS2MMfdmltOY=;
+	s=arc-20240116; t=1792256456; c=relaxed/simple;
+	bh=msuTYIodkpRYfltpOsiiJMSsWLelM14AIucYhmALI50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li3xbXQIwitvpN+CJ7hlHRJcqIqToGn+AFL8uZ/DmVDwmaVsWnvBWyNHkjgK51tPgKIBDgY2ilr4M/TjZGuj3IGd2uZ4mm6xEvJ8kYtfA2HyTApi/tnVBOOOJ89SyqX0zy482gh9FqRmgeU+DHyyuhA/cDOIMi738X0xUMB3IZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAE9xyJF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3HN8HrT0YgZ4xTWxFom2MoNmD2GTNRBXZix5w/dPv5RCaub/XunVXZO+qJ9sDj+w03HzewSjq/SGOo2C7VkLbnT0HcvoJUFKCVkGeEJ6VziJjzHNFXQsy05NrvK9wL7OW4DKlZusihRtlNrXdiNYfxzdBdhGCIHXFfNq0thi98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv9eGle8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAE9xyJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CB01F000C4;
-	Sat, 17 Oct 2026 17:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv9eGle8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B291F000C4;
+	Sat, 17 Oct 2026 17:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256452;
-	bh=A1FpaIwDv078fgIygbmiKJSi/3bHgik2eM9MVZlhlZY=;
+	s=korg; t=1792256455;
+	bh=X4RoIFcnLPq/pIqGnF4hQnWgey6CPxyYhlIg8HDiY9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cAE9xyJFyA3MIyWmUTMGhnsHIfxbd4UTuEKiHCsBZ+mgHOD75nUuKz+v3f1nH2xAU
-	 F3GeUnnpzwEuD+vYcgDO+2cboSfQpgSz4gNq8wKVplFJ3lip9LYotsgFOnt5xbM0Ej
-	 QVPwcFck8pJ7QXL7Amoi/Ob+XKKD+dU+gbvFiRRQ=
+	b=qv9eGle8+7sJDFTuTrViSMIL8mbO7qhqSIaK9zaSKvZMMNOn6qF82n9xW2qHZbZOM
+	 fw72OpGYrHqkVHFCLFjqUqq/DfzgpEpFnDdPDLRuTjSuVpsNSiHk0srAwnlMN//926
+	 /KyyJOFTMFie3Xm1zSnYkRZO2aeFcGsaBtY1Y658=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haojie Li <lihaojie@kylinos.cn>,
-	CK Hu <ck.hu@mediatek.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.6 0240/1674] drm/mediatek: Add missing IS_ERR check for ovl_adaptor platform device
-Date: Sat, 17 Oct 2026 17:41:52 +0200
-Message-ID: <20261017160437.293207668@linuxfoundation.org>
+Subject: [PATCH 6.6 0241/1674] drm/mediatek: Fix ovl adaptor platform device leak
+Date: Sat, 17 Oct 2026 17:41:53 +0200
+Message-ID: <20261017160437.318211091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,39 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haojie Li <lihaojie@kylinos.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit bce7698e2e6565bb765bd0522337f29f5f312624 upstream.
+commit 048739be3e9cacae5301b68245668002fe6f0ce5 upstream.
 
-platform_device_register_data() can fail and return an ERR_PTR, but the
-return value is used without checking, leading to an invalid pointer
-being stored in ddp_comp[].dev and passed to component_match_add() and
-mtk_ddp_comp_init(), which could result in a kernel crash.
+mtk_drm_probe() creates an OVL adaptor platform device with
+platform_device_register_data() when the display pipeline requires the
+OVL adaptor.
 
-Add an IS_ERR() check to jump to the error handling path on failure.
+If a later initialization step fails, the probe error path releases
+the DRM resources without unregistering the already registered OVL
+adaptor device. The normal remove path likewise leaves the device
+registered after the DRM driver is unbound.
+
+Keep track of whether the OVL adaptor was successfully registered and
+unregister it on probe failure. Also recover the platform device from
+the stored DDP component device and unregister it during normal
+removal.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
 Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260825100845.438893-1-lihaojie@kylinos.cn/
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260921131156.403652-1-lgs201920130244@gmail.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
 +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -840,6 +840,9 @@ static int mtk_drm_probe(struct platform
- 							    PLATFORM_DEVID_AUTO,
- 							    (void *)private->mmsys_dev,
- 							    sizeof(*private->mmsys_dev));
-+		if (IS_ERR(ovl_adaptor))
-+			return PTR_ERR(ovl_adaptor);
+@@ -808,7 +808,7 @@ static int mtk_drm_probe(struct platform
+ 	struct mtk_drm_private *private;
+ 	struct device_node *node;
+ 	struct component_match *match = NULL;
+-	struct platform_device *ovl_adaptor;
++	struct platform_device *ovl_adaptor = NULL;
+ 	int ret;
+ 	int i;
+ 
+@@ -939,6 +939,8 @@ static int mtk_drm_probe(struct platform
+ err_pm:
+ 	pm_runtime_disable(dev);
+ err_node:
++	if (ovl_adaptor)
++		platform_device_unregister(ovl_adaptor);
+ 	of_node_put(private->mutex_node);
+ 	for (i = 0; i < DDP_COMPONENT_DRM_ID_MAX; i++)
+ 		of_node_put(private->comp_node[i]);
+@@ -948,9 +950,15 @@ err_node:
+ static void mtk_drm_remove(struct platform_device *pdev)
+ {
+ 	struct mtk_drm_private *private = platform_get_drvdata(pdev);
++	struct device *ovl_adaptor_dev;
+ 	int i;
+ 
++	ovl_adaptor_dev =
++		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev;
 +
- 		private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR].dev = &ovl_adaptor->dev;
- 		mtk_ddp_comp_init(dev, NULL, &private->ddp_comp[DDP_COMPONENT_DRM_OVL_ADAPTOR],
- 				  DDP_COMPONENT_DRM_OVL_ADAPTOR);
+ 	component_master_del(&pdev->dev, &mtk_drm_ops);
++	if (ovl_adaptor_dev)
++		platform_device_unregister(to_platform_device(ovl_adaptor_dev));
+ 	pm_runtime_disable(&pdev->dev);
+ 	of_node_put(private->mutex_node);
+ 	for (i = 0; i < DDP_COMPONENT_DRM_ID_MAX; i++)
 
 
