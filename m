@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9CF3921FB;
-	Sat, 17 Oct 2026 17:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A513921FB;
+	Sat, 17 Oct 2026 17:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258726; cv=none; b=ORVkzv/z8HSS2PurnRUkdNc7me4N/xWFWn8xekWC8+n3qPmjlGOieawodOxNSPoYBS36hYhqRKiF1T3netN1j12qCRwQKzjWNildrzbkzEQ7SOQ3+ZvnyP1pGh0jRYoP2k+WLMcDdpvGRVQ10FbZH+PCAkVNk+hR2MKsJdPD88I=
+	t=1792258730; cv=none; b=aPJsgAyk4RxH22Hk+ObU+lPEmjZQrXYmi+owPWFzaifYw6veVeBv3M4Y3I4ULMuzqimHKOgJJnmYZhj3k4Q7i0nxPh/B8ouMuzgn3Lc3fzqZn7Auwjsv08Q+vwDHwq2DD0XEknFAsKLSNQID4fMEMJcOKS0l7tSdFtlbRy9oKoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258726; c=relaxed/simple;
-	bh=eGXqfIg7A5BuJUvmaSbti8bQNhMuUP7PnVDa/JFdeQE=;
+	s=arc-20240116; t=1792258730; c=relaxed/simple;
+	bh=W93VKC0fi+UBoLVG4CBtF96UghM2VEOyF3+gWsbDn2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+CtGKYaARQRCv9a7i3iiuvcSgRtRgurz/2I68w6AbbGDE1CQP4d0j/bJQpvjQYYl8vpUWWoYXjb1qeFFiZ3XY28CVcuzq02IRrgTGmA49KvL9C3nJy9OK+RAJ681gbNzWO/9cJ4b5hnea+nWZTSSql3tAzpDRvht4akpbCjSmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+G0qE/x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FrYu12NE+gMLaJ6aMhhR6GfdhVc18NdWLEfrJzXr7O+0FnAye8DGbrU95gPVldNG6URMAWz0KIUxqKKg5FGxGCUbnMNjfAzY5uHUu4idhZ2Rjvt2swcwcGqzwZszggatkXeImkPrLnv2GbIqxhvCf/z1chss9UpixZJj/hF/Q64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av1M5WXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+G0qE/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD06B1F000C4;
-	Sat, 17 Oct 2026 17:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av1M5WXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC711F000C4;
+	Sat, 17 Oct 2026 17:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258725;
-	bh=9YXO+cW6XorfpYOEoLIpBowKjHmysrdMUaKnlQ+TJIc=;
+	s=korg; t=1792258729;
+	bh=k7s/SlYYzN/iHv/R7W5wU28pSvYB5f9bLzG9eo8a2Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+G0qE/xbktESMkJMB8R/G4539EYmNbsZToI38Xn8E76x6hB6d3i6vPL/c3XBp680
-	 AJ1BzGw3+/BO1RlhkyLvr/m2SxDyA/NkjAFpIMuzLfzfygnpAUTTYW6OV8ZZbC9HDP
-	 LjdLa/QYk//y+dapSLlKECRCNZJheKiTgI+55vfU=
+	b=av1M5WXJ9Si8WKg/KM/KUuFQGrKLTN8x55G17VLcDGpzxdwO2yTdg0qf27OnpODCu
+	 PSkJHSsFnc6Q6VwwVIK3gslualjKIkgB+P6gHw1967duxcC1cUR8151nWwjmeBv4Hx
+	 omZd9TD/WI81w2TdE6SoLkdy+ECt8uzTcnqUoxrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0972/1674] device property: Add fwnode_property_match_property_string()
-Date: Sat, 17 Oct 2026 17:54:04 +0200
-Message-ID: <20261017160456.074550848@linuxfoundation.org>
+Subject: [PATCH 6.6 0981/1674] libceph: Fix potential out-of-bounds access in __ceph_x_decrypt()
+Date: Sat, 17 Oct 2026 17:54:13 +0200
+Message-ID: <20261017160456.306189844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,93 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-[ Upstream commit fac4a535758851215d23d7d92879aeee5035f51d ]
+[ Upstream commit 821365487aa58d06bda65c676ba215d506ba9768 ]
 
-Sometimes the users want to match the single value string property
-against an array of predefined strings. Create a helper for them.
+In __ceph_x_decrypt(), a part of the buffer p is interpreted as a
+ceph_x_encrypt_header, and the magic field of this struct is accessed.
+This happens without any guarantee that the buffer is large enough to
+hold this struct. The function parameter ciphertext_len represents the
+length of the ciphertext to decrypt and is guaranteed to be at most the
+remaining size of the allocated buffer p. However, this value is not
+necessarily greater than sizeof(ceph_x_encrypt_header). E.g., a message
+frame of type FRAME_TAG_AUTH_REPLY_MORE, that is just as long to hold
+the ciphertext at its end with a ciphertext_len of 8 or less, can
+trigger an out-of-bounds memory access when accessing hdr->magic.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://lore.kernel.org/r/20230808162800.61651-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: aac0a51b1670 ("iio: frequency: admv1013: fix NULL pointer dereference on str")
+This patch fixes the issue by adding a check to ensure that the
+decrypted plaintext in the buffer is large enough to represent at least
+the ceph_x_encrypt_header.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c  | 35 +++++++++++++++++++++++++++++++++++
- include/linux/property.h | 12 ++++++++++++
- 2 files changed, 47 insertions(+)
+ net/ceph/auth_x.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index b6a70830555ea..a87cbb858d352 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -498,6 +498,41 @@ int fwnode_property_match_string(const struct fwnode_handle *fwnode,
- }
- EXPORT_SYMBOL_GPL(fwnode_property_match_string);
+diff --git a/net/ceph/auth_x.c b/net/ceph/auth_x.c
+index c83559f015e46..f805a813308fd 100644
+--- a/net/ceph/auth_x.c
++++ b/net/ceph/auth_x.c
+@@ -86,6 +86,11 @@ static int __ceph_x_decrypt(struct ceph_crypto_key *secret, void *p,
+ 	if (ret)
+ 		return ret;
  
-+/**
-+ * fwnode_property_match_property_string - find a property string value in an array and return index
-+ * @fwnode: Firmware node to get the property of
-+ * @propname: Name of the property holding the string value
-+ * @array: String array to search in
-+ * @n: Size of the @array
-+ *
-+ * Find a property string value in a given @array and if it is found return
-+ * the index back.
-+ *
-+ * Return: index, starting from %0, if the string value was found in the @array (success),
-+ *	   %-ENOENT when the string value was not found in the @array,
-+ *	   %-EINVAL if given arguments are not valid,
-+ *	   %-ENODATA if the property does not have a value,
-+ *	   %-EPROTO or %-EILSEQ if the property is not a string,
-+ *	   %-ENXIO if no suitable firmware interface is present.
-+ */
-+int fwnode_property_match_property_string(const struct fwnode_handle *fwnode,
-+	const char *propname, const char * const *array, size_t n)
-+{
-+	const char *string;
-+	int ret;
++	if (plaintext_len < sizeof(*hdr)) {
++		pr_err("%s plaintext too small %d\n", __func__, plaintext_len);
++		return -EINVAL;
++	}
 +
-+	ret = fwnode_property_read_string(fwnode, propname, &string);
-+	if (ret)
-+		return ret;
-+
-+	ret = match_string(array, n, string);
-+	if (ret < 0)
-+		ret = -ENOENT;
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(fwnode_property_match_property_string);
-+
- /**
-  * fwnode_property_get_reference_args() - Find a reference with arguments
-  * @fwnode:	Firmware node where to look for the reference
-diff --git a/include/linux/property.h b/include/linux/property.h
-index d32b8052e0863..e91b4d759758e 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -124,6 +124,18 @@ static inline bool device_is_compatible(const struct device *dev, const char *co
- 	return fwnode_device_is_compatible(dev_fwnode(dev), compat);
- }
- 
-+int fwnode_property_match_property_string(const struct fwnode_handle *fwnode,
-+					  const char *propname,
-+					  const char * const *array, size_t n);
-+
-+static inline
-+int device_property_match_property_string(const struct device *dev,
-+					  const char *propname,
-+					  const char * const *array, size_t n)
-+{
-+	return fwnode_property_match_property_string(dev_fwnode(dev), propname, array, n);
-+}
-+
- int fwnode_property_get_reference_args(const struct fwnode_handle *fwnode,
- 				       const char *prop, const char *nargs_prop,
- 				       unsigned int nargs, unsigned int index,
+ 	if (le64_to_cpu(hdr->magic) != CEPHX_ENC_MAGIC) {
+ 		pr_err("%s bad magic\n", __func__);
+ 		return -EINVAL;
 -- 
 2.53.0
 
