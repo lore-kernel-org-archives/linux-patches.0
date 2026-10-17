@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F033A257E;
-	Sat, 17 Oct 2026 16:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2593A59A3;
+	Sat, 17 Oct 2026 16:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253266; cv=none; b=qPZpILnHoGcr4W+ebG9YBE5qhe+mWgUhqb201eDHcuePeK+3dCbJcc/2nDuw6/+SmgWc8HLVO4fXnfluzqDjd3o0J+KoAll7i44ddCI2UhI8w3v8ylVnlhxjlWyTdSFpDUdpvJ2GT+E2veKd9IQFmdGBGgDAGxDA79T9fPTRkhQ=
+	t=1792253267; cv=none; b=rKde/ve8Yk5ENQm6E8dJR9dnNJZW0zGA7fnZF+HZROBtrIppje6rZdwDEilKwsx4o7Cqyc0p5Dbp5ntKvDup3OkVisCqG7JGkfOd/BM2iMfAtW9TOBHTVG7D0Zgk47R+t9Ys6bleaGbnyFB8WdkWFr2xpntrxJeRFFH9rWzU4uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253266; c=relaxed/simple;
-	bh=K+jpY/lSvReWDThAJ9YilvJjwFNVIpSDz0UxEa3Z3CI=;
+	s=arc-20240116; t=1792253267; c=relaxed/simple;
+	bh=9IYapL14f7wYiqBBBHUdzlECjX8Zu4lXFY6pTfzowMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1EUYH+IDZPDOkrOVctOj799PEaIAf95k+QZtvIM5mwS5oYsS63l56MMOU/tkhg4BgP7ii2Yr3C4QDVEYutztbH4oV/w5j8ysQk5q5rT2g2MEZVu6rc4VID7lV4DmWiodfmlLrvdSxjs+ZMD5aJoMHXi/htxureZvUwFX3Zc2WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUrHn5vK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fk2yAOT3wfXNxt9r5tN0HXO7BgxGgtupGXll2QsK9Dgd6STVBt0Uscb78RZ+qBA/40bjgqfTbOHbqAd61hwgepKRi50AkoPJie5nVaq+PrqCq6LsA46TK8XWQ9cYKlU/UiA1bZbmbazhT3y651wx248Blt7WpjYBE2Pp28+96G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4vVLDRw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUrHn5vK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3AD1F000C5;
-	Sat, 17 Oct 2026 16:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4vVLDRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8179C1F000C4;
+	Sat, 17 Oct 2026 16:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253262;
-	bh=ZTjQCGjU+Xmu8z95n4RqFINAQBQdb4whYlCeqVmLJnM=;
+	s=korg; t=1792253265;
+	bh=E67BCQSGwzG/zLSzuncD239k6/cEn/wMcXj/B7+7MXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wUrHn5vKWBF4UfOTl9HPElWxfqACY3CXVs0H5U6P6WV6nYYA6x1wwjRHhifA4log7
-	 9x77fLQzLg57/dYFSq1nRmfsKjocMDma9/l5MyoKuzfFrbA8+KzKNk3hyqG73jnDyl
-	 RoitDqgdJnWWc0D93F8nZCZZJx6CKfSkfVaQIXxo=
+	b=U4vVLDRwOPQuHoCTu3gu+vZFzCs9kFr4YrihICi0XIN0P1qYW6weZDJ70qFCwlYBC
+	 p+8/ot36LF2xfnzjxltzDpcUPIug+AFNqF1dMAvVl/Xz9uyKhnj/ma7w4dJ5kGseht
+	 /cI26QFGGF/sicj5ygmoz6e2uUUYhm6jY6Z2cvY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/869] ax25: Remove broken autobind
-Date: Sat, 17 Oct 2026 17:48:20 +0200
-Message-ID: <20261017160038.534154207@linuxfoundation.org>
+Subject: [PATCH 6.12 060/869] f2fs: quota: fix to avoid warning in dquot_writeback_dquots()
+Date: Sat, 17 Oct 2026 17:48:21 +0200
+Message-ID: <20261017160038.561188391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,231 +51,333 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
+[ Upstream commit eb85c2410d6f581e957cd03a644ff6ddbe592af9 ]
 
-Binding AX25 socket by using the autobind feature leads to memory leaks
-in ax25_connect() and also refcount leaks in ax25_release(). Memory
-leak was detected with kmemleak:
+F2FS-fs (dm-59): checkpoint=enable has some unwritten data.
 
-================================================================
-unreferenced object 0xffff8880253cd680 (size 96):
-backtrace:
-__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
-kmemdup_noprof (mm/util.c:136)
-ax25_rt_autobind (net/ax25/ax25_route.c:428)
-ax25_connect (net/ax25/af_ax25.c:1282)
-__sys_connect_file (net/socket.c:2045)
-__sys_connect (net/socket.c:2064)
-__x64_sys_connect (net/socket.c:2067)
-do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-================================================================
-
-When socket is bound, refcounts must be incremented the way it is done
-in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
-autobind, the refcounts are not incremented.
-
-This bug leads to the following issue reported by Syzkaller:
-
-================================================================
-ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
 ------------[ cut here ]------------
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-Modules linked in:
-CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-...
-Call Trace:
- <TASK>
- __refcount_dec include/linux/refcount.h:336 [inline]
- refcount_dec include/linux/refcount.h:351 [inline]
- ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
- netdev_tracker_free include/linux/netdevice.h:4302 [inline]
- netdev_put include/linux/netdevice.h:4319 [inline]
- ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
- __sock_release net/socket.c:647 [inline]
- sock_close+0xbc/0x240 net/socket.c:1398
- __fput+0x3e9/0x9f0 fs/file_table.c:464
- __do_sys_close fs/open.c:1580 [inline]
- __se_sys_close fs/open.c:1565 [inline]
- __x64_sys_close+0x7f/0x110 fs/open.c:1565
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- ...
- </TASK>
-================================================================
+WARNING: CPU: 6 PID: 8013 at fs/quota/dquot.c:691 dquot_writeback_dquots+0x2fc/0x308
+pc : dquot_writeback_dquots+0x2fc/0x308
+lr : f2fs_quota_sync+0xcc/0x1c4
+Call trace:
+dquot_writeback_dquots+0x2fc/0x308
+f2fs_quota_sync+0xcc/0x1c4
+f2fs_write_checkpoint+0x3d4/0x9b0
+f2fs_issue_checkpoint+0x1bc/0x2c0
+f2fs_sync_fs+0x54/0x150
+f2fs_do_sync_file+0x2f8/0x814
+__f2fs_ioctl+0x1960/0x3244
+f2fs_ioctl+0x54/0xe0
+__arm64_sys_ioctl+0xa8/0xe4
+invoke_syscall+0x58/0x114
 
-Considering the issues above and the comments left in the code that say:
-"check if we can remove this feature. It is broken."; "autobinding in this
-may or may not work"; - it is better to completely remove this feature than
-to fix it because it is broken and leads to various kinds of memory bugs.
+checkpoint and f2fs_remount may race as below, resulting triggering warning
+in dquot_writeback_dquots().
 
-Now calling connect() without first binding socket will result in an
-error (-EINVAL). Userspace software that relies on the autobind feature
-might get broken. However, this feature does not seem widely used with
-this specific driver as it was not reliable at any point of time, and it
-is already broken anyway. E.g. ax25-tools and ax25-apps packages for
-popular distributions do not use the autobind feature for AF_AX25.
+atomic write                                    remount
+                                                - do_remount
+                                                 - down_write(&sb->s_umount);
+                                                  - f2fs_remount
+- ioctl
+ - f2fs_do_sync_file
+  - f2fs_sync_fs
+   - f2fs_write_checkpoint
+    - block_operations
+     - locked = down_read_trylock(&sbi->sb->s_umount)
+       : fail to lock due to the write lock was held by remount
+                                                 - up_write(&sb->s_umount);
+     - f2fs_quota_sync
+      - dquot_writeback_dquots
+       - WARN_ON_ONCE(!rwsem_is_locked(&sb->s_umount))
+       : trigger warning because s_umount lock was unlocked by remount
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+If checkpoint comes from mount/umount/remount/freeze/quotactl, caller of
+checkpoint has already held s_umount lock, calling dquot_writeback_dquots()
+in the context should be safe.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+So let's record task to sbi->umount_lock_holder, so that checkpoint can
+know whether the lock has held in the context or not by checking current
+w/ it.
+
+In addition, in order to not misrepresent caller of checkpoint, we should
+not allow to trigger async checkpoint for those callers: mount/umount/remount/
+freeze/quotactl.
+
+Fixes: af033b2aa8a8 ("f2fs: guarantee journalled quota data by checkpoint")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ax25.h    |  1 -
- net/ax25/af_ax25.c    | 30 ++++++------------
- net/ax25/ax25_route.c | 74 -------------------------------------------
- 3 files changed, 10 insertions(+), 95 deletions(-)
+ fs/f2fs/checkpoint.c | 15 ++++++----
+ fs/f2fs/f2fs.h       |  3 +-
+ fs/f2fs/super.c      | 65 ++++++++++++++++++++++++++++++++++----------
+ 3 files changed, 61 insertions(+), 22 deletions(-)
 
-diff --git a/include/net/ax25.h b/include/net/ax25.h
-index 4ee141aae0a29..a7bba42dde153 100644
---- a/include/net/ax25.h
-+++ b/include/net/ax25.h
-@@ -418,7 +418,6 @@ void ax25_rt_device_down(struct net_device *);
- int ax25_rt_ioctl(unsigned int, void __user *);
- extern const struct seq_operations ax25_rt_seqops;
- ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
--int ax25_rt_autobind(ax25_cb *, ax25_address *);
- struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
- 				   ax25_address *, ax25_digi *);
- void ax25_rt_free(void);
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 9f3b8b682adb2..3ee7dba343100 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 6322bf2e16228..dc9540400caae 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -1249,7 +1249,7 @@ static int block_operations(struct f2fs_sb_info *sbi)
+ retry_flush_quotas:
+ 	f2fs_lock_all(sbi);
+ 	if (__need_flush_quota(sbi)) {
+-		int locked;
++		bool need_lock = sbi->umount_lock_holder != current;
+ 
+ 		if (++cnt > DEFAULT_RETRY_QUOTA_FLUSH_COUNT) {
+ 			set_sbi_flag(sbi, SBI_QUOTA_SKIP_FLUSH);
+@@ -1258,11 +1258,13 @@ static int block_operations(struct f2fs_sb_info *sbi)
  		}
+ 		f2fs_unlock_all(sbi);
+ 
+-		/* only failed during mount/umount/freeze/quotactl */
+-		locked = down_read_trylock(&sbi->sb->s_umount);
+-		f2fs_quota_sync(sbi->sb, -1);
+-		if (locked)
++		/* don't grab s_umount lock during mount/umount/remount/freeze/quotactl */
++		if (!need_lock) {
++			f2fs_do_quota_sync(sbi->sb, -1);
++		} else if (down_read_trylock(&sbi->sb->s_umount)) {
++			f2fs_do_quota_sync(sbi->sb, -1);
+ 			up_read(&sbi->sb->s_umount);
++		}
+ 		cond_resched();
+ 		goto retry_flush_quotas;
  	}
+@@ -1870,7 +1872,8 @@ int f2fs_issue_checkpoint(struct f2fs_sb_info *sbi)
+ 	struct cp_control cpc;
  
--	/*
--	 *	Must bind first - autobinding in this may or may not work. If
--	 *	the socket is already bound, check to see if the device has
--	 *	been filled in, error if it hasn't.
--	 */
-+	/* Must bind first - autobinding does not work. */
- 	if (sock_flag(sk, SOCK_ZAPPED)) {
--		/* check if we can remove this feature. It is broken. */
--		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
--			current->comm);
--		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
--			kfree(digi);
--			goto out_release;
--		}
-+		kfree(digi);
-+		err = -EINVAL;
-+		goto out_release;
-+	}
+ 	cpc.reason = __get_cp_reason(sbi);
+-	if (!test_opt(sbi, MERGE_CHECKPOINT) || cpc.reason != CP_SYNC) {
++	if (!test_opt(sbi, MERGE_CHECKPOINT) || cpc.reason != CP_SYNC ||
++		sbi->umount_lock_holder == current) {
+ 		int ret;
  
--		ax25_fillin_cb(ax25, ax25->ax25_dev);
--		ax25_cb_add(ax25);
--	} else {
--		if (ax25->ax25_dev == NULL) {
--			kfree(digi);
--			err = -EHOSTUNREACH;
--			goto out_release;
--		}
-+	/* Check to see if the device has been filled in, error if it hasn't. */
-+	if (ax25->ax25_dev == NULL) {
-+		kfree(digi);
-+		err = -EHOSTUNREACH;
-+		goto out_release;
- 	}
+ 		f2fs_down_write(&sbi->gc_lock);
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 12ca7ba9d6dc4..81c2a566f1d42 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1708,6 +1708,7 @@ struct f2fs_sb_info {
  
- 	if (sk->sk_type == SOCK_SEQPACKET &&
-diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index 69de75db0c9c2..10577434f40bf 100644
---- a/net/ax25/ax25_route.c
-+++ b/net/ax25/ax25_route.c
-@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
- 	return ax25_rt;
+ 	unsigned int nquota_files;		/* # of quota sysfile */
+ 	struct f2fs_rwsem quota_sem;		/* blocking cp for flags */
++	struct task_struct *umount_lock_holder;	/* s_umount lock holder */
+ 
+ 	/* # of pages, see count_type */
+ 	atomic_t nr_pages[NR_COUNT_TYPE];
+@@ -3728,7 +3729,7 @@ int f2fs_inode_dirtied(struct inode *inode, bool sync);
+ void f2fs_inode_synced(struct inode *inode);
+ int f2fs_dquot_initialize(struct inode *inode);
+ int f2fs_enable_quota_files(struct f2fs_sb_info *sbi, bool rdonly);
+-int f2fs_quota_sync(struct super_block *sb, int type);
++int f2fs_do_quota_sync(struct super_block *sb, int type);
+ loff_t max_file_blocks(struct inode *inode);
+ void f2fs_quota_off_umount(struct super_block *sb);
+ void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index f7acb1998b2cd..c278ce7842056 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1736,22 +1736,28 @@ int f2fs_sync_fs(struct super_block *sb, int sync)
+ 
+ static int f2fs_freeze(struct super_block *sb)
+ {
++	struct f2fs_sb_info *sbi = F2FS_SB(sb);
++
+ 	if (f2fs_readonly(sb))
+ 		return 0;
+ 
+ 	/* IO error happened before */
+-	if (unlikely(f2fs_cp_error(F2FS_SB(sb))))
++	if (unlikely(f2fs_cp_error(sbi)))
+ 		return -EIO;
+ 
+ 	/* must be clean, since sync_filesystem() was already called */
+-	if (is_sbi_flag_set(F2FS_SB(sb), SBI_IS_DIRTY))
++	if (is_sbi_flag_set(sbi, SBI_IS_DIRTY))
+ 		return -EINVAL;
+ 
++	sbi->umount_lock_holder = current;
++
+ 	/* Let's flush checkpoints and stop the thread. */
+-	f2fs_flush_ckpt_thread(F2FS_SB(sb));
++	f2fs_flush_ckpt_thread(sbi);
++
++	sbi->umount_lock_holder = NULL;
+ 
+ 	/* to avoid deadlock on f2fs_evict_inode->SB_FREEZE_FS */
+-	set_sbi_flag(F2FS_SB(sb), SBI_IS_FREEZING);
++	set_sbi_flag(sbi, SBI_IS_FREEZING);
+ 	return 0;
  }
  
--/*
-- *	Adjust path: If you specify a default route and want to connect
-- *      a target on the digipeater path but w/o having a special route
-- *	set before, the path has to be truncated from your target on.
-- */
--static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
--{
--	int k;
--
--	for (k = 0; k < digipeat->ndigi; k++) {
--		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
--			break;
--	}
--
--	digipeat->ndigi = k;
--}
--
--
--/*
-- *	Find which interface to use.
-- */
--int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
--{
--	ax25_uid_assoc *user;
--	ax25_route *ax25_rt;
--	int err = 0;
--
--	ax25_route_lock_use();
--	ax25_rt = ax25_get_route(addr, NULL);
--	if (!ax25_rt) {
--		ax25_route_lock_unuse();
--		return -EHOSTUNREACH;
--	}
--	rcu_read_lock();
--	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
--		err = -EHOSTUNREACH;
--		goto put;
--	}
--
--	user = ax25_findbyuid(current_euid());
--	if (user) {
--		ax25->source_addr = user->call;
--		ax25_uid_put(user);
--	} else {
--		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
--			err = -EPERM;
--			goto put;
--		}
--		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
--	}
--
--	if (ax25_rt->digipeat != NULL) {
--		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
--					 GFP_ATOMIC);
--		if (ax25->digipeat == NULL) {
--			err = -ENOMEM;
--			goto put;
--		}
--		ax25_adjust_path(addr, ax25->digipeat);
--	}
--
--	if (ax25->sk != NULL) {
--		local_bh_disable();
--		bh_lock_sock(ax25->sk);
--		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
--		bh_unlock_sock(ax25->sk);
--		local_bh_enable();
--	}
--
--put:
--	rcu_read_unlock();
--	ax25_route_lock_unuse();
--	return err;
--}
+@@ -2363,6 +2369,8 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 	org_mount_opt = sbi->mount_opt;
+ 	old_sb_flags = sb->s_flags;
  
- struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
- 	ax25_address *dest, ax25_digi *digi)
++	sbi->umount_lock_holder = current;
++
+ #ifdef CONFIG_QUOTA
+ 	org_mount_opt.s_jquota_fmt = F2FS_OPTION(sbi).s_jquota_fmt;
+ 	for (i = 0; i < MAXQUOTAS; i++) {
+@@ -2593,6 +2601,8 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 	limit_reserve_root(sbi);
+ 	adjust_unusable_cap_perc(sbi);
+ 	*flags = (*flags & ~SB_LAZYTIME) | (sb->s_flags & SB_LAZYTIME);
++
++	sbi->umount_lock_holder = NULL;
+ 	return 0;
+ restore_checkpoint:
+ 	if (need_enable_checkpoint) {
+@@ -2634,6 +2644,8 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ #endif
+ 	sbi->mount_opt = org_mount_opt;
+ 	sb->s_flags = old_sb_flags;
++
++	sbi->umount_lock_holder = NULL;
+ 	return err;
+ }
+ 
+@@ -2950,7 +2962,7 @@ static int f2fs_quota_sync_file(struct f2fs_sb_info *sbi, int type)
+ 	return ret;
+ }
+ 
+-int f2fs_quota_sync(struct super_block *sb, int type)
++int f2fs_do_quota_sync(struct super_block *sb, int type)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+ 	struct quota_info *dqopt = sb_dqopt(sb);
+@@ -2998,11 +3010,21 @@ int f2fs_quota_sync(struct super_block *sb, int type)
+ 	return ret;
+ }
+ 
++static int f2fs_quota_sync(struct super_block *sb, int type)
++{
++	int ret;
++
++	F2FS_SB(sb)->umount_lock_holder = current;
++	ret = f2fs_do_quota_sync(sb, type);
++	F2FS_SB(sb)->umount_lock_holder = NULL;
++	return ret;
++}
++
+ static int f2fs_quota_on(struct super_block *sb, int type, int format_id,
+ 							const struct path *path)
+ {
+ 	struct inode *inode;
+-	int err;
++	int err = 0;
+ 
+ 	/* if quota sysfile exists, deny enabling quota with specific file */
+ 	if (f2fs_sb_has_quota_ino(F2FS_SB(sb))) {
+@@ -3013,31 +3035,34 @@ static int f2fs_quota_on(struct super_block *sb, int type, int format_id,
+ 	if (path->dentry->d_sb != sb)
+ 		return -EXDEV;
+ 
+-	err = f2fs_quota_sync(sb, type);
++	F2FS_SB(sb)->umount_lock_holder = current;
++
++	err = f2fs_do_quota_sync(sb, type);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	inode = d_inode(path->dentry);
+ 
+ 	err = filemap_fdatawrite(inode->i_mapping);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	err = filemap_fdatawait(inode->i_mapping);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	err = dquot_quota_on(sb, type, format_id, path);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	inode_lock(inode);
+ 	F2FS_I(inode)->i_flags |= F2FS_QUOTA_DEFAULT_FL;
+ 	f2fs_set_inode_flags(inode);
+ 	inode_unlock(inode);
+ 	f2fs_mark_inode_dirty_sync(inode, false);
+-
+-	return 0;
++out:
++	F2FS_SB(sb)->umount_lock_holder = NULL;
++	return err;
+ }
+ 
+ static int __f2fs_quota_off(struct super_block *sb, int type)
+@@ -3048,7 +3073,7 @@ static int __f2fs_quota_off(struct super_block *sb, int type)
+ 	if (!inode || !igrab(inode))
+ 		return dquot_quota_off(sb, type);
+ 
+-	err = f2fs_quota_sync(sb, type);
++	err = f2fs_do_quota_sync(sb, type);
+ 	if (err)
+ 		goto out_put;
+ 
+@@ -3071,6 +3096,8 @@ static int f2fs_quota_off(struct super_block *sb, int type)
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+ 	int err;
+ 
++	F2FS_SB(sb)->umount_lock_holder = current;
++
+ 	err = __f2fs_quota_off(sb, type);
+ 
+ 	/*
+@@ -3080,6 +3107,9 @@ static int f2fs_quota_off(struct super_block *sb, int type)
+ 	 */
+ 	if (is_journalled_quota(sbi))
+ 		set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
++
++	F2FS_SB(sb)->umount_lock_holder = NULL;
++
+ 	return err;
+ }
+ 
+@@ -3212,7 +3242,7 @@ int f2fs_dquot_initialize(struct inode *inode)
+ 	return 0;
+ }
+ 
+-int f2fs_quota_sync(struct super_block *sb, int type)
++int f2fs_do_quota_sync(struct super_block *sb, int type)
+ {
+ 	return 0;
+ }
+@@ -4760,6 +4790,7 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
+ 	if (err)
+ 		goto free_compress_inode;
+ 
++	sbi->umount_lock_holder = current;
+ #ifdef CONFIG_QUOTA
+ 	/* Enable quota usage during mount */
+ 	if (f2fs_sb_has_quota_ino(sbi) && !f2fs_readonly(sb)) {
+@@ -4892,6 +4923,8 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
+ 	f2fs_update_time(sbi, CP_TIME);
+ 	f2fs_update_time(sbi, REQ_TIME);
+ 	clear_sbi_flag(sbi, SBI_CP_DISABLED_QUICK);
++
++	sbi->umount_lock_holder = NULL;
+ 	return 0;
+ 
+ sync_free_meta:
+@@ -4997,6 +5030,8 @@ static void kill_f2fs_super(struct super_block *sb)
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+ 
+ 	if (sb->s_root) {
++		sbi->umount_lock_holder = current;
++
+ 		set_sbi_flag(sbi, SBI_IS_CLOSE);
+ 		f2fs_stop_gc_thread(sbi);
+ 		f2fs_stop_discard_thread(sbi);
 -- 
 2.53.0
 
