@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8F23A1E92;
-	Sat, 17 Oct 2026 17:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83A73A1A3F;
+	Sat, 17 Oct 2026 17:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259934; cv=none; b=kNw0aze5KiF5NqYwrrmVR/yE4LNL+0/7PC47JjHy0ucUfGS3ydMpebISHZw28SVnu93YxzexLjXTP+VgXd3BPrHDlULimVzvDc/3UElPgUdcX0i73aodqIQun91/z/SgwP29/CzTNDEP3LNSJTPVa1TzW3M2Y5nPTz+BGbqaeeo=
+	t=1792259937; cv=none; b=gjE3y/v/AXJrorfrGewbWwfylf8j4+HYhE4Y7ysxOGtie1vowU5rap63w8IMXmps3uc94BBgQQZnp8NLhWBFRd7/pxGvLXm1lxTu6m55hUiYVHL2w5vf/1TnAdL5+NahYy5jLStOqphNzlEr0rbmyFx2hApM0c5SYm/ub7zct8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259934; c=relaxed/simple;
-	bh=SHyftku0ihgzXPt+TuAB00RCPkVQZL6YEPFezaSiRf0=;
+	s=arc-20240116; t=1792259937; c=relaxed/simple;
+	bh=c31DlQoQcZ4VwRdAf4SdIloPHYxoy68WIl3czGb+o/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idSGtJDYVn0WFoeAb4zBpGkSfJ9HOlfkttViT5quscuDLLsv0aUx8JgWAqNsQS4LJ3ZQa9xwv99wYImbgR/pxnIgOc9sXy23HJe8lbbmIluwuy7aHWY7eODrNH2rU2cqAd8NYMDcdWQIOU8mFA2jcqQc5RD6TdaosKOA3b6qRfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuTdMJaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=baQczEcjUpY1wa4duXJOD/m2gnE818BVyTtomHRhSdNi60fSwiESnwwcRyovPXFa56Y7yX6G3nbq+mIeM7jp5Kvnh7eJ7NurTHpXlLiYpSQNljGdhZvh8mi0AzN4Ypefr0SKPUjq59chrCu83/qSzmm/vx7qG6gVKlfLspZQ0aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JvIjke/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuTdMJaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05741F000C4;
-	Sat, 17 Oct 2026 17:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JvIjke/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDE41F000C4;
+	Sat, 17 Oct 2026 17:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259933;
-	bh=KHC01IkWbQ5B1RNnNAOy6h2L3K6tRViMUdbe5I6DeKg=;
+	s=korg; t=1792259936;
+	bh=zfZQXnwu87rpg/lmivaezAFKhz4JNH4kdLXdcYzBkY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuTdMJaUFlPOgdXPmFvrpxH1z7JmiCHW8U9uhW3zKPbMbl+p2gDXNPtjvnwHYDJqJ
-	 GGWO8BJpVZ1fMRDcHSKzVq/pV2hLbivWT4KIOiUydw0TLqJ9kZVHHEbJMOAAS4DCXS
-	 c8J8QcxcEmAa66sYWGCtnHAdIAyWszhPULPe0LbA=
+	b=1JvIjke/KksldtUUso+HsfnbieRTlAZE913H/3L236ZAICQiz1pq7/YE8jeLL0RIk
+	 UWfvFFGe2MZ80yRm9F2JY/XeaJzhrW3XkgccRZF3Cgp5+EMwHATfMEDjYEc85f3Dfy
+	 Z8VDKiGxtI2LROaFqZGcnLJld+wS+lSul5njS1kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1379/1674] net/sched: account classifier filter allocations to memcg
-Date: Sat, 17 Oct 2026 18:00:51 +0200
-Message-ID: <20261017160506.563031046@linuxfoundation.org>
+Subject: [PATCH 6.6 1380/1674] NFSv4.1: zero referring call lists before decoding
+Date: Sat, 17 Oct 2026 18:00:52 +0200
+Message-ID: <20261017160506.587750604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -47,301 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 1beb81947eb486716af80db7a584f9e9fef7e003 ]
+[ Upstream commit 8fa4804fe62ca4155a2d8fc2789d630376cbf2fc ]
 
-Allocations in the tc classifier *_change() paths (filter objects,
-per-CPU counters, and per-filter aux data) use plain GFP_KERNEL without
-__GFP_ACCOUNT, allowing unprivileged users to pin kernel memory outside
-memcg charging. The shared tcf_exts_init_ex() action array allocation in
-cls_api.c was also uncharged; this patch closes it along with the
-per-classifier filter-object/percpu/aux allocations that remain
-unaccounted.
+decode_cb_sequence_args() allocates csa_rclists with kmalloc_objs(), so
+each referring_call_list starts uninitialized. decode_rc_list() assigns
+rcl_refcalls only when rcl_nrefcalls is nonzero. A valid list with zero
+referring calls therefore leaves the pointer uninitialized, and
+nfs4_callback_sequence() later passes stale slab contents to kfree().
 
-Add GFP_KERNEL_ACCOUNT to:
-- the shared tcf_exts_init_ex() action array (cls_api.c), common to every
-  filter of every classifier (32 pointers, 256 bytes);
-- the filter-object, per-CPU-counter, and per-filter aux allocations in
-  cls_basic, cls_bpf, cls_cgroup, cls_flow, cls_flower, cls_fw,
-  cls_matchall, cls_route and cls_u32;
-- the u32_init_knode() replace-path knode allocation (cls_u32.c), which
-  allocates the same struct tc_u_knode + sel.keys on every replace of an
-  existing knode and was missed by the create-path-only conversion.
+Allocate csa_rclists with kzalloc_objs() so every rcl_refcalls member is
+NULL from the beginning, including valid empty referring call lists.
 
-Also fix the cls_basic error path: basic_change() inserts fnew into the
-IDR before allocating the per-CPU counter. If alloc_percpu() fails the
-errout path kfree'd fnew without idr_remove, leaving a dangling pointer
-in the IDR. With GFP_KERNEL_ACCOUNT the percpu alloc becomes failable
-on demand (memcg at memory.max), making the dead path attacker-reachable
-and burning the handle permanently. Add the idr_remove on the percpu
-failure path, matching the basic_set_parms failure-path pattern.
-
-Note: vega@nebusec.ai provided a poc for basic_cls, but it was easy to
-extend to the other classifiers.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_CLS_* (the classifier being used),
-  CONFIG_NET_CLS_ACT, CONFIG_MEMCG, CONFIG_USER_NS, CONFIG_NET_NS.
-- Unprivileged user in a fresh user+network namespace (unshare -Urn),
-  or root with CAP_NET_ADMIN.
-- Create a large number of tc filters (e.g. tc filter add dev lo
-  ingress ... <classifier> ...) while watching a memcg-limited cgroup:
-  system slab grows far faster than memory.current, pinning kernel
-  memory outside memcg charging.
-
-Fixes: 0da974f4f303 ("[NET]: Conversions from kmalloc+memset to k(z|c)alloc.")
-Reported-by: vega@nebusec.ai
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260819143733.57538-1-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4aece6a19cf7 ("nfs41: cb_sequence xdr implementation")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c      |  2 +-
- net/sched/cls_basic.c    |  6 ++++--
- net/sched/cls_bpf.c      |  6 +++---
- net/sched/cls_cgroup.c   |  2 +-
- net/sched/cls_flow.c     |  2 +-
- net/sched/cls_flower.c   |  4 ++--
- net/sched/cls_fw.c       |  4 ++--
- net/sched/cls_matchall.c |  4 ++--
- net/sched/cls_route.c    |  4 ++--
- net/sched/cls_u32.c      | 11 ++++++-----
- 10 files changed, 24 insertions(+), 21 deletions(-)
+ fs/nfs/callback_xdr.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 256cbfadea650..5eb337c1531fa 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -3356,7 +3356,7 @@ int tcf_exts_init_ex(struct tcf_exts *exts, struct net *net, int action,
- 	 */
- 	exts->net = net;
- 	exts->actions = kcalloc(TCA_ACT_MAX_PRIO, sizeof(struct tc_action *),
--				GFP_KERNEL);
-+				GFP_KERNEL_ACCOUNT);
- 	if (!exts->actions)
- 		return -ENOMEM;
- #endif
-diff --git a/net/sched/cls_basic.c b/net/sched/cls_basic.c
-index 1b92c33b5f819..ee09ff574f966 100644
---- a/net/sched/cls_basic.c
-+++ b/net/sched/cls_basic.c
-@@ -193,7 +193,7 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 	}
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index d5f6437da352d..a03e7e1e48679 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -419,9 +419,9 @@ static __be32 decode_cb_sequence_args(struct svc_rqst *rqstp,
+ 	args->csa_nrclists = ntohl(*p++);
+ 	args->csa_rclists = NULL;
+ 	if (args->csa_nrclists) {
+-		args->csa_rclists = kmalloc_array(args->csa_nrclists,
+-						  sizeof(*args->csa_rclists),
+-						  GFP_KERNEL);
++		args->csa_rclists = kcalloc(args->csa_nrclists,
++					    sizeof(*args->csa_rclists),
++					    GFP_KERNEL);
+ 		if (unlikely(args->csa_rclists == NULL))
+ 			return htonl(NFS4ERR_RESOURCE);
  
--	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
-+	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
- 	if (!fnew)
- 		return -ENOBUFS;
- 
-@@ -212,9 +212,11 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
- 	if (err)
- 		goto errout;
- 	fnew->handle = handle;
--	fnew->pf = alloc_percpu(struct tc_basic_pcnt);
-+	fnew->pf = alloc_percpu_gfp(struct tc_basic_pcnt, GFP_KERNEL_ACCOUNT);
- 	if (!fnew->pf) {
- 		err = -ENOMEM;
-+		if (!fold)
-+			idr_remove(&head->handle_idr, fnew->handle);
- 		goto errout;
- 	}
- 
-diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
-index 8ca716bf9e42b..b0ae488bc533f 100644
---- a/net/sched/cls_bpf.c
-+++ b/net/sched/cls_bpf.c
-@@ -352,7 +352,7 @@ static int cls_bpf_prog_from_ops(struct nlattr **tb, struct cls_bpf_prog *prog)
- 	if (bpf_size != nla_len(tb[TCA_BPF_OPS]))
- 		return -EINVAL;
- 
--	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL);
-+	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL_ACCOUNT);
- 	if (bpf_ops == NULL)
- 		return -ENOMEM;
- 
-@@ -403,7 +403,7 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
- 	}
- 
- 	if (tb[TCA_BPF_NAME]) {
--		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL);
-+		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL_ACCOUNT);
- 		if (!name) {
- 			bpf_prog_put(fp);
- 			return -ENOMEM;
-@@ -443,7 +443,7 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
- 	if (ret < 0)
- 		return ret;
- 
--	prog = kzalloc(sizeof(*prog), GFP_KERNEL);
-+	prog = kzalloc(sizeof(*prog), GFP_KERNEL_ACCOUNT);
- 	if (!prog)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_cgroup.c b/net/sched/cls_cgroup.c
-index bd9322d71910b..f05e654e0b996 100644
---- a/net/sched/cls_cgroup.c
-+++ b/net/sched/cls_cgroup.c
-@@ -95,7 +95,7 @@ static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
- 	if (head && handle != head->handle)
- 		return -ENOENT;
- 
--	new = kzalloc(sizeof(*head), GFP_KERNEL);
-+	new = kzalloc(sizeof(*head), GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index 9ba13953d3a5e..e2883f0e40488 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -438,7 +438,7 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
- 			return -EOPNOTSUPP;
- 	}
- 
--	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
-+	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
- 	if (!fnew)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 4fc59af6696ea..8b4dc3930906a 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -2109,7 +2109,7 @@ static struct fl_flow_mask *fl_create_new_mask(struct cls_fl_head *head,
- 	struct fl_flow_mask *newmask;
- 	int err;
- 
--	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL);
-+	newmask = kzalloc(sizeof(*newmask), GFP_KERNEL_ACCOUNT);
- 	if (!newmask)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -2269,7 +2269,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout_tb;
- 	}
- 
--	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL);
-+	fnew = kzalloc(sizeof(*fnew), GFP_KERNEL_ACCOUNT);
- 	if (!fnew) {
- 		err = -ENOBUFS;
- 		goto errout_tb;
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index bc007bb47432c..1d5427757c692 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -276,7 +276,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
- 		if (f->id != handle && handle)
- 			return -EINVAL;
- 
--		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
-+		fnew = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
- 		if (!fnew)
- 			return -ENOBUFS;
- 
-@@ -330,7 +330,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
- 		rcu_assign_pointer(tp->root, head);
- 	}
- 
--	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL);
-+	f = kzalloc(sizeof(struct fw_filter), GFP_KERNEL_ACCOUNT);
- 	if (f == NULL)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
-index e8353b27c8c4d..c7060d8e54a2d 100644
---- a/net/sched/cls_matchall.c
-+++ b/net/sched/cls_matchall.c
-@@ -189,7 +189,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 	}
- 
--	new = kzalloc(sizeof(*new), GFP_KERNEL);
-+	new = kzalloc(sizeof(*new), GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return -ENOBUFS;
- 
-@@ -201,7 +201,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
- 		handle = 1;
- 	new->handle = handle;
- 	new->flags = userflags;
--	new->pf = alloc_percpu(struct tc_matchall_pcnt);
-+	new->pf = alloc_percpu_gfp(struct tc_matchall_pcnt, GFP_KERNEL_ACCOUNT);
- 	if (!new->pf) {
- 		err = -ENOMEM;
- 		goto err_alloc_percpu;
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 54f5f7857ee0c..592cd27cfaba6 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -455,7 +455,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	h1 = to_hash(nhandle);
- 	b = rtnl_dereference(head->table[h1]);
- 	if (!b) {
--		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL);
-+		b = kzalloc(sizeof(struct route4_bucket), GFP_KERNEL_ACCOUNT);
- 		if (b == NULL)
- 			return -ENOBUFS;
- 
-@@ -530,7 +530,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 
- 	err = -ENOBUFS;
--	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL);
-+	f = kzalloc(sizeof(struct route4_filter), GFP_KERNEL_ACCOUNT);
- 	if (!f)
- 		goto errout;
- 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 4557051a7d0d0..69c6ccd8f0918 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -841,7 +841,7 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
- 	struct tc_u32_sel *s = &n->sel;
- 	struct tc_u_knode *new;
- 
--	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL);
-+	new = kzalloc(struct_size(new, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return NULL;
- 
-@@ -1139,15 +1139,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		goto erridr;
- 	}
- 
--	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL);
-+	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL_ACCOUNT);
- 	if (n == NULL) {
- 		err = -ENOBUFS;
- 		goto erridr;
- 	}
- 
- #ifdef CONFIG_CLS_U32_PERF
--	n->pf = __alloc_percpu(struct_size(n->pf, kcnts, s->nkeys),
--			       __alignof__(struct tc_u32_pcnt));
-+	n->pf = __alloc_percpu_gfp(struct_size(n->pf, kcnts, s->nkeys),
-+				   __alignof__(struct tc_u32_pcnt),
-+				   GFP_KERNEL_ACCOUNT);
- 	if (!n->pf) {
- 		err = -ENOBUFS;
- 		goto errfree;
-@@ -1169,7 +1170,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout;
- 
- #ifdef CONFIG_CLS_U32_MARK
--	n->pcpu_success = alloc_percpu(u32);
-+	n->pcpu_success = alloc_percpu_gfp(u32, GFP_KERNEL_ACCOUNT);
- 	if (!n->pcpu_success) {
- 		err = -ENOMEM;
- 		goto errout;
 -- 
 2.53.0
 
