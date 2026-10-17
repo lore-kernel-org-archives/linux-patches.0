@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2042D73A6;
-	Sat, 17 Oct 2026 16:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CA3AF65F;
+	Sat, 17 Oct 2026 16:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255600; cv=none; b=IerXgHnnyhQHE/wceEcn9rvG7JOyVarypJxc7ZZCUfHhr6MQIU27Jsxay8Tj1uoG8N7E/ShZ4TCuevro+ogPAZ/DBxXXZOaIHkwg0qEf0ukpoUkijdtWJAl+mNAHzVc6Z74By/FVMQvrXLnFU6GxCvlHxWbnQHHjjbXiE8uoPQ0=
+	t=1792255602; cv=none; b=ugKsZWRYgu6y3v5Sa+PImkjpVKuMbLsxlWzSCc3qLrKpktCaHtuHFQCuYqY1WRSqQA+azhJqVIp/egYIvAZDYL6RBSrxRoJVW3h9/AJhbJSnrE7o43rMSwRG5iJU542ZVARsGRkstx0F+3imdk+uqFYIWlwdvi3vF8Mtf+L6Mh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255600; c=relaxed/simple;
-	bh=aAcE8opHTafPyrZeLQ8qdmNcYM++JEpY3UdA+ll+0AI=;
+	s=arc-20240116; t=1792255602; c=relaxed/simple;
+	bh=2zuXtbWGpRHKQ0/f+ZhJLxnR1kYaOF3OYCQaYRqOrdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCtoF3HbkV7DlmhSo7hKoAzJAbHWQ12ZCdJaYUcmZlYITLcRtrDeSC4UDa0kKbA+YcAQJ9SPlrmoTtOlx35UuTxbJ3J9+r6+i6woOyYTr0GDtZG8Tp9YHcuDP36PvFJsZRZdaQLPb9Dak7TN9fgZSXGhr/yNJjOdDxhp3Txh17A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtu+iQlJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9g8x8TgQrj3jGqjjgbwQyxvQjTmX97VfZPKOIM4MWpDqHbUHvl8i5NrpH6Egk+bBNPYCKiGZFYOfzhkqlu0kbK0gvorhqku2gVLD+cQCYlVOGQ3sxDBq/r6TRf/GPVDe0SQg6DU0p9hGuYb2YhTnVSl8oZOE1MFRsJrnSjX7Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldsfwdLn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtu+iQlJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839A51F000C4;
-	Sat, 17 Oct 2026 16:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldsfwdLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E331F000C4;
+	Sat, 17 Oct 2026 16:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255599;
-	bh=h4OOi+jM4ma7I/vBpce/Q1zoWG3vHblaRo5s/oReZ5o=;
+	s=korg; t=1792255601;
+	bh=0He+YdsQ94FhwyxlbL4gCR2cos03aUutmRBI/TWjgzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mtu+iQlJmux6wcUO0GVTAml+lZLXxov92rfeg52rF1LkgS+lQBHEtLg5xVmI+r4sw
-	 Q5iAWG7jWIx8jPJhVXVw+/mpc5vHEu0Ssjww6xRnNJVY6PNnV7wo1W6aGl1guwNl3S
-	 yFWsgp4G3AhjOL+QixCDmPkuUx0GF6KXqWZrIsyQ=
+	b=ldsfwdLnwaTecqal39SV31l+dwilcLgz7bRppHKBSN+8mmKWV7vbH4Qk/MSRc4wGI
+	 +EGsudMDYOJcXu5GN5JhzxUM5oETfMKuHw47/PiQxIrF5P2NPKTcJhHR4A+7F/Fl16
+	 GD2hFK5VwLhfhx9ksD4OoSMiz7oKnVcN82LrToUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Aishwarya <aishwarya.tcv@arm.com>,
+	Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 828/869] s390/kvm: Mask extra bits from program interrupt code
-Date: Sat, 17 Oct 2026 18:01:09 +0200
-Message-ID: <20261017160058.110193173@linuxfoundation.org>
+Subject: [PATCH 6.12 829/869] scsi: ufs: qcom : Fix NULL pointer dereference in ufs_qcom_setup_clocks
+Date: Sat, 17 Oct 2026 18:01:10 +0200
+Message-ID: <20261017160058.135354297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,52 +60,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
 
-[ Upstream commit 34fb045eddd300a2d1c0d7de7e83113215c422e3 ]
+[ Upstream commit 720fa0cb59e411eca6b274f78073b6d2fe68eb45 ]
 
-The program interrupt code has some extra bits that are sometimes set
-by hardware for various reasons; those bits should be ignored when the
-program interrupt number is needed for interrupt handling.
+Fix a NULL pointer dereference in ufs_qcom_setup_clocks due to an
+uninitialized 'host' variable. The variable 'phy' is now assigned
+after confirming 'host' is not NULL.
 
-Fixes: 05066cafa925 ("s390/mm/fault: Handle guest-related program interrupts in KVM")
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Link: https://lore.kernel.org/r/20241031120316.25462-1-imbrenda@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Call Stack:
+
+Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+
+ufs_qcom_setup_clocks+0x28/0x148 ufs_qcom (P)
+ufshcd_setup_clocks (drivers/ufs/core/ufshcd-priv.h:142)
+ufshcd_init (drivers/ufs/core/ufshcd.c:9468)
+ufshcd_pltfrm_init (drivers/ufs/host/ufshcd-pltfrm.c:504)
+ufs_qcom_probe+0x28/0x68 ufs_qcom
+platform_probe (drivers/base/platform.c:1404)
+really_probe (drivers/base/dd.c:579 drivers/base/dd.c:657)
+__driver_probe_device (drivers/base/dd.c:799)
+driver_probe_device (drivers/base/dd.c:829)
+__driver_attach (drivers/base/dd.c:1216)
+bus_for_each_dev (drivers/base/bus.c:370)
+driver_attach (drivers/base/dd.c:1234)
+bus_add_driver (drivers/base/bus.c:678)
+driver_register (drivers/base/driver.c:249)
+__platform_driver_register (drivers/base/platform.c:868)
+ufs_qcom_pltform_init+0x28/0xff8 ufs_qcom
+do_one_initcall (init/main.c:1274)
+do_init_module (kernel/module/main.c:3041)
+load_module (kernel/module/main.c:3511)
+init_module_from_file (kernel/module/main.c:3704)
+__arm64_sys_finit_module (kernel/module/main.c:3715.
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off calls")
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reported-by: Aishwarya <aishwarya.tcv@arm.com>
+Closes: https://lore.kernel.org/lkml/20250620214408.11028-1-aishwarya.tcv@arm.com/
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/linux-scsi/CA+G9fYuFQ2dBvYm1iB6rbwT=4b1c8e4NJ3yxqFPGZGUKH3GmMA@mail.gmail.com/T/#t
+Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250623134809.20405-1-quic_nitirawa@quicinc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/kvm-s390.c | 2 +-
- arch/s390/kvm/vsie.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index c11e579e23313..7bb5640bb8a71 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -4847,7 +4847,7 @@ static int vcpu_post_run_handle_fault(struct kvm_vcpu *vcpu)
- 	if (kvm_s390_cur_gmap_fault_is_write())
- 		foll = FOLL_WRITE;
- 
--	switch (current->thread.gmap_int_code) {
-+	switch (current->thread.gmap_int_code & PGM_INT_CODE_MASK) {
- 	case 0:
- 		vcpu->stat.exit_null++;
- 		break;
-diff --git a/arch/s390/kvm/vsie.c b/arch/s390/kvm/vsie.c
-index 44e25b2654a2d..de9f0dd421979 100644
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -923,7 +923,7 @@ static int handle_fault(struct kvm_vcpu *vcpu, struct vsie_page *vsie_page)
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 5fbcc234131f1..ba760aab3a7d7 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -934,7 +934,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 				 enum ufs_notify_change_status status)
  {
- 	int rc;
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	struct phy *phy = host->generic_phy;
++	struct phy *phy;
+ 	int err;
  
--	if (current->thread.gmap_int_code == PGM_PROTECTION)
-+	if ((current->thread.gmap_int_code & PGM_INT_CODE_MASK) == PGM_PROTECTION)
- 		/* we can directly forward all protection exceptions */
- 		return inject_fault(vcpu, PGM_PROTECTION,
- 				    current->thread.gmap_teid.addr * PAGE_SIZE, 1);
+ 	/*
+@@ -945,6 +945,8 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 	if (!host)
+ 		return 0;
+ 
++	phy = host->generic_phy;
++
+ 	switch (status) {
+ 	case PRE_CHANGE:
+ 		if (on) {
 -- 
 2.53.0
 
