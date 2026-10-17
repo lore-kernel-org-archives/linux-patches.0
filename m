@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DD217BED0;
-	Sat, 17 Oct 2026 16:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9AF22F767;
+	Sat, 17 Oct 2026 16:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253532; cv=none; b=LLDW9YNAqN+Yjzdo6+UwHOU5hUNk68Y3M+5Byi2Hd71cXqfg4NEQtfnKpoapMweI/lwx6u6c7zynwj7i35N0RrjRrK0xFpXTa9Tk5IJNmn6Cr1y3f6zOZMfIWQZQoCdeZLcDvyLOiIyn+ojxxtgevsjKL413Uyn4iHbsG6Wv4Ug=
+	t=1792253535; cv=none; b=gbJdAP/u2k1wLO6G7OeC6MRPFVxehXTaR1/x6XNEhhXFXq1FtrXkrDTY4rTcBu0neuChXbFqQCmEzobaAzIpIdhG8c/LxIx6ngbc3nHg1DdLeb1aICAjSeAxr7EcFNqG69STyQi9QlspWAl3kGN2nNWrAIpmz2nm7oRep8hulW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253532; c=relaxed/simple;
-	bh=3vftqE0JJYNjo/SNp8jkV1mzUik4a3COb6Y4RRP5CxY=;
+	s=arc-20240116; t=1792253535; c=relaxed/simple;
+	bh=ggObSA2FTb/chdFYMUMQoH4DOtUf8FM6dW4Wgm3c6fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6UM6AUuiWNcKfzp+P6PnOfkXO/aWB8z4toEPKPBn7v8YmQvQqsE9xqJXVfX0eqix05iysNwy4xSyfDkEQdID5oPr6RAA5s06Q+rwD9E7DAQoN3jwiRw772aG/JTJKm0o9SACcdgPSh31T1bBa8bd/oYcrMz/egYOYkLhVwF740=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=venJJxU9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ge3XVAGKY9dIVqQo4NyKEfXvn/fESSRvG1MVPrcoha9ITtOL5/DqjnptT3N5lekaxnKaoGr0upkm1fZ6BPXN90m4xCG8Io71zFa/p1Hoqx4Fo/EgBFtwk43QQzrAWJOR7XRXbgNrWjmFiGTYiK1rIuZ/ItFQXOnFKLrb90ijrMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQgzS+T2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="venJJxU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BA41F000C4;
-	Sat, 17 Oct 2026 16:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQgzS+T2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BA61F000C4;
+	Sat, 17 Oct 2026 16:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253531;
-	bh=EfhxFAx0FPy33XbHyM/Y8QFP8BluIP6cOJN5QNdLXUw=;
+	s=korg; t=1792253534;
+	bh=oVy8cuPUcZcx1qiQMIPV8YaJM69UFmX/mpwum8W/Ir0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=venJJxU9/5vd5JR5O1WtN1atlAGT2Td5J686869PleCAGNxKq64KzimAch32jKwH2
-	 3BDrNVXs6iXiPkFyi0XqBG9xqRetbCdEDnzHnPRtkQPXnxZLMGu9pliEfBO5l/ihuS
-	 fOt7cWFWgY6Ass9wjA2QFlKM23tPdC31VAbv6px0=
+	b=SQgzS+T2veO14fL7zGoeUIGDNUSmBBmQW8/cd4NG6OwxL+ErFahk5bFjD7UlMgrok
+	 VuFv1mH3BXeitcm8iKnEPObH3uWEDTdIw+06AtfHcL8iqxDSTxsA2ZQp+ql20wyaWJ
+	 VVEFofiPBmaA2bHTdG5V9NXwQ0vLQnSeDrQ1sdgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akiva Goldberger <agoldberger@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Erez Shitrit <erezsh@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/869] mlx5: Fix default values in create CQ
-Date: Sat, 17 Oct 2026 17:49:49 +0200
-Message-ID: <20261017160040.834087558@linuxfoundation.org>
+Subject: [PATCH 6.12 113/869] net/mlx5: HWS, simplify allocations as we support only FDB
+Date: Sat, 17 Oct 2026 17:49:14 +0200
+Message-ID: <20261017160039.937302456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,301 +54,535 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akiva Goldberger <agoldberger@nvidia.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit e5eba42f01340f73888dfe560be2806057c25913 ]
+[ Upstream commit c86963aae5b83a865a552408b40e743c3610bd9f ]
 
-Currently, CQs without a completion function are assigned the
-mlx5_add_cq_to_tasklet function by default. This is problematic since
-only user CQs created through the mlx5_ib driver are intended to use
-this function.
+In pools, STCs and actions: no need to allocate array for various
+table types, as HWS is used to manage only FDB flow tables.
 
-Additionally, all CQs that will use doorbells instead of polling for
-completions must call mlx5_cq_arm. However, the default CQ creation flow
-leaves a valid value in the CQ's arm_db field, allowing FW to send
-interrupts to polling-only CQs in certain corner cases.
-
-These two factors would allow a polling-only kernel CQ to be triggered
-by an EQ interrupt and call a completion function intended only for user
-CQs, causing a null pointer exception.
-
-Some areas in the driver have prevented this issue with one-off fixes
-but did not address the root cause.
-
-This patch fixes the described issue by adding defaults to the create CQ
-flow. It adds a default dummy completion function to protect against
-null pointer exceptions, and it sets an invalid command sequence number
-by default in kernel CQs to prevent the FW from sending an interrupt to
-the CQ until it is armed. User CQs are responsible for their own
-initialization values.
-
-Callers of mlx5_core_create_cq are responsible for changing the
-completion function and arming the CQ per their needs.
-
-Fixes: cdd04f4d4d71 ("net/mlx5: Add support to create SQ and CQ for ASO")
-Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Erez Shitrit <erezsh@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Acked-by: Leon Romanovsky <leon@kernel.org>
-Link: https://patch.msgid.link/1762681743-1084694-1-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250102181415.1477316-5-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2c0a959bebdc ("net/mlx5: HWS, Fix memory leak in hws_pool_buddy_init error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c               | 11 +++++---
- drivers/net/ethernet/mellanox/mlx5/core/cq.c  | 23 +++++++++++++--
- .../net/ethernet/mellanox/mlx5/core/en_main.c |  1 -
- .../ethernet/mellanox/mlx5/core/fpga/conn.c   | 15 +++++-----
- .../mellanox/mlx5/core/steering/dr_send.c     | 28 +++++--------------
- .../mlx5/core/steering/hws/mlx5hws_send.c     |  7 -----
- drivers/vdpa/mlx5/net/mlx5_vnet.c             |  6 ++--
- include/linux/mlx5/cq.h                       |  1 +
- 8 files changed, 44 insertions(+), 48 deletions(-)
+ .../mlx5/core/steering/hws/mlx5hws_action.c   | 107 +++++++++---------
+ .../mlx5/core/steering/hws/mlx5hws_action.h   |   2 +-
+ .../mlx5/core/steering/hws/mlx5hws_cmd.c      |   2 +-
+ .../mlx5/core/steering/hws/mlx5hws_context.c  |  29 ++---
+ .../mlx5/core/steering/hws/mlx5hws_context.h  |   4 +-
+ .../mlx5/core/steering/hws/mlx5hws_debug.c    |  36 +++---
+ .../mlx5/core/steering/hws/mlx5hws_matcher.c  |   4 +-
+ .../mlx5/core/steering/hws/mlx5hws_rule.c     |   2 +-
+ .../mlx5/core/steering/hws/mlx5hws_table.c    |  13 +--
+ 9 files changed, 87 insertions(+), 112 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 3387f218104aa..b0b10b8bedfb4 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1021,15 +1021,18 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	if (cq->create_flags & IB_UVERBS_CQ_FLAGS_IGNORE_OVERRUN)
- 		MLX5_SET(cqc, cqc, oi, 1);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
+index b27bb41065326..ef3e5caf75495 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.c
+@@ -11,31 +11,29 @@
+ /* This is the longest supported action sequence for FDB table:
+  * DECAP, POP_VLAN, MODIFY, CTR, ASO, PUSH_VLAN, MODIFY, ENCAP, Term.
+  */
+-static const u32 action_order_arr[MLX5HWS_TABLE_TYPE_MAX][MLX5HWS_ACTION_TYP_MAX] = {
+-	[MLX5HWS_TABLE_TYPE_FDB] = {
+-		BIT(MLX5HWS_ACTION_TYP_REMOVE_HEADER) |
+-		BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L2_TO_L2) |
+-		BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L3_TO_L2),
+-		BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
+-		BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
+-		BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
+-		BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
+-		BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
+-		BIT(MLX5HWS_ACTION_TYP_INSERT_HEADER) |
+-		BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L2) |
+-		BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L3),
+-		BIT(MLX5HWS_ACTION_TYP_CTR),
+-		BIT(MLX5HWS_ACTION_TYP_TAG),
+-		BIT(MLX5HWS_ACTION_TYP_ASO_METER),
+-		BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
+-		BIT(MLX5HWS_ACTION_TYP_TBL) |
+-		BIT(MLX5HWS_ACTION_TYP_VPORT) |
+-		BIT(MLX5HWS_ACTION_TYP_DROP) |
+-		BIT(MLX5HWS_ACTION_TYP_SAMPLER) |
+-		BIT(MLX5HWS_ACTION_TYP_RANGE) |
+-		BIT(MLX5HWS_ACTION_TYP_DEST_ARRAY),
+-		BIT(MLX5HWS_ACTION_TYP_LAST),
+-	},
++static const u32 action_order_arr[MLX5HWS_ACTION_TYP_MAX] = {
++	BIT(MLX5HWS_ACTION_TYP_REMOVE_HEADER) |
++	BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L2_TO_L2) |
++	BIT(MLX5HWS_ACTION_TYP_REFORMAT_TNL_L3_TO_L2),
++	BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
++	BIT(MLX5HWS_ACTION_TYP_POP_VLAN),
++	BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
++	BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
++	BIT(MLX5HWS_ACTION_TYP_PUSH_VLAN),
++	BIT(MLX5HWS_ACTION_TYP_INSERT_HEADER) |
++	BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L2) |
++	BIT(MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L3),
++	BIT(MLX5HWS_ACTION_TYP_CTR),
++	BIT(MLX5HWS_ACTION_TYP_TAG),
++	BIT(MLX5HWS_ACTION_TYP_ASO_METER),
++	BIT(MLX5HWS_ACTION_TYP_MODIFY_HDR),
++	BIT(MLX5HWS_ACTION_TYP_TBL) |
++	BIT(MLX5HWS_ACTION_TYP_VPORT) |
++	BIT(MLX5HWS_ACTION_TYP_DROP) |
++	BIT(MLX5HWS_ACTION_TYP_SAMPLER) |
++	BIT(MLX5HWS_ACTION_TYP_RANGE) |
++	BIT(MLX5HWS_ACTION_TYP_DEST_ARRAY),
++	BIT(MLX5HWS_ACTION_TYP_LAST),
+ };
  
-+	if (udata) {
-+		cq->mcq.comp = mlx5_add_cq_to_tasklet;
-+		cq->mcq.tasklet_ctx.comp = mlx5_ib_cq_comp;
-+	} else {
-+		cq->mcq.comp  = mlx5_ib_cq_comp;
-+	}
-+
- 	err = mlx5_core_create_cq(dev->mdev, &cq->mcq, cqb, inlen, out, sizeof(out));
- 	if (err)
- 		goto err_cqb;
+ static const char * const mlx5hws_action_type_str[] = {
+@@ -83,8 +81,8 @@ static int hws_action_get_shared_stc_nic(struct mlx5hws_context *ctx,
+ 	int ret;
  
- 	mlx5_ib_dbg(dev, "cqn 0x%x\n", cq->mcq.cqn);
--	if (udata)
--		cq->mcq.tasklet_ctx.comp = mlx5_ib_cq_comp;
--	else
--		cq->mcq.comp  = mlx5_ib_cq_comp;
- 	cq->mcq.event = mlx5_ib_cq_event;
+ 	mutex_lock(&ctx->ctrl_lock);
+-	if (ctx->common_res[tbl_type].shared_stc[stc_type]) {
+-		ctx->common_res[tbl_type].shared_stc[stc_type]->refcount++;
++	if (ctx->common_res.shared_stc[stc_type]) {
++		ctx->common_res.shared_stc[stc_type]->refcount++;
+ 		mutex_unlock(&ctx->ctrl_lock);
+ 		return 0;
+ 	}
+@@ -124,8 +122,8 @@ static int hws_action_get_shared_stc_nic(struct mlx5hws_context *ctx,
+ 		goto free_shared_stc;
+ 	}
  
- 	INIT_LIST_HEAD(&cq->wc_list);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cq.c b/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-index ba52e52e98863..24dd6318964a9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-@@ -66,8 +66,8 @@ void mlx5_cq_tasklet_cb(struct tasklet_struct *t)
- 		tasklet_schedule(&ctx->task);
+-	ctx->common_res[tbl_type].shared_stc[stc_type] = shared_stc;
+-	ctx->common_res[tbl_type].shared_stc[stc_type]->refcount = 1;
++	ctx->common_res.shared_stc[stc_type] = shared_stc;
++	ctx->common_res.shared_stc[stc_type]->refcount = 1;
+ 
+ 	mutex_unlock(&ctx->ctrl_lock);
+ 
+@@ -178,16 +176,16 @@ static void hws_action_put_shared_stc(struct mlx5hws_action *action,
+ 	}
+ 
+ 	mutex_lock(&ctx->ctrl_lock);
+-	if (--ctx->common_res[tbl_type].shared_stc[stc_type]->refcount) {
++	if (--ctx->common_res.shared_stc[stc_type]->refcount) {
+ 		mutex_unlock(&ctx->ctrl_lock);
+ 		return;
+ 	}
+ 
+-	shared_stc = ctx->common_res[tbl_type].shared_stc[stc_type];
++	shared_stc = ctx->common_res.shared_stc[stc_type];
+ 
+ 	mlx5hws_action_free_single_stc(ctx, tbl_type, &shared_stc->stc_chunk);
+ 	kfree(shared_stc);
+-	ctx->common_res[tbl_type].shared_stc[stc_type] = NULL;
++	ctx->common_res.shared_stc[stc_type] = NULL;
+ 	mutex_unlock(&ctx->ctrl_lock);
  }
  
--static void mlx5_add_cq_to_tasklet(struct mlx5_core_cq *cq,
--				   struct mlx5_eqe *eqe)
-+void mlx5_add_cq_to_tasklet(struct mlx5_core_cq *cq,
-+			    struct mlx5_eqe *eqe)
+@@ -206,10 +204,10 @@ bool mlx5hws_action_check_combo(struct mlx5hws_context *ctx,
+ 				enum mlx5hws_action_type *user_actions,
+ 				enum mlx5hws_table_type table_type)
  {
- 	unsigned long flags;
- 	struct mlx5_eq_tasklet *tasklet_ctx = cq->tasklet_ctx.priv;
-@@ -84,7 +84,15 @@ static void mlx5_add_cq_to_tasklet(struct mlx5_core_cq *cq,
+-	const u32 *order_arr = action_order_arr[table_type];
++	const u32 *order_arr = action_order_arr;
++	bool valid_combo;
+ 	u8 order_idx = 0;
+ 	u8 user_idx = 0;
+-	bool valid_combo;
+ 
+ 	if (table_type >= MLX5HWS_TABLE_TYPE_MAX) {
+ 		mlx5hws_err(ctx, "Invalid table_type %d", table_type);
+@@ -321,8 +319,8 @@ int mlx5hws_action_alloc_single_stc(struct mlx5hws_context *ctx,
+ __must_hold(&ctx->ctrl_lock)
+ {
+ 	struct mlx5hws_cmd_stc_modify_attr cleanup_stc_attr = {0};
+-	struct mlx5hws_pool *stc_pool = ctx->stc_pool[table_type];
+ 	struct mlx5hws_cmd_stc_modify_attr fixup_stc_attr = {0};
++	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
+ 	bool use_fixup;
+ 	u32 obj_0_id;
+ 	int ret;
+@@ -387,8 +385,8 @@ void mlx5hws_action_free_single_stc(struct mlx5hws_context *ctx,
+ 				    struct mlx5hws_pool_chunk *stc)
+ __must_hold(&ctx->ctrl_lock)
+ {
+-	struct mlx5hws_pool *stc_pool = ctx->stc_pool[table_type];
+ 	struct mlx5hws_cmd_stc_modify_attr stc_attr = {0};
++	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
+ 	u32 obj_id;
+ 
+ 	/* Modify the STC not to point to an object */
+@@ -561,7 +559,7 @@ hws_action_create_stcs(struct mlx5hws_action *action, u32 obj_id)
+ 	if (action->flags & MLX5HWS_ACTION_FLAG_HWS_FDB) {
+ 		ret = mlx5hws_action_alloc_single_stc(ctx, &stc_attr,
+ 						      MLX5HWS_TABLE_TYPE_FDB,
+-						      &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
++						      &action->stc);
+ 		if (ret)
+ 			goto out_err;
  	}
- 	spin_unlock_irqrestore(&tasklet_ctx->lock, flags);
+@@ -585,7 +583,7 @@ hws_action_destroy_stcs(struct mlx5hws_action *action)
+ 
+ 	if (action->flags & MLX5HWS_ACTION_FLAG_HWS_FDB)
+ 		mlx5hws_action_free_single_stc(ctx, MLX5HWS_TABLE_TYPE_FDB,
+-					       &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
++					       &action->stc);
+ 
+ 	mutex_unlock(&ctx->ctrl_lock);
  }
-+EXPORT_SYMBOL(mlx5_add_cq_to_tasklet);
+@@ -1639,8 +1637,8 @@ hws_action_create_dest_match_range_table(struct mlx5hws_context *ctx,
+ 	rtc_attr.table_type = mlx5hws_table_get_res_fw_ft_type(MLX5HWS_TABLE_TYPE_FDB, false);
  
-+static void mlx5_core_cq_dummy_cb(struct mlx5_core_cq *cq, struct mlx5_eqe *eqe)
-+{
-+	mlx5_core_err(cq->eq->core.dev,
-+		      "CQ default completion callback, CQ #%u\n", cq->cqn);
-+}
-+
-+#define MLX5_CQ_INIT_CMD_SN cpu_to_be32(2 << 28)
- /* Callers must verify outbox status in case of err */
- int mlx5_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
- 		   u32 *in, int inlen, u32 *out, int outlen)
-@@ -110,10 +118,19 @@ int mlx5_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
- 	cq->arm_sn     = 0;
- 	cq->eq         = eq;
- 	cq->uid = MLX5_GET(create_cq_in, in, uid);
-+
-+	/* Kernel CQs must set the arm_db address prior to calling
-+	 * this function, allowing for the proper value to be
-+	 * initialized. User CQs are responsible for their own
-+	 * initialization since they do not use the arm_db field.
-+	 */
-+	if (cq->arm_db)
-+		*cq->arm_db = MLX5_CQ_INIT_CMD_SN;
-+
- 	refcount_set(&cq->refcount, 1);
- 	init_completion(&cq->free);
- 	if (!cq->comp)
--		cq->comp = mlx5_add_cq_to_tasklet;
-+		cq->comp = mlx5_core_cq_dummy_cb;
- 	/* assuming CQ will be deleted before the EQ */
- 	cq->tasklet_ctx.priv = &eq->tasklet_ctx;
- 	INIT_LIST_HEAD(&cq->tasklet_ctx.list);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 573a9d1ea3765..f6c15fce4a025 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -2078,7 +2078,6 @@ static int mlx5e_alloc_cq_common(struct mlx5_core_dev *mdev,
- 	mcq->set_ci_db  = cq->wq_ctrl.db.db;
- 	mcq->arm_db     = cq->wq_ctrl.db.db + 1;
- 	*mcq->set_ci_db = 0;
--	*mcq->arm_db    = 0;
- 	mcq->vector     = param->eq_ix;
- 	mcq->comp       = mlx5e_completion_event;
- 	mcq->event      = mlx5e_cq_error_event;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fpga/conn.c b/drivers/net/ethernet/mellanox/mlx5/core/fpga/conn.c
-index cb1319974f83f..ccef64fb40b66 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fpga/conn.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fpga/conn.c
-@@ -421,6 +421,13 @@ static int mlx5_fpga_conn_create_cq(struct mlx5_fpga_conn *conn, int cq_size)
- 	__be64 *pas;
- 	u32 i;
+ 	/* STC is a single resource (obj_id), use any STC for the ID */
+-	stc_pool = ctx->stc_pool[MLX5HWS_TABLE_TYPE_FDB];
+-	default_stc = ctx->common_res[MLX5HWS_TABLE_TYPE_FDB].default_stc;
++	stc_pool = ctx->stc_pool;
++	default_stc = ctx->common_res.default_stc;
+ 	obj_id = mlx5hws_pool_chunk_get_base_id(stc_pool, &default_stc->default_hit);
+ 	rtc_attr.stc_base = obj_id;
  
-+	conn->cq.mcq.cqe_sz     = 64;
-+	conn->cq.mcq.set_ci_db  = conn->cq.wq_ctrl.db.db;
-+	conn->cq.mcq.arm_db     = conn->cq.wq_ctrl.db.db + 1;
-+	*conn->cq.mcq.set_ci_db = 0;
-+	conn->cq.mcq.vector     = 0;
-+	conn->cq.mcq.comp       = mlx5_fpga_conn_cq_complete;
-+
- 	cq_size = roundup_pow_of_two(cq_size);
- 	MLX5_SET(cqc, temp_cqc, log_cq_size, ilog2(cq_size));
+@@ -1731,7 +1729,7 @@ hws_action_create_dest_match_range_fill_table(struct mlx5hws_context *ctx,
+ 	ste_attr.used_id_rtc_0 = &used_rtc_0_id;
+ 	ste_attr.used_id_rtc_1 = &used_rtc_1_id;
  
-@@ -468,15 +475,7 @@ static int mlx5_fpga_conn_create_cq(struct mlx5_fpga_conn *conn, int cq_size)
- 	if (err)
- 		goto err_cqwq;
+-	common_res = &ctx->common_res[MLX5HWS_TABLE_TYPE_FDB];
++	common_res = &ctx->common_res;
  
--	conn->cq.mcq.cqe_sz     = 64;
--	conn->cq.mcq.set_ci_db  = conn->cq.wq_ctrl.db.db;
--	conn->cq.mcq.arm_db     = conn->cq.wq_ctrl.db.db + 1;
--	*conn->cq.mcq.set_ci_db = 0;
--	*conn->cq.mcq.arm_db    = 0;
--	conn->cq.mcq.vector     = 0;
--	conn->cq.mcq.comp       = mlx5_fpga_conn_cq_complete;
- 	tasklet_setup(&conn->cq.tasklet, mlx5_fpga_conn_cq_tasklet);
--
- 	mlx5_fpga_dbg(fdev, "Created CQ #0x%x\n", conn->cq.mcq.cqn);
+ 	/* init an empty match STE which will always hit */
+ 	ste_attr.wqe_ctrl = &wqe_ctrl;
+@@ -1750,7 +1748,7 @@ hws_action_create_dest_match_range_fill_table(struct mlx5hws_context *ctx,
+ 	wqe_ctrl.stc_ix[MLX5HWS_ACTION_STC_IDX_CTRL] |=
+ 		htonl(MLX5HWS_ACTION_STC_IDX_LAST_COMBO2 << 29);
+ 	wqe_ctrl.stc_ix[MLX5HWS_ACTION_STC_IDX_HIT] =
+-		htonl(hit_ft_action->stc[MLX5HWS_TABLE_TYPE_FDB].offset);
++		htonl(hit_ft_action->stc.offset);
  
- 	goto out;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
-index 34e64c1d11437..645d329367760 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
-@@ -1049,12 +1049,6 @@ static int dr_prepare_qp_to_rts(struct mlx5dr_domain *dmn)
- 	return 0;
- }
+ 	wqe_data_arr = (__force __be32 *)&range_wqe_data;
  
--static void dr_cq_complete(struct mlx5_core_cq *mcq,
--			   struct mlx5_eqe *eqe)
--{
--	pr_err("CQ completion CQ: #%u\n", mcq->cqn);
--}
--
- static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
- 				      struct mlx5_uars_page *uar,
- 				      size_t ncqe)
-@@ -1089,6 +1083,13 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
- 		cqe->op_own = MLX5_CQE_INVALID << 4 | MLX5_CQE_OWNER_MASK;
+@@ -1843,7 +1841,7 @@ mlx5hws_action_create_dest_match_range(struct mlx5hws_context *ctx,
+ 	stc_attr.ste_table.match_definer_id = ctx->caps->trivial_match_definer;
+ 
+ 	ret = mlx5hws_action_alloc_single_stc(ctx, &stc_attr, MLX5HWS_TABLE_TYPE_FDB,
+-					      &action->stc[MLX5HWS_TABLE_TYPE_FDB]);
++					      &action->stc);
+ 	if (ret)
+ 		goto error_unlock;
+ 
+@@ -1970,8 +1968,8 @@ __must_hold(&ctx->ctrl_lock)
+ 	struct mlx5hws_action_default_stc *default_stc;
+ 	int ret;
+ 
+-	if (ctx->common_res[tbl_type].default_stc) {
+-		ctx->common_res[tbl_type].default_stc->refcount++;
++	if (ctx->common_res.default_stc) {
++		ctx->common_res.default_stc->refcount++;
+ 		return 0;
  	}
  
-+	cq->mcq.cqe_sz = 64;
-+	cq->mcq.set_ci_db = cq->wq_ctrl.db.db;
-+	cq->mcq.arm_db = cq->wq_ctrl.db.db + 1;
-+	*cq->mcq.set_ci_db = 0;
-+	cq->mcq.vector = 0;
-+	cq->mdev = mdev;
-+
- 	inlen = MLX5_ST_SZ_BYTES(create_cq_in) +
- 		sizeof(u64) * cq->wq_ctrl.buf.npages;
- 	in = kvzalloc(inlen, GFP_KERNEL);
-@@ -1112,27 +1113,12 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
- 	pas = (__be64 *)MLX5_ADDR_OF(create_cq_in, in, pas);
- 	mlx5_fill_page_frag_array(&cq->wq_ctrl.buf, pas);
+@@ -2023,8 +2021,8 @@ __must_hold(&ctx->ctrl_lock)
+ 		goto free_nop_dw7;
+ 	}
  
--	cq->mcq.comp  = dr_cq_complete;
--
- 	err = mlx5_core_create_cq(mdev, &cq->mcq, in, inlen, out, sizeof(out));
- 	kvfree(in);
+-	ctx->common_res[tbl_type].default_stc = default_stc;
+-	ctx->common_res[tbl_type].default_stc->refcount++;
++	ctx->common_res.default_stc = default_stc;
++	ctx->common_res.default_stc->refcount++;
  
- 	if (err)
- 		goto err_cqwq;
- 
--	cq->mcq.cqe_sz = 64;
--	cq->mcq.set_ci_db = cq->wq_ctrl.db.db;
--	cq->mcq.arm_db = cq->wq_ctrl.db.db + 1;
--	*cq->mcq.set_ci_db = 0;
--
--	/* set no-zero value, in order to avoid the HW to run db-recovery on
--	 * CQ that used in polling mode.
--	 */
--	*cq->mcq.arm_db = cpu_to_be32(2 << 28);
--
--	cq->mcq.vector = 0;
--	cq->mdev = mdev;
--
- 	return cq;
- 
- err_cqwq:
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
-index 7312f042d41eb..6911ce4138836 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_send.c
-@@ -748,12 +748,6 @@ static int hws_send_ring_open_sq(struct mlx5hws_context *ctx,
- 	return err;
- }
- 
--static void hws_cq_complete(struct mlx5_core_cq *mcq,
--			    struct mlx5_eqe *eqe)
--{
--	pr_err("CQ completion CQ: #%u\n", mcq->cqn);
--}
--
- static int hws_send_ring_alloc_cq(struct mlx5_core_dev *mdev,
- 				  int numa_node,
- 				  struct mlx5hws_send_engine *queue,
-@@ -776,7 +770,6 @@ static int hws_send_ring_alloc_cq(struct mlx5_core_dev *mdev,
- 	mcq->cqe_sz = 64;
- 	mcq->set_ci_db = cq->wq_ctrl.db.db;
- 	mcq->arm_db = cq->wq_ctrl.db.db + 1;
--	mcq->comp = hws_cq_complete;
- 
- 	for (i = 0; i < mlx5_cqwq_get_size(&cq->wq); i++) {
- 		cqe = mlx5_cqwq_get_wqe(&cq->wq, i);
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 6b8e9da15ed0b..ac4aa2e29fcc0 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -573,6 +573,8 @@ static int cq_create(struct mlx5_vdpa_net *ndev, u16 idx, u32 num_ent)
- 	vcq->mcq.set_ci_db = vcq->db.db;
- 	vcq->mcq.arm_db = vcq->db.db + 1;
- 	vcq->mcq.cqe_sz = 64;
-+	vcq->mcq.comp = mlx5_vdpa_cq_comp;
-+	vcq->cqe = num_ent;
- 
- 	err = cq_frag_buf_alloc(ndev, &vcq->buf, num_ent);
- 	if (err)
-@@ -612,10 +614,6 @@ static int cq_create(struct mlx5_vdpa_net *ndev, u16 idx, u32 num_ent)
- 	if (err)
- 		goto err_vec;
- 
--	vcq->mcq.comp = mlx5_vdpa_cq_comp;
--	vcq->cqe = num_ent;
--	vcq->mcq.set_ci_db = vcq->db.db;
--	vcq->mcq.arm_db = vcq->db.db + 1;
- 	mlx5_cq_arm(&mvq->cq.mcq, MLX5_CQ_DB_REQ_NOT, uar_page, mvq->cq.mcq.cons_index);
- 	kfree(in);
  	return 0;
-diff --git a/include/linux/mlx5/cq.h b/include/linux/mlx5/cq.h
-index 7ef2c7c7d803d..9d47cdc727ad0 100644
---- a/include/linux/mlx5/cq.h
-+++ b/include/linux/mlx5/cq.h
-@@ -183,6 +183,7 @@ static inline void mlx5_cq_put(struct mlx5_core_cq *cq)
- 		complete(&cq->free);
+ 
+@@ -2046,9 +2044,7 @@ __must_hold(&ctx->ctrl_lock)
+ {
+ 	struct mlx5hws_action_default_stc *default_stc;
+ 
+-	default_stc = ctx->common_res[tbl_type].default_stc;
+-
+-	default_stc = ctx->common_res[tbl_type].default_stc;
++	default_stc = ctx->common_res.default_stc;
+ 	if (--default_stc->refcount)
+ 		return;
+ 
+@@ -2058,7 +2054,7 @@ __must_hold(&ctx->ctrl_lock)
+ 	mlx5hws_action_free_single_stc(ctx, tbl_type, &default_stc->nop_dw5);
+ 	mlx5hws_action_free_single_stc(ctx, tbl_type, &default_stc->nop_ctr);
+ 	kfree(default_stc);
+-	ctx->common_res[tbl_type].default_stc = NULL;
++	ctx->common_res.default_stc = NULL;
  }
  
-+void mlx5_add_cq_to_tasklet(struct mlx5_core_cq *cq, struct mlx5_eqe *eqe);
- int mlx5_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
- 		   u32 *in, int inlen, u32 *out, int outlen);
- int mlx5_core_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
+ static void hws_action_modify_write(struct mlx5hws_send_engine *queue,
+@@ -2150,8 +2146,7 @@ hws_action_apply_stc(struct mlx5hws_actions_apply_data *apply,
+ {
+ 	struct mlx5hws_action *action = apply->rule_action[action_idx].action;
+ 
+-	apply->wqe_ctrl->stc_ix[stc_idx] =
+-		htonl(action->stc[apply->tbl_type].offset);
++	apply->wqe_ctrl->stc_ix[stc_idx] = htonl(action->stc.offset);
+ }
+ 
+ static void
+@@ -2181,7 +2176,7 @@ hws_action_setter_modify_header(struct mlx5hws_actions_apply_data *apply,
+ 	rule_action = &apply->rule_action[setter->idx_double];
+ 	action = rule_action->action;
+ 
+-	stc_idx = htonl(action->stc[apply->tbl_type].offset);
++	stc_idx = htonl(action->stc.offset);
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
+ 
+@@ -2240,7 +2235,7 @@ hws_action_setter_insert_ptr(struct mlx5hws_actions_apply_data *apply,
+ 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW6] = 0;
+ 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW7] = htonl(arg_idx);
+ 
+-	stc_idx = htonl(action->stc[apply->tbl_type].offset);
++	stc_idx = htonl(action->stc.offset);
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
+ 
+@@ -2272,7 +2267,7 @@ hws_action_setter_tnl_l3_to_l2(struct mlx5hws_actions_apply_data *apply,
+ 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW6] = 0;
+ 	apply->wqe_data[MLX5HWS_ACTION_OFFSET_DW7] = htonl(arg_idx);
+ 
+-	stc_idx = htonl(action->stc[apply->tbl_type].offset);
++	stc_idx = htonl(action->stc.offset);
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW6] = stc_idx;
+ 	apply->wqe_ctrl->stc_ix[MLX5HWS_ACTION_STC_IDX_DW7] = 0;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
+index 2de7c3c842f64..2283eefeb2233 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_action.h
+@@ -124,7 +124,7 @@ struct mlx5hws_action {
+ 	struct mlx5hws_context *ctx;
+ 	union {
+ 		struct {
+-			struct mlx5hws_pool_chunk stc[MLX5HWS_TABLE_TYPE_MAX];
++			struct mlx5hws_pool_chunk stc;
+ 			union {
+ 				struct {
+ 					u32 pat_id;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
+index 2c7b14172049b..7b8eefead1a02 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_cmd.c
+@@ -359,7 +359,7 @@ void mlx5hws_cmd_set_attr_connect_miss_tbl(struct mlx5hws_context *ctx,
+ 	ft_attr->type = fw_ft_type;
+ 	ft_attr->table_miss_action = MLX5_IFC_MODIFY_FLOW_TABLE_MISS_ACTION_GOTO_TBL;
+ 
+-	default_miss_tbl = ctx->common_res[type].default_miss->ft_id;
++	default_miss_tbl = ctx->common_res.default_miss->ft_id;
+ 	if (!default_miss_tbl) {
+ 		pr_warn("HWS: no flow table ID for default miss\n");
+ 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
+index 00e4fdf4a558b..a4cc81849ebe2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.c
+@@ -23,7 +23,6 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
+ 	struct mlx5hws_pool_attr pool_attr = {0};
+ 	u8 max_log_sz;
+ 	int ret;
+-	int i;
+ 
+ 	ret = mlx5hws_pat_init_pattern_cache(&ctx->pattern_cache);
+ 	if (ret)
+@@ -39,23 +38,17 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
+ 	max_log_sz = min(MLX5HWS_POOL_STC_LOG_SZ, ctx->caps->stc_alloc_log_max);
+ 	pool_attr.alloc_log_sz = max(max_log_sz, ctx->caps->stc_alloc_log_gran);
+ 
+-	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
+-		pool_attr.table_type = i;
+-		ctx->stc_pool[i] = mlx5hws_pool_create(ctx, &pool_attr);
+-		if (!ctx->stc_pool[i]) {
+-			mlx5hws_err(ctx, "Failed to allocate STC pool [%d]", i);
+-			ret = -ENOMEM;
+-			goto free_stc_pools;
+-		}
++	pool_attr.table_type = MLX5HWS_TABLE_TYPE_FDB;
++	ctx->stc_pool = mlx5hws_pool_create(ctx, &pool_attr);
++	if (!ctx->stc_pool) {
++		mlx5hws_err(ctx, "Failed to allocate STC pool\n");
++		ret = -ENOMEM;
++		goto uninit_cache;
+ 	}
+ 
+ 	return 0;
+ 
+-free_stc_pools:
+-	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++)
+-		if (ctx->stc_pool[i])
+-			mlx5hws_pool_destroy(ctx->stc_pool[i]);
+-
++uninit_cache:
+ 	mlx5hws_definer_uninit_cache(ctx->definer_cache);
+ uninit_pat_cache:
+ 	mlx5hws_pat_uninit_pattern_cache(ctx->pattern_cache);
+@@ -64,12 +57,8 @@ static int hws_context_pools_init(struct mlx5hws_context *ctx)
+ 
+ static void hws_context_pools_uninit(struct mlx5hws_context *ctx)
+ {
+-	int i;
+-
+-	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
+-		if (ctx->stc_pool[i])
+-			mlx5hws_pool_destroy(ctx->stc_pool[i]);
+-	}
++	if (ctx->stc_pool)
++		mlx5hws_pool_destroy(ctx->stc_pool);
+ 
+ 	mlx5hws_definer_uninit_cache(ctx->definer_cache);
+ 	mlx5hws_pat_uninit_pattern_cache(ctx->pattern_cache);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
+index 8ab548aa402be..6cd3c613eac18 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_context.h
+@@ -37,8 +37,8 @@ struct mlx5hws_context {
+ 	struct mlx5_core_dev *mdev;
+ 	struct mlx5hws_cmd_query_caps *caps;
+ 	u32 pd_num;
+-	struct mlx5hws_pool *stc_pool[MLX5HWS_TABLE_TYPE_MAX];
+-	struct mlx5hws_context_common_res common_res[MLX5HWS_TABLE_TYPE_MAX];
++	struct mlx5hws_pool *stc_pool;
++	struct mlx5hws_context_common_res common_res;
+ 	struct mlx5hws_pattern_cache *pattern_cache;
+ 	struct mlx5hws_definer_cache *definer_cache;
+ 	struct mutex ctrl_lock; /* control lock to protect the whole context */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
+index 2b8c5a4e1c4c0..0ec60c25596dd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
+@@ -368,9 +368,10 @@ static int hws_debug_dump_context_info(struct seq_file *f, struct mlx5hws_contex
+ 
+ static int hws_debug_dump_context_stc_resource(struct seq_file *f,
+ 					       struct mlx5hws_context *ctx,
+-					       u32 tbl_type,
+ 					       struct mlx5hws_pool_resource *resource)
+ {
++	u32 tbl_type = MLX5HWS_TABLE_TYPE_BASE + MLX5HWS_TABLE_TYPE_FDB;
++
+ 	seq_printf(f, "%d,0x%llx,%u,%u\n",
+ 		   MLX5HWS_DEBUG_RES_TYPE_CONTEXT_STC,
+ 		   HWS_PTR_TO_ID(ctx),
+@@ -382,31 +383,22 @@ static int hws_debug_dump_context_stc_resource(struct seq_file *f,
+ 
+ static int hws_debug_dump_context_stc(struct seq_file *f, struct mlx5hws_context *ctx)
+ {
+-	struct mlx5hws_pool *stc_pool;
+-	u32 table_type;
++	struct mlx5hws_pool *stc_pool = ctx->stc_pool;
+ 	int ret;
+-	int i;
+-
+-	for (i = 0; i < MLX5HWS_TABLE_TYPE_MAX; i++) {
+-		stc_pool = ctx->stc_pool[i];
+-		table_type = MLX5HWS_TABLE_TYPE_BASE + i;
+ 
+-		if (!stc_pool)
+-			continue;
++	if (!stc_pool)
++		return 0;
+ 
+-		if (stc_pool->resource[0]) {
+-			ret = hws_debug_dump_context_stc_resource(f, ctx, table_type,
+-								  stc_pool->resource[0]);
+-			if (ret)
+-				return ret;
+-		}
++	if (stc_pool->resource[0]) {
++		ret = hws_debug_dump_context_stc_resource(f, ctx, stc_pool->resource[0]);
++		if (ret)
++			return ret;
++	}
+ 
+-		if (i == MLX5HWS_TABLE_TYPE_FDB && stc_pool->mirror_resource[0]) {
+-			ret = hws_debug_dump_context_stc_resource(f, ctx, table_type,
+-								  stc_pool->mirror_resource[0]);
+-			if (ret)
+-				return ret;
+-		}
++	if (stc_pool->mirror_resource[0]) {
++		ret = hws_debug_dump_context_stc_resource(f, ctx, stc_pool->mirror_resource[0]);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
+index ce541c60c5b49..e4b24996bb74c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
+@@ -310,8 +310,8 @@ static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
+ 	hws_matcher_set_rtc_attr_sz(matcher, &rtc_attr, rtc_type, false);
+ 
+ 	/* STC is a single resource (obj_id), use any STC for the ID */
+-	stc_pool = ctx->stc_pool[tbl->type];
+-	default_stc = ctx->common_res[tbl->type].default_stc;
++	stc_pool = ctx->stc_pool;
++	default_stc = ctx->common_res.default_stc;
+ 	obj_id = mlx5hws_pool_chunk_get_base_id(stc_pool, &default_stc->default_hit);
+ 	rtc_attr.stc_base = obj_id;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
+index 8a011b958b431..a40c66410585b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
+@@ -315,7 +315,7 @@ static void hws_rule_create_init(struct mlx5hws_rule *rule,
+ 
+ 	/* Init default action apply */
+ 	apply->tbl_type = tbl->type;
+-	apply->common_res = &ctx->common_res[tbl->type];
++	apply->common_res = &ctx->common_res;
+ 	apply->jump_to_action_stc = matcher->action_ste[0].stc.offset;
+ 	apply->require_dep = 0;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
+index 6544d2fcb48ba..0f413547e89b8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_table.c
+@@ -49,8 +49,8 @@ __must_hold(&tbl->ctx->ctrl_lock)
+ 	if (tbl->type != MLX5HWS_TABLE_TYPE_FDB)
+ 		return 0;
+ 
+-	if (ctx->common_res[tbl_type].default_miss) {
+-		ctx->common_res[tbl_type].default_miss->refcount++;
++	if (ctx->common_res.default_miss) {
++		ctx->common_res.default_miss->refcount++;
+ 		return 0;
+ 	}
+ 
+@@ -71,8 +71,8 @@ __must_hold(&tbl->ctx->ctrl_lock)
+ 		return -EINVAL;
+ 	}
+ 
+-	ctx->common_res[tbl_type].default_miss = default_miss;
+-	ctx->common_res[tbl_type].default_miss->refcount++;
++	ctx->common_res.default_miss = default_miss;
++	ctx->common_res.default_miss->refcount++;
+ 
+ 	return 0;
+ }
+@@ -83,17 +83,16 @@ __must_hold(&tbl->ctx->ctrl_lock)
+ {
+ 	struct mlx5hws_cmd_forward_tbl *default_miss;
+ 	struct mlx5hws_context *ctx = tbl->ctx;
+-	u8 tbl_type = tbl->type;
+ 
+ 	if (tbl->type != MLX5HWS_TABLE_TYPE_FDB)
+ 		return;
+ 
+-	default_miss = ctx->common_res[tbl_type].default_miss;
++	default_miss = ctx->common_res.default_miss;
+ 	if (--default_miss->refcount)
+ 		return;
+ 
+ 	mlx5hws_cmd_forward_tbl_destroy(ctx->mdev, default_miss);
+-	ctx->common_res[tbl_type].default_miss = NULL;
++	ctx->common_res.default_miss = NULL;
+ }
+ 
+ static int hws_table_connect_to_default_miss_tbl(struct mlx5hws_table *tbl, u32 ft_id)
 -- 
 2.53.0
 
