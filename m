@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B6A377A92;
-	Sat, 17 Oct 2026 16:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28348377A92;
+	Sat, 17 Oct 2026 16:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253849; cv=none; b=VY8eGTmONvgEDEGqAOt/0Fk2VIwrLSBRYE9epyJ09tTidQJ4QtZFmo51mjgSnt+qoIxs+/VEb7mYHH60PIJtpYTh95a0Ix8fQF0hkYPUm7/qFtWV/Y1b1DwnDnkf4LG+Z0HifF7uy4lk69BlrNS2Nw60RiQ74qr81Al+e23kpO0=
+	t=1792253852; cv=none; b=jFbydvYgxX38cgZ4SLyr9FVR8QxioUPDS979K3TSvkNbFcwtaKnHpzoaGEvRJyuesferJBzw226cBmocKMZt4Dc/xjeBD0mjjTt76+PPpp/zX7WcOEVuSA8EctEEuoTjX2zMjNQeQHTkSt3FJ2GV1OJo4z39o+MY9oOHansEe3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253849; c=relaxed/simple;
-	bh=3w4XWKWXydLFT27mUOWFBQKeMUM0jdQLa/M8OaKdmo4=;
+	s=arc-20240116; t=1792253852; c=relaxed/simple;
+	bh=Jj1jaPW/nPniEKUTLtMG1GM9TuoLRESWGOtaSvVxn24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPKqi04M68yRwuAbQG/Y6daKu6PUaT72B4PLGVF+ucHAfJbMrQqOEhLOSccz5ju2zRBuyxjyPGDij/AljlzY+8EQ/uwDJkVXrQZYjpzMqR4YHBVrDeIbszd8KZKprh6JBDrsvKUIwHQirg98erET+G4tUm9P9U3+RePLq6+yjtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyG8OXW6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WAoMRUu9mNlDZD5yYDZ9Vle4PnFsFOrWvP3rQUz/cv4ghN/l+zQnnaGtC5RAJ4h/eTMSugrDuoVbmtTVSmNC4SjLHndVai1JXPW2JR3Termnzw5JS+hg1m8xpZFHrdQnTdVny89rPdCPkIf/txCtFg5MjuWk2j7Q5B9hEEELbBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu5M3QCN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyG8OXW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776D41F000C4;
-	Sat, 17 Oct 2026 16:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu5M3QCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6DC1F000C4;
+	Sat, 17 Oct 2026 16:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253848;
-	bh=ckILJFL2MQQ2v1HWni3+dTA/yhAelXtCD55x2/iLr7U=;
+	s=korg; t=1792253851;
+	bh=jouX9c7xv0JBTCOEPfu0MjUzIk6RpAd8awhduqp2WTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyG8OXW6upNjzgwhnFa+WulGm30mB0OnR0939C4C3cr3LCmDqUtb36kYkAGuQNy5n
-	 4tnjyip+SwFBtugsAlfSFEAJb0H6r6GvYYXzod7m53cyHcTRoPGILtcASFZEKVJ4L5
-	 JemJ+YmA92TJG151sXdMkNiJ41ArIFZw/LaJEbZ4=
+	b=wu5M3QCNxV8sMFLhjzP6baTopXfjBXKcVdcbZIb1L2kTWlMhDQU8lHj6tHL6OuLlU
+	 EgccgrQeXMsuJDiEeUS+v9ayzdrnQEgEwVynR1AHJfPaH/j63BK87qDMy8xv0fWBsS
+	 eqHeqN/LGX8emQ0ZRxIhEqNhZ22XZFq22qxSpUbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heinz Mauelshagen <heinzm@redhat.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/869] md raid: fix hang when stopping arrays with metadata through dm-raid
-Date: Sat, 17 Oct 2026 17:51:35 +0200
-Message-ID: <20261017160043.570018333@linuxfoundation.org>
+Subject: [PATCH 6.12 255/869] media: v4l2-mem2mem: Add a kref to the v4l2_m2m_dev structure
+Date: Sat, 17 Oct 2026 17:51:36 +0200
+Message-ID: <20261017160043.595803258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,74 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heinz Mauelshagen <heinzm@redhat.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit cefcb9297fbdb6d94b61787b4f8d84f55b741470 ]
+[ Upstream commit db6b97a4f8041e479be9ef4b8b07022636c96f50 ]
 
-When using device-mapper's dm-raid target, stopping a RAID array can cause
-the system to hang under specific conditions.
+Adding a reference count to the v4l2_m2m_dev structure allow safely
+sharing it across multiple hardware nodes. This can be used to prevent
+running jobs concurrently on m2m cores that have some internal resource
+sharing.
 
-This occurs when:
-
-- A dm-raid managed device tree is suspended from top to bottom
-   (the top-level RAID device is suspended first, followed by its
-    underlying metadata and data devices)
-
-- The top-level RAID device is then removed
-
-Removing the top-level device triggers a hang in the following sequence:
-the dm-raid destructor calls md_stop(), which tries to flush the
-write-intent bitmap by writing to the metadata sub-devices. However, these
-devices are already suspended, making them unable to complete the write-intent
-operations and causing an indefinite block.
-
-Fix:
-
-- Prevent bitmap flushing when md_stop() is called from dm-raid
-destructor context
-  and avoid a quiescing/unquescing cycle which could also cause I/O
-
-- Still allow write-intent bitmap flushing when called from dm-raid
-suspend context
-
-This ensures that RAID array teardown can complete successfully even when the
-underlying devices are in a suspended state.
-
-This second patch uses md_is_rdwr() to distinguish between suspend and
-destructor paths as elaborated on above.
-
-Link: https://lore.kernel.org/linux-raid/CAM23VxqYrwkhKEBeQrZeZwQudbiNey2_8B_SEOLqug=pXxaFrA@mail.gmail.com
-Signed-off-by: Heinz Mauelshagen <heinzm@redhat.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: fix typos in v4l2_m2m_put documentation]
+Stable-dep-of: e0203ddf9af7 ("media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/media/v4l2-core/v4l2-mem2mem.c | 23 +++++++++++++++++++++++
+ include/media/v4l2-mem2mem.h           | 21 +++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index a6f71253511cf..55632055196f0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -6484,12 +6484,14 @@ static void __md_stop_writes(struct mddev *mddev)
- {
- 	del_timer_sync(&mddev->safemode_timer);
+diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
+index eb22d6172462d..85006fb18f720 100644
+--- a/drivers/media/v4l2-core/v4l2-mem2mem.c
++++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
+@@ -90,6 +90,7 @@ static const char * const m2m_entity_name[] = {
+  * @job_work:		worker to run queued jobs.
+  * @job_queue_flags:	flags of the queue status, %QUEUE_PAUSED.
+  * @m2m_ops:		driver callbacks
++ * @kref:		device reference count
+  */
+ struct v4l2_m2m_dev {
+ 	struct v4l2_m2m_ctx	*curr_ctx;
+@@ -109,6 +110,8 @@ struct v4l2_m2m_dev {
+ 	unsigned long		job_queue_flags;
  
--	if (mddev->pers && mddev->pers->quiesce) {
--		mddev->pers->quiesce(mddev, 1);
--		mddev->pers->quiesce(mddev, 0);
--	}
-+	if (md_is_rdwr(mddev) || !mddev_is_dm(mddev)) {
-+		if (mddev->pers && mddev->pers->quiesce) {
-+			mddev->pers->quiesce(mddev, 1);
-+			mddev->pers->quiesce(mddev, 0);
-+		}
+ 	const struct v4l2_m2m_ops *m2m_ops;
++
++	struct kref kref;
+ };
  
--	mddev->bitmap_ops->flush(mddev);
-+		mddev->bitmap_ops->flush(mddev);
-+	}
+ static struct v4l2_m2m_queue_ctx *get_queue_ctx(struct v4l2_m2m_ctx *m2m_ctx,
+@@ -1210,6 +1213,7 @@ struct v4l2_m2m_dev *v4l2_m2m_init(const struct v4l2_m2m_ops *m2m_ops)
+ 	INIT_LIST_HEAD(&m2m_dev->job_queue);
+ 	spin_lock_init(&m2m_dev->job_spinlock);
+ 	INIT_WORK(&m2m_dev->job_work, v4l2_m2m_device_run_work);
++	kref_init(&m2m_dev->kref);
  
- 	if (md_is_rdwr(mddev) &&
- 	    ((!mddev->in_sync && !mddev_is_clustered(mddev)) ||
+ 	return m2m_dev;
+ }
+@@ -1221,6 +1225,25 @@ void v4l2_m2m_release(struct v4l2_m2m_dev *m2m_dev)
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_release);
+ 
++void v4l2_m2m_get(struct v4l2_m2m_dev *m2m_dev)
++{
++	kref_get(&m2m_dev->kref);
++}
++EXPORT_SYMBOL_GPL(v4l2_m2m_get);
++
++static void v4l2_m2m_release_from_kref(struct kref *kref)
++{
++	struct v4l2_m2m_dev *m2m_dev = container_of(kref, struct v4l2_m2m_dev, kref);
++
++	v4l2_m2m_release(m2m_dev);
++}
++
++void v4l2_m2m_put(struct v4l2_m2m_dev *m2m_dev)
++{
++	kref_put(&m2m_dev->kref, v4l2_m2m_release_from_kref);
++}
++EXPORT_SYMBOL_GPL(v4l2_m2m_put);
++
+ struct v4l2_m2m_ctx *v4l2_m2m_ctx_init(struct v4l2_m2m_dev *m2m_dev,
+ 		void *drv_priv,
+ 		int (*queue_init)(void *priv, struct vb2_queue *src_vq, struct vb2_queue *dst_vq))
+diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
+index 2e55a13ed3bb8..1f10f63ef3803 100644
+--- a/include/media/v4l2-mem2mem.h
++++ b/include/media/v4l2-mem2mem.h
+@@ -544,6 +544,27 @@ v4l2_m2m_register_media_controller(struct v4l2_m2m_dev *m2m_dev,
+  */
+ void v4l2_m2m_release(struct v4l2_m2m_dev *m2m_dev);
+ 
++/**
++ * v4l2_m2m_get() - take a reference to the m2m_dev structure
++ *
++ * @m2m_dev: opaque pointer to the internal data to handle M2M context
++ *
++ * This is used to share the M2M device across multiple devices. This
++ * can be used to avoid scheduling two hardware nodes concurrently.
++ */
++void v4l2_m2m_get(struct v4l2_m2m_dev *m2m_dev);
++
++/**
++ * v4l2_m2m_put() - remove a reference to the m2m_dev structure
++ *
++ * @m2m_dev: opaque pointer to the internal data to handle M2M context
++ *
++ * Once the M2M device has no more references, v4l2_m2m_release() will be
++ * called automatically. Users of this method should never call
++ * v4l2_m2m_release() directly. See v4l2_m2m_get() for more details.
++ */
++void v4l2_m2m_put(struct v4l2_m2m_dev *m2m_dev);
++
+ /**
+  * v4l2_m2m_ctx_init() - allocate and initialize a m2m context
+  *
 -- 
 2.53.0
 
