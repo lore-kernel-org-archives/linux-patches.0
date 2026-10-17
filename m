@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1293A380C;
-	Sat, 17 Oct 2026 18:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FF23C4B8D;
+	Sat, 17 Oct 2026 18:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260751; cv=none; b=d69SaaXXq74AT9q7b6YizgVm1JgP8Q6o7hF3anR6RnGLSaTg90P6r9Mmo8LE7E8h+iDOr6tIR+lYZ18s6ZgVzA8jqKiR/PPd8FgwPW2v060PV0I6ml8I1eXRwRpH2ij+9M+q2oQUJZPKizEZz8wHrS42DIBUtqSewj/3geErGQk=
+	t=1792260753; cv=none; b=cEeMiUuyfg6HoZhnYEu1j+WUN1aQs6N36UJs64cTcSkPl0z0sFe+91MBiJORGaUgKB6wHWZ8eeMVnq7SVMw4DVfoUdnc5KAzA9tN/o/o41VtdYSo4Nd+pVQM0cfqQw7VINcvlVtYKB/QJqP6AFEwQ58N1DIhDIZZXcrOLogaFYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260751; c=relaxed/simple;
-	bh=TCrHk6iUCJwerp1o62JFUc4sOfEC4xVLZsLMiLiXHJ0=;
+	s=arc-20240116; t=1792260753; c=relaxed/simple;
+	bh=s/5C/HOcYaDzj1DD99024WNbinNip6jqiYbHyuOC6H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipThUzKjVVR1XXzFAfdllxhwT9FXNNNwVzpl5Qz+MseLqbdxR2as6D2uOAbO9usBpOjkH5IR0Hxg13RPmQMUCpTMODuOSbEf5dvlN1vgkPpAfK228YYT+/NOKydxOskuFEXPWN+QeNSWqLOKkjrTSCU/FC0NID7WKMkKaQl+A8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2B+XWTDF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUTsNBxwv/IV2vSSOMPkaLx03iCroMm3+WeJjGKnAVmZvdIrTqf6xF1tl7VESuLmP0SZwnSkrvplLsQHYvv8BNjLhaz0s/OTXUg0hh1aJ4LmwM/CKNHIC5SdyOSQ0SmxKIAqq6zP5xncxI59f2zf0sgfmsNeZTlNp6taNWbIEvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps4kt3QO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2B+XWTDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264E71F000C4;
-	Sat, 17 Oct 2026 18:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps4kt3QO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0FB1F000C4;
+	Sat, 17 Oct 2026 18:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260749;
-	bh=6u+RwZorNHBeoNuhRYbWBLsPt4vD7GnRG25ShY39fKs=;
+	s=korg; t=1792260752;
+	bh=2TkwcYDSVX1NyCbpALW9KlZYcvxNVaQcIbxmro7zo0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2B+XWTDFggxnCGV/SW3IrOIMq8U5kJ1fEQ83rg6ruuFBV5SKPiwJlITVlEWHHxPIo
-	 hd+M0s/4HdU1F5c06vDjd8++Z81T2vDDdJOt0XCPQ0gL0YUeFe/e4X2CoZ2H2RsIHm
-	 jLvn4n0b25hv/YEEBedNQAxYBKnutcHVzqP+127w=
+	b=ps4kt3QOjmilPkExNMOGF1mWF4W+RES8PuCKvM7bF7NyDT55HsNr4FJjCFCsin3HE
+	 9XfwxYCV3mgI6ZoAA/l3UykNj2nI8hR/xwfNkKr7l9BVsaOVgsOF9L5jBIHE6S9Hg8
+	 7GDjsvEoJajwBSf+ovcoi3k/tc+KCY8CjCxsyDv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3d99fb01bcd740f2fc1e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1648/1674] igmp: convert struct ip_sf_list to RCU
-Date: Sat, 17 Oct 2026 18:05:20 +0200
-Message-ID: <20261017160513.371919231@linuxfoundation.org>
+Subject: [PATCH 6.6 1649/1674] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
+Date: Sat, 17 Oct 2026 18:05:21 +0200
+Message-ID: <20261017160513.396983197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,584 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 2987ee196c88dbde0463dc87d5fb209c684e34a2 ]
+[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
 
-Commit 23d2b94043ca ("igmp: Add ip_mc_list lock in ip_check_mc_rcu")
-added spin_lock_bh(&im->lock) to ip_check_mc_rcu() to prevent a
-use-after-free while iterating im->sources during concurrent deletions.
+l2cap_chan_connect() tries to ensure there are no more than
+L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
+same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
 
-However, ip_check_mc_rcu() is called from RCU read-side critical
-sections in packet receive and route lookup fast paths (e.g.
-__mkroute_output(), ip_route_input_rcu(), and __udp4_lib_rcv()).
+However, the check only counts deferred channels.  If 6 L2CAP sockets
+are connected at the same time in order DDDDND (D=deferred,
+N=non-deferred), the last can bump the total to max+1.  It results to
+one __le16 written out of bounds of the scid array, and an invalid
+ECRED_CONN_REQ being sent.
 
-When igmpv3_send_cr() or igmpv3_send_report() holds &pmc->lock and
-calls add_grec() -> igmpv3_newpack() -> ip_route_output_ports(),
-an XFRM policy matching a multicast destination triggers
-xfrm_tmpl_resolve_one() -> xfrm4_get_saddr() -> __mkroute_output() ->
-ip_check_mc_rcu(). This attempts to acquire &im->lock while &pmc->lock
-is already held on the same CPU, triggering a lockdep recursive locking
-warning / deadlock.
+Fix by leaving room for the non-deferred pending ECRED channels in the
+counting in l2cap_chan_connect(), so the limit can't be exceeded.
 
-Fix this by converting IPv4 struct ip_sf_list to RCU, mirroring the
-IPv6 implementation in net/ipv6/mcast.c:
+Move counting under same critical section where the channel is added.
+Although race conditions involving this appear unreachable, it's easier
+to see.
 
-1. Add struct rcu_head to struct ip_sf_list and annotate sf_next,
-   sources, and tomb as __rcu pointers.
-2. Use rcu_assign_pointer() and kfree_rcu() for list updates and
-   deletions.
-3. Remove spin_lock_bh(&im->lock) from ip_check_mc_rcu() and traverse
-   im->sources locklessly with for_each_psf_rcu(), reading and writing
-   counter fields with READ_ONCE() and WRITE_ONCE().
+Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
+less brittle.
 
-Note: RCU conversion of /proc/net/mcfilter will be done in a
-separate patch.
-
-Fixes: 23d2b94043ca ("igmp: Add ip_mc_list lock in ip_check_mc_rcu")
-Reported-by: syzbot+3d99fb01bcd740f2fc1e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3d99fb01bcd740f2fc1e
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260827160656.903003-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/igmp.h |   7 +-
- net/ipv4/igmp.c      | 210 +++++++++++++++++++++++++++----------------
- 2 files changed, 135 insertions(+), 82 deletions(-)
+ net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/igmp.h b/include/linux/igmp.h
-index ebf4349a53af7..a57989cfa54cd 100644
---- a/include/linux/igmp.h
-+++ b/include/linux/igmp.h
-@@ -57,20 +57,21 @@ struct ip_mc_socklist {
- };
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 260031e59d646..c2bd2b25a809c 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1325,7 +1325,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
+ struct l2cap_ecred_conn_data {
+ 	struct {
+ 		struct l2cap_ecred_conn_req req;
+-		__le16 scid[5];
++		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
+ 	} __packed pdu;
+ 	struct l2cap_chan *chan;
+ 	struct pid *pid;
+@@ -1356,6 +1356,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
+ 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
+ 		return;
  
- struct ip_sf_list {
--	struct ip_sf_list	*sf_next;
-+	struct ip_sf_list __rcu	*sf_next;
- 	unsigned long		sf_count[2];	/* include/exclude counts */
- 	__be32			sf_inaddr;
- 	unsigned char		sf_gsresp;	/* include in g & s response? */
- 	unsigned char		sf_oldin;	/* change state */
- 	unsigned char		sf_crcount;	/* retrans. left to send */
-+	struct rcu_head		rcu;
- };
++	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
++	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
++		return;
++
+ 	l2cap_ecred_init(chan, 0);
  
- struct ip_mc_list {
- 	struct in_device	*interface;
- 	__be32			multiaddr;
- 	unsigned int		sfmode;
--	struct ip_sf_list	*sources;
--	struct ip_sf_list	*tomb;
-+	struct ip_sf_list __rcu	*sources;
-+	struct ip_sf_list __rcu	*tomb;
- 	unsigned long		sfcount[2];
- 	union {
- 		struct ip_mc_list *next;
-diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index 75bb534c3f3ec..6647aa93276cb 100644
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -172,6 +172,10 @@ static void ip_ma_put(struct ip_mc_list *im)
+ 	/* Set the same ident so we can match on the rsp */
+@@ -7304,6 +7308,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		goto done;
  	}
- }
  
-+#define pmc_dereference(e, pmc) \
-+	rcu_dereference_protected(e, lockdep_is_held(&(pmc)->lock) || \
-+				     lockdep_is_held(&(pmc)->interface->mc_tomb_lock))
++	mutex_lock(&conn->lock);
++	l2cap_chan_lock(chan);
 +
- #define for_each_pmc_rcu(in_dev, pmc)				\
- 	for (pmc = rcu_dereference(in_dev->mc_list);		\
- 	     pmc != NULL;					\
-@@ -182,13 +186,28 @@ static void ip_ma_put(struct ip_mc_list *im)
- 	     pmc != NULL;					\
- 	     pmc = rtnl_dereference(pmc->next_rcu))
+ 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
+ 		struct l2cap_chan_data data;
  
-+#define for_each_psf_mclock(pmc, psf)				\
-+	for (psf = pmc_dereference((pmc)->sources, pmc);	\
-+	     psf;						\
-+	     psf = pmc_dereference(psf->sf_next, pmc))
+@@ -7311,19 +7318,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		data.pid = chan->ops->get_peer_pid(chan);
+ 		data.count = 1;
+ 
+-		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
 +
-+#define for_each_psf_rcu(im, psf)				\
-+	for (psf = rcu_dereference((im)->sources);		\
-+	     psf;						\
-+	     psf = rcu_dereference(psf->sf_next))
-+
-+#define for_each_psf_tomb(pmc, psf)				\
-+	for (psf = pmc_dereference((pmc)->tomb, pmc);		\
-+	     psf;						\
-+	     psf = pmc_dereference(psf->sf_next, pmc))
-+
- static void ip_sf_list_clear_all(struct ip_sf_list *psf)
- {
- 	struct ip_sf_list *next;
++		/* Leave room for non-deferred channel that ends the group. */
++		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
++			data.count += 1;
  
- 	while (psf) {
--		next = psf->sf_next;
--		kfree(psf);
-+		next = rcu_dereference_protected(psf->sf_next, 1);
-+		kfree_rcu(psf, rcu);
- 		psf = next;
- 	}
- }
-@@ -333,7 +352,7 @@ igmp_scount(struct ip_mc_list *pmc, int type, int gdeleted, int sdeleted)
- 	struct ip_sf_list *psf;
- 	int scount = 0;
- 
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (!is_in(pmc, psf, type, gdeleted, sdeleted))
- 			continue;
- 		scount++;
-@@ -478,7 +497,8 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
- 	struct net *net = dev_net(dev);
- 	struct igmpv3_report *pih;
- 	struct igmpv3_grec *pgr = NULL;
--	struct ip_sf_list *psf, *psf_next, *psf_prev, **psf_list;
-+	struct ip_sf_list *psf, *psf_next, *psf_prev;
-+	struct ip_sf_list __rcu **psf_list;
- 	int scount, stotal, first, isquery, truncate;
- 	unsigned int mtu;
- 
-@@ -501,7 +521,7 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
- 
- 	psf_list = sdeleted ? &pmc->tomb : &pmc->sources;
- 
--	if (!*psf_list)
-+	if (!rcu_access_pointer(*psf_list))
- 		goto empty_source;
- 
- 	pih = skb ? igmpv3_report_hdr(skb) : NULL;
-@@ -517,10 +537,12 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
- 	}
- 	first = 1;
- 	psf_prev = NULL;
--	for (psf = *psf_list; psf; psf = psf_next) {
-+	for (psf = pmc_dereference(*psf_list, pmc);
-+	     psf;
-+	     psf = psf_next) {
- 		__be32 *psrc;
- 
--		psf_next = psf->sf_next;
-+		psf_next = pmc_dereference(psf->sf_next, pmc);
- 
- 		if (!is_in(pmc, psf, type, gdeleted, sdeleted)) {
- 			psf_prev = psf;
-@@ -567,10 +589,12 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
- 			psf->sf_crcount--;
- 			if ((sdeleted || gdeleted) && psf->sf_crcount == 0) {
- 				if (psf_prev)
--					psf_prev->sf_next = psf->sf_next;
-+					rcu_assign_pointer(psf_prev->sf_next,
-+							   psf_next);
- 				else
--					*psf_list = psf->sf_next;
--				kfree(psf);
-+					rcu_assign_pointer(*psf_list,
-+							   psf_next);
-+				kfree_rcu(psf, rcu);
- 				continue;
- 			}
+ 		/* Check if there isn't too many channels being connected */
+ 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
+ 			hci_conn_drop(hcon);
+ 			err = -EPROTO;
+-			goto done;
++			goto chan_unlock;
  		}
-@@ -639,28 +663,29 @@ static int igmpv3_send_report(struct in_device *in_dev, struct ip_mc_list *pmc)
- /*
-  * remove zero-count source records from a source filter list
-  */
--static void igmpv3_clear_zeros(struct ip_sf_list **ppsf)
-+static void igmpv3_clear_zeros(struct ip_sf_list __rcu **ppsf)
- {
- 	struct ip_sf_list *psf_prev, *psf_next, *psf;
- 
- 	psf_prev = NULL;
--	for (psf = *ppsf; psf; psf = psf_next) {
--		psf_next = psf->sf_next;
-+	for (psf = rcu_dereference_protected(*ppsf, 1); psf; psf = psf_next) {
-+		psf_next = rcu_dereference_protected(psf->sf_next, 1);
- 		if (psf->sf_crcount == 0) {
- 			if (psf_prev)
--				psf_prev->sf_next = psf->sf_next;
-+				rcu_assign_pointer(psf_prev->sf_next, psf_next);
- 			else
--				*ppsf = psf->sf_next;
--			kfree(psf);
--		} else
-+				rcu_assign_pointer(*ppsf, psf_next);
-+			kfree_rcu(psf, rcu);
-+		} else {
- 			psf_prev = psf;
-+		}
  	}
- }
  
- static void kfree_pmc(struct ip_mc_list *pmc)
- {
--	ip_sf_list_clear_all(pmc->sources);
--	ip_sf_list_clear_all(pmc->tomb);
-+	ip_sf_list_clear_all(rcu_dereference_protected(pmc->sources, 1));
-+	ip_sf_list_clear_all(rcu_dereference_protected(pmc->tomb, 1));
- 	kfree(pmc);
- }
- 
-@@ -694,7 +719,8 @@ static void igmpv3_send_cr(struct in_device *in_dev)
- 				igmpv3_clear_zeros(&pmc->sources);
- 			}
- 		}
--		if (pmc->crcount == 0 && !pmc->tomb && !pmc->sources) {
-+		if (pmc->crcount == 0 && !rcu_access_pointer(pmc->tomb) &&
-+		    !rcu_access_pointer(pmc->sources)) {
- 			if (pmc_prev)
- 				pmc_prev->next = pmc_next;
- 			else
-@@ -880,7 +906,7 @@ static int igmp_xmarksources(struct ip_mc_list *pmc, int nsrcs, __be32 *srcs)
- 	int i, scount;
- 
- 	scount = 0;
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (scount == nsrcs)
- 			break;
- 		for (i = 0; i < nsrcs; i++) {
-@@ -911,7 +937,7 @@ static int igmp_marksources(struct ip_mc_list *pmc, int nsrcs, __be32 *srcs)
- 
- 	/* mark INCLUDE-mode sources */
- 	scount = 0;
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (scount == nsrcs)
- 			break;
- 		for (i = 0; i < nsrcs; i++)
-@@ -1211,11 +1237,12 @@ static void igmpv3_add_delrec(struct in_device *in_dev, struct ip_mc_list *im,
- 	if (pmc->sfmode == MCAST_INCLUDE) {
- 		struct ip_sf_list *psf;
- 
-+		for_each_psf_mclock(im, psf)
-+			psf->sf_crcount = pmc->crcount;
- 		pmc->tomb = im->tomb;
- 		pmc->sources = im->sources;
--		im->tomb = im->sources = NULL;
--		for (psf = pmc->sources; psf; psf = psf->sf_next)
--			psf->sf_crcount = pmc->crcount;
-+		RCU_INIT_POINTER(im->tomb, NULL);
-+		RCU_INIT_POINTER(im->sources, NULL);
- 	}
- 	spin_unlock_bh(&im->lock);
- 
-@@ -1254,9 +1281,18 @@ static void igmpv3_del_delrec(struct in_device *in_dev, struct ip_mc_list *im)
- 	if (pmc) {
- 		im->interface = pmc->interface;
- 		if (im->sfmode == MCAST_INCLUDE) {
--			swap(im->tomb, pmc->tomb);
--			swap(im->sources, pmc->sources);
--			for (psf = im->sources; psf; psf = psf->sf_next)
-+			struct ip_sf_list *sources, *tomb;
-+
-+			tomb = rcu_replace_pointer(im->tomb,
-+						   rcu_dereference_protected(pmc->tomb, 1),
-+						   lockdep_is_held(&im->lock));
-+			rcu_assign_pointer(pmc->tomb, tomb);
-+
-+			sources = rcu_replace_pointer(im->sources,
-+						      rcu_dereference_protected(pmc->sources, 1),
-+						      lockdep_is_held(&im->lock));
-+			rcu_assign_pointer(pmc->sources, sources);
-+			for_each_psf_mclock(im, psf)
- 				psf->sf_crcount = in_dev->mr_qrv ?:
- 					READ_ONCE(net->ipv4.sysctl_igmp_qrv);
- 		} else {
-@@ -1293,8 +1329,8 @@ static void igmpv3_clear_delrec(struct in_device *in_dev)
- 		struct ip_sf_list *psf;
- 
- 		spin_lock_bh(&pmc->lock);
--		psf = pmc->tomb;
--		pmc->tomb = NULL;
-+		psf = pmc_dereference(pmc->tomb, pmc);
-+		RCU_INIT_POINTER(pmc->tomb, NULL);
- 		spin_unlock_bh(&pmc->lock);
- 		ip_sf_list_clear_all(psf);
- 	}
-@@ -1881,7 +1917,7 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
- 	int rv = 0;
- 
- 	psf_prev = NULL;
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (psf->sf_inaddr == *psfsrc)
- 			break;
- 		psf_prev = psf;
-@@ -1890,7 +1926,7 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
- 		/* source filter not found, or count wrong =>  bug */
- 		return -ESRCH;
- 	}
--	psf->sf_count[sfmode]--;
-+	WRITE_ONCE(psf->sf_count[sfmode], psf->sf_count[sfmode] - 1);
- 	if (psf->sf_count[sfmode] == 0) {
- 		ip_rt_multicast_event(pmc->interface);
- 	}
-@@ -1902,19 +1938,28 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
- 
- 		/* no more filters for this source */
- 		if (psf_prev)
--			psf_prev->sf_next = psf->sf_next;
-+			rcu_assign_pointer(psf_prev->sf_next,
-+					   pmc_dereference(psf->sf_next, pmc));
- 		else
--			pmc->sources = psf->sf_next;
-+			rcu_assign_pointer(pmc->sources,
-+					   pmc_dereference(psf->sf_next, pmc));
- #ifdef CONFIG_IP_MULTICAST
- 		if (psf->sf_oldin &&
- 		    !IGMP_V1_SEEN(in_dev) && !IGMP_V2_SEEN(in_dev)) {
--			psf->sf_crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
--			psf->sf_next = pmc->tomb;
--			pmc->tomb = psf;
--			rv = 1;
--		} else
-+			struct ip_sf_list *dpsf = kmalloc(sizeof(*dpsf), GFP_ATOMIC);
-+
-+			if (dpsf) {
-+				*dpsf = *psf;
-+				dpsf->sf_crcount = in_dev->mr_qrv ?:
-+					READ_ONCE(net->ipv4.sysctl_igmp_qrv);
-+				rcu_assign_pointer(dpsf->sf_next,
-+						   pmc_dereference(pmc->tomb, pmc));
-+				rcu_assign_pointer(pmc->tomb, dpsf);
-+				rv = 1;
-+			}
-+		}
- #endif
--			kfree(psf);
-+		kfree_rcu(psf, rcu);
- 	}
- 	return rv;
- }
-@@ -1951,7 +1996,7 @@ static int ip_mc_del_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
- 		err = -EINVAL;
- 		if (!pmc->sfcount[sfmode])
- 			goto out_unlock;
--		pmc->sfcount[sfmode]--;
-+		WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] - 1);
- 	}
- 	err = 0;
- 	for (i = 0; i < sfcount; i++) {
-@@ -1974,7 +2019,7 @@ static int ip_mc_del_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
- #ifdef CONFIG_IP_MULTICAST
- 		pmc->crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
- 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
--		for (psf = pmc->sources; psf; psf = psf->sf_next)
-+		for_each_psf_mclock(pmc, psf)
- 			psf->sf_crcount = 0;
- 		igmp_ifc_event(pmc->interface);
- 	} else if (sf_setstate(pmc) || changerec) {
-@@ -1995,7 +2040,7 @@ static int ip_mc_add1_src(struct ip_mc_list *pmc, int sfmode,
- 	struct ip_sf_list *psf, *psf_prev;
- 
- 	psf_prev = NULL;
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (psf->sf_inaddr == *psfsrc)
- 			break;
- 		psf_prev = psf;
-@@ -2005,12 +2050,12 @@ static int ip_mc_add1_src(struct ip_mc_list *pmc, int sfmode,
- 		if (!psf)
- 			return -ENOBUFS;
- 		psf->sf_inaddr = *psfsrc;
--		if (psf_prev) {
--			psf_prev->sf_next = psf;
--		} else
--			pmc->sources = psf;
-+		if (psf_prev)
-+			rcu_assign_pointer(psf_prev->sf_next, psf);
-+		else
-+			rcu_assign_pointer(pmc->sources, psf);
- 	}
--	psf->sf_count[sfmode]++;
-+	WRITE_ONCE(psf->sf_count[sfmode], psf->sf_count[sfmode] + 1);
- 	if (psf->sf_count[sfmode] == 1) {
- 		ip_rt_multicast_event(pmc->interface);
- 	}
-@@ -2023,13 +2068,15 @@ static void sf_markstate(struct ip_mc_list *pmc)
- 	struct ip_sf_list *psf;
- 	int mca_xcount = pmc->sfcount[MCAST_EXCLUDE];
- 
--	for (psf = pmc->sources; psf; psf = psf->sf_next)
-+	for_each_psf_mclock(pmc, psf) {
- 		if (pmc->sfcount[MCAST_EXCLUDE]) {
- 			psf->sf_oldin = mca_xcount ==
- 				psf->sf_count[MCAST_EXCLUDE] &&
- 				!psf->sf_count[MCAST_INCLUDE];
--		} else
-+		} else {
- 			psf->sf_oldin = psf->sf_count[MCAST_INCLUDE] != 0;
-+		}
-+	}
- }
- 
- static int sf_setstate(struct ip_mc_list *pmc)
-@@ -2040,27 +2087,31 @@ static int sf_setstate(struct ip_mc_list *pmc)
- 	int new_in, rv;
- 
- 	rv = 0;
--	for (psf = pmc->sources; psf; psf = psf->sf_next) {
-+	for_each_psf_mclock(pmc, psf) {
- 		if (pmc->sfcount[MCAST_EXCLUDE]) {
- 			new_in = mca_xcount == psf->sf_count[MCAST_EXCLUDE] &&
- 				!psf->sf_count[MCAST_INCLUDE];
--		} else
-+		} else {
- 			new_in = psf->sf_count[MCAST_INCLUDE] != 0;
-+		}
- 		if (new_in) {
- 			if (!psf->sf_oldin) {
- 				struct ip_sf_list *prev = NULL;
- 
--				for (dpsf = pmc->tomb; dpsf; dpsf = dpsf->sf_next) {
-+				for_each_psf_tomb(pmc, dpsf) {
- 					if (dpsf->sf_inaddr == psf->sf_inaddr)
- 						break;
- 					prev = dpsf;
- 				}
- 				if (dpsf) {
-+					struct ip_sf_list *dpsf_next;
-+
-+					dpsf_next = pmc_dereference(dpsf->sf_next, pmc);
- 					if (prev)
--						prev->sf_next = dpsf->sf_next;
-+						rcu_assign_pointer(prev->sf_next, dpsf_next);
- 					else
--						pmc->tomb = dpsf->sf_next;
--					kfree(dpsf);
-+						rcu_assign_pointer(pmc->tomb, dpsf_next);
-+					kfree_rcu(dpsf, rcu);
- 				}
- 				psf->sf_crcount = qrv;
- 				rv++;
-@@ -2072,17 +2123,19 @@ static int sf_setstate(struct ip_mc_list *pmc)
- 			 * add or update "delete" records if an active filter
- 			 * is now inactive
- 			 */
--			for (dpsf = pmc->tomb; dpsf; dpsf = dpsf->sf_next)
-+			for_each_psf_tomb(pmc, dpsf) {
- 				if (dpsf->sf_inaddr == psf->sf_inaddr)
- 					break;
-+			}
- 			if (!dpsf) {
- 				dpsf = kmalloc(sizeof(*dpsf), GFP_ATOMIC);
- 				if (!dpsf)
- 					continue;
- 				*dpsf = *psf;
- 				/* pmc->lock held by callers */
--				dpsf->sf_next = pmc->tomb;
--				pmc->tomb = dpsf;
-+				rcu_assign_pointer(dpsf->sf_next,
-+						   pmc_dereference(pmc->tomb, pmc));
-+				rcu_assign_pointer(pmc->tomb, dpsf);
- 			}
- 			dpsf->sf_crcount = qrv;
- 			rv++;
-@@ -2122,7 +2175,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
- #endif
- 	isexclude = pmc->sfmode == MCAST_EXCLUDE;
- 	if (!delta)
--		pmc->sfcount[sfmode]++;
-+		WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] + 1);
- 	err = 0;
- 	for (i = 0; i < sfcount; i++) {
- 		err = ip_mc_add1_src(pmc, sfmode, &psfsrc[i]);
-@@ -2133,7 +2186,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
- 		int j;
- 
- 		if (!delta)
--			pmc->sfcount[sfmode]--;
-+			WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] - 1);
- 		for (j = 0; j < i; j++)
- 			(void) ip_mc_del1_src(pmc, sfmode, &psfsrc[j]);
- 	} else if (isexclude != (pmc->sfcount[MCAST_EXCLUDE] != 0)) {
-@@ -2153,7 +2206,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
- 
- 		pmc->crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
- 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
--		for (psf = pmc->sources; psf; psf = psf->sf_next)
-+		for_each_psf_mclock(pmc, psf)
- 			psf->sf_crcount = 0;
- 		igmp_ifc_event(in_dev);
- 	} else if (sf_setstate(pmc)) {
-@@ -2169,13 +2222,13 @@ static void ip_mc_clear_src(struct ip_mc_list *pmc)
- 	struct ip_sf_list *tomb, *sources;
- 
- 	spin_lock_bh(&pmc->lock);
--	tomb = pmc->tomb;
--	pmc->tomb = NULL;
--	sources = pmc->sources;
--	pmc->sources = NULL;
-+	tomb = pmc_dereference(pmc->tomb, pmc);
-+	RCU_INIT_POINTER(pmc->tomb, NULL);
-+	sources = pmc_dereference(pmc->sources, pmc);
-+	RCU_INIT_POINTER(pmc->sources, NULL);
- 	pmc->sfmode = MCAST_EXCLUDE;
--	pmc->sfcount[MCAST_INCLUDE] = 0;
--	pmc->sfcount[MCAST_EXCLUDE] = 1;
-+	WRITE_ONCE(pmc->sfcount[MCAST_INCLUDE], 0);
-+	WRITE_ONCE(pmc->sfcount[MCAST_EXCLUDE], 1);
- 	spin_unlock_bh(&pmc->lock);
- 
- 	ip_sf_list_clear_all(tomb);
-@@ -2757,20 +2810,19 @@ int ip_check_mc_rcu(struct in_device *in_dev, __be32 mc_addr, __be32 src_addr, u
- 		rv = 1;
- 	} else if (im) {
- 		if (src_addr) {
--			spin_lock_bh(&im->lock);
--			for (psf = im->sources; psf; psf = psf->sf_next) {
-+			for_each_psf_rcu(im, psf) {
- 				if (psf->sf_inaddr == src_addr)
- 					break;
- 			}
- 			if (psf)
--				rv = psf->sf_count[MCAST_INCLUDE] ||
--					psf->sf_count[MCAST_EXCLUDE] !=
--					im->sfcount[MCAST_EXCLUDE];
-+				rv = READ_ONCE(psf->sf_count[MCAST_INCLUDE]) ||
-+					READ_ONCE(psf->sf_count[MCAST_EXCLUDE]) !=
-+					READ_ONCE(im->sfcount[MCAST_EXCLUDE]);
- 			else
--				rv = im->sfcount[MCAST_EXCLUDE] != 0;
--			spin_unlock_bh(&im->lock);
--		} else
-+				rv = READ_ONCE(im->sfcount[MCAST_EXCLUDE]) != 0;
-+		} else {
- 			rv = 1; /* unspecified source; tentatively allow */
-+		}
- 	}
- 	return rv;
- }
-@@ -2930,7 +2982,7 @@ static inline struct ip_sf_list *igmp_mcf_get_first(struct seq_file *seq)
- 		im = rcu_dereference(idev->mc_list);
- 		if (likely(im)) {
- 			spin_lock_bh(&im->lock);
--			psf = im->sources;
-+			psf = pmc_dereference(im->sources, im);
- 			if (likely(psf)) {
- 				state->im = im;
- 				state->idev = idev;
-@@ -2946,7 +2998,7 @@ static struct ip_sf_list *igmp_mcf_get_next(struct seq_file *seq, struct ip_sf_l
- {
- 	struct igmp_mcf_iter_state *state = igmp_mcf_seq_private(seq);
- 
--	psf = psf->sf_next;
-+	psf = pmc_dereference(psf->sf_next, state->im);
- 	while (!psf) {
- 		spin_unlock_bh(&state->im->lock);
- 		state->im = state->im->next;
-@@ -2964,7 +3016,7 @@ static struct ip_sf_list *igmp_mcf_get_next(struct seq_file *seq, struct ip_sf_l
- 		if (!state->im)
- 			break;
- 		spin_lock_bh(&state->im->lock);
--		psf = state->im->sources;
-+		psf = pmc_dereference(state->im->sources, state->im);
- 	}
- out:
- 	return psf;
+-	mutex_lock(&conn->lock);
+-	l2cap_chan_lock(chan);
+-
+ 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
+ 		hci_conn_drop(hcon);
+ 		err = -EBUSY;
 -- 
 2.53.0
 
