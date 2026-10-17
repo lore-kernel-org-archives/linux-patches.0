@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384E437BE64;
-	Sat, 17 Oct 2026 16:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B55537DEBE;
+	Sat, 17 Oct 2026 16:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254768; cv=none; b=loTaSMgAtbVwXpZGQx6k9pHRSkekPQ9jTpy3/ZI8FneIHM/knsWK+a1vNoxuz08Ne8QVynAVfSo2dlRS72IO6gBZmZkqBRAFzgGEQbikB+xvOn/2inVQbaMM8UXbo4UOu6K4Bq/SjKyFka8OdPcQhQpCUl/ssuQP/FSp4mkrEcA=
+	t=1792254771; cv=none; b=soD4dHZ58a1BQqmFOoOxt1d6z88dlmjG9yxofN5Yvo6CUm1XWIirfoa62M/nloLczAYG0EAPSK5leF20/tI66BGCVFtDUzNrElq0bEtVJ6wlplXXdn9mEi+hscutJYunMJdwiRseECSskes66cYglsVhJQSSD0D6icA+7Ci8ybM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254768; c=relaxed/simple;
-	bh=/7t1qCsRibbOEi6iRli07gANYbW2Qs73I6LbBqGe9u4=;
+	s=arc-20240116; t=1792254771; c=relaxed/simple;
+	bh=YvlfDh8n2nzeHvWzwuYZsLE19FcGoiuaVrILTYzhPBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZSbEaEeOphlx05pTUqY4mzTzNDs1xNFykwAdHZx3RSKPT7khsoxBp/wrPqZfDH7xiJ7kTdcCcuLuHLvh3Qm4U+ATLORNMce/Hif5v8KzdkzfHtwFFoE5qe/ibnUNuXAma3wYBFFTD/shslGBQVzrnEdffpLXv/DzaPl5Mruhig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndbUs7HR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DBkkIrW8AB3PMfQgb90USofosLOZ4SweuKby5JWcHe1+7c9U/JN53PwdD4kjyyzG/PK2wOyzemxTv6CEa1bIJyB7lL6yn5atYb3XcJwVMLRfZrJhZlrPD5NoiVClsSnfhzx1OHY5TJ46v0gL1O9Rc1W6XaYqnOo/6vt8UjdosDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeRdpzuj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndbUs7HR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5191F000C5;
-	Sat, 17 Oct 2026 16:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeRdpzuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F711F000C4;
+	Sat, 17 Oct 2026 16:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254767;
-	bh=UZoeYj9AH0gucabMQPTcq/Cuyblgjt7hO/EIon6LkJk=;
+	s=korg; t=1792254770;
+	bh=Kj8eUFTL0xF10htvpT27vPv20XHLwgMna+nvXps7qoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ndbUs7HRr0uT2TOySKC0RU89Bty1QZ9Ihe7NoUmOSGedNYN+YPQOFDBygGqHQMD2x
-	 1tBqYXrVnnpRjikiuRS88h7a9XvDB5k5JGIr15E5CgEZNZMPtqRy6/8byvAV30aoKM
-	 ux+afy1nClu9RWiDBN7WM2ZhmQhGnXZ+ce4TBSiY=
+	b=VeRdpzujMEezX/ZnVCKn+4MrGZ4D+lQH/84eMhB/a94F2d+TxggaW3u0C+OLV/ZUV
+	 X41OMwH5JJbU+I7D8HKj+dkoKy98BgWtRtBmQzISmIbsr3X1hUFQimfJX5A+ylwajk
+	 zzD7PbqzpnZbjNJgubCPyq/q+QUn8nimgSEkuku8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	tipc-discussion@lists.sourceforge.net,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 553/869] fbdev: Wrap user-invoked calls to fb_set_var() in helper
-Date: Sat, 17 Oct 2026 17:56:34 +0200
-Message-ID: <20261017160051.263623157@linuxfoundation.org>
+Subject: [PATCH 6.12 554/869] tipc: avoid busy looping in tipc_exit_net()
+Date: Sat, 17 Oct 2026 17:56:35 +0200
+Message-ID: <20261017160051.287849464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,171 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6f611e5e5f3327cf2e2daabe6ee5acac58cc784e ]
+[ Upstream commit c1481c94e74c955e0448ddf46b8615a44d840c1e ]
 
-Handle fbcon during display updates in fb_set_var_from_user(). Check
-with fbcon if the mode change is possible, update hardware state and
-finally update fbcon. Update all callers.
+Blamed commit introduced a busy-wait loop in tipc_exit_net()
+to wait for pending UDP bearer cleanup works to complete:
 
-Only the FBIOPUT_VSCREENINFO ioctl currently does all steps. Other
-mode-changes callers in sysfs and driver code are missing fbcon-related
-steps.
+       while (atomic_read(&tn->wq_count))
+               cond_resched();
 
-With the new helper, ps3fb and sh_mobile_lcdcfb no longer maintain
-fbcon state themselves.
+This loop can busy-wait for a long time if cond_resched() is a NOP. This
+typically happens if the netns exit is executed by a high priority task,
+or under kernels configured without preemption (CONFIG_PREEMPT_NONE). In
+such cases, it wastes CPU cycles and can lead to soft lockups.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix this by replacing the busy loop with wait_var_event(), allowing the
+thread to sleep properly until the work queue count reaches zero.
+
+Accordingly, update cleanup_bearer() to use atomic_dec_and_test() and
+wake_up_var() to wake up the waiter when the count drops to zero.
+
+This uses the global wait queue hash table, avoiding the need to bloat
+struct tipc_net with a wait_queue_head_t. The atomic_dec_and_test()
+provides the necessary memory barrier to ensure the wakeup is not missed.
+
+Fixes: 04c26faa51d1 ("tipc: wait and exit until all work queues are done")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jon Maloy <jmaloy@redhat.com>
+Cc: tipc-discussion@lists.sourceforge.net
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260623173030.2925059-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_chrdev.c   |  6 +-----
- drivers/video/fbdev/core/fbcon.c       |  2 --
- drivers/video/fbdev/core/fbmem.c       | 13 +++++++++++++
- drivers/video/fbdev/core/fbsysfs.c     |  4 +---
- drivers/video/fbdev/ps3fb.c            |  5 +----
- drivers/video/fbdev/sh_mobile_lcdcfb.c |  5 +----
- include/linux/fb.h                     |  2 ++
- 7 files changed, 19 insertions(+), 18 deletions(-)
+ net/tipc/core.c      | 4 ++--
+ net/tipc/udp_media.c | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fb_chrdev.c b/drivers/video/fbdev/core/fb_chrdev.c
-index 4ebd16b7e3b8d..54f926fb411bd 100644
---- a/drivers/video/fbdev/core/fb_chrdev.c
-+++ b/drivers/video/fbdev/core/fb_chrdev.c
-@@ -85,11 +85,7 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
- 		var.activate &= ~FB_ACTIVATE_KD_TEXT;
- 		console_lock();
- 		lock_fb_info(info);
--		ret = fbcon_modechange_possible(info, &var);
--		if (!ret)
--			ret = fb_set_var(info, &var);
--		if (!ret)
--			fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
-+		ret = fb_set_var_from_user(info, &var);
- 		unlock_fb_info(info);
- 		console_unlock();
- 		if (!ret && copy_to_user(argp, &var, sizeof(var)))
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 024cad45af930..5ce1aba2e7615 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2754,7 +2754,6 @@ void fbcon_update_vcs(struct fb_info *info, bool all)
- 	else
- 		fbcon_modechanged(info);
- }
--EXPORT_SYMBOL(fbcon_update_vcs);
+diff --git a/net/tipc/core.c b/net/tipc/core.c
+index 1ddecea1df6e9..315975c3be818 100644
+--- a/net/tipc/core.c
++++ b/net/tipc/core.c
+@@ -45,6 +45,7 @@
+ #include "crypto.h"
  
- /* let fbcon check if it supports a new screen resolution */
- int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *var)
-@@ -2782,7 +2781,6 @@ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *va
+ #include <linux/module.h>
++#include <linux/wait_bit.h>
  
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(fbcon_modechange_possible);
- 
- int fbcon_mode_deleted(struct fb_info *info,
- 		       struct fb_videomode *mode)
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index a689b390fce33..044a8f327cc22 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -341,6 +341,19 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
- }
- EXPORT_SYMBOL(fb_set_var);
- 
-+int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var)
-+{
-+	int ret = fbcon_modechange_possible(info, var);
-+
-+	if (!ret)
-+		ret = fb_set_var(info, var);
-+	if (!ret)
-+		fbcon_update_vcs(info, var->activate & FB_ACTIVATE_ALL);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL(fb_set_var_from_user);
-+
- int
- fb_blank(struct fb_info *info, int blank)
- {
-diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
-index 10c3cfb959f4f..572bf45d9d980 100644
---- a/drivers/video/fbdev/core/fbsysfs.c
-+++ b/drivers/video/fbdev/core/fbsysfs.c
-@@ -22,9 +22,7 @@ static int activate(struct fb_info *fb_info, struct fb_var_screeninfo *var)
- 	var->activate |= FB_ACTIVATE_FORCE;
- 	console_lock();
- 	lock_fb_info(fb_info);
--	err = fb_set_var(fb_info, var);
--	if (!err)
--		fbcon_update_vcs(fb_info, var->activate & FB_ACTIVATE_ALL);
-+	err = fb_set_var_from_user(fb_info, var);
- 	unlock_fb_info(fb_info);
- 	console_unlock();
- 	if (err)
-diff --git a/drivers/video/fbdev/ps3fb.c b/drivers/video/fbdev/ps3fb.c
-index dbcda307f6a67..1376d19b19aeb 100644
---- a/drivers/video/fbdev/ps3fb.c
-+++ b/drivers/video/fbdev/ps3fb.c
-@@ -29,7 +29,6 @@
- #include <linux/freezer.h>
- #include <linux/uaccess.h>
- #include <linux/fb.h>
--#include <linux/fbcon.h>
- #include <linux/init.h>
- 
- #include <asm/cell-regs.h>
-@@ -830,9 +829,7 @@ static int ps3fb_ioctl(struct fb_info *info, unsigned int cmd,
- 				/* Force, in case only special bits changed */
- 				var.activate |= FB_ACTIVATE_FORCE;
- 				par->new_mode_id = val;
--				retval = fb_set_var(info, &var);
--				if (!retval)
--					fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
-+				retval = fb_set_var_from_user(info, &var);
- 				console_unlock();
- 			}
- 			break;
-diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-index 6b37b188af314..84aa2086d5ae2 100644
---- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
-+++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-@@ -15,7 +15,6 @@
- #include <linux/ctype.h>
- #include <linux/dma-mapping.h>
- #include <linux/delay.h>
--#include <linux/fbcon.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/ioctl.h>
-@@ -1769,11 +1768,9 @@ static void sh_mobile_fb_reconfig(struct fb_info *info)
- 	var.height = ch->display.height;
- 	var.activate = FB_ACTIVATE_NOW;
- 
--	if (fb_set_var(info, &var) < 0)
-+	if (fb_set_var_from_user(info, &var) < 0)
- 		/* Couldn't reconfigure, hopefully, can continue as before */
- 		return;
--
--	fbcon_update_vcs(info, true);
+ /* configurable TIPC parameters */
+ unsigned int tipc_net_id __read_mostly;
+@@ -118,8 +119,7 @@ static void __net_exit tipc_exit_net(struct net *net)
+ #ifdef CONFIG_TIPC_CRYPTO
+ 	tipc_crypto_stop(&tipc_net(net)->crypto_tx);
+ #endif
+-	while (atomic_read(&tn->wq_count))
+-		cond_resched();
++	wait_var_event(&tn->wq_count, atomic_read(&tn->wq_count) == 0);
  }
  
- /*
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index d87d6547c6e41..8f41d449fb9de 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -537,6 +537,8 @@ extern int fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var);
- extern int fb_pan_display(struct fb_info *info, struct fb_var_screeninfo *var);
- extern int fb_blank(struct fb_info *info, int blank);
+ static void __net_exit tipc_pernet_pre_exit(struct net *net)
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 311ebc6163855..17385de8bfcde 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -40,6 +40,7 @@
+ #include <linux/igmp.h>
+ #include <linux/kernel.h>
+ #include <linux/workqueue.h>
++#include <linux/wait_bit.h>
+ #include <linux/list.h>
+ #include <net/sock.h>
+ #include <net/ip.h>
+@@ -827,7 +828,8 @@ static void cleanup_bearer(struct work_struct *work)
+ 	synchronize_net();
  
-+int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
-+
- /*
-  * Helpers for framebuffers in I/O memory
-  */
+ 	dst_cache_destroy(&ub->rcast.dst_cache);
+-	atomic_dec(&tn->wq_count);
++	if (atomic_dec_and_test(&tn->wq_count))
++		wake_up_var(&tn->wq_count);
+ 	kfree(ub);
+ }
+ 
 -- 
 2.53.0
 
