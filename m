@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD2B3B3884;
-	Sat, 17 Oct 2026 18:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F193939A4;
+	Sat, 17 Oct 2026 18:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260099; cv=none; b=EqT3KS0SCIXKf3C9HX8BVIHUMN4cMm1DR3azPYBJLHNX7I6SgDDbVOzogprKM7dOvt760JnL0pBEB6l5YgyRxYwOC24cqsCS5wIDUaFHOkl2hDJoNhuIlMviv1+tcSeLRbNNfkMi/+cfaqnAJZ5drAlYFP+pILdZdgh1iFzsM0c=
+	t=1792260102; cv=none; b=SjP934UXRz160QV5moyQEFvi0U8xFWgbVbIHh+FrTAKbzKb9iCq+qKP18GgC3xiymqU/afH5tsWZ0fIRi4w5V8afycZxIdeDATYFK4JQritiVlPJP8dUrXCjNQg2xaSBLK72IQtznpveeCwLcgEpcdLZ/F3fQ+bEnOWJ8ULjpU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260099; c=relaxed/simple;
-	bh=4f4hRJ32we/PpkyxOgFDRADiIJZ1K+s69cAiFqF7zFw=;
+	s=arc-20240116; t=1792260102; c=relaxed/simple;
+	bh=y7OXbrFqRo7bsiCvfh10CvFLlfjiuicK9X/CfmWQbqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXEMLlZssl/YHfjDQtiBZNPcsmOJ+eFMgmkQDv1rdJ5VkzLQpKVdFvIJbSCjGkOm/Jsyv/REtgzigXp/syXpdAL2BSJKCBgOIskAYT/fgXL5wQSm/mhuIErzSVMTZVIgRPck31eKSjtP7VIIEt8Nf6DfvNUfVFpZdyK0X6VAucE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I72Usdqp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p6HN/nPMnr6wL+kMvA33a+yQd6TeRP32NaQAiH0Ao9GnWokMHX7kpl1NcIG9o96/DUc1pk7zMYD6daFi6ak5L7cnVK5KbAdlupuj79TIlzyP6blf9qaXJgjZzI/IAvRdF9tin+5O9w5gjx09W0uYcnux/pfDOHLtHTLBky3C6Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwXjYCnr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I72Usdqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6901F000C4;
-	Sat, 17 Oct 2026 18:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwXjYCnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2497B1F000C4;
+	Sat, 17 Oct 2026 18:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260098;
-	bh=aeTC5ZGcnMt+apW2zsuu6zG+UUBPiG1I00YDJaVYtMQ=;
+	s=korg; t=1792260101;
+	bh=WhVQ9P82oGAOLTsTuYy0h4yXb2BcW9OIocoawmyeBkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I72UsdqpbZNqltTHidbkmuG+Yo+Z2+rmyfdbCB1RRn8UndULFmHXfvL9AoKIrfDBU
-	 DGFDDt38wXmTmpssl+0rS26izEPmuboWFtoRQeFbIMV5UgvWWxT3pg9coeHn1+i5F1
-	 MYfaLPsVj5gpuR/LXZWZcTgZ2lE17tEfbVxK9G3k=
+	b=FwXjYCnrHAcP36YQnr2CzEthzAlN2TESmEynQWhX8NiYsiStBm3IXoJ/1MzR7b3Qe
+	 qw60UPQcr6cBMduHlWeG6AUoVZNqtf2ReCkvc3hGtcNSVIvqbxL7uWavVf/sYNpYvz
+	 +kCnR6XSnMFcet49aCKMO4QnDzptI6vtwyEnP7YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Tang Yizhou <yizhou.tang@shopee.com>,
+	Yu Kuai <yukuai@fygo.io>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1433/1674] ublk: check import_ubuf() return value
-Date: Sat, 17 Oct 2026 18:01:45 +0200
-Message-ID: <20261017160507.966629060@linuxfoundation.org>
+Subject: [PATCH 6.6 1434/1674] blk-cgroup: fix race between policy activation and blkg destruction
+Date: Sat, 17 Oct 2026 18:01:46 +0200
+Message-ID: <20261017160507.991201319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,54 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 3831568792af75b6523fa93bb91560e29189cf55 ]
+[ Upstream commit 5313d4d41739b0cb63000747c97bb1217ac45f3e ]
 
-import_ubuf() can fail if the address range (provided by the userspace
-ublk server) is outside the allowed user address space. Return that 0
-bytes were copied if import_ubuf() fails rather than passing an
-uninitialized struct iov_iter to ublk_copy_user_pages().
+When switching an IO scheduler on a block device, blkcg_activate_policy()
+allocates blkg_policy_data (pd) for all blkgs attached to the queue.
+However, blkcg_activate_policy() may race with concurrent blkcg deletion,
+leading to use-after-free and memory leak issues.
 
-Fixes: 981f95a571e3 ("ublk: cleanup ublk_copy_user_pages")
-Reported-by: Ming Lei <tom.leiming@gmail.com>
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Link: https://patch.msgid.link/20260729171041.45061-2-csander@purestorage.com
+The use-after-free occurs in the following race:
+
+T1 (blkcg_activate_policy):
+  - Successfully allocates pd for blkg1 (loop0->queue, blkcgA)
+  - Fails to allocate pd for blkg2 (loop0->queue, blkcgB)
+  - Enters the enomem rollback path to release blkg1 resources
+
+T2 (blkcg deletion):
+  - blkcgA is deleted concurrently
+  - blkg1 is freed via blkg_free_workfn()
+  - blkg1->pd is freed
+
+T1 (continued):
+  - Rollback path accesses blkg1->pd->online after pd is freed
+  - Triggers use-after-free
+
+In addition, blkg_free_workfn() frees pd before removing the blkg from
+q->blkg_list. This allows blkcg_activate_policy() to allocate a new pd
+for a blkg that is being destroyed, leaving the newly allocated pd
+unreachable when the blkg is finally freed.
+
+Fix these races by extending blkcg_mutex coverage to serialize
+blkcg_activate_policy() rollback and blkg destruction, ensuring pd
+lifecycle is synchronized with blkg list visibility.
+
+Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Tang Yizhou <yizhou.tang@shopee.com>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://patch.msgid.link/20260802112525.3933753-3-yukuai@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ block/blk-cgroup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index c39eab406978e..ad1156e36d8aa 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -938,8 +938,9 @@ static int ublk_map_io(const struct ublk_queue *ubq, const struct request *req,
- 		struct iovec iov;
- 		const int dir = ITER_DEST;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index f23d5f8c6ef22..83bbc0c5448f3 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1574,6 +1574,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
  
--		import_single_range(dir, u64_to_user_ptr(io->addr), rq_bytes,
--				&iov, &iter);
-+		if (import_single_range(dir, u64_to_user_ptr(io->addr), rq_bytes,
-+				&iov, &iter) < 0)
-+			return 0;
- 
- 		return ublk_copy_user_pages(req, 0, &iter, dir);
- 	}
-@@ -962,8 +963,10 @@ static int ublk_unmap_io(const struct ublk_queue *ubq,
- 
- 		WARN_ON_ONCE(io->res > rq_bytes);
- 
--		import_single_range(dir, u64_to_user_ptr(io->addr), io->res,
--				&iov, &iter);
-+		if (import_single_range(dir, u64_to_user_ptr(io->addr), io->res,
-+				&iov, &iter) < 0)
-+			return 0;
+ 	if (queue_is_mq(q))
+ 		blk_mq_freeze_queue(q);
 +
- 		return ublk_copy_user_pages(req, 0, &iter, dir);
- 	}
- 	return rq_bytes;
++	mutex_lock(&q->blkcg_mutex);
+ retry:
+ 	spin_lock_irq(&q->queue_lock);
+ 
+@@ -1638,6 +1640,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 
+ 	spin_unlock_irq(&q->queue_lock);
+ out:
++	mutex_unlock(&q->blkcg_mutex);
+ 	if (queue_is_mq(q))
+ 		blk_mq_unfreeze_queue(q);
+ 	if (pinned_blkg)
 -- 
 2.53.0
 
