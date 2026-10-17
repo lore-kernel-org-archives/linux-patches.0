@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDE4394785;
-	Sat, 17 Oct 2026 16:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA1017BED0;
+	Sat, 17 Oct 2026 16:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253469; cv=none; b=omPZq6vHko9w7f0KQPdw069A0zxombs/wj1xxQHE/87ktypFlFfD5vEpGbnhHSUjzscQLOKBKutAiAS/+GNbYKW2XZ0d1MxzmmfpQ3SuWIW4uIbg6Y7R0bfsfixnM4eCkTCWn9aNPrOQe7WU0yfenp81MV552yZvxSFe9T4nGD0=
+	t=1792253472; cv=none; b=YRx/+mRf7SM7+QGPtAwCi4J09KGY2egNMGqH5DkijpejZ/l/8dnMIzPUNhSYIN4GLnb8VMC5fRJXAX0RT7S372RbHIHBIEd2QR8OYYsKJoESE32/W11EDHIedZ1kk6moIochg2aTi3bG2BLkLcBZ7krDtn50PpiNhfyJnhhEqhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253469; c=relaxed/simple;
-	bh=VAwXA7CHUtMOwGZ2ee71K0Sti7kNR/MT99C9Z+euB2I=;
+	s=arc-20240116; t=1792253472; c=relaxed/simple;
+	bh=4IMI+XlXKAFPJkyJM7t943fbKLgynNNxR3C3ziS8A1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mghf17+I+xiFfdMFdh/WT7WIA/O750FlDWUHx0jQCwKI78fO6Ni2/6ouCEB5dxHLLMKP3XMAVER964/ZqUgU21mZObXre+efLEO7ZkbI1sEVVU/hK+xQTs2rnZUPlyiF2nI3D0/jrwiolmpi7pzX7MF/1p9r2xPkEhvVCwdlr1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/U1Wr0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sYyUNOUf53gBPYYXpMpvMmAUgCNfvqcFjdn5hy72iyIZx5ZSL7xnIW1G8O8jrFR0CJqgcnJBoQzB+xFf2k1n+vgtZoXbHoCe9LZxvvDiXW+uTyDR+0/tnBvkz+79QsfYtqm0+2kefsnlYQflQYlHUKUV2GdHgGoWN0L6WUFuk6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDFMON3b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/U1Wr0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960091F000C5;
-	Sat, 17 Oct 2026 16:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDFMON3b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727661F000C4;
+	Sat, 17 Oct 2026 16:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253468;
-	bh=bcVtYr7Yc7+8jo9sWcyQs0mYNtYinkLMLZdwz/zgt0w=;
+	s=korg; t=1792253471;
+	bh=r/3vnWurkluDBSkdUnv5Qgm90b/5SNNMNBKg+ydq+jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/U1Wr0aqB8HRocn8JHWpLabXrP/WB9xd0cuiMKG6xiPY5FI1dI3odtlq1lRLnkhP
-	 pN1o7COn3hQqTZsAq4Q0lFMsQcUVEwD1TmjmS/27Hjg+G07yf9t1ArMEtBqUw7sxZd
-	 KMXIn8reDikQWYygMTF6/xwiqeML6y7zmtCKSLXg=
+	b=CDFMON3bAFcG9/X48WXR7jT/NVZb9dQpGW7AzHoQHtOZzrdqXdOvhi044DFzPuSWy
+	 ZxxbRHjmR7dYONbU793SB7VTvRmhrIkQyVf79+Ksh1C5wvTIVAqsE83oRAatOhhype
+	 rjYNyIgmRc0OGuibU3U5X545H5nTT5wQs4qW+rPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Paulo Zanoni <paulo.r.zanoni@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/869] crypto: x86/aegis - Add missing error checks
-Date: Sat, 17 Oct 2026 17:49:12 +0200
-Message-ID: <20261017160039.884474535@linuxfoundation.org>
+Subject: [PATCH 6.12 129/869] drm/xe: Dont allow evicting of BOs in same VM in array of VM binds
+Date: Sat, 17 Oct 2026 17:49:30 +0200
+Message-ID: <20261017160040.349917136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,136 +47,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 3d9eb180fbe8828cce43bce4c370124685b205c3 ]
+[ Upstream commit 7ac74613e5f2ef3450f44fd2127198662c2563a9 ]
 
-The skcipher_walk functions can allocate memory and can fail, so
-checking for errors is necessary.
+An array of VM binds can potentially evict other buffer objects (BOs)
+within the same VM under certain conditions, which may lead to NULL
+pointer dereferences later in the bind pipeline. To prevent this, clear
+the allow_res_evict flag in the xe_bo_validate call.
 
-Fixes: 1d373d4e8e15 ("crypto: x86 - Add optimized AEGIS implementations")
+v2:
+ - Invert polarity of no_res_evict (Thomas)
+ - Add comment in code explaining issue (Thomas)
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/6268
+Fixes: 774b5fa509a9 ("drm/xe: Avoid evicting object of the same vm in none fault mode")
+Fixes: 77f2ef3f16f5 ("drm/xe: Lock all gpuva ops during VM bind IOCTL")
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Tested-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://lore.kernel.org/r/20251009110618.3481870-1-matthew.brost@intel.com
+(cherry picked from commit 8b9ba8d6d95fe75fed6b0480bb03da4b321bea08)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aegis128-aesni-glue.c | 36 +++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c       | 31 ++++++++++++++++++++++---------
+ drivers/gpu/drm/xe/xe_vm_types.h |  3 +++
+ 2 files changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/crypto/aegis128-aesni-glue.c b/arch/x86/crypto/aegis128-aesni-glue.c
-index de0aab6997d41..f5bbf274a54e9 100644
---- a/arch/x86/crypto/aegis128-aesni-glue.c
-+++ b/arch/x86/crypto/aegis128-aesni-glue.c
-@@ -108,10 +108,12 @@ static void crypto_aegis128_aesni_process_ad(
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index fa0d7c6414022..da148df421057 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -2469,7 +2469,7 @@ static void vm_bind_ioctl_ops_unwind(struct xe_vm *vm,
  }
  
--static __always_inline void
-+static __always_inline int
- crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
- 				    struct skcipher_walk *walk, bool enc)
+ static int vma_lock_and_validate(struct drm_exec *exec, struct xe_vma *vma,
+-				 bool validate)
++				 bool res_evict, bool validate)
  {
-+	int err = 0;
+ 	struct xe_bo *bo = xe_vma_bo(vma);
+ 	int err = 0;
+@@ -2478,7 +2478,7 @@ static int vma_lock_and_validate(struct drm_exec *exec, struct xe_vma *vma,
+ 		if (!bo->vm)
+ 			err = drm_exec_lock_obj(exec, &bo->ttm.base);
+ 		if (!err && validate)
+-			err = xe_bo_validate(bo, xe_vma_vm(vma), true);
++			err = xe_bo_validate(bo, xe_vma_vm(vma), res_evict);
+ 	}
+ 
+ 	return err;
+@@ -2500,13 +2500,22 @@ static int check_ufence(struct xe_vma *vma)
+ }
+ 
+ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+-			    struct xe_vma_op *op)
++			    struct xe_vma_ops *vops, struct xe_vma_op *op)
+ {
+ 	int err = 0;
++	bool res_evict;
 +
- 	while (walk->nbytes >= AEGIS128_BLOCK_SIZE) {
- 		if (enc)
- 			aegis128_aesni_enc(state, walk->src.virt.addr,
-@@ -124,7 +126,8 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
- 					   round_down(walk->nbytes,
- 						      AEGIS128_BLOCK_SIZE));
- 		kernel_fpu_end();
--		skcipher_walk_done(walk, walk->nbytes % AEGIS128_BLOCK_SIZE);
-+		err = skcipher_walk_done(walk,
-+					 walk->nbytes % AEGIS128_BLOCK_SIZE);
- 		kernel_fpu_begin();
++	/*
++	 * We only allow evicting a BO within the VM if it is not part of an
++	 * array of binds, as an array of binds can evict another BO within the
++	 * bind.
++	 */
++	res_evict = !(vops->flags & XE_VMA_OPS_ARRAY_OF_BINDS);
+ 
+ 	switch (op->base.op) {
+ 	case DRM_GPUVA_OP_MAP:
+ 		err = vma_lock_and_validate(exec, op->map.vma,
++					    res_evict,
+ 					    !xe_vm_in_fault_mode(vm) ||
+ 					    op->map.immediate);
+ 		break;
+@@ -2517,11 +2526,13 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.remap.unmap->va),
+-					    false);
++					    res_evict, false);
+ 		if (!err && op->remap.prev)
+-			err = vma_lock_and_validate(exec, op->remap.prev, true);
++			err = vma_lock_and_validate(exec, op->remap.prev,
++						    res_evict, true);
+ 		if (!err && op->remap.next)
+-			err = vma_lock_and_validate(exec, op->remap.next, true);
++			err = vma_lock_and_validate(exec, op->remap.next,
++						    res_evict, true);
+ 		break;
+ 	case DRM_GPUVA_OP_UNMAP:
+ 		err = check_ufence(gpuva_to_vma(op->base.unmap.va));
+@@ -2530,7 +2541,7 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.unmap.va),
+-					    false);
++					    res_evict, false);
+ 		break;
+ 	case DRM_GPUVA_OP_PREFETCH:
+ 	{
+@@ -2541,7 +2552,7 @@ static int op_lock_and_prep(struct drm_exec *exec, struct xe_vm *vm,
+ 
+ 		err = vma_lock_and_validate(exec,
+ 					    gpuva_to_vma(op->base.prefetch.va),
+-					    false);
++					    res_evict, false);
+ 		if (!err && !xe_vma_has_no_bo(vma))
+ 			err = xe_bo_migrate(xe_vma_bo(vma),
+ 					    region_to_mem_type[region]);
+@@ -2566,7 +2577,7 @@ static int vm_bind_ioctl_ops_lock_and_prep(struct drm_exec *exec,
+ 		return err;
+ 
+ 	list_for_each_entry(op, &vops->list, link) {
+-		err = op_lock_and_prep(exec, vm, op);
++		err = op_lock_and_prep(exec, vm, vops, op);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -3163,6 +3174,8 @@ int xe_vm_bind_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
  	}
  
-@@ -138,9 +141,10 @@ crypto_aegis128_aesni_process_crypt(struct aegis_state *state,
- 						walk->dst.virt.addr,
- 						walk->nbytes);
- 		kernel_fpu_end();
--		skcipher_walk_done(walk, 0);
-+		err = skcipher_walk_done(walk, 0);
- 		kernel_fpu_begin();
- 	}
-+	return err;
- }
- 
- static struct aegis_ctx *crypto_aegis128_aesni_ctx(struct crypto_aead *aead)
-@@ -173,7 +177,7 @@ static int crypto_aegis128_aesni_setauthsize(struct crypto_aead *tfm,
- 	return 0;
- }
- 
--static __always_inline void
-+static __always_inline int
- crypto_aegis128_aesni_crypt(struct aead_request *req,
- 			    struct aegis_block *tag_xor,
- 			    unsigned int cryptlen, bool enc)
-@@ -182,20 +186,24 @@ crypto_aegis128_aesni_crypt(struct aead_request *req,
- 	struct aegis_ctx *ctx = crypto_aegis128_aesni_ctx(tfm);
- 	struct skcipher_walk walk;
- 	struct aegis_state state;
-+	int err;
- 
- 	if (enc)
--		skcipher_walk_aead_encrypt(&walk, req, false);
-+		err = skcipher_walk_aead_encrypt(&walk, req, false);
- 	else
--		skcipher_walk_aead_decrypt(&walk, req, false);
-+		err = skcipher_walk_aead_decrypt(&walk, req, false);
-+	if (err)
-+		return err;
- 
- 	kernel_fpu_begin();
- 
- 	aegis128_aesni_init(&state, &ctx->key, req->iv);
- 	crypto_aegis128_aesni_process_ad(&state, req->src, req->assoclen);
--	crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
--	aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
--
-+	err = crypto_aegis128_aesni_process_crypt(&state, &walk, enc);
-+	if (err == 0)
-+		aegis128_aesni_final(&state, tag_xor, req->assoclen, cryptlen);
- 	kernel_fpu_end();
-+	return err;
- }
- 
- static int crypto_aegis128_aesni_encrypt(struct aead_request *req)
-@@ -204,8 +212,11 @@ static int crypto_aegis128_aesni_encrypt(struct aead_request *req)
- 	struct aegis_block tag = {};
- 	unsigned int authsize = crypto_aead_authsize(tfm);
- 	unsigned int cryptlen = req->cryptlen;
-+	int err;
- 
--	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, true);
-+	err = crypto_aegis128_aesni_crypt(req, &tag, cryptlen, true);
-+	if (err)
-+		return err;
- 
- 	scatterwalk_map_and_copy(tag.bytes, req->dst,
- 				 req->assoclen + cryptlen, authsize, 1);
-@@ -220,11 +231,14 @@ static int crypto_aegis128_aesni_decrypt(struct aead_request *req)
- 	struct aegis_block tag;
- 	unsigned int authsize = crypto_aead_authsize(tfm);
- 	unsigned int cryptlen = req->cryptlen - authsize;
-+	int err;
- 
- 	scatterwalk_map_and_copy(tag.bytes, req->src,
- 				 req->assoclen + cryptlen, authsize, 0);
- 
--	crypto_aegis128_aesni_crypt(req, &tag, cryptlen, false);
-+	err = crypto_aegis128_aesni_crypt(req, &tag, cryptlen, false);
-+	if (err)
-+		return err;
- 
- 	return crypto_memneq(tag.bytes, zeros.bytes, authsize) ? -EBADMSG : 0;
- }
+ 	xe_vma_ops_init(&vops, vm, q, syncs, num_syncs);
++	if (args->num_binds > 1)
++		vops.flags |= XE_VMA_OPS_ARRAY_OF_BINDS;
+ 	for (i = 0; i < args->num_binds; ++i) {
+ 		u64 range = bind_ops[i].range;
+ 		u64 addr = bind_ops[i].addr;
+diff --git a/drivers/gpu/drm/xe/xe_vm_types.h b/drivers/gpu/drm/xe/xe_vm_types.h
+index b280e335c5bb4..e75dc50446164 100644
+--- a/drivers/gpu/drm/xe/xe_vm_types.h
++++ b/drivers/gpu/drm/xe/xe_vm_types.h
+@@ -377,6 +377,9 @@ struct xe_vma_ops {
+ 	u32 num_syncs;
+ 	/** @pt_update_ops: page table update operations */
+ 	struct xe_vm_pgtable_update_ops pt_update_ops[XE_MAX_TILES_PER_DEVICE];
++	/** @flags: signify the properties within xe_vma_ops */
++#define XE_VMA_OPS_ARRAY_OF_BINDS	 BIT(2)
++	u32 flags;
+ #ifdef TEST_VM_OPS_ERROR
+ 	/** @inject_error: inject error to test error handling */
+ 	bool inject_error;
 -- 
 2.53.0
 
