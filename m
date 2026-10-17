@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30E43C0601;
-	Sat, 17 Oct 2026 18:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CE731B828;
+	Sat, 17 Oct 2026 18:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260513; cv=none; b=Okdh4xxpP2cd7j05nZxDtP+uNHqHqfp1JaluAE32O6KJDdyk71CZGdJzPt04/4eInzOJECoGhzeS5n0yBwPBQ8mxBeL8+qeGgjUYtCp9dvGiT9fx8sdk4/sC9+V36OTHYJ5SUSX/1hMIi/XeAwse5evjuspo0p0iWu+u1mHIBtU=
+	t=1792260516; cv=none; b=DNf3zi2NbxtULvDmwTf/E0C5dUpHXdrD4oDb+N5182RltlImYKWCvnbnh8WiXi5y6+H8lqoonDf7xGiQTjK5bG3e8u/ViHP6EyxHEL92/AsSjfiDArcJljTYPdaGCf5tomSpNQO3iv4vYdiYyetsYLBjcfS4GZPNV4ETSUYQlj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260513; c=relaxed/simple;
-	bh=eVgxrzVqlvb9PaDVOmpHEE3wyL7i3IhCjpYHnxX05ZA=;
+	s=arc-20240116; t=1792260516; c=relaxed/simple;
+	bh=iBRhPvjbYH16OOVmoG2dUz2FXzKetMs1U2L/C2o6SiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjbGXRJcO/HSPGF7P3aUOCp2eZFbwiDcev00n5WvuktmgF4aQ+OBcRFE5QJqGDqxkW+tyQD5x9YxV/Ct56HShjRlSY+luTxJvpAXh6tiiaYly/hXKYuunmR0g6OUXP0eB/bO8YWGZ//DMI8NEs9efW3vMG6FryciGAIMsZnbK+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtlL582t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F6m2yPEGMTI177ssWKQXAy63tS0i9/MFSbXEg1hnuSdUFEQXFcV7B2oy2HvtpgevPev2MMC1KvGs/IXwPkxMZsLZmgv1W/6qo0E52J9ovui+eqTFre4N/0kG7y2FUJw0YbgoAnb6Mnnyfn4Trex4+HJD4TkPYJOSMCnROi0o+pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1aX9MvV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtlL582t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A46A1F000C4;
-	Sat, 17 Oct 2026 18:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1aX9MvV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685DF1F000C4;
+	Sat, 17 Oct 2026 18:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260511;
-	bh=OcbYioROIztfz9tqBLUcrYURlDFBW0XzDPzkMEwVFkA=;
+	s=korg; t=1792260515;
+	bh=+oi2zQb6dLgVSrUHr18DAewPvMzBd6/J0hsBxSYKebw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wtlL582t32xRXFlZEZL2zS1YHGAXAomIHAcXRSNfDSkQtBnl2/ohCbWwrGj1H9Lpv
-	 ekjqdRd1g69hRGlcE06gf+gJTw8MzihjWe7z2nT9592Sai4c3GeUcS0s/96hvjoDda
-	 T9+YGNkfPgCoK6+HLvRNDt4YgD+GxImSx2TFpagw=
+	b=J1aX9MvVpRrNKaZ1ovQ8fUBirzcoDwylo/hJnGCOqo4OglKy80uEPXgwGwgexTR5h
+	 WHlsWOokmiPDUxo4JPC7zZq+6IuusqyXFGLlfkHFxTubmyP7zK+fb/4M26HY2qRMaf
+	 OwNm2BxLwK8hqApc9fbLUquxMYzNJ7Cb4w1x8UX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1542/1674] drm/amdgpu: validate and share PSP fw_pri_buf copies via psp_copy_fw
-Date: Sat, 17 Oct 2026 18:03:34 +0200
-Message-ID: <20261017160510.691411486@linuxfoundation.org>
+Subject: [PATCH 6.6 1569/1674] net/handshake: hand off the pinned file reference to accept_doit
+Date: Sat, 17 Oct 2026 18:04:01 +0200
+Message-ID: <20261017160511.374223993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,258 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d1f9f5839bd785a3a06335a01d53282e80f8e5fa ]
+[ Upstream commit f4251190e58b209999c1ba9e6d2976136a1be055 ]
 
-Change psp_copy_fw from void to int: return -ENODEV when drm_dev_enter
-fails, and -EINVAL when the image size is zero or larger than the
-1 MiB PSP private buffer.
+handshake_req_next() removes the request from the per-net
+pending list and drops hn_lock before handshake_nl_accept_doit()
+reads req->hr_sk->sk_socket and dereferences sock->file (once in
+FD_PREPARE() and again in get_file()).  In that window a
+consumer running tls_handshake_cancel() followed by sockfd_put()
+(svc_sock_free) or __fput_sync() (xs_reset_transport) releases
+sock->file.  sock_release() then runs sock_orphan(), zeroing
+sk_socket, and frees the struct socket.  The accept-side code
+either reads NULL through sk_socket or chases freed memory.
 
-Replace open-coded memset/memcpy into fw_pri_buf with psp_copy_fw.
+The submit-side sock_hold() does not prevent this.  sk_refcnt
+protects struct sock, but struct socket and sock->file are
+independently refcounted via the file descriptor the consumer
+owns.  Pinning sk leaves sock and sock->file unprotected.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Retarget the accept-side dereferences at req->hr_file, which was
+pinned at submit time, instead of req->hr_sk->sk_socket->file.
+Pinning on its own is not sufficient: a consumer that cancels
+between handshake_req_next() returning and accept_doit reaching
+FD_PREPARE() takes the !remove_pending() branch in
+handshake_req_cancel() and drops hr_file before the accept side
+takes its own reference.  Hand off an additional file reference
+inside handshake_req_next(), under hn_lock, so the accept side
+operates on a reference that no concurrent handshake_req_cancel()
+can revoke.  FD_PREPARE() consumes that handed-off reference,
+either by transferring it to the new fd in fd_publish() or by
+dropping it in the cleanup destructor on error; the explicit
+get_file() that previously balanced FD_PREPARE() is therefore
+redundant and goes away.
+
+Update handshake_req_cancel_test2 and _test3 to simulate the
+FD_PREPARE() consumption with an fput() so the kunit file-count
+assertions stay balanced.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-5-66c616906ead@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c  | 32 ++++++++++++++++++------
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h  |  2 +-
- drivers/gpu/drm/amd/amdgpu/psp_v11_0.c   |  8 ++++--
- drivers/gpu/drm/amd/amdgpu/psp_v12_0.c   |  8 ++++--
- drivers/gpu/drm/amd/amdgpu/psp_v13_0.c   | 14 +++++------
- drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c | 14 +++++------
- drivers/gpu/drm/amd/amdgpu/psp_v3_1.c    |  8 ++++--
- 7 files changed, 56 insertions(+), 30 deletions(-)
+ net/handshake/handshake-test.c |  8 ++++++++
+ net/handshake/netlink.c        |  6 +++---
+ net/handshake/request.c        | 18 ++++++++++++++++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index 91eebf85596b7..e678fd5a0a60c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -759,7 +759,11 @@ static int psp_load_toc(struct psp_context *psp,
- 	struct psp_gfx_cmd_resp *cmd = acquire_psp_cmd_buf(psp);
+diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
+index 34fd1d9b2db86..6eeb53da6e2de 100644
+--- a/net/handshake/handshake-test.c
++++ b/net/handshake/handshake-test.c
+@@ -375,6 +375,10 @@ static void handshake_req_cancel_test2(struct kunit *test)
+ 	/* Pretend to accept this request */
+ 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
+ 	KUNIT_ASSERT_PTR_EQ(test, req, next);
++	/* Simulate FD_PREPARE() consuming the file reference handed
++	 * off by handshake_req_next(); see handshake_nl_accept_doit().
++	 */
++	fput(filp);
  
- 	/* Copy toc to psp firmware private buffer */
--	psp_copy_fw(psp, psp->toc.start_addr, psp->toc.size_bytes);
-+	ret = psp_copy_fw(psp, psp->toc.start_addr, psp->toc.size_bytes);
-+	if (ret) {
-+		release_psp_cmd_buf(psp);
-+		return ret;
-+	}
+ 	/* Act */
+ 	result = handshake_req_cancel(sock->sk);
+@@ -417,6 +421,10 @@ static void handshake_req_cancel_test3(struct kunit *test)
+ 	/* Pretend to accept this request */
+ 	next = handshake_req_next(hn, HANDSHAKE_HANDLER_CLASS_TLSHD);
+ 	KUNIT_ASSERT_PTR_EQ(test, req, next);
++	/* Simulate FD_PREPARE() consuming the file reference handed
++	 * off by handshake_req_next(); see handshake_nl_accept_doit().
++	 */
++	fput(filp);
  
- 	psp_prep_load_toc_cmd_buf(cmd, psp->fw_pri_mc_addr, psp->toc.size_bytes);
+ 	/* Pretend to complete this request */
+ 	handshake_complete(next, -ETIMEDOUT, NULL);
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index c4a76319e1f88..1afa7d4880381 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -92,7 +92,6 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	struct net *net = sock_net(skb->sk);
+ 	struct handshake_net *hn = handshake_pernet(net);
+ 	struct handshake_req *req = NULL;
+-	struct socket *sock;
+ 	int class, fd, err;
  
-@@ -994,8 +998,11 @@ static int psp_rl_load(struct amdgpu_device *adev)
+ 	err = -EOPNOTSUPP;
+@@ -109,9 +108,9 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (!req)
+ 		goto out_status;
  
- 	cmd = acquire_psp_cmd_buf(psp);
+-	sock = req->hr_sk->sk_socket;
+ 	fd = get_unused_fd_flags(O_CLOEXEC);
+ 	if (fd < 0) {
++		fput(req->hr_file); /* drop ref from handshake_req_next() */
+ 		err = fd;
+ 		goto out_complete;
+ 	}
+@@ -119,10 +118,11 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	err = req->hr_proto->hp_accept(req, info, fd);
+ 	if (err) {
+ 		put_unused_fd(fd);
++		fput(req->hr_file); /* drop ref from handshake_req_next() */
+ 		goto out_complete;
+ 	}
  
--	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
--	memcpy(psp->fw_pri_buf, psp->rl.start_addr, psp->rl.size_bytes);
-+	ret = psp_copy_fw(psp, psp->rl.start_addr, psp->rl.size_bytes);
-+	if (ret) {
-+		release_psp_cmd_buf(psp);
-+		return ret;
-+	}
+-	fd_install(fd, get_file(sock->file));
++	fd_install(fd, req->hr_file);
  
- 	cmd->cmd_id = GFX_CMD_ID_LOAD_IP_FW;
- 	cmd->cmd.cmd_load_ip_fw.fw_phy_addr_lo = lower_32_bits(psp->fw_pri_mc_addr);
-@@ -1188,8 +1195,12 @@ int psp_ta_load(struct psp_context *psp, struct ta_context *context)
- 
- 	cmd = acquire_psp_cmd_buf(psp);
- 
--	psp_copy_fw(psp, context->bin_desc.start_addr,
--		    context->bin_desc.size_bytes);
-+	ret = psp_copy_fw(psp, context->bin_desc.start_addr,
-+			  context->bin_desc.size_bytes);
-+	if (ret) {
-+		release_psp_cmd_buf(psp);
-+		return ret;
-+	}
- 
- 	psp_prep_ta_load_cmd_buf(cmd, psp->fw_pri_mc_addr, context);
- 
-@@ -3576,17 +3587,24 @@ static ssize_t psp_usbc_pd_fw_sysfs_write(struct device *dev,
- 	return count;
+ 	trace_handshake_cmd_accept(net, req, req->hr_sk, fd);
+ 	return 0;
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index e5285fcf15b06..b8eb7e8e0ec48 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -182,6 +182,17 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
+ 	return ret;
  }
  
--void psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size)
-+int psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size)
++/**
++ * handshake_req_next - Return the next queued handshake request
++ * @hn: per-net handshake state
++ * @class: handler class to match
++ *
++ * On a non-NULL return, the caller owns an extra reference
++ * on @req->hr_file.  FD_PREPARE() consumes it on success; on
++ * the FD_PREPARE() failure path the caller must fput() it.
++ *
++ * Return: pointer to a removed handshake_req, or NULL.
++ */
+ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
  {
- 	int idx;
- 
- 	if (!drm_dev_enter(adev_to_drm(psp->adev), &idx))
--		return;
-+		return -ENODEV;
-+
-+	if (!bin_size || bin_size > PSP_1_MEG) {
-+		dev_err(psp->adev->dev, "PSP firmware is invalid\n");
-+		drm_dev_exit(idx);
-+		return -EINVAL;
-+	}
- 
- 	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
- 	memcpy(psp->fw_pri_buf, start_addr, bin_size);
- 
- 	drm_dev_exit(idx);
-+	return 0;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
-index 3e67ed63e6385..2431bfb598678 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
-@@ -528,7 +528,7 @@ int psp_get_fw_attestation_records_addr(struct psp_context *psp,
- 
- int psp_load_fw_list(struct psp_context *psp,
- 		     struct amdgpu_firmware_info **ucode_list, int ucode_count);
--void psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size);
-+int psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size);
- 
- int psp_spatial_partition(struct psp_context *psp, int mode);
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
-index 8f84fe40abbbb..7f6c45539eb86 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
-@@ -193,7 +193,9 @@ static int psp_v11_0_bootloader_load_component(struct psp_context  	*psp,
- 		return ret;
- 
- 	/* Copy PSP System Driver binary to memory */
--	psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
-+	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the sys driver to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
-@@ -239,7 +241,9 @@ static int psp_v11_0_bootloader_load_sos(struct psp_context *psp)
- 		return ret;
- 
- 	/* Copy Secure OS binary to PSP memory */
--	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP secure OS to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
-index fcd708eae75cc..14e6cd44cc012 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
-@@ -90,7 +90,9 @@ static int psp_v12_0_bootloader_load_sysdrv(struct psp_context *psp)
- 		return ret;
- 
- 	/* Copy PSP System Driver binary to memory */
--	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the sys driver to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
-@@ -129,7 +131,9 @@ static int psp_v12_0_bootloader_load_sos(struct psp_context *psp)
- 		return ret;
- 
- 	/* Copy Secure OS binary to PSP memory */
--	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP secure OS to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
-index fe1995ed13be7..a1ad01056efbf 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
-@@ -215,10 +215,9 @@ static int psp_v13_0_bootloader_load_component(struct psp_context  	*psp,
- 	if (ret)
- 		return ret;
- 
--	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
--
--	/* Copy PSP KDB binary to memory */
--	memcpy(psp->fw_pri_buf, bin_desc->start_addr, bin_desc->size_bytes);
-+	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP KDB to bootloader */
- 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
-@@ -284,10 +283,9 @@ static int psp_v13_0_bootloader_load_sos(struct psp_context *psp)
- 	if (ret)
- 		return ret;
- 
--	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
--
--	/* Copy Secure OS binary to PSP memory */
--	memcpy(psp->fw_pri_buf, psp->sos.start_addr, psp->sos.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP secure OS to bootloader */
- 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c b/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
-index d5ba58eba3e2b..28a2f2ca62460 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
-@@ -107,10 +107,9 @@ static int psp_v13_0_4_bootloader_load_component(struct psp_context  	*psp,
- 	if (ret)
- 		return ret;
- 
--	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
--
--	/* Copy PSP KDB binary to memory */
--	memcpy(psp->fw_pri_buf, bin_desc->start_addr, bin_desc->size_bytes);
-+	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP KDB to bootloader */
- 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
-@@ -170,10 +169,9 @@ static int psp_v13_0_4_bootloader_load_sos(struct psp_context *psp)
- 	if (ret)
- 		return ret;
- 
--	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
--
--	/* Copy Secure OS binary to PSP memory */
--	memcpy(psp->fw_pri_buf, psp->sos.start_addr, psp->sos.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP secure OS to bootloader */
- 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c b/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
-index f6b75e3e47ffb..b0c1046c355da 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
-@@ -96,7 +96,9 @@ static int psp_v3_1_bootloader_load_sysdrv(struct psp_context *psp)
- 		return ret;
- 
- 	/* Copy PSP System Driver binary to memory */
--	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the sys driver to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
-@@ -135,7 +137,9 @@ static int psp_v3_1_bootloader_load_sos(struct psp_context *psp)
- 		return ret;
- 
- 	/* Copy Secure OS binary to PSP memory */
--	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-+	if (ret)
-+		return ret;
- 
- 	/* Provide the PSP secure OS to bootloader */
- 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+ 	struct handshake_req *req, *pos;
+@@ -192,6 +203,13 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 		if (pos->hr_proto->hp_handler_class != class)
+ 			continue;
+ 		__remove_pending_locked(hn, pos);
++		/* Hand off a file reference to the accept side under
++		 * hn_lock.  A concurrent handshake_req_cancel() can drop
++		 * hr_file before accept reaches FD_PREPARE(); this extra
++		 * reference keeps the file alive until FD_PREPARE() takes
++		 * ownership.
++		 */
++		get_file(pos->hr_file);
+ 		req = pos;
+ 		break;
+ 	}
 -- 
 2.53.0
 
