@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAE0374E60;
-	Sat, 17 Oct 2026 17:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73353921FB;
+	Sat, 17 Oct 2026 17:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257825; cv=none; b=G4cXLLvwp8EMMNpfnKNN0Lhr3MfS/df4R0UIAV6au+NV0tVn7E2C4dmeJ7ap5AjPR9digDbhh2CeM9kDOkPkG9Veq8IlWTwa6QUynFu4NlsMNlm+/wjj+vv3YkMIHctjtqyBOi+YYFPHs1mIo+Ms6J7sWV2kd+5XxduKi0Ciyec=
+	t=1792257827; cv=none; b=diK+xSSx9y5V8OMNacOSHwd1j0Lkyggd3TglaHTt9A2dClRRh8D6V3fuvYNL3xmT7jKDONxDKiAkbllSH4ZwS+hsl/nANhIffuhTpLSouAMIC0I2PyxlPQKolW3/N1jhjUidHvSdUQwx1xrHSJHJKKrUyFQrBB71JgdJqyyH5QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257825; c=relaxed/simple;
-	bh=ZaaXv1aligEFE8sGcwZ/MSmMMyIeWzIa+nLv33UZ5SQ=;
+	s=arc-20240116; t=1792257827; c=relaxed/simple;
+	bh=0WygJcoW++htciPpjU3QB9nxe0OpeybdnYvGSeH0WYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsvJZDK5dyT794w90h7k5ptwD/89LbCZzXanXVT0cjguTttwIE+XGiRbZiFFVZPsfnUdzm72vqwLvPXtZl/3P3BaF8Ezx3foLZCaDMF1t1X9HLTfo2CiBfwJCKxsgn51StA2xmv9bH10ZblYHmIF5B1tyP9Kqo8g4xHZ2LUQKGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6C4VXpb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GvF71FHM9ae7S9BZW2h3xA7we3CwaGwB9uKJjs0qp25/+LUCUnIcQ/Tmh2Zk5O81rR3BUQgkxYOT7S9pD7nrP+67k0GkUKiC1TIKRWHiVC6IbNSdF4BJRSe215xbXGNAS9et4JjcjyMIVOZpu0juGFxetb7z/+tXBU67Kv3F0Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P93cMi+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6C4VXpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18981F000C4;
-	Sat, 17 Oct 2026 17:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P93cMi+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F25B1F000C4;
+	Sat, 17 Oct 2026 17:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257823;
-	bh=YHf9OmDnqhnGOkBDVtYkFQv+HYd3S5zOd1zFkqs7mTM=;
+	s=korg; t=1792257826;
+	bh=wepirYdPQcs/kpw2NeZMiutqPGj5z5gv5MCtTND1U0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6C4VXpbDH8gYpgy+A909I1owQs1YAM/PYBQtDg3w4SkpoefezwSD6H397qISKEbW
-	 gXMNwo3wxPHsEdN1eI3kOJ7rBEv3RbuBwPEp/RProE+B1nVIkEgPaQrLjbgBuzwJji
-	 BDm2qb3QlogqLnK4vPr4TCwgaK7j60ftN1BOSTlU=
+	b=P93cMi+K09719XgfYbIMqT31+wR7sKwoApu4T2mlJamCD/FHXJM7KIf2oh3YeVwDm
+	 ZSYblxcByenQxSp7f1Rj7E98Vc9mIkMrvGze7wv9m67bC9UELA3jTN+3MsmCAPoCD7
+	 UFp0rEhzdYiAtfF8b3HQWgdyW08F53j6CaKZNVPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Hou Tao <houtao1@huawei.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0682/1674] btrfs: do proper folio cleanup when cow_file_range() failed
-Date: Sat, 17 Oct 2026 17:49:14 +0200
-Message-ID: <20261017160448.615581937@linuxfoundation.org>
+Subject: [PATCH 6.6 0683/1674] bpf: Cancel the running bpf_timer through kworker for PREEMPT_RT
+Date: Sat, 17 Oct 2026 17:49:15 +0200
+Message-ID: <20261017160448.641453234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,260 +47,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 06f364284794f149d2abc167c11d556cf20c954b ]
+[ Upstream commit 58f038e6d209d2dd862fcf5de55407855856794d ]
 
-[BUG]
-When testing with COW fixup marked as BUG_ON() (this is involved with the
-new pin_user_pages*() change, which should not result new out-of-band
-dirty pages), I hit a crash triggered by the BUG_ON() from hitting COW
-fixup path.
+During the update procedure, when overwrite element in a pre-allocated
+htab, the freeing of old_element is protected by the bucket lock. The
+reason why the bucket lock is necessary is that the old_element has
+already been stashed in htab->extra_elems after alloc_htab_elem()
+returns. If freeing the old_element after the bucket lock is unlocked,
+the stashed element may be reused by concurrent update procedure and the
+freeing of old_element will run concurrently with the reuse of the
+old_element. However, the invocation of check_and_free_fields() may
+acquire a spin-lock which violates the lockdep rule because its caller
+has already held a raw-spin-lock (bucket lock). The following warning
+will be reported when such race happens:
 
-This BUG_ON() happens just after a failed btrfs_run_delalloc_range():
+  BUG: scheduling while atomic: test_progs/676/0x00000003
+  3 locks held by test_progs/676:
+  #0: ffffffff864b0240 (rcu_read_lock_trace){....}-{0:0}, at: bpf_prog_test_run_syscall+0x2c0/0x830
+  #1: ffff88810e961188 (&htab->lockdep_key){....}-{2:2}, at: htab_map_update_elem+0x306/0x1500
+  #2: ffff8881f4eac1b8 (&base->softirq_expiry_lock){....}-{2:2}, at: hrtimer_cancel_wait_running+0xe9/0x1b0
+  Modules linked in: bpf_testmod(O)
+  Preemption disabled at:
+  [<ffffffff817837a3>] htab_map_update_elem+0x293/0x1500
+  CPU: 0 UID: 0 PID: 676 Comm: test_progs Tainted: G ... 6.12.0+ #11
+  Tainted: [W]=WARN, [O]=OOT_MODULE
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)...
+  Call Trace:
+  <TASK>
+  dump_stack_lvl+0x57/0x70
+  dump_stack+0x10/0x20
+  __schedule_bug+0x120/0x170
+  __schedule+0x300c/0x4800
+  schedule_rtlock+0x37/0x60
+  rtlock_slowlock_locked+0x6d9/0x54c0
+  rt_spin_lock+0x168/0x230
+  hrtimer_cancel_wait_running+0xe9/0x1b0
+  hrtimer_cancel+0x24/0x30
+  bpf_timer_delete_work+0x1d/0x40
+  bpf_timer_cancel_and_free+0x5e/0x80
+  bpf_obj_free_fields+0x262/0x4a0
+  check_and_free_fields+0x1d0/0x280
+  htab_map_update_elem+0x7fc/0x1500
+  bpf_prog_9f90bc20768e0cb9_overwrite_cb+0x3f/0x43
+  bpf_prog_ea601c4649694dbd_overwrite_timer+0x5d/0x7e
+  bpf_prog_test_run_syscall+0x322/0x830
+  __sys_bpf+0x135d/0x3ca0
+  __x64_sys_bpf+0x75/0xb0
+  x64_sys_call+0x1b5/0xa10
+  do_syscall_64+0x3b/0xc0
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  ...
+  </TASK>
 
-  BTRFS error (device dm-2): failed to run delalloc range, root 348 ino 405 folio 65536 submit_bitmap 6-15 start 90112 len 106496: -28
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/extent_io.c:1444!
-  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-  CPU: 0 UID: 0 PID: 434621 Comm: kworker/u24:8 Tainted: G           OE      6.12.0-rc7-custom+ #86
-  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-  Workqueue: events_unbound btrfs_async_reclaim_data_space [btrfs]
-  pc : extent_writepage_io+0x2d4/0x308 [btrfs]
-  lr : extent_writepage_io+0x2d4/0x308 [btrfs]
-  Call trace:
-   extent_writepage_io+0x2d4/0x308 [btrfs]
-   extent_writepage+0x218/0x330 [btrfs]
-   extent_write_cache_pages+0x1d4/0x4b0 [btrfs]
-   btrfs_writepages+0x94/0x150 [btrfs]
-   do_writepages+0x74/0x190
-   filemap_fdatawrite_wbc+0x88/0xc8
-   start_delalloc_inodes+0x180/0x3b0 [btrfs]
-   btrfs_start_delalloc_roots+0x174/0x280 [btrfs]
-   shrink_delalloc+0x114/0x280 [btrfs]
-   flush_space+0x250/0x2f8 [btrfs]
-   btrfs_async_reclaim_data_space+0x180/0x228 [btrfs]
-   process_one_work+0x164/0x408
-   worker_thread+0x25c/0x388
-   kthread+0x100/0x118
-   ret_from_fork+0x10/0x20
-  Code: aa1403e1 9402f3ef aa1403e0 9402f36f (d4210000)
-  ---[ end trace 0000000000000000 ]---
+It seems feasible to break the reuse and refill of per-cpu extra_elems
+into two independent parts: reuse the per-cpu extra_elems with bucket
+lock being held and refill the old_element as per-cpu extra_elems after
+the bucket lock is unlocked. However, it will make the concurrent
+overwrite procedures on the same CPU return unexpected -E2BIG error when
+the map is full.
 
-[CAUSE]
-That failure is mostly from cow_file_range(), where we can hit -ENOSPC.
+Therefore, the patch fixes the lock problem by breaking the cancelling
+of bpf_timer into two steps for PREEMPT_RT:
+1) use hrtimer_try_to_cancel() and check its return value
+2) if the timer is running, use hrtimer_cancel() through a kworker to
+   cancel it again
+Considering that the current implementation of hrtimer_cancel() will try
+to acquire a being held softirq_expiry_lock when the current timer is
+running, these steps above are reasonable. However, it also has
+downside. When the timer is running, the cancelling of the timer is
+delayed when releasing the last map uref. The delay is also fixable
+(e.g., break the cancelling of bpf timer into two parts: one part in
+locked scope, another one in unlocked scope), it can be revised later if
+necessary.
 
-Although the -ENOSPC is already a bug related to our space reservation
-code, let's just focus on the error handling.
+It is a bit hard to decide the right fix tag. One reason is that the
+problem depends on PREEMPT_RT which is enabled in v6.12. Considering the
+softirq_expiry_lock lock exists since v5.4 and bpf_timer is introduced
+in v5.15, the bpf_timer commit is used in the fixes tag and an extra
+depends-on tag is added to state the dependency on PREEMPT_RT.
 
-For example, we have the following dirty range [0, 64K) of an inode,
-with 4K sector size and 4K page size:
-
-   0        16K        32K       48K       64K
-   |///////////////////////////////////////|
-   |#######################################|
-
-Where |///| means page are still dirty, and |###| means the extent io
-tree has EXTENT_DELALLOC flag.
-
-- Enter extent_writepage() for page 0
-
-- Enter btrfs_run_delalloc_range() for range [0, 64K)
-
-- Enter cow_file_range() for range [0, 64K)
-
-- Function btrfs_reserve_extent() only reserved one 16K extent
-  So we created extent map and ordered extent for range [0, 16K)
-
-   0        16K        32K       48K       64K
-   |////////|//////////////////////////////|
-   |<- OE ->|##############################|
-
-   And range [0, 16K) has its delalloc flag cleared.
-   But since we haven't yet submit any bio, involved 4 pages are still
-   dirty.
-
-- Function btrfs_reserve_extent() returns with -ENOSPC
-  Now we have to run error cleanup, which will clear all
-  EXTENT_DELALLOC* flags and clear the dirty flags for the remaining
-  ranges:
-
-   0        16K        32K       48K       64K
-   |////////|                              |
-   |        |                              |
-
-  Note that range [0, 16K) still has its pages dirty.
-
-- Some time later, writeback is triggered again for the range [0, 16K)
-  since the page range still has dirty flags.
-
-- btrfs_run_delalloc_range() will do nothing because there is no
-  EXTENT_DELALLOC flag.
-
-- extent_writepage_io() finds page 0 has no ordered flag
-  Which falls into the COW fixup path, triggering the BUG_ON().
-
-Unfortunately this error handling bug dates back to the introduction of
-btrfs.  Thankfully with the abuse of COW fixup, at least it won't crash
-the kernel.
-
-[FIX]
-Instead of immediately unlocking the extent and folios, we keep the extent
-and folios locked until either erroring out or the whole delalloc range
-finished.
-
-When the whole delalloc range finished without error, we just unlock the
-whole range with PAGE_SET_ORDERED (and PAGE_UNLOCK for !keep_locked
-cases), with EXTENT_DELALLOC and EXTENT_LOCKED cleared.
-And the involved folios will be properly submitted, with their dirty
-flags cleared during submission.
-
-For the error path, it will be a little more complex:
-
-- The range with ordered extent allocated (range (1))
-  We only clear the EXTENT_DELALLOC and EXTENT_LOCKED, as the remaining
-  flags are cleaned up by
-  btrfs_mark_ordered_io_finished()->btrfs_finish_one_ordered().
-
-  For folios we finish the IO (clear dirty, start writeback and
-  immediately finish the writeback) and unlock the folios.
-
-- The range with reserved extent but no ordered extent (range(2))
-- The range we never touched (range(3))
-  For both range (2) and range(3) the behavior is not changed.
-
-Now even if cow_file_range() failed halfway with some successfully
-reserved extents/ordered extents, we will keep all folios clean, so
-there will be no future writeback triggered on them.
-
-CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Depends-on: v6.12+ with PREEMPT_RT enabled
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/bpf/20241106084527.4gPrMnHt@linutronix.de
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
+Link: https://lore.kernel.org/r/20250117101816.2101857-5-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 63 ++++++++++++++++++++++++++----------------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+ kernel/bpf/helpers.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 613350705b864..8945e35a1f3a2 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1368,6 +1368,17 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 
- 	alloc_hint = get_extent_allocation_hint(inode, start, num_bytes);
- 
-+	/*
-+	 * We're not doing compressed IO, don't unlock the first page (which
-+	 * the caller expects to stay locked), don't clear any dirty bits and
-+	 * don't set any writeback bits.
-+	 *
-+	 * Do set the Ordered (Private2) bit so we know this page was properly
-+	 * setup for writepage.
-+	 */
-+	page_ops = (keep_locked ? 0 : PAGE_UNLOCK);
-+	page_ops |= PAGE_SET_ORDERED;
-+
- 	/*
- 	 * Relocation relies on the relocated extents to have exactly the same
- 	 * size as the original extents. Normally writeback for relocation data
-@@ -1411,8 +1422,13 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 				continue;
- 			}
- 			if (done_offset) {
--				*done_offset = start - 1;
--				return 0;
-+				/*
-+				 * Move @end to the end of the processed range,
-+				 * and exit the loop to unlock the processed extents.
-+				 */
-+				end = start - 1;
-+				ret = 0;
-+				break;
- 			}
- 			ret = -ENOSPC;
- 		}
-@@ -1468,21 +1484,6 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 
- 		btrfs_dec_block_group_reservations(fs_info, ins.objectid);
- 
--		/*
--		 * We're not doing compressed IO, don't unlock the first page
--		 * (which the caller expects to stay locked), don't clear any
--		 * dirty bits and don't set any writeback bits
--		 *
--		 * Do set the Ordered (Private2) bit so we know this page was
--		 * properly setup for writepage.
--		 */
--		page_ops = (keep_locked ? 0 : PAGE_UNLOCK);
--		page_ops |= PAGE_SET_ORDERED;
--
--		extent_clear_unlock_delalloc(inode, start, start + ram_size - 1,
--					     locked_page,
--					     EXTENT_LOCKED | EXTENT_DELALLOC,
--					     page_ops);
- 		if (num_bytes < cur_alloc_size)
- 			num_bytes = 0;
- 		else
-@@ -1499,6 +1500,8 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 		if (ret)
- 			goto out_unlock;
- 	}
-+	extent_clear_unlock_delalloc(inode, orig_start, end, locked_page,
-+				     EXTENT_LOCKED | EXTENT_DELALLOC, page_ops);
- done:
- 	if (done_offset)
- 		*done_offset = end;
-@@ -1519,29 +1522,31 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 	 * We process each region below.
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 1fa140915b0c0..41b0fb7243e38 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1533,10 +1533,24 @@ void bpf_timer_cancel_and_free(void *val)
+ 	 * To avoid these issues, punt to workqueue context when we are in a
+ 	 * timer callback.
  	 */
- 
--	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--		EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
--	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
--
- 	/*
- 	 * For the range (1). We have already instantiated the ordered extents
- 	 * for this region. They are cleaned up by
- 	 * btrfs_cleanup_ordered_extents() in e.g,
--	 * btrfs_run_delalloc_range(). EXTENT_LOCKED | EXTENT_DELALLOC are
--	 * already cleared in the above loop. And, EXTENT_DELALLOC_NEW |
--	 * EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV are handled by the cleanup
--	 * function.
-+	 * btrfs_run_delalloc_range().
-+	 * EXTENT_DELALLOC_NEW | EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV
-+	 * are also handled by the cleanup function.
- 	 *
--	 * However, in case of @keep_locked, we still need to unlock the pages
--	 * (except @locked_page) to ensure all the pages are unlocked.
-+	 * So here we only clear EXTENT_LOCKED and EXTENT_DELALLOC flag, and
-+	 * finish the writeback of the involved folios, which will be never submitted.
- 	 */
--	if (keep_locked && orig_start < start) {
-+	if (orig_start < start) {
-+		clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC;
-+		page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
+-	if (this_cpu_read(hrtimer_running))
++	if (this_cpu_read(hrtimer_running)) {
+ 		queue_work(system_unbound_wq, &t->cb.delete_work);
+-	else
++		return;
++	}
 +
- 		if (!locked_page)
- 			mapping_set_error(inode->vfs_inode.i_mapping, ret);
- 		extent_clear_unlock_delalloc(inode, orig_start, start - 1,
--					     locked_page, 0, page_ops);
-+					     locked_page, clear_bits, page_ops);
- 	}
++	if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
++		/* If the timer is running on other CPU, also use a kworker to
++		 * wait for the completion of the timer instead of trying to
++		 * acquire a sleepable lock in hrtimer_cancel() to wait for its
++		 * completion.
++		 */
++		if (hrtimer_try_to_cancel(&t->timer) >= 0)
++			kfree_rcu(t, cb.rcu);
++		else
++			queue_work(system_unbound_wq, &t->cb.delete_work);
++	} else {
+ 		bpf_timer_delete_work(&t->cb.delete_work);
++	}
+ }
  
-+	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
-+		     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
-+	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
-+
- 	/*
- 	 * For the range (2). If we reserved an extent for our delalloc range
- 	 * (or a subrange) and failed to create the respective ordered extent,
+ BPF_CALL_2(bpf_kptr_xchg, void *, map_value, void *, ptr)
 -- 
 2.53.0
 
