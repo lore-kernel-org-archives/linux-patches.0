@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4533A5E77;
-	Sat, 17 Oct 2026 16:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DF3ABDB3;
+	Sat, 17 Oct 2026 16:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255157; cv=none; b=susvN1h649pRpX0JLbwP2dIVc0CHVNO5e/mChEBU443BpdZBsPXQUI/pya/FDpFmjyq2IbrDKwCzuia8mJf1LBTbQIy7diEmQC9bC4PPi4lvx64zEfGPwtfgWao3SrjohgUnXnpdWxkH9AY5lE+Ht/eyIAqnemTTWwWH9AnGVUg=
+	t=1792255159; cv=none; b=L+jsc3iMqov1LmJubjTVZ4BqQySHOuccNK7//oouICf6pKynl7TL5sJEzssVPRtT51IP6y0UiRE4NJWGKsccE0rDoVgdJILpzKLcfUYJqzmYf+TKcHUcDODYz38n8CShk5W0AL2IzEJkPS6KvmdBG/u7TXgLXnV/Ta99bpTLWrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255157; c=relaxed/simple;
-	bh=61yURVACdUl2xsxyeG66gAyzW6IpfBhDPFO48bso9JY=;
+	s=arc-20240116; t=1792255159; c=relaxed/simple;
+	bh=m1il9uZLgqKILyCTLkaJHxcf3yMlUFHH+m4q6Lhgtes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jMIQU5kNoWDj+vLAdecrU/7sZnAEj4Tafj13QUvCYGaFn3oOep5w7sdqZduVTW5NrrV1EYfKgSxecw8ggtFpop6XuWArAwhL6zEii2GIgYbzHHp7me2ltQxkF+enTxM/RsoHU/XDaA/WPRcyMRpgW9p0msn0GRKYl5gU7BROs2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AlPmSSg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NYOUrWg9ncC0pnYoXx3gBTD38PjFjJNZ6H/OSJ5ojo6aMj0kO1kxYsx1QYCa6taxX81kxsNzvb+ZUOaZeeBR+d5e6mIWxP5R2Y0zUJZ9FntCtPdHPOepPMlApCmO/A4t4vNRfPIZQNSDZBelQ/eWO20b7raDya/CaBujuO+5Akk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMLL+huM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AlPmSSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C21F1F000C6;
-	Sat, 17 Oct 2026 16:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMLL+huM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D6B1F000C4;
+	Sat, 17 Oct 2026 16:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255155;
-	bh=AyyO7MYVDu65o8H0EHADW4KIsNtcyIbSMFeRI+trwdY=;
+	s=korg; t=1792255158;
+	bh=mHDNpd/GgUM1yjw318qVjEnolqG3y+Rn0vcKWhRQCWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0AlPmSSgCl7K2YCvfAYSwOUwBOlXiHcNCo5Fs12FzfC88JtPmCewmWr9E5wy3A3xX
-	 fuatLE+sXPHcX2DnGH0nrSv86yJwOrpohvlYZkSZm1tUBmiq1WGp17Vg/UHNEZEw7a
-	 PKDfnRxH+3fK7/34lBfTtMh3fsAb0+IDMrFQIu1A=
+	b=mMLL+huMJUrp12Zow0nP+4EtVyLQckLhqVvWeXrWYVATJZ4a4TgOaJdoNkbGuuGDg
+	 ix4MZhz4tRgYmsWXkv34LvdkWVw+tZ+dnJ15g8EWUFZ0skE/jMXt/MWHWPTKyFMf9g
+	 Zgs6s3Fm2MBLnrBJTUHqBI5wUEatA2j0PN1ORS8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	linux-hardening@vger.kernel.org,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 682/869] overflow: add range_overflows() and range_end_overflows()
-Date: Sat, 17 Oct 2026 17:58:43 +0200
-Message-ID: <20261017160054.462859969@linuxfoundation.org>
+Subject: [PATCH 6.12 683/869] drm/panthor: Add vm_bind region with kbo range overlap check
+Date: Sat, 17 Oct 2026 17:58:44 +0200
+Message-ID: <20261017160054.490595279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -56,211 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 5f3cec21f6d57336a2cbfa9ee428ac66c77a7211 ]
+[ Upstream commit 985f5e12f3cdf43030e13c2bbd154913133b5c3f ]
 
-Move the range_overflows() and range_end_overflows() along with the _t
-variants over from drm/i915 and drm/buddy to overflow.h.
+When a VM is created, caller has to specify the range of the address space
+carve-out set aside for mapping kernel BO's. That means vm_bind mappings of
+UM-exposed BO's should not intersect with that region, but at the moment
+we're not checking this.
 
-Cc: Kees Cook <kees@kernel.org>
-Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-hardening@vger.kernel.org
-Reviewed-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250829174601.2163064-3-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Stable-dep-of: 985f5e12f3cd ("drm/panthor: Add vm_bind region with kbo range overlap check")
+At first, I thought of giving these values to drm_gpuvm_init() through its
+reserve_{offset, range} arguments, but it turns out that is meant for VM
+address spans that are not managed through the usual drm_gpuvm split/merge
+circuit, so storing the end of the user VA range at VM creation time and
+doing a quick check in the vm_bind ioctl path was the simplest workaround.
+
+The new check also makes sure vm_bind range doesn't overflow the size of a
+64-bit unsigned integer. That was already being done further down the call
+stack inside drm_gpuvm_sm_map -> drm_gpuvm_range_valid, but it's best to
+fail early in the driver before GPUVM functions are invoked so that we
+won't waste time allocating vm_bind context resources.
+
+Fixes: 12cf826bf1dd ("drm/panthor: Support sparse mappings")
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20260720-vm_bind_checks-v6-1-c2c7dbe93a73@collabora.com
+Signed-off-by: Steven Price <steven.price@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_utils.h | 70 -------------------------------
- include/linux/gpu_buddy.h         |  9 ----
- include/linux/overflow.h          | 70 +++++++++++++++++++++++++++++++
- 3 files changed, 70 insertions(+), 79 deletions(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_utils.h b/drivers/gpu/drm/i915/i915_utils.h
-index a53d8a59ce19a..e9b8ec51f6ab4 100644
---- a/drivers/gpu/drm/i915/i915_utils.h
-+++ b/drivers/gpu/drm/i915/i915_utils.h
-@@ -69,76 +69,6 @@ bool i915_error_injected(void);
- 		drm_err(&(i915)->drm, fmt, ##__VA_ARGS__); \
- })
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 9b6afc9c1da13..3cad487c1b727 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -311,6 +311,9 @@ struct panthor_vm {
+ 		u64 end;
+ 	} kernel_auto_va;
  
--/**
-- * range_overflows() - Check if a range is out of bounds
-- * @start: Start of the range.
-- * @size:  Size of the range.
-- * @max:   Exclusive upper boundary.
-- *
-- * A strict check to determine if the range [@start, @start + @size) is
-- * invalid with respect to the allowable range [0, @max). Any range
-- * starting at or beyond @max is considered an overflow, even if @size is 0.
-- *
-- * Returns: true if the range is out of bounds.
-- */
--#define range_overflows(start, size, max) ({ \
--	typeof(start) start__ = (start); \
--	typeof(size) size__ = (size); \
--	typeof(max) max__ = (max); \
--	(void)(&start__ == &size__); \
--	(void)(&start__ == &max__); \
--	start__ >= max__ || size__ > max__ - start__; \
--})
--
--/**
-- * range_overflows_t() - Check if a range is out of bounds
-- * @type:  Data type to use.
-- * @start: Start of the range.
-- * @size:  Size of the range.
-- * @max:   Exclusive upper boundary.
-- *
-- * Same as range_overflows() but forcing the parameters to @type.
-- *
-- * Returns: true if the range is out of bounds.
-- */
--#define range_overflows_t(type, start, size, max) \
--	range_overflows((type)(start), (type)(size), (type)(max))
--
--/**
-- * range_end_overflows() - Check if a range's endpoint is out of bounds
-- * @start: Start of the range.
-- * @size:  Size of the range.
-- * @max:   Exclusive upper boundary.
-- *
-- * Checks only if the endpoint of a range (@start + @size) exceeds @max.
-- * Unlike range_overflows(), a zero-sized range at the boundary (@start == @max)
-- * is not considered an overflow. Useful for iterator-style checks.
-- *
-- * Returns: true if the endpoint exceeds the boundary.
-- */
--#define range_end_overflows(start, size, max) ({ \
--	typeof(start) start__ = (start); \
--	typeof(size) size__ = (size); \
--	typeof(max) max__ = (max); \
--	(void)(&start__ == &size__); \
--	(void)(&start__ == &max__); \
--	start__ > max__ || size__ > max__ - start__; \
--})
--
--/**
-- * range_end_overflows_t() - Check if a range's endpoint is out of bounds
-- * @type:  Data type to use.
-- * @start: Start of the range.
-- * @size:  Size of the range.
-- * @max:   Exclusive upper boundary.
-- *
-- * Same as range_end_overflows() but forcing the parameters to @type.
-- *
-- * Returns: true if the endpoint exceeds the boundary.
-- */
--#define range_end_overflows_t(type, start, size, max) \
--	range_end_overflows((type)(start), (type)(size), (type)(max))
--
- #define ptr_mask_bits(ptr, n) ({					\
- 	unsigned long __v = (unsigned long)(ptr);			\
- 	(typeof(ptr))(__v & -BIT(n));					\
-diff --git a/include/linux/gpu_buddy.h b/include/linux/gpu_buddy.h
-index 2d45ce054f263..db0a23405ec9d 100644
---- a/include/linux/gpu_buddy.h
-+++ b/include/linux/gpu_buddy.h
-@@ -14,15 +14,6 @@
++	/** @user_va_range: Upper boundary of VAs VM users can map objects against. */
++	u64 user_va_range;
++
+ 	/** @as: Address space related fields. */
+ 	struct {
+ 		/**
+@@ -2323,6 +2326,8 @@ panthor_vm_create(struct panthor_device *ptdev, bool for_mcu,
+ 		va_range = full_va_range;
+ 	}
  
- #include <drm/drm_print.h>
++	vm->user_va_range = kernel_va_start;
++
+ 	mutex_init(&vm->mm_lock);
+ 	drm_mm_init(&vm->mm, kernel_va_start, kernel_va_size);
+ 	vm->kernel_auto_va.start = auto_kernel_va_start;
+@@ -2412,6 +2417,10 @@ panthor_vm_bind_prepare_op_ctx(struct drm_file *file,
+ 	if (!IS_ALIGNED(op->va | op->size | op->bo_offset, vm_pgsz))
+ 		return -EINVAL;
  
--#define range_overflows(start, size, max) ({ \
--	typeof(start) start__ = (start); \
--	typeof(size) size__ = (size); \
--	typeof(max) max__ = (max); \
--	(void)(&start__ == &size__); \
--	(void)(&start__ == &max__); \
--	start__ >= max__ || size__ > max__ - start__; \
--})
--
- #define GPU_BUDDY_RANGE_ALLOCATION		BIT(0)
- #define GPU_BUDDY_TOPDOWN_ALLOCATION		BIT(1)
- #define GPU_BUDDY_CONTIGUOUS_ALLOCATION		BIT(2)
-diff --git a/include/linux/overflow.h b/include/linux/overflow.h
-index 89e9d60498835..456b3b09e3e9c 100644
---- a/include/linux/overflow.h
-+++ b/include/linux/overflow.h
-@@ -238,6 +238,76 @@ static inline bool __must_check __must_check_overflow(bool overflow)
- 			      __overflows_type_constexpr(n, T),	\
- 			      __overflows_type(n, T))
- 
-+/**
-+ * range_overflows() - Check if a range is out of bounds
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * A strict check to determine if the range [@start, @start + @size) is
-+ * invalid with respect to the allowable range [0, @max). Any range
-+ * starting at or beyond @max is considered an overflow, even if @size is 0.
-+ *
-+ * Returns: true if the range is out of bounds.
-+ */
-+#define range_overflows(start, size, max) ({ \
-+	typeof(start) start__ = (start); \
-+	typeof(size) size__ = (size); \
-+	typeof(max) max__ = (max); \
-+	(void)(&start__ == &size__); \
-+	(void)(&start__ == &max__); \
-+	start__ >= max__ || size__ > max__ - start__; \
-+})
++	/* We don't allow mappings that overlap with kbo's reserved range */
++	if (range_overflows(op->va, op->size, vm->user_va_range))
++		return -EINVAL;
 +
-+/**
-+ * range_overflows_t() - Check if a range is out of bounds
-+ * @type:  Data type to use.
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Same as range_overflows() but forcing the parameters to @type.
-+ *
-+ * Returns: true if the range is out of bounds.
-+ */
-+#define range_overflows_t(type, start, size, max) \
-+	range_overflows((type)(start), (type)(size), (type)(max))
-+
-+/**
-+ * range_end_overflows() - Check if a range's endpoint is out of bounds
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Checks only if the endpoint of a range (@start + @size) exceeds @max.
-+ * Unlike range_overflows(), a zero-sized range at the boundary (@start == @max)
-+ * is not considered an overflow. Useful for iterator-style checks.
-+ *
-+ * Returns: true if the endpoint exceeds the boundary.
-+ */
-+#define range_end_overflows(start, size, max) ({ \
-+	typeof(start) start__ = (start); \
-+	typeof(size) size__ = (size); \
-+	typeof(max) max__ = (max); \
-+	(void)(&start__ == &size__); \
-+	(void)(&start__ == &max__); \
-+	start__ > max__ || size__ > max__ - start__; \
-+})
-+
-+/**
-+ * range_end_overflows_t() - Check if a range's endpoint is out of bounds
-+ * @type:  Data type to use.
-+ * @start: Start of the range.
-+ * @size:  Size of the range.
-+ * @max:   Exclusive upper boundary.
-+ *
-+ * Same as range_end_overflows() but forcing the parameters to @type.
-+ *
-+ * Returns: true if the endpoint exceeds the boundary.
-+ */
-+#define range_end_overflows_t(type, start, size, max) \
-+	range_end_overflows((type)(start), (type)(size), (type)(max))
-+
- /**
-  * castable_to_type - like __same_type(), but also allows for casted literals
-  *
+ 	switch (op->flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) {
+ 	case DRM_PANTHOR_VM_BIND_OP_TYPE_MAP:
+ 		gem = drm_gem_object_lookup(file, op->bo_handle);
 -- 
 2.53.0
 
