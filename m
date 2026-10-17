@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76193515E7;
-	Sat, 17 Oct 2026 16:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06E639CCE6;
+	Sat, 17 Oct 2026 16:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253301; cv=none; b=PehXJ8ZM3cMUwEXEO0k5UDFoPDADpo1xH7D//gFIKbFzV9PrbeqQpV2f2w11IW5srS/7NC+vf19vHEazntjMbtSD+EVux0ziUfSVr/r1Y6JZoxgbMJYJx/NOgAmXiDQLtcdPFnIm7Oka2izOQpo5/yF+LNcfJPYsf/ty38WspMA=
+	t=1792253304; cv=none; b=MRwY7Emt9uQxzD8BWqGIPkj+A7mINgZk87ATaN25mRk6/rfDtgvm361+c/FfF00ehkVUJ5jCHD7/neSNS8/qBZuhcHwXnkDpPkyLGNwB6lDC4seybWaL6HWeaMGVKoXKtye5xu1J5j/89ApyQFE3m3aAAyS4uv++TtZOQ6gi0WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253301; c=relaxed/simple;
-	bh=nwrx/UvnNGYeoSrCQ8Nmwk1sul0ui966E2tvd1uy/fc=;
+	s=arc-20240116; t=1792253304; c=relaxed/simple;
+	bh=2c1a4Dxn8jTesHfPEHe4PZ5q7ngz9MUDTJIf0Divc3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kC11ygstqxYrNfrn63clE2kklbvD1f6CLVWhxv2Jt1rECHJoZS7X84C7z7+xQah1kpPeNSj3zVe9YIY3+XDFoxSCUBwWwG6WojPo+1W+m8nMcFckwqsiF/qmaAhnwiHclcALmMZG+6vkMJ+aMHSWcwqkz9AQ/Jw76N/iwf+ksj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTitccIt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XX8SpAeylIGiDsWUNREb9LNplkeO0BquMh1YTfe9W/ldGOsJMRUS2NZqi8ITGjF3TI7RWbvsVpjzUbVrvdMiM9Rn/ccR1kG7vg5qLIBfH+vOacHmzI14r94zpZcFnhp+OzJQTRJuSb2TyeyBB5joIDnFLExrup3tA9+V98Fvpp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khv8bgPT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTitccIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D641F000C4;
-	Sat, 17 Oct 2026 16:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khv8bgPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD731F000C4;
+	Sat, 17 Oct 2026 16:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253299;
-	bh=U0eHCxBTKgXCfDlyFI2PHoaniTocKIa683plJAg7qXo=;
+	s=korg; t=1792253302;
+	bh=u43jmJZf6ORczQfXFUxo/CFIYx0HZuyug4IS2i3JLDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VTitccItGwGznfDAQliX5CXzzETbeI6SPnwXSOkY4kzfTSSRCqUAjAyKNVPnCM+o9
-	 Z9NDDgeLXCesf7QwWc8QFYn1xOjfsvEZuNlbbOIp+KzSj1GK+0/pWmss+wg3j3P3zC
-	 HogSsubyfdSBZtFb/9ZmRdHocX90wCOjgNL07pzM=
+	b=khv8bgPTagyuMbzulmMh5eQO7jlUnRhBP9S+ro+auLEOVOF/MuHj+5F2NZi2y+6fK
+	 rYkovr1DkCOwJpVrbOO8huEWldlHuO9qCHZZzYPyOJ3hG/Ht/yfexUG8ISFflzYSnd
+	 4kS7NJVpQo1VfAoxrhEKGPRr+rP4H/zmMYBHPWzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eauger@redhat.com>,
-	Hongyu Ning <hongyu.ning@linux.intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/869] virtio: break and reset virtio devices on device_shutdown()
-Date: Sat, 17 Oct 2026 17:48:35 +0200
-Message-ID: <20261017160038.924387455@linuxfoundation.org>
+Subject: [PATCH 6.12 075/869] coresight: holding cscfg_csdev_lock while removing cscfg from csdev
+Date: Sat, 17 Oct 2026 17:48:36 +0200
+Message-ID: <20261017160038.949758844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,88 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 8bd2fa086a04886798b505f28db4002525895203 ]
+[ Upstream commit 53b9e2659719b04f5ba7593f2af0f2335f75e94a ]
 
-Hongyu reported a hang on kexec in a VM. QEMU reported invalid memory
-accesses during the hang.
+There'll be possible race scenario for coresight config:
 
-	Invalid read at addr 0x102877002, size 2, region '(null)', reason: rejected
-	Invalid write at addr 0x102877A44, size 2, region '(null)', reason: rejected
-	...
+CPU0                                          CPU1
+(perf enable)                                 load module
+                                              cscfg_load_config_sets()
+                                              activate config. // sysfs
+                                              (sys_active_cnt == 1)
+...
+cscfg_csdev_enable_active_config()
+  lock(csdev->cscfg_csdev_lock)
+                                              deactivate config // sysfs
+                                              (sys_activec_cnt == 0)
+                                              cscfg_unload_config_sets()
+  <iterating config_csdev_list>               cscfg_remove_owned_csdev_configs()
+  // here load config activate by CPU1
+  unlock(csdev->cscfg_csdev_lock)
 
-It was traced down to virtio-console. Kexec works fine if virtio-console
-is not in use.
+iterating config_csdev_list could be raced with config_csdev_list's
+entry delete.
 
-The issue is that virtio-console continues to write to the MMIO even after
-underlying virtio-pci device is reset.
+To resolve this race , hold csdev->cscfg_csdev_lock() while
+cscfg_remove_owned_csdev_configs()
 
-Additionally, Eric noticed that IOMMUs are reset before devices, if
-devices are not reset on shutdown they continue to poke at guest memory
-and get errors from the IOMMU. Some devices get wedged then.
-
-The problem can be solved by breaking all virtio devices on virtio
-bus shutdown, then resetting them.
-
-Reported-by: Eric Auger <eauger@redhat.com>
-Reported-by: Hongyu Ning <hongyu.ning@linux.intel.com>
-Message-ID: <c1dbc7dbad9b445245d3348f19e6742b0be07347.1740094946.git.mst@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 02bd588e12df ("coresight: configuration: Update API to permit dynamic load/unload")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250514161951.3427590-3-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/hwtracing/coresight/coresight-syscfg.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index 1b193d08a6ba8..148ce610ccb83 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -377,6 +377,34 @@ static void virtio_dev_remove(struct device *_d)
- 	of_node_put(dev->dev.of_node);
- }
+diff --git a/drivers/hwtracing/coresight/coresight-syscfg.c b/drivers/hwtracing/coresight/coresight-syscfg.c
+index 30a561d874819..55f36ed1af13c 100644
+--- a/drivers/hwtracing/coresight/coresight-syscfg.c
++++ b/drivers/hwtracing/coresight/coresight-syscfg.c
+@@ -395,6 +395,8 @@ static void cscfg_remove_owned_csdev_configs(struct coresight_device *csdev, voi
+ 	if (list_empty(&csdev->config_csdev_list))
+ 		return;
  
-+static void virtio_dev_shutdown(struct device *_d)
-+{
-+	struct virtio_device *dev = dev_to_virtio(_d);
-+	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
++	guard(spinlock_irqsave)(&csdev->cscfg_csdev_lock);
 +
-+	/*
-+	 * Stop accesses to or from the device.
-+	 * We only need to do it if there's a driver - no accesses otherwise.
-+	 */
-+	if (!drv)
-+		return;
-+
-+	/*
-+	 * Some devices get wedged if you kick them after they are
-+	 * reset. Mark all vqs as broken to make sure we don't.
-+	 */
-+	virtio_break_device(dev);
-+	/*
-+	 * Guarantee that any callback will see vq->broken as true.
-+	 */
-+	virtio_synchronize_cbs(dev);
-+	/*
-+	 * As IOMMUs are reset on shutdown, this will block device access to memory.
-+	 * Some devices get wedged if this happens, so reset to make sure it does not.
-+	 */
-+	dev->config->reset(dev);
-+}
-+
- static const struct bus_type virtio_bus = {
- 	.name  = "virtio",
- 	.match = virtio_dev_match,
-@@ -384,6 +412,7 @@ static const struct bus_type virtio_bus = {
- 	.uevent = virtio_uevent,
- 	.probe = virtio_dev_probe,
- 	.remove = virtio_dev_remove,
-+	.shutdown = virtio_dev_shutdown,
- };
- 
- int __register_virtio_driver(struct virtio_driver *driver, struct module *owner)
+ 	list_for_each_entry_safe(config_csdev, tmp, &csdev->config_csdev_list, node) {
+ 		if (config_csdev->config_desc->load_owner == load_owner)
+ 			list_del(&config_csdev->node);
 -- 
 2.53.0
 
