@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8DD29B795;
-	Sat, 17 Oct 2026 16:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6138F29B795;
+	Sat, 17 Oct 2026 16:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254792; cv=none; b=FJql/F14/f78hR6jOEyW37k5RhdMPxpKImNs9UPKq8d9XjE11I6UnD0MehLAESG/drJdziZCNLmxuQbymtb3BI+kjR8gpmmyqwy/9nbBSW7jWz16jZy5TavpLnQSTdvVnbp9YRNO3XTKTYQKmJwnt00HYAAv6XDJWW0lGy4qf4U=
+	t=1792254795; cv=none; b=VrO4F0xvrmkWyUcXYn0eNHpEDUkA3Il52BMlZGlWR7ghoV+1kbntv2Rt3gEH+bQEWxGRZOvqVzQ968NmYnxWXxAXVvJoa+/xKkIbHo2jLx3WAsS8l1FIKtEpm5zYEYjT9tNahDuQeExid7YF7qYAJ5fokOWS26ycZBvbEDOIDEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254792; c=relaxed/simple;
-	bh=oiWXTQqxuz7DoDg31nWxgnrfzfHUeUAw3Yun7DgaE9Q=;
+	s=arc-20240116; t=1792254795; c=relaxed/simple;
+	bh=P2Dyqf6dTe/JsEJEC8LaZDEz+9fPWWeNezUXIO8prw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtKcUneCMSaqakUXs6D+3E/KTFCTmEpT1gl6TjCgSvT3P5iZm3bnnTDam16ArFgQMUkdBJGcwDzvQS9HVS8zAZwr0CB3oGgrmrQgaJ07Yc/QjqQ0zBTv4UjkTvcWW/b8SDfmCuClACCvUgpvR2V/ibuoWiPbPEJ1YFn+Exk05NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUi9CMiw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WvLdgE7e52RF1GLKwoaBBfESo6OpxH16qnva5oYQFwlLDgad0tEgLnTPu+JH3eMd+fu92NkPLe3thncLtVNZcwGP/blM2yF3ltskKwJAkCWC+wwP6Hj6BUqrOcmpWukJO0hN/o2KgP3QEu8l2IJ2XxPONVxTlqwOrf/7/cD74fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMXssu5b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUi9CMiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAF51F000C4;
-	Sat, 17 Oct 2026 16:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMXssu5b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBFA1F000C4;
+	Sat, 17 Oct 2026 16:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254790;
-	bh=4Nx5MpyY0mEmuO8Wb5DcjGan2ThZbynGAFh+uoh6pPc=;
+	s=korg; t=1792254794;
+	bh=ElE3VmXjSZrWr8dQQ8/x8axlMpTn3dI2QETPP4j12jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUi9CMiwBQ6TAw869Qx49nG/GY6vFkxMJaa3SPLtIkYsJDClrMFujvyj8faXP53mu
-	 U1DBgyI88M12WE89HVMhqaMwe575dYpRruvTbbgbJL6lEGNi7neURSNvBFoLQr/XYC
-	 pPASR1kyh7qwoM5wy/X28D+xlkx63ocDfsgFbCrc=
+	b=yMXssu5bH+sOqtwHFdGVEpT/Ffvri17HpFzEWIcd8ToM3oGI/3C3O5A+dKs6AaM/a
+	 BRCchDbpz1pnL99YHNPGfG6Ps7mxa8oMTgIYzGiVL08130dm73ptF8AuSAmEiLnS+n
+	 D7kzDFB0ilp/QcImPUyWePuSbIzKX4DLisXOr7CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjie Fang <hongjiefang@asrmicro.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 521/869] scsi: core: pair EH runtime PM get and put
-Date: Sat, 17 Oct 2026 17:56:02 +0200
-Message-ID: <20261017160050.471669640@linuxfoundation.org>
+Subject: [PATCH 6.12 512/869] vhost_iotlb: bound map allocation in add_range
+Date: Sat, 17 Oct 2026 17:55:53 +0200
+Message-ID: <20261017160050.228392341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,138 +45,359 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongjie Fang <hongjiefang@asrmicro.com>
+From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
 
-[ Upstream commit 872f486259ae0bc6b73ca4735a15d013241f73e9 ]
+[ Upstream commit 1ed35ac7f3fe2b4396bdd29ac3a7f0ebc0829e94 ]
 
-shost->eh_noresume is currently consulted twice in one error handling
-iteration: once before scsi_autopm_get_host() and once again before
-scsi_autopm_put_host().
+vhost_iotlb_add_range_ctx() only retires an old entry when the table
+has a non-zero limit, has exactly reached that limit and has
+VHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating
+entries after reaching their configured limit.
 
-That is racy when a PM-triggered error path flips shost->eh_noresume
-while the SCSI EH thread is still running.
+Existing vhost devices allocate their IOTLB with max_iotlb_entries from
+vhost.c, which defaults to 2048 and is tunable by module parameter. Use
+the caller-provided limit at the allocation point instead of adding a
+separate default in the common IOTLB helper, and reject non-positive
+values in vhost paths that can report an error.
 
-The problem flow looks like this:
-PM path
-  ufshcd_set_dev_pwr_mode()
-    shost->eh_noresume = 1
-    ufshcd_execute_start_stop  <-- trigger EH
-    ...
-    shost->eh_noresume = 0
+Other vhost IOTLB users should not create zero-limit tables when entries
+can be populated from userspace or guest-controlled requests. Add
+caller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and
+vhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require
+at least two entries for vdpa_sim and mlx5 vDPA paths that install
+full-range mappings, since those mappings are split into two IOTLB
+entries.
 
-EH path
-  scsi_error_handler()
-    if (!shost->eh_noresume)
-      scsi_autopm_get_host()  <-- skipped
-    ...
-    if (!shost->eh_noresume)
-       scsi_autopm_put_host()  <-- executed later
+Handle full-range mappings in the common helper by checking that the
+IOTLB can hold both split entries before inserting the first half. This
+avoids returning an error after leaving a half mapping behind.
 
-In that case one EH iteration can skip autoresume on entry and still
-drop a runtime PM reference on exit. That leaves an unmatched runtime PM
-put and can trigger a runtime PM usage count underflow.
+When the table is full, keep the existing retire behavior for retiring
+tables and return -ENOSPC for non-retiring tables. Reuse the retired map
+node instead of freeing it and allocating a replacement, so a stream of
+IOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table
+has reached its limit. If a zero-limit IOTLB still reaches the common
+helper, treat it as a configuration error and return -EINVAL.
 
-Fix this by making eh_noresume a regular bool so it can be accessed with
-READ_ONCE() and WRITE_ONCE(). Snapshot it once per EH iteration and use
-that snapshot for both runtime PM get and put decisions.
+I found this bug myself, though the patch was written with AI assistance.
 
-Fixes: ae0751ffc77e ("[SCSI] add flag to skip the runtime PM calls on the host")
-Signed-off-by: Hongjie Fang <hongjiefang@asrmicro.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260729111614.2407559-1-hongjiefang@asrmicro.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 0bbe30668d89 ("vhost: factor out IOTLB")
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
+Message-ID: <AMYAtgAiKmgYcSQT5ukl-4qq.3.1781960405943.Hmail.241270009@hdu.edu.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 6 ++++--
- drivers/ufs/core/ufshcd.c | 4 ++--
- include/scsi/scsi_host.h  | 7 ++++---
- 3 files changed, 10 insertions(+), 7 deletions(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h   |  2 ++
+ drivers/vdpa/mlx5/core/mr.c          |  5 ++-
+ drivers/vdpa/mlx5/core/resources.c   | 11 ++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim.c     | 10 ++++--
+ drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++-
+ drivers/vhost/iotlb.c                | 47 +++++++++++++++++++---------
+ drivers/vhost/vdpa.c                 |  9 +++++-
+ drivers/vhost/vhost.c                |  8 +++++
+ 8 files changed, 82 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 3ecdcb21040c9..94b873ec73449 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -2338,6 +2338,7 @@ static void scsi_unjam_host(struct Scsi_Host *shost)
- int scsi_error_handler(void *data)
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index 2cedf7e2dbc49..42f2f44b383c7 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -11,6 +11,8 @@
+ 
+ #define MLX5V_ETH_HARD_MTU (ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN)
+ 
++extern int mlx5_vdpa_max_iotlb_entries;
++
+ struct mlx5_vdpa_direct_mr {
+ 	u64 start;
+ 	u64 end;
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index 25e2c234bcef2..a5b5feb74f26f 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -778,6 +778,9 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
  {
- 	struct Scsi_Host *shost = data;
-+	bool eh_noresume;
+ 	int err;
  
- 	/*
- 	 * We use TASK_INTERRUPTIBLE so that the thread is not
-@@ -2379,7 +2380,8 @@ int scsi_error_handler(void *data)
- 		 * what we need to do to get it up and online again (if we can).
- 		 * If we fail, we end up taking the thing offline.
- 		 */
--		if (!shost->eh_noresume && scsi_autopm_get_host(shost) != 0) {
-+		eh_noresume = READ_ONCE(shost->eh_noresume);
-+		if (!eh_noresume && scsi_autopm_get_host(shost) != 0) {
- 			SCSI_LOG_ERROR_RECOVERY(1,
- 				shost_printk(KERN_ERR, shost,
- 					     "scsi_eh_%d: unable to autoresume\n",
-@@ -2403,7 +2405,7 @@ int scsi_error_handler(void *data)
- 		 * which are still online.
- 		 */
- 		scsi_restart_operations(shost);
--		if (!shost->eh_noresume)
-+		if (!eh_noresume)
- 			scsi_autopm_put_host(shost);
++	if (mlx5_vdpa_max_iotlb_entries < 2)
++		return -EINVAL;
++
+ 	if (iotlb)
+ 		err = create_user_mr(mvdev, mr, iotlb);
+ 	else
+@@ -786,7 +789,7 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
+ 	if (err)
+ 		return err;
+ 
+-	mr->iotlb = vhost_iotlb_alloc(0, 0);
++	mr->iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
+ 	if (!mr->iotlb) {
+ 		err = -ENOMEM;
+ 		goto err_mr;
+diff --git a/drivers/vdpa/mlx5/core/resources.c b/drivers/vdpa/mlx5/core/resources.c
+index aeae31d0cefae..28a4d7a35bf4e 100644
+--- a/drivers/vdpa/mlx5/core/resources.c
++++ b/drivers/vdpa/mlx5/core/resources.c
+@@ -3,8 +3,14 @@
+ 
+ #include <linux/iova.h>
+ #include <linux/mlx5/driver.h>
++#include <linux/moduleparam.h>
+ #include "mlx5_vdpa.h"
+ 
++int mlx5_vdpa_max_iotlb_entries = 2048;
++module_param_named(max_iotlb_entries, mlx5_vdpa_max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid)
+ {
+ 	struct mlx5_core_dev *mdev = dev->mdev;
+@@ -229,7 +235,10 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey)
+ 
+ static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
+ {
+-	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
++	if (mlx5_vdpa_max_iotlb_entries < 2)
++		return -EINVAL;
++
++	mvdev->cvq.iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
+ 	if (!mvdev->cvq.iotlb)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index 825690c6fed19..3bcec8c1e2ab3 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -34,7 +34,7 @@ MODULE_PARM_DESC(batch_mapping, "Batched mapping 1 -Enable; 0 - Disable");
+ static int max_iotlb_entries = 2048;
+ module_param(max_iotlb_entries, int, 0444);
+ MODULE_PARM_DESC(max_iotlb_entries,
+-		 "Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048)");
++		 "Maximum number of iotlb entries for each address space. (default: 2048)");
+ 
+ static bool use_va = true;
+ module_param(use_va, bool, 0444);
+@@ -201,6 +201,8 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
+ 
+ 	if (!dev_attr->alloc_size)
+ 		return ERR_PTR(-EINVAL);
++	if (max_iotlb_entries < 2)
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (config->mask & BIT_ULL(VDPA_ATTR_DEV_FEATURES)) {
+ 		if (config->device_features &
+@@ -266,8 +268,10 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
+ 
+ 	for (i = 0; i < vdpasim->dev_attr.nas; i++) {
+ 		vhost_iotlb_init(&vdpasim->iommu[i], max_iotlb_entries, 0);
+-		vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX, 0,
+-				      VHOST_MAP_RW);
++		ret = vhost_iotlb_add_range(&vdpasim->iommu[i], 0, ULONG_MAX,
++					    0, VHOST_MAP_RW);
++		if (ret)
++			goto err_iommu;
+ 		vdpasim->iommu_pt[i] = true;
  	}
- 	__set_current_state(TASK_RUNNING);
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 44c84090496d6..81297a429cfe6 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9561,7 +9561,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	 * we are functional while we are here, skip host resume in error
- 	 * handling context.
- 	 */
--	hba->host->eh_noresume = 1;
-+	WRITE_ONCE(hba->host->eh_noresume, 1);
  
- 	/*
- 	 * Current function would be generally called from the power management
-@@ -9583,7 +9583,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	}
+diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
+index ec743bed361c1..e8b837df328f0 100644
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -12,11 +12,17 @@
+ #include <linux/file.h>
+ #include <linux/anon_inodes.h>
+ #include <linux/highmem.h>
++#include <linux/moduleparam.h>
+ #include <linux/vmalloc.h>
+ #include <linux/vdpa.h>
  
- 	scsi_device_put(sdp);
--	hba->host->eh_noresume = 0;
-+	WRITE_ONCE(hba->host->eh_noresume, 0);
- 	return ret;
+ #include "iova_domain.h"
+ 
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int vduse_iotlb_add_range(struct vduse_iova_domain *domain,
+ 				 u64 start, u64 last,
+ 				 u64 addr, unsigned int perm,
+@@ -622,11 +628,14 @@ vduse_domain_create(unsigned long iova_limit, size_t bounce_size)
+ 	if (iova_limit <= bounce_size)
+ 		return NULL;
+ 
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+ 	if (!domain)
+ 		return NULL;
+ 
+-	domain->iotlb = vhost_iotlb_alloc(0, 0);
++	domain->iotlb = vhost_iotlb_alloc(max_iotlb_entries, 0);
+ 	if (!domain->iotlb)
+ 		goto err_iotlb;
+ 
+diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
+index ea61330a34310..a6228dd249316 100644
+--- a/drivers/vhost/iotlb.c
++++ b/drivers/vhost/iotlb.c
+@@ -20,6 +20,14 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ 		     rb, __u64, __subtree_last,
+ 		     START, LAST, static inline, vhost_iotlb_itree);
+ 
++static void vhost_iotlb_map_unlink(struct vhost_iotlb *iotlb,
++				   struct vhost_iotlb_map *map)
++{
++	vhost_iotlb_itree_remove(map, &iotlb->root);
++	list_del(&map->link);
++	iotlb->nmaps--;
++}
++
+ /**
+  * vhost_iotlb_map_free - remove a map node and free it
+  * @iotlb: the IOTLB
+@@ -28,10 +36,8 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
+ 			  struct vhost_iotlb_map *map)
+ {
+-	vhost_iotlb_itree_remove(map, &iotlb->root);
+-	list_del(&map->link);
++	vhost_iotlb_map_unlink(iotlb, map);
+ 	kfree(map);
+-	iotlb->nmaps--;
  }
+ EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
  
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 990747f803fef..28ab13c6ac619 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -633,6 +633,10 @@ struct Scsi_Host {
+@@ -57,14 +63,25 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 	if (last < start)
+ 		return -EFAULT;
+ 
++	if (!iotlb->limit)
++		return -EINVAL;
++
+ 	/* If the range being mapped is [0, ULONG_MAX], split it into two entries
+ 	 * otherwise its size would overflow u64.
  	 */
- 	unsigned nr_hw_queues;
- 	unsigned nr_maps;
+ 	if (start == 0 && last == ULONG_MAX) {
+ 		u64 mid = last / 2;
+-		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
+-				perm, opaque);
++		int err;
 +
-+	/* Don't resume host in EH */
-+	bool eh_noresume;
++		if (iotlb->limit < 2)
++			return -ENOSPC;
+ 
++		if (!(iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) &&
++		    iotlb->nmaps > iotlb->limit - 2)
++			return -ENOSPC;
 +
- 	unsigned active_mode:2;
++		err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
++						perm, opaque);
+ 		if (err)
+ 			return err;
  
- 	/*
-@@ -654,9 +658,6 @@ struct Scsi_Host {
- 	/* Asynchronous scan in progress */
- 	unsigned async_scan:1;
+@@ -72,17 +89,19 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 		start = mid + 1;
+ 	}
  
--	/* Don't resume host in EH */
--	unsigned eh_noresume:1;
+-	if (iotlb->limit &&
+-	    iotlb->nmaps == iotlb->limit &&
+-	    iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
+-		map = list_first_entry(&iotlb->list, typeof(*map), link);
+-		vhost_iotlb_map_free(iotlb, map);
++	if (iotlb->nmaps >= iotlb->limit) {
++		if (iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
++			map = list_first_entry(&iotlb->list, typeof(*map), link);
++			vhost_iotlb_map_unlink(iotlb, map);
++		} else {
++			return -ENOSPC;
++		}
++	} else {
++		map = kmalloc(sizeof(*map), GFP_ATOMIC);
++		if (!map)
++			return -ENOMEM;
+ 	}
+ 
+-	map = kmalloc(sizeof(*map), GFP_ATOMIC);
+-	if (!map)
+-		return -ENOMEM;
 -
- 	/* The controller does not support WRITE SAME */
- 	unsigned no_write_same:1;
+ 	map->start = start;
+ 	map->size = last - start + 1;
+ 	map->last = last;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 789bd8da55052..a940718745def 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -34,6 +34,11 @@ enum {
  
+ #define VHOST_VDPA_DEV_MAX (1U << MINORBITS)
+ 
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ #define VHOST_VDPA_IOTLB_BUCKETS 16
+ 
+ struct vhost_vdpa_as {
+@@ -112,12 +117,14 @@ static struct vhost_vdpa_as *vhost_vdpa_alloc_as(struct vhost_vdpa *v, u32 asid)
+ 
+ 	if (asid >= v->vdpa->nas)
+ 		return NULL;
++	if (max_iotlb_entries <= 0)
++		return NULL;
+ 
+ 	as = kmalloc(sizeof(*as), GFP_KERNEL);
+ 	if (!as)
+ 		return NULL;
+ 
+-	vhost_iotlb_init(&as->iotlb, 0, 0);
++	vhost_iotlb_init(&as->iotlb, max_iotlb_entries, 0);
+ 	as->id = asid;
+ 	hlist_add_head(&as->hash_link, head);
+ 
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index f966fc094f126..22119ec7fd9b7 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1135,6 +1135,9 @@ EXPORT_SYMBOL_GPL(vhost_dev_set_owner);
+ 
+ static struct vhost_iotlb *iotlb_alloc(void)
+ {
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	return vhost_iotlb_alloc(max_iotlb_entries,
+ 				 VHOST_IOTLB_FLAG_RETIRE);
+ }
+@@ -1979,6 +1982,8 @@ static long vhost_set_memory(struct vhost_dev *d, struct vhost_memory __user *m)
+ 		return -EOPNOTSUPP;
+ 	if (mem.nregions > max_mem_regions)
+ 		return -E2BIG;
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
+ 	newmem = kvzalloc(struct_size(newmem, regions, mem.nregions),
+ 			GFP_KERNEL);
+ 	if (!newmem)
+@@ -2281,6 +2286,9 @@ int vhost_init_device_iotlb(struct vhost_dev *d)
+ 	struct vhost_iotlb *niotlb, *oiotlb;
+ 	int i;
+ 
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
++
+ 	niotlb = iotlb_alloc();
+ 	if (!niotlb)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
