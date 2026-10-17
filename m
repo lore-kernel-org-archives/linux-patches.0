@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899483822B7;
-	Sat, 17 Oct 2026 16:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759E23A0E85;
+	Sat, 17 Oct 2026 16:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254937; cv=none; b=huRX0C7/AqGLbQurtDghc15V8IskskK61VArsPZ5UY5SpnohNNO6ZYrkOwIe1ihM3+QXEb5gKgD3s43VSF5y5C0tin30qlFPokHb2SvPtj2k6MdXKhL92ZYw8zMhORXMVFbs850zmAwEvtWUa09R56BNoHG17W2p8CZL33LFZBM=
+	t=1792254940; cv=none; b=YTVGobi3IdI7bY2949YNkVX06+cclt2M7WSuSmNLkh+D/TT6ug1oiZtFDpjmJbDiIIjK86Fx1dtqdxCIuCgGbMMailr2Xs2JhFWcrjJrIjInYKWKjQ33aI6LK6IRMpCRe9TRGiESfgIoiKBvXOfiFgqJST+QXAtWHplRq7r7efk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254937; c=relaxed/simple;
-	bh=T8LD23wBhu8YCZQb245b+VkievsiRSMm4zwGmHr8I2Q=;
+	s=arc-20240116; t=1792254940; c=relaxed/simple;
+	bh=Jkr/aqBykvKEpBntwBipWjnQAZJk17LQUfHAeZmd3XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4V1HJro7a/HkuXcT3PZfx94O2QENfVGSQg5tVOCrSMLtViTGkdaGn21lQ+8MaviBNvpa92nePeUZElCH4JZfmNT7DofsvlrlKMBu0dZqKvRvfyacI7VDvcnvgKO9vBHE3gRHe1dzE3DkCHxG3S7N7wyBLTvof/tieiN0mTe0ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdnafmho; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sfZ6y9FcpzKzPL6xAJXZLCwzgbB0xlsQEbi2ZkJBdkRgtknv/5mjyD6AV0ajfsbAZ+nvnlGBDRs9g2/v0UJly4DXa4yRW9VNk5nJLqI7f3W3rM7IbH9wshOEJIM/E9Y9ZrGuZNtJ/PpmG0oUBTsuOBumg1FaBt8rgsaOOcNw5S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UggQEkgv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdnafmho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14E71F000C4;
-	Sat, 17 Oct 2026 16:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UggQEkgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1E71F000C4;
+	Sat, 17 Oct 2026 16:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254936;
-	bh=aiQrVxS4W5YDhv/hvWjevDstGt4p/mJz0a1hLBcPFg4=;
+	s=korg; t=1792254939;
+	bh=jAi/mba/PoyRgPsFZAsdjM2woNfOypXr79fJfjLdod4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdnafmhohLY4+nOn4GJcZR8dtYCvpOEQnXImU6VjGuUcniQalfmJEDot0XmFZ9aEe
-	 of/lIhLHf8AENGdPnMoiIEFR84kcziTz8p5A0s+a+aGPWPu1lMnuYInqXJRoVUxGO7
-	 QSS++jAo7sfXRO9/UiRXkkUH9crow64tb3IAWSQw=
+	b=UggQEkgvonQjtr8dv/lXI6myzWB3hqpT2aeSKqXD1mQvRFSGQuqDWX+rNFi0jUm9S
+	 cYTSbJk6LL73LKti4+LCEDXm8bPkPbYjZqxErOqjB+RczoKCCr4y/xDh9Kq0Ivffwh
+	 mc7mYjd+HeV0mSMgPuoirbp6RUG2pBBm/KMphnzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Breno Leitao <leitao@debian.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 604/869] net: add getsockopt_iter callback to proto_ops
-Date: Sat, 17 Oct 2026 17:57:25 +0200
-Message-ID: <20261017160052.528143968@linuxfoundation.org>
+Subject: [PATCH 6.12 613/869] ALSA: mtpav: shut down output timer before card teardown
+Date: Sat, 17 Oct 2026 17:57:34 +0200
+Message-ID: <20261017160052.751872754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,84 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 67fab22a7adcec0279b9b057eb3dc669e32834f0 ]
+[ Upstream commit c73cb5b7c159246dd572277c668851a56e516019 ]
 
-Add a new getsockopt_iter callback to struct proto_ops that uses
-sockopt_t, a type-safe wrapper around iov_iter. This provides a clean
-interface for socket option operations that works with both user and
-kernel buffers.
+snd_mtpav_output_timer() rearms chip->timer while holding
+chip->spinlock and accesses the card-private mtpav state.
 
-The sockopt_t type encapsulates an iov_iter and an optlen field.
+snd_mtpav_free() currently takes the same lock and calls
+timer_delete() when the timer is active. This only removes a
+pending timer; it does not wait for a callback that is already
+running and does not prevent the callback from rearming the timer.
 
-The optlen field, although not suggested by Linus, serves as both input
-(buffer size) and output (returned data size), allowing callbacks to
-return random values independent of the bytes written via
-copy_to_iter(), so, keep it separated from iov_iter.count.
+A callback running on another CPU can therefore continue after
+snd_mtpav_free() releases the lock and access the card-private
+state while the card is being torn down. It can also rearm the
+timer after timer_delete() has returned.
 
-This is preparatory work for removing the SOL_SOCKET level restriction
-from io_uring getsockopt operations.
+Call timer_shutdown_sync() without holding chip->spinlock. This
+waits for any running callback to finish and prevents further
+rearming before the card-private mtpav state is released.
 
-Keep in mind that both iter_out and iter_in always point to the same
-data at all times, and we just have two of them to make the callback
-implementation sane.
-
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260408-getsockopt-v3-1-061bb9cb355d@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ca2c4c264986 ("Bluetooth: L2CAP: access chan->conn safely in get/setsockopt")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820112749.9195-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/net.h | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ sound/drivers/mtpav.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/linux/net.h b/include/linux/net.h
-index b75bc534c1b35..c6d92428c71a5 100644
---- a/include/linux/net.h
-+++ b/include/linux/net.h
-@@ -23,9 +23,30 @@
- #include <linux/fs.h>
- #include <linux/mm.h>
- #include <linux/sockptr.h>
-+#include <linux/uio.h>
+diff --git a/sound/drivers/mtpav.c b/sound/drivers/mtpav.c
+index 946184a2a7589..dc67bb3d46397 100644
+--- a/sound/drivers/mtpav.c
++++ b/sound/drivers/mtpav.c
+@@ -657,12 +657,8 @@ static int snd_mtpav_get_RAWMIDI(struct mtpav *mcard)
+ static void snd_mtpav_free(struct snd_card *card)
+ {
+ 	struct mtpav *crd = card->private_data;
+-	unsigned long flags;
  
- #include <uapi/linux/net.h>
+-	spin_lock_irqsave(&crd->spinlock, flags);
+-	if (crd->istimer > 0)
+-		snd_mtpav_remove_output_timer(crd);
+-	spin_unlock_irqrestore(&crd->spinlock, flags);
++	timer_shutdown_sync(&crd->timer);
+ }
  
-+/**
-+ * struct sockopt - socket option value container
-+ * @iter_in: iov_iter for reading optval with the content from the caller.
-+ *	     Use copy_from_iter() given this iov direction is ITER_SOURCE
-+ * @iter_out: iov_iter for protocols to update optval data to userspace
-+ *	      Use _copy_to_iter() given iov direction is ITER_DEST
-+ * @optlen: serves as both input (buffer size) and output (returned data size).
-+ *
-+ * Type-safe wrapper for socket option data that works with both
-+ * user and kernel buffers.
-+ *
-+ * The optlen field allows callbacks to return a specific length value
-+ * independent of the bytes written via copy_to_iter().
-+ */
-+typedef struct sockopt {
-+	struct iov_iter iter_in;
-+	struct iov_iter iter_out;
-+	int optlen;
-+} sockopt_t;
-+
- struct poll_table_struct;
- struct pipe_inode_info;
- struct inode;
-@@ -194,6 +215,8 @@ struct proto_ops {
- 				      unsigned int optlen);
- 	int		(*getsockopt)(struct socket *sock, int level,
- 				      int optname, char __user *optval, int __user *optlen);
-+	int		(*getsockopt_iter)(struct socket *sock, int level,
-+					   int optname, sockopt_t *opt);
- 	void		(*show_fdinfo)(struct seq_file *m, struct socket *sock);
- 	int		(*sendmsg)   (struct socket *sock, struct msghdr *m,
- 				      size_t total_len);
+ /*
 -- 
 2.53.0
 
