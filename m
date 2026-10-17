@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AFB3BAD9B;
-	Sat, 17 Oct 2026 18:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66253890F8;
+	Sat, 17 Oct 2026 18:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260785; cv=none; b=d9PI+mdQjFUQE51LgxQMgN2LtFFTQeTQ+rXhpM5VsRHfLGHYFWhTza1pK2WPPrK6g1Ut89fsYe9ylxenpgbSbatZOLsMsy3Tj/1rAlb1Y0yfHO8Vh9GCKaoUAiast+2fiD79heGi080aH/TNugER2FYrkgS4AYTVANjgbDmwgZ8=
+	t=1792260788; cv=none; b=uD8ng7pqo6uPcm0rxn5i192dTJTpr00aJQMFOqeqC2OIdRUsTAKdOceVt4UfgiTzhSW3r8Bf02xywy2+Ue9HTpCwtqDG3Uo0oRCzm9II+0C0FXfm+wX+L69AXkqZBqAoEujgnipi55dDmyUeBk2SN2dclo+JaPIlNuwjzOuUpIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260785; c=relaxed/simple;
-	bh=yOkIglc1q7M9GN791LeiTDr6iRK+U0cSS59CckEv3Ao=;
+	s=arc-20240116; t=1792260788; c=relaxed/simple;
+	bh=xVVE/1mXMO9tNp+arT9MRR1QeJaJEaLfqDuNnbvi1RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDKqSW4F+elKO1+bzsXKoMKG2pPnRJ4ExwgM4CkPcA4bnWaKmSjFImb/M9N0x7YZliGjHU1TLWGumMWHa845Kejqi9e6IFWjaafYx1m/wT86Jn07m41Ko12lWhi6yr25NmDZ0QF7FLE8Il7IqF7arq7eOikZHdnCTNahlq7vD5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeaBqqKc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nwYlJIEXI83rlIQYyhuI7RIqHeIgYDIs0TLYxvscqEok7QGOZ8BYB0pqCLRf3fDliygbkIol/tfGjru/G+lu93flqNGB5+bQMkdhWHnvNzDXVY6/kLrP6fMQESSzVjNdeUSFPXksqMqDlvomxxoNh8WySRgkNWhxtcYBlodJe+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydEH3n/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeaBqqKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066DA1F000C4;
-	Sat, 17 Oct 2026 18:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydEH3n/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100CD1F000C4;
+	Sat, 17 Oct 2026 18:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260784;
-	bh=Ehh8ngZ8ZEtwK3M7mWeHfhcOxKRtyUmhL1cxAJAA/88=;
+	s=korg; t=1792260787;
+	bh=rPh+Av/BJ77ok8w85gJQ3949ZwoU8nxmFY4n3L9NZEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KeaBqqKcvPJ0vYurumuPtkmjB681yFy1eYpDFhbMuzffif5K/glDcdlY+MKni0FW7
-	 +hjqcSF5xdkK7YoAwAembRod4fEconsDTLiYFkRPLmp0xMe602z+k9SDL+FsoVGr1p
-	 CKOaab+xAqsLwTDzP8P/+ZKboiDdSaYgM4QhKClc=
+	b=ydEH3n/xzIwfXdW9efqRk1oeaVTHg+q9JxF/duQp/PWWE4tPK70Y9sJWQGyCrutEn
+	 C0uK87LTCEDRm35HdcuP6iX34eYdNL+05N7q2Urknz5m0BdAniq77jqEX4fnD8val+
+	 FAf6wGQt8KPnn+VV0H0p8TIN/+J2xH0O/27wUm5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Ze Tan <tanze@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1658/1674] nvdimm: pmem: keep PREFLUSH before data writes
-Date: Sat, 17 Oct 2026 18:05:30 +0200
-Message-ID: <20261017160513.628494750@linuxfoundation.org>
+Subject: [PATCH 6.6 1659/1674] smb/server: fix tree connection leak in smb2_tree_connect()
+Date: Sat, 17 Oct 2026 18:05:31 +0200
+Message-ID: <20261017160513.653934945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Ze Tan <tanze@kylinos.cn>
 
-[ Upstream commit c644a2f8fef5618fcf453c591177700fd07dd024 ]
+[ Upstream commit 39f2032096715daae5f6fd0f587ca7a474b019df ]
 
-pmem_submit_bio() records a REQ_PREFLUSH error, but continues to copy the
-bio data and can later overwrite the error with a successful REQ_FUA flush.
-That lets data writes run after a failed preflush and can complete the bio
-successfully despite the failed ordering barrier.
+See the procedure below:
 
-Run the REQ_PREFLUSH flush synchronously before touching the bio data and
-complete the bio with the flush error if it fails. Keep asynchronous flush
-chaining for REQ_FUA. At that point, data copy has completed and the parent
-bio can wait for the chained flush bio.
+  smb2_tree_connect
+    ksmbd_tree_conn_connect
+      xa_store(&sess->tree_conns, tree_conn->id, tree_conn)
+      ksmbd_counter_inc(KSMBD_COUNTER_TREE_CONNS)
+      ksmbd_share_tree_conn_inc(sc)
+    ksmbd_iov_pin_rsp // fail
+    status.ret = KSMBD_TREE_CONN_STATUS_NOMEM
+    // do not disconnect tree_conn
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-3-me@linux.beauty>
+Disconnect the new tree connection if ksmbd_iov_pin_rsp() fails.
+
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Ze Tan <tanze@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/pmem.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvdimm/pmem.c b/drivers/nvdimm/pmem.c
-index 4e8fdcb3f1c82..e82c8e7ec3720 100644
---- a/drivers/nvdimm/pmem.c
-+++ b/drivers/nvdimm/pmem.c
-@@ -209,8 +209,14 @@ static void pmem_submit_bio(struct bio *bio)
- 	struct pmem_device *pmem = bio->bi_bdev->bd_disk->private_data;
- 	struct nd_region *nd_region = to_region(pmem);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 7e1a6f8e49131..f2b9e4d9cbd02 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2071,8 +2071,13 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	rsp->ShareFlags = SMB2_SHAREFLAG_MANUAL_CACHING;
  
--	if (bio->bi_opf & REQ_PREFLUSH)
--		ret = nvdimm_flush(nd_region, bio);
-+	if (bio->bi_opf & REQ_PREFLUSH) {
-+		ret = nvdimm_flush(nd_region, NULL);
-+		if (ret) {
-+			bio->bi_status = errno_to_blk_status(ret);
-+			bio_endio(bio);
-+			return;
+ 	rc = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_tree_connect_rsp));
+-	if (rc)
++	if (rc) {
++		if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
++			ksmbd_tree_conn_disconnect(sess, status.tree_conn);
++			status.tree_conn = NULL;
 +		}
+ 		status.ret = KSMBD_TREE_CONN_STATUS_NOMEM;
 +	}
  
- 	do_acct = blk_queue_io_stat(bio->bi_bdev->bd_disk->queue);
- 	if (do_acct)
-@@ -230,7 +236,7 @@ static void pmem_submit_bio(struct bio *bio)
- 	if (do_acct)
- 		bio_end_io_acct(bio, start);
- 
--	if (bio->bi_opf & REQ_FUA)
-+	if ((bio->bi_opf & REQ_FUA) && !bio->bi_status)
- 		ret = nvdimm_flush(nd_region, bio);
- 
- 	if (ret)
+ 	if (!IS_ERR(treename))
+ 		kfree(treename);
 -- 
 2.53.0
 
