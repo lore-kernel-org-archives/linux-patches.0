@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E2B18787A;
-	Sat, 17 Oct 2026 16:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD88A4CF49A;
+	Sat, 17 Oct 2026 16:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253690; cv=none; b=se26gbE/1dJCwoMRjZl+3ocnpwILSNHhsrsPvmbL+OA7i8KRkdzRwS749kFw+AyGRU+zIMs0IqpEu3Cvja5W+GlSSHk2dtAAHAzXROgMGtgM//srF4OSDAvBar1b+hwBG7O9clZ0kQFPA/7uNuaoRHmfliCorxDTuVNXSMT+ni8=
+	t=1792253693; cv=none; b=bg/bPy5ZrvXJpdFnzpMgXTfHoh/oHqmUpSJCJ/bR1V29U3pHXugDk0/oOoG6zrvm+OcBR8sZqeYF/rb+guXBHbk+e8YzLlYKXejdUpkd7YXL+fWUGBLzaVIRn/KAbPGRqlR92hgHNuoxKosPNimpgHCa2eAyXmJlbXKRtXtDgLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253690; c=relaxed/simple;
-	bh=tr8ckJxowG6oIYE2ceQ/uX72jL5ReA5i01e/LNRvUeU=;
+	s=arc-20240116; t=1792253693; c=relaxed/simple;
+	bh=3TAsZ5Se/uyS62cZ8HS8nOBc/RBjCC/Pe7vjxc1PC4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJa6oy5qFr2M32KT7V3nx1aCWPkvaChiOeh/1pcCQhl9F2+d9yO4J4Fo+KEuWko9Zqwi9g7pUWq0dL6/gusRvdCXNRdmlddonQ7bmwc+7sVVp26cTSllwfI1y3sCgxf4p9cZvE4zmOtybVvEE+xUohWi23SzcJaFleu8z3CZBpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0tW1n14; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PMsipuirZt/P1K4CuZV4Spoy2fZtqQnbY4lkqwImlqphJ9B3WXxvbNqUZEN7SvAdz5/yrtSaliRNdJ0TWbvcWRN7Tlf+u3/vbBZGKv+reN9sbrKrDmmTfi7B/ntE9LD603EnpL1qZnyRaD6UcP3d2QCxVrNwa5Du39Ml+kN8Skc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKnSuXul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0tW1n14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153B01F000C4;
-	Sat, 17 Oct 2026 16:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKnSuXul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFCA1F000C4;
+	Sat, 17 Oct 2026 16:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253689;
-	bh=uEYxA16XOAuQKd5m/6771ouiIp1Z2qEZyIf8ajwcheo=;
+	s=korg; t=1792253692;
+	bh=GsHAskaKoGCn7Kv1Xpc0a/VXpAno2DS5R9Lwd8Vq4uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C0tW1n14+JLyBdKt07Wj4/C8WuBK4/eKmylHnoUdtluxlyVFAEiWIJG5v1N8Z3dEd
-	 oSB5hmVWoe6BR4jNoPE91b5dlv0PUc4z48XIx2c9KQeT8S9VCeKsBlewT7ZYh3FbC6
-	 ciDvaBmm09aURwlZxMk4F2oi5MGOyAF97gi0eLoc=
+	b=nKnSuXulsWFleZINedp23VZmB/Zb5rKVvffY1Mi9cw/CnASgauAWVynGuNQMnI1p+
+	 XW1kYhosk4dMGo5NwGQjvOeunt7hZJjp9+z2me4b1z9U1i4AXpycy2NNMBdqkBF5VD
+	 QtToxBP9uXac82yJOL/Npw+vEO9QvCCw6EkEkWkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ge Yang <yangge1116@126.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	David Hildenbrand <david@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/869] KVM: SEV: Use long-term pin when registering encrypted memory regions
-Date: Sat, 17 Oct 2026 17:50:40 +0200
-Message-ID: <20261017160042.160710674@linuxfoundation.org>
+Subject: [PATCH 6.12 159/869] wifi: ath12k: Fix MSDU buffer types handling in RX error path
+Date: Sat, 17 Oct 2026 17:50:00 +0200
+Message-ID: <20261017160041.121382888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,96 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ge Yang <yangge1116@126.com>
+From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
 
-[ Upstream commit 7e066cb9b71a22c3e5ef233de63ff14525baf6f0 ]
+[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
 
-When registering an encrypted memory region for SEV-MEM/SEV-ES guests,
-pin the pages with FOLL_TERM so that the pages are migrated out of
-MIGRATE_CMA/ZONE_MOVABLE.  Failure to do so violates the CMA/MOVABLE
-mechanisms and can result in fragmentation due to unmovable pages, e.g.
-can make CMA allocations fail.
+Currently, packets received on the REO exception ring from
+unassociated peers are of MSDU buffer type, while the driver expects
+link descriptor type packets. These packets are not parsed further due
+to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
+but the associated skb is not freed. This may lead to kernel
+crashes and buffer leaks.
 
-Signed-off-by: Ge Yang <yangge1116@126.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/1739241423-14326-1-git-send-email-yangge1116@126.com
-[sean: massage changelog, make @flags an unsigned int]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: b6408b6cec5d ("KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock")
+Hence to fix, update the RX error handler to explicitly drop
+MSDU buffer type packets received on the REO exception ring.
+This prevents further processing of invalid packets and ensures
+stability in the RX error handling path.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c  | 58 +++++++++++++++++++++++-
+ drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
+ 2 files changed, 59 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index eb9c1f9e23bd6..775704fb704ca 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -624,7 +624,7 @@ static int sev_launch_start(struct kvm *kvm, struct kvm_sev_cmd *argp)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 1c0d796ffc7ad..d1248b98573ef 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
- 				    unsigned long ulen, unsigned long *n,
--				    int write)
-+				    unsigned int flags)
+ #include <linux/ieee80211.h>
+@@ -3441,6 +3441,48 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
+ 	return 0;
+ }
+ 
++static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
++					struct list_head *list,
++					struct hal_reo_dest_ring *desc)
++{
++	struct ath12k_rx_desc_info *desc_info;
++	struct ath12k_skb_rxcb *rxcb;
++	struct sk_buff *msdu;
++	u64 desc_va;
++
++	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
++		  le32_to_cpu(desc->buf_va_lo);
++	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
++	if (!desc_info) {
++		u32 cookie;
++
++		cookie = le32_get_bits(desc->buf_addr_info.info1,
++				       BUFFER_ADDR_INFO1_SW_COOKIE);
++		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
++		if (!desc_info) {
++			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
++				    cookie);
++			return -EINVAL;
++		}
++	}
++
++	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
++		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
++			    desc_info->magic);
++		return -EINVAL;
++	}
++
++	msdu = desc_info->skb;
++	desc_info->skb = NULL;
++	list_add_tail(&desc_info->list, list);
++	rxcb = ATH12K_SKB_RXCB(msdu);
++	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
++			 DMA_FROM_DEVICE);
++	dev_kfree_skb_any(msdu);
++
++	return 0;
++}
++
+ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 			     int budget)
  {
- 	struct kvm_sev_info *sev = &to_kvm_svm(kvm)->sev_info;
- 	unsigned long npages, size;
-@@ -668,7 +668,7 @@ static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
- 		return ERR_PTR(-ENOMEM);
+@@ -3481,6 +3523,19 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 		drop = false;
+ 		ab->soc_stats.err_ring_pkts++;
  
- 	/* Pin the user virtual address. */
--	npinned = pin_user_pages_fast(uaddr, npages, write ? FOLL_WRITE : 0, pages);
-+	npinned = pin_user_pages_fast(uaddr, npages, flags, pages);
- 	if (npinned != npages) {
- 		pr_err("SEV: Failure locking %lu pages.\n", npages);
- 		ret = -ENOMEM;
-@@ -756,7 +756,7 @@ static int sev_launch_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 	vaddr_end = vaddr + size;
++		/* Below case is added to handle data packet from un-associated clients.
++		 * As it is expected that AST lookup will fail for
++		 * un-associated station's data packets.
++		 */
++		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
++		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
++			if (!ath12k_dp_h_msdu_buffer_type(ab,
++							  &rx_desc_used_list,
++							  reo_desc))
++				tot_n_bufs_reaped++;
++			goto next_desc;
++		}
++
+ 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
+ 						    &desc_bank);
+ 		if (ret) {
+@@ -3529,6 +3584,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 				tot_n_bufs_reaped++;
+ 		}
  
- 	/* Lock the user memory. */
--	inpages = sev_pin_memory(kvm, vaddr, size, &npages, 1);
-+	inpages = sev_pin_memory(kvm, vaddr, size, &npages, FOLL_WRITE);
- 	if (IS_ERR(inpages))
- 		return PTR_ERR(inpages);
++next_desc:
+ 		if (tot_n_bufs_reaped >= quota) {
+ 			tot_n_bufs_reaped = quota;
+ 			goto exit;
+diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
+index f7c1aaa3b5d47..ac820333047ff 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_rx.c
++++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
-@@ -1261,7 +1261,7 @@ static int sev_dbg_crypt(struct kvm *kvm, struct kvm_sev_cmd *argp, bool dec)
- 		if (IS_ERR(src_p))
- 			return PTR_ERR(src_p);
+ #include "debug.h"
+@@ -320,7 +320,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
+ {
+ 	enum hal_reo_dest_ring_push_reason push_reason;
+ 	enum hal_reo_dest_ring_error_code err_code;
+-	u32 cookie, val;
++	u32 cookie;
  
--		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, 1);
-+		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, FOLL_WRITE);
- 		if (IS_ERR(dst_p)) {
- 			sev_unpin_memory(kvm, src_p, n);
- 			return PTR_ERR(dst_p);
-@@ -1328,7 +1328,7 @@ static int sev_launch_secret(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 	if (copy_from_user(&params, u64_to_user_ptr(argp->data), sizeof(params)))
- 		return -EFAULT;
+ 	push_reason = le32_get_bits(desc->info0,
+ 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
+@@ -335,12 +335,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
+ 		return -EINVAL;
+ 	}
  
--	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, 1);
-+	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, FOLL_WRITE);
- 	if (IS_ERR(pages))
- 		return PTR_ERR(pages);
+-	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
+-	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
+-		ath12k_warn(ab, "expected buffer type link_desc");
+-		return -EINVAL;
+-	}
+-
+ 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
+ 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
  
-@@ -1810,7 +1810,7 @@ static int sev_receive_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
- 
- 	/* Pin guest memory */
- 	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
--				    PAGE_SIZE, &n, 1);
-+				    PAGE_SIZE, &n, FOLL_WRITE);
- 	if (IS_ERR(guest_page)) {
- 		ret = PTR_ERR(guest_page);
- 		goto e_free_trans;
-@@ -2718,7 +2718,8 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 		return -ENOMEM;
- 
- 	mutex_lock(&kvm->lock);
--	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages, 1);
-+	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
-+				       FOLL_WRITE | FOLL_LONGTERM);
- 	if (IS_ERR(region->pages)) {
- 		ret = PTR_ERR(region->pages);
- 		mutex_unlock(&kvm->lock);
 -- 
 2.53.0
 
