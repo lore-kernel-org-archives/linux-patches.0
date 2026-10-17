@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E863C8C65;
-	Sat, 17 Oct 2026 17:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97213C8C65;
+	Sat, 17 Oct 2026 17:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258440; cv=none; b=K3XUmUi//sVUMi1g0sfyh/xTDcB/VYlyAL8Kv6ilmffZIhR98CDg8UiNo0SreCE/BYy780aVZhmGhx5UHX4zvEbAoz6ID+8KIpL9lV3+QsOjXrI19Y4jpeI8l0TZ5rC3A1y63AnXh1Vp2b4ktaiu7Q84sQcomNxCGO06RZWLtjU=
+	t=1792258443; cv=none; b=ashDmIe+ejEcR9Wca/zHUMj7AE00f++iINIiWgQT4/N+DDHlNGbOS7gdhyIOAZ4Dj76mfN4XNIHl7QFePCnsYfogY3WqcREc30JQzFn0JtTh2t7nyRu+QTiHBjgC/6JsvpN7GpKO5qqE3VR1iTC+5C6RRMkGOFExP1eZbWhj2AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258440; c=relaxed/simple;
-	bh=URqt3cGJc5Pw2F2fyshAivqSablUpkTyOrAkTVWkN/I=;
+	s=arc-20240116; t=1792258443; c=relaxed/simple;
+	bh=bjv1QLQO4cmojpVXlJbXexhwRyfnqxDZwBbUEHnl6J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CS3oVAXWj356bhyFDDUYUCsh3cI7/0EadEIcnGSb1dcUM7R321pRvNxf+yoVcS4yA+Nb2sEovs14HCyDABKVtbpGYl/Uev2z7m6nhSCkr++wAAyScMU4qtuWGonXeTEdLneScb/mjLmdA/bPy1SKNkmbnupST/Ei1a7VHQp+Xs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pflW1YU/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z8QmWfxxhBGeWR0wC6a8HW+Vg/b8KgpcEXjn5Has0t0yj02ixxzMKx+Ta5rWxeVptSSpvvXovJZ7z+H9xN8xHkyyYXyy6M9DMb0VgYqI5i1lPrdvMlhrrEInJtm9BxN8K/ngCOZuiFzx//HIGlnFkDeMDa68XiI6VFY1V2HBF2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iF4rqIYv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pflW1YU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1AE1F000C4;
-	Sat, 17 Oct 2026 17:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iF4rqIYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A31D1F000C5;
+	Sat, 17 Oct 2026 17:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258439;
-	bh=isPBMlTqDh/y/w8mS2WRjp0WqSNYWx7+HHNBQBcIaS4=;
+	s=korg; t=1792258442;
+	bh=fUPMSwx9tc4h2/vKko1tvjphbSS+xrpaaWnqmiNivQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pflW1YU/LyVcXp7IIoJMmo3SM3UVOuYEi8+cSgMwCN1r5qhZgwKXED/MqUI2aanz6
-	 V0OVtV6dSqVlD8MuVGG4MJKCCLdHzZwWz15w0pDErThUi4dBBFVymQKBfnMyKUHWuF
-	 wvXVTH+MnR6K7HnFxxRi4oqSC9Xgvkwzlc+5qbBk=
+	b=iF4rqIYvbGk8s1Tk1iJ4xdjAzirHbNggxakvDogMyfAoKzHNxoNNxhEJsv08Rn+C4
+	 5SwODpY9YPIGtd01I6C7cNAMLWkd/nSptqRHWni3gffVOn8vHSrZKLwBm855gCAhi6
+	 /XXlZEXkAP2wgcfYN2pjXqhMbJhx0k85x14Th1EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FengWei Shih <dannyshih@synology.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0845/1674] md: suspend array while updating raid_disks via sysfs
-Date: Sat, 17 Oct 2026 17:51:57 +0200
-Message-ID: <20261017160452.815230384@linuxfoundation.org>
+Subject: [PATCH 6.6 0846/1674] wifi: mac80211: dont WARN for connections on invalid channels
+Date: Sat, 17 Oct 2026 17:51:58 +0200
+Message-ID: <20261017160452.840549467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,64 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FengWei Shih <dannyshih@synology.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2cc583653bbe050bacd1cadcc9776d39bf449740 ]
+[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
 
-In raid1_reshape(), freeze_array() is called before modifying the r1bio
-memory pool (conf->r1bio_pool) and conf->raid_disks, and
-unfreeze_array() is called after the update is completed.
+It's not clear (to me) how exactly syzbot managed to hit this,
+but it seems conceivable that e.g. regulatory changed and has
+disabled a channel between scanning (channel is checked to be
+usable by cfg80211_get_ies_channel_number) and connecting on
+the channel later.
 
-However, freeze_array() only waits until nr_sync_pending and
-(nr_pending - nr_queued) of all buckets reaches zero. When an I/O error
-occurs, nr_queued is increased and the corresponding r1bio is queued to
-either retry_list or bio_end_io_list. As a result, freeze_array() may
-unblock before these r1bios are released.
+With one scenario that isn't covered elsewhere described above,
+the warning isn't good, replace it with a (more informative)
+error message.
 
-This can lead to a situation where conf->raid_disks and the mempool have
-already been updated while queued r1bios, allocated with the old
-raid_disks value, are later released. Consequently, free_r1bio() may
-access memory out of bounds in put_all_bios() and release r1bios of the
-wrong size to the new mempool, potentially causing issues with the
-mempool as well.
-
-Since only normal I/O might increase nr_queued while an I/O error occurs,
-suspending the array avoids this issue.
-
-Note: Updating raid_disks via ioctl SET_ARRAY_INFO already suspends
-the array. Therefore, we suspend the array when updating raid_disks
-via sysfs to avoid this issue too.
-
-Signed-off-by: FengWei Shih <dannyshih@synology.com>
-Link: https://lore.kernel.org/linux-raid/20251226101816.4506-1-dannyshih@synology.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/mlme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index f4d9defee5d04..c8cb2a83e2f54 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4309,7 +4309,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (err < 0)
- 		return err;
- 
--	err = mddev_lock(mddev);
-+	err = mddev_suspend_and_lock(mddev);
- 	if (err)
- 		return err;
- 	if (mddev->pers)
-@@ -4334,7 +4334,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	} else
- 		mddev->raid_disks = n;
- out_unlock:
--	mddev_unlock(mddev);
-+	mddev_unlock_and_resume(mddev);
- 	return err ? err : len;
- }
- static struct md_sysfs_entry md_raid_disks =
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 9f67290e7fe58..c085cfa5273eb 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -452,7 +452,10 @@ ieee80211_determine_chantype(struct ieee80211_sub_if_data *sdata,
+ 	while (!cfg80211_chandef_usable(sdata->local->hw.wiphy, chandef,
+ 					tracking ? 0 :
+ 						   IEEE80211_CHAN_DISABLED)) {
+-		if (WARN_ON(chandef->width == NL80211_CHAN_WIDTH_20_NOHT)) {
++		if (chandef->width == NL80211_CHAN_WIDTH_20_NOHT) {
++			sdata_info(sdata,
++				   "unusable channel (%d MHz) for connection\n",
++				   chandef->chan->center_freq);
+ 			ret = IEEE80211_CONN_DISABLE_HT |
+ 			      IEEE80211_CONN_DISABLE_VHT |
+ 			      IEEE80211_CONN_DISABLE_HE |
 -- 
 2.53.0
 
