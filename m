@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB313C10AC;
-	Sat, 17 Oct 2026 17:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094F73CA4B2;
+	Sat, 17 Oct 2026 17:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258492; cv=none; b=gXsm21rwLCiQ7OmmQkbYAidBLnCQ9hXBQGdobzhhZPWyHHiEWS1fwk7xBXkrZSdjPIgtJxscZU9PEDCMuvAj8um4gqso8g9GrLJODYFYnPgA5zwnFtq8Vw8HZEIGwUGAkEvWPcFXhAAX9uRzTOHynpRMn4XCApeIH4LhTMlEP8k=
+	t=1792258495; cv=none; b=C8Ph/7Zk1su5zeMqt0o5JQIhG2SqxgU525hmavupLn/y4s5UgRNUJM2QsHIRdfdhI370izbJVPFdpX81NzpQr0TYgS2zZC06iQSuBxY4mqZCAitP3WxgN0w/Tlkec6wLADG/qJHe41EPaMAn7kw6DRjXV4zJ0DKgD+WvWE/9994=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258492; c=relaxed/simple;
-	bh=h5PF+JMJQLWCf4sSHeu+25Wwg+liZA2SmMLjFGc/QG0=;
+	s=arc-20240116; t=1792258495; c=relaxed/simple;
+	bh=qfvPqiuOiOyfiw8ku5XNkeiV5kxNJSNt2HT93XQk/Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOLgEpdlq73gjULqtoDp2RSSZMrD05ozPDxCt6nX5LcJ9WKCvmTgPUFuOZJmGSVlEUiu5JIUAw/wx1tfy5YCHIX5I/OqVALaq+lU0uvZfK2DEJLn8MYEQSEpFu7AOkceHP4aRowg2yHZaRyJNWpY8xEYz8T9gm86wWMAFRWuUVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7e9HRBA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qUfM8+QAGMHuh3u6+/rGso3P+ZA1GZNlJkedV59bdgXIqzzD5r//pyzDN8pHVCBcYoTPcjOILYylm9iPKXcr7MRN/TxpSfylViIgp2OvYRWOMlg0pgm3WHgb5mKgARzsE/IBgZTQLmhaMIdJViGZvRcuVG7cpHMeDKOO+trbMxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXIdQpMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7e9HRBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE8D1F000C4;
-	Sat, 17 Oct 2026 17:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXIdQpMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672011F000C4;
+	Sat, 17 Oct 2026 17:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258491;
-	bh=vDc/OZXCqEP1zNfheAfso6y0bt+7m1Fm4+vBmcNm8pQ=;
+	s=korg; t=1792258493;
+	bh=8WGR+jL6uf4BglVi074FMk7+SaU3bxFaCJQzihbICn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7e9HRBA10h+EsQmygBIlEZHVktTa3+igttPaa4tQlVCO/7Mqw76cVLm7FwYZftXt
-	 RLkwLw2yEmhWjDGYJM8i8tpkCICwm9QC4SdZbGD+I/8mtyQN8/hK2heKrgCFMzVfeb
-	 Bw938NM8t6zHrSI0skFtK0ZMPYZANKKSuX7cgEUY=
+	b=PXIdQpMgDKT3Q0VoHhXeVCX/klbgXUu1/atIswxAUDpKGDwCX+zjFp+6eY1iFv8b+
+	 hySQIwwpcZICRZmmVi2OOtr9Tbaq45+gM3/4CBZzhWbRa6FYkTsyDYC/2ZEF+skv4o
+	 2ksCHum+JX4Y36xT/IAzRQUo6pn7hRKo0+6DwiXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Edward Cree <ecree.xilinx@gmail.com>
-Subject: [PATCH 6.6 0885/1674] net: adopt skb_network_offset() and similar helpers
-Date: Sat, 17 Oct 2026 17:52:37 +0200
-Message-ID: <20261017160453.828263538@linuxfoundation.org>
+	Yuan Tan <tanyuan98@outlook.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0903/1674] mpls: add seqcount to protect the platform_label{,s} pair
+Date: Sat, 17 Oct 2026 17:52:55 +0200
+Message-ID: <20261017160454.306441990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,439 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 80bfab79b8351c8d858e6928a091b57c103dce29 ]
+[ Upstream commit 629ec78ef8608d955ce217880cdc3e1873af3a15 ]
 
-This is a cleanup patch, making code a bit more concise.
+The RCU-protected codepaths (mpls_forward, mpls_dump_routes) can have
+an inconsistent view of platform_labels vs platform_label in case of a
+concurrent resize (resize_platform_label_table, under
+platform_mutex). This can lead to OOB accesses.
 
-1) Use skb_network_offset(skb) in place of
-       (skb_network_header(skb) - skb->data)
+This patch adds a seqcount, so that we get a consistent snapshot.
 
-2) Use -skb_network_offset(skb) in place of
-       (skb->data - skb_network_header(skb))
+Note that mpls_label_ok is also susceptible to this, so the check
+against RTA_DST in rtm_to_route_config, done outside platform_mutex,
+is not sufficient. This value gets passed to mpls_label_ok once more
+in both mpls_route_add and mpls_route_del, so there is no issue, but
+that additional check must not be removed.
 
-3) Use skb_transport_offset(skb) in place of
-       (skb_transport_header(skb) - skb->data)
-
-4) Use skb_inner_transport_offset(skb) in place of
-       (skb_inner_transport_header(skb) - skb->data)
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Edward Cree <ecree.xilinx@gmail.com> # for sfc
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
+Reported-by: Yuan Tan <tanyuan98@outlook.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Fixes: 7720c01f3f590 ("mpls: Add a sysctl to control the size of the mpls label table")
+Fixes: dde1b38e873c ("mpls: Convert mpls_dump_routes() to RCU.")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/cd8fca15e3eb7e212b094064cd83652e20fd9d31.1774284088.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c   | 11 +++++------
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c   |  4 ++--
- drivers/net/ethernet/intel/i40e/i40e_main.c       |  2 +-
- drivers/net/ethernet/intel/iavf/iavf_main.c       |  2 +-
- drivers/net/ethernet/intel/igb/igb_main.c         |  2 +-
- drivers/net/ethernet/intel/igbvf/netdev.c         |  2 +-
- drivers/net/ethernet/intel/igc/igc_main.c         |  2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c     |  2 +-
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |  2 +-
- drivers/net/ethernet/qlogic/qede/qede_fp.c        |  2 +-
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c    |  3 +--
- drivers/net/ethernet/sfc/siena/tx_common.c        |  5 ++---
- drivers/net/ethernet/sfc/tx_common.c              |  5 ++---
- drivers/net/ethernet/sfc/tx_tso.c                 |  4 ++--
- drivers/net/ethernet/sun/sunvnet_common.c         |  4 ++--
- drivers/net/ethernet/wangxun/libwx/wx_lib.c       |  2 +-
- drivers/net/wireguard/receive.c                   |  2 +-
- kernel/bpf/cgroup.c                               |  2 +-
- net/ipv4/raw.c                                    |  2 +-
- net/ipv4/xfrm4_input.c                            |  2 +-
- net/ipv6/exthdrs.c                                |  4 ++--
- net/ipv6/netfilter/nf_conntrack_reasm.c           |  4 ++--
- net/ipv6/reassembly.c                             |  4 ++--
- net/ipv6/xfrm6_input.c                            |  2 +-
- 24 files changed, 36 insertions(+), 40 deletions(-)
+ include/net/netns/mpls.h |  2 ++
+ net/mpls/af_mpls.c       | 35 ++++++++++++++++++++++++++++-------
+ 2 files changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-index 7c3f62783de3c..7bab74cfb37ee 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -3538,7 +3538,7 @@ static u8 bnx2x_set_pbd_csum_enc(struct bnx2x *bp, struct sk_buff *skb,
- 				 u32 *parsing_data, u32 xmit_type)
+diff --git a/include/net/netns/mpls.h b/include/net/netns/mpls.h
+index 19ad2574b267c..9b83b7f43d83b 100644
+--- a/include/net/netns/mpls.h
++++ b/include/net/netns/mpls.h
+@@ -7,6 +7,7 @@
+ #define __NETNS_MPLS_H__
+ 
+ #include <linux/types.h>
++#include <linux/seqlock.h>
+ 
+ struct mpls_route;
+ struct ctl_table_header;
+@@ -16,6 +17,7 @@ struct netns_mpls {
+ 	int default_ttl;
+ 	size_t platform_labels;
+ 	struct mpls_route __rcu * __rcu *platform_label;
++	seqcount_t platform_label_seq;
+ 
+ 	struct ctl_table_header *ctl;
+ };
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 9685405d744b9..b94ea43b965d1 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -75,16 +75,31 @@ static void rtmsg_lfib(int event, u32 label, struct mpls_route *rt,
+ 		       struct nlmsghdr *nlh, struct net *net, u32 portid,
+ 		       unsigned int nlm_flags);
+ 
++static struct mpls_route __rcu **mpls_platform_label_rcu(struct net *net, size_t *platform_labels)
++{
++	struct mpls_route __rcu **platform_label;
++	unsigned int sequence;
++
++	do {
++		sequence = read_seqcount_begin(&net->mpls.platform_label_seq);
++		platform_label = rcu_dereference_rtnl(net->mpls.platform_label);
++		*platform_labels = net->mpls.platform_labels;
++	} while (read_seqcount_retry(&net->mpls.platform_label_seq, sequence));
++
++	return platform_label;
++}
++
+ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
  {
- 	*parsing_data |=
--		((((u8 *)skb_inner_transport_header(skb) - skb->data) >> 1) <<
-+		((skb_inner_transport_offset(skb) >> 1) <<
- 		ETH_TX_PARSE_BD_E2_L4_HDR_START_OFFSET_W_SHIFT) &
- 		ETH_TX_PARSE_BD_E2_L4_HDR_START_OFFSET_W;
+-	struct mpls_route *rt = NULL;
++	struct mpls_route __rcu **platform_label;
++	size_t platform_labels;
  
-@@ -3570,7 +3570,7 @@ static u8 bnx2x_set_pbd_csum_e2(struct bnx2x *bp, struct sk_buff *skb,
- 				u32 *parsing_data, u32 xmit_type)
- {
- 	*parsing_data |=
--		((((u8 *)skb_transport_header(skb) - skb->data) >> 1) <<
-+		((skb_transport_offset(skb) >> 1) <<
- 		ETH_TX_PARSE_BD_E2_L4_HDR_START_OFFSET_W_SHIFT) &
- 		ETH_TX_PARSE_BD_E2_L4_HDR_START_OFFSET_W;
- 
-@@ -3613,7 +3613,7 @@ static u8 bnx2x_set_pbd_csum(struct bnx2x *bp, struct sk_buff *skb,
- 			     struct eth_tx_parse_bd_e1x *pbd,
- 			     u32 xmit_type)
- {
--	u8 hlen = (skb_network_header(skb) - skb->data) >> 1;
-+	u8 hlen = skb_network_offset(skb) >> 1;
- 
- 	/* for now NS flag is not used in Linux */
- 	pbd->global_data =
-@@ -3667,8 +3667,7 @@ static void bnx2x_update_pbds_gso_enc(struct sk_buff *skb,
- 	u8 outerip_off, outerip_len = 0;
- 
- 	/* from outer IP to transport */
--	hlen_w = (skb_inner_transport_header(skb) -
--		  skb_network_header(skb)) >> 1;
-+	hlen_w = skb_inner_transport_offset(skb) >> 1;
- 
- 	/* transport len */
- 	hlen_w += inner_tcp_hdrlen(skb) >> 1;
-@@ -3714,7 +3713,7 @@ static void bnx2x_update_pbds_gso_enc(struct sk_buff *skb,
- 					0, IPPROTO_TCP, 0));
- 	}
- 
--	outerip_off = (skb_network_header(skb) - skb->data) >> 1;
-+	outerip_off = (skb_network_offset(skb)) >> 1;
- 
- 	*global_data |=
- 		outerip_off |
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 107e692e8c87a..9ad5576507707 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -2491,9 +2491,9 @@ static netdev_features_t hns3_features_check(struct sk_buff *skb,
- 		return features;
- 
- 	if (skb->encapsulation)
--		len = skb_inner_transport_header(skb) - skb->data;
-+		len = skb_inner_transport_offset(skb);
- 	else
--		len = skb_transport_header(skb) - skb->data;
-+		len = skb_transport_offset(skb);
- 
- 	/* Assume L4 is 60 byte as TCP is the only protocol with a
- 	 * a flexible value, and it's max len is 60 bytes.
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 063f9ced3ffd1..7d575e857d38b 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -13362,7 +13362,7 @@ static netdev_features_t i40e_features_check(struct sk_buff *skb,
- 		features &= ~NETIF_F_GSO_MASK;
- 
- 	/* MACLEN can support at most 63 words */
--	len = skb_network_header(skb) - skb->data;
-+	len = skb_network_offset(skb);
- 	if (len & ~(63 * 2))
- 		goto out_err;
- 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index b9b855a35fc85..3ddae92964610 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -4507,7 +4507,7 @@ static netdev_features_t iavf_features_check(struct sk_buff *skb,
- 		features &= ~NETIF_F_GSO_MASK;
- 
- 	/* MACLEN can support at most 63 words */
--	len = skb_network_header(skb) - skb->data;
-+	len = skb_network_offset(skb);
- 	if (len & ~(63 * 2))
- 		goto out_err;
- 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index c38be2880efcf..43201369226bc 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -2543,7 +2543,7 @@ igb_features_check(struct sk_buff *skb, struct net_device *dev,
- 	unsigned int network_hdr_len, mac_hdr_len;
- 
- 	/* Make certain the headers can be described by a context descriptor */
--	mac_hdr_len = skb_network_header(skb) - skb->data;
-+	mac_hdr_len = skb_network_offset(skb);
- 	if (unlikely(mac_hdr_len > IGB_MAX_MAC_HDR_LEN))
- 		return features & ~(NETIF_F_HW_CSUM |
- 				    NETIF_F_SCTP_CRC |
-diff --git a/drivers/net/ethernet/intel/igbvf/netdev.c b/drivers/net/ethernet/intel/igbvf/netdev.c
-index 404e8dbe679f7..c812e4b0e29f0 100644
---- a/drivers/net/ethernet/intel/igbvf/netdev.c
-+++ b/drivers/net/ethernet/intel/igbvf/netdev.c
-@@ -2653,7 +2653,7 @@ igbvf_features_check(struct sk_buff *skb, struct net_device *dev,
- 	unsigned int network_hdr_len, mac_hdr_len;
- 
- 	/* Make certain the headers can be described by a context descriptor */
--	mac_hdr_len = skb_network_header(skb) - skb->data;
-+	mac_hdr_len = skb_network_offset(skb);
- 	if (unlikely(mac_hdr_len > IGBVF_MAX_MAC_HDR_LEN))
- 		return features & ~(NETIF_F_HW_CSUM |
- 				    NETIF_F_SCTP_CRC |
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 6fdf009df836d..b8261a630ca7d 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5269,7 +5269,7 @@ igc_features_check(struct sk_buff *skb, struct net_device *dev,
- 	unsigned int network_hdr_len, mac_hdr_len;
- 
- 	/* Make certain the headers can be described by a context descriptor */
--	mac_hdr_len = skb_network_header(skb) - skb->data;
-+	mac_hdr_len = skb_network_offset(skb);
- 	if (unlikely(mac_hdr_len > IGC_MAX_MAC_HDR_LEN))
- 		return features & ~(NETIF_F_HW_CSUM |
- 				    NETIF_F_SCTP_CRC |
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index 99876b765b08b..4787aa85febad 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -10205,7 +10205,7 @@ ixgbe_features_check(struct sk_buff *skb, struct net_device *dev,
- 	unsigned int network_hdr_len, mac_hdr_len;
- 
- 	/* Make certain the headers can be described by a context descriptor */
--	mac_hdr_len = skb_network_header(skb) - skb->data;
-+	mac_hdr_len = skb_network_offset(skb);
- 	if (unlikely(mac_hdr_len > IXGBE_MAX_MAC_HDR_LEN))
- 		return features & ~(NETIF_F_HW_CSUM |
- 				    NETIF_F_SCTP_CRC |
-diff --git a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-index 99d6aa03d4b61..3b5a5f7450a5d 100644
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -4449,7 +4449,7 @@ ixgbevf_features_check(struct sk_buff *skb, struct net_device *dev,
- 	unsigned int network_hdr_len, mac_hdr_len;
- 
- 	/* Make certain the headers can be described by a context descriptor */
--	mac_hdr_len = skb_network_header(skb) - skb->data;
-+	mac_hdr_len = skb_network_offset(skb);
- 	if (unlikely(mac_hdr_len > IXGBEVF_MAX_MAC_HDR_LEN))
- 		return features & ~(NETIF_F_HW_CSUM |
- 				    NETIF_F_SCTP_CRC |
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index 5d83d10de348a..a02624f6d6d59 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -216,7 +216,7 @@ static void qede_set_params_for_ipv6_ext(struct sk_buff *skb,
- 
- 	bd2_bits1 |= (1 << ETH_TX_DATA_2ND_BD_IPV6_EXT_SHIFT);
- 
--	bd2_bits2 |= ((((u8 *)skb_transport_header(skb) - skb->data) >> 1) &
-+	bd2_bits2 |= ((skb_transport_offset(skb) >> 1) &
- 		     ETH_TX_DATA_2ND_BD_L4_HDR_START_OFFSET_W_MASK)
- 		    << ETH_TX_DATA_2ND_BD_L4_HDR_START_OFFSET_W_SHIFT;
- 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-index 41894d154013b..b9dc0071c5de4 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-@@ -446,8 +446,7 @@ static int qlcnic_tx_encap_pkt(struct qlcnic_adapter *adapter,
- 	encap_descr |= skb_network_offset(skb) << 10;
- 	first_desc->encap_descr = cpu_to_le16(encap_descr);
- 
--	first_desc->tcp_hdr_offset = skb_inner_transport_header(skb) -
--				     skb->data;
-+	first_desc->tcp_hdr_offset = skb_inner_transport_offset(skb);
- 	first_desc->ip_hdr_offset = skb_inner_network_offset(skb);
- 
- 	qlcnic_set_tx_flags_opcode(first_desc, flags, opcode);
-diff --git a/drivers/net/ethernet/sfc/siena/tx_common.c b/drivers/net/ethernet/sfc/siena/tx_common.c
-index a7a9ab304e136..71f9b5ec5ae46 100644
---- a/drivers/net/ethernet/sfc/siena/tx_common.c
-+++ b/drivers/net/ethernet/sfc/siena/tx_common.c
-@@ -317,11 +317,10 @@ static int efx_tx_tso_header_length(struct sk_buff *skb)
- 	size_t header_len;
- 
- 	if (skb->encapsulation)
--		header_len = skb_inner_transport_header(skb) -
--				skb->data +
-+		header_len = skb_inner_transport_offset(skb) +
- 				(inner_tcp_hdr(skb)->doff << 2u);
- 	else
--		header_len = skb_transport_header(skb) - skb->data +
-+		header_len = skb_transport_offset(skb) +
- 				(tcp_hdr(skb)->doff << 2u);
- 	return header_len;
+-	if (index < net->mpls.platform_labels) {
+-		struct mpls_route __rcu **platform_label =
+-			rcu_dereference_rtnl(net->mpls.platform_label);
+-		rt = rcu_dereference_rtnl(platform_label[index]);
+-	}
+-	return rt;
++	platform_label = mpls_platform_label_rcu(net, &platform_labels);
++
++	if (index >= platform_labels)
++		return NULL;
++
++	return rcu_dereference_rtnl(platform_label[index]);
  }
-diff --git a/drivers/net/ethernet/sfc/tx_common.c b/drivers/net/ethernet/sfc/tx_common.c
-index 9f2393d343715..2adb132b2f7e4 100644
---- a/drivers/net/ethernet/sfc/tx_common.c
-+++ b/drivers/net/ethernet/sfc/tx_common.c
-@@ -336,11 +336,10 @@ int efx_tx_tso_header_length(struct sk_buff *skb)
- 	size_t header_len;
  
- 	if (skb->encapsulation)
--		header_len = skb_inner_transport_header(skb) -
--				skb->data +
-+		header_len = skb_inner_transport_offset(skb) +
- 				(inner_tcp_hdr(skb)->doff << 2u);
- 	else
--		header_len = skb_transport_header(skb) - skb->data +
-+		header_len = skb_transport_offset(skb) +
- 				(tcp_hdr(skb)->doff << 2u);
- 	return header_len;
- }
-diff --git a/drivers/net/ethernet/sfc/tx_tso.c b/drivers/net/ethernet/sfc/tx_tso.c
-index 64a6768f75ea1..ddf149db81801 100644
---- a/drivers/net/ethernet/sfc/tx_tso.c
-+++ b/drivers/net/ethernet/sfc/tx_tso.c
-@@ -174,8 +174,8 @@ static int tso_start(struct tso_state *st, struct efx_nic *efx,
- 	unsigned int header_len, in_len;
- 	dma_addr_t dma_addr;
- 
--	st->ip_off = skb_network_header(skb) - skb->data;
--	st->tcp_off = skb_transport_header(skb) - skb->data;
-+	st->ip_off = skb_network_offset(skb);
-+	st->tcp_off = skb_transport_offset(skb);
- 	header_len = st->tcp_off + (tcp_hdr(skb)->doff << 2u);
- 	in_len = skb_headlen(skb) - header_len;
- 	st->header_len = header_len;
-diff --git a/drivers/net/ethernet/sun/sunvnet_common.c b/drivers/net/ethernet/sun/sunvnet_common.c
-index 3525d5c0d694c..351609f4f011d 100644
---- a/drivers/net/ethernet/sun/sunvnet_common.c
-+++ b/drivers/net/ethernet/sun/sunvnet_common.c
-@@ -1144,9 +1144,9 @@ static inline struct sk_buff *vnet_skb_shape(struct sk_buff *skb, int ncookies)
- 		nskb->protocol = skb->protocol;
- 		offset = skb_mac_header(skb) - skb->data;
- 		skb_set_mac_header(nskb, offset);
--		offset = skb_network_header(skb) - skb->data;
-+		offset = skb_network_offset(skb);
- 		skb_set_network_header(nskb, offset);
--		offset = skb_transport_header(skb) - skb->data;
-+		offset = skb_transport_offset(skb);
- 		skb_set_transport_header(nskb, offset);
- 
- 		offset = 0;
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index c27e68e320e62..71c64cdb5ddbf 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1247,7 +1247,7 @@ static int wx_tso(struct wx_ring *tx_ring, struct wx_tx_buffer *first,
- 
- 	/* compute header lengths */
- 	l4len = enc ? inner_tcp_hdrlen(skb) : tcp_hdrlen(skb);
--	*hdr_len = enc ? (skb_inner_transport_header(skb) - skb->data) :
-+	*hdr_len = enc ? skb_inner_transport_offset(skb) :
- 			 skb_transport_offset(skb);
- 	*hdr_len += l4len;
- 
-diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
-index db01ec03bda00..eb8851113654f 100644
---- a/drivers/net/wireguard/receive.c
-+++ b/drivers/net/wireguard/receive.c
-@@ -263,7 +263,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
- 	 * call skb_cow_data, so that there's no chance that data is removed
- 	 * from the skb, so that later we can extract the original endpoint.
- 	 */
--	offset = skb->data - skb_network_header(skb);
-+	offset = -skb_network_offset(skb);
- 	skb_push(skb, offset);
- 	num_frags = skb_cow_data(skb, 0, &trailer);
- 	offset += sizeof(struct message_data);
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index fa6f818c8eabb..c2002eeb065c0 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1416,7 +1416,7 @@ int __cgroup_bpf_run_filter_skb(struct sock *sk,
- 				struct sk_buff *skb,
- 				enum cgroup_bpf_attach_type atype)
- {
--	unsigned int offset = skb->data - skb_network_header(skb);
-+	unsigned int offset = -skb_network_offset(skb);
- 	struct sock *save_sk;
- 	void *saved_data_end;
- 	struct cgroup *cgrp;
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index b670364630a13..ac49dac9b4fdb 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -310,7 +310,7 @@ int raw_rcv(struct sock *sk, struct sk_buff *skb)
- 	}
- 	nf_reset_ct(skb);
- 
--	skb_push(skb, skb->data - skb_network_header(skb));
-+	skb_push(skb, -skb_network_offset(skb));
- 
- 	raw_rcv_skb(sk, skb);
- 	return 0;
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index f6e90ba50b639..4548a8ff2d628 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -56,7 +56,7 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
- 		return -iph->protocol;
- #endif
- 
--	__skb_push(skb, skb->data - skb_network_header(skb));
-+	__skb_push(skb, -skb_network_offset(skb));
- 	iph->tot_len = htons(skb->len);
- 	ip_send_check(iph);
- 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 6b4cdc7745e85..bf319cbe76592 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -815,7 +815,7 @@ static int ipv6_rthdr_rcv(struct sk_buff *skb)
- 
- 	ip6_route_input(skb);
- 	if (skb_dst(skb)->error) {
--		skb_push(skb, skb->data - skb_network_header(skb));
-+		skb_push(skb, -skb_network_offset(skb));
- 		dst_input(skb);
- 		return -1;
- 	}
-@@ -832,7 +832,7 @@ static int ipv6_rthdr_rcv(struct sk_buff *skb)
- 		goto looped_back;
+ bool mpls_output_possible(const struct net_device *dev)
+@@ -2583,8 +2598,12 @@ static int resize_platform_label_table(struct net *net, size_t limit)
  	}
  
--	skb_push(skb, skb->data - skb_network_header(skb));
-+	skb_push(skb, -skb_network_offset(skb));
- 	dst_input(skb);
- 	return -1;
+ 	/* Update the global pointers */
++	local_bh_disable();
++	write_seqcount_begin(&net->mpls.platform_label_seq);
+ 	net->mpls.platform_labels = limit;
+ 	rcu_assign_pointer(net->mpls.platform_label, labels);
++	write_seqcount_end(&net->mpls.platform_label_seq);
++	local_bh_enable();
  
-diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
-index 662e3c78b741d..0d19974e85cf7 100644
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -335,9 +335,9 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 	if (!reasm_data)
- 		goto err;
+ 	rtnl_unlock();
  
--	payload_len = ((skb->data - skb_network_header(skb)) -
-+	payload_len = -skb_network_offset(skb) -
- 		       sizeof(struct ipv6hdr) + fq->q.len -
--		       sizeof(struct frag_hdr));
-+		       sizeof(struct frag_hdr);
- 	if (payload_len > IPV6_MAXPLEN) {
- 		net_dbg_ratelimited("nf_ct_frag6_reasm: payload len = %d\n",
- 				    payload_len);
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index 359b0b4ec1bbc..a429620d06ed6 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -274,9 +274,9 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 	if (!reasm_data)
- 		goto out_oom;
+@@ -2665,6 +2684,8 @@ static int mpls_net_init(struct net *net)
+ 	struct ctl_table *table;
+ 	int i;
  
--	payload_len = ((skb->data - skb_network_header(skb)) -
-+	payload_len = -skb_network_offset(skb) -
- 		       sizeof(struct ipv6hdr) + fq->q.len -
--		       sizeof(struct frag_hdr));
-+		       sizeof(struct frag_hdr);
- 	if (payload_len > IPV6_MAXPLEN)
- 		goto out_oversize;
- 
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 00d2a1b8b679e..0ca92740129e5 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -41,7 +41,7 @@ static int xfrm6_transport_finish2(struct net *net, struct sock *sk,
- int xfrm6_transport_finish(struct sk_buff *skb, int async)
- {
- 	struct xfrm_offload *xo = xfrm_offload(skb);
--	int nhlen = skb->data - skb_network_header(skb);
-+	int nhlen = -skb_network_offset(skb);
- 
- 	skb_network_header(skb)[IP6CB(skb)->nhoff] =
- 		XFRM_MODE_SKB_CB(skb)->protocol;
++	seqcount_init(&net->mpls.platform_label_seq);
++
+ 	net->mpls.platform_labels = 0;
+ 	net->mpls.platform_label = NULL;
+ 	net->mpls.ip_ttl_propagate = 1;
 -- 
 2.53.0
 
