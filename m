@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59053909BC;
-	Sat, 17 Oct 2026 18:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D183A7F4D;
+	Sat, 17 Oct 2026 18:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260711; cv=none; b=dxltpr0+KIGJRjvfhYORzLmox9bGXmqkPT/0u2R6rqddSkFbZTvjOjGM84kmiSZz7Wj4hPXmTKuC4BXTrUeT+7PrMSoN6n1K4OoFlrnSmiviD+rR+5ZacCGXut1RRYDy6InoUDB8hfZSMk99XY5/TKs1v5nDgx6dKRUFcQNti1A=
+	t=1792260714; cv=none; b=DS0Dy/1dB5t5LvZgQ5Udbj6yjZVxQgZU26m/cTNNwdyjj1IOCeHppqTY9hnZ1vvC1vHsJn1Nhy0BXcOMkM+dTjTgLyNCJ5QZ1aPGkyCfYbnn94jl29+JlVwgLzRBfpSignyi4XZk4ULiT+lVqRO/DAGLy5/qyU1nD5+vdbQ2xdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260711; c=relaxed/simple;
-	bh=LZFdJExtztFmak8WJR9uzEigQGvu1kCW3ynf2LljFnI=;
+	s=arc-20240116; t=1792260714; c=relaxed/simple;
+	bh=GTc5Zpa5bj18xwxnRfsX+hU80xvyvL6xbJspvY9+c3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8EabwpTsuW+jzdi6cVfWh1D6XJQhr4a0nlVPcys8CLCU1gJ+6TcpjdMU1bdoNdblkFYBonA1XuNMlLdu6eFQYmbypVp237D7aOrv18NLA26sFcJ1u4haPNmuNwS3L7k2CKMzi6htSRZYZm4CPfg+FGefVhiRvix7HyjzYV/zGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrhFC0Sf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RrN9YghQGGkyFTtCWEu5fwftza0suxy7clYNIu+pF0JH2whwHitnKA71Uu9bg5zGatJY5jf4t/j1nyKNlJBrxmJPCTJk03jQr1mmhGzc8Pd5yfhCrJ9vdcAw7B4C4aj0n/8xNlOE8dEGT5i3Tt/TsyRtrvTTzYI4pdoT5oIr5H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzheC08c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrhFC0Sf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C441F000C4;
-	Sat, 17 Oct 2026 18:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzheC08c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C501F000C4;
+	Sat, 17 Oct 2026 18:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260710;
-	bh=eMilPC1palebldFGokefb694YIhWFlan5uNAS3IMw3Y=;
+	s=korg; t=1792260713;
+	bh=X6MGW/3rmt4NWcL0VI6+5gapsC+Q/Itb21q7HZ81etA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jrhFC0SfkcwtyNNUwwIo7YzPeGw2/nuTaHX71bwO0G41RBtG4wxTxHWsCNjCOFRjo
-	 Ut0rLeYjUVlQB+wbmeKfEghnQoi4F/TyDoQdgeaDGwU5T9fRWjFPM4jq/I0QMarDeR
-	 XJWFZbkW5zPjtg+QkDaq23Xg5zxOtIsQNeIOafWM=
+	b=KzheC08cr5eXKI/L7JUdU0yl9ADBeX2VF1qZ/BbTfP6jr5CwitpgnOG8g/gagJK5U
+	 0yGXk06BRNwS4z2T0/eLEewdTEqdTH9zfLbACmSPSYG841Uci2v0jmaLZcbBm+cBg1
+	 id8YP2qncV9Rn22664AMx+jtA/4ymCL+nzN0Dl6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Randy Jennings <randyj@purestorage.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1628/1674] bpf: rename is_branch_taken reg arguments to prepare for the second one
-Date: Sat, 17 Oct 2026 18:05:00 +0200
-Message-ID: <20261017160512.870519732@linuxfoundation.org>
+Subject: [PATCH 6.6 1637/1674] nvme: remove stale namespaces by NSID range during scan
+Date: Sat, 17 Oct 2026 18:05:09 +0200
+Message-ID: <20261017160513.098414464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,261 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit c2a3ab094683ddc154879a1364fc7cb0228f96a6 ]
+[ Upstream commit 4ed7f3d7d435bf5b63da2814dc9270f5ba896011 ]
 
-Just taking mundane refactoring bits out into a separate patch. No
-functional changes.
+nvme_scan_ns_list() drops the stale namespaces in each gap in the
+reported NSID list one NSID at a time. Every iteration calls
+nvme_find_get_ns() to look the namespace up and removes it if it is
+present. The loop runs once per NSID in the gap rather than once per
+namespace actually present.
 
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20231102033759.2541186-12-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e51179a4e098 ("bpf: Don't predict JMP32 pointer vs zero comparisons")
+NSIDs are 32-bit, so a target with a sparse NSID space can make a
+single gap spin the loop billions of times with nothing to remove.
+
+  watchdog: BUG: soft lockup - CPU#4 stuck for 26s!
+  Workqueue: nvme-wq nvme_scan_work [nvme_core]
+  RIP: 0010:__srcu_read_unlock+0xb/0x20
+  Call Trace:
+   nvme_find_get_ns+0x7d/0xb0 [nvme_core]
+   nvme_scan_ns_list+0xe8/0x280 [nvme_core]
+   nvme_scan_work+0x18a/0x280 [nvme_core]
+   process_one_work+0x197/0x380
+   worker_thread+0x2fe/0x410
+   kthread+0xe0/0x100
+
+Rename nvme_remove_invalid_namespaces() to nvme_remove_nsid_range()
+and give it an open (start, end) NSID range. ctrl->namespaces is
+sorted by NSID, so the whole gap is dropped in a single walk that
+stops once end is reached. This bounds the work by the namespaces
+that are present instead of by the size of the gap.
+
+Fixes: 540c801c65eb ("NVMe: Implement namespace list scanning")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Randy Jennings <randyj@purestorage.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 108 +++++++++++++++++++++---------------------
- 1 file changed, 54 insertions(+), 54 deletions(-)
+ drivers/nvme/host/core.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4493df7e837e5..30751a16f186b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14076,26 +14076,26 @@ static void find_good_pkt_pointers(struct bpf_verifier_state *vstate,
- 	}));
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c8c62523653db..af71dd259c3c3 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -122,8 +122,6 @@ static dev_t nvme_ns_chr_devt;
+ static struct class *nvme_ns_chr_class;
+ 
+ static void nvme_put_subsystem(struct nvme_subsystem *subsys);
+-static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
+-					   unsigned nsid);
+ static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
+ 				   struct nvme_command *cmd);
+ 
+@@ -3862,15 +3860,16 @@ static void nvme_scan_ns_async(void *data, async_cookie_t cookie)
+ 	nvme_scan_ns(scan_info->ctrl, nsid);
  }
  
--static int is_branch32_taken(struct bpf_reg_state *reg, u32 val, u8 opcode)
-+static int is_branch32_taken(struct bpf_reg_state *reg1, u32 val, u8 opcode)
+-static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
+-					unsigned nsid)
++static void nvme_remove_nsid_range(struct nvme_ctrl *ctrl, u32 start, u32 end)
  {
--	struct tnum subreg = tnum_subreg(reg->var_off);
-+	struct tnum subreg = tnum_subreg(reg1->var_off);
- 	s32 sval = (s32)val;
+ 	struct nvme_ns *ns, *next;
+ 	LIST_HEAD(rm_list);
  
- 	switch (opcode) {
- 	case BPF_JEQ:
- 		if (tnum_is_const(subreg))
- 			return !!tnum_equals_const(subreg, val);
--		else if (val < reg->u32_min_value || val > reg->u32_max_value)
-+		else if (val < reg1->u32_min_value || val > reg1->u32_max_value)
- 			return 0;
--		else if (sval < reg->s32_min_value || sval > reg->s32_max_value)
-+		else if (sval < reg1->s32_min_value || sval > reg1->s32_max_value)
- 			return 0;
- 		break;
- 	case BPF_JNE:
- 		if (tnum_is_const(subreg))
- 			return !tnum_equals_const(subreg, val);
--		else if (val < reg->u32_min_value || val > reg->u32_max_value)
-+		else if (val < reg1->u32_min_value || val > reg1->u32_max_value)
- 			return 1;
--		else if (sval < reg->s32_min_value || sval > reg->s32_max_value)
-+		else if (sval < reg1->s32_min_value || sval > reg1->s32_max_value)
- 			return 1;
- 		break;
- 	case BPF_JSET:
-@@ -14105,51 +14105,51 @@ static int is_branch32_taken(struct bpf_reg_state *reg, u32 val, u8 opcode)
- 			return 0;
- 		break;
- 	case BPF_JGT:
--		if (reg->u32_min_value > val)
-+		if (reg1->u32_min_value > val)
- 			return 1;
--		else if (reg->u32_max_value <= val)
-+		else if (reg1->u32_max_value <= val)
- 			return 0;
- 		break;
- 	case BPF_JSGT:
--		if (reg->s32_min_value > sval)
-+		if (reg1->s32_min_value > sval)
- 			return 1;
--		else if (reg->s32_max_value <= sval)
-+		else if (reg1->s32_max_value <= sval)
- 			return 0;
- 		break;
- 	case BPF_JLT:
--		if (reg->u32_max_value < val)
-+		if (reg1->u32_max_value < val)
- 			return 1;
--		else if (reg->u32_min_value >= val)
-+		else if (reg1->u32_min_value >= val)
- 			return 0;
- 		break;
- 	case BPF_JSLT:
--		if (reg->s32_max_value < sval)
-+		if (reg1->s32_max_value < sval)
- 			return 1;
--		else if (reg->s32_min_value >= sval)
-+		else if (reg1->s32_min_value >= sval)
- 			return 0;
- 		break;
- 	case BPF_JGE:
--		if (reg->u32_min_value >= val)
-+		if (reg1->u32_min_value >= val)
- 			return 1;
--		else if (reg->u32_max_value < val)
-+		else if (reg1->u32_max_value < val)
- 			return 0;
- 		break;
- 	case BPF_JSGE:
--		if (reg->s32_min_value >= sval)
-+		if (reg1->s32_min_value >= sval)
- 			return 1;
--		else if (reg->s32_max_value < sval)
-+		else if (reg1->s32_max_value < sval)
- 			return 0;
- 		break;
- 	case BPF_JLE:
--		if (reg->u32_max_value <= val)
-+		if (reg1->u32_max_value <= val)
- 			return 1;
--		else if (reg->u32_min_value > val)
-+		else if (reg1->u32_min_value > val)
- 			return 0;
- 		break;
- 	case BPF_JSLE:
--		if (reg->s32_max_value <= sval)
-+		if (reg1->s32_max_value <= sval)
- 			return 1;
--		else if (reg->s32_min_value > sval)
-+		else if (reg1->s32_min_value > sval)
- 			return 0;
- 		break;
+ 	mutex_lock(&ctrl->namespaces_lock);
+ 	list_for_each_entry_safe(ns, next, &ctrl->namespaces, list) {
+-		if (ns->head->ns_id > nsid) {
++		if (ns->head->ns_id >= end)
++			break;
++		if (ns->head->ns_id > start) {
+ 			list_del_rcu(&ns->list);
+ 			synchronize_srcu(&ctrl->srcu);
+ 			list_add_tail_rcu(&ns->list, &rm_list);
+@@ -3920,13 +3919,14 @@ static int nvme_scan_ns_list(struct nvme_ctrl *ctrl)
+ 				goto out;
+ 			async_schedule_domain(nvme_scan_ns_async, &scan_info,
+ 						&domain);
+-			while (++prev < nsid)
+-				nvme_ns_remove_by_nsid(ctrl, prev);
++			if (prev + 1 < nsid)
++				nvme_remove_nsid_range(ctrl, prev, nsid);
++			prev = max(prev + 1, nsid);
+ 		}
+ 		async_synchronize_full_domain(&domain);
  	}
-@@ -14158,79 +14158,79 @@ static int is_branch32_taken(struct bpf_reg_state *reg, u32 val, u8 opcode)
+  out:
+-	nvme_remove_invalid_namespaces(ctrl, prev);
++	nvme_remove_nsid_range(ctrl, prev, UINT_MAX);
+  free:
+ 	async_synchronize_full_domain(&domain);
+ 	kfree(ns_list);
+@@ -3946,7 +3946,7 @@ static void nvme_scan_ns_sequential(struct nvme_ctrl *ctrl)
+ 	for (i = 1; i <= nn; i++)
+ 		nvme_scan_ns(ctrl, i);
+ 
+-	nvme_remove_invalid_namespaces(ctrl, nn);
++	nvme_remove_nsid_range(ctrl, nn, UINT_MAX);
  }
  
- 
--static int is_branch64_taken(struct bpf_reg_state *reg, u64 val, u8 opcode)
-+static int is_branch64_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode)
- {
- 	s64 sval = (s64)val;
- 
- 	switch (opcode) {
- 	case BPF_JEQ:
--		if (tnum_is_const(reg->var_off))
--			return !!tnum_equals_const(reg->var_off, val);
--		else if (val < reg->umin_value || val > reg->umax_value)
-+		if (tnum_is_const(reg1->var_off))
-+			return !!tnum_equals_const(reg1->var_off, val);
-+		else if (val < reg1->umin_value || val > reg1->umax_value)
- 			return 0;
--		else if (sval < reg->smin_value || sval > reg->smax_value)
-+		else if (sval < reg1->smin_value || sval > reg1->smax_value)
- 			return 0;
- 		break;
- 	case BPF_JNE:
--		if (tnum_is_const(reg->var_off))
--			return !tnum_equals_const(reg->var_off, val);
--		else if (val < reg->umin_value || val > reg->umax_value)
-+		if (tnum_is_const(reg1->var_off))
-+			return !tnum_equals_const(reg1->var_off, val);
-+		else if (val < reg1->umin_value || val > reg1->umax_value)
- 			return 1;
--		else if (sval < reg->smin_value || sval > reg->smax_value)
-+		else if (sval < reg1->smin_value || sval > reg1->smax_value)
- 			return 1;
- 		break;
- 	case BPF_JSET:
--		if ((~reg->var_off.mask & reg->var_off.value) & val)
-+		if ((~reg1->var_off.mask & reg1->var_off.value) & val)
- 			return 1;
--		if (!((reg->var_off.mask | reg->var_off.value) & val))
-+		if (!((reg1->var_off.mask | reg1->var_off.value) & val))
- 			return 0;
- 		break;
- 	case BPF_JGT:
--		if (reg->umin_value > val)
-+		if (reg1->umin_value > val)
- 			return 1;
--		else if (reg->umax_value <= val)
-+		else if (reg1->umax_value <= val)
- 			return 0;
- 		break;
- 	case BPF_JSGT:
--		if (reg->smin_value > sval)
-+		if (reg1->smin_value > sval)
- 			return 1;
--		else if (reg->smax_value <= sval)
-+		else if (reg1->smax_value <= sval)
- 			return 0;
- 		break;
- 	case BPF_JLT:
--		if (reg->umax_value < val)
-+		if (reg1->umax_value < val)
- 			return 1;
--		else if (reg->umin_value >= val)
-+		else if (reg1->umin_value >= val)
- 			return 0;
- 		break;
- 	case BPF_JSLT:
--		if (reg->smax_value < sval)
-+		if (reg1->smax_value < sval)
- 			return 1;
--		else if (reg->smin_value >= sval)
-+		else if (reg1->smin_value >= sval)
- 			return 0;
- 		break;
- 	case BPF_JGE:
--		if (reg->umin_value >= val)
-+		if (reg1->umin_value >= val)
- 			return 1;
--		else if (reg->umax_value < val)
-+		else if (reg1->umax_value < val)
- 			return 0;
- 		break;
- 	case BPF_JSGE:
--		if (reg->smin_value >= sval)
-+		if (reg1->smin_value >= sval)
- 			return 1;
--		else if (reg->smax_value < sval)
-+		else if (reg1->smax_value < sval)
- 			return 0;
- 		break;
- 	case BPF_JLE:
--		if (reg->umax_value <= val)
-+		if (reg1->umax_value <= val)
- 			return 1;
--		else if (reg->umin_value > val)
-+		else if (reg1->umin_value > val)
- 			return 0;
- 		break;
- 	case BPF_JSLE:
--		if (reg->smax_value <= sval)
-+		if (reg1->smax_value <= sval)
- 			return 1;
--		else if (reg->smin_value > sval)
-+		else if (reg1->smin_value > sval)
- 			return 0;
- 		break;
- 	}
-@@ -14245,11 +14245,11 @@ static int is_branch64_taken(struct bpf_reg_state *reg, u64 val, u8 opcode)
-  * -1 - unknown. Example: "if (reg < 5)" is unknown when register value
-  *      range [0,10]
-  */
--static int is_branch_taken(struct bpf_reg_state *reg, u64 val, u8 opcode,
-+static int is_branch_taken(struct bpf_reg_state *reg1, u64 val, u8 opcode,
- 			   bool is_jmp32)
- {
--	if (__is_pointer_value(false, reg)) {
--		if (!reg_not_null(reg))
-+	if (__is_pointer_value(false, reg1)) {
-+		if (!reg_not_null(reg1))
- 			return -1;
- 
- 		/* If pointer is valid tests against zero will fail so we can
-@@ -14269,8 +14269,8 @@ static int is_branch_taken(struct bpf_reg_state *reg, u64 val, u8 opcode,
- 	}
- 
- 	if (is_jmp32)
--		return is_branch32_taken(reg, val, opcode);
--	return is_branch64_taken(reg, val, opcode);
-+		return is_branch32_taken(reg1, val, opcode);
-+	return is_branch64_taken(reg1, val, opcode);
- }
- 
- static int flip_opcode(u32 opcode)
+ static void nvme_clear_changed_ns_log(struct nvme_ctrl *ctrl)
 -- 
 2.53.0
 
