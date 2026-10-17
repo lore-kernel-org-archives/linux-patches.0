@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4993C4B8D;
-	Sat, 17 Oct 2026 18:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D505D3C4B8D;
+	Sat, 17 Oct 2026 18:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260801; cv=none; b=Sfl2VJnlg4U3YFPng0OAQcHv3V305S/BmrtqWpgeO28mdHzxqrezQJHLZw20IL2BRvdkYv2Bm4Y/LnyNgehejU0EunTn6at+Hv5ZwYn5T71Sx1aBZwTFGAYBSFt001chRYCb/VOXxwb5m/bNblTvPlVoLySL28WeRAcnxoBNFSw=
+	t=1792260803; cv=none; b=Hp4krcutOaGa5tUWhBNdNonMfHYnfcyoZXhPDLO39JrpoGprvjoSqCsojvmPQCG4HcaNHYwXlCMpkXuWZx63GzFLEtRo7eZB7c7Z/iM9ZKr6m9kc0yVzir0n3GdXJDPYLznFiLU+S02u4dUfQfmz5WfLoB70yVvqAUJn8SVx1x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260801; c=relaxed/simple;
-	bh=7TlwC4xwiSGRLw5pj38D9Dhmp/hz3cnd8txlksxJi/I=;
+	s=arc-20240116; t=1792260803; c=relaxed/simple;
+	bh=LiuRATBUfrnF97td4F6fl/qR2XCjwKG8lsHAlphTiDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSZXiRFVpYBs9rjb7dk6d62e7EFcwUfBrmjjLrgTIDEYq3tbXQvvEVxcaVtC12h6sZTo8jDi9DpYD7DlQJHK7okx8+cZWDKwZuuFVnd4kb3bTcCOSp06kr3QSRir3IJOu8Nyskn31An7C16EEgbvspFUJ+d5/Sac1uTAIV/jssY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjvy9HhP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QMOsFJnb8/y4g/ytIQSegh8k/y8VcVu7KK3etVRYSq28rY9QqAj0dnFrdK7KSSZrXIv3+kL5DwW+eoYqaULSOQ2KbS1ikGZ7w3f7TSraciOFwPyvXNF4gvC2uMkQGlcqzGtcbNprKqZ/sfXRagAROYdYW+IRKJVImGkAki4Rsuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gy9LKc4Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjvy9HhP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5431F000C4;
-	Sat, 17 Oct 2026 18:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gy9LKc4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3921F000C4;
+	Sat, 17 Oct 2026 18:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260799;
-	bh=gME61Q4S42e7aBJG8Bb9FLOUs+64+y9cYciPp0QOmjw=;
+	s=korg; t=1792260802;
+	bh=mPTEQZ0UktbzDq9SuIyvZ/0HagRpbxbMXVurefv2MR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjvy9HhPq8tczxyet5vcMJCI6WJ2pnnRTFBXypr2ZtN639YRqT3y02QEJSkeAD2Ti
-	 ayabitvokdTqC9W2+k91Tq4Ep4pXZJOJyUw3Pw2TR8QYxp/GKAyuWs5eOkerlhEAqe
-	 NuQrrOlr6PKWsQSY7B0idpBzz+6JtEUXC9tZFHV4=
+	b=Gy9LKc4YAmkdlNlsU4e1vZIo+pYSNfVZC9lAFshBsUus9+avylA1gbXDuEI9vL4kw
+	 /ByjQFQSB8xTu7ehcM7QqUPJdcBfiFHQvxUag867t4Faa3/KI3aPesGF/fKpRVwZPX
+	 41R1Qe/09WlaxTf2Up1U2gy2+iaHesmpaUQvHO0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kangjing Huang <huangkangjing@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1663/1674] Revert "ksmbd: fix missing RDMA-capable flag for IPoIB device in ksmbd_rdma_capable_netdev()"
-Date: Sat, 17 Oct 2026 18:05:35 +0200
-Message-ID: <20261017160513.757094283@linuxfoundation.org>
+Subject: [PATCH 6.6 1664/1674] Revert "mm/filemap: avoid buffered read/write race to read inconsistent data"
+Date: Sat, 17 Oct 2026 18:05:36 +0200
+Message-ID: <20261017160513.780732388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,85 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 1a81ea738c030dfa83929a954e8c2cd15a91a883 ]
+[ Upstream commit 4b944f8ef99641d5af287c7d9df91d20ef5d3e88 ]
 
-This reverts commit ecce70cf17d91c3dd87a0c4ea00b2d1387729701.
+This reverts commit e2c27b803bb6 ("mm/filemap: avoid buffered read/write
+race to read inconsistent data"). After making the i_size_read/write
+helpers be smp_load_acquire/store_release(), it is already guaranteed that
+changes to page contents are visible before we see increased inode size,
+so the extra smp_rmb() in filemap_read() can be removed.
 
-Revert the GUID trick code causing the layering violation.
-I will try to allow the users to turn RDMA-capable on/off via sysfs later
-
-Cc: Kangjing Huang <huangkangjing@gmail.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240124142857.4146716-3-libaokun1@huawei.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 40 +++++++++-------------------------
- 1 file changed, 10 insertions(+), 30 deletions(-)
+ mm/filemap.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 8c450e5fd4f0b..d522ace20840d 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -2206,7 +2206,8 @@ static int smb_direct_ib_client_add(struct ib_device *ib_dev)
- 	if (ib_dev->node_type != RDMA_NODE_IB_CA)
- 		smb_direct_port = SMB_DIRECT_PORT_IWARP;
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 5a340cad44ed4..7ad7202ad65ed 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2704,15 +2704,6 @@ ssize_t filemap_read(struct kiocb *iocb, struct iov_iter *iter,
+ 			goto put_folios;
+ 		end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
  
--	if (!rdma_frwr_is_supported(&ib_dev->attrs))
-+	if (!ib_dev->ops.get_netdev ||
-+	    !rdma_frwr_is_supported(&ib_dev->attrs))
- 		return 0;
- 
- 	smb_dev = kzalloc(sizeof(*smb_dev), GFP_KERNEL);
-@@ -2309,38 +2310,17 @@ bool ksmbd_rdma_capable_netdev(struct net_device *netdev)
- 		for (i = 0; i < smb_dev->ib_dev->phys_port_cnt; i++) {
- 			struct net_device *ndev;
- 
--			if (smb_dev->ib_dev->ops.get_netdev) {
--				ndev = smb_dev->ib_dev->ops.get_netdev(
--					smb_dev->ib_dev, i + 1);
--				if (!ndev)
--					continue;
-+			ndev = smb_dev->ib_dev->ops.get_netdev(smb_dev->ib_dev,
-+							       i + 1);
-+			if (!ndev)
-+				continue;
- 
--				if (ndev == netdev) {
--					dev_put(ndev);
--					rdma_capable = true;
--					goto out;
--				}
-+			if (ndev == netdev) {
- 				dev_put(ndev);
--			/* if ib_dev does not implement ops.get_netdev
--			 * check for matching infiniband GUID in hw_addr
--			 */
--			} else if (netdev->type == ARPHRD_INFINIBAND) {
--				struct netdev_hw_addr *ha;
--				union ib_gid gid;
--				u32 port_num;
--				int ret;
+-		/*
+-		 * Pairs with a barrier in
+-		 * block_write_end()->mark_buffer_dirty() or other page
+-		 * dirtying routines like iomap_write_end() to ensure
+-		 * changes to page contents are visible before we see
+-		 * increased inode size.
+-		 */
+-		smp_rmb();
 -
--				netdev_hw_addr_list_for_each(
--					ha, &netdev->dev_addrs) {
--					memcpy(&gid, ha->addr + 4, sizeof(gid));
--					ret = ib_find_gid(smb_dev->ib_dev, &gid,
--							  &port_num, NULL);
--					if (!ret) {
--						rdma_capable = true;
--						goto out;
--					}
--				}
-+				rdma_capable = true;
-+				goto out;
- 			}
-+			dev_put(ndev);
- 		}
- 	}
- out:
+ 		/*
+ 		 * Once we start copying data, we don't want to be touching any
+ 		 * cachelines that might be contended:
 -- 
 2.53.0
 
