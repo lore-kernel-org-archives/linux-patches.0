@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B733ABD99;
-	Sat, 17 Oct 2026 16:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B683B19CA;
+	Sat, 17 Oct 2026 16:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255412; cv=none; b=VsKGvcrD7rfD8lZy4fJB1i3fKk60K25PoTqZhBgLmp78wDWc/W1qFE44dPKcFtzEfVB8hFW8CXlQnezXhK28qQDLsQfdgxHmN3FFNFYlfXN9E67Q6wb2RN8VfbxpqjuCBMt3XyK6xpA7hobj8hA/xy06paTp8tnCSAI3lmGkkpg=
+	t=1792255415; cv=none; b=Oigj2CMhNkuz77657xFpED2l6OdhUTdKRloPv0Eugv3buGiMLWqvn4OYY0TjBGtk9XlqFR8Zmb7/UBQ9B4u6gXO41ZEXtBOtET3bCkRrG/hzNksXPH13RFz22wmtLAj53zKeJscfWsi9fOcwFJJ4JJNOkB2Uug8prPX+LeElyQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255412; c=relaxed/simple;
-	bh=GNjrfTMoqJMxmnkkCoxYTJgt1LtjjNOsPOxUnV0PsiM=;
+	s=arc-20240116; t=1792255415; c=relaxed/simple;
+	bh=tGQ/J3dIqFzEFN+xlklN+19gNsZCnhoN0aQPdt6VK8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X1VmSAL/6rs2HQ8nsCurnmBKEjKYEAn7mztGd1jB/l8PIEgzFd2PIQFcn5/R5SSNc4k8wUasY617SauiBI4X+htkQVTCicOHGMUfZl9HYLkX1/v2m6xsnZNT3LWdt6+MAUm38w+VMU85kv+9ECg0bh/hM4vwGoI/tBfyu+rPC0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5AeM2AJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=azgbhpXMDHuwFISJoUKJui4cizoamo9JJcA0jX6Ldrl7qCHzCgUfbs0O/9aVYmWlrl4Xg/4G55PPCsCHA3Rsr3mxLVP6qZYUEBdZNP8p7aFLCdZmNcsIfq/32o5XWwzqvI5ixwVi6fNlmPgChj9ntTencRD807ItkHxGQrYgBxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIYD/gmL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5AeM2AJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD9A1F000C4;
-	Sat, 17 Oct 2026 16:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIYD/gmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4787F1F000C4;
+	Sat, 17 Oct 2026 16:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255410;
-	bh=R3VNRsdoDxYBH9qKeg33vT7qVIEuynVuW/T6tfbFGlc=;
+	s=korg; t=1792255413;
+	bh=5JuJmZUzFv1ItDslHKZGaAATZx6J/nvYDdik7jDIx50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S5AeM2AJX85CIzZD5uJ66glBW+ya1u5+OCH0VJCLJwHshQtzLrJtadnLcPXBqs4ce
-	 YMwxcRLLOyHyoQbHNMbTnT7HdJUkwo6GK4P5AO8qaFVzYqof70zqHZ468IlMa0058r
-	 8CRVNuZ+/lByC/rzoK1AJhKntEmRGEi5iYI2P14c=
+	b=JIYD/gmLwCAwayQz4dexXsLGtkXSUrRXURD9kpdPubxkuBMkg7iP0lwyGbvUwwYho
+	 Xw6y4eWkx9g30NKr2DZjDVvVvqunGkx8Ew03DkIE6/DaZykSKYdx8WFkKrTG2B9J9C
+	 mYtrn0TTZrWL9PD52NMk1Tn+ss7oxZvyvkhVVBiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 767/869] drm/amdgpu: skip the VMID 0 flush for VRAM
-Date: Sat, 17 Oct 2026 18:00:08 +0200
-Message-ID: <20261017160056.587692362@linuxfoundation.org>
+Subject: [PATCH 6.12 768/869] perf/x86/intel: Prevent drain_pebs() reentry
+Date: Sat, 17 Oct 2026 18:00:09 +0200
+Message-ID: <20261017160056.612767893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,155 +45,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 87ceb8cba73d0b3c4025ff42495bccd8164acaed ]
+[ Upstream commit a56c03a397e2cd0c4cf8da96dcd6214f7d0e7d8c ]
 
-Clear-on-release only runs on VRAM, which amdgpu_ttm_map_buffer() reaches
-via its direct MC address without programming a GART window, yet the wipe
-still forces a VMID 0 flush. On GFX11 (e.g. Navi33) that spurious SDMA
-flush can wedge the engine; only flush when a GART window is actually used.
+The PEBS buffer is shared by all events on a CPU, so drain_pebs() must
+not be reentered. If so, one instance may observe stale buffer state and
+potentially access out-of-bound memory.
 
-v2: Let amdgpu_ttm_map_buffer() return whether the VMID 0 flush is needed,
-    and drive the clear and copy paths from that. (Christian)
-v3: Make the vm_needs_flush output parameter mandatory instead of
-    allowing NULL. (Christian)
+Most invocations happen in NMI context, which naturally prevents reentry.
+However, drain_pebs() is also reachable from process context via
+intel_pmu_drain_pebs_buffer().
 
-Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5413
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a306e406e570b74318ff7d80e5b07b540ca1d3a9)
-Cc: stable@vger.kernel.org
+In those paths, the PMU is often already disabled, but not guaranteed.
+For example, __intel_pmu_pebs_disable() only disables the target counter,
+so other active counters can still raise a PMI and interrupt an in-flight
+drain_pebs(). Here is an example,
+
+__perf_addr_filters_adjust()
+  perf_event_stop()
+    __perf_event_stop()
+      x86_pmu_stop() (event->pmu->stop)
+        intel_pmu_disable_event()
+          intel_pmu_pebs_disable()
+            __intel_pmu_pebs_disable()
+              intel_pmu_drain_large_pebs()
+                intel_pmu_drain_pebs_buffer()
+
+Introduce __intel_pmu_quiesce() and __intel_pmu_resume() helpers and
+use them in intel_pmu_drain_large_pebs() to disable the full PMU
+around the intel_pmu_drain_pebs_buffer() call, preventing reentry.
+
+Also add a warning in intel_pmu_drain_pebs_buffer() when the full PMU is
+not disabled.
+
+Fixes: b752ea0c28e3 ("perf/x86/intel/ds: Flush PEBS DS when changing PEBS_DATA_CFG")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260813064346.335458-1-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ arch/x86/events/intel/core.c | 32 ++++++++++++++++++++++++--------
+ arch/x86/events/intel/ds.c   |  8 +++++++-
+ arch/x86/events/perf_event.h |  3 +++
+ 3 files changed, 34 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 60c5e8803f60c..93da39a5ce492 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -174,6 +174,8 @@ static void amdgpu_evict_flags(struct ttm_buffer_object *bo,
-  * @tmz: if we should setup a TMZ enabled mapping
-  * @size: in number of bytes to map, out number of bytes mapped
-  * @addr: resulting address inside the MC address space
-+ * @vm_needs_flush: out, set true if a GART window was programmed (VMID 0 flush
-+ *		    needed) or false for a direct address
-  *
-  * Setup one of the GART windows to access a specific piece of memory or return
-  * the physical address for local memory.
-@@ -182,7 +184,8 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
- 				 struct ttm_resource *mem,
- 				 struct amdgpu_res_cursor *mm_cur,
- 				 unsigned int window, struct amdgpu_ring *ring,
--				 bool tmz, uint64_t *size, uint64_t *addr)
-+				 bool tmz, uint64_t *size, uint64_t *addr,
-+				 bool *vm_needs_flush)
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 2efb414959e1f..35b6c340001db 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2606,6 +2606,27 @@ static void intel_pmu_del_event(struct perf_event *event)
+ 		intel_pmu_pebs_del(event);
+ }
+ 
++int __intel_pmu_quiesce(void)
++{
++	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++	int pmu_enabled = cpuc->enabled;
++
++	cpuc->enabled = 0;
++	if (pmu_enabled)
++		intel_pmu_disable_all();
++
++	return pmu_enabled;
++}
++
++void __intel_pmu_resume(int pmu_enabled)
++{
++	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
++
++	cpuc->enabled = pmu_enabled;
++	if (pmu_enabled)
++		intel_pmu_enable_all(0);
++}
++
+ static int icl_set_topdown_event_period(struct perf_event *event)
  {
- 	struct amdgpu_device *adev = ring->adev;
- 	unsigned int offset, num_pages, num_dw, num_bytes;
-@@ -203,9 +206,12 @@ static int amdgpu_ttm_map_buffer(struct ttm_buffer_object *bo,
- 	if (!tmz && mem->start != AMDGPU_BO_INVALID_OFFSET) {
- 		*addr = amdgpu_ttm_domain_start(adev, mem->mem_type) +
- 			mm_cur->start;
-+		*vm_needs_flush = false;
- 		return 0;
+ 	struct hw_perf_event *hwc = &event->hw;
+@@ -2784,24 +2805,19 @@ static void intel_pmu_read_event(struct perf_event *event)
+ {
+ 	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
+ 		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+-		bool pmu_enabled = cpuc->enabled;
++		int pmu_enabled;
+ 
+ 		/* Only need to call update_topdown_event() once for group read. */
+ 		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
+ 			return;
+ 
+-		cpuc->enabled = 0;
+-		if (pmu_enabled)
+-			intel_pmu_disable_all();
++		pmu_enabled = __intel_pmu_quiesce();
+ 
+ 		if (is_topdown_count(event))
+ 			static_call(intel_pmu_update_topdown_event)(event);
+ 		else
+ 			intel_pmu_drain_pebs_buffer();
+-
+-		cpuc->enabled = pmu_enabled;
+-		if (pmu_enabled)
+-			intel_pmu_enable_all(0);
++		__intel_pmu_resume(pmu_enabled);
+ 
+ 		return;
  	}
+diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
+index 4eac316932108..44c041c6a29b7 100644
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -949,8 +949,11 @@ int intel_pmu_drain_bts_buffer(void)
  
-+	/* A GART window is programmed below, so its VMID 0 TLB needs a flush */
-+	*vm_needs_flush = true;
+ void intel_pmu_drain_pebs_buffer(void)
+ {
++	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+ 	struct perf_sample_data data;
  
- 	/*
- 	 * If start begins at an offset inside the page, then adjust the size
-@@ -314,6 +320,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
- 	while (src_mm.remaining) {
- 		uint64_t from, to, cur_size, tiling_flags;
- 		uint32_t num_type, data_format, max_com, write_compress_disable;
-+		bool src_vm_flush, dst_vm_flush;
- 		struct dma_fence *next;
++	WARN_ON_ONCE(cpuc->enabled);
++
+ 	static_call(x86_pmu_drain_pebs)(NULL, &data);
+ }
  
- 		/* Never copy more than 256MiB at once to avoid a timeout */
-@@ -321,12 +328,12 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
+@@ -1448,8 +1451,11 @@ static void intel_pmu_pebs_via_pt_enable(struct perf_event *event)
+ static inline void intel_pmu_drain_large_pebs(struct cpu_hw_events *cpuc)
+ {
+ 	if (cpuc->n_pebs == cpuc->n_large_pebs &&
+-	    cpuc->n_pebs != cpuc->n_pebs_via_pt)
++	    cpuc->n_pebs != cpuc->n_pebs_via_pt) {
++		int enabled = __intel_pmu_quiesce();
+ 		intel_pmu_drain_pebs_buffer();
++		__intel_pmu_resume(enabled);
++	}
+ }
  
- 		/* Map src to window 0 and dst to window 1. */
- 		r = amdgpu_ttm_map_buffer(src->bo, src->mem, &src_mm,
--					  0, ring, tmz, &cur_size, &from);
-+					  0, ring, tmz, &cur_size, &from, &src_vm_flush);
- 		if (r)
- 			goto error;
+ void intel_pmu_pebs_enable(struct perf_event *event)
+diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
+index 3878173933be6..85afab67414a8 100644
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1560,6 +1560,9 @@ static __always_inline void __intel_pmu_lbr_disable(void)
+ 	wrmsrl(MSR_IA32_DEBUGCTLMSR, debugctl);
+ }
  
- 		r = amdgpu_ttm_map_buffer(dst->bo, dst->mem, &dst_mm,
--					  1, ring, tmz, &cur_size, &to);
-+					  1, ring, tmz, &cur_size, &to, &dst_vm_flush);
- 		if (r)
- 			goto error;
++extern int __intel_pmu_quiesce(void);
++extern void __intel_pmu_resume(int pmu_enabled);
++
+ int intel_pmu_save_and_restart(struct perf_event *event);
  
-@@ -354,7 +361,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct amdgpu_device *adev,
- 		}
- 
- 		r = amdgpu_copy_buffer(ring, from, to, cur_size, resv,
--				       &next, false, true, copy_flags);
-+				       &next, false, src_vm_flush || dst_vm_flush, copy_flags);
- 		if (r)
- 			goto error;
- 
-@@ -2311,6 +2318,7 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
- 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
- 	struct amdgpu_res_cursor cursor;
-+	bool vm_needs_flush = false;
- 	u64 addr;
- 	int r = 0;
- 
-@@ -2338,12 +2346,12 @@ int amdgpu_ttm_clear_buffer(struct amdgpu_bo *bo,
- 		size = min(cursor.size, 256ULL << 20);
- 
- 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &cursor,
--					  1, ring, false, &size, &addr);
-+					  1, ring, false, &size, &addr, &vm_needs_flush);
- 		if (r)
- 			goto err;
- 
- 		r = amdgpu_ttm_fill_mem(ring, 0, addr, size, resv,
--					&next, true, true,
-+					&next, vm_needs_flush, true,
- 					AMDGPU_KERNEL_JOB_ID_TTM_CLEAR_BUFFER);
- 		if (r)
- 			goto err;
-@@ -2370,6 +2378,7 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
- 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
- 	struct dma_fence *fence = NULL;
- 	struct amdgpu_res_cursor dst;
-+	bool vm_needs_flush = false;
- 	int r;
- 
- 	if (!adev->mman.buffer_funcs_enabled) {
-@@ -2388,12 +2397,12 @@ int amdgpu_fill_buffer(struct amdgpu_bo *bo,
- 		cur_size = min(dst.size, 256ULL << 20);
- 
- 		r = amdgpu_ttm_map_buffer(&bo->tbo, bo->tbo.resource, &dst,
--					  1, ring, false, &cur_size, &to);
-+					  1, ring, false, &cur_size, &to, &vm_needs_flush);
- 		if (r)
- 			goto error;
- 
- 		r = amdgpu_ttm_fill_mem(ring, src_data, to, cur_size, resv,
--					&next, true, delayed, k_job_id);
-+					&next, vm_needs_flush, delayed, k_job_id);
- 		if (r)
- 			goto error;
- 
+ struct event_constraint *
 -- 
 2.53.0
 
