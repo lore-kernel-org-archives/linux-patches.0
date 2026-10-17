@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA8C35C1BC;
-	Sat, 17 Oct 2026 16:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C6B30216D;
+	Sat, 17 Oct 2026 16:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253858; cv=none; b=l4xx9/f5IpW60lDr1LCQ91wKJEB4pikuJC9fs91CvJWbKCaAB2/Blrna1tD8Xt1BxK81q1xnpUBgxzM+T+J4Cuxcj2QIeTQ3lvpE0+5gMiAmRTOL3v31q3EnSQVlHN0kFZO7Thoau/f4ioqqmvW2anpvUIyfAnr+q+je5E2zDLQ=
+	t=1792253865; cv=none; b=PMrcj22Z4XO5CtTfMky1dCjK1heI3HXsNukIauExUyZynWycI3rMdNMuFCBFBirylQhUIA21+tZembmUNG+BGfxxAOHU1lnLQo1+QvtwUquTO/HXF3e7ycVt8dQLjRiX+VK1PhDNEDreaXD2PJPKn6l/EzX/bptScgKB9y9Uu/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253858; c=relaxed/simple;
-	bh=CVjDbQfdVIwGdexpcVYPfA+g4I2NbQDK+nhfpnyRH2s=;
+	s=arc-20240116; t=1792253865; c=relaxed/simple;
+	bh=Yr4PqVdo6Emododu0erYS9ua1EHlHha0ROyEkqWTixA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCgvwKoczrBMcu6M88Oi8apH06MthrArN+jDvvL1LlkN/oYsH5oXZPrxxFdUEo8zDPd5jG7EklXiZ9KW6IcHb6/NdVbmg4PAaVnfJhDB8UEdpK4xG19RnXIYwHTFFsBtcsS0bS6zVcCilrtDo44aOm1RKD3hD2wpHvtRXlPZe7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/R11smC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NMrzR4iKSf7tpEp+0/WI01JO0DM4PC8RckkvPw5AGIO4MUPDj+hX9ZstU7jbOj3SYNiJ3tIb6TNA91uOTHoai9w8MfOYVDzowgLzNulhp//6s/biSnO9duzSw+Cc+GMXFIb3yw5Opc1oDFc9aHQikpagfpx/CgwI/FgJWEIRKSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jirxefWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/R11smC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E8E1F000C4;
-	Sat, 17 Oct 2026 16:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jirxefWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE7E1F000C5;
+	Sat, 17 Oct 2026 16:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253857;
-	bh=0f0hq54py0v19zHdg6EOGhNPljyPIiOXbwSGRld2/xA=;
+	s=korg; t=1792253863;
+	bh=8A9YUpdA7Ryz6k9mACrP49zOpQFdsOCWgmE2IRVtZlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u/R11smCG2iLFWu5l8PexrZyNHmVTt/OMoA58oZB8ZJ7o3+vx/SLX4LgbMpnMC8oI
-	 uehODkOZ/+SqTqzVGjZNXACeeCiqBNRlDSQ69sLwSJivBs+p8vglWB1bfdkNzHMbnv
-	 iXBs6uTDWhzC1slYWoBZJVnX5uOwnmodvn7QSVeY=
+	b=jirxefWvwEALr4LjfXE/OCfJRNm2Pof28CTni4Fdphx9C70lblMkyRvG/hhj7Ix6X
+	 vDPMF6CXKZq8KU6WGL8QmNne7lCJ76LslvsV8XxRgSfoW4WfnPudAMrBvYlrEKdDUy
+	 1C666IBl99F3gjuWQmcQmAuiKjq0YW5lwc7veSVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Petlozu Pravareshwar <petlozup@nvidia.com>,
+	Prathamesh Shete <pshete@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 257/869] KVM: Export hardware virtualization enabling/disabling functions
-Date: Sat, 17 Oct 2026 17:51:38 +0200
-Message-ID: <20261017160043.644946085@linuxfoundation.org>
+Subject: [PATCH 6.12 259/869] soc/tegra: pmc: Fix unsafe generic_handle_irq() call
+Date: Sat, 17 Oct 2026 17:51:40 +0200
+Message-ID: <20261017160043.700802754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,113 +53,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Huang <kai.huang@intel.com>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 62b1fa69f31969e11d03529d3a80599ddda2d043 ]
+[ Upstream commit e6d96073af681780820c94079b978474a8a44413 ]
 
-To support TDX, KVM will need to enable TDX during KVM module loading
-time.  Enabling TDX requires enabling hardware virtualization first so
-that all online CPUs (and the new CPU going online) are in post-VMXON
-state.
+Currently, when resuming from system suspend on Tegra platforms,
+the following warning is observed:
 
-KVM by default enables hardware virtualization but that is done in
-kvm_init(), which must be the last step after all initialization is done
-thus is too late for enabling TDX.
+WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
+Call trace:
+ handle_irq_desc+0x20/0x58 (P)
+ tegra186_pmc_wake_syscore_resume+0xe4/0x15c
+ syscore_resume+0x3c/0xb8
+ suspend_devices_and_enter+0x510/0x540
+ pm_suspend+0x16c/0x1d8
 
-Export functions to enable/disable hardware virtualization so that TDX
-code can use them to handle hardware virtualization enabling before
-kvm_init().
+The warning occurs because generic_handle_irq() is being called from
+a non-interrupt context which is considered as unsafe.
 
-Signed-off-by: Kai Huang <kai.huang@intel.com>
-Message-ID: <dfe17314c0d9978b7bc3b0833dff6f167fbd28f5.1731664295.git.kai.huang@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: e6d96073af68 ("soc/tegra: pmc: Fix unsafe generic_handle_irq() call")
+Fix this warning by deferring generic_handle_irq() call to an IRQ work
+which gets executed in hard IRQ context where generic_handle_irq()
+can be called safely.
+
+When PREEMPT_RT kernels are used, regular IRQ work (initialized with
+init_irq_work) is deferred to run in per-CPU kthreads in preemptible
+context rather than hard IRQ context. Hence, use the IRQ_WORK_INIT_HARD
+variant so that with PREEMPT_RT kernels, the IRQ work is processed in
+hardirq context instead of being deferred to a thread which is required
+for calling generic_handle_irq().
+
+On non-PREEMPT_RT kernels, both init_irq_work() and IRQ_WORK_INIT_HARD()
+execute in IRQ context, so this change has no functional impact for
+standard kernel configurations.
+
+Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+[treding@nvidia.com: miscellaneous cleanups]
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kvm_host.h |  8 ++++++++
- virt/kvm/kvm_main.c      | 18 ++++--------------
- 2 files changed, 12 insertions(+), 14 deletions(-)
+ drivers/soc/tegra/pmc.c | 104 ++++++++++++++++++++++++++++------------
+ 1 file changed, 74 insertions(+), 30 deletions(-)
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index b4235e99f0a9d..2b7068685ff2a 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2528,4 +2528,12 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
- 				    struct kvm_pre_fault_memory *range);
- #endif
- 
-+#ifdef CONFIG_KVM_GENERIC_HARDWARE_ENABLING
-+int kvm_enable_virtualization(void);
-+void kvm_disable_virtualization(void);
-+#else
-+static inline int kvm_enable_virtualization(void) { return 0; }
-+static inline void kvm_disable_virtualization(void) { }
-+#endif
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index bed58b78d13dc..0cca72e18437d 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -28,6 +28,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/irqdomain.h>
+ #include <linux/irq.h>
++#include <linux/irq_work.h>
+ #include <linux/kernel.h>
+ #include <linux/of_address.h>
+ #include <linux/of_clk.h>
+@@ -468,6 +469,10 @@ struct tegra_pmc {
+ 	unsigned long *wake_sw_status_map;
+ 	unsigned long *wake_cntrl_level_map;
+ 	struct syscore syscore;
 +
- #endif
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 15ad929ec0d0c..b2e76be087121 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -136,8 +136,6 @@ static int kvm_no_compat_open(struct inode *inode, struct file *file)
- #define KVM_COMPAT(c)	.compat_ioctl	= kvm_no_compat_ioctl,	\
- 			.open		= kvm_no_compat_open
- #endif
--static int kvm_enable_virtualization(void);
--static void kvm_disable_virtualization(void);
- 
- static void kvm_io_bus_destroy(struct kvm_io_bus *bus);
- 
-@@ -5713,7 +5711,7 @@ static struct syscore_ops kvm_syscore_ops = {
- 	.shutdown = kvm_shutdown,
++	/* Pending wake IRQ processing */
++	struct irq_work wake_work;
++	u32 *wake_status;
  };
  
--static int kvm_enable_virtualization(void)
-+int kvm_enable_virtualization(void)
- {
- 	int r;
- 
-@@ -5758,8 +5756,9 @@ static int kvm_enable_virtualization(void)
- 	--kvm_usage_count;
- 	return r;
- }
-+EXPORT_SYMBOL_GPL(kvm_enable_virtualization);
- 
--static void kvm_disable_virtualization(void)
-+void kvm_disable_virtualization(void)
- {
- 	guard(mutex)(&kvm_usage_lock);
- 
-@@ -5770,6 +5769,7 @@ static void kvm_disable_virtualization(void)
- 	cpuhp_remove_state(CPUHP_AP_KVM_ONLINE);
- 	kvm_arch_disable_virtualization();
- }
-+EXPORT_SYMBOL_GPL(kvm_disable_virtualization);
- 
- static int kvm_init_virtualization(void)
- {
-@@ -5785,21 +5785,11 @@ static void kvm_uninit_virtualization(void)
- 		kvm_disable_virtualization();
- }
- #else /* CONFIG_KVM_GENERIC_HARDWARE_ENABLING */
--static int kvm_enable_virtualization(void)
--{
--	return 0;
--}
--
- static int kvm_init_virtualization(void)
- {
+ static struct tegra_pmc *pmc = &(struct tegra_pmc) {
+@@ -1905,6 +1910,50 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
  	return 0;
  }
  
--static void kvm_disable_virtualization(void)
++/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
++static void tegra186_pmc_wake_handler(struct irq_work *work)
++{
++	struct tegra_pmc *pmc = container_of(work, struct tegra_pmc, wake_work);
++	unsigned int i, wake;
++
++	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
++		unsigned long status = pmc->wake_status[i];
++
++		for_each_set_bit(wake, &status, 32) {
++			irq_hw_number_t hwirq = wake + (i * 32);
++			struct irq_desc *desc;
++			unsigned int irq;
++
++			irq = irq_find_mapping(pmc->domain, hwirq);
++			if (!irq) {
++				dev_warn(pmc->dev,
++					 "No IRQ found for WAKE#%lu!\n",
++					 hwirq);
++				continue;
++			}
++
++			dev_dbg(pmc->dev,
++				"Resume caused by WAKE#%lu mapped to IRQ#%u\n",
++				hwirq, irq);
++
++			desc = irq_to_desc(irq);
++			if (!desc) {
++				dev_warn(pmc->dev,
++					 "No descriptor found for IRQ#%u\n",
++					 irq);
++				continue;
++			}
++
++			if (!desc->action || !desc->action->name)
++				continue;
++
++			generic_handle_irq(irq);
++		}
++
++		pmc->wake_status[i] = 0;
++	}
++}
++
+ static int tegra_pmc_init(struct tegra_pmc *pmc)
+ {
+ 	if (pmc->soc->max_wake_events > 0) {
+@@ -1923,6 +1972,18 @@ static int tegra_pmc_init(struct tegra_pmc *pmc)
+ 		pmc->wake_cntrl_level_map = bitmap_zalloc(pmc->soc->max_wake_events, GFP_KERNEL);
+ 		if (!pmc->wake_cntrl_level_map)
+ 			return -ENOMEM;
++
++		pmc->wake_status = kcalloc(pmc->soc->max_wake_vectors, sizeof(u32), GFP_KERNEL);
++		if (!pmc->wake_status)
++			return -ENOMEM;
++
++		/*
++		 * Initialize IRQ work for processing wake IRQs. Must use
++		 * HARD_IRQ variant to run in hard IRQ context on PREEMPT_RT
++		 * because we call generic_handle_irq() which requires hard
++		 * IRQ context.
++		 */
++		pmc->wake_work = IRQ_WORK_INIT_HARD(tegra186_pmc_wake_handler);
+ 	}
+ 
+ 	if (pmc->soc->init)
+@@ -3122,47 +3183,30 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
+ 	}
+ }
+ 
+-/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
+-static void tegra186_pmc_process_wake_events(struct tegra_pmc *pmc, unsigned int index,
+-					     unsigned long status)
 -{
+-	unsigned int wake;
 -
+-	dev_dbg(pmc->dev, "Wake[%d:%d]  status=%#lx\n", (index * 32) + 31, index * 32, status);
+-
+-	for_each_set_bit(wake, &status, 32) {
+-		irq_hw_number_t hwirq = wake + 32 * index;
+-		struct irq_desc *desc;
+-		unsigned int irq;
+-
+-		irq = irq_find_mapping(pmc->domain, hwirq);
+-
+-		desc = irq_to_desc(irq);
+-		if (!desc || !desc->action || !desc->action->name) {
+-			dev_dbg(pmc->dev, "Resume caused by WAKE%ld, IRQ %d\n", hwirq, irq);
+-			continue;
+-		}
+-
+-		dev_dbg(pmc->dev, "Resume caused by WAKE%ld, %s\n", hwirq, desc->action->name);
+-		generic_handle_irq(irq);
+-	}
 -}
 -
- static void kvm_uninit_virtualization(void)
+ static void tegra186_pmc_wake_syscore_resume(void *data)
  {
+-	u32 status, mask;
+ 	unsigned int i;
++	u32 mask;
  
+ 	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
+ 		mask = readl(pmc->wake + WAKE_AOWAKE_TIER2_ROUTING(i));
+-		status = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
+-
+-		tegra186_pmc_process_wake_events(pmc, i, status);
++		pmc->wake_status[i] = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
+ 	}
++
++	/* Schedule IRQ work to process wake IRQs (if any) */
++	irq_work_queue(&pmc->wake_work);
+ }
+ 
+ static int tegra186_pmc_wake_syscore_suspend(void *data)
+ {
++	unsigned int i;
++
++	/* Check if there are unhandled wake IRQs */
++	for (i = 0; i < pmc->soc->max_wake_vectors; i++)
++		if (pmc->wake_status[i])
++			dev_warn(pmc->dev,
++				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
++				 i, pmc->wake_status[i]);
+ 	wke_read_sw_wake_status(pmc);
+ 
+ 	/* flip the wakeup trigger for dual-edge triggered pads
 -- 
 2.53.0
 
