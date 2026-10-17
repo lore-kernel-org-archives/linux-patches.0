@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76813B3884;
-	Sat, 17 Oct 2026 17:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797F3B2FCA;
+	Sat, 17 Oct 2026 17:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259514; cv=none; b=kWxLyiNY9Y+F9DwFJAfBv4f4SUTKXeE2O0UQq4GcSVnQbL6uSyO/Ut1mjpRAnpRp3c+KjIuTm1DY6YeDWNIX+8PFKbrJ7k3uwcdno1cRwTCtMELjvPmjL6YnHsw3XRxwOdK9lZXxBakL03+oN/Jre2xyveqpGRH7M/4yCIdPphI=
+	t=1792259516; cv=none; b=NfKgmP7ECON7KWr8QY4kleDdPUV29u6euQQNSlKy6p0qO30psZksxOWVZAEqCfAbe3SoHFaTHFsaeFyctXWmDwXqeEb80NANeHe26eByskEGv9fnPzrrFsJ1V/tB8mb3rE+r4ETWjOxmbp83qmOcAkC6YEmtSQgaAeaduNtpSd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259514; c=relaxed/simple;
-	bh=RK1SGPDBsAjjgu+XRaiTWz5M8MfSj7BTP25Zt2CZ4gY=;
+	s=arc-20240116; t=1792259516; c=relaxed/simple;
+	bh=60Onc37aYEIhkgUflJv2+1HcMeeFtFdqMmfFCD8Svkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tyciq6Z2IqAIE1c1x+sPEYbKEOBKQpgxvk05W8gOci+txDJLB4Z9JGlNfW4ZpKgjSIxUS0+ukdiFIp0qwgGPWwnRaghFdOSHIHv4h7ub7uHtK1//Mw+grhdjc8TSETIMZilB54X8FEGsCemxQ87lT86289sr/77k4KpQqJlCuZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxekpHd4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qk+29Yyxg8V+yiIgJwhT81bnsaqOX7jjYDxJOWXCEZkb/PYXOrWF2xYFVv5Erv1I8FYAnSiUc8gaotWr0b+zPHLLw0rwF5EvVxqPGZUaSji05sVp/pFGNpUxxNs9fTROWdIzkDyFsmO+9YFa9GrsGoVcfNvf9dt/+8/lHKhPpqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvwHKcTE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxekpHd4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4FC1F000C4;
-	Sat, 17 Oct 2026 17:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvwHKcTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D511F000C4;
+	Sat, 17 Oct 2026 17:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259512;
-	bh=emPZWk2hgFVz9i1uorAfZAV85QYTMukBYVEpMJaGYUo=;
+	s=korg; t=1792259515;
+	bh=P4EtQyCYHAftQmKDKUKeUegrWtpfJUGFqqiZrauvhVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OxekpHd4KQn8Jsdpg/RXKDoy3IXlN2DSicFtc774lr7yzvnql+GqAOEi9trJai2V5
-	 QlcBzHqE+lJoaL3G3Zzviba/nCBa2VeEBnzypUwZ6do3fwRQ98AxAzVNxWTVrrKmpx
-	 0DOUUBWKPNxAYhMw2bMq/jvMmnkyM+duE8g9n6T8=
+	b=tvwHKcTEJ7nXoRl2C/rIlUnYg2aen8faIHYcr0o77M0e4wje1yLOygzZDA5pcD30F
+	 Fq461jkxmcnsMXOh/ztH7s4pJG1IK9HU+M1jH/OhjkpS1nhw9FyI1J+eh4b46Y4xuh
+	 SA28tROywTbLPD9HFoIZ7JGaVv8xcsLmcVHOX6p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1188/1674] xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx
-Date: Sat, 17 Oct 2026 17:57:40 +0200
-Message-ID: <20261017160501.637456023@linuxfoundation.org>
+Subject: [PATCH 6.6 1233/1674] Drivers: hv: vmbus: use generic driver_override infrastructure
+Date: Sat, 17 Oct 2026 17:58:25 +0200
+Message-ID: <20261017160502.789088490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,77 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit a3c8382ebce4780c6b3ace2c09bc342313ac0186 ]
+[ Upstream commit 331d8900121a1d74ecd45cd2db742ddcb5a0a565 ]
 
-This patch is inspired by the check[1] from sashiko. It says when
-overflow happens, the address of cq to be published is invalid.
-Actually the severer thing is the whole process of publishing the
-address of cq in this particular case is not right: it should truely
-publish the address and advance the cached_prod in cq as long as it
-reads descriptors from txq.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-The following is the full analysis.
-xsk_drop_skb() is called in three places, which all discard a partially
-built multi-buffer skb:
-1) xsk_build_skb() -EOVERFLOW error path: packet exceeds MAX_SKB_FRAGS
-2) __xsk_generic_xmit() post-loop cleanup: an invalid descriptor in
-   the TX ring prevents the partial packet from completing
-3) xsk_release(): socket close while xs->skb holds an incomplete packet
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-In all three cases, the TX descriptors for the already-processed frags
-have been consumed from the TX ring (xskq_cons_release), and CQ slots
-have been reserved. However, xsk_drop_skb() calls xsk_consume_skb()
-which cancels the CQ reservations via xsk_cq_cancel_locked(). Since
-the buffer addresses never appear in the completion queue, userspace
-permanently loses track of these buffers.
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-Fix this by letting consume_skb() trigger the existing xsk_destruct_skb
-destructor, which already submits buffer addresses to the CQ via
-xsk_cq_submit_addr_locked().
-
-Note that cancelling the descriptors back to the TX ring (via
-xskq_cons_cancel_n) is not a appropriate option because an oversized
-packet that always exceeds MAX_SKB_FRAGS would be retried indefinitely,
-which is an obviously deadlock bug in the TX path.
-
-Also move the desc->addr assignment in xsk_build_skb() above the
-overflow check so that the current descriptor's address is recorded
-before a potential -EOVERFLOW jump to free_err, consistent with the
-zerocopy path in xsk_build_skb_zerocopy().
-
-[1]: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
-
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260719135609.147823-2-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: d765edbb301c ("vmbus: add driver_override support")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260505133935.3772495-4-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hv/vmbus_drv.c | 43 ++++++++++--------------------------------
+ include/linux/hyperv.h |  5 -----
+ 2 files changed, 10 insertions(+), 38 deletions(-)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 3caeac3a5f161..95944ad2eaae6 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -614,8 +614,11 @@ static void xsk_consume_skb(struct sk_buff *skb)
- 
- static void xsk_drop_skb(struct sk_buff *skb)
- {
--	xdp_sk(skb->sk)->tx->invalid_descs += xsk_get_num_desc(skb);
--	xsk_consume_skb(skb);
-+	struct xdp_sock *xs = xdp_sk(skb->sk);
-+
-+	xs->tx->invalid_descs += xsk_get_num_desc(skb);
-+	consume_skb(skb);
-+	xs->skb = NULL;
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index da5c42201680b..416c1383f5afd 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -530,34 +530,6 @@ static ssize_t device_show(struct device *dev,
  }
+ static DEVICE_ATTR_RO(device);
  
- static struct sk_buff *xsk_build_skb_zerocopy(struct xdp_sock *xs,
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct hv_device *hv_dev = device_to_hv_device(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &hv_dev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct hv_device *hv_dev = device_to_hv_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = snprintf(buf, PAGE_SIZE, "%s\n", hv_dev->driver_override);
+-	device_unlock(dev);
+-
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ /* Set up per device attributes in /sys/bus/vmbus/devices/<bus device> */
+ static struct attribute *vmbus_dev_attrs[] = {
+ 	&dev_attr_id.attr,
+@@ -588,7 +560,6 @@ static struct attribute *vmbus_dev_attrs[] = {
+ 	&dev_attr_channel_vp_mapping.attr,
+ 	&dev_attr_vendor.attr,
+ 	&dev_attr_device.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
+ };
+ 
+@@ -700,9 +671,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(struct hv_driver *drv,
+ {
+ 	const guid_t *guid = &dev->dev_type;
+ 	const struct hv_vmbus_device_id *id;
++	int ret;
+ 
+-	/* When driver_override is set, only bind to the matching driver */
+-	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
++	/* If a driver override is set, only bind to the matching driver */
++	ret = device_match_driver_override(&dev->device, &drv->driver);
++	if (ret == 0)
+ 		return NULL;
+ 
+ 	/* Look at the dynamic ids first, before the static ones */
+@@ -710,8 +683,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(struct hv_driver *drv,
+ 	if (!id)
+ 		id = hv_vmbus_dev_match(drv->id_table, guid);
+ 
+-	/* driver_override will always match, send a dummy id */
+-	if (!id && dev->driver_override)
++	/*
++	 * If there's a matching driver override, this function should succeed,
++	 * thus return a dummy device ID if no matching ID is found.
++	 */
++	if (!id && ret > 0)
+ 		id = &vmbus_device_null;
+ 
+ 	return id;
+@@ -990,6 +966,7 @@ static const struct dev_pm_ops vmbus_pm = {
+ /* The one and only one */
+ static struct bus_type  hv_bus = {
+ 	.name =		"vmbus",
++	.driver_override =	true,
+ 	.match =		vmbus_match,
+ 	.shutdown =		vmbus_shutdown,
+ 	.remove =		vmbus_remove,
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index e4ad9760774e1..20f180a081235 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -1305,11 +1305,6 @@ struct hv_device {
+ 	u16 device_id;
+ 
+ 	struct device device;
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char *driver_override;
+ 
+ 	struct vmbus_channel *channel;
+ 	struct kset	     *channels_kset;
 -- 
 2.53.0
 
