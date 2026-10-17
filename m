@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7FB38424C;
-	Sat, 17 Oct 2026 17:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B5E3AA9F3;
+	Sat, 17 Oct 2026 17:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256539; cv=none; b=j72UpM5dcwYB+tdrY+4frcKUKWg2lklMa6uLGAzG/C0l4sb4RJW325fvKd88I8+xKTYczihpBssPfJZ4NEvFPNr/hN1FapE3/y+jaTQh1yYxAgeNPf4G6PD9sgmza+k0CZKRshXj5PEW3PlpQn58CJF/87O72GFIC21FnPNnYgQ=
+	t=1792256543; cv=none; b=GSW7PZguAe53rIkTeYYzBpp307QFhfCwJyIQ2cgDyOGHSzHvRjPR1qNjCgwFtOII0pyOBrHNLrGbnFoJgPBM7O3akK/XubL8tpvKnqvgRc+ho39HGjReSiEYcFmxjAvZypL2nR3X8LOMJt8eJlbcpM6AiJajpf/uQAYbu+U0uVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256539; c=relaxed/simple;
-	bh=nSguku34NXhlHVEg6hAARl/jZb56ESzAwC216MZ76c0=;
+	s=arc-20240116; t=1792256543; c=relaxed/simple;
+	bh=n9jYP9EqtbJOPBUh4LGhg+sysExOPvQAc0pXYy7DKS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=is7UYziU65Rj3X6WyTUtmEsr+c+vWV677yhiRQjANQybEeuYFSHPnUP/5neEJloo2M+OXcQdvWX0q2VMhYJWAzw8TGg0YBUf/xSehpeqQ4XBpeYT5cmReKl+fkhMyJApa8PuaSpPlzzZ3cs72+taLZHXKZQSudPDsMbfI8DRWkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qT88ulfa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VLzkq1AfoGaRRD2Fe+dqenkxH5hGYwx3wLKVE2AzJxtgB4ZsCM8LuLeRQ7cw5KBfRUSomt5PF+X3M9OYg3PJkhbUxOzEJFa504B/nR0Gq3UNhCMlquBHrpsFfRIzvpTQBRXQHdXf0zsaRCMmcDr4aJH4Vq6p9iquuFwa9D1yGdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQPLhIW2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qT88ulfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508EF1F000C4;
-	Sat, 17 Oct 2026 17:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQPLhIW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6392F1F000C4;
+	Sat, 17 Oct 2026 17:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256537;
-	bh=G9beZsvcxldqk5ApyFQZLZ2J4ndCQvMEY6r4QPaRmE8=;
+	s=korg; t=1792256541;
+	bh=XW4Ns+AywyP1xJ4oW6fZ4qW3Hcdrjn5FdTTnSR7IHJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qT88ulfaMPU4wEuvKqLqiUTfOv7R12dRA7kr9327LuNJvdgMQubsz/YxF/M+ZfSpF
-	 w7b3ku2+rKXD4AuaAROcGyenUL0+cNhLn1qNcl54MbyQep6I5wp+FTCXESWfdGXfwJ
-	 wkri8D+7c2FV4QV1wwWvGErpjGsk5cM2qR0nNOkA=
+	b=HQPLhIW20ZxkNb3IOAVdNNwqvsrUG2IJ1rWNmSfr45HtAAo2mo18YAhRj31/oQI3X
+	 1gV+jPxCMQJmTcEOeioOfcUKBGDg+Kd1gwDhbF+RANsM6T6MfgeKL4gvUdNoj/AOst
+	 H3lgEC0wblEMwvSh7o1u+siwZqBmF94pz7uKNCK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Salmun <salmundani@gmail.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0252/1674] Input: synaptics - limit T440p InterTouch quirk to LEN0036
-Date: Sat, 17 Oct 2026 17:42:04 +0200
-Message-ID: <20261017160437.596386291@linuxfoundation.org>
+	stable@kernel.org,
+	Yuchao Zhang <ndaugoing@gmail.com>,
+	=?UTF-8?q?Micha=C5=82=20Nazarewicz?= <mina86@mina86.com>
+Subject: [PATCH 6.6 0270/1674] usb: gadget: f_fs: Fix NULL pointer dereference in FUNCTIONFS_ENDPOINT_DESC
+Date: Sat, 17 Oct 2026 17:42:22 +0200
+Message-ID: <20261017160438.049401018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,49 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphaël Larocque <rlarocque@disroot.org>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
+commit 9cd072788c76595529eb38f42bf94d23852f8534 upstream.
 
-The ThinkPad L440 also uses board id 2722, but does not have the SMBus
-initialization problem seen on the T440p. On the L440, the SMBus
-companion becomes available shortly after psmouse probes, allowing the
-touchpad to use SMBus/RMI4 normally.
+When user space sets up FunctionFS with only full-speed descriptors
+(e.g., flags = FUNCTIONFS_HAS_FS_DESC) and the gadget operates at a
+higher speed (such as USB_SPEED_HIGH or USB_SPEED_SUPER),
+config_ep_by_speed() detects that the function lacks descriptors for
+the current speed, logs a warning, and falls back to full-speed
+descriptors. The endpoint is then successfully enabled via
+usb_ep_enable(), and epfile->ep becomes valid.
 
-The T440p's quirk is currently applied to all Synaptics touchpads with
-board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
-as reported by Daniel Salmun.
+However, when user space subsequently issues the FUNCTIONFS_ENDPOINT_DESC
+ioctl to query the endpoint descriptor, ffs_epfile_ioctl() selects the
+descriptor index solely based on gadget->speed:
 
-Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
-that other devices sharing board id 2722 retain their normal
-SMBus/RMI4 operation.
+	switch (epfile->ffs->gadget->speed) {
+	case USB_SPEED_SUPER:
+	case USB_SPEED_SUPER_PLUS:
+		desc_idx = 2;
+		break;
+	case USB_SPEED_HIGH:
+		desc_idx = 1;
+		break;
+	default:
+		desc_idx = 0;
+	}
+	desc = epfile->ep->descs[desc_idx];
+	memcpy(&desc1, desc, desc->bLength);
 
-Reported-by: Daniel Salmun <salmundani@gmail.com>
-Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
-Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
-Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Because user space only supplied full-speed descriptors,
+epfile->ep->descs[1] is NULL. Dereferencing desc->bLength triggers an
+immediate kernel NULL pointer dereference panic.
+
+Fix this by falling back through lower speed descriptors if the current
+speed descriptor was not supplied, matching the fallback logic in
+config_ep_by_speed() and historical f_fs behavior. If still missing,
+fall back to epfile->ep->ep->desc (the active descriptor), and return
+-EINVAL safely if no valid descriptor is found. In addition, mark desc
+as const to match struct usb_ep::desc and avoid discarding qualifiers.
+
+Fixes: c559a3534109 ("usb: gadget: f_fs: add ioctl returning ep descriptor")
+Cc: stable@kernel.org
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Acked-by: Michał Nazarewicz <mina86@mina86.com>
+Link: https://patch.msgid.link/20260918005438.81263-2-ndaugoing@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1839,8 +1839,10 @@ static int synaptics_setup_intertouch(st
- 			return -ENXIO;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1326,8 +1326,9 @@ static long ffs_epfile_ioctl(struct file
+ 		break;
+ 	case FUNCTIONFS_ENDPOINT_DESC:
+ 	{
++		const struct usb_endpoint_descriptor *desc;
++		struct usb_endpoint_descriptor desc1;
+ 		int desc_idx;
+-		struct usb_endpoint_descriptor desc1, *desc;
+ 
+ 		switch (epfile->ffs->gadget->speed) {
+ 		case USB_SPEED_SUPER:
+@@ -1341,7 +1342,17 @@ static long ffs_epfile_ioctl(struct file
+ 			desc_idx = 0;
  		}
  
--		/* Disable intertouch on known-broken board revisions */
--		if (info->board_id == 2722) {
-+		/* Disable intertouch on known-broken T440p board revisions */
-+		if (info->board_id == 2722 &&
-+		    psmouse_matches_pnp_id(psmouse,
-+					   (const char * const []){"LEN0036", NULL})) {
- 			psmouse_info(psmouse,
- 				     "Disabling intertouch for board id %u\n",
- 				     info->board_id);
+-		desc = epfile->ep->descs[desc_idx];
++		do {
++			desc = epfile->ep->descs[desc_idx];
++		} while (!desc && --desc_idx >= 0);
++
++		if (!desc)
++			desc = epfile->ep->ep->desc;
++		if (!desc) {
++			ret = -EINVAL;
++			break;
++		}
++
+ 		memcpy(&desc1, desc, desc->bLength);
+ 
+ 		spin_unlock_irq(&epfile->ffs->eps_lock);
 
 
