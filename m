@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A550D4CF49B;
-	Sat, 17 Oct 2026 16:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E8034B437;
+	Sat, 17 Oct 2026 16:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256395; cv=none; b=GwJIODZVHlisSCNbji7I6tpdONF8HQssfgGQfL0wHmh4v/vQ2USJdJHs9HrKVAS7o+xyzGIZBdnLooHJ5BYk3pVSyNEtl3cEFyq3D20pZYz7ko1DIfPxphMuBESWQ/Jc/90bNeDn9bid8foU4PFlTycvcV87Y/k3Yudjx/Vq5Q0=
+	t=1792256399; cv=none; b=OnBDXZCfUN667q3kGCjf6i7qYUfJfqtPpHPUaWzm8AQAGWGTSmDYIv9cJebbUXukQwFb85/Bbtd0K3k+un28y0FlwX4h6cgHxcLV1Neu99wZAN/xByVbdPBgPvSunqtcgS5syht7MpmSsBUYs7zn3yhhHN4oxwZpNvhjCSakuPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256395; c=relaxed/simple;
-	bh=YYUBTps0TYIkBG5TGH96jcmeff6/I6O4on1WNBUJKBk=;
+	s=arc-20240116; t=1792256399; c=relaxed/simple;
+	bh=3ekHhoJqM/Z2fPLsWljQhZRpom8iDoLFclhdJGD5yH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VhvjuQC7q6scXrNehXnOf8T9S8cV1w53GIJ/WvKdlpcTqHPKFa5uoJLE0y6Jo4up4TkCLHznOlYdnEwaR0TgmIlIlsl2/+EfM0JUj31wz/5ZnuUwZzWd9A06ZpxUrQa1G6a95L85B5Bsixs8JneZYmN0RxcxNNDMZmooe0WLMKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bizsTnDf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bIjpYL/sy8hJ+oR//2suQRzK6UKXFLU1NSB6bUvVxRtlWUcMquSutZlGM0YZ/6puRtyUMDubajCLbwBddXTbQDXuIK0YFoGsQNt7yZek0pVhWpZRT+Cr/QCfqhPj64vBw5E1CuR7bIGTBm4E6RI6J1UfGhyTR0C5MAB+hI+Xu9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06/k6V6j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bizsTnDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE90D1F000C4;
-	Sat, 17 Oct 2026 16:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06/k6V6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063FE1F000C4;
+	Sat, 17 Oct 2026 16:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256394;
-	bh=S8uP4eMQJZjRza2+3bCVJuhs2ejoNoBBYMwBc0v4jks=;
+	s=korg; t=1792256397;
+	bh=v+uhWlNUyP+CiPVG149paIjHoMX/UghahuZkZpEbfb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bizsTnDfiVc0PvBdzhMMqN+RVe2t+dCOVAAxcf4WuqaTf7yapp/WM2oJLxya2jQf4
-	 7qcv5nJ9TUlh+2Bm1HpkXG/BwEeBQ88VP+vtyLrNSwI7a0A6mNHpPAWFoW4PminMK2
-	 UJFKVPMQ47f8GL2djdiEzrICJiKCHDx0UEr0OgiE=
+	b=06/k6V6jvyfseS4qT9aq0A1/B3z+0VinB6+l3ajKPI9R6mmIsKQr/0kupiass5AFy
+	 9F9LpSrNxDUAWiyMGfVaxhbUGa5kpzuGqdxPaOhm7BnwUBIxrSn9Z3ZiE/26EQj1m+
+	 DT3h5BwqVhHKq/F+l+NnH1T8dDUwmNAMgnVshofE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Binbin Deng <18983559317@163.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0223/1674] netfilter: bpf: reject invalid NAT manipulation types
-Date: Sat, 17 Oct 2026 17:41:35 +0200
-Message-ID: <20261017160436.870006399@linuxfoundation.org>
+Subject: [PATCH 6.6 0206/1674] net/mctp: publish the mctp_dev only after it is initialised
+Date: Sat, 17 Oct 2026 17:41:18 +0200
+Message-ID: <20261017160436.437653685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,61 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 16d464013ec2267b00a83f4bfbb97b3ecc63bfa7 ]
+[ Upstream commit aadf655e8ea9a8ffa24bb8d69f504572e8d18181 ]
 
-As bpf_ct_set_nat_info() is not validating the NAT manipulation type a
-wrong value can be passed directly to nf_nat_setup_info(). This triggers
-the WARN_ON() at nf_nat_setup_info() and if panic_on_warn isn't set,
-then IPS_SRC_NAT_DONE is set without adding nat_bysource and conntrack
-cleanup tries to unlink an uninitialized hlist node.
+mctp_add_dev() links the new mctp_dev into dev->mctp_ptr before mdev->dev
+is assigned, so a reader that picks the device up in that window
+dereferences a net_device pointer that is still NULL:
 
-Fix this by checking that NAT manipulation type is correct before
-calling nf_nat_setup_info(). In addition, if the WARN_ON is hit, return
-NF_DROP instead of continuing with the processing to avoid similar
-situations in the future.
+KASAN: null-ptr-deref in range [0x00000000000000b0-0x00000000000000b7]
+Call Trace:
+ <TASK>
+ ? __pfx_mctp_sendmsg (./include/linux/sockptr.h:49)
+ ? __pfx_mctp_dst_output (net/mctp/route.c:41)
+ ? selinux_socket_sendmsg (security/selinux/hooks.c:5278)
+ ____sys_sendmsg (net/socket.c:775 (discriminator 1) net/socket.c:790
+ (discriminator 1) net/socket.c:2684 (discriminator 1))
+ ? __pfx_____sys_sendmsg (net/socket.c:1131)
+ ? __pfx_copy_msghdr_from_user (net/socket.c:2590)
+ ? update_cfs_rq_load_avg (kernel/sched/fair.c:5478)
+ ___sys_sendmsg (net/socket.c:2738)
+ ? __pfx____sys_sendmsg (net/socket.c:2625)
+ ? perf_event_task_tick (./include/linux/rcupdate.h:838)
+ ? sched_tick (kernel/sched/core.c:5818)
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? fdget (./include/linux/rcupdate.h:873 fs/file.c:1100)
+ __sys_sendmsg (net/socket.c:2770)
+ ? __pfx___sys_sendmsg (net/socket.c:2751)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
 
-Reported-by: VEGA <vega@nebusec.ai>
-Fixes: 0fabd2aa199f ("net: netfilter: add bpf_ct_set_nat_info kfunc helper")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix by publishing only once the object is fully initialised:
+__mctp_dev_get() runs under rcu_read_lock() only and hands
+this object to readers as soon as mctp_ptr is assigned, so
+they must never observe mdev->dev == NULL.
+
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/729830b8.130.1a0c945579d.Coremail.18983559317@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_bpf.c  | 3 +++
- net/netfilter/nf_nat_core.c | 5 +++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ net/mctp/device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_bpf.c b/net/netfilter/nf_nat_bpf.c
-index 141ee7783223d..2fd62678e7752 100644
---- a/net/netfilter/nf_nat_bpf.c
-+++ b/net/netfilter/nf_nat_bpf.c
-@@ -41,6 +41,9 @@ __bpf_kfunc int bpf_ct_set_nat_info(struct nf_conn___init *nfct,
- 	if (proto != NFPROTO_IPV4 && proto != NFPROTO_IPV6)
- 		return -EINVAL;
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 67576cb2728ec..ee430b73b0976 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -344,13 +344,13 @@ static struct mctp_dev *mctp_add_dev(struct net_device *dev)
  
-+	if (manip != NF_NAT_MANIP_SRC && manip != NF_NAT_MANIP_DST)
-+		return -EINVAL;
+ 	mdev->net = mctp_default_net(dev_net(dev));
+ 
+-	/* associate to net_device */
+ 	refcount_set(&mdev->refs, 1);
+-	rcu_assign_pointer(dev->mctp_ptr, mdev);
+-
+ 	dev_hold(dev);
+ 	mdev->dev = dev;
+ 
++	/* Associate to net_device, publish the mdev. */
++	rcu_assign_pointer(dev->mctp_ptr, mdev);
 +
- 	memset(&range, 0, sizeof(struct nf_nat_range2));
- 	range.flags = NF_NAT_RANGE_MAP_IPS;
- 	range.min_addr = *addr;
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index d29767646ffa5..2fc334a442f6c 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -794,8 +794,9 @@ nf_nat_setup_info(struct nf_conn *ct,
- 	if (nf_ct_is_confirmed(ct))
- 		return NF_ACCEPT;
+ 	return mdev;
+ }
  
--	WARN_ON(maniptype != NF_NAT_MANIP_SRC &&
--		maniptype != NF_NAT_MANIP_DST);
-+	if (WARN_ON(maniptype != NF_NAT_MANIP_SRC &&
-+		    maniptype != NF_NAT_MANIP_DST))
-+		return NF_DROP;
- 
- 	if (WARN_ON(nf_nat_initialized(ct, maniptype)))
- 		return NF_DROP;
 -- 
 2.53.0
 
