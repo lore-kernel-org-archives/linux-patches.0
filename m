@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83A73A1A3F;
-	Sat, 17 Oct 2026 17:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF61C3A6F00;
+	Sat, 17 Oct 2026 17:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259937; cv=none; b=gjE3y/v/AXJrorfrGewbWwfylf8j4+HYhE4Y7ysxOGtie1vowU5rap63w8IMXmps3uc94BBgQQZnp8NLhWBFRd7/pxGvLXm1lxTu6m55hUiYVHL2w5vf/1TnAdL5+NahYy5jLStOqphNzlEr0rbmyFx2hApM0c5SYm/ub7zct8A=
+	t=1792259940; cv=none; b=u/9V2Bbp1Lyc+ZEJqxYVJZ8iaJZh4l7tIULyNQqTyONuNuS6eVwM6FIq+DWUPjQTI7mEUtzsBeGR+Fy0Xjjrx0Qd8ny6Asf9E3dLcmTKFQHgLI2lS+jvRFBOJ/hfbpeTuCLdI301YfXYfuv3rx1yy/HrhSr3uPBfSPlOuD4x2WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259937; c=relaxed/simple;
-	bh=c31DlQoQcZ4VwRdAf4SdIloPHYxoy68WIl3czGb+o/M=;
+	s=arc-20240116; t=1792259940; c=relaxed/simple;
+	bh=EpIKm9jCwrB3Df6N5IEyr0ic0CYxPFO9OlgtCK+TARg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=baQczEcjUpY1wa4duXJOD/m2gnE818BVyTtomHRhSdNi60fSwiESnwwcRyovPXFa56Y7yX6G3nbq+mIeM7jp5Kvnh7eJ7NurTHpXlLiYpSQNljGdhZvh8mi0AzN4Ypefr0SKPUjq59chrCu83/qSzmm/vx7qG6gVKlfLspZQ0aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JvIjke/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHWdmzWuUcraW8ItyxI1OOshWxXiGtyKTG4i6ffIn3ZnOgZmAVbvyo71s8Pnax+7cbKRyW+34DKMypRGJo6IcCQZHOmsiSjfslvg1PoyZNUUOdShdWbhSXL4zuyOX4+ohX4E17+u04LItIJ9iqXALKXcH1PCKKjZU4qujX5oQIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3BHgApM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JvIjke/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDE41F000C4;
-	Sat, 17 Oct 2026 17:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3BHgApM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA62B1F000C4;
+	Sat, 17 Oct 2026 17:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259936;
-	bh=zfZQXnwu87rpg/lmivaezAFKhz4JNH4kdLXdcYzBkY0=;
+	s=korg; t=1792259939;
+	bh=5cWJSZp63PdLP+Ne79fJMm0zIuD33VZafFg4wAanPII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1JvIjke/KksldtUUso+HsfnbieRTlAZE913H/3L236ZAICQiz1pq7/YE8jeLL0RIk
-	 UWfvFFGe2MZ80yRm9F2JY/XeaJzhrW3XkgccRZF3Cgp5+EMwHATfMEDjYEc85f3Dfy
-	 Z8VDKiGxtI2LROaFqZGcnLJld+wS+lSul5njS1kY=
+	b=d3BHgApM+eWuSIun9kE9WUhFgnWWd+sTxmL0t8MUxFEPCmAYQIgwlT/8yimI/Nf2U
+	 dDSzLtFiOX+AWlN163pXfqjn69o+y9ARyFVT9PTqFu2U5IfU8P44233CojIHTfanUI
+	 XIPSLsyC5UJp/QrhrZsZzWrBXgvt+0lnR4IB49CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1380/1674] NFSv4.1: zero referring call lists before decoding
-Date: Sat, 17 Oct 2026 18:00:52 +0200
-Message-ID: <20261017160506.587750604@linuxfoundation.org>
+Subject: [PATCH 6.6 1381/1674] vxlan: fix reading neigh ha
+Date: Sat, 17 Oct 2026 18:00:53 +0200
+Message-ID: <20261017160506.612026164@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,52 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 8fa4804fe62ca4155a2d8fc2789d630376cbf2fc ]
+[ Upstream commit b824059a673b2283e78c7aae2c7d257aad7f0e1d ]
 
-decode_cb_sequence_args() allocates csa_rclists with kmalloc_objs(), so
-each referring_call_list starts uninitialized. decode_rc_list() assigns
-rcl_refcalls only when rcl_nrefcalls is nonzero. A valid list with zero
-referring calls therefore leaves the pointer uninitialized, and
-nfs4_callback_sequence() later passes stale slab contents to kfree().
+Currently arp/neigh_reduce read neigh ha directly which can lead to
+partial reads while the neigh is being updated. Use neigh_ha_snapshot to
+take a stable snapshot of the address similar to route_shortcircuit which
+already does the right thing.
 
-Allocate csa_rclists with kzalloc_objs() so every rcl_refcalls member is
-NULL from the beginning, including valid empty referring call lists.
-
-Fixes: 4aece6a19cf7 ("nfs41: cb_sequence xdr implementation")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
+Fixes: f564f45c4518 ("vxlan: add ipv6 proxy support")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260818150756.890025-3-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_xdr.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
-index d5f6437da352d..a03e7e1e48679 100644
---- a/fs/nfs/callback_xdr.c
-+++ b/fs/nfs/callback_xdr.c
-@@ -419,9 +419,9 @@ static __be32 decode_cb_sequence_args(struct svc_rqst *rqstp,
- 	args->csa_nrclists = ntohl(*p++);
- 	args->csa_rclists = NULL;
- 	if (args->csa_nrclists) {
--		args->csa_rclists = kmalloc_array(args->csa_nrclists,
--						  sizeof(*args->csa_rclists),
--						  GFP_KERNEL);
-+		args->csa_rclists = kcalloc(args->csa_nrclists,
-+					    sizeof(*args->csa_rclists),
-+					    GFP_KERNEL);
- 		if (unlikely(args->csa_rclists == NULL))
- 			return htonl(NFS4ERR_RESOURCE);
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index fd7859f72a124..93940ea5cf9c8 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1899,6 +1899,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
  
+ 	if (n) {
+ 		struct vxlan_rdst *rdst = NULL;
++		u8 ha[ETH_ALEN] __aligned(2);
+ 		struct vxlan_fdb *f;
+ 		struct sk_buff	*reply;
+ 
+@@ -1907,7 +1908,9 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 			goto out;
+ 		}
+ 
+-		f = vxlan_find_mac(vxlan, n->ha, vni);
++		neigh_ha_snapshot(ha, n, n->dev);
++
++		f = vxlan_find_mac(vxlan, ha, vni);
+ 		if (f)
+ 			rdst = first_remote_rcu(f);
+ 		if (rdst && vxlan_addr_any(&rdst->remote_ip)) {
+@@ -1917,7 +1920,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 		}
+ 
+ 		reply = arp_create(ARPOP_REPLY, ETH_P_ARP, sip, dev, tip, sha,
+-				n->ha, sha);
++				   ha, sha);
+ 
+ 		neigh_release(n);
+ 
+@@ -1950,7 +1953,8 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+-	struct neighbour *n, bool isrouter)
++				       struct neighbour *n, u8 *ha,
++				       bool isrouter)
+ {
+ 	struct net_device *dev = request->dev;
+ 	struct sk_buff *reply;
+@@ -1998,7 +2002,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 
+ 	/* Ethernet header */
+ 	ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
+-	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
++	ether_addr_copy(eth_hdr(reply)->h_source, ha);
+ 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
+ 	reply->protocol = htons(ETH_P_IPV6);
+ 
+@@ -2027,7 +2031,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 	na->icmph.icmp6_override = 1;
+ 	na->icmph.icmp6_solicited = 1;
+ 	na->target = ns->target;
+-	ether_addr_copy(&na->opt[2], n->ha);
++	ether_addr_copy(&na->opt[2], ha);
+ 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
+ 	na->opt[1] = na_olen >> 3;
+ 
+@@ -2070,6 +2074,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 
+ 	if (n) {
+ 		struct vxlan_rdst *rdst = NULL;
++		u8 ha[ETH_ALEN] __aligned(2);
+ 		struct vxlan_fdb *f;
+ 		struct sk_buff *reply;
+ 
+@@ -2078,7 +2083,8 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 			goto out;
+ 		}
+ 
+-		f = vxlan_find_mac(vxlan, n->ha, vni);
++		neigh_ha_snapshot(ha, n, n->dev);
++		f = vxlan_find_mac(vxlan, ha, vni);
+ 		if (f)
+ 			rdst = first_remote_rcu(f);
+ 		if (rdst && vxlan_addr_any(&rdst->remote_ip)) {
+@@ -2087,7 +2093,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 			goto out;
+ 		}
+ 
+-		reply = vxlan_na_create(skb, n,
++		reply = vxlan_na_create(skb, n, ha,
+ 					!!(f ? f->flags & NTF_ROUTER : 0));
+ 
+ 		neigh_release(n);
 -- 
 2.53.0
 
