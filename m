@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD88A4CF49A;
-	Sat, 17 Oct 2026 16:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A08C5B5AB;
+	Sat, 17 Oct 2026 16:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253693; cv=none; b=bg/bPy5ZrvXJpdFnzpMgXTfHoh/oHqmUpSJCJ/bR1V29U3pHXugDk0/oOoG6zrvm+OcBR8sZqeYF/rb+guXBHbk+e8YzLlYKXejdUpkd7YXL+fWUGBLzaVIRn/KAbPGRqlR92hgHNuoxKosPNimpgHCa2eAyXmJlbXKRtXtDgLU=
+	t=1792253697; cv=none; b=h+bSAgWEVcrn/dvTYx0njWp3VPUN3arL+coLCYnacqHpZqxuAT1Vtx6KcX84smTiQHdkfirxcJi7qN/36pn4MWd8MCf6u9NDlsi2iVcX8IaebE8B2AFUxQkQAtIyukbBdsdxZKBWAH/ARvVPUtUFDryginykzQaymnYxo39Ml1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253693; c=relaxed/simple;
-	bh=3TAsZ5Se/uyS62cZ8HS8nOBc/RBjCC/Pe7vjxc1PC4U=;
+	s=arc-20240116; t=1792253697; c=relaxed/simple;
+	bh=3/5Baq47IHfF9kMjy2pMM3J4QVRzCBb6FmwR2cB0wuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMsipuirZt/P1K4CuZV4Spoy2fZtqQnbY4lkqwImlqphJ9B3WXxvbNqUZEN7SvAdz5/yrtSaliRNdJ0TWbvcWRN7Tlf+u3/vbBZGKv+reN9sbrKrDmmTfi7B/ntE9LD603EnpL1qZnyRaD6UcP3d2QCxVrNwa5Du39Ml+kN8Skc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKnSuXul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZYI3WaqjPtrTxxlPXg2OEQYbO4gEuUXfzTYXnF2nDy4WJFj72726S29UN7N9ZA1ol3hoclvoQVrlEzDDlJ0N4jUQtRdjp29tZ5sUiyM9haenQ0GXbZtLj05BqEs+rPz7eiUzbDz0hWj1u66V6s3TGQSyZgX/UEQYsIOeijppIBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqFE3xP5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKnSuXul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFCA1F000C4;
-	Sat, 17 Oct 2026 16:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqFE3xP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6139A1F000C4;
+	Sat, 17 Oct 2026 16:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253692;
-	bh=GsHAskaKoGCn7Kv1Xpc0a/VXpAno2DS5R9Lwd8Vq4uA=;
+	s=korg; t=1792253695;
+	bh=j3KQpaYalpiUb/C6TK3yUcciSIoJXtgsDkZn5C639oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nKnSuXulsWFleZINedp23VZmB/Zb5rKVvffY1Mi9cw/CnASgauAWVynGuNQMnI1p+
-	 XW1kYhosk4dMGo5NwGQjvOeunt7hZJjp9+z2me4b1z9U1i4AXpycy2NNMBdqkBF5VD
-	 QtToxBP9uXac82yJOL/Npw+vEO9QvCCw6EkEkWkY=
+	b=xqFE3xP5AKnxy0fMxzjIB0a7+eBG31AYZBqnZKhTi96+CH5LeWY0uxKT0dC0RLi5L
+	 SOX+syG9WD+VCSW+VQ/DCxHNfSmWIvCwDnx7CUPFVBaZhmni+SIJzHgHs1OF2tx3t+
+	 I6wffpYPfZz83N1TPRUSdk2I2lagfKiOJUCwVE5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/869] wifi: ath12k: Fix MSDU buffer types handling in RX error path
-Date: Sat, 17 Oct 2026 17:50:00 +0200
-Message-ID: <20261017160041.121382888@linuxfoundation.org>
+Subject: [PATCH 6.12 160/869] accel/ivpu: Allow to import single buffer into multiple contexts
+Date: Sat, 17 Oct 2026 17:50:01 +0200
+Message-ID: <20261017160041.147867484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,161 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
 
-[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
+[ Upstream commit 67725f5e8d844e27db4514a76699ec6a7000c627 ]
 
-Currently, packets received on the REO exception ring from
-unassociated peers are of MSDU buffer type, while the driver expects
-link descriptor type packets. These packets are not parsed further due
-to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
-but the associated skb is not freed. This may lead to kernel
-crashes and buffer leaks.
+Use ivpu_gem_prime_import() based on drm_gem_prime_import_dev()
+for importing buffers, removing optimization for same device
+imports. This optimization reused the same ivpu_bo object in multiple
+contexts but a single buffer can be MMU-mapped only to a single context.
+Each import now creates a new instance of ivpu_bo object that shares
+the same sg_table but have separate MMU mappings.
 
-Hence to fix, update the RX error handler to explicitly drop
-MSDU buffer type packets received on the REO exception ring.
-This prevents further processing of invalid packets and ensures
-stability in the RX error handling path.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250204084622.2422544-5-jacek.lawrynowicz@linux.intel.com
+Stable-dep-of: 8b694b405a84 ("accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 58 +++++++++++++++++++++++-
- drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
- 2 files changed, 59 insertions(+), 9 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c |  2 +-
+ drivers/accel/ivpu/ivpu_gem.c | 45 ++++++++++++++++++++++++++++++++++-
+ drivers/accel/ivpu/ivpu_gem.h |  1 +
+ 3 files changed, 46 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 1c0d796ffc7ad..d1248b98573ef 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
+index ea2909c4745ab..a811da0634e71 100644
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -446,7 +446,7 @@ static const struct drm_driver driver = {
+ 	.postclose = ivpu_postclose,
  
- #include <linux/ieee80211.h>
-@@ -3441,6 +3441,48 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
- 	return 0;
+ 	.gem_create_object = ivpu_gem_create_object,
+-	.gem_prime_import_sg_table = drm_gem_shmem_prime_import_sg_table,
++	.gem_prime_import = ivpu_gem_prime_import,
+ 
+ 	.ioctls = ivpu_drm_ioctls,
+ 	.num_ioctls = ARRAY_SIZE(ivpu_drm_ioctls),
+diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
+index b4213e63afb43..6f07c1d022b27 100644
+--- a/drivers/accel/ivpu/ivpu_gem.c
++++ b/drivers/accel/ivpu/ivpu_gem.c
+@@ -20,6 +20,8 @@
+ #include "ivpu_mmu.h"
+ #include "ivpu_mmu_context.h"
+ 
++MODULE_IMPORT_NS(DMA_BUF);
++
+ static const struct drm_gem_object_funcs ivpu_gem_funcs;
+ 
+ static inline void ivpu_dbg_bo(struct ivpu_device *vdev, struct ivpu_bo *bo, const char *action)
+@@ -177,6 +179,47 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
+ 	return &bo->base.base;
  }
  
-+static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
-+					struct list_head *list,
-+					struct hal_reo_dest_ring *desc)
++struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
++					     struct dma_buf *dma_buf)
 +{
-+	struct ath12k_rx_desc_info *desc_info;
-+	struct ath12k_skb_rxcb *rxcb;
-+	struct sk_buff *msdu;
-+	u64 desc_va;
++	struct device *attach_dev = dev->dev;
++	struct dma_buf_attachment *attach;
++	struct sg_table *sgt;
++	struct drm_gem_object *obj;
++	int ret;
 +
-+	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
-+		  le32_to_cpu(desc->buf_va_lo);
-+	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
-+	if (!desc_info) {
-+		u32 cookie;
++	attach = dma_buf_attach(dma_buf, attach_dev);
++	if (IS_ERR(attach))
++		return ERR_CAST(attach);
 +
-+		cookie = le32_get_bits(desc->buf_addr_info.info1,
-+				       BUFFER_ADDR_INFO1_SW_COOKIE);
-+		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
-+		if (!desc_info) {
-+			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
-+				    cookie);
-+			return -EINVAL;
-+		}
++	get_dma_buf(dma_buf);
++
++	sgt = dma_buf_map_attachment_unlocked(attach, DMA_BIDIRECTIONAL);
++	if (IS_ERR(sgt)) {
++		ret = PTR_ERR(sgt);
++		goto fail_detach;
 +	}
 +
-+	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
-+		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
-+			    desc_info->magic);
-+		return -EINVAL;
++	obj = drm_gem_shmem_prime_import_sg_table(dev, attach, sgt);
++	if (IS_ERR(obj)) {
++		ret = PTR_ERR(obj);
++		goto fail_unmap;
 +	}
 +
-+	msdu = desc_info->skb;
-+	desc_info->skb = NULL;
-+	list_add_tail(&desc_info->list, list);
-+	rxcb = ATH12K_SKB_RXCB(msdu);
-+	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
-+			 DMA_FROM_DEVICE);
-+	dev_kfree_skb_any(msdu);
++	obj->import_attach = attach;
++	obj->resv = dma_buf->resv;
 +
-+	return 0;
++	return obj;
++
++fail_unmap:
++	dma_buf_unmap_attachment_unlocked(attach, sgt, DMA_BIDIRECTIONAL);
++fail_detach:
++	dma_buf_detach(dma_buf, attach);
++	dma_buf_put(dma_buf);
++
++	return ERR_PTR(ret);
 +}
 +
- int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			     int budget)
+ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 flags, u32 ctx_id)
  {
-@@ -3481,6 +3523,19 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 		drop = false;
- 		ab->soc_stats.err_ring_pkts++;
+ 	struct drm_gem_shmem_object *shmem;
+@@ -203,7 +246,7 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
+ 	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
+ 	mutex_unlock(&vdev->bo_list_lock);
  
-+		/* Below case is added to handle data packet from un-associated clients.
-+		 * As it is expected that AST lookup will fail for
-+		 * un-associated station's data packets.
-+		 */
-+		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
-+		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
-+			if (!ath12k_dp_h_msdu_buffer_type(ab,
-+							  &rx_desc_used_list,
-+							  reo_desc))
-+				tot_n_bufs_reaped++;
-+			goto next_desc;
-+		}
-+
- 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
- 						    &desc_bank);
- 		if (ret) {
-@@ -3529,6 +3584,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 				tot_n_bufs_reaped++;
- 		}
+-	ivpu_dbg_bo(vdev, bo, "alloc");
++	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
  
-+next_desc:
- 		if (tot_n_bufs_reaped >= quota) {
- 			tot_n_bufs_reaped = quota;
- 			goto exit;
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
-index f7c1aaa3b5d47..ac820333047ff 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+ 	return bo;
+ }
+diff --git a/drivers/accel/ivpu/ivpu_gem.h b/drivers/accel/ivpu/ivpu_gem.h
+index df8e65b77ec41..efca279758c8b 100644
+--- a/drivers/accel/ivpu/ivpu_gem.h
++++ b/drivers/accel/ivpu/ivpu_gem.h
+@@ -28,6 +28,7 @@ int ivpu_bo_pin(struct ivpu_bo *bo);
+ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx);
  
- #include "debug.h"
-@@ -320,7 +320,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- {
- 	enum hal_reo_dest_ring_push_reason push_reason;
- 	enum hal_reo_dest_ring_error_code err_code;
--	u32 cookie, val;
-+	u32 cookie;
- 
- 	push_reason = le32_get_bits(desc->info0,
- 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
-@@ -335,12 +335,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- 		return -EINVAL;
- 	}
- 
--	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
--	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
--		ath12k_warn(ab, "expected buffer type link_desc");
--		return -EINVAL;
--	}
--
- 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
- 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
- 
+ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size);
++struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev, struct dma_buf *dma_buf);
+ struct ivpu_bo *ivpu_bo_create(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx,
+ 			       struct ivpu_addr_range *range, u64 size, u32 flags);
+ struct ivpu_bo *ivpu_bo_create_global(struct ivpu_device *vdev, u64 size, u32 flags);
 -- 
 2.53.0
 
