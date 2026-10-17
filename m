@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1593AEF2D;
-	Sat, 17 Oct 2026 17:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898543AEF2D;
+	Sat, 17 Oct 2026 17:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258281; cv=none; b=qMXU6dQjuVMKSPQT2SN6rEwruV3eUrvb8FicIaJWfYW+nR9NWkQlksIYl/nnGFhyDqVHHqw1XNRWXz2joFI5Oz5aUfrZCfPFaRdSv+CESjt8vBHkRuJ297MyBxTwaZbb7fGR5KXKtJfSvNlVx3CAjsoAu08iBwumh2s51K/xzXM=
+	t=1792258284; cv=none; b=cHWNXNlELy7XOMu1UgRa7+OrgYkHXhFDasykaVOMPyTNY4PGaux5LkRlYe1cHs1rArG+JfITYcCIdb0HL0h9VLz74tPctRuBDmTFVLwUHJGvTZFJl1R1ltNGRYydNa2sX++e6WKc3HnVJLGDSFtUbffSTjC2momfHaHgaMt+c4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258281; c=relaxed/simple;
-	bh=GVOfoEjy5J5hK+ddntxMtJ1zvbvDwYMK51b+aIPKnTc=;
+	s=arc-20240116; t=1792258284; c=relaxed/simple;
+	bh=9RTLjTuWzWJnPhDCC5nmcVfo/MV+xn/oV4x9Psnf6fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CB7nX+yjVOJaKLi4JRutxUvKAwmuezJYBscP/HP35giFDpIqpcih9u18cR9IYf3YY2F83Tfi6JjZPJHfk5r1+52yV97m3YBnQowKwh1B5ykyFRUKtaDYIsunHoiVRNTa4c3xDfE9erGpNdCDgvJZoIraHAfo7CQuAkJIavNPoKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJx3WT3a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lW4QRqeom6Ys1jseuqj925rHiMzfxmzzqyK6T2zJ8gr1R+Qe3Lly/mjffkkv/rQpyKQGjT5DeQeJaiK7/6QJX23Xqz6oCyG7UjsH/GS6UpLGV/hnWamjBg0HZfgxafptbzRBaQ5Wgd/e302JIUU67QYzPlsh8o8dic31Vq3+XFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GS4bd7th; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJx3WT3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C261F000C4;
-	Sat, 17 Oct 2026 17:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GS4bd7th"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10ED1F000C5;
+	Sat, 17 Oct 2026 17:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258280;
-	bh=NE1+aIjGGRWN+46F6LLhH0IWEEZkQN4R/VqWFsrlYAU=;
+	s=korg; t=1792258283;
+	bh=aYU4ItMHy9goKMmwMRXkWJcbtFnNd9EslEw9spqpBdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJx3WT3a8+d7shBsXIsAGuOsyVASokdATVLlUz/dqP3gD4EjUw8er2AI/eSg+gqBv
-	 MROefTk24PXUcveeZk04Fyoh9uIfqRa4GxkQoUuwDB3ihJnSFxgRaggeWdkHsEEmmJ
-	 8VYOBvFiRBePamumDCTxXZhz73hcO4wZvIA5XKpU=
+	b=GS4bd7thGFB36XqyOtC7XCwcJNT6K90pGpq12AN6rqe/pnl6wvFqGRxq0i9lCJhM2
+	 x9in/CqUEvuckii/xIeqKkjsP1gaKXPPxShCsENPbz6n4LYpDd5F0cDvowfKSN2htZ
+	 W720ndeSJ5A3D4XF1Aox+IDh6O+74yWW7dMHVQUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c9b724fbb41cf2538b7b@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
+	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0831/1674] bpf: Fix stackmap overflow check in __bpf_get_stackid()
-Date: Sat, 17 Oct 2026 17:51:43 +0200
-Message-ID: <20261017160452.456801080@linuxfoundation.org>
+Subject: [PATCH 6.6 0832/1674] wifi: ath12k: Fix MSDU buffer types handling in RX error path
+Date: Sat, 17 Oct 2026 17:51:44 +0200
+Message-ID: <20261017160452.484975180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,81 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
 
-[ Upstream commit 23f852daa4bab4d579110e034e4d513f7d490846 ]
+[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
 
-Syzkaller reported a KASAN slab-out-of-bounds write in __bpf_get_stackid()
-when copying stack trace data. The issue occurs when the perf trace
- contains more stack entries than the stack map bucket can hold,
- leading to an out-of-bounds write in the bucket's data array.
+Currently, packets received on the REO exception ring from
+unassociated peers are of MSDU buffer type, while the driver expects
+link descriptor type packets. These packets are not parsed further due
+to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
+but the associated skb is not freed. This may lead to kernel
+crashes and buffer leaks.
 
-Fixes: ee2a098851bf ("bpf: Adjust BPF stack helper functions to accommodate skip > 0")
-Reported-by: syzbot+c9b724fbb41cf2538b7b@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20251025192941.1500-1-contact@arnaud-lcm.com
+Hence to fix, update the RX error handler to explicitly drop
+MSDU buffer type packets received on the REO exception ring.
+This prevents further processing of invalid packets and ensures
+stability in the RX error handling path.
 
-Closes: https://syzkaller.appspot.com/bug?extid=c9b724fbb41cf2538b7b
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c  | 59 +++++++++++++++++++++++-
+ drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
+ 2 files changed, 60 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index a330f38ae7335..2f89588872a50 100644
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -216,7 +216,7 @@ static long __bpf_get_stackid(struct bpf_map *map,
- 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
- 	struct stack_map_bucket *bucket, *new_bucket, *old_bucket;
- 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
--	u32 hash, id, trace_nr, trace_len;
-+	u32 hash, id, trace_nr, trace_len, max_depth;
- 	bool user = flags & BPF_F_USER_STACK;
- 	u64 *ips;
- 	bool hash_matches;
-@@ -225,7 +225,10 @@ static long __bpf_get_stackid(struct bpf_map *map,
- 		/* skipping more than usable stack trace */
- 		return -EFAULT;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index a957b57eab1dc..c849728732254 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
--	trace_nr = trace->nr - skip;
-+	max_depth = map->value_size / stack_map_data_size(map) + skip;
-+	if (max_depth > sysctl_perf_event_max_stack)
-+		max_depth = sysctl_perf_event_max_stack;
-+	trace_nr = min_t(u32, trace->nr - skip, max_depth - skip);
- 	trace_len = trace_nr * sizeof(u64);
- 	ips = trace->ip + skip;
- 	hash = jhash2((u32 *)ips, trace_len / sizeof(u32), 0);
-@@ -354,15 +357,11 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		return -EFAULT;
- 
- 	nr_kernel = count_kernel_ip(trace);
-+	__u64 nr = trace->nr; /* save original */
- 
- 	if (kernel) {
--		__u64 nr = trace->nr;
--
- 		trace->nr = nr_kernel;
- 		ret = __bpf_get_stackid(map, trace, flags);
--
--		/* restore nr */
--		trace->nr = nr;
- 	} else { /* user */
- 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 
-@@ -373,6 +372,10 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
- 		ret = __bpf_get_stackid(map, trace, flags);
- 	}
-+
-+	/* restore nr */
-+	trace->nr = nr;
-+
- 	return ret;
+ #include <linux/ieee80211.h>
+@@ -3411,6 +3411,50 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
+ 	return 0;
  }
+ 
++static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
++					struct hal_reo_dest_ring *desc)
++{
++	struct ath12k_rx_desc_info *desc_info;
++	struct ath12k_skb_rxcb *rxcb;
++	struct sk_buff *msdu;
++	u64 desc_va;
++
++	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
++		  le32_to_cpu(desc->buf_va_lo);
++	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
++	if (!desc_info) {
++		u32 cookie;
++
++		cookie = le32_get_bits(desc->buf_addr_info.info1,
++				       BUFFER_ADDR_INFO1_SW_COOKIE);
++		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
++		if (!desc_info) {
++			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
++				    cookie);
++			return -EINVAL;
++		}
++	}
++
++	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
++		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
++			    desc_info->magic);
++		return -EINVAL;
++	}
++
++	msdu = desc_info->skb;
++	desc_info->skb = NULL;
++	spin_lock_bh(&ab->dp.rx_desc_lock);
++	list_move_tail(&desc_info->list, &ab->dp.rx_desc_free_list);
++	spin_unlock_bh(&ab->dp.rx_desc_lock);
++
++	rxcb = ATH12K_SKB_RXCB(msdu);
++	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
++			 DMA_FROM_DEVICE);
++	dev_kfree_skb_any(msdu);
++
++	return 0;
++}
++
+ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 			     int budget)
+ {
+@@ -3448,6 +3492,18 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 	while (budget &&
+ 	       (reo_desc = ath12k_hal_srng_dst_get_next_entry(ab, srng))) {
+ 		ab->soc_stats.err_ring_pkts++;
++
++		/* Below case is added to handle data packet from un-associated clients.
++		 * As it is expected that AST lookup will fail for
++		 * un-associated station's data packets.
++		 */
++		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
++		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
++			if (!ath12k_dp_h_msdu_buffer_type(ab, reo_desc))
++				tot_n_bufs_reaped++;
++			goto next_desc;
++		}
++
+ 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
+ 						    &desc_bank);
+ 		if (ret) {
+@@ -3494,6 +3550,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
+ 				tot_n_bufs_reaped++;
+ 		}
+ 
++next_desc:
+ 		if (tot_n_bufs_reaped >= quota) {
+ 			tot_n_bufs_reaped = quota;
+ 			goto exit;
+diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
+index 4d1b89cdffe12..bc72b9c966ce2 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_rx.c
++++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
+ #include "debug.h"
+@@ -320,7 +320,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
+ {
+ 	enum hal_reo_dest_ring_push_reason push_reason;
+ 	enum hal_reo_dest_ring_error_code err_code;
+-	u32 cookie, val;
++	u32 cookie;
+ 
+ 	push_reason = le32_get_bits(desc->info0,
+ 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
+@@ -335,12 +335,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
+ 		return -EINVAL;
+ 	}
+ 
+-	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
+-	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
+-		ath12k_warn(ab, "expected buffer type link_desc");
+-		return -EINVAL;
+-	}
+-
+ 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
+ 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
  
 -- 
 2.53.0
