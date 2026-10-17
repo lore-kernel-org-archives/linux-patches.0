@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D37139B4A5;
-	Sat, 17 Oct 2026 16:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4AF37BE64;
+	Sat, 17 Oct 2026 16:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254713; cv=none; b=krHpiRYvuQ/xxtAgDxpmHZwvPy/OxgnLdcEpZi99M4ecH7jH7Uok9fJAXEqVeOZ0lac1SKAV8TeVfV+H+TRkalMdwRfd/g9CE3iNyRwDkiRKNmlVuAlG+xP2e6FxbjilXZjnnaguK5boUPlDJId+hPAl7vVJ2m7hpSYQbhv/drI=
+	t=1792254716; cv=none; b=tsfrZyaaOy9kv+Iws7DQnO1dqWOGka8X6nadNPHeWK95NRqcYwYcl2/fUtqf1OTNQfybryBXEnCJbclRlQKBlmgR3QKlEIQaZpBjwrZhTX1qfRafPZChe8P94gb0CiQoKqUeYESmIktaJLYj9LOxuO5o4f+OVipO/E3JX9P0FJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254713; c=relaxed/simple;
-	bh=CnTE+otAz6hF544uHLa2hF7W0oPnyaxPRuyErFriLsU=;
+	s=arc-20240116; t=1792254716; c=relaxed/simple;
+	bh=iCb28sk+0+XpAd46rt/vHUTHldNz1AnPZV22SLnS6DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPLAOb6EpIKTfVredpiVgF5szpgB2JvW6eJjJXTdPmgobD9DvzmGU2CEQLwcYHmn5FKDP2kmUPQLNYfGfo0So7DUO+2HcIPdp9+E54ShA6nptHMRBi9iSIt5sWcV2v3m/JegDVMrM4sE0yh3UsgIUf9QTI1N43dqGTo1f3TSBO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI9ZgXGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p1iYxAAlVUAEyRzSMFDrX04tvgUXx+G5Rx1R/mSlYuu72988/p9QqPzPgRL08P18hRqn2l1kEjGg5TDhSx7rnInBydBrT63haOMFf62ArISZsIve59LBt28231VsAUfS/PduAJ37PsJ56Mb66CWPcHnWQJbSGF4yFl/uzmm8Fsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7gO/C0Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI9ZgXGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30901F000C4;
-	Sat, 17 Oct 2026 16:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7gO/C0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37201F000C4;
+	Sat, 17 Oct 2026 16:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254712;
-	bh=uCS+bZBFx1geug6zwQHTwl2RFprHxK0ClixueEx6RpM=;
+	s=korg; t=1792254715;
+	bh=qkzmZyOQDQDYFygS+rJzjyZIXusXS0bXcgL5aWObEME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tI9ZgXGRz5GFIyB9KsccZoqJNAtjbesrzNyiazGv8efCAGOZNXoL23ALUAykv/Pqo
-	 KJeKaZq6Xvy/8U6/PPYRJZdRizQXnEYQtviioq9xPr9mNCpSQXufcsDsedhBbcACqk
-	 /m9irTWbv2OKQ82W057moD8o0biAkjeEKwZt3Wnw=
+	b=s7gO/C0ZJPiH4ZzSFT5+Ywb3un4ZiApnnClzYCtM3+FGzhbEs67UFjH6mUneEhO88
+	 qdq8tU5IJkvXJYb0OXGZXJXUcqLwY6UDsVgChk4oF/ywFIxujoIP56pmNZWGtJv78Q
+	 wjtoBzRxgCQGiNqqn0/VkeB/ClklWnHX+EW4gy6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 537/869] EDAC/igen6: Skip absent memory controllers
-Date: Sat, 17 Oct 2026 17:56:18 +0200
-Message-ID: <20261017160050.867512123@linuxfoundation.org>
+Subject: [PATCH 6.12 538/869] EDAC/igen6: Fix call trace due to missing release()
+Date: Sat, 17 Oct 2026 17:56:19 +0200
+Message-ID: <20261017160050.893818350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,156 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 20e190b1c1fd88b21cc5106c12cfe6def5ab849d ]
+[ Upstream commit ab1f9d466c7d83ab0d2a529e07984e53b5960dcd ]
 
-Some BIOS versions may fuse off certain memory controllers and set the
-registers of these absent memory controllers to ~0. The current igen6_edac
-mistakenly enumerates these absent memory controllers and registers them
-with the EDAC core.
+When unloading the igen6_edac driver, there is a call trace:
 
-Skip the absent memory controllers to avoid mistakenly enumerating them.
+  Device '(null)' does not have a release() function, it is broken and must be fixed.
+  See Documentation/core-api/kobject.rst.
+  WARNING: drivers/base/core.c:2567 at device_release+0x84/0x90, CPU#5: rmmod/127209
+  ...
+  RIP: 0010:device_release+0x84/0x90
+  Call Trace:
+   <TASK>
+   kobject_put+0x8c/0x220
+   put_device+0x17/0x30
+   igen6_unregister_mcis+0xa2/0xe0 [igen6_edac]
+   igen6_remove+0x82/0xb0 [igen6_edac]
+   ...
 
+Fix the call trace by providing empty release() functions for the
+memory controller devices.
+
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20250408132455.489046-2-qiuxu.zhuo@intel.com
-Stable-dep-of: ab1f9d466c7d ("EDAC/igen6: Fix call trace due to missing release()")
+Link: https://patch.msgid.link/20260403054029.3950383-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 78 +++++++++++++++++++++++++++++++--------
- 1 file changed, 62 insertions(+), 16 deletions(-)
+ drivers/edac/igen6_edac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 6eb8bfff1ab0b..d4b034737e31f 100644
+index d4b034737e31f..3a28b3d6242da 100644
 --- a/drivers/edac/igen6_edac.c
 +++ b/drivers/edac/igen6_edac.c
-@@ -127,6 +127,7 @@
- 
- static struct res_config {
- 	bool machine_check;
-+	/* The number of present memory controllers. */
- 	int num_imc;
- 	u32 imc_base;
- 	u32 cmf_base;
-@@ -1191,23 +1192,21 @@ static void igen6_check(struct mem_ctl_info *mci)
- 		irq_work_queue(&ecclog_irq_work);
+@@ -1198,6 +1198,11 @@ static bool igen6_imc_absent(void __iomem *window)
+ 	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
  }
  
--static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
-+/* Check whether the memory controller is absent. */
-+static bool igen6_imc_absent(void __iomem *window)
++static void imc_release(struct device *dev)
 +{
-+	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
++	/* Nothing to do, the 'imc' owns the 'dev' and will also release it. */
 +}
 +
-+static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
+ static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
  {
  	struct edac_mc_layer layers[2];
- 	struct mem_ctl_info *mci;
- 	struct igen6_imc *imc;
--	void __iomem *window;
- 	int rc;
+@@ -1236,6 +1241,7 @@ static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev
+ 	mci->pvt_info = &igen6_pvt->imc[mc];
  
- 	edac_dbg(2, "\n");
- 
--	mchbar += mc * MCHBAR_SIZE;
--	window = ioremap(mchbar, MCHBAR_SIZE);
--	if (!window) {
--		igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx\n", mchbar);
--		return -ENODEV;
--	}
--
- 	layers[0].type = EDAC_MC_LAYER_CHANNEL;
- 	layers[0].size = NUM_CHANNELS;
- 	layers[0].is_virt_csrow = false;
-@@ -1273,7 +1272,6 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
- fail2:
- 	edac_mc_free(mci);
- fail:
--	iounmap(window);
- 	return rc;
- }
- 
-@@ -1299,6 +1297,56 @@ static void igen6_unregister_mcis(void)
- 	}
- }
- 
-+static int igen6_register_mcis(struct pci_dev *pdev, u64 mchbar)
-+{
-+	void __iomem *window;
-+	int lmc, pmc, rc;
-+	u64 base;
-+
-+	for (lmc = 0, pmc = 0; pmc < NUM_IMC; pmc++) {
-+		base   = mchbar + pmc * MCHBAR_SIZE;
-+		window = ioremap(base, MCHBAR_SIZE);
-+		if (!window) {
-+			igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx for mc%d\n", base, pmc);
-+			rc = -ENOMEM;
-+			goto out_unregister_mcis;
-+		}
-+
-+		if (igen6_imc_absent(window)) {
-+			iounmap(window);
-+			edac_dbg(2, "Skip absent mc%d\n", pmc);
-+			continue;
-+		}
-+
-+		rc = igen6_register_mci(lmc, window, pdev);
-+		if (rc)
-+			goto out_iounmap;
-+
-+		/* Done, if all present MCs are detected and registered. */
-+		if (++lmc >= res_cfg->num_imc)
-+			break;
-+	}
-+
-+	if (!lmc) {
-+		igen6_printk(KERN_ERR, "No mc found.\n");
-+		return -ENODEV;
-+	}
-+
-+	if (lmc < res_cfg->num_imc)
-+		igen6_printk(KERN_WARNING, "Expected %d mcs, but only %d detected.",
-+			     res_cfg->num_imc, lmc);
-+
-+	return 0;
-+
-+out_iounmap:
-+	iounmap(window);
-+
-+out_unregister_mcis:
-+	igen6_unregister_mcis();
-+
-+	return rc;
-+}
-+
- static int igen6_mem_slice_setup(u64 mchbar)
- {
- 	struct igen6_imc *imc = &igen6_pvt->imc[0];
-@@ -1395,7 +1443,7 @@ static void opstate_set(struct res_config *cfg, const struct pci_device_id *ent)
- static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	u64 mchbar;
--	int i, rc;
-+	int rc;
- 
- 	edac_dbg(2, "\n");
- 
-@@ -1411,11 +1459,9 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	opstate_set(res_cfg, ent);
- 
--	for (i = 0; i < res_cfg->num_imc; i++) {
--		rc = igen6_register_mci(i, mchbar, pdev);
--		if (rc)
--			goto fail2;
--	}
-+	rc = igen6_register_mcis(pdev, mchbar);
-+	if (rc)
-+		goto fail;
- 
- 	if (res_cfg->num_imc > 1) {
- 		rc = igen6_mem_slice_setup(mchbar);
+ 	imc = mci->pvt_info;
++	imc->dev.release = imc_release;
+ 	device_initialize(&imc->dev);
+ 	/*
+ 	 * EDAC core uses mci->pdev(pointer of structure device) as
 -- 
 2.53.0
 
