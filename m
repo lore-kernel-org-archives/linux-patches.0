@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23EF3515E7;
-	Sat, 17 Oct 2026 16:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89FA17BED0;
+	Sat, 17 Oct 2026 16:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253322; cv=none; b=sdSe3L1xr7EgKibLD+1NajYhd1x0HkOHYSFYTCketskv+493oFBXfPLkop7ZJacAtXfijU5wMEtXDREczmJ0WyVCx71z7KVhX0V4jlU2i9md2i+KwKCewBijKZmfCWF/lumXGSOXSO8qvKkS9Jl/AH1puxJJOZHzQj6TDM8DH0A=
+	t=1792253325; cv=none; b=rjam4Jaczjf31dPVWxEbK6qAthYM0nMRJN6S8Y9T6+o2tv1cTp8yf/opfgVIR7YucN3pmFTCbU0P7ByWjkRtrylkquWBci/YkXnzxLhy6BNf1s/viJsZKdJMER4K0NC/Cl2ZFMC+L8XG7Da75bd8dxxyyLHyuergW0KdEPnJQts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253322; c=relaxed/simple;
-	bh=HsKJ6ekaJfTeaErUbdWKtQGps9p0wudwrLhKcTpUK8E=;
+	s=arc-20240116; t=1792253325; c=relaxed/simple;
+	bh=xSIopImmpdBwjGYCvlCLEDoHLdbPCX9wzKyvO7avudw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQjzB3dVew35PqIDLLatiB6WetXioKJDkNSXuGlZ4QP0BQzvBStMVKWH9EZ271UEkKV2ujQDTMSU1HM0U8Qwpu2QX0cfu5Wa5UtxET0dfc3gqdNrlEe025M+jjq1X33WdPoivOd5VX8ztkTQt+pQUe3fPr/Ei4EOBKrWiqHNk5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1md5zSNM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eto+MVpCqD50PBVdxI5Wi07v0mbZHMYFjeSdLUAfGjmAhaGRoS+6FWIgZRpeN8nEJW8PbXaT9Btf1Q4clRQzAOZj1Mgebs88ydEzbYpzfCUORmWVU7dgofrTmgPCjnoEWnOg/tVgh3n5FvpqJlaGz+A7cNyQxk2J0WKnFQ9Ynz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7I38JrR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1md5zSNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71FE1F000C4;
-	Sat, 17 Oct 2026 16:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7I38JrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDB01F000C4;
+	Sat, 17 Oct 2026 16:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253321;
-	bh=4Ror5KU6ACnhYwctO5rnLACBZJRr/LhO/2scaIVkbHg=;
+	s=korg; t=1792253324;
+	bh=Sfurqs3NKja8m4hqfoP1W+LEhHmxKIjr78rNOlpC3sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1md5zSNMcvcT8N8RYEuo8RtPOFaPnRbNY2V8flCdv6pyTeCf52A0+WYtzBXo5c4sP
-	 0JNJYjeQKk+Ba2X1Smah4TPNR3Jb22DxswAEXJoyJ3ZUUTJX5tvhuBI3RFoj2gqkqz
-	 OfE8PyvUMbe0JewEDM9K86832VbyJDAONXjU/K8g=
+	b=i7I38JrR7l6eEeGTcg6KuQaucfJGdTC9t1Y3Q1Z/7GNBeQ9hhOUndcrVPf/el3ixO
+	 l/d9w7/8DjLCL2dTXSLqmLKmDKc7tnkR4Wq8ljjpfFjgN3e+pRKWhguMK+AEINlTgE
+	 VIqfbseaGbjGazsQi7UzYYjrDFXNmwlhZFKheRzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sriram R <quic_srirrama@quicinc.com>,
+	Rameshkumar Sundaram <quic_ramess@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/869] wifi: ath12k: ath12k_mac_op_sta_state(): clean up update_wk cancellation
-Date: Sat, 17 Oct 2026 17:48:42 +0200
-Message-ID: <20261017160039.105001031@linuxfoundation.org>
+Subject: [PATCH 6.12 082/869] wifi: ath12k: prepare vif data structure for MLO handling
+Date: Sat, 17 Oct 2026 17:48:43 +0200
+Message-ID: <20261017160039.131180772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,52 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Valo <quic_kvalo@quicinc.com>
+From: Sriram R <quic_srirrama@quicinc.com>
 
-[ Upstream commit e805272f8c2dee280e2fa1c1a454517df17f1261 ]
+[ Upstream commit 3dd2c68f206ef7020d12b9f85cbfe05ca8662cf4 ]
 
-Now that we have switched to using wiphy_lock() there's no need to have
-update_wk cancel call separately, for consistency move it to the rest of code
-handling IEEE80211_STA_NONE state.
+To prepare the driver for MLO support, split the driver vif data structure to
+scale for multiple links. This requires changing the use of arvif to per link
+and not per hw which can now comprise of multiple links. Also since most
+configurations from mac80211 are done per link, do refactoring of the driver
+functions to apply these configurations at link level.
 
-No functional changes.
+Split ath12k_vif which is the driver private of ieee80211_vif to store link
+specific information as ath12k_link_vif. For default use cases the ath12k vif
+will have a preallocated link vif called deflink which will be used by non ML
+and the first link vif of ML vif.
 
+With MLO support to be added, remaining link vifs will be allocated during
+channel assignment where vdev create/start happens. These link vifs will be
+freed during interface down.
+
+       		Current ath12k_vif(arvif) structure
+
+             +---------------+      +---------------+     +---------------+
+             | ieee80211_vif |      | ieee80211_vif |     | ieee80211_vif |
+             | private data  |      | private data  |     | private data  |
+             |               |      |               |     |               |
+             |  ath12k_vif   |      |  ath12k_vif   |     |  ath12k_vif   |
+             |  (arvif)      |      |  (arvif)      |     |  (arvif)      |
+             |               |      |               |     |               |
+             |  +----------+ |      |  +----------+ |     |  +----------+ |
+             |  |*ar (2GHz)| |      |  |*ar (5GHz)| |     |  |*ar (2GHz)| |
+             |  +----------+ |      |  +----------+ |     |  +----------+ |
+             |               |      |               |     |               |
+             +---------------+      +---------------+     +---------------+
+
+The new ath12k_vif (ahvif) containing ath12k_link_vif(s) (arvif) (deflink is
+preallocated member which is always the first link if ieee80211_vif is MLD and
+is the only link otherwise):
+
+       			+---------------------------------+
+       			|     ieee80211_vif               |
+       			|     private data                |
+       			|                                 |
+       			|   ath12k_vif(ahvif)             |
+       			|                                 |
+       			| +-------------------------------+
+       			| |ath12k_link_vif deflink (arvif)|
+       			| |        +---------------+      |
+       			| |        | *ar(2GHz)     |      |
+       			| +-------------------------------+
+       			| +-------------------------------+
+       			| |  ath12k_link_vif *link (arvif)|
+       			| |        +---------------+      |
+       			| |        | *ar(5GHz)     |      |
+       			| +-------------------------------+
+       			| +-------------------------------+
+       			| |  ath12k_link_vif *link (arvif)|
+       			| |        +---------------+      |
+       			| |        | *ar(6GHz)     |      |
+       			| +-------------------------------+
+       			|                                 |
+       			+---------------------------------+
+
+To refactor existing ath12k_vif to make use of link vifs, following
+changes are made:
+
+ 1. ath12k_vif now called by variable name ahvif storing multiple
+    arvifs (struct ah12k_link_vif) and also has a back pointer to ieee80211_vif.
+
+ 2. In this patch set, only deflink is used to be on par with the
+    existing code. When MLO support is added the link id will be used to fetch
+    the arvif.
+
+ 3. For mac80211 ops which doesn't use specific link_id, the config or info
+    is common for the vif, hence apply the config to all link vifs.
+    The links_map in the ahvif, will be used to identify all the link vifs that
+    are setup.
+
+ 4. Change ath12k_vif_to_arvif() as ath12k_vif_to_ahvif() to fetch the
+    hw level vif. The link vif can be fetched from ahvif->link[], or the
+    deflink can be accessed via ahvif->deflink. API to access link
+    vif (arvif) by passing link_id can be introduced with MLO Support.
+
+ 5. The ieee80211_vif can be accessed from ahvif using ath12k_ahvif_to_vif().
+
+The locking continues to use wiphy_lock() for protecting access to most data in
+struct ath12k&co, there are no changes in that regard. Though struct
+ath12k_vif::link[] is protected with RCU.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
+Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
+Co-developed-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
+Signed-off-by: Rameshkumar Sundaram <quic_ramess@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20241007165932.78081-7-kvalo@kernel.org
+Link: https://patch.msgid.link/20241015171416.518022-2-kvalo@kernel.org
 Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+
+Retain only the removal of the blank line immediately before the rx_stats
+allocation in ath12k_mac_station_add(). This supplies the exact preimage
+needed by the subsequent allocation guard fix. Keeping the separator
+causes that fix to conflict, including when using a three-way merge.
+
+Drop the MLO vif split and associated API changes. The allocation guard
+does not need them, and they assume locking changes that are absent here.
+There is no runtime behavior change.
+
 Stable-dep-of: c426497fa205 ("wifi: ath12k: Fix memory leak due to multiple rx_stats allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index e5d3cfade4e1f..f3785bc0f4c8e 100644
+index f3785bc0f4c8e..3a7fb0e490fa3 100644
 --- a/drivers/net/wireless/ath/ath12k/mac.c
 +++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4583,11 +4583,6 @@ static int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
- 	struct ath12k_peer *peer;
- 	int ret = 0;
- 
--	/* cancel must be done outside the mutex to avoid deadlock */
--	if ((old_state == IEEE80211_STA_NONE &&
--	     new_state == IEEE80211_STA_NOTEXIST))
--		wiphy_work_cancel(hw->wiphy, &arsta->update_wk);
+@@ -4481,7 +4481,6 @@ static int ath12k_mac_station_add(struct ath12k *ar,
+ 			    ar->max_num_stations);
+ 		goto exit;
+ 	}
 -
- 	ar = ath12k_get_ar_by_vif(hw, vif);
- 	if (!ar) {
- 		WARN_ON_ONCE(1);
-@@ -4608,6 +4603,8 @@ static int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
- 				    sta->addr, arvif->vdev_id);
- 	} else if ((old_state == IEEE80211_STA_NONE &&
- 		    new_state == IEEE80211_STA_NOTEXIST)) {
-+		wiphy_work_cancel(hw->wiphy, &arsta->update_wk);
-+
- 		if (arvif->vdev_type == WMI_VDEV_TYPE_STA) {
- 			ath12k_bss_disassoc(ar, arvif);
- 			ret = ath12k_mac_vdev_stop(arvif);
+ 	arsta->rx_stats = kzalloc(sizeof(*arsta->rx_stats), GFP_KERNEL);
+ 	if (!arsta->rx_stats) {
+ 		ret = -ENOMEM;
 -- 
 2.53.0
 
