@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1273CBE8B;
-	Sat, 17 Oct 2026 18:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACF635E93B;
+	Sat, 17 Oct 2026 18:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260615; cv=none; b=hzW/wif79UhzLPfWHcAK0KOuUFWd/IVe751bFJDjBg/iDCVRxDDePzsNv3M3ph6od0A8L2NEjKXXiYif/HB+aW7hCF0eIH+Z53y0A7EAgb2B9GOjNRHS6c4SK7xQytV9zqwse2NZuHkRUlVVXWUphl85fch3otq1PKfvCzwdKBM=
+	t=1792260618; cv=none; b=LsbJAjlJ3Iogxck22QHqqBT5T3bI27PtopGx8x+iWKAs+JmzgFSDvjU1mYk/wK7Ge2q9yBqD62taXGlPL1YYjMh/mAaIH3gAwJ9BC9AnJrSv8DLdAKRwnJlyDVh/ObsW5Ed/JKLAZPP7hJ0yyR41OTAPYQw5uox7zgu9a5M4fIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260615; c=relaxed/simple;
-	bh=gFFKR6nXQx0sSkURRND8xFPippsXVLeMS8SF2WhJjaU=;
+	s=arc-20240116; t=1792260618; c=relaxed/simple;
+	bh=hw4to64Y0q4erfCEM2NxzKGiBVQGjbdlfXdRHKXhoMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkeFjMFFHvNbFCKOpSkbP6dv4B61WTG054Ow9nsYpdoNpyK4Loc6fzPUNUPfuPaCAdfuF6UpNfSNgX6CGu0JhegWPVVS9WWhX6cClAWrSAiZcLwtGc8F7MF6Jx544l2pME4P2/miyheWh9NvNgZGs65gdCy4MXt2Qs4Td03HrAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPqggmgi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9BNaY0ZLzvpRzuk9OBQykMcuXF/4csS8plIICfoX6WrgnTOjIwmvXwPOG6B3L/FKtlIPF3YjLjBEJwQlxDhhBDKyWrY0QSPM52csDJTyt0cHca2QSBi+K2P/eBIDPALIN0/l9vJJAs5aRBG27+IGUdw+ognjuk7tTvBxEcSnpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xY6JRI/0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPqggmgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC4C1F000C4;
-	Sat, 17 Oct 2026 18:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xY6JRI/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22ECF1F000C4;
+	Sat, 17 Oct 2026 18:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260613;
-	bh=ausVuksK53Uu58dmjWOpR3Vq1ARA+AHRf0on43VObg8=;
+	s=korg; t=1792260616;
+	bh=viiwiE0NqxQBYD9ZHxxSxJdbM/HJOVo5IYdocXBg6i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPqggmgiPhHB2cUNDvnYPM00E1xPN+Upuhg8z/Pd1fY7moCbDL5cLWeZFPpNMLEn2
-	 1xYr7nZzDoZgIzEOETJwOQsmsMoXlRLlWFybYAgkZKGjG0MhRp/QzmX68x5EpbzB3d
-	 GIFMFOn/sMNfi/Wps7UkvCbGrbZg1qztRHkaLERI=
+	b=xY6JRI/0Is4BVTRhaaHO5aXYKtSI5Odydz5o8gcwNJnTcUWrQgIiQ6eTF0v87CpNd
+	 BjfIW+qmG/ZdurwQxQvLRJndSYwRIx1JvXdTcC8ObzN7H7WYI+a3KbWu8k2EMnZkaj
+	 TwrM2p5OqVBM9FUExsIt1xbrIWdjsTWH7py7dlqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	sashiko-bot@kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1603/1674] ALSA: usbusx2y: validate URB actual_length in interrupt callback
-Date: Sat, 17 Oct 2026 18:04:35 +0200
-Message-ID: <20261017160512.233534645@linuxfoundation.org>
+Subject: [PATCH 6.6 1604/1674] tracing: Take trace_array reference when opening a tracer options file
+Date: Sat, 17 Oct 2026 18:04:36 +0200
+Message-ID: <20261017160512.258120198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,61 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 8f5ef203abda9dd36b2af473c7b737d544f807bd ]
+[ Upstream commit ed0aff60f83a9bdc2f6556376ac79c96b3ce7e80 ]
 
-i_usx2y_in04_int() processes the interrupt URB data without checking
-urb->actual_length.  A short transfer from a malfunctioning device
-would cause the handler to process uninitialized heap data from the
-kmalloc-allocated in04_buf, which is then copied to the mmap-accessible
-ctl_snapshot[] array.
+When a tracer option file is opened, it is passed a descriptor that points
+to an element on the trace_array's topts array. This element has
+information to find the trace array and other information. It uses this
+element to take a reference of the trace_array so that the trace_array
+does not get removed while this file is opened.
 
-Fix by using kzalloc() for in04_buf to zero-initialize the buffer,
-and adding an actual_length check to skip processing on short
-transfers while still resubmitting the URB.
+Unfortunately, there's a race condition where the element itself could be
+freed by the removal of the instance the trace_array represents causing a
+use-after-free as this element that is used to find the trace_array to
+increment its reference counter is also freed when the instance is
+removed.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+To solve this, add a trace_array_tracer_options_get() helper function that
+will take the address of the element that is passed to the open function
+by the inode->i_private pointer and search all the trace_arrays under a
+lock to find the one that the element's address is in the range of the
+trace_arrays topts array elements. When a match happens, that trace_array's
+reference would be increased.
+
+Note, there's a race where if an admin was deleting and creating trace
+instances at the same time and the memory of the old trace_array's array
+matched the memory of the new trace_array that it could in theory open the
+option from the wrong trace array. But we do not care because it would be
+stupid to perform that kind of action. As long as the only thing that can
+happen is that the option from the wrong trace array is used and doesn't
+crash the kernel it will only make the user confused. But if they are
+doing something stupid like this, they are already confused, so no harm
+done.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260904205826.4071119-2-tristmd@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260910221209.62dad8d3@robin
+Fixes: 7e2cfbd2d3c86 ("tracing: Have option files inc the trace array ref count")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260902121918.5a9e9d1b@gandalf.local.home/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2y.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 48 +++++++++++++++++++++++++++++++++++++++++++-
+ kernel/trace/trace.h |  1 +
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
-index 6832eac95cf15..1ccb01bf85f37 100644
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -189,6 +189,9 @@ static void i_usx2y_in04_int(struct urb *urb)
- 		return;
- 	}
- 
-+	if (urb->actual_length < USX2Y_IN04_SIZE)
-+		goto resubmit;
-+
- 	if (us428ctls) {
- 		diff = -1;
- 		if (us428ctls->ctl_snapshot_last == -2) {
-@@ -253,6 +256,7 @@ static void i_usx2y_in04_int(struct urb *urb)
- 	if (err)
- 		dev_err(&urb->dev->dev, "in04_int() usb_submit_urb err=%i\n", err);
- 
-+resubmit:
- 	urb->dev = usx2y->dev;
- 	usb_submit_urb(urb, GFP_ATOMIC);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index c21133901f1bf..9ab20e1a936fa 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8902,12 +8902,57 @@ trace_options_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 	return cnt;
  }
-@@ -305,7 +309,7 @@ int usx2y_in04_init(struct usx2ydev *usx2y)
- 		goto error;
- 	}
  
--	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
-+	usx2y->in04_buf = kzalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
- 	if (!usx2y->in04_buf) {
- 		err = -ENOMEM;
- 		goto error;
++static bool tr_option_match(struct trace_array *tr, void *topt)
++{
++	for (int i = 0; i < tr->nr_topts; i++) {
++		struct trace_options *tr_topts = &tr->topts[i];
++
++		if (topt >= (void *)&tr_topts->topts[0] &&
++		    topt < (void *)&tr_topts->topts[tr_topts->nr_topts])
++			return true;
++	}
++	return false;
++}
++
++/*
++ * The topt is the address of a trace_array->topts[] element that holds the
++ * the tracer options descriptor. But since the trace_array reference has not
++ * been taken yet, it cannot be dereferenced as it could have been freed by
++ * a rmdir of the instance the trace_array represents.
++ *
++ * Search the list of trace_arrays and compare the topt to the address of
++ * the entire trace_array topts array for each trace_array in the list.
++ * If one is matched, then take the reference and return it. If not, the
++ * trace_array no longer exits.
++ */
++static int trace_array_tracer_options_get(void *topt)
++{
++	struct trace_array *tr;
++	int ret;
++
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
++
++	if (tracing_disabled)
++		return -ENODEV;
++
++	guard(mutex)(&trace_types_lock);
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		if (tr_option_match(tr, topt)) {
++			tr->ref++;
++			return 0;
++		}
++	}
++	return -ENODEV;
++}
++
+ static int tracing_open_options(struct inode *inode, struct file *filp)
+ {
+ 	struct trace_option_dentry *topt = inode->i_private;
+ 	int ret;
+ 
+-	ret = tracing_check_open_get_tr(topt->tr);
++	ret = trace_array_tracer_options_get(topt);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -9191,6 +9236,7 @@ create_trace_option_files(struct trace_array *tr, struct tracer *tracer)
+ 	tr->topts = tr_topts;
+ 	tr->topts[tr->nr_topts].tracer = tracer;
+ 	tr->topts[tr->nr_topts].topts = topts;
++	tr->topts[tr->nr_topts].nr_topts = cnt;
+ 	tr->nr_topts++;
+ 
+ 	for (cnt = 0; opts[cnt].name; cnt++) {
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index fc1d5874356f5..640257a8405d7 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -223,6 +223,7 @@ struct array_buffer {
+ struct trace_options {
+ 	struct tracer			*tracer;
+ 	struct trace_option_dentry	*topts;
++	int				nr_topts;
+ };
+ 
+ struct trace_pid_list *trace_pid_list_alloc(void);
 -- 
 2.53.0
 
