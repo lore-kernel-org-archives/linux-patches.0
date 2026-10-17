@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A013B71A7;
-	Sat, 17 Oct 2026 18:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076E38F950;
+	Sat, 17 Oct 2026 18:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260397; cv=none; b=QD6Y5omz/xsVV0BFTc5E0LqOHqrxTwHYqbLRrSSYVzvWFhLG/If8jfwWv3TIsR0eTz6yKaZ0jiu7rdoSMzXCXnA6A52CsltWi7ToSDVq820zPK5O8YbhR+VRCUUClt4fVC8sP4Z+5DmkeRE/k9ol76z+Rjhm+68Ip+KbE67gfc4=
+	t=1792260400; cv=none; b=hGWbgmGU4Jv6naCm8Bc+nGSP+EG9BooBXiZmLh66e+6Jb+DgRoVKh1l1fgrnduxItoyH8j3PzD+gIBFED3lh9AxNDe+9awsv6lYxoSSgE4XMdORdLYOjQbHvu7tN2hSAGKL7JrLTXXo5AYb/KDKhgrxacowP9KUdo58oGGDByK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260397; c=relaxed/simple;
-	bh=/FXmi3lo91SHiig89bgFKXGh3dJ5/C2COCfTWyMkw5I=;
+	s=arc-20240116; t=1792260400; c=relaxed/simple;
+	bh=4PcZKQrFJ2ER1mnKwyVE3Vo+cJOsDfBkcFgnMg50pJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwCSPtCjyuBgZVEzdEYIbBsTTO4FSjBPdiM0vBZLUDBe3anCpjNh7UNBXY+CDwB0RUo4fZrFmM7Jn2b1t5KaT1Nem5THnvBzh/NFmqvKL1sSB+sMzkctHWwxySCUaXTJ8JUxGzZJtjmm5xxg2vmiwmtrkXthEA3H8rPEo3g66sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmuKhLFy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+woi3nzYSHDuOAYwdwYQincjnvi3tw9chSUFvPfNTAdi/TyIbT+UKbS/n+MIDRWE5UgpRpLD4NxuuW5mgRREZwh7mXdmh9Ri78l1adbSHqfcDcfmupKpiqZBvoOlnIfDyniuKaUu7AMGsiERDlAvPuY32EZ+hyiBI7Ks+MeKKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6YNuG0A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmuKhLFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5C31F000C4;
-	Sat, 17 Oct 2026 18:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6YNuG0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECE61F000C4;
+	Sat, 17 Oct 2026 18:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260396;
-	bh=P1cKNCLscsoCNB1RXjftSeFVUyi9EcBTAmT4dV+eb5Q=;
+	s=korg; t=1792260399;
+	bh=s0/W8mwbSz2QGbKJ5PvkPntUINy328S12NjqaRRjY2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmuKhLFyTA3ik1yJs0qfKiWvgD0eR9tFI6y7xlYF85r5UaiVgg5giuPEdzPEhgaH9
-	 73j3q47yiDyDS0fE8HVDJNT95hhrRHR5ylAcQnuNKc8zeetqkoYm03HExzUA1IZu7y
-	 NrKd21AFrBGbtZcyCGCeM6fh9Ojq57fcBhauRkXE=
+	b=g6YNuG0AvTX0MJxKiNwOQjBweD9S0Q3aAPjzEmYPxHxwNwwjx0PGsN+eXkEAbx+GF
+	 PJlFxHGrrzcS4NU6v+wQDOOHMeBpn+vYVIRph0DpoRKrj662ambPDA8j3uIYWhKpVK
+	 nkDQsvzx/dU4qw9wuycfGFzOTuAP/TwArYnFZWag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stanley.Yang" <Stanley.Yang@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1530/1674] drm/amdgpu: harden FRU PIA parsing with bounded helpers
-Date: Sat, 17 Oct 2026 18:03:22 +0200
-Message-ID: <20261017160510.392314927@linuxfoundation.org>
+Subject: [PATCH 6.6 1531/1674] wifi: iwlwifi: mvm: fix P2P-Device binding handling
+Date: Sat, 17 Oct 2026 18:03:23 +0200
+Message-ID: <20261017160510.416436234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,122 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley.Yang <Stanley.Yang@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c990c05eb6c74c98d1ff3acf67a19015312820b7 ]
+[ Upstream commit b74e377cad9271950c57472867c469e4b5b2ff0c ]
 
-Replace the open-coded TLV walk with fru_pia_advance()
-and fru_pia_copy_field() helpers that bound every read
-by the actual EEPROM data length, preventing out-of-bounds
-reads on truncated or malformed FRU data.
+Our binding handling for P2P-Device can run into the following
+scenario, as observed by our testing:
 
-Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ - a station interface is connected on some channel
+ - the P2P-Device does a remain-on-channel (ROC) on that channel
+ - the ROC ends, and the P2P-Device is removed from the binding,
+   but the phy_ctxt pointer is left around as a PHY cache so we
+   don't need to recalibrate to the channel again and again in
+   case it's not shared
+ - a binding update by the station interface, even a removal,
+   will re-add the P2P-Device to the binding
+ - the P2P-Device is removed, which removes the PHY context, but
+   it's still in the binding so the firmware crashes
+
+Since the P2P device is removed from the binding and only re-
+added by unrelated code, but we want to keep the phy_ctxt around
+as a cache for future ROC usage, fix it by adding a boolean that
+indicates whether or not the P2P-Device should be added to the
+binding, and handle that in the binding iterator. That way, the
+station interface cannot re-add the P2P-Device to the binding
+when that isn't active.
+
+Assisted-by: Github Copilot:claude-opus-4-6
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260527230313.07f94335ae06.I384238b0859343c4a9a9dda20682be1aad89cc9d@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c    | 74 ++++++++++++++-----
- 1 file changed, 55 insertions(+), 19 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/binding.c    |  5 ++++-
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c   | 13 ++++++++++++-
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h        |  3 +++
+ drivers/net/wireless/intel/iwlwifi/mvm/time-event.c |  3 ++-
+ 4 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
-index ba62ddeaa31f9..b3b87b6edeb89 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
-@@ -97,6 +97,43 @@ static bool is_fru_eeprom_supported(struct amdgpu_device *adev, u32 *fru_addr)
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/binding.c b/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
+index 458b97930059e..9d1f8e7657e76 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/binding.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (C) 2012-2014, 2020 Intel Corporation
+  * Copyright (C) 2016 Intel Deutschland GmbH
+- * Copyright (C) 2022 Intel Corporation
++ * Copyright (C) 2022, 2026 Intel Corporation
+  */
+ #include <net/mac80211.h>
+ #include "fw-api.h"
+@@ -76,6 +76,9 @@ static void iwl_mvm_iface_iterator(void *_data, u8 *mac,
+ 	if (vif == data->ignore_vif)
+ 		return;
+ 
++	if (vif->type == NL80211_IFTYPE_P2P_DEVICE && !mvmvif->p2p_in_binding)
++		return;
++
+ 	if (mvmvif->deflink.phy_ctxt != data->phyctxt)
+ 		return;
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 4ec2ea44f4886..6d5cfcfb7a181 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1022,6 +1022,8 @@ static void iwl_mvm_cleanup_iterator(void *data, u8 *mac,
+ 	iwl_mvm_te_clear_data(mvm, &mvmvif->time_event_data);
+ 	spin_unlock_bh(&mvm->time_event_lock);
+ 
++	mvmvif->p2p_in_binding = false;
++
+ 	memset(&mvmvif->bf_data, 0, sizeof(mvmvif->bf_data));
+ 	mvmvif->ap_sta = NULL;
+ 
+@@ -4582,6 +4584,7 @@ static int iwl_mvm_add_aux_sta_for_hs20(struct iwl_mvm *mvm, u32 lmac_id)
+ 
+ static int iwl_mvm_roc_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ {
++	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+ 	int ret;
+ 
+ 	lockdep_assert_held(&mvm->mutex);
+@@ -4590,10 +4593,18 @@ static int iwl_mvm_roc_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ 	if (WARN(ret, "Failed binding P2P_DEVICE\n"))
+ 		return ret;
+ 
++	mvmvif->p2p_in_binding = true;
++
+ 	/* The station and queue allocation must be done only after the binding
+ 	 * is done, as otherwise the FW might incorrectly configure its state.
+ 	 */
+-	return iwl_mvm_add_p2p_bcast_sta(mvm, vif);
++	ret = iwl_mvm_add_p2p_bcast_sta(mvm, vif);
++	if (ret) {
++		iwl_mvm_binding_remove_vif(mvm, vif);
++		mvmvif->p2p_in_binding = false;
++	}
++
++	return ret;
  }
  
-+/*
-+ * IPMI FRU Product Info Area fields are TLV: one type/length byte
-+ * (low 6 bits = data length) followed by that many data bytes. These
-+ * helpers walk the cursor and copy a single field while bounding all
-+ * accesses to the actual buffer length read from the EEPROM.
-+ */
-+#define FRU_FIELD_LEN(p, a)	((p)[a] & 0x3F)
-+
-+/* Advance cursor past the current TLV. Returns false if no more data. */
-+static bool fru_pia_advance(u32 *addr, const unsigned char *pia, int len)
-+{
-+	if (*addr >= (u32)len)
-+		return false;
-+	*addr += 1 + FRU_FIELD_LEN(pia, *addr);
-+	return true;
-+}
-+
-+/*
-+ * Copy the current TLV's data into dst (NUL-terminated). Returns false if
-+ * the TLV header or data would read past the end of pia.
-+ */
-+static bool fru_pia_copy_field(char *dst, size_t dst_size,
-+			       const unsigned char *pia, u32 addr, int len)
-+{
-+	size_t fl;
-+
-+	if (addr + 1 >= (u32)len)
-+		return false;
-+
-+	fl = min3((size_t)FRU_FIELD_LEN(pia, addr),
-+			  dst_size - 1,
-+			  (size_t)(len - addr - 1));
-+	memcpy(dst, pia + addr + 1, fl);
-+	dst[fl] = '\0';
-+	return true;
-+}
-+
- int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
- {
- 	struct amdgpu_fru_info *fru_info;
-@@ -193,32 +230,31 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
- 	 * Skip the Manufacturer Name at [3] and go directly to
- 	 * the Product Name field.
- 	 */
--	addr = 3 + 1 + (pia[3] & 0x3F);
--	if (addr + 1 >= len)
-+	addr = 3;
-+	if (!fru_pia_advance(&addr, pia, len) ||
-+	    !fru_pia_copy_field(fru_info->product_name,
-+				sizeof(fru_info->product_name),
-+				pia, addr, len))
- 		goto Out;
--	memcpy(fru_info->product_name, pia + addr + 1,
--	       min_t(size_t, sizeof(fru_info->product_name), pia[addr] & 0x3F));
--	fru_info->product_name[sizeof(fru_info->product_name) - 1] = '\0';
+ static int iwl_mvm_roc(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index c70b458ee2d60..3509eabe0fa2b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -363,6 +363,8 @@ struct iwl_mvm_vif_link_info {
+  * @csa_countdown: indicates that CSA countdown may be started
+  * @csa_failed: CSA failed to schedule time event, report an error later
+  * @csa_bcn_pending: indicates that we are waiting for a beacon on a new channel
++ * @p2p_in_binding: indicates that this P2P-Device interface should be
++ *	added to the binding, i.e. is running ROC right now
+  * @features: hw features active for this vif
+  */
+ struct iwl_mvm_vif {
+@@ -437,6 +439,7 @@ struct iwl_mvm_vif {
  
- 	/* Go to the Product Part/Model Number field. */
--	addr += 1 + (pia[addr] & 0x3F);
--	if (addr + 1 >= len)
-+	if (!fru_pia_advance(&addr, pia, len) ||
-+	    !fru_pia_copy_field(fru_info->product_number,
-+				sizeof(fru_info->product_number),
-+				pia, addr, len))
- 		goto Out;
--	memcpy(fru_info->product_number, pia + addr + 1,
--	       min_t(size_t, sizeof(fru_info->product_number),
--		     pia[addr] & 0x3F));
--	fru_info->product_number[sizeof(fru_info->product_number) - 1] = '\0';
+ 	struct iwl_mvm_time_event_data time_event_data;
+ 	struct iwl_mvm_time_event_data hs_time_event_data;
++	bool p2p_in_binding;
  
--	/* Go to the Product Version field. */
--	addr += 1 + (pia[addr] & 0x3F);
-+	/* Skip the Product Version field. */
-+	if (!fru_pia_advance(&addr, pia, len))
-+		goto Out;
+ 	/* TCP Checksum Offload */
+ 	netdev_features_t features;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+index 158266719ffd7..752414f16d63b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2023 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2023, 2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2017 Intel Deutschland GmbH
+  */
+@@ -94,6 +94,7 @@ void iwl_mvm_roc_done_wk(struct work_struct *wk)
+ 			} else {
+ 				iwl_mvm_rm_p2p_bcast_sta(mvm, vif);
+ 				iwl_mvm_binding_remove_vif(mvm, vif);
++				mvmvif->p2p_in_binding = false;
+ 			}
  
--	/* Go to the Product Serial Number field. */
--	addr += 1 + (pia[addr] & 0x3F);
--	if (addr + 1 >= len)
-+	/* Read the Product Serial Number field. */
-+	if (!fru_pia_advance(&addr, pia, len) ||
-+	    !fru_pia_copy_field(fru_info->serial,
-+				sizeof(fru_info->serial),
-+				pia, addr, len))
- 		goto Out;
--	memcpy(fru_info->serial, pia + addr + 1,
--	       min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
--	fru_info->serial[sizeof(fru_info->serial) - 1] = '\0';
-+
- Out:
- 	kfree(pia);
- 	return 0;
+ 			/* Do not remove the PHY context as removing and adding
 -- 
 2.53.0
 
