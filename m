@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77363A48E3;
-	Sat, 17 Oct 2026 16:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C335A36CE19;
+	Sat, 17 Oct 2026 16:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254978; cv=none; b=UGZqQHUWFGIwqaIPTpvM/07LT18pz+pzixza4cv1AP8QQ+VlrqCpNa82VNKaP8VEI7iV95GPnfnTAAJmiIOQaoCjyYslcK0jao8JZ53J2ACgy/yWztFvV1umy8n5La0R7PhVWqIm4PvgyMYMmNteGb7qzOc5kSLPWdwiGEqUp7E=
+	t=1792254980; cv=none; b=PMZCPHDVFy4F5UK1v7XODgbd7EOLyDJCnKYIGtMoHwfgPkWwkEKnG2sIfngwTHnBWXuimZBkLjh0ETDC7nZI+ta96ezWFC1CmrOeTLn7tbissuGD7pybfIJclcODp2MNTBeBhLr75p964npRm2i6BKdViC5AHTEKqYWTxAlzgSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254978; c=relaxed/simple;
-	bh=zl38OndRQqpyrW+Jv3jxPYc5hR5XFkgU46m8I/ZBsYQ=;
+	s=arc-20240116; t=1792254980; c=relaxed/simple;
+	bh=BFCOJdvWQPNhLxH7DHAbnW2bE7OXElHy3kvxdsrXWHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RTjgW2afJ9I4QkL3JaR31BRMQs5gOie7/oOcZUyskQYba15DkX9IvuWgdWC1HPrewVV/jz++PE2a+m/xOwNx1jchIrBBq8CN7B6HR5hK7f601j0mPnsOrOnqz7vXeHwy1GJwqWCdqAKBv/XBLyBCxAGZEmjgWe/S+c/P4pAZieg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyKsgh7M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aXIY3fqB8vs++3NAqkDG924uv2H/Iv/RE3AyvaQDuwFQnnvUJTV3J+LpbwfmDKSCaCwDZRtdlxoUvnmYVSLf54AL3CXsg2rFzHtKSJsQvi1/2TrRilwZ98Hqg4ZD9O96vshwkehJCSYtw5xLtaoGJcHG3NYfqggSHx0aw5D/hN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8yzg9Sk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyKsgh7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B74E1F000C4;
-	Sat, 17 Oct 2026 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8yzg9Sk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FBA1F000C4;
+	Sat, 17 Oct 2026 16:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254976;
-	bh=CGJlRZSIL9KzM0bcaZzai//J+Mb4Dxmzn6Ngnz2bmIg=;
+	s=korg; t=1792254979;
+	bh=LvflhYGY7ma2DbgDqq8IR0kRK4r3vvY+hHQvN30pMNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CyKsgh7M+wcNmfYSqKyWTJH75MFJZI4l0qa6O5bxb161F58hUPxuiIq8ajBKnRXKG
-	 uw0KjLaxOjiYEtZ8cofg6n820MKNWFDm0PF68CrhL1wit+i33vZCK16fbL36Qc/5VB
-	 yhidgbPse37HmuY9ICNhLMPc8i3qUDRvz8wUKKW0=
+	b=g8yzg9SkCMvxevcYuqrHN1sWFl0xCUyZtZGRMu9WOPFNW5d2QhO9wRNM7JaFO9SpN
+	 gN0ZOUTHQ/w0hNj61YkvbL1duTnPaWDHm11pAVn3nQl5YL2g/rvy9876NdUjUyVLhi
+	 SHXJWuLRkD2jT64tTkpm1P+CV4F8aPiaSzLict3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 624/869] ksmbd: fix slab-out-of-bounds read in ksmbd_alloc_user()
-Date: Sat, 17 Oct 2026 17:57:45 +0200
-Message-ID: <20261017160053.028961044@linuxfoundation.org>
+Subject: [PATCH 6.12 625/869] bpf: Check pointer type for all atomic RMW paths
+Date: Sat, 17 Oct 2026 17:57:46 +0200
+Message-ID: <20261017160053.052840010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,162 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunseong Kim <yunseong.kim@est.tech>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 7405d0ba294306721843bc551611775e6edef516 ]
+[ Upstream commit 4bc49ae344d65cfcef738f281ac575cf73ca2fc5 ]
 
-ksmbd_alloc_user() copies resp->hash_sz bytes out of the mountd IPC
-login response with
+Atomic RMW verification records an instruction pointer type only when the
+current destination is PTR_TO_ARENA. A second path can therefore reach the
+same instruction with an ordinary pointer without comparing it against the
+saved arena type.
 
-	user->passkey_sz = resp->hash_sz;
-	user->passkey = kmalloc(resp->hash_sz, KSMBD_DEFAULT_GFP);
-	if (user->passkey)
-		memcpy(user->passkey, resp->hash, resp->hash_sz);
+The post-verification fixup uses the saved type to rewrite the instruction
+to BPF_PROBE_ATOMIC for every path. Record the actual destination type for
+all atomic RMW paths so the existing mismatch check rejects incompatible
+uses of one instruction.
 
-resp->hash_sz is a __u16 supplied by the response, but resp->hash[] is
-only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or malicious login
-response can set hash_sz well beyond that (up to 65535), so the memcpy()
-reads past the end of the response object.  ipc_validate_msg() does not
-bound hash_sz, so reject any response whose hash_sz exceeds the on-stack
-hash[] buffer before allocating and copying.
-
-[ 2030.238706] BUG: KASAN: slab-out-of-bounds in ksmbd_alloc_user+0x278/0x680
-[ 2030.240549] Read of size 65535 at addr ffff888121bb6680 by task kworker/4:1/18611
-[ 2030.242296]
-[ 2030.242710] CPU: 4 UID: 0 PID: 18611 Comm: kworker/4:1 Not tainted 7.1.0-next-20260623-virtme #96 PREEMPT(lazy)
-[ 2030.242732] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 2030.242743] Workqueue: ksmbd-io handle_ksmbd_work
-[ 2030.242763] Call Trace:
-[ 2030.242769]  <TASK>
-[ 2030.242776]  dump_stack_lvl+0xa2/0xd0
-[ 2030.242794]  print_address_description+0x77/0x200
-[ 2030.242815]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242831]  print_report+0x58/0x70
-[ 2030.242848]  kasan_report+0x117/0x150
-[ 2030.242869]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242888]  kasan_check_range+0x3c7/0x3f0
-[ 2030.242908]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242925]  __asan_memcpy+0x29/0x70
-[ 2030.242942]  ksmbd_alloc_user+0x278/0x680
-[ 2030.242960]  ksmbd_login_user+0xc3/0x120
-[ 2030.242978]  ntlm_authenticate+0x5e6/0x1b00
-[ 2030.243017]  ? __pfx_ntlm_authenticate+0x10/0x10
-[ 2030.243035]  ? ksmbd_session_lookup+0x188/0x1d0
-[ 2030.243054]  ? __pfx_ksmbd_session_lookup+0x10/0x10
-[ 2030.243090]  ? __sanitizer_cov_trace_switch+0x7b/0x140
-[ 2030.243108]  smb2_sess_setup+0x1e4a/0x27b0
-[ 2030.243126]  ? copy_from_kernel_nofault+0x199/0x300
-[ 2030.243156]  ? __pfx_smb2_sess_setup+0x10/0x10
-[ 2030.243173]  ? get_smb2_cmd_val+0xe3/0x1c0
-[ 2030.243208]  handle_ksmbd_work+0x954/0x1280
-[ 2030.243230]  ? __pfx_handle_ksmbd_work+0x10/0x10
-[ 2030.243249]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243270]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243291]  process_scheduled_works+0xa70/0x1490
-[ 2030.243320]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 2030.243340]  ? do_raw_spin_lock+0x130/0x300
-[ 2030.243358]  ? lock_is_held_type+0x7b/0x110
-[ 2030.243388]  worker_thread+0x932/0xe20
-[ 2030.243415]  kthread+0x38a/0x470
-[ 2030.243431]  ? __pfx_worker_thread+0x10/0x10
-[ 2030.243451]  ? __pfx_kthread+0x10/0x10
-[ 2030.243467]  ret_from_fork+0x484/0x910
-[ 2030.243485]  ? __pfx_ret_from_fork+0x10/0x10
-[ 2030.243501]  ? __switch_to+0xc77/0x12c0
-[ 2030.243523]  ? __pfx_kthread+0x10/0x10
-[ 2030.243540]  ret_from_fork_asm+0x1a/0x30
-[ 2030.243564]  </TASK>
-[ 2030.243570]
-[ 2030.290164] Allocated by task 19279:
-[ 2030.290911]  kasan_save_track+0x3e/0x80
-[ 2030.292179]  __kasan_kmalloc+0x72/0x90
-[ 2030.293217]  __kvmalloc_node_noprof+0x3ff/0x6b0
-[ 2030.294467]  handle_generic_event+0x59b/0x750
-[ 2030.295345]  genl_family_rcv_msg_doit+0x238/0x340
-[ 2030.296553]  genl_rcv_msg+0x606/0x7b0
-[ 2030.297129]  netlink_rcv_skb+0x22b/0x4a0
-[ 2030.298500]  genl_rcv+0x2d/0x40
-[ 2030.299273]  netlink_unicast+0x7ba/0x930
-[ 2030.300019]  netlink_sendmsg+0x8c3/0xb00
-[ 2030.301073]  __sock_sendmsg+0xec/0x140
-[ 2030.301579]  __sys_sendto+0x357/0x470
-[ 2030.302255]  __x64_sys_sendto+0xe3/0x100
-[ 2030.303425]  do_syscall_64+0x135/0x460
-[ 2030.304763]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[ 2030.305594]
-[ 2030.305819] The buggy address belongs to the object at ffff888121bb6640
-[ 2030.305819]  which belongs to the cache kmalloc-192 of size 192
-[ 2030.309595] The buggy address is located 64 bytes inside of
-[ 2030.309595]  allocated 166-byte region [ffff888121bb6640, ffff888121bb66e6)
-[ 2030.312484]
-[ 2030.312719] The buggy address belongs to the physical page:
-[ 2030.314315] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x121bb6
-[ 2030.316481] head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[ 2030.318248] flags: 0x100000000000040(head|node=0|zone=2)
-[ 2030.319662] page_type: f5(slab)
-[ 2030.320242] raw: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.321911] raw: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.324413] head: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.326150] head: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.327960] head: 0100000000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
-[ 2030.329615] head: ffff888121bb7ab0 0000000000000000 00000000ffffffff 0000000000000000
-[ 2030.331861] page dumped because: kasan: bad access detected
-[ 2030.332946]
-[ 2030.333502] Memory state around the buggy address:
-[ 2030.334698]  ffff888121bb6580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.336475]  ffff888121bb6600: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
-[ 2030.338143] >ffff888121bb6680: 00 00 00 00 00 00 00 00 00 00 00 00 06 fc fc fc
-[ 2030.339116]                                                        ^
-[ 2030.341315]  ffff888121bb6700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.342801]  ffff888121bb6780: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-[ 2030.344643] ==================================================================
-
-Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
-kcov-dataflow [1] coverage vector: it folds each instrumented
-comparison/argument's runtime operand value together with its PC (the
-default arm mixes them as pc⊕val) so that a new operand value at a known
-site counts as new coverage.
-
-[1] https://lwn.net/Articles/1077606/
-[2] https://github.com/yskzalloc/kcov-dataflow
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260816-bpf-next-038-mixed-atomic-v1-v2-1-4644c1886dbc@mails.tsinghua.edu.cn
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_config.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/bpf/verifier.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
-index 53db14e91bfd8..0e5fcd6f95c15 100644
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -37,6 +37,17 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
- {
- 	struct ksmbd_user *user;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 03d5e7db3df76..752bc2d57d2bf 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7559,11 +7559,9 @@ static int check_atomic_rmw(struct bpf_verifier_env *env,
+ 	if (err)
+ 		return err;
  
-+	/*
-+	 * resp->hash_sz is a __u16 taken from the mountd IPC login response but
-+	 * resp->hash[] is only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or
-+	 * malicious response can set hash_sz far beyond that (up to 65535),
-+	 * making the memcpy() below read past the response object
-+	 * (slab-out-of-bounds in ksmbd_alloc_user()).  Reject any oversized
-+	 * hash rather than trust the length.
-+	 */
-+	if (resp->hash_sz > sizeof(resp->hash))
-+		return NULL;
-+
- 	user = kmalloc(sizeof(struct ksmbd_user), KSMBD_DEFAULT_GFP);
- 	if (!user)
- 		return NULL;
+-	if (is_arena_reg(env, insn->dst_reg)) {
+-		err = save_aux_ptr_type(env, PTR_TO_ARENA, false);
+-		if (err)
+-			return err;
+-	}
++	err = save_aux_ptr_type(env, reg_state(env, insn->dst_reg)->type, false);
++	if (err)
++		return err;
+ 	/* Check whether we can write into the same memory. */
+ 	err = check_mem_access(env, env->insn_idx, insn->dst_reg, insn->off,
+ 			       BPF_SIZE(insn->code), BPF_WRITE, -1, true, false);
 -- 
 2.53.0
 
