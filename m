@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA5C17BED0;
-	Sat, 17 Oct 2026 16:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB4817BED0;
+	Sat, 17 Oct 2026 16:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254652; cv=none; b=L/5JdyDpqrOlh0OFO40NfMo9RxRphCk+rflzgmN+1n8E7yklpgWsaYNF7ofVJBEWsfzZyrt2CX0jFMI/WTv8rI3wrUaRAwPFrQjtIBaHF0A1OV91IFrshV88akiaroTR6fYlWS+gKgJ+ssVanzOPNKwKwqFs2du12GOQuSL5YAQ=
+	t=1792254655; cv=none; b=A0QSI1Rx6P/QYXT2GMV72Na8NexmPpQecWgyEMj9JJ7/cCifffDBYD8jXhP+riuY+b0pwqKKrVPkmC3MCwtrRphlmu80KkEQL0Iu5FWTc3pfUEHbr0IyCVFZFQVZtY8C+OjyxDbVJhvQpszZEcxp0AH6MuXftsPylHG6h6d01c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254652; c=relaxed/simple;
-	bh=8FqWblJQimqSglxuNFLtUFMb71B5CT3C0yc/7V7Aqhs=;
+	s=arc-20240116; t=1792254655; c=relaxed/simple;
+	bh=IyWy8sCVZ9iUOw9FtFCwLL4qrsPkhToQs/dy7qxT4pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBNe4s9CJQi5laFmu8rAp8eBIdtlmAtYkY3L7UdcMWquywLLxtaWN/LdeXxyDXQVBf54ebuDfQSDw8LqVEvG3mjnJBHUSJsSNdekUVsdyuRZRORGGCMjZ0LPXtJ+Rd1cZfYPYgK8LPoIsCEfOBitPAzrXfCe/OsvPGnRYBw0eDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmCW/UC8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t5+3ZjTLPX5R5GYIe9N+yM5JDKhW9JhThHmxepq38QQJKKz+km/ArNO3E9vhpipf85xtiNUeX/JttNN8FTean86LFVgL94TkOkHNga5MQrxGimzBdjP8ep9nfMfYP/zIaNslmUDleGeZ1EpAgS3z48O4hGKZesbi/DYp/Q9sJ54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvNuUf+v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmCW/UC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFC81F000C4;
-	Sat, 17 Oct 2026 16:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvNuUf+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D731F000C4;
+	Sat, 17 Oct 2026 16:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254651;
-	bh=oMRAefgzS6puRr9/yvSsnRMLi/HiCS7tgwfuMNYO5qI=;
+	s=korg; t=1792254654;
+	bh=bFKMJIbGb1Jd41yI5rau133f0lb2LUJq5Sg7YMPhPkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LmCW/UC8AfN9Ht3yWBGRSTIi26AWVD2Y84DQ/6tGeMm5VZ3HFIkudUiHTLQVd1FN3
-	 pwHt+yke/PrgL0Q5bglVhyaeFuDSBOzpROQesTgkrZJB9B0DQrAwr9Ms27WIvX0nP1
-	 o03Umj41Wf1lXAzymFrdLBdPu3SI7cLla+Am9jP8=
+	b=WvNuUf+vJHqQI9MBw51RyYQAw6tVytUJoMfJ0rWSd5fiLZbBcgaB3gkq85QTbVucC
+	 mZhrBw9mMKJWMYChNep59nQ8fDzGCIz1nBs6mV3sRJV7EstWgVChiITwwpLuxiBcYm
+	 YdfXJcQaoAqfd6aGLp8DEvSYfiE2o9TtaZcb430E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiao Ni <xiao@kernel.org>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 474/869] md/raid1,raid10: fix deadlock in read error recovery path
-Date: Sat, 17 Oct 2026 17:55:15 +0200
-Message-ID: <20261017160049.278447574@linuxfoundation.org>
+Subject: [PATCH 6.12 475/869] md/raid1,raid10: fix bio accounting for split md cloned bios
+Date: Sat, 17 Oct 2026 17:55:16 +0200
+Message-ID: <20261017160049.302478711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,87 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 7b15c24f805339a585cfe7d72f446b7e88b9bcc0 ]
+[ Upstream commit ba976e3501111d11c550848b3b7341a73035f582 ]
 
-raid1d and raid10d may resubmit a split md cloned bio while handling
-a read error. In this case, resubmitting the bio can lead to a deadlock
-if the array is suspended before md_handle_request() acquires an
-active_io reference via percpu_ref_tryget_live().
+Use md_cloned_bio() to control bio accounting instead of relying
+on r1bio_existed in raid1 or the io_accounting flag in raid10.
 
-Since the cloned bio already holds an active_io reference,
-trying to acquire another reference via percpu_ref_tryget_live()
-can lead to a deadlock while the array is suspended.
+The previous logic does not reliably reflect whether a bio is an
+md cloned bio. When a failed bio is split and resubmitted via
+bio_submit_split_bioset() on the error path, this can lead to either
+double accounting for md cloned bios, or missing accounting for bios
+returned from bio_submit_split_bioset()
 
-Fix this by using percpu_ref_get() for md cloned bios.
+Fix this by using md_cloned_bio() to detect md cloned bios and
+skip accounting accordingly.
 
 Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
 Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
 Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 Reviewed-by: Xiao Ni <xiao@kernel.org>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260501114652.590037-2-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260501114652.590037-4-abd.masalkhi@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Stable-dep-of: ba976e350111 ("md/raid1,raid10: fix bio accounting for split md cloned bios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 25 ++++++++++++++++---------
- drivers/md/md.h |  5 +++++
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ drivers/md/raid1.c  | 2 +-
+ drivers/md/raid10.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 424ee03f47429..db8df74fcf67a 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -380,17 +380,24 @@ static bool is_suspended(struct mddev *mddev, struct bio *bio)
- bool md_handle_request(struct mddev *mddev, struct bio *bio)
- {
- check_suspended:
--	if (is_suspended(mddev, bio)) {
--		/* Bail out if REQ_NOWAIT is set for the bio */
--		if (bio->bi_opf & REQ_NOWAIT) {
--			bio_wouldblock_error(bio);
--			return true;
-+	if (unlikely(md_cloned_bio(mddev, bio))) {
-+		/*
-+		 * This bio is an MD cloned bio and already holds an
-+		 * active_io reference, so percpu_ref_get() is safe here.
-+		 */
-+		percpu_ref_get(&mddev->active_io);
-+	} else {
-+		if (is_suspended(mddev, bio)) {
-+			/* Bail out if REQ_NOWAIT is set for the bio */
-+			if (bio->bi_opf & REQ_NOWAIT) {
-+				bio_wouldblock_error(bio);
-+				return true;
-+			}
-+			wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
- 		}
--		wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
-+		if (!percpu_ref_tryget_live(&mddev->active_io))
-+			goto check_suspended;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 91ecf50eba402..b365fd4595228 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1400,7 +1400,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
  	}
--	if (!percpu_ref_tryget_live(&mddev->active_io))
--		goto check_suspended;
--
- 	if (!mddev->pers->make_request(mddev, bio)) {
- 		percpu_ref_put(&mddev->active_io);
- 		if (!mddev->gendisk && mddev->pers->prepare_suspend)
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index bd5d95b1bac74..eba943cbd3b26 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -1001,6 +1001,11 @@ void mddev_update_io_opt(struct mddev *mddev, unsigned int nr_stripes);
  
- extern const struct block_device_operations md_fops;
+ 	r1_bio->read_disk = rdisk;
+-	if (!r1bio_existed) {
++	if (likely(!md_cloned_bio(mddev, bio))) {
+ 		md_account_bio(mddev, &bio);
+ 		r1_bio->master_bio = bio;
+ 	}
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index fc68e6b05ddfe..fe136080a3798 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1143,7 +1143,7 @@ static bool regular_request_wait(struct mddev *mddev, struct r10conf *conf,
+ }
  
-+static inline bool md_cloned_bio(struct mddev *mddev, struct bio *bio)
-+{
-+	return bio->bi_pool == &mddev->io_clone_set;
-+}
-+
- /*
-  * MD devices can be used undeneath by DM, in which case ->gendisk is NULL.
-  */
+ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+-				struct r10bio *r10_bio, bool io_accounting)
++				struct r10bio *r10_bio)
+ {
+ 	struct r10conf *conf = mddev->private;
+ 	struct bio *read_bio;
+@@ -1220,7 +1220,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	}
+ 	slot = r10_bio->read_slot;
+ 
+-	if (io_accounting) {
++	if (likely(!md_cloned_bio(mddev, bio))) {
+ 		md_account_bio(mddev, &bio);
+ 		r10_bio->master_bio = bio;
+ 	}
+@@ -1551,7 +1551,7 @@ static bool __make_request(struct mddev *mddev, struct bio *bio, int sectors)
+ 
+ 	ret = true;
+ 	if (bio_data_dir(bio) == READ)
+-		raid10_read_request(mddev, bio, r10_bio, true);
++		raid10_read_request(mddev, bio, r10_bio);
+ 	else
+ 		ret = raid10_write_request(mddev, bio, r10_bio);
+ 
+@@ -2889,7 +2889,7 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
+ 
+ 	rdev_dec_pending(rdev, mddev);
+ 	r10_bio->state = 0;
+-	raid10_read_request(mddev, r10_bio->master_bio, r10_bio, false);
++	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
+ 	/*
+ 	 * allow_barrier after re-submit to ensure no sync io
+ 	 * can be issued while regular io pending.
 -- 
 2.53.0
 
