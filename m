@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C447F3B6BFE;
-	Sat, 17 Oct 2026 17:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6533A1E92;
+	Sat, 17 Oct 2026 17:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258823; cv=none; b=GhUf3ntxSWqymJOBcS0C0jXWDnBYuCQaLE6VIqU0tGepwSjEvVURz3vmiLwej9QRe/GuVdySuvCfNuFic0zoJV/3ftcWhERMAmgmPWsv+di78PQFtQK6Ur4e2jx+CYRuIF/Yabz54R9fTpXvK0rLzY4iaswPmCm6HhsMnHAPzk4=
+	t=1792258825; cv=none; b=cxCDUcd3icznm0BEpZ7s4s4lP+huCb7oWsFZYhY5E0QnrmlbJANekbabKE1W4bpK3Kb1I9RNzk8+l8ZAG3T6ba/Np82657kwqWlR58LLFQTEOmzOrs2/kFJQ/Yaw75o3iwA6xKmTQ1jIOnVIaiOj0PDt1l3npZM8GJsiFYB8llQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258823; c=relaxed/simple;
-	bh=/k22a7khlX+pEZWdD71MK6ro71xODe/UlFbOjoJoH0s=;
+	s=arc-20240116; t=1792258825; c=relaxed/simple;
+	bh=7ONjm31v4++RkYRCamRkORUvI+WrVrSoeLGbZ4kF3e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9F6sXEfEioUPW4NUwl+6odfDEajUWy5cXIRRAiGLcdRXQL5dnv4BsW1f/7lhGapWiY94o2aoHTTglUx2ePigImKel0ajaOJPlnJW02LUFsmv/s9+ZEbF7LnYZSxANz+XYKnyGFvIRyW/fGYUi0s9ivOzCXM9aeEMMgnNGAffuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTXumsFy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7PPMcRAdOzMcjm77v5TMFCVcDQg5uJkAfm8tcft2eFJNfCkQKc2hX6j/N/9PKg53litoAKvRD5ju7FXH+2a3ML1CqiO/k+N8bohbaEXx7e1h9rKt7+vxqbgIcO4z51OdpXWReuh9ymbET+9PNeaumPTNiNeqnS6bGkaT/V03B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kasd3x1/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTXumsFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E082D1F000C4;
-	Sat, 17 Oct 2026 17:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kasd3x1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD41F000C4;
+	Sat, 17 Oct 2026 17:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258821;
-	bh=FobVFVoewGMrS03zLJEUCbFi848yEOcn4rZAJ9kUfdA=;
+	s=korg; t=1792258824;
+	bh=1Pq1HlcW0Mxywfe6QBno1SKeGbEMl/C0x5HVToFfVXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTXumsFyImJ4v+LGpG9//MpCWZCMFZ8zA6owXTunMMI+6sT4c1UY3/xS6qufU8N7V
-	 RKxFTm7FprMUwk0Jw6fzXf5trNooYND3cUn7/X0Tp5qLKuVLVIkZ3I/iaG6dWcQ+bW
-	 qqqNaWICoRNg/v4nChNareRLw0hPXnwK/BOwQ0YM=
+	b=Kasd3x1/iGlk0GZ6SJoXTJn+trs+5X/vfqbaskWHvysnn+u7MRI85zaqx+p8m3+bv
+	 nHiR/UAxsycIFeJf7R1uZ+aaLSk0J0f+FpR6OsHGI4RCNaGb9Wt6IKJeEG67Sb3Obc
+	 /I2hM43L04C6CNsSY4WRlKxfvJCGyKVO5KnO8DnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Rob Herring <robh@kernel.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1009/1674] of: device: Export of_device_make_bus_id()
-Date: Sat, 17 Oct 2026 17:54:41 +0200
-Message-ID: <20261017160457.030707562@linuxfoundation.org>
+Subject: [PATCH 6.6 1010/1674] nvmem: Move of_nvmem_layout_get_container() in another header
+Date: Sat, 17 Oct 2026 17:54:42 +0200
+Message-ID: <20261017160457.056389649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,151 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 7f38b70042fcaa49219045bd1a9a2836e27a58ac ]
+[ Upstream commit 4a1a40233b4a9fc159a5c7a27dc34c5c7bc5be55 ]
 
-This helper is really handy to create unique device names based on their
-device tree path, we may need it outside of the OF core (in the NVMEM
-subsystem) so let's export it. As this helper has nothing patform
-specific, let's move it to of/device.c instead of of/platform.c so we
-can add its prototype to of_device.h.
+nvmem-consumer.h is included by consumer devices, extracting data from
+NVMEM devices whereas nvmem-provider.h is included by devices providing
+NVMEM content.
+
+The only users of of_nvmem_layout_get_container() outside of the core
+are layout drivers, so better move its prototype to nvmem-provider.h.
+
+While we do so, we also move the kdoc associated with the function to
+the header rather than the .c file.
 
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231215111536.316972-2-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20231215111536.316972-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 5b6b6fc49189 ("nvmem: core: fix use-after-free bugs in error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/device.c       | 41 +++++++++++++++++++++++++++++++++++++++
- drivers/of/platform.c     | 40 --------------------------------------
- include/linux/of_device.h |  6 ++++++
- 3 files changed, 47 insertions(+), 40 deletions(-)
+ drivers/nvmem/core.c           |  8 --------
+ include/linux/nvmem-consumer.h |  7 -------
+ include/linux/nvmem-provider.h | 21 +++++++++++++++++++++
+ 3 files changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/of/device.c b/drivers/of/device.c
-index 1ca42ad9dd159..6e9572c4af83b 100644
---- a/drivers/of/device.c
-+++ b/drivers/of/device.c
-@@ -304,3 +304,44 @@ int of_device_uevent_modalias(const struct device *dev, struct kobj_uevent_env *
- 	return 0;
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index 5b819bbd451af..a4ae058ea12c5 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -838,14 +838,6 @@ static int nvmem_add_cells_from_layout(struct nvmem_device *nvmem)
  }
- EXPORT_SYMBOL_GPL(of_device_uevent_modalias);
+ 
+ #if IS_ENABLED(CONFIG_OF)
+-/**
+- * of_nvmem_layout_get_container() - Get OF node to layout container.
+- *
+- * @nvmem: nvmem device.
+- *
+- * Return: a node pointer with refcount incremented or NULL if no
+- * container exists. Use of_node_put() on it when done.
+- */
+ struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem)
+ {
+ 	return of_get_child_by_name(nvmem->dev.of_node, "nvmem-layout");
+diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
+index 526025561df19..39959d9d4465e 100644
+--- a/include/linux/nvmem-consumer.h
++++ b/include/linux/nvmem-consumer.h
+@@ -242,7 +242,6 @@ struct nvmem_cell *of_nvmem_cell_get(struct device_node *np,
+ 				     const char *id);
+ struct nvmem_device *of_nvmem_device_get(struct device_node *np,
+ 					 const char *name);
+-struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem);
+ #else
+ static inline struct nvmem_cell *of_nvmem_cell_get(struct device_node *np,
+ 						   const char *id)
+@@ -255,12 +254,6 @@ static inline struct nvmem_device *of_nvmem_device_get(struct device_node *np,
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+-
+-static inline struct device_node *
+-of_nvmem_layout_get_container(struct nvmem_device *nvmem)
+-{
+-	return NULL;
+-}
+ #endif /* CONFIG_NVMEM && CONFIG_OF */
+ 
+ #endif  /* ifndef _LINUX_NVMEM_CONSUMER_H */
+diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
+index 9a015e4d428cc..f00fc4949abef 100644
+--- a/include/linux/nvmem-provider.h
++++ b/include/linux/nvmem-provider.h
+@@ -243,6 +243,27 @@ nvmem_layout_get_match_data(struct nvmem_device *nvmem,
+ 
+ #endif /* CONFIG_NVMEM */
+ 
++#if IS_ENABLED(CONFIG_NVMEM) && IS_ENABLED(CONFIG_OF)
 +
 +/**
-+ * of_device_make_bus_id - Use the device node data to assign a unique name
-+ * @dev: pointer to device structure that is linked to a device tree node
++ * of_nvmem_layout_get_container() - Get OF node of layout container
 + *
-+ * This routine will first try using the translated bus address to
-+ * derive a unique name. If it cannot, then it will prepend names from
-+ * parent nodes until a unique name can be derived.
++ * @nvmem: nvmem device
++ *
++ * Return: a node pointer with refcount incremented or NULL if no
++ * container exists. Use of_node_put() on it when done.
 + */
-+void of_device_make_bus_id(struct device *dev)
++struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem);
++
++#else  /* CONFIG_NVMEM && CONFIG_OF */
++
++static inline struct device_node *of_nvmem_layout_get_container(struct nvmem_device *nvmem)
 +{
-+	struct device_node *node = dev->of_node;
-+	const __be32 *reg;
-+	u64 addr;
-+	u32 mask;
-+
-+	/* Construct the name, using parent nodes if necessary to ensure uniqueness */
-+	while (node->parent) {
-+		/*
-+		 * If the address can be translated, then that is as much
-+		 * uniqueness as we need. Make it the first component and return
-+		 */
-+		reg = of_get_property(node, "reg", NULL);
-+		if (reg && (addr = of_translate_address(node, reg)) != OF_BAD_ADDR) {
-+			if (!of_property_read_u32(node, "mask", &mask))
-+				dev_set_name(dev, dev_name(dev) ? "%llx.%x.%pOFn:%s" : "%llx.%x.%pOFn",
-+					     addr, ffs(mask) - 1, node, dev_name(dev));
-+
-+			else
-+				dev_set_name(dev, dev_name(dev) ? "%llx.%pOFn:%s" : "%llx.%pOFn",
-+					     addr, node, dev_name(dev));
-+			return;
-+		}
-+
-+		/* format arguments only used if dev_name() resolves to NULL */
-+		dev_set_name(dev, dev_name(dev) ? "%s:%s" : "%s",
-+			     kbasename(node->full_name), dev_name(dev));
-+		node = node->parent;
-+	}
++	return NULL;
 +}
-+EXPORT_SYMBOL_GPL(of_device_make_bus_id);
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index d1dfd857f2cd0..3a36678cf05e1 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -97,46 +97,6 @@ static const struct of_device_id of_skipped_node_table[] = {
-  * mechanism for creating devices from device tree nodes.
-  */
- 
--/**
-- * of_device_make_bus_id - Use the device node data to assign a unique name
-- * @dev: pointer to device structure that is linked to a device tree node
-- *
-- * This routine will first try using the translated bus address to
-- * derive a unique name. If it cannot, then it will prepend names from
-- * parent nodes until a unique name can be derived.
-- */
--static void of_device_make_bus_id(struct device *dev)
--{
--	struct device_node *node = dev->of_node;
--	const __be32 *reg;
--	u64 addr;
--	u32 mask;
--
--	/* Construct the name, using parent nodes if necessary to ensure uniqueness */
--	while (node->parent) {
--		/*
--		 * If the address can be translated, then that is as much
--		 * uniqueness as we need. Make it the first component and return
--		 */
--		reg = of_get_property(node, "reg", NULL);
--		if (reg && (addr = of_translate_address(node, reg)) != OF_BAD_ADDR) {
--			if (!of_property_read_u32(node, "mask", &mask))
--				dev_set_name(dev, dev_name(dev) ? "%llx.%x.%pOFn:%s" : "%llx.%x.%pOFn",
--					     addr, ffs(mask) - 1, node, dev_name(dev));
--
--			else
--				dev_set_name(dev, dev_name(dev) ? "%llx.%pOFn:%s" : "%llx.%pOFn",
--					     addr, node, dev_name(dev));
--			return;
--		}
--
--		/* format arguments only used if dev_name() resolves to NULL */
--		dev_set_name(dev, dev_name(dev) ? "%s:%s" : "%s",
--			     kbasename(node->full_name), dev_name(dev));
--		node = node->parent;
--	}
--}
--
- /**
-  * of_device_alloc - Allocate and initialize an of_device
-  * @np: device node to assign to device
-diff --git a/include/linux/of_device.h b/include/linux/of_device.h
-index 2c7a3d4bc775b..a72661e47faa5 100644
---- a/include/linux/of_device.h
-+++ b/include/linux/of_device.h
-@@ -40,6 +40,9 @@ static inline int of_dma_configure(struct device *dev,
- {
- 	return of_dma_configure_id(dev, np, force_dma, NULL);
- }
 +
-+void of_device_make_bus_id(struct device *dev);
++#endif /* CONFIG_NVMEM && CONFIG_OF */
 +
- #else /* CONFIG_OF */
- 
- static inline int of_driver_match_device(struct device *dev,
-@@ -82,6 +85,9 @@ static inline int of_dma_configure(struct device *dev,
- {
- 	return 0;
- }
-+
-+static inline void of_device_make_bus_id(struct device *dev) {}
-+
- #endif /* CONFIG_OF */
- 
- #endif /* _LINUX_OF_DEVICE_H */
+ #define module_nvmem_layout_driver(__layout_driver)		\
+ 	module_driver(__layout_driver, nvmem_layout_register,	\
+ 		      nvmem_layout_unregister)
 -- 
 2.53.0
 
