@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F09A23394D;
-	Sat, 17 Oct 2026 17:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7FB38424C;
+	Sat, 17 Oct 2026 17:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256536; cv=none; b=BTlb8gmnkUbwWy+NkjcTOCE125yqXiOBCrOhIXls3YF9IeDyUmCO1uGKwfryz74dWHPu6ULsTXMFDZJYfS4cbLqq3mb18/ZDC/ayBDxKND3yHyjoXXt+ZkQARSyV489mPjEAV/Vw+uvCZVxxPrxLB2dG3xDVa8mS8YPEVhfzJMc=
+	t=1792256539; cv=none; b=j72UpM5dcwYB+tdrY+4frcKUKWg2lklMa6uLGAzG/C0l4sb4RJW325fvKd88I8+xKTYczihpBssPfJZ4NEvFPNr/hN1FapE3/y+jaTQh1yYxAgeNPf4G6PD9sgmza+k0CZKRshXj5PEW3PlpQn58CJF/87O72GFIC21FnPNnYgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256536; c=relaxed/simple;
-	bh=M2XMg58J9jfJWesqGnBBpQqe04tmJwZS/74OXBBJ2hA=;
+	s=arc-20240116; t=1792256539; c=relaxed/simple;
+	bh=nSguku34NXhlHVEg6hAARl/jZb56ESzAwC216MZ76c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhO96qMxmlzjzIgMnNrV2uwHirY1FRmrRHwOnF9yx22OyVtbU+k4hIfEM9QXyCdp+PTzLrgVtIbQQNp2c+aJWfui8zcUyRLgHnH5fQcDbK6HBtcQ1YkhgP1E2AKHtpsYRkHg2ITwqHd/Cyj5rvvSWgUML7k4P2JhKQDk0KOg9pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZyFRu+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=is7UYziU65Rj3X6WyTUtmEsr+c+vWV677yhiRQjANQybEeuYFSHPnUP/5neEJloo2M+OXcQdvWX0q2VMhYJWAzw8TGg0YBUf/xSehpeqQ4XBpeYT5cmReKl+fkhMyJApa8PuaSpPlzzZ3cs72+taLZHXKZQSudPDsMbfI8DRWkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qT88ulfa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZyFRu+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651A41F000C4;
-	Sat, 17 Oct 2026 17:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qT88ulfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508EF1F000C4;
+	Sat, 17 Oct 2026 17:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256535;
-	bh=V+ckejmsT5a9Qc1r0dmX28SK+xBc1Dk86U5uE9UUuWQ=;
+	s=korg; t=1792256537;
+	bh=G9beZsvcxldqk5ApyFQZLZ2J4ndCQvMEY6r4QPaRmE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZyFRu+foVLB0PU+m27D9LRDwUd/Aye4Pa8QrVh7h85rWRoMQVXFH0jVgAnlqu/yX
-	 LWQxoosKztHtPeNqr8MamuTPSq3MPyPfQnSuomVM0skR8PVSyjBUPHXQ+IAeNd/k6G
-	 LG1r3Wr3u1SHaxGwD/bKp+d4jMu1nz1Wyxwd1LQQ=
+	b=qT88ulfaMPU4wEuvKqLqiUTfOv7R12dRA7kr9327LuNJvdgMQubsz/YxF/M+ZfSpF
+	 w7b3ku2+rKXD4AuaAROcGyenUL0+cNhLn1qNcl54MbyQep6I5wp+FTCXESWfdGXfwJ
+	 wkri8D+7c2FV4QV1wwWvGErpjGsk5cM2qR0nNOkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseo Kim <neck3922@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 0269/1674] USB: gadget: dummy-hcd: Fix wait for outstanding request completions
-Date: Sat, 17 Oct 2026 17:42:21 +0200
-Message-ID: <20261017160438.025327400@linuxfoundation.org>
+	Daniel Salmun <salmundani@gmail.com>,
+	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 0252/1674] Input: synaptics - limit T440p InterTouch quirk to LEN0036
+Date: Sat, 17 Oct 2026 17:42:04 +0200
+Message-ID: <20261017160437.596386291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -45,72 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Raphaël Larocque <rlarocque@disroot.org>
 
-commit b263ff9b0fc5c1f371d65c4eb196b31263d039ff upstream.
+commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
 
-The dummy-hcd driver emulates synchronize_irq() by waiting until its
-private callback_usage counter drops to 0 (with the private lock not
-held).  This counter is incremented whenever a gadget driver callback
-occurs (which requires the private lock to be dropped), but not when a
-request completion handler is called.
+The ThinkPad L440 also uses board id 2722, but does not have the SMBus
+initialization problem seen on the T440p. On the L440, the SMBus
+companion becomes available shortly after psmouse probes, allowing the
+touchpad to use SMBus/RMI4 normally.
 
-This is an oversight.  Request completion is triggered by timer
-interrupts (emulating device IRQs in a real UDC), and the interrupt
-handlers are supposed to have completed when the synchronize_irq()
-emulation routine returns -- they aren't supposed to be in the middle
-of a completion callback.  If this happens it can lead to a gadget
-driver's unbind routine running before all outstanding request
-completions have finished, maybe even allowing the gadget driver's
-module to be unloaded while a completion handler is still running.
+The T440p's quirk is currently applied to all Synaptics touchpads with
+board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
+as reported by Daniel Salmun.
 
-Fix the oversight by incrementing the callback_usage value across
-request completion callbacks.
+Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
+that other devices sharing board id 2722 retain their normal
+SMBus/RMI4 operation.
 
-Link: https://lore.kernel.org/linux-usb/7a87e293-633c-4100-aa8d-91560ba5e5c5@rowland.harvard.edu/
-Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
-Tested-by: Minseo Kim <neck3922@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/f23b9e1a-f110-441a-a1d8-95f442ec09d5@rowland.harvard.edu
+Reported-by: Daniel Salmun <salmundani@gmail.com>
+Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
+Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
+Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/mouse/synaptics.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -342,9 +342,11 @@ static void dummy_giveback(struct dummy
- {
- 	bool fifo = req == &dum->fifo_req;
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1839,8 +1839,10 @@ static int synaptics_setup_intertouch(st
+ 			return -ENXIO;
+ 		}
  
-+	++dum->callback_usage;
- 	spin_unlock(&dum->lock);
- 	usb_gadget_giveback_request(_ep, &req->req);
- 	spin_lock(&dum->lock);
-+	--dum->callback_usage;
- 	if (fifo)
- 		dum->fifo_req_busy = 0;
- }
-@@ -758,11 +760,13 @@ static int dummy_queue(struct usb_ep *_e
- 		req->req.complete = fifo_complete;
- 
- 		list_add_tail(&req->queue, &ep->queue);
-+		++dum->callback_usage;
- 		spin_unlock(&dum->lock);
- 		_req->actual = _req->length;
- 		_req->status = 0;
- 		usb_gadget_giveback_request(_ep, _req);
- 		spin_lock(&dum->lock);
-+		--dum->callback_usage;
- 	}  else
- 		list_add_tail(&req->queue, &ep->queue);
- 	spin_unlock_irqrestore(&dum->lock, flags);
+-		/* Disable intertouch on known-broken board revisions */
+-		if (info->board_id == 2722) {
++		/* Disable intertouch on known-broken T440p board revisions */
++		if (info->board_id == 2722 &&
++		    psmouse_matches_pnp_id(psmouse,
++					   (const char * const []){"LEN0036", NULL})) {
+ 			psmouse_info(psmouse,
+ 				     "Disabling intertouch for board id %u\n",
+ 				     info->board_id);
 
 
