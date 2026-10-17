@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7382E387373;
-	Sat, 17 Oct 2026 16:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669733ACA7E;
+	Sat, 17 Oct 2026 16:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254992; cv=none; b=A3C7iWmYhPvEBWwla+Y9yMNTYbWDPMH5kK7mAaeCgOR5WEmx+rrm5eKA1zXpP4uwiU1Nv+L1sKqfUg7NEWDjOZs3Rd9BZVrSgrzkgy/xCscwHHrWlh84E4OZMU8YWGj0JqroQIXBXTIBmxD9A+f1/mBRbVGvJN5aNruvzEv1upU=
+	t=1792254995; cv=none; b=Ng7iri4vfokjUqxsBhCURsFVuv+NuxItoDt1ds+cBbxAelo7UXr5TQo+bK/oRO7m3sceo3mqMgNdJtfkH/f9YHToto+SO8CR4QdoAcTWBanb313JzLCa/+CWezpwPc+i42cEmNs9BagwGPG8ki89ZkIx1yh4+PPA1MA0mIz2uCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254992; c=relaxed/simple;
-	bh=lAM6BNzubqynxKXwIzI79UdGe1vKQxhMfdktT0muGJo=;
+	s=arc-20240116; t=1792254995; c=relaxed/simple;
+	bh=G97gLk0KFddVQu+LIgCupKVPy9iNt42zItjikwClX3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMfrunDE3T9Z9TMETL3Kl2X2PG1blUbE8SzPV0UUBbDU9wSjUSEhjcmOtKmTMhj1VuKQAPBZCxcWSW/IOyWYriMYQHXL45aV04/vwoMpmGaEmr14IdPIIka3tOZ2T3kEjklkDTIcRlWl96etJeiAKIGtKFW3hTtaDggzz66k3dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yij8OWAs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uxRjNfoTyUp1mfHjGGm/NBMHqRRY+rVRM0PSxBVgmBDriBGKy6spj9enwdL/9eYvTsUvE0P8ydhlhdS422KQ4pjoywgkq1myo1+ti8D/vCkC9o0zOipJjkDk3SE/yprJig+owsugPeNztwB5t83SBOe+AJPij/+mbfrE6Wb2X9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVPqPd/p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yij8OWAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D3C1F000C5;
-	Sat, 17 Oct 2026 16:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVPqPd/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF22E1F000C4;
+	Sat, 17 Oct 2026 16:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254991;
-	bh=fxPuveJAVu9AJc1PyM+D/uXPZTaPHjZz/pEZXviutfI=;
+	s=korg; t=1792254994;
+	bh=eRb44qHOqsDfpv+s0XOvsEpwq3F6HhAnikt1LEzvLjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yij8OWAskt16ByAHkRxViBXGYED0ru5B+1pbCzR09vifoMGa5C9kwy6NnvT130j/B
-	 BLstf4Nb3nTA5befMgq9EBjpG/bFfg0L+r1HmLcJxdVVbfytR1R8RbIU6iU6sWrPeF
-	 TpKMtqPw0zXuD1A3FqdI5t6K0e6SQmvi8jGZCqQo=
+	b=HVPqPd/pFQkWP4OkZZ/87+0KpHRruARrjAt+GNj8IlVSsxgZh7Q3KFFcx3HGnYZPi
+	 GzLglIPDq9Gyl/jZHxKP2LYgyjnQzjxel695kV4QH/RA8JI1Con9Pf6cPDTYe1L70y
+	 U61oF0PMF+J1iyti6tJM5InOnLdKCZVdrKiLZUbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 629/869] blk-iolatency: clear delay state when freeing policy data
-Date: Sat, 17 Oct 2026 17:57:50 +0200
-Message-ID: <20261017160053.155718411@linuxfoundation.org>
+Subject: [PATCH 6.12 630/869] ocfs2: validate DIO orphan slot during inode read
+Date: Sat, 17 Oct 2026 17:57:51 +0200
+Message-ID: <20261017160053.179481108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,63 +58,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 8935bf22c0a0db517a7f72f7097300e05dd852f5 ]
+[ Upstream commit bb88131c9831075b8dc08cdd375743e5d44c7ca2 ]
 
-io.latency can throttle a group which has no latency target of its own.
-When a sibling misses its target, check_scale_change() scales down its
-peers, and a peer that reaches queue depth one gets blkcg_use_delay()
-called on it on every further scale-down, even with min_lat_nsec == 0.
+[BUG]
+A corrupted append-DIO dinode (high byte at offset 0xa1
+corrupted from 0 to 1) can carry an i_dio_orphaned_slot
+outside the mounted filesystem slot range and trigger a
+use-after-free error:
 
-iolatency_pd_offline() resets the target through
-iolatency_set_min_lat_nsec(), which clears the delay only on a nonzero
-to zero transition, so it never clears such a peer.  Freeing the policy
-data then leaves blkg->use_delay set and blkcg->congestion_count
-elevated with nothing left that can drop it.
+BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
+Call Trace:
+ ...
+ ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+ ocfs2_wipe_inode+0x292/0xf70 fs/ocfs2/inode.c:840
+ ocfs2_delete_inode fs/ocfs2/inode.c:1155 [inline]
+ ocfs2_evict_inode+0x6c9/0x1170 fs/ocfs2/inode.c:1295
+ evict+0x38e/0x8f0 fs/inode.c:810
+ iput_final fs/inode.c:1914 [inline]
+ iput fs/inode.c:1966 [inline]
+ iput+0x55b/0x8b0 fs/inode.c:1926
+ ocfs2_recover_orphans+0x610/0xe40 fs/ocfs2/journal.c:2374
+ ocfs2_complete_recovery+0x5af/0xd00 fs/ocfs2/journal.c:1373
+ ...
 
-blk_cgroup_congested() then returns true for every task in that cgroup
-and its descendants for as long as the cgroup lives: page_cache_sync_ra()
-cuts readahead to a single page, page_cache_async_ra() skips it
-altogether, and __folio_throttle_swaprate() takes swap_avail_lock and
-schedules a throttle on anonymous folio allocation.
+[CAUSE]
+ocfs2_del_inode_from_orphan() uses i_dio_orphaned_slot to index the
+slot-local system inode cache. The dinode validator does not check
+this active slot, so an out-of-range value produces an invalid cache
+entry pointer that is dereferenced as an inode pointer.
 
-Clear the delay in iolatency_pd_free().  By then bio-held blkg
-references have drained, or the queue is frozen for policy
-deactivation, so check_scale_change() cannot re-arm it.  The free
-callback can also see policy data which was never attached to a blkg,
-hence the pd->blkg check.
+[FIX]
+Reject an active i_dio_orphaned_slot outside the slot range during
+dinode validation, before DIO orphan recovery can consume it.
 
-Fixes: d70675121546 ("block: introduce blk-iolatency io controller")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260814165712.510132-2-usama.arif@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/20260803030007.3993199-3-gality369@gmail.com
+Fixes: 06ee5c75b575 ("ocfs2: add functions to add and remove inode in orphan dir")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iolatency.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ocfs2/inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 49141c7fbcaa2..6be1c5e020ac9 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -1043,6 +1043,15 @@ static void iolat_release(struct rcu_head *rcu)
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index dd486c74ab9d1..4cb7d51d4e774 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1466,6 +1466,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
+ 	}
  
- static void iolatency_pd_free(struct blkg_policy_data *pd)
- {
-+	struct blkcg_gq *blkg = pd_to_blkg(pd);
++	if ((le32_to_cpu(di->i_flags) & OCFS2_DIO_ORPHANED_FL) &&
++	    le16_to_cpu(di->i_dio_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
++		rc = ocfs2_error(sb, "Invalid dinode %llu: DIO orphaned slot %u\n",
++				 (unsigned long long)bh->b_blocknr,
++				 le16_to_cpu(di->i_dio_orphaned_slot));
++		goto bail;
++	}
 +
-+	/*
-+	 * Groups throttled as collateral have min_lat_nsec == 0, so
-+	 * iolatency_pd_offline() leaves their delay set.  Drop it here, where
-+	 * no in-flight bio can re-arm it via check_scale_change().
-+	 */
-+	if (blkg)
-+		blkcg_clear_delay(blkg);
- 	call_rcu(&pd->rcu_head, iolat_release);
- }
- 
+ 	/*
+ 	 * Reject dinodes whose i_mode does not name one of the seven
+ 	 * canonical POSIX file types.  ocfs2_populate_inode() copies
 -- 
 2.53.0
 
