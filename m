@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1372E266C;
-	Sat, 17 Oct 2026 17:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A8D392829;
+	Sat, 17 Oct 2026 17:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257868; cv=none; b=JJAxat8so492LVNLhz3Wy7mgGYks3ea2mza1wVf76nbXDfVPwD2f07JFTP3J7S2BMjzTfqzYQkWy5y04p4EB4q7KxA4yD6XJkgokv9C7NPkD6zdfT5F61HdtU/gcSN6z3tuI2auICdJB7+lVWO2gBlYbfNWdbFA/bVuiflgHme4=
+	t=1792257871; cv=none; b=sygYSHoSBehElmZAD7yRHFNg5gP8AqSiFhZl4FV8vULB3RtrGut/tQPP9QsOmcVkopORIfLl0KX1SLn73k5N5W6p+DMDB0a8BQMTM6+WEJwEFCrPmo4l2d7lS9K05T/4UUIhoCTFnp9bQ4zSHpko6jmKPHyhjdwivn7aAHdB8uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257868; c=relaxed/simple;
-	bh=+Oz6mRpjFRTwz37Fj0N6dU7UiCJuJ3x7j9JF+0GdojQ=;
+	s=arc-20240116; t=1792257871; c=relaxed/simple;
+	bh=xO90S9VT/bjXFeV40A1sV9Afomnxa4k0ZMIl+zyPkGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImMY4FBf0zL0w0m0XSNncJByzNUzVW0IlPl05j7gPk6CbBuX5sTUBss1ZGvgMP7JOYZ3rEe7XviS0tRmPaSKJzp8SKnjEzxQmV1eHctGszl5js7Haf3Pp0MCIwPzgReor18aDRSn7RmrEppPaW5uR2PFE8nnc49qHLkdELW8Opo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIrgNWYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdthimsrkVYZNwODn+RZ2NLzNSuBxFoIkqa0bTO/ra/UEe9fm5I+RHqCxm9R2rtJLvleMa14ijhcmy+EY5+euJjVRt0YjEup4g9JDcsLc4K2zRzpAXD3xax+3as36tu+jcVnrVcXW5LH+DlEA/KerZkA6OGdR+zvwD1Oh4g+Xc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOOQARYc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIrgNWYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDA81F000C4;
-	Sat, 17 Oct 2026 17:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOOQARYc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B441F000C5;
+	Sat, 17 Oct 2026 17:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257867;
-	bh=anECkRpDUB31N5UuAogi+elQ0Al0BS1s7QR2Fj7B7zc=;
+	s=korg; t=1792257870;
+	bh=8di175ovLW8WdJeNRrvj2nkpTyS/1S2o5lZScnCsW9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TIrgNWYF9vYdWJLZuEvPSaG3E2Ez0iFuzHxbc2LC7AYMnrdFy/fLNw8poUZfLUWbm
-	 +kiHDtjNduA9CKj4ytR6TdNOxqOJs7gqjBS3Q4blyna+yGjfU9mIVoS8yNrFZaqWHI
-	 Bx0kKWZ+Gw1w0qzYixtWR0PVOvnQLgEQ40DbhOAo=
+	b=HOOQARYclnyb4byj9NeJP02gTVWXwiyMetXXtVdxKcZM5jjeHa9GL/92O0dAFa6vQ
+	 ah0G0ARimLDN/DJbjhi4W2gfBoAzk4ANBLpd4xyLmz5040WFpfknD1achQkUdAfGgh
+	 aAAaqbQbe1y6iEYK8owecw0YWgIUHrnwUaZnzhPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0695/1674] bnxt_en: Mask the bd_cnt field in the TX BD properly
-Date: Sat, 17 Oct 2026 17:49:27 +0200
-Message-ID: <20261017160448.942808445@linuxfoundation.org>
+Subject: [PATCH 6.6 0696/1674] ax25: Remove broken autobind
+Date: Sat, 17 Oct 2026 17:49:28 +0200
+Message-ID: <20261017160448.968065142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,88 +52,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 107b25db61122d8f990987895c2912927b8b6e3f ]
+[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
 
-The bd_cnt field in the TX BD specifies the total number of BDs for
-the TX packet.  The bd_cnt field has 5 bits and the maximum number
-supported is 32 with the value 0.
+Binding AX25 socket by using the autobind feature leads to memory leaks
+in ax25_connect() and also refcount leaks in ax25_release(). Memory
+leak was detected with kmemleak:
 
-CONFIG_MAX_SKB_FRAGS can be modified and the total number of SKB
-fragments can approach or exceed the maximum supported by the chip.
-Add a macro to properly mask the bd_cnt field so that the value 32
-will be properly masked and set to 0 in the bd_cnd field.
+================================================================
+unreferenced object 0xffff8880253cd680 (size 96):
+backtrace:
+__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
+kmemdup_noprof (mm/util.c:136)
+ax25_rt_autobind (net/ax25/ax25_route.c:428)
+ax25_connect (net/ax25/af_ax25.c:1282)
+__sys_connect_file (net/socket.c:2045)
+__sys_connect (net/socket.c:2064)
+__x64_sys_connect (net/socket.c:2067)
+do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+================================================================
 
-Without this patch, the out-of-range bd_cnt value will corrupt the
-TX BD and may cause TX timeout.
+When socket is bound, refcounts must be incremented the way it is done
+in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
+autobind, the refcounts are not incremented.
 
-The next patch will check for values exceeding 32.
+This bug leads to the following issue reported by Syzkaller:
 
-Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250321211639.3812992-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+================================================================
+ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
+------------[ cut here ]------------
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+Modules linked in:
+CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+...
+Call Trace:
+ <TASK>
+ __refcount_dec include/linux/refcount.h:336 [inline]
+ refcount_dec include/linux/refcount.h:351 [inline]
+ ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
+ netdev_tracker_free include/linux/netdevice.h:4302 [inline]
+ netdev_put include/linux/netdevice.h:4319 [inline]
+ ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
+ __sock_release net/socket.c:647 [inline]
+ sock_close+0xbc/0x240 net/socket.c:1398
+ __fput+0x3e9/0x9f0 fs/file_table.c:464
+ __do_sys_close fs/open.c:1580 [inline]
+ __se_sys_close fs/open.c:1565 [inline]
+ __x64_sys_close+0x7f/0x110 fs/open.c:1565
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ...
+ </TASK>
+================================================================
+
+Considering the issues above and the comments left in the code that say:
+"check if we can remove this feature. It is broken."; "autobinding in this
+may or may not work"; - it is better to completely remove this feature than
+to fix it because it is broken and leads to various kinds of memory bugs.
+
+Now calling connect() without first binding socket will result in an
+error (-EINVAL). Userspace software that relies on the autobind feature
+might get broken. However, this feature does not seem widely used with
+this specific driver as it was not reliable at any point of time, and it
+is already broken anyway. E.g. ax25-tools and ax25-apps packages for
+popular distributions do not use the autobind feature for AF_AX25.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 4 ++--
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 2 ++
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 3 +--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ include/net/ax25.h    |  1 -
+ net/ax25/af_ax25.c    | 30 ++++++------------
+ net/ax25/ax25_route.c | 74 -------------------------------------------
+ 3 files changed, 10 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 239dc465348ba..e066f44e900b6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -494,7 +494,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 					TX_BD_FLAGS_LHINT_512_AND_SMALLER |
- 					TX_BD_FLAGS_COAL_NOW |
- 					TX_BD_FLAGS_PACKET_END |
--					(2 << TX_BD_FLAGS_BD_CNT_SHIFT));
-+					TX_BD_CNT(2));
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index ef79023f1a286..df3515e43da58 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -416,7 +416,6 @@ void ax25_rt_device_down(struct net_device *);
+ int ax25_rt_ioctl(unsigned int, void __user *);
+ extern const struct seq_operations ax25_rt_seqops;
+ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
+-int ax25_rt_autobind(ax25_cb *, ax25_address *);
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
+ 				   ax25_address *, ax25_digi *);
+ void ax25_rt_free(void);
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 4a16142ac58a9..8b86f05c1dea4 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
+ 		}
+ 	}
  
- 		if (skb->ip_summed == CHECKSUM_PARTIAL)
- 			tx_push1->tx_bd_hsize_lflags =
-@@ -560,7 +560,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+-	/*
+-	 *	Must bind first - autobinding in this may or may not work. If
+-	 *	the socket is already bound, check to see if the device has
+-	 *	been filled in, error if it hasn't.
+-	 */
++	/* Must bind first - autobinding does not work. */
+ 	if (sock_flag(sk, SOCK_ZAPPED)) {
+-		/* check if we can remove this feature. It is broken. */
+-		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
+-			current->comm);
+-		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
+-			kfree(digi);
+-			goto out_release;
+-		}
++		kfree(digi);
++		err = -EINVAL;
++		goto out_release;
++	}
  
- 	dma_unmap_addr_set(tx_buf, mapping, mapping);
- 	flags = (len << TX_BD_LEN_SHIFT) | TX_BD_TYPE_LONG_TX_BD |
--		((last_frag + 2) << TX_BD_FLAGS_BD_CNT_SHIFT);
-+		TX_BD_CNT(last_frag + 2);
+-		ax25_fillin_cb(ax25, ax25->ax25_dev);
+-		ax25_cb_add(ax25);
+-	} else {
+-		if (ax25->ax25_dev == NULL) {
+-			kfree(digi);
+-			err = -EHOSTUNREACH;
+-			goto out_release;
+-		}
++	/* Check to see if the device has been filled in, error if it hasn't. */
++	if (ax25->ax25_dev == NULL) {
++		kfree(digi);
++		err = -EHOSTUNREACH;
++		goto out_release;
+ 	}
  
- 	txbd->tx_bd_haddr = cpu_to_le64(mapping);
- 	txbd->tx_bd_opaque = SET_TX_OPAQUE(bp, prod, 2 + last_frag);
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 67ec15eae5d57..4c1598d475059 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -74,6 +74,8 @@ struct tx_bd {
- #define TX_OPAQUE_PROD(bp, opq)	((TX_OPAQUE_IDX(opq) + TX_OPAQUE_BDS(opq)) &\
- 				 (bp)->tx_ring_mask)
+ 	if (sk->sk_type == SOCK_SEQPACKET &&
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index 69de75db0c9c2..10577434f40bf 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ 	return ax25_rt;
+ }
  
-+#define TX_BD_CNT(n)	(((n) << TX_BD_FLAGS_BD_CNT_SHIFT) & TX_BD_FLAGS_BD_CNT)
-+
- struct tx_bd_ext {
- 	__le32 tx_bd_hsize_lflags;
- 	#define TX_BD_FLAGS_TCP_UDP_CHKSUM			(1 << 0)
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 5e62172fb5f29..f3e322e7d61cc 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -48,8 +48,7 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
- 		tx_buf->page = virt_to_head_page(xdp->data);
+-/*
+- *	Adjust path: If you specify a default route and want to connect
+- *      a target on the digipeater path but w/o having a special route
+- *	set before, the path has to be truncated from your target on.
+- */
+-static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
+-{
+-	int k;
+-
+-	for (k = 0; k < digipeat->ndigi; k++) {
+-		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
+-			break;
+-	}
+-
+-	digipeat->ndigi = k;
+-}
+-
+-
+-/*
+- *	Find which interface to use.
+- */
+-int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+-{
+-	ax25_uid_assoc *user;
+-	ax25_route *ax25_rt;
+-	int err = 0;
+-
+-	ax25_route_lock_use();
+-	ax25_rt = ax25_get_route(addr, NULL);
+-	if (!ax25_rt) {
+-		ax25_route_lock_unuse();
+-		return -EHOSTUNREACH;
+-	}
+-	rcu_read_lock();
+-	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
+-		err = -EHOSTUNREACH;
+-		goto put;
+-	}
+-
+-	user = ax25_findbyuid(current_euid());
+-	if (user) {
+-		ax25->source_addr = user->call;
+-		ax25_uid_put(user);
+-	} else {
+-		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
+-			err = -EPERM;
+-			goto put;
+-		}
+-		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
+-	}
+-
+-	if (ax25_rt->digipeat != NULL) {
+-		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
+-					 GFP_ATOMIC);
+-		if (ax25->digipeat == NULL) {
+-			err = -ENOMEM;
+-			goto put;
+-		}
+-		ax25_adjust_path(addr, ax25->digipeat);
+-	}
+-
+-	if (ax25->sk != NULL) {
+-		local_bh_disable();
+-		bh_lock_sock(ax25->sk);
+-		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
+-		bh_unlock_sock(ax25->sk);
+-		local_bh_enable();
+-	}
+-
+-put:
+-	rcu_read_unlock();
+-	ax25_route_lock_unuse();
+-	return err;
+-}
  
- 	txbd = &txr->tx_desc_ring[TX_RING(bp, prod)][TX_IDX(prod)];
--	flags = (len << TX_BD_LEN_SHIFT) |
--		((num_frags + 1) << TX_BD_FLAGS_BD_CNT_SHIFT) |
-+	flags = (len << TX_BD_LEN_SHIFT) | TX_BD_CNT(num_frags + 1) |
- 		bnxt_lhint_arr[len >> 9];
- 	txbd->tx_bd_len_flags_type = cpu_to_le32(flags);
- 	txbd->tx_bd_opaque = SET_TX_OPAQUE(bp, prod, 1 + num_frags);
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
+ 	ax25_address *dest, ax25_digi *digi)
 -- 
 2.53.0
 
