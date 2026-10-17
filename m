@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D40385D7B;
-	Sat, 17 Oct 2026 17:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616183B8BBB;
+	Sat, 17 Oct 2026 17:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258870; cv=none; b=Jfk1WY0KFXlgiw5qMgzd+4Zjms5J6n5mdNJHXZRi6gBisQTDp6sPtuH4wZSGMQxZIKQpZzaSSD/20oMgSmI8ZCbkS/FYE1EHiqKaA/Gmp3eXIwnJy/Ld2S1uYAHAl3QXIaYZDbuGfVqkmsVUDHdvTVTOeBejM6zwx8IP4me7ouI=
+	t=1792258873; cv=none; b=WbWz6/fRHuJOtsZ2x2KeLr70lmooAEYtylf8TBPe9zLXAPMTWLHtgpAjpAtrE2n4gJHUwnl9+l4vmuKASNmpnWSoCVkBuYVn4TvEBYX+6zzoCLSxVPrVkmdie8Mu/MGPdrDQ2EtJ1+phhoZB2R3jVqn2KUA551ZjBOxmJjd2xsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258870; c=relaxed/simple;
-	bh=fUa2l01yw4Yul6UCutvgt6Dcni/+xMPoxLL+Vz9Q1pU=;
+	s=arc-20240116; t=1792258873; c=relaxed/simple;
+	bh=28r2vArt/7kNEBFsSArnah+a5w0QlxVstol73DdsvIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYrZ2kJUJTe+3HIffdYOrHCDL96BzQNLcn0+ZGMiS4mdgaSYpuvXag9u6Cyg+B1Qd+m0v2SKciQ8QVGgGQsKsFaXxPcfZXzFS2JQ5/Y/cE414GLTOH92A42ZdYDOCYj/tn9R7QrkhYjt4A8VRbPqMKf+TEuKnXLFZd0jOf3SjFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwW9dtic; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tw3R5DDsUPZ+ndV7nWaOirqBXMsqK3zByIvGJTag5bPYxeibhXktVXroePdvC/IM/m1Iod2wRjvznvKNyMoZ5NyS+UDv4gAasp7lFVidAB4CVObmeFF2aZzfC4+pEYCog4vuXI86o7NQg5vwordognR6yyqkR5049jvEAzftPoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofv+o8Yu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwW9dtic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A712C1F000C4;
-	Sat, 17 Oct 2026 17:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofv+o8Yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14B31F000C5;
+	Sat, 17 Oct 2026 17:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258869;
-	bh=h/1FTauSHL5NS5kO0iJwyiwIGSq24DHEn/9HnuWZ8e4=;
+	s=korg; t=1792258872;
+	bh=ripnIOyqhTxvcW0Bh6lgRvx+Z20JnlGXCFE7iuWkG+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EwW9dticY9NhLlS7UOOnB3MRnQ3h68KuF2lMR+/t0s/yfoMh3z9zl4jQhjjKsHx4h
-	 7eAm9QKNc/NbkvkJb9U66a3JmEVP/5KWQKV/Thvc2bNWRwFkH0HxEJxYkxP4cvlAyy
-	 DZ36FxvD8c8zxldB+XeXUtoq4Hq7Uar7D+ktvlvs=
+	b=ofv+o8YupfCfEjvnngIOFEYbeqJiSI7s6zXR563CT2hoR1sGQ88nNZ6939G3fgIex
+	 VAZPhtg+0Wukxy7XMqFz+iEKYnZaGNXztGtYgEcMgsLYh+RMJjrxMZNs9e8582U/Dd
+	 9bQzIxSNu6nxsoRNKQERvK+19lO0Jbo6EDP8Vtkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rory Little <rory@candelatech.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1027/1674] drm/amd/display: Avoid NULL dereference in dc_dmub_srv error paths
-Date: Sat, 17 Oct 2026 17:54:59 +0200
-Message-ID: <20261017160457.495067939@linuxfoundation.org>
+Subject: [PATCH 6.6 1028/1674] wifi: mt76: mt7921: Place upper limit on station AID
+Date: Sat, 17 Oct 2026 17:55:00 +0200
+Message-ID: <20261017160457.520672670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -56,76 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Rory Little <rory@candelatech.com>
 
-[ Upstream commit 4ae3e16f4b3bf64140f773629b765d605ee079a9 ]
+[ Upstream commit 4d0bf21e3e20619d51d06c0c36207aabab8b712c ]
 
-In dc_dmub_srv_log_diagnostic_data() and
-dc_dmub_srv_enable_dpia_trace().
+Any station configured with an AID over 20 causes a firmware crash.
+This situation occurred in our testing using an AP interface on 7922
+hardware, with a modified hostapd, sourced from Mediatek's OpenWRT
+feeds.
 
-Both functions check:
+In stock hostapd, station AIDs begin counting at 1, and this
+configuration is prevented with an upper limit on associated stations.
+However, the modified hostapd began allocation at 65, which caused the
+firmware to crash. This fix does not allow these AIDs to work, but will
+prevent the firmware crash.
 
-  if (!dc_dmub_srv || !dc_dmub_srv->dmub)
+This crash was only seen on IFTYPE_AP interfaces, and the fix does not
+appear to have an effect on IFTYPE_STATION behavior.
 
-and then call DC_LOG_ERROR() inside that block.
-
-DC_LOG_ERROR() uses dc_dmub_srv->ctx internally. So if
-dc_dmub_srv is NULL, the logging itself can dereference a
-NULL pointer and cause a crash.
-
-Fix this by splitting the checks.
-
-First check if dc_dmub_srv is NULL and return immediately.
-Then check dc_dmub_srv->dmub and log the error only when
-dc_dmub_srv is valid.
-
-Fixes the below:
-../display/dc/dc_dmub_srv.c:962 dc_dmub_srv_log_diagnostic_data() error: we previously assumed 'dc_dmub_srv' could be null (see line 961)
-../display/dc/dc_dmub_srv.c:1167 dc_dmub_srv_enable_dpia_trace() error: we previously assumed 'dc_dmub_srv' could be null (see line 1166)
-
-Fixes: 2631ac1ac328 ("drm/amd/display: add DMUB registers to crash dump diagnostic data.")
-Fixes: 71ba6b577a35 ("drm/amd/display: Add interface to enable DPIA trace")
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
+Signed-off-by: Rory Little <rory@candelatech.com>
+Link: https://patch.msgid.link/20250904000711.3033860-1-rory@candelatech.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 3 +++
+ drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 3dd1761d5a932..624e93e22b06c 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -793,7 +793,10 @@ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv)
- {
- 	struct dmub_diagnostic_data diag_data = {0};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 5ffe08b8b85c4..8f0976e9c295e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -726,6 +726,9 @@ int mt7921_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 	int ret, idx;
  
--	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
-+	if (!dc_dmub_srv)
-+		return;
++	if (sta->aid > MT7921_MAX_AID)
++		return -ENOENT;
 +
-+	if (!dc_dmub_srv->dmub) {
- 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
- 		return;
- 	}
-@@ -1034,7 +1037,10 @@ void dc_dmub_srv_enable_dpia_trace(const struct dc *dc)
- 	enum dmub_status status;
- 	static const uint32_t timeout_us = 30;
+ 	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, MT792x_WTBL_STA - 1);
+ 	if (idx < 0)
+ 		return -ENOSPC;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+index 87dd06855f685..bb54832358f56 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+@@ -7,6 +7,8 @@
+ #include "../mt792x.h"
+ #include "regs.h"
  
--	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
-+	if (!dc_dmub_srv)
-+		return;
++#define MT7921_MAX_AID                  20
 +
-+	if (!dc_dmub_srv->dmub) {
- 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
- 		return;
- 	}
+ #define MT7921_TX_RING_SIZE		2048
+ #define MT7921_TX_MCU_RING_SIZE		256
+ #define MT7921_TX_FWDL_RING_SIZE	128
 -- 
 2.53.0
 
