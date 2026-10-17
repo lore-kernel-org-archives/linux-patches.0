@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9023BB115;
-	Sat, 17 Oct 2026 17:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8103B8BBB;
+	Sat, 17 Oct 2026 17:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258154; cv=none; b=EWBQPpRGXc5HaiadpayziEmZqHmYBRE9a+/aDZV773QFpg17QRcyHFeufFQ1vy9QuWjRoOC3WSmPVigtgnmnvbBN10a5WKzhgws0xgdedFDsCmcLdWLtxG8AGY8Lq8BF6j0e5mry+7/KZYoOUu2WbUNv7o8JpPBLZyyBozCGwOU=
+	t=1792258158; cv=none; b=lCiCbh7D9wsdbM8DKmSB7zGY7kI/k3CvgjrouyYXDvHy9L2E/1C+xmHHE+w6ngLAbiWoo77o1FadrTuuYOUStN6qt0uzyoZ7GwhZ+z9b2Y+y79O2TMHRZDr2MjgWrBQr0IsCQpokRgJcr/f5ZE/PTR/WRI2u528kJX3p4KXffl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258154; c=relaxed/simple;
-	bh=EdIT2Ji0WEpxQ4mwLOTpp1dAwv45FZZ2J/jpXalQcEI=;
+	s=arc-20240116; t=1792258158; c=relaxed/simple;
+	bh=/S/lqnZiPnVXzzBtFLADrRJ4GJuN1XGCNQ3X2rERIX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/OjqdIIyn2vMW8ULNtrhxoKPByOCCkBl4PehMYCq93WnEBux8RvubmW8SoRix42TxkwQOTnOzQXrhB1/o4JDJyCQC0BKp0Ajxz4R2UQsVXxy5vuNI8hGXQKmZXY5ZeK3JehL5I3eP1v0iLKzU4l/cyVrzOwbRsLLFJgbrW+22Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjKEvaEP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TKN+nkxEOso5Fl89tlo271FxrSq5gbnR1z+6S4CSXVokAALwEMtQpFwInB/+b9jcHenuQnocCYt3AdY1qzOjHz+4ICIbWQbpEoDy0z1GebBI7fxrPXyn9sqjsbZJxYl5KYU+RiR63ebnDYafyvQRjvnYy9jpKNlmHEM4sUMqS04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4fXrOUi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjKEvaEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D901F000C4;
-	Sat, 17 Oct 2026 17:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4fXrOUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156C11F000C4;
+	Sat, 17 Oct 2026 17:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258153;
-	bh=NLIF7UKcvDXUTqmjNm5rMFguRE1z16Y2ZzJ5hXn5IxY=;
+	s=korg; t=1792258156;
+	bh=jZFVZd5wBvyoOQejJBbmPjm5t8e9RuOzUCgEvldzFBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GjKEvaEPMND5w0GYLr/XAnT0iSFP3ADmElhTmotiUComRBvGXoMyFMAknlJpy3UvE
-	 fW0BfzYDVokFRGo8+j+bfsti94hmt0Q+W1Gs8tPA8HSS1hF5Uq6kRCPr3G4Wk06M0m
-	 lT8p5MKP0uTSqrb8zPKtmQPc1IxrhEAtzLZJ7U/Q=
+	b=c4fXrOUij8CFBy7yEgsPOYWcIt0b6QVUqTr5siZJUhPpvLNu52+E/XQXtgDraIt/3
+	 iRjVjldWCBvCcp65pafD4tsKQx9vJy//MmH3JLxqCi/tpu446BkMKHemN4FCNFSO1M
+	 B5hm18z44luZK/GrictD8dqNWzQTbGPqrhtMSYto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0789/1674] dm-verity: provide dma_alignment limit in io_hints
-Date: Sat, 17 Oct 2026 17:51:01 +0200
-Message-ID: <20261017160451.355790403@linuxfoundation.org>
+Subject: [PATCH 6.6 0754/1674] bpf: Do not include stack ptr register in precision backtracking bookkeeping
+Date: Sat, 17 Oct 2026 17:50:26 +0200
+Message-ID: <20261017160450.455884340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,55 +51,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 09d1430896e38933470045408d7a350dac7d841b ]
+[ Upstream commit e2d2115e56c4a02377189bfc3a9a7933552a7b0f ]
 
-Since Linux v6.1, some filesystems support submitting direct I/O that is
-aligned to only dma_alignment instead of the logical_block_size
-alignment that was required before.  I/O that is not aligned to the
-logical_block_size is difficult to handle in device-mapper targets that
-do cryptographic processing of data, as it makes the units of data that
-are hashed or encrypted possibly be split across pages, creating rarely
-used and rarely tested edge cases.
+Yi Lai reported an issue ([1]) where the following warning appears
+in kernel dmesg:
+  [   60.643604] verifier backtracking bug
+  [   60.643635] WARNING: CPU: 10 PID: 2315 at kernel/bpf/verifier.c:4302 __mark_chain_precision+0x3a6c/0x3e10
+  [   60.648428] Modules linked in: bpf_testmod(OE)
+  [   60.650471] CPU: 10 UID: 0 PID: 2315 Comm: test_progs Tainted: G           OE       6.15.0-rc4-gef11287f8289-dirty #327 PREEMPT(full)
+  [   60.654385] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+  [   60.656682] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+  [   60.660475] RIP: 0010:__mark_chain_precision+0x3a6c/0x3e10
+  [   60.662814] Code: 5a 30 84 89 ea e8 c4 d9 01 00 80 3d 3e 7d d8 04 00 0f 85 60 fa ff ff c6 05 31 7d d8 04
+                       01 48 c7 c7 00 58 30 84 e8 c4 06 a5 ff <0f> 0b e9 46 fa ff ff 48 ...
+  [   60.668720] RSP: 0018:ffff888116cc7298 EFLAGS: 00010246
+  [   60.671075] RAX: 54d70e82dfd31900 RBX: ffff888115b65e20 RCX: 0000000000000000
+  [   60.673659] RDX: 0000000000000001 RSI: 0000000000000004 RDI: 00000000ffffffff
+  [   60.676241] RBP: 0000000000000400 R08: ffff8881f6f23bd3 R09: 1ffff1103ede477a
+  [   60.678787] R10: dffffc0000000000 R11: ffffed103ede477b R12: ffff888115b60ae8
+  [   60.681420] R13: 1ffff11022b6cbc4 R14: 00000000fffffff2 R15: 0000000000000001
+  [   60.684030] FS:  00007fc2aedd80c0(0000) GS:ffff88826fa8a000(0000) knlGS:0000000000000000
+  [   60.686837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [   60.689027] CR2: 000056325369e000 CR3: 000000011088b002 CR4: 0000000000370ef0
+  [   60.691623] Call Trace:
+  [   60.692821]  <TASK>
+  [   60.693960]  ? __pfx_verbose+0x10/0x10
+  [   60.695656]  ? __pfx_disasm_kfunc_name+0x10/0x10
+  [   60.697495]  check_cond_jmp_op+0x16f7/0x39b0
+  [   60.699237]  do_check+0x58fa/0xab10
+  ...
 
-As such, dm-crypt and dm-integrity have already opted out of this by
-setting dma_alignment to 'logical_block_size - 1'.
+Further analysis shows the warning is at line 4302 as below:
 
-Although dm-verity does have code that handles these cases (or at least
-is intended to do so), supporting direct I/O with such a low amount of
-alignment is not really useful on dm-verity devices.  So, opt dm-verity
-out of it too so that it's not necessary to handle these edge cases.
+  4294                 /* static subprog call instruction, which
+  4295                  * means that we are exiting current subprog,
+  4296                  * so only r1-r5 could be still requested as
+  4297                  * precise, r0 and r6-r10 or any stack slot in
+  4298                  * the current frame should be zero by now
+  4299                  */
+  4300                 if (bt_reg_mask(bt) & ~BPF_REGMASK_ARGS) {
+  4301                         verbose(env, "BUG regs %x\n", bt_reg_mask(bt));
+  4302                         WARN_ONCE(1, "verifier backtracking bug");
+  4303                         return -EFAULT;
+  4304                 }
 
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Stable-dep-of: 1071d560afb4 ("dm-stripe: fix a possible integer overflow")
+With the below test (also in the next patch):
+  __used __naked static void __bpf_jmp_r10(void)
+  {
+	asm volatile (
+	"r2 = 2314885393468386424 ll;"
+	"goto +0;"
+	"if r2 <= r10 goto +3;"
+	"if r1 >= -1835016 goto +0;"
+	"if r2 <= 8 goto +0;"
+	"if r3 <= 0 goto +0;"
+	"exit;"
+	::: __clobber_all);
+  }
+
+  SEC("?raw_tp")
+  __naked void bpf_jmp_r10(void)
+  {
+	asm volatile (
+	"r3 = 0 ll;"
+	"call __bpf_jmp_r10;"
+	"r0 = 0;"
+	"exit;"
+	::: __clobber_all);
+  }
+
+The following is the verifier failure log:
+  0: (18) r3 = 0x0                      ; R3_w=0
+  2: (85) call pc+2
+  caller:
+   R10=fp0
+  callee:
+   frame1: R1=ctx() R3_w=0 R10=fp0
+  5: frame1: R1=ctx() R3_w=0 R10=fp0
+  ; asm volatile ("                                 \ @ verifier_precision.c:184
+  5: (18) r2 = 0x20202000256c6c78       ; frame1: R2_w=0x20202000256c6c78
+  7: (05) goto pc+0
+  8: (bd) if r2 <= r10 goto pc+3        ; frame1: R2_w=0x20202000256c6c78 R10=fp0
+  9: (35) if r1 >= 0xffe3fff8 goto pc+0         ; frame1: R1=ctx()
+  10: (b5) if r2 <= 0x8 goto pc+0
+  mark_precise: frame1: last_idx 10 first_idx 0 subseq_idx -1
+  mark_precise: frame1: regs=r2 stack= before 9: (35) if r1 >= 0xffe3fff8 goto pc+0
+  mark_precise: frame1: regs=r2 stack= before 8: (bd) if r2 <= r10 goto pc+3
+  mark_precise: frame1: regs=r2,r10 stack= before 7: (05) goto pc+0
+  mark_precise: frame1: regs=r2,r10 stack= before 5: (18) r2 = 0x20202000256c6c78
+  mark_precise: frame1: regs=r10 stack= before 2: (85) call pc+2
+  BUG regs 400
+
+The main failure reason is due to r10 in precision backtracking bookkeeping.
+Actually r10 is always precise and there is no need to add it for the precision
+backtracking bookkeeping.
+
+One way to fix the issue is to prevent bt_set_reg() if any src/dst reg is
+r10. Andrii suggested to go with push_insn_history() approach to avoid
+explicitly checking r10 in backtrack_insn().
+
+This patch added push_insn_history() support for cond_jmp like 'rX <op> rY'
+operations. In check_cond_jmp_op(), if any of rX or rY is a stack pointer,
+push_insn_history() will record such information, and later backtrack_insn()
+will do bt_set_reg() properly for those register(s).
+
+  [1] https://lore.kernel.org/bpf/Z%2F8q3xzpU59CIYQE@ly-workstation/
+
+Reported by: Yi Lai <yi1.lai@linux.intel.com>
+
+Fixes: 407958a0e980 ("bpf: encapsulate precision backtracking bookkeeping")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250524041335.4046126-1-yonghong.song@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-target.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/bpf_verifier.h | 12 ++++++++----
+ kernel/bpf/verifier.c        | 18 ++++++++++++++++--
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
-index 7e877c6adb2ea..bfd0e80bb9f3a 100644
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -997,6 +997,14 @@ static void verity_io_hints(struct dm_target *ti, struct queue_limits *limits)
- 		limits->physical_block_size = 1 << v->data_dev_block_bits;
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 9a3b93c24f19f..23eac97f8a7dc 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -333,7 +333,11 @@ enum {
+ 	INSN_F_SPI_MASK = 0x3f, /* 6 bits */
+ 	INSN_F_SPI_SHIFT = 3, /* shifted 3 bits to the left */
  
- 	blk_limits_io_min(limits, limits->logical_block_size);
+-	INSN_F_STACK_ACCESS = BIT(9), /* we need 10 bits total */
++	INSN_F_STACK_ACCESS = BIT(9),
 +
-+	/*
-+	 * Similar to what dm-crypt does, opt dm-verity out of support for
-+	 * direct I/O that is aligned to less than the traditional direct I/O
-+	 * alignment requirement of logical_block_size.  This prevents dm-verity
-+	 * data blocks from crossing pages, eliminating various edge cases.
-+	 */
-+	limits->dma_alignment = limits->logical_block_size - 1;
- }
++	INSN_F_DST_REG_STACK = BIT(10), /* dst_reg is PTR_TO_STACK */
++	INSN_F_SRC_REG_STACK = BIT(11), /* src_reg is PTR_TO_STACK */
++	/* total 12 bits are used now. */
+ };
  
- static void verity_dtr(struct dm_target *ti)
+ static_assert(INSN_F_FRAMENO_MASK + 1 >= MAX_CALL_FRAMES);
+@@ -342,9 +346,9 @@ static_assert(INSN_F_SPI_MASK + 1 >= MAX_BPF_STACK / 8);
+ struct bpf_jmp_history_entry {
+ 	u32 idx;
+ 	/* insn idx can't be bigger than 1 million */
+-	u32 prev_idx : 22;
+-	/* special flags, e.g., whether insn is doing register stack spill/load */
+-	u32 flags : 10;
++	u32 prev_idx : 20;
++	/* special INSN_F_xxx flags */
++	u32 flags : 12;
+ 	/* additional registers that need precision tracking when this
+ 	 * jump is backtracked, vector of six 10-bit records
+ 	 */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b057583d3c3bb..58ce6c90e99c0 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4114,8 +4114,10 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			 * before it would be equally necessary to
+ 			 * propagate it to dreg.
+ 			 */
+-			bt_set_reg(bt, dreg);
+-			bt_set_reg(bt, sreg);
++			if (!hist || !(hist->flags & INSN_F_SRC_REG_STACK))
++				bt_set_reg(bt, sreg);
++			if (!hist || !(hist->flags & INSN_F_DST_REG_STACK))
++				bt_set_reg(bt, dreg);
+ 		} else if (BPF_SRC(insn->code) == BPF_K) {
+ 			 /* dreg <cond> K
+ 			  * Only dreg still needs precision before
+@@ -14675,6 +14677,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	struct bpf_reg_state *eq_branch_regs;
+ 	struct linked_regs linked_regs = {};
+ 	u8 opcode = BPF_OP(insn->code);
++	int insn_flags = 0;
+ 	bool is_jmp32;
+ 	int pred = -1;
+ 	int err;
+@@ -14709,6 +14712,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 				insn->src_reg);
+ 			return -EACCES;
+ 		}
++
++		if (src_reg->type == PTR_TO_STACK)
++			insn_flags |= INSN_F_SRC_REG_STACK;
+ 	} else {
+ 		if (insn->src_reg != BPF_REG_0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -14716,6 +14722,14 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 		}
+ 	}
+ 
++	if (dst_reg->type == PTR_TO_STACK)
++		insn_flags |= INSN_F_DST_REG_STACK;
++	if (insn_flags) {
++		err = push_jmp_history(env, this_branch, insn_flags, 0);
++		if (err)
++			return err;
++	}
++
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 
+ 	if (BPF_SRC(insn->code) == BPF_K) {
 -- 
 2.53.0
 
