@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E997C342532;
-	Sat, 17 Oct 2026 16:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA18224D6;
+	Sat, 17 Oct 2026 16:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253139; cv=none; b=nrm6+A3sJa8Hj34a6cXXSSnHdlHbEV6ELQGNfLxB9RjIwQ83e+XujV8QUXdy1L3+kM9oBJiik7IKNlLVBbQZNU/GJyiWVHW281m/JxmcQSOzv71ZUz0gfOqe/9PhHEVkKViJGCoA3VPt4bRRS159gkB1YQTqJHswKOrUWeUHVmI=
+	t=1792253142; cv=none; b=rkSrOIuXA7oFgo91x+BstBblzzy4CArlTi0Iz0HlBAf2msyqUhul7r94+twQJiUV/GAE9oXsNigucDz3gwDLKz+nQ9APwCEWhTWcg4mEF0bf6R/ch166WaIbLZkE+9rNvw+pdGpUYbOOzBGjsID+d73hAFCKzJwcur1doJD4rd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253139; c=relaxed/simple;
-	bh=g4BwvNOE1u2uL9x6Cl/xq5VyBDKYxszJ7f+wzrzUZV8=;
+	s=arc-20240116; t=1792253142; c=relaxed/simple;
+	bh=VIofS0UYhuwJHlg5L8fmtwcq5KBtucHVeSUhqOvE/Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCsJdkGNk3nnvzaLbVdVFoqhRgfQzpk05MkY6mpHVxdwyFmlni05KyzUb/jrXhD5QXmasqShdzJvRC1BvtgmOAqWD2YZAtFTFBZdPKjZ7+D0Sup9Njd7UCwJZCViB2aPDSj6MWZ0KAqii2wRzBuDCrX4M2CSko5btumpyCzs68A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlWglfXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8IJW5TygoKHbCDk881NQm5VzJ470qxDM5qnOGfFhoK6lNzka6OPP18lUb3NTF0WI6t6SL7CFIB9mfcWPBbKZcbaaob5HugUNDRBv+U0LWF1JDYlBcA3+b9OaBw/BnsqKW+5sXaNTanjlLE8U3DmtVbTJ1/5KKIqhBZWG4f3Obc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROfUaEcd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlWglfXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418261F000C4;
-	Sat, 17 Oct 2026 16:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROfUaEcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB2E1F000C4;
+	Sat, 17 Oct 2026 16:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253137;
-	bh=KEEAmPiXRDibnr+PjZAjTjFwJV3vZ4mxGK8AAdRnlcM=;
+	s=korg; t=1792253140;
+	bh=u0SQ25Hh+5LnHIq/fUgokyu4Af3IuVistxfNh6pHF8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zlWglfXI/D58hwO72kE7IgVVkAI33TLoEJUBI1vhjvhlkbNNi8aBc7QS75hKIXdMM
-	 6EvVLV9uF184lH7wfIx2uORtSeCVaZVKiID7O/wWaA774gQKxadQPlYD6O8fTwlsio
-	 2bbz+iNXzrfxnKO75Sj9VXATOJGKemE4fSTVKask=
+	b=ROfUaEcdDZbR328tvSSKlxDtVi0o4fQd4Zt80scdNOiLI7+ZmBu5j4XrrrDEKxX5r
+	 Qm0s6osjQGOZbvOityrZ80maJbzuEAFyXzqx8HzZO5EnOJjHghaCzm3MEQ6Na8CAqH
+	 pS4+t5iTGmaqrHCOnIFAeWPy6x1n7KUCr8sqbv6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/869] xfs: fix exchange-range-to-eof file size exchange
-Date: Sat, 17 Oct 2026 17:47:28 +0200
-Message-ID: <20261017160037.185825521@linuxfoundation.org>
+Subject: [PATCH 6.12 008/869] ip6_gre: remove obsolete ERSPAN PMTU update
+Date: Sat, 17 Oct 2026 17:47:29 +0200
+Message-ID: <20261017160037.213659687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,244 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 7dfb218c829c1acb626e0fe92c5fddb9a26a03e9 ]
+[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
 
-Norbert Szetei posted a patch containing an incomplete description of a
-bug in XFS_IOC_EXCHANGE_RANGE's TO_EOF flag.  The bug tricks
-exchange-range into modifying a file so that it has shared blocks
-starting beyond EOF, which is never allowed because files never have
-written data beyond EOF, and you can only share written data blocks.
-This is key to all the incorrect behavior that follows.
+A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
+and mirred can redirect it to a native ip6erspan device. The legacy PMTU
+update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
+Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
 
-Eventually I got from Norbert a description of what's going wrong:
+On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
+self-created user and network namespaces to trigger:
 
-> Fair. Here it is with physical block numbers, 4k blocks. peer is the file
-> that gets rewritten and file1 is the one that ends up with the flag
-> cleared.
->
-> Start, nothing shared:
->
->	peer size 4096   -> [100]
->	file1 size 12288 -> [200] [201] [202]
->	donor1 size 4096 -> [300]
->	donor2 size 4096 -> [400]
->
-> 1. FICLONERANGE peer's block into file1's middle slot:
->
->	peer size 4096   -> [100]
->	file1 size 12288 -> [200] [100] [202] reflink flag set
->                             ^^^^^ both files own block 100
->
-> 2. XFS_IOC_EXCHANGE_RANGE file1 against donor1, file1_offset 0,
-> file2_offset 8192, length 0, TO_EOF. One block is exchanged, and the sizes
-> are exchanged with it:
->
->	file1 size 4096   -> [200] [100] [300] reflink flag set
->                              ^^^^^^^^^^^ still owned, now past the size
->	donor1 size 12288 -> [202]
->
-> file1 says it is one block long while it still owns three. Nothing was
-> unmapped. file2_offset is block 2, so this exchange cannot clear a flag.
->
-> 3. XFS_IOC_EXCHANGE_RANGE file1 against donor2, both offsets 0, length 4096.
-> By i_disk_size this is two one-block files exchanging everything, so
-> xmi_can_exchange_reflink_flags() agrees and the flag is cleared:
->
->	file1 size 4096   -> [400] [100] [300] reflink flag CLEARED
->	donor2 size 4096  -> [200]
->
-> Block 100 is still shared with peer.
->
-> 4. pwrite(file1, 4096, 4096), which is file1's second slot, block 100.
-> xfs_is_cow_inode(file1) is false, so no CoW:
->
->	peer size 4096 -> [100] same block, new contents
->
-> Block 100 is the only one that matters here. PoC below, it reads a file
-> called peer in the current directory. The filesystem needs reflink and
-> exchange-range, which mkfs.xfs 7.x turns on by default.
+  KASAN: null-ptr-deref
+  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-So yes, TO_EOF is screwing up the file size even if it's actually
-exchanging the data block correctly.  The following is the intended
-behavior of XFS_EXCHANGE_RANGE_TO_EOF, as described by its manpage:
+The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
+in a better way") changed IPv6 GRE Too Big handling to update the
+underlay route and removed the equivalent block from __gre6_xmit().
+ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
 
-"Ignore the length parameter.  All bytes in file1_fd from file1_offset
- to EOF are moved to file2_fd, and file2's size is set to
- (file2_offset+(file1_length-file1_offset)).  Meanwhile, all bytes in
- file2 from file2_offset to EOF are moved to file1 and file1's size is
- set to (file1_offset+(file2_length-file2_offset))."
+Remove the stale ERSPAN copy and its now-unused dst variable. This
+eliminates the metadata-dst dereference and keeps ERSPAN aligned with
+IPv6 GRE PMTU handling.
 
-In other words, if we only exchange a portion of the file data, then we
-should only exchange the portion of the file size that relates to the
-exchanged data.  Unfortunately, the code swaps the ondisk file size and
-the incore file sizes, which is incorrect if the caller passes in a
-nonzero offset.
-
-Having confused the file sizes, the PoC uses a second exchange-range
-call on what looks like a non-reflinked single-block file.  Because the
-file size is set incorrectly, exchange-range thinks it's exchanging the
-full contents of two files and clears the reflink flag on the broken
-file.  That enables an extending write of the broken file to rewrite the
-shared block that's just past EOF.  This has become known colloquially
-as refluxfs.
-
-Once the file sizes are set correctly, the second exchange-range no
-longer thinks that it's doing a full-contents swap, so it won't clear
-the reflink flag on either of its file arguments.
-
-Norbert followed up to an earlier version of this patch with a second
-complaint about us not handling the i_disk_size state correctly:
-
-> The offsets are bounded against the incore i_size but subtracted from
-> the ondisk i_disk_size, so a file that has not been written back gives
-> xmi_isize1 = 0 + (0 - 12288).
->
-> For instance, you can do:
->
-> $ xfs_io -f -c "pwrite -q 0 4096" -c fsync file1
-> $ xfs_io -f -c "pwrite -q 0 12288" \
->   -c "exchangerange -s 0 -d 12288 file1" dirty
-> $ stat -c %s file1
-> 0
-> $ stat -c %i file1
-> 131
-> $ sudo xfs_io -r -c "bulkstat_single 131" . | grep bs_size
-> bs_size = 18446744073709539328
-
-That's wrong, and the new file size update logic depends on the ondisk
-i_disk_size matching the incore i_size, so flush the pagecache as needed
-to push it upwards.
-
-Link: https://lore.kernel.org/linux-xfs/1E196589-DEBE-40AC-AFEA-D420DAAB067F@doyensec.com/
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 966ceafc7a4371 ("xfs: create deferred log items for file mapping exchanges")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+Cc: stable@vger.kernel.org
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adjusted the removal to match dst6_mtu() instead of dst_mtu() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_exchmaps.c | 13 +++++++--
- fs/xfs/xfs_exchrange.c       | 51 ++++++++++++++++++++++++++----------
- 2 files changed, 48 insertions(+), 16 deletions(-)
+ net/ipv6/ip6_gre.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_exchmaps.c b/fs/xfs/libxfs/xfs_exchmaps.c
-index 6a9a73fc5fd90..d900aff4fbea6 100644
---- a/fs/xfs/libxfs/xfs_exchmaps.c
-+++ b/fs/xfs/libxfs/xfs_exchmaps.c
-@@ -929,6 +929,7 @@ xfs_exchmaps_init_intent(
- 	const struct xfs_exchmaps_req	*req)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index ce1ba9d2af405..0cc0e1113845a 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -951,7 +951,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
  {
- 	struct xfs_exchmaps_intent	*xmi;
-+	struct xfs_mount		*mp = req->ip1->i_mount;
+ 	struct ip_tunnel_info *tun_info = NULL;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct dst_entry *dst = skb_dst(skb);
+ 	IP_TUNNEL_DECLARE_FLAGS(flags) = { };
+ 	bool truncate = false;
+ 	int encap_limit = -1;
+@@ -1087,12 +1086,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 	gre_build_header(skb, 8, flags, proto, 0,
+ 			 htonl(atomic_fetch_inc(&t->o_seqno)));
  
- 	xmi = kmem_cache_zalloc(xfs_exchmaps_intent_cache,
- 			GFP_NOFS | __GFP_NOFAIL);
-@@ -946,10 +947,18 @@ xfs_exchmaps_init_intent(
- 		return xmi;
- 	}
- 
-+	/*
-+	 * If the caller wanted, set each file's size to that file's exchange
-+	 * offset + length exchanged from the other file because the ranges in
-+	 * each file might be different lengths.
-+	 */
- 	if (req->flags & XFS_EXCHMAPS_SET_SIZES) {
-+		loff_t	off1 = XFS_FSB_TO_B(mp, xmi->xmi_startoff1);
-+		loff_t	off2 = XFS_FSB_TO_B(mp, xmi->xmi_startoff2);
-+
- 		xmi->xmi_flags |= XFS_EXCHMAPS_SET_SIZES;
--		xmi->xmi_isize1 = req->ip2->i_disk_size;
--		xmi->xmi_isize2 = req->ip1->i_disk_size;
-+		xmi->xmi_isize1 = off1 + (req->ip2->i_disk_size - off2);
-+		xmi->xmi_isize2 = off2 + (req->ip1->i_disk_size - off1);
- 	}
- 
- 	if (S_ISDIR(VFS_I(xmi->xmi_ip2)->i_mode) ||
-diff --git a/fs/xfs/xfs_exchrange.c b/fs/xfs/xfs_exchrange.c
-index f54ed30b76e40..449090cbb1698 100644
---- a/fs/xfs/xfs_exchrange.c
-+++ b/fs/xfs/xfs_exchrange.c
-@@ -287,17 +287,20 @@ xfs_exchrange_mappings(
- 		goto out_unlock;
- 
- 	/*
--	 * If the caller wanted us to exchange the contents of two complete
--	 * files of unequal length, exchange the incore sizes now.  This should
--	 * be safe because we flushed both files' page caches, exchanged all
--	 * the mappings, and updated the ondisk sizes.
-+	 * If the caller wanted, set each file's size to that file's exchange
-+	 * offset + length exchanged from the other file because the ranges in
-+	 * each file might be different lengths.  This should be safe because
-+	 * we flushed both files' page caches, exchanged all the mappings, and
-+	 * updated the ondisk sizes.
- 	 */
- 	if (fxr->flags & XFS_EXCHANGE_RANGE_TO_EOF) {
--		loff_t	temp;
-+		loff_t	old_ip1_size = i_size_read(VFS_I(ip1));
-+		loff_t	old_ip2_size = i_size_read(VFS_I(ip2));
- 
--		temp = i_size_read(VFS_I(ip2));
--		i_size_write(VFS_I(ip2), i_size_read(VFS_I(ip1)));
--		i_size_write(VFS_I(ip1), temp);
-+		i_size_write(VFS_I(ip2), fxr->file2_offset +
-+				(old_ip1_size - fxr->file1_offset));
-+		i_size_write(VFS_I(ip1), fxr->file1_offset +
-+				(old_ip2_size - fxr->file2_offset));
- 	}
- 
- out_unlock:
-@@ -442,6 +445,30 @@ xfs_exchange_range_checks(
- 	return blen == fxr->length ? 0 : -EINVAL;
- }
- 
-+/* Flush all relevant dirty pagecache near the range to be exchanged. */
-+static inline int
-+xfs_exchange_range_flush(
-+	struct xfs_inode		*ip,
-+	const struct xfs_exchrange	*fxr,
-+	loff_t				offset)
-+{
-+	/*
-+	 * If TO_EOF is set, the ondisk file size update logic depends on the
-+	 * ondisk file size matching the incore file size.  Flush everything.
-+	 */
-+	if (fxr->flags & XFS_EXCHANGE_RANGE_TO_EOF)
-+		return filemap_write_and_wait(VFS_I(ip)->i_mapping);
-+
-+	/*
-+	 * Because we're updating the ondisk mappings, flush all dirty data
-+	 * between the ondisk size and the exchange offset to reduce the chance
-+	 * of zeroed file contents in that gap after a crash.
-+	 */
-+	return filemap_write_and_wait_range(VFS_I(ip)->i_mapping,
-+			min(offset, ip->i_disk_size),
-+			offset + fxr->length - 1);
-+}
-+
- /*
-  * Check that the two inodes are eligible for range exchanges, the ranges make
-  * sense, and then flush all dirty data.  Caller must ensure that the inodes
-@@ -467,15 +494,11 @@ xfs_exchange_range_prep(
- 	if (!same_inode)
- 		inode_dio_wait(inode2);
- 
--	error = filemap_write_and_wait_range(inode1->i_mapping,
--			fxr->file1_offset,
--			fxr->file1_offset + fxr->length - 1);
-+	error = xfs_exchange_range_flush(XFS_I(inode1), fxr, fxr->file1_offset);
- 	if (error)
- 		return error;
- 
--	error = filemap_write_and_wait_range(inode2->i_mapping,
--			fxr->file2_offset,
--			fxr->file2_offset + fxr->length - 1);
-+	error = xfs_exchange_range_flush(XFS_I(inode2), fxr, fxr->file2_offset);
- 	if (error)
- 		return error;
- 
+-	/* TooBig packet may have updated dst->dev's mtu */
+-	if (!t->parms.collect_md && dst) {
+-		mtu = READ_ONCE(dst_dev(dst)->mtu);
+-		if (dst6_mtu(dst) > mtu)
+-			dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
+-	}
+ 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
+ 			   NEXTHDR_GRE);
+ 	if (err != 0) {
 -- 
 2.53.0
 
