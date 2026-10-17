@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760B71DFDA1;
-	Sat, 17 Oct 2026 17:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0C23BB690;
+	Sat, 17 Oct 2026 17:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257611; cv=none; b=G9sPq/eMvl9xZ3mRPbD3IAV+Xdh865WQ58v0bLcDakmVS7Of3ad3nMFPK2DqJvkyQ+iIx18SnSW/uXaXBq0SQRYEO/aDIDTTxQq9Yh9G5YoVhnqYsWGTRY+mpsPHr2/vm1LsNzqHUaQcC3/r/QB5PXAc0KRGwYRuKR06Jo3qsb8=
+	t=1792257615; cv=none; b=DLHoSKJyVivFAOUpAOZd3j4IEtZPvgHtOd8prv/wLzWFvTQqw8hnSG+4BWPdY96MJidRM1V//0tMolmKKA0nW3Mo4siec2nHhHeQjThPSTw3rmYIAGnfMaBlyhN/UEDRmBvR5U9g+CmfSbj1fN1Zf8kdzT2WQ3HJtrycEVztgSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257611; c=relaxed/simple;
-	bh=CGp31GmCmueuUUdqvFgrBFINqhB0+aRMt8KOV5pEnd0=;
+	s=arc-20240116; t=1792257615; c=relaxed/simple;
+	bh=8uwubsJ9tRSZUUND/43wqjU2xtAT111DW89+fn53AJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8m+EU/NhE8ey9jqgfaNfLMA2TlkktJA5nEbHGUD2+ijrSIPRXNlw9RbXuHus+rywQUI4+M7MsD6Z7yqG/eFSsdLUO4VDNcvCXise6Aa37wwJTO3jeoAlcRIJ42W9joFk8tfw06tzvFLZz606ol1LxZLdqZDrmlu7TiQwst2AKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1bDEz5j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfp5ZHFWNIE4CJynNIqyjaFD1s2A9qc8XG6tq/0QcNCb2xORH3Fr/RZdOt/fzEiAZDH031y+hRyksa408sE8SNq3HjHPFYT7FMAnq5E3Ds+quQ72ARFdCX87dLalyAYRS1aXEhR1nkCNd2nxpJF4gbgLKNcEPCdq8Ghp39vbPho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSU2xP04; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1bDEz5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527CD1F000C4;
-	Sat, 17 Oct 2026 17:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSU2xP04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9E51F000C4;
+	Sat, 17 Oct 2026 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257609;
-	bh=vZb68qhHv2vXL74YP7r1gS9FdJNluNOn6HP9dcQVhcc=;
+	s=korg; t=1792257613;
+	bh=Fv7RF8lSpOcoTbA09pvgCUpV5iVp6r1uinxTDWhId88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1bDEz5j4OrCvMql+vaATvdMslaQnX//k9Q190PeA/gIquGbjUvE2HG8Ug/BpgzEy
-	 tYcvxEoM0qrHN601F3wXqMQkS4rmXqlU77IOkI4Qsg8KVSRXy59Gucn2QIO4PvOrIh
-	 tlwBD2MwmQerPq5jFAEEv1ACPm1hAARLGmwp9/LQ=
+	b=jSU2xP045NQFFRIij1c33OBiVzOsd+iG9kcxL+GdMDDb4ZXhZQZfFU2HGJbshgizF
+	 e8gq3abs/2MsgeGgXfRT62omLzZmG9ExEJuRs6JUWCkXw4OSU3pz6C27R30OB3LM18
+	 5myNbqVawsHDj99d8SQhhk1ZAAA4UB+4zKjBF/ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0572/1674] mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
-Date: Sat, 17 Oct 2026 17:47:24 +0200
-Message-ID: <20261017160445.774560740@linuxfoundation.org>
+Subject: [PATCH 6.6 0573/1674] llist: add interface to check if a node is on a list.
+Date: Sat, 17 Oct 2026 17:47:25 +0200
+Message-ID: <20261017160445.800920159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -55,170 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 838bb60dc21553e32df90f2f3bac5b905376e7aa ]
+[ Upstream commit d6b3358a2813bb14791259a2227d9af1e7019ca0 ]
 
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
+With list.h lists, it is easy to test if a node is on a list, providing
+it was initialised and that it is removed with list_del_init().
 
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
+This patch provides similar functionality for llist.h lists.
 
-Fix another of these - self-merge.
+ init_llist_node()
+marks a node as being not-on-any-list be setting the ->next pointer to
+the node itself.
+ llist_on_list()
+tests if the node is on any list.
+ llist_del_first_init()
+remove the first element from a llist, and marks it as being off-list.
 
-Self-merge occurs when a VMA is moved in front of or behind itself and the
-attributes of the VMA permit such a merge.
-
-Practically this can only happen for unfaulted anonymous VMAs due to the
-page offset equality requirement for merge:
-
-                           |------------|
-                           |            |
-                           |            v
-        |...........||-----------||...........|
-        |           || unfaulted ||           |
-        |...........||-----------||...........|
-              ^            |
-              |            |
-              |------------|
-
-This becomes problematic if the VMA is configured by the user to
-mlock-on-fault, i.e. the VMA_LOCKED_BIT, VMA_LOCKONFAULT_BIT VMA flags are
-set.
-
-MREMAP_DONTUNMAP clears mlock flags for the source VMA and maintains them
-for the destination VMA.
-
-Self-merge makes this impossible (there is only one VMA) and incorrectly
-clears the destination VMA's mlock flags.
-
-This causes a leak in mm->locked_vm as clearing this flag does not
-decrement the counter and the VMA no longer has VMA_LOCKED_BIT set so it
-is not decremented on unmap.
-
-Resolve this by simply disallowing a self-merge in this case - the source
-and destination VMAs are kept distinct and then are able to have distinct
-mlock() flags.
-
-Update to make the now-redundant self-merge check a VM_WARN_ON_ONCE()
-instead to guard against future regressions.
-
-Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: <stable@vger.kernel.org>
-[ ljs - Converted to work with vma_merge(), tweaked commit msg. ]
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm.h |  2 +-
- mm/mmap.c          | 23 +++++++++++++++++++----
- mm/mremap.c        |  7 +++++--
- 3 files changed, 25 insertions(+), 7 deletions(-)
+ include/linux/llist.h | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 09669ea23084a..c365c33b9c3a8 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3313,7 +3313,7 @@ extern int insert_vm_struct(struct mm_struct *, struct vm_area_struct *);
- extern void unlink_file_vma(struct vm_area_struct *);
- extern struct vm_area_struct *copy_vma(struct vm_area_struct **,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks);
-+	bool *need_rmap_locks, bool keep_source);
- extern void exit_mmap(struct mm_struct *);
+diff --git a/include/linux/llist.h b/include/linux/llist.h
+index 85bda2d02d65b..dcb91e3bac1cc 100644
+--- a/include/linux/llist.h
++++ b/include/linux/llist.h
+@@ -73,6 +73,33 @@ static inline void init_llist_head(struct llist_head *list)
+ 	list->first = NULL;
+ }
  
- static inline int check_data_rlimit(unsigned long rlim,
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 1b7e295128312..4fb3f7156dc35 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3391,13 +3391,14 @@ int insert_vm_struct(struct mm_struct *mm, struct vm_area_struct *vma)
-  */
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks)
-+	bool *need_rmap_locks, bool keep_source)
- {
- 	struct vm_area_struct *vma = *vmap;
- 	unsigned long vma_start = vma->vm_start;
- 	struct mm_struct *mm = vma->vm_mm;
- 	struct vm_area_struct *new_vma, *prev;
- 	bool faulted_in_anon_vma = true;
-+	bool can_self_merge = false;
- 	VMA_ITERATOR(vmi, mm, addr);
- 
- 	/*
-@@ -3407,15 +3408,29 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	if (unlikely(vma_is_anonymous(vma) && !vma->anon_vma)) {
- 		pgoff = addr >> PAGE_SHIFT;
- 		faulted_in_anon_vma = false;
-+		can_self_merge = true;
- 	}
- 
- 	new_vma = find_vma_prev(mm, addr, &prev);
- 	if (new_vma && new_vma->vm_start < addr + len)
- 		return NULL;	/* should never get here */
- 
--	new_vma = vma_merge(&vmi, mm, prev, addr, addr + len, vma->vm_flags,
--			    vma->anon_vma, vma->vm_file, pgoff, vma_policy(vma),
--			    vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-+	/*
-+	 * If the original VMA is kept (MREMAP_DONTUNMAP), the source and
-+	 * destination VMA must be treated distinctly.
-+	 *
-+	 * A merge violates this, so in this case disallow a self-merge. A
-+	 * self-merge can only occur if the new range is immediately adjacent to
-+	 * the source VMA, so simply do not attempt to merge in that case.
-+	 */
-+	if (can_self_merge && keep_source &&
-+	    (addr == vma->vm_end || vma->vm_start == addr + len))
-+		new_vma = NULL;
-+	else
-+		new_vma = vma_merge(&vmi, mm, prev, addr, addr + len,
-+				    vma->vm_flags, vma->anon_vma, vma->vm_file,
-+				    pgoff, vma_policy(vma),
-+				    vma->vm_userfaultfd_ctx, anon_vma_name(vma));
- 	if (new_vma) {
- 		/*
- 		 * Source vma may have been merged into new_vma
-diff --git a/mm/mremap.c b/mm/mremap.c
-index db18cacb795b5..ddf374d74e184 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -662,7 +662,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 	vma_start_write(vma);
- 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
- 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
--			   &need_rmap_locks);
-+			   &need_rmap_locks, flags & MREMAP_DONTUNMAP);
- 	if (!new_vma) {
- 		if (vm_flags & VM_ACCOUNT)
- 			vm_unacct_memory(to_account >> PAGE_SHIFT);
-@@ -723,6 +723,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		untrack_pfn_clear(vma);
- 
- 	if (unlikely(!err && (flags & MREMAP_DONTUNMAP))) {
-+		/* Self-merge is disallowed. */
-+		VM_WARN_ON_ONCE(new_vma == vma);
++/**
++ * init_llist_node - initialize lock-less list node
++ * @node:	the node to be initialised
++ *
++ * In cases where there is a need to test if a node is on
++ * a list or not, this initialises the node to clearly
++ * not be on any list.
++ */
++static inline void init_llist_node(struct llist_node *node)
++{
++	node->next = node;
++}
 +
- 		/* We always clear VM_LOCKED[ONFAULT] on the old vma */
- 		vm_flags_clear(vma, VM_LOCKED_MASK);
++/**
++ * llist_on_list - test if a lock-list list node is on a list
++ * @node:	the node to test
++ *
++ * When a node is on a list the ->next pointer will be NULL or
++ * some other node.  It can never point to itself.  We use that
++ * in init_llist_node() to record that a node is not on any list,
++ * and here to test whether it is on any list.
++ */
++static inline bool llist_on_list(const struct llist_node *node)
++{
++	return node->next != node;
++}
++
+ /**
+  * llist_entry - get the struct of this entry
+  * @ptr:	the &struct llist_node pointer.
+@@ -249,6 +276,21 @@ static inline struct llist_node *__llist_del_all(struct llist_head *head)
  
-@@ -730,7 +733,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		 * anon_vma links of the old vma is no longer needed after its page
- 		 * table has been moved.
- 		 */
--		if (new_vma != vma && vma->vm_start == old_addr &&
-+		if (vma->vm_start == old_addr &&
- 			vma->vm_end == (old_addr + old_len)) {
- 			const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
+ extern struct llist_node *llist_del_first(struct llist_head *head);
  
++/**
++ * llist_del_first_init - delete first entry from lock-list and mark is as being off-list
++ * @head:	the head of lock-less list to delete from.
++ *
++ * This behave the same as llist_del_first() except that llist_init_node() is called
++ * on the returned node so that llist_on_list() will report false for the node.
++ */
++static inline struct llist_node *llist_del_first_init(struct llist_head *head)
++{
++	struct llist_node *n = llist_del_first(head);
++
++	if (n)
++		init_llist_node(n);
++	return n;
++}
+ struct llist_node *llist_reverse_order(struct llist_node *head);
+ 
+ #endif /* LLIST_H */
 -- 
 2.53.0
 
