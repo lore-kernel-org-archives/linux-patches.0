@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3293A59A3;
-	Sat, 17 Oct 2026 15:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4438F253;
+	Sat, 17 Oct 2026 15:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252537; cv=none; b=QHhCHETqAFfD9DL8kBCblHMIlQh2aYPvgTreHLChRl/qypNRauFKTP0isiXLdgC2NOu9A/qsRBCcO+Oy546b16LiUnaMVg7N5BeKMWkjWg62QlETgTEJg0UzJli6eN0EiAtk1KTQtnf6d0YjGY+aYsjIFUrrLYpp0Cu1zPFfMJ8=
+	t=1792252538; cv=none; b=eow8eYOwd1mYLQXvykGBcs6ZMnnSaXHE961iB32pfnHhoAAQXhOXKK87ddla6J3kK5ZTShHptQ1V6ZVCf+YmTGHyKAwAK7FFBP4BbmEldOOJYF6X7FNkZQ7P2MWhVFdzrFCJa6ZHclkdrahPztyTrPG1GnouLI1yu4PJFlk48IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252537; c=relaxed/simple;
-	bh=kcrjbr5u+/44QViLSWB/eZK3t0TW9e0P96KrFdgwFvs=;
+	s=arc-20240116; t=1792252538; c=relaxed/simple;
+	bh=9qE944ZzCUV50w8VWnste54ynr1mgELpHrkLRv2VFsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=benvfmiTRV2Q2irgxKnV6HQILnLSy7R+7EA7Xvz/zc+Coj0VOi+TpJDevbJGLjroTO5hcpHzqT8AvyI+R1p4fixeMlSn2MSCDaKhUYPctcOa3UVOnggkeeTxq7IMzwiKOyqGe2f2lYDTx8UQx8wtCYcBBBL7Z/SBux3nFuXuOC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7MBrGr4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hgnmOj30cFPlZsVYz9Kf1S0waIbyqFPML9AKMQQtA9pG556Ve+iSIu7zsWZxAwlv9oeqZZ/hNJ/C7KFM69JIBP6KfOPOnMNL+b3gT28yL5/m/d24ZgHElLPeYcMdSqf20baMMNquRg20XJAUHtpLmUm8MmIi9EzSz1xi126ySuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQVRv/6y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7MBrGr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9510C1F000C6;
-	Sat, 17 Oct 2026 15:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQVRv/6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8181F000C4;
+	Sat, 17 Oct 2026 15:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252529;
-	bh=zABuzCwr/PxxDRDWKMoxwRlj5ScmOstTwUZro+oyyLY=;
+	s=korg; t=1792252532;
+	bh=bBYV9MI0CP7Z1+QENkDQAKJOjh0INKAVAQ0yiP7/zkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J7MBrGr4NnSGVagoBpIlfukDOpybx1k4QCuYQB5gwB1ws3mVv5RbvvxAaMNWFiNvh
-	 0Ugp2AeXwUXmYB+ebFl/v5bClxYvrxUaX2GxCOqkUP9umotd0oytXjttkEKaTp5q94
-	 +dyHHjv+oJrA8WvdI/e/+xieJLgigZaxVTyNKi/o=
+	b=UQVRv/6yFrH4TrYM6TXPfSlvEWkwVK+4uqZgtoNmU/ubo1w/GPmz2n0sSWy1h4YSi
+	 kBkwoUHQtfNm/MteZtfTJkebZ36gOdjKayXqm4AFdItyayErQhLF+GICqVGIpCKSau
+	 bdABqZGg3HxbasGB1JbJELRB8lPM4D43fLu/u6Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@kernel.org>,
+	Lubos Rendek <l.rendek@proxmox.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 11/52] mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
-Date: Sat, 17 Oct 2026 17:54:12 +0200
-Message-ID: <20261017155105.222198856@linuxfoundation.org>
+Subject: [PATCH 6.18 12/52] nfsd: fix all-zero stateid in CB_OFFLOAD for async COPY
+Date: Sat, 17 Oct 2026 17:54:13 +0200
+Message-ID: <20261017155105.254897565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -60,228 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Lubos Rendek <l.rendek@proxmox.com>
 
-[ Upstream commit 838bb60dc21553e32df90f2f3bac5b905376e7aa ]
+[ There is no upstream commit: this fixes the 6.18.y backport of
+  d0beaee498e1. Mainline fixed the problem as part of the async COPY
+  rework in commit f307b4f7ed17 ("nfsd: split nfsd4_copy into transient
+  and durable async copy objects"), which is too risky to backport. ]
 
-Patch series "mm/mremap: fix two issues with MREMAP_DONTUNMAP", v2.
+Since commit 9b4e5e9ba5ae ("nfsd: fix stale s2s_cp_stateids IDR entry
+for async COPY"), nfsd4_copy() calls dup_copy_fields() before the copy
+stateid is created and then writes the new stateid only into the COPY
+result. The async copy's own cp_res.cb_stateid stays zero, so
+nfsd4_send_cb_offload() sends CB_OFFLOAD with an all-zero stateid. The
+client cannot match it to its pending COPY and waits forever in
+nfs42_proc_copy().
 
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
+Also copy the new stateid into async_copy->cp_res.cb_stateid. Calling
+dup_copy_fields() after nfs4_init_copy_state() instead is not an
+option, because dup_copy_fields() also copies cp_stateid and would
+overwrite the stateid that the backport moved to the async copy.
 
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
+Tested on 6.18.56 with an NFSv4.2 server-side COPY between two
+exports: with this change the copy completes and CB_OFFLOAD carries
+the same stateid as the COPY reply. Without it, cp(1) hangs on
+6.18.55; the affected code in nfsd4_copy() is the same in 6.18.56.
 
-Commit 397432cab17b ("mm/mremap: account mm->locked_vm correctly for
-MREMAP_DONTUNMAP") fixed an accidentally introduced bug around
-mm->locked_vm accounting, but this wasn't the only issue.
-
-And thus history repeats itself, as it turns out that mm->locked_vm
-accounting is broken by MREMAP_DONTUNMAP yet again by two further cases,
-and has been broken ever since the feature was introduced.
-
-Both relate to the fact that VMA_LOCKED_BIT is cleared on the source VMA
-(it has to be as all page tables are moved):
-
-1. If an unfaulted VMA_LOCKONFAULT_BIT anonymous VMA self-merges it
-   clears the VMA_LOCKED_BIT flag and permanently leaks mm->locked_vm
-   pages.
-
-2. If a partial mremap() is performed on a locked VMA there is a leak equal
-   to the number of pages not copied.
-
-(Both for MREMAP_DONTUNMAP operations only)
-
-Both issues can be fixed by treating the source range as distinct from the
-destination range, which is the definition of what MREMAP_DONTUNMAP does
-so is appropriate.
-
-In case 1, simply disallow the self-merge, keeping adjacent source and
-destination VMAs distinct.
-
-In case 2, split the source range ahead of time if the VMA is mlock()'d,
-so accounting is always correct.
-
-Both changes were tested locally and confirmed to fix the issues.
-
-For the purposes of a backport, the fixes are kept distinct, a follow-up
-series can add self-tests.
-
-This patch (of 2):
-
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
-
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
-
-Fix another of these - self-merge.
-
-Self-merge occurs when a VMA is moved in front of or behind itself and the
-attributes of the VMA permit such a merge.
-
-Practically this can only happen for unfaulted anonymous VMAs due to the
-page offset equality requirement for merge:
-
-                           |------------|
-                           |            |
-                           |            v
-        |...........||-----------||...........|
-        |           || unfaulted ||           |
-        |...........||-----------||...........|
-              ^            |
-              |            |
-              |------------|
-
-This becomes problematic if the VMA is configured by the user to
-mlock-on-fault, i.e. the VMA_LOCKED_BIT, VMA_LOCKONFAULT_BIT VMA flags are
-set.
-
-MREMAP_DONTUNMAP clears mlock flags for the source VMA and maintains them
-for the destination VMA.
-
-Self-merge makes this impossible (there is only one VMA) and incorrectly
-clears the destination VMA's mlock flags.
-
-This causes a leak in mm->locked_vm as clearing this flag does not
-decrement the counter and the VMA no longer has VMA_LOCKED_BIT set so it
-is not decremented on unmap.
-
-Resolve this by simply disallowing a self-merge in this case - the source
-and destination VMAs are kept distinct and then are able to have distinct
-mlock() flags.
-
-Update dontunmap_complete() to make the now-redundant self-merge check a
-VM_WARN_ON_ONCE() instead to guard against future regressions.
-
-Also update the VMA userland tests to reflect the change.
-
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-0-f388985a0f0a@kernel.org
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-1-f388985a0f0a@kernel.org
-Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Translated can_self_merge logic to the inverse faulted_in_anon_vma flag. ]
+Fixes: 9b4e5e9ba5ae ("nfsd: fix stale s2s_cp_stateids IDR entry for async COPY")
+Closes: https://lore.kernel.org/stable/7cc824c4-632d-49df-ae5e-cfcbb5bf76ad@proxmox.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Lubos Rendek <l.rendek@proxmox.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c             |  7 +++++--
- mm/vma.c                | 17 ++++++++++++++++-
- mm/vma.h                |  2 +-
- tools/testing/vma/vma.c |  4 ++--
- 4 files changed, 24 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4proc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 5d1322dca0359..f0e63d3b3c148 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1206,7 +1206,7 @@ static int copy_vma_and_data(struct vma_remap_struct *vrm,
- 	PAGETABLE_MOVE(pmc, NULL, NULL, vrm->addr, vrm->new_addr, vrm->old_len);
- 
- 	new_vma = copy_vma(&vma, vrm->new_addr, vrm->new_len, new_pgoff,
--			   &pmc.need_rmap_locks);
-+			   &pmc.need_rmap_locks, vrm->flags & MREMAP_DONTUNMAP);
- 	if (!new_vma) {
- 		vrm_uncharge(vrm);
- 		*new_vma_ptr = NULL;
-@@ -1266,6 +1266,9 @@ static void dontunmap_complete(struct vma_remap_struct *vrm,
- 	unsigned long old_start = vma->vm_start;
- 	unsigned long old_end = vma->vm_end;
- 
-+	/* Self-merge is disallowed. */
-+	VM_WARN_ON_ONCE(new_vma == vma);
-+
- 	/* We always clear VM_LOCKED[ONFAULT] on the old VMA. */
- 	vm_flags_clear(vma, VM_LOCKED_MASK);
- 
-@@ -1273,7 +1276,7 @@ static void dontunmap_complete(struct vma_remap_struct *vrm,
- 	 * anon_vma links of the old vma is no longer needed after its page
- 	 * table has been moved.
- 	 */
--	if (new_vma != vma && start == old_start && end == old_end) {
-+	if (start == old_start && end == old_end) {
- 		const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
- 
- 		unlink_anon_vmas(vma);
-diff --git a/mm/vma.c b/mm/vma.c
-index fd7e968ad707f..d1627a8ef32b1 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1852,7 +1852,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma)
-  */
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks)
-+	bool *need_rmap_locks, bool keep_source)
- {
- 	struct vm_area_struct *vma = *vmap;
- 	unsigned long vma_start = vma->vm_start;
-@@ -1885,6 +1885,21 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 
- 	vmg.pgoff = pgoff;
- 	vmg.next = vma_iter_next_rewind(&vmi, NULL);
-+
-+	/*
-+	 * If the original VMA is kept (MREMAP_DONTUNMAP), the source and
-+	 * destination VMA must be treated distinctly.
-+	 *
-+	 * A merge violates this, so in this case disallow a self-merge.
-+	 */
-+	if (!faulted_in_anon_vma && keep_source) {
-+		if (vmg.prev == vma)
-+			vmg.prev = NULL;
-+		if (vmg.next == vma)
-+			vmg.next = NULL;
-+		faulted_in_anon_vma = true;
-+	}
-+
- 	new_vma = vma_merge_copied_range(&vmg);
- 
- 	if (new_vma) {
-diff --git a/mm/vma.h b/mm/vma.h
-index 5534216cea4d1..ab6e5ff4633f2 100644
---- a/mm/vma.h
-+++ b/mm/vma.h
-@@ -389,7 +389,7 @@ int vma_link(struct mm_struct *mm, struct vm_area_struct *vma);
- 
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks);
-+	bool *need_rmap_locks, bool keep_source);
- 
- struct anon_vma *find_mergeable_anon_vma(struct vm_area_struct *vma);
- 
-diff --git a/tools/testing/vma/vma.c b/tools/testing/vma/vma.c
-index fd37ce3b26280..db580c5d21515 100644
---- a/tools/testing/vma/vma.c
-+++ b/tools/testing/vma/vma.c
-@@ -1558,7 +1558,7 @@ static bool test_copy_vma(void)
- 	/* Move backwards and do not merge. */
- 
- 	vma = alloc_and_link_vma(&mm, 0x3000, 0x5000, 3, vm_flags);
--	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks);
-+	vma_new = copy_vma(&vma, 0, 0x2000, 0, &need_locks, false);
- 	ASSERT_NE(vma_new, vma);
- 	ASSERT_EQ(vma_new->vm_start, 0);
- 	ASSERT_EQ(vma_new->vm_end, 0x2000);
-@@ -1571,7 +1571,7 @@ static bool test_copy_vma(void)
- 
- 	vma = alloc_and_link_vma(&mm, 0, 0x2000, 0, vm_flags);
- 	vma_next = alloc_and_link_vma(&mm, 0x6000, 0x8000, 6, vm_flags);
--	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks);
-+	vma_new = copy_vma(&vma, 0x4000, 0x2000, 4, &need_locks, false);
- 	vma_assert_attached(vma_new);
- 
- 	ASSERT_EQ(vma_new, vma_next);
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 898aaeea2059a..864eebb1f0760 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -2084,6 +2084,8 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 			goto out_dec_async_copy_err;
+ 		memcpy(&result->cb_stateid, &async_copy->cp_stateid.cs_stid,
+ 			sizeof(result->cb_stateid));
++		memcpy(&async_copy->cp_res.cb_stateid, &async_copy->cp_stateid.cs_stid,
++		       sizeof(async_copy->cp_res.cb_stateid));
+ 		if ((READ_ONCE(copy->nf_dst->nf_file->f_mode) &
+ 			       FMODE_NOCMTIME) != 0)
+ 			async_copy->attr_update = true;
 -- 
 2.53.0
 
