@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11FA377A92;
-	Sat, 17 Oct 2026 16:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFA136AB6B;
+	Sat, 17 Oct 2026 16:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253842; cv=none; b=aq9c5bkL5D7amWUpk/CrZOaSnflLNmaBecmoDxWHGblQA6deK6dF6dFySNw8GDA1tujq9eYOBxDJXBhO5rParzMCBpwxQ1gsSFGAApAWIqEdUllQlJ/d4rKS2Ey7f4enbrkV+lJd4Fum+BFCqAcOsgGCDGtxfHUbaxoP6ymTq8E=
+	t=1792253846; cv=none; b=uP+4Yh6cEv6gc1JqOBUSDT/bvg6ApvQvQKMRtiDtwuguUt3CtL92dySAjdMbN7vr1x3p6Wzxd5BDJcP+B3gZWWll6ssiFT5vDJCy0/T17047/ARB6TFB3OogVE9i03kHlMCIuh3jCxN/r4bqvRxep7hkejOjDJIDtD4+YkwbbYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253842; c=relaxed/simple;
-	bh=JHv5i0LEooqGalwcwpX3heHSecBUg5IqVkGdMMNfoas=;
+	s=arc-20240116; t=1792253846; c=relaxed/simple;
+	bh=jTLLRKivmVhvZT8YwmyRWSvSs1HWh9Y/a5LSA4BshhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NzxYxcyyKS1Jym2pZYjHULeoWgJTuPnme7iyNirvr4x1JL7FP36Cl3pUCp8DMoRkhZQda8LvIIzqRgAX75TGUeT2gIFxNHpxkIgfmPBUD9BufW4VwLDoOLEJsjw+oo7xrsgaZ93a5BdMpToYmqO+Goihndc+HkN4TfDKkjnnFR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKL4l0P2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WTPD7cRue5p65rKMIVXEOsSiV/9ga476C0nv4erEmaD21WzEEig/JbdBTx+j55c5tQuMW0d9ADnTabKps6kNM/oT2pw3c+ERU7Kpk10mh5Bo5S8XK9kx5bUP3OhWxAF2yEhZfBma5kDF+uYje/67zKe5VL08CuAW86hzzrJtSUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rz7l0GWn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKL4l0P2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D5D1F000C4;
-	Sat, 17 Oct 2026 16:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rz7l0GWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D871F000C4;
+	Sat, 17 Oct 2026 16:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253841;
-	bh=qgX3ouEeePQF20HYIf/4UhKbzeodsVCYCY1KFvsrfEI=;
+	s=korg; t=1792253844;
+	bh=UtwygEtAUwnoCks+TsqILFGAu0P1f0ludAz5Ctd5TDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKL4l0P2ALjKA/tLAmlw3mAGDGtXXaFs8OG4G1oLBcJXdabaRJt2Va1jxeJXTnzyf
-	 pJEES6GN66Tv5pS37uJxVaHV6Rn5/nZBT0SoNJnduO9ldHSDhINpV3/atavkYdESX7
-	 VW54NDYKuapE9RcbIFe/96gV8nIjbgO+YJU19cHw=
+	b=rz7l0GWnKAhylv0YLu7f6KomQi3uAF0Qf9m7Te1bREKVpOkxmbhCHJnYtladrFaqE
+	 +t1BhGSxbDMonnf11O5+9ZbFsGO1YpT3OkzWoJLn23NEpsQgJBCJKU+AHRglmOJfNt
+	 kmhRpeW4UzYwkRI0SavFZVMjyQ1+bD84CW3GuR/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/869] ASoC: qcom: q6asm: drop DSP responses for closed data streams
-Date: Sat, 17 Oct 2026 17:51:25 +0200
-Message-ID: <20261017160043.316514933@linuxfoundation.org>
+Subject: [PATCH 6.12 253/869] btrfs: dont BUG() on unexpected delayed ref type in run_one_delayed_ref()
+Date: Sat, 17 Oct 2026 17:51:34 +0200
+Message-ID: <20261017160043.544136867@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,57 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8a066a81ee0c1b6cdbd81393536c3b2d19ccef25 ]
+[ Upstream commit c7d1d4ff56744074e005771aff193b927392d51f ]
 
-'Commit a354f030dbce ("ASoC: qcom: q6asm: handle the responses
-after closing")' attempted to ignore DSP responses arriving
-after a stream had been closed.
+There is no need to BUG(), we can just return an error and log an error
+message.
 
-However, those responses were still handled, causing lockups.
-
-Fix this by unconditionally dropping all DSP responses associated with
-closed data streams.
-
-Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
-Link: https://patch.msgid.link/20260102215225.609166-1-cedric.bellegarde@adishatz.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6asm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6asm.c b/sound/soc/qcom/qdsp6/q6asm.c
-index 4c3315d4e27da..60c81edd945d5 100644
---- a/sound/soc/qcom/qdsp6/q6asm.c
-+++ b/sound/soc/qcom/qdsp6/q6asm.c
-@@ -638,7 +638,6 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			client_event = ASM_CLIENT_EVENT_CMD_OUT_FLUSH_DONE;
- 			break;
- 		case ASM_STREAM_CMD_OPEN_WRITE_V3:
--		case ASM_DATA_CMD_WRITE_V2:
- 		case ASM_STREAM_CMD_OPEN_READ_V3:
- 		case ASM_STREAM_CMD_OPEN_READWRITE_V2:
- 		case ASM_STREAM_CMD_SET_ENCDEC_PARAM:
-@@ -657,8 +656,9 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			break;
- 		case ASM_DATA_CMD_EOS:
- 		case ASM_DATA_CMD_READ_V2:
-+		case ASM_DATA_CMD_WRITE_V2:
- 			/* response as result of close stream */
--			break;
-+			goto done;
- 		default:
- 			dev_err(ac->dev, "command[0x%x] not expecting rsp\n",
- 				result->opcode);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 1e760331272a0..a821ea34674f3 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1750,32 +1750,36 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
+ 			       struct btrfs_delayed_extent_op *extent_op,
+ 			       bool insert_reserved)
+ {
++	struct btrfs_fs_info *fs_info = trans->fs_info;
+ 	int ret = 0;
+ 
+ 	if (TRANS_ABORTED(trans)) {
+ 		if (insert_reserved) {
+ 			btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
+-			free_head_ref_squota_rsv(trans->fs_info, href);
++			free_head_ref_squota_rsv(fs_info, href);
+ 		}
+ 		return 0;
+ 	}
+ 
+ 	if (node->type == BTRFS_TREE_BLOCK_REF_KEY ||
+-	    node->type == BTRFS_SHARED_BLOCK_REF_KEY)
++	    node->type == BTRFS_SHARED_BLOCK_REF_KEY) {
+ 		ret = run_delayed_tree_ref(trans, href, node, extent_op,
+ 					   insert_reserved);
+-	else if (node->type == BTRFS_EXTENT_DATA_REF_KEY ||
+-		 node->type == BTRFS_SHARED_DATA_REF_KEY)
++	} else if (node->type == BTRFS_EXTENT_DATA_REF_KEY ||
++		   node->type == BTRFS_SHARED_DATA_REF_KEY) {
+ 		ret = run_delayed_data_ref(trans, href, node, extent_op,
+ 					   insert_reserved);
+-	else if (node->type == BTRFS_EXTENT_OWNER_REF_KEY)
++	} else if (node->type == BTRFS_EXTENT_OWNER_REF_KEY) {
+ 		ret = 0;
+-	else
+-		BUG();
++	} else {
++		ret = -EUCLEAN;
++		btrfs_err(fs_info, "unexpected delayed ref node type: %u", node->type);
++	}
++
+ 	if (ret && insert_reserved)
+ 		btrfs_pin_extent(trans, node->bytenr, node->num_bytes);
+ 	if (ret < 0)
+-		btrfs_err(trans->fs_info,
++		btrfs_err(fs_info,
+ "failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
+ 			  node->bytenr, node->num_bytes, node->type,
+ 			  node->action, node->ref_mod, ret);
 -- 
 2.53.0
 
