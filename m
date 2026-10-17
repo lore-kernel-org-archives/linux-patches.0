@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA163ACEE0;
-	Sat, 17 Oct 2026 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5D83AF66D;
+	Sat, 17 Oct 2026 17:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256623; cv=none; b=WgHYaiJZ1X4rLYJeHMGe63YtXQo0/XGm4ZpHLKBVjWxQeWILT3M9VanCAEciSLddDdHdQzXzRN71TEGIaeNsbccvNi6RaRJqNKx851Mn+lQF77AZvEtBBzV+s4LPPQKeGdA03BuApK+SSPTsTJ+w2Z/rsRZ67p3D9rTW1bzxKPo=
+	t=1792256626; cv=none; b=aWW+iFvvdZPaUK+yr/m5DDsUb6rYJOKMAsk/s2DmNdqtBZOVkAi0NHqx4ZyHvpwVhVCVFZNKN3lG4gsFdCihv8NebkJtprDNl8kR22a2o0+dnBVtZB7G5qjNzK75G+RJTQTOJ+2fiuGJ9z3ferwM5aUJfrudOOs2c4Yr5L0LFms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256623; c=relaxed/simple;
-	bh=nfdTreNsmwXe7GeBLcqaR+p7URCNYYtfYxAph4UJBL4=;
+	s=arc-20240116; t=1792256626; c=relaxed/simple;
+	bh=gm7mg+9Ou2h2krrU9vzXtYB7Awn4Msk2lYRj8m/uZCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZPMB6/KJYCdtPNuyAnfGQbK4vhmcykkOL1b3i9eO8V3qdhkHewXlh4iCl26C8qtxoCdnYKI1djDta6ptqjI4T54ZpGnWSgBqroXJjM63iQt7G4MAX/s2yjirwE2FnDEy1mLgYcRmznIlHLGDFaww0ihOW8ay0WiqFz4qQDjfE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrK39bo7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aMI1ag5M7rt80ilKsDSsWqqnLjb8JYs7uxZzuAcPH6BnQWf51UkKXt3csiCXadxrPAIrodPbFEicJqFJTry36z6tM4g+uV4leY7yTls8uJw+eNfVLt0V4vDFYCx63c4n1GZFn7OAZyvQpBIiEtV9+LLcXW2KYweh6sfvx4kKwDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdBITgIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrK39bo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D491F000C4;
-	Sat, 17 Oct 2026 17:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdBITgIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B559D1F000C4;
+	Sat, 17 Oct 2026 17:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256622;
-	bh=kPindba07v37IW8z0o24c9AeYbcoWTwfx7OtUEB5tAg=;
+	s=korg; t=1792256625;
+	bh=Ep0aErvAdi+s6/3Hfxbkx9YlWMSAvKVnmCL5APi4Jds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wrK39bo7tprWihBdbxl4P/wwaG19P0ET+xfQ1SqXF8PIzuAaVvIT250S8bFB31c6A
-	 wIjm83FtyMS9twmT7uxphHHWDdfy6IjY+/KKc83u0W4hgdIj9+BuqnD6nRK/xmyEE2
-	 LXC1U7GqlJT0mHM9NjJk7XExCTta8BY7/RXDmSDw=
+	b=CdBITgImd+unM105VNwsv3NWJcxFXNRiEjOUNDTy24qjwWFzEJvgd9oIiQjHlM7nv
+	 wFV7ytJSEXGZZyzCoxH8s52Y7KB/GTP25AaMasXtIyRMezjcVRo8KtfPqq3usuLXC+
+	 w1uEuaLza+wfrcV8GkLuo2h11EdUCf1VmdgUUXfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0255/1674] USB: cdc-acm: fix racy TIOCMIWAIT implementation
-Date: Sat, 17 Oct 2026 17:42:07 +0200
-Message-ID: <20261017160437.671796026@linuxfoundation.org>
+	Yuchao Zhang <ndaugoing@gmail.com>
+Subject: [PATCH 6.6 0256/1674] USB: cdc-acm: skip URB restart in port_shutdown if disconnected
+Date: Sat, 17 Oct 2026 17:42:08 +0200
+Message-ID: <20261017160437.695296052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,102 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
+commit dc614d6bc991740d41d5a99ac7765c4b675dda88 upstream.
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+acm_port_shutdown() is called from the tty-port machinery whenever the
+last user closes the port.  acm_disconnect() sets acm->disconnected and
+calls tty_port_tty_vhangup(), which eventually triggers port_shutdown().
+At that point acm_disconnect() has already called acm_poison_urbs() and
+is about to free the control and read URBs.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+However, acm_port_shutdown() unconditionally calls acm_unpoison_urbs()
+and, when the ALWAYS_POLL_CTRL quirk is set, immediately re-submits the
+ctrlurb and all read URBs.  If the concurrent acm_disconnect() then
+frees those URBs and their DMA buffers while they are in-flight, the
+result is a use-after-free in acm_ctrl_irq() or acm_read_bulk_callback()
+accessing the freed DMA memory.
 
-Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
+Fix by checking acm->disconnected after draining the delayed anchor and
+returning early: if we are in a disconnect path the URBs must remain
+poisoned and must not be resubmitted.
+
+The early return is placed after the delayed-anchor drain loop because
+that loop only cancels write-side accounting (wb->use = false and
+autopm counter) and does not touch the hardware path.
+
+Fixes: f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10 INGENIC touchscreen")
 Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Link: https://patch.msgid.link/20260918114309.3659635-2-ndaugoing@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
- drivers/usb/class/cdc-acm.h |    1 -
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ drivers/usb/class/cdc-acm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/usb/class/cdc-acm.c
 +++ b/drivers/usb/class/cdc-acm.c
-@@ -331,7 +331,6 @@ static void acm_process_notification(str
+@@ -787,6 +787,9 @@ static void acm_port_shutdown(struct tty
+ 		usb_autopm_put_interface_async(acm->control);
+ 	}
  
- 		spin_lock_irqsave(&acm->read_lock, flags);
- 		acm->ctrlin = newctrl;
--		acm->oldcount = acm->iocount;
- 
- 		if (difference & USB_CDC_SERIAL_STATE_DSR)
- 			acm->iocount.dsr++;
-@@ -1027,11 +1026,16 @@ static int wait_serial_change(struct acm
- 	DECLARE_WAITQUEUE(wait, current);
- 	struct async_icount old, new;
- 
--	do {
-+	spin_lock_irq(&acm->read_lock);
-+	old = acm->iocount;
-+	spin_unlock_irq(&acm->read_lock);
++	if (acm->disconnected)
++		return;
 +
-+	add_wait_queue(&acm->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&acm->read_lock);
--		old = acm->oldcount;
- 		new = acm->iocount;
--		acm->oldcount = new;
- 		spin_unlock_irq(&acm->read_lock);
+ 	acm_unpoison_urbs(acm);
  
- 		if ((arg & TIOCM_DSR) &&
-@@ -1044,22 +1048,20 @@ static int wait_serial_change(struct acm
- 			old.rng != new.rng)
- 			break;
- 
--		add_wait_queue(&acm->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&acm->wioctl, &wait);
- 		if (acm->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
--			else
--				rv = -ENODEV;
--		} else {
--			if (signal_pending(current))
--				rv = -ERESTARTSYS;
-+			rv = -ENODEV;
-+			break;
- 		}
--	} while (!rv);
- 
--	
-+		schedule();
-+
-+		if (signal_pending(current)) {
-+			rv = -ERESTARTSYS;
-+			break;
-+		}
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&acm->wioctl, &wait);
- 
- 	return rv;
- }
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -90,7 +90,6 @@ struct acm {
- 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
- 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
- 	struct async_icount iocount;			/* counters for control line changes */
--	struct async_icount oldcount;			/* for comparison of counter */
- 	wait_queue_head_t wioctl;			/* for ioctl */
- 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
- 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
+ 	if (acm->quirks & ALWAYS_POLL_CTRL) {
 
 
