@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CCB36B93B;
-	Sat, 17 Oct 2026 16:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6882C026C;
+	Sat, 17 Oct 2026 16:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254200; cv=none; b=sqVO/dLUX62pL9XAgxx6oMs46JoFBLk0dVmWJJ2qD5bH5eBG34LzkIVgchZSGD/tsX4L7vchSvf4DgbavooVZ6/5kstv0SUWsQn+LwgSro5AWOgYeZPETB3XBzeeMuOdl4pGjasRUgOxkor4gvQlLy2zkpvE8tabL9ZC/KBptwc=
+	t=1792254203; cv=none; b=AmC/IrctmIuaCrb+UaKewF4m2dtIfvtdLVE+oE8gpyimnfv0KBbhgGtaUxKOXHCozbNyn+vtM7n7IzMvo4CZIw64/U/Qtzw9pi3okl3nuLPxXGZB9nGw0C5F6EI2hiKucAw51b9YbjhacLvOGlkhPXH6O8Jiq8De3T5KCxd5uKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254200; c=relaxed/simple;
-	bh=BlDX3D9Ea9ohCaGBLGDjXvvWmIfetTS8UB+QHTFzUbw=;
+	s=arc-20240116; t=1792254203; c=relaxed/simple;
+	bh=UU0OEv0Jf4RA4wJO39mWYVrZ/Ae4WI/Mwd59MTt5e+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGo5v5u+iIIxlj1/jEvKb0q7lKiKCTDXsEGcP5QSzznDXaJo8S0hgz56vzF0C0iTQVSwP9WQop/IpDGz5QmPAQ60nYDyiDb5kNghZ9IJrahpQ627R0syGXDA3kfx6MutWJurZC/+mWwqGT5o2WW2WDGa6Syb2gPRd1gFLkRpwog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+m7QK1t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RptK1ciRRGZONwJd4zbc5RSB+ocdSKJl9f62wvBVouXojlV3NzkrkCiMsJc5H1zWTTKdtYhqHg2iEw41MMz7MrwnC/UzFAWVWillCorT2fLhETpeqehKBOi6BzFQsU2nO8ZYfYQaHWDn+WjzFBxAwYkOHB6hvqyvNhuzvOoTOFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNxFTep8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+m7QK1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCA51F000C4;
-	Sat, 17 Oct 2026 16:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNxFTep8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD011F000C4;
+	Sat, 17 Oct 2026 16:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254198;
-	bh=+qlXPr1W7EpiWGCBX0meVDApqNUKqCrnN9Nhqt4sG1E=;
+	s=korg; t=1792254201;
+	bh=ZOUJthvUYk3CQCiFvi3aI/eg3rdaw1CfT8f5P2Y9F8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+m7QK1txczG1FKaTSSOH7VqxEz1oOGbk0qlbyVcBUZet4GjRBQg1EDMRr9ukZIFK
-	 Do6O0JF954lonn+GZ7hVKbSrGjxoq6lyDrPofY2mHjfr1JB4lO0+4Y3ulfwsfgPoS+
-	 Dtj581l46lVB9Z5qL+nnPnr/afNXIXikWp5ghuHk=
+	b=mNxFTep8H93cYjmkKVXpupwIy2LONPY2TUtnEgLxL7eAYCrlc54i2xA0gj6Kpxmvy
+	 UkS8EQ4LCF2rE5rh7IdLa06KAUnJpKgryByLFQPw/qV+pDGP7+DI36aa2iSxpv5sSH
+	 JIvYeDCeKRYa7qcfuaMoA+N9s9XWMgOQbLy6uUzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ackerley Tng <ackerleytng@google.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Ralph Boehme <slow@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 367/869] KVM: guest_memfd: Treat memslot binding offset+size as unsigned values
-Date: Sat, 17 Oct 2026 17:53:28 +0200
-Message-ID: <20261017160046.517038668@linuxfoundation.org>
+Subject: [PATCH 6.12 368/869] smb/client: fix chown/chgrp with SMB3 POSIX Extensions
+Date: Sat, 17 Oct 2026 17:53:29 +0200
+Message-ID: <20261017160046.543937032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -52,131 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ralph Boehme <slow@samba.org>
 
-[ Upstream commit eba85fee7fc6cf28fec38a5bf3c378bef9a79ca6 ]
+[ Upstream commit 760ef2c579c2609cf17fb1cd5392f64d42d43d33 ]
 
-When binding a memslot to a guest_memfd file, treat the offset and size as
-unsigned values to fix a bug where the sum of the two can result in a false
-negative when checking for overflow against the size of the file.  Passing
-unsigned values also avoids relying on somewhat obscure checks in other
-flows for safety, and tracks the offset and size as they are intended to be
-tracked, as unsigned values.
+Ownership (chown) and group (chgrp) modifications were being ignored when
+mounting with SMB3 POSIX Extensions unless CIFS_MOUNT_CIFS_ACL or
+CIFS_MOUNT_MODE_FROM_SID were also explicitly set.
 
-On 64-bit kernels, the number of pages a memslot contains and thus the size
-(and offset) of its guest_memfd binding are unsigned 64-bit values.  Taking
-the offset+size as an loff_t instead of a uoff_t inadvertently converts
-the unsigned value to a signed value if the offset and/or size is massive.
+Fix this by checking for posix_extensions in cifs_setattr_nounix() when
+updating UID and GID, ensuring that id_mode_to_cifs_acl() is called to map
+and set the ownership/group information on the server.
 
-Locally storing the offset and size as signed values is benign in and of
-itself (though even that is *extremely* difficult to discern), but
-operating on their sum is not.
-
-For the offset, KVM explicitly checks against a negative value, which might
-seem like a bug as KVM could incorrectly reject a legitimate binding, but
-that's not actually the case as KVM_CREATE_GUEST_MEMFD takes a signed value
-for its size, i.e. a would-be-negative offset is also greater than the
-maximum possible size of any guest_memfd file.
-
-Regarding the size, while KVM lacks an explicit check for a negative value,
-i.e. seemingly has a flawed overflow check, KVM restricts the number of
-pages in a single memslot to the largest positive signed 32-bit value:
-
-        if (id < KVM_USER_MEM_SLOTS &&
-            (mem->memory_size >> PAGE_SHIFT) > KVM_MEM_MAX_NR_PAGES)
-                return -EINVAL;
-
-and so that maximum "size" will ever be is 0x7fffffff000.
-
-The sum of the two is, however, problematic.  While the size is restricted
-by KVM's memslot logic, the offset is not, i.e. the offset is completely
-unchecked until the "offset + size > i_size_read(inode)" check.  If the
-offset is the (nearly) largest possible _positive_ value, then adding size
-to the offset can result in a signed, negative 64-bit value.  When compared
-against the size of the file (guaranteed to be positive), the negative sum
-is always smaller, and KVM incorrectly allows the absurd offset.
-
-Opportunistically add missing includes in kvm_mm.h (instead of relying on
-its parents).
-
-Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
 Cc: stable@vger.kernel.org
-Cc: Ackerley Tng <ackerleytng@google.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260602170921.1304394-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/guest_memfd.c | 8 ++++----
- virt/kvm/kvm_mm.h      | 7 +++++--
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ fs/smb/client/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index e2c7e3d918406..71afb0ca0cc94 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -473,15 +473,16 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
- }
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 7c4828580076c..acb3220e5b703 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3296,7 +3296,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 		gid = attrs->ia_gid;
  
- int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
--		  unsigned int fd, loff_t offset)
-+		  unsigned int fd, u64 offset)
- {
--	loff_t size = slot->npages << PAGE_SHIFT;
-+	u64 size = slot->npages << PAGE_SHIFT;
- 	unsigned long start, end;
- 	struct kvm_gmem *gmem;
- 	struct inode *inode;
- 	struct file *file;
- 	int r = -EINVAL;
- 
-+	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
- 	BUILD_BUG_ON(sizeof(gfn_t) != sizeof(slot->gmem.pgoff));
- 
- 	file = fget(fd);
-@@ -497,8 +498,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
- 
- 	inode = file_inode(file);
- 
--	if (offset < 0 || !PAGE_ALIGNED(offset) ||
--	    offset + size > i_size_read(inode))
-+	if (!PAGE_ALIGNED(offset) || offset + size > i_size_read(inode))
- 		goto err;
- 
- 	filemap_invalidate_lock(inode->i_mapping);
-diff --git a/virt/kvm/kvm_mm.h b/virt/kvm/kvm_mm.h
-index 715f19669d01f..15b2c728f7dd5 100644
---- a/virt/kvm/kvm_mm.h
-+++ b/virt/kvm/kvm_mm.h
-@@ -3,6 +3,9 @@
- #ifndef __KVM_MM_H__
- #define __KVM_MM_H__ 1
- 
-+#include <linux/kvm.h>
-+#include <linux/kvm_types.h>
-+
- /*
-  * Architectures can choose whether to use an rwlock or spinlock
-  * for the mmu_lock.  These macros, for use in common code
-@@ -39,7 +42,7 @@ static inline void gfn_to_pfn_cache_invalidate_start(struct kvm *kvm,
- void kvm_gmem_init(struct module *module);
- int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args);
- int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
--		  unsigned int fd, loff_t offset);
-+		  unsigned int fd, u64 offset);
- void kvm_gmem_unbind(struct kvm_memory_slot *slot);
- #else
- static inline void kvm_gmem_init(struct module *module)
-@@ -49,7 +52,7 @@ static inline void kvm_gmem_init(struct module *module)
- 
- static inline int kvm_gmem_bind(struct kvm *kvm,
- 					 struct kvm_memory_slot *slot,
--					 unsigned int fd, loff_t offset)
-+					 unsigned int fd, u64 offset)
- {
- 	WARN_ON_ONCE(1);
- 	return -EIO;
+ 	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_CIFS_ACL) ||
+-	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID)) {
++	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID) ||
++	    cifs_sb_master_tcon(cifs_sb)->posix_extensions) {
+ 		if (uid_valid(uid) || gid_valid(gid)) {
+ 			mode = NO_CHANGE_64;
+ 			rc = id_mode_to_cifs_acl(inode, full_path, &mode,
 -- 
 2.53.0
 
