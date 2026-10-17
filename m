@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10373A6F00;
-	Sat, 17 Oct 2026 18:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC52E3C13E0;
+	Sat, 17 Oct 2026 18:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260584; cv=none; b=p0LYrce4TF2sVezxlchmSpy5N/LSz4sOq3HzcpkVOhBcUqAK38A82PiQmnUUdQ5S2cViJwq644XP96/1A5fQuY4QYuH4uPhfB5Xne/x67ZFFXipAMi2aew+ipuQ5mip9clrK8gtIx3P5YsexLyS4EDJD+PrVLTqRRR7r1zcbL0w=
+	t=1792260589; cv=none; b=OBXDkskneAIq9EmAczBfOvbd57Ndy5qqGlzcOXHJl3Wz4tIEnDaTU9tOccEbveOhMROwFtFaWkVjAgJgF3ddjKlyAPtr7O5yQ5lLnpH0uH96rDRQTJsg3hVTLRoigv3MSEN/EMNzrH6dO0wxnMIxQyOU58CAU797YL+vPshpKPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260584; c=relaxed/simple;
-	bh=Z4qrTQAQCtOz3HSX7WmhDSPSOhZ7TukyP/smQHrL62U=;
+	s=arc-20240116; t=1792260589; c=relaxed/simple;
+	bh=QFYPvUysL/SVQzxnSQ9rFRYmbQ3Ea1iSkKQKumkmbZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNJpGghwB7Ysj0elCNSyIYi8AO7Zgj0RFVSFsv4riewhPVyrPQB2K3drLc1blGn+TSUadrF3nyXCeTuuoMrsByxb3ZTuMzdL5G6sTJFmi6HRFzjjldF/hC7LjCOJv29RUghLkStJ4lImvTja2Nd95uL1/GPuTgasm1WNzaSNoBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDMIobYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GDDUTZzo6VxwNc9UgxoP07xRsr4cs6F07G+57uCBYsUrh+NJzRHl+0EuAgHYQfT8uU6KXl5wRqmcOYqBMv94gr9nlB6/zEXG8PVx4bpTgvPorq9cY5zPoY5VNgokLLeGq9umgSf/HTi1m7ypkkWCvQcdrGb2PilbUivetVcfZRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4S3PuA7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDMIobYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8D01F000C4;
-	Sat, 17 Oct 2026 18:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4S3PuA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167131F000C4;
+	Sat, 17 Oct 2026 18:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260583;
-	bh=QziS2h/5EhOIbP7ISudqYnsvPVZ6y9ODU2Y/MIqQ7Qc=;
+	s=korg; t=1792260586;
+	bh=Qtcsxcqklbey9dR4a+EYwZ+E9//+Abs4o69oN79mwU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDMIobYiUiO90qcEvpVJRRB+bOewbJFKe09sQR3TYObfOpOg5L0mzFs8GLXypV2BR
-	 bQoMivbl36zsguYd5gxK2ltf0MQtMAqb5V+NhE8eB5aYJ4ngbhGqXoQljRXwvVDEfx
-	 +f497FUqyqBO63xALOiA+RBYycmG2McYUXnlzVls=
+	b=S4S3PuA7Ygr0IdwkfeDwnJJUcU6rMMC020PDKOXdHT8xOrUcTOPDhmN+6vIiEHChb
+	 vevUyRdUPZ4/utVIW3QASpnTZOn/ONYiG/2zs6URn1csGBR8SZbgeevcsWvI+Qkcpj
+	 Lf5bnNIm5LuIXZ40J3xzJBqhKiHVQmsqDJdccjoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1594/1674] ipv6: flowlabel: cap duplicate leases per socket
-Date: Sat, 17 Oct 2026 18:04:26 +0200
-Message-ID: <20261017160512.003977626@linuxfoundation.org>
+Subject: [PATCH 6.6 1595/1674] netfilter: cttimeout: prevent UAF during module unload
+Date: Sat, 17 Oct 2026 18:04:27 +0200
+Message-ID: <20261017160512.029365372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,85 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
+[ Upstream commit fec9b1de0d02de8dafa3cc344bcb91cf28660643 ]
 
-ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
-successful GET. The recheck path for a compatible existing flowlabel
-links another lease without applying any lease admission check. Repeated
-GET requests for one shareable label can therefore grow a socket's lease
-list without bound.
+nf_ct_set_timeout() protects the timeout hook dereference and policy lookup
+with rcu_read_lock(). cttimeout_exit(), however, unregisters the per-net
+operations before it clears the hook.
 
-Reject a new unprivileged lease once the socket already holds
-FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
-of a globally interned label, including the fl_intern() collision path,
-is covered as well. New-label admission remains under the existing
-mem_check() policy.
+This allows the following interleaving:
 
-Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
-mem_check(). An unprivileged user must not bypass the cap by creating a
-user namespace and a netns where they have CAP_NET_ADMIN, which would
-still consume host memory.
+  CPU 0                              CPU 1
+  cttimeout_exit()                   nf_ct_set_timeout()
+    unregister_pernet_subsys()         rcu_read_lock()
+      kfree(pernet)                     h = nf_ct_timeout_hook
+                                        h->timeout_find_get()
+                                          nfct_timeout_pernet()
 
-Check the capability only when the socket reaches the limit, so
-successful unprivileged GET requests below the cap do not generate a
-capability audit. Do the admission check before updating linger and
-expires so a rejected GET does not refresh the shared label, matching
-the existing socket-list allocation failure path.
+The hook still points to ctnl_timeout_find_get() when CPU 1 looks up the
+already freed per-net timeout list. KASAN reported:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  BUG: KASAN: slab-use-after-free in ctnl_timeout_find_get
+  Read of size 8 by task poc/90
+  Call Trace:
+   ctnl_timeout_find_get+0x271/0x2a0 [nfnetlink_cttimeout]
+   nf_ct_set_timeout+0x7b/0x3c0
+   xt_ct_tg_check+0x724/0xb20
+   xt_check_target+0x234/0xa90
+   do_ipt_set_ctl+0x570/0x1270
+  Allocated by task 89:
+   __kmalloc_noprof+0x16e/0x460
+   ops_init+0x6d/0x420
+   register_pernet_operations+0x2f6/0x670
+  Freed by task 91:
+   kfree+0x131/0x390
+   ops_undo_list+0x3d4/0x730
+   unregister_pernet_operations+0x232/0x490
+   unregister_pernet_subsys+0x1c/0x30
+   cttimeout_exit+0x52/0x970 [nfnetlink_cttimeout]
+
+Clear the hook and wait for existing readers before unregistering the
+per-net operations. This blocks new policy lookups and ensures readers that
+observed the hook finish before the per-net storage is freed.
+
+Fixes: ebfbe67568a7 ("netfilter: cttimeout: use net_generic infra")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_flowlabel.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ net/netfilter/nfnetlink_cttimeout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
-index bf909fa69a977..f6f2e25215c5c 100644
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -463,6 +463,22 @@ fl_create(struct net *net, struct sock *sk, struct in6_flowlabel_req *freq,
- 	return NULL;
+diff --git a/net/netfilter/nfnetlink_cttimeout.c b/net/netfilter/nfnetlink_cttimeout.c
+index eb4d4a3be922f..6067e99830e40 100644
+--- a/net/netfilter/nfnetlink_cttimeout.c
++++ b/net/netfilter/nfnetlink_cttimeout.c
+@@ -660,9 +660,9 @@ static void __exit cttimeout_exit(void)
+ {
+ 	nfnetlink_subsys_unregister(&cttimeout_subsys);
+ 
+-	unregister_pernet_subsys(&cttimeout_ops);
+ 	RCU_INIT_POINTER(nf_ct_timeout_hook, NULL);
+ 	synchronize_net();
++	unregister_pernet_subsys(&cttimeout_ops);
  }
  
-+static bool fl_sock_at_lease_limit(const struct sock *sk)
-+{
-+	const struct ipv6_pinfo *np = inet6_sk(sk);
-+	const struct ipv6_fl_socklist *sfl;
-+	int count = 0;
-+
-+	rcu_read_lock();
-+	for_each_sk_fl_rcu(np, sfl) {
-+		if (++count >= FL_MAX_PER_SOCK)
-+			break;
-+	}
-+	rcu_read_unlock();
-+
-+	return count >= FL_MAX_PER_SOCK;
-+}
-+
- static int mem_check(struct sock *sk)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
-@@ -673,6 +689,10 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 			err = -ENOMEM;
- 			if (!sfl1)
- 				goto release;
-+			err = -ENOBUFS;
-+			if (fl_sock_at_lease_limit(sk) &&
-+			    !capable(CAP_NET_ADMIN))
-+				goto release;
- 			if (fl->linger > fl1->linger)
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
+ module_init(cttimeout_init);
 -- 
 2.53.0
 
