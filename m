@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2486730216D;
-	Sat, 17 Oct 2026 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176ED339365;
+	Sat, 17 Oct 2026 16:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253556; cv=none; b=L5SvLtIltenVI0auJ3RcH6rKssPk/E7xcLGHr+7X9UnJgFsK7BkW8c7Ggt3CJb5FmbgW6o+ryQ5qRnso28/M38lG1Ob+wsL4twW2zx0k2cDuZU0wmbTnXX/Ue666RBDPBMnk60tCbQi6iTPapufrG990eBJ2dytHVoDKVt/hSfs=
+	t=1792253559; cv=none; b=U/5Rc+dwJW0kH9cWq5yIC1GTZJiaoI8KCjYxu+fxfUOjNzgvuRJDbrCgHDYZkmLE8zYaCY4K5NJJgtePcGv9kIJ2WrYKLP5p/oiRpl6kGazdYqjGxCQIUnekWQP7kMb3ua6IJES8xnDm9oPpJ5qq9jzcUNX66pLdZaLCMR0OCpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253556; c=relaxed/simple;
-	bh=Nan3wOHhS3VOv4Es/pwxgPMHyDYJzN/gKre0Dg512PQ=;
+	s=arc-20240116; t=1792253559; c=relaxed/simple;
+	bh=PjwkKKb9gGyQRv6m5yD1RzUQ+xSt3jH1IaK8lArulmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtNP1/G9jyt5NB23uiK5BiaSa+LiUbnHimFpOkvRvfbkaZ7MK4ZlIaoGg+jjbo7RewLyxXwPwo3f0EBVkFkSJXpSzIdjofu6QJV/24lVmfp85lTSmpsg2VOQZ4Yl3vdMlkDnsAWUhUCNzg7dVZb5P07SDjqloJi1DQEb32RWCvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvjsJO5t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6YyonNML32ch4cK+GlKLhp3mY4G+PUscKVDWRNBBLjgjPsj96RezyJIP1XoOtFypts3JXwMzz9ztLUWPerpFEUGl0CmSrOwStwgZx/ofluT9fLONE0UzknEQCLxOjJvrc+SJ9TnwZw45kP72OKQxxEC+NA6InuKkKXw3QMo04E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJ6rkD8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvjsJO5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735011F000C4;
-	Sat, 17 Oct 2026 16:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJ6rkD8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1861F000C4;
+	Sat, 17 Oct 2026 16:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253555;
-	bh=sbyrld2LRkAUGX4Ge/sz1tC7bYm7k4+AAvSvejfX1GE=;
+	s=korg; t=1792253558;
+	bh=IDMYSfuuQ/F5PL36yqXD36BVwplaB78+k+Xf9gl4EXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MvjsJO5taKeKiaXroL4ul8l3VxQwSdiCdAc3+/yGb2lK62+G7sOoG1v4nFACTo4Kv
-	 TsxXJik2QB5Yg/NDJWKeXRbc/P6iGMLuA6UrVgLYdtjxXjY5N6a0WTtMHJ7AuhxNVW
-	 AI/A+GfNCRy/YK7cqcvjEVjcWsCRFm0b4swlaJy8=
+	b=oJ6rkD8/RPkLImb4hR3we8ZFyP8C7EsYQRGk07ZTHe9Mnmzh3oJDmZzT2TzcpkrlY
+	 eTwwwBLb+oZAzjCXKbFGtophZDTRZN1wD0BL+TmTwHZ1PKSbElqLz3AW+Smouj+KWd
+	 37X+dcISqGDiTBkJieBefDoMic5iELwAGbRn4+AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Vlad Dogaru <vdogaru@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Mark Bloch <mbloch@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/869] net/mlx5: HWS, update flow - remove the use of dual RTCs
-Date: Sat, 17 Oct 2026 17:49:16 +0200
-Message-ID: <20261017160039.989815375@linuxfoundation.org>
+Subject: [PATCH 6.12 116/869] net/mlx5: HWS, Remove unused element array
+Date: Sat, 17 Oct 2026 17:49:17 +0200
+Message-ID: <20261017160040.017067192@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -54,595 +55,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-[ Upstream commit ab6912ff6558a504d9a02c01333ef8f4247681ad ]
+[ Upstream commit b2ae16214ffeda3e1c25223eebe19f85b0876181 ]
 
-This patch is the first part of update flow implementation.
+Remove the array of elements wrapped in a struct because in reality only
+the first element was ever used.
 
-Update flow should support rules with single STE (match STE only),
-as well as rules with multiple STEs (match STE plus action STEs).
-
-Supporting the rules with single STE is straightforward: we just
-overwrite the STE, which is an atomic operation.
-Supporting the rules with action STEs is a more complicated case.
-The existing implementation uses two action RTCs per matcher and
-alternates between the two for each update request.
-This implementation was unnecessarily complex and lead to some
-unhandled edge cases, so the support for rule update with multiple
-STEs wasn't really functional.
-
-This patch removes this code, and the next patch adds implementation
-of a different approach.
-
-Note that after applying this patch and before applying the next
-patch we still have support for update rule with single STE (only
-match STE w/o action STEs), but update will fail for rules with
-action STEs.
-
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
 Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
 Reviewed-by: Mark Bloch <mbloch@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250109160546.1733647-15-tariqt@nvidia.com
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://patch.msgid.link/1744312662-356571-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 2c0a959bebdc ("net/mlx5: HWS, Fix memory leak in hws_pool_buddy_init error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/steering/hws/mlx5hws_debug.c    |  10 +-
- .../mlx5/core/steering/hws/mlx5hws_internal.h |   1 -
- .../mlx5/core/steering/hws/mlx5hws_matcher.c  | 170 +++++++-----------
- .../mlx5/core/steering/hws/mlx5hws_matcher.h  |   8 +-
- .../mlx5/core/steering/hws/mlx5hws_rule.c     |  73 ++------
- .../mlx5/core/steering/hws/mlx5hws_rule.h     |   3 +-
- 6 files changed, 81 insertions(+), 184 deletions(-)
+ .../mlx5/core/steering/hws/mlx5hws_pool.c     | 55 ++++++++-----------
+ .../mlx5/core/steering/hws/mlx5hws_pool.h     |  6 +-
+ 2 files changed, 23 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-index 0ec60c25596dd..d8ac4a445e099 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_debug.c
-@@ -148,8 +148,8 @@ static int hws_debug_dump_matcher(struct seq_file *f, struct mlx5hws_matcher *ma
- 		   matcher->match_ste.rtc_1_id,
- 		   (int)ste_1_id);
- 
--	ste = &matcher->action_ste[0].ste;
--	ste_pool = matcher->action_ste[0].pool;
-+	ste = &matcher->action_ste.ste;
-+	ste_pool = matcher->action_ste.pool;
- 	if (ste_pool) {
- 		ste_0_id = mlx5hws_pool_chunk_get_base_id(ste_pool, ste);
- 		if (tbl_type == MLX5HWS_TABLE_TYPE_FDB)
-@@ -171,10 +171,8 @@ static int hws_debug_dump_matcher(struct seq_file *f, struct mlx5hws_matcher *ma
- 		return ret;
- 
- 	seq_printf(f, ",%d,%d,%d,%d,%d,0x%llx,0x%llx\n",
--		   matcher->action_ste[0].rtc_0_id,
--		   (int)ste_0_id,
--		   matcher->action_ste[0].rtc_1_id,
--		   (int)ste_1_id,
-+		   matcher->action_ste.rtc_0_id, (int)ste_0_id,
-+		   matcher->action_ste.rtc_1_id, (int)ste_1_id,
- 		   0,
- 		   mlx5hws_debug_icm_to_idx(icm_addr_0),
- 		   mlx5hws_debug_icm_to_idx(icm_addr_1));
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_internal.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_internal.h
-index 5643be1cd5bf3..73511a5ab02ae 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_internal.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_internal.h
-@@ -39,7 +39,6 @@
- #define mlx5hws_dbg(ctx, arg...) mlx5_core_dbg((ctx)->mdev, ##arg)
- 
- #define MLX5HWS_TABLE_TYPE_BASE 2
--#define MLX5HWS_ACTION_STE_IDX_ANY 0
- 
- static inline bool is_mem_zero(const u8 *mem, size_t size)
- {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-index e4b24996bb74c..41511d0b6268d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-@@ -200,7 +200,7 @@ static void hws_matcher_set_rtc_attr_sz(struct mlx5hws_matcher *matcher,
- 					enum mlx5hws_matcher_rtc_type rtc_type,
- 					bool is_mirror)
- {
--	struct mlx5hws_pool_chunk *ste = &matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].ste;
-+	struct mlx5hws_pool_chunk *ste = &matcher->action_ste.ste;
- 	enum mlx5hws_matcher_flow_src flow_src = matcher->attr.optimize_flow_src;
- 	bool is_match_rtc = rtc_type == HWS_MATCHER_RTC_TYPE_MATCH;
- 
-@@ -217,8 +217,7 @@ static void hws_matcher_set_rtc_attr_sz(struct mlx5hws_matcher *matcher,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
+index 048b97de07625..866e6938e340c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.c
+@@ -293,7 +293,7 @@ static int hws_pool_create_resource_on_index(struct mlx5hws_pool *pool,
  }
  
- static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
--				  enum mlx5hws_matcher_rtc_type rtc_type,
--				  u8 action_ste_selector)
-+				  enum mlx5hws_matcher_rtc_type rtc_type)
+ static struct mlx5hws_pool_elements *
+-hws_pool_element_create_new_elem(struct mlx5hws_pool *pool, u32 order, int idx)
++hws_pool_element_create_new_elem(struct mlx5hws_pool *pool, u32 order)
  {
- 	struct mlx5hws_matcher_attr *attr = &matcher->attr;
- 	struct mlx5hws_cmd_rtc_create_attr rtc_attr = {0};
-@@ -278,7 +277,7 @@ static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
- 		break;
- 
- 	case HWS_MATCHER_RTC_TYPE_STE_ARRAY:
--		action_ste = &matcher->action_ste[action_ste_selector];
-+		action_ste = &matcher->action_ste;
- 
- 		rtc_0_id = &action_ste->rtc_0_id;
- 		rtc_1_id = &action_ste->rtc_1_id;
-@@ -350,8 +349,7 @@ static int hws_matcher_create_rtc(struct mlx5hws_matcher *matcher,
- }
- 
- static void hws_matcher_destroy_rtc(struct mlx5hws_matcher *matcher,
--				    enum mlx5hws_matcher_rtc_type rtc_type,
--				    u8 action_ste_selector)
-+				    enum mlx5hws_matcher_rtc_type rtc_type)
- {
- 	struct mlx5hws_matcher_action_ste *action_ste;
- 	struct mlx5hws_table *tbl = matcher->tbl;
-@@ -367,7 +365,7 @@ static void hws_matcher_destroy_rtc(struct mlx5hws_matcher *matcher,
- 		ste = &matcher->match_ste.ste;
- 		break;
- 	case HWS_MATCHER_RTC_TYPE_STE_ARRAY:
--		action_ste = &matcher->action_ste[action_ste_selector];
-+		action_ste = &matcher->action_ste;
- 		rtc_0_id = action_ste->rtc_0_id;
- 		rtc_1_id = action_ste->rtc_1_id;
- 		ste_pool = action_ste->pool;
-@@ -458,20 +456,13 @@ static int hws_matcher_resize_init(struct mlx5hws_matcher *src_matcher)
- 	if (!resize_data)
- 		return -ENOMEM;
- 
--	resize_data->max_stes = src_matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].max_stes;
--
--	resize_data->action_ste[0].stc = src_matcher->action_ste[0].stc;
--	resize_data->action_ste[0].rtc_0_id = src_matcher->action_ste[0].rtc_0_id;
--	resize_data->action_ste[0].rtc_1_id = src_matcher->action_ste[0].rtc_1_id;
--	resize_data->action_ste[0].pool = src_matcher->action_ste[0].max_stes ?
--					  src_matcher->action_ste[0].pool :
--					  NULL;
--	resize_data->action_ste[1].stc = src_matcher->action_ste[1].stc;
--	resize_data->action_ste[1].rtc_0_id = src_matcher->action_ste[1].rtc_0_id;
--	resize_data->action_ste[1].rtc_1_id = src_matcher->action_ste[1].rtc_1_id;
--	resize_data->action_ste[1].pool = src_matcher->action_ste[1].max_stes ?
--					  src_matcher->action_ste[1].pool :
--					   NULL;
-+	resize_data->max_stes = src_matcher->action_ste.max_stes;
-+
-+	resize_data->stc = src_matcher->action_ste.stc;
-+	resize_data->rtc_0_id = src_matcher->action_ste.rtc_0_id;
-+	resize_data->rtc_1_id = src_matcher->action_ste.rtc_1_id;
-+	resize_data->pool = src_matcher->action_ste.max_stes ?
-+			    src_matcher->action_ste.pool : NULL;
- 
- 	/* Place the new resized matcher on the dst matcher's list */
- 	list_add(&resize_data->list_node, &src_matcher->resize_dst->resize_data);
-@@ -504,42 +495,60 @@ static void hws_matcher_resize_uninit(struct mlx5hws_matcher *matcher)
- 		if (resize_data->max_stes) {
- 			mlx5hws_action_free_single_stc(matcher->tbl->ctx,
- 						       matcher->tbl->type,
--						       &resize_data->action_ste[1].stc);
--			mlx5hws_action_free_single_stc(matcher->tbl->ctx,
--						       matcher->tbl->type,
--						       &resize_data->action_ste[0].stc);
-+						       &resize_data->stc);
- 
--			if (matcher->tbl->type == MLX5HWS_TABLE_TYPE_FDB) {
-+			if (matcher->tbl->type == MLX5HWS_TABLE_TYPE_FDB)
- 				mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev,
--							resize_data->action_ste[1].rtc_1_id);
--				mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev,
--							resize_data->action_ste[0].rtc_1_id);
--			}
--			mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev,
--						resize_data->action_ste[1].rtc_0_id);
-+							resize_data->rtc_1_id);
-+
- 			mlx5hws_cmd_rtc_destroy(matcher->tbl->ctx->mdev,
--						resize_data->action_ste[0].rtc_0_id);
--			if (resize_data->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].pool) {
--				mlx5hws_pool_destroy(resize_data->action_ste[1].pool);
--				mlx5hws_pool_destroy(resize_data->action_ste[0].pool);
--			}
-+						resize_data->rtc_0_id);
-+
-+			if (resize_data->pool)
-+				mlx5hws_pool_destroy(resize_data->pool);
+ 	struct mlx5hws_pool_elements *elem;
+ 	u32 alloc_size;
+@@ -311,21 +311,21 @@ hws_pool_element_create_new_elem(struct mlx5hws_pool *pool, u32 order, int idx)
+ 		elem->bitmap = hws_pool_create_and_init_bitmap(alloc_size - order);
+ 		if (!elem->bitmap) {
+ 			mlx5hws_err(pool->ctx,
+-				    "Failed to create bitmap type: %d: size %d index: %d\n",
+-				    pool->type, alloc_size, idx);
++				    "Failed to create bitmap type: %d: size %d\n",
++				    pool->type, alloc_size);
+ 			goto free_elem;
  		}
  
- 		kfree(resize_data);
+ 		elem->log_size = alloc_size - order;
  	}
- }
  
--static int
--hws_matcher_bind_at_idx(struct mlx5hws_matcher *matcher, u8 action_ste_selector)
-+static int hws_matcher_bind_at(struct mlx5hws_matcher *matcher)
+-	if (hws_pool_create_resource_on_index(pool, alloc_size, idx)) {
+-		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %d index: %d\n",
+-			    pool->type, alloc_size, idx);
++	if (hws_pool_create_resource_on_index(pool, alloc_size, 0)) {
++		mlx5hws_err(pool->ctx, "Failed to create resource type: %d: size %d\n",
++			    pool->type, alloc_size);
+ 		goto free_db;
+ 	}
+ 
+-	pool->db.element_manager->elements[idx] = elem;
++	pool->db.element = elem;
+ 
+ 	return elem;
+ 
+@@ -359,9 +359,9 @@ hws_pool_onesize_element_get_mem_chunk(struct mlx5hws_pool *pool, u32 order,
  {
-+	bool is_jumbo = mlx5hws_matcher_mt_is_jumbo(matcher->mt);
- 	struct mlx5hws_cmd_stc_modify_attr stc_attr = {0};
- 	struct mlx5hws_matcher_action_ste *action_ste;
- 	struct mlx5hws_table *tbl = matcher->tbl;
- 	struct mlx5hws_pool_attr pool_attr = {0};
- 	struct mlx5hws_context *ctx = tbl->ctx;
--	int ret;
-+	u32 required_stes;
-+	u8 max_stes = 0;
-+	int i, ret;
+ 	struct mlx5hws_pool_elements *elem;
  
--	action_ste = &matcher->action_ste[action_ste_selector];
-+	if (matcher->flags & MLX5HWS_MATCHER_FLAGS_COLLISION)
-+		return 0;
-+
-+	for (i = 0; i < matcher->num_of_at; i++) {
-+		struct mlx5hws_action_template *at = &matcher->at[i];
-+
-+		ret = hws_matcher_check_and_process_at(matcher, at);
-+		if (ret) {
-+			mlx5hws_err(ctx, "Invalid at %d", i);
-+			return ret;
-+		}
-+
-+		required_stes = at->num_of_action_stes - (!is_jumbo || at->only_term);
-+		max_stes = max(max_stes, required_stes);
-+
-+		/* Future: Optimize reparse */
-+	}
-+
-+	/* There are no additional STEs required for matcher */
-+	if (!max_stes)
-+		return 0;
-+
-+	matcher->action_ste.max_stes = max_stes;
-+
-+	action_ste = &matcher->action_ste;
+-	elem = pool->db.element_manager->elements[0];
++	elem = pool->db.element;
+ 	if (!elem)
+-		elem = hws_pool_element_create_new_elem(pool, order, 0);
++		elem = hws_pool_element_create_new_elem(pool, order);
+ 	if (!elem)
+ 		goto err_no_elem;
  
- 	/* Allocate action STE mempool */
- 	pool_attr.table_type = tbl->type;
-@@ -555,7 +564,7 @@ hws_matcher_bind_at_idx(struct mlx5hws_matcher *matcher, u8 action_ste_selector)
- 	}
- 
- 	/* Allocate action RTC */
--	ret = hws_matcher_create_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY, action_ste_selector);
-+	ret = hws_matcher_create_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY);
- 	if (ret) {
- 		mlx5hws_err(ctx, "Failed to create action RTC\n");
- 		goto free_ste_pool;
-@@ -579,18 +588,18 @@ hws_matcher_bind_at_idx(struct mlx5hws_matcher *matcher, u8 action_ste_selector)
+@@ -451,16 +451,14 @@ static int hws_pool_general_element_db_init(struct mlx5hws_pool *pool)
  	return 0;
- 
- free_rtc:
--	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY, action_ste_selector);
-+	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY);
- free_ste_pool:
- 	mlx5hws_pool_destroy(action_ste->pool);
- 	return ret;
  }
  
--static void hws_matcher_unbind_at_idx(struct mlx5hws_matcher *matcher, u8 action_ste_selector)
-+static void hws_matcher_unbind_at(struct mlx5hws_matcher *matcher)
+-static void hws_onesize_element_db_destroy_element(struct mlx5hws_pool *pool,
+-						   struct mlx5hws_pool_elements *elem,
+-						   struct mlx5hws_pool_chunk *chunk)
++static void
++hws_onesize_element_db_destroy_element(struct mlx5hws_pool *pool,
++				       struct mlx5hws_pool_elements *elem)
  {
- 	struct mlx5hws_matcher_action_ste *action_ste;
- 	struct mlx5hws_table *tbl = matcher->tbl;
+-	if (unlikely(!pool->resource[chunk->resource_idx]))
+-		pr_warn("HWS: invalid resource with index %d\n", chunk->resource_idx);
+-
+-	hws_pool_resource_free(pool, chunk->resource_idx);
++	hws_pool_resource_free(pool, 0);
++	bitmap_free(elem->bitmap);
+ 	kfree(elem);
+-	pool->db.element_manager->elements[chunk->resource_idx] = NULL;
++	pool->db.element = NULL;
+ }
  
--	action_ste = &matcher->action_ste[action_ste_selector];
-+	action_ste = &matcher->action_ste;
+ static void hws_onesize_element_db_put_chunk(struct mlx5hws_pool *pool,
+@@ -471,7 +469,7 @@ static void hws_onesize_element_db_put_chunk(struct mlx5hws_pool *pool,
+ 	if (unlikely(chunk->resource_idx))
+ 		pr_warn("HWS: invalid resource with index %d\n", chunk->resource_idx);
  
- 	if (!action_ste->max_stes ||
- 	    matcher->flags & MLX5HWS_MATCHER_FLAGS_COLLISION ||
-@@ -598,65 +607,10 @@ static void hws_matcher_unbind_at_idx(struct mlx5hws_matcher *matcher, u8 action
+-	elem = pool->db.element_manager->elements[chunk->resource_idx];
++	elem = pool->db.element;
+ 	if (!elem) {
+ 		mlx5hws_err(pool->ctx, "No such element (%d)\n", chunk->resource_idx);
  		return;
+@@ -483,7 +481,7 @@ static void hws_onesize_element_db_put_chunk(struct mlx5hws_pool *pool,
  
- 	mlx5hws_action_free_single_stc(tbl->ctx, tbl->type, &action_ste->stc);
--	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY, action_ste_selector);
-+	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_STE_ARRAY);
- 	mlx5hws_pool_destroy(action_ste->pool);
+ 	if (pool->flags & MLX5HWS_POOL_FLAGS_RELEASE_FREE_RESOURCE &&
+ 	    !elem->num_of_elements)
+-		hws_onesize_element_db_destroy_element(pool, elem, chunk);
++		hws_onesize_element_db_destroy_element(pool, elem);
  }
  
--static int hws_matcher_bind_at(struct mlx5hws_matcher *matcher)
--{
--	bool is_jumbo = mlx5hws_matcher_mt_is_jumbo(matcher->mt);
--	struct mlx5hws_table *tbl = matcher->tbl;
--	struct mlx5hws_context *ctx = tbl->ctx;
--	u32 required_stes;
--	u8 max_stes = 0;
--	int i, ret;
--
--	if (matcher->flags & MLX5HWS_MATCHER_FLAGS_COLLISION)
--		return 0;
--
--	for (i = 0; i < matcher->num_of_at; i++) {
--		struct mlx5hws_action_template *at = &matcher->at[i];
--
--		ret = hws_matcher_check_and_process_at(matcher, at);
--		if (ret) {
--			mlx5hws_err(ctx, "Invalid at %d", i);
--			return ret;
+ static int hws_onesize_element_db_get_chunk(struct mlx5hws_pool *pool,
+@@ -504,18 +502,13 @@ static int hws_onesize_element_db_get_chunk(struct mlx5hws_pool *pool,
+ 
+ static void hws_onesize_element_db_uninit(struct mlx5hws_pool *pool)
+ {
+-	struct mlx5hws_pool_elements *elem;
+-	int i;
++	struct mlx5hws_pool_elements *elem = pool->db.element;
+ 
+-	for (i = 0; i < MLX5HWS_POOL_RESOURCE_ARR_SZ; i++) {
+-		elem = pool->db.element_manager->elements[i];
+-		if (elem) {
+-			bitmap_free(elem->bitmap);
+-			kfree(elem);
+-			pool->db.element_manager->elements[i] = NULL;
 -		}
--
--		required_stes = at->num_of_action_stes - (!is_jumbo || at->only_term);
--		max_stes = max(max_stes, required_stes);
--
--		/* Future: Optimize reparse */
--	}
--
--	/* There are no additional STEs required for matcher */
--	if (!max_stes)
--		return 0;
--
--	matcher->action_ste[0].max_stes = max_stes;
--	matcher->action_ste[1].max_stes = max_stes;
--
--	ret = hws_matcher_bind_at_idx(matcher, 0);
--	if (ret)
--		return ret;
--
--	ret = hws_matcher_bind_at_idx(matcher, 1);
--	if (ret)
--		goto free_at_0;
--
--	return 0;
--
--free_at_0:
--	hws_matcher_unbind_at_idx(matcher, 0);
--	return ret;
--}
--
--static void hws_matcher_unbind_at(struct mlx5hws_matcher *matcher)
--{
--	hws_matcher_unbind_at_idx(matcher, 1);
--	hws_matcher_unbind_at_idx(matcher, 0);
--}
--
- static int hws_matcher_bind_mt(struct mlx5hws_matcher *matcher)
++	if (elem) {
++		bitmap_free(elem->bitmap);
++		kfree(elem);
++		pool->db.element = NULL;
+ 	}
+-	kfree(pool->db.element_manager);
+ }
+ 
+ /* This memory management works as the following:
+@@ -526,10 +519,6 @@ static void hws_onesize_element_db_uninit(struct mlx5hws_pool *pool)
+  */
+ static int hws_pool_onesize_element_db_init(struct mlx5hws_pool *pool)
  {
- 	struct mlx5hws_context *ctx = matcher->tbl->ctx;
-@@ -802,7 +756,7 @@ static int hws_matcher_create_and_connect(struct mlx5hws_matcher *matcher)
- 		goto unbind_at;
- 
- 	/* Allocate the RTC for the new matcher */
--	ret = hws_matcher_create_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH, 0);
-+	ret = hws_matcher_create_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH);
- 	if (ret)
- 		goto destroy_end_ft;
- 
-@@ -814,7 +768,7 @@ static int hws_matcher_create_and_connect(struct mlx5hws_matcher *matcher)
- 	return 0;
- 
- destroy_rtc:
--	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH, 0);
-+	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH);
- destroy_end_ft:
- 	hws_matcher_destroy_end_ft(matcher);
- unbind_at:
-@@ -828,7 +782,7 @@ static void hws_matcher_destroy_and_disconnect(struct mlx5hws_matcher *matcher)
- {
- 	hws_matcher_resize_uninit(matcher);
- 	hws_matcher_disconnect(matcher);
--	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH, 0);
-+	hws_matcher_destroy_rtc(matcher, HWS_MATCHER_RTC_TYPE_MATCH);
- 	hws_matcher_destroy_end_ft(matcher);
- 	hws_matcher_unbind_at(matcher);
- 	hws_matcher_unbind_mt(matcher);
-@@ -962,10 +916,9 @@ int mlx5hws_matcher_attach_at(struct mlx5hws_matcher *matcher,
- 		return ret;
- 
- 	required_stes = at->num_of_action_stes - (!is_jumbo || at->only_term);
--	if (matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].max_stes < required_stes) {
-+	if (matcher->action_ste.max_stes < required_stes) {
- 		mlx5hws_dbg(ctx, "Required STEs [%d] exceeds initial action template STE [%d]\n",
--			    required_stes,
--			    matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].max_stes);
-+			    required_stes, matcher->action_ste.max_stes);
- 		return -ENOMEM;
- 	}
- 
-@@ -1149,8 +1102,7 @@ static int hws_matcher_resize_precheck(struct mlx5hws_matcher *src_matcher,
- 		return -EINVAL;
- 	}
- 
--	if (src_matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].max_stes >
--	    dst_matcher->action_ste[0].max_stes) {
-+	if (src_matcher->action_ste.max_stes > dst_matcher->action_ste.max_stes) {
- 		mlx5hws_err(ctx, "Src/dst matcher max STEs mismatch\n");
- 		return -EINVAL;
- 	}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.h
-index 125391d1a1148..b9075919a4c96 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.h
-@@ -52,15 +52,11 @@ struct mlx5hws_matcher_action_ste {
- 	u8 max_stes;
+-	pool->db.element_manager = kzalloc(sizeof(*pool->db.element_manager), GFP_KERNEL);
+-	if (!pool->db.element_manager)
+-		return -ENOMEM;
+-
+ 	pool->p_db_uninit = &hws_onesize_element_db_uninit;
+ 	pool->p_get_chunk = &hws_onesize_element_db_get_chunk;
+ 	pool->p_put_chunk = &hws_onesize_element_db_put_chunk;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
+index 621298b352b24..f4258f83fdbf7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pool.h
+@@ -87,14 +87,10 @@ struct mlx5hws_pool_elements {
+ 	bool is_full;
  };
  
--struct mlx5hws_matcher_resize_data_node {
-+struct mlx5hws_matcher_resize_data {
- 	struct mlx5hws_pool_chunk stc;
- 	u32 rtc_0_id;
- 	u32 rtc_1_id;
- 	struct mlx5hws_pool *pool;
+-struct mlx5hws_element_manager {
+-	struct mlx5hws_pool_elements *elements[MLX5HWS_POOL_RESOURCE_ARR_SZ];
 -};
 -
--struct mlx5hws_matcher_resize_data {
--	struct mlx5hws_matcher_resize_data_node action_ste[2];
- 	u8 max_stes;
- 	struct list_head list_node;
+ struct mlx5hws_pool_db {
+ 	enum mlx5hws_db_type type;
+ 	union {
+-		struct mlx5hws_element_manager *element_manager;
++		struct mlx5hws_pool_elements *element;
+ 		struct mlx5hws_buddy_manager *buddy_manager;
+ 	};
  };
-@@ -78,7 +74,7 @@ struct mlx5hws_matcher {
- 	struct mlx5hws_matcher *col_matcher;
- 	struct mlx5hws_matcher *resize_dst;
- 	struct mlx5hws_matcher_match_ste match_ste;
--	struct mlx5hws_matcher_action_ste action_ste[2];
-+	struct mlx5hws_matcher_action_ste action_ste;
- 	struct list_head list_node;
- 	struct list_head resize_data;
- };
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-index a40c66410585b..97195c643a583 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.c
-@@ -142,14 +142,9 @@ hws_rule_save_resize_info(struct mlx5hws_rule *rule,
- 			return;
- 		}
- 
--		rule->resize_info->max_stes =
--			rule->matcher->action_ste[MLX5HWS_ACTION_STE_IDX_ANY].max_stes;
--		rule->resize_info->action_ste_pool[0] = rule->matcher->action_ste[0].max_stes ?
--							rule->matcher->action_ste[0].pool :
--							NULL;
--		rule->resize_info->action_ste_pool[1] = rule->matcher->action_ste[1].max_stes ?
--							rule->matcher->action_ste[1].pool :
--							NULL;
-+		rule->resize_info->max_stes = rule->matcher->action_ste.max_stes;
-+		rule->resize_info->action_ste_pool = rule->matcher->action_ste.max_stes ?
-+						     rule->matcher->action_ste.pool : NULL;
- 	}
- 
- 	memcpy(rule->resize_info->ctrl_seg, ste_attr->wqe_ctrl,
-@@ -204,15 +199,15 @@ hws_rule_load_delete_info(struct mlx5hws_rule *rule,
- 	}
- }
- 
--static int hws_rule_alloc_action_ste_idx(struct mlx5hws_rule *rule,
--					 u8 action_ste_selector)
-+static int hws_rule_alloc_action_ste(struct mlx5hws_rule *rule,
-+				     struct mlx5hws_rule_attr *attr)
- {
- 	struct mlx5hws_matcher *matcher = rule->matcher;
- 	struct mlx5hws_matcher_action_ste *action_ste;
- 	struct mlx5hws_pool_chunk ste = {0};
- 	int ret;
- 
--	action_ste = &matcher->action_ste[action_ste_selector];
-+	action_ste = &matcher->action_ste;
- 	ste.order = ilog2(roundup_pow_of_two(action_ste->max_stes));
- 	ret = mlx5hws_pool_chunk_alloc(action_ste->pool, &ste);
- 	if (unlikely(ret)) {
-@@ -225,8 +220,7 @@ static int hws_rule_alloc_action_ste_idx(struct mlx5hws_rule *rule,
- 	return 0;
- }
- 
--static void hws_rule_free_action_ste_idx(struct mlx5hws_rule *rule,
--					 u8 action_ste_selector)
-+void mlx5hws_rule_free_action_ste(struct mlx5hws_rule *rule)
- {
- 	struct mlx5hws_matcher *matcher = rule->matcher;
- 	struct mlx5hws_pool_chunk ste = {0};
-@@ -236,10 +230,10 @@ static void hws_rule_free_action_ste_idx(struct mlx5hws_rule *rule,
- 	if (mlx5hws_matcher_is_resizable(matcher)) {
- 		/* Free the original action pool if rule was resized */
- 		max_stes = rule->resize_info->max_stes;
--		pool = rule->resize_info->action_ste_pool[action_ste_selector];
-+		pool = rule->resize_info->action_ste_pool;
- 	} else {
--		max_stes = matcher->action_ste[action_ste_selector].max_stes;
--		pool = matcher->action_ste[action_ste_selector].pool;
-+		max_stes = matcher->action_ste.max_stes;
-+		pool = matcher->action_ste.pool;
- 	}
- 
- 	/* This release is safe only when the rule match part was deleted */
-@@ -249,41 +243,6 @@ static void hws_rule_free_action_ste_idx(struct mlx5hws_rule *rule,
- 	mlx5hws_pool_chunk_free(pool, &ste);
- }
- 
--static int hws_rule_alloc_action_ste(struct mlx5hws_rule *rule,
--				     struct mlx5hws_rule_attr *attr)
--{
--	int action_ste_idx;
--	int ret;
--
--	ret = hws_rule_alloc_action_ste_idx(rule, 0);
--	if (unlikely(ret))
--		return ret;
--
--	action_ste_idx = rule->action_ste_idx;
--
--	ret = hws_rule_alloc_action_ste_idx(rule, 1);
--	if (unlikely(ret)) {
--		hws_rule_free_action_ste_idx(rule, 0);
--		return ret;
--	}
--
--	/* Both pools have to return the same index */
--	if (unlikely(rule->action_ste_idx != action_ste_idx)) {
--		pr_warn("HWS: allocation of action STE failed - pool indexes mismatch\n");
--		return -EINVAL;
--	}
--
--	return 0;
--}
--
--void mlx5hws_rule_free_action_ste(struct mlx5hws_rule *rule)
--{
--	if (rule->action_ste_idx > -1) {
--		hws_rule_free_action_ste_idx(rule, 1);
--		hws_rule_free_action_ste_idx(rule, 0);
--	}
--}
--
- static void hws_rule_create_init(struct mlx5hws_rule *rule,
- 				 struct mlx5hws_send_ste_attr *ste_attr,
- 				 struct mlx5hws_actions_apply_data *apply,
-@@ -298,9 +257,6 @@ static void hws_rule_create_init(struct mlx5hws_rule *rule,
- 		/* In update we use these rtc's */
- 		rule->rtc_0 = 0;
- 		rule->rtc_1 = 0;
--		rule->action_ste_selector = 0;
--	} else {
--		rule->action_ste_selector = !rule->action_ste_selector;
- 	}
- 
- 	rule->pending_wqes = 0;
-@@ -316,7 +272,7 @@ static void hws_rule_create_init(struct mlx5hws_rule *rule,
- 	/* Init default action apply */
- 	apply->tbl_type = tbl->type;
- 	apply->common_res = &ctx->common_res;
--	apply->jump_to_action_stc = matcher->action_ste[0].stc.offset;
-+	apply->jump_to_action_stc = matcher->action_ste.stc.offset;
- 	apply->require_dep = 0;
- }
- 
-@@ -333,7 +289,6 @@ static void hws_rule_move_init(struct mlx5hws_rule *rule,
- 
- 	rule->pending_wqes = 0;
- 	rule->action_ste_idx = -1;
--	rule->action_ste_selector = 0;
- 	rule->status = MLX5HWS_RULE_STATUS_CREATING;
- 	rule->resize_info->state = MLX5HWS_RULE_RESIZE_STATE_WRITING;
- }
-@@ -403,10 +358,8 @@ static int hws_rule_create_hws(struct mlx5hws_rule *rule,
- 			}
- 		}
- 		/* Skip RX/TX based on the dep_wqe init */
--		ste_attr.rtc_0 = dep_wqe->rtc_0 ?
--				 matcher->action_ste[rule->action_ste_selector].rtc_0_id : 0;
--		ste_attr.rtc_1 = dep_wqe->rtc_1 ?
--				 matcher->action_ste[rule->action_ste_selector].rtc_1_id : 0;
-+		ste_attr.rtc_0 = dep_wqe->rtc_0 ? matcher->action_ste.rtc_0_id : 0;
-+		ste_attr.rtc_1 = dep_wqe->rtc_1 ? matcher->action_ste.rtc_1_id : 0;
- 		/* Action STEs are written to a specific index last to first */
- 		ste_attr.direct_index = rule->action_ste_idx + action_stes;
- 		apply.next_direct_idx = ste_attr.direct_index;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.h
-index 495cdd17e9f3c..fd2bef87116be 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_rule.h
-@@ -42,7 +42,7 @@ struct mlx5hws_rule_match_tag {
- };
- 
- struct mlx5hws_rule_resize_info {
--	struct mlx5hws_pool *action_ste_pool[2];
-+	struct mlx5hws_pool *action_ste_pool;
- 	u32 rtc_0;
- 	u32 rtc_1;
- 	u32 rule_idx;
-@@ -62,7 +62,6 @@ struct mlx5hws_rule {
- 	u32 rtc_1; /* The RTC into which the STE was inserted */
- 	int action_ste_idx; /* STE array index */
- 	u8 status; /* enum mlx5hws_rule_status */
--	u8 action_ste_selector; /* For rule update - which action STE is in use */
- 	u8 pending_wqes;
- 	bool skip_delete; /* For complex rules - another rule with same tag
- 			   * still exists, so don't actually delete this rule.
 -- 
 2.53.0
 
