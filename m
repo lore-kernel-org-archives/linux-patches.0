@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E0D3BED7A;
-	Sat, 17 Oct 2026 17:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072B53AFB07;
+	Sat, 17 Oct 2026 17:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258128; cv=none; b=T0W2hebcYutfhNXNDIF50gCt2Q9IVuPNiHclmmOUA+525oZes2MaYnF/y23y8C2PuHooAPSHRTVjHLgEsabw4NImnJFEA35HX/drpne0eAsVGRCRZCUIKXB6s0KmolZDp3BZILG3qfk1pR1yZQsTSnXBDN+ChoaSohOGdWSXj3Y=
+	t=1792258132; cv=none; b=pnVCYTr7ee9dVsPKFf89pW4gOo3K6m0Hzf1aBIoGg9iCWL3gq8NOnAWihQHoMZxwgY4p7VrrfGhSvoO0cPBV3h94XB0ItOHP57pfgxPLjIQtcPx8HhSKHGbaoSzh/rsBGpe6bokuBs1npGOPQR7wtLxAM7CNkBiS9mkjC2Yn2ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258128; c=relaxed/simple;
-	bh=XE/x+xVYWQaz0VQT3GNxnfK90rTBYQUIWCBlSylvq7g=;
+	s=arc-20240116; t=1792258132; c=relaxed/simple;
+	bh=on+Q9DLPHBDVlpO7alBBA/8lKIv/qTGqOsgmMsK/yzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSRRWFZaIcGQKIyUWAkOWwu8tzTzLXdeHwAj1OwuzMdjFH1ezInfCHO8O836wXTFIQhuWwiw/nCZ/VxEotFqAKM/DZvWyqpTjGmj9/CLSCi2QC1clVtiXWc3eWdxluCAtddUvFfnBfr1YWDf5tcOfSXCgcNaCXGfwUPK1TdI5XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlqOFSCC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FrcXlEt8wzoNAVuu5XOfGCQsWDPhMI8lBNc5zR44wCTnEPOSF5qgPZ/3mYLI4jnv7rtfld/iG48T15ugkMFuMRGQTkbLoW/z1oj3WuHp87dlBDnXZEta/qsAmmnrTJamUhBOwzx0dOs1RhcEeSc0nBIALg6zZiGKmuy0znL3SqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJj0KMLd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlqOFSCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC611F000C4;
-	Sat, 17 Oct 2026 17:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJj0KMLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8EA1F000C4;
+	Sat, 17 Oct 2026 17:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258127;
-	bh=havXaTlI2/4GFM+kY+h/GVrpGRZmjspSgALDEEFgRqo=;
+	s=korg; t=1792258129;
+	bh=scgKCjjIQOgaKCNPak8wYWalRyQ6Ied1HNIJJyB1ZPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jlqOFSCChcv/xBmEmLmfzpGBg/TbXakqB2DokId8gls75cbQ1HbAITwJCGIredqyq
-	 O6wqEbRbWVheOYNrRu2bAUjfaChP+MJU1TeDi8ASiFKUKi4GDTP4EFHF64K+yZIZZL
-	 DSbtVxzRN0DCzR+GsLWc+k17iVq3YZJsgfjCsS6Y=
+	b=CJj0KMLdTFgcDuH+vgCfVUvL5d0X8m6RQR2wVozRsi3Ka/c758P1FdejVHZCJ3rdy
+	 pRhDM8niz4mETPmI3qv02DEARhc1Q7bYXtq8LdNpvyANmVKSS1Rw3qaesk07AdetT4
+	 iuWqZ+dqUJxcaWISg6Segx/QLHA7rSWvq43tnfZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Ye Weihua <yeweihua4@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0780/1674] bnxt_en: Fix memory corruption when FW resources change during ifdown
-Date: Sat, 17 Oct 2026 17:50:52 +0200
-Message-ID: <20261017160451.125794010@linuxfoundation.org>
+Subject: [PATCH 6.6 0781/1674] trace/fgraph: Fix the warning caused by missing unregister notifier
+Date: Sat, 17 Oct 2026 17:50:53 +0200
+Message-ID: <20261017160451.152007171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,104 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+From: Ye Weihua <yeweihua4@huawei.com>
 
-[ Upstream commit 2747328ba2714f1a7454208dbbc1dc0631990b4a ]
+[ Upstream commit edede7a6dcd7435395cf757d053974aaab6ab1c2 ]
 
-bnxt_set_dflt_rings() assumes that it is always called before any TC has
-been created.  So it doesn't take bp->num_tc into account and assumes
-that it is always 0 or 1.
+This warning was triggered during testing on v6.16:
 
-In the FW resource or capability change scenario, the FW will return
-flags in bnxt_hwrm_if_change() that will cause the driver to
-reinitialize and call bnxt_cancel_reservations().  This will lead to
-bnxt_init_dflt_ring_mode() calling bnxt_set_dflt_rings() and bp->num_tc
-may be greater than 1.  This will cause bp->tx_ring[] to be sized too
-small and cause memory corruption in bnxt_alloc_cp_rings().
+notifier callback ftrace_suspend_notifier_call already registered
+WARNING: CPU: 2 PID: 86 at kernel/notifier.c:23 notifier_chain_register+0x44/0xb0
+...
+Call Trace:
+ <TASK>
+ blocking_notifier_chain_register+0x34/0x60
+ register_ftrace_graph+0x330/0x410
+ ftrace_profile_write+0x1e9/0x340
+ vfs_write+0xf8/0x420
+ ? filp_flush+0x8a/0xa0
+ ? filp_close+0x1f/0x30
+ ? do_dup2+0xaf/0x160
+ ksys_write+0x65/0xe0
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fix it by properly scaling the TX rings by bp->num_tc in the code
-paths mentioned above.  Add 2 helper functions to determine
-bp->tx_nr_rings and bp->tx_nr_rings_per_tc.
+When writing to the function_profile_enabled interface, the notifier was
+not unregistered after start_graph_tracing failed, causing a warning the
+next time function_profile_enabled was written.
 
-Fixes: ec5d31e3c15d ("bnxt_en: Handle firmware reset status during IF_UP.")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250825175927.459987-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixed by adding unregister_pm_notifier in the exception path.
+
+Link: https://lore.kernel.org/20250818073332.3890629-1-yeweihua4@huawei.com
+Fixes: 4a2b8dda3f870 ("tracing/function-graph-tracer: fix a regression while suspend to disk")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Ye Weihua <yeweihua4@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 25 ++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ kernel/trace/fgraph.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index e066f44e900b6..7bdd94bb4a3a2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -10515,6 +10515,21 @@ static int bnxt_reinit_after_abort(struct bnxt *bp)
- 	return rc;
- }
- 
-+static int bnxt_tx_nr_rings(struct bnxt *bp)
-+{
-+	int num_tc = netdev_get_num_tc(bp->dev);
-+
-+	return num_tc ? bp->tx_nr_rings_per_tc * num_tc :
-+			bp->tx_nr_rings_per_tc;
-+}
-+
-+static int bnxt_tx_nr_rings_per_tc(struct bnxt *bp)
-+{
-+	int num_tc = netdev_get_num_tc(bp->dev);
-+
-+	return num_tc ? bp->tx_nr_rings / num_tc : bp->tx_nr_rings;
-+}
-+
- static int __bnxt_open_nic(struct bnxt *bp, bool irq_re_init, bool link_re_init)
- {
- 	int rc = 0;
-@@ -13462,7 +13477,7 @@ static void bnxt_trim_dflt_sh_rings(struct bnxt *bp)
- 	bp->cp_nr_rings = min_t(int, bp->tx_nr_rings_per_tc, bp->rx_nr_rings);
- 	bp->rx_nr_rings = bp->cp_nr_rings;
- 	bp->tx_nr_rings_per_tc = bp->cp_nr_rings;
--	bp->tx_nr_rings = bp->tx_nr_rings_per_tc;
-+	bp->tx_nr_rings = bnxt_tx_nr_rings(bp);
- }
- 
- static int bnxt_set_dflt_rings(struct bnxt *bp, bool sh)
-@@ -13493,12 +13508,12 @@ static int bnxt_set_dflt_rings(struct bnxt *bp, bool sh)
- 		bnxt_trim_dflt_sh_rings(bp);
- 	else
- 		bp->cp_nr_rings = bp->tx_nr_rings_per_tc + bp->rx_nr_rings;
--	bp->tx_nr_rings = bp->tx_nr_rings_per_tc;
-+	bp->tx_nr_rings = bnxt_tx_nr_rings(bp);
- 
- 	rc = __bnxt_reserve_rings(bp);
- 	if (rc && rc != -ENODEV)
- 		netdev_warn(bp->dev, "Unable to reserve tx rings\n");
--	bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+	bp->tx_nr_rings_per_tc = bnxt_tx_nr_rings_per_tc(bp);
- 	if (sh)
- 		bnxt_trim_dflt_sh_rings(bp);
- 
-@@ -13507,7 +13522,7 @@ static int bnxt_set_dflt_rings(struct bnxt *bp, bool sh)
- 		rc = __bnxt_reserve_rings(bp);
- 		if (rc && rc != -ENODEV)
- 			netdev_warn(bp->dev, "2nd rings reservation failed.\n");
--		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+		bp->tx_nr_rings_per_tc = bnxt_tx_nr_rings_per_tc(bp);
+diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+index c83c005e654e3..f7e0ade90500c 100644
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -648,6 +648,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
+ 	ret = start_graph_tracing();
+ 	if (ret) {
+ 		ftrace_graph_active--;
++		unregister_pm_notifier(&ftrace_suspend_notifier);
+ 		goto out;
  	}
- 	if (BNXT_CHIP_TYPE_NITRO_A0(bp)) {
- 		bp->rx_nr_rings++;
-@@ -13541,7 +13556,7 @@ static int bnxt_init_dflt_ring_mode(struct bnxt *bp)
- 	if (rc)
- 		goto init_dflt_ring_err;
- 
--	bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+	bp->tx_nr_rings_per_tc = bnxt_tx_nr_rings_per_tc(bp);
- 
- 	bnxt_set_dflt_rfs(bp);
  
 -- 
 2.53.0
