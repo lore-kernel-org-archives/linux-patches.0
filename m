@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B837A2D7D3A;
-	Sat, 17 Oct 2026 17:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D691A3B2FD9;
+	Sat, 17 Oct 2026 17:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257975; cv=none; b=qAlMaKlm0rh5alkAR6EIkBY2NrSgroWFaklgvsG2SmGIgPu+C+WRvu3KEG9/SlxUrc1dTpvaIFnwU1OJbAheARuGRBbWPgVwUE/UO4SbY78fB6DW5p1JaJFaLorLxMmza4LjkkbFzFmxYZQNmLbcmYEyOXDoAKNGB4WWblktQ9c=
+	t=1792257978; cv=none; b=UNmlD4uRmP51ncdJQG4Vd/fhjXU7oLNL+3VUHvxilFXvZF2Qy1r+lmdJe+TTfMVpJzAwKrAyme7xKgaG/dYQVKKxmkXGs0UtK3et9nycA4eMm08+2+U0aJjOsEWrEwSmeMZWb6j78n20mJpryTJbr15azXzovuv2lG+SLhsobv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257975; c=relaxed/simple;
-	bh=IOKps5CU1dbKsGAoQZOrAQrJBsjExCS3BETn7Qqg3Oc=;
+	s=arc-20240116; t=1792257978; c=relaxed/simple;
+	bh=Z8PyOk+anTP7fb+SEidEiwdV4sWZ1gz20sugunNfRiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNx3OFjgMwpzhYrAZPdmqqIzUYEho83Sjishg0ey/55WB9P/VCn4yb/1LyrVioxIs1nsYOdHHAdr9In5W1/1whGvvS495gsGF3R7Z3xsXBFOoacg616q9/UIK85FkcywxF87XRHWpFm68AO6oCNldJVe72BUHy4jHVM5Ztwbj48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaGpTfc4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y3ra2wIRWRW2lxcUWAxR2kgI/EgrOVL/26pK7XGXshVjdkOJfHVRmd+SgQCKVlkd7P/RJJwLte8WpF/pJ8+IE8tnZ3JUz6gGkkr3TVkNeaanR4/t096r6RKAK5ija14ChWciks40ukPQ5yqL7vZVaLQIyVtmIkJ5MPRTqqzpL5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQGAN2kU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaGpTfc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D0D1F000C4;
-	Sat, 17 Oct 2026 17:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQGAN2kU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA031F000C4;
+	Sat, 17 Oct 2026 17:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257974;
-	bh=6eO6DtOwyFuSk3o831aobu/1rHtj1tCUEs8SRctjyDA=;
+	s=korg; t=1792257977;
+	bh=+mk4pMDV/jCckYfho7WCQDjw58Xqc9r4bPgg95xWytQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaGpTfc4aIsrmubkUTi84+1II9wK5+C3FnQ7QzbN5pjRDCHgIjA4e1QEF7G2O7Am/
-	 bq6JTbyBJMj8LEd/jaWc4nAxFB7Fc9jiq6Tmk0rVAI37FrzFFQ0nllEirKrnina1cc
-	 8zzqmwMP5IGeoQ0IByeyOgZ1t7hukaSa4MQPV6fQ=
+	b=yQGAN2kULFdzzlR9JDpWOepVU1mrFl7P2wSWZhjCjZjlagz9PAlZ3IKQpiGXXVuZE
+	 ItoZ2mklMzFO3N3Ftnr8fv25Nag3C/41wGpsbimuaUpcLJ9nJRYwhnGLXoC3fsOJ1U
+	 9/f3B88hbcZmuWbDo9ol/2TuL2JioBWT8NspnBfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Mayuresh Chitale <mchitale@ventanamicro.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0731/1674] btrfs: harden block_group::bg_list against list_del() races
-Date: Sat, 17 Oct 2026 17:50:03 +0200
-Message-ID: <20261017160449.867586027@linuxfoundation.org>
+Subject: [PATCH 6.6 0705/1674] RISC-V: KVM: Add kvm_vcpu_config
+Date: Sat, 17 Oct 2026 17:49:37 +0200
+Message-ID: <20261017160449.202766950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,95 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Mayuresh Chitale <mchitale@ventanamicro.com>
 
-[ Upstream commit 7511e29cf1355b2c47d0effb39e463119913e2f6 ]
+[ Upstream commit fe0bab701e3b71a1d2db123c05b4f5c33098cc96 ]
 
-As far as I can tell, these calls of list_del_init() on bg_list cannot
-run concurrently with btrfs_mark_bg_unused() or btrfs_mark_bg_to_reclaim(),
-as they are in transaction error paths and situations where the block
-group is readonly.
+Add a placeholder for all registers such as henvcfg, hstateen etc
+which have 'static' configurations depending on extensions supported by
+the guest. The values are derived once and are then subsequently written
+to the corresponding CSRs while switching to the vcpu.
 
-However, if there is any chance at all of racing with mark_bg_unused(),
-or a different future user of bg_list, better to be safe than sorry.
-
-Otherwise we risk the following interleaving (bg_list refcount in parens)
-
-T1 (some random op)                       T2 (btrfs_mark_bg_unused)
-                                        !list_empty(&bg->bg_list); (1)
-list_del_init(&bg->bg_list); (1)
-                                        list_move_tail (1)
-btrfs_put_block_group (0)
-                                        btrfs_delete_unused_bgs
-                                             bg = list_first_entry
-                                             list_del_init(&bg->bg_list);
-                                             btrfs_put_block_group(bg); (-1)
-
-Ultimately, this results in a broken ref count that hits zero one deref
-early and the real final deref underflows the refcount, resulting in a WARNING.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mayuresh Chitale <mchitale@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Stable-dep-of: 2d117e67f318 ("RISC-V: KVM: Teardown riscv specific bits after kvm_exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c |  8 ++++++++
- fs/btrfs/transaction.c | 12 ++++++++++++
- 2 files changed, 20 insertions(+)
+ arch/riscv/include/asm/kvm_host.h |  7 +++++++
+ arch/riscv/kvm/vcpu.c             | 27 ++++++++++++++-------------
+ 2 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 163f73538cf76..7c4e3b87f608e 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -2884,7 +2884,15 @@ int btrfs_finish_extent_commit(struct btrfs_trans_handle *trans)
- 						   block_group->length,
- 						   &trimmed);
+diff --git a/arch/riscv/include/asm/kvm_host.h b/arch/riscv/include/asm/kvm_host.h
+index d2d7f9b4f7c04..ba434eab2f80c 100644
+--- a/arch/riscv/include/asm/kvm_host.h
++++ b/arch/riscv/include/asm/kvm_host.h
+@@ -164,6 +164,10 @@ struct kvm_vcpu_csr {
+ 	unsigned long scounteren;
+ };
  
-+		/*
-+		 * Not strictly necessary to lock, as the block_group should be
-+		 * read-only from btrfs_delete_unused_bgs().
-+		 */
-+		ASSERT(block_group->ro);
-+		spin_lock(&fs_info->unused_bgs_lock);
- 		list_del_init(&block_group->bg_list);
-+		spin_unlock(&fs_info->unused_bgs_lock);
++struct kvm_vcpu_config {
++	u64 henvcfg;
++};
 +
- 		btrfs_unfreeze_block_group(block_group);
- 		btrfs_put_block_group(block_group);
+ struct kvm_vcpu_arch {
+ 	/* VCPU ran at least once */
+ 	bool ran_atleast_once;
+@@ -245,6 +249,9 @@ struct kvm_vcpu_arch {
  
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 3fbf85cf3ad97..6dce8c299d699 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -164,7 +164,13 @@ void btrfs_put_transaction(struct btrfs_transaction *transaction)
- 			cache = list_first_entry(&transaction->deleted_bgs,
- 						 struct btrfs_block_group,
- 						 bg_list);
-+			/*
-+			 * Not strictly necessary to lock, as no other task will be using a
-+			 * block_group on the deleted_bgs list during a transaction abort.
-+			 */
-+			spin_lock(&transaction->fs_info->unused_bgs_lock);
- 			list_del_init(&cache->bg_list);
-+			spin_unlock(&transaction->fs_info->unused_bgs_lock);
- 			btrfs_unfreeze_block_group(cache);
- 			btrfs_put_block_group(cache);
- 		}
-@@ -2113,7 +2119,13 @@ static void btrfs_cleanup_pending_block_groups(struct btrfs_trans_handle *trans)
+ 	/* Performance monitoring context */
+ 	struct kvm_pmu pmu_context;
++
++	/* 'static' configurations which are set only once */
++	struct kvm_vcpu_config cfg;
+ };
  
-        list_for_each_entry_safe(block_group, tmp, &trans->new_bgs, bg_list) {
-                btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
-+		/*
-+		* Not strictly necessary to lock, as no other task will be using a
-+		* block_group on the new_bgs list during a transaction abort.
-+		*/
-+	       spin_lock(&fs_info->unused_bgs_lock);
-                list_del_init(&block_group->bg_list);
-+	       spin_unlock(&fs_info->unused_bgs_lock);
-        }
+ static inline void kvm_arch_sync_events(struct kvm *kvm) {}
+diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
+index e2c66bf319111..5ea1a704f145b 100644
+--- a/arch/riscv/kvm/vcpu.c
++++ b/arch/riscv/kvm/vcpu.c
+@@ -521,31 +521,28 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
+ 	return -EINVAL;
  }
+ 
+-static void kvm_riscv_vcpu_update_config(const unsigned long *isa)
++static void kvm_riscv_vcpu_setup_config(struct kvm_vcpu *vcpu)
+ {
+-	u64 henvcfg = 0;
++	const unsigned long *isa = vcpu->arch.isa;
++	struct kvm_vcpu_config *cfg = &vcpu->arch.cfg;
+ 
+ 	if (riscv_isa_extension_available(isa, SVPBMT))
+-		henvcfg |= ENVCFG_PBMTE;
++		cfg->henvcfg |= ENVCFG_PBMTE;
+ 
+ 	if (riscv_isa_extension_available(isa, SSTC))
+-		henvcfg |= ENVCFG_STCE;
++		cfg->henvcfg |= ENVCFG_STCE;
+ 
+ 	if (riscv_isa_extension_available(isa, ZICBOM))
+-		henvcfg |= (ENVCFG_CBIE | ENVCFG_CBCFE);
++		cfg->henvcfg |= (ENVCFG_CBIE | ENVCFG_CBCFE);
+ 
+ 	if (riscv_isa_extension_available(isa, ZICBOZ))
+-		henvcfg |= ENVCFG_CBZE;
+-
+-	csr_write(CSR_HENVCFG, henvcfg);
+-#ifdef CONFIG_32BIT
+-	csr_write(CSR_HENVCFGH, henvcfg >> 32);
+-#endif
++		cfg->henvcfg |= ENVCFG_CBZE;
+ }
+ 
+ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ {
+ 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
++	struct kvm_vcpu_config *cfg = &vcpu->arch.cfg;
+ 
+ 	csr_write(CSR_VSSTATUS, csr->vsstatus);
+ 	csr_write(CSR_VSIE, csr->vsie);
+@@ -556,8 +553,9 @@ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ 	csr_write(CSR_VSTVAL, csr->vstval);
+ 	csr_write(CSR_HVIP, csr->hvip);
+ 	csr_write(CSR_VSATP, csr->vsatp);
+-
+-	kvm_riscv_vcpu_update_config(vcpu->arch.isa);
++	csr_write(CSR_HENVCFG, cfg->henvcfg);
++	if (IS_ENABLED(CONFIG_32BIT))
++		csr_write(CSR_HENVCFGH, cfg->henvcfg >> 32);
+ 
+ 	kvm_riscv_gstage_update_hgatp(vcpu);
+ 
+@@ -677,6 +675,9 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 	struct kvm_cpu_trap trap;
+ 	struct kvm_run *run = vcpu->run;
+ 
++	if (!vcpu->arch.ran_atleast_once)
++		kvm_riscv_vcpu_setup_config(vcpu);
++
+ 	/* Mark this VCPU ran at least once */
+ 	vcpu->arch.ran_atleast_once = true;
  
 -- 
 2.53.0
