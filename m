@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A363A7F54;
-	Sat, 17 Oct 2026 17:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233237F01B;
+	Sat, 17 Oct 2026 17:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258659; cv=none; b=h4Vqk+jG1vC8RN7zf3Sj8w31Lbzm+ZkHHRKn6tUm2A2cNkM1LbeXXSyVQH3seZTqzQb/9jEuA84W9Hnnr8FiWn34MjOJSiAXmDnLJgeOb/0gg7XF40cL22l17T5Q6j2tM3APHot2nVjDl0AvskpoHy9j3dVPug56+8P0xbxwlnk=
+	t=1792258662; cv=none; b=ABDAtdFSVwziL46aIw3FFB4AvlpQMkZ7kgiq8eoH/pqALiJedAG2M9NfvLSjI0a/bix49pnCjMbp9Yyj1viq1Gw6/R9AnWB9ip82ccT1v0EQeCUEf/UdiqY5abgyBup/WtBciMAj1EYZ37PZKZg8M+DnCsb5Bp2PhEwBjubJ+LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258659; c=relaxed/simple;
-	bh=kIRz3y4bjd2tcZkm3/Ihlb9L2guIhfMxA0e323zoBXQ=;
+	s=arc-20240116; t=1792258662; c=relaxed/simple;
+	bh=sIde8AiGLX01ZsmiezWlR+UNGlTvHL+fx3rPKAUi8ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n6XUDv8pVX6bEnXL7rqheaxsFvuzHeJMPYe0hQ+1t6BzGKXtnfuHm3aozVEs9YeiGh5k+spUUjQAu5r9FCIAnm4OzT2ismgkA7PSe64KqX/gHPm4ijLVFmsOKFZd0AqzLQKoGFnQ9fV/BetQRB0Ot0Y60O0pWPWlJSNR3DKfzx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFc44J4C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rrAXNIRuEUKUhRzwXYfnPnn8/x9jdZlc6QOCYwu1s7i6HMY6w1NnMIS2aiPmmmFTlpktFKQ49va7DcJ5B33qsSlM4wk+OZ5bfXN00HG+kz+fHTelGRhUHR6LsqyEM4uNYkq9EV8/dNyVF62dTc5C6vbe4Rj5ykIbLnA5SYa9U/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD7VwqNk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFc44J4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22FA1F000C4;
-	Sat, 17 Oct 2026 17:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD7VwqNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14881F000C4;
+	Sat, 17 Oct 2026 17:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258658;
-	bh=H0IWS4MCLtnRm/xLinLPQfOn6Tt6I1+ujQLDdWznea8=;
+	s=korg; t=1792258661;
+	bh=OZtGUlwgpBoRVonSfZv0XKcxHII+TihpTntQHCCAkGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vFc44J4CPHqCVhErsQ5EZow64xGTFz3gxUmDJaAo5T5QE6nzdvJ68EqUbMg1IkIIp
-	 v8i0eZgH31zSw7Z1hBTrGTOQVe+qcnodN2Nm+TGL1E+sSbyc/HGtH5DKLd5OqN/rT2
-	 mKIH5o5lhG0PB/vB09NaYrTtV57ux7YoMLfdhdiA=
+	b=XD7VwqNk79HxJu7JbhHV1QvlDNZJRcLcV66/gbDxwIHyQwplKGRwKPfDddqCNKRi6
+	 CH25VI0pyibznDk7vIhAfpU30iHlbAuv/+gLubd85L9iFyb65kbkyNWIUD0pE+VTF4
+	 K/iMOSdiH2imWud/ulX+jIvf0ORc3qafTS8I3vJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stephen Rothwell <sfr@rothwell.id.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chiara Meiohas <cmeiohas@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0930/1674] arch: turn off -Werror for architectures with known warnings
-Date: Sat, 17 Oct 2026 17:53:22 +0200
-Message-ID: <20261017160455.006540294@linuxfoundation.org>
+Subject: [PATCH 6.6 0957/1674] RDMA/mlx5: Fix UMR hang in LAG error state unload
+Date: Sat, 17 Oct 2026 17:53:49 +0200
+Message-ID: <20261017160455.692097511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -48,146 +48,224 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chiara Meiohas <cmeiohas@nvidia.com>
 
-[ Upstream commit 0f0d2871e78db648a2578abbeb9103f484f9b754 ]
+[ Upstream commit ebc2164a4cd4314503f1a0c8e7aaf76d7e5fa211 ]
 
-A couple of architectures enable -Werror for their own files regardless of
-CONFIG_WERROR but also have known warnings that fail the build with
--Wmissing-prototypes enabled by default:
+During firmware reset in LAG mode, a race condition causes the driver
+to hang indefinitely while waiting for UMR completion during device
+unload. See [1].
 
-arch/alpha/lib/memcpy.c:153:8: error: no previous prototype for 'memcpy' [-Werror=missing-prototypes]
-arch/alpha/kernel/irq.c:96:1: error: no previous prototype for 'handle_irq' [-Werror=missing-prototypes]
-arch/mips/kernel/signal.c:673:17: error: no previous prototype for ‘sys_rt_sigreturn’ [-Werror=missing-prototypes]
-arch/mips/kernel/signal.c:636:17: error: no previous prototype for ‘sys_sigreturn’ [-Werror=missing-prototypes]
-arch/mips/kernel/syscall.c:51:16: error: no previous prototype for ‘sysm_pipe’ [-Werror=missing-prototypes]
-arch/mips/mm/fault.c:323:17: error: no previous prototype for ‘do_page_fault’ [-Werror=missing-prototypes]
-arch/sparc/vdso/vma.c:246:12: warning: no previous prototype for ‘init_vdso_image’ [-Wmissing-prototypes]v
-arch/sparc/vdso/vdso32/../vclock_gettime.c:343:1: warning: no previous prototype for ‘__vdso_gettimeofday_stick’ [-Wmissing-prototypes]
-arch/sparc/vdso/vclock_gettime.c:343:1: warning: no previous prototype for ‘__vdso_gettimeofday_stick’ [-Wmissing-prototypes]
-arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’ [-Wmissing-prototypes]
-arch/sparc/prom/misc_64.c:165:5: warning: no previous prototype for ‘prom_get_mmu_ihandle’ [-Wmissing-prototypes]
+In LAG mode the bond device is only registered on the master, so it
+never sees sys_error events from the slave.
+During firmware reset this causes UMR waits to hang forever on unload
+as the slave is dead but the master hasn't entered error state yet, so
+UMR posts succeed but completions never arrive.
 
-This appears to be an artifact from the times when this architecture code
-was better maintained that most device drivers and before CONFIG_WERROR
-was added.  Now it just gets in the way, so remove all of these.
+Fix this by adding a sys_error notifier that gets registered before
+MLX5_IB_STAGE_IB_REG and stays alive until after ib_unregister_device().
+This ensures error events reach the bond device throughout teardown.
 
-Powerpc and x86 both still have their own Kconfig options to enable
--Werror for some of their files.  These architectures are better
-maintained than most and the options are easy to disable, so leave those
-untouched.
+[1]
+Call Trace:
+ __schedule+0x2bd/0x760
+ schedule+0x37/0xa0
+ schedule_preempt_disabled+0xa/0x10
+ __mutex_lock.isra.6+0x2b5/0x4a0
+ __mlx5_ib_dereg_mr+0x606/0x870 [mlx5_ib]
+ ? __xa_erase+0x4a/0xa0
+ ? _cond_resched+0x15/0x30
+ ? wait_for_completion+0x31/0x100
+ ib_dereg_mr_user+0x48/0xc0 [ib_core]
+ ? rdmacg_uncharge_hierarchy+0xa0/0x100
+ destroy_hw_idr_uobject+0x20/0x50 [ib_uverbs]
+ uverbs_destroy_uobject+0x37/0x150 [ib_uverbs]
+ __uverbs_cleanup_ufile+0xda/0x140 [ib_uverbs]
+ uverbs_destroy_ufile_hw+0x3a/0xf0 [ib_uverbs]
+ ib_uverbs_remove_one+0xc3/0x140 [ib_uverbs]
+ remove_client_context+0x8b/0xd0 [ib_core]
+ disable_device+0x8c/0x130 [ib_core]
+ __ib_unregister_device+0x10d/0x180 [ib_core]
+ ib_unregister_device+0x21/0x30 [ib_core]
+ __mlx5_ib_remove+0x1e4/0x1f0 [mlx5_ib]
+ auxiliary_bus_remove+0x1e/0x30
+ device_release_driver_internal+0x103/0x1f0
+ bus_remove_device+0xf7/0x170
+ device_del+0x181/0x410
+ mlx5_rescan_drivers_locked.part.10+0xa9/0x1d0 [mlx5_core]
+ mlx5_disable_lag+0x253/0x260 [mlx5_core]
+ mlx5_lag_disable_change+0x89/0xc0 [mlx5_core]
+ mlx5_eswitch_disable+0x67/0xa0 [mlx5_core]
+ mlx5_unload+0x15/0xd0 [mlx5_core]
+ mlx5_unload_one+0x71/0xc0 [mlx5_core]
+ mlx5_sync_reset_reload_work+0x83/0x100 [mlx5_core]
+ process_one_work+0x1a7/0x360
+ worker_thread+0x30/0x390
+ ? create_worker+0x1a0/0x1a0
+ kthread+0x116/0x130
+ ? kthread_flush_work_fn+0x10/0x10
+ ret_from_fork+0x22/0x40
 
-Link: https://lkml.kernel.org/r/4be73872-c1f5-4c31-8201-712c19290a22@app.fastmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: Stephen Rothwell <sfr@rothwell.id.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: dd5712f3379c ("alpha: fix user-space corruption during memory compaction")
+Fixes: ede132a5cf55 ("RDMA/mlx5: Move events notifier registration to be after device registration")
+Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260113-umr-hand-lag-fix-v1-1-3dc476e00cd9@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/lib/Makefile    | 1 -
- arch/alpha/mm/Makefile     | 2 --
- arch/mips/Kbuild           | 6 ------
- arch/sparc/kernel/Makefile | 1 -
- arch/sparc/lib/Makefile    | 1 -
- arch/sparc/mm/Makefile     | 1 -
- arch/sparc/prom/Makefile   | 1 -
- 7 files changed, 13 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c    | 75 ++++++++++++++++++++++++----
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 +
+ 2 files changed, 68 insertions(+), 9 deletions(-)
 
-diff --git a/arch/alpha/lib/Makefile b/arch/alpha/lib/Makefile
-index 1cc74f7b50efb..6a779b9018fd1 100644
---- a/arch/alpha/lib/Makefile
-+++ b/arch/alpha/lib/Makefile
-@@ -4,7 +4,6 @@
- #
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index df9d4b8373d11..b4875b639da55 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -2719,7 +2719,6 @@ static void mlx5_ib_handle_event(struct work_struct *_work)
+ 		container_of(_work, struct mlx5_ib_event_work, work);
+ 	struct mlx5_ib_dev *ibdev;
+ 	struct ib_event ibev;
+-	bool fatal = false;
  
- asflags-y := $(KBUILD_CFLAGS)
--ccflags-y := -Werror
+ 	if (work->is_slave) {
+ 		ibdev = mlx5_ib_get_ibdev_from_mpi(work->mpi);
+@@ -2730,12 +2729,6 @@ static void mlx5_ib_handle_event(struct work_struct *_work)
+ 	}
  
- # Many of these routines have implementations tuned for ev6.
- # Choose them iff we're targeting ev6 specifically.
-diff --git a/arch/alpha/mm/Makefile b/arch/alpha/mm/Makefile
-index bd770302eb824..101dbd06b4ceb 100644
---- a/arch/alpha/mm/Makefile
-+++ b/arch/alpha/mm/Makefile
-@@ -3,6 +3,4 @@
- # Makefile for the linux alpha-specific parts of the memory manager.
- #
+ 	switch (work->event) {
+-	case MLX5_DEV_EVENT_SYS_ERROR:
+-		ibev.event = IB_EVENT_DEVICE_FATAL;
+-		mlx5_ib_handle_internal_error(ibdev);
+-		ibev.element.port_num  = (u8)(unsigned long)work->param;
+-		fatal = true;
+-		break;
+ 	case MLX5_EVENT_TYPE_PORT_CHANGE:
+ 		if (handle_port_change(ibdev, work->param, &ibev))
+ 			goto out;
+@@ -2757,8 +2750,6 @@ static void mlx5_ib_handle_event(struct work_struct *_work)
+ 	if (ibdev->ib_active)
+ 		ib_dispatch_event(&ibev);
  
--ccflags-y := -Werror
--
- obj-y	:= init.o fault.o
-diff --git a/arch/mips/Kbuild b/arch/mips/Kbuild
-index af2967bffb73d..e2d623621a00e 100644
---- a/arch/mips/Kbuild
-+++ b/arch/mips/Kbuild
-@@ -1,10 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0
--# Fail on warnings - also for files referenced in subdirs
--# -Werror can be disabled for specific files using:
--# CFLAGS_<file.o> := -Wno-error
--ifeq ($(W),)
--subdir-ccflags-y := -Werror
--endif
+-	if (fatal)
+-		ibdev->ib_active = false;
+ out:
+ 	kfree(work);
+ }
+@@ -2802,6 +2793,66 @@ static int mlx5_ib_event_slave_port(struct notifier_block *nb,
+ 	return NOTIFY_OK;
+ }
  
- # platform specific definitions
- include $(srctree)/arch/mips/Kbuild.platforms
-diff --git a/arch/sparc/kernel/Makefile b/arch/sparc/kernel/Makefile
-index 0984bb6f0f17b..58ea4ef9b622b 100644
---- a/arch/sparc/kernel/Makefile
-+++ b/arch/sparc/kernel/Makefile
-@@ -5,7 +5,6 @@
- #
- 
- asflags-y := -ansi
--ccflags-y := -Werror
- 
- # Undefine sparc when processing vmlinux.lds - it is used
- # And teach CPP we are doing $(BITS) builds (for this case)
-diff --git a/arch/sparc/lib/Makefile b/arch/sparc/lib/Makefile
-index 063556fe2cb1d..59669ebddd4e1 100644
---- a/arch/sparc/lib/Makefile
-+++ b/arch/sparc/lib/Makefile
-@@ -3,7 +3,6 @@
- #
- 
- asflags-y := -ansi -DST_DIV0=0x02
--ccflags-y := -Werror
- 
- lib-$(CONFIG_SPARC32) += ashrdi3.o
- lib-$(CONFIG_SPARC32) += memcpy.o memset.o
-diff --git a/arch/sparc/mm/Makefile b/arch/sparc/mm/Makefile
-index 871354aa3c002..809d993f6d888 100644
---- a/arch/sparc/mm/Makefile
-+++ b/arch/sparc/mm/Makefile
-@@ -3,7 +3,6 @@
- #
- 
- asflags-y := -ansi
--ccflags-y := -Werror
- 
- obj-$(CONFIG_SPARC64)   += ultra.o tlb.o tsb.o
- obj-y                   += fault_$(BITS).o
-diff --git a/arch/sparc/prom/Makefile b/arch/sparc/prom/Makefile
-index 397b79af77f7b..a1adc75d80551 100644
---- a/arch/sparc/prom/Makefile
-+++ b/arch/sparc/prom/Makefile
-@@ -3,7 +3,6 @@
- # Linux.
- #
- asflags := -ansi
--ccflags := -Werror
- 
- lib-y                 := bootstr_$(BITS).o
- lib-y                 += init_$(BITS).o
++static void mlx5_ib_handle_sys_error_event(struct work_struct *_work)
++{
++	struct mlx5_ib_event_work *work =
++		container_of(_work, struct mlx5_ib_event_work, work);
++	struct mlx5_ib_dev *ibdev = work->dev;
++	struct ib_event ibev;
++
++	ibev.event = IB_EVENT_DEVICE_FATAL;
++	mlx5_ib_handle_internal_error(ibdev);
++	ibev.element.port_num = (u8)(unsigned long)work->param;
++	ibev.device = &ibdev->ib_dev;
++
++	if (!rdma_is_port_valid(&ibdev->ib_dev, ibev.element.port_num)) {
++		mlx5_ib_warn(ibdev, "warning: event on port %d\n",  ibev.element.port_num);
++		goto out;
++	}
++
++	if (ibdev->ib_active)
++		ib_dispatch_event(&ibev);
++
++	ibdev->ib_active = false;
++out:
++	kfree(work);
++}
++
++static int mlx5_ib_sys_error_event(struct notifier_block *nb,
++				   unsigned long event, void *param)
++{
++	struct mlx5_ib_event_work *work;
++
++	if (event != MLX5_DEV_EVENT_SYS_ERROR)
++		return NOTIFY_DONE;
++
++	work = kmalloc(sizeof(*work), GFP_ATOMIC);
++	if (!work)
++		return NOTIFY_DONE;
++
++	INIT_WORK(&work->work, mlx5_ib_handle_sys_error_event);
++	work->dev = container_of(nb, struct mlx5_ib_dev, sys_error_events);
++	work->is_slave = false;
++	work->param = param;
++	work->event = event;
++
++	queue_work(mlx5_ib_event_wq, &work->work);
++
++	return NOTIFY_OK;
++}
++
++static int mlx5_ib_stage_sys_error_notifier_init(struct mlx5_ib_dev *dev)
++{
++	dev->sys_error_events.notifier_call = mlx5_ib_sys_error_event;
++	mlx5_notifier_register(dev->mdev, &dev->sys_error_events);
++	return 0;
++}
++
++static void mlx5_ib_stage_sys_error_notifier_cleanup(struct mlx5_ib_dev *dev)
++{
++	mlx5_notifier_unregister(dev->mdev, &dev->sys_error_events);
++}
++
+ static int set_has_smi_cap(struct mlx5_ib_dev *dev)
+ {
+ 	struct mlx5_hca_vport_context vport_ctx;
+@@ -4363,6 +4414,9 @@ static const struct mlx5_ib_profile pf_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_WHITELIST_UID,
+ 		     mlx5_ib_devx_init,
+ 		     mlx5_ib_devx_cleanup),
++	STAGE_CREATE(MLX5_IB_STAGE_SYS_ERROR_NOTIFIER,
++		     mlx5_ib_stage_sys_error_notifier_init,
++		     mlx5_ib_stage_sys_error_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
+ 		     mlx5_ib_stage_ib_reg_init,
+ 		     mlx5_ib_stage_ib_reg_cleanup),
+@@ -4423,6 +4477,9 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_WHITELIST_UID,
+ 		     mlx5_ib_devx_init,
+ 		     mlx5_ib_devx_cleanup),
++	STAGE_CREATE(MLX5_IB_STAGE_SYS_ERROR_NOTIFIER,
++		     mlx5_ib_stage_sys_error_notifier_init,
++		     mlx5_ib_stage_sys_error_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
+ 		     mlx5_ib_stage_ib_reg_init,
+ 		     mlx5_ib_stage_ib_reg_cleanup),
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 9b780f48a382b..e9257178454a4 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -961,6 +961,7 @@ enum mlx5_ib_stages {
+ 	MLX5_IB_STAGE_BFREG,
+ 	MLX5_IB_STAGE_PRE_IB_REG_UMR,
+ 	MLX5_IB_STAGE_WHITELIST_UID,
++	MLX5_IB_STAGE_SYS_ERROR_NOTIFIER,
+ 	MLX5_IB_STAGE_IB_REG,
+ 	MLX5_IB_STAGE_DEVICE_NOTIFIER,
+ 	MLX5_IB_STAGE_POST_IB_REG_UMR,
+@@ -1116,6 +1117,7 @@ struct mlx5_ib_dev {
+ 	struct ib_device		ib_dev;
+ 	struct mlx5_core_dev		*mdev;
+ 	struct notifier_block		mdev_events;
++	struct notifier_block		sys_error_events;
+ 	int				num_ports;
+ 	/* serialize update of capability mask
+ 	 */
 -- 
 2.53.0
 
