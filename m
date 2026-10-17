@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE6E21FF23;
-	Sat, 17 Oct 2026 17:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85A421FF23;
+	Sat, 17 Oct 2026 17:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259772; cv=none; b=vDAsxP3GovO4xV+4+LwF1Ia/T2KlnSS8SxNmqHZlyKMmScPEWwyh72EFR7S6IwxiZkcE6lzsShkzu8kjFo3h/YPM95qJ4YHYOH6jEN3BgFFN/hx2SpaIxYT2MwpA53hkm9e6O6B2UdX5jZ6W/BPw63pQgvtrz0xG2GMOFn9sqs4=
+	t=1792259777; cv=none; b=WebVvHhhV17kQhoKfMklgK7pI3tbOeXcEgHiTUt1kpQ5/kaKs30B4LMDWgm/ciY+OqE8fyZZLh2pCnWQjFlvNVIHxqokVe+gPfABDlGHeKnJCjvrWk/tDd5U8jdvxW73xQ8iX19os/xudoue45f6GLUBF+HJV7u8zPJuHOVBXP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259772; c=relaxed/simple;
-	bh=46VjdIcGoPxXajZAKC6rQuWO1TvJd17gL0UvqLMSyyI=;
+	s=arc-20240116; t=1792259777; c=relaxed/simple;
+	bh=razWOtluQg63Xtn3QQyfg3BGSsZ6kXPMur5GdaZxAcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIcAervwcwYJXezirHw8lfbgvmpdad1AH09AfvHkO0Jipo3NMBtZkgmf/uc05vCKCy3W+UZYXrW7D2Di0Ue3rBoviWyi11GYIyF1SYPNL9SdfybLPEXRJIxoqyqV06zT5VyUrgxWlkOa30Ks9pSUDrex7FzFOXsSckkRi/k5SrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3vzoOZC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aqk4KaFJnX0w73u04VdY8G8/JNABPQHxJKi6hP036tyRxas2CZN8O94GET8m62QsT+0vgKgwFwn7iGJgX2XiaiEuX7WEdsOdi5yPR60x4/agOI8UnQ+63T8zwqtZMWPkUNG7FjC3Lf9qah6USudonhkORtxNNv9OjhhGONnABEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKgLv4QS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3vzoOZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301EC1F000C4;
-	Sat, 17 Oct 2026 17:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKgLv4QS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408B11F000C4;
+	Sat, 17 Oct 2026 17:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259771;
-	bh=QRAE57V5Em1MfhcBuF/Z9Lh1zQMC89wHaSL5Ru5oohc=;
+	s=korg; t=1792259774;
+	bh=8YECYUCy++/0VDHlI2Y+QGjkB44GuDUIUyr3IPJLy0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3vzoOZCyCETYiGNUT9Dx6ViyNTIWyv1WC1XgmKcAd5GcFwVf3Mgd8JnJommsC0PA
-	 zsa/zztSo0X0jmeReWxaW54ngyoFlK21816WQvVn0sr3ug/RvGvCR+/Sd/8bqT5fgd
-	 Gzl18dT8ENH3jeERq+ruLkOTeeufQa9U9ZAInY/o=
+	b=SKgLv4QSVI+QwYQ5es7QXaI37zvbyjQkCUgL6iAJhEKpHym82uYstXve68/lF+p/Z
+	 Hn4YR2NR/MnRKN9hqyleAPAPBJ21vBzLWTG8JsIqmUSgZbSSnLa7LGqt8oFcxS8ZEr
+	 areOSXhxVJidzX7pTitx+d7E3rVY97VAzb23oF3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <cel@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1285/1674] svcrdma: Reject inline replies that overflow the pull-up buffer
-Date: Sat, 17 Oct 2026 17:59:17 +0200
-Message-ID: <20261017160504.124446574@linuxfoundation.org>
+Subject: [PATCH 6.6 1276/1674] power: supply: charger-manager: register regulators before exposing sysfs
+Date: Sat, 17 Oct 2026 17:59:08 +0200
+Message-ID: <20261017160503.895389893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,166 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 0fbe20dfe74b783d255bf389a6ea77aa25dc7860 ]
+[ Upstream commit c57cb36f76eb7ced45f57af1a890d8f3a6d76342 ]
 
-An RPC-over-RDMA client can request a reply, such as an NFS READ
-payload, without providing a Write list or a Reply chunk to carry
-it. When such a reply needs more scatter/gather entries than the
-device's Send Queue supports, svc_rdma_pull_up_needed() selects
-pull-up and svc_rdma_pull_up_reply_msg() linearizes the whole
-reply into sctxt->sc_xprt_buf. That buffer is only sc_max_req_size
-bytes, while the reply on this path is bounded only by the client's
-request, so svc_rdma_xb_linearize() copies past the end of the
-buffer and corrupts adjacent slab memory. The oversized length is
-then stored in sc_sges[0].length and posted, so the device also
-reads beyond the mapped region.
+charger_manager_remove() and the err_reg_extcon probe error path free each
+charger regulator with regulator_put() before tearing down the power_supply
+sysfs entries (power_supply_unregister()). charger_manager_remove() also
+calls try_charger_enable(cm, false) after the regulator_put() loop. A
+concurrent write to a charger's externally_control sysfs attribute that
+lands between regulator_put() and power_supply_unregister() can run
+charger_externally_control_store() and call try_charger_enable(), which,
+when charging is enabled, dereferences the already-freed consumer handle.
+When charging is enabled, try_charger_enable(cm, false) in .remove() also
+dereferences the freed handles directly. Both leave use-after-free windows.
+Symmetrically, probe registers the sysfs entries (power_supply_register)
+before acquiring the regulators (regulator_get, inside
+charger_manager_register_extcon), so userspace can reach externally_control
+before the regulators are available.
 
-The SGE-exhaustion branch is the only pull-up path that can exceed
-the buffer: the threshold branch pulls up only replies smaller
-than RPCRDMA_PULLUP_THRESH, and replies that fit the device's SGE
-budget are sent directly without linearization. Make
-svc_rdma_pull_up_needed() report -E2BIG when the reply it would
-pull up cannot fit sc_max_req_size, and fail the request with
-ERR_CHUNK as RFC 8166 Section 4.5.3 directs rather than dropping
-the connection.
+Split charger_manager_register_extcon() on the sync/async boundary:
+charger_manager_get_regulators() (regulator_get only, no async producer)
+now runs before power_supply_register() so sysfs is not live before
+regulators are available, and charger_manager_register_extcon() keeps only
+the extcon notifier/work setup, still after power_supply_register() so a
+power_supply_register() failure cannot reach extcon setup. This keeps the
+sysfs setup/teardown ordering symmetric without introducing an asynchronous
+producer on the earlier probe-error path.
 
-The helper no longer answers a simple yes/no question: it now
-reports pull-up, no pull-up, or -E2BIG for a reply too large to
-linearize. Rename svc_rdma_pull_up_needed() to
-svc_rdma_check_pull_up() so its name no longer implies a boolean
-predicate.
+Move power_supply_unregister() and try_charger_enable(cm, false) ahead of
+the regulator_put() loop on both teardown paths, and adjust err_reg_extcon
+(power_supply_unregister() then fall through err_regulator for
+regulator_put(); get_regulators self-rolls back on its own failure).
 
-Fixes: e248aa7be86e ("svcrdma: Remove max_sge check at connect time")
+This does not address the separate extcon-notifier-driven deref of the same
+handles, which needs its own synchronization design.
+
+Found by an in-house static analysis tool.
+
+Fixes: 3950c7865cd7 ("charger-manager: Add support sysfs entry for charger")
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <clm@meta.com>
-Assisted-by: kres:claude-opus-4-7
-Link: https://patch.msgid.link/20260623014728.826032-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260728030123.230202-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_sendto.c | 47 ++++++++++++++++++---------
- 1 file changed, 32 insertions(+), 15 deletions(-)
+ drivers/power/supply/charger-manager.c | 54 +++++++++++++++++++-------
+ 1 file changed, 39 insertions(+), 15 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_sendto.c b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-index c6644cca52c57..c7800779ac937 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-@@ -650,20 +650,21 @@ static int svc_rdma_xb_count_sges(const struct xdr_buf *xdr,
+diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
+index 42a7e4f045d82..48b706c876464 100644
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -1017,6 +1017,29 @@ static int charger_extcon_init(struct charger_manager *cm,
+ 	return 0;
  }
  
- /**
-- * svc_rdma_pull_up_needed - Determine whether to use pull-up
-+ * svc_rdma_check_pull_up - Determine whether to use pull-up
-  * @rdma: controlling transport
-  * @sctxt: send_ctxt for the Send WR
-  * @rctxt: Write and Reply chunks provided by client
-  * @xdr: xdr_buf containing RPC message to transmit
-  *
-  * Returns:
-- *   %true if pull-up must be used
-- *   %false otherwise
-+ *   %1 if pull-up must be used
-+ *   %0 if pull-up is not needed
-+ *   %-E2BIG if the reply is too large to be pulled up
-  */
--static bool svc_rdma_pull_up_needed(const struct svcxprt_rdma *rdma,
--				    const struct svc_rdma_send_ctxt *sctxt,
--				    const struct svc_rdma_recv_ctxt *rctxt,
--				    const struct xdr_buf *xdr)
-+static int svc_rdma_check_pull_up(const struct svcxprt_rdma *rdma,
-+				   const struct svc_rdma_send_ctxt *sctxt,
-+				   const struct svc_rdma_recv_ctxt *rctxt,
-+				   const struct xdr_buf *xdr)
- {
- 	/* Resources needed for the transport header */
- 	struct svc_rdma_pullup_data args = {
-@@ -675,11 +676,22 @@ static bool svc_rdma_pull_up_needed(const struct svcxprt_rdma *rdma,
- 	ret = pcl_process_nonpayloads(&rctxt->rc_write_pcl, xdr,
- 				      svc_rdma_xb_count_sges, &args);
- 	if (ret < 0)
--		return false;
-+		return 0;
- 
- 	if (args.pd_length < RPCRDMA_PULLUP_THRESH)
--		return true;
--	return args.pd_num_sges >= rdma->sc_max_send_sges;
-+		return 1;
-+	if (args.pd_num_sges < rdma->sc_max_send_sges)
-+		return 0;
++static int charger_manager_get_regulators(struct charger_manager *cm)
++{
++	struct charger_desc *desc = cm->desc;
++	struct charger_regulator *charger;
++	int i, ret;
 +
-+	/*
-+	 * The reply has too many SGEs to Send inline, so it has to be
-+	 * linearized into sc_xprt_buf. That buffer holds only
-+	 * sc_max_req_size bytes, so a larger reply cannot be pulled up.
-+	 * RFC 8166 Section 4.5.3 requires responding with ERR_CHUNK.
-+	 */
-+	if (args.pd_length > rdma->sc_max_req_size)
-+		return -E2BIG;
-+	return 1;
- }
- 
++	for (i = 0; i < desc->num_charger_regulators; i++) {
++		charger = &desc->charger_regulators[i];
++		charger->consumer = regulator_get(cm->dev,
++						  charger->regulator_name);
++		if (IS_ERR(charger->consumer)) {
++			dev_err(cm->dev, "Cannot find charger(%s)\n",
++				charger->regulator_name);
++			ret = PTR_ERR(charger->consumer);
++			while (i-- > 0)
++				regulator_put(desc->charger_regulators[i].consumer);
++			return ret;
++		}
++		charger->cm = cm;
++	}
++	return 0;
++}
++
  /**
-@@ -735,7 +747,7 @@ static int svc_rdma_xb_linearize(const struct xdr_buf *xdr,
-  * Assemble the elements of @xdr into the transport header buffer.
-  *
-  * Assumptions:
-- *  pull_up_needed has determined that @xdr will fit in the buffer.
-+ *  check_pull_up has determined that @xdr will fit in the buffer.
-  *
-  * Returns:
-  *   %0 if pull-up was successful
-@@ -769,6 +781,7 @@ static int svc_rdma_pull_up_reply_msg(const struct svcxprt_rdma *rdma,
-  *
-  * Returns:
-  *   %0 if DMA mapping was successful.
-+ *   %-E2BIG if the reply is too large to be pulled up
-  *   %-EMSGSIZE if a buffer manipulation problem occurred
-  *   %-EIO if DMA mapping failed
-  *
-@@ -783,6 +796,7 @@ int svc_rdma_map_reply_msg(struct svcxprt_rdma *rdma,
- 		.md_rdma	= rdma,
- 		.md_ctxt	= sctxt,
- 	};
-+	int ret;
+  * charger_manager_register_extcon - Register extcon device to receive state
+  *				     of charger cable.
+@@ -1039,15 +1062,6 @@ static int charger_manager_register_extcon(struct charger_manager *cm)
+ 	for (i = 0; i < desc->num_charger_regulators; i++) {
+ 		charger = &desc->charger_regulators[i];
  
- 	/* Set up the (persistently-mapped) transport header SGE. */
- 	sctxt->sc_send_wr.num_sge = 1;
-@@ -797,7 +811,10 @@ int svc_rdma_map_reply_msg(struct svcxprt_rdma *rdma,
- 	/* For pull-up, svc_rdma_send() will sync the transport header.
- 	 * No additional DMA mapping is necessary.
- 	 */
--	if (svc_rdma_pull_up_needed(rdma, sctxt, rctxt, xdr))
-+	ret = svc_rdma_check_pull_up(rdma, sctxt, rctxt, xdr);
+-		charger->consumer = regulator_get(cm->dev,
+-					charger->regulator_name);
+-		if (IS_ERR(charger->consumer)) {
+-			dev_err(cm->dev, "Cannot find charger(%s)\n",
+-				charger->regulator_name);
+-			return PTR_ERR(charger->consumer);
+-		}
+-		charger->cm = cm;
+-
+ 		for (j = 0; j < charger->num_cables; j++) {
+ 			struct charger_cable *cable = &charger->cables[j];
+ 
+@@ -1582,13 +1596,23 @@ static int charger_manager_probe(struct platform_device *pdev)
+ 	}
+ 	psy_cfg.attr_grp = desc->sysfs_groups;
+ 
++	/*
++	 * Acquire charger regulators before exposing the sysfs entries, so
++	 * userspace cannot reach externally_control before the regulators
++	 * (and charger->cm) are available.  Mirrors the order in remove().
++	 */
++	ret = charger_manager_get_regulators(cm);
 +	if (ret < 0)
 +		return ret;
-+	if (ret)
- 		return svc_rdma_pull_up_reply_msg(rdma, sctxt, rctxt, xdr);
++
+ 	cm->charger_psy = power_supply_register(&pdev->dev,
+ 						&cm->charger_psy_desc,
+ 						&psy_cfg);
+ 	if (IS_ERR(cm->charger_psy)) {
+ 		dev_err(&pdev->dev, "Cannot register charger-manager with name \"%s\"\n",
+ 			cm->charger_psy_desc.name);
+-		return PTR_ERR(cm->charger_psy);
++		ret = PTR_ERR(cm->charger_psy);
++		goto err_regulator;
+ 	}
  
- 	return pcl_process_nonpayloads(&rctxt->rc_write_pcl, xdr,
-@@ -974,7 +991,7 @@ int svc_rdma_sendto(struct svc_rqst *rqstp)
- 
- 	ret = svc_rdma_send_reply_chunk(rdma, rctxt, &rqstp->rq_res);
- 	if (ret < 0)
--		goto reply_chunk;
-+		goto send_err;
- 	rc_size = ret;
- 
- 	*p++ = *rdma_argp;
-@@ -994,10 +1011,10 @@ int svc_rdma_sendto(struct svc_rqst *rqstp)
- 
- 	ret = svc_rdma_send_reply_msg(rdma, sctxt, rctxt, rqstp);
- 	if (ret < 0)
--		goto put_ctxt;
-+		goto send_err;
+ 	/* Register extcon device for charger cable */
+@@ -1622,11 +1646,11 @@ static int charger_manager_probe(struct platform_device *pdev)
  	return 0;
  
--reply_chunk:
-+send_err:
- 	if (ret != -E2BIG && ret != -EINVAL)
- 		goto put_ctxt;
+ err_reg_extcon:
++	power_supply_unregister(cm->charger_psy);
++err_regulator:
+ 	for (i = 0; i < desc->num_charger_regulators; i++)
+ 		regulator_put(desc->charger_regulators[i].consumer);
  
+-	power_supply_unregister(cm->charger_psy);
+-
+ 	return ret;
+ }
+ 
+@@ -1644,12 +1668,12 @@ static void charger_manager_remove(struct platform_device *pdev)
+ 	cancel_work_sync(&setup_polling);
+ 	cancel_delayed_work_sync(&cm_monitor_work);
+ 
+-	for (i = 0 ; i < desc->num_charger_regulators ; i++)
+-		regulator_put(desc->charger_regulators[i].consumer);
++	try_charger_enable(cm, false);
+ 
+ 	power_supply_unregister(cm->charger_psy);
+ 
+-	try_charger_enable(cm, false);
++	for (i = 0 ; i < desc->num_charger_regulators ; i++)
++		regulator_put(desc->charger_regulators[i].consumer);
+ }
+ 
+ static const struct platform_device_id charger_manager_id[] = {
 -- 
 2.53.0
 
