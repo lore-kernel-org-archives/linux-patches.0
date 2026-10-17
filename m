@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFAE3B71A7;
-	Sat, 17 Oct 2026 18:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F173909BC;
+	Sat, 17 Oct 2026 18:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260705; cv=none; b=usmHTXm+WMNSwB/iJAvkTG323G2HMCiCMqWkdmeMXDR0v+7vGNSyhFxdtVhg4a9ooqlbZcUmT8jT9QvwPy/bDCPJZa4XVqk4YAeEghno/7NFBNJywf9XScDgOYR32Hitf30a25qIlSdlVbEntL2IDI0VYIvPlYMbcjhpvi7dp0k=
+	t=1792260709; cv=none; b=k8oAScVnsFDi5xi+g+K/Ad6VOm6YDjbk+4Knuqf2b4/yXMgXi7zOdEIqkTfsYue6dw7D++J2uXshlbYdZRzYL+D3HzPIDrJVoxUL7foSOpvq2acyONaBcrjbUqBS3AHZLlBfRTyhf0q4XOklBcdQ9Y3TIX6P/z7sGMLzeJMRmTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260705; c=relaxed/simple;
-	bh=kcOyGEZtsQi+kfdwMGUMCxVa4YUTeSu3UAF11DaW1mc=;
+	s=arc-20240116; t=1792260709; c=relaxed/simple;
+	bh=oZDJl2XpWTrO9JldEKcj7ctnTvAFHpk2TXfOwirbkmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfuy2x1CholyxL0CRDnOc8VZvZk3ZmLktpaQlIBIPRAlC7jJKuOK0qjpU1hSaMwzR9Yor4op8ONhRo5aD2pqmBjsz2LjabGCuBQT6wKSSpbzKCZbNqEHZLsUgf9smeqEj8i2K3B8rWyJdUzJjgbrnal66QjPzlQX7B7uRuthQmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3cXEIH9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f/IQFiuUnG4bL8q2gKvj0JmJwHsMbqQwN/3w2oJowzYNCzZbRE6zy1Ez73g0bQNKqQhi5G17hbTxiGjDN7rSPqrmHkSV93ZdP/aVsxCh8EIG7LJzzs6XS3ooj39yGsUmvw1ulLE8zKvH+f6RR2UT2rBQIOvM1/3893F/TPlG3mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlWl9KQZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3cXEIH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45781F000C4;
-	Sat, 17 Oct 2026 18:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlWl9KQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF27D1F000C4;
+	Sat, 17 Oct 2026 18:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260704;
-	bh=JSYMkbngZ4lQqaHBr5MQkA7UkQYgvY56hHHNq7vVX6w=;
+	s=korg; t=1792260707;
+	bh=XkLFXViFXneG+UpvpdUCZJVrb7uRKip72Ih2OMziwbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3cXEIH98zdztuCkdvEjBYaQ1oYNGJJKCWEC5WlnY3r2MMhBBSidnWYqJt4sjf9HJ
-	 9eJ71qtkxsD3TWUYleJyWFYymBcbXUfHl8PlewyG7sDRf5bc2+ZQF6PvfH3U7X4K0V
-	 eBkhSi4TOb7M1IEQ/dZDzz192HLtShaWyJmSWIoc=
+	b=PlWl9KQZtvuVUT0OViwQkFwILb/J9nw3yRssNFIhRGQKuVNASOj71+f64m/Z6xbiu
+	 ETLL1V8UkVXQAnJSZibq0Xhvxikcf3KAGsIfqozaiqcBzmQrbxcF78D0RaZVXRAjUc
+	 eKLwJygHeVKXCMNIekS2rGLFUukteWjxZyMuIxQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com,
-	Tao Cui <cuitao@kylinos.cn>,
-	Kalpan Jani <kalpan.jani@mpiricsoftware.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1592/1674] mptcp: pm: kernel: drop pending ADD_ADDR when removing ID0
-Date: Sat, 17 Oct 2026 18:04:24 +0200
-Message-ID: <20261017160511.953704611@linuxfoundation.org>
+Subject: [PATCH 6.6 1583/1674] wifi: cfg80211: reject duplicate wiphy cipher suite entries
+Date: Sat, 17 Oct 2026 18:04:15 +0200
+Message-ID: <20261017160511.720980063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,75 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit 2ac7d6e620764f1fc79eb4edd3610a7a661981ca ]
+[ Upstream commit 7187d145d9042b037e4f10538f70cf95e380219f ]
 
-The in-kernel MPTCP path manager can leave a stale ADD_ADDR announcement
-entry alive when removing the id 0 endpoint. This happens because the id 0
-removal path does not tear down pending announcements, unlike the non-zero
-id path.
+Duplicate entries in wiphy->cipher_suites do not describe any
+additional capability, but cfg80211 currently accepts them and leaves
+individual consumers to deal with them.
 
-When the PM later reselects id 0 after adding another signal endpoint, it
-finds the stale anno_list entry and hits WARN_ON_ONCE(mptcp_pm_is_kernel())
-in mptcp_pm_announced_alloc().
+One such consumer is the WEXT compatibility code, which appends a WEP
+key length for each WEP cipher entry it sees. Repeated WEP entries can
+therefore overflow the fixed iw_range::encoding_size array returned by
+SIOCGIWRANGE.
 
-Root cause: asymmetry between removal paths.
-- Non-zero id path: mptcp_nl_remove_subflow_and_signal_addr() calls
-  mptcp_pm_remove_announced() to clean up.
-- Id 0 path: mptcp_nl_remove_id_zero_address() skips cleanup entirely.
+Reject duplicate cipher suite entries in wiphy_register() instead.
+This keeps the cipher suite invariant in one place and makes malformed
+wiphy descriptions fail early with -EINVAL, rather than relying on a
+single cfg80211 user to handle duplicates correctly.
 
-Fix by making the id 0 path symmetric: call mptcp_pm_announced_remove()
-and decrement add_addr_signaled before queuing the RM_ADDR.
-
-Subtle detail: signal endpoints are stored in anno_list with port 0, but
-msk_local carries the connection's local port. In other words, entries
-linked to ID0 paths should have port == 0. A follow-up patch will ensure
-that. mptcp_pm_announced_remove() uses use_port=true for comparison. So
-clear the port before the lookup.
-
-Fixes: 740d798e8767 ("mptcp: remove id 0 address")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/620
-Suggested-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-4-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/20260413123000.1480661-1-n05ec@lzu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/wireless/core.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 2e5eb51d6ee09..8eb7fed89d6fc 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1725,6 +1725,8 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
- 	while ((msk = mptcp_token_iter_next(net, &s_slot, &s_num)) != NULL) {
- 		struct sock *sk = (struct sock *)msk;
- 		struct mptcp_addr_info msk_local;
-+		struct mptcp_addr_info anno_addr;
-+		bool announced;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 164277e81234b..da355e5975ca1 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -697,6 +697,24 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
+ 	return 0;
+ }
  
- 		if (list_empty(&msk->conn_list) || mptcp_pm_is_userspace(msk))
- 			goto next;
-@@ -1734,7 +1736,13 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
- 			goto next;
++static bool wiphy_cipher_suites_valid(const struct wiphy *wiphy)
++{
++	int i, j;
++
++	if (wiphy->n_cipher_suites && !wiphy->cipher_suites)
++		return false;
++
++	for (i = 0; i < wiphy->n_cipher_suites; i++) {
++		for (j = 0; j < i; j++) {
++			if (wiphy->cipher_suites[i] ==
++			    wiphy->cipher_suites[j])
++				return false;
++		}
++	}
++
++	return true;
++}
++
+ int wiphy_register(struct wiphy *wiphy)
+ {
+ 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
+@@ -828,6 +846,9 @@ int wiphy_register(struct wiphy *wiphy)
+ 	if (res)
+ 		return res;
  
- 		lock_sock(sk);
-+		/* Drop a possibly pending ADD_ADDR for this address. */
-+		anno_addr = msk_local;
-+		anno_addr.port = 0;
-+		announced = remove_anno_list_by_saddr(msk, &anno_addr);
- 		spin_lock_bh(&msk->pm.lock);
-+		if (announced)
-+			msk->pm.add_addr_signaled--;
- 		mptcp_pm_remove_addr(msk, &list);
- 		mptcp_pm_nl_rm_subflow_received(msk, &list);
- 		__mark_subflow_endp_available(msk, 0);
++	if (!wiphy_cipher_suites_valid(wiphy))
++		return -EINVAL;
++
+ 	/* sanity check supported bands/channels */
+ 	for (band = 0; band < NUM_NL80211_BANDS; band++) {
+ 		u16 types = 0;
 -- 
 2.53.0
 
