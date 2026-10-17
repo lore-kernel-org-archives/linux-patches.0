@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39653A5E7D;
-	Sat, 17 Oct 2026 17:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CFC392829;
+	Sat, 17 Oct 2026 17:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258594; cv=none; b=RCiu6qkuenmAnPu2B7VQH4sWfLpQ5LJjPnzDh3JIjyrqqD7xA3e/ZjdRV2HfCspGy9V7/y6PGvZLjJRqYKpTvtC0glWEECF3QF5XQwZmP/L3jahL4SiCPGonyoTEh77polZHON7CPA54v9Af2YLRcKQhmKMi9ZjmhfTJM60JAUA=
+	t=1792258597; cv=none; b=kN03OVfYKRZN3GHDU94OAIvipBOzXi5yVhThyIkZ9Je9U8lqHF26slSLgBwcWs7ZCfuWGK5NVZGyENYpTl2mZOpLI/qYQWlBRSt9ATYNynremj1fzB4RQznoq6Jk+FVWo81eNQkBJynXBBPQJsEsBlnHZLc8MbKdOd4TuMm2rH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258594; c=relaxed/simple;
-	bh=jGrA54A93dycmqsH0uFoMTf7RhXh95vOjzG0XzsEj4k=;
+	s=arc-20240116; t=1792258597; c=relaxed/simple;
+	bh=V1GwtuJNrmUXVZ4kdl9wQIrhsFK+mOxMnQGcU1rP4WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sF/T0BPPSl2K/XJXraS2HMhTV2Lv5MBnUBwgtwUgvPr2DrhgxsQOKU9Hx720htE2XgoSz98JIw1fMT/l++f/6CAiB0S9ZN0Z2S1Q1MJt67TfOaKlPRFcsJve1cECndQtA6vsClYAThQngUGxP5rjONIx1vYuB5tgwJ51nv2DTBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLd2xqQg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j7tYWvmCzYTOeBw3/UqgIePWyqUWE7E7xpJstSWgF1g6b/3tOjwQXfIwlkPhH4mlN6HOmYfUGwEAnqFfLEwRO872FTt1IMqZHAY2JA7v5S29lQtpDju2wPg7tumypPuhKVTasQ9vvYHiibBbZ37hv5e1IU28BK+J/YZBGFFlT9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldHr+IQn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLd2xqQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16AF1F000C4;
-	Sat, 17 Oct 2026 17:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldHr+IQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33421F000C4;
+	Sat, 17 Oct 2026 17:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258593;
-	bh=Jlegu+RUFR6zIk5acfreGwP0exKtgMOjVxhQoOKHzpQ=;
+	s=korg; t=1792258596;
+	bh=aUnj8e6Y+bTQvTDQRhOGK6Bo7zEl7KN4KURygen5vQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLd2xqQg2mJAYgTTKo0VRsiEDcz67BOMjTnGpo4VNgPBVuyKzZWuolqOVEUDsQZE1
-	 ReSduOIsgC+AR2XXzgyruA2YOtJ+oA6gG8jp8N7L7Xq54y30vvF48zGHREEnBuRfrd
-	 6KcZo0WAeFDULomIfH54hRHUiSt7bt4l4LuktTeU=
+	b=ldHr+IQnnPFxgr+OJbs7AJVApTfrjoBzNJJrL/XLq8wvXcOYZ/Ml/qWfiZagNB9vm
+	 7MIsFo2OTv28FT9ZMYmkDV4COeuoS2ajPaMkChJbzN/AODg1HQmHFjEBNJK4/4CKlz
+	 9B2wPQ5KfX147Js3k/1xOaPQsX2L/g8gF8VgJAJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0937/1674] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
-Date: Sat, 17 Oct 2026 17:53:29 +0200
-Message-ID: <20261017160455.181057505@linuxfoundation.org>
+Subject: [PATCH 6.6 0938/1674] i3c: mipi-i3c-hci: Fix race in DMA ring dequeue
+Date: Sat, 17 Oct 2026 17:53:30 +0200
+Message-ID: <20261017160455.206489841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,73 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 ]
+[ Upstream commit 1dca8aee80eea76d2aae21265de5dd64f6ba0f09 ]
 
-The logic used to abort the DMA ring contains several flaws:
+The HCI DMA dequeue path (hci_dma_dequeue_xfer()) may be invoked for
+multiple transfers that timeout around the same time.  However, the
+function is not serialized and can race with itself.
 
- 1. The driver unconditionally issues a ring abort even when the ring has
-    already stopped.
- 2. The completion used to wait for abort completion is never
-    re-initialized, resulting in incorrect wait behavior.
- 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
-    resets hardware ring pointers and disrupts the controller state.
- 4. If the ring is already stopped, the abort operation should be
-    considered successful without attempting further action.
+When a timeout occurs, hci_dma_dequeue_xfer() stops the ring, processes
+incomplete transfers, and then restarts the ring.  If another timeout
+triggers a parallel call into the same function, the two instances may
+interfere with each other - stopping or restarting the ring at unexpected
+times.
 
-Fix the abort handling by checking whether the ring is running before
-issuing an abort, re-initializing the completion when needed, ensuring that
-RING_CTRL_ENABLE remains asserted during abort, and treating an already
-stopped ring as a successful condition.
+Add a mutex so that hci_dma_dequeue_xfer() is serialized with respect to
+itself.
 
 Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260306072451.11131-7-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 3 +++
+ drivers/i3c/master/mipi-i3c-hci/dma.c  | 2 ++
+ drivers/i3c/master/mipi-i3c-hci/hci.h  | 1 +
+ 3 files changed, 6 insertions(+)
 
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 10c400da66403..6cc89cf01c662 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -747,6 +747,9 @@ static int i3c_hci_probe(struct platform_device *pdev)
+ 	hci = devm_kzalloc(&pdev->dev, sizeof(*hci), GFP_KERNEL);
+ 	if (!hci)
+ 		return -ENOMEM;
++
++	mutex_init(&hci->control_mutex);
++
+ 	hci->base_regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(hci->base_regs))
+ 		return PTR_ERR(hci->base_regs);
 diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 2cf4974fffa75..7b13508ccca66 100644
+index 7b13508ccca66..60da4be20c5f2 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -448,16 +448,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
- 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
- 	unsigned int i;
+@@ -450,6 +450,8 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
  	bool did_unqueue = false;
--
--	/* stop the ring */
--	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
--	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
--		/*
--		 * We're deep in it if ever this condition is ever met.
--		 * Hardware might still be writing to memory, etc.
--		 */
--		dev_crit(&hci->master.dev, "unable to abort the ring\n");
--		WARN_ON(1);
-+	u32 ring_status;
-+
-+	ring_status = rh_reg_read(RING_STATUS);
-+	if (ring_status & RING_STATUS_RUNNING) {
-+		/* stop the ring */
-+		reinit_completion(&rh->op_done);
-+		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
-+		wait_for_completion_timeout(&rh->op_done, HZ);
-+		ring_status = rh_reg_read(RING_STATUS);
-+		if (ring_status & RING_STATUS_RUNNING) {
-+			/*
-+			 * We're deep in it if ever this condition is ever met.
-+			 * Hardware might still be writing to memory, etc.
-+			 */
-+			dev_crit(&hci->master.dev, "unable to abort the ring\n");
-+			WARN_ON(1);
-+		}
- 	}
+ 	u32 ring_status;
  
- 	for (i = 0; i < n; i++) {
++	guard(mutex)(&hci->control_mutex);
++
+ 	ring_status = rh_reg_read(RING_STATUS);
+ 	if (ring_status & RING_STATUS_RUNNING) {
+ 		/* stop the ring */
+diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
+index f109923f6c3f3..39490bc9f84f6 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/hci.h
++++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
+@@ -43,6 +43,7 @@ struct i3c_hci {
+ 	const struct hci_io_ops *io;
+ 	void *io_data;
+ 	const struct hci_cmd_ops *cmd;
++	struct mutex control_mutex;
+ 	atomic_t next_cmd_tid;
+ 	u32 caps;
+ 	unsigned int quirks;
 -- 
 2.53.0
 
