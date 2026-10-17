@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7903A542B;
-	Sat, 17 Oct 2026 18:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A0E15E5BB;
+	Sat, 17 Oct 2026 18:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260851; cv=none; b=gk95AjT3sQoBgWAwWPP/NKajP+QCuQzaIl29UUQMxiJrlOuLHt+nqTiUnm+s3ZkH7MkGnxESFkQqKDyjYgnZC8f+6OeRFxHX8sPPqkMrgA+W1OublD45aN4pxVMoE5lwBekF1R+OrCUvZPXSg8bTJDXaiJ7RR3w6O1lErUM93fw=
+	t=1792260854; cv=none; b=cRDOw8sPCTKI6UG3iuYWZcsioE5tsk4iqOZvvoLecuOvaHjTnrNDectP7KanmmETFNB8P8u2IkDz9r8cyi4gA6sFEsqbk37b4NL45fN+p4nfM/uuh6vCXxGrfr5YfYzoYlNHWkOpdSDFcWirLaHRUL30Il51UsuVFneDij9nlIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260851; c=relaxed/simple;
-	bh=Rc0z5wG9Rnmq3rgBv5ntddDTbU0ZB05VwvqDdFUbvow=;
+	s=arc-20240116; t=1792260854; c=relaxed/simple;
+	bh=B9PR24tVQMiW5231qd+L/oXAW/8AmIDXwlZksIf8Dvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEYPNb2kT7TxAymttcFaAZ+Mz7GSFF7qTMl91757BoP9kMuICV4z7dLxF+Vw2BaJZpHSxz+o4WXvOv8qB1WbYDUkE+r7naOswXyZzEbW6sfZ6YbzjLwFoy9MDhS5a9u3w8ZxNEearunJoaridNT63HOqSjwmPrN6dsTEK6NHL1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQwFW5Gf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QsaQI/bDC/pyTIvHtIhNKPNRw6jhpiCuG+MCDraFMnr+bwO0oITqH5hQrzWzSlzQcFKsQtRoTE5bwLdzrlvprTJDLoj0g9lzqM34KHbLuD7SwfigchncszRj9clxaOCNIQ0Jmlf9MU2nN54Ddz5QWTT8931HBGUR6j2uc4yuwYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuNO9MIx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQwFW5Gf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC781F000C4;
-	Sat, 17 Oct 2026 18:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuNO9MIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140641F000C4;
+	Sat, 17 Oct 2026 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260850;
-	bh=IOkMjVDoG7wtllxN4nuzq6fSWdbvBJ1CNi9sOLpRu9E=;
+	s=korg; t=1792260853;
+	bh=VkUpRe4EVCKaZnpfZbaiNzorp+CtVtBveNBv2xioaCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQwFW5Gf7pYN49OHCh/9NNs/fRMI+1bYjcBVDgSLZzUhinQW1KhxvaPrk+6tM5SWG
-	 J++wI6xN6hSRmtTo0yC9NK1PkgWoRb3VbaOzWvXNgVBmJt9BtHQlpVDHjV3v1oU0TH
-	 3f9hZw/dLTjV5wO3ENgV8pQI9uIrJD1C0j45LZRE=
+	b=uuNO9MIx/fQTg1Hu5Nzvl/vT3ZK4io7JAA1ryJXAUkiIGMNwNR8N2jnOssXpPEyjI
+	 f5RY9bz58xHvH2Eio1IEY6rStPVJ3n/qohgbudsf/V8jtVlHKo/NuWEgCk4BuFR2QA
+	 5QuWYBbD4VzzwoisgHcAfkjGwceT2+UdITMhkVN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattia Meleleo <mattia.meleleo@coralogix.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1674/1674] bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
-Date: Sat, 17 Oct 2026 18:05:46 +0200
-Message-ID: <20261017160514.034895205@linuxfoundation.org>
+Subject: [PATCH 6.6 1670/1674] xfs: factor out stale buffer item completion
+Date: Sat, 17 Oct 2026 18:05:42 +0200
+Message-ID: <20261017160513.932772162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -54,90 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattia Meleleo <mattia.meleleo@coralogix.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 04af4efde58a4a4ef4feab7360c46af9ec0b83a0 ]
+[ Upstream commit 816c330b605c3f4813c0dc0ab5af5cce17ff06b3 ]
 
-tcp_bpf_ioctl() answers SIOCINQ from psock->msg_tot_len, which only
-counts bytes in ingress_msg. Without a stream/skb verdict program
-nothing is diverted there: data stays in sk_receive_queue, so FIONREAD
-returns 0 even though read() returns data.
+The stale buffer item completion handling is currently only done
+from BLI unpinning. We need to perform this function from where-ever
+the last reference to the BLI is dropped, so first we need to
+factor this code out into a helper.
 
-Add tcp_inq() to the reported value when the psock has no verdict
-program. The two queues are disjoint, so bytes redirected into
-ingress_msg from other sockets stay correctly accounted through
-msg_tot_len.
-
-Remove unused sk_psock_msg_inq().
-
-Fixes: 929e30f93125 ("bpf, sockmap: Fix FIONREAD for sockmap")
-Signed-off-by: Mattia Meleleo <mattia.meleleo@coralogix.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h |   14 --------------
- net/ipv4/tcp_bpf.c    |   17 ++++++++++++++++-
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ fs/xfs/xfs_buf_item.c | 60 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 23 deletions(-)
 
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -549,20 +549,6 @@ static inline bool sk_psock_strp_enabled
- 	return !!psock->saved_data_ready;
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 1b323b3c0eb93..ade89a233e686 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -541,6 +541,42 @@ xfs_buf_item_pin(
+ 	atomic_inc(&bip->bli_buf->b_pin_count);
  }
  
--/* for tcp only, sk is locked */
--static inline ssize_t sk_psock_msg_inq(struct sock *sk)
--{
--	struct sk_psock *psock;
--	ssize_t inq = 0;
--
--	psock = sk_psock_get(sk);
--	if (likely(psock)) {
--		inq = sk_psock_get_msg_len_nolock(psock);
--		sk_psock_put(sk, psock);
--	}
--	return inq;
--}
--
- /* for udp only, sk is not locked */
- static inline ssize_t sk_msg_first_len(struct sock *sk)
- {
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -335,6 +335,7 @@ unlock:
- 
- static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- {
-+	struct sk_psock *psock;
- 	bool slow;
- 
- 	if (cmd != SIOCINQ)
-@@ -345,7 +346,21 @@ static int tcp_bpf_ioctl(struct sock *sk
- 		return -EINVAL;
- 
- 	slow = lock_sock_fast(sk);
--	*karg = sk_psock_msg_inq(sk);
-+	psock = sk_psock_get(sk);
-+	if (unlikely(!psock)) {
-+		unlock_sock_fast(sk, slow);
-+		return tcp_ioctl(sk, cmd, karg);
++/*
++ * For a stale BLI, process all the necessary completions that must be
++ * performed when the final BLI reference goes away. The buffer will be
++ * referenced and locked here - we return to the caller with the buffer still
++ * referenced and locked for them to finalise processing of the buffer.
++ */
++static void
++xfs_buf_item_finish_stale(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++	struct xfs_log_item	*lip = &bip->bli_item;
++
++	ASSERT(bip->bli_flags & XFS_BLI_STALE);
++	ASSERT(xfs_buf_islocked(bp));
++	ASSERT(bp->b_flags & XBF_STALE);
++	ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
++	ASSERT(list_empty(&lip->li_trans));
++	ASSERT(!bp->b_transp);
++
++	if (bip->bli_flags & XFS_BLI_STALE_INODE) {
++		xfs_buf_item_done(bp);
++		xfs_buf_inode_iodone(bp);
++		ASSERT(list_empty(&bp->b_li_list));
++		return;
 +	}
-+	*karg = sk_psock_get_msg_len_nolock(psock);
-+	/* Without a verdict program, ingress data is never diverted to
-+	 * ingress_msg: it stays in sk_receive_queue and is read through
-+	 * the fallback to tcp_recvmsg(), so account for it like
-+	 * tcp_ioctl() does.
++
++	/*
++	 * We may or may not be on the AIL here, xfs_trans_ail_delete() will do
++	 * the right thing regardless of the situation in which we are called.
 +	 */
-+	if (!READ_ONCE(psock->progs.stream_verdict) &&
-+	    !READ_ONCE(psock->progs.skb_verdict))
-+		*karg += tcp_inq(sk);
-+	sk_psock_put(sk, psock);
- 	unlock_sock_fast(sk, slow);
++	xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
++	xfs_buf_item_relse(bip);
++	ASSERT(bp->b_log_item == NULL);
++}
++
+ /*
+  * This is called to unpin the buffer associated with the buf log item which was
+  * previously pinned with a call to xfs_buf_item_pin().  We enter this function
+@@ -590,13 +626,6 @@ xfs_buf_item_unpin(
+ 	}
  
- 	return 0;
+ 	if (stale) {
+-		ASSERT(bip->bli_flags & XFS_BLI_STALE);
+-		ASSERT(xfs_buf_islocked(bp));
+-		ASSERT(bp->b_flags & XBF_STALE);
+-		ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
+-		ASSERT(list_empty(&lip->li_trans));
+-		ASSERT(!bp->b_transp);
+-
+ 		trace_xfs_buf_item_unpin_stale(bip);
+ 
+ 		/*
+@@ -607,22 +636,7 @@ xfs_buf_item_unpin(
+ 		 * processing is complete.
+ 		 */
+ 		xfs_buf_rele(bp);
+-
+-		/*
+-		 * If we get called here because of an IO error, we may or may
+-		 * not have the item on the AIL. xfs_trans_ail_delete() will
+-		 * take care of that situation. xfs_trans_ail_delete() drops
+-		 * the AIL lock.
+-		 */
+-		if (bip->bli_flags & XFS_BLI_STALE_INODE) {
+-			xfs_buf_item_done(bp);
+-			xfs_buf_inode_iodone(bp);
+-			ASSERT(list_empty(&bp->b_li_list));
+-		} else {
+-			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bip);
+-			ASSERT(bp->b_log_item == NULL);
+-		}
++		xfs_buf_item_finish_stale(bip);
+ 		xfs_buf_relse(bp);
+ 		return;
+ 	}
+-- 
+2.53.0
+
 
 
