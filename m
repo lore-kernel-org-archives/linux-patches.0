@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F3038424C;
-	Sat, 17 Oct 2026 18:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7B23C0601;
+	Sat, 17 Oct 2026 18:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260495; cv=none; b=BsB4isEGyBkue8tCvRXIMkR6OC9GgRv2mRGpol/kPwwv+FvYKM5oqol7cUvtDCWut2oQ17yrtA9mBRM2+E9iMxOBemlTU7to8FsuSwDPbbwOXlTJ1oDirxkuCx90isathVVLDrdPD1r9ks5Pa8VKIMQJG0+V0k7LPMrsrT2a8L4=
+	t=1792260498; cv=none; b=EMyXDf7oC5C4SJPkHxZHO/GSBaxTl0ibpUcHyIVxrhmUkGrsJmIJXcnXEWaRFIItNyi80boHwauRuBdzJ2+WxpscvYdgocT855w6J7Vu+gwihXqJcWm6TuDMTkI7CdqGbCL09+GPBCJUfWrlKNPMx9pv0TFHIm1eO5TcDOwhgpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260495; c=relaxed/simple;
-	bh=jL+4jz1mKId1p694pJMU6CyI/XaScK4QqQai6AfD3z4=;
+	s=arc-20240116; t=1792260498; c=relaxed/simple;
+	bh=5NjXOHxM6WZcDDHDXvQa+BYz/7IFsZnDKJbEA7NqcQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYE9gis3G+1er/fcqqCKtIzXmCdnY+TeGvsjEWI2H/y79t1foFhLrfUuv4EQzQETn0ht77Usm0rhQYOrbgoQv8HGs+QRDHXvafxl3xricAbSBRlwHPJGr8Lhwctq1sQCkgl4vPfq+P3lpl2KPq0/omI72dWpE6dX4lu4E6gADpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGlDTxRz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dZpdEvrrOP/MHX74kQx3bNH7XyLqwXGbpwXK/z44HHC4vWexdxgA7aHVKD1C81eHSnwz+b26GEKT1YUS09l/a64jEexsy/59bc7yqL6z9TPcaXdnV7Bjtw66hCuGLb/Xvm1shFpk7c/6bruv43flJO4FgBvfmzAbxGjoNn7ppec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYwEQ12A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGlDTxRz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1DA1F000C5;
-	Sat, 17 Oct 2026 18:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYwEQ12A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418801F000C4;
+	Sat, 17 Oct 2026 18:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260493;
-	bh=ebtnYifeHXJbAbLWJQmN/akt6ucduxi2+vzQ4LvFWyI=;
+	s=korg; t=1792260496;
+	bh=kbE1Yjve5xop9oOLboSVyHwwkEW/+TRvkzqclXhVzIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wGlDTxRzg+CB2gFtWt/2ORDFGJNA2uHcSbv3yU83T8toPyUwmjIJDAc2odqm1FyXl
-	 2657i4UHD8yFbAgfqRmOjU9IrMAai9KS8UO0Vmmk2bR2r4Kb4WTJ2tRe5KRT8Mpuxk
-	 BPNLfWssOAihKdlFkZ137PTAlt3UHx7HvkJLTvsg=
+	b=xYwEQ12ATlb0ftfuZuDwgTOerypmslYNYeCMo8JGYj4NQOmSOBdETWJIqzsCAK5bf
+	 orx4qDVOFGAzk8cEbbI4kSsW6Vn8+aBY4HpWoiJiOpqdHRR5e3EN8JqvYpxe6sDPYS
+	 vGxqUTWbXVgKnVCdt7zeMicF47tnAnVs7NdoU3fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Lianjie Wang <karin0.zst@gmail.com>,
+	Jim Mattson <jmattson@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1563/1674] hwrng: core - use RCU and work_struct to fix race condition
-Date: Sat, 17 Oct 2026 18:03:55 +0200
-Message-ID: <20261017160511.220081949@linuxfoundation.org>
+Subject: [PATCH 6.6 1564/1674] KVM: SVM: Add missing save/restore handling of LBR MSRs
+Date: Sat, 17 Oct 2026 18:03:56 +0200
+Message-ID: <20261017160511.243652577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,427 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianjie Wang <karin0.zst@gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit cc2f39d6ac48e6e3cb2d6240bc0d6df839dd0828 ]
+[ Upstream commit 3700f0788da6acf73b2df56690f4b201aa4aefd2 ]
 
-Currently, hwrng_fill is not cleared until the hwrng_fillfn() thread
-exits. Since hwrng_unregister() reads hwrng_fill outside the rng_mutex
-lock, a concurrent hwrng_unregister() may call kthread_stop() again on
-the same task.
+MSR_IA32_DEBUGCTLMSR and LBR MSRs are currently not enumerated by
+KVM_GET_MSR_INDEX_LIST, and LBR MSRs cannot be set with KVM_SET_MSRS. So
+save/restore is completely broken.
 
-Additionally, if hwrng_unregister() is called immediately after
-hwrng_register(), the stopped thread may have never been executed. Thus,
-hwrng_fill remains dirty even after hwrng_unregister() returns. In this
-case, subsequent calls to hwrng_register() will fail to start new
-threads, and hwrng_unregister() will call kthread_stop() on the same
-freed task. In both cases, a use-after-free occurs:
+Fix it by adding the MSRs to msrs_to_save_base, and allowing writes to
+LBR MSRs from userspace only (as they are read-only MSRs) if LBR
+virtualization is enabled.  Additionally, to correctly restore L1's LBRs
+while L2 is running, make sure the LBRs are copied from the captured
+VMCB01 save area in svm_copy_vmrun_state().
 
-refcount_t: addition on 0; use-after-free.
-WARNING: ... at lib/refcount.c:25 refcount_warn_saturate+0xec/0x1c0
-Call Trace:
- kthread_stop+0x181/0x360
- hwrng_unregister+0x288/0x380
- virtrng_remove+0xe3/0x200
+Note, for VMX, this also fixes a flaw where MSR_IA32_DEBUGCTLMSR isn't
+reported as an MSR to save/restore.
 
-This patch fixes the race by protecting the global hwrng_fill pointer
-inside the rng_mutex lock, so that hwrng_fillfn() thread is stopped only
-once, and calls to kthread_run() and kthread_stop() are serialized
-with the lock held.
+Note #2, over-reporting MSR_IA32_LASTxxx on Intel is ok, as KVM already
+handles unsupported reads and writes thanks to commit b5e2fec0ebc3 ("KVM:
+Ignore DEBUGCTL MSRs with no effect") (kvm_do_msr_access() will morph the
+unsupported userspace write into a nop).
 
-To avoid deadlock in hwrng_fillfn() while being stopped with the lock
-held, we convert current_rng to RCU, so that get_current_rng() can read
-current_rng without holding the lock. To remove the lock from put_rng(),
-we also delay the actual cleanup into a work_struct.
-
-Since get_current_rng() no longer returns ERR_PTR values, the IS_ERR()
-checks are removed from its callers.
-
-With hwrng_fill protected by the rng_mutex lock, hwrng_fillfn() can no
-longer clear hwrng_fill itself. Therefore, if hwrng_fillfn() returns
-directly after current_rng is dropped, kthread_stop() would be called on
-a freed task_struct later. To fix this, hwrng_fillfn() calls schedule()
-now to keep the task alive until being stopped. The kthread_stop() call
-is also moved from hwrng_unregister() to drop_current_rng(), ensuring
-kthread_stop() is called on all possible paths where current_rng becomes
-NULL, so that the thread would not wait forever.
-
-Fixes: be4000bc4644 ("hwrng: create filler thread")
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Lianjie Wang <karin0.zst@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 24e09cbf480a ("KVM: SVM: enable LBR virtualization")
+Cc: stable@vger.kernel.org
+Reported-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260303003421.2185681-4-yosry@kernel.org
+[sean: guard with lbrv checks, massage changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/core.c | 148 ++++++++++++++++++++++------------
- include/linux/hw_random.h     |   2 +
- 2 files changed, 99 insertions(+), 51 deletions(-)
+ arch/x86/kvm/svm/nested.c |  9 +++++++++
+ arch/x86/kvm/svm/svm.c    | 42 ++++++++++++++++++++++++++++++++++-----
+ arch/x86/kvm/x86.c        | 13 ++++++++++++
+ 3 files changed, 59 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
-index 6863121e16b01..e3e730dc64c42 100644
---- a/drivers/char/hw_random/core.c
-+++ b/drivers/char/hw_random/core.c
-@@ -20,23 +20,25 @@
- #include <linux/miscdevice.h>
- #include <linux/module.h>
- #include <linux/random.h>
-+#include <linux/rcupdate.h>
- #include <linux/sched.h>
- #include <linux/sched/signal.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/uaccess.h>
-+#include <linux/workqueue.h>
- 
- #define RNG_MODULE_NAME		"hw_random"
- 
- #define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
- 
--static struct hwrng *current_rng;
-+static struct hwrng __rcu *current_rng;
- /* the current rng has been explicitly chosen by user via sysfs */
- static int cur_rng_set_by_user;
- static struct task_struct *hwrng_fill;
- /* list of registered rngs */
- static LIST_HEAD(rng_list);
--/* Protects rng_list and current_rng */
-+/* Protects rng_list, hwrng_fill and updating on current_rng */
- static DEFINE_MUTEX(rng_mutex);
- /* Protects rng read functions, data_avail, rng_buffer and rng_fillbuf */
- static DEFINE_MUTEX(reading_mutex);
-@@ -77,18 +79,39 @@ static void add_early_randomness(struct hwrng *rng)
- 	}
- }
- 
--static inline void cleanup_rng(struct kref *kref)
-+static void cleanup_rng_work(struct work_struct *work)
- {
--	struct hwrng *rng = container_of(kref, struct hwrng, ref);
-+	struct hwrng *rng = container_of(work, struct hwrng, cleanup_work);
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 432d188b2f3c9..2e4db6602db11 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -973,6 +973,15 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
+ 	to_save->rsp = from_save->rsp;
+ 	to_save->rip = from_save->rip;
+ 	to_save->cpl = 0;
 +
-+	/*
-+	 * Hold rng_mutex here so we serialize in case they set_current_rng
-+	 * on rng again immediately.
-+	 */
-+	mutex_lock(&rng_mutex);
-+
-+	/* Skip if rng has been reinitialized. */
-+	if (kref_read(&rng->ref)) {
-+		mutex_unlock(&rng_mutex);
-+		return;
++	if (kvm_cpu_cap_has(X86_FEATURE_LBRV)) {
++		to_save->dbgctl		= from_save->dbgctl;
++		to_save->br_from	= from_save->br_from;
++		to_save->br_to		= from_save->br_to;
++		to_save->last_excp_from	= from_save->last_excp_from;
++		to_save->last_excp_to	= from_save->last_excp_to;
++		to_save->dbgctl &= ~DEBUGCTL_RESERVED_BITS;
 +	}
- 
- 	if (rng->cleanup)
- 		rng->cleanup(rng);
- 
- 	complete(&rng->cleanup_done);
-+	mutex_unlock(&rng_mutex);
-+}
-+
-+static inline void cleanup_rng(struct kref *kref)
-+{
-+	struct hwrng *rng = container_of(kref, struct hwrng, ref);
-+
-+	schedule_work(&rng->cleanup_work);
  }
  
- static int set_current_rng(struct hwrng *rng)
- {
-+	struct hwrng *old_rng;
- 	int err;
- 
- 	BUG_ON(!mutex_is_locked(&rng_mutex));
-@@ -97,8 +120,14 @@ static int set_current_rng(struct hwrng *rng)
- 	if (err)
- 		return err;
- 
--	drop_current_rng();
--	current_rng = rng;
-+	old_rng = rcu_dereference_protected(current_rng,
-+					    lockdep_is_held(&rng_mutex));
-+	rcu_assign_pointer(current_rng, rng);
-+
-+	if (old_rng) {
-+		synchronize_rcu();
-+		kref_put(&old_rng->ref, cleanup_rng);
-+	}
- 
- 	/* if necessary, start hwrng thread */
- 	if (!hwrng_fill) {
-@@ -114,47 +143,56 @@ static int set_current_rng(struct hwrng *rng)
- 
- static void drop_current_rng(void)
- {
--	BUG_ON(!mutex_is_locked(&rng_mutex));
--	if (!current_rng)
-+	struct hwrng *rng;
-+
-+	rng = rcu_dereference_protected(current_rng,
-+					lockdep_is_held(&rng_mutex));
-+	if (!rng)
- 		return;
- 
-+	RCU_INIT_POINTER(current_rng, NULL);
-+	synchronize_rcu();
-+
-+	if (hwrng_fill) {
-+		kthread_stop(hwrng_fill);
-+		hwrng_fill = NULL;
-+	}
-+
- 	/* decrease last reference for triggering the cleanup */
--	kref_put(&current_rng->ref, cleanup_rng);
--	current_rng = NULL;
-+	kref_put(&rng->ref, cleanup_rng);
- }
- 
--/* Returns ERR_PTR(), NULL or refcounted hwrng */
-+/* Returns NULL or refcounted hwrng */
- static struct hwrng *get_current_rng_nolock(void)
- {
--	if (current_rng)
--		kref_get(&current_rng->ref);
-+	struct hwrng *rng;
-+
-+	rng = rcu_dereference_protected(current_rng,
-+					lockdep_is_held(&rng_mutex));
-+	if (rng)
-+		kref_get(&rng->ref);
- 
--	return current_rng;
-+	return rng;
- }
- 
- static struct hwrng *get_current_rng(void)
- {
- 	struct hwrng *rng;
- 
--	if (mutex_lock_interruptible(&rng_mutex))
--		return ERR_PTR(-ERESTARTSYS);
-+	rcu_read_lock();
-+	rng = rcu_dereference(current_rng);
-+	if (rng)
-+		kref_get(&rng->ref);
- 
--	rng = get_current_rng_nolock();
-+	rcu_read_unlock();
- 
--	mutex_unlock(&rng_mutex);
- 	return rng;
- }
- 
- static void put_rng(struct hwrng *rng)
- {
--	/*
--	 * Hold rng_mutex here so we serialize in case they set_current_rng
--	 * on rng again immediately.
--	 */
--	mutex_lock(&rng_mutex);
- 	if (rng)
- 		kref_put(&rng->ref, cleanup_rng);
--	mutex_unlock(&rng_mutex);
- }
- 
- static int hwrng_init(struct hwrng *rng)
-@@ -219,10 +257,6 @@ static ssize_t rng_dev_read(struct file *filp, char __user *buf,
- 
- 	while (size) {
- 		rng = get_current_rng();
--		if (IS_ERR(rng)) {
--			err = PTR_ERR(rng);
--			goto out;
--		}
- 		if (!rng) {
- 			err = -ENODEV;
- 			goto out;
-@@ -309,7 +343,7 @@ static struct miscdevice rng_miscdev = {
- 
- static int enable_best_rng(void)
- {
--	struct hwrng *rng, *new_rng = NULL;
-+	struct hwrng *rng, *cur_rng, *new_rng = NULL;
- 	int ret = -ENODEV;
- 
- 	BUG_ON(!mutex_is_locked(&rng_mutex));
-@@ -327,7 +361,9 @@ static int enable_best_rng(void)
- 			new_rng = rng;
- 	}
- 
--	ret = ((new_rng == current_rng) ? 0 : set_current_rng(new_rng));
-+	cur_rng = rcu_dereference_protected(current_rng,
-+					    lockdep_is_held(&rng_mutex));
-+	ret = ((new_rng == cur_rng) ? 0 : set_current_rng(new_rng));
- 	if (!ret)
- 		cur_rng_set_by_user = 0;
- 
-@@ -345,7 +381,8 @@ static ssize_t rng_current_store(struct device *dev,
- 	if (err)
- 		return -ERESTARTSYS;
- 
--	old_rng = current_rng;
-+	old_rng = rcu_dereference_protected(current_rng,
-+					    lockdep_is_held(&rng_mutex));
- 	if (sysfs_streq(buf, "")) {
- 		err = enable_best_rng();
- 	} else {
-@@ -378,8 +415,6 @@ static ssize_t rng_current_show(struct device *dev,
- 	struct hwrng *rng;
- 
- 	rng = get_current_rng();
--	if (IS_ERR(rng))
--		return PTR_ERR(rng);
- 
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", rng ? rng->name : "none");
- 	put_rng(rng);
-@@ -423,8 +458,6 @@ static ssize_t rng_quality_show(struct device *dev,
- 	struct hwrng *rng;
- 
- 	rng = get_current_rng();
--	if (IS_ERR(rng))
--		return PTR_ERR(rng);
- 
- 	if (!rng) /* no need to put_rng */
- 		return -ENODEV;
-@@ -439,6 +472,7 @@ static ssize_t rng_quality_store(struct device *dev,
- 				 struct device_attribute *attr,
- 				 const char *buf, size_t len)
- {
-+	struct hwrng *rng;
- 	u16 quality;
- 	int ret = -EINVAL;
- 
-@@ -455,12 +489,13 @@ static ssize_t rng_quality_store(struct device *dev,
- 		goto out;
- 	}
- 
--	if (!current_rng) {
-+	rng = rcu_dereference_protected(current_rng, lockdep_is_held(&rng_mutex));
-+	if (!rng) {
- 		ret = -ENODEV;
- 		goto out;
- 	}
- 
--	current_rng->quality = quality;
-+	rng->quality = quality;
- 	current_quality = quality; /* obsolete */
- 
- 	/* the best available RNG may have changed */
-@@ -506,8 +541,20 @@ static int hwrng_fillfn(void *unused)
- 		struct hwrng *rng;
- 
- 		rng = get_current_rng();
--		if (IS_ERR(rng) || !rng)
-+		if (!rng) {
-+			/*
-+			 * Keep the task_struct alive until kthread_stop()
-+			 * is called to avoid UAF in drop_current_rng().
-+			 */
-+			while (!kthread_should_stop()) {
-+				set_current_state(TASK_INTERRUPTIBLE);
-+				if (!kthread_should_stop())
-+					schedule();
-+			}
-+			set_current_state(TASK_RUNNING);
- 			break;
-+		}
-+
- 		mutex_lock(&reading_mutex);
- 		rc = rng_get_data(rng, rng_fillbuf,
- 				  rng_buffer_size(), 1);
-@@ -535,14 +582,13 @@ static int hwrng_fillfn(void *unused)
- 		add_hwgenerator_randomness((void *)rng_fillbuf, rc,
- 					   entropy >> 10, true);
- 	}
--	hwrng_fill = NULL;
- 	return 0;
- }
- 
- int hwrng_register(struct hwrng *rng)
- {
- 	int err = -EINVAL;
--	struct hwrng *tmp;
-+	struct hwrng *cur_rng, *tmp;
- 	bool is_new_current = false;
- 
- 	if (!rng->name || (!rng->data_read && !rng->read))
-@@ -558,6 +604,7 @@ int hwrng_register(struct hwrng *rng)
- 	}
- 	list_add_tail(&rng->list, &rng_list);
- 
-+	INIT_WORK(&rng->cleanup_work, cleanup_rng_work);
- 	init_completion(&rng->cleanup_done);
- 	complete(&rng->cleanup_done);
- 	init_completion(&rng->dying);
-@@ -565,8 +612,10 @@ int hwrng_register(struct hwrng *rng)
- 	/* Adjust quality field to always have a proper value */
- 	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
- 
--	if (!current_rng ||
--	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
-+	cur_rng = rcu_dereference_protected(current_rng,
-+					    lockdep_is_held(&rng_mutex));
-+	if (!cur_rng ||
-+	    (!cur_rng_set_by_user && rng->quality > cur_rng->quality)) {
+ void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 8844f49d3e7f8..832886bec53d3 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -2903,19 +2903,19 @@ static int svm_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		msr_info->data = svm->tsc_aux;
+ 		break;
+ 	case MSR_IA32_DEBUGCTLMSR:
+-		msr_info->data = svm->vmcb->save.dbgctl;
++		msr_info->data = lbrv ? svm->vmcb->save.dbgctl : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHFROMIP:
+-		msr_info->data = svm->vmcb->save.br_from;
++		msr_info->data = lbrv ? svm->vmcb->save.br_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHTOIP:
+-		msr_info->data = svm->vmcb->save.br_to;
++		msr_info->data = lbrv ? svm->vmcb->save.br_to : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTFROMIP:
+-		msr_info->data = svm->vmcb->save.last_excp_from;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTTOIP:
+-		msr_info->data = svm->vmcb->save.last_excp_to;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_to : 0;
+ 		break;
+ 	case MSR_VM_HSAVE_PA:
+ 		msr_info->data = svm->nested.hsave_msr;
+@@ -3191,6 +3191,38 @@ static int svm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
+ 		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
+ 		svm_update_lbrv(vcpu);
+ 		break;
++	case MSR_IA32_LASTBRANCHFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTBRANCHTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
+ 	case MSR_VM_HSAVE_PA:
  		/*
- 		 * Set new rng as current as the new rng source
- 		 * provides better entropy quality and was not
-@@ -611,10 +660,12 @@ void hwrng_unregister(struct hwrng *rng)
+ 		 * Old kernels did not validate the value written to
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 313fce77e0589..cb659d04d07ee 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -1473,6 +1473,9 @@ static const u32 msrs_to_save_base[] = {
+ 	MSR_IA32_UMWAIT_CONTROL,
  
- 	mutex_lock(&rng_mutex);
- 
--	old_rng = current_rng;
-+	old_rng = rcu_dereference_protected(current_rng,
-+					    lockdep_is_held(&rng_mutex));
- 	list_del(&rng->list);
- 	complete_all(&rng->dying);
--	if (current_rng == rng) {
-+
-+	if (old_rng == rng) {
- 		err = enable_best_rng();
- 		if (err) {
- 			drop_current_rng();
-@@ -623,12 +674,7 @@ void hwrng_unregister(struct hwrng *rng)
- 	}
- 
- 	new_rng = get_current_rng_nolock();
--	if (list_empty(&rng_list)) {
--		mutex_unlock(&rng_mutex);
--		if (hwrng_fill)
--			kthread_stop(hwrng_fill);
--	} else
--		mutex_unlock(&rng_mutex);
-+	mutex_unlock(&rng_mutex);
- 
- 	if (new_rng) {
- 		if (old_rng != new_rng)
-@@ -723,7 +769,7 @@ static int __init hwrng_modinit(void)
- static void __exit hwrng_modexit(void)
- {
- 	mutex_lock(&rng_mutex);
--	BUG_ON(current_rng);
-+	WARN_ON(rcu_access_pointer(current_rng));
- 	kfree(rng_buffer);
- 	kfree(rng_fillbuf);
- 	mutex_unlock(&rng_mutex);
-diff --git a/include/linux/hw_random.h b/include/linux/hw_random.h
-index 136e9842120e8..37a52d071a1f7 100644
---- a/include/linux/hw_random.h
-+++ b/include/linux/hw_random.h
-@@ -16,6 +16,7 @@
- #include <linux/types.h>
- #include <linux/list.h>
- #include <linux/kref.h>
-+#include <linux/workqueue.h>
- 
- /**
-  * struct hwrng - Hardware Random Number Generator driver
-@@ -49,6 +50,7 @@ struct hwrng {
- 	/* internal. */
- 	struct list_head list;
- 	struct kref ref;
-+	struct work_struct cleanup_work;
- 	struct completion cleanup_done;
- 	struct completion dying;
+ 	MSR_IA32_XFD, MSR_IA32_XFD_ERR,
++	MSR_IA32_DEBUGCTLMSR,
++	MSR_IA32_LASTBRANCHFROMIP, MSR_IA32_LASTBRANCHTOIP,
++	MSR_IA32_LASTINTFROMIP, MSR_IA32_LASTINTTOIP,
  };
+ 
+ static const u32 msrs_to_save_pmu[] = {
+@@ -1914,6 +1917,16 @@ static int kvm_set_msr_ignored_check(struct kvm_vcpu *vcpu,
+ {
+ 	int ret = __kvm_set_msr(vcpu, index, data, host_initiated);
+ 
++	if (ret == KVM_MSR_RET_UNSUPPORTED && host_initiated && !data) {
++		switch (index) {
++		case MSR_IA32_LASTBRANCHFROMIP:
++		case MSR_IA32_LASTBRANCHTOIP:
++		case MSR_IA32_LASTINTFROMIP:
++		case MSR_IA32_LASTINTTOIP:
++			return 0;
++		}
++	}
++
+ 	if (ret == KVM_MSR_RET_UNSUPPORTED)
+ 		if (kvm_msr_ignored_check(index, data, true))
+ 			ret = 0;
 -- 
 2.53.0
 
