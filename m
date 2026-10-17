@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0D718787A;
-	Sat, 17 Oct 2026 15:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA01B23394D;
+	Sat, 17 Oct 2026 15:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792252654; cv=none; b=aPZeGe5eWYMHu+gVfrHh3yQXUUSCs2CYRA48Etx36+SGwzZLjK6FcO5fzpw+rXjkaSR54u/iUwA0VIMsOtRUSJc6k8qiTOfiM2UA54js6h4TaczUHs/WaW7lPWBFufuYV65ksFeUNMm1LbLxkqQeWKMza1z47E+UhjtT3Pvimao=
+	t=1792252657; cv=none; b=mRE77UzupCuAwXugX06DmVrUazaNqVRFTbTWvZAog+Ze2uPLUBpBZs3311Wp//kTZbSchmWiOr+0RiI6Lwwi2mLsBgWaXVOww0ZbA8HXUHPwzhSfSyTDpx1nUWTiE9ezGmz3YKFdnovf17DDVqlMQzUuQkFkiLLUuFZ5o3IkvCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792252654; c=relaxed/simple;
-	bh=MWThTC7v+BRFsYmT15hxq4S2a0TYdSxm0FjL7SJWF3w=;
+	s=arc-20240116; t=1792252657; c=relaxed/simple;
+	bh=jLKoDR96ZDAOCwOIUOieKgAFSqtOd2PqjKWk0sYw1zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GHN7n6MoBJiuLOnlygHcVTm64s8INtlefvPrZpg7W5MBU7fUBuCH2nQsMSxrxAkbixnLgy5Ub+LA8+uD/fSgxLoswFs5TKTuZ71YBAUtEIEQvBcUc9bIAp6dwBIkIUUh1XNWwNrtbdfyLbtLy5inE42jr4+cZP+opdiRUvr2A/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDgyzw5+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ToACeH635/uXu9jPIGaltAy8TlFBhYI22fnMb2C/S48YXsKG6GaAkIxahypcSjzvxS57EAaJ2GPfPUPbOh+efpK7ydCcqyroxS9XuT1cjGcf9xxNIWMA10s9ZRFKahjLwDkXxkXbkEVwJbSuzBoDYm9ufGba3bcTWtLRDVaevqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPJS0j0g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDgyzw5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8FB1F000C4;
-	Sat, 17 Oct 2026 15:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPJS0j0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4051F000C4;
+	Sat, 17 Oct 2026 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792252653;
-	bh=YK11KcROY37mQBnONxmISmUB2cCmV3hylSZ7B7tpe/E=;
+	s=korg; t=1792252656;
+	bh=bydivF7vHbZSOhu2D37ClioEMTirZ0wu8OWLWtdw5nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tDgyzw5+e3JIlpoo0ZKpKwjPoELILZQ1HKWp2MuAFJbm8//La2ol6qo8IV3asm9MN
-	 z3zAVHJlTbXgJazrEp+irOoDWE34w36LVaZJckjhxABxve7HFNoeb4O2fGvDOhfsoG
-	 afjBKnoAKZmr0iNi7rxeeEqMuHAW87vEfW6vqwsE=
+	b=iPJS0j0g9YYAEiDy2d0IOfDrr18EgyE2e4sBtykV3NSvvPA90WmhgKizQnNVJKKUl
+	 4AZa0bGmwu1vN8LyMBF2OabiS5kl08dJpm/aqOC9p1Dh0JdkRQed8P+pdhEsXa0fdN
+	 YYmUvABe5v9UFsx9ViSlfdyORGhf3ZxphUGWxrKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Alexander Graf <graf@amazon.com>,
-	David Matlack <dmatlack@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Federico Parola <fparola@amazon.de>,
+	Mattia Meleleo <mattia.meleleo@coralogix.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 50/52] kho: free chunks using free_page() instead of kfree()
-Date: Sat, 17 Oct 2026 17:54:51 +0200
-Message-ID: <20261017155106.454608354@linuxfoundation.org>
+Subject: [PATCH 6.18 51/52] bpf, sockmap: Account for receive queue in FIONREAD without a verdict program
+Date: Sat, 17 Oct 2026 17:54:52 +0200
+Message-ID: <20261017155106.485705794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: <20261017155104.830766652@linuxfoundation.org>
@@ -56,44 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <pratyush@kernel.org>
+From: Mattia Meleleo <mattia.meleleo@coralogix.com>
 
-[ Upstream commit b15515155af735a86e5bcd67ed739162f0de27f5 ]
+[ Upstream commit 04af4efde58a4a4ef4feab7360c46af9ec0b83a0 ]
 
-Before commit fa759cd75bce5 ("kho: allocate metadata directly from the
-buddy allocator"), the chunks were allocated from the slab allocator using
-kzalloc().  Those were rightly freed using kfree().
+tcp_bpf_ioctl() answers SIOCINQ from psock->msg_tot_len, which only
+counts bytes in ingress_msg. Without a stream/skb verdict program
+nothing is diverted there: data stays in sk_receive_queue, so FIONREAD
+returns 0 even though read() returns data.
 
-When the commit switched to using the buddy allocator directly, it missed
-updating kho_mem_ser_free() to use free_page() instead of kfree().
+Add tcp_inq() to the reported value when the psock has no verdict
+program. The two queues are disjoint, so bytes redirected into
+ingress_msg from other sockets stay correctly accounted through
+msg_tot_len.
 
-Link: https://lkml.kernel.org/r/20251118182218.63044-1-pratyush@kernel.org
-Fixes: fa759cd75bce5 ("kho: allocate metadata directly from the buddy allocator")
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Alexander Graf <graf@amazon.com>
-Cc: David Matlack <dmatlack@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Federico Parola <fparola@amazon.de>
+Remove unused sk_psock_msg_inq().
+
+Fixes: 929e30f93125 ("bpf, sockmap: Fix FIONREAD for sockmap")
+Signed-off-by: Mattia Meleleo <mattia.meleleo@coralogix.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20260708-fionread-no-verdict-v3-1-b4ee31b3af53@coralogix.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_handover.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/skmsg.h | 14 --------------
+ net/ipv4/tcp_bpf.c    | 17 ++++++++++++++++-
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
-index ac9fa7727b5ff..9fe5d14f1ec54 100644
---- a/kernel/kexec_handover.c
-+++ b/kernel/kexec_handover.c
-@@ -365,7 +365,7 @@ static void kho_mem_ser_free(struct khoser_mem_chunk *first_chunk)
- 		struct khoser_mem_chunk *tmp = chunk;
- 
- 		chunk = KHOSER_LOAD_PTR(chunk->hdr.next);
--		kfree(tmp);
-+		free_page((unsigned long)tmp);
- 	}
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index 4ee7e4680a6e1..718351acd0230 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -561,20 +561,6 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
+ 	return !!psock->saved_data_ready;
  }
  
+-/* for tcp only, sk is locked */
+-static inline ssize_t sk_psock_msg_inq(struct sock *sk)
+-{
+-	struct sk_psock *psock;
+-	ssize_t inq = 0;
+-
+-	psock = sk_psock_get(sk);
+-	if (likely(psock)) {
+-		inq = sk_psock_get_msg_len_nolock(psock);
+-		sk_psock_put(sk, psock);
+-	}
+-	return inq;
+-}
+-
+ /* for udp only, sk is not locked */
+ static inline ssize_t sk_msg_first_len(struct sock *sk)
+ {
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index ca51756d8aa47..6027cd33a9fdc 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -334,6 +334,7 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 
+ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
+ {
++	struct sk_psock *psock;
+ 	bool slow;
+ 
+ 	if (cmd != SIOCINQ)
+@@ -344,7 +345,21 @@ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
+ 		return -EINVAL;
+ 
+ 	slow = lock_sock_fast(sk);
+-	*karg = sk_psock_msg_inq(sk);
++	psock = sk_psock_get(sk);
++	if (unlikely(!psock)) {
++		unlock_sock_fast(sk, slow);
++		return tcp_ioctl(sk, cmd, karg);
++	}
++	*karg = sk_psock_get_msg_len_nolock(psock);
++	/* Without a verdict program, ingress data is never diverted to
++	 * ingress_msg: it stays in sk_receive_queue and is read through
++	 * the fallback to tcp_recvmsg(), so account for it like
++	 * tcp_ioctl() does.
++	 */
++	if (!READ_ONCE(psock->progs.stream_verdict) &&
++	    !READ_ONCE(psock->progs.skb_verdict))
++		*karg += tcp_inq(sk);
++	sk_psock_put(sk, psock);
+ 	unlock_sock_fast(sk, slow);
+ 
+ 	return 0;
 -- 
 2.53.0
 
