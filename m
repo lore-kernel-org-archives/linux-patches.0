@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8646CE555;
-	Sat, 17 Oct 2026 17:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092D23CF202;
+	Sat, 17 Oct 2026 17:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258434; cv=none; b=uKSLbfsFIBf+WvTumHtEdH/frx3VyrxHbryqU4X4BRKAuOlToZh186VW2zKw2rp/j3Q3laNP6ShrWgM0VHVNyGOfqPyIM//7MBB5oTKJwzVD03KEwJLS7NZVZVLYBcEG6PohngqewbSW5JlfPCd0RorVipFNSICKQyua9jUTK1k=
+	t=1792258438; cv=none; b=fwJL8xZlPk+wjabDBjAL3lSyRZYkfdjD2B72coyXmvZh8cWFJ8oEA0/UO1WF4i1txhJkcW3AkortidYXFUp3d57gKzI6z/X/qjQNkXim/PCtTR5rl1S58ukvTYVqwDnaUBGHSKlFyXztd1cwb3/H85Ku6UK3endenL7StfgmhJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258434; c=relaxed/simple;
-	bh=MtCiBB0jBniOe2fzpKyckrUA1u8P6uat4AQZ7H4gko4=;
+	s=arc-20240116; t=1792258438; c=relaxed/simple;
+	bh=PRvqsg0ybG4rNlzS+k+uBAfjNRXI4TGz601aepIiFjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SD+R+ZW8wtHpZz+1u7jy0eyE6/fg0CsG0+Vuf0Qd/Xpzqvm7NADHTlCSZyyB9N5DoUCCcVEOUH66++m5nrQC2PXvH0GbAVQX6MC6vW9rIHHOx5CEf+gzgHkTHpuEjY9bkcM0ij8ntbGRzEA5qIA2F1gV06WyUKuRsaOpd4ziULk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCAPLjiZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3jWsWLOXjbgq8rkb7t6EKVmkxYA3z1oe5m0yIg6uNWIsw78bLllhMX7jBr8F5jkUx5VcocieZwf0b/x48jwsyjN9pU/BBkBaSVP10VAPxY1ooS48hMaYgzcLVXdVZPqVboRPJb+UShIRgU88bvP78LF4ySW1zHl1/aptKHLH0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ch8bwtiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCAPLjiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19F61F000C4;
-	Sat, 17 Oct 2026 17:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ch8bwtiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96B31F000C5;
+	Sat, 17 Oct 2026 17:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258433;
-	bh=TBysR97Ih1kaIJfRfebCuRfMYbVu6W2kg9VIDFIdsqI=;
+	s=korg; t=1792258436;
+	bh=EmbiS3yRnn5RxeNrExibPMfyklZPcL8meVUXIbo5K/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCAPLjiZ2OHs8qghK1AZiVxWyzKIbUGo2OzrIqCLvL0eYnHFA8kaMM/Yx3/t4he6m
-	 sXSQHtT7ycLVwR+nDBhR06Uorziezect8eZITS/oUeh1vxC04L8fYcAqNQ3bNcvxSS
-	 Kl837wmw4gL/P9cauwUevb712ee5i898vI1cY6VM=
+	b=ch8bwtiLKirp0tSwH72xSiO/GFdKWrTpEyws9TgidUxjHpaelRWHluNeQIFK+NAE1
+	 31MJnUYb5CT6EytZ5z+i1cKPxOCk+RetfYHEPHezggWaPJPRc3oc9dxHcoC97hFIeq
+	 q3ky/X6M2yPP1OPZNJX1UWeNXvB/lu26+zW/mbg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Sean Christopherson <seanjc@google.com>,
+	stable <stable@kernel.org>,
+	Michael Zimmermann <sigmaepsilon92@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0881/1674] KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock
-Date: Sat, 17 Oct 2026 17:52:33 +0200
-Message-ID: <20261017160453.730702106@linuxfoundation.org>
+Subject: [PATCH 6.6 0882/1674] usb: gadget: f_hid: dont call cdev_init while cdev in use
+Date: Sat, 17 Oct 2026 17:52:34 +0200
+Message-ID: <20261017160453.755828044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,119 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Michael Zimmermann <sigmaepsilon92@gmail.com>
 
-[ Upstream commit b6408b6cec5df76a165575777800ef2aba12b109 ]
+[ Upstream commit 81ebd43cc0d6d106ce7b6ccbf7b5e40ca7f5503d ]
 
-Take and hold kvm->lock for before checking sev_guest() in
-sev_mem_enc_register_region(), as sev_guest() isn't stable unless kvm->lock
-is held (or KVM can guarantee KVM_SEV_INIT{2} has completed and can't
-rollack state).  If KVM_SEV_INIT{2} fails, KVM can end up trying to add to
-a not-yet-initialized sev->regions_list, e.g. triggering a #GP
+When calling unbind, then bind again, cdev_init reinitialized the cdev,
+even though there may still be references to it. That's the case when
+the /dev/hidg* device is still opened. This obviously unsafe behavior
+like oopes.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  CPU: 110 UID: 0 PID: 72717 Comm: syz.15.11462 Tainted: G     U  W  O        6.16.0-smp-DEV #1 NONE
-  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.52.0-0 10/28/2024
-  RIP: 0010:sev_mem_enc_register_region+0x3f0/0x4f0 ../include/linux/list.h:83
-  Code: <41> 80 3c 04 00 74 08 4c 89 ff e8 f1 c7 a2 00 49 39 ed 0f 84 c6 00
-  RSP: 0018:ffff88838647fbb8 EFLAGS: 00010256
-  RAX: dffffc0000000000 RBX: 1ffff92015cf1e0b RCX: dffffc0000000000
-  RDX: 0000000000000000 RSI: 0000000000001000 RDI: ffff888367870000
-  RBP: ffffc900ae78f050 R08: ffffea000d9e0007 R09: 1ffffd4001b3c000
-  R10: dffffc0000000000 R11: fffff94001b3c001 R12: 0000000000000000
-  R13: ffff8982ab0bde00 R14: ffffc900ae78f058 R15: 0000000000000000
-  FS:  00007f34e9dc66c0(0000) GS:ffff89ee64d33000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007fe180adef98 CR3: 000000047210e000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   kvm_arch_vm_ioctl+0xa72/0x1240 ../arch/x86/kvm/x86.c:7371
-   kvm_vm_ioctl+0x649/0x990 ../virt/kvm/kvm_main.c:5363
-   __se_sys_ioctl+0x101/0x170 ../fs/ioctl.c:51
-   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x6f/0x1f0 ../arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7f34e9f7e9a9
-  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007f34e9dc6038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007f34ea1a6080 RCX: 00007f34e9f7e9a9
-  RDX: 0000200000000280 RSI: 000000008010aebb RDI: 0000000000000007
-  RBP: 00007f34ea000d69 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 0000000000000000 R14: 00007f34ea1a6080 R15: 00007ffce77197a8
-   </TASK>
+This fixes this by using cdev_alloc to put the cdev on the heap. That
+way, we can simply allocate a new one in hidg_bind.
 
-with a syzlang reproducer that looks like:
-
-  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000040)={0x0, &(0x7f0000000180)=ANY=[], 0x70}) (async)
-  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000080)={0x0, &(0x7f0000000180)=ANY=[@ANYBLOB="..."], 0x4f}) (async)
-  r0 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000200), 0x0, 0x0)
-  r1 = ioctl$KVM_CREATE_VM(r0, 0xae01, 0x0)
-  r2 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000240), 0x0, 0x0)
-  r3 = ioctl$KVM_CREATE_VM(r2, 0xae01, 0x0)
-  ioctl$KVM_SET_CLOCK(r3, 0xc008aeba, &(0x7f0000000040)={0x1, 0x8, 0x0, 0x5625e9b0}) (async)
-  ioctl$KVM_SET_PIT2(r3, 0x8010aebb, &(0x7f0000000280)={[...], 0x5}) (async)
-  ioctl$KVM_SET_PIT2(r1, 0x4070aea0, 0x0) (async)
-  r4 = ioctl$KVM_CREATE_VM(0xffffffffffffffff, 0xae01, 0x0)
-  openat$kvm(0xffffffffffffff9c, 0x0, 0x0, 0x0) (async)
-  ioctl$KVM_SET_USER_MEMORY_REGION(r4, 0x4020ae46, &(0x7f0000000400)={0x0, 0x0, 0x0, 0x2000, &(0x7f0000001000/0x2000)=nil}) (async)
-  r5 = ioctl$KVM_CREATE_VCPU(r4, 0xae41, 0x2)
-  close(r0) (async)
-  openat$kvm(0xffffffffffffff9c, &(0x7f0000000000), 0x8000, 0x0) (async)
-  ioctl$KVM_SET_GUEST_DEBUG(r5, 0x4048ae9b, &(0x7f0000000300)={0x4376ea830d46549b, 0x0, [0x46, 0x0, 0x0, 0x0, 0x0, 0x1000]}) (async)
-  ioctl$KVM_RUN(r5, 0xae80, 0x0)
-
-Opportunistically use guard() to avoid having to define a new error label
-and goto usage.
-
-Fixes: 1e80fdc09d12 ("KVM: SVM: Pin guest memory when SEV is active")
-Cc: stable@vger.kernel.org
-Reported-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Link: https://patch.msgid.link/20260310234829.2608037-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Closes: https://lore.kernel.org/linux-usb/CAN9vWDKZn0Ts5JyV2_xcAmbnBEi0znMLg_USMFrShRryXrgWGQ@mail.gmail.com/T/#m2cb0dba3633b67b2a679c98499508267d1508881
+Cc: stable <stable@kernel.org>
+Signed-off-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
+Link: https://patch.msgid.link/20260327192209.59945-1-sigmaepsilon92@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 7ed6f71f49de6..7602a205cd3cd 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1984,6 +1984,8 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 	struct enc_region *region;
- 	int ret = 0;
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 1246964790987..d7bc83b5f1a91 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -76,7 +76,7 @@ struct f_hidg {
+ 	struct usb_request		*req;
  
-+	guard(mutex)(&kvm->lock);
+ 	struct device			dev;
+-	struct cdev			cdev;
++	struct cdev			*cdev;
+ 	struct usb_function		func;
+ 
+ 	struct usb_ep			*in_ep;
+@@ -558,8 +558,9 @@ static int f_hidg_release(struct inode *inode, struct file *fd)
+ 
+ static int f_hidg_open(struct inode *inode, struct file *fd)
+ {
++	struct kobject *parent = inode->i_cdev->kobj.parent;
+ 	struct f_hidg *hidg =
+-		container_of(inode->i_cdev, struct f_hidg, cdev);
++		container_of(parent, struct f_hidg, dev.kobj);
+ 
+ 	fd->private_data = hidg;
+ 
+@@ -1004,8 +1005,14 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+ 	hidg->req = NULL;
+ 
+ 	/* create char device */
+-	cdev_init(&hidg->cdev, &f_hidg_fops);
+-	status = cdev_device_add(&hidg->cdev, &hidg->dev);
++	hidg->cdev = cdev_alloc();
++	if (!hidg->cdev) {
++		status = -ENOMEM;
++		goto fail_free_descs;
++	}
++	hidg->cdev->ops = &f_hidg_fops;
 +
- 	if (!sev_guest(kvm))
- 		return -ENOTTY;
++	status = cdev_device_add(hidg->cdev, &hidg->dev);
+ 	if (status)
+ 		goto fail_free_descs;
  
-@@ -1998,12 +2000,10 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 	if (!region)
- 		return -ENOMEM;
+@@ -1250,7 +1257,7 @@ static void hidg_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
+ 	struct f_hidg *hidg = func_to_hidg(f);
  
--	mutex_lock(&kvm->lock);
- 	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
- 				       FOLL_WRITE | FOLL_LONGTERM);
- 	if (IS_ERR(region->pages)) {
- 		ret = PTR_ERR(region->pages);
--		mutex_unlock(&kvm->lock);
- 		goto e_free;
- 	}
+-	cdev_device_del(&hidg->cdev, &hidg->dev);
++	cdev_device_del(hidg->cdev, &hidg->dev);
  
-@@ -2021,8 +2021,6 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 	region->size = range->size;
- 
- 	list_add_tail(&region->list, &sev->regions_list);
--	mutex_unlock(&kvm->lock);
--
- 	return ret;
- 
- e_free:
+ 	usb_free_all_descriptors(f);
+ }
 -- 
 2.53.0
 
