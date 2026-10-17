@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98703AFAE3;
-	Sat, 17 Oct 2026 16:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EC33382C7;
+	Sat, 17 Oct 2026 16:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792256114; cv=none; b=fsCUNj6Jdx1bQC0kdBzzPAVZqL7+I5MhcHaZhzhxnPmzgbfeKVKdjAr2b7sgRffZJwTuNgj21cP9E09WRfeayp/3zGg138LUWU06LHPH4145oTf52Olp984cRQAprj1mL6uLy/RSC9bwUtuM9KGgiPkIm4CtwWaktJ8Ivm54xmg=
+	t=1792256117; cv=none; b=jwLNc0xux1PySwjTGjaNON2Osk2vQU74k3BiZ3SHoxrXir+oU10LW4RSNsbNith3V15DjQyBqUMu7vMovgO87H0wczS5wTH5UwWYACiuRN1tTHRxEDIvMont2siNBmcO1xf/PtZu0LUHB/vV+t8+47y+kv3Ubrzzv588avPP53Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792256114; c=relaxed/simple;
-	bh=lcclyBpm4oXFaS86DHxio3qYgDhgCBR5X8BqTjxykhw=;
+	s=arc-20240116; t=1792256117; c=relaxed/simple;
+	bh=MYf6OqjY7rR5QyzYH4dflUfYr8Qvq/RQHAMYJXoe1xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa1DY4eeoftJfRMGp1h80mrTZDz1MEORM5xVgy+4pSL9lj6abjgBFKj4FQAUn6ZMeRNqeTqvVEwP8kdRGLN+0DpECKyF6SksK61mec938qUGMgj6+KpE/Gqxtab3d+hiWrevnvWGEist/FFBUvoSUZ3z6ZdDwvNsuHNyq9PH+MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSagrMXU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W5chetE2O6CJfd7C0rD1U+IOrY5qOnCIvzDohD+ku5uw3oShRVczAICgyD88MCz98wDSQrmTxYpiV7UOe3LA/wK8G/Ry9oCSL58v0dN/KYsOZHNjijZ54yccUmrOtZQFxugG6RxeSiKPcuXqaIphQYTv59HdXbYhIj6ig2ko7AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p/UiR+V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSagrMXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D70E1F000C4;
-	Sat, 17 Oct 2026 16:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p/UiR+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392641F000C4;
+	Sat, 17 Oct 2026 16:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792256112;
-	bh=5ViJoz73P2QetR62c0JRojBnvCB/b+JodqLIOEV4Lkc=;
+	s=korg; t=1792256115;
+	bh=MhYchBWLmYLA3cUbFSTHafKc/O0OXYlNakX11hoIJ0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSagrMXU09pu0WkjCqwfcROg/9RPkRQwknQ5MKPVnz5oNoIpXzgV4L3EpSiYO8SlN
-	 p3apeTLtmbg2+ZvmUJZLvzrWjX4tAGO/3fCVLOlFWqZnG92dR1eQBYiijHpmPZ9VIb
-	 6gsGOeBByvEAIVvIieJ6e1JC2yrJhEpVH6KRdAFI=
+	b=0p/UiR+Vm2BtL7YczHbNwD9enyO1fQkBROk0UMds4Md2aC8PW4+IooMb2Ekn7rGgF
+	 goWJ8ZqFAORWy1vr9arxwIm8KXJ1lNem1+kt6losl55j/DKUM8NNlHssBmaI818Pmm
+	 kiFVkcVsWnvKalUhqzKdZtxMdRSGEkrj/UAK+fBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Aaron Conole <aconole@redhat.om>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0130/1674] openvswitch: prepare for stolen verdict coming from conntrack and nat engine
-Date: Sat, 17 Oct 2026 17:40:02 +0200
-Message-ID: <20261017160434.500473627@linuxfoundation.org>
+Subject: [PATCH 6.6 0131/1674] net: openvswitch: conntrack: remove add_helper dead code
+Date: Sat, 17 Oct 2026 17:40:03 +0200
+Message-ID: <20261017160434.525150425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,130 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit c7f79f2620b7776586c626edf21eb6ed6ed3d1eb ]
+[ Upstream commit 5e6c14dd42a1c1fe938e573dc6c9098145b2b0c4 ]
 
-At this time, conntrack either returns NF_ACCEPT or NF_DROP.
-To improve debuging it would be nice to be able to replace NF_DROP
-verdict with NF_DROP_REASON() helper,
+This variable can only become 'true' when the connection is not
+confirmed, but it is only checked when it is confirmed.  So, it can be
+treated as being always false and just removed.
 
-This helper releases the skb instantly (so drop_monitor can pinpoint
-precise location) and returns NF_STOLEN.
-
-Prepare call sites to deal with this before introducing such changes
-in conntrack and nat core.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Aaron Conole <aconole@redhat.om>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3c1860543fcc ("openvswitch: add nf_ct_is_confirmed check before assigning the helper")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260921145655.3167436-3-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 1a4151e6be57 ("net: openvswitch: conntrack: fix helper UAF due to extensions realloc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 47 +++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ net/openvswitch/conntrack.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 45a7ab66868f9..df48c4c90b8d9 100644
+index df48c4c90b8d9..acfef7f14bce2 100644
 --- a/net/openvswitch/conntrack.c
 +++ b/net/openvswitch/conntrack.c
-@@ -679,6 +679,8 @@ static int ovs_ct_nat(struct net *net, struct sw_flow_key *key,
- 		action |= BIT(NF_NAT_MANIP_DST);
+@@ -779,8 +779,6 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
  
- 	err = nf_ct_nat(skb, ct, ctinfo, &action, &info->range, info->commit);
-+	if (err != NF_ACCEPT)
-+		return err;
+ 	ct = nf_ct_get(skb, &ctinfo);
+ 	if (ct) {
+-		bool add_helper = false;
+-
+ 		/* Packets starting a new connection must be NATted before the
+ 		 * helper, so that the helper knows about the NAT.  We enforce
+ 		 * this by delaying both NAT and helper calls for unconfirmed
+@@ -812,7 +810,6 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 							    GFP_ATOMIC);
+ 			if (err)
+ 				return err;
+-			add_helper = true;
  
- 	if (action & BIT(NF_NAT_MANIP_SRC))
- 		ovs_nat_update_key(key, skb, NF_NAT_MANIP_SRC);
-@@ -697,6 +699,22 @@ static int ovs_ct_nat(struct net *net, struct sw_flow_key *key,
- }
- #endif
- 
-+static int verdict_to_errno(unsigned int verdict)
-+{
-+	switch (verdict & NF_VERDICT_MASK) {
-+	case NF_ACCEPT:
-+		return 0;
-+	case NF_DROP:
-+		return -EINVAL;
-+	case NF_STOLEN:
-+		return -EINPROGRESS;
-+	default:
-+		break;
-+	}
-+
-+	return -EINVAL;
-+}
-+
- /* Pass 'skb' through conntrack in 'net', using zone configured in 'info', if
-  * not done already.  Update key with new CT state after passing the packet
-  * through conntrack.
-@@ -747,7 +765,7 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
- 
- 		err = nf_conntrack_in(skb, &state);
- 		if (err != NF_ACCEPT)
--			return -ENOENT;
-+			return verdict_to_errno(err);
- 
- 		/* Clear CT state NAT flags to mark that we have not yet done
- 		 * NAT after the nf_conntrack_in() call.  We can actually clear
-@@ -774,9 +792,12 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
- 		 * the key->ct_state.
- 		 */
- 		if (info->nat && !(key->ct_state & OVS_CS_F_NAT_MASK) &&
--		    (nf_ct_is_confirmed(ct) || info->commit) &&
--		    ovs_ct_nat(net, key, info, skb, ct, ctinfo) != NF_ACCEPT) {
--			return -EINVAL;
-+		    (nf_ct_is_confirmed(ct) || info->commit)) {
-+			int err = ovs_ct_nat(net, key, info, skb, ct, ctinfo);
-+
-+			err = verdict_to_errno(err);
-+			if (err)
-+				return err;
+ 			/* helper installed, add seqadj if NAT is required */
+ 			if (info->nat && !nfct_seqadj(ct)) {
+@@ -822,13 +819,10 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
  		}
  
- 		/* Userspace may decide to perform a ct lookup without a helper
-@@ -807,9 +828,12 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 		/* Call the helper only if:
+-		 * - nf_conntrack_in() was executed above ("!cached") or a
+-		 *   helper was just attached ("add_helper") for a confirmed
+-		 *   connection, or
++		 * - nf_conntrack_in() was executed above ("!cached"), or
  		 * - When committing an unconfirmed connection.
  		 */
- 		if ((nf_ct_is_confirmed(ct) ? !cached || add_helper :
--					      info->commit) &&
--		    nf_ct_helper(skb, ct, ctinfo, info->family) != NF_ACCEPT) {
--			return -EINVAL;
-+					      info->commit)) {
-+			int err = nf_ct_helper(skb, ct, ctinfo, info->family);
-+
-+			err = verdict_to_errno(err);
-+			if (err)
-+				return err;
- 		}
+-		if ((nf_ct_is_confirmed(ct) ? !cached || add_helper :
+-					      info->commit)) {
++		if ((nf_ct_is_confirmed(ct) ? !cached : info->commit)) {
+ 			int err = nf_ct_helper(skb, ct, ctinfo, info->family);
  
- 		if (nf_ct_protonum(ct) == IPPROTO_TCP &&
-@@ -1017,10 +1041,9 @@ static int ovs_ct_commit(struct net *net, struct sw_flow_key *key,
- 	/* This will take care of sending queued events even if the connection
- 	 * is already confirmed.
- 	 */
--	if (nf_conntrack_confirm(skb) != NF_ACCEPT)
--		return -EINVAL;
-+	err = nf_conntrack_confirm(skb);
- 
--	return 0;
-+	return verdict_to_errno(err);
- }
- 
- /* Returns 0 on success, -EINPROGRESS if 'skb' is stolen, or other nonzero
-@@ -1055,6 +1078,10 @@ int ovs_ct_execute(struct net *net, struct sk_buff *skb,
- 	else
- 		err = ovs_ct_lookup(net, key, info, skb);
- 
-+	/* conntrack core returned NF_STOLEN */
-+	if (err == -EINPROGRESS)
-+		return err;
-+
- 	skb_push_rcsum(skb, nh_ofs);
- 	if (err)
- 		ovs_kfree_skb_reason(skb, OVS_DROP_CONNTRACK);
+ 			err = verdict_to_errno(err);
 -- 
 2.53.0
 
