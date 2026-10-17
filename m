@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06467404E;
-	Sat, 17 Oct 2026 16:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570FD29B795;
+	Sat, 17 Oct 2026 16:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254804; cv=none; b=gA+ySP8X+LPCjnrJTxryWkpd5YyfBgWFQv0zy7JgLQCeOx4n+q9lLhxriFkWqqHZRQ6oguf5L5PG61yaZYmjxnd3BGycu+2sTZAszbDZkf3oHYPrGIE6wqr71OuRpdIJm7kSWobpw6HxQvvl/NQOKVsqpFpD1CRLT0uJvx4u8FE=
+	t=1792254807; cv=none; b=AByXzuNDAu0tMIyUvtR7hA40qQ5tY6uLugzWAQ+BX+jZl/zyDC3sFAj9mKDzQn/MatQxpJF3y0wGijj0GYme4r7sSQhNKW4OfzLKLYGxxmjOGyjfECcYKOtdrjQG/mp4mgW2hVIYqTN7fjpgtXLPvaq+CyijkYx5icrz3udND9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254804; c=relaxed/simple;
-	bh=WT6M0egs8iohk6q1W1B6KMIGlgGKzD0KrByRFBKFkc4=;
+	s=arc-20240116; t=1792254807; c=relaxed/simple;
+	bh=7aO012BBF5ar01Lad+TgzdDQNKMUfWhXNeBIk/0q/ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDDTNozHHKWxDKbgNBuQHfCkzyMOM65k7BWPN2Nt1mWAnYloZfA8NmJYJNWcXBUuKqf/atQw50giFJCkVm1gKT64QdGdeiP2bqOuu1S7D0fOgy8r6mVOzF3ZbcEmM+dao8X1TWhlh9GLyufBcKHYZMQBMk2V1Z3jLvaump8ciuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qab7j8Me; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DECPH0Rsx9sixDIYUkho2fvMTk+8AQUr2qRrgeKqRdw95W6fOo7BPKnIawa2Jk8YTb0EBKwWWqQlTXdxQihTXxQUyiyI4iDBp4gKppwuQzCyyM+qatMcYM+8B8A/cN3sIeRZdvOlApCJT+jQHPwuDIrnepRSwcKzQujbH9AIIS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rs+iyI/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qab7j8Me"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1ADD1F000C4;
-	Sat, 17 Oct 2026 16:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rs+iyI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF901F000C4;
+	Sat, 17 Oct 2026 16:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254803;
-	bh=JnNQYkNMtZvbb+ZnLCH3lap2p0iLu7tvsTq24qA9h7s=;
+	s=korg; t=1792254806;
+	bh=FUjhZvyodNRUAjkBjUgdPX4rrpTZHaW4WrkJV6AZeUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qab7j8Mes3acreob5PUqa+2TorUflo0w/aJNZcj1WTF9a0y0JRuQDKVzyxGgBXah+
-	 rbB0EJpdjrRUVOYc3iz7vVW5XMy/igrm4uU8ZUfiR9/qN8YK7eeg+oeht16iE+DxOb
-	 PCVFdO1Nv60TJl/hQTNEBBS3QAd4bjNLpKmpvB/o=
+	b=0rs+iyI/Jy1xqWr5rPEwqMZUysRMKZ5Zgtn1nX3uqKw3TuvfdR26ITk8tCHsytaI3
+	 tAdnh4V5oi4JsLlH96kISO+sJpCbfhuR1fzx72DTwSXIZSkVwAl8ldCn/Y0oXH8oh2
+	 +vWFlaZMriNo4tB68Io9e0cxlG0NOhauLeuwZijA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 568/869] ext2: Fix lost inode updates for IS_SYNC inodes
-Date: Sat, 17 Oct 2026 17:56:49 +0200
-Message-ID: <20261017160051.632860403@linuxfoundation.org>
+Subject: [PATCH 6.12 569/869] smb: client: reject a tree connect response whose byte count is too small
+Date: Sat, 17 Oct 2026 17:56:50 +0200
+Message-ID: <20261017160051.657587692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,73 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 356984d1a5c32e94810cbb6c8dc7d8ff2d4d919a ]
+[ Upstream commit 65deb18359341141d37dc86fc7853511be3c87a7 ]
 
-ext2_setsize() and ext2_xattr_set2() had a construct like:
+CIFSTCon() bounds its strnlen() over the byte area with the server's
+ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int
+and converts to a huge size_t.  The later subtraction wraps the __u16
+bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of
+up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the
+slab object, and the bytes reach userspace through tcon->nativeFileSystem
+in /proc/fs/cifs/DebugData.
 
-	if (IS_SYNC(inode)) {
-		sync_inode_metadata(inode, 1);
-	} else {
-		mark_inode_dirty(inode);
-	}
+Reject a byte area too small for what the parser consumes.  Two bytes is
+the least it can consume, and no conformant response carries fewer.  The
+new trace point is the 129th smb_eio_trace entry, which __mode(byte)
+cannot represent, so the attribute goes with it.
 
-which leads to lost inode updates for IS_SYNC inodes because
-sync_inode_metadata() does anything only if the inode is already dirty
-and hence inode updates may be simply lost. Fix the problem by
-unconditionally marking the inode dirty and *then* call
-sync_inode_metadata().
-
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260727104923.3828017-26-jack@suse.cz
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: cc20c031bb06 ("cifs: convert CIFSTCon to use new unicode helper functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/inode.c | 3 +--
- fs/ext2/xattr.c | 4 ++--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ fs/smb/client/connect.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
-index 3fcf8191da42a..f3149022257a4 100644
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -1300,11 +1300,10 @@ static int ext2_setsize(struct inode *inode, loff_t newsize)
- 	filemap_invalidate_unlock(inode->i_mapping);
- 
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
-+	mark_inode_dirty(inode);
- 	if (inode_needs_sync(inode)) {
- 		sync_mapping_buffers(inode->i_mapping);
- 		sync_inode_metadata(inode, 1);
--	} else {
--		mark_inode_dirty(inode);
- 	}
- 
- 	return 0;
-diff --git a/fs/ext2/xattr.c b/fs/ext2/xattr.c
-index c885dcc3bd0d1..5574b601ae09c 100644
---- a/fs/ext2/xattr.c
-+++ b/fs/ext2/xattr.c
-@@ -777,6 +777,7 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
- 	/* Update the inode. */
- 	EXT2_I(inode)->i_file_acl = new_bh ? new_bh->b_blocknr : 0;
- 	inode_set_ctime_current(inode);
-+	mark_inode_dirty(inode);
- 	if (IS_SYNC(inode)) {
- 		error = sync_inode_metadata(inode, 1);
- 		/* In case sync failed due to ENOSPC the inode was actually
-@@ -789,8 +790,7 @@ ext2_xattr_set2(struct inode *inode, struct buffer_head *old_bh,
- 			}
- 			goto cleanup;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index a7261fb38379f..7db347fc8faa2 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3895,6 +3895,10 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 		tcon->tid = smb_buffer_response->Tid;
+ 		bcc_ptr = pByteArea(smb_buffer_response);
+ 		bytes_left = get_bcc(smb_buffer_response);
++		if (bytes_left < 2) {
++			rc = -EIO;
++			goto out;
++		}
+ 		length = strnlen(bcc_ptr, bytes_left - 2);
+ 		if (smb_buffer->Flags2 & SMBFLG2_UNICODE)
+ 			is_unicode = true;
+@@ -3950,6 +3954,7 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
  		}
--	} else
--		mark_inode_dirty(inode);
-+	}
- 
- 	error = 0;
- 	if (old_bh && old_bh != new_bh) {
+ 	}
++out:
+ 	cifs_buf_release(smb_buffer);
+ 	return rc;
+ }
 -- 
 2.53.0
 
