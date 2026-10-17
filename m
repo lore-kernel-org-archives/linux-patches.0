@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237292E8DEB;
-	Sat, 17 Oct 2026 16:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A522F767;
+	Sat, 17 Oct 2026 16:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253424; cv=none; b=aUnfKYqjYo+rAjsiTosuA2MbmAiilpPjNheLGCEUJQvRwF6ObFZn275HVA/aXqDbbmPlqZZGObIPxDDyj2R1QvWKRnFDFxUUD9ZxEAjIMAeMgxJduXqxl+O8mIKl76RVjzd8zMDWhl0QF8rDgUfRs9L+6MqhXVU2uA9M5aVj9zo=
+	t=1792253427; cv=none; b=tfwD2TbkycLjkh379NUssm0Lae/CtgbsmwwvcB+YfXQbZuBQrnR1HE8hZd8U6FIlENN7FMvce5uxkRd48sbaTjqU1l6Byo4zY4TtXdBWCI3WWJExxpArIzshjkwrGpMpLL6SWZgimPxAs+zInqloDmXbzWDc7K1O2QJ8q6NAO+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253424; c=relaxed/simple;
-	bh=s5xEzg+OoH0t3gTW8EgvbTZCvPEnjwrA0H7dTdJIeGY=;
+	s=arc-20240116; t=1792253427; c=relaxed/simple;
+	bh=tuVy9w5i4N7FuTPrYhhI063Dm+mne8evBDQvd3lNfuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQaiu4WSSwn/DQhltNH9w4u8A1c3S7NbG1wNnm7xcFAIFWipheco7IPB8GplSAtOzzDiJe2a89IofUYYNqWQ8ug7dbWAkR4SZcq/pOjS5p4EtjsjjV4PBZCCTZt0xF7c2n6rwlKtzIIxf11aC9kR1Zp+QsV13MyzKHCEZywTfo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRPDZyTP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ttZ/ZRI9i79aC4gIj++a9x8jJBOgbE03qjgpvLzZ7q2maOk2gFGXAQlyJN9gjRaQ6V30h7r7F3/JfVqWyzhlERg6evoW9njixgNTESWMt6NG44XyazeAd95GDL/L1XtwNC6jyS8GY7P+Rv+szvRe46P1rmq54uFA8dOplN/UBKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIr1pKg+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRPDZyTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E92F1F000C4;
-	Sat, 17 Oct 2026 16:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIr1pKg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711B41F000C4;
+	Sat, 17 Oct 2026 16:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253423;
-	bh=ovygKlaQVU6nOM6smhJL02QodRGq/Q1r4mbOCKc3hpI=;
+	s=korg; t=1792253425;
+	bh=sTo7ZfP1ZqZ/fcsMR5H6qYsJF9kcE4ImMwaucCYT60E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bRPDZyTP8ocxJLbsI5v8mDz8TdgP8bdNPWfYa1FjIgCFpW4caq9Qa5zWRrgDxKE4P
-	 dQGfoONjy3F+sBCEHEVGtUSMSKMJT3hzuIFQ/M0/ldoQgtDXCJ0Kbb1rW9aPeme2xs
-	 fYWoHoyKrB3zqLCLHY9dqveelbZnIkVxos3IjSgM=
+	b=hIr1pKg+OFj3quslXomVwpkMIHSOK4dUloJyCxtooPYW0cS2REzfs4mzdLwaVFD7r
+	 OJu40FgylJptpiQ0QhoUzHdTGmEDfaaqQh2qgOu2yG+FSmhFea0Jun8N5U8KOoGhBG
+	 TVAPFpet1mpl8A1kO+azAyoPtMqRXSwwN+gssvjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Simons <simons.philippe@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/869] clk: sunxi-ng: h616: Reparent GPU clock during frequency changes
-Date: Sat, 17 Oct 2026 17:48:32 +0200
-Message-ID: <20261017160038.845914023@linuxfoundation.org>
+Subject: [PATCH 6.12 072/869] net: ethernet: ti: am65-cpsw: streamline RX queue creation and cleanup
+Date: Sat, 17 Oct 2026 17:48:33 +0200
+Message-ID: <20261017160038.871122987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,101 +51,359 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philippe Simons <simons.philippe@gmail.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit eb963d7948ce6571939c6875424b557b25f16610 ]
+[ Upstream commit 66c1ae68a1e9bde7376a50229b0b33145fcb0a71 ]
 
-The H616 manual does not state that the GPU PLL supports
-dynamic frequency configuration, so we must take extra care when changing
-the frequency. Currently any attempt to do device DVFS on the GPU lead
-to panfrost various ooops, and GPU hangs.
+Introduce am65_cpsw_create_rxqs() and am65_cpsw_destroy_rxqs()
+and use them.
 
-The manual describes the algorithm for changing the PLL
-frequency, which the CPU PLL notifier code already support, so we reuse
-that to reparent the GPU clock to GPU1 clock during frequency
-changes.
-
-Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250220113808.1122414-2-simons.philippe@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Link: https://patch.msgid.link/20250117-am65-cpsw-streamline-v2-2-91a29c97e569@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0da30874729b ("dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-h616.c | 36 +++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 243 +++++++++++------------
+ 1 file changed, 119 insertions(+), 124 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-index 85eea196f25e3..d4e3838ed90ba 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-@@ -318,10 +318,16 @@ static SUNXI_CCU_M_WITH_MUX_GATE(gpu0_clk, "gpu0", gpu0_parents, 0x670,
- 				       24, 1,	/* mux */
- 				       BIT(31),	/* gate */
- 				       CLK_SET_RATE_PARENT);
-+
-+/*
-+ * This clk is needed as a temporary fall back during GPU PLL freq changes.
-+ * Set CLK_IS_CRITICAL flag to prevent from being disabled.
-+ */
-+#define SUN50I_H616_GPU_CLK1_REG        0x674
- static SUNXI_CCU_M_WITH_GATE(gpu1_clk, "gpu1", "pll-periph0-2x", 0x674,
- 					0, 2,	/* M */
- 					BIT(31),/* gate */
--					0);
-+					CLK_IS_CRITICAL);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 45cea845d4aaa..8b47ff7a8b15b 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -398,35 +398,61 @@ static void am65_cpsw_init_host_port_switch(struct am65_cpsw_common *common);
+ static void am65_cpsw_init_host_port_emac(struct am65_cpsw_common *common);
+ static void am65_cpsw_init_port_switch_ale(struct am65_cpsw_port *port);
+ static void am65_cpsw_init_port_emac_ale(struct am65_cpsw_port *port);
++static inline void am65_cpsw_put_page(struct am65_cpsw_rx_flow *flow,
++				      struct page *page,
++				      bool allow_direct);
++static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma);
  
- static SUNXI_CCU_GATE(bus_gpu_clk, "bus-gpu", "psi-ahb1-ahb2",
- 		      0x67c, BIT(0), 0);
-@@ -1108,6 +1114,19 @@ static struct ccu_pll_nb sun50i_h616_pll_cpu_nb = {
- 	.lock		= BIT(28),
- };
- 
-+static struct ccu_mux_nb sun50i_h616_gpu_nb = {
-+	.common		= &gpu0_clk.common,
-+	.cm		= &gpu0_clk.mux,
-+	.delay_us	= 1, /* manual doesn't really say */
-+	.bypass_index	= 1, /* GPU_CLK1@400MHz */
-+};
-+
-+static struct ccu_pll_nb sun50i_h616_pll_gpu_nb = {
-+	.common		= &pll_gpu_clk.common,
-+	.enable		= BIT(29),	/* LOCK_ENABLE */
-+	.lock		= BIT(28),
-+};
-+
- static int sun50i_h616_ccu_probe(struct platform_device *pdev)
+-static void am65_cpsw_destroy_xdp_rxqs(struct am65_cpsw_common *common)
++static void am65_cpsw_destroy_rxq(struct am65_cpsw_common *common, int id)
  {
- 	void __iomem *reg;
-@@ -1156,6 +1175,14 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
- 	val &= ~(GENMASK(21, 16) | BIT(0));
- 	writel(val | (11 << 16) | BIT(0), reg + SUN50I_H616_PLL_AUDIO_REG);
+ 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
+ 	struct am65_cpsw_rx_flow *flow;
+ 	struct xdp_rxq_info *rxq;
+-	int id, port;
++	int port;
  
-+	/*
-+	 * Set the input-divider for the gpu1 clock to 3, to reach a safe 400 MHz.
-+	 */
-+	val = readl(reg + SUN50I_H616_GPU_CLK1_REG);
-+	val &= ~GENMASK(1, 0);
-+	val |= 2;
-+	writel(val, reg + SUN50I_H616_GPU_CLK1_REG);
-+
- 	/*
- 	 * First clock parent (osc32K) is unusable for CEC. But since there
- 	 * is no good way to force parent switch (both run with same frequency),
-@@ -1176,6 +1203,13 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
- 	/* Re-lock the CPU PLL after any rate changes */
- 	ccu_pll_notifier_register(&sun50i_h616_pll_cpu_nb);
+-	for (id = 0; id < common->rx_ch_num_flows; id++) {
+-		flow = &rx_chn->flows[id];
++	flow = &rx_chn->flows[id];
++	napi_disable(&flow->napi_rx);
++	hrtimer_cancel(&flow->rx_hrtimer);
++	k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, id, rx_chn,
++				  am65_cpsw_nuss_rx_cleanup, !!id);
  
-+	/* Reparent GPU during GPU PLL rate changes */
-+	ccu_mux_notifier_register(pll_gpu_clk.common.hw.clk,
-+				  &sun50i_h616_gpu_nb);
-+
-+	/* Re-lock the GPU PLL after any rate changes */
-+	ccu_pll_notifier_register(&sun50i_h616_pll_gpu_nb);
-+
- 	return 0;
+-		for (port = 0; port < common->port_num; port++) {
+-			if (!common->ports[port].ndev)
+-				continue;
++	for (port = 0; port < common->port_num; port++) {
++		if (!common->ports[port].ndev)
++			continue;
+ 
+-			rxq = &common->ports[port].xdp_rxq[id];
++		rxq = &common->ports[port].xdp_rxq[id];
+ 
+-			if (xdp_rxq_info_is_reg(rxq))
+-				xdp_rxq_info_unreg(rxq);
+-		}
++		if (xdp_rxq_info_is_reg(rxq))
++			xdp_rxq_info_unreg(rxq);
++	}
+ 
+-		if (flow->page_pool) {
+-			page_pool_destroy(flow->page_pool);
+-			flow->page_pool = NULL;
+-		}
++	if (flow->page_pool) {
++		page_pool_destroy(flow->page_pool);
++		flow->page_pool = NULL;
+ 	}
  }
  
+-static int am65_cpsw_create_xdp_rxqs(struct am65_cpsw_common *common)
++static void am65_cpsw_destroy_rxqs(struct am65_cpsw_common *common)
++{
++	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
++	int id;
++
++	reinit_completion(&common->tdown_complete);
++	k3_udma_glue_tdown_rx_chn(rx_chn->rx_chn, true);
++
++	if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ) {
++		id = wait_for_completion_timeout(&common->tdown_complete, msecs_to_jiffies(1000));
++		if (!id)
++			dev_err(common->dev, "rx teardown timeout\n");
++	}
++
++	for (id = common->rx_ch_num_flows - 1; id >= 0; id--)
++		am65_cpsw_destroy_rxq(common, id);
++
++	k3_udma_glue_disable_rx_chn(common->rx_chns.rx_chn);
++}
++
++static int am65_cpsw_create_rxq(struct am65_cpsw_common *common, int id)
+ {
+ 	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
+ 	struct page_pool_params pp_params = {
+@@ -441,45 +467,92 @@ static int am65_cpsw_create_xdp_rxqs(struct am65_cpsw_common *common)
+ 	struct am65_cpsw_rx_flow *flow;
+ 	struct xdp_rxq_info *rxq;
+ 	struct page_pool *pool;
+-	int id, port, ret;
++	struct page *page;
++	int port, ret, i;
+ 
+-	for (id = 0; id < common->rx_ch_num_flows; id++) {
+-		flow = &rx_chn->flows[id];
+-		pp_params.napi = &flow->napi_rx;
+-		pool = page_pool_create(&pp_params);
+-		if (IS_ERR(pool)) {
+-			ret = PTR_ERR(pool);
++	flow = &rx_chn->flows[id];
++	pp_params.napi = &flow->napi_rx;
++	pool = page_pool_create(&pp_params);
++	if (IS_ERR(pool)) {
++		ret = PTR_ERR(pool);
++		return ret;
++	}
++
++	flow->page_pool = pool;
++
++	/* using same page pool is allowed as no running rx handlers
++	 * simultaneously for both ndevs
++	 */
++	for (port = 0; port < common->port_num; port++) {
++		if (!common->ports[port].ndev)
++		/* FIXME should we BUG here? */
++			continue;
++
++		rxq = &common->ports[port].xdp_rxq[id];
++		ret = xdp_rxq_info_reg(rxq, common->ports[port].ndev,
++				       id, flow->napi_rx.napi_id);
++		if (ret)
++			goto err;
++
++		ret = xdp_rxq_info_reg_mem_model(rxq,
++						 MEM_TYPE_PAGE_POOL,
++						 pool);
++		if (ret)
++			goto err;
++	}
++
++	for (i = 0; i < AM65_CPSW_MAX_RX_DESC; i++) {
++		page = page_pool_dev_alloc_pages(flow->page_pool);
++		if (!page) {
++			dev_err(common->dev, "cannot allocate page in flow %d\n",
++				id);
++			ret = -ENOMEM;
+ 			goto err;
+ 		}
+ 
+-		flow->page_pool = pool;
++		ret = am65_cpsw_nuss_rx_push(common, page, id);
++		if (ret < 0) {
++			dev_err(common->dev,
++				"cannot submit page to rx channel flow %d, error %d\n",
++				id, ret);
++			am65_cpsw_put_page(flow, page, false);
++			goto err;
++		}
++	}
+ 
+-		/* using same page pool is allowed as no running rx handlers
+-		 * simultaneously for both ndevs
+-		 */
+-		for (port = 0; port < common->port_num; port++) {
+-			if (!common->ports[port].ndev)
+-				continue;
++	napi_enable(&flow->napi_rx);
++	return 0;
+ 
+-			rxq = &common->ports[port].xdp_rxq[id];
++err:
++	am65_cpsw_destroy_rxq(common, id);
++	return ret;
++}
+ 
+-			ret = xdp_rxq_info_reg(rxq, common->ports[port].ndev,
+-					       id, flow->napi_rx.napi_id);
+-			if (ret)
+-				goto err;
++static int am65_cpsw_create_rxqs(struct am65_cpsw_common *common)
++{
++	int id, ret;
+ 
+-			ret = xdp_rxq_info_reg_mem_model(rxq,
+-							 MEM_TYPE_PAGE_POOL,
+-							 pool);
+-			if (ret)
+-				goto err;
++	for (id = 0; id < common->rx_ch_num_flows; id++) {
++		ret = am65_cpsw_create_rxq(common, id);
++		if (ret) {
++			dev_err(common->dev, "couldn't create rxq %d: %d\n",
++				id, ret);
++			goto err;
+ 		}
+ 	}
+ 
++	ret = k3_udma_glue_enable_rx_chn(common->rx_chns.rx_chn);
++	if (ret) {
++		dev_err(common->dev, "couldn't enable rx chn: %d\n", ret);
++		goto err;
++	}
++
+ 	return 0;
+ 
+ err:
+-	am65_cpsw_destroy_xdp_rxqs(common);
++	for (--id; id >= 0; id--)
++		am65_cpsw_destroy_rxq(common, id);
++
+ 	return ret;
+ }
+ 
+@@ -543,7 +616,6 @@ static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma)
+ 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
+ 	dma_unmap_single(rx_chn->dma_dev, buf_dma, buf_dma_len, DMA_FROM_DEVICE);
+ 	k3_cppi_desc_pool_free(rx_chn->desc_pool, desc_rx);
+-
+ 	am65_cpsw_put_page(&rx_chn->flows[flow_id], page, false);
+ }
+ 
+@@ -625,12 +697,9 @@ static struct sk_buff *am65_cpsw_build_skb(void *page_addr,
+ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
+ {
+ 	struct am65_cpsw_host *host_p = am65_common_get_host(common);
+-	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
+ 	struct am65_cpsw_tx_chn *tx_chn = common->tx_chns;
+-	int port_idx, i, ret, tx, flow_idx;
+-	struct am65_cpsw_rx_flow *flow;
++	int port_idx, ret, tx;
+ 	u32 val, port_mask;
+-	struct page *page;
+ 
+ 	if (common->usage_count)
+ 		return 0;
+@@ -690,47 +759,9 @@ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
+ 
+ 	am65_cpsw_qos_tx_p0_rate_init(common);
+ 
+-	ret = am65_cpsw_create_xdp_rxqs(common);
+-	if (ret) {
+-		dev_err(common->dev, "Failed to create XDP rx queues\n");
++	ret = am65_cpsw_create_rxqs(common);
++	if (ret)
+ 		return ret;
+-	}
+-
+-	for (flow_idx = 0; flow_idx < common->rx_ch_num_flows; flow_idx++) {
+-		flow = &rx_chn->flows[flow_idx];
+-		for (i = 0; i < AM65_CPSW_MAX_RX_DESC; i++) {
+-			page = page_pool_dev_alloc_pages(flow->page_pool);
+-			if (!page) {
+-				dev_err(common->dev, "cannot allocate page in flow %d\n",
+-					flow_idx);
+-				ret = -ENOMEM;
+-				goto fail_rx;
+-			}
+-
+-			ret = am65_cpsw_nuss_rx_push(common, page, flow_idx);
+-			if (ret < 0) {
+-				dev_err(common->dev,
+-					"cannot submit page to rx channel flow %d, error %d\n",
+-					flow_idx, ret);
+-				am65_cpsw_put_page(flow, page, false);
+-				goto fail_rx;
+-			}
+-		}
+-	}
+-
+-	ret = k3_udma_glue_enable_rx_chn(rx_chn->rx_chn);
+-	if (ret) {
+-		dev_err(common->dev, "couldn't enable rx chn: %d\n", ret);
+-		goto fail_rx;
+-	}
+-
+-	for (i = 0; i < common->rx_ch_num_flows ; i++) {
+-		napi_enable(&rx_chn->flows[i].napi_rx);
+-		if (rx_chn->flows[i].irq_disabled) {
+-			rx_chn->flows[i].irq_disabled = false;
+-			enable_irq(rx_chn->flows[i].irq);
+-		}
+-	}
+ 
+ 	for (tx = 0; tx < common->tx_ch_num; tx++) {
+ 		ret = k3_udma_glue_enable_tx_chn(tx_chn[tx].tx_chn);
+@@ -753,30 +784,13 @@ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common)
+ 		tx--;
+ 	}
+ 
+-	for (flow_idx = 0; i < common->rx_ch_num_flows; flow_idx++) {
+-		flow = &rx_chn->flows[flow_idx];
+-		if (!flow->irq_disabled) {
+-			disable_irq(flow->irq);
+-			flow->irq_disabled = true;
+-		}
+-		napi_disable(&flow->napi_rx);
+-	}
+-
+-	k3_udma_glue_disable_rx_chn(rx_chn->rx_chn);
+-
+-fail_rx:
+-	for (i = 0; i < common->rx_ch_num_flows; i++)
+-		k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, i, rx_chn,
+-					  am65_cpsw_nuss_rx_cleanup, !!i);
+-
+-	am65_cpsw_destroy_xdp_rxqs(common);
++	am65_cpsw_destroy_rxqs(common);
+ 
+ 	return ret;
+ }
+ 
+ static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
+ {
+-	struct am65_cpsw_rx_chn *rx_chn = &common->rx_chns;
+ 	struct am65_cpsw_tx_chn *tx_chn = common->tx_chns;
+ 	int i;
+ 
+@@ -810,31 +824,12 @@ static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
+ 		k3_udma_glue_disable_tx_chn(tx_chn[i].tx_chn);
+ 	}
+ 
+-	reinit_completion(&common->tdown_complete);
+-	k3_udma_glue_tdown_rx_chn(rx_chn->rx_chn, true);
+-
+-	if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ) {
+-		i = wait_for_completion_timeout(&common->tdown_complete, msecs_to_jiffies(1000));
+-		if (!i)
+-			dev_err(common->dev, "rx teardown timeout\n");
+-	}
+-
+-	for (i = common->rx_ch_num_flows - 1; i >= 0; i--) {
+-		napi_disable(&rx_chn->flows[i].napi_rx);
+-		hrtimer_cancel(&rx_chn->flows[i].rx_hrtimer);
+-		k3_udma_glue_reset_rx_chn(rx_chn->rx_chn, i, rx_chn,
+-					  am65_cpsw_nuss_rx_cleanup, !!i);
+-	}
+-
+-	k3_udma_glue_disable_rx_chn(rx_chn->rx_chn);
+-
++	am65_cpsw_destroy_rxqs(common);
+ 	cpsw_ale_stop(common->ale);
+ 
+ 	writel(0, common->cpsw_base + AM65_CPSW_REG_CTL);
+ 	writel(0, common->cpsw_base + AM65_CPSW_REG_STAT_PORT_EN);
+ 
+-	am65_cpsw_destroy_xdp_rxqs(common);
+-
+ 	dev_dbg(common->dev, "cpsw_nuss stopped\n");
+ 	return 0;
+ }
 -- 
 2.53.0
 
