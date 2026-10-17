@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E273803DC;
-	Sat, 17 Oct 2026 16:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47EB35C1BC;
+	Sat, 17 Oct 2026 16:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253982; cv=none; b=PT+L68G/3iG70q+LEn3jySNIJUHjXvItYsMkccShByyzEKDbXgXjxXq3b+umQgDqDJ5Vq0xT1Q+0VvhqmsFk3WpAayxWMADpBvV6IgaBpcAx/myHyQAIqRm3Ztf0AK2HVyknFxLFlC8EAdWtTUHIupuBKPw86G2lrPNqBSFRpCQ=
+	t=1792253985; cv=none; b=h7Gk6cFu6GAO1GydDh0wH0jrIQfsRoz3fwGBBMuldh7ut1W2OorwAEPzDySHmmJ/zfbjIwV78qF3LEjHoM+C4Mr1OOY8x3d/zciVXMI9Tt94jE38fgG/BqIEdc0YKq8D912LUk4Xn9qX7AEKQBUeRsyqn7KQM8S6DZ1m/tGtBDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253982; c=relaxed/simple;
-	bh=B2UN32ZAjoC+NVQh4OsHv8MDz0+mHXiUZdZjmsydVLQ=;
+	s=arc-20240116; t=1792253985; c=relaxed/simple;
+	bh=zvO2QkkT9vf9TOq9sLty5uYtUjWeFp9B38rufQOP+e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VXkZ1310aLx05JxQt6Su/hlE1fyXy2o3VjBm8YATVmVVkiIqvsmf0jc7eHWIZxxxNv4j8Ivflg81NoNzt9YSnK2wlyYUuEtRQZAt+r9HBNu1rqGR1jhxqv1aj9I2laUBBqv+faR9dTUbjGChg0Q8kYSlT09S4Bihmrx78gL8vtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJEXqKiw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rg6FfOclX+I2C2Y4GbKybPB2e/hefNvl0oo6yzUZVZfYHfYtjfubIWLZIykTfD9toUgbtX8KXuZdztfhkr5Zpx0/bX6fMtPA0afa//zYnUXWZpu/oykh5+ySjI1jR4Ay/HXSTOY67yVrloRRa6f5vp4A4y9P8UtH3hwlfBOLo0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZpS8R+x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJEXqKiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EF61F000C4;
-	Sat, 17 Oct 2026 16:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZpS8R+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5BE1F000C6;
+	Sat, 17 Oct 2026 16:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253981;
-	bh=YQYk/0xe0q+shKKdj8pokHe9GX1HeZxl/yd9BiuB8GE=;
+	s=korg; t=1792253984;
+	bh=OfR+zyFBMBVZDBMnxa/i+VywjYsz0jtT7OwNdABNt6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJEXqKiwLbihEFcditFHMHPIa6XD7RamdZg97nqhqAFsHh77wka4GpbaSIwADrvqi
-	 cboFz3Z1ifrtl0vFCgjbJDjinMBqCZBJ4E0s5lIBaRluLMXld+gqDEfyIyuxFVqesF
-	 tGMvbnGq4O7Z9t6DGVUqbMfYqQtWN43sP4mRdL6k=
+	b=pZpS8R+xj1LDIb5LYxCDvUYmEgmDXz/FkC8UORwQ45lDV+34STlVWnIXBNRGzuDNi
+	 P91BtHWBwwyar71wAMOTyg7yFB59RjTm7AqnzvVwO6rgR16+3QgCNL3WKRQc3G9OPY
+	 QfPYgfkOIyNnc498NCs0IExW9rVcb265KjZMpawg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	ChiaHsuan Chung <chiahsuan.chung@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	John Cagle <john.cagle@hammerspace.com>,
+	Allen Lu <allen.lu@hammerspace.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Mike Snitzer <snitzer@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 298/869] drm/amd/display: Fix dc_link NULL handling in HPD init
-Date: Sat, 17 Oct 2026 17:52:19 +0200
-Message-ID: <20261017160044.715800932@linuxfoundation.org>
+Subject: [PATCH 6.12 299/869] NFS/localio: prevent direct reclaim recursion into NFS via nfs_writepages
+Date: Sat, 17 Oct 2026 17:52:20 +0200
+Message-ID: <20261017160044.741843924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -53,91 +48,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Mike Snitzer <snitzer@hammerspace.com>
 
-[ Upstream commit 226a40c06a183abaeb7529a4f54d6c203bd14407 ]
+[ Upstream commit 67435d2d8a33a75f9647724952cb1b18279d2e95 ]
 
-amdgpu_dm_hpd_init() may see connectors without a valid dc_link.
+LOCALIO is an NFS loopback mount optimization that avoids using the
+network for READ, WRITE and COMMIT if the NFS client and server are
+determined to be on the same system. But because LOCALIO is still
+fundamentally "just NFS loopback mount" it is susceptible to recursion
+deadlock via direct reclaim, e.g.: NFS LOCALIO down to XFS and then
+back into NFS via nfs_writepages.
 
-The code already checks dc_link for the polling decision, but later
-unconditionally dereferences it when setting up HPD interrupts.
+Fix LOCALIO's potential for direct reclaim deadlock by ensuring that
+all its page cache allocations are done from GFP_NOFS context.
 
-Assign dc_link early and skip connectors where it is NULL.
+Thanks to Ben Coddington for pointing out commit ad22c7a043c2 ("xfs:
+prevent stack overflows from page cache allocation").
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c:940 amdgpu_dm_hpd_init()
-error: we previously assumed 'dc_link' could be null (see line 931)
-
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_irq.c
-    923                 /*
-    924                  * Analog connectors may be hot-plugged unlike other connector
-    925                  * types that don't support HPD. Only poll analog connectors.
-    926                  */
-    927                 use_polling |=
-    928                         amdgpu_dm_connector->dc_link &&
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The patch adds this NULL check but hopefully it can be removed
-
-    929                         dc_connector_supports_analog(amdgpu_dm_connector->dc_link->link_id.id);
-    930
-    931                 dc_link = amdgpu_dm_connector->dc_link;
-
-dc_link assigned here.
-
-    932
-    933                 /*
-    934                  * Get a base driver irq reference for hpd ints for the lifetime
-    935                  * of dm. Note that only hpd interrupt types are registered with
-    936                  * base driver; hpd_rx types aren't. IOW, amdgpu_irq_get/put on
-    937                  * hpd_rx isn't available. DM currently controls hpd_rx
-    938                  * explicitly with dc_interrupt_set()
-    939                  */
---> 940                 if (dc_link->irq_source_hpd != DC_IRQ_SOURCE_INVALID) {
-                            ^^^^^^^^^^^^^^^^^^^^^^^ If it's NULL then we are trouble because we dereference it here.
-
-    941                         irq_type = dc_link->irq_source_hpd - DC_IRQ_SOURCE_HPD1;
-    942                         /*
-    943                          * TODO: There's a mismatch between mode_info.num_hpd
-    944                          * and what bios reports as the # of connectors with hpd
-
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Cc: Timur Kristóf <timur.kristof@gmail.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Mario Limonciello <superm1@kernel.org>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: ChiaHsuan Chung <chiahsuan.chung@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: John Cagle <john.cagle@hammerspace.com>
+Tested-by: Allen Lu <allen.lu@hammerspace.com>
+Suggested-by: Benjamin Coddington <bcodding@hammerspace.com>
+Fixes: 70ba381e1a43 ("nfs: add LOCALIO support")
+Signed-off-by: Mike Snitzer <snitzer@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/localio.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-index a215234151ac3..82bc3dcd3f652 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_irq.c
-@@ -913,8 +913,9 @@ void amdgpu_dm_hpd_init(struct amdgpu_device *adev)
- 			continue;
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index c59f205b51308..fe76b8a9f2e67 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -270,6 +270,18 @@ nfs_bvec_alloc_and_import_pagevec(struct page **pagevec,
+ 	return bvec;
+ }
  
- 		amdgpu_dm_connector = to_amdgpu_dm_connector(connector);
--
- 		dc_link = amdgpu_dm_connector->dc_link;
-+		if (!dc_link)
-+			continue;
++/*
++ * Ensure all page cache allocations are done from GFP_NOFS context to
++ * prevent direct reclaim recursion back into NFS via nfs_writepages.
++ */
++static void
++nfs_local_mapping_set_gfp_nofs_context(struct address_space *m)
++{
++	gfp_t gfp_mask = mapping_gfp_mask(m);
++
++	mapping_set_gfp_mask(m, (gfp_mask & ~(__GFP_FS)));
++}
++
+ static void
+ nfs_local_iocb_free(struct nfs_local_kiocb *iocb)
+ {
+@@ -293,6 +305,7 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+ 		return NULL;
+ 	}
  
- 		/*
- 		 * Get a base driver irq reference for hpd ints for the lifetime
++	nfs_local_mapping_set_gfp_nofs_context(file->f_mapping);
+ 	if (localio_O_DIRECT_semantics &&
+ 	    test_bit(NFS_IOHDR_ODIRECT, &hdr->flags)) {
+ 		iocb->kiocb.ki_filp = file;
+@@ -734,6 +747,8 @@ nfs_local_run_commit(struct file *filp, struct nfs_commit_data *data)
+ 			end = LLONG_MAX;
+ 	}
+ 
++	nfs_local_mapping_set_gfp_nofs_context(filp->f_mapping);
++
+ 	dprintk("%s: commit %llu - %llu\n", __func__, start, end);
+ 	return vfs_fsync_range(filp, start, end, 0);
+ }
 -- 
 2.53.0
 
