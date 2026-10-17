@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E53B3BB9F1;
-	Sat, 17 Oct 2026 17:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD713BB9F1;
+	Sat, 17 Oct 2026 17:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258218; cv=none; b=YzT86ScHQNqsgMWwyFJHIemKz23Xs7Eo6cGYOsfLLdOR5AwVozPbkhUXA8H6SdPJOfETszM4SFcyHuUfrH94VBXjnmc8V5CoS247R5eDMYGC5ZYMDkdjRQHVVbySM2zlep18W5szP6WjX4LbUc2thtggzN7uMJef3+UC9ZQjik8=
+	t=1792258221; cv=none; b=QuVqWekj0cawJ6NDqDMd9NkDnxskUtS3mWtx5FY9WSJwE/v6m9Yf0WDgRdY7GliogV7G9S01PzupJk3VA9Q0tNw/VDw/HnwmTR8ClKU+uv01MxCjTWgladI/Dq2ymIg6mTtKDBBFbKX2x91Q8zgSilhpiJ1W4BR4PGdYmFtfdIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258218; c=relaxed/simple;
-	bh=0xtWfMqYLjJ0DYJeN1FJh/MNDJA7k/+y+SDIJ1S52Fs=;
+	s=arc-20240116; t=1792258221; c=relaxed/simple;
+	bh=2OpByieinFlmThCIs/F1zx4gbhswQJfPFrodlJyo7Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nk0xftDwd9vqfqG5axm8k49zRRgMmVFeqEkxLaJadxst8eiQw+dSA4GE/Lb0Wt4AyN4fPhf7+WK3OVpu2lAYn52QJN8xaq4bzCioHJo+FtZl9xDjb0kK2EilI/L9CXcI9fq1IWs0bKaZZTMDcuhXtyAaJn5fZZt/FJCO+Koyjx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXuJ6Jap; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=L1pBVla2LdmldaAL7MKlWTKE42SyqWO2XNjGJTXosWCnKezlJiuZSqFDhX8SRQDjLO6q8VHc4hj4B0vdlr9v3mPQfW35MUttKpf4Mo5yi1rz/McFsNyIvmvNSTPUzvx/VAeYS0WyvzUlkKtKOK6ptdx3g4aoBElT2Kov1dtS//M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vihtlqJ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXuJ6Jap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BA01F000C5;
-	Sat, 17 Oct 2026 17:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vihtlqJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9373D1F000C4;
+	Sat, 17 Oct 2026 17:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258217;
-	bh=lLDMM5W/v8jwrTLVhOFLevpIc4hfdcc84sKcHz4H9bE=;
+	s=korg; t=1792258220;
+	bh=DvD0zmMXTjNliVJeRNLpHSQIn/dT9CUlBEcL5cCbIWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vXuJ6Jap54ST92a5tCXaIw7kphZjwFJvC7XoW+jKq9bNo9gKtOz0PMTshQ4Roxzfd
-	 NAjNHLK/tcsR/rd+0vftELq+x9uo0kd8F5qgKD+EXP0uDJahsAPGPP982QwKebvm6R
-	 3xfTGz8I88u9PIfy3JKRLk/ObVlE1ZRk+4rzVaCU=
+	b=vihtlqJ5puKt2eszv4cirDczzd/61F+rRkJwNLQIHLbAMJ0VtAlHgQ8D2MWhqwsTw
+	 sESq50IH2K9Ptpxl5nMGQJdy5o3N5MGj52yN/6gvX0iUQFRuzqH1Ha7OIpVUz8zArw
+	 ohGmvEX/+Twpwf+VmHO5+DoMCg8909OB079vY80o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
-	Coly Li <colyli@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0812/1674] md/raid10: wait barrier before returning discard request with REQ_NOWAIT
-Date: Sat, 17 Oct 2026 17:51:24 +0200
-Message-ID: <20261017160451.965332579@linuxfoundation.org>
+Subject: [PATCH 6.6 0813/1674] ASoC: Intel: avs: Do not share the name pointer between components
+Date: Sat, 17 Oct 2026 17:51:25 +0200
+Message-ID: <20261017160451.992297890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -46,48 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 3db4404435397a345431b45f57876a3df133f3b4 ]
+[ Upstream commit 4dee5c1cc439b0d5ef87f741518268ad6a95b23d ]
 
-raid10_handle_discard should wait barrier before returning a discard bio
-which has REQ_NOWAIT. And there is no need to print warning calltrace
-if a discard bio has REQ_NOWAIT flag. Quality engineer usually checks
-dmesg and reports error if dmesg has warning/error calltrace.
+By sharing 'name' directly, tearing down components may lead to
+use-after-free errors. Duplicate the name to avoid that.
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Acked-by: Coly Li <colyli@kernel.org>
-Link: https://lore.kernel.org/linux-raid/20250306094938.48952-1-xni@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+At the same time, update the order of operations - since commit
+cee28113db17 ("ASoC: dmaengine_pcm: Allow passing component name via
+config") the framework does not override component->name if set before
+invoking the initializer.
+
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250818104126.526442-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/intel/avs/pcm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index ca9ae89c6d1dc..08f59c1ad2751 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1653,11 +1653,10 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery))
- 		return -EAGAIN;
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 9251c38cf9d12..12e31027d99c2 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -1178,7 +1178,10 @@ int avs_soc_component_register(struct device *dev, const char *name,
+ 		return ret;
  
--	if (WARN_ON_ONCE(bio->bi_opf & REQ_NOWAIT)) {
-+	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
- 		return 0;
- 	}
--	wait_barrier(conf, false);
+ 	/* force name change after ASoC is done with its init */
+-	acomp->base.name = name;
++	acomp->base.name = devm_kstrdup(dev, name, GFP_KERNEL);
++	if (!acomp->base.name)
++		return -ENOMEM;
++
+ 	INIT_LIST_HEAD(&acomp->node);
  
- 	/*
- 	 * Check reshape again to avoid reshape happens after checking
+ 	return snd_soc_add_component(&acomp->base, cpu_dais, num_cpu_dais);
 -- 
 2.53.0
 
