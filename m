@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031B83839B2;
-	Sat, 17 Oct 2026 17:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A75D3B531D;
+	Sat, 17 Oct 2026 17:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792257988; cv=none; b=oGK/O9u6wgXvuLact/IKfUBsaPjatuKYGkaTLnrvJIU84hVENI4MawW6I8t5BAGc5dbakUw33hjICYcCIrzEB5lhJssLo96GaNpwLTs6BG5bU1EYEbzqtNASGzmyhH9/a6n0BGki9XXilVfAxBmuvyjqGi8HZRCn7CBNNYarmIw=
+	t=1792257991; cv=none; b=NOKxqHLSmiQAzt2Fvwq+hptEEXTrCgjrQGVz3uByNCQVf67pViUCXQLLX3YpUpi/t/8HrMfu5+Q5FDL32ZlQ/vELeiub0erv2U0YAes5DmDPDZCkCMjX7vOsbf/1JOPOuSH+zor4c4Zw8T/pUzFpDSSngKFCrzgfUgJFMnHsUoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792257988; c=relaxed/simple;
-	bh=oEdyfMGfB760AINLyXyUrCoPK725SKlD4eihLjM6XXU=;
+	s=arc-20240116; t=1792257991; c=relaxed/simple;
+	bh=+MXdnjgGySv9pLOnNlsgfC3UZsRZxGCclccMmQs+GUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPzMLybx4fuZnCcyb0J3rbJ1uQyau+UnFe204CGOyBgWivjnx8nPzvcV54CIbF3sLr85i55n8iLEWwOGtJHsyraATqF2wIYpAg+Se2EfvIP1EEw1vJAyYMOR1HpVN6WVvi1XTZpCqLe5MHJPYBicLNIztbUmmHkqOFcz1PP2yR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYBvWLzh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1pIN1nIgdhBCx0rXhNwCMRBYB+9hdjlKhmJ19ZTgzqBi/J9yVUTm1KCHVvFXERXFbYPqxjR1ELzvN8GfIXFhM6Keiy08eYgzTOqdyl9VUgrqf/RBeIGw44yFmVK2BNsdMmXpvsusRHfxomjt+AzwzVvy5ycOKhKlVSxUQBvqnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh+6d8p/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYBvWLzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502881F000C4;
-	Sat, 17 Oct 2026 17:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh+6d8p/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED1F1F000C4;
+	Sat, 17 Oct 2026 17:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792257986;
-	bh=3lQFht/mQXlDuYjC1/ptTJYrgpiZaCiTwbKtJP+AK5M=;
+	s=korg; t=1792257990;
+	bh=Py0pqjGSEvnHQKb0Zsh/cqdxELQEikFF6kv5mYmUaRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BYBvWLzh+k7DgldYhDpgk/0we9quxUQn5OW+FQu9XAQFEth+Bc5DMrTJnc4styCvr
-	 zO6kqooAnd0WLnBkC0WqVbT1k/wD7gCZ8IGSQEmlgFwFCHOgYcB75ADWdiaBrXyC/g
-	 nvJndfojlptD3Qv5P5KMgxHRqmt74KxviJCfz55Y=
+	b=Eh+6d8p/njUTWytLAI08ir7cNuKV5GfQ9/AupEP9biqjguV6fGr0OvJcboY5E0pdd
+	 K57VJcD22yLfiRd86Uogf2uX2tFBR0L4TmBfD+FmhSjJaenm9rjI7Q4Z1ZtcAmQG74
+	 z/oKb9mg7Gp+xW9UWXqOrHWQBq/YPzDBLBPSXdik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0734/1674] sfc: fix NULL dereferences in ef100_process_design_param()
-Date: Sat, 17 Oct 2026 17:50:06 +0200
-Message-ID: <20261017160449.943469521@linuxfoundation.org>
+Subject: [PATCH 6.6 0735/1674] scsi: mpi3mr: Split off bus_reset function from host_reset
+Date: Sat, 17 Oct 2026 17:50:07 +0200
+Message-ID: <20261017160449.969501341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,155 +57,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Cree <ecree.xilinx@gmail.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 8241ecec1cdc6699ae197d52d58e76bddd995fa5 ]
+[ Upstream commit 82b2fb52d6ecc3c902b46b3f9bb4325ab3f6d50d ]
 
-Since cited commit, ef100_probe_main() and hence also
- ef100_check_design_params() run before efx->net_dev is created;
- consequently, we cannot netif_set_tso_max_size() or _segs() at this
- point.
-Move those netif calls to ef100_probe_netdev(), and also replace
- netif_err within the design params code with pci_err.
+SCSI EH host reset is the final callback in the escalation chain; once we
+reach this we need to reset the controller.  As such it defeats the purpose
+to skip controller reset if no I/Os are pending and the RAID device is to
+be reset; especially after kexec there might be stale commands pending in
+firmware for which we have no reference whatsoever.  So this patch splits
+off the check for pending I/O into a 'bus_reset' function, and leaves the
+actual controller reset to the host reset.
 
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Fixes: 98ff4c7c8ac7 ("sfc: Separate netdev probe/remove from PCI probe/remove")
-Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250401225439.2401047-1-edward.cree@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Link: https://lore.kernel.org/r/20231002154328.43718-19-hare@suse.de
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: f195fc060c73 ("scsi: mpi3mr: Synchronous access b/w reset and tm thread for reply queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef100_netdev.c |  6 ++--
- drivers/net/ethernet/sfc/ef100_nic.c    | 47 +++++++++++--------------
- 2 files changed, 24 insertions(+), 29 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 57 +++++++++++++++++++++------------
+ 1 file changed, 37 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
-index d941f073f1ebf..3a06e3b1bd6bf 100644
---- a/drivers/net/ethernet/sfc/ef100_netdev.c
-+++ b/drivers/net/ethernet/sfc/ef100_netdev.c
-@@ -450,8 +450,9 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
- 	net_dev->hw_enc_features |= efx->type->offload_features;
- 	net_dev->vlan_features |= NETIF_F_HW_CSUM | NETIF_F_SG |
- 				  NETIF_F_HIGHDMA | NETIF_F_ALL_TSO;
--	netif_set_tso_max_segs(net_dev,
--			       ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS_DEFAULT);
-+	nic_data = efx->nic_data;
-+	netif_set_tso_max_size(efx->net_dev, nic_data->tso_max_payload_len);
-+	netif_set_tso_max_segs(efx->net_dev, nic_data->tso_max_payload_num_segs);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 1bf3572c7aac4..f257721033841 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -4053,20 +4053,45 @@ static inline void mpi3mr_setup_divert_ws(struct mpi3mr_ioc *mrioc,
+  * mpi3mr_eh_host_reset - Host reset error handling callback
+  * @scmd: SCSI command reference
+  *
+- * Issue controller reset if the scmd is for a Physical Device,
+- * if the scmd is for RAID volume, then wait for
+- * MPI3MR_RAID_ERRREC_RESET_TIMEOUT and checke whether any
+- * pending I/Os prior to issuing reset to the controller.
++ * Issue controller reset
+  *
+  * Return: SUCCESS of successful reset else FAILED
+  */
+ static int mpi3mr_eh_host_reset(struct scsi_cmnd *scmd)
++{
++	struct mpi3mr_ioc *mrioc = shost_priv(scmd->device->host);
++	int retval = FAILED, ret;
++
++	ret = mpi3mr_soft_reset_handler(mrioc,
++	    MPI3MR_RESET_FROM_EH_HOS, 1);
++	if (ret)
++		goto out;
++
++	retval = SUCCESS;
++out:
++	sdev_printk(KERN_INFO, scmd->device,
++	    "Host reset is %s for scmd(%p)\n",
++	    ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
++
++	return retval;
++}
++
++/**
++ * mpi3mr_eh_bus_reset - Bus reset error handling callback
++ * @scmd: SCSI command reference
++ *
++ * Checks whether pending I/Os are present for the RAID volume;
++ * if not there's no need to reset the adapter.
++ *
++ * Return: SUCCESS of successful reset else FAILED
++ */
++static int mpi3mr_eh_bus_reset(struct scsi_cmnd *scmd)
+ {
+ 	struct mpi3mr_ioc *mrioc = shost_priv(scmd->device->host);
+ 	struct mpi3mr_stgt_priv_data *stgt_priv_data;
+ 	struct mpi3mr_sdev_priv_data *sdev_priv_data;
+ 	u8 dev_type = MPI3_DEVICE_DEVFORM_VD;
+-	int retval = FAILED, ret;
++	int retval = FAILED;
  
- 	rc = efx_ef100_init_datapath_caps(efx);
- 	if (rc < 0)
-@@ -477,7 +478,6 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
- 	/* Don't fail init if RSS setup doesn't work. */
- 	efx_mcdi_push_default_indir_table(efx, efx->n_rx_channels);
+ 	sdev_priv_data = scmd->device->hostdata;
+ 	if (sdev_priv_data && sdev_priv_data->tgt_priv_data) {
+@@ -4076,25 +4101,16 @@ static int mpi3mr_eh_host_reset(struct scsi_cmnd *scmd)
  
--	nic_data = efx->nic_data;
- 	rc = ef100_get_mac_address(efx, net_dev->perm_addr, CLIENT_HANDLE_SELF,
- 				   efx->type->is_vf);
- 	if (rc)
-diff --git a/drivers/net/ethernet/sfc/ef100_nic.c b/drivers/net/ethernet/sfc/ef100_nic.c
-index 6da06931187d6..5b1bdcac81d99 100644
---- a/drivers/net/ethernet/sfc/ef100_nic.c
-+++ b/drivers/net/ethernet/sfc/ef100_nic.c
-@@ -887,8 +887,7 @@ static int ef100_process_design_param(struct efx_nic *efx,
- 	case ESE_EF100_DP_GZ_TSO_MAX_HDR_NUM_SEGS:
- 		/* We always put HDR_NUM_SEGS=1 in our TSO descriptors */
- 		if (!reader->value) {
--			netif_err(efx, probe, efx->net_dev,
--				  "TSO_MAX_HDR_NUM_SEGS < 1\n");
-+			pci_err(efx->pci_dev, "TSO_MAX_HDR_NUM_SEGS < 1\n");
- 			return -EOPNOTSUPP;
- 		}
- 		return 0;
-@@ -901,32 +900,28 @@ static int ef100_process_design_param(struct efx_nic *efx,
- 		 */
- 		if (!reader->value || reader->value > EFX_MIN_DMAQ_SIZE ||
- 		    EFX_MIN_DMAQ_SIZE % (u32)reader->value) {
--			netif_err(efx, probe, efx->net_dev,
--				  "%s size granularity is %llu, can't guarantee safety\n",
--				  reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
--				  reader->value);
-+			pci_err(efx->pci_dev,
-+				"%s size granularity is %llu, can't guarantee safety\n",
-+				reader->type == ESE_EF100_DP_GZ_RXQ_SIZE_GRANULARITY ? "RXQ" : "TXQ",
-+				reader->value);
- 			return -EOPNOTSUPP;
- 		}
- 		return 0;
- 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_LEN:
- 		nic_data->tso_max_payload_len = min_t(u64, reader->value,
- 						      GSO_LEGACY_MAX_SIZE);
--		netif_set_tso_max_size(efx->net_dev,
--				       nic_data->tso_max_payload_len);
- 		return 0;
- 	case ESE_EF100_DP_GZ_TSO_MAX_PAYLOAD_NUM_SEGS:
- 		nic_data->tso_max_payload_num_segs = min_t(u64, reader->value, 0xffff);
--		netif_set_tso_max_segs(efx->net_dev,
--				       nic_data->tso_max_payload_num_segs);
- 		return 0;
- 	case ESE_EF100_DP_GZ_TSO_MAX_NUM_FRAMES:
- 		nic_data->tso_max_frames = min_t(u64, reader->value, 0xffff);
- 		return 0;
- 	case ESE_EF100_DP_GZ_COMPAT:
- 		if (reader->value) {
--			netif_err(efx, probe, efx->net_dev,
--				  "DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
--				  reader->value);
-+			pci_err(efx->pci_dev,
-+				"DP_COMPAT has unknown bits %#llx, driver not compatible with this hw\n",
-+				reader->value);
- 			return -EOPNOTSUPP;
- 		}
- 		return 0;
-@@ -946,10 +941,10 @@ static int ef100_process_design_param(struct efx_nic *efx,
- 		 * So the value of this shouldn't matter.
- 		 */
- 		if (reader->value != ESE_EF100_DP_GZ_VI_STRIDES_DEFAULT)
--			netif_dbg(efx, probe, efx->net_dev,
--				  "NIC has other than default VI_STRIDES (mask "
--				  "%#llx), early probing might use wrong one\n",
--				  reader->value);
-+			pci_dbg(efx->pci_dev,
-+				"NIC has other than default VI_STRIDES (mask "
-+				"%#llx), early probing might use wrong one\n",
-+				reader->value);
- 		return 0;
- 	case ESE_EF100_DP_GZ_RX_MAX_RUNT:
- 		/* Driver doesn't look at L2_STATUS:LEN_ERR bit, so we don't
-@@ -961,9 +956,9 @@ static int ef100_process_design_param(struct efx_nic *efx,
- 		/* Host interface says "Drivers should ignore design parameters
- 		 * that they do not recognise."
- 		 */
--		netif_dbg(efx, probe, efx->net_dev,
--			  "Ignoring unrecognised design parameter %u\n",
--			  reader->type);
-+		pci_dbg(efx->pci_dev,
-+			"Ignoring unrecognised design parameter %u\n",
-+			reader->type);
- 		return 0;
+ 	if (dev_type == MPI3_DEVICE_DEVFORM_VD) {
+ 		mpi3mr_wait_for_host_io(mrioc,
+-		    MPI3MR_RAID_ERRREC_RESET_TIMEOUT);
+-		if (!mpi3mr_get_fw_pending_ios(mrioc)) {
++			MPI3MR_RAID_ERRREC_RESET_TIMEOUT);
++		if (!mpi3mr_get_fw_pending_ios(mrioc))
+ 			retval = SUCCESS;
+-			goto out;
+-		}
  	}
++	if (retval == FAILED)
++		mpi3mr_print_pending_host_io(mrioc);
+ 
+-	mpi3mr_print_pending_host_io(mrioc);
+-	ret = mpi3mr_soft_reset_handler(mrioc,
+-	    MPI3MR_RESET_FROM_EH_HOS, 1);
+-	if (ret)
+-		goto out;
+-
+-	retval = SUCCESS;
+-out:
+ 	sdev_printk(KERN_INFO, scmd->device,
+-	    "Host reset is %s for scmd(%p)\n",
+-	    ((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
+-
++		"Bus reset is %s for scmd(%p)\n",
++		((retval == SUCCESS) ? "SUCCESS" : "FAILED"), scmd);
+ 	return retval;
  }
-@@ -999,13 +994,13 @@ static int ef100_check_design_params(struct efx_nic *efx)
- 	 */
- 	if (reader.state != EF100_TLV_TYPE) {
- 		if (reader.state == EF100_TLV_TYPE_CONT)
--			netif_err(efx, probe, efx->net_dev,
--				  "truncated design parameter (incomplete type %u)\n",
--				  reader.type);
-+			pci_err(efx->pci_dev,
-+				"truncated design parameter (incomplete type %u)\n",
-+				reader.type);
- 		else
--			netif_err(efx, probe, efx->net_dev,
--				  "truncated design parameter %u\n",
--				  reader.type);
-+			pci_err(efx->pci_dev,
-+				"truncated design parameter %u\n",
-+				reader.type);
- 		rc = -EIO;
- 	}
- out:
+ 
+@@ -4941,6 +4957,7 @@ static const struct scsi_host_template mpi3mr_driver_template = {
+ 	.change_queue_depth		= mpi3mr_change_queue_depth,
+ 	.eh_device_reset_handler	= mpi3mr_eh_dev_reset,
+ 	.eh_target_reset_handler	= mpi3mr_eh_target_reset,
++	.eh_bus_reset_handler		= mpi3mr_eh_bus_reset,
+ 	.eh_host_reset_handler		= mpi3mr_eh_host_reset,
+ 	.bios_param			= mpi3mr_bios_param,
+ 	.map_queues			= mpi3mr_map_queues,
 -- 
 2.53.0
 
