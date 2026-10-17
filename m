@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759C4CF461;
-	Sat, 17 Oct 2026 18:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22264391E51;
+	Sat, 17 Oct 2026 18:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260059; cv=none; b=E32Py1Oz26U93HtRcJ5m7st5HFpgFFuAAWXyUFpxMTRKtZn02cTb2yoKnUqOiW5zC++Fsa6XHjiDTctas1JaxTbw2wHc/Ez3B50vOO9umq0kZTnD2Sd8ZlP6aYVZXUNe+8ts2GZZ8GWenFjdo71W9kOI1wVaAC/kqMgWGTu9Uus=
+	t=1792260062; cv=none; b=UOR8fezobG61OWmjMfOKbR17shDsV06ZLbd95ZeGaYzeK7xIZm45Ywick6MLh+ukNZ08NlD9T9X3QTfuiv+XThBZmH77Ow5bjrl1roNDnnhD3SKeV+69Wj82qp0tkoC1psQn8455QfJV3dT6tHdYPa0aSOqMRbHH+otfA2h5vBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260059; c=relaxed/simple;
-	bh=QRcEX3Pr6tmPsvDHG9kvX0qOwgPtqZFhOgFzAho+nrM=;
+	s=arc-20240116; t=1792260062; c=relaxed/simple;
+	bh=i8+8Sqoc+cvny73g3+0cwK+DSvXpiIMo9Cdj1eSzimM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olxJjgwVoG/HSe9UNmJzxporGMtt7qbt8gdqko0/AdW3Sz4PWOHXj17QUNPcvylmWw6En23e3W2th7AYWqdMhr6ziOb/Rk3UaxvwjxEo0zDp13uaubr8k2UNW2uecKS0tae/EcOThrBa/llYhFW8yLGOxEX3VpHOfNznzaHG+vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oa91+QbB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YCPmC7lrO5LK1e2QRLWSqOsiGOfTHt6+0OcLYfNfGopDpx9xE/yZqLf6ravg8puK5180OaDyzX5uG6BcqAr22ISzs7KIFTDAyn4SPtl1booD2xRMpSStKsv5wAyHctffigo6BIkLHSAblRcEZxDFQ/Zy34nfAoCeOsrwAAyRTWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFxywi+2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa91+QbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9237D1F000C4;
-	Sat, 17 Oct 2026 18:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFxywi+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6381F000C4;
+	Sat, 17 Oct 2026 18:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260058;
-	bh=d1oHQVD5uZQjqfwyG+UQwBALfaO37F6D2onPmko3hOQ=;
+	s=korg; t=1792260061;
+	bh=ywQXVybDS+Owb1wwUYanRMZeSPPwy6JQi/a2PdCuRL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oa91+QbBN65VCEzs971LtAhxqBm0LVCylO2pLaSrrAj1GUGjKOpylbcvQ3us7UWQi
-	 fyia+XWLoPFgPvyNWwKG7c3yxT5cuV8nm0iNsNJ8hw0RjPZ33AUvi98aPYRsZTV43K
-	 Jy7AxRkYMhVEX/F3YA/7/KsxNrhMWO65YjHqW0hs=
+	b=UFxywi+246s3/HqdRwwo0geJ6FnxdsYjjbOt5DKKCl/JmTRy3fDV1ULdHlbiXEwEd
+	 TNsjOR7B4ljle9MPnvAp4/B0ZGZH/wrqTGGeGXW5vH/yoySpRQWidGT8nBb2bxlpoe
+	 jf0L0iu0QQz1bgAPesMVP8auHKBOOB265H56WKoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1420/1674] btrfs: always wait for ordered extents to avoid OE races
-Date: Sat, 17 Oct 2026 18:01:32 +0200
-Message-ID: <20261017160507.627665084@linuxfoundation.org>
+Subject: [PATCH 6.6 1421/1674] btrfs: defrag: fix deadlock between defrag and delalloc space reservation
+Date: Sat, 17 Oct 2026 18:01:33 +0200
+Message-ID: <20261017160507.653078299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -53,272 +52,296 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ec78575dde998c21be7e0cb2503b5620f34b6255 ]
+[ Upstream commit ba02eab28041f9a4bbe9fc90c7249644fef6de0f ]
 
-[BUG]
-Syzbot reported a bug that there can be conflicting OEs for the same
-range:
+While running fsstress with autodefrag and flushoncommit, hit a deadlock
+due to the fact that defrag reserves delalloc space while it's holding
+dirty and locked folios, besides the extent range lock. The stack traces
+are the following:
 
-  BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object alrea[  179.162726][ T6897] BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object already exists)
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/ordered-data.c:264!
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
-  RIP: 0010:btrfs_alloc_ordered_extent+0x943/0xad0
-  Call Trace:
-   <TASK>
-   cow_file_range+0x744/0x12a0
-   fallback_to_cow+0x5ea/0xa00
-   run_delalloc_nocow+0x110c/0x17a0
-   btrfs_run_delalloc_range+0xbe4/0x1c20
-   writepage_delalloc+0x104d/0x1ba0
-   btrfs_writepages+0x1667/0x28b0
-   do_writepages+0x338/0x560
-   filemap_fdatawrite_range+0x1f2/0x300
-   btrfs_fdatawrite_range+0x54/0xf0
-   btrfs_direct_write+0x6a0/0xc30
-   btrfs_do_write_iter+0x329/0x790
-   do_iter_readv_writev+0x624/0x8d0
-   vfs_writev+0x34c/0x990
-   __se_sys_pwritev2+0x17a/0x2a0
-   do_syscall_64+0x174/0x580
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+   [958.624] task:kworker/u50:3   state:D stack:0     pid:20365 tgid:20365 ppid:2      task_flags:0x4208060 flags:0x00080000
+   [958.626] Workqueue: events_unbound btrfs_async_reclaim_metadata_space [btrfs]
+   [958.627] Call Trace:
+   [958.628]  <TASK>
+   [958.628]  __schedule+0x4be/0x10f0
+   [958.629]  ? preempt_count_add+0x69/0xa0
+   [958.630]  schedule+0x26/0xd0
+   [958.631]  wait_current_trans+0x102/0x160 [btrfs]
+   [958.632]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.633]  start_transaction+0x374/0x900 [btrfs]
+   [958.634]  btrfs_commit_current_transaction+0x1d/0x70 [btrfs]
+   [958.635]  flush_space+0xca/0x5e0 [btrfs]
+   [958.636]  ? _raw_spin_unlock+0x15/0x30
+   [958.637]  ? btrfs_reduce_alloc_profile+0x8c/0x190 [btrfs]
+   [958.639]  ? _raw_spin_unlock+0x15/0x30
+   [958.640]  ? calc_available_free_space.isra.0+0x6f/0x110 [btrfs]
+   [958.641]  do_async_reclaim_metadata_space+0x84/0x190 [btrfs]
+   [958.642]  btrfs_async_reclaim_metadata_space+0x64/0x80 [btrfs]
+   [958.644]  process_one_work+0x19d/0x3a0
+   [958.644]  worker_thread+0x1c4/0x330
+   [958.645]  ? __pfx_worker_thread+0x10/0x10
+   [958.646]  kthread+0xfc/0x130
+   [958.647]  ? __pfx_kthread+0x10/0x10
+   [958.648]  ret_from_fork+0x1f7/0x2c0
+   [958.648]  ? __pfx_kthread+0x10/0x10
+   [958.649]  ret_from_fork_asm+0x1a/0x30
+   [958.650]  </TASK>
+   [958.651] task:kworker/u49:7   state:D stack:0     pid:52990 tgid:52990 ppid:2      task_flags:0x4208060 flags:0x00080000
+   [958.653] Workqueue: writeback wb_workfn (flush-btrfs-334)
+   [958.655] Call Trace:
+   [958.655]  <TASK>
+   [958.656]  __schedule+0x4be/0x10f0
+   [958.657]  ? __blk_flush_plug+0xe9/0x140
+   [958.658]  schedule+0x26/0xd0
+   [958.658]  io_schedule+0x42/0x70
+   [958.659]  folio_wait_bit_common+0x12b/0x330
+   [958.660]  ? folio_wait_bit_common+0x100/0x330
+   [958.662]  ? __pfx_wake_page_function+0x10/0x10
+   [958.663]  extent_write_cache_pages+0x599/0x830 [btrfs]
+   [958.664]  ? acpi_fwnode_get_reference_args+0x1fa/0x270
+   [958.665]  btrfs_writepages+0x77/0x130 [btrfs]
+   [958.666]  ? __pfx_end_bbio_data_write+0x10/0x10 [btrfs]
+   [958.667]  do_writepages+0xc6/0x160
+   [958.668]  __writeback_single_inode+0x42/0x310
+   [958.669]  writeback_sb_inodes+0x231/0x570
+   [958.670]  wb_writeback+0x8a/0x340
+   [958.671]  wb_workfn+0xbf/0x450
+   [958.672]  ? finish_task_switch.isra.0+0xc1/0x350
+   [958.673]  process_one_work+0x19d/0x3a0
+   [958.673]  worker_thread+0x1c4/0x330
+   [958.674]  ? __pfx_worker_thread+0x10/0x10
+   [958.675]  kthread+0xfc/0x130
+   [958.676]  ? __pfx_kthread+0x10/0x10
+   [958.676]  ret_from_fork+0x1f7/0x2c0
+   [958.677]  ? __pfx_kthread+0x10/0x10
+   [958.678]  ret_from_fork_asm+0x1a/0x30
+   [958.679]  </TASK>
+   [958.679] task:btrfs-cleaner   state:D stack:0     pid:296750 tgid:296750 ppid:2      task_flags:0x208040 flags:0x00080000
+   [958.681] Call Trace:
+   [958.682]  <TASK>
+   [958.682]  __schedule+0x4be/0x10f0
+   [958.683]  schedule+0x26/0xd0
+   [958.684]  handle_reserve_ticket+0x1b9/0x2c0 [btrfs]
+   [958.685]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.686]  reserve_bytes+0x283/0x4c0 [btrfs]
+   [958.687]  btrfs_reserve_metadata_bytes+0x18/0xb0 [btrfs]
+   [958.688]  btrfs_delalloc_reserve_metadata+0x121/0x320 [btrfs]
+   [958.690]  btrfs_delalloc_reserve_space+0x46/0xb0 [btrfs]
+   [958.691]  btrfs_defrag_file+0x903/0x1110 [btrfs]
+   [958.692]  btrfs_run_defrag_inodes+0x334/0x430 [btrfs]
+   [958.694]  cleaner_kthread+0x97/0x1c0 [btrfs]
+   [958.694]  ? __pfx_cleaner_kthread+0x10/0x10 [btrfs]
+   [958.696]  kthread+0xfc/0x130
+   [958.696]  ? __pfx_kthread+0x10/0x10
+   [958.697]  ret_from_fork+0x1f7/0x2c0
+   [958.698]  ? __pfx_kthread+0x10/0x10
+   [958.699]  ret_from_fork_asm+0x1a/0x30
+   [958.700]  </TASK>
+   [958.716] task:fsstress        state:D stack:0     pid:296769 tgid:296769 ppid:296768 task_flags:0x400140 flags:0x00080000
+   [958.718] Call Trace:
+   [958.719]  <TASK>
+   [958.719]  __schedule+0x4be/0x10f0
+   [958.720]  ? preempt_count_add+0x69/0xa0
+   [958.721]  schedule+0x26/0xd0
+   [958.722]  wb_wait_for_completion+0x79/0xc0
+   [958.723]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.724]  __writeback_inodes_sb_nr+0xc5/0xf0
+   [958.725]  try_to_writeback_inodes_sb+0x55/0x70
+   [958.726]  btrfs_commit_transaction+0x19d/0xeb0 [btrfs]
+   [958.727]  ? start_transaction+0x343/0x900 [btrfs]
+   [958.728]  btrfs_mksubvol+0x28b/0x4e0 [btrfs]
+   [958.729]  btrfs_mksnapshot+0x74/0xa0 [btrfs]
+   [958.730]  __btrfs_ioctl_snap_create+0x194/0x210 [btrfs]
+   [958.732]  btrfs_ioctl_snap_create_v2+0xef/0x150 [btrfs]
+   [958.733]  btrfs_ioctl+0x7ec/0x2a70 [btrfs]
+   [958.734]  ? __virt_addr_valid+0xe4/0x180
+   [958.735]  ? __check_object_size+0x1cd/0x1f0
+   [958.736]  ? kmem_cache_free+0x146/0x380
+   [958.737]  ? _raw_spin_unlock+0x15/0x30
+   [958.738]  ? do_sys_openat2+0x83/0xd0
+   [958.739]  __x64_sys_ioctl+0x92/0xe0
+   [958.740]  do_syscall_64+0x60/0x590
+   [958.741]  ? clear_bhb_loop+0x60/0xb0
+   [958.742]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   [958.743] RIP: 0033:0x7f4431e108db
+   [958.744] RSP: 002b:00007ffcd147db20 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+   [958.746] RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f4431e108db
+   [958.747] RDX: 00007ffcd147eb90 RSI: 0000000050009417 RDI: 0000000000000005
+   [958.749] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+   [958.751] R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffcd147fbf0
+   [958.752] R13: 00007ffcd147eb90 R14: 0000000000000005 R15: 0000000000000003
+   [958.754]  </TASK>
 
-[CAUSE]
-Since commit ff66fe666233 ("btrfs: fix incorrect buffered IO fallback
-for append direct writes"), if the direct IO finished short, we will
-revert the isize back to the original one, so that append writes can be
-respected during the buffered fallback.
+What happens is the following:
 
-Normally we rely on lock_and_cleanup_extent_if_need() function during
-buffered writeback to wait for any existing ordered extents.
+1) The cleaner kthread is running autodefrag, and in defrag_one_range()
+   it acquired all the folios for the range and locked them.
 
-But that ordered extent waiting only happens if the start_pos is inside
-the isize.
-Since we have reverted the isize during failed direct IO, we will not
-wait for any ordered extents.
+   Then it locked the extent range in the inode's iotree.
 
-This means we can have a race where the direct IO OE is still in the
-tree, finished but not yet removed, then we're inserting the OE for the
-buffered write, causing the above crash.
+   It got two subranges from defrag_collect_targets(), the first one
+   with folio A and the second one with folio B.
 
-[FIX]
-Make the OE wait to be unconditional, to handle the reverted isize
-situation.
+   After it defragged the first subrange, folio A remains locked and
+   dirty - it's only unlocked when defrag_one_range() returns.
 
-And since lock_and_cleanup_extent_if_need() now either lock the
-extents or return -EAGAIN, also remove the branches that handles
-no-extent-locked cases, and rename it to remove the "_if_need" suffix.
+   When it attempts to defrag the second subrange (containing folio B),
+   btrfs_delalloc_reserve_space() creates a space reservation ticket,
+   due to lack of free metadata space and blocks waiting for the async
+   metadata reclaim task to free space and wake it up;
 
-The following micro benchmark shows the runtime difference for
-btrfs_buffered_write(), doing `xfs_io -f -c "pwrite 0 1m"` workload,
-all values are the average runtime in nano seconds.
+2) The async reclaim metadata task attempts to commit the current
+   transaction, but it blocks because there is another task that
+   started the commit first;
 
-      function runtime              |   before    |     after
- -----------------------------------+-------------+---------------
- lock_and_cleanup_extent_if_need()  |     58.2    |    183.0
- btrfs_buffered_write()             |   2115.6    |   2973.3
+3) A task creating a snapshot is committing the transaction and
+   because the fs was mounted with flushoncommit, it calls
+   try_to_writeback_inodes_sb(), which spawns a task to flush
+   delalloc and waits for it to complete;
 
-The overall runtime of btrfs_buffered_write() is still pretty
-tiny (still less than 3 micro seconds), I'd say the extra cost is still
-acceptable.
+4) The task flushing delalloc (kworker/u49:7), finds that folio A for
+   the inode being defragged is dirty, so it tries to lock it...
 
-An alternative to fix this problem is to wait ordered extents during
-iomap_end() where the isize revert is done.
+   But it blocks because folio A is locked by the defrag task (the
+   cleaner kthread) which is blocked waiting for the reservation
+   ticket to be served, but the async reclaim metadata task is
+   blocked waiting for the transaction commit, which in turn is
+   blocked waiting for the delalloc flush task, which is trying to
+   lock folio A, resulting in a deadlock.
 
-But that solution will break nowait requirement, as if a nowait direct
-IO finished short, we have to wait for the OEs unconditionally or the
-next append buffered IO can still hit the same problem.
+The same type of problem can happen if the async reclaim task starts to
+flush delalloc, as that requires both locking the folio and the extent
+range in the inode's io tree, and in this case we don't need the fs to
+be mounted with flushoncommit. This type of problem has ocurred several
+times in the past with reflinks for example, where we had a dirty folio
+while holding the extent range locked and then starting a transaction
+blocked waiting for the async reclaim task due to lack of free metadata
+space.
 
-So here we have to move the wait cost to buffered write, but at least
-the code is slightly more streamline.
+So fix this by reserving delalloc space before locking folios and locking
+the extent range in the inode's iotree. We can not simply unlock the
+folios for each subrange given by defrag_collect_targets() after we defrag
+it because the same folio may be present too in the next subrange (due to
+large folios).
 
-Reported-by: syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=ba2afde329fc27e3f22e
-Fixes: ff66fe666233 ("btrfs: fix incorrect buffered IO fallback for append direct writes")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Fixes: 22b398eeeed4 ("btrfs: defrag: introduce helper to defrag a contiguous prepared range")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 106 ++++++++++++++++++++----------------------------
- 1 file changed, 44 insertions(+), 62 deletions(-)
+ fs/btrfs/defrag.c | 50 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 4211194c18cf1..fe742200154e8 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -956,70 +956,64 @@ static noinline int prepare_pages(struct inode *inode, struct page **pages,
- 
- /*
-  * This function locks the extent and properly waits for data=ordered extents
-- * to finish before allowing the pages to be modified if need.
-+ * to finish before allowing the pages to be modified.
+diff --git a/fs/btrfs/defrag.c b/fs/btrfs/defrag.c
+index e1475dfdf7a8b..c7b0582d14447 100644
+--- a/fs/btrfs/defrag.c
++++ b/fs/btrfs/defrag.c
+@@ -1017,26 +1017,21 @@ static_assert(PAGE_ALIGNED(CLUSTER_SIZE));
   *
-  * The return value:
-- * 1 - the extent is locked
-- * 0 - the extent is not locked, and everything is OK
-+ * 0 - the extent is locked
-  * -EAGAIN - need re-prepare the pages
-  * the other < 0 number - Something wrong happens
+  * - Extent bits are locked
   */
- static noinline int
--lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct page **pages,
--				size_t num_pages, loff_t pos,
--				size_t write_bytes,
--				u64 *lockstart, u64 *lockend, bool nowait,
--				struct extent_state **cached_state)
-+lock_and_cleanup_extent(struct btrfs_inode *inode, struct page **pages,
-+			size_t num_pages, loff_t pos,
-+			size_t write_bytes,
-+			u64 *lockstart, u64 *lockend, bool nowait,
-+			struct extent_state **cached_state)
+-static int defrag_one_locked_target(struct btrfs_inode *inode,
+-				    struct defrag_target_range *target,
+-				    struct page **pages, int nr_pages,
+-				    struct extent_state **cached_state)
++static void defrag_one_locked_target(struct btrfs_inode *inode,
++				     struct defrag_target_range *target,
++				     struct page **pages, int nr_pages,
++				     struct extent_state **cached_state)
  {
  	struct btrfs_fs_info *fs_info = inode->root->fs_info;
-+	struct btrfs_ordered_extent *ordered;
- 	u64 start_pos;
- 	u64 last_pos;
- 	int i;
+-	struct extent_changeset *data_reserved = NULL;
+ 	const u64 start = target->start;
+ 	const u64 len = target->len;
+ 	unsigned long last_index = (start + len - 1) >> PAGE_SHIFT;
+ 	unsigned long start_index = start >> PAGE_SHIFT;
+ 	unsigned long first_index = page_index(pages[0]);
 -	int ret = 0;
+ 	int i;
  
- 	start_pos = round_down(pos, fs_info->sectorsize);
- 	last_pos = round_up(pos + write_bytes, fs_info->sectorsize) - 1;
+ 	ASSERT(last_index - first_index + 1 <= nr_pages);
  
--	if (start_pos < inode->vfs_inode.i_size) {
--		struct btrfs_ordered_extent *ordered;
--
--		if (nowait) {
--			if (!try_lock_extent(&inode->io_tree, start_pos, last_pos,
--					     cached_state)) {
--				for (i = 0; i < num_pages; i++) {
--					unlock_page(pages[i]);
--					put_page(pages[i]);
--					pages[i] = NULL;
--				}
--
--				return -EAGAIN;
--			}
--		} else {
--			lock_extent(&inode->io_tree, start_pos, last_pos, cached_state);
--		}
--
--		ordered = btrfs_lookup_ordered_range(inode, start_pos,
--						     last_pos - start_pos + 1);
--		if (ordered &&
--		    ordered->file_offset + ordered->num_bytes > start_pos &&
--		    ordered->file_offset <= last_pos) {
--			unlock_extent(&inode->io_tree, start_pos, last_pos,
--				      cached_state);
-+	if (nowait) {
-+		if (!try_lock_extent(&inode->io_tree, start_pos, last_pos,
-+				     cached_state)) {
- 			for (i = 0; i < num_pages; i++) {
- 				unlock_page(pages[i]);
- 				put_page(pages[i]);
-+				pages[i] = NULL;
- 			}
--			btrfs_start_ordered_extent(ordered);
--			btrfs_put_ordered_extent(ordered);
-+
- 			return -EAGAIN;
- 		}
--		if (ordered)
--			btrfs_put_ordered_extent(ordered);
-+	} else {
-+		lock_extent(&inode->io_tree, start_pos, last_pos, cached_state);
-+	}
- 
--		*lockstart = start_pos;
--		*lockend = last_pos;
--		ret = 1;
-+	ordered = btrfs_lookup_ordered_range(inode, start_pos,
-+					     last_pos - start_pos + 1);
-+	if (ordered &&
-+	    ordered->file_offset + ordered->num_bytes > start_pos &&
-+	    ordered->file_offset <= last_pos) {
-+		unlock_extent(&inode->io_tree, start_pos, last_pos,
-+			      cached_state);
-+		for (i = 0; i < num_pages; i++) {
-+			unlock_page(pages[i]);
-+			put_page(pages[i]);
-+		}
-+		btrfs_start_ordered_extent(ordered);
-+		btrfs_put_ordered_extent(ordered);
-+		return -EAGAIN;
+-	ret = btrfs_delalloc_reserve_space(inode, &data_reserved, start, len);
+-	if (ret < 0)
+-		return ret;
+ 	clear_extent_bit(&inode->io_tree, start, start + len - 1,
+ 			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
+ 			 EXTENT_DEFRAG, cached_state);
+@@ -1048,10 +1043,6 @@ static int defrag_one_locked_target(struct btrfs_inode *inode,
+ 		ClearPageChecked(pages[i]);
+ 		btrfs_page_clamp_set_dirty(fs_info, pages[i], start, len);
  	}
-+	if (ordered)
-+		btrfs_put_ordered_extent(ordered);
-+
-+	*lockstart = start_pos;
-+	*lockend = last_pos;
- 
- 	/*
- 	 * We should be called after prepare_pages() which should have locked
-@@ -1028,7 +1022,7 @@ lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct page **pages,
- 	for (i = 0; i < num_pages; i++)
- 		WARN_ON(!PageLocked(pages[i]));
- 
+-	btrfs_delalloc_release_extents(inode, len);
+-	extent_changeset_free(data_reserved);
+-
 -	return ret;
-+	return 0;
  }
  
- /*
-@@ -1224,7 +1218,6 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
- 		size_t copied;
- 		size_t dirty_sectors;
- 		size_t num_sectors;
--		int extents_locked;
+ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+@@ -1067,6 +1058,8 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 	u64 last_index = (start + len - 1) >> PAGE_SHIFT;
+ 	u64 start_index = start >> PAGE_SHIFT;
+ 	unsigned int nr_pages = last_index - start_index + 1;
++	struct extent_changeset *data_reserved = NULL;
++	u64 last_defrag_end = start;
+ 	int ret = 0;
+ 	int i;
  
- 		/*
- 		 * Fault pages before locking them in prepare_pages
-@@ -1308,17 +1301,16 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
- 			break;
+@@ -1077,6 +1070,22 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 	if (!pages)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Reserve delalloc space before locking the range and before locking
++	 * and dirtying any folios - otherwise we could deadlock, for example
++	 * after defrag of one range we dirty folios and keep them locked when
++	 * we move to the next range, so reserving delalloc space right before
++	 * each range could trigger flushing of delalloc and deadlock on the
++	 * extent lock or trigger a transaction commit with flushoncommit, which
++	 * can either deadlock on the lock of a folio made dirty in the previous
++	 * range or the extent lock.
++	 */
++	ret = btrfs_delalloc_reserve_space(inode, &data_reserved, start, len);
++	if (ret < 0) {
++		kfree(pages);
++		return ret;
++	}
++
+ 	/* Prepare all pages */
+ 	for (i = 0; i < nr_pages; i++) {
+ 		pages[i] = defrag_prepare_one_page(inode, start_index + i);
+@@ -1107,10 +1116,11 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 		goto unlock_extent;
+ 
+ 	list_for_each_entry(entry, &target_list, list) {
+-		ret = defrag_one_locked_target(inode, entry, pages, nr_pages,
+-					       &cached_state);
+-		if (ret < 0)
+-			break;
++		defrag_one_locked_target(inode, entry, pages, nr_pages, &cached_state);
++		if (entry->start > last_defrag_end)
++			btrfs_delalloc_release_space(inode, data_reserved, last_defrag_end,
++						     entry->start - last_defrag_end, true);
++		last_defrag_end = entry->start + entry->len;
+ 	}
+ 
+ 	list_for_each_entry_safe(entry, tmp, &target_list, list) {
+@@ -1129,6 +1139,12 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
  		}
+ 	}
+ 	kfree(pages);
++	btrfs_delalloc_release_extents(inode, len);
++	if (last_defrag_end < start + len)
++		btrfs_delalloc_release_space(inode, data_reserved, last_defrag_end,
++					     start + len - last_defrag_end, true);
++	extent_changeset_free(data_reserved);
++
+ 	return ret;
+ }
  
--		extents_locked = lock_and_cleanup_extent_if_need(
--				BTRFS_I(inode), pages,
--				num_pages, pos, write_bytes, &lockstart,
--				&lockend, nowait, &cached_state);
--		if (extents_locked < 0) {
--			if (!nowait && extents_locked == -EAGAIN)
-+		ret = lock_and_cleanup_extent(BTRFS_I(inode), pages,
-+					      num_pages, pos, write_bytes,
-+					      &lockstart, &lockend, nowait,
-+					      &cached_state);
-+		if (ret < 0) {
-+			if (!nowait && ret == -EAGAIN)
- 				goto again;
- 
- 			btrfs_delalloc_release_extents(BTRFS_I(inode),
- 						       reserve_bytes);
--			ret = extents_locked;
- 			break;
- 		}
- 
-@@ -1371,18 +1363,8 @@ static noinline ssize_t btrfs_buffered_write(struct kiocb *iocb,
- 					dirty_pages, pos, copied,
- 					&cached_state, only_release_metadata);
- 
--		/*
--		 * If we have not locked the extent range, because the range's
--		 * start offset is >= i_size, we might still have a non-NULL
--		 * cached extent state, acquired while marking the extent range
--		 * as delalloc through btrfs_dirty_pages(). Therefore free any
--		 * possible cached extent state to avoid a memory leak.
--		 */
--		if (extents_locked)
--			unlock_extent(&BTRFS_I(inode)->io_tree, lockstart,
--				      lockend, &cached_state);
--		else
--			free_extent_state(cached_state);
-+		unlock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
-+			      &cached_state);
- 
- 		btrfs_delalloc_release_extents(BTRFS_I(inode), reserve_bytes);
- 		if (ret) {
 -- 
 2.53.0
 
