@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0671A382F25;
-	Sat, 17 Oct 2026 16:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8D2382F2F;
+	Sat, 17 Oct 2026 16:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253251; cv=none; b=tVgfYv2GME7gkA0MAl54Cbs32gw2RyiqXXj9GMK9iHafS3aZ1z/1v9wIafleM+DpJey3ccbThUfSdETaLuYUipFsUqZplWl1zpixBvW/RT/FUrxhT8AVlcU8Ggrn9B/5FAvErdBKr5Rsz7XFICENnUd8xKtDG7Ixg2FR/din/tA=
+	t=1792253254; cv=none; b=BiJsZpUcHas8CIwWe3R3UDiyaqzMWnGVi7az4vQ+oz4zH0iEQfuQYtx0RsQHPRLPK8hJw6r36hWxChQ01j2Y2dFBbE1JmkSbgBff/dPfq2EVm3EK+Une5XL9aRhiAJTAHQe0PSZuWunvNsPLvjMQDjKIHJMn7Lgmvgv2CznvgBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253251; c=relaxed/simple;
-	bh=Y9KYcDkSbs0C+fvLZOg/AaM3Pbh0ST8X+q5JgVZCoMM=;
+	s=arc-20240116; t=1792253254; c=relaxed/simple;
+	bh=irgMfHovLyH5xGKuHGc+ICPLss6mRB7SCJe0dXOZU1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iCgG+tAkgZa5RQjgxraLyxpXnd/BTlVUpbtKSeoOhWF120pcAvcJf6np81ZCsZqng25C7aFIrLXpHOJ5VKjrOlGsM93J9c86omtplZdrAJ5CBciVwvvkzd4IqMbYuUbcVmXqFgT8OKoOBnmR7548r1JTRjPGbRdpVDv26QQo3ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS4/yTor; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zt53IQ2YFBpql3SR4rDnXcDNhlVo6HaKSzdGmm3OnrvsC8Oe/ZgQ9rV21p3C+U/Qm1wZeQ3epjImK5whVm38+0eOjlsLuNex/0HTGK0d654xujxC7mezFw51csO4jLT7LKN+HZwzIJqjKQh57ePlqEc68Ofbvpt07wIqbkSmvD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ir+f7Vok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS4/yTor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF5B1F000C4;
-	Sat, 17 Oct 2026 16:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ir+f7Vok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643351F000C5;
+	Sat, 17 Oct 2026 16:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253245;
-	bh=9Jy0eQ0P+KgvXGR6krd+bzLQuPf9EG9HeOYpnwOiAn4=;
+	s=korg; t=1792253249;
+	bh=Z//spQZSXmH3CBwvZelfAeDbsUWr2DEFMiEkVm68UvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YS4/yTorHA3Gnocc6RRr5em711B62rrniYgfc4qqLEN3+avlJpZ6Iv00iMtGZbot+
-	 1JZntiUQCc4byCEV67VqhR4shzhbu8iTItdvvxVNsx1hdHCpqXF+GHklxDyfy42EMT
-	 XLZqV+/c53J6BaNOMGyJnEm274bA86o9WcsTbPdM=
+	b=Ir+f7VokejGxbV0dpLxUepfQd8b8vIG7CKyzqxn7hcDLLh8LgwZny/O8p3jjOIzTS
+	 fejJfyibMqqMyaUZAcomQ/qOnwWdGJQhq+htk/cJmfWWBmPMCD84FxH60q8BnowcMj
+	 U3rhrxuitrpGbV+QAYz+osLqwQR+GlSYIVf6sSMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/869] drm/i915/display: convert I915_STATE_WARN() to struct intel_display
-Date: Sat, 17 Oct 2026 17:48:16 +0200
-Message-ID: <20261017160038.431859420@linuxfoundation.org>
+Subject: [PATCH 6.12 056/869] drm/i915/gmbus: convert to struct intel_display
+Date: Sat, 17 Oct 2026 17:48:17 +0200
+Message-ID: <20261017160038.457877344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,1081 +53,1317 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 0f4869b1636cddbb14826e148500dfa01f4088e0 ]
+[ Upstream commit fdc387383ebd0d88dda9c40bcb81023a70b4408e ]
 
-Convert I915_STATE_WARN() to struct intel_display *, and rename to
-INTEL_DISPLAY_STATE_WARN(). Do some minor opportunistic struct
-drm_i915_private to struct intel_display conversions while at it.
+struct intel_display will replace struct drm_i915_private as the main
+device pointer for display code. Switch gmbus code over to it.
 
-v2: crtc_state may be NULL in intel_connector_verify_state()
-
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241024162510.2410128-1-jani.nikula@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/d784e4799ab5095baa5c8fd840920066878c6273.1730146000.git.jani.nikula@intel.com
 Stable-dep-of: dc3806d9eb66 ("drm/i915: Grab intel_display from the encoder to avoid potential oopsies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/g4x_dp.c         | 15 ++--
- drivers/gpu/drm/i915/display/intel_crtc.c     |  8 +-
- drivers/gpu/drm/i915/display/intel_cx0_phy.c  | 76 ++++++++--------
- drivers/gpu/drm/i915/display/intel_display.c  | 19 ++--
- drivers/gpu/drm/i915/display/intel_display.h  | 17 ++--
- .../drm/i915/display/intel_display_power.c    | 73 +++++++--------
- drivers/gpu/drm/i915/display/intel_dpll.c     |  9 +-
- drivers/gpu/drm/i915/display/intel_dpll_mgr.c | 90 ++++++++++---------
- drivers/gpu/drm/i915/display/intel_fdi.c      | 42 +++++----
- .../drm/i915/display/intel_modeset_verify.c   | 89 +++++++++---------
- .../gpu/drm/i915/display/intel_pch_display.c  | 56 ++++++------
- drivers/gpu/drm/i915/display/intel_pps.c      | 26 +++---
- drivers/gpu/drm/i915/display/intel_snps_phy.c | 11 +--
- drivers/gpu/drm/i915/display/vlv_dsi_pll.c    |  7 +-
- 14 files changed, 277 insertions(+), 261 deletions(-)
+ drivers/gpu/drm/i915/display/intel_bios.c     |   6 +-
+ drivers/gpu/drm/i915/display/intel_crt.c      |   6 +-
+ .../drm/i915/display/intel_display_driver.c   |   4 +-
+ .../gpu/drm/i915/display/intel_display_irq.c  |  11 +-
+ drivers/gpu/drm/i915/display/intel_dsi_vbt.c  |   5 +-
+ drivers/gpu/drm/i915/display/intel_dvo.c      |   8 +-
+ drivers/gpu/drm/i915/display/intel_gmbus.c    | 290 +++++++++---------
+ drivers/gpu/drm/i915/display/intel_gmbus.h    |  15 +-
+ .../gpu/drm/i915/display/intel_gmbus_regs.h   |  16 +-
+ drivers/gpu/drm/i915/display/intel_hdmi.c     |   8 +-
+ .../gpu/drm/i915/display/intel_hotplug_irq.c  |   6 +-
+ drivers/gpu/drm/i915/display/intel_lvds.c     |   2 +-
+ drivers/gpu/drm/i915/display/intel_sdvo.c     |   9 +-
+ drivers/gpu/drm/i915/i915_suspend.c           |   2 +-
+ 14 files changed, 202 insertions(+), 186 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/g4x_dp.c b/drivers/gpu/drm/i915/display/g4x_dp.c
-index 9a5beb91dd4b6..724d24ef1c785 100644
---- a/drivers/gpu/drm/i915/display/g4x_dp.c
-+++ b/drivers/gpu/drm/i915/display/g4x_dp.c
-@@ -169,13 +169,12 @@ static void assert_dp_port(struct intel_dp *intel_dp, bool state)
- {
- 	struct intel_display *display = to_intel_display(intel_dp);
- 	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_i915_private *dev_priv = to_i915(dig_port->base.base.dev);
- 	bool cur_state = intel_de_read(display, intel_dp->output_reg) & DP_PORT_EN;
- 
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"[ENCODER:%d:%s] state assertion failure (expected %s, current %s)\n",
--			dig_port->base.base.base.id, dig_port->base.base.name,
--			str_on_off(state), str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "[ENCODER:%d:%s] state assertion failure (expected %s, current %s)\n",
-+				 dig_port->base.base.base.id, dig_port->base.base.name,
-+				 str_on_off(state), str_on_off(cur_state));
- }
- #define assert_dp_port_disabled(d) assert_dp_port((d), false)
- 
-@@ -184,9 +183,9 @@ static void assert_edp_pll(struct drm_i915_private *dev_priv, bool state)
- 	struct intel_display *display = &dev_priv->display;
- 	bool cur_state = intel_de_read(display, DP_A) & DP_PLL_ENABLE;
- 
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"eDP PLL state assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "eDP PLL state assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
- }
- #define assert_edp_pll_enabled(d) assert_edp_pll((d), true)
- #define assert_edp_pll_disabled(d) assert_edp_pll((d), false)
-diff --git a/drivers/gpu/drm/i915/display/intel_crtc.c b/drivers/gpu/drm/i915/display/intel_crtc.c
-index 12842bd37aa7f..b2faa92a7ecc0 100644
---- a/drivers/gpu/drm/i915/display/intel_crtc.c
-+++ b/drivers/gpu/drm/i915/display/intel_crtc.c
-@@ -35,11 +35,11 @@
- 
- static void assert_vblank_disabled(struct drm_crtc *crtc)
- {
--	struct drm_i915_private *i915 = to_i915(crtc->dev);
-+	struct intel_display *display = to_intel_display(crtc->dev);
- 
--	if (I915_STATE_WARN(i915, drm_crtc_vblank_get(crtc) == 0,
--			    "[CRTC:%d:%s] vblank assertion failure (expected off, current on)\n",
--			    crtc->base.id, crtc->name))
-+	if (INTEL_DISPLAY_STATE_WARN(display, drm_crtc_vblank_get(crtc) == 0,
-+				     "[CRTC:%d:%s] vblank assertion failure (expected off, current on)\n",
-+				     crtc->base.id, crtc->name))
- 		drm_crtc_vblank_put(crtc);
- }
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_cx0_phy.c b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-index f11309efff339..c7baf4255c19b 100644
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-@@ -3246,28 +3246,28 @@ static void intel_c10pll_state_verify(const struct intel_crtc_state *state,
- 				      struct intel_encoder *encoder,
- 				      struct intel_c10pll_state *mpllb_hw_state)
- {
--	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
-+	struct intel_display *display = to_intel_display(state);
- 	const struct intel_c10pll_state *mpllb_sw_state = &state->dpll_hw_state.cx0pll.c10;
- 	int i;
- 
- 	for (i = 0; i < ARRAY_SIZE(mpllb_sw_state->pll); i++) {
- 		u8 expected = mpllb_sw_state->pll[i];
- 
--		I915_STATE_WARN(i915, mpllb_hw_state->pll[i] != expected,
--				"[CRTC:%d:%s] mismatch in C10MPLLB: Register[%d] (expected 0x%02x, found 0x%02x)",
--				crtc->base.base.id, crtc->base.name, i,
--				expected, mpllb_hw_state->pll[i]);
-+		INTEL_DISPLAY_STATE_WARN(display, mpllb_hw_state->pll[i] != expected,
-+					 "[CRTC:%d:%s] mismatch in C10MPLLB: Register[%d] (expected 0x%02x, found 0x%02x)",
-+					 crtc->base.base.id, crtc->base.name, i,
-+					 expected, mpllb_hw_state->pll[i]);
- 	}
- 
--	I915_STATE_WARN(i915, mpllb_hw_state->tx != mpllb_sw_state->tx,
--			"[CRTC:%d:%s] mismatch in C10MPLLB: Register TX0 (expected 0x%02x, found 0x%02x)",
--			crtc->base.base.id, crtc->base.name,
--			mpllb_sw_state->tx, mpllb_hw_state->tx);
-+	INTEL_DISPLAY_STATE_WARN(display, mpllb_hw_state->tx != mpllb_sw_state->tx,
-+				 "[CRTC:%d:%s] mismatch in C10MPLLB: Register TX0 (expected 0x%02x, found 0x%02x)",
-+				 crtc->base.base.id, crtc->base.name,
-+				 mpllb_sw_state->tx, mpllb_hw_state->tx);
- 
--	I915_STATE_WARN(i915, mpllb_hw_state->cmn != mpllb_sw_state->cmn,
--			"[CRTC:%d:%s] mismatch in C10MPLLB: Register CMN0 (expected 0x%02x, found 0x%02x)",
--			crtc->base.base.id, crtc->base.name,
--			mpllb_sw_state->cmn, mpllb_hw_state->cmn);
-+	INTEL_DISPLAY_STATE_WARN(display, mpllb_hw_state->cmn != mpllb_sw_state->cmn,
-+				 "[CRTC:%d:%s] mismatch in C10MPLLB: Register CMN0 (expected 0x%02x, found 0x%02x)",
-+				 crtc->base.base.id, crtc->base.name,
-+				 mpllb_sw_state->cmn, mpllb_hw_state->cmn);
- }
- 
- void intel_cx0pll_readout_hw_state(struct intel_encoder *encoder,
-@@ -3353,51 +3353,51 @@ static void intel_c20pll_state_verify(const struct intel_crtc_state *state,
- 				      struct intel_encoder *encoder,
- 				      struct intel_c20pll_state *mpll_hw_state)
- {
--	struct drm_i915_private *i915 = to_i915(crtc->base.dev);
-+	struct intel_display *display = to_intel_display(state);
- 	const struct intel_c20pll_state *mpll_sw_state = &state->dpll_hw_state.cx0pll.c20;
- 	bool sw_use_mpllb = intel_c20phy_use_mpllb(mpll_sw_state);
- 	bool hw_use_mpllb = intel_c20phy_use_mpllb(mpll_hw_state);
- 	int clock = intel_c20pll_calc_port_clock(encoder, mpll_sw_state);
- 	int i;
- 
--	I915_STATE_WARN(i915, mpll_hw_state->clock != clock,
--			"[CRTC:%d:%s] mismatch in C20: Register CLOCK (expected %d, found %d)",
--			crtc->base.base.id, crtc->base.name,
--			mpll_sw_state->clock, mpll_hw_state->clock);
-+	INTEL_DISPLAY_STATE_WARN(display, mpll_hw_state->clock != clock,
-+				 "[CRTC:%d:%s] mismatch in C20: Register CLOCK (expected %d, found %d)",
-+				 crtc->base.base.id, crtc->base.name,
-+				 mpll_sw_state->clock, mpll_hw_state->clock);
- 
--	I915_STATE_WARN(i915, sw_use_mpllb != hw_use_mpllb,
--			"[CRTC:%d:%s] mismatch in C20: Register MPLLB selection (expected %d, found %d)",
--			crtc->base.base.id, crtc->base.name,
--			sw_use_mpllb, hw_use_mpllb);
-+	INTEL_DISPLAY_STATE_WARN(display, sw_use_mpllb != hw_use_mpllb,
-+				 "[CRTC:%d:%s] mismatch in C20: Register MPLLB selection (expected %d, found %d)",
-+				 crtc->base.base.id, crtc->base.name,
-+				 sw_use_mpllb, hw_use_mpllb);
- 
- 	if (hw_use_mpllb) {
- 		for (i = 0; i < ARRAY_SIZE(mpll_sw_state->mpllb); i++) {
--			I915_STATE_WARN(i915, mpll_hw_state->mpllb[i] != mpll_sw_state->mpllb[i],
--					"[CRTC:%d:%s] mismatch in C20MPLLB: Register[%d] (expected 0x%04x, found 0x%04x)",
--					crtc->base.base.id, crtc->base.name, i,
--					mpll_sw_state->mpllb[i], mpll_hw_state->mpllb[i]);
-+			INTEL_DISPLAY_STATE_WARN(display, mpll_hw_state->mpllb[i] != mpll_sw_state->mpllb[i],
-+						 "[CRTC:%d:%s] mismatch in C20MPLLB: Register[%d] (expected 0x%04x, found 0x%04x)",
-+						 crtc->base.base.id, crtc->base.name, i,
-+						 mpll_sw_state->mpllb[i], mpll_hw_state->mpllb[i]);
- 		}
- 	} else {
- 		for (i = 0; i < ARRAY_SIZE(mpll_sw_state->mplla); i++) {
--			I915_STATE_WARN(i915, mpll_hw_state->mplla[i] != mpll_sw_state->mplla[i],
--					"[CRTC:%d:%s] mismatch in C20MPLLA: Register[%d] (expected 0x%04x, found 0x%04x)",
--					crtc->base.base.id, crtc->base.name, i,
--					mpll_sw_state->mplla[i], mpll_hw_state->mplla[i]);
-+			INTEL_DISPLAY_STATE_WARN(display, mpll_hw_state->mplla[i] != mpll_sw_state->mplla[i],
-+						 "[CRTC:%d:%s] mismatch in C20MPLLA: Register[%d] (expected 0x%04x, found 0x%04x)",
-+						 crtc->base.base.id, crtc->base.name, i,
-+						 mpll_sw_state->mplla[i], mpll_hw_state->mplla[i]);
- 		}
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(mpll_sw_state->tx); i++) {
--		I915_STATE_WARN(i915, mpll_hw_state->tx[i] != mpll_sw_state->tx[i],
--				"[CRTC:%d:%s] mismatch in C20: Register TX[%i] (expected 0x%04x, found 0x%04x)",
--				crtc->base.base.id, crtc->base.name, i,
--				mpll_sw_state->tx[i], mpll_hw_state->tx[i]);
-+		INTEL_DISPLAY_STATE_WARN(display, mpll_hw_state->tx[i] != mpll_sw_state->tx[i],
-+					 "[CRTC:%d:%s] mismatch in C20: Register TX[%i] (expected 0x%04x, found 0x%04x)",
-+					 crtc->base.base.id, crtc->base.name, i,
-+					 mpll_sw_state->tx[i], mpll_hw_state->tx[i]);
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(mpll_sw_state->cmn); i++) {
--		I915_STATE_WARN(i915, mpll_hw_state->cmn[i] != mpll_sw_state->cmn[i],
--				"[CRTC:%d:%s] mismatch in C20: Register CMN[%i] (expected 0x%04x, found 0x%04x)",
--				crtc->base.base.id, crtc->base.name, i,
--				mpll_sw_state->cmn[i], mpll_hw_state->cmn[i]);
-+		INTEL_DISPLAY_STATE_WARN(display, mpll_hw_state->cmn[i] != mpll_sw_state->cmn[i],
-+					 "[CRTC:%d:%s] mismatch in C20: Register CMN[%i] (expected 0x%04x, found 0x%04x)",
-+					 crtc->base.base.id, crtc->base.name, i,
-+					 mpll_sw_state->cmn[i], mpll_hw_state->cmn[i]);
- 	}
- }
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 4a81e4563e924..2d4049e6ba785 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -321,6 +321,7 @@ intel_wait_for_pipe_off(const struct intel_crtc_state *old_crtc_state)
- void assert_transcoder(struct drm_i915_private *dev_priv,
- 		       enum transcoder cpu_transcoder, bool state)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	bool cur_state;
- 	enum intel_display_power_domain power_domain;
- 	intel_wakeref_t wakeref;
-@@ -341,24 +342,24 @@ void assert_transcoder(struct drm_i915_private *dev_priv,
- 		cur_state = false;
- 	}
- 
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"transcoder %s assertion failure (expected %s, current %s)\n",
--			transcoder_name(cpu_transcoder), str_on_off(state),
--			str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "transcoder %s assertion failure (expected %s, current %s)\n",
-+				 transcoder_name(cpu_transcoder), str_on_off(state),
-+				 str_on_off(cur_state));
- }
- 
- static void assert_plane(struct intel_plane *plane, bool state)
- {
--	struct drm_i915_private *i915 = to_i915(plane->base.dev);
-+	struct intel_display *display = to_intel_display(plane->base.dev);
- 	enum pipe pipe;
- 	bool cur_state;
- 
- 	cur_state = plane->get_hw_state(plane, &pipe);
- 
--	I915_STATE_WARN(i915, cur_state != state,
--			"%s assertion failure (expected %s, current %s)\n",
--			plane->base.name, str_on_off(state),
--			str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "%s assertion failure (expected %s, current %s)\n",
-+				 plane->base.name, str_on_off(state),
-+				 str_on_off(cur_state));
- }
- 
- #define assert_plane_enabled(p) assert_plane(p, true)
-diff --git a/drivers/gpu/drm/i915/display/intel_display.h b/drivers/gpu/drm/i915/display/intel_display.h
-index b21d9578d5db4..3c4b48697bb1c 100644
---- a/drivers/gpu/drm/i915/display/intel_display.h
-+++ b/drivers/gpu/drm/i915/display/intel_display.h
-@@ -570,18 +570,17 @@ void assert_transcoder(struct drm_i915_private *dev_priv,
- bool assert_port_valid(struct drm_i915_private *i915, enum port port);
- 
- /*
-- * Use I915_STATE_WARN(x) (rather than WARN() and WARN_ON()) for hw state sanity
-- * checks to check for unexpected conditions which may not necessarily be a user
-- * visible problem. This will either WARN() or DRM_ERROR() depending on the
-- * verbose_state_checks module param, to enable distros and users to tailor
-- * their preferred amount of i915 abrt spam.
-+ * Use INTEL_DISPLAY_STATE_WARN(x) (rather than WARN() and WARN_ON()) for hw
-+ * state sanity checks to check for unexpected conditions which may not
-+ * necessarily be a user visible problem. This will either drm_WARN() or
-+ * drm_err() depending on the verbose_state_checks module param, to enable
-+ * distros and users to tailor their preferred amount of i915 abrt spam.
-  */
--#define I915_STATE_WARN(__i915, condition, format...) ({		\
--	struct drm_device *drm = &(__i915)->drm;			\
-+#define INTEL_DISPLAY_STATE_WARN(__display, condition, format...) ({	\
- 	int __ret_warn_on = !!(condition);				\
- 	if (unlikely(__ret_warn_on))					\
--		if (!drm_WARN(drm, __i915->display.params.verbose_state_checks, format)) \
--			drm_err(drm, format);				\
-+		if (!drm_WARN((__display)->drm, (__display)->params.verbose_state_checks, format)) \
-+			drm_err((__display)->drm, format);		\
- 	unlikely(__ret_warn_on);					\
- })
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_power.c b/drivers/gpu/drm/i915/display/intel_display_power.c
-index 85335d8dfec11..be39a0180921b 100644
---- a/drivers/gpu/drm/i915/display/intel_display_power.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_power.c
-@@ -1176,43 +1176,44 @@ static void hsw_assert_cdclk(struct drm_i915_private *dev_priv)
- 
- static void assert_can_disable_lcpll(struct drm_i915_private *dev_priv)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	struct intel_crtc *crtc;
- 
--	for_each_intel_crtc(&dev_priv->drm, crtc)
--		I915_STATE_WARN(dev_priv, crtc->active,
--				"CRTC for pipe %c enabled\n",
--				pipe_name(crtc->pipe));
--
--	I915_STATE_WARN(dev_priv, intel_de_read(dev_priv, HSW_PWR_WELL_CTL2),
--			"Display power well on\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, SPLL_CTL) & SPLL_PLL_ENABLE,
--			"SPLL enabled\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, WRPLL_CTL(0)) & WRPLL_PLL_ENABLE,
--			"WRPLL1 enabled\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, WRPLL_CTL(1)) & WRPLL_PLL_ENABLE,
--			"WRPLL2 enabled\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, PP_STATUS(dev_priv, 0)) & PP_ON,
--			"Panel power on\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, BLC_PWM_CPU_CTL2) & BLM_PWM_ENABLE,
--			"CPU PWM1 enabled\n");
-+	for_each_intel_crtc(display->drm, crtc)
-+		INTEL_DISPLAY_STATE_WARN(display, crtc->active,
-+					 "CRTC for pipe %c enabled\n",
-+					 pipe_name(crtc->pipe));
-+
-+	INTEL_DISPLAY_STATE_WARN(display, intel_de_read(display, HSW_PWR_WELL_CTL2),
-+				 "Display power well on\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, SPLL_CTL) & SPLL_PLL_ENABLE,
-+				 "SPLL enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, WRPLL_CTL(0)) & WRPLL_PLL_ENABLE,
-+				 "WRPLL1 enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, WRPLL_CTL(1)) & WRPLL_PLL_ENABLE,
-+				 "WRPLL2 enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, PP_STATUS(display, 0)) & PP_ON,
-+				 "Panel power on\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, BLC_PWM_CPU_CTL2) & BLM_PWM_ENABLE,
-+				 "CPU PWM1 enabled\n");
- 	if (IS_HASWELL(dev_priv))
--		I915_STATE_WARN(dev_priv,
--				intel_de_read(dev_priv, HSW_BLC_PWM2_CTL) & BLM_PWM_ENABLE,
--				"CPU PWM2 enabled\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, BLC_PWM_PCH_CTL1) & BLM_PCH_PWM_ENABLE,
--			"PCH PWM1 enabled\n");
--	I915_STATE_WARN(dev_priv,
--			(intel_de_read(dev_priv, UTIL_PIN_CTL) & (UTIL_PIN_ENABLE | UTIL_PIN_MODE_MASK)) == (UTIL_PIN_ENABLE | UTIL_PIN_MODE_PWM),
--			"Utility pin enabled in PWM mode\n");
--	I915_STATE_WARN(dev_priv,
--			intel_de_read(dev_priv, PCH_GTC_CTL) & PCH_GTC_ENABLE,
--			"PCH GTC enabled\n");
-+		INTEL_DISPLAY_STATE_WARN(display,
-+					 intel_de_read(display, HSW_BLC_PWM2_CTL) & BLM_PWM_ENABLE,
-+					 "CPU PWM2 enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, BLC_PWM_PCH_CTL1) & BLM_PCH_PWM_ENABLE,
-+				 "PCH PWM1 enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 (intel_de_read(display, UTIL_PIN_CTL) & (UTIL_PIN_ENABLE | UTIL_PIN_MODE_MASK)) == (UTIL_PIN_ENABLE | UTIL_PIN_MODE_PWM),
-+				 "Utility pin enabled in PWM mode\n");
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_de_read(display, PCH_GTC_CTL) & PCH_GTC_ENABLE,
-+				 "PCH GTC enabled\n");
- 
- 	/*
- 	 * In theory we can still leave IRQs enabled, as long as only the HPD
-@@ -1220,8 +1221,8 @@ static void assert_can_disable_lcpll(struct drm_i915_private *dev_priv)
- 	 * gen-specific and since we only disable LCPLL after we fully disable
- 	 * the interrupts, the check below should be enough.
- 	 */
--	I915_STATE_WARN(dev_priv, intel_irqs_enabled(dev_priv),
--			"IRQs enabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display, intel_irqs_enabled(dev_priv),
-+				 "IRQs enabled\n");
- }
- 
- static u32 hsw_read_dcomp(struct drm_i915_private *dev_priv)
-diff --git a/drivers/gpu/drm/i915/display/intel_dpll.c b/drivers/gpu/drm/i915/display/intel_dpll.c
-index bc72d1c0cb414..0e4a21d35be20 100644
---- a/drivers/gpu/drm/i915/display/intel_dpll.c
-+++ b/drivers/gpu/drm/i915/display/intel_dpll.c
-@@ -2319,12 +2319,13 @@ void vlv_force_pll_off(struct drm_i915_private *dev_priv, enum pipe pipe)
- static void assert_pll(struct drm_i915_private *dev_priv,
- 		       enum pipe pipe, bool state)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	bool cur_state;
- 
--	cur_state = intel_de_read(dev_priv, DPLL(dev_priv, pipe)) & DPLL_VCO_ENABLE;
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"PLL state assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	cur_state = intel_de_read(display, DPLL(display, pipe)) & DPLL_VCO_ENABLE;
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "PLL state assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
- }
- 
- void assert_pll_enabled(struct drm_i915_private *i915, enum pipe pipe)
-diff --git a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-index f490b2157828d..c9eda647919ac 100644
---- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-+++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-@@ -173,18 +173,19 @@ void assert_shared_dpll(struct drm_i915_private *i915,
- 			struct intel_shared_dpll *pll,
- 			bool state)
- {
-+	struct intel_display *display = &i915->display;
- 	bool cur_state;
- 	struct intel_dpll_hw_state hw_state;
- 
--	if (drm_WARN(&i915->drm, !pll,
-+	if (drm_WARN(display->drm, !pll,
- 		     "asserting DPLL %s with no DPLL\n", str_on_off(state)))
- 		return;
- 
- 	cur_state = intel_dpll_get_hw_state(i915, pll, &hw_state);
--	I915_STATE_WARN(i915, cur_state != state,
--			"%s assertion failure (expected %s, current %s)\n",
--			pll->info->name, str_on_off(state),
--			str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "%s assertion failure (expected %s, current %s)\n",
-+				 pll->info->name, str_on_off(state),
-+				 str_on_off(cur_state));
- }
- 
- static enum tc_port icl_pll_id_to_tc_port(enum intel_dpll_id id)
-@@ -545,14 +546,15 @@ static bool ibx_pch_dpll_get_hw_state(struct drm_i915_private *i915,
- 
- static void ibx_assert_pch_refclk_enabled(struct drm_i915_private *i915)
- {
-+	struct intel_display *display = &i915->display;
- 	u32 val;
- 	bool enabled;
- 
--	val = intel_de_read(i915, PCH_DREF_CONTROL);
-+	val = intel_de_read(display, PCH_DREF_CONTROL);
- 	enabled = !!(val & (DREF_SSC_SOURCE_MASK | DREF_NONSPREAD_SOURCE_MASK |
- 			    DREF_SUPERSPREAD_SOURCE_MASK));
--	I915_STATE_WARN(i915, !enabled,
--			"PCH refclk assertion failure, should be active but is disabled\n");
-+	INTEL_DISPLAY_STATE_WARN(display, !enabled,
-+				 "PCH refclk assertion failure, should be active but is disabled\n");
- }
- 
- static void ibx_pch_dpll_enable(struct drm_i915_private *i915,
-@@ -4619,6 +4621,7 @@ verify_single_dpll_state(struct drm_i915_private *i915,
- 			 struct intel_crtc *crtc,
- 			 const struct intel_crtc_state *new_crtc_state)
- {
-+	struct intel_display *display = &i915->display;
- 	struct intel_dpll_hw_state dpll_hw_state = {};
- 	u8 pipe_mask;
- 	bool active;
-@@ -4626,22 +4629,22 @@ verify_single_dpll_state(struct drm_i915_private *i915,
- 	active = intel_dpll_get_hw_state(i915, pll, &dpll_hw_state);
- 
- 	if (!pll->info->always_on) {
--		I915_STATE_WARN(i915, !pll->on && pll->active_mask,
--				"%s: pll in active use but not on in sw tracking\n",
--				pll->info->name);
--		I915_STATE_WARN(i915, pll->on && !pll->active_mask,
--				"%s: pll is on but not used by any active pipe\n",
--				pll->info->name);
--		I915_STATE_WARN(i915, pll->on != active,
--				"%s: pll on state mismatch (expected %i, found %i)\n",
--				pll->info->name, pll->on, active);
-+		INTEL_DISPLAY_STATE_WARN(display, !pll->on && pll->active_mask,
-+					 "%s: pll in active use but not on in sw tracking\n",
-+					 pll->info->name);
-+		INTEL_DISPLAY_STATE_WARN(display, pll->on && !pll->active_mask,
-+					 "%s: pll is on but not used by any active pipe\n",
-+					 pll->info->name);
-+		INTEL_DISPLAY_STATE_WARN(display, pll->on != active,
-+					 "%s: pll on state mismatch (expected %i, found %i)\n",
-+					 pll->info->name, pll->on, active);
- 	}
- 
- 	if (!crtc) {
--		I915_STATE_WARN(i915,
--				pll->active_mask & ~pll->state.pipe_mask,
--				"%s: more active pll users than references: 0x%x vs 0x%x\n",
--				pll->info->name, pll->active_mask, pll->state.pipe_mask);
-+		INTEL_DISPLAY_STATE_WARN(display,
-+					 pll->active_mask & ~pll->state.pipe_mask,
-+					 "%s: more active pll users than references: 0x%x vs 0x%x\n",
-+					 pll->info->name, pll->active_mask, pll->state.pipe_mask);
- 
- 		return;
- 	}
-@@ -4649,23 +4652,23 @@ verify_single_dpll_state(struct drm_i915_private *i915,
- 	pipe_mask = BIT(crtc->pipe);
- 
- 	if (new_crtc_state->hw.active)
--		I915_STATE_WARN(i915, !(pll->active_mask & pipe_mask),
--				"%s: pll active mismatch (expected pipe %c in active mask 0x%x)\n",
--				pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
-+		INTEL_DISPLAY_STATE_WARN(display, !(pll->active_mask & pipe_mask),
-+					 "%s: pll active mismatch (expected pipe %c in active mask 0x%x)\n",
-+					 pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
- 	else
--		I915_STATE_WARN(i915, pll->active_mask & pipe_mask,
--				"%s: pll active mismatch (didn't expect pipe %c in active mask 0x%x)\n",
--				pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
-+		INTEL_DISPLAY_STATE_WARN(display, pll->active_mask & pipe_mask,
-+					 "%s: pll active mismatch (didn't expect pipe %c in active mask 0x%x)\n",
-+					 pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
- 
--	I915_STATE_WARN(i915, !(pll->state.pipe_mask & pipe_mask),
--			"%s: pll enabled crtcs mismatch (expected 0x%x in 0x%x)\n",
--			pll->info->name, pipe_mask, pll->state.pipe_mask);
-+	INTEL_DISPLAY_STATE_WARN(display, !(pll->state.pipe_mask & pipe_mask),
-+				 "%s: pll enabled crtcs mismatch (expected 0x%x in 0x%x)\n",
-+				 pll->info->name, pipe_mask, pll->state.pipe_mask);
- 
--	I915_STATE_WARN(i915,
--			pll->on && memcmp(&pll->state.hw_state, &dpll_hw_state,
--					  sizeof(dpll_hw_state)),
--			"%s: pll hw state mismatch\n",
--			pll->info->name);
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 pll->on && memcmp(&pll->state.hw_state, &dpll_hw_state,
-+						   sizeof(dpll_hw_state)),
-+				 "%s: pll hw state mismatch\n",
-+				 pll->info->name);
- }
- 
- static bool has_alt_port_dpll(const struct intel_shared_dpll *old_pll,
-@@ -4678,6 +4681,7 @@ static bool has_alt_port_dpll(const struct intel_shared_dpll *old_pll,
- void intel_shared_dpll_state_verify(struct intel_atomic_state *state,
- 				    struct intel_crtc *crtc)
- {
-+	struct intel_display *display = to_intel_display(state);
- 	struct drm_i915_private *i915 = to_i915(state->base.dev);
- 	const struct intel_crtc_state *old_crtc_state =
- 		intel_atomic_get_old_crtc_state(state, crtc);
-@@ -4693,16 +4697,16 @@ void intel_shared_dpll_state_verify(struct intel_atomic_state *state,
- 		u8 pipe_mask = BIT(crtc->pipe);
- 		struct intel_shared_dpll *pll = old_crtc_state->shared_dpll;
- 
--		I915_STATE_WARN(i915, pll->active_mask & pipe_mask,
--				"%s: pll active mismatch (didn't expect pipe %c in active mask (0x%x))\n",
--				pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
-+		INTEL_DISPLAY_STATE_WARN(display, pll->active_mask & pipe_mask,
-+					 "%s: pll active mismatch (didn't expect pipe %c in active mask (0x%x))\n",
-+					 pll->info->name, pipe_name(crtc->pipe), pll->active_mask);
- 
- 		/* TC ports have both MG/TC and TBT PLL referenced simultaneously */
--		I915_STATE_WARN(i915, !has_alt_port_dpll(old_crtc_state->shared_dpll,
--							 new_crtc_state->shared_dpll) &&
--				pll->state.pipe_mask & pipe_mask,
--				"%s: pll enabled crtcs mismatch (found pipe %c in enabled mask (0x%x))\n",
--				pll->info->name, pipe_name(crtc->pipe), pll->state.pipe_mask);
-+		INTEL_DISPLAY_STATE_WARN(display, !has_alt_port_dpll(old_crtc_state->shared_dpll,
-+								     new_crtc_state->shared_dpll) &&
-+					 pll->state.pipe_mask & pipe_mask,
-+					 "%s: pll enabled crtcs mismatch (found pipe %c in enabled mask (0x%x))\n",
-+					 pll->info->name, pipe_name(crtc->pipe), pll->state.pipe_mask);
- 	}
- }
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_fdi.c b/drivers/gpu/drm/i915/display/intel_fdi.c
-index 0168894e9cd1b..98e1a36062273 100644
---- a/drivers/gpu/drm/i915/display/intel_fdi.c
-+++ b/drivers/gpu/drm/i915/display/intel_fdi.c
-@@ -26,9 +26,10 @@ struct intel_fdi_funcs {
- static void assert_fdi_tx(struct drm_i915_private *dev_priv,
- 			  enum pipe pipe, bool state)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	bool cur_state;
- 
--	if (HAS_DDI(dev_priv)) {
-+	if (HAS_DDI(display)) {
- 		/*
- 		 * DDI does not have a specific FDI_TX register.
- 		 *
-@@ -36,14 +37,14 @@ static void assert_fdi_tx(struct drm_i915_private *dev_priv,
- 		 * so pipe->transcoder cast is fine here.
- 		 */
- 		enum transcoder cpu_transcoder = (enum transcoder)pipe;
--		cur_state = intel_de_read(dev_priv,
--					  TRANS_DDI_FUNC_CTL(dev_priv, cpu_transcoder)) & TRANS_DDI_FUNC_ENABLE;
-+		cur_state = intel_de_read(display,
-+					  TRANS_DDI_FUNC_CTL(display, cpu_transcoder)) & TRANS_DDI_FUNC_ENABLE;
- 	} else {
--		cur_state = intel_de_read(dev_priv, FDI_TX_CTL(pipe)) & FDI_TX_ENABLE;
-+		cur_state = intel_de_read(display, FDI_TX_CTL(pipe)) & FDI_TX_ENABLE;
- 	}
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"FDI TX state assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "FDI TX state assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
- }
- 
- void assert_fdi_tx_enabled(struct drm_i915_private *i915, enum pipe pipe)
-@@ -59,12 +60,13 @@ void assert_fdi_tx_disabled(struct drm_i915_private *i915, enum pipe pipe)
- static void assert_fdi_rx(struct drm_i915_private *dev_priv,
- 			  enum pipe pipe, bool state)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	bool cur_state;
- 
--	cur_state = intel_de_read(dev_priv, FDI_RX_CTL(pipe)) & FDI_RX_ENABLE;
--	I915_STATE_WARN(dev_priv, cur_state != state,
--			"FDI RX state assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	cur_state = intel_de_read(display, FDI_RX_CTL(pipe)) & FDI_RX_ENABLE;
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "FDI RX state assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
- }
- 
- void assert_fdi_rx_enabled(struct drm_i915_private *i915, enum pipe pipe)
-@@ -80,6 +82,7 @@ void assert_fdi_rx_disabled(struct drm_i915_private *i915, enum pipe pipe)
- void assert_fdi_tx_pll_enabled(struct drm_i915_private *i915,
- 			       enum pipe pipe)
- {
-+	struct intel_display *display = &i915->display;
- 	bool cur_state;
- 
- 	/* ILK FDI PLL is always enabled */
-@@ -87,23 +90,24 @@ void assert_fdi_tx_pll_enabled(struct drm_i915_private *i915,
- 		return;
- 
- 	/* On Haswell, DDI ports are responsible for the FDI PLL setup */
--	if (HAS_DDI(i915))
-+	if (HAS_DDI(display))
- 		return;
- 
--	cur_state = intel_de_read(i915, FDI_TX_CTL(pipe)) & FDI_TX_PLL_ENABLE;
--	I915_STATE_WARN(i915, !cur_state,
--			"FDI TX PLL assertion failure, should be active but is disabled\n");
-+	cur_state = intel_de_read(display, FDI_TX_CTL(pipe)) & FDI_TX_PLL_ENABLE;
-+	INTEL_DISPLAY_STATE_WARN(display, !cur_state,
-+				 "FDI TX PLL assertion failure, should be active but is disabled\n");
- }
- 
- static void assert_fdi_rx_pll(struct drm_i915_private *i915,
- 			      enum pipe pipe, bool state)
- {
-+	struct intel_display *display = &i915->display;
- 	bool cur_state;
- 
--	cur_state = intel_de_read(i915, FDI_RX_CTL(pipe)) & FDI_RX_PLL_ENABLE;
--	I915_STATE_WARN(i915, cur_state != state,
--			"FDI RX PLL assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	cur_state = intel_de_read(display, FDI_RX_CTL(pipe)) & FDI_RX_PLL_ENABLE;
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "FDI RX PLL assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
- }
- 
- void assert_fdi_rx_pll_enabled(struct drm_i915_private *i915, enum pipe pipe)
-diff --git a/drivers/gpu/drm/i915/display/intel_modeset_verify.c b/drivers/gpu/drm/i915/display/intel_modeset_verify.c
-index 3491db5cad316..bc70e72ccc2e9 100644
---- a/drivers/gpu/drm/i915/display/intel_modeset_verify.c
-+++ b/drivers/gpu/drm/i915/display/intel_modeset_verify.c
-@@ -27,6 +27,7 @@ static void intel_connector_verify_state(const struct intel_crtc_state *crtc_sta
- 					 const struct drm_connector_state *conn_state)
- {
- 	struct intel_connector *connector = to_intel_connector(conn_state->connector);
-+	struct intel_display *display = to_intel_display(connector);
- 	struct drm_i915_private *i915 = to_i915(connector->base.dev);
- 
- 	drm_dbg_kms(&i915->drm, "[CONNECTOR:%d:%s]\n",
-@@ -35,29 +36,29 @@ static void intel_connector_verify_state(const struct intel_crtc_state *crtc_sta
- 	if (connector->get_hw_state(connector)) {
- 		struct intel_encoder *encoder = intel_attached_encoder(connector);
- 
--		I915_STATE_WARN(i915, !crtc_state,
--				"connector enabled without attached crtc\n");
-+		INTEL_DISPLAY_STATE_WARN(display, !crtc_state,
-+					 "connector enabled without attached crtc\n");
- 
- 		if (!crtc_state)
- 			return;
- 
--		I915_STATE_WARN(i915, !crtc_state->hw.active,
--				"connector is active, but attached crtc isn't\n");
-+		INTEL_DISPLAY_STATE_WARN(display, !crtc_state->hw.active,
-+					 "connector is active, but attached crtc isn't\n");
- 
- 		if (!encoder || encoder->type == INTEL_OUTPUT_DP_MST)
- 			return;
- 
--		I915_STATE_WARN(i915,
--				conn_state->best_encoder != &encoder->base,
--				"atomic encoder doesn't match attached encoder\n");
-+		INTEL_DISPLAY_STATE_WARN(display,
-+					 conn_state->best_encoder != &encoder->base,
-+					 "atomic encoder doesn't match attached encoder\n");
- 
--		I915_STATE_WARN(i915, conn_state->crtc != encoder->base.crtc,
--				"attached encoder crtc differs from connector crtc\n");
-+		INTEL_DISPLAY_STATE_WARN(display, conn_state->crtc != encoder->base.crtc,
-+					 "attached encoder crtc differs from connector crtc\n");
- 	} else {
--		I915_STATE_WARN(i915, crtc_state && crtc_state->hw.active,
--				"attached crtc is active, but connector isn't\n");
--		I915_STATE_WARN(i915, !crtc_state && conn_state->best_encoder,
--				"best encoder set without crtc!\n");
-+		INTEL_DISPLAY_STATE_WARN(display, crtc_state && crtc_state->hw.active,
-+					 "attached crtc is active, but connector isn't\n");
-+		INTEL_DISPLAY_STATE_WARN(display, !crtc_state && conn_state->best_encoder,
-+					 "best encoder set without crtc!\n");
- 	}
- }
- 
-@@ -65,6 +66,7 @@ static void
- verify_connector_state(struct intel_atomic_state *state,
- 		       struct intel_crtc *crtc)
- {
-+	struct intel_display *display = to_intel_display(state);
- 	struct drm_connector *connector;
- 	const struct drm_connector_state *new_conn_state;
- 	int i;
-@@ -81,8 +83,8 @@ verify_connector_state(struct intel_atomic_state *state,
- 
- 		intel_connector_verify_state(crtc_state, new_conn_state);
- 
--		I915_STATE_WARN(to_i915(connector->dev), new_conn_state->best_encoder != encoder,
--				"connector's atomic encoder doesn't match legacy encoder\n");
-+		INTEL_DISPLAY_STATE_WARN(display, new_conn_state->best_encoder != encoder,
-+					 "connector's atomic encoder doesn't match legacy encoder\n");
- 	}
- }
- 
-@@ -109,6 +111,7 @@ static void intel_pipe_config_sanity_check(const struct intel_crtc_state *crtc_s
+diff --git a/drivers/gpu/drm/i915/display/intel_bios.c b/drivers/gpu/drm/i915/display/intel_bios.c
+index 4793d460892b6..18e8453a339c5 100644
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -2815,7 +2815,6 @@ static bool child_device_size_valid(struct intel_display *display, int size)
  static void
- verify_encoder_state(struct intel_atomic_state *state)
+ parse_general_definitions(struct intel_display *display)
  {
-+	struct intel_display *display = to_intel_display(state);
- 	struct drm_i915_private *i915 = to_i915(state->base.dev);
- 	struct intel_encoder *encoder;
- 	struct drm_connector *connector;
-@@ -134,25 +137,25 @@ verify_encoder_state(struct intel_atomic_state *state)
- 			found = true;
- 			enabled = true;
+-	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	const struct bdb_general_definitions *defs;
+ 	struct intel_bios_encoder_data *devdata;
+ 	const struct child_device_config *child;
+@@ -2840,7 +2839,7 @@ parse_general_definitions(struct intel_display *display)
  
--			I915_STATE_WARN(i915,
--					new_conn_state->crtc != encoder->base.crtc,
--					"connector's crtc doesn't match encoder crtc\n");
-+			INTEL_DISPLAY_STATE_WARN(display,
-+						 new_conn_state->crtc != encoder->base.crtc,
-+						 "connector's crtc doesn't match encoder crtc\n");
- 		}
+ 	bus_pin = defs->crt_ddc_gmbus_pin;
+ 	drm_dbg_kms(display->drm, "crt_ddc_bus_pin: %d\n", bus_pin);
+-	if (intel_gmbus_is_valid_pin(i915, bus_pin))
++	if (intel_gmbus_is_valid_pin(display, bus_pin))
+ 		display->vbt.crt_ddc_pin = bus_pin;
  
- 		if (!found)
+ 	if (!child_device_size_valid(display, defs->child_dev_size))
+@@ -3426,7 +3425,6 @@ bool intel_bios_is_tv_present(struct intel_display *display)
+  */
+ bool intel_bios_is_lvds_present(struct intel_display *display, u8 *i2c_pin)
+ {
+-	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	const struct intel_bios_encoder_data *devdata;
+ 
+ 	if (list_empty(&display->vbt.display_devices))
+@@ -3443,7 +3441,7 @@ bool intel_bios_is_lvds_present(struct intel_display *display, u8 *i2c_pin)
+ 		    child->device_type != DEVICE_TYPE_LFP)
  			continue;
  
--		I915_STATE_WARN(i915, !!encoder->base.crtc != enabled,
--				"encoder's enabled state mismatch (expected %i, found %i)\n",
--				!!encoder->base.crtc, enabled);
-+		INTEL_DISPLAY_STATE_WARN(display, !!encoder->base.crtc != enabled,
-+					 "encoder's enabled state mismatch (expected %i, found %i)\n",
-+					 !!encoder->base.crtc, enabled);
+-		if (intel_gmbus_is_valid_pin(i915, child->i2c_pin))
++		if (intel_gmbus_is_valid_pin(display, child->i2c_pin))
+ 			*i2c_pin = child->i2c_pin;
  
- 		if (!encoder->base.crtc) {
- 			bool active;
+ 		/* However, we cannot trust the BIOS writers to populate
+diff --git a/drivers/gpu/drm/i915/display/intel_crt.c b/drivers/gpu/drm/i915/display/intel_crt.c
+index fd78adbaadbe8..8222b1c251db1 100644
+--- a/drivers/gpu/drm/i915/display/intel_crt.c
++++ b/drivers/gpu/drm/i915/display/intel_crt.c
+@@ -935,6 +935,7 @@ intel_crt_detect(struct drm_connector *connector,
  
- 			active = encoder->get_hw_state(encoder, &pipe);
--			I915_STATE_WARN(i915, active,
--					"encoder detached but still enabled on pipe %c.\n",
--					pipe_name(pipe));
-+			INTEL_DISPLAY_STATE_WARN(display, active,
-+						 "encoder detached but still enabled on pipe %c.\n",
-+						 pipe_name(pipe));
- 		}
+ static int intel_crt_get_modes(struct drm_connector *connector)
+ {
++	struct intel_display *display = to_intel_display(connector->dev);
+ 	struct drm_device *dev = connector->dev;
+ 	struct drm_i915_private *dev_priv = to_i915(dev);
+ 	struct intel_crt *crt = intel_attached_crt(to_intel_connector(connector));
+@@ -954,7 +955,7 @@ static int intel_crt_get_modes(struct drm_connector *connector)
+ 		goto out;
+ 
+ 	/* Try to probe digital port for output in DVI-I -> VGA mode. */
+-	ddc = intel_gmbus_get_adapter(dev_priv, GMBUS_PIN_DPB);
++	ddc = intel_gmbus_get_adapter(display, GMBUS_PIN_DPB);
+ 	ret = intel_crt_ddc_get_modes(connector, ddc);
+ 
+ out:
+@@ -1009,6 +1010,7 @@ static const struct drm_encoder_funcs intel_crt_enc_funcs = {
+ 
+ void intel_crt_init(struct drm_i915_private *dev_priv)
+ {
++	struct intel_display *display = &dev_priv->display;
+ 	struct drm_connector *connector;
+ 	struct intel_crt *crt;
+ 	struct intel_connector *intel_connector;
+@@ -1057,7 +1059,7 @@ void intel_crt_init(struct drm_i915_private *dev_priv)
+ 	drm_connector_init_with_ddc(&dev_priv->drm, connector,
+ 				    &intel_crt_connector_funcs,
+ 				    DRM_MODE_CONNECTOR_VGA,
+-				    intel_gmbus_get_adapter(dev_priv, ddc_pin));
++				    intel_gmbus_get_adapter(display, ddc_pin));
+ 
+ 	drm_encoder_init(&dev_priv->drm, &crt->base.base, &intel_crt_enc_funcs,
+ 			 DRM_MODE_ENCODER_DAC, "CRT");
+diff --git a/drivers/gpu/drm/i915/display/intel_display_driver.c b/drivers/gpu/drm/i915/display/intel_display_driver.c
+index c189ce08a950a..8d65a26c9a403 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_driver.c
++++ b/drivers/gpu/drm/i915/display/intel_display_driver.c
+@@ -431,7 +431,7 @@ int intel_display_driver_probe_nogem(struct drm_i915_private *i915)
+ 
+ 	intel_pps_setup(display);
+ 
+-	intel_gmbus_setup(i915);
++	intel_gmbus_setup(display);
+ 
+ 	drm_dbg_kms(&i915->drm, "%d display pipe%s available.\n",
+ 		    INTEL_NUM_PIPES(i915),
+@@ -607,7 +607,7 @@ void intel_display_driver_remove_noirq(struct drm_i915_private *i915)
+ 
+ 	intel_overlay_cleanup(i915);
+ 
+-	intel_gmbus_teardown(i915);
++	intel_gmbus_teardown(display);
+ 
+ 	destroy_workqueue(i915->display.wq.flip);
+ 	destroy_workqueue(i915->display.wq.modeset);
+diff --git a/drivers/gpu/drm/i915/display/intel_display_irq.c b/drivers/gpu/drm/i915/display/intel_display_irq.c
+index 179ed72037e71..e2a98395e921f 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_irq.c
++++ b/drivers/gpu/drm/i915/display/intel_display_irq.c
+@@ -551,12 +551,13 @@ void i965_pipestat_irq_handler(struct drm_i915_private *dev_priv,
+ 		intel_opregion_asle_intr(display);
+ 
+ 	if (pipe_stats[0] & PIPE_GMBUS_INTERRUPT_STATUS)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
+ }
+ 
+ void valleyview_pipestat_irq_handler(struct drm_i915_private *dev_priv,
+ 				     u32 pipe_stats[I915_MAX_PIPES])
+ {
++	struct intel_display *display = &dev_priv->display;
+ 	enum pipe pipe;
+ 
+ 	for_each_pipe(dev_priv, pipe) {
+@@ -574,7 +575,7 @@ void valleyview_pipestat_irq_handler(struct drm_i915_private *dev_priv,
  	}
+ 
+ 	if (pipe_stats[0] & PIPE_GMBUS_INTERRUPT_STATUS)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
  }
-@@ -161,8 +164,8 @@ static void
- verify_crtc_state(struct intel_atomic_state *state,
- 		  struct intel_crtc *crtc)
- {
--	struct drm_device *dev = crtc->base.dev;
--	struct drm_i915_private *i915 = to_i915(dev);
-+	struct intel_display *display = to_intel_display(state);
-+	struct drm_i915_private *i915 = to_i915(display->drm);
- 	const struct intel_crtc_state *sw_crtc_state =
- 		intel_atomic_get_new_crtc_state(state, crtc);
- 	struct intel_crtc_state *hw_crtc_state;
-@@ -173,7 +176,7 @@ verify_crtc_state(struct intel_atomic_state *state,
- 	if (!hw_crtc_state)
- 		return;
  
--	drm_dbg_kms(&i915->drm, "[CRTC:%d:%s]\n", crtc->base.base.id,
-+	drm_dbg_kms(display->drm, "[CRTC:%d:%s]\n", crtc->base.base.id,
- 		    crtc->base.name);
+ static void ibx_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+@@ -596,7 +597,7 @@ static void ibx_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ 		intel_dp_aux_irq_handler(display);
  
- 	hw_crtc_state->hw.enable = sw_crtc_state->hw.enable;
-@@ -184,30 +187,30 @@ verify_crtc_state(struct intel_atomic_state *state,
- 	if (IS_I830(i915) && hw_crtc_state->hw.active)
- 		hw_crtc_state->hw.active = sw_crtc_state->hw.active;
+ 	if (pch_iir & SDE_GMBUS)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
  
--	I915_STATE_WARN(i915,
--			sw_crtc_state->hw.active != hw_crtc_state->hw.active,
--			"crtc active state doesn't match with hw state (expected %i, found %i)\n",
--			sw_crtc_state->hw.active, hw_crtc_state->hw.active);
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 sw_crtc_state->hw.active != hw_crtc_state->hw.active,
-+				 "crtc active state doesn't match with hw state (expected %i, found %i)\n",
-+				 sw_crtc_state->hw.active, hw_crtc_state->hw.active);
+ 	if (pch_iir & SDE_AUDIO_HDCP_MASK)
+ 		drm_dbg(&dev_priv->drm, "PCH HDCP audio interrupt\n");
+@@ -685,7 +686,7 @@ static void cpt_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ 		intel_dp_aux_irq_handler(display);
  
--	I915_STATE_WARN(i915, crtc->active != sw_crtc_state->hw.active,
--			"transitional active state does not match atomic hw state (expected %i, found %i)\n",
--			sw_crtc_state->hw.active, crtc->active);
-+	INTEL_DISPLAY_STATE_WARN(display, crtc->active != sw_crtc_state->hw.active,
-+				 "transitional active state does not match atomic hw state (expected %i, found %i)\n",
-+				 sw_crtc_state->hw.active, crtc->active);
+ 	if (pch_iir & SDE_GMBUS_CPT)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
  
- 	primary_crtc = intel_primary_crtc(sw_crtc_state);
+ 	if (pch_iir & SDE_AUDIO_CP_REQ_CPT)
+ 		drm_dbg(&dev_priv->drm, "Audio CP request interrupt\n");
+@@ -1128,7 +1129,7 @@ void gen8_de_irq_handler(struct drm_i915_private *dev_priv, u32 master_ctl)
  
--	for_each_encoder_on_crtc(dev, &primary_crtc->base, encoder) {
-+	for_each_encoder_on_crtc(display->drm, &primary_crtc->base, encoder) {
- 		enum pipe pipe;
- 		bool active;
+ 			if ((IS_GEMINILAKE(dev_priv) || IS_BROXTON(dev_priv)) &&
+ 			    (iir & BXT_DE_PORT_GMBUS)) {
+-				intel_gmbus_irq_handler(dev_priv);
++				intel_gmbus_irq_handler(display);
+ 				found = true;
+ 			}
  
- 		active = encoder->get_hw_state(encoder, &pipe);
--		I915_STATE_WARN(i915, active != sw_crtc_state->hw.active,
--				"[ENCODER:%i] active %i with crtc active %i\n",
--				encoder->base.base.id, active,
--				sw_crtc_state->hw.active);
-+		INTEL_DISPLAY_STATE_WARN(display, active != sw_crtc_state->hw.active,
-+					 "[ENCODER:%i] active %i with crtc active %i\n",
-+					 encoder->base.base.id, active,
-+					 sw_crtc_state->hw.active);
- 
--		I915_STATE_WARN(i915, active && primary_crtc->pipe != pipe,
--				"Encoder connected to wrong pipe %c\n",
--				pipe_name(pipe));
-+		INTEL_DISPLAY_STATE_WARN(display, active && primary_crtc->pipe != pipe,
-+					 "Encoder connected to wrong pipe %c\n",
-+					 pipe_name(pipe));
- 
- 		if (active)
- 			intel_encoder_get_config(encoder, hw_crtc_state);
-@@ -220,7 +223,7 @@ verify_crtc_state(struct intel_atomic_state *state,
- 
- 	if (!intel_pipe_config_compare(sw_crtc_state,
- 				       hw_crtc_state, false)) {
--		I915_STATE_WARN(i915, 1, "pipe state doesn't match!\n");
-+		INTEL_DISPLAY_STATE_WARN(display, 1, "pipe state doesn't match!\n");
- 		intel_crtc_state_dump(hw_crtc_state, NULL, "hw state");
- 		intel_crtc_state_dump(sw_crtc_state, NULL, "sw state");
- 	}
-diff --git a/drivers/gpu/drm/i915/display/intel_pch_display.c b/drivers/gpu/drm/i915/display/intel_pch_display.c
-index f13ab680c2cf4..5fbcb74aeac11 100644
---- a/drivers/gpu/drm/i915/display/intel_pch_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_pch_display.c
-@@ -39,58 +39,61 @@ static void assert_pch_dp_disabled(struct drm_i915_private *dev_priv,
- 				   enum pipe pipe, enum port port,
- 				   i915_reg_t dp_reg)
+diff --git a/drivers/gpu/drm/i915/display/intel_dsi_vbt.c b/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
+index f0e3be0fe4208..e8129a7202103 100644
+--- a/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
++++ b/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
+@@ -323,6 +323,7 @@ enum {
+ static void icl_native_gpio_set_value(struct drm_i915_private *dev_priv,
+ 				      int gpio, bool value)
  {
 +	struct intel_display *display = &dev_priv->display;
- 	enum pipe port_pipe;
- 	bool state;
+ 	int index;
  
- 	state = g4x_dp_port_enabled(dev_priv, dp_reg, port, &port_pipe);
+ 	if (drm_WARN_ON(&dev_priv->drm, DISPLAY_VER(dev_priv) == 11 && gpio >= MIPI_RESET_2))
+@@ -367,7 +368,7 @@ static void icl_native_gpio_set_value(struct drm_i915_private *dev_priv,
+ 	case MIPI_AVEE_EN_2:
+ 		index = gpio == MIPI_AVEE_EN_1 ? 1 : 2;
  
--	I915_STATE_WARN(dev_priv, state && port_pipe == pipe,
--			"PCH DP %c enabled on transcoder %c, should be disabled\n",
--			port_name(port), pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display, state && port_pipe == pipe,
-+				 "PCH DP %c enabled on transcoder %c, should be disabled\n",
-+				 port_name(port), pipe_name(pipe));
+-		intel_de_rmw(dev_priv, GPIO(dev_priv, index),
++		intel_de_rmw(display, GPIO(display, index),
+ 			     GPIO_CLOCK_VAL_OUT,
+ 			     GPIO_CLOCK_DIR_MASK | GPIO_CLOCK_DIR_OUT |
+ 			     GPIO_CLOCK_VAL_MASK | (value ? GPIO_CLOCK_VAL_OUT : 0));
+@@ -376,7 +377,7 @@ static void icl_native_gpio_set_value(struct drm_i915_private *dev_priv,
+ 	case MIPI_VIO_EN_2:
+ 		index = gpio == MIPI_VIO_EN_1 ? 1 : 2;
  
--	I915_STATE_WARN(dev_priv,
--			HAS_PCH_IBX(dev_priv) && !state && port_pipe == PIPE_B,
--			"IBX PCH DP %c still using transcoder B\n",
--			port_name(port));
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 HAS_PCH_IBX(dev_priv) && !state && port_pipe == PIPE_B,
-+				 "IBX PCH DP %c still using transcoder B\n",
-+				 port_name(port));
- }
- 
- static void assert_pch_hdmi_disabled(struct drm_i915_private *dev_priv,
- 				     enum pipe pipe, enum port port,
- 				     i915_reg_t hdmi_reg)
+-		intel_de_rmw(dev_priv, GPIO(dev_priv, index),
++		intel_de_rmw(display, GPIO(display, index),
+ 			     GPIO_DATA_VAL_OUT,
+ 			     GPIO_DATA_DIR_MASK | GPIO_DATA_DIR_OUT |
+ 			     GPIO_DATA_VAL_MASK | (value ? GPIO_DATA_VAL_OUT : 0));
+diff --git a/drivers/gpu/drm/i915/display/intel_dvo.c b/drivers/gpu/drm/i915/display/intel_dvo.c
+index 12e7628cbecfb..2bb4d829ca3c4 100644
+--- a/drivers/gpu/drm/i915/display/intel_dvo.c
++++ b/drivers/gpu/drm/i915/display/intel_dvo.c
+@@ -416,6 +416,7 @@ static bool intel_dvo_init_dev(struct drm_i915_private *dev_priv,
+ 			       struct intel_dvo *intel_dvo,
+ 			       const struct intel_dvo_device *dvo)
  {
 +	struct intel_display *display = &dev_priv->display;
- 	enum pipe port_pipe;
- 	bool state;
+ 	struct i2c_adapter *i2c;
+ 	u32 dpll[I915_MAX_PIPES];
+ 	enum pipe pipe;
+@@ -427,7 +428,7 @@ static bool intel_dvo_init_dev(struct drm_i915_private *dev_priv,
+ 	 * special cases, but otherwise default to what's defined
+ 	 * in the spec.
+ 	 */
+-	if (intel_gmbus_is_valid_pin(dev_priv, dvo->gpio))
++	if (intel_gmbus_is_valid_pin(display, dvo->gpio))
+ 		gpio = dvo->gpio;
+ 	else if (dvo->type == INTEL_DVO_CHIP_LVDS)
+ 		gpio = GMBUS_PIN_SSC;
+@@ -439,7 +440,7 @@ static bool intel_dvo_init_dev(struct drm_i915_private *dev_priv,
+ 	 * It appears that everything is on GPIOE except for panels
+ 	 * on i830 laptops, which are on GPIOB (DVOA).
+ 	 */
+-	i2c = intel_gmbus_get_adapter(dev_priv, gpio);
++	i2c = intel_gmbus_get_adapter(display, gpio);
  
- 	state = intel_sdvo_port_enabled(dev_priv, hdmi_reg, &port_pipe);
+ 	intel_dvo->dev = *dvo;
  
--	I915_STATE_WARN(dev_priv, state && port_pipe == pipe,
--			"PCH HDMI %c enabled on transcoder %c, should be disabled\n",
--			port_name(port), pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display, state && port_pipe == pipe,
-+				 "PCH HDMI %c enabled on transcoder %c, should be disabled\n",
-+				 port_name(port), pipe_name(pipe));
+@@ -488,6 +489,7 @@ static bool intel_dvo_probe(struct drm_i915_private *i915,
  
--	I915_STATE_WARN(dev_priv,
--			HAS_PCH_IBX(dev_priv) && !state && port_pipe == PIPE_B,
--			"IBX PCH HDMI %c still using transcoder B\n",
--			port_name(port));
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 HAS_PCH_IBX(dev_priv) && !state && port_pipe == PIPE_B,
-+				 "IBX PCH HDMI %c still using transcoder B\n",
-+				 port_name(port));
- }
- 
- static void assert_pch_ports_disabled(struct drm_i915_private *dev_priv,
- 				      enum pipe pipe)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	enum pipe port_pipe;
- 
- 	assert_pch_dp_disabled(dev_priv, pipe, PORT_B, PCH_DP_B);
- 	assert_pch_dp_disabled(dev_priv, pipe, PORT_C, PCH_DP_C);
- 	assert_pch_dp_disabled(dev_priv, pipe, PORT_D, PCH_DP_D);
- 
--	I915_STATE_WARN(dev_priv,
--			intel_crt_port_enabled(dev_priv, PCH_ADPA, &port_pipe) && port_pipe == pipe,
--			"PCH VGA enabled on transcoder %c, should be disabled\n",
--			pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_crt_port_enabled(dev_priv, PCH_ADPA, &port_pipe) && port_pipe == pipe,
-+				 "PCH VGA enabled on transcoder %c, should be disabled\n",
-+				 pipe_name(pipe));
- 
--	I915_STATE_WARN(dev_priv,
--			intel_lvds_port_enabled(dev_priv, PCH_LVDS, &port_pipe) && port_pipe == pipe,
--			"PCH LVDS enabled on transcoder %c, should be disabled\n",
--			pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display,
-+				 intel_lvds_port_enabled(dev_priv, PCH_LVDS, &port_pipe) && port_pipe == pipe,
-+				 "PCH LVDS enabled on transcoder %c, should be disabled\n",
-+				 pipe_name(pipe));
- 
- 	/* PCH SDVOB multiplex with HDMIB */
- 	assert_pch_hdmi_disabled(dev_priv, pipe, PORT_B, PCH_HDMIB);
-@@ -101,14 +104,15 @@ static void assert_pch_ports_disabled(struct drm_i915_private *dev_priv,
- static void assert_pch_transcoder_disabled(struct drm_i915_private *dev_priv,
- 					   enum pipe pipe)
- {
-+	struct intel_display *display = &dev_priv->display;
- 	u32 val;
- 	bool enabled;
- 
--	val = intel_de_read(dev_priv, PCH_TRANSCONF(pipe));
-+	val = intel_de_read(display, PCH_TRANSCONF(pipe));
- 	enabled = !!(val & TRANS_ENABLE);
--	I915_STATE_WARN(dev_priv, enabled,
--			"transcoder assertion failed, should be off on pipe %c but is still active\n",
--			pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display, enabled,
-+				 "transcoder assertion failed, should be off on pipe %c but is still active\n",
-+				 pipe_name(pipe));
- }
- 
- static void ibx_sanitize_pch_hdmi_port(struct drm_i915_private *dev_priv,
-diff --git a/drivers/gpu/drm/i915/display/intel_pps.c b/drivers/gpu/drm/i915/display/intel_pps.c
-index feddc30e3375e..22616a6f75092 100644
---- a/drivers/gpu/drm/i915/display/intel_pps.c
-+++ b/drivers/gpu/drm/i915/display/intel_pps.c
-@@ -800,7 +800,6 @@ bool intel_pps_vdd_on_unlocked(struct intel_dp *intel_dp)
- void intel_pps_vdd_on(struct intel_dp *intel_dp)
- {
- 	struct intel_display *display = to_intel_display(intel_dp);
--	struct drm_i915_private *i915 = to_i915(display->drm);
- 	intel_wakeref_t wakeref;
- 	bool vdd;
- 
-@@ -810,10 +809,10 @@ void intel_pps_vdd_on(struct intel_dp *intel_dp)
- 	vdd = false;
- 	with_intel_pps_lock(intel_dp, wakeref)
- 		vdd = intel_pps_vdd_on_unlocked(intel_dp);
--	I915_STATE_WARN(i915, !vdd, "[ENCODER:%d:%s] %s VDD already requested on\n",
--			dp_to_dig_port(intel_dp)->base.base.base.id,
--			dp_to_dig_port(intel_dp)->base.base.name,
--			pps_name(intel_dp));
-+	INTEL_DISPLAY_STATE_WARN(display, !vdd, "[ENCODER:%d:%s] %s VDD already requested on\n",
-+				 dp_to_dig_port(intel_dp)->base.base.base.id,
-+				 dp_to_dig_port(intel_dp)->base.base.name,
-+				 pps_name(intel_dp));
- }
- 
- static void intel_pps_vdd_off_sync_unlocked(struct intel_dp *intel_dp)
-@@ -920,18 +919,17 @@ static void edp_panel_vdd_schedule_off(struct intel_dp *intel_dp)
- void intel_pps_vdd_off_unlocked(struct intel_dp *intel_dp, bool sync)
- {
- 	struct intel_display *display = to_intel_display(intel_dp);
--	struct drm_i915_private *dev_priv = to_i915(display->drm);
- 
- 	lockdep_assert_held(&display->pps.mutex);
- 
- 	if (!intel_dp_is_edp(intel_dp))
- 		return;
- 
--	I915_STATE_WARN(dev_priv, !intel_dp->pps.want_panel_vdd,
--			"[ENCODER:%d:%s] %s VDD not forced on",
--			dp_to_dig_port(intel_dp)->base.base.base.id,
--			dp_to_dig_port(intel_dp)->base.base.name,
--			pps_name(intel_dp));
-+	INTEL_DISPLAY_STATE_WARN(display, !intel_dp->pps.want_panel_vdd,
-+				 "[ENCODER:%d:%s] %s VDD not forced on",
-+				 dp_to_dig_port(intel_dp)->base.base.base.id,
-+				 dp_to_dig_port(intel_dp)->base.base.name,
-+				 pps_name(intel_dp));
- 
- 	intel_dp->pps.want_panel_vdd = false;
- 
-@@ -1806,7 +1804,7 @@ void assert_pps_unlocked(struct intel_display *display, enum pipe pipe)
- 	    ((val & PANEL_UNLOCK_MASK) == PANEL_UNLOCK_REGS))
- 		locked = false;
- 
--	I915_STATE_WARN(dev_priv, panel_pipe == pipe && locked,
--			"panel assertion failure, pipe %c regs locked\n",
--			pipe_name(pipe));
-+	INTEL_DISPLAY_STATE_WARN(display, panel_pipe == pipe && locked,
-+				 "panel assertion failure, pipe %c regs locked\n",
-+				 pipe_name(pipe));
- }
-diff --git a/drivers/gpu/drm/i915/display/intel_snps_phy.c b/drivers/gpu/drm/i915/display/intel_snps_phy.c
-index e6df1f92def5f..4b3a32736fd69 100644
---- a/drivers/gpu/drm/i915/display/intel_snps_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_snps_phy.c
-@@ -1997,6 +1997,7 @@ int intel_snps_phy_check_hdmi_link_rate(int clock)
- void intel_mpllb_state_verify(struct intel_atomic_state *state,
- 			      struct intel_crtc *crtc)
- {
-+	struct intel_display *display = to_intel_display(state);
- 	struct drm_i915_private *i915 = to_i915(state->base.dev);
- 	const struct intel_crtc_state *new_crtc_state =
- 		intel_atomic_get_new_crtc_state(state, crtc);
-@@ -2019,11 +2020,11 @@ void intel_mpllb_state_verify(struct intel_atomic_state *state,
- 	intel_mpllb_readout_hw_state(encoder, &mpllb_hw_state);
- 
- #define MPLLB_CHECK(__name)						\
--	I915_STATE_WARN(i915, mpllb_sw_state->__name != mpllb_hw_state.__name, \
--			"[CRTC:%d:%s] mismatch in MPLLB: %s (expected 0x%08x, found 0x%08x)", \
--			crtc->base.base.id, crtc->base.name,		\
--			__stringify(__name),				\
--			mpllb_sw_state->__name, mpllb_hw_state.__name)
-+	INTEL_DISPLAY_STATE_WARN(display, mpllb_sw_state->__name != mpllb_hw_state.__name, \
-+				 "[CRTC:%d:%s] mismatch in MPLLB: %s (expected 0x%08x, found 0x%08x)", \
-+				 crtc->base.base.id, crtc->base.name,	\
-+				 __stringify(__name),			\
-+				 mpllb_sw_state->__name, mpllb_hw_state.__name)
- 
- 	MPLLB_CHECK(mpllb_cp);
- 	MPLLB_CHECK(mpllb_div);
-diff --git a/drivers/gpu/drm/i915/display/vlv_dsi_pll.c b/drivers/gpu/drm/i915/display/vlv_dsi_pll.c
-index 70c5a13a3c75b..59a50647f2c3c 100644
---- a/drivers/gpu/drm/i915/display/vlv_dsi_pll.c
-+++ b/drivers/gpu/drm/i915/display/vlv_dsi_pll.c
-@@ -592,15 +592,16 @@ void bxt_dsi_reset_clocks(struct intel_encoder *encoder, enum port port)
- 
- static void assert_dsi_pll(struct drm_i915_private *i915, bool state)
+ void intel_dvo_init(struct drm_i915_private *i915)
  {
 +	struct intel_display *display = &i915->display;
- 	bool cur_state;
+ 	struct intel_connector *connector;
+ 	struct intel_encoder *encoder;
+ 	struct intel_dvo *intel_dvo;
+@@ -548,7 +550,7 @@ void intel_dvo_init(struct drm_i915_private *i915)
+ 	drm_connector_init_with_ddc(&i915->drm, &connector->base,
+ 				    &intel_dvo_connector_funcs,
+ 				    intel_dvo_connector_type(&intel_dvo->dev),
+-				    intel_gmbus_get_adapter(i915, GMBUS_PIN_DPC));
++				    intel_gmbus_get_adapter(display, GMBUS_PIN_DPC));
  
- 	vlv_cck_get(i915);
- 	cur_state = vlv_cck_read(i915, CCK_REG_DSI_PLL_CONTROL) & DSI_PLL_VCO_EN;
- 	vlv_cck_put(i915);
+ 	drm_connector_helper_add(&connector->base,
+ 				 &intel_dvo_connector_helper_funcs);
+diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.c b/drivers/gpu/drm/i915/display/intel_gmbus.c
+index 88b37deb5c82a..3a268e70e3080 100644
+--- a/drivers/gpu/drm/i915/display/intel_gmbus.c
++++ b/drivers/gpu/drm/i915/display/intel_gmbus.c
+@@ -48,7 +48,7 @@ struct intel_gmbus {
+ 	u32 reg0;
+ 	i915_reg_t gpio_reg;
+ 	struct i2c_algo_bit_data bit_algo;
+-	struct drm_i915_private *i915;
++	struct intel_display *display;
+ };
  
--	I915_STATE_WARN(i915, cur_state != state,
--			"DSI PLL state assertion failure (expected %s, current %s)\n",
--			str_on_off(state), str_on_off(cur_state));
-+	INTEL_DISPLAY_STATE_WARN(display, cur_state != state,
-+				 "DSI PLL state assertion failure (expected %s, current %s)\n",
-+				 str_on_off(state), str_on_off(cur_state));
+ enum gmbus_gpio {
+@@ -149,9 +149,10 @@ static const struct gmbus_pin gmbus_pins_mtp[] = {
+ 	[GMBUS_PIN_12_TC4_ICP] = { "tc4", GPIOM },
+ };
+ 
+-static const struct gmbus_pin *get_gmbus_pin(struct drm_i915_private *i915,
++static const struct gmbus_pin *get_gmbus_pin(struct intel_display *display,
+ 					     unsigned int pin)
+ {
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	const struct gmbus_pin *pins;
+ 	size_t size;
+ 
+@@ -173,7 +174,7 @@ static const struct gmbus_pin *get_gmbus_pin(struct drm_i915_private *i915,
+ 	} else if (IS_GEMINILAKE(i915) || IS_BROXTON(i915)) {
+ 		pins = gmbus_pins_bxt;
+ 		size = ARRAY_SIZE(gmbus_pins_bxt);
+-	} else if (DISPLAY_VER(i915) == 9) {
++	} else if (DISPLAY_VER(display) == 9) {
+ 		pins = gmbus_pins_skl;
+ 		size = ARRAY_SIZE(gmbus_pins_skl);
+ 	} else if (IS_BROADWELL(i915)) {
+@@ -190,9 +191,9 @@ static const struct gmbus_pin *get_gmbus_pin(struct drm_i915_private *i915,
+ 	return &pins[pin];
  }
  
- void assert_dsi_pll_enabled(struct drm_i915_private *i915)
+-bool intel_gmbus_is_valid_pin(struct drm_i915_private *i915, unsigned int pin)
++bool intel_gmbus_is_valid_pin(struct intel_display *display, unsigned int pin)
+ {
+-	return get_gmbus_pin(i915, pin);
++	return get_gmbus_pin(display, pin);
+ }
+ 
+ /* Intel GPIO access functions */
+@@ -206,42 +207,45 @@ to_intel_gmbus(struct i2c_adapter *i2c)
+ }
+ 
+ void
+-intel_gmbus_reset(struct drm_i915_private *i915)
++intel_gmbus_reset(struct intel_display *display)
+ {
+-	intel_de_write(i915, GMBUS0(i915), 0);
+-	intel_de_write(i915, GMBUS4(i915), 0);
++	intel_de_write(display, GMBUS0(display), 0);
++	intel_de_write(display, GMBUS4(display), 0);
+ }
+ 
+-static void pnv_gmbus_clock_gating(struct drm_i915_private *i915,
++static void pnv_gmbus_clock_gating(struct intel_display *display,
+ 				   bool enable)
+ {
+ 	/* When using bit bashing for I2C, this bit needs to be set to 1 */
+-	intel_de_rmw(i915, DSPCLK_GATE_D(i915), PNV_GMBUSUNIT_CLOCK_GATE_DISABLE,
++	intel_de_rmw(display, DSPCLK_GATE_D(display),
++		     PNV_GMBUSUNIT_CLOCK_GATE_DISABLE,
+ 		     !enable ? PNV_GMBUSUNIT_CLOCK_GATE_DISABLE : 0);
+ }
+ 
+-static void pch_gmbus_clock_gating(struct drm_i915_private *i915,
++static void pch_gmbus_clock_gating(struct intel_display *display,
+ 				   bool enable)
+ {
+-	intel_de_rmw(i915, SOUTH_DSPCLK_GATE_D, PCH_GMBUSUNIT_CLOCK_GATE_DISABLE,
++	intel_de_rmw(display, SOUTH_DSPCLK_GATE_D,
++		     PCH_GMBUSUNIT_CLOCK_GATE_DISABLE,
+ 		     !enable ? PCH_GMBUSUNIT_CLOCK_GATE_DISABLE : 0);
+ }
+ 
+-static void bxt_gmbus_clock_gating(struct drm_i915_private *i915,
++static void bxt_gmbus_clock_gating(struct intel_display *display,
+ 				   bool enable)
+ {
+-	intel_de_rmw(i915, GEN9_CLKGATE_DIS_4, BXT_GMBUS_GATING_DIS,
++	intel_de_rmw(display, GEN9_CLKGATE_DIS_4, BXT_GMBUS_GATING_DIS,
+ 		     !enable ? BXT_GMBUS_GATING_DIS : 0);
+ }
+ 
+ static u32 get_reserved(struct intel_gmbus *bus)
+ {
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	u32 reserved = 0;
+ 
+ 	/* On most chips, these bits must be preserved in software. */
+ 	if (!IS_I830(i915) && !IS_I845G(i915))
+-		reserved = intel_de_read_notrace(i915, bus->gpio_reg) &
++		reserved = intel_de_read_notrace(display, bus->gpio_reg) &
+ 			(GPIO_DATA_PULLUP_DISABLE | GPIO_CLOCK_PULLUP_DISABLE);
+ 
+ 	return reserved;
+@@ -250,31 +254,31 @@ static u32 get_reserved(struct intel_gmbus *bus)
+ static int get_clock(void *data)
+ {
+ 	struct intel_gmbus *bus = data;
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 	u32 reserved = get_reserved(bus);
+ 
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved | GPIO_CLOCK_DIR_MASK);
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved | GPIO_CLOCK_DIR_MASK);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved);
+ 
+-	return (intel_de_read_notrace(i915, bus->gpio_reg) & GPIO_CLOCK_VAL_IN) != 0;
++	return (intel_de_read_notrace(display, bus->gpio_reg) & GPIO_CLOCK_VAL_IN) != 0;
+ }
+ 
+ static int get_data(void *data)
+ {
+ 	struct intel_gmbus *bus = data;
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 	u32 reserved = get_reserved(bus);
+ 
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved | GPIO_DATA_DIR_MASK);
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved | GPIO_DATA_DIR_MASK);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved);
+ 
+-	return (intel_de_read_notrace(i915, bus->gpio_reg) & GPIO_DATA_VAL_IN) != 0;
++	return (intel_de_read_notrace(display, bus->gpio_reg) & GPIO_DATA_VAL_IN) != 0;
+ }
+ 
+ static void set_clock(void *data, int state_high)
+ {
+ 	struct intel_gmbus *bus = data;
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 	u32 reserved = get_reserved(bus);
+ 	u32 clock_bits;
+ 
+@@ -284,14 +288,14 @@ static void set_clock(void *data, int state_high)
+ 		clock_bits = GPIO_CLOCK_DIR_OUT | GPIO_CLOCK_DIR_MASK |
+ 			     GPIO_CLOCK_VAL_MASK;
+ 
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved | clock_bits);
+-	intel_de_posting_read(i915, bus->gpio_reg);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved | clock_bits);
++	intel_de_posting_read(display, bus->gpio_reg);
+ }
+ 
+ static void set_data(void *data, int state_high)
+ {
+ 	struct intel_gmbus *bus = data;
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 	u32 reserved = get_reserved(bus);
+ 	u32 data_bits;
+ 
+@@ -301,20 +305,21 @@ static void set_data(void *data, int state_high)
+ 		data_bits = GPIO_DATA_DIR_OUT | GPIO_DATA_DIR_MASK |
+ 			GPIO_DATA_VAL_MASK;
+ 
+-	intel_de_write_notrace(i915, bus->gpio_reg, reserved | data_bits);
+-	intel_de_posting_read(i915, bus->gpio_reg);
++	intel_de_write_notrace(display, bus->gpio_reg, reserved | data_bits);
++	intel_de_posting_read(display, bus->gpio_reg);
+ }
+ 
+ static int
+ intel_gpio_pre_xfer(struct i2c_adapter *adapter)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 
+-	intel_gmbus_reset(i915);
++	intel_gmbus_reset(display);
+ 
+ 	if (IS_PINEVIEW(i915))
+-		pnv_gmbus_clock_gating(i915, false);
++		pnv_gmbus_clock_gating(display, false);
+ 
+ 	set_data(bus, 1);
+ 	set_clock(bus, 1);
+@@ -326,13 +331,14 @@ static void
+ intel_gpio_post_xfer(struct i2c_adapter *adapter)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 
+ 	set_data(bus, 1);
+ 	set_clock(bus, 1);
+ 
+ 	if (IS_PINEVIEW(i915))
+-		pnv_gmbus_clock_gating(i915, true);
++		pnv_gmbus_clock_gating(display, true);
+ }
+ 
+ static void
+@@ -355,16 +361,17 @@ intel_gpio_setup(struct intel_gmbus *bus, i915_reg_t gpio_reg)
+ 	algo->data = bus;
+ }
+ 
+-static bool has_gmbus_irq(struct drm_i915_private *i915)
++static bool has_gmbus_irq(struct intel_display *display)
+ {
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	/*
+ 	 * encoder->shutdown() may want to use GMBUS
+ 	 * after irqs have already been disabled.
+ 	 */
+-	return HAS_GMBUS_IRQ(i915) && intel_irqs_enabled(i915);
++	return HAS_GMBUS_IRQ(display) && intel_irqs_enabled(i915);
+ }
+ 
+-static int gmbus_wait(struct drm_i915_private *i915, u32 status, u32 irq_en)
++static int gmbus_wait(struct intel_display *display, u32 status, u32 irq_en)
+ {
+ 	DEFINE_WAIT(wait);
+ 	u32 gmbus2;
+@@ -374,21 +381,21 @@ static int gmbus_wait(struct drm_i915_private *i915, u32 status, u32 irq_en)
+ 	 * we also need to check for NAKs besides the hw ready/idle signal, we
+ 	 * need to wake up periodically and check that ourselves.
+ 	 */
+-	if (!has_gmbus_irq(i915))
++	if (!has_gmbus_irq(display))
+ 		irq_en = 0;
+ 
+-	add_wait_queue(&i915->display.gmbus.wait_queue, &wait);
+-	intel_de_write_fw(i915, GMBUS4(i915), irq_en);
++	add_wait_queue(&display->gmbus.wait_queue, &wait);
++	intel_de_write_fw(display, GMBUS4(display), irq_en);
+ 
+ 	status |= GMBUS_SATOER;
+-	ret = wait_for_us((gmbus2 = intel_de_read_fw(i915, GMBUS2(i915))) & status,
++	ret = wait_for_us((gmbus2 = intel_de_read_fw(display, GMBUS2(display))) & status,
+ 			  2);
+ 	if (ret)
+-		ret = wait_for((gmbus2 = intel_de_read_fw(i915, GMBUS2(i915))) & status,
++		ret = wait_for((gmbus2 = intel_de_read_fw(display, GMBUS2(display))) & status,
+ 			       50);
+ 
+-	intel_de_write_fw(i915, GMBUS4(i915), 0);
+-	remove_wait_queue(&i915->display.gmbus.wait_queue, &wait);
++	intel_de_write_fw(display, GMBUS4(display), 0);
++	remove_wait_queue(&display->gmbus.wait_queue, &wait);
+ 
+ 	if (gmbus2 & GMBUS_SATOER)
+ 		return -ENXIO;
+@@ -397,7 +404,7 @@ static int gmbus_wait(struct drm_i915_private *i915, u32 status, u32 irq_en)
+ }
+ 
+ static int
+-gmbus_wait_idle(struct drm_i915_private *i915)
++gmbus_wait_idle(struct intel_display *display)
+ {
+ 	DEFINE_WAIT(wait);
+ 	u32 irq_enable;
+@@ -405,33 +412,33 @@ gmbus_wait_idle(struct drm_i915_private *i915)
+ 
+ 	/* Important: The hw handles only the first bit, so set only one! */
+ 	irq_enable = 0;
+-	if (has_gmbus_irq(i915))
++	if (has_gmbus_irq(display))
+ 		irq_enable = GMBUS_IDLE_EN;
+ 
+-	add_wait_queue(&i915->display.gmbus.wait_queue, &wait);
+-	intel_de_write_fw(i915, GMBUS4(i915), irq_enable);
++	add_wait_queue(&display->gmbus.wait_queue, &wait);
++	intel_de_write_fw(display, GMBUS4(display), irq_enable);
+ 
+-	ret = intel_de_wait_fw(i915, GMBUS2(i915), GMBUS_ACTIVE, 0, 10);
++	ret = intel_de_wait_fw(display, GMBUS2(display), GMBUS_ACTIVE, 0, 10);
+ 
+-	intel_de_write_fw(i915, GMBUS4(i915), 0);
+-	remove_wait_queue(&i915->display.gmbus.wait_queue, &wait);
++	intel_de_write_fw(display, GMBUS4(display), 0);
++	remove_wait_queue(&display->gmbus.wait_queue, &wait);
+ 
+ 	return ret;
+ }
+ 
+-static unsigned int gmbus_max_xfer_size(struct drm_i915_private *i915)
++static unsigned int gmbus_max_xfer_size(struct intel_display *display)
+ {
+-	return DISPLAY_VER(i915) >= 9 ? GEN9_GMBUS_BYTE_COUNT_MAX :
++	return DISPLAY_VER(display) >= 9 ? GEN9_GMBUS_BYTE_COUNT_MAX :
+ 	       GMBUS_BYTE_COUNT_MAX;
+ }
+ 
+ static int
+-gmbus_xfer_read_chunk(struct drm_i915_private *i915,
++gmbus_xfer_read_chunk(struct intel_display *display,
+ 		      unsigned short addr, u8 *buf, unsigned int len,
+ 		      u32 gmbus0_reg, u32 gmbus1_index)
+ {
+ 	unsigned int size = len;
+-	bool burst_read = len > gmbus_max_xfer_size(i915);
++	bool burst_read = len > gmbus_max_xfer_size(display);
+ 	bool extra_byte_added = false;
+ 
+ 	if (burst_read) {
+@@ -444,21 +451,21 @@ gmbus_xfer_read_chunk(struct drm_i915_private *i915,
+ 			len++;
+ 		}
+ 		size = len % 256 + 256;
+-		intel_de_write_fw(i915, GMBUS0(i915),
++		intel_de_write_fw(display, GMBUS0(display),
+ 				  gmbus0_reg | GMBUS_BYTE_CNT_OVERRIDE);
+ 	}
+ 
+-	intel_de_write_fw(i915, GMBUS1(i915),
++	intel_de_write_fw(display, GMBUS1(display),
+ 			  gmbus1_index | GMBUS_CYCLE_WAIT | (size << GMBUS_BYTE_COUNT_SHIFT) | (addr << GMBUS_SLAVE_ADDR_SHIFT) | GMBUS_SLAVE_READ | GMBUS_SW_RDY);
+ 	while (len) {
+ 		int ret;
+ 		u32 val, loop = 0;
+ 
+-		ret = gmbus_wait(i915, GMBUS_HW_RDY, GMBUS_HW_RDY_EN);
++		ret = gmbus_wait(display, GMBUS_HW_RDY, GMBUS_HW_RDY_EN);
+ 		if (ret)
+ 			return ret;
+ 
+-		val = intel_de_read_fw(i915, GMBUS3(i915));
++		val = intel_de_read_fw(display, GMBUS3(display));
+ 		do {
+ 			if (extra_byte_added && len == 1) {
+ 				len--;
+@@ -471,7 +478,7 @@ gmbus_xfer_read_chunk(struct drm_i915_private *i915,
+ 
+ 		if (burst_read && len == size - 4)
+ 			/* Reset the override bit */
+-			intel_de_write_fw(i915, GMBUS0(i915), gmbus0_reg);
++			intel_de_write_fw(display, GMBUS0(display), gmbus0_reg);
+ 	}
+ 
+ 	return 0;
+@@ -488,9 +495,10 @@ gmbus_xfer_read_chunk(struct drm_i915_private *i915,
+ #define INTEL_GMBUS_BURST_READ_MAX_LEN		767U
+ 
+ static int
+-gmbus_xfer_read(struct drm_i915_private *i915, struct i2c_msg *msg,
++gmbus_xfer_read(struct intel_display *display, struct i2c_msg *msg,
+ 		u32 gmbus0_reg, u32 gmbus1_index)
+ {
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	u8 *buf = msg->buf;
+ 	unsigned int rx_size = msg->len;
+ 	unsigned int len;
+@@ -500,9 +508,9 @@ gmbus_xfer_read(struct drm_i915_private *i915, struct i2c_msg *msg,
+ 		if (HAS_GMBUS_BURST_READ(i915))
+ 			len = min(rx_size, INTEL_GMBUS_BURST_READ_MAX_LEN);
+ 		else
+-			len = min(rx_size, gmbus_max_xfer_size(i915));
++			len = min(rx_size, gmbus_max_xfer_size(display));
+ 
+-		ret = gmbus_xfer_read_chunk(i915, msg->addr, buf, len,
++		ret = gmbus_xfer_read_chunk(display, msg->addr, buf, len,
+ 					    gmbus0_reg, gmbus1_index);
+ 		if (ret)
+ 			return ret;
+@@ -515,7 +523,7 @@ gmbus_xfer_read(struct drm_i915_private *i915, struct i2c_msg *msg,
+ }
+ 
+ static int
+-gmbus_xfer_write_chunk(struct drm_i915_private *i915,
++gmbus_xfer_write_chunk(struct intel_display *display,
+ 		       unsigned short addr, u8 *buf, unsigned int len,
+ 		       u32 gmbus1_index)
+ {
+@@ -528,8 +536,8 @@ gmbus_xfer_write_chunk(struct drm_i915_private *i915,
+ 		len -= 1;
+ 	}
+ 
+-	intel_de_write_fw(i915, GMBUS3(i915), val);
+-	intel_de_write_fw(i915, GMBUS1(i915),
++	intel_de_write_fw(display, GMBUS3(display), val);
++	intel_de_write_fw(display, GMBUS1(display),
+ 			  gmbus1_index | GMBUS_CYCLE_WAIT | (chunk_size << GMBUS_BYTE_COUNT_SHIFT) | (addr << GMBUS_SLAVE_ADDR_SHIFT) | GMBUS_SLAVE_WRITE | GMBUS_SW_RDY);
+ 	while (len) {
+ 		int ret;
+@@ -539,9 +547,9 @@ gmbus_xfer_write_chunk(struct drm_i915_private *i915,
+ 			val |= *buf++ << (8 * loop);
+ 		} while (--len && ++loop < 4);
+ 
+-		intel_de_write_fw(i915, GMBUS3(i915), val);
++		intel_de_write_fw(display, GMBUS3(display), val);
+ 
+-		ret = gmbus_wait(i915, GMBUS_HW_RDY, GMBUS_HW_RDY_EN);
++		ret = gmbus_wait(display, GMBUS_HW_RDY, GMBUS_HW_RDY_EN);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -550,7 +558,7 @@ gmbus_xfer_write_chunk(struct drm_i915_private *i915,
+ }
+ 
+ static int
+-gmbus_xfer_write(struct drm_i915_private *i915, struct i2c_msg *msg,
++gmbus_xfer_write(struct intel_display *display, struct i2c_msg *msg,
+ 		 u32 gmbus1_index)
+ {
+ 	u8 *buf = msg->buf;
+@@ -559,9 +567,9 @@ gmbus_xfer_write(struct drm_i915_private *i915, struct i2c_msg *msg,
+ 	int ret;
+ 
+ 	do {
+-		len = min(tx_size, gmbus_max_xfer_size(i915));
++		len = min(tx_size, gmbus_max_xfer_size(display));
+ 
+-		ret = gmbus_xfer_write_chunk(i915, msg->addr, buf, len,
++		ret = gmbus_xfer_write_chunk(display, msg->addr, buf, len,
+ 					     gmbus1_index);
+ 		if (ret)
+ 			return ret;
+@@ -588,7 +596,7 @@ gmbus_is_index_xfer(struct i2c_msg *msgs, int i, int num)
+ }
+ 
+ static int
+-gmbus_index_xfer(struct drm_i915_private *i915, struct i2c_msg *msgs,
++gmbus_index_xfer(struct intel_display *display, struct i2c_msg *msgs,
+ 		 u32 gmbus0_reg)
+ {
+ 	u32 gmbus1_index = 0;
+@@ -604,17 +612,17 @@ gmbus_index_xfer(struct drm_i915_private *i915, struct i2c_msg *msgs,
+ 
+ 	/* GMBUS5 holds 16-bit index */
+ 	if (gmbus5)
+-		intel_de_write_fw(i915, GMBUS5(i915), gmbus5);
++		intel_de_write_fw(display, GMBUS5(display), gmbus5);
+ 
+ 	if (msgs[1].flags & I2C_M_RD)
+-		ret = gmbus_xfer_read(i915, &msgs[1], gmbus0_reg,
++		ret = gmbus_xfer_read(display, &msgs[1], gmbus0_reg,
+ 				      gmbus1_index);
+ 	else
+-		ret = gmbus_xfer_write(i915, &msgs[1], gmbus1_index);
++		ret = gmbus_xfer_write(display, &msgs[1], gmbus1_index);
+ 
+ 	/* Clear GMBUS5 after each index transfer */
+ 	if (gmbus5)
+-		intel_de_write_fw(i915, GMBUS5(i915), 0);
++		intel_de_write_fw(display, GMBUS5(display), 0);
+ 
+ 	return ret;
+ }
+@@ -624,34 +632,35 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	      u32 gmbus0_source)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	int i = 0, inc, try = 0;
+ 	int ret = 0;
+ 
+ 	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
+ 	if (IS_GEMINILAKE(i915) || IS_BROXTON(i915))
+-		bxt_gmbus_clock_gating(i915, false);
++		bxt_gmbus_clock_gating(display, false);
+ 	else if (HAS_PCH_SPT(i915) || HAS_PCH_CNP(i915))
+-		pch_gmbus_clock_gating(i915, false);
++		pch_gmbus_clock_gating(display, false);
+ 
+ retry:
+-	intel_de_write_fw(i915, GMBUS0(i915), gmbus0_source | bus->reg0);
++	intel_de_write_fw(display, GMBUS0(display), gmbus0_source | bus->reg0);
+ 
+ 	for (; i < num; i += inc) {
+ 		inc = 1;
+ 		if (gmbus_is_index_xfer(msgs, i, num)) {
+-			ret = gmbus_index_xfer(i915, &msgs[i],
++			ret = gmbus_index_xfer(display, &msgs[i],
+ 					       gmbus0_source | bus->reg0);
+ 			inc = 2; /* an index transmission is two msgs */
+ 		} else if (msgs[i].flags & I2C_M_RD) {
+-			ret = gmbus_xfer_read(i915, &msgs[i],
++			ret = gmbus_xfer_read(display, &msgs[i],
+ 					      gmbus0_source | bus->reg0, 0);
+ 		} else {
+-			ret = gmbus_xfer_write(i915, &msgs[i], 0);
++			ret = gmbus_xfer_write(display, &msgs[i], 0);
+ 		}
+ 
+ 		if (!ret)
+-			ret = gmbus_wait(i915,
++			ret = gmbus_wait(display,
+ 					 GMBUS_HW_WAIT_PHASE, GMBUS_HW_WAIT_EN);
+ 		if (ret == -ETIMEDOUT)
+ 			goto timeout;
+@@ -663,19 +672,19 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	 * a STOP on the very first cycle. To simplify the code we
+ 	 * unconditionally generate the STOP condition with an additional gmbus
+ 	 * cycle. */
+-	intel_de_write_fw(i915, GMBUS1(i915), GMBUS_CYCLE_STOP | GMBUS_SW_RDY);
++	intel_de_write_fw(display, GMBUS1(display), GMBUS_CYCLE_STOP | GMBUS_SW_RDY);
+ 
+ 	/* Mark the GMBUS interface as disabled after waiting for idle.
+ 	 * We will re-enable it at the start of the next xfer,
+ 	 * till then let it sleep.
+ 	 */
+-	if (gmbus_wait_idle(i915)) {
+-		drm_dbg_kms(&i915->drm,
++	if (gmbus_wait_idle(display)) {
++		drm_dbg_kms(display->drm,
+ 			    "GMBUS [%s] timed out waiting for idle\n",
+ 			    adapter->name);
+ 		ret = -ETIMEDOUT;
+ 	}
+-	intel_de_write_fw(i915, GMBUS0(i915), 0);
++	intel_de_write_fw(display, GMBUS0(display), 0);
+ 	ret = ret ?: i;
+ 	goto out;
+ 
+@@ -694,8 +703,8 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	 * it's slow responding and only answers on the 2nd retry.
+ 	 */
+ 	ret = -ENXIO;
+-	if (gmbus_wait_idle(i915)) {
+-		drm_dbg_kms(&i915->drm,
++	if (gmbus_wait_idle(display)) {
++		drm_dbg_kms(display->drm,
+ 			    "GMBUS [%s] timed out after NAK\n",
+ 			    adapter->name);
+ 		ret = -ETIMEDOUT;
+@@ -705,11 +714,11 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	 * of resetting the GMBUS controller and so clearing the
+ 	 * BUS_ERROR raised by the target's NAK.
+ 	 */
+-	intel_de_write_fw(i915, GMBUS1(i915), GMBUS_SW_CLR_INT);
+-	intel_de_write_fw(i915, GMBUS1(i915), 0);
+-	intel_de_write_fw(i915, GMBUS0(i915), 0);
++	intel_de_write_fw(display, GMBUS1(display), GMBUS_SW_CLR_INT);
++	intel_de_write_fw(display, GMBUS1(display), 0);
++	intel_de_write_fw(display, GMBUS0(display), 0);
+ 
+-	drm_dbg_kms(&i915->drm, "GMBUS [%s] NAK for addr: %04x %c(%d)\n",
++	drm_dbg_kms(display->drm, "GMBUS [%s] NAK for addr: %04x %c(%d)\n",
+ 		    adapter->name, msgs[i].addr,
+ 		    (msgs[i].flags & I2C_M_RD) ? 'r' : 'w', msgs[i].len);
+ 
+@@ -720,7 +729,7 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	 * drm_do_probe_ddc_edid, which bails out on the first -ENXIO.
+ 	 */
+ 	if (ret == -ENXIO && i == 0 && try++ == 0) {
+-		drm_dbg_kms(&i915->drm,
++		drm_dbg_kms(display->drm,
+ 			    "GMBUS [%s] NAK on first message, retry\n",
+ 			    adapter->name);
+ 		goto retry;
+@@ -729,10 +738,10 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ 	goto out;
+ 
+ timeout:
+-	drm_dbg_kms(&i915->drm,
++	drm_dbg_kms(display->drm,
+ 		    "GMBUS [%s] timed out, falling back to bit banging on pin %d\n",
+ 		    bus->adapter.name, bus->reg0 & 0xff);
+-	intel_de_write_fw(i915, GMBUS0(i915), 0);
++	intel_de_write_fw(display, GMBUS0(display), 0);
+ 
+ 	/*
+ 	 * Hardware may not support GMBUS over these pins? Try GPIO bitbanging
+@@ -743,9 +752,9 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
+ out:
+ 	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
+ 	if (IS_GEMINILAKE(i915) || IS_BROXTON(i915))
+-		bxt_gmbus_clock_gating(i915, true);
++		bxt_gmbus_clock_gating(display, true);
+ 	else if (HAS_PCH_SPT(i915) || HAS_PCH_CNP(i915))
+-		pch_gmbus_clock_gating(i915, true);
++		pch_gmbus_clock_gating(display, true);
+ 
+ 	return ret;
+ }
+@@ -754,7 +763,8 @@ static int
+ gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	intel_wakeref_t wakeref;
+ 	int ret;
+ 
+@@ -778,7 +788,8 @@ gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num)
+ int intel_gmbus_output_aksv(struct i2c_adapter *adapter)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
++	struct drm_i915_private *i915 = to_i915(display->drm);
+ 	u8 cmd = DRM_HDCP_DDC_AKSV;
+ 	u8 buf[DRM_HDCP_KSV_LEN] = {};
+ 	struct i2c_msg msgs[] = {
+@@ -799,7 +810,7 @@ int intel_gmbus_output_aksv(struct i2c_adapter *adapter)
+ 	int ret;
+ 
+ 	wakeref = intel_display_power_get(i915, POWER_DOMAIN_GMBUS);
+-	mutex_lock(&i915->display.gmbus.mutex);
++	mutex_lock(&display->gmbus.mutex);
+ 
+ 	/*
+ 	 * In order to output Aksv to the receiver, use an indexed write to
+@@ -808,7 +819,7 @@ int intel_gmbus_output_aksv(struct i2c_adapter *adapter)
+ 	 */
+ 	ret = do_gmbus_xfer(adapter, msgs, ARRAY_SIZE(msgs), GMBUS_AKSV_SELECT);
+ 
+-	mutex_unlock(&i915->display.gmbus.mutex);
++	mutex_unlock(&display->gmbus.mutex);
+ 	intel_display_power_put(i915, POWER_DOMAIN_GMBUS, wakeref);
+ 
+ 	return ret;
+@@ -832,27 +843,27 @@ static void gmbus_lock_bus(struct i2c_adapter *adapter,
+ 			   unsigned int flags)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 
+-	mutex_lock(&i915->display.gmbus.mutex);
++	mutex_lock(&display->gmbus.mutex);
+ }
+ 
+ static int gmbus_trylock_bus(struct i2c_adapter *adapter,
+ 			     unsigned int flags)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 
+-	return mutex_trylock(&i915->display.gmbus.mutex);
++	return mutex_trylock(&display->gmbus.mutex);
+ }
+ 
+ static void gmbus_unlock_bus(struct i2c_adapter *adapter,
+ 			     unsigned int flags)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 
+-	mutex_unlock(&i915->display.gmbus.mutex);
++	mutex_unlock(&display->gmbus.mutex);
+ }
+ 
+ static const struct i2c_lock_operations gmbus_lock_ops = {
+@@ -863,31 +874,32 @@ static const struct i2c_lock_operations gmbus_lock_ops = {
+ 
+ /**
+  * intel_gmbus_setup - instantiate all Intel i2c GMBuses
+- * @i915: i915 device private
++ * @display: display device
+  */
+-int intel_gmbus_setup(struct drm_i915_private *i915)
++int intel_gmbus_setup(struct intel_display *display)
+ {
+-	struct pci_dev *pdev = to_pci_dev(i915->drm.dev);
++	struct drm_i915_private *i915 = to_i915(display->drm);
++	struct pci_dev *pdev = to_pci_dev(display->drm->dev);
+ 	unsigned int pin;
+ 	int ret;
+ 
+ 	if (IS_VALLEYVIEW(i915) || IS_CHERRYVIEW(i915))
+-		i915->display.gmbus.mmio_base = VLV_DISPLAY_BASE;
+-	else if (!HAS_GMCH(i915))
++		display->gmbus.mmio_base = VLV_DISPLAY_BASE;
++	else if (!HAS_GMCH(display))
+ 		/*
+ 		 * Broxton uses the same PCH offsets for South Display Engine,
+ 		 * even though it doesn't have a PCH.
+ 		 */
+-		i915->display.gmbus.mmio_base = PCH_DISPLAY_BASE;
++		display->gmbus.mmio_base = PCH_DISPLAY_BASE;
+ 
+-	mutex_init(&i915->display.gmbus.mutex);
+-	init_waitqueue_head(&i915->display.gmbus.wait_queue);
++	mutex_init(&display->gmbus.mutex);
++	init_waitqueue_head(&display->gmbus.wait_queue);
+ 
+-	for (pin = 0; pin < ARRAY_SIZE(i915->display.gmbus.bus); pin++) {
++	for (pin = 0; pin < ARRAY_SIZE(display->gmbus.bus); pin++) {
+ 		const struct gmbus_pin *gmbus_pin;
+ 		struct intel_gmbus *bus;
+ 
+-		gmbus_pin = get_gmbus_pin(i915, pin);
++		gmbus_pin = get_gmbus_pin(display, pin);
+ 		if (!gmbus_pin)
+ 			continue;
+ 
+@@ -903,7 +915,7 @@ int intel_gmbus_setup(struct drm_i915_private *i915)
+ 			 "i915 gmbus %s", gmbus_pin->name);
+ 
+ 		bus->adapter.dev.parent = &pdev->dev;
+-		bus->i915 = i915;
++		bus->display = display;
+ 
+ 		bus->adapter.algo = &gmbus_algorithm;
+ 		bus->adapter.lock_ops = &gmbus_lock_ops;
+@@ -921,7 +933,7 @@ int intel_gmbus_setup(struct drm_i915_private *i915)
+ 		if (IS_I830(i915))
+ 			bus->force_bit = 1;
+ 
+-		intel_gpio_setup(bus, GPIO(i915, gmbus_pin->gpio));
++		intel_gpio_setup(bus, GPIO(display, gmbus_pin->gpio));
+ 
+ 		ret = i2c_add_adapter(&bus->adapter);
+ 		if (ret) {
+@@ -929,43 +941,43 @@ int intel_gmbus_setup(struct drm_i915_private *i915)
+ 			goto err;
+ 		}
+ 
+-		i915->display.gmbus.bus[pin] = bus;
++		display->gmbus.bus[pin] = bus;
+ 	}
+ 
+-	intel_gmbus_reset(i915);
++	intel_gmbus_reset(display);
+ 
+ 	return 0;
+ 
+ err:
+-	intel_gmbus_teardown(i915);
++	intel_gmbus_teardown(display);
+ 
+ 	return ret;
+ }
+ 
+-struct i2c_adapter *intel_gmbus_get_adapter(struct drm_i915_private *i915,
++struct i2c_adapter *intel_gmbus_get_adapter(struct intel_display *display,
+ 					    unsigned int pin)
+ {
+-	if (drm_WARN_ON(&i915->drm, pin >= ARRAY_SIZE(i915->display.gmbus.bus) ||
+-			!i915->display.gmbus.bus[pin]))
++	if (drm_WARN_ON(display->drm, pin >= ARRAY_SIZE(display->gmbus.bus) ||
++			!display->gmbus.bus[pin]))
+ 		return NULL;
+ 
+-	return &i915->display.gmbus.bus[pin]->adapter;
++	return &display->gmbus.bus[pin]->adapter;
+ }
+ 
+ void intel_gmbus_force_bit(struct i2c_adapter *adapter, bool force_bit)
+ {
+ 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
+-	struct drm_i915_private *i915 = bus->i915;
++	struct intel_display *display = bus->display;
+ 
+-	mutex_lock(&i915->display.gmbus.mutex);
++	mutex_lock(&display->gmbus.mutex);
+ 
+ 	bus->force_bit += force_bit ? 1 : -1;
+-	drm_dbg_kms(&i915->drm,
++	drm_dbg_kms(display->drm,
+ 		    "%sabling bit-banging on %s. force bit now %d\n",
+ 		    force_bit ? "en" : "dis", adapter->name,
+ 		    bus->force_bit);
+ 
+-	mutex_unlock(&i915->display.gmbus.mutex);
++	mutex_unlock(&display->gmbus.mutex);
+ }
+ 
+ bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter)
+@@ -975,25 +987,25 @@ bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter)
+ 	return bus->force_bit;
+ }
+ 
+-void intel_gmbus_teardown(struct drm_i915_private *i915)
++void intel_gmbus_teardown(struct intel_display *display)
+ {
+ 	unsigned int pin;
+ 
+-	for (pin = 0; pin < ARRAY_SIZE(i915->display.gmbus.bus); pin++) {
++	for (pin = 0; pin < ARRAY_SIZE(display->gmbus.bus); pin++) {
+ 		struct intel_gmbus *bus;
+ 
+-		bus = i915->display.gmbus.bus[pin];
++		bus = display->gmbus.bus[pin];
+ 		if (!bus)
+ 			continue;
+ 
+ 		i2c_del_adapter(&bus->adapter);
+ 
+ 		kfree(bus);
+-		i915->display.gmbus.bus[pin] = NULL;
++		display->gmbus.bus[pin] = NULL;
+ 	}
+ }
+ 
+-void intel_gmbus_irq_handler(struct drm_i915_private *i915)
++void intel_gmbus_irq_handler(struct intel_display *display)
+ {
+-	wake_up_all(&i915->display.gmbus.wait_queue);
++	wake_up_all(&display->gmbus.wait_queue);
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.h b/drivers/gpu/drm/i915/display/intel_gmbus.h
+index 8111eb23e2af2..35a200a9efc00 100644
+--- a/drivers/gpu/drm/i915/display/intel_gmbus.h
++++ b/drivers/gpu/drm/i915/display/intel_gmbus.h
+@@ -8,8 +8,8 @@
+ 
+ #include <linux/types.h>
+ 
+-struct drm_i915_private;
+ struct i2c_adapter;
++struct intel_display;
+ 
+ #define GMBUS_PIN_DISABLED	0
+ #define GMBUS_PIN_SSC		1
+@@ -34,18 +34,17 @@ struct i2c_adapter;
+ 
+ #define GMBUS_NUM_PINS	15 /* including 0 */
+ 
+-int intel_gmbus_setup(struct drm_i915_private *dev_priv);
+-void intel_gmbus_teardown(struct drm_i915_private *dev_priv);
+-bool intel_gmbus_is_valid_pin(struct drm_i915_private *dev_priv,
+-			      unsigned int pin);
++int intel_gmbus_setup(struct intel_display *display);
++void intel_gmbus_teardown(struct intel_display *display);
++bool intel_gmbus_is_valid_pin(struct intel_display *display, unsigned int pin);
+ int intel_gmbus_output_aksv(struct i2c_adapter *adapter);
+ 
+ struct i2c_adapter *
+-intel_gmbus_get_adapter(struct drm_i915_private *dev_priv, unsigned int pin);
++intel_gmbus_get_adapter(struct intel_display *display, unsigned int pin);
+ void intel_gmbus_force_bit(struct i2c_adapter *adapter, bool force_bit);
+ bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter);
+-void intel_gmbus_reset(struct drm_i915_private *dev_priv);
++void intel_gmbus_reset(struct intel_display *display);
+ 
+-void intel_gmbus_irq_handler(struct drm_i915_private *i915);
++void intel_gmbus_irq_handler(struct intel_display *display);
+ 
+ #endif /* __INTEL_GMBUS_H__ */
+diff --git a/drivers/gpu/drm/i915/display/intel_gmbus_regs.h b/drivers/gpu/drm/i915/display/intel_gmbus_regs.h
+index 53aacbda983c4..59bad1dda6d6a 100644
+--- a/drivers/gpu/drm/i915/display/intel_gmbus_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_gmbus_regs.h
+@@ -8,9 +8,9 @@
+ 
+ #include "i915_reg_defs.h"
+ 
+-#define GMBUS_MMIO_BASE(__i915) ((__i915)->display.gmbus.mmio_base)
++#define __GMBUS_MMIO_BASE(__display) ((__display)->gmbus.mmio_base)
+ 
+-#define GPIO(__i915, gpio)	_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5010 + 4 * (gpio))
++#define GPIO(__display, gpio)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5010 + 4 * (gpio))
+ #define   GPIO_CLOCK_DIR_MASK		(1 << 0)
+ #define   GPIO_CLOCK_DIR_IN		(0 << 1)
+ #define   GPIO_CLOCK_DIR_OUT		(1 << 1)
+@@ -27,7 +27,7 @@
+ #define   GPIO_DATA_PULLUP_DISABLE	(1 << 13)
+ 
+ /* clock/port select */
+-#define GMBUS0(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5100)
++#define GMBUS0(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5100)
+ #define   GMBUS_AKSV_SELECT		(1 << 11)
+ #define   GMBUS_RATE_100KHZ		(0 << 8)
+ #define   GMBUS_RATE_50KHZ		(1 << 8)
+@@ -37,7 +37,7 @@
+ #define   GMBUS_BYTE_CNT_OVERRIDE	(1 << 6)
+ 
+ /* command/status */
+-#define GMBUS1(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5104)
++#define GMBUS1(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5104)
+ #define   GMBUS_SW_CLR_INT		(1 << 31)
+ #define   GMBUS_SW_RDY			(1 << 30)
+ #define   GMBUS_ENT			(1 << 29) /* enable timeout */
+@@ -54,7 +54,7 @@
+ #define   GMBUS_SLAVE_WRITE		(0 << 0)
+ 
+ /* status */
+-#define GMBUS2(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5108)
++#define GMBUS2(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5108)
+ #define   GMBUS_INUSE			(1 << 15)
+ #define   GMBUS_HW_WAIT_PHASE		(1 << 14)
+ #define   GMBUS_STALL_TIMEOUT		(1 << 13)
+@@ -64,10 +64,10 @@
+ #define   GMBUS_ACTIVE			(1 << 9)
+ 
+ /* data buffer bytes 3-0 */
+-#define GMBUS3(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x510c)
++#define GMBUS3(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x510c)
+ 
+ /* interrupt mask (Pineview+) */
+-#define GMBUS4(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5110)
++#define GMBUS4(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5110)
+ #define   GMBUS_SLAVE_TIMEOUT_EN	(1 << 4)
+ #define   GMBUS_NAK_EN			(1 << 3)
+ #define   GMBUS_IDLE_EN			(1 << 2)
+@@ -75,7 +75,7 @@
+ #define   GMBUS_HW_RDY_EN		(1 << 0)
+ 
+ /* byte index */
+-#define GMBUS5(__i915)		_MMIO(GMBUS_MMIO_BASE(__i915) + 0x5120)
++#define GMBUS5(__display)	_MMIO(__GMBUS_MMIO_BASE(__display) + 0x5120)
+ #define   GMBUS_2BYTE_INDEX_EN		(1 << 31)
+ 
+ #endif /* __INTEL_GMBUS_REGS_H__ */
+diff --git a/drivers/gpu/drm/i915/display/intel_hdmi.c b/drivers/gpu/drm/i915/display/intel_hdmi.c
+index c5b2fbaeff897..1f3d099a97119 100644
+--- a/drivers/gpu/drm/i915/display/intel_hdmi.c
++++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
+@@ -2913,7 +2913,6 @@ static struct intel_encoder *
+ get_encoder_by_ddc_pin(struct intel_encoder *encoder, u8 ddc_pin)
+ {
+ 	struct intel_display *display = to_intel_display(encoder);
+-	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+ 	struct intel_encoder *other;
+ 
+ 	for_each_intel_encoder(display->drm, other) {
+@@ -2927,7 +2926,7 @@ get_encoder_by_ddc_pin(struct intel_encoder *encoder, u8 ddc_pin)
+ 
+ 		connector = enc_to_dig_port(other)->hdmi.attached_connector;
+ 
+-		if (connector && connector->base.ddc == intel_gmbus_get_adapter(i915, ddc_pin))
++		if (connector && connector->base.ddc == intel_gmbus_get_adapter(display, ddc_pin))
+ 			return other;
+ 	}
+ 
+@@ -2937,7 +2936,6 @@ get_encoder_by_ddc_pin(struct intel_encoder *encoder, u8 ddc_pin)
+ static u8 intel_hdmi_ddc_pin(struct intel_encoder *encoder)
+ {
+ 	struct intel_display *display = to_intel_display(encoder);
+-	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+ 	struct intel_encoder *other;
+ 	const char *source;
+ 	u8 ddc_pin;
+@@ -2950,7 +2948,7 @@ static u8 intel_hdmi_ddc_pin(struct intel_encoder *encoder)
+ 		source = "platform default";
+ 	}
+ 
+-	if (!intel_gmbus_is_valid_pin(i915, ddc_pin)) {
++	if (!intel_gmbus_is_valid_pin(display, ddc_pin)) {
+ 		drm_dbg_kms(display->drm,
+ 			    "[ENCODER:%d:%s] Invalid DDC pin %d\n",
+ 			    encoder->base.base.id, encoder->base.name, ddc_pin);
+@@ -3048,7 +3046,7 @@ bool intel_hdmi_init_connector(struct intel_digital_port *dig_port,
+ 	drm_connector_init_with_ddc(dev, connector,
+ 				    &intel_hdmi_connector_funcs,
+ 				    DRM_MODE_CONNECTOR_HDMIA,
+-				    intel_gmbus_get_adapter(dev_priv, ddc_pin));
++				    intel_gmbus_get_adapter(display, ddc_pin));
+ 
+ 	drm_connector_helper_add(connector, &intel_hdmi_connector_helper_funcs);
+ 
+diff --git a/drivers/gpu/drm/i915/display/intel_hotplug_irq.c b/drivers/gpu/drm/i915/display/intel_hotplug_irq.c
+index 2c4e946d55754..b34e759db4ceb 100644
+--- a/drivers/gpu/drm/i915/display/intel_hotplug_irq.c
++++ b/drivers/gpu/drm/i915/display/intel_hotplug_irq.c
+@@ -556,6 +556,7 @@ void xelpdp_pica_irq_handler(struct drm_i915_private *i915, u32 iir)
+ 
+ void icp_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ {
++	struct intel_display *display = &dev_priv->display;
+ 	u32 ddi_hotplug_trigger = pch_iir & SDE_DDI_HOTPLUG_MASK_ICP;
+ 	u32 tc_hotplug_trigger = pch_iir & SDE_TC_HOTPLUG_MASK_ICP;
+ 	u32 pin_mask = 0, long_mask = 0;
+@@ -589,11 +590,12 @@ void icp_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ 		intel_hpd_irq_handler(dev_priv, pin_mask, long_mask);
+ 
+ 	if (pch_iir & SDE_GMBUS_ICP)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
+ }
+ 
+ void spt_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ {
++	struct intel_display *display = &dev_priv->display;
+ 	u32 hotplug_trigger = pch_iir & SDE_HOTPLUG_MASK_SPT &
+ 		~SDE_PORTE_HOTPLUG_SPT;
+ 	u32 hotplug2_trigger = pch_iir & SDE_PORTE_HOTPLUG_SPT;
+@@ -625,7 +627,7 @@ void spt_irq_handler(struct drm_i915_private *dev_priv, u32 pch_iir)
+ 		intel_hpd_irq_handler(dev_priv, pin_mask, long_mask);
+ 
+ 	if (pch_iir & SDE_GMBUS_CPT)
+-		intel_gmbus_irq_handler(dev_priv);
++		intel_gmbus_irq_handler(display);
+ }
+ 
+ void ilk_hpd_irq_handler(struct drm_i915_private *dev_priv, u32 hotplug_trigger)
+diff --git a/drivers/gpu/drm/i915/display/intel_lvds.c b/drivers/gpu/drm/i915/display/intel_lvds.c
+index fb4ed9f7855b6..a3459f89315fe 100644
+--- a/drivers/gpu/drm/i915/display/intel_lvds.c
++++ b/drivers/gpu/drm/i915/display/intel_lvds.c
+@@ -899,7 +899,7 @@ void intel_lvds_init(struct drm_i915_private *i915)
+ 	drm_connector_init_with_ddc(&i915->drm, &connector->base,
+ 				    &intel_lvds_connector_funcs,
+ 				    DRM_MODE_CONNECTOR_LVDS,
+-				    intel_gmbus_get_adapter(i915, ddc_pin));
++				    intel_gmbus_get_adapter(display, ddc_pin));
+ 
+ 	drm_encoder_init(&i915->drm, &encoder->base, &intel_lvds_enc_funcs,
+ 			 DRM_MODE_ENCODER_LVDS, "LVDS");
+diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+index 7cc519b402e90..3af9447714712 100644
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -2081,10 +2081,10 @@ intel_sdvo_get_edid(struct drm_connector *connector)
+ static const struct drm_edid *
+ intel_sdvo_get_analog_edid(struct drm_connector *connector)
+ {
+-	struct drm_i915_private *i915 = to_i915(connector->dev);
++	struct intel_display *display = to_intel_display(connector->dev);
+ 	struct i2c_adapter *ddc;
+ 
+-	ddc = intel_gmbus_get_adapter(i915, i915->display.vbt.crt_ddc_pin);
++	ddc = intel_gmbus_get_adapter(display, display->vbt.crt_ddc_pin);
+ 	if (!ddc)
+ 		return NULL;
+ 
+@@ -2637,6 +2637,7 @@ intel_sdvo_select_ddc_bus(struct intel_sdvo *sdvo,
+ static void
+ intel_sdvo_select_i2c_bus(struct intel_sdvo *sdvo)
+ {
++	struct intel_display *display = to_intel_display(&sdvo->base);
+ 	struct drm_i915_private *dev_priv = to_i915(sdvo->base.base.dev);
+ 	const struct sdvo_device_mapping *mapping;
+ 	u8 pin;
+@@ -2647,7 +2648,7 @@ intel_sdvo_select_i2c_bus(struct intel_sdvo *sdvo)
+ 		mapping = &dev_priv->display.vbt.sdvo_mappings[1];
+ 
+ 	if (mapping->initialized &&
+-	    intel_gmbus_is_valid_pin(dev_priv, mapping->i2c_pin))
++	    intel_gmbus_is_valid_pin(display, mapping->i2c_pin))
+ 		pin = mapping->i2c_pin;
+ 	else
+ 		pin = GMBUS_PIN_DPB;
+@@ -2656,7 +2657,7 @@ intel_sdvo_select_i2c_bus(struct intel_sdvo *sdvo)
+ 		    sdvo->base.base.base.id, sdvo->base.base.name,
+ 		    pin, sdvo->target_addr);
+ 
+-	sdvo->i2c = intel_gmbus_get_adapter(dev_priv, pin);
++	sdvo->i2c = intel_gmbus_get_adapter(display, pin);
+ 
+ 	/*
+ 	 * With gmbus we should be able to drive sdvo i2c at 2MHz, but somehow
+diff --git a/drivers/gpu/drm/i915/i915_suspend.c b/drivers/gpu/drm/i915/i915_suspend.c
+index 9d3d9b9830320..f18f1acf21587 100644
+--- a/drivers/gpu/drm/i915/i915_suspend.c
++++ b/drivers/gpu/drm/i915/i915_suspend.c
+@@ -137,5 +137,5 @@ void i915_restore_display(struct drm_i915_private *dev_priv)
+ 
+ 	intel_vga_redisable(display);
+ 
+-	intel_gmbus_reset(dev_priv);
++	intel_gmbus_reset(display);
+ }
 -- 
 2.53.0
 
