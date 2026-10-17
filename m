@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750D2C026C;
-	Sat, 17 Oct 2026 16:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29C32248B3;
+	Sat, 17 Oct 2026 16:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254184; cv=none; b=tPuVlZutcGmBonmkugRrX+d1/5s/sBScCHrB+7ZFW5ItfhIV8zLIJZgroxHXF+LGxpP8miw8Y6AW0AynCa2AN2s+m9JmgdsVzHbXHw49MEjNdHxX7NgpD6L8R3eVwQ5h9S//PnpHw88pOGJGaPL4jAPkmi0QAegyEFeURHFrdEs=
+	t=1792254189; cv=none; b=m6MFxN3IOUs8Znq4S44ZKUixUL2kV6EyKbdHjAt0X2Ge5RceWcl2XkFEno4xHuAs5uaUlKok7Z1UnDdX7Y2VECzYxqMIhHUyNfUuCx78hmFS6UrRz+kmHuvw5FvXRr6VwH0/gEr45seybcBZwwS/Qe/yiQwbRTB4vp72TOAAMFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254184; c=relaxed/simple;
-	bh=5pUDS6zJD1v7AkHliI3k+pWpEHUwzYQyJvX5FKXeC+Q=;
+	s=arc-20240116; t=1792254189; c=relaxed/simple;
+	bh=rjwXLJzi4uGzOTkntTzu1SAPqzU7QR+UuX6ZIS00Lno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPYZwZJ57IFXDJ2QhrPFl4W+2D2WVB/pMEAKNkhAmnZHMe1VgnMsR6EsbDm8FhNV4+uM4bMX72WR8iQGIkS8vgsweYtKlAmG8d3cc/Nj/yc4hMTRpB6RLDxrCJKyUC01rbh8lDpAyQrNp8zhP+p2gPzWsoy6NzjqHPo+uSZGjwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b000DPYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UycoQ7M8pOEjVu49YuvRX5mB4UYCsfLB1DS4rPfbVOKS/iDwMEPewf3pUmLT5jH4aKscFnp4m3vLsQwOQNExz/G79+aN5CHXK2PBc3F4GBw5BH3CUf+msHJjX9OsrWMlwssrp8y9KVgsunteReKAyQ6paq0RPNOXBxc66muGumU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKihvq8W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b000DPYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDE01F000C4;
-	Sat, 17 Oct 2026 16:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKihvq8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DD61F000C4;
+	Sat, 17 Oct 2026 16:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254183;
-	bh=SoJsVRUtSvd+TWMePM4frUSqaOw9juHAHfT9yzZDuoQ=;
+	s=korg; t=1792254186;
+	bh=ViN9ihhHMBhCdfRkguQ69Qe5Kn2u0lc8slCvH9BQ8Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b000DPYt2Pf1SOwSdJyxyyIlrd8p/iVzyS4T62YMWjnFqR8RQCjejt6AEzNIwinIl
-	 ADOsq3MCwkK8NV+FdtOTeweMp19h0WCk3OnJThL1wIzMqbWNmF33rGJxu3r7kpH4L2
-	 wQLmIotpitxcu4O3CzHG0Tgr+g0db/WryhnI2Sss=
+	b=UKihvq8WXw/JVk3YPSDk+beaWTe1Y3lsShOgHcv7HtI3dxy1vKpIEMDe1IJWN6UZJ
+	 bzf8DXgB5cKFvIyYz2hdgI+CkBEOKYmjXHt/8iWs7vihE0ljRvxmrn/ZKRSCbOMUuO
+	 zWAjUCjCC1TvFUTSp1X79NSoyzxbeuGiUTGLFtMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 363/869] erofs: fix metabuf leak in inode xattr initialization
-Date: Sat, 17 Oct 2026 17:53:24 +0200
-Message-ID: <20261017160046.414575661@linuxfoundation.org>
+Subject: [PATCH 6.12 337/869] drm/msm: always recover the gpu
+Date: Sat, 17 Oct 2026 17:52:58 +0200
+Message-ID: <20261017160045.722154934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,76 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Zhu <zhujia.zj@bytedance.com>
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
-[ Upstream commit 79b09c54c6563df9846ca3094bcfd72082c3e1d7 ]
+[ Upstream commit 01a0d6cd7032e9993feea19fadb03ef9d5b488f2 ]
 
-commit bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-converted xattr operations to use on-stack erofs_buf instances.
-erofs_init_inode_xattrs() uses such a metabuf while reading the inline
-xattr header and shared xattr id array.
+Previously, in case there was no more work to do, recover worker
+wouldn't trigger recovery and would instead rely on the gpu going to
+sleep and then resuming when more work is submitted.
 
-Some error paths after erofs_read_metabuf() leave through out_unlock
-without dropping the metabuf, so the folio reference can leak.
+Recover_worker will first increment the fence of the hung ring so, if
+there's only one job submitted to a ring and that causes an hang, it
+will early out.
 
-Consolidate the cleanup at out_unlock. erofs_put_metabuf() is a
-no-op if no folio has been acquired, and this keeps all paths after
-taking EROFS_I_BL_XATTR_BIT covered by a single cleanup site.
+There's no guarantee that the gpu will suspend and resume before more
+work is submitted and if the gpu is in a hung state it will stay in that
+state and probably trigger a timeout again.
 
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Just stop checking and always recover the gpu.
+
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Cc: stable@vger.kernel.org
+Patchwork: https://patchwork.freedesktop.org/patch/704066/
+Message-ID: <20260210-recovery_suspend_fix-v1-1-00ed9013da04@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/xattr.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_gpu.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
-index 60d2cf26e837e..9753df4e95a24 100644
---- a/fs/erofs/xattr.c
-+++ b/fs/erofs/xattr.c
-@@ -47,6 +47,8 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 	if (wait_on_bit_lock(&vi->flags, EROFS_I_BL_XATTR_BIT, TASK_KILLABLE))
- 		return -ERESTARTSYS;
- 
-+	it.buf = __EROFS_BUF_INITIALIZER;
-+
- 	/* someone has initialized xattrs for us? */
- 	if (test_bit(EROFS_I_EA_INITED_BIT, &vi->flags))
- 		goto out_unlock;
-@@ -76,7 +78,6 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 		goto out_unlock;
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index ffb91e45aefde..76b44bb8de0d3 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -421,25 +421,23 @@ static void recover_worker(struct kthread_work *work)
+ 		msm_update_fence(ring->fctx, fence);
  	}
  
--	it.buf = __EROFS_BUF_INITIALIZER;
- 	erofs_init_metabuf(&it.buf, sb);
- 	it.pos = erofs_iloc(inode) + vi->inode_isize;
+-	if (msm_gpu_active(gpu)) {
+-		gpu->funcs->recover(gpu);
++	gpu->funcs->recover(gpu);
  
-@@ -93,7 +94,6 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 	vi->xattr_shared_xattrs = kmalloc_array(vi->xattr_shared_count,
- 						sizeof(uint), GFP_KERNEL);
- 	if (!vi->xattr_shared_xattrs) {
--		erofs_put_metabuf(&it.buf);
- 		ret = -ENOMEM;
- 		goto out_unlock;
+-		/* retire completed submits, plus the one that hung: */
+-		retire_submits(gpu);
++	/* retire completed submits, plus the one that hung: */
++	retire_submits(gpu);
+ 
+-		/*
+-		 * Replay all remaining submits starting with highest priority
+-		 * ring
+-		 */
+-		for (i = 0; i < gpu->nr_rings; i++) {
+-			struct msm_ringbuffer *ring = gpu->rb[i];
+-			unsigned long flags;
++	/*
++	 * Replay all remaining submits starting with highest priority
++	 * ring
++	 */
++	for (i = 0; i < gpu->nr_rings; i++) {
++		struct msm_ringbuffer *ring = gpu->rb[i];
++		unsigned long flags;
+ 
+-			spin_lock_irqsave(&ring->submit_lock, flags);
+-			list_for_each_entry(submit, &ring->submits, node)
+-				gpu->funcs->submit(gpu, submit);
+-			spin_unlock_irqrestore(&ring->submit_lock, flags);
+-		}
++		spin_lock_irqsave(&ring->submit_lock, flags);
++		list_for_each_entry(submit, &ring->submits, node)
++			gpu->funcs->submit(gpu, submit);
++		spin_unlock_irqrestore(&ring->submit_lock, flags);
  	}
-@@ -112,13 +112,13 @@ static int erofs_init_inode_xattrs(struct inode *inode)
- 		vi->xattr_shared_xattrs[i] = le32_to_cpu(*(__le32 *)it.kaddr);
- 		it.pos += sizeof(__le32);
- 	}
--	erofs_put_metabuf(&it.buf);
  
- 	/* paired with smp_mb() at the beginning of the function. */
- 	smp_mb();
- 	set_bit(EROFS_I_EA_INITED_BIT, &vi->flags);
- 
- out_unlock:
-+	erofs_put_metabuf(&it.buf);
- 	clear_and_wake_up_bit(EROFS_I_BL_XATTR_BIT, &vi->flags);
- 	return ret;
- }
+ 	pm_runtime_put(&gpu->pdev->dev);
 -- 
 2.53.0
 
