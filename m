@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD09D3451DA;
-	Sat, 17 Oct 2026 17:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A638F658;
+	Sat, 17 Oct 2026 17:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259856; cv=none; b=b6eXWTyp/LgBsCMW3yN/Qyqee5j6gQJ+xB4SJ6Xod/NwkH7JfgrJT364mWqwNAg2X0QjGa2qFbz3AJ/EN2I8EOpogDVAyiKX6uJrAfRchBrsYQCesbbNfMh9BhDk5MhC77uTK1xFYJCQAjPRiK0+uiF+bTY/PrnRmawBF/nqrWs=
+	t=1792259860; cv=none; b=GomiTYghDAm0L48ustfW1+TZ+TsNLfu9R8VH6Y1US0TCHcwNbM5s8Y/uoZGXUjZYSsS51XyHOCJ8f02hZ1O2Jm0DrYTeik/G7d+OftsOH8prf8La0M5j5hic7PIAATbpjthFCkR5rjE+lm8Xd9BWB0SivjBzh35W3hpcMhjK83c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259856; c=relaxed/simple;
-	bh=8798Pa5LLEMjwuwwEiiM4UkIzhP0GvYnnYI2yP5a2Ss=;
+	s=arc-20240116; t=1792259860; c=relaxed/simple;
+	bh=1JAnJBdeJpzwKkB+YpQ7Yfn0w6X5rfmW9MzL8C4X2Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+PItbd1LEIi4RINeuH/KPZsbhSbCC8e25nKhMw8AM5fVgQMycteO3g1P5Njj8YWIG2iowLLcPPXb7Y2wfLhMS7frwOu5Bmel6+7P245KqSrwadLpyzsSq9p6z6thrP7vYNqrxQPziIujDckgiacwitsTK4vBX+vyCDDYwpFGeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p60J+vYS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tE/lCJrPw8GmgGguVIbTyifZy35+gn01gsSj076WQkekb4C4pkOCvO9YnZ7Bz4EdSgOjjVyiSb0oQZyQHeDerfQqILGCV36DrhISHL9uf0tE/uuudBNvSJbgzKNsqhi9l9Kim5tlUJTg2okhVwGmJMqi5M1ZPkPogpGnU8fqJfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnG2I40i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p60J+vYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356E01F000C4;
-	Sat, 17 Oct 2026 17:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnG2I40i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6F91F000C4;
+	Sat, 17 Oct 2026 17:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259855;
-	bh=1vGJiPUrotblw/WNFrGlntRJNd7gbKG9+lyukujy4t8=;
+	s=korg; t=1792259859;
+	bh=ajTnr7QCEGQghQotEVVP4srS+FxNf9k15HiONmqh3dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p60J+vYSVfr4sXvkX7fCcJ7/P40oqRqYS8IBR+PoeF+txf7m29rr447C3yI0eUS67
-	 daCQ1wApHeqWTHxlT80BK6keRsx8/3BtKmQBJzkR/DNmdkRIBXpghF1NE/fM/798Qe
-	 0FL378QEQUCvBg7cj3HylshcJkmPCbaM+tHn9bN8=
+	b=lnG2I40iQJYkJYimxXD9oFH9gM5vI+IC6a0ACOTkGH6SnI/xoV+aeC/PHB1P3+iqN
+	 RwzpqItVydKrlo7wnJtyqBW5mZA4aw622J3UZdDY8y2cvE2sPqx4yd4jCoLcRxo1Ru
+	 W8TbkdLYSYr02LBlQ0TuoH4gkMHsBoA66VDPp4ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1352/1674] LoongArch: BPF: Refactor jump offset calculation in tail call
-Date: Sat, 17 Oct 2026 18:00:24 +0200
-Message-ID: <20261017160505.867824184@linuxfoundation.org>
+Subject: [PATCH 6.6 1353/1674] KVM: s390: Fix memory corruption by not reinjecting CK machine checks
+Date: Sat, 17 Oct 2026 18:00:25 +0200
+Message-ID: <20261017160505.893449611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,91 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit 37d545d12f21c4d50612ecaebd7ae1e5bf91b2d8 ]
+[ Upstream commit 546dde823a36d7283dcf46127c2f3d093443860f ]
 
-The old macro-based jmp_offset calculation derives the jump distance
-from a stale prior-pass code stride, which can lead to wrong branch
-offsets and soft lockups under extra JIT passes.
+Channel-subsystem damage machine checks are for the host channel
+subsystem. The guest channel subsystem is emulated in the userspace VMM.
+There is no point in forwarding such machine checks into the guest.
 
-Fix this by calculating the offset directly on the absolute target:
-"ctx->offset[insn + 1] - ctx->idx".
+This also simplifies the machine check reinjection and avoids kfree of a
+stack variable as reported by sashiko.  There might be still machine
+checks that have the ck bit set with another bit (like instruction
+damage), mask out the CK bit in s390_backup_mcck_info(), like the CP and
+ED bits already are.
 
-To avoid a false 16-bit range check abort during size estimation, add
-a "ctx->image == NULL" guard to inject a safe dummy offset.
-
+Fixes: 4d62fcc0b692 ("KVM: s390: Inject machine check into the guest")
 Cc: stable@vger.kernel.org
-Fixes: cd39d9e6b7e4 ("LoongArch: BPF: Fix jump offset calculation in tailcall")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260806145835.31818-1-borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/s390/include/asm/nmi.h |  3 +++
+ arch/s390/kernel/nmi.c      |  5 +----
+ arch/s390/kvm/interrupt.c   | 24 ++++++++----------------
+ 3 files changed, 12 insertions(+), 20 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index f1ad46e233215..e3220af7d26a1 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -205,17 +205,13 @@ bool bpf_jit_supports_kfunc_call(void)
+diff --git a/arch/s390/include/asm/nmi.h b/arch/s390/include/asm/nmi.h
+index 227466ce9e416..da5a98183cb65 100644
+--- a/arch/s390/include/asm/nmi.h
++++ b/arch/s390/include/asm/nmi.h
+@@ -22,6 +22,7 @@
+ #define MCCK_CODE_SYSTEM_DAMAGE		BIT(63)
+ #define MCCK_CODE_EXT_DAMAGE		BIT(63 - 5)
+ #define MCCK_CODE_CP			BIT(63 - 9)
++#define MCCK_CODE_CK			BIT(63 - 11)
+ #define MCCK_CODE_STG_ERROR		BIT(63 - 16)
+ #define MCCK_CODE_STG_KEY_ERROR		BIT(63 - 18)
+ #define MCCK_CODE_STG_DEGRAD		BIT(63 - 19)
+@@ -33,6 +34,8 @@
+ #define MCCK_CODE_FC_VALID		BIT(63 - 43)
+ #define MCCK_CODE_CPU_TIMER_VALID	BIT(63 - 46)
  
- static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- {
--	int off, tc_ninsn = 0;
-+	int off, jmp_offset;
- 	u8 tcc = tail_call_reg(ctx);
- 	u8 a1 = LOONGARCH_GPR_A1;
- 	u8 a2 = LOONGARCH_GPR_A2;
- 	u8 t1 = LOONGARCH_GPR_T1;
- 	u8 t2 = LOONGARCH_GPR_T2;
- 	u8 t3 = LOONGARCH_GPR_T3;
--	const int idx0 = ctx->idx;
++#define MCCK_CODE_NO_GUEST	(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE | MCCK_CODE_CK)
++
+ #ifndef __ASSEMBLY__
+ 
+ union mci {
+diff --git a/arch/s390/kernel/nmi.c b/arch/s390/kernel/nmi.c
+index 38ec0487521c4..bc07f6c11b332 100644
+--- a/arch/s390/kernel/nmi.c
++++ b/arch/s390/kernel/nmi.c
+@@ -347,8 +347,7 @@ static void notrace s390_backup_mcck_info(struct pt_regs *regs)
+ 
+ 	sie_page = container_of(sie_block, struct sie_page, sie_block);
+ 	mcck_backup = &sie_page->mcck_info;
+-	mcck_backup->mcic = S390_lowcore.mcck_interruption_code &
+-				~(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE);
++	mcck_backup->mcic = S390_lowcore.mcck_interruption_code & ~MCCK_CODE_NO_GUEST;
+ 	mcck_backup->ext_damage_code = S390_lowcore.external_damage_code;
+ 	mcck_backup->failing_storage_address
+ 			= S390_lowcore.failing_storage_address;
+@@ -361,8 +360,6 @@ NOKPROBE_SYMBOL(s390_backup_mcck_info);
+ #define ED_STP_ISLAND	6	/* External damage STP island check */
+ #define ED_STP_SYNC	7	/* External damage STP sync check */
+ 
+-#define MCCK_CODE_NO_GUEST	(MCCK_CODE_CP | MCCK_CODE_EXT_DAMAGE)
 -
--#define cur_offset (ctx->idx - idx0)
--#define jmp_offset (tc_ninsn - (cur_offset))
+ /*
+  * machine check handler.
+  */
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 4b3892584f5b9..fe31bf352ce09 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -2862,9 +2862,7 @@ static int set_adapter_int(struct kvm_kernel_irq_routing_entry *e,
+ void kvm_s390_reinject_machine_check(struct kvm_vcpu *vcpu,
+ 				     struct mcck_volatile_info *mcck_info)
+ {
+-	struct kvm_s390_interrupt_info inti;
+ 	struct kvm_s390_irq irq = {};
+-	struct kvm_s390_mchk_info *mchk;
+ 	union mci mci;
+ 	__u64 cr14 = 0;         /* upper bits are not used */
+ 	int rc;
+@@ -2877,20 +2875,14 @@ void kvm_s390_reinject_machine_check(struct kvm_vcpu *vcpu,
+ 	if (mci.w)
+ 		cr14 |= CR14_WARNING_SUBMASK;
  
- 	/*
- 	 * a0: &ctx
-@@ -225,12 +221,12 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- 	 * if (index >= array->map.max_entries)
- 	 *	 goto out;
- 	 */
--	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
- 	emit_zext_32(ctx, a2, true);
- 
- 	off = offsetof(struct bpf_array, map.max_entries);
- 	emit_insn(ctx, ldwu, t1, a1, off);
- 	/* bgeu $a2, $t1, jmp_offset */
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JGE, a2, t1, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -239,6 +235,7 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- 	 *	 goto out;
- 	 */
- 	emit_insn(ctx, addid, REG_TCC, tcc, -1);
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JSLT, REG_TCC, LOONGARCH_GPR_ZERO, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -251,6 +248,7 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- 	off = offsetof(struct bpf_array, ptrs);
- 	emit_insn(ctx, ldd, t2, t2, off);
- 	/* beq $t2, $zero, jmp_offset */
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JEQ, t2, LOONGARCH_GPR_ZERO, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -264,8 +262,6 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
- toofar:
- 	pr_info_once("tail_call: jump too far\n");
- 	return -1;
--#undef cur_offset
--#undef jmp_offset
+-	mchk = mci.ck ? &inti.mchk : &irq.u.mchk;
+-	mchk->cr14 = cr14;
+-	mchk->mcic = mcck_info->mcic;
+-	mchk->ext_damage_code = mcck_info->ext_damage_code;
+-	mchk->failing_storage_address = mcck_info->failing_storage_address;
+-	if (mci.ck) {
+-		/* Inject the floating machine check */
+-		inti.type = KVM_S390_MCHK;
+-		rc = __inject_vm(vcpu->kvm, &inti);
+-	} else {
+-		/* Inject the machine check to specified vcpu */
+-		irq.type = KVM_S390_MCHK;
+-		rc = kvm_s390_inject_vcpu(vcpu, &irq);
+-	}
++	irq.u.mchk.cr14 = cr14;
++	irq.u.mchk.mcic = mcck_info->mcic;
++	irq.u.mchk.ext_damage_code = mcck_info->ext_damage_code;
++	irq.u.mchk.failing_storage_address = mcck_info->failing_storage_address;
++
++	/* Inject the machine check to specified vcpu */
++	irq.type = KVM_S390_MCHK;
++	rc = kvm_s390_inject_vcpu(vcpu, &irq);
+ 	WARN_ON_ONCE(rc);
  }
  
- static void emit_atomic(const struct bpf_insn *insn, struct jit_ctx *ctx)
 -- 
 2.53.0
 
