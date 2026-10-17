@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AEA35E93B;
-	Sat, 17 Oct 2026 17:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D848B3B9616;
+	Sat, 17 Oct 2026 17:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259415; cv=none; b=S9cjw9e9abiAcmERzdInBN39edD9oFDQsjPFkcV5I9+MzJ6LyQCusnwWjEywSsvrlrkPvJd0Rv/Vhjj4e1V5PAsTmtcag+VUCwNsz8++2bMp5v/UFO6U26QCp8FC7+o/B0p/KFvCpGoW3SYvzNhI9yD3OeRHBPrtdbFVdaF6Ssw=
+	t=1792259418; cv=none; b=Lr3R17wbEucCjBmaXvwwDvA8vjsvd5pmKdxRIN/4C3lMYMPnsSW3WyFRoPozomQ5odOVuWr3P5Sgq6YSOAG88J9B4vXfbb5OF6IVm/V9KAA0t+UJQdwlNREXee7VgHilmsFwe0oogTIrBAVguGZS6iywiD38MFXupvGNXR8Q8m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259415; c=relaxed/simple;
-	bh=cmi1naOa0xxPk1Ox0fS9fqgHQ4Z88lDiz+CPpIVeMpc=;
+	s=arc-20240116; t=1792259418; c=relaxed/simple;
+	bh=fdtHsUOJEmGAzdBG4FNTzNkK0dMHdAiSnolRtpH0e50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBShcftQqJMJAUFQSkLx/aSozAvqajKMvn8DjNnQSOzOluA47zQUlv5ESFezGsos4T5qi9cQwC/LYg5qr89izR0doWcV4QSBSCMc+Ode+3kfDRFG0ADNi8t3sLoEcjwDTB241aKn7KO65Vsu/BIZLptTsvTHffhETY0tqD4MF2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+NSy2T3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uk9tB13nf/k+x+if/WUEN09ziWKxKi2gu2iZctId5si+vJVLRIeqk1ANrowlvtDSUB3rEyAv3PZN1PiTAG99EFujLq06Vv7A++Q6HhpJE1W8h6ERJKGk1unIrmmRobtD/yOjc04QRjSODnMd/kSWCkcjRAXDM98BE1n7JEW0OcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5FebINd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+NSy2T3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5571A1F000C4;
-	Sat, 17 Oct 2026 17:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5FebINd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1BC1F000C4;
+	Sat, 17 Oct 2026 17:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259413;
-	bh=GuoEISN1h1twXWFS8uXrs2y4kqZtAhg77G54zpqvwrs=;
+	s=korg; t=1792259416;
+	bh=V2ITvSBNeisbXZYvw7VOGnPMItTi0kfq+4N3WGpF4hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+NSy2T3Bsa1UF4tBFg1Q4eyu62MO6pkHFBU8BEKHc4bB9oWYg22kPypbjOYj32I6
-	 MzEaP67yEttEX4BVKnKYm0F+XRedZCmoSGeq1eK0aHXX9UGD6b5CaN63c/VGk368Ag
-	 jRqntBas3BVXpxUspS2kR5kKP4zjMOpM7VQYWFZY=
+	b=s5FebINdekkJ4GJYPjOucbr/Zhfce8K4kfwapQdAWTrEaxQTeb+awCgo2lPjgMCgS
+	 oTR2UOTACczaUBVviu5bgX3pXPQhORFCNwYausGNHE6AvrqwlKgQqoo3kEk5hfQ9zz
+	 lCLTfj+32IVwiM0qRkYOfeqBVN1nYzQlOs663p6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d30aad27833a559defab@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Qu Wenruo <wqu@suse.com>,
+	Dongjiang Zhu <zhudongjiang@fnnas.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1207/1674] firewire: ohci: fix NULL pointer dereference in ar_context_release
-Date: Sat, 17 Oct 2026 17:57:59 +0200
-Message-ID: <20261017160502.121627121@linuxfoundation.org>
+Subject: [PATCH 6.6 1190/1674] btrfs: skip global block reserve accounting for rescue mounts
+Date: Sat, 17 Oct 2026 17:57:42 +0200
+Message-ID: <20261017160501.686896523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -52,73 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Dongjiang Zhu <zhudongjiang@fnnas.com>
 
-[ Upstream commit 42d217add8d80d6e7d9f58f80d11ea9b07ea113e ]
+[ Upstream commit 51a0e8399858621442807a26057bcd1cd3ced046 ]
 
-During the error handling path of the driver's probe function, a NULL
-pointer dereference can occur in ar_context_release().
+[BUG]
+Mounting with rescue=ibadroots after corrupting the block group tree
+root triggers a NULL pointer dereference:
 
-When pci_probe() fails early (e.g., if pcim_enable_device() or MMIO mapping
-fails), the devres cleanup mechanism invokes release_ohci(). This function
-unconditionally calls ar_context_release() to clean up the asynchronous
-receive contexts. However, if ar_context_init() was not yet called,
-ctx->ohci remains NULL (as the fw_ohci structure is zero-initialized by
-devres_alloc()).
+  BUG: kernel NULL pointer dereference, address: 0000000000000100
+  RIP: 0010:btrfs_update_global_block_rsv+0x9d/0x1c0 [btrfs]
+  Call Trace:
+   fill_dummy_bgs+0xd4/0x120 [btrfs]
+   open_ctree+0xc6e/0x1ca0 [btrfs]
+   btrfs_get_tree+0x50d/0xa40 [btrfs]
 
-ar_context_release() immediately dereferences ctx->ohci to get the dev
-pointer before checking if the context was actually initialized, leading to
-a crash:
+The same crash occurs with a corrupted raid stripe tree root, via
+btrfs_read_block_groups() instead of fill_dummy_bgs().
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:ar_context_release+0x3f/0x380 drivers/firewire/ohci.c:543
-Call Trace:
- release_ohci+0x3f/0x60 drivers/firewire/ohci.c:3567
- release_nodes drivers/base/devres.c:546 [inline]
- devres_release_all+0x1a8/0x260 drivers/base/devres.c:576
- device_unbind_cleanup drivers/base/dd.c:597 [inline]
- really_probe+0x451/0xae0 drivers/base/dd.c:772
+[CAUSE]
+With rescue=ibadroots, btrfs_read_roots() allows the mount to continue
+when either root cannot be read, leaving the corresponding root pointer
+NULL while its on-disk feature bit remains set.
 
-To fix this, move the assignment of the dev pointer after the !ctx->buffer
-check. If ctx->buffer is NULL, it indicates that the context was never
-successfully initialized and there is nothing to release, safely avoiding
-the dereference of the uninitialized ctx->ohci pointer.
+btrfs_update_global_block_rsv() then dereferences the missing root based
+on the feature bit alone.
 
-Fixes: 5716e58aecdd ("firewire: ohci: release buffer for AR req/resp contexts when managed resource is released")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+d30aad27833a559defab@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d30aad27833a559defab
-Link: https://syzkaller.appspot.com/ai_job?id=10a18617-7893-42dd-bf1c-cd49e19e95d9
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://lore.kernel.org/r/90c5db71-dd1f-4d46-b9d3-2f1046cbd5ea@mail.kernel.org
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+[FIX]
+Rescue mounts are fully read-only and cannot start transactions, so the
+global reserve is never consumed. Under btrfs_is_full_ro(), mark the
+reserve as full and return before performing the accounting.
+
+And since we need to check if the fs is mount fully RO, export
+fs_is_full_ro() as btrfs_is_full_ro(), and move it to fs.h.
+
+Fixes: 8dbfc14fc736 ("btrfs: account block group tree when calculating global reserve size")
+Fixes: 515020900d44 ("btrfs: read raid stripe tree from disk")
+Suggested-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Dongjiang Zhu <zhudongjiang@fnnas.com>
+[ Squash the fs_is_full_ro() export commit into this one. ]
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/ohci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/block-rsv.c | 19 +++++++++++++++++--
+ fs/btrfs/disk-io.c   | 11 +----------
+ fs/btrfs/fs.h        |  9 +++++++++
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
-index b9ae0340b8a70..b184669cdaef4 100644
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -719,12 +719,14 @@ static void ar_context_link_page(struct ar_context *ctx, unsigned int index)
- 
- static void ar_context_release(struct ar_context *ctx)
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index 07bf07431a7f4..14530d436d6ef 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -324,10 +324,25 @@ void btrfs_block_rsv_add_bytes(struct btrfs_block_rsv *block_rsv,
+ void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
  {
--	struct device *dev = ctx->ohci->card.device;
-+	struct device *dev;
- 	unsigned int i;
- 
- 	if (!ctx->buffer)
- 		return;
- 
-+	dev = ctx->ohci->card.device;
+ 	struct btrfs_block_rsv *block_rsv = &fs_info->global_block_rsv;
+-	struct btrfs_space_info *sinfo = block_rsv->space_info;
++	struct btrfs_space_info *sinfo;
+ 	struct btrfs_root *root, *tmp;
+-	u64 num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
+ 	unsigned int min_items = 1;
++	u64 num_bytes;
 +
- 	vunmap(ctx->buffer);
++	/*
++	 * A full read-only mount (rescue options) cannot start transactions,
++	 * so the global reserve is never consumed. Mark it as full and skip
++	 * the accounting.
++	 */
++	if (btrfs_is_full_ro(fs_info)) {
++		spin_lock(&block_rsv->lock);
++		block_rsv->full = true;
++		spin_unlock(&block_rsv->lock);
++		return;
++	}
++
++	sinfo = block_rsv->space_info;
++	num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
  
- 	for (i = 0; i < AR_BUFFERS; i++) {
+ 	/*
+ 	 * The global block rsv is based on the size of the extent tree, the
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index e025399abce97..20253e3e5f820 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3155,15 +3155,6 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
+ 	return 0;
+ }
+ 
+-static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
+-{
+-	if (!sb_rdonly(fs_info->sb))
+-		return false;
+-	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
+-		return true;
+-	return false;
+-}
+-
+ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
+ 		      char *options)
+ {
+@@ -3308,7 +3299,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 		goto fail_alloc;
+ 
+ 	/* If the fs has any rescue options, no transaction is allowed. */
+-	if (fs_is_full_ro(fs_info))
++	if (btrfs_is_full_ro(fs_info))
+ 		WRITE_ONCE(fs_info->fs_error, -EROFS);
+ 
+ 	ret = btrfs_check_features(fs_info, !sb_rdonly(sb));
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index 415f867dd1252..88c779635483f 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -948,6 +948,15 @@ do {									\
+ 	btrfs_clear_opt(fs_info->mount_opt, opt);			\
+ } while (0)
+ 
++static inline bool btrfs_is_full_ro(const struct btrfs_fs_info *fs_info)
++{
++	if (!sb_rdonly(fs_info->sb))
++		return false;
++	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
++		return true;
++	return false;
++}
++
+ static inline int btrfs_fs_closing(struct btrfs_fs_info *fs_info)
+ {
+ 	/* Do it this way so we only ever do one test_bit in the normal case. */
 -- 
 2.53.0
 
