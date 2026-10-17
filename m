@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C9B3BF699;
-	Sat, 17 Oct 2026 17:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57402DF126;
+	Sat, 17 Oct 2026 17:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792258983; cv=none; b=Ppy1Lp2rtjMFhvnikQzodb9wbGjrx9/ebXdPZO2jT5owW+TUpo3wYNcQD6iSHhq9AjB9ssNm46pWKTyEOi7OhHR3T/0Fj4nK9Duv3hbvMGDiJcJ8daTF4tq1TBB2IcEgyG2v5BJOtzaQiDaTRmCxD2sJvDvNjDCls13oQWeR4Ao=
+	t=1792258986; cv=none; b=ldO7i8W4vMLlirOjxH9+UxE3RHeUNgZBNKBBr1H2VJimd+AL+aUj23v9Ui5Meg01dI4vdJjePpIZycXRj6KEZ/OusZrN4UVPugYA+Yi+BAALNqo4Hmx4qo9g7ZOnN0ziykUBAQyvn6UCnCpIoh6fXzkmdExdMkbfbXy0h2lwQfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792258983; c=relaxed/simple;
-	bh=ENbOO1q1q1kltjSo966feNH3nEmYFyAOJE5drJ+pToI=;
+	s=arc-20240116; t=1792258986; c=relaxed/simple;
+	bh=gtbg2Y35vrCJwu/lGHMKE0xpgWqBUNvfmjGHWHs0uw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Prv6UKTjAqwGYsGqdGb0BCIH3G2Rl8jUl2y4NCTWMs1dZ2w6om7lrDMAL80BqTWm8QmTveuo/1zFgvlHqwz43G2p3P+J4uZIXGaMoRzaUY5AlVyepMGidYQxOaEVYgznkVfWsXyeIrU0sV+MBZNaQDzrwKUiSdWLdFP9D6pFlws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiEbbFAg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQ6eras+bs+XnbaPzIxTIXt96/kbftGKyDmjt4QKHqp6NRLadORwInQ/w4PE04jqujszJLtQMTV13hBAzYD39mz6N6ihoN8CwqHP/A1HJXGjmCFF2etJZH/B5XqM2Qhvb5KTGcgW0YFpLhD699V6cZ/dZAwPBH+PX/hkAZF/uNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLhvoBVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiEbbFAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0441F000C4;
-	Sat, 17 Oct 2026 17:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLhvoBVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9AE81F000C4;
+	Sat, 17 Oct 2026 17:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792258982;
-	bh=EJDw2kaVi/trylBcYlCIcrYC2uMKTIeqCLJM/mHUgGY=;
+	s=korg; t=1792258985;
+	bh=drc34hV3CyR4Y6DcIlXsKmKead/qonfTCpoU3s/JCto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AiEbbFAgKBQ0NhC7X8o6DH2xtleo1F2eTvDRletA2k7ziNHjuzYLF2HsYm2W2LT55
-	 piCrwl5KNlbU0zTW2cal03RPZOHBc4mmDoZ/UpFLMN0ncq1PuTOMi+xPab4yZIYMgx
-	 F2i9JjB/PoCtVlqKXMaXg+42AKVuZtobT8lnjIT8=
+	b=BLhvoBVYkXNSnEuq3vJGbNbC1/JxnuWoCZNblFnVWi6SiarQWQpP8FnniyuUAB2zv
+	 e7NCHft+DosrdsUsuxjgyu+2lEXQeIQOw0yA8n8C+xIfzAshbvbls1qIwhknbMUMdC
+	 BoZieeQYyyGb6NewrabS4mMxlcM3nmBEcr9N6vLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Lee Jones <lee@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1022/1674] wifi: fix leak if split 6 GHz scanning fails
-Date: Sat, 17 Oct 2026 17:54:54 +0200
-Message-ID: <20261017160457.364935618@linuxfoundation.org>
+Subject: [PATCH 6.6 1023/1674] l2tp: pppol2tp: hold reference to session in pppol2tp_ioctl()
+Date: Sat, 17 Oct 2026 17:54:55 +0200
+Message-ID: <20261017160457.391144729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,77 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit e8694f7cc29287e843648d1075177b9a2000d957 ]
+[ Upstream commit a213a8950414c684999dcf03edeea6c46ede172e ]
 
-rdev->int_scan_req is leaked if cfg80211_scan() fails.  Note that it's
-supposed to be released at ___cfg80211_scan_done() but this doesn't happen
-as rdev->scan_req is NULL at that point, too, leading to the early return
-from the freeing function.
+pppol2tp_ioctl() read sock->sk->sk_user_data directly without any
+locks or reference counting.  If a controllable sleep was induced during
+copy_from_user() (e.g. via a userfaultfd page fault sleep), a concurrent
+socket close could trigger pppol2tp_session_close() asynchronously.  This
+frees the l2tp_session structure via the l2tp_session_del_work workqueue.
+Upon resuming, the ioctl thread dereferences the stale session pointer,
+resulting in a Use-After-Free (UAF).
 
-unreferenced object 0xffff8881161d0800 (size 512):
-  comm "wpa_supplicant", pid 379, jiffies 4294749765
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 f0 81 13 16 81 88 ff ff  ................
-  backtrace (crc c867fdb6):
-    kmemleak_alloc+0x89/0x90
-    __kmalloc_noprof+0x2fd/0x410
-    cfg80211_scan+0x133/0x730
-    nl80211_trigger_scan+0xc69/0x1cc0
-    genl_family_rcv_msg_doit+0x204/0x2f0
-    genl_rcv_msg+0x431/0x6b0
-    netlink_rcv_skb+0x143/0x3f0
-    genl_rcv+0x27/0x40
-    netlink_unicast+0x4f6/0x820
-    netlink_sendmsg+0x797/0xce0
-    __sock_sendmsg+0xc4/0x160
-    ____sys_sendmsg+0x5e4/0x890
-    ___sys_sendmsg+0xf8/0x180
-    __sys_sendmsg+0x136/0x1e0
-    __x64_sys_sendmsg+0x76/0xc0
-    x64_sys_call+0x13f0/0x17d0
+Fix this by securely fetching the session reference using the RCU-safe,
+refcounted helper pppol2tp_sock_to_session(sk) on entry.  This locks the
+session's refcount across the sleep.  We structured the function to exit
+via standard err breaks, guaranteeing that l2tp_session_put() is cleanly
+called on all return paths to drop the reference.
 
-Found by Linux Verification Center (linuxtesting.org).
+To preserve existing behavior we validate the session and its magic
+signature only for the specific L2TP commands that require it.  This
+ensures that generic/unknown ioctls called on an unconnected socket
+still return -ENOIOCTLCMD and correctly fall back to generic handlers
+(e.g. in sock_do_ioctl()).
 
-Fixes: c8cb5b854b40 ("nl80211/cfg80211: support 6 GHz scanning")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260601094157.92703-1-pchelkin@ispras.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: fd558d186df2 ("l2tp: Split pppol2tp patch into separate l2tp and ppp parts")
+Link: https://patch.msgid.link/20260527133630.2120612-1-lee@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/l2tp/l2tp_ppp.c | 82 +++++++++++++++++++++++++++------------------
+ 1 file changed, 50 insertions(+), 32 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index c215c82f399e7..d10d2dfd8b8d9 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1028,6 +1028,7 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
- 	struct cfg80211_scan_request *request;
- 	struct cfg80211_scan_request *rdev_req = rdev->scan_req;
- 	u32 n_channels = 0, idx, i;
-+	int err;
+diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
+index 1573edb66ee35..230b1b156465a 100644
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -1056,64 +1056,76 @@ static int pppol2tp_ioctl(struct socket *sock, unsigned int cmd,
+ {
+ 	struct pppol2tp_ioc_stats stats;
+ 	struct l2tp_session *session;
++	int err = 0;
++
++	session = pppol2tp_sock_to_session(sock->sk);
  
- 	if (!(rdev->wiphy.flags & WIPHY_FLAG_SPLIT_SCAN_6GHZ))
- 		return rdev_scan(rdev, rdev_req);
-@@ -1054,8 +1055,14 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
++	/* Validate session presence and magic integrity ONLY for commands
++	 * that belong to L2TP and require a valid session.
++	 */
+ 	switch (cmd) {
+ 	case PPPIOCGMRU:
+ 	case PPPIOCGFLAGS:
+-		session = sock->sk->sk_user_data;
++	case PPPIOCSMRU:
++	case PPPIOCSFLAGS:
++	case PPPIOCGL2TPSTATS:
+ 		if (!session)
+ 			return -ENOTCONN;
+ 
+-		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
++		if (session->magic != L2TP_SESSION_MAGIC) {
++			sock_put(sock->sk);
+ 			return -EBADF;
++		}
++		break;
++	default:
++		break;
++	}
+ 
++	switch (cmd) {
++	case PPPIOCGMRU:
++	case PPPIOCGFLAGS:
+ 		/* Not defined for tunnels */
+-		if (!session->session_id && !session->peer_session_id)
+-			return -ENOSYS;
++		if (!session->session_id && !session->peer_session_id) {
++			err = -ENOSYS;
++			break;
++		}
+ 
+-		if (put_user(0, (int __user *)arg))
+-			return -EFAULT;
++		if (put_user(0, (int __user *)arg)) {
++			err = -EFAULT;
++			break;
++		}
+ 		break;
+ 
+ 	case PPPIOCSMRU:
+ 	case PPPIOCSFLAGS:
+-		session = sock->sk->sk_user_data;
+-		if (!session)
+-			return -ENOTCONN;
+-
+-		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
+-			return -EBADF;
+-
+ 		/* Not defined for tunnels */
+-		if (!session->session_id && !session->peer_session_id)
+-			return -ENOSYS;
++		if (!session->session_id && !session->peer_session_id) {
++			err = -ENOSYS;
++			break;
++		}
+ 
+-		if (!access_ok((int __user *)arg, sizeof(int)))
+-			return -EFAULT;
++		if (!access_ok((int __user *)arg, sizeof(int))) {
++			err = -EFAULT;
++			break;
++		}
+ 		break;
+ 
+ 	case PPPIOCGL2TPSTATS:
+-		session = sock->sk->sk_user_data;
+-		if (!session)
+-			return -ENOTCONN;
+-
+-		if (WARN_ON(session->magic != L2TP_SESSION_MAGIC))
+-			return -EBADF;
+-
+ 		/* Session 0 represents the parent tunnel */
+ 		if (!session->session_id && !session->peer_session_id) {
+ 			u32 session_id;
+-			int err;
+ 
+ 			if (copy_from_user(&stats, (void __user *)arg,
+-					   sizeof(stats)))
+-				return -EFAULT;
++					   sizeof(stats))) {
++				err = -EFAULT;
++				break;
++			}
+ 
+ 			session_id = stats.session_id;
+ 			err = pppol2tp_tunnel_copy_stats(&stats,
+ 							 session->tunnel);
+ 			if (err < 0)
+-				return err;
++				break;
+ 
+ 			stats.session_id = session_id;
+ 		} else {
+@@ -1123,15 +1135,21 @@ static int pppol2tp_ioctl(struct socket *sock, unsigned int cmd,
+ 		stats.tunnel_id = session->tunnel->tunnel_id;
+ 		stats.using_ipsec = l2tp_tunnel_uses_xfrm(session->tunnel);
+ 
+-		if (copy_to_user((void __user *)arg, &stats, sizeof(stats)))
+-			return -EFAULT;
++		if (copy_to_user((void __user *)arg, &stats, sizeof(stats))) {
++			err = -EFAULT;
++			break;
++		}
+ 		break;
+ 
+ 	default:
+-		return -ENOIOCTLCMD;
++		err = -ENOIOCTLCMD;
++		break;
  	}
  
- 	rdev_req->scan_6ghz = false;
-+	err = rdev_scan(rdev, request);
-+	if (err) {
-+		kfree(request);
-+		return err;
-+	}
+-	return 0;
++	if (session)
++		sock_put(sock->sk);
 +
- 	rdev->int_scan_req = request;
--	return rdev_scan(rdev, request);
-+	return 0;
++	return err;
  }
  
- void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
+ /*****************************************************************************
 -- 
 2.53.0
 
