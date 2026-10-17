@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE2A3ACF0E;
-	Sat, 17 Oct 2026 16:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82093B19B9;
+	Sat, 17 Oct 2026 16:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255225; cv=none; b=jM8dNTbFMMab4z2C/NypqB0JpKwCF5c4HuvDRj2v3oHvlP49MJcM8LM9IM8BpbcNVac0z9vZqC0W2axE/RML61g2GpBr/wzdF/z84pJyD2GzNTURmB4sloyLGz63+nMXCT4hrVCj/FURt41dVsSCLZAcUjzM4piPQBSFiXFWWGE=
+	t=1792255226; cv=none; b=PXNf6oyTM6arBE81uzp8mPXMAw1cQN7mKJAHYR79ZxL4/dgbuShUQh+AOCOcRKytw0yIiVf88lcRKj4lrspbQ7CCijH9GlJTzlF/iVRrqluNg9AunMhAgzTehwZlbJG9FQSQu7HiNZu6r9Ag8DMkY8d0Tjwuqsq2jk8Ozzsm8Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255225; c=relaxed/simple;
-	bh=jPBUEM7nHFV/m/67FZHvpZ+ToCxqNeBOTLCKWgf5tsw=;
+	s=arc-20240116; t=1792255226; c=relaxed/simple;
+	bh=drbU2SDA/Nb++7YzDwyflG9JmyTy06MyU2cxVgrrKUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oephkLVVaTXFQeHDpYwGRM/Av4EurD0UNdOlgtOOBlORE7/zZiSlcoxgHanTDDsyF/AvtBod7GwtKuWVVycLXlCwJwi3/E9Uu83piFzCIm9T0CuUxxRrG5W+4W50YZ2IY56Z2tjDHuiiNwvcCNyUbpP1CjkwjqKPyqjH3eZzHsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuD7Nas4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O23MGgMEa9cLAkohKZmSXde+gM4l9HLVgg+P3JSeTzU7TBF+ONJS/kfAusJyxeMWNDxatqleMuWUUa9xlpOllC32nTHGZio8+yRT3CrjsmtTJ+5IVdTc/wTeJf/d0MNKWxgkjIMXod1Yk5ZZ0yblIck2ERZBtzj4PEJZdCZCK5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqWhQCcz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuD7Nas4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2C01F000C8;
-	Sat, 17 Oct 2026 16:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqWhQCcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5BB1F000C4;
+	Sat, 17 Oct 2026 16:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792255221;
-	bh=Jsbl7kDffnOyXy+k/D84sMahtJDzzO6xMs/jTVx2gGA=;
+	s=korg; t=1792255224;
+	bh=9WMR6dVdioIHjEIXS9Q4OnyEvQgsvgM2XZHncKkN778=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZuD7Nas4n2KoY5ZNipRL3sP1NUa/En/SIaBitnQMk5G0hrCpV8+ZzAXh31ej6dvty
-	 KkYEYYUevC6kK5glU53RxlbIYrGbBfgBQeaU7NtHeQonc5cs4wyU/S+wU4XShK16b/
-	 ckvcCM9kXCMeFZDh+1c3JFLLML+9xbqK/GbOIrGw=
+	b=QqWhQCczFvPaoilkl6dmh4S+mSEGXv9dSf1FZz5+oV9sqe1ihdVyqqtPjSiLwayAa
+	 S5UlcHiPDFJgUO1Mas0JNTnTa/UwvCqYTi8YBo9eL3wZ4TTsB8JMR83mFD50zcJdCw
+	 0UBIUALLRiB7JUdUki1KKKP4UqExwXRbJMimV9vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 660/869] thermal: hwmon: Remove hwmon class device along with its parent
-Date: Sat, 17 Oct 2026 17:58:21 +0200
-Message-ID: <20261017160053.919801985@linuxfoundation.org>
+Subject: [PATCH 6.12 661/869] ocfs2: validate inline xattrs during inode block validation
+Date: Sat, 17 Oct 2026 17:58:22 +0200
+Message-ID: <20261017160053.944598617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,217 +58,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 2b57e24d34b2dfc43c81942bb359d6315bf302fb ]
+[ Upstream commit 8914a3330b72378136c2c02d6328a826f6abdad7 ]
 
-The current code creates one hwmon device per thermal zone type and that
-device is registered under the first thermal zone of the given type.
+Patch series "ocfs2: validate xattr entry bounds", v7.
 
-That turns out to be problematic when the thermal zone holding the
-hwmon device is removed.
+This series validates OCFS2 xattr entry name/value bounds when xattr
+metadata is read and validated, before getxattr() or listxattr() can walk
+out-of-range entry arrays or offsets from corrupted metadata.
 
-For example, say that there are two ACPI thermal zones on a system
+This patch (of 2):
 
- /sys/devices/virtual/thermal/thermal_zone0/
- /sys/devices/virtual/thermal/thermal_zone1/
+ocfs2_validate_inode_block() verifies a dinode before OCFS2 users walk
+metadata from it, but inline xattr metadata is still checked only in
+operation-specific consumers.  The existing ibody lookup helper validates
+inline header placement and entry count, but inode block validation does
+not reject entry name/value bounds.
 
-The current code registers a hwmon class device for thermal_zone0 only:
+Add a flat xattr entry validator and call it from inode block validation
+for inline xattrs.  Keep the operation paths on their existing
+header/count lookup checks; the full entry bounds check now runs when the
+inode block is validated at read time.
 
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/
+Reject corrupted inline xattr metadata before ocfs2_xattr_ibody_get() or
+listxattr() can walk past the inline storage.
 
-because the type is "acpitz" for both of them, but it adds a sysfs
-attribute that belongs to thermal_zone1 under it:
+Validation reproduced this kernel report:
+BUG: KASAN: use-after-free in ocfs2_xattr_find_entry+0x5a/0x170
+Read of size 2 at addr ffff8881242a2000 by task python3/529
+Call Trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  kasan_report+0xe0/0x110
+  ocfs2_xattr_find_entry+0x5a/0x170
+  ocfs2_xattr_get_nolock+0x20a/0x820
+  ocfs2_xattr_get+0x10c/0x1e0
+  __vfs_getxattr+0xe2/0x130
+  vfs_getxattr+0x185/0x1b0
 
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp2_input
-
-There is also
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-
-which belongs to thermal_zone0.
-
-When thermal_zone0 is removed, say because the ACPI thermal driver is
-unbound from the underlying platform device, thermal_remove_hwmon_sysfs()
-skips the removal of hwmon0 because of the temp2_input attribute
-belonging to thermal_zone1 which effectively prevents thermal_zone0
-removal from making progress.
-
-Address this by making thermal_remove_hwmon_sysfs() remove the entire
-hwmon class device interface for the given thermal zone type when the
-thermal zone device holding it is removed.
-
-To prevent races with thermal_add_hwmon_sysfs() that may interfere
-with this, carry out the entire addition and removal of hwmon sysfs
-interfaces for thermal zones under thermal_hwmon_list_lock.
-
-Also adjust the layout of the labels in thermal_add_hwmon_sysfs() to
-the current kernel coding style to align with the new "unlock" label.
-
-Link: https://lore.kernel.org/linux-pm/20260402021828.16556-1-liujia6264@gmail.com/
-Fixes: f6b6b52ef7a5 ("thermal_hwmon: Pass the originating device down to hwmon_device_register_with_info")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5094738.GXAFRqVoOG@rafael.j.wysocki
+Link: https://lore.kernel.org/20260705025311.3429854-1-zzzccc427@gmail.com
+Link: https://lore.kernel.org/20260705025311.3429854-2-zzzccc427@gmail.com
+Fixes: cf1d6c763fbc ("ocfs2: Add extended attribute support")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: Codex:gpt-5.5
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 87 +++++++++++++--------------------
- 1 file changed, 34 insertions(+), 53 deletions(-)
+ fs/ocfs2/inode.c |   4 ++
+ fs/ocfs2/xattr.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++
+ fs/ocfs2/xattr.h |   2 +
+ 3 files changed, 124 insertions(+)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index 3162a1a8cbb60..fcbad98d3e1b1 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -98,34 +98,12 @@ thermal_hwmon_lookup_by_type(const struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	char type[THERMAL_NAME_LENGTH];
- 
--	mutex_lock(&thermal_hwmon_list_lock);
- 	list_for_each_entry(hwmon, &thermal_hwmon_list, node) {
- 		strcpy(type, tz->type);
- 		strreplace(type, '-', '_');
--		if (!strcmp(hwmon->type, type)) {
--			mutex_unlock(&thermal_hwmon_list_lock);
-+		if (!strcmp(hwmon->type, type))
- 			return hwmon;
--		}
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 1330ea2473736..eb8de681376bd 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1562,6 +1562,10 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
  	}
--	mutex_unlock(&thermal_hwmon_list_lock);
--
--	return NULL;
--}
--
--/* Find the temperature input matching a given thermal zone */
--static struct thermal_hwmon_temp *
--thermal_hwmon_lookup_temp(const struct thermal_hwmon_device *hwmon,
--			  const struct thermal_zone_device *tz)
--{
--	struct thermal_hwmon_temp *temp;
--
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_for_each_entry(temp, &hwmon->tz_list, hwmon_node)
--		if (temp->tz == tz) {
--			mutex_unlock(&thermal_hwmon_list_lock);
--			return temp;
--		}
--	mutex_unlock(&thermal_hwmon_list_lock);
  
- 	return NULL;
- }
-@@ -141,7 +119,9 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	struct thermal_hwmon_temp *temp;
- 	int new_hwmon_device = 1;
--	int result;
-+	int result = 0;
++	rc = ocfs2_validate_inode_xattr(sb, bh->b_blocknr, di);
++	if (rc)
++		goto bail;
 +
-+	mutex_lock(&thermal_hwmon_list_lock);
+ 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
+ 		struct ocfs2_inline_data *data = &di->id2.i_data;
  
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (hwmon) {
-@@ -150,8 +130,10 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	hwmon = kzalloc(sizeof(*hwmon), GFP_KERNEL);
--	if (!hwmon)
--		return -ENOMEM;
-+	if (!hwmon) {
-+		result = -ENOMEM;
-+		goto unlock;
-+	}
- 
- 	INIT_LIST_HEAD(&hwmon->tz_list);
- 	strscpy(hwmon->type, tz->type, THERMAL_NAME_LENGTH);
-@@ -199,24 +181,24 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 		temp->temp_crit_present = true;
- 	}
- 
--	mutex_lock(&thermal_hwmon_list_lock);
- 	if (new_hwmon_device)
- 		list_add_tail(&hwmon->node, &thermal_hwmon_list);
- 	list_add_tail(&temp->hwmon_node, &hwmon->tz_list);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	return 0;
-+	goto unlock;
- 
-- unregister_input:
-+unregister_input:
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
-- free_temp_mem:
-+free_temp_mem:
- 	kfree(temp);
-- unregister_name:
-+unregister_name:
- 	if (new_hwmon_device)
- 		hwmon_device_unregister(hwmon->device);
-- free_mem:
-+free_mem:
- 	if (new_hwmon_device)
- 		kfree(hwmon);
-+unlock:
-+	mutex_unlock(&thermal_hwmon_list_lock);
- 
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 3cc679e5f1a1a..1cad9a386705e 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -953,6 +953,124 @@ static int ocfs2_xattr_list_entries(struct inode *inode,
  	return result;
  }
-@@ -224,8 +206,11 @@ EXPORT_SYMBOL_GPL(thermal_add_hwmon_sysfs);
  
- void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- {
-+	struct thermal_hwmon_temp *temp, *entry;
- 	struct thermal_hwmon_device *hwmon;
--	struct thermal_hwmon_temp *temp;
-+	bool unregister;
++static int ocfs2_validate_xattr_entries_flat(struct super_block *sb, u64 blkno,
++					     struct ocfs2_xattr_header *xh,
++					     size_t region_size)
++{
++	u16 xattr_count = le16_to_cpu(xh->xh_count);
++	size_t entries_limit = region_size;
++	size_t nv_limit = region_size;
++	size_t max_entries;
++	int i;
 +
-+	guard(mutex)(&thermal_hwmon_list_lock);
- 
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (unlikely(!hwmon)) {
-@@ -234,29 +219,25 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 		return;
- 	}
- 
--	temp = thermal_hwmon_lookup_temp(hwmon, tz);
--	if (unlikely(!temp)) {
--		/* Should never happen... */
--		dev_dbg(&tz->device, "temperature input lookup failed!\n");
--		return;
--	}
-+	unregister = hwmon->device->parent == &tz->device;
- 
--	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (temp->temp_crit_present)
--		device_remove_file(hwmon->device, &temp->temp_crit.attr);
-+	list_for_each_entry_safe_reverse(temp, entry, &hwmon->tz_list, hwmon_node) {
-+		if (!unregister && temp->tz != tz)
-+			continue;
- 
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_del(&temp->hwmon_node);
--	kfree(temp);
--	if (!list_empty(&hwmon->tz_list)) {
--		mutex_unlock(&thermal_hwmon_list_lock);
--		return;
-+		device_remove_file(hwmon->device, &temp->temp_input.attr);
-+		if (temp->temp_crit_present)
-+			device_remove_file(hwmon->device, &temp->temp_crit.attr);
++	if (region_size < sizeof(*xh))
++		return ocfs2_error(sb,
++				   "Invalid xattr in block %llu: region size %zu is too small\n",
++				   (unsigned long long)blkno, region_size);
 +
-+		list_del(&temp->hwmon_node);
-+		kfree(temp);
- 	}
--	list_del(&hwmon->node);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	hwmon_device_unregister(hwmon->device);
--	kfree(hwmon);
-+	if (unregister) {
-+		list_del(&hwmon->node);
-+		hwmon_device_unregister(hwmon->device);
-+		kfree(hwmon);
++	max_entries = (entries_limit - sizeof(*xh)) /
++		      sizeof(struct ocfs2_xattr_entry);
++
++	if (xattr_count > max_entries)
++		return ocfs2_error(sb,
++				   "Invalid xattr in block %llu: entry count %u exceeds maximum %zu\n",
++				   (unsigned long long)blkno,
++				   xattr_count, max_entries);
++
++	for (i = 0; i < xattr_count; i++) {
++		struct ocfs2_xattr_entry *xe = &xh->xh_entries[i];
++		size_t name_offset = le16_to_cpu(xe->xe_name_offset);
++		size_t value_offset;
++
++		if (name_offset > nv_limit ||
++		    xe->xe_name_len > nv_limit - name_offset)
++			return ocfs2_error(sb,
++					   "Invalid xattr in block %llu: entry %d name is out of bounds\n",
++					   (unsigned long long)blkno, i);
++
++		value_offset = name_offset + OCFS2_XATTR_SIZE(xe->xe_name_len);
++		if (value_offset > nv_limit)
++			return ocfs2_error(sb,
++					   "Invalid xattr in block %llu: entry %d value starts out of bounds\n",
++					   (unsigned long long)blkno, i);
++
++		if (ocfs2_xattr_is_local(xe)) {
++			if (le64_to_cpu(xe->xe_value_size) >
++			    nv_limit - value_offset)
++				return ocfs2_error(sb,
++						   "Invalid xattr in block %llu: entry %d value is out of bounds\n",
++						   (unsigned long long)blkno,
++						   i);
++		} else if (sizeof(struct ocfs2_xattr_value_root) >
++			   nv_limit - value_offset) {
++			return ocfs2_error(sb,
++					   "Invalid xattr in block %llu: entry %d value root is out of bounds\n",
++					   (unsigned long long)blkno, i);
++		}
 +	}
- }
- EXPORT_SYMBOL_GPL(thermal_remove_hwmon_sysfs);
- 
++
++	return 0;
++}
++
++static int ocfs2_xattr_ibody_lookup_header_raw(struct super_block *sb,
++					       u64 blkno,
++					       struct ocfs2_dinode *di,
++					       struct ocfs2_xattr_header **header,
++					       u16 *inline_size_ret)
++{
++	struct ocfs2_xattr_header *xh;
++	u16 xattr_count;
++	size_t max_entries;
++	u16 inline_size = le16_to_cpu(di->i_xattr_inline_size);
++
++	if (inline_size > sb->s_blocksize ||
++	    inline_size < sizeof(struct ocfs2_xattr_header)) {
++		ocfs2_error(sb,
++			    "Invalid inode %llu: xattr inline size %u\n",
++			    (unsigned long long)blkno, inline_size);
++		return -EFSCORRUPTED;
++	}
++
++	xh = (struct ocfs2_xattr_header *)
++		((void *)di + sb->s_blocksize - inline_size);
++
++	xattr_count = le16_to_cpu(xh->xh_count);
++	max_entries = (inline_size - sizeof(struct ocfs2_xattr_header)) /
++		      sizeof(struct ocfs2_xattr_entry);
++
++	if (xattr_count > max_entries) {
++		ocfs2_error(sb,
++			    "xattr entry count %u exceeds maximum %zu in inode %llu\n",
++			    xattr_count, max_entries,
++			    (unsigned long long)blkno);
++		return -EFSCORRUPTED;
++	}
++
++	*header = xh;
++	if (inline_size_ret)
++		*inline_size_ret = inline_size;
++
++	return 0;
++}
++
++int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
++			       struct ocfs2_dinode *di)
++{
++	struct ocfs2_xattr_header *xh;
++	u16 inline_size;
++	int ret;
++
++	if (!(le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_XATTR_FL))
++		return 0;
++
++	ret = ocfs2_xattr_ibody_lookup_header_raw(sb, blkno, di, &xh,
++						  &inline_size);
++	if (ret)
++		return ret;
++
++	return ocfs2_validate_xattr_entries_flat(sb, blkno, xh, inline_size);
++}
++
+ int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
+ 					 struct ocfs2_dinode *di)
+ {
+diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
+index aeba323e14b3c..887cc1a18b1af 100644
+--- a/fs/ocfs2/xattr.h
++++ b/fs/ocfs2/xattr.h
+@@ -43,6 +43,8 @@ int ocfs2_xattr_set_handle(handle_t *, struct inode *, struct buffer_head *,
+ 			   struct ocfs2_alloc_context *);
+ int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
+ 					 struct ocfs2_dinode *di);
++int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
++			       struct ocfs2_dinode *di);
+ int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
+ int ocfs2_init_security_get(struct inode *, struct inode *,
+ 			    const struct qstr *,
 -- 
 2.53.0
 
