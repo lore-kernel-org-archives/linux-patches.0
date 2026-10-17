@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF6C3A1E92;
-	Sat, 17 Oct 2026 16:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2725E38654F;
+	Sat, 17 Oct 2026 16:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253782; cv=none; b=S706aYWouW8ivtsArDo3rPcEn6wXXjMabDS0CKOLOQcSVeLWQjk9vUxMCzeT93oflwwh2VWvO44ROF0tTJB5/FgB5SrDk5lWb518ddfiS6OgRjpymlODGiPz0efO0que18o25SkGrJFCtUT0649DtZ/eCwQIMYvIu21wpOCb9+s=
+	t=1792253783; cv=none; b=YuoIwcL/LC/rt8A1tQo6t7eLgNxlQhYRyJklyNYjafMnDSRmww5raWfkTfJj2qwbS6NewvWGX/wgYVtPg8WjfAaMBxs+KpB1FJS5Rl0+ya9hM9tNdtpfYWZphBA0w+j2cD2G7BglBmGyCMGELb1whwviwlRxrH4Tmj2ayLpQEOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253782; c=relaxed/simple;
-	bh=iSvlUDCQPRUrLD3CxyB7dZd8KkS04J15TB4Qeng+LWM=;
+	s=arc-20240116; t=1792253783; c=relaxed/simple;
+	bh=o2DfGx9IQkLQnFdbcTGtyo/TxOetVE1MKS7XlKYp94Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qrszDvAKQY+gLFFzuoaOwJNw/TzKCCLKwrg56aWTqVbfLH/JOhFn7WfnDnBbucskjnqob2FMdUHS2SgqFKMyaP8oSkNANPDbdb6R+mgJbNfVp9HAhQEAr2LpEffrOcCx9OBgMDaX6d+nWW/dyEXG+r4zMxN+FobtW+qnyr2pD5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukdosL+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eEynZNovHPClWbW6wol4kxU8FsxXQGzWcbdYEEpBGzdfvLbKF7jgXkm+fCA0+0c1EvJZoIbW/XxAuuhx5dzOal780VMrX2WmTLhyCUYiUoXE+O5FT6hs7cYGfUG6uM5aiKLA0H68sxkyC9WmlG4JJ3dtjipfPi+seT5DEDrnvHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXQnWxgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukdosL+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965B21F000C4;
-	Sat, 17 Oct 2026 16:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXQnWxgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAE81F000C5;
+	Sat, 17 Oct 2026 16:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253779;
-	bh=DVP+aUk/VWUetW2r5ju/jNysRLwKINaSsaVv5GLKBlc=;
+	s=korg; t=1792253782;
+	bh=v9Ghd1c4zFmREyiUvxxyfczGjidB+TAWNs+1V/5a/es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukdosL+SQrBQp9VLTT31yYAIBZoM4Huhi4fLK40QbbHfzyFN7kowFIpqeLHF+bpyo
-	 dP9UGz+V9YzXh4JIdNAlLOprplvOlIM1+VI0ezQTKDgV4l3rlufs82fwARtCImqxLH
-	 FOlP9YQunofT23nQne+UvH6AGx7wuEyKwd9VBLV0=
+	b=kXQnWxgFR8TuGVLOCCtyrcyTVd/s7hWaA8yWvlqydNXve6jYhuJ6VTLpqu03Q3Si3
+	 e+eBIDFmc4as2sSP7NsBZslvdx6/PHh4/13TF+DgC4gAiXWVYieiJf1jELFJDS1VE1
+	 8Lvr9cLlpGbmYaOFShpQQZZ20P3OYPiMtsMXyxaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Long Li <leo.lilong@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/869] ALSA: ctxfi: Add hw parameter to daio_mgr_dao_init()
-Date: Sat, 17 Oct 2026 17:50:44 +0200
-Message-ID: <20261017160042.261927372@linuxfoundation.org>
+Subject: [PATCH 6.12 230/869] xfs: remove bp->b_error check in xfs_attr3_root_inactive
+Date: Sat, 17 Oct 2026 17:51:11 +0200
+Message-ID: <20261017160042.946452288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,79 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 5ebd054272718334c543998a6d0b77a9846c16d9 ]
+[ Upstream commit 09f7680dea8760d48dd5b8b5288a388fec122275 ]
 
-Add a hw parameter to the daio_mgr_dao_init() function to provide
-access to model-specific information. This is necessary for proper
-configuration of S/PDIF and I2S output ports on different hardware
-variants.
+The b_error check right after xfs_trans_get_buf() is redundant:
 
-Signed-off-by: Harin Lee <me@harin.net>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251124180501.2760421-2-me@harin.net
-Stable-dep-of: 277c6960d4dd ("ALSA: ctxfi: Check the error for index mapping")
+1) If the buffer is found in transaction via xfs_trans_buf_item_match(),
+   any corrupted metadata error would have already been exposed during
+   previous reads like xfs_da3_node_read().
+
+2) If the buffer is obtained via xfs_buf_get_map():
+   - It's called without XBF_READ flag, so won't return buffer with
+     b_error set, since xfs_buf_get_map() will clear it anyway.
+   - Buffer found in cache normally won't have error since previous reads
+     had checked it, unless someone corrupts the buffer and the AIL
+     pushes it out to disk while the buffer's unlocked. But in this case,
+     AIL will shut down the log.
+
+Remove this redundant check to simplify the code, make the code consistent
+with most other xfs_trans_get_buf() callers in XFS.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: b854e1c4eff3 ("xfs: close crash window in attr dabtree inactivation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctdaio.c     | 2 +-
- sound/pci/ctxfi/cthardware.h | 2 +-
- sound/pci/ctxfi/cthw20k1.c   | 2 +-
- sound/pci/ctxfi/cthw20k2.c   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_attr_inactive.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index 5a50f6452a1df..b20c10196579d 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -413,7 +413,7 @@ static int dao_rsc_init(struct dao *dao,
- 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
- 
- 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
--	hw->daio_mgr_dao_init(mgr->mgr.ctrl_blk,
-+	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
- 			daio_device_index(dao->daio.type, hw), conf);
- 	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
- 			daio_device_index(dao->daio.type, hw));
-diff --git a/sound/pci/ctxfi/cthardware.h b/sound/pci/ctxfi/cthardware.h
-index 2875cec83b8f2..d29b4e5b3fcc4 100644
---- a/sound/pci/ctxfi/cthardware.h
-+++ b/sound/pci/ctxfi/cthardware.h
-@@ -167,7 +167,7 @@ struct hw {
- 	int (*daio_mgr_dsb_dai)(void *blk, unsigned int idx);
- 	int (*daio_mgr_enb_dao)(void *blk, unsigned int idx);
- 	int (*daio_mgr_dsb_dao)(void *blk, unsigned int idx);
--	int (*daio_mgr_dao_init)(void *blk, unsigned int idx,
-+	int (*daio_mgr_dao_init)(struct hw *hw, void *blk, unsigned int idx,
- 						unsigned int conf);
- 	int (*daio_mgr_set_imaparc)(void *blk, unsigned int slot);
- 	int (*daio_mgr_set_imapnxt)(void *blk, unsigned int next);
-diff --git a/sound/pci/ctxfi/cthw20k1.c b/sound/pci/ctxfi/cthw20k1.c
-index 9edbf5d8c3c70..7b41e1ffda082 100644
---- a/sound/pci/ctxfi/cthw20k1.c
-+++ b/sound/pci/ctxfi/cthw20k1.c
-@@ -1031,7 +1031,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
- 	return 0;
- }
- 
--static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
-+static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
- {
- 	struct daio_mgr_ctrl_blk *ctl = blk;
- 
-diff --git a/sound/pci/ctxfi/cthw20k2.c b/sound/pci/ctxfi/cthw20k2.c
-index 4d970f25a2c6c..e45c655528f51 100644
---- a/sound/pci/ctxfi/cthw20k2.c
-+++ b/sound/pci/ctxfi/cthw20k2.c
-@@ -985,7 +985,7 @@ static int daio_mgr_dsb_dao(void *blk, unsigned int idx)
- 	return 0;
- }
- 
--static int daio_mgr_dao_init(void *blk, unsigned int idx, unsigned int conf)
-+static int daio_mgr_dao_init(struct hw *hw __maybe_unused, void *blk, unsigned int idx, unsigned int conf)
- {
- 	struct daio_mgr_ctrl_blk *ctl = blk;
- 
+diff --git a/fs/xfs/xfs_attr_inactive.c b/fs/xfs/xfs_attr_inactive.c
+index 24fb12986a568..319004bf089fa 100644
+--- a/fs/xfs/xfs_attr_inactive.c
++++ b/fs/xfs/xfs_attr_inactive.c
+@@ -305,11 +305,6 @@ xfs_attr3_root_inactive(
+ 			XFS_FSB_TO_BB(mp, mp->m_attr_geo->fsbcount), 0, &bp);
+ 	if (error)
+ 		return error;
+-	error = bp->b_error;
+-	if (error) {
+-		xfs_trans_brelse(*trans, bp);
+-		return error;
+-	}
+ 	xfs_trans_binval(*trans, bp);	/* remove from cache */
+ 	/*
+ 	 * Commit the invalidate and start the next transaction.
 -- 
 2.53.0
 
