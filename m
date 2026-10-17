@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0B038654F;
-	Sat, 17 Oct 2026 16:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2920F3911A9;
+	Sat, 17 Oct 2026 16:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792254590; cv=none; b=JC8cGTp4qnNc38bNw8ZMpdUy6T0CeFc8qtxeSo23PTYo970cZjDBzGI+N2QiphnocmoXsVfFyCy43eLEYPJHnNmdc0BosSxLdW1K3KcnjwSl0teHFIIbZ1NPDfJxs4bN/9RcTG04GYKg9h313XwXqCU8qy1jX/GD9biNpLV3FWY=
+	t=1792254593; cv=none; b=ShJrWJaaTJZkABhiZFxTNEhlHkOah4gv6yN7QB9e2HjVT0BdB3yqYW1+t3s1AQ/SwUfRJrXzBc14J4DLUAilYmBktWsDXUE+ktJy6xKG1vdy4IRPGhLpQbfP+G2TKvnCpgrGECG/ckHvePrVsvRbKjKOMvF4Xgw5nKB5s/CZn8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792254590; c=relaxed/simple;
-	bh=X/I/iK2ozoVxkHCWj2hn/r0cKfjzWOLvceCeqBKEU3I=;
+	s=arc-20240116; t=1792254593; c=relaxed/simple;
+	bh=Uy1tuay3u0ommA469D1l370YQwmwXgkVIBJidbNdsWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKo+55t4BL4acNbTLnsQVoGx3VS33q3LNGN6sbQ2HnxlzX6fm0GXvkQoHdzmP4TzyteyxvHejs8idgtCi/YH7FMkMM/wAGXpS0i8o7Yl1yaml4P+FH1emYjdEvdIMT8fOw1dAzKGBFb7C0I1vfkVlMig+uwUuM7ZPvD3mCbmGE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DETJA+lt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CsMznj8edjesoWtNZYZEb/rfQzFXKbNFh4hVUX+k8G+nbCtruBJ2eR7ae79IFtACON27gnaUvhg9JwaPsyfqlt7/IwMOEwloEPyWeuFODDjteSERmZ7yqpU7hGEG4BR2rcd6yd04I1hh/jQ/QRqmi5N8Zesc1DLa0M3PxLuPXAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQbFB6y1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DETJA+lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7491F000C4;
-	Sat, 17 Oct 2026 16:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQbFB6y1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D011F000C4;
+	Sat, 17 Oct 2026 16:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792254588;
-	bh=rHZ0EeBAyzCjqZCbugZrBmbk6WSDcdDZKuwRYB96RqM=;
+	s=korg; t=1792254591;
+	bh=5Ped3AVuxuC/Cf4se0OoMqsHzl5yz/C4CN7j+9vJjl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DETJA+ltEJAja+HEYd/oHZRQ0KC3lnMRyHhjhgCZiSEw9Vu3ENtSPpq5KbtkfrPAZ
-	 5j+xawtUoq42q4+dMYb5rylDqi4KKdJ5CtvdLA9DhWuCVG3SjGqB59MTymSm0yCZTI
-	 B9mJXszuUSkLri3wWA6d+mpi0QiXj3uLbYj7Sl7s=
+	b=gQbFB6y1qv1f2OPPS8WmZPV/OCcqxIwYT3qg+jCX9RP7N9UHulwIgju4+HVGWGSfL
+	 EIdd9nHyP+MA7OqNTZhI3yoftdTq7/gA4VubAOThvz3bZ+KfKLMfvbUKZ7Sb1cTbBX
+	 y4ywE1dxuQWjc0M31i1Ie6eO/3NycQ0ORdKEBgVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+0da43efa72f88bd3a8af@syzkaller.appspotmail.com,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 496/869] Bluetooth: ISO: lock sk in iso_connect_ind
-Date: Sat, 17 Oct 2026 17:55:37 +0200
-Message-ID: <20261017160049.828579211@linuxfoundation.org>
+Subject: [PATCH 6.12 497/869] netfs: Fix folio_queue ENOMEM in writeback by adding a mempool
+Date: Sat, 17 Oct 2026 17:55:38 +0200
+Message-ID: <20261017160049.853473110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -51,77 +58,360 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 4311fd6f429065a8ba208660360a895627a00cf3 ]
+[ Upstream commit 1d78d56c43ef3768183e8370e7367b162700e049 ]
 
-Accessing iso_pi(sk)->conn requires lock_sock, which is not taken in the
-"ev3" part of iso_connect_ind.  It may also be NULL if socket has
-transitioned away from the LISTEN/CONNECT states before locking.
+Fix the handling of folio_queue allocation failure in writeback by adding a
+mempool and passing in gfp_t flags to the rolling buffer functions that
+allocate memory, using the mempool if gfp != GFP_KERNEL.
 
-Fix by adding lock/release. Recheck hcon is valid after lock acquire
-where needed.
+This is then extended upwards and the gfp to be used for a request is stored
+in the netfs_io_request struct and is then used for both requests and
+subrequests, eliminating the sleeping loops there.
 
-Fixes: 168d9bf9c7f0 ("Bluetooth: ISO: Reassemble PA data for bcast sink")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The failure caused:
+
+    folio != NULL
+    WARNING: fs/netfs/write_issue.c:603 at netfs_writepages+0x883/0xa10 fs/netfs/write_issue.c:603, CPU#3: syz.0.17/5919
+
+Fixes: cd0277ed0c18 ("netfs: Use new folio_queue data type and iterator instead of xarray iter")
+Reported-by: syzbot+0da43efa72f88bd3a8af@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0da43efa72f88bd3a8af
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260727130716.1099906-5-dhowells@redhat.com
+Tested-by: syzbot+0da43efa72f88bd3a8af@syzkaller.appspotmail.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Yun Zhou <yun.zhou@windriver.com>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: Christoph Hellwig <hch@infradead.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ fs/netfs/buffered_read.c       |  6 +++---
+ fs/netfs/internal.h            |  1 +
+ fs/netfs/main.c                |  7 +++++++
+ fs/netfs/objects.c             | 31 ++++++++++++++++++-------------
+ fs/netfs/read_pgpriv2.c        |  2 +-
+ fs/netfs/rolling_buffer.c      | 22 +++++++++++++---------
+ fs/netfs/write_issue.c         |  8 ++++----
+ include/linux/netfs.h          |  1 +
+ include/linux/rolling_buffer.h |  6 +++---
+ 9 files changed, 51 insertions(+), 33 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 89e59cdafd571..eafa22468e5f0 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2293,9 +2293,11 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 		if (!sk)
- 			goto done;
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index 1228cabbfde3a..23235e62f33ec 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -351,7 +351,7 @@ void netfs_readahead(struct readahead_control *ractl)
  
--		hcon = iso_pi(sk)->conn->hcon;
-+		lock_sock(sk);
+ 	rreq->ractl = ractl;
+ 	rreq->submitted = rreq->start;
+-	if (rolling_buffer_init(&rreq->buffer, rreq->debug_id, ITER_DEST) < 0)
++	if (rolling_buffer_init(&rreq->buffer, rreq->debug_id, ITER_DEST, rreq->gfp) < 0)
+ 		goto cleanup_free;
+ 	netfs_read_to_pagecache(rreq);
+ 
+@@ -372,10 +372,10 @@ static int netfs_create_singular_buffer(struct netfs_io_request *rreq, struct fo
+ {
+ 	ssize_t added;
+ 
+-	if (rolling_buffer_init(&rreq->buffer, rreq->debug_id, ITER_DEST) < 0)
++	if (rolling_buffer_init(&rreq->buffer, rreq->debug_id, ITER_DEST, rreq->gfp) < 0)
+ 		return -ENOMEM;
+ 
+-	added = rolling_buffer_append(&rreq->buffer, folio, rollbuf_flags);
++	added = rolling_buffer_append(&rreq->buffer, folio, rollbuf_flags, rreq->gfp);
+ 	if (added < 0)
+ 		return added;
+ 	rreq->submitted = rreq->start + added;
+diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
+index 7256277edacb8..b8b78c9be293d 100644
+--- a/fs/netfs/internal.h
++++ b/fs/netfs/internal.h
+@@ -34,6 +34,7 @@ extern struct list_head netfs_io_requests;
+ extern spinlock_t netfs_proc_lock;
+ extern mempool_t netfs_request_pool;
+ extern mempool_t netfs_subrequest_pool;
++extern mempool_t netfs_folioq_pool;
+ 
+ #ifdef CONFIG_PROC_FS
+ static inline void netfs_proc_add_rreq(struct netfs_io_request *rreq)
+diff --git a/fs/netfs/main.c b/fs/netfs/main.c
+index 3a8433e802cc2..98ff6d2e62ec3 100644
+--- a/fs/netfs/main.c
++++ b/fs/netfs/main.c
+@@ -28,6 +28,7 @@ static struct kmem_cache *netfs_request_slab;
+ static struct kmem_cache *netfs_subrequest_slab;
+ mempool_t netfs_request_pool;
+ mempool_t netfs_subrequest_pool;
++mempool_t netfs_folioq_pool;
+ 
+ #ifdef CONFIG_PROC_FS
+ LIST_HEAD(netfs_io_requests);
+@@ -105,6 +106,9 @@ static int __init netfs_init(void)
+ {
+ 	int ret = -ENOMEM;
+ 
++	if (mempool_init_kmalloc_pool(&netfs_folioq_pool, 100, sizeof(struct folio_queue)) < 0)
++		goto error_folioq_pool;
 +
-+		hcon = iso_pi(sk)->conn ? iso_pi(sk)->conn->hcon : NULL;
- 		if (!hcon)
--			goto done;
-+			goto release3;
+ 	netfs_request_slab = kmem_cache_create("netfs_request",
+ 					       sizeof(struct netfs_io_request), 0,
+ 					       SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT,
+@@ -157,6 +161,8 @@ static int __init netfs_init(void)
+ error_reqpool:
+ 	kmem_cache_destroy(netfs_request_slab);
+ error_req:
++	mempool_exit(&netfs_folioq_pool);
++error_folioq_pool:
+ 	return ret;
+ }
+ fs_initcall(netfs_init);
+@@ -169,5 +175,6 @@ static void __exit netfs_exit(void)
+ 	kmem_cache_destroy(netfs_subrequest_slab);
+ 	mempool_exit(&netfs_request_pool);
+ 	kmem_cache_destroy(netfs_request_slab);
++	mempool_exit(&netfs_folioq_pool);
+ }
+ module_exit(netfs_exit);
+diff --git a/fs/netfs/objects.c b/fs/netfs/objects.c
+index 8c98b70eb3a4f..788bdaf7332f9 100644
+--- a/fs/netfs/objects.c
++++ b/fs/netfs/objects.c
+@@ -7,7 +7,6 @@
  
- 		if (ev3->data_status == LE_PA_DATA_TRUNCATED) {
- 			/* The controller was unable to retrieve PA data. */
-@@ -2303,12 +2305,12 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 			       HCI_MAX_PER_AD_TOT_LEN);
- 			hcon->le_per_adv_data_len = 0;
- 			hcon->le_per_adv_data_offset = 0;
--			goto done;
-+			goto release3;
- 		}
+ #include <linux/slab.h>
+ #include <linux/mempool.h>
+-#include <linux/delay.h>
+ #include "internal.h"
  
- 		if (hcon->le_per_adv_data_offset + ev3->length >
- 		    HCI_MAX_PER_AD_TOT_LEN)
--			goto done;
-+			goto release3;
+ /*
+@@ -24,16 +23,22 @@ struct netfs_io_request *netfs_alloc_request(struct address_space *mapping,
+ 	struct netfs_io_request *rreq;
+ 	mempool_t *mempool = ctx->ops->request_pool ?: &netfs_request_pool;
+ 	struct kmem_cache *cache = mempool->pool_data;
++	gfp_t gfp = GFP_KERNEL;
+ 	int ret;
  
- 		memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
- 		       ev3->data, ev3->length);
-@@ -2327,7 +2329,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 						    &base_len);
- 
- 			if (!base || base_len > BASE_MAX_LENGTH)
--				goto done;
-+				goto release3;
- 
- 			lock_sock(sk);
- 			memcpy(iso_pi(sk)->base, base, base_len);
-@@ -2339,6 +2341,9 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 			 */
- 			hcon->le_per_adv_data_len = 0;
- 		}
+-	for (;;) {
+-		rreq = mempool_alloc(mempool, GFP_KERNEL);
+-		if (rreq)
+-			break;
+-		msleep(10);
++	/* Writeback is part of memory reclaim and must not fail due to ENOMEM. */
++	if (origin == NETFS_WRITEBACK) {
++		gfp = GFP_NOFS; /* Allows use of mempools. */
 +
-+release3:
-+		release_sock(sk);
- 	} else {
- 		sk = iso_get_sock(&hdev->bdaddr, BDADDR_ANY,
- 				  BT_LISTEN, NULL, NULL);
++		rreq = mempool_alloc(mempool, gfp);
++	} else {
++		rreq = mempool->alloc(gfp, mempool->pool_data);
++		if (!rreq)
++			return ERR_PTR(-ENOMEM);
+ 	}
+ 
+ 	memset(rreq, 0, kmem_cache_size(cache));
++	rreq->gfp	= gfp;
+ 	rreq->start	= start;
+ 	rreq->len	= len;
+ 	rreq->origin	= origin;
+@@ -182,13 +187,13 @@ struct netfs_io_subrequest *netfs_alloc_subrequest(struct netfs_io_request *rreq
+ 	mempool_t *mempool = rreq->netfs_ops->subrequest_pool ?: &netfs_subrequest_pool;
+ 	struct kmem_cache *cache = mempool->pool_data;
+ 
+-	for (;;) {
+-		subreq = mempool_alloc(rreq->netfs_ops->subrequest_pool ?: &netfs_subrequest_pool,
+-				       GFP_KERNEL);
+-		if (subreq)
+-			break;
+-		msleep(10);
+-	}
++	/* The write-side callers don't handle failure, so only reads may fail. */
++	if (rreq->gfp == GFP_KERNEL && rreq->origin <= NETFS_DIO_READ)
++		subreq = mempool->alloc(rreq->gfp, mempool->pool_data);
++	else
++		subreq = mempool_alloc(mempool, rreq->gfp);
++	if (!subreq)
++		return NULL;
+ 
+ 	memset(subreq, 0, kmem_cache_size(cache));
+ 
+diff --git a/fs/netfs/read_pgpriv2.c b/fs/netfs/read_pgpriv2.c
+index 838f92eed1c23..d29d5ca594588 100644
+--- a/fs/netfs/read_pgpriv2.c
++++ b/fs/netfs/read_pgpriv2.c
+@@ -95,7 +95,7 @@ static int netfs_pgpriv2_copy_folio(struct netfs_io_request *wreq, struct folio
+ 	trace_netfs_folio(folio, netfs_folio_trace_store_copy);
+ 
+ 	/* Attach the folio to the rolling buffer. */
+-	if (rolling_buffer_append(&wreq->buffer, folio, 0) < 0)
++	if (rolling_buffer_append(&wreq->buffer, folio, 0, wreq->gfp) < 0)
+ 		return -ENOMEM;
+ 
+ 	cache->submit_extendable_to = fsize;
+diff --git a/fs/netfs/rolling_buffer.c b/fs/netfs/rolling_buffer.c
+index 75d97af14b4ab..7c768ca5ff592 100644
+--- a/fs/netfs/rolling_buffer.c
++++ b/fs/netfs/rolling_buffer.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/bitops.h>
++#include <linux/mempool.h>
+ #include <linux/pagemap.h>
+ #include <linux/rolling_buffer.h>
+ #include <linux/slab.h>
+@@ -27,7 +28,10 @@ struct folio_queue *netfs_folioq_alloc(unsigned int rreq_id, gfp_t gfp,
+ {
+ 	struct folio_queue *fq;
+ 
+-	fq = kmalloc(sizeof(*fq), gfp);
++	if (gfp == GFP_KERNEL)
++		fq = netfs_folioq_pool.alloc(gfp, netfs_folioq_pool.pool_data);
++	else
++		fq = mempool_alloc(&netfs_folioq_pool, gfp);
+ 	if (fq) {
+ 		netfs_stat(&netfs_n_folioq);
+ 		folioq_init(fq, rreq_id);
+@@ -50,7 +54,7 @@ void netfs_folioq_free(struct folio_queue *folioq,
+ {
+ 	trace_netfs_folioq(folioq, trace);
+ 	netfs_stat_d(&netfs_n_folioq);
+-	kfree(folioq);
++	mempool_free(folioq, &netfs_folioq_pool);
+ }
+ EXPORT_SYMBOL(netfs_folioq_free);
+ 
+@@ -60,11 +64,11 @@ EXPORT_SYMBOL(netfs_folioq_free);
+  * consumer.
+  */
+ int rolling_buffer_init(struct rolling_buffer *roll, unsigned int rreq_id,
+-			unsigned int direction)
++			unsigned int direction, gfp_t gfp)
+ {
+ 	struct folio_queue *fq;
+ 
+-	fq = netfs_folioq_alloc(rreq_id, GFP_NOFS, netfs_trace_folioq_rollbuf_init);
++	fq = netfs_folioq_alloc(rreq_id, gfp, netfs_trace_folioq_rollbuf_init);
+ 	if (!fq)
+ 		return -ENOMEM;
+ 
+@@ -77,14 +81,14 @@ int rolling_buffer_init(struct rolling_buffer *roll, unsigned int rreq_id,
+ /*
+  * Add another folio_queue to a rolling buffer if there's no space left.
+  */
+-int rolling_buffer_make_space(struct rolling_buffer *roll)
++int rolling_buffer_make_space(struct rolling_buffer *roll, gfp_t gfp)
+ {
+ 	struct folio_queue *fq, *head = roll->head;
+ 
+ 	if (!folioq_full(head))
+ 		return 0;
+ 
+-	fq = netfs_folioq_alloc(head->rreq_id, GFP_NOFS, netfs_trace_folioq_make_space);
++	fq = netfs_folioq_alloc(head->rreq_id, gfp, netfs_trace_folioq_make_space);
+ 	if (!fq)
+ 		return -ENOMEM;
+ 	fq->prev = head;
+@@ -122,7 +126,7 @@ ssize_t rolling_buffer_load_from_ra(struct rolling_buffer *roll,
+ 	int nr, ix, to;
+ 	ssize_t size = 0;
+ 
+-	if (rolling_buffer_make_space(roll) < 0)
++	if (rolling_buffer_make_space(roll, GFP_KERNEL) < 0)
+ 		return -ENOMEM;
+ 
+ 	fq = roll->head;
+@@ -157,12 +161,12 @@ ssize_t rolling_buffer_load_from_ra(struct rolling_buffer *roll,
+  * Append a folio to the rolling buffer.
+  */
+ ssize_t rolling_buffer_append(struct rolling_buffer *roll, struct folio *folio,
+-			      unsigned int flags)
++			      unsigned int flags, gfp_t gfp)
+ {
+ 	ssize_t size = folio_size(folio);
+ 	int slot;
+ 
+-	if (rolling_buffer_make_space(roll) < 0)
++	if (rolling_buffer_make_space(roll, gfp) < 0)
+ 		return -ENOMEM;
+ 
+ 	slot = folioq_append(roll->head, folio);
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 8143f84e60b4b..4242cfc683d7c 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -107,7 +107,7 @@ struct netfs_io_request *netfs_create_write_req(struct address_space *mapping,
+ 	ictx = netfs_inode(wreq->inode);
+ 	if (is_buffered)
+ 		fscache_begin_write_operation(&wreq->cache_resources, netfs_i_cookie(ictx));
+-	if (rolling_buffer_init(&wreq->buffer, wreq->debug_id, ITER_SOURCE) < 0)
++	if (rolling_buffer_init(&wreq->buffer, wreq->debug_id, ITER_SOURCE, wreq->gfp) < 0)
+ 		goto nomem;
+ 
+ 	wreq->cleaned_to = wreq->start;
+@@ -167,7 +167,7 @@ static void netfs_prepare_write(struct netfs_io_request *wreq,
+ 	 */
+ 	if (iov_iter_is_folioq(wreq_iter) &&
+ 	    wreq_iter->folioq_slot >= folioq_nr_slots(wreq_iter->folioq))
+-		rolling_buffer_make_space(&wreq->buffer);
++		rolling_buffer_make_space(&wreq->buffer, wreq->gfp);
+ 
+ 	subreq = netfs_alloc_subrequest(wreq);
+ 	subreq->source		= stream->source;
+@@ -330,7 +330,7 @@ static int netfs_write_folio(struct netfs_io_request *wreq,
+ 
+ 	_enter("");
+ 
+-	if (rolling_buffer_make_space(&wreq->buffer) < 0)
++	if (rolling_buffer_make_space(&wreq->buffer, wreq->gfp) < 0)
+ 		return -ENOMEM;
+ 
+ 	/* netfs_perform_write() may shift i_size around the page or from out
+@@ -432,7 +432,7 @@ static int netfs_write_folio(struct netfs_io_request *wreq,
+ 	}
+ 
+ 	/* Attach the folio to the rolling buffer. */
+-	rolling_buffer_append(&wreq->buffer, folio, 0);
++	rolling_buffer_append(&wreq->buffer, folio, 0, wreq->gfp);
+ 
+ 	/* Move the submission point forward to allow for write-streaming data
+ 	 * not starting at the front of the page.  We don't do write-streaming
+diff --git a/include/linux/netfs.h b/include/linux/netfs.h
+index ff208bbe6c5a6..cab466964141f 100644
+--- a/include/linux/netfs.h
++++ b/include/linux/netfs.h
+@@ -246,6 +246,7 @@ struct netfs_io_request {
+ 	void			*netfs_priv;	/* Private data for the netfs */
+ 	void			*netfs_priv2;	/* Private data for the netfs */
+ 	struct bio_vec		*direct_bv;	/* DIO buffer list (when handling iovec-iter) */
++	gfp_t			gfp;		/* GFP flags to use */
+ 	unsigned int		direct_bv_count; /* Number of elements in direct_bv[] */
+ 	unsigned int		debug_id;
+ 	unsigned int		rsize;		/* Maximum read size (0 for none) */
+diff --git a/include/linux/rolling_buffer.h b/include/linux/rolling_buffer.h
+index ac15b1ffdd831..9e5dad29669cf 100644
+--- a/include/linux/rolling_buffer.h
++++ b/include/linux/rolling_buffer.h
+@@ -43,13 +43,13 @@ struct rolling_buffer_snapshot {
+ #define ROLLBUF_MARK_2	BIT(1)
+ 
+ int rolling_buffer_init(struct rolling_buffer *roll, unsigned int rreq_id,
+-			unsigned int direction);
+-int rolling_buffer_make_space(struct rolling_buffer *roll);
++			unsigned int direction, gfp_t gfp);
++int rolling_buffer_make_space(struct rolling_buffer *roll, gfp_t gfp);
+ ssize_t rolling_buffer_load_from_ra(struct rolling_buffer *roll,
+ 				    struct readahead_control *ractl,
+ 				    struct folio_batch *put_batch);
+ ssize_t rolling_buffer_append(struct rolling_buffer *roll, struct folio *folio,
+-			      unsigned int flags);
++			      unsigned int flags, gfp_t gfp);
+ struct folio_queue *rolling_buffer_delete_spent(struct rolling_buffer *roll);
+ void rolling_buffer_clear(struct rolling_buffer *roll);
+ 
 -- 
 2.53.0
 
