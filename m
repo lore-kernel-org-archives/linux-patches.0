@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345A73CAE74;
-	Sat, 17 Oct 2026 18:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EF33CAE99;
+	Sat, 17 Oct 2026 18:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792260091; cv=none; b=N6HX7DpTXhJBA/uDmodDVyLdoRBg621xZnNL9Iq2TyQ1O80mHxUuaM2uRiWD8We4eKsfx+Z7XAdPQ1qTmyjeqy92sWbqK3QF84ypOxBqeBt8RxtmxjYE59KSah/wlu0MH3i/jYM8R0hiC7c9k3IilpBrzvIwbzU5XhmvTN2k9Jo=
+	t=1792260094; cv=none; b=kPgTa+49Ib+yGrcjxL9dLb1uzxLQKsXjFBvnjZ9L9FfEY3whglq9QiC4G0HGp2f/sdm9ZwyAPat8jnelP9zah2g42WnlGO75rEUFzpXDJ88ECs0iJyA+ITUPQQdFxd0WizmXig52Hjpuo3n8DJDFJh/01nEcxpRZj6FHhIeWX8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792260091; c=relaxed/simple;
-	bh=H7KghDz8xltWlku0hrKHM8MfdUEOxsYDSoU5DjzTiaM=;
+	s=arc-20240116; t=1792260094; c=relaxed/simple;
+	bh=KfnZNN33Tk+pPVgIgmZbwTlV1Aib2IXRzFi4Zsn6qIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVudxSkqca/zGoxHwLIzgvXuql2K1I5AtjRB5d6Fe6DErwMonntvTwMvwW2MKFcuZ703z46kvu3l4N3kgkj59a9Dw4dDOY0HGubXkfT47xKNWbMJTCE0L7vpfYVdWuuuUda9bF1Sr4bjeu+YVoVD3fEVdueitMJHvcjje1WFKaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVe0oi5l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V8dZZmTDZqSRhaSgXmgviwiy7dQy3Zau/2C8Qb4r3XWujWB1ldFSBYcntvjIKuo8flYWkDW9W4/R/u5L9mVJmaYI+Q+fotb1F+oz4LSaYxicQIzuWWBYcU0qYV9HQh84xe9ZlgN76szPssquo0ZpTLHQrVGM8MvEbHuFBR6hLKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiT9uZEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVe0oi5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABCE1F000C4;
-	Sat, 17 Oct 2026 18:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiT9uZEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC271F000C4;
+	Sat, 17 Oct 2026 18:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792260090;
-	bh=4gaJ71GUBCHASPK7cGZPRyWqvuqjDsg/s36J2f1+QCY=;
+	s=korg; t=1792260093;
+	bh=7o83MH+oxak6bo7xAoDpXrM0m0HegRfpA1Ay+LrJt08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LVe0oi5l9VshbNIFagOowtr3iITzyTula3fvxIavDeZLlZgxdMJcT4ssuF900H0ff
-	 LDO2HEt6dSxEhZdA+LIRETuMyKWI784rGDR6euXuh2dOXkHdo/ifBUdhKUeQnZb3YJ
-	 yW5cuoFeVJONz2UED0Qps+XQ/gqiE50Od+zZ0ujk=
+	b=kiT9uZEXIsyddJ5LKr1e9+T1CZkj0raKMTWZZL8+AvqPc7CltvyU9vvWChNscB0RR
+	 v3iWnhkU0wJedi277XZUt+oYajbVa5aPp2WRccZxJE8bf6T3OnNTK4hnvfImQ5LXV7
+	 +9HzV/rD91cI1cYAZmm3WdgZ+heQyNO7GmsnQlLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1430/1674] RDMA/erdma: Hold QP references for AE and CM processing
-Date: Sat, 17 Oct 2026 18:01:42 +0200
-Message-ID: <20261017160507.887919733@linuxfoundation.org>
+Subject: [PATCH 6.6 1431/1674] thermal: hwmon: Remove hwmon class device along with its parent
+Date: Sat, 17 Oct 2026 18:01:43 +0200
+Message-ID: <20261017160507.913072888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -51,138 +51,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a52eeff32024f190b3bdc99088c7becccd4fa60b ]
+[ Upstream commit 2b57e24d34b2dfc43c81942bb359d6315bf302fb ]
 
-AE QP fatal events and iWARP CM paths load QPs from dev->qp_xa
-and then use or reference them outside the xarray lock.
-erdma_destroy_qp() can drop the destroy-path reference and free QP
-resources while such a lookup is in flight.
+The current code creates one hwmon device per thermal zone type and that
+device is registered under the first thermal zone of the given type.
 
-Add erdma_qp_get_by_qpn() to acquire a kref under the xarray
-lock with kref_get_unless_zero(). Remove the QP from the xarray
-before dropping the destroy-path reference so no new lookup can acquire
-it while destruction waits for existing users.
+That turns out to be problematic when the thermal zone holding the
+hwmon device is removed.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20260730124357.12976-2-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+For example, say that there are two ACPI thermal zones on a system
+
+ /sys/devices/virtual/thermal/thermal_zone0/
+ /sys/devices/virtual/thermal/thermal_zone1/
+
+The current code registers a hwmon class device for thermal_zone0 only:
+
+ /sys/devices/virtual/thermal/thermal_zone0/hwmon0/
+
+because the type is "acpitz" for both of them, but it adds a sysfs
+attribute that belongs to thermal_zone1 under it:
+
+ /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp2_input
+
+There is also
+
+ /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
+
+which belongs to thermal_zone0.
+
+When thermal_zone0 is removed, say because the ACPI thermal driver is
+unbound from the underlying platform device, thermal_remove_hwmon_sysfs()
+skips the removal of hwmon0 because of the temp2_input attribute
+belonging to thermal_zone1 which effectively prevents thermal_zone0
+removal from making progress.
+
+Address this by making thermal_remove_hwmon_sysfs() remove the entire
+hwmon class device interface for the given thermal zone type when the
+thermal zone device holding it is removed.
+
+To prevent races with thermal_add_hwmon_sysfs() that may interfere
+with this, carry out the entire addition and removal of hwmon sysfs
+interfaces for thermal zones under thermal_hwmon_list_lock.
+
+Also adjust the layout of the labels in thermal_add_hwmon_sysfs() to
+the current kernel coding style to align with the new "unlock" label.
+
+Link: https://lore.kernel.org/linux-pm/20260402021828.16556-1-liujia6264@gmail.com/
+Fixes: f6b6b52ef7a5 ("thermal_hwmon: Pass the originating device down to hwmon_device_register_with_info")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/5094738.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_cm.c    |  6 ++----
- drivers/infiniband/hw/erdma/erdma_eq.c    |  3 ++-
- drivers/infiniband/hw/erdma/erdma_verbs.c |  6 +++++-
- drivers/infiniband/hw/erdma/erdma_verbs.h | 15 +++++++++++++++
- 4 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/thermal/thermal_hwmon.c | 87 +++++++++++++--------------------
+ 1 file changed, 34 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
-index e349e8d2fb50a..c747f77c1bdbd 100644
---- a/drivers/infiniband/hw/erdma/erdma_cm.c
-+++ b/drivers/infiniband/hw/erdma/erdma_cm.c
-@@ -1017,10 +1017,9 @@ int erdma_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	if (laddr->sa_family != AF_INET || raddr->sa_family != AF_INET)
- 		return -EAFNOSUPPORT;
+diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
+index 79a4de5f9f0e1..55a9bd111d258 100644
+--- a/drivers/thermal/thermal_hwmon.c
++++ b/drivers/thermal/thermal_hwmon.c
+@@ -101,34 +101,12 @@ thermal_hwmon_lookup_by_type(const struct thermal_zone_device *tz)
+ 	struct thermal_hwmon_device *hwmon;
+ 	char type[THERMAL_NAME_LENGTH];
  
--	qp = find_qp_by_qpn(dev, params->qpn);
-+	qp = erdma_qp_get_by_qpn(dev, params->qpn);
- 	if (!qp)
- 		return -ENOENT;
--	erdma_qp_get(qp);
+-	mutex_lock(&thermal_hwmon_list_lock);
+ 	list_for_each_entry(hwmon, &thermal_hwmon_list, node) {
+ 		strcpy(type, tz->type);
+ 		strreplace(type, '-', '_');
+-		if (!strcmp(hwmon->type, type)) {
+-			mutex_unlock(&thermal_hwmon_list_lock);
++		if (!strcmp(hwmon->type, type))
+ 			return hwmon;
+-		}
+ 	}
+-	mutex_unlock(&thermal_hwmon_list_lock);
+-
+-	return NULL;
+-}
+-
+-/* Find the temperature input matching a given thermal zone */
+-static struct thermal_hwmon_temp *
+-thermal_hwmon_lookup_temp(const struct thermal_hwmon_device *hwmon,
+-			  const struct thermal_zone_device *tz)
+-{
+-	struct thermal_hwmon_temp *temp;
+-
+-	mutex_lock(&thermal_hwmon_list_lock);
+-	list_for_each_entry(temp, &hwmon->tz_list, hwmon_node)
+-		if (temp->tz == tz) {
+-			mutex_unlock(&thermal_hwmon_list_lock);
+-			return temp;
+-		}
+-	mutex_unlock(&thermal_hwmon_list_lock);
  
- 	ret = sock_create(AF_INET, SOCK_STREAM, IPPROTO_TCP, &s);
- 	if (ret < 0)
-@@ -1149,10 +1148,9 @@ int erdma_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 		return -ECONNRESET;
+ 	return NULL;
+ }
+@@ -144,7 +122,9 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
+ 	struct thermal_hwmon_device *hwmon;
+ 	struct thermal_hwmon_temp *temp;
+ 	int new_hwmon_device = 1;
+-	int result;
++	int result = 0;
++
++	mutex_lock(&thermal_hwmon_list_lock);
+ 
+ 	hwmon = thermal_hwmon_lookup_by_type(tz);
+ 	if (hwmon) {
+@@ -153,8 +133,10 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
  	}
  
--	qp = find_qp_by_qpn(dev, params->qpn);
-+	qp = erdma_qp_get_by_qpn(dev, params->qpn);
- 	if (!qp)
- 		return -ENOENT;
--	erdma_qp_get(qp);
+ 	hwmon = kzalloc(sizeof(*hwmon), GFP_KERNEL);
+-	if (!hwmon)
+-		return -ENOMEM;
++	if (!hwmon) {
++		result = -ENOMEM;
++		goto unlock;
++	}
  
- 	down_write(&qp->state_lock);
- 	if (qp->attrs.state > ERDMA_QP_STATE_RTR) {
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index 3fec9cd18afaf..9d5b75abf06ab 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -65,7 +65,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 			erdma_cq_put(cq);
- 		} else {
- 			qpn = le32_to_cpu(aeqe->event_data0);
--			qp = find_qp_by_qpn(dev, qpn);
-+			qp = erdma_qp_get_by_qpn(dev, qpn);
- 			if (!qp)
- 				continue;
- 
-@@ -75,6 +75,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 			if (qp->ibqp.event_handler)
- 				qp->ibqp.event_handler(&event,
- 						       qp->ibqp.qp_context);
-+			erdma_qp_put(qp);
- 		}
+ 	INIT_LIST_HEAD(&hwmon->tz_list);
+ 	strscpy(hwmon->type, tz->type, THERMAL_NAME_LENGTH);
+@@ -202,24 +184,24 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
+ 		temp->temp_crit_present = true;
  	}
  
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 066144ae3b248..047f5977c420b 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1266,6 +1266,7 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
- 		udata, struct erdma_ucontext, ibucontext);
- 	struct erdma_qp_attrs qp_attrs;
-+	unsigned long flags;
- 	int err;
- 	struct erdma_cmdq_destroy_qp_req req;
+-	mutex_lock(&thermal_hwmon_list_lock);
+ 	if (new_hwmon_device)
+ 		list_add_tail(&hwmon->node, &thermal_hwmon_list);
+ 	list_add_tail(&temp->hwmon_node, &hwmon->tz_list);
+-	mutex_unlock(&thermal_hwmon_list_lock);
  
-@@ -1284,6 +1285,10 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 	if (err)
- 		return err;
+-	return 0;
++	goto unlock;
  
-+	xa_lock_irqsave(&dev->qp_xa, flags);
-+	__xa_erase(&dev->qp_xa, QP_ID(qp));
-+	xa_unlock_irqrestore(&dev->qp_xa, flags);
-+
- 	erdma_qp_put(qp);
- 	wait_for_completion(&qp->safe_free);
+- unregister_input:
++unregister_input:
+ 	device_remove_file(hwmon->device, &temp->temp_input.attr);
+- free_temp_mem:
++free_temp_mem:
+ 	kfree(temp);
+- unregister_name:
++unregister_name:
+ 	if (new_hwmon_device)
+ 		hwmon_device_unregister(hwmon->device);
+- free_mem:
++free_mem:
+ 	if (new_hwmon_device)
+ 		kfree(hwmon);
++unlock:
++	mutex_unlock(&thermal_hwmon_list_lock);
  
-@@ -1306,7 +1311,6 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 
- 	if (qp->cep)
- 		erdma_cep_put(qp->cep);
--	xa_erase(&dev->qp_xa, QP_ID(qp));
- 
- 	return 0;
+ 	return result;
  }
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
-index 10b9b8a5f6a8b..687017531b958 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.h
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
-@@ -280,6 +280,21 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
- 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
- }
+@@ -227,8 +209,11 @@ EXPORT_SYMBOL_GPL(thermal_add_hwmon_sysfs);
  
-+static inline struct erdma_qp *erdma_qp_get_by_qpn(struct erdma_dev *dev,
-+						   int id)
-+{
-+	struct erdma_qp *qp;
-+	unsigned long flags;
-+
-+	xa_lock_irqsave(&dev->qp_xa, flags);
-+	qp = xa_load(&dev->qp_xa, id);
-+	if (qp && !kref_get_unless_zero(&qp->ref))
-+		qp = NULL;
-+	xa_unlock_irqrestore(&dev->qp_xa, flags);
-+
-+	return qp;
-+}
-+
- static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
- 						   int id)
+ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
  {
++	struct thermal_hwmon_temp *temp, *entry;
+ 	struct thermal_hwmon_device *hwmon;
+-	struct thermal_hwmon_temp *temp;
++	bool unregister;
++
++	guard(mutex)(&thermal_hwmon_list_lock);
+ 
+ 	hwmon = thermal_hwmon_lookup_by_type(tz);
+ 	if (unlikely(!hwmon)) {
+@@ -237,29 +222,25 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
+ 		return;
+ 	}
+ 
+-	temp = thermal_hwmon_lookup_temp(hwmon, tz);
+-	if (unlikely(!temp)) {
+-		/* Should never happen... */
+-		dev_dbg(&tz->device, "temperature input lookup failed!\n");
+-		return;
+-	}
++	unregister = hwmon->device->parent == &tz->device;
+ 
+-	device_remove_file(hwmon->device, &temp->temp_input.attr);
+-	if (temp->temp_crit_present)
+-		device_remove_file(hwmon->device, &temp->temp_crit.attr);
++	list_for_each_entry_safe_reverse(temp, entry, &hwmon->tz_list, hwmon_node) {
++		if (!unregister && temp->tz != tz)
++			continue;
+ 
+-	mutex_lock(&thermal_hwmon_list_lock);
+-	list_del(&temp->hwmon_node);
+-	kfree(temp);
+-	if (!list_empty(&hwmon->tz_list)) {
+-		mutex_unlock(&thermal_hwmon_list_lock);
+-		return;
++		device_remove_file(hwmon->device, &temp->temp_input.attr);
++		if (temp->temp_crit_present)
++			device_remove_file(hwmon->device, &temp->temp_crit.attr);
++
++		list_del(&temp->hwmon_node);
++		kfree(temp);
+ 	}
+-	list_del(&hwmon->node);
+-	mutex_unlock(&thermal_hwmon_list_lock);
+ 
+-	hwmon_device_unregister(hwmon->device);
+-	kfree(hwmon);
++	if (unregister) {
++		list_del(&hwmon->node);
++		hwmon_device_unregister(hwmon->device);
++		kfree(hwmon);
++	}
+ }
+ EXPORT_SYMBOL_GPL(thermal_remove_hwmon_sysfs);
+ 
 -- 
 2.53.0
 
