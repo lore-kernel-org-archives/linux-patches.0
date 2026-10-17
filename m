@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2838C2C3;
-	Sat, 17 Oct 2026 16:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48903839B2;
+	Sat, 17 Oct 2026 16:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792253706; cv=none; b=hCEQDTpGGNS0bECfwjHcgL8Bu0EoI7s2cmuDzL1yS8FLaItFoSft5pG3GFljQSgP6kLQ8J3/+hpfFoceNEw6Aa8f0J3X+5gDffMXP2Bm2q/ReBWd/IEbyEwkWB54BzGZ0pByCp1OS2SKrHcDkETK+qddA3EaYumrUNgriZTWftY=
+	t=1792253710; cv=none; b=JixYHxm69VVaLusNHHVQGFlTzM0gapNpQD7N1kpmqth5qBMhycicHqGcn7Fh6EG5bjturp+Sjl7Si8vGiz2Lkpx44vEo9pBscpT4K44vQruz6bnv8Z1WyRcgGkIT8WcssgFXWngLmWPg8NgbjaDfiRlQ3zymVuHHMGzRM0IoD8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792253706; c=relaxed/simple;
-	bh=owykMeypf2BfqQ6EsJHj/WIQl2Yh4rFEtWYMqyFzDDs=;
+	s=arc-20240116; t=1792253710; c=relaxed/simple;
+	bh=9pleGtLmLrezHBbO+ZIsAiKWrI2Q9iVQbpokyGWQEMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tiK3homfHzn6bZUqAZM2bK8uQagkIwTtl/B4RTUBrz0WsOE+os4bZ4y3w7K6TkuC7iw2ajzGk9eZwiY84Wj3YTfD3kLKNi/cSV0MG8SVYZW2F/dkYgo1LazoYBxf1Uw1uDO8ssyeA/8f4D2+/cOgL5hp4pHiX8LvuRDGxDDCGeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdbVF/MC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XrsTBj678qxaKGsNM8yorbAcK2aRHHQ/9y9whPKPfLg2xbRxwSL0nxkCRSVkJ/H+1ccfT4XnAPim5SH8XQI+JnNHz6KU8raQmtqMNINqksW87HZsTfvd6IFCbpr0OZ+pYsvAC0B24e8LCc9HS0KEauZNU2J1x9GsdVYbi/cUpYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELxFQWvT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdbVF/MC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55241F000C4;
-	Sat, 17 Oct 2026 16:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELxFQWvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37E31F000C4;
+	Sat, 17 Oct 2026 16:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792253705;
-	bh=CWDVKEKPyhpYchf2ywi0oSGf6DDDG9+107C8nZ4JqYo=;
+	s=korg; t=1792253708;
+	bh=ZgrlPfM8Nxy1YTP7o6dkI4u3xGOBDj0rRLAKlE9BMcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdbVF/MCJu2GdDMGXPQFhC+mS8nNRNHiuzelAHIiHtMLD5OHiXKl4CtvxC1u88/Lg
-	 ZlerC0JRI01YaIHPOW9m+6x0DMHFOA/GPXaiSJVrKgdTgQT8l7j9oZpqPR63180z8M
-	 +RTxEtMEgf2NwX0loeF7hqCWz2IgbENQzpVYZyek=
+	b=ELxFQWvTa+x6oGNmjr54HU5eCeGV6nUXnXsfPN7h4vIl2Ues/sic4+Ha4N8HgXJ85
+	 UM8LE8qGqx+hJv1Czv3OT5DWUsEb+z8HrNEYjjGxj97A9hlYFmU7QuqSYami5awEyh
+	 ADud5rXWpeJZbl/Z/dz19DHhqFDWMJVAEa3BtCpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Akash Goel <akash.goel@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Chia-I Wu <olvaffe@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mssola@mssola.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/869] drm/panthor: Prevent potential UAF in group creation
-Date: Sat, 17 Oct 2026 17:50:04 +0200
-Message-ID: <20261017160041.227371560@linuxfoundation.org>
+Subject: [PATCH 6.12 154/869] btrfs: fix double free of qgroup record after failure to add delayed ref head
+Date: Sat, 17 Oct 2026 17:49:55 +0200
+Message-ID: <20261017160040.990447370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160036.979869304@linuxfoundation.org>
 References: <20261017160036.979869304@linuxfoundation.org>
@@ -47,95 +46,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Miquel Sabaté Solà <mssola@mssola.com>
 
-[ Upstream commit eec7e23d848d2194dd8791fcd0f4a54d4378eecd ]
+[ Upstream commit 725e46298876a2cc1f1c3fb22ba69d29102c3ddf ]
 
-This commit prevents the possibility of a use after free issue in the
-GROUP_CREATE ioctl function, which arose as pointer to the group is
-accessed in that ioctl function after storing it in the Xarray.
-A malicious userspace can second guess the handle of a group and try
-to call GROUP_DESTROY ioctl from another thread around the same time
-as GROUP_CREATE ioctl.
+In the previous code it was possible to incur into a double kfree()
+scenario when calling add_delayed_ref_head(). This could happen if the
+record was reported to already exist in the
+btrfs_qgroup_trace_extent_nolock() call, but then there was an error
+later on add_delayed_ref_head(). In this case, since
+add_delayed_ref_head() returned an error, the caller went to free the
+record. Since add_delayed_ref_head() couldn't set this kfree'd pointer
+to NULL, then kfree() would have acted on a non-NULL 'record' object
+which was pointing to memory already freed by the callee.
 
-To prevent the use after free exploit, this commit uses a mark on an
-entry of group pool Xarray which is added just before returning from
-the GROUP_CREATE ioctl function. The mark is checked for all ioctls
-that specify the group handle and so userspace won't be abe to delete
-a group that isn't marked yet.
+The problem comes from the fact that the responsibility to kfree the
+object is on both the caller and the callee at the same time. Hence, the
+fix for this is to shift the ownership of the 'qrecord' object out of
+the add_delayed_ref_head(). That is, we will never attempt to kfree()
+the given object inside of this function, and will expect the caller to
+act on the 'qrecord' object on its own. The only exception where the
+'qrecord' object cannot be kfree'd is if it was inserted into the
+tracing logic, for which we already have the 'qrecord_inserted_ret'
+boolean to account for this. Hence, the caller has to kfree the object
+only if add_delayed_ref_head() reports not to have inserted it on the
+tracing logic.
 
-v2: Add R-bs and fixes tags
+As a side-effect of the above, we must guarantee that
+'qrecord_inserted_ret' is properly initialized at the start of the
+function, not at the end, and then set when an actual insert
+happens. This way we avoid 'qrecord_inserted_ret' having an invalid
+value on an early exit.
 
-Fixes: de85488138247 ("drm/panthor: Add the scheduler logical block")
-Co-developed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
-Link: https://patch.msgid.link/20251127164912.3788155-1-akash.goel@arm.com
+The documentation from the add_delayed_ref_head() has also been updated
+to reflect on the exact ownership of the 'qrecord' object.
+
+Fixes: 6ef8fbce0104 ("btrfs: fix missing error handling when adding delayed ref with qgroups enabled")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Miquel Sabaté Solà <mssola@mssola.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/btrfs/delayed-ref.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 822b003893a89..c1fc52f1ee426 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -742,6 +742,12 @@ struct panthor_job_profiling_data {
-  */
- #define MAX_GROUPS_PER_POOL 128
- 
-+/*
-+ * Mark added on an entry of group pool Xarray to identify if the group has
-+ * been fully initialized and can be accessed elsewhere in the driver code.
-+ */
-+#define GROUP_REGISTERED XA_MARK_1
-+
- /**
-  * struct panthor_group_pool - Group pool
-  *
-@@ -3509,6 +3515,8 @@ int panthor_group_create(struct panthor_file *pfile,
- 	}
- 	mutex_unlock(&sched->reset.lock);
- 
-+	xa_set_mark(&gpool->xa, gid, GROUP_REGISTERED);
-+
- 	return gid;
- 
- err_put_group:
-@@ -3523,6 +3531,9 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
- 	struct panthor_scheduler *sched = ptdev->scheduler;
- 	struct panthor_group *group;
- 
-+	if (!xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
-+		return -EINVAL;
-+
- 	group = xa_erase(&gpool->xa, group_handle);
- 	if (!group)
- 		return -EINVAL;
-@@ -3548,12 +3559,12 @@ int panthor_group_destroy(struct panthor_file *pfile, u32 group_handle)
+diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
+index cab94d141f662..55d2a3089ac1a 100644
+--- a/fs/btrfs/delayed-ref.c
++++ b/fs/btrfs/delayed-ref.c
+@@ -837,9 +837,13 @@ static void init_delayed_ref_head(struct btrfs_delayed_ref_head *head_ref,
  }
  
- static struct panthor_group *group_from_handle(struct panthor_group_pool *pool,
--					       u32 group_handle)
-+					       unsigned long group_handle)
- {
- 	struct panthor_group *group;
+ /*
+- * helper function to actually insert a head node into the rbtree.
+- * this does all the dirty work in terms of maintaining the correct
+- * overall modification count.
++ * Helper function to actually insert a head node into the rbtree. This does all
++ * the dirty work in terms of maintaining the correct overall modification
++ * count.
++ *
++ * The caller is responsible for calling kfree() on @qrecord. More specifically,
++ * if this function reports that it did not insert it as noted in
++ * @qrecord_inserted_ret, then it's safe to call kfree() on it.
+  *
+  * Returns an error pointer in case of an error.
+  */
+@@ -852,12 +856,25 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+ 	struct btrfs_delayed_ref_head *existing;
+ 	struct btrfs_delayed_ref_root *delayed_refs;
+-	bool qrecord_inserted = false;
++
++	/*
++	 * If 'qrecord_inserted_ret' is provided, then the first thing we need
++	 * to do is to initialize it to false just in case we have an exit
++	 * before trying to insert the record.
++	 */
++	if (qrecord_inserted_ret)
++		*qrecord_inserted_ret = false;
  
- 	xa_lock(&pool->xa);
--	group = group_get(xa_load(&pool->xa, group_handle));
-+	group = group_get(xa_find(&pool->xa, &group_handle, group_handle, GROUP_REGISTERED));
- 	xa_unlock(&pool->xa);
+ 	delayed_refs = &trans->transaction->delayed_refs;
  
- 	return group;
+ 	/* Record qgroup extent info if provided */
+ 	if (qrecord) {
++		/*
++		 * Setting 'qrecord' but not 'qrecord_inserted_ret' will likely
++		 * result in a memory leakage.
++		 */
++		ASSERT(qrecord_inserted_ret != NULL);
++
+ 		int ret;
+ 
+ 		ret = btrfs_qgroup_trace_extent_nolock(fs_info, delayed_refs, qrecord);
+@@ -865,12 +882,10 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
+ 			/* Clean up if insertion fails or item exists. */
+ 			xa_release(&delayed_refs->dirty_extents,
+ 				   qrecord->bytenr >> fs_info->sectorsize_bits);
+-			/* Caller responsible for freeing qrecord on error. */
+ 			if (ret < 0)
+ 				return ERR_PTR(ret);
+-			kfree(qrecord);
+-		} else {
+-			qrecord_inserted = true;
++		} else if (qrecord_inserted_ret) {
++			*qrecord_inserted_ret = true;
+ 		}
+ 	}
+ 
+@@ -902,8 +917,6 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
+ 		delayed_refs->num_heads_ready++;
+ 		atomic_inc(&delayed_refs->num_entries);
+ 	}
+-	if (qrecord_inserted_ret)
+-		*qrecord_inserted_ret = qrecord_inserted;
+ 
+ 	return head_ref;
+ }
+@@ -1075,6 +1088,8 @@ static int add_delayed_ref(struct btrfs_trans_handle *trans,
+ 
+ 	if (qrecord_inserted)
+ 		return btrfs_qgroup_trace_extent_post(trans, record);
++
++	kfree(record);
+ 	return 0;
+ 
+ free_record:
 -- 
 2.53.0
 
