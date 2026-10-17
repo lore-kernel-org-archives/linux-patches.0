@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E30A38C2C0;
-	Sat, 17 Oct 2026 17:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAB23B2FD8;
+	Sat, 17 Oct 2026 17:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792259306; cv=none; b=S232phAfxLvfe2JXFBllerhJP06s1ZMKm6liGRfE1N8QrfKXBVxMg+E2Sj48mL0Igo/+Pi8VsVLz8uQdpiR05KQvq1ALSkuCMgDHV1xbKajzi8AwMj1W1IL2Oy87NoWHkLTYnUkyQ0lHc20iy+RFxMUfT+mkWo0g2GZGPwhP/Ho=
+	t=1792259308; cv=none; b=T4dPB83tf8tlsp5FVA53jj4B7aCInu8Vj7hlxnWTHwWLf9Du4Ai3hdV5clK4y49w9sTtpgbZE0BHA8cOZ1/kmgDRB7X2lYz4JPQrtsXqp+iO6dCjuY8Icax7jTKGwHusYsBELFh4MReXEU+XsVaOIW4RcLiRUrYM0lyGlhpl7cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792259306; c=relaxed/simple;
-	bh=UILX0yUtpA44RuVqspw0+OSEJz2uzpFpsrYQHFmr0SE=;
+	s=arc-20240116; t=1792259308; c=relaxed/simple;
+	bh=qPDRbnIYGqXudiXbnHFRoTb+wrSge0ZhfwKvz6/DBmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjLXyJsMmzxBtz+wSvzzLjuE5iD5rHrQ6t7TEMFZtOtpw/sUvuCEOFJrnqSSmZKW55DMo22xLcjrEOVIfQD62IRtECrlMx+rjlOeB83hwW94kWclwIZyOAYBEbUMsDrXvmjBjl6FGAJUs8diFrjXcNGS4dPMvAp7DXHctMaHhLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q36VzO2E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PwsVtbIKqWfjW/2XxABLUR4kHwCNe1tjcySRrm/5Dw4OBnxQfXZPTxDmy0fiX8Id5KYnAS6sPykxEbLbw7ASIUNBtfvxt3H8JfoxjonAt5zr2jK7l6/VdR62KNAZ3pLvuGFiDzqaiOIuxnX+Z2NuWxlvUrShN9cIBN8qNnqwsJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CI7yZDWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q36VzO2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6A31F000C4;
-	Sat, 17 Oct 2026 17:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CI7yZDWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F3D1F000C4;
+	Sat, 17 Oct 2026 17:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792259304;
-	bh=nqa3Ut5KzW9JptKG2cxblsuURtblNyfHXUenTWqAW4s=;
+	s=korg; t=1792259307;
+	bh=NFr6S1FmTndq5XKArvLypALGYceUjatddq+miKtGVtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q36VzO2EAMibGKE1eDe1x8Wbj/VJwRauyo84RS+KXiFqIw9Ksyp23/2P6qFufd3WA
-	 BbPgft713hD+sE5S2xzh0Yi0bACfWhq12zqXR2ZGa23oPCxFUU23by5oHz8CsIR1ZT
-	 rZNUplnJ5PmelfUZrgYynb5OiPtBzXbIemf6qv8M=
+	b=CI7yZDWglGBdxGaTpvOrl/4mq+K40N541CX/em4aEmvzcwp+9yvywl+D5ctC2aEja
+	 swiqqJpxJHpvMvzJajJuty+kc3PYQ+eFCQiJ1nd9MslT3vnBvOU9r2PQkJ/6OYPqff
+	 VXnvjn/btL4iaYsRmf41nYh3SZfeHfPZMWliv8TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Xianting Tian <xianting.tian@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1169/1674] ocfs2: validate fast symlink target during inode read
-Date: Sat, 17 Oct 2026 17:57:21 +0200
-Message-ID: <20261017160501.150403076@linuxfoundation.org>
+Subject: [PATCH 6.6 1170/1674] vhost: correct misleading printing information
+Date: Sat, 17 Oct 2026 17:57:22 +0200
+Message-ID: <20261017160501.178173030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017160431.119607952@linuxfoundation.org>
 References: <20261017160431.119607952@linuxfoundation.org>
@@ -59,104 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Xianting Tian <xianting.tian@linux.alibaba.com>
 
-[ Upstream commit e234973f286ed2e8961a24561ec91594ec3e3ff8 ]
+[ Upstream commit 76f408535aab39c33e0a1dcada9fba5631c65595 ]
 
-ocfs2_validate_inode_block() already rejects several inconsistent
-self-contained dinodes before they are exposed to the rest of the
-filesystem.  Fast symlinks need the same treatment.
+Guest moved avail idx not used idx when we need to print log if
+'(vq->avail_idx - last_avail_idx) > vq->num', so fix it.
 
-A zero-cluster symlink is treated as a fast symlink and later read through
-page_get_link() and ocfs2_fast_symlink_read_folio().  That path uses
-strnlen() on the inline payload and then copies len + 1 bytes into the
-folio.  If a corrupt dinode stores an i_size that does not fit the inline
-area or omits the terminating NUL at i_size, that copy reads past the end
-of the inode block buffer.
-
-Reject zero-cluster symlink dinodes whose i_size exceeds the inline
-fast-symlink capacity or whose inline payload is not NUL-terminated
-exactly at i_size when the inode block is validated.  This keeps malformed
-fast symlinks from reaching the read path.
-
-Validation reproduced this kernel report:
-KASAN use-after-free in ocfs2_fast_symlink_read_folio+0x12c/0x1f0
-RIP: 0033:0x7f5c6d859aa7
-Read of size 3905
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xce/0x630 (?:?)
-  ocfs2_fast_symlink_read_folio+0x12c/0x1f0 (fs/ocfs2/inode.c:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x19f/0x330 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  kasan_check_range+0x105/0x1b0 (?:?)
-  __asan_memcpy+0x23/0x60 (?:?)
-  filemap_read_folio+0x27/0xe0 (?:?)
-  filemap_read_folio+0x35/0xe0 (?:?)
-  do_read_cache_folio+0x138/0x230 (?:?)
-  __page_get_link+0x26/0x110 (?:?)
-  page_get_link+0x2e/0x70 (?:?)
-  vfs_readlink+0x15e/0x250 (?:?)
-  touch_atime+0x4d/0x370 (?:?)
-  do_readlinkat+0x186/0x200 (?:?)
-  do_user_addr_fault+0x65a/0x890 (?:?)
-  __x64_sys_readlink+0x46/0x60 (?:?)
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-
-Link: https://lore.kernel.org/20260528151230.361127-1-rollkingzzc@gmail.com
-Fixes: ea022dfb3c2a ("ocfs: simplify symlink handling")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Gui-Dong Han <2045gemini@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Xianting Tian <xianting.tian@linux.alibaba.com>
+Message-Id: <20240311082109.46773-1-xianting.tian@linux.alibaba.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: 09861858a683 ("vhost: fix vhost_get_avail_idx for a non empty ring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/vhost/vhost.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 34ba82c7a1237..d0f58966d6339 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1624,6 +1624,29 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index fd8298490a31d..8bbf44ce373ce 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -2591,7 +2591,7 @@ int vhost_get_vq_desc(struct vhost_virtqueue *vq,
+ 		vq->avail_idx = vhost16_to_cpu(vq, avail_idx);
+ 
+ 		if (unlikely((u16)(vq->avail_idx - last_avail_idx) > vq->num)) {
+-			vq_err(vq, "Guest moved used index from %u to %u",
++			vq_err(vq, "Guest moved avail index from %u to %u",
+ 				last_avail_idx, vq->avail_idx);
+ 			return -EFAULT;
  		}
- 	}
- 
-+	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
-+	    !le32_to_cpu(di->i_clusters)) {
-+		int max_inline = ocfs2_fast_symlink_chars(sb);
-+		u64 i_size = le64_to_cpu(di->i_size);
-+
-+		if (i_size >= max_inline) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: fast symlink i_size %llu exceeds max %d\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)i_size,
-+					 max_inline - 1);
-+			goto bail;
-+		}
-+
-+		if (strnlen((char *)di->id2.i_symlink, i_size + 1) != i_size) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: fast symlink is not NUL-terminated at i_size %llu\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)i_size);
-+			goto bail;
-+		}
-+	}
-+
- 	if (le32_to_cpu(di->i_flags) & OCFS2_CHAIN_FL) {
- 		struct ocfs2_chain_list *cl = &di->id2.i_chain;
- 
 -- 
 2.53.0
 
