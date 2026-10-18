@@ -1,71 +1,69 @@
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D033E172B
-	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 10:24:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279B737DEA8;
+	Sun, 18 Oct 2026 13:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792319043; cv=none; b=HKtnBc2zoJKmGQrFinumzohZd9+TH5VJNgkwmZs+ChC8bABk6h3ACu3U7W1Tit4Y+L8mveC1jFfCSDMmVH5HlOQS4/ADeQ5tIRlkqPYjo5S6F1C54S1pu3dG3nMog+iVUQ5LICuZQc9gKXXyb7Y0bOuUbgagm97xuNR7ZF4Bx/g=
+	t=1792330537; cv=none; b=iIWwuyBD/pBl4qwe/ZqemzWNPgwenjhB/ekEVaoMg5sONouSu8rkLOG8Caxr4Qpi1l5cdIBBNmh6nWtCBnaQJZP5dXZVyioQ9XGoxjtCvbexjlfGpZ8q1RHDa77gRWwO6N+OP33QPRvoqNhE08/6ECsXBdk/TN89IX6JpC874rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792319043; c=relaxed/simple;
-	bh=mkFEDrApwNVHnpQW6fTa8SONt5XnpgCHj2+JtwTAPr8=;
+	s=arc-20240116; t=1792330537; c=relaxed/simple;
+	bh=m4EkBgarajkiFxcHIFX/fmFZ6UCAwXdt87wRv9iOUn8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PFC7lQ3IDtrHQfmwdKQQ+e8QIRGTlimWlb2+d5OolFaa9cifAIj4Evj480ibZ/Sz0buWYsmlejpca8T1m7P+22yjFGTB5lSORbbMIvv31mt3GGLcVcCWB0GobKtvSMTCM8m6OWOkDs0jA/GLB2l9Jp/poE/4SqCUZPJTrasWST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=I7pQuRXt; arc=none smtp.client-ip=80.241.56.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=eYBv2H9k+rAjoLdEFXEWLhYynPzbXQtF51P5WRf8rRGnla9ii8OyDrpnk1ev+A7P4IJBeVvlwt0LOXA+F71KRpiaEB5iODBqecWfFl3M+Eu0VElF1g9bpNMQFeUmlNvJ5Nv1fZ4ZrHuZD6RChSIAW5Nz3iKlldYHiN1r4ldAbJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dh/te4yo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="I7pQuRXt"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4j6vsp0BZgzMlWp;
-	Sun, 18 Oct 2026 12:23:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1792319038;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LfcGtuFt14aLawmeFdDDC0cmMdWupykDob9ZfZ9H+l8=;
-	b=I7pQuRXtPAlXwax2SnMrytZuYFenReWkIlUuqleDbJGu22nco81I2YoOfTugxwQ7DMOW1w
-	SgOBPt2eANbzYsjK9aJfxlRBXBAF1EYDo4FJ20ipsQ483DypbRGr8Hm4W7Eg7Ko3oGnmxD
-	R4qg7hoI/a1DEA2jGqzNW68iv58+T6WbkMjQZB9SSTQvi6oIbit2dGu31MD1zVBPSKIwRn
-	eKuBH2mXbgPQ8uRWBNZNHu7mK9QzJiOScxpQWr2+/JA9zxCNvEr3fF0Q190nisPMQK4JnN
-	ZUZJSFL2tDlbbImGSDJpwXBNGNw9eYnj2/Ax1m4S/o0B49TFrtelwdCa3mZ8LA==
-Date: Sun, 18 Oct 2026 12:23:53 +0200
-From: Benjamin Boortz <bennib@mailbox.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 7.2 00/10] 7.2.12-rc1 review
-Message-ID: <atSeEcAqpKIl47lX@bb-82jq>
-References: <20261017155059.698368299@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dh/te4yo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5829C1F000C4;
+	Sun, 18 Oct 2026 13:35:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1792330536;
+	bh=jkFEHutrPpfHQHinfTWm69mADl45S+7QqSFw1PYFIAw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Dh/te4yobeGq+Zejau80v4O4hKqiLd+NA+tmH+wfzV4v6Hu2ER7fD3NDtCiJgm4aL
+	 sjUBBk+YQNBYJqqynnGjOwYLnGPbnlDwvhDvJ88v+Spk427ZrfICfuaZQxXpT5Ddcc
+	 SzafcRjcIWINWszbc/zTOYCGC5tgZvEstiUYbDq8=
+Date: Sun, 18 Oct 2026 15:35:31 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Bob Anderson <kernel@ametros.net>
+Cc: Wolfgang Walter <linux@stwm.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: regression 6.18.57: acpi power button vanished in machines
+ running in qemu
+Message-ID: <2026101813-doorstop-hyphen-614c@gregkh>
+References: <5fe757e7aa54c38df3525d313598db99@stwm.de>
+ <2026101834-parchment-reps-0bee@gregkh>
+ <atSdI7buRErdF1jZ@ametros.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261017155059.698368299@linuxfoundation.org>
-X-MBO-RS-META: 81m6zz81ytpq7tnpnpmdjd9tnm7mz3m7
-X-MBO-RS-ID: 560b2b1976b406a0af3
+In-Reply-To: <atSdI7buRErdF1jZ@ametros.net>
 
-On Sat, Oct 17, 2026 at 05:54:29PM +0200, Greg Kroah-Hartman wrote:
+On Sun, Oct 18, 2026 at 11:19:15AM +0100, Bob Anderson wrote:
+> On Sun, Oct 18, 2026 at 08:48:03AM +0200, Greg Kroah-Hartman wrote:
+> > On Sat, Oct 17, 2026 at 07:26:54PM +0200, Wolfgang Walter wrote:
+> > > 
+> > > since 6.18.57 there is no acpi power button any more in virtual qemu based
+> > > machines (as far as I can see model doesn't matter).
+> > 
+> > Can you use 'git bisect' to find the offending change?  Does this also
+> > happen in the latest 7.2.y and 7.3-rc releases?
+> 
+> Reverting 38c79dacc8063ff8a0d75ce2a900fbaff82ad94c makes the problem
+> go away.
+> 
+> Reverting cleanly required reverting c85f325d9ec3116b0d4ee9d5b76c26aea0ad5ce0
+> and 78677084cd09001c3c815aab80c59708130a65d7 too.
+> 
+> FWIW we also have this problem on hardware (various Dell servers): the
+> power button and "graceful shutdown" via iDRAC no longer work. We're using
+> a custom ACPI daemon that looks specifically for ACPI power button events.
 
->This is the start of the stable review cycle for the 7.2.12 release.
->There are 10 patches in this series, all will be posted as a response
->to this one.  If anyone has any issues with these being applied, please
->let me know.
-
-Build and boot tested with QEMU for x86_64, i386, arm64, and riscv
-across multiple configurations, and boots on AMD Ryzen 7 5800H.
-No regressions observed.
-
-Tested-by: Benjamin Boortz <bennib@mailbox.org>
+is this an issue in 7.3-rc as well?
