@@ -1,127 +1,127 @@
-Received: from out198-158.us.a.mail.aliyun.com (out198-158.us.a.mail.aliyun.com [47.90.198.158])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3AB4AA1CE
-	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 14:23:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C12D5436
+	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 16:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792333430; cv=none; b=Ro2GCaRX/gRIFVdgQl9loq7E82/2j8aplqO6vjLOy/rah9mjd/KyYyB1Z1ri+IAsPPVdDZe9trYH7mGTepsQEOU/BiDzSFEzE1TTKYiLcVZXqE0KOKnG7nw82h0fhyPTb8Dg3Ttyihb//bO47xp/A/SPEeAhGRFSeapsbGTvX2o=
+	t=1792342107; cv=none; b=IWg5GKQVDABTuDh01iA+RtqOZecw9+1gAamBjHEVJHswBepdYcfUkk1b10D1fmDdN//J/vcTdDMUfir1K2+hb9Pfg0jsq/ZJFh+Z6taS+7WMBJiSv5vLZwxIsVGl6xATbrCIqyxBWNGfQ9ORlqn28/8eQX3R9lH5PW0kse7fIZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792333430; c=relaxed/simple;
-	bh=iwrG2CF5CQKCjpu/K5joC/BAqpZ90MdR78mFcfVqEqU=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
-	 MIME-Version:Content-Type; b=ixSkaN1VEhwxjVaj1zbIH1IldzzjsHHD0isCLz7Yi0hal2YQfvf7vaqbow13Yxl/25Nuxv3pqZfPezhKD5wE6h+zH6OT5Srl7xLau/z8oQ87QrmB/iVHqrdzTM4H4AcRPliKmXq7txxKuljyc6BJ7suub4/9invRIFVYZ9XbzVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=47.90.198.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
-X-Alimail-AntiSpam:AC=CONTINUE;BC=0.04436514|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_alarm|0.131031-0.000425844-0.868543;FP=15510668704860441811|0|0|0|0|-1|-1|-1;HT=maildocker-contentspam033037026024;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=8;RT=8;SR=0;TI=SMTPD_---.jj7kr-7_1792329738;
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.jj7kr-7_1792329738 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Sun, 18 Oct 2026 21:22:19 +0800
-Date: Sun, 18 Oct 2026 21:22:20 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
+	s=arc-20240116; t=1792342107; c=relaxed/simple;
+	bh=YtuArZrJ5k0lumYLRLZjdb7x7yqpwIrTMz5SX4VVG04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BdpXJBuPf3/AVMKfiXZAeviZiUaAXXQmlQ43rQAjojaKQGhZ9oNz7tHhpOtY0Eu6BLU8f23RWd8OV5yr0K1VWBsfQBijDu6jyQaJSwo6jGXrxglDbYtZcRYCK0pRSa7UhF0v2Wzeg9HikbgA9AfwzTrR0Z+xdm70kLCuEWUj5GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ametros.net; spf=pass smtp.mailfrom=ametros.net; dkim=pass (2048-bit key) header.d=ametros.net header.i=kernel@ametros.net header.b=t0Vadawa; arc=none smtp.client-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ametros.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ametros.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ametros.net header.i=kernel@ametros.net header.b="t0Vadawa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ametros.net;
+	s=s1-ionos; t=1792342069; x=1792946869; i=kernel@ametros.net;
+	bh=YtuArZrJ5k0lumYLRLZjdb7x7yqpwIrTMz5SX4VVG04=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=t0VadawaF3IBm6n5gb1ZLf2JcAH8dRjvN82iSsBOmwZy2t3YbQSP4HDRrQE7gBCL
+	 H/2NUEh4yl23eLdwpSPl8IGT9KyZFge0sN8vyOejxPgh3tHCjbYq9mnNKFBSEM/hW
+	 ctOXUkTs9TOcNd5F8gSTS5vf9HHFAdRQJzXHsuK2bHjRx7kIlEArXZY3NzzhDHBg3
+	 O4VzdP0tBzBx2LqXIECW+ixh/rqjO2mbg12bXeEXMIfycOkN65sh/299Cg0Botdbl
+	 jjQXRmSILG+r/eMDlXkm05U5qtfmZNGpH8r8/nDJGiYNK4trjjx2ahg1bKG94GlbV
+	 fJd6QIPcCdVnbQSdbg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue109
+ [213.165.67.119]) with ESMTPSA (Nemesis) id 1M9WqY-1xCyGX33jw-00AInU; Sun, 18
+ Oct 2026 18:47:49 +0200
+Date: Sun, 18 Oct 2026 17:47:47 +0100
+From: Bob Anderson <kernel@ametros.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.12 543/869] perf tools: Use perf_env__get_cpu_topology() in machine__resolve()
-Cc: stable@vger.kernel.org,
- patches@lists.linux.dev,
- sashiko-bot <sashiko-bot@kernel.org>,
- Ian Rogers <irogers@google.com>,
- Kan Liang <kan.liang@intel.com>,
- Arnaldo Carvalho de Melo <acme@redhat.com>,
- Sasha Levin <sashal@kernel.org>
-In-Reply-To: <20261017160051.014967079@linuxfoundation.org>
-References: <20261017160036.979869304@linuxfoundation.org> <20261017160051.014967079@linuxfoundation.org>
-Message-Id: <20261018212219.A23A.409509F4@e16-tech.com>
+Cc: Wolfgang Walter <linux@stwm.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: regression 6.18.57: acpi power button vanished in machines
+ running in qemu
+Message-ID: <atT4M12w4Em-JdsA@ametros.net>
+References: <5fe757e7aa54c38df3525d313598db99@stwm.de>
+ <2026101834-parchment-reps-0bee@gregkh>
+ <atSdI7buRErdF1jZ@ametros.net>
+ <2026101813-doorstop-hyphen-614c@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="GB2312"
-Content-Transfer-Encoding: 8bit
-X-Mailer: Becky! ver. 2.83.03 [en]
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2026101813-doorstop-hyphen-614c@gregkh>
+X-Provags-ID: V03:K1:br/SXQxHTqGhH5leLP0uZ9DTD6EVZ0Cyxufe0A8SglF6C8RmL9b
+ wC5CTmg5Yu/1ti83nPCOia+G6ufAaNIaCYj6wDz6cDmpobQMIx3POwnb3/h/bx01xuiSYPO
+ YEPlBRZUAY50r0Ru1y1nUtgtU2ZkwHyZqcvMHxlXmn6h3DlcyWvVqPIEWHYKMfsWRKkg2My
+ C8SnlwdZ4bChQB4D9C47g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:W9+Cv8ZFFVo=;se8QK+qbK3OX3JvkobT1q5+Z25w
+ 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
+ JNzd0b
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Sun, Oct 18, 2026 at 03:35:31PM +0200, Greg Kroah-Hartman wrote:
+> On Sun, Oct 18, 2026 at 11:19:15AM +0100, Bob Anderson wrote:
+> > > On Sat, Oct 17, 2026 at 07:26:54PM +0200, Wolfgang Walter wrote:
+> > > >=20
+> > > > since 6.18.57 there is no acpi power button any more in virtual qe=
+mu based
+> > > > machines (as far as I can see model doesn't matter).
+> > ...
+> > Reverting 38c79dacc8063ff8a0d75ce2a900fbaff82ad94c makes the problem
+> > go away.
+> > ...
+>=20
+> is this an issue in 7.3-rc as well?
 
-please drop this patch for 6.12.y or add some dependency.
+ACPI power button in QEMU on v7.3-rc7 seems OK.
 
-because of the build error:
-util/event.c:775:32: error: implicit declaration of function ¡®perf_env__get_cpu_topology¡¯; did you mean ¡®perf_env__read_cpu_topology_map¡¯? [-Wimplicit-function-declaration]
+I haven't tested on hardware, but I suspect that it'll also be OK.
 
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2026/10/18
-
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> [ Upstream commit 5484b43a0ec8231c36fba6ead654cb72dbba8b8f ]
-> 
-> machine__resolve() accesses env->cpu[al->cpu].socket_id after checking
-> al->cpu >= 0 and env->cpu != NULL, but without validating al->cpu
-> against env->nr_cpus_avail.  Since al->cpu comes from the untrusted
-> perf.data sample, a crafted file with a large CPU index causes an
-> out-of-bounds heap read.
-> 
-> Use perf_env__get_cpu_topology() which validates both NULL and bounds.
-> Also bounds-check al->cpu before the cast to struct perf_cpu (int16_t):
-> without this, values like 65536 silently truncate to 0, bypassing the
-> accessor's internal check and returning CPU 0's topology.
-> 
-> Fixes: 0c4c4debb0adda4c ("perf tools: Add processor socket info to hist_entry and addr_location")
-> Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-> Reviewed-by: Ian Rogers <irogers@google.com>
-> Cc: Kan Liang <kan.liang@intel.com>
-> Cc: Ian Rogers <irogers@google.com>
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  tools/perf/util/event.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tools/perf/util/event.c b/tools/perf/util/event.c
-> index aac96d5d19170..1e5085817e825 100644
-> --- a/tools/perf/util/event.c
-> +++ b/tools/perf/util/event.c
-> @@ -12,6 +12,7 @@
->  #include <linux/zalloc.h>
->  #include "cpumap.h"
->  #include "dso.h"
-> +#include "env.h"
->  #include "event.h"
->  #include "debug.h"
->  #include "hist.h"
-> @@ -763,8 +764,18 @@ int machine__resolve(struct machine *machine, struct addr_location *al,
->  	if (al->cpu >= 0) {
->  		struct perf_env *env = machine->env;
->  
-> -		if (env && env->cpu)
-> -			al->socket = env->cpu[al->cpu].socket_id;
-> +		/*
-> +		 * Bounds-check al->cpu (s32) before casting to struct perf_cpu
-> +		 * (int16_t): without this, e.g. 65536 truncates to 0 and silently
-> +		 * returns CPU 0's topology.  Can go once perf_cpu.cpu is widened.
-> +		 */
-> +		if (env && al->cpu < env->nr_cpus_avail) {
-> +			struct cpu_topology_map *topo;
-> +
-> +			topo = perf_env__get_cpu_topology(env, (struct perf_cpu){ al->cpu });
-> +			if (topo)
-> +				al->socket = topo->socket_id;
-> +		}
->  	}
->  
->  	if (al->map) {
-> -- 
-> 2.53.0
-> 
-> 
-> 
-> 
-
+thanks,
+Bob.
 
