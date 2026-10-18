@@ -1,52 +1,48 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-40.mta0.migadu.com [91.218.175.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C12D5436
-	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 16:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4303876A0
+	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 17:40:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792342107; cv=none; b=IWg5GKQVDABTuDh01iA+RtqOZecw9+1gAamBjHEVJHswBepdYcfUkk1b10D1fmDdN//J/vcTdDMUfir1K2+hb9Pfg0jsq/ZJFh+Z6taS+7WMBJiSv5vLZwxIsVGl6xATbrCIqyxBWNGfQ9ORlqn28/8eQX3R9lH5PW0kse7fIZo=
+	t=1792345220; cv=none; b=maCHL21mfwwHo2uEHPS4wdyGwSxKCSvvCDpOmYSwGF+Q/4oQ5/Xcr6UAwVRALVUyZ4Lluh4LtLVPuVz3nkY+tbUOCTuPdi5aDAl3bymx3Ol2tNYL6AmKG9k8RXV0SX+qY7auygOLMg9UTujKqmQhZVxVbj/pwDSD5ZyI5pPp8Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792342107; c=relaxed/simple;
-	bh=YtuArZrJ5k0lumYLRLZjdb7x7yqpwIrTMz5SX4VVG04=;
+	s=arc-20240116; t=1792345220; c=relaxed/simple;
+	bh=03wOdN0QqpNw0B5wbOQxOLCbp9B3KFMzooqxQafR8vU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BdpXJBuPf3/AVMKfiXZAeviZiUaAXXQmlQ43rQAjojaKQGhZ9oNz7tHhpOtY0Eu6BLU8f23RWd8OV5yr0K1VWBsfQBijDu6jyQaJSwo6jGXrxglDbYtZcRYCK0pRSa7UhF0v2Wzeg9HikbgA9AfwzTrR0Z+xdm70kLCuEWUj5GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ametros.net; spf=pass smtp.mailfrom=ametros.net; dkim=pass (2048-bit key) header.d=ametros.net header.i=kernel@ametros.net header.b=t0Vadawa; arc=none smtp.client-ip=212.227.17.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ametros.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ametros.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=I3eNKoDK2t1Ww70vUcK17dTLaf7ZZhu2B6fk2CcnIfBemtLzLqdsKkxWMeqbjCao2UPi9x6OO04y9xn2hMmbRGlgo7EhMneZfvoiOAf3Uye2k5lU65TtegRlXcWvzOTMJvU03Hc4dnINIDo7QnuttbM2A3jgc366D2G15FYUeyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=M/bDqVmh; arc=none smtp.client-ip=91.218.175.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ametros.net header.i=kernel@ametros.net header.b="t0Vadawa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ametros.net;
-	s=s1-ionos; t=1792342069; x=1792946869; i=kernel@ametros.net;
-	bh=YtuArZrJ5k0lumYLRLZjdb7x7yqpwIrTMz5SX4VVG04=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=t0VadawaF3IBm6n5gb1ZLf2JcAH8dRjvN82iSsBOmwZy2t3YbQSP4HDRrQE7gBCL
-	 H/2NUEh4yl23eLdwpSPl8IGT9KyZFge0sN8vyOejxPgh3tHCjbYq9mnNKFBSEM/hW
-	 ctOXUkTs9TOcNd5F8gSTS5vf9HHFAdRQJzXHsuK2bHjRx7kIlEArXZY3NzzhDHBg3
-	 O4VzdP0tBzBx2LqXIECW+ixh/rqjO2mbg12bXeEXMIfycOkN65sh/299Cg0Botdbl
-	 jjQXRmSILG+r/eMDlXkm05U5qtfmZNGpH8r8/nDJGiYNK4trjjx2ahg1bKG94GlbV
-	 fJd6QIPcCdVnbQSdbg==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue109
- [213.165.67.119]) with ESMTPSA (Nemesis) id 1M9WqY-1xCyGX33jw-00AInU; Sun, 18
- Oct 2026 18:47:49 +0200
-Date: Sun, 18 Oct 2026 17:47:47 +0100
-From: Bob Anderson <kernel@ametros.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Wolfgang Walter <linux@stwm.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: regression 6.18.57: acpi power button vanished in machines
- running in qemu
-Message-ID: <atT4M12w4Em-JdsA@ametros.net>
-References: <5fe757e7aa54c38df3525d313598db99@stwm.de>
- <2026101834-parchment-reps-0bee@gregkh>
- <atSdI7buRErdF1jZ@ametros.net>
- <2026101813-doorstop-hyphen-614c@gregkh>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="M/bDqVmh"
+X-Envelope-To: patches@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=03wOdN0QqpNw0B5wbOQxOLCbp9B3KFMzooqxQafR8vU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792345215; v=1; x=1792950015;
+ b=M/bDqVmhGYZKqNnkkCGFdt64nMmWNhE2ZC2KCC2pCIniBnpN7iVnfozwV5MdVmUkc5XloPA8
+ L2fxlPwWWnPcqpQXE0mTiuaHPSH2aFJlxtlIX3lAw9oJc4ESh5+alvaZtruLy0873NWDyG4M2Pu
+ cIHpNra89ah65MnqW+40sIqU=
+X-Envelope-To: patches@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id cb3488b75a0f913e;
+	Sun, 18 Oct 2026 17:40:10 +0000
+X-Mizu-Trace-ID: cb3488b75a0f913e
+X-Migadu-Flow: FLOW_OUT
+Date: Mon, 19 Oct 2026 01:40:52 +0800
+From: Chen Yu <chen.yu@linux.dev>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: tony.luck@intel.com, ben.horgan@arm.com, james.morse@arm.com,
+	Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+	tglx@linutronix.de, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
+	peternewman@google.com, yu.c.chen@intel.com,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 3/5] x86,fs/resctrl: Move MSR_IA32_L{2,3}_QOS_CFG
+ scope property to x86 resource
+Message-ID: <atUEpF4pd4YBncbL@three-body>
+References: <cover.1791406459.git.reinette.chatre@intel.com>
+ <c873c62e78f335df6f7b99cb0cf0ccbcdd62b09e.1791406459.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,73 +51,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2026101813-doorstop-hyphen-614c@gregkh>
-X-Provags-ID: V03:K1:br/SXQxHTqGhH5leLP0uZ9DTD6EVZ0Cyxufe0A8SglF6C8RmL9b
- wC5CTmg5Yu/1ti83nPCOia+G6ufAaNIaCYj6wDz6cDmpobQMIx3POwnb3/h/bx01xuiSYPO
- YEPlBRZUAY50r0Ru1y1nUtgtU2ZkwHyZqcvMHxlXmn6h3DlcyWvVqPIEWHYKMfsWRKkg2My
- C8SnlwdZ4bChQB4D9C47g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:W9+Cv8ZFFVo=;se8QK+qbK3OX3JvkobT1q5+Z25w
- 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
- JNzd0b
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <c873c62e78f335df6f7b99cb0cf0ccbcdd62b09e.1791406459.git.reinette.chatre@intel.com>
 
-On Sun, Oct 18, 2026 at 03:35:31PM +0200, Greg Kroah-Hartman wrote:
-> On Sun, Oct 18, 2026 at 11:19:15AM +0100, Bob Anderson wrote:
-> > > On Sat, Oct 17, 2026 at 07:26:54PM +0200, Wolfgang Walter wrote:
-> > > >=20
-> > > > since 6.18.57 there is no acpi power button any more in virtual qe=
-mu based
-> > > > machines (as far as I can see model doesn't matter).
-> > ...
-> > Reverting 38c79dacc8063ff8a0d75ce2a900fbaff82ad94c makes the problem
-> > go away.
-> > ...
->=20
-> is this an issue in 7.3-rc as well?
+Hi Reinette,
 
-ACPI power button in QEMU on v7.3-rc7 seems OK.
+On Wed, Oct 07, 2026 at 02:06:45PM -0700, Reinette Chatre wrote:
+> 
+> MSR_IA32_L{2,3}_QOS_CFG enable code and data prioritization on x86. On
+> Intel the registers have the scope of the associated cache while on AMD
+> they have CPU scope. The scope is recorded as a property of the cache
+> resource's control, of which each cache resource currently supports only
+> one.
+> 
+> The scope of MSR_IA32_L{2,3}_QOS_CFG is only relevant to x86. Even so, the
+> property is found among the resctrl filesystem's cache properties while only
+> x86 code sets and reads it. Keeping the property with the cache control
+> properties would also duplicate it across all controls of a resource when
+> resources support multiple controls.
+> 
+> Make the scope of MSR_IA32_L{2,3}_QOS_CFG a property of the x86 hardware
+> resource and name it for the registers it describes now that it no longer
+> needs to be generic.
+> 
+> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 
-I haven't tested on hardware, but I suspect that it'll also be OK.
+[ ... ]
+
+> @@ -140,6 +143,7 @@ struct rdt_hw_resource {
+>  	unsigned int		mon_scale;
+>  	unsigned int		mbm_width;
+>  	bool			cdp_enabled;
+> +	bool			qos_cfg_has_cpu_scope;
+>  	bool			mbm_cntr_assign_enabled;
+>  	bool			sdciae_enabled;
+>  };
+
+It seems that some flags are in resource scope, while others are in the controller's scope,
+cache's flags are in the resource scope, MB's flags are in controller's scope, for example "linear".
+For now, there is only one controller under the L2/L3 cache resource, so it might
+not be duplicated if we keep qos_cfg_has_cpu_scope in the controller scope to keep consistence? Or do
+you mean if in the future there are multiple controllers under this cache resource, all controllers'
+flags (e.g., qos_cfg_has_cpu_scope) would still share the same value, so it is OK to put the flag in
+the cache resource? If yes, the code looks good to me,
+
+Review-by: Chen Yu <yu.c.chen@intel.com>
 
 thanks,
-Bob.
-
+Chenyu
