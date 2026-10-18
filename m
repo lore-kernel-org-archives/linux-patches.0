@@ -1,80 +1,155 @@
-Received: from mta0.migadu.com (out-74.mta0.migadu.com [91.218.175.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3C940F732
-	for <patches@lists.linux.dev>; Sun, 18 Oct 2026 17:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9723DAAD2;
+	Sun, 18 Oct 2026 18:14:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792345427; cv=none; b=IT7FxBtaC6k3G+lajKJNxNaPEyd5WmN83TuZBqn87yRhHb4gLjLRPHHLFQzglj3Xr31ICGoZmcQForXfh49p8TJkRb5aLj6u0R9J3xwMnQ/6ZJthw6576oLLD6oqBj8jB39uHfw8QaXIsVhjsyTKMRSJBWTGZ0k0d3J6G59/01Q=
+	t=1792347264; cv=none; b=RqsuMnoS+q89uAsARZoksGJ2XHMjb3StJOTUUm3fnm6ksqRdrxISBFoO/Z/jbFzGYIDqdldoLlu9wKrelEnsuETtQQga8YnD4/QJlQwQFx+HQzgP2E7IrB0FscdYwdGZE3/wvVQugVcvAYTnmhH/FnbbJZhN0dK0YXKT7aJeqBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792345427; c=relaxed/simple;
-	bh=SEryhHEn2ByopfBRHkq9FPldXMMAcOdNRkbc6JOUSCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=laVPRR+0iglwrpO3/9OfFTqc3DR3U9gw1xpN5giOQPsKCQJFr4y5Z85DoRae9Ns29f44mwoblQNQoN+BfLMOBzlOftewu+AQhPwX+NsvhxJ5mVdIxUDpIi3eGHL+c96a89IaP2cQenJLYk5H1LGxvTgMPppmxC+uvUPQb6FPtk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HRawQOep; arc=none smtp.client-ip=91.218.175.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1792347264; c=relaxed/simple;
+	bh=hGNljsmlJ89RqpxxKO8aJD0+W4SCvw2zKOnRmkMoBls=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qJOdEOn8fCaOwjLYjnUjQPgd1L+S7A3lqvLtnF5zzWR7fRgZ7s/PFxngX1SrW4eHWpVd6Q9EP4Afn8gj1RyyMBvuYwA1lBbYQKUMj+7uKrUz7/BorIbI8ybnyXRgZqkiWccG/Dv+WK39zxEDMfwI8UZiSmJVCmn5iCB2nKha+7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NrJAIMVW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HRawQOep"
-X-Envelope-To: patches@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=SEryhHEn2ByopfBRHkq9FPldXMMAcOdNRkbc6JOUSCU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792345423; v=1; x=1792950223;
- b=HRawQOepB1kKHztcUCHDA8+8UMQrGh3cskwa93r1S5nrlewfDAgEcYVoc31H3rYFS2YEbkoS
- NYMRR7JSPS988J5rkvqak2LpaOp0WEOZZRbT1eLppcRAb7qY+sxGiP5tdYMrCeSZWulXZqvb13X
- ZWqSwPgYnS+71kRIQgPYRWUs=
-X-Envelope-To: patches@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 2e23c358c62a656b;
-	Sun, 18 Oct 2026 17:43:43 +0000
-X-Mizu-Trace-ID: 2e23c358c62a656b
-X-Migadu-Flow: FLOW_OUT
-Date: Mon, 19 Oct 2026 01:44:24 +0800
-From: Chen Yu <chen.yu@linux.dev>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: tony.luck@intel.com, ben.horgan@arm.com, james.morse@arm.com,
-	Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
-	tglx@linutronix.de, dave.hansen@linux.intel.com, x86@kernel.org,
-	hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
-	peternewman@google.com, yu.c.chen@intel.com,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 5/5] fs/resctrl: Drop unnecessary parameter from
- resctrl_io_alloc_parse_line()
-Message-ID: <atUFeK4x_F1wcIwR@three-body>
-References: <cover.1791406459.git.reinette.chatre@intel.com>
- <b01d58ebb13c6cadd68c0fb33f469fdb32dcb597.1791406459.git.reinette.chatre@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NrJAIMVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61791F000C4;
+	Sun, 18 Oct 2026 18:14:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792347263;
+	bh=aE+v/ITY/cV8pvLHmhsyDv97zOidMIbJEMK6i2OBrM4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=NrJAIMVWv/VB03JqhiqwzX0stZbNcUh4oxeuIIcD64DS1Cf0lGmgl4qloa9FVOLlM
+	 tzpclz+1AfZuhj0qIJl7b+qlAZWi0P6SX1/ndScSHn9QpyVpfzwlF39Ov+nIkujrU6
+	 68/4JZAGewxCSeg4/ncSmWFA3Uo3l26fvI7Z7g4Qf47zkcaw1fpCc0j/UO/gv7JKYP
+	 aPnd+kGEV6mJdJ6MNi9S6/cZ2dZw1LhWopPkA4c0DkGVq24QEQ499Kvg+c7RdVKVHl
+	 50YdeR/nwOOMeXcg4GHIPHEWE48HxpYLacVB5SDo+sItcKiNqJwUqsCjFOvjwSHVqm
+	 7AmkKJ2wzOTOw==
+From: SJ Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	Kirill Tkhai <tkhai@ya.ru>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Price <steven.price@arm.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Alasdair Kergon <agk@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Anna Schumaker <anna@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Carlos Llamas <cmllamas@google.com>,
+	Chandan Babu R <chandan.babu@oracle.com>,
+	Chao Yu <chao@kernel.org>,
+	Chris Mason <clm@fb.com>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Coly Li <colyli@suse.de>,
+	Dai Ngo <Dai.Ngo@oracle.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Airlie <airlied@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	David Sterba <dsterba@suse.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Jason Wang <jasowang@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jeffle Xu <jefflexu@linux.alibaba.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Juergen Gross <jgross@suse.com>,
+	Kent Overstreet <kent.overstreet@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Nadav Amit <namit@vmware.com>,
+	Neil Brown <neilb@suse.de>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Richard Weinberger <richard@nod.at>,
+	Rob Clark <robdclark@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sean Paul <sean@poorly.run>,
+	Song Liu <song@kernel.org>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+	Tom Talpey <tom@talpey.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Yue Hu <huyue2@coolpad.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 1003/1674] mm: shrinker: add infrastructure for dynamically allocating shrinker
+Date: Sun, 18 Oct 2026 11:14:12 -0700
+Message-ID: <20261018181413.376492-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261017160456.871872142@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b01d58ebb13c6cadd68c0fb33f469fdb32dcb597.1791406459.git.reinette.chatre@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 07, 2026 at 02:06:47PM -0700, Reinette Chatre wrote:
-> 
-> resctrl_io_alloc_parse_line() parses a line written to the io_alloc_cbm file.
-> It receives both a schema and a pointer to the schema's resource. Its only
-> caller looks up the resource from the schema just to pass both.
-> 
-> Passing the resource separately is redundant and allows a caller to pass a
-> resource that does not belong to the schema. parse_line(), which parses lines
-> written to the schemata file, already receives only the schema and determines
-> the resource from it.
-> 
-> Pass only the schema to resctrl_io_alloc_parse_line() and have it determine
-> the resource itself, matching parse_line() and in preparation for passing
-> additional information when supporting multiple controls.
-> 
-> No functional change.
-> 
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> Reviewed-by: Ben Horgan <ben.horgan@arm.com>
->
+Hello,
 
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+On Sat, 17 Oct 2026 17:54:35 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-thanks,
-Chenyu 
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Qi Zheng <zhengqi.arch@bytedance.com>
+> 
+> [ Upstream commit c42d50aefd17a6bad3ed617769edbbb579137545 ]
+> 
+> Patch series "use refcount+RCU method to implement lockless slab shrink",
+> v6.
+[...]
+
+I just found this patch is causing below warning.
+
+    mm/damon/../internal.h: In function 'shrinker_debugfs_name_alloc':
+    mm/damon/../internal.h:1247:9: error: function 'shrinker_debugfs_name_alloc' might be a candidate for 'gnu_printf' format attribute [-Werror=suggest-attribute=format]
+     1247 |         shrinker->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
+           |         ^~~~~~~~
+
+Upstream commit f04eba134e59 ("mm: add printf attribute to
+shrinker_debugfs_name_alloc") fixes the warning.  I confirmed the above warning
+is also removed after cherry-picking it.  The commit message explains the issue
+and how it is solved in detail.
+
+Could you please add it, too?
+
+
+Thanks,
+SJ
