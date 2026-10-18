@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C7395240;
-	Sun, 18 Oct 2026 18:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8074C376BC2;
+	Sun, 18 Oct 2026 18:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792347595; cv=none; b=JWMXMg1LV/3wrWwBtVsYkXfyHNQBueU1c8Vg3wYlc5uxfX9AqMuiffSbgrWvohGPhzxQJq3TTdJGGhFY0kJUTPwbLMDyRXRNOt/CZ8gHHh3adCPD5MKJLG3lmdK/5g9HymVgP8ct1kRY/C+bskkeHo4g7uJaMOtqv/KTzp3Mhn0=
+	t=1792347687; cv=none; b=iQkQK8KSdlGup6zrOX1hC4prItNFBTYPVtRQkmxhDMefcvRtEaGrX4MeiBTj7n8Ztlq1j4n8fZ+BDc8dBXxgSRlhVtkL9t/QaBTYw9Z/Pinr2oIcrzlF2G2E3MXMuHZdj1HNstGhPDmoHQwWSv+5Gd8ujQbLtWq4RKcMlFigPuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792347595; c=relaxed/simple;
-	bh=xjH/zN8fLYhvRAB90baDFXN0UkJ99xOlJVwneJ5p8wg=;
+	s=arc-20240116; t=1792347687; c=relaxed/simple;
+	bh=/Da0XkWapf9tvIH8y4DOZ8InOtttFKkLYkGwlJLhPrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvWMOW/z8NWoqRoe+kO/l+GLODI9hhpMhezPUN9f9XRYoAAQPm9pTZVpn753L3Ot9umxUlzgoN4cZ7wAOnrI/ojok0k22zh9r/fZs8MUgWJAbDyCLkRXCIwtcJZn0bEvrURZ7TXKDQMyBOzWD4zgdJjDBhqmky39jiXACqTZHAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JiDyzIuh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fMlob7fVIEj8b4RHc/FDKHt1+VREeJom8IHFj1SNwxIknxrcMQVLhPCrEJP+WKskBqvNDEi2jULHs6eBaTxjBrsQpkvcUjt3XkNLh+eJyTfgelcOraDCdNN84g4h5UswJVcOQRyIk6/JwfZXrRPlJ6JBbVjHDo0yh/KSMTPfWHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hc5SXIQC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JiDyzIuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC571F000C4;
-	Sun, 18 Oct 2026 18:19:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hc5SXIQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5E11F000C4;
+	Sun, 18 Oct 2026 18:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792347594;
-	bh=Hr95qZg8wqighuNV9l8lqKCelK6yoIercusfePq6BFc=;
+	s=k20260515; t=1792347686;
+	bh=e5O8Tl++2piX9n5bEiJ+TETTvEyspyg/xEnESqzMi60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JiDyzIuhSEEkq8DoGewphQfZM/OIGCLqHQyWjlZHvh96MYA7FV8d1BE9wOT/xmWJc
-	 zelLNldbhT9CiSclKaT/1v0hSMGIsMiecwhMFA6q1FC+uT1Iwo/JLA/Tz3r338Mh8z
-	 T7dyCLvtmwr3vQLFbyfUkWy6u0aQhg9GP9RGlf21bKWAd3f6aMHbUBCy0N72GrrAqx
-	 YRxMUVunYUE1cP5f4d4PslXhFiNBsU7qly1JYMfj5xcNJ0E+JrTgZZS47FFist56sL
-	 QrnZaQz8C4kwI8w8YZ0sVhuC0cGVtf9naebxDFJWkQTxREqoJh0HbZvcUJd+8TRtsQ
-	 vvKyF+PDdNl7Q==
+	b=hc5SXIQCc7wW/oa8+l1FNM5ZioQjUxJB+Zv8dD+iyr7dlYUsgdI4Ysc0JZS252Xm5
+	 XVKOeb1PpB784V4JC1QkeOHZ8lfA6xqGezCHH0UC/ycO2bKLw0nJW3XXjcV8yBbkPY
+	 hpyM6CVAArED/k7CulXKlAbXDXRdlEm2dObdtvdahU5iLlbRtyGVSkKoejyDQmAB7Z
+	 raVPsDmPCI4WOLJEl0Dj538xlMdWZo7JWKLnrmTc1CuD3cQaSGMThwsKmNsLMDFXd8
+	 SGOcsC0LkCmvEWSwoaqFU5WhHreLPLFZUh7wigGRzBj47DPmAclkPOm8AASoRRQOWG
+	 wIcFhdM+YffZg==
 From: SJ Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -48,11 +48,11 @@ Cc: SJ Park <sj@kernel.org>,
 	broonie@kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 7.2 00/10] 7.2.12-rc1 review
-Date: Sun, 18 Oct 2026 11:19:45 -0700
-Message-ID: <20261018181946.376674-1-sj@kernel.org>
+Subject: Re: [PATCH 6.18 00/52] 6.18.58-rc1 review
+Date: Sun, 18 Oct 2026 11:21:18 -0700
+Message-ID: <20261018182118.376825-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261017155059.698368299@linuxfoundation.org>
+In-Reply-To: <20261017155104.830766652@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -62,10 +62,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 17 Oct 2026 17:54:29 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sat, 17 Oct 2026 17:54:01 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 7.2.12 release.
-> There are 10 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.18.58 release.
+> There are 52 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
