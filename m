@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62515AF68B;
-	Mon, 19 Oct 2026 14:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2F54C7B2B;
+	Mon, 19 Oct 2026 14:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418489; cv=none; b=OzCfrp6dmwkFbMwKdxdpbJLHH3/zf6nGfSfLTL1cPtAA6bpXKHaZf+3pB7Uo/HkYL0+oUOtoFUx6GilONmznPBcNNJQ027TOMyIHCK8EbkJAmdqlAclp5kxjaujB2shXolj/8SgkxTl07+zlOCN+XicGgKmxKNaZzLK2kfZMSL8=
+	t=1792418489; cv=none; b=Kmd/MdOIafUsC9NFue64Vd2/2qmD4PcJl4qqvh02ZKZJjOLcoiT6U+OOewAj/t8qj0jInhfXHNYNdhLnmOBI/j8lKszX0nbxuJ7ZYjLa+TV8wRzS4a2BlZQZrS7nx4JmGBMtWZLSREcN2zsvHqGupD4yU/zMmRbX7rlYpHAuSm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418489; c=relaxed/simple;
-	bh=Bd8e95cLLC2DBPcFrLahfFGPiSluWfiTct0FPxBJzG4=;
+	bh=jtz6INkpERdZ7fXTKOwsqLtCyJcTAJTfPTX9u+/pG8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ln78SCRLncyFXmV9MZ/3UNoh5J8og6vm5zsLXwic0yFtC/mLv2VFy92G/96fs+rS0ytZQUjtqyT6dMRST+TZJDNXv5Iyj8IRMOBAmQgjKq4p+wJa6gElcrsxDrVpM9//kRkDK3GzZZBn5P/yH3tb3VPPwC2RlSZigB4qObn1TKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H52FS1Bg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iA3K0LZzoH4/fp4FV6DWVCq2V88uNgqedzeUlbwzZg6L0SbO42YqRq6U+SyMzKLYgwwMqq5Cfle0HM2YBT/piwOaaYcz2XE5fAvcY48reeOcKNsV3V68NyC7k8MFxoUUktCFB/TqB8uAuup1eMtV0WR7GeJDy1U3oDAWIiVA2zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zcbx5XVr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H52FS1Bg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D431F000C6;
-	Mon, 19 Oct 2026 14:01:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zcbx5XVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B4D1F000C7;
+	Mon, 19 Oct 2026 14:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418485;
-	bh=J0bjOxGPa4OoEAmDMMIHn67YvxWXcybSpy3sgFMbz48=;
+	s=k20260515; t=1792418486;
+	bh=V6K2WhP3zDMm7pCJDjDTcWpb3EHpqlbzXjNyB7l1Km4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H52FS1BgNmUagPeyo/8WA6gEpuEEO/zpGYsqmASA5KHzOEjnnyPhlu3oBvuWe6G/E
-	 z4J7mu1UXy7BmjblkaDLuVuRrbTxDrAATeiQJrh8gg98eXFDS3MLY4MVHAYMJqYl82
-	 XmhkK4DQgLc30zdWSeMLOp+0t4an/OYQsGnFWhjEkrDg/ih9SvL3AEzL1y6FBoedqW
-	 sig/Bp2FJCy9UqLHFm6Hz35j/jfaclR+UurADo/whq+e80TYC3WCirRjhoufO5uuNX
-	 Ng/HX7cTEQLWWnLlhby/nPmDhAwJ2cYVm/MRBil/uMGhitOvlZtPABRO+bs1MmBmTM
-	 9txPFaXkDsBeg==
+	b=Zcbx5XVrA+yruLQhJFnAUf8fwVTZeKH1gH3HmOVhVd2l6BrZZPxc24O8kD+pp1pXd
+	 r0BILJdjR/yNwvlW26YcaTwHUsutKnU1q/xIDxEyNKERcXnCUNCnhwpn0HHzb2Xhoa
+	 0uvlCVI3R/ccKP/ojrSlW0SlQSod0/ie8a2C7OMekp5w3p+6R4o0fuIAr7tdiLeNQc
+	 iwj65LMrRVGXizC2XRzk9GufpUL6xgM5HEh7kPV+du4DAG9TiaPnkEibWl2twMIJiV
+	 AN+D2ipAOGp3rknSkfIM3s0+LtTwsxsnsVklkvMwXG+dPSX/4Tx0svTVqxpl8ScZ4H
+	 /8jiXjNhHZmhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wang <kevinyang.wang@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	viro@zeniv.linux.org.uk,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] drm/amd/pm: Validate Vega10 PPTable subtable bounds
-Date: Mon, 19 Oct 2026 09:49:33 -0400
-Message-ID: <20261019135441.1420968-282-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] fs/namespace: notify pollers of legacy propagation changes
+Date: Mon, 19 Oct 2026 09:49:34 -0400
+Message-ID: <20261019135441.1420968-283-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,312 +53,389 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit 9914149f99fd2ddcfd2a8c1053a57d96ec43448e ]
+[ Upstream commit 0ae44a20835e5cf37d03a83e70c92e92deda3703 ]
 
-v1:
-Vega10 PPTable parsing uses VBIOS-provided offsets, revision fields
-and entry counts to locate subtables. Malformed data can otherwise
-drive out-of-bounds reads from soft_pp_table_size, and voltage lookup
-tables can overrun their fixed-size destination arrays.
+Changing mount propagation through the legacy mount API changes
+user-visible mountinfo contents, including the shared: and master:
+optional fields.
 
-Add shared bounds helpers and validate fixed-size subtables, dynamic
-entry arrays and revision-specific layouts before consuming thermal,
-fan, power-tune, clock dependency, PCIE, hard-limit and voltage lookup
-data.
+The mount_setattr() path already touches the mount namespace after
+change_mnt_propagation(), so pollers of /proc/<pid>/mountinfo are woken
+when the namespace event changes.
 
-v2:
-if ucRevId is not matched, fallback to default table size instead of returning -EINVAL.
+The legacy mount --make-* path also changes propagation through
+change_mnt_propagation(), and MOVE_MOUNT_SET_GROUP updates the
+propagation relationship of the target mount. Both paths currently
+return without touching the affected mount namespace.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+As a result, userspace polling /proc/<pid>/mountinfo can miss these
+propagation-only changes even though mountinfo has changed.
+
+A simple reproducer that polls /proc/self/mountinfo while changing
+propagation shows the inconsistency.
+
+Before this change:
+
+  legacy MS_SHARED: poll ret=0 revents=0x0
+  mount_setattr MS_SHARED: poll ret=1 revents=0xa
+
+After this change:
+
+  legacy MS_SHARED: poll ret=1 revents=0xa
+  mount_setattr MS_SHARED: poll ret=1 revents=0xa
+
+Fix this by touching the affected mount namespace after successful
+propagation changes in do_change_type() and do_set_group().
+
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Link: https://patch.msgid.link/20260601032911.940507-1-guopeng.zhang@linux.dev
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a memory-safety fix for Vega10 PowerPlay table parsing in
-**6.18.53**. The buggy offset/`ucNumEntries` handling is in this tree
-and is reachable at probe and via the `pp_table` sysfs write path.
+I have enough to decide: the miss is real in 6.18.53, the helpers exist,
+and the patch is a small ABI wake-up fix. Below is the full 9-phase
+write-up.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[drm/amd/pm] [Validate] [reject malformed Vega10 PPTable
-subtables before parsing]**
+
+Record: `[fs/namespace] [notify] notify pollers of legacy propagation
+changes`
+
+Subsystem is VFS mount-namespace (`fs/namespace.c`). Verb is “notify”,
+which here means adding a missing userspace wake-up after a state
+change.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Yang Wang \<kevinyang.wang@amd.com\> (author)
-- Reviewed-by: Asad Kamal \<asad.kamal@amd.com\>
-- Reviewed-by: Kenneth Feng \<kenneth.feng@amd.com\>
-- Signed-off-by: Alex Deucher \<alexander.deucher@amd.com\> (amdgpu
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence
-  expected)
-- Pipeline markers ignored: `[Upstream commit 9914149f99fd...]`, Sasha
-  Levin SOB
+- **Signed-off-by:** Guopeng Zhang `<zhangguopeng@kylinos.cn>` (author)
+- **Link:** `https://patch.msgid.link/20260601032911.940507-1-
+  guopeng.zhang@linux.dev`
+- **Signed-off-by:** Christian Brauner (Amutable) `<brauner@kernel.org>`
+  (VFS maintainer; applied the patch)
+- **No Fixes: tag** (expected for this review queue)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Reviewed-by / Acked-by**
+- Pipeline-only tags (`[Upstream commit …]`, `Signed-off-by: Sasha
+  Levin`) ignored per instructions
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug:** Vega10 PPTable parsers trust VBIOS offsets, `ucRevId`, and
-  `ucNumEntries` without checking they fit in `soft_pp_table_size`.
-  Voltage lookup copies `ucNumEntries` into arrays allocated with a
-  fixed `max_levels`.
-- **Symptom:** out-of-bounds reads of the PPTable buffer; destination-
-  array overrun on voltage lookup.
-- **Version info:** none in the message. Code dates to Vega10 powerplay
-  (2017).
-- **Root cause:** pointer = `powerplay_table + le16_to_cpu(offset)` with
-  no size check; lookup loop bound is `ucNumEntries` while allocation
-  uses `max_levels` (8 or 4).
-- **v2:** unknown `ucRevId` falls back to a default table size instead
-  of `-EINVAL` (fan / power-tune), to avoid rejecting real tables.
+- **Bug:** `mount(MS_SHARED|MS_PRIVATE|MS_SLAVE|MS_UNBINDABLE)`
+  (`do_change_type`) and `move_mount(MOVE_MOUNT_SET_GROUP)`
+  (`do_set_group`) change propagation (and therefore
+  `/proc/<pid>/mountinfo` `shared:` / `master:` / `unbindable` fields)
+  but never call `touch_mnt_namespace()`.
+- **Symptom:** `poll()` on `/proc/self/mountinfo` returns 0 /
+  `revents=0` after a legacy `--make-*` change. The same change via
+  `mount_setattr()` already wakes pollers (`revents=0xa` =
+  `EPOLLERR|EPOLLPRI`).
+- **Failure mode:** userspace that waits on mountinfo can miss a real,
+  user-visible table change.
+- **Version info:** none in the message. Bug is in the legacy `mount()`
+  path, which has existed since shared-subtree days.
+- **Root cause (author):** those two paths return after
+  `change_mnt_propagation()` / SET_GROUP list updates without bumping
+  `ns->event` or waking `ns->poll`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Explicit bounds validation for OOB read and array
-overrun.
+
+Record: Not a disguised cleanup. It is an explicit correctness/ABI fix:
+pollers must be woken when mountinfo contents change.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File:
-  `drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c`
-  (+459 / −105, 564 lines touched)
-- New helpers: `vega10_pp_table_has_space`, `get_vega10_subtable`,
-  `validate_vega10_table_entries`, plus per-subtable getters (gfxclk,
-  clk, mclk, mm, pcie, hard-limit, thermal, fan, power-tune, voltage
-  lookup)
-- Callers updated: `init_thermal_controller`, `init_over_drive_limits`,
-  `init_powerplay_extended_tables`, `init_dpm_2_parameters`
-- Scope: single-file, systematic validation of existing parsers (not a
-  cross-subsystem refactor)
+- **File:** `fs/namespace.c` only (`+7` lines, no deletions)
+- **Functions:** `do_change_type()`, `do_set_group()`
+- **Scope:** single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- **Before:** `init_*` computed subtable pointers as `(unsigned
-  long)powerplay_table + le16_to_cpu(offset)` and passed them straight
-  into parsers.
-- **After:** helpers require non-zero offset, header-in-bounds,
-  `ucNumEntries != 0` (PCIE allows 0), and `offset + header +
-  N*entry_size <= soft_pp_table_size`. Voltage lookup also requires
-  `ucNumEntries <= max_levels`.
-- **Paths:** probe-time `vega10_pp_tables_initialize` and
-  `pp_dpm_set_pp_table` → `amd_powerplay_reset` → `hwmgr_hw_init` →
-  `pptable_init`. Error paths return `-1`/`-EINVAL` instead of parsing.
+- **Hunk 1 (`do_change_type`):** after the `change_mnt_propagation()`
+  walk, previously returned 0 with no namespace event. After: take
+  `guard(mount_locked_reader)()`, then
+  `touch_mnt_namespace(mnt->mnt_ns)`, then return 0. Normal success path
+  of `mount(--make-shared/slave/private/unbindable)`. Error paths
+  unchanged.
+- **Hunk 2 (`do_set_group`):** after copying slave/share linkage onto
+  `to`, previously returned 0. After: same lock +
+  `touch_mnt_namespace(to->mnt_ns)`. Normal success path of
+  `MOVE_MOUNT_SET_GROUP`. Error paths unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
+
 Record:
-- **Category:** buffer overflow / out-of-bounds (memory safety)
-- **OOB read:** VBIOS/sysfs offsets and entry counts can point past
-  `soft_pp_table_size`.
-- **Heap write OOB:** `get_vddc_lookup_table()` at v6.18.53 does
-  `kzalloc(struct_size(..., max_levels))` then loops `i < ucNumEntries`.
-  If `ucNumEntries > 8` (VDDC) or `> 4` (VDDMEM/VDDCI), it writes past
-  the allocation.
-- **Fix:** overflow-safe `offset <= size && size <= table_size -
-  offset`; reject oversized lookup tables before
-  `get_vddc_lookup_table()`.
+- **Category:** logic/correctness + userspace ABI (missing poll wake-up)
+- **Mechanism:** `touch_mnt_namespace()` does `ns->event = ++event` and
+  `wake_up_interruptible(&ns->poll)`. `mounts_poll()` in
+  `fs/proc_namespace.c` waits on that queue and sets `EPOLLERR|EPOLLPRI`
+  when `ns->event` changes. `show_mountinfo` prints `shared:%i`,
+  `master:%i`, `propagate_from:%i`, `unbindable` from the same
+  propagation state. Those fields change without a corresponding event,
+  so pollers keep a stale view.
+- Locking: v1 used `lock_mount_hash()` (`write_seqlock`), which bumps
+  `mount_lock` and forces seqcount readers to retry. Christian asked for
+  `guard(mount_locked_reader)()` (`read_seqlock_excl`) so topology
+  seqcount readers are not spuriously invalidated. That is the committed
+  form.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- Overflow check is the usual unsigned form and is correct.
-- GFXCLK unknown `ucRevId` still returns `-EINVAL`, matching existing
-  `get_gfxclk_voltage_dependency_table()`.
-- Fan/power-tune unknown rev uses a fallback size (v2), reducing brick
-  risk on odd BIOS revisions.
-- `init_over_drive_limits()` now fails if the gfxclk table is
-  missing/malformed; previously it always returned 0 (and could read
-  garbage). Valid Vega10 tables have this subtable; AMD reviewed that
-  change.
-- Regression risk: medium for a large parser change, mitigated by v2
-  fallback and maintainer review. No public API change.
+- **Quality:** obviously correct. Same helper already used by
+  `mount_setattr_commit()` after `change_mnt_propagation()`.
+- **Minimal:** two call sites, no API or structural change.
+- **Regression risk:** low. Extra exclusive seqlock after
+  `namespace_excl` matches existing lock order (`namespace_sem` then
+  `mount_lock`). Wake-up is after a successful mutation only. Using the
+  reader-exclusive guard avoids extra `mount_lock` sequence bumps, which
+  is why v1 was revised.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: Unvalidated thermal-controller pointer and
-`get_vddc_lookup_table()` come from `f83a9991648bb` (“drm/amd/powerplay:
-add Vega10 powerplay support (v5)”, 2017-03-29), contained in
-**v4.12-rc1**. Present in this 6.18.53 tree (`git merge-base --is-
-ancestor f83a9991648bb v6.18.53`).
+
+Record:
+- Propagation loop in `do_change_type` dates to Al Viro / Miklos Szeredi
+  (2008–2011); `do_change_type` itself goes back to shared-subtree
+  (`07b20889e3052`, contained in v2.6.15-rc1).
+- `do_set_group` body is from Pavel Tikhomirov (`9ffb14ef61bab`,
+  contained in v5.15-rc1).
+- Neither path ever called `touch_mnt_namespace()` until this commit.
+- `mount_setattr_commit()` has called `touch_mnt_namespace()` since
+  `e257039f0fc7da` / `2a1867219c7b2` (mount_setattr, contained in
+  v5.12-rc1). That is the inconsistency the author measured.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Buggy code is the original 2017 parser, not a
-recent regression.
+
+Record: No `Fixes:` tag. Not applicable. The missing wake-up is original
+behavior of `do_change_type`, not a recent regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Same-author series on this branch:
-- `10510a4c2c397` drm/amd/pm: Validate Vega hwmgr PowerPlay table bounds
-  (parent; adds `get_vega10_state_array`)
-- this commit (vega10 subtables)
-- `fc93a02036e5f` Tonga subtables (2/3, other file)
-- mailing-list 3/3: remaining legacy PPLIB (`processpptables.c`)
-This patch is **standalone for Vega10**. 2/3 and 3/3 touch other files.
+
+Record:
+- Related: `12cdd1af7a6d1 do_change_type(): use guards`, `7b99ee2c5c83b
+  do_set_group(): use guards` (already in v6.18.53; this patch sits on
+  that form).
+- `cffd0441872e7` uniform permission checks; `d8cc0362f918d` SET_GROUP
+  graph fix — adjacent but not prerequisites for this wake-up.
+- Standalone. Not `patch X/Y`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Yang Wang is an AMD pm contributor with several PPTable bounds
-patches. Reviewed by Asad Kamal and Kenneth Feng; applied by Alex
-Deucher.
+
+Record: Guopeng Zhang is not the VFS maintainer. Other `master` commits
+under that name are mostly cgroup/docs. This mount patch was applied by
+Christian Brauner to `vfs-7.3.mount`.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
 Record:
-- Parent `10510a4c2c397` is **not** in v6.18.53. It applies cleanly to
-  v6.18.53. This commit applies cleanly **on top of that parent**;
-  without it, the first hunk fails because v6.18.53 still has
-  `check_powerplay_tables` instead of `get_vega10_state_array`.
-- Functional dependency is weak (insert context only). Helpers use
-  existing `soft_pp_table_size`.
-- 2/3 and 3/3 are not required for this file.
+- Needs `touch_mnt_namespace()`, `guard(mount_locked_reader)()`,
+  `do_change_type()`, `do_set_group()`. All exist at v6.18.53
+  (`mount_locked_reader` from `d154f18575899`, contained in the 6.18
+  cycle).
+- Applies standalone. No follow-up in this file after 2026-06-01 that
+  amends this wake-up.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig -c 9914149f99fd2ddcfd2a8c1053a57d96ec43448e` → https://patch.m
-  sgid.link/20260623134917.443011-1-kevinyang.wang@amd.com
-- v1: https://patch.msgid.link/20260623102319.413960-1-
-  kevinyang.wang@amd.com
-- v2 applied (fallback instead of `-EINVAL` on unmatched fan/power-tune
-  rev)
-- Reviewers: Asad Kamal “Series is Reviewed-by”; Kenneth Feng same. No
-  NAK in the saved mbox.
-- lore.kernel.org/amd-gfx WebFetch returned 403; thread recovered via
-  `b4 dig -m`.
+- **b4 dig:** https://patch.msgid.link/20260601032911.940507-1-
+  guopeng.zhang@linux.dev
+- **v1:** 2026-05-29, https://patch.msgid.link/20260529095441.1744006-1-
+  guopeng.zhang@linux.dev
+- **v2:** 2026-06-01 (committed version)
+- Christian on v1: `lock_mount_hash()` would make seqcount readers retry
+  on propagation-only changes; use `guard(mount_locked_reader)()`
+  instead. Author agreed and sent v2.
+- No NAK. Christian applied v2 to `vfs/vfs.git` branch `vfs-7.3.mount`
+  (commit `0ae44a20835e`).
+- No reviewer `Cc: stable` in the thread.
+- lore HTTP fetch returned 403; threads were retrieved with `b4 dig -m`
+  / `b4 mbox`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: To/Cc: amd-gfx, Alex Deucher, Hawking Zhang, Kenneth Feng, Asad
-Kamal. AMD graphics maintainers were on the patch.
+
+Record (`b4 dig -w`): To/Cc Alexander Viro, Christian Brauner, Jan Kara,
+linux-fsdevel, linux-kernel. Brauner reviewed v1 and merged v2. Viro and
+Kara were CCed; no extra Acked-by in the mbox.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla/Reported-by. Issue is from code audit of
-untrusted table parsing, not a public crash report.
+
+Record: No syzbot, bugzilla, or extra reporters. Evidence is the
+author’s side-by-side poll reproducer (`legacy MS_SHARED: poll ret=0` vs
+`mount_setattr: poll ret=1`). Severity from that: userspace misses a
+mountinfo update. How many users: not quantified; the interfaces (`mount
+--make-*`, `MOVE_MOUNT_SET_GROUP`, poll on mountinfo) are used by
+systemd/libmount, `findmnt --poll`, and container runtimes.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: [PATCH v2 1/3] this; 2/3 Tonga; 3/3 remaining PPLIB. Self-
-contained for Vega10. Separate Asad Kamal “clamp ucNumEntries” series
-exists; this tree’s 6.18.53 baseline has neither.
+
+Record: Single patch, v1→v2 lock change only. Not part of a larger
+series.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search was blocked (403 / WebSearch
-error). UNVERIFIED whether stable@ already discussed this.
+
+Record: lore.kernel.org/stable search via WebFetch was 403. No stable
+discussion was found in the fsdevel mboxes. UNVERIFIED whether anyone
+previously requested or rejected this for -stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
+semcode MCP is not available. Callers/callees were traced with grep and
+by reading the functions.
+
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: New validators listed above; modified `init_thermal_controller`,
-`init_over_drive_limits`, `init_powerplay_extended_tables`,
-`init_dpm_2_parameters`. `vega10_pp_tables_initialize` unchanged except
-it now sees errors from those inits.
+
+Record: `do_change_type`, `do_set_group`; they call
+`touch_mnt_namespace` and `guard(mount_locked_reader)`.
 
 **Step 5.2: TRACE CALLERS**
+
 Record:
-- `vega10_pptable_funcs.pptable_init` → `vega10_pp_tables_initialize`
-- `hwmgr.c`: `hwmgr->pptable_func->pptable_init(hwmgr)` during hwmgr
-  init
-- `pp_dpm_set_pp_table()` copies userspace buffer into `soft_pp_table` /
-  `soft_pp_table_size`, then `amd_powerplay_reset()` → `hwmgr_hw_init()`
-  → pptable_init
-- Also boot: ATOM VBIOS via `smu_atom_get_data_table()`
+- `do_change_type()` ← `path_mount()` when flags include
+  `MS_SHARED|MS_PRIVATE|MS_SLAVE|MS_UNBINDABLE` ← `do_mount()` /
+  `mount()` syscall.
+- `do_set_group()` ← `vfs_move_mount()` when `MNT_TREE_PROPAGATION` ←
+  `move_mount()` with `MOVE_MOUNT_SET_GROUP`.
+- `touch_mnt_namespace()` also used from `commit_tree`,
+  `set_mount_attributes`, `mount_setattr_commit`, umount/expiry paths.
+- `mounts_poll()` is `.poll` for `/proc/<pid>/mounts` and
+  `/proc/<pid>/mountinfo`.
 
 **Step 5.3: TRACE CALLEES**
-Record: `le16_to_cpu`, `offsetof`, `PP_ASSERT_WITH_CODE`, existing
-`get_*_voltage_dependency_table` / `get_vddc_lookup_table` after
-validation. No new allocations in the helpers.
+
+Record: `change_mnt_propagation()` (under `namespace_sem` exclusive),
+`invent_group_ids()`, `may_change_propagation()`, then the new lock +
+`touch_mnt_namespace()` (`ns->event++`, `wake_up_interruptible`). No
+allocation on the added path.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from GPU probe (Vega10) and from sysfs `pp_table`
-(0644 read, owner-write: `S_IRUGO | S_IWUSR`). Not unprivileged; still a
-documented upload/re-init path. Boot path runs on every Vega10 load.
+
+Record: Userspace-reachable via `mount(2)` and `move_mount(2)` with
+`CAP_SYS_ADMIN` in the relevant namespace (`may_change_propagation`).
+Unprivileged user+mount namespaces (containers) can hit it. Pollers of
+procfs mountinfo are the observers. This is a common container/systemd
+path, not an obscure config.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same pattern in Tonga (`process_pptables_v1_0.c`) and legacy
-PPLIB (`processpptables.c`) — patches 2/3 and 3/3. Voltage-lookup heap
-overrun is the same `max_levels` vs `ucNumEntries` bug.
+
+Record: `mount_setattr_commit()` already does `change_mnt_propagation()`
+then `touch_mnt_namespace()`. Historical `0e55a7cca4b66`
+(“touch_mnt_namespace when the mount flags change”) and `5addc5dd8836a`
+(make `/proc/mounts` pollable) are the same contract: if
+mountinfo/mounts text changes, bump the event. This commit fills the
+remaining propagation-only hole.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. v6.18.53 `vega10_processpptables.c` still does raw offset
-arithmetic in `init_thermal_controller`, `init_over_drive_limits`,
-`init_powerplay_extended_tables`, `init_dpm_2_parameters`, and the
-`get_vddc_lookup_table()` overflow loop. Introduced v4.12, still here.
-`git describe HEAD` = **v6.18.53-5049-g0f0bdc2b0dffb**; `make
-kernelversion` = **6.18.53**.
+
+Record:
+- Local tree: **6.18.53** (`Makefile` VERSION=6 PATCHLEVEL=18
+  SUBLEVEL=53; `git describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`;
+  branch `autosel`).
+- At **v6.18.53**, `do_change_type()` and `do_set_group()` return after
+  propagation updates with **no** `touch_mnt_namespace()`. The bug is
+  present.
+- The autosel cherry-pick (`3e32bcbd6febbb`) is ignored as pipeline
+  state, not as “already selected.”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Does not apply to bare v6.18.53 (first hunk expects
-`get_vega10_state_array`). Parent `10510a4c2c397` applies cleanly to
-v6.18.53 (vega10/12/20); this commit then applies cleanly. Backport
-difficulty: **clean apply if parent is taken; otherwise one-hunk context
-tweak**.
+
+Record: **Clean apply** to v6.18.53. Exact context matches both hunks.
+`guard(mount_locked_reader)()` and `touch_mnt_namespace()` are already
+in this series.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `git log v6.18.53 --grep=PPTable -- vega10_processpptables.c`
-empty. No `vega10_pp_table_has_space` / `pp_entries_max` in v6.18.53. No
-earlier fix for this bug in 6.18.53.
+
+Record: `mount_setattr_commit()` already notifies. No earlier equivalent
+fix for the legacy/`SET_GROUP` paths at v6.18.53.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drm/amd/pm (legacy powerplay / Vega10 hwmgr)**. Criticality:
-**IMPORTANT** — vendor GPU power/thermal init, not core mm/net, but
-boot-critical for Vega 56/64 and related cards. Not staging.
+
+Record: **VFS mount namespace** (`fs/namespace.c`,
+`fs/proc_namespace.c`). **CORE** for anyone using mounts; poll on
+mountinfo is a long-standing userspace ABI.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: amdgpu pm is active; this particular file is mature (2017
-parser, occasional UBSAN/flex-array cleanups). Long-standing bug, not a
-new-code issue.
+
+Record: Actively maintained (Brauner/Viro). The bug is old; the new
+mount API made the missing wake-up obvious by contrast.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Vega10 amdgpu users (`CONFIG_DRM_AMDGPU`). Driver-specific, not
-universal.
+
+Record: Anyone polling `/proc/*/mountinfo` or `/proc/*/mounts` while
+another task changes propagation via legacy `mount()` or
+`MOVE_MOUNT_SET_GROUP`. Typical: systemd/libmount monitors, `findmnt
+--poll`, container runtimes. Not universal on every syscall, but not a
+rare driver either.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Normal valid VBIOS: not triggered.
-- Truncated/corrupt VBIOS or crafted `pp_table` sysfs write: triggered.
-- Sysfs write is root (`S_IWUSR`). Documented: “Writing to the file will
-  attempt to upload a new powerplay table and re-initialize powerplay.”
-- Not an unprivileged attack; still a real kernel heap overflow from a
-  supported interface.
+
+Record: Trigger is `mount --make-shared/slave/private/unbindable`
+(optionally `MS_REC`) or `move_mount(..., MOVE_MOUNT_SET_GROUP)` while a
+poller is waiting. Needs mount-admin capability in the namespace.
+Unprivileged in a user+mount ns. Not a race in the kernel sense; it is a
+missing notification on a fully deterministic path. Common during
+container setup; easy to miss if the same process both changes
+propagation and does not poll.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
 Record:
-- Heap write past `kzalloc` in `get_vddc_lookup_table()` →
-  **HIGH/CRITICAL** (corruption / crash).
-- OOB reads of PPTable → **HIGH** (KASAN/oops, possible info leak).
-- Severity: **HIGH**.
+- Failure: poll does not wake; userspace keeps a stale view of
+  `shared:`/`master:`/`unbindable` until some later unrelated mount
+  event.
+- Actual propagation in the kernel is correct; this is not a graph
+  corruption bug.
+- **Severity: MEDIUM.** Userspace ABI miss, not
+  oops/deadlock/corruption. Can make mount monitors and orchestrators
+  act on stale topology.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- **Benefit:** high for Vega10 — stops heap overflow and OOB reads on
-  malformed tables, including sysfs reload.
-- **Risk:** medium — +459 lines, parser now fails closed; v2 fallback
-  and AMD review reduce brick risk. No API change.
-- **Ratio:** benefit outweighs risk for 6.18.y Vega10 users.
+- **Benefit:** medium. Restores the documented poll contract for a
+  change that is already visible in mountinfo, and matches
+  `mount_setattr()`.
+- **Risk:** very low. +7 lines, existing helper, lock form chosen by the
+  VFS maintainer specifically to avoid extra seqcount retries.
+- **Ratio:** favorable for 6.18.y.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -371,770 +443,162 @@ PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Real heap overflow: `ucNumEntries` vs `max_levels` in voltage lookup
-  (verified in v6.18.53 source).
-- Real OOB reads from VBIOS/sysfs offsets (verified).
-- Triggerable via documented `pp_table` sysfs write
-  (`pp_dpm_set_pp_table`).
-- Bug present since v4.12; still in 6.18.53.
-- Single file; helpers are overflow-safe; v2 avoids hard-fail on unknown
-  fan/power-tune rev.
-- Reviewed-by AMD; applied by Deucher.
-- Parent + this apply cleanly to v6.18.53.
+**For backporting:**
+- Real, reproduced bug: legacy `MS_SHARED` poll ret=0 vs `mount_setattr`
+  poll ret=1.
+- User-visible `/proc/<pid>/mountinfo` contents change (`shared:`,
+  `master:`, `unbindable`) without a poll event.
+- Same subsystem already notifies on the `mount_setattr()` path; this
+  closes the hole for `mount()` and `MOVE_MOUNT_SET_GROUP`.
+- 7-line, obviously correct change; VFS maintainer reviewed locking and
+  merged v2.
+- Bug and helpers exist in this 6.18.53 tree; patch applies cleanly.
+- Reachable from `mount(2)` / `move_mount(2)`; pollable proc files have
+  been an ABI since `5addc5dd8836a`.
 
-AGAINST:
-- Large (+459); not a 10-line patch.
-- Needs parent for a clean apply (or a small context edit).
-- No public crash/syzbot report; valid OEM VBIOS is fine.
-- `init_over_drive_limits` can now fail probe if gfxclk table is absent.
+**Against backporting:**
+- Not a crash, deadlock, data-corruption, or security fix.
+- No extra user/syzbot reports; author found it by comparing APIs.
+- `do_change_type` has omitted this wake-up since shared-subtree
+  (~2.6.15) without a flood of reports.
+- No `Cc: stable` in review (absence is expected, not a veto).
+- Importance is “oh, that’s not good” ABI correctness, not oops-class.
 
-UNRESOLVED:
-- Stable-list discussion (lore 403).
-- Full v1 review text (msgid.link 403); v2 intent is in the commit
-  message.
+**Unresolved:**
+- Could not query lore.kernel.org/stable over HTTP (403). No evidence
+  the patch was previously rejected for stable.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — overflow-safe size check;
-   AMD Reviewed-by; v2 regression tweak.
-2. Fixes a real bug that affects users? **PASS** — heap overflow + OOB
-   read; sysfs upload path.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   HIGH, memory safety.
-4. Small and contained? **PASS** — one file, no new APIs/refactor; line
-   count is high but mechanical validation.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** with parent `10510a4c2c397`
-   (verified apply); otherwise minor first-hunk rework.
+
+1. Obviously correct and tested? **PASS** — matches
+   `mount_setattr_commit`; v2 lock change from Brauner; author showed
+   before/after poll results.
+2. Fixes a real bug that affects users? **PASS** — pollers of mountinfo
+   miss propagation-only updates; documented proc poll ABI
+   (`5addc5dd8836a`, `mounts_poll`).
+3. Important issue? **PASS** (medium / “oh, that’s not good”) — stale
+   mount-table view for systemd/libmount/container monitors; not oops-
+   class, but it is a userspace-visible contract break on core VFS, not
+   trivia.
+4. Small and contained? **PASS** — 7 lines, one file, two success-path
+   sites.
+5. No new features or APIs? **PASS** — only wakes existing waiters.
+6. Can apply to the local tree? **PASS** — v6.18.53 context matches;
+   `mount_locked_reader` and `touch_mnt_namespace` exist.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary memory-
-safety fix.
+
+Record: None (not a device ID, quirk, DT, build, or docs fix). It is a
+normal small ABI/correctness fix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This should go to **this** 6.18.53 tree. The voltage-lookup overflow and
-unvalidated subtable walks are in 6.18.53. The patch is large but
-contained and reviewed. Take the parent bounds commit first so it
-applies cleanly.
 
-------------------------------------------------------------
-What problem it solves and why it matters to 6.18 users
-------------------------------------------------------------
-Vega10 powerplay treats PPTable offsets and `ucNumEntries` as trusted. A
-truncated VBIOS or a crafted `pp_table` sysfs write can read past
-`soft_pp_table_size` and, in `get_vddc_lookup_table()`, write past a
-heap object sized with `max_levels` (8/4) while looping `ucNumEntries`.
-That is crash/corruption on GPU init or table reload.
+This should be backported to **this** 6.18.53 tree. The bug is present
+here, the fix is small and already the pattern used by
+`mount_setattr()`, and leaving poll silent while mountinfo
+`shared:`/`master:` fields change is a real userspace-visible failure,
+not a cleanup.
 
-Does it meet stable rules?
-Yes: real memory-safety bug, no new API, one file, AMD-reviewed. Size is
-the only stretch; it is validation, not a redesign.
+Stable rules in this tree explicitly allow “oh, that’s not good” issues.
+A broken `poll()` on `/proc/<pid>/mountinfo` after `mount --make-*` is
+that: monitors used in production can miss a topology change the kernel
+already committed. Risk is negligible compared with that benefit.
 
-Risk vs benefit
-Benefit is a closed heap overflow and OOB read on a supported reload
-path. Risk is probe failure on malformed/unexpected tables; v2 fallback
-and existing GFXCLK rev checks limit that. Parent should be applied
-first.
+===============================================================
+What the commit solves for stable users
+===============================================================
 
-Concerns
-Depends on `10510a4c2c397` for a clean apply to 6.18.53. Sibling 2/3 and
-3/3 are other ASICs/files, not required for this fix.
+On 6.18.y, `mount --make-shared` (and related flags) and
+`MOVE_MOUNT_SET_GROUP` update propagation and the text of mountinfo, but
+do not increment `mnt_namespace->event` or wake `ns->poll`. Tools
+waiting on that fd do not re-read, so they can keep stale `shared:` /
+`master:` / `unbindable` state. `mount_setattr()` already notifies. The
+patch adds the same `touch_mnt_namespace()` after the two missing
+success paths, under `mount_locked_reader` so lookup seqcounts are not
+bumped.
 
-Verification:
-- [Phase 1] Tags: author Yang Wang; Reviewed-by Asad Kamal, Kenneth
-  Feng; SOB Alex Deucher; no Fixes/syzbot
-- [Phase 2] Diff: +459/−105 in one file; `vega10_pp_table_has_space`
-  uses `offset <= size && size <= table_size - offset`
-- [Phase 2] v6.18.53 `get_vddc_lookup_table`: alloc `max_levels`, loop
-  `ucNumEntries` — heap overflow confirmed
-- [Phase 3] Blame: `f83a9991648bb` (2017); `git merge-base --is-ancestor
-  f83a9991648bb v6.18.53` → yes; `git describe --contains` → v4.12-rc1
-- [Phase 3] No Fixes: tag; parent `10510a4c2c397` not in v6.18.53
-- [Phase 4] `b4 dig -c 9914149f99fd`: v2 1/3 at
-  patch.msgid.link/20260623134917.443011-1; v1 same day; mbox: both AMD
-  reviewers Acked the series; no NAK
-- [Phase 4] lore WebFetch 403; discussion taken from `b4 dig -m
-  /tmp/vega10-pptable.mbox`
-- [Phase 4] UNVERIFIED: stable@ thread
-- [Phase 5] Callers: `pptable_init` from `hwmgr.c`;
-  `pp_dpm_set_pp_table` sets `soft_pp_table` then `amd_powerplay_reset`
-- [Phase 5] `AMDGPU_DEVICE_ATTR_RW(pp_table)` → `S_IRUGO | S_IWUSR`
-- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion` = 6.18.53
-- [Phase 6] Bare v6.18.53: this patch does not apply; parent applies
-  cleanly; parent then this applies cleanly
-- [Phase 6] No PPTable bounds fix already in v6.18.53 for this file
-- [Phase 8] Failure mode: heap OOB write / OOB read; severity HIGH
-- UNVERIFIED: v1 mailing-list body (403); whether gfxclk offset is ever
-  0 on shipping Vega10 VBIOS
+No extra commits are required. No new ABI. Regression risk is a spurious
+extra wake (harmless) or the brief exclusive seqlock (same class as
+other namespace operations).
+
+===============================================================
+Verification
+===============================================================
+
+- [Phase 1] Parsed message/tags: author Guopeng Zhang; Link msgid
+  20260601032911; SOB Christian Brauner; no Fixes/Reported-by/Cc-stable.
+- [Phase 2] Diff: +7 lines in `fs/namespace.c`; `do_change_type` and
+  `do_set_group` success paths only.
+- [Phase 2] Confirmed `touch_mnt_namespace()` increments `ns->event` and
+  wakes `ns->poll` (`fs/namespace.c` ~971–976).
+- [Phase 2] Confirmed `mounts_poll()` waits on `ns->poll` and sets
+  `EPOLLERR|EPOLLPRI` on event change (`fs/proc_namespace.c` 21–37).
+- [Phase 2] Confirmed mountinfo prints `shared:`/`master:`/`unbindable`
+  from that state (`fs/proc_namespace.c` 158–169).
+- [Phase 2] Confirmed `mount_setattr_commit()` already calls
+  `touch_mnt_namespace()` after `change_mnt_propagation()` (line 4785).
+- [Phase 3] `git describe HEAD` / `make kernelversion` / Makefile: this
+  tree is 6.18.53.
+- [Phase 3] `git merge-base --is-ancestor 3e32bcbd6febbb v6.18.53`: not
+  in v6.18.53 (bug still there).
+- [Phase 3] `git show v6.18.53:fs/namespace.c`: both functions return
+  without `touch_mnt_namespace`.
+- [Phase 3] Blame: `do_change_type` loop 2008–2011; `do_set_group`
+  `9ffb14ef61bab` (v5.15-rc1); `git describe --contains 07b20889e3052` →
+  v2.6.15-rc1.
+- [Phase 3] `mount_locked_reader` present at v6.18.53 (`d154f18575899` /
+  `fs/mount.h:164`).
+- [Phase 3] Patch context matches v6.18.53 exactly
+  (`do_change_type`/`do_set_group` context match: True).
+- [Phase 4] `b4 dig -c 0ae44a20835e`: v2 lore URL; `b4 dig -a`: v1
+  2026-05-29, v2 2026-06-01.
+- [Phase 4] v1 mbox: Brauner requested `guard(mount_locked_reader)`
+  instead of `lock_mount_hash`; v2 applied to vfs-7.3.mount; no NAK.
+- [Phase 4] `b4 dig -w`: Viro, Brauner, Jan Kara, linux-fsdevel CCed.
+- [Phase 4] WebFetch lore/stable: 403; UNVERIFIED stable-list history.
+- [Phase 5] Callers: `path_mount` → `do_change_type`; `vfs_move_mount` →
+  `do_set_group` for `MOVE_MOUNT_SET_GROUP` (UAPI in
+  `include/uapi/linux/mount.h`).
+- [Phase 6] Local 6.18.53 has the bug; helpers present; clean apply.
+- [Phase 8] Failure mode: missed poll on mountinfo, severity MEDIUM
+  (ABI), not oops.
+- UNVERIFIED: whether systemd/libmount has a public bug for this
+  specific miss; no reporter besides the author.
+
+The patch is small, already matches the `mount_setattr()` notification
+path, and restores poll on a core proc file for a change that is already
+user-visible in this 6.18.y tree.
 
 **YES**
 
- .../powerplay/hwmgr/vega10_processpptables.c  | 564 ++++++++++++++----
- 1 file changed, 459 insertions(+), 105 deletions(-)
+ fs/namespace.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-index 64cff9f4850a6..63fa6b937d9ef 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-@@ -63,6 +63,46 @@ static const void *get_powerplay_table(struct pp_hwmgr *hwmgr)
- 	return table_address;
- }
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 3b6d7271eb3d1..ab050a939cb53 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2932,6 +2932,9 @@ static int do_change_type(const struct path *path, int ms_flags)
+ 	for (m = mnt; m; m = (recurse ? next_mnt(m, mnt) : NULL))
+ 		change_mnt_propagation(m, type);
  
-+static bool vega10_pp_table_has_space(struct pp_hwmgr *hwmgr, size_t offset,
-+				      size_t size)
-+{
-+	size_t table_size = hwmgr->soft_pp_table_size;
++	guard(mount_locked_reader)();
++	touch_mnt_namespace(mnt->mnt_ns);
 +
-+	return offset <= table_size && size <= table_size - offset;
-+}
-+
-+static int get_vega10_subtable(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		u16 table_offset, size_t table_size, const void **table)
-+{
-+	PP_ASSERT_WITH_CODE((table_offset != 0),
-+			    "Invalid PowerPlay Table!", return -1);
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*table = (const void *)(((unsigned long)powerplay_table) + table_offset);
-+
-+	return 0;
-+}
-+
-+static int validate_vega10_table_entries(struct pp_hwmgr *hwmgr,
-+		u16 table_offset, size_t entries_offset,
-+		u8 num_entries, size_t entry_size)
-+{
-+	size_t table_size;
-+
-+	PP_ASSERT_WITH_CODE((num_entries != 0),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	table_size = entries_offset + num_entries * entry_size;
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	return 0;
-+}
-+
- static int get_vega10_state_array(struct pp_hwmgr *hwmgr,
- 	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
- 	const ATOM_Vega10_State_Array **state_array)
-@@ -102,6 +142,293 @@ static int get_vega10_state_array(struct pp_hwmgr *hwmgr,
  	return 0;
  }
  
-+static int get_vega10_gfxclk_dependency_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const ATOM_Vega10_GFXCLK_Dependency_Table **gfxclk_dep_table)
-+{
-+	const ATOM_Vega10_GFXCLK_Dependency_Table *table;
-+	u16 table_offset;
-+	size_t table_size;
-+	size_t entry_size;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usGfxclkDependencyTableOffset);
-+	if (!table_offset)
-+		return -EINVAL;
-+
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       sizeof(*table))),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	table = (const ATOM_Vega10_GFXCLK_Dependency_Table *)
-+		(((unsigned long)powerplay_table) + table_offset);
-+	PP_ASSERT_WITH_CODE((table->ucNumEntries != 0),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	if (table->ucRevId == 0)
-+		entry_size = sizeof(ATOM_Vega10_GFXCLK_Dependency_Record);
-+	else if (table->ucRevId == 1)
-+		entry_size = sizeof(ATOM_Vega10_GFXCLK_Dependency_Record_V2);
-+	else
-+		PP_ASSERT_WITH_CODE(false,
-+			"Unsupported GFXClockDependencyTable Revision!",
-+			return -EINVAL);
-+
-+	table_size = offsetof(ATOM_Vega10_GFXCLK_Dependency_Table, entries) +
-+		table->ucNumEntries * entry_size;
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*gfxclk_dep_table = table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_clk_dependency_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		u16 table_offset,
-+		const ATOM_Vega10_SOCCLK_Dependency_Table **clk_dep_table)
-+{
-+	const ATOM_Vega10_SOCCLK_Dependency_Table *table;
-+	int ret;
-+
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	ret = validate_vega10_table_entries(hwmgr, table_offset,
-+					    offsetof(ATOM_Vega10_SOCCLK_Dependency_Table,
-+						     entries),
-+					    table->ucNumEntries,
-+					    sizeof(ATOM_Vega10_CLK_Dependency_Record));
-+	if (ret)
-+		return ret;
-+
-+	*clk_dep_table = table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_mclk_dependency_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const ATOM_Vega10_MCLK_Dependency_Table **mclk_dep_table)
-+{
-+	const ATOM_Vega10_MCLK_Dependency_Table *table;
-+	u16 table_offset;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usMclkDependencyTableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	ret = validate_vega10_table_entries(hwmgr, table_offset,
-+					    offsetof(ATOM_Vega10_MCLK_Dependency_Table,
-+						     entries),
-+					    table->ucNumEntries,
-+					    sizeof(ATOM_Vega10_MCLK_Dependency_Record));
-+	if (ret)
-+		return ret;
-+
-+	*mclk_dep_table = table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_mm_dependency_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const ATOM_Vega10_MM_Dependency_Table **mm_dep_table)
-+{
-+	const ATOM_Vega10_MM_Dependency_Table *table;
-+	u16 table_offset;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usMMDependencyTableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	ret = validate_vega10_table_entries(hwmgr, table_offset,
-+					    offsetof(ATOM_Vega10_MM_Dependency_Table,
-+						     entries),
-+					    table->ucNumEntries,
-+					    sizeof(ATOM_Vega10_MM_Dependency_Record));
-+	if (ret)
-+		return ret;
-+
-+	*mm_dep_table = table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_pcie_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const Vega10_PPTable_Generic_SubTable_Header **pcie_table)
-+{
-+	const ATOM_Vega10_PCIE_Table *table;
-+	u16 table_offset;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usPCIETableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	if (!table->ucNumEntries) {
-+		*pcie_table = (const Vega10_PPTable_Generic_SubTable_Header *)table;
-+		return 0;
-+	}
-+
-+	ret = validate_vega10_table_entries(hwmgr, table_offset,
-+					    offsetof(ATOM_Vega10_PCIE_Table,
-+						     entries),
-+					    table->ucNumEntries,
-+					    sizeof(ATOM_Vega10_PCIE_Record));
-+	if (ret)
-+		return ret;
-+
-+	*pcie_table = (const Vega10_PPTable_Generic_SubTable_Header *)table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_hard_limit_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const ATOM_Vega10_Hard_Limit_Table **hard_limit_table)
-+{
-+	const ATOM_Vega10_Hard_Limit_Table *table;
-+	u16 table_offset;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usHardLimitTableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	ret = validate_vega10_table_entries(hwmgr, table_offset,
-+					    offsetof(ATOM_Vega10_Hard_Limit_Table,
-+						     entries),
-+					    table->ucNumEntries,
-+					    sizeof(ATOM_Vega10_Hard_Limit_Record));
-+	if (ret)
-+		return ret;
-+
-+	*hard_limit_table = table;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_thermal_controller_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const ATOM_Vega10_Thermal_Controller **thermal_controller)
-+{
-+	u16 table_offset;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usThermalControllerOffset);
-+
-+	return get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				   sizeof(**thermal_controller),
-+				   (const void **)thermal_controller);
-+}
-+
-+static int get_vega10_fan_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const Vega10_PPTable_Generic_SubTable_Header **fan_table)
-+{
-+	const Vega10_PPTable_Generic_SubTable_Header *header;
-+	u16 table_offset;
-+	size_t table_size;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usFanTableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*header), (const void **)&header);
-+	if (ret)
-+		return ret;
-+
-+	if (header->ucRevId == 10)
-+		table_size = sizeof(ATOM_Vega10_Fan_Table);
-+	else if (header->ucRevId == 0xb)
-+		table_size = sizeof(ATOM_Vega10_Fan_Table_V2);
-+	else if (header->ucRevId > 0xb)
-+		table_size = sizeof(ATOM_Vega10_Fan_Table_V3);
-+	else
-+		table_size = sizeof(*header);
-+
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*fan_table = header;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_power_tune_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		const Vega10_PPTable_Generic_SubTable_Header **power_tune_table)
-+{
-+	const Vega10_PPTable_Generic_SubTable_Header *header;
-+	u16 table_offset;
-+	size_t table_size;
-+	int ret;
-+
-+	table_offset = le16_to_cpu(powerplay_table->usPowerTuneTableOffset);
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*header), (const void **)&header);
-+	if (ret)
-+		return ret;
-+
-+	if (header->ucRevId == 5)
-+		table_size = sizeof(ATOM_Vega10_PowerTune_Table);
-+	else if (header->ucRevId == 6)
-+		table_size = sizeof(ATOM_Vega10_PowerTune_Table_V2);
-+	else
-+		table_size = sizeof(ATOM_Vega10_PowerTune_Table_V3);
-+
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*power_tune_table = header;
-+
-+	return 0;
-+}
-+
-+static int get_vega10_voltage_lookup_table(struct pp_hwmgr *hwmgr,
-+		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+		u16 table_offset, uint32_t max_levels,
-+		const ATOM_Vega10_Voltage_Lookup_Table **lookup_table)
-+{
-+	const ATOM_Vega10_Voltage_Lookup_Table *table;
-+	size_t table_size;
-+	int ret;
-+
-+	ret = get_vega10_subtable(hwmgr, powerplay_table, table_offset,
-+				  sizeof(*table), (const void **)&table);
-+	if (ret)
-+		return ret;
-+
-+	PP_ASSERT_WITH_CODE((table->ucNumEntries != 0 &&
-+			     table->ucNumEntries <= max_levels),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	table_size = offsetof(ATOM_Vega10_Voltage_Lookup_Table, entries) +
-+		table->ucNumEntries * sizeof(ATOM_Vega10_Voltage_Lookup_Record);
-+	PP_ASSERT_WITH_CODE((vega10_pp_table_has_space(hwmgr, table_offset,
-+						       table_size)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*lookup_table = table;
-+
-+	return 0;
-+}
-+
- static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
- 	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
- {
-@@ -149,14 +476,16 @@ static int init_thermal_controller(
- 	const ATOM_Vega10_Fan_Table *fan_table_v1;
- 	const ATOM_Vega10_Fan_Table_V2 *fan_table_v2;
- 	const ATOM_Vega10_Fan_Table_V3 *fan_table_v3;
--
--	thermal_controller = (ATOM_Vega10_Thermal_Controller *)
--			(((unsigned long)powerplay_table) +
--			le16_to_cpu(powerplay_table->usThermalControllerOffset));
-+	int ret;
- 
- 	PP_ASSERT_WITH_CODE((powerplay_table->usThermalControllerOffset != 0),
- 			"Thermal controller table not set!", return -EINVAL);
- 
-+	ret = get_vega10_thermal_controller_table(hwmgr, powerplay_table,
-+						  &thermal_controller);
-+	if (ret)
-+		return ret;
-+
- 	hwmgr->thermal_controller.ucType = thermal_controller->ucType;
- 	hwmgr->thermal_controller.ucI2cLine = thermal_controller->ucI2cLine;
- 	hwmgr->thermal_controller.ucI2cAddress = thermal_controller->ucI2cAddress;
-@@ -185,9 +514,9 @@ static int init_thermal_controller(
- 	if (!powerplay_table->usFanTableOffset)
- 		return 0;
- 
--	header = (const Vega10_PPTable_Generic_SubTable_Header *)
--			(((unsigned long)powerplay_table) +
--			le16_to_cpu(powerplay_table->usFanTableOffset));
-+	ret = get_vega10_fan_table(hwmgr, powerplay_table, &header);
-+	if (ret)
-+		return ret;
- 
- 	if (header->ucRevId == 10) {
- 		fan_table_v1 = (ATOM_Vega10_Fan_Table *)header;
-@@ -332,12 +661,15 @@ static int init_over_drive_limits(
- 		struct pp_hwmgr *hwmgr,
- 		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
- {
--	const ATOM_Vega10_GFXCLK_Dependency_Table *gfxclk_dep_table =
--			(const ATOM_Vega10_GFXCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usGfxclkDependencyTableOffset));
-+	const ATOM_Vega10_GFXCLK_Dependency_Table *gfxclk_dep_table;
- 	bool is_acg_enabled = false;
- 	ATOM_Vega10_GFXCLK_Dependency_Record_V2 *patom_record_v2;
-+	int ret;
-+
-+	ret = get_vega10_gfxclk_dependency_table(hwmgr, powerplay_table,
-+						 &gfxclk_dep_table);
-+	if (ret)
-+		return ret;
- 
- 	if (gfxclk_dep_table->ucRevId == 1) {
- 		patom_record_v2 =
-@@ -900,51 +1232,13 @@ static int init_powerplay_extended_tables(
- 	int result = 0;
- 	struct phm_ppt_v2_information *pp_table_info =
- 		(struct phm_ppt_v2_information *)(hwmgr->pptable);
--
--	const ATOM_Vega10_MM_Dependency_Table *mm_dependency_table =
--			(const ATOM_Vega10_MM_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usMMDependencyTableOffset));
--	const Vega10_PPTable_Generic_SubTable_Header *power_tune_table =
--			(const Vega10_PPTable_Generic_SubTable_Header *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usPowerTuneTableOffset));
--	const ATOM_Vega10_SOCCLK_Dependency_Table *socclk_dep_table =
--			(const ATOM_Vega10_SOCCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usSocclkDependencyTableOffset));
--	const ATOM_Vega10_GFXCLK_Dependency_Table *gfxclk_dep_table =
--			(const ATOM_Vega10_GFXCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usGfxclkDependencyTableOffset));
--	const ATOM_Vega10_DCEFCLK_Dependency_Table *dcefclk_dep_table =
--			(const ATOM_Vega10_DCEFCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usDcefclkDependencyTableOffset));
--	const ATOM_Vega10_MCLK_Dependency_Table *mclk_dep_table =
--			(const ATOM_Vega10_MCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usMclkDependencyTableOffset));
--	const ATOM_Vega10_Hard_Limit_Table *hard_limits =
--			(const ATOM_Vega10_Hard_Limit_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usHardLimitTableOffset));
--	const Vega10_PPTable_Generic_SubTable_Header *pcie_table =
--			(const Vega10_PPTable_Generic_SubTable_Header *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usPCIETableOffset));
--	const ATOM_Vega10_PIXCLK_Dependency_Table *pixclk_dep_table =
--			(const ATOM_Vega10_PIXCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usPixclkDependencyTableOffset));
--	const ATOM_Vega10_PHYCLK_Dependency_Table *phyclk_dep_table =
--			(const ATOM_Vega10_PHYCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usPhyClkDependencyTableOffset));
--	const ATOM_Vega10_DISPCLK_Dependency_Table *dispclk_dep_table =
--			(const ATOM_Vega10_DISPCLK_Dependency_Table *)
--			(((unsigned long) powerplay_table) +
--			le16_to_cpu(powerplay_table->usDispClkDependencyTableOffset));
-+	const ATOM_Vega10_MM_Dependency_Table *mm_dependency_table;
-+	const Vega10_PPTable_Generic_SubTable_Header *power_tune_table;
-+	const ATOM_Vega10_GFXCLK_Dependency_Table *gfxclk_dep_table;
-+	const ATOM_Vega10_MCLK_Dependency_Table *mclk_dep_table;
-+	const ATOM_Vega10_Hard_Limit_Table *hard_limits;
-+	const Vega10_PPTable_Generic_SubTable_Header *pcie_table;
-+	const ATOM_Vega10_SOCCLK_Dependency_Table *clk_dep_table;
- 
- 	pp_table_info->vdd_dep_on_socclk = NULL;
- 	pp_table_info->vdd_dep_on_sclk = NULL;
-@@ -956,63 +1250,114 @@ static int init_powerplay_extended_tables(
- 	pp_table_info->vdd_dep_on_phyclk = NULL;
- 	pp_table_info->vdd_dep_on_dispclk = NULL;
- 
--	if (powerplay_table->usMMDependencyTableOffset)
--		result = get_mm_clock_voltage_table(hwmgr,
-+	if (powerplay_table->usMMDependencyTableOffset) {
-+		result = get_vega10_mm_dependency_table(hwmgr, powerplay_table,
-+							&mm_dependency_table);
-+		if (!result)
-+			result = get_mm_clock_voltage_table(hwmgr,
- 				&pp_table_info->mm_dep_table,
- 				mm_dependency_table);
-+	}
- 
--	if (!result && powerplay_table->usPowerTuneTableOffset)
--		result = get_tdp_table(hwmgr,
-+	if (!result && powerplay_table->usPowerTuneTableOffset) {
-+		result = get_vega10_power_tune_table(hwmgr, powerplay_table,
-+						     &power_tune_table);
-+		if (!result)
-+			result = get_tdp_table(hwmgr,
- 				&pp_table_info->tdp_table,
- 				power_tune_table);
-+	}
- 
--	if (!result && powerplay_table->usSocclkDependencyTableOffset)
--		result = get_socclk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usSocclkDependencyTableOffset) {
-+		result = get_vega10_clk_dependency_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usSocclkDependencyTableOffset),
-+				&clk_dep_table);
-+		if (!result)
-+			result = get_socclk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_socclk,
--				socclk_dep_table);
-+				(const ATOM_Vega10_SOCCLK_Dependency_Table *)
-+				clk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usGfxclkDependencyTableOffset)
--		result = get_gfxclk_voltage_dependency_table(hwmgr,
--				&pp_table_info->vdd_dep_on_sclk,
--				gfxclk_dep_table);
-+	if (!result && powerplay_table->usGfxclkDependencyTableOffset) {
-+		result = get_vega10_gfxclk_dependency_table(hwmgr,
-+			powerplay_table, &gfxclk_dep_table);
-+		if (!result)
-+			result = get_gfxclk_voltage_dependency_table(hwmgr,
-+					&pp_table_info->vdd_dep_on_sclk,
-+					gfxclk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usPixclkDependencyTableOffset)
--		result = get_pix_clk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usPixclkDependencyTableOffset) {
-+		result = get_vega10_clk_dependency_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usPixclkDependencyTableOffset),
-+				&clk_dep_table);
-+		if (!result)
-+			result = get_pix_clk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_pixclk,
- 				(const ATOM_Vega10_PIXCLK_Dependency_Table *)
--				pixclk_dep_table);
-+				clk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usPhyClkDependencyTableOffset)
--		result = get_pix_clk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usPhyClkDependencyTableOffset) {
-+		result = get_vega10_clk_dependency_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usPhyClkDependencyTableOffset),
-+				&clk_dep_table);
-+		if (!result)
-+			result = get_pix_clk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_phyclk,
- 				(const ATOM_Vega10_PIXCLK_Dependency_Table *)
--				phyclk_dep_table);
-+				clk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usDispClkDependencyTableOffset)
--		result = get_pix_clk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usDispClkDependencyTableOffset) {
-+		result = get_vega10_clk_dependency_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usDispClkDependencyTableOffset),
-+				&clk_dep_table);
-+		if (!result)
-+			result = get_pix_clk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_dispclk,
- 				(const ATOM_Vega10_PIXCLK_Dependency_Table *)
--				dispclk_dep_table);
-+				clk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usDcefclkDependencyTableOffset)
--		result = get_dcefclk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usDcefclkDependencyTableOffset) {
-+		result = get_vega10_clk_dependency_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usDcefclkDependencyTableOffset),
-+				&clk_dep_table);
-+		if (!result)
-+			result = get_dcefclk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_dcefclk,
--				dcefclk_dep_table);
-+				(const ATOM_Vega10_DCEFCLK_Dependency_Table *)
-+				clk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usMclkDependencyTableOffset)
--		result = get_mclk_voltage_dependency_table(hwmgr,
-+	if (!result && powerplay_table->usMclkDependencyTableOffset) {
-+		result = get_vega10_mclk_dependency_table(hwmgr, powerplay_table,
-+							  &mclk_dep_table);
-+		if (!result)
-+			result = get_mclk_voltage_dependency_table(hwmgr,
- 				&pp_table_info->vdd_dep_on_mclk,
- 				mclk_dep_table);
-+	}
- 
--	if (!result && powerplay_table->usPCIETableOffset)
--		result = get_pcie_table(hwmgr,
-+	if (!result && powerplay_table->usPCIETableOffset) {
-+		result = get_vega10_pcie_table(hwmgr, powerplay_table,
-+					       &pcie_table);
-+		if (!result)
-+			result = get_pcie_table(hwmgr,
- 				&pp_table_info->pcie_table,
- 				pcie_table);
-+	}
- 
--	if (!result && powerplay_table->usHardLimitTableOffset)
--		result = get_hard_limits(hwmgr,
-+	if (!result && powerplay_table->usHardLimitTableOffset) {
-+		result = get_vega10_hard_limit_table(hwmgr, powerplay_table,
-+						     &hard_limits);
-+		if (!result)
-+			result = get_hard_limits(hwmgr,
- 				&pp_table_info->max_clock_voltage_on_dc,
- 				hard_limits);
-+	}
- 
- 	hwmgr->dyn_state.max_clock_voltage_on_dc.sclk =
- 			pp_table_info->max_clock_voltage_on_dc.sclk;
-@@ -1140,30 +1485,39 @@ static int init_dpm_2_parameters(
+@@ -3414,6 +3417,10 @@ static int do_set_group(const struct path *from_path, const struct path *to_path
+ 		list_add(&to->mnt_share, &from->mnt_share);
+ 		set_mnt_shared(to);
  	}
- 
- 	if (powerplay_table->usVddcLookupTableOffset) {
--		const ATOM_Vega10_Voltage_Lookup_Table *vddc_table =
--				(ATOM_Vega10_Voltage_Lookup_Table *)
--				(((unsigned long)powerplay_table) +
--				le16_to_cpu(powerplay_table->usVddcLookupTableOffset));
--		result = get_vddc_lookup_table(hwmgr,
--				&pp_table_info->vddc_lookup_table, vddc_table, 8);
-+		const ATOM_Vega10_Voltage_Lookup_Table *vddc_table;
 +
-+		result = get_vega10_voltage_lookup_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usVddcLookupTableOffset),
-+				8, &vddc_table);
-+		if (!result)
-+			result = get_vddc_lookup_table(hwmgr,
-+					&pp_table_info->vddc_lookup_table,
-+					vddc_table, 8);
- 	}
- 
--	if (powerplay_table->usVddmemLookupTableOffset) {
--		const ATOM_Vega10_Voltage_Lookup_Table *vdd_mem_table =
--				(ATOM_Vega10_Voltage_Lookup_Table *)
--				(((unsigned long)powerplay_table) +
--				le16_to_cpu(powerplay_table->usVddmemLookupTableOffset));
--		result = get_vddc_lookup_table(hwmgr,
--				&pp_table_info->vddmem_lookup_table, vdd_mem_table, 4);
-+	if (!result && powerplay_table->usVddmemLookupTableOffset) {
-+		const ATOM_Vega10_Voltage_Lookup_Table *vdd_mem_table;
++	guard(mount_locked_reader)();
++	touch_mnt_namespace(to->mnt_ns);
 +
-+		result = get_vega10_voltage_lookup_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usVddmemLookupTableOffset),
-+				4, &vdd_mem_table);
-+		if (!result)
-+			result = get_vddc_lookup_table(hwmgr,
-+					&pp_table_info->vddmem_lookup_table,
-+					vdd_mem_table, 4);
- 	}
+ 	return 0;
+ }
  
--	if (powerplay_table->usVddciLookupTableOffset) {
--		const ATOM_Vega10_Voltage_Lookup_Table *vddci_table =
--				(ATOM_Vega10_Voltage_Lookup_Table *)
--				(((unsigned long)powerplay_table) +
--				le16_to_cpu(powerplay_table->usVddciLookupTableOffset));
--		result = get_vddc_lookup_table(hwmgr,
--				&pp_table_info->vddci_lookup_table, vddci_table, 4);
-+	if (!result && powerplay_table->usVddciLookupTableOffset) {
-+		const ATOM_Vega10_Voltage_Lookup_Table *vddci_table;
-+
-+		result = get_vega10_voltage_lookup_table(hwmgr, powerplay_table,
-+				le16_to_cpu(powerplay_table->usVddciLookupTableOffset),
-+				4, &vddci_table);
-+		if (!result)
-+			result = get_vddc_lookup_table(hwmgr,
-+					&pp_table_info->vddci_lookup_table,
-+					vddci_table, 4);
- 	}
- 
- 	return result;
 -- 
 2.53.0
 
