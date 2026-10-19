@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609126441EF;
-	Mon, 19 Oct 2026 14:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DEA64237F;
+	Mon, 19 Oct 2026 14:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418784; cv=none; b=BEB9aOrvgnHZ48Ri8IsJTmUN5H1JbrivboEKN21dkgffTHsBsX3aePAdOyFyhZ+OHJnwXh5GfLfBgZ4s+9/p0pHwE40SW3pQL2ibXddCgyaf6LPyF2sjsm82zFl3XVB4PPUMzWU0lGrSi15DwebxsvbpJDi3fubUCShNpCpwPDw=
+	t=1792418786; cv=none; b=KomAY3HpKd7jRhJjEVUkGZga1r2VdEuhdDLy4vviTNHBjlVJFu+wYabdR29ZBNwtNaniPd3aM7QPnY/Wyu7p3Kj01uwa3y2eGwUN0Bph5ZYqzhz3nRdUDBcUDq+wNFSCVo657kTvdlO7y+/iQW0T3XzFhwo/7D4/Gn/TwoCbAh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418784; c=relaxed/simple;
-	bh=ec4ghU6yfXjblR6fUDXDHkutpdBOFVRXJKmDCHcyQDQ=;
+	s=arc-20240116; t=1792418786; c=relaxed/simple;
+	bh=pygUcnzaksX9aU8kJ88BWTM71IAxaDaqLTBnSiwPHag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=APp/J+8XksfD0Y5g2J8vQy4fSgL3olq5msNUJrrMeN09FiHm7HEwPEwfVIyuP6AsraWa0p+DdV/aD0An4cKo2l8dABfYRHg/gRFv1mHONA7QNmMQvyiKndBTOir+ms/R7L5X42U2QqCOJsKFyo+gPGAzV444i4jtWWXfPgo2MQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPBKHXGs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pgfvqb/G2Qts4mIM8M9hKlI4LjG2anjPbVxgkL2UkxSYiRaLwvjFrXEWDCOdkGwGF3FAiNNTw/7AKdQvfD44kBfUdvd7E5mcBbKI4xBorBdhdG/Xdr8pASD5KK/Vt0mxkHGNeJhVUiVWWWAesDBa16KqdRY2OEbEqrEh/RYX9pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mCKdYXhA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPBKHXGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F66E1F000C9;
-	Mon, 19 Oct 2026 14:06:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mCKdYXhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F451F000C7;
+	Mon, 19 Oct 2026 14:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418782;
-	bh=nkFJWPU1MK03QOAusoiniFX+wO1yecpInBwT2lN1yp0=;
+	s=k20260515; t=1792418783;
+	bh=+zdzCHQBF84phwrViAwt8IDjEeqG5XBif9izD52XHEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPBKHXGsSHFT3UK+FJkkLhMPIhpgVqPP64LVAxhenAWaiIofAwJkCQnalqujNSE5V
-	 NUJ5OBo9XTfPwPvoIwadBrEkbg+wWr5YHNIToP4HhV1VOiLNUp9aa0s3DrzM5vCSIf
-	 cEWKSPwLwtraCtr/y3eCcn/OkiJe5gL9W2Dc8Cj3j24Hcs7IEM+0gA6kx1FHUfOFwF
-	 BPjPzPIGAcL4+AhNRUvLXIDlO5H6ZksEP0Ch1Od5Wa3IV7ZYNLWX+abpNow30ekVNd
-	 A95isPXeFOXfPwSgVN4D/lej/f3gZ3+YkfLfGSUuJr8lsxK4XgyyCxHc6OzSuKGLqi
-	 GvvkiX5Irna6A==
+	b=mCKdYXhA1LpdN9IF42ifafMvinE+7DyUltDx/1WXXgVGeTGKT8rfaIkbPSqr1b7PK
+	 DYvYCpR8BqLrfqnkCaAyrW0hjpDQIrEFYEJbQIyjEZjVfa1eqfxSK46qOuOtGYHt7m
+	 2MiAiUwbb2LNyuPyb7wrmWHwA5cdYnObsJ0OecgSZS+65VIzapfhPEoVTGLxkvej1Q
+	 tDscrCIhuhA/c+mfsMvTclL39zSiW21DGLlu2VwoWejpy0+MLvdd8a4Px4CZ+9R3Ys
+	 hEoOX9mLKj9FeRLmvf6onvPU7uYsc6vmtff+P5IMdOcIyMc7+3v2mzmydSKuM0GexG
+	 ZFAdn3Y2OF4uA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Muralidhara M K <muralidhara.mk@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	naveenkrishna.chatradhi@amd.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] wifi: iwlwifi: mvm: reset the smart fifo state upon FW stop
-Date: Mon, 19 Oct 2026 09:53:03 -0400
-Message-ID: <20261019135441.1420968-492-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] platform/x86/amd/hsmp: Validate _DSD mailbox sub-package element count
+Date: Mon, 19 Oct 2026 09:53:04 -0400
+Message-ID: <20261019135441.1420968-493-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -46,422 +48,303 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Muralidhara M K <muralidhara.mk@amd.com>
 
-[ Upstream commit a51cc8131214870af92abbceab64877b27e690c2 ]
+[ Upstream commit 0d7a2664494534d6152be9bd9bf1cb1d089c67d3 ]
 
-The smart fifo is a feature in the firmware configured by the driver.
-The driver keeps a state to remember what was the last configuration
-sent to the firmware. Obviously, if the firmware stops, we need to
-reconfigure the smart fifo. Since we didn't reset that state upon
-firmware stop, we thought the firmware is already properly
-configured and we didn't send the smart fifo configuration command
-as part of the init sequence.
+hsmp_read_acpi_dsd() dereferenced elements[0] and elements[1] of each
+mailbox sub-package before confirming the package actually held two
+elements, allowing an out-of-bounds read on a malformed _DSD.
 
-Reset the smart fifo state in iwl_mvm_stop_device() so that we
-will properly send the command during the init that will come
-later.
+Verify package.count >= 2 first, then fetch the string and integer
+objects.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23c328a677257257f695fa6f439e41fbcd081@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
+Link: https://patch.msgid.link/20260629155634.1807598-3-muralidhara.mk@amd.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[iwlwifi/mvm] [reset] [clear cached smart-fifo state when
-firmware is stopped]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- **Fixes:** none (expected for this review)
-- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
-- **Link:** `https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23
-  c328a677257257f695fa6f439e41fbcd081@changeid`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Emmanuel Grumbach (author; Intel iwlwifi), Miri
-  Korenblit (iwlwifi maintainer, committer)
-- No syzbot, no CVE, no stack trace
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** Driver caches last smart-fifo config in `mvm->sf_state`.
-  Firmware stop does not clear that cache.
-- **Symptom:** After firmware is stopped and started again, init skips
-  `REPLY_SF_CFG_CMD` because the driver thinks firmware is already
-  configured.
-- **Version info:** none
-- **Root cause:** Stale driver-side firmware-config cache after the
-  firmware image is gone.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit correctness fix for
-stale cached firmware state.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/net/wireless/intel/iwlwifi/mvm/ops.c` (+1 / −0)
-- Function: `iwl_mvm_stop_device()`
-- Scope: single-file, one-line surgical fix
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `iwl_mvm_stop_device()` cleared
-  `IWL_MVM_STATUS_FIRMWARE_RUNNING`, paused TCM, stopped the transport,
-  and freed paging. `sf_state` was left as-is.
-- **After:** Immediately after clearing FIRMWARE_RUNNING, set
-  `mvm->sf_state = SF_UNINIT`.
-- Path: every firmware stop (mac stop, restart cleanup, D3 switch, init-
-  ucode teardown, load error paths). Not an error-only path.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic / correctness — stale cached firmware configuration**
-
-Verified skip in `iwl_mvm_sf_config()`:
-
-```183:188:drivers/net/wireless/intel/iwlwifi/mvm/sf.c
-        /*
-  - If an associated AP sta changed its antenna configuration, the state
-  - will remain FULL_ON but SF parameters need to be reconsidered.
-         */
-        if (new_state != SF_FULL_ON && mvm->sf_state == new_state)
-                return 0;
-```
-
-Init always tries to configure SF:
-
-```1761:1763:drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-        ret = iwl_mvm_sf_update(mvm, NULL, false);
-        if (ret)
-                IWL_ERR(mvm, "Failed to initialize Smart Fifo\n");
-```
-
-With `changed_vif == NULL` and no active MACs, that becomes
-`SF_INIT_OFF`. If `sf_state` is still `SF_INIT_OFF` from the previous
-firmware life, the command is skipped and new firmware keeps reset
-defaults.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: firmware is gone, cached config must be invalid.
-- Minimal: one assignment under `mvm->mutex` (`lockdep_assert_held`).
-- Regression risk: very low. On firmware with
-  `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD` (commit `ff04f78ce38d7`, 2024),
-  `iwl_mvm_sf_update()` already returns 0 and never sends the command;
-  resetting the cache is a no-op there.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Surrounding `iwl_mvm_stop_device()` body: `cf5b462768474` (2020, moved
-  out of line).
-- Smart FIFO and `sf_state` skip logic: `1f3b0ff8eccef` (“iwlwifi: mvm:
-  Add Smart FIFO support”, 2013-12-17, contained in v3.14-rc1).
-- Bug has been present for a long time; not recent code.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy pattern is the original 2013 SF cache
-plus the skip-if-same-state optimization, not a recent regression.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Nearby same-author series (same Change-Id date 20260714165826):
-  - `0a00c3ec2db76` device_powered_off → `iwl_mvm_restart_cleanup()`
-    (independent)
-  - `71ac392d8b5c2` MLD analogue (different driver)
-- This patch does not depend on those.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Emmanuel Grumbach is a long-time Intel iwlwifi core author. Miri
-Korenblit is the listed iwlwifi maintainer. High confidence in the
-diagnosis.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. Needs only `mvm->sf_state` and `SF_UNINIT`, both
-present here. No new helpers or struct fields.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c a51cc81312148`: matched `[PATCH iwlwifi-next 13/15]`
-- URL: `https://patch.msgid.link/20260714143119.7d3c5efe2d1a.I16b23c328a
-  677257257f695fa6f439e41fbcd081@changeid`
-- `b4 dig -a`: v1 (`20260714143119`) and v2 (`20260714165826`, the
-  applied Link:). This hunk is identical in v1/v2.
-- Series title: “wifi: iwlwifi: updates - 07-14-2026” (15 patches mixing
-  features and fixes). This one is self-contained.
-- Saved mbox had the series posts, no replies/NAKs on this patch. No
-  `Cc: stable` in review.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To Johannes Berg; Cc linux-
-wireless@vger.kernel.org and Emmanuel Grumbach. Committed by maintainer
-Miri Korenblit. No extra Reviewed-by on this patch.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, bugzilla, or syzbot. Failure mode is inferred
-from code + commit text, not a user crash report.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Patch 13/15. Follow-ups 14/15 and 15/15 are related
-stop/recovery cleanup but not prerequisites. This line is independently
-correct.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search blocked by anti-bot (403).
-UNVERIFIED whether it was previously requested or rejected for stable.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-Record: `iwl_mvm_stop_device()` (modified). Related:
-`iwl_mvm_sf_config()`, `iwl_mvm_sf_update()`, `iwl_mvm_up()`.
-
-**Step 5.2: TRACE CALLERS**
-Record: `iwl_mvm_stop_device()` is called from:
-- `ops.c` NVM/init-ucode teardown
-- `mac80211.c` `iwl_mvm_restart_cleanup()`, `__iwl_mvm_mac_start()`
-  fast-resume fail, `__iwl_mvm_mac_stop()`
-- `fw.c` `iwl_mvm_up()` / `iwl_mvm_load_d3_fw()` error paths
-- `d3.c` `iwl_mvm_switch_to_d3()`
-
-Reachable from interface down, rfkill/stop, suspend (non-fast), firmware
-restart, and probe/init teardown. Common laptop WiFi paths.
-
-**Step 5.3: TRACE CALLEES**
-Record: Stop path tears down firmware/transport. The new line only
-writes a field; no new I/O.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `ip link set wlan0 down/up`, rfkill, suspend/resume,
-and mac80211 restart all hit this. Bug is reachable without special
-debug options.
-
-Nuance (verified): `SF_FULL_ON` is never skipped, so association still
-sends SF config. The missed command is the init/unassociated
-`SF_INIT_OFF` after a stop that left `sf_state == SF_INIT_OFF` (typical
-after disconnect then ifdown, or never-associated then wifi toggle).
-During `IWL_MVM_STATUS_IN_HW_RESTART`, `iwl_mvm_sf_update()` returns
-early anyway; this reset still makes post-restart updates send when
-restart completes.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same series resets other driver state after firmware death
-(`device_powered_off`, MLD recovery). `sf_state` was the one cache not
-cleared on stop. No duplicate fix already present besides this commit.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Local tree: `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**;
-  `make kernelversion` → **7.3.0-rc4**
-- `sf_state`, skip-if-same-state, and `iwl_mvm_up()` SF init all exist
-- Bug introduced with Smart FIFO in 2013 (`1f3b0ff8eccef`); ancestor of
-  this HEAD
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Pre-fix `iwl_mvm_stop_device()` already has the
-insertion point next to `clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING,
-...)`. Expected difficulty: clean apply.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier equivalent reset of `sf_state` on stop. Only the
-start-time `mvm->sf_state = SF_UNINIT` in `iwl_op_mode_mvm_start()`
-(probe), which does not cover later stop/start cycles.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: **wifi / iwlwifi mvm**. **IMPORTANT** — Intel WiFi is one of the
-most common laptop NICs. Not core mm/VFS, but far from
-peripheral/staging.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Very active. This patch came in an iwlwifi-next 15-patch update
-dump, then was taken by the maintainer.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-Record: Intel iwlwifi **mvm** users whose firmware does **not**
-advertise `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD`. Driver-specific /
-firmware-version-specific. Still a large installed base of 22000-and-
-older-class chips plus any newer FW without that TLV.
-
-**Step 8.2: TRIGGER CONDITIONS**
-Record: Firmware stop then start while cached state is `SF_INIT_OFF` or
-`SF_UNINIT`. Common: wifi radio toggle, interface down/up, some suspend
-paths. Not a race. Unprivileged users can toggle wifi and hit it.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: Firmware left without host `REPLY_SF_CFG_CMD` after reload
-(wrong RX FIFO watermarks/timers in unassociated/init). Not an oops,
-deadlock, or filesystem corruption.
-**Severity: MEDIUM** (wrong firmware config / power and RX-FIFO
-behavior; associated `SF_FULL_ON` still sent).
-
-**Step 8.4: RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Restores a required init-time firmware command after
-  every firmware stop on a very common driver. Low-to-medium user-
-  visible benefit (no crash report), but the broken path is not rare.
-- **Risk:** Very low (one store under existing mutex).
-- **Ratio:** Favorable for a 1-line obviously-correct fix.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-FOR:
-- Real, verified stale-cache bug; init explicitly tries to send SF
-  config and can skip it
-- One line, obviously correct, mutex-protected
-- Bug present since 2013; code exists in this tree
-- No prerequisites; applies cleanly
-- Intel iwlwifi mvm is widely deployed
-- Author/maintainer-originated; no NAKs found
-
-AGAINST:
-- Not a crash, UAF, deadlock, corruption, or security issue
-- No user/syzbot report; impact is firmware defaults vs host SF_INIT_OFF
-- `SF_FULL_ON` still always sent, so associated operation is less
-  affected
-- Newer firmware with SMART_FIFO_OFFLOAD never needed the command
-- Submitted as iwlwifi-next “updates” 13/15, not a -fixes/stable
-  nomination
-
-UNRESOLVED:
-- lore.kernel.org WebFetch/stable search blocked (403 / anti-bot)
-- Exact user-visible symptom (power vs missed RX vs none) not documented
-
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one assignment; merged by
-   iwlwifi maintainer
-2. Fixes a real bug that affects users? **PASS** — stale cache skips a
-   real firmware command on wifi stop/start
-3. Important issue (crash/security/corruption/deadlock)? **PASS** with
-   MEDIUM severity — wrong device firmware configuration after stop is a
-   functional bug on a common driver, not a panic. Conservative reading
-   could FAIL this bar; the 1-line nature and common trigger keep it a
-   PASS.
-4. Small and contained? **PASS** — +1 line, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `iwl_mvm_stop_device()`,
-   `sf_state`, and `SF_UNINIT` are all here
-
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not a device ID, quirk table, DT, build, or docs fix).
-
-**Step 9.4: DECISION**
-This is a real, long-standing iwlwifi correctness bug: after firmware
-stop the driver keeps believing smart-fifo is already programmed, so
-`iwl_mvm_up()` skips `REPLY_SF_CFG_CMD`. The local 7.3-rc4 tree has the
-buggy cache and skip logic. The fix is a single `sf_state = SF_UNINIT`
-in the existing stop path, with no API change and negligible regression
-risk. That meets stable rules for a small, obviously correct driver
-bugfix even without a crash report.
-
----
-
-### What the commit solves for this tree
-On this checkout, `iwl_mvm_sf_config()` refuses to send smart-fifo
-config when `new_state` matches `mvm->sf_state` (except `SF_FULL_ON`).
-`sf_state` was only initialized at op-mode start, not when firmware
-actually stopped. After a normal mac stop / restart / D3 firmware swap,
-the next `iwl_mvm_up()` therefore omits `REPLY_SF_CFG_CMD`. Stable users
-hitting wifi toggle, rfkill, or non-fast suspend on Intel mvm hardware
-then run reloaded firmware without the host SF init the driver intends.
-
-### Risk vs benefit
-Benefit is restoring firmware RX-FIFO configuration after a common
-stop/start cycle. Risk is essentially nil: one field write under
-`mvm->mutex`, harmless on offload firmware. Backport needs no extra
-commits.
-
----
+## Phase 1: Commit message forensics
+
+**Step 1.1:** Record: `[platform/x86/amd/hsmp] [Validate] [check _DSD
+mailbox sub-package count before indexing elements[0]/[1]]`
+
+**Step 1.2:** Record: tags present:
+- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (platform-drivers-x86 maintainer)
+- `Link: https://patch.msgid.link/20260625123337.886435-3-
+  muralidhara.mk@amd.com` (v2 7-patch series)
+- `Link: https://patch.msgid.link/20260629155634.1807598-3-
+  muralidhara.mk@amd.com` (v2 4-patch series, applied version)
+- `Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>` (author)
+- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (maintainer apply)
+- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence is expected)
+- No syzbot, no Tested-by, no CVE
+
+**Step 1.3:** Record: `[Bug: hsmp_read_acpi_dsd() indexed mailbox sub-
+package elements[0] and elements[1] before checking package.count]
+[Symptom: out-of-bounds read on malformed ACPI _DSD] [Versions: none
+stated] [Root cause: missing count check before pointer fetch]`
+
+Cover letter for the 4-patch series: “This series hardens the AMD HSMP
+ACPI driver against malformed firmware.” Patches 1–2 are ACPI input
+validation; this is patch 2.
+
+**Step 1.4:** Record: `[Not disguised. Explicit OOB-read fix. “Validate”
+here is a real bounds check, not style cleanup.]`
+
+## Phase 2: Diff analysis
+
+**Step 2.1:** Record: `[drivers/platform/x86/amd/hsmp/acpi.c: +9/-3]
+[function: hsmp_read_acpi_dsd] [single-file surgical fix]`
+
+**Step 2.2:** Record: Before: after `msgobj =
+&mailbox_package->package.elements[j]`, the code immediately did `msgstr
+= &msgobj->package.elements[0]` and `msgint =
+&msgobj->package.elements[1]`, then checked `msgobj->type`,
+`msgstr->type`, and `msgint->type`. After: check `msgobj->type !=
+ACPI_TYPE_PACKAGE || msgobj->package.count < 2` first (`||` short-
+circuits, so `.package.count` is not read on a non-package), then take
+the two element pointers, then check string/integer types. Probe error
+path: malformed firmware now returns `-EINVAL` instead of reading off
+the end of the ACPI object array.
+
+**Step 2.3:** Record: `[Bug category: buffer overflow / out-of-bounds
+AND type-confused union access] [Mechanism: ACPI package elements array
+is sized to package.count; count 0 or 1 makes elements[0]/elements[1]
+OOB. Type was also checked after the dereference, so a non-PACKAGE
+object was read as a package.]`
+
+**Step 2.4:** Record: `[Obviously correct: reorder of existing checks
+plus one count test. No unrelated edits. Regression risk very low: well-
+formed _DSD (count >= 2, string+integer) is unchanged; only malformed
+firmware takes the new -EINVAL path.]`
+
+## Phase 3: Git history
+
+**Step 3.1:** Record: `[Buggy dereference introduced in ba8dcff0e9c4f
+("platform/x86/amd/hsmp: Add support for ACPI based probing",
+2024-01-06). First in v6.9. Moved unchanged to acpi.c in 969f915473d8c
+(v6.13). Present for ~2 years before this fix.]`
+
+**Step 3.2:** Record: `[No Fixes: tag. Original buggy commit
+ba8dcff0e9c4f is an ancestor of this HEAD.]`
+
+**Step 3.3:** Record: `[Sibling series (self-contained, this patch does
+not need the others):`
+- `4c7d1b4cd75a7 Validate ACPI UID before parsing socket index (1/4)`
+- `0d7a266449453 this commit (2/4)`
+- `b558cbed39af2 Pass struct device explicitly (3/4, pure refactor)`
+- `e5e511f5d9e05 Gate the data plane on a fully initialized socket
+  (4/4)`
+`] [Standalone: yes. No shared types or helpers.]`
+
+**Step 3.4:** Record: `[Author Muralidhara M K is an AMD HSMP
+contributor (many HSMP commits). Subsystem maintainers: Naveen Krishna
+Chatradhi (MAINTAINERS), applied/reviewed by Ilpo Järvinen (pdx86).]`
+
+**Step 3.5:** Record: `[No functional prerequisites. Later HEAD commit
+b558cbed39af2 changed the prototype to hsmp_read_acpi_dsd(struct device
+*dev, struct hsmp_socket *sock); that is a follow-up, not a dependency
+of this bounds check.]`
+
+## Phase 4: Mailing list
+
+**Step 4.1:** Record: `[b4 dig: https://patch.msgid.link/20260629155634.
+1807598-3-muralidhara.mk@amd.com] [Revisions: combined UID+_DSD patch as
+2/7 on 2026-06-25; split to 2/4 on 2026-06-29 after Ilpo asked for a
+split; applied version is that 2/4] [Ilpo: “totally independent changes
+so they should be split”; then Reviewed-by. No NAK, no stable
+nomination, no concern about the OOB logic itself.]`
+
+**Step 4.2:** Record: `[To: Ilpo Järvinen; Cc: platform-
+driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org. Right
+maintainer and list.]`
+
+**Step 4.3:** Record: `[No bugzilla/syzbot report. Bug was found by
+review of the ACPI parser, not a user crash. Cover letter: “based on the
+review discussion at [1]”.]`
+
+**Step 4.4:** Record: `[Part of a 4-patch hardening series. This hunk is
+independent. Patch 3 is explicitly “pure refactor”; patch 4 is a
+different race. Do not need 3/4 or 4/4 for this OOB fix.]`
+
+**Step 4.5:** Record: `[lore.kernel.org/stable search returned HTTP 403.
+UNVERIFIED: no confirmed stable-list discussion.]`
+
+## Phase 5: Code semantics
+
+**Step 5.1:** Record: `[hsmp_read_acpi_dsd]`
+
+**Step 5.2:** Record: `[Callers: hsmp_parse_acpi_table() → init_acpi() →
+hsmp_acpi_probe(). Probe of the AMD HSMP ACPI platform device
+(CONFIG_AMD_HSMP_ACPI). Not interrupt context, not a syscall. One call
+site.]`
+
+**Step 5.3:** Record: `[acpi_evaluate_object_typed("_DSD"),
+is_acpi_hsmp_uuid(), strncmp on MSG_*_STR, ACPI_FREE. No locks, no
+allocation beyond the ACPI buffer already obtained.]`
+
+**Step 5.4:** Record: `[Reachable at driver bind when firmware exposes
+the HSMP ACPI object (EPYC / MI300A). Unprivileged userspace cannot
+inject a malformed _DSD on a normal system; the trigger is firmware.
+Broken/tampered ACPI tables can hit it at probe.]`
+
+**Step 5.5:** Record: `[Outer _DSD package already checks
+dsd->package.count != 2 before elements[0]/[1]. Only the inner mailbox
+sub-packages lacked a count check. No other copy of this inner loop.]`
+
+## Phase 6: This tree (v7.3-rc4)
+
+**Step 6.1:** Record: `[Local tree: v7.3-rc4-27-gf0100363d8c37,
+kernelversion 7.3.0-rc4. File and function exist. Bug introduced in
+v6.9, long before 7.3. Current working tree already contains the count
+check (this commit is an ancestor of HEAD). Evaluating the pre-fix
+logic: the OOB was in this lineage.]`
+
+**Step 6.2:** Record: `[On this checkout the change is already present;
+a re-apply of the raw diff would not match because (a) the check is
+already there and (b) b558cbed39af2 later changed the function
+signature. That is history of this development tree, not a missing
+prerequisite. The fix itself is a 12-line reorder in one function.]`
+
+**Step 6.3:** Record: `[No alternate fix for this OOB. git log
+--grep='mailbox sub-package' on this path only finds this commit.]`
+
+## Phase 7: Subsystem context
+
+**Step 7.1:** Record: `[platform/x86 AMD HSMP ACPI driver] [PERIPHERAL /
+IMPORTANT-for-EPYC-servers: Host System Management Port mailbox on AMD
+EPYC and MI300A, CONFIG_AMD_HSMP_ACPI]`
+
+**Step 7.2:** Record: `[Active in 2026: concurrency/lifecycle series
+plus metric-table work. Parser bug itself dates to the original ACPI
+probe support (v6.9), so it is old code, not a last-month feature.]`
+
+## Phase 8: Impact and risk
+
+**Step 8.1:** Record: `[Affected users: systems with
+CONFIG_AMD_HSMP_ACPI and an HSMP ACPI device (AMD EPYC / MI300A
+servers). Not universal.]`
+
+**Step 8.2:** Record: `[Trigger: probe-time parse of ACPI _DSD mailbox
+sub-packages with count < 2 or non-PACKAGE type. Common on correct AMD
+BIOS: no. Possible with broken BIOS, firmware fuzzing, or ACPI table
+tampering. Unprivileged users cannot trigger it via a syscall.]`
+
+**Step 8.3:** Record: `[Failure mode: out-of-bounds read of union
+acpi_object (KASAN OOB / possible oops during probe). Severity: HIGH if
+firmware is malformed; LOW on well-formed production BIOS. Probe failure
+is preferable to an OOB.]`
+
+**Step 8.4:** Record: `[Benefit: closes a real memory-safety hole in a
+production server driver, cheaply. Risk: very low (error path only, same
+success path). Ratio: favorable.]`
+
+## Phase 9: Synthesis
+
+**For backporting:** Real OOB (and type-confused union access) in
+`hsmp_read_acpi_dsd()`. Small (+9/-3), obviously correct, maintainer-
+reviewed. Driver and buggy pattern exist in this tree’s history since
+v6.9. No series dependency. Matches stable rules for memory-safety
+fixes.
+
+**Against:** No user/syzbot report; firmware-only trigger; driver is not
+core kernel. Cover letter calls it “hardening.” This 7.3-rc4 checkout
+already contains the commit.
+
+**Unresolved:** Stable mailing list search was HTTP 403.
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — reorder + count check; Ilpo
+   Reviewed-by; W=1/checkpatch claimed on the series.
+2. Real bug affecting users? **PASS** — OOB on malformed _DSD;
+   EPYC/MI300A with bad firmware would oops or KASAN-fail at probe.
+3. Important (crash/security/corruption/deadlock)? **PASS** — OOB read
+   is a crash/memory-safety issue. Not a wild userspace exploit, but
+   still an important class.
+4. Small and contained? **PASS** — one function, 12 lines.
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — the file/function exist here; the
+   change is the right fix for this parser. (HEAD already has the
+   equivalent code.)
+
+**Exception category:** none (not a device ID/quirk/DT/build/doc patch).
+It is a normal memory-safety bugfix.
+
+This tree is 7.3.0-rc4. The HSMP ACPI `_DSD` parser is present. The bug
+is a genuine out-of-bounds read of ACPI package elements, not a
+refactor. The success path is unchanged. That is stable-quality on
+technical merit.
 
 Verification:
-- [Phase 1] Parsed tags: SOB Emmanuel Grumbach + Miri Korenblit; Link to
-  msgid; no Fixes/Reported-by/stable Cc
-- [Phase 2] Diff: +1 line `mvm->sf_state = SF_UNINIT` in
-  `iwl_mvm_stop_device()`
-- [Phase 2] Confirmed skip in `iwl_mvm_sf_config()` and init call in
-  `iwl_mvm_up()`
-- [Phase 3] `git show a51cc81312148`: 1 file, +1; parent `974cbad4c86d6`
-- [Phase 3] Original SF: `1f3b0ff8eccef` (2013-12-17), ancestor of HEAD;
-  `git merge-base --is-ancestor` succeeded
-- [Phase 3] Blame: new line is this commit; rest of stop_device from
-  `cf5b462768474` (2020)
-- [Phase 3] Follow-up `0a00c3ec2db76` is independent, not required
-- [Phase 4] `b4 dig -c a51cc81312148`: lore match; patch 13/15 of
-  iwlwifi-next updates
-- [Phase 4] `b4 dig -a`: v1 and v2; committed Link is v2; hunk unchanged
-- [Phase 4] `b4 dig -w`: Johannes Berg + linux-wireless; no NAK in saved
-  mbox
-- [Phase 4] UNVERIFIED: stable list discussion (lore 403/anti-bot);
-  WebFetch of lore URLs also 403
-- [Phase 5] Callers of `iwl_mvm_stop_device()`: mac80211 stop/restart,
-  d3, fw error, NVM init
-- [Phase 5] `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD` added in
-  `ff04f78ce38d7` (2024); offload path ignores SF commands
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4
-- [Phase 6] Pre-fix `iwl_mvm_stop_device()` at parent matches insertion
-  context; clean apply
-- [Phase 7] MAINTAINERS: INTEL WIRELESS WIFI LINK, Miri Korenblit
-- [Phase 8] Failure mode: skipped firmware SF init after stop; severity
-  MEDIUM, not oops/deadlock
-- UNVERIFIED: concrete user-visible packet-loss vs power-only impact
-  (not stated in commit or mail)
+- [Phase 1] Parsed tags: Reviewed-by Ilpo; two msgid Links; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +9/-3 in `hsmp_read_acpi_dsd()`; count check before
+  `elements[0]/[1]`
+- [Phase 3] `git blame` on parent: lines from 969f915473d8c; semantic
+  intro `ba8dcff0e9c4f` (in v6.9, ancestor of HEAD)
+- [Phase 3] No Fixes: tag; `git merge-base --is-ancestor ba8dcff0e9c4f
+  HEAD` yes
+- [Phase 3] Series 1/4–4/4 identified; this patch does not need 3/4 or
+  4/4
+- [Phase 4] `b4 dig -c 0d7a266449453`: lore URL above; `-a` showed
+  7-patch then 4-patch split; `-w` To Ilpo + pdx86
+- [Phase 4] Ilpo 2026-06-26: split request + Reviewed-by; no NAK on the
+  OOB fix
+- [Phase 4] lore.kernel.org WebFetch 403; stable list UNVERIFIED
+- [Phase 5] Call chain: `hsmp_acpi_probe` → `init_acpi` →
+  `hsmp_parse_acpi_table` → `hsmp_read_acpi_dsd`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4; file present; `git merge-base --is-
+  ancestor 0d7a266449453 HEAD` yes
+- [Phase 8] Failure mode: OOB ACPI object read at probe; HIGH if
+  firmware malformed
+- UNVERIFIED: whether stable@ discussed this (lore 403)
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/amd/hsmp/acpi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index d6a13174b5617..3e7c620821069 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1535,6 +1535,7 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
- 	iwl_fw_cancel_timestamp(&mvm->fwrt);
+diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
+index 674be31654776..8f297d52ab5e3 100644
+--- a/drivers/platform/x86/amd/hsmp/acpi.c
++++ b/drivers/platform/x86/amd/hsmp/acpi.c
+@@ -152,12 +152,18 @@ static int hsmp_read_acpi_dsd(struct hsmp_socket *sock)
+ 		union acpi_object *msgobj, *msgstr, *msgint;
  
- 	clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status);
-+	mvm->sf_state = SF_UNINIT;
+ 		msgobj	= &mailbox_package->package.elements[j];
+-		msgstr	= &msgobj->package.elements[0];
+-		msgint	= &msgobj->package.elements[1];
  
- 	iwl_mvm_pause_tcm(mvm, false);
- 
+ 		/* package should have 1 string and 1 integer object */
+ 		if (msgobj->type != ACPI_TYPE_PACKAGE ||
+-		    msgstr->type != ACPI_TYPE_STRING ||
++		    msgobj->package.count < 2) {
++			ret = -EINVAL;
++			goto free_buf;
++		}
++
++		msgstr	= &msgobj->package.elements[0];
++		msgint	= &msgobj->package.elements[1];
++
++		if (msgstr->type != ACPI_TYPE_STRING ||
+ 		    msgint->type != ACPI_TYPE_INTEGER) {
+ 			ret = -EINVAL;
+ 			goto free_buf;
 -- 
 2.53.0
 
