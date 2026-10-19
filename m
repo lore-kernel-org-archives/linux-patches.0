@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298DC6441D5;
-	Mon, 19 Oct 2026 14:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609126441EF;
+	Mon, 19 Oct 2026 14:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418784; cv=none; b=WYV1KozQ5ce6FuRT+lvvyEOb1gcwotDML5S3eBDdPwXg6CkbRMk39ZUTM6P3hLc3C8Kjy4KgF0jAezFQGpU6WLXRgy46dcJ3MKOYQMLpJGMNnr9gzyF8YT2FI9c4xqwfQTsg+Rfp0t4pGVG5aR0EfSeRF79jxS+ibiWFbEIp18w=
+	t=1792418784; cv=none; b=BEB9aOrvgnHZ48Ri8IsJTmUN5H1JbrivboEKN21dkgffTHsBsX3aePAdOyFyhZ+OHJnwXh5GfLfBgZ4s+9/p0pHwE40SW3pQL2ibXddCgyaf6LPyF2sjsm82zFl3XVB4PPUMzWU0lGrSi15DwebxsvbpJDi3fubUCShNpCpwPDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418784; c=relaxed/simple;
-	bh=BRYx6sfi+qaICiszrnJe7Au12YDnz4CgawoZ2q31LV0=;
+	bh=ec4ghU6yfXjblR6fUDXDHkutpdBOFVRXJKmDCHcyQDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E2G94hRgys3gCNwxTgRWhRG2eaJlt7eaelLdqaPt/i+ovmJ8HX+v+9logcqu/y4EZ63nIGCOCGwuQIUkGiGIFcSAyo1olfxe+svyTK5rhzXsUawsfXPKMwUrWYcjsM6K/jyWipuBaoq6zPLQ3h7EZCrKqMziRhtnpoo5RBiqABg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/q02KXl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=APp/J+8XksfD0Y5g2J8vQy4fSgL3olq5msNUJrrMeN09FiHm7HEwPEwfVIyuP6AsraWa0p+DdV/aD0An4cKo2l8dABfYRHg/gRFv1mHONA7QNmMQvyiKndBTOir+ms/R7L5X42U2QqCOJsKFyo+gPGAzV444i4jtWWXfPgo2MQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPBKHXGs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/q02KXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164011F000C4;
-	Mon, 19 Oct 2026 14:06:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPBKHXGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F66E1F000C9;
+	Mon, 19 Oct 2026 14:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418781;
-	bh=DVtJR1vmE5OFuJ9R/f1sgyN9djO4OQA8APg4XWGVC2Q=;
+	s=k20260515; t=1792418782;
+	bh=nkFJWPU1MK03QOAusoiniFX+wO1yecpInBwT2lN1yp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/q02KXl/2JLuuMAa5af43kcxUmUv6+Swj3sWhMW1oHtTMj/TlLuNlcANoBjv6/Zq
-	 YN/U+3IWvGUNG1Opt0qmku6ZFiFs/Rz/IEN373rpm7PI+c9UPU/aohrWlltbrqJATG
-	 XHvbmr3jRShmBkSENK34BNnSdN7sScQhXiSLY0zoBPiHGKC6lteIUYsrC6qeAnthTd
-	 MEWdV9B9BnZ7bSQKs5o0w6dcPC6Qh0iqNiHBrWGQOUs2U3Dk6IUAJUfbPFZzyB7kXT
-	 k2UiVehnnX20nauVH8kneerMk9O7rFBHJqks8L7uePaIyh2s6ckhuqtEMATSAuMBr0
-	 uPUqsb09H/GRA==
+	b=iPBKHXGsSHFT3UK+FJkkLhMPIhpgVqPP64LVAxhenAWaiIofAwJkCQnalqujNSE5V
+	 NUJ5OBo9XTfPwPvoIwadBrEkbg+wWr5YHNIToP4HhV1VOiLNUp9aa0s3DrzM5vCSIf
+	 cEWKSPwLwtraCtr/y3eCcn/OkiJe5gL9W2Dc8Cj3j24Hcs7IEM+0gA6kx1FHUfOFwF
+	 BPjPzPIGAcL4+AhNRUvLXIDlO5H6ZksEP0Ch1Od5Wa3IV7ZYNLWX+abpNow30ekVNd
+	 A95isPXeFOXfPwSgVN4D/lej/f3gZ3+YkfLfGSUuJr8lsxK4XgyyCxHc6OzSuKGLqi
+	 GvvkiX5Irna6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@kernel.org,
-	linux-gpio@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] gpio: vf610: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:53:02 -0400
-Message-ID: <20261019135441.1420968-491-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] wifi: iwlwifi: mvm: reset the smart fifo state upon FW stop
+Date: Mon, 19 Oct 2026 09:53:03 -0400
+Message-ID: <20261019135441.1420968-492-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,523 +52,416 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 975a1d61260cf74d467f34898fade63165c80735 ]
+[ Upstream commit a51cc8131214870af92abbceab64877b27e690c2 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+The smart fifo is a feature in the firmware configured by the driver.
+The driver keeps a state to remember what was the last configuration
+sent to the firmware. Obviously, if the firmware stops, we need to
+reconfigure the smart fifo. Since we didn't reset that state upon
+firmware stop, we thought the firmware is already properly
+configured and we didn't send the smart fifo configuration command
+as part of the init sequence.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+Reset the smart fifo state in iwl_mvm_stop_device() so that we
+will properly send the command during the init that will come
+later.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260704122123.73004-1-pengpeng@iscas.ac.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23c328a677257257f695fa6f439e41fbcd081@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the mailing-list thread, version mapping, and driver context.
-Compiling the nine-phase analysis and verdict next.
-
----
-
-## Phase 1: Commit message forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: `[gpio: vf610:] [add] [missing MODULE_DEVICE_TABLE() so OF
-module aliases are generated]`
-
-- Subsystem: `gpio: vf610` (Freescale/NXP VF610 / i.MX GPIO driver)
-- Action verb: **add** (missing export — a functional gap, not a new
-  feature)
-- Claimed intent: export the existing OF match table for module
-  autoloading
+Record: **[iwlwifi/mvm] [reset] [clear cached smart-fifo state when
+firmware is stopped]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
 Record:
-- **Fixes:** none (expected; not a negative signal)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** Linus Walleij `<linusw@kernel.org>` (GPIO subsystem
-  veteran / former GPIO maintainer)
-- **Acked-by:** none
-- **Link:**
-  `https://patch.msgid.link/20260704122123.73004-1-pengpeng@iscas.ac.cn`
+- **Fixes:** none (expected for this review)
+- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
+- **Link:** `https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23
+  c328a677257257f695fa6f439e41fbcd081@changeid`
 - **Cc: stable:** none (expected)
-- **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author)
-- **Signed-off-by:** Bartosz Golaszewski
-  `<bartosz.golaszewski@oss.qualcomm.com>` (current GPIO maintainer who
-  applied it)
-
-Ignored per instructions: any pipeline “Upstream commit” / Sasha Levin
-SOB (none present on the real commit).
-
-Notable: maintainer-applied, reviewed by a GPIO expert. No user/syzbot
-report.
+- **Signed-off-by:** Emmanuel Grumbach (author; Intel iwlwifi), Miri
+  Korenblit (iwlwifi maintainer, committer)
+- No syzbot, no CVE, no stack trace
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
 Record:
-- **Bug:** `vf610_gpio_dt_ids` is wired to `.of_match_table` but is not
-  published with `MODULE_DEVICE_TABLE(of, ...)`.
-- **Symptom:** when `CONFIG_GPIO_VF610=m`, modpost does not emit
-  `of:N*T*C...` aliases, so udev/modprobe will not autoload `gpio-vf610`
-  from DT compatible strings (`fsl,vf610-gpio`, `fsl,imx7ulp-gpio`,
-  `fsl,imx8ulp-gpio`).
-- **Version info in message:** none
-- **Root cause (author):** match table exists and is used by the
-  platform driver; only the module-alias publication is missing. Author
-  explicitly calls it a **source-level** fix with no dynamic hardware
-  repro.
+- **Bug:** Driver caches last smart-fifo config in `mvm->sf_state`.
+  Firmware stop does not clear that cache.
+- **Symptom:** After firmware is stopped and started again, init skips
+  `REPLY_SF_CFG_CMD` because the driver thinks firmware is already
+  configured.
+- **Version info:** none
+- **Root cause:** Stale driver-side firmware-config cache after the
+  firmware image is gone.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not a disguised cleanup.** It is an explicit missing-export
-fix. The “add missing” wording is the standard pattern for module-
-autoload bugs. It is not a refactor, API, or feature.
+Record: Not a disguised cleanup. It is an explicit correctness fix for
+stale cached firmware state.
 
 ---
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-
 Record:
-- File: `drivers/gpio/gpio-vf610.c` — **+1 / −0**
-- Function/object: file-scope `vf610_gpio_dt_ids[]` (not a function
-  body)
-- Scope: **single-file surgical fix** (one macro)
+- File: `drivers/net/wireless/intel/iwlwifi/mvm/ops.c` (+1 / −0)
+- Function: `iwl_mvm_stop_device()`
+- Scope: single-file, one-line surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
 Record:
-- **Before:** `vf610_gpio_dt_ids` is a `const struct of_device_id[]`
-  used only as `vf610_gpio_driver.driver.of_match_table`. Runtime OF
-  matching still works **if the module is already loaded or the driver
-  is built-in**.
-- **After:** `MODULE_DEVICE_TABLE(of, vf610_gpio_dt_ids)` creates a
-  `__mod_of__vf610_gpio_dt_ids_device_table` alias (see
-  `include/linux/module.h`) so `scripts/mod/file2alias.c` / modpost
-  emits OF modaliases into `.modinfo`.
-- Path affected: **build-time module metadata only**, not probe, IRQ, or
-  GPIO runtime.
+- **Before:** `iwl_mvm_stop_device()` cleared
+  `IWL_MVM_STATUS_FIRMWARE_RUNNING`, paused TCM, stopped the transport,
+  and freed paging. `sf_state` was left as-is.
+- **After:** Immediately after clearing FIRMWARE_RUNNING, set
+  `mvm->sf_state = SF_UNINIT`.
+- Path: every firmware stop (mac stop, restart cleanup, D3 switch, init-
+  ucode teardown, load error paths). Not an error-only path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Logic / correctness — stale cached firmware configuration**
 
-Record:
-- **Category:** hardware enablement / module autoload (OF analogue of
-  missing device IDs)
-- **Mechanism:** without the alias, a modular driver is never bound to
-  DT nodes unless something else loads it (`modprobe gpio-vf610`,
-  initramfs list, etc.). GPIO chip never registers → pins/IRQs missing
-  on affected boards.
+Verified skip in `iwl_mvm_sf_config()`:
+
+```183:188:drivers/net/wireless/intel/iwlwifi/mvm/sf.c
+        /*
+  - If an associated AP sta changed its antenna configuration, the state
+  - will remain FULL_ON but SF parameters need to be reconsidered.
+         */
+        if (new_state != SF_FULL_ON && mvm->sf_state == new_state)
+                return 0;
+```
+
+Init always tries to configure SF:
+
+```1761:1763:drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+        ret = iwl_mvm_sf_update(mvm, NULL, false);
+        if (ret)
+                IWL_ERR(mvm, "Failed to initialize Smart Fifo\n");
+```
+
+With `changed_vif == NULL` and no active MACs, that becomes
+`SF_INIT_OFF`. If `sf_state` is still `SF_INIT_OFF` from the previous
+firmware life, the command is skipped and new firmware keeps reset
+defaults.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-
 Record:
-- **Quality:** obviously correct; this is the canonical one-line fix
-  used across GPIO and many other subsystems.
-- **Regression risk:** **very low**. The macro is `__attribute__((used,
-  alias(...)))`; it does not change probe, locking, or exported APIs.
-  Built-in builds ignore module aliases.
+- Obviously correct: firmware is gone, cached config must be invalid.
+- Minimal: one assignment under `mvm->mutex` (`lockdep_assert_held`).
+- Regression risk: very low. On firmware with
+  `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD` (commit `ff04f78ce38d7`, 2024),
+  `iwl_mvm_sf_update()` already returns 0 and never sends the command;
+  resetting the cache is a no-op there.
 
 ---
 
-## Phase 3: Git history investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
 Record:
-- Match table introduced with the driver in `7f2691a19627a8` (Stefan
-  Agner, 2014) — originally **built-in only** (`bool` +
-  `builtin_platform_driver`).
-- Compatible entries updated later: `fsl,imx7ulp-gpio` (2017),
-  `fsl,imx8ulp-gpio` (2023).
-- **Bug became real** when the driver was made modular:
-
-`73dc041f8a602` — `gpio: vf610: Allow building as a module` (Jindong
-Yue, 2025-04-16; merged for **v6.16**)
-
-That commit switched Kconfig to `tristate` and `builtin_platform_driver`
-→ `module_platform_driver` **without** adding `MODULE_DEVICE_TABLE`.
-Reason given: Android GKI cannot carry board-specific drivers built-in.
+- Surrounding `iwl_mvm_stop_device()` body: `cf5b462768474` (2020, moved
+  out of line).
+- Smart FIFO and `sf_state` skip logic: `1f3b0ff8eccef` (“iwlwifi: mvm:
+  Add Smart FIFO support”, 2013-12-17, contained in v3.14-rc1).
+- Bug has been present for a long time; not recent code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: **No Fixes: tag.** Investigated by history instead. Introducing
-commit `73dc041f8a602` **is** an ancestor of this tree (`git merge-base
---is-ancestor` succeeded). It is **in v6.16+** including this 7.3-rc4
-checkout. It is **not** in v6.15.
+Record: No `Fixes:` tag. Buggy pattern is the original 2013 SF cache
+plus the skip-if-same-state optimization, not a recent regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record (recent `drivers/gpio/gpio-vf610.c`):
-- `975a1d61260cf` — this fix
-- `656dc0c6f725a` — generic GPIO chip API (unrelated)
-- `73dc041f8a602` — allow module build (**prerequisite**)
-- No later commits on this file after the fix (empty
-  `975a1d61260cf..HEAD`)
-
-Standalone; not “patch X/Y”. Same-day sibling: `8fe6fa0f223f4` `gpio:
-sifive: add missing MODULE_DEVICE_TABLE()` (same author, same template).
+Record:
+- Nearby same-author series (same Change-Id date 20260714165826):
+  - `0a00c3ec2db76` device_powered_off → `iwl_mvm_restart_cleanup()`
+    (independent)
+  - `71ac392d8b5c2` MLD analogue (different driver)
+- This patch does not depend on those.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Pengpeng Hou is **not** the GPIO maintainer. This is part of a
-mechanical sweep of missing `MODULE_DEVICE_TABLE()` across drivers
-(gpio, rtc, vdpa, watchdog, hwmon, fbdev, soc, …). GPIO maintainer still
-applied it after Walleij’s review, which keeps the change trustworthy.
+Record: Emmanuel Grumbach is a long-time Intel iwlwifi core author. Miri
+Korenblit is the listed iwlwifi maintainer. High confidence in the
+diagnosis.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Runtime prerequisite is only “driver can be a module,” which
-this tree has (`tristate`, `module_platform_driver`). The one-line macro
-needs no extra APIs. **Can apply standalone** on any tree that already
-has `vf610_gpio_dt_ids`.
+Record: Standalone. Needs only `mvm->sf_state` and `SF_UNINIT`, both
+present here. No new helpers or struct fields.
 
 ---
 
-## Phase 4: Mailing list and external research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
 Record:
-- `b4 dig -c 975a1d61260cf`: matched
-  `https://patch.msgid.link/20260704122123.73004-1-pengpeng@iscas.ac.cn`
-- `b4 dig -a`: **v1 only** (no v2/v3)
-- Thread (mbox): (1) patch from Hou, (2) **Reviewed-by: Linus Walleij**,
-  (3) Bartosz: **“Applied, thanks!”** →
-  `brgl/c/7a6426e72ab53c7cae34952528092efd2e26edc3`
-- No NAK, no stable nomination, no reviewer risk flags
+- `b4 dig -c a51cc81312148`: matched `[PATCH iwlwifi-next 13/15]`
+- URL: `https://patch.msgid.link/20260714143119.7d3c5efe2d1a.I16b23c328a
+  677257257f695fa6f439e41fbcd081@changeid`
+- `b4 dig -a`: v1 (`20260714143119`) and v2 (`20260714165826`, the
+  applied Link:). This hunk is identical in v1/v2.
+- Series title: “wifi: iwlwifi: updates - 07-14-2026” (15 patches mixing
+  features and fixes). This one is self-contained.
+- Saved mbox had the series posts, no replies/NAKs on this patch. No
+  `Cc: stable` in review.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): To/Cc were **Linus Walleij**, **Bartosz
-Golaszewski**, `linux-gpio@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`. Right maintainers and list.
+Record (`b4 dig -w`): To Johannes Berg; Cc linux-
+wireless@vger.kernel.org and Emmanuel Grumbach. Committed by maintainer
+Miri Korenblit. No extra Reviewed-by on this patch.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: no Reported-by / bugzilla / syzbot. Evidence is the missing
-export, not a field crash. Same class as other “fix module autoloading”
-GPIO commits (e.g. `11baa36d31732` gpio-lpc32xx, `e6382fcf98907` gpio-
-spacemit).
+Record: No Reported-by, bugzilla, or syzbot. Failure mode is inferred
+from code + commit text, not a user crash report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: standalone `[PATCH]`, not a numbered series. Parallel same-day
-sifive fix is independent.
+Record: Patch 13/15. Follow-ups 14/15 and 15/15 are related
+stop/recovery cleanup but not prerequisites. This line is independently
+correct.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: **UNVERIFIED** — `lore.kernel.org` and `patch.msgid.link`
-returned **HTTP 403** via WebFetch and curl. GPIO thread was obtained
-via `b4 dig -m` (does not discuss stable).
+Record: lore.kernel.org/stable search blocked by anti-bot (403).
+UNVERIFIED whether it was previously requested or rejected for stable.
 
 ---
 
-## Phase 5: Code semantic analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: KEY FUNCTIONS**
-
-Record: no function body changed. Touches file-scope
-`vf610_gpio_dt_ids[]`. Related symbols: `vf610_gpio_driver`,
-`vf610_gpio_probe`, `module_platform_driver`.
+Record: `iwl_mvm_stop_device()` (modified). Related:
+`iwl_mvm_sf_config()`, `iwl_mvm_sf_update()`, `iwl_mvm_up()`.
 
 **Step 5.2: TRACE CALLERS**
+Record: `iwl_mvm_stop_device()` is called from:
+- `ops.c` NVM/init-ucode teardown
+- `mac80211.c` `iwl_mvm_restart_cleanup()`, `__iwl_mvm_mac_start()`
+  fast-resume fail, `__iwl_mvm_mac_stop()`
+- `fw.c` `iwl_mvm_up()` / `iwl_mvm_load_d3_fw()` error paths
+- `d3.c` `iwl_mvm_switch_to_d3()`
 
-Record:
-- `of_match_table = vf610_gpio_dt_ids` in `vf610_gpio_driver` (verified
-  in-file at line 351)
-- Bound via `module_platform_driver` → `platform_driver_register` at
-  module init
-- `MODULE_DEVICE_TABLE` is **not** a runtime caller graph; modpost
-  consumes the alias at **build** time
-
-semcode MCP: **not available** (namespace search returned no semcode
-tools).
+Reachable from interface down, rfkill/stop, suspend (non-fast), firmware
+restart, and probe/init teardown. Common laptop WiFi paths.
 
 **Step 5.3: TRACE CALLEES**
-
-Record: probe uses `device_get_match_data()` / GPIO chip registration.
-Unchanged. New code allocates nothing, takes no locks, does no I/O.
+Record: Stop path tears down firmware/transport. The new line only
+writes a field; no new I/O.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace `ip link set wlan0 down/up`, rfkill, suspend/resume,
+and mac80211 restart all hit this. Bug is reachable without special
+debug options.
 
-Record: path is **reachable from userspace/boot** on NXP DT platforms
-when the driver is a module: DT node with those compatibles → udev
-`modalias` → `modprobe gpio-vf610`. The bug is that this chain is
-**broken** without aliases. Unprivileged users do not need a special
-exploit; missing GPIO is a boot/bring-up failure.
-
-DT users verified under `arch/`:
-- `arch/arm/boot/dts/nxp/vf/vfxxx.dtsi` — `fsl,vf610-gpio`
-- `arch/arm/boot/dts/nxp/imx/imx7ulp.dtsi` — `fsl,imx7ulp-gpio`
-- `arch/arm64/boot/dts/freescale/imx8ulp.dtsi`, `imx91_93_common.dtsi`,
-  `imx94.dtsi`, `imx95.dtsi`, `imx952.dtsi` — `fsl,imx8ulp-gpio`
-  (including i.MX93/94/95)
+Nuance (verified): `SF_FULL_ON` is never skipped, so association still
+sends SF config. The missed command is the init/unassociated
+`SF_INIT_OFF` after a stop that left `sf_state == SF_INIT_OFF` (typical
+after disconnect then ifdown, or never-associated then wifi toggle).
+During `IWL_MVM_STATUS_IN_HW_RESTART`, `iwl_mvm_sf_update()` returns
+early anyway; this reset still makes post-restart updates send when
+restart completes.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: same missing-table pattern recently fixed in `gpio-sifive.c`,
-and earlier in spacemit/lpc32xx/cadence/ath79/ts4800. Systematic, well-
-understood class.
+Record: Same series resets other driver state after firmware death
+(`device_powered_off`, MLD recovery). `sf_state` was the one cache not
+cleared on stop. No duplicate fix already present besides this commit.
 
 ---
 
-## Phase 6: Cross-referencing against the local tree
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
 Record:
-- Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
-  **7.3.0-rc4** (mainline, not an LTS branch)
-- `CONFIG_GPIO_VF610` is **tristate**; `module_platform_driver` is
-  present — the modular bug **does exist** in this lineage
-- The **fix commit `975a1d61260cf` is already an ancestor of HEAD**
-  (landed in **v7.3-rc1**; **not** in v7.2)
-- Introducing modularization `73dc041f8a602` **is** in this tree (since
-  v6.16)
-- Current file already has `MODULE_DEVICE_TABLE(of, vf610_gpio_dt_ids)`
-  at line 86
-
-Approximate introduction of the **bug:** **v6.16** (April/July 2025).
-Driver itself: **v3.x/v4.x era** (2014).
+- Local tree: `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**;
+  `make kernelversion` → **7.3.0-rc4**
+- `sf_state`, skip-if-same-state, and `iwl_mvm_up()` SF init all exist
+- Bug introduced with Smart FIFO in 2013 (`1f3b0ff8eccef`); ancestor of
+  this HEAD
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **clean apply** on this tree’s driver — one line after the
-existing `of_device_id` table. Match-table layout here matches the
-commit hunk. No conflicting local changes.
+Record: Clean apply. Pre-fix `iwl_mvm_stop_device()` already has the
+insertion point next to `clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING,
+...)`. Expected difficulty: clean apply.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: this exact fix **is already in HEAD**. No alternate/earlier
-equivalent found (`git log --oneline --grep=MODULE_DEVICE_TABLE --
-drivers/gpio/gpio-vf610.c` is this commit). No follow-up on the file
-after it.
-
-For **this checkout as a 7.3 baseline**, 7.3.y would inherit the fix
-from rc1; the evaluation still asks whether the change is **stable-
-worthy given that this tree’s driver is modular**.
+Record: No earlier equivalent reset of `sf_state` on stop. Only the
+start-time `mvm->sf_state = SF_UNINIT` in `iwl_op_mode_mvm_start()`
+(probe), which does not cover later stop/start cycles.
 
 ---
 
-## Phase 7: Subsystem and maintainer context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: SUBSYSTEM AND CRITICALITY**
-
-Record: `drivers/gpio/` — GPIO. **IMPORTANT** (not core mm/sched, but
-platform GPIO is boot-critical on NXP i.MX/Vybrid: resets, IRQs,
-regulators). Not staging.
+Record: **wifi / iwlwifi mvm**. **IMPORTANT** — Intel WiFi is one of the
+most common laptop NICs. Not core mm/VFS, but far from
+peripheral/staging.
 
 **Step 7.2: SUBSYSTEM ACTIVITY**
-
-Record: GPIO is actively maintained (Bartosz); this file still gets API
-updates. The autoload hole is from the v6.16 modularization, not ancient
-dead code.
+Record: Very active. This patch came in an iwlwifi-next 15-patch update
+dump, then was taken by the maintainer.
 
 ---
 
-## Phase 8: Impact and risk assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: WHO IS AFFECTED**
-
-Record: **driver-specific / config-specific**: `CONFIG_GPIO_VF610=m` on
-`ARCH_MXC` (Vybrid VF610, i.MX7ULP, i.MX8ULP, and later i.MX9x that
-compatible-string to `fsl,imx8ulp-gpio`). Built-in (`=y`) is unaffected.
-Kconfig has `default y if SOC_VF610` only; i.MX7/8/9 do **not**
-default-y on that symbol, so modular builds are realistic (explicitly
-for **Android GKI**).
+Record: Intel iwlwifi **mvm** users whose firmware does **not**
+advertise `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD`. Driver-specific /
+firmware-version-specific. Still a large installed base of 22000-and-
+older-class chips plus any newer FW without that TLV.
 
 **Step 8.2: TRIGGER CONDITIONS**
-
-Record:
-- Trigger: boot/udev on DT platforms with `GPIO_VF610=m` and no explicit
-  `modprobe`
-- Commonness: every such boot, not a race
-- Unprivileged exploit: **no**; availability/bring-up bug, not a
-  sanitizer crash
+Record: Firmware stop then start while cached state is `SF_INIT_OFF` or
+`SF_UNINIT`. Common: wifi radio toggle, interface down/up, some suspend
+paths. Not a race. Unprivileged users can toggle wifi and hit it.
 
 **Step 8.3: FAILURE MODE SEVERITY**
-
-Record:
-- Failure: GPIO controller never probes → missing gpiochip, pin IRQs,
-  board GPIOs
-- Not oops/UAF/corruption
-- Severity: **MEDIUM** functionally (hardware silent-fail), **HIGH** on
-  boards that need those GPIOs at boot
-- Fits “oh, that’s not good” plus the **device-ID / autoload** exception
+Record: Firmware left without host `REPLY_SF_CFG_CMD` after reload
+(wrong RX FIFO watermarks/timers in unassociated/init). Not an oops,
+deadlock, or filesystem corruption.
+**Severity: MEDIUM** (wrong firmware config / power and RX-FIFO
+behavior; associated `SF_FULL_ON` still sent).
 
 **Step 8.4: RISK-BENEFIT RATIO**
-
 Record:
-- **Benefit:** restores autoload for an existing, in-tree driver on
-  current NXP SoCs and GKI modular images
-- **Risk:** **very low** (1 line, metadata only)
-- **Ratio:** favorable for stable
+- **Benefit:** Restores a required init-time firmware command after
+  every firmware stop on a very common driver. Low-to-medium user-
+  visible benefit (no crash report), but the broken path is not rare.
+- **Risk:** Very low (one store under existing mutex).
+- **Ratio:** Favorable for a 1-line obviously-correct fix.
 
 ---
 
-## Phase 9: Final synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR backporting:**
-- Real bug: OF module aliases never generated after v6.16 made the
-  driver `tristate`
-- One line, obviously correct, no runtime behavior change for built-in
-- Same class as device-ID additions (explicitly allowed) and many
-  historical “fix module autoloading” GPIO patches
-- Used on VF610, i.MX7ULP, i.MX8ULP, i.MX93/94/95 DT
-- Modularization was for Android GKI — the config where autoload matters
-- Reviewed by Linus Walleij; applied by Bartosz Golaszewski
-- Applies cleanly; no series dependencies
-- This tree **has** the modular driver, so the bug class is applicable
-  here
+FOR:
+- Real, verified stale-cache bug; init explicitly tries to send SF
+  config and can skip it
+- One line, obviously correct, mutex-protected
+- Bug present since 2013; code exists in this tree
+- No prerequisites; applies cleanly
+- Intel iwlwifi mvm is widely deployed
+- Author/maintainer-originated; no NAKs found
 
-**AGAINST:**
-- Not a crash, deadlock, corruption, or security hole
-- No user/syzbot report; author labels it source-level
-- Mechanical sweep by a non-maintainer
-- `SOC_VF610` defaults the driver to `y` (Vybrid built-in path is fine)
-- Workaround: load the module by name
-- **Already in this 7.3-rc4 history** (since 7.3-rc1) — but that is
-  expected for a mainline commit under review, not a reason to treat the
-  fix as non-bugs
+AGAINST:
+- Not a crash, UAF, deadlock, corruption, or security issue
+- No user/syzbot report; impact is firmware defaults vs host SF_INIT_OFF
+- `SF_FULL_ON` still always sent, so associated operation is less
+  affected
+- Newer firmware with SMART_FIFO_OFFLOAD never needed the command
+- Submitted as iwlwifi-next “updates” 13/15, not a -fixes/stable
+  nomination
 
-**UNRESOLVED:**
-- lore.kernel.org/stable search (HTTP 403)
-- Whether Android GKI already lists this module in a manual load list
-  (unverified; aliases still help udev/modprobe)
+UNRESOLVED:
+- lore.kernel.org WebFetch/stable search blocked (403 / anti-bot)
+- Exact user-visible symptom (power vs missed RX vs none) not documented
 
 **Step 9.2: STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — canonical macro; reviewed
-   and applied by GPIO maintainers
-2. Fixes a real bug that affects users? **PASS** — modular OF autoload
-   is broken; GKI/i.MX modular users hit it
-3. Important issue? **PASS** (as device-ID/hardware-enablement / “oh,
-   that’s not good”) — GPIO never appears; not a panic
-4. Small and contained? **PASS** — +1 line, one file
-5. No new features or APIs? **PASS** — publishes existing match table
-6. Can apply to the local tree? **PASS** — code present; hunk matches;
-   tree already contains the commit because it is mainline 7.3
+1. Obviously correct and tested? **PASS** — one assignment; merged by
+   iwlwifi maintainer
+2. Fixes a real bug that affects users? **PASS** — stale cache skips a
+   real firmware command on wifi stop/start
+3. Important issue (crash/security/corruption/deadlock)? **PASS** with
+   MEDIUM severity — wrong device firmware configuration after stop is a
+   functional bug on a common driver, not a panic. Conservative reading
+   could FAIL this bar; the 1-line nature and common trigger keep it a
+   PASS.
+4. Small and contained? **PASS** — +1 line, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `iwl_mvm_stop_device()`,
+   `sf_state`, and `SF_UNINIT` are all here
 
 **Step 9.3: EXCEPTION CATEGORIES**
-
-Record: **Device ID / module alias publication for an existing driver**
-(OF `MODULE_DEVICE_TABLE`). Not a new driver, not a new uAPI.
+Record: None (not a device ID, quirk table, DT, build, or docs fix).
 
 **Step 9.4: DECISION**
-
-This tree is **mainline 7.3-rc4**, where `gpio-vf610` is modular.
-Missing `MODULE_DEVICE_TABLE(of, ...)` is a real, user-visible autoload
-bug on DT NXP platforms and GKI-style `=m` builds. The fix is one
-obviously correct line with essentially no regression risk, which is the
-same bar used for new device IDs in stable.
+This is a real, long-standing iwlwifi correctness bug: after firmware
+stop the driver keeps believing smart-fifo is already programmed, so
+`iwl_mvm_up()` skips `REPLY_SF_CFG_CMD`. The local 7.3-rc4 tree has the
+buggy cache and skip logic. The fix is a single `sf_state = SF_UNINIT`
+in the existing stop path, with no API change and negligible regression
+risk. That meets stable rules for a small, obviously correct driver
+bugfix even without a crash report.
 
 ---
 
-### What the commit solves (for stable users)
-
-When `CONFIG_GPIO_VF610=m`, the kernel never announces OF aliases for
-`fsl,vf610-gpio` / `fsl,imx7ulp-gpio` / `fsl,imx8ulp-gpio`. udev
-therefore does not load the module, so the GPIO controller never probes.
-That became a live bug in **v6.16** when the driver was switched from
-`bool` to `tristate` for Android GKI. Adding `MODULE_DEVICE_TABLE(of,
-vf610_gpio_dt_ids)` only restores the aliases the match table already
-describes.
+### What the commit solves for this tree
+On this checkout, `iwl_mvm_sf_config()` refuses to send smart-fifo
+config when `new_state` matches `mvm->sf_state` (except `SF_FULL_ON`).
+`sf_state` was only initialized at op-mode start, not when firmware
+actually stopped. After a normal mac stop / restart / D3 firmware swap,
+the next `iwl_mvm_up()` therefore omits `REPLY_SF_CFG_CMD`. Stable users
+hitting wifi toggle, rfkill, or non-fast suspend on Intel mvm hardware
+then run reloaded firmware without the host SF init the driver intends.
 
 ### Risk vs benefit
-
-Benefit is working GPIO autoload on NXP boards that build this driver as
-a module. Risk is negligible: module metadata only.
-
-### Concerns
-
-No field crash report; severity is bring-up rather than oops. That does
-not outweigh the device-ID exception and the tiny, maintainer-acked
-diff. No extra backports are required on this tree.
+Benefit is restoring firmware RX-FIFO configuration after a common
+stop/start cycle. Risk is essentially nil: one field write under
+`mvm->mutex`, harmless on offload firmware. Backport needs no extra
+commits.
 
 ---
 
-### Verification
-
-- **[Phase 1]** Parsed tags: Reviewed-by Linus Walleij; Link msgid; SOB
-  Hou + Bartosz; no Fixes/Reported-by/Cc:stable
-- **[Phase 1]** Body: missing OF `MODULE_DEVICE_TABLE`; source-level, no
-  hardware repro claimed
-- **[Phase 2]** Diff: `drivers/gpio/gpio-vf610.c` +1 line after
-  `vf610_gpio_dt_ids[]`
-- **[Phase 2]** `include/linux/module.h:255-257`: macro is used+alias
-  for file2alias; no runtime side effects
-- **[Phase 3]** `git blame` lines 80–86: table from `7f2691a19627a8`
-  (2014); MODULE_DEVICE_TABLE from `975a1d61260cf`
-- **[Phase 3]** `git show 73dc041f8a602`: tristate +
-  `module_platform_driver` without MODULE_DEVICE_TABLE; Android GKI
-  rationale
-- **[Phase 3]** `git merge-base --is-ancestor 73dc041f8a602 HEAD` → yes;
-  `975a1d61260cf HEAD` → yes
-- **[Phase 3]** Version tags: modular **in v6.16+**; fix **in
-  v7.3-rc1+**, **not** in v7.2
-- **[Phase 3]** `git log --oneline -20 -- drivers/gpio/gpio-vf610.c`: no
-  series; sibling sifive commit same author
-- **[Phase 3]** `git log 975a1d61260cf..HEAD -- drivers/gpio/gpio-
-  vf610.c`: empty (no follow-up)
-- **[Phase 4]** `b4 dig -c`: lore/msgid
-  `20260704122123.73004-1-pengpeng@iscas.ac.cn`
-- **[Phase 4]** `b4 dig -a`: v1 only
-- **[Phase 4]** `b4 dig -w`: Walleij, Bartosz, linux-gpio, linux-kernel
-- **[Phase 4]** `b4 dig -m`: Walleij Reviewed-by; Bartosz “Applied,
-  thanks!”; no NAK; no Cc:stable in thread
-- **[Phase 4]** WebFetch lore/msgid: **403** UNVERIFIED via HTTP; mbox
-  used instead
-- **[Phase 4]** lore.kernel.org/stable curl: **403** UNVERIFIED
-- **[Phase 5]** semcode: **unavailable**
-- **[Phase 5]** Read `gpio-vf610.c`: `of_match_table =
-  vf610_gpio_dt_ids`; `module_platform_driver`
-- **[Phase 5]** Grep DT: vfxxx, imx7ulp, imx8ulp, imx91/93, imx94,
-  imx95, imx952
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` = 7.3.0-rc4
-- **[Phase 6]** Kconfig: `tristate`, `default y if SOC_VF610` only
-- **[Phase 8]** Failure mode: module not autoloaded → GPIO missing; not
-  a panic
-- **UNVERIFIED:** whether GKI already force-loads this `.ko` by name;
-  stable@ thread beyond 403
-
-The change is a one-line, maintainer-reviewed autoload fix for an
-existing modular GPIO driver. That is appropriate stable material for
-this tree’s code.
+Verification:
+- [Phase 1] Parsed tags: SOB Emmanuel Grumbach + Miri Korenblit; Link to
+  msgid; no Fixes/Reported-by/stable Cc
+- [Phase 2] Diff: +1 line `mvm->sf_state = SF_UNINIT` in
+  `iwl_mvm_stop_device()`
+- [Phase 2] Confirmed skip in `iwl_mvm_sf_config()` and init call in
+  `iwl_mvm_up()`
+- [Phase 3] `git show a51cc81312148`: 1 file, +1; parent `974cbad4c86d6`
+- [Phase 3] Original SF: `1f3b0ff8eccef` (2013-12-17), ancestor of HEAD;
+  `git merge-base --is-ancestor` succeeded
+- [Phase 3] Blame: new line is this commit; rest of stop_device from
+  `cf5b462768474` (2020)
+- [Phase 3] Follow-up `0a00c3ec2db76` is independent, not required
+- [Phase 4] `b4 dig -c a51cc81312148`: lore match; patch 13/15 of
+  iwlwifi-next updates
+- [Phase 4] `b4 dig -a`: v1 and v2; committed Link is v2; hunk unchanged
+- [Phase 4] `b4 dig -w`: Johannes Berg + linux-wireless; no NAK in saved
+  mbox
+- [Phase 4] UNVERIFIED: stable list discussion (lore 403/anti-bot);
+  WebFetch of lore URLs also 403
+- [Phase 5] Callers of `iwl_mvm_stop_device()`: mac80211 stop/restart,
+  d3, fw error, NVM init
+- [Phase 5] `IWL_UCODE_TLV_API_SMART_FIFO_OFFLOAD` added in
+  `ff04f78ce38d7` (2024); offload path ignores SF commands
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
+  kernelversion 7.3.0-rc4
+- [Phase 6] Pre-fix `iwl_mvm_stop_device()` at parent matches insertion
+  context; clean apply
+- [Phase 7] MAINTAINERS: INTEL WIRELESS WIFI LINK, Miri Korenblit
+- [Phase 8] Failure mode: skipped firmware SF init after stop; severity
+  MEDIUM, not oops/deadlock
+- UNVERIFIED: concrete user-visible packet-loss vs power-only impact
+  (not stated in commit or mail)
 
 **YES**
 
- drivers/gpio/gpio-vf610.c | 1 +
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
-index aa8586d8a787f..adfa2c2d5873d 100644
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -83,6 +83,7 @@ static const struct of_device_id vf610_gpio_dt_ids[] = {
- 	{ .compatible = "fsl,imx8ulp-gpio",	.data = &imx8ulp_data, },
- 	{ /* sentinel */ }
- };
-+MODULE_DEVICE_TABLE(of, vf610_gpio_dt_ids);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index d6a13174b5617..3e7c620821069 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -1535,6 +1535,7 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
+ 	iwl_fw_cancel_timestamp(&mvm->fwrt);
  
- static inline void vf610_gpio_writel(u32 val, void __iomem *reg)
- {
+ 	clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status);
++	mvm->sf_state = SF_UNINIT;
+ 
+ 	iwl_mvm_pause_tcm(mvm, false);
+ 
 -- 
 2.53.0
 
