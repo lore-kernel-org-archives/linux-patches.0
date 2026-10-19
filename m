@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E9262044C;
-	Mon, 19 Oct 2026 14:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE3553875B;
+	Mon, 19 Oct 2026 14:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418680; cv=none; b=DoM2fho8g6d523cqO5jj6gdv8gRZHl0qvUefL4Qs9zubulWmjh9biIjPL0BSuJftyAQHz1WZ/u0tsftGItehpKpgBF8OHdbmSFGk3gMvwN0cuAxcW32wti57CdqCnkwt2BgJS0a9XC+gtxjJiGW3kiV5QbEi6w2jz/ay7x4nDSw=
+	t=1792418681; cv=none; b=M/O0ZSdK3K50IYKthoXdXUZbxEWcxPvwBN/xuPrvcdlLJIYv8sJQoVfXYDJuuRCtDKEC9P/c8ul9w+q9+wMatXOYYOomrMOBZ14KoOL+9oZU7MtcbwN6aXf3zYBDRLatr7OTR3FtcbI7qNShd/OMKNuTs3P3S9gClD40c447LSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418680; c=relaxed/simple;
-	bh=B67A8eXe3+J+lFkKW1UCubxmG4KiUYkrRr4S1T6k8ng=;
+	s=arc-20240116; t=1792418681; c=relaxed/simple;
+	bh=jrQMOA/SM4mc01xbFxhcMqq6uwiY2uRcd+zxTo7vtqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GUlypB3NU7A3NiAbZHRX/djOydaF2iohknFGeuPlxR3/qJD7ObTkVNxXWx0ofHM6qQF7ZpZ39dTmLAhK+WuKsQX5FIY7CMS390G48mo4PtmH6KtkbCL39foeh8bLRdIc22v+fVeOB9FCp5gc67i82xTmDQGuRa1Z2DlW47GqpIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvIz9x5w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mdydJ9MFpZ6Bw+hwXyXUQgwaLRB1VM7T/92dqgVYQSYCd2p6hU+10eU0QRtp8dyidQH0j+3EsX5lM5HS/GGTRUhqEEBnH28/DmqSTZ7nZHkQCZpCjPhLhRFpvD/dIDPnWJcGnUfzZDsWFHiIjkDpqb0/3FytJMkkSfAgq9r1r9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FYh1Z35Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvIz9x5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083921F000C8;
-	Mon, 19 Oct 2026 14:04:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FYh1Z35Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43161F000C4;
+	Mon, 19 Oct 2026 14:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418677;
-	bh=tUxqjMydVOQ+CkV40AyW4K1j3ezjia8tYP77IbFRgrU=;
+	s=k20260515; t=1792418678;
+	bh=1GBZygteAOTn7BJ5HKhZvdqg98ATeVmYxOHQkitqReU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvIz9x5wWkY21K1cIsh9sTE5c9AqjKn4B0QtYk9HoPbDJBvJwSvZIMbkB4U31LJu4
-	 fF2XlJdESOFRy8ob5bSDpO7WuuRGupZYBjWJj2qtEHt9g84W4LDQr+PpsLzWVG7RRh
-	 MpxHtbENMDw6MUiog8WzPORZ+wy5/31GwPMIw99a1MJ+xToTkpJaYUO9f94lMt57A6
-	 PERRHuEwf1AguqZVtHsTCtEegOjpnlZjhysvEcC9SnTvLTRgfFFhdIZYrsBEOtOrRr
-	 tA8Aep7Y5uJkXfgs1hyva+G7MDpbA86XkA1styCVdBVVHeaJ8/svw3x2ZpME/85imn
-	 Uqr+P2kg6K8pw==
+	b=FYh1Z35YrvPMr2AKY+hn/4u/rj/z6BSpBvwvu4oQ8uI4SWQjnUvKVmMfT3obnVV6K
+	 oHFlE+k63RpPibpVOpFkxfpSnSWOZT7FRgL7sfwqkRMoKAnNXLT7d9yFT4EshAEEt4
+	 7Nz160dkmxxIqUtm59AXwzGWiNoEJML6HEd2X45E1LVLRBe/ipCfWOEMd19rj0iXLk
+	 2qQNy7ksTh4/i8r1E2INXkSCLXQMl7Cg/rmnDLvwj2KK0+oJJvjryOf/YnShz/1I+7
+	 /wTMl68j5BxbnECrM/0j+seFpxwcqHaCZ3KLS26hAZuhaqqsKJDzfj0iGduq5lr4I4
+	 Kci6n3q9y9AGw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	kenneth.feng@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/amd/pm: Validate Tonga PowerPlay state array bounds
-Date: Mon, 19 Oct 2026 09:51:49 -0400
-Message-ID: <20261019135441.1420968-418-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] ALSA: hda/realtek: Fix speakers on ASUS PM3406CHA
+Date: Mon, 19 Oct 2026 09:51:50 -0400
+Message-ID: <20261019135441.1420968-419-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,544 +54,449 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
 
-[ Upstream commit 1ac24df78c566d767a5ef05a1fe0ecc55bac248d ]
+[ Upstream commit 0eee030c2c09c7a44be778de5f451d9e7a2f09c1 ]
 
-process_pptables_v1_0.c builds the Tonga state array pointer
-from usStateArrayOffset before checking that the table buffer covers
-the referenced data. A truncated PowerPlay table can therefore lead to
-out-of-bounds reads while validating the state array.
+The ASUS ExpertBook PM3406CHA uses an ALC256 codec with subsystem
+ID 1043:1664. On Linux boot, the internal speakers are silent even
+though playback is routed to the codec and the speaker pin is
+configured for output.
 
-Validate the fixed table size first, then check the state array offset
-and entry range before dereferencing the state array.
+The codec starts with coefficient 0x10 set to 0x1d20. Writing 0x7f20
+to coefficient 0x10 immediately restores internal speaker output.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This was reproduced on the affected hardware from a fresh boot using
+hda-verb. Reducing a larger initialization sequence showed that this
+coefficient write alone is sufficient; no GPIO, EAPD, pin-control, or
+other coefficient changes are required. After applying the coefficient
+in userspace, speaker output also remains functional across suspend
+and resume.
+
+Add a machine-specific HDA fixup that writes the required coefficient.
+
+The fixup has been compile-tested, but could not be boot-tested because
+the affected hardware is no longer available.
+
+Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/2162718
+Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
+Link: https://patch.msgid.link/20260924144512.3989-1-muhtaseem2005@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the Tonga state-array OOB exists in this
-6.18.53 tree, the patch is self-contained, and it applies cleanly.
+This is a machine-specific Realtek HDA quirk for silent speakers on one
+ASUS laptop. The local tree is **6.18.57**; the ALC256 driver and quirk
+tables are already here, and the SSID entry is not.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [drm/amd/pm] [Validate] [Add bounds checks before using the
-Tonga PowerPlay state array pointer derived from `usStateArrayOffset`.]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[ALSA: hda/realtek]** **[Fix]** **[restore internal speakers
+on ASUS ExpertBook PM3406CHA]**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Yang Wang &lt;kevinyang.wang@amd.com&gt; (author)
-- Reviewed-by: Hawking Zhang &lt;Hawking.Zhang@amd.com&gt; (AMD GFX
-  reviewer; mailing-list reply said the whole 5-patch series is
-  Reviewed-by)
-- Signed-off-by: Alex Deucher &lt;alexander.deucher@amd.com&gt; (amdgpu
-  maintainer)
-- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence
-  expected)
-- Ignore pipeline-added Upstream commit / Sasha Levin SOB
+- `Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-
+  driver/+bug/2162718` — Ubuntu bug with a real user report
+- `Link: https://patch.msgid.link/20260924144512.3989-1-
+  muhtaseem2005@gmail.com` — original submission
+- `Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>` —
+  author
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA maintainer
+  applied it
+- No `Fixes:` tag (expected: this is a missing hardware quirk, not a
+  regression)
+- No `Cc: stable@vger.kernel.org` (expected for this review queue)
+- No `Reported-by:` / `Tested-by:` in the git message; the Launchpad
+  thread supplies both in practice
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `process_pptables_v1_0.c` forms `ATOM_Tonga_State_Array *` from
-  `usStateArrayOffset` before proving the PowerPlay buffer covers that
-  object.
-- Symptom: truncated/malformed PowerPlay table → out-of-bounds reads
-  while validating the state array.
-- Root cause: pointer arithmetic first, checks after (and the checks
-  never used `soft_pp_table_size`).
-- Fix: check fixed table size, then offset, then entry span, then
-  dereference.
-- No affected-version list in the message.
+- **Bug:** ASUS ExpertBook PM3406CHA (ALC256, SSID `1043:1664`) boots
+  with internal speakers silent even though ALSA routes playback to the
+  codec and the speaker pin is an output.
+- **Symptom:** no audible speaker output; HDMI/Bluetooth still work
+  (Launchpad).
+- **Root cause:** vendor coefficient `0x10` comes up as `0x1d20`.
+  Writing `0x7f20` restores output. Isolated with `hda-verb` from a
+  larger init sequence; GPIO/EAPD/pin-control/other coeffs were not
+  required. After the userspace write, audio still worked across
+  suspend/resume.
+- **Version info:** Launchpad reporter: Ubuntu 24.04.4, kernel
+  `7.0.0-28-generic`; author also tested on `7.2.6-arch2-1`.
+- **Caveat in the message:** author compile-tested the kernel patch but
+  no longer had the laptop for a kernel boot-test.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. Explicit OOB hardening. Also tightens
-`entry_index <= ucNumEntries` to `entry_index < ucNumEntries` (off-by-
-one on the index check).
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. This is an explicit hardware-quirk bug
+fix.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c`
-  (+40 / −22)
-- Functions: `check_powerplay_tables` split into `get_tonga_state_array`
-  + thin wrapper; `get_number_of_powerplay_table_entries_v1_0`;
-  `get_powerplay_table_entry_v1_0`
-- Scope: single-file surgical fix
+- File: `sound/hda/codecs/realtek/alc269.c`  **+10 / -0**
+- Functions/tables: `enum { ... }` (add `ALC256_FIXUP_ASUS_PM3406CHA`),
+  `alc269_fixups[]`, `alc269_fixup_tbl[]`
+- Scope: **single-file surgical hardware quirk**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Hunk 1 (init validation): Before — compute `state_arrays = table +
-  usStateArrayOffset` then assert revision/offset/size/`ucNumEntries`.
-  After — require `soft_pp_table_size >= sizeof(*powerplay_table)`, then
-  existing header checks, then `offset <= table_size -
-  sizeof(*state_arrays)`, then dereference, then `struct_size(...) <=
-  remaining`.
-- Hunk 2 (`get_number_of_powerplay_table_entries_v1_0`): Before — same
-  unvalidated pointer add, return `ucNumEntries`. After — shared helper;
-  fail closed on invalid table.
-- Hunk 3 (`get_powerplay_table_entry_v1_0`): Before — pointer add +
-  offset/`ucNumEntries` checks after the add; `entry_index <=
-  ucNumEntries`. After — helper first; `entry_index < ucNumEntries`.
-- Paths: GPU powerplay init and power-state table walk (normal device
-  bring-up), not a rare error-only path.
+1. Enum: add a new fixup ID used as an index into `alc269_fixups[]`.
+2. Fixup table: `HDA_FIXUP_VERBS` writing nid `0x20`
+   `AC_VERB_SET_COEF_INDEX 0x10` then `AC_VERB_SET_PROC_COEF 0x7f20`.
+3. Quirk table: `SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook
+   PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA)`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: memory safety — buffer overflow / OOB read of firmware (and
-  optionally sysfs-uploaded) table data.
-- Mechanism: `usStateArrayOffset` and `ucNumEntries` were trusted. A
-  truncated blob or huge offset reads past the ATOM table.
-  `struct_size()` is overflow-safe for the entries span.
-- Also logic: exclusive vs inclusive index check.
+Before: `alc269_probe()` has no PCI-SSID match for `1043:1664`.
+Launchpad shows a pin-match fallback (`"ALC256: picked fixup (pin
+match)"` with empty name) that does not enable speakers.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: size → header → offset → header of subtable → full
-  entries span.
-- Underflow: `table_size - sizeof(*state_arrays)` is safe because the
-  first check is `table_size >= sizeof(*powerplay_table)`, and
-  `ATOM_Tonga_POWERPLAYTABLE` is much larger than
-  `ATOM_Tonga_State_Array` (header + two `UCHAR`s + flex array).
-- Regression: valid VBIOS tables should still pass if `usStructureSize`
-  is the full PowerPlay blob (ATOM `CU16(idx)` / `usStructureSize`).
-  That is the same size the later Tonga/Vega subtable helpers use; a
-  header-only size would reject every Tonga GPU and would not have
-  landed.
-- No public API / locking / data-structure change. Stale kernel-doc
-  above `get_tonga_state_array` still mentions `check_powerplay_tables`
-  (later comment-only fix 4986757d); no runtime impact.
+After: PCI SSID match wins (`snd_hda_pick_fixup` runs first;
+`snd_hda_pick_pin_fixup` returns immediately if `fixup_id` is already
+set). Verbs are queued at `HDA_FIXUP_ACT_PROBE` via
+`snd_hda_add_verbs()` and executed in `alc_init()` after Realtek init,
+including resume.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Hardware workaround / codec quirk]**
+Broken: ALC256 coef `0x10` left at `0x1d20` on this SKU, so the internal
+amp/output path stays muted.
+Fix: machine-specific init/resume verb write of `0x7f20`. Same pattern
+as `ALC269_FIXUP_DELL_M101Z` (speaker enable via coef verbs).
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct for this class of fix: one SSID, two verbs,
+existing `HDA_FIXUP_VERBS` machinery. Isolated to `1043:1664`. ALSA
+maintainer accepted it. Low regression risk for other machines. Residual
+risk is headphone routing on this one SKU if coef `0x10` is also a
+HP/speaker switch on ALC256 (GX502/GU502 comments use `0x10` that way
+with different values). That is unverified on this SKU; Takashi still
+applied the patch, and the Launchpad reporter confirmed speakers work.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: There is no “introduced-by” regression. The bug is a **missing
+quirk**. Surrounding table entries (`0x1043:0x1663` / `0x1683`,
+`ALC269_FIXUP_DELL_M101Z`) already exist at `v6.18.57`. ALC256
+(`0x10ec0256`) is a first-class ID in this file
+(`HDA_CODEC_ID(0x10ec0256, "ALC256")`).
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Not applicable. This is new-hardware quirk
+coverage, not a revert of a bad change.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- Buggy `check_powerplay_tables` body: `c82baa28184356` (yanyang1,
-  2015-08-18), originally `tonga_processpptables.c`.
-- File rename: `f8a4c11b0a33f9` (2016).
-- Bug has been in-tree since PowerPlay v1 (~4.x era), so it is in this
-  6.18 tree.
+- Related: `0156c22fb0ca8` “Add support for ASUS Commercial laptops
+  using CS35L41 HDA” adds **PM3406CKA** (`0x1043:0x1454`) with
+  `ALC287_FIXUP_CS35L41_I2C_2`. That is a **different SKU** with Cirrus
+  companion amps. Copying it to CHA would be wrong.
+- Similar silent-speaker quirk already in this tree: `e561c2740b628`
+  Higole F9B.
+- Standalone 10-line patch, not `X/Y` of a series. No follow-up on this
+  SSID after the candidate.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. N/A.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Only this commit by Muhtasham Nawr al-Mahmud under `sound/hda/`.
+Not the subsystem maintainer. Applied by Takashi Iwai (`MAINTAINERS`:
+sound maintainer).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Same author/series (independent per-ASIC bounds work):
-  - 1/5 `Validate pp_table header before reading size` (SWSMU
-    `smu_sys_set_pp_table`)
-  - 2/5 `Use uploaded size for legacy custom PPTable`
-    (`pp_dpm_set_pp_table`)
-  - **3/5 this commit**
-  - 4/5 Vega hwmgr bounds
-  - 5/5 legacy hwmgr offsets
-- Follow-up (separate 2/3 series): `Validate Tonga PPTable subtable
-  bounds` (~600 lines) for other subtables; later comment-align commit
-  for this helper.
-- This commit does not call `pp_entries_max()` (autosel parent helper).
-  Standalone for the state-array OOB.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Yang Wang is an AMD PM contributor with a run of PPTable
-bounds/UAF fixes. Hawking Zhang reviewed; Alex Deucher merged.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Uses existing `hwmgr->soft_pp_table_size` (set in
-  `get_powerplay_table()` from ATOM) and kernel `struct_size`
-  (`include/linux/overflow.h`). Both exist in v6.18.53.
-- 1/5 is a different file (SWSMU). 2/5 improves custom-upload size
-  accounting in `amd_powerplay.c` but is not required to compile or to
-  bound VBIOS tables.
-- Can apply standalone. Confirmed with `patch --dry-run` against
-  `v6.18.53` file: clean.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses `HDA_FIXUP_VERBS`, `SND_PCI_QUIRK`,
+`alc269_fixups[]`, `alc269_fixup_tbl[]` — all present at `v6.18.57`. Can
+apply standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 1ac24df78c566d767a5ef05a1fe0ecc55bac248d` → [PATCH 3/5] htt
-  ps://patch.msgid.link/20260623034151.263746-3-kevinyang.wang@amd.com
-- `b4 dig -a`: only v1 of this 5-patch series (no later rewrite of 3/5).
-- Freedesktop: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/147288.html
-- Hawking on 1/5 (series Ack): “Series is Reviewed-by: Hawking Zhang” —
-  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147299.html
-- No NAK found. No Cc: stable in the submission.
+- `b4 dig -c 0eee030c2c09…` matched msgid
+  `20260924144512.3989-1-muhtaseem2005@gmail.com`
+- Series: **v1 RFC only** (no v2/v3)
+- LKML: https://lkml.iu.edu/2609.3/01658.html (patch),
+  https://lkml.iu.edu/2609.3/11978.html (reply)
+- Takashi Iwai: “The code change looks OK, so I applied this now.” **No
+  NAK, no requested changes.**
+- lore.kernel.org fetches returned 403; discussion recovered via `b4
+  dig`, Patchew, and LKML IU.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w` To/Cc: amd-gfx, Alex Deucher, Hawking Zhang, Kenneth
-Feng. Maintainer merged.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Muhtasham Nawr al-Mahmud; Jaroslav Kysela; Takashi
+Iwai; Kailang Yang (Realtek); `linux-sound@vger.kernel.org`; `linux-
+kernel@vger.kernel.org`. Subsystem maintainer reviewed and applied.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Bug is described as truncated PowerPlay
-table OOB. Trigger is firmware parse at init, or root write to
-`pp_table` sysfs (documented in `amdgpu_pm.c`).
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record (Launchpad #2162718):
+- Reporter: Nguyễn Trọng Tuyền, 2026-08-03, ASUS ExpertBook P3
+  PM3406CHA, Ryzen 7 8840HS, ALC256, SSID `1043:1664`.
+- Thought it was the same as PM3406CKA (#2133791, `1043:1454`); that SKU
+  needed CS35L41, this one does not.
+- Author isolated coef `0x10` on the hardware; reporter later: “It works
+  perfectly on my laptop (Ubuntu 24.04.4, kernel 7.0.0-28). My speakers
+  are finally working again!”
+- Independent user confirmation of the userspace workaround. Kernel-
+  patch `Tested-by` was offered but not in the commit.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 5-patch OOB series plus a later Tonga subtable series. This
-patch is the Tonga *state array* piece and is self-contained. Other
-patches cover other table formats/subtables.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone RFC. Not part of a multi-patch series. PM3406CKA
+CS35L41 quirk is a different machine and must not be reused.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED — lore.kernel.org/stable returned HTTP 403. No
-evidence this was rejected for stable.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No stable-list hit for PM3406CHA (lore.kernel.org/stable 403;
+web search did not show a stable NAK or prior rejection). UNVERIFIED
+that it was ever discussed on stable@; absence is not a negative.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `get_tonga_state_array` (new), `check_powerplay_tables`,
-`get_number_of_powerplay_table_entries_v1_0`,
-`get_powerplay_table_entry_v1_0`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: No function bodies changed. Data: `ALC256_FIXUP_ASUS_PM3406CHA`,
+`alc269_fixups[]`, `alc269_fixup_tbl[]`. Consumers: `alc269_probe()` →
+`snd_hda_pick_fixup()` → `snd_hda_apply_fixup()`; `alc_init()` →
+`snd_hda_apply_verbs()`.
 
-Step 5.2: TRACE CALLERS
+**Step 5.2: TRACE CALLERS**
 Record:
-- `check_powerplay_tables` ← `pp_tables_v1_0_initialize` ←
-  `pptable_v1_0_funcs.pptable_init` ← SMU7 when `pp_table_version ==
-  PP_TABLE_V1` (`smu7_init_function_pointers`).
-- `get_number_of_powerplay_table_entries_v1_0` ←
-  `smu7_get_number_of_powerplay_table_entries` ← `psm`
-  `get_num_of_pp_table_entries`.
-- `get_powerplay_table_entry_v1_0` ← `smu7_get_pp_table_entry_v1` ←
-  `psm_init_power_state_table` loop `for (i = 0; i < table_entries;
-  i++)`.
-- Context: driver init / DPM bring-up, process context.
+- `alc269_probe()` calls `snd_hda_pick_fixup(..., alc269_fixup_tbl,
+  alc269_fixups)` then `snd_hda_apply_fixup(..., HDA_FIXUP_ACT_PROBE)`.
+- `alc_init()` (codec `.init`, including resume) calls
+  `snd_hda_apply_verbs()` then `HDA_FIXUP_ACT_INIT`.
+- `HDA_FIXUP_VERBS` are applied only at `HDA_FIXUP_ACT_PROBE` to
+  **register** the list; documented to run at init and resume
+  (`snd_hda_add_verbs` comment in `auto_parser.c`).
+- Path: HD-audio codec probe on this laptop, then PCM playback. Not IRQ-
+  hot.
 
-Step 5.3: TRACE CALLEES
-Record: `le16_to_cpu`, `struct_size`, `PP_ASSERT_WITH_CODE` (warns and
-runs `return -1` — real control flow, not a debug-only assert).
+**Step 5.3: TRACE CALLEES**
+Record: `snd_hda_sequence_write()` of two vendor verbs on nid `0x20`
+(Realtek vendor processing node). No alloc/lock/API change.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Reachable on every boot of SMU7 PP_TABLE_V1 ASICs
-(Tonga/Fiji/Polaris/VegaM class in this hwmgr). Also reachable if root
-writes `/sys/class/drm/cardX/device/pp_table` (`S_IRUGO | S_IWUSR`),
-which copies into `hardcode_pp_table` and calls `amd_powerplay_reset` →
-re-init. Unprivileged users cannot write the sysfs node.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Unprivileged playback on this laptop triggers the silent path
+today. After the quirk, probe/init writes the coef. Userspace-reachable
+on the affected SKU.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same unvalidated `table + le16_to_cpu(offset)` pattern in
-Vega/legacy processpptables; same author fixed those in 4/5, 5/5, and
-the later Tonga subtable patch.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same file already uses coef-`0x10` verbs
+(`ALC269_FIXUP_ASUS_N7601ZM`, `ALC274_FIXUP_ASUS_ZEN_AIO_27`) and
+speaker-enable verbs (`ALC269_FIXUP_DELL_M101Z`). This matches
+established Realtek practice.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 Record:
-- Local tree: `v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18
-  SUBLEVEL=53`, branch `autosel`.
-- `git merge-base --is-ancestor f29e53bc54611 v6.18.53` → **not in
-  v6.18.53**.
-- `v6.18.53:process_pptables_v1_0.c` still has the old
-  `check_powerplay_tables` that adds `usStateArrayOffset` before any
-  size check (lines 1116–1137).
-- Bug introduced ~2015; present here.
+- `git describe HEAD` → `v6.18.57-155-gcdf239ca885b2`
+- `make kernelversion` / Makefile → **6.18.57**
+- `git merge-base --is-ancestor 97902f970e5cd v6.18.57` → **not an
+  ancestor** (the quirk is **not** in the 6.18.57 baseline)
+- At `v6.18.57`, `alc269_fixup_tbl` goes `0x1663` then `0x1683`; **no
+  `0x1664` / PM3406CHA**
+- File `sound/hda/codecs/realtek/alc269.c` exists (split in
+  `aeeb85f26c3bb`, long before 6.18)
+- ALC256 ID table present at v6.18.57
+- Bug is the missing SSID quirk; it exists on this 6.18.y tree
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Expected **clean apply**. Dry-run of this commit’s diff onto the
-v6.18.53 copy of the file succeeded. Mainline context uses
-`kzalloc_obj`; 6.18.53 uses `kzalloc(sizeof(...))` — that line is not
-part of the hunks.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply expected.** Insertion points at v6.18.57:
+- enum: `ALC269_FIXUP_DELL_M101Z` then `ALC269_FIXUP_SKU_IGNORE`
+- `alc269_fixups[]`: same pair of entries
+- quirk table: `0x1663` then `0x1683`
+No struct/API mismatch.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: v6.18.53 does **not** contain 1/5, 2/5, this commit, 4/5, or
-5/5. No earlier Tonga state-array bounds helper. Follow-up subtable
-helpers (`tonga_pp_table_has_space`) are only on the autosel branch
-after later candidates — not in v6.18.53.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No other `PM3406CHA` / `0x1043:0x1664` fix. PM3406CKA CS35L41
+entry is a different SSID and amp topology.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [drm/amd/pm powerplay] [IMPORTANT — widely used AMD GPU DPM for
-Tonga/Fiji/Polaris-era cards, not core mm/net, but real hardware in the
-field]
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **ALSA HD-audio Realtek codec** (`sound/hda/codecs/realtek/`).
+**IMPORTANT** for laptop audio, not core mm/VFS. Quirk-table maintenance
+is routine in stable.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained; this is targeted firmware-table hardening,
-not a refactor of a brand-new subsystem.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: High churn of per-machine quirks (mute LEDs, SSIDs, silent
+speakers). Mature driver, new rows for new laptops. That is the intended
+stable pattern.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific: amdgpu SMU7 with PowerPlay table v1
-(Tonga/Fiji/Polaris family). Config `CONFIG_DRM_AMDGPU`.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / SSID-specific.** Only ASUS ExpertBook
+PM3406CHA (`PCI SSID 1043:1664`, ALC256). No effect on other machines.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Every boot / every speaker playback on that laptop. Not a race.
+Unprivileged user playing audio. Reported on Ubuntu 24.04.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Internal speakers completely silent while the stack looks
+healthy. Not a panic/UAF. **MEDIUM–HIGH functional** for owners of that
+laptop (device unusable for built-in audio). HDMI/BT still work.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Always parsed at device init from VBIOS/ATOM
-  (`smu_atom_get_data_table` → `soft_pp_table_size = usStructureSize`).
-- Healthy firmware: no behavior change.
-- Truncated/corrupt VBIOS or crafted table: OOB read.
-- Sysfs `pp_table` store is root-only. On v6.18.53, short uploads
-  `memcpy` into a buffer still sized as the original table
-  (`pp_dpm_set_pp_table`); 2/5 would make `soft_pp_table_size` match the
-  upload. This commit still stops offsets that run past
-  `soft_pp_table_size`.
-- Unprivileged users cannot trigger via sysfs.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Kernel OOB read → KASAN/oops, possible info leak from adjacent
-BIOS/kernel memory if values are consumed. Severity: **HIGH** (memory
-safety). Not a confirmed remote unprivileged exploit.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: HIGH for Tonga/Polaris users with bad/truncated firmware or
-  custom PP tables; fail closed instead of reading off the end of the
-  ATOM blob.
-- Risk: LOW (~40 lines, local helper, existing `PP_ASSERT_WITH_CODE`
-  style).
-- Ratio: favorable. Residual gap: other subtables still unchecked until
-  the large follow-up; that is not a reason to skip this contained
-  state-array fix.
+- **Benefit:** High for that SKU (speakers work). Matches the stable
+  hardware-quirk exception. User-confirmed.
+- **Risk:** Very low: +10 lines, one SSID, existing verb mechanism,
+  maintainer-acked. Possible headphone interaction on this SKU only
+  (unverified).
+- **Ratio:** Strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
+
 FOR:
-- Real OOB read: pointer from firmware offset used before buffer
-  coverage is proven (code from 2015, present in 6.18.53).
-- Small, obviously correct, overflow-safe `struct_size` check.
-- Reviewed by Hawking Zhang (series), merged by Alex Deucher.
-- Applies cleanly to this tree; no missing types/helpers.
-- Shared helper also closes the same hole in entry-count and entry-fetch
-  paths.
-- Fail closed: init returns error instead of walking garbage.
+- Real user-visible bug: silent internal speakers
+- Ubuntu Launchpad #2162718; original reporter confirmed the coef
+  workaround
+- Isolated, machine-specific `HDA_FIXUP_VERBS` + `SND_PCI_QUIRK`
+- +10 lines, one file, no new API
+- Driver, ALC256 support, and quirk tables already in 6.18.57
+- Same pattern as existing speaker/coef quirks
+- Takashi Iwai applied the RFC as-is
+- Explicit stable exception: hardware quirk / SSID enablement for an
+  existing driver
 
 AGAINST:
-- No crash report / syzbot / Fixes: tag.
-- Part of 3/5; full PPTable hardening needs later larger patches.
-- Sysfs path is root-only; VBIOS path needs a truncated/malformed table.
-- Incomplete vs later 600-line subtable patch.
+- Not a crash, UAF, or security bug
+- Author could not boot-test the kernel patch after losing the laptop
+  (userspace path was tested; reporter confirmed it)
+- Unverified headphone behavior if coef `0x10` is a HP/speaker mux on
+  this SKU
 
 UNRESOLVED:
-- Stable list discussion (lore 403).
-- No production crash log attached to the patch.
+- lore.kernel.org HTTP 403 (discussion recovered elsewhere)
+- No stable@ thread found
+- Headphone path on this SKU not documented
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — order of checks is sound;
-   maintainer review; in mainline.
-2. Fixes a real bug that affects users? **PASS** — OOB read of PowerPlay
-   state array from truncated/malformed tables on a live init path.
-3. Important issue? **PASS** — kernel OOB read / crash / info-leak
-   class; HIGH, not a style cleanup.
-4. Small and contained? **PASS** — one file, +40/−22.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — bug present in v6.18.53; dry-
-   run apply clean.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — standard quirk; hda-verb
+   isolation; Launchpad confirmation; maintainer applied
+2. Fixes a real bug that affects users? **PASS** — silent speakers,
+   filed and confirmed
+3. Important issue? **PASS** for this class (hardware quirk / broken
+   audio on a shipping laptop), not CRITICAL crash
+4. Small and contained? **PASS** — 10 lines, one SSID
+5. No new features or APIs? **PASS** — quirk only
+6. Can apply to the local tree? **PASS** — 6.18.57 has the file and
+   insertion context; SSID not already present
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
-bugfix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **Hardware quirk / existing-driver SSID enablement.** Automatic
+YES category in the stable rules given in the prompt.
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to **this** 6.18.y tree. The buggy pointer
-construction is in v6.18.53, the fix is small and independent of the
-rest of the 5-patch series, and it prevents out-of-bounds reads during
-amdgpu PowerPlay v1 init.
+**Step 9.4: MAKE YOUR DECISION**
 
-===============================================================
-What the commit solves for this tree
-===============================================================
-
-On 6.18.53, `check_powerplay_tables()`,
-`get_number_of_powerplay_table_entries_v1_0()`, and
-`get_powerplay_table_entry_v1_0()` all do:
-
-`state_arrays = (ATOM_Tonga_State_Array *)(powerplay_table +
-le16_to_cpu(usStateArrayOffset))`
-
-and then read `ucNumEntries` / `entries[i]`. `soft_pp_table_size` is
-already known from ATOM `usStructureSize` but was unused. A truncated
-PowerPlay table or an offset past the blob is an out-of-bounds kernel
-read during GPU init (Polaris-class cards are still common). The patch
-adds the missing coverage checks and an exclusive entry-index test. It
-does not add APIs. 1/5 and 2/5 are related hardening but not
-compile/runtime prerequisites for this file.
-
-Risk vs benefit: low risk of regressing good firmware; high value if the
-table is short or the offset is wrong.
+This belongs on 6.18.y. The ALC256 Realtek driver already enumerates
+this laptop; without the SSID row, speakers stay silent. The change is a
+two-verb init/resume write gated to `1043:1664`, the same style as other
+Realtek speaker quirks already in this file. It applies cleanly to this
+tree and does not need the unrelated PM3406CKA CS35L41 patch.
 
 Verification:
-- [Phase 1] Tags: author Yang Wang; Reviewed-by Hawking Zhang; SOB Alex
-  Deucher; no Fixes/syzbot/stable Cc
-- [Phase 2] Diff: +40/−22 in `process_pptables_v1_0.c`; helper + three
-  call sites; OOB bounds + off-by-one index
-- [Phase 2] `PP_ASSERT_WITH_CODE` in `pp_debug.h` really `pr_warn` +
-  executes `return -1`
-- [Phase 3] Blame: `c82baa28184356` (2015-08-18) introduced the
-  unvalidated pointer add
-- [Phase 3] No Fixes: tag
-- [Phase 3] Series 1/5 and 2/5 touch other files; this commit does not
-  use `pp_entries_max()`
-- [Phase 3] `struct_size` in `include/linux/overflow.h`;
-  `soft_pp_table_size` set in `get_powerplay_table()`
-- [Phase 4] `b4 dig -c 1ac24df78c566d767a5ef05a1fe0ecc55bac248d` → PATCH
-  3/5 msgid 20260623034151.263746-3
-- [Phase 4] `b4 dig -a`: v1 only for this series
-- [Phase 4] `b4 dig -w`: amd-gfx, Deucher, Hawking, Kenneth Feng
-- [Phase 4] Hawking: “Series is Reviewed-by”
-  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147299.html
-- [Phase 4] Patch body: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/147288.html
-- [Phase 5] Callers: `pp_tables_v1_0_initialize`,
-  `smu7_get_number_of_powerplay_table_entries`,
-  `smu7_get_pp_table_entry_v1` ← `psm_init_power_state_table`
-- [Phase 5] `pptable_v1_0_funcs` selected for `PP_TABLE_V1` in
-  `smu7_init_function_pointers`
-- [Phase 5] sysfs `pp_table` is `S_IRUGO | S_IWUSR`
-  (`AMDGPU_DEVICE_ATTR_RW`)
-- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; Makefile
-  6.18.53
-- [Phase 6] commit **not** ancestor of v6.18.53; buggy function present
-  at v6.18.53:1116
-- [Phase 6] `patch --dry-run` of this diff onto v6.18.53 file: success
-- [Phase 6] ATOM size is `usStructureSize` via
-  `amdgpu_atom_parse_data_header` `*size = CU16(idx)`
-- [Phase 8] Failure mode: OOB read on truncated PP table during amdgpu
-  init; HIGH
-- UNVERIFIED: lore.kernel.org/stable search (HTTP 403); no public crash
-  repro attached to the patch
+- [Phase 1] Parsed tags: `Closes:` Launchpad 2162718; `Link:` patch
+  msgid; SOB author + Takashi Iwai; no `Fixes:`/`Cc: stable`
+- [Phase 1] Body: silent speakers; coef `0x10` `0x1d20`→`0x7f20`; hda-
+  verb isolation
+- [Phase 2] Diff: +10 in `alc269.c`; enum + `HDA_FIXUP_VERBS` +
+  `SND_PCI_QUIRK(0x1043,0x1664)`
+- [Phase 2] `auto_parser.c`: `HDA_FIXUP_VERBS` registered at PROBE, run
+  from `alc_init()` after codec init and on resume
+- [Phase 3] No `Fixes:` tag; missing-quirk, not a regression
+- [Phase 3] Related `0156c22fb0ca8` is PM3406CKA CS35L41 (`0x1454`),
+  different hardware
+- [Phase 3] Author has only this hda commit; Takashi applied it
+- [Phase 4] `b4 dig -c 0eee030c2c09…`: RFC v1 only; recipients include
+  Iwai/Kysela/Realtek/linux-sound
+- [Phase 4] Takashi: “The code change looks OK, so I applied this now.”
+  No NAK
+- [Phase 4] Launchpad: reporter confirmed speakers work with the coef
+  write
+- [Phase 4] lore.kernel.org direct fetch: 403; used b4/Patchew/LKML IU
+  instead
+- [Phase 5] Call chain: `alc269_probe` → `snd_hda_pick_fixup` → verbs →
+  `alc_init`/`snd_hda_apply_verbs`
+- [Phase 5] Pin-match cannot override once PCI SSID is set
+  (`snd_hda_pick_pin_fixup` early return)
+- [Phase 6] `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`;
+  kernelversion 6.18.57
+- [Phase 6] `git merge-base --is-ancestor 97902f970e5cd v6.18.57` failed
+  → quirk **not** in 6.18.57 baseline
+- [Phase 6] `git show v6.18.57:…alc269.c` has `0x1663` then `0x1683`, no
+  `0x1664`; DELL_M101Z/SKU_IGNORE insertion points exist
+- [Phase 6] ALC256 `0x10ec0256` present at v6.18.57
+- [Phase 7] ALSA Realtek; Takashi Iwai in MAINTAINERS
+- [Phase 8] Failure mode: silent speakers on one laptop SSID; severity
+  MEDIUM–HIGH functional; risk very low
+- UNVERIFIED: headphone interaction of coef `0x10` on this SKU; no
+  stable@ discussion recovered
 
 **YES**
 
- .../powerplay/hwmgr/process_pptables_v1_0.c   | 62 ++++++++++++-------
- 1 file changed, 40 insertions(+), 22 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-index 6cfef1b295abb..94c1e2c103703 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-@@ -1113,15 +1113,17 @@ static int init_thermal_controller(
-  * @powerplay_table: Pointer to the PowerPlay Table.
-  * Exception:  2 if the powerplay table is incorrect.
-  */
--static int check_powerplay_tables(
--		struct pp_hwmgr *hwmgr,
--		const ATOM_Tonga_POWERPLAYTABLE *powerplay_table
--		)
-+static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
-+	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
-+	const ATOM_Tonga_State_Array **state_array)
- {
- 	const ATOM_Tonga_State_Array *state_arrays;
-+	u16 state_array_offset;
-+	size_t state_array_size;
-+	size_t table_size = hwmgr->soft_pp_table_size;
- 
--	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
--		le16_to_cpu(powerplay_table->usStateArrayOffset));
-+	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
-+			    "Invalid PowerPlay Table!", return -1);
- 
- 	PP_ASSERT_WITH_CODE((ATOM_Tonga_TABLE_REVISION_TONGA <=
- 		powerplay_table->sHeader.ucTableFormatRevision),
-@@ -1130,12 +1132,34 @@ static int check_powerplay_tables(
- 		"State table is not set!", return -1);
- 	PP_ASSERT_WITH_CODE((0 < powerplay_table->sHeader.usStructureSize),
- 		"Invalid PowerPlay Table!", return -1);
-+
-+	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
-+	PP_ASSERT_WITH_CODE((state_array_offset <=
-+			     table_size - sizeof(*state_arrays)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
-+		state_array_offset);
- 	PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
- 		"Invalid PowerPlay Table!", return -1);
- 
-+	state_array_size = struct_size(state_arrays, entries, state_arrays->ucNumEntries);
-+	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*state_array = state_arrays;
-+
- 	return 0;
- }
- 
-+static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
-+	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table)
-+{
-+	const ATOM_Tonga_State_Array *state_arrays;
-+
-+	return get_tonga_state_array(hwmgr, powerplay_table, &state_arrays);
-+}
-+
- static int pp_tables_v1_0_initialize(struct pp_hwmgr *hwmgr)
- {
- 	int result = 0;
-@@ -1239,17 +1263,16 @@ const struct pp_table_func pptable_v1_0_funcs = {
- 
- int get_number_of_powerplay_table_entries_v1_0(struct pp_hwmgr *hwmgr)
- {
--	ATOM_Tonga_State_Array const *state_arrays;
-+	const ATOM_Tonga_State_Array *state_arrays;
- 	const ATOM_Tonga_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
-+	int result;
- 
- 	PP_ASSERT_WITH_CODE((NULL != pp_table),
- 			"Missing PowerPlay Table!", return -1);
--	PP_ASSERT_WITH_CODE((pp_table->sHeader.ucTableFormatRevision >=
--			ATOM_Tonga_TABLE_REVISION_TONGA),
--			"Incorrect PowerPlay table revision!", return -1);
- 
--	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
--			le16_to_cpu(pp_table->usStateArrayOffset));
-+	result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
-+	PP_ASSERT_WITH_CODE((result == 0),
-+			    "Invalid PowerPlay Table State Array.", return result);
- 
- 	return (uint32_t)(state_arrays->ucNumEntries);
- }
-@@ -1380,15 +1403,11 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
- 
- 	if (pp_table->sHeader.ucTableFormatRevision >=
- 			ATOM_Tonga_TABLE_REVISION_TONGA) {
--		state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
--				le16_to_cpu(pp_table->usStateArrayOffset));
--
--		PP_ASSERT_WITH_CODE((0 < pp_table->usStateArrayOffset),
--				"Invalid PowerPlay Table State Array Offset.", return -1);
--		PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
--				"Invalid PowerPlay Table State Array.", return -1);
--		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
--				"Invalid PowerPlay Table State Array Entry.", return -1);
-+		result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
-+		PP_ASSERT_WITH_CODE((result == 0),
-+				    "Invalid PowerPlay Table State Array.", return result);
-+		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
-+				    "Invalid PowerPlay Table State Array Entry.", return -1);
- 
- 		state_entry = GET_FLEXIBLE_ARRAY_MEMBER_ADDR(
- 						ATOM_Tonga_State, entries,
-@@ -1414,4 +1433,3 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
- 
- 	return result;
- }
--
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index fa5bc54ff083d..a40b85fbaf393 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3678,6 +3678,7 @@ enum {
+ 	ALC269_FIXUP_SONY_VAIO,
+ 	ALC275_FIXUP_SONY_VAIO_GPIO2,
+ 	ALC269_FIXUP_DELL_M101Z,
++	ALC256_FIXUP_ASUS_PM3406CHA,
+ 	ALC269_FIXUP_SKU_IGNORE,
+ 	ALC269_FIXUP_ASUS_G73JW,
+ 	ALC269_FIXUP_ASUS_N7601ZM_PINS,
+@@ -4089,6 +4090,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 			{}
+ 		}
+ 	},
++	[ALC256_FIXUP_ASUS_PM3406CHA] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x10 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x7f20 },
++			{}
++		}
++	},
+ 	[ALC269_FIXUP_SKU_IGNORE] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_sku_ignore,
+@@ -7184,6 +7193,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA),
+ 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
 -- 
 2.53.0
 
