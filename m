@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E698646984;
-	Mon, 19 Oct 2026 14:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18BF647992;
+	Mon, 19 Oct 2026 14:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418794; cv=none; b=ttCE70n2qAnK9GoqD5MSpkLvo3vqnsOk2sTHNLX3pPUFnpPS8j8gOXQshKZppf4z+3ClKXHzJPWFTOrzjmJjcjxv1iUSjgQ6YxEAqC/zdNMFTuO/w8nJ8+8RcmgXXZQMYSuH9Neervh0We3sVIwOz3mk9l7HJEFA5Rr4P9YX0gA=
+	t=1792418795; cv=none; b=fHLAGe30u5vCkolKVVyMSrFRWlDSz0CO7PppLd+vRdN8WAcmU9Cn4hGa4/yesc5QBMpOybQLo9t2AC+3NngG7UCRhttXT/ST9zmx8wB0WXOBNYABDGZrSjXsy1xWTeU80c9nI44cI3mgdqY56NJABpxUEWEZKJG8OPBo1IkqsAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418794; c=relaxed/simple;
-	bh=DIjaZS84LAc19WXPq5YOGaiFUOcay9QyGAgedbAcO9Y=;
+	s=arc-20240116; t=1792418795; c=relaxed/simple;
+	bh=gEEJd4PlB23y/8SGXAWYyzRbVPbMpV+TOCKiJ4Zlp1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bXfISiFUDVZa7k6Zfc9aK9bcb4MizNdcr+/7glc8AlPkEnHQ2/cK0cG1NWgZEQVv1cmG4hxnP9v+1RXb4B0Qka98zEj/0snLaYmVGXFbECWJNMgoR9gHyfMsG/XAMP3P0zHp/8GSEEovMNcanzGx5Obb5N5BD4DK/R85CT7vLEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NUA3H4Za; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dS5+iJA2EPM+uhosPS8yadbqyGcblc1ky6A0Zfs5grljAptzovZTS+vDkFghpyNnaGiGUKOt1xZdY3MUwIygSCuoTFaBC3W1L11iMo9UEFCLHSqEkFqf3WLF9lFNfm1/sU8Qeqi4mLmd2tcAE7c6nyopj5LYFqzgjWfZr0RWbHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dxrcAi6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NUA3H4Za"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF371F000C4;
-	Mon, 19 Oct 2026 14:06:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dxrcAi6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91371F000C6;
+	Mon, 19 Oct 2026 14:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418791;
-	bh=zjAjO0BSBACDj5Kt6V/l7hCPxN8HOcQsmHMRubHsGJ8=;
+	s=k20260515; t=1792418792;
+	bh=vvmtytqQAG4Lx2uj9KxSX8lUECGNW+T1jV44qoXA0VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUA3H4Zalv5BEjYKOw13yIS1g6S3vGN7u2RzTV0c+k6iG3NpRLAP+mx+k0FAN4EkQ
-	 0x9Kjdecay3BzK99Vuy7TKt35jujhKl/r3/q0lEChCGXZ+fy2jQT8bZvOYCyBEOdOm
-	 qzCGaJ3VJYtDIBJDKOWk2JxjRVmw1b6UuZcU3FZzCxah46n2wAHVmM6PZGvO69Zep2
-	 ObHX2pvpLfB8+33d08Ow+e+lPVYucqPU3ZAfeflumS4IDe91tg043w2cRRRCe7hRQb
-	 X23q45UmLcq9wTrSnUTqze76voIb52e/cbwdgC5Mbmaz8+bLMWh3TmNKmQo/5xLKdb
-	 ub6H4IwJN2H0A==
+	b=dxrcAi6aUiRLXGPMPLJzdt/ZONfodS+zLlaeGlV7nGsitVqYHHjYhioUDQD1gIes+
+	 oroKW/4vYIQJ9Zl+qFdESRGA+k2jUwSaj8r6e8vucbtIuZhG+hp1SYeOcZ/wuoeQFC
+	 n/33Q3G59eD3UUxYa95jSmfA1ca8jIy0j2WIa9mVJnUYhfHv1CrUI9GM62jh/8hj7n
+	 xyEoLkXfYNhBbzNW1aW92IIJ9BCG7n6qVDvbaIH+IjWlV0PhS6Z9oYpzcYoEXYpgwt
+	 K31dnHVPlxU40ftc9TPGKHLhPHNrvbS5iMkI/RlYPaFkTLbCtsgKMp63CVSXRQtERE
+	 HWjOlJBnTeMkw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/radeon: avoid double free in r600 DPM cleanup
-Date: Mon, 19 Oct 2026 09:53:10 -0400
-Message-ID: <20261019135441.1420968-499-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] dmaengine: pl330: remove debugfs file on teardown
+Date: Mon, 19 Oct 2026 09:53:11 -0400
+Message-ID: <20261019135441.1420968-500-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,515 +52,465 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
+[ Upstream commit 0d3e3376b289cdaff5b3b6c1581999926ff1000f ]
 
-r600_parse_extended_power_table() uses manual kfree() calls for some
-early allocation failures, but the freed pointers are left in the
-dynamic power-management state. If device teardown later calls
-r600_free_extended_power_table(), those stale pointers can be freed
-again.
+init_pl330_debugfs() creates a debugfs file with struct pl330_dmac as
+private data. pl330_remove() then unregisters the DMA device and frees
+the PL330 channel/thread state without removing that file.
 
-Use the common extended power table cleanup helper for those early
-failure paths as well, and clear each pointer after freeing it so
-repeated cleanup stays safe.
+Keep the debugfs dentry and remove it before tearing down the DMAC state
+used by the debugfs show callback.
 
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: `drm/radeon: avoid double free in r600 DPM
-cleanup`
+## Phase 1: Commit message forensics
 
-Local tree: **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`, branch
-`autosel`). Verdict is for this tree only.
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Upstream commit: `d3f30034f861a585f8e487ae1555d9f288a96f87` (Alex
-Deucher, 2026-06-17).
+Record: **[dmaengine/pl330] [remove] [drop the leftover debugfs file
+before DMAC teardown]**
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
+Record:
+- `Fixes:` — absent (expected for this review)
+- `Reported-by:` — absent
+- `Tested-by:` — absent
+- `Reviewed-by:` — absent
+- `Acked-by:` — absent
+- `Link:`
+  `https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn`
+- `Cc: stable@vger.kernel.org` — absent (expected)
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Vinod Koul <vkoul@kernel.org>` (dmaengine maintainer)
+- Ignore any Sasha Levin SOB if present in candidate wrapping — none on
+  this commit object
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
+Record:
+- **Bug:** `init_pl330_debugfs()` creates a debugfs file whose private
+  data is `struct pl330_dmac *`. `pl330_remove()` tears down DMA
+  registration and frees channel/thread state without removing that
+  file.
+- **Symptom:** After unbind/`rmmod`, the debugfs file remains. A later
+  read runs `pl330_debugfs_show()` against freed `pl330` /
+  `pl330->channels` (use-after-free / oops).
+- **Version info:** none in the message. The debugfs file was added in
+  `b45aef3aef636` (contained in v5.2-rc1).
+- **Root cause:** missing `debugfs_remove()` before DMAC teardown.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Not disguised. It is an explicit lifetime/UAF fix (remove
+debugfs before freeing the object the show callback uses).
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff analysis
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: **[drm/radeon] [avoid] [double free in r600 DPM cleanup]**
+**Step 2.1: INVENTORY THE CHANGES**
 
-Subsystem prefix `drm/radeon`. Verb **avoid** is a bug-fix verb. Claimed
-intent: prevent a double-free in R600 dynamic power-management cleanup.
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Fixes:** none (expected for this review queue)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none
-- **Acked-by:** none
-- **Link:** none in the commit; lore found later via `b4 dig`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Ruoyu Wang (author); Alex Deucher (AMD/radeon
-  maintainer)
+- File: `drivers/dma/pl330.c` only (`+16 / -3`)
+- Functions: `struct pl330_dmac` (add `dbgfs`), `init_pl330_debugfs()`,
+  new `deinit_pl330_debugfs()`, `pl330_remove()`
+- Scope: single-file surgical fix
 
-No syzbot, no CVE, no multi-reporter pattern. Maintainer SOB is a
-positive quality signal.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `r600_parse_extended_power_table()` does manual `kfree()` on
-  some early allocation-failure paths and leaves the pointers in
-  `rdev->pm.dpm.dyn_state`.
-- **Symptom:** later `r600_free_extended_power_table()` can free those
-  stale pointers again → **double-free**.
-- **Root cause:** incomplete error-path cleanup plus non-idempotent free
-  helper.
-- **Fix:** use `r600_free_extended_power_table()` on those early paths,
-  and NULL each pointer after `kfree()` so repeated cleanup is safe.
-- **Version info:** none in the message.
+- **Hunk 1 (`struct pl330_dmac`):** store the dentry so it can be
+  removed later.
+- **Hunk 2 (`init_pl330_debugfs`):** keep the return of
+  `debugfs_create_file()` in `pl330->dbgfs`. Add
+  `deinit_pl330_debugfs()` that calls `debugfs_remove()` and NULLs the
+  pointer. `#else` stub for `!CONFIG_DEBUG_FS`.
+- **Hunk 3 (`pl330_remove`):** call `deinit_pl330_debugfs(pl330)`
+  **before** IRQ free, `dma_async_device_unregister()`, channel
+  teardown, and `pl330_del()`.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not hidden.** This is an explicit double-free fix. The “use
-the common helper” wording is cleanup-shaped, but it is fixing real
-dangling pointers.
+Probe still creates the file only on the success path after
+`dma_async_device_register()`; nothing after `init_pl330_debugfs()` can
+fail, so probe error paths do not need deinit.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **Use-after-free / lifetime** (debugfs private data).
+
+Before: file at debugfs root, private data = `pl330`. `pl330_remove()`
+then:
+1. unregisters the DMA device
+2. `pl330_del()` → `dmac_free_threads()` → `kfree(pl330->channels)`
+3. AMBA `devm` frees `pl330` itself (`devm_kzalloc` in `pl330_probe`)
+
+`pl330_debugfs_show()` then does `s->private` → `pl330->channels[ch]` on
+freed memory.
+
+After: `debugfs_remove()` first. Core debugfs waits for `active_users`
+to drain, so an in-flight `cat` finishes before teardown.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: Obviously correct and minimal. `debugfs_remove()` already no-ops
+on `IS_ERR_OR_NULL`. `pl330` is `devm_kzalloc`’d so `dbgfs` starts NULL.
+Sibling DMA drivers (`pxa_dma`, `hidma`, `idxd`, `bcm-sba-raid`) already
+remove debugfs on teardown.
+
+Regression risk: very low. `debugfs_remove()` may wait for a reader;
+that is intended. No API/locking/hot-path change.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## Phase 3: Git history
 
-### Step 2.1: INVENTORY THE CHANGES
-Record:
-- **File:** `drivers/gpu/drm/radeon/r600_dpm.c` (**+15 / −6**)
-- **Functions:** `r600_parse_extended_power_table()`,
-  `r600_free_extended_power_table()`
-- **Scope:** single-file surgical fix
+**Step 3.1: BLAME THE CHANGED LINES**
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
+Record: Buggy create-without-remove came from `b45aef3aef636`
+(“dmaengine: pl330: introduce debugfs interface”, 2019-03-25). `git
+describe --contains` → `v5.2-rc1~115^2~30`. Present for years in this
+lineage.
 
-**Hunk 1 (three early error returns in parse):**
-- Before: on `r600_parse_clk_voltage_dep_table()` failure for VDDCI-on-
-  MCLK / VDDC-on-MCLK / MVDD-on-MCLK, manually `kfree()` previously
-  allocated `*.entries` and return, **without clearing the pointers**.
-- After: call `r600_free_extended_power_table(rdev)` then return.
+**Step 3.2: FOLLOW THE FIXES TAG**
 
-**Hunk 2 (free helper):**
-- Before: twelve `kfree()`s, pointers left non-NULL.
-- After: same `kfree()`s, each pointer set to NULL.
+Record: No `Fixes:` tag. Introducer is `b45aef3aef636`, ancestor of HEAD
+(`git merge-base --is-ancestor` exit 0).
 
-The first parse failure (`vddc_dependency_on_sclk`) still does a bare
-`return ret`. That is correct: `r600_parse_clk_voltage_dep_table()` only
-fails after `kcalloc` returns NULL, so there is nothing allocated yet.
+**Step 3.3: CHECK FILE HISTORY**
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **[DOUBLE-FREE] [error-path resource cleanup]**
+Record: Recent `pl330.c` history is unrelated (GFP helpers, runtime PM).
+No prerequisite series. Standalone.
 
-Mechanism:
-1. Early parse error: `kfree(ptr)` but `ptr` remains in `dyn_state`.
-2. Later error paths in the same function already called
-   `r600_free_extended_power_table()` without NULLing.
-3. Teardown (`*_dpm_fini` → `r600_free_extended_power_table`) `kfree()`s
-   the same pointers again.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-NULLing also makes the helper idempotent for callers that free on their
-own error path and then free again in `fini` (e.g. `si_dpm_init` /
-`ci_dpm_init` / `btc_dpm_init`).
+Record: Pengpeng Hou has this one dmaengine commit here. Applied by
+maintainer Vinod Koul. Not a series from this author.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- **Quality:** obviously correct. `kfree(NULL)` is a no-op; NULLing
-  after free is the standard idempotent-cleanup pattern.
-- **Minimal:** only the three incomplete early paths plus NULL stores in
-  the existing helper. No API/struct changes.
-- **Regression risk:** low. Success-path `fini` still frees once;
-  NULLing after free cannot change live DPM behavior. A pre-existing
-  issue remains: `radeon_pm_init_dpm()` ignores `radeon_dpm_init()`’s
-  return, so a NULL deref is possible if code continues with `count > 0`
-  and `entries == NULL`. That is **not introduced** by this patch (old
-  code was UAF/double-free on the same path). Sashiko flagged it; Alex
-  Deucher applied the patch anyway.
+**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
+
+Record: None. Uses long-standing `debugfs_create_file` /
+`debugfs_remove` / `DEFINE_SHOW_ATTRIBUTE`. Applies standalone.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 4: Mailing list / external research
 
-### Step 3.1: BLAME THE CHANGED LINES
+**Step 4.1: ORIGINAL PATCH DISCUSSION**
+
 Record:
-- Buggy manual `kfree()`s introduced in **`61b7d6011054eb`**
-  (“drm/radeon/dpm: add helpers for extended power tables (v2)”, Alex
-  Deucher, 2012-11-14) → first in **v3.11-rc1**.
-- MVDD path: **`dd621a22cf43bb`** (2013-05-06).
-- Free helper body: **`41cd0b3b78d83a`** (“drm/radeon: clean up
-  r600_free_extended_power_table()”, Dan Carpenter, 2013-09-04) →
-  **v3.12-rc2**.
+- Lore URL from `b4 dig -c 0d3e3376b289c`:
+  `https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn`
+- `b4 dig -a`: single **v1**, no later revision
+- Thread (mbox): author submission; sashiko-bot comments on **pre-
+  existing** issues (desc_pool locking, IRQ vs `pl330_add`,
+  `pch->thread` TOCTOU in show); **Vinod: “Applied, thanks!”** as
+  `0d3e3376b289c`
+- No NAK of this change. No reviewer `Cc: stable`. Direct lore HTTP
+  fetch returned 403; discussion taken from `b4 dig -m`.
 
-This has been in the tree for more than a decade, including 6.18.y.
+**Step 4.2: WHO REVIEWED**
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** Not applicable. The introducing commit is in
-this tree (v3.11).
+Record (`b4 dig -w`): To/Cc Vinod Koul, Frank Li,
+`dmaengine@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Maintainer
+applied it. No human Reviewed-by.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Related: **`20c3dffdccbd4`** “radeon: avoid double free in
-  ci_dpm_init()” (v6.5-rc1). Same class of bug: parse error already
-  calls `r600_free_extended_power_table()`, then `ci_dpm_fini()` calls
-  it again.
-- File is mature; recent commits are drive-by cleanups, not DPM-table
-  refactors.
-- **Standalone**, not patch X/Y.
+**Step 4.3: BUG REPORT**
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Ruoyu Wang is not the radeon maintainer; nearby DRM work is
-similar cleanup-safety (`drm/msm`, `drm/mediatek`). Weight comes from
-**Alex Deucher’s SOB and “Applied”**.
+Record: No syzbot/bugzilla/`Reported-by`. Found by inspection. Failure
+mode is still a concrete UAF on leftover debugfs.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: **No prerequisites.** The helper and the three `kfree` sites
-exist in this tree. Applies standalone.
+**Step 4.4: RELATED PATCHES / SERIES**
+
+Record: Standalone 1/1. Not part of a multi-patch series.
+
+**Step 4.5: STABLE MAILING LIST**
+
+Record: **UNVERIFIED** — `lore.kernel.org/stable` returned HTTP 403. No
+stable discussion in the dmaengine mbox.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 5: Code semantic analysis
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `init_pl330_debugfs`, `deinit_pl330_debugfs` (new),
+`pl330_remove`, `pl330_debugfs_show` (user of private data), `pl330_del`
+/ `dmac_free_threads` (free the memory the show callback uses).
+
+**Step 5.2: CALLERS**
+
 Record:
-- **Lore:**
-  https://patch.msgid.link/20260608063638.24-1-ruoyuw560@gmail.com
-- **Revisions:** v1 only (`b4 dig -a`)
-- Direct lore.kernel.org fetch returned 403; thread recovered via `b4
-  dig -m`.
-- Sashiko bot: pre-existing ignored `radeon_dpm_init()` return and stale
-  `count` fields. Not NAKs of this patch.
-- **Alex Deucher (2026-06-15): “Applied. Thanks!”** No request for v2.
-- No reviewer `Cc: stable`.
+- `init_pl330_debugfs()` — `pl330_probe()` success path only
+- `deinit_pl330_debugfs()` — `pl330_remove()` only
+- `pl330_remove()` — AMBA `.remove`
+- `pl330_debugfs_show()` — debugfs read (`DEFINE_SHOW_ATTRIBUTE`)
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc included Alex Deucher, Christian König,
-David Airlie, Simona Vetter, amd-gfx, dri-devel, linux-kernel. Applied
-by the radeon maintainer.
+**Step 5.3: CALLEES**
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-Record: no Reported-by / syzbot / bugzilla. Static/code analysis style
-fix, same family as `20c3dffdccbd4` (SVACE) and amdgpu `a6582701178a4`.
+Record: `debugfs_create_file`, `debugfs_remove`, then existing remove
+path (`dma_async_device_unregister`, `pl330_del` → `kfree(channels)`).
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: standalone v1. Sibling in amdgpu: **`a6582701178a4`**
-“drm/amd/pm: fix a double-free in amdgpu_parse_extended_power_table”
-(already in this tree). Same parse-then-fini double-free shape.
+**Step 5.4: CALL CHAIN / REACHABILITY**
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: **UNVERIFIED.** `lore.kernel.org/stable/` returned 403. No
-evidence in the dri-devel thread of a stable NAK.
+Record: `echo … > unbind` or `rmmod dma-pl330` → `pl330_remove`. Then
+`cat /sys/kernel/debug/<devname>` (file is created with parent `NULL` at
+debugfs root). Reachable from userspace. debugfs is typically root-only
+(0700), so not an unprivileged UAF, still a kernel UAF/oops.
+
+**Step 5.5: SIMILAR PATTERNS**
+
+Record: Other DMA drivers already `debugfs_remove[_recursive]` on
+teardown (`pxa_dma.c`, `dmaengine.c`, `bcm-sba-raid.c`,
+`idxd/debugfs.c`, `qcom/hidma_dbg.c`). pl330 was the outlier.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 6: Local tree
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `r600_parse_extended_power_table()`,
-`r600_free_extended_power_table()`. Helper used internally:
-`r600_parse_clk_voltage_dep_table()` (ENOMEM-only failure).
+**Step 6.1: DOES THE BUGGY CODE EXIST HERE?**
 
-### Step 5.2: TRACE CALLERS
-Record (parse): `btc_dpm_init`, `ni_dpm_init`, `si_dpm_init`,
-`ci_dpm_init`, `trinity_dpm_init`, `kv_dpm_init`.
+Record: Local tree is **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`, `git describe` `v7.3-rc4-27-gf0100363d8c37`).
 
-Record (free): those chips’ `*_dpm_fini`, plus error paths inside parse
-and some init functions (`si_dpm_init`, `ni_dpm_init`, `btc_dpm_init`,
-`ci_dpm_init`).
+`drivers/dma/pl330.c` is present. Debugfs dates to v5.2. This commit
+**is already an ancestor of HEAD** (`0d3e3376b289c`). The bug existed in
+this lineage until that commit; current HEAD already has the fix. That
+is the mainline landing, not a reason to reject it as a stable
+candidate.
 
-Context: driver probe (`radeon_pm_init` → `radeon_dpm_init`) and
-teardown (`radeon_pm_fini` → `radeon_dpm_fini`). Not interrupt/hot-path.
+**Step 6.2: BACKPORT COMPLICATIONS**
 
-### Step 5.3: TRACE CALLEES
-Record: `kcalloc`/`kzalloc` for VBIOS power-play tables, `kfree` in the
-helper. No locking, no new allocations in the patch.
+Record: Clean apply on this file. Context (`quirks`, `rstc`,
+`init_pl330_debugfs`, `pl330_remove`) has been stable. Expected **clean
+apply** to trees that still have the v5.2 debugfs code.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-Record (verified in this tree):
+**Step 6.3: RELATED FIXES ALREADY HERE**
 
-```
-radeon_pm_init_dpm()
-  radeon_dpm_init(rdev);          /* return IGNORED, radeon_pm.c:1442 */
-  radeon_dpm_enable(...)
-cik/si/ni/..._init()
-  radeon_pm_init(rdev);           /* return also ignored, e.g.
-cik.c:8620 */
-
-radeon_pm_fini_dpm()
-  radeon_dpm_fini(rdev);          /* ALWAYS, radeon_pm.c:1678 */
-    -> r600_free_extended_power_table()
-```
-
-On unload, `radeon_driver_unload_kms()` → `radeon_device_fini()` → asic
-`fini` → `radeon_pm_fini()`.
-
-Because DPM init failure is ignored, a failed parse still reaches `fini`
-on unbind/unload. **Reachable from normal driver lifetime**, not a
-theoretical path. Trigger is allocation failure while parsing ATOM
-power-play tables (ENOMEM during probe). Unprivileged userspace cannot
-force it except by load/unload under memory pressure.
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: same bug already fixed in amdgpu (`a6582701178a4`) and partially
-in `ci_dpm_init` (`20c3dffdccbd4`). Remaining hole was exactly these
-radeon helper paths.
+Record: This commit is the fix. No earlier alternative fix on `pl330.c`.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 7: Subsystem context
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.** Parent of the candidate (`d3276745c87d1^`) still has
-the manual `kfree()`s at the three early returns and the free helper
-without NULL stores. Introduced in v3.11; present throughout 6.18.y.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **clean apply.** Surrounding `r600_dpm.c` DPM-table code matches
-the patch context. No conflicting refactor in this series.
+Record: **dmaengine / ARM PL330** (`drivers/dma/pl330.c`). **IMPORTANT**
+for ARM SoCs that use PrimeCell DMA (not core mm/net). Enabled as
+`CONFIG_PL330_DMA=y` in `arm64/defconfig`, `multi_v7`, `exynos`,
+`socfpga`, `hisi`, `axm55xx`.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `20c3dffdccbd4` is already in this tree and only hardens
-`ci_dpm_init`; it does **not** NULL the r600 helper pointers or convert
-the early parse `kfree()`s. This commit is still needed.
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Mature driver (since ~2010). Recent commits are small fixes, not
+a rewrite.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 8: Impact and risk
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **[drm/radeon DPM] [IMPORTANT]** — pre-GCN AMD GPUs (R600–CIK:
-HD 2000 through Hawaii/Kaveri). Not core mm/net, but a long-lived
-production driver (`CONFIG_DRM_RADEON`).
+**Step 8.1: WHO IS AFFECTED**
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: mature/low churn. `r600_dpm.c` last real DPM logic is from
-~2013; later commits are mechanical. Long-present bugs in this code are
-the ones stable still cares about.
+Record: Driver-specific + `CONFIG_DEBUG_FS`. Population: ARM/ARM64
+boards with PL330 (Exynos and others). Built-in in several defconfigs,
+so unbind is less common than for a typical module, but sysfs unbind and
+`rmmod` (tristate) still exist.
 
----
+**Step 8.2: TRIGGER CONDITIONS**
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Record: Bind PL330 with debugfs on → unbind or unload → read leftover
+`/sys/kernel/debug/<devname>`. Not every boot. Root-oriented (debugfs).
+Race-free UAF after teardown; concurrent read during remove is handled
+by debugfs `active_users`.
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **driver-specific / config-specific** (`CONFIG_DRM_RADEON`, DPM
-method, chips that call `r600_parse_extended_power_table`:
-BTC/NI/SI/CI/Trinity/KV).
+**Step 8.3: FAILURE MODE SEVERITY**
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: **Use-after-free → oops / KASAN / potential memory corruption.**
+Severity **HIGH**. debugfs is usually root-only, so not a typical
+unprivileged CVE path, still a real crash/UAF.
+
+**Step 8.4: RISK-BENEFIT**
+
 Record:
-- Trigger: ENOMEM (or parse failure) while building extended power
-  tables during DPM init, then device teardown.
-- Not every boot; needs allocation failure in that path.
-- Unprivileged users cannot craft a VBIOS, but module unload after a
-  failed/partial DPM init is a normal admin path.
-- **r600_parse_clk_voltage_dep_table() only returns -ENOMEM**, so the
-  three converted sites are memory-pressure probe errors. The NULL
-  stores also close double-frees on later parse/init error paths that
-  already called the helper.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **double-free / invalid `kfree` → kernel oops/BUG in SLUB,
-possible further corruption.** Severity: **HIGH** (crash on GPU probe-
-failure teardown). Not a guaranteed panic on every radeon boot.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** medium-high for radeon DPM users — prevents a real
-  double-free that `fini` will hit after a failed parse, including
-  because init errors are ignored.
-- **Risk:** very low — 15 insertions, NULL-after-free, no locking/API
-  change.
+- **Benefit:** medium-high for PL330 + debugfs users (prevents UAF on
+  teardown).
+- **Risk:** very low (~19 lines, one driver, standard `debugfs_remove`).
 - **Ratio:** favorable.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Synthesis
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: EVIDENCE**
 
-**FOR backporting:**
-- Real double-free, not style cleanup.
-- Buggy code exists in this 6.18.y tree (since v3.11).
-- Small, obviously correct, single file.
-- No new APIs/features; no prerequisites.
-- Maintainer applied it.
-- Same pattern already treated as a real bug in-tree (`20c3dffdccbd4`,
-  amdgpu `a6582701178a4`).
-- Teardown always calls `radeon_dpm_fini()`; DPM init return is ignored,
-  so the second free is actually reached.
+**For:**
+- Real UAF: debugfs private data outlives `pl330` / `channels`
+- Show callback indexes `pl330->channels[ch]` after `kfree`
+- Small, obviously correct, matches other DMA drivers
+- Maintainer applied v1
+- `debugfs_remove()` waits for active readers
+- Bug present since v5.2; driver is in this tree
 
-**AGAINST:**
-- No user report / syzbot / Fixes tag (absence is expected here).
-- Trigger is ENOMEM during probe, not a hot path.
-- Sashiko noted pre-existing ignored-init-return / stale-count issues
-  this patch does not fully solve.
+**Against:**
+- No user/syzbot report (inspection-only)
+- Needs `CONFIG_DEBUG_FS` and unbind/unload
+- debugfs typically root-only
+- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
 
-**UNRESOLVED:**
-- Stable-list discussion (lore.kernel.org/stable 403).
+**Unresolved:** stable@ lore search (HTTP 403).
 
-None of the against items outweigh a contained double-free fix that
-applies cleanly.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — NULLing after `kfree` is
-   standard; maintainer applied v1.
-2. Fixes a real bug that affects users? **PASS** — double-free on DPM
-   parse-failure teardown.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   double-free → oops/memory corruption. Severity HIGH.
-4. Small and contained? **PASS** — +15/−6, one file.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy sites present; context
-   matches.
+1. Obviously correct and tested? **PASS** — standard debugfs lifetime;
+   maintainer applied.
+2. Real bug affecting users? **PASS** — leftover file + UAF on read
+   after remove.
+3. Important (crash/security/corruption/deadlock)? **PASS** — UAF/oops.
+   HIGH, not a hot-path panic.
+4. Small and contained? **PASS** — one file, +16/-3.
+5. No new features/APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same file/functions; already
+   landed here as the upstream commit.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: none needed; this is a normal memory-safety bug fix.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-### Step 9.4: MAKE YOUR DECISION
+Record: None (not an ID/quirk/DT/build/docs exception). Ordinary bug
+fix.
 
-This belongs in 6.18.y. The early `kfree()`s leave dangling `dyn_state`
-pointers; `radeon_pm_fini_dpm()` always calls
-`r600_free_extended_power_table()`. NULLing makes that helper safe to
-call twice, which this driver already does on several error paths. Risk
-is negligible relative to the crash it prevents.
+**Step 9.4: DECISION**
+
+This is a contained UAF fix in a long-shipped ARM DMA driver. The local
+v7.3-rc4 tree has the PL330 debugfs code; the change is the right stable
+material (crash/UAF, tiny, no new API). Missing reports and debugfs-only
+trigger do not outweigh that.
 
 ---
 
-## What the commit solves for stable users
+### What the commit solves
 
-On Radeon chips that parse ATOM extended power tables, an allocation
-failure during DPM init frees some tables but leaves the pointers set.
-Driver unload then frees them again. That is a kernel double-free. The
-patch uses the existing cleanup helper on those paths and clears every
-pointer so a second cleanup is harmless.
+`init_pl330_debugfs()` created `/sys/kernel/debug/<dev>` with `pl330` as
+private data and never removed it. `pl330_remove()` then freed
+`pl330->channels` and let `devm` free `pl330`. A later debugfs read is a
+use-after-free. The patch stores the dentry and removes it first;
+`debugfs_remove()` drains active readers.
 
-## Stable rules / risk vs benefit
+### Stable rules
 
-Meets all six stable criteria. Benefit is preventing an oops/corruption
-on GPU init-failure teardown; risk is a 21-line, no-lock, no-API change.
-No backport rework needed in this tree.
+Meets them: real UAF, small, no new API, applies to this driver’s
+existing debugfs code.
 
-## Concerns
+### Risk vs benefit
 
-- Does not fix ignored `radeon_dpm_init()` return (pre-existing; out of
-  scope).
-- Count fields are not zeroed (pre-existing; Sashiko note). That is not
-  a reason to withhold the double-free fix.
-- Trigger needs ENOMEM during table parse, so it is not every-boot, but
-  stable regularly takes this class of error-path double-free.
+Benefit is preventing oops/UAF after PL330 teardown. Risk is very low.
 
-## Verification
-- [Phase 1] Tags: author + Alex Deucher SOB only; no Fixes/Reported-
-  by/Cc-stable.
-- [Phase 2] Diff: +15/−6 in `r600_dpm.c`; three `kfree` → helper; twelve
-  NULL stores in `r600_free_extended_power_table()`.
-- [Phase 2] Parent still has
-  `kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries)` at the
-  three early returns.
-- [Phase 2] `r600_parse_clk_voltage_dep_table()` only fails with
-  `-ENOMEM` after assigning NULL.
-- [Phase 3] Blame: `61b7d6011054eb` (v3.11-rc1) introduced the kfrees;
-  `41cd0b3b78d83a` (v3.12) wrote the free helper without NULLs.
-- [Phase 3] Related in-tree: `20c3dffdccbd4` (ci_dpm_init only); does
-  not replace this patch.
-- [Phase 4] `b4 dig -c d3f30034f861`:
-  https://patch.msgid.link/20260608063638.24-1-ruoyuw560@gmail.com
-- [Phase 4] `b4 dig -a`: v1 only.
-- [Phase 4] `b4 dig -w`: Deucher/König/Airlie/Vetter + amd-gfx/dri-
-  devel.
-- [Phase 4] mbox: Alex Deucher “Applied. Thanks!”; Sashiko pre-existing
-  notes, no NAK.
-- [Phase 4] UNVERIFIED: lore.kernel.org and lore.kernel.org/stable HTTP
-  403.
-- [Phase 5] Callers: btc/ni/si/ci/trinity/kv `dpm_init`/`dpm_fini`.
-- [Phase 5] `radeon_pm.c:1442` ignores `radeon_dpm_init()`;
-  `radeon_pm.c:1678` always `radeon_dpm_fini()`.
-- [Phase 5] `cik.c:8620` ignores `radeon_pm_init()`; `cik.c:8712`
-  `radeon_pm_fini()` on asic fini.
-- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` → 6.18.53.
-- [Phase 6] Buggy kfrees present in
-  `d3276745c87d1^:drivers/gpu/drm/radeon/r600_dpm.c`.
-- [Phase 7] `CONFIG_DRM_RADEON` still present.
-- [Phase 8] Failure mode: double-free → SLUB BUG/oops; severity HIGH.
-- UNVERIFIED: whether any user hit this in production (no Reported-by).
-  Decision does not rely on that.
+### Concerns
 
-The fix is small, surgical, present in the local 6.18 code, and closes a
-real double-free on DPM teardown.
+No `Fixes:` tag (introducer is `b45aef3aef636` / v5.2). No mailing-list
+stable nomination. Trigger is unbind/unload + debugfs. None of that
+blocks backport.
+
+---
+
+Verification:
+- [Phase 1] Parsed tags: Link to msgid
+  `20260615091645.28878-1-pengpeng@iscas.ac.cn`; SOBs Hou + Vinod Koul;
+  no Fixes/Reported-by/Cc stable
+- [Phase 1] Body describes create-without-remove and show-callback
+  lifetime
+- [Phase 2] Diff: `drivers/dma/pl330.c` +16/-3; `dbgfs` field;
+  `deinit_pl330_debugfs` in `pl330_remove` before teardown
+- [Phase 2] Pre-patch `init_pl330_debugfs` discarded
+  `debugfs_create_file()`; `pl330_remove` had no remove
+- [Phase 2] `pl330_probe`: `devm_kzalloc` for `pl330`; `pl330_del` →
+  `kfree(pl330->channels)`
+- [Phase 2] `fs/debugfs/inode.c`: `debugfs_remove` handles
+  `IS_ERR_OR_NULL`; waits on `active_users`
+- [Phase 3] `git blame` / `git log -S init_pl330_debugfs --
+  drivers/dma/pl330.c`: introducer `b45aef3aef636` (v5.2-rc1)
+- [Phase 3] `git merge-base --is-ancestor b45aef3aef636 HEAD` and
+  `0d3e3376b289c HEAD`: both true
+- [Phase 3] `git log --oneline -20 -- drivers/dma/pl330.c`: no
+  prerequisite series
+- [Phase 3] Author log on `drivers/dma/`: only this commit
+- [Phase 4] `b4 dig -c 0d3e3376b289c`: lore match at the msgid above
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: Vinod Koul, Frank Li, dmaengine@, linux-kernel@
+- [Phase 4] mbox: Vinod applied as `0d3e3376b289c`; sashiko comments
+  were pre-existing, not a NAK of this fix
+- [Phase 4] lore HTTP 403; stable@ search 403 — UNVERIFIED via
+  WebFetch/curl
+- [Phase 5] Callers: probe → init; remove → deinit; show via debugfs
+- [Phase 5] Same debugfs-remove pattern in other `drivers/dma/*` files
+- [Phase 6] `git describe HEAD` / Makefile: v7.3-rc4; `pl330.c` present;
+  fix already on HEAD
+- [Phase 7] `CONFIG_PL330_DMA` in
+  arm64/multi_v7/exynos/socfpga/hisi/axm55xx defconfigs
+- [Phase 8] Failure mode: UAF on leftover debugfs read after remove,
+  severity HIGH
+- UNVERIFIED: whether stable@ ever discussed this patch (HTTP 403)
 
 **YES**
 
- drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/dma/pl330.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
-index 81d58ef667dd4..2bc0bdfd11590 100644
---- a/drivers/gpu/drm/radeon/r600_dpm.c
-+++ b/drivers/gpu/drm/radeon/r600_dpm.c
-@@ -933,7 +933,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -944,8 +944,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -956,9 +955,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -1298,17 +1295,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
- 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 82a9fe88ad54c..fe4d266ee611c 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -502,6 +502,7 @@ struct pl330_dmac {
+ 	struct dma_pl330_chan *peripherals; /* keep at end */
+ 	int quirks;
  
- 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
-+	dyn_state->vddc_dependency_on_sclk.entries = NULL;
- 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
-+	dyn_state->vddci_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
-+	dyn_state->vddc_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
-+	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->cac_leakage_table.entries);
-+	dyn_state->cac_leakage_table.entries = NULL;
- 	kfree(dyn_state->phase_shedding_limits_table.entries);
-+	dyn_state->phase_shedding_limits_table.entries = NULL;
- 	kfree(dyn_state->ppm_table);
-+	dyn_state->ppm_table = NULL;
- 	kfree(dyn_state->cac_tdp_table);
-+	dyn_state->cac_tdp_table = NULL;
- 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
-+	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
-+	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
-+	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
-+	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
++	struct dentry		*dbgfs;
+ 	struct reset_control	*rstc;
+ 	struct reset_control	*rstc_ocp;
+ };
+@@ -2958,14 +2959,24 @@ DEFINE_SHOW_ATTRIBUTE(pl330_debugfs);
+ 
+ static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
+ {
+-	debugfs_create_file(dev_name(pl330->ddma.dev),
+-			    S_IFREG | 0444, NULL, pl330,
+-			    &pl330_debugfs_fops);
++	pl330->dbgfs = debugfs_create_file(dev_name(pl330->ddma.dev),
++					   S_IFREG | 0444, NULL, pl330,
++					   &pl330_debugfs_fops);
++}
++
++static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
++{
++	debugfs_remove(pl330->dbgfs);
++	pl330->dbgfs = NULL;
  }
+ #else
+ static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
+ {
+ }
++
++static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
++{
++}
+ #endif
  
- enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
+ /*
+@@ -3211,6 +3222,8 @@ static void pl330_remove(struct amba_device *adev)
+ 	struct dma_pl330_chan *pch, *_p;
+ 	int i, irq;
+ 
++	deinit_pl330_debugfs(pl330);
++
+ 	pm_runtime_get_noresume(pl330->ddma.dev);
+ 
+ 	if (adev->dev.of_node)
 -- 
 2.53.0
 
