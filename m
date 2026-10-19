@@ -1,61 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792428891;
-	b=YnhvJRIs2vv5iGpvKck5xkiQ4dsyAPiqkmX+1k+bPyBW0hYvHS+iiMcmONPySAuET+91
-	 xk/KTmCOsY0tzpd7yiZn4fpUI1gHvINQ1r2R6ciuE6V4zNIDOMfeezY/moY2yMfZb6z3X
-	 jy9Qt1IxVQPobNR9EaOtusZPGSFlKZogMnhIRH4i9CPcds0enia8jWsPga9INI5ZGHZaW
-	 cV+SvsBoDwb1fojhP+98J7oHtceTgz54KIzV/tlFZDKd7FaqOiKlgV5Z9OqFHKv1MPQ87
-	 j2rCL4tBLcUPhhHfnyyt2b+nS4qofmUoRtVcF0LLuKOHcS8OXyjXX78p8MvBnqm6Raw==
+	t=1792428893;
+	b=3X68IsiPDu0Kt7tLeJLrkYGoL/iqFZDUAsppJ83p/BlpDKOu3CclT7L1bT5wF0zzooJT
+	 Zz9Jd33uutwkkvY7rVcCtJ3SJJ+urZQ5SKsiJyElAFazRGAwJqE3gLPeVsaVs838dx9A9
+	 rxsb01efBF4/qgN/aolNIDCCWGsLAVxBDRGWLw60phET3PhoMjTP0LUKxLYa+wWGKDNQo
+	 NrD1A43JKu7UWSCQ1fiQNzToRXUNJIgihiVA8mSUfZb1izI5w2gljCF+nK2HOSF4k70nN
+	 CaWg7xFaM86uvXlrt3gmy42xYHnCJa2VCdPBhmh7opNM3cmIRwe0wdJDdkQlCBQ3nyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792428891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792428893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=blYG7okg8nrSPkvv1vYfUDKjZfs9B9neDOavkO6laDc=;
-	b=1p2iiCPFk2lUpTQoDuMFBb00yDBa3sP+ZW4GZk4MtjmS0C8zpAtNtCXykTmw3cpe4sAf
-	 4nUpHu5I1VrAsRH1vPFDwZUk/N6ybrELTE/PXf4CYpiMEXU0m0NlkSAXDCU0S4jDUS+wK
-	 c3kEQG/fqvmKwqQ+e+r0e7MSsHLdWe4BdY/3RmDhgMug3DT4XVUUT35kMvxgey/PVYwSh
-	 X+bE4Wpt5ud+Kw1l7gJY8c6m5eLiuhAK8g/h1KsYCjWG+tu9aJGkSaxoHfnhYirws+8KS
-	 +nAhUuIF4TjPYN45ZR6zCbR1VEQ4+AvP8cirdFl/GutGeErhffdPTc5XtyerGf3dkqg==
+	bh=/vWn8vyFir5R6D0iFD0/omUM4kYSgdHlE4Y2WEwH1hQ=;
+	b=NtUHQatUUZo9aBgTJptI6wKvwi54HwaL//eAbOt92pWjNk0b9K5aCjdltAgYnl67xzv3
+	 YT+TVQiOaUiXYuxKTvUmayIoGdY44DuYPCr9fol+8qPSiNZte7NVwyMUOwRqxZWcr4fH1
+	 VJoD5yO32UGhbAvRfoa2avVSCM7OtTSkZHDyclDfnicDeHT/OHfRMX+okJhrk/7QXsPEw
+	 hbreJv1Qz4O6b4Rp/9LwClNIBz6SwFb1TrJne19kXIAcTGVzED+ny6EbgeVcuVoSJjzak
+	 Z97ADsBoPzos7HIiPGWWlZQfEoJjeHYz1xH1yHEkpnSqLMK1mvNz6DD/RTl9/LJUT2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XL0S+1Ln;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aUsL7JXh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D0460A2611;
-	Mon, 19 Oct 2026 16:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9D606A332;
+	Mon, 19 Oct 2026 16:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XL0S+1Ln
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831521F000D4;
-	Mon, 19 Oct 2026 16:54:49 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aUsL7JXh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E85A1F000C6;
+	Mon, 19 Oct 2026 16:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792428891;
-	bh=blYG7okg8nrSPkvv1vYfUDKjZfs9B9neDOavkO6laDc=;
+	s=k20260515; t=1792428893;
+	bh=/vWn8vyFir5R6D0iFD0/omUM4kYSgdHlE4Y2WEwH1hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XL0S+1Lnl/QzEeJ37XpI/DtM6a8e/G6sGobAPQaE4QH2246uA3Vq7QVoGvGPjvtTO
-	 0YrCX1JG0Ayqnl5XFG0gierCLG6xD94UzW32g9Pf1PQa8fuZmucJKqzpx0e0OWaJMJ
-	 qmEKiqJaNrXOGN1BE9NkDi3om4jI4Kc5m+JkdYB3yqljt8oVKW5EPnjPmAAQjDgsL/
-	 HpBsCFkmWBXBx2nu86JI7xhpPxbUF6xxBjbMngJwyeg0BitS/F7z4SjcKpxU5ugadC
-	 eKv4sGhWg+i/2Rvc/VYNE3VsXn7YiVUxnJ3r2s2pMaJ0bmFjJlzcGE4h/0qneXelJE
-	 YdONs+GzvOmkA==
+	b=aUsL7JXhSwWYZ8nngR0rJvFbPIbPuUPgYUWubdyMYHF4eoLJyI3GPuKsP7f7G8rnC
+	 YYDmSApE7GztVlFDHQhUgLASXfJvmSd2tsC1ifWq0gcys516klEZFXYc6HuakPnyPx
+	 ++OBMKyNuKdO4+DE/0jhrtcupIWhghHGybkyy4vg3yQCkorqtgwTm5LbjaEUTnwLxg
+	 zEg0x4YlgkI++Gtvd/yezp73HGNFYy5ZrfyVle0R5X4YRaucJ/u2e+/DANiBZJdpJR
+	 6wfnY6CXHld03m94Ofsa5AwQd+NGv0WpfL8dndNwj02Mob5eNXeoIl5byucqp0jPdx
+	 xSE5HhT5yk0hA==
 From: Sasha Levin <sashal@kernel.org>
-To: Wang Yugui <wangyugui@e16-tech.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
 Cc: Sasha Levin <sashal@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Kan Liang <kan.liang@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: Re: [PATCH 6.12 543/869] perf tools: Use perf_env__get_cpu_topology() in machine__resolve()
-Date: Mon, 19 Oct 2026 12:54:31 -0400
-Message-ID: <rc-reply-0003-65f0fe218835@kernel.org>
+	Eric Dumazet <edumazet@google.com>,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	virtualization@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH 6.6 1008/1674] vsock/virtio: fix potential unbounded skb queue
+Date: Mon, 19 Oct 2026 12:54:32 -0400
+Message-ID: <rc-reply-0004-be6cedb2b118@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261018212219.A23A.409509F4@e16-tech.com>
-References: <20261017160036.979869304@linuxfoundation.org> <20261017160051.014967079@linuxfoundation.org> <20261018212219.A23A.409509F4@e16-tech.com>
+In-Reply-To: <atYgJz85081YBziv@sgarzare-redhat>
+References: <20261017160431.119607952@linuxfoundation.org> <20261017160457.007728876@linuxfoundation.org> <atYgJz85081YBziv@sgarzare-redhat>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -68,17 +73,23 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, Oct 18, 2026 at 09:22:20PM +0800, Wang Yugui wrote:
-> please drop this patch for 6.12.y or add some dependency.
->
-> because of the build error:
-> util/event.c:775:32: error: implicit declaration of function ‘perf_env__get_cpu_topology’; did you mean ‘perf_env__read_cpu_topology_map’? [-Wimplicit-function-declaration]
+On Mon, Oct 19, 2026 at 03:51:21PM +0200, Stefano Garzarella wrote:
+> Be careful with this patch, this caused data loss. It's fixed upstream
+> by commits:
+[...]
+> So if you want to backport this patch, I strongly recommend that you
+> include these others as well in the same backport.
 
-Dropped 5484b43a0ec8 ("perf tools: Use perf_env__get_cpu_topology() in
-machine__resolve()") from the 6.12 queue. It is also dropped from 6.6
-and 6.1, where the same perf_env__get_cpu_topology() helper is missing.
+Thanks. I dropped 059b7dbd20a6 ("vsock/virtio: fix potential unbounded
+skb queue") from the 6.6 queue, together with its two prerequisites that
+were queued only for it:
 
-Thanks for the report.
+  - 0df7cd3c13e4 ("vsock/virtio/vhost: read data from non-linear skb")
+  - 45ca7e9f0730 ("vsock/virtio: fix `rx_bytes` accounting for stream
+    sockets")
+
+It is dropped from 6.1 as well. If it comes back to 6.6, it will be with
+the complete set of fixes.
 
 -- 
 Thanks,
