@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2922A5008DB;
-	Mon, 19 Oct 2026 13:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2974FD79C;
+	Mon, 19 Oct 2026 13:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418297; cv=none; b=SUqcN1U8zfM60KGlPsY5OpjbfbEIGUcO7UvgDyNF7kHoFyq0viGvPRT/BR00X1o8ijCJ8UBqQGGt8iuM46lAASM7iJ6ixOrbYbyLHQy67918tpCGSTNO/Zu+f5/9AK4cl5OO22UlJ43yBQODnRyiSGjnznsNNKP3eCLTor7ILJw=
+	t=1792418298; cv=none; b=KwBzdgWpP5DJcF6lpWoQ+8N9h4Chmfw55lbyCDR1I/RoljBPi7n46VelyoXMH/lQT15ZHcHHU2B2ZVeMKUVSS1Mkr965rDMSjHAnFsOgEHJoUEAnNmJBD2PckXsYBRAt9ZWrcF393HcQXwunxqr26qoExBDhig+2zBtQewp74wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418297; c=relaxed/simple;
-	bh=+gizcpBKphcm9LNReXGI0Mt+7+kT1LWOBGOEziwPLvA=;
+	s=arc-20240116; t=1792418298; c=relaxed/simple;
+	bh=6sFnVbt2hLiO37r4MPLryBWnzrCgJnOWgVpC4ChUDCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QVjOrrzKsvtYYFJgJyc+/yaVxa1jCqe3M2glLcvhrKWjunIe2EaTZ6/PGDov5Hi2ZrWKUHIoVAujLE0sdYr4/qnAQ/ANZPE/Z4+HbsaKtdhr0eOuJuXpG9YfIRegXJlBnxekjjiPvITDYH39q5Ip8oMKsNpC2eyuVgiQqaDFa+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kULE8PDi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Qe42/5dRnNPyYTU4/8+0w/1mFjn0r3F97In3WIAwj5OqU6UcWE09GcPSliHsIowcSJjrUqwb1btlOT6xu1vAC/hq4Ae6xdcU4vWVjWAM3TOwzkDSr+HusFKLWmLmhx7VAmeDEPX15xgE2YZvJjdXMw+azuDjmg9Si+46e3S0O7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7PWeDm4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kULE8PDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2978E1F000C8;
-	Mon, 19 Oct 2026 13:58:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7PWeDm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33B41F000C6;
+	Mon, 19 Oct 2026 13:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418295;
-	bh=85qfeiOa1NVqqULnFXLwgWZiYeXT6dY9AfFlRUE5iw8=;
+	s=k20260515; t=1792418293;
+	bh=dVpi2Qt8rGDhkBJcCF1Rc3xlJf7dXV2WsmSTuQO/f0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kULE8PDikPIzShVcGLPn5Nh0DfRKBhqDeqjIL3t5PS3CQjM+tDEMJwW7juq1o25qp
-	 yzBdPpFOTIeYSrnMogcj0aWBbUfPtJv72TJTWwDloMznErHMmmevGQHDOQPqx2hqU8
-	 uDboGUE2CCyDRYaJS5v2H9DvcRJZly11JP73kwfj894Ql75cl8DLaSm2wYcCwjzoUR
-	 ZL+k3fzsU39WNuXMRL7y73YSg/JiNyQOV156Kn8O32eI0oR6923MGbL+c+26dbeTKo
-	 NMGsnRfiSd3wbbZ8/hKmiuGzqvgvqy2dD5sV+sTGjGjQJbHyttMlTw+RSrSeIqNJla
-	 3Ah/u1FVyk6Uw==
+	b=U7PWeDm49kuuj4jBR9R+HXh1WOSqSKYKa8y/7DOG+QBxVOaWQ0K+qqIJ8PesY5Sjk
+	 goCBno4JTE/4RoRuor5OxrixqCUV83SBZZ2jFa2LSoseFtXI3Lym7TKLEBV1RL/51v
+	 ZDUEiZfTBzSP5t2P6DFijL20EPgKJ7IJt+Ioep1n27EagqR6UmEdRy3rIS/NhnKWc1
+	 Sy3hCn3PeE7ocdzWzbw+r1yxp3h+V1mQQbC4o3JVINaOOD4j3VwZKtWCMtjkRSTgaI
+	 Qo30+W37PeEZ/u3JmWhe6yJ3YhelEUBfhObQ+Ntb+HqD9x1HK/W0cYR+dIVGrVZwIG
+	 3x0feFihulq3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+Cc: Aviv Bakal <avivb@amazon.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	linux-kernel@vger.kernel.org,
+	mark.rutland@arm.com,
 	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18] soc: mediatek: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:47:17 -0400
-Message-ID: <20261019135441.1420968-146-sashal@kernel.org>
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] perf/arm-cmn: Add workarounds for CMN-S3 on Graviton5
+Date: Mon, 19 Oct 2026 09:47:16 -0400
+Message-ID: <20261019135441.1420968-145-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,400 +56,507 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Aviv Bakal <avivb@amazon.com>
 
-[ Upstream commit ec762057868d70d474a9816e9c293c2ef801c3c9 ]
+[ Upstream commit 9d0b1714e1af16622a2d0f7317ddaa9a4b27f353 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+Graviton5 uses a customised CMN-S3 implementation where certain
+discovery registers report zeroed fields. Add the following workarounds:
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+ - Introduce a dedicated ACPI HID to identify the Graviton5 CMN variant.
+ - Derive the DTC domain from the XP node ID, since the unit info
+   register reports it as zero.
+ - Set the DTC logical ID from the XP's logical ID, since the node info
+   register's logical ID field is also zeroed.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Aviv Bakal <avivb@amazon.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is **7.3-rc4**. The DVFSRC driver is modular, had an
-OF match table, and did not publish aliases, so autoload is broken for
-`CONFIG_MTK_DVFSRC=m`. That is a real, one-line hardware-enablement bug.
+The local tree is **v7.3-rc4** (kernel 7.3.0-rc4). The question is
+whether `9d0b1714e1af1` (`perf/arm-cmn: Add workarounds for CMN-S3 on
+Graviton5`) belongs in **this** tree on technical merit.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[soc: mediatek] [add] [missing MODULE_DEVICE_TABLE() for OF
-module autoload]**
-- Subsystem: `soc: mediatek`
-- Verb: **add** (missing export; the body is a fix, not a feature)
-- Intent: publish the existing OF match table as module aliases
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Verified from `git show ec762057868d70`:
-- Signed-off-by: Pengpeng Hou \<pengpeng@iscas.ac.cn\> (author)
-- Signed-off-by: AngeloGioacchino Del Regno
-  \<angelogioacchino.delregno@collabora.com\> (MediaTek SoC maintainer;
-  applied the patch)
-- No Fixes:, Reported-by, Tested-by, Reviewed-by, Acked-by, Link:, or
-  Cc: stable
-- Absence of Fixes:/Cc: stable is expected for this review and is not a
-  negative
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record: `[perf/arm-cmn] [Add] [workarounds for a customised CMN-S3 on
+Graviton5]`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- **Bug:** OF match table is wired to `.of_match_table` but not exported
-  via `MODULE_DEVICE_TABLE(of, ...)`
-- **Symptom:** `depmod`/`file2alias` never emit
-  `of:N*T*Cmediatek,mtXXXX-dvfsrc` aliases, so udev/kmod will not
-  autoload `mtk-dvfsrc.ko`
-- **Version info:** none in the message. Driver landed in v6.13; this
-  fix is in v7.3-rc4
-- **Root cause:** forgotten alias publication on a tristate
-  `module_platform_driver`
+- `Fixes:` — none (expected)
+- `Reported-by:` — none
+- `Tested-by:` — none
+- `Reviewed-by: Robin Murphy <robin.murphy@arm.com>` (arm-cmn
+  maintainer)
+- `Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>`
+- `Link:` — none in the commit
+- `Cc: stable@vger.kernel.org` — none (expected)
+- `Signed-off-by: Aviv Bakal <avivb@amazon.com>` (author)
+- `Signed-off-by: Robin Murphy <robin.murphy@arm.com>`
+- `Signed-off-by: Will Deacon <will@kernel.org>`
+- Ignored: any Sasha Levin SOB / Upstream-commit markers
 
-The extra “source-level fix / no dynamic hardware reproduction”
-paragraph is in the original lore submission as well (not a stable-
-pipeline marker).
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not hidden.** It is an explicit autoload/modalias bug fix
-disguised only by the verb “add”. Same class as a missing device-ID
-table export.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/soc/mediatek/mtk-dvfsrc.c` (**+1 / −0**)
-- One line after `mtk_dvfsrc_of_match[]`
-- Scope: **single-file surgical fix**
+- **Bug:** Graviton5’s CMN-S3 zeros some discovery fields (DTC domain in
+  unit info, logical ID in node info).
+- **Symptom:** Standard discovery cannot identify DTC domains or DTC
+  logical IDs; a 10×14 mesh also exceeds `CMN_MAX_DIMENSION` 12.
+- **Version info:** none in the message.
+- **Root cause:** custom silicon, not a kernel logic regression.
+  Identified via ACPI HID `AMZN0070`.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Not a disguised cleanup. It is an explicit hardware workaround
+plus ACPI ID. Cover letter language is “adds support”; the mechanism is
+a quirk for broken discovery registers.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- **Before:** match table exists and is used for platform binding, but
-  no `__mod_of__mtk_dvfsrc_of_match` alias is generated
-- **After:** `MODULE_DEVICE_TABLE(of, mtk_dvfsrc_of_match)` creates that
-  alias for `scripts/mod/file2alias.c`
-- Affected path: **module build / autoload**, not probe logic. Built-in
-  (`=y`) is unchanged at runtime
+- File: `drivers/perf/arm-cmn.c` (+31 / −1)
+- Functions: `arm_cmn_graviton5_dtc_domain` (new), `arm_cmn_discover`
+  (workaround + DTC logid), `arm_cmn_acpi_match[]` (HID)
+- Also: `CMN_MAX_DIMENSION` 12→14, `PART_GRAVITON5`
+- Scope: single-file, surgical, driver-local
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- **Category:** hardware enablement / missing module alias (OF
-  equivalent of a missing device ID table)
-- **Mechanism:** without `MODULE_DEVICE_TABLE`, kmod cannot map DT
-  `compatible` to `mtk-dvfsrc.ko`. Probe never runs unless the module is
-  loaded by hand
-- Not UAF, leak, race, or locking
+- Dimension cap 12→14 so a 10×14 mesh is not rejected.
+- ACPI `AMZN0070` → synthetic `PART_GRAVITON5`, then treated as
+  `PART_CMN_S3`.
+- DTC domain: from unit-info register → from XP node ID `(x/5)+(y/7)*2`
+  on the 10×14 mesh (domains 0–3).
+- DTC `logid`: from node info → XP `logid` so sort order matches
+  firmware IRQ order.
 
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **Hardware workaround + ACPI device ID.** Zeroed discovery
+fields would map every XP to DTC domain 0 and every DTC logid to 0. Mesh
+10×14 fails `max(mesh_x,mesh_y) > CMN_MAX_DIMENSION` (`36c0de02575ce`,
+already in this tree).
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- **Obviously correct:** one standard macro next to the table, same
-  pattern as `mtk-mmsys.c`, `mtk-svs.c`, `mtk-mutex.c` in this tree
-- **Regression risk: negligible.** No runtime code, locking, or API
-  change; only `.modinfo` aliases when built as a module
+- Quality: small, gated on `AMZN0070` except the dimension bump.
+  Maintainer R-b’d after review (v1 used `xp->logid`; v2 used `xp->dtc`;
+  Robin required `xp->logid` because `cmn->dtc[]` is sorted by logid to
+  match firmware IRQ order). Committed code matches that.
+- Regression risk: low. Workaround is HID-gated. `CMN_MAX_DIMENSION` 14
+  only grows per-event bitmaps (`CMN_MAX_XPS` 144→196). Domain formula
+  is Graviton5-specific; x,y are 4-bit so theoretical max domain is 7,
+  but 10×14 yields 0–3 (`CMN_MAX_DTCS` is 4).
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- Match table introduced in **192514ae05687** (“Add MediaTek DVFS
-  Resource Collector (DVFSRC) driver”, AngeloGioacchino Del Regno, 2024)
-- Present in **v6.13-rc1**; **not** in v6.12 or v6.6
-- Original file already had `.of_match_table` and
-  `module_platform_driver` and **never** had `MODULE_DEVICE_TABLE` (`git
-  show 192514ae05687a:drivers/soc/mediatek/mtk-dvfsrc.c`)
-- The one-line fix is **ec762057868d70** (Pengpeng Hou, 2026-07-04;
-  applied 2026-07-30)
+- Workaround and dimension bump introduced by `9d0b1714e1af1` itself
+  (Aviv Bakal, 2026-06-30; merged 2026-07-21).
+- Driver: long-standing. CMN-S3: `0dc2f4963f7ef` (2024-09-04). ACPI
+  `ARMHC003`: `8c138a189f6db` (2025-05-19). Mesh reject: `36c0de02575ce`
+  (2026-02-03, `Cc: stable`).
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** Bug is the original omission in
-192514ae05687, which **is** an ancestor of this tree.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: later DVFSRC work (MT6893, MT8196, bandwidth rework) only grew
-the match table. No prerequisite refactor is required for this one line.
-**Standalone.**
+Record: No `Fixes:` tag. Not a regression from a specific kernel commit;
+hardware does not implement discovery as the driver expects.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Pengpeng Hou has a series of the same “add missing
-MODULE_DEVICE_TABLE()” fixes (rtc, vdpa, watchdog, hwmon, aspeed,
-ixp4xx). This is a systematic audit, not a one-off. The applying
-maintainer is the MediaTek SoC co-maintainer.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: **None.** Needs only `mtk_dvfsrc_of_match` and `module.h`, both
-present since the driver was added. Applies standalone.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c ec762057868d70` →
-  https://patch.msgid.link/20260704124308.6241-1-pengpeng@iscas.ac.cn
-- `b4 dig -a`: **v1 only** (no v2/v3)
-- Thread (saved via `b4 dig -m`): maintainer reply “Applied to
-  v7.2-next/soc, thanks!” (commit 0ef07f74aff2 while in the MTK tree)
-- No NAKs, no requested changes, no Cc: stable in review
+- This is **v6 2/2**. Patch 1 is `56603c28d9169` (`Move DTM index data
+  out of hw_perf_event`) — **already an ancestor of HEAD**. Needed
+  because embedded `dtm_idx`/`wp_idx` in `hw_perf_event` were size-
+  capped; growing `CMN_MAX_DIMENSION` without that move would fail
+  `static_assert(sizeof(struct arm_cmn_hw_event) <= offsetof(struct
+  hw_perf_event, target))`.
+- Later 7.3 work (filter refactor, CMN S3 r2) does not revert the
+  workaround. No graviton-specific follow-up.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc included both MediaTek SoC maintainers
-(Matthias Brugger, AngeloGioacchino Del Regno) and linux-mediatek /
-linux-arm-kernel / linux-kernel. Applied by the subsystem maintainer.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: **No Reported-by / bugzilla / syzbot.** Evidence is the source
-mismatch (match table vs missing export), which is deterministic for
-`=m` builds.
+Record: Aviv Bakal (Amazon) — this is their only arm-cmn commit here.
+Robin Murphy is the driver author/maintainer and both reviewed and re-
+posted v6.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: not a numbered series. Sibling same-cycle fixes exist (`soc:
-aspeed`, `soc: ixp4xx: npe/qmgr`). Each is self-contained. Historical
-MediaTek analogs: `6f42f5e73bb43` (mtk-svs), `10687632307c0` (mtk-
-mmsys).
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: **UNVERIFIED.** lore.kernel.org returned HTTP 403 for WebFetch
-and curl. No local evidence of a stable NAK.
+Record: Needs CMN-S3, ACPI table, mesh-size check, and the DTM-index
+move. **All are in this 7.3-rc4 tree.** Standalone on this tree.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: **No function body changed.** The new line is
-`MODULE_DEVICE_TABLE(of, mtk_dvfsrc_of_match)` beside the existing
-table. Related runtime entry is `mtk_dvfsrc_probe`.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 5.2: TRACE CALLERS
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `module_platform_driver(mtk_dvfsrc_driver)` → OF platform probe
-- Exported `mtk_dvfsrc_send_request` / `mtk_dvfsrc_query_info` used by:
-  - `drivers/interconnect/mediatek/icc-emi.c`
-    (`INTERCONNECT_MTK_DVFSRC_EMI` depends on `MTK_DVFSRC`)
-  - `drivers/regulator/mtk-dvfsrc-regulator.c` (`REGULATOR_MTK_DVFSRC`
-    depends on `MTK_DVFSRC`)
-- Probe also `devm_of_platform_populate()`, so child
-  interconnect/regulator nodes never appear if this module never loads
+- `b4 dig -c 9d0b1714e1af1` → https://patch.msgid.link/e9340d3a4385e6f1a
+  6e80bda944a3ba6435472b6.1782824005.git.robin.murphy@arm.com
+- Revisions: v1 (2026-05-03) → v2 → v3 (added DTM move) → v4 → v5 → **v6
+  applied** (Robin re-post, 2026-06-30)
+- Robin on v2: use `xp->logid` not `xp->dtc`; “surprisingly pleasant and
+  unobtrusive given that it's a pretty horrible hardware issue”
+- No NAK. Applied version is latest.
+- A sashiko-bot note about unbounded DTC domain / sort order is the
+  opposite of Robin’s requested `xp->logid` behaviour; not a NAK from
+  maintainers.
 
-Step 5.3: TRACE CALLEES
-Record: probe does SMC init/start of the DVFSRC IP, clock enable, child
-populate. Autoload failure means that entire stack never starts.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: **Userspace-reachable via normal boot on MediaTek DT platforms**
-(kmod/udev matching `compatible`). Unprivileged users do not need a
-special syscall; they just boot. Trigger requires `CONFIG_MTK_DVFSRC=m`
-and a matching DT node.
+Record (`b4 dig -w`): Robin Murphy, Will Deacon, Mark Rutland, linux-
+arm-kernel, linux-perf-users, Amazon (zeev, blakgeof), Ilkka Koskinen.
+Right maintainers.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: other `drivers/soc/mediatek/` drivers already have
-`MODULE_DEVICE_TABLE(of, ...)`. This was the omission.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: No syzbot/bugzilla. Amazon submitted from silicon bring-up.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Series is DTM-index move + this workaround. Patch 1 is in this
+tree. No extra ACPI docs/HID patch required (`AMZN0070` is only in `arm-
+cmn.c`).
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: lore.kernel.org/stable search returned 403. **UNVERIFIED:** no
+confirmed stable-list nomination or rejection.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `arm_cmn_graviton5_dtc_domain`, `arm_cmn_discover`,
+`arm_cmn_acpi_match`, `arm_cmn_init_node_info` (unchanged, still source
+of zeroed logid).
+
+**Step 5.2: TRACE CALLERS**
+
+Record: `arm_cmn_discover()` ← `arm_cmn_probe()` only. Probe runs when
+ACPI matches (including `AMZN0070`). Not IRQ/syscall hot path;
+boot/device-init.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `arm_cmn_init_node_info`, `arm_cmn_dtc_domain` / graviton5
+variant, `arm_cmn_init_dtm`, then `arm_cmn_init_dtcs` (sort by
+type+logid, `platform_get_irq` by sort index).
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: ACPI `AMZN0070` → probe → discover (workaround) → init DTCs/IRQs
+→ register PMU. Userspace `perf` then uses the interconnect PMU.
+Reachable on Graviton5 with `CONFIG_ARM_CMN`.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same file already has AmpereOneX bogus-child-pointer handling
+and CMN-600AE aliasing. Same “quirks for broken discovery” pattern.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: Yes. `drivers/perf/arm-cmn.c` has CMN-S3, ACPI match, mesh-size
+reject. Without this commit, `AMZN0070` would not bind; a 10×14 mesh
+would `-ENODEV`; zeroed DTC fields would mis-program the PMU. Introduced
+as hardware behaviour, not a post-7.3 commit.
+
+`git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`. Commit is in
+v7.3-rc1 (not in v7.2). That is **not** used as “already selected”; it
+only shows 7.3 has the prerequisites.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: Clean on this tree. Context still matches (graviton5 flag, ACPI
+HID, dimension 14). Later S3 r2/filter refactors left the workaround in
+place.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No alternate Graviton5 fix. No later graviton-specific patch in
+`9d0b1714e1af1..HEAD`.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: `drivers/perf/` — Arm CMN uncore PMU. **PERIPHERAL/IMPORTANT:**
+ARM64 servers with CMN; Graviton5-specific for the HID path. Not
+mm/sched/VFS.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Active in 7.3 (S3 r2, filters, DTM layout). Driver itself is
+mature (~CMN-600 era).
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: ACPI `AMZN0070` / Graviton5 only, plus a small extra bitmap size
+for all `CONFIG_ARM_CMN` users.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Probe on Graviton5. Not unprivileged-triggerable beyond normal
+perf. Not a race. Common on that platform at boot.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: Missing/wrong CMN PMU (no bind, `-ENODEV`, or events on the
+wrong DTC). Not panic/corruption/deadlock. **MEDIUM** for that hardware;
+still the documented quirk/ID exception.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**; `make
-  kernelversion` → **7.3.0-rc4**
-- File and match table exist. Before ec762057868d70 there was **no**
-  `MODULE_DEVICE_TABLE` (`git show ec762057868d70^:...`)
-- Bug introduced with the driver in **v6.13** (192514ae05687)
-- `git merge-base --is-ancestor ec762057868d70 HEAD` → yes (this
-  checkout already contains the fix as mainline, which does not change
-  whether the bug class is real)
+- Benefit: Graviton5 CMN perf actually works (HID + discovery + 10×14
+  mesh).
+- Risk: low (~31 lines, HID-gated, maintainer-reviewed). Dimension bump
+  is small and already paired with the DTM-index move in this tree.
+- Ratio: favorable.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **clean apply.** One line after the sentinel entry. Compatible
-strings may differ on older stables, but the macro is independent of
-table contents.
+---
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: this is the fix. No earlier equivalent. Sibling SoC drivers
-already had the macro.
+## PHASE 9: FINAL SYNTHESIS
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record:
-- **Subsystem:** `drivers/soc/mediatek` (MediaTek SoC DVFS resource
-  collector)
-- **Criticality: IMPORTANT** on ARCH_MEDIATEK (Chromebooks/boards with
-  MT8183/MT8195/MT8196/MT6893), **PERIPHERAL** globally
-- Kconfig: `config MTK_DVFSRC` **tristate**, `depends on ARCH_MEDIATEK`
+**FOR:**
+- ACPI ID + hardware quirk on an existing driver (stable exception).
+- Real silicon: zeroed CMN-S3 discovery, 10×14 mesh.
+- Small, single-file, obviously correct after maintainer review.
+- Prerequisites present in 7.3-rc4.
+- Robin Murphy: use `xp->logid`; workaround is unobtrusive.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: actively maintained (MT8196/DVFSRCv4, bandwidth rework,
-mmsys/cmdq work). DVFSRC itself is a few years old (6.13), not brand-new
-staging code.
+**AGAINST:**
+- Enablement/quirk, not a crash/security/corruption fix.
+- Cover letter is “add support”.
+- `CMN_MAX_DIMENSION` affects all CMN bitmap sizes (small).
+- Series 2/2 (patch 1 already here).
+- No `Reported-by` from production crashes.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**UNRESOLVED:**
+- Stable list discussion (lore 403).
+- No public Tested-by (author is Amazon; hardware access is plausible
+  but unverified).
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **platform-specific / config-specific** — `ARCH_MEDIATEK` +
-`CONFIG_MTK_DVFSRC=m` + DT `compatible` in the match table. Built-in
-configs are unaffected.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Trigger: boot (or DT overlay) with the module not already loaded
-- Common on distro-style `=m` kernels; Chromebook/embedded images often
-  use `=y` (then a no-op)
-- Not a race; **100%** for modular builds
-- Unprivileged user is not required beyond using the machine
+1. Obviously correct and tested? **PASS** — maintainer R-b after v1–v6;
+   IRQ/logid issue addressed as Robin specified.
+2. Fixes a real bug that affects users? **PASS** — Graviton5 CMN PMU
+   cannot enumerate correctly without it.
+3. Important issue? **PASS** via quirk/ID exception (severity MEDIUM as
+   a PMU, not a panic).
+4. Small and contained? **PASS** — +31/−1, one file.
+5. No new features or APIs? **PASS** — no new uAPI; HID + discovery
+   workaround on existing PMU.
+6. Can apply to the local tree? **PASS** — driver, CMN-S3, DTM-index
+   move, mesh check all present.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- **Failure:** DVFSRC module does not autoload → probe skipped → child
-  devices not populated → interconnect EMI bandwidth votes and DVFSRC
-  regulators return failure/`-ENODEV`
-- Not an oops/UAF/corruption
-- **Severity: MEDIUM** (device/stack does not come up; power/bandwidth
-  management broken on those SoCs). For users who ship this as a module,
-  it is a real “hardware doesn’t work” bug, in the same bucket as
-  missing device IDs
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** high for modular MediaTek kernels; zero elsewhere
-- **Risk:** very low (1 line, `.modinfo` only)
-- **Ratio:** strongly favors including it
+Record: **ACPI device ID** (`AMZN0070`) **and hardware quirk** for
+customised CMN-S3.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 9.4: MAKE YOUR DECISION**
 
-Step 9.1: COMPILE THE EVIDENCE
+This tree is 7.3-rc4, which already contains CMN-S3 and the series
+prerequisite. The patch is the standard stable shape: ID + quirk so
+existing `arm-cmn` works on shipping Graviton5. Benefit is real for that
+platform; risk is low and mostly HID-gated.
 
-FOR:
-- Real, deterministic autoload bug on a **tristate** driver that already
-  has an OF table
-- DVFSRC is the parent of interconnect and regulator children; missing
-  autoload takes down that DVFS/bandwidth stack
-- 1-line, standard `MODULE_DEVICE_TABLE(of, ...)` pattern already used
-  by sibling MediaTek SoC drivers
-- Applied by the MediaTek SoC maintainer; v1 accepted unchanged
-- Same class as device-ID additions (explicit stable exception):
-  existing driver, existing hardware, missing match publication
-- Driver has been in this lineage since v6.13; the omission is old, not
-  a just-landed feature
+---
 
-AGAINST:
-- No user/syzbot report; author describes it as source-level
-- Not a crash, deadlock, or data-corruption fix
-- `=y` builds are unaffected; no in-tree defconfig sets
-  `CONFIG_MTK_DVFSRC`
-- No Cc: stable (expected here; not used as a negative)
+## What the commit solves and why it matters here
 
-UNRESOLVED:
-- lore.kernel.org stable-list search (HTTP 403)
-- Whether a given distro actually builds this as `=m` (unverified)
+Graviton5 implements CMN-S3 with discovery registers that read as zero
+and a 10×14 mesh. In this tree, `arm_cmn_discover()` would then put
+every XP in DTC domain 0, leave DTC logids at 0 (breaking IRQ sort
+order), and reject the mesh as larger than 12. Adding `AMZN0070` and the
+three workarounds makes the existing CMN PMU usable on that hardware
+without new APIs.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — one established macro;
-   maintainer applied v1
-2. Fixes a real bug that affects users? **PASS** — module will not
-   autoload for OF devices (`stable-kernel-rules.rst`: “real bug that
-   bothers people **or** just add a device ID”)
-3. Important issue? **PASS** as hardware-does-not-bind / missing ID-
-   table export, not as a panic. Severity MEDIUM but in the device-ID
-   exception class
-4. Small and contained? **PASS** — +1 line, one file
-5. No new features or APIs? **PASS** — only publishes an existing table
-6. Can apply to the local tree? **PASS** — file and table exist; the
-   line is already the correct form here
+It meets stable rules as a quirk/ID exception: small, reviewed, no uAPI,
+applies cleanly here because `56603c28d9169` already moved DTM arrays
+out of `hw_perf_event`.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Device ID / match-table publication for an existing driver.**
-Closest documented exception: “just add a device ID.”
+Risk vs benefit: extra bitmap bytes for all CMN users vs a working
+interconnect PMU on Graviton5. Favorable.
 
-Step 9.4: MAKE YOUR DECISION
-This is a one-line, obviously correct fix for a real modular-boot
-failure on MediaTek SoCs that already have this driver. Risk is
-negligible. It belongs in this tree’s stable lineage.
+Concerns: not a panic-class bug; depends on the DTM-index move (already
+in this tree). No stable-list confirmation (fetch failed).
 
-### What it solves for stable users
-If `mtk-dvfsrc` is built as a module, kmod never gets `of:` aliases for
-`mediatek,mt8183-dvfsrc` and the other compatibles. The driver never
-probes, so DVFSRC children (EMI interconnect, DVFSRC regulators) never
-appear. Adding `MODULE_DEVICE_TABLE` is the supported way to generate
-those aliases (`include/linux/module.h` + `scripts/mod/file2alias.c`).
+---
 
-### Risk vs benefit
-Benefit is restoring autoload for a SoC DVFS block; risk is a `.modinfo`
-addition with no runtime logic change.
+## Verification
 
-### Concerns
-Needs no extra commits. Older stables without `mtk-dvfsrc.c` (pre-6.13)
-would not apply; **this** checkout has the driver. Lore stable
-discussion could not be fetched (403).
-
-Verification:
-- [Phase 1] `git show ec762057868d70`: subject/tags/body as above; no
-  Fixes/Cc stable/Reported-by
-- [Phase 2] Diff is exactly `+MODULE_DEVICE_TABLE(of,
-  mtk_dvfsrc_of_match);` in `mtk-dvfsrc.c`
-- [Phase 3] Blame: table from 192514ae05687; MODULE_DEVICE_TABLE line
-  from ec762057868d70
-- [Phase 3] `git show 192514ae05687a:drivers/soc/mediatek/mtk-dvfsrc.c`:
-  of_match_table + module_platform_driver, no MODULE_DEVICE_TABLE
-- [Phase 3] `git merge-base --is-ancestor 192514ae05687 v6.13-rc1` yes;
-  not in v6.12
-- [Phase 3] `git merge-base --is-ancestor ec762057868d70 HEAD` yes
-- [Phase 4] `b4 dig -c/-a/-w/-m`: lore msgid
-  20260704124308.6241-1-pengpeng@iscas.ac.cn; v1 only; maintainers CC’d;
-  Angelo applied to v7.2-next/soc
-- [Phase 4] lore.kernel.org HTTP 403 — stable-list discussion UNVERIFIED
-- [Phase 5] Callers: `icc-emi.c`, `mtk-dvfsrc-regulator.c`; Kconfig
-  `depends on MTK_DVFSRC`; probe uses `devm_of_platform_populate`
-- [Phase 5] `CONFIG_MTK_DVFSRC` is tristate in
-  `drivers/soc/mediatek/Kconfig`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4
-- [Phase 6] Pre-commit file has match table and no MODULE_DEVICE_TABLE
-- [Phase 7] MAINTAINERS: ARM/Mediatek SoC support → AngeloGioacchino Del
-  Regno (applier)
-- [Phase 8] Failure mode: module not autoloaded → DVFSRC/DVFS stack
-  down; not an oops
-- UNVERIFIED: distro `=m` vs `=y` defaults; stable@ lore thread
+- [Phase 1] Parsed tags: R-b Robin Murphy + Ilkka Koskinen; SOB Aviv
+  Bakal, Robin Murphy, Will Deacon; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: `drivers/perf/arm-cmn.c` +31/−1; HID `AMZN0070`,
+  `CMN_MAX_DIMENSION` 14, DTC domain/logid workarounds
+- [Phase 2] Current tree still has graviton5 paths at `arm_cmn_discover`
+  / `arm_cmn_graviton5_dtc_domain` / ACPI table
+- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor 9d0b1714e1af1 HEAD` — yes; in
+  v7.3-rc1, not v7.2
+- [Phase 3] CMN-S3 `0dc2f4963f7ef` (2024-09-04) in tree; ACPI S3
+  `8c138a189f6db` in tree
+- [Phase 3] Mesh reject `36c0de02575ce` in tree; DTM move
+  `56603c28d9169` in tree (series 1/2)
+- [Phase 3] `git blame` on workaround lines → `9d0b1714e1af1`
+- [Phase 3] No graviton follow-ups in `9d0b1714e1af1..HEAD`
+- [Phase 4] `b4 dig -c 9d0b1714e1af1` → v6 2/2 msgid `e9340d3a4385e6f1a6
+  e80bda944a3ba6435472b6.1782824005.git.robin.murphy@arm.com`
+- [Phase 4] `b4 dig -a`: v1–v6; applied is v6
+- [Phase 4] `b4 dig -w`: Will/Mark/Robin, linux-arm-kernel, linux-perf-
+  users
+- [Phase 4] Robin v2 review: must use `xp->logid` for firmware IRQ order
+  (committed code does)
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable (403)
+- [Phase 5] `arm_cmn_discover` only from `arm_cmn_probe`; ACPI match
+  includes `AMZN0070`
+- [Phase 6] Buggy discovery path and mesh check exist in this checkout;
+  apply is clean
+- [Phase 7] `CONFIG_ARM_CMN` depends on ARM64 || COMPILE_TEST
+- [Phase 8] Failure: missing/wrong CMN PMU on Graviton5, not
+  oops/deadlock; severity MEDIUM + quirk exception
+- UNVERIFIED: Amazon Tested-by on silicon (not in tags)
 
 **YES**
 
- drivers/soc/mediatek/mtk-dvfsrc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/perf/arm-cmn.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/mediatek/mtk-dvfsrc.c b/drivers/soc/mediatek/mtk-dvfsrc.c
-index 41add5636b03c..af35d71615baf 100644
---- a/drivers/soc/mediatek/mtk-dvfsrc.c
-+++ b/drivers/soc/mediatek/mtk-dvfsrc.c
-@@ -562,6 +562,7 @@ static const struct of_device_id mtk_dvfsrc_of_match[] = {
- 	{ .compatible = "mediatek,mt8195-dvfsrc", .data = &mt8195_data },
- 	{ /* sentinel */ }
- };
-+MODULE_DEVICE_TABLE(of, mtk_dvfsrc_of_match);
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index 527a953bf4744..688a94ef81c22 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -31,7 +31,8 @@
+ #define CMN_CHILD_NODE_ADDR		GENMASK(29, 0)
+ #define CMN_CHILD_NODE_EXTERNAL		BIT(31)
  
- static struct platform_driver mtk_dvfsrc_driver = {
- 	.probe	= mtk_dvfsrc_probe,
+-#define CMN_MAX_DIMENSION		12
++/* Some implementations use a mesh larger than the architectural max of 12 */
++#define CMN_MAX_DIMENSION		14
+ #define CMN_MAX_XPS			(CMN_MAX_DIMENSION * CMN_MAX_DIMENSION)
+ #define CMN_MAX_DTMS			(CMN_MAX_XPS + (CMN_MAX_DIMENSION - 1) * 4)
+ 
+@@ -215,6 +216,8 @@ enum cmn_part {
+ 	PART_CMN700 = 0x43c,
+ 	PART_CI700 = 0x43a,
+ 	PART_CMN_S3 = 0x43e,
++	/* Synthetic part number, overridden to PART_CMN_S3 during discovery */
++	PART_GRAVITON5 = 0xa5,
+ };
+ 
+ /* CMN-600 r0px shouldn't exist in silicon, thankfully */
+@@ -2217,6 +2220,18 @@ static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_reg
+ 	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
+ }
+ 
++static unsigned int arm_cmn_graviton5_dtc_domain(u16 xp_id)
++{
++	unsigned int x = (xp_id >> 7) & 0xf;
++	unsigned int y = (xp_id >> 3) & 0xf;
++
++	/*
++	 * The unit info register reads as zero; derive the DTC domain from
++	 * the XP's mesh coordinates over the 10x14 mesh.
++	 */
++	return (x / 5) + (y / 7) * 2;
++}
++
+ static void arm_cmn_init_node_info(struct arm_cmn *cmn, u32 offset, struct arm_cmn_node *node)
+ {
+ 	int level;
+@@ -2262,6 +2277,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 	u64 reg;
+ 	int i, j;
+ 	size_t sz;
++	bool graviton5_workaround = false;
+ 
+ 	arm_cmn_init_node_info(cmn, rgn_offset, &cfg);
+ 	if (cfg.type != CMN_TYPE_CFG)
+@@ -2272,6 +2288,13 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
+ 	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
+ 	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
++
++	/* Graviton5 has a customised CMN-S3 which needs some fixups */
++	if (cmn->part == PART_GRAVITON5) {
++		cmn->part = PART_CMN_S3;
++		graviton5_workaround = true;
++	}
++
+ 	/* 600AE is close enough that it's not really worth more complexity */
+ 	if (part == PART_CMN600AE)
+ 		part = PART_CMN600;
+@@ -2361,6 +2384,8 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 
+ 		if (cmn->part == PART_CMN600)
+ 			xp->dtc = -1;
++		else if (graviton5_workaround)
++			xp->dtc = arm_cmn_graviton5_dtc_domain(xp->id);
+ 		else
+ 			xp->dtc = arm_cmn_dtc_domain(cmn, xp_region);
+ 
+@@ -2439,6 +2464,10 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 
+ 			switch (dn->type) {
+ 			case CMN_TYPE_DTC:
++				if (graviton5_workaround) {
++					/* Node info logical ID is zeroed; use the XP's */
++					dn->logid = xp->logid;
++				}
+ 				cmn->num_dtcs++;
+ 				dn++;
+ 				break;
+@@ -2671,6 +2700,7 @@ static const struct acpi_device_id arm_cmn_acpi_match[] = {
+ 	{ "ARMHC650" },
+ 	{ "ARMHC700" },
+ 	{ "ARMHC003" },
++	{ "AMZN0070", PART_GRAVITON5 },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
 -- 
 2.53.0
 
