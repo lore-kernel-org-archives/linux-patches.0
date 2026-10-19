@@ -1,66 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792447685;
-	b=qHOBbBXXHzql2IiwGNhsH04YTqTGEYy85wxqRQOQmcl0t7pDaMRHJ+/ncwkVtSkey86k
-	 Hqp/O/GjPz2RoLHX+qxEvcade1hveWQiwaE2WTQZl7vWzr+x+7ryzp5UU049enwk82c8Z
-	 a8dpJCnTWQAUNs5TPOHZgWpztPiOKmSR9dkrbodGH/UIlYIXmGwGLjIRRo805YlKXRokB
-	 NeBkvWp8c8tPt7Fjgt1G4YCd6oTAj5zfE52msNZVAS9aeLpeZK5lE+1PIRdTvH8gh4zUo
-	 pu0hUVKyH+KZfHubpq8sSVh5GPaiZgRB1mqK9QAolL8D7WkSbrgA5VpV1Ktqw2viXbQ==
+	t=1792447683;
+	b=ovIl8il4KO2eHYT8pmsnyYbW0SsIZJKa16bkVdHJPstJTQ22q/gf7bVr/Eq7Lz1cQ+eL
+	 PPFo/CojRRlIQ84g3BFjY0EgxxuwuHrdgdyT55apBUQk1VwwEkz4qWdfgDLFsGz0Y6jSD
+	 F+Nuk1Qa0DOCO1c7HWp0bS7Bd9qm67Zf68TBNv9BKbfQiLcy7dNI7akTbdyeCriwSiIVw
+	 q5Kp7hQLFeBTFt+xIGbaPVpOGEO2XsDoGQB8pAZfthRPcaSeKueXSWji1L5pYc90RJjrF
+	 d8a/TFP8B88reG7fbNh3riKfwk1g4s6ZFrMJZF/Xq6LZiavhJYmDTgFCIExQwSX54uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792447685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792447683;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=VEnfh9dB8CZN9wOKO/BO/QyAEitVOeSygcI3jJ2ugug=;
-	b=u0Mbd1YiJxUHU05NaXhHNrefK7PgKX+LrZI6U+2CV19tPbGo4gG2b4EUTaJd6TeZqC6e
-	 GDHxT0uodEpObNgDAUF/e9ZDnA89+2qEAEzJYqfdiP7Gpb1Qw3PlCLV/2giY5uj8eE8Nt
-	 S9i/a/X32MbL0fbLEmMMRQyrz6EofjyX0f6Q0gAEBOe20okGEAJghqsmTtFNBigyCsNwh
-	 blwBL5vo1moHCgHiPic5L6+qFBkg9MB7NHotaqnuSSZlaH1zkihkTDmQKmGOykzRgojDS
-	 +z5co6drW46n7dGdSfgdzaxwUlrG1dm2dDzdp39zodhcZECBgUgSJssWjTyJfyJhQHw==
+	bh=YeZNYunybcxy/NfWb6jCfz+TaK9LyyfOatz74eHc0KM=;
+	b=juJ46cEokXVS6ceDfM1Dysmc1ByjzCC9wNia5rRn+0PxxQMo+1wVoLj0zBXl2BzmkLvb
+	 ikeV0iDEnZxHHnxm5E1PfzMk47wEFskX3CUChSb2Z2ne9GQ0kQqCFF7I9gpDNek7mfYTc
+	 wSAWHcGQ8N9jEgAf9GI6D2G8Wm9Bmg9jvUmm3fHxpgmnnBtPe5vfJH/DxsKLLjqEiAagi
+	 0YXYs0IODatRA4YXmXdN6A9+y1num79Kta1ivCnN5LSDKdRyOZNkjc1KgGmvlGeGr5aXZ
+	 K6WeZajKpImmln553MEdd/jAdwAjbUiufluZqZCwWIvlKgHXNfNb9AWhpf023hiQ7Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bH1s1a7A;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kOaBxOLk;
 	arc=none smtp.remote-ip=192.198.163.17
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F22060A2621
-	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 22:08:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F22060A2621
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B14606A336
+	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 22:08:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E7B14606A336
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bH1s1a7A
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kOaBxOLk
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792447685; x=1823983685;
+  t=1792447681; x=1823983681;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=K158NP7KXwoHv/mYHuzVJWjCNSLVTUMArbIKw0y5PfE=;
-  b=bH1s1a7AnWiI+FLuBca+xK1cDAC2WvOmBxxaQJcSotdm013ekclBNhg/
-   4dxiTaFe7wWTTJpln/J8tjnQUFdqPPvW/oqPWCfrTovUsqhEUGZqIYRFV
-   Z3X0LjDAZUt/L0Q3icFwBwYu2UF8aSmeF3PpjwfMqKfOakCpsAACaaTUG
-   CgueAtIijzqdAXkeGPZ7MVJFn11puLJInWm1fpwfT4dzphctC75MmQfKZ
-   l/W8crSPMHVbS/mtBrZoVai63/cOJyh6VeanT9ObjKjAmE/HD8H9w/INU
-   sryk9lrDRnhuIzhrleQMoud+PVem2qKxw2Z7fJXryv8R0KNPWEGE+wphi
+  bh=9RK0cTSErpvZvdFlmTLHSVOodu/G/WUGFbYDPDtGi7Y=;
+  b=kOaBxOLk7Z9rBmdn/3tv7RGV5eWhdtrH0JP5OlHGFGG3I18f9E3YWdaH
+   e6C+TknuJMyD8wtHFzkMaEuQPF2O6u1xMYfvsw0oRU82/Abgt404e79hn
+   XOQ7rjqMcqCeeOQrXYlUJhdtc379BorBw0OCPG5+1+L3W0PamVPzIeZXY
+   ZElkc3nc1Q8Sa4G+MPlzOXfudW0s7hI1JQIPpXGnjUQobMqk/GhUXo/IJ
+   Eu38GhDCBAfC4TZ2RMNuJfnh945218cTgEBTVqHvYyM0VIQHgv0zxHZ26
+   Clcty0fqBmUvFqAO1jybaO7KMF4TfY7o6SAEKtjMWtZFb3NSwFyX7zS4N
    w==;
-X-CSE-ConnectionGUID: VyHvPhjxRmq0P1Ktf9wqUA==
-X-CSE-MsgGUID: dVYZaKf9TRubAuCFo13o3w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1144240"
+X-CSE-ConnectionGUID: wBZ6ts9NRpiOE+vOi9+HzA==
+X-CSE-MsgGUID: bko6Yu4QRiSKQ3GecaSOxQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1144218"
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1144240"
+   d="scan'208";a="1144218"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
   by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 15:08:00 -0700
-X-CSE-ConnectionGUID: fM/1IehZSeqREYasocEd7Q==
-X-CSE-MsgGUID: 12qscziNQXSJyRoDpGDg1Q==
+X-CSE-ConnectionGUID: Jy1DBh7uTJOEd+iqTAl12Q==
+X-CSE-MsgGUID: QVEI9MElQH+S/ejUvlxmHQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="2708355"
+   d="scan'208";a="2708346"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 15:08:00 -0700
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 15:07:59 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: ben.horgan@arm.com,
 	james.morse@arm.com,
@@ -74,9 +74,9 @@ Cc: tony.luck@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [RFC PATCH v2 10/10] arm_mpam: resctrl: Update the comment on monitoring domain setup
-Date: Mon, 19 Oct 2026 15:07:44 -0700
-Message-ID: <f6080eca2696f4a06777725854447a563aa29696.1792443633.git.reinette.chatre@intel.com>
+Subject: [RFC PATCH v2 07/10] arm_mpam: resctrl: Warn when no monitoring component is found for a CPU
+Date: Mon, 19 Oct 2026 15:07:41 -0700
+Message-ID: <1c68a6ae981095ec93250cf0e394bb4df15c7e66.1792443633.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1792443633.git.reinette.chatre@intel.com>
 References: <cover.1792443633.git.reinette.chatre@intel.com>
@@ -91,54 +91,41 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The comment in mpam_resctrl_setup_mon_domain() explains that the L3
-component IDs need to be used for a monitoring domain because there may
-be no control component for the L3. It also describes searching each
-event's class for a component with overlapping CPUs.
+Setting up a monitoring domain fails if no monitoring class has a
+component that contains the CPU. This is not expected to happen: a
+resource only supports monitoring when at least one monitoring class
+was picked, and only classes that cover all possible CPUs are picked
+for monitoring.
 
-Neither matches the code. The monitoring domain has its own structure
-and is set up independently of the control domain, so whether a control
-component exists has no bearing on it. Each event's class must have a
-component that contains the CPU, and all components of the domain must
-cover the same CPUs, which is stricter than overlapping.
+The failure path calls WARN_ON_ONCE(0), which never warns. The
+unexpected failure is thus silent and the CPU is left without a
+monitoring domain with nothing reporting why.
 
-Rewrite the comment to say where the domain's ID comes from and what is
-required of the components that back the domain's events.
-
-No functional change.
+Warn when no monitoring component is found for the CPU, as is already
+done when setting up a control domain finds no component in the
+resource's class.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Note to maintainers: This comment update is kept as a separate patch to
-make it easy to review. It can be folded into "arm_mpam: resctrl: Give
-the monitoring domain its own structure" and "arm_mpam: resctrl: Require
-monitoring components to cover the same CPUs" if preferred.
----
- drivers/resctrl/mpam_resctrl.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/resctrl/mpam_resctrl.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-index c3ea61a40bb2..61fbde9c0960 100644
+index 022920be1862..63c5bf45856d 100644
 --- a/drivers/resctrl/mpam_resctrl.c
 +++ b/drivers/resctrl/mpam_resctrl.c
-@@ -1647,11 +1647,12 @@ static int mpam_resctrl_setup_mon_domain(unsigned int cpu,
- 	int err;
+@@ -1665,10 +1665,8 @@ static int mpam_resctrl_setup_mon_domain(unsigned int cpu,
+ 		if (mon_comp)
+ 			any_mon_comp = mon_comp;
+ 	}
+-	if (!any_mon_comp) {
+-		WARN_ON_ONCE(0);
++	if (WARN_ON_ONCE(!any_mon_comp))
+ 		return -EFAULT;
+-	}
  
- 	/*
--	 * Even if the monitor domain is backed by a different
--	 * component, the L3 component IDs need to be used... only
--	 * there may be no ctrl_comp for the L3.
--	 * Search each event's class list for a component with
--	 * overlapping CPUs and set up the dom->mon_comp array.
-+	 * The monitoring domain takes the L3 cache ID as its ID even when its
-+	 * events are backed by components of other classes, see
-+	 * mpam_resctrl_pick_domain_id().
-+	 * Find the component of each event's class that contains the CPU and
-+	 * set up the dom->mon_comp array. All these components must cover the
-+	 * same CPUs.
- 	 */
- 
- 	for_each_mpam_resctrl_mon(mon, eventid) {
+ 	mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
+ 	mon_d->hdr.type = RESCTRL_MON_DOMAIN;
 -- 
 2.55.0
 
