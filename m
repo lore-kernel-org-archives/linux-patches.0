@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E5A5D18DF;
-	Mon, 19 Oct 2026 14:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C585D2A09;
+	Mon, 19 Oct 2026 14:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418493; cv=none; b=H4GLApeTOK6Wth0htJ1JoxS2SQoMDyhak8tR0c8xi6xHodyL4UrVR4K61WtPBx1moQSstmi5QHPvesQdEN0JauPByRdgWWAoDUQ3fIJIdGt40SEE2dLtf4t9QGIpj5FwE+HSaJ+Pr4Jh//DIfLiBCsHl/EQmr0JXhvHif+FRZXQ=
+	t=1792418495; cv=none; b=p+xLMaHUPGmFamnhLCai78sXJRKA28K7P01OXn74a2WD5vpNCvdS6LszrBeuSeffl4x0eNzcIMIVhJO1/Qo28nQ8FDHrIcJWZB1pp0KHIcjJTrCFMlJiV6TbNQogNR1/EP7PK3OnH/fjucrSAaaqsXGWrwgwTlX6SIJMWBTTH5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418493; c=relaxed/simple;
-	bh=tF2h+slp+mYt6nWU5GXtnDi27H6BUcMfXLpk4rOJukA=;
+	s=arc-20240116; t=1792418495; c=relaxed/simple;
+	bh=FTo0tuqmLtaoXV1Ps7QVMNzMAHQZnrxv5rcQCfXaVEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oMzoB4EqW40cyCwMGvcl1Mo4WHt9r1XJX7+BP2jP37+ZrIFavSVs9BZQmwqYi2yX6whWO5SXFDuyPuY1wFMA7t22zRn00zT5t57Nm/RoF9TNtZ/kRlKhuijBV4+yYyPedmT63P4qm+YT0YSV8uYLuMmNO+9STPeTpVYG9vt5uLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VjcgDdZc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JKrFLN0fsVk7KJr4l8MJvtnjdPA5xbDKzAmmSygPOE2tn65i8e5yHJYmfA+8rs7BqBMEpmgY7MJJlODZeplDO54+b6YKHQKGLGn5SUMxmgl3ucqcXmmKY2qEBTKrON2dF74UH3x5HoIKn38p9uV/lUucrXMIGs+EHg7q2o9ejoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzBPbMoP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VjcgDdZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FBD1F000CB;
-	Mon, 19 Oct 2026 14:01:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzBPbMoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866961F000C4;
+	Mon, 19 Oct 2026 14:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418491;
-	bh=9srQrdCZMoRLFkutGZ67T1/tsebmKZ6eRD+DmvGcDX4=;
+	s=k20260515; t=1792418492;
+	bh=qIx0oMbMGkNxA0B5LE0snzLqyXZgwPDKrBhNTml/zNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjcgDdZcYCbcuFoB6WoYyeKOYfVxzr+096jOsVjhoh014LXS1sB0z14V378psKXU8
-	 gKXEyU6AHstGpnkdoNBlwoq1KJ+7fE8UsCNefc4+nfScwcJ/iCOgpzaEIGo/DYVqkT
-	 uXwJRdaW9ok5r223+vEI+Uk3l22QylDKxIF9tL9CpJ5QZ08VnruyxQq40aAFSe0F8i
-	 gyENlMdrB2E3JlCUIATjW5Agy1GdHdkc+zi5oICDF5LS2w4MENNdy3MwkEID+pJkYB
-	 LrSnH6EcGASiWBR60a/gjtkHiccbBknFpXh2L0mY/AMk5qWV11AtlHWDNaDW8Y8Soh
-	 XfPR99ziFR19Q==
+	b=mzBPbMoPD1ux0ii5v8qFtUoLQ79s6HMzxWiSGoJaTbQbNRCVs+DfLG3qK+WnCP4p8
+	 i3mtcQrnqQqQFOw82lWUHKPh8f+D8JOXPvMtwik8vUoRwGsBIx7XJyLfCAJp2aNeAl
+	 7yJtBc/LkrUXef5zvK8X8ETlkwa3QBdDa6eeDJShIn2Fd7BnDxwjPcCdm1Q3EWamot
+	 jaZryFxTVr+PQZMjcXfF75eXqReinNr60f+bgaaidbwi6jJoZ71Fta4EYw2j4K51DW
+	 fslb2kxTtCWC/TNI6dbtapJ+p0a9SPDXhYyKwfeAgCAksGCFMBq6VDZayXgMlzkpap
+	 i9OG+PbEkKp1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Ahmed Naseef <naseefkm@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: quatech_daqp_cs: Fix sanity check in interrupt handler
-Date: Mon, 19 Oct 2026 09:49:37 -0400
-Message-ID: <20261019135441.1420968-286-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-5.15] wifi: mt76: mt7603: add 0x7592 EEPROM chip ID
+Date: Mon, 19 Oct 2026 09:49:38 -0400
+Message-ID: <20261019135441.1420968-287-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,448 +58,379 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-[ Upstream commit 1bc9538df6be8dac8727179d8bcc0d880648361b ]
+[ Upstream commit d16447d7470502e998d82e806ca7ed49d1baa853 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+Some EcoNet based routers ship an on-flash EEPROM whose chip-id is
+0x7592 instead of the expected 0x7603. The device probes as PCI
+14c3:7603 and the hardware MT_HW_CHIPID register reports 0x7603,
+independent of the EEPROM value.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
+This is seen across multiple EcoNet EN751221 and EN7528 based devices
+(for example the Genexis Platinum 4410).
 
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Link: https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the attach/IRQ window, the original KASAN report, and the 4-line
-reorder; compiling that against this 7.3-rc4 tree next.
+The evaluation target is **pending-6.6 (6.6.157)**. The mt7603 driver is
+present; the 0x7592 EEPROM ID is not. This is a one-line ID addition to
+an existing driver, which is a standard stable exception.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [wifi: mt76: mt7603] [add] [accept EEPROM chip ID 0x7592 in
+mt7603_check_eeprom]
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: `[comedi: quatech_daqp_cs] [Fix] [sanity check in interrupt
-handler is performed after a possible NULL deref]`
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` — COMEDI maintainer
-  (author)
-- `Link:
-  https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk` —
-  lore/patch-id; msgid `-12` is cover+11 patches (this is 11/11)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` —
-  char-misc maintainer
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` on the commit itself (absence of Fixes/Cc-stable
-  is expected)
+- Signed-off-by: Ahmed Naseef \<naseefkm@gmail.com\> (author)
+- Link:
+  https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
+- Signed-off-by: Felix Fietkau \<nbd@nbd.name\> (mt76 maintainer,
+  applied the patch)
+- No Fixes: tag (expected for this review queue)
+- No Cc: stable (expected)
+- No Reported-by / Tested-by / Reviewed-by / Acked-by
+- No syzbot / KASAN tags
+- Sasha Levin SOB not present on this commit
 
-Cover-letter CC (from b4, not the commit): Jaeyoung Chung, Sangyun Kim,
-Kyungwook Boo (SNU) — original reporters of the sibling ISA-driver bugs.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** IRQ handler is registered before the device is fully set up.
-  The `dev->attached` guard exists but runs *after* `dev->read_subdev`
-  is used.
-- **Symptom/failure mode:** NULL pointer dereference in interrupt
-  context (kernel oops/panic). Message says `dev->read_dev`; actual
-  field is `dev->read_subdev` (typo in the message, verified in source).
-- **Version info:** none in the commit.
-- **Root cause:** local initializer `cmd = &s->async->cmd` evaluates at
-  function entry, before `if (!dev->attached)`.
+- Bug: EcoNet routers store chip-id 0x7592 in on-flash EEPROM instead of
+  0x7603/0x7628/0x7600.
+- Hardware identity is still MT7603: PCI 14c3:7603, and MT_HW_CHIPID
+  reads 0x7603.
+- Symptom: driver treats a valid factory EEPROM as invalid.
+- Devices: EcoNet EN751221 and EN7528, e.g. Genexis Platinum 4410.
+- No stack trace; this is hardware recognition, not a crash fix.
+- Root cause: mt7603_check_eeprom() whitelist is incomplete.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit EEPROM ID addition.
+When the ID is rejected and OTP exists, mt7603_eeprom_init() memcpy()s
+OTP over the flash EEPROM, so MAC/calibration from flash are discarded.
+That is a real functional bug for those boards, not a new API.
 
-Record: Not hidden. Explicit NULL-deref fix; “sanity check” here means
-reorder of an existing guard.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/comedi/drivers/quatech_daqp_cs.c` — +3 / −1
-- Function: `daqp_interrupt()`
-- Scope: single-file surgical fix
+- File: drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
+- +1 line, 0 removed
+- Function: mt7603_check_eeprom()
+- Scope: single-file, one-line surgical change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record (verified against `1bc9538df6be8^` and current file):
-
-Before:
-```c
-struct comedi_subdevice *s = dev->read_subdev;
-struct comedi_cmd *cmd = &s->async->cmd;  /* deref s immediately */
-...
-if (!dev->attached)
-    return IRQ_NONE;
-```
-
-After:
-```c
-struct comedi_subdevice *s = dev->read_subdev;  /* pointer copy only */
-struct comedi_cmd *cmd;
-...
-if (!dev->attached)
-    return IRQ_NONE;
-cmd = &s->async->cmd;  /* only after attached */
-```
-
-Path: interrupt handler, probe/early-IRQ window (and analogously
-detach).
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **NULL pointer dereference** in IRQ context. `s` is NULL until
-`dev->read_subdev` is assigned in `daqp_auto_attach()` (line 734), which
-is *after* `pcmcia_request_irq()` (line 718). `dev->attached` is set
-only later in `comedi_device_postconfig()`
-(`drivers/comedi/drivers.c:833`). C evaluates the `cmd` initializer at
-block entry, so the attached check never ran in time.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Obviously correct reorder; no API/locking/behavior change on the
-normal path. Residual `s = dev->read_subdev` before the check is a
-pointer copy, not a deref. Regression risk: very low.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- `s = dev->read_subdev` and `if (!dev->attached)`: `c12717423e1c61`
-  (2013-02, contained in **v3.9-rc1**)
-- Buggy `cmd = &s->async->cmd`: `2d7840c70dcf52` “use comedi_async
-  'scans_done' to detect EOA” (2014-11, contained in **v3.19-rc1**)
-- Driver itself: `62ed666238aba1` (2009)
+- Before: switch accepts 0x7628, 0x7603, 0x7600; anything else returns
+  -EINVAL.
+- After: also accepts 0x7592.
+- Path: probe → mt7603_register_device() → mt7603_init_hardware() →
+  mt7603_eeprom_init().
+- If check succeeds and OTP exists: apply cal-free OTP overlay onto
+  flash EEPROM.
+- If check fails and OTP exists: overwrite entire flash EEPROM with OTP
+  (MAC, TX power, xtal data from flash lost).
+- Probe does not fail on unknown EEPROM ID.
 
-Long-standing bug, not new-subsystem code.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware ID / quirk] [Whitelist used to decide whether on-flash
+EEPROM is trusted. Missing 0x7592 caused valid EcoNet EEPROMs to be
+discarded in favor of OTP.]
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. Buggy commit identified by blame:
-`2d7840c70dcf52`. That history is in this tree.
-
-**Step 3.3: CHECK FILE HISTORY**
-
-Record: After this fix, only older moves (`df0e68c1e9945` headers,
-`8ffdff6a8cfbd` out of staging). No conflicting refactors. Standalone vs
-this file.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Ian Abbott is listed in MAINTAINERS for COMEDI (`S: Odd Fixes`).
-Same-day series of 11 independent IRQ-guard fixes (aio_iiro_16, das6402,
-dt2811, ni_at_a2150, ni_atmio16d, pcl711, pcl816, pcl818, pcmmio,
-pcmuio, this one).
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: No functional dependency on the other 10; each driver is self-
-contained. `dev->attached` / `read_subdev` / `s->async->cmd` all exist
-here. Can apply standalone.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `b4 dig -c 1bc9538df6be8`:
-  https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk
-- `b4 dig -a`: **v1 only**, `[PATCH 11/11]`
-- Cover: “comedi: Add/fix sanity check in ISA drivers to avoid null-ptr-
-  deref”
-- Original report [1]: https://lore.kernel.org/lkml/20260610115912.78013
-  1-1-jjy600901@snu.ac.kr/ — subject “KASAN null-ptr-deref in ISA driver
-  IRQ handlers on early IRQ”
-- No NAKs in the saved series mbox (12 messages: cover + 11 patches, no
-  replies)
+- Obviously correct: same pattern as the existing 0x7600 case.
+- Minimal: one case label.
+- Regression risk: very low. A random EEPROM whose first LE16 is 0x7592
+  would be trusted; that is the same risk as the existing IDs.
+- No API or data-structure change.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-Record (`b4 dig -w`): To/Cc linux-kernel, Greg KH, Ian Abbott, H Hartley
-Sweeten, SNU reporters. No extra Reviewed-by. Applied by Greg KH.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record (from `/tmp/snu-report/...mbx`): Jaeyoung Chung / Sangyun Kim /
-Kyungwook Boo. KASAN NULL deref if IRQ fires after `request_irq` and
-before `dev->read_subdev` is set. Listed ISA drivers: das6402,
-ni_atmio16d, aio_iiro_16, pcmmio, comedi_parport, pcl711.
-**quatech_daqp_cs was not in that list**; Abbott added it as the same
-pattern (PCMCIA `pcmcia_request_irq` before `read_subdev`). Suggested
-fix: request IRQ later **or** guard the handler — this patch does the
-latter.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: 11 independent per-driver patches. This one does not need the
-others.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: **UNVERIFIED** — lore.kernel.org/stable search returned HTTP
-403. No stable discussion in the series mbox.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `daqp_interrupt()` modified. Related: `daqp_auto_attach()`,
-`comedi_device_postconfig()`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record: `daqp_interrupt` is only passed to `pcmcia_request_irq()` in
-`daqp_auto_attach()` (`quatech_daqp_cs.c:718`). Hardware IRQ context,
-not a syscall. Probe-time and runtime IRQs.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: After the guard: `inb`, `daqp_ai_get_sample`,
-`comedi_buf_write_samples`, `comedi_handle_events`. Those run only once
-`attached` is true.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-`pcmcia probe` → `comedi_auto_config()` → `daqp_auto_attach()` →
-`pcmcia_request_irq(daqp_interrupt)` → later `read_subdev = s` → return
-→ `comedi_device_postconfig()` sets `attached = true`.
+- mt7603_check_eeprom() introduced in c8846e1015022 ("mt76: add driver
+  for MT7603E and MT7628/7688"), 2018, first released in v5.1-rc1.
+- 0x7600 added by bf4a938ab2cf8 ("mt76: mt7603: add additional EEPROM
+  chip ID"), 2020, same one-line pattern for TP-Link Archer C50 v4.
+- Both commits are ancestors of pending-6.6.
 
-Reachable when a DAQP-208/DAQP-308 PCMCIA card is inserted
-(`CONFIG_COMEDI_QUATECH_DAQP_CS`). Unprivileged userspace is not
-required; hardware IRQ during attach is enough. Same class as the KASAN-
-reported ISA siblings.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Buggy whitelist dates to the original driver
+(v5.1), which is in this tree.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same reorder in `pcl711.c` and others in this series.
-`ni_660x.c` even comments “make sure dev->attached is checked before
-doing anything else”. Systematic COMEDI IRQ pattern.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
-- `make kernelversion`: **7.3.0-rc4**
-- Driver present: `drivers/comedi/drivers/quatech_daqp_cs.c`
-- `git merge-base --is-ancestor 1bc9538df6be8 HEAD`: yes (fix is already
-  on this branch)
-- Pre-fix form verified in `1bc9538df6be8^`; bug introduced v3.19,
-  driver since ~2009
-- Current `daqp_interrupt()` already has the reordered check (lines
-  210–221)
+- Related: bf4a938ab2cf8 already in 6.6 (precedent).
+- Candidate d16447d747050 is not an ancestor of pending-6.6.
+- Standalone; not patch X/Y.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Clean apply. Function has been stable since ~2015
-(`f676376d692d8e` / `77e7c200f37536`). No rework needed.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: This exact fix is already on HEAD. Sibling series commits are
-also here. No alternate/competing fix for this file.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: `drivers/comedi/` — data-acquisition. **PERIPHERAL** (PCMCIA
-DAQ: DAQP-208/308). Crash in IRQ handler is still a hard oops for those
-users.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Mature, “Odd Fixes”. Recent work is this IRQ-guard series plus
-small cleanups. Not a new/experimental driver (left staging in 2021,
-`8ffdff6a8cfbd`).
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: Driver-specific / config-specific:
-`CONFIG_COMEDI_QUATECH_DAQP_CS`, Quatech DAQP PCMCIA cards.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: IRQ after `pcmcia_request_irq` and before
-`attached`/`read_subdev`. Window during attach (and similar on
-teardown). Not every boot; needs the card and a premature/spurious IRQ.
-SNU reported KASAN for the same pattern on ISA siblings; Abbott
-confirmed this driver has the same ordering.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: NULL deref in IRQ handler → oops/panic. **CRITICAL** for users
-of this driver. (Cover letter: “null-ptr-deref”; original report:
-“kernel panic” / KASAN.)
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
 Record:
-- Benefit: HIGH for affected hardware (prevents IRQ oops); population is
-  small
-- Risk: VERY LOW (4-line reorder, no lock/API change)
-- Ratio: favorable
+- Author Ahmed Naseef has no other mt76 commits on pending-6.6.
+- Applied by Felix Fietkau, listed maintainer of MEDIATEK MT76.
 
----
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- No new helpers or struct fields.
+- pending-6.6 vs patch parent only differs in SPDX and later
+  chainmask/return of mt76_eeprom_override(); the switch hunk is
+  identical.
+- Can apply standalone with a clean hunk.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- b4 dig -c d16447d747050 →
+  https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
+- b4 dig -a: single v1 series, no v2/v3.
+- Thread mbox is the patch only; no replies, no NAK, no Cc: stable in
+  review.
+- Included in wireless-next-2026-08-06 pull (Johannes Berg).
+- Syzbot CI: build/boot passed; fuzz skipped.
 
-**FOR:**
-- Real NULL deref in interrupt context; C initializer ran before
-  `dev->attached`
-- Attach path verified: IRQ requested before `read_subdev` and before
-  `attached = true`
-- Same class as KASAN-reported COMEDI IRQ bugs (SNU); maintainer
-  included this driver
-- Author is the COMEDI maintainer; Greg KH applied it
-- 4 lines, one function, no new APIs, no dependencies
-- Bug present since ~v3.19; driver exists in this 7.3-rc4 tree
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record:
+- b4 dig -w: Felix Fietkau, Lorenzo Bianconi, Ryder Lee, Shayne Chen,
+  Sean Wang, linux-wireless, linux-mediatek, linux-kernel.
+- Applied by Felix Fietkau (maintainer SOB). No separate Reviewed-by.
 
-**AGAINST:**
-- Niche PCMCIA DAQ hardware
-- quatech_daqp_cs was not in the original SNU driver list (pattern match
-  by maintainer)
-- No `Fixes:` / `Cc: stable` (expected, not a negative)
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record:
+- No bugzilla/syzbot link.
+- Commit cites multiple EcoNet EN751221/EN7528 devices, example Genexis
+  Platinum 4410.
+- OpenWrt mt76 tree already contains case 0x7592.
+- No independent public crash report found (UNVERIFIED beyond the commit
+  text and OpenWrt tree).
 
-**UNRESOLVED:**
-- No stable@ thread found (lore 403)
-- No on-list review replies in the b4 mbox
-- Not proven on this exact Quatech card that IRQ fires in the window
-  (sibling ISA drivers were KASAN-reported)
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone one-patch series. Same pattern as bf4a938ab2cf8.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable returned 403. No stable discussion found
+via b4/mbox. UNVERIFIED whether anyone requested/rejected this for
+stable.
 
-1. Obviously correct and tested? **PASS** — reorder of existing guard;
-   applied to char-misc by Greg KH
-2. Fixes a real bug that affects users? **PASS** — premature IRQ NULL
-   deref; reported class, same code here
-3. Important issue? **PASS** — oops/panic in IRQ handler (CRITICAL for
-   this driver)
-4. Small and contained? **PASS** — +3/−1, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — same function, clean; tree is
-   7.3-rc4 with this driver
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: mt7603_check_eeprom() only.
 
-Record: None (not an ID/quirk/DT/build/doc exception). Ordinary crash
-fix.
+Step 5.2: TRACE CALLERS
+Record:
+- Only caller: mt7603_eeprom_init() (same file).
+- mt7603_eeprom_init() ← mt7603_init_hardware() ←
+  mt7603_register_device()
+- mt7603_register_device() ← mt76pci_probe() (PCI 14c3:7603) and
+  mt76_wmac_probe() (mediatek,mt7628-wmac).
+- Probe/init path, not hot path or IRQ.
 
-**Step 9.4: DECISION**
+Step 5.3: TRACE CALLEES
+Record: get_unaligned_le16() on eeprom.data[0]. No alloc, lock, or I/O
+in the changed function.
 
-This tree is **7.3.0-rc4**. The driver and the buggy ordering exist
-here. The patch is a 4-line, obviously correct NULL-deref fix in an IRQ
-handler. It meets stable criteria for this checkout.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record:
+- Reachable when an MT7603 PCI device or MT7628 WMAC probes with
+  CONFIG_MT7603E.
+- Not a syscall-triggered memory bug; firmware/EEPROM contents decide
+  the branch.
+- Unprivileged users cannot trigger it except by plugging/using the
+  device.
 
-## Why it matters
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record:
+- Sibling drivers use the same EEPROM-ID switch (mt7615, mt76x0,
+  mt76x2).
+- This tree already backported other mt76 ID adds, e.g. efd75512e38ac
+  (mt76x2u TP-Link USB ID).
 
-`daqp_auto_attach()` calls `pcmcia_request_irq()` before
-`dev->read_subdev` is set and before the core sets `dev->attached`. The
-handler used to do `cmd = &s->async->cmd` at declaration time, so a
-premature IRQ oopses instead of returning `IRQ_NONE`. Stable users with
-this card can panic on insert/probe.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-Risk is negligible; benefit is avoiding a hard crash. No prerequisites.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Tree under evaluation: pending-6.6, 6.6.157 (git describe
+  p-6.6-3-g04810563abb71).
+- Yes. pending-6.6 eeprom.c switch has 0x7628/0x7603/0x7600 only.
+- git merge-base --is-ancestor d16447d747050 pending-6.6 → not present.
+- Bug present since v5.1 driver introduction.
 
-## Verification
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Switch context matches. Later chainmask/license
+diffs are outside the hunk.
 
-- [Phase 1] Tags: Ian Abbott SOB, Greg KH SOB, msgid
-  `20260618102949.26607-12` (11/11). No Fixes/Reported-by/Cc-stable on
-  the commit.
-- [Phase 1] Message typo verified: text says `read_dev`; code uses
-  `read_subdev`.
-- [Phase 2] Diff: +3/−1 in `daqp_interrupt()`; `cmd` init moved after
-  `if (!dev->attached)`.
-- [Phase 2] Pre-fix source from `git show 1bc9538df6be8^:...` confirms
-  initializer before the guard.
-- [Phase 3] Blame: cmd init `2d7840c70dcf52` (v3.19-rc1); attached check
-  `c12717423e1c61` (v3.9-rc1).
-- [Phase 3] `git merge-base --is-ancestor 1bc9538df6be8 HEAD` → is
-  ancestor.
-- [Phase 3] Author is COMEDI maintainer (`MAINTAINERS`); 11-patch
-  series, this file standalone.
-- [Phase 4] `b4 dig -c 1bc9538df6be8` → lore URL; `-a` → v1 only; `-w` →
-  Greg KH, Hartley, SNU CCs.
-- [Phase 4] Cover letter: explicit null-ptr-deref; cites SNU report.
-- [Phase 4] Original report mbox: KASAN NULL deref / panic on early IRQ;
-  quatech not named; Abbott added it.
-- [Phase 4] UNVERIFIED: stable@ discussion (HTTP 403); review replies
-  (none in series mbox).
-- [Phase 5] Only caller: `pcmcia_request_irq` in `daqp_auto_attach`.
-- [Phase 5] `comedi_device_postconfig()` sets `dev->attached = true`
-  only after `auto_attach` returns.
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  `kernelversion` 7.3.0-rc4; file present.
-- [Phase 6] Current `daqp_interrupt()` at lines 210–221 already contains
-  the fix.
-- [Phase 7] `CONFIG_COMEDI_QUATECH_DAQP_CS` — DAQP-208/308 PCMCIA.
-- [Phase 8] Failure mode: NULL deref in IRQ → oops; severity CRITICAL
-  for this driver; risk very low.
-- UNVERIFIED: hardware demonstration that this specific PCMCIA card IRQs
-  in the attach window.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: 0x7600 ID is present. 0x7592 is not. No alternate fix.
+
+Note: EcoNet SoC support landed in 6.16 (arch/mips/econet), not in 6.6.
+That lowers vanilla-6.6 user count; it does not remove the driver or the
+ID check. PCI 14c3:7603 still exists in this tree.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [drivers/net/wireless/mediatek/mt76/mt7603] [IMPORTANT for
+MT7603/MT7628 users; PERIPHERAL relative to core kernel]
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature driver since v5.1. 6.6 still receives mt76 fixes.
+Maintainer is Felix Fietkau.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / config-specific (CONFIG_MT7603E). Documented
+users are EcoNet EN751221/EN7528 routers with MT7603 PCI WiFi. Vanilla
+6.6 cannot boot EcoNet SoCs; downstream 6.6 kernels and any other board
+with this EEPROM still benefit.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- Trigger: probe of MT7603 when flash EEPROM starts with 0x7592 and OTP
+  is present.
+- Every boot on those devices, not a race.
+- Not exploitable by unprivileged software alone.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [Wrong EEPROM source: factory MAC/calibration replaced by OTP]
+[Severity: MEDIUM for those devices — broken/degraded WiFi or wrong MAC,
+not oops/corruption]
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: medium for affected hardware (WiFi uses intended EEPROM);
+  lower on vanilla 6.6 because EcoNet platform is later, but this is the
+  usual device-ID case.
+- Risk: very low (one case label, no locking/API).
+- Ratio: favorable. Device-ID additions are accepted in stable for this
+  reason.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- One-line EEPROM/chip ID addition to an existing driver (stable
+  exception).
+- Same pattern as 0x7600, already in 6.6.
+- Real boards named; hardware already binds as PCI 14c3:7603.
+- Without it, valid flash EEPROM is discarded for OTP (MAC/cal).
+- Maintainer applied it; applies cleanly here; no new API.
+- This tree already contains similar mt76 ID backports.
+
+AGAINST:
+- Not a crash/security/deadlock.
+- No Tested-by/Reviewed-by; mailing list had no discussion.
+- EcoNet platform is not in 6.6, so vanilla 6.6 user count is small.
+- No Fixes:/Cc: stable (expected, not a negative).
+
+UNRESOLVED:
+- Could not search lore.kernel.org/stable (403).
+- No independent public repro beyond the commit and OpenWrt mt76 tree.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — one-line whitelist, maintainer-
+   applied, syzbot CI build/boot passed.
+2. Fixes a real bug that affects users? PASS — those boards trust OTP
+   instead of factory EEPROM.
+3. Important issue? PASS under the device-ID/quirk exception (functional
+   WiFi/MAC on real hardware), even though not a panic.
+4. Small and contained? PASS — +1 line, one file.
+5. No new features or APIs? PASS — existing driver, additional ID only.
+6. Can apply to the local tree? PASS — hunk matches pending-6.6.
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Device ID addition to an existing driver (EEPROM chip ID,
+analogous to PCI/USB ID). Also a hardware quirk for boards whose EEPROM
+ID does not match MT_HW_CHIPID.
+
+Step 9.4: MAKE YOUR DECISION
+This belongs in 6.6.y. The driver and the incomplete whitelist are in
+this tree; the fix is the standard one-line ID addition stable already
+takes for mt76. EcoNet SoC support arriving later reduces vanilla-6.6
+exposure but does not make the patch a new feature or a dependency-heavy
+backport.
+
+What it solves for stable users: MT7603 devices whose flash EEPROM ID is
+0x7592 keep factory MAC and calibration instead of having them replaced
+by OTP on probe.
+
+Risk vs benefit: essentially no regression risk; benefit is enabling
+correct EEPROM use on existing hardware.
+
+Verification:
+- [Phase 1] Tags: author SOB, Felix Fietkau SOB, msgid link; no Fixes/Cc
+  stable/Reported-by
+- [Phase 2] Diff: +1 `case 0x7592:` in mt7603_check_eeprom()
+- [Phase 2] Confirmed eeprom_init: fail → memcpy OTP over flash; success
+  → cal-free overlay only
+- [Phase 3] blame: function from c8846e1015022 (v5.1); 0x7600 from
+  bf4a938ab2cf8; both in pending-6.6
+- [Phase 3] git merge-base --is-ancestor d16447d747050 pending-6.6 → not
+  in 6.6
+- [Phase 3] git diff pending-6.6 vs parent: switch identical; only
+  SPDX/chainmask elsewhere
+- [Phase 4] b4 dig -c d16447d747050: lore msgid
+  20260719082530.3879831-1-naseefkm@gmail.com
+- [Phase 4] b4 dig -a: v1 only; mbox has no replies
+- [Phase 4] b4 dig -w: mt76 maintainers + linux-wireless CC'd; Felix
+  applied
+- [Phase 4] wireless-next-2026-08-06 pull lists this commit
+- [Phase 5] callers: mt7603_eeprom_init → init_hardware →
+  register_device → pci/soc probe
+- [Phase 6] pending-6.6 Makefile 6.6.157; switch lacks 0x7592; would
+  apply cleanly
+- [Phase 6] EcoNet arch not in 6.6 (added ~6.16) — lowers vanilla user
+  count, code still present
+- [Phase 7] MAINTAINERS: Felix Fietkau maintains mt76
+- [Phase 8] Failure: OTP replaces flash EEPROM (MAC/cal); not oops
+- UNVERIFIED: stable@ lore search (HTTP 403); no independent field crash
+  report
 
 **YES**
 
- drivers/comedi/drivers/quatech_daqp_cs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/comedi/drivers/quatech_daqp_cs.c b/drivers/comedi/drivers/quatech_daqp_cs.c
-index 2a76c75c513b8..d5e3e213e233b 100644
---- a/drivers/comedi/drivers/quatech_daqp_cs.c
-+++ b/drivers/comedi/drivers/quatech_daqp_cs.c
-@@ -211,13 +211,15 @@ static irqreturn_t daqp_interrupt(int irq, void *dev_id)
- {
- 	struct comedi_device *dev = dev_id;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
- 	int loop_limit = 10000;
- 	int status;
- 
- 	if (!dev->attached)
- 		return IRQ_NONE;
- 
-+	cmd = &s->async->cmd;
-+
- 	status = inb(dev->iobase + DAQP_STATUS_REG);
- 	if (!(status & DAQP_STATUS_EVENTS))
- 		return IRQ_NONE;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
+index 88382b537a33b..06f61988655e5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
+@@ -142,6 +142,7 @@ static int mt7603_check_eeprom(struct mt76_dev *dev)
+ 	case 0x7628:
+ 	case 0x7603:
+ 	case 0x7600:
++	case 0x7592:
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
