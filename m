@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2644FC8F9;
-	Mon, 19 Oct 2026 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075654FD29B;
+	Mon, 19 Oct 2026 13:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418091; cv=none; b=h+r+Eo5TYGX63RYPoJM31e2yWdBdW4m0FvE1e9P+Ip91093abC/AcxZgW8ydZoGOXlJExtSdpodygaEddjstDKoKhbYaKJ+g/lo1rUx241fatzoQzhoDiHoRaDjrO0KGfjdbaRlQFYEGp1VyNx0Kw8ZEoTUhVF5pco02D+EYL4E=
+	t=1792418093; cv=none; b=jzZJ2tvs0M87PxJvNzpSd6r1fS9uTaZLrQQKIbdRYXF4It+VYf7dYrf0eD+mHSv8k6x6y5Yr8bbqx0P2+f44cemKonELm5Gct7xOzUxtf4Qrz27Pg+j3upzWCk6ZmHoD4zciLdwjnZDrniWJThUEykMCdYGyLZnapOecKrB3ZPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418091; c=relaxed/simple;
-	bh=QQoVlm+4mbNlXObSNWeqmb5h+b+0yPoTgL/QWUtdZG0=;
+	s=arc-20240116; t=1792418093; c=relaxed/simple;
+	bh=OWLb2TiGJ9IwlMCPEq24zD1+vzwirIdMUHo2W1pZaBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nYyzNE+cC4FQge0OkcCcWLusnCayHieloI2AsdrprqVhN6Gtj85euETxK6+iPY77DfaatsiUUlKQwd5cPIgTGovKruBE6wcQnJYkioU9siuhiRVtFK9wBF+9ehQjt+8ZXraB740LNYSRAubeRHrDllUH/3V4kVxImcW/dzHnsB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEr2cvmn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=X1PRhM8zbFBHF7h7cH/AhyJSizdaasKVSJGkMzB4wXRKVbVE3n40pNPq6Vy4viht2MpNP9A23JsLj53e99v7wI8CS5K3dif4Op5Co0GWyP9nlViAZh4wU1zB6uES8ZRzYYp6xiAfMk8jLiXQ1cnE+KqyEhBj5yFZYYmPTUKrxQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtBPssNy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEr2cvmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656501F000C5;
-	Mon, 19 Oct 2026 13:54:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtBPssNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9521F000C8;
+	Mon, 19 Oct 2026 13:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418088;
-	bh=X1z45abRY0XdCSMnwX2mP6HuNp68VPaI3GKdaVLUi+o=;
+	s=k20260515; t=1792418089;
+	bh=HnQ43w9Y9f8r4GagshV8oopPcggbOu3LYuh/KbApEkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oEr2cvmndDqnS5DnsEbavN2iqqE+d+32IAjzU8WrPOqp9z6ANr5feOBduC4BfycO9
-	 4cIc7V5G9Wtht53MJFK/UNRSVkqiP/SoUl/n8cZyHYpJ9trt67o4hiEhKrky4Uott2
-	 KOrVSQhGAKM0HNYzzfUr3rS2/RnznKnBQxRABR44e8Eu+Zb1KYrlnaC/EQVzsokL3m
-	 ZLXuGDB41azO/4fGdsdBCknV61/Pl3WfMlOzCIPUsO2QJiaiZ21VAp0nzcPP4Ly3t4
-	 ZlHbKJkgMW0Th3D1e4Sn+XegfZopw1vb+e/AuLtyunW184M7A0zCQpkT9Wtbiz4JLf
-	 +FtqjM1DeTKqw==
+	b=OtBPssNyl7km5VBF+pbIwU+EJYhjfG0z03aw9QqEZMtezxjtjWzEa+DlQyATPGEhD
+	 KZAcbYF3xXtN58FSKkFz51hn3z4NLXWRwFLm4lg/FerR+E6eh6UgWog4sfat1bnchh
+	 oQgVm5l5LxSwpL5sFD9wbstHKTRBxEmd/zNPtRA4LDIeciM+IvLGs9Z2cvLyzdk4kV
+	 ZWLYj7VU+sSYtXN2e7XiM+QdX4daI/uNBPPEuCYL2mKUUuzObfKZ1gMzMQynb6qNxj
+	 vILwLgsgWM8gQcTs3FCH55j9lR23aLzRndywLiBs912mBcisHC03RWo0O7gjigOQri
+	 cnZM7uWky568w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_asutoshd@quicinc.com,
-	linux-mmc@vger.kernel.org,
+	linux-ext4@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] mmc: cqhci: fix to missed endian conversions
-Date: Mon, 19 Oct 2026 09:44:55 -0400
-Message-ID: <20261019135441.1420968-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] ext4: use FGP_WRITEBEGIN for tail block zeroing
+Date: Mon, 19 Oct 2026 09:44:56 -0400
+Message-ID: <20261019135441.1420968-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,275 +53,408 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
+[ Upstream commit e1cf7b5f5c8ad1e00d00c50c61c3e8fdc79cd422 ]
 
-Fix two places where the wrong type or conversion of little-endian
-types to fix the following sparse warnings:
+ext4_load_tail_bh() returns a locked folio that callers immediately
+mutate through folio_zero_range() and mark_buffer_dirty().  Use
+FGP_WRITEBEGIN so that, on backing devices that require stable writes,
+__filemap_get_folio() waits for writeback to finish before returning
+the folio; on regular devices the wait is a no-op.
 
-drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
-drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
-drivers/mmc/host/cqhci-core.c:487:15:    got int
-drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
-drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
-drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
-
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260714080044.4038124-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real missed little-endian conversion in CQHCI DMA descriptors,
-not a sparse-only cleanup. The local tree is mainline 7.3-rc4; the bug
-has been in this file since v4.16.
+I have enough to decide: this is a one-line stable-writes data-integrity
+fix in a userspace-reachable ext4 tail-zeroing path, and the helper and
+`FGP_WRITEBEGIN` both exist in this 7.3-rc4 tree.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[mmc / cqhci] [fix] missed little-endian conversions on CQHCI
-descriptors**
+
+Record: **[ext4] [use] use FGP_WRITEBEGIN for tail block zeroing**
+
+Subsystem prefix `ext4:`. Verb is “use” (correctness change of folio-get
+flags, not a feature). Claimed intent: get the tail folio with the
+write-begin flag set so writeback finishes before the folio is mutated.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
+
+Verified from `git show e1cf7b5f5c8ad1e00d00c50c61c3e8fdc79cd422`:
+
 - **Fixes:** none (expected for this review pipeline)
 - **Reported-by:** none
 - **Tested-by:** none
-- **Reviewed-by:** none
-- **Acked-by:** Adrian Hunter \<adrian.hunter@intel.com\> (CQHCI/SDHCI
-  expert)
-- **Link:** none in the commit; mailing-list thread recovered via `b4
-  dig`
-- **Cc: stable:** none (not a negative signal here)
-- **Signed-off-by:** Ben Dooks \<ben.dooks@codethink.co.uk\> (author);
-  Ulf Hansson \<ulfh@kernel.org\> (MMC maintainer). Ignore any Sasha
-  Levin SOB.
+- **Reviewed-by:** Jan Kara \<jack@suse.cz\> (ext4 co-maintainer)
+- **Acked-by:** none
+- **Link:** https://patch.msgid.link/20260714080044.4038124-2-
+  yi.zhang@huaweicloud.com
+- **Cc: stable:** none (expected; not a negative signal)
+- **Signed-off-by:** Zhang Yi \<yi.zhang@huawei.com\> (author); Theodore
+  Ts'o \<tytso@mit.edu\> (ext4 maintainer)
+
+No syzbot, no kernel-test-robot, no multiple reporters.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug described:** two assignments use the wrong type / omit
-  `cpu_to_le*` when writing `__le32` / `__le64` CQHCI descriptors.
-- **Symptom in the message:** sparse type warnings only. No stack trace,
-  no reproducer, no user report.
-- **Failure mode implied by the code (not stated in the message):** on a
-  big-endian CPU, transfer-descriptor attributes (including
-  `CQHCI_DAT_LENGTH`) and DCMD task descriptors are stored in CPU byte
-  order instead of the little-endian layout the CQHCI controller
-  expects.
-- **Version info:** none in the message.
-- **Root cause as given:** missed endian conversion / wrong pointer
-  type.
+
+- **Bug:** `ext4_load_tail_bh()` returns a locked folio that callers
+  immediately mutate with `folio_zero_range()` and
+  `mark_buffer_dirty()`, without waiting for in-flight writeback.
+- **Symptom/failure mode:** On backing devices that require stable
+  writes, page-cache contents can change while DMA/writeback is in
+  progress, which can corrupt the in-flight write or break integrity
+  checksums. On ordinary devices the extra wait is a no-op.
+- **Version information:** none in the message. History shows the helper
+  landed in v7.1-rc1 and this fix in v7.3-rc1.
+- **Root cause:** folio obtained with `FGP_LOCK | FGP_ACCESSED |
+  FGP_CREAT` (no `FGP_STABLE` / `FGP_WRITE`).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Yes, this is a hidden functional endian fix.** The subject
-says “fix” but the body only cites sparse. The same file already
-converts sibling descriptor fields with `cpu_to_le32`/`cpu_to_le64`.
-Omitting that on `__le32 *attr` and `__le64 *task_desc` is a hardware-
-descriptor bug on BE, not a warning-only cleanup.
+
+Record: **Yes, this is a real bug fix**, not cleanup. The cover letter
+for the series (v4) states it explicitly: “Add patch 1 to use
+FGP_WRITEBEGIN in ext4_load_tail_bh(), fixing a pre-existing stable-
+writes bug exposed by patch 4's reordering.”
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- **File:** `drivers/mmc/host/cqhci-core.c` — 7 insertions, 7 deletions
-  (14 lines touched).
-- **Functions:** `cqhci_set_tran_desc()`, `cqhci_prep_dcmd_desc()`.
-- **Scope:** single-file surgical fix.
+
+- File: `fs/ext4/inode.c` — **1 insertion, 1 deletion**
+- Function: `ext4_load_tail_bh()`
+- Scope: **single-file surgical fix** (one flag expression)
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- **Hunk 1 (`cqhci_set_tran_desc`):** before, `*(__le32 *)attr` was
-  assigned a native `int` bitfield (`VALID|END|INT|ACT|DAT_LENGTH`).
-  Address words already used `cpu_to_le64`/`cpu_to_le32`. After, the
-  attribute word is wrapped in `cpu_to_le32()`. Path: every CQE data
-  transfer descriptor (normal I/O path).
-- **Hunk 2 (`cqhci_prep_dcmd_desc`):** before, `task_desc` was `u64 *`
-  and `*task_desc |= data` mixed a CPU-endian `u64` into memory obtained
-  as `__le64`. After, `task_desc` is `__le64 *` and the OR uses
-  `cpu_to_le64(data)`. Path: CQE direct commands (DCMD), e.g. cache
-  flush / status when `MMC_CAP2_CQE_DCMD` is set.
+
+**Before:** `__filemap_get_folio(..., FGP_LOCK | FGP_ACCESSED |
+FGP_CREAT, ...)`. Locks/creates the folio and marks it accessed. Does
+**not** wait for writeback.
+
+**After:** `__filemap_get_folio(..., FGP_WRITEBEGIN | FGP_ACCESSED,
+...)`.
+
+`FGP_WRITEBEGIN` is defined in `include/linux/pagemap.h` as:
+
+`FGP_LOCK | FGP_WRITE | FGP_CREAT | FGP_STABLE`
+
+Net additions: `FGP_WRITE` and `FGP_STABLE`. `FGP_STABLE` calls
+`folio_wait_stable()` after the folio is locked (`mm/filemap.c`). That
+waits for writeback only if `mapping_stable_writes()` is set.
+
+Path affected: every caller of `ext4_load_tail_bh()` immediately zeros
+the folio (`ext4_block_do_zero_range()`,
+`ext4_block_journalled_zero_range()`). This is a **normal mutator
+path**, not an error-only path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Type / endianness]** CQHCI descriptors in memory are little-
-endian. `CQHCI_DAT_LENGTH` lives in bits 16–31; DCMD
-`CMD_INDEX`/`CMD_TIMING`/`RESP_TYPE` live in bits 16–24. Those fields do
-not fit in byte 0, so a native store is wrong on BE. The controller
-would see a swapped length and scrambled DCMD opcode/timing. The fix is
-the same conversion already used in `cqhci_prep_task_desc()`
-(`task_desc[0] = cpu_to_le64(desc0)`).
+
+Record:
+
+- **Category:** memory-safety / data integrity (stable-pages race with
+  writeback), plus a small GFP/idle-flag side effect from `FGP_WRITE`
+- **Mechanism:** On `AS_STABLE_WRITES` mappings, in-flight writeback
+  DMA’s from page cache. Zeroing the folio without `folio_wait_stable()`
+  can mix old and new contents in the I/O. `FGP_WRITEBEGIN` is the
+  established write-begin flag set that waits first.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. On little-endian,
-`cpu_to_le32`/`cpu_to_le64` are no-ops, so the common CQHCI population
-does not change. Regression risk is very low. No API, locking, or
-structure-layout change. `update_dcmd_desc` still mutates the CPU-endian
-`u64 data` before conversion (Tegra’s callback is consistent with that).
+
+Record:
+
+- **Quality:** obviously correct. Same flags every `->write_begin`
+  implementation uses. `folio_wait_stable()` is a no-op when
+  `mapping_stable_writes()` is false, so typical disks are unchanged.
+- **Regression risk:** very low. Waiting while the folio is locked is
+  the documented write-begin pattern (`folio_wait_stable` comment: if
+  unlocked, writeback can restart). `FGP_ACCESSED | FGP_WRITEBEGIN`
+  still takes the `FGP_ACCESSED` branch in `__filemap_get_folio()`, so
+  idle-flag clearing does not change vs the old flags; `FGP_WRITE` only
+  adds `__GFP_WRITE` on allocation.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: Buggy assignments come from **a4080225f51dce** (“mmc: cqhci:
-support for command queue enabled host”, Venkat Gopalakrishnan,
-2017-11-29), first in **v4.16-rc1**. Address-field conversions were
-already present then; the attribute/DCMD stores were the miss. Code has
-been in-tree for many years.
+
+Record:
+
+- Current line is `e1cf7b5f5c8ad` (this commit).
+- Same flags were already in `__ext4_block_zero_page_range()` before the
+  helper was factored out (`3b312a6f510ca`, v7.1-rc1, “ext4: factor out
+  journalled block zeroing range”).
+- Folio conversion `9d3973de9a374` (“ext4: Convert
+  __ext4_block_zero_page_range() to use a folio”, v6.4 era) replaced
+  `find_or_create_page()` with `FGP_LOCK | FGP_ACCESSED | FGP_CREAT`.
+  `find_or_create_page()` also did **not** wait for stable writeback, so
+  the gap is older than the helper.
+- Helper `ext4_load_tail_bh` first appeared in **v7.1-rc1**
+  (`3b312a6f510ca`).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The introducing commit is a4080225f51dce
-(v4.16). Intermediate related work: **ee49d0321f025** (Eric Biggers,
-2021) converted `cqhci_prep_task_desc()` to `__le64 *` + `cpu_to_le64`
-and did not fix DCMD / transfer-attr stores.
+
+Record: **No Fixes: tag.** Not applicable. The immediate pre-image is
+the helper as introduced in `3b312a6f510ca`, which copied the old flags.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `cqhci-core.c` work is halt/recovery/callback related,
-not endian. Not a numbered series. Standalone.
+
+Record: This is **patch 1/9** of Zhang Yi’s series “ext4: fix unaligned
+edge handling in FALLOC_FL_WRITE_ZEROES”, landed together around
+2026-07-22:
+
+1. `e1cf7b5f5c8ad` this commit
+2. `2fff82f081401` skip tail zeroing for inline data
+3. `705a3fd3bac16` check `ext4_get_block()` return
+4. `b16e9d27a643a` move partial zeroing earlier in `ext4_zero_range()`
+   (the reorder that **exposes** the stable-writes bug)
+5–9. WRITE_ZEROES edge-handling / orphan-list work
+
+This patch does **not** depend on 2–9. Later patches that increase tail-
+zeroing (especially 4) depend on this one for correctness on stable-
+write devices.
+
+Related earlier commit `df0b5afc62f33` (“ext4: remove the redundant
+folio_wait_stable()”) is a different path (`ext4_da_write_begin`); it
+only shows that ext4 already treats `FGP_WRITEBEGIN` as implying the
+stable wait.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Ben Dooks is a regular MMC endian/sparse contributor (`dw_mmc`
-LE descriptor fixes, endian-agnostic IO). Not the MMC maintainer. Ulf
-Hansson applied it; Adrian Hunter acked it.
+
+Record: Zhang Yi is a regular, high-volume ext4 contributor (tail-
+zeroing, WRITE_ZEROES, journal paths). This series was reviewed by Jan
+Kara and applied by Ted Ts'o. Related commits in the same week are the
+rest of the 1/9 series.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: No functional prerequisite. `cqhci_set_tran_desc` was exported
-in **52bf134fca61f** (v6.11) for DWCMSHC; the body bug is independent of
-that. File rename `cqhci.c` → `cqhci-core.c` (**0653300224a69**) is a
-path tweak only for older trees. Can apply standalone.
+
+Record:
+
+- Prerequisite API: `FGP_WRITEBEGIN` from `e999a5c5a19cf` (“fs: Add
+  FGP_WRITEBEGIN”), present since **v6.4-rc1**. Present in this tree.
+- Prerequisite function: `ext4_load_tail_bh()` since **v7.1-rc1**.
+  Present in this tree.
+- **Can apply standalone:** yes. One flag change; no new helpers.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- Lore URL from `b4 dig -c 0aae2c73175821`: https://patch.msgid.link/202
-  60622145036.513129-1-ben.dooks@codethink.co.uk
-- **Series:** v1 only (`b4 dig -a`). Applied version is that v1.
-- **Review:** Adrian Hunter Acked-by. Ulf Hansson: “Applied for next,
-  thanks!”
-- **NAKs / stable nominations:** none in the thread.
-- WebFetch of lore.kernel.org returned 403; thread was read from `b4 dig
-  -m` mbox instead.
+
+- `b4 dig -c e1cf7b5f5c8ad` → https://patch.msgid.link/20260714080044.40
+  38124-2-yi.zhang@huaweicloud.com
+- Series revisions: **v3** (2026-07-08) and **v4** (2026-07-14). Cover
+  letter: v4 has **no code changes** vs v3; v2 **added this patch**.
+- Cover letter quote (verified in saved mbox): “Add patch 1 to use
+  FGP_WRITEBEGIN in ext4_load_tail_bh(), fixing a pre-existing stable-
+  writes bug exposed by patch 4's reordering.”
+- Ted Ts'o applied the series; patch 9 was dropped separately over
+  error-handling concerns.
+- No NAK on this patch. No reviewer asked for `Cc: stable` on patch 1
+  (patches 7/8 in the same mbox do have `Cc: stable`, for WRITE_ZEROES-
+  specific bugs).
+- WebFetch of lore.kernel.org returned **403**; discussion recovered via
+  `b4 dig -m /tmp/ext4-fgp.mbox`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Adrian Hunter, Asutosh Das, Ritesh
-Harjani, Ulf Hansson, linux-mmc, linux-kernel. Right maintainers were on
-the original mail.
+
+`b4 dig -w` recipients included linux-ext4, linux-fsdevel, tytso,
+adilger, Jan Kara, Ojaswin Mujoo, Ritesh Harjani, Huawei ext4
+developers.
+
+Record: **Jan Kara Reviewed-by** (in the patch); **Ted Ts'o** applied
+it. Right maintainers were on the thread.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, bugzilla, or syzbot link. Trigger was sparse,
-not a user crash report.
+
+Record: **No standalone bugzilla/syzbot report.** The bug was found
+while reworking WRITE_ZEROES unaligned edges. Severity from the author:
+pre-existing **stable-writes data-integrity** bug.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone single patch. Not 2/N.
+
+Record: Standalone as a fix. The rest of 1/9 is WRITE_ZEROES contract
+work and two other pre-existing helper fixes (inline-data skip;
+propagate `ext4_get_block()` errors). This commit does not require those
+to be correct.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** (lore.kernel.org/stable WebFetch 403). Original
-thread did not mention stable.
+
+Record: lore.kernel.org/stable WebFetch returned **403**. No evidence in
+the ext4 thread that this patch 1 was requested for stable or rejected
+for stable. **UNVERIFIED** whether linux-stable@ discussed it.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `cqhci_set_tran_desc`, `cqhci_prep_dcmd_desc`. Callers also
-involved: `cqhci_prep_tran_desc`, `cqhci_request`,
-`dwcmshc_set_tran_desc`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+
+Record: **`ext4_load_tail_bh()`** only.
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `cqhci_set_tran_desc`: `cqhci_prep_tran_desc` (default),
-  `dwcmshc_set_tran_desc` in `sdhci-of-dwcmshc.c` (Rockchip/DWC MSHC).
-- `cqhci_prep_dcmd_desc`: `cqhci_request()` when `!mrq->data`.
-- `cqhci_request` is `.cqe_request` — MMC command-queue I/O, not init-
-  only.
+
+Verified in this tree:
+
+- `ext4_block_do_zero_range()` → `folio_zero_range()` +
+  `mark_buffer_dirty()`
+- `ext4_block_journalled_zero_range()` → journal write access +
+  `folio_zero_range()`
+- Both from `ext4_block_zero_range()`
+- That is used by:
+  - `ext4_block_zero_eof()` — truncate (`ext4_truncate`), append
+    (`ext4_write_checks` in `fs/ext4/file.c`), extent operations
+    (`fs/ext4/extents.c`)
+  - `ext4_zero_partial_blocks()` — punch hole / zero_range /
+    WRITE_ZEROES (`ext4_punch_hole`, `ext4_zero_range`, extents
+    WRITE_ZEROES)
+
+Record: **Common filesystem operations**, process context, folio locked.
+Not IRQ.
 
 **Step 5.3: TRACE CALLEES**
-Record: Bitfield macros, `get_desc()`, optional `update_dcmd_desc`
-(Tegra only), `cpu_to_le32`/`cpu_to_le64`. No alloc/lock changes.
+
+Record: `__filemap_get_folio()` → on `FGP_STABLE`, `folio_wait_stable()`
+→ `folio_wait_writeback()` if `mapping_stable_writes()`. Then
+`create_empty_buffers` / `ext4_get_block` / `ext4_read_bh_lock` as
+before.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace block I/O on CQE eMMC → MMC core → `cqe_request` →
-descriptor prep → doorbell. Reachable on any CQHCI host (Qualcomm, i.MX,
-Tegra, MTK, Broadcom STB, Arasan, Intel GLK, TI AM654, Rockchip DWCMSHC,
-etc.). BE vs LE is a kernel endian config, not a separate code path.
+
+Record: **Userspace-reachable** without privilege beyond write access to
+an ext4 file: `truncate`,
+`fallocate(PUNCH_HOLE|ZERO_RANGE|WRITE_ZEROES)`, append `write()`.
+**HIGH** reachability.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `cqhci_prep_task_desc` already converts correctly.
-`setup_trans_desc()` still writes `VALID|ACT|END` through a `u8 *`;
-those bits fit in byte 0, so a LE controller still sees the correct LSB
-regardless of CPU endianness. The two sites this patch touches are the
-ones that put multi-byte fields into `__le32`/`__le64` words.
+
+Record: Other ext4 write paths already use `FGP_WRITEBEGIN`
+(`fs/ext4/inline.c`, `fs/ext4/move_extent.c`) and/or explicit
+`folio_wait_stable()` (`ext4_write_begin`, `ext4_page_mkwrite`). Tail-
+block zeroing was the outlier.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: This checkout is **v7.3-rc4** (`7.3.0-rc4`, HEAD
-`f0100363d8c37`, origin/master). Commit **0aae2c73175821 is already an
-ancestor of HEAD** (merged in `mmc-v7.3`). Pre-fix code is in
-`0aae2c73^`. The unconverted stores existed from v4.16 until this
-commit. The bug is in this tree’s history and in any stable series that
-still has the old assignments.
+
+Record:
+
+- Local tree: **`git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`**,
+  `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`. Origin is
+  torvalds/linux (mainline), detached HEAD.
+- `ext4_load_tail_bh()` exists at `fs/ext4/inode.c` (currently already
+  using `FGP_WRITEBEGIN | FGP_ACCESSED` because `e1cf7b5f5c8ad` **is an
+  ancestor of HEAD**).
+- Buggy pre-image (helper with `FGP_LOCK | FGP_ACCESSED | FGP_CREAT`)
+  existed from **v7.1-rc1** (`3b312a6f510ca`) until this fix in
+  **v7.3-rc1**.
+- `FGP_WRITEBEGIN` exists here (`include/linux/pagemap.h:720`).
+
+The pipeline instruction is to ignore “already selected” markers, not to
+treat mainline already containing the original commit as a reason to
+reject a backport-worthy fix. The code and prerequisites are in this
+tree.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply on this tree (already applied). Older stables may
-still name the file `cqhci.c` and may still have a static
-`cqhci_set_tran_desc`; that is a trivial context/path adjustment, not a
-semantic rework.
+
+Record: **Clean apply** on this tree (one-line flag change;
+`FGP_WRITEBEGIN` present). `git log --oneline -10 -- fs/ext4/inode.c`
+shows normal ext4 churn; nothing that would conflict with this hunk.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier equivalent DCMD/attr conversion. `ee49d0321f025` only
-fixed `cqhci_prep_task_desc`.
+
+Record: This exact change **is** HEAD’s current code (`git blame` on the
+flags line is `e1cf7b5f5c8ad`). No alternate fix for the same stable-
+writes hole in `ext4_load_tail_bh()`. Other `folio_wait_stable()` sites
+in ext4 do not cover this helper.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **MMC host / CQHCI** (`drivers/mmc/host/`). **IMPORTANT** — eMMC
-command queue on widely used SoCs and some PCI hosts. Not core mm/VFS,
-not staging.
+
+Record: **Subsystem: fs/ext4. Criticality: IMPORTANT** (widely used
+filesystem; data-integrity on stable-write devices). Not core mm/VFS,
+but truncate/punch/zero are universal ext4 operations.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (halt, recovery, crypto, DWCMSHC callbacks).
-CQHCI itself is mature (2017).
+
+Record: **Actively developed** (WRITE_ZEROES series, iomap conversion,
+journal/writeback fixes in 7.3). The helper itself is recent (v7.1) but
+the missing stable wait is the same pattern as the older zero-page-range
+code.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: CQHCI users on **big-endian** kernels. In-tree `supports-cqe` DT
-is ARM64 (Qualcomm, Rockchip, Tegra, …). ARM64 has
-`CONFIG_CPU_BIG_ENDIAN`. No MIPS `supports-cqe` DT. Little-endian CQHCI
-(the usual phone/board case) is unaffected.
+
+Record: **ext4 users whose backing device requires stable writes**, i.e.
+`bdev_stable_writes()`: integrity checksums (`CONFIG_BLK_DEV_INTEGRITY`)
+**or** `BLK_FEAT_STABLE_WRITES`.
+
+Verified setters of `BLK_FEAT_STABLE_WRITES` in this tree include NVMe
+(when `data_digest` is enabled), RAID5 `skip_copy`, dm-integrity, zram,
+RBD, iSCSI TCP, MMC, DRBD. Superblock then sets `SB_I_STABLE_WRITES` and
+inode mappings get `AS_STABLE_WRITES`.
+
+Not universal, but not a toy config: enterprise integrity, RAID, dm-
+integrity, some NVMe.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Any CQE data transfer (`cqhci_set_tran_desc`) or DCMD
-(`cqhci_prep_dcmd_desc`) on BE. Common path if CQE is enabled. Not a
-race. Unprivileged I/O can exercise it if the device is
-mounted/accessible.
+
+Record:
+
+- Trigger: tail/partial-block zeroing while that folio is under
+  writeback.
+- How common: truncate, punch, zero_range, append past EOF —
+  **routine**. The race still needs concurrent writeback of that folio,
+  so it is **timing-dependent**.
+- Cover letter: patch 4’s reorder **widens** the window; the bug is
+  still pre-existing without patch 4. This tree **already has patch 4**
+  (`b16e9d27a643a`).
+- Unprivileged users with write access **can** trigger the operations.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Wrong LE descriptor in DMA memory → controller misreads length /
-DCMD fields → **I/O failure and possible data corruption**. **Severity:
-HIGH** on BE CQHCI; **none** on LE.
+
+Record: **Failure mode: in-flight writeback sees torn folio contents /
+integrity checksum mismatch.** **Severity: CRITICAL** (data corruption),
+limited to stable-write devices. Not a panic path.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: **Benefit:** high for BE CQHCI (makes CQE descriptors spec-
-correct); none for LE. **Risk:** very low (7 lines, LE no-op, no
-locking/API). **Ratio:** favorable. This is the usual justification for
-descriptor endian fixes in stable.
+
+Record:
+
+- **Benefit: high** for ext4 on stable-write devices (prevents silent
+  data corruption on common ops). **Low** for everyone else (wait is a
+  no-op).
+- **Risk: very low** (1 line, standard flags, no API change, no new
+  locking order).
+- **Ratio: strongly favors applying.**
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -331,152 +463,159 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR backporting:**
-- Real missed `cpu_to_le*` on hardware DMA/task descriptors, present
-  since v4.16.
-- Sibling `cqhci_prep_task_desc` and the address fields in the same
-  function already convert; these two stores were the hole.
-- On BE, `DAT_LENGTH` and DCMD opcode/timing/response type would be
-  byte-swapped → CQE malfunction / corruption risk.
-- 7-line, obviously correct, LE no-op.
-- Acked by Adrian Hunter; applied by Ulf Hansson.
-- Matches the endianness/type-bug class used in stable.
+
+- Author and cover letter call it a **pre-existing stable-writes bug**.
+- Mutating a folio under writeback on `AS_STABLE_WRITES` is a known
+  class of **data corruption**.
+- Reachable from truncate / fallocate / append.
+- One-line, matches `FGP_WRITEBEGIN` used everywhere else.
+- Reviewed by Jan Kara; applied by Ted Ts'o.
+- `FGP_WRITEBEGIN` and `ext4_load_tail_bh()` both exist in this 7.3-rc4
+  tree.
+- This tree also has the later reorder (`b16e9d27a643a`) that
+  **exposes** the race more.
 
 **AGAINST backporting:**
-- Commit text only mentions sparse; no user report, no `Fixes:`, no `Cc:
-  stable`.
-- Typical CQHCI hardware is ARM64/x86 LE, so most stable users see no
-  runtime change.
-- Author did not describe a user-visible failure.
+
+- No Fixes tag, no user/syzbot report (not a valid NO by pipeline
+  rules).
+- Nested in a 9-patch WRITE_ZEROES series; later patches are feature-
+  contract fixes. This patch is still self-contained.
+- Author did not `Cc: stable` on patch 1 (other patches in the same
+  series did).
+- Bug existed in spirit since `find_or_create_page()`; field reports are
+  absent, so the race may be rare without the v7.3 reorder.
 
 **UNRESOLVED:**
-- Whether this was discussed on stable@ (lore 403).
-- Whether any production BE CQHCI board is in the wild (in-tree CQE DT
-  is ARM64; ARM64 BE exists but is uncommon).
+
+- linux-stable@ archives could not be fetched (HTTP 403).
+- Full v2 mailing-list review text for this hunk was not retrieved (lore
+  403); Jan’s Reviewed-by on the committed patch is verified.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — mechanical `cpu_to_le*` to
-   match existing descriptor stores; maintainer ack.
-2. Fixes a real bug that affects users? **PASS** — wrong CQHCI
-   descriptor endianness on BE is a real protocol/hardware bug, not
-   whitespace.
-3. Important issue? **PASS** — wrong transfer length / DCMD fields can
-   break CQE I/O or corrupt data. Sparse is how it was found, not the
-   user-visible impact.
-4. Small and contained? **PASS** — 7 lines, one file, two functions.
+
+1. Obviously correct and tested? **PASS** — one flag change to the
+   standard write-begin set; reviewed by Jan Kara; in mainline since
+   v7.3-rc1.
+2. Fixes a real bug that affects users? **PASS** — stable-writes devices
+   (NVMe digest, RAID5 skip_copy, dm-integrity, zram, T10 PI, etc.).
+3. Important issue? **PASS** — data corruption on in-flight writeback,
+   not a crash, but explicitly in the stable rules list.
+4. Small and contained? **PASS** — 1 line, one function.
 5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — already present on this
-   7.3-rc4 tree; the pre-fix pattern is the long-standing one.
+6. Can apply to the local tree? **PASS** — `FGP_WRITEBEGIN` and
+   `ext4_load_tail_bh()` are here; the hunk is identical to what already
+   landed.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/docs exception. Closest adjacent class
-is **endianness correctness** (and incidentally a sparse warning). Not a
-reason to reject.
+
+Record: **None** (not a device ID, quirk, DT, build, or docs exception).
+It qualifies as a normal data-integrity bug fix.
 
 **Step 9.4: MAKE YOUR DECISION**
-The local tree is mainline **7.3.0-rc4**, which already contains the
-fix. The evaluation is whether that fix should also be selected for
-stable: the buggy stores have been in CQHCI since **v4.16**, the change
-is self-contained, and it corrects hardware-visible descriptors. Sparse
-was the detector; the bug is endian-incorrect DMA descriptors. Risk on
-the LE majority is zero. That is appropriate for stable.
 
-===============================================================
-What the commit solves and why it matters
-===============================================================
-CQHCI transfer and DCMD descriptors are little-endian in memory. Two
-writes used native CPU values: transfer attributes
-(`VALID`/`END`/`ACT`/`DAT_LENGTH`) and the DCMD task word. On big-endian
-that swaps the length and command fields the controller DMA-reads, so
-command-queue I/O can fail or transfer the wrong size. Little-endian
-kernels are unchanged. The patch is small, already reviewed by the CQHCI
-expert, and needs no extra commits.
+This tree is **Linux 7.3-rc4** (Linus mainline). The helper lives here,
+`FGP_WRITEBEGIN` lives here, and callers still zero the folio
+immediately. The change is a one-line restoration of the stable-write
+wait that every other write-begin path already does. That is exactly the
+kind of small, important data-integrity fix stable trees should take.
+The surrounding WRITE_ZEROES series is not required for this hunk to be
+correct.
 
-Risk vs benefit: very low risk, real correctness fix for BE CQHCI, no
-behavior change for typical LE devices.
+### What the commit solves
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed commit 0aae2c73175821: Acked-by Adrian Hunter; SOB
-  Ben Dooks, Ulf Hansson; no Fixes/Reported-by/Cc: stable.
-- [Phase 2] Diff: 7+/-7 in `cqhci_set_tran_desc` and
-  `cqhci_prep_dcmd_desc` only.
-- [Phase 2] Confirmed `CQHCI_DAT_LENGTH` is bits 16–31 and DCMD fields
-  are bits 16+ in `cqhci.h`.
-- [Phase 2] Pre-fix parent still assigned native ints/`u64` into `__le*`
-  memory; addresses already used `cpu_to_le*`.
-- [Phase 3] `git blame`: buggy code from a4080225f51dce (v4.16-rc1).
-- [Phase 3] `cqhci_prep_task_desc` conversion added in ee49d0321f025
-  (2021); DCMD/attr left unconverted.
-- [Phase 3] Author history on `drivers/mmc/`: several real dw_mmc endian
-  fixes.
-- [Phase 3] `git merge-base --is-ancestor 0aae2c73175821 HEAD` → commit
-  is in this tree.
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1-only thread; Hunter ack; Ulf
-  “Applied for next”; lists linux-mmc + Hunter/Hansson.
-- [Phase 4] lore WebFetch 403; used local mbox. Stable@ search
-  UNVERIFIED (403).
-- [Phase 5] Callers: `cqhci_request` → prep_tran_desc/prep_dcmd_desc;
-  `dwcmshc_set_tran_desc` calls `cqhci_set_tran_desc`.
-- [Phase 5] No semcode MCP; used git grep.
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4.
-- [Phase 6] Fix merged via f96718fc1f614 (`mmc-v7.3`).
-- [Phase 6] In-tree `supports-cqe` is ARM64-only; no MIPS matches.
-- [Phase 7] CQHCI selected by MSM, i.MX, Tegra, MTK, brcmstb, Arasan,
-  DWCMSHC, AM654, SDHCI PCI.
-- [Phase 8] Failure mode: BE descriptor corruption → CQE I/O failure /
-  possible data corruption; LE no-op.
-- UNVERIFIED: production BE CQHCI user reports; stable@ discussion.
+`ext4_load_tail_bh()` was grabbing a locked folio without `FGP_STABLE`.
+Callers then call `folio_zero_range()` and dirty the buffer. On devices
+that set `AS_STABLE_WRITES` (integrity checksums or
+`BLK_FEAT_STABLE_WRITES`), that can change page-cache bytes while
+writeback DMA is still running. Switching to `FGP_WRITEBEGIN |
+FGP_ACCESSED` waits for writeback first; elsewhere the wait is a no-op.
 
-The patch is small, obviously correct, and fixes a real hardware-
-descriptor endian bug that has been in this tree’s CQHCI code since
-v4.16.
+### Stable rules / risk vs benefit
+
+Meets all six stable criteria. Benefit is preventing filesystem data
+corruption on a real (if not universal) device class; risk is a single
+established flag combination.
+
+### Concerns
+
+- Nested in a larger series, but this patch is standalone.
+- No field report; the author found it while reordering zeroing. Still a
+  concrete integrity bug, and this tree already contains the reorder
+  that widens it.
+- Lore stable-list search was blocked (403); that does not change the
+  code-level conclusion.
+
+Verification:
+- [Phase 1] Parsed tags from `git show e1cf7b5f5c8ad`: Reviewed-by Jan
+  Kara; Link msgid `...4038124-2...`; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Cover letter in `/tmp/ext4-fgp.mbox` msg 5: “pre-existing
+  stable-writes bug exposed by patch 4's reordering”
+- [Phase 2] Diff: 1 line in `ext4_load_tail_bh()`; flags
+  `FGP_LOCK|FGP_ACCESSED|FGP_CREAT` → `FGP_WRITEBEGIN|FGP_ACCESSED`
+- [Phase 2] `FGP_WRITEBEGIN` = `FGP_LOCK|FGP_WRITE|FGP_CREAT|FGP_STABLE`
+  (`include/linux/pagemap.h:720`)
+- [Phase 2] `__filemap_get_folio` calls `folio_wait_stable()` when
+  `FGP_STABLE` (`mm/filemap.c:1986-1987`)
+- [Phase 2] `folio_wait_stable()` only waits if
+  `mapping_stable_writes()` (`mm/page-writeback.c:3105-3108`)
+- [Phase 3] `git describe --contains --match 'v7.*' 3b312a6f510ca` →
+  v7.1-rc1 (helper introduced)
+- [Phase 3] `git describe --contains --match 'v7.*' e1cf7b5f5c8ad` →
+  v7.3-rc1 (this fix)
+- [Phase 3] `git merge-base --is-ancestor e1cf7b5f5c8ad HEAD` true;
+  `3b312a6f510ca` also ancestor
+- [Phase 3] `git show 9d3973de9a374`: folio conversion used the same
+  non-stable flags; previously `find_or_create_page()`
+- [Phase 3] `git show 3b312a6f510ca`: factor-out copied those flags into
+  `ext4_load_tail_bh()`
+- [Phase 4] `b4 dig -c e1cf7b5f5c8ad`: lore URL; v3 then v4; v4 no code
+  change
+- [Phase 4] `b4 dig -w`: linux-ext4, tytso, Jan Kara, adilger, Ojaswin,
+  Ritesh on Cc
+- [Phase 4] `b4 dig -m /tmp/ext4-fgp.mbox`: Ted applied 1–8; patch 9
+  dropped; no NAK on patch 1
+- [Phase 4] WebFetch lore.kernel.org 403 — UNVERIFIED stable-list
+  discussion
+- [Phase 5] Callers: `ext4_block_do_zero_range` /
+  `ext4_block_journalled_zero_range` → `ext4_block_zero_range` →
+  `ext4_block_zero_eof` / `ext4_zero_partial_blocks` (truncate, punch,
+  zero_range, WRITE_ZEROES, append)
+- [Phase 5] Other ext4 write paths already use `FGP_WRITEBEGIN` or
+  `folio_wait_stable()`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; Makefile
+  7.3.0-rc4
+- [Phase 6] Current `fs/ext4/inode.c:4042-4043` already has
+  `FGP_WRITEBEGIN | FGP_ACCESSED`
+- [Phase 7] fs/ext4, important filesystem
+- [Phase 8] `bdev_stable_writes()` = integrity csum OR
+  `BLK_FEAT_STABLE_WRITES` (`include/linux/blkdev.h:1410-1414`)
+- [Phase 8] `BLK_FEAT_STABLE_WRITES` set by nvme (data_digest), raid5
+  skip_copy, dm-integrity, zram, rbd, iscsi_tcp, mmc, drbd
+- [Phase 8] Failure: data corruption on stable-write devices; wait is
+  no-op otherwise
+- UNVERIFIED: linux-stable mailing list history (HTTP 403)
+- UNVERIFIED: full v2 review mail body for this hunk (lore 403);
+  Reviewed-by on the commit is verified
 
 **YES**
 
- drivers/mmc/host/cqhci-core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/ext4/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-index 178277d90c31c..00614b500b2bc 100644
---- a/drivers/mmc/host/cqhci-core.c
-+++ b/drivers/mmc/host/cqhci-core.c
-@@ -484,11 +484,11 @@ void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
- {
- 	__le32 *attr = (__le32 __force *)desc;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 2e3f7ba1a924b..c3fb5f16f6e39 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4092,7 +4092,7 @@ static int __ext4_block_zero_page_range(handle_t *handle,
+ 	int err = 0;
  
--	*attr = (CQHCI_VALID(1) |
--		 CQHCI_END(end ? 1 : 0) |
--		 CQHCI_INT(0) |
--		 CQHCI_ACT(0x4) |
--		 CQHCI_DAT_LENGTH(len));
-+	*attr = cpu_to_le32((CQHCI_VALID(1) |
-+			     CQHCI_END(end ? 1 : 0) |
-+			     CQHCI_INT(0) |
-+			     CQHCI_ACT(0x4) |
-+			     CQHCI_DAT_LENGTH(len)));
- 
- 	if (dma64) {
- 		__le64 *dataddr = (__le64 __force *)(desc + 4);
-@@ -542,7 +542,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
- static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
- 				   struct mmc_request *mrq)
- {
--	u64 *task_desc = NULL;
-+	__le64 *task_desc = NULL;
- 	u64 data = 0;
- 	u8 resp_type;
- 	u8 *desc;
-@@ -574,7 +574,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
- 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
- 	if (cq_host->ops->update_dcmd_desc)
- 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
--	*task_desc |= data;
-+	*task_desc |= cpu_to_le64(data);
- 	desc = (u8 *)task_desc;
- 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
- 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
+ 	folio = __filemap_get_folio(mapping, from >> PAGE_SHIFT,
+-				    FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
++				    FGP_WRITEBEGIN | FGP_ACCESSED,
+ 				    mapping_gfp_constraint(mapping, ~__GFP_FS));
+ 	if (IS_ERR(folio))
+ 		return PTR_ERR(folio);
 -- 
 2.53.0
 
