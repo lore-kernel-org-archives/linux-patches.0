@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE5253F9AB;
-	Mon, 19 Oct 2026 14:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8E553F9BB;
+	Mon, 19 Oct 2026 14:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418722; cv=none; b=YENZhJtmEqF5DmFr1KVLe5YvgB78rCkaiDsE821gX6orcg3gEGGEYj+xqOb/JmPXxo3c7dagYIzlOUHOxEREOSbzpkI+nLDinUSZPQisoQbk62ncXpEa/L/SF0QYHl1xPjJSnyDHQgMN8kzH0V0owowy1oda6tmwYQm3vajCaus=
+	t=1792418723; cv=none; b=L2j8WdLE65xvbTu/M+lKW+jjKnPL1IFdgx6S1Plv9H703zGfDhrDwB76OHES3WRSMq0SWOw9FvRI9e+3tT6b66gfANoDhfirDLTYv4LnLDvC/i4GeKWZUjUn1fUMsLUMfkLT37RKd9zoYcx8nwYblTpKFllmf0xr7UGoAPMApfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418722; c=relaxed/simple;
-	bh=fpKt3M6Yb4rAuiuMk+ukdm6y9Uzj2EfKJngLWbZqIMs=;
+	s=arc-20240116; t=1792418723; c=relaxed/simple;
+	bh=++X0frGjoGy9FF1OPPzbPItCI8j7Z01sMLl2eAaan/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NKY1lUzX+odaAmGWP54ybpw9o+tYTg5vpRknxQTt+N8AUEDzX4CEri/KunHDNBzp2QYd6br9C2k1nBrR4KcKxpsLqhG9icOe8EjbmCQvxtYDOb65l78gBij/uzwMAsnHd3mSSRXd6Mu9i7oUvm4Gfn8XD1CFBZNVLta5/y8zZ8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nk2nKAAA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gU7B7nNMM18HPEhDLimBshjRamlx2Wd0QBjhuNZ16nkSYNe2W4bRaPeA8j/GJeYkQht0eBsoE1cNts2UQhVwEYi8MLtjhyn1eGemRUeja66elvvsoqneKB0GIyJ2L/RFm6ZQRRgiBNHh976o6pivlZsW/xp7sB+vW56w8i0ppSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eK0XhjQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nk2nKAAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578201F000C5;
-	Mon, 19 Oct 2026 14:05:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eK0XhjQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFB81F000CB;
+	Mon, 19 Oct 2026 14:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418719;
-	bh=+hcH1HiLgHTHuCm0DvzlFDDPUk0wpg9BqkPllEirZrE=;
+	s=k20260515; t=1792418720;
+	bh=ACbfuDX4SmepyLpW4JiPlajQNzRadVRjDpG4gszd+WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nk2nKAAAfJRqHb3yMGbpYrSmumy52OMwELcgJ3AUd9jFnXJdOifg17KGD+dMJmoSt
-	 dlVVh7wRVY8dTc/lfjTTDmMGWoXYZeoXZjLBTUoDVoSH/48rHKMBBB5epixVDKZgYf
-	 c+7K1zdZSEaqasmCrzaQ2AigjMsCJ8ESsNxUKWziIk3pIS8mg3GMPx+KT+mKasFtw4
-	 x4Tj6Ipkqf446IvKVi4nTxzOxERaKDCdFM3xme3csoIlX2rXbfe4/DVelSDgM0RjMz
-	 c+aO86Nmv7l3Z4M9ZAfD9nF98nIqJcJCk29lfa6FZQrEZKoDS4k4bnkLWuVq4xwXFs
-	 pkX2Qx0POPtvQ==
+	b=eK0XhjQgWXbkhTSHKW+3LayqUxZjQ80tRl38NkUn06wK0jTvMS21uVTMiFI4zA+Z8
+	 ZDJ49BDLRJopg8zl0DfBZEFF0sFu+pyDSNmKFL24Swl5UyofHC6ElKg+IjrEDteWD5
+	 q4J+ueTWTEYI0yUbNX2+EjXjOsXI9bzO4HEw3DMDWVq2/Jxhqhxmd4r3Gsl0WiTgBF
+	 7KnAxne+7emT/9ZrFBDC4vtRNkhVEQvUucy2o1O+0AeuIUFBO0Z+mmwp3UTNM6UsGC
+	 TRIfqXfiiVUvrnob/fO9mTrSi4PzQdUZd4J59W7VUN9xnmJOE9tEIt99Xgc4quwz2t
+	 0+TRX4Dq7x3sw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Genjian Zhang <zhanggenjian@kylinos.cn>,
-	Yu Kuai <yukuai@fygo.io>,
+Cc: Heyang Tan <thy15333007817@163.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org,
+	chunkeey@googlemail.com,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] md/raid5: complete discard bios while reshape is active
-Date: Mon, 19 Oct 2026 09:52:18 -0400
-Message-ID: <20261019135441.1420968-447-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: p54: validate firmware record lengths
+Date: Mon, 19 Oct 2026 09:52:19 -0400
+Message-ID: <20261019135441.1420968-448-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,70 +54,77 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Heyang Tan <thy15333007817@163.com>
 
-[ Upstream commit 85764f475f3b3abd956bf8eaeaa643b367676cf4 ]
+[ Upstream commit db7b86bd97b380ece8fa39cfdd7502a9fd35e56f ]
 
-make_discard_request() returns without completing the bio when reshape
-is in progress. Discard callers block in submit_bio_wait()
-waiting for a completion that never arrives.  The caller hangs in
-uninterruptible sleep, and this does not resolve when reshape finishes.
+The p54 firmware parser accesses component ID and component version
+records without checking that their lengths cover the fields being read.
+A malformed record can therefore make the parser read past the record.
 
-Complete the bio with BLK_STS_AGAIN so userspace can retry after reshape,
-consistent with the existing policy of not processing discard during
-reshape.
+Validate the component ID and component version record lengths before
+accessing their data. The descriptor record is also checked against the
+shortest descriptor length found in the supported firmware images.
 
-Tested on a loop-backed RAID5 array during mdadm --grow: without this
-patch, blkdiscard hangs in bio_await() and remains in uninterruptible
-sleep after md reports "reshape done"; with this patch it returns
--EAGAIN instead.
+Reject descriptor values that underflow the RX offset or produce an empty
+RX range before updating the driver state.
 
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260711161326.962336-1-zhanggenjian@126.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Assisted-by: LLM Codex
+Signed-off-by: Heyang Tan <thy15333007817@163.com>
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.1.188**. The reshape discard hang is present here; the
-fix is a small completion of an otherwise leaked bio.
+The local tree is **6.18.57**. The p54 firmware parser here still lacks
+record-length checks, so this is a real bounds-check fix for this
+series.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 Step 1.1: PARSE THE SUBJECT LINE
-Record: `[md/raid5] [complete] complete discard bios while reshape is
-active`
+Record: `[wifi: p54:] [validate] firmware record lengths` — wireless p54
+firmware parser; “validate” is a correctness/safety fix, not a feature.
 
 Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn> (author)
-- Reviewed-by: Yu Kuai <yukuai@fygo.io> (applied the patch to md-7.3)
-- Link:
-  https://patch.msgid.link/20260711161326.962336-1-zhanggenjian@126.com
-- Signed-off-by: Yu Kuai <yukuai@fygo.io> (maintainer tree)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Acked-by
-- Ignore pipeline SOBs
+- `Assisted-by: LLM Codex`
+- `Signed-off-by: Heyang Tan <thy15333007817@163.com>` (author)
+- `Tested-by: Christian Lamparter <chunkeey@gmail.com>` (original p54
+  author; hardware test)
+- `Link:
+  https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com`
+- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` (wireless
+  maintainer)
+- Pipeline-only (ignored): `[Upstream commit
+  db7b86bd97b380ece8fa39cfdd7502a9fd35e56f]`, `Signed-off-by: Sasha
+  Levin`
+- No `Fixes:`, no `Cc: stable` (expected)
+- No `Reported-by:`, no syzbot tag on the commit itself
 
 Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: `make_discard_request()` returns without `bio_endio()` when
-  `mddev->reshape_position != MaxSector`.
-- Symptom: discard callers (`submit_bio_wait()` / `blkdiscard`) sleep in
-  D-state forever. Hang survives reshape completion.
-- Root cause: early return that skips completion; the bio is never
-  finished.
-- Fix: complete with `BLK_STS_AGAIN` so userspace gets `-EAGAIN` and can
-  retry after reshape.
-- Author tested loop-backed RAID5 during `mdadm --grow`.
+- Bug: component ID and component version records are used without
+  checking that `len` covers the fields read. A short record can make
+  the parser read past the record.
+- Extra: descriptor records are checked against the shortest known valid
+  length (`0xa` words). Descriptor RX values that underflow `0x3500` or
+  produce an empty RX window are rejected before driver state is
+  updated.
+- Symptom: out-of-bounds read of the firmware blob; invalid
+  `rx_start`/`rx_end` (the old code even had `/* FIXME add sanity
+  checking */`).
+- Version info: none in the message. The parser dates to 2009 in this
+  tree.
 
 Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. This is an explicit hang fix (bio never completed).
+Record: Not hidden. Explicit bounds and range checks. The descriptor
+work implements the old FIXME.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -124,83 +132,86 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/md/raid5.c` only
-- Scope: surgical, one function (`make_discard_request`)
-- Candidate form: early `return` → `goto complete_again`; success-path
-  `bio_endio` gets an explicit `return`; new label calls
-  `bio_endio_status(bi, BLK_STS_AGAIN)`
-- Mailing-list v1 (what Yu Kuai applied): 3 insertions / 1 deletion,
-  inline `bio_endio_status` before `return`. Same behavior.
+- File: `drivers/net/wireless/intersil/p54/fwio.c` (+37 / −5)
+- Function: `p54_parse_firmware()`
+- Scope: single-file surgical fix
 
 Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: reshape active → return, bio left outstanding.
-- After: reshape active → complete bio with `BLK_STS_AGAIN`.
-- Path: discard submit during reshape (admin `blkdiscard` / `fstrim` /
-  FS discard).
-- Success path unchanged (`bio_endio(bi)` still runs).
+- `BR_CODE_COMPONENT_ID`: previously `be32_to_cpup(bootrec->data)` with
+  no length check. After: reject if `len < sizeof(struct
+  bootrec_comp_id)/sizeof(*bootrec->data)` i.e. `len < 1`.
+- `BR_CODE_COMPONENT_VERSION`: previously `strnlen(..., 24)` even for a
+  short record. After: require `len >= DIV_ROUND_UP(24, 4)` (= 6 words),
+  then `strnlen` limited to `sizeof(struct bootrec_comp_ver)` (still 24;
+  no functional change for valid records).
+- `BR_CODE_DESCR`: previously stored `rx_start` and `rx_end - 0x3500`
+  with an explicit FIXME. After: require `len >= 0xa`; compute
+  `rx_start`/`rx_end` locally; reject if `rx_end < 0x3500` or `rx_end -
+  0x3500 <= rx_start`; only then write `priv->rx_start` /
+  `priv->rx_end`.
+
+`len` is in **u32 words**, matching the existing loop `bootrec->data +
+len <= end_data`.
 
 Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- Category: logic / resource-completion bug → uninterruptible hang
-- Mechanism: bio remaining count never reaches zero; `submit_bio_wait()`
-  sits in `wait_for_completion_io()`.
-- Fix: complete the bio with a retryable status instead of dropping it.
+- Category: memory safety (OOB read) + integer underflow / invalid RX
+  window.
+- Mechanism: the outer loop only keeps the *declared* record inside the
+  blob. If `len` is 0 and the record is at the end,
+  `be32_to_cpup(bootrec->data)` reads `*end_data` (past the firmware).
+  `strnlen(..., 24)` can read up to 24 bytes past a short version
+  record. `rx_end - 0x3500` wraps if `rx_end < 0x3500`;
+  `p54_assign_address()` then uses that window as firmware memory.
 
 Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Obviously correct: every bio must be completed; this path did not.
-- Minimal: a few lines, one function.
-- Regression: callers see `-EAGAIN` instead of hanging.
-  `blkdev_issue_discard()` maps `-EOPNOTSUPP` to success, so
-  `BLK_STS_NOTSUPP` would lie; `BLK_STS_AGAIN` is the right retry
-  signal. Header comment says `BLK_STS_AGAIN` is for NOWAIT; maintainer
-  still accepted this, and the author showed `NOTSUPP` would look like a
-  successful discard.
-- Red flags: none on the hang fix itself. Helper `bio_endio_status()` is
-  missing in 6.1 (backport uses existing `bio->bi_status` +
-  `bio_endio()`).
+- Obviously correct for the OOB: don’t read fields the record does not
+  contain.
+- `len < 0xa` matches the packed descriptor through `padding2` (40 bytes
+  / 10 words); `rx_mtu` remains gated on `len == 11`.
+- Regression risk is low: checks only reject truncated/inconsistent
+  records. Christian Lamparter tested PCI and USB, including firmware
+  down to 2.5.2.0.
+- Reviewer nits on v2 (`len != 1` vs `len < 1`, local `bootrec_comp_ver
+  *`) are style; he called v2 “technically correct.” A later v3 only
+  restyles the same checks and is not in this tree. v2 is what Johannes
+  merged.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Introducer: `620125f2bf8ff0` “MD: raid5 trim support” (Shaohua Li,
-  2012-10-11).
-- The skip-without-complete has been in tree since RAID5 discard was
-  added.
-- Present in this 6.1 checkout at `drivers/md/raid5.c:5809-5811`.
+Record: Unchecked parser body is from `76074e1670b197` (“p54: Move
+firmware code”, 2009-06-23, Christian Lamparter). Present in this tree
+(`git merge-base --is-ancestor` succeeded). The logic is older than that
+(original p54 driver `eff1a59c48e3`, also in this tree).
 
 Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Introducer confirmed via blame + `git merge-base
---is-ancestor 620125f2bf8ff0 HEAD`.
+Record: No `Fixes:` tag. N/A. Introducer is the 2009 move / original
+2007 driver, both ancestors of HEAD.
 
 Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Recent `raid5.c` work is other hang/lockup fixes, not this discard
-  skip.
-- `git log --grep='complete discard'` / `'discard bios while reshape'`
-  on `drivers/md/`: not in this tree.
-- Standalone patch (not `N/M`).
+Record (same directory, already in this tree):
+- `da1b9a55ff116` / `d38f5d868a0a4`: p54 EEPROM/RX length checks
+  (malicious USB / KASAN)
+- `3bdcc4d61212b` / `d2fb6b588dc5b`: p54 EEPROM/PDA length checks (`Cc:
+  stable`)
+This patch is standalone, not patch X/Y. It does not depend on those
+EEPROM fixes.
 
 Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record:
-- Genjian Zhang: not an MD regular in this tree.
-- Yu Kuai: frequent MD contributor here (`md/raid5: account discard IO`,
-  `fix IO hang when array is broken with IO inflight`, etc.) and applied
-  this to md-7.3.
+Record: Heyang Tan has this p54 fix and an unrelated octeontx2 debugfs
+change. Not the subsystem maintainer. Weight comes from Christian’s
+Tested-by and Johannes’s SOB.
 
 Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Functional dependency: none. Completing the bio does not need later
-  RAID5 refactoring.
-- `bio_endio_status()` is absent in 6.1; equivalent is already used
-  (`bio_wouldblock_error()`, `bio->bi_status = ...; bio_endio()`).
-- `raid5_discard_limits()` is context from later mainline, not used by
-  the fix. Not in 6.1.
-- Applies standalone with a 2-line helper substitution.
+Record: No new helpers or structs. Uses existing `bootrec_comp_id`,
+`bootrec_comp_ver`, `bootrec_desc`. Standalone. `git diff v6.18.57
+ac2ff9b564e82^ -- fwio.c` is empty, so it applies cleanly to this
+series.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -208,164 +219,136 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- Lore/msgid: `20260711161326.962336-1-zhanggenjian@126.com`
-- `b4 mbox`: 6-message thread, standalone v1 (no v2).
-- Recipients: Song Liu, Yu Kuai, linux-raid, linux-kernel.
-- Yu Kuai 2026-07-19: Reviewed-by; leave REQ_NOWAIT hang (nowait being
-  removed in mainline).
-- Yu Kuai 2026-07-31: “Rebase and applied to md-7.3”.
-- Author: no v2 for REQ_NOWAIT.
-- No NAK. No reviewer `Cc: stable`.
-- Sashiko bot: (1) REQ_NOWAIT also leaks the bio (pre-existing); (2)
-  `BLK_STS_AGAIN` on blocking bios.
-- Author: NOTSUPP is wrong (discard is supported, just not during
-  reshape); `blkdev_issue_discard()` treats `-EOPNOTSUPP` as success, so
-  NOTSUPP would report success with no discard; `BLK_STS_AGAIN` matches
-  raid10’s discard-during-reshape `-EAGAIN` policy.
+- `b4 dig -c db7b86bd97b380ece8fa39cfdd7502a9fd35e56f` →
+  https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com
+- Series: v2 submitted 2026-09-18 (this is the committed version).
+- Christian Lamparter, 2026-09-19: tested USB (`isl3887usb` LM87) and
+  PCI (LM86), plus older 2.5.2.0 firmware; `Tested-by`. Called the
+  `sizeof`/`DIV_ROUND_UP` checks “technically correct”; asked for
+  readability (`len != 1`, local version pointer). No NAK.
+- v3 (2026-10-09) is that style follow-up (`len != 1`, `len < 6`, local
+  pointer). Not the merged commit.
+- Syzbot CI on v2: KASAN build/boot/fuzz passed (no new findings).
+- Direct lore.kernel.org fetch returned 403; thread recovered via `b4
+  dig -m`.
 
 Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: MD maintainers CC’d (Song Liu, Yu Kuai). Yu Kuai reviewed and
-applied. Song Liu did not comment in the thread.
+Record (`b4 dig -w`): To `linux-wireless@`, Cc Christian Lamparter.
+Johannes Berg merged it. Christian is the long-time p54 author.
 
 Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot. Author reproduced with `blkdiscard` during
-`mdadm --grow` on loop RAID5. Hang remained after “reshape done”.
+Record: No syzbot/bugzilla `Reported-by` on this commit. Bug is from
+code inspection. Author later asked whether a CVE is appropriate (OOB
+firmware parser). Christian’s answer to that CVE question was not
+retrieved (UNVERIFIED). Practical trigger is a malformed firmware file,
+not a BadUSB frame.
 
 Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone. REQ_NOWAIT leak left unfixed on maintainer request
-(mainline nowait removal). In 6.1 that WARN_ON_ONCE return without
-`bio_endio` is still present; it is a separate, rarer path.
+Record: Standalone v2. v3 is cosmetic and unmerged here. Related p54
+length-check work is EEPROM/PDA, already in this tree.
 
 Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable-list discussion found for this subject. Absence of
-`Cc: stable` is expected for this review pipeline.
+Record: No useful `lore.kernel.org/stable` hit for this subject. No
+known “do not backport” discussion.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `make_discard_request()` only.
+Record: `p54_parse_firmware()` only.
 
 Step 5.2: TRACE CALLERS
 Record:
-- Only caller: `raid5_make_request()` when `bio_op(bi) ==
-  REQ_OP_DISCARD` (`drivers/md/raid5.c:6175-6178`).
-- After the call: `md_write_end(mddev)` always runs, so write accounting
-  stays balanced if the bio is completed with error.
-- Context: MD make_request from `submit_bio` / `submit_bio_wait`.
+- `p54pci.c`: after firmware request, before upload
+- `p54usb.c`: `p54u_start_ops()` after firmware load
+- `p54spi.c`: `p54spi_request_firmware()` (`"3826.arm"`)
+All probe/firmware-load paths, not the datapath.
 
 Step 5.3: TRACE CALLEES
-Record: On the buggy skip path, no stripe work, no `bio_inc_remaining`,
-no bitmap. Completing the original bio is sufficient. Success path still
-ends with `bio_endio(bi)` after stripe setup.
+Record: `le32_to_cpu` / `be32_to_cpup` / `strnlen` / `wiphy_err`.
+Descriptor fields feed `priv->rx_start`, `priv->rx_end`, `headroom`,
+`tailroom`, `privacy_caps`, `rx_keycache_size`, `rx_mtu`.
 
 Step 5.4: FOLLOW THE CALL CHAIN
-Record:
-```
-blkdiscard / FITRIM / FS discard
-  → blkdev_issue_discard() / sb_issue_discard()
-  → submit_bio_wait()  [wait_for_completion_io, uninterruptible]
-  → raid5_make_request()
-  → make_discard_request()
-  → return without bio_endio  [BUG]
-```
-Reachable from userspace on a RAID5/6 array with discard enabled. Needs
-admin (BLKDISCARD / fstrim), not an unprivileged syscall gadget.
+Record: USB/PCI/SPI probe → `request_firmware[_nowait]` →
+`p54_parse_firmware`. Reachable whenever p54 hardware is present and
+firmware is loaded. Firmware comes from the host (`isl3886pci`,
+`isl3887usb`, `3826.arm`, etc.), not from the USB packet stream.
+Unprivileged users normally cannot plant that file; a bad file still
+oopses/reads OOB in kernel.
 
 Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record:
-- Same file still has REQ_NOWAIT `WARN_ON_ONCE` then `return` without
-  completing (6.1-only leftover).
-- RAID10 already returns `-EAGAIN` for discard during reshape
-  (`raid10_handle_discard`, `drivers/md/raid10.c:1653-1654`) and
-  completes NOWAIT discards with `bio_wouldblock_error()`.
-- `raid5_make_request` already uses `bio_wouldblock_error()` for NOWAIT
-  vs reshape on normal I/O (`:6193-6201`). Discard skipped that pattern.
-
-No semcode MCP in this environment; callers/callees from `rg` + reading
-the functions.
+Record: Same class as the p54 EEPROM/PDA length checks already in this
+tree. `BR_CODE_EXPOSED_IF` in this same function still walks `exp_if`
+from `len` without a per-record fit check; that is a leftover, not a
+reason to drop this hunk.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes.
-
-```5809:5811:drivers/md/raid5.c
-        if (mddev->reshape_position != MaxSector)
-                /* Skip discard while reshape is happening */
-                return;
-```
-
-- Tree: `p-6.1-11-g10bc6eb33d95f`, `make kernelversion` → 6.1.188.
-- Bug since 2012 (`620125f2bf8ff0`), ancestor of HEAD.
+Record: Yes. This checkout is `v6.18.57-155-gcdf239ca885b2`,
+kernelversion `6.18.57`.
+`v6.18.57:drivers/net/wireless/intersil/p54/fwio.c` still does
+unvalidated `be32_to_cpup`, `strnlen(..., 24)`, and `rx_end - 0x3500`
+with the FIXME. Bug introduced ~2009, long before 6.18.
 
 Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Needs a small backport, not a rework.
-- No `bio_endio_status()` in 6.1 → `bi->bi_status = BLK_STS_AGAIN;
-  bio_endio(bi);` (or `bio_wouldblock_error(bi)`).
-- No `raid5_discard_limits()` (later context only).
-- 6.1 still has the REQ_NOWAIT warning above the reshape check; leave it
-  (out of scope of this commit).
-- Expected difficulty: minor context/helper adjustment.
+Record: Clean apply. Pre-candidate `fwio.c` matches `v6.18.57`. No
+refactor between mainline context and this series.
 
 Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: This hang is not fixed. Discard still disabled by default
-(`devices_handle_discard_safely = false`), but the hang exists whenever
-that param is set and discard is issued during reshape.
+Record: EEPROM/PDA validation is already here; it does not cover this
+firmware bootrec parser. No earlier version of this exact fix in
+6.18.57.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: MD RAID5/6 (`drivers/md/raid5.c`). IMPORTANT: not core VFS/mm,
-but widely used for storage. RAID5 reshape (`mdadm --grow`) is a
-supported production operation.
+Record: `drivers/net/wireless/intersil/p54` — old
+Prism54/ISL38xx/STLC45xx (USB/PCI and Nokia N800/N810 SPI). Criticality:
+PERIPHERAL, but real hardware and already-supported in 6.18.
 
 Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Active in this tree (recent hang, lockup, discard accounting
-fixes). Yu Kuai is a regular MD committer here. Official maintainer in
-MAINTAINERS: Song Liu.
+Record: Mature/low churn. Recent work is mostly bounds checks. A long-
+standing parser hole is more, not less, relevant for stable.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 Step 8.1: DETERMINE WHO IS AFFECTED
-Record: RAID5/6 users who enabled discard
-(`raid456.devices_handle_discard_safely=Y`) and run discard
-(`blkdiscard`, `fstrim`, mount-time/online discard) while reshape is
-active. Config- and workload-specific, not universal.
+Record: Users with p54 USB/PCI/SPI (`CONFIG_P54_*`) and a malformed or
+truncated firmware image.
 
 Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Trigger: discard bio while `reshape_position != MaxSector`.
-- How common: reshape is infrequent; overlap with `fstrim.timer` / admin
-  trim is realistic on SSD RAID.
-- Unprivileged: typically no (needs write on the device /
-  CAP_SYS_ADMIN). Still a production hang for admins and FS discard from
-  `fstrim`/ext4/xfs/f2fs (those use `blkdev_issue_discard` →
-  `submit_bio_wait`).
+Record: Device probe / firmware load. Common with p54 hardware; the
+*malformed* case is uncommon (bad file, truncated image, attacker-
+controlled firmware path). Not a hot-path race. Unprivileged trigger is
+limited (firmware is host-provided).
 
 Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- Failure: uninterruptible sleep (`wait_for_completion_io`) that does
-  **not** clear when reshape finishes. Process is unkillable; hung-task
-  warnings; reboot to recover.
-- Severity: **CRITICAL** for the affected path (hang), even though the
-  feature is opt-in.
+- Short records near the end of the blob: kernel OOB read (KASAN-class).
+  Severity HIGH for memory safety; practical exploitability is lower
+  than the USB EEPROM bugs.
+- `rx_end` underflow: wrapped firmware memory window used by
+  `p54_assign_address()` / `p54_setup_mac()`. Severity MEDIUM–HIGH for
+  driver malfunction / bad device addresses.
+- Overall: HIGH memory-safety, not a universal panic on valid vendor
+  firmware.
 
 Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- Benefit: high for RAID5/6 + discard + reshape (unkillable hang →
-  `-EAGAIN`).
-- Risk: very low (few lines, error-only path, no new API, no
-  locking/data-structure change). Worst case: discard fails with
-  `-EAGAIN` instead of hanging.
-- Ratio: strongly favors backport.
+- Benefit: stops OOB reads and bogus RX windows on a parser this tree
+  has had since 2009; same robustness class as p54 fixes already in
+  6.18.y.
+- Risk: ~40-line, error-path-only; hardware-tested; no API change.
+- Ratio: favorable.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -374,114 +357,148 @@ PHASE 9: FINAL SYNTHESIS
 Step 9.1: COMPILE THE EVIDENCE
 
 FOR:
-- Real, tested uninterruptible hang; does not self-resolve after
-  reshape.
-- Small, obviously correct: complete a bio that was leaked.
-- Buggy code present in this 6.1 tree since 2012.
-- Maintainer Reviewed-by and applied (Yu Kuai, md-7.3).
-- `BLK_STS_AGAIN` avoids the `-EOPNOTSUPP`→success lie in
-  `blkdev_issue_discard()`.
-- Matches “complete with retryable error” rather than silent drop.
-- Callers (`blkdev_issue_discard`, FITRIM, `sb_issue_discard`) all wait
-  on completion.
+- Real OOB read in `p54_parse_firmware()` plus RX-range underflow the
+  original code flagged with FIXME.
+- Small, contained, no new API.
+- Present in this 6.18 tree for ~17 years; applies cleanly.
+- Tested-by original p54 author on PCI and USB, including old firmware.
+- Merged by Johannes Berg.
+- Same validation pattern as other p54 stable fixes already here.
 
 AGAINST:
-- Discard off by default (`devices_handle_discard_safely`).
-- Exact mainline helper `bio_endio_status()` missing (trivial substitute
-  exists).
-- `BLK_STS_AGAIN` is documented as NOWAIT-oriented; maintainer accepted
-  it anyway.
-- No `Cc: stable` (not a negative for this process).
+- Niche driver; trigger is a bad firmware file, not a malicious URB.
+- No syzbot/CVE on this specific patch.
+- v3 is a later style tweak (not a functional hole in v2).
 
 UNRESOLVED:
-- Could not use `b4 dig -c <sha>` (commit not in this checkout). Thread
-  recovered via msgid/`b4 mbox`.
-- No stable-list thread found.
+- Christian’s reply on CVE classification not retrieved.
+- lore.kernel.org HTTP fetch 403; thread obtained via b4 instead.
 
 Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — missing `bio_endio` is the
-   hang; author tested `blkdiscard` vs reshape; Yu Kuai reviewed.
-2. Fixes a real bug that affects users? **PASS** — D-state hang on
-   discard during reshape.
-3. Important issue? **PASS** — unkillable hang / hung task (CRITICAL on
-   that path).
-4. Small and contained? **PASS** — one function, a few lines.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** with a trivial backport
-   (`bio_endio_status` → set `bi_status` + `bio_endio`).
+1. Obviously correct and tested? **PASS** — reviewer called v2
+   technically correct; Tested-by on real devices.
+2. Fixes a real bug that affects users? **PASS** — OOB read and invalid
+   RX window on malformed firmware.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   kernel OOB read / firmware-parser memory safety (HIGH). Not a
+   universal oops on good firmware, but this class is accepted for
+   stable.
+4. Small and contained? **PASS** — one function, +37/−5.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — identical pre-image to
+   v6.18.57 `fwio.c`.
 
 Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not an ID/quirk/DT/docs exception. Ordinary hang fix.
+Record: None (not a device ID, quirk, DT, build, or doc fix). Qualifies
+as a normal bugfix.
 
 Step 9.4: MAKE YOUR DECISION
-Backport to this 6.1 tree. The hang is in this code, the fix is
-surgical, and the only adjustment is how to set bio status without
-`bio_endio_status()`.
+Backport. The 6.18 parser still has the hole; the fix is small, tested,
+and addresses a real OOB/underflow without depending on later refactors.
+
+What it solves for this tree: `p54_parse_firmware()` can read past a
+truncated component-ID/version record and can wrap `rx_end`. That hits
+USB/PCI/SPI probe when firmware is loaded. Stable rules are met; risk is
+low because valid images were tested and only invalid records are
+rejected.
 
 Verification:
-- [Phase 1] Subject/tags/body from the candidate message and lore mbox;
-  hang + `-EAGAIN` policy confirmed.
-- [Phase 2] Diff: reshape early-return without completion → `bio_endio`
-  with `BLK_STS_AGAIN`.
-- [Phase 3] `git blame` `raid5.c:5809-5811` → `620125f2bf8ff0` (2012);
-  `git merge-base --is-ancestor` true; fix not in this tree.
-- [Phase 3] `git log --grep` on `drivers/md/` for this subject: empty.
-- [Phase 4] `b4 mbox` msgid
-  `20260711161326.962336-1-zhanggenjian@126.com`: 6 msgs; Yu Kuai
-  Reviewed-by + applied md-7.3; author rationale for AGAIN vs NOTSUPP.
-- [Phase 4] Openwall/LKML mirrors match the patch; lore.kernel.org fetch
-  403 (Anubis); thread obtained via b4.
-- [Phase 5] `rg make_discard_request`: only `raid5_make_request`.
-  `submit_bio_wait` uses `wait_for_completion_io`.
-  `blkdev_issue_discard` treats only `-EOPNOTSUPP` as 0.
-- [Phase 5] RAID10 already returns `-EAGAIN` for discard during reshape
-  (`raid10.c:1653-1654`).
-- [Phase 6] `git describe HEAD` → `p-6.1-11-g10bc6eb33d95f`; `make
-  kernelversion` → 6.1.188. Buggy return present. `bio_endio_status` /
-  `raid5_discard_limits` absent.
-- [Phase 6] Equivalent completion: `include/linux/bio.h`
-  `bio_wouldblock_error()` / `BLK_STS_AGAIN`.
-- [Phase 7] MAINTAINERS: Song Liu / linux-raid; Yu Kuai active on
-  `drivers/md/raid5.c` in this tree.
-- [Phase 8] Failure mode: D-state hang until reboot; discard opt-in via
-  `devices_handle_discard_safely`.
-- UNVERIFIED: whether some later mainline commit renamed the helper-only
-  form to the `goto complete_again` form (functionally equivalent).
-
-The hang is real in 6.1, the fix is a few lines, and a missing helper is
-not a reason to leave an unkillable discard stall in place.
+- [Phase 1] Tags: Tested-by Christian Lamparter; SOB Johannes Berg; Link
+  msgid 20260918083349.891-1; no Fixes/Cc:stable/Reported-by (expected).
+- [Phase 2] Diff: +37/−5 in `p54_parse_firmware()`; ID `len < 1`,
+  version `len < 6`, descriptor `len < 0xa` plus RX-range check.
+  `bootrec_desc` packed size 42 bytes; `0xa` words covers fields used
+  when `len != 11`.
+- [Phase 3] `git blame` on parent: `76074e1670b197` (2009). `git merge-
+  base --is-ancestor 76074e1670b197 HEAD` succeeded. No Fixes tag.
+- [Phase 3] Related p54 length checks (`da1b9a55ff116`, `d38f5d868a0a4`,
+  `3bdcc4d61212b`, `d2fb6b588dc5b`) are EEPROM/PDA, not this parser.
+- [Phase 4] `b4 dig -c db7b86bd97b380ece8fa39cfdd7502a9fd35e56f`: v2
+  lore thread; `-a` only v2 as committed series; `-w` linux-wireless +
+  chunkeey. Christian: “technically correct” + Tested-by PCI/USB.
+- [Phase 4] WebSearch: v3 is style-only; syzbot CI passed v2.
+  lore.kernel.org WebFetch 403.
+- [Phase 4] UNVERIFIED: Christian’s CVE-classification reply.
+- [Phase 5] Callers: `p54pci.c:79`, `p54usb.c:872`, `p54spi.c:166` on
+  firmware load. `rx_end` used in `p54_assign_address()` /
+  `p54_setup_mac()`.
+- [Phase 6] `git describe HEAD` → `v6.18.57-155-gcdf239ca885b2`; `make
+  kernelversion` → `6.18.57`. Buggy code in
+  `v6.18.57:drivers/net/wireless/intersil/p54/fwio.c`. `git diff
+  v6.18.57 ac2ff9b564e82^ -- fwio.c` empty.
+- [Phase 8] Failure mode: OOB read of firmware blob; wrapped RX window.
+  Severity HIGH for memory safety, driver-specific trigger.
 
 **YES**
 
- drivers/md/raid5.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intersil/p54/fwio.c | 42 +++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 2817cd7d197e9..b7da2b83e1938 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5707,8 +5707,7 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- 	int stripe_sectors;
- 
- 	if (mddev->reshape_position != MaxSector)
--		/* Skip discard while reshape is happening */
--		return;
-+		goto complete_again;
- 
- 	stripe_sectors = conf->chunk_sectors *
- 		(conf->raid_disks - conf->max_degraded);
-@@ -5786,6 +5785,11 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- 	}
- 
- 	bio_endio(bi);
-+	return;
+diff --git a/drivers/net/wireless/intersil/p54/fwio.c b/drivers/net/wireless/intersil/p54/fwio.c
+index 3baf8ab01e22b..4b8e6cf711d8f 100644
+--- a/drivers/net/wireless/intersil/p54/fwio.c
++++ b/drivers/net/wireless/intersil/p54/fwio.c
+@@ -52,6 +52,13 @@ int p54_parse_firmware(struct ieee80211_hw *dev, const struct firmware *fw)
+ 		u32 code = le32_to_cpu(bootrec->code);
+ 		switch (code) {
+ 		case BR_CODE_COMPONENT_ID:
++			if (len < sizeof(struct bootrec_comp_id) /
++				sizeof(*bootrec->data)) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component ID is too short\n");
++				return -EINVAL;
++			}
 +
-+complete_again:
-+	/* Skip discard while reshape is happening */
-+	bio_endio_status(bi, BLK_STS_AGAIN);
- }
- 
- static bool ahead_of_reshape(struct mddev *mddev, sector_t sector,
+ 			priv->fw_interface = be32_to_cpup((__be32 *)
+ 					     bootrec->data);
+ 			switch (priv->fw_interface) {
+@@ -72,16 +79,41 @@ int p54_parse_firmware(struct ieee80211_hw *dev, const struct firmware *fw)
+ 			}
+ 			break;
+ 		case BR_CODE_COMPONENT_VERSION:
++			if (len < DIV_ROUND_UP(sizeof(struct bootrec_comp_ver),
++					       sizeof(*bootrec->data))) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component version is too short\n");
++				return -EINVAL;
++			}
++
+ 			/* 24 bytes should be enough for all firmwares */
+-			if (strnlen((unsigned char *) bootrec->data, 24) < 24)
+-				fw_version = (unsigned char *) bootrec->data;
++			if (strnlen((unsigned char *)bootrec->data,
++				    sizeof(struct bootrec_comp_ver)) <
++				    sizeof(struct bootrec_comp_ver))
++				fw_version = (unsigned char *)bootrec->data;
+ 			break;
+ 		case BR_CODE_DESCR: {
+ 			struct bootrec_desc *desc =
+ 				(struct bootrec_desc *)bootrec->data;
+-			priv->rx_start = le32_to_cpu(desc->rx_start);
+-			/* FIXME add sanity checking */
+-			priv->rx_end = le32_to_cpu(desc->rx_end) - 0x3500;
++			u32 rx_start, rx_end;
++
++			/* 0xa is the shortest descriptor in supported firmware. */
++			if (len < 0xa) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor is too short\n");
++				return -EINVAL;
++			}
++
++			rx_start = le32_to_cpu(desc->rx_start);
++			rx_end = le32_to_cpu(desc->rx_end);
++			if (rx_end < 0x3500 || rx_end - 0x3500 <= rx_start) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor has invalid RX range\n");
++				return -EINVAL;
++			}
++
++			priv->rx_start = rx_start;
++			priv->rx_end = rx_end - 0x3500;
+ 			priv->headroom = desc->headroom;
+ 			priv->tailroom = desc->tailroom;
+ 			priv->privacy_caps = desc->privacy_caps;
 -- 
 2.53.0
 
