@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463FE5D9D75;
-	Mon, 19 Oct 2026 14:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FB95D9D97;
+	Mon, 19 Oct 2026 14:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418524; cv=none; b=N46wzxLHHlEjBhWji8FU2Vk/M+cYcc8iaPwesSLzpeKnG+aBRiR0abgKGBjUaSULFxkk5bT9mYMo+1C16REcosIPhD2SFuvV5U7Vf/BlDpFa5qnRunvxPcPfSSyR57Td8VtPI1myp1L4JDdddYcvTQ1yuAVOzocrpa8dHb9bqp8=
+	t=1792418525; cv=none; b=P3hybLzjR43/q6dCEhCIRs8Lo9qYs0XGmPo0VoWH0ePVzcuXMMQGJi/w/WKsy7drTEPbFdJrKfkZ4e80h9zQ1zfuOZil9otXusNBLYo7zWejEWCH1HYgB/ivVnJ0BwuEg0pc5CTdNNaNoOawmfFELskfBlVgQsSgOVUjnfQ1dZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418524; c=relaxed/simple;
-	bh=MMD+EBEPV0Pg7Ltq9yTjC1CMXB2jXqd4hX7pdWvy8Vc=;
+	s=arc-20240116; t=1792418525; c=relaxed/simple;
+	bh=HWU39KNqQaW6mRCYZGyKIsIVE5a4TkNDiJLtp751LYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KLxSu98svAcFK1QDJg1zuNn0CwTTGnXSrEXiJXKQMuID6Wj2viSO3x82DOy6cwtTRRFfwdm8J1HWIgxpufVsb6L9KxlYQA7KuX2+y6xr6gR4A/1V51SHUDPblgmGtyatqnZzYzUklnKu8w5fOcaqOgglMvZsgDXF7+v8H8Ss064=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvpfWu8G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YeZxvgX7jd6n9pi5FPPqJ2z2F2PoVh/jgj8ctO/X2cHxWds44Xs9h46wfz4DcIqv8VFCKyyypg9H4Hm4biabTAuL0CAqv5GY1TsK2GIsYhmkENIHz779j4H9gwrJdS6Tq2NMyFfIIAePcz4DIjM31wVcb9neZ6GQ/vkotq1+B50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXvUb+o6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvpfWu8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494D81F000C8;
-	Mon, 19 Oct 2026 14:02:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXvUb+o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2FF1F000C4;
+	Mon, 19 Oct 2026 14:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418521;
-	bh=u/avkUqxcKZrBjqLt0ZXn2Myl1uHIiz9AgCo+A8lC9Q=;
+	s=k20260515; t=1792418522;
+	bh=at/eGBD5LOOerqpoJEWHNdcxGFSF0uKjnyFVsmUIpVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvpfWu8GEO41oTL8jjpm9IUERIg0k/mjDLKlfOYb5EU6AiKgpqpHh2uK6dzGuMMq3
-	 iY4QJVEsPbpgauJ0uUaZaBDQrdijapKo7EDCvYdhIC9omdaEeoKN0DpMza1DadM6Dd
-	 sGh1TkyM1Aj060g4BDX5Z/IcXf0D1E+4Kn9SGgP+iyZ7hWFcdZCGir+1Id7PqJCr0y
-	 S3FxoxSMoxnMI9YdvZmIaM6KQ/U1wpFU1LBuN/4ahVQERqT+lpydWxzahOhjoYLfLS
-	 6lBQNlJpG8XZi5bZTK3/w3bLIItpm45LL6+GH2WDAX8K/BRJ2rQ7O1mj3nIbWSH+dD
-	 k82S2kIFpqPKQ==
+	b=AXvUb+o6M8Ncq9sSfDQ1ZCDvykg38KcP4skCbX5mwlX67ANOlxL2NX6D1qBZdNFBr
+	 wIeEKDnfWyTCtjLX91OAwPvXeL1HjtzupFSwr8exrkzDKNp+qwa05OdjO305y1Y9kR
+	 JGoHDptfeuSqVms/KWA+fSWDzpkRMl55m03ZnpNuT7HYlUiUi1HYZTPUkn2XBKn4TD
+	 S7uFBQkUjM1q9HjmnAzD45B9E8vI9un8vuXopf5A9GhP5G5Tyf4bwD893FdZFjzcPY
+	 cIkLnAtTrngm7KiFfkf1q2LAONZLNTdPYdDtPrvYG2mMy8DtzVhTg7aDnMw5jNYOB3
+	 OJNNnS72mMmLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai@fygo.io>,
-	Mykola Marzhan <mykola@meshstor.io>,
+Cc: Junzhe Yu <junzheyu1@gmail.com>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org,
+	linux-ext4@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] md: skip bitmap accounting for empty write ranges
-Date: Mon, 19 Oct 2026 09:49:58 -0400
-Message-ID: <20261019135441.1420968-307-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ext4: guard against NULL s_group_info in ext4_get_group_info
+Date: Mon, 19 Oct 2026 09:49:59 -0400
+Message-ID: <20261019135441.1420968-308-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,500 +46,442 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Junzhe Yu <junzheyu1@gmail.com>
 
-[ Upstream commit 87c10252e3d6c28769d93bea9e6a9b592e5809d1 ]
+[ Upstream commit 8f3901fbb40745046e513226ad84e8b84492632d ]
 
-mkfs.ext4 can submit zero-sector flush/FUA bios. These bios are WRITE
-bios for md_write_start() purposes, but they do not cover any data sector
-and must not dirty bitmap bits.
+Resend: previous attempt was rejected by vger for containing HTML.
 
-md bitmap accounting currently passes such bios to bitmap start_write().
-For llbitmap this reaches llbitmap_start_write() with sectors == 0,
-which underflows the end chunk calculation.
+==================================================================
 
-Personality bitmap mapping can also turn a non-empty bio into an empty
-bitmap range when the requested sectors are outside the active bitmap
-geometry. Treat both cases as not started, so the completion path will not
-call end_write() for an empty range.
+ext4_mark_group_bitmap_corrupted() already treats a NULL return from
+ext4_get_group_info() as "nothing to do", but ext4_get_group_info()
+indexes s_group_info without checking whether the array exists.
 
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-11-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+During mount, fast-commit replay runs inside jbd2_journal_load() from
+ext4_load_and_init_journal(), which is before ext4_mb_init() allocates
+s_group_info. Replaying an FC UNLINK for an inode whose bitmap bit is
+already clear takes:
+
+   ext4_fc_replay_unlink -> iput -> ext4_evict_inode -> ext4_free_inode
+     -> ext4_mark_group_bitmap_corrupted -> ext4_get_group_info
+
+and faults on the NULL s_group_info base. Userspace only mounts a dirty
+ext4 image; this is a supported recovery path.
+
+Return NULL when s_group_info (or the per-block grp_info row) is unset
+so the existing caller check is effective during early mount.
+
+Tested on Linux v6.6.145 KASAN: crafted FC-unlink image previously
+triggered KASAN null-ptr-deref / panic in ext4_get_group_info; with this
+patch, mount succeeds (EXT4 "bit already cleared" may still log). Also
+observed on v6.6.144; still present on torvalds/linux as of
+f5098b6bae76 (2026-07-26).
+
+A self-contained Docker/QEMU reproducer (craft + mount + patch verify) is
+available on request.
+
+Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
+Link: https://patch.msgid.link/65c955b0-716b-4599-b925-59c2782e38b4@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`p-6.18`). The empty-range skip is
-missing, and the llbitmap underflow path is present. Full analysis
-follows.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+Record: **[ext4] [guard / prevent] NULL `s_group_info` dereference in
+`ext4_get_group_info`**. “Guard against” is a bug-fix verb: add a
+missing safety check.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[md] [skip] skip bitmap accounting for empty write ranges**
-- Subsystem: `md` (MD RAID core)
-- Action verb: **skip** (prevent incorrect handling)
-- Intent: do not run bitmap start/end accounting when the write covers
-  no data sectors
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+**Step 1.2 — Tags**
 Record:
-- `Tested-by: Mykola Marzhan <mykola@meshstor.io>` — independent
-  hardware/user verification
-- `Link:
-  https://patch.msgid.link/20260802195038.164272-11-yukuai@kernel.org` —
-  v5 series, patch 10/29 (msgid `-11` is 1-based with cover)
-- `Signed-off-by: Yu Kuai <yukuai@fygo.io>` — author (MD contributor;
-  ignore pipeline SoBs)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- No `Reported-by:` / syzbot
-- No `Reviewed-by:` on this revision (v1 had Reviewed-by from Su Yue on
-  earlier series patches)
+- `Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>` (author)
+- `Link: https://patch.msgid.link/65c955b0-716b-4599-b925-
+  59c2782e38b4@gmail.com`
+- `Signed-off-by: Theodore Ts'o <tytso@mit.edu>` (ext4 maintainer
+  applied it)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence is expected in this pipeline)
+- Upstream SHA after maintainer application:
+  `8f3901fbb40745046e513226ad84e8b84492632d`
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.3 — Body**
 Record:
-- **Bug:** mkfs.ext4 can submit zero-sector flush/FUA bios. They are
-  WRITE bios for `md_write_start()`, but they cover no data and must not
-  dirty bitmap bits. They are still passed to bitmap `start_write()`.
-- **llbitmap failure mode:** `llbitmap_start_write()` with `sectors ==
-  0` underflows the end-chunk calculation (`offset + sectors - 1`).
-- **Second case:** personality `bitmap_sector()` can map a non-empty bio
-  to an empty bitmap range (outside active geometry). Completion must
-  not call `end_write()` for a start that never ran / was empty.
-- **Symptom:** bitmap accounting of a zero-length range → unsigned wrap
-  in llbitmap, then a huge page/chunk walk (barriers + state machine),
-  i.e. hang, bitmap corruption, or crash.
-- **Version info:** none in the message; code is the post-6.14 upper-
-  layer bitmap path + llbitmap (2025).
+- **Bug:** `ext4_get_group_info()` indexes `s_group_info` without
+  checking that the array exists.
+- **Symptom:** KASAN null-ptr-deref / panic in `ext4_get_group_info`
+  while mounting a dirty ext4 image that needs fast-commit UNLINK
+  replay.
+- **Path:** `ext4_fc_replay_unlink` → `iput` → `ext4_evict_inode` →
+  `ext4_free_inode` → `ext4_mark_group_bitmap_corrupted` →
+  `ext4_get_group_info`
+- **Root cause:** FC replay runs inside `jbd2_journal_load()` from
+  `ext4_load_and_init_journal()`, **before** `ext4_mb_init()` allocates
+  `s_group_info`.
+- **Author testing:** KASAN on v6.6.145 (also seen on v6.6.144); still
+  present on torvalds/linux as of `f5098b6bae76` (2026-07-26). Mount
+  succeeds with the patch.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+**Step 1.4 — Hidden bug fix?**
+Record: Not hidden. This is an explicit NULL-deref fix. The “already-
+cleared bitmap bit” path looks like a recovery edge case, but it is a
+real oops on a supported mount/recovery path.
 
-Record: **Not hidden.** It is an explicit correctness fix: skip empty
-ranges so start/end stay balanced and llbitmap does not underflow.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS
-===============================================================
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+**Step 2.1 — Inventory**
 Record:
-- File: `drivers/md/md.c` only (~+7 / −2, four tight edits)
-- Functions: `md_bitmap_start()`, `md_end_clone_io()`, `md_clone_bio()`
+- File: `fs/ext4/balloc.c` only (`+4 / -0`)
+- Function: `ext4_get_group_info()`
 - Scope: **single-file surgical fix**
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.2 — Code flow**
+Record (verified against local `fs/ext4/balloc.c`):
 
+Before:
+```
+if (group >= s_groups_count) return NULL;
+indexv/indexh = ...
+grp_info = sbi_array_rcu_deref(..., s_group_info, indexv);  //
+NULL[index] if array missing
+return grp_info[indexh];
+```
+
+After:
+```
+if (group >= s_groups_count) return NULL;
+if (!s_group_info) return NULL;          // new
+... deref row ...
+if (!grp_info) return NULL;              // new
+return grp_info[indexh];
+```
+
+This is an early-mount / missing-table path, not a new feature path.
+
+**Step 2.3 — Bug mechanism**
+Record: **NULL pointer dereference (memory safety)**.
+`sbi_array_rcu_deref()` does
+`rcu_dereference(sbi->s_group_info)[index]`. `sbi` is `kzalloc`’d, so
+`s_group_info` is NULL until `ext4_mb_alloc_groupinfo()` /
+`rcu_assign_pointer`. The per-row check covers `ext4_mb_add_groupinfo()`
+error paths that set `group_info[idx] = NULL`.
+
+**Step 2.4 — Fix quality**
+Record: Obviously correct. Matches the existing contract
+(`ext4_get_group_info()` may return NULL;
+`ext4_mark_group_bitmap_corrupted()` already does `if (!grp || !gdp)
+return;`). Four `unlikely()` lines, no API/lock/data-structure change.
+Regression risk is very low: after `ext4_mb_init()`, `s_group_info` is
+non-NULL and these checks are no-ops. Returning NULL instead of oopsing
+cannot be worse for callers that already handle NULL.
+
+## Phase 3: Git history
+
+**Step 3.1 — Blame**
+Record: Current function body in this tree is from the 6.4-era change
+“allow `ext4_get_group_info()` to fail” (this history: `b4319e457d6e3`;
+mainline `5354b2af34064`, 2023-05-13) plus `fa285d799d1d5` (“drop
+`ext4_error()` from `ext4_get_group_info()`”). Those commits taught the
+helper to return NULL for a bad group number and taught callers to check
+NULL — but they never checked the array pointer itself.
+
+**Step 3.2 — Fixes: tag**
+Record: None. Reachability comes from fast-commit replay, added in
+`6866d7b3f2bb4` (“ext4 / jbd2: add fast commit initialization”,
+`tags/v5.10-rc1~59^2~7`). Journal load still runs before
+`ext4_mb_init()` in this tree.
+
+**Step 3.3 — File history**
+Record: Recent `fs/ext4/balloc.c` commits here are unrelated
+(capability-check reorder, fault-injection race, kunit stubs). No
+prerequisite series. Standalone 1/1 patch.
+
+**Step 3.4 — Author**
+Record: Yu Junzhe is not the ext4 maintainer. Theodore Ts’o applied it
+by hand after noting mangled whitespace, then posted “Applied, thanks!”
+with commit `8f3901fbb407`.
+
+**Step 3.5 — Dependencies**
+Record: None. The helper, `s_group_info`, FC replay, and the caller NULL
+check all exist in this checkout. Applies standalone.
+
+## Phase 4: Mailing list / external
+
+**Step 4.1 — Original discussion**
 Record:
-1. **`md_bitmap_start`:** after optional `bitmap_sector()` remap,
-   **return if `sectors == 0`** instead of calling
-   `start_write`/`start_discard`.
-2. **`md_end_clone_io`:** call `md_bitmap_end()` only if
-   `md_io_clone->sectors != 0` (paired with start).
-3. **`md_clone_bio`:** set `md_io_clone->sectors = 0` (mempool reuse).
-   Skip the start path unless `bio_sectors(*bio) != 0`.
-4. **Affected paths:** WRITE clone accounting (`md_account_bio` →
-   `md_clone_bio`), including 0-sector flush/FUA and post-map empty
-   ranges. Not a refactor of the hot data path.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** logic / integer underflow (unsigned wrap) + start/end
-  accounting mismatch
-- **Mechanism:** `llbitmap_start_write()` does
-  `end = (offset + sectors - 1) >> chunkshift`.
-  `sectors == 0` underflows. If `offset == 0`, `end` becomes a huge
-  chunk index; the `page_start <= page_end` loop and
-  `llbitmap_state_machine()` then walk a massive range.
-- Legacy `bitmap_start_write()` uses `while (sectors)` and is a no-op
-  for 0; the crash is **llbitmap-specific**, but the skip is correct for
-  both backends.
-- The `sectors = 0` init is required: after skipping the start `if`,
-  completion must not see a stale mempool `sectors` value.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-- **Obviously correct:** empty range → don’t start, don’t end, init
-  `sectors` to 0.
-- **Minimal:** four related edits, no API change.
-- **Regression risk: low.** Worst case is skipping bitmap bits for a
-  0-sector I/O (correct). Start/end stay balanced.
-- **Local extra path:** this tree’s `md_free_cloned_bio()` also calls
-  `md_bitmap_end()` without a `sectors` check (raid5 reshape-wait
-  abort). A faithful backport should add the same guard there. That is a
-  small extra hunk, not a reason to reject.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- `md_bitmap_start` / clone accounting introduced by `cd5fc65338181`
-  (“md/md-bitmap: move bitmap_{start, end}write to md upper layer”,
-  2025-01-09) — **is an ancestor of this HEAD**.
-- Discard ops wiring: `ac9dad8faaa7b`.
-- `else md_io_clone->start_time = 0` already here from `d81822fd5fa81`
-  (“md: avoid stale clone I/O accounting timestamps”).
-- llbitmap: `5ab829f1971dc` (“md/md-llbitmap: introduce new lockless
-  bitmap”, 2025-09-06) — **present**.
-- Bug is in **this** 6.18 tree, not only in later mainline.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: **No Fixes: tag.** Introducers are `cd5fc65338181` (upper-layer
-accounting of all WRITE bios, including 0-sector) and `5ab829f1971dc`
-(llbitmap underflow). Both are in this tree (`git merge-base --is-
-ancestor` exit 0 for `cd5fc65338181`).
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: recent `drivers/md/md.c` on this branch includes:
-- `73881ff7a7591` md: wait for behind writes before destroying bitmap
-  (v5 patch 6)
-- `d81822fd5fa81` md: avoid stale clone I/O accounting timestamps (v5
-  patch 7)
-
-Same series already on this tree:
-- `930cc4f1af5a1` md/md-llbitmap: prevent create failure bitmap UAF
-  (patch 8)
-- `c55aa6c17f019` md/md-llbitmap: stop daemon timer rearm on destroy
-  (patch 9)
-
-This commit is **v5 10/29**, the next accounting fix. Standalone vs
-later reshape patches (11+). **No missing prerequisite** among 6–9 for
-this hunk.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Yu Kuai is a primary MD/llbitmap author on this tree (bitmap
-move, llbitmap, this series). Weight: high.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Needs `md_bitmap_start` / `md_io_clone` /
-`bitmap_ops->start_write` — all present. Does **not** need patch 12
-(`prepare_range` / exact mapping); v5 commit text was updated to
-`bitmap_sector` so it stands alone. **Can apply standalone** with small
-context tweaks.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- Lore msgid `20260802195038.164272-11-yukuai@kernel.org` (v5 10/29).
-- Cover: [PATCH v5 00/29] md: improve lockless bitmap reshape support
-  https://lists.openwall.net/linux-kernel/2026/08/02/769
-- Earlier: v1 2026-06-05, v2, v4 07/25, v5 10/29.
-- Cover: patches 6–11 are “md core and llbitmap lifetime/accounting
-  prerequisites”; this one is “empty bitmap ranges”.
-- v5 note: “Fix patch 10 to keep empty-range handling valid before the
-  exact mapping hook is introduced.”
-- **No NAK** in the fetched cover/patch bodies.
-- `b4 mbox`/`b4 dig -c` did not resolve without a mainline SHA (local
-  master is older than this series). Thread recovered via
-  gnuweeb/IU/openwall.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: To/Cc Song Liu, Li Nan, Xiao Ni; lists linux-raid, linux-kernel.
-Tested-by Mykola Marzhan (v4, carried to v5). Su Yue Reviewed-by on v1
-series (not re-stated on this hunk in v5).
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla. Trigger described as **mkfs.ext4 zero-sector
-flush/FUA** — common userspace. Tested-by supports real-world impact.
-**UNVERIFIED:** did not reproduce mkfs.ext4 on this kernel.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Independent of reshape (11+). Empty-range skip is valid before
-`prepare_range`. Same-series 6–9 already in this tree.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: gnuweeb `/stable/?q=skip+bitmap+accounting...` returned
-unrelated stable-rc noise, **no dedicated stable thread**. Not a
-negative signal.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: KEY FUNCTIONS**
-
-Record: `md_bitmap_start`, `md_bitmap_end` (unchanged body, callers
-gated), `md_end_clone_io`, `md_clone_bio`. Callee of interest:
-`llbitmap_start_write` / `bitmap_start_write`. Local extra:
-`md_free_cloned_bio`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record:
-- `md_clone_bio` ← `md_account_bio`
-- `md_account_bio` ← raid0, raid1, raid10, raid5, md-linear
-  `make_request`
-- `md_end_clone_io` = clone `bi_end_io`
-- `md_free_cloned_bio` ← raid5 `STRIPE_WAIT_RESHAPE` abort
-- Context: block submit from userspace (mkfs, etc.), not init-only
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `md_bitmap_start` → `pers->bitmap_sector` (raid5) →
-`bitmap_ops->start_write` (`llbitmap_start_write` or
-`bitmap_start_write`). llbitmap: unsigned end chunk, per-page barriers,
-`llbitmap_state_machine(..., BitmapActionStartwrite)`.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: **Userspace-reachable.** raid1/raid5 still send PREFLUSH empty
-bios to `md_flush_request()`, which completes `bio_sectors == 0` without
-accounting. FUA-only 0-sector WRITEs, or PREFLUSH that falls through
-(`-EAGAIN` journal fallback in raid5), hit `md_account_bio`.
-raid0/linear call `md_account_bio` on the I/O path. Confirmed in-tree:
-`raid5_make_request` calls `md_account_bio` at line 6182 after flush
-handling.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: `llbitmap_end_write` / `llbitmap_start_discard` use the same
-`offset + sectors - 1` pattern. This patch avoids calling them with 0.
-Legacy bitmap is safe via `while (sectors)`. No duplicate core skip
-already present (`rg` found no `if (!md_io_clone->sectors)`).
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.**
-- Tree: `git describe HEAD` → `p-6.18-1-g03b85e06ca9bf`; `make
-  kernelversion` → **6.18.53**
-- `md_bitmap_start()` at `drivers/md/md.c:9261` calls `fn()` with no
-  empty-range check
-- `md_clone_bio()` at 9319 starts bitmap on every WRITE if bitmap
-  enabled, including `bio_sectors == 0`
-- `llbitmap_start_write()` at `md-llbitmap.c:1074` does `offset +
-  sectors - 1`
-- `raid5_bitmap_sector()` can set `*sectors = end - start` to 0 when the
-  mapped range is empty
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Minor conflicts / small extra hunk.**
-- Local `md_end_clone_io` uses `bio->bi_private` as `md_io_clone*`;
-  candidate uses `container_of` + reshape completion. The `sectors &&`
-  condition still matches.
-- Local already has `else start_time = 0` (patch 7).
-- Add the same `md_io_clone->sectors &&` guard to `md_free_cloned_bio()`
-  (6.18-only helper).
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: Empty-range skip **not** present. Series patches 6–9 **are**
-present. No alternate fix for this underflow.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-
-Record: **md (MD RAID bitmap accounting).** **IMPORTANT** — not core
-mm/vfs, but RAID+bitmap is widely used; mkfs on an MD device is a normal
-path. llbitmap is the lockless bitmap backend in 6.18.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-
-Record: **Active** on this branch (llbitmap, clone accounting, this Yu
-Kuai series). Still a real bug in shipping 6.18 code, not a speculative
-cleanup.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: **MD users with a bitmap enabled**, especially **llbitmap**.
-Triggered by 0-sector WRITE/flush/FUA (mkfs.ext4) or raid5
-`bitmap_sector` mapping a request to an empty range. Config: `CONFIG_MD`
-+ bitmap (llbitmap or classic).
-
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record:
-- Common: mkfs.ext4 / empty flush+FUA on an MD array with bitmap
-- Also: raid5 geometry mapping to a zero bitmap range
-- Unprivileged user with write access to the array (typical admin/mkfs)
-- Not a narrow race; it is size==0 handling
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
-Record:
-- llbitmap: unsigned wrap → enormous chunk/page walk, barriers, state
-  machine on invalid range → **hang, bitmap corruption, possible crash**
-- Classic bitmap: `while (sectors)` no-op, but start/end still run with
-  0; skip is still correct
-- Severity: **HIGH** (hang/corruption on a common mkfs path with
-  llbitmap)
-
-**Step 8.4: RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit: high** — stops underflow/wrong bitmap updates on a real I/O
-  pattern
-- **Risk: very low** — ~7–10 lines, local to clone accounting, start/end
-  remain paired
-- **Ratio: strongly favors backport**
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real bug: 0-sector WRITE accounting into llbitmap underflow
-- Common trigger (mkfs.ext4 flush/FUA), Tested-by
-- Buggy path exists in this 6.18.53 tree (`md_bitmap_start`, llbitmap)
-- Small, obviously correct, no new API
-- Series patches 6–9 already here; this is the matching empty-range fix
-- MD RAID data-integrity relevant
-
-**AGAINST:**
-- Part of a larger reshape series (but this hunk is standalone)
-- `md_free_cloned_bio` needs the same `sectors` guard (small extra hunk)
-- Context differs slightly (`bi_private` vs `container_of`)
-
-**UNRESOLVED:**
-- Did not run mkfs.ext4 against this build
-- `b4 dig -c` had no mainline SHA in this clone; thread confirmed via
-  other archives
-- gnuweeb stable search was noisy, no dedicated nomination thread
-
-**Step 9.2: STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — paired start/end skip +
-   Tested-by
-2. Real bug affecting users? **PASS** — mkfs.ext4 0-sector WRITE +
-   llbitmap wrap
-3. Important (crash/corruption/hang)? **PASS** — HIGH (underflow walk /
-   bitmap corruption)
-4. Small and contained? **PASS** — one file, ~9 lines
+- Lore/msgid: https://patch.msgid.link/65c955b0-716b-4599-b925-
+  59c2782e38b4@gmail.com
+- Direct lore WebFetch: **403** (could not read lore HTML)
+- Openwall/LKML mirrors and `b4` succeeded
+- `b4 dig -a`: **v1 only** (no v2/v3)
+- Thread: author submission; tytso note about gmail whitespace (still
+  applied); tytso “Applied, thanks!” — **no NAK**
+- No reviewer `Cc: stable` in the thread (tytso also did not add it when
+  committing)
+
+**Step 4.2 — Recipients (`b4 dig -w`)**
+Record: Junzhe Yu, Theodore Ts’o, Andreas Dilger, linux-ext4, linux-
+kernel. Both ext4 maintainers were on the original To/Cc.
+
+**Step 4.3 — Bug report**
+Record: No syzbot/bugzilla link. Author reports KASAN on a crafted FC-
+unlink image and offers a Docker/QEMU reproducer. I did not run that
+reproducer (UNVERIFIED empirically; the code path is verified).
+
+**Step 4.4 — Series**
+Record: Standalone `[PATCH]` 1/1. Related-in-time FC-replay crashes
+(writeback rwsem not initialized, RO mount replay) are separate bugs,
+not prerequisites.
+
+**Step 4.5 — Stable list**
+Record: lore.kernel.org/stable WebFetch returned **403**. No stable-list
+discussion found via search. No evidence it was rejected for stable.
+
+## Phase 5: Semantic / call-chain analysis
+
+**Step 5.1 — Functions**
+Record: `ext4_get_group_info()` only. (No semcode MCP in this
+environment; used `git grep` + reads.)
+
+**Step 5.2 — Callers**
+Record: Many, across `fs/ext4/{balloc,ialloc,mballoc,super}.c`. Almost
+all already handle NULL (`if (!grp)` / `if (!grinfo)`), because of the
+6.4 “allow to fail” work. The crashing caller is
+`ext4_mark_group_bitmap_corrupted()` in `fs/ext4/super.c`, which already
+returns on NULL.
+
+**Step 5.3 — Callees**
+Record: `sbi_array_rcu_deref()` →
+`rcu_dereference(s_group_info)[indexv]`. That is the NULL deref.
+
+**Step 5.4 — Reachability**
+Record: User-reachable: mount an ext4 filesystem with a journal that
+still has fast-commit UNLINK tags, when the inode bitmap bit is already
+clear. `ext4_fc_init()` installs `j_fc_replay_callback` even if fast
+commit is currently off, so leftover FC blocks still replay. Mount of a
+dirty ext4 image is a normal recovery path (crash, unclean unmount, or
+an untrusted image). Typically needs mount privilege, but the failure is
+a **kernel oops**, not a userspace error.
+
+Verified mount order in this tree (`fs/ext4/super.c`):
+1. `ext4_load_and_init_journal()` → `ext4_load_journal()` →
+   `jbd2_journal_load()` (FC replay)
+2. much later: `ext4_mb_init()` (allocates `s_group_info`)
+
+Verified free path: `ext4_free_inode()` skips the group-info corruption
+check under `EXT4_FC_REPLAY`, then on `!cleared` still calls
+`ext4_error` + `ext4_mark_group_bitmap_corrupted()`.
+
+**Step 5.5 — Similar patterns**
+Record: `ext4_count_free_clusters()` already does `if
+(EXT4_SB(sb)->s_group_info)` before calling `ext4_get_group_info()`.
+Bitmap validators skip work under `EXT4_FC_REPLAY`. The hole is
+specifically the helper used by `ext4_mark_group_bitmap_corrupted()`.
+
+## Phase 6: This checkout (6.12.y)
+
+**Step 6.1 — Does the buggy code exist here?**
+Record: **Yes.** Local tree is **6.12.111** (`pending-6.12`; `git
+describe` was `p-6.12-3-g88406e77611c6` at start).
+`ext4_get_group_info()` in `fs/ext4/balloc.c` still has only the
+`s_groups_count` check. `git merge-base --is-ancestor 8f3901fbb407 HEAD`
+→ **not an ancestor**. `git grep` for the new `!s_group_info` guard →
+**not present**. Fast commit and the journal-before-mballoc order
+**are** present.
+
+**Step 6.2 — Backport difficulty**
+Record: **Clean apply.** Local function text matches the upstream hunk
+context exactly. Confirmed by reading the function and by comparing to
+`git show 8f3901fbb407`.
+
+**Step 6.3 — Related fixes already here?**
+Record: The “allow to fail” / drop-`ext4_error` work is here
+(`b4319e457d6e3`, `fa285d799d1d5`). That is why the caller already
+treats NULL as success-noop — and why this four-line guard is
+sufficient. No alternate fix for this crash is in the tree.
+`origin/master` has `8f3901fbb407` as the latest `balloc.c` change; no
+follow-up revert/amend on that function.
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: **ext4 (fs/ext4). Criticality: IMPORTANT** (default Linux
+filesystem; not quite mm/VFS core, but production-critical).
+
+**Step 7.2**
+Record: Actively maintained (tytso/Dilger, linux-ext4). The hole is old
+(FC since 5.10 + helper NULL contract since 6.4), not a brand-new
+subsystem.
+
+## Phase 8: Impact and risk
+
+**Step 8.1 — Who is affected**
+Record: Anyone mounting an ext4 filesystem that still has fast-commit
+journal data to replay (crash recovery, or a crafted/dirty image). That
+is a large, real population — not an obscure driver.
+
+**Step 8.2 — Trigger**
+Record: Mount-time FC UNLINK replay when the inode bitmap bit is already
+clear. Not every boot, but a **supported recovery path**. Unprivileged
+users cannot usually mount; a user who can mount a malicious ext4 image
+(containers, loop, removable media with automount) can panic the kernel.
+
+**Step 8.3 — Failure mode**
+Record: **NULL deref → KASAN report / oops / panic during mount.**
+Severity: **CRITICAL** (host crash while recovering a dirty filesystem).
+
+**Step 8.4 — Risk/benefit**
+Record: **Benefit: high** (prevents oops on ext4 recovery). **Risk: very
+low** (4 lines, existing NULL contract, hot path unchanged after
+`ext4_mb_init()`). Ratio strongly favors backport.
+
+Note: `ext4_error("bit already cleared...")` can still log or remount-ro
+depending on `errors=`; the author states mount succeeds with this
+patch. That `ext4_error` is pre-existing, not introduced here.
+
+## Phase 9: Synthesis
+
+**Step 9.1 — Evidence**
+
+FOR:
+- Real NULL deref on a supported ext4 mount/recovery path
+- KASAN-confirmed; author tested the patch
+- Call path and journal-before-`mb_init` order verified in **this** 6.12
+  tree
+- 4-line, obviously correct guard; callers already handle NULL
+- Ext4 maintainer applied it upstream (`8f3901fbb407`); it is on
+  `origin/master`
+- No dependencies; applies cleanly
+- Ext4 is widely used; FC exists since 5.10
+
+AGAINST:
+- No `Fixes:` / `Cc: stable` (expected; not a negative)
+- Trigger is an FC replay edge (already-cleared bit), not every mount
+- I did not run the author’s QEMU reproducer
+- tytso did not nominate stable in the apply mail
+
+UNRESOLVED:
+- Empirical reproducer not run here
+- lore.kernel.org HTML and stable-list search returned HTTP 403 (thread
+  recovered via b4/openwall)
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** (KASAN + maintainer apply;
+   logic matches existing NULL contract)
+2. Real bug affecting users? **PASS** (oops on dirty-ext4 mount / FC
+   replay)
+3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
+   oops/panic, severity CRITICAL
+4. Small and contained? **PASS** — +4 lines, one function
 5. No new features/APIs? **PASS**
-6. Can apply to the local tree? **PASS** — logic matches; minor extra
-   hunk on `md_free_cloned_bio`
+6. Can apply to this tree? **PASS** — buggy code present, clean context
 
-**Step 9.3: EXCEPTION CATEGORIES**
+**Step 9.3 — Exceptions**
+Record: Not an ID/quirk/DT/docs exception. It is a normal crash fix.
 
-Record: Not an exception category. Ordinary important bug fix.
+**Step 9.4 — Decision**
+This tree is 6.12.y. The bug exists here; the fix is a four-line NULL
+guard with no prerequisites. It should be backported.
 
-**Step 9.4: DECISION**
+---
 
-This tree already moved bitmap accounting into `md_clone_bio` and has
-llbitmap. Empty WRITEs still call `start_write(sectors == 0)`, which
-underflows llbitmap. The patch is the right, small fix and belongs on
-6.18.y.
+### What this solves for stable users
+
+Mounting a dirty ext4 filesystem with leftover fast-commit UNLINK
+records can take `ext4_free_inode()` →
+`ext4_mark_group_bitmap_corrupted()` **before** mballoc has allocated
+`s_group_info`. The helper then does `NULL[index]` and oopses. The patch
+makes the helper return NULL so the existing caller check is a no-op and
+mount/recovery can continue.
+
+### Risk vs benefit
+
+Benefit is a real mount-time crash fix on the default Linux filesystem.
+Risk is a pair of `unlikely()` NULL returns in a helper that is already
+allowed to fail. After `ext4_mb_init()`, behavior is unchanged.
+
+### Concerns
+
+None that block backport. No missing commits, no API change, no follow-
+up on `origin/master` that reworks this function.
+
+---
 
 Verification:
-- [Phase 1] Tags: Tested-by Mykola Marzhan; Link msgid
-  20260802195038.164272-11 (v5 10/29); author Yu Kuai; no Fixes/Cc-
-  stable
-- [Phase 2] Diff: `md.c` only; skip empty start; gate end on `sectors`;
-  init `sectors = 0`; require `bio_sectors` before start
-- [Phase 2] Confirmed `llbitmap_start_write` uses `offset + sectors - 1`
-  at md-llbitmap.c:1079
-- [Phase 3] `git merge-base --is-ancestor cd5fc65338181 HEAD` → 0
-  (upper-layer bitmap in tree)
-- [Phase 3] llbitmap file present; intro `5ab829f1971dc` in history
-- [Phase 3] Series 6–9 already on this branch (`73881ff7`, `d81822fd`,
-  `930cc4f1`, `c55aa6c1`)
-- [Phase 3] No `skip bitmap accounting` commit in local `git log --
-  drivers/md/`
-- [Phase 4] Cover letter: empty bitmap ranges as accounting
-  prerequisite; v5 rebased so patch 10 does not need `prepare_range`
-- [Phase 4] lore.kernel.org 403; recovered via gnuweeb + openwall + IU
-- [Phase 4] No NAK in fetched cover/patch
-- [Phase 5] Callers: raid0/1/5/10/linear `md_account_bio`; userspace
-  block I/O
-- [Phase 5] Legacy `bitmap_start_write` is `while (sectors)` — llbitmap
-  is the underflow
-- [Phase 6] `git describe HEAD` = p-6.18-1-g03b85e06ca9bf; `make
-  kernelversion` = 6.18.53
-- [Phase 6] Current `md_bitmap_start` has no empty return;
-  `md_clone_bio` has no `bio_sectors` guard
-- [Phase 6] Backport: add same `sectors` check to `md_free_cloned_bio`
-  (raid5 reshape abort)
-- [Phase 8] Failure: unsigned wrap → huge llbitmap walk; severity HIGH
-- UNVERIFIED: live mkfs.ext4 reproduction; `b4 dig` match by commit SHA
+- [Phase 1] Parsed subject/tags/body from the candidate message and from
+  `git show 8f3901fbb407`
+- [Phase 1] Confirmed no Fixes/Cc:stable; maintainer SOB present
+- [Phase 2] Diff is +4 lines in `ext4_get_group_info()`; local function
+  matches the hunk
+- [Phase 2] `sbi_array_rcu_deref` indexes `s_group_info` without a NULL
+  check (`fs/ext4/ext4.h`)
+- [Phase 2] `ext4_mark_group_bitmap_corrupted()` already returns if
+  `!grp` (`fs/ext4/super.c`)
+- [Phase 3] Blame: helper NULL-for-bad-group from `b4319e457d6e3` /
+  `fa285d799d1d5` in this history
+- [Phase 3] Fast commit added in `6866d7b3f2bb4` (v5.10-rc1); present
+  here
+- [Phase 3] `git log --grep` on `fs/ext4/`: this subject is **not** in
+  HEAD
+- [Phase 4] `b4 am` / `b4 dig -c 8f3901fbb407`: thread at msgid
+  `65c955b0-716b-4599-b925-59c2782e38b4@gmail.com`; v1 only
+- [Phase 4] `b4 dig -w`: tytso + Dilger + linux-ext4 on the original
+  mail
+- [Phase 4] tytso applied as `8f3901fbb407`; noted whitespace but no NAK
+- [Phase 4] lore.kernel.org WebFetch: 403; used openwall + b4 mbox
+  instead
+- [Phase 5] Callers of `ext4_get_group_info` grepped; crashing caller
+  checks NULL
+- [Phase 5] `ext4_free_inode()` FC_REPLAY skip + “bit already cleared” →
+  `ext4_mark_group_bitmap_corrupted()` verified
+- [Phase 5] Mount order: `jbd2_journal_load` in `ext4_load_journal()`
+  before `ext4_mb_init()` verified
+- [Phase 5] `sbi = kzalloc` zeroes `s_group_info`; assigned later via
+  `rcu_assign_pointer` in mballoc
+- [Phase 6] `make kernelversion` / Makefile: **6.12.111**; branch
+  `pending-6.12`
+- [Phase 6] `git merge-base --is-ancestor 8f3901fbb407 HEAD` → not in
+  this tree
+- [Phase 6] Same SHA **is** an ancestor of `origin/master`; no later
+  balloc.c follow-up on that fix
+- [Phase 6] Clean apply context present in local `ext4_get_group_info()`
+- [Phase 8] Failure mode: NULL deref oops on mount/recovery, severity
+  CRITICAL
+- UNVERIFIED: Did not run the author’s crafted-image/QEMU reproducer
+- UNVERIFIED: Could not search lore.kernel.org/stable HTML (HTTP 403)
 
 **YES**
 
- drivers/md/md.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ext4/balloc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 03d328506b285..ce3bd127e3bb3 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9266,6 +9266,8 @@ static void md_bitmap_start(struct mddev *mddev,
- 		mddev->pers->bitmap_sector(mddev, &md_io_clone->offset,
- 					   &md_io_clone->sectors);
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index c9329ed5c094e..08556dd45760d 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -331,9 +331,13 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
  
-+	if (!md_io_clone->sectors)
-+		return;
- 	fn(mddev, md_io_clone->offset, md_io_clone->sectors);
+ 	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
+ 		return NULL;
++	if (unlikely(!EXT4_SB(sb)->s_group_info))
++		return NULL;
+ 	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
+ 	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
+ 	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
++	if (unlikely(!grp_info))
++		return NULL;
+ 	return grp_info[indexh];
  }
  
-@@ -9284,7 +9286,8 @@ static void md_end_clone_io(struct bio *bio)
- 	struct bio *orig_bio = md_io_clone->orig_bio;
- 	struct mddev *mddev = md_io_clone->mddev;
- 
--	if (bio_data_dir(orig_bio) == WRITE && md_bitmap_enabled(mddev, false))
-+	if (bio_data_dir(orig_bio) == WRITE && md_io_clone->sectors &&
-+	    md_bitmap_enabled(mddev, false))
- 		md_bitmap_end(mddev, md_io_clone);
- 
- 	if (bio->bi_status && !orig_bio->bi_status)
-@@ -9308,12 +9311,14 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
- 	md_io_clone = container_of(clone, struct md_io_clone, bio_clone);
- 	md_io_clone->orig_bio = *bio;
- 	md_io_clone->mddev = mddev;
-+	md_io_clone->sectors = 0;
- 	if (blk_queue_io_stat(bdev->bd_disk->queue))
- 		md_io_clone->start_time = bio_start_io_acct(*bio);
- 	else
- 		md_io_clone->start_time = 0;
- 
--	if (bio_data_dir(*bio) == WRITE && md_bitmap_enabled(mddev, false)) {
-+	if (bio_data_dir(*bio) == WRITE && bio_sectors(*bio) &&
-+	    md_bitmap_enabled(mddev, false)) {
- 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
- 		md_io_clone->sectors = bio_sectors(*bio);
- 		md_io_clone->rw = op_stat_group(bio_op(*bio));
 -- 
 2.53.0
 
