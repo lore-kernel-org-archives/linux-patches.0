@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4135527FC3;
-	Mon, 19 Oct 2026 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8597527FAA;
+	Mon, 19 Oct 2026 14:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418575; cv=none; b=Sv5lrJyUFPUmo99ap/zEPVZzP5CXBg1T5iaX77yaKUvIgLUn8gFnbFXoOF1iYPnuA4su68hO0773aukZgZgBKElIkDz6/CtsFnu/d1vGOtsiwBzBODstM/Cs4ELQFeita+14Bm8EyUj1WS/7IJBSbBLEH3HTc8SB0Yt0tX4BljM=
+	t=1792418577; cv=none; b=Mnzy0/lWLNNx11QgnAOJKVVox9CnJcdiLKxuscFbadjN6PYNbgbVqQ17gnEAc4C5dth0rcM3pprO49nRvn/iipM+EUXlZMEWOoOoKe8SiEim77KsDFYQNOvZnqLJYL6dmVJiX25WaqX9mkahvSAA+uWxW/cJNkLvvgt3GnbpPNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418575; c=relaxed/simple;
-	bh=Y/neO6EHFGwLh8pa7B+NVwTUEpf8aC70WWbL/TXYEYs=;
+	s=arc-20240116; t=1792418577; c=relaxed/simple;
+	bh=H5bx14eHgHrAlHbq5Av0q/wky2hMBG7AsqxKUd1ahVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ckpivZsl13UofIG0Tp2VSZrQRjHvh6mAlIoB/Yp4tLNv1mmjG3xe0V5x0sUA4Fn4nFUfnIq+NH9GH2Zo5jLyRNmNSZtmtSR4UdoIXyvmTYAZqUoGbbbTUi7dYahD6EkmaTJ23wtx9g75owOkIrB0mrVopA6WAeM2u8lgwCGt3uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXEwnaul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QxQ1fZbmiIcCsvMFDMhv30kGu3PRVhBQtOS4Unoe/Vv1UXnZq3w+edBhXVCMWuaykfsB2Ft+0etknSX4HoZV4CSCSnfHIanZJJPigBJRbtdmdBMLmQVhCYut3BvrOQTu3wXRRjp1sKzfg7Gcs0e6KymTlsxR/eBf41BNHv+dips=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=crbzpjmZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXEwnaul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CBA1F000C7;
-	Mon, 19 Oct 2026 14:02:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="crbzpjmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F611F000CA;
+	Mon, 19 Oct 2026 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418572;
-	bh=+O0pLDWiJaBqFJBeOjOY6kMwYvWyU4+xf8Id2PyVxzc=;
+	s=k20260515; t=1792418573;
+	bh=bk/DI9RFZeexxtAaHB7BsUX5Ya90d3OBuO88xMA81E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXEwnaulby7pQ0lJjm6NBmS7obAPyWm0JY7/jnMtDIbnrClXCxq6OVY2GaUx7ccR5
-	 erm3pxebsEUAXcXjYz6Fu16Kwvyc0QuFm7RjoEpkn00XkvzFG46f/e/WcSMJBQZ4MT
-	 ZI+Df1goPTxYUfhWh7pqq04gpdiOkoI3vL1eIROYP6JptzNz/p44epl1xIilekPiK4
-	 IvVWql1NJ47z1WrSbIAnnwOFDUKvlvh2auX4isE/NwKGq9LxP3mZZ3EH+yOn/ALP7b
-	 K7wQCE/9w3HSIrQNPCfjHJW3oEKa2C4eBhRY8ODsIabGLLhbsD+PjIQGZf5VdBN/Ep
-	 U8rzSK5lMkRcw==
+	b=crbzpjmZVSoNpxAqFY8NxHlBUkXR399233CikFQeuuX5DiJgM70MJAWiY1lfvo1ub
+	 W2+3ilFtnh7PhKPZD06WFFm7CIQiNyzlZTuKx8W6+x2vc/oaKJvGpmxR4xwxJM3kJa
+	 UMd5g+WNVpybVKWhosji+xfdUxD7D5WOYFMT0Mwx9W7qcQFKofodte61XPjXhzBbqy
+	 4DX23o6K3pKB/iiW6CAbtpYt29Zqm+1x6DyXxGZn47SQgVtNQr2WQibMaTT6DO9mx0
+	 wLW2KCmQsiToIhaocfenN7460Zi/hCRE+6LhUbvibYdxVGcetJmb3MyeqmiyheHRVf
+	 2bY332SQMdNKg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	scott.branden@broadcom.com,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] misc: bcm-vk: validate write size before allocation
-Date: Mon, 19 Oct 2026 09:50:34 -0400
-Message-ID: <20261019135441.1420968-343-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: cancel wiphy work before freeing wiphy
+Date: Mon, 19 Oct 2026 09:50:35 -0400
+Message-ID: <20261019135441.1420968-344-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,476 +52,485 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit f66c40cd90954f52809b3eabd386137f56bb6215 ]
+[ Upstream commit c99bc4d4e0ba6f4661b2b914c96a597d26e7cc05 ]
 
-bcm_vk_write() uses the user-supplied write count to size a
-flexible-array work entry and then copies count bytes into that array.
-The allocation expression is evaluated before any overflow check, so a
-very large count can wrap the allocation smaller than the subsequent
-copy.
+When we fail to load the fw during op-mode start, we purge the list
+of the async handlers but we don't cancel the work.
+Same when we stop the op-mode.
 
-Reject empty writes, check the allocation arithmetic before kzalloc(),
-and initialize the __counted_by field before copying into to_v_msg[].
+Before freeing wiphy, we need to cancel/flush any pending wiphy work,
+otherwise the work will fire with a freed memory.
+cfg80211 will do it anyway, but it will warn.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260629160605.29412-1-alhouseenyousef@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cancel the work in those cases.
+
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0e821aee3318fee8dc0a6bc03@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have enough to decide: this is a small UAF/WARN fix in iwlwifi MLD,
+the buggy path exists in this 7.3-rc4 tree, and the change is self-
+contained.
 
-**Step 1.1: Subject line**
-- Subsystem: `misc: bcm-vk`
-- Action: **validate** (pre-check / prevent)
-- Claimed intent: reject a user-controlled write length that is used as
-  an allocation size before the copy.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-Record: `[misc/bcm-vk] [validate] [check write count before sizing the
-work-entry allocation]`
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[iwlwifi/mld] [cancel] cancel wiphy work before freeing wiphy`
+- Subsystem: `wifi: iwlwifi: mld`
+- Action verb: **cancel** (prevent leftover work from running after
+  teardown)
+- Intent: stop pending `wiphy_work` before `ieee80211_free_hw()` so it
+  cannot run against freed memory
 
-**Step 1.2: Tags**
-- `Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>` (author)
-- `Link: https://patch.msgid.link/20260629160605.29412-1-
-  alhouseenyousef@gmail.com`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-  (char-misc maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of the last two is expected in this
-  pipeline)
-- Sasha Levin SOB is not present on the real commit `f66c40cd90954`
-
-Record: Author SOB + Greg SOB + msgid Link. No syzbot, no Fixes, no
-stable CC.
-
-**Step 1.3: Body**
-`bcm_vk_write()` sizes a flexible-array work entry with the user
-`count`, then `copy_from_user()`s `count` bytes into it. The sum
-`sizeof(*entry) + count + vk->ib_sgl_size` is evaluated with wrapping C
-addition **before** any overflow check, so a huge `count` can make
-`kzalloc()` allocate less than `count`, and the copy overruns the slab
-object.
-
-The patch: reject `count == 0`, check the two additions with
-`check_add_overflow()` before `kzalloc()`, and set `to_v_blks` (the
-`__counted_by` field) before the copy.
-
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Bug: integer wrap of allocation size vs subsequent copy length
-- Symptom: heap buffer overflow (or HARDENED_USERCOPY abort) on
-  `write()`
-- Version info: none in the message
-- Root cause: unchecked `size_t` addition of a user length
+- `Reviewed-by: Johannes Berg <johannes.berg@intel.com>` —
+  mac80211/cfg80211 and iwlwifi maintainer
+- `Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b
+  0eeb5b0e821aee3318fee8dc0a6bc03@changeid`
+- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
+  (author; ignore any Sasha Levin SOB)
+- **No** `Fixes:`, **no** `Cc: stable`, **no** `Reported-by`, **no**
+  `Tested-by` — expected for this review pipeline
+- Notable: maintainer Reviewed-by; no syzbot/KASAN report in the message
 
-**Step 1.4: Hidden bug fix?**
-Not hidden. The subject says “validate”; the body describes wrap, then
-copy. The empty-write reject and `__counted_by` move are the same write
-path, not a cleanup-only change.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** On op-mode start firmware-load failure, async handler *list*
+  is purged (`iwl_mld_stop_fw()` →
+  `iwl_mld_cancel_async_notifications()`), but `async_handlers_wk` is
+  not cancelled. Same gap on op-mode stop.
+- **Symptom:** Pending wiphy work can run after `ieee80211_free_hw()`;
+  cfg80211 still drains/cancels and **WARNs**.
+- **Failure mode:** use-after-free of wiphy/`iwl_mld` if the work runs;
+  otherwise `WARN_ON(!list_empty(&rdev->wiphy_work_list))` in
+  `cfg80211_dev_free()`.
+- **Root cause:** cancel of `async_handlers_wk` was removed from the
+  generic purge helper; start-fail/stop still free the wiphy with work
+  queued.
+- **Version info in message:** none
 
-Record: Explicit memory-safety fix, not disguised cleanup.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. Explicit teardown correctness / UAF-prevention.
+Not style cleanup.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/net/wireless/intel/iwlwifi/mld/mld.c` — **+3 lines**, 0
+  removed (`git show --stat`: 3 insertions)
+- Functions: `iwl_op_mode_mld_start()`, `iwl_op_mode_mld_stop()`
+- Scope: **single-file surgical fix**
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+Hunk 1 (`iwl_op_mode_mld_start`, firmware/NVM failure):
+- **Before:** `wiphy_unlock` → `rtnl_unlock` → `goto err` →
+  `ieee80211_free_hw()` with `async_handlers_wk` possibly still on
+  `wiphy_work_list`.
+- **After:** `wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk)`
+  while `wiphy_lock` is still held, then unlock/free.
+- Path: **error path** (fw load or NVM read failure during probe/op-mode
+  start).
+
+Hunk 2 (`iwl_op_mode_mld_stop`):
+- **Before:** lock, `iwl_mld_low_latency_stop` /
+  `iwl_mld_deinit_time_sync`, unlock, `ieee80211_unregister_hw` /
+  `ieee80211_free_hw`.
+- **After:** same, but cancel `async_handlers_wk` under the wiphy lock
+  first.
+- Path: **teardown** (module unload / transport op-mode leave).
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** memory safety (use-after-free of work item / wiphy) +
+  leftover-work WARN
+- **Mechanism:** `wiphy_work_queue()` during RX after ALIVE;
+  `iwl_mld_stop_fw()` purges `async_handlers_list` but (after
+  59a5876e474ac) no longer cancels the work. `ieee80211_free_hw()` →
+  `wiphy_free()` → `cfg80211_dev_free()` WARNs if the list is non-empty.
+  Worker `cfg80211_wiphy_work()` can also run
+  `iwl_mld_async_handlers_wk()` after unlock and race teardown.
+- **Fix:** `wiphy_work_cancel()` under the wiphy mutex (required by
+  `lockdep_assert_held(&wiphy->mtx)` in `wiphy_work_cancel()`).
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct: both sites already hold `wiphy_lock`; cancel of a
+  not-queued work is a no-op (`list_empty` check in
+  `wiphy_work_cancel()`).
+- Minimal; no API/data-structure change.
+- Regression risk: **very low**. Cancel vs flush is appropriate here (do
+  not run handlers from a dead/going-away FW). Does not restore the lock
+  requirement on `iwl_mld_cancel_async_notifications()`.
+- Residual (pre-existing, not introduced here): NVM-fail path still does
+  not call `iwl_mld_stop_fw()`; cancel avoids running those handlers
+  during free. That is strictly safer than leaving work queued.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Surrounding start-fail/stop skeleton: `d1e879ec600f9` (“wifi: iwlwifi:
+  add iwlmld sub-driver”, 2025-02/03) — first appeared in **v6.15**.
+- The two new cancel lines: `c99bc4d4e0ba6` (this commit, 2026-07-14).
+- Stop-path `wiphy_lock` wrapper: `83128399f3b492` (Benjamin Berg,
+  2025-05).
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Historical chain (verified with `git show` /
+`git log -S`):
+1. `4f7a07791944e` (2025-04, Fixes: d1e879ec600f9) — cancel async notifs
+   on start failure specifically because work can run after
+   `ieee80211_free_hw` (**UAF**).
+2. `833026098b2d9` — fold cancel+purge into
+   `iwl_mld_cancel_async_notifications()`.
+3. **`59a5876e474ac` (2026-05-26, in v7.2, not in v7.1)** — **removed**
+   `wiphy_work_cancel()` from that helper so it can run without the
+   wiphy lock. That **reopened** the free-without-cancel hole.
+4. This commit puts cancel back on the two paths that actually free the
+   wiphy.
+
+`59a5876e474ac` **is** an ancestor of this tree (`git merge-base --is-
+ancestor` → yes via v7.2).
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- Nearby: `a40ad60a47f7c` purge-on-NIC-error; `59a5876e474ac` remove
+  cancel from helper.
+- This is **not** patch-dependent on other hunks in the 15-patch
+  iwlwifi-next dump; parent is unrelated `21b3263b90e80` (“mvm: validate
+  monitor notif link_id”).
+- Standalone: **yes**.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Miri Korenblit is a primary iwlwifi MLD author (driver
+introduction and most async-handler work). Johannes Berg reviewed. High
+confidence in the diagnosis.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- Needs `wiphy_work_*` and `struct wiphy_work async_handlers_wk` —
+  present since MLD intro in this tree.
+- Needs the start-fail `if (ret)` / stop `wiphy_lock` shape — present.
+- Needs `59a5876e474ac` as the regression that made cancel missing; that
+  commit is in this tree.
+- **Can apply standalone: yes** (already an ancestor of HEAD).
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c c99bc4d4e0ba6`: **[PATCH iwlwifi-next 08/15]**
+  https://patch.msgid.link/20260714143119.07aa49f755a2.I734a27b1b0eeb5b0
+  e821aee3318fee8dc0a6bc03@changeid
+- `b4 dig -a`: v1 then **v2** “wifi: iwlwifi: updates - 07-14-2026”
+  https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0
+  e821aee3318fee8dc0a6bc03@changeid
+  Committed `Link:` is **v2** (latest).
+- Lore WebFetch returned **403**; patchwork bot-blocked. Review body
+  beyond tags is **UNVERIFIED**. No NAK found in b4 metadata.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Miri Korenblit; Johannes Berg
+(`johannes@sipsolutions.net` / intel.com); `linux-
+wireless@vger.kernel.org`. Maintainer was To/Cc and `Reviewed-by`.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by` / bugzilla / syzbot. Author-found from code
+(consistent with 4f7a077’s earlier UAF write-up). User count:
+**UNVERIFIED**, but the start-fail path is firmware-load failure — a
+real probe path.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 08/15 of a mixed iwlwifi-next batch, not a dependent 1/N fix
+series. Parent commit unrelated. No other series patch required for this
+hunk.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: WebSearch of lore.kernel.org/stable for this subject did **not**
+find a stable-specific thread. **UNVERIFIED** that anyone nominated or
+rejected it on stable@ (absence of Cc:stable is expected).
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `iwl_op_mode_mld_start`, `iwl_op_mode_mld_stop`. Related
+callees: `wiphy_work_cancel`, `iwl_mld_load_fw`, `iwl_mld_stop_fw`,
+`ieee80211_free_hw`.
+
+**Step 5.2: TRACE CALLERS**
+Record:
+- `iwl_mld_ops.start = iwl_op_mode_mld_start` — op-mode start from
+  iwlwifi transport when `iwlmld` is selected
+  (`iwl_opmode_register("iwlmld", ...)`).
+- Stop is the matching `.stop` callback on unbind/unload.
+- Context: process, probe/remove — not IRQ. Reachable whenever
+  CONFIG_IWLMLD hardware probes or the module is removed.
+
+**Step 5.3: TRACE CALLEES**
+Record:
+- Start-fail: `iwl_mld_load_fw()` on error after ALIVE calls
+  `iwl_mld_stop_fw()` → purges list, does **not** cancel work.
+- Then `ieee80211_free_hw()` → `wiphy_free()` → `put_device()` →
+  `wiphy_dev_release()` → `cfg80211_dev_free()` which
+  `WARN_ON(!list_empty(&rdev->wiphy_work_list))` then
+  `cancel_work_sync(&rdev->wiphy_work)`.
+- Worker: `cfg80211_wiphy_work()` → `wk->func` →
+  `iwl_mld_async_handlers_wk()`.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace/admin trigger: load iwlwifi on MLD firmware (Wi-Fi 7
+Intel), failed firmware/NVM, or unload. Not a syscall exploit path;
+**driver probe/remove**. Common enough for production laptops.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: MVM already cancels/flushes analog work in `iwl_mvm_mac_stop()`
+(`wiphy_work_cancel` on `async_handlers_wiphy_wk`). MLD
+`iwl_mld_mac80211_stop()` already cancels `add_txqs_wk` but **not**
+`async_handlers_wk`. This commit aligns MLD teardown with that rule.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record:
+- Local tree: **v7.3-rc4** (`git describe HEAD` →
+  `v7.3-rc4-27-gf0100363d8c37`; `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+  EXTRAVERSION=-rc4`).
+- MLD driver **present**
+  (`drivers/net/wireless/intel/iwlwifi/mld/mld.c`).
+- Regression `59a5876e474ac` **is** in this history (v7.2+).
+- Current file already contains both `wiphy_work_cancel` calls (this
+  commit is ancestor of HEAD). Pre-fix parent of `c99bc4d4e0ba6` matches
+  the supplied diff exactly.
+- Bug was introduced **before** this 7.3 branch (in v7.2), not after.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply** on this tree (already applied). Surrounding
+`iwl_op_mode_mld_start`/`stop` matches the patch. `wiphy_work_cancel`
+exists in `net/wireless/core.c`.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: `4f7a07791944e` / `833026098b2d9` / `59a5876e474ac` are all
+here. No alternate fix of this hole besides `c99bc4d4e0ba6`. `git log
+--grep='cancel wiphy work'` only this commit.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `drivers/net/wireless/intel/iwlwifi/mld` — Intel Wi-Fi MLD
+(CONFIG_IWLMLD). **IMPORTANT** (shipping Wi-Fi 7 NICs), not core mm/VFS,
+not staging.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Very active (NAN, RSC, scan, firmware API churn in recent `git
+log` on `mld.c`). Mature enough that this is a teardown correctness fix,
+not new-feature scaffolding.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **driver-specific / config-specific** — CONFIG_IWLMLD users
+(Intel MLD firmware devices). Not universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Start-fail: firmware load/init failure after ALIVE (missing/bad fw,
+  PNVM/init timeout) — **realistic probe path**.
+- Stop: op-mode teardown/unload.
+- Timing: leftover `wiphy_work` after list purge.
+- Unprivileged trigger: only if an unprivileged user can unload the
+  driver or force fw failure — typically **admin/probe**. Not a syzbot-
+  style syscall UAF, but probe-fail is still user-visible.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- Confirmed: `WARN_ON` in `cfg80211_dev_free()` if work remains queued
+  (taint; panic if `panic_on_warn`).
+- Author/prior commit (`4f7a077`): work running after
+  `ieee80211_free_hw` is **UAF**. cfg80211’s `cancel_work_sync` in
+  `cfg80211_dev_free` reduces but does not make the WARN or the post-
+  unlock race imaginary (`cfg80211_wiphy_work` can run after
+  `wiphy_unlock` and before free).
+- Severity: **HIGH** (WARN + realistic UAF race on probe fail / unload).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- Benefit: **high** for IWLMLD users — stops WARN/UAF on fw init failure
+  and stop.
+- Risk: **very low** — 3 lines, existing API, lock already held.
+- Ratio: strongly in favor of including the fix.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real teardown bug: pending `async_handlers_wk` after wiphy free
+- Regression from `59a5876e474ac` (in this tree); restores cancel only
+  where memory is freed
+- Same UAF class as `4f7a07791944e` (explicit “access freed memory”)
+- 3-line, obviously correct, maintainer Reviewed-by
+- Applies to this tree’s MLD code; prerequisites present
+- cfg80211 documents leftover work with WARN_ON
+
+AGAINST:
+- No Fixes:/Cc:stable/Reported-by (not a negative per pipeline rules)
+- Error/teardown path, not hot datapath
+- cfg80211 already `cancel_work_sync`s, so many hits are WARN rather
+  than a guaranteed oops
+- 08/15 series member (but standalone)
+
+UNRESOLVED:
+- Full lore review text (HTTP 403)
+- Whether stable@ already discussed this subject
+- How often start-fail hits with work still queued (depends on
+  notifications after ALIVE)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — lock already held; Johannes
+   reviewed; cancel is the documented API.
+2. Fixes a real bug that affects users? **PASS** — leftover wiphy work
+   on fw-start failure and op-mode stop.
+3. Important issue? **PASS** — UAF risk + `WARN_ON` in cfg80211 (HIGH).
+4. Small and contained? **PASS** — +3 lines, one file, two call sites.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — MLD + `wiphy_work_cancel` +
+   matching functions exist (commit already in 7.3-rc4).
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+bugfix.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree is **7.3-rc4** and contains the iwlwifi MLD op-mode. The hole
+is real here: after `59a5876e474ac`, start-fail and stop free the wiphy
+without cancelling `async_handlers_wk`. That is a use-after-free/WARN
+class bug on firmware load failure — a path users hit. The fix is three
+lines, matches cfg80211’s contract, and does not need the rest of the
+15-patch series.
 
 ---
 
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
-- File: `drivers/misc/bcm-vk/bcm_vk_msg.c` (+12 / −6; `git show --stat`
-  reports 18 lines changed)
-- Include: `#include <linux/overflow.h>`
-- Function: `bcm_vk_write()` only (the `bcm_vk_msg_init` hunk in the
-  prompt is context-only; no functional change there)
-
-Record: Single-file surgical fix in one syscall handler.
-
-**Step 2.2: Code flow**
-Before (verified on `f66c40cd90954^`):
-1. Reject `count` not a multiple of 16 (`VK_MSGQ_BLK_SIZE`).
-2. `kzalloc(sizeof(*entry) + count + vk->ib_sgl_size, GFP_KERNEL)` with
-   wrapping add.
-3. `copy_from_user(&entry->to_v_msg[0], buf, count)`.
-4. Then `entry->to_v_blks = count >> 4`, then a **later** msgq-size
-   check.
-
-After:
-1. Also reject `count == 0`.
-2. `check_add_overflow(sizeof(*entry), count, &entry_size)` then add
-   `vk->ib_sgl_size`; fail with `-EOVERFLOW`.
-3. `kzalloc(entry_size)`.
-4. Set `to_v_blks` **before** the copy.
-5. Same copy and later msgq check.
-
-Record: Normal `write()` path; hardening of alloc + copy, not an error-
-path-only change.
-
-**Step 2.3: Bug mechanism**
-- Category: **integer overflow → heap buffer overflow** (also
-  `__counted_by` / bounds-sanitizer correctness).
-- User `count` is only required to be a multiple of 16. Near `SIZE_MAX`,
-  the sum wraps to a small size, `kzalloc` succeeds, then
-  `copy_from_user` uses the original huge `count`. The first mapped user
-  page(s) are enough to overflow the slab object before the copy hits
-  `-EFAULT`.
-- The msgq bound is **after** the copy, so it does not prevent the
-  overflow.
-- `to_v_msg[]` is `__counted_by(to_v_blks)` in this tree. `kzalloc`
-  leaves `to_v_blks == 0`, so the copy used to write into a counted-by-
-  zero flexible array.
-
-Record: Alloc-size wrap + copy; `__counted_by` initialized too late.
-
-**Step 2.4: Fix quality**
-- Obviously correct: standard `check_add_overflow` + allocate checked
-  size.
-- Minimal; no API/structure change.
-- Regression risk: low. `-EOVERFLOW` / `-EINVAL` for impossible sizes.
-  Rejecting `count == 0` is reasonable (zero-length messages are not a
-  multiple of a useful blk payload). `check_add_overflow` is an existing
-  helper.
-
-Record: High quality, low regression risk.
-
----
-
-## Phase 3: Git history
-
-**Step 3.1: Blame / introduction**
-- Driver messaging (including this alloc+copy) landed in `111d746bb4767`
-  (“misc: bcm-vk: add VK messaging support”), contained in `v5.12-rc1`.
-- `__counted_by` on `struct bcm_vk_wkent`: `3c69d52e3e12f` (contained in
-  `v6.7-rc1`).
-- Parent of the fix still had the wrapping `kzalloc` expression.
-
-Record: Buggy alloc/copy since v5.12; counted-by issue since v6.7.
-
-**Step 3.2: Fixes: tag**
-None. Ancestor of the bug is `111d746bb4767`, and `git merge-base --is-
-ancestor 111d746bb4767 HEAD` is true.
-
-**Step 3.3: File history**
-Recent bcm-vk work is mostly style, kmalloc_obj conversion, an
-acquire/release change, and this overflow check. No prerequisite series
-for this hunk. Standalone.
-
-**Step 3.4: Author**
-Yousef Alhouseen also has nearby misc overflow/bounds patches (`hpilo`,
-`ibmvmc`, `xilinx_sdfec`, `genwqe`, `sgi-gru`) merged the same day by
-Greg. Not the bcm-vk maintainer; a correctness/security sweep. Greg
-still took the patch.
-
-**Step 3.5: Dependencies**
-- `check_add_overflow()` / `linux/overflow.h`: present in this tree
-  (helpers date to 2018).
-- `__counted_by` field exists here; moving `to_v_blks` does not need
-  extra commits.
-- Applies standalone.
-
-Record: No missing prerequisites in this checkout.
-
----
-
-## Phase 4: Mailing list / external
-
-**Step 4.1: Original discussion**
-`b4 dig -c f66c40cd90954` matched msgid
-`20260629160605.29412-1-alhouseenyousef@gmail.com`.
-`b4 dig -a`: **v1 only**, 2026-06-29.
-Saved mbox: **one message** (the patch). No replies, NAKs, or reviewer
-comments in that thread. Greg applied it to char-misc.
-
-Direct lore HTTP fetch returned 403; discussion content was taken from
-the b4 mbox instead.
-
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Maintainer: Scott Branden
-- Broadcom internal list
-- Arnd Bergmann
-- Greg Kroah-Hartman
-- linux-kernel@vger.kernel.org
-
-Right lists/people were CCed. No `Reviewed-by` on the committed patch.
-
-**Step 4.3: Bug report**
-No `Reported-by` / syzbot / bugzilla. Trigger needs `/dev/bcm-vk.N` (PCI
-device), so syzbot is unlikely.
-
-**Step 4.4: Series**
-Standalone `[PATCH]`, not N/M.
-
-**Step 4.5: Stable list**
-Web search did not turn up a stable@ discussion of this subject.
-Unverified beyond that (lore search HTTP 403).
-
-Record: v1, maintainer-tree merge, no NAK, no explicit stable nomination
-in the thread.
-
----
-
-## Phase 5: Semantic / call graph
-
-**Step 5.1: Functions**
-`bcm_vk_write()` only.
-
-**Step 5.2: Callers**
-Wired as `.write = bcm_vk_write` in `bcm_vk_fops` (`bcm_vk_dev.c`). That
-is the miscdevice `write()` path. Reachable from the `write` syscall on
-`/dev/bcm-vk.N`.
-
-**Step 5.3: Callees**
-`bcm_vk_drv_access_ok`, `kzalloc`, `copy_from_user`, later `get_q_num`,
-msgq `readl`, `bcm_vk_get_msg_id`. The overflow is **before** queue/id
-logic.
-
-**Step 5.4: Reachability**
-1. PCI probe of Broadcom Valkyrie (`PCI_DEVICE_ID_VALKYRIE` 0x5e87)
-   registers the misc device.
-2. `bcm_vk_drv_access_ok()` requires `msgq_inited` (card messaging up);
-   otherwise `-EPERM`.
-3. Then user `write()` with a 16-aligned huge length hits the wrap.
-
-Userspace-reachable on systems that have this card and a live msgq.
-
-**Step 5.5: Similar patterns**
-Same author’s same-day misc write/size checks. Same class of bug, not a
-bcm-vk-only refactor.
-
-Record: Syscall-reachable heap overflow on a real device node.
-
----
-
-## Phase 6: This checkout
-
-**Step 6.1: Local tree**
-- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
-- `make kernelversion`: `7.3.0-rc4`
-- Makefile: VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4
-- Driver, `bcm_vk_write()`, `check_add_overflow`, and `__counted_by` are
-  all present.
-- `git merge-base --is-ancestor f66c40cd90954 HEAD` is true (current
-  `bcm_vk_write()` already has the checks). That is not used as “already
-  selected for stable”; it only confirms the code this patch targets
-  exists here.
-
-Record: Buggy path exists in this lineage since v5.12; this tree is
-7.3-rc4 and has the helpers the patch needs.
-
-**Step 6.2: Backport difficulty**
-Against this tree: clean (the hunk matches current code). `overflow.h`
-is already used by the patched file.
-
-**Step 6.3: Other fixes for the same bug**
-No earlier overflow check on this alloc. No competing fix.
-
----
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-- Subsystem: `drivers/misc/bcm-vk` (Broadcom VK PCIe accelerator,
-  video/crypto offload).
-- Criticality: **PERIPHERAL** hardware, but the handler is a generic
-  `write()` with a kernel heap overflow.
-
-**Step 7.2**
-Mature driver (v5.12). Low churn besides treewide kmalloc conversions
-and this safety patch. Maintainer status: Supported (Scott Branden).
-
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1: Who is affected**
-Users of Broadcom VK (`CONFIG_BCM_VK`, PCI 14e4:5e87). Not universal.
-Device node is a miscdevice; `.mode` is unset, so default char-dev
-permissions (typically root/udev). Anyone who can open the node can
-issue the `write()`.
-
-**Step 8.2: Trigger**
-- Hardware present, driver loaded, msgq initialized.
-- `write(fd, buf, count)` with `count` a non-zero multiple of 16 large
-  enough to wrap `sizeof(*entry) + count + ib_sgl_size` (`ib_sgl_size`
-  default 16×16 = 256).
-- Not every boot; it is a deliberate/malicious or buggy huge write, not
-  a typical message size.
-- Unprivileged only if udev grants the node; otherwise local
-  privileged/compromised userspace with device access.
-
-**Step 8.3: Failure mode**
-Heap overflow of a `kzalloc` object, or `usercopy` abort if
-HARDENED_USERCOPY is on. Severity: **HIGH** (memory corruption / crash).
-Security-relevant if the node is writable.
-
-**Step 8.4: Risk vs benefit**
-- Benefit: stops a user-controlled wrap-and-copy; also makes
-  `__counted_by` consistent before the copy.
-- Risk: ~12 insertions in one function; overflow helpers already in this
-  tree.
-- Ratio: high benefit / very low risk for this tree.
-
----
-
-## Phase 9: Synthesis
-
-**Evidence FOR**
-- Real wrap of `kzalloc` size vs `copy_from_user` length; msgq check is
-  too late.
-- Syscall-reachable (`write` on `/dev/bcm-vk.N`).
-- Small, obviously correct, uses existing `check_add_overflow`.
-- Merged by Greg KH; CCed to the bcm-vk maintainer.
-- Driver and helpers exist in this 7.3-rc4 tree.
-- `__counted_by` init-before-copy is required in this tree.
-
-**Evidence AGAINST**
-- Niche PCIe accelerator, not a core-path bug.
-- No reporter, syzbot, Fixes, or stable CC.
-- No mailing-list review comments (v1 applied as-is).
-- Author is not the subsystem maintainer (audit-style series).
-
-**Unresolved**
-- Full lore HTML was 403; thread content is from `b4 dig -m` (single
-  email).
-- No stable@ discussion found.
-
-**Stable rules**
-1. Obviously correct and tested — **PASS** (standard overflow check;
-   merged to char-misc). No extra Tested-by.
-2. Real bug affecting users — **PASS** (heap overflow on write for VK
-   users).
-3. Important (crash/security/corruption) — **PASS** (HIGH: heap smash /
-   usercopy BUG).
-4. Small and contained — **PASS** (one function, ~12 lines).
-5. No new features/APIs — **PASS**.
-6. Can apply to this tree — **PASS** (`overflow.h`, `bcm_vk_write`,
-   `__counted_by` all present).
-
-**Exception category:** none (not an ID/quirk/DT/build/doc exception).
-It is a normal memory-safety fix.
-
-This tree is **7.3.0-rc4**. The driver has had this alloc+copy since
-v5.12. The patch is a contained security/correctness fix and belongs
-here.
-
----
-
-## What the commit solves for this tree
-
-`bcm_vk_write()` trusted a user `size_t count` in
-`kzalloc(sizeof(*entry) + count + vk->ib_sgl_size)` and then copied
-`count` bytes. A 16-aligned huge count wraps the size, allocates a small
-object, and overflows it on copy. The later queue-size check does not
-run first. The fix checks the arithmetic, rejects empty writes, and sets
-`to_v_blks` before touching `to_v_msg[]`.
-
-It matches stable rules: real overflow, small, no new API, helpers
-already in this tree. Risk is low; benefit is avoiding a write-triggered
-heap overflow on Broadcom VK devices.
-
----
-
-## Verification
-- [Phase 1] `git show f66c40cd90954 --format=fuller`: subject/body/tags
-  as above; no Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff vs parent: overflow.h, `!count` check, two
-  `check_add_overflow`, `to_v_blks` moved before `copy_from_user`
-- [Phase 2] `git show f66c40cd90954^:drivers/misc/bcm-vk/bcm_vk_msg.c`:
-  wrapping `kzalloc` then copy then `to_v_blks`
-- [Phase 3] `111d746bb4767` contained in `v5.12-rc1`; `3c69d52e3e12f`
-  counted_by in `v6.7-rc1`
-- [Phase 3] `git merge-base --is-ancestor 111d746bb4767 HEAD`: driver in
-  this tree
-- [Phase 3] Author log under `drivers/misc/`: clustered overflow/bounds
-  patches merged 2026-07-17
-- [Phase 4] `b4 dig -c f66c40cd90954`: msgid 20260629160605.29412-1; v1
-  only
-- [Phase 4] `b4 dig -w`: Branden, Broadcom list, Arnd, Greg, lkml
-- [Phase 4] `b4 dig -m`: 1-message mbox, no replies/NAKs
-- [Phase 4] WebFetch lore: 403; stable@ search: no dedicated thread
-  found
-- [Phase 5] `.write = bcm_vk_write`; `bcm_vk_drv_access_ok` is
-  `atomic_read_acquire(&vk->msgq_inited)`
-- [Phase 5] PCI id table: Broadcom Valkyrie 0x5e87 only
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `kernelversion` 7.3.0-rc4
-- [Phase 6] Current `bcm_vk_write()` already contains
-  `check_add_overflow`; `include/linux/overflow.h` defines it
-- [Phase 6] `to_v_msg[] __counted_by(to_v_blks)` in `bcm_vk_msg.h`
-- [Phase 8] `nr_ib_sgl_blk` default `BCM_VK_DEF_IB_SGL_BLK_LEN` 16;
-  `VK_MSGQ_BLK_SIZE` 16
-- UNVERIFIED: distro udev mode for `/dev/bcm-vk.N` (whether unprivileged
-  open is allowed)
+### What the commit solves
+On MLD op-mode start, firmware can ALIVE and queue `async_handlers_wk`.
+Failure then purges the handler list in `iwl_mld_stop_fw()` but leaves
+the wiphy work queued. `ieee80211_free_hw()` then frees that memory.
+cfg80211 still `cancel_work_sync`s and **WARNs**; there is also a window
+after `wiphy_unlock` where the worker can run. The same missing cancel
+exists in `iwl_op_mode_mld_stop`. Cancelling under the wiphy lock closes
+that.
+
+### Stable rules
+Meets all six criteria for **this** tree: small, correct, no new API,
+real WARN/UAF, code present.
+
+### Risk vs benefit
+Benefit high for Intel MLD hardware; risk very low (idempotent cancel,
+lock already held).
+
+### Concerns
+None that block inclusion. Not a dependent series member. NVM-fail still
+does not `iwl_mld_stop_fw()` (pre-existing); this patch still improves
+that path by not leaving work queued.
+
+Verification:
+- [Phase 1] Parsed subject/tags: Reviewed-by Johannes Berg; Link to v2
+  msgid; no Fixes/Cc:stable/Reported-by
+- [Phase 1] Body: purge-without-cancel on start-fail and stop; work vs
+  freed wiphy; cfg80211 WARN
+- [Phase 2] Diff: +3 lines in `mld.c`; `iwl_op_mode_mld_start` error
+  path and `iwl_op_mode_mld_stop`; `wiphy_work_cancel`
+- [Phase 2] `wiphy_work_cancel()` in `net/wireless/core.c` requires
+  wiphy mutex; both sites already `wiphy_lock`
+- [Phase 2] `cfg80211_dev_free()`:
+  `WARN_ON(!list_empty(&rdev->wiphy_work_list))` then `cancel_work_sync`
+- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` 7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor c99bc4d4e0ba6 HEAD` → yes
+- [Phase 3] `git blame` start-fail/stop: skeleton `d1e879ec600f9` (MLD
+  intro); cancel lines this commit
+- [Phase 3] MLD first in v6.15 (`git merge-base --is-ancestor
+  d1e879ec600f9 v6.15`); not in v6.14
+- [Phase 3] `git show 59a5876e474ac`: removed `wiphy_work_cancel` from
+  `iwl_mld_cancel_async_notifications`; in v7.2, not v7.1
+- [Phase 3] `git show 4f7a07791944e`: original UAF fix on start-fail;
+  Fixes: d1e879ec600f9
+- [Phase 3] `git log -S wiphy_work_cancel -- mld/`: d1e879ec, 4f7a077,
+  833026, 59a5876, c99bc4d4
+- [Phase 3] Parent of candidate is unrelated mvm change; series 08/15 is
+  a mixed iwlwifi-next batch
+- [Phase 4] `b4 dig -c`: lore/patchwork msgid for 08/15; `-a`: v1 then
+  v2 (applied); `-w`: Johannes + linux-wireless
+- [Phase 4] WebFetch lore 403; patchwork bot wall; spinics 500 — review
+  comments UNVERIFIED
+- [Phase 4] No stable@ hit for this subject (search not useful)
+- [Phase 5] `iwl_mld_ops.start` = `iwl_op_mode_mld_start`; RX path
+  `wiphy_work_queue(&mld->async_handlers_wk)` in `notif.c`
+- [Phase 5] `iwl_mld_load_fw` error after init sequence calls
+  `iwl_mld_stop_fw` (purge, no cancel)
+- [Phase 5] MVM `iwl_mvm_mac_stop` already cancels analogous wiphy work
+- [Phase 6] Local `mld.c` already has both cancel sites; pre-image of
+  parent matches the candidate diff
+- [Phase 7] CONFIG_IWLMLD in
+  `drivers/net/wireless/intel/iwlwifi/Kconfig`
+- [Phase 8] Trigger: fw load fail after ALIVE / op-mode stop; severity
+  HIGH (WARN + UAF race)
+- UNVERIFIED: exact lore review discussion text; field frequency of this
+  WARN
 
 **YES**
 
- drivers/misc/bcm-vk/bcm_vk_msg.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
-index a36a6c7d384a9..4663d758de3ce 100644
---- a/drivers/misc/bcm-vk/bcm_vk_msg.c
-+++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
-@@ -9,6 +9,7 @@
- #include <linux/interrupt.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/poll.h>
- #include <linux/sizes.h>
- #include <linux/spinlock.h>
-@@ -1090,6 +1091,7 @@ ssize_t bcm_vk_write(struct file *p_file,
- 	u32 q_num;
- 	u32 msg_size;
- 	u32 msgq_size;
-+	size_t entry_size;
- 
- 	if (!bcm_vk_drv_access_ok(vk))
- 		return -EPERM;
-@@ -1097,20 +1099,26 @@ ssize_t bcm_vk_write(struct file *p_file,
- 	dev_dbg(dev, "Msg count %zu\n", count);
- 
- 	/* first, do sanity check where count should be multiple of basic blk */
--	if (count & (VK_MSGQ_BLK_SIZE - 1)) {
--		dev_err(dev, "Failure with size %zu not multiple of %zu\n",
-+	if (!count || count & (VK_MSGQ_BLK_SIZE - 1)) {
-+		dev_err(dev, "Failure with size %zu not a positive multiple of %zu\n",
- 			count, VK_MSGQ_BLK_SIZE);
- 		rc = -EINVAL;
- 		goto write_err;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index cf003a4a37408..49fcbe6814677 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -440,6 +440,8 @@ iwl_op_mode_mld_start(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
  	}
  
-+	if (check_add_overflow(sizeof(*entry), count, &entry_size) ||
-+	    check_add_overflow(entry_size, vk->ib_sgl_size, &entry_size)) {
-+		rc = -EOVERFLOW;
-+		goto write_err;
-+	}
-+
- 	/* allocate the work entry + buffer for size count and inband sgl */
--	entry = kzalloc(sizeof(*entry) + count + vk->ib_sgl_size,
--			GFP_KERNEL);
-+	entry = kzalloc(entry_size, GFP_KERNEL);
- 	if (!entry) {
- 		rc = -ENOMEM;
- 		goto write_err;
- 	}
-+	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
+ 	if (ret) {
++		/* wiphy memory is about to be freed, we should cancel any pending work */
++		wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
+ 		wiphy_unlock(mld->wiphy);
+ 		rtnl_unlock();
+ 		goto err;
+@@ -505,6 +507,7 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
+ 	iwl_mld_thermal_exit(mld);
  
- 	/* now copy msg from user space, and then formulate the work entry */
- 	if (copy_from_user(&entry->to_v_msg[0], buf, count)) {
-@@ -1118,7 +1126,6 @@ ssize_t bcm_vk_write(struct file *p_file,
- 		goto write_free_ent;
- 	}
- 
--	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
- 	entry->ctx = ctx;
- 
- 	/* do a check on the blk size which could not exceed queue space */
-@@ -1355,4 +1362,3 @@ void bcm_vk_msg_remove(struct bcm_vk *vk)
- 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_v_msg_chan, NULL);
- 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_h_msg_chan, NULL);
- }
--
+ 	wiphy_lock(mld->wiphy);
++	wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
+ 	iwl_mld_low_latency_stop(mld);
+ 	iwl_mld_deinit_time_sync(mld);
+ 	wiphy_unlock(mld->wiphy);
 -- 
 2.53.0
 
