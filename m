@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEDE50841C;
-	Mon, 19 Oct 2026 14:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F30260C107;
+	Mon, 19 Oct 2026 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418612; cv=none; b=m26y8lKZsuZY2BmqJa2Ly1v/gFSgI7WucL5mH8KtNbTA7So64tbw+G0ltdXbU8LSTYW95HIpesM1yKGIXfaaaau3/dv4f+0W3aZRY+/gJ6zgdXDnUHsMNXS3P4Kv0I9PiRHnC195ZsC7Hty69DXn7c5VLf7oeyXlN54TSfQP+4E=
+	t=1792418613; cv=none; b=X6xAOdoCSpZfcniutZrD/c4hQP/rLwrfgA5+vXDXbSkzE06u4PiiHXb031yPK6ytHvciRS5WnUdGME3kZoG9i2VdH31M9lJcJRqlipxiY7g8bApuDM5RHKVXWUAnyk3o2FZZWhqn+xiPvxwDdtMZ5ZI50K81br182TYwGgVpL5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418612; c=relaxed/simple;
-	bh=BcvsgOYZE/XsJ+D+p03Dqf37OQAI3d1cOGaFE1fdTxw=;
+	s=arc-20240116; t=1792418613; c=relaxed/simple;
+	bh=36HdIlOFHdL/vVYmiZs7Q2F+j2DiREH0OCTVOMHKEsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ohgssXtY0O08pmdRH6kmC0jzLRenVoRASRSkh62JI22BKYv1nePWA7zc1oXzQMAc3cR+aY+U2jKnHZ8vnYzDgfI1a1Golm18Kkq4f0l299k+7Wk3+qXNf/AyyeY39v02aorJCNLGgJSUjahIPfknJ0jZVPxXIiGilQZVqf/u2Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqpfLuB3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LaGhtc0xkw/O1zJs0WXJjQB12ER8S3QiBoQVQ/aWKQS95cpwXmOSDFdRpskkbkUM6KhA2JXPTG+D4LOgJ6XISTpoJ/7rWWbrVY8kH/BK+SvT7ppF1mJC/22xGW0INmz67wgrO3y10vkvn1DajHXa0IghmWZE6NDOdn7pO08oJg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5FfhMgv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqpfLuB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7B81F000C4;
-	Mon, 19 Oct 2026 14:03:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5FfhMgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755C31F000C8;
+	Mon, 19 Oct 2026 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418609;
-	bh=3XWOh0TlZD3lVy6AJyQ1GhSc9Trgig1dArAlc2AK3/I=;
+	s=k20260515; t=1792418610;
+	bh=4udapwcgqT1eSwUZFlUCJ5E9O4cf3E3CyLCU8wLYjFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqpfLuB3FIE/Z/N+YcpGlDmc2DAVEroXp720IkqOU6/Y2l4079xYoG0Z9j8f9A55v
-	 PkAmO51uL56pg1PyRuK83gfDGL3o7ODxMWdkkH2rcl8waYvvrxCEC5p1+ksRnKE/xG
-	 aKF3Bct7KhGpqSAfFIW9nwtKtnSchbR6kFI1QiLpt0w2RiQawBlvLi00qxxUdSjqo3
-	 tkGlPmaHf64+9dM1Ly7nFpvVIIXnFc/kYLZfx8am7+SjySomJd9K2e5njEvZcqnzva
-	 WpO0uLRf0v1Dl2nabFnFmj7dPI9YDk9kmRtDt4mu9Ihbiq4iz5MVLguBLQPGGaHZEs
-	 hI2dUc9BiJAKg==
+	b=D5FfhMgvavQ8vJ53GE0NKIjPzio7zAyrdlbk8M691ofc2CW6u+opHiSffy6C4o8r3
+	 6aIe32Wallkjc6NKnFUc0UyPCJXgblvFYe1j81NKAx4DSUgI+J7ELIeQpTgZad8FKV
+	 Ro5Rb1QTFNAR2M8Tqv7D1XhxxsvHMvDNP53wKWxZqFs9g8xUHkIKOjaTAJ78A9i8P9
+	 Uh7rhCmydfU9ig8ubNTRlg77bd54l3aTK/wHKxlo9FlgYFPFFzbdyZ4N/OEkg2koWb
+	 TUrKpbbKVY+WlGGDAYLcLcc9Ji+FkPlNJnK+54uMRB6FFbMIUSZIJaLnGYR760b5lV
+	 7/9MsBmLb78vg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	florian.fainelli@broadcom.com,
-	linux-rtc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	peterhuewe@gmx.de,
+	linux-integrity@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:51:01 -0400
-Message-ID: <20261019135441.1420968-370-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] tpm: atmel: depend on X86
+Date: Mon, 19 Oct 2026 09:51:02 -0400
+Message-ID: <20261019135441.1420968-371-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,430 +53,336 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
+[ Upstream commit 4bfacee94f309346bef0b598ea091088b9150af9 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+tpm_atmel probes for the chip at fixed x86 Super-I/O ports (0x4e) with
+inb()/outb(), so it only works on x86. TCG_ATMEL nevertheless depends
+only on HAS_IOPORT_MAP/HAS_IOPORT, which arm and arm64 also satisfy.
+There the probe is useless, and on platforms whose unbacked I/O access
+faults it oopses in init_atmel() at boot (e.g. arm/versatile):
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+  Unable to handle kernel paging request at virtual address fee0004e
+  PC is at init_atmel+0x34/0x244
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+TCG_NSC and TCG_TIS already "depends on X86" (commit 2f592f2a7d74 ("TPM:
+NSC and TIS drivers X86 dependency fix")); TCG_ATMEL was missed. Add the
+same dependency.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260712183234.23125-1-kmehltretter@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The one-line OF alias
-publication is missing here, the match table is present, and the
-original mailed hunk applies cleanly.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+Record: `[tpm / TCG_ATMEL]` `[depend]` Restrict the Atmel TPM driver to
+x86 because it probes Super-I/O ports.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[rtc / brcmstb-waketimer] [add] [publish missing OF
-MODULE_DEVICE_TABLE so the module can autoload]**
-
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2 — Tags**
 Record:
-- **Link:**
-  https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-- **Signed-off-by:** Pengpeng Hou (author)
-- **Signed-off-by:** Alexandre Belloni (RTC maintainer; applied)
-- **No Fixes:** (expected for this review)
-- **No Cc: stable** (expected)
-- **No Reported-by / Tested-by / Reviewed-by / Acked-by / syzbot**
-- Pipeline markers (`[Upstream commit ...]`, Sasha Levin SOB) ignored
-  per instructions
+- `Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>` (TPM maintainer)
+- `Link: https://lore.kernel.org/r/20260712183234.23125-1-
+  kmehltretter@gmail.com`
+- `Signed-off-by: Karl Mehltretter` (author)
+- `Signed-off-by: Jarkko Sakkinen` (maintainer)
+- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence is expected
+  for this review)
+- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+  …]` markers
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3 — Body**
 Record:
-- **Bug:** OF match table is wired to `.of_match_table` but not exported
-  with `MODULE_DEVICE_TABLE()`, so modpost never emits
-  `of:N*T*Cbrcm,brcmstb-waketimer` aliases.
-- **Symptom:** When `CONFIG_RTC_DRV_BRCMSTB=m`, udev/kmod cannot
-  autoload `rtc-brcmstb-waketimer.ko` from the DT compatible string. The
-  wake-timer/RTC does not bind unless the module is loaded by hand.
-- **Version info:** none in the message. Driver has been in tree since
-  v4.13.
-- **Root cause (author):** missing module-alias publication, evidenced
-  by the driver-owned table and its use by the platform driver.
-  Explicitly a source-level finding, not a live hardware repro.
+- Bug: `tpm_atmel` probes Super-I/O at `0x4e` with `inb()`/`outb()`.
+  Kconfig only required `HAS_IOPORT_MAP`/`HAS_IOPORT`, which ARM/arm64
+  also satisfy.
+- Symptom: boot oops, `Unable to handle kernel paging request at virtual
+  address fee0004e`, `PC is at init_atmel+0x34/0x244` (example:
+  arm/versatile).
+- Root cause: unbacked PCI I/O window access on non-x86.
+- Same class of fix as `2f592f2a7d74` (`TCG_NSC` / `TCG_TIS` `depends on
+  X86`); `TCG_ATMEL` was missed.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not disguised.** It is a real autoload bug, same class as
-adding/publishing a device ID. Not style-only.
+**Step 1.4 — Hidden bug fix?**
+Record: Not hidden. Explicit crash fix via Kconfig dependency. Not
+cleanup or a new feature.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- **File:** `drivers/rtc/rtc-brcmstb-waketimer.c` (+1 / −0)
-- **Function/site:** after `brcmstb_waketmr_of_match[]` (not inside a
-  function)
-- **Scope:** single-file, one-line surgical change
-- **Upstream SHA (verified):**
-  `402c89d28fecd28652a4bfe997f08f6544836381`
+**Step 2.1 — Inventory**
+Record: One file, `drivers/char/tpm/Kconfig`. `TCG_ATMEL`: replace
+`depends on HAS_IOPORT_MAP` + `depends on HAS_IOPORT` with `depends on
+X86`. Scope: single-file, two-line Kconfig change.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- **Before:** table exists and is assigned to `.of_match_table` via
-  `of_match_ptr()`. Built-in matching still works. Modular autoload does
-  not, because file2alias never sees the table.
-- **After:** `MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match)` creates
-  `__mod_of__brcmstb_waketmr_of_match_device_table` as an alias when
-  `MODULE` is set (`include/linux/module.h`). `scripts/mod/file2alias.c`
-  `do_of_entry_multi()` then emits `MODULE_ALIAS("of:N*T*Cbrcm,brcmstb-
-  waketimer")`.
-- **Path affected:** module install / depmod / udev autoload only.
-  Probe, PM, and built-in bind paths are unchanged. When `!MODULE`, the
-  macro is empty.
+**Step 2.2 — Code flow**
+Record: Before: any arch with I/O-port mapping can build/enable
+`tpm_atmel`; `init_atmel()` always probes `0x4e`. After: the driver is
+not built on non-x86. Affected path: module/builtin init, not a hot
+path.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **[Hardware enablement / missing device ID publication]**
-- Category (h): OF alias not published, so modular bind fails.
-- Not UAF, leak, race, NULL deref, or crash.
+**Step 2.3 — Bug mechanism**
+Record: Kconfig/hardware-scope bug that produces a NULL/unmapped I/O
+dereference. On ARM, `inb(0x4e)` becomes a load at
+`PCI_IO_VIRT_BASE+0x4e` (`0xfee0004e`). If that page is not mapped, the
+kernel oopses.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- **Quality:** obviously correct; this is the standard pattern (dozens
-  of RTC drivers already have `MODULE_DEVICE_TABLE(of, ...)` in this
-  tree).
-- **Regression risk:** very low. Compile-time alias only.
-  `__maybe_unused` on the table remains valid: built-in + `!CONFIG_OF`
-  still has no C reference; as a module the alias references the table,
-  which is intended.
-- **No API, locking, or data-structure changes.**
+**Step 2.4 — Fix quality**
+Record: Obviously correct for the Super-I/O probe. Minimal. No runtime
+locking/API change. Regression risk is only over-restricting platforms
+that still have a working non-x86 path. That matters on **this** tree
+(see Phase 6): PPC64 OF support is still present, so the backport must
+be `depends on X86 || PPC64`, not bare `depends on X86`.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Match table and `.of_match_table` introduced in **`c4f07ecee22ec7`**
-  (“rtc: brcmstb-waketimer: Add Broadcom STB wake-timer”, Brian Norris,
-  2017) — first appears **v4.13-rc1**. Present in this tree (`git merge-
-  base --is-ancestor` succeeded).
-- `__maybe_unused` added in **`ae1247f79ddf8`** (v5.12 era) for
-  `!CONFIG_OF` compile-test. That did not add `MODULE_DEVICE_TABLE`.
-- Bug has been present for the entire life of the driver.
+**Step 3.1 — Blame**
+Record: `TCG_ATMEL` dates to `1da177e4c3f41` (Linux 2.6.12-rc2). Local
+depends lines:
+- `depends on PPC64 || HAS_IOPORT_MAP` — `ce816fa88cca0` (2014; rename
+  of `HAS_IOPORT` → `HAS_IOPORT_MAP`)
+- `depends on HAS_IOPORT` — `6155153601183` (“char: tpm: handle
+  HAS_IOPORT dependencies”, 2024; **in this tree**)
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** The introducing commit is `c4f07ecee22ec7`,
-which is in this tree. No later intermediate autoload fix on this file.
+The Super-I/O probe in `tpm_atmel.h` (`#else` of `CONFIG_PPC64`) has
+been there for the life of the driver.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record (this tree, path-limited):
-- `e005a9b35b464` level alarm_irq
-- `d64906b320ce6` `.remove` → `.remove_new`
-- `24304a87158aa` non-wake alarm
-- None of these publish OF aliases.
-- **Standalone** one-line patch; not “X/Y” of a series that this file
-  depends on. Parent of upstream `402c89d28fec` is a sibling RTC
-  autoload fix (`rtc: s32g`), not a prerequisite for this driver.
+**Step 3.2 — Fixes: tag**
+Record: None. Related historical commit `2f592f2a7d74` (2011, **in this
+tree**) added `depends on X86` for NSC/TIS after PPC oopses; Atmel was
+not included.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Pengpeng Hou is not the RTC maintainer. In this tree the only
-other `drivers/rtc/` commit from that author is unrelated (`rtc: zynqmp:
-Return optional clock lookup errors`). Alexandre Belloni (RTC
-maintainer) applied the patch. Florian Fainelli / Broadcom were on
-To/Cc.
+**Step 3.3 — Related file history**
+Record: `5578b4347bb5d` (“tpm: atmel: Drop PPC64 specific MMIO setup”,
+2024-11-22) is **not** an ancestor of this checkout (`git merge-base
+--is-ancestor` exit 1). It is an ancestor of the candidate. That commit
+changed Kconfig to `depends on HAS_IOPORT_MAP` only; the candidate then
+changed that to `depends on X86`.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: **None.** Needs only `MODULE_DEVICE_TABLE` and the existing
-`of_device_id` table, both present since the driver was added. **Can
-apply standalone.**
+**Step 3.4 — Author**
+Record: Karl Mehltretter — this is the only Atmel TPM commit from that
+author on `origin/master`. Jarkko Sakkinen (TPM maintainer) reviewed and
+applied it.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.5 — Prerequisites**
+Record: The **verbatim** diff assumes PPC64 was already dropped. That
+drop is not in 6.12. The **semantic** fix does not need that drop: this
+tree can use `depends on X86 || PPC64` and keep the existing OF path.
+Standalone with that one-line adaptation. Do not pull in `5578b4347bb5d`
+(feature removal, ~140 lines).
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- **b4 dig -c 402c89d28fec:**
-  https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-- **b4 dig -a:** single **v1**, 2026-07-04; no v2/v3.
-- Thread (3 messages): original patch; Sashiko bot “no issues”;
-  Alexandre Belloni **“Applied, thanks!”** pointing at
-  `https://git.kernel.org/abelloni/c/402c89d28fec`.
-- **No NAK, no stable nomination, no reviewer risk flags.** WebFetch to
-  lore returned 403; thread recovered via `b4 mbox`.
+## Phase 4: Mailing list / external
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (b4 dig -w): To/Cc included Alexandre Belloni (RTC maintainer),
-Florian Fainelli, bcm-kernel-feedback-list, linux-rtc, linux-arm-kernel,
-linux-kernel. Maintainer applied it. No human Reviewed-by.
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c 4bfacee94f309` →
+https://patch.msgid.link/20260712183234.23125-1-kmehltretter@gmail.com
+`b4 dig -a`: single revision (v1 only).
+Thread (mbox): author patch + Jarkko `Reviewed-by`. No NAK, no stable
+debate, no risk flags.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: **No user/syzbot/bugzilla report.** Author states it is source-
-level. Severity from reporters: N/A. Users affected: anyone building
-this driver as a module on DT platforms with `brcm,brcmstb-waketimer`.
+**Step 4.2 — Recipients** (`b4 dig -w`)
+Record: Jarkko Sakkinen, Peter Huewe, Jason Gunthorpe, `linux-
+integrity`, `linux-kernel`. Right maintainers/list.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Wave of the same one-line OF-alias pattern. This 6.12 tree
-already contains:
-- `330fdd1fb7d09` drm/tve200: add OF module alias for autoloading
-- `2260191fbf7c6` crypto: keembay - publish OF module alias for OCS
-  AES/SM4
-Those are the same bug class, already accepted here. This brcmstb patch
-does not depend on them.
+**Step 4.3 — Bug report**
+Record: No syzbot/bugzilla. Concrete oops in the commit message; PC and
+fault address match ARM `inb(0x4e)`.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search via WebFetch returned 403.
-**UNVERIFIED** whether this exact patch was discussed on stable@. No
-local evidence it was rejected.
+**Step 4.4 — Series**
+Record: Standalone, not patch x/y.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.5 — Stable list**
+Record: No stable-specific thread found. lore.kernel.org HTTP fetch
+returned 403; discussion recovered via `b4 dig -m`. UNVERIFIED: whether
+anyone later nominated it on `stable@`.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: **No function body changed.** Site is `brcmstb_waketmr_of_match`
-/ `brcmstb_waketmr_driver`. Related runtime function:
-`brcmstb_waketmr_probe`.
+## Phase 5: Semantic / call surface
 
-Step 5.2: TRACE CALLERS
-Record: `brcmstb_waketmr_probe` is only referenced as `.probe` on
-`brcmstb_waketmr_driver`, registered via `module_platform_driver()`.
-Called from platform/OF device bind (kernel boot or module load), not
-from a syscall directly. Userspace trigger is: DT node present + module
-autoload (or manual `modprobe`).
+**Step 5.1 — Functions**
+Record: No C functions changed. Runtime path gated: `init_atmel()` →
+`atmel_get_base_addr()` → `atmel_verify_tpm11()` → `tpm_read_index()` →
+`outb`/`inb` at `TPM_ADDR` (`0x4E` in `drivers/char/tpm/tpm.h`).
 
-Step 5.3: TRACE CALLEES
-Record: Probe ioremaps, allocates an RTC device, requests IRQs,
-`device_init_wakeup()`. The new line calls nothing at runtime.
+**Step 5.2 — Callers**
+Record: `module_init(init_atmel)` — builtin boot or `modprobe
+tpm_atmel`.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: DT `compatible = "brcm,brcmstb-waketimer"` (in-tree on several
-BMIPS boards, e.g. `arch/mips/boot/dts/brcm/bcm7435.dtsi`) → OF match →
-probe. **Reachable on real STB hardware.** Autoload is the broken hop
-when `=m`.
+**Step 5.3 — Callees**
+Record: Super-I/O index/data ports; no allocation/locking in the
+faulting probe.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Many RTC drivers already export OF tables (`rtc-zynqmp.c`, `rtc-
-mt7622.c`, …). Historical RTC fixes of the same kind: `206e04ec7539e`
-(mxc_v2), `3fc990a5dbfff` (mt7622). Systematic missing-alias class, not
-a one-off.
+**Step 5.4 — Reachability**
+Record: Yes, if `CONFIG_TCG_ATMEL=y/m`. Not a syscall. User/config must
+enable an x86 Super-I/O TPM driver.
+`arch/parisc/configs/generic-64bit_defconfig` sets `CONFIG_TCG_ATMEL=m`.
+ARM `allyesconfig`/custom configs can set it `=y` and oops at boot.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.5 — Similar patterns**
+Record: `TCG_NSC` already `depends on X86` in this tree. `TCG_TIS` is
+`depends on X86 || OF` here (OF added later; not Super-I/O).
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.** `drivers/rtc/rtc-brcmstb-waketimer.c:413-424` has the
-table and `.of_match_table` and **no** `MODULE_DEVICE_TABLE`. `git
-merge-base --is-ancestor 402c89d28fec HEAD` failed (fix not here).
-Introduced v4.13, long before 6.12.
+## Phase 6: This checkout (6.12.y)
 
-Kconfig in this tree (`drivers/rtc/Kconfig`):
+**Step 6.1 — Does the buggy code exist?**
+Record: Yes.
+- Tree: `git describe` → `p-6.12-3-gc504cf0baa3d8`, `make kernelversion`
+  → **6.12.111**
+- Candidate `4bfacee94f309` is **not** in HEAD
+- Local Kconfig:
+
+```164:171:drivers/char/tpm/Kconfig
+config TCG_ATMEL
+        tristate "Atmel TPM Interface"
+        depends on PPC64 || HAS_IOPORT_MAP
+        depends on HAS_IOPORT
 ```
-config RTC_DRV_BRCMSTB
-        tristate "Broadcom STB wake-timer"
-        depends on ARCH_BRCMSTB || BMIPS_GENERIC || COMPILE_TEST
-        default ARCH_BRCMSTB || BMIPS_GENERIC
+
+- Non-PPC64 `tpm_atmel.h` still does Super-I/O `inb`/`outb` at
+  `TPM_ADDR`.
+- `arch/arm/Kconfig` `select HAS_IOPORT`. `HAS_IOPORT_MAP` defaults y
+  unless `NO_IOPORT_MAP`. `ARCH_VERSATILE` does **not** select
+  `NO_IOPORT_MAP`.
+- ARM `PCI_IO_VIRT_BASE` is `0xfee00000`; `inb(0x4e)` → `0xfee0004e`,
+  matching the oops.
+
+**Step 6.2 — Backport difficulty**
+Record: Exact hunk will not apply (this tree still has `PPC64 ||
+HAS_IOPORT_MAP`). Trivial adaptation:
+
 ```
-Explicitly modular. Default `y` on the SoCs that have the IP, so the
-common defconfig path is built-in; `=m` is still a supported and
-documented config.
+depends on X86 || PPC64
+```
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply.** Original mailed hunk (3 lines of context
-through `.probe`) — `git apply --check` **rc 0** on this tree. `.remove`
-vs `.remove_new` is later in the struct and is not in the original hunk.
-No rework needed.
+Do **not** apply bare `depends on X86`; that would disable the still-
+present PPC64 OF path (`CONFIG_PPC64` in `tpm_atmel.h`).
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: **No** commit on this file adds `MODULE_DEVICE_TABLE`. Sibling
-OF-alias backports exist for other drivers (tve200, keembay), not a
-substitute for this one.
+**Step 6.3 — Related fixes already here?**
+Record: No other Atmel X86-dependency fix. `2f592f2a7d74` only covered
+NSC/TIS.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem context
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **[drivers/rtc — Broadcom STB wake-timer] [PERIPHERAL]** for
-most 6.12 users; **IMPORTANT** on BCM7xxx set-top boxes (alarm/S2/S3/S5
-wake). Not mm/net/block core.
+**Step 7.1**
+Record: `drivers/char/tpm` — TPM. Criticality: **IMPORTANT** for TPM
+users; Atmel Super-I/O is a legacy path. Still a driver that can be
+built into generic/distro kernels.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Driver is mature (2017). Recent local commits are PM/IRQ and
-platform-remove conversion, not a rewrite. Low churn around the match
-table.
+**Step 7.2**
+Record: TPM core is active (HMAC, new backends). `tpm_atmel` itself is
+mature/legacy.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific.** Users of Broadcom STB
-wake-timer with `CONFIG_RTC_DRV_BRCMSTB=m`. In-tree DT nodes are on
-BMIPS boards (`bcm7346/7358/7360/7362/7425/7435`). `ARCH_BRCMSTB` also
-exists on ARM and arm64; this tree’s ARM/arm64 dtsi files do not contain
-the compatible string (vendor DTs may). Built-in (`=y`, the Kconfig
-default on those arches) is unaffected.
+**Step 8.1 — Who is affected**
+Record: Config-specific: `CONFIG_TCG_ATMEL` on non-x86 (ARM/arm64 with
+PCI I/O, parisc defconfig, etc.). Not all 6.12 users.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2 — Trigger**
+Record: Boot if builtin; module load if `=m`. Unprivileged users cannot
+trigger unless the module is loaded. Commonness: low on production ARM,
+high on `allyesconfig` / mistaken enablement. Author hit it on
+versatile.
+
+**Step 8.3 — Failure mode**
+Record: Kernel paging-request oops in `init_atmel`. Severity:
+**CRITICAL** when the driver is enabled (boot crash if `=y`).
+
+**Step 8.4 — Risk/benefit**
 Record:
-- Trigger: modular driver + OF device present + reliance on autoload
-  (normal distro/udev path).
-- Commonness: uncommon vs default `=y`; real whenever someone chooses
-  `=m` (help text documents that).
-- Unprivileged userspace cannot exploit this; it is bind/enablement, not
-  a crash primitive.
+- Benefit: stops a real oops; Kconfig-only.
+- Risk: very low if PPC64 is preserved; **high if applied verbatim**
+  (would hide `tpm_atmel` on PPC64 while the OF code remains).
+- Ratio: favorable **with** `X86 || PPC64`.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **[RTC/wake-timer never binds when built as a module] [MEDIUM]**
-- Not oops/deadlock/corruption/CVE.
-- On affected boxes, RTC alarm and suspend wake from this block can fail
-  to be available until a manual `modprobe`.
-- Fits stable-rules “device ID” / “oh, that’s not good” more than
-  “oops”.
+## Phase 9: Synthesis
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** medium for modular STB configs (hardware actually gets
-  its driver); low for default `=y` defconfigs.
-- **Risk:** very low (1 line, modpost alias, no runtime behavior change
-  for built-in).
-- **Ratio:** favorable. Same class already merged in this 6.12.y tree.
+**Evidence FOR**
+- Documented boot oops; fault address verified against ARM `inb()`.
+- Same bug class already fixed for NSC/TIS in this tree.
+- One-file Kconfig change; TPM maintainer Reviewed-by.
+- Buggy probe is in this 6.12 tree.
+- Fits “build/Kconfig dependency” stable exception; prevents a crash,
+  adds no API.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Evidence AGAINST**
+- Verbatim patch does not apply; depends on PPC64-drop `5578b4347bb5d`
+  which is **not** in 6.12.
+- `TCG_ATMEL` is not in ARM defconfigs; impact is config-selected.
+- Bare `depends on X86` would be a PPC64 regression on this tree.
 
-Step 9.1: COMPILE THE EVIDENCE
-**FOR:**
-- Real autoload bug: OF table used, aliases never generated.
-- One line, obviously correct, maintainer-applied.
-- Driver and buggy code exist in 6.12.111 since v4.13.
-- Original patch applies cleanly here.
-- Device-ID / hardware-enablement exception; wake-timer matters for STB
-  suspend/resume.
-- Identical OF-alias one-liners already in this tree (tve200, keembay).
-- Zero runtime regression path for the default built-in config.
+**Unresolved**
+- UNVERIFIED: whether any live PPC64 machine still uses AT97SC3201 via
+  OF (Rob Herring later found no in-tree powerpc configs; that drop is
+  still not in 6.12, so this backport should keep PPC64).
+- UNVERIFIED: stable@ discussion (lore HTTP 403).
 
-**AGAINST:**
-- Not a crash, UAF, deadlock, or security hole.
-- No user report; source-level scan.
-- Kconfig default is built-in on the SoCs that have the hardware, so
-  many production images never hit autoload.
-- Peripheral driver, not core.
+**Stable rules**
+1. Obviously correct and tested? **PASS** (Kconfig restrict + maintainer
+   review; oops matches code).
+2. Real user-visible bug? **PASS** (boot oops).
+3. Important (crash)? **PASS** when the option is enabled.
+4. Small and contained? **PASS** (1–2 Kconfig lines).
+5. No new features/APIs? **PASS**.
+6. Apply to this tree? **PASS with backport** (`depends on X86 ||
+   PPC64`); **FAIL** if taken verbatim.
 
-**UNRESOLVED:**
-- Whether this SHA was already discussed on stable@ (lore 403).
-- Whether vendor ARM/arm64 brcmstb DTs (not in this tree) also use this
-  compatible.
+**Exception category:** Kconfig/build dependency fix that prevents a
+crash.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — standard macro; RTC
-   maintainer applied v1 with no objections.
-2. Fixes a real bug that affects users? **PASS** — modular OF autoload
-   does not work; Kconfig allows `=m`.
-3. Important issue? **PASS** (device-ID / hardware-enablement class;
-   functional miss for modular STB RTC/wake). Severity MEDIUM, not
-   CRITICAL.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — publishes an alias for an
-   existing match table.
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded; code present; no missing prereqs.
+The 6.12 bug is real: `TCG_ATMEL` can still be enabled on
+ARM/arm64/parisc, and `init_atmel()` will touch `0x4e` and oops on
+unbacked I/O. Restricting the symbol is the right stable fix. Use
+`depends on X86 || PPC64` so the still-present PowerPC OF path is not
+dropped.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Device ID / OF module alias publication for an existing
-driver** (stable-rules: “or just add a device ID”). Closest match to the
-documented ID-addition exception.
-
-Step 9.4: MAKE YOUR DECISION
-Backport. The bug is in this tree, the fix is the usual one-line alias
-export, it applies cleanly, and it matches both the written device-ID
-exception and OF-alias fixes already on 6.12.y. Default-y only reduces
-how often it bites; it does not make the modular path fictional.
-
-------------------------------------------------
-What the commit solves for this tree
-The 6.12 `rtc-brcmstb-waketimer` driver matches `brcm,brcmstb-waketimer`
-but never asks modpost to emit that alias. Built as a module, the wake-
-timer will not autoload. Adding `MODULE_DEVICE_TABLE(of, ...)` is the
-complete fix.
-
-Risk vs benefit
-Benefit is restoring bind on modular STB configs; risk is essentially
-nil. Context around `.remove_new` does not affect the original hunk.
-
-------------------------------------------------
 Verification:
-- [Phase 1] Parsed tags: Link to msgid, SOB Pengpeng Hou + Alexandre
-  Belloni; no Fixes/Cc stable/Reported-by
-- [Phase 1] Body: missing OF alias; source-level, no hardware repro
-  claimed
-- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(of,
-  brcmstb_waketmr_of_match)` after the match table
-- [Phase 2] `include/linux/module.h`: macro is alias-for-modpost if
-  `MODULE`, empty otherwise
-- [Phase 2] `scripts/mod/file2alias.c` `do_of_entry_multi()`: emits
-  `of:N*T*C<compatible>`
-- [Phase 3] `git blame`: table from `c4f07ecee22ec7` (v4.13-rc1);
-  `__maybe_unused` from `ae1247f79ddf8`
-- [Phase 3] `git merge-base --is-ancestor c4f07ecee22ec HEAD`: intro
-  commit is in this tree
-- [Phase 3] `git merge-base --is-ancestor 402c89d28fec HEAD`: fix is
-  **not** in this tree
-- [Phase 3] `git show 402c89d28fec`: confirmed same +1 line,
-  author/date/message
-- [Phase 3] `git log --oneline -20 -- drivers/rtc/rtc-brcmstb-
-  waketimer.c`: no prior MODULE_DEVICE_TABLE on this file
-- [Phase 4] `b4 dig -c 402c89d28fec`: lore URL + v1-only series
-- [Phase 4] `b4 dig -a`: only v1, 2026-07-04
-- [Phase 4] `b4 dig -w`: Belloni, Fainelli, bcm-kernel-feedback-list,
-  linux-rtc CC’d
-- [Phase 4] `b4 mbox`: Belloni “Applied, thanks!”; Sashiko no issues; no
+- [Phase 1] Tags: Reviewed-by Jarkko; lore Link; no Fixes/Cc:stable
+- [Phase 2] Diff: Kconfig only, `HAS_IOPORT*` → `X86`
+- [Phase 3] `git describe` / `make kernelversion`: 6.12.111
+- [Phase 3] `git merge-base --is-ancestor 4bfacee94f309 HEAD`: not in
+  tree
+- [Phase 3] `git merge-base --is-ancestor 5578b4347bb5d HEAD`: PPC64
+  drop not in tree
+- [Phase 3] `git merge-base --is-ancestor 2f592f2a7d74 HEAD`: NSC/TIS
+  X86 dep is in tree
+- [Phase 3] `git blame drivers/char/tpm/Kconfig`: HAS_IOPORT added by
+  `6155153601183`
+- [Phase 4] `b4 dig -c 4bfacee94f309`: v1 only; Jarkko Reviewed-by; no
   NAK
-- [Phase 4] WebFetch lore: 403; used b4 instead
-- [Phase 4] UNVERIFIED: stable@ thread for this exact subject
-- [Phase 5] Probe only used as platform `.probe`; DT compatible present
-  in `arch/mips/boot/dts/brcm/*.dtsi`
-- [Phase 6] `make kernelversion` / Makefile: **6.12.111**; `git describe
-  HEAD`: p-6.12-3-gc504cf0baa3d8
-- [Phase 6] Local file lines 413–424: table present, MODULE_DEVICE_TABLE
-  absent
-- [Phase 6] `git apply --check` of original hunk: **success (rc 0)**
-- [Phase 6] Same-class already in tree: `330fdd1fb7d09`, `2260191fbf7c6`
-- [Phase 7] MAINTAINERS: RTC subsystem maintained by Alexandre Belloni
-- [Phase 8] Kconfig tristate + `default y` on ARCH_BRCMSTB/BMIPS_GENERIC
-  verified via blame
-- [Phase 8] Failure mode: missing modular bind, not a crash
+- [Phase 4] lore WebFetch: 403; thread read from `b4 dig -m`
+- [Phase 5] `init_atmel` → `atmel_verify_tpm11` →
+  `tpm_read_index(TPM_ADDR=0x4E)`
+- [Phase 6] Local Kconfig still `PPC64 || HAS_IOPORT_MAP`; ARM
+  `PCI_IO_VIRT_BASE=0xfee00000` matches oops
+- [Phase 6] `ARCH_VERSATILE` does not select `NO_IOPORT_MAP`;
+  `HAS_IOPORT` selected by ARM
+- [Phase 8] parisc `generic-64bit_defconfig` has `CONFIG_TCG_ATMEL=m`
+- UNVERIFIED: live PPC64 Atmel hardware; stable@ thread beyond b4 mbox
 
 **YES**
 
- drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/tpm/Kconfig | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
-index fb47c32ab5ff4..55c15aad42cff 100644
---- a/drivers/rtc/rtc-brcmstb-waketimer.c
-+++ b/drivers/rtc/rtc-brcmstb-waketimer.c
-@@ -413,6 +413,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
- 	{ .compatible = "brcm,brcmstb-waketimer" },
- 	{ /* sentinel */ },
- };
-+MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
+diff --git a/drivers/char/tpm/Kconfig b/drivers/char/tpm/Kconfig
+index 8a8f692b60880..5f672f2c01b04 100644
+--- a/drivers/char/tpm/Kconfig
++++ b/drivers/char/tpm/Kconfig
+@@ -163,8 +163,7 @@ config TCG_NSC
  
- static struct platform_driver brcmstb_waketmr_driver = {
- 	.probe			= brcmstb_waketmr_probe,
+ config TCG_ATMEL
+ 	tristate "Atmel TPM Interface"
+-	depends on HAS_IOPORT_MAP
+-	depends on HAS_IOPORT
++	depends on X86
+ 	help
+ 	  If you have a TPM security chip from Atmel say Yes and it 
+ 	  will be accessible from within Linux.  To compile this driver 
 -- 
 2.53.0
 
