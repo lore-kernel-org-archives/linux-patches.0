@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F29562603;
-	Mon, 19 Oct 2026 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C67D5A463C;
+	Mon, 19 Oct 2026 13:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418383; cv=none; b=apKpi5Q2aQ0kg2eFeupQ4BxgUNzr6zXKJnoOCmq3iDPpXaT+ExRVeMK3KZMB8dWn4QYhtEoQwjn/TNbjZBGlPcTGMuAWOKxg9lIGqcrmSjw2AG8laMqIIuLtDj9lAYDKQ4YQTbbfjqpfHIlddX2opyLre1pjnuCB03cMN8s0gZg=
+	t=1792418384; cv=none; b=Hx8N8mypoQfQMbZ9hq2rauQnkcs7oLmIayDEQ5UgCybpFnkX3FU3EXSzFwk4etqDdRiWPbMVsBURPaTPFFclyqKjfNUSSLC0VM4crQaQ3hLMZgRJ2b3O71tWEQFTJB2EWJhy2MiWUbo8WYivvbUNjSnZqyEDVkXLUsBpRXp2mrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418383; c=relaxed/simple;
-	bh=ZgQ6IG3/9L98G0Gm0xaMLLQ6yNfAtV+hIlmhy7XoHaw=;
+	s=arc-20240116; t=1792418384; c=relaxed/simple;
+	bh=N64ofjkUpTGPkSvl3GDa1BCGYS9Nq0epO3Thd5wJkRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gkcsqntlpE9gq9MP5bk076BKWAGIz02yFtWTZFYe2LF3tPZWGdp8w4Aa+BXvQm4D+xyg8fDL99hhp9+be533MQ23rq8TbODv+o8HqT0+Nnoeen6yN6z3/BER0l3fBwSte8Lk5B1wXI5MEv1Yho7YylUs/gsYX7a3sATIztgSULg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjTjxpRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cwAIQcOQ3PIOiOi5EV8Pgy8EsC+iCHcD9EJfzJO4V1+P2Ss7NEpVApLcWCaeGnBzbPjwyID+HDcXU746rySFQDtvFxOpgReLzlsyTQ1vfXJ5EmDsWzgQZiNzD8I+a5Ki0ZD+wbBdJgrSY2nR0zOV9aDYZXT47EU4QTxKD3LoeH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4gOCc79; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjTjxpRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B643B1F000C9;
-	Mon, 19 Oct 2026 13:59:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4gOCc79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9731F000C6;
+	Mon, 19 Oct 2026 13:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418379;
-	bh=rD2KxmotcfM8IGAGm9A/rw+ymS4q5qqa6HG40p80LfY=;
+	s=k20260515; t=1792418381;
+	bh=u1Tf6MsgB65J8rRmT2HY3mDOWGviM+UbICT+94mEk8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjTjxpRZAKJYnNK3NxzDhK+2p9TBlF+7TxB4xqa8+7PQrTxXXnumLRQ8GIOz+Wjtm
-	 8ZSsGt2mt6nKi9W+PrnWBDx1hWC8dEmybttW3yODDtLmW7oQNer8CmRhYnngO3bERR
-	 EuMQHXB6cVFeoTw0P5ctGiakPjRXgeG0e82D35GshDa6SgiczSpTyG5t3qf0NYMXXM
-	 hWcDCFMkGtFEWsKu01+G3KXePBOo8sMa51QpQ6CpkBVtXwVRCgrDtHNanvqvgOj9LA
-	 CM5JR0HOiLKi9mq4HuGhla59iM6gwL3JuTmCWyQoxGAzk9YxDipA8a0uXrwtVPdQQB
-	 Oct7WEXQXj80w==
+	b=Q4gOCc79QGcIY4EuWyLMDQDpSqvLa3rRhu5hw0Dq+1bkuBOfTu3yxHDUco9lbLZv7
+	 WDdxB2uPRz5tOQ4zWaFyeLWDwTaQn8gM/BC9rfhJZMVpXXgHoA5ZR45xBgreZkDqs/
+	 CuLnEhMRhpR0+8+cdb79UtWJTE+CrkvVrdC756SibJlz0+p6zui5VFgLx8NIolowyy
+	 mEEUeGShxVsIynxbqrYOo31MzJjcH1EcNM8CKoLmqU3n+QXgARE9o8jzBWy486tYzM
+	 HlC5UZjzqwZGxAO9L1a2ff8TzRd+EbYE5clc7gc1Y2WehBZQ7dqY/zZA2JqazytstN
+	 HmvjPHUlfOLbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Berke Durak <berke.durak@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] HID: elecom: Add support for ELECOM M-XT4DRBK (018E)
-Date: Mon, 19 Oct 2026 09:48:18 -0400
-Message-ID: <20261019135441.1420968-207-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] perf/core: Fix kernel register info leak via hardware skid
+Date: Mon, 19 Oct 2026 09:48:19 -0400
+Message-ID: <20261019135441.1420968-208-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,463 +55,506 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Berke Durak <berke.durak@gmail.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit f3c2b266b8fd7cf816d36168d19f67e716f2c080 ]
+[ Upstream commit 166f10836a653dfa280d4335603b52f685b8b1ef ]
 
-The 2025 revision of the left-handed EX-G wireless trackball
-(M-XT4DRBK-G) reports USB ID 056e:018e instead of 056e:00fd. Its report
-descriptor declares an 8-bit button field (Report Count 8) but only five
-usages (Usage Maximum 5), so the sixth (Fn) button ends up as a
-duplicate of button 5 and is unusable.
+An unprivileged hardware perf event using exclude_kernel=1 can leak kernel
+register data to user space via PERF_SAMPLE_REGS_INTR or PERF_SAMPLE_IP.
+Due to hardware skid, a PMI may trigger after the CPU has already entered
+kernel space (Ring 0), bypassing the perf_allow_kernel() privilege
+barrier.
 
-The report descriptor has the same layout as the M-XT3DRBK 018C
-(button usage maximum at offset 16, button report count at 22, button
-report size at 24, padding report size at 30), so reuse that fixup.
+This security vulnerability is severely exacerbated by upcoming support
+for SIMD register sampling via XSAVES, which could expose sensitive kernel
+FPU states (such as active cryptographic keys).
 
-Rename the existing M_XT4DRBK define to M_XT4DRBK_00FD to match the
-convention used for the other EX-G revisions.
+Fix this by ensuring that sampled register data is dropped if the event's
+exclude_kernel attribute is set but the PMI catches the CPU in kernel mode.
 
-Tested on a Raspberry Pi 5 with the same fixup in an
-out-of-tree module on 6.12 (6.12.96+rpt-rpi-2712);
-all six buttons are reported after the fix, and they
-work (tested with xev as well).
-
-Report descriptor as sent by the device, pre-fix (056e:018e,
-215 bytes):
-
- 05 01 09 02 A1 01 09 01 A1 00 85 01 05 09 19 01
- 29 05 15 00 25 01 95 08 75 01 81 02 95 01 75 00
- 81 01 05 01 09 30 09 31 16 00 80 26 FF 7F 75 10
- 95 02 81 06 C0 A1 00 05 01 09 38 15 81 25 7F 75
- 08 95 01 81 06 C0 A1 00 05 0C 0A 38 02 95 01 75
- 08 15 81 25 7F 81 06 C0 C0 06 01 FF 09 00 A1 01
- 85 02 09 00 15 00 26 FF 00 75 08 95 07 81 02 C0
- 05 0C 09 01 A1 01 85 05 15 00 26 3C 02 19 00 2A
- 3C 02 75 10 95 01 81 00 C0 05 01 09 80 A1 01 85
- 03 19 81 29 83 15 00 25 01 95 03 75 01 81 02 95
- 01 75 05 81 01 C0 06 BC FF 09 88 A1 01 85 04 95
- 01 75 08 15 00 26 FF 00 19 00 2A FF 00 81 00 C0
- 06 02 FF 09 02 A1 01 85 06 09 02 15 00 26 FF 00
- 75 08 95 07 B1 02 C0
-
-Assisted-by: LLM
-Signed-off-by: Berke Durak <berke.durak@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/20260529085613.CCAFB1F00893@smtp.kernel.org/
+Link: https://patch.msgid.link/20260616044654.3468742-8-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.57** (`v6.18.57-155-gcdf239ca885b2`). The
-question is whether this HID/elecom USB-ID + report-descriptor fixup
-should be backported here. The driver, the existing
-`mouse_button_fixup()` helper, and the sibling 018C fixup are all
-already present in 6.18.57.
+I have enough to decide: this is a real unprivileged kernel-register
+leak on 6.18.53, and the fix is small enough to backport.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[HID / elecom] [Add support] [USB ID 056e:018e for the 2025
-M-XT4DRBK-G trackball, plus the existing button report-descriptor
-fixup]`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [perf/core] [Fix] [Stop unprivileged hardware sampling from
+leaking kernel IP/register state when PMI skid lands in Ring 0]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- No `Fixes:` tag (expected for this review)
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:`
-- No `Link:`
-- No `Cc: stable@vger.kernel.org` (expected; not a negative)
-- `Assisted-by: LLM`
-- `Signed-off-by: Berke Durak <berke.durak@gmail.com>` (author)
-- `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
-- Ignore pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
-  ...]`
+- Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com> (author)
+- Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+  (perf/core maintainer; merged into tip perf/core)
+- Link: https://lore.kernel.org/all/20260529085613.CCAFB1F00893@smtp.ker
+  nel.org/ (earlier discussion; lore fetch returned 403)
+- Link: https://patch.msgid.link/20260616044654.3468742-8-
+  dapeng1.mi@linux.intel.com (v4 series, this patch)
+- No Fixes: tag (expected)
+- No Cc: stable (expected)
+- No Reported-by / Tested-by / Reviewed-by / Acked-by besides SOBs
+- Ignore: Signed-off-by: Sasha Levin and "[Upstream commit
+  166f10836a653dfa280d4335603b52f685b8b1ef]" (pipeline markers)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: 2025 left-handed EX-G wireless trackball (M-XT4DRBK-G) uses USB
-  ID `056e:018e` instead of the old `056e:00fd`.
-- Descriptor claims an 8-bit button field (`Report Count 8`) but only
-  five usages (`Usage Maximum 5`), so the sixth (Fn) button is a
-  duplicate of button 5 and is unusable.
-- Root cause: same broken descriptor layout as M-XT3DRBK 018C (offsets
-  16/22/24/30).
-- Symptom: extra button does not work; mouse otherwise enumerates.
-- Author tested on Raspberry Pi 5, 6.12 (`6.12.96+rpt-rpi-2712`), via an
-  out-of-tree module; all six buttons work (`xev`).
-- Full 215-byte pre-fix descriptor is included.
+- Bug: An unprivileged hardware perf event with `exclude_kernel=1` can
+  still observe kernel register data through `PERF_SAMPLE_REGS_INTR` or
+  `PERF_SAMPLE_IP`.
+- Symptom/failure mode: Kernel IP and interrupt-time register state
+  (GPRs; on some Intel platforms PEBS XMM too) are copied into the
+  userspace mmap buffer. That is a KASLR / kernel-state info leak. The
+  message also warns that later XSAVES SIMD sampling would make this
+  worse (crypto-key material in FPU/SIMD state).
+- Trigger: Hardware PMI skid: the overflow interrupt is delivered after
+  the CPU has already entered kernel mode, so `perf_allow_kernel()` at
+  `perf_event_open()` time is bypassed.
+- Root cause: Sample preparation always dumps `regs` / IP from the PMI
+  frame, with no check that `exclude_kernel` is consistent with
+  `user_mode(regs)`.
+- Versions: No kernel-version range in the message. The REGS_INTR dump
+  path dates to 2014; guest IP helper to 2024.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is a device-ID addition plus an
-existing HID report-descriptor quirk. The rename `M_XT4DRBK` →
-`M_XT4DRBK_00FD` is local naming only.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. Subject and body state a security leak
+and a surgical filter. Not a hidden bug.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- `drivers/hid/hid-ids.h`: +1 ID (`0x018e`), rename existing `0x00fd`
-  define
-- `drivers/hid/hid-elecom.c`: +1 case in `elecom_report_fixup()`, +1
-  `elecom_devices[]` entry, rename 00FD references
-- `drivers/hid/hid-quirks.c`: +1 `hid_have_special_driver[]` entry,
-  rename 00FD
-- Scope: 8 insertions, 4 deletions across 3 files. Surgical, existing
-  driver only.
+- File: `kernel/events/core.c` (+30 / -7)
+- Functions: `perf_instruction_pointer()`, `perf_sample_regs_intr()`,
+  call site in `perf_prepare_sample()`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: `056e:018e` is not in hid-elecom, so hid-generic binds and the
-  stock descriptor is used (Usage Maximum 5 / Count 8). Old `056e:00fd`
-  still uses the 6-button fixup via `USB_DEVICE_ID_ELECOM_M_XT4DRBK`.
-- After: `018e` is claimed by hid-elecom and runs
-  `mouse_button_fixup(..., 22, 30, 24, 16, 6)` (same as 018C). Old 00FD
-  device still hits the same 6-button fixup through the renamed define.
-  `hid_have_special_driver` keeps hid-generic from binding 018E.
+- Hunk 1 (`perf_instruction_pointer`): Before, guest and host always
+  returned the captured IP. After, if `exclude_kernel` and the captured
+  context is not userspace (host `!user_mode(regs)`, or guest without
+  `PERF_GUEST_USER`), IP is replaced with 0.
+- Hunk 2 (`perf_sample_regs_intr`): Before, always `regs_intr->regs =
+  regs` and a real ABI. After, if `exclude_kernel && !user_mode(regs)`,
+  ABI is `PERF_SAMPLE_REGS_ABI_NONE` and `regs` is NULL so
+  `perf_output_sample()` writes a zero ABI and skips register payload.
+- Hunk 3 (`perf_prepare_sample`): Passes `event->attr.exclude_kernel`
+  into the new parameter. Sample header size already accounts for a NULL
+  `regs` pointer (`if (data->regs_intr.regs)`), so dyn_size stays
+  consistent.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: `[Hardware workaround / device ID + HID descriptor quirk]`
-- Broken HID report descriptor: Usage Maximum 5 vs Report Count 8.
-- Fix reuses the proven 018C path: set count and usage max to 6, padding
-  to 2.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: Memory-safety / info-leak (unprivileged kernel-state
+disclosure), not UAF/leak-of-heap.
+- Mechanism: PMI skid + `exclude_kernel=1` still presents kernel
+  `pt_regs` to userspace.
+- Fix: Drop register payload and zero IP when the sample is kernel-mode
+  but the event asked to exclude the kernel.
+- Analogous to the 2017 attempt `cc1582c231ea0` ("Drop kernel samples
+  even though :u is specified"), which was reverted in `6a8a75f323572`
+  because dropping the whole sample broke rr overflow signals. This
+  patch keeps the sample/signal and only redacts contents.
 
-Verified against the included descriptor (first 32 bytes):
-```
-offset 16: 29 05  Usage Maximum (5)
-offset 22: 95 08  Report Count (8)
-offset 24: 75 01  Report Size (1)
-offset 30: 75 00  padding Report Size (0)
-```
-Those match `mouse_button_fixup(hdev, rdesc, *rsize, 22, 30, 24, 16,
-6)`. The helper then writes count=6, usage max=6, padding=2. The 018C
-commit in this tree used the identical dump.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Obviously correct: new ID, existing helper, offsets match the dump.
-- Minimal: no new APIs, no new helper, no behavior change for 00FD.
-- Rename is kernel-internal (`hid-ids.h`); grep shows no leftover
-  `USB_DEVICE_ID_ELECOM_M_XT4DRBK` users.
-- Regression risk is low: `mouse_button_fixup()` bails out unless the
-  expected HID items are at those offsets, so a mismatched 018E
-  descriptor would be left unchanged.
-- `hid-quirks.c` update is required so hid-generic does not steal the
-  device (`HID_QUIRK_HAVE_SPECIAL_DRIVER`).
+- Obviously correct: the predicate matches the existing
+  `sample_is_allowed()` / `perf_exclude_event()` tests (`exclude_kernel
+  && !user_mode(regs)`).
+- Minimal: three related sites, no API/UAPI change (ABI_NONE is the
+  documented empty-regs encoding).
+- Regression risk: low for kernel correctness. Userspace profilers can
+  see IP=0 on skid samples; kernel test robot reported `perf-sanity-
+  tests.Object_code_reading.fail` for that. Author said the kernel
+  behavior is intended and the test should skip IP 0. rr is not broken
+  because overflow still fires. Privileged `exclude_kernel=0` events are
+  unchanged.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Original M-XT4DRBK 00FD support: `fbb77e88f08ce` (2018, Tomasz
-  Kramkowski), already in 6.18.57.
-- Parameterized `mouse_button_fixup()`: `68d09380a6278` (2020), already
-  in 6.18.57.
-- 018C sibling layout this patch reuses: `da1880c7b6b83` (Arnoud
-  Willemsen), already in 6.18.57 (`git merge-base --is-ancestor`
-  returned 0).
+- `perf_sample_regs_intr()` introduced by `60e2364e60e86e` (Stephane
+  Eranian, 2014-11-16) "perf: Add ability to sample machine state on
+  interrupt".
+- `perf_instruction_pointer(event, regs)` guest split from
+  `2c47e7a74f4454` / `04782e63917dbc` (Colton Lewis, 2024-11-13)
+  "perf/core: Correct perf sampling with guest VMs".
+- The leak of kernel IP on `:u` sampling has been a known class since at
+  least 2017.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not a regression in previously working 018E
-support; 018E was never in this tree. The bug is the device’s
-descriptor, same class as 00FD/018C.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Historical related commits:
+- `cc1582c231ea0` (2017): dropped entire skid kernel samples; Cc:
+  stable.
+- `6a8a75f323572` (2017): reverted that because rr depends on overflow
+  signals, not sample contents.
+- `030a976efae83` (2022): reintroduced `sample_is_allowed()` only for
+  sigtrap, not for sample output. In this tree it is used solely at
+  `kernel/events/core.c:10445`.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `hid-elecom.c` history is the same pattern of “new USB ID
-+ existing fixup”:
-- `cdcbb8e8d10f6` M-XT3URBK 018F (in 6.18.57)
-- `da1880c7b6b83` M-XT3DRBK 018C (in 6.18.57)
-- `a36e053b16804` HUGE Plus M-HT1MRBK (in 6.18.57)
-Standalone; not patch X/Y.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Sibling security patches in the same Dapeng series (self-
+contained, not prerequisites of this hunk):
+- `perf/core: Check kernel access when kernel callchains are requested`
+  (callchain permission hole)
+- `perf/x86/intel: Fix kernel address leakages in LBR stack`
+This patch does not need those to compile or to close the IP/REGS_INTR
+hole.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Berke Durak has only this hid-elecom commit here. Jiri Kosina
-(HID maintainer) signed off and applied it.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Dapeng Mi is an Intel PMU/perf contributor. Peter Zijlstra
+(subsystem maintainer) signed off and queued it on tip perf/core (commit
+166f10836a653dfa280d4335603b52f685b8b1ef, 2026-06-30). Author's other
+`kernel/events` work in this clone is unrelated cpu-clock fixes.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs `mouse_button_fixup()` and the 018C case. Both exist at
-v6.18.57. No new functions. Can apply standalone. `patch --dry-run` of
-this diff onto the v6.18.57 copies of the three files succeeded.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Standalone. All symbols used (`user_mode`,
+`PERF_SAMPLE_REGS_ABI_NONE`, `should_sample_guest`, `perf_guest_state`,
+`PERF_GUEST_USER`, `perf_guest_get_ip`) exist in v6.18.53. Signature
+change of static `perf_sample_regs_intr()` has a single call site in
+`core.c`.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c a6dbbf8a1601a`:
-  https://patch.msgid.link/20260907184719.25042-1-berke.durak@gmail.com
-- `b4 dig -a`: single revision (v1 only), 2026-09-07
-- lore.kernel.org fetches returned 403; discussion confirmed via patchew
-  and openwall mirrors
-- Jiri Kosina: “Applied, thanks.” No NAK, no requested respin, no
-  stable-risk comments
+- b4 dig matched patch-id to lore; msgid
+  `20260616044654.3468742-8-dapeng1.mi@linux.intel.com`
+- Evolved from the v8 SIMD/XSAVES sampling series (2026-05-29) into a
+  standalone "miscellaneous PMU bug fixes" series:
+  - v1 2026-06-05: only `perf_sample_regs_intr` (no IP redaction)
+  - v2–v4: added `perf_instruction_pointer` host+guest IP redaction
+    (committed form)
+- Merged to tip perf/core 2026-06-30 by Peter Zijlstra; no NAK found.
+- Later (2026-09-15) kernel test robot: userspace `Object code reading`
+  test fails on IP 0. Dapeng: expected; test should filter IP 0. That is
+  not a kernel functional/security regression.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc Jiri Kosina, Benjamin Tissoires, linux-
-input, linux-kernel. HID maintainer applied it.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: Recipients (b4 dig -w): Peter Zijlstra, Ingo Molnar, Arnaldo
+Carvalho de Melo, Namhyung Kim, Ian Rogers, Adrian Hunter, Alexander
+Shishkin, Andi Kleen, Stephane Eranian, Mark Rutland, linux-kernel,
+linux-perf-users. Maintainer SOB is the strongest review signal found.
+Lore HTML itself returned 403; discussion reconstructed from
+openwall/lkml mirrors.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot link. The author is the reporter and tester,
-with a full descriptor dump and xev confirmation. Same failure mode as
-018C, which is already in this tree.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Motivated by analysis around SIMD register
+sampling. The IP leak is independently real: unprivileged `perf record
+-e cycles:u` is a common path, and 2017 already treated skid kernel
+samples as a security issue.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone v1. Closely related 018C/018F/HUGE Plus ID+fixup
-patches are already in 6.18.57.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Same series also has callchain permission and LBR address-leak
+fixes. Those are separate holes. This commit does not depend on
+SIMD/XSAVES patches; v6.18.53 has no XSAVES SIMD sampling (`git grep` of
+XSAVES SIMD sample paths on v6.18.53 was empty). XMM-via-PEBS already
+exists on Ice Lake+ (`PERF_REG_EXTENDED_MASK` in
+`arch/x86/events/core.c`).
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: UNVERIFIED. `lore.kernel.org/stable/?q=M-XT4DRBK` returned 403.
-No evidence of a prior rejection. Does not change the technical verdict.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search returned 403. No evidence this was
+rejected for stable. Absence of Cc: stable is expected for this review
+pipeline.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `elecom_report_fixup()` (switch cases / id table);
-`mouse_button_fixup()` called but not modified; ID tables in `hid-
-elecom.c` and `hid_have_special_driver[]`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `perf_instruction_pointer`, `perf_sample_regs_intr`,
+`perf_prepare_sample`. Related existing helpers: `sample_is_allowed`,
+`perf_allow_kernel`, `perf_output_sample`.
 
-**Step 5.2: TRACE CALLERS**
+Step 5.2: TRACE CALLERS
 Record:
-- `elecom_report_fixup` ← `elecom_driver.report_fixup` ← `hid-core.c`
-  `hid_open_report()` (`device->driver->report_fixup(...)` at line 1305)
-- `hid_have_special_driver` match ← `hid_gets_squirk()` sets
-  `HID_QUIRK_HAVE_SPECIAL_DRIVER` ← `hid_generic_match()` returns false
-  so hid-generic does not bind
+- `perf_instruction_pointer()`: only used from `perf_prepare_sample()`
+  (`data->ip = ...`) when `PERF_SAMPLE_IP` (or dependent
+  `PERF_SAMPLE_CODE_PAGE_SIZE`) is set.
+- `perf_sample_regs_intr()`: only called from `perf_prepare_sample()`
+  for `PERF_SAMPLE_REGS_INTR`.
+- `perf_prepare_sample()`: `__perf_event_output()` (normal mmap
+  samples), `bpf_overflow_handler()`, PEBS/BTS/s390 sampling paths.
+  Hardware PMI → `perf_event_overflow()` → overflow handler → output.
+  Confirmed `__perf_event_overflow()` does **not** drop skid kernel
+  samples today; `sample_is_allowed()` is sigtrap-only.
 
-**Step 5.3: TRACE CALLEES**
-Record: `mouse_button_fixup()` only mutates three descriptor bytes after
-pattern checks; `hid_info()` log. No allocation, locking, or I/O.
+Step 5.3: TRACE CALLEES
+Record: `user_mode(regs)`, `perf_arch_instruction_pointer()`,
+`perf_guest_get_ip()`, `perf_guest_state()`, `perf_reg_abi()`. Output
+path: `perf_output_sample()` already treats ABI 0 as "no regs".
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Plug USB receiver → usbhid → hid parse → `report_fixup` → input
-events. Userspace-reachable on plug. Unprivileged users then use the
-extra button via evdev. Not a security bug; it is a functional hardware
-bug.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable from unprivileged `perf_event_open()`:
+- `sysctl_perf_event_paranoid > 1` requires `exclude_kernel=1`
+  (`perf_allow_kernel()` at `kernel/events/core.c:13553`).
+- `PERF_SAMPLE_IP` has no extra privilege check (default sample type).
+- `PERF_SAMPLE_REGS_INTR` is gated only by
+  `security_locked_down(LOCKDOWN_PERF)`, not paranoid. Without lockdown
+  (typical without Secure Boot), unprivileged REGS_INTR is allowed.
+Trigger is common: non-precise `cycles:u` around syscalls/page faults.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same pattern already used for 018C, 018F, DT2, HUGE, etc. in
-this file. This is the left-handed 2025 wireless counterpart of 018C.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same `exclude_kernel && !user_mode(regs)` already used in
+`sample_is_allowed()`, `perf_exclude_event()`, and tracepoint matching.
+This patch extends that policy to sample payload. Remaining sibling
+holes (callchain, LBR) are other commits.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. v6.18.57 has hid-elecom, `mouse_button_fixup()`, and 018C’s
-layout, but **not** ID `0x018e`. Without this patch, 018E is a generic
-HID mouse with a broken sixth button. The 00FD model is already quirked.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is **6.18.53** (`git describe HEAD` =
+`v6.18.53-5049-g0f0bdc2b0dffb`, Makefile VERSION=6 PATCHLEVEL=18
+SUBLEVEL=53). At tag `v6.18.53`:
+- `perf_instruction_pointer` returns guest/host IP unconditionally.
+- `perf_sample_regs_intr(regs)` always assigns `regs`.
+- Call site is `perf_sample_regs_intr(&data->regs_intr, regs);`
+- `git merge-base --is-ancestor 166f10836a653dfa280d4335603b52f685b8b1ef
+  v6.18.53` is false.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply onto v6.18.57 (`patch --dry-run` rc 0). Parent vs
-v6.18.57 differs only by an unrelated ITE keyboard ID later in `hid-
-ids.h`.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply expected. Pre-image of both functions and the call
+site on v6.18.53 matches the patch. `PERF_GUEST_USER` is in
+`include/linux/perf_event.h`. No conflicting refactor of these functions
+on 6.18.y.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No 018E fix in v6.18.57. 018C/018F/HUGE Plus ID+fixup patches
-**are** already in 6.18.57, which is the same stable-accepted class of
-change.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: The 2017 full-sample drop is **not** present (reverted).
+`sample_is_allowed()` does not redact IP/REGS_INTR. No other in-tree
+substitute for this leak on 6.18.53.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `[drivers/hid/hid-elecom.c] [PERIPHERAL / driver-specific]`,
-gated by `CONFIG_HID_ELECOM`. Important for owners of this trackball;
-not core MM/VFS.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [perf/core, `kernel/events/core.c`] [CORE for
+observability/security: `perf_event_open` is a common unprivileged
+syscall; leak is kernel-wide, not driver-specific]
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature driver (2010–); recent work is additional ELECOM IDs and
-descriptor fixups, several of which already landed in 6.18.y.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively maintained (Peter Zijlstra). File still receives
+UAF/deadlock fixes on 6.18.y; these two functions have been stable for
+years.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / config-specific: users of ELECOM M-XT4DRBK-G
-2025 (`056e:018e`) with `CONFIG_HID_ELECOM`. 00FD users are unchanged.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Any unprivileged user who can open a hardware sampling event
+with `exclude_kernel=1` (default paranoid). Universal on systems with a
+hardware PMU. REGS_INTR extra impact depends on lockdown; IP leak does
+not.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every plug-in of that dongle. Not a race. Unprivileged users see
-a missing/duplicated Fn button.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Common. Non-precise userspace-only sampling (`cycles:u`) plus
+kernel entry/exit. Unprivileged-triggerable. Timing-dependent (skid) but
+well documented and previously reproduced in 2017.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: `[Broken extra mouse button on specific hardware] [MEDIUM
-functional / hardware-quirk]`. Not a crash, UAF, or corruption issue.
-This is the documented stable exception for USB IDs and hardware quirks.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [Kernel address / register info leak, KASLR bypass; on PEBS XMM
+also SIMD state] [Severity: HIGH / security. Not a panic. XSAVES full-
+SIMD crypto-key leak is **not** in 6.18; XMM PEBS already is.]
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- Benefit: 2025 left-handed EX-G trackball gets a working sixth button
-  on 6.18.y, matching what 018C already got.
-- Risk: very low (8/4 line change, existing helper, pattern-gated,
-  maintainer-applied, tested).
-- Ratio: high benefit for affected hardware, negligible regression risk.
+- Benefit: HIGH — closes an unprivileged kernel-IP leak on a default
+  sampling path; also covers REGS_INTR.
+- Risk: LOW — ~30 lines, static helper, keeps overflow (rr-safe),
+  existing ABI_NONE encoding.
+- Residual: userspace tools may see IP=0 (test already did). That is the
+  security behavior, not a kernel crash.
+- Ratio: strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- USB ID + existing HID quirk on an existing driver (stable exceptions 1
-  and 2)
-- Real user-visible bug: sixth button unusable; author tested the fix
-- Descriptor offsets verified against the dump and against 018C already
-  in this tree
-- Small, obviously correct, no new APIs
-- HID maintainer applied v1 with no objections
-- Same class of patch (018C/018F/HUGE Plus) already in 6.18.57
-- Applies cleanly to this tree
+- Real unprivileged info leak via PMI skid; same class previously sent
+  to stable in 2017.
+- Current code on 6.18.53 still emits kernel IP/regs;
+  `sample_is_allowed()` no longer drops samples.
+- Surgical, obviously correct, maintainer-signed, applies cleanly.
+- Avoids the rr regression by redacting payload instead of dropping the
+  event.
 
 AGAINST:
-- Not a crash/security/corruption fix
-- Affects one consumer trackball model
-- Author is not a regular HID contributor; patch notes `Assisted-by:
-  LLM` (mitigated by maintainer apply + dump + test)
+- Userspace perf "object code reading" test can fail on IP 0 (author:
+  fix the test).
+- No Fixes:/Cc:stable (not a negative per rules).
+- XSAVES SIMD exacerbation is not in 6.18; the IP/GPR (and PEBS XMM)
+  leak still is.
 
 UNRESOLVED:
-- Could not fetch lore.kernel.org (403) or search stable@ archives
-  directly; discussion recovered from b4/patchew/openwall
+- Full lore HTML was 403; review reconstructed from mirrors and b4.
+  Peter Zijlstra SOB still verified.
+- Whether a userspace-only test fix later landed is unverified in this
+  clone; it does not block the kernel fix.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — offsets match; author
-   tested; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — Fn button unusable
-   without the quirk
-3. Important issue? **PASS** under the hardware-quirk / new-ID exception
-   (severity MEDIUM, not CRITICAL)
-4. Small and contained? **PASS** — 8 insertions / 4 deletions, 3 files
-5. No new features or APIs? **PASS** — ID + existing fixup only
-6. Can apply to the local tree? **PASS** — clean apply to v6.18.57;
-   prerequisites present
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — maintainer merged; robot only
+   hit expected IP=0.
+2. Fixes a real bug that affects users? PASS — unprivileged
+   `perf_event_open` + hardware sampling.
+3. Important issue (crash, security, corruption, deadlock)? PASS —
+   security info leak / KASLR.
+4. Small and contained? PASS — one file, +30/-7.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — v6.18.53 pre-image matches.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Device ID addition to existing driver** and **hardware
-quirk/workaround**. Both qualify for stable.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary security
+bugfix.
 
-**Step 9.4: MAKE YOUR DECISION**
-YES. This is the same HID-elecom USB-ID + report-descriptor quirk 6.18.y
-has already taken for 018C. It does not add a driver or API; it makes a
-current ELECOM trackball’s sixth button work.
+Step 9.4: MAKE YOUR DECISION
+This tree is 6.18.53. The buggy dump path is present. The patch is a
+small, rr-safe security fix with no missing prerequisites. It should be
+backported.
 
-What the commit solves: the 2025 M-XT4DRBK-G (`056e:018e`) ships a
-descriptor that only declares five button usages, so Linux reports the
-Fn button as a duplicate of button 5. The fix binds that ID to hid-
-elecom and reuses the 018C `mouse_button_fixup()`.
+------------------------------------------------
+What the commit solves for stable users
+Unprivileged hardware sampling with `exclude_kernel=1` can still capture
+kernel IP and interrupt registers when the PMI skids into Ring 0. On
+6.18 that includes default `PERF_SAMPLE_IP` and, unless lockdown,
+`PERF_SAMPLE_REGS_INTR` (including PEBS XMM on capable Intel CPUs). The
+fix redacts that payload without dropping the sample, so overflow-based
+tools keep working.
 
-Risk vs benefit: benefit is a working extra button on real hardware;
-risk is a few table entries and a pattern-checked 3-byte descriptor
-edit. 00FD behavior is unchanged.
+Risk vs benefit
+Benefit is a real KASLR/register leak on a common syscall path. Risk is
+low: tiny core.c change, existing empty-regs ABI, no locking/API change.
+The only observed fallout is userspace seeing IP 0, which is intended.
 
-No extra prerequisites; 018C’s helper and case are already in this tree.
+Concerns
+No series dependencies for this hunk. XSAVES SIMD is not in 6.18; that
+does not reduce the IP leak. A follow-up is only needed for the perf
+selftest, not for kernel correctness.
 
 Verification:
-- [Phase 1] Parsed tags: author + Jiri Kosina SOB; no Fixes/Cc
-  stable/Reported-by; LLM-assisted
-- [Phase 1] Body: 056e:018e, Usage Maximum 5 vs Count 8, sixth button
-  unusable; tested on Pi 5 / 6.12
-- [Phase 2] Diff: +8/-4 in hid-elecom.c, hid-ids.h, hid-quirks.c; rename
-  00FD define; add 018E to 018C fixup
-- [Phase 2] Descriptor offsets 16/22/24/30 verified against the dump
-- [Phase 3] `git describe HEAD` / Makefile: local tree is 6.18.57
-- [Phase 3] `git merge-base --is-ancestor a6dbbf8a1601a v6.18.57` → not
-  in v6.18.57 (exit 1)
-- [Phase 3] 00FD support `fbb77e88f08ce` and 018C `da1880c7b6b83` are
-  ancestors of v6.18.57
-- [Phase 3] v6.18.57 still uses `USB_DEVICE_ID_ELECOM_M_XT4DRBK` only;
-  no 018E
-- [Phase 3] Author has no other hid-elecom commits here
-- [Phase 4] `b4 dig -c`: msgid
-  20260907184719.25042-1-berke.durak@gmail.com; v1 only
-- [Phase 4] `b4 dig -w`: Kosina + Tissoires + linux-input; Kosina
-  applied
-- [Phase 4] lore.kernel.org 403; patchew/openwall used instead
-- [Phase 4] UNVERIFIED: stable@ archive search (403)
-- [Phase 5] Callers: hid-core `report_fixup` on probe; hid-generic skips
-  via `HID_QUIRK_HAVE_SPECIAL_DRIVER`
-- [Phase 6] `patch --dry-run` onto v6.18.57 files: success
-- [Phase 6] Related 018C/018F/HUGE Plus ID patches already in 6.18.57
-- [Phase 8] Failure mode: extra button unusable, not a kernel crash
-- UNVERIFIED: original lore HTML (403); does not affect the decision
+- [Phase 1] Parsed tags: Dapeng Mi author, Peter Zijlstra SOB, two
+  lore/msgid links; no Fixes/Reported-by
+- [Phase 2] Diff: `perf_instruction_pointer` zeros IP;
+  `perf_sample_regs_intr` uses ABI_NONE; `perf_prepare_sample` passes
+  `exclude_kernel`
+- [Phase 3] `git blame v6.18.53`: REGS_INTR dump from `60e2364e60e86e`
+  (2014); guest IP from `2c47e7a74f4454` (2024)
+- [Phase 3] `git log -S sample_is_allowed -- kernel/events/core.c`: 2017
+  drop reverted; current use is sigtrap-only
+- [Phase 3] `git show 6a8a75f323572`: revert because rr needs overflow
+  signals
+- [Phase 4] `b4 dig -c 7db4d13613f57`: matched v4 msgid
+  20260616044654.3468742-8; recipients include Peter Zijlstra et al.
+- [Phase 4] `b4 dig -a`: originated in SIMD series v8, then standalone
+  bugfix series v1–v4; IP redaction added after v1
+- [Phase 4] openwall 2026-09-15: author confirms IP=0 is the leak fix;
+  test should skip it
+- [Phase 5] grep: `perf_instruction_pointer` / `perf_sample_regs_intr`
+  only used from `perf_prepare_sample`; overflow path does not drop skid
+  samples
+- [Phase 5] `perf_allow_kernel()` at open requires `exclude_kernel` for
+  unprivileged users; REGS_INTR only checks lockdown
+- [Phase 6] `git describe HEAD` / Makefile: 6.18.53; v6.18.53 still has
+  the unfiltered dump; ancestor check of 166f10836a65 vs v6.18.53 is
+  false
+- [Phase 6] `PERF_GUEST_USER` present; function pre-image matches patch
+- [Phase 6] no XSAVES SIMD sampling in v6.18.53; XMM PEBS already
+  present
+- [Phase 8] Failure mode: unprivileged kernel IP/register disclosure,
+  HIGH security
+- UNVERIFIED: full lore.kernel.org thread body (HTTP 403); stable@ list
+  search (403)
 
 **YES**
 
- drivers/hid/hid-elecom.c | 6 ++++--
- drivers/hid/hid-ids.h    | 3 ++-
- drivers/hid/hid-quirks.c | 3 ++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-elecom.c b/drivers/hid/hid-elecom.c
-index 37d88ce57f671..d21ead40bb076 100644
---- a/drivers/hid/hid-elecom.c
-+++ b/drivers/hid/hid-elecom.c
-@@ -79,7 +79,7 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 	case USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB:
- 	case USB_DEVICE_ID_ELECOM_M_XT3URBK_018F:
- 	case USB_DEVICE_ID_ELECOM_M_XT3DRBK_00FC:
--	case USB_DEVICE_ID_ELECOM_M_XT4DRBK:
-+	case USB_DEVICE_ID_ELECOM_M_XT4DRBK_00FD:
- 		/*
- 		 * Report descriptor format:
- 		 * 12: button bit count
-@@ -104,6 +104,7 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		mouse_button_fixup(hdev, rdesc, *rsize, 12, 30, 14, 20, 8);
- 		break;
- 	case USB_DEVICE_ID_ELECOM_M_XT3DRBK_018C:
-+	case USB_DEVICE_ID_ELECOM_M_XT4DRBK_018E:
- 		/*
- 		 * Report descriptor format:
- 		 * 22: button bit count
-@@ -148,7 +149,8 @@ static const struct hid_device_id elecom_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK_00FC) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK_018C) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK_00FD) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK_018E) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT2DRBK) },
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index a10b4ae0e3d8e..ca5c62f29aebe 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -466,7 +466,8 @@
- #define USB_DEVICE_ID_ELECOM_M_XT3URBK_018F	0x018f
- #define USB_DEVICE_ID_ELECOM_M_XT3DRBK_00FC	0x00fc
- #define USB_DEVICE_ID_ELECOM_M_XT3DRBK_018C	0x018c
--#define USB_DEVICE_ID_ELECOM_M_XT4DRBK	0x00fd
-+#define USB_DEVICE_ID_ELECOM_M_XT4DRBK_00FD	0x00fd
-+#define USB_DEVICE_ID_ELECOM_M_XT4DRBK_018E	0x018e
- #define USB_DEVICE_ID_ELECOM_M_DT1URBK	0x00fe
- #define USB_DEVICE_ID_ELECOM_M_DT1DRBK	0x00ff
- #define USB_DEVICE_ID_ELECOM_M_DT2DRBK	0x018d
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 8d2ac32c5ac12..debd00ed9062a 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -431,7 +431,8 @@ static const struct hid_device_id hid_have_special_driver[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK_00FC) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK_018C) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK_00FD) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK_018E) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT2DRBK) },
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 018a1e4ef5b0d..3b01c2853d681 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7499,10 +7499,20 @@ unsigned long perf_misc_flags(struct perf_event *event,
+ unsigned long perf_instruction_pointer(struct perf_event *event,
+ 				       struct pt_regs *regs)
+ {
+-	if (should_sample_guest(event))
+-		return perf_guest_get_ip();
++	/*
++	 * Hardware skid can lead to a scenario where a PMI is
++	 * delivered after the CPU has already entered kernel mode.
++	 * In that case, user-space sampling must not expose kernel
++	 * register state.
++	 */
++	if (should_sample_guest(event)) {
++		return event->attr.exclude_kernel &&
++		       !(perf_guest_state() & PERF_GUEST_USER) ?
++			0 : perf_guest_get_ip();
++	}
+ 
+-	return perf_arch_instruction_pointer(regs);
++	return event->attr.exclude_kernel && !user_mode(regs) ?
++		0 : perf_arch_instruction_pointer(regs);
+ }
+ 
+ static void
+@@ -7536,10 +7546,22 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
+ }
+ 
+ static void perf_sample_regs_intr(struct perf_regs *regs_intr,
+-				  struct pt_regs *regs)
++				  struct pt_regs *regs,
++				  bool exclude_kernel)
+ {
+-	regs_intr->regs = regs;
+-	regs_intr->abi  = perf_reg_abi(current);
++	/*
++	 * Hardware skid can lead to a scenario where a PMI is
++	 * delivered after the CPU has already entered kernel mode.
++	 * In that case, user-space sampling must not expose kernel
++	 * register state.
++	 */
++	if (exclude_kernel && !user_mode(regs)) {
++		regs_intr->abi = PERF_SAMPLE_REGS_ABI_NONE;
++		regs_intr->regs = NULL;
++	} else {
++		regs_intr->regs = regs;
++		regs_intr->abi = perf_reg_abi(current);
++	}
+ }
+ 
+ 
+@@ -8427,7 +8449,8 @@ void perf_prepare_sample(struct perf_sample_data *data,
+ 		/* regs dump ABI info */
+ 		int size = sizeof(u64);
+ 
+-		perf_sample_regs_intr(&data->regs_intr, regs);
++		perf_sample_regs_intr(&data->regs_intr, regs,
++				      event->attr.exclude_kernel);
+ 
+ 		if (data->regs_intr.regs) {
+ 			u64 mask = event->attr.sample_regs_intr;
 -- 
 2.53.0
 
