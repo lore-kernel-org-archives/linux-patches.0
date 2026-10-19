@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65655501F39;
-	Mon, 19 Oct 2026 13:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EBA5087E5;
+	Mon, 19 Oct 2026 13:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418163; cv=none; b=FLpGaERp5zDEc5HH/HllWzk6h/609nz9+M87nyznH/drT5CI4hQHSyv1FzKtS17x1Cmlsj1o7dBn3hjZM7QnCft+C5aLiswD0rC8OJ1AJ/18z7XaomJ+sAzCTK3tYgCl81Uv8OLMbEbY/Vkn8UuSXycABJGrAjJc2enX7V7Juyo=
+	t=1792418164; cv=none; b=jVNEkJ1XYFviT1i5miU5tT1RdIxSpLR0A2UPc9TaWdktWqqNTQX8jd4gFREbGkAar5s2aX/IbtimD77wwhz958N0cQYIBKq4gpfa1ruikUiknfFNwlEw7txJiDYL2Zr8cQ/M5HeLdUk0iqyOOJbv+1f7FUaBi1pPTiiyfNaJ2n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418163; c=relaxed/simple;
-	bh=4JlpX1bdi9w0cyXMHNlCCzcvZ1TTeVnNXMigX81LVpE=;
+	s=arc-20240116; t=1792418164; c=relaxed/simple;
+	bh=mE4c5XPQP0gPoUCFzwEGDU+ClOrOyyVumsH/AkoQ/N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=toGiCjgC6lWOb1asAkzdqnUz9pBydMhc62CvxtsDGhgz1Riox+SGZpea6Rjwat4U/rBXhfzrF6kF4VdEAuqQtPH7pIL5Na4EtFOw5xeCyof9fHa3LyO+RQYHvckGGLzW56uQ5/dzTU1HKbp30QXqES5ZPyEDFFZHxKy9xxQ0tA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmcLiLY9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YgpNgqw8pUIhpdeVrmMzaymXXRlsmBozwoytMS1qo4feCZlRhchuarnALFw5VeXbzOWV7v3e5HpZmrk/JCwJoAwxULKAJ1NL6eqC0khMNG8ZRHvw7oJMzbIpDNHJwOVrkGK2kmqKu4QtPDzlUOdosf48opeW/euMjqNyYyHJ3Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rf/SFJOn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmcLiLY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86A51F000C8;
-	Mon, 19 Oct 2026 13:55:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rf/SFJOn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6651F000C5;
+	Mon, 19 Oct 2026 13:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418160;
-	bh=dxLpyMlBmuDKRoUAE5QCl/yjwfCLvwlmCgkhNXBTigM=;
+	s=k20260515; t=1792418161;
+	bh=VXIqA+vWM+D/a4jO+k80ffaFziKi9uGiLkkJ5W3CfWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmcLiLY9KKx7nZ4NVDGrwz1rGyZvY9fFpsbc1WPplNJVKYjLL+KWc8iDAYryui18V
-	 RLLz/jZLxrhe5Onz7cMvMYwQa1i/dlACdTIkllrN9XDDiwM19TrtMQodSWABvkqhaR
-	 2eSXhFIGTaa1PRBHGjonzpAHKoZO10fVbSj8Ga8oCOn3bluLs8Gfpr7SB37Cb92VM8
-	 U0lyXtztScvdxVUM1IXu50RnAsKtvDVeUAPdN5EYNgklCkk4b/LDk4xF81mtZFiXG/
-	 Xg6m7nNPrrtJzYrK1ONKsY4NPmRE/n+I3hLXlT2RAyC4W1t7/viBmmx/SuLYuQtX6b
-	 ZZFrqwDfsFUuQ==
+	b=Rf/SFJOnQzhr7Z92zQubZNQOnEnLUA7g3+eBm5PVlTAQSKKvX7ScbjYPvN/cw2V2e
+	 8x3LXbc2pH2phJck3v5Y4fy9fMVm1Y3Pqu8fw4MD5+rCMROU7Qgbkk261esWZ5IpDE
+	 6H+SOaTgGKK8drPvsixDJRuLfttTQLohVsdVExIVPzbwhWTtxx+6hKJQh6D6BnHl/T
+	 Gy0uZKqCdLKy/obLnus+OAnzwC+dtLXaLlERmlmAlrxR+fNE9ojvlFQ22DPWf/iJl7
+	 KXXfDAlQtjJk05kHz955Am+zWt5I/5QTlhODoMrcgkiXcfbOAYgCqY/C4n0ypRxYpW
+	 HkHRnVsrfIahg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jasper Firth <jasper.m.f@hotmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	cezary.rojewski@intel.com,
-	liam.r.girdwood@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	yung-chuan.liao@linux.intel.com,
-	kai.vehmanen@linux.intel.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: Intel: bytcr_rt5651: Add quirk for Chuwi Hi8 with generic DMI strings
-Date: Mon, 19 Oct 2026 09:45:45 -0400
-Message-ID: <20261019135441.1420968-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amdgpu: Validate ATIF buffer length before use
+Date: Mon, 19 Oct 2026 09:45:46 -0400
+Message-ID: <20261019135441.1420968-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,470 +56,510 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jasper Firth <jasper.m.f@hotmail.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit c5a8fc2abe05cf6db71f57ff0177fddc59861a1a ]
+[ Upstream commit b978b7d43963bbb3e2d850288f7c21ac11c3b751 ]
 
-Some Chuwi Hi8 tablets with model number CWI513 ship with a BIOS
-(American Megatrends 5.11, dated 05/21/2016) whose DMI sys_vendor and
-product_name are both "Default string". The tested unit is labelled
-just "Hi8", but its model number is the same as the existing "Chuwi Hi8
-Pro (CWI513)" entry, and it needs the same quirks. That entry matches on
-sys_vendor "Hampoo" and product_name "X1D3_C806N", so it never applies
-to these units.
+Add a min_size parameter to amdgpu_atif_call() to validate that the
+returned ACPI buffer is of type ACPI_TYPE_BUFFER, holds at least a u16
+size field, does not claim more data than was actually returned, and
+meets the minimum size required by the calling function. Each caller
+passes its required minimum via sizeof() or offsetof() of the expected
+output struct and drops its own size check.
 
-Without its quirks the internal speaker, whose amplifier has a
-differential input wired across LOUT left and right, cancels to a faint
-distorted residual for any centred (L == R) content, and the headphone
-channels are swapped.
-
-Add an entry matching board_vendor "Hampoo" and board_name "Cherry Trail
-CR", plus the BIOS date since those two are too generic on their own.
-drivers/platform/x86/touchscreen_dmi.c already matches the Chuwi HiBook
-the same way.
-
-The quirks are those of the existing Hi8 Pro entry, except for the
-over-current detection scale factor: 1.0 instead of the 0.75 from
-BYT_RT5651_DEFAULT_QUIRKS. With 0.75 and a CTIA headset (inline mic and
-one button), loud speech into the mic, and headphone playback coupling
-onto the mic line, were reported as spurious KEY_PLAYPAUSE presses, one
-of them held for a whole 8 second speech window. With 1.0 the same test
-gave no spurious events, and 3 real button presses were reported as
-exactly 3 press/release pairs.
-
-Tested on a unit with the generic DMI strings, with a module built from
-this patch and no quirk module parameter. The quirks were applied via
-the new entry, the card components read "cfg-spk:1 cfg-mic:in2
-cfg-hp:lrswap", and the following all work: speaker, headphone left/right
-order, jack and headset-mic detection, headset button, and the internal
-and headset mics.
-
-The problem was diagnosed with the help of an AI coding assistant, which
-also drafted this changelog.
-
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Jasper Firth <jasper.m.f@hotmail.com>
-Link: https://patch.msgid.link/20260925-hi8-quirk-v1-1-ffd00b0447f9@hotmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Assisted-by: Claude Sonnet (Cursor AI)
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a DMI hardware quirk for a tablet whose
-audio is already broken without it, and the surrounding driver code is
-present in this 6.18 tree.
+This is a firmware-buffer bounds check in `amdgpu_atif_call()`. On this
+6.18.53 tree the buggy path is still present, the patch is small, and it
+closes a real out-of-bounds read.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ASoC/Intel/bytcr_rt5651] [Add] [DMI quirk so Chuwi Hi8 units
-with generic BIOS strings get the existing audio workarounds]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[drm/amdgpu] [Validate] Validate ATIF buffer length before use`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Assisted-by: Claude Opus 5.5
-- Signed-off-by: Jasper Firth \<jasper.m.f@hotmail.com\> (author)
-- Link: https://patch.msgid.link/20260925-hi8-quirk-v1-1-
-  ffd00b0447f9@hotmail.com
-- Signed-off-by: Mark Brown \<broonie@kernel.org\> (ASoC maintainer)
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by
-- No Cc: stable@vger.kernel.org (expected; not a negative)
-- Ignore pipeline-added "[Upstream commit ...]" and Sasha Levin SOB
+- `Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>` (author)
+- `Assisted-by: Claude Sonnet (Cursor AI)`
+- `Acked-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, or syzbot
+  tags (absence expected)
+- Upstream SHA from the candidate wrapper:
+  `b978b7d43963bbb3e2d850288f7c21ac11c3b751` (ignored as a selection
+  marker; used only to find the original discussion)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: Some Chuwi Hi8 CWI513 tablets ship AMI BIOS 5.11 dated 05/21/2016
-  with DMI sys_vendor and product_name both "Default string". The
-  existing "Chuwi Hi8 Pro (CWI513)" entry matches sys_vendor "Hampoo" +
-  product_name "X1D3_C806N" and never applies.
-- Symptom: internal speaker (differential amp across LOUT L/R) cancels
-  to a faint distorted residual for centred (L==R) content; headphone
-  L/R swapped. With default OVCD scale 0.75, loud speech into a CTIA
-  headset mic produced spurious KEY_PLAYPAUSE events (one held for an 8s
-  window).
-- Root cause: missing DMI match, so DEFAULT_QUIRKS (stereo path, SF
-  0.75) are used on hardware that needs mono-speaker mix, HP swap, and
-  OVCD SF 1.0.
-- Version info: hardware/BIOS from 2016; no kernel-version restriction
-  stated.
-- Author tested on a real unit without the quirk module parameter; card
-  components became "cfg-spk:1 cfg-mic:in2 cfg-hp:lrswap"; speaker, HP
-  order, jack/headset-mic, button, and both mics worked.
+- Bug: ACPI ATIF responses are used without checking that the returned
+  buffer actually contains the `u16` size field, that the BIOS-reported
+  size does not exceed the ACPI object length, or that the payload meets
+  the caller’s minimum.
+- Symptom/failure mode: out-of-bounds read (and possible oops) when
+  firmware returns a short or lying buffer, then callers `memcpy()`
+  using the claimed size.
+- Version info: none in the message. The pattern dates to `d38ceaf99ed0`
+  (“drm/amdgpu: add core driver (v4)”, 2015).
+- Root cause: callers trusted `*(u16 *)info->buffer.pointer` and copied
+  that many bytes without comparing it to `obj->buffer.length`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware-quirk
-addition. The "add" verb here is the standard form for DMI/quirk table
-entries that fix broken hardware, not a new feature.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: This is an explicit memory-safety fix, not cleanup. Centralizing
+existing per-caller `size < N` checks is incidental; the new `actual >=
+sizeof(u16)` and `actual >= claimed` tests are the real fix.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- Files: sound/soc/intel/boards/bytcr_rt5651.c only (+17 / -0)
-- Functions: none modified; one new `dmi_system_id` entry in
-  `byt_rt5651_quirk_table[]`
-- Scope: single-file surgical table addition
+- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` (+34/−34)
+- Functions: `amdgpu_atif_call`, `amdgpu_atif_verify_interface`,
+  `amdgpu_atif_get_notification_params`,
+  `amdgpu_atif_query_backlight_caps`, `amdgpu_atif_get_sbios_requests`
+- Scope: single-file surgical fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record (v6.18.53 before → after):
+- `amdgpu_atif_call()`: after confirming `ACPI_TYPE_BUFFER`, return the
+  object. After: reject length `< sizeof(u16)`, claimed size `> actual`
+  length, or claimed size `< min_size`.
+- Callers: pass `sizeof()` / `offsetof()` as `min_size` and drop their
+  own `size < 12/10/10/0xd` checks. `memcpy` still uses
+  `min(sizeof(struct), claimed_size)`, now only after those checks.
+
+Verified struct sizes in `drivers/gpu/drm/amd/include/amd_acpi.h`
+(`__packed`):
+- `sizeof(atif_verify_interface)` = 12 (replaces `size < 12`)
+- `offsetof(atif_system_params, command_code)` = 10 (replaces `size <
+  10`; the `size < 11` command_code path remains)
+- `offsetof(atif_qbtc_output, data_points)` = 10 (replaces `size < 10`)
+- `sizeof(atif_sbios_requests)` = 13 = `0xd` (replaces `size < 0xd`)
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: `[Memory safety / OOB] [Firmware-controlled size used as memcpy
+length]`
+
+v6.18.53 callers still do:
+
+```
+size = *(u16 *)info->buffer.pointer;
+size = min(sizeof(output), size);
+memcpy(&output, info->buffer.pointer, size);
+```
+
+If `obj->buffer.length` is 0 or 1, the `u16` load is already OOB. If
+claimed size is 12 and actual length is 4, `memcpy` copies 12 bytes from
+a 4-byte ACPI payload (heap OOB read). `c9b7c809b89f2` only checked
+object type, not length; that hole is still in this tree.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct. Rejecting `claimed > actual` can disable ATIF
+on a BIOS that lies about size but still returned enough bytes; that is
+malformed firmware, and the fallback is “ATIF unused” rather than a
+crash. Error codes change from `-EINVAL` to `-EIO` on undersized
+buffers; callers only test `if (ret)` / disable the feature. Low
+regression risk.
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: Size-then-memcpy logic is from `d38ceaf99ed0` (Alex Deucher,
+2015, “drm/amdgpu: add core driver (v4)”). Type check added by
+`c9b7c809b89f2` (2024). NULL-on-`AE_NOT_FOUND` fixed by `91c9e221fe255`
+(2024). Length vs claimed size was never checked.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. The bug is in original ATIF parsing, present
+since 2015. Both `d38ceaf99ed0` and `c9b7c809b89f2` are ancestors of
+`v6.18.53`.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- Before: `dmi_check_system(byt_rt5651_quirk_table)` in
-  `snd_byt_rt5651_mc_probe()` never matches these units, so
-  `byt_rt5651_quirk` stays `BYT_RT5651_DEFAULT_QUIRKS |
-  BYT_RT5651_IN2_MAP`.
-- After: units with board_vendor "Hampoo", board_name "Cherry Trail CR",
-  and BIOS date "05/21/2016" set:
-  MCLK_EN | JD1_1 | OVCD_TH_2000UA | OVCD_SF_1P0 | IN2_MAP |
-  HP_LR_SWAPPED | MONO_SPEAKER
-- That is the existing Hi8 Pro quirk set with OVCD scale 1.0 instead of
-  DEFAULT_QUIRKS' 0.75.
-- Path: machine-driver probe / initialization only. Callback
-  `byt_rt5651_quirk_cb` still just stores `driver_data` and returns 1.
+- `c9b7c809b89f2` “Guard against bad data for ATIF ACPI method” — real
+  oops in `amdgpu_atif_query_backlight_caps`; later tagged
+  CVE-2024-50117; already in this tree.
+- `91c9e221fe255` — NULL deref if ATIF missing; already in this tree.
+- Sibling `9d367fab451d9` “Validate ATPX buffer length before use” is
+  patch 2/2 on a different file; not a prerequisite.
+- No later commits on this file after the candidate that rework the same
+  logic.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Lijo Lazar is a regular AMD amdgpu contributor (ATPX/ATRM/XCP
+bounds checks in the same wave). Maintainer Acked-by/SOB from Alex
+Deucher.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Standalone. `amdgpu_atif_call` is static with four local
+callers, all updated. No new helpers. ATPX 2/2 is independent.
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- Category: (h) hardware workaround / DMI quirk table entry
-- Mechanism: without MONO_SPEAKER the stereo DAC feeds a differential
-  mono amp and centred audio cancels (this is the same failure Hans de
-  Goede documented in `a0d1d867c262f`, "Add mono speaker quirk").
-  Without HP_LR_SWAPPED, headphone channels are reversed. OVCD_SF_1P0
-  raises the headset-button over-current scale so coupled mic audio is
-  not reported as KEY_PLAYPAUSE.
+- `b4 dig -c b978b7d43963...` failed (lore.kernel.org returned errors).
+- Original submission: `[PATCH 1/2] drm/amdgpu: Validate ATIF buffer
+  length before use`, 14 Jun 2026, https://www.mail-archive.com/amd-
+  gfx@lists.freedesktop.org/msg145004.html
+- Series: 1/2 ATIF, 2/2 ATPX. No v2 found.
+- No NAKs found. Merged via Alex Deucher’s `drm-next-7.3` pull; Dave
+  Airlie acked the pull.
 
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Posted to amd-gfx. Acked/signed by Alex Deucher. Recipients from
+`b4 dig -w` could not be retrieved (lore 403).
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: This commit has no new user report. The related 2024 ATIF bad-
+data oops (`c9b7c809b89f2`) was hit on at least one system and became
+CVE-2024-50117. That earlier fix did not validate lengths.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 1/2 of ATIF+ATPX ACPI buffer validation. ATRM buffer checks in
+the same author batch. ATIF is self-contained.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned 403. No verified stable-
+list discussion. Prior ATIF guard *was* taken into stable
+(CVE-2024-50117).
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `amdgpu_atif_call` plus the four callers listed above. No
+semcode tools available.
+
+**Step 5.2: TRACE CALLERS**
 Record:
-- Obviously correct: additive table entry using the same callback and
-  flag bits already used by the Hi8 Pro / Vi8 Plus entries.
-- Match is deliberately narrowed with BIOS date after the author noted
-  board_vendor+board_name are too generic; same comment/pattern as Chuwi
-  HiBook in `drivers/platform/x86/touchscreen_dmi.c`.
-- `dmi_check_system()` stops on first callback returning non-zero.
-  Existing Hi8 Pro entry is earlier in the table, so units with proper
-  "Hampoo"/"X1D3_C806N" strings keep the old flags.
-- Residual risk: another Hampoo "Cherry Trail CR" board with BIOS date
-  05/21/2016 and the RT5651 machine driver could get mono/HP-swap
-  incorrectly. BIOS date plus first-match-wins makes that small. No
-  locking/API/data-structure changes.
+- `amdgpu_atif_verify_interface` ← `amdgpu_atif_pci_probe_handle` ←
+  `amdgpu_acpi_detect` ← `amdgpu_drv.c` (driver load)
+- `amdgpu_atif_get_notification_params` /
+  `amdgpu_atif_query_backlight_caps` ← `amdgpu_acpi_detect`
+- `amdgpu_atif_get_sbios_requests` ← `amdgpu_atif_handler` ← ACPI
+  notifier (`amdgpu_acpi_event`) on brightness/hotplug-style events
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 5.3: TRACE CALLEES**
+Record: `acpi_evaluate_object`, then `memcpy` of firmware bytes into
+stack structs.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Quirk table exists since Pierre-Louis Bossart, 2016
-  (`2bd5bd15a51858`).
-- Existing "Chuwi Hi8 Pro (CWI513)" match (Hampoo / X1D3_C806N) from
-  Hans de Goede, 2018 (`55d69c0309acea` / `8f250e7009d71`).
-- MONO_SPEAKER + HP_LR_SWAPPED on that entry from 2018
-  (`a0d1d867c262f4`).
-- The buggy situation is long-standing: these generic-DMI units have
-  never matched. Introduced with the 2016 BIOS, not by a recent kernel
-  change.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reached on every amdgpu load when the GPU’s ACPI node has ATIF
+(common on AMD laptops/APUs). SBIOS request path runs on ACPI video
+notifies. Unprivileged userspace cannot call ATIF directly; a guest/VM
+with a crafted ACPI table can. Firmware bugs have already crashed this
+path.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. The "bug" is missing DMI
-coverage, not a regression from a tagged commit.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same claimed-size-then-memcpy pattern remains in
+`amdgpu_atcs_call` callers in this file and in `radeon_acpi.c`. This
+patch does not touch those; not a reason to reject the ATIF fix.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Recent file history is unrelated (DAPM idle_bias, invalid quirk
-  mapping, DPCM flags, remove() conversion).
-- Original Hi8 Pro/Vi8 Plus DMI entries and all flag macros are already
-  in this tree.
-- Standalone; not patch X/Y.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Only this commit by Jasper Firth under
-`sound/soc/intel/boards/`. Not a subsystem maintainer. Hans de Goede
-(historical author of these Chuwi entries) and Intel ASoC maintainers
-were on the original To/Cc. Mark Brown applied it the same day.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Local tree is **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`,
+branch `autosel`). `git merge-base --is-ancestor c8373721c3e54 v6.18.53`
+is false. `v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` still has
+the unvalidated `*(u16 *)` / `memcpy` sequence. Bug introduced in 2015
+(`d38ceaf99ed0`).
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No extra commits needed. `BYT_RT5651_MCLK_EN`, `JD1_1`,
-`OVCD_TH_2000UA`, `OVCD_SF_1P0`, `IN2_MAP`, `HP_LR_SWAPPED`,
-`MONO_SPEAKER`, `byt_rt5651_quirk_cb`, and
-`dmi_check_system(byt_rt5651_quirk_table)` all exist in v6.18.57. Can
-apply standalone.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: `git diff v6.18.53 c8373721c3e54 --
+drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` is exactly this commit
+(+34/−34). Mainline `noinline_for_stack` is not in 6.18; the candidate
+as it exists here already matches 6.18. Clean apply.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: Type/NULL guards (`c9b7c809b89f2`, `91c9e221fe255`) are in
+6.18.53. Length validation is not. No alternate fix.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- b4 dig -c c5a8fc2abe05cf6db71f57ff0177fddc59861a1a matched https://pat
-  ch.msgid.link/20260925-hi8-quirk-v1-1-ffd00b0447f9@hotmail.com
-- b4 dig -a: v1 only (2026-09-25)
-- Thread has two messages: submission and Mark Brown "Applied to
-  broonie/sound.git for-7.3"
-- No NAKs, no requested revisions, no reviewer Cc: stable
-- Author note (not in the final commit body): left the existing Hi8 Pro
-  entry unchanged because they do not have an X1D3_C806N unit; that
-  model may still see OVCD_SF_0P75 spurious buttons. This patch does not
-  change that entry.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (b4 dig -w): linux-sound, linux-kernel, Mark Brown, Takashi Iwai,
-Jaroslav Kysela, Hans de Goede, Pierre-Louis Bossart, Liam Girdwood,
-Cezary Rojewski, Bard Liao, Kai Vehmanen, Peter Ujfalusi. Subsystem
-maintainer applied it. No extra Reviewed-by.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `[drm/amdgpu ACPI/ATIF] [IMPORTANT]` — not core mm/net, but a
+widely used GPU driver on AMD laptops.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla link. Evidence is the author's hardware test
-in the changelog (speaker cancellation, swapped HP, spurious
-KEY_PLAYPAUSE, and post-fix verification).
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively developed; this ATIF parsing has been stable since 2015
+aside from the 2024 type/NULL guards.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single standalone patch, change-id
-20260925-hi8-quirk-00ca3a49b32f. No series dependencies.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: Web search of lore.kernel.org/stable for this subject/file found
-no discussion of this quirk. Nobody requested or rejected it for stable
-in a thread I could verify.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: AMD GPU systems whose ACPI provides ATIF (typical AMD
+laptop/APU). Config: `CONFIG_DRM_AMDGPU`.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Driver probe always; ACPI notifies for SBIOS requests. Needs a
+short or lying ATIF buffer. Unprivileged userspace cannot trigger it on
+bare metal; firmware/VM ACPI can. Prior ATIF bad-data crashes were seen
+in the wild.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function bodies changed. Data consumed by
-`byt_rt5651_quirk_cb()` and `snd_byt_rt5651_mc_probe()`.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: `[OOB read → possible oops / info leak] [HIGH]` Same class as
+CVE-2024-50117, remaining hole.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `byt_rt5651_quirk_cb` is only used as `.callback` in this DMI table.
-- `dmi_check_system(byt_rt5651_quirk_table)` is called once from
-  `snd_byt_rt5651_mc_probe()` (line 1024).
-- That probe is the platform driver `bytcr_rt5651`
-  (`MODULE_ALIAS("platform:bytcr_rt5651")`).
-- Context: device probe, not IRQ/hot path. Userspace cannot call it
-  directly; it runs when this Bay Trail / Cherry Trail RT5651 machine
-  driver binds.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: Benefit high (closes firmware OOB on a common driver). Risk low
+(~30-line single-file change, fail-closed). Ratio favors backport.
 
-Step 5.3: TRACE CALLEES
-Record: Callback only assigns `byt_rt5651_quirk`. Probe later uses those
-bits for codec device properties, card `components` (`cfg-spk:1`, `cfg-
-hp:lrswap`), long_name, and jack OVCD settings. No new allocations or
-locks.
+## PHASE 9: FINAL SYNTHESIS
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: ACPI/platform match → `snd_byt_rt5651_mc_probe` →
-`dmi_check_system` → quirk flags → ALSA card registration / UCM profile
-selection. Reachable on this tablet at every boot if
-`CONFIG_SND_SOC_INTEL_BYTCR_RT5651_MACH` is enabled (recommended in
-Kconfig for such devices). Not a syscall-triggered crash path.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same Hampoo + "Cherry Trail CR" + BIOS-date pattern already used
-for Chuwi HiBook in `touchscreen_dmi.c` (BIOS date 05/07/2016, different
-from 05/21/2016). Sibling Hi8 Pro / Vi8 Plus audio entries already exist
-in this same table. VIOS LTH17 already uses `BYT_RT5651_OVCD_SF_1P0`.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Local tree: `git describe HEAD` = v6.18.57-155-gcdf239ca885b2; `make
-  kernelversion` = 6.18.57.
-- File and quirk table exist at v6.18.57. Existing Hi8 Pro entry is
-  present; generic-DMI units still miss it.
-- Bug is missing coverage, present for as long as this driver has been
-  used on these 2016 tablets.
-
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Against v6.18.57 the hunk applied with a 1-line offset (`Hunk #1
-succeeded at 409`). Context around the Hi8 Pro entry is identical.
-Expected difficulty: clean apply / trivial offset. All flag macros exist
-unchanged.
-
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `git log v6.18..v6.18.57 --
-sound/soc/intel/boards/bytcr_rt5651.c` is empty; 6.18.y has not already
-taken a different fix for this. No "generic DMI" match exists without
-this entry. Existing Hi8 Pro match does not cover "Default string"
-vendor/product.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [sound/soc/intel/boards – Intel Baytrail/Cherry Trail ASoC
-machine driver] [PERIPHERAL / driver-specific, but a supported in-tree
-board driver, not staging]
-
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature. Quirk table dates to 2016–2018; recent commits are small
-maintenance. This is a late hardware-coverage add, not a rewrite of new
-code.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / DMI-specific. Only Chuwi Hi8 CWI513-class
-units with board_vendor Hampoo, board_name "Cherry Trail CR", BIOS date
-05/21/2016, using this RT5651 machine driver. Other users are unchanged
-unless they share that exact triple (unverified but constrained).
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every probe/boot on matching hardware. No race. Unprivileged
-users do not trigger a kernel bug; they just get broken audio / spurious
-KEY_PLAYPAUSE until the quirk is applied.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Failure: internal speaker effectively unusable for typical centred
-  content; swapped headphones; false headset-button events.
-- Severity: MEDIUM for the affected device (real functional break, not a
-  panic). Not CRITICAL in the crash/corruption sense, but it is the
-  class of hardware-quirk issue stable trees routinely take.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for owners of this tablet (speaker/headphones/jack
-  actually work); zero for everyone else if the DMI triple is unique.
-- Risk: very low — 17-line table add, existing flags, probe-time only,
-  first-match preserves the older Hi8 Pro entry.
-- Ratio: favorable.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real hardware bug: differential mono speaker cancellation, swapped HP,
-  spurious KEY_PLAYPAUSE
-- Author tested on the affected unit; quirks applied without module-
-  parameter override
-- Textbook stable exception: DMI/hardware quirk on an existing driver
-- Small (+17), contained, no new API
-- All consumed flags and the table hook exist in this 6.18.57 tree
-- Applies with a trivial offset
-- Same matching strategy already used for Chuwi HiBook
-- ASoC maintainer applied v1 the same day; Intel ASoC and Hans de Goede
-  were CC'd
-- Existing more-specific Hi8 Pro entry remains first and still wins for
-  X1D3_C806N units
+- Real OOB: claimed ATIF size used as `memcpy` length without comparing
+  to ACPI buffer length.
+- Same subsystem already produced a stable/CVE oops from unvalidated
+  ATIF data (`c9b7c809b89f2` / CVE-2024-50117); that patch did not check
+  lengths.
+- Buggy code is in this 6.18.53 tree since 2015.
+- Small, contained, no new API; maintainer Acked-by.
+- Applies cleanly here.
+- Failure is crash/OOB, not a feature change.
 
 AGAINST:
-- Niche 2016 tablet, one reporter/tester
-- Not a crash, security hole, or data-corruption bug
-- Theoretical false match on another Hampoo Cherry Trail CR board with
-  the same BIOS date
-- No Fixes:/Cc: stable; Mark Brown queued it for the 7.3 merge window
-  rather than as an urgent fix
+- No dedicated report for *this* length mismatch (hardening of a known-
+  bad path).
+- Undersized-buffer errno changes `-EINVAL` → `-EIO` (callers treat both
+  as failure).
+- Sibling ATPX patch is separate and not required.
 
 UNRESOLVED:
-- Could not fetch lore.kernel.org HTML (403); thread reconstructed via
-  b4 dig + Patchew + LKML archive
-- Could not prove no other product shares Hampoo + "Cherry Trail CR" +
-  BIOS 05/21/2016
-- No stable-list thread found
+- `b4 dig` / lore.kernel.org returned errors; discussion recovered from
+  mail-archive.
+- No stable@ thread found (lore 403).
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — additive DMI entry, author
-   hardware test, maintainer applied
-2. Fixes a real bug that affects users? PASS — broken speaker/HP/jack on
-   a shipping tablet
-3. Important issue? PASS under the hardware-quirk exception (device
-   unusable audio, not a panic)
-4. Small and contained? PASS — +17 lines, one table entry
-5. No new features or APIs? PASS — existing quirk flags only
-6. Can apply to the local tree? PASS — driver + flags present; hunk
-   applies to v6.18.57
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — checks match existing
+   minima; maintainer merged.
+2. Fixes a real bug that affects users? **PASS** — OOB on malformed
+   ATIF; ATIF bad data already crashed systems.
+3. Important issue? **PASS** — HIGH: OOB read / oops from firmware data.
+4. Small and contained? **PASS** — one file, +34/−34.
+5. No new features or APIs? **PASS** — static helper only.
+6. Can apply to the local tree? **PASS** — identical to `v6.18.53` file
+   plus this diff.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Hardware quirk / DMI workaround on an existing driver. This is
-an allowed stable exception.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
+bug fix.
 
-Step 9.4: MAKE YOUR DECISION
-This is a small, tested DMI quirk that makes existing Chuwi Hi8 hardware
-work on this 6.18 tree. Benefit is real for those units; regression
-surface is limited to an already-narrow DMI triple. It should be
-backported.
+**Step 9.4: MAKE YOUR DECISION**
+Backport. It closes a leftover ATIF buffer-length hole on this 6.18 tree
+with a small, fail-closed change.
+
+### What the commit solves for stable users
+On 6.18, `amdgpu_atif_call()` only rejects non-buffer ACPI objects.
+Callers then trust a BIOS `u16` size and `memcpy` that many bytes. A
+short or inflated ATIF payload over-reads kernel heap and can oops — the
+same ATIF path that already oopsed in 2024. This patch requires actual
+length ≥ 2, actual ≥ claimed, and claimed ≥ caller minimum before any
+copy.
+
+### Risk vs benefit
+Benefit is preventing oops/OOB on AMD systems with ATIF. Risk is
+disabling ATIF on lying firmware instead of crashing. That is the right
+stable tradeoff.
+
+### Concerns
+ATPX 2/2 is not required. ATCS/radeon still have the old pattern; out of
+scope. No extra 6.18 prerequisites.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from `git show 80c7d7ab1fe03` /
-  upstream `c5a8fc2abe05`; no Fixes:/syzbot/Cc: stable; Link to msgid
-- [Phase 2] Diff is +17 lines in `byt_rt5651_quirk_table[]` only;
-  compared flags to `BYT_RT5651_DEFAULT_QUIRKS` (diff is OVCD_SF_1P0 vs
-  0.75)
-- [Phase 2] Confirmed `dmi_check_system()` stops when callback returns
-  non-zero (`drivers/firmware/dmi_scan.c`)
-- [Phase 3] `git blame -L 399,423 v6.18.57 --
-  sound/soc/intel/boards/bytcr_rt5651.c`: Hi8 Pro entry from 2018 Hans
-  de Goede
-- [Phase 3] `git show a0d1d867c262f`: MONO_SPEAKER exists because stereo
-  mix on a mono amp garbles centred audio
-- [Phase 3] `git log --oneline --author='Jasper Firth' --
-  sound/soc/intel/boards/`: only this commit
-- [Phase 3] Flag macros present in `git show
-  v6.18.57:sound/soc/intel/boards/bytcr_rt5651.c`
-- [Phase 4] `b4 dig -c c5a8fc2abe05...` → lore msgid; `-a` v1 only; `-w`
-  ASoC/Intel/Hans de Goede CCs; `-m` two-message thread, Mark Brown
-  applied, no NAK
-- [Phase 4] Patchew and LKML copies of the patch and apply mail
-- [Phase 4] Stable-list search did not find this subject
-- [Phase 5] `dmi_check_system` call at line 1024 of
-  `snd_byt_rt5651_mc_probe`; platform driver `bytcr_rt5651`
-- [Phase 5] HiBook analog in `touchscreen_dmi.c` lines 1197–1204 (Hampoo
-  + Cherry Trail CR + BIOS date)
-- [Phase 6] `git describe HEAD` v6.18.57-155-gcdf239ca885b2; `make
-  kernelversion` 6.18.57
-- [Phase 6] `git show v6.18.57:...` has Hi8 Pro then Vi8 Plus; patch
-  dry-run succeeded at line 409 (offset -1)
-- [Phase 6] `git log v6.18..v6.18.57 --
-  sound/soc/intel/boards/bytcr_rt5651.c` empty — no prior alternate fix
-- [Phase 8] Failure mode from commit text + MONO_SPEAKER history: broken
-  speaker/HP/button, not oops
-- UNVERIFIED: uniqueness of the DMI triple across all Hampoo Cherry
-  Trail products; lore.kernel.org HTML (403)
+- [Phase 1] Tags: author SOB, Claude Assisted-by, Alex Deucher Acked-
+  by/SOB; no Fixes/Reported-by/syzbot
+- [Phase 2] Diff: +34/−34 in `amdgpu_acpi.c`; length checks in
+  `amdgpu_atif_call`; callers pass sizeof/offsetof
+- [Phase 2] Struct sizes: 12, offsetof 10, offsetof 10, 13 match old
+  magic constants
+- [Phase 3] blame: size/memcpy from `d38ceaf99ed0` (2015); type check
+  `c9b7c809b89f2` (in 6.18.53)
+- [Phase 3] `git merge-base --is-ancestor d38ceaf99ed0 v6.18.53` true;
+  `c9b7c809b89f2` true; this commit false
+- [Phase 3] ATPX sibling `9d367fab451d9` is a different file; not a
+  dependency
+- [Phase 4] `b4 dig` failed (lore error). Thread: mail-archive
+  msg145004, series 1/2. Pulled in drm-next-7.3
+- [Phase 4] lore/stable 403; UNVERIFIED whether stable@ discussed this
+  SHA
+- [Phase 5] Callers: probe via `amdgpu_acpi_detect`, ACPI notify via
+  `amdgpu_atif_handler`
+- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
+  Makefile 6.18.53
+- [Phase 6] `git diff v6.18.53 <commit> -- amdgpu_acpi.c` equals this
+  patch (clean apply)
+- [Phase 8] Failure mode: heap OOB read / oops; severity HIGH
+- UNVERIFIED: exact To/Cc list (`b4 dig -w` unavailable)
 
 **YES**
 
- sound/soc/intel/boards/bytcr_rt5651.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 68 ++++++++++++------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index ca540a66f22ce..723acb58e248e 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -409,6 +409,23 @@ static const struct dmi_system_id byt_rt5651_quirk_table[] = {
- 					BYT_RT5651_HP_LR_SWAPPED |
- 					BYT_RT5651_MONO_SPEAKER),
- 	},
-+	{
-+		/* Chuwi Hi8 (CWI513) with a BIOS using generic DMI strings */
-+		.callback = byt_rt5651_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Cherry Trail CR"),
-+			/* Above matches are too generic, add bios-date match */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/21/2016"),
-+		},
-+		.driver_data = (void *)(BYT_RT5651_MCLK_EN |
-+					BYT_RT5651_JD1_1 |
-+					BYT_RT5651_OVCD_TH_2000UA |
-+					BYT_RT5651_OVCD_SF_1P0 |
-+					BYT_RT5651_IN2_MAP |
-+					BYT_RT5651_HP_LR_SWAPPED |
-+					BYT_RT5651_MONO_SPEAKER),
-+	},
- 	{
- 		/* Chuwi Vi8 Plus (CWI519) */
- 		.callback = byt_rt5651_quirk_cb,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+index 36f429e7f2027..5a04c20a5fd15 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -138,13 +138,15 @@ static struct amdgpu_acpi_priv {
+  * @atif: atif structure
+  * @function: the ATIF function to execute
+  * @params: ATIF function params
++ * @min_size: minimum size of the expected output buffer in bytes
+  *
+  * Executes the requested ATIF function (all asics).
+  * Returns a pointer to the acpi output buffer.
+  */
+ static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
+ 					   int function,
+-					   struct acpi_buffer *params)
++					   struct acpi_buffer *params,
++					   size_t min_size)
+ {
+ 	acpi_status status;
+ 	union acpi_object *obj;
+@@ -187,6 +189,28 @@ static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
+ 		return NULL;
+ 	}
+ 
++	if (obj->buffer.length < sizeof(u16)) {
++		DRM_DEBUG_DRIVER("ATIF buffer too small to hold size field: %u\n",
++				 obj->buffer.length);
++		kfree(obj);
++		return NULL;
++	}
++
++	if (obj->buffer.length < *(u16 *)obj->buffer.pointer) {
++		DRM_DEBUG_DRIVER("ATIF buffer length mismatch: reported %u, actual %u\n",
++				 *(u16 *)obj->buffer.pointer,
++				 obj->buffer.length);
++		kfree(obj);
++		return NULL;
++	}
++
++	if (*(u16 *)obj->buffer.pointer < min_size) {
++		DRM_DEBUG_DRIVER("ATIF buffer too small: expected %zu, got %u\n",
++				 min_size, *(u16 *)obj->buffer.pointer);
++		kfree(obj);
++		return NULL;
++	}
++
+ 	return obj;
+ }
+ 
+@@ -248,19 +272,14 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
+ 	size_t size;
+ 	int err = 0;
+ 
+-	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL);
++	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL,
++				sizeof(output));
+ 	if (!info)
+ 		return -EIO;
+ 
+ 	memset(&output, 0, sizeof(output));
+ 
+-	size = *(u16 *) info->buffer.pointer;
+-	if (size < 12) {
+-		DRM_INFO("ATIF buffer is too small: %zu\n", size);
+-		err = -EINVAL;
+-		goto out;
+-	}
+-	size = min(sizeof(output), size);
++	size = min(sizeof(output), (size_t)*(u16 *)info->buffer.pointer);
+ 
+ 	memcpy(&output, info->buffer.pointer, size);
+ 
+@@ -270,7 +289,6 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
+ 	amdgpu_atif_parse_notification(&atif->notifications, output.notification_mask);
+ 	amdgpu_atif_parse_functions(&atif->functions, output.function_bits);
+ 
+-out:
+ 	kfree(info);
+ 	return err;
+ }
+@@ -295,20 +313,14 @@ static int amdgpu_atif_get_notification_params(struct amdgpu_atif *atif)
+ 	int err = 0;
+ 
+ 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_PARAMETERS,
+-				NULL);
++				NULL, offsetof(struct atif_system_params, command_code));
+ 	if (!info) {
+ 		err = -EIO;
+ 		goto out;
+ 	}
+ 
+-	size = *(u16 *) info->buffer.pointer;
+-	if (size < 10) {
+-		err = -EINVAL;
+-		goto out;
+-	}
+-
+ 	memset(&params, 0, sizeof(params));
+-	size = min(sizeof(params), size);
++	size = min(sizeof(params), (size_t)*(u16 *)info->buffer.pointer);
+ 	memcpy(&params, info->buffer.pointer, size);
+ 
+ 	DRM_DEBUG_DRIVER("SYSTEM_PARAMS: mask = %#x, flags = %#x\n",
+@@ -371,20 +383,14 @@ static int amdgpu_atif_query_backlight_caps(struct amdgpu_atif *atif)
+ 
+ 	info = amdgpu_atif_call(atif,
+ 		ATIF_FUNCTION_QUERY_BRIGHTNESS_TRANSFER_CHARACTERISTICS,
+-		&params);
++		&params, offsetof(struct atif_qbtc_output, data_points));
+ 	if (!info) {
+ 		err = -EIO;
+ 		goto out;
+ 	}
+ 
+-	size = *(u16 *) info->buffer.pointer;
+-	if (size < 10) {
+-		err = -EINVAL;
+-		goto out;
+-	}
+-
+ 	memset(&characteristics, 0, sizeof(characteristics));
+-	size = min(sizeof(characteristics), size);
++	size = min(sizeof(characteristics), (size_t)*(u16 *)info->buffer.pointer);
+ 	memcpy(&characteristics, info->buffer.pointer, size);
+ 
+ 	atif->backlight_caps.caps_valid = true;
+@@ -422,24 +428,18 @@ static int amdgpu_atif_get_sbios_requests(struct amdgpu_atif *atif,
+ 	int count = 0;
+ 
+ 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_BIOS_REQUESTS,
+-				NULL);
++				NULL, sizeof(*req));
+ 	if (!info)
+ 		return -EIO;
+ 
+-	size = *(u16 *)info->buffer.pointer;
+-	if (size < 0xd) {
+-		count = -EINVAL;
+-		goto out;
+-	}
+ 	memset(req, 0, sizeof(*req));
+ 
+-	size = min(sizeof(*req), size);
++	size = min(sizeof(*req), (size_t)*(u16 *)info->buffer.pointer);
+ 	memcpy(req, info->buffer.pointer, size);
+ 	DRM_DEBUG_DRIVER("SBIOS pending requests: %#x\n", req->pending);
+ 
+ 	count = hweight32(req->pending);
+ 
+-out:
+ 	kfree(info);
+ 	return count;
+ }
 -- 
 2.53.0
 
