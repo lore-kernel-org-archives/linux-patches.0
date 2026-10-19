@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F01556FE2;
-	Mon, 19 Oct 2026 13:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8311C5586E4;
+	Mon, 19 Oct 2026 13:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418228; cv=none; b=I6Yoh8koSkmCxUbL7Og8sIusq/E8nQ1/nTwlMsSnHA07Rfb6ITq5dejNs2opeJlqbFG/XFs7cgyrcnkDekGL07Le9vB03Y+2XHb5O4drpNpDZWeVJm8VAv7j48+4OzWZS/BpHz6zeg74E7LItH7I6Y9oOUVXv/wZDdT3X8ZncTc=
+	t=1792418230; cv=none; b=Zo9X6OT/Faz/pUQb7g1wtPa6/g6+rkrskdkXWuLPhzPmZpTR/y5ItnDkalloVMUEe6zNrNp6NcwXrX4Ln3CkkA3WgNRdrMkXOQBnKZfkgiFogP9KvJ2HrQ+N5hTqdBMF61aGgzNEYu3aGOmMLOTBve+SMnHBDbwI2m52v/5hyYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418228; c=relaxed/simple;
-	bh=yeCb1al2BCBgFbx6wfAyiaIkI8CN1Tuwop2o9ZU78Tc=;
+	s=arc-20240116; t=1792418230; c=relaxed/simple;
+	bh=SCEIpo3ag9euaCtixW5igfDR6iGxfBzuufmmCTw0c0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eP6nM0h8GOmAyvXv9OjSthPxQkOEG9eRkXBRkbkU8GCpCjDU+qGZceRKNhsulzUPntXIauytXsTHHKCleNdcfX070WRPIJWr7dLQIaNg+OKJ3aDNdxqHlNcoXqR3vz3WjSCuDRjPu2rOQuLh6JVOd4xWqEBBdUgbCmXVJLaNu1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjybZ6Cv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PubCF9oZkoo8sU+F+coW2+nVwtjI/Z2DP+wk4J+NayF1cIoT6M+sow+a7OV3UMp1OHeFjA8F9o0w88egAO3R7zVUpbulF+bYGUkhjUXfZYLaY8n4fcJZGMUbBJw6lUXWw/HmKVYjUJ2PRgR3MD758n+dbOTNxVLDCsyXcKXk388=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HjXidz9M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjybZ6Cv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651B01F000C4;
-	Mon, 19 Oct 2026 13:57:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HjXidz9M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198EB1F000C5;
+	Mon, 19 Oct 2026 13:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418225;
-	bh=q0WncpZ2lwOwyYBAfu9Lpl/1a+NyHwxI7yzZHen09Mw=;
+	s=k20260515; t=1792418227;
+	bh=Tsa+O50cD+IE1OIK+QCJ95up2t7XPcqoYagvI7nqtjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjybZ6CvNawJUeRhiHYI90tPzSGbshL8ZltmOmoHGn52OPqvqvDyAlFTX45wCjuTd
-	 ZKUymQ7JfBqvNEoJjtHg/X+2NwQQwplpT7w6iLk22XCv+OaTCzpOQwEAk45iWcSgEZ
-	 LJy8W/Yl3G9IhybWfik0eixwXZ3CZSdKKkPdAIWTxkzffOWHD2SydSxkN/o7xxPOZn
-	 CtRfLMwF74gE2UVf9RF7Z4kwRmXr0LKv2Wktyhcv++clRkk/GKU06W5etrlMMxQ3B2
-	 eJDj+tAYpFVHDwVFVUCuP6UGk8fl0TLvOY932KkFruFfku660fnrTUngJ23oxa35JE
-	 P96rgMXiwWxbw==
+	b=HjXidz9Mae+0I7CSQ/bRyzQOeNNqQYthFS1Myr/9q/GH3y3LN9tVelpZHNK8CGOSt
+	 1IlmviB+7/GJ5PhNz8wjENcZi555qp4iBEgy3BeA3PAI3IJBfhvht+ZPJMKzFFkBj4
+	 c6mSXtktj4WA64vNUHoYHrZSa6Z4V2iI3c65nXb5OnWd6GIWkezTl62LTfMR7n4Ak1
+	 KdfK5b6LSqGIBB3ftkqhf/Duk9UsINQtVvQVu7FfDCSrO+W8Yag/yQBNaGjraWmrpN
+	 mNyKxfaUhbyeOh725/AEf/kipf5MkFPGN+eXOR7B+t/9dHIC0hYDL8p4fmKdxInWZ4
+	 36T7losJO4+cQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Reinhard Speyerer <rspmn@arcor.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>,
-	bjorn@mork.no,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	chunfeng.yun@mediatek.com,
+	gregkh@linuxfoundation.org,
 	linux-usb@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: usb: qmi_wwan: add Rolling Wireless RN947R
-Date: Mon, 19 Oct 2026 09:46:32 -0400
-Message-ID: <20261019135441.1420968-101-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] usb: mtu3: Fix double dereference in TP_printk
+Date: Mon, 19 Oct 2026 09:46:33 -0400
+Message-ID: <20261019135441.1420968-102-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,406 +58,458 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-[ Upstream commit 7375d38364a9aa66fb31716bcefef38aecad75d8 ]
+[ Upstream commit cfb3293c4573289f11f913611f530ea6b1926d67 ]
 
-Add Rolling Wireless RN947R 0x9300 composition:
+Paul reported kernel splat:
 
-DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_set_halt has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] ------------[ cut here ]------------
+[    0.000000] Event mtu3_gadget_ep_set_halt has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] WARNING: kernel/trace/trace_events.c:420 at test_double_dereference+0x144/0x14c, CPU#0: swapper/0/0
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.3.0-rc1 #15247 PREEMPT
+[    0.000000] Hardware name: linux,dummy-virt (DT)
+[    0.000000] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.000000] pc : test_double_dereference+0x144/0x14c
+[    0.000000] lr : test_double_dereference+0x144/0x14c
+[    0.000000] sp : ffffc80aa7633bf0
+[    0.000000] x29: ffffc80aa7633bf0 x28: ffffc80aa7c0f047 x27: 000508b58019388f
+[    0.000000] x26: 0000000000000003 x25: 0000000000000007 x24: ffffc80aa5fceff8
+[    0.000000] x23: ffffc80aa7c0f05a x22: ffffc80aa64edfe8 x21: ffffc80aa7c0fce8
+[    0.000000] x20: ffffc80aa7c0f047 x19: 0000000000000013 x18: 0000000000000001
+[    0.000000] x17: 6572656420656c62 x16: 756f642073616820 x15: 746c61685f746573
+[    0.000000] x14: 0000000000000000 x13: ffff000139d90000 x12: 0000000000000045
+[    0.000000] x11: 00000000000000cf x10: ffff00013f546428 x9 : ffff000139d90000
+[    0.000000] x8 : 3fffffffffffc000 x7 : 0000000000000001 x6 : 0000000000000001
+[    0.000000] x5 : ffff00013f4e6440 x4 : 0000000000000000 x3 : 0000000000000000
+[    0.000000] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffc80aa764a700
+[    0.000000] Call trace:
+[    0.000000]  test_double_dereference+0x144/0x14c (P)
+[    0.000000]  trace_event_raw_init+0x37c/0x5d8
+[    0.000000]  event_init+0x34/0xc0
+[    0.000000]  trace_event_init+0xec/0x588
+[    0.000000]  trace_init+0x24/0x6e0
+[    0.000000]  start_kernel+0x4a0/0x8ec
+[    0.000000]  __primary_switched+0x88/0x90
+[    0.000000] irq event stamp: 0
+[    0.000000] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+[    0.000000] hardirqs last disabled at (0): [<0000000000000000>] 0x0
+[    0.000000] softirqs last  enabled at (0): [<0000000000000000>] 0x0
+[    0.000000] softirqs last disabled at (0): [<0000000000000000>] 0x0
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_disable has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_enable has double dereference in TP_printk: &REC->gpd_ring->dma
 
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=9300 Rev= 0.00
-S:  Manufacturer=Rolling Wireless
-S:  Product=RN947R
-S:  SerialNumber=xxxxxxxxxxx
-C:* #Ifs= 7 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=21 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=22 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Which also observed by Mark and myself.
 
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Link: https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The splat it result of new check introduced by b5cc230af5e5 ("tracing:
+Warn when an event dereferences a pointer in TP_printk()") which
+correctly catches issue with %pad dereferencing the address saved in
+the ring buffer. TP_fast_assign() logic gets executed when the
+tracepoint is triggered, however the TP_printk() is executed when the
+user reads the trace buffer which could be seconds, minutes, hours,
+days, even months later and nothing guarantee that __entry->gpd_ring
+pointer will still be pointing to what it was when it was recorded.
+
+Fix the issue by capturing immediate value of gpd_ring.dma when trace
+point is triggered.
+
+Reported-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line USB ID addition to the existing `qmi_wwan` driver for
-Rolling Wireless RN947R (`33f8:9300`). That is a standard stable
-exception, and the ID table plus DTR quirk already exist in this 6.18.y
-tree.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+Record: **[usb/mtu3]** **[Fix]** Double dereference in `TP_printk` for
+the `mtu3_log_ep` trace class
+(`mtu3_gadget_ep_enable/disable/set_halt`).
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [net: usb: qmi_wwan] [add] [USB device ID for Rolling Wireless
-RN947R]
-
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: Tags**
 Record:
-- Link: https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
-- Signed-off-by: Reinhard Speyerer <rspmn@arcor.de> (author)
-- Signed-off-by: Jakub Kicinski <kuba@kernel.org> (netdev maintainer,
-  applied)
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by
-- No Cc: stable (expected)
-- Ignored pipeline SOB / Upstream commit marker
+- **Reported-by:** Paul E. McKenney
+- **Tested-by:** Mark Rutland
+- **Reviewed-by:** Steven Rostedt (tracing maintainer)
+- **Signed-off-by:** Vladimir Murzin (author); Paul E. McKenney (merged
+  via his tree)
+- **No Fixes:** tag (expected for this review)
+- **No Cc: stable** (expected)
+- No syzbot, no CVE, no bugzilla Link
+- Ignore pipeline “Upstream commit” / Sasha Levin SOB
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Notable: three independent observers (Paul, Mark, the author). Rostedt
+reviewed it.
+
+**Step 1.3: Body**
 Record:
-- Bug description: RN947R USB WWAN modem (`Vendor=33f8 ProdID=9300`) is
-  not in `qmi_wwan`’s ID table, so the RMNET/QMI network function does
-  not bind.
-- Symptom: no `qmi_wwan` netdev for this modem; cellular data does not
-  come up out of the box.
-- Version information: none stated.
-- Root cause: missing USB ID / interface mapping. `lsusb -t`-style dump
-  shows If#=8 Cls=ff Sub=ff Prot=50 as the QMI/RMNET function.
-  Composition is DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL.
+- **Bug:** `TP_printk` uses `%pad` with `&REC->gpd_ring->dma`, i.e. it
+  follows a pointer stored in the ring buffer when the trace is printed,
+  not when it is recorded.
+- **Symptom that motivated the patch:** boot `WARNING` in
+  `test_double_dereference()` on 7.3.0-rc1 (`linux,dummy-virt`), events
+  `mtu3_gadget_ep_set_halt/disable/enable`.
+- **Root cause (author):** check added by `b5cc230af5e5` (“tracing: Warn
+  when an event dereferences a pointer in TP_printk()”).
+  `TP_fast_assign()` runs at the tracepoint; `TP_printk()` can run much
+  later, when `__entry->gpd_ring` may be stale.
+- **Fix:** snapshot `mep->gpd_ring.dma` into a `dma_addr_t` field at
+  assign time and print `&__entry->gpd_ring_dma`.
+- **Versions in the message:** 7.3.0-rc1 only. Mailing list later says
+  the splat was still present in 7.3-rc5/rc6.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a hidden crash/leak fix. It is an explicit device-ID
-enablement, which stable rules treat as a first-class exception.
+Linus’s merge of `8fc6e594884a` describes the same bug as pre-existing:
+it can dump garbage traces because `TP_printk()` may run after the
+pointed-to memory is gone. Extra tracing checks only **exposed** it.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. It is an explicit tracing UAF/stale-pointer fix. The
+boot WARN is how it was found; the real defect is delayed dereference of
+a saved kernel pointer.
 
-Step 2.1: INVENTORY THE CHANGES
+---
+
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
 Record:
-- File: `drivers/net/usb/qmi_wwan.c` (+1 / -0)
-- Function/table: `products[]` (`static const struct usb_device_id`)
-- Scope: single-file, one-line surgical ID addition
+- File: `drivers/usb/mtu3/mtu3_trace.h` only (+3 / −1; 4-line class)
+- Function/class: `DECLARE_EVENT_CLASS(mtu3_log_ep)` (shared by
+  `mtu3_gadget_ep_enable`, `mtu3_gadget_ep_disable`,
+  `mtu3_gadget_ep_set_halt`)
+- Scope: single-file surgical tracing fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: Code flow**
+Record: **Before:** `TP_fast_assign` stores `__entry->gpd_ring =
+&mep->gpd_ring`. `TP_printk` prints `%p/%pad` with `__entry->gpd_ring,
+&__entry->gpd_ring->dma`. **After:** also stores `__entry->gpd_ring_dma
+= mep->gpd_ring.dma` and prints `&__entry->gpd_ring_dma`. Affected path
+is trace **print**, not gadget I/O.
+
+Verified in this tree’s `lib/vsprintf.c` `address_val()`: `%pad` does
+`*(const dma_addr_t *)addr`. The old argument therefore both follows
+`gpd_ring` and then dereferences `.dma`.
+
+**Step 2.3: Bug mechanism**
+Record: **Memory safety / delayed pointer dereference in tracing (UAF or
+garbage).** `%p` of the saved pointer is safe; `%pad` is not. `gpd_ring`
+is embedded in `struct mtu3_ep` (`mtu3.h`). `mtu3_gpd_ring_free()`
+`memset`s the ring on disable; the `mtu3_ep` itself is freed on unbind.
+Reading traces after unbind is a use-after-free. Reading after disable
+but before unbind can print a later (zeroed) DMA address instead of the
+recorded one.
+
+**Step 2.4: Fix quality**
+Record: Obviously correct and minimal. `%pad` still gets a `dma_addr_t
+*`, now into the ring-buffer entry. The missing semicolon on the new
+assign is harmless: `TP_fast_assign` is expanded with a trailing `;`. No
+API/locking/hot-path change. Regression risk is very low. The leftover
+`__field(struct mtu3_gpd_ring *, gpd_ring)` is still only printed with
+`%p`.
+
+---
+
+## Phase 3: Git history
+
+**Step 3.1: Blame**
+Record: Buggy `mtu3_log_ep` pattern comes from `83374e035b628` (“usb:
+mtu3: add tracepoints to help debug”, Chunfeng Yun, 2019-03-21). Present
+in this tree (`git merge-base --is-ancestor 83374e035b628 HEAD`
+succeeded). Long-lived, not recent code.
+
+**Step 3.2: Fixes: tag**
+Record: None on the merged commit. An earlier unused submission
+(Shixiong Ou, 2026-08-28) tagged `Fixes: 83374e035b62`. That introducing
+commit **is** in this tree.
+
+**Step 3.3: File history**
+Record (path-limited log):
+- `83374e035b628` add tracepoints
+- later style/`__vstring`/`__assign_str` churn
+- this fix
+
+Standalone; not patch X/Y. No prerequisite refactor in this file beyond
+what 6.18 already has (`__assign_str(name)` without a second argument is
+already here).
+
+**Step 3.4: Author**
+Record: Vladimir Murzin is not the mtu3 maintainer (that is Chunfeng
+Yun, CC’d). He is an ARM engineer fixing a splat he, Paul, and Mark hit.
+Rostedt reviewed. Paul merged it when USB maintainers were slow (splat
+still in 7.3-rc6).
+
+**Step 3.5: Dependencies**
+Record: None. Uses existing `dma_addr_t`, `TP_*`, and
+`mep->gpd_ring.dma`. No new tracing helpers. `b5cc230af5e5` is the
+detector, **not** a prerequisite for the fix.
+
+---
+
+## Phase 4: Mailing list / external
+
+**Step 4.1: Original discussion**
 Record:
-- Before: `33f8:9300` is unmatched; USB core does not probe `qmi_wwan`
-  for interface 8.
-- After: `QMI_QUIRK_SET_DTR(0x33f8, 0x9300, 8)` matches
-  vendor/product/interface 8 and sets `qmi_wwan_info_quirk_dtr`.
-- Path: USB enumeration / driver probe only. No error-path or hot-path
-  logic change.
+- `b4 dig -c cfb3293c4573289f11f913611f530ea6b1926d67` → https://patch.m
+  sgid.link/20260922103756.104846-1-vladimir.murzin@arm.com
+- `b4 dig -a`: single revision (v1 only)
+- Thread: ping for 7.3-rc5/rc6 splat; Paul offered to merge because the
+  WARN broke his tests; later merged and Linus pulled it
+- No NAK. No reviewer asked for `Cc: stable`
+- lore.kernel.org fetch returned 403; thread recovered via `b4 dig -m`
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: linux-usb, linux-arm-kernel, linux-mediatek, linux-kernel,
+Chunfeng Yun, Greg KH, Steven Rostedt, Paul McKenney, Mark Rutland.
+Right lists and maintainers.
+
+**Step 4.3: Bug report**
+Record: Reproduced by Paul, Mark, and Vladimir on 7.3-rc1+ (dummy-virt).
+Independent earlier patch from Shixiong Ou describes the same WARN and
+the same stale-pointer/UAF. Severity for **those** kernels is a boot
+WARN whenever `CONFIG_USB_MTU3` is built. That WARN is **not** in
+6.18.y.
+
+**Step 4.4: Series**
+Record: Standalone. Duplicate independently submitted by Shixiong Ou
+(same approach, field named `gpd_dma`). Murzin’s version is what merged.
+
+**Step 4.5: Stable list**
+Record: No useful hit on lore stable for this subject. Not a documented
+“do not backport.”
+
+---
+
+## Phase 5: Semantic / call graph
+
+**Step 5.1: Functions**
+Record: `mtu3_log_ep` class; events `mtu3_gadget_ep_enable`,
+`mtu3_gadget_ep_disable`, `mtu3_gadget_ep_set_halt`.
+
+**Step 5.2: Callers**
+Record (this tree):
+- `mtu3_gadget_ep_enable()` — `drivers/usb/mtu3/mtu3_gadget.c:202`
+- `mtu3_gadget_ep_disable()` — line 214 (before `mtu3_ep_disable()` /
+  `mtu3_gpd_ring_free()`)
+- `mtu3_gadget_ep_set_halt()` — line 404
+
+These are USB gadget ep ops: enable/disable/halt from gadget drivers /
+configfs. Common on MediaTek gadget/OTG, not a syscall of its own.
+
+**Step 5.3: Callees**
+Record: TRACE_EVENT assign/print only. No alloc/lock/I/O in the changed
+code. `%pad` → `address_val()` → dereference `dma_addr_t *`.
+
+**Step 5.4: Reachability**
+Record: Recording: gadget ep enable/disable/halt with these events on.
+Printing: reading the trace buffer. UAF: print after `mtu3_ep` is freed
+(driver unbind). Boot WARN: only if `test_double_dereference()` exists
+(it does not here). Unprivileged users normally cannot enable tracefs.
+
+**Step 5.5: Similar patterns**
+Record: Other mtu3 events print saved pointers with `%p` only (safe).
+Same class already in this 6.18.y tree: `0b0d2f9db2406` (“eth: ice:
+don't dereference pointers from TP_printk()”), also written against
+`b5cc230af5e5`, and it **is** an ancestor of `v6.18.57`.
+
+---
+
+## Phase 6: This checkout only
+
+**Step 6.1: Does the buggy code exist?**
+Record: **Yes, in v6.18.57.** `git describe HEAD` →
+`v6.18.57-155-gcdf239ca885b2`; `make kernelversion` → **6.18.57**.
+v6.18.57 `mtu3_trace.h` still has `__entry->gpd_ring,
+&__entry->gpd_ring->dma`. Introduced 2019. `git merge-base --is-ancestor
+dff6c93cf7131 v6.18.57` failed (fix not in 6.18.57).
+`test_double_dereference` is **absent** from `kernel/trace/`
+(`b5cc230af5e5` is not an ancestor of HEAD).
+
+**Step 6.2: Backport difficulty**
+Record: **Clean apply.** `git diff v6.18.57 dff6c93cf7131 --
+drivers/usb/mtu3/mtu3_trace.h` is exactly this 4-line change. Context
+matches 6.18 (`__assign_str(name)` already present).
+
+**Step 6.3: Related fix already here?**
+Record: No other mtu3 `TP_printk` fix in `v6.18..v6.18.57`. The ice
+analogue **is** already in 6.18.57. That does not replace this mtu3 bug.
+
+---
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: **drivers/usb/mtu3** — MediaTek USB3 dual-role. Criticality:
+**PERIPHERAL/IMPORTANT for MTK** (`CONFIG_USB_MTU3`, `depends on
+ARCH_MEDIATEK || COMPILE_TEST`). Tracepoints compiled with the driver
+when `CONFIG_TRACEPOINTS` is on.
+
+**Step 7.2**
+Record: Mature driver (tracepoints since 2019). Recent 6.18.y mtu3 fixes
+include DMA unmap on queue failure and suspend-with-gadget. Not staging.
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+Record: MediaTek USB3 gadget users who enable these ftrace events and
+later print the buffer. Distro kernels that build mtu3 for
+`COMPILE_TEST` do **not** get the 7.3 boot WARN here, because that check
+is missing.
+
+**Step 8.2: Trigger**
+Record: Not every boot on 6.18.y. Needs `CONFIG_USB_MTU3` + tracepoints
++ enable these events + later print. UAF additionally needs the
+endpoint/device object to have been freed. Not unprivileged. The 7.3
+boot WARN fires even on dummy-virt; **that path does not exist in this
+tree**.
+
+**Step 8.3: Failure mode**
 Record:
-- Category: hardware enablement / USB device ID (stable exception 1).
-- Mechanism: `QMI_QUIRK_SET_DTR` expands to
-  `USB_DEVICE_INTERFACE_NUMBER` plus DTR quirk `driver_info`. Interface
-  8 matches the dump (`Prot=50`, QMI/RMNET). DTR quirk is the same
-  pattern as Rolling RW101 (`33f8:0104`) and other Qualcomm USB WWAN
-  entries.
+- On 7.3+: boot `WARNING` — **does not apply to 6.18.57**
+- On this tree: delayed deref → **garbage DMA address in traces**, or
+  **UAF/oops** if `mtu3_ep` was freed — severity **HIGH** when hit,
+  **MEDIUM** overall because the trigger is a debug path
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: VID/PID/interface taken from a real device dump;
-  match is interface-number-specific so DIAG/ADB/NMEA/MODEM/QDSS/ADPL
-  are not claimed.
-- Minimal: one table entry, no API or structure change.
-- Regression risk: very low; only `33f8:9300` is affected. Wrong
-  interface number would be the main risk, and the dump confirms If#=8.
+**Step 8.4: Risk vs benefit**
+Record: **Benefit:** closes a real stale-pointer/UAF in mtu3 gadget
+traces; same class already taken for ice on this series. **Risk:** very
+low (3 insertions, print-time only). Ratio favors backport.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Insertion sits next to Rolling RW101: `d362046021ea12`
-  (“net:usb:qmi_wwan: support Rolling modules”, Vanillan Wang,
-  2024-04-16).
-- That RW101 ID is in this tree’s v6.18.57 base (`git merge-base --is-
-  ancestor d362046021ea1 v6.18.57` succeeded).
-- This is extending an existing vendor block, not introducing a new
-  driver.
+## Phase 9: Synthesis
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. This does not revert or repair a
-prior logic bug.
+**Step 9.1: Evidence**
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Recent `qmi_wwan` history is dominated by the same class of ID
-  additions (Quectel, Telit, MeiG, Fibocom, SIMCom).
-- No prerequisite refactor is required; `products[]` and
-  `QMI_QUIRK_SET_DTR` are long-standing.
-- Standalone: subject is not “patch X/Y”. `b4 dig -a` shows a single v1
-  patch.
+For:
+- Real delayed dereference of a kernel pointer from the trace buffer
+  (`%pad` confirmed to dereference)
+- Buggy code present in this 6.18.y tree since 2019
+- Small, obviously correct, applies cleanly
+- Reviewed by Rostedt; reported/tested by McKenney and Rutland
+- Same class (`TP_printk` must not follow saved pointers) already in
+  v6.18.57 for ice
+- No new API/feature; no series dependency
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record:
-- Reinhard Speyerer has prior `qmi_wwan` ID/work in this history (e.g.
-  Fibocom FG132 `64761c980cbf7`).
-- Not the listed maintainer; maintainer is Bjørn Mork (`MAINTAINERS`:
-  USB QMI WWAN NETWORK DRIVER). The patch was mailed to `bjorn@mork.no`.
+Against:
+- The boot splat that drove the patch **cannot happen here**
+  (`test_double_dereference` / `b5cc230af5e5` not in 6.18.y)
+- Debug/tracing path, MediaTek-specific, needs events enabled
+- Failure is often wrong trace text rather than a production USB failure
+- No `Cc: stable` in review (not a negative per the rules)
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Depends only on `QMI_QUIRK_SET_DTR` / `USB_DEVICE_INTERFACE_NUMBER`,
-  both present.
-- No companion `option.c` change is in this series. Serial AT/NMEA/DIAG
-  auto-bind is separate; this patch alone still enables the WWAN netdev.
-  Can apply standalone.
+Unresolved: lore.kernel.org HTTP 403 (thread read from `b4` mbox
+instead).
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** (Rostedt Reviewed-by, Mark
+   Tested-by, logic is local)
+2. Real bug that affects users? **PASS** (stale pointer / UAF when
+   traces are printed)
+3. Important (crash/security/corruption/deadlock)? **PASS** (UAF/oops
+   possible on print after free; garbage traces otherwise). The 7.3 boot
+   WARN is not the important part **for this tree**.
+4. Small and contained? **PASS** (one header, 4 lines)
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** (clean vs v6.18.57)
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 7375d38364a9aa66fb31716bcefef38aecad75d8` matched
-  https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
-- `b4 dig -a`: only v1, 2026-09-25, `[PATCH net] net: usb: qmi_wwan: add
-  Rolling Wireless RN947R`
-- Thread (saved via `b4 dig -m`): submission, then patchwork-bot
-  “applied to netdev/net.git (main) by Jakub Kicinski”. No NAK, no
-  review objections, no later revision.
-- No reviewer Cc: stable in the thread.
+**Step 9.3: Exception category**
+Record: None (not a device ID/quirk/DT/build/docs exception). It is a
+normal small bugfix.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To `bjorn@mork.no`, Cc `netdev@vger.kernel.org`.
-Subsystem maintainer was on To. Applied by netdev maintainer. No
-explicit Reviewed-by in the committed message.
+**Step 9.4: Decision**
+The 7.3 boot WARN is not a reason to take this on 6.18.y. The reason to
+take it is the pre-existing `TP_printk` dereference, which **is** in
+this tree, is a real UAF/garbage-print bug, is a 4-line no-brainer, and
+matches a fix this series already accepted for ice.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Evidence of a real device is the author’s
-usb-devices dump (Manufacturer=Rolling Wireless, Product=RN947R,
-33f8:9300). User population is owners of that modem.
+---
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single-patch series. No `option.c` RN947R commit in this tree
-(`git log --grep=RN947R -- drivers/` only finds this qmi_wwan change).
-Web search did not find a matching option serial patch.
+## What this means for 6.18.y users
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED. `WebFetch` of lore.kernel.org/stable/?q=RN947R
-returned 403. No local evidence this ID was rejected for stable.
+`mtu3_log_ep` stores `&mep->gpd_ring` and later does `%pad` on
+`&gpd_ring->dma`. Print can happen long after disable/unbind. That is a
+real bug in this tree. The patch only snapshots `gpd_ring.dma` at event
+time. It does not change gadget behavior.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## Verification
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body edited. Data change in `products[]`, consumed
-as `qmi_wwan_driver.id_table`.
+- **[Phase 1]** Parsed tags: Reported-by Paul McKenney, Tested-by Mark
+  Rutland, Reviewed-by Steven Rostedt; no Fixes/Cc-stable
+- **[Phase 2]** Diff: +`gpd_ring_dma` field, assign `mep->gpd_ring.dma`,
+  print `&__entry->gpd_ring_dma`
+- **[Phase 2]** `%pad` in `lib/vsprintf.c` `address_val()`: `num =
+  *(const dma_addr_t *)addr`
+- **[Phase 2]** `struct mtu3_ep` has embedded `struct mtu3_gpd_ring
+  gpd_ring`; `mtu3_gpd_ring_free()` memsets it
+- **[Phase 3]** Blame: `83374e035b628` (2019) introduced the pattern;
+  ancestor of HEAD
+- **[Phase 3]** `git merge-base --is-ancestor b5cc230af5e5 HEAD` failed;
+  no `test_double_dereference` in this tree
+- **[Phase 3]** Author log on `drivers/usb/`: this commit plus unrelated
+  xhci work
+- **[Phase 4]** `b4 dig -c cfb3293c4573`: msgid
+  `20260922103756.104846-1-vladimir.murzin@arm.com`; v1 only
+- **[Phase 4]** `b4 dig -w`: USB/Mediatek lists, Greg KH, Chunfeng Yun,
+  Rostedt
+- **[Phase 4]** mbox: Paul merged after 7.3-rc5/rc6 pings; no NAK; no
+  stable nomination
+- **[Phase 4]** UNVERIFIED: live lore.kernel.org page (403)
+- **[Phase 5]** Callers: `mtu3_gadget_ep_enable/disable/set_halt` in
+  `mtu3_gadget.c`
+- **[Phase 6]** `git describe HEAD` = v6.18.57-155-gcdf239ca885b2;
+  kernelversion 6.18.57
+- **[Phase 6]** v6.18.57 still has `&__entry->gpd_ring->dma`; fix not an
+  ancestor of v6.18.57
+- **[Phase 6]** File diff vs v6.18.57 is exactly this patch (clean)
+- **[Phase 6]** ice TP_printk analogue `0b0d2f9db2406` **is** in
+  v6.18.57
+- **[Phase 8]** Boot WARN not reachable here; UAF/garbage on delayed
+  print is
 
-Step 5.2: TRACE CALLERS
-Record:
-- `products` -> `qmi_wwan_driver.id_table` -> USB core match ->
-  `qmi_wwan_probe()` -> `usbnet` bind path (`qmi_wwan_bind`).
-- Reachable on device plug-in / boot with the modem attached. Not
-  interrupt or syscall hot path for other devices.
-
-Step 5.3: TRACE CALLEES
-Record: Unchanged. Bind still uses existing `qmi_wwan_bind` / DTR
-handling (`qmi_wwan_change_dtr` when `QMI_WWAN_QUIRK_DTR` or `bcdUSB >=
-0x0201`). Dump has `Ver= 2.10`, so DTR would be set even with
-`QMI_FIXED_INTF`; `QMI_QUIRK_SET_DTR` matches sibling Rolling entries.
-
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace-visible: plugging the modem should create a QMI WWAN
-netdev and cdc-wdm control node. Trigger is ordinary USB enumeration,
-not an obscure debug path.
-
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same `QMI_QUIRK_SET_DTR(vend, prod, intf)` pattern is used
-throughout `products[]`, including `33f8:0104` RW101. This is the
-established way to add Qualcomm RMNET compositions.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Local tree: `git describe HEAD` / `make kernelversion` => **6.18.57**
-  (`VERSION=6 PATCHLEVEL=18 SUBLEVEL=57`).
-- `drivers/net/usb/qmi_wwan.c` exists; `CONFIG_USB_NET_QMI_WWAN` exists;
-  `QMI_QUIRK_SET_DTR` exists.
-- `git show v6.18.57:drivers/net/usb/qmi_wwan.c` has Rolling RW101
-  (`33f8:0104`) and **does not** have `33f8:9300` / RN947R. The missing-
-  ID problem exists on this 6.18.y base.
-
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. v6.18.57 context is identical around the insertion
-point:
-```
-{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
-{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
-```
-No refactor between mainline hunk and this tree.
-
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other RN947R ID in this tree’s `option.c` or `qmi_wwan.c` on
-the v6.18.57 base. No alternate fix for 33f8:9300.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [drivers/net/usb/qmi_wwan] [IMPORTANT for WWAN users, peripheral
-for everyone else]. Mature, non-staging driver used by laptops and
-embedded LTE/5G modems.
-
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained via ID-table additions. Maintainer Bjørn
-Mork; netdev applies these routinely. Mature ID-table design.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / hardware-specific. Only Rolling Wireless
-RN947R (`33f8:9300`). Other USB devices unchanged.
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Plug in the modem or boot with it attached. Common for those
-users. Unprivileged users do not get a new attack surface; this is bind-
-table matching.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Without the ID, the RMNET function stays unbound; WWAN
-networking does not work. Not a panic/UAF. Severity MEDIUM as a
-functional hardware-support miss, and it still qualifies under the
-device-ID exception.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: HIGH for RN947R users (modem network interface works); zero
-  effect on others.
-- Risk: VERY LOW (1 line, existing macro, existing driver,
-  VID:PID:interface match).
-- Ratio: strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Explicit stable exception: USB ID added to an existing driver.
-- One line, obviously correct, matches a real device dump (If#=8,
-  Prot=50).
-- Driver, macros, and Rolling vendor support already in 6.18.57.
-- Applies cleanly next to RW101.
-- Mailed to qmi_wwan maintainer, applied by netdev maintainer, v1 with
-  no NAK.
-- Same pattern as many other qmi_wwan ID additions.
-
-AGAINST:
-- Does not fix a crash, UAF, or corruption.
-- No Tested-by/Reviewed-by tags.
-- `option.c` still lacks `33f8:9300`, so serial ports may need a
-  separate ID or `new_id`; that does not block the netdev ID.
-
-UNRESOLVED:
-- lore.kernel.org WebFetch 403 for stable@ search.
-- Whether an option serial companion exists upstream later than this
-  tree.
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — dump-backed ID, applied to
-   netdev/net.
-2. Fixes a real bug that affects users? PASS — modem otherwise has no
-   QMI netdev.
-3. Important issue? PASS under device-ID exception (hardware enablement
-   for existing driver).
-4. Small and contained? PASS — +1 line in one table.
-5. No new features or APIs? PASS — no new driver, syscall, or userspace
-   API; ID only.
-6. Can apply to the local tree? PASS — v6.18.57 has identical context.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Device ID addition to existing driver (USB ID in `qmi_wwan`).
-
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.18.y tree. It is the standard, low-
-risk USB ID pattern stable already takes for `qmi_wwan`.
-
-What problem it solves: RN947R owners on 6.18.y get a working QMI/RMNET
-interface instead of an unbound USB function.
-
-Risk vs benefit: one matching table entry vs. a non-working WWAN modem.
-Benefit dominates.
-
-Concerns: serial `option` binding is incomplete without a separate ID;
-that is independent and not a reason to drop this netdev ID.
-
-Verification:
-- [Phase 1] Parsed subject/tags/body: device-ID add; Link to
-  patch.msgid.link; SOB Speyerer + Kicinski; no Fixes/syzbot.
-- [Phase 2] Diff: +1 line in `products[]`; `QMI_QUIRK_SET_DTR(0x33f8,
-  0x9300, 8)` matches dump If#=8.
-- [Phase 2] Read `QMI_QUIRK_SET_DTR` / `qmi_wwan_info_quirk_dtr` / DTR
-  logic at bind (lines 804–825, 938–958).
-- [Phase 3] `git blame` around insertion: RW101 from `d362046021ea12`
-  (2024); ancestor of v6.18.57.
-- [Phase 3] `git log --oneline -20 -- drivers/net/usb/qmi_wwan.c`: many
-  similar ID adds; this is standalone.
-- [Phase 3] `git log --author='Reinhard Speyerer' -- drivers/net/usb/`:
-  prior qmi_wwan ID work.
-- [Phase 4] `b4 dig -c 7375d38364a9…`: lore URL found; `-a` v1 only;
-  `-w` To bjorn@mork.no Cc netdev; `-m` thread is submit + applied-bot,
-  no NAK.
-- [Phase 4] lore WebFetch 403; used b4 mbox instead.
-- [Phase 4] WebSearch: no option.c RN947R companion found.
-- [Phase 5] `products` -> `qmi_wwan_driver.id_table` ->
-  `qmi_wwan_probe`; `MODULE_DEVICE_TABLE(usb, products)`.
-- [Phase 5] `option.c` has other 33f8 IDs, not 0x9300.
-- [Phase 6] `git describe HEAD` / Makefile: 6.18.57. `git show
-  v6.18.57:drivers/net/usb/qmi_wwan.c` has RW101, lacks RN947R. Apply
-  context matches.
-- [Phase 6] `git merge-base --is-ancestor 7375d38364a9 HEAD` is false
-  (upstream SHA not this history); evaluate against local 6.18.y code,
-  not that SHA.
-- [Phase 7] MAINTAINERS: USB QMI WWAN NETWORK DRIVER, M: Bjørn Mork.
-- [Phase 8] Failure mode: unbound RMNET on this VID:PID only; risk
-  confined to that device.
-- UNVERIFIED: stable@ lore discussion (HTTP 403).
+The fix is small, correct, already matches this tree’s context, and
+closes a real tracing UAF, not a 7.3-only WARN.
 
 **YES**
 
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/mtu3/mtu3_trace.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index aa66a30e56cdc..85d2daae805fd 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1453,6 +1453,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x9300, 8)}, /* Rolling RN947R RMNET */
- 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
+diff --git a/drivers/usb/mtu3/mtu3_trace.h b/drivers/usb/mtu3/mtu3_trace.h
+index 89870175d6356..9aaa167d69c13 100644
+--- a/drivers/usb/mtu3/mtu3_trace.h
++++ b/drivers/usb/mtu3/mtu3_trace.h
+@@ -224,6 +224,7 @@ DECLARE_EVENT_CLASS(mtu3_log_ep,
+ 		__field(unsigned int, flags)
+ 		__field(unsigned int, direction)
+ 		__field(struct mtu3_gpd_ring *, gpd_ring)
++		__field(dma_addr_t, gpd_ring_dma)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(name);
+@@ -235,12 +236,13 @@ DECLARE_EVENT_CLASS(mtu3_log_ep,
+ 		__entry->flags = mep->flags;
+ 		__entry->direction = mep->is_in;
+ 		__entry->gpd_ring = &mep->gpd_ring;
++		__entry->gpd_ring_dma = mep->gpd_ring.dma
+ 	),
+ 	TP_printk("%s: type %s maxp %d slot %d mult %d burst %d ring %p/%pad flags %c:%c%c%c:%c",
+ 		__get_str(name), usb_ep_type_string(__entry->type),
+ 		__entry->maxp, __entry->slot,
+ 		__entry->mult, __entry->maxburst,
+-		__entry->gpd_ring, &__entry->gpd_ring->dma,
++		__entry->gpd_ring, &__entry->gpd_ring_dma,
+ 		__entry->flags & MTU3_EP_ENABLED ? 'E' : 'e',
+ 		__entry->flags & MTU3_EP_STALL ? 'S' : 's',
+ 		__entry->flags & MTU3_EP_WEDGE ? 'W' : 'w',
 -- 
 2.53.0
 
