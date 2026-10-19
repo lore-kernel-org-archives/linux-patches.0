@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9BF5B67BC;
-	Mon, 19 Oct 2026 14:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B545B79A5;
+	Mon, 19 Oct 2026 14:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418445; cv=none; b=OdLXZW7DtyggFIPxNaXhbXikDz1vkyShciP0zoPgG2tK2e55GW6xfqC59Oe6vWTbPSgN8P+OdYXeWeGoqwMi+7GUKxWpCN9Dz9nBf4DgUIZimZEIOxsKceQw46TxMDgGiHLl+FtVe6q4cH2CIf0hduEjsSxedTaO3veS9LDoblQ=
+	t=1792418446; cv=none; b=MW3zXAK4j2948xJi1wHUY1SXyPllM+Nq3IugtEcepQj6G9gTjECvcIrNlVX++bbsfp4IQ7uzCN7e8t1asF4C/ybweCn0ThASQS3DwxNrlIh/D+l5uhTROLemf1hmODYWX1UszAfK38D45N4vi3ZYpvPxYU/OoTfh+8e2GSWYmRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418445; c=relaxed/simple;
-	bh=AJlwbBz5hu9qk6tcGpKoYI14lMBX3Ih9zAw/WqN8b9M=;
+	s=arc-20240116; t=1792418446; c=relaxed/simple;
+	bh=ZUHMONK+uqOvaTNGBGkHS4RNvg6YiKVzJZK+BpVJy14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ftMznlZDejBi29TghaXqIk7pKG2IVCXN8nErPYEfIUgiYyc/Uc3Ei8tsX/gp6ulYaEl3dWQZ9j7m04XcA7ghJGM81/6KLAuOYnhftl5UaflHI4XAqK5tWqnU9IvHrwlF3JQo8cGW9xt+MwsJv6ABergeNeMzHStbGaUi4AWtj1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PxLnJ/ej; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=edDpTU+ye/ifzkL8dakxUFOhhzx2YjdLl3xoJlqW7CktPNuDqLaWN3fIHtfdG9/6BSlCEpnDEjw/pQMuCOiRtHaIROMiBZSjUO6zqgQu9GZ7UGmgUB0nV1MDhJCrDfH/JqtoDnu9O+g0J8OR/mublBXrXDansTwxWDsV3i/u4Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1joZ6bx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PxLnJ/ej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A441F000CA;
-	Mon, 19 Oct 2026 14:00:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1joZ6bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E911F000C9;
+	Mon, 19 Oct 2026 14:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418442;
-	bh=xy3kLagWdTJP6ZfDbHny/OxnWXLKiOpy4Ok4SL2BMpQ=;
+	s=k20260515; t=1792418444;
+	bh=woDQFJcQQTqvpSJjN0218Yk/zCb6MZjy1tq5Gy92XUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PxLnJ/ej0mHR3ugRcGnN1bCZLaUIwFPQJCjO8GCcRh9jvH9mlEZ4iDvUt5meLJquk
-	 5k9OFVfJ2ikRyqqKTr7G7be5wGyOHNzm7FKcfgyl58zAoGsx3FNkapyZRs8ff1tWgV
-	 x/WVBJBdn/iHvO0EGLVpL34+qz1QWtEnjm2C0ZSYANpJ/rbQMz9uPNR0+RHJSDjz8W
-	 V++9h4WtwvY27VrKVw36HXFa/R2vnUR7ANFzm0HW2agZ95PpibBOY6octsMuVzhiTV
-	 pXlOUvWvybFnn6UVFYzUzB4UozKMSLJXYD9tt4jSzynvjOk/hRIGfoZ5CckIY+VO8B
-	 6I8cDbOEWjlfw==
+	b=N1joZ6bxi0uo4YHfc1m4bLFR2bZZf/Hs6W3J3sogV9OWXzbYCibD5P04Y4CREyJvr
+	 GNX0irBjDKd0ITF0E06PeMoyQ58h4Eld1J8r2oVmTf+tyMe9U6VfGonnB7Q+tTwWb8
+	 yDlxWU1MbTW0ojoxK9M/5KOayBK3ExwuazYiTixohlgb22bDstPQ9gSfIPg6Oi5OdN
+	 dYwJ3Mcdj77pQvDD6ZFAxSB/JXaUB8wP/m0aXKBhWFcPAwb04JOB6yyJHevXnbt66C
+	 AQXeF+BkaGSJv+00nNgIr6HOMx/Dk+NraZ8nFtX2R/QBe9o0yzuJEUWEP+7YcBog8T
+	 tmxytSV9L7FpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcelo.leitner@gmail.com,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	kuba@kernel.org,
-	linux-sctp@vger.kernel.org,
-	netdev@vger.kernel.org,
+	jasowangio@gmail.com,
+	eperezma@redhat.com,
+	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] sctp: auth: propagate HMAC calculation errors to callers
-Date: Mon, 19 Oct 2026 09:49:03 -0400
-Message-ID: <20261019135441.1420968-252-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] vdpa: alibaba: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:49:04 -0400
+Message-ID: <20261019135441.1420968-253-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,532 +54,450 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 5d3ae80ecddeb82b492a2cf31ac3e44412b426f4 ]
+[ Upstream commit 7eeda5e2487276ed87960655fdae1c97d9779a0e ]
 
-sctp_auth_calculate_hmac() can fail when building the association secret
-under memory pressure, but its void return silently leaves the HMAC digest
-zeroed.  On the receive path, sctp_sf_authenticate() compares this zeroed
-digest against the peer-supplied one using crypto_memneq(), potentially
-accepting an all-zero HMAC from the peer if the allocation failed.  On the
-send path, sctp_packet_pack() transmits a packet with a zeroed HMAC that
-the peer would reject.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Improve error handling by making sctp_auth_calculate_hmac() return int:
-- sctp_sf_authenticate() returns SCTP_IERROR_NOMEM instead of accepting
-  a zero HMAC.
-- sctp_packet_pack() drops the packet on failure instead of transmitting
-  a zeroed HMAC.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Update the declaration in auth.h accordingly.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Assisted-by: LLM
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260807064314.500742-1-l1138897701@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260704152732.55338-1-pengpeng@iscas.ac.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real SCTP-AUTH fail-open under memory pressure, and the buggy
-`void` HMAC helper is present in this 6.12 tree. The fix is small,
-reviewer-acked, and backportable with a trivial `auth.c` context tweak.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: `[sctp/auth] [propagate] HMAC calculation errors to callers` —
-turn `sctp_auth_calculate_hmac()` from `void` into an `int` so ENOMEM is
-not swallowed.
+Record: `[vdpa: alibaba:] [add] [missing MODULE_DEVICE_TABLE() so PCI
+aliases are generated for autoload]`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
+From upstream commit `7eeda5e2487276ed87960655fdae1c97d9779a0e`
+(verified with `git show`):
+
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Michael S. Tsirkin <mst@redhat.com>` (virtio/vDPA
+  maintainer)
+- `Message-ID: <20260704152732.55338-1-pengpeng@iscas.ac.cn>`
+
+No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Reviewed-by:`, no
+`Acked-by:`, no `Cc: stable`, no `Link:` (besides Message-ID). Absence
+of `Fixes:`/`Cc: stable` is expected for this review pipeline.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- `Assisted-by: LLM` (author used an LLM)
-- `Signed-off-by: Qing Luo <luoqing@kylinos.cn>` (author)
-- `Acked-by: Xin Long <lucien.xin@gmail.com>` (SCTP maintainer)
-- `Link:
-  https://patch.msgid.link/20260807064314.500742-1-l1138897701@163.com`
-- `Signed-off-by: Paolo Abeni <pabeni@redhat.com>` (netdev)
-- No `Reported-by`, `Tested-by`, `Reviewed-by` on the committed message
-- No `Fixes:` / `Cc: stable` on the committed v4 text (expected for this
-  review queue; see Phase 4 — they were present on v2/v3, and Xin Long
-  re-added `Fixes:` when acking v4)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+- Bug: `eni_pci_ids[]` is wired into `eni_vdpa_driver.id_table` but
+  never exported via `MODULE_DEVICE_TABLE()`.
+- Symptom: `modpost`/`file2alias` never emits `pci:v...d...` aliases, so
+  depmod/udev will not autoload `alibaba-eni-vdpa` when the PCI device
+  appears.
+- Version info: none in the message. Driver itself dates to v5.16-rc1.
+- Root cause: missing alias publication, not a runtime logic error.
+  Author explicitly calls it a source-level fix (build-time module
+  metadata).
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Not a disguised cleanup. It is an autoload/hardware-enablement
+bug: the match table exists and is used for probe matching, but is not
+published for module loading. Same pattern as device-ID publication.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- Bug: `sctp_auth_calculate_hmac()` can fail while building the
-  association secret; it still returns void and leaves the HMAC field
-  zeroed.
-- Receive symptom: `sctp_sf_authenticate()` compares that zero digest to
-  the peer HMAC with `crypto_memneq()`, so an all-zero HMAC can be
-  accepted.
-- Send symptom: `sctp_packet_pack()` ships a packet with a zero HMAC,
-  which the peer rejects.
-- Root cause: silent early return on `sctp_auth_asoc_create_secret()`
-  failure.
-- No kernel-version range in the message.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit error-propagation fix
-for a fail-open AUTH path. v1 understated it as “wrong error code
-(BAD_SIG vs NOMEM)”; later revisions correctly describe acceptance of a
-zero HMAC.
+- File: `drivers/vdpa/alibaba/eni_vdpa.c` (`+1` / `-0`)
+- Function: none. Insert after `eni_pci_ids[]`, before
+  `eni_vdpa_driver`.
+- Scope: single-file, one-line surgical change.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Step 2.1: INVENTORY THE CHANGES
+Record: Before, `eni_pci_ids` is only referenced by `.id_table` (in-
+kernel PCI matching after the module is already loaded). After,
+`MODULE_DEVICE_TABLE(pci, eni_pci_ids)` also creates
+`__mod_pci__eni_pci_ids_device_table`, which `scripts/mod/file2alias.c`
+(`do_pci_entry`) turns into PCI aliases. No probe/remove/runtime path
+changes. Built-in (`!MODULE`) the macro is a no-op
+(`include/linux/module.h`).
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: Category **(h) hardware enablement / missing device-ID
+publication**. Mechanism: without `MODULE_DEVICE_TABLE`, udev never
+loads the module on device discovery. Sibling PCI vDPA drivers (`ifcvf`,
+`snet`) already export their tables.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: Obviously correct; matches the established PCI-driver pattern.
+Minimal. Regression risk is negligible: no locks, no APIs, no data-
+structure changes, no runtime control-flow change. `linux/module.h` is
+already included (line 12).
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record: `git blame -L 540,560` shows the ID table and `pci_driver` come
+entirely from `e85087beedcae` (“eni_vdpa: add vDPA driver for Alibaba
+ENI”, Wu Zongyong, 2021-10-29). Contained in `v5.16-rc1`. Present and
+unchanged in this tree. Bug has existed for the entire life of the
+driver.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: No `Fixes:` tag. The introducing commit is `e85087beedcae`. `git
+merge-base --is-ancestor e85087beedcae HEAD` succeeded. No later commit
+in this tree added `MODULE_DEVICE_TABLE` for this driver.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
+Record: Recent history is `e85087beedcae` → probe simplify → vDPA API
+updates → probe error-path fix → `get_vq_size`. None of those touch the
+PCI ID table. Standalone; not patch X/Y.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Pengpeng Hou is not the vDPA maintainer. Same day they sent an
+identical `MODULE_DEVICE_TABLE` fix for `can: ctucanfd`, which **is
+already in this 6.12 tree** as `877e99535dfb9` (`Cc: stable@kernel.org`,
+`Fixes:`, Greg KH). Maintainer of this driver is Michael S. Tsirkin, who
+applied the vDPA patch.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: No new helpers or structs. `MODULE_DEVICE_TABLE` has existed for
+decades. Applies standalone. `git show
+7eeda5e2487276ed87960655fdae1c97d9779a0e | git apply --check` succeeded
+(exit 0).
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `include/net/sctp/auth.h`: `void` → `int` for
-  `sctp_auth_calculate_hmac()`
-- `net/sctp/auth.c`: return `-ENOMEM` on secret allocation failure;
-  `return 0` on success
-- `net/sctp/output.c`: drop packed skb on HMAC failure; treat `pkt_count
-  <= 0` as transmit failure
-- `net/sctp/sm_statefuns.c`: on HMAC failure, `kfree(save_digest)` and
-  return `SCTP_IERROR_NOMEM`
-- Scope: ~24 insertions / 13 deletions, four files, surgical, SCTP-only
-- Functions: `sctp_auth_calculate_hmac`, `sctp_packet_pack`,
-  `sctp_packet_transmit`, `sctp_sf_authenticate`
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+- `b4 dig -c 7eeda5e2487276ed87960655fdae1c97d9779a0e` →
+  https://patch.msgid.link/20260704152732.55338-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: single revision (v1 only).
+- Thread (saved mbox): MST replied the same day asking what the “source-
+  level fix” boilerplate paragraph meant. No NAK, no requested code
+  change. He later SOB’d and applied it (CommitDate 2026-08-19). No
+  reviewer asked for `Cc: stable`.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+
+Record (`b4 dig -w`): To/Cc were Michael S. Tsirkin, Jason Wang, Xuan
+Zhuo, Eugenio Pérez, `virtualization@lists.linux.dev`, `linux-
+kernel@vger.kernel.org`. Right maintainers. Only MST replied.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: No `Reported-by`, no bugzilla/syzbot. Author found it by
+inspecting the driver-owned match table vs missing alias export. No
+evidence of a live user report.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Same-day batch of missing-`MODULE_DEVICE_TABLE` patches
+(ctucanfd, octeon_ep vDPA, cadence PCI, this one). ctucanfd already
+landed in this stable tree. octeon_ep in *this* checkout also still
+lacks `MODULE_DEVICE_TABLE` (`octep_pci_vdpa_map` at
+`drivers/vdpa/octeon_ep/octep_vdpa_main.c`); that is a separate
+candidate and is not a dependency of this patch.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: lore.kernel.org/stable searches returned 403; web search found
+no stable-list discussion of this specific Alibaba patch. The related
+ctucanfd patch *was* sent to stable and is in this tree. UNVERIFIED: no
+positive evidence this exact SHA was discussed on stable@; no evidence
+it was rejected either.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+
+Record: No functions modified. Added `MODULE_DEVICE_TABLE(pci,
+eni_pci_ids)` next to `eni_pci_ids[]` / `eni_vdpa_driver`.
+
+**Step 5.2: TRACE CALLERS**
+
+Record: `eni_pci_ids` is used as `.id_table` of `eni_vdpa_driver`,
+registered via `module_pci_driver()`. PCI core matches on
+enumeration/hotplug. The new alias is consumed at module-install time by
+depmod, then at runtime by udev/systemd-udevd. Not an interrupt or
+syscall path.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: Macro only. Expands to an alias symbol for `file2alias.c`. No
+allocations, locks, or I/O.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Reachable when `CONFIG_ALIBABA_ENI_VDPA=m` and a matching PCI
+device appears (Red Hat Qumranet vendor `0x1af4`, transitional virtio-
+net `VIRTIO_TRANS_ID_NET`, subsystem virtio-net). Userspace does not
+need a special syscall; PCI discovery is enough. Built-in builds are
+unaffected (macro is empty).
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: In-tree vDPA PCI drivers `ifcvf` and `snet` already have
+`MODULE_DEVICE_TABLE(pci, ...)`. `eni_vdpa` and `octeon_ep` do not.
+Systematic omission, not unique to Alibaba.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: Yes. Local tree is **6.12.111** (`git describe HEAD` →
+`p-6.12-3-gc504cf0baa3d8`; `VERSION=6 PATCHLEVEL=12 SUBLEVEL=111`).
+Current `eni_vdpa.c` has `eni_pci_ids` and `.id_table = eni_pci_ids`
+with **no** `MODULE_DEVICE_TABLE`. `git merge-base --is-ancestor
+7eeda5e2487276ed87960655fdae1c97d9779a0e HEAD` failed (fix not in this
+tree). Bug introduced in `e85087beedcae` (v5.16-rc1), well before 6.12.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: Surrounding lines match the upstream hunk exactly. `git apply
+--check` clean. Expected difficulty: **clean apply**.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: `git log --grep='alibaba: add missing MODULE_DEVICE_TABLE'` on
+this file is empty. No alternate autoload fix. ctucanfd’s analogous fix
+is already here, which shows this class is accepted on 6.12.y.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: `drivers/vdpa/alibaba/` — vDPA PCI driver for Alibaba ENI.
+**PERIPHERAL** (cloud-specific, `depends on PCI_MSI && X86`). Not core
+mm/net, but a real distro-shipped driver.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: vDPA is actively maintained (recent ifcvf/mlx5/octeon_ep/vduse
+fixes). The Alibaba file itself is mature; last functional commits are
+API follow-ups plus a probe error-path fix. This is a long-standing
+omission, not churn from new code.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: Config- and driver-specific: `CONFIG_ALIBABA_ENI_VDPA=m` on x86
+with Alibaba ENI (legacy virtio 0.9.5 transitional net PCI IDs). Built-
+in (`=y`) already probes via the in-kernel `id_table`.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Trigger is ordinary PCI enumeration with the module not
+preloaded. Common for distro modular kernels. Unprivileged users cannot
+exploit it; the failure is “device never binds until someone
+`modprobe`s”.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: Failure mode: driver never autoloads → vDPA/ENI NIC does not
+come up. Not a panic, UAF, or corruption. Severity **MEDIUM** for
+affected hardware (device non-functional until manual load). Matches the
+device-ID/quirk exception, not a crash-class bug.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- HMAC helper: allocation failure used to `return;` with digest
-  untouched → now `-ENOMEM`.
-- Receive: digest is `memset` to 0, then HMAC is computed into it. On
-  failure, compare is skipped; NOMEM is returned instead of comparing
-  against zeros.
-- Send: HMAC failure frees `packet->auth`, frees the GSO fragment if
-  needed, returns `-ENOMEM`. Non-GSO `nskb == head`, so `nskb` is not
-  freed there (avoids double-free); `sctp_packet_transmit` frees `head`
-  when `pkt_count <= 0`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: logic / correctness with security impact (AUTH fail-open),
-  plus missing error-path handling.
-- Mechanism: RFC 4895 requires the AUTH HMAC field to be zero during
-  computation. The receive path zeros it, then writes the computed MAC.
-  If computation is skipped, the field stays zero, so
-  `crypto_memneq(peer_hmac, zeros)` succeeds when the peer sent zeros.
-- Trigger: `key_id != asoc->active_key_id` (non-active configured shared
-  key) plus `sctp_auth_asoc_create_secret()` GFP_ATOMIC failure.
+- Benefit: restores autoload for a driver that already exists in 6.12;
+  hardware that distros already ship a module for actually binds.
+- Risk: **very low** (one line, build-time metadata only).
+- Ratio: strongly favorable. Same class already taken into this tree
+  (`877e99535dfb9`).
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: callers already have NOMEM handling
-  (`sctp_sf_eat_auth` → `SCTP_DISPOSITION_NOMEM`; transmit already drops
-  on pack failure).
-- Minimal: no API for userspace, no new features.
-- Regression risk: low. Send path drops the packet instead of emitting a
-  MAC the peer would reject. Receive path no longer accept-on-OOM.
-- Residual in this tree: `crypto_shash_setkey()` failure still `goto
-  free` without an error (mainline HMAC helpers no longer have that
-  path). That is preexisting and outside this commit.
+---
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## PHASE 9: FINAL SYNTHESIS
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: Silent `return` on failed `sctp_auth_asoc_create_secret()` is
-from `1f485649f52929` (“[SCTP]: Implement SCTP-AUTH internals”, Vlad
-Yasevich, 2007-10-09), first in `v2.6.24-rc1`. Present for the entire
-life of SCTP-AUTH.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: Committed v4 has no `Fixes:` line. Xin Long added `Fixes:
-1f485649f529 ("[SCTP]: Implement SCTP-AUTH internals")` on ack. That
-commit **is** an ancestor of this tree (`git merge-base --is-ancestor
-1f485649f52929 HEAD` succeeded). Mainline fix `5d3ae80ecdde` is **not**
-in this tree.
-
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent SCTP work here is unrelated (INIT leaks, ASCONF, TOCTOU,
-STALE_COOKIE). No prior attempt to propagate HMAC errors.
-`hmac_sha1_usingrawkey` is **not** in this tree; this tree still uses
-`crypto_shash`.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Qing Luo is not the SCTP maintainer. Xin Long **is** (recent
-`net/sctp` commits, and he acked this). That ack is the quality signal.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No functional prerequisite. Mainline `auth.c` later switched to
-`hmac_sha*_usingrawkey`; this tree still has `crypto_shash`. The error-
-return change does not need that conversion. Standalone after a small
-context adapt in `auth.c`.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 5d3ae80ecdde` →
-  https://patch.msgid.link/20260807064314.500742-1-l1138897701@163.com
-- Series: v1 net-next (2026-07-30), v2 net (2026-08-04), v3 net
-  (2026-08-04), v4 net-next (2026-08-07, applied)
-- v1 changelog only mentioned BAD_SIG vs NOMEM.
-- Jakub Kicinski forwarded an AI review he treated as valid: the real
-  bug is **accepting an all-zero HMAC**, reachable from the wire via a
-  configured non-active key id, including delayed COOKIE-ECHO AUTH;
-  asked for `Fixes:` and `Cc: stable`.
-- v2/v3 retargeted to `net`, added security wording, `Fixes:`, `Cc:
-  stable`, and a `sctp_auth_chunk_verify()` refactor.
-- Xin Long on v3: “This patch is intended as a **fix**”; drop the
-  `sctp_auth_chunk_verify()` churn (send that kind of cleanup to net-
-  next). Returning `-ENOMEM` from pack is fine because transmit already
-  treats non-positive pack results as drop.
-- v4 dropped the verify refactor and was sent to net-next; Xin Long
-  acked and re-added `Fixes:`. Paolo applied it to net-next
-  (`5d3ae80ecdde`).
-- No NAKs. Applied version is v4 (latest).
-
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): netdev maintainers (davem, edumazet, kuba, pabeni,
-horms), `linux-sctp@`, `lucien.xin@gmail.com`. Xin Long acked. Jakub’s
-review drove the security description.
-
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla/user crash report. Bug was found by code
-review (LLM-assisted, then confirmed on the list). Unverified: whether
-any production user has hit the zero-HMAC accept path.
-
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single patch, not 2/N. v3’s `sctp_auth_chunk_verify()` NOMEM vs
-BAD_SIG split was deliberately **not** merged. Without it, delayed
-COOKIE-ECHO treats HMAC-calc ENOMEM as auth failure
-(`sctp_auth_chunk_verify` still returns bool / false) and discards —
-fail-closed, which is the safe direction.
-
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. From the netdev
-thread, v2/v3 carried `Cc: stable`; v4 dropped it only because the
-author retargeted after Xin Long asked to strip the verify refactor.
-Unverified: no separate stable@ thread found.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `sctp_auth_calculate_hmac`, `sctp_packet_pack`,
-`sctp_packet_transmit`, `sctp_sf_authenticate`. (semcode MCP not
-available; used grep + reads.)
-
-Step 5.2: TRACE CALLERS
-Record: `sctp_auth_calculate_hmac` has exactly two call sites in this
-tree:
-- `sctp_sf_authenticate()` — receive AUTH, GFP_ATOMIC, reachable from
-  the wire
-- `sctp_packet_pack()` — transmit path
-`sctp_sf_authenticate` is used by `sctp_sf_eat_auth` and by
-`sctp_auth_chunk_verify` (delayed COOKIE-ECHO). Softirq/packet receive
-context.
-
-Step 5.3: TRACE CALLEES
-Record: `sctp_auth_asoc_create_secret()` allocates key vectors
-(`sctp_auth_make_local_vector` / `peer_vector` /
-`sctp_auth_asoc_set_secret`) with the caller’s `gfp`. Receive uses
-`GFP_ATOMIC`.
-
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace/peer can trigger this: enable SCTP AUTH
-(`net.sctp.auth_enable` is **0 by default**, but applications/sysctl can
-turn it on; ADD-IP needs AUTH), configure more than one shared key, send
-AUTH with a non-active key id and an all-zero HMAC while the host is
-under atomic-allocation pressure. Reachable from the network, not a
-local-only path.
-
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: No other `sctp_auth_calculate_hmac` copies. Same fail-open
-exists on both send and receive via the single helper.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Tree is `pending-6.12` / `6.12.111`
-(`p-6.12-3-gc504cf0baa3d8`).
-```707:731:net/sctp/auth.c
-void sctp_auth_calculate_hmac(...)
-{
-        ...
-                asoc_key = sctp_auth_asoc_create_secret(asoc, ep_key,
-gfp);
-                if (!asoc_key)
-                        return;
-```
-Receive still zeros the digest then compares unconditionally
-(`net/sctp/sm_statefuns.c` ~4426–4433). Bug introduced in v2.6.24, long
-before 6.12.
-
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Mainline `auth.c` uses `hmac_sha1_usingrawkey` /
-`hmac_sha256_usingrawkey`; this tree uses `crypto_shash_setkey` +
-`crypto_shash_tfm_digest`. Exact mainline hunk context in `auth.c` will
-not match. The signature change, `-ENOMEM` return, `return 0`, and both
-caller sites match this tree. An adapted patch (`void`→`int`, `return
--ENOMEM`, `return 0` after the existing `free:` label, plus the
-output/statefuns hunks) applies (`git apply --check` succeeded on that
-adaptation). Difficulty: **minor conflicts / trivial rework**, not a
-rewrite.
-
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `git merge-base --is-ancestor 5d3ae80ecdde HEAD` failed. No
-“propagate HMAC” commit. `sctp_auth_calculate_hmac` is still `void`. No
-substitute fix.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: `net/sctp` — IMPORTANT (transport protocol; not mm/core). AUTH
-is optional but is the integrity mechanism for SCTP-AUTH / ADD-IP.
-
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained (Xin Long and others still landing SCTP
-fixes on this branch). Mature protocol; this bug is old, not a new-
-subsystem artifact.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Config/protocol-specific: `CONFIG_IP_SCTP` plus AUTH enabled
-(`net->sctp.auth_enable` defaults to 0 in `net/sctp/protocol.c`). Users
-who enable AUTH (telecom, WebRTC data-channel stacks, ADD-IP) are the
-population that matters.
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- AUTH enabled and a non-active shared key configured
-- Peer uses that key id
-- `sctp_auth_asoc_create_secret()` fails (`GFP_ATOMIC` on receive)
-- Peer HMAC is all zeros
-Allocation failure is not attacker-controlled; key id and zero HMAC are.
-Unprivileged remote peer on an AUTH-enabled association can attempt
-this. Commonness: uncommon; severity if it hits: high.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Receive: AUTH bypass (`chunk->auth = 1`) for chunks that should have
-  been rejected — **HIGH** (security / integrity). Not a panic, but
-  fail-open authentication.
-- Send: packet with zero HMAC dropped by peer — **LOW/MEDIUM** (failed
-  send under OOM; already broken).
-Overall: **HIGH** because of the receive fail-open.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for AUTH users — stops accepting unauthenticated chunks
-  under OOM.
-- Risk: very low — ~20 lines, error paths only, existing NOMEM/drop
-  handling.
-- Ratio: strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real AUTH fail-open: zeroed digest compared to peer HMAC after silent
-  HMAC-calc failure (verified in `sctp_sf_authenticate`).
-- Present in this 6.12 tree since `1f485649f529` (v2.6.24).
-- Small, obviously correct; NOMEM already handled on the eat-AUTH path.
-- SCTP maintainer acked it as a fix and supplied `Fixes:`.
-- Jakub’s review explicitly called for stable.
-- Two call sites only; no new APIs.
+
+- Real functional bug: PCI match table present, aliases unpublished.
+- One-line, obviously correct, applies cleanly to this 6.12 tree.
+- Buggy code has been here since the driver was added (v5.16); the
+  upstream fix is not an ancestor of HEAD.
+- Device-ID / autoload publication is an established stable exception.
+- Identical pattern from the same author already backported here
+  (ctucanfd).
+- Sibling vDPA PCI drivers already export `MODULE_DEVICE_TABLE`.
+- Applied by the vDPA maintainer (MST) after seeing the patch.
+- Zero runtime regression surface.
 
 AGAINST:
-- AUTH off by default; needs extra keys + atomic ENOMEM + zero HMAC.
-- No syzbot/user crash report.
-- Merged via net-next as v4 without `Cc: stable` in the commit text.
-- Exact mainline `auth.c` context differs (`crypto_shash` vs
-  `hmac_sha*`).
-- Delayed COOKIE-ECHO still maps NOMEM to “auth failed” (fail-closed;
-  acceptable, and what was merged).
+
+- Not a crash, UAF, deadlock, or security issue.
+- Niche (Alibaba ENI, x86, modular builds only).
+- No user `Reported-by`.
+- Author did not `Cc: stable` (expected for this review set; not a
+  negative).
+- MST questioned the boilerplate wording, not the code.
 
 UNRESOLVED:
-- No stable@ archive confirmation (lore 403).
-- No evidence of a real-world exploit/report.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — logic is local; acked by Xin
-   Long; applied to net-next.
-2. Fixes a real bug that affects users? **PASS** — fail-open AUTH on a
-   wire-reachable path when AUTH is enabled.
-3. Important issue? **PASS** — authentication bypass / integrity failure
-   (HIGH), not a crash. Narrow trigger, but security-class.
-4. Small and contained? **PASS** — four files, ~24 lines, one helper +
-   two callers.
-5. No new features or APIs? **PASS** — return type only, internal.
-6. Can apply to the local tree? **PASS** — buggy code is here; caller
-   hunks match; `auth.c` needs a 3-line adapt around `crypto_shash` (not
-   a missing subsystem).
+- Could not fetch lore.kernel.org/stable HTML (403). No evidence of
+  rejection.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID/quirk/DT/build/doc exception). It
-qualifies as a normal security/correctness fix.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-Step 9.4: MAKE YOUR DECISION
-Backport to this 6.12 tree. The bug exists here, the fix is surgical,
-and leaving AUTH fail-open under OOM is worse than dropping the packet /
-returning NOMEM.
+1. Obviously correct and tested? **PASS** — one-line standard pattern;
+   maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — modular autoload
+   fails for matching PCI devices.
+3. Important issue? **PASS** under the device-ID / hardware-enablement
+   exception (severity MEDIUM, not crash-class).
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — publishes IDs the driver already
+   matches on.
+6. Can apply to the local tree? **PASS** — buggy code present; `git
+   apply --check` clean.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **Device ID / module alias publication for an existing driver.**
+Equivalent to adding PCI IDs so hardware actually binds when built as a
+module.
+
+**Step 9.4: DECISION**
+
+This should be backported to this 6.12 tree. The driver is already here,
+the omission is real, the fix is trivial and has no runtime risk, and
+this tree already accepted the same class of fix.
+
+---
+
+### What the commit solves and why it matters here
+
+Without `MODULE_DEVICE_TABLE(pci, eni_pci_ids)`, `file2alias` never
+emits PCI aliases for `alibaba-eni-vdpa`. On 6.12 systems that build
+`CONFIG_ALIBABA_ENI_VDPA=m`, udev will not load the module when the ENI
+virtio-net PCI device appears, so the vDPA device never probes unless
+something else loads the module. The in-kernel `id_table` still works
+after a manual `modprobe`; autoload is what is broken.
+
+### Stable rules and risk
+
+The change is one line, matches the PCI driver idiom used by
+`ifcvf`/`snet`, and does not alter probe/remove. Risk is essentially
+zero. Benefit is limited to Alibaba ENI modular users, but that is the
+same justification used for PCI ID additions and for the ctucanfd
+autoload fix already on this branch.
+
+### Concerns
+
+None material for this tree. No prerequisites. No backport rewrite
+needed. octeon_ep has the same omission locally; that is independent.
+
+---
 
 Verification:
-- [Phase 1] Tags parsed from the provided message and from the lore
-  mbox: Acked-by Xin Long; no Fixes on v4 commit text; v2/v3 had Fixes +
-  Cc: stable
-- [Phase 2] Diff: void→int, -ENOMEM on secret alloc, receive NOMEM +
-  kfree(save_digest), send drop + `pkt_count <= 0`
-- [Phase 2] Confirmed receive zeros digest then `crypto_memneq` in
-  `sm_statefuns.c` 4426–4433
-- [Phase 3] `git blame net/sctp/auth.c`: silent return from
-  `1f485649f52929` (2007); `git describe --contains` → v2.6.24-rc1
-- [Phase 3] `git merge-base --is-ancestor 1f485649f52929 HEAD`
-  succeeded; `5d3ae80ecdde` is not an ancestor
-- [Phase 3] `hmac_sha1_usingrawkey` absent in this tree; HMAC still via
-  `crypto_shash`
-- [Phase 4] `b4 dig -c 5d3ae80ecdde`: v1–v4; Jakub review identified
-  zero-HMAC accept and asked for stable; Xin Long: “intended as a fix”,
-  drop verify refactor; acked v4 with Fixes
-- [Phase 4] lore.kernel.org/stable WebFetch 403 — UNVERIFIED whether
-  stable@ discussed it separately
-- [Phase 5] grep: only two `sctp_auth_calculate_hmac` call sites;
-  `sctp_sf_eat_auth` already handles `SCTP_IERROR_NOMEM`
-- [Phase 5] `net->sctp.auth_enable = 0` by default (`protocol.c:1382`)
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111
-- [Phase 6] Adapted patch `git apply --check` succeeded; exact mainline
-  `auth.c` context would conflict
-- [Phase 8] Failure mode: AUTH bypass under ENOMEM + zero HMAC + non-
-  active key — HIGH; send of zero HMAC — LOW
-- UNVERIFIED: real-world exploitation; whether `crypto_shash_setkey`
-  failure is practically reachable for HMAC-SHA1/256 (not required for
-  this verdict)
+- [Phase 1] Parsed tags from `git show
+  7eeda5e2487276ed87960655fdae1c97d9779a0e`: SOB Hou, SOB Tsirkin,
+  Message-ID; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(pci, eni_pci_ids)` in
+  `eni_vdpa.c`; no function body change
+- [Phase 2] Confirmed `MODULE_DEVICE_TABLE` expansion in
+  `include/linux/module.h` (alias for modules, empty if built-in)
+- [Phase 2] Confirmed `do_pci_entry()` in `scripts/mod/file2alias.c`
+  generates `pci:` aliases from exported tables
+- [Phase 3] `git blame -L 540,560`: ID table from `e85087beedcae`
+  (v5.16-rc1)
+- [Phase 3] `git merge-base --is-ancestor e85087beedcae HEAD`: yes (bug
+  present)
+- [Phase 3] `git merge-base --is-ancestor
+  7eeda5e2487276ed87960655fdae1c97d9779a0e HEAD`: no (fix absent)
+- [Phase 3] Same-author ctucanfd fix `877e99535dfb9` already in this
+  tree
+- [Phase 4] `b4 dig -c 7eeda5e…`:
+  https://patch.msgid.link/20260704152732.55338-1-pengpeng@iscas.ac.cn
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: MST, Jason Wang, Xuan Zhuo, Eugenio Pérez,
+  virtualization@, lkml
+- [Phase 4] mbox: MST asked about boilerplate wording; no NAK; later
+  applied
+- [Phase 4] lore.kernel.org HTML fetches returned 403; used b4 mbox +
+  openwall copy instead
+- [Phase 5] Callers: `module_pci_driver` → PCI probe; aliases consumed
+  by depmod/udev
+- [Phase 5] Sibling drivers `ifcvf`/`snet` already have
+  `MODULE_DEVICE_TABLE`; `octeon_ep` still missing (independent)
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.12.111
+  (`p-6.12-3-gc504cf0baa3d8`)
+- [Phase 6] Current `eni_vdpa.c` lines 540–559: table present,
+  `MODULE_DEVICE_TABLE` absent
+- [Phase 6] `git apply --check` of the commit: success
+- [Phase 7] Kconfig: `ALIBABA_ENI_VDPA` tristate, `depends on PCI_MSI &&
+  X86`
+- [Phase 8] Failure mode: module autoload skip → device does not bind;
+  severity MEDIUM; risk very low
+- UNVERIFIED: no stable@ thread found (lore/stable HTTP 403); did not
+  drive the decision
+
+The fix is small, surgical, present as a real autoload bug in this 6.12
+tree, and meets the device-ID/hardware-enablement exception.
 
 **YES**
 
- include/net/sctp/auth.h |  6 +++---
- net/sctp/auth.c         | 10 ++++++----
- net/sctp/output.c       | 12 +++++++++---
- net/sctp/sm_statefuns.c |  9 ++++++---
- 4 files changed, 24 insertions(+), 13 deletions(-)
+ drivers/vdpa/alibaba/eni_vdpa.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/sctp/auth.h b/include/net/sctp/auth.h
-index 3d5879e08e78a..27a098411e4cc 100644
---- a/include/net/sctp/auth.h
-+++ b/include/net/sctp/auth.h
-@@ -84,9 +84,9 @@ int sctp_auth_send_cid(enum sctp_cid chunk,
- 		       const struct sctp_association *asoc);
- int sctp_auth_recv_cid(enum sctp_cid chunk,
- 		       const struct sctp_association *asoc);
--void sctp_auth_calculate_hmac(const struct sctp_association *asoc,
--			      struct sk_buff *skb, struct sctp_auth_chunk *auth,
--			      struct sctp_shared_key *ep_key, gfp_t gfp);
-+int sctp_auth_calculate_hmac(const struct sctp_association *asoc,
-+			     struct sk_buff *skb, struct sctp_auth_chunk *auth,
-+			     struct sctp_shared_key *ep_key, gfp_t gfp);
- void sctp_auth_shkey_release(struct sctp_shared_key *sh_key);
- void sctp_auth_shkey_hold(struct sctp_shared_key *sh_key);
+diff --git a/drivers/vdpa/alibaba/eni_vdpa.c b/drivers/vdpa/alibaba/eni_vdpa.c
+index e476504db0c82..fd6fdba460945 100644
+--- a/drivers/vdpa/alibaba/eni_vdpa.c
++++ b/drivers/vdpa/alibaba/eni_vdpa.c
+@@ -545,6 +545,7 @@ static struct pci_device_id eni_pci_ids[] = {
+ 			 VIRTIO_ID_NET) },
+ 	{ 0 },
+ };
++MODULE_DEVICE_TABLE(pci, eni_pci_ids);
  
-diff --git a/net/sctp/auth.c b/net/sctp/auth.c
-index fbbfa0c279552..6971cb00f5e30 100644
---- a/net/sctp/auth.c
-+++ b/net/sctp/auth.c
-@@ -613,9 +613,9 @@ int sctp_auth_recv_cid(enum sctp_cid chunk, const struct sctp_association *asoc)
-  *    zero (as shown in Figure 6) followed by all chunks that are placed
-  *    after the AUTH chunk in the SCTP packet.
-  */
--void sctp_auth_calculate_hmac(const struct sctp_association *asoc,
--			      struct sk_buff *skb, struct sctp_auth_chunk *auth,
--			      struct sctp_shared_key *ep_key, gfp_t gfp)
-+int sctp_auth_calculate_hmac(const struct sctp_association *asoc,
-+			     struct sk_buff *skb, struct sctp_auth_chunk *auth,
-+			     struct sctp_shared_key *ep_key, gfp_t gfp)
- {
- 	struct sctp_auth_bytes *asoc_key;
- 	__u16 key_id, hmac_id;
-@@ -636,7 +636,7 @@ void sctp_auth_calculate_hmac(const struct sctp_association *asoc,
- 		/* ep_key can't be NULL here */
- 		asoc_key = sctp_auth_asoc_create_secret(asoc, ep_key, gfp);
- 		if (!asoc_key)
--			return;
-+			return -ENOMEM;
- 
- 		free_key = 1;
- 	}
-@@ -654,6 +654,8 @@ void sctp_auth_calculate_hmac(const struct sctp_association *asoc,
- 
- 	if (free_key)
- 		sctp_auth_key_put(asoc_key);
-+
-+	return 0;
- }
- 
- /* API Helpers */
-diff --git a/net/sctp/output.c b/net/sctp/output.c
-index 23e96305cad7c..3d7ead9d40e19 100644
---- a/net/sctp/output.c
-+++ b/net/sctp/output.c
-@@ -517,8 +517,14 @@ static int sctp_packet_pack(struct sctp_packet *packet,
- 		}
- 
- 		if (auth) {
--			sctp_auth_calculate_hmac(tp->asoc, nskb, auth,
--						 packet->auth->shkey, gfp);
-+			if (sctp_auth_calculate_hmac(tp->asoc, nskb, auth,
-+						     packet->auth->shkey, gfp)) {
-+				sctp_chunk_free(packet->auth);
-+				packet->auth = NULL;
-+				if (gso)
-+					kfree_skb(nskb);
-+				return -ENOMEM;
-+			}
- 			/* free auth if no more chunks, or add it back */
- 			if (list_empty(&packet->chunk_list))
- 				sctp_chunk_free(packet->auth);
-@@ -619,7 +625,7 @@ int sctp_packet_transmit(struct sctp_packet *packet, gfp_t gfp)
- 
- 	/* pack up chunks */
- 	pkt_count = sctp_packet_pack(packet, head, gso, gfp);
--	if (!pkt_count) {
-+	if (pkt_count <= 0) {
- 		kfree_skb(head);
- 		goto out;
- 	}
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 86f26b8b39934..8dc65498763cc 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -4457,9 +4457,12 @@ static enum sctp_ierror sctp_sf_authenticate(
- 
- 	memset(digest, 0, sig_len);
- 
--	sctp_auth_calculate_hmac(asoc, chunk->skb,
--				 (struct sctp_auth_chunk *)chunk->chunk_hdr,
--				 sh_key, GFP_ATOMIC);
-+	if (sctp_auth_calculate_hmac(asoc, chunk->skb,
-+				     (struct sctp_auth_chunk *)chunk->chunk_hdr,
-+				     sh_key, GFP_ATOMIC)) {
-+		kfree(save_digest);
-+		return SCTP_IERROR_NOMEM;
-+	}
- 
- 	/* Discard the packet if the digests do not match */
- 	if (crypto_memneq(save_digest, digest, sig_len)) {
+ static struct pci_driver eni_vdpa_driver = {
+ 	.name		= "alibaba-eni-vdpa",
 -- 
 2.53.0
 
