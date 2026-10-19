@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED035B22E5;
-	Mon, 19 Oct 2026 14:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CE75B22FC;
+	Mon, 19 Oct 2026 14:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418429; cv=none; b=UlMtaC0DYQB9OcCVgeujerhhODEpJB3kSnRMXCjXGV/mPz2cxydKFmllrgBj2Mz7UxWb57SScJPLlhmfBylT3tJd9CmVdCT3lVsDIEZbh+eoU/thg52MoGya45gC6VszorC/Wg848wVfVWkECYA5afCEz70Wd/qG/X7hbpEFnTU=
+	t=1792418430; cv=none; b=m7t86ap7MwKh7GZOdewkcGXESifqsyW706VnCCxOgUsnK8ZbVll7gp6EaArIaG42QKhEIsYV2zEZO4je5D1lzVMnNiJI09CHeJr000BJn5UL2twbU1VYPdYpDN7+wcq0cWfXN93zF6AbIlbJv19fJsvsFocr4g+jKxV8uWVIJ9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418429; c=relaxed/simple;
-	bh=M3PzNG+O285to9tkI+ssnnxPTk7gn8r8kfAlSyeXO+E=;
+	s=arc-20240116; t=1792418430; c=relaxed/simple;
+	bh=HZyHm/8NGS5AjoFW9jMzeT2t1j7Hr38G0rq7hobWajo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hYlnoCK93FYqRfQD78zFOsP65Tf2zi33LR0F4CyC7PMdi0Uzc+eBtbWVRlM+H1Lj18X2J/oTxUU1SbgQdJrM+GVXxujC01OaVzaEuJVlpPq49iS6nc94IsB1hT0louGKF8c15go9wDBFmgQOomwZ/uvSZ3UMf1giSkxE2m/UJeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LfkFchot; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YyPpxRDW6kUCH7I6YUHyc3m09PBzOGWLOiqdPRGVyv5Ko1KjnnGFy7ClnGnLAitj2H5S7G6fvJWkO60sIpnIjhUhbjKF+ZNbtXcYGfA+w2H4rQ7JnR7YVNOlBSttWhJWDijiMB1/DKpYRhemJd7phgVU74Neb9y8ECBcLE+uIPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLidLT4/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LfkFchot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196D61F000C4;
-	Mon, 19 Oct 2026 14:00:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLidLT4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836BF1F000C6;
+	Mon, 19 Oct 2026 14:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418427;
-	bh=JacI1PS0XwMOWP778EnHVdGmIAyo9cuU52auPMAJsoE=;
+	s=k20260515; t=1792418428;
+	bh=CDyUvjRFuY6gb/FANiwi4tYUqLnklY0TRx7rrQv5F9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfkFchotC3QxoscvW1UDJoVgkWT4XWJUrj+aW9Q5Un4OJX3bwWnLMS+INDAgac/SP
-	 Q060nztt6GHOKvvsW+4QERmfnPXkNVaQ2FSUuRhRcP4nikLvGSNcpQ0L9Mp/nUAmxd
-	 A3VPaX33sThOT0IgqMcZYZVHgw8jN9wOZo8izP0vVlHJ5aTx/qBhkynEDGjk3lxnPJ
-	 6ezA3LByQk0cnjLfhdeFh9AumjVmVRdli/AmU+oAKyK52tTnzzEvS/EOvf/bcOD4Rs
-	 mSnVaUKIJ8i/SoobJhJERlSbIBYuQkO5bem1H6K/wNi9tNF/494dhYO5tSjyRwEcxE
-	 1VP6j+ceuiE6Q==
+	b=BLidLT4/lGMMuz3I+Yx/yaHIzQjxenx0c4/kA21a9Z7c48Nkv6AeV0jjIcyguY3UD
+	 mxUUabP7m1WdQu4n4GsiHY2hAoBfwtID7XB+YwBdWFgpGC0WaqdCUyfCyDQU71kCTk
+	 uwV1sJ2ZPGWrtWmplpc5JBpdEvQkywTVbiYoolJJxy6eSJbsPLBmUNL+0TpLMsJdrT
+	 d0U/VQ0GecWNIUJECjX1xxjow9XWa3cVsxgVY/hZHS3sXU/RM1fRmz03pDpVC66OOa
+	 G4c8OUF8bJ3v31W3oMR9gSlN1t47EVuXi7yqN4NgLiFxdmjYjlzwlRQsoxBI/CnF7O
+	 7MhfkTnCBtyHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	khilman@baylibre.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] soc: amlogic: meson-clk-measure: remove debugfs tree
-Date: Mon, 19 Oct 2026 09:48:52 -0400
-Message-ID: <20261019135441.1420968-241-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] RISC-V: errata: Add SiFive MAL-9092 workaround
+Date: Mon, 19 Oct 2026 09:48:53 -0400
+Message-ID: <20261019135441.1420968-242-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,386 +55,522 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-[ Upstream commit 67481152be2ec5de3529664c82054b43d6d4b9f5 ]
+[ Upstream commit 148ab873d8194cb44f29474da3b4428fa2e100d1 ]
 
-meson_msr_probe() creates a debugfs tree with entries that reference
-devm-managed measurement table entries and the driver's private regmap
-state. The driver has no remove callback, so unbinding the device can
-leave those debugfs entries behind after the private data is released.
+SiFive cores with MAL-9092 require fence.rw instructions around
+HLV/HLVX/HSV hypervisor instructions to ensure proper memory ordering
+when accessing guest memory.
 
-Store the debugfs root and remove the subtree from a new remove callback.
+Note that HSTATUS.HU is cleared during KVM initialization, restricting
+hypervisor instructions to HS-mode only. If future changes enable
+HSTATUS.HU for U-mode access, additional errata considerations will be
+needed.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://patch.msgid.link/20260817-sifive-errata-v1-1-6a80f1a2743d@sifive.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **6.18.y** (`v6.18.57`). This SiFive MAL-9092 change
+is a hardware-errata workaround for KVM guest-memory accesses, and the
+code it patches is already in this series.
 
-**Step 1.1 — Subject**
-- Record: `[soc: amlogic: meson-clk-measure]` `[remove]` `[tear down
-  leftover debugfs on driver unbind]`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags**
-- `Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>` (Amlogic SoC
-  maintainer; also committed the patch)
-- `Link:
-  https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn`
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>`
-  (maintainer)
-- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Cc: stable`
-  (absence is expected)
-- No syzbot / bugzilla / CVE tags
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.3 — Body**
-- Record: `[Bug: probe creates debugfs entries that point at devm-
-  managed `msr_table` and private regmap state, but the driver had no
-  remove callback.]`
-- `[Symptom: after unbind, leftover debugfs files can be used after that
-  memory is released.]`
-- `[Version info: none in the message. Driver has existed since v5.0.]`
-- `[Root cause: missing lifetime teardown for debugfs vs. devm-managed
-  private data.]`
+Record: [subsystem: RISC-V errata/SiFive] [action verb: Add] [workaround
+for SiFive MAL-9092: `fence.rw` around HLV/HLVX/HSV]
 
-**Step 1.4 — Hidden bug fix?**
-- Record: `[Not hidden. This is an explicit lifetime/UAF fix, even
-  though the verb is "remove".]`
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-## Phase 2: Diff analysis
+Record:
+- No `Fixes:` tag (expected for this review queue)
+- No `Reported-by:` / `Tested-by:` / `Acked-by:`
+- `Reviewed-by: Samuel Holland <samuel.holland@sifive.com>` (SiFive,
+  same vendor)
+- `Link: https://patch.msgid.link/20260817-sifive-
+  errata-v1-1-6a80f1a2743d@sifive.com`
+- `Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>` (author,
+  SiFive)
+- `Signed-off-by: Paul Walmsley <pjw@kernel.org>` (RISC-V arch
+  maintainer)
+- No `Cc: stable@vger.kernel.org` (expected; not a negative signal)
+- Sasha Levin SOB ignored per instructions
 
-**Step 2.1 — Inventory**
-- Record: `[drivers/soc/amlogic/meson-clk-measure.c: +14 / −0]`
-- Functions: `struct meson_msr` (new `debugfs_root`),
-  `meson_msr_probe()`, new `meson_msr_remove()`, `meson_msr_driver`
-  table
-- Scope: single-file surgical fix
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-**Step 2.2 — Code flow**
-- Before: `meson_msr_probe()` builds `/sys/kernel/debug/meson-clk-msr/`
-  (`measure_summary` plus per-clock files). File private data is
-  `priv->data.msr_table` and `&priv->data.msr_table[i]`, with `.priv =
-  priv`. `priv`, `msr_table`, `reg`, and `regmap` are all `devm_*`
-  allocations. There was no `platform_set_drvdata()` and no `.remove`.
-- After: root dentry is stored, `platform_set_drvdata()` is set, and
-  `meson_msr_remove()` calls `debugfs_remove_recursive()` so the tree is
-  gone before devres frees private data.
-- Path: driver remove / module unload / sysfs unbind, not the normal
-  measure path.
+Record:
+- [Bug] SiFive cores with MAL-9092 do not provide the required memory
+  ordering around hypervisor load/store (`HLV`/`HLVX`/`HSV`) when
+  touching guest memory.
+- [Symptom] Wrong/stale guest instruction or data observed by the host
+  hypervisor (KVM unprivileged guest-memory access). Not a documented
+  oops; it is an architecture-level ordering hole.
+- [Version] None stated. Paul queued it for v7.3-rc. Affected `mimpid`
+  values look like 2025-10-31, 2025-12-17, and 2026-03-20 silicon.
+- [Root cause] Missing `fence.rw` around those hypervisor instructions
+  on specific `marchid`/`mimpid` combinations. `HSTATUS.HU` is left
+  clear in KVM setup, so the workaround is HS-mode only.
 
-**Step 2.3 — Bug mechanism**
-- Record: `[Use-after-free / leftover debugfs after unbind]`
-- Mechanism: unbind runs `devres` teardown and frees `priv` /
-  `msr_table` / `regmap`. Debugfs files remain. `clk_msr_summary_show()`
-  does `msr_table->priv->data.msr_count`; `meson_measure_id()` then uses
-  `priv->regmap` and `priv->data.reg`. That is a UAF if those files are
-  read after unbind.
-- Category (c)/(d): lifetime/refcount-style teardown; memory safety.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.4 — Fix quality**
-- Record: `[Obviously correct, minimal, standard pattern.]`
-- `debugfs_remove()` itself already ignores `IS_ERR_OR_NULL`, so the
-  extra check is redundant but harmless.
-- `platform_set_drvdata()` is required for `platform_get_drvdata()` in
-  remove.
-- `.remove` is `void (*)(struct platform_device *)` in this tree,
-  matching the new callback.
-- Regression risk: low. `debugfs_remove()` uses
-  `simple_recursive_removal()`, so in-flight file users are drained
-  before return. No public API change.
+Record: Not a disguised cleanup. It is an explicit hardware-errata
+workaround, which is a stable exception category (quirks/workarounds).
 
-## Phase 3: Git history
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 3.1 — Blame**
-- Record: `[Buggy debugfs creation is from 2b45ebef39a2c ("soc: amlogic:
-  Add Meson Clock Measure driver"), 2018-11-28, first in v5.0-rc1.]`
-- The missing-remove bug is as old as the driver. Confirmed on the
-  parent of the fix: no `platform_set_drvdata`, no `debugfs_root`, no
-  remove callback.
+**Step 2.1: INVENTORY THE CHANGES**
 
-**Step 3.2 — Fixes: tag**
-- Record: `[No Fixes: tag. Introducer is 2b45ebef39a2c, present in this
-  tree.]`
+Record:
+- `arch/riscv/Kconfig.errata`: +14 (`CONFIG_ERRATA_SIFIVE_MAL_9092`,
+  `depends on ERRATA_SIFIVE && 64BIT`, `default y`)
+- `arch/riscv/errata/sifive/errata.c`: +20 (`errata_mal_9092_check_func`
+  + list entry)
+- `arch/riscv/include/asm/errata_list_vendors.h`: +2/-1
+  (`ERRATA_SIFIVE_MAL_9092 2`, `ERRATA_SIFIVE_NUMBER 3`)
+- `arch/riscv/include/asm/insn-def.h`: +13/-3 (ALTERNATIVE nop→`fence
+  rw,rw` around `HLVX_HU`/`HLV_W`/`HLV_D`)
+- Total: **4 files, +49/-4**. Functions: `errata_mal_9092_check_func`
+  (new), `errata_list[]` (extended), HLV macros. Scope: single-arch
+  surgical errata, not a refactor.
 
-**Step 3.3 — File history**
-- Record: `[Recent commits add SoC tables (A1/T7, S4, C3) and register-
-  offset refactoring. None change debugfs lifetime.]`
-- Standalone, not patch X/Y.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-**Step 3.4 — Author**
-- Record: `[Pengpeng Hou: only this commit on this driver.
-  Reviewer/committer Neil Armstrong is the original driver author and
-  Amlogic maintainer.]`
+Record:
+- Probe: previously only CIP-453/CIP-1200. After,
+  `marchid==0x8000000000000109` and `mimpid` in
+  `{0x19251031,0x19251217,0x19260320}` also set bit
+  `ERRATA_SIFIVE_MAL_9092`.
+- HLV macros: previously a single hypervisor load. After, `nop` (or
+  patched `fence rw,rw`) both before and after the instruction via the
+  existing `ALTERNATIVE` framework.
+- Normal KVM path (`kvm_riscv_vcpu_unpriv_read`), not an error path.
+  Unaffected CPUs keep `nop`.
 
-**Step 3.5 — Dependencies**
-- Record: `[None. Uses existing `debugfs_create_dir` /
-  `debugfs_remove_recursive` / `platform_set_drvdata`. Can apply
-  standalone to this tree.]`
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-## Phase 4: Mailing list and external research
+Record: [category: hardware workaround / memory-ordering errata]
+[mechanism: SiFive MAL-9092 omits ordering around HS-mode guest-memory
+hypervisor ops; alternatives patch in `fence.rw` only on matching CPUs]
 
-**Step 4.1 — Original discussion**
-- Record: `[https://patch.msgid.link/20260615091531.21964-1-
-  pengpeng@iscas.ac.cn]`
-- `b4 dig -a`: only v1; that version was applied.
-- Maintainer review: `Reviewed-by: Neil Armstrong`.
-- Sashiko bot flagged a pre-existing probe-time race (`measure_summary`
-  created before `.priv` is filled). Armstrong replied: “Impossible the
-  driver is initialized way before userspace starts.” That race is not
-  introduced by this patch and was not treated as a blocker.
-- No NAK. No reviewer request for `Cc: stable`.
+No HSV macros exist in this tree; wrapping HLV/HLVX is the complete in-
+tree coverage.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-- Record: `[Neil Armstrong, Kevin Hilman, Jerome Brunet, Martin
-  Blumenstingl, linux-amlogic, linux-arm-kernel, linux-kernel. Right
-  maintainers were on the patch.]`
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 4.3 — Bug report**
-- Record: `[No Reported-by / syzbot / bugzilla. Bug is from code
-  inspection of lifetime mismatch.]`
+Record: Matches CIP-453/CIP-1200 style. CPU-ID gated, `default y`,
+reviewed by SiFive and queued by the arch maintainer. Regression risk is
+low: extra nops on other CPUs; fences only on listed IDs. Residual
+risks: `insn-def.h` relies on include order for
+`ALTERNATIVE`/`SIFIVE_VENDOR_ID`/`ERRATA_SIFIVE_MAL_9092`;
+`warn_miss_errata()` can warn at boot if KVM is not built-in because the
+only alternative sites are in KVM.
 
-**Step 4.4 — Series**
-- Record: `[Standalone single patch. No follow-up on this file after
-  67481152be2ec.]`
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 4.5 — Stable list**
-- Record: `[UNVERIFIED: lore.kernel.org/stable returned HTTP 403.]`
+**Step 3.1: BLAME THE CHANGED LINES**
 
-## Phase 5: Code semantic analysis
+Record: HLV macros come from `26b73f14933e9c` (2022-10-02, “riscv: KVM:
+Apply insn-def to hlv encodings”). SiFive errata probe/list from
+`800149a77c2cb8` / `bff3ff525460b4` (2021, CIP-453/CIP-1200). The
+hypervisor accessors have been in tree for years; the errata is new
+silicon, not new kernel code.
 
-**Step 5.1 — Functions**
-- Record: `[meson_msr_probe, meson_msr_remove (new), meson_msr_driver;
-  readers clk_msr_show / clk_msr_summary_show / meson_measure_id]`
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 5.2 — Callers**
-- Record: `[probe/remove from the platform core on bind/unbind. Debugfs
-  show via `DEFINE_SHOW_ATTRIBUTE`. `meson_msr_remove` is only the new
-  driver `.remove`.]`
+Record: No `Fixes:` tag. The defect is in the CPU, not in a prior kernel
+commit. Not applicable.
 
-**Step 5.3 — Callees**
-- Record: `[debugfs_create_dir/file, debugfs_remove_recursive,
-  platform_set/get_drvdata, and on read: mutex + regmap MMIO.]`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 5.4 — Reachability**
-- Record: `[Yes. CONFIG_MESON_CLK_MEASURE is tristate, default y on
-  ARCH_MESON. DT nodes exist for GX, Meson8/8b, AXG, G12A, SM1, C3, S4,
-  A1, T7. Unbind is `rmmod meson-clk-measure` or sysfs unbind, then
-  reading leftover debugfs. Typically root-only, but still a real kernel
-  UAF.]`
+Record: Recent `arch/riscv` errata work is MIPS P8700, T-Head
+GHOSTWRITE, vendor-header split (`16d18e3eaf29b`). None of those is a
+prerequisite for this patch. Standalone v1, not patch X/Y.
 
-**Step 5.5 — Similar patterns**
-- Record: `[Same teardown exists in other SoC drivers (qcom
-  smem/socinfo/aoss, ti smartreflex). This driver was the one missing
-  it.]`
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-## Phase 6: This tree (v7.3-rc4)
+Record: Yong-Xuan Wang is a SiFive contributor with RISC-V KVM work in
+this history (APLIC, Svade/Svadu). Samuel Holland (SiFive) reviewed. Not
+the arch maintainer; Paul Walmsley queued it.
 
-**Step 6.1 — Does the buggy code exist here?**
-- Record: `[Yes in this lineage. Driver is `drivers/soc/amlogic/meson-
-  clk-measure.c`. Bug introduced in v5.0 (2b45ebef39a2c). This checkout
-  is `v7.3-rc4-27-gf0100363d8c37` / 7.3.0-rc4. The fix landed in
-  v7.3-rc1 (`git merge-base --is-ancestor 67481152be2ec v7.3-rc1`
-  succeeded; it is not in v7.2).]`
-- Current file already has `debugfs_root` and `meson_msr_remove()`. That
-  is because the commit merged during 7.3; it is not a reason to treat
-  the bug as never existing here.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 6.2 — Backport difficulty**
-- Record: `[Clean apply on this tree. Context matches. `.remove` is
-  already void.]`
+Record: Needs RISC-V alternatives, `ERRATA_SIFIVE`,
+`errata_list_vendors.h`, and the HLV macros. All are ancestors of
+`v6.18.57` (`git merge-base --is-ancestor` succeeded for `16d18e3eaf29b`
+and `26b73f14933e9c`). Applies standalone.
 
-**Step 6.3 — Related fixes already here?**
-- Record: `[This is the fix. No alternate teardown was present before
-  it.]`
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## Phase 7: Subsystem context
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 7.1**
-- Record: `[Subsystem: drivers/soc/amlogic clock-measure debugfs helper.
-  Criticality: PERIPHERAL (Amlogic-only, debugfs), but UAF is still a
-  crash/memory-safety bug.]`
+Record:
+- `b4 dig -c f36eeaaaecc2c` → https://patch.msgid.link/20260817-sifive-
+  errata-v1-1-6a80f1a2743d@sifive.com
+- `b4 dig -a`: **v1 only** (2026-08-17). No v2/v3.
+- Thread: patch + Paul Walmsley “Thanks, queued for v7.3-rc.” No NAKs,
+  no stable nomination, no reviewer risk flags.
+- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
+  -m` mbox.
 
-**Step 7.2**
-- Record: `[Mature driver (2018). Recent work is new SoC tables, not
-  lifetime redesign.]`
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-## Phase 8: Impact and risk
+Record: `b4 dig -w` To/Cc: Paul Walmsley, Palmer Dabbelt, Albert Ou,
+Alexandre Ghiti, Samuel Holland, other SiFive engineers, linux-riscv,
+linux-kernel. Appropriate RISC-V maintainers were on the patch.
 
-**Step 8.1 — Who is affected**
-- Record: `[Amlogic Meson users with CONFIG_MESON_CLK_MEASURE and
-  CONFIG_DEBUG_FS, after driver unbind/unload.]`
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 8.2 — Trigger**
-- Record: `[Unbind or rmmod, then open leftover debugfs. Not a boot-hot
-  path. Privileged in typical debugfs setups. Deterministic UAF, not a
-  heisenrace.]`
+Record: No syzbot/bugzilla/user crash thread. This is a vendor errata
+from SiFive, not a fuzzer report. Public MAL-9092 documentation beyond
+the patch was not found.
 
-**Step 8.3 — Failure mode**
-- Record: `[UAF → oops / KASAN / possible memory corruption. Severity:
-  HIGH.]`
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Step 8.4 — Risk-benefit**
-- Record: `[Benefit: high for the affected unbind path (prevents UAF).
-  Risk: very low (14 lines, standard debugfs teardown). Ratio favors
-  taking the fix.]`
+Record: Single standalone patch (`[PATCH]`, not `[PATCH 1/N]`). No
+follow-ups on these files after this commit on HEAD.
 
-## Phase 9: Synthesis
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-**Step 9.1 — Evidence**
+Record: Web search of stable/MAL-9092 found no stable-list discussion
+and no stated reason to keep it out of stable.
 
-For:
-- Real UAF: leftover debugfs vs. `devm` private data after unbind
-- Small (+14), obviously correct
-- Reviewed and applied by the subsystem maintainer
-- Driver and bug exist in this 7.3 tree’s history since v5.0
-- `MESON_CLK_MEASURE` is tristate, so module unload is a supported path
-- Same teardown pattern used elsewhere in `drivers/soc/`
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-Against:
-- No user/syzbot report
-- Debugfs, typically root-only
-- Amlogic-only helper, not core kernel
-- Maintainer did not nominate stable
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
-Unresolved:
-- Could not search lore.kernel.org/stable (HTTP 403)
+Record: `errata_mal_9092_check_func` (new); `errata_list[]`; macros
+`ALT_SIFIVE_MAL_9092_FENCE`, `HLVX_HU`, `HLV_W`, `HLV_D`. Existing
+`sifive_errata_probe` / `sifive_errata_patch_func` pick it up via
+`ERRATA_SIFIVE_NUMBER`.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — standard remove +
-   `debugfs_remove_recursive`; maintainer Reviewed-by
-2. Real bug affecting users? **PASS** — leftover debugfs after unbind is
-   a UAF
-3. Important (crash/security/corruption/deadlock)? **PASS** — UAF oops /
-   memory-safety; HIGH, not a theoretical warning
-4. Small and contained? **PASS** — 14 lines, one file
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** — driver present, void `.remove`, no
-   missing prereqs
+**Step 5.2: TRACE CALLERS**
 
-**Step 9.3 — Exception category**
-- Record: `[None. This is a normal bugfix, not a device-
-  ID/quirk/DT/build/docs exception.]`
+Record:
+- `HLV*` used only in `arch/riscv/kvm/vcpu_exit.c` →
+  `kvm_riscv_vcpu_unpriv_read()`
+- Callers of that: `kvm_riscv_vcpu_virtual_insn()` in `vcpu_insn.c`
+  (guest insn fetch when `stval` is 0 / 16-bit); `vcpu_sbi_v01.c` (SBI
+  0.1 SEND_IPI / remote fence hart-mask reads)
+- Context: KVM VM-exit handling, not IRQ-entry core. Reachable whenever
+  a guest traps.
 
-**Step 9.4 — Decision**
-This tree is 7.3-rc4. The clock-measure driver is here, the missing-
-remove UAF has been here since v5.0, and the patch is a small, correct
-teardown. It meets stable criteria for this checkout.
+**Step 5.3: TRACE CALLEES**
 
-### What it fixes and why it matters
-`meson_msr_probe()` publishes debugfs files whose private pointers refer
-to `devm`-allocated `priv` / `msr_table` / `regmap`. Without a remove
-callback those dentries survive unbind, so a later read of
-`measure_summary` or a per-clock file uses freed memory. On 7.3 that is
-a real module-unload/unbind UAF on Amlogic boards that ship this IP.
+Record: Probe only compares `archid`/`impid`. Patching uses
+`patch_text_nosync` under `text_mutex`, same as CIP errata. Macros
+expand to `ALTERNATIVE("nop", "fence rw, rw", ...)`.
 
-### Stable rules / risk
-The change is 14 lines, does not add APIs, and matches
-`debugfs_remove()` semantics already used by sibling SoC drivers.
-Benefit is preventing a UAF; regression risk is very low.
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-### Concerns
-No public reproducer. Trigger is privileged debugfs/unbind. That lowers
-breadth, not severity. No extra commits are required on this tree.
+Record: Userspace QEMU/KVM on RISC-V → guest trap →
+`kvm_riscv_vcpu_unpriv_read` → HLV/HLVX. Unprivileged guest code can
+induce those exits. Only relevant with `CONFIG_KVM` on matching SiFive
+cores.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same pattern as CIP-453 and CIP-1200 in this tree. No HSV macros
+in `arch/riscv` at `v6.18.57` or HEAD, so nothing else to wrap here.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: Yes. Local tree: `git describe HEAD` =
+`v6.18.57-155-gcdf239ca885b2`, `make kernelversion` = **6.18.57**. `git
+merge-base --is-ancestor f36eeaaaecc2c v6.18.57` failed (workaround not
+in 6.18.57). `v6.18.57` already has HLV macros in `insn-def.h`, KVM
+`vcpu_exit.c`, and SiFive errata with `ERRATA_SIFIVE_NUMBER 2`. The
+hardware bug is therefore live for matching CPUs running this series.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: `git diff --stat v6.18.57 f36eeaaaecc2c -- <the four files>` is
+exactly +49/-4. Clean apply. No conflicting refactor in 6.18.57 vs this
+patch.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: `git log --grep=MAL-9092` only finds this candidate. No earlier
+equivalent workaround.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: [arch/riscv errata + KVM guest-memory access] [IMPORTANT, not
+CORE: RISC-V-specific, and only listed SiFive cores with KVM]. Wrong
+guest-memory ordering is still a real virt correctness issue for those
+systems.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: RISC-V errata and KVM are actively maintained. This is new-
+silicon errata on a mature HLV/KVM path, not a rewrite of a brand-new
+subsystem.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: RISC-V + `CONFIG_ERRATA_SIFIVE` (selected by `ARCH_SIFIVE`) +
+`CONFIG_64BIT` + KVM + `marchid 0x8000000000000109` with one of three
+`mimpid`s. Driver/platform-specific, not universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Trigger is KVM using HLV/HLVX to read guest memory (instruction
+emulate, SBI 0.1 hart masks). Common for any VM on those cores. Guest
+(typically unprivileged) can cause the VM-exit. Not a rare error-path-
+only bug.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: [Failure mode: missing memory fence → stale/wrong guest insn or
+data in the hypervisor] [Severity: HIGH — guest corruption or incorrect
+emulation; not a documented host panic]. Silent wrongness is worse than
+a WARN.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- Benefit: HIGH for KVM on the listed SiFive cores (correct guest-memory
+  access).
+- Risk: LOW — ~50 lines, ID-gated alternatives, same mechanism as
+  CIP-1200 already in 6.18.57. Unaffected CPUs only gain nops.
+- Ratio: benefit outweighs risk for this 6.18.y tree.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Hardware errata/quirk, which stable explicitly accepts
+- Real KVM guest-memory ordering bug on shipping/soon-shipping SiFive
+  cores
+- Small (+49/-4), uses existing alternatives/errata machinery
+- HLV/KVM/SiFive errata all present in 6.18.57; applies cleanly
+- Reviewed by SiFive, queued by RISC-V arch maintainer, no NAKs
+- CPU-ID match so other RISC-V systems are not functionally changed
+
+AGAINST:
+- New Kconfig symbol (standard for RISC-V errata, `default y`)
+- No field crash/syzbot report (vendor errata, typical)
+- Possible `warn_miss_errata` noise if KVM is disabled on an affected
+  CPU
+- HSV mentioned in text but no HSV macros here (not a functional gap in
+  6.18.y)
+
+UNRESOLVED:
+- Public MAL-9092 datasheet text was not found (only the kernel patch)
+- lore.kernel.org HTTP 403; discussion recovered from b4 mbox instead
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — ID-gated alternative fences;
+   SiFive review; maintainer queued for 7.3-rc
+2. Fixes a real bug that affects users? **PASS** — KVM guest-memory
+   ordering on listed cores
+3. Important issue? **PASS** — HIGH: incorrect hypervisor guest
+   instruction/data reads (corruption / bad emulation)
+4. Small and contained? **PASS** — 4 files, +49/-4
+5. No new features or APIs? **PASS** — no userspace ABI; Kconfig is the
+   usual errata toggle
+6. Can apply to the local tree? **PASS** — clean vs `v6.18.57`
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: Hardware quirk/workaround (SiFive CPU errata), same class as
+USB/PCI quirks and existing CIP-453/CIP-1200.
+
+**Step 9.4: DECISION**
+
+This belongs on **this** 6.18.y tree. The HLV path has been here since
+2022; 6.18.57 just lacks the fence workaround. LTS users who run KVM on
+these SiFive cores get a contained, ID-gated fix with the same shape as
+errata already in the series.
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by Neil Armstrong; Link to msgid
-  20260615091531.21964-1; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +14 in meson-clk-measure.c; store debugfs root, set
-  drvdata, add void remove
-- [Phase 2] Pre-fix parent 67481152be2ec^: no platform_set_drvdata, no
-  debugfs_root, no remove
-- [Phase 2] clk_msr_summary_show uses msr_table->priv; meson_measure_id
-  uses priv->regmap — UAF after unbind confirmed
-- [Phase 3] git blame: debugfs create from 2b45ebef39a2c (v5.0-rc1)
-- [Phase 3] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; Makefile
-  7.3.0-rc4
-- [Phase 3] git merge-base --is-ancestor 67481152be2ec v7.3-rc1: yes;
-  not in v7.2
-- [Phase 4] b4 dig -c 67481152be2ec:
-  https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn
-- [Phase 4] b4 dig -a: v1 only, applied as-is
-- [Phase 4] b4 dig -w: Armstrong, Hilman, Brunet, Blumenstingl, linux-
-  amlogic
-- [Phase 4] mbox: Armstrong Reviewed-by; dismissed sashiko probe-race as
-  pre-existing/impossible
-- [Phase 5] Kconfig MESON_CLK_MEASURE tristate default ARCH_MESON; DT
-  compatibles in meson-gx/g12/axg/sm1/s4/a1/t7/c3 dtsi
-- [Phase 5] platform_driver.remove is void (*)(struct platform_device *)
-  in include/linux/platform_device.h:280
-- [Phase 5] debugfs_remove() already IS_ERR_OR_NULL-safe
-  (fs/debugfs/inode.c:778)
-- [Phase 6] File present; no later changes on this file after the fix
-- [Phase 8] Failure mode: UAF on leftover debugfs after unbind, severity
-  HIGH
-- UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
+- [Phase 1] Parsed tags: Reviewed-by Samuel Holland; Link to msgid
+  20260817-sifive-errata-v1-1; SOB Yong-Xuan Wang and Paul Walmsley; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +49/-4 across Kconfig.errata, errata.c,
+  errata_list_vendors.h, insn-def.h; ALTERNATIVE nop→fence around
+  HLVX_HU/HLV_W/HLV_D
+- [Phase 3] git blame v6.18.57 insn-def.h: HLV macros from
+  26b73f14933e9c (2022); errata framework from 2021 CIP commits
+- [Phase 3] No Fixes: tag; standalone, not a series
+- [Phase 3] git merge-base --is-ancestor 26b73f14933e9c v6.18.57 → yes;
+  16d18e3eaf29b v6.18.57 → yes
+- [Phase 4] b4 dig -c f36eeaaaecc2c: lore URL found; -a: v1 only; -w:
+  RISC-V maintainers on To/Cc; mbox: Paul “queued for v7.3-rc”; no NAK
+- [Phase 4] lore WebFetch 403; mbox used instead
+- [Phase 5] HLV* only used in kvm/vcpu_exit.c; callers vcpu_insn.c and
+  vcpu_sbi_v01.c; git grep HSV_ in arch/riscv: none
+- [Phase 6] git describe HEAD: v6.18.57-155-gcdf239ca885b2;
+  kernelversion 6.18.57
+- [Phase 6] git merge-base --is-ancestor f36eeaaaecc2c v6.18.57 → not in
+  6.18.57; git grep MAL-9092 v6.18.57 → none
+- [Phase 6] git diff --stat v6.18.57 f36eeaaaecc2c -- the four files →
+  exact patch, clean apply
+- [Phase 7] ARCH_SIFIVE selects ERRATA_SIFIVE; KVM is
+  arch/riscv/kvm/Kconfig
+- [Phase 8] Failure mode: missing fence → wrong guest memory in KVM,
+  severity HIGH
+- UNVERIFIED: full public MAL-9092 silicon manual; compile of
+  vcpu_exit.c was inferred from include order, not by building
+
+The workaround is small, ID-gated, and fixes a real KVM memory-ordering
+erratum on hardware that 6.18.y can boot. It meets the stable rules and
+the hardware-quirk exception.
 
 **YES**
 
- drivers/soc/amlogic/meson-clk-measure.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/riscv/Kconfig.errata                    | 14 ++++++++++++++
+ arch/riscv/errata/sifive/errata.c            | 20 ++++++++++++++++++++
+ arch/riscv/include/asm/errata_list_vendors.h |  3 ++-
+ arch/riscv/include/asm/insn-def.h            | 16 +++++++++++++---
+ 4 files changed, 49 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
-index d862e30a244ed..7ca43bcb622a2 100644
---- a/drivers/soc/amlogic/meson-clk-measure.c
-+++ b/drivers/soc/amlogic/meson-clk-measure.c
-@@ -7,6 +7,7 @@
- #include <linux/of_address.h>
- #include <linux/platform_device.h>
- #include <linux/bitfield.h>
-+#include <linux/err.h>
- #include <linux/seq_file.h>
- #include <linux/debugfs.h>
- #include <linux/regmap.h>
-@@ -50,6 +51,7 @@ struct meson_msr_data {
- struct meson_msr {
- 	struct regmap *regmap;
- 	struct meson_msr_data data;
-+	struct dentry *debugfs_root;
- };
+diff --git a/arch/riscv/Kconfig.errata b/arch/riscv/Kconfig.errata
+index 6f230aebd4968..65d00fb9db9d7 100644
+--- a/arch/riscv/Kconfig.errata
++++ b/arch/riscv/Kconfig.errata
+@@ -95,6 +95,20 @@ config ERRATA_STARFIVE_JH7100
+ 	  Say "Y" if you want to support the BeagleV Starlight and/or
+ 	  StarFive VisionFive V1 boards.
  
- #define CLK_MSR_ID(__id, __name) \
-@@ -952,6 +954,7 @@ static int meson_msr_probe(struct platform_device *pdev)
- 	       sizeof(struct msr_reg_offset));
- 
- 	root = debugfs_create_dir("meson-clk-msr", NULL);
-+	priv->debugfs_root = root;
- 	clks = debugfs_create_dir("clks", root);
- 
- 	debugfs_create_file("measure_summary", 0444, root,
-@@ -967,9 +970,19 @@ static int meson_msr_probe(struct platform_device *pdev)
- 				    &priv->data.msr_table[i], &clk_msr_fops);
- 	}
- 
-+	platform_set_drvdata(pdev, priv);
++config ERRATA_SIFIVE_MAL_9092
++	bool "Apply SiFive HLV/HLVX/HSV fence errata"
++	depends on ERRATA_SIFIVE && 64BIT
++	default y
++	help
++	  This will apply the SiFive MAL-9092 errata to add fence.rw
++	  instructions around all HLV/HLVX/HSV instructions.
 +
- 	return 0;
++	  Note: HSTATUS.HU is cleared during KVM initialization. If future
++	  changes enable HSTATUS.HU to allow hypervisor instructions in
++	  U-mode, additional errata handling may be required.
++
++	  If you don't know what to do here, say "Y".
++
+ config ERRATA_THEAD
+ 	bool "T-HEAD errata"
+ 	depends on RISCV_ALTERNATIVE
+diff --git a/arch/riscv/errata/sifive/errata.c b/arch/riscv/errata/sifive/errata.c
+index 38aac2c47845a..3025b9d6966f8 100644
+--- a/arch/riscv/errata/sifive/errata.c
++++ b/arch/riscv/errata/sifive/errata.c
+@@ -51,6 +51,22 @@ static bool errata_cip_1200_check_func(unsigned long  arch_id, unsigned long imp
+ 	return true;
  }
  
-+static void meson_msr_remove(struct platform_device *pdev)
++static bool errata_mal_9092_check_func(unsigned long  arch_id, unsigned long impid)
 +{
-+	struct meson_msr *priv = platform_get_drvdata(pdev);
++	/*
++	 * Affected cores:
++	 * Architecture ID: 0x8000000000000109
++	 * Implementation ID: 0x19251031, 0x19251217, 0x19260320
++	 */
 +
-+	if (!IS_ERR_OR_NULL(priv->debugfs_root))
-+		debugfs_remove_recursive(priv->debugfs_root);
++	if (arch_id != 0x8000000000000109)
++		return false;
++	if (impid != 0x19251031 && impid != 0x19251217 && impid != 0x19260320)
++		return false;
++
++	return true;
 +}
 +
- static const struct msr_reg_offset msr_reg_offset = {
- 	.duty_val = 0x0,
- 	.freq_ctrl = 0x4,
-@@ -1065,6 +1078,7 @@ MODULE_DEVICE_TABLE(of, meson_msr_match_table);
+ static struct errata_info_t errata_list[ERRATA_SIFIVE_NUMBER] = {
+ 	{
+ 		.name = "cip-453",
+@@ -60,6 +76,10 @@ static struct errata_info_t errata_list[ERRATA_SIFIVE_NUMBER] = {
+ 		.name = "cip-1200",
+ 		.check_func = errata_cip_1200_check_func
+ 	},
++	{
++		.name = "mal-9092",
++		.check_func = errata_mal_9092_check_func
++	},
+ };
  
- static struct platform_driver meson_msr_driver = {
- 	.probe	= meson_msr_probe,
-+	.remove = meson_msr_remove,
- 	.driver = {
- 		.name		= "meson_msr",
- 		.of_match_table	= meson_msr_match_table,
+ static u32 __init_or_module sifive_errata_probe(unsigned long archid,
+diff --git a/arch/riscv/include/asm/errata_list_vendors.h b/arch/riscv/include/asm/errata_list_vendors.h
+index ec7eba3734371..c62a82f60468a 100644
+--- a/arch/riscv/include/asm/errata_list_vendors.h
++++ b/arch/riscv/include/asm/errata_list_vendors.h
+@@ -11,7 +11,8 @@
+ #ifdef CONFIG_ERRATA_SIFIVE
+ #define	ERRATA_SIFIVE_CIP_453 0
+ #define	ERRATA_SIFIVE_CIP_1200 1
+-#define	ERRATA_SIFIVE_NUMBER 2
++#define	ERRATA_SIFIVE_MAL_9092 2
++#define	ERRATA_SIFIVE_NUMBER 3
+ #endif
+ 
+ #ifdef CONFIG_ERRATA_THEAD
+diff --git a/arch/riscv/include/asm/insn-def.h b/arch/riscv/include/asm/insn-def.h
+index d29da6ccd3dd8..b1b97eab91007 100644
+--- a/arch/riscv/include/asm/insn-def.h
++++ b/arch/riscv/include/asm/insn-def.h
+@@ -191,18 +191,28 @@
+ 	INSN_R(OPCODE_SYSTEM, FUNC3(0), FUNC7(49),		\
+ 	       __RD(0), RS1(gaddr), RS2(vmid))
+ 
++#define ALT_SIFIVE_MAL_9092_FENCE					\
++ALTERNATIVE("nop", "fence rw, rw", SIFIVE_VENDOR_ID,			\
++	    ERRATA_SIFIVE_MAL_9092, CONFIG_ERRATA_SIFIVE_MAL_9092)
++
+ #define HLVX_HU(dest, addr)					\
++	ALT_SIFIVE_MAL_9092_FENCE "\n"				\
+ 	INSN_R(OPCODE_SYSTEM, FUNC3(4), FUNC7(50),		\
+-	       RD(dest), RS1(addr), __RS2(3))
++	       RD(dest), RS1(addr), __RS2(3)) "\n"		\
++	ALT_SIFIVE_MAL_9092_FENCE
+ 
+ #define HLV_W(dest, addr)					\
++	ALT_SIFIVE_MAL_9092_FENCE "\n"				\
+ 	INSN_R(OPCODE_SYSTEM, FUNC3(4), FUNC7(52),		\
+-	       RD(dest), RS1(addr), __RS2(0))
++	       RD(dest), RS1(addr), __RS2(0)) "\n"		\
++	ALT_SIFIVE_MAL_9092_FENCE
+ 
+ #ifdef CONFIG_64BIT
+ #define HLV_D(dest, addr)					\
++	ALT_SIFIVE_MAL_9092_FENCE "\n"				\
+ 	INSN_R(OPCODE_SYSTEM, FUNC3(4), FUNC7(54),		\
+-	       RD(dest), RS1(addr), __RS2(0))
++	       RD(dest), RS1(addr), __RS2(0)) "\n"		\
++	ALT_SIFIVE_MAL_9092_FENCE
+ #else
+ #define HLV_D(dest, addr)					\
+ 	__ASM_STR(.error "hlv.d requires 64-bit support")
 -- 
 2.53.0
 
