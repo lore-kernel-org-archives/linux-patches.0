@@ -1,45 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096A553BBAF;
-	Mon, 19 Oct 2026 14:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E172162C0DB;
+	Mon, 19 Oct 2026 14:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418715; cv=none; b=FEgaZSWquNP86hWr8gwWmQyfYYELWwetpULTd349ZfiBhkZGnYN7nWBuq/aIoH6GaKJ3RA50GHfFcgP7GWXQ53G70LjyyurtHQj4H2I5L+Pd6uzAHVNF0smpqdvWnhPEskzAk2S3RJKvCuEK8iu18qB1dRpsZZSI7v5xNvhQW80=
+	t=1792418716; cv=none; b=RM9ToqiZsoede9Na1hrEWfqzIfBEE5FBrrJRnuZwfiRfFiD7mWiURUbvQkyNSQFOKrR7xqwXZie2yc2VnZ5z2JtCAmG1wd8YqmJ32+oZSXPEzdRKXvviWU2+ffbjZsynqmmPPrg6W8PXmBvlMS93ruDDRwRC/B8scP7LHZNPMMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418715; c=relaxed/simple;
-	bh=g+veDCmlhCAqMBdGLPALcJ3IuOIMVViwoioxncymKNQ=;
+	s=arc-20240116; t=1792418716; c=relaxed/simple;
+	bh=NS+dYxfyjC54yA8xF4W3zeUdqixq8YahZ/6nL88VUbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nbxa9TDhzxERz6qdCSJfpV48WhfoRw8AVSqOZGMRUQNwe3KaGnmAiZYGT4oACT6p2NyQisYK/GeFEoApQ+wEi4G29Zn9qa1ABGd5O6NjZz5zJZCxiQUBrEAE5UMt4dFBWaOEb8iBj8x+DY6J+wmltONso9g7P/0Hm2hwObmfKE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mn+M2xg5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=C45aUY/Qpz07li8B1RfWKoHl8GNaFJTkRUda9/jHUyBbB/lb7yW6y7GQ4SX3ajbRDt1SNJkDci2r/IwHiwnWrGT8xzkRgAgLfiIR/jb1tF2p7YVjcHb8JDIIBviskxKssAjqWEQUz8SxF+5P25flivTa09wCuKA4Kd2Uj1qaaN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bf/E01hj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mn+M2xg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D8C1F000C7;
-	Mon, 19 Oct 2026 14:05:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bf/E01hj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C221F000C9;
+	Mon, 19 Oct 2026 14:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418711;
-	bh=CM2WAE2HkP0FdbYvaMOjqRvZj/7tVd7+xmKcg/KyjcU=;
+	s=k20260515; t=1792418713;
+	bh=OJnDRXaD8MXKY+HfVAGx8ycJVEcnB4lWDfYJHPvkKb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mn+M2xg5dJ6MTHExbbG+b450kblSLnAZM9hVmnrEgdoHSa9O6Y5h8aZq8hRFVe1dK
-	 NjGjNgRKKoYSw6wKijfuWoQoz5+PoEUY7EXG/ki+6UzbcvGOrfUrZKGrYF4fReV2k2
-	 hkGKV3wJzMKtComXJdKTblvIHc0FEe+Lz45wZK+NjZWjCFpfADG5Ot4IAedT9+/kDc
-	 nQWZUmjuyPTgUORnLhH9qQ2VXRlqRtpMT+zcQLcPdrzRcH4dLQ0bk300wqt6kncokx
-	 XLGQ5JyMUsCvOxepTKRWagVW5vv8TSeDoZKwZ2CECCbF3VtL3Gtj/0k6blgx4CSlND
-	 q9jw1ngtv9ZDw==
+	b=bf/E01hjpu608+YAIXvBZ8sLKTH6wN4X6fCJ266yZXD9IUA84iZ5tHSbvtTkUThwg
+	 j7b75Zfd9bwTyHXiMvYncHq4rvcE65DsDqz/aIEmmci2ek9dbiCVmsmivlxi4rmXyd
+	 0hCF6sI/KvQuEynwTYJ3xs7j8KKiF54nWaVmGdVaTduzmV2qBJSfrnLNuFyQhPu7B0
+	 0DReVvYr6GaJMZb1Ucxw9mccPd0om2AQlljhVhl6eKiHMuvKaCcGbZ2BYq7EugqtFN
+	 7gGQJvbk6uaR63I2smHhQLXfeH4HjMUkcU7kYw8EBcxoGPlfWo7yzzg1aumaig8pA0
+	 2sqzRO8psMLCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Weimin Xiong <xiongwm2026@163.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Atish Patra <atishp@meta.com>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Charlie Jenkins <thecharlesjenkins@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dtatulea@nvidia.com,
-	jasowangio@gmail.com,
-	eperezma@redhat.com,
-	virtualization@lists.linux.dev,
+	atish.patra@linux.dev,
+	will@kernel.org,
+	mark.rutland@arm.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	linux-riscv@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] vdpa/mlx5: roll back MR update after VQ setup failure
-Date: Mon, 19 Oct 2026 09:52:13 -0400
-Message-ID: <20261019135441.1420968-442-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] RISC-V: perf: fix resource cleanup on driver probe failure
+Date: Mon, 19 Oct 2026 09:52:14 -0400
+Message-ID: <20261019135441.1420968-443-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,490 +61,589 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weimin Xiong <xiongwm2026@163.com>
+From: Atish Patra <atishp@meta.com>
 
-[ Upstream commit 11f79e2780043ad94424a8db02a7a9022ba93252 ]
+[ Upstream commit e24a1418e90beac2ef4384bc9b0b5a10f19b806e ]
 
-mlx5_vdpa_change_map() must install the new MR before rebuilding or
-resuming virtqueues, because both paths read the MR keys from
-mvdev->mres.mr[].
+Sashiko pointed out various UAF and memory leak issues around
+pmu_sbi_device_probe() error paths.
 
-If rebuilding the virtqueue resources fails, the new MR must not remain
-installed after its reference is released. Keep an extra reference to
-the old MR before replacing it. On setup failure, restore the old MR;
-the saved reference then becomes the map reference, while replacing the
-new MR drops its map reference.
+If the probe fails, here are list of cleanups needed.
+a. Already registered pmu must be freed
+b. per cpu IRQ must be released
+c. pmu_ctr_list data structure must be freed
+d. cpu hotplug state must be cleaned up only if added.
 
-Make mlx5_vdpa_change_map() consume new_mr on all error paths so that
-set_map_data() does not release an MR already released during rollback.
+Fix the resource cleanup by reorganizing the code around probe failure.
 
-v2:
-- Keep the new MR installed while virtqueues are rebuilt.
-- Restore the old MR only after setup_vq_resources() fails.
-
-Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-
-Message-ID: <20260716054353.155805-1-xiongwm2026@163.com>
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Reviewed-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
+Signed-off-by: Atish Patra <atishp@meta.com>
+Link: https://patch.msgid.link/20260807-counter_delegation-v9-1-58658104e487@meta.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **6.12.111** (`pending-6.12`). The buggy
-`mlx5_vdpa_change_map()` path is present, the patch applies cleanly, and
-this is a real use-after-free on the map-update error path.
+This tree is **6.12.111** (`pending-6.12`). The buggy probe cleanup is
+present here, the patch applies, and it is a real UAF/leak/crash fix — a
+YES for this tree.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[vdpa/mlx5] [roll back] [restore the previous memory region if
-virtqueue rebuild fails after installing a new MR]**
+
+Record: `[RISC-V perf / SBI PMU] [fix] [resource cleanup on driver probe
+failure]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- **Fixes:** none (expected for this review)
-- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
-- **Link:** none in the commit; Message-ID
-  `20260716054353.155805-1-xiongwm2026@163.com`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Weimin Xiong (author); Michael S. Tsirkin (vhost
-  maintainer, applied the patch)
-- Ignore any pipeline SOBs.
 
-Notable: standalone v2 patch, not `N/M`. Maintainer SOB is present; no
-syzbot tag.
+Record:
+- `Reported-by: Sashiko AI <sashiko-bot@kernel.org>` — static-analysis
+  bot, not a user oops, but it named concrete UAF/leak paths
+- `Reviewed-by: Charlie Jenkins <thecharlesjenkins@gmail.com>` — RISC-V
+  reviewer
+- `Signed-off-by: Atish Patra <atishp@meta.com>` — original SBI PMU
+  driver author
+- `Link: https://patch.msgid.link/20260807-counter_delegation-v9-1-
+  58658104e487@meta.com` — **v9 01/20** of the counter-delegation series
+- `Signed-off-by: Paul Walmsley <pjw@kernel.org>` — RISC-V maintainer
+- No `Fixes:` tag (expected)
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  — none on the real commit `e24a1418e90be`
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug:** `mlx5_vdpa_change_map()` installs `new_mr` into
-  `mvdev->mres.mr[]` before rebuilding virtqueues. If
-  `setup_vq_resources()` fails, the caller still drops `new_mr` while
-  that pointer remains installed.
-- **Symptom:** dangling MR pointer / use-after-free after a failed live
-  map update. GC can free the MR ~2s later (`MLX5_VDPA_MR_GC_TRIGGER_MS`
-  is 2000).
-- **Version info:** none in the message. Introduced by the v6.7 MR-
-  update flow, present in this 6.12 tree.
-- **Root cause:** missing rollback of the map slot and split ownership
-  of `new_mr` between `change_map()` and `set_map_data()`.
+- **Bug:** `pmu_sbi_device_probe()` error paths leak and leave live
+  references to freed objects
+- **Needed cleanups:** (a) unregister an already-registered PMU, (b)
+  release the per-CPU IRQ, (c) free `pmu_ctr_list`, (d) remove the CPU-
+  hotplug instance only if it was added
+- **Symptom:** UAF and memory leaks if probe fails after partial setup
+- **Root cause:** probe does `goto out_unregister` / `out_free` without
+  matching teardown
+- **Version info:** none in the message; code dates to 2022–2024
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not a disguised cleanup.** This is an explicit error-path
-refcount/UAF fix. v1 wrongly deferred the MR install until after VQ
-setup; v2 keeps the new MR installed during rebuild and rolls back only
-on failure.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: Not disguised. It is an explicit error-path UAF/leak fix.
+“Reorganizing probe failure” is the usual `goto` cleanup pattern, not a
+refactor-for-its-own-sake.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `drivers/vdpa/mlx5/net/mlx5_vnet.c` — **+15 / -8** (23 lines)
-- Functions: `mlx5_vdpa_change_map()`, `set_map_data()`
-- Scope: **single-file surgical error-path fix**
+- File: `drivers/perf/riscv_pmu_sbi.c` — **+27 / −6** (33 insertions, 6
+  deletions)
+- Functions: `pmu_sbi_setup_irqs()`, `riscv_pmu_destroy()`,
+  `pmu_sbi_device_probe()`
+- Scope: single-file surgical error-path fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-1. `save_channels_info()` failure: now `mlx5_vdpa_put_mr(new_mr)` inside
-   `change_map()` (caller no longer puts it).
-2. Before `mlx5_vdpa_update_mr()`: extra `get` on `old_mr` so it is not
-   GC'd after the map slot is replaced.
-3. `setup_vq_resources()` failure: `mlx5_vdpa_update_mr(old_mr)`
-   restores the old map; extra get becomes the map ref; installing
-   `old_mr` drops `new_mr`'s map ref.
-4. Success / early `!DRIVER_OK` / suspended: `goto out` and drop the
-   extra old-MR ref.
-5. `set_map_data()`: remove `out_err` put of `new_mr` so rollback cannot
-   double-free.
+
+1. **`pmu_sbi_setup_irqs()`**
+   - Before: domain/mapping/request failures return immediately.
+     `riscv_pmu_use_irq` can stay **true** even though no IRQ was
+     installed. Mapping leaked if `request_percpu_irq()` failed.
+   - After: those paths `goto err`, dispose a created mapping, set
+     `riscv_pmu_use_irq = false`.
+
+2. **`riscv_pmu_destroy()`**
+   - Before: always `cpuhp_state_remove_instance()` even when the
+     instance was never added.
+   - After: only if `!hlist_unhashed(&pmu->node)`.
+
+3. **`pmu_sbi_device_probe()`**
+   - Before: `riscv_pm_pmu_register` / `perf_pmu_register` failures jump
+     to `out_unregister` (destroy + `kfree(pmu)` only). Snapshot-alloc
+     and cpuhp-add failures also skip `perf_pmu_unregister`. IRQ,
+     `hw_events`, and `pmu_ctr_list` never freed.
+   - After: `irq_requested` tracks a successful IRQ request. Failures
+     before PMU register go to `out_destroy`. Failures after register go
+     to `out_unregister` which now calls `perf_pmu_unregister`. Then
+     IRQ/percpu/`pmu_ctr_list`/`pmu` are freed.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[UAF / dangling pointer + refcount] [map slot updated, then
-`new_mr` released on error while `mres.mr[asid]` still points at it]**
 
-Verified in this tree:
+Record: **Error-path resource leak + UAF + NULL deref**, with a logic
+fix on the IRQ fallback path.
 
-```731:743:drivers/vdpa/mlx5/core/mr.c
-void mlx5_vdpa_update_mr(struct mlx5_vdpa_dev *mvdev,
-                         struct mlx5_vdpa_mr *new_mr,
-                         unsigned int asid)
-{
-        struct mlx5_vdpa_mr *old_mr = mvdev->mres.mr[asid];
-        mutex_lock(&mvdev->mres.lock);
-        _mlx5_vdpa_put_mr(mvdev, old_mr);
-        mvdev->mres.mr[asid] = new_mr;
-        mutex_unlock(&mvdev->mres.lock);
-}
-```
+Verified mechanisms in **this** tree:
 
-`create_virtqueue()` / `modify_virtqueue` read `mvdev->mres.mr[]` for
-mkeys, so the new MR **must** be installed before rebuild/resume. v1 was
-incorrect; v2 matches that constraint.
+| Bug | Mechanism |
+|---|---|
+| **UAF of registered PMU** | `perf_pmu_register()` then
+`pmu_sbi_snapshot_alloc()` or `cpuhp_state_add_instance()` fails →
+`kfree(pmu)` while the PMU stays in perf core |
+| **NULL deref / list corruption** | `riscv_pmu_destroy()` →
+`cpuhp_state_remove_instance()` → `hlist_del()` → `WRITE_ONCE(*pprev,
+next)` with `pprev == NULL` on a `kzalloc`’d node |
+| **IRQ + cookie UAF** | successful `request_percpu_irq(..., hw_events)`
+then later probe fail frees `pmu`/`hw_events` without `free_percpu_irq`
+|
+| **Leaks** | `alloc_percpu` `hw_events` and `kcalloc` `pmu_ctr_list`
+only freed on the new `out_free` |
+| **Wrong IRQ flag on success path** | IRQ setup failure is **non-
+fatal**; probe continues with `PERF_PMU_CAP_NO_INTERRUPT` but
+`riscv_pmu_use_irq` stayed true, so `pmu_sbi_starting_cpu()` can
+`enable_percpu_irq(0)` |
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- **Quality:** refcount flow is consistent: extra get on `old_mr`;
-  failure converts it into the map ref; success drops it; `new_mr` is
-  consumed on every `change_map()` error path.
-- **Regression risk:** low. No new locks, APIs, or data structures.
-  `put_mr(NULL)` is a no-op. Residual issue: after a failed rebuild, VQs
-  stay torn down (pre-existing); this patch only keeps the MR pointer
-  valid.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Record: Obviously correct and minimal. `out_unregister` is only reached
+after a successful `perf_pmu_register`. `out_destroy` does not
+unregister. `hlist_unhashed` matches `cpuhp` (node is hashed only after
+successful add). IRQ free happens before `free_percpu(hw_events)`.
+
+Regression risk: **low**. Remaining gaps (sysctl not unregistered;
+`sbi_pmu_snapshot_available` static key not disabled) are pre-existing
+and not introduced here. They do not make this patch unsafe.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- `mlx5_vdpa_update_mr()` before setup: **625e4b59a923d2** (“vdpa/mlx5:
-  Improve mr update flow”), **v6.7-rc1**.
-- Teardown/rebuild via `setup_vq_resources()`: **f756dd3e2a4c70**,
-  **v6.8-rc1**.
-- Caller `out_err` put: **625e4b59a923d2** / **a06bd11b18fdf2**.
-- Function itself dates to **1a86b377aa2147** (2020).
 
-The dangling-pointer pattern exists since the v6.7 MR-update refactor:
-setup failure returns without restoring the map, and the caller puts
-`new_mr`.
+Record:
+- IRQ error returns: `4905ec2fb7e642` (Atish Patra, 2022-02-18) —
+  sscofpmf
+- Destroy / `out_unregister`: `e9a023f2b73ac3` (Eric Lin, 2022-07-05) —
+  PM notifier
+- Snapshot + moving `cpuhp_state_add_instance` **after** register:
+  `a8625217a054ca` (Atish Patra, 2024-04-20) — **this is when the
+  registered-PMU UAF became real**
+- Original `kfree(pmu)`-only `out_free`: `e9991434596f53` (2022-02-18) —
+  driver introduction
+
+All of these are ancestors of this 6.12 tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No Fixes: tag.** Buggy pattern is in this tree via 625e4b59 /
-f756dd3e. `git merge-base --is-ancestor 11f79e2780043 HEAD` is false —
-fix is **not** already here.
+
+Record: No `Fixes:` tag. Buggy code is still in this checkout (see Phase
+6).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Related: **62111654481d5** “Postpone MR deletion” (**v6.12-rc1**) —
-  delayed GC, so a dangling MR is freed ~2s later rather than
-  immediately.
-- No prior rollback of `change_map()` in this tree.
-- Standalone; not `N/M`.
+
+Record (this tree, `git log --oneline -20 --
+drivers/perf/riscv_pmu_sbi.c`): overflow-IRQ NULL check, bitmap cmask,
+errno/firmware-event fixes. None of those replace this cleanup. `git log
+--oneline e24a1418e90be..origin/master -- drivers/perf/riscv_pmu_sbi.c`
+only shows later overflow-mask/bitmap work; they do not revert or redo
+this cleanup.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Weimin Xiong has **no other mlx5 vdpa commits in this tree**.
-Subsystem maintainer is Dragos Tatulea; the patch was applied by Michael
-Tsirkin. Recipients included Tatulea, Tsirkin, Jason Wang, Eugenio
-Perez.
+
+Record: Atish Patra wrote the SBI PMU driver (`e9991434596f53`) and the
+snapshot code. This is a maintainer-area fix, not drive-by.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses existing `mlx5_vdpa_get_mr` / `put_mr` / `update_mr`. `git
-apply --check` of 11f79e27 against this tree: **clean**. **Standalone.**
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+Record: Msgid is `counter_delegation-v9-1`. Patches 2–20 add
+Smcsrind/Ssccfg/Smcdeleg and a new PMU path. They are **features**, not
+prerequisites. This hunk only uses `hlist_unhashed`,
+`perf_pmu_unregister`, `free_percpu_irq`, `irq_dispose_mapping`,
+`free_percpu`, `pmu_ctr_list` — all already in 6.12. **Standalone.**
+`git show e24a1418e90be | git apply --check` succeeded (offsets only).
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig -c 11f79e2780043`:
-  https://patch.msgid.link/20260716054353.155805-1-xiongwm2026@163.com
-- `b4 dig -a`: **only v2** matched by patch-id
-- v1 existed with a different subject/diff: “fix MR state corruption on
-  setup_vq_resources failure” — it moved `update_mr` **after** setup,
-  which would program VQs with the **old** mkey. v2 changelog documents
-  that correction.
-- Saved mbox: **patch only, no public replies**. lore.kernel.org fetches
-  returned 403; no NAK found in the saved thread.
+- `b4 dig -c e24a1418e90be`: matched patch-id; lore URL `https://patch.m
+  sgid.link/20260807-counter_delegation-v9-1-58658104e487@meta.com`
+- `b4 dig -a`: cleanup first appeared as **v7 01/22** (2026-06-22), then
+  **v9 01/20** (committed)
+- WebFetch of lore returned **403** (Anubis). Thread was recovered via
+  `b4 dig -m /tmp/riscv-pmu-cleanup.mbox`
+- No NAK on this patch. Paul Walmsley queued the first ten patches
+  (including this one) for `riscv/for-next`
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc Dragos Tatulea, Michael Tsirkin, Jason Wang,
-Xuan Zhuo, Eugenio Perez, virtualization@lists.linux.dev. Applied with
-Tsirkin SOB. No public Reviewed-by.
+
+Record: Charlie Jenkins `Reviewed-by`. Paul Walmsley applied it.
+Recipients are the RISC-V list / maintainers (from msgid and SOBs). No
+`Cc: stable` in review.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: **No syzbot, bugzilla, or user crash report.** Bug is from code
-inspection of the error path. Failure mode is still verified from the
-current sources.
+
+Record: Reporter is Sashiko, not syzbot. v9 review of **this** patch
+restates remaining **pre-existing** issues (snapshot disable without CPU
+pin, static key, sysctl leak, init-time cpuhp leak). It does **not** NAK
+the cleanup. The UAF it describes of a registered-then-freed PMU is
+exactly what `perf_pmu_unregister` addresses.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: **Standalone v2.** No later `mlx5_vnet.c` commits on `all-next`
-after 11f79e27. No follow-up reverting or replacing this fix.
+
+Record: Rest of v9 is new ISA / delegation code. Not needed for this
+cleanup. Later origin/master commits on this file do not change these
+error labels.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned 403. **UNVERIFIED**
-whether stable@ already discussed this. That does not change the
-technical verdict.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+Record: lore.kernel.org/stable WebFetch also 403. **UNVERIFIED** whether
+stable@ already discussed this. Absence of `Cc: stable` is expected for
+this review queue.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `mlx5_vdpa_change_map()`, `set_map_data()`
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `pmu_sbi_setup_irqs`, `riscv_pmu_destroy`,
+`pmu_sbi_device_probe`. Related: `pmu_sbi_starting_cpu`,
+`riscv_pmu_alloc`, `pmu_sbi_get_ctrinfo`.
 
 **Step 5.2: TRACE CALLERS**
+
 Record:
-- `set_map_data()` → `mlx5_vdpa_change_map()` when an ASID already has
-  an MR
-- `mlx5_vdpa_set_map()` (vdpa `.set_map`) → `set_map_data()` under
-  `reslock`
-- vhost-vdpa calls `.set_map` from `vhost_vdpa_map()` / unmap / batch
-  IOTLB updates (`drivers/vhost/vdpa.c`)
+- `pmu_sbi_device_probe` — `.probe` of `pmu_sbi_driver`
+- Called from `pmu_sbi_devinit()` (`device_initcall`) via
+  `platform_device_register_simple(RISCV_PMU_SBI_PDEV_NAME, ...)`
+- `pmu_sbi_starting_cpu` / `pmu_sbi_dying_cpu` read `riscv_pmu_use_irq`
+  (the flag this patch clears on IRQ setup failure)
 
 **Step 5.3: TRACE CALLEES**
-Record: `suspend_vqs`, `save_channels_info`, `teardown_vq_resources`,
-`mlx5_vdpa_get_mr`/`update_mr`/`put_mr`, `setup_vq_resources`,
-`resume_vqs`. `setup_vq_resources()` can fail on umem, virtqueue create,
-RQT/TIR, steering (firmware/alloc errors). `_mlx5_vdpa_put_mr()` queues
-GC when refcount hits 0.
+
+Record: `riscv_pmu_alloc()` does `kzalloc` + `alloc_percpu_gfp` (this
+tree, `drivers/perf/riscv_pmu.c`). `pmu_sbi_get_ctrinfo()` `kcalloc`s
+`pmu_ctr_list`. `cpuhp_state_remove_instance()` always `hlist_del()`s.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace/QEMU vhost-vdpa IOTLB updates → `VHOST_IOTLB_*` →
-`ops->set_map` → this path. **Reachable from VM memory map changes**
-(boot, live migration, hotplug, vIOMMU). The UAF arm additionally needs
-DRIVER_OK, non-resumable firmware (`freeze_to_rdy_supported` missing →
-`.resume = NULL` → teardown/rebuild), and `setup_vq_resources()`
-failure.
+
+Record: Boot/init on RISC-V with SBI PMU (`CONFIG_RISCV_PMU_SBI`
+**default y**). Trigger is probe failure after partial success:
+`snapshot_alloc` ENOMEM, `perf_pmu_register` failure,
+`cpuhp_state_add_instance` failure, or `cpu_pm_register_notifier`
+failure. After a successful `perf_pmu_register` and a later fail,
+userspace `perf` can touch a PMU whose `struct riscv_pmu` is already
+`kfree`d — **userspace-reachable UAF**.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Other `mlx5_vdpa_update_mr()` sites (`mlx5_vdpa_clean_mrs`,
-first-map in `set_map_data`, reset) do not rebuild VQs then drop the new
-MR while leaving it installed. This error path is unique to
-`change_map()`.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: Same file’s `pmu_sbi_devinit()` still leaks
+`cpuhp_setup_state_multi` if `platform_driver_register` fails. Pre-
+existing, out of this patch’s scope.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `mlx5_vdpa_change_map()` at
-`drivers/vdpa/mlx5/net/mlx5_vnet.c:3044` still updates the MR then
-returns on `setup_vq_resources()` failure; `set_map_data()` still `put`s
-`new_mr` on that error. Bug since **v6.7**; delayed GC since
-**v6.12-rc1**. Local: **6.12.111**.
+
+Record: **Yes.** This checkout is 6.12.111; `e24a1418e90be` is **not**
+an ancestor (`git merge-base --is-ancestor` exit 1).
+
+Current probe error path (`drivers/perf/riscv_pmu_sbi.c`):
+
+```1462:1468:drivers/perf/riscv_pmu_sbi.c
+out_unregister:
+        riscv_pmu_destroy(pmu);
+
+out_free:
+        kfree(pmu);
+        return ret;
+```
+
+`riscv_pmu_destroy()` still unconditionally removes the cpuhp instance.
+`pmu_sbi_setup_irqs()` still returns without clearing
+`riscv_pmu_use_irq` or disposing a mapping.
+
+Bug introduced: leaks since v5.17-era driver; UAF of registered PMU
+since snapshot/cpuhp reorder in `a8625217a054ca` (in this tree).
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** (`git apply --check` exit 0). Surrounding code
-matches the diff hunks.
+
+Record: **Clean apply** (`git apply --check` — all 6 hunks succeeded
+with −54 line offset). Context differs (`bitmap_copy` vs mainline
+`pmu->cmask = cmask`) because 6.12 already has `143668c424772` (counter
+mask as bitmap). No rework required.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: **No** rollback/`roll back MR` commit in this tree. 11f79e27 is
-not an ancestor of HEAD.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+Record: No equivalent cleanup. Bitmap and overflow-IRQ fixes in this
+tree are independent.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **[drivers/vdpa/mlx5] [IMPORTANT]** — ConnectX6+ virtio-net
-datapath offload (`CONFIG_MLX5_VDPA_NET`). Not core MM/VFS, but
-production virtualization (OpenStack/K8s HW-offloaded virtio).
-Maintainer: Dragos Tatulea.
+---
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature, still receiving error-path and MR-lifetime fixes
-(postpone MR deletion, probe error paths). Not staging.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **driver-specific / config-specific** — `CONFIG_MLX5_VDPA_NET`
-users, mainly when firmware lacks `freeze_to_rdy_supported`
-(teardown/rebuild on every map change).
+Record: `drivers/perf` / RISC-V SBI PMU. **IMPORTANT** for RISC-V
+(default-on perf), not core-mm/VFS. Not staging.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Live `.set_map` while DRIVER_OK, teardown path, then VQ resource
-setup fails. Not every boot; map updates are normal for vDPA VMs.
-Unprivileged guest does not call `.set_map` directly; the VMM/host
-process does. Still a host kernel UAF.
+**Step 7.2: SUBSYSTEM ACTIVITY**
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **[dangling `mres.mr[]` + GC free → UAF] [HIGH]** — later VQ
-modify/create or another map op can dereference a freed MR. Crash or
-memory corruption in the host kernel.
+Record: Mature driver (2022) with ongoing RISC-V perf fixes. This is a
+long-standing error-path hole, not churn in brand-new code.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: RISC-V systems with `CONFIG_RISCV_PMU_SBI` (default y) and SBI
+PMU (QEMU virt, most recent boards). Driver-specific, not universal.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
 Record:
-- **Benefit:** high for mlx5 vDPA — prevents UAF after a failed map
-  change.
-- **Risk:** low — ~15 lines, local refcount, applies cleanly.
-- **Ratio:** **favor backport.**
+- Common path: probe succeeds — no crash
+- Realistic fail: `pmu_sbi_snapshot_alloc()` ENOMEM (page alloc
+  GFP_ATOMIC per CPU) **after** `perf_pmu_register`
+- IRQ mapping fail with SSCOF/T-Head/Andes: probe **continues**,
+  `riscv_pmu_use_irq` wrongly stays true
+- Unprivileged user cannot force probe, but **can** open the registered
+  `"cpu"` PMU in the failure window
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 8.3: FAILURE MODE SEVERITY**
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Record:
+- Registered PMU then `kfree(pmu)` → **UAF** → HIGH
+- `hlist_del` on unhashed node → **oops** → HIGH
+- IRQ cookie UAF → HIGH
+- One-time leaks if probe dies before register → MEDIUM
+- `enable_percpu_irq(0)` on fallback success path → MEDIUM–HIGH
 
-FOR:
-- Real UAF: map slot holds `new_mr` after the caller drops its last map
-  ref.
-- Delayed GC in this 6.12 tree makes the free asynchronous and easier to
-  hit.
-- Small, contained, obviously correct refcount rollback.
-- Applies cleanly; no missing helpers.
-- v2 respects that VQ setup/resume must see the new MR keys.
-- Applied by the vhost maintainer.
+**Step 8.4: RISK-BENEFIT RATIO**
 
-AGAINST:
-- Error-path only (setup failure after teardown).
-- mlx5 vDPA only, not all 6.12 users.
-- No syzbot/user report, no Fixes/Cc:stable (not a negative per the
-  review rules).
-- No public review comments in the saved mbox.
+Record:
+- **Benefit:** high for RISC-V 6.12 — prevents oops/UAF on probe fail
+  and a wrong IRQ flag on a continued probe
+- **Risk:** low — ~27 net lines, error path + one flag clear, applies
+  cleanly
+- **Ratio:** favor backport
 
-UNRESOLVED:
-- Full lore/stable@ threads (HTTP 403).
-- No Tested-by from hardware.
+---
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — refcount accounting is
-   consistent; maintainer-applied. Hardware Tested-by absent but the
-   logic is verifiable from the code.
-2. Fixes a real bug that affects users? **PASS** — dangling MR after
-   failed `.set_map`.
-3. Important issue? **PASS** — UAF / host crash, HIGH.
-4. Small and contained? **PASS** — one file, +15/-8.
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: EVIDENCE**
+
+**FOR:**
+- Real UAF: perf-registered PMU freed without unregister (snapshot/cpuhp
+  fail after `perf_pmu_register`)
+- Real oops: `cpuhp_state_remove_instance` → `hlist_del` with NULL
+  `pprev`
+- Real IRQ leak/UAF and `pmu_ctr_list`/`hw_events` leaks
+- `riscv_pmu_use_irq` left true on non-fatal IRQ setup failure (success-
+  path bug)
+- Small, obviously correct, reviewed by Charlie Jenkins, authored by the
+  driver owner
+- Buggy code and helpers exist in 6.12; patch applies cleanly
+- Standalone despite being 01/20 of a feature series
+
+**AGAINST:**
+- Probe-fail is uncommon (except IRQ-setup fallback, which is not fatal
+  and is common on some platforms)
+- Incomplete: sysctl, snapshot static key, init-time cpuhp still leak
+  (pre-existing)
+- RISC-V only
+- Reported by an AI bot, not a production oops
+
+**UNRESOLVED:** stable@ thread (lore 403); whether Sashiko had a
+concrete reproducer beyond code review.
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — reviewed, applied by RISC-V
+   maintainer, logic matches the four listed holes
+2. Fixes a real bug that affects users? **PASS** — UAF/oops/leaks in the
+   default RISC-V PMU driver
+3. Important issue? **PASS** — UAF and NULL deref are HIGH; not a style
+   cleanup
+4. Small and contained? **PASS** — one file, +27/−6
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present; clean
-   apply.
+6. Can apply to the local tree? **PASS** — `git apply --check` clean
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Not an exception category** (not an ID/quirk/DT/build/doc
-add). It qualifies as a normal UAF/refcount bug fix.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-**Step 9.4: MAKE YOUR DECISION**
-This tree has the bug. The patch is a small, correct rollback that
-prevents a host UAF on a reachable vDPA map-update error path. Backport
-it.
+Record: None. Ordinary bugfix.
 
-===============================================================
-What the commit solves, and why it matters here
-===============================================================
+**Step 9.4: DECISION**
 
-On 6.12, a live mlx5 vDPA map change with non-resumable firmware tears
-down virtqueues, installs a new MR, then rebuilds queues. If rebuild
-fails, `set_map_data()` still `put`s that new MR while `mres.mr[asid]`
-points at it. The MR GC workqueue can free it two seconds later. Later
-mkey reads are a use-after-free in the host kernel.
+This 6.12 tree has the buggy probe path. The fix is small, applies, and
+closes UAF/oops/leak holes in a default-on RISC-V driver. Remaining
+cleanup gaps are not a reason to withhold the part that is correct.
 
-The fix keeps an extra ref on the old MR, installs the new one for the
-rebuild (required, because create/modify read `mres.mr[]`), and on setup
-failure restores the old MR so the extra ref becomes the map ref.
-`change_map()` owns `new_mr` on all error paths, so the caller does not
-double-put.
+---
 
-Risk vs benefit: low risk, high severity. No prerequisites missing in
-6.12.111.
+## What this means for 6.12 users
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: SOB Weimin Xiong + Michael Tsirkin; Message-ID
-  present; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +15/-8 in `mlx5_vnet.c`; extra get on old MR; rollback
-  via `update_mr`; move `new_mr` put into `change_map()`
-- [Phase 2] `mlx5_vdpa_update_mr()` puts old and assigns new without get
-  on new (mr.c:731)
-- [Phase 2] `mlx5_vdpa_create_mr()` starts refcount at 1 (mr.c:832)
-- [Phase 2] create_virtqueue reads `mvdev->mres.mr[]` for mkeys
-  (mlx5_vnet.c:944)
-- [Phase 3] blame: update-before-setup from 625e4b59 (v6.7-rc1);
-  teardown/rebuild from f756dd3e (v6.8-rc1)
-- [Phase 3] `git merge-base --is-ancestor 11f79e2780043 HEAD` → not in
-  this tree
-- [Phase 3] Postpone-MR-deletion 62111654481d5 is in this tree
-  (v6.12-rc1); GC delay 2000ms (mr.c:664)
-- [Phase 4] `b4 dig -c 11f79e27` →
-  patch.msgid.link/20260716054353.155805-1-xiongwm2026@163.com
-- [Phase 4] `b4 dig -a`: only v2; v1 was a different (incorrect) patch-
-  id
-- [Phase 4] `b4 dig -w`: Tatulea, Tsirkin, Wang, Perez CC'd
-- [Phase 4] mbox: submission only, no replies; lore HTTP 403
-- [Phase 5] callers: `mlx5_vdpa_set_map` ← vhost-vdpa `.set_map`
-- [Phase 5] teardown path when `.resume` is NULL
-  (`freeze_to_rdy_supported` missing, mlx5_vnet.c:4107)
-- [Phase 6] `git describe HEAD` → p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion` → 6.12.111
-- [Phase 6] current `mlx5_vdpa_change_map()` matches the pre-patch code;
-  `git apply --check` clean
-- [Phase 8] Failure mode: dangling MR → GC → UAF, severity HIGH
-- UNVERIFIED: stable@ mailing-list discussion (lore 403); no hardware
-  Tested-by
+On RISC-V with SBI PMU, a failed probe after `perf_pmu_register()`
+currently frees `struct riscv_pmu` while perf still holds it, and
+`riscv_pmu_destroy()` oopses by deleting an unhashed cpuhp node. The
+same path leaks the per-CPU IRQ cookie, `hw_events`, and `pmu_ctr_list`.
+IRQ setup failure is treated as non-fatal but leaves `riscv_pmu_use_irq`
+set, so hotplug can enable IRQ 0. The patch only rewires those gotos and
+frees; it does not pull in counter-delegation.
+
+Risk is low relative to leaving a registered-PMU UAF in a long-term
+tree.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed tags: Sashiko Reported-by, Charlie Jenkins
+  Reviewed-by, Atish Patra + Paul Walmsley SOBs, msgid v9 01/20; no
+  Fixes
+- **[Phase 2]** Diff: +27/−6 in `riscv_pmu_sbi.c`; IRQ err goto,
+  `hlist_unhashed` guard, `perf_pmu_unregister`,
+  `free_percpu_irq`/`free_percpu`/`kfree(pmu_ctr_list)`
+- **[Phase 2]** Read 6.12 `pmu_sbi_device_probe` lines 1367–1468:
+  destroy + `kfree(pmu)` only
+- **[Phase 2]** Read `kernel/cpu.c` `__cpuhp_state_remove_instance`:
+  always `hlist_del(node)`
+- **[Phase 2]** Read `include/linux/list.h` `__hlist_del`:
+  `WRITE_ONCE(*pprev, next)` NULL-derefs if never hashed
+- **[Phase 2]** Read `__cpuhp_state_add_instance_cpuslocked`:
+  `hlist_add_head` only on success
+- **[Phase 3]** `git blame` IRQ path `4905ec2fb7e642` (2022); destroy
+  `e9a023f2b73ac3` (2022); snapshot/cpuhp order `a8625217a054ca` (2024,
+  in this tree)
+- **[Phase 3]** `git merge-base --is-ancestor e24a1418e90be HEAD` → not
+  in this tree; `e9a023f2b73ac3` / `a8625217a054ca` / `e9991434596f53` →
+  in this tree
+- **[Phase 3]** Follow-ups on origin/master do not redo this cleanup
+- **[Phase 4]** `b4 dig -c e24a1418e90be` → patch.msgid.link v9-1; `-a`
+  shows v7 first, v9 applied
+- **[Phase 4]** `b4 dig -m`: 31-message mbox; Sashiko comments are pre-
+  existing leftovers; Paul queued first ten patches; no NAK
+- **[Phase 4]** WebFetch lore/stable: 403 — UNVERIFIED stable-list
+  discussion
+- **[Phase 5]** Probe from `device_initcall(pmu_sbi_devinit)`;
+  `riscv_pmu_alloc` allocates `hw_events`; `pmu_sbi_get_ctrinfo`
+  allocates `pmu_ctr_list`
+- **[Phase 5]** `pmu_sbi_starting_cpu` uses `riscv_pmu_use_irq` /
+  `riscv_pmu_irq`
+- **[Phase 6]** `git describe HEAD` → `p-6.12-4-gbf6fcdf761abd`; `make
+  kernelversion` → **6.12.111**
+- **[Phase 6]** `git apply --check` of `e24a1418e90be`: all hunks OK
+- **[Phase 7]** `CONFIG_RISCV_PMU_SBI` default y in
+  `drivers/perf/Kconfig`
+- **[Phase 8]** Failure mode: UAF of registered PMU + cpuhp oops → HIGH
+- **UNVERIFIED:** live user oops; stable@ nomination history
 
 **YES**
 
- drivers/vdpa/mlx5/net/mlx5_vnet.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/perf/riscv_pmu_sbi.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 44062e9d68f00..c49167d760a62 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -3044,18 +3044,24 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
- 				unsigned int asid)
- {
- 	struct mlx5_vdpa_net *ndev = to_mlx5_vdpa_ndev(mvdev);
-+	struct mlx5_vdpa_mr *old_mr;
- 	bool teardown = !is_resumable(ndev);
- 	int err;
- 
- 	suspend_vqs(ndev, 0, ndev->cur_num_vqs);
- 	if (teardown) {
- 		err = save_channels_info(ndev);
--		if (err)
-+		if (err) {
-+			mlx5_vdpa_put_mr(mvdev, new_mr);
- 			return err;
-+		}
- 
- 		teardown_vq_resources(ndev);
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 25f3a45dd7869..10f64b7b60c53 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -1258,22 +1258,29 @@ static int pmu_sbi_setup_irqs(struct riscv_pmu *pmu, struct platform_device *pde
+ 					  DOMAIN_BUS_ANY);
+ 	if (!domain) {
+ 		pr_err("Failed to find INTC IRQ root domain\n");
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err;
  	}
  
-+	/* Keep the old MR alive in case rebuilding the VQs fails. */
-+	old_mr = mvdev->mres.mr[asid];
-+	mlx5_vdpa_get_mr(mvdev, old_mr);
- 	mlx5_vdpa_update_mr(mvdev, new_mr, asid);
- 
- 	for (int i = 0; i < mvdev->max_vqs; i++)
-@@ -3063,17 +3069,22 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
- 						MLX5_VIRTQ_MODIFY_MASK_DESC_GROUP_MKEY;
- 
- 	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
--		return 0;
-+		goto out;
- 
- 	if (teardown) {
- 		restore_channels_info(ndev);
- 		err = setup_vq_resources(ndev, true);
--		if (err)
-+		if (err) {
-+			/* The saved reference becomes the restored map reference. */
-+			mlx5_vdpa_update_mr(mvdev, old_mr, asid);
- 			return err;
-+		}
+ 	riscv_pmu_irq = irq_create_mapping(domain, riscv_pmu_irq_num);
+ 	if (!riscv_pmu_irq) {
+ 		pr_err("Failed to map PMU interrupt for node\n");
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err;
  	}
  
- 	resume_vqs(ndev, 0, ndev->cur_num_vqs);
+ 	ret = request_percpu_irq(riscv_pmu_irq, pmu_sbi_ovf_handler, "riscv-pmu", hw_events);
+ 	if (ret) {
+ 		pr_err("registering percpu irq failed [%d]\n", ret);
+-		return ret;
++		irq_dispose_mapping(riscv_pmu_irq);
++		riscv_pmu_irq = 0;
++		goto err;
+ 	}
  
-+out:
-+	mlx5_vdpa_put_mr(mvdev, old_mr);
  	return 0;
++err:
++	riscv_pmu_use_irq = false;
++	return ret;
  }
  
-@@ -3357,15 +3368,11 @@ static int set_map_data(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
- 		err = mlx5_vdpa_change_map(mvdev, new_mr, asid);
- 		if (err) {
- 			mlx5_vdpa_err(mvdev, "change map failed(%d)\n", err);
--			goto out_err;
-+			return err;
+ #ifdef CONFIG_CPU_PM
+@@ -1340,7 +1347,8 @@ static void riscv_pmu_destroy(struct riscv_pmu *pmu)
  		}
  	}
- 
- 	return mlx5_vdpa_update_cvq_iotlb(mvdev, iotlb, asid);
--
--out_err:
--	mlx5_vdpa_put_mr(mvdev, new_mr);
--	return err;
+ 	riscv_pm_pmu_unregister(pmu);
+-	cpuhp_state_remove_instance(CPUHP_AP_PERF_RISCV_STARTING, &pmu->node);
++	if (!hlist_unhashed(&pmu->node))
++		cpuhp_state_remove_instance(CPUHP_AP_PERF_RISCV_STARTING, &pmu->node);
  }
  
- static int mlx5_vdpa_set_map(struct vdpa_device *vdev, unsigned int asid,
+ static void pmu_sbi_event_init(struct perf_event *event)
+@@ -1462,6 +1470,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
+ 	struct riscv_pmu *pmu = NULL;
+ 	int ret = -ENODEV;
+ 	int num_counters;
++	bool irq_requested = false;
+ 
+ 	pr_info("SBI PMU extension is available\n");
+ 	pmu = riscv_pmu_alloc();
+@@ -1490,6 +1499,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
+ 		pmu->pmu.capabilities |= PERF_PMU_CAP_NO_INTERRUPT;
+ 		pmu->pmu.capabilities |= PERF_PMU_CAP_NO_EXCLUDE;
+ 	}
++	irq_requested = (ret == 0);
+ 
+ 	pmu->pmu.attr_groups = riscv_pmu_attr_groups;
+ 	pmu->pmu.parent = &pdev->dev;
+@@ -1508,11 +1518,11 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
+ 
+ 	ret = riscv_pm_pmu_register(pmu);
+ 	if (ret)
+-		goto out_unregister;
++		goto out_destroy;
+ 
+ 	ret = perf_pmu_register(&pmu->pmu, "cpu", PERF_TYPE_RAW);
+ 	if (ret)
+-		goto out_unregister;
++		goto out_destroy;
+ 
+ 	/* SBI PMU Snapsphot is only available in SBI v2.0 */
+ 	if (sbi_v2_available) {
+@@ -1553,9 +1563,20 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ out_unregister:
++	perf_pmu_unregister(&pmu->pmu);
++
++out_destroy:
+ 	riscv_pmu_destroy(pmu);
++	if (irq_requested) {
++		free_percpu_irq(riscv_pmu_irq, pmu->hw_events);
++		irq_dispose_mapping(riscv_pmu_irq);
++		riscv_pmu_irq = 0;
++	}
+ 
+ out_free:
++	free_percpu(pmu->hw_events);
++	kfree(pmu_ctr_list);
++	pmu_ctr_list = NULL;
+ 	kfree(pmu);
+ 	return ret;
+ }
 -- 
 2.53.0
 
