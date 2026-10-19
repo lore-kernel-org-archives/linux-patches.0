@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102BA52CCCB;
-	Mon, 19 Oct 2026 13:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6127552F26B;
+	Mon, 19 Oct 2026 13:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418118; cv=none; b=sdi9ZXNx12OW1tjiDrqSBIYCjuoWA8lG8FtXNbyXfaesP32U7PlOTyXtU1t0fYWSgz6nz9nwuXt/dp1Wto+HjZv0hWBmFBE1yNW6InmmKwV5fjLa5OISy8CwGTSJdmrxKQONhNJPKJKSQyKz3nCWfDKNBB7ytHxaNZyLtW0pjwI=
+	t=1792418119; cv=none; b=oO5Xl0eZhyADvAJIWU6cQk3H4gKtkdBmeXU56SwKWxWBBHx6H2RurqguLvgVIWgU87SSnUmgj1a+oDqB0YjT15AOc49XkiCa7nJfTj2P8/F8XoEDKHNbxyPPVpBVQViUreHmoZjyGp04eZ/prCVhukJsvuIU1O6W1KE8u/9RVoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418118; c=relaxed/simple;
-	bh=PmudlrudLdAanj58C1sWrtQ/fZfqREqyylf0yGvFvf4=;
+	s=arc-20240116; t=1792418119; c=relaxed/simple;
+	bh=vvfWDcS2rWGi+nOV2v/fQMUgu8zF8gJl01U+RURLLL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aLDye5jcMwLcL7iliZOR/AbNXGb7xmTpXqMGQTv/VvQK043p7kTWz3euRo1J2aEQxnq/QGfUvPi9Fy6Mal5fJVsP8d//+VBSVWVIlwGHw0vFE2+dEWohMsbXqsXh1XRfiI8r2PymPjOLnV6RUvetQpdGpuU+qGuxrsIpolbi1Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NVxRvnLE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ix0UTUDyMb44IBACzSkAiLWDqMorslmvIC+TgKmtX1jRe5hDQp6vEf5haw3yNFfXvix4d6j+eLPi3JxBb6zuzyK+pMnWT/e1z1r/E8NohlriSEvHUKFnLm7ouEU4n/kS//kffwzZXnqx1uS105NDsTOTcLVvjIUKKo3oxv4zZsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gDG5fM/1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NVxRvnLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F050C1F000C7;
-	Mon, 19 Oct 2026 13:55:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gDG5fM/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569AD1F000C6;
+	Mon, 19 Oct 2026 13:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418116;
-	bh=eRKh27WTcim/71bt1Dd3x9aJZ+WOlDtE80dMKQu2svo=;
+	s=k20260515; t=1792418117;
+	bh=WRcfFK3BdNnjyOg64mtimJlbpdRUsbjFlCy++SmS9iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NVxRvnLEU37Mv4ym6Vsq9IzWSNudFKIcsmvWvXdgpikbZqEg7MJfhdbIesDMuIgST
-	 MGvcoI91X6znr6oma4Y10Ud2PgpG84UVOwIClkq3RiUdWYj2l/tZDqeyfFQGi0KWTY
-	 VMt3JTAIs3a5cVrPhXS6MB67eihtwfjgJ7IBzDGx7u3Gooe2YfM+iDDxWh+cyEA81M
-	 mHi/uuysJSW4czCNnyoU+I4dct/XTJMbu42gjre9olyH+X5ApBL0pr4npME6lGmQNX
-	 4UBty7o+C22G8r41A1kdVoPUQfSvsQNgd00vurMRZRFjTFLHCVh0YmgpRlPcof5gsE
-	 YvM8NFZOA9YYw==
+	b=gDG5fM/1+Si7UuCMwKN/H8Ykuz85D6murT+9izZUr2G4wVDBrIbtzuen/fCgAto3t
+	 eu96DIbRrcOaw5uYE9p+D4Zk4N8oyRydmJMe6jlA2lKBFMT/mHdqDe6+CWL8xchCnb
+	 Z+Aawsuh1Ro/iAgEyOJxfFUUviBOzBrlAVzrSsPuFWiSD1hk9JwsGawQKwVu7w+EzQ
+	 5MUHGEqnC9346DJxe+OPvbghdDveojFh6htIm1NO2JOa6nqkWmGrAnlwKp2fksIexj
+	 VXHCzkfQnEDkVvStkNKlmdfPdjZr3Yd2AXL+F8snH5J41y3O/bE6NeoN8GsMegm9Ct
+	 7uVuxV6XFE/QQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for Lenovo IdeaPad Slim 3 15ABR8
-Date: Mon, 19 Oct 2026 09:45:13 -0400
-Message-ID: <20261019135441.1420968-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] i2c: qup: Propagate clock enable failures
+Date: Mon, 19 Oct 2026 09:45:14 -0400
+Message-ID: <20261019135441.1420968-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,435 +54,464 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit be79a45e2ec289eb9fad519e8f5a3d4fc3789dd0 ]
+[ Upstream commit a477626332800942f463d76aa48db0c47f1dfd18 ]
 
-The internal microphone on Lenovo IdeaPad Slim 3 15ABR8 (subsystem
-17aa:3862) exhibits severe distortion at default gain levels. The
-Capture Volume is fixed at 63 (max) and cannot be lowered without
-explicit userspace intervention. The existing fixup
-ALC269_FIXUP_LIMIT_INT_MIC_BOOST limits the gain range and resolves
-the issue.
+The QUP I2C driver treats the core and iface clocks as required
+resources, but qup_i2c_enable_clocks() ignores clk_prepare_enable()
+failures.  Probe can then continue to register the I2C adapter, and
+runtime/system resume can return success, even when a required clock
+transition failed.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260824123752.525173-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Make the helper return an error, unwind a partially enabled clock, and
+propagate failures from probe and resume paths.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260624055237.29977-1-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line Realtek HDA hardware quirk for a specific Lenovo
-laptop. The local tree is **6.12.111** (`pending-6.12`). The Realtek
-quirk table and `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` already exist here;
-SSID `17aa:3862` does not.
+The local checkout is **v7.3-rc4**. The driver and the ignored-clock-
+enable bug exist in this lineage (since v3.15); the fix is a small,
+self-contained error-path change that belongs in this tree.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Record: **[ALSA/hda/realtek] [Add] [quirk for Lenovo IdeaPad Slim 3
-  15ABR8]**
-- Subsystem prefix: `ALSA: hda/realtek`
-- Action verb: **Add** (hardware quirk table entry, not a new feature)
-- Claimed intent: map PCI subsystem `17aa:3862` to an existing internal-
-  mic boost limit fixup
+
+Record: **[i2c: qup]** **[Propagate]** — make `clk_prepare_enable()`
+failures visible instead of swallowing them.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - `Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891` — user-
-    filed kernel.org bug
-  - `Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>` — author
-  - `Link: https://patch.msgid.link/20260824123752.525173-1-
-    zhangheng@kylinos.cn` — original submission msgid
-  - `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA HDA maintainer
-    applied it
-  - No `Fixes:`, no `Cc: stable`, no `Reported-by`, no `Tested-by`, no
-    `Reviewed-by` (absence of `Fixes:`/`Cc: stable` is expected for this
-    review)
-- Notable: maintainer SOB plus a `Closes:` bugzilla link
+
+Record:
+- **Fixes:** none (expected)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** Konrad Dybcio (Qualcomm / linux-arm-msm)
+- **Acked-by:** none
+- **Link:**
+  https://lore.kernel.org/r/20260624055237.29977-1-pengpeng@iscas.ac.cn
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Pengpeng Hou (author); Andi Shyti (I2C maintainer)
+- No syzbot / kernel test robot tags
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record:
-  - **Bug:** Internal mic on IdeaPad Slim 3 15ABR8 (`17aa:3862`) has
-    severe distortion at default gain
-  - **Symptom:** Capture Volume stuck at 63 (max); cannot be lowered
-    without explicit userspace intervention; captured audio is badly
-    distorted
-  - **Root cause (author):** default amp/boost range is too high for
-    this hardware
-  - **Fix:** reuse existing `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`
-  - **Version info:** none in the message; laptop is a 2023 AMD IdeaPad,
-    so 6.12 users are in the affected population
+
+Record:
+- **Bug:** `qup_i2c_enable_clocks()` treats core and iface clocks as
+  required, but ignores `clk_prepare_enable()` return values.
+- **Symptoms:** probe still registers the I2C adapter; runtime/system
+  resume still return success after a required clock failed.
+- **Version info:** none in the message. Git shows the ignore-return
+  pattern since the driver was added.
+- **Root cause:** void helper with unchecked clock enables; callers
+  cannot fail.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a hidden fix. It is an explicit hardware quirk. The “Add”
-  verb is the standard form for `SND_PCI_QUIRK` table entries that make
-  existing hardware usable.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: Not disguised. It is an explicit error-path fix: check returns,
+unwind a half-enabled clock, propagate from probe and resume.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-- Record:
-  - File in the commit: `sound/hda/codecs/realtek/alc269.c` (**+1 /
-    −0**)
-  - Function/table: `alc269_fixup_tbl[]`
-  - Scope: **single-file surgical** — one `SND_PCI_QUIRK` line
-  - Local tree equivalent file: `sound/pci/hda/patch_realtek.c` (HDA
-    codecs were not yet split out of `sound/pci/hda/` in 6.12)
+
+Record:
+- **File:** `drivers/i2c/busses/i2c-qup.c` — **+24 / −7** (31 lines)
+- **Functions:** `qup_i2c_enable_clocks`, `qup_i2c_probe`,
+  `qup_i2c_pm_resume_runtime`, `qup_i2c_resume`
+- **Scope:** single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record: **Before** — SSID `17aa:3862` matches no quirk; probe uses
-  generic auto-config; internal mic boost stays at the default wide
-  range, Capture Volume sits at max, audio is distorted.
-  **After** — `snd_hda_pick_fixup()` matches
-  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`. At `HDA_FIXUP_ACT_PROBE`,
-  `alc269_fixup_limit_int_mic_boost()` walks auto-config inputs, and for
-  internal mic pins overrides amp caps to 0 offset, 1 step, step size
-  `0x2f` (boost limited to 0 or 1). Only the probe path for this SSID is
-  affected.
+
+Record:
+1. **Helper:** void, two unchecked `clk_prepare_enable()` → `int`, abort
+   on first failure, disable core clk if iface enable fails.
+2. **Probe (DT path only):** ignore enable → `ret = …; if (ret) goto
+   fail_dma`. ACPI path still skips this helper.
+3. **Runtime resume:** always `return 0` → return the helper’s error.
+4. **System resume:** always `pm_request_autosuspend()` after resume →
+   skip autosuspend request if clocks failed.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: **[Hardware workaround / audio codec quirk]**
-  - Mechanism: Realtek codec exposes boost steps 2 and 3 that are too
-    noisy on this chassis. The existing helper comments: “The mic boosts
-    on level 2 and 3 are too noisy on the internal mic input. Therefore
-    limit the boost to 0 or 1.”
-  - The new line only *selects* that already-present helper for one PCI
-    subsystem ID.
+
+Record: **Error-path / ignored-return + resource leak.**
+- Broken: required clocks can fail; driver still MMIO-resets the QUP
+  (`writel` to `QUP_SW_RESET` immediately after enable in probe) and
+  later runs I2C with clocks off; iface-fail leaves core clk enabled.
+- Fix: fail probe/resume, unwind partial enable.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-- Record: Obviously correct and minimal. Same pattern already used for
-  ThinkPad T480, Positivo ARN50/N14AP7, several Asus/VAIO machines, etc.
-  - Regression risk: **very low**. Match is vendor+device SSID
-    `17aa:3862` only. `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` also chains to
-    `ALC269_FIXUP_THINKPAD_ACPI`, but `hda_fixup_thinkpad_acpi()`
-    returns immediately unless ACPI IDs `LEN0068`/`LEN0268`/`IBM0068`
-    exist, so LED binding does not run on an IdeaPad.
-    `alc_fixup_no_shutup()` still runs (reduces click noise); that same
-    chain is already used by other non-ThinkPad LIMIT_INT_MIC_BOOST
-    quirks in this tree.
-  - No public API, no new fixup enum, no new module parameter.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Record: Obviously correct and matches other I2C host drivers. `goto
+fail_dma` is the right label: `fail:` would call
+`qup_i2c_disable_clocks()` and MMIO/unprepare clocks that were never (or
+no longer) enabled. Regression risk is low: a real clock failure now
+fails probe/resume instead of continuing on dead hardware.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-- Record: There is no “buggy line” in the table; the bug is a
-  **missing** entry. Neighboring rows in this tree:
-  - `0x3855` Legion 7 16ITHG6 — `1e24881d8b2a7c` (2022)
-  - `0x3865` Lenovo 13X — `25f46354dca912` (2024)
-  - Insertion sits in a long-stable Lenovo SSID block. The helper
-    `alc269_fixup_limit_int_mic_boost()` was introduced in
-    `3e0d611b2045b` (2013-04-22, “Limit internal mic boost for a few
-    Asus machines”) and has been in-tree for years.
+
+Record: Ignored enables introduced in **`10c5a8425968`** (“i2c: qup: New
+bus driver…”, Bjorn Andersson, 2014). First contained in **v3.15-rc1**.
+`git log -L :qup_i2c_enable_clocks:` shows only that commit and this
+fix.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Not applicable. The “bug” is hardware that
-  never had a quirk, not a regression from a prior commit.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: Recent `patch_realtek.c` history is almost entirely other
-  `SND_PCI_QUIRK` additions (HP mute LED, Legion, Yoga, etc.). Same-
-  fixup examples already in this 6.12 tree:
-  - `85981dfd6b0a0` Limit mic boost on T480 (`Cc: stable`)
-  - `86a433862912f` Limit mic boost on N14AP7 (`Cc: stable`)
-  - `d44418f5024f6` Limit mic boost on Positivo ARN50 (already
-    backported here as `[ Upstream commit 76b0a22d4cf7... ]`)
-- Standalone. Not patch X/Y.
+Record: No `Fixes:` tag. Original driver commit is an ancestor of HEAD.
+
+**Step 3.3: CHECK FILE HISTORY**
+
+Record: Recent related work is unrelated (`pm_runtime_mark_last_busy`,
+timeout loop, interconnect vote). Older related fix **`3cf357dfb40b`**
+already routed some probe errors to `fail` so clocks get released — this
+patch fills the missing enable-check. Standalone, not `X/Y`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Zhang Heng has other sound quirks in this tree (ASUS UM6702RC,
-  Inspur S14-G1, Samsung 750XBE, AMD YC DMI quirks). Regular hardware-
-  quirk contributor, not the subsystem maintainer. Maintainer Takashi
-  Iwai applied it.
+
+Record: Pengpeng Hou has only this commit under `drivers/i2c/`. Reviewer
+is a Qualcomm platform maintainer; committer is the I2C maintainer.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: None. Depends only on `SND_PCI_QUIRK`,
-  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`, and `alc269_fixup_tbl[]`, all
-  present in 6.12. Can apply standalone with a path remap (`alc269.c` →
-  `patch_realtek.c`).
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+Record: No new APIs or structs. Applies standalone on this tree. No
+follow-ups on `i2c-qup.c` after `a477626332800`.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: `b4 dig -c` could not be used: this SHA is not in the local
-  tree. Recovered via msgid
-  `20260824123752.525173-1-zhangheng@kylinos.cn`.
-  - Submission: https://lists.openwall.net/linux-kernel/2026/08/24/1126
-    (also lkml.iu.edu/2608.3/00949.html)
-  - Single-patch v1 only; diff is the same one-line quirk as committed
-  - To: `tiwai@suse.de`; Cc: `linux-sound`, `linux-kernel`
-  - Maintainer reply (Takashi Iwai, 2026-08-25): **“Applied now.
-    Thanks.”** (lkml.iu.edu/2608.3/02564.html)
-  - No NAK, no requested respin, no stable discussion in the thread
-  - Lore.kernel.org itself returned Anubis/403 to automated fetch
+
+Record:
+- **b4 dig:**
+  https://patch.msgid.link/20260624055237.29977-1-pengpeng@iscas.ac.cn
+- **Revisions:** v1 only (no v2/v3)
+- **Review:** Konrad Dybcio `Reviewed-by` the same day; Andi Shyti
+  merged to `i2c/i2c` (~2026-07-28). No NAK, no stable nomination in-
+  thread.
+- lore.kernel.org fetch returned 403; thread confirmed via gnuweeb,
+  patchew, and openwall mirrors.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: Sent directly to Takashi Iwai (ALSA HDA maintainer) and linux-
-  sound. Maintainer applied v1 as-is. No other reviewer comments found.
+
+Record (`b4 dig -w`): To Andi Shyti; Cc linux-arm-msm, linux-i2c, linux-
+kernel. Konrad was not in the original To/Cc but reviewed from linux-
+arm-msm.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: Bugzilla 221891 was 403/Anubis; full comments **UNVERIFIED**.
-  The `Closes:` tag plus the commit body (SSID, Capture Volume 63,
-  distortion) are the verified description.
-  - Related real-world report: Ask Ubuntu “Audio issues on Lenovo
-    Ideapad Slim 3 **16ABR8** — microphone distortion” (sibling ABR8
-    chassis, same symptom class). That report is 16ABR8, not
-    15ABR8/`17aa:3862`, so it does **not** prove this SSID, only that
-    the product family has this class of mic problem.
+
+Record: No bugzilla/syzbot/user report. Issue is from code review of
+ignored returns.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Standalone 1/1. No series. No extra Realtek patches required.
+
+Record: Single standalone patch, not a series.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable search blocked (Anubis). No evidence in
-  this tree that this SSID was already requested or rejected. Identical
-  LIMIT_INT_MIC_BOOST quirks have been accepted into this 6.12 tree
-  before.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+Record: No discussion of this subject on stable@ found
+(lore.kernel.org/stable 403; web search did not hit this patch).
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-- Record: No function body changed. New table entry in
-  `alc269_fixup_tbl[]`. Runtime functions involved:
-  `snd_hda_pick_fixup()` → `alc269_fixup_limit_int_mic_boost()` (and
-  chained `alc_fixup_thinkpad_acpi()`).
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `qup_i2c_enable_clocks`, `qup_i2c_probe`,
+`qup_i2c_pm_resume_runtime`, `qup_i2c_resume`. (semcode MCP not
+available.)
 
 **Step 5.2: TRACE CALLERS**
-- Record: `alc269_fixup_tbl` is passed from the ALC269-family probe
-  path:
 
-```12583:12584:sound/pci/hda/patch_realtek.c
-        snd_hda_pick_fixup(codec, alc269_fixup_models,
-                       alc269_fixup_tbl, alc269_fixups);
-```
+Record: Only three call sites in this file:
+- `qup_i2c_probe` (DT/clk path, boot / module load)
+- `qup_i2c_pm_resume_runtime` (runtime PM; also used as `RUNTIME_PM_OPS`
+  resume)
+- `qup_i2c_resume` → that runtime helper (system sleep)
 
-That runs during codec probe (device enumeration / module load), not a
-syscall hot path. Reachable on every boot for machines with a Realtek
-ALC269-family HDA codec.
+Not interrupt context. Reachable on every QUP I2C device probe and every
+resume.
 
 **Step 5.3: TRACE CALLEES**
-- Record: `alc269_fixup_limit_int_mic_boost()` uses
-  `snd_hda_codec_get_pincfg()`, `snd_hda_get_input_pin_attr()`,
-  `snd_hda_override_amp_caps()`. Probe-time mixer cap override only; no
-  allocation, no new locks.
+
+Record: `clk_prepare_enable` / `clk_disable_unprepare` only. Probe then
+`clk_get_rate` and `writel(QUP_SW_RESET)`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Userspace does not need a special trigger. Opening the capture
-  device at default volume is enough. Unprivileged users of this laptop
-  hit it (PulseAudio/PipeWire default capture). High user visibility,
-  hardware-specific.
+
+Record: Platform probe / PM resume. Userspace does not call this
+directly, but every Qualcomm QUP I2C bus (touch, sensors, PMICs, cameras
+on many phones and boards) goes through it. Unclocked MMIO after a
+failed enable is a hang path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Many `SND_PCI_QUIRK(..., ALC269_FIXUP_LIMIT_INT_MIC_BOOST)`
-  entries already in this file (ThinkPads
-  `0x2215`/`0x225d`/`0x5013`/`0x5026`/`0x5109`, Asus
-  `0x106d`/`0x115d`/`0x1c23`, Positivo, VAIO). This is a systematic,
-  well-worn workaround, not a one-off invention.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: Most I2C hosts already check `clk_prepare_enable`
+(`i2c-designware-common.c`, `i2c-exynos5.c`, `i2c-img-scb.c`, etc.). A
+few still ignore it (`i2c-mv64xxx.c`, `i2c-hix5hd2.c`). This brings QUP
+in line with the common pattern.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: **Yes, as a missing quirk.** Local tree:
-  `p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12 SUBLEVEL=111`.
-  - `sound/hda/codecs/realtek/` does **not** exist (split is post-6.12).
-  - `sound/pci/hda/patch_realtek.c` **does** exist; `alc269_fixup_tbl[]`
-    at line 10675; LIMIT_INT_MIC_BOOST at 8711–8716 and function at
-    6661–6691.
-  - `git grep 0x3862 -- sound/pci/hda/` : **no match**. Between 0x3855
-    and 0x3865 there is a hole exactly where the new line goes (lines
-    11565–11566).
-  - Bug “introduced”: never fixed here; hardware existed well before
-    v6.12 (released 2024-11-17).
+
+Record: **Yes.** Tree is **v7.3-rc4** (`7.3.0-rc4`, `f0100363d8c37`).
+Introducer `10c5a8425968` and fix `a477626332800` are both ancestors of
+HEAD. Pre-fix helper in the parent of the fix is still the 2014 void
+ignore-return version. Driver: `drivers/i2c/busses/i2c-qup.c`.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **Minor path remap, otherwise clean.** Neighboring context in
-  this tree is identical to the mainline hunk (`0x3855` Legion then
-  `0x3865` Lenovo 13X). Need to apply to `sound/pci/hda/patch_realtek.c`
-  instead of `sound/hda/codecs/realtek/alc269.c`. No conflicting SSID,
-  no missing helper.
+
+Record: Clean apply on this tree (same file, same functions). No extra
+prerequisites.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: No `IdeaPad Slim 3 15ABR8` and no `17aa:3862` in
-  `sound/pci/hda/`. Sibling IdeaPad Slim 9i 14ITL5 is a different
-  SSID/fixup. No earlier version of this fix.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+Record: No alternate fix for ignored enable. `3cf357dfb40b` only fixes a
+later probe unwind, not enable checking. No post-fix regressions on this
+file.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: **[sound/pci/hda Realtek codec] [IMPORTANT]** — not core
-  mm/vfs, but the default laptop audio stack.
-  `CONFIG_SND_HDA_CODEC_REALTEK` is a standard distro config.
-  Criticality is hardware-specific, not peripheral/staging.
+---
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Very active: recent history is a stream of model quirks.
-  Mature table, mature helper (2013). Quirk additions are the normal
-  stable-friendly change in this file.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: **driver-specific / hardware-specific** — only PCI SSID
-  `17aa:3862` (Lenovo IdeaPad Slim 3 15ABR8). Everyone else unchanged.
+Record: **I2C host driver** (`drivers/i2c/busses/i2c-qup.c`),
+`CONFIG_I2C_QUP` (`ARCH_QCOM || COMPILE_TEST`). **IMPORTANT** for
+Qualcomm platforms (common on phones, boards, IoT); not core mm/VFS.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: Trigger is default capture on this laptop (every
-  VoIP/recording session). Common for owners of this model. Unprivileged
-  users can trigger it. Not a race.
+**Step 7.2: SUBSYSTEM ACTIVITY**
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: **[Internal mic unusable / severe distortion] [MEDIUM
-  functionally; HIGH for that hardware]**
-  - Not panic, UAF, or data corruption
-  - Internal microphone is effectively broken at default settings;
-    userspace volume workarounds are the only current escape
-  - This is the documented audio-codec quirk class, routinely taken into
-    stable
+Record: Mature driver (2014), still getting occasional correctness
+fixes. Not a new subsystem.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record:
-  - **Benefit:** High for 15ABR8 owners on 6.12; mic works without mixer
-    hacks
-  - **Risk:** Very low — 1 line, SSID-gated, helper used for a decade,
-    same pattern already backported here
-  - **Ratio:** strongly in favor of backport
+---
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 8.1: WHO IS AFFECTED**
 
-FOR:
-- Real hardware bug with a kernel.org bugzilla `Closes:` (221891)
-- Severe mic distortion; capture stuck at max gain
-- Classic `SND_PCI_QUIRK` exception (explicitly stable-appropriate)
-- 1 line, existing fixup from 2013
-- Helper and table present in 6.12; SSID absent
-- Maintainer (Takashi Iwai) applied v1 with no objections
-- Identical LIMIT_INT_MIC_BOOST quirks already in this 6.12 tree (T480,
-  N14AP7, Positivo ARN50)
+Record: Qualcomm SoC users with QUP I2C (`qcom,i2c-qup-v1.1.1` /
+`v2.1.1` / `v2.2.1`). Driver- and config-specific, but a large device
+population.
 
-AGAINST:
-- Not a crash/security/deadlock (strict reading of “important issue”)
-- Mainline path differs (`alc269.c` vs `patch_realtek.c`) — trivial
-  remap
-- Full bugzilla text could not be fetched (403)
-- `b4 dig` could not run without a local SHA
+**Step 8.2: TRIGGER CONDITIONS**
 
-UNRESOLVED:
-- Full bugzilla 221891 comments
-- Whether any other chassis silently shares SSID `17aa:3862` (no in-tree
-  collision)
+Record: `clk_prepare_enable()` failure on core or iface (probe, runtime
+resume, or system resume). Unprivileged users cannot poke the helper,
+but resume is a normal path. Failures are uncommon on healthy clocks;
+they do happen with power-domain / RPM / -ENOMEM issues. No public
+reproducer.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one SSID line to a long-used
-   helper; maintainer applied; same pattern proven in this tree
-2. Fixes a real bug that affects users? **PASS** — unusable/distorted
-   internal mic; bugzilla + concrete SSID
-3. Important issue? **PASS via hardware-quirk exception** — not a kernel
-   oops, but a device-breaking audio defect of the class stable already
-   takes (`SND_PCI_QUIRK` in `patch_realtek.c`)
-4. Small and contained? **PASS** — +1 line
-5. No new features or APIs? **PASS** — table entry only
-6. Can apply to the local tree? **PASS** — remap path to
-   `sound/pci/hda/patch_realtek.c`; context around 0x3855/0x3865 matches
+**Step 8.3: FAILURE MODE SEVERITY**
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: **AUDIO CODEC QUIRK / hardware workaround** — `SND_PCI_QUIRK`
-  in the Realtek HDA table. This is an automatic YES category.
+Record: Continuing after a failed enable then `writel`/`readl` on the
+QUP can hang the interconnect; resume success with clocks off breaks
+later transfers; iface-fail leaks a prepared core clk. **HIGH** when it
+triggers (hang / stuck I2C), **MEDIUM** overall because triggers are
+rare. Not a demonstrated CVE.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The bug exists on 6.12 for this laptop, the fix is the
-standard one-line quirk, and the only adjustment is the post-6.12
-filename change.
+**Step 8.4: RISK-BENEFIT RATIO**
 
-------------------------------------------------
-What the commit solves and why it matters here
-------------------------------------------------
-On IdeaPad Slim 3 15ABR8 the Realtek internal mic boost range is too
-high, so Capture Volume sits at 63 and recordings are badly distorted.
-6.12 already has `alc269_fixup_limit_int_mic_boost()`; it just never
-binds it to `17aa:3862`. Adding that binding restores usable capture for
-that model without touching any other machine.
+Record:
+- **Benefit:** avoid unclocked MMIO and false-success resume on QUP I2C.
+- **Risk:** very low (~24 insertions, error paths only, standard clk
+  unwind).
+- **Ratio:** favorable.
 
-Risk vs benefit: one SSID-gated line vs a broken laptop microphone.
-Benefit dominates. Backport applies to `patch_realtek.c` between the
-existing `0x3855` and `0x3865` rows.
+---
 
-------------------------------------------------
-Verification
-------------------------------------------------
-- [Phase 1] Parsed tags: `Closes: bugzilla 221891`, msgid link, SOB
-  Zhang Heng + Takashi Iwai; no Fixes/Cc-stable
-- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x17aa, 0x3862, ...,
-  ALC269_FIXUP_LIMIT_INT_MIC_BOOST)` in `alc269_fixup_tbl`
-- [Phase 2] Read `alc269_fixup_limit_int_mic_boost()` at
-  `patch_realtek.c:6661-6691` — probe-time amp-cap override for internal
-  mic pins
-- [Phase 2] Read `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` at 8711-8716 —
-  chains to THINKPAD_ACPI
-- [Phase 2] Read `hda_fixup_thinkpad_acpi()` / `is_thinkpad()` in
-  `thinkpad_helper.c` — LED path skipped without ThinkPad ACPI IDs
-- [Phase 3] `git log -S ALC269_FIXUP_LIMIT_INT_MIC_BOOST --
-  sound/pci/hda/patch_realtek.c`: introduced `3e0d611b2045b` (2013)
-- [Phase 3] Similar quirks already in this tree: T480 `85981dfd6b0a0`,
-  N14AP7 `86a433862912f`, Positivo ARN50 `d44418f5024f6`
-- [Phase 3] `git log --grep='IdeaPad Slim 3 15ABR8' -- sound/pci/hda/`:
-  empty
-- [Phase 4] Openwall + IU LKML: v1 patch identical to commit; Takashi
-  “Applied now. Thanks.”
-- [Phase 4] lore.kernel.org and bugzilla HTML/REST: 403 Anubis — full
-  bugzilla body UNVERIFIED
-- [Phase 4] `b4 dig -c`: not run; commit SHA not in this checkout
-- [Phase 5] Caller: `snd_hda_pick_fixup(..., alc269_fixup_tbl, ...)` at
-  probe (`patch_realtek.c:12583`)
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111
-- [Phase 6] `sound/hda/codecs/realtek` missing;
-  `sound/pci/hda/patch_realtek.c` present
-- [Phase 6] `git grep 0x3862 -- sound/pci/hda/`: no hits; hole between
-  0x3855 and 0x3865 at lines 11565-11566
-- [Phase 8] Failure mode: distorted/unusable internal mic, SSID-
-  specific; severity medium globally, high for that laptop
-- UNVERIFIED: full text of bugzilla 221891; whether any other product
-  silently uses SSID 17aa:3862
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: EVIDENCE**
+
+**For:**
+- Real ignored-error bug on required clocks.
+- Probe immediately MMIO-resets the block; clocks-off access can hang.
+- Resume used to report success with clocks still off.
+- Partial enable leaked the core clock.
+- 24 insertions in one file; obviously correct; no new API.
+- Reviewed by Konrad Dybcio, merged by Andi Shyti.
+- Bug present since v3.15; no extra dependencies.
+- Matches the usual I2C host-driver pattern.
+
+**Against:**
+- No user/syzbot report in ~12 years.
+- Clock enable rarely fails on working hardware.
+- No in-thread `Cc: stable`.
+
+**Unresolved:** Direct lore.kernel.org/stable search 403; no evidence
+this was rejected for stable.
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — standard clk check/unwind;
+   maintainer review/merge. No extra Tested-by.
+2. Fixes a real bug that affects users? **PASS** — ignored required-
+   clock failure on probe/resume.
+3. Important issue? **PASS** — hang / dead I2C / clock leak on that
+   path, not a style cleanup.
+4. Small and contained? **PASS** — +24/−7, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — driver and call sites match.
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: None (not a device ID, quirk, DT, build, or doc fix). Qualifies
+as a normal error-path bugfix.
+
+**Step 9.4: DECISION**
+
+This is a small, correct fix for ignored required-clock errors. On this
+v7.3-rc4 tree the buggy helper and the QUP probe/resume paths are
+present; the change prevents probe/resume from continuing into unclocked
+MMIO. That is enough for stable, even without a field report.
+
+---
+
+### What it solves for this tree
+
+`qup_i2c_enable_clocks()` used to ignore `clk_prepare_enable()`. Probe
+still registered the adapter and then `writel`’d `QUP_SW_RESET`; resume
+returned 0. If enable actually failed, that is unclocked MMIO (possible
+SoC hang) plus a clock leak when only the iface clock failed. The patch
+fails those paths and unwinds.
+
+### Stable rules / risk
+
+Meets the rules: real bug, small, no features, applies here. Benefit is
+avoiding hangs and false-success PM on Qualcomm QUP I2C; risk is low.
+
+### Concerns
+
+No `Fixes:` / user report (not a reason to reject). `fail_dma` on enable
+failure is correct. No follow-up fix found.
+
+---
+
+### Verification
+
+- **[Phase 1]** Tags: Reviewed-by Konrad Dybcio; SOB Andi Shyti; Link
+  lore msgid `20260624055237.29977-1`; no Fixes/Reported-by/Cc:stable.
+- **[Phase 2]** Diff: +24/−7 in `i2c-qup.c`; helper becomes `int`;
+  probe/resume propagate; partial unwind on iface fail.
+- **[Phase 2]** Pre-fix parent: void helper, probe
+  `qup_i2c_enable_clocks(qup)` then `writel(QUP_SW_RESET)`; resume
+  always 0.
+- **[Phase 2]** Post-fix probe uses `goto fail_dma` (not `fail`), so
+  `qup_i2c_disable_clocks()` is not run on a failed enable.
+- **[Phase 3]** `git log -L :qup_i2c_enable_clocks:` → `10c5a8425968`
+  (v3.15-rc1) then `a477626332800`.
+- **[Phase 3]** `git merge-base --is-ancestor` both SHAs vs HEAD: both
+  in this tree.
+- **[Phase 3]** Author: only this I2C commit; no later commits on this
+  file after the fix.
+- **[Phase 4]** `b4 dig -c a477626332800`: matched msgid; `-a`: v1 only;
+  `-w`: Andi + linux-i2c/arm-msm.
+- **[Phase 4]** Review: Konrad Reviewed-by; Andi “merged to i2c/i2c”; no
+  NAK.
+- **[Phase 4]** lore.kernel.org 403; gnuweeb/patchew/openwall used
+  instead. Stable-list search: no hits for this subject.
+- **[Phase 5]** Callers: probe, runtime resume, system resume only.
+  Other I2C hosts already check `clk_prepare_enable`.
+- **[Phase 6]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → `7.3.0-rc4`. Buggy code existed; driver
+  present.
+- **[Phase 7]** `CONFIG_I2C_QUP` depends on `ARCH_QCOM`; I2C maintainer
+  Andi Shyti.
+- **[Phase 8]** Failure mode: unclocked MMIO / false resume success;
+  severity HIGH if triggered, uncommon trigger.
+- **UNVERIFIED:** Could not fetch lore.kernel.org HTML directly (403).
+  Thread content verified via b4 + mirrors.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-qup.c | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8196235c31d2b..bc87062f86da7 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7515,6 +7515,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
-+	SND_PCI_QUIRK(0x17aa, 0x3862, "Lenovo IdeaPad Slim 3 15ABR8", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index a0e076fc5f363..ee7915ee2ba2f 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1657,10 +1657,21 @@ static const struct i2c_adapter_quirks qup_i2c_quirks_v2 = {
+ 	.flags = I2C_AQ_NO_ZERO_LEN,
+ };
+ 
+-static void qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
++static int qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
+ {
+-	clk_prepare_enable(qup->clk);
+-	clk_prepare_enable(qup->pclk);
++	int ret;
++
++	ret = clk_prepare_enable(qup->clk);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(qup->pclk);
++	if (ret) {
++		clk_disable_unprepare(qup->clk);
++		return ret;
++	}
++
++	return 0;
+ }
+ 
+ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
+@@ -1823,7 +1834,9 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 			ret = PTR_ERR(qup->pclk);
+ 			goto fail_dma;
+ 		}
+-		qup_i2c_enable_clocks(qup);
++		ret = qup_i2c_enable_clocks(qup);
++		if (ret)
++			goto fail_dma;
+ 		src_clk_freq = clk_get_rate(qup->clk);
+ 	}
+ 	qup->src_clk_freq = src_clk_freq;
+@@ -1975,8 +1988,7 @@ static int qup_i2c_pm_resume_runtime(struct device *device)
+ 	struct qup_i2c_dev *qup = dev_get_drvdata(device);
+ 
+ 	dev_dbg(device, "pm_runtime: resuming...\n");
+-	qup_i2c_enable_clocks(qup);
+-	return 0;
++	return qup_i2c_enable_clocks(qup);
+ }
+ 
+ static int qup_i2c_suspend(struct device *device)
+@@ -1988,7 +2000,12 @@ static int qup_i2c_suspend(struct device *device)
+ 
+ static int qup_i2c_resume(struct device *device)
+ {
+-	qup_i2c_pm_resume_runtime(device);
++	int ret;
++
++	ret = qup_i2c_pm_resume_runtime(device);
++	if (ret)
++		return ret;
++
+ 	pm_request_autosuspend(device);
+ 	return 0;
+ }
 -- 
 2.53.0
 
