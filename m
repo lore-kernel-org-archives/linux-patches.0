@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6839060CDA6;
-	Mon, 19 Oct 2026 14:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621BC60DC75;
+	Mon, 19 Oct 2026 14:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418618; cv=none; b=KI/1IdUl9BdKG7wVXuybfrjpNRoxIJw/39ZFN2qK7Fl00EIMyBwSsTBulcjiCChueQLaajedbaCYfnU4A1zgzOEJf1YSnShfDeVxAYE6vbPqNgj8nf6yNORUUqVUFfcsbGDNmwFtd/B+vr+LKzTjzmPwcD2SYqBVB3kB7BVxZyM=
+	t=1792418619; cv=none; b=K/WSZm0DqqiJxRd1UA82KVOjR95Gpp9dfFDryfc2xBQ7JlkW8AnUzPaORJ0XWGR6xGvusDUWW1gDmTqQjRGNvrT0wdfrz/OutUNck0ENeNMhEUVuoGmkId2T94SRZG42KQu49kiOLDe95yE5CZGWjY2j1ErwP1QPcOVXNUWGpDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418618; c=relaxed/simple;
-	bh=j92dllQBszqrU3b0FCCyQxDoMdsNFcjzZhBXLHCT0go=;
+	s=arc-20240116; t=1792418619; c=relaxed/simple;
+	bh=vk2hjEXDnur/2vaPN9bfPfxK1ab0eSIhrLVNs+sCEvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k1wObC95HiY1sH7a5TUPhMofGjekYrNlWCwdbfk4M05UBzdDLKOOW40RvWkrYB/2jjbTjdjMmwevq6+l9ClcQixiTnUGLeQ8LllIhfBe2DmN9Xj2e6KEeNf7caPDJ5LOPuSgarhM1PNM6nJot4wI06HAQJaTnrZhGd5jVZ3x03M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S8u2ZiDv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UUgs2YP12HAd+0mHtG/QcoE64Xy78USdsAetAESSWC6+27EszVbp8HrgkMPr7OgkB2TuCN9EpnbaeSlk8LiOaHnK2q5eRIxKbZfvORSIdXzfasJ6fWhluUNE577dFpIjddfBiQyfpsc6XM8cw8C18Shbyf6bLPb6CpfDEOP6sA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RyLLX8d6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S8u2ZiDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CD41F000C4;
-	Mon, 19 Oct 2026 14:03:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RyLLX8d6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC081F000C5;
+	Mon, 19 Oct 2026 14:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418615;
-	bh=27UIU0XeKm7CxyMBtKFouhIEmrD/4xb0FnUHUBFn2Vc=;
+	s=k20260515; t=1792418616;
+	bh=DGz/pA8p8YxKO1h+kYZhjDaXY/1B0WDV1cQFe7P6AGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8u2ZiDvHWFJTwUobkWUIG3qDwHM1j8xWr7kSgcEFDwkiutU7MTm5i9rj8GyWv3y5
-	 1myLHIww7iarowmTyrTbofy29UnXM7jJUCBN0SUwQD9Tgr+b3LZASxFDYmAOuZEFwX
-	 pm2GdQ58SLyjWteVxQ9YfRDlLnfMwHGqphPz1z+AAasVcf8TlIEkFlzC/mP9P9Grva
-	 0o3LFkaFszO/zVeVHAKQ0kyy61xz4JtfRGJINiPYoMnCho3ETQXnmRiPPqISZVE8Rv
-	 22YWJnPaHtCH4CtAlr7tUFNzfAe0ciHPUNWGrVNwiPAej15FQ+iFIErW9NPhRN34Wd
-	 zqRTajc91BcxA==
+	b=RyLLX8d6OvpxTPELl90Gyk48MMEJh9nQNSuFxFpv/nTy0j900+fJswmFUTmo0WxEz
+	 Xrl8Xe1AkzGXOH6F+zPlK4Mo/HYCQ24ZFW9nSPqgwRe5FfT0Hf1TjPn4j9iwZ5nzRA
+	 RitcIM1EwHZijaybUKeVfhXHZP2gygXCji3uIz5ZEtj56IXtwKWtZuJ2aMEO0Bt7bj
+	 DKoLqnmnju8vu7kUy+MWk8XIGGCDfEbEYb9T4f74YYykXnhoqVmd5JnGMpN4bjM3hN
+	 3msITKIQ3RyjcHb0L6hBMqFmNE7i0vakPG3ot3WMZmikappEKQZq+IML6+VwNxbm2i
+	 Plae9ck/DCz+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ASoC: cs35l56: Add support for CS35L62 for SoundWire
-Date: Mon, 19 Oct 2026 09:51:05 -0400
-Message-ID: <20261019135441.1420968-374-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: reset the driver state upon firmware recovery
+Date: Mon, 19 Oct 2026 09:51:06 -0400
+Message-ID: <20261019135441.1420968-375-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,401 +52,541 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 3330b5f6d8dea66df51c07362f01a39ad9845aad ]
+[ Upstream commit 71ac392d8b5c23c45c66f30eff1c319580ada4da ]
 
-CS35L62 uses the same control and regmap interface as CS35L63 so
-support for it can be added into the CS35L56 driver.
+Just like we did in iwlmvm, we also need to clear the mld state when the
+firmware was killed because of the device being powered off during
+suspend.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260715120135.939280-2-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260714165826.ff1c9e05e0a9.I8df8d4a0384065fd2a32cf258339be77084c55bd@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have enough of the tree, the sibling mvm fix, and the lore series to
+judge this on merit. Writing the full phase-by-phase analysis next.
 
-**Step 1.1 — Subject**
-- Record: `[ASoC/cs35l56] [add] [enable CS35L62 on SoundWire by reusing
-  CS35L63 paths]`
+---
 
-**Step 1.2 — Tags**
-- Record:
-  - `Fixes:` none (expected)
-  - `Reported-by:` none
-  - `Tested-by:` none
-  - `Reviewed-by:` none on the commit
-  - `Acked-by:` none
-  - `Link: https://patch.msgid.link/20260715120135.939280-2-
-    rf@opensource.cirrus.com`
-  - `Cc: stable@vger.kernel.org` none (expected)
-  - `Signed-off-by: Stefan Binding` (author)
-  - `Signed-off-by: Richard Fitzgerald` (Cirrus; submitted the series)
-  - `Signed-off-by: Mark Brown` (ASoC maintainer)
-  - Ignore any Sasha Levin SOB if present — pipeline noise
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.3 — Body**
-- Record: No bug, crash, leak, or regression is described. Claimed
-  intent is hardware enablement: CS35L62 shares CS35L63’s control/regmap
-  interface, so it can live in the existing cs35l56 driver. Symptom
-  without the patch: a CS35L62 SoundWire amp is not matched (`-ENODEV` /
-  unknown DEVID). Root cause: missing part ID and type cases. No version
-  range is given. Mark Brown applied it to `for-7.3` as merge-window
-  material, not as a bugfix.
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.4 — Hidden bug fix?**
-- Record: No. Wording is “Add support”, not cleanup/locking/error-path
-  repair. This is new silicon enablement, not a disguised UAF/leak/race
-  fix.
+Record: **[iwlwifi/mld] [reset] [clear MLD driver state when firmware is
+killed because the device was powered off during suspend]**
 
-## Phase 2: Diff analysis
+- Subsystem: `wifi: iwlwifi: mld`
+- Action verb: **reset** (correctness / recovery, not a feature)
+- Intent: after firmware recovery from a power-off-during-suspend, wipe
+  MLD software state the same way `iwlmvm` already does
 
-**Step 2.1 — Inventory**
-- Record: 3 files, **+7 / −0**, single-driver surgical change.
-  - `sound/soc/codecs/cs35l56-sdw.c` (+2): `cs35l56_sdw_probe()`,
-    `cs35l56_sdw_id[]`
-  - `sound/soc/codecs/cs35l56-shared.c` (+4): `cs35l56_set_patch()`,
-    `cs35l56_set_fw_reg_table()`, `cs35l56_system_reset()`,
-    `cs35l56_hw_init()`
-  - `sound/soc/codecs/cs35l56.c` (+1): `_cs35l56_component_probe()`
-- Scope: device-ID addition to an existing codec driver.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-**Step 2.2 — Flow**
-- Before: SoundWire ID `0x01FA:0x3562` is unmatched; type `0x62` / DEVID
-  `0x35A620` fall through to `-ENODEV` or skip CS35L63
-  firmware/reset/controls.
-- After: ID binds; all CS35L63-specific switches also accept CS35L62 and
-  reuse `cs35l63_regmap_sdw`, `cs35l63_patch_fw`, `cs35l63_fw_reg`,
-  `cs35l63_system_reset_seq`, `cs35l63_calibration_controls`,
-  `cs35l63_controls`.
-- Path: probe/init only for the new part. Existing 0x54/56/57/63 paths
-  are unchanged.
+Record (from `git show 71ac392d8b5c2`):
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none on the commit itself
+- **Acked-by:** none
+- **Link:** `https://patch.msgid.link/20260714165826.ff1c9e05e0a9.I8df8d
+  4a0384065fd2a32cf258339be77084c55bd@changeid`
+- **Cc: stable:** none (not a negative signal)
+- **Signed-off-by:** Emmanuel Grumbach (author); Miri Korenblit (iwlwifi
+  maintainer)
+- Ignore pipeline markers: none present on the original commit
 
-**Step 2.3 — Bug mechanism**
-- Record: `[Hardware enablement / SoundWire device ID]` not a memory-
-  safety or locking bug. Mechanism: add `SDW_SLAVE_ENTRY(0x01FA, 0x3562,
-  0x3562)` and sibling `case` labels so CS35L62 is treated as CS35L63.
+Notable: Intel iwlwifi developers; maintainer SOB; no syzbot/user
+reports.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct given the stated aliasing. Minimal. No
-  public API, no new driver. Regression risk for existing chips is very
-  low (new cases only). Completeness: other `type` switches in this
-  driver already use `default:` for CS35L63-class silicon, so they pick
-  up 0x62 without extra cases. I2C/SPI tables are intentionally
-  untouched (series is SoundWire-only). KUnit still special-cases only
-  0x63 in one test; that is test-only.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-## Phase 3: Git history
+Record:
+- **Bug:** When firmware is killed because the NIC was powered off in
+  suspend, MLD driver state is left as if the firmware were still
+  configured.
+- **Symptom:** After that resume path, software
+  IDs/keys/scan/FTM/internal STAs no longer match a freshly started
+  firmware image. Connection/recovery after suspend can fail; later FW
+  commands can error or WARN.
+- **Version info:** none in the message. Analog is explicit: “Just like
+  we did in iwlmvm”.
+- **Root cause (author):** `device_powered_off` stopped firmware
+  (`iwl_mld_stop_fw`) and cleared `in_d3`, but never ran the existing
+  restart cleanup that zeros restart-sensitive state and walks
+  vifs/stations.
 
-**Step 3.1 — Blame**
-- Record: CS35L63 cases/IDs came from `978858791ceda` (“Add initial
-  support for CS35L63…”, 2025-04-07). That commit is an ancestor of HEAD
-  and is in v6.16. cs35l56 itself dates to `e496112529006` (2023-03-20).
-  The CS35L62 lines are this commit (`3330b5f6d8dea`).
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 3.2 — Fixes: tag**
-- Record: None. There is no “buggy commit”; support was simply never
-  added. N/A.
+Record: **Not disguised.** It is a real recovery-path correctness fix.
+“Reset the driver state” is the missing counterpart of
+`iwl_mld_restart_cleanup()` already used from `iwl_mld_mac80211_start()`
+when `in_hw_restart` is set. The mvm sibling (`0a00c3ec2db76`) states
+the same problem more clearly: after power-off, firmware must be
+reloaded **and reconfigured**.
 
-**Step 3.3 — File history / series**
-- Record: Patch **1/2**. Companion `0306d21155819` (“ASoC: sdw_utils:
-  Add codec info for CS35L62”) adds the SOF/generic machine-driver table
-  entry. Cover letter: chip IDs in the codec driver **and** sdw_utils.
-  Follow-up `998b8a6c8aff2` sorted the SDW ID table (addresses Pierre-
-  Louis Bossart’s nit). Later cs35l56 changes are independent (IRQ,
-  probe deadlock, pm_runtime).
+---
 
-**Step 3.4 — Author**
-- Record: Stefan Binding is a regular Cirrus cs35l56/cs35l41 contributor
-  (including the original CS35L63 support). Submitted via Richard
-  Fitzgerald; applied by Mark Brown. High confidence in the ID mapping.
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 3.5 — Prerequisites**
-- Record: Needs CS35L63 symbols (`cs35l63_regmap_sdw`,
-  patch/fw/reset/calibration/controls). Those exist in this checkout.
-  Standalone for the codec driver; SOF auto-wiring wants patch 2/2 as
-  well.
+**Step 2.1: INVENTORY THE CHANGES**
 
-## Phase 4: Mailing list / external
+Record:
+- `drivers/net/wireless/intel/iwlwifi/mld/mac80211.c`:
+  `iwl_mld_restart_cleanup` un-static’d (`static void` → `void`) — **3
+  +/− lines net**
+- `drivers/net/wireless/intel/iwlwifi/mld/mac80211.h`: export prototype;
+  copyright year — **+2**
+- `drivers/net/wireless/intel/iwlwifi/mld/mld.c`: one call
+  `iwl_mld_restart_cleanup(mld);` in `iwl_mld_device_powered_off` —
+  **+1**
+- Totals: **+4 / −2**, three files, one function body unchanged
+- Scope: **single-subsystem, surgical**
 
-**Step 4.1 — b4 dig**
-- Record: Lore/thread: `https://patch.msgid.link/20260715120135.939280-
-  2-rf@opensource.cirrus.com`
-- Series: **v1 only** (no v2/v3). Applied as submitted.
-- Review: Pierre-Louis Bossart (SoundWire) only nitted sort order (62
-  after 63). No NAK, no stable nomination, no functional concern.
-- Mark Brown: applied to `for-7.3`, with the standard note that merge-
-  window patches go in the next window “or sooner **if it is a bug
-  fix**” — i.e. this was **not** treated as a bugfix.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-- Record: `broonie@kernel.org`, `linux-sound@vger.kernel.org`, `linux-
-  kernel@vger.kernel.org`, `patches@opensource.cirrus.com`. Maintainer
-  applied it.
+Hunk 1 (`mac80211.c`): `iwl_mld_restart_cleanup` still does
+`iwl_cleanup_mld` → iterate vifs (`iwl_mld_cleanup_vif`) → iterate
+stations (`iwl_mld_cleanup_sta`) → `iwl_mld_ftm_restart_cleanup`. Only
+linkage changes (now callable from `mld.c`).
 
-**Step 4.3 — Bug report**
-- Record: None. No syzbot, bugzilla, or user crash report.
+Hunk 2 (`mac80211.h`): prototype so `mld.c` can call it. `mld.c` already
+includes `mac80211.h`.
 
-**Step 4.4 — Related patches**
-- Record: `[PATCH 0/2]` + `[PATCH 2/2]` sdw_utils codec_info. Both
-  applied together (`3330b5f6d8dea`, `0306d21155819`).
+Hunk 3 (`mld.c` `iwl_mld_device_powered_off`, `CONFIG_PM_SLEEP`):
 
-**Step 4.5 — stable@**
-- Record: lore.kernel.org/stable WebFetch returned 403. **UNVERIFIED**
-  whether stable@ discussed it. Unlikely: 7.3 is still rc4 and this was
-  merge-window work.
+**Before:**
+```
+wiphy_lock
+iwl_mld_stop_fw(mld)   // abort waits, stop device, fw_status.running =
+false
+in_d3 = false
+wiphy_unlock
+```
 
-## Phase 5: Semantic / call graph
+**After:** same, plus `iwl_mld_restart_cleanup(mld)` between stop_fw and
+clearing `in_d3`.
 
-**Step 5.1 — Functions**
-- Record: `cs35l56_sdw_probe`, `cs35l56_sdw_id[]`, `cs35l56_set_patch`,
-  `cs35l56_set_fw_reg_table`, `cs35l56_system_reset`, `cs35l56_hw_init`,
-  `_cs35l56_component_probe`.
+Path: PCI resume when scratch/MAC grab shows the device was powered off
+(`iwl_op_mode_device_powered_off` from `pcie/drv.c`). Not the happy
+wowlan-keep-alive path.
 
-**Step 5.2 — Callers**
-- Record: `cs35l56_sdw_probe` is the `sdw_driver.probe` (SoundWire
-  enumeration). `cs35l56_common_probe()` is called from SDW/I2C/SPI
-  probe. `cs35l56_hw_init` / `cs35l56_set_patch` are called from the
-  codec init path in `cs35l56.c`. `_cs35l56_component_probe` is the ALSA
-  component probe. Not a syscall hot path; probe/runtime of this amp.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-**Step 5.3 — Callees**
-- Record: `devm_regmap_init_sdw`, `cs35l56_common_probe`,
-  `regmap_register_patch`, `regmap_multi_reg_write_bypassed`,
-  `snd_soc_add_component_controls`. No new helpers.
+Record: **[Logic / correctness — stale driver state after firmware
+death]**
 
-**Step 5.4 — Reachability**
-- Record: Reachable when a CS35L62 SoundWire slave enumerates
-  (laptops/SOF). Unprivileged userspace cannot trigger a crash path
-  here; without the ID the device simply does not bind.
+Without cleanup, `iwl_mld_mac80211_start` sees `in_d3 == false`, skips
+D3 resume, and calls `iwl_mld_start_fw()` **without**
+`iwl_mld_restart_cleanup()`. Firmware is empty; driver still holds:
+- `zeroed_on_hw_restart` groups (phy, scan, iface, link, sta, txq)
+- firmware station IDs / internal STAs
+- keys
+- FTM initiator request
 
-**Step 5.5 — Similar patterns**
-- Record: Same pattern as CS35L63 (`978858791ceda`) and CS35L57 IDs.
-  Remaining `case 0x57` blocks use `default:` for CS35L63-class parts,
-  so CS35L62 is covered there.
+`iwl_mld_cleanup_vif` frees internal STAs and keys; skipping it on this
+path is a leak plus ID mismatch. Category is **incomplete error/recovery
+handling**, not a new feature.
 
-## Phase 6: This tree
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 6.1 — Local tree and whether the code exists**
-- Record: `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
-  kernelversion` = **7.3.0-rc4**. This is mainline 7.3-rc, not an LTS
-  branch.
-- Driver, CS35L63 paths, and the new IDs all exist here. `git merge-base
-  --is-ancestor 978858791ceda HEAD` succeeds. `git merge-base --is-
-  ancestor 3330b5f6d8dea HEAD` succeeds. CS35L62 first appears in
-  **v7.3-rc1**, not v7.2.
+Record:
+- **Obviously correct:** reuses the function already used on HW restart;
+  mvm does the same from `iwl_op_mode_mvm_device_powered_off`
+  (`iwl_mvm_restart_cleanup`).
+- **Minimal:** one call + un-static.
+- **Regression risk low:** already runs under `wiphy_lock` from
+  `iwl_mld_mac80211_start`; `device_powered_off` already takes
+  `wiphy_lock`. Cleanup is largely idempotent (`CLEANUP_STRUCT` memset,
+  `sta_id != IWL_INVALID_STA` guards). FTM abort on a dead NIC during
+  resume is appropriate.
+- **Redundant** `in_d3 = false` after `iwl_cleanup_mld` also clears it —
+  harmless.
+- No public API / data-structure change except making an existing helper
+  non-static.
 
-**Step 6.2 — Backport difficulty**
-- Record: Context here already includes later IRQ/ID-sort changes, but
-  the hunks are trivial case/ID inserts. Expected apply: clean or
-  trivial reorder. **Low difficulty.**
+---
 
-**Step 6.3 — Related fixes already here**
-- Record: No alternate CS35L62 fix. Support is this series. ID table
-  sort came after.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-## Phase 7: Subsystem
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 7.1**
-- Record: `[ASoC codec driver, Cirrus CS35L56 family] [IMPORTANT —
-  common laptop speaker amps, not core mm/fs; not staging]`
+Record:
+- Buggy `iwl_mld_device_powered_off` introduced in **`d1e879ec600f9`**
+  (`wifi: iwlwifi: add iwlmld sub-driver`, 2025-03-05; that commit’s
+  Makefile is **6.14.0-rc4**).
+- Merged to this lineage via `c73ebc0dbb6ed` (`iwlwifi-
+  next-2025-06-25`).
+- Intermediate: `7aeec8c8d63bf` removed `system_pm_mode` assignment;
+  still no cleanup.
+- `iwl_mld_restart_cleanup` existed as **static** since MLD
+  introduction; this commit only exports it.
 
-**Step 7.2**
-- Record: Actively maintained (many 2026 probe/IRQ/pm fixes). CS35L56 is
-  mature; CS35L62 is a small ID alias on top of CS35L63.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-## Phase 8: Impact and risk
+Record: **No Fixes: tag.** Bug is original MLD `device_powered_off`
+(omit cleanup). Target `d1e879ec600f9` **is** an ancestor of this tree
+(`git merge-base --is-ancestor`).
 
-**Step 8.1 — Who is affected**
-- Record: Driver-specific / config-specific
-  (`CONFIG_SND_SOC_CS35L56_SDW`). Only CS35L62 SoundWire hardware.
-  Existing CS35L54/56/57/63 behavior unchanged.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 8.2 — Trigger**
-- Record: Device enumeration of part `0x3562`. Not a race. Not
-  unprivileged exploit surface.
+Record:
+- **`71ac392d8b5c2`** — this fix (in tree)
+- **`0a00c3ec2db76`** — mvm analog, same day/author/series (14/15 vs
+  15/15)
+- **`1c031ac5a39eb`** — later “do not cleanup FW state when device is
+  dead”; **different path** (chanctx unassign / NULL link), not a revert
+  of this call
+- **`c99bc4d4e0ba6`** — cancel wiphy work before free (same series,
+  08/15); not a prerequisite for this hunk
 
-**Step 8.3 — Failure mode without the patch**
-- Record: Device does not probe; no speaker amp. Severity **LOW** as a
-  kernel bug (no oops/corruption), **HIGH** as hardware enablement for
-  those machines.
+Standalone: no other series patch is required for this one-line call.
 
-**Step 8.4 — Benefit vs risk**
-- Record: Benefit: CS35L62 SoundWire amps work on this kernel. Risk:
-  very low (7 lines, additive cases). Ratio: favorable **if** treating
-  this as a device-ID exception; poor **if** requiring a crash/security
-  bug.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-## Phase 9: Synthesis
+Record: Emmanuel Grumbach is a long-time Intel iwlwifi developer. Same-
+day pair: mvm cleanup + this MLD mirror. Maintainer Miri Korenblit SOB’d
+both. Weight: **high**.
 
-**Step 9.1 — Evidence**
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-For:
-- Matches the documented **new device ID** exception (SoundWire ID +
-  cases routing to existing CS35L63 code).
-- Small (7 lines), obviously correct, maintainer-applied.
-- Driver and CS35L63 prerequisites exist in this 7.3 tree.
-- No change to existing IDs’ control flow.
-- Author is the Cirrus driver owner.
+Record: Needs `iwl_mld_restart_cleanup`, `iwl_mld_device_powered_off`,
+MLD op_mode — all present since MLD add. `mld.c` already `#include
+"mac80211.h"`. **Applies standalone** on this tree.
 
-Against:
-- Subject/body are **new feature**, not a bugfix. No crash, leak, UAF,
-  deadlock, or CVE.
-- Mark Brown applied it to **for-7.3 merge window**, not as a stable
-  bugfix.
-- Patch 1/2; SOF machine auto-config also wants `0306d21155819`.
-- No `Reported-by` / no in-field bug.
-- Stable rules 2 and 3 fail unless the ID exception is used.
+---
 
-Unresolved:
-- stable@ lore search could not be fetched (403).
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — aliasing is local and
-   reviewed; applied by broonie. Only review comment was sort order.
-2. Fixes a real bug that affects users? **FAIL** as a defect; **PASS**
-   only under the device-ID exception (unsupported CS35L62).
-3. Important issue (crash/security/corruption/deadlock)? **FAIL**
-4. Small and contained? **PASS** (7 lines, one driver)
-5. No new features or APIs? **FAIL** as a feature; **PASS** under
-   device-ID exception (no new driver/API, only an ID)
-6. Can apply to the local tree? **PASS** — CS35L63 paths present on
-   7.3-rc4
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 9.3 — Exception**
-- Record: **NEW DEVICE IDs** on an existing driver. Same class as adding
-  a PCI/USB ID. Not a new driver, not a new uAPI.
+Record:
+- `b4 dig -c 71ac392d8b5c2` → **https://patch.msgid.link/20260714165826.
+  ff1c9e05e0a9.I8df8d4a0384065fd2a32cf258339be77084c55bd@changeid**
+- **v2**, `[PATCH v2 iwlwifi-next 15/15]`; v2 cover: resend so next
+  contains an unrelated compile fix (`too long hcmds`), **not** a
+  redesign of this patch
+- Cover: “Usual fixed, cleanups and features from our internal tree.”
+  This commit listed under Emmanuel’s fixes.
+- Saved mbox: **16 messages, all series posts, zero review replies /
+  NAKs / Cc: stable**
+- lore.kernel.org / patch.msgid.link HTTP fetch: **403** — discussion
+  taken from `b4 dig -m` mbox instead
 
-**Step 9.4 — Decision**
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-This tree is **7.3.0-rc4**. The cs35l56 driver and CS35L63 handling are
-present, so the patch is applicable here. It does not fix a stability
-bug, but it is the standard “add ID to existing driver” pattern the
-stable rules explicitly allow: one SoundWire ID and a handful of `case`
-labels so CS35L62 reuses CS35L63. Risk to current users is negligible.
-Companion sdw_utils entry is separate and not required for the codec to
-bind.
+Record (`b4 dig -w`): To/Cc **Johannes Berg**, **linux-
+wireless@vger.kernel.org**, Miri Korenblit, Emmanuel Grumbach. No
+Reviewed-by on 15/15 (several other series patches have Johannes R-b).
+Applied via iwlwifi-next (`905b418df8af2`, 2026-07-23). Maintainer-tree
+merge is the review signal.
 
-### What it solves for users of this tree
-Without the ID, a CS35L62 SoundWire amp never matches the driver. With
-it, the existing CS35L63 path runs. That is hardware enablement, not a
-crash fix.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-### Rules / risk
-Meets “small, obviously correct, no new API”. Importance is hardware
-support, covered by the device-ID exception. Backport/apply risk is very
-low.
+Record: **No user/syzbot/bugzilla report.** Bug is reasoned from the mvm
+gap. Severity from code: stale FW IDs after D3cold/hibernate-style
+power-off — WiFi may not come back cleanly.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: 15-patch iwlwifi-next dump. **14/15 is the mvm twin**
+(independent). This patch does **not** depend on 01–13. Mix of features
+and fixes; this hunk is a self-contained fix.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: Web search found **other** iwlwifi MLD restart patches in stable
+(e.g. “stop TX during firmware restart” for 6.18/7.0). **No hit** for
+this subject on stable@. UNVERIFIED: whether anyone already nominated
+this exact commit for older -stable.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `iwl_mld_restart_cleanup` (export), `iwl_mld_device_powered_off`
+(call site). Unchanged callees: `iwl_cleanup_mld`,
+`iwl_mld_cleanup_vif`, `iwl_mld_cleanup_sta`,
+`iwl_mld_ftm_restart_cleanup`.
+
+**Step 5.2: TRACE CALLERS**
+
+Record:
+- `iwl_mld_restart_cleanup`: `iwl_mld_mac80211_start` (if
+  `in_hw_restart`); **now** `iwl_mld_device_powered_off`
+- `iwl_mld_device_powered_off`: op_mode `.device_powered_off` →
+  `iwl_op_mode_device_powered_off` → **`_iwl_pci_resume`** in
+  `pcie/drv.c` when restore or scratch says powered off
+- Context: **PM resume**, process context, already holds `wiphy_lock`
+- Reachable on Intel WiFi 7 / MLD laptops that D3cold the NIC or
+  hibernate
+
+**Step 5.3: TRACE CALLEES**
+
+Record: stop_fw (trans stop, abort waits); cleanup zeros restart groups;
+frees internal STAs/keys; may call
+`ieee80211_remain_on_channel_expired`; FTM reports failure to cfg80211.
+Side effects are the intended reset.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: **Userspace-reachable** via suspend/resume (and hibernate), not
+a syscall bug. Trigger is common on laptops that cut WiFi power.
+Unprivileged users typically cannot force PCI D3cold, but they **do**
+suspend.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: **Exact mvm analog** `0a00c3ec2db76` — same author, same series.
+Pattern is systematic (mvm had the cleanup; mld was missed at
+introduction).
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record:
+- Local tree: **`git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`**,
+  `make kernelversion` = **7.3.0-rc4**
+- MLD files present under `drivers/net/wireless/intel/iwlwifi/mld/`
+- **`git merge-base --is-ancestor 71ac392d8b5c2 HEAD` succeeds** — this
+  fix is **already in this checkout**
+- Pre-fix body (parent of 71ac392d8b5c2) had `device_powered_off`
+  without cleanup; current `mld.c:750` has the call
+- Bug introduced with MLD (`d1e879ec600f9`, ~6.14 development / 2025);
+  **not** after 7.3 branched
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply** on this tree (already applied). Context around
+`iwl_mld_device_powered_off` matches the candidate diff. No conflicting
+refactor.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: This fix **is** here. mvm analog **is** here. No earlier
+different MLD-powered-off cleanup. Follow-up `1c031ac5a39eb` is
+unrelated chanctx/dead-device WARN, not a replacement.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **iwlwifi MLD** (`CONFIG_IWLMLD`) — Intel Wi-Fi 7 / MLO devices.
+**IMPORTANT** (very common laptop NIC), not core mm/VFS. Affects all
+IWLMLD users on PM sleep.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: **Active** (regular iwlwifi-next pulls). Bug is an original
+omission in a still-young op_mode (~1.5 years), not bitrot in abandoned
+code.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: **Driver-specific + config-specific:** `CONFIG_IWLWIFI` +
+`CONFIG_IWLMLD` + `CONFIG_PM_SLEEP`. Intel BE200/BE201-class Wi-Fi 7.
+Population is large for a driver fix.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record:
+- Trigger: resume after the transport decides the device was powered off
+  (scratch bits, 0xFFFFFFFF, or failed NIC grab) — **hibernate, D3cold,
+  some s2idle**
+- Not every suspend (wowlan-alive path skips this)
+- Not a userspace exploit path
+- Timing: deterministic once the platform cuts power
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record:
+- **Failure:** driver/firmware state desync after resume; commands with
+  stale IDs; possible internal-STA/key leak; FTM requests left hanging;
+  Wi-Fi may not recover without reload
+- Not shown as oops/UAF/CVE in the message (UNVERIFIED as crash)
+- **Severity: HIGH** for affected hardware (broken Wi-Fi after suspend),
+  **not CRITICAL** (no verified panic/corruption)
+
+Stable-rules fit: **“oh, that’s not good”** / hardware resume quirk, not
+theoretical.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit: high** for IWLMLD + PM — resume actually reconfigures like
+  mvm
+- **Risk: very low** — +1 call to existing helper, same lock as start
+  path
+- **Ratio: strongly favorable**
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR backporting to this 7.3 tree:**
+- Real resume bug: firmware stopped, MLD software state not reset
+- Same fix already proven in mvm (`0a00c3ec2db76`)
+- Tiny, obviously correct; helper already used on HW restart
+- Intel Wi-Fi 7 is common; suspend/resume is a user-facing path
+- MLD and the buggy function exist in this tree; no extra prereqs
+- Maintainer-tree merge; Johannes on Cc
+- Matches stable rule of a real bug that bothers people (Wi-Fi
+  dead/wrong after power-off suspend)
+
+**AGAINST:**
+- No Reported-by / syzbot / stack trace
+- Brief commit message
+- 15/15 of a mixed “updates” series, not a dedicated stable submission
+- No explicit crash/security
+- Power-off-during-suspend is not every resume (wowlan-alive OK)
+
+**UNRESOLVED:**
+- Exact user-visible rate (no public bugzilla)
+- lore HTTP 403; no on-list NAK found in mbox
+- No stable@ discussion of this exact subject
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — mirrors mvm; merged to
+   iwlwifi-next/mainline; logic is a single missing call.
+2. Fixes a real bug that affects users? **PASS** — stale MLD state vs
+   empty firmware after D3cold/hibernate resume.
+3. Important issue? **PASS** — user-visible Wi-Fi recovery failure
+   (HIGH, not panic). Fits “oh, that’s not good” / resume hardware path.
+4. Small and contained? **PASS** — ~4 insertions, one subsystem.
+5. No new features or APIs? **PASS** — export existing helper + call it.
+6. Can apply to the local tree? **PASS** — code present; patch already
+   applies (already in v7.3-rc4).
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **None** (not a device ID / quirk table / DT / build / docs).
+Qualifies as a normal small bugfix.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree is **7.3.0-rc4**. The MLD `device_powered_off` path exists
+here and omitted restart cleanup until `71ac392d8b5c2`. The commit is a
+4-line, low-risk fix for a real suspend/resume correctness bug on Intel
+MLD hardware. It should be in this tree’s stable stream.
+
+### What the commit solves (for 7.3 users)
+
+On PCI resume, if the NIC was powered off, MLD only stopped firmware and
+cleared `in_d3`. `iwl_mld_mac80211_start` then did a cold
+`iwl_mld_start_fw()` **without** `iwl_mld_restart_cleanup()`, so
+firmware IDs, keys, scan, and internal STAs stayed live in software. Wi-
+Fi 7 devices can fail to recover after that suspend. The fix is the same
+cleanup mvm already does.
+
+Risk is a single call under the lock already used for restart cleanup.
+Benefit is working wireless after D3cold/hibernate on common Intel
+hardware.
 
 ---
 
 Verification:
-- [Phase 1] Parsed tags: SOB Binding/Fitzgerald/Brown; Link to patch
-  1/2; no Fixes/Reported-by/stable Cc
-- [Phase 2] Diff: +7 lines, ID `0x3562` + cases `0x62`/`0x35A620`
-  reusing CS35L63
-- [Phase 3] `git blame`: CS35L63 from `978858791ceda` (v6.16); CS35L62
-  from `3330b5f6d8dea`
-- [Phase 3] `git merge-base --is-ancestor 978858791ceda HEAD`: CS35L63
-  in this tree
-- [Phase 3] `git merge-base --is-ancestor 3330b5f6d8dea v7.3-rc1`: first
-  in 7.3-rc1; not in v7.2
-- [Phase 3] Series: 1/2 codec IDs, 2/2 `0306d21155819` sdw_utils
-- [Phase 4] `b4 dig -c 3330b5f6d8dea`: v1 only; URL
-  patch.msgid.link/20260715120135.939280-2-…
-- [Phase 4] `b4 dig -a`: no later revision
-- [Phase 4] `b4 dig -w`: broonie + linux-sound
-- [Phase 4] mbox: Bossart sort-order nit only; Brown applied to for-7.3
-- [Phase 4] WebFetch lore.kernel.org: 403; used b4 mbox + openwall
-  instead
-- [Phase 5] grep callers: SDW probe → `cs35l56_common_probe`;
-  hw_init/set_patch from codec init
-- [Phase 5] Other `case 0x63` sites updated; remaining type switches use
-  `default:` for L63-class
-- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
-  7.3.0-rc4; files present
-- [Phase 8] Failure mode: no bind for CS35L62, not an oops; existing IDs
-  unchanged
-- UNVERIFIED: stable@ mailing list (lore 403)
+- [Phase 1] `git show 71ac392d8b5c2`: subject/tags/body as above; SOB
+  Grumbach + Korenblit; Link msgid; no Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: un-static `iwl_mld_restart_cleanup`, header prototype,
+  +1 call in `iwl_mld_device_powered_off`; +4/−2
+- [Phase 2] Parent of commit: `device_powered_off` was stop_fw +
+  `in_d3=false` only
+- [Phase 2] Current `mld.c:743-753`: call present under `wiphy_lock`
+- [Phase 2] `iwl_cleanup_mld` / `iwl_mld_cleanup_vif` /
+  `iwl_mld_cleanup_sta` / `iwl_mld_ftm_restart_cleanup` read in tree
+- [Phase 3] `git log -L` on `iwl_mld_device_powered_off`: d1e879ec600f9
+  → 7aeec8c8d63bf → 71ac392d8b5c2
+- [Phase 3] `d1e879ec600f9` Makefile 6.14.0-rc4; ancestor of HEAD
+- [Phase 3] `git show 0a00c3ec2db76`: mvm analog same day
+- [Phase 3] `git log -S iwl_mld_restart_cleanup -- mld/`: only MLD add +
+  this commit
+- [Phase 3] `1c031ac5a39eb` is a different chanctx/dead-device WARN, not
+  a revert
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v2 15/15 iwlwifi-next; recipients
+  Johannes + linux-wireless; mbox 16 series mails, no NAK
+- [Phase 4] WebFetch lore/msgid: 403; used mbox instead
+- [Phase 4] WebSearch stable@: other MLD restart fixes, not this subject
+- [Phase 5] `git grep iwl_op_mode_device_powered_off`: `pcie/drv.c:1281`
+  from `_iwl_pci_resume` when powered off
+- [Phase 5] `mld.c` includes `mac80211.h`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` 7.3.0-rc4
+- [Phase 6] `git merge-base --is-ancestor 71ac392d8b5c2 HEAD`: yes
+- [Phase 8] Failure mode inferred from code + mvm message (reload
+  **and** reconfigure); no crash dump in commit (stated)
+- UNVERIFIED: public user reports; whether older LTS without this commit
+  would be in scope (out of band — this verdict is 7.3-rc4 only)
 
 **YES**
 
- sound/soc/codecs/cs35l56-sdw.c    | 2 ++
- sound/soc/codecs/cs35l56-shared.c | 4 ++++
- sound/soc/codecs/cs35l56.c        | 1 +
- 3 files changed, 7 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/mac80211.c | 3 +--
+ drivers/net/wireless/intel/iwlwifi/mld/mac80211.h | 2 ++
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c      | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
-index a513a15d7e5a7..a7b4e2a923205 100644
---- a/sound/soc/codecs/cs35l56-sdw.c
-+++ b/sound/soc/codecs/cs35l56-sdw.c
-@@ -529,6 +529,7 @@ static int cs35l56_sdw_probe(struct sdw_slave *peripheral, const struct sdw_devi
- 		regmap_config = &cs35l56_regmap_sdw;
- 		break;
- 	case 0x3563:
-+	case 0x3562:
- 		regmap_config = &cs35l63_regmap_sdw;
- 		break;
- 	default:
-@@ -582,6 +583,7 @@ static const struct sdw_device_id cs35l56_sdw_id[] = {
- 	SDW_SLAVE_ENTRY(0x01FA, 0x3556, 0x3556),
- 	SDW_SLAVE_ENTRY(0x01FA, 0x3557, 0x3557),
- 	SDW_SLAVE_ENTRY(0x01FA, 0x3563, 0x3563),
-+	SDW_SLAVE_ENTRY(0x01FA, 0x3562, 0x3562),
- 	{},
- };
- MODULE_DEVICE_TABLE(sdw, cs35l56_sdw_id);
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 646bb4fbca025..3001ec45a72de 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -86,6 +86,7 @@ int cs35l56_set_patch(struct cs35l56_base *cs35l56_base)
- 					    ARRAY_SIZE(cs35l56_patch_fw));
- 		break;
- 	case 0x63:
-+	case 0x62:
- 		ret = regmap_register_patch(cs35l56_base->regmap, cs35l63_patch_fw,
- 					    ARRAY_SIZE(cs35l63_patch_fw));
- 		break;
-@@ -370,6 +371,7 @@ static void cs35l56_set_fw_reg_table(struct cs35l56_base *cs35l56_base)
- 		}
- 		break;
- 	case 0x63:
-+	case 0x62:
- 		cs35l56_base->fw_reg = &cs35l63_fw_reg;
- 		break;
- 	}
-@@ -576,6 +578,7 @@ void cs35l56_system_reset(struct cs35l56_base *cs35l56_base, bool is_soundwire)
- 		}
- 		break;
- 	case 0x63:
-+	case 0x62:
- 		regmap_multi_reg_write_bypassed(cs35l56_base->regmap,
- 						cs35l63_system_reset_seq,
- 						ARRAY_SIZE(cs35l63_system_reset_seq));
-@@ -1080,6 +1083,7 @@ int cs35l56_hw_init(struct cs35l56_base *cs35l56_base)
- 		cs35l56_base->calibration_controls = &cs35l56_calibration_controls;
- 		break;
- 	case 0x35A630:
-+	case 0x35A620:
- 		cs35l56_base->calibration_controls = &cs35l63_calibration_controls;
- 		devid = devid >> 4;
- 		break;
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index e3334b2d84532..69976761ffa50 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -968,6 +968,7 @@ static int cs35l56_component_probe(struct snd_soc_component *component)
- 						     ARRAY_SIZE(cs35l56_controls));
- 		break;
- 	case 0x63:
-+	case 0x62:
- 		ret = snd_soc_add_component_controls(component, cs35l63_controls,
- 						     ARRAY_SIZE(cs35l63_controls));
- 		break;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+index 27ae06e208402..69a066904a808 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+@@ -483,8 +483,7 @@ iwl_mld_mac80211_tx(struct ieee80211_hw *hw,
+ 	iwl_mld_tx_skb(mld, skb, NULL);
+ }
+ 
+-static void
+-iwl_mld_restart_cleanup(struct iwl_mld *mld)
++void iwl_mld_restart_cleanup(struct iwl_mld *mld)
+ {
+ 	iwl_cleanup_mld(mld);
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.h b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.h
+index aad04d7b2617d..f3302997b28f2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.h
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+  * Copyright (C) 2024 Intel Corporation
++ * Copyright (C) 2026 Intel Corporation
+  */
+ #ifndef __iwl_mld_mac80211_h__
+ #define __iwl_mld_mac80211_h__
+@@ -9,5 +10,6 @@
+ 
+ int iwl_mld_register_hw(struct iwl_mld *mld);
+ void iwl_mld_recalc_multicast_filter(struct iwl_mld *mld);
++void iwl_mld_restart_cleanup(struct iwl_mld *mld);
+ 
+ #endif /* __iwl_mld_mac80211_h__ */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index 49e46babf8221..cf003a4a37408 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -739,6 +739,7 @@ static void iwl_mld_device_powered_off(struct iwl_op_mode *op_mode)
+ 
+ 	wiphy_lock(mld->wiphy);
+ 	iwl_mld_stop_fw(mld);
++	iwl_mld_restart_cleanup(mld);
+ 	mld->fw_status.in_d3 = false;
+ 	wiphy_unlock(mld->wiphy);
+ }
 -- 
 2.53.0
 
