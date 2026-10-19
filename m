@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7255B53FA22;
-	Mon, 19 Oct 2026 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB31546422;
+	Mon, 19 Oct 2026 14:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418812; cv=none; b=mC7AnyoctEFcdsh7NO2GYqhLuXjVzsZ2VQeaaGr92n4reHMFarA82/eSrMCO9Bmy4B56sGjXJdNxW7YCCzaQHcJE1bHQlzbIlAz2bmHfIXc40bUZBMIvyFDWPw1UEiTI2DZENGXcK8VlDYlz7zCfFX4uKWzA2fCnWkvOuw967Rg=
+	t=1792418815; cv=none; b=DDiVbRdYyX1nbY7UVoi6R7rjekdpjbrj+aPH3uaMpSk7HaPBk9ZvIWZbvzeEHyBXdNxJK5V8YlUkl9DwkShTn4UBblrQYMQ10+Z1EmmHGci4+UWLBXTU8DI5uSDEmQ2f8ALk81HqgxPdrh35lDLORJdfGcjL33dLcuUl3HnMltQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418812; c=relaxed/simple;
-	bh=9rG/+Iw+mKzxYFLTqkl6csqsPkCNFKmRx0FknDhw6QA=;
+	s=arc-20240116; t=1792418815; c=relaxed/simple;
+	bh=a96vZeOudisHkaTw5Le90gYqgV+c/SH9KynmdqrMl2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JKorlWdWGpLaUAljSanlTv1BI7RLBVE80rysBj8luulE+mqiFDK+amPHw56a+Iq5MESjGV36CnYxUop7p50Mv0gT5AOCfT+/GJYJlzlKclEli+LN9zHEBWtWmBm1QekGxesmcFLV1Q7ZCuLm1121RsRQzO/KWqXSkuHUCF6vqzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gvP5p6fJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SvQjO/fmZQ7/Q2UNfQyKtkAE07uKbLfIMU8sooC66tzP3rtDf4tsAIL1Hw1QlDQn57ucBQHOGglmlk75bE/2A5CjvUq6dAcO1KKYyg+Gvk/zohmq2oqpFszW4/pWIii2fz6gxiZwz07t62jxbR00phaDGuLg5TtwyCSIceqX8oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cLbpZmi3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gvP5p6fJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D981F000C4;
-	Mon, 19 Oct 2026 14:06:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cLbpZmi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F6A1F000C7;
+	Mon, 19 Oct 2026 14:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418808;
-	bh=RzQ3SkwKQZ9klrbhlD1x6zyQ5NhMYF1dZvBVDXNr5yQ=;
+	s=k20260515; t=1792418809;
+	bh=4ZRgmKFdCpPDginywHt5VsDhsJlJuuAVf2iJq272ijA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gvP5p6fJhaEhhjEKpSg2YPvM/9lvSuF8tTaukzN34pI6EEZoZ2G/x26nKIkxkrGw/
-	 CBZ5MOrefrFxXGQ3sSZscW8W2btzJM3Yz9bFv8z/bxo2/e8bnpMa5YMwPI3v5Ag5TE
-	 zUXu6Fgccp4EVpCmHRfvIuBqxBMUVGyPhfSaqxLFVA5k416dB8KtQjjxLF7Agcw0Gh
-	 A13q1DjaOx+RKqscOUdiT5o7ikyGfGZsU2TMaQY6Ul2t7EexnnRFVFGTHbNTaXf+tM
-	 aD3LBtdhRnwp0VaF8RrTMl9asA0hKIDmP8nq7g8gelYctFBJg7S3upWTrPBrkFoNnV
-	 Hh0YelvCgB0lg==
+	b=cLbpZmi3k+0UfjK47JYAv/pXN9wEGqiMsrqiABpC5iYD5kYaxAdheXOXk/9OUY2WB
+	 P/vlfRqF7bmIELWvR33jJKSC0hpPvXvl9WqBFd8J131UMdBe1XpeW5zZegWqxW9OVX
+	 wwSrjAo4j3pSoiMwPvpKLyrS00evPXpljc+ZNrYugq2R1RyCfYNcx/fljFhD2F2Qz5
+	 7Mp5Fsko9D7b++Hi/CGm9ycayvylQn636/k0aaUj2F737KWxtDDzBhDa17oE0eT6ek
+	 VZwv3W4WbN49hpXgjG0yyJ7MONNULM34JK1oLIN39WD65gKE3Td0Fb8YI09fRyW7Ln
+	 7ae9aDgqX6YDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Baokun Li <libaokun@linux.alibaba.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-ext4@vger.kernel.org,
+	agordeev@linux.ibm.com,
+	gerald.schaefer@linux.ibm.com,
+	linux-s390@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ext4: reduce max cluster size to match documented 256MB limit
-Date: Mon, 19 Oct 2026 09:53:22 -0400
-Message-ID: <20261019135441.1420968-511-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] s390/mm: Add missing mm check to do_secure_storage_access()
+Date: Mon, 19 Oct 2026 09:53:23 -0400
+Message-ID: <20261019135441.1420968-512-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,531 +56,434 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit afa3caf2fbc417f755f36e271c4b3c2d45ccda9d ]
+[ Upstream commit 7cf227b2707ed0129018c283ffc8f893945586db ]
 
-The mke2fs man page documents:
+Similar like the normal exception handler the secure storage access
+exception handler needs to verify if mm is not NULL, which may happen
+with kernel threads.
 
-  Valid cluster-size values are from 2048 to 256M bytes per cluster.
-
-but EXT4_MAX_CLUSTER_LOG_SIZE was set to 30 (1GB), allowing crafted
-filesystem images to specify cluster sizes up to 1GB.
-
-On 32-bit systems with bigalloc enabled, the consistency check in
-ext4_handle_clustersize():
-
-  s_blocks_per_group == s_clusters_per_group * (clustersize / blocksize)
-
-can overflow when the cluster ratio is large enough. Since
-s_blocks_per_group is not range-checked in the bigalloc path, the
-wrapped product can pass the consistency check, leading to inconsistent
-group geometry and potential out-of-bounds block allocation.
-
-Reduce EXT4_MAX_CLUSTER_LOG_SIZE to 28 to match the documented 256MB
-limit. With this cap, the maximum product is:
-
-  (blocksize * 8) * (256M / blocksize) = 2^31
-
-which fits safely in a 32-bit unsigned long for all block sizes.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260608061112.392391-1-libaokun%40linux.alibaba.com
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20260608111150.827117-3-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260717132345.539A11F00A3A@smtp.kernel.org/
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>> ---
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **v7.3-rc4** (kernel 7.3.0-rc4, detached HEAD). The change
-is a one-line cap on ext4 bigalloc cluster size to stop a 32-bit
-overflow on crafted images.
-
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[ext4]** **[reduce]** reduce `EXT4_MAX_CLUSTER_LOG_SIZE` from
-30 (1GB) to 28 (256MB) to match the documented mke2fs limit and stop a
-32-bit overflow.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- **Reported-by:** Sashiko `<sashiko-bot@kernel.org>` (automated kernel
-  review, not syzbot)
-- **Closes:** https://sashiko.dev/#/patchset/20260608061112.392391-1-
-  libaokun%40linux.alibaba.com (v1 series)
-- **Reviewed-by:** Andreas Dilger `<adilger@dilger.ca>` (ext4 co-
-  maintainer)
-- **Link:** https://patch.msgid.link/20260608111150.827117-3-
-  libaokun@linux.alibaba.com
-- **Signed-off-by:** Baokun Li `<libaokun@linux.alibaba.com>` (author)
-- **Signed-off-by:** Theodore Ts'o `<tytso@mit.edu>` (ext4 maintainer;
-  applied the series)
-- **Fixes:** none (expected for this review pipeline)
-- **Cc: stable:** none (expected)
-- Ignore pipeline markers: none present in the supplied message beyond
-  the usual evaluation context
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** `EXT4_MAX_CLUSTER_LOG_SIZE` was 30, so crafted bigalloc
-  images can claim cluster sizes up to 1GB. mke2fs only documents
-  2048–256MB.
-- **Symptom/failure mode:** On 32-bit, `s_clusters_per_group *
-  (clustersize / blocksize)` in `ext4_handle_clustersize()` wraps.
-  `s_blocks_per_group` is not range-checked on the bigalloc path, so the
-  wrapped product can pass the consistency check. That yields
-  inconsistent group geometry and possible out-of-bounds block
-  allocation.
-- **Version info:** none beyond “32-bit systems with bigalloc”.
-- **Root cause (author):** cluster-size cap is too high; product can
-  exceed 32-bit `unsigned long`.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not a disguised cleanup. The message names overflow, crafted
-images, and OOB allocation. It is an explicit mount-time sanity fix.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-**Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- **File:** `fs/ext4/ext4.h` — 1 line changed (`30` → `28`)
-- **Functions:** none; only `#define EXT4_MAX_CLUSTER_LOG_SIZE`
-- **Scope:** single-file, one-constant surgical fix
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** `__ext4_fill_super()` rejects `s_log_cluster_size` only if
-  it is greater than `30 - 10 = 20`, so `clustersize = BLOCK_SIZE << log
-  = 1024 << 20 = 1GB` is accepted.
-- **After:** max log is `28 - 10 = 18`, so max cluster size is `1024 <<
-  18 = 256MB`.
-- **Path:** mount-time superblock validation in `__ext4_fill_super()`,
-  before `ext4_handle_clustersize()`.
-
-Verified use site:
-
-```5196:5202:fs/ext4/super.c
-        if (le32_to_cpu(es->s_log_cluster_size) >
-            (EXT4_MAX_CLUSTER_LOG_SIZE - EXT4_MIN_BLOCK_LOG_SIZE)) {
-                ext4_msg(sb, KERN_ERR,
-                         "Invalid log cluster size: %u",
-                         le32_to_cpu(es->s_log_cluster_size));
-                goto out;
-        }
-```
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** integer overflow in mount-time geometry check, leading
-  to inconsistent geometry / possible OOB block allocation (memory-
-  safety / filesystem-image robustness).
-- **Mechanism:** `s_blocks_per_group` and `s_clusters_per_group` are
-  `unsigned long` (`fs/ext4/ext4.h`). The check is:
-
-```4500:4506:fs/ext4/super.c
-        if (sbi->s_blocks_per_group !=
-            (sbi->s_clusters_per_group * (clustersize /
-sb->s_blocksize))) {
-                ext4_msg(sb, KERN_ERR,
-                         "blocks per group (%lu) and clusters per group
-(%lu) inconsistent",
-                         sbi->s_blocks_per_group,
-sbi->s_clusters_per_group);
-                return -EINVAL;
-        }
-```
-
-`s_clusters_per_group` is capped at `blocksize * 8`. Max product is
-`(blocksize * 8) * (clustersize / blocksize) = 8 * clustersize`.
-- With 1GB clusters: `8 * 2^30 = 2^33` → wraps on 32-bit `unsigned
-  long`.
-- With 256MB clusters: `8 * 2^28 = 2^31` → fits in 32-bit `unsigned
-  long`.
-
-The `s_blocks_per_group > sb->s_blocksize * 8` range check is only on
-the **non-bigalloc** branch (verified in `ext4_handle_clustersize()`).
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-- **Quality:** obviously correct. Tightens an existing mount-time bound
-  to the documented mkfs limit; the overflow math is checkable by
-  inspection.
-- **Regression risk:** very low. mke2fs documents max 256MB; Andreas
-  Dilger noted real-world >1GB clusters are implausible. A 512MB (log
-  29) filesystem would also be rejected; Jan Kara said 28 or 29 were
-  both acceptable. **29 is not overflow-safe:** `8 * 512MB = 2^32` wraps
-  to 0 on 32-bit `unsigned long`. 28 is the right cap. Ted applied 28.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- Current line (already 28 in this checkout): `afa3caf2fbc41` Baokun Li,
-  2026-06-08 — the candidate itself.
-- Previous value 30 introduced by **`9e47a4c9fc580`** (“ext4: sanity
-  check the block and cluster size at mount time”, Ted Ts'o,
-  2016-11-18), first in **v4.10-rc1**. Duplicate in-tree copy:
-  `8cdf3372fe836`.
-- That original commit was **Cc: stable** and cited security refs
-  (SecurityFocus 539661, RH BZ 1332506). The 1GB cap has been in place
-  since then.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. The overflow is in the interaction of the 2016
-cap (`9e47a4c9fc580`, in this tree) and the bigalloc consistency
-multiply (bigalloc from `281b59959707d`, **v3.2-rc1**). Both ancestors
-of HEAD.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record:
-- This is **v2 2/3** of “ext4: tighten mount-time superblock geometry
-  validation”.
-- Sibling **1/3:** `d42dc7726a003` — 8-alignment of clusters/inodes per
-  group (bitmap csum).
-- Sibling **3/3:** `a34de48f329b2` — inodes-per-group multiple of
-  inodes-per-block.
-- Cover letter (Ted applied 2026-07-23): patches 2 and 3 were added in
-  v2 for additional Sashiko issues and are **independent of patch 1**.
-- This commit is standalone: only the `#define` in `ext4.h`. No
-  prerequisite from 1/3 or 3/3.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Baokun Li is a regular, high-volume ext4 contributor (many
-recent ext4 commits in this tree). Series was reviewed by
-Dilger/Kara/Zhang Yi and applied by Ted Ts'o.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None required. `EXT4_MAX_CLUSTER_LOG_SIZE` and the
-`s_log_cluster_size` check exist here. The define is the only consumer
-besides `ext4.h` itself (`git grep` shows only `fs/ext4/ext4.h` and
-`fs/ext4/super.c`). Applies standalone.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- **b4 dig -c afa3caf2fbc41:** matched `[PATCH v2 2/3]` at https://patch
-  .msgid.link/20260608111150.827117-3-libaokun@linux.alibaba.com
-- **b4 dig -a:** series is **v2** “ext4: tighten mount-time superblock
-  geometry validation” (2026-06-08). v1 was only patch 1; patches 2–3
-  are new in v2.
-- **Jan Kara** (2026-06-09): no NAK; defer 28 vs 29 to Ted; both fine if
-  consistent.
-- **Andreas Dilger** (2026-06-08): Reviewed-by; “pretty safe”; doubts
-  anyone uses >1GiB clusters.
-- **Ted Ts'o** (2026-07-23): “Applied, thanks!” with this SHA.
-- No NAKs. No reviewer `Cc: stable` in the thread (absence expected).
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (**b4 dig -w**): linux-ext4, tytso, adilger, jack@suse.cz,
-yi.zhang@huawei.com, ojaswin@linux.ibm.com, ritesh.list@gmail.com,
-Sashiko. Maintainers and regular reviewers were on the To/Cc list.
-Dilger R-b; Ted applied.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: Sashiko is an LF/Google automated review bot, not a user crash
-or syzbot repro. The Closes URL is the v1 patchset page (SPA; fetch
-returned the Sashiko landing page, not the finding text). Cover letter:
-patches 2 and 3 fix additional Sashiko-reported issues. Severity from
-the patch itself: crafted-image overflow → inconsistent geometry / OOB
-allocation.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Three independent mount-time checks. This one does not need 1/3
-or 3/3 to be correct. Siblings are also real bugfixes but out of scope
-for this verdict.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org/stable returned 403. Openwall/web search found
-no stable-list rejection of this patch. UNVERIFIED whether anyone
-already requested it on stable@.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: No function body changed. Consumer: `__ext4_fill_super()`
-cluster-log check; downstream user of the accepted size:
-`ext4_handle_clustersize()`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record:
-- `ext4_handle_clustersize()` is static; only caller is
-  `__ext4_fill_super()` at mount (`fs/ext4/super.c:5451`).
-- `ext4_fill_super()` is the VFS mount entry (`:5835`).
-- Context: filesystem mount, not IRQ/hot path.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: The define is only compared in the mount validator. No new
-calls.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Userspace mount of an ext4 image (`mount`, loop, USB, VM disk) →
-`ext4_fill_super` → `__ext4_fill_super` → log-cluster check →
-`ext4_handle_clustersize()`. Reachable from any ext4 mount of a bigalloc
-image. Triggering the overflow needs a crafted superblock (untrusted
-image), typically CAP_SYS_ADMIN to mount, still the usual malicious-
-filesystem class.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same series adds two other geometry checks. Same class of
-crafted-image bugs. No other `EXT4_MAX_CLUSTER_LOG_SIZE` sites.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record:
-- Tree: **v7.3-rc4-27-gf0100363d8c37**, `VERSION=7 PATCHLEVEL=3
-  SUBLEVEL=0 EXTRAVERSION=-rc4`.
-- `git merge-base --is-ancestor afa3caf2fbc41 HEAD` → commit **is** in
-  HEAD (landed via ext4-for-linus 7.3-rc1). Current `#define` is already
-  28.
-- That does **not** mean “already selected for stable”; it is the
-  mainline landing. The **bug mechanism** (32-bit multiply of
-  `s_clusters_per_group` by cluster ratio, uncapped `s_blocks_per_group`
-  on bigalloc) is still in `ext4_handle_clustersize()` here; only the
-  cap is 28.
-- Bug class has existed since the 2016 cap (`9e47a4c9fc580` is an
-  ancestor). Code is not missing.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Expected apply: **clean**. One-line `#define` change in
-`fs/ext4/ext4.h`. Macro and check have been stable since 2016 / the 2022
-`ext4_handle_clustersize()` factor-out (`4a8557b094671`).
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: This is the fix. No earlier alternate cap. No follow-up revert
-or tightening of this define after `afa3caf2fbc41` in `fs/ext4/ext4.h`.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **ext4** (`fs/ext4/`). **IMPORTANT** — default Linux filesystem;
-crafted-image bugs affect anyone who mounts untrusted ext4 (install
-media, USB, VMs, backups).
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Actively developed (ext4_for_linus pulls this cycle). The
-overflow is in long-standing mount validation, not new BS>PS work.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Filesystem-specific (ext4)**, extra conditions: **bigalloc +
-32-bit `unsigned long` + cluster size > 256MB**. 64-bit does not wrap at
-1GB, but the looser cap still allows undocumented cluster sizes. 32-bit
-still matters (embedded, some Android/i686).
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: Mount of a crafted bigalloc image with large
-`s_log_cluster_size`. Not every boot. Not an unprivileged syscall by
-itself (mount is privileged), but standard untrusted-image attack. Not a
-timing race.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: Integer overflow bypass of geometry check → inconsistent groups
-→ **potential out-of-bounds block allocation**. Severity **HIGH**
-(memory corruption / OOB on crafted mount). Not a guaranteed panic on
-every mount, but it is a real robustness/security class that stable
-routinely takes.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** high for 32-bit ext4 mounts of untrusted images; aligns
-  kernel with documented mkfs limit.
-- **Risk:** very low (one constant; Dilger R-b; Ted applied). Only
-  theoretical regression is rejecting 512MB/1GB cluster filesystems that
-  mke2fs would not create.
-- **Ratio:** strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-FOR:
-- Real 32-bit overflow in mount-time geometry check; wrapped product can
-  pass; OOB allocation is the stated consequence.
-- One-line, obviously correct cap matching mke2fs (256MB).
-- 28 is the max value that keeps `8 * clustersize` ≤ 2^31 on 32-bit.
-- Reviewed by Andreas Dilger; applied by Ted Ts'o; Jan Kara did not
-  object.
-- Independent of the rest of the series.
-- Affected code present since v4.10; applies cleanly.
-- Same class as the original 2016 cluster-size sanity check (that one
-  was Cc: stable).
-
-AGAINST:
-- Trigger needs crafted bigalloc + typically 32-bit.
-- No `Fixes:` / `Cc: stable` (not a negative per rules).
-- Sashiko is a bot, not a production crash with a reproducer.
-- Jan Kara floated 29; that value still overflows (verified); committed
-  value is 28.
-
-UNRESOLVED:
-- Stable@ discussion (lore/stable 403).
-- Full Sashiko finding text (SPA page).
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — one-constant change;
-   maintainer-applied; Dilger R-b.
-2. Fixes a real bug that affects users? **PASS** — overflow on crafted
-   bigalloc mount.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   HIGH: overflow → bad geometry / possible OOB allocation.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features or APIs? **PASS** — tightens an existing limit.
-6. Can apply to the local tree? **PASS** — define and check exist; patch
-   is a single substitution.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: Not an ID/quirk/DT/build/docs exception. It is a normal small
-correctness/security-style mount check.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-This tree has the ext4 mount path, the overflow-prone multiply, and the
-too-large historical cap. The fix is a one-line tightening to the
-documented 256MB limit so the 32-bit product cannot wrap. Independent,
-reviewed, and low regression risk. It should be backported here.
-
-------------------------------------------------
-What the commit solves and why it matters
-------------------------------------------------
-Crafted ext4 bigalloc images can set cluster size up to 1GB. On 32-bit,
-the groups-per-cluster consistency multiply wraps, so a bogus
-`s_blocks_per_group` can look consistent. That can produce wrong group
-geometry and out-of-bounds block allocation when the image is mounted.
-Capping at 256MB matches mke2fs and keeps the product at 2^31.
-
-------------------------------------------------
-Stable rules / risk vs benefit
-------------------------------------------------
-Meets all six criteria: real overflow, small, no API, applies cleanly.
-Benefit is blocking a crafted-image OOB path; risk is rejecting
-undocumented huge clusters that tools do not create.
-
-------------------------------------------------
-Concerns
-------------------------------------------------
-No extra series deps. No backport rework expected. 32-bit-centric, but
-still a valid stable-class filesystem-image bug.
+The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+candidate is `7cf227b2707ed` (“s390/mm: Add missing mm check to
+do_secure_storage_access()”). The function and the unguarded
+`current->mm` path exist here; the decision is whether this fix belongs
+in this tree on technical merit.
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1 — Subject line**
+- Record: **[s390/mm]** **[Add]** missing `mm` check in
+  `do_secure_storage_access()`. “Add missing … check” is a correctness
+  fix, not a feature.
+
+**Step 1.2 — Tags**
+- Record:
+  - `Reported-by: sashiko-bot <sashiko-bot@kernel.org>` — static/AI
+    review, not syzbot
+  - `Closes: https://lore.kernel.org/all/20260717132345.539A11F00A3A@smt
+    p.kernel.org/`
+  - `Signed-off-by: Heiko Carstens <hca@linux.ibm.com>` (author; s390
+    architecture maintainer)
+  - `Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>`
+    (KVM/s390)
+  - `Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>` (s390 maintainer,
+    applied)
+  - No `Fixes:`, no `Cc: stable` (expected for this pipeline)
+  - Ignore any Sasha Levin SOB (none on the real commit)
+
+**Step 1.3 — Body**
+- Record:
+  - **Bug:** secure-storage exception handler did not check `current->mm
+    != NULL`, unlike `do_exception()`.
+  - **Symptom:** kernel thread with `mm == NULL` can hit PGM 0x3d and
+    then `mmap_read_lock(NULL)`.
+  - **Failure mode:** NULL dereference in the exception handler.
+  - **Root cause:** user-fault path assumed `current->mm` was always
+    valid.
+  - **Version info:** none in the message. Function dates to 2020
+    (`084ea4d611a3d0`).
+
+**Step 1.4 — Hidden bug fix?**
+- Record: Not hidden. Explicit missing-check / NULL-deref fix. Not
+  cleanup disguised as a fix.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1 — Inventory**
+- Record:
+  - File: `arch/s390/mm/fault.c` (+2 / −3)
+  - Function: `do_secure_storage_access()`
+  - Scope: single-file surgical fix
+
+**Step 2.2 — Code flow**
+- Record:
+  - **Before:** user-fault path did `if (faulthandler_disabled())` then
+    `mm = current->mm; mmap_read_lock(mm)`.
+  - **After:** `mm = current->mm` is taken first; path is `if
+    (faulthandler_disabled() || !mm) return
+    handle_fault_error_nolock(regs, 0);`
+  - Affected path: non-kernel-fault PGM 0x3d (user mode, or kernel
+    uaccess via secondary space).
+  - `handle_fault_error_nolock()` is already the no-lock fallback: user
+    SIGSEGV, or kernel `fixup_exception()` / oops.
+
+**Step 2.3 — Bug mechanism**
+- Record:
+  - **Category:** memory safety — NULL pointer dereference
+  - **Mechanism:** `mmap_read_lock(mm)` with `mm == NULL` (kernel
+    thread).
+  - **Fix:** same `!mm` guard as `do_exception()` at line 285.
+
+**Step 2.4 — Fix quality**
+- Record:
+  - Obviously correct: one extra condition, same pattern as the normal
+    fault handler.
+  - Minimal; no unrelated edits.
+  - Regression risk is very low: the new path only avoids locking a NULL
+    `mm`. For kernel uaccess, `handle_fault_error_nolock()` runs
+    exception fixups and returns `-EFAULT`, which is the intended
+    behavior (same as `do_exception()` and as `11709abccf93b` for atomic
+    context).
+
+---
+
+## PHASE 3: GIT HISTORY
+
+**Step 3.1 — Blame**
+- Record:
+  - `do_secure_storage_access()` introduced in `084ea4d611a3d0`
+    (2020-01-21): already did `mm = current->mm;
+    down_read(&mm->mmap_sem)` with no NULL check.
+  - `11709abccf93b` (2025-06-03) added `faulthandler_disabled()` after a
+    real qemu crash (`copy_page_from_iter_atomic` → PGM 0x3d while
+    `in_atomic`), but still assigned `mm = current->mm` afterward with
+    no `!mm` check.
+  - The `!mm` check on this path is `7cf227b2707ed` itself.
+  - `do_exception()` has had `faulthandler_disabled() || !mm` for years
+    (`a12d622ad541b5` / `70ffdb9393a72`).
+
+**Step 3.2 — Fixes: tag**
+- Record: No `Fixes:` tag. The incomplete guard is from `11709abccf93b`
+  (in this tree). The NULL-mm hole has existed since the handler was
+  added in 2020.
+
+**Step 3.3 — File history**
+- Record: This is v4 2/8 of “Reintroduce support for
+  DCACHE_WORD_ACCESS”. Neighbors:
+  - 1/8 VM_SPARSE (unrelated feature)
+  - 3/8 `lock_mm_and_find_vma()` (refactor; still needs `mm != NULL`)
+  - 4–7 more handler cleanups
+  - 8/8 DCACHE_WORD_ACCESS feature
+- This patch is standalone. It does not depend on 1/8 or 8/8.
+
+**Step 3.4 — Author**
+- Record: Heiko Carstens is s390 architecture maintainer (`MAINTAINERS`:
+  S390 ARCHITECTURE). He wrote the 2025 atomic-context fix and this
+  follow-up. Borntraeger reviewed.
+
+**Step 3.5 — Prerequisites**
+- Record: None. It only adds `|| !mm` next to an existing
+  `faulthandler_disabled()` check. Applies standalone on this tree’s
+  `fault.c`.
+
+---
+
+## PHASE 4: MAILING LIST / EXTERNAL
+
+**Step 4.1 — Original discussion**
+- Record:
+  - `b4 dig -c 7cf227b2707ed` →
+    https://patch.msgid.link/20260720085834.898025-3-hca@linux.ibm.com
+  - `b4 dig -a`: v1/v2 were VM_SPARSE-only; v3 “Reintroduce
+    DCACHE_WORD_ACCESS”; v4 is the applied series. This mm-check first
+    appears as v4 2/8.
+  - Sashiko report (Closes:): **[High] Missing !mm check … kernel
+    threads faulting on user-space accesses … NULL pointer
+    dereference.** Example given: `copy_from_user()` onto a secure page
+    from a kernel thread, then `mmap_read_lock(NULL)`.
+  - Alexander Gordeev (S390 MM) called that sashiko note a **false
+    positive** on a related patch.
+  - Heiko still took the check: he wanted the handler to match
+    `do_exception()` and to address the sashiko reports. Borntraeger
+    gave `Reviewed-by` on this exact patch. No NAK.
+
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: Heiko, Gordeev, Schnelle, Gorbik, Borntraeger, Frank,
+  Imbrenda, Hildenbrand; `linux-s390@`, `kvm@`, `linux-kernel@`. Right
+  maintainers were on CC.
+
+**Step 4.3 — Bug report**
+- Record: Sashiko static finding, severity High. Not a user crash log
+  for the `!mm` case. The related 2025 bug *was* a real qemu oops on
+  this same handler. WebFetch/curl to lore returned 403; thread was
+  recovered with `b4 mbox`.
+
+**Step 4.4 — Series**
+- Record: Bundled with a feature series, but this hunk is an independent
+  NULL check. Other 2/8–7/8 patches are not required for this guard.
+
+**Step 4.5 — Stable list**
+- Record: **UNVERIFIED** — lore.kernel.org `/stable/` returned 403. No
+  stable discussion found in the saved v4 mbox (no `Cc: stable` in
+  review).
+
+---
+
+## PHASE 5: CODE SEMANTICS
+
+**Step 5.1 — Functions**
+- Record: `do_secure_storage_access()` only.
+
+**Step 5.2 — Callers**
+- Record: Trap table in `arch/s390/kernel/traps.c`: `[0x3d] =
+  do_secure_storage_access`. Hardware PGM 0x3d (secure storage access).
+  `COND_TRAP` weak-aliases to `default_trap_handler` if the symbol is
+  absent. Reached from `__do_pgm_check` → exception handler, not a
+  normal syscall helper.
+
+**Step 5.3 — Callees**
+- Record: After the check: `lock_mm_and_find_vma` / `mmap_read_lock`,
+  `folio_walk_*`, `arch_make_folio_accessible`. On the new path:
+  `handle_fault_error_nolock()` only (no lock, no folio walk).
+
+**Step 5.4 — Reachability**
+- Record: `is_kernel_fault()` is false for user mode, or kernel mode
+  with `teid.as == PSW_BITS_AS_SECONDARY` (uaccess). User processes have
+  an `mm`. Kernel threads have `current->mm == NULL` unless `use_mm()`.
+- Reachable in principle: kernel-thread uaccess to a secure page without
+  `use_mm()`.
+- Confirmed real traffic on this handler: `11709abccf93b` stack (qemu
+  `vfs_write` → `copy_page_from_iter_atomic` → PGM 0x3d). Those tasks
+  have an `mm`; they hit the atomic case, not `!mm`.
+- Userspace-reachable for normal tasks: yes, but they have `mm`, so this
+  check does not change that path.
+
+**Step 5.5 — Similar patterns**
+- Record: `do_exception()` already uses `is_kernel_fault() ||
+  faulthandler_disabled() || !mm`. This commit brings the secure handler
+  in line. No other copy of this hole in `fault.c`.
+
+---
+
+## PHASE 6: LOCAL TREE
+
+**Step 6.1 — Does the buggy code exist here?**
+- Record: Yes. Tree is **7.3.0-rc4**. `do_secure_storage_access()` is in
+  `arch/s390/mm/fault.c` under `CONFIG_KVM`. Current source already has
+  `if (faulthandler_disabled() || !mm)` at line 451 (`git merge-base
+  --is-ancestor 7cf227b2707ed HEAD` succeeded). The unguarded
+  `mmap_read_lock(current->mm)` pattern was present from 2020 until this
+  commit (v7.3-rc1).
+
+**Step 6.2 — Backport difficulty**
+- Record: Clean apply on this tree. Later refactors
+  (`lock_mm_and_find_vma`, goto, `__context_unsafe`) still keep the
+  `!mm` check.
+
+**Step 6.3 — Related fixes already here?**
+- Record: `11709abccf93b` is here (atomic/`faulthandler_disabled` only).
+  No earlier `!mm` fix on this path. This commit is the `!mm` fix.
+
+---
+
+## PHASE 7: SUBSYSTEM
+
+**Step 7.1**
+- Record: **s390 MM / Secure Execution (Ultravisor) exception
+  handling**. Criticality: **IMPORTANT** on s390 with KVM/protected
+  virtualization; not core-universal. Not staging.
+
+**Step 7.2**
+- Record: Active. Multiple 2025–2026 fixes on this same function (atomic
+  handling, donated-memory fixups, folio_walk, vmalloc). Mature handler,
+  still getting real-bug fixes.
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+**Step 8.1 — Who is affected**
+- Record: s390 systems with `CONFIG_KVM` that take PGM 0x3d (Secure
+  Execution / protected virt). Not universal.
+
+**Step 8.2 — Trigger**
+- Record: Kernel thread (`current->mm == NULL`) takes a user/secondary-
+  space secure-storage exception (e.g. uaccess to a secure page).
+  Unprivileged users do not directly set `mm` to NULL. Likelihood is
+  lower than the 2025 atomic qemu case; Gordeev called the sashiko
+  report a false positive. Heiko still treated the check as required for
+  parity with `do_exception()`.
+
+**Step 8.3 — Failure mode**
+- Record: `mmap_read_lock(NULL)` → kernel oops. **Severity: HIGH** if
+  the path runs; **MEDIUM** if it is only defensive. Exception-handler
+  NULL deref is still a crash class of bug.
+
+**Step 8.4 — Risk vs benefit**
+- Record:
+  - **Benefit:** Medium–high. Prevents an oops on a path that already
+    crashed qemu in atomic context; completes the standard three-way
+    fault-handler guard.
+  - **Risk:** Very low. One condition, error-path only, same semantics
+    as `do_exception()`.
+  - **Ratio:** Favor including it.
+
+---
+
+## PHASE 9: SYNTHESIS
+
+**Step 9.1 — Evidence**
+
+**For:**
+- Real NULL-deref if `mm` is NULL before `mmap_read_lock()`.
+- Same guard `do_exception()` has used for years.
+- Same function already needed a production fix (`11709abccf93b`) for
+  kernel uaccess to secure pages.
+- 5-line, obviously correct change; `handle_fault_error_nolock()` is the
+  right fallback (exception fixup / `-EFAULT`).
+- Written by the s390 arch maintainer; Reviewed-by Borntraeger.
+- Sashiko rated the hole High and described the `copy_from_user` +
+  kernel-thread scenario.
+- Code exists in this 7.3-rc4 tree; no missing prerequisites.
+
+**Against:**
+- Gordeev called the sashiko `!mm` note a false positive (may not be hit
+  by real kernel threads that use `use_mm()`).
+- No live crash log for the `!mm` case (sashiko static analysis).
+- s390 + KVM + Secure Execution only.
+- Landed as 2/8 of a feature series (the hunk itself is independent).
+
+**Unresolved:**
+- Stable-list history (lore `/stable/` 403).
+- No public reproducer of a kernel-thread `!mm` crash.
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — one condition, reviewed by
+   KVM/s390, applied by s390 maintainer.
+2. Fixes a real bug that affects users? **PASS** — NULL `mm` then
+   `mmap_read_lock()` is a real oops; sibling path already crashed qemu.
+   Trigger may be uncommon, but the hole is real.
+3. Important (crash/security/corruption/deadlock)? **PASS** — exception-
+   handler NULL deref / oops.
+4. Small and contained? **PASS** — +2/−3 in one function.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — `fault.c` and the user-fault path
+   are present; patch is trivial here.
+
+**Step 9.3 — Exceptions**
+- Record: None (not a device ID, quirk, DT, build, or docs fix).
+  Qualifies as a normal crash-prevention fix.
+
+**Step 9.4 — Decision**
+This tree has the handler and had the unguarded `mm` use. The fix is a
+one-line NULL check that matches `do_exception()` and closes a crash
+path in the PGM 0x3d handler. Benefit outweighs risk.
+
+---
+
+### What the commit solves (for this tree)
+
+`do_secure_storage_access()` handles s390 PGM 0x3d. On the
+user/secondary-space path it took `mmap_read_lock(current->mm)` without
+checking `mm`. Kernel threads have `mm == NULL`, so that is a NULL
+deref. `do_exception()` already checks `faulthandler_disabled() || !mm`.
+The 2025 commit added only the atomic half after a qemu oops; this
+commit adds the missing `!mm` half. On this 7.3-rc4 tree the function
+exists and the check is the right fix.
+
+### Risk vs benefit
+
+Very low risk, meaningful crash-prevention benefit on s390 KVM/Secure
+Execution. No API or structural change.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: Reported-by Sashiko; Reviewed-by Andreas
-  Dilger; SOB Baokun Li + Ted Ts'o; Link msgid 20260608111150.827117-3;
-  no Fixes/Cc:stable
-- [Phase 1] Cover letter (openwall/spinics): v2 2/3 independent of 1/3;
-  overflow on 32-bit bigalloc
-- [Phase 2] Diff: 1 line in fs/ext4/ext4.h, 30→28
-- [Phase 2] Read ext4_handle_clustersize(): s_blocks_per_group range
-  check only on non-bigalloc; multiply at lines 4500–4501
-- [Phase 2] Types: s_blocks_per_group / s_clusters_per_group are
-  unsigned long (ext4.h:1595–1596)
-- [Phase 2] Math: max product 8*clustersize; 1GB → 2^33 wrap; 256MB →
-  2^31; 512MB → 2^32 wrap (29 unsafe)
-- [Phase 2] Consumer: __ext4_fill_super log-cluster check at
-  super.c:5196–5202
-- [Phase 3] git blame: current 28 from afa3caf2fbc41; 30 from
-  9e47a4c9fc580 (2016-11-18, v4.10-rc1, Cc:stable)
-- [Phase 3] git merge-base --is-ancestor 9e47a4c9fc580 HEAD: yes
-- [Phase 3] git merge-base --is-ancestor afa3caf2fbc41 HEAD: yes
-  (mainline landing, not used as circular “already selected”)
-- [Phase 3] Series siblings d42dc7726a003 and a34de48f329b2 are
-  independent; this patch only touches the define
-- [Phase 3] git grep EXT4_MAX_CLUSTER_LOG_SIZE: only ext4.h and super.c
-- [Phase 4] b4 dig -c: lore msgid 20260608111150.827117-3
-- [Phase 4] b4 dig -a: v2 series 2026-06-08; v1 was patch 1 only
-- [Phase 4] b4 dig -w: tytso, dilger, jack, linux-ext4 on original To/Cc
-- [Phase 4] Jan Kara: 28 vs 29 up to Ted, no NAK
-- [Phase 4] Andreas Dilger: Reviewed-by; safe, nobody using >1GiB
-  clusters
-- [Phase 4] Ted: Applied 2026-07-23 as afa3caf2fbc41
-- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED
-- [Phase 4] sashiko.dev hash URL: landing page only, UNVERIFIED full
-  finding text
-- [Phase 5] Only caller of ext4_handle_clustersize: __ext4_fill_super
-  (mount)
-- [Phase 6] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; make
-  kernelversion 7.3.0-rc4
-- [Phase 6] Buggy cap/check present in this lineage since v4.10; apply
-  is a one-line define swap
-- [Phase 8] Failure mode: 32-bit overflow → inconsistent geometry /
-  possible OOB alloc, severity HIGH
-- UNVERIFIED: stable@ thread; full Sashiko report body
+- [Phase 1] Parsed tags: Reported-by sashiko-bot; Closes lore msgid
+  `20260717132345.539A11F00A3A`; Reviewed-by Borntraeger; SOB Heiko +
+  Gorbik; no Fixes/Cc-stable
+- [Phase 1] Body: kernel-thread `mm == NULL` vs normal exception handler
+- [Phase 2] Diff: `arch/s390/mm/fault.c` +2/−3; `if
+  (faulthandler_disabled() || !mm)` then `handle_fault_error_nolock`
+- [Phase 2] Confirmed `handle_fault_error_nolock()` does
+  fixup/SIGSEGV/oops and does not unlock `mm`
+- [Phase 3] `git show 7cf227b2707ed`; ancestor of HEAD
+- [Phase 3] Blame: function from `084ea4d611a3d0` (2020); `!mm` on
+  `do_exception` long-standing; `faulthandler_disabled` only from
+  `11709abccf93b` (2025)
+- [Phase 3] `git show 11709abccf93b`: real qemu stack, sleeping on
+  mmap_lock in atomic PGM 0x3d
+- [Phase 3] Series neighbors 79ef8d384fdfb…46a8c8d142ba8 do not replace
+  this check
+- [Phase 4] `b4 dig -c 7cf227b2707ed`:
+  https://patch.msgid.link/20260720085834.898025-3-hca@linux.ibm.com
+- [Phase 4] `b4 dig -a`: v4 is the applied series; this is 2/8
+- [Phase 4] `b4 dig -w`: s390 + KVM maintainers on CC
+- [Phase 4] `b4 mbox` of Closes: sashiko [High] NULL deref; Gordeev
+  “false positive”; Heiko still aligned with `do_exception()`
+- [Phase 4] WebFetch/curl lore: 403; UNVERIFIED: stable@ discussion
+- [Phase 5] `git grep do_secure_storage_access`: `traps.c` PGM 0x3d +
+  `entry.h`
+- [Phase 5] Read `is_kernel_fault()`: user mode or secondary AS → user
+  path
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] Current `fault.c:451` has `faulthandler_disabled() || !mm`
+- [Phase 7] MAINTAINERS: Heiko = S390 ARCHITECTURE; Gordeev = S390 MM
+- [Phase 8] Failure mode: NULL deref in exception handler; trigger
+  narrower than the 2025 atomic bug
+- UNVERIFIED: whether a kernel thread without `use_mm()` has hit this on
+  a production machine; Gordeev doubted it
+
+The fix is small, matches the existing fault-handler contract, and
+prevents an oops on this tree’s s390 secure-storage path.
 
 **YES**
 
- fs/ext4/ext4.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/mm/fault.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index da6428312c36b..a9178d63a7d1b 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -334,7 +334,7 @@ struct ext4_io_submit {
- #define	EXT4_MAX_BLOCK_SIZE		65536
- #define EXT4_MIN_BLOCK_LOG_SIZE		10
- #define EXT4_MAX_BLOCK_LOG_SIZE		16
--#define EXT4_MAX_CLUSTER_LOG_SIZE	30
-+#define EXT4_MAX_CLUSTER_LOG_SIZE	28
- #ifdef __KERNEL__
- # define EXT4_BLOCK_SIZE(s)		((s)->s_blocksize)
- #else
+diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
+index 069f72703a915..46e5748b5b1b3 100644
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -404,9 +404,9 @@ void do_secure_storage_access(struct pt_regs *regs)
+ {
+ 	union teid teid = { .val = regs->int_parm_long };
+ 	unsigned long addr = get_fault_address(regs);
++	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma;
+ 	struct folio_walk fw;
+-	struct mm_struct *mm;
+ 	struct folio *folio;
+ 	int rc;
+ 
+@@ -448,9 +448,8 @@ void do_secure_storage_access(struct pt_regs *regs)
+ 		if (rc)
+ 			return handle_fault_error_nolock(regs, 0);
+ 	} else {
+-		if (faulthandler_disabled())
++		if (faulthandler_disabled() || !mm)
+ 			return handle_fault_error_nolock(regs, 0);
+-		mm = current->mm;
+ 		mmap_read_lock(mm);
+ 		vma = find_vma(mm, addr);
+ 		if (!vma)
 -- 
 2.53.0
 
