@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CE8530ABF;
-	Mon, 19 Oct 2026 14:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB2D612565;
+	Mon, 19 Oct 2026 14:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418632; cv=none; b=CI6hLlweNeFu9vSJywvY16rnl439sVsUYVQbQq3fxMIIA1A04I/kGisxcOIAm9YgrqUy49GhnSdtDaiRs0Vku8iJhjDDQRDMvxzt5Rc19dlvspO71+Iu37TYfd+xb7tU6Fkuir2RnenpYaT+p3qv8RNJpZRZCqd3NQ7YJSlLyEg=
+	t=1792418633; cv=none; b=ZP8RT2jq11J0IOhzXk72P/Txxmckw6W5thVEpzxn1LuL2GjyEtcFJUcGT1bhRlfUITog89o9ZxDG6cPRH82uJRO6v7hx03/EQKOyL3jxjjvfvN00rdqNdN21tK/ljAanz+ONZvoaxErjDVNPiNtI28nDiufiPZ52635VKWOReNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418632; c=relaxed/simple;
-	bh=rcpwPJ7mcV+mpVjshr18mmEwCaZCXXtBA3JTQOERv7c=;
+	s=arc-20240116; t=1792418633; c=relaxed/simple;
+	bh=ZfxOOX3ej3q0mFdA/DyGaopJmYWIhBshTMlyYAqSVrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mrlrc3elum3MB0/PfF8F8un348qyOvCPU+Oteafq8MLfJ61SVW6Jkdx1fRMh8LHQRd7Q0dVJ9Q/EQt7svbvNB/UtolY4eXytrECB6KFLA3ORrcXVAHS7i/qzwFeQEQjmTucaoZuuWPdjHSSMkFDEMTsoUSeJ00cGm2wX5qtgfvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnyvl+H9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LQIMyI8mwT8qUldTdJLkKdPllx82TC17sx0EEqrLRARHq28mHXJlOVPQNr8ULEIN2taxnwZO2Gt46DTZC3tHYbHQ/xH9yB52/giW4lxwFuNWr3lGh0a3EeikaWMIP12vCEuHqBk1A388a7WIkE+iKVISeVUtoFHsIX589PZmqTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AfbQ1jl/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnyvl+H9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E08F1F000C7;
-	Mon, 19 Oct 2026 14:03:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AfbQ1jl/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9871F000C8;
+	Mon, 19 Oct 2026 14:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418629;
-	bh=euT1B/egjPX/wctp3QDspXsmLwlDfRDCrI84bw+LBz8=;
+	s=k20260515; t=1792418630;
+	bh=Zev1xjlOxm+rYJyfpM2+m7m0Kp99smLd/rcxrOeHMJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bnyvl+H9nzsYyKam45p4sxdrWh4eMEk9X0sFpCZd719nWPbJZs7w1XFbDAsO1VHHl
-	 nr/gaOuVPXZr84imucDvxlG4fC3Qpis3yYmF0/TzXG5a/FfP1ZKmunMADLu6C5g+Su
-	 jPS9IwBwk0ZaJ5lJoCfR5uoXhjrfV/fzFrqTlzVx/OpGymeqmd0fHZiejtjFqJNdS6
-	 5wHAKLoUuKkWGcVlEdexyHe09Ai1jEyQ+HF86Ou4JjieAgEuwVDJ5tKVMZdrgQ5mSL
-	 hIC/l2+x7tdnA7Qlz68tzoY9UC1eaOolk9Xrx1FCskNaT6aCDeNxwJqPhQwJSaVj0N
-	 9QtP3XcDT7jLA==
+	b=AfbQ1jl/o4qP/jZWo2mhs761kp/rrE7UFJE2nUyJYR49lfzCVH6GLXTa4wCJDsUTC
+	 qluVLQeW0ArMPelYgQGZmsJMeo4PncFNlGRAsts2gIru9hvehgsbelMm3ji0oU7GVT
+	 uqmfW9CJDU3CoCTGkEBSqmdLBNhrXFwU9m1D+3ulYzb6PY2daa/1ZLPQBGWG2GAINU
+	 Q6/81EmiOilXjcWmgkHkWMrtVh7Y17jGFuw2x6bv8qInhlxez2pK7JStXoxfdZU+V9
+	 kpsM+IQ1V8QhL991hUTxVSIN+0MPnuYsPfknHaFPxCFgnfQ28KomCSpdGzgshEhvrn
+	 Ha8peKpb+sI+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wen <anmuxixixi@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sj1557.seo@samsung.com,
-	exfat@lists.linux.dev,
+	ping.cheng@wacom.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] exfat: keep FITRIM within the requested range
-Date: Mon, 19 Oct 2026 09:51:16 -0400
-Message-ID: <20261019135441.1420968-385-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: wacom: avoid copying Bluetooth input reports
+Date: Mon, 19 Oct 2026 09:51:17 -0400
+Message-ID: <20261019135441.1420968-386-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,411 +56,394 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wen <anmuxixixi@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
+[ Upstream commit 8310cdeefc8a14d2093c3234b570c7805c20bcbf ]
 
-exfat_find_free_bitmap() searches the entire allocation bitmap and may
-wrap around to its beginning. exfat_trim_fs() does not verify that the
-returned cluster is still within the requested FITRIM range.
+wacom_intuos_bt_irq() duplicates the received Bluetooth report with
+kmemdup() so that it can pass 10-byte input report payloads to the
+common Intuos parser. The helper then copies each payload back into
+wacom->data before calling wacom_intuos_irq().
 
-As a result, a partial FITRIM operation may discard free clusters outside
-the user-specified range and report a trimmed length larger than the
-requested length.
+Avoid the allocation and copy by temporarily pointing wacom->data at the
+current 10-byte payload while the common parser runs, then restoring the
+original report pointer. The Bluetooth report parser keeps using the
+original report buffer for dispatch and battery parsing, while the common
+parser sees the same payload bytes as before.
 
-Validate each returned cluster against the requested range and stop the
-search when it wraps around or passes the range end.
+This also removes the unchecked kmemdup() result from the Bluetooth IRQ
+path.
 
-Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Suggested-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The FITRIM range bug is
-in this checkout, and the fix applies cleanly.
+Vanilla 6.18.53 still has the unchecked `kmemdup(GFP_KERNEL)` in this
+Bluetooth IRQ path. The rest of the walkthrough is below.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: **[exfat] [keep / constrain] keep FITRIM within the requested
-  range**
-- Subsystem: `exfat`. Action is “keep … within”, i.e. stop the ioctl
-  from acting outside the caller’s range.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [HID: wacom] [avoid] [stop kmemdup/memcpy of Bluetooth Intuos
+reports by switching the parser onto the live 10-byte payload]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Commit `2de727471b3b13409466a4af4f8824a86073bf4b` (mainline, contained
-in `v7.3-rc1`):
-- Signed-off-by: Yang Wen \<anmuxixixi@gmail.com\> (author)
-- Signed-off-by: Namjae Jeon \<linkinjeon@kernel.org\> (exFAT
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record:
+- Suggested-by: Jason Gerecke <jason.gerecke@wacom.com>
+- Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com> (author)
+- Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com> (Wacom driver
   maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable (absence is expected for this review)
+- Signed-off-by: Jiri Kosina <jkosina@suse.com> (HID maintainer)
+- Ignore: `[Upstream commit 8310cdeefc8a...]`, `Signed-off-by: Sasha
+  Levin`
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence
+  expected)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record: **[Bug]** `exfat_find_free_bitmap()` walks the whole
-  allocation bitmap and **wraps to cluster 2**. `exfat_trim_fs()` treats
-  that result as the next hole to discard, without checking the FITRIM
-  range.
-- **[Symptom]** A **partial** FITRIM can `sb_issue_discard()` free
-  clusters **outside** `range->start`/`range->len`, and write back a
-  `range->len` **larger than requested**.
-- **[Root cause]** Trim reused the allocator’s circular free-cluster
-  search and never rejected a wrapped or out-of-range cluster.
-- **[Versions]** Message does not name versions. FITRIM was added in
-  `654762df2ec7d` (v5.13); wrap-around has been in
-  `exfat_find_free_bitmap()` since `1e49a94cf70720` (exFAT bitmap ops).
+Notable: maintainer both suggested the approach and reviewed it.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: **Not a disguised cleanup.** It is an explicit FITRIM
-  correctness fix (wrong discard range + wrong reported length).
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: `wacom_intuos_bt_irq()` `kmemdup()`s the Bluetooth report, then
+  `wacom_intuos_bt_process_data()` `memcpy`s each 10-byte payload into
+  `wacom->data` for `wacom_intuos_irq()`. The `kmemdup()` result is not
+  checked.
+- Symptom: NULL deref of `data[0]` if allocation fails; also an
+  allocation+copy on every report.
+- Version info: none in the message. The `kmemdup` itself was added
+  later (see Phase 3).
+- Root cause: the copy exists only so the shared Intuos parser can see a
+  10-byte payload without destroying the packed Bluetooth report. The
+  author replaces that with a temporary `wacom->data` pointer swap.
 
-## PHASE 2: DIFF ANALYSIS
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Yes. v1 on the list was explicitly `HID: wacom: handle kmemdup
+failure in Bluetooth IRQ path` (NULL check). v2, at Jason Gerecke’s
+request, removes the allocation instead. This is a crash fix written as
+“avoid copying.”
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record: **`fs/exfat/balloc.c` only** — 19 insertions, 12 deletions
-  (net +7). Function: `exfat_trim_fs()`. **Single-function surgical
-  fix.**
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Local `exfat_trim_fs()` (lines 309–387) is **byte-identical** to the
-parent of `2de727471b3b1`.
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `drivers/hid/wacom_wac.c` (~5 insertions, 3 deletions; series
+  mail said 8 lines)
+- Functions: `wacom_intuos_bt_process_data()`, `wacom_intuos_bt_irq()`
+- Scope: single-file surgical fix
 
-Before:
-1. `trim_begin = exfat_find_free_bitmap(sb, clu_start)` — wrap is
-   ignored.
-2. Second search; EOF bails **before** remainder trim.
-3. `do { ... } while (next != EOF && next > trim_end)` — wrap at the
-   **end** of an iteration can exit, but if the wrapped cluster was
-   **assigned** to `trim_begin`/`trim_end`, wrap detection is lost and
-   the loop trims from the start of the volume.
-4. `next >= clu_end` does not catch wrap-to-beginning.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record:
+- Before: `wacom_intuos_bt_irq()` does `data = kmemdup(wacom->data, len,
+  GFP_KERNEL)` then `switch (data[0])`. Helper `memcpy(wacom->data,
+  data, 10)` then `wacom_intuos_irq()`. `kfree(data)` at the end.
+- After: `data = wacom->data`. Helper saves `wacom->data`, points it at
+  the 10-byte slice, calls `wacom_intuos_irq()`, restores the original
+  pointer.
+- Path: HID input IRQ for `INTUOS4WL` (Wacom Intuos4 Wireless, USB ID
+  0xBD), not probe/error-only.
 
-After:
-1. Reject first cluster if EOF or `trim_begin < clu_start || trim_begin
-   > clu_end`.
-2. `for (;;)`: stop when `trim_end >= clu_end`.
-3. Reject next cluster if EOF, wrap (`next <= trim_end`), or `next >
-   clu_end`.
-4. Remainder trim still runs for the last in-range hole.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Category: NULL deref on failed `kmemdup`; GFP_KERNEL allocation on the
+  HID input IRQ path.
+- Mechanism: `hid_irq_in()` (USB URB complete) →
+  `hid_safe_input_report()` → `wacom_raw_event()` → `wacom_wac_irq()` →
+  `wacom_intuos_bt_irq()`. `__hid_input_report()` uses `down_trylock()`
+  because this can run in atomic context. `kmemdup(..., GFP_KERNEL)`
+  there can sleep or return NULL; `switch (data[0])` then oopses. The
+  pointer swap keeps the packed report intact without allocating.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: **[Logic / correctness]** FITRIM range not enforced against a
-  wrapping bitmap walk. Also a minor hole: old EOF-on-second-search
-  skipped remainder trim of a valid in-range hole.
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Quality: small, equivalent for this device. `wacom_intuos_inout()` /
+  `wacom_intuos_general()` / INTUOS4 pad parsing only read
+  `data[0]`–`data[9]`. Restore of `wacom->data` is synchronous; nothing
+  stashes the pointer.
+- Regression risk: low-medium. Sashiko flagged unaligned
+  `be16_to_cpup((__be16 *)&data[2])` because payloads start at offset
+  1/11. Old `memcpy` landed those 10 bytes on the aligned URB buffer;
+  the new pointer does not. Jason Gerecke treated that as non-blocking
+  and asked for a later alignment cleanup. Intuos4 WL is a PC USB
+  tablet, so strict-alignment ARM faults are unlikely. No API/data-
+  structure change.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record: **Obviously correct.** Range checks match FITRIM’s
-  `[clu_start, clu_end]`. Wrap is `next <= trim_end`. Inclusive end:
-  `trim_end++` only when `next == trim_end+1` and `next <= clu_end`.
-  `fatal_signal_pending` kept. No API/lock/structure changes. **Low
-  regression risk** (tightens discard, does not expand it). Remainder
-  after a range-validated hole cannot start outside the range.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Bluetooth packing/`memcpy` helper: 81af7e61a774e6 (Benjamin Tissoires,
+  2014-08-06).
+- `kmemdup`/`kfree`: 5e013ad206895e (“HID: wacom: Remove static
+  WACOM_PKGLEN_MAX limit”, Jason Gerecke, 2025-03-03). That replaced a
+  stack `unsigned char data[WACOM_PKGLEN_MAX]` + `memcpy`. First in
+  v6.15 (in v6.15, not in v6.14). Present in this 6.18.53 tree.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record: Entire `exfat_trim_fs()` is **`654762df2ec7d`** (“exfat: add
-  support ioctl and FITRIM function”, Hyeongseok Kim, 2021-03-04). Wrap
-  in `exfat_find_free_bitmap()` is **`1e49a94cf70720`** (“exfat: add
-  bitmap operations”). Bug is as old as FITRIM itself (**v5.13**).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Functionally this repairs 5e013ad206895e, which
+is an ancestor of this tree.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: **No Fixes: tag.** Introducer is `654762df2ec7d`, **present in
-  this tree** (`git merge-base --is-ancestor` succeeded).
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- c8dc23c97680e “HID: wacom: fix out-of-bounds read in
+  wacom_intuos_bt_irq” — length checks; already in v6.18.53.
+- 74ec08f7b81c2 — Pro2 BT length validation, different function.
+- Standalone; not patch x/y. No extra prereqs beyond the `kmemdup` code
+  this tree already has.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: Recent local `fs/exfat/balloc.c` commits are bitmap
-  validation, soft lockup, leaks, ffs/hweight — **none change trim**.
-  Mainline after this fix has **no further `balloc.c` commits**.
-  **Standalone, not a series.**
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Ruoyu Wang has this one wacom commit here. Jason Gerecke is the
+Wacom maintainer and both introduced the `kmemdup` and reviewed this
+fix.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: **Yang Wen** has **no** prior `fs/exfat/` commits in this
-  tree. **Namjae Jeon** is the exFAT maintainer and applied the patch
-  the next day.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: None. Uses existing `wacom->data` / `wacom_intuos_irq()`.
+Applies to v6.18.53 as written.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: **None.** Uses existing `exfat_find_free_bitmap`,
-  `sb_issue_discard`, `clu_start`/`clu_end`. `git apply --check`
-  **succeeds** (hunks at offset −12).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- Lore/msgid:
+  https://patch.msgid.link/20260617072035.3373487-1-ruoyuw560@gmail.com
+- v1 (2026-06-06):
+  https://patch.msgid.link/20260606040344.4-1-ruoyuw560@gmail.com —
+  NULL-check only.
+- v2 (2026-06-17): pointer swap, as Jason asked.
+- v1: Jason Reviewed-by + “do away with the kmemdup entirely.”
+- v2: Sashiko unaligned-access warning; Jason: do not block; wants a
+  later alignment cleanup; Reviewed-by.
+- Jiri Kosina: “Applied, thanks.”
+- No NAK. No reviewer Cc: stable.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: **[Lore]**
-  https://patch.msgid.link/20260813142919.812744-1-anmuxixixi@gmail.com
-- **[Revisions]** **v1 only** (b4 dig -a). Applied as submitted.
-- Maintainer reply (Namjae Jeon, 2026-08-14): **“Applied it to #dev.
-  Thanks!”** — no NAK, no requested changes, no stable nomination in-
-  thread.
-- WebFetch/curl to lore.kernel.org hit Anubis bot-check (403). Thread
-  recovered via **`b4 dig -m`**.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: To/Cc: Ping Cheng, Jason Gerecke, Jiri Kosina, Benjamin
+Tissoires, linux-input, linux-kernel. Jason reviewed; Jiri applied.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: To/Cc: Namjae Jeon, Sungjong Seo, Yuezhang Mo,
-  `exfat@lists.linux.dev`, `linux-kernel`. **Maintainer applied v1.** No
-  extra Reviewed-by on the commit.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by / bugzilla / syzbot. Found by code review of the
+unchecked `kmemdup`.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: **No Reported-by / bugzilla / syzbot.** Analysis-driven, not a
-  user crash report.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: v1→v2 of one patch, not a multi-commit series. Related OOB fix
+already in this tree.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: **Standalone single patch.** No follow-up on `origin/master`
-  for this function.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: UNVERIFIED — lore.kernel.org/stable returned 403. b4 thread has
+no stable discussion.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable search **blocked** (Anubis).
-  **UNVERIFIED** whether stable@ discussed this. Not used as a NO
-  signal.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `wacom_intuos_bt_process_data()`, `wacom_intuos_bt_irq()`.
 
-**Step 5.1: KEY FUNCTIONS**
-- Record: **Modified:** `exfat_trim_fs()`. **Relies on:**
-  `exfat_find_free_bitmap()` (wraps; unchanged).
+Step 5.2: TRACE CALLERS
+Record:
+- `wacom_intuos_bt_irq()` ← `wacom_wac_irq()` case `INTUOS4WL`
+  (`drivers/hid/wacom_wac.c`).
+- `wacom_wac_irq()` ← `wacom_raw_event()` (`wacom_sys.c`).
+- USB: `hid_irq_in()` (`drivers/hid/usbhid/hid-core.c`) calls
+  `hid_safe_input_report()` from URB complete (atomic/softirq).
+- Bluetooth HIDP: `hidp_process_report()` from the l2cap/session path
+  (process context). This device is USB ID 0xBD, so the USB IRQ path is
+  the one that matters.
+- Device table: `wacom_features_0xBD` / “Wacom Intuos4 WL”.
 
-**Step 5.2: TRACE CALLERS**
-- Record: Only **`exfat_ioctl_fitrim()`** in `fs/exfat/file.c` (`FITRIM`
-  ioctl). Requires **`CAP_SYS_ADMIN`**. Copies `struct fstrim_range`
-  in/out; `range.len` is the trimmed-byte count userspace sees (`fstrim
-  -v`).
+Step 5.3: TRACE CALLEES
+Record: `wacom_intuos_irq()` → pad/inout/general parsers;
+`wacom_notify_battery()`; `input_sync()`. No alloc after the change.
 
-**Step 5.3: TRACE CALLEES**
-- Record: `exfat_find_free_bitmap()`, `sb_issue_discard()`,
-  `exfat_cluster_to_sector()`, `mutex_lock(&sbi->bitmap_lock)`,
-  `fatal_signal_pending()`.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable from normal USB HID input of Intuos4 Wireless.
+Unprivileged userspace is not required; hardware input is enough. Not a
+syscall fuzzer path.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: `ioctl(FITRIM)` → `exfat_ioctl()` → `exfat_ioctl_fitrim()` →
-  `exfat_trim_fs()`. Reachable from userspace **with CAP_SYS_ADMIN**
-  (`fstrim`, systemd-fstrim, Android idle trim). **Not** an unprivileged
-  path.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Pro2 BT (`wacom_intuos_pro2_bt_irq`) does not `kmemdup`. This
+packed 10-byte copy was unique to Intuos4 WL.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: **FAT** `fat_trim_fs()` walks **only** `ent_start..ent_end`
-  (no wrap). exFAT is the outlier. FAT’s loop is the intended FITRIM
-  contract.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree: 6.18.53 (`autosel`,
+`v6.18.53-5049-g0f0bdc2b0dffb`). `v6.18.53:drivers/hid/wacom_wac.c`
+still has `kmemdup` + `memcpy` + unchecked `data[0]`. Upstream fix
+8310cdeefc8a is not an ancestor of v6.18.53.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: **Yes.** `fs/exfat/balloc.c` `exfat_trim_fs()` matches the
-  pre-fix function (SHA-1 of the function text identical to
-  `2de727471b3b1^`). Introduced **v5.13**, present in **6.12.111**.
-  Candidate **not** an ancestor of HEAD.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Surrounding OOB length checks are already in
+6.18.53.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **Clean apply** (`git apply --check`, offset −12 from later
-  bitmap-load changes that do not touch trim). **No rework needed.**
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: OOB length checks yes. No earlier version of this pointer-
+swap/NULL-check.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: **No** other FITRIM-range fix in this tree. Only FITRIM commit
-  is the original add (`654762df2ec7d`).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: HID / Wacom tablet driver. IMPORTANT for tablet users,
+PERIPHERAL overall (one 2010-era wireless Intuos4 model).
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-- Record: **[exFAT filesystem] [IMPORTANT]** — SD cards, USB sticks,
-  Android/embedded. Not mm/VFS-core, but a widely shipped FS.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Active (device IDs, BT OOB fixes, pktlen work). The `kmemdup` is
+from the v6.15 pktlen change, not ancient code.
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-- Record: **Active** (bitmap validation, lockups, leaks). Trim loop
-  itself has been **unchanged since 2021**.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific — Intuos4 Wireless (`INTUOS4WL`, USB
+0x056A:0x00BD).
 
-**Step 8.1: WHO IS AFFECTED**
-- Record: **Filesystem-specific (exFAT) + ioctl path.** Anyone running
-  **partial** FITRIM (`fstrim -o/-l`, chunked idle trim). Full-volume
-  trim (`start=0`, `len=ULLONG_MAX`) sets `clu_start` to
-  `EXFAT_FIRST_CLUSTER`, so wrap is inside the requested range —
-  **default `fstrim` is largely unaffected**.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every packed BT/WL input report allocates. Oops if `kmemdup`
+fails; GFP_KERNEL from USB complete is illegal even when the alloc hits
+the slab cache. Not a userspace-triggered security hole.
 
-**Step 8.2: TRIGGER CONDITIONS**
-- Record: CAP_SYS_ADMIN FITRIM with a **range that is not the whole
-  volume**, and **no free cluster from `clu_start` to end of bitmap**
-  (first search wraps), **or** a hole whose next free cluster is found
-  only after wrap. Not a race (`bitmap_lock` held). Unprivileged users
-  **cannot** trigger it.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: NULL deref → oops (HIGH). GFP_KERNEL from URB complete →
+sleeping-in-atomic WARN/instability (HIGH). Practical hit rate is low
+(small alloc, old device), but the bug is on the live input path.
 
-**Step 8.3: FAILURE MODE SEVERITY**
-- Record: **Wrong-range discard of free clusters** + **inflated
-  `range->len`**. Not a panic/UAF. On SSDs: extra wear and extra
-  latency. On thin/sparse LUNs: **unmap of the wrong region** (space
-  accounting / unexpected hole punch of free space outside the requested
-  byte range). File data in allocated clusters is not discarded.
-  **Severity: MEDIUM** (contract + device-side unmap), not CRITICAL.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: medium — real IRQ-path crash/atomic-sleep fix, small user
+  population.
+- Risk: low — ~8 lines, maintainer-reviewed; unaligned `be16_to_cpup` is
+  the main caveat and was accepted upstream.
+- Ratio: benefit outweighs risk for 6.18.y.
 
-**Step 8.4: RISK-BENEFIT RATIO**
-- Record: **Benefit: medium** (correct FITRIM; matters for
-  ranged/chunked trim on exFAT). **Risk: very low** (~20-line single-
-  function tighten). **Ratio: favorable.**
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real FITRIM bug: discard and reported length ignore the requested
-  range when the bitmap search wraps.
-- Present in this 6.12 tree since v5.13; function matches mainline
-  parent.
-- Small, obviously correct, applies cleanly; no new API.
-- Maintainer applied v1 the next day; no follow-up revert/fix.
-- FAT already confines trim to the range; this aligns exFAT with that
-  contract.
-- Extra/wrong-range discard is user-visible and can unmap the wrong
-  thin-provisioned region.
+- Unchecked `kmemdup` NULL deref in this 6.18.53 tree.
+- GFP_KERNEL on USB HID URB complete; 5e013ad replaced an atomic-safe
+  stack buffer.
+- v1 was an explicit crash fix; v2 is the maintainer-preferred form.
+- Reviewed by Jason Gerecke, applied by Jiri Kosina.
+- Small, no new API, applies cleanly, parsers only use 10 payload bytes.
 
 AGAINST:
-- Not a crash, UAF, or file-data corruption.
-- Needs CAP_SYS_ADMIN; default full-FS `fstrim` rarely hits wrap.
-- No Reported-by / Tested-by / syzbot.
-- “Important” is a correctness/contract issue, not panic-class.
+- Niche Intuos4 Wireless hardware.
+- No user/syzbot report.
+- Subject reads like an optimization.
+- Unaligned access vs old memcpy-to-aligned-buffer; no follow-up
+  alignment patch verified here.
 
 UNRESOLVED:
-- Stable@ discussion (lore blocked).
-- How often 6.12 users actually pass a partial FITRIM range.
+- No stable@ thread (lore 403).
+- No evidence of a field oops.
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — logic is local and
-   checkable; maintainer merged v1; in mainline as of v7.3-rc1. No
-   separate Tested-by.
-2. Fixes a real bug that affects users? **PASS** — ranged FITRIM
-   discards the wrong free clusters and lies about `len`.
-3. Important issue? **PASS** (MEDIUM) — wrong discard range / thin unmap
-   / wrong userspace length, not a crash. Still a real FS ioctl bug, not
-   a cleanup.
-4. Small and contained? **PASS** — one function, +19/−12.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — pointer save/restore; Wacom
+   maintainer Reviewed-by.
+2. Fixes a real bug that affects users? PASS — NULL deref and GFP_KERNEL
+   in IRQ on a shipping device path.
+3. Important issue? PASS — oops / sleeping-in-atomic (HIGH), not a style
+   cleanup.
+4. Small and contained? PASS — one file, ~8 lines.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — buggy code is in v6.18.53; patch
+   matches.
 
-**Step 9.3: EXCEPTION CATEGORIES**
-- Record: **None** (not a device ID/quirk/DT/build/doc exception).
-  Qualifies as a normal bugfix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary bugfix.
 
-**Step 9.4: DECISION**
-This tree still has the original 2021 trim loop. The fix is a tight
-range/wrap check, not a refactor. For 6.12 users of exFAT FITRIM,
-especially chunked/partial trim, backporting prevents out-of-range
-discards with negligible risk.
-
-### What the commit solves for this tree
-Partial `FITRIM` on exFAT can discard free clusters **before** the
-requested offset after `exfat_find_free_bitmap()` wraps, and return a
-**larger** trimmed length than requested. That violates the ioctl
-contract and can TRIM the wrong region on SSDs/thin volumes. The code
-path exists here unchanged; the patch applies cleanly.
-
-### Risk vs benefit
-Benefit is correctness of a privileged but standard maintenance ioctl on
-a common removable/Android filesystem. Risk is very low: fewer discards,
-same locks, same helpers.
-
----
+Step 9.4: MAKE YOUR DECISION
+This belongs on 6.18.53. The tree still does `kmemdup(..., GFP_KERNEL)`
+in `wacom_intuos_bt_irq()` and dereferences `data[0]` with no NULL
+check, on the USB HID complete path. Replacing that with a temporary
+`wacom->data` pointer is the same fix the maintainer asked for, and it
+applies here without extra commits.
 
 Verification:
-- [Phase 1] `git log -1` / `git show 2de727471b3b1`: subject/body/SOBs
-  only; no Fixes/Reported-by/Cc stable
-- [Phase 1] Local tree: `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`;
-  `make kernelversion` → **6.12.111**
-- [Phase 2] Diff is only `exfat_trim_fs()` in `fs/exfat/balloc.c`
-  (+19/−12)
-- [Phase 2] Read local `exfat_trim_fs` (balloc.c:309–387) and
-  `exfat_find_free_bitmap` wrap (balloc.c:266–271)
-- [Phase 2] Function SHA-1 of local trim == parent of `2de727471b3b1`
-- [Phase 3] `git blame -L 309,387 fs/exfat/balloc.c` → all
-  `654762df2ec7d` (v5.13 FITRIM)
-- [Phase 3] `git blame -L 266,274` wrap → `1e49a94cf70720`
-- [Phase 3] `git merge-base --is-ancestor 654762df2ec7d HEAD` → yes;
-  `2de727471b3b1` → **not** in HEAD
-- [Phase 3] `git apply --check` of `2de727471b3b1` → **success**, offset
-  −12
-- [Phase 3] `git log origin/master -- fs/exfat/balloc.c` after the fix →
-  **empty** (no follow-up)
-- [Phase 4] `b4 dig -c 2de727471b3b1` →
-  https://patch.msgid.link/20260813142919.812744-1-anmuxixixi@gmail.com
-- [Phase 4] `b4 dig -a`: v1 only; `-w`: maintainer + Seo + Mo + exfat
-  list
-- [Phase 4] mbox: Namjae Jeon “Applied it to #dev”; no NAK/stable tag
-- [Phase 4] lore WebFetch/curl: **403 Anubis** — stable@ search
-  UNVERIFIED
-- [Phase 5] Callers: only `exfat_ioctl_fitrim()`;
-  `capable(CAP_SYS_ADMIN)`
-- [Phase 5] FAT `fat_trim_fs()` already limits to `ent_start..ent_end`
-- [Phase 6] Buggy loop present; no prior range fix in this tree
-- [Phase 8] Failure: out-of-range discard + bad `range->len`; severity
-  MEDIUM
-- UNVERIFIED: whether this SHA was already discussed on stable@
-
-The patch is a small, correctly scoped FITRIM range check for a bug that
-exists in this 6.12 tree and applies without prerequisites.
+- [Phase 1] Tags: Suggested-by/Reviewed-by Jason Gerecke, SOB Ruoyu Wang
+  and Jiri Kosina; no Fixes/Reported-by/Cc: stable
+- [Phase 1] v1 subject from b4: “handle kmemdup failure in Bluetooth IRQ
+  path”
+- [Phase 2] Diff: drop kmemdup/kfree/memcpy; save/restore `wacom->data`
+  around `wacom_intuos_irq()`
+- [Phase 2] Parsers for INTUOS4WL use `data[0]`–`data[9]` only
+  (inout/general/pad)
+- [Phase 3] Blame: kmemdup from 5e013ad206895e (v6.15+); in HEAD and
+  v6.18.53
+- [Phase 3] `git merge-base --is-ancestor 5e013ad206895e v6.18.53` →
+  yes; `8310cdeefc8a` → no
+- [Phase 3] Related OOB fix c8dc23c97680e already in v6.18.53
+- [Phase 4] `b4 dig -c 8310cdeefc8a` → v1+v2 msgid links; Jason reviewed
+  both; Jiri applied v2
+- [Phase 4] Sashiko unaligned warning; Jason said do not block
+- [Phase 4] lore.kernel.org WebFetch 403; stable@ search UNVERIFIED
+- [Phase 5] Call chain: `hid_irq_in` → `hid_safe_input_report` →
+  `wacom_raw_event` → `wacom_intuos_bt_irq`; USB 0xBD Intuos4 WL
+- [Phase 6] `git describe HEAD` → v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion` → 6.18.53
+- [Phase 6] `git show v6.18.53:drivers/hid/wacom_wac.c` still has
+  kmemdup
+- [Phase 8] Failure: NULL deref / GFP_KERNEL from URB complete; severity
+  HIGH
+- UNVERIFIED: whether this was already requested on stable@
 
 **YES**
 
- fs/exfat/balloc.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/hid/wacom_wac.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 0b6466b3490a0..4013034375dbe 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -327,14 +327,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 	mutex_lock(&sbi->bitmap_lock);
- 
- 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
--	if (trim_begin == EXFAT_EOF_CLUSTER)
-+	/*
-+	 * exfat_find_free_bitmap() may wrap around to the beginning of
-+	 * the bitmap. Reject a cluster outside the requested range.
-+	 */
-+	if (trim_begin == EXFAT_EOF_CLUSTER ||
-+		trim_begin < clu_start || trim_begin > clu_end)
- 		goto unlock;
- 
--	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
--	if (next_free_clu == EXFAT_EOF_CLUSTER)
--		goto unlock;
-+	for (;;) {
-+		if (trim_end >= clu_end)
-+			break;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index af76e49fd0f25..8feb8027be95e 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1192,8 +1192,11 @@ static int int_dist(int x1, int y1, int x2, int y2)
+ static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
+ 		unsigned char *data)
+ {
+-	memcpy(wacom->data, data, 10);
++	u8 *saved_data = wacom->data;
 +
-+		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
-+		/*
-+		 * Stop if the search wrapped around or moved beyond the requested
-+		 * FITRIM range.
-+		 */
-+		if (next_free_clu == EXFAT_EOF_CLUSTER ||
-+			next_free_clu <= trim_end || next_free_clu > clu_end)
-+			break;
++	wacom->data = data;
+ 	wacom_intuos_irq(wacom);
++	wacom->data = saved_data;
  
--	do {
- 		if (next_free_clu == trim_end + 1) {
- 			/* extend trim range for continuous free cluster */
- 			trim_end++;
-@@ -355,17 +368,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 			trim_begin = trim_end = next_free_clu;
- 		}
+ 	input_sync(wacom->pen_input);
+ 	if (wacom->pad_input)
+@@ -1202,7 +1205,7 @@ static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
  
--		if (next_free_clu >= clu_end)
--			break;
--
- 		if (fatal_signal_pending(current)) {
- 			err = -ERESTARTSYS;
- 			goto unlock;
- 		}
--
--		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
--	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
--			next_free_clu > trim_end);
-+	}
+ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
+ {
+-	u8 *data = kmemdup(wacom->data, len, GFP_KERNEL);
++	u8 *data = wacom->data;
+ 	int i = 1;
+ 	unsigned power_raw, battery_capacity, bat_charging, ps_connected;
  
- 	/* try to trim remainder */
- 	count = trim_end - trim_begin + 1;
+@@ -1242,7 +1245,6 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
+ 		break;
+ 	}
+ 
+-	kfree(data);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
