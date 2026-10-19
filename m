@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32274FFA23;
-	Mon, 19 Oct 2026 13:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1BE4FFA48;
+	Mon, 19 Oct 2026 13:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418250; cv=none; b=kGHqx3EzMQ8mZRQ4pcX9bz4eO/X7Rb4ht24jbwcy8rcI79ZnI7x3/rwK4tpV8L+ekxDzXpcsW+e+A7evmzusO5PF09tfDjJyEWWuDWbmXxFAMNVcaJqUbnCsmeo8FK+e4Eald6n5YS/YZRhJ7TXTHYzU9qT2NfdmA7+3dPrRr6A=
+	t=1792418252; cv=none; b=ZiRm43vvCOjpG87tuNjeQKCKKwEBjR9RweU9Q14zZDc2z+aE7sJBe9bdsHR1IDSWUDSkOZP3gV8MaIulDMoiLFLEhO+vbFivJXRGj+pjQX5yFIf6ta6EV9cRV9yRP6fxOdN9YeoT6mECsXwcZL/78HkuUA0L4jn3JkBdnb5T7YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418250; c=relaxed/simple;
-	bh=O3LaxiIuL0cy7v6sHAR1GYWghevGkkV2CcWLonf89oI=;
+	s=arc-20240116; t=1792418252; c=relaxed/simple;
+	bh=Wh9qhL8mCgT5QJA6GF6krnahySZ6C+OVWUpRqBcJP6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pt1NASJXjsioHYfAocwCPqw2WiVlNGtLKDoXmIeqD/fsjOMl8saSL+aRRN4MYG6SpbYA52YhM7UW9lPOsqhjLD1uRPhS6xWckaE+dgLTv0EtKHz+6/row4YhwbiR5UxrikbOWykZUqN+tgJ5PJqgTc/L0WwoJkyytO/3oBOfHPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DL57TVDN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lbdkTslnH2Lq8ba6Ada9KRfOsNp3mb7vjVF7qNpgiW2o2z+mb6AraSb73Hgx4iNDTI45nttsjXNMgnEpYxyllYYrnWXEDr/DsiyQ6j1rS32rsYbJaiDPQXkqE3PXYzhVLlPOr+0DvgKBzNOoA4/B2BVmVug8FQu28h4Obq+Ob0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M725uWws; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DL57TVDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D2B1F000C5;
-	Mon, 19 Oct 2026 13:57:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M725uWws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D231F000C6;
+	Mon, 19 Oct 2026 13:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418247;
-	bh=kakytPNLY+AAC3VufQx8vQdmpbFyKM5AqZpi8YYg6KQ=;
+	s=k20260515; t=1792418249;
+	bh=wE1RMnUDMMnvpx7rc/PtXVu9rOvIEpslybb3iEFRjXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DL57TVDNCQKYrHfaRTcoTBGaZwp3IVsxOK2mkcggezVONOUNML6CkjODs/d5hsqSC
-	 wr5wGTS3PCpmNyye+vJoFrrQsJH7s/n+l7/UpneJ+bxvqshVKD0GTfD3D9Ejwq92Ab
-	 rea7Bfvzgzn6+reR7fhL46cbHYvKk8jrdVfByLw2oBgcXAT9JES+ojjzhn3bQgzpeb
-	 VKzrI/0xiQdoaIY9PZMFmOMLjWZCBgCaWrY/dCIV9XwQt5BjiAwrL3a462hFi31m6I
-	 fwHlxmhScyAcQYffn59JwX3vn1qesgkGtFUFy0hl2FtVfpC7l09tXkBGYMYiW68/df
-	 9zFrgQcOPZorw==
+	b=M725uWwsj1cRTG9dlepKZGKCbKlT+pQxQ1bmvu6kd6At8mUHoS0CKsYa7lCGndK6A
+	 LrCOeQMqmQWi7mP0nuQFIVsY7+AvrUGsrW3LYKPgGN0gStxehGWs43Oimh84msw6Pc
+	 Rjzp7XQl9sfvSZLBzwbq3x27tNbBDLLpklfcWEex/OW8KugWC+kwaCKeqjcDU2zuio
+	 ctNgle8cbWordTQ0VtpUPQUvw7m+gcYCufEnYZ3ft4c8exiGx/QUuetdXSAHThB9c2
+	 d5bAoPDI460llKrGeicKi2CX3e1b6QzSjLabypBqHBUsamh7iFSwUekkDZgWMYuoHO
+	 fA9n5qKdqM14A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	sashiko-bot@kernel.org,
-	Lee Jones <lee@kernel.org>,
+Cc: Zhi-Jun You <hujy652@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	mfd@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
-Date: Mon, 19 Oct 2026 09:46:48 -0400
-Message-ID: <20261019135441.1420968-117-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18] wifi: mt76: wed: fix kernel panic on non-DBDC MT7986
+Date: Mon, 19 Oct 2026 09:46:49 -0400
+Message-ID: <20261019135441.1420968-118-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,426 +58,489 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Zhi-Jun You <hujy652@gmail.com>
 
-[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
+[ Upstream commit 8a177dabeeead47dda4d4f91331282790eed0097 ]
 
-ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
-It copies characters to a stack buffer retstr, but fails to
-null-terminate it. When kstrdup() is called on retstr, it can read past
-the buffer into uninitialized stack memory, potentially leaking stack
-contents.
+In mt76_wed_init_rx_buf, it's hardcoded to use MT_RXQ_MAIN.
+But for non-DBDC MT7986 MT_RXQ_BAND1 is used for RX data queue which
+leads to kernel panic when attaching WED.
 
-Fix this by initializing retstr to zero.
+Use the correct RX queue by checking WED version and band_idx.
 
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+v2 and band 1 -> MT_RXQ_BAND1
+Others -> MT_RXQ_MAIN
+
+Kernel panic:
+
+Unable to handle kernel access to user memory outside uaccess routines at virtual address 0000000000000000
+Mem abort info:
+  ESR = 0x0000000096000005
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x05: level 1 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+Internal error: Oops: 0000000096000005 [#1]  SMP
+CPU: 1 UID: 0 PID: 925 Comm: kmodloader Tainted: G           O        6.18.26 #0 NONE
+Tainted: [O]=OOT_MODULE
+Hardware name: Acer Connect Vero W6m (DT)
+pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : page_pool_alloc_frag_netmem+0x1c/0x1bc
+lr : page_pool_alloc_frag+0xc/0x34
+sp : ffffffc081dab660
+x29: ffffffc081dab660 x28: ffffffc081dabc60 x27: ffffff80091af040
+x26: 0000008000000000 x25: ffffff80091a8898 x24: ffffff80091a5440
+x23: 0000000000001000 x22: 0000000140000000 x21: ffffff80091a2040
+x20: ffffff8003f1d780 x19: 0000000000000000 x18: 0000000000000020
+x17: ffffffbfbf0ac000 x16: ffffffc080ee0000 x15: ffffff80049d47ca
+x14: 000000000000037b x13: 000000000000037b x12: 0000000000000001
+x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+x8 : ffffff8003f1d7c0 x7 : 0000000000000000 x6 : ffffff8003f1d780
+x5 : 0000000000000680 x4 : 0000000000000000 x3 : 0000000000002824
+x2 : 0000000000000000 x1 : ffffffc081dab71c x0 : 0000000000000000
+Call trace:
+ page_pool_alloc_frag_netmem+0x1c/0x1bc (P)
+ page_pool_alloc_frag+0xc/0x34
+ mt76_wed_init_rx_buf+0xf8/0x2ac [mt76]
+ mtk_wed_start+0x79c/0x12ac
+ mt7915_dma_start+0x274/0x63c [mt7915e]
+ mt7915_dma_start+0x5b4/0x63c [mt7915e]
+ mt7915_dma_init+0x49c/0x81c [mt7915e]
+ mt7915_register_device+0x24c/0x530 [mt7915e]
+ mt7915_mmio_probe+0x91c/0x1980 [mt7915e]
+ platform_probe+0x58/0xa0
+ really_probe+0xb8/0x2a8
+ __driver_probe_device+0x74/0x118
+ driver_probe_device+0x3c/0xe0
+ __driver_attach+0x88/0x154
+ bus_for_each_dev+0x60/0xb0
+ driver_attach+0x20/0x28
+ bus_add_driver+0xdc/0x200
+ driver_register+0x64/0x118
+ __platform_driver_register+0x20/0x30
+ init_module+0x74/0x1000 [mt7915e]
+ do_one_initcall+0x4c/0x1f8
+ do_init_module+0x50/0x210
+ load_module+0x15f8/0x1b10
+ __do_sys_init_module+0x1a8/0x260
+ __arm64_sys_init_module+0x18/0x20
+ invoke_syscall.constprop.0+0x4c/0xd0
+ do_el0_svc+0x3c/0xd0
+ el0_svc+0x18/0x60
+ el0t_64_sync_handler+0x98/0xdc
+ el0t_64_sync+0x158/0x15c
+Code: aa0003f3 a9025bf5 a90363f7 d2820017 (b9400000)
+
+Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
+Link: https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (`7.3.0-rc4`). The bug is in
-`ipaq_micro_str()`: it copies UTF-16LE bytes into an uninitialized
-256-byte stack buffer and then `kstrdup()`/`strlen()` can walk off the
-end of that buffer. That is a real out-of-bounds stack read and a
-kernel-stack leak into dmesg, introduced in 2014, with a one-line zero-
-init fix that applies here with no prerequisites.
+This tree is **6.6.157** (`pending-6.6`). The panic is real here, but
+the mainline patch has to be rewritten onto `mt7915/mmio.c` because
+`wed.c` does not exist yet.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[mfd / ipaq-micro] [Fix] out-of-bounds stack read in
-ipaq_micro_str**
-- Subsystem prefix: `mfd: ipaq-micro:`
-- Action verb: **Fix** (explicit bug-fix language)
-- Claimed intent: stop `ipaq_micro_str()` from reading past a stack
-  buffer
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[wifi: mt76: wed:] [fix] [kernel panic on non-DBDC MT7986 when
+attaching WED because RX buf init used the wrong queue]`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Reported-by:** `sashiko-bot@kernel.org` (automated analysis bot, not
-  syzbot, not a user crash report)
-- **Assisted-by:** `Antigravity:gemini-3.5-flash` (LLM-assisted)
-- **Signed-off-by:** Dmitry Torokhov (author)
-- **Link:** https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
-- **Signed-off-by:** Lee Jones (MFD maintainer)
-- **No Fixes:** tag (expected for this review pipeline)
-- **No Cc: stable@vger.kernel.org** (expected; not treated as a
-  negative)
-- **No Tested-by / Reviewed-by / Acked-by**
-- No Sasha Levin SOB and no `[Upstream commit ...]` marker on the commit
-  itself
+- `Signed-off-by: Zhi-Jun You <hujy652@gmail.com>` (author)
+- `Link:
+  https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com` (v2
+  1/2 of a 2-patch series)
+- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer)
+- No `Fixes:` tag (expected for this review)
+- No `Cc: stable@vger.kernel.org` (expected)
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:`
+- Sibling patch 2/2 has the same msgid stem `20260715152113.553-2` and
+  **is already in this 6.6 tree** as `8eae5e5aa09da` (`wifi: mt76:
+  mt7915: fix net_fill_forward_path for non-DBDC mt7986`)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `ipaq_micro_str()` decodes UTF-16LE into ASCII in stack
-  buffer `retstr` and never NUL-terminates it.
-- **Symptom/failure mode:** `kstrdup(retstr)` uses `strlen()`, which can
-  read past `retstr` into uninitialized stack, **leaking stack
-  contents**.
-- **Version information:** none in the message.
-- **Root cause (author):** missing terminator on a stack buffer before a
-  C-string API.
+- **Bug:** `mt76_wed_init_rx_buf` always uses `MT_RXQ_MAIN`. Non-DBDC
+  MT7986 uses `MT_RXQ_BAND1` for the RX data queue.
+- **Symptom:** NULL deref oops while attaching WED, in
+  `page_pool_alloc_frag_netmem`. Full oops from **Acer Connect Vero
+  W6m**, kernel 6.18.26, PID `kmodloader` during `mt7915e` probe.
+- **Root cause:** wrong RX queue → uninitialized `page_pool` (NULL) →
+  fault at `page_pool_alloc_frag*`.
+- **Fix:** `wed->version == 2 && dev->phy.band_idx` → `MT_RXQ_BAND1`,
+  else `MT_RXQ_MAIN`.
+- Crash taint includes `O` (OOT module), but the call trace is in-tree
+  `mt76` / `mt7915e` / `mtk_wed_start`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not a hidden fix.** Subject and body state an OOB read / stack
-leak. The one-line zero-init matches that claim.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. Explicit panic fix with a stack trace. Not
+cleanup/refactor.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/mfd/ipaq-micro.c` — 1 insertion, 1 deletion
-- **Function:** `ipaq_micro_str()`
-- **Scope:** single-file, single-line surgical fix
+- File: `drivers/net/wireless/mediatek/mt76/wed.c` (+6 / −1)
+- Function: `mt76_wed_init_rx_buf`
+- Scope: single-file, surgical (~5 lines of logic)
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** `char retstr[256];` is uninitialized. Loop writes `len/2`
-  ASCII bytes at `retstr[0 .. len/2-1]` and never writes a terminator.
-  `kstrdup(retstr)` calls `strlen()` (verified in `mm/util.c`).
-- **After:** `char retstr[256] = { 0 };` zero-fills the buffer, so the
-  first unused byte is NUL and `kstrdup` stays inside the array.
-- **Path:** `__init` probe dump only (`ipaq_micro_eeprom_dump()` →
-  `ipaq_micro_str()`), not a hot path.
+- **Before:** `q = &dev->q_rx[MT_RXQ_MAIN]` always, then
+  `mt76_get_page_pool_buf(q, ...)`.
+- **After:** pick `MT_RXQ_BAND1` for WED v2 + band 1; otherwise
+  `MT_RXQ_MAIN`.
+- Path: WED RX buffer init during `mtk_wed_start` from
+  `mt7915_dma_start` (probe / DMA start), not a rare error path.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- **Categories:** uninitialized data **and** out-of-bounds stack read;
-  possible kernel-stack leak to dmesg.
-- **Mechanism:** C-string API on a non-terminated stack buffer. Callers
-  pass `len` of 10/40/20/10, so 5–20 bytes are written and 236–251 bytes
-  stay uninitialized. If those leftover bytes contain no NUL, `strlen()`
-  reads **past** the 256-byte array.
-- **Fix:** full zero-init; `len` is `u8` so `len/2 <= 127`, always room
-  for a terminator.
+- Category: **NULL pointer dereference** (memory safety) from **wrong-
+  queue logic**.
+- Mechanism: for non-DBDC MT7986, `mt7915_band_config` sets `band_idx =
+  1` and DMA only allocates `q_rx[MT_RXQ_BAND1]`. `MT_RXQ_MAIN` is left
+  with `page_pool == NULL`. `mt76_get_page_pool_buf` →
+  `page_pool_dev_alloc_frag(NULL)` → oops.
 
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- **Quality:** obviously correct. Equivalent to `retstr[i] = '\0'` after
-  the loop; zero-init is simpler and covers every `len`.
-- **Regression risk:** very low. Only this helper; no locking, APIs, or
-  control-flow change. Extra zeros cannot make a well-formed EEPROM
-  string worse; they only stop the over-read.
-- **Red flags:** none (1 line, one driver, no public API).
+- Obviously correct given DMA queue allocation in `mt7915/dma.c`.
+- Minimal; no API/locking/refcount changes.
+- Regression risk low: DBDC and band-0 devices still use `MT_RXQ_MAIN`.
+- Backport caveat: in 6.6 the same logic lives in
+  `mt7915_mmio_wed_init_rx_buf` (`dev` is `struct mt7915_dev *`), so the
+  condition must use `dev->mt76.phy.band_idx` (or
+  `dev->phy.mt76->band_idx`), not `dev->phy.band_idx`.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- **Buggy function introduced by:** `dcc21cc09e3c22` — “mfd: Add driver
-  for Atmel Microcontroller on iPaq h3xxx” (Linus Walleij, 2014-04-03;
-  merged 2014-06-03).
-- **First appeared:** `v3.16-rc1` (`git describe --contains
-  dcc21cc09e3c22` → `v3.16-rc1~82^2~6^2~20`).
-- The `char retstr[256];` / `kstrdup` pattern was unchanged from
-  introduction until this fix.
+- Hardcoded `MT_RXQ_MAIN` in 6.6: `mt7915/mmio.c:635`, from
+  `2f5c3c77fc9b6` (`wifi: mt76: switch to page_pool allocator`,
+  2023-02-03). Present in this tree.
+- WED RX itself: `4f831d18d12da` (`wifi: mt76: mt7915: enable WED RX
+  support`, 2022-12-01). Present.
+- MT7986 one-A-die `band_idx = 1`: `mt7915_band_config` in `init.c`.
+  Present.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** Introducer identified by blame:
-`dcc21cc09e3c22`, present in this tree (`git merge-base --is-ancestor`
-not needed for HEAD history; the file and function are here).
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Bug is the hardcoded MAIN queue vs MT7986
+band-1 mapping, present since WED RX + page_pool.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- Recent file commits are style/helpers (`str_enable_disable`, `%*ph`,
-  missing `break`, etc.), not a competing terminator fix.
-- **Standalone**, not `patch X/Y`. No follow-up on this helper after
-  `da3a98c941753`.
+- `wed.c` added later by `8a7386e787ef4` (`wifi: mt76: move wed common
+  utilities in wed.c`, 2024-02-22). **Not in pending-6.6** (`git merge-
+  base --is-ancestor` → not ancestor).
+- Related 6.6 history: WED enable for MT7986, WED RX, page_pool switch,
+  several WED robustness fixes.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 Record:
-- Author **Dmitry Torokhov** is a long-time input/MFD contributor, not
-  the iPAQ driver original author.
-- Nearby MFD work is unrelated (rohm, ucb1x00, mt6397). This looks like
-  a bot-found one-off, not a series.
+- Author is not the mt76 maintainer; maintainer Felix Fietkau signed
+  off.
+- Same author, same series date: `8eae5e5aa09da` already on pending-6.6
+  (patch 2/2).
+- Felix has many mt7915/WED fixes on this branch.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 Record:
-- **No dependencies.** Changes only `char retstr[256];` → `= { 0 }`.
-  Pre-fix function in this tree’s parent of the fix is identical to the
-  candidate hunk. **Applies standalone.**
+- Standalone logic; does **not** need the `wed.c` move.
+- Needed in 6.6: `wed->version` (exists, `u8 version` in
+  `mtk_wed_device`), `phy.band_idx`, `MT_RXQ_BAND1`, page_pool RX — all
+  present.
+- Series 1/2; 2/2 is independent (forward-path queue) and already
+  applied.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- **b4 dig -c da3a98c941753:** https://patch.msgid.link/aintJF4X5tWDW-
-  Ej@google.com
-- **b4 dig -a:** single **v1** only (2026-06-10); no v2/v3.
-- Thread (saved via `b4 dig -m`): Dmitry’s patch + Lee Jones “Applied,
-  thanks!” (2026-06-18). **No NAK, no stable nomination, no risk
-  discussion.**
-- lore.kernel.org WebFetch returned **403**; discussion recovered from
-  the mbox instead.
+- `b4 dig` on sibling `8eae5e5aa09da` matched msgid
+  `20260715152113.553-*`.
+- RFC (2026-06-13): “single band MT7986”
+- v1 (2026-06-30):
+  https://patch.msgid.link/20260630150649.1629-1-hujy652@gmail.com (and
+  1629-2)
+- v2 (2026-07-15, applied):
+  https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com
+- v2 1/2 is the committed version. Change vs RFC: “single band” → “non-
+  DBDC”.
+- lore.kernel.org fetches returned 403; thread text confirmed via
+  ratatoskr mirrors.
+- No NAK found. Merged by Felix Fietkau (2026-07-31) as `8a177dabeeead`.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: **b4 dig -w** original recipients: Dmitry Torokhov, **Lee
-Jones** (`lee@kernel.org`, MFD maintainer), `linux-
-kernel@vger.kernel.org`. Maintainer applied it. No other review mail in
-the thread.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w` on sibling): Zhi-Jun You; Felix Fietkau
+(`nbd@nbd.name`); Lorenzo Bianconi; Ryder Lee / Shayne Chen / Sean Wang
+(MediaTek); `linux-wireless`; `linux-mediatek`; Benjamin Larsson
+(Suggested-by on 2/2). Maintainer merged it.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: Reporter is **sashiko-bot**, not syzbot. No bugzilla/syzkaller
-link. No user “I hit this on hardware” report found in the thread.
-Severity from the author: stack OOB + possible stack leak.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Concrete oops from Acer Connect Vero W6m
+(MT7986). Real hardware, probe-time crash with WED.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: **Standalone v1.** Not part of a multi-patch series.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 2-patch v2 series. 1/2 = this panic. 2/2 =
+`net_fill_forward_path` wrong WDMA queue; already in 6.6. Independent;
+1/2 is the crash fix.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). No stable
-discussion in the captured mbox.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable returned 403. **UNVERIFIED** whether
+anyone mailed stable@. 2/2 of the same series is already in this 6.6
+tree, so the series is treated as 6.6-relevant.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: **`ipaq_micro_str()`** only.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: Mainline `mt76_wed_init_rx_buf`. In this tree:
+`mt7915_mmio_wed_init_rx_buf`.
 
-Step 5.2: TRACE CALLERS
-Record: (semcode unavailable; `git grep` / file read)
-- Only caller: `ipaq_micro_eeprom_dump()` with `(dump, 10)`, `(dump+10,
-  40)`, `(dump+50, 20)`, `(dump+70, 10)`.
-- That dump is `__init` and is called from **`micro_probe()`** after MFD
-  cells are added.
-- Results go to `dev_info()` and, for the serial-number string,
-  `add_device_randomness()`.
-
-Step 5.3: TRACE CALLEES
-Record: loop assignment; **`kstrdup()`** → `strlen()` + `kmalloc` +
-`memcpy` (`mm/util.c`). That is what turns missing NUL into an over-read
-and a heap copy of whatever `strlen` walked.
-
-Step 5.4: FOLLOW THE CALL CHAIN
+**Step 5.2: TRACE CALLERS**
 Record:
-- `builtin_platform_driver_probe(..., micro_probe)` →
-  `ipaq_micro_eeprom_dump` → `ipaq_micro_str`.
-- **Reachable only when this platform device probes**, i.e. Compaq iPAQ
-  h3xxx with `CONFIG_MFD_IPAQ_MICRO` / `SA1100_H3600`.
-- Not a syscall-reachable path for unprivileged users on generic
-  hardware. Requires that board.
+- Assigned as `wed->wlan.init_rx_buf` in `mt7915_mmio_wed_init`.
+- Called from `mtk_wed_rx_buffer_alloc` → `dev->wlan.init_rx_buf(dev,
+  dev->wlan.rx_npkt)` (`mtk_wed.c`).
+- That runs from `mtk_wed_start` ← `mt7915_dma_start` ←
+  `mt7915_dma_init` ← `mt7915_register_device` ← probe.
+- Reachable on device probe when WED is attached (`wed_enable` module
+  param).
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: No other `ipaq_micro_str`-style helper in-tree. Sibling iPAQ
-drivers (keys/ts/battery) do not duplicate this decoder.
+**Step 5.3: TRACE CALLEES**
+Record: `mt76_get_rxwi`, `mt76_get_page_pool_buf` →
+`page_pool_dev_alloc_frag(q->page_pool)`, `mt76_rx_token_consume`. First
+page_pool alloc is the crash site.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record:
+```
+module load mt7915e
+  → mt7915_mmio_probe / register_device
+  → mt7915_dma_init → mt7915_dma_start
+  → mtk_wed_device_start → mtk_wed_rx_buffer_alloc
+  → mt7915_mmio_wed_init_rx_buf
+  → mt76_get_page_pool_buf(uninitialized MT_RXQ_MAIN)
+  → oops
+```
+Userspace-reachable via loading the driver (typically root). Not a
+syscall fuzz path; it is a boot/probe crash on affected hardware.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `mt7915/testmode.c` already uses `q = phy->mt76->band_idx ?
+MT_RXQ_BAND1 : MT_RXQ_MAIN`. DMA init uses the same band_idx split. Same
+author’s 2/2 fixes the matching forward-path mistake.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- **Yes.** File and helper exist. Pre-fix form (`char retstr[256];` +
-  `kstrdup`) is in this lineage from `dcc21cc09e3c22` (v3.16) through
-  the parent of `da3a98c941753`.
-- Current HEAD already contains the zero-init line (commit is an
-  ancestor of HEAD). That is **not** used as “already selected for
-  stable”; it only confirms the surrounding code is the same.
-- Local version: **7.3.0-rc4** / `v7.3-rc4-27-gf0100363d8c37`.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** Tree is 6.6.157 (`pending-6.6`). `wed.c` is absent.
+Equivalent bug:
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply.** Hunk context (`ipaq_micro_eeprom_read` /
-`ipaq_micro_str` / loop / `kstrdup`) is unchanged besides this one
-initializer. No refactor of this function in this tree.
+```
+mt7915_mmio_wed_init_rx_buf:
+    q = &dev->mt76.q_rx[MT_RXQ_MAIN];   /* mmio.c:635 */
+```
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No earlier alternate terminator fix. `3d1c3272a8095` is an
-unrelated missing-`break` change.
+`mt7915_dma.c`: allocate `MT_RXQ_MAIN` only if
+`!dev->phy.mt76->band_idx`; allocate `MT_RXQ_BAND1` if `dbdc_support ||
+band_idx`. `mt7915_band_config` sets `band_idx = 1` for MT7986 one-A-die
+(non-DBDC). Introduced with WED RX + page_pool (2022–2023), well before
+6.6.
+
+`git merge-base --is-ancestor 8a177dabeeead pending-6.6` → **not
+present**.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Needs a small backport**, not a clean apply. Same if/else in
+`mt7915/mmio.c`, with `dev->mt76.phy.band_idx` /
+`dev->phy.mt76->band_idx`. `wed->version` exists and is set to 2 for
+non-netsys-v1 (MT7986) in `mtk_wed.c`. Minor conflict, not a rewrite.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No equivalent RX-buf queue selection. 2/2 (`8eae5e5aa09da`) is
+here and addresses the same hardware mapping, not this NULL deref.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record:
-- **Subsystem:** MFD driver `drivers/mfd/ipaq-micro.c` (Compaq iPAQ
-  Atmel companion).
-- **Criticality: PERIPHERAL.** `MFD_IPAQ_MICRO` depends on
-  `SA1100_H3600` (StrongARM iPAQ H3100/H3600/H3700). `SA1100_H3600` is
-  still a real board option (not `UNUSED_BOARD_FILES`, unlike several
-  other sa1100 boards).
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `drivers/net/wireless/mediatek/mt76` + MediaTek WED.
+**IMPORTANT** (common Filogic/MT7986 WiFi, OpenWrt/embedded), not core
+mm/VFS.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: **Mature / low churn.** Driver added 2014; later commits are
-small cleanups. Bug is long-standing, not a new-subsystem issue.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature and actively fixed on 6.6 (WED null-ptr, register
+mapping, MT7981, chainmask for non-DBDC band 1).
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Platform-specific / config-specific** — only kernels built for
-Compaq iPAQ H3xxx (`SA1100_H3600` selects `MFD_IPAQ_MICRO`). Not
-universal, not enterprise-default hardware.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific: MT7986 (and similar mt798x) **non-DBDC**
+(single A-die) with `CONFIG_NET_MEDIATEK_SOC_WED` and `wed_enable`. Real
+product: Acer Connect Vero W6m. Default `wed_enable` is false, but WED
+is used on these SoCs.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- **Trigger:** once per boot, in `__init` `micro_probe()`, when the
-  microcontroller EEPROM is dumped.
-- **How common:** every probe on that hardware; never on other machines.
-- **Unprivileged userspace:** cannot trigger this without the device
-  (not a syzbot-style syscall bug). If dmesg is readable, leaked stack
-  bytes in `dev_info` lines are the exposure.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Every probe with WED attached on that SKU. Not a race. Needs
+privilege to load the module; typical as a platform driver at boot.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- **Failure mode:** `strlen`/`kstrdup` over-read of stack; copy of extra
-  stack bytes into a heap string; print via `dev_info` (kernel log info
-  leak); oversized `add_device_randomness()` on the serial path.
-  Possible large `kmalloc` if no NUL is found soon; crash only if the
-  scan hits an unmapped guard (possible, not demonstrated).
-- **Severity: HIGH** for memory safety / info leak on that platform;
-  **LOW population**. Not a guaranteed panic on every boot.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Kernel oops/panic on WiFi/WED attach. **CRITICAL** for those
+devices (WiFi unusable; can panic the box).
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** stops a real OOB stack read and stack leak for every iPAQ
-  micro probe. Code has been wrong since v3.16.
-- **Risk:** very low (one initializer, no behavior change for terminated
-  strings).
-- **Ratio:** benefit modest in user count, risk near zero. For a 1-line
-  memory-safety fix that is obviously correct, that still favors
-  inclusion.
+- **Benefit:** high for MT7986 non-DBDC + WED (prevents probe oops).
+- **Risk:** low (5-line queue index; other SKUs unchanged).
+- **Ratio:** benefit ≫ risk. Backport must retarget `mmio.c`.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
-**FOR backporting to this tree:**
-- Real bug: missing NUL + `kstrdup`/`strlen` → OOB stack read; leftover-
-  buffer chance of no NUL is high (~35–40% if leftover bytes are
-  random), so this is not a purely theoretical race.
-- Failure includes kernel-stack contents in dmesg (info leak) and a
-  possibly oversized allocation.
-- One-line, obviously correct, no new API/feature.
-- Present in this tree’s code since v3.16; no missing prerequisites.
-- MFD maintainer Lee Jones applied v1 with no objections.
-- Matches stable patterns: uninitialized data, OOB, small surgical fix.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**AGAINST:**
-- Extremely niche 2000-era PDA; not a core/enterprise path.
-- Probe/`__init` only; not a hot-path leak or a syscall UAF.
-- Reporter is sashiko-bot + LLM assist, not a hardware user or syzbot
-  repro.
-- No `Cc: stable` in review (not a negative per pipeline rules).
+FOR:
+- Documented oops: NULL `page_pool` in WED RX init.
+- Same bug in this tree (`mt7915_mmio_wed_init_rx_buf` + DMA not
+  allocating MAIN when `band_idx == 1`).
+- Small, obviously correct queue selection.
+- mt76 maintainer signed off; RFC → v1 → v2.
+- Sibling 2/2 already on 6.6.
+- MT7986 + WED RX + page_pool all exist here.
+- `wed->version` and `band_idx` exist.
 
-**UNRESOLVED:**
-- Could not query lore.kernel.org/stable (403).
-- No runtime crash log; analysis is from code + commit text.
+AGAINST:
+- Patch file `wed.c` is not in 6.6 (moved in 6.8-era `8a7386e787ef4`).
+- Needs a few-line context backport.
+- WED off by default; subset of MT7986 boards.
+- Crash log tainted OOT; still in-tree frames.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — zero-init makes `kstrdup`
-   well-defined; maintainer applied it. (No extra Tested-by; correctness
-   is visible from the code.)
-2. Fixes a real bug that affects users? **PASS** — OOB read + stack leak
-   on this driver’s probe path. Affected users are iPAQ H3xxx owners
-   only, but the bug is real.
-3. Important issue? **PASS** — out-of-bounds stack read and kernel-stack
-   leak, not a style cleanup. Severity HIGH on that platform, not a core
-   panic.
-4. Small and contained? **PASS** — 1 line, one static helper.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — same function, same callers,
-   no refactor required.
+UNRESOLVED:
+- Stable ML discussion (lore/stable 403).
+- Whether every reviewer asked for Cc: stable (not seen on v2 1/2).
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **None** (not a device ID, quirk, DT, build, or docs exception).
-It qualifies as a normal small memory-safety bug fix.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — matches DMA allocation;
+   maintainer merged; oops on real HW.
+2. Fixes a real bug that affects users? **PASS** — probe oops on non-
+   DBDC MT7986 + WED.
+3. Important issue? **PASS** — kernel oops, severity CRITICAL for that
+   hardware.
+4. Small and contained? **PASS** — ~5 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** with a backport to
+   `mt7915/mmio.c` (stable rule: apply cleanly **or come with a
+   backport**). Not a missing-feature case.
 
-Step 9.4: MAKE YOUR DECISION
-This tree contains the buggy helper and can take the one-line terminator
-fix with essentially no regression risk. Niche hardware lowers the user
-count; it does not make an OOB stack read + log leak ineligible. The
-patch meets the stable-rule checklist for **this** 7.3-rc4 tree.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID/quirk/DT/build/doc). Ordinary crash fix.
 
-===============================================================
-What the commit solves for this tree
-===============================================================
-`ipaq_micro_str()` fills a 256-byte stack buffer and then treats it as a
-C string. Without a terminator, `kstrdup()` → `strlen()` can read off
-the end of `retstr` and copy leftover stack into a heap string that is
-printed (`dev_info`) and, for the serial number, passed to
-`add_device_randomness()`. Zero-initializing `retstr` terminates the
-string inside the array. That is the whole fix.
+**Step 9.4: MAKE YOUR DECISION**
+The 6.6 tree has the same panic path under a pre-`wed.c` name. Selecting
+this for 6.6 is justified; apply the same `version == 2 && band_idx`
+check in `mt7915_mmio_wed_init_rx_buf`.
 
-Risk vs benefit: benefit is limited to Compaq iPAQ H3xxx probe, but the
-defect is a genuine memory-safety / info-leak bug present since v3.16.
-Risk of the change is negligible. No series, no extra commits, no
-backport rework.
+---
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: Reported-by sashiko-bot; Assisted-by LLM; SOB
-  Dmitry Torokhov + Lee Jones; Link patch.msgid.link/aintJF4X5tWDW-
-  Ej@google.com; no Fixes/Cc-stable
-- [Phase 2] Diff: 1 line in `ipaq_micro_str()`: `char retstr[256]` → `=
-  { 0 }`
-- [Phase 2] `kstrdup` in `mm/util.c` uses `strlen(s)+1` then `memcpy` —
-  confirms OOB if unterminated
-- [Phase 2] Callers in `ipaq_micro_eeprom_dump` pass len 10/40/20/10;
-  `len` is `u8` so `len/2 <= 127`
-- [Phase 3] `git blame`: function from `dcc21cc09e3c22` (2014);
-  initializer from `da3a98c941753`
-- [Phase 3] `git describe --contains dcc21cc09e3c22` → v3.16-rc1; bug
-  long predates this tree
-- [Phase 3] `git log -15 --author=Dmitry Torokhov -- drivers/mfd/`: this
-  commit is an isolated ipaq-micro change
-- [Phase 3] No related follow-up on `ipaq_micro_str`
-- [Phase 4] `b4 dig -c da3a98c941753`: lore URL found; `-a` only v1;
-  `-w` Lee Jones + lkml; `-m` thread is patch + “Applied, thanks!”
-- [Phase 4] WebFetch lore/all and lore/stable: **403** — UNVERIFIED via
-  HTTP
-- [Phase 5] grep: only `ipaq_micro_eeprom_dump` / `micro_probe` call
-  this helper; `__init` probe path
-- [Phase 6] `git describe HEAD` / `make kernelversion`: **v7.3-rc4 /
-  7.3.0-rc4**
-- [Phase 6] `git merge-base --is-ancestor da3a98c941753 HEAD`: yes
-  (commit is in this checkout; not used as circular “already selected”)
-- [Phase 6] Pre-fix snippet from `da3a98c941753^` matches the candidate
-  diff exactly
-- [Phase 7] Kconfig: `MFD_IPAQ_MICRO depends on SA1100_H3600`; H3600 not
-  under UNUSED_BOARD_FILES
-- [Phase 8] Failure mode: stack OOB + dmesg leak on iPAQ probe, severity
-  HIGH on that platform
-- UNVERIFIED: whether anyone discussed this on stable@; whether strlen
-  walking off-stack actually hits a guard page on SA1100
+**What the commit solves for this tree:** On non-DBDC MT7986, the main
+phy is band 1, so only `MT_RXQ_BAND1` is allocated. WED RX init still
+pulls from `MT_RXQ_MAIN`, whose `page_pool` is NULL, and the kernel
+oopses in `page_pool_alloc_frag` during `mt7915e` probe. That mapping is
+already in 6.6 `init.c`/`dma.c`; only the RX-buf picker is wrong.
 
-The fix is small, surgical, and meets the stable criteria for this tree.
+**Stable rules:** Real, important crash; tiny logic fix; no new API.
+File path changed after 6.6, so it needs a short backport, not a NAK.
+
+**Risk vs benefit:** Low risk, high benefit on Filogic devices that
+enable WED (including the reported Acer Vero W6m class).
+
+**Concerns:** Must edit
+`drivers/net/wireless/mediatek/mt76/mt7915/mmio.c` and use
+`dev->mt76.phy.band_idx` (or `dev->phy.mt76->band_idx`) because `dev` is
+`struct mt7915_dev *` here. Do not require `8a7386e787ef4`.
+
+Verification:
+- [Phase 1] Subject/tags: fix panic; SOB Zhi-Jun You + Felix Fietkau;
+  Link `20260715152113.553-1`; no Fixes/Cc-stable
+- [Phase 1] Series: v2 1/2; 2/2 already `8eae5e5aa09da` on pending-6.6
+- [Phase 2] Diff: 6 insertions in `mt76_wed_init_rx_buf`; queue MAIN vs
+  BAND1
+- [Phase 3] Blame on 6.6: `q = &dev->mt76.q_rx[MT_RXQ_MAIN]` from
+  `2f5c3c77fc9b6` (page_pool); present
+- [Phase 3] `8a7386e787ef4` (wed.c split) **not** ancestor of
+  pending-6.6
+- [Phase 3] Fix `8a177dabeeead` **not** ancestor of pending-6.6
+- [Phase 4] b4 dig: RFC → v1 → v2; applied v2; Felix merged 2026-07-31
+- [Phase 4] Recipients: mt76 maintainers + linux-wireless/mediatek
+- [Phase 4] UNVERIFIED: lore.kernel.org and lore.kernel.org/stable HTTP
+  403; used ratatoskr mirrors
+- [Phase 5] Caller: `mtk_wed_rx_buffer_alloc` → `wlan.init_rx_buf` from
+  `mtk_wed_start` / probe
+- [Phase 6] `git show pending-6.6:Makefile`: VERSION 6 / PATCHLEVEL 6 /
+  SUBLEVEL 157
+- [Phase 6] `git cat-file` pending-6.6 `wed.c`: path does not exist
+- [Phase 6] pending-6.6 `mmio.c:635`: hardcoded `MT_RXQ_MAIN`; `init.c`
+  sets `band_idx = 1` for one-A-die MT7986
+- [Phase 6] DMA: MAIN allocated only if `!band_idx`; BAND1 if
+  `dbdc_support || band_idx`
+- [Phase 6] `wed->version` exists; set to 2 for MT7986-class WED
+- [Phase 8] Failure: NULL page_pool deref → oops; CRITICAL for that
+  SKU+WED
+- UNVERIFIED: whether an out-of-tree module contributed besides in-tree
+  frames (taint `O`)
 
 **YES**
 
- drivers/mfd/ipaq-micro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/wed.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
-index 4b757d8472825..5146a6eb0e5a6 100644
---- a/drivers/mfd/ipaq-micro.c
-+++ b/drivers/mfd/ipaq-micro.c
-@@ -221,7 +221,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
- 
- static char *ipaq_micro_str(u8 *wchar, u8 len)
+diff --git a/drivers/net/wireless/mediatek/mt76/wed.c b/drivers/net/wireless/mediatek/mt76/wed.c
+index fbd7e59c73aaf..2ebf4edc689e9 100644
+--- a/drivers/net/wireless/mediatek/mt76/wed.c
++++ b/drivers/net/wireless/mediatek/mt76/wed.c
+@@ -33,10 +33,15 @@ u32 mt76_wed_init_rx_buf(struct mtk_wed_device *wed, int size)
  {
--	char retstr[256];
-+	char retstr[256] = { 0 };
- 	u8 i;
+ 	struct mtk_wed_bm_desc *desc = wed->rx_buf_ring.desc;
+ 	struct mt76_dev *dev = mt76_wed_to_dev(wed);
+-	struct mt76_queue *q = &dev->q_rx[MT_RXQ_MAIN];
+ 	struct mt76_txwi_cache *t = NULL;
++	struct mt76_queue *q;
+ 	int i;
  
- 	for (i = 0; i < len / 2; i++)
++	if (wed->version == 2 && dev->phy.band_idx)
++		q = &dev->q_rx[MT_RXQ_BAND1];
++	else
++		q = &dev->q_rx[MT_RXQ_MAIN];
++
+ 	for (i = 0; i < size; i++) {
+ 		dma_addr_t addr;
+ 		u32 offset;
 -- 
 2.53.0
 
