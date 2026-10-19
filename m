@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04EE4F55CC;
-	Mon, 19 Oct 2026 13:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D673534E1F;
+	Mon, 19 Oct 2026 13:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418329; cv=none; b=tNo/4ysoQ32AQKc7xVLk09pD5r+rDYx5P9AsRgo/dR/IQsH4bL0A7LvILjLjWhTprXsj2Al914v9QiwfGXH5vrqcSSQiViM0QTl05OG8rovFWp4QSOmB1H6s3g/wBNjOHhat4PznlEJIdYsbOwIec1p36XEAzJ1MrMFCgHiSIZE=
+	t=1792418330; cv=none; b=TOjK4V5sdfD60oLISNwtEvtDYIFFqSdDUpFiPqmAIR37QmR5YzCUdlfQDkoghP8lgOv1uVC5NN24+lsY2frCVhn7eUwO931aXGN3GmKEAKayZmUsntleV/09I7ge273KrPgGjndUxPO98a5MCpTGMxS+NLHd4tW2WvmUmPF9+e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418329; c=relaxed/simple;
-	bh=v3TnQfomq5DOdToBm9KN+2GrcuQ3kCaCqNyH1RiERMc=;
+	s=arc-20240116; t=1792418330; c=relaxed/simple;
+	bh=UE4NnoT493pvS51GbTL2WfN+oSCVnTbw0457tHTCllk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JmqmolH9F3Y1uAOAtvxUqwgI2axVnxJmwjNYZ+xUHwJ0cv+e5t+fb37pCrL39okkatgthxWbHq5FPnVxpKNB884RNfCHt1oHjUeW4E884w/PCpWgHqscQBzj+t2aThK8ZZ1/PNoySP+gYYXC9tXD2qwKkgnOHzCp2+cPAGwg7jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oal7QZTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YCaYEt/ijEwHuyPsN1iXlWlW8uSHeTJFiqtVooO1+voLgNEeeeyXfLp1drOJynQdzuWly18NeauvB6vSge/WtrtxG5aYISmoBLOAQievp3ZDsihvsY1XefcENsX0YVuoubSC7CMFY6xlPe22Vuqu1Y8neEe3vEaX4rll6uVBr/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ni8BoWWH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oal7QZTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75121F000C6;
-	Mon, 19 Oct 2026 13:58:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ni8BoWWH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7161F000CA;
+	Mon, 19 Oct 2026 13:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418324;
-	bh=IDcXYreBZNrwbKXGDCum4ggHLKTGxosx/kv63bkThqk=;
+	s=k20260515; t=1792418326;
+	bh=rYBZe3igbPZbFkB4NVWRoMynaA+xpZR2p3CIOhgJA8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oal7QZTntC/BIDONB6VR4K94tW9qIkzfoFRIAKPpIojcfb0UVuv/GjWRC41ec+jIJ
-	 G+ljx4RS/drAoirtfiI74oWfmIXyq18xZWXulaM97mMUVFaPUL5g0EZQIRBxmaCfky
-	 joS/6M4D3Fkg6mK4J9pJvkB+9K8RxONyVA39O3b2iYfuAVUKjXSsdGKmbePxi6oHY1
-	 0b9U2SU/GCn7vJyYCaeZeeVbCL5as/5tVrhWuWVS1/bne1mpsCsPNVPzn03i8ILvGs
-	 1LIhdBfeslmgZStu+DJZ6l0unlYzL2IZ+p2U4kt7+NEAkntWYEh6zFJxSCevuyxioI
-	 Mtl3cN0bGQwbA==
+	b=Ni8BoWWHz87j1nYFEJk8BhNBlIwGy9qRkJJC8lR3/RnOaX3G1qK40s2ooAFe8ndjL
+	 VJahuIW/ygkPaz9pO1AGHfmc+6JEUlUc5lotlV4EM2yI2T6p6yjdIDvJW3yeOX7uXZ
+	 2YsHQ/2A+wUH5G+OvzqkW7Ykj8RnON1Wlt+k9OdQptnaM8M46IWE5HsWGhHjUM01Fa
+	 isT9UWbF/re8OocLlHDNZnItI11CzZbEYXMdEbfgXrIeLmRkg8p5QxWzYQQlyUxdYV
+	 RzWOz0pOLe/dIX1nPTZfLBpuTDWgfjYximZZdjIb8ROFf1UoK1PkPhtPwwtiybIfrG
+	 xuM0G08R8+f/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Qiang <liqiang01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] Bluetooth: bfusb: validate received block boundaries
-Date: Mon, 19 Oct 2026 09:47:38 -0400
-Message-ID: <20261019135441.1420968-167-sashal@kernel.org>
+	gregkh@linuxfoundation.org,
+	rafael@kernel.org,
+	dakr@kernel.org,
+	linux-kernel@vger.kernel.org,
+	driver-core@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.6] regmap: maple: Workaround for another false-positive compiler warning
+Date: Mon, 19 Oct 2026 09:47:39 -0400
+Message-ID: <20261019135441.1420968-168-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,606 +49,355 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 6afadcff79b157a4770c4e987a6005bff40a670b ]
+[ Upstream commit dffd32eb2b0e714a8ae23f98518ad7152cb06369 ]
 
-The USB receive path trusts the block header to contain the required
-number of bytes and passes it to the reassembly routine. The routine
-also trusts a malformed HCI packet type and can append more data than
-the skb allocated from the advertised packet length. A malformed USB
-transfer can therefore cause out-of-bounds reads or an skb tail
-overwrite.
+Similar to the issue fixed in commit 542440fd7b30 ("regmap: maple: work
+around gcc-14.1 false-positive warning"), I see an uninitialized warning
+for upper_index and upper_last.
 
-Validate block header availability, declared block size, packet type,
-and reassembly tailroom. Drop the partial frame on an invalid block.
+Happens with arc-linux-gnu-gcc (Debian 15.3.0-1) 15.3.0 on an
+allmodconfig for ARCH=arc.
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`pending-6.18`). The buggy `bfusb`
-receive path is present here; the fix is not. This is a real USB OOB /
-`skb_over_panic` bug, and the patch applies cleanly.
+I have the tree version, the pre-image at v6.18.53, the lore thread, and
+the call-path context. Compiling the nine-phase analysis next.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+**Step 1.1: Subject**
+Record: `[regmap: maple:] [Workaround] [silence a gcc false-positive
+-Wuninitialized on upper_index/upper_last]`
 
-Record: **[Bluetooth/bfusb] [validate] [check USB block headers and
-reassembly bounds before trusting them]**
-
-- Subsystem prefix: `Bluetooth: bfusb:`
-- Action verb: **validate** (safety check / missing bounds handling)
-- Claimed intent: stop treating untrusted USB block headers as valid
-  lengths
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record (from the candidate message and from `git show b94bab6f1dd9`):
-
-- `Signed-off-by: Li Qiang <liqiang01@kylinos.cn>` — author
-- `Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>` —
-  Bluetooth maintainer; applied to bluetooth-next
-- No `Fixes:` tag (expected)
-- No `Cc: stable@vger.kernel.org` (expected)
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
-  `Link:`
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  ...]` markers
-
-Notable pattern: maintainer SOB only; no syzbot/user report. The same
-driver already had a `Cc: stable` USB-descriptor panic fix
-(`b5e6fa7a12572`, division by zero on malicious `wMaxPacketSize`).
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.2: Tags**
 Record:
+- Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-
+  koenig@baylibre.com
+- Signed-off-by: Uwe Kleine-König (author)
+- Signed-off-by: Mark Brown (regmap maintainer)
+- No Fixes:, Reported-by, Tested-by, Reviewed-by, Acked-by, or Cc:
+  stable (absence expected)
+- Mentions prior commit 542440fd7b30
 
-- **Bug:** USB RX trusts the 2/3-byte block header and HCI packet type.
-  Reassembly then copies `len` bytes into an skb sized from the
-  advertised HCI length, with no tailroom check.
-- **Symptom:** out-of-bounds URB reads and skb tail overwrite
-  (`skb_put()` → `skb_over_panic()` → `BUG()`).
-- **Version info:** none in the message. Blame shows the logic dates to
-  `1da177e4c3f41` (Linux-2.6.12-rc2).
-- **Root cause (author):** malformed USB transfer; missing validation of
-  header availability, declared size, packet type, and reassembly
-  tailroom. Invalid blocks should drop the partial frame.
+**Step 1.3: Body**
+Record: [Bug] gcc 15.3.0 on ARCH=arc allmodconfig reports
+-Wuninitialized for `upper_index` and `upper_last` in
+`regcache_maple_drop()`. Same class as the gcc-14.1 false-positive
+already worked around for `lower_index`/`lower_last`. [Symptom] compiler
+warning; with `CONFIG_WERROR` it is a hard build failure
+(`-Werror=uninitialized`). [Versions] gcc 15.3.0 (Debian), ARCH=arc
+allmodconfig. [Root cause] compiler cannot see that those locals are
+only read after they are assigned (guarded by `if (upper)`).
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not a hidden/cleanup-only change.** The subject is “validate”,
-but the body names OOB reads and skb overwrite. The diff adds bounds
-checks, a `default:` reject, and `break` on short/oversize blocks. This
-is an explicit memory-safety fix.
+**Step 1.4: Hidden bug fix?**
+Record: Not a hidden runtime bug. It is an explicit compiler-warning
+workaround. It is a **build fix**, which the stable rules treat as an
+allowed exception.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
+Record: `drivers/base/regmap/regcache-maple.c` — 1 line changed
+(`+1/-1`). Function: `regcache_maple_drop()`. Scope: single-file, one-
+line surgical change.
 
-Record:
+**Step 2.2: Flow**
+Record: Before: `unsigned long upper_index, upper_last;` uninitialized.
+After: `= 0` on both. No control-flow change. `upper_index`/`upper_last`
+are assigned at lines 146–147 only when `mas.last > max`, which is also
+when `upper` is allocated; they are consumed only under `if (upper)`
+(line 171). Initializing to 0 is a dead store on the real path.
 
-- File: `drivers/bluetooth/bfusb.c` only
-- Scope: **+34 / −3**, single-file surgical fix
-- Functions: `bfusb_recv_block()`, `bfusb_rx_complete()`
+**Step 2.3: Bug mechanism**
+Record: [Category] Build / compiler false-positive (not a runtime
+uninitialized use). [Mechanism] gcc 15 cannot prove initialization
+through the maple-tree loop and warns; with Werror that fails the build.
+Fix: same dummy init already used for `lower_index`/`lower_last`.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.4: Fix quality**
+Record: Obviously correct; matches the existing comment and the gcc-14
+workaround. Zero runtime behavior change. Regression risk: negligible (0
+is never consumed unless `upper` is set, and that path always assigns
+first).
 
-Record (before → after), verified against current `bfusb.c` in this
-tree:
+---
 
-1. **Unknown HCI packet type (start block):** `switch` has EVENT/ACL/SCO
-   only, no `default`. `pkt_len` stays **0**. Code allocates
-   `bt_skb_alloc(0)`, then `skb_put_data(..., len)` with the remaining
-   block. → **`default:` returns `-EILSEQ`** before alloc.
-2. **Reassembly copy:** any continuation (or start payload) is copied
-   with `skb_put_data` with no tailroom check. → **if `len >
-   skb_tailroom(reassembly)`, free skb, return `-EILSEQ`**.
-3. **Block header parse loop:** `while (count)` always does `hdr =
-   buf[0] | (buf[1] << 8)` and, unless bit `0x4000`, `buf[2]`. No `count
-   >= 2` / `count >= 3` checks. → **short-header checks; drop reassembly
-   and `break`**.
-4. **`count < len`:** only logs `"block extends over URB buffer
-   ranges"`, then still calls `bfusb_recv_block` and does `count -=
-   len`. → **free reassembly and `break`**.
-5. **Error accounting:** `bfusb_recv_block` return was ignored. → **on
-   `< 0`, `data->hdev->stat.err_rx++`**.
+## Phase 3: Git history
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 3.1: Blame**
+Record: `regcache_maple_drop()` introduced in f033c26de5a57 (“regmap:
+Add maple tree based register cache”, 2023-03-30, ~v6.4). `lower_index`
+dummy init: 542440fd7b309 (2024-07-19, in this tree). `upper_index` was
+left uninitialized until this commit.
 
-Record: **[Memory safety: OOB read + skb overflow panic] [plus infinite
-loop in URB complete]**
+**Step 3.2: Fixes: tag**
+Record: None. Related original: 542440fd7b309, already an ancestor of
+HEAD and of v6.18.53.
 
-Verified mechanism in this tree:
+**Step 3.3: File history**
+Record: Recent real fixes in this file (`00bb549d7d63a` cache
+corruption, `eaa03486d9325` uninitialized `ret`, `f08f2d2907675` leak on
+store failure) are independent. This commit is standalone, not patch X/Y
+of a functional series.
 
-```355:376:drivers/bluetooth/bfusb.c
-        while (count) {
-                hdr = buf[0] | (buf[1] << 8);
-                ...
-                        len = (buf[2] == 0) ? 256 : buf[2];
-                ...
-                if (count < len)
-                        bt_dev_err(data->hdev, "block extends over URB
-buffer ranges");
+**Step 3.4: Author**
+Record: Uwe Kleine-König is a regular driver-core contributor, not the
+regmap maintainer. Mark Brown applied it. No other related maple commits
+by this author.
 
-                if ((hdr & 0xe1) == 0xc1)
-                        bfusb_recv_block(data, hdr, buf, len);
+**Step 3.5: Dependencies**
+Record: Needs the maple cache (present since v6.4) and the existing
+`lower_*` init comment (present). Applies standalone. No new helpers or
+struct fields.
 
-                count -= len;
-                buf   += len;
-        }
+---
+
+## Phase 4: Mailing list
+
+**Step 4.1: Original discussion**
+Record: [Lore]
+https://patch.msgid.link/20260626060427.2548578-2-u.kleine-
+koenig@baylibre.com
+[Revisions] v1 only (`b4 dig -a`). Thread: submission + Mark Brown
+“Applied to broonie/regmap.git for-7.3”. No NAKs, no stable nomination,
+no reviewer risk flags.
+
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: To: Mark Brown. Cc: Greg Kroah-Hartman, Rafael Wysocki, Danilo
+Krummrich, linux-kernel, driver-core. Maintainer received and applied
+it.
+
+**Step 4.3: Bug report**
+Record: Author-reported compiler warning on arc-linux-gnu-gcc 15.3.0
+allmodconfig. No syzbot/bugzilla. Severity: build warning/error, not a
+runtime crash.
+
+**Step 4.4: Series**
+Record: msgid `…2548578-2` but subject is `[PATCH v1]` and Mark applied
+it as `[1/1]`. Standalone.
+
+**Step 4.5: Stable list**
+Record: No lore.kernel.org/stable discussion of this specific fix found.
+
+---
+
+## Phase 5: Semantic analysis
+
+**Step 5.1: Functions**
+Record: `regcache_maple_drop()` only.
+
+**Step 5.2: Callers**
+Record: Wired as `regcache_ops.drop`. Reached via
+`regcache_drop_region()` (exported). Callers: regmap core, kunit tests,
+various drivers. The *warning* triggers at compile time whenever this
+file is built, independent of runtime callers.
+
+**Step 5.3: Callees**
+Record: maple-tree `mas_*`, `kmemdup_array`, `kfree`. Unchanged.
+
+**Step 5.4: Reachability**
+Record: Compile-time: `drivers/base/regmap/regcache-maple.c` is built
+with `CONFIG_REGMAP` (common). Runtime drop path is not relevant to the
+failure mode.
+
+**Step 5.5: Similar patterns**
+Record: Same function already initializes `lower_index`/`lower_last` for
+the same reason (542440fd7b309) and `ret` for smatch (eaa03486d9325).
+This completes the remaining pair.
+
+---
+
+## Phase 6: Local tree (this checkout)
+
+**Step 6.1: Does the buggy code exist?**
+Record: Local tree is **6.18.53** (`git describe`:
+v6.18.53-5049-g0f0bdc2b0dffb; Makefile VERSION=6 PATCHLEVEL=18
+SUBLEVEL=53). At **v6.18.53**:
 ```
-
-- `count` is `int urb->actual_length`. If `count < len`, `count -= len`
-  goes **negative**. `while (count)` is then true forever → **hard
-  lockup in USB completion**.
-- `skb_put_data()` calls `skb_put()`, which panics if `skb->tail >
-  skb->end`:
-
-```2574:2592:net/core/skbuff.c
- - This function extends the used data area of the buffer. If this would
- - exceed the total buffer size the kernel will panic.
-...
-        if (unlikely(skb->tail > skb->end))
-                skb_over_panic(skb, len, __builtin_return_address(0));
+unsigned long upper_index, upper_last;
 ```
+exists; `lower_index = 0` is already present. Upstream dffd32eb2b0e is
+**not** an ancestor of v6.18.53. Maple cache has been here since ~v6.4.
 
-`skb_over_panic()` → `skb_panic()` → `BUG()`.
+**Step 6.2: Backport difficulty**
+Record: Clean apply on v6.18.53. Surrounding function matches the hunk.
+No refactor in the way.
 
-Unknown packet type: `pkt_len` initialized to 0, no `default`, then
-`bt_skb_alloc(0)` and `skb_put_data` of the rest of the block → same
-panic.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-
-- **Quality:** obviously correct. Same pattern as existing
-  `skb_tailroom` checks in `btusb.c` / `hci_h4.c`.
-- **Minimal:** only RX validation and error accounting; no API/structure
-  changes.
-- **Regression risk: low.** `default:` cannot reject ISO
-  (`HCI_ISODATA_PKT` 0x05) on this 2003-era AVM dongle (VID `0x057c`,
-  PID `0x2200`); previously unknown types already panicked. Short-header
-  `break` only stops already-corrupt URBs. `kfree_skb(NULL)` is safe if
-  `reassembly` is already NULL.
-- **Red flags:** labeled `[PATCH 1/5]`, but the other four patches touch
-  **different files** (`btmrvl`, `hci_bcsp`, `hci_ldisc`, `hci_qca`).
-  This one is standalone.
+**Step 6.3: Related fixes already here?**
+Record: gcc-14 `lower_*` workaround is in v6.18.53. Nothing already
+initializes `upper_*`.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 7: Subsystem context
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 7.1**
+Record: [Subsystem] drivers/base/regmap (maple register cache).
+[Criticality] IMPORTANT — used by many hardware drivers; this change is
+compile-time only.
 
-Record:
-
-- Core RX loop / `bfusb_recv_block`: `1da177e4c3f41` (Linus, 2005-04-16,
-  Linux-2.6.12-rc2)
-- Function split/cleanup: `9c724357f432df` (Marcel Holtmann, 2006)
-- `skb_put_data`: `59ae1d127ac0ae` (2017) — same overflow semantics as
-  old `skb_put`+`memcpy`
-- `bt_dev_err` conversion: `2a4f3909d0fbda` (2020)
-- Brace removal on the `count < len` log: `461159ece0586` (2025) — style
-  only; did **not** add a `break`
-
-Buggy pattern has been in the tree for ~20 years.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: **No `Fixes:` tag.** Introducer is `1da177e4c3f41`, which **is**
-an ancestor of this tree (`git merge-base --is-ancestor 1da177e4c3f41
-HEAD` succeeded).
-
-Related unmerged attempt: Seungjin Bae, Oct 2025, “Fix buffer over-read
-in rx processing loop” — only the `count < 3` / `buf[2]` case. Not in
-this tree. This commit is a superset.
-
-**Step 3.3: CHECK FILE HISTORY**
-
-Record (recent `git log --oneline -20 -- drivers/bluetooth/bfusb.c`):
-
-- `b5e6fa7a12572` — `bfusb: fix division by zero in send path` (`Cc:
-  stable`, malicious USB descriptors)
-- `461159ece0586` — brace style on the exact `count < len` line
-- No existing bounds-check fix for this RX loop
-
-Standalone: yes. Series mates are other drivers.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Li Qiang has **no** other `drivers/bluetooth/` commits on this
-branch. Luiz von Dentz is a Bluetooth maintainer (`MAINTAINERS`:
-BLUETOOTH DRIVERS / SUBSYSTEM) and applied the patch to bluetooth-next
-(commit date Mon Jul 20 2026).
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: **None required.** Uses existing `skb_tailroom`, `bt_skb_alloc`,
-`bt_dev_err`, `kfree_skb`. `git show b94bab6f1dd9 --
-drivers/bluetooth/bfusb.c | git apply --check` → **clean apply**.
+**Step 7.2**
+Record: Mature cache implementation (since v6.4), modest ongoing churn.
+Not staging.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 8: Impact and risk
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+**Step 8.1: Who is affected**
+Record: Anyone compiling this file with gcc that emits the warning.
+Documented trigger: ARCH=arc, gcc 15.3.0, allmodconfig. `CONFIG_WERROR`
+defaults to `COMPILE_TEST` (`init/Kconfig`); allmodconfig enables that,
+so the warning becomes `-Werror=uninitialized` (same diagnostic the
+gcc-14 commit showed as a hard error). Distro production configs usually
+have WERROR=n, so they see a warning rather than a failed build.
 
-Record:
+**Step 8.2: Trigger**
+Record: Compile of `regcache-maple.c`. Not a runtime race. Not
+userspace-triggerable.
 
-- `b4 dig -c b94bab6f1dd9`: https://patch.msgid.link/1f79f2f12306c15d6f6
-  86348bb79d8e6839968d2.1784191283.git.liqiang01@kylinos.cn
-- Cover: `[PATCH 0/5] Bluetooth: harden packet and transport parsing`
-  (2026-07-16)
-- `b4 dig -a`: **v1 only**; applied as submitted
-- Applied to bluetooth-next as `b94bab6f1dd9` by Luiz (patchwork-bot,
-  2026-07-20)
-- Networking pull for **7.3** (Jakub Kicinski, 2026-08-18) — **not** in
-  6.18
-- No NAK on this patch. Samsung review (`0eec0c0d-636b-...`) is about
-  **patch 2/5 `btmrvl`**, not bfusb.
+**Step 8.3: Failure mode**
+Record: Build warning, or build *error* when WERROR is on. Severity:
+MEDIUM for CI/allmodconfig (broken compile), LOW at runtime (no
+functional bug).
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): `linux-bluetooth@vger.kernel.org`, Marcel
-Holtmann, Luiz von Dentz, LKML. Maintainer applied it. No extra
-Reviewed-by on this hunk.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: no syzbot/bugzilla/`Reported-by`. Independent earlier report:
-Seungjin Bae described the `buf[2]` over-read / panic (Oct 2025).
-Trigger is a malformed USB bulk IN, not a syscall fuzzer.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: 5 independent driver hardenings. Patch 1/5 is self-contained.
-Patch 5/5 (`hci_qca`) was **not** applied. No bfusb follow-up found.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org/stable search for this subject did not turn up a
-prior stable discussion or a reason to skip it. UNVERIFIED in the sense
-that lore.kernel.org itself returned 403; used mirrors + web search
-instead.
+**Step 8.4: Risk-benefit**
+Record: Benefit: restores allmodconfig/WERROR builds on gcc 15 (and
+likely similar compilers). Risk: very low — one-line initializer, proven
+pattern in the same function. Ratio: favorable.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 9: Synthesis
 
-**Step 5.1: KEY FUNCTIONS**
+**Step 9.1: Evidence**
 
-Record: `bfusb_recv_block()`, `bfusb_rx_complete()`.
+FOR:
+- Explicit **build-fix** exception (compilation warnings/errors).
+- Reproduced: gcc 15.3.0, ARCH=arc allmodconfig.
+- With `CONFIG_WERROR` this is a hard build failure
+  (`-Werror=uninitialized`), same class as 542440fd7b309, which is
+  already in this tree.
+- One line, obviously correct, no runtime change.
+- Buggy (uninitialized) locals exist in v6.18.53; patch applies cleanly.
+- Maintainer (Mark Brown) applied it; no NAKs.
 
-**Step 5.2: TRACE CALLERS**
+AGAINST:
+- Not a runtime crash/corruption/security bug.
+- Applied to for-7.3 (merge window), not a -fixes pull, so not treated
+  as urgent by the maintainer.
+- Narrowest documented trigger is ARC + gcc 15 + allmodconfig.
+- No Cc: stable (expected; not a negative).
 
-Record:
+UNRESOLVED:
+- Whether gcc 15 also warns on x86/arm allmodconfig for 6.18 was not
+  reproduced here (author only cited ARC).
+- lore.kernel.org HTTP fetch returned 403; discussion recovered via `b4
+  dig -m` and openwall/patchew mirrors.
 
-- `bfusb_recv_block` — only from `bfusb_rx_complete`
-- `bfusb_rx_complete` — URB complete from `bfusb_rx_submit()`
-  (`usb_fill_bulk_urb(..., bfusb_rx_complete, skb)`)
-- `bfusb_rx_submit` — `bfusb_open()` (HCI start) and resubmit in
-  `bfusb_rx_complete`
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — dummy init; author built ARC
+   allmodconfig; maintainer applied.
+2. Real bug affecting users? **PASS** as a build break under
+   WERROR/allmodconfig; not a runtime bug.
+3. Important (crash/security/corruption/deadlock)? **FAIL** as a runtime
+   issue; **PASS** under the build-fix exception.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features/APIs? **PASS**.
+6. Can apply to this tree? **PASS** — v6.18.53 has the pre-image.
 
-Context: USB completion (atomic/BH). An infinite `while (count)` here is
-a **hard lockup**, not a sleepable hang.
+**Step 9.3: Exception**
+Record: **Build fix** (compiler warning that becomes a compile error
+with WERROR).
 
-**Step 5.3: TRACE CALLEES**
-
-Record: `bt_skb_alloc`, `skb_put_data`/`skb_put`, `hci_recv_frame`,
-`kfree_skb`, `usb_submit_urb`. No new callees in the fix (`skb_tailroom`
-is an existing inline).
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record:
-
-USB plug of `0x057c:0x2200` → `bfusb_probe` → BlueZ opens HCI →
-`bfusb_open` → bulk IN URBs → `bfusb_rx_complete`.
-
-Reachable from: a matching (or spoofed) USB device plus HCI running. Not
-a random syscall; **local USB attack surface**, same class as the prior
-`Cc: stable` bfusb descriptor fix.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: `btusb.c`, `hci_h4.c`, `btmtk.c` already check `skb_tailroom`
-before appending. `err_rx++` on parse failure is standard (`btusb`,
-`btsdio`, `bpa10x`, …). bfusb was missing both.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `drivers/bluetooth/bfusb.c` still has the unvalidated
-loop and no `default:` / tailroom check (lines 245–376). `git describe
-HEAD` = `p-6.18-1-g03b85e06ca9bf`; `make kernelversion` = **6.18.53**.
-`git merge-base --is-ancestor b94bab6f1dd9 HEAD` → **not in this tree**.
-Introduced in 2.6.12-rc2; present for the entire 6.18 lifetime.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply.** `git apply --check` on the exact commit diff
-succeeded. Surrounding code matches the hunks (including
-post-`461159ece0586` braceless `if (count < len)`).
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: Seungjin Bae over-read patch is **not** here. No other RX-bounds
-fix in this file. The send-path div-by-zero fix **is** here; it does not
-cover this RX bug.
+**Step 9.4: Decision**
+This is a one-line, zero-risk workaround for a real gcc 15 false-
+positive that breaks `CONFIG_WERROR` builds of a file this 6.18.y tree
+already ships. It matches the gcc-14 workaround already present here. It
+meets the build-fix exception and applies cleanly.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### What the commit solves for this tree
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **Bluetooth USB driver (`drivers/bluetooth/bfusb.c`)**.
-Criticality: **PERIPHERAL** hardware (AVM BlueFRITZ! USB only), but the
-failure is a **kernel panic / lockup** on untrusted USB data. Kconfig:
-`BT_HCIBFUSB`, depends on USB. Enabled as `=m` in several defconfigs
-(e.g. `omap2plus`, `exynos`, `loongson3`, `pmac32`).
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Bluetooth core is active; **bfusb itself is mature/mostly
-idle**. Recent file commits are isolated fixes/style. Long-lived bug,
-not churn from a new feature.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: **driver-specific** — AVM BlueFRITZ! USB (`USB_DEVICE(0x057c,
-0x2200)`), plus any system with the module that binds a spoofed VID/PID.
-Not universal.
-
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record:
-
-- Requires this driver bound and HCI running (`HCI_RUNNING`).
-- Trigger: truncated/malformed bulk IN (device bug, USB fuzzing,
-  malicious dongle).
-- Not a normal healthy-traffic path.
-- Unprivileged userspace cannot hit it without the device; a **USB
-  attacker** can.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
-Record:
-
-- `skb_put` overflow → `skb_over_panic` → **`BUG()` / panic** —
-  **CRITICAL**
-- `while (count)` with negative `count` → **infinite loop in URB
-  complete** — **CRITICAL**
-- Short-header `buf[0]/buf[1]/buf[2]` — **OOB read** — **HIGH**
-
-**Step 8.4: RISK-BENEFIT RATIO**
-
-Record:
-
-- **Benefit: high for affected systems** (panic/lockup prevention).
-  Population is small, but the same driver already got stable treatment
-  for malicious USB descriptors.
-- **Risk: very low** — 37-line, single-file, validated by maintainer,
-  applies cleanly, error-path only.
-- **Ratio: favor backport.**
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-
-- Real OOB read + `skb` overflow `BUG()` + possible hard lockup,
-  verified in this tree’s code
-- Bug present since 2.6.12; definitely in 6.18.53
-- Small, obviously correct, no new APIs
-- Applies cleanly; no prerequisites
-- Bluetooth maintainer applied it
-- Same driver already had a stable USB-malice panic fix
-- Independent of the rest of the 5-patch series
-
-**AGAINST:**
-
-- Niche 2000s dongle; few users
-- No syzbot / production `Reported-by`
-- Series framed as “harden”
-- Patch 2/5 (`btmrvl`) later needed a fix — **does not apply to this
-  file**
-
-**UNRESOLVED:**
-
-- Could not fetch lore.kernel.org directly (403); used `b4 dig` +
-  mirrors
-- No scan of every post-`b94bab6f1dd9` bluetooth-next follow-up (object
-  is not on HEAD); no evidence of a bfusb revert/fixup
-
-**Step 9.2: STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — maintainer-applied; logic
-   matches existing Bluetooth RX checks
-2. Fixes a real bug that affects users? **PASS** — malformed USB RX
-   panics/lockups this driver
-3. Important issue? **PASS** — kernel `BUG()` / hard lockup / OOB
-   (CRITICAL), even though the driver is niche
-4. Small and contained? **PASS** — +34/−3, one file
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded; buggy code present; fix not present
-
-**Step 9.3: EXCEPTION CATEGORIES**
-
-Record: none (not a device ID / quirk / DT / build / doc exception).
-Qualifies as a **normal memory-safety bug fix**.
-
-**Step 9.4: DECISION**
-
-Backport to **this** 6.18.53 tree. The receive path here still trusts
-USB block lengths; that can panic or lock up the USB completion path.
-The fix is surgical and already matches this file.
-
-### What the commit solves for stable users
-
-On AVM BlueFRITZ! USB (or a spoofed `057c:2200`), a short or lying block
-header can over-read the URB buffer, `skb_put()` past the reassembled
-HCI skb (`BUG()`), or drive `count` negative and spin forever in
-`bfusb_rx_complete`. This tree still has that code. The patch only adds
-header/size/type/tailroom checks and drops the partial frame.
+v6.18.53 still declares `upper_index`/`upper_last` uninitialized in
+`regcache_maple_drop()`. gcc 15.3.0 (ARC allmodconfig) warns; with
+WERROR that fails the kernel build. Initializing them to 0, as already
+done for `lower_index`/`lower_last`, silences the diagnostic without
+changing runtime behavior.
 
 ### Risk vs benefit
 
-Benefit is preventing panic/lockup on untrusted USB RX. Risk is low:
-error-path validation, no locking/API change, clean apply. Niche
-hardware lowers breadth of impact but does not make a USB-triggered
-`BUG()` unsuitable for stable.
+Benefit is restoring compiles for WERROR/allmodconfig (and silencing the
+warning otherwise). Risk is a dead store of 0. No prerequisites beyond
+code already in 6.18.y.
 
----
-
-## Verification
-
-- **[Phase 1]** Parsed subject/body/tags from the candidate text and
-  `git show b94bab6f1dd9`; no Fixes/Cc:stable/Reported-by; Luiz SOB
-  confirmed
-- **[Phase 2]** Read `bfusb_recv_block` / `bfusb_rx_complete` in this
-  tree; confirmed missing `default`, no tailroom check, log-only `count
-  < len`, signed `count` loop
-- **[Phase 2]** Read `skb_put` / `skb_put_data` / `skb_panic`: overflow
-  → `BUG()`
-- **[Phase 3]** `git blame` on both functions: core logic
-  `1da177e4c3f41` (2.6.12-rc2)
-- **[Phase 3]** `git merge-base --is-ancestor 1da177e4c3f41 HEAD` —
-  introducer in this tree
-- **[Phase 3]** `git merge-base --is-ancestor b94bab6f1dd9 HEAD` — fix
-  **not** in this tree (exit 1)
-- **[Phase 3]** `git log --oneline -20 -- drivers/bluetooth/bfusb.c` —
-  no prior RX-bounds fix; `b5e6fa7a12572` is a different (send-path) USB
-  panic
-- **[Phase 4]** `b4 dig -c b94bab6f1dd9` — lore msgid
-  `1f79f2f12306c15d6f686348bb79d8e6839968d2.1784191283`
-- **[Phase 4]** `b4 dig -a` — v1 only
-- **[Phase 4]** `b4 dig -w` — linux-bluetooth, Holtmann, von Dentz
-- **[Phase 4]** Cover letter / patchwork-bot: applied to bluetooth-next
-  2026-07-20; networking pull for 7.3
-- **[Phase 4]** Samsung mail is about `btmrvl` 2/5, not this patch
-- **[Phase 5]** Callers: only URB complete ← `bfusb_rx_submit` ←
-  `bfusb_open` / resubmit
-- **[Phase 5]** `git grep skb_tailroom` in `drivers/bluetooth` — sibling
-  drivers already check
-- **[Phase 6]** `git describe HEAD` / `make kernelversion`: 6.18.53;
-  `grep` found no “block exceeds packet length” in this tree
-- **[Phase 6]** `git apply --check` of `b94bab6f1dd9` — success
-- **[Phase 7]** Kconfig `BT_HCIBFUSB`; MAINTAINERS lists Luiz;
-  defconfigs enable it as a module
-- **[Phase 8]** Failure mode verified: panic (`BUG`) and infinite URB-
-  complete loop
-- **UNVERIFIED:** direct lore.kernel.org HTTP (403); exhaustive post-
-  merge bfusb follow-ups on branches not in HEAD
+### Verification
+- [Phase 1] Parsed tags: Link to msgid, SOBs from Uwe Kleine-König and
+  Mark Brown; no Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: 1 line in `regcache_maple_drop()`; `upper_index,
+  upper_last` → `= 0`
+- [Phase 2] Read function: `upper_*` assigned only when `mas.last >
+  max`, used only under `if (upper)`
+- [Phase 3] blame: maple cache f033c26de5a57 (v6.4); lower_* init
+  542440fd7b309 (in this tree)
+- [Phase 3] `git merge-base --is-ancestor 542440fd7b309 HEAD` → yes;
+  `dffd32eb2b0e` vs v6.18.53 → not ancestor
+- [Phase 3] `git show 542440fd7b309`: same -Werror=uninitialized class
+  for `lower_index`
+- [Phase 4] `b4 dig -c dffd32eb2b0e`: lore msgid
+  20260626060427.2548578-2; v1 only; applied for-7.3
+- [Phase 4] `b4 dig -w`: Mark Brown, Greg KH, driver-core CC’d
+- [Phase 4] mbox: Mark Brown applied [1/1]; no NAK, no stable Cc
+- [Phase 4] WebFetch lore/msgid.link: 403; recovered via openwall +
+  patchew + mbox
+- [Phase 5] callers: `regcache_ops.drop` → `regcache_drop_region()`;
+  warning is compile-time
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.53
+- [Phase 6] `v6.18.53:drivers/base/regmap/regcache-maple.c` still has
+  `unsigned long upper_index, upper_last;`
+- [Phase 7] init/Kconfig: `config WERROR` default `COMPILE_TEST`;
+  Makefile.extrawarn adds `-Werror`
+- [Phase 8] Failure mode: compile warning/error, not runtime oops
+- UNVERIFIED: whether gcc 15 warns on non-ARC 6.18 allmodconfig (author
+  only reported ARC)
 
 **YES**
 
- drivers/bluetooth/bfusb.c | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/bfusb.c b/drivers/bluetooth/bfusb.c
-index 8df310983bf6b..d31d797639b51 100644
---- a/drivers/bluetooth/bfusb.c
-+++ b/drivers/bluetooth/bfusb.c
-@@ -301,6 +301,11 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
- 				return -EILSEQ;
- 			}
- 			break;
-+
-+		default:
-+			bt_dev_err(data->hdev, "unknown packet type 0x%02x",
-+				   pkt_type);
-+			return -EILSEQ;
- 		}
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index 9cf0384ce7b95..615ecb89d5377 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -112,7 +112,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
+ 	unsigned long *entry, *lower, *upper;
+ 	/* initialized to work around false-positive -Wuninitialized warning */
+ 	unsigned long lower_index = 0, lower_last = 0;
+-	unsigned long upper_index, upper_last;
++	unsigned long upper_index = 0, upper_last = 0;
+ 	int ret = 0;
  
- 		skb = bt_skb_alloc(pkt_len, GFP_ATOMIC);
-@@ -319,6 +324,13 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
- 		}
- 	}
- 
-+	if (len > skb_tailroom(data->reassembly)) {
-+		bt_dev_err(data->hdev, "block exceeds packet length");
-+		kfree_skb(data->reassembly);
-+		data->reassembly = NULL;
-+		return -EILSEQ;
-+	}
-+
- 	if (len > 0)
- 		skb_put_data(data->reassembly, buf, len);
- 
-@@ -353,6 +365,13 @@ static void bfusb_rx_complete(struct urb *urb)
- 	skb_put(skb, count);
- 
- 	while (count) {
-+		if (count < 2) {
-+			bt_dev_err(data->hdev, "short block header");
-+			kfree_skb(data->reassembly);
-+			data->reassembly = NULL;
-+			break;
-+		}
-+
- 		hdr = buf[0] | (buf[1] << 8);
- 
- 		if (hdr & 0x4000) {
-@@ -360,16 +379,28 @@ static void bfusb_rx_complete(struct urb *urb)
- 			count -= 2;
- 			buf   += 2;
- 		} else {
-+			if (count < 3) {
-+				bt_dev_err(data->hdev, "short block header");
-+				kfree_skb(data->reassembly);
-+				data->reassembly = NULL;
-+				break;
-+			}
-+
- 			len = (buf[2] == 0) ? 256 : buf[2];
- 			count -= 3;
- 			buf   += 3;
- 		}
- 
--		if (count < len)
-+		if (count < len) {
- 			bt_dev_err(data->hdev, "block extends over URB buffer ranges");
-+			kfree_skb(data->reassembly);
-+			data->reassembly = NULL;
-+			break;
-+		}
- 
--		if ((hdr & 0xe1) == 0xc1)
--			bfusb_recv_block(data, hdr, buf, len);
-+		if ((hdr & 0xe1) == 0xc1 &&
-+		    bfusb_recv_block(data, hdr, buf, len) < 0)
-+			data->hdev->stat.err_rx++;
- 
- 		count -= len;
- 		buf   += len;
+ 	lower = NULL;
 -- 
 2.53.0
 
