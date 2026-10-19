@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D80E5FF62C;
-	Mon, 19 Oct 2026 14:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820AA528E9C;
+	Mon, 19 Oct 2026 14:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418581; cv=none; b=YjcnF2I5I+JAr+OoWIfG282YTp9Gqb+QH1trg5zux6IyagldmhlgGtjmRfmTvAGMfHVja0UwVhsM0sl5mQ8WakgztkP5K8+tfpShL1rMGlaFLYRcqt0YgvRRncnlhEF85pBWWgc0t1B6OD6zMwWXjW8lc59jpt1yrFGFLOAGl4s=
+	t=1792418584; cv=none; b=ib4tOwTrlSyLkxTq4AQiC/CjHl4GN3fJBqP0gs0KJWJbdxU9jzYXJ3j5IXXqVSAM5aD67shls7U0le48YJDEE7AQfAAIICoTAMDvGNX2V/gyWaH1egbMPlO5hsnz/wB732Y5ordzw+84xoCMTMtlMv60O3DxJ4N40PjB36nJN1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418581; c=relaxed/simple;
-	bh=TTdddeHMtr7wetz1Vsamh2kd68eQ1w7kmjkDp4jMAUo=;
+	s=arc-20240116; t=1792418584; c=relaxed/simple;
+	bh=WDzIbKo4KLjrS4lSNJREq6bBYJ+b6B6bMFaHdQRkxYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gs2KmFiZE0qE5u2HmyKPuxqZqRc+9H6lyajGek6ZDkD27e4JSVqn3NX9e7FS6W6SgxDN2/F5hxfB9FjZKR0MMjUSPmJ/cZyo6uAyReSudPpiQfwRnekguBFDGeYosFawY6bH/9P0fSyzlUjYwZcfDbYM8DkjJVfr1BBHJKU9ubo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaCT8lO0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b4zYS85R4l46CoJC4khq0V9LGM0Hg4koj2wbpOrVKk9HIs1Hyn2s+ZqfUnOxltOGSjWgWKIIQvaF7DK7VN+BhRwQKFAmjyxqu3jZKWTwUv1iYSmzIihhl7yXYaN5hwdonWQLWPDSK62bReYOg3JsPvqR5zx6637y50XFztxME7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIFVaIj3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaCT8lO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C5F1F000C7;
-	Mon, 19 Oct 2026 14:02:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIFVaIj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574001F000C4;
+	Mon, 19 Oct 2026 14:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418579;
-	bh=1MHD/LNv7217jb5wbOXkHs7+xUUewgbYZ/jth4BbiyA=;
+	s=k20260515; t=1792418581;
+	bh=6cgidK+zeGuACZ/n/MWCuGvUglgmjVNS9L7Qx+HPLZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FaCT8lO0hkA+2i5uaNu9amvUGB/4STX4QXobNNXrkgBJcD2MBhx69zE4HJ+E3X6CG
-	 6TprtMyaU7VkTRB0Hm7U8cIPJMdP1xKXvXVK+2Mi3PRUee4PBORLfTHQu62nMp+D4t
-	 VJnrlvkNq/Nn8+0V1mqIrdL8vYXokPENWQFOUdTA2eXwFDPH6tsTM5IVV8PIIql8TZ
-	 jXe+hUEIl1R9OdU5uE4MdM6563bPAJrFOubrOt/Q++5vM8VNR9UDnqVmWReuidLZ2z
-	 +k06RMI9/QgwIAgEDcLu+NuWYmHqecS3J7NIN1eGypwrLN67zQkfVQ81iBQo4UzmCy
-	 fX0CMsIG8pSPg==
+	b=MIFVaIj3glebXWQ4T5nUShQiZcEkLUA9LwB/KsPHIEICRTfmbk2xo4h3h5Yv9ruCx
+	 1+b3jhrx9KdA6M9v8idMarMj9hnFS6daJ2oSUFINa+a5RWy5EMSDja5s/CGoRI9GS+
+	 SZGN2FGvqsZCIoDuI3glMdNs86bXngIr7w3fmVfSZO4ftiVojrM8TTYhJ8avgZ+0GU
+	 XFw5n23qUC/GlqiKBQemD3ze4/rTTjFOip5W9YWge2mvA3xGy+dhUTVO/+ji8VMYlk
+	 Z4dhRosRf1DSn5MiTA17LKPzTe2ZCNyx0noNFR9XcyoZzTSv4PpLgqoFrXFYwQchYd
+	 +m7FDHWKHAeHA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	hjc@rock-chips.com,
+	andyshrk@163.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: honor client signing-required in all modes
-Date: Mon, 19 Oct 2026 09:50:39 -0400
-Message-ID: <20261019135441.1420968-348-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/rockchip: dw_hdmi: Use resume_early pm ops for system suspend
+Date: Mon, 19 Oct 2026 09:50:40 -0400
+Message-ID: <20261019135441.1420968-349-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,307 +61,469 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit bc2f3f3dd69424f76e2ed3dc53d29bfd6c9966d4 ]
+[ Upstream commit af3a9eadc11896f6677bcb7102bfb7c84be48d2d ]
 
-The SMB2 NEGOTIATE request's SMB2_NEGOTIATE_SIGNING_REQUIRED bit requires
-the server to set Connection.ShouldSign. KSMBD represents that state with
-conn->sign, but previously set it only when its signing configuration was
-auto or disabled.
+rockchip_drm_sys_resume()/drm_mode_config_helper_resume() is called
+before the resume pm ops of dw-hdmi. This result in an atomic_enable()
+before dw_hdmi_rockchip_resume()/dw_hdmi_resume() is called.
 
-Set conn->sign whenever the client requires signing, independently of the
-server's signing mode. Keep the mandatory server-mode handling unchanged.
+Resume (without changes):
+- rockchip_drm_sys_resume()
+  - drm_mode_config_helper_resume()
+    - atomic_enable()
+- dw_hdmi_rockchip_resume()
+  - dw_hdmi_resume()
+    - dw_hdmi_init_hw()
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Change to use resume_early pm ops for system suspend to ensure pm ops
+for dw-hdmi is run before rockchip-drm pm ops. Also fix a possible NULL
+pointer dereference timing issue while at it.
+
+Resume (with changes):
+- dw_hdmi_rockchip_resume_early()
+  - dw_hdmi_resume()
+    - dw_hdmi_init_hw()
+- rockchip_drm_sys_resume()
+  - drm_mode_config_helper_resume()
+    - atomic_enable()
+
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Tested-by: Heiko Stuebner <heiko@sntech.de> #rk3328
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260518193748.2482823-12-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have the 6.18.y picture: the buggy resume path is in v6.18.53, the
+patch is self-contained, and the DSI sibling already uses the same
+late/early PM ordering. Compiling the full nine-phase verdict next.
 
-**Step 1.1 — Subject**
-Record: `[ksmbd] [honor] honor client signing-required in all modes`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [drm/rockchip: dw_hdmi] [Use] [switch HDMI system-resume
+callback to resume_early so dw-hdmi re-inits before rockchip-drm
+atomic_enable]
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd
-  maintainer; author and committer of upstream `bc2f3f3dd694`)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Link:`, or
-  `Cc: stable` (absence expected for this review)
-- Pipeline `Signed-off-by: Sasha Levin` ignored per instructions
+- Tested-by: Heiko Stuebner <heiko@sntech.de> #rk3328 (Rockchip DRM
+  maintainer; hardware-tested)
+- Signed-off-by: Jonas Karlman <jonas@kwiboo.se> (author)
+- Signed-off-by: Heiko Stuebner <heiko@sntech.de> (subsystem maintainer
+  applied it)
+- Link:
+  https://patch.msgid.link/20260518193748.2482823-12-jonas@kwiboo.se
+- No Fixes:, Reported-by, Reviewed-by, Acked-by, or Cc: stable (absence
+  expected)
+- Ignore pipeline tags: [Upstream commit
+  af3a9eadc11896f6677bcb7102bfb7c84be48d2d], Signed-off-by: Sasha Levin
 
-**Step 1.3 — Body**
+Notable: maintainer Tested-by on real RK3328 hardware.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: MS-SMB2 requires `Connection.ShouldSign` when the client sets
-  `SMB2_NEGOTIATE_SIGNING_REQUIRED` on NEGOTIATE. ksmbd stores that in
-  `conn->sign`, but only set it when `server_conf.signing` was `AUTO` or
-  `DISABLED`.
-- Symptom: with `server signing = enabled`, a client that requires
-  signing does not get `conn->sign` set. Later session signing
-  (`sess->sign`) can stay off unless SESSION_SETUP repeats the flag.
-- Failure mode: protocol MUST violation; session may not be treated as
-  signing-required.
-- Version: present since ksmbd was merged; not a new-code-only bug.
+- Bug: on system resume, `rockchip_drm_sys_resume()` →
+  `drm_mode_config_helper_resume()` → atomic enable runs before
+  `dw_hdmi_resume()` → `dw_hdmi_init_hw()`.
+- Symptom: HDMI hardware (DDC I2C, HPD, interrupt mutes) is restored
+  after DRM has already tried to re-enable the display pipeline.
+- Secondary: “possible NULL pointer dereference timing issue” — resume
+  can run with NULL drvdata.
+- No stack trace, syzbot report, or CVE. Author gave simulated-suspend
+  (`pm_test`) and `rtcwake` test steps in the mailing-list version.
 
-**Step 1.4 — Hidden fix?**
-Record: Not disguised. It is an explicit protocol/security correctness
-fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised. It is an explicit PM-ordering fix plus a NULL
+check. It was patch 11/11 of a series titled “Misc cleanup and propagate
+bus format”, and was added in v2; the other patches are unrelated
+cleanups/prep. This hunk is a standalone bug fix.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1 — Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `fs/smb/server/smb2pdu.c` (upstream +2/−4; this tree matches at
-  lines 1252–1263)
-- Function: `smb2_handle_negotiate()`
-- Scope: single-file surgical logic change
+- File: `drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c` (+4/-3, 7 lines)
+- Functions: `dw_hdmi_rockchip_resume` renamed to
+  `dw_hdmi_rockchip_resume_early`; `dw_hdmi_rockchip_pm` table
+- Scope: single-file surgical PM-ops change
 
-**Step 2.2 — Before → after**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: `conn->sign = true` only if `(AUTO || DISABLED) && client
-  SIGNING_REQUIRED`, else if `MANDATORY` (force required +
-  `conn->sign`).
-- After: if client SIGNING_REQUIRED → `conn->sign = true` in every
-  server mode. `MANDATORY` handling is a separate `if` (not `else if`)
-  and is otherwise unchanged.
-- Path: SMB2 NEGOTIATE, once per connection.
+- Before: `.resume` (normal phase) unconditionally calls
+  `dw_hdmi_resume(hdmi->hdmi)`.
+- After: `.resume_early` (early phase) calls it only if
+  `dev_get_drvdata()` is non-NULL.
+- `SET_SYSTEM_SLEEP_PM_OPS(NULL, resume)` →
+  `SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, resume_early)`.
+- Suspend remains NULL. Hibernation thaw/restore move from thaw/restore
+  to thaw_early/restore_early, matching the same ordering intent.
 
-**Step 2.3 — Bug mechanism**
-Record: Logic/correctness (protocol security).
-`KSMBD_CONFIG_OPT_ENABLED` (1) was the missing case. Userspace maps
-`server signing = enabled` to that value.
+Resume phase order is resume_noirq → resume_early → resume. HDMI
+therefore always re-inits before rockchip-drm’s `.resume`.
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct vs MS-SMB2 3.3.5.4. Minimal. Changing `else
-if` to `if` is equivalent for AUTO/DISABLED/MANDATORY. Regression risk
-is very low; the only new behavior is honoring client-required signing
-when the server mode is ENABLED.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Primary: logic/correctness + hardware resume ordering. Sibling `dw-
+  mipi-dsi-rockchip.c` already uses `SET_LATE_SYSTEM_SLEEP_PM_OPS` with
+  the comment that it must run before `rockchip_drm_drv` re-enables
+  panels.
+- Secondary: memory safety — NULL check before `hdmi->hdmi` dereference
+  when the platform device has probed (`component_add`) but not bound
+  (`platform_set_drvdata` is in bind, not probe).
 
-## Phase 3: Git history
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct: Linux PM runs all `resume_early` callbacks before
+  any `.resume`. That is the standard way to order a component ahead of
+  the DRM master.
+- Minimal; no API or data-structure change.
+- Regression risk low: same pattern as the in-tree DSI sibling; only
+  resume is registered; `dw_hdmi_init_hw()` only re-inits mutes, DDC
+  I2C, and HPD.
+- NULL check does not cover `hdmi->hdmi` being `ERR_PTR` after a failed
+  bind; that is a leftover hole, not a regression from this patch.
 
-**Step 3.1 — Blame**
-Record: Buggy condition is from `e2f34481b24db` (“cifsd: add server-side
-procedures for SMB3”, 2021-05-10). Whitespace-only tweak in
-`64b39f4a2fd29`. Present since ksmbd entered mainline (~v5.15).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.2 — Fixes: tag**
-Record: None. Introduction commit is an ancestor of this tree (`git
-merge-base --is-ancestor e2f34481b24db HEAD` succeeded).
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Buggy resume path introduced by `27c9130baef543` (“drm/rockchip:
+  dw_hdmi: Handle suspend/resume”, Douglas Anderson, 2019-06-04), first
+  in v5.3-rc1.
+- That commit is an ancestor of this tree.
+- That commit already documented the failure on rk3288 Chromebooks (HDMI
+  HPD and DDC I2C stop working after suspend) and that Chrome OS 3.14
+  used late/early PM ops because VOP sometimes resumed before dw-hdmi.
+  Mainline used normal `.resume` because the author could not reproduce
+  it then. This patch is the proper late/early fix for that known issue.
 
-**Step 3.3 — File history**
-Record: Recent `smb2pdu.c` work is leases, durable reconnect, negotiate
-races — not this signing condition. Standalone, not “patch X/Y”.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. The introducing commit is `27c9130baef543`,
+present here.
 
-**Step 3.4 — Author**
-Record: Namjae Jeon is the ksmbd maintainer. Nearby work is other ksmbd
-protocol/security fixes, not a prerequisite series for this hunk.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Only two resume-related commits on this file: 27c9130baef543 (add
+  resume) and this one.
+- Recent 6.18.y file history is unrelated (SCLIN mask, FIELD_PREP,
+  whitespace).
+- Series-local neighbors (output_port, whitespace, empty helpers) are
+  not functional prerequisites of this hunk.
 
-**Step 3.5 — Dependencies**
-Record: None. Uses existing `conn->sign`, `server_conf.signing`, and
-`SMB2_NEGOTIATE_SIGNING_REQUIRED_LE`. `git apply --check` of a line-
-adjusted patch is clean.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Jonas Karlman is a regular Rockchip HDMI/dw-hdmi contributor.
+Heiko Stuebner (maintainer) applied the series and tested it on rk3328.
 
-## Phase 4: Mailing list / external
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Series v2 11/11; cover letter says patches 1–10 are cleanup / YCbCr-
+  Deep Color prep. Patch 11 only changes PM ops.
+- `SET_LATE_SYSTEM_SLEEP_PM_OPS` exists in this tree’s
+  `include/linux/pm.h`.
+- `dw_hdmi_resume()` exists in `drivers/gpu/drm/bridge/synopsys/dw-
+  hdmi.c`.
+- Applies standalone. No missing helpers.
 
-**Step 4.1 — Original discussion**
-Record: Upstream SHA `bc2f3f3dd69424f76e2ed3dc53d29bfd6c9966d4`
-(authored 2026-07-17, committed 2026-08-17). `b4 dig` failed:
-lore.kernel.org returned errors (bot protection). No thread URL
-retrieved.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.2 — Reviewers**
-Record: UNVERIFIED via b4. Namjae is both author and committer; typical
-for ksmbd maintainer commits.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- b4 dig:
+  https://patch.msgid.link/20260518193748.2482823-12-jonas@kwiboo.se
+- v1 (2026-05-10): 10 patches, no resume_early change
+- v2 (2026-05-18): this patch added (“v2: New patch”)
+- Applied by Heiko 2026-06-02 as
+  `af3a9eadc11896f6677bcb7102bfb7c84be48d2d`
+- No NAK. No reviewer asked for further revisions of this hunk.
+- Author included CONFIG_PM_DEBUG / rtcwake test instructions and noted
+  a separate RK356x EHCI/OHCI clock issue, not this bug.
 
-**Step 4.3 — Bug report**
-Record: No `Reported-by` / syzbot / bugzilla. The 7.3-rc1 ksmbd pull
-(Namjae Jeon, 2026-08-23) lists “signing-required handling” under
-“SMB2/SMB3 protocol validation and security issues” and mentions
-smbtorture-validated compatibility fixes.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: Recipients included Heiko Stuebner, Sandy Huang, Andy Yan, DRM
+maintainers, dri-devel, linux-rockchip. Heiko tested and applied. No
+other Acked-by/Reviewed-by on this patch.
 
-**Step 4.4 — Series**
-Record: Independent of the 7.3 features landed the same day (replay,
-sequence window, Time Machine). This hunk does not use those structures.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla link. Real-world grounding is the 2019
+Chromebook report in 27c9130baef543 plus Heiko’s rk3328 Tested-by.
 
-**Step 4.5 — stable@**
-Record: lore.kernel.org/stable search returned 403. No stable-specific
-NAK found.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone vs the rest of the v2 series. DSI sibling
+`e584cdc154993` (“drm/rockchip: dsi: Reconfigure hardware on resume()”)
+used the same late PM ops and had Cc: stable.
 
-## Phase 5: Code semantics
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: UNVERIFIED. lore.kernel.org/stable returned an Anubis bot-check
+page; WebFetch to lore returned 403.
 
-**Step 5.1 — Functions**
-Record: `smb2_handle_negotiate()` only.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.2 — Callers**
-Record: Called from `fs/smb/server/smb_common.c` during SMB2 dialect
-negotiate, under `conn->srv_mutex`. That is the first SMB2 command on a
-connection (TCP 445). User-reachable on every ksmbd connection.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `dw_hdmi_rockchip_resume_early` (was `dw_hdmi_rockchip_resume`);
+`dw_hdmi_rockchip_pm`.
 
-**Step 5.3 — Callees / effects**
-Record: `conn->sign` is `Connection.ShouldSign`. It is consumed in NTLM
-and Kerberos session setup to set `sess->sign`. `sess->sign` causes
-response signing in `__handle_ksmbd_work()`.
+Step 5.2: TRACE CALLERS
+Record: Invoked by the PM core as `dev_pm_ops.resume_early` on the
+`dwhdmi-rockchip` platform driver. Triggered by system suspend/resume
+(and freeze/thaw/restore via LATE_SYSTEM_SLEEP_PM_OPS). Not a syscall
+hot path; it is the Chromebook/SBC sleep path.
 
-**Step 5.4 — Reachability**
-Record: Yes, from the network. Gated on `CONFIG_SMB_SERVER` (default n).
+Step 5.3: TRACE CALLEES
+Record: `dev_get_drvdata` → `dw_hdmi_resume` → `dw_hdmi_init_hw` →
+`initialize_hdmi_ih_mutes`, `dw_hdmi_i2c_init`, optional
+`phy.ops->setup_hpd`.
 
-**Step 5.5 — Similar patterns**
-Record: SESSION_SETUP has a second check: `req->SecurityMode &
-SMB2_NEGOTIATE_SIGNING_REQUIRED`. Compliant clients (MS-SMB2 MUST, Linux
-CIFS) usually set the same flag on SESSION_SETUP, so `sess->sign` can
-still be set. That is a fallback, not a reason the NEGOTIATE bug is
-absent. SMB1-style negotiate around line 307 only advertises REQUIRED in
-MANDATORY mode and does not set `conn->sign`.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record:
+- Userspace: `echo mem > /sys/power/state` / rtcwake / systemd suspend.
+- DRM side: `rockchip_drm_sys_resume` → `drm_mode_config_helper_resume`
+  → `drm_atomic_helper_resume` (atomic commit / enable).
+- HDMI platform device is a component, not a child of the DRM device;
+  sibling `.resume` order is not guaranteed. `platform_set_drvdata` is
+  in `dw_hdmi_rockchip_bind`, while probe only does `component_add`, so
+  resume-before-bind can see NULL drvdata.
+- Reachable on any Rockchip board with this HDMI IP and CONFIG_PM_SLEEP
+  (RK3288/RK3328/RK3399/RK3568, including Chromebooks).
 
-Verified in this tree: `smb2_is_sign_req()` still only looks at
-`SMB2_FLAGS_SIGNED` on the request. This patch does not add reject-
-unsigned-when-required. It only sets ShouldSign so session signing state
-can follow the spec.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record:
+- `dw-mipi-dsi-rockchip.c` already uses
+  `SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, dw_mipi_dsi_rockchip_resume)` in
+  this tree for the same reason.
+- `dw_hdmi_qp-rockchip.c` still uses `SET_SYSTEM_SLEEP_PM_OPS`
+  (different HDMI QP IP, not this patch).
+- imx8mp and meson dw-hdmi glue still use normal SYSTEM_SLEEP PM ops.
 
-## Phase 6: This tree (6.12.111)
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.1 — Buggy code present?**
-Record: Yes, `fs/smb/server/smb2pdu.c` lines 1255–1263. Local tree:
-`p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = **6.12.111**. Upstream
-commit is **not** an ancestor (`git merge-base --is-ancestor
-bc2f3f3dd694 HEAD` failed).
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Local tree: `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion` = 6.18.53 (6.18.y).
+- v6.18.53 still has:
+  `SET_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume)`
+  and `dw_hdmi_resume(hdmi->hdmi)` with no NULL check
+  at `drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c`.
+- Bug present since v5.3 (2019), long before 6.18 branched.
+- Upstream commit `af3a9eadc11896` is not an ancestor of HEAD (`git
+  merge-base --is-ancestor` failed); this is a backport candidate, not
+  already in 6.18.y proper.
 
-**Step 6.2 — Backport difficulty**
-Record: Clean apply after shifting hunks (~1252 vs upstream ~1687).
-Surrounding negotiate code matches.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. The resume function in v6.18.53 is identical to the
+parent of this change. `SET_LATE_SYSTEM_SLEEP_PM_OPS` and
+`dw_hdmi_resume()` already exist here. Surrounding unbind/bridge-ref
+changes from later series patches are not required.
 
-**Step 6.3 — Related fixes already here?**
-Record: `1ae94dd9dea50` (“mark invalid session responses as signed”) is
-a different FLAGS_SIGNED error-path issue. No existing fix for the
-ENABLED-mode `conn->sign` gap.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other resume-ordering fix on this file. DSI already has the
+analogous LATE PM ops. No earlier version of this HDMI fix in 6.18.53.
 
-## Phase 7: Subsystem
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.1**
-Record: `fs/smb/server` (ksmbd). Criticality: IMPORTANT (network-facing
-SMB3 server; not core mm/VFS, but production NAS/OpenWrt/etc.).
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: DRM Rockchip HDMI glue (`drivers/gpu/drm/rockchip/`). IMPORTANT
+(common SoC display, not core mm/fs). Affects
+RK3288/RK3328/RK3399/RK356x HDMI (Chromebooks, SBCs, TV boxes).
 
-**Step 7.2**
-Record: Actively maintained; this 6.12 tree already carries many later
-ksmbd security/protocol backports.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature driver (HDMI glue since ~2015). Resume path untouched
+from 2019 until this patch. Low churn on the PM ops themselves.
 
-## Phase 8: Impact and risk
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.1 — Who**
-Record: ksmbd users (`CONFIG_SMB_SERVER`) with `server signing =
-enabled`. ksmbd-tools `cp_get_group_kv_config_opt()` maps `"enabled"` →
-`KSMBD_CONFIG_OPT_ENABLED`. Default in tools is `auto` (already
-correct). `"enabled"` is still a parsed, distinct value (Samba-style
-configs often use it). Man page documents disabled/auto/mandatory;
-userspace still accepts enabled.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / platform-specific. Users of Rockchip dw-hdmi
+who suspend the system. CONFIG_PM_SLEEP. Not universal, but a well-used
+platform class in Android, Chromebook, and ARM SBCs.
 
-**Step 8.2 — Trigger**
-Record: Client sets NEGOTIATE `SMB2_NEGOTIATE_SIGNING_REQUIRED` while
-server mode is ENABLED. Common for Windows/Linux clients that require
-signing. Unprivileged remote clients can send that bit.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- Trigger: system suspend/resume with this HDMI driver bound (and the
+  NULL path if probed but unbound).
+- Common on laptops/Chromebooks; less so on always-on appliances.
+- Unprivileged users typically cannot suspend; the HPD/I2C break is
+  still a real admin/user-visible failure after lid-close/sleep.
 
-**Step 8.3 — Failure mode**
-Record: Protocol MUST missed; `Connection.ShouldSign` stays false.
-Severity: **MEDIUM–HIGH** (integrity of SMB traffic / spec security
-negotiation), not a panic. Mitigated if SESSION_SETUP also carries
-SIGNING_REQUIRED.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Primary: HDMI HPD and DDC I2C not restored before DRM atomic enable →
+  hotplug/EDID/output broken after resume. HIGH for affected hardware
+  (display not coming back is a serious functional bug), not a kernel
+  panic.
+- Secondary: NULL deref if resume runs before bind → oops. Less common.
+  HIGH if hit, MEDIUM likelihood.
+- Overall: HIGH (suspend/resume display breakage on real hardware).
 
-**Step 8.4 — Risk vs benefit**
-Record: Benefit: honor client-required signing in the one broken mode;
-matches spec and maintainer intent. Risk: very low (4-line boolean, no
-locks/APIs/new features). Ratio: favorable.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for Rockchip HDMI suspend users; restores the ordering
+  Chrome OS already needed.
+- Risk: very low (7 lines, established LATE PM pattern already in the
+  same DRM driver).
+- Ratio: favor backport.
 
-## Phase 9: Synthesis
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**For backporting**
-- Real MS-SMB2 MUST violation in existing 6.12 code
-- Security-related signing negotiation on a network file server
-- Tiny, obviously correct, applies cleanly
-- Maintainer-authored; 7.3-rc1 pull grouped it with protocol/security
-  fixes
-- `server signing = enabled` is a real userspace mapping
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real resume-ordering bug: DRM atomic enable before
+  `dw_hdmi_init_hw()`.
+- User-visible: HDMI HPD/DDC broken after sleep (documented on rk3288
+  Chromebooks in 2019; re-tested on rk3328 in 2026).
+- Same fix already used by dw-mipi-dsi-rockchip in this tree, and that
+  DSI change went to stable with Cc: stable.
+- Possible NULL deref on resume before bind.
+- 7-line surgical change; applies cleanly to v6.18.53.
+- Maintainer Tested-by and Signed-off-by.
+- Buggy code has been in this tree since v5.3; no missing prerequisites.
 
-**Against**
-- Default `auto` already sets `conn->sign`
-- SESSION_SETUP fallback for compliant clients
-- No crash/syzbot/CVE
-- Does not fully enforce unsigned-request rejection (`is_sign_req` still
-  flag-based)
+AGAINST:
+- No Fixes:/Cc: stable (expected for this pipeline; not a negative).
+- Buried as 11/11 in a cleanup series (but the hunk is independent and
+  was added specifically in v2).
+- Not a panic/corruption/CVE; display-after-suspend rather than a crash.
+- No extra Reviewed-by besides maintainer apply/test.
+- UNVERIFIED whether stable@ already discussed rejecting it.
 
-**Unresolved**
-- Full lore review thread (lore 403 / b4 failed)
-- No stable@ discussion retrieved
+UNRESOLVED:
+- lore.kernel.org/stable search blocked (Anubis/403).
+- Incomplete NULL check if bind failed and left `hdmi->hdmi` as ERR_PTR
+  (pre-existing).
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** (logic vs spec; maintainer-
-   committed)
-2. Real bug affecting users? **PASS** (ENABLED mode + client
-   SIGNING_REQUIRED)
-3. Important (security/protocol integrity)? **PASS** (signing-required
-   handling; not a panic)
-4. Small and contained? **PASS** (+2/−4, one function)
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** (clean apply)
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — PM phase ordering is well-
+   defined; Heiko tested on rk3328.
+2. Fixes a real bug that affects users? PASS — HDMI not correctly re-
+   inited before DRM resume; Chromebook-class hardware.
+3. Important issue (crash, security, corruption, deadlock)? PASS —
+   suspend/resume display breakage plus a possible oops; hardware resume
+   workaround, same class as the DSI stable fix.
+4. Small and contained? PASS — 7 lines, one file.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — v6.18.53 has the old resume
+   function and the LATE PM macro.
 
-No exception category (not a device ID/quirk/DT/build/docs-only change).
-It is a normal small protocol fix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Hardware suspend/resume workaround on an existing driver (quirk-
+class). Not a new driver, ID, or API.
 
-The ENABLED hole is the mode where admins reasonably expect signing to
-work, and it is the only mode that ignored a client REQUIRED bit. Cost
-of backporting to 6.12.y is negligible.
+Step 9.4: MAKE YOUR DECISION
+This belongs on 6.18.y. The buggy `.resume` path is in this checkout,
+the switch to `resume_early` is the same proven pattern as the in-tree
+DSI sibling, and the patch is tiny with maintainer hardware testing.
+
+What it solves for stable users: after system sleep on Rockchip dw-hdmi
+boards, DRM can re-enable the pipeline before HDMI DDC/HPD/init, so
+hotplug and HDMI output fail. Moving the callback to `resume_early`
+forces `dw_hdmi_init_hw()` first, and skips a NULL drvdata deref if the
+component never bound.
+
+Risk is low; benefit is a real resume fix on shipping SoCs. No series
+dependencies are required for this hunk.
 
 Verification:
-- [Phase 1] Parsed message/tags: only Namjae SOB; no Fixes/Reported-by
-- [Phase 2] Diff: `smb2_handle_negotiate()` condition; ENABLED was
-  skipped
-- [Phase 3] `git blame` / `-L`: introduced in `e2f34481b24db` (v5.15-era
-  cifsd)
-- [Phase 3] `git merge-base --is-ancestor e2f34481b24db HEAD`: yes
-- [Phase 3] `git merge-base --is-ancestor bc2f3f3dd694 HEAD`: no (not in
-  this tree)
-- [Phase 3] `git apply --check`: clean on 6.12 `smb2pdu.c`
-- [Phase 4] GitHub API: upstream
-  `bc2f3f3dd69424f76e2ed3dc53d29bfd6c9966d4`
-- [Phase 4] `b4 dig -c bc2f3f3dd694`: lore errors, no thread
-- [Phase 4] 7.3-rc1 GIT PULL: “signing-required handling” under
-  protocol/security
-- [Phase 5] Caller: `smb_common.c` SMB2 NEGOTIATE; `conn->sign` →
-  `sess->sign` in session setup
-- [Phase 5] `smb2_is_sign_req()` does not use `conn->sign` (verified)
-- [Phase 6] `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion`: 6.12.111; buggy `if` present at 1255–1263
-- [Phase 8] ksmbd-tools `config_parser.c`: `"enabled"` →
-  `KSMBD_CONFIG_OPT_ENABLED`; default `"server signing = auto"`
-- UNVERIFIED: mailing-list NAKs/Cc: stable (lore unavailable)
-
-This is a small, contained protocol-security fix that already matches
-this tree’s ksmbd negotiate path and should be backported.
+- [Phase 1] Parsed tags: Tested-by Heiko (rk3328), SOB Jonas + Heiko,
+  Link msgid ...-12; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Cover letter via b4 mbox: patch 11/11 of v2 “Misc cleanup”;
+  “v2: New patch”; Heiko “Series: Tested-by” and Applied
+- [Phase 2] Diff: rename resume→resume_early, add `if (hdmi)`,
+  SET_SYSTEM_SLEEP→SET_LATE_SYSTEM_SLEEP; +4/-3
+- [Phase 2] Confirmed LATE_SYSTEM_SLEEP_PM_OPS maps resume_fn to
+  `.resume_early` in include/linux/pm.h:321-327,350-351
+- [Phase 2] Confirmed rockchip_drm_drv.c:260-262 still uses
+  SET_SYSTEM_SLEEP_PM_OPS for sys_resume
+- [Phase 2] drm_mode_config_helper_resume() calls
+  drm_atomic_helper_resume() (drm_modeset_helper.c:250)
+- [Phase 3] git blame parent: resume added in 27c9130baef543 (Douglas
+  Anderson, 2019)
+- [Phase 3] git show 27c9130baef543: documented Chromebook HPD/I2C break
+  and Chrome OS late/early PM ops
+- [Phase 3] git describe --contains 27c9130baef543 → v5.3-rc1; git
+  merge-base --is-ancestor 27c9130baef543 HEAD → yes
+- [Phase 3] git log --oneline --grep resume_early --
+  drivers/gpu/drm/rockchip/ → only this commit
+- [Phase 4] b4 dig -c af3a9eadc11896: lore thread found; v1 had no this
+  patch; v2 added it; applied as af3a9eadc11896
+- [Phase 4] b4 dig -a: v1 2026-05-10, v2 2026-05-18
+- [Phase 4] b4 dig -w: Heiko, dri-devel, linux-rockchip CC’d
+- [Phase 4] b4 dig -m /tmp/thread.mbox: no NAKs; Heiko tested+applied
+- [Phase 4] lore.kernel.org WebFetch 403; stable search Anubis-blocked →
+  UNVERIFIED stable@ discussion
+- [Phase 5] Callers: PM core resume_early on dwhdmi-rockchip; callees
+  dw_hdmi_resume→dw_hdmi_init_hw
+- [Phase 5] platform_set_drvdata in bind (line 580), probe only
+  component_add — NULL drvdata on unbound resume is real
+- [Phase 5] Sibling dw-mipi-dsi-rockchip.c:1346 already
+  SET_LATE_SYSTEM_SLEEP_PM_OPS in this tree; introduced by e584cdc154993
+  with Cc: stable
+- [Phase 6] git describe HEAD: v6.18.53-5049-g0f0bdc2b0dffb; make
+  kernelversion 6.18.53
+- [Phase 6] git show v6.18.53:dw_hdmi-rockchip.c has
+  SET_SYSTEM_SLEEP_PM_OPS + unchecked dw_hdmi_resume
+- [Phase 6] git merge-base --is-ancestor af3a9eadc11896 HEAD → no (not
+  in 6.18.y proper)
+- [Phase 6] Resume hunk in v6.18.53 identical to parent of this change;
+  SET_LATE and dw_hdmi_resume exist in v6.18.53
+- [Phase 8] Failure mode: HDMI broken after suspend (HIGH); possible
+  NULL oops (HIGH if hit)
+- UNVERIFIED: whether stable@ previously rejected this patch (lore
+  blocked)
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index cc3a3da410eaf..e7b1cab45ab2d 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1253,11 +1253,9 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 	rsp->SecurityMode = SMB2_NEGOTIATE_SIGNING_ENABLED_LE;
- 	conn->use_spnego = true;
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index 727cdf768161a..ff34aeef3a6ff 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -635,17 +635,18 @@ static void dw_hdmi_rockchip_remove(struct platform_device *pdev)
+ 	component_del(&pdev->dev, &dw_hdmi_rockchip_ops);
+ }
  
--	if ((server_conf.signing == KSMBD_CONFIG_OPT_AUTO ||
--	     server_conf.signing == KSMBD_CONFIG_OPT_DISABLED) &&
--	    req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
-+	if (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
- 		conn->sign = true;
--	else if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
-+	if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
- 		server_conf.enforced_signing = true;
- 		rsp->SecurityMode |= SMB2_NEGOTIATE_SIGNING_REQUIRED_LE;
- 		conn->sign = true;
+-static int __maybe_unused dw_hdmi_rockchip_resume(struct device *dev)
++static int __maybe_unused dw_hdmi_rockchip_resume_early(struct device *dev)
+ {
+ 	struct rockchip_hdmi *hdmi = dev_get_drvdata(dev);
+ 
+-	dw_hdmi_resume(hdmi->hdmi);
++	if (hdmi)
++		dw_hdmi_resume(hdmi->hdmi);
+ 
+ 	return 0;
+ }
+ 
+ static const struct dev_pm_ops dw_hdmi_rockchip_pm = {
+-	SET_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume)
++	SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_rockchip_resume_early)
+ };
+ 
+ struct platform_driver dw_hdmi_rockchip_pltfm_driver = {
 -- 
 2.53.0
 
