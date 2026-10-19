@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67844FB9C1;
-	Mon, 19 Oct 2026 13:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D259E47085A;
+	Mon, 19 Oct 2026 13:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418149; cv=none; b=eo6v61J8NImqfx5UKVQiE0hDZdFPVVFQtodL+IJxAJrvs5rQ2fwTWfiRXQZCqGykIi4MS4ZB8FpjTnSP5NbIZ1YAG8cQX+at3x9bBXuw8ASQ9y2kSKZUE1+gomd/VsxLWPXdSLulLimMGFm+xEt5xT1Hif1XM/+G0leJ9dFQaBc=
+	t=1792418151; cv=none; b=iLzhoqZsjoctEP7eLLy25Tx0gW91Tb+1dgAxKKQItKdDjjaBxQnJ/DvFYSHgpPGTo+k1a0YEBSjyJkqp1V+7WK5ehlgJ0KMu1uLAtt5czWUyvhubGB46J6X2hYMdBnZ/HQbgp7bd4t6xj3mP2kUYQE5aIIDySdcThxZKlQ1UXic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418149; c=relaxed/simple;
-	bh=xNpJtdbzmu4bsF8kG77rCxjk225HcJCrbbgFn6PT9IM=;
+	s=arc-20240116; t=1792418151; c=relaxed/simple;
+	bh=4LrwTIoNSvDtLKjEpkLrO88y71xXFjc20Wh8/L0H7no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b85QwJZlcpyzP4/4HQS7uzqioH76K5JJZuOhC/RbXuKcz7u5VP6LQc5aLPAyJJ+ASHIAoOflZRC9hlPMAwr6VMXJ+s0l2+uofEt+z5TsQC8cuKtkf+DDpoG0ekJsGAlhb+78nV2nZv1BnINVsvUoxHVYrCF2jZuaD2xjtv7T/mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BgtwxXbW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DF7yBOUSF+BjITfLjJr/JjMspVFDXeZCJim468IfabtxYPXIo3XBT94eWq3z69OGNQQRjuniF7aFWWh+wNfn0Q9spzOL8yw3gtwhv9qSs/n/k8drwE+i3i1iaD/DSWzrRe3C7BWB/3JWvSDgkQ98P/UN3LjovJ7t5iM3+McZZ1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5+4TQ+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BgtwxXbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F06B1F000C7;
-	Mon, 19 Oct 2026 13:55:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L5+4TQ+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A92D1F000C4;
+	Mon, 19 Oct 2026 13:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418147;
-	bh=Wg+AIs8KYPCP0rVOxjNhqpgGUxP9XW+ARNuo5978U/4=;
+	s=k20260515; t=1792418149;
+	bh=eHnefyVOo/AiBg1cwJ3voQDManzSQqGf5DOxZLbPmmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgtwxXbWwpe9qTC0GcQPs/8I5QUSy0LEPrKHAGnihldi873a4rHxFo7kX2J3en1Un
-	 iyq48ztCulUx/4m3VSOv3pt6YjzqLeggIc+GziU1FNTDMSXH9Bjp1NqOujV1OVgS2R
-	 gkoj4+Yj61K9NJn0amqNLY5TuSCzSxeFCTtWM1iInOcSYOwpLCkopaonJ6A2U45OFz
-	 m7CkwYOYt3jN17EwM6NCE1CfpAlt46Jw8jjZVXN92a1nLrO5nGKBLiiRYytCklR3ny
-	 WpvwsNNEzfvhWX0WzLFbRLeZXMBGUZFICvSmmxGJYDt1Rn5Ca+syfxZaSMghaI33Bb
-	 SyxODDqsDdv+w==
+	b=L5+4TQ+6q/GgW4uacWRZ9vsxn0MluTWKcwgPGCzydLu73h01tM2WLXKEQCguXSBYl
+	 UFabz1BsYwbcvONJxmSUNd9mnPfJVMYSevPtl5W0GYvLq9JqDzDlp90W94m0XFWUDy
+	 z4FNrQS9FfRrPGxkAihplrlWwVBd9rEym76RRcGowe/TJezDU1lYIJ3pZ28SU840eU
+	 NqI8UFFfQTslVUlXWZZa2/S6PAo8F/bQVV/jNq1sZQqVK081XF9F0miq8eh8vs56/J
+	 0MMxl38nHd3ZKRBvCnfbvvw4Kv670sC+EyN53ygQQ7M4/fYwUI9oS/Mrdw0GWbW0Eh
+	 vuLVZWchwbZ9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Logan Gunthorpe <logang@deltatee.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Md Rabbani <rabbanyhmm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	maxime.chevallier@bootlin.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	pabeni@redhat.com,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] PCI: switchtec: Add Microchip PCI1008 to NTB DMA alias quirk
-Date: Mon, 19 Oct 2026 09:45:37 -0400
-Message-ID: <20261019135441.1420968-46-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] net: stmmac: fix device node reference leaks in stmmac_mtl_setup()
+Date: Mon, 19 Oct 2026 09:45:38 -0400
+Message-ID: <20261019135441.1420968-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,427 +61,393 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Logan Gunthorpe <logang@deltatee.com>
+From: Md Rabbani <rabbanyhmm@gmail.com>
 
-[ Upstream commit 00a479ba1d01249d43ca5e453380d1ed60946f8a ]
+[ Upstream commit 317fe168f4c0fc30e5c375c22d9c8911940aea9b ]
 
-Add the PCI1008 device ID to the quirk_switchtec_ntb_dma_alias PCI fixup
-table. Without it, DMA transactions from a PCI1008 switch's NTB function
-are not given the correct requester ID alias, which can misdirect them
-under an IOMMU.
+In stmmac_mtl_setup(), q_node is shared across the RX and TX queue
+parsing loops. When the RX queue loop breaks early because the number
+of parsed queues reaches plat->rx_queues_to_use, q_node retains an
+acquired reference count. If the error check passes
+(queue == plat->rx_queues_to_use), execution proceeds directly to the
+TX queue loop, where of_get_next_child() immediately overwrites q_node
+with the first TX child, permanently leaking the retained RX child
+device node reference.
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260714212010.230606-4-logang@deltatee.com
+Switch both loops to for_each_child_of_node_scoped() so child node
+references are automatically dropped upon loop exit or early break,
+and remove the now-unnecessary function-scoped q_node variable and
+its manual of_node_put() at the exit label.
+
+Signed-off-by: Md Rabbani <rabbanyhmm@gmail.com>
+Link: https://patch.msgid.link/20260821055718.57-1-rabbanyhmm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line PCI ID addition to an existing NTB DMA-alias quirk.
-The local tree is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). The
-`SWITCHTEC_PCI100X_QUIRK` table is present, so the change belongs here.
+The leak is real in this 6.12 tree: `stmmac_mtl_setup()` can drop an OF
+child reference when RX queue parsing breaks early, and in-tree DTs
+actually hit that path.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: `[PCI: switchtec:] [Add] [PCI1008 device ID to the existing NTB
-DMA alias quirk table]`
+- Record: `[net: stmmac:] [fix] [OF device-node reference leaks in
+  stmmac_mtl_setup()]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- `Fixes:` — none (expected)
-- `Reported-by:` — none
-- `Tested-by:` — none
-- `Reviewed-by:` — none
-- `Acked-by:` — none on this patch; Vinod Koul acked series patch 1/3
-  (dmaengine ID)
-- `Link:`
-  https://patch.msgid.link/20260714212010.230606-4-logang@deltatee.com
-  (series 3/3)
-- `Cc: stable@vger.kernel.org` — none (expected)
-- `Signed-off-by: Logan Gunthorpe <logang@deltatee.com>` (author;
-  SWITCHTEC DMA maintainer)
-- `Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>` (PCI subsystem
-  maintainer)
+- Record:
+  - `Signed-off-by: Md Rabbani <rabbanyhmm@gmail.com>` (author)
+  - `Link:
+    https://patch.msgid.link/20260821055718.57-1-rabbanyhmm@gmail.com`
+  - `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev
+    maintainer; applied to `netdev/net`)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, or `Cc: stable` (absence of Fixes/Cc-stable is expected for
+    this review)
+  - Upstream SHA (from patchwork bot):
+    `317fe168f4c0fc30e5c375c22d9c8911940aea9b`
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** PCI1008 is missing from `quirk_switchtec_ntb_dma_alias`.
-  Switchtec NTB replaces the original requester ID with a hardware proxy
-  ID. Without an IOMMU alias, those TLPs are not attributed to the NTB
-  device.
-- **Symptom:** DMA from a PCI1008 NTB function can be misdirected or
-  blocked when an IOMMU is on (IOMMU faults / failed peer DMA).
-- **Versions:** none named. Series cover letter says the patches were
-  based on v7.2-rc3; Bjorn applied them for v7.3.
-- **Root cause:** the PCI100X quirk table lists 0x1001–0x1006 only;
-  PCI1008 (0x1008) was never added.
+- Record: [Bug] Shared `q_node` is used by both RX and TX
+  `for_each_child_of_node()` loops. An early `break` in the RX loop
+  leaves `q_node` holding a live OF reference. If `queue ==
+  plat->rx_queues_to_use`, the function continues into the TX loop,
+  which calls `of_get_next_child(tx_node, NULL)` and overwrites `q_node`
+  without putting the RX child.
+- [Symptom] Permanent `device_node` refcount leak (kobject/`device_node`
+  never released).
+- [Version info] None in the message. The loops date to 2017
+  (`d976a525c37127`, v4.12-rc1).
+- [Root cause] Early-break + reused iterator; `of_get_next_child(parent,
+  NULL)` does not drop the previous pointer.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
+- Record: Not hidden. Subject/body explicitly describe a refcount leak.
+  The `_scoped` conversion is the fix mechanism, not a style-only
+  cleanup.
 
-Record: Not hidden. It is an explicit hardware-quirk / device-ID
-addition. That is a documented stable exception, not cleanup.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- File: `drivers/pci/quirks.c` — **+1 / −0**
-- Function: none changed; one `SWITCHTEC_PCI100X_QUIRK(0x1008)` entry
-  added next to 0x1001–0x1006
-- Scope: single-file, one-line surgical fix
+- Record: Single file
+  `drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c`. Actual commit
+  is **+2 / -4**. Functions: `stmmac_mtl_setup()` only. Surgical,
+  single-file.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** `DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_EFAR, 0x1008,
-  PCI_CLASS_BRIDGE_OTHER, 8, quirk_switchtec_ntb_dma_alias)` is not
-  registered. A PCI1008 NTB function never runs the quirk.
-- **After:** the same FINAL-class fixup used for PCI1001–PCI1006 is
-  registered for 0x1008. Enumeration of a matching device calls
-  `quirk_switchtec_ntb_dma_alias()`, which reads the NTB proxy-ID tables
-  and calls `pci_add_dma_alias()`.
-- Path: PCI enumeration / class fixup FINAL (init), not a hot path.
+- Record:
+  - RX loop: `for_each_child_of_node(rx_node, q_node)` →
+    `for_each_child_of_node_scoped(...)`. Early `break` now auto-drops
+    the current child via `__free(device_node)`.
+  - TX loop: same conversion.
+  - Function-scope `struct device_node *q_node` removed;
+    `of_node_put(q_node)` at `out:` removed (would not compile with the
+    loop-scoped iterator).
+  - Probe/DT parse path only; no datapath change.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** (h) Hardware workaround — PCI ID added to an existing
-  quirk table
-- **Mechanism:** Switchtec NTB DMA uses proxy requester IDs. IOMMU
-  groups are built from those aliases. Missing 0x1008 means PCI1008
-  proxy IDs are not aliased, so IOMMU policy does not match the
-  requester ID on the wire.
+- Record: [Category] Reference counting / resource leak.
+- [Mechanism] `for_each_child_of_node` is `of_get_next_child()`, which
+  gets `next` and puts `prev`. `break` skips the put of the current
+  node. Reusing the same pointer in the TX loop with `prev=NULL` leaks
+  that RX child. TX extra children were previously dropped by the
+  trailing `of_node_put(q_node)`; RX extra children were not.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+- Record: Obviously correct. `for_each_child_of_node_scoped` exists in
+  this tree and is already used widely. `__free(device_node)` is `if
+  (_T) of_node_put(_T)`, so NULL at loop end is safe. Regression risk is
+  very low: no locking, no ABI, no behavior change besides dropping the
+  leaked ref. The `_scoped` form is stronger than a one-off
+  `of_node_put()` before the TX loop because it also covers TX early-
+  break without a manual put.
 
-Record:
-- Obviously correct: same macro and comment style as PCI1001–PCI1006.
-- Minimal: one line, no API or structure change.
-- Regression risk: very low. The new fixup only matches vendor EFAR +
-  device 0x1008 + class `PCI_CLASS_BRIDGE_OTHER`. Other devices are
-  unchanged. `quirk_switchtec_ntb_dma_alias()` already bounds `table_sz`
-  (skip 0, reject >512).
-- Red flags: none. A pre-existing `ep_map + 4` pointer-arithmetic issue
-  in the quirk function was flagged on the list; it is not introduced by
-  this line.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- Surrounding `SWITCHTEC_PCI100X_QUIRK` entries: `a3282f84b2151` (“PCI:
-  switchtec: Add Microchip PCI100X device IDs”, 2025-01-21). Present in
-  v6.14, not in v6.13.
-- Original Switchtec NTB DMA alias quirk: `ad281ecf1c7d4` (“PCI: Add DMA
-  alias quirk for Microsemi Switchtec NTB”, 2018-06-29). Present in this
-  tree.
-- The 0x1008 line itself is this commit (`00a479ba1d012`).
+- Record: Buggy loops introduced by `d976a525c37127` ("net: stmmac:
+  multiple queues dt configuration", Joao Pinto, 2017-03-10), first in
+  **v4.12-rc1**. Present for many years. `goto out` / extra
+  `of_node_put(q_node)` added by `2ee2132ffb83e` (2018), which still
+  leaves the RX-then-TX overwrite leak.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. The omission is the PCI1008 ID never being
-added when PCI100X support landed in `a3282f84b2151` (six SKUs
-1001–1006). PCI1008 is a later part.
+- Record: No `Fixes:` tag. Introducer is `d976a525c37127`, and `git
+  merge-base --is-ancestor d976a525c37127 HEAD` succeeds. That code is
+  in this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record:
-- Same series (msgid `20260714212010.230606-*`, based on v7.2-rc3,
-  applied to pci/switchtec for v7.3):
-  1. `8b326de3cc02c` dmaengine: switchtec-dma: Add PCI1008 device ID
-     (`-2`)
-  2. `0d8a6306c680e` PCI: switchtec: Add Microchip PCI1008 device ID
-     (`-3`)
-  3. `00a479ba1d012` this patch (`-4`, submitted as 3/3)
-- This patch is standalone. The quirk is a PCI fixup, not a driver ID
-  table. It does not need the switchtec or switchtec-dma ID additions.
+- Record: Recent `stmmac_platform.c` work is unrelated (bus_id, probe
+  error path, IRQ). Historical OF leak fixes in this driver:
+  `a249708bc2aa1`, `d2ed0a7755fe1`, `4613b279bee79`. Standalone
+  `[PATCH]`, not `X/Y`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Logan Gunthorpe is listed maintainer of SWITCHTEC DMA
-(`MAINTAINERS`) and a long-time switchtec contributor. Bjorn Helgaas
-(PCI maintainer) signed off and applied the series.
+- Record: `git log --author="Md Rabbani"` on this path is empty in this
+  tree (new contributor). Applied by Jakub Kicinski to `netdev/net.git`
+  (fixes tree), which is a strong maintainer signal.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+- Record: Depends on `for_each_child_of_node_scoped` /
+  `DEFINE_FREE(device_node)` (`34af4554fb0ce1` / `9448e55d032d99`,
+  2024-02-25). Both are already in this 6.12 tree (`git merge-base --is-
+  ancestor` succeeded). Can apply standalone. `stmmac_platform.c`
+  already includes `<linux/of.h>`, which includes `<linux/cleanup.h>`.
 
-Record:
-- Prerequisite in this tree: `SWITCHTEC_PCI100X_QUIRK` /
-  `PCI_VENDOR_ID_EFAR` table from `a3282f84b2151` — present.
-- `quirk_switchtec_ntb_dma_alias()` and `pci_add_dma_alias()` — present.
-- No other structural dependency. Can apply standalone.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- `b4 dig -c 00a479ba1d012` →
-  https://patch.msgid.link/20260714212010.230606-4-logang@deltatee.com
-- Subject on list: `[PATCH v1 3/3] PCI: Add PCI1008 to switchtec NTB DMA
-  alias quirk`
-- `b4 dig -a`: only v1. Cover letter `[PATCH v1 0/3] switchtec: add new
-  device IDs`.
-- Direct lore.kernel.org HTTP fetch returned 403/Anubis; the thread was
-  recovered via `b4 dig -m`.
-- Review: no NAKs. Sashiko noted a pre-existing `ep_map + 4` pointer
-  issue; Logan said it is unrelated and should not gate the series.
-  Bjorn: “Applied to pci/switchtec for v7.3, thanks!”
-- No reviewer asked for `Cc: stable`.
+- Record: `b4 dig -c <sha>` cannot match because `317fe168f4c0` is not
+  an ancestor of HEAD. Used msgid instead. Lore thread: `https://lore.ke
+  rnel.org/netdev/20260821055718.57-1-rabbanyhmm@gmail.com/`
+- Series: single v1 `[PATCH]` (2 messages: submission + patchwork-bot).
+  Applied to `netdev/net.git (main)` as
+  `https://git.kernel.org/netdev/net/c/317fe168f4c0`. No v2, no NAK.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): Logan Gunthorpe, linux-pci, linux-kernel,
-dmaengine, Vinod Koul, Bjorn Helgaas, Frank Li, Kelvin Cao (Microchip /
-SWITCHTEC DMA co-maintainer). PCI and dmaengine maintainers were on the
-original To/Cc.
+- Record: To/Cc included STMMAC maintainers (Torgue, Coquelin,
+  Chevallier), netdev maintainers (Miller, Dumazet, Kicinski, Abeni),
+  `netdev@`, `linux-stm32@`, `linux-arm-kernel@`. No written review
+  comments; Kicinski applied it to the **net fixes** tree.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No bugzilla/syzbot link. Cover letter: Logan originally had only
-the dmaengine ID; Sashiko reminded him to add the management ID and the
-NTB quirk, then he sent this 3-patch series. Hardware impact is
-described in the patch, not in a separate user report.
+- Record: No syzbot/bugzilla. Bug is from code inspection. Real in-tree
+  DTs trigger it (see Phase 6/8).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Three independent 1-line ID additions (dmaengine, switchtec
-management, NTB quirk). This quirk patch is self-contained. The other
-two enable management/NTB userspace and the DMA engine; they are not
-required for the IOMMU alias.
+- Record: Standalone. No other patches required.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+- Record: lore.kernel.org/stable search for `stmmac_mtl_setup` shows
+  older stmmac stable backports (probe error-path, MDIO, Tx COE), not
+  this leak. No prior rejection of this fix.
 
-Record: lore.kernel.org/stable search for PCI1008 returned HTTP 403. No
-stable discussion in the linux-pci mbox. UNVERIFIED whether anyone
-requested this on stable@ after merge.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: No function body edited. New fixup entry invokes existing
-`quirk_switchtec_ntb_dma_alias()`.
+**Step 5.1: KEY FUNCTIONS**
+- Record: `stmmac_mtl_setup()` (modified). Helpers:
+  `for_each_child_of_node_scoped`, `of_get_next_child` /
+  `__of_get_next_child`, `of_node_put`.
 
 **Step 5.2: TRACE CALLERS**
-
-Record: Not called in C. Registered with
-`DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_EFAR, 0x1008,
-PCI_CLASS_BRIDGE_OTHER, 8, ...)`. PCI core runs class FINAL fixups
-during device setup, before typical driver probe. Context: boot/hotplug
-enumeration, not IRQ.
+- Record: Only caller is `stmmac_probe_config_dt()` in the same file
+  (line 603). That is used via `devm_stmmac_probe_config_dt()` from many
+  glue drivers: `dwmac-rk`, `dwmac-qcom-ethqos`, `dwmac-imx`, `dwmac-
+  stm32`, `dwmac-sun8i`, `dwmac-mediatek`, `dwmac-generic`, and others.
+  Probe/init context, not IRQ/hot path.
 
 **Step 5.3: TRACE CALLEES**
-
-Record: `quirk_switchtec_ntb_dma_alias()` uses `pci_enable_device`,
-`pci_iomap`, MMIO reads of NTB partition/proxy tables,
-`pci_add_dma_alias()`, then unmap/disable. `pci_add_dma_alias()` sets
-`dma_alias_mask` bits used to program IOMMU source IDs.
+- Record: `of_parse_phandle`, `of_property_read_*`, `of_get_next_child`,
+  `of_node_put`. DT parse only.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: PCI enumeration → class FINAL fixup → alias programming → IOMMU
-group creation. Reachable only with PCI1008 hardware present.
-Unprivileged userspace cannot trigger the quirk directly; a user of that
-NTB/IOMMU path sees DMA failures if it is missing.
+- Record: Userspace cannot trigger it directly. It runs on every DT-
+  based stmmac probe. Reachable on common ARM/ARM64 SoCs (Rockchip,
+  i.MX, STM32, Qualcomm, MediaTek). Leak fires when the RX config node
+  has more children than `snps,rx-queues-to-use`.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+- Record: Same file still has `for_each_child_of_node(np, mdio_node)` in
+  `stmmac_of_get_mdio()` (line 324); not the same shared-iterator bug.
+  In-tree DTs with extra RX children:
+  `arch/arm64/boot/dts/qcom/sa8540p-ride.dts` uses `snps,rx-queues-to-
+  use = <1>` with `queue0`–`queue3` on both ethernet0 and ethernet1.
 
-Record: Same pattern as PCI1001–PCI1006 in this file, and as many other
-`pci_add_dma_alias` quirks (PLX NTB, Ricoh, Marvell, etc.). Adding
-0x1008 is consistent with how every prior Switchtec/PCI100X ID was
-handled.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: Yes. `drivers/pci/quirks.c` has `SWITCHTEC_PCI100X_QUIRK` for
-0x1001–0x1006. Without 0x1008, a PCI1008 NTB function would not get
-aliases. `a3282f84b2151` (v6.14) added the table; this tree is 7.3-rc4,
-so the table is present. `git merge-base --is-ancestor 00a479ba1d012
-HEAD` is true (commit is already in 7.3-rc1); that is not treated as
-“already selected for stable.”
+- Record: Yes. This tree is **6.12.111** (`pending-6.12`,
+  `p-6.12-3-gc504cf0baa3d8`). Current code at `stmmac_platform.c:177` /
+  `:240` still uses unscoped loops and `of_node_put(q_node)` at `:293`.
+  `317fe168f4c0` is **not** an ancestor of HEAD. Bug present since
+  v4.12.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Expected apply: **clean**. Context is the existing PCI100X quirk
-block, unchanged except for the new line. No refactor of this table
-since it was added.
+- Record: Expected difficulty: **minor context conflicts**. Upstream
+  context has later `stmmac_axi_blen_to_mask` / `MTL_MAX_*` clamping
+  that 6.12 does not have. The three functional edits (two loop macros,
+  drop `q_node` + trailing put) match 6.12 1:1. Needs a small context-
+  adjusted backport, not a rewrite.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+- Record: No commit with this subject in this tree. Older stmmac
+  `of_node_put` fixes do not cover this iterator reuse.
 
-Record: No alternate PCI1008 NTB alias fix. Companion IDs in
-`switchtec.c` and `switchtec_dma.c` are the sibling series patches, not
-substitutes for this quirk.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: `[PCI quirks / Switchtec NTB DMA alias] [IMPORTANT]` — not core
-mm/scheduler, but PCI IOMMU correctness for NTB. Affects systems with
-this Microchip switch and IOMMU enabled.
+- Record: [Subsystem] `drivers/net/ethernet/stmicro/stmmac` (Synopsys
+  DWMAC). [Criticality] **IMPORTANT** — common platform Ethernet on many
+  SoCs, not core mm/VFS, not staging.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+- Record: Actively maintained (many recent stmmac fixes on this branch).
+  The leak itself is old (2017), not a new-feature bug.
 
-Record: PCI quirks and switchtec are actively maintained (recent
-pci/switchtec and pci/virtualization merges on this tree). The quirk
-function itself has been stable since 2018; PCI100X IDs since v6.14.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: Driver/hardware-specific: Microchip PCI1008 (vendor EFAR 0x1055,
-device 0x1008) with NTB and IOMMU. Not universal.
+- Record: Driver/config-specific: `CONFIG_STMMAC_ETH` +
+  `CONFIG_STMMAC_PLATFORM` + DT `snps,mtl-rx-config` with extra child
+  nodes. Confirmed affected in-tree board: Qualcomm SA8540P Ride
+  (`sa8540p-ride.dts`). Many other boards have matching child counts and
+  do not leak.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: Present whenever that device is enumerated with IOMMU on. Not a
-race. Not triggerable by an unprivileged syscall on machines without the
-hardware. Common for any PCI1008 NTB + IOMMU deployment.
+- Record: Device probe (and every unbind/rebind). Common on boards whose
+  DT lists more queue children than `snps,rx-queues-to-use`. Not a
+  userspace syscall; not a race. Extra TX children were already put at
+  `out:`; extra RX children leak.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: IOMMU rejects or mis-groups DMA from NTB proxy IDs → DMA
-failures, IOMMU faults, broken peer NTB DMA. **HIGH** for that hardware;
-not a generic panic.
+- Record: [Failure] One `device_node` ref leak per probe when extra RX
+  children exist. [Severity] **MEDIUM** — not oops/deadlock/corruption,
+  but a real lifetime leak of an OF kobject. Repeatable on module
+  reload. Can pin overlay/node teardown.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Record: Benefit: medium (fixes a real, DT-triggered leak on a widely
+  used NIC driver, including an in-tree Qualcomm board). Risk: **very
+  low** (2 insertions / 4 deletions, existing helper, probe-only). Ratio
+  favors backport.
 
-Record:
-- **Benefit:** HIGH for PCI1008+IOMMU users (device works correctly
-  under IOMMU). Classic device-ID/quirk enablement.
-- **Risk:** VERY LOW (1 line, existing macro, match is device-specific).
-- **Ratio:** strongly favors backporting.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- PCI ID / hardware quirk on an existing table (stable exception).
-- Real IOMMU DMA misdirection without the alias.
-- 1 line, obviously correct, same pattern as PCI1001–1006.
-- Prerequisite table exists in this 7.3 tree.
-- Author is switchtec maintainer; PCI maintainer applied it.
-- Standalone; no API change.
+- Real OF refcount leak, mechanism verified against
+  `of_get_next_child()` / `__of_get_next_child()`.
+- Buggy code is in this 6.12 tree and has been since v4.12.
+- In-tree DT `sa8540p-ride.dts` has 4 RX queue children with `rx-queues-
+  to-use = <1>` — the leak path is not theoretical.
+- Tiny, obviously correct fix; helper already in 6.12.
+- Applied to `netdev/net` (fixes) by Kicinski.
+- Same class of bug as prior stmmac `of_node_put` fixes already in
+  history.
+- No new API/feature; no series dependency.
 
 AGAINST:
-- No `Reported-by` / production crash log (typical for ID additions).
-- Audience is PCI1008 NTB + IOMMU, not all machines.
-- Unrelated pre-existing `ep_map` pointer issue in the quirk function
-  (not caused by this line).
-- Stable@ discussion could not be fetched (403).
+- Probe-time leak of a single node, not a crash/UAF/security issue.
+- Surrounding file context differs slightly from mainline, so `git am`
+  of the raw mainline diff may need a trivial refresh.
+- No user crash report / syzbot.
 
 UNRESOLVED:
-- Whether stable@ discussed this after merge (lore.kernel.org/stable
-  403).
-- Whether Logan later sent an `ep_map` fix (explicitly out of scope).
+- No written mailing-list review beyond maintainer application (v1
+  accepted as-is).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — one-line ID, applied by PCI
-   maintainer after list review.
-2. Fixes a real bug that affects users? **PASS** — PCI1008 NTB DMA under
-   IOMMU is wrong without the alias.
-3. Important issue? **PASS** — IOMMU DMA correctness (faults /
-   misdirected DMA), HIGH for that hardware.
-4. Small and contained? **PASS** — +1 line in `drivers/pci/quirks.c`.
-5. No new features or APIs? **PASS** — device ID on an existing quirk;
-   allowed exception.
-6. Can apply to the local tree? **PASS** — `SWITCHTEC_PCI100X_QUIRK` is
-   present; apply is clean.
+1. Obviously correct and tested? **PASS** — scoped put on break/exit is
+   the intended helper; applied to netdev/net.
+2. Fixes a real bug that affects users? **PASS** — leak on probe;
+   triggered by in-tree Qualcomm DT.
+3. Important issue? **PASS** at medium importance — resource leak, not
+   panic, but a genuine lifetime bug in a common Ethernet driver.
+4. Small and contained? **PASS** — +2/-4, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same loops exist; scoped
+   macro exists; minor context tweak only.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+- Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+  bugfix.
 
-Record: **Device ID addition** and **hardware quirk/workaround** (PCI
-DMA alias quirk). These are listed as YES for stable.
+**Step 9.4: DECISION**
+Backport to this 6.12 tree. The bug exists here, the helper exists here,
+the fix is surgical, and at least one in-tree board hits it.
 
-**Step 9.4: MAKE YOUR DECISION**
+---
 
-This tree has the PCI100X quirk table. Adding PCI1008 is the same class
-of change already used for PCI1001–1006. Without it, PCI1008 NTB DMA can
-be misdirected under an IOMMU. The patch is one line, applies cleanly,
-and does not need the rest of the series.
+### What the commit solves and why it matters here
+`stmmac_mtl_setup()` parses `snps,mtl-rx-config` / `snps,mtl-tx-config`
+at probe. The RX iterator `break`s once `queue >=
+plat->rx_queues_to_use`, leaving `q_node` referenced. The TX loop then
+starts with `of_get_next_child(tx_node, NULL)`, which never puts that RX
+child. That is a permanent OF node leak.
+`arch/arm64/boot/dts/qcom/sa8540p-ride.dts` is written exactly that way
+(1 queue in use, 4 queue child nodes).
 
-Verification:
-- [Phase 1] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` → `7.3.0-rc4`. Tags: SOB Logan + Bjorn; Link to patch
-  3/3; no Fixes/stable/Reported-by.
-- [Phase 2] `git show 00a479ba1d012`: +1 line
-  `SWITCHTEC_PCI100X_QUIRK(0x1008)` in `drivers/pci/quirks.c`.
-- [Phase 2] Read `quirk_switchtec_ntb_dma_alias()`: enable, iomap, read
-  proxy IDs, `pci_add_dma_alias()`, table_sz 0/512 guards.
-- [Phase 3] `git blame -L 6087,6096`: table from `a3282f84b2151`
-  (v6.14); 0x1008 from this commit.
-- [Phase 3] `git merge-base --is-ancestor a3282f84b2151 v6.14` true; not
-  ancestor of v6.13. Original quirk `ad281ecf1c7d4` (2018) is in HEAD.
-- [Phase 3] `git merge-base --is-ancestor 00a479ba1d012 v7.2` false;
-  ancestor of v7.3-rc1/rc4.
-- [Phase 3] Series patches `8b326de3cc02c`, `0d8a6306c680e` are sibling
-  ID adds, not prerequisites of this quirk.
-- [Phase 4] `b4 dig -c 00a479ba1d012` / `-a` / `-w` / `-m`: v1-only
-  3-patch series; Bjorn applied for v7.3; Vinod acked 1/3; no NAK;
-  Sashiko `ep_map` note treated as unrelated.
-- [Phase 4] lore.kernel.org HTTP 403/Anubis; thread recovered via b4
-  mbox. stable@ search 403 — UNVERIFIED.
-- [Phase 5] No C callers; `DECLARE_PCI_FIXUP_CLASS_FINAL` in
-  `include/linux/pci.h`; `pci_add_dma_alias` in `drivers/pci/pci.c`.
-- [Phase 6] Local `quirks.c` has PCI100X table and (in this checkout)
-  the 0x1008 line. Companion IDs exist in `switchtec.c:1877` and
-  `switchtec_dma.c:1426`.
-- [Phase 7] PCI subsystem maintainer Bjorn Helgaas; Logan maintains
-  SWITCHTEC DMA.
-- [Phase 8] Failure mode: IOMMU DMA misdirection for PCI1008 NTB — HIGH
-  for that hardware; patch risk very low.
+### Stable rules / risk
+Meets the rules: small, obviously correct, no new API, real leak, helper
+already in 6.12. Risk is a possible trivial context conflict around
+later mainline-only `stmmac_platform.c` edits; the functional change
+does not depend on those.
 
-The change is a one-line PCI quirk ID. That is the standard stable
-exception, it is obviously correct, and this tree already has the table
-it extends.
+### Verification
+- [Phase 1] Parsed tags: author SOB, msgid Link, Kicinski SOB; no
+  Fixes/Reported-by; upstream `317fe168f4c0`
+- [Phase 2] Diff: +2/-4 in `stmmac_mtl_setup()`; two loops to `_scoped`;
+  drop `q_node` + `of_node_put(q_node)`
+- [Phase 2] `__of_get_next_child()` does `of_node_get(next);
+  of_node_put(prev)` (`drivers/of/base.c:600-603`); `prev=NULL` does not
+  put the overwritten pointer
+- [Phase 3] Blame: loops from `d976a525c37127` (v4.12-rc1); ancestor of
+  HEAD
+- [Phase 3] `34af4554fb0ce1` / `DEFINE_FREE(device_node)` are ancestors
+  of HEAD
+- [Phase 3] `git merge-base --is-ancestor 317fe168f4c0 HEAD` failed (fix
+  not in this tree)
+- [Phase 4] `b4 mbox` msgid: 2-message thread; applied to netdev/net; no
+  NAK
+- [Phase 4] stable lore search: no discussion of this leak
+- [Phase 5] Caller: `stmmac_probe_config_dt()` → many `dwmac-*` platform
+  probes
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.12.111
+  `pending-6.12`; buggy loops still present at lines 177 and 240
+- [Phase 6] `sa8540p-ride.dts` `ethernet0_mtl_rx_setup` /
+  `ethernet1_mtl_rx_setup`: `rx-queues-to-use = <1>` with queue0–queue3
+- [Phase 8] Failure mode: OF `device_node` leak at probe, severity
+  MEDIUM
+- UNVERIFIED: Could not use `b4 dig -c` against HEAD (commit not in this
+  checkout); lore HTML fetch returned 403, raw/mbox succeeded
 
 **YES**
 
- drivers/pci/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index e8067ff59e2a5..e03a3831bcc00 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -6045,6 +6045,7 @@ SWITCHTEC_PCI100X_QUIRK(0x1003);  /* PCI1003XG4 */
- SWITCHTEC_PCI100X_QUIRK(0x1004);  /* PCI1004XG4 */
- SWITCHTEC_PCI100X_QUIRK(0x1005);  /* PCI1005XG4 */
- SWITCHTEC_PCI100X_QUIRK(0x1006);  /* PCI1006XG4 */
-+SWITCHTEC_PCI100X_QUIRK(0x1008);  /* PCI1008XG4 */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 0cb51935c4056..ceb913a3a6c69 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -131,7 +131,6 @@ static struct stmmac_axi *stmmac_axi_setup(struct platform_device *pdev)
+ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 			    struct plat_stmmacenet_data *plat)
+ {
+-	struct device_node *q_node;
+ 	struct device_node *rx_node;
+ 	struct device_node *tx_node;
+ 	u8 queue = 0;
+@@ -174,7 +173,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 		plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
  
+ 	/* Processing individual RX queue config */
+-	for_each_child_of_node(rx_node, q_node) {
++	for_each_child_of_node_scoped(rx_node, q_node) {
+ 		if (queue >= plat->rx_queues_to_use)
+ 			break;
  
- /*
+@@ -237,7 +236,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 	queue = 0;
+ 
+ 	/* Processing individual TX queue config */
+-	for_each_child_of_node(tx_node, q_node) {
++	for_each_child_of_node_scoped(tx_node, q_node) {
+ 		if (queue >= plat->tx_queues_to_use)
+ 			break;
+ 
+@@ -290,7 +289,6 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ out:
+ 	of_node_put(rx_node);
+ 	of_node_put(tx_node);
+-	of_node_put(q_node);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
