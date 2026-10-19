@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8C4606118;
-	Mon, 19 Oct 2026 14:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B285D606134;
+	Mon, 19 Oct 2026 14:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418601; cv=none; b=MTkxTvOr+LRnPSHb64dmPaJeSsoD6qp12QHPUyNtxSpnOpsjDnR9ihsV1/mnYvVU5HNxogvcHuGO9wBTKpnBwxZdPth1UbI1+KOAXDAw9tNTGK1JYCeWtnnUFIe6i7eiwetHk3HtXNqplltiM3CSFXmWYtuTziCvX7bti80yB94=
+	t=1792418601; cv=none; b=MNe0FEJJWysMgPMRLgqneBmXmwo7loB9qn/iV6Omjz2yFLDGQ2ickztlm1KBOb2waCqts/no+Y7+M4BqzLjpWLdn+zp5nZG+ro+z8ntnGUTUG/BzzE4Mxo346U7in3liFaE1cIUTPbLzhZBJ3WDHnuIikk5hthNbWl685kDFLxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418601; c=relaxed/simple;
-	bh=nQVuP7B0iOJ6a22Oh/YZ8UFWOuGhpE6HymMl0hnF6Ms=;
+	bh=PMgA9PZlf02ZMMOTWwvddXbD6Vd+7kTdfmbeboZtQ1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IMgMG/TeMl0XkfLaI0sDQbX83dYHXj3w/a1zM7N7Xu6VKdW9YDoiKkHDFAuLfaiV+Mj+N1qGsprih4g5Pa1JKopXMsbRvg4Me+Eju0/clb7JkuANXHwS9+x7B0zcgBxYfepKAnkry02kKoj2nZta6YY0UMYVWjdLWctDqR7Y3GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WByqMUmt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZTgnRaK7gXcykc1dNIN71PlwBmWhR+J7ypf0SOihrzi1A30TbYh25GBo20K44PbxommKbOmVWScjyrXiuDZnHiK98NVIhKKvg5MQkgSj3N9uF7zIPGc3UmFPpVwgfDWXXErSObhIgmAbZQCX+/Ju0UElFN85hvLuEyZetrcoMtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3x7giZi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WByqMUmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0521F000C4;
-	Mon, 19 Oct 2026 14:03:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3x7giZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC17D1F000C8;
+	Mon, 19 Oct 2026 14:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418597;
-	bh=paOQPqKpLelHXuUgFni47NEMAW4wi6DzQzhrIRE0ayI=;
+	s=k20260515; t=1792418598;
+	bh=1f/3E7GBQELuPmGfuS3V/GVdSIWaQRfdTZ0pogT42/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WByqMUmt3/xkH8Gc/3lCkmF/t7LmGxYrLCmSaeli+r/GzdSaIdHhjxIQVsmzbSPpg
-	 aDyphRSePrwTtAfc1APJ5lKy/cLBgJp5xtPyIIewYkqIW4jac/DyOaxynwfR0AZIoS
-	 5d3OI6FcAvoE63KRnfx4P386eSb4pAk/Jqc0yQ9KNbU3UdhsWE6Wj51WQ4+OQR+t3/
-	 HsttmUrN6PIOGuK6wgJDPcjBmfVijhGKVDFSzxzPXwegekbIIb78uWqixWeG6EFDQZ
-	 /4ELyGD0BXK5EdcuqVZgBINiJH0DSTWj/mHakaTPrcSM3YcBQ+IkdztDIUcsHb2fFu
-	 AwXS6sE3BDcUw==
+	b=U3x7giZiGYq90ojmSCsCtoEpLgkZOL3CoO533x1tBTMMbRqaXQgF58W4sfoRA14GP
+	 gYc5xL15WYswbxMPg3NRg13xebWMJmMeaSE6EkISxonLyj+bayYyKShgXlG6bXfBWw
+	 IRxFhdUd0N1GqCOz+Lbn6oDWnnNQxeZWJbW6dKu3Ofd2wUB384RDRlT9erVStAiL16
+	 cDYYGdyqnvql5R+dIGpAKyDxMaakYxTKOkFnK/qLHLDdVgEsYgInhy7C2fH21WsS5D
+	 CS1HLV0wewhvlmeGv9wpB4aLLXwsdxOtMqJ0gjLoik6AMID5X2pAX+ZsEBEWtEBD1q
+	 layPsnMXDkvNQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
+Cc: Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	mathias.nyman@intel.com,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: pcm711: Fix sanity check in interrupt handler
-Date: Mon, 19 Oct 2026 09:50:52 -0400
-Message-ID: <20261019135441.1420968-361-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] xhci: include all root port children in recovery prevention on link error
+Date: Mon, 19 Oct 2026 09:50:53 -0400
+Message-ID: <20261019135441.1420968-362-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,441 +54,470 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit f876cbfe3e066bc9e3f3210907bd534be82946c8 ]
+[ Upstream commit e3d757dc9257f2638ca61eda4faef26c2daeea10 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+Driver already prevents useless transfer retry and endpoint recovery
+for devices directly connected to a root port with link errors.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
+These devices are either disconnecting or will be reset. Link is gone.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-7-abbotti@mev.co.uk
+Move the flag indicating link error from the xhci device structure to
+the root port strucure, allowing all child devices behind hubs to easily
+check for root port link errors, avoiding useless transfer retries and
+endpoint recovery.
+
+This extends the previous endpoint recovery prevention in
+commit b8c3b718087b ("usb: xhci: Don't try to recover an endpoint if port
+is in error state.")
+Only root port link errors can be detected early by xhci driver,
+not link errors between external hubs and their children.
+
+Tested-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). This is
-a 3-line interrupt-handler reorder that stops a NULL dereference of
-`dev->read_subdev` / `s->async` if an IRQ fires during
-`pcl711_attach()`, before `dev->attached` is set.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+- Record: `[xhci]` `[include]` extend existing root-port link-error
+  recovery skip from the directly attached device to every device under
+  that root port.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[comedi/pcl711] [Fix] sanity check in interrupt handler`
-- Subsystem: `comedi` (COMEDI data-acquisition), driver `pcl711`
-  (Advantech PCL-711 / ADLink ACL-8112). Subject says `pcm711`; the file
-  is `pcl711.c` (typo, same as other patches in the series).
-- Action verb: **Fix** — explicit bug fix.
+**Step 1.2: Tags**
+- Record:
+  - `Tested-by: Xu Rao <raoxu@uniontech.com>`
+  - `Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>` (xhci
+    maintainer)
+  - `Link: https://patch.msgid.link/20260806142113.2436238-4-
+    mathias.nyman@linux.intel.com`
+  - `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
+  - No `Fixes:` / `Cc: stable` (expected for this review)
+  - Pipeline `Signed-off-by: Sasha Levin` ignored
+- Notable: maintainer-authored; tester is the person who hit the host-
+  teardown bug.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Fixes:` — none (expected for this review)
-- `Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>`
-- `Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>`
-- `Reported-by: Kyungwook Boo <bookyungwook@gmail.com>`
-- `Link: https://lore.kernel.org/lkml/20260610115912.780131-1-
-  jjy600901@snu.ac.kr/` (original report)
-- `Link:
-  https://patch.msgid.link/20260618102949.26607-7-abbotti@mev.co.uk`
-  (patch 06/11)
-- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (COMEDI maintainer)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-- No `Cc: stable`, no `Tested-by`, no `Reviewed-by`, no `Acked-by`
-- Notable: **three reporters**; original mail describes a **KASAN null-
-  ptr-deref / kernel panic**.
+**Step 1.3: Body**
+- Record:
+  - **Bug:** On a root port in SS.Inactive, xhci already skips URB
+    enqueue and endpoint reset for the device plugged into that port
+    (`VDEV_PORT_ERROR`). Devices behind hubs never get that flag, so
+    they still retry transfers and reset endpoints after the root-port
+    link is gone.
+  - **Symptom:** Useless recovery while the hub driver is still sorting
+    the port out. The existing comment on this path is “Can cause host
+    hang.” The 2019 precursor (`b8c3b718087b`) documented host-
+    controller stop after repeated endpoint resets on an inactive root
+    port.
+  - **Root cause:** The error flag lives on `xhci_virt_device`, and
+    `handle_port_status()` only sets it on `xhci->devs[port->slot_id]`
+    (the device directly on the root port).
+  - **Fix:** Move the flag to `xhci_port->link_inactive` so every child
+    that already has `vdev->rhub_port` can see the same root-port state.
+  - **Limit:** Only root-port link errors are visible this way, not hub-
+    to-child link errors.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** IRQ handler is registered in `pcl711_attach()` before the
-  device is fully set up. The handler already checks `dev->attached`,
-  but only **after** `cmd = &s->async->cmd`, which dereferences
-  `dev->read_subdev` (commit text says `read_dev`; code is
-  `read_subdev`).
-- **Symptom:** NULL pointer dereference in interrupt context →
-  oops/panic. Original report: “triggering a KASAN null-ptr-deref”.
-- **Root cause:** `request_irq()` runs before `dev->read_subdev` is
-  assigned and before core postconfig sets `dev->attached` and allocates
-  `s->async`.
-- **Version info:** none in the message. The buggy deref has been in
-  this handler since the 3.13/3.16-era staging rework.
+**Step 1.4: Hidden bug fix?**
+- Record: Not hidden. It is an explicit extension of a hang-prevention
+  check. Moving the flag off `vdev` is a small structural change with
+  standalone functional effect, not a pure cleanup.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Subject and body both say this is a null-ptr-deref
-fix. Cover letter: “Add/fix sanity check in ISA drivers to avoid null-
-ptr-deref”.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.1: Inventory**
+- Record:
+  - `drivers/usb/host/xhci-ring.c`: `xhci_handle_halted_endpoint()`,
+    `handle_port_status()` (~15+/12-)
+  - `drivers/usb/host/xhci.c`: `xhci_urb_enqueue()`,
+    `xhci_discover_or_reset_device()` (1+ / 3-)
+  - `drivers/usb/host/xhci.h`: drop `vdev->flags` / `VDEV_PORT_ERROR`;
+    add `xhci_port.link_inactive:1`
+  - Net: 17 insertions, 23 deletions. Single-subsystem surgical change.
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/comedi/drivers/pcl711.c` (+2 / −1)
-- Function: `pcl711_interrupt()`
-- Scope: single-file surgical fix, 3 lines
+**Step 2.2: Control-flow change**
+- Record:
+  - **Before:** Port event with PLS==`XDEV_INACTIVE` and no `PORT_RESET`
+    sets `vdev->flags |= VDEV_PORT_ERROR` on the directly attached slot
+    only. `PORT_RC` clears it. `reset_device` also zeros `vdev->flags`.
+    Halted-endpoint recovery and URB enqueue consult that per-device
+    flag.
+  - **After:** If the port is not in reset, `port->link_inactive = (pls
+    == XDEV_INACTIVE)`. All devices whose `rhub_port` is that port skip
+    recovery/enqueue. Device reset no longer clears the flag; port
+    events drive it from real PLS.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `s = dev->read_subdev;` then immediately `cmd =
-  &s->async->cmd;` then `if (!dev->attached) return;`. If `s` is NULL,
-  that second line oopses. If `s` is set but `s->async` is not yet
-  allocated (postconfig), same oops.
-- **After:** declare `cmd` uninitialized; check `dev->attached` first;
-  only then `cmd = &s->async->cmd`.
-- Path: interrupt / attach-time error path, not the steady-state sample
-  path.
+**Step 2.3: Bug mechanism**
+- Record: **Logic / correctness + hardware hang workaround.** Same class
+  as the 2019 “don’t reset an endpoint on an inactive root port” fix.
+  Also improves flag lifetime vs the stale-flag bug already fixed in
+  this tree by `d77efd7b3def7` (clearing is now “link is not Inactive”,
+  not “PORT_RC or reset_device succeeded”).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** NULL pointer dereference (memory safety)
-- **Mechanism:** `pcl711_attach()` calls `request_irq()` at line 431,
-  then later sets `dev->read_subdev` at line 457. Core sets
-  `dev->attached = true` only in `comedi_device_postconfig()` after
-  `__comedi_device_postconfig_async()` allocates `s->async`. A premature
-  IRQ (pending line, wrong ISA IRQ/I/O config, leftover hardware state)
-  hits the handler with `read_subdev` and/or `s->async` still NULL.
+**Step 2.4: Fix quality**
+- Record: Obviously correct for the stated gap. Minimal. Regression risk
+  is low: skipping recovery when the root-port link is gone is the
+  intended policy; clearing is tied to actual port state, which is
+  stricter and more accurate than clearing on `reset_device` while the
+  port may still be Inactive. Theoretical `rhub_port == NULL` deref
+  exists in the new loads; `xhci_setup_addressable_virt_dev()` sets
+  `rhub_port` before normal URB traffic, and mainline has no follow-up
+  NULL-check fix on this path.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: the existing guard is just moved before the first
-  dereference of `s`.
-- Minimal; no API, locking, or data-structure change.
-- Regression risk: very low. After `attached` is true, attach has
-  assigned `read_subdev` (when IRQ was requested) and postconfig has
-  allocated `s->async`.
-- Residual: `s = dev->read_subdev` still runs before the check, but that
-  is a pointer load, not a dereference. Same unlocked `dev->attached`
-  read as the rest of COMEDI; this patch does not make that worse.
-- Typos in subject/body (`pcm711`, `read_dev`) do not affect the code.
+## Phase 3: Git history
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.1: Blame**
+- Record: Flag set/clear in `handle_port_status()` is `d77efd7b3def7`
+  (2025), which reworked `b8c3b718087b` (2019-06-18, v5.2-rc5 era, `Cc:
+  stable`). The hang-prevention hole for hub children has been in the
+  driver since 2019.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- `if (!dev->attached)`: original handler, David Schleef, 2009
-  (`456af2011ce33e`).
-- `s = dev->read_subdev`: `8f494fe626b473` (2013-09-25), first in
-  **v3.13-rc1**.
-- `cmd = &s->async->cmd` before the attached check: `ae2348e2282452`
-  (2014-05-27), first in **v3.16-rc1**.
-- Long-standing bug, not recent code.
+**Step 3.2: Fixes: tag**
+- Record: None. The message names `b8c3b718087b`, which **is** an
+  ancestor of this 6.12 tree (`git merge-base --is-ancestor` exit 0).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. Introducers above are in this
-tree’s history.
+**Step 3.3: Related file history**
+- Record:
+  - `d77efd7b3def7` “fix stale flag preventing URBs after link state
+    error is cleared” — already in this tree; this commit supersedes its
+    per-vdev flag management.
+  - Same-day series on `origin/master`: `e3d757dc9257f` (this) →
+    `042aad8d0db66` (disconnect) → `7e0ef4332ed9b` (`EP_DROP_PENDING`).
+  - None of those three are in this checkout.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- `f876cbfe3e066` — this fix
-- `7e33ddd6d0282` — I/O-base sanity checks (unrelated)
-- No later commits on `pcl711.c` after this fix
-- Sibling series (same author, same day): dt2811, ni_at_a2150, pcl816,
-  pcl818, pcmmio, pcmuio, quatech_daqp_cs, aio_iiro_16, das6402,
-  ni_atmio16d
-- Standalone for this file: patch 06/11, no dependency on the other
-  patches
+**Step 3.4: Author**
+- Record: Mathias Nyman is the xhci maintainer. This is his generic
+  replacement for Xu Rao’s proposed `XHCI_NO_SOFT_RETRY` quirk on
+  Renesas uPD720201.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Ian Abbott is **COMEDI maintainer** (`MAINTAINERS`: COMEDI
-DRIVERS, status Odd Fixes). He wrote this series and the earlier
-`17221216ae8ce` (`comedi_parport: deal with premature interrupt`) for
-the same report.
+**Step 3.5: Dependencies**
+- Record: This patch does **not** need the later two to compile or to
+  apply its own logic. The later two **do** need this
+  (`rhub_port->link_inactive`). Local context differs
+  (`readl(port->addr)` vs `xhci_portsc_readl()`, no `xhci_sideband`
+  field); those are apply-noise, not semantic prerequisites. `rhub_port`
+  itself (`06790c19086fe`) is already here.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses `dev->attached`, `read_subdev`, `s->async->cmd` — all
-present for years. Applies standalone.
+## Phase 4: Mailing list
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.1: Original discussion**
+- Record:
+  - `b4 dig -c e3d757dc9257f`: lore `https://patch.msgid.link/2026080614
+    2113.2436238-4-mathias.nyman@linux.intel.com`
+  - Applied version is **[PATCH 03/17] xhci features and fixes for usb-
+    next** (Aug 6 2026).
+  - First posting was **[RFT PATCH 1/3] xhci: avoid futile stop endpoint
+    command and host teardown** (`20260629123031.142133-2`).
+  - Cover letter of that RFT: stop-endpoint timeout → `xHCI host
+    controller not responding, assume dead`.
+  - No NAK. No reviewer `Cc: stable` on this specific patch.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c f876cbfe3e066`:
-  https://patch.msgid.link/20260618102949.26607-7-abbotti@mev.co.uk
-- `b4 dig -a`: **v1 only** (11-patch series, 2026-06-18)
-- Cover: “several comedi ISA drivers register their interrupt handler
-  before initializing the subdevice … null pointer dereferences if the
-  device raises an interrupt prematurely.”
-- No NAKs, no review comments, no explicit `Cc: stable` in the thread
-  (mbox is patches only, no replies)
-- Applied as submitted by Greg KH (char-misc), 2026-07-17
+**Step 4.2: Recipients**
+- Record: `b4 dig -w`: Mathias Nyman, gregkh, linux-usb, Xu Rao. Right
+  list and USB maintainer.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`):
-- To: linux-kernel
-- Cc: Greg Kroah-Hartman, H Hartley Sweeten (co-maintainer), the three
-  reporters
-- No Reviewed-by. Quality signal is that the **subsystem maintainer
-  authored it** and Greg applied it.
+**Step 4.3: Bug report**
+- Record: Xu Rao, Renesas uPD720201 (`1912:0014`), Genesys Logic hub +
+  RTL8153. Repro: bring Ethernet up, hot-unplug hub. Log:
+  - `Transfer error` → `Soft-reset ep` → `xHCI host not responding to
+    stop endpoint command` → `assume dead` → `HC died`.
+  - Xu tested the **3-patch RFT as a whole** and said the teardown is
+    gone; he also said the `EP_DROP_PENDING` path (patch 3 of that
+    series) was used on disconnect. He agreed the generic series made
+    the `XHCI_NO_SOFT_RETRY` quirk unnecessary.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Fetched https://lore.kernel.org/lkml/20260610115912.780131-1-
-jjy600901@snu.ac.kr/raw
-- Jaeyoung Chung (SNU): several ISA drivers register the IRQ before
-  `read_subdev` is set.
-- “If the device raises an interrupt before the subdevice is
-  initialized, the handler runs against an uninitialized subdevice,
-  causing a **kernel panic**.”
-- Names `pcl711_interrupt()` / `pcl711_attach()` explicitly; KASAN null-
-  ptr-deref.
-- Suggested fix: move `request_irq()` later **or** guard NULL
-  `read_subdev`. Maintainer chose the existing `dev->attached` pattern.
+**Step 4.4: Series context**
+- Record: Standalone for *link-error* hub children. The reported hot-
+  unplug teardown is a **disconnect** path that also wants
+  `042aad8d0db66` and `7e0ef4332ed9b`. This commit is still the
+  necessary first step and independently closes the Inactive-link gap.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 11 independent per-driver patches. This one only needs
-`pcl711.c`. `comedi_parport` was already fixed separately
-(`17221216ae8ce`).
+**Step 4.5: stable@ discussion**
+- Record: No stable-specific thread found for this SHA. The 2019
+  precursor and the 2025 stale-flag fix both went to stable.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable searches for “pcm711”, “Fix sanity check
-in interrupt handler”, and “comedi null-ptr-deref” found **no discussion
-of this 2026 fix**. (Older “pcl711 sanity” hits are unrelated 2021
-stable reviews.)
+## Phase 5: Semantic / call-path analysis
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.1: Functions**
+- Record: `xhci_handle_halted_endpoint()`, `handle_port_status()`,
+  `xhci_urb_enqueue()`, `xhci_discover_or_reset_device()`. Structs:
+  `xhci_virt_device`, `xhci_port`.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `pcl711_interrupt()` (handler); setup in `pcl711_attach()`.
+**Step 5.2: Callers of halted-endpoint recovery (this tree)**
+- Record: transaction/babble/split errors, stall, bulk/interrupt soft-
+  retry (`process_bulk_intr_td`), stream transferless events, stop-ep
+  completion racing a stall. All of these run from xhci interrupt/event
+  handling during normal USB I/O.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- Registered via `request_irq(..., pcl711_interrupt, 0, ...)` in
-  `pcl711_attach()` (non-shared).
-- Invoked from IRQ context when the configured ISA IRQ fires.
-- `pcl711_interrupt` has no other callers.
+**Step 5.3: Callees**
+- Record: `xhci_reset_halted_ep()` / `xhci_queue_reset_ep()` — the
+  commands that, on a dead link, have hung or killed hosts.
 
-**Step 5.3: TRACE CALLEES**
-Record: `pcl711_ai_get_sample()` (port I/O),
-`comedi_buf_write_samples()`, `comedi_handle_events()`, `outb()` to
-clear IRQ status. After the fix, those run only if `dev->attached`.
+**Step 5.4: Reachability**
+- Record: Yes. Any USB transfer on a device under an xhci root port
+  whose PLS is `XDEV_INACTIVE`. Hot-unplug / bad SuperSpeed link is a
+  normal user action, not a debug path.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `COMEDI_DEVCONFIG` → `pcl711_attach()` →
-`request_irq()`. Reachable from the comedi ioctl path when
-`CONFIG_COMEDI_PCL711` is enabled and an IRQ is in the config options.
-Wrong ISA IRQ/I/O (the report’s realistic case) can fire the handler
-during that window. Unprivileged trigger: only if the user can configure
-the comedi device (typically privileged). Failure is still a kernel
-oops.
+**Step 5.5: Similar patterns**
+- Record: Same skip already exists for the directly attached device.
+  Follow-up commits add `port->connected` and `EP_DROP_PENDING` for
+  disconnect; they are not in this tree.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same bug class across the 11-driver series. `ni_660x.c` even
-comments “make sure `dev->attached` is checked before doing anything
-else.” This is a systematic COMEDI ISR pattern, not a one-off.
+## Phase 6: This tree (6.12.111)
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 6.1: Buggy code present?**
+- Record: **Yes.** `p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12
+  SUBLEVEL=111`.
+  - `xhci.h:753` `VDEV_PORT_ERROR`
+  - `xhci-ring.c:943` and `xhci.c:1572` still test `vdev->flags`
+  - `xhci-ring.c:2024-2028` still sets the flag only on the directly
+    attached `vdev`
+- Candidate SHA `e3d757dc9257f` is **not** an ancestor of HEAD.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: **7.3.0-rc4** (`git describe HEAD` =
-  `v7.3-rc4-27-gf0100363d8c37`).
-- `git merge-base --is-ancestor f876cbfe3e066 HEAD` → yes. Fix landed in
-  **v7.3-rc1** (not in v7.2).
-- Driver and handler exist: `drivers/comedi/drivers/pcl711.c`. Pre-fix
-  form (deref then attached check) is in `f876cbfe3e066^`.
-- Bug introduced ~v3.13/v3.16; present in every current stable lineage
-  that has this driver.
-- HEAD already has the fixed handler (lines 183–209). That does not make
-  the fix unsuitable for older trees of this lineage.
+**Step 6.2: Backport difficulty**
+- Record: **Minor context.** This tree still uses `readl(port->addr)`
+  (not `xhci_portsc_readl`), `xhci_get_usb3_hcd()`, and has no
+  `xhci_sideband`. The logic hunks (`VDEV_PORT_ERROR` →
+  `rhub_port->link_inactive`, port-level PLS update, drop
+  `virt_dev->flags = 0`) match this tree.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. The function body has been stable since 2014 aside
-from this reorder. No conflicting local changes. `CONFIG_COMEDI_PCL711`
-exists.
+**Step 6.3: Related fixes already here**
+- Record: `b8c3b718087b` and `d77efd7b3def7` are here. They only cover
+  the directly attached device. Disconnect/`EP_DROP_PENDING` follow-ups
+  are not here. Renesas `0x0014` still has only `XHCI_ZERO_64B_REGS`,
+  not `XHCI_NO_SOFT_RETRY`.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This commit is the fix; no later pcl711 ISR change.
-`comedi_parport` premature-IRQ fix is a sibling, not a substitute.
+## Phase 7: Subsystem
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 7.1**
+- Record: USB xhci host controller. **IMPORTANT** — default host on most
+  PCs, many embedded SoCs, Android.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/comedi/` — ISA/PC-104 DAQ. **PERIPHERAL / config-
-specific** (`CONFIG_COMEDI_PCL711`, depends on ISA/PC104 +
-`HAS_IOPORT`). Not core mm/net/fs, but a real in-tree driver with users.
+**Step 7.2**
+- Record: Actively maintained; this is a targeted hang-prevention fix in
+  a mature path, not a new subsystem.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: “Odd Fixes”; Ian Abbott still sends targeted fixes. Mature
-driver, old bug, small patch.
+## Phase 8: Impact and risk
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 8.1: Who is affected**
+- Record: Users of xhci with a hub (or composite device with an
+  integrated hub) under a root port that goes SS.Inactive, plus any
+  topology that currently misses `VDEV_PORT_ERROR`. Confirmed hardware:
+  Renesas uPD720201 + Genesys hub + RTL8153; the mechanism is not
+  vendor-specific.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Users of Advantech PCL-711/711B and ADLink ACL-8112 with IRQ
-enabled. Config- and hardware-specific, not universal.
+**Step 8.2: Trigger**
+- Record: Root-port link Inactive (cable/hub/link training). Common in
+  the field. Unprivileged users can unplug USB devices. Full Xu Rao hot-
+  unplug teardown also needs the later disconnect patches.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Window: after `request_irq()` in `pcl711_attach()`, before
-  `read_subdev` assignment and before `dev->attached = true` in
-  postconfig.
-- How common: not every boot; ISA leftover IRQ, wrong IRQ/I/O in comedi
-  config, or a pending line. Cover letter/report treat that as the
-  failure mode.
-- Unprivileged: generally no (device config is privileged). Still a
-  kernel oops if it fires.
+**Step 8.3: Failure mode**
+- Record: Endpoint reset / soft-retry on a dead link → stop-endpoint
+  timeout → **`xHCI host controller not responding, assume dead`** →
+  entire xhci bus torn down. **CRITICAL** (host death, all USB on that
+  controller gone). The 2019 write-up also described host stop after
+  repeated endpoint resets.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: NULL deref in IRQ context → **oops/panic**. Original report:
-kernel panic / KASAN null-ptr-deref. **Severity: HIGH** (crash; not a
-hot-path UAF, but a hard crash).
+**Step 8.4: Risk/benefit**
+- Record: Benefit high (prevents host teardown on a realistic USB event;
+  closes a 2019 hang hole for hub children). Risk low (~20-line xhci-
+  only change, no API, policy already used for direct-attach devices).
+  Ratio favors backport.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** HIGH for affected hardware — prevents attach-time oops.
-  Medium globally (small user base).
-- **Risk:** VERY LOW — 3-line reorder of an existing check; no lock/API
-  change.
-- **Ratio:** benefit outweighs risk. Stable rules favor small crash
-  fixes even in niche drivers.
+## Phase 9: Synthesis
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**For:**
+- Real hang/host-death class bug; xhci is widely deployed.
+- Extends a fix that already went to stable in 2019.
+- Small, maintainer-written, tester-acked as part of the hang series.
+- Buggy code is in 6.12; apply needs only local context tweaks.
+- Standalone value: hub children currently do not skip recovery on root-
+  port Inactive.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Against:**
+- First of a 3-patch hang series; Xu Rao’s hot-unplug case also needs
+  the disconnect + `EP_DROP_PENDING` patches.
+- No `Cc: stable` on this commit (not a negative per the review rules).
+- Tiny leftover: `vdev` is still fetched in `handle_port_status()` for
+  later `xhci_ring_device()`, so it is not unused.
 
-FOR backporting:
-- Real NULL deref in IRQ handler → kernel panic (KASAN report).
-- Three reporters; maintainer-authored; Greg applied it.
-- 3-line, obviously correct reorder of an existing guard.
-- Bug present since ~2013/2014; driver exists in this tree.
-- Standalone; no prerequisites; applies cleanly.
-- Same pattern already used elsewhere in COMEDI (`dev->attached` first).
+**Unresolved:** Whether `rhub_port` can be NULL at `xhci_urb_enqueue()`
+in some rare pre-address path — unverified as a real 6.12 trigger; not
+used as a NO reason.
 
-AGAINST:
-- Niche ISA DAQ (`CONFIG_COMEDI_PCL711`); not a universal path.
-- Trigger is attach-time premature IRQ, not every sample.
-- No `Fixes:` / `Cc: stable` (not a negative under these rules).
-- No mailing-list review beyond the maintainer.
+**Stable rules**
+1. Obviously correct and tested — **PASS** (maintainer + Tested-by)
+2. Real user-visible bug — **PASS** (host teardown / hang)
+3. Important — **PASS** (CRITICAL: xhci assumed dead)
+4. Small and contained — **PASS**
+5. No new features/APIs — **PASS**
+6. Applies to this tree — **PASS** (minor context)
 
-UNRESOLVED:
-- No on-list replies in the saved mbox (Greg applied v1). Does not
-  change correctness.
-- lore WebFetch returned 403; report body was retrieved via raw URL
-  instead.
+**Exception category:** None required; ordinary bugfix.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — reorder of an existing
-   check; maintainer + three reporters.
-2. Fixes a real bug that affects users? **PASS** — NULL deref / panic on
-   premature IRQ during attach.
-3. Important issue? **PASS** — kernel oops in interrupt context (HIGH).
-4. Small and contained? **PASS** — +2/−1 in one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same `pcl711_interrupt()`
-   structure; this tree already contains equivalent code.
+This should be backported to **this** 6.12 tree. It is not a new
+feature; it is the missing half of an existing hang-prevention check.
+The later two series patches are additional (disconnect) coverage, not a
+reason to keep this gap in 6.12.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
-crash fix.
-
-**Step 9.4: MAKE YOUR DECISION**
-This is a surgical NULL-deref fix in an interrupt handler. The buggy
-code has been in this driver for over a decade, the failure is a kernel
-oops, and the patch only moves a check that was already there. It meets
-stable-kernel rules for this tree.
-
-===============================================================
-Why it matters to stable users
-===============================================================
-COMEDI attach registers `pcl711_interrupt` before `read_subdev` and
-`s->async` exist and before `dev->attached` is set. A premature IRQ then
-executes `cmd = &s->async->cmd` on a NULL pointer and panics. Moving the
-attached check first closes that window without changing normal
-sampling.
-
-Risk vs benefit: three lines, no semantic change on the success path,
-crash avoided on the attach/error path. Safe to backport.
-
-Verification:
-- [Phase 1] Parsed tags: three Reported-by (SNU); lore link to original
-  report; maintainer + Greg SOBs; no Fixes/Cc-stable
-- [Phase 1] Cover letter: explicit null-ptr-deref if IRQ fires before
-  subdevice init
-- [Phase 2] Diff: +2/−1 in `pcl711_interrupt()`; delay `cmd =
-  &s->async->cmd` until after `dev->attached`
-- [Phase 2] Confirmed pre-fix parent still dereferenced `s->async`
-  before the attached check
-- [Phase 3] Blame: attached check 2009; `read_subdev` in ISR v3.13
-  (`8f494fe626b473`); `cmd = &s->async->cmd` v3.16 (`ae2348e2282452`)
-- [Phase 3] No Fixes tag; `git merge-base --is-ancestor f876cbfe3e066
-  HEAD` succeeded
-- [Phase 3] Author is COMEDI maintainer; series of 11 independent per-
-  driver patches
-- [Phase 4] `b4 dig -c`:
-  https://patch.msgid.link/20260618102949.26607-7-abbotti@mev.co.uk
-- [Phase 4] `b4 dig -a`: v1 only, no later revision
-- [Phase 4] `b4 dig -w`: Greg KH, Hartley Sweeten, reporters on Cc
-- [Phase 4] Original report raw: names `pcl711_interrupt`, KASAN null-
-  ptr-deref, kernel panic
-- [Phase 4] stable list: no discussion of this 2026 fix
-- [Phase 5] Only caller is `request_irq` in `pcl711_attach()` (line
-  431); `read_subdev` assigned at line 457; `attached` set in
-  `comedi_device_postconfig()` after async alloc
-- [Phase 5] No semcode MCP; used grep/read
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 6] Commit in v7.3-rc1, not v7.2; driver present; no post-fix
-  pcl711 churn
-- [Phase 8] Failure mode: IRQ-context NULL deref → oops/panic, severity
-  HIGH
-- UNVERIFIED: live hardware reproduction (code-path analysis + reporter
-  KASAN writeup only)
-- UNVERIFIED: lore HTML (403); raw mbox succeeded
+## Verification
+- [Phase 1] Parsed tags: Tested-by Xu Rao; Link msgid `...2436238-4`;
+  maintainer SOB; no Fixes/Cc:stable
+- [Phase 2] Diff: move `VDEV_PORT_ERROR` from `xhci_virt_device` to
+  `xhci_port.link_inactive`; 17+/23-
+- [Phase 3] `git describe HEAD` / Makefile: **6.12.111**
+  (`p-6.12-3-gc504cf0baa3d8`)
+- [Phase 3] `git merge-base --is-ancestor b8c3b718087b HEAD` → yes;
+  `e3d757dc9257f` → no
+- [Phase 3] `git blame` on flag set/clear: `d77efd7b3def7` (already in
+  tree) over `b8c3b718087b` (2019)
+- [Phase 3] `git show d77efd7b3def7`: stale-flag fix still uses per-vdev
+  flag; this commit replaces that
+- [Phase 4] `b4 dig -c e3d757dc9257f`: PATCH 03/17; earlier RFT 1/3
+- [Phase 4] `b4 mbox` RFT cover: “stop endpoint command” / “assume dead”
+- [Phase 4] Xu Rao: teardown gone after the 3-patch series;
+  EP_DROP_PENDING used on unplug
+- [Phase 4] Original report: Renesas 1912:0014, Genesys hub, RTL8153
+  hot-unplug
+- [Phase 5] Callers of `xhci_handle_halted_endpoint` in `xhci-ring.c`
+  (soft retry, stall, transaction error)
+- [Phase 6] Local `VDEV_PORT_ERROR` still present; `rhub_port` present;
+  Renesas 0x0014 lacks `XHCI_NO_SOFT_RETRY`
+- [Phase 8] Failure mode verified in `xhci-ring.c:1725` (“xHCI host not
+  responding to stop endpoint command”)
+- UNVERIFIED: lore.kernel.org HTTP fetch (403); used `b4` instead
+- UNVERIFIED: concrete 6.12 NULL `rhub_port` at enqueue; not used for
+  the verdict
 
 **YES**
 
- drivers/comedi/drivers/pcl711.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c | 27 +++++++++++++++------------
+ drivers/usb/host/xhci.c      |  4 +---
+ drivers/usb/host/xhci.h      |  9 +--------
+ 3 files changed, 17 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/comedi/drivers/pcl711.c b/drivers/comedi/drivers/pcl711.c
-index 0cf3917defe79..33407da84ef45 100644
---- a/drivers/comedi/drivers/pcl711.c
-+++ b/drivers/comedi/drivers/pcl711.c
-@@ -181,7 +181,7 @@ static irqreturn_t pcl711_interrupt(int irq, void *d)
- {
- 	struct comedi_device *dev = d;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
- 	unsigned short data;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 6ce5874fc4b3d..dc18da8385a21 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1008,7 +1008,7 @@ static int xhci_handle_halted_endpoint(struct xhci_hcd *xhci,
+ 	 * Avoid resetting endpoint if link is inactive. Can cause host hang.
+ 	 * Device will be reset soon to recover the link so don't do anything
+ 	 */
+-	if (ep->vdev->flags & VDEV_PORT_ERROR)
++	if (ep->vdev->rhub_port->link_inactive)
+ 		return -ENODEV;
  
- 	if (!dev->attached) {
-@@ -189,6 +189,7 @@ static irqreturn_t pcl711_interrupt(int irq, void *d)
- 		return IRQ_HANDLED;
+ 	/* add td to cancelled list and let reset ep handler take care of it */
+@@ -2007,13 +2007,15 @@ static void xhci_cavium_reset_phy_quirk(struct xhci_hcd *xhci)
+ static void handle_port_status(struct xhci_hcd *xhci, union xhci_trb *event)
+ {
+ 	struct xhci_virt_device *vdev = NULL;
+-	struct usb_hcd *hcd;
+-	u32 port_id;
+-	u32 portsc, cmd_reg;
+-	unsigned int hcd_portnum;
+ 	struct xhci_bus_state *bus_state;
+-	bool bogus_port_status = false;
+ 	struct xhci_port *port;
++	struct usb_hcd *hcd;
++	bool bogus_port_status = false;
++	unsigned int hcd_portnum;
++	u32 cmd_reg;
++	u32 port_id;
++	u32 portsc;
++	u32 pls;
+ 
+ 	/* Port status change events always have a successful completion code */
+ 	if (GET_COMP_CODE(le32_to_cpu(event->generic.field[2])) != COMP_SUCCESS)
+@@ -2050,6 +2052,7 @@ static void handle_port_status(struct xhci_hcd *xhci, union xhci_trb *event)
+ 	bus_state = &port->rhub->bus_state;
+ 	hcd_portnum = port->hcd_portnum;
+ 	portsc = xhci_portsc_readl(port);
++	pls = portsc & PORT_PLS_MASK;
+ 
+ 	xhci_dbg(xhci, "Port change event, %d-%d, id %d, portsc: 0x%x\n",
+ 		 hcd->self.busnum, hcd_portnum + 1, port_id, portsc);
+@@ -2061,12 +2064,12 @@ static void handle_port_status(struct xhci_hcd *xhci, union xhci_trb *event)
+ 		usb_hcd_resume_root_hub(hcd);
  	}
  
-+	cmd = &s->async->cmd;
- 	data = pcl711_ai_get_sample(dev, s);
+-	if (vdev && (portsc & PORT_PLS_MASK) == XDEV_INACTIVE) {
+-		if (!(portsc & PORT_RESET))
+-			vdev->flags |= VDEV_PORT_ERROR;
+-	} else if (vdev && portsc & PORT_RC) {
+-		vdev->flags &= ~VDEV_PORT_ERROR;
+-	}
++	/*
++	 * Tag broken links to avoid retries while hub driver sorts it out.
++	 * Link status is not relible while port is in reset.
++	 */
++	if (!(portsc & PORT_RESET))
++		port->link_inactive = (pls == XDEV_INACTIVE);
  
- 	outb(PCL711_INT_STAT_CLR, dev->iobase + PCL711_INT_STAT_REG);
+ 	if ((portsc & PORT_PLC) && (portsc & PORT_PLS_MASK) == XDEV_RESUME) {
+ 		xhci_dbg(xhci, "port resume event for port %d\n", port_id);
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 14eeb16f668b2..a4fab82da76b6 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -1674,7 +1674,7 @@ static int xhci_urb_enqueue(struct usb_hcd *hcd, struct urb *urb, gfp_t mem_flag
+ 		goto free_priv;
+ 	}
+ 
+-	if (xhci->devs[slot_id]->flags & VDEV_PORT_ERROR) {
++	if (xhci->devs[slot_id]->rhub_port->link_inactive) {
+ 		xhci_dbg(xhci, "Can't queue urb, port error, link inactive\n");
+ 		ret = -ENODEV;
+ 		goto free_priv;
+@@ -4038,7 +4038,6 @@ static int xhci_discover_or_reset_device(struct usb_hcd *hcd,
+ 				xhci_get_slot_state(xhci, virt_dev->out_ctx));
+ 		xhci_dbg(xhci, "Not freeing device rings.\n");
+ 		/* Don't treat this as an error.  May change my mind later. */
+-		virt_dev->flags = 0;
+ 		ret = 0;
+ 		goto command_cleanup;
+ 	case COMP_SUCCESS:
+@@ -4090,7 +4089,6 @@ static int xhci_discover_or_reset_device(struct usb_hcd *hcd,
+ 	}
+ 	/* If necessary, update the number of active TTs on this root port */
+ 	xhci_update_tt_active_eps(xhci, virt_dev, old_active_eps);
+-	virt_dev->flags = 0;
+ 	ret = 0;
+ 
+ command_cleanup:
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index caa3fbee29f2c..87d43bc95bf33 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -741,14 +741,6 @@ struct xhci_virt_device {
+ 	struct xhci_port		*rhub_port;
+ 	struct xhci_interval_bw_table	*bw_table;
+ 	struct xhci_tt_bw_info		*tt_info;
+-	/*
+-	 * flags for state tracking based on events and issued commands.
+-	 * Software can not rely on states from output contexts because of
+-	 * latency between events and xHC updating output context values.
+-	 * See xhci 1.1 section 4.8.3 for more details
+-	 */
+-	unsigned long			flags;
+-#define VDEV_PORT_ERROR			BIT(0) /* Port error, link inactive */
+ 
+ 	/* The current max exit latency for the enabled USB3 link states. */
+ 	u16				current_mel;
+@@ -1469,6 +1461,7 @@ struct xhci_port {
+ 	int			hcd_portnum;
+ 	struct xhci_hub		*rhub;
+ 	struct xhci_port_cap	*port_cap;
++	unsigned int		link_inactive:1;
+ 	unsigned int		lpm_incapable:1;
+ 	unsigned long		resume_timestamp;
+ 	bool			rexit_active;
 -- 
 2.53.0
 
