@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154A5A8767;
-	Mon, 19 Oct 2026 13:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794C55A877C;
+	Mon, 19 Oct 2026 13:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418397; cv=none; b=qC1a1C776UDMAd8N3en4uTdxqJd66RLLi0hwZOdsjgewhBrsCyL9cgwKW01+pP11rV2YuSQsUVR0JmTN4zRAvDy0MeP2/Jp/nUi8D8am71QyDg4/s4IqvcGsIYaTNMHNRbu9meEOqG+/3u5y8J581kEF5ZHvMyy6F2wPOWEjTck=
+	t=1792418398; cv=none; b=npjRpqcf9Eq1/1n+xjZwRNJ2Jp9mX6iZACuvxMp3ewrIdZgm0806PRVbWAYAE+VmUjdyTjs4Lqz70bU6xlNcYhC+ZJXok4zjVGaP4XMLRhl+CzP5fpFEwBavAHNgDz8NwUjxGqMMgLjeYVmem6+rqSYKlagNGB3w9uVtGqYJQRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418397; c=relaxed/simple;
-	bh=lXAEDhNCr2vsjmfDWLRZ8UrqZWYjFwAPdewqndj9g24=;
+	s=arc-20240116; t=1792418398; c=relaxed/simple;
+	bh=+rgjnN/rn8QdW3E3GektyquPiRgfKGPkpWDkXktqH6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XqYV7QGR0vbN2DeD7Q2IO3h6cEpD8m9pat/0erUIHBYDnnKkpr5EaFDEmuUy8u2/5sU2c4DUbNiAoiFfVc2Rx39Onw6XOaXJNN2ZikbUIT+EsaO56gK+Il/ypFLoIr80iN6k3XxxZDKu8QK3qOOITQFDuvDvPywIQuUfvU3kvSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ll3rkweG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XVUnXvs7G9AIOsB/sUL5EmzzZdaSG6SkpQKpg+r8YdP4kZttt42hpl1yiO9f8Cu9muJFmH1RCGhaCf1ASohoeSJ3ugKKrWq/RzTCsyR6+vk/w4PkL4hjOynK2CutJAB9UmDllVGyRkqyOhJkoDOuTOiRMaKxqHcFjlXtfiRksak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgGNWYvW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ll3rkweG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAD01F000C4;
-	Mon, 19 Oct 2026 13:59:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgGNWYvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DA21F000C6;
+	Mon, 19 Oct 2026 13:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418395;
-	bh=Hohi6tC2hi2Y/Me0I+YLX5SX56omrwG9apCpo34mcI0=;
+	s=k20260515; t=1792418396;
+	bh=nN/oj2G5DXBDEezzna4kzmDv57r3wtSqLKW0ihvmoIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ll3rkweGxJmw2LoiZpLRrr0lAIEEr3EPMPu+DYV5xSTbGUQulczmon9fxqpr3SdnS
-	 BffvjaoYSMQ0qvv9ojAWUSbdcc8O5KukoHN/36HUTjYNTqJ7kPHsarCzVEM9bwRHRu
-	 2r0s54zLtI4Xfi6d9d4y8ss5UXcWOe47aAlqsAQ9PKiTNjYgqKVS2ZMTVohY7xUYkR
-	 S9MHigOCSK50eUGx5ixkkr5MhqTPcMAAB0p2+t0kZgC+vjKErjSJpNzZIBmgl3uEhU
-	 ObA/Sz8DlLkQYQQ+dOwzc9I6Ki9yr2UcIzWepXZApJHu01vQHllmOxIZuHX5vKV1Fi
-	 npna5EbigB4wA==
+	b=LgGNWYvWdAWYEOfEGwPYju1kkIERwCaqrmJPwJh5Hoc2QXTBw0kRbzU/+tm4xqdwW
+	 cw6M8tqI/3bZI251JuyYiSjoulXy86IuF8WpQbYCeg+3b7JhyqQ1pIvB6TEaUMLPws
+	 ygOkWvJzVaP1rchokQ8aCgdhuAAhpCZfui5mj6FDm/9wkAuThse+FkAZ0NHr2QGjpp
+	 k99UpEqCiMDZjj0E3L7WVez9ghKan+e3G9H5gEFk5JvHQAJcYwXxICM2ls9zjfEgQV
+	 Otugq+bYo3Y630lnh8lOOYfEyMmhZK9zu72xZWsN+4iJyBUCWBKwhJlMjAdFtCp56G
+	 mq9DKuBLDWoDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Jiawen Liu <1298662399@qq.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	linux-spi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: allow I/O on directory named streams
-Date: Mon, 19 Oct 2026 09:48:30 -0400
-Message-ID: <20261019135441.1420968-219-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] spi: bcm-qspi: return error from failed controller suspend
+Date: Mon, 19 Oct 2026 09:48:31 -0400
+Message-ID: <20261019135441.1420968-220-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,371 +53,400 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 8184c425a19d44f138d42b44cc363917c08e5f1c ]
+[ Upstream commit 44d09ef0ba690ac46d17eb05c12a47a5dd75e231 ]
 
-Named streams are stored as extended attributes on the base inode. The
-VFS read and write helpers reject directory inodes before or together
-with checking whether the handle represents a stream.
+spi_controller_suspend() can fail if the SPI core cannot stop the
+controller. bcm_qspi_suspend() ignored that error, disabled the
+controller clock, uninitialized the hardware, and returned success.
 
-Permit read and write operations when a directory-backed handle is a
-named stream. Continue rejecting direct I/O on ordinary directory
-handles.
+Return the suspend error before tearing down the clock and hardware
+state.
 
-This fixes creation of the directory stream in smb2.getinfo.complex.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Link: https://patch.msgid.link/tencent_21BF5F9512F56D45FD9018BAF14ED2805808@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **6.18.53** (`autosel`). The buggy ignore-and-teardown
+path is in that base, and this is a small PM error-path fix that belongs
+there.
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ksmbd] [allow] permit read/write on named streams whose base
-inode is a directory`
+Record: **[spi / bcm-qspi] [return] [propagate
+`spi_controller_suspend()` failure instead of tearing down
+clocks/hardware and reporting success]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd
-  maintainer; author)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@`
-- Absence of `Fixes:`/`Cc: stable` is expected for this review pipeline
-  and is not a negative signal
-- Ignore any later `[Upstream commit ...]` / `Signed-off-by: Sasha
-  Levin` markers; they are candidate-prep, not selection
+- `Fixes:` — **absent** (expected for autosel review; not a negative)
+- `Reported-by:` — **absent**
+- `Tested-by:` — **absent**
+- `Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>` — **driver
+  maintainer** (MAINTAINERS: “BROADCOM SPI DRIVER”)
+- `Acked-by:` — none on this commit; sibling patch 2/3 was Acked-by
+  William Zhang (Broadcom)
+- `Link: https://patch.msgid.link/tencent_21BF5F9512F56D45FD9018BAF14ED2
+  805808@qq.com`
+- `Cc: stable@` — **absent** (expected)
+- `Signed-off-by: Jiawen Liu <1298662399@qq.com>` (author)
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (SPI maintainer)
+- Pipeline tags (`[Upstream commit 44d09ef0ba69…]`, Sasha Levin SOB)
+  **ignored** per instructions
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** Named streams are stored as xattrs on the base inode.
-  `ksmbd_vfs_read()` and `ksmbd_vfs_write()` reject directory inodes
-  before (read) or together with (write) the stream-handle check, so a
-  directory-backed stream never reaches `ksmbd_vfs_stream_read()` /
-  `ksmbd_vfs_stream_write()`.
-- **Symptom:** SMB read/write of a named stream on a directory fails
-  (`-EISDIR` / `-EACCES`). Samba smbtorture `smb2.getinfo.complex`
-  cannot create `DNAME:streamtwo`.
-- **Version info in the message:** none.
-- **Root cause:** directory inode check is applied to the base inode,
-  not to whether the handle is a stream.
+- **Bug:** `spi_controller_suspend()` can fail when the SPI core cannot
+  stop the controller. `bcm_qspi_suspend()` discarded that return value.
+- **Symptom:** On that failure the driver still
+  `clk_disable_unprepare()`s, calls `bcm_qspi_hw_uninit()`, and
+  **returns 0**, so PM continues as if suspend succeeded.
+- **Root cause (author):** ignored error, then hardware teardown.
+- **Version info in message:** none.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. This is an explicit protocol-correctness fix for
-existing ADS I/O. “Allow” here means “stop rejecting a path that already
-exists,” not a new API.
+Record: **Not hidden.** It is an explicit error-propagation fix: keep
+clocks/HW up and fail device suspend if the controller cannot be
+stopped.
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `fs/smb/server/vfs.c` — 3 insertions, 2 deletions
-- Functions: `ksmbd_vfs_read()`, `ksmbd_vfs_write()`
-- Scope: single-file surgical fix
+- File: `drivers/spi/spi-bcm-qspi.c` — **+5 / −1**
+- Function: `bcm_qspi_suspend()`
+- Scope: **single-file surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Read, before:** `S_ISDIR(inode)` → immediate `-EISDIR`, so
-  `ksmbd_stream_fd()` is never reached.
-- **Read, after:** reject only `S_ISDIR && !ksmbd_stream_fd(fp)`. Stream
-  handles fall through to `ksmbd_vfs_stream_read()` (xattr).
-- **Write, before:** inside the SMB access check, `S_ISDIR` forces
-  `-EACCES` even for stream fds.
-- **Write, after:** same access check, but directory rejection is
-  skipped for `ksmbd_stream_fd(fp)`, then the existing stream-write
-  branch runs.
-- Ordinary directory I/O is still rejected. Stream I/O still never calls
-  `kernel_read()` / `kernel_write()`.
+Record: **Before:** always call `spi_controller_suspend()`, then disable
+the clock, uninit HW, return 0. **After:** if `spi_controller_suspend()`
+returns non-zero, return that error **before** clock disable /
+`bcm_qspi_hw_uninit()`. Normal success path unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic / protocol correctness.** Directory ADS is valid SMB.
-The VFS helpers treated the base directory inode as “no I/O allowed” and
-never used the xattr stream path.
+Record: **[Logic / PM error-path]**
+`spi_controller_suspend()` → for queued controllers, `spi_stop_queue()`.
+That polls up to 500 × ~10 ms and returns **`-EBUSY`** if the queue is
+still non-empty or `ctlr->busy`. This driver sets `host->transfer_one =
+bcm_qspi_transfer_one`, so `spi_register_controller()` calls
+`spi_controller_initialize_queue()` and sets `ctlr->queued = true`.
+Failure is therefore reachable.
+
+Old code then:
+1. Disables the controller clock
+2. `bcm_qspi_hw_uninit()` writes MSPI registers (clears `MSPI_SPCR2`,
+   write lock, status)
+3. Reports success so system suspend proceeds
+
+That can interrupt an in-flight QSPI transfer (this hardware is used as
+SPI NOR on Broadcom STB / iProc).
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. `ksmbd_stream_fd()` is an
-existing inline (`fp->stream.name != NULL`). After the exemption, both
-functions still take the stream branch and `goto out` / return before
-VFS file I/O, so the `__kernel_write_iter` WARNING that motivated the
-earlier directory-write ban is not reintroduced. Regression risk is very
-low.
+Record: **Obviously correct** and matches the standard pattern already
+used by many SPI drivers (`spi-rockchip`, `spi-qup`, `spi-dw-core`,
+`spi-bcm63xx`, etc.). **Regression risk is low:** 5 lines, error path
+only. Residual SPI-core quirk: `spi_controller_suspend()` still calls
+`__spi_mark_suspended()` even on `spi_stop_queue()` failure; that is
+pre-existing core behavior, not introduced here, and is the same
+contract other drivers already rely on.
 
-## Phase 3: Git history investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Read `S_ISDIR` check: `f44158485826c0` (“cifsd: add file operations”,
-  2021). Directory stream **reads** have been broken since ksmbd’s
-  original file ops.
-- Write `S_ISDIR` check: `2a879da5c34a1` (“ksmbd: fix the warning from
-  __kernel_write_iter”), upstream `b37f2f332b40`, present here as
-  `v6.12.25~99`. That stable backport banned all directory writes to
-  avoid `WARNING: CPU: ... at fs/read_write.c:599 __kernel_write_iter`.
-  It sits **before** the stream-fd check, so it also blocked directory
-  **stream** writes that previously went through xattrs.
+- Ignore-and-teardown dates to **`fa236a7ef24048`** (“spi: bcm-qspi: Add
+  Broadcom MSPI driver”, Kamal Dasu, 2016) which called
+  `spi_master_suspend()` and always returned 0.
+- Rename to `spi_controller_suspend(qspi->host)`: **`ec271c04ae93b8`**
+  (2023), no functional change.
+- Clock path: **`1b7ad8c405c3dc`** (2020) switched to
+  `clk_disable_unprepare()`.
+- Bug has been in the driver since introduction (**v4.9-era**), not new
+  6.18 code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The write-side bug is a follow-on to
-`2a879da5c34a1` / `b37f2f332b40`, which **is** in this tree.
+Record: **No `Fixes:` tag.** Buggy behavior is original suspend
+implementation, not a later regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Stream I/O already exists here (`ksmbd_vfs_stream_read/write`,
-`d62ba16563a86` OOB check, `5c54a557bde18` empty-stream write fix,
-`a8f5d39971bba` opener creds for ADS). Neighboring 7.3 stream patches
-(copychunk, AAPL FinderInfo, stream delete, `::$DATA` validation) are
-**not** prerequisites for this 3-line change. Standalone.
+Record: Standalone among bcm-qspi changes. Same author submitted a
+3-patch series of the same pattern:
+- `spi: bcm63xx: return error from failed controller suspend`
+- `spi: bcm63xx-hsspi: …`
+- **this patch (3/3)**
+- later sibling: `spi: bcmbca-hsspi: …`
+Each driver is independent; this patch does not need the others.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Namjae Jeon is the ksmbd maintainer. This landed in the ksmbd
-7.3-rc1 pull among other ADS/protocol fixes. Same author previously
-landed `2fb9b5dc80cab` (“allow write with FILE_APPEND_DATA”) on stable
-for a similar client-visible I/O rejection.
+Record: Jiawen Liu is a regular SPI error-handling contributor, not this
+driver’s maintainer. Weight comes from **Reviewed-by Kamal Dasu**
+(listed maintainer) and **SOB Mark Brown**.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses only `ksmbd_stream_fd()`, already in
-`fs/smb/server/vfs_cache.h` and included from `vfs.c`. Parent
-`4ea46ea602fc7` (“protect private extended attributes”) is **not** in
-this tree and is not required. `git show 8184c425a19d4 | git apply
---check` succeeds on this tree.
+Record: **None.** Uses `qspi->host` and `spi_controller_suspend()`, both
+in v6.18.53. Standalone.
 
-## Phase 4: Mailing list and external research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record: `b4 dig -c 8184c425a19d4` failed (lore.kernel.org returned an
-error / Anubis bot wall). Same for lore search URLs. Fallback: the
-commit is listed in Namjae’s **[GIT PULL] ksmbd server update for
-7.3-rc1** (2026-08-23) as `ksmbd: allow I/O on directory named streams`,
-under “Correct alternate-data-stream and named-stream handling,” not
-under “New features.”
+Record:
+- `b4 dig -c 44d09ef0ba69` → **https://patch.msgid.link/tencent_21BF5F95
+  12F56D45FD9018BAF14ED2805808@qq.com**
+- Subject: `[PATCH 3/3] spi: bcm-qspi: return error from failed
+  controller suspend`
+- `b4 dig -a`: **v1 only** (no v2/v3)
+- Thread: Kamal Dasu **Reviewed-by**; no NAK; no request for further
+  changes
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: UNVERIFIED at patch-thread level (lore unreachable). The pull is
-from the subsystem maintainer to Linus.
+Record (`b4 dig -w`): To Mark Brown (`broonie@`); Cc `linux-spi`, Kamal
+Dasu, `bcm-kernel-feedback-list`, Jonas Gorski, Kursad Oney, William
+Zhang. Right maintainers were on the patch.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Samba `smb2.getinfo.complex` (`source4/torture/smb2/getinfo.c`)
-does:
-- `torture_setup_complex_dir(..., DNAME)`
-- `torture_setup_complex_file(..., DNAME ":streamtwo")`
-Historically noted as “streams on directories does not work.” That is a
-real client/test failure, not a theoretical one.
+Record: **No bugzilla/syzbot/user crash report.** Bug is derived from
+code review of ignored return value.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Part of the large 7.3 ksmbd dump, but this hunk is self-
-contained. Later stream patches improve enumeration, delete, copychunk,
-AAPL; they are not needed for this I/O gate.
+Record: 3/3 series; each patch is a per-driver copy of the same check.
+This commit is self-contained.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: UNVERIFIED (lore blocked). No in-tree discussion of rejecting
-this fix.
+Record: **UNVERIFIED** — `lore.kernel.org/stable/` HTTP 403 from this
+environment. SPI list thread (via `b4 dig -m`) had no stable nomination
+and no objection.
 
-## Phase 5: Code semantic analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `ksmbd_vfs_read()`, `ksmbd_vfs_write()`, helper
-`ksmbd_stream_fd()`.
+Record: `bcm_qspi_suspend` (modified). Callees of interest:
+`spi_controller_suspend`, `clk_disable_unprepare`, `bcm_qspi_hw_uninit`.
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `ksmbd_vfs_read()` ← `smb2_read()` (`smb2pdu.c`)
-- `ksmbd_vfs_write()` ← `smb2_write()` and `smb2_write_rdma_channel()`
-Reachable from normal SMB2 READ/WRITE on a connected share.
-`connection_type` is set from the negotiated dialect, so the write-side
-directory check applies to SMB2/SMB3.
+Record: Wired via `bcm_qspi_pm_ops` (`SIMPLE_DEV_PM_OPS` /
+`DEFINE_SIMPLE_DEV_PM_OPS`), exported and used by:
+- `drivers/spi/spi-brcmstb-qspi.c` (`brcm,spi-brcmstb-qspi` / `brcm,spi-
+  brcmstb-mspi`)
+- `drivers/spi/spi-iproc-qspi.c`
+Called from the PM core on system suspend, not from a syscall directly.
 
 **Step 5.3: TRACE CALLEES**
-Record: Stream path uses `ksmbd_vfs_getcasexattr` / `ksmbd_vfs_setxattr`
-on the dentry. Directories support xattrs; no `kernel_write()` on the
-directory inode.
+Record: `spi_controller_suspend` → `spi_stop_queue` (queued) → `-EBUSY`
+after ~5s; then `__spi_mark_suspended`. `bcm_qspi_hw_uninit` performs
+MMIO to stop MSPI.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace SMB client → SMB2 CREATE of `dir:streamtwo` (open
-already allowed when `s_type` is not explicit `$DATA`) → SMB2 WRITE →
-`ksmbd_vfs_write()` currently returns `-EACCES`. Triggerable by any
-client with streams enabled (`KSMBD_SHARE_FLAG_STREAMS`).
+Record: **Userspace-reachable indirectly:** suspend-to-idle/S3 with in-
+flight SPI (SPI-NOR, userspace spidev, etc.). Not a syscall crash path;
+a **system-suspend** path. If QSPI backs system flash, interrupting a
+write/erase is a **data-corruption** risk.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Other `S_ISDIR` checks in ksmbd (oplock, setattr, query info)
-are separate. No duplicate I/O gate that would still block this path
-after the patch.
+Record: Same ignore-return bug was fixed in sibling Broadcom SPI drivers
+in the same series. Vast majority of in-tree SPI drivers already check
+`spi_controller_suspend()`’s return.
 
-## Phase 6: Cross-referencing against the local tree
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Local tree is **6.12.111** (`pending-6.12`,
-`p-6.12-3-gc504cf0baa3d8`). Current code:
+Record: **Yes.** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
+`make kernelversion` → **6.18.53**.
+`v6.18.53:drivers/spi/spi-bcm-qspi.c` still has:
 
-```377:378:fs/smb/server/vfs.c
-        if (S_ISDIR(inode->i_mode))
-                return -EISDIR;
+```c
+spi_controller_suspend(qspi->host);
+clk_disable_unprepare(qspi->clk);
+bcm_qspi_hw_uninit(qspi);
+return 0;
 ```
 
-```503:505:fs/smb/server/vfs.c
-        if (work->conn->connection_type) {
-                if (!(fp->daccess & (FILE_WRITE_DATA_LE |
-FILE_APPEND_DATA_LE)) ||
-                    S_ISDIR(file_inode(fp->filp)->i_mode)) {
-```
-
-`8184c425a19d4` is **not** an ancestor of HEAD. Write-side regression
-introduced in **v6.12.25**.
+Original driver commit `fa236a7ef24048` **is** an ancestor of
+`v6.18.53`.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply (`git apply --check` exit 0). Surrounding functions
-match the upstream hunk context. `ksmbd_stream_fd()` already present.
+Record: **Clean apply** to this 6.18.y file: the pre-image hunk is byte-
+identical in `v6.18.53`. No `master` vs `host` rename needed (already
+`qspi->host`).
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No equivalent directory-stream I/O exemption. Stream write
-OOB/empty-xattr fixes are present but do not address `S_ISDIR`.
+Record: This exact fix is **not** in `v6.18.53` (`git log v6.18.53
+--grep="return error from failed controller suspend" -- drivers/spi/` is
+empty). No alternate fix in the file.
 
-## Phase 7: Subsystem and maintainer context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `fs/smb/server` (ksmbd). **IMPORTANT** — in-kernel SMB3 server
-used by NAS/embedded/distro images. Not core mm/VFS, not staging.
+Record: **[drivers/spi, Broadcom QSPI]** **[IMPORTANT for that hardware,
+PERIPHERAL globally]**. Not core mm/net, but this controller commonly
+backs SPI-NOR on Broadcom STB and iProc boards.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained; this tree already carries many ksmbd
-protocol and memory-safety backports. Mature ADS support has existed
-since the cifsd era (2021).
+Record: Mature driver (2016), still maintained (Kamal Dasu). SPI core
+still actively developed. This is a long-standing hole, not churn from a
+new subsystem.
 
-## Phase 8: Impact and risk assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: ksmbd users with `KSMBD_SHARE_FLAG_STREAMS` who have
-Windows/Samba/macOS clients using named streams on directories (Explorer
-ADS, smbtorture, some backup/metadata workflows).
+Record: **Driver-specific / platform-specific:** Broadcom STB and iProc
+QSPI users who suspend. Config: `CONFIG_SPI_BCM_QSPI` and SoC glue
+drivers.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: SMB2 WRITE/READ on a handle opened as `dir:stream`. Common in
-protocol tests; less common than file ADS, but a supported SMB feature.
-Unprivileged share users can trigger it if they can create streams.
+Record: System suspend while the SPI message queue cannot drain within
+~5s (`-EBUSY`). Unprivileged users cannot trigger it except insofar as
+they can generate SPI traffic and then suspend (typically privileged).
+**Not common** on a healthy idle bus; **realistic** if a transfer is
+stuck or messages keep arriving during freeze.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Client I/O fails (`STATUS` derived from `-EISDIR`/`-EACCES`);
-not a panic, UAF, or silent corruption. **MEDIUM**
-functional/interoperability, **HIGH** as a **stable-to-stable write
-regression** since v6.12.25.
+Record: **Failure mode:** clock off + MMIO uninit while the controller
+is still busy, then suspend proceeds. Outcomes: hung MMIO, incomplete
+SPI NOR program/erase, **possible flash corruption**, later resume with
+HW already torn down. **Severity: HIGH** (data corruption / crash on a
+real suspend error path). Not a panic on every boot.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** Restores directory ADS I/O; undoes over-broad fallout
-  from the `__kernel_write_iter` stable fix; unblocks
-  `smb2.getinfo.complex`.
-- **Risk:** Very low (3 lines, existing helper, stream path still
-  bypasses `kernel_write`).
-- **Ratio:** favorable.
+- **Benefit: medium–high** for affected platforms (correct abort of
+  suspend; no teardown while busy).
+- **Risk: very low** (5 lines, error path, maintainer-reviewed, same
+  pattern as many drivers).
+- **Ratio: favorable.**
 
-## Phase 9: Final synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Real SMB protocol bug: named streams live in xattrs; directory base
-  inodes must still allow stream I/O.
-- Write path is a **regression** from `2a879da5c34a1` (v6.12.25) already
-  on this 6.12.y tree.
-- Existing ADS stack is in this tree; this only opens the gate to it.
-- 3-line, obviously correct, applies cleanly.
-- Maintainer-authored; validated via smbtorture `smb2.getinfo.complex`.
-- Does not restore the directory `kernel_write` WARNING.
+**FOR:**
+- Real ignored-error bug: teardown + success after
+  `spi_controller_suspend()` fails
+- Driver is queued (`transfer_one`), so `-EBUSY` is a real return
+- Teardown while busy can corrupt SPI-NOR or touch unclocked MMIO
+- 5-line, obviously correct, matches subsystem convention
+- Reviewed by the listed Broadcom SPI maintainer; applied by Mark Brown
+- Buggy code present since 2016; present in **this** 6.18.53 tree
+- Applies cleanly; no prerequisites
 
-AGAINST:
-- Not a crash/security/corruption issue.
-- Directory ADS is a narrower client feature than file ADS.
-- Read-side rejection has existed since 2021 (enabling reads is
-  correctness, not a 6.12.y regression).
+**AGAINST:**
+- No user `Reported-by`, syzbot, or `Fixes:`
+- Trigger is the uncommon queue-stop timeout, not every suspend
+- Affects only Broadcom QSPI platforms
+- No explicit `Cc: stable` (not a negative under these rules)
 
-UNRESOLVED:
-- Original lore review thread (b4/lore blocked).
-- Whether reviewers asked for `Cc: stable`.
+**UNRESOLVED:**
+- Could not query `lore.kernel.org/stable/` (HTTP 403)
+- No public reproducer beyond the code path
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — logic is local and was
-   exercised by smbtorture.
-2. Fixes a real bug that affects users? **PASS** — SMB clients cannot
-   I/O directory named streams.
-3. Important issue? **PASS** — interoperability failure plus a write-
-   side regression from a prior stable commit. Not a panic, but user-
-   visible and already shipped in 6.12.y.
-4. Small and contained? **PASS** — 3 lines, one file.
-5. No new features or APIs? **PASS** — no new syscall/sysfs; streams
-   already advertised.
-6. Can apply to the local tree? **PASS** — clean apply; helpers exist.
+1. Obviously correct and tested? **PASS** — trivial check; maintainer
+   Reviewed-by; in mainline via Mark Brown
+2. Fixes a real bug that affects users? **PASS** — ignored PM error then
+   unsafe HW teardown
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   HIGH: possible SPI-NOR corruption / MMIO after clock gate if queue
+   stop fails
+4. Small and contained? **PASS** — +5/−1, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — hunk matches `v6.18.53`
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None of device-ID / quirk / DT / build / docs. Qualifies on
-ordinary bug-fix rules.
+Record: **Not an exception category** (not a new
+ID/quirk/DT/build/docs). It is a normal small bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This tree already contains ksmbd named-stream I/O and the v6.12.25
-directory-write ban. The ban is correct for ordinary directory handles
-but incorrectly covers stream handles, which never use `kernel_write()`.
-Backporting this exemption restores intended ADS behavior with
-negligible risk.
+This should be backported to **this 6.18.y tree**. The bug exists here,
+the fix is surgical, and failing to stop the SPI queue must not be
+reported as a successful suspend.
 
 ---
 
-What this solves for 6.12.y: Windows/Samba clients that write a named
-stream on a directory (as `smb2.getinfo.complex` does with
-`DNAME:streamtwo`) currently get `-EACCES` on write and `-EISDIR` on
-read. After v6.12.25 that write failure is a regression from a WARNING
-fix. The patch is a 3-line predicate change; stream I/O still goes
-through xattrs, so the WARNING does not come back.
+### What the commit solves for stable users
 
-Verification:
-- [Phase 1] Parsed tags: only maintainer SOB; no Fixes/Reported-by/Cc:
-  stable
-- [Phase 2] Diff: 3 lines in `ksmbd_vfs_read`/`ksmbd_vfs_write`; exempts
-  `ksmbd_stream_fd()` from `S_ISDIR`
-- [Phase 3] `git blame`: read check from `f44158485826c0` (2021); write
-  check from `2a879da5c34a1` (`v6.12.25~99`)
-- [Phase 3] `git merge-base --is-ancestor 2a879da5c34a1 HEAD` → yes;
-  `8184c425a19d4` → no
-- [Phase 3] `git apply --check` of `8184c425a19d4` → clean
-- [Phase 4] `b4 dig -c 8184c425a19d4` failed (lore error)
-- [Phase 4] 7.3-rc1 GIT PULL lists this under ADS handling, not new
-  features
-- [Phase 4] Samba `getinfo.c` creates `DNAME ":streamtwo"` in
-  `smb2.getinfo.complex`
-- [Phase 5] Callers: `smb2_read` / `smb2_write` / RDMA write; stream
-  callees are xattr helpers
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111; buggy `S_ISDIR` present
-- [Phase 8] Failure mode: failed SMB stream I/O, plus write regression
-  since v6.12.25; not a panic
-- UNVERIFIED: lore review comments / stable ML discussion (lore blocked)
+On Broadcom QSPI, suspend used to disable the clock and uninit MSPI even
+when the SPI core could not stop the queue, then return success. That
+lets suspend continue with the controller still busy. The patch fails
+the device suspend instead, which is what every modern SPI driver
+already does.
+
+### Stable rules and risk
+
+Meets all six criteria: real PM bug, small, no new API, clean apply on
+6.18.53. Risk is far below benefit.
+
+### Concerns
+
+No user reports; trigger is an error path. Sibling series patches are
+independent and not required. Residual `__spi_mark_suspended()` on
+failure is a pre-existing SPI-core issue, not a reason to skip this
+driver fix.
+
+### Verification
+- **[Phase 1]** Parsed tags: Reviewed-by Kamal Dasu; Link to msgid; no
+  Fixes/Reported-by/Cc: stable
+- **[Phase 2]** Diff: +5/−1 in `bcm_qspi_suspend()`; check
+  `spi_controller_suspend()` before `clk_disable_unprepare` /
+  `bcm_qspi_hw_uninit`
+- **[Phase 2]** `spi_stop_queue()` in `drivers/spi/spi.c` returns
+  `-EBUSY` after 500 polls
+- **[Phase 2]** `host->transfer_one` set in `bcm_qspi_probe`;
+  `spi_controller_initialize_queue()` sets `queued = true`
+- **[Phase 3]** Blame: ignore-return since `fa236a7ef24048` (2016);
+  rename `ec271c04ae93b8` (2023)
+- **[Phase 3]** `git merge-base --is-ancestor fa236a7ef24048 v6.18.53` —
+  yes
+- **[Phase 3]** Series is 3 independent per-driver patches; this one is
+  standalone
+- **[Phase 4]** `b4 dig -c 44d09ef0ba69` → lore msgid above; v1 only;
+  Kamal Reviewed-by; no NAK
+- **[Phase 4]** `b4 dig -w`: Mark Brown + linux-spi + Broadcom list
+- **[Phase 4]** UNVERIFIED: stable@ lore search (403)
+- **[Phase 5]** Callers: `spi-brcmstb-qspi.c`, `spi-iproc-qspi.c` via
+  `bcm_qspi_pm_ops`
+- **[Phase 6]** `git describe HEAD`: `v6.18.53-5049-g0f0bdc2b0dffb`;
+  `make kernelversion`: 6.18.53
+- **[Phase 6]** `git show v6.18.53:drivers/spi/spi-bcm-qspi.c` still has
+  the buggy sequence; pre-image matches
+- **[Phase 6]** `git log v6.18.53 --grep="return error from failed
+  controller suspend" -- drivers/spi/` empty
+- **[Phase 8]** Failure mode: suspend proceeds after clock-off/HW uninit
+  while queue busy → HIGH (corruption/crash risk)
 
 **YES**
 
- fs/smb/server/vfs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm-qspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 3ac5f3f48121d..47c289ad9c3dc 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -372,7 +372,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
- 	ssize_t nbytes = 0;
- 	struct inode *inode = file_inode(filp);
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index cfdaa5eaec76d..ae5545be0a45c 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -1694,13 +1694,17 @@ EXPORT_SYMBOL_GPL(bcm_qspi_remove);
+ static int __maybe_unused bcm_qspi_suspend(struct device *dev)
+ {
+ 	struct bcm_qspi *qspi = dev_get_drvdata(dev);
++	int ret;
  
--	if (S_ISDIR(inode->i_mode))
-+	if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp))
- 		return -EISDIR;
+ 	/* store the override strap value */
+ 	if (!bcm_qspi_bspi_ver_three(qspi))
+ 		qspi->s3_strap_override_ctrl =
+ 			bcm_qspi_read(qspi, BSPI, BSPI_STRAP_OVERRIDE_CTRL);
  
- 	if (unlikely(count == 0))
-@@ -500,7 +500,8 @@ int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
+-	spi_controller_suspend(qspi->host);
++	ret = spi_controller_suspend(qspi->host);
++	if (ret)
++		return ret;
++
+ 	clk_disable_unprepare(qspi->clk);
+ 	bcm_qspi_hw_uninit(qspi);
  
- 	if (work->conn->connection_type) {
- 		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE)) ||
--		    S_ISDIR(file_inode(fp->filp)->i_mode)) {
-+		    (S_ISDIR(file_inode(fp->filp)->i_mode) &&
-+		     !ksmbd_stream_fd(fp))) {
- 			pr_err("no right to write(%pD)\n", fp->filp);
- 			err = -EACCES;
- 			goto out;
 -- 
 2.53.0
 
