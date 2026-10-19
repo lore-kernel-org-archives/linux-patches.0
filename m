@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CC55BA3AF;
-	Mon, 19 Oct 2026 14:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611C05BA3CB;
+	Mon, 19 Oct 2026 14:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418454; cv=none; b=lzembIa0bsrIqoHPfw6a+BWsIDqf3tbyqkorImTis2P3VjTC+oF+o/CACn7Z6EwVziL4msoAy4X3ffvzmgzsXfx7SvBvLSN76sOBslYQMOft3IcCaWHLnzyhXRRcKGnEBmgBRDi+8PrPl5eTJEn9ghwI+ZQ1xI343nLlyO1lda8=
+	t=1792418455; cv=none; b=qC07lHUFsIgyZmD10B+O8TxYQ5+CjlLVCIEASCmTnfltxgD8xWU7MMYk8WR2oNjCiiVk87A5wgkJqHd0BKJRjlievsmcEhkFhDz+O7k1OFJIbtS5WpeGhLffYvFKn+6eWp6831X3Ab7H7z3+CibRgVjOBumppqFgxdoPy7188pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418454; c=relaxed/simple;
-	bh=5no7e+H7WYHDdz+1w0HDK0z71uH03BSsEBrRvk1I8AE=;
+	s=arc-20240116; t=1792418455; c=relaxed/simple;
+	bh=r0zsBFHATJcVfG4CZqubPjoA1F7bzzSDI9zIRslLnXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VYqIOMjvHdDp5JLqxVntBRc5H3D2lLZtUHIKe18EPh/Q3F4NLmjGyRDqwb1UBaD3476Uv7+p42Nt61q+WhPnLOwdmVAqdgadi32La9TIZKz9E5C3FRnRyjqrEuFf15F6NqYttoB6ghOkK/hqT0GPpv+VzDqama1RudHYLwlBj6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R5W85yyf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lkTkERMv7KsYFaYiODOsMXipqkasO/zcE70s+RuyLN80CdpHkI6j1eLyopbiodvs/+GFivqP0aC0ftxlFgVZo5u89v+E6MDPa9jtc7FiKju9v3JJYNi8n34Cb0B+zpa7YJ903Wxtybq+nIsjffngTrqYn1tLXTObSRmEJX1Xpoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FK/oHWpV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R5W85yyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CD01F000C7;
-	Mon, 19 Oct 2026 14:00:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FK/oHWpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C381F000CB;
+	Mon, 19 Oct 2026 14:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418451;
-	bh=SJFwWmYUbL4dju6SdY/KrJstjd8qjA4jgvDPm2aNnm8=;
+	s=k20260515; t=1792418453;
+	bh=6rgQydcwj3fnLt9d7NChznuTHnqmnYcDevtU01Fxjjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R5W85yyfyXZE1M73pqOgM+2vlmi93yNA87LHD4FJCxkzTYdR1aTF6RUlSk7D0DSYe
-	 8x65Pz//Yf6FiLS9BJmyURpOPAHH+7ocdGYPQjNdi15WWrYAbcIYv+/bn1twPhHuAp
-	 QJJ2GOdv9OFJobnXXqCQFQdX03UtIrS6fdE7wadaItrr9Z+ZdIH0lYb9wsYQpvHp81
-	 MPrw72skq+8Ht/Y/iPH2IC5/gkGMuJAaJxQYbNFwkhQXJ7p5h8OdctXTyuGomlUwUJ
-	 DLe68ClmaROMgRGTb0wHmUEIAiRV0O9tKgXg6RoOxyWJ0HQvJnMDIZ1mQLsluEZ+Si
-	 8JYIn73l2VinA==
+	b=FK/oHWpVhQQgXfumIe1uM8UDXZPeUpJkS7Cw78IXFLbh5Q5FrYQfFX4F4pnh1eWVW
+	 glTcFwqdqbIf0/Nd5D559AC2sZaXzz4c29VXXEh7g/QVk2inszqJ+x0RcARNhFHiZn
+	 NwJoxW7oH0OTxEYIdlyXOl2M5Rinsjz3vt8CJjWhd0R6eDEC3A62jevst+FjYVPpYA
+	 WTGTSRHxsA0EXeywYdnpsEr+C21WWaMb5nmQ+pBmjHx4qseayBG8TooJPrxpjv/bqk
+	 nZ4U2MWaG60foR2iP2FWx6Jr2Yqb5SqWtZAezUM+3AquiSsLJH+BUWTJF1NBbPkLIU
+	 6mhH1sAy4bHAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	rds-devel@oss.oracle.com,
+	adrian.hunter@intel.com,
+	ychuang3@nuvoton.com,
+	schung@nuvoton.com,
+	linux-mmc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net/rds: fix rds_message leak in the rds_send_xmit() drop path
-Date: Mon, 19 Oct 2026 09:49:09 -0400
-Message-ID: <20261019135441.1420968-258-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] mmc: sdhci-of-ma35d1: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:49:10 -0400
+Message-ID: <20261019135441.1420968-259-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,106 +56,70 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
+[ Upstream commit 9b3732cce41d177acac731e0b8024d72f0dfde38 ]
 
-When rds_send_xmit() picks the next message off cp_send_queue it takes
-its own reference with rds_message_addref().  If the message then hits
-the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
-already retransmitted), it is moved to the local to_be_dropped list and
-that reference is dropped after the batch.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-However, if RDS_MSG_ON_CONN has already been cleared, the message is
-not added to to_be_dropped and the reference taken above is never
-dropped: cp_xmit_rm has not been set at this point, so the loop simply
-abandons rm and the rds_message (and everything it pins: pages, MRs,
-notifiers) leaks after an RDMA error.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-The only other places that clear RDS_MSG_ON_CONN are
-rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
-while rds_send_xmit() has dropped cp_lock between moving the message
-to cp_retrans and re-taking the lock in the never-retransmit check:
-rds_send_path_drop_acked() can ack away a message that already sat on
-cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
-rds_send_drop_to() runs on socket close.  Both unlink the message
-under cp_lock and put their own reference, leaving the xmit-path
-reference stranded.
-
-Drop the reference directly in that case.
-
-This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
-rds_send_xmit".
-
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-[achender: port to net-next; update commit message, checkpatch nits]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real, long-standing `rds_message` leak in `rds_send_xmit()`
-that exists in this 5.10.270 tree. The fix is small, matches the local
-code, and does not need the rest of its series.
+# Stable backport analysis: `mmc: sdhci-of-ma35d1: add missing
+MODULE_DEVICE_TABLE()`
+
+Local tree: **v7.3-rc4** (`7.3.0-rc4`, `VERSION=7 PATCHLEVEL=3
+SUBLEVEL=0 EXTRAVERSION=-rc4`).
+Candidate: `9b3732cce41d177acac731e0b8024d72f0dfde38`.
+The driver and the missing-alias bug exist in this tree; the one-line
+fix is already present here as a mainline commit.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[net/rds] [fix] [rds_message leak in rds_send_xmit() drop
-path]**
+Record: **[mmc / sdhci-of-ma35d1] [add] [export OF match table via
+MODULE_DEVICE_TABLE so the module can autoload]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- **Fixes:** none (expected)
+- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
+- **Link:** none in the committed message
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Pengpeng Hou (author); Ulf Hansson (MMC maintainer,
+  applied it)
+- Ignore any pipeline SOBs
 
-From the candidate message:
-- `Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>` (original
-  author)
-- `Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>`
-  (UEK/port author)
-- `[achender: port to net-next; update commit message, checkpatch nits]`
-- `Signed-off-by: Allison Henderson <achender@kernel.org>` (RDS
-  maintainer-side porter)
-- `Link:
-  https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev merge)
-
-No `Reported-by`, `Tested-by`, `Reviewed-by`, or `Acked-by` in the
-candidate text. Absence of `Fixes:` / `Cc: stable` is expected here.
-
-Mailing-list v4 (same msgid) **did** carry:
-- `Fixes: 2ad8099b58f2 ("RDS: rds_send_xmit() locking/irq fixes")`
-
-Oracle UEK source (`94549e4732d8`) carried:
-- `Fixes: fbbe0610d057 ("RDS: add support for atomic messages over the
-  wire")` — that SHA is **not** in this tree
-- `Reviewed-by: William Kucharski <william.kucharski@oracle.com>`
-- `Orabug: 38923495` (internal production bug)
+Notable: maintainer SOB; no user report; no syzbot.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `rds_send_xmit()` takes an extra `rds_message_addref()` when
-  dequeuing. On the never-retransmit path (`RDS_MSG_FLUSH` or already-
-  retransmitted RDMA), that ref is only dropped if the message is moved
-  onto `to_be_dropped`. If `RDS_MSG_ON_CONN` was already cleared, the
-  extra ref is abandoned.
-- **Symptom:** leak of `rds_message` plus pinned pages, MRs, and
-  notifiers after an RDMA error / reconnect / socket close.
-- **Root cause:** `rds_send_path_drop_acked()` (ACK of a message already
-  on `cp_retrans`) and `rds_send_drop_to()` (socket close) can clear
-  `RDS_MSG_ON_CONN` and put **their** refs in the window where xmit has
-  dropped `cp_lock`. They do not put the xmit-path extra ref.
-  `cp_xmit_rm` is not set yet, so the success-path put never runs.
-- **Version info:** bug traces to 2010 locking change; present in this
-  5.10 tree.
+- **Bug:** OF match table is wired to `.of_match_table` but not exported
+  with `MODULE_DEVICE_TABLE(of, ...)`.
+- **Symptom:** `depmod`/`modinfo` get no `of:` aliases, so udev/kmod
+  will not autoload `sdhci-ma35` when DT has `compatible =
+  "nuvoton,ma35d1-sdhci"`. Built-in (`=y`) matching still works.
+- **Version info:** none in the message. Driver introduced in v6.12-rc1.
+- **Root cause:** missing `MODULE_DEVICE_TABLE` so `file2alias.c` never
+  publishes the table.
+
+Original mailing-list body (stripped before commit) said this is a
+source-level fix with no hardware reproduction; evidence is the table
+itself.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not hidden.** Subject and body are an explicit leak/refcount
-fix.
+Record: **Not hidden.** It is an explicit autoload/alias fix. Same class
+as “add a device ID”: the ID exists; userspace was never told.
 
 ---
 
@@ -166,43 +127,36 @@ fix.
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `net/rds/send.c` only (~+12/−3 in `rds_send_xmit()`)
-- Scope: **single-file surgical fix**
+- File: `drivers/mmc/host/sdhci-of-ma35d1.c` — **+1 / −0**
+- Function: none; one statement after `sdhci_ma35_dt_ids[]`
+- Scope: **single-file, one-line surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** `test_and_clear_bit(RDS_MSG_ON_CONN)` → if set,
-  `list_move` to `to_be_dropped`; always unlock; `continue`. If the bit
-  was already clear, no put.
-- **After:** same if the bit is set; **else** unlock then
-  `rds_message_put(rm)` for the extra xmit ref.
+- **Before:** `sdhci_ma35_dt_ids` is only used as `.of_match_table` (in-
+  kernel match when the module is already loaded or built-in).
+- **After:** same, plus `MODULE_DEVICE_TABLE(of, sdhci_ma35_dt_ids)` so
+  modpost emits `MODULE_ALIAS("of:N*T*Cnuvoton,ma35d1-sdhci")`.
+- Path: **module build / autoload**, not probe/error/init runtime logic.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Reference-counting / resource leak.** Extra
-`rds_message_addref()` at dequeue (local tree `net/rds/send.c:265`) is
-not balanced when `RDS_MSG_ON_CONN` is already clear. Verified in this
-tree: only `rds_send_path_drop_acked()` (`clear_bit` at line 707) and
-`rds_send_drop_to()` (`test_and_clear_bit` at line 774) plus this drop
-path itself clear that bit. `rds_send_path_reset()` does **not** (v4
-commit message correction vs v1–v3).
+Record: **[Hardware enablement / missing module alias]** — category
+**(h) plus logic for autoload**. Not UAF, leak, race, or crash. Without
+the macro, a modular build never gets OF aliases. Confirmed by
+`include/linux/module.h`: `MODULE_DEVICE_TABLE` creates a `used` alias
+so `scripts/mod/file2alias.c` can find the table.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- **Obviously correct.** Queueing takes a conn-list ref
-  (`rds_send_queue_rm` addref + `RDS_MSG_ON_CONN`). Xmit takes a second
-  ref. Concurrent drop/ack puts the conn-list ref. Xmit must put its
-  own.
-- `rds_send_remove_from_sock()` documents that it puts the list-position
-  ref; drop_acked uses that. Xmit’s extra ref is separate.
-- After `continue`, the next loop iteration does `rm = cp->cp_xmit_rm`
-  (still NULL), so the local pointer is not used after put.
-- Put happens after `spin_unlock_irqrestore`, same as the existing
-  success-path put at line 423. The “irqs on here, so we can put()”
-  comment is about not putting **under** `cp_lock`.
-- **Regression risk: low.** Does not change locking order or APIs.
-  Follow-up `reinitialize to_be_dropped on restart` is documented
-  hardening with **no known user-visible bug**; this else-path does not
-  even enqueue on `to_be_dropped`.
+- **Quality:** obviously correct; this is the documented way to export
+  OF IDs.
+- **Regression risk:** negligible. Macro only adds a static alias
+  symbol; no locking, no API, no runtime path change except autoload
+  starts working.
+- **Red flags:** none on the diff. Author is doing a wide
+  `MODULE_DEVICE_TABLE` sweep (rtc, vdpa, gpio, iio, …); that does not
+  make *this* line wrong. MMC maintainer applied it after trimming the
+  disclaimer.
 
 ---
 
@@ -210,41 +164,40 @@ Record:
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Drop-path structure from `5c11559046c4b3` (“RDS: send.c”, 2009).
-- Leak introduced by `2ad8099b58f27` (“RDS: rds_send_xmit() locking/irq
-  fixes”, 2010): that commit **removed** an unconditional
-  `rds_message_put(rm)` on this path and only put messages that made it
-  onto `to_be_dropped`.
-- FLUSH clause: `905dd4184e0732` (2016). Multipath `cp_` conversion:
-  `1f9ecd7eacfd9e` (2016).
-- Buggy pattern has been in-tree for ~16 years; first appeared long
-  before 5.10.
+- Table and driver: `addc9ecb9ddb3` (“Add Nuvoton MA35D1 SDHCI driver”),
+  Shan-Chun Hung, 2024-07-16, committed 2024-08-26.
+- First appeared: **v6.12-rc1** (`git describe --contains addc9ecb9ddb3`
+  → `v6.12-rc1~158^2~42`).
+- Original driver had the match table and `.of_match_table` and **no**
+  `MODULE_DEVICE_TABLE` from day one.
+- Bug age: ~v6.12 through this July 2026 fix.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record:
-- Mailing-list `Fixes: 2ad8099b58f2` — **is an ancestor of this HEAD**
-  (`git merge-base --is-ancestor` exit 0).
-- `git show 2ad8099b58f27` confirms the put was moved to the batch-end
-  `to_be_dropped` walk only.
-- UEK `Fixes: fbbe0610d057` is **not** in this tree (exit 128); that tag
-  is a red herring for 5.10. The real introducer here is `2ad8099b58f2`.
+Record: **No Fixes: tag.** Buggy commit is the original driver add,
+verified by blame and by `git show addc9ecb9ddb3` (tail of the file has
+the table without the macro). That commit **is** an ancestor of this
+tree.
 
 **Step 3.3: CHECK FILE HISTORY**
-Record: Recent `net/rds/send.c` work in this tree is locking/xmit
-serialization (`acquire_in_xmit`, shutdown races), not this drop path.
-No prior fix for this leak (`rg` for “already off the conn list” is
-empty). **Standalone**, not a refactor prerequisite.
+Record (this file only):
+- `addc9ecb9ddb3` — add driver
+- `078e548af9c3a` — `remove_new` → `remove`
+- `01bc623f9a5c2` — drop `sdhci_pltfm_free()`
+- `995832b2cebe6` — include-header churn
+- `9b3732cce41d1` — this fix
+
+No prerequisite refactor for this one line. **Standalone.**
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Gerd Rausch / Sharath Srinivasan / Allison Henderson are
-established RDS contributors. Henderson has many RDS stable backports in
-this tree. This is a UEK→upstream port of a production Orabug.
+Record: Pengpeng Hou is not the MMC maintainer; many similar “add
+missing MODULE_DEVICE_TABLE()” commits across subsystems. Ulf Hansson
+applied this one. Related MMC precedent by others: `6e540da4c1db7`
+(“mmc: sdhci-of-aspeed: fix module autoloading”) is the same one-line
+change **and had `Fixes:` + `Cc: stable@vger.kernel.org`**.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: v4 series is four **independent** bugs (sleep-in-atomic unpin,
-MR socket UAF, **this leak**, IB MR pin leak). This hunk only needs
-existing `rds_message_put()` / `RDS_MSG_ON_CONN` / `to_be_dropped`, all
-present. **Applies standalone.**
+**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
+Record: **None.** Only needs `sdhci_ma35_dt_ids` and `module.h` (already
+included). Can apply standalone on any tree that has this driver.
 
 ---
 
@@ -252,278 +205,248 @@ present. **Applies standalone.**
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c` on the candidate SHA was not possible (commit is not in
-  this checkout). `b4 dig -c 5c11559046c4b3` only found the 2009
-  original.
-- lore.kernel.org fetches returned **403**. Used openwall mirrors.
-- Thread: https://lists.openwall.net/netdev/2026/07/30/65 (v4 3/4),
-  cover https://lists.openwall.net/netdev/2026/07/30/62
-- Revisions: v1 (2026-07-11) → v3 → v4 (2026-07-30). **Code of this
-  patch unchanged after v3**; v4 only corrected the commit message to
-  name `drop_acked`/`drop_to` instead of `rds_send_path_reset()`.
-- Merged by Jakub Kicinski. No NAK found.
-- v1–v3 incorrectly named `rds_send_path_reset()` as a clearer of
-  `RDS_MSG_ON_CONN`; verified **false** in this tree
-  (`rds_send_path_reset` only sets `RDS_MSG_RETRANSMITTED` and splices
-  queues).
+- `b4 dig -c 9b3732cce41d1` →
+  https://patch.msgid.link/20260704124115.2874-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: **v1 only** (2026-07-04). Applied version is that v1
+  (commit message cleaned).
+- Thread (mbox): Ulf Hansson, 2026-07-06: **“Applied for next (by
+  cleanup of the commit message a bit), thanks!”**
+- No NAK, no reviewer-requested `Cc: stable`, no risk discussion.
+- lore.kernel.org HTTP fetch returned 403 (Anubis); thread recovered via
+  `b4 dig -m`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Sent to netdev, linux-rdma, Kicinski, Dumazet, Abeni, Horms. RDS
-lists historically include `rds-devel@oss.oracle.com`. No extra
-`Reviewed-by` on the upstream version; UEK had William Kucharski.
-Maintainer-side porter is Allison Henderson.
+Record (`b4 dig -w`): To/Cc included Ulf Hansson (MMC), Adrian Hunter
+(SDHCI), Nuvoton (Jacky Huang, Shan-Chun Hung), `linux-mmc`, `linux-arm-
+kernel`. Right people. Only maintainer reply was “applied”.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Oracle UEK Orabug 38923495; no public syzbot/bugzilla report
-found. Production bug inside Oracle RDS, not theoretical.
+Record: **No user/syzbot/bugzilla report.** Author stated it was
+inferred from source. The failure mode is still deterministic for `=m`
+builds.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Independent of series 1/4, 2/4, 4/4. Later “reinitialize
-`to_be_dropped` on restart” is **hardening only** (“no user-visible bug
-is known”).
+**Step 4.4: RELATED PATCHES AND SERIES**
+Record: **Standalone 1/1.** Same-week author activity is a tree-wide
+missing-alias sweep, not a multi-patch MMC series.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search **403**; web search found **no**
-stable-list discussion of this leak. UNVERIFIED whether anyone already
-requested/rejected it for 5.10.y.
+Record: **UNVERIFIED** via lore.kernel.org/stable (Anubis 403). No `Cc:
+stable` on this patch. Closest analogue in-tree (`sdhci-of-aspeed`
+autoload) *was* explicitly nominated for stable.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-semcode MCP is **not** available; used read/grep.
-
 **Step 5.1: KEY FUNCTIONS**
-Record: `rds_send_xmit()` only.
+Record: **No function body changed.** Touches `sdhci_ma35_dt_ids` and
+the `sdhci_ma35_driver` registration site.
 
 **Step 5.2: TRACE CALLERS**
-Record (this tree):
-- `rds_sendmsg()` → `rds_send_xmit()` (`send.c:1385`) — syscall
-- `rds_send_worker()` (`threads.c:200`) — `rds_wq` work
-- `rds_ib_tasklet_fn_send()` (`ib_cm.c:334`) — IB send tasklet
+Record:
+- `.probe = ma35_probe` — driver-core platform probe.
+- `.of_match_table = sdhci_ma35_dt_ids` — OF matching when the driver is
+  present.
+- `MODULE_DEVICE_TABLE` is not a runtime caller; it feeds **modpost**.
+- Impact surface: modular `CONFIG_MMC_SDHCI_OF_MA35D1=m` on
+  `nuvoton,ma35d1-sdhci` DT.
 
 **Step 5.3: TRACE CALLEES**
-Record: `rds_message_addref` / `rds_message_put` (`message.c`); last put
-runs `rds_message_purge()` (pages, `rds_rdma_free_op`, MR krefs).
+Record: Unchanged. `ma35_probe` still does `sdhci_pltfm_init` / host
+setup. Macro expands to a static alias (verified in
+`include/linux/module.h`).
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: **Userspace-reachable** via RDS `sendmsg`. Also on IB completion
-and reconnect. Race: xmit drops `cp_lock` after moving to `cp_retrans`;
-recv/ACK path (`rds_send_path_drop_acked`) or
-`close`/`RDS_CANCEL_SENT_TO` (`rds_send_drop_to`) can run then.
+Record: DT node `compatible = "nuvoton,ma35d1-sdhci"` → kmod alias
+lookup → load `sdhci-ma35` → `ma35_probe`. Reachable on MA35D1 boot if
+the driver is a module. Not a syscall/UAF path. **Userspace-visible:**
+missing MMC/SD host until manual `modprobe`.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same file already balances other refs carefully (`drop_to` skips
-if `ON_CONN` already clear). This path is the missing counterpart. No
-duplicate of this exact leak elsewhere in `net/rds/`.
+Record: Other `sdhci-of-*.c` drivers already have
+`MODULE_DEVICE_TABLE(of, ...)`. Historical MMC autoload fixes: aspeed,
+am654, at91, mediatek. This driver was the outlier.
+
+Kconfig: `MMC_SDHCI_OF_MA35D1` is **tristate** (`depends on ARCH_MA35 ||
+COMPILE_TEST`), so `=m` is a supported config. Help text: “say Y or M
+here.”
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `pending-5.10`, `make kernelversion` = **5.10.270**,
-`git describe` = `p-5.10-1-gce56b7a73b64b`.
+Record: **Yes.** File exists; table and `.of_match_table` exist; the
+missing alias was the original 6.12 code. This checkout already contains
+the fix line at `drivers/mmc/host/sdhci-of-ma35d1.c:293`. `git merge-
+base --is-ancestor addc9ecb9ddb3 HEAD` and `9b3732cce41d1 HEAD` both
+succeed. Bug introduced **v6.12**, not after this tree.
 
-```287:294:net/rds/send.c
-                        if (test_bit(RDS_MSG_FLUSH, &rm->m_flags) ||
-                            (rm->rdma.op_active &&
-                            test_bit(RDS_MSG_RETRANSMITTED,
-&rm->m_flags))) {
-                                spin_lock_irqsave(&cp->cp_lock, flags);
-                                if (test_and_clear_bit(RDS_MSG_ON_CONN,
-&rm->m_flags))
-                                        list_move(&rm->m_conn_item,
-&to_be_dropped);
-                                spin_unlock_irqrestore(&cp->cp_lock,
-flags);
-                                continue;
-                        }
-```
+**Step 6.2: BACKPORT COMPLICATIONS**
+Record: **Clean apply.** One added line next to a table that has been
+there since the driver was added. Later churn (`remove`,
+`sdhci_pltfm_free`, includes) does not conflict with this hunk.
 
-Introduced in 2010 (`2ad8099b58f2`); present for the entire 5.10
-lifetime.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** (trivial fuzz at most). Local drop-path text
-matches the hunk exactly. Nearby comment still has the old “We cold
-possibly” typo; that line is context only.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Fix **not** present. No other send.c commit in this tree plugs
-this hole.
+**Step 6.3: RELATED FIXES ALREADY HERE**
+Record: This *is* the fix. No earlier equivalent. Sibling OF SDHCI
+drivers already export their tables.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: **net/rds** — Reliable Datagram Sockets (Oracle RAC / InfiniBand
-and TCP). MAINTAINERS: Supported (Santosh Shilimkar / Oracle).
-**IMPORTANT** (not core mm/VFS; not staging). `CONFIG_RDS` depends on
-`INET`; RDMA ops need `CONFIG_RDS_RDMA`.
+Record: **MMC host / SDHCI platform driver.** Criticality:
+**PERIPHERAL** (Nuvoton MA35D1 only), but it is the SD/MMC host for that
+SoC — root-on-SD/eMMC is a realistic layout.
 
 **Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Actively maintained in this 5.10 tree (recent shutdown/xmit
-locking, TCP corruption, NULL-deref fixes). Mature send path; this leak
-is old, not a new-feature bug.
+Record: `drivers/mmc/host/` is active (many recent fixes). This
+particular file is low-churn (five commits total).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: WHO IS AFFECTED**
-Record: **Config/driver-specific** — `CONFIG_RDS` users, especially
-RDMA/IB reconnect and TCP peer-generation flush (`RDS_MSG_FLUSH` in
-`recv.c`). Enterprise RDS/RAC deployments.
+Record: **Platform-specific / config-specific:** `ARCH_MA35` +
+`CONFIG_MMC_SDHCI_OF_MA35D1=m`. Built-in (`=y`) is unaffected. Distro-
+style modular kernels are the users who benefit.
 
 **Step 8.2: TRIGGER CONDITIONS**
-Record:
-1. Xmit dequeues a message (addref, move to `cp_retrans`, drop
-   `cp_lock`).
-2. Never-retransmit: `RDS_MSG_FLUSH` (peer gen change) or RDMA +
-   `RDS_MSG_RETRANSMITTED` (after `rds_send_path_reset`).
-3. Concurrent ACK (`drop_acked`) or socket close (`drop_to`) already
-   cleared `ON_CONN`.
-
-Not every packet; **error/reconnect/close**. Unprivileged RDS sockets
-can drive send/close; RDMA/reconnect is the realistic production case
-(Orabug).
+Record: Every boot/enumeration of `nuvoton,ma35d1-sdhci` when the driver
+is a module. Not a race. Unprivileged users do not trigger it;
+**boot/udev does**. Common *on that hardware* if distros ship the driver
+as `=m`.
 
 **Step 8.3: FAILURE MODE SEVERITY**
-Record: **Memory/resource leak** of message, pages, MRs, notifiers. Not
-a panic. Repeated reconnects accumulate pinned memory → **HIGH** for RDS
-users, not a universal crash.
+Record: **Missing driver autoload → SD/MMC host never probes → no
+card/root disk until manual load.** Not oops/UAF. Severity **MEDIUM**,
+**HIGH** if root is on that host and the module is not in the initramfs
+by name. Same user-visible class as a missing device ID.
 
 **Step 8.4: RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** high for RDS/RDMA users; stops leaking pinned pages/MRs
-  after errors that already happen in production.
-- **Risk:** very low (~12 lines, one else-put, same pattern as existing
-  puts).
-- **Ratio:** favor backport.
+- **Benefit:** medium for MA35D1 modular builds (storage may not
+  appear).
+- **Risk:** **very low** (1 line, alias-only).
+- **Ratio:** favorable. Same pattern already taken for stable on other
+  SDHCI OF drivers.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: EVIDENCE**
 
-**FOR:**
-- Real refcount leak; objects pin pages/MRs/notifiers
-- Present in this 5.10 tree since 2010 (`2ad8099b58f2`)
-- Small, obviously correct, one function
-- Clean apply; no prerequisites
-- RDS maintainer port; netdev merge; Oracle production Orabug
-- Userspace-reachable via RDS send + close/reconnect
+**For backporting:**
+- Real, deterministic autoload bug when `MMC_SDHCI_OF_MA35D1=m`.
+- One-line, obviously correct, no new API.
+- Driver has been in this lineage since v6.12; table was never exported.
+- MMC maintainer applied it; SDHCI/Nuvoton were on Cc; no NAK.
+- Same change as `mmc: sdhci-of-aspeed: fix module autoloading`, which
+  carried `Cc: stable`.
+- Matches the stable-rules “device ID” / hardware-enablement exception
+  in spirit: publish an ID the driver already matches.
+- Applies cleanly; no prerequisites.
 
-**AGAINST:**
-- RDS is not universal
-- Error-path race, not every send
-- Not a crash/CVE
-- No public syzbot report
+**Against:**
+- No `Reported-by` / no hardware reproduction (author said so).
+- Peripheral SoC, not a core path.
+- Not a crash, UAF, or corruption.
+- No `Cc: stable` on this specific patch (Ulf took it for *next*, not as
+  an urgent fix).
+- Author is running a tree-wide alias sweep (quality of *this* hunk is
+  still fine).
 
-**UNRESOLVED:**
-- Stable-list history (lore 403)
-- Whether last-ref `rds_message_put()` from IB **tasklet** can sleep via
-  `unpin_user_pages_dirty_lock()` — **already true** for the success-
-  path and `to_be_dropped` puts in this tree; this patch does not create
-  that class of bug (series 1/4 is a separate sleep-in-atomic fix)
+**Unresolved:**
+- Whether linux-stable already discussed this (lore.kernel.org/stable
+  blocked).
+- How many shipping MA35D1 kernels use `=m` vs `=y` (unverified).
 
 **Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — refcount math checks out;
-   UEK + netdev merge
-2. Real bug affecting users? **PASS** — Orabug 38923495; leak is in this
-   tree
-3. Important (crash/security/corruption/deadlock)? **PASS** — leak of
-   pinned pages/MRs after RDMA error/reconnect; severity HIGH for RDS
-4. Small and contained? **PASS** — ~12 lines, one file
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS**
+1. Obviously correct and tested? **PASS** — standard macro; maintainer
+   applied. “Tested” is source-level, not lab hardware.
+2. Fixes a real bug that affects users? **PASS** — modular autoload is
+   broken; Kconfig allows `=m`.
+3. Important issue? **PASS** (as device-ID / hardware-enablement, not as
+   a crash). Storage host may never appear on boot.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — only module aliases for an
+   existing compatible string.
+6. Can apply to the local tree? **PASS** — driver present; hunk is the
+   existing table site.
 
 **Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not an ID/quirk/DT/build/docs exception). Qualifies as a
-normal leak/refcount fix.
+Record: **Device ID / module alias publication for an existing driver**
+(same practical class as adding PCI/USB/OF IDs). Not a new driver.
 
 **Step 9.4: DECISION**
-Backport to **this** 5.10.270 tree. The buggy code is here, the fix is
-surgical, and there is no missing prerequisite.
+This tree has the MA35D1 SDHCI driver and had the missing alias from
+introduction until this commit. The patch is a one-line, zero-runtime-
+risk fix that makes the already-supported compatible string autoload
+when the driver is a module. That is stable-appropriate hardware
+enablement, not a feature or refactor.
 
-What it fixes for 5.10 users: after RDMA QP error / reconnect
-(`RDS_MSG_RETRANSMITTED`) or peer generation flush (`RDS_MSG_FLUSH`),
-racing ACK or socket close can clear `RDS_MSG_ON_CONN` in the xmit lock
-gap. The extra `rds_message_addref()` is then never dropped, leaking the
-message and everything it pins. Adding `rds_message_put(rm)` in that
-else branch restores the balance `2ad8099b58f2` broke.
+---
+
+## What the commit solves for stable users
+
+On Nuvoton MA35D1, `sdhci-of-ma35d1` already matches
+`nuvoton,ma35d1-sdhci` **if loaded**. Without `MODULE_DEVICE_TABLE`, a
+modular kernel never generates the OF alias, so the MMC/SD controller is
+silent until someone runs `modprobe`. Backporting restores autoload.
+Risk is essentially zero.
 
 ---
 
 ## Verification
-
-- **[Phase 1]** Tags: SOBs Rausch/Srinivasan/Henderson/Kicinski; Link
-  msgid `3512480-4`; ML `Fixes: 2ad8099b58f2`; UEK Orabug 38923495
-- **[Phase 2]** Diff: else-branch `rds_message_put(rm)` in
-  `rds_send_xmit()` never-retransmit path
-- **[Phase 2]** Confirmed `rds_send_remove_from_sock()` puts the conn-
-  list ref; xmit extra ref is separate (`send.c:605-674`)
-- **[Phase 2]** Confirmed only drop_acked (707) and drop_to (774) plus
-  this path clear `RDS_MSG_ON_CONN`
-- **[Phase 3]** `git blame`: leak from `2ad8099b58f27` (2010), which
-  removed unconditional put
-- **[Phase 3]** `git merge-base --is-ancestor 2ad8099b58f2 HEAD` → yes;
-  `fbbe0610d057` → no
-- **[Phase 3]** `git show 2ad8099b58f27`: put moved to `to_be_dropped`
-  only
-- **[Phase 4]** openwall v4 0/4 and 3/4; v4 commit-message correction;
-  Kicinski merge
-- **[Phase 4]** Follow-up `to_be_dropped` reinit is hardening only, not
-  required
-- **[Phase 4]** UNVERIFIED: lore.kernel.org 403; `b4 dig` could not
-  target the 2026 SHA (not in this tree)
-- **[Phase 5]** Callers: sendmsg, `rds_send_worker`,
-  `rds_ib_tasklet_fn_send`
-- **[Phase 5]** No semcode MCP
-- **[Phase 6]** `git describe HEAD` = `p-5.10-1-gce56b7a73b64b`; `make
-  kernelversion` = 5.10.270
-- **[Phase 6]** Buggy hunk present at `send.c:287-294`; fix text absent
-- **[Phase 8]** Failure mode: leak of message + pages + MRs; HIGH for
-  RDS, not a panic
-- **UNVERIFIED:** stable@ discussion of this specific backport
+- [Phase 1] Parsed commit `9b3732cce41d1`: no Fixes/Reported-
+  by/Cc:stable; SOBs Pengpeng Hou + Ulf Hansson
+- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(of, sdhci_ma35_dt_ids)`
+  in `sdhci-of-ma35d1.c`
+- [Phase 2] `MODULE_DEVICE_TABLE` expansion verified in
+  `include/linux/module.h:255-257`
+- [Phase 3] `git blame`: table from `addc9ecb9ddb3` (v6.12-rc1), no
+  MODULE_DEVICE_TABLE until this commit
+- [Phase 3] `git show addc9ecb9ddb3`: original driver had
+  `.of_match_table` only
+- [Phase 3] `git merge-base --is-ancestor addc9ecb9ddb3 HEAD` and
+  `9b3732cce41d1 HEAD`: both true
+- [Phase 3] File log: 5 commits; no extra prereqs for this line
+- [Phase 3] Precedent `6e540da4c1db7` (aspeed autoload): same one-liner,
+  had `Cc: stable`
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1-only; lore msgid
+  `20260704124115.2874-1-pengpeng@iscas.ac.cn`; Ulf “Applied for next”
+- [Phase 4] WebFetch lore/patch.msgid.link: 403; thread read from mbox
+  instead
+- [Phase 5] Kconfig: `MMC_SDHCI_OF_MA35D1` is tristate, `depends on
+  ARCH_MA35 || COMPILE_TEST`
+- [Phase 5] Other `sdhci-of-*.c` already have `MODULE_DEVICE_TABLE`
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = `7.3.0-rc4`
+- [Phase 6] Current file line 293 already has the macro
+- [Phase 8] Failure mode: module not autoloaded; no oops
+- UNVERIFIED: linux-stable list discussion (Anubis); how common `=m` is
+  on MA35D1 distro kernels
 
 **YES**
 
- net/rds/send.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci-of-ma35d1.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 5d09c7654f136..0a541cfc90185 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
- 			    (rm->rdma.op_active &&
- 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
- 				spin_lock_irqsave(&cp->cp_lock, flags);
--				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
--					list_move(&rm->m_conn_item, &to_be_dropped);
--				spin_unlock_irqrestore(&cp->cp_lock, flags);
-+				if (test_and_clear_bit(RDS_MSG_ON_CONN,
-+						       &rm->m_flags)) {
-+					/* our ref is put after the batch */
-+					list_move(&rm->m_conn_item,
-+						  &to_be_dropped);
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+				} else {
-+					/* already off the conn list; drop
-+					 * the ref taken above ourselves
-+					 */
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+					rds_message_put(rm);
-+				}
- 				continue;
- 			}
+diff --git a/drivers/mmc/host/sdhci-of-ma35d1.c b/drivers/mmc/host/sdhci-of-ma35d1.c
+index 287026422616c..73f772db04148 100644
+--- a/drivers/mmc/host/sdhci-of-ma35d1.c
++++ b/drivers/mmc/host/sdhci-of-ma35d1.c
+@@ -291,6 +291,7 @@ static const struct of_device_id sdhci_ma35_dt_ids[] = {
+ 	{ .compatible = "nuvoton,ma35d1-sdhci" },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, sdhci_ma35_dt_ids);
  
+ static struct platform_driver sdhci_ma35_driver = {
+ 	.driver	= {
 -- 
 2.53.0
 
