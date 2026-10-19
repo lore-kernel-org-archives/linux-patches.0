@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EBA5087E5;
-	Mon, 19 Oct 2026 13:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECD4508818;
+	Mon, 19 Oct 2026 13:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418164; cv=none; b=jVNEkJ1XYFviT1i5miU5tT1RdIxSpLR0A2UPc9TaWdktWqqNTQX8jd4gFREbGkAar5s2aX/IbtimD77wwhz958N0cQYIBKq4gpfa1ruikUiknfFNwlEw7txJiDYL2Zr8cQ/M5HeLdUk0iqyOOJbv+1f7FUaBi1pPTiiyfNaJ2n4=
+	t=1792418166; cv=none; b=XFTwXD+IMGnZMflNJq5ge/svmajBzxKF5lLf1oT0TxyYCb382HYlCbBK+OiatI4ZRfmDp58j3LxGAhQ68HeHcgm0ZXOFAq+P9eXsk7NJxMaWnTOu4KusJWQIcbPShDwd6Hs3iDBHLLMSP3ai2rujJEtIPN7nWCzdf5GfPw4x1LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418164; c=relaxed/simple;
-	bh=mE4c5XPQP0gPoUCFzwEGDU+ClOrOyyVumsH/AkoQ/N8=;
+	s=arc-20240116; t=1792418166; c=relaxed/simple;
+	bh=DEOX1JM4PMaj4Hkdqru6zsIucAAEHc+fB3xAWBKvW28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YgpNgqw8pUIhpdeVrmMzaymXXRlsmBozwoytMS1qo4feCZlRhchuarnALFw5VeXbzOWV7v3e5HpZmrk/JCwJoAwxULKAJ1NL6eqC0khMNG8ZRHvw7oJMzbIpDNHJwOVrkGK2kmqKu4QtPDzlUOdosf48opeW/euMjqNyYyHJ3Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rf/SFJOn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=amJtJwZ2VIUA7hxQbWx9dNxqc/k/esuxwwo+uV8JnCkYr0mmsR0S7PpEOcj9ntQRr0hF+KpEiaumFXtQ3pDU3h7CK3GqfhXjjFeqTjw4AJ2Z5R3BmfzLiJtZ5U7XflXDqY+XZGU5WeAIVU/mxxU31lJnL9eUJgrTboLENOnjBu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8D917HT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rf/SFJOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6651F000C5;
-	Mon, 19 Oct 2026 13:56:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8D917HT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CE51F000C7;
+	Mon, 19 Oct 2026 13:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418161;
-	bh=VXIqA+vWM+D/a4jO+k80ffaFziKi9uGiLkkJ5W3CfWQ=;
+	s=k20260515; t=1792418164;
+	bh=NbG8KeK/8Obh+OVNCohBG662A62vEgDIt/OjzMVvTJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rf/SFJOnQzhr7Z92zQubZNQOnEnLUA7g3+eBm5PVlTAQSKKvX7ScbjYPvN/cw2V2e
-	 8x3LXbc2pH2phJck3v5Y4fy9fMVm1Y3Pqu8fw4MD5+rCMROU7Qgbkk261esWZ5IpDE
-	 6H+SOaTgGKK8drPvsixDJRuLfttTQLohVsdVExIVPzbwhWTtxx+6hKJQh6D6BnHl/T
-	 Gy0uZKqCdLKy/obLnus+OAnzwC+dtLXaLlERmlmAlrxR+fNE9ojvlFQ22DPWf/iJl7
-	 KXXfDAlQtjJk05kHz955Am+zWt5I/5QTlhODoMrcgkiXcfbOAYgCqY/C4n0ypRxYpW
-	 HkHRnVsrfIahg==
+	b=I8D917HTxc+QaL2hEcPjyHgp+rBYjX2HoiHwg7rNpvRZhVny9ZJiJyRlQBGNaymKi
+	 xlR1N6OVd680McvzTTaBZOWX5FWG221bx+zGP/hn4LyjK0HHqnEV1Oiqo1SpAOvTT/
+	 17qlBJFCs4HJYBnDRPz77/UZMszqbbLWDBlDhZNYmGcKo2tpOnDdRp4khGCUru2LIy
+	 laAYifWMggd9VTY6GdKETh9cL2qhIOmFOmnRFtIt7k5NKgInlip8m2vi/ptD8xL0Pl
+	 7LztRbIEODhm7Jnz2OtOtColE6WZxtwUvcZuIEgq93TCYAKE7j1X0fBtMNmhtydgwD
+	 XdMeC/CgaFnBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Ian Abbott <abbotti@mev.co.uk>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	hsweeten@visionengravers.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/amdgpu: Validate ATIF buffer length before use
-Date: Mon, 19 Oct 2026 09:45:46 -0400
-Message-ID: <20261019135441.1420968-55-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] comedi: ni_at_a2150: Fix sanity check in interrupt handler
+Date: Mon, 19 Oct 2026 09:45:48 -0400
+Message-ID: <20261019135441.1420968-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,510 +52,358 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit b978b7d43963bbb3e2d850288f7c21ac11c3b751 ]
+[ Upstream commit e7356cdc7077a4f30fc5232a18e9fc6a4d404581 ]
 
-Add a min_size parameter to amdgpu_atif_call() to validate that the
-returned ACPI buffer is of type ACPI_TYPE_BUFFER, holds at least a u16
-size field, does not claim more data than was actually returned, and
-meets the minimum size required by the calling function. Each caller
-passes its required minimum via sizeof() or offsetof() of the expected
-output struct and drops its own size check.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Assisted-by: Claude Sonnet (Cursor AI)
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing various pointers which may be NULL if dev->attached is
+false.  Move the check to avoid the possible null pointer dereferences.
+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a firmware-buffer bounds check in `amdgpu_atif_call()`. On this
-6.18.53 tree the buggy path is still present, the patch is small, and it
-closes a real out-of-bounds read.
+## Phase 1: Commit message forensics
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1:** Record: `[comedi: ni_at_a2150:] [Fix] [Move the
+`dev->attached` check in `a2150_interrupt()` so it runs before pointer
+dereferences that can be NULL while the device is still attaching.]`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[drm/amdgpu] [Validate] Validate ATIF buffer length before use`
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>` (author)
-- `Assisted-by: Claude Sonnet (Cursor AI)`
-- `Acked-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+**Step 1.2:** Tags in `e7356cdc7077a`:
+- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (author; comedi
   maintainer)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, or syzbot
-  tags (absence expected)
-- Upstream SHA from the candidate wrapper:
-  `b978b7d43963bbb3e2d850288f7c21ac11c3b751` (ignored as a selection
-  marker; used only to find the original discussion)
+- `Link:
+  https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk`
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` on the committed message (absence is expected
+  here)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- Bug: ACPI ATIF responses are used without checking that the returned
-  buffer actually contains the `u16` size field, that the BIOS-reported
-  size does not exceed the ACPI object length, or that the payload meets
-  the caller’s minimum.
-- Symptom/failure mode: out-of-bounds read (and possible oops) when
-  firmware returns a short or lying buffer, then callers `memcpy()`
-  using the claimed size.
-- Version info: none in the message. The pattern dates to `d38ceaf99ed0`
-  (“drm/amdgpu: add core driver (v4)”, 2015).
-- Root cause: callers trusted `*(u16 *)info->buffer.pointer` and copied
-  that many bytes without comparing it to `obj->buffer.length`.
+Mailbox recipients of the original mail also included H Hartley Sweeten,
+Jaeyoung Chung, and a malformed Cc that was meant to be `Reported-by:
+Sangyun Kim` plus Kyungwook Boo. Those trailers were not copied onto the
+git commit.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: This is an explicit memory-safety fix, not cleanup. Centralizing
-existing per-caller `size < N` checks is incidental; the new `actual >=
-sizeof(u16)` and `actual >= claimed` tests are the real fix.
+**Step 1.3:** Record:
+- Bug: the ISR is registered in `a2150_alloc_irq_and_dma()` during
+  `a2150_attach()`, before postconfig sets `dev->attached`.
+- Symptom: NULL pointer dereference in interrupt context if the handler
+  runs while `dev->attached` is still false.
+- Version info: none in the commit body.
+- Root cause: the existing `if (!dev->attached)` guard sits *after*
+  `dma->desc[0]`, `s->async`, `async->cmd`, and `desc->virt_addr`.
 
-## PHASE 2: DIFF ANALYSIS
+Cover letter for the 11-patch series: “Add/fix sanity check in ISA
+drivers to avoid null-ptr-deref”.
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` (+34/−34)
-- Functions: `amdgpu_atif_call`, `amdgpu_atif_verify_interface`,
-  `amdgpu_atif_get_notification_params`,
-  `amdgpu_atif_query_backlight_caps`, `amdgpu_atif_get_sbios_requests`
-- Scope: single-file surgical fix
+**Step 1.4:** Record: Not a hidden fix. Subject and body are explicit
+NULL-deref prevention.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record (v6.18.53 before → after):
-- `amdgpu_atif_call()`: after confirming `ACPI_TYPE_BUFFER`, return the
-  object. After: reject length `< sizeof(u16)`, claimed size `> actual`
-  length, or claimed size `< min_size`.
-- Callers: pass `sizeof()` / `offsetof()` as `min_size` and drop their
-  own `size < 12/10/10/0xd` checks. `memcpy` still uses
-  `min(sizeof(struct), claimed_size)`, now only after those checks.
+## Phase 2: Diff analysis
 
-Verified struct sizes in `drivers/gpu/drm/amd/include/amd_acpi.h`
-(`__packed`):
-- `sizeof(atif_verify_interface)` = 12 (replaces `size < 12`)
-- `offsetof(atif_system_params, command_code)` = 10 (replaces `size <
-  10`; the `size < 11` command_code path remains)
-- `offsetof(atif_qbtc_output, data_points)` = 10 (replaces `size < 10`)
-- `sizeof(atif_sbios_requests)` = 13 = `0xd` (replaces `size < 0xd`)
+**Step 2.1:** Record:
+- File: `drivers/comedi/drivers/ni_at_a2150.c` (+9 / −4; 13 lines
+  changed)
+- Function: `a2150_interrupt()`
+- Scope: single-file surgical ISR change
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: `[Memory safety / OOB] [Firmware-controlled size used as memcpy
-length]`
+**Step 2.2:** Record: Before, locals were initialized with dereferences,
+then `dev->attached` was checked. After, `desc`/`async`/`cmd`/`buf` are
+declared uninitialized, the attached check runs, then those pointers are
+filled. Normal attached-and-running IRQ path is unchanged.
 
-v6.18.53 callers still do:
+**Step 2.3:** Record: `[NULL pointer dereference] [ISR used `dma`,
+`read_subdev`, and `async` before the attached guard; those can still be
+NULL between `request_irq()` and `dev->attached = true`, and `dma` can
+already have been freed on detach before `free_irq()`.]`
 
-```
-size = *(u16 *)info->buffer.pointer;
-size = min(sizeof(output), size);
-memcpy(&output, info->buffer.pointer, size);
-```
+Verified attach/detach order in this tree:
+1. `comedi_alloc_devpriv()` then `a2150_alloc_irq_and_dma()` →
+   `request_irq(a2150_interrupt, …)` then DMA alloc, then later
+   `comedi_alloc_subdevices()` / `dev->read_subdev = s`.
+2. `comedi_device_attach()` only then calls
+   `comedi_device_postconfig()`, which sets `dev->attached = true`.
+3. Detach sets `dev->attached = false` first, then `a2150_detach()`
+   frees DMA, then `comedi_legacy_detach()` calls `free_irq()`.
 
-If `obj->buffer.length` is 0 or 1, the `u16` load is already OOB. If
-claimed size is 12 and actual length is 4, `memcpy` copies 12 bytes from
-a 4-byte ACPI payload (heap OOB read). `c9b7c809b89f2` only checked
-object type, not length; that hole is still in this tree.
+So a premature IRQ during attach hits NULL `dma` or NULL `s`/`s->async`.
+An IRQ between DMA free and `free_irq()` hits a freed `dma` (UAF) in the
+old code.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct. Rejecting `claimed > actual` can disable ATIF
-on a BIOS that lies about size but still returned enough bytes; that is
-malformed firmware, and the fallback is “ATIF unused” rather than a
-crash. Error codes change from `-EINVAL` to `-EIO` on undersized
-buffers; callers only test `if (ret)` / disable the feature. Low
-regression risk.
+Loads that remain before the check (`dev->private`, `devpriv->dma`,
+`dev->read_subdev`) are pointer loads, not the crashing derefs.
+`private` is allocated before `request_irq()`, and it is still valid
+until after `free_irq()`.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 2.4:** Record: Obviously correct and minimal. Regression risk is
+very low: early return already existed; only the check moved. No
+API/locking/data-structure change. Residual theoretical issue: if
+`attached` were true with `dma` or `read_subdev` still NULL, later
+derefs would still fault — that is not the attach/detach window this
+patch targets, and `dev->irq` is only kept when DMA alloc succeeded.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Size-then-memcpy logic is from `d38ceaf99ed0` (Alex Deucher,
-2015, “drm/amdgpu: add core driver (v4)”). Type check added by
-`c9b7c809b89f2` (2024). NULL-on-`AE_NOT_FOUND` fixed by `91c9e221fe255`
-(2024). Length vs claimed size was never checked.
+## Phase 3: Git history
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The bug is in original ATIF parsing, present
-since 2015. Both `d38ceaf99ed0` and `c9b7c809b89f2` are ancestors of
-`v6.18.53`.
+**Step 3.1:** Record: `if (!dev->attached)` is old (Frank Mori Hess,
+2009). The dangerous pre-check initializers come from `1a97f144e3d3e9`
+(“staging: comedi: ni_at_a2150: remove depends on ISA_DMA_API
+limitation”, H Hartley Sweeten, 2015-01-14), first contained in
+`v4.0-rc1`. Present in this tree (`git merge-base --is-ancestor
+1a97f144e3d3e9 HEAD`).
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- `c9b7c809b89f2` “Guard against bad data for ATIF ACPI method” — real
-  oops in `amdgpu_atif_query_backlight_caps`; later tagged
-  CVE-2024-50117; already in this tree.
-- `91c9e221fe255` — NULL deref if ATIF missing; already in this tree.
-- Sibling `9d367fab451d9` “Validate ATPX buffer length before use” is
-  patch 2/2 on a different file; not a prerequisite.
-- No later commits on this file after the candidate that rework the same
-  logic.
+**Step 3.2:** Record: No `Fixes:` tag. Introduced by `1a97f144e3d3e9`
+(v4.0), which is in this checkout.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Lijo Lazar is a regular AMD amdgpu contributor (ATPX/ATRM/XCP
-bounds checks in the same wave). Maintainer Acked-by/SOB from Alex
-Deucher.
+**Step 3.3:** Record: This is patch 4/11 of Ian Abbott’s June 2026
+series. Neighbor commits are the same class of per-driver ISR guards
+(`dt2811`, `aio_iiro_16`, `das6402`, `pcl711`, etc.). Independent; no
+shared helper or prerequisite refactor. No later follow-up on
+`ni_at_a2150.c`.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. `amdgpu_atif_call` is static with four local
-callers, all updated. No new helpers. ATPX 2/2 is independent.
+**Step 3.4:** Record: Ian Abbott is the long-time comedi maintainer.
+Greg Kroah-Hartman applied the series. Related work: `17221216ae8ce`
+(“comedi: comedi_parport: deal with premature interrupt”) for the same
+premature-IRQ class, with syzbot + `Cc: stable`.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 3.5:** Record: No extra commits required. The ISR,
+`dev->attached`, `request_irq`, and `comedi_legacy_detach()` already
+exist here. Standalone.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c b978b7d43963...` failed (lore.kernel.org returned errors).
-- Original submission: `[PATCH 1/2] drm/amdgpu: Validate ATIF buffer
-  length before use`, 14 Jun 2026, https://www.mail-archive.com/amd-
-  gfx@lists.freedesktop.org/msg145004.html
-- Series: 1/2 ATIF, 2/2 ATPX. No v2 found.
-- No NAKs found. Merged via Alex Deucher’s `drm-next-7.3` pull; Dave
-  Airlie acked the pull.
+## Phase 4: Mailing list / external research
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Posted to amd-gfx. Acked/signed by Alex Deucher. Recipients from
-`b4 dig -w` could not be retrieved (lore 403).
+**Step 4.1:** Record:
+- `b4 dig -c e7356cdc7077a` →
+  https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
+- `b4 dig -a`: v1 only (no v2/v3)
+- Cover letter: “comedi: Add/fix sanity check in ISA drivers to avoid
+  null-ptr-deref”
+- No NAKs in the saved thread (12 series mails, no review replies)
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: This commit has no new user report. The related 2024 ATIF bad-
-data oops (`c9b7c809b89f2`) was hit on at least one system and became
-CVE-2024-50117. That earlier fix did not validate lengths.
+**Step 4.2:** Record (`b4 dig -w`): linux-kernel, Greg KH, Hartley
+Sweeten, Jaeyoung Chung, Sangyun Kim, Kyungwook Boo. Maintainer-
+authored, applied by Greg.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 1/2 of ATIF+ATPX ACPI buffer validation. ATRM buffer checks in
-the same author batch. ATIF is self-contained.
+**Step 4.3:** Record: Original report retrieved with `b4 mbox` msgid
+`20260610115912.780131-1-jjy600901@snu.ac.kr`:
+- Subject: “comedi: KASAN null-ptr-deref in ISA driver IRQ handlers on
+  early IRQ”
+- From Jaeyoung Chung; Reported-by Sangyun Kim and Kyungwook Boo
+- Failure: handler runs before `read_subdev` is set → KASAN NULL deref /
+  panic
+- Named drivers: das6402, ni_atmio16d, aio_iiro_16, pcmmio,
+  comedi_parport, pcl711
+- ni_at_a2150 was not in that list; Ian added it after finding the same
+  `request_irq` / `read_subdev` / attached-check ordering
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned 403. No verified stable-
-list discussion. Prior ATIF guard *was* taken into stable
-(CVE-2024-50117).
+Related: `comedi_parport` premature IRQ was a syzbot GPF in
+`comedi_get_is_subdevice_running()`.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.4:** Record: 11 independent per-driver patches. This one does
+not need the others.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `amdgpu_atif_call` plus the four callers listed above. No
-semcode tools available.
+**Step 4.5:** Record: UNVERIFIED — lore.kernel.org returned HTTP 403 for
+`/stable/` search. No stable-list discussion confirmed.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `amdgpu_atif_verify_interface` ← `amdgpu_atif_pci_probe_handle` ←
-  `amdgpu_acpi_detect` ← `amdgpu_drv.c` (driver load)
-- `amdgpu_atif_get_notification_params` /
-  `amdgpu_atif_query_backlight_caps` ← `amdgpu_acpi_detect`
-- `amdgpu_atif_get_sbios_requests` ← `amdgpu_atif_handler` ← ACPI
-  notifier (`amdgpu_acpi_event`) on brightness/hotplug-style events
+## Phase 5: Code semantic analysis
 
-**Step 5.3: TRACE CALLEES**
-Record: `acpi_evaluate_object`, then `memcpy` of firmware bytes into
-stack structs.
+**Step 5.1:** Record: `a2150_interrupt()` only.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reached on every amdgpu load when the GPU’s ACPI node has ATIF
-(common on AMD laptops/APUs). SBIOS request path runs on ACPI video
-notifies. Unprivileged userspace cannot call ATIF directly; a guest/VM
-with a crafted ACPI table can. Firmware bugs have already crashed this
-path.
+**Step 5.2:** Record: Sole registration is `request_irq()` in
+`a2150_alloc_irq_and_dma()`, called from `a2150_attach()`. Hardirq
+context. Userspace can trigger attach/detach via comedi config
+(`COMEDI_NI_AT_A2150`).
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same claimed-size-then-memcpy pattern remains in
-`amdgpu_atcs_call` callers in this file and in `radeon_acpi.c`. This
-patch does not touch those; not a reason to reject the ATIF fix.
+**Step 5.3:** Record: After the guard: `inw(STATUS_REG)`,
+`comedi_handle_events()`, `comedi_isadma_disable()`, sample copy into
+the async buffer.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+**Step 5.4:** Record: Reachable from the comedi attach ioctl / config
+path on ISA AT-A2150 (or a crafted I/O base/IRQ). Same class as the
+KASAN/syzbot premature-IRQ bugs. Not a hot syscall path for typical
+machines.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Local tree is **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`,
-branch `autosel`). `git merge-base --is-ancestor c8373721c3e54 v6.18.53`
-is false. `v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` still has
-the unvalidated `*(u16 *)` / `memcpy` sequence. Bug introduced in 2015
-(`d38ceaf99ed0`).
+**Step 5.5:** Record: Same `if (!dev->attached)` pattern across many
+`drivers/comedi/drivers/*.c` files; this series fixes the ones that
+checked too late or not at all.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: `git diff v6.18.53 c8373721c3e54 --
-drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c` is exactly this commit
-(+34/−34). Mainline `noinline_for_stack` is not in 6.18; the candidate
-as it exists here already matches 6.18. Clean apply.
+## Phase 6: Local tree (this checkout)
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Type/NULL guards (`c9b7c809b89f2`, `91c9e221fe255`) are in
-6.18.53. Length validation is not. No alternate fix.
+**Step 6.1:** Record:
+- `make kernelversion` / Makefile: **7.3.0-rc4**
+- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
+- File and ISR exist. Pre-fix ISR confirmed at `e7356cdc7077a^`. Bug
+  dates to v4.0 (`1a97f144e3d3e9`). This is mainline, not a 6.x.y stable
+  branch; the driver code the patch targets is present.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.2:** Record: Clean apply on the pre-image in this history. No
+extra backport rework needed for a tree that still has the old ISR.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `[drm/amdgpu ACPI/ATIF] [IMPORTANT]` — not core mm/net, but a
-widely used GPU driver on AMD laptops.
+**Step 6.3:** Record: No earlier ni_at_a2150-specific substitute.
+`comedi_parport` got a related premature-IRQ fix; it does not cover this
+driver.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively developed; this ATIF parsing has been stable since 2015
-aside from the 2024 type/NULL guards.
+## Phase 7: Subsystem / maintainer
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.1:** Record: `[drivers/comedi — ISA DAQ] [PERIPHERAL]`. Out of
+staging (`8ffdff6a8cfbd`). Hardware is old NI AT-A2150 ISA cards
+(`CONFIG_COMEDI_NI_AT_A2150`).
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: AMD GPU systems whose ACPI provides ATIF (typical AMD
-laptop/APU). Config: `CONFIG_DRM_AMDGPU`.
+**Step 7.2:** Record: Mature, low churn. Ian Abbott still actively
+fixing ISR attach races in 2026.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Driver probe always; ACPI notifies for SBIOS requests. Needs a
-short or lying ATIF buffer. Unprivileged userspace cannot trigger it on
-bare metal; firmware/VM ACPI can. Prior ATIF bad-data crashes were seen
-in the wild.
+## Phase 8: Impact and risk
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: `[OOB read → possible oops / info leak] [HIGH]` Same class as
-CVE-2024-50117, remaining hole.
+**Step 8.1:** Record: Driver-specific, `CONFIG_COMEDI_NI_AT_A2150`.
+Small user set (legacy ISA DAQ).
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: Benefit high (closes firmware OOB on a common driver). Risk low
-(~30-line single-file change, fail-closed). Ratio favors backport.
+**Step 8.2:** Record: Trigger is attach (IRQ registered before
+`attached`/`read_subdev`) or detach (DMA freed before `free_irq()`).
+Needs the device (or a spurious/pending IRQ on that line). Not a general
+unprivileged remote exploit; privileged/local comedi attach is enough if
+the IRQ fires. Likelihood is low, but the window is real and matches a
+KASAN report for the same pattern.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3:** Record: `[NULL deref / possible UAF in hardirq →
+oops/panic] [HIGH]` (CRITICAL for that machine; not data corruption).
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 8.4:** Record: Benefit HIGH for anyone using this driver (avoids
+IRQ oops on attach/detach). Risk very low (13-line ISR reorder). Ratio
+favors backport.
 
-FOR:
-- Real OOB: claimed ATIF size used as `memcpy` length without comparing
-  to ACPI buffer length.
-- Same subsystem already produced a stable/CVE oops from unvalidated
-  ATIF data (`c9b7c809b89f2` / CVE-2024-50117); that patch did not check
-  lengths.
-- Buggy code is in this 6.18.53 tree since 2015.
-- Small, contained, no new API; maintainer Acked-by.
-- Applies cleanly here.
-- Failure is crash/OOB, not a feature change.
+## Phase 9: Synthesis
 
-AGAINST:
-- No dedicated report for *this* length mismatch (hardening of a known-
-  bad path).
-- Undersized-buffer errno changes `-EINVAL` → `-EIO` (callers treat both
-  as failure).
-- Sibling ATPX patch is separate and not required.
+**Evidence FOR:**
+- Real NULL deref (and detach UAF) in an interrupt handler
+- Same class as a KASAN report and a syzbot GPF on sibling comedi
+  drivers
+- Author is the comedi maintainer; Greg applied v1 unchanged
+- Small, obviously correct, no new API
+- Bug present since v4.0; code exists in this tree
+- Independent of the rest of the series
 
-UNRESOLVED:
-- `b4 dig` / lore.kernel.org returned errors; discussion recovered from
-  mail-archive.
-- No stable@ thread found (lore 403).
+**Evidence AGAINST:**
+- Niche obsolete ISA hardware
+- Not in the original SNU driver list (Ian’s extra finding)
+- Committed message has no `Fixes:` / `Cc: stable` (expected for this
+  review)
+- No Tested-by on hardware in the thread
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — checks match existing
-   minima; maintainer merged.
-2. Fixes a real bug that affects users? **PASS** — OOB on malformed
-   ATIF; ATIF bad data already crashed systems.
-3. Important issue? **PASS** — HIGH: OOB read / oops from firmware data.
-4. Small and contained? **PASS** — one file, +34/−34.
-5. No new features or APIs? **PASS** — static helper only.
-6. Can apply to the local tree? **PASS** — identical to `v6.18.53` file
-   plus this diff.
+**UNRESOLVED:**
+- Could not read lore.kernel.org in the browser (403); used `b4` mboxes
+  instead
+- No confirmed stable@ discussion
+- No hardware Tested-by
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
-bug fix.
+**Stable rules:**
+1. Obviously correct and tested? **PASS** — logic is local and matches
+   core `attached` semantics; applied by Greg. No extra hardware Tested-
+   by, but the defect is visible in code.
+2. Real user-visible bug? **PASS** — KASAN NULL deref / panic for this
+   ISR pattern.
+3. Important (crash/security/corruption/deadlock)? **PASS** — hardirq
+   oops/panic.
+4. Small and contained? **PASS** — one function, +9/−4.
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — pre-fix ISR is the historical form
+   of this file; no missing helpers.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. It closes a leftover ATIF buffer-length hole on this 6.18 tree
-with a small, fail-closed change.
+**Exception category:** none (ordinary crash fix).
 
-### What the commit solves for stable users
-On 6.18, `amdgpu_atif_call()` only rejects non-buffer ACPI objects.
-Callers then trust a BIOS `u16` size and `memcpy` that many bytes. A
-short or inflated ATIF payload over-reads kernel heap and can oops — the
-same ATIF path that already oopsed in 2024. This patch requires actual
-length ≥ 2, actual ≥ claimed, and claimed ≥ caller minimum before any
-copy.
+This is a 13-line IRQ-handler NULL-deref (and detach UAF) fix in
+existing comedi code. It meets the stable rules. The local 7.3.0-rc4
+tree has the driver and had the bug since v4.0.
+
+### What it fixes for stable users
+If the AT-A2150 ISR runs after `request_irq()` but before
+`dev->attached` (or after DMA is freed on detach), the old handler
+oopses on NULL/dangling `dma`/`read_subdev`/`async`. Moving the existing
+guard first prevents that crash.
 
 ### Risk vs benefit
-Benefit is preventing oops/OOB on AMD systems with ATIF. Risk is
-disabling ATIF on lying firmware instead of crashing. That is the right
-stable tradeoff.
+Benefit is avoiding a kernel oops; risk is negligible. Other patches in
+the 11-patch series are not required.
 
-### Concerns
-ATPX 2/2 is not required. ATCS/radeon still have the old pattern; out of
-scope. No extra 6.18 prerequisites.
+---
 
 Verification:
-- [Phase 1] Tags: author SOB, Claude Assisted-by, Alex Deucher Acked-
-  by/SOB; no Fixes/Reported-by/syzbot
-- [Phase 2] Diff: +34/−34 in `amdgpu_acpi.c`; length checks in
-  `amdgpu_atif_call`; callers pass sizeof/offsetof
-- [Phase 2] Struct sizes: 12, offsetof 10, offsetof 10, 13 match old
-  magic constants
-- [Phase 3] blame: size/memcpy from `d38ceaf99ed0` (2015); type check
-  `c9b7c809b89f2` (in 6.18.53)
-- [Phase 3] `git merge-base --is-ancestor d38ceaf99ed0 v6.18.53` true;
-  `c9b7c809b89f2` true; this commit false
-- [Phase 3] ATPX sibling `9d367fab451d9` is a different file; not a
-  dependency
-- [Phase 4] `b4 dig` failed (lore error). Thread: mail-archive
-  msg145004, series 1/2. Pulled in drm-next-7.3
-- [Phase 4] lore/stable 403; UNVERIFIED whether stable@ discussed this
-  SHA
-- [Phase 5] Callers: probe via `amdgpu_acpi_detect`, ACPI notify via
-  `amdgpu_atif_handler`
-- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
-  Makefile 6.18.53
-- [Phase 6] `git diff v6.18.53 <commit> -- amdgpu_acpi.c` equals this
-  patch (clean apply)
-- [Phase 8] Failure mode: heap OOB read / oops; severity HIGH
-- UNVERIFIED: exact To/Cc list (`b4 dig -w` unavailable)
+- [Phase 1] Parsed `e7356cdc7077a`: Ian Abbott + Greg KH; msgid
+  `20260618102949.26607-5`; no Fixes/Cc stable
+- [Phase 1] Cover letter from mbox: series is explicitly “avoid null-
+  ptr-deref”
+- [Phase 2] Diff: +9/−4 in `a2150_interrupt()`; moved
+  `desc`/`async`/`cmd`/`buf` after `if (!dev->attached)`
+- [Phase 2] `a2150_attach` / `a2150_alloc_irq_and_dma` /
+  `comedi_device_postconfig`: `request_irq` before `attached = true`
+- [Phase 2] `comedi_device_detach_locked`: `attached = false` before
+  `a2150_free_dma` then `free_irq`
+- [Phase 3] `git blame` on pre-image: check from 2009; early derefs from
+  `1a97f144e3d3e9` (v4.0-rc1)
+- [Phase 3] `git merge-base --is-ancestor 1a97f144e3d3e9 HEAD` and
+  `e7356cdc7077a HEAD`: both true
+- [Phase 3] Series is 11 independent driver patches; no ni_at_a2150
+  follow-up
+- [Phase 4] `b4 dig -c/-a/-w`: v1 only; recipients include Greg, Hartley
+  Sweeten, SNU reporters
+- [Phase 4] `b4 mbox` of `20260610115912.780131-1-jjy600901@snu.ac.kr`:
+  KASAN null-ptr-deref report
+- [Phase 4] Related `17221216ae8ce` comedi_parport fix: syzbot GPF + Cc
+  stable
+- [Phase 4] lore HTTP 403; UNVERIFIED stable@ archive search
+- [Phase 5] `a2150_interrupt` only used from `request_irq` in this file
+- [Phase 6] Local tree 7.3.0-rc4 (`v7.3-rc4-27-gf0100363d8c37`); pre-fix
+  ISR confirmed at parent
+- [Phase 7] `CONFIG_COMEDI_NI_AT_A2150`; peripheral ISA DAQ
+- [Phase 8] Failure mode: hardirq NULL deref/UAF oops, severity HIGH;
+  backport risk very low
+- UNVERIFIED: hardware reproduction on a real AT-A2150; stable mailing-
+  list mentions
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 68 ++++++++++++------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ drivers/comedi/drivers/ni_at_a2150.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-index 36f429e7f2027..5a04c20a5fd15 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -138,13 +138,15 @@ static struct amdgpu_acpi_priv {
-  * @atif: atif structure
-  * @function: the ATIF function to execute
-  * @params: ATIF function params
-+ * @min_size: minimum size of the expected output buffer in bytes
-  *
-  * Executes the requested ATIF function (all asics).
-  * Returns a pointer to the acpi output buffer.
-  */
- static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
- 					   int function,
--					   struct acpi_buffer *params)
-+					   struct acpi_buffer *params,
-+					   size_t min_size)
- {
- 	acpi_status status;
- 	union acpi_object *obj;
-@@ -187,6 +189,28 @@ static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
- 		return NULL;
- 	}
+diff --git a/drivers/comedi/drivers/ni_at_a2150.c b/drivers/comedi/drivers/ni_at_a2150.c
+index e4e5a0ebd195a..93e9591f5dd4c 100644
+--- a/drivers/comedi/drivers/ni_at_a2150.c
++++ b/drivers/comedi/drivers/ni_at_a2150.c
+@@ -132,11 +132,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	struct comedi_device *dev = d;
+ 	struct a2150_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[0];
++	struct comedi_isadma_desc *desc;
+ 	struct comedi_subdevice *s = dev->read_subdev;
+-	struct comedi_async *async = s->async;
+-	struct comedi_cmd *cmd = &async->cmd;
+-	unsigned short *buf = desc->virt_addr;
++	struct comedi_async *async;
++	struct comedi_cmd *cmd;
++	unsigned short *buf;
+ 	unsigned int max_points, num_points, residue, leftover;
+ 	unsigned short dpnt;
+ 	int status;
+@@ -145,6 +145,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	if (!dev->attached)
+ 		return IRQ_HANDLED;
  
-+	if (obj->buffer.length < sizeof(u16)) {
-+		DRM_DEBUG_DRIVER("ATIF buffer too small to hold size field: %u\n",
-+				 obj->buffer.length);
-+		kfree(obj);
-+		return NULL;
-+	}
++	desc = &dma->desc[0];
++	async = s->async;
++	cmd = &async->cmd;
++	buf = desc->virt_addr;
 +
-+	if (obj->buffer.length < *(u16 *)obj->buffer.pointer) {
-+		DRM_DEBUG_DRIVER("ATIF buffer length mismatch: reported %u, actual %u\n",
-+				 *(u16 *)obj->buffer.pointer,
-+				 obj->buffer.length);
-+		kfree(obj);
-+		return NULL;
-+	}
-+
-+	if (*(u16 *)obj->buffer.pointer < min_size) {
-+		DRM_DEBUG_DRIVER("ATIF buffer too small: expected %zu, got %u\n",
-+				 min_size, *(u16 *)obj->buffer.pointer);
-+		kfree(obj);
-+		return NULL;
-+	}
-+
- 	return obj;
- }
- 
-@@ -248,19 +272,14 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
- 	size_t size;
- 	int err = 0;
- 
--	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL);
-+	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL,
-+				sizeof(output));
- 	if (!info)
- 		return -EIO;
- 
- 	memset(&output, 0, sizeof(output));
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 12) {
--		DRM_INFO("ATIF buffer is too small: %zu\n", size);
--		err = -EINVAL;
--		goto out;
--	}
--	size = min(sizeof(output), size);
-+	size = min(sizeof(output), (size_t)*(u16 *)info->buffer.pointer);
- 
- 	memcpy(&output, info->buffer.pointer, size);
- 
-@@ -270,7 +289,6 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
- 	amdgpu_atif_parse_notification(&atif->notifications, output.notification_mask);
- 	amdgpu_atif_parse_functions(&atif->functions, output.function_bits);
- 
--out:
- 	kfree(info);
- 	return err;
- }
-@@ -295,20 +313,14 @@ static int amdgpu_atif_get_notification_params(struct amdgpu_atif *atif)
- 	int err = 0;
- 
- 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_PARAMETERS,
--				NULL);
-+				NULL, offsetof(struct atif_system_params, command_code));
- 	if (!info) {
- 		err = -EIO;
- 		goto out;
- 	}
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 10) {
--		err = -EINVAL;
--		goto out;
--	}
--
- 	memset(&params, 0, sizeof(params));
--	size = min(sizeof(params), size);
-+	size = min(sizeof(params), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(&params, info->buffer.pointer, size);
- 
- 	DRM_DEBUG_DRIVER("SYSTEM_PARAMS: mask = %#x, flags = %#x\n",
-@@ -371,20 +383,14 @@ static int amdgpu_atif_query_backlight_caps(struct amdgpu_atif *atif)
- 
- 	info = amdgpu_atif_call(atif,
- 		ATIF_FUNCTION_QUERY_BRIGHTNESS_TRANSFER_CHARACTERISTICS,
--		&params);
-+		&params, offsetof(struct atif_qbtc_output, data_points));
- 	if (!info) {
- 		err = -EIO;
- 		goto out;
- 	}
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 10) {
--		err = -EINVAL;
--		goto out;
--	}
--
- 	memset(&characteristics, 0, sizeof(characteristics));
--	size = min(sizeof(characteristics), size);
-+	size = min(sizeof(characteristics), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(&characteristics, info->buffer.pointer, size);
- 
- 	atif->backlight_caps.caps_valid = true;
-@@ -422,24 +428,18 @@ static int amdgpu_atif_get_sbios_requests(struct amdgpu_atif *atif,
- 	int count = 0;
- 
- 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_BIOS_REQUESTS,
--				NULL);
-+				NULL, sizeof(*req));
- 	if (!info)
- 		return -EIO;
- 
--	size = *(u16 *)info->buffer.pointer;
--	if (size < 0xd) {
--		count = -EINVAL;
--		goto out;
--	}
- 	memset(req, 0, sizeof(*req));
- 
--	size = min(sizeof(*req), size);
-+	size = min(sizeof(*req), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(req, info->buffer.pointer, size);
- 	DRM_DEBUG_DRIVER("SBIOS pending requests: %#x\n", req->pending);
- 
- 	count = hweight32(req->pending);
- 
--out:
- 	kfree(info);
- 	return count;
- }
+ 	status = inw(dev->iobase + STATUS_REG);
+ 	if ((status & INTR_BIT) == 0)
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
