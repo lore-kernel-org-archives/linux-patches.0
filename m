@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BEC503BE9;
-	Mon, 19 Oct 2026 14:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C3364A888;
+	Mon, 19 Oct 2026 14:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418809; cv=none; b=U1xzzXOlRJ0oYoQL2u6cq5AzythkH05kVYfZn17cVmNLEx7y3N+maZxlY91/fIFbBLGG8P3rzVu9Ij9kXrZr7Nxufb4khxJoRqzK5+iKjTWzJKqCadE6YG1Va6E+nQLfZgG6yr05GXjF/p2R8T7Q7cAy3O2pj+hhOeixri7zSpA=
+	t=1792418811; cv=none; b=gXzXDlVwFjp2lmJvgy6E+BFhiq54uUsBChpyxNbietHWrTa7xO+N+XU3Ywv175bl+GulhmwT86PrFL/H5xWJiMfacR7sSARwqqJQXUMv9BaVIGLUwOR6BSBbBv9PCC5DSumAZG74kgjQm2NXY1rEqbBnJcMe93LR9b5hMu0shSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418809; c=relaxed/simple;
-	bh=8HTGKz/1NgVU+pDsV/Bim2NeNHfDYKv/D+EClCVs6Y8=;
+	s=arc-20240116; t=1792418811; c=relaxed/simple;
+	bh=7eHM45NPLVbSB2rWEQrIR/3jDdUUMejk7jeUEPqlOqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nke4RCeJyZ0++QaY+ju5P7zn6gcJpBGD9oJUGOsSlqh7GMPf5pLng4CxVeWWa+QngoRNE9WLM3AgvuyxPTaLvbNQLMknv9fGE56oxHC72vh4nAXnW+q0mFgBbTXfeLJaIxrUiUeuBVIEY9jhg4k240kC6e3SgSKMqU2dmBxHD3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YVS9jDb7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=goKf0TwP4YTeBlB52ONSjP7iegSh2Af0VVpLs7buxhfhChjnOEo3bFmxvP6Og7OvyKpb98EVfheSgwe7cx0cRqK1hY6+dDlIRV/pWbmnwnhlr/vN2dJE1s9eYsJnC4w10dFm2cG5qB10FBe05R34J5IklMzsHjVmlOctuPzqdwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O7pnl4xI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YVS9jDb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC41F000C6;
-	Mon, 19 Oct 2026 14:06:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O7pnl4xI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4161F000CC;
+	Mon, 19 Oct 2026 14:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418803;
-	bh=WI7wYpsNMkdXcklVicKth9S9t37805X7PofsGlT4fB0=;
+	s=k20260515; t=1792418807;
+	bh=Ka3ZG+0/jaJUIN2HdnBaOl0wFNO/VMkQL9G6JtKgayE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YVS9jDb7x1yRx0hBUr2N6Ud9RJWEikoPVpNghCh2HJEnWCPi/d3jA42fzeiiuD9sK
-	 MlnX70NgtKFM+xmahYs0TjiUckNZdjEqfgYp3jvFMVx/eohlROLIeovC6v2aIc1Fen
-	 YyCgNEA/Rmxdq/6OwNe1OUi5Mkunww824JCWq4NOzW5oTvvhsfBPTUjKhRiWgCW6Q2
-	 HDxfd5wH1XIJ3JZnxdhzfLjkHUZRb3ki6kT2IV5gzfs/I1zAjDX3AvvAapNtTwdYUY
-	 tWreaMnzqxupa7oT9zqZwzlibbr8kg6pGI0cCtR9w1QFvVwK9YJr6o5t30uC302T1K
-	 VaUHGaGGe38Og==
+	b=O7pnl4xInEy3Y20FiMePeIDiXxrcjlSQM6GOs/EFrOUljgX/ctYT5VJN6IhvUnL1A
+	 vR8I8KUZsf1mYMkUlhKgzML9SIXsPH0Q8raUvXd4qTcNL5FoeS3HQY6mumktmjrRHD
+	 6rJ8szeHSyBH0xCEvEP0jnJVyNAEsNGxjhthxlzszm111zRgjdKMgt/TcByMtKltag
+	 lTs2qop/cIQide1mcU8Zwj5PMdM2fqzmzW/5UykON9BT5LorL1Zn1Qe5XubkhRpDWm
+	 tLaHzEyKBgFRUgXXXv9fWMb2plDjMdQ5NUDiAntdCiZqH688dhw0xJ0MST0MZTlBI9
+	 XiJVccnVwS9xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: BingKun Yue <yuebingkun@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/conexant: Add NULL check for dc_mode_path
-Date: Mon, 19 Oct 2026 09:53:18 -0400
-Message-ID: <20261019135441.1420968-507-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] fbdev: platinumfb: add error checking for ioremap calls
+Date: Mon, 19 Oct 2026 09:53:21 -0400
+Message-ID: <20261019135441.1420968-510-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,512 +53,458 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: BingKun Yue <yuebingkun@kylinos.cn>
 
-[ Upstream commit 273806f38ce95c95c288a03d3de1e423cd3e5543 ]
+[ Upstream commit ba13226fc966004713aed47931db8922b84d1960 ]
 
-snd_hda_add_new_path() returns NULL when no path exists between the
-given NIDs, but olpc_xo_update_mic_pins() passes dc_mode_path
-straight to snd_hda_activate_path() which dereferences it without
-checking. Add the missing NULL guards, same as the local path
-variable already has in the same function.
+The ioremap() and ioremap_wt() calls in platinumfb_probe() were not
+checked for failure. If any of these mappings fail, the driver would
+dereference NULL pointers, leading to a kernel panic.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add proper error checking and use goto-based cleanup to avoid code
+duplication across the error paths.
+
+Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-# Stable backport analysis: `ALSA: hda/conexant: Add NULL check for
-dc_mode_path`
+## Phase 1: Commit message forensics
 
-Local tree: **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). Evaluation is
-for this checkout only. The conexant OLPC XO path exists here; the
-change is a two-site NULL guard in `olpc_xo_update_mic_pins()`.
+**Step 1.1 — Subject**
+- Record: **[fbdev/platinumfb] [add] error checking for ioremap calls**
+- Subsystem: `fbdev: platinumfb`. Action verb: **add** (defensive
+  checks). Intent: stop using NULL mappings after failed `ioremap()` /
+  `ioremap_wt()`.
 
----
+**Step 1.2 — Tags**
+- Record (committed message):
+  - `Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>` (author)
+  - `Signed-off-by: Helge Deller <deller@gmx.de>` (fbdev maintainer)
+- Ignored as pipeline noise: any `[Upstream commit ...]` / `Signed-off-
+  by: Sasha Levin`.
+- Not in the committed message, but present on the mailing-list v1/v2:
+  `Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")`. Helge Deller dropped that
+  tag as having no value (it points at the git epoch, not a real
+  introducing change).
+- No `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, `Link:`, or
+  `Cc: stable` in the committed message.
+- Absence of `Cc: stable` / `Fixes:` is expected for this review and is
+  not a negative signal.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body**
+- Record:
+  - **Bug:** `ioremap()` / `ioremap_wt()` in `platinumfb_probe()` are
+    unchecked.
+  - **Symptom:** NULL dereference → kernel panic.
+  - **Root cause:** probe maps framebuffer, platinum registers, and cmap
+    registers, then immediately writes through those pointers
+    (`out_be32`, `fbuffer[0x100000] = ...`).
+  - **Fix approach:** check each mapping, return `-ENOMEM`, goto-based
+    cleanup to avoid duplicated teardown.
+  - **Version info:** none in the body. Hardware is Apple “platinum” on
+    PPC32 Power Mac.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `ALSA: hda/conexant`
-- Action verb: **Add** (NULL check)
-- Claimed intent: stop passing a possibly-NULL `dc_mode_path` into
-  `snd_hda_activate_path()`
-
-Record: `[ALSA/hda/conexant] [add] [NULL-check dc_mode_path before
-snd_hda_activate_path]`
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- `Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>` (author)
-- `Link:
-  https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com`
-  (patch 2/2)
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer;
-  applied)
-- No `Fixes:`
-- No `Reported-by` / `Tested-by` / `Reviewed-by` / `Acked-by`
-- No `Cc: stable` (expected for this review pipeline)
-- Pipeline `Signed-off-by: Sasha Levin` is absent from the real commit
-  and is ignored anyway
-
-Record: Maintainer SOB only; no crash reporter, syzbot, or Fixes tag.
-Msgid `-2` shows this is **patch 2/2**.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The body says `snd_hda_add_new_path()` can return NULL when no path
-exists between the given NIDs, and `olpc_xo_update_mic_pins()` passes
-`spec->dc_mode_path` to `snd_hda_activate_path()` with no check. The
-local `path` variable in the same function is already NULL-checked. No
-stack trace, reproducer, or version range.
-
-Record:
-- [Bug] Unchecked NULL from `snd_hda_add_new_path()` used later
-- [Symptom] NULL deref / oops in `snd_hda_activate_path()`
-  (`path->active = enable`)
-- [Version info] none in the message
-- [Root cause] missing NULL guards, unlike the sibling `path` checks
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Not disguised. It is an explicit NULL-deref guard. Not a feature or
-refactor.
-
-Record: `[Not a hidden fix; stated NULL deref guard]`
+**Step 1.4 — Hidden bug fix?**
+- Record: **Yes, a real bug fix**, not style cleanup. The “goto cleanup”
+  wording also **closes a pre-existing resource leak**: on
+  `platinum_init_fb()` failure the old path `iounmap()`’d three mappings
+  and called `framebuffer_release()` but never `release_mem_region()`
+  for the framebuffer or cmap regions. `platinumfb_remove()` does
+  release those regions, but `remove()` is not run after a failed probe.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-- File: `sound/hda/codecs/conexant.c` (+4 / -2)
-- Function: `olpc_xo_update_mic_pins()`
-- Classification: single-file surgical fix
+**Step 2.1 — Inventory**
+- Record:
+  - File: `drivers/video/fbdev/platinumfb.c` (~+23 / −8 in
+    `platinumfb_probe()`; ~35 lines net as posted).
+  - Function modified: **`platinumfb_probe()` only**.
+  - Scope: **single-file surgical fix**.
 
-Record: `[conexant.c +4-2] [olpc_xo_update_mic_pins] [surgical]`
+**Step 2.2 — Code flow**
+- Record:
+  - **Hunk 1 (framebuffer):** `ioremap_wt(..., 0x400000)` was used
+    unconditionally. After: if NULL, `rc = -ENOMEM`, `goto
+    err_release_fb`.
+  - **Hunk 2 (platinum regs):** `ioremap(..., 0x1000)` was used
+    unconditionally. After: if NULL, `goto err_unmap_fb`.
+  - **Hunk 3 (cmap regs):** `ioremap(..., 0x1000)` was used
+    unconditionally. After: if NULL, `goto err_release_cmap`.
+  - **Hunk 4 (init failure / cleanup):** old `platinum_init_fb()`
+    failure only unmapped and released `fb_info`. After: shared labels
+    unmap cmap → release cmap region → unmap platinum regs → unmap
+    framebuffer → release framebuffer region → `framebuffer_release()`.
+    Success path now `return 0` explicitly.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Hunk 1 (`!spec->dc_enable`, default path): always called
-`snd_hda_activate_path(..., dc_mode_path, false, false)` to disable the
-DC path → now skipped if `dc_mode_path` is NULL.
+**Step 2.3 — Bug mechanism**
+- Record:
+  - **Category:** memory safety (NULL deref) + error-path resource leak.
+  - **Mechanism:** failed `ioremap*` returns NULL; next statements
+    dereference it (`out_be32(&pinfo->platinum_regs->...)`,
+    `fbuffer[0x100000] = 0x34`, `out_8(&pinfo->cmap_regs->addr, ...)`).
+  - **Cleanup:** goto chain matches acquisition order. Nathan Chancellor
+    later had an unused `err_unmap_regs` label removed; the candidate
+    diff is that folded version (no unused label).
 
-Hunk 2 (`spec->dc_enable`): always activated the DC path → now skipped
-if NULL.
-
-Both are the normal OLPC mic-pin update path (init, jack, capture,
-mixer), not a new error-handling framework.
-
-Record: `[unconditional activate_path → NULL-guarded activate_path on
-both branches]`
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: **memory safety / NULL pointer dereference**.
-
-`cxt_fixup_olpc_xo()` does:
-
-```c
-spec->dc_mode_path = snd_hda_add_new_path(codec, 0x1e, 0x14, 0);
-```
-
-`snd_hda_add_new_path()` is documented to return NULL if no valid path
-is found, and also returns NULL if `is_reachable_path()` fails,
-`snd_array_new()` fails, or `snd_hda_parse_nid_path()` fails.
-`snd_hda_activate_path()` immediately does `path->active = enable` with
-no NULL check.
-
-Record: `[NULL deref] [add_new_path NULL stored, later deref in
-activate_path]`
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct and matches the existing `if (path)` pattern in the
-same function. Minimal. Skipping activate on NULL cannot activate a
-missing path anyway, so behavior is “don’t oops” rather than a new
-feature. Regression risk is very low: no locking, no API, no data-
-structure change.
-
-Record: `[obviously correct, 2 ifs] [regression risk: very low]`
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-Unchecked `snd_hda_activate_path(codec, spec->dc_mode_path, ...)` and
-the assignment of `dc_mode_path` come from `3a00c6605b7709` (“ALSA:
-hda/conexant - Re-implement OLPC XO workarounds via fixup”), Takashi
-Iwai, 2014-01-27, first contained in **v3.15-rc1**. Present as an
-ancestor of this HEAD.
-
-Record: `[3a00c6605b7709, v3.15-rc1] [code present ~12 years]`
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-No `Fixes:` tag. Introducer verified by blame as above. `git merge-base
---is-ancestor 3a00c6605b7709 HEAD` succeeded.
-
-Record: `[no Fixes tag] [buggy code exists in this tree since v3.15]`
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Recent `conexant.c` work is headset/LED/pin quirks. Only related hit for
-`dc_mode_path` is this commit. Standalone relative to later conexant
-changes.
-
-Record: `[no prerequisites in recent file history] [standalone vs later
-work]`
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-wangdicheng is a regular ALSA contributor, not the subsystem maintainer.
-Nearby work includes other defensive checks. Same-day series: this patch
-plus `[PATCH 1/2] ALSA: hda/conexant: Fix EAPD pin array overflow`.
-
-Record: `[regular contributor] [2/2 series; patch 1 was rejected]`
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Needs `olpc_xo_update_mic_pins`, `dc_mode_path`, and
-`snd_hda_activate_path` — all present. Patch 1/2 is **not** a
-dependency; Takashi NAK’d it (“No, it checks right after the increment…
-overwrite won't happen”), and this tree still has the original EAPD
-write-then-check order. This NULL-check applies standalone.
-
-Record: `[no functional dependency on 1/2] [applies standalone]`
+**Step 2.4 — Fix quality**
+- Record:
+  - Obviously correct: each mapping is checked before use; unwind order
+    is right.
+  - Minimal: one probe function, no API/struct changes.
+  - Regression risk: **low**. Same teardown operations already exist on
+    the `platinum_init_fb()` error path and in `platinumfb_remove()`.
+    Extra `release_mem_region()` on probe failure is the missing
+    counterpart of `request_mem_region()`.
+  - Pre-existing (unchanged): `request_mem_region()` for cmap is still
+    unchecked; `dev_set_drvdata()` still happens before
+    `platinum_init_fb()`. Not introduced by this patch.
+  - `rc` is already declared in this tree and is set on every new goto
+    path (`-ENOMEM`) or by `platinum_init_fb()`.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 3: Git history
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-`b4 dig -c 273806f38ce95` matched:
-https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
+**Step 3.1 — Blame**
+- Record:
+  - Unchecked `ioremap()` of platinum/cmap regs: present since
+    `1da177e4c3f41` (Linux-2.6.12-rc2, 2005).
+  - Framebuffer mapping: `cc5d0189b9ba95` (2005) then `e04e39507c3c3d`
+    (2018, `__ioremap()` → `ioremap_wt()`), still unchecked.
+  - Partial teardown on `platinum_init_fb()` failure: `2b7574da255fef`
+    (2006, “ioremap balanced with iounmap”).
+- The hole has been in this driver for the entire git history, including
+  this 6.12 tree.
 
-`b4 dig -a`: **v1 only** (no v2/v3). Thread saved to mbox.
+**Step 3.2 — Fixes: tag**
+- Record: mailing-list `Fixes: 1da177e4c3f4` is the epoch commit, not a
+  real regression. Helge dropped it. `1da177e4c3f41` **is** an ancestor
+  of this tree (`git merge-base --is-ancestor` succeeded). The buggy
+  code is here regardless of the tag.
 
-Takashi on 2/2: “Applied to for-next branch now. Thanks.” No NAK, no
-stable nomination, no concern about this patch.
+**Step 3.3 — File history**
+- Record: last change touching this file in-tree is `01ecc142ef7c8`
+  (“fbdev: Switch back to struct platform_driver::remove()”). Recent
+  platinumfb work is platform-remove/fb_ops/whitespace, not probe
+  mapping. **Standalone**, not patch N/M.
 
-Takashi on 1/2: explicit rejection — the claimed EAPD overflow does not
-happen.
+**Step 3.4 — Author**
+- Record: BingKun Yue has **no** other commits in this tree under
+  `drivers/video/fbdev/`. Helge Deller is the fbdev maintainer and
+  signed off. Nathan Chancellor (Clang/build) reviewed the applied
+  version.
 
-Record: `[lore msgid 20260729070935.548050-2] [v1 only] [2/2 applied;
-1/2 NAK’d] [no Cc: stable in review]`
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-`b4 dig -w` recipients: `tiwai@suse.com`, `broonie@kernel.org`, `linux-
-sound@`, `linux-kernel@`, author. Subsystem maintainer was To: and
-applied the patch.
-
-Record: `[Takashi Iwai applied; Mark Brown CC’d; linux-sound CC’d]`
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-No `Reported-by`, no bugzilla, no syzbot. HTTP fetch of lore.kernel.org
-returned 403; discussion recovered via `b4 dig -m` instead. No evidence
-of a user-reported oops.
-
-Record: `[no user/syzbot report found] [static/code-review style
-finding]`
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-2/2 of “conexant defensive fixes”. Patch 1 was a false positive. Patch 2
-does not depend on patch 1.
-
-Record: `[series 2/2; sibling not needed and not in tree]`
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-lore.kernel.org/stable HTTP search: **UNVERIFIED** (403). No
-`dc_mode_path` discussion in this tree’s git history besides this
-commit.
-
-Record: `[UNVERIFIED: stable list search via HTTP] [no in-tree stable
-discussion]`
+**Step 3.5 — Dependencies**
+- Record: uses `ioremap_wt()`, `dev_err()`, `request_mem_region()`,
+  `framebuffer_release()` — all present. **Can apply standalone.**
+  Context in this checkout matches the “before” side of the diff
+  exactly.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing list / external research
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Modified: `olpc_xo_update_mic_pins()`
-- Related: `cxt_fixup_olpc_xo()`, `olpc_xo_automic()`,
-  `olpc_xo_capture_hook()`, `olpc_xo_dc_mode_put()`,
-  `olpc_xo_dc_bias_enum_put()`, `snd_hda_add_new_path()`,
-  `snd_hda_activate_path()`
+`b4 dig -c` was not used: the candidate is **not in this checkout**, so
+there is no local SHA to feed it. Thread was recovered from
+lore/openwall/patchew.
 
-Record: `[olpc_xo_update_mic_pins only in the diff]`
+**Step 4.1 — Original discussion**
+- Record:
+  - v1 (duplicated cleanup, no gotos):
+    `20260817055625.276500-1-yuebingkun@kylinos.cn`
+  - v2 (goto cleanup, applied): `https://lists.openwall.net/linux-
+    kernel/2026/08/17/346` — Message-ID
+    `20260817063637.306865-1-yuebingkun@kylinos.cn`
+  - Helge Deller: applied v2, dropped the epoch `Fixes:` line, asked for
+    a real name on SOB.
+  - Nathan Chancellor: unused label `err_unmap_regs` warning; suggested
+    deleting it. Helge folded that in. Candidate diff matches the folded
+    result (`err_release_cmap` falls through into
+    `iounmap(platinum_regs)`).
+  - A later “v3” wrongly changed `strscpy` → `strcpy` and reused this
+    subject; reviewers called out the mismatch. **That v3 is not this
+    candidate.**
+  - Merged in Helge’s fbdev pull for **v7.3-rc1**.
+- No NAK. No reviewer `Cc: stable`. No claim this was a production crash
+  report.
 
-**Step 5.2: TRACE CALLERS**
-`olpc_xo_update_mic_pins()` is called from:
-1. `olpc_xo_automic` — `mic_autoswitch_hook`
-2. `olpc_xo_capture_hook` — PCM PREPARE/CLEANUP (capture start/stop)
-3. `olpc_xo_dc_mode_put` — “DC Mode Enable Switch” mixer
-4. `olpc_xo_dc_bias_enum_put` — if `dc_enable`
+**Step 4.2 — Recipients**
+- Record: To Helge Deller; Cc `linux-fbdev`, `dri-devel`, `linux-
+  kernel`. Right maintainer and list.
 
-`olpc_xo_automic` is invoked from `call_mic_autoswitch()` in generic
-HDA, including `update_automute_all()` from **codec init**
-(`snd_hda_gen_init` path at generic.c:6029). So a NULL `dc_mode_path`
-oopses on the **default** `!dc_enable` branch during init or jack
-handling, not only when DC mode is turned on.
+**Step 4.3 — Bug report**
+- Record: **No user/syzbot report.** Static/code-review finding. Failure
+  mode is still a panic if `ioremap*` fails.
 
-Record: `[init, jack, capture, mixer] [reachable without enabling DC
-mode]`
+**Step 4.4 — Series**
+- Record: Standalone driver fix. Same family of Mac fbdev drivers:
+  `controlfb.c` and `valkyriefb.c` **already** check ioremap failure in
+  this tree. platinumfb is the outlier.
 
-**Step 5.3: TRACE CALLEES**
-`update_mic_pin` / `snd_hda_codec_write_cache`,
-`snd_hda_get_path_from_idx`, `snd_hda_activate_path`, pin-target
-helpers. The dangerous callee is `snd_hda_activate_path` → `path->active
-= enable`.
-
-Record: `[activate_path dereferences path unconditionally]`
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Quirk `SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO)`
-plus model hint `olpc-xo`. Probe sets the hook and path; gen init calls
-automute; userspace capture/mixer also reach it. Unprivileged capture on
-that machine can hit it if the pointer is NULL.
-
-Record: `[userspace-reachable on OLPC XO-1.5 and model=olpc-xo] [init
-also hits it]`
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Same function already NULL-checks `snd_hda_get_path_from_idx()` results.
-`snd_hda_activate_path()` itself does not check NULL (generic helper;
-callers must).
-
-Record: `[inconsistent NULL check vs local path; helper assumes non-
-NULL]`
+**Step 4.5 — Stable list**
+- Record: lore.kernel.org/stable search returned **403**. **UNVERIFIED**
+  whether this SHA was discussed on stable@. No evidence it was
+  rejected.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 5: Semantic / call-chain
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Yes. `sound/hda/codecs/conexant.c`: `dc_mode_path` on the spec,
-assignment in `cxt_fixup_olpc_xo`, use in `olpc_xo_update_mic_pins`.
-Introduced v3.15, long before 7.3. (Current HEAD already contains
-273806f38ce95; that is the original upstream commit, not used as a
-“already selected for stable” argument.)
+**Step 5.1 — Functions**
+- Record: `platinumfb_probe()` only.
 
-Record: `[buggy pattern exists in this lineage; file present at
-sound/hda/codecs/conexant.c] [since v3.15]`
+**Step 5.2 — Callers**
+- Record: `.probe = platinumfb_probe` in `platinum_driver`. Called from
+  platform/OF probe when the node name is `"platinum"`. Boot/device-bind
+  path, not a syscall.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-On **this** 7.3-rc4 tree the path and context match the candidate diff.
-Codec drivers were moved in `6014e9021b28e` (v6.17 era); that does not
-block this tree. No conflicting local edits.
+**Step 5.3 — Callees**
+- Record: `ioremap_wt` / `ioremap`, `request_mem_region` /
+  `release_mem_region`, `iounmap`, `platinum_init_fb()` (VRAM probe +
+  `register_framebuffer()`), `framebuffer_release()`. After a successful
+  map, probe immediately MMIO-writes the mapped addresses.
 
-Record: `[clean apply on this tree]`
+**Step 5.4 — Reachability**
+- Record: Reachable only if `CONFIG_FB_PLATINUM=y` (`bool`, not
+  tristate) on **PPC_PMAC && PPC32** with a `platinum` OF node. Not
+  userspace-triggerable on other machines. If probe runs and `ioremap*`
+  fails, panic is certain.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-No earlier alternate fix for `dc_mode_path`. Patch 1/2 is not in the
-tree (correctly, it was wrong).
-
-Record: `[no alternate fix] [EAPD sibling correctly absent]`
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-ALSA HD-audio, Conexant codec, **OLPC XO-1.5-only** fixup. Criticality:
-**PERIPHERAL** (one PCI quirk / one model hint), but still a real
-shipped platform.
-
-Record: `[ALSA HDA conexant / OLPC XO] [PERIPHERAL]`
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-conexant.c still gets headset/LED/pin quirks. The OLPC block itself has
-been stable since 2014.
-
-Record: `[driver active; OLPC XO block mature]`
+**Step 5.5 — Similar patterns**
+- Record: `controlfb.c` already does `if (!p->cmap_regs ||
+  !p->control_regs || !p->frame_buffer) goto error_out;`. `valkyriefb.c`
+  already does a NULL check after the three ioremaps. Historical
+  analogue: `13b7c0390a5d3` “video: imsttfb: check for ioremap()
+  failures”.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 6: This tree (pending-6.12 / 6.12.111)
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-OLPC XO-1.5 (`0x152d:0x0833`) and anyone forcing `model=olpc-xo` on a
-Conexant codec. Not a generic conexant bug.
+**Step 6.1 — Does the bug exist here?**
+- Record: **Yes.** `drivers/video/fbdev/platinumfb.c` lines 569, 574,
+  578: three unchecked maps, then MMIO at 581–608. `make kernelversion`
+  → **6.12.111**. `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`.
+  Subject grep on this file history: **commit not present**.
 
-Record: `[driver/platform-specific; tiny population]`
+**Step 6.2 — Backport difficulty**
+- Record: **Clean apply.** All four “before” contexts match this file
+  byte-for-byte.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-NULL only if `snd_hda_add_new_path(0x1e, 0x14)` fails: unreachable NIDs
-(wrong hardware + olpc-xo fixup) or `snd_array_new()` ENOMEM. On real
-XO-1.5 the path was designed to exist; **no oops reports in ~12 years**.
-If it is NULL, codec init or first jack/capture hits it on the default
-`!dc_enable` branch. Unprivileged capture can trigger it once the
-pointer is NULL.
-
-Record: `[rare: ENOMEM or wrong model] [init/jack/capture] [unprivileged
-if already NULL]`
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-NULL deref in `snd_hda_activate_path` → kernel oops. Not data corruption
-or a security hole by itself.
-
-Record: `[oops] [HIGH if triggered; LOW likelihood on intended
-hardware]`
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Benefit: prevents oops on a real (if narrow) error path; same pattern
-  already used for `path`.
-- Risk: two extra NULL tests; no API/lock/behavior change when the
-  pointer is valid.
-- Ratio: **low benefit, very low risk**. The crash-prevention bias still
-  favors taking it.
-
-Record: `[benefit: modest] [risk: very low] [favorable for a 4-line oops
-guard]`
+**Step 6.3 — Related fixes already here?**
+- Record: **No** platinumfb ioremap-check. Sibling Mac drivers already
+  have the check; this driver does not.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem context
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 7.1**
+- Record: **fbdev / Apple Platinum**. Criticality: **PERIPHERAL**
+  (legacy PPC32 Power Mac only). Still a first-party in-tree driver, not
+  staging.
 
-FOR:
-- Verified unconditional deref in `snd_hda_activate_path()`
-  (`path->active = enable`)
-- `snd_hda_add_new_path()` documented to return NULL; return is stored
-  unchecked
-- Default `!dc_enable` path also calls activate, including codec init
-  via `update_automute_all()`
-- 4-line, obviously correct, matches existing `if (path)` in the same
-  function
-- No new API/feature; no dependency on the NAK’d 1/2
-- Buggy code has been in this tree’s lineage since v3.15; file exists
-  here
-- ALSA maintainer applied it
-- Crash-class failure if the pointer is NULL
-
-AGAINST:
-- No `Reported-by`, syzbot, or stack trace in 12 years
-- Only OLPC XO-1.5 / `model=olpc-xo`
-- Same series’ patch 1 was a false positive NAK’d by Takashi (static-
-  analysis/LLM-style noise)
-- On intended hardware the 0x1e→0x14 path is expected to exist
-- Not nominated for stable in review
-
-UNRESOLVED:
-- HTTP lore.kernel.org/stable search (403); thread itself was recovered
-  with `b4`
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — correct by inspection;
-   maintainer applied (no extra Tested-by)
-2. Fixes a real bug that affects users? **PASS** — real NULL-deref
-   defect; user population is small
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   oops if triggered (HIGH, narrow)
-4. Small and contained? **PASS** — 2 if-statements, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — matching file and function in
-   7.3-rc4
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-None (not a device ID, quirk table add, DT, build, or docs fix).
-Qualifies as a normal crash-prevention bugfix.
-
-**Step 9.4: MAKE YOUR DECISION**
-The hardware audience is tiny and there is no field report, but the
-defect is a real oops on a reachable init/capture path, the patch is two
-NULL tests with essentially no regression surface, and it does not need
-the rejected sibling. For this tree, that meets stable rules. Borderline
-impact is resolved in favor of including a crash fix.
+**Step 7.2**
+- Record: File is mature/quiet. Last platinumfb-specific functional
+  change in this tree is older fbdev-ops/platform-remove work. Bug is
+  long-standing, not a new-subsystem leftover.
 
 ---
 
-## What the commit solves and why it matters here
+## Phase 8: Impact and risk
 
-`cxt_fixup_olpc_xo()` stores `snd_hda_add_new_path(codec, 0x1e, 0x14,
-0)` in `spec->dc_mode_path` and never checks it.
-`olpc_xo_update_mic_pins()` later passes that pointer into
-`snd_hda_activate_path()`, which writes `path->active` immediately. That
-runs on codec init, jack autoswitch, and capture — even with DC mode
-off. If the path is missing (ENOMEM or `model=olpc-xo` on a codec
-without 0x1e→0x14), the result is an oops, not a clean skip.
+**Step 8.1 — Who is affected**
+- Record: **config- and platform-specific**: 32-bit Power Macintosh with
+  platinum graphics (`CONFIG_FB_PLATINUM`). Tiny population, but those
+  users take this path on every boot.
 
-Stable users of this 7.3 line who have that quirk get a 4-line guard
-already used for the other path in the same function. Risk is
-negligible; the only real caveat is limited hardware, which is not a
-reason to leave a verified NULL deref unfixed.
+**Step 8.2 — Trigger**
+- Record: Probe-time `ioremap*` failure (vmalloc/ioremap space
+  exhaustion or mapping rejection). Unprivileged users cannot trigger it
+  except by booting that machine. Uncommon, not theoretical in the “dead
+  code” sense: the next instructions are unconditional dereferences.
+
+**Step 8.3 — Failure mode**
+- Record: **NULL deref → oops/panic during probe**. Severity: **HIGH**
+  (crash), not a security hole. Secondary: mem-region leak if
+  `platinum_init_fb()` fails after regions were requested.
+
+**Step 8.4 — Risk/benefit**
+- Record:
+  - Benefit: avoid panic and leak on a real (if rare) probe failure;
+    same check sibling drivers already have.
+  - Risk: **very low** (~20 lines, error path only, maintainer-applied,
+    unused-label already folded).
+  - Ratio: favorable. Conservative stable policy still accepts small
+    NULL-deref probe fixes in in-tree drivers.
 
 ---
 
-## Verification
+## Phase 9: Synthesis
 
-- [Phase 1] Parsed tags: author SOB, maintainer SOB, msgid Link
-  `...548050-2`; no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: two `if (spec->dc_mode_path)` wrappers in
-  `olpc_xo_update_mic_pins()`; +4/-2
-- [Phase 2] Read `snd_hda_activate_path()`: first use is `path->active =
-  enable` with no NULL check
-- [Phase 2] Read `snd_hda_add_new_path()`: documented NULL; also NULL on
-  unreachable path, `snd_array_new` failure, parse failure
-- [Phase 3] `git blame`: introducer `3a00c6605b7709` (2014); `git
-  describe --contains` → v3.15-rc1
-- [Phase 3] `git merge-base --is-ancestor 3a00c6605b7709 HEAD`: yes
-- [Phase 3] `git show 273806f38ce95^:sound/hda/codecs/conexant.c`:
-  confirmed unguarded calls before the fix
-- [Phase 3] No `Fixes:` tag to follow
-- [Phase 3] Author log on `sound/`: regular ALSA contributor; 2/2 series
-- [Phase 4] `b4 dig -c 273806f38ce95`:
-  https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: tiwai, broonie, linux-sound, linux-kernel
-- [Phase 4] `b4 dig -m`: Takashi applied 2/2; NAK’d 1/2 EAPD overflow as
-  incorrect
-- [Phase 4] WebFetch lore.kernel.org: 403 — discussion taken from mbox
-  instead
-- [Phase 5] Callers of `olpc_xo_update_mic_pins`: automic, capture hook,
-  two mixer puts
-- [Phase 5] `update_automute_all()` → `call_mic_autoswitch()` from gen
-  init (generic.c:6029)
-- [Phase 5] Quirk: `SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5",
-  CXT_FIXUP_OLPC_XO)`; model `olpc-xo`
-- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
-  7.3.0-rc4
-- [Phase 6] File present at `sound/hda/codecs/conexant.c`; pre-fix code
-  in parent of 273806f38ce95
-- [Phase 6] `git merge-base --is-ancestor 273806f38ce95 HEAD`: original
-  commit is in this history
-- [Phase 8] Failure mode: NULL deref oops; severity HIGH if hit,
-  population OLPC XO-1.5 / model override
-- UNVERIFIED: lore.kernel.org/stable HTTP search (403)
-- UNVERIFIED: whether 0x1e→0x14 is reachable on every CX codec if
-  someone forces `model=olpc-xo` (not required for the decision; ENOMEM
-  and missing-path cases are already documented in
-  `snd_hda_add_new_path()`)
+**Step 9.1 — Evidence**
 
-The fix is small, surgical, and meets the stable criteria for this tree.
+For:
+- Unchecked `ioremap*` then immediate dereference is a real panic.
+- Bug is in **this** 6.12 tree and dates to 2.6.12-era code.
+- Small, obviously correct, applies cleanly.
+- Also releases mem regions on `platinum_init_fb()` failure (old path
+  leaked them).
+- Maintainer SOB; Nathan’s warning fix is already in the candidate.
+- Sibling `controlfb` / `valkyriefb` already check this.
+
+Against:
+- No crash report, no syzbot, no `Cc: stable`.
+- Hardware is ancient PPC32 Power Mac; ioremap failure is uncommon.
+- Helge treated the epoch `Fixes:` as worthless (not a tracked
+  regression).
+- Mixed into a 7.3-rc1 “fixes and updates” pull with many cleanups.
+
+Unresolved:
+- Exact mainline SHA (not in this tree).
+- Whether stable@ already discussed it (lore/stable 403).
+- `b4 dig` not run (no local SHA).
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   maintainer applied it; unused-label fixed.
+2. Real bug affecting users? **PASS** — NULL deref on failed map; probe
+   is the only path this driver has.
+3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
+   panic. User base is small; crash class still qualifies.
+4. Small and contained? **PASS** — one function, one file.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — context matches; no missing prereqs.
+
+**Step 9.3 — Exceptions**
+- Record: none (not a device ID, quirk, DT, build, or docs patch).
+  Ordinary crash-prevention fix.
+
+**Step 9.4 — Decision**
+This is a surgical NULL-deref/leak fix in code this tree actually runs
+on PPC32 Power Mac. Sibling drivers already do the check. Benefit is a
+avoided panic; risk is negligible. Meets stable rules for **this** 6.12
+checkout.
+
+---
+
+### Problem for stable users
+On Power Macs with Apple platinum graphics, `platinumfb_probe()` maps
+the framebuffer and two register windows and then writes through those
+pointers with no NULL check. A failed `ioremap*` panics instead of
+failing probe. The new labels also `release_mem_region()` on
+`platinum_init_fb()` failure, which the old error path skipped.
+
+### Rules / risk
+Small, maintainer-acked, applies cleanly to 6.12.111, no new API, no
+extra dependencies. Regression risk is limited to probe error paths.
+
+### Concerns
+Rare hardware and no field report; Helge dropped the epoch `Fixes:` tag.
+Those do not remove the panic if mapping fails, and they do not block
+backport to this tree.
+
+Verification:
+- [Phase 1] Parsed committed tags: author + Helge Deller SOB only; no
+  Reported-by/syzbot.
+- [Phase 1] Openwall v2: original `Fixes: 1da177e4c3f4`; Helge dropped
+  it as valueless.
+- [Phase 2] Diff: three NULL checks + goto teardown in
+  `platinumfb_probe()`; also `release_mem_region` on init failure.
+- [Phase 2] Current probe (lines 569–633) dereferences maps with no
+  checks; cleanup omits mem-region release.
+- [Phase 3] `git blame`: unchecked ioremap since `1da177e4c3f41` /
+  `cc5d0189b9ba95`; `ioremap_wt` from `e04e39507c3c3d`.
+- [Phase 3] `git merge-base --is-ancestor 1da177e4c3f41 HEAD`: yes.
+- [Phase 3] `git log --oneline --grep='add error checking for ioremap'
+  -- drivers/video/fbdev/`: not in this tree.
+- [Phase 3] Author search in fbdev: no other BingKun Yue commits here.
+- [Phase 4] Thread: v2 applied by Helge; Nathan unused-label fold
+  matches candidate; bogus v3 strcpy not this patch.
+- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED.
+- [Phase 4] `b4 dig`: UNVERIFIED (no local candidate SHA).
+- [Phase 5] Only caller: `platinum_driver.probe`; Kconfig `FB_PLATINUM`
+  depends on `PPC_PMAC && PPC32`, `bool`.
+- [Phase 5] `controlfb.c` / `valkyriefb.c` already check ioremap NULL in
+  this tree.
+- [Phase 6] `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` = 6.12.111.
+- [Phase 6] Before-context of all four hunks matches this file.
+- [Phase 8] Failure mode: NULL deref oops on probe, severity HIGH;
+  trigger rare but on the only probe path.
+- UNVERIFIED: mainline SHA; stable@ discussion.
 
 **YES**
 
- sound/hda/codecs/conexant.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/platinumfb.c | 35 ++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
-index fe7445fabb887..56d6fbdd9b06d 100644
---- a/sound/hda/codecs/conexant.c
-+++ b/sound/hda/codecs/conexant.c
-@@ -457,7 +457,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
- 	if (!spec->dc_enable) {
- 		/* disable DC bias path and pin for port F */
- 		update_mic_pin(codec, 0x1e, 0);
--		snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
-+		if (spec->dc_mode_path)
-+			snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
+diff --git a/drivers/video/fbdev/platinumfb.c b/drivers/video/fbdev/platinumfb.c
+index a08d955d9b439..81fdaa3541db9 100644
+--- a/drivers/video/fbdev/platinumfb.c
++++ b/drivers/video/fbdev/platinumfb.c
+@@ -567,15 +567,30 @@ static int platinumfb_probe(struct platform_device* odev)
+ 	/* frame buffer - map only 4MB */
+ 	pinfo->frame_buffer_phys = pinfo->rsrc_fb.start;
+ 	pinfo->frame_buffer = ioremap_wt(pinfo->rsrc_fb.start, 0x400000);
++	if (!pinfo->frame_buffer) {
++		dev_err(&odev->dev, "failed to ioremap frame buffer\n");
++		rc = -ENOMEM;
++		goto err_release_fb;
++	}
+ 	pinfo->base_frame_buffer = pinfo->frame_buffer;
  
- 		/* update port B (ext mic) and C (int mic) */
- 		/* OLPC defers mic widget control until when capture is
-@@ -493,7 +494,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
- 		update_mic_pin(codec, 0x1b, 0);
- 		/* enable DC bias path and pin */
- 		update_mic_pin(codec, 0x1e, spec->recording ? PIN_IN : 0);
--		snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
-+		if (spec->dc_mode_path)
-+			snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
- 	}
+ 	/* registers */
+ 	pinfo->platinum_regs_phys = pinfo->rsrc_reg.start;
+ 	pinfo->platinum_regs = ioremap(pinfo->rsrc_reg.start, 0x1000);
++	if (!pinfo->platinum_regs) {
++		dev_err(&odev->dev, "failed to ioremap registers\n");
++		rc = -ENOMEM;
++		goto err_unmap_fb;
++	}
+ 
+ 	pinfo->cmap_regs_phys = 0xf301b000;	/* XXX not in prom? */
+ 	request_mem_region(pinfo->cmap_regs_phys, 0x1000, "platinumfb cmap");
+ 	pinfo->cmap_regs = ioremap(pinfo->cmap_regs_phys, 0x1000);
++	if (!pinfo->cmap_regs) {
++		dev_err(&odev->dev, "failed to ioremap cmap registers\n");
++		rc = -ENOMEM;
++		goto err_release_cmap;
++	}
+ 
+ 	/* Grok total video ram */
+ 	out_be32(&pinfo->platinum_regs->reg[16].r, (unsigned)pinfo->frame_buffer_phys);
+@@ -623,13 +638,21 @@ static int platinumfb_probe(struct platform_device* odev)
+ 	dev_set_drvdata(&odev->dev, info);
+ 
+ 	rc = platinum_init_fb(info);
+-	if (rc != 0) {
+-		iounmap(pinfo->frame_buffer);
+-		iounmap(pinfo->platinum_regs);
+-		iounmap(pinfo->cmap_regs);
+-		framebuffer_release(info);
+-	}
++	if (rc != 0)
++		goto err_unmap_cmap;
++
++	return 0;
+ 
++err_unmap_cmap:
++	iounmap(pinfo->cmap_regs);
++err_release_cmap:
++	release_mem_region(pinfo->cmap_regs_phys, 0x1000);
++	iounmap(pinfo->platinum_regs);
++err_unmap_fb:
++	iounmap(pinfo->frame_buffer);
++err_release_fb:
++	release_mem_region(pinfo->rsrc_fb.start, resource_size(&pinfo->rsrc_fb));
++	framebuffer_release(info);
+ 	return rc;
  }
  
 -- 
