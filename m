@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBD0491B2A;
-	Mon, 19 Oct 2026 14:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E015CDB61;
+	Mon, 19 Oct 2026 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418474; cv=none; b=UV/FPvEbj+XSyLpKAqXEI/3xBJBUYxmSrmKv7M10l0JBQT5zN1PKP6Cm9MuY1Wu6vuPVrUrDI71LtxL25y4AXr3fZAQ9d4caadBMHqAqh5Nu0BRDLx7McYUklsDXeGrjwsMaZ5wIL2S2b2ftROpXRYPXggb1xM/Nf45KUA9+fMw=
+	t=1792418475; cv=none; b=kTSci+y6GnS/qZ7WlZ+RqXzBgF8L9sfOvlmP3AGjqbGFplKG9eprbkzEpgd5sH5DrXk0k3wVDqt//XehL1JxF5fgtKTQDgIsShzKXAbgccqn9C32EhJe6aWsF38LE4VqjPw2M9KLySxqIBvX64lIpL1GM8iF6vNWiRUJ+05Ic3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418474; c=relaxed/simple;
-	bh=+IwJ1jIERnHKcn8mgK2ikzWrNJ05yPaQQ0V+6v6vJkM=;
+	s=arc-20240116; t=1792418475; c=relaxed/simple;
+	bh=m2IWMHyjga/ETqf9LajO6RZajKBzIVFyJukmVdyWobQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XDwHXinD0Dzyd6e/vmZBo/LFurBl5646sR1XxTKmt0JSnJgJoZ6nUXSItqmG7Y3fkL5eDOgnaSCz8wJlX+kvg4HbYUhbFs8ONlq+UBYvG657RhBYrQP4NWuV5AttWaailzL+cZevOMus9UiuJfJp9MmiEwpfTycVMo9VIXKTvpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dq8GVnHp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iK00+5+EHaCnEC8mj5aCWr3ohsMaAlVkVp8D/nIj2LX6plXO8tgYOl+n2pXOnEA2IzOkhkZDltmWeu7ogtrgVNrxHx6VyEDT4TBCFczrUO1aubbQ2CVkijmhk+MQB1VhBu7CumL3Ms0/4E6zHy0t6pKbi2xMHTi0Nuf+qPPNIiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rk579FSo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dq8GVnHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C5B1F000CD;
-	Mon, 19 Oct 2026 14:01:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rk579FSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500BC1F000C7;
+	Mon, 19 Oct 2026 14:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418471;
-	bh=V+BpAgOcs4dx6jaCqlRDYOWuOtdLY5wLjAviSgNO1q4=;
+	s=k20260515; t=1792418473;
+	bh=zAT/vqPrTnKluzUDLYA49M6qLx/XMcxvjF6X9vSlybg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dq8GVnHp1W7Tn1lh9mr3WgLiR6ZzwKt8qY48//eUFDb/s23e4wV5fEJCojyAz2O+D
-	 prR2JHw+1UM+zlYJk90a8uFD7jVjZjSE5kSI88qCoDT+klaBHkQdWnrrVOXzl6GcNO
-	 3DfgHilfTyA3z8ZmfutqHFfhmIEl/KU4BSPLr67dtex0Wa1pu483N+LF8RC8aakDmL
-	 mgtr5a9uYKruB7zENmMO7UYSRo4f3LHbA1WZLm7tn8o8O7eUg43PbpoHRYOfnQfJTe
-	 NFpJ89lTAzTthOjMDc6CT1kce7sl/ZVlA6TlIMvWcXRCQkU4hyTUfdccD9kQAs9HiR
-	 61KQy6woyzOww==
+	b=Rk579FSo4GQhON0xdqbu/iSBrb+CJXJUwOVf5l+RCRPP593tpBEqfGK8j0XfKrPoA
+	 vmw4dWm1cMn1DcTy/dD+Gbr+A3lTIEFEv1jjOWb6a28+gvbWDtqUZl4Uq6Tf9iu2T2
+	 geosC8fXVRui5Hy2EgQU+PuHBe9u8LsZ3N/xMYDRqNknord6yh4m2CZlV1yu375Xhe
+	 YHgQr2HfXxEUtNPZSodYDD+bZJF2G1ECFsJw2B+lHe5THYnUIBAvHHRlL4Ot2yyUi7
+	 COgQHx1TowaaexH8CO7xdazXcAJbecqVfnloN9s4u5gWEeGo8DBRczcbkQy9HO1gm4
+	 V4bThF6sBd/pg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Peixin Xie <peixin.xie@linux.spacemit.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] nvmem: brcm_nvram: reject empty NVRAM partition
-Date: Mon, 19 Oct 2026 09:49:23 -0400
-Message-ID: <20261019135441.1420968-272-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ACPI: scan: Defer device power initialization
+Date: Mon, 19 Oct 2026 09:49:24 -0400
+Message-ID: <20261019135441.1420968-273-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,415 +53,506 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Peixin Xie <peixin.xie@linux.spacemit.com>
 
-[ Upstream commit fde46579cf8872138b296349c2bd8a3cd3f132e2 ]
+[ Upstream commit dc948f8b384a516ac5c471eb9382959f838e02f4 ]
 
-If the partition is completely erased (all padding bytes), the trimming
-loop reduces data_len to 0. devm_kzalloc(dev, 0, GFP_KERNEL) returns
-ZERO_SIZE_PTR ((void *)16), which is non-NULL and bypasses the NULL
-check. The subsequent cast of priv->data to struct brcm_nvram_header *
-and dereference of header->magic causes a page fault on address 0x10.
+acpi_bus_get_power_flags() initializes the device power state while the
+ACPI device object is being created, before checking whether the device
+is ready for enumeration.
 
-Reject data_len smaller than the header before allocating.
+If enumeration is deferred, acpi_bus_attach() clears the initialized and
+power_manageable flags. When the dependency is later satisfied,
+acpi_bus_init_power() is called again and takes additional references to
+the power resources used by the device. These references prevent the
+resources from being turned off when the device enters D3.
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260729094647.111468-13-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This issue was reproduced on a SpacemiT K3 RISC-V Pico-ITX. The affected
+device uses a power resource through _PR0 and has an automatically
+derived dependency on its interrupt controller.
+
+The initial power initialization acquires a power resource reference.
+The device is then deferred, but that reference is not dropped. When
+the dependency becomes available, power initialization acquires another
+reference. Consequently, entering D3 only drops the reference count
+from 2 to 1 and _OFF is not evaluated:
+
+ [    0.314611] ACPI Debug:  "I2P2 _STA"
+ [    0.318260] ACPI: \_SB_.I2P2: ACPI: PM: Power resource is on
+ [    0.323998] ACPI: \_SB_.I2P2: New power resource
+ [    0.382108] ACPI Debug:  "I2P2 _STA"
+ [    0.478964] ACPI Debug:  "I2P2 _ON"
+ [    0.482498] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned on
+ [    0.488597] ACPI Debug:  "I2C2, PS0"
+ [    0.863170] ACPI: \_SB_.I2P2: ACPI: PM: Power resource already on
+ [    0.873686] ACPI Debug:  "I2C2, PS0"
+ [    2.416055] ACPI Debug:  "I2C2, PS3"
+ [    2.423397] ACPI: \_SB_.I2P2: ACPI: PM: Power resource still in use
+
+To address this, remove the early acpi_bus_init_power() call and leave
+regular ACPI device objects uninitialized until acpi_bus_attach() runs
+after the device is ready for enumeration.
+
+Power resource objects are initialized through acpi_add_power_resource()
+and do not require the generic initialization in acpi_bus_attach(), so
+mark them as initialized there.
+
+After the change, device power state initialization is deferred until its
+dependency is met. Since no reference is acquired before then, the power
+resource left on by firmware is turned off as unused after the namespace
+scan. Once the dependency is met, the resource is turned on once for the
+device and is turned off normally when the device later enters D3:
+
+ [    0.314628] ACPI Debug:  "I2P2 _STA"
+ [    0.318277] ACPI: \_SB_.I2P2: ACPI: PM: Power resource is on
+ [    0.324016] ACPI: \_SB_.I2P2: New power resource
+ [    0.382118] ACPI Debug:  "I2P2 _STA"
+ [    0.496116] ACPI: \_SB_.I2P2: ACPI: PM: Turning OFF
+ [    0.501081] ACPI Debug:  "I2P2 _OFF"
+ [    0.504705] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned off
+ [    1.415899] ACPI Debug:  "I2P2 _ON"
+ [    1.418866] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned on
+ [    1.424947] ACPI Debug:  "I2C2, PS0"
+ [    2.647655] ACPI Debug:  "I2C2, PS3"
+ [    2.654856] ACPI Debug:  "I2P2 _OFF"
+ [    2.654866] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned off
+
+This also avoids powering up devices before their dependencies are
+available.
+
+Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **6.6.157** (`pending-6.6`). The empty-NVRAM oops path is
-present here and the 5-line guard is not. This is a real boot-time page
-fault on Broadcom Northstar boards, and the patch applies cleanly.
+The local tree is 6.12.111. The buggy ACPI power-init path is present
+here, so the rest of this is whether the leak is backport-worthy for
+this checkout.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[nvmem/brcm_nvram] [reject] reject empty NVRAM partition**
-- Subsystem: `nvmem: brcm_nvram`
-- Verb: **reject** — defensive check, not a feature
-- Intent: refuse to probe when the cached NVRAM image is smaller than
-  the on-flash header
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[ACPI: scan:] [Defer] [device power initialization]`
+Subsystem ACPI scan/PM. “Defer” is a timing change that the body
+presents as a leak fix, not a feature.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
-- **Assisted-by:** `opencode:big-pickle`
-- **Signed-off-by:** Rosen Penev (author); Srinivas Kandagatla (nvmem
-  maintainer); Greg Kroah-Hartman (char-misc)
-- **Link:**
-  `https://patch.msgid.link/20260729094647.111468-13-srini@kernel.org` —
-  this is patch 12/14 of Srinivas’s later char-misc pull, not a
-  dependency series
-- **Cc: stable:** none (not a negative signal)
-- Original submission was a standalone `[PATCH]`
-  (`20260703222830.408764-1-rosenp@gmail.com`), applied as mainline
-  `5f75913830bc`
+- Signed-off-by: Peixin Xie \<peixin.xie@linux.spacemit.com\> (author)
+- `[ rjw: Changelog edits ]` — ACPI maintainer edited the changelog
+- Link: https://patch.msgid.link/20260820-acpi-power-resource-ref-
+  fix-v2-1-29818173ea13@linux.spacemit.com
+- Signed-off-by: Rafael J. Wysocki \<rafael.j.wysocki@intel.com\>
+  (ACPI/PM maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence is expected)
+- Ignore any pipeline “Upstream commit” / Sasha Levin SOB if present
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** erased NVRAM (all padding bytes) makes the trim loop set
-  `data_len = 0`
-- **Symptom:** `devm_kzalloc(..., 0)` returns `ZERO_SIZE_PTR` (`(void
-  *)16`), the `if (!priv->data)` check passes, then `brcm_nvram_parse()`
-  dereferences `header->magic` and **page-faults at address 0x10**
-- **Root cause:** zero-size kmalloc is not NULL; the code treats it as a
-  valid buffer
-- **Fix:** return `-EINVAL` if `data_len < sizeof(struct
-  brcm_nvram_header)` before allocating
-- **Versions:** none named; the buggy trim-and-cache path was added by
-  `nvmem: brcm_nvram: store a copy of NVRAM content`
+- Bug: `acpi_bus_get_power_flags()` calls `acpi_bus_init_power()` while
+  the ACPI device is created, before readiness for enumeration. If
+  attach defers the device, it clears `initialized` and
+  `power_manageable` without dropping power-resource refs. Later re-init
+  takes a second ref. D3 then drops 2→1 and `_OFF` is never evaluated.
+- Symptom: power resource “still in use”; device stays powered in D3.
+  Reproduced on SpacemiT K3 RISC-V Pico-ITX (I2C with `_PR0`, auto-dep
+  on interrupt controller). Logs show `_ON` twice, then `_PS3` without
+  `_OFF`.
+- Root cause: leaked power-resource `ref_count` across deferred
+  enumeration.
+- Fix: drop the early `acpi_bus_init_power()`; leave `initialized` false
+  until `acpi_bus_attach()` after the device is ready; mark power-
+  resource objects `initialized` in `acpi_add_power_resource()`. Side
+  effect: firmware-on unused resources can be turned off after namespace
+  scan, then turned on once when the dependency is met.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not hidden.** This is an explicit crash fix. The wording
-matches the code.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: This is an explicit bug fix (unbalanced power-resource refs),
+not a disguised cleanup. The subject says “Defer” because that is the
+mechanism.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/nvmem/brcm_nvram.c` — **+5 / −0**
-- **Function:** `brcm_nvram_copy_data()`
-- **Scope:** single-file surgical error-path check
+- `drivers/acpi/power.c`: +1 (`device->flags.initialized = true` in
+  `acpi_add_power_resource()`)
+- `drivers/acpi/scan.c`: −4 (remove `acpi_bus_init_power()` from
+  `acpi_bus_get_power_flags()`; remove `initialized = true` from
+  `acpi_init_device_object()`)
+- Functions: `acpi_add_power_resource`, `acpi_bus_get_power_flags`,
+  `acpi_init_device_object`
+- Scope: single-subsystem, surgical (~5 lines)
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** trim padding → `WARN` if huge → `devm_kzalloc(data_len)` →
-  copy → parse
-- **After:** same, but if `data_len` is smaller than the 20-byte header,
-  log and return `-EINVAL`
-- **Path:** probe/init only (`subsys_initcall_sync` → `brcm_nvram_probe`
-  → `brcm_nvram_copy_data`)
-- Probe already returns `copy_data` errors, so this fails the driver
-  instead of oopsing
+- Hunk 1 (`power.c`): power-resource objects skip generic attach init;
+  they must still be marked initialized so later `acpi_bus_attach()`
+  does not treat them as uninitialized ACPI devices.
+- Hunk 2 (`acpi_bus_get_power_flags`): still discovers `_PRx`/`_PSx` and
+  fills state lists, but no longer takes refs / evaluates `_ON` at
+  object-creation time.
+- Hunk 3 (`acpi_init_device_object`): `initialized` stays false
+  (kzalloc-zeroed) until attach. Existing attach path already does:
+  - not ready → leave uninitialized, clear `power_manageable`
+  - ready && `!initialized` → `acpi_bus_init_power()` once, then set
+    `initialized`
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- **Category:** memory safety / NULL-check bypass (`ZERO_SIZE_PTR`)
-  leading to a **NULL-ish deref / page fault**
-- **Mechanism:** `devm_kmalloc()` returns `ZERO_SIZE_PTR` for size 0
-  (verified in this tree). That pointer is non-NULL, so the allocation
-  “succeeded.” `brcm_nvram_parse()` then does `memcmp(header->magic,
-  ...)` at address `0x10`
-- Also covers `1 <= data_len < sizeof(header)`, which would be a short
-  buffer under the same parse
+Before: init at create (ref=1) → defer (flags cleared, ref still 1) →
+later init (ref=2) → D3 (ref=1, no `_OFF`).
+After: no early ref → defer → later init (ref=1) → D3 (ref=0, `_OFF`).
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- **Obviously correct:** you cannot parse a header that is not there
-- **Minimal:** 5 lines, no API/locking/structure change
-- **Regression risk:** very low. Worst case: probe fails with `-EINVAL`
-  and NVRAM cells are missing (MAC fallback), instead of a boot oops
-- **Red flags:** none. The later sibling “malformed flash OOB” patch is
-  independent
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: Reference-counting / resource leak (ACPI power-resource
+`ref_count`, not kmalloc). `acpi_power_on_unlocked()` does
+`ref_count++`; `acpi_power_off_unlocked()` only calls `_OFF` when count
+hits 0. Extra init leaves a sticky ref so D3 never turns the resource
+off. Category: logic/correctness + PM refcount.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct relative to the attach-time init path that has
+existed since 2015 (`1b1f3e1699a988`). Minimal. Regression risk is the
+global move of first `acpi_bus_init_power()` from add to attach for
+every ACPI device, plus unused resources of deferred devices being
+turned off after scan (existing DMI quirks already cover platforms that
+cannot tolerate that). For devices ready immediately, attach still runs
+in the same `acpi_bus_scan()` before driver probe, so common x86/ACPI
+paths stay equivalent. Power-resource `initialized=true` is required so
+walk-of-children attach does not mis-init those objects. Early devices
+that skip `acpi_bus_attach()` (fixed power/sleep button, ECDT EC)
+typically have no `_PR0`/`_PS0`; `acpi_device_enumerated()` was already
+false because `visited` is unset — verified no change there.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Trim loop, `devm_kzalloc(priv->data_len)`, and parse were introduced
-  by **`09283d60bc332`** (`nvmem: brcm_nvram: store a copy of NVRAM
-  content`, upstream `1e37bf84afacd`)
-- That landed in **this tree in v6.6.9** (`git describe --contains` →
-  `v6.6.9~19`)
-- Original v6.6 did **not** have this path (`git merge-base --is-
-  ancestor 09283d60bc332 v6.6` failed)
+- Early `acpi_bus_init_power()` in `acpi_bus_get_power_flags`:
+  `1b1f3e1699a988` (2015-01-05, “ACPI / PM: Fix PM initialization for
+  devices that are not present”) — in this tree.
+- `initialized = true` in `acpi_init_device_object`: `202317a573b20d`
+  (2013-11-22) — in this tree.
+- Attach-time re-init: same 2015 commit.
+- The leak becomes reachable when enumeration is deferred *and* the
+  device is still present (`acpi_dev_ready_for_enumeration()` can fail
+  on `honor_deps && dep_unmet` while `acpi_device_is_present()` is
+  true). Honor-deps: `9d9bcae47fd5a` (2021, INT3472). RISC-V PLIC/APLIC
+  on the honor list: `15f210f43e95f` (2024-08-27) — ancestor of v6.12
+  and of HEAD.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** The buggy commit is nonetheless identified:
-`09283d60bc332` / `1e37bf84afacd`, present in this tree. This is a
-**stable-to-stable follow-up** to a 6.6.9 backport.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. The interaction is old init (2013–2015) plus
+deferred enumeration (2021, much wider on RISC-V ACPI in 6.12).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Last change to this file in *this* tree is the copy-data backport
-  itself
-- Rosen also sent a sibling patch the same day: `nvmem: brcm_nvram: fix
-  out-of-bounds access on malformed flash data` (pull 13/14). That
-  tightens `header->len` vs `data_len`. **Not a prerequisite** for this
-  empty-partition check
-- Original author series was **v1 standalone `[PATCH]`**, later batched
-  as 12/14 in Srinivas→Greg pull
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `scan.c` work is honor-list and dep-scan
+(`15f210f43e95f`, `b38c61f1f394d`, `0dae3d96ca011`). Recent `power.c`
+work includes unused-resource DMI quirks (`d08fb559b4557`,
+`9b04d99788cf4`). This patch is standalone, not “2/N”. v1 was a
+different approach (forced D3cold on defer); v2 replaced it.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record:
-- Rosen Penev has no prior `drivers/nvmem/` commits in this tree
-- Srinivas Kandagatla is the nvmem maintainer and applied it (`Applied,
-  thanks!` / commit `5f75913830bc`)
-- Original driver author Rafał Miłecki was CCed; no NAK in the thread
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: No prior Peixin Xie ACPI commits in this tree. The design is
+Rafael’s (v1 review), and he applied v2.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Depends only on `brcm_nvram_copy_data()` + `struct brcm_nvram_header`,
-  both in this tree
-- **Can apply standalone.** Insertion context matches exactly
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Uses existing `acpi_bus_attach()` uninitialized path.
+`acpi_init_device_object()` callers in this tree are only
+`acpi_add_single_object()` and `acpi_add_power_resource()`. No missing
+helpers. Standalone; applies to this tree.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- **b4 dig -c 5f75913830bc:**
-  https://patch.msgid.link/20260703222830.408764-1-rosenp@gmail.com
-- **b4 dig -a:** only **v1**; applied version is that v1
-- Thread is 2 messages: patch + maintainer apply. **No NAK, no requested
-  respin**
-- lore.kernel.org WebFetch returned 403; thread recovered via b4 mbox +
-  openwall/lkml mirrors
+- v2 lore msgid: `20260820-acpi-power-resource-ref-
+  fix-v2-1-29818173ea13@linux.spacemit.com`
+- v1: `20260811-acpi-power-resource-ref-
+  fix-v1-1-828f1c383831@linux.spacemit.com`
+- v1: drop refs by `acpi_power_transition(..., D3_COLD)` on the not-
+  ready path. Rafael: pointless to power up then immediately down; drop
+  early `acpi_bus_init_power()` and init once when ready.
+- Author tested that on SpacemiT K3; runtime suspend/resume balanced.
+- Rafael then asked to clear `initialized` in
+  `acpi_init_device_object()` and set it in `acpi_add_power_resource()`
+  (exactly v2).
+- v2 reply from Rafael: “Applied as 7.3-rc material, thanks!” No NAK. No
+  reviewer Cc: stable.
+- Base-commit on the patch: `d58772d8520c7ef247c4b95c9bd76d3a25da9ff5`
+  (mainline-era, not this branch).
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (b4 dig -w):
-- To: linux-kernel
-- Cc: Srinivas Kandagatla (maintainer), rafal@milecki.pl (driver author)
-- Applied by the subsystem maintainer; no extra Reviewed-by
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: To/Cc: Rafael J. Wysocki, Len Brown, Yixun Lan, linux-acpi,
+linux-kernel, linux-riscv, spacemit. Maintainer designed and applied it.
+No extra Reviewed-by.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: **No Reported-by, no syzbot, no bugzilla.** The crash mechanism
-is spelled out (fault at `0x10`) and matches the code. Trigger is an
-erased NVRAM image (all `0xFF`/`0x00`), which is a real flash state.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Hardware report from the author with
+before/after ACPI Debug traces (I2C2/I2P2 in v2; USBD.PDPR in v1). Real-
+world, not theoretical.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record:
-- Standalone v1 from Rosen
-- Later 12/14 is only the maintainer pull batch
-- Sibling OOB-length fix is related but **not required** for this patch
-  to be correct
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Single-patch series, v1→v2 only. No extra patches required for
+the leak itself.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No useful stable-list hit for this subject. Absence of Cc:
-stable is expected for this review.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No stable@ discussion found for this msgid. Not a reason to
+reject.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `brcm_nvram_copy_data()` (modified). Crash consumer:
-`brcm_nvram_parse()`. Caller: `brcm_nvram_probe()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `acpi_bus_get_power_flags`, `acpi_init_device_object`,
+`acpi_add_power_resource`. Callers of the removed init:
+`acpi_bus_init_power` still from `acpi_bus_attach` and
+`acpi_device_update_power`.
 
-Step 5.2: TRACE CALLERS
+**Step 5.2: TRACE CALLERS**
 Record:
-- `brcm_nvram_copy_data` ← only `brcm_nvram_probe`
-- `brcm_nvram_probe` ← platform driver, registered from
-  `brcm_nvram_init` via **`subsys_initcall_sync`**
-- Reachable at **boot** on DT nodes `compatible = "brcm,nvram"`
+- `acpi_bus_get_power_flags()` ← `acpi_add_single_object()` during
+  namespace scan.
+- `acpi_init_device_object()` ← `acpi_add_single_object()`,
+  `acpi_add_power_resource()`.
+- `acpi_bus_attach()` ← `acpi_bus_scan()` (pass 1),
+  `acpi_scan_clear_dep_fn()` (deferred), hotplug attach.
+- `acpi_scan_add_dep()` sets `honor_dep` when the supplier HID is in
+  `acpi_honor_dep_ids` (PLIC `RSCV0001`, APLIC `RSCV0002`, INT3472,
+  IVSC, PNP0C0F, ACPI0016, …). RISC-V `arch_acpi_add_auto_dep()` adds
+  GSI/PLIC deps for devices with interrupts.
 
-Step 5.3: TRACE CALLEES
-Record: `devm_platform_get_and_ioremap_resource`, `readb` trim loop,
-`devm_kzalloc`, `memcpy_fromio`, `bcm47xx_nvram_init_from_iomem` (return
-value already ignored). `bcm47xx_nvram_is_valid()` reads **iomem**, not
-`priv->data`, so it does not crash first; copy_data still returns 0 and
-parse faults.
+**Step 5.3: TRACE CALLEES**
+Record: `acpi_bus_init_power()` → `acpi_device_get_power()` →
+`acpi_power_on_resources()` → `acpi_power_on_list()` →
+`acpi_power_on_unlocked()` (`ref_count++`, maybe `_ON`). End of
+`acpi_scan_init()` calls `acpi_turn_off_unused_power_resources()` only
+for `ref_count==0`.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record:
-Boot → `brcm_nvram_init` → probe → copy_data (data_len=0, ZERO_SIZE_PTR)
-→ parse → `memcmp(header->magic)` at `0x10` → **oops**
-- Userspace syscall not required
-- **Yes, reachable** on BCM5301X with an empty/erased NVRAM mapping
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Boot ACPI scan, no userspace needed. On RISC-V ACPI, any GSI
+consumer depending on PLIC/APLIC is deferred; if it also has `_PR0`, the
+leak fires (I2C and USB in the reports). On x86, INT3472/IVSC camera
+`_DEP` devices with power resources are the same class. Reachable on
+real hardware in this tree.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: `devm_kmalloc()` in this tree explicitly `return ZERO_SIZE_PTR`
-when `!size`. Same class of bug as other “kmalloc(0) is not NULL”
-crashes. Sibling OOB check in parse is a related malformed-flash bug,
-not a duplicate of this one.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same extra-ref pattern is unique to “init, then clear flags
+without dropping refs.” Wakeup-resource refcount has had its own stable-
+worthy fixes historically; this patch does not touch that.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.** `drivers/nvmem/brcm_nvram.c` lines 78–89 (trim +
-`devm_kzalloc`) and 177–187 (header deref). Introduced in **v6.6.9**.
-Mainline fix `5f75913830bc` is **not** an ancestor of HEAD. Source has
-no “NVRAM data too small” check.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes.
+- Tree: `pending-6.12`, `git describe` `p-6.12-3-gc504cf0baa3d8`, `make
+  kernelversion` **6.12.111**
+- `drivers/acpi/scan.c:1160-1161` still calls `acpi_bus_init_power()`
+  from `acpi_bus_get_power_flags()`
+- `scan.c:1844` still sets `initialized = true` at object creation
+- `scan.c:2298-2315` still clears flags on defer and re-inits if
+  `!initialized`
+- `power.c` `acpi_add_power_resource()` does **not** set `initialized`
+- Subject not in `git log` on these files — not already applied
+- RISC-V honor list + `arch_acpi_add_auto_dep()` are in this tree
+  (`15f210f43e95f` is ancestor of v6.12)
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply.** Context around the `WARN`/`devm_kzalloc` site
-matches. `MAC_ADDR_STR_LEN` vs `3 * ETH_ALEN - 1` is a different
-function and is not touched.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. The three contexts match. Mainline `kzalloc_obj` vs
+this tree’s `kzalloc` is outside the hunk. Extra `strcpy` of name/class
+in this tree is also outside the hunk.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No “empty NVRAM” / “data too small” commit in this tree. No
-alternate fix.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No alternate fix. Unused-resource DMI quirks are unrelated (they
+skip turning unused resources off).
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **nvmem / Broadcom NVRAM driver.** Criticality: **PERIPHERAL**
-(ARCH_BCM_5301X routers), but real shipping hardware. 16 DT files in
-this tree already have `compatible = "brcm,nvram"` (Luxul, Linksys,
-D-Link, Asus, etc.). `CONFIG_NVMEM_BRCM_NVRAM` depends on
-`ARCH_BCM_5301X || COMPILE_TEST`.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: ACPI scan + ACPI PM (`drivers/acpi/scan.c`,
+`drivers/acpi/power.c`). IMPORTANT: not mm/scheduler, but ACPI device PM
+on every ACPI platform. Broken D3/runtime-PM for deferred devices.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: This driver is mature; last local change is the 6.6.9 cache-copy
-backport. The bug is in that long-lived path, not in brand-new mainline-
-only code.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature core with ongoing honor-dep/RISC-V work in 6.11–6.12.
+This is a bug in that shipped 6.12 behavior, not a new 7.3-only
+subsystem.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / platform-specific** — BCM5301X boards with a
-`brcm,nvram` node (OpenWrt and similar). Not universal.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Config/platform-specific, but not a toy driver. Trigger: ACPI
+device with `_PR0`/`_PS0` power resources **and** deferred enumeration
+(`honor_deps && dep_unmet`). Populations: RISC-V ACPI (PLIC/APLIC auto-
+dep — 6.12 feature); Intel camera `_DEP` (INT3472/IVSC); PCI link / CXL
+host-bridge honor list. Unaffected: devices enumerated immediately
+(typical x86).
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Every boot on matching firmware. Not a race. Not unprivileged-
+syscall. Common on RISC-V ACPI boards with powered I2C/USB; less common
+on generic x86.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Power-resource ref leak → `_OFF` skipped → rails stay on in D3;
+runtime suspend does not actually power the device. Not
+oops/corruption/CVE. Severity **HIGH** for PM correctness and
+battery/embedded power; **MEDIUM** as a generic “will this brick 6.12
+laptops?” risk. Author’s logs match the code (`still in use` is the
+`ref_count != 0` debug in `acpi_power_off_unlocked()`).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Trigger: NVRAM window is all padding (erased flash `0xFF`, or all
-  zeros)
-- Happens at **device probe / boot**, not a rare runtime race
-- Not an unprivileged syscall exploit; it is a **boot oops** on those
-  machines
-- Realistic after wipe, bad flash, or empty factory partition
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **Kernel oops / page fault during probe.** Severity: **HIGH**
-(boot crash on affected boards). Not a silent corruption bug, but it
-takes the kernel down instead of failing probe.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** high for BCM5301X users with empty/wiped NVRAM; converts
-  oops → clean `-EINVAL`
-- **Risk:** very low (5 lines, error path only, no locking)
-- **Ratio:** strongly favors backport. This is also a fix for a bug
-  **introduced by an earlier stable backport** (6.6.9)
+- Benefit: HIGH for RISC-V ACPI 6.12 users and any honor-dep + `_PR0`
+  device; restores D3/`_OFF` and avoids powering devices before deps
+  exist.
+- Risk: LOW. Five lines, maintainer-designed, uses the existing attach
+  init path. Common (non-deferred) devices only shift init from add to
+  attach in the same scan, before probe.
+- Ratio: benefit > risk for this tree because 6.12 shipped RISC-V auto-
+  deps that make the leak easy to hit.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Concrete oops: dereference of `ZERO_SIZE_PTR` at `0x10`
-- Buggy path exists in this 6.6.157 tree (since 6.6.9)
-- 5-line, obviously correct guard; probe already handles `-EINVAL`
-- Maintainer-applied; no NAK
-- Clean apply; no prerequisites
-- Follow-up to a stable backport that added the trim-and-allocate logic
+FOR:
+- Real, reproduced leak; D3 does not turn resources off
+- Buggy code and RISC-V honor-dep trigger are in 6.12.111
+- Small, obviously correct, standalone
+- ACPI maintainer specified v2 and applied it
+- Tested with before/after traces
+- Applies cleanly here
 
-**AGAINST:**
-- No public Reported-by / Tested-by
-- Driver is platform-specific, not core
-- Empty NVRAM is not every-boot on healthy devices
+AGAINST:
+- Not crash/security/filesystem corruption
+- Changes first power-init timing for all ACPI devices
+- Unused resources of deferred devices may `_OFF` after scan (intended;
+  DMI quirks exist for broken firmware)
+- No Cc: stable (not a negative per rules)
+- Relatively new mainline (7.3-rc, ~Aug 2026)
 
-**UNRESOLVED:**
-- Direct lore.kernel.org HTTP fetch was 403 (thread recovered via b4)
-- No independent user report found beyond the author’s analysis
+UNRESOLVED:
+- Mainline SHA not in this checkout (cannot `merge-base` the upstream
+  commit). Not needed: the diff matches local code.
+- No evidence of a revert in the month after apply (lore v2 thread is
+  apply-only).
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — mechanism matches
-   `devm_kmalloc(0)` and parse; maintainer applied v1
-2. Fixes a real bug that affects users? **PASS** — oops on erased NVRAM;
-   DT boards in this tree use the driver
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   boot-time page fault
-4. Small and contained? **PASS** — +5 lines, one function
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — maintainer-designed;
+   hardware logs.
+2. Real bug that affects users? **PASS** — SpacemiT K3; any RISC-V ACPI
+   `_PR0` + PLIC dep.
+3. Important issue? **PASS** — sticky power resources break runtime
+   D3/`_OFF`; serious PM bug, not a crash. Matches “etc.” for production
+   PM.
+4. Small and contained? **PASS** — 5 lines, two ACPI files.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — context identical
+6. Can apply to the local tree? **PASS** — contexts match; bug exists
+   here.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary crash
-fix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID/quirk/DT/build/docs add). Qualifies as a
+normal bugfix.
 
-Step 9.4: MAKE YOUR DECISION
-Backport. The local tree has the 6.6.9 cache-copy code that created this
-`kmalloc(0)` oops; the guard is tiny and fails probe instead of taking a
-fault.
+**Step 9.4: MAKE YOUR DECISION**
+This tree added RISC-V interrupt-controller honor deps. Combined with
+early `acpi_bus_init_power()`, deferred present devices leak power-
+resource refs and cannot leave D0 electrically. The fix is the attach-
+time init path this tree already has, plus marking power-resource
+objects initialized. That is appropriate for 6.12.y.
 
-===============================================================
-What this solves for stable users
-===============================================================
-
-On this 6.6.y tree, `brcm_nvram_copy_data()` trims trailing padding and
-allocates `data_len` bytes. If the mapped NVRAM is fully erased,
-`data_len` becomes 0. `devm_kzalloc(dev, 0)` returns `(void *)16`, parse
-treats that as a header, and the kernel oopses at boot. The patch
-rejects anything smaller than `struct brcm_nvram_header` (20 bytes) and
-returns `-EINVAL`, which `brcm_nvram_probe()` already handles.
-
-It meets the stable rules: real crash, tiny, no API change, applies
-cleanly, and it closes a hole opened by a prior 6.6.9 stable backport.
-
-Risk vs benefit: very low risk, high benefit on BCM5301X when NVRAM is
-empty. The sibling malformed-length OOB patch is useful later but is not
-required for this one.
-
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: no Fixes/Reported-by; SOBs Rosen/Srinivas/Greg;
-  Link is Srinivas 12/14 pull of a standalone v1
-- [Phase 2] Diff: +5 lines in `brcm_nvram_copy_data()` before
-  `devm_kzalloc`
-- [Phase 2] `include/linux/device.h`: `devm_kzalloc` → `devm_kmalloc`;
-  `drivers/base/devres.c:833-834`: size 0 returns `ZERO_SIZE_PTR`;
-  `include/linux/slab.h:175`: `((void *)16)`
-- [Phase 2] `brcm_nvram_parse()` at lines 179–184 dereferences
-  `header->magic` — matches “page fault on address 0x10”
-- [Phase 3] `git blame`: trim/alloc from `09283d60bc332`; `git describe
-  --contains` → `v6.6.9~19`; not in `v6.6`
-- [Phase 3] `git merge-base --is-ancestor 5f75913830bc HEAD` → not
-  ancestor (fix absent)
-- [Phase 3] `git log --grep='empty NVRAM'` on `drivers/nvmem/` → empty
-- [Phase 4] `b4 dig -c 5f75913830bc`: original URL
-  `20260703222830.408764-1-rosenp@gmail.com`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: linux-kernel, Srinivas, Rafał; mbox: patch +
-  “Applied, thanks!”; no NAK
-- [Phase 4] lore WebFetch 403; used b4 + openwall/lkml instead
-- [Phase 5] Callers: only `brcm_nvram_probe`; `subsys_initcall_sync`
-- [Phase 5] `bcm47xx_nvram_init_from_iomem` reads iomem magic; return
-  ignored so parse still runs
-- [Phase 6] `git describe HEAD` → `p-6.6-3-g04810563abb71`; `make
-  kernelversion` → **6.6.157**
-- [Phase 6] Patch context around WARN/kzalloc matches; clean apply
-  expected
-- [Phase 7] 16 `arch/arm/boot/dts/broadcom/*.dts*` files with
-  `brcm,nvram`; Kconfig `NVMEM_BRCM_NVRAM` depends on `ARCH_BCM_5301X`
-- [Phase 8] Failure mode: probe-time oops, severity HIGH
-- UNVERIFIED: no independent end-user crash log; mechanism verified from
-  code anyway
+Verification:
+- [Phase 1] Parsed tags: author SOB, Rafael SOB + changelog edits, lore
+  Link; no Fixes/Cc:stable/syzbot
+- [Phase 2] Diff: −4/+1; remove early init; delay `initialized`; set it
+  in `acpi_add_power_resource()`
+- [Phase 2] Confirmed `acpi_power_on_unlocked`/`acpi_power_off_unlocked`
+  refcount vs “still in use” log
+- [Phase 3] `git describe HEAD` / `make kernelversion`: p-6.12-3 /
+  6.12.111
+- [Phase 3] blame: early init `1b1f3e1699a988` (2015); `initialized`
+  `202317a573b20d` (2013)
+- [Phase 3] `git merge-base --is-ancestor 15f210f43e95f HEAD` and
+  `v6.12`: YES (RISC-V honor list)
+- [Phase 3] `git merge-base --is-ancestor 9d9bcae47fd5a HEAD`: YES
+  (INT3472 honor)
+- [Phase 3] `git log --grep="Defer device power initialization" --
+  drivers/acpi/`: empty (not applied)
+- [Phase 4] `b4 mbox` v2: Rafael “Applied as 7.3-rc material”
+- [Phase 4] `b4 mbox` v1: Rafael requested this approach; author
+  confirmed K3
+- [Phase 5] callers: `acpi_add_single_object` → get_power_flags; attach
+  re-init; RISC-V `arch_acpi_add_auto_dep` → `acpi_scan_add_dep` with
+  PLIC/APLIC honor_dep
+- [Phase 6] local `scan.c:1160` and `1844` still buggy; `power.c` lacks
+  `initialized = true`
+- [Phase 6] three hunks match this tree (clean apply)
+- [Phase 8] failure: D3 does not `_OFF`; severity HIGH for PM, not oops
+- UNVERIFIED: exact mainline SHA in torvalds.git (git.kernel.org HTML
+  blocked); does not affect the local-tree decision
 
 **YES**
 
- drivers/nvmem/brcm_nvram.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/acpi/power.c | 1 +
+ drivers/acpi/scan.c  | 4 ----
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/nvmem/brcm_nvram.c b/drivers/nvmem/brcm_nvram.c
-index b4cf245fb2467..4b3781a70222a 100644
---- a/drivers/nvmem/brcm_nvram.c
-+++ b/drivers/nvmem/brcm_nvram.c
-@@ -84,6 +84,11 @@ static int brcm_nvram_copy_data(struct brcm_nvram *priv, struct platform_device
- 	}
- 	WARN(priv->data_len > SZ_128K, "Unexpected (big) NVRAM size: %zu B\n", priv->data_len);
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index 6d16740e1d70a..0d9c3fcf895ff 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -959,6 +959,7 @@ struct acpi_device *acpi_add_power_resource(acpi_handle handle)
+ 	strscpy(acpi_device_class(device), ACPI_POWER_CLASS);
+ 	device->power.state = ACPI_STATE_UNKNOWN;
+ 	device->flags.match_driver = true;
++	device->flags.initialized = true;
  
-+	if (priv->data_len < sizeof(struct brcm_nvram_header)) {
-+		dev_err(priv->dev, "NVRAM data too small (%zu)\n", priv->data_len);
-+		return -EINVAL;
-+	}
-+
- 	priv->data = devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
- 	if (!priv->data)
- 		return -ENOMEM;
+ 	/* Evaluate the object to get the system level and resource order. */
+ 	status = acpi_evaluate_object(handle, NULL, NULL, &buffer);
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 7f9dd2704f638..e049fcfee2a84 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -1144,9 +1144,6 @@ static void acpi_bus_get_power_flags(struct acpi_device *device)
+ 		if (!list_empty(&device->power.states[ACPI_STATE_D3_HOT].resources))
+ 			device->power.states[ACPI_STATE_D3_COLD].flags.valid = 1;
+ 	}
+-
+-	if (acpi_bus_init_power(device))
+-		device->flags.power_manageable = 0;
+ }
+ 
+ static void acpi_bus_get_flags(struct acpi_device *device)
+@@ -1826,7 +1823,6 @@ void acpi_init_device_object(struct acpi_device *device, acpi_handle handle,
+ 	acpi_init_properties(device);
+ 	acpi_bus_get_flags(device);
+ 	device->flags.match_driver = false;
+-	device->flags.initialized = true;
+ 	device->flags.enumeration_by_parent =
+ 		acpi_device_enumeration_by_parent(device);
+ 	acpi_device_clear_enumerated(device);
 -- 
 2.53.0
 
