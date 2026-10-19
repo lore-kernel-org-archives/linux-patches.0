@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18BF647992;
-	Mon, 19 Oct 2026 14:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7131B6479B7;
+	Mon, 19 Oct 2026 14:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418795; cv=none; b=fHLAGe30u5vCkolKVVyMSrFRWlDSz0CO7PppLd+vRdN8WAcmU9Cn4hGa4/yesc5QBMpOybQLo9t2AC+3NngG7UCRhttXT/ST9zmx8wB0WXOBNYABDGZrSjXsy1xWTeU80c9nI44cI3mgdqY56NJABpxUEWEZKJG8OPBo1IkqsAI=
+	t=1792418796; cv=none; b=OzBBpbPRlQCMxdwu+3lTOIOtU0azGaNKEL3e/J1H0UfUFY+PMispS/ekhzTwvuLL+heHETVVy5GguTCu7u7Z4XfaUVDAX/4uoi/bPQuXNiGZff/FFks07oGsC/ptt181YyBm4ekUwgdBCFYL61xCzU91x9JpHiriYd467ZjvjdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418795; c=relaxed/simple;
-	bh=gEEJd4PlB23y/8SGXAWYyzRbVPbMpV+TOCKiJ4Zlp1E=;
+	s=arc-20240116; t=1792418796; c=relaxed/simple;
+	bh=qzzqFHduJFPJ3gjpN3AgNQSdcp8ZATdEGKLZFid2SzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dS5+iJA2EPM+uhosPS8yadbqyGcblc1ky6A0Zfs5grljAptzovZTS+vDkFghpyNnaGiGUKOt1xZdY3MUwIygSCuoTFaBC3W1L11iMo9UEFCLHSqEkFqf3WLF9lFNfm1/sU8Qeqi4mLmd2tcAE7c6nyopj5LYFqzgjWfZr0RWbHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dxrcAi6a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iqEF4Qubet846ds0Y9SP+wp5/ie1TaWjYrGx/gE4n7U4INSVaIqjvyU27TNZZMDMCq6Xbh/0oFKYgN1ZTmWL2lfulqiAr8gTcdS+wWrWMonXzXS4v2BU7MdK5bk0G6MpvYN3wzzvkRVinAOfg1CaU1uHUUSnGla5Lom+bSP2ibg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SVsT+lpS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dxrcAi6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91371F000C6;
-	Mon, 19 Oct 2026 14:06:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SVsT+lpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87381F000C7;
+	Mon, 19 Oct 2026 14:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418792;
-	bh=vvmtytqQAG4Lx2uj9KxSX8lUECGNW+T1jV44qoXA0VQ=;
+	s=k20260515; t=1792418794;
+	bh=3O7F2X6+k4YoUAU2Oxwl9vtYL6fJyRW+Z7I2RKsPELI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxrcAi6aUiRLXGPMPLJzdt/ZONfodS+zLlaeGlV7nGsitVqYHHjYhioUDQD1gIes+
-	 oroKW/4vYIQJ9Zl+qFdESRGA+k2jUwSaj8r6e8vucbtIuZhG+hp1SYeOcZ/wuoeQFC
-	 n/33Q3G59eD3UUxYa95jSmfA1ca8jIy0j2WIa9mVJnUYhfHv1CrUI9GM62jh/8hj7n
-	 xyEoLkXfYNhBbzNW1aW92IIJ9BCG7n6qVDvbaIH+IjWlV0PhS6Z9oYpzcYoEXYpgwt
-	 K31dnHVPlxU40ftc9TPGKHLhPHNrvbS5iMkI/RlYPaFkTLbCtsgKMp63CVSXRQtERE
-	 HWjOlJBnTeMkw==
+	b=SVsT+lpSO4UhuZZin3de5iOCnl7r8MI5SpJg6+BlEprYTj1X30qaM6bgJDmUlUZi7
+	 ACiKIipiJOdIDOFHgHldozO7FMqgo/Bs6AZtmO/A44In4IO5PqL1rS9lUc/Wvisrmr
+	 vpR3W9TUSZfh4tCf09kpnQenL/DJTbaehW6HYXLuihNkJwCh9ixX/IM0odhfV223wK
+	 sbIn1h556jGx7TxK4w1yRyoUEFof21MeH2CiNFP/jIUpkgdbZioAz4xvwCbaLH9X8+
+	 WTy9tC0pHKUaWv0dA7oc2wd1+iE2YlAlBX60km1u/jouJg4tE6cO3W/xSG6AvfSb3E
+	 OeTBlFAJZiQBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Jerome Brunet <jbrunet@baylibre.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dmaengine@vger.kernel.org,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	jernej.skrabec@gmail.com,
+	samuel@sholland.org,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] dmaengine: pl330: remove debugfs file on teardown
-Date: Mon, 19 Oct 2026 09:53:11 -0400
-Message-ID: <20261019135441.1420968-500-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] clk: sunxi-ng: fix ccu probe clock unregister on error
+Date: Mon, 19 Oct 2026 09:53:12 -0400
+Message-ID: <20261019135441.1420968-501-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,20 +60,26 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 0d3e3376b289cdaff5b3b6c1581999926ff1000f ]
+[ Upstream commit 81f4ddc9f7e0c11d3e9d24d0f30023845a02f7ee ]
 
-init_pl330_debugfs() creates a debugfs file with struct pl330_dmac as
-private data. pl330_remove() then unregisters the DMA device and frees
-the PL330 channel/thread state without removing that file.
+When registering clocks with sunxi_ccu_probe(), the number of ccu_clocks
+and the number of hw clocks might be different, eventhough they usually are
+the same.
 
-Keep the debugfs dentry and remove it before tearing down the DMAC state
-used by the debugfs show callback.
+If they are different, it could lead to out-of-bound access or registered
+clock left behind on error.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Use a different variable when iterating on hw clocks so every registered
+clock, and only those, gets unregistered on error.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-f330728db3d3@baylibre.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -73,444 +87,363 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+**Step 1.1: Subject line**
+Record: **[clk: sunxi-ng]** **[fix]** unregister the right set of CCU
+`clk_hw` objects when `sunxi_ccu_probe()` fails.
 
-Record: **[dmaengine/pl330] [remove] [drop the leftover debugfs file
-before DMAC teardown]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+**Step 1.2: Tags**
 Record:
-- `Fixes:` — absent (expected for this review)
-- `Reported-by:` — absent
-- `Tested-by:` — absent
-- `Reviewed-by:` — absent
-- `Acked-by:` — absent
-- `Link:`
-  `https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn`
-- `Cc: stable@vger.kernel.org` — absent (expected)
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Signed-off-by: Vinod Koul <vkoul@kernel.org>` (dmaengine maintainer)
-- Ignore any Sasha Levin SOB if present in candidate wrapping — none on
-  this commit object
+- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — static-analysis bot,
+  not syzbot
+- `Closes:
+  https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org`
+- `Reviewed-by: Chen-Yu Tsai <wens@kernel.org>` — sunxi/clk maintainer
+- `Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>` (author)
+- `Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-
+  f330728db3d3@baylibre.com` — **v4 3/9** of the A733 RTC series
+- `Signed-off-by: Chen-Yu Tsai <wens@kernel.org>` (applied to sunxi clk
+  tree)
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected; not treated as a negative)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.3: Body**
 Record:
-- **Bug:** `init_pl330_debugfs()` creates a debugfs file whose private
-  data is `struct pl330_dmac *`. `pl330_remove()` tears down DMA
-  registration and frees channel/thread state without removing that
-  file.
-- **Symptom:** After unbind/`rmmod`, the debugfs file remains. A later
-  read runs `pl330_debugfs_show()` against freed `pl330` /
-  `pl330->channels` (use-after-free / oops).
-- **Version info:** none in the message. The debugfs file was added in
-  `b45aef3aef636` (contained in v5.2-rc1).
-- **Root cause:** missing `debugfs_remove()` before DMAC teardown.
+[Bug] `sunxi_ccu_probe()` uses one index for both `desc->ccu_clks`
+(`num_ccu_clks`) and `desc->hw_clks` (`hw_clks->num`). Those lengths are
+not always equal.
+[Symptom] On probe error: **out-of-bounds** `hws[i]` access, or
+**registered clocks left behind**.
+[Version] None stated.
+[Root cause] Error-path unregister walks the leftover loop index instead
+of the hw-clock index.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not disguised. It is an explicit lifetime/UAF fix (remove
-debugfs before freeing the object the show callback uses).
+**Step 1.4: Hidden bug fix?**
+Record: **No disguise.** This is an explicit error-path OOB/leak fix.
+Sashiko rated the pre-existing issue **High**.
 
 ---
 
 ## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
+Record: `drivers/clk/sunxi-ng/ccu_common.c` only; **+6 / −6**. Function:
+`sunxi_ccu_probe()`. Surgical, single-file.
 
-Record:
-- File: `drivers/dma/pl330.c` only (`+16 / -3`)
-- Functions: `struct pl330_dmac` (add `dbgfs`), `init_pl330_debugfs()`,
-  new `deinit_pl330_debugfs()`, `pl330_remove()`
-- Scope: single-file surgical fix
+**Step 2.2: Code-flow change**
+Before: one `i` for (1) `ccu_clks` setup, (2) `hw_clks` register, (3)
+rate-range on `ccu_clks`, then `err_clk_unreg` does `while (--i)` over
+`hw_clks->hws[i]`. After loop (3), `i == num_ccu_clks`, so
+provider/reset failures use the wrong bound.
+After: hw-clock register/unregister uses `j`; `i` stays for `ccu_clks`.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.3: Bug mechanism**
+Record: **[memory safety / error-path leak]**
+- `num_ccu_clks > hw_clks->num` → OOB read of `hws[]`
+- `num_ccu_clks < hw_clks->num` → incomplete `clk_hw_unregister()`
+  (leak)
+`clk_hw_register()` failure already used the hw index; the clobber is
+the **rate-range loop** added later, then `of_clk_add_hw_provider()` /
+`reset_controller_register()` failures.
 
-Record:
-- **Hunk 1 (`struct pl330_dmac`):** store the dentry so it can be
-  removed later.
-- **Hunk 2 (`init_pl330_debugfs`):** keep the return of
-  `debugfs_create_file()` in `pl330->dbgfs`. Add
-  `deinit_pl330_debugfs()` that calls `debugfs_remove()` and NULLs the
-  pointer. `#else` stub for `!CONFIG_DEBUG_FS`.
-- **Hunk 3 (`pl330_remove`):** call `deinit_pl330_debugfs(pl330)`
-  **before** IRQ free, `dma_async_device_unregister()`, channel
-  teardown, and `pl330_del()`.
-
-Probe still creates the file only on the success path after
-`dma_async_device_register()`; nothing after `init_pl330_debugfs()` can
-fail, so probe error paths do not need deinit.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **Use-after-free / lifetime** (debugfs private data).
-
-Before: file at debugfs root, private data = `pl330`. `pl330_remove()`
-then:
-1. unregisters the DMA device
-2. `pl330_del()` → `dmac_free_threads()` → `kfree(pl330->channels)`
-3. AMBA `devm` frees `pl330` itself (`devm_kzalloc` in `pl330_probe`)
-
-`pl330_debugfs_show()` then does `s->private` → `pl330->channels[ch]` on
-freed memory.
-
-After: `debugfs_remove()` first. Core debugfs waits for `active_users`
-to drain, so an in-flight `cat` finishes before teardown.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Obviously correct and minimal. `debugfs_remove()` already no-ops
-on `IS_ERR_OR_NULL`. `pl330` is `devm_kzalloc`’d so `dbgfs` starts NULL.
-Sibling DMA drivers (`pxa_dma`, `hidma`, `idxd`, `bcm-sba-raid`) already
-remove debugfs on teardown.
-
-Regression risk: very low. `debugfs_remove()` may wait for a reader;
-that is intended. No API/locking/hot-path change.
+**Step 2.4: Fix quality**
+Record: Obviously correct (separate index). Minimal. Regression risk
+**very low** (`j` is always set by `for (j = 0; …)` before any `goto
+err_clk_unreg`). No API/locking changes.
 
 ---
 
 ## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 3.1: Blame**
+Record: Probe helper from `1d80c14248d608` (2016). Error unregister from
+`5d806f9fc8e63d` / `9bec2b9c61340` (v5.16 era). The **clobber** is
+`ea977d742507e` (“Don't call hw_to_ccu_common on hw without common”,
+**v6.10-rc7**), which inserted a `num_ccu_clks` loop after hw
+registration and reused `i`.
 
-Record: Buggy create-without-remove came from `b45aef3aef636`
-(“dmaengine: pl330: introduce debugfs interface”, 2019-03-25). `git
-describe --contains` → `v5.2-rc1~115^2~30`. Present for years in this
-lineage.
+**Step 3.2: Fixes: tag**
+Record: **None.** Introducer is `ea977d742507e` (ancestor of HEAD). That
+commit was itself `Cc: stable` / `Fixes: b914ec33b391e`.
 
-**Step 3.2: FOLLOW THE FIXES TAG**
+**Step 3.3: File history**
+Record: Candidate `81f4ddc9f7e0c`. Nearby Jerome commits are A733 RTC
+**features** after this fix. This patch is **standalone**; later series
+patches are not prerequisites.
 
-Record: No `Fixes:` tag. Introducer is `b45aef3aef636`, ancestor of HEAD
-(`git merge-base --is-ancestor` exit 0).
+**Step 3.4: Author**
+Record: Jerome Brunet (BayLibre, regular clk/sunxi contributor).
+Maintainer Chen-Yu Tsai reviewed and applied it.
 
-**Step 3.3: CHECK FILE HISTORY**
-
-Record: Recent `pl330.c` history is unrelated (GFP helpers, runtime PM).
-No prerequisite series. Standalone.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Pengpeng Hou has this one dmaengine commit here. Applied by
-maintainer Vinod Koul. Not a series from this author.
-
-**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None. Uses long-standing `debugfs_create_file` /
-`debugfs_remove` / `DEFINE_SHOW_ATTRIBUTE`. Applies standalone.
+**Step 3.5: Dependencies**
+Record: Needs the three-loop `sunxi_ccu_probe()` from `ea977d742507e`.
+That is in this tree. No new helpers. **Can apply standalone.**
 
 ---
 
-## Phase 4: Mailing list / external research
+## Phase 4: Mailing list / external
 
-**Step 4.1: ORIGINAL PATCH DISCUSSION**
+**Step 4.1: Original discussion**
+Record: `b4 dig -c 81f4ddc9f7e0c` → https://patch.msgid.link/20260706-
+a733-rtc-v4-3-f330728db3d3@baylibre.com
+Series: v1 (Junhui Liu, Jan 2026) → v2/v3/v4 (Jerome). This fix first
+appears in **v3** (“Fix ccu probe helper to properly unregister clocks
+on error”), applied as **v4 3/9**.
+No NAK. Chen-Yu applied it to `sunxi/clk-for-7.3`. No reviewer `Cc:
+stable`.
 
-Record:
-- Lore URL from `b4 dig -c 0d3e3376b289c`:
-  `https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn`
-- `b4 dig -a`: single **v1**, no later revision
-- Thread (mbox): author submission; sashiko-bot comments on **pre-
-  existing** issues (desc_pool locking, IRQ vs `pl330_add`,
-  `pch->thread` TOCTOU in show); **Vinod: “Applied, thanks!”** as
-  `0d3e3376b289c`
-- No NAK of this change. No reviewer `Cc: stable`. Direct lore HTTP
-  fetch returned 403; discussion taken from `b4 dig -m`.
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Chen-Yu Tsai, Jernej Skrabec, Samuel Holland, Stephen Boyd,
+Maxime Ripard, linux-clk, linux-sunxi. Right maintainers.
 
-**Step 4.2: WHO REVIEWED**
+**Step 4.3: Bug report**
+Record: Sashiko on **v2 5/6** (msgid
+`20260629131254.7E34C1F00A3A@smtp.kernel.org`), severity **High**: error
+path uses `i == num_ccu_clks` as the `hws[]` bound → leak or OOB
+depending on driver sizes. Pre-existing, not introduced by the A733
+patch.
 
-Record (`b4 dig -w`): To/Cc Vinod Koul, Frank Li,
-`dmaengine@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Maintainer
-applied it. No human Reviewed-by.
+**Step 4.4: Series**
+Record: 9-patch A733 RTC enablement. This hunk only touches
+`ccu_common.c` and does not need A733. Later patches make RTC
+`num_ccu_clks` vs `hw_clks->num` diverge more; the common-probe bug
+already exists.
 
-**Step 4.3: BUG REPORT**
-
-Record: No syzbot/bugzilla/`Reported-by`. Found by inspection. Failure
-mode is still a concrete UAF on leftover debugfs.
-
-**Step 4.4: RELATED PATCHES / SERIES**
-
-Record: Standalone 1/1. Not part of a multi-patch series.
-
-**Step 4.5: STABLE MAILING LIST**
-
-Record: **UNVERIFIED** — `lore.kernel.org/stable` returned HTTP 403. No
-stable discussion in the dmaengine mbox.
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable search for this subject returned **no**
+dedicated stable-thread discussion. WebFetch to lore.html returned 403;
+raw mbox via curl/`b4 dig -m` succeeded.
 
 ---
 
-## Phase 5: Code semantic analysis
+## Phase 5: Semantic / impact
 
-**Step 5.1: KEY FUNCTIONS**
+**Step 5.1: Functions**
+Record: `sunxi_ccu_probe()` only (plus log index).
 
-Record: `init_pl330_debugfs`, `deinit_pl330_debugfs` (new),
-`pl330_remove`, `pl330_debugfs_show` (user of private data), `pl330_del`
-/ `dmac_free_threads` (free the memory the show callback uses).
+**Step 5.2: Callers**
+Record: `devm_sunxi_ccu_probe()` and `of_sunxi_ccu_probe()` in the same
+file. Called from **all** sunxi-ng CCU drivers (H6, A64, H3, D1, A10,
+RTC, …) at SoC clock probe/boot.
 
-**Step 5.2: CALLERS**
+**Step 5.3: Callees**
+Record: `clk_hw_register` / `of_clk_hw_register`,
+`of_clk_add_hw_provider`, `reset_controller_register`,
+`clk_hw_unregister`. Provider add can fail (`-ENOMEM`,
+`of_clk_set_defaults()`).
 
-Record:
-- `init_pl330_debugfs()` — `pl330_probe()` success path only
-- `deinit_pl330_debugfs()` — `pl330_remove()` only
-- `pl330_remove()` — AMBA `.remove`
-- `pl330_debugfs_show()` — debugfs read (`DEFINE_SHOW_ATTRIBUTE`)
+**Step 5.4: Reachability**
+Record: Boot-time CCU probe on Allwinner. Failure is error-path (OOM,
+assigned-clock defaults). On failure, `of_sunxi_ccu_probe()` /
+`devm_sunxi_ccu_probe()` **kfree** the `struct sunxi_ccu` whose `lock`
+remaining clocks still point at (`cclk->lock = &ccu->lock`) if
+unregister is incomplete.
 
-**Step 5.3: CALLEES**
-
-Record: `debugfs_create_file`, `debugfs_remove`, then existing remove
-path (`dma_async_device_unregister`, `pl330_del` → `kfree(channels)`).
-
-**Step 5.4: CALL CHAIN / REACHABILITY**
-
-Record: `echo … > unbind` or `rmmod dma-pl330` → `pl330_remove`. Then
-`cat /sys/kernel/debug/<devname>` (file is created with parent `NULL` at
-debugfs root). Reachable from userspace. debugfs is typically root-only
-(0700), so not an unprivileged UAF, still a kernel UAF/oops.
-
-**Step 5.5: SIMILAR PATTERNS**
-
-Record: Other DMA drivers already `debugfs_remove[_recursive]` on
-teardown (`pxa_dma.c`, `dmaengine.c`, `bcm-sba-raid.c`,
-`idxd/debugfs.c`, `qcom/hidma_dbg.c`). pl330 was the outlier.
+**Step 5.5: Similar patterns**
+Record: `devm_sunxi_ccu_release()` already walks `hw_clks->num`
+correctly. Only the probe error path was wrong. Counts really differ,
+e.g. H6: **127** `ccu_clks` vs **CLK_NUMBER 138**; A64: **104** vs
+**115**. RTC in this tree: 12 `ccu_clks` vs `CLK_NUMBER_NO_GATES` **8**
+on H616/R329 → **OOB** if probe fails after the rate-range loop.
 
 ---
 
-## Phase 6: Local tree
+## Phase 6: This checkout (v7.3-rc4)
 
-**Step 6.1: DOES THE BUGGY CODE EXIST HERE?**
+**Step 6.1: Buggy code here?**
+Record: **Yes.** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+`VERSION=7 PATCHLEVEL=3`. `ea977d742507e` and `81f4ddc9f7e0c` are both
+ancestors of HEAD. Pre-fix `sunxi_ccu_probe()` at `81f4ddc9f7e0c^` still
+clobbers `i`. Bug since **v6.10**, long before 7.3.
 
-Record: Local tree is **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-EXTRAVERSION=-rc4`, `git describe` `v7.3-rc4-27-gf0100363d8c37`).
+**Step 6.2: Backport difficulty**
+Record: **Clean apply** on this code (6-line index split). No refactor
+between the buggy helper and this patch.
 
-`drivers/dma/pl330.c` is present. Debugfs dates to v5.2. This commit
-**is already an ancestor of HEAD** (`0d3e3376b289c`). The bug existed in
-this lineage until that commit; current HEAD already has the fix. That
-is the mainline landing, not a reason to reject it as a stable
-candidate.
-
-**Step 6.2: BACKPORT COMPLICATIONS**
-
-Record: Clean apply on this file. Context (`quirks`, `rstc`,
-`init_pl330_debugfs`, `pl330_remove`) has been stable. Expected **clean
-apply** to trees that still have the v5.2 debugfs code.
-
-**Step 6.3: RELATED FIXES ALREADY HERE**
-
-Record: This commit is the fix. No earlier alternative fix on `pl330.c`.
+**Step 6.3: Other fixes already here?**
+Record: This **is** the fix (`81f4ddc9f7e0c`). No earlier equivalent.
+That does not mean “already selected for stable”; it is the mainline
+commit being evaluated.
 
 ---
 
-## Phase 7: Subsystem context
+## Phase 7: Subsystem
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
+**Step 7.1:** Record: **clk / Allwinner sunxi-ng CCU**. **IMPORTANT**
+(every Allwinner platform’s clock controller), not core mm/net, not
+staging.
 
-Record: **dmaengine / ARM PL330** (`drivers/dma/pl330.c`). **IMPORTANT**
-for ARM SoCs that use PrimeCell DMA (not core mm/net). Enabled as
-`CONFIG_PL330_DMA=y` in `arm64/defconfig`, `multi_v7`, `exynos`,
-`socfpga`, `hisi`, `axm55xx`.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-
-Record: Mature driver (since ~2010). Recent commits are small fixes, not
-a rewrite.
+**Step 7.2:** Record: Mature CCU core (2016) with ongoing SoC additions.
+Helper is shared and stable; this is not churny experimental code.
 
 ---
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: WHO IS AFFECTED**
+**Step 8.1:** Record: **platform-specific** — `CONFIG_SUNXI_CCU` /
+Allwinner boards (phones, SBCs, TVs). Many LTS users.
 
-Record: Driver-specific + `CONFIG_DEBUG_FS`. Population: ARM/ARM64
-boards with PL330 (Exynos and others). Built-in in several defconfigs,
-so unbind is less common than for a typical module, but sysfs unbind and
-`rmmod` (tristate) still exist.
+**Step 8.2:** Record: Trigger = CCU **probe failure** after clocks are
+registered (`of_clk_add_hw_provider` / reset register). Not every boot.
+Not a userspace syscall. `of_clk_set_defaults()` is a realistic DT
+failure. Unprivileged users do not trigger it directly.
 
-**Step 8.2: TRIGGER CONDITIONS**
+**Step 8.3:** Record: Incomplete unregister → leak; wrong bound →
+**OOB**; leftover `clk_hw` plus `kfree(ccu)` → **UAF** on `cclk->lock`.
+Severity **HIGH** on the error path (crash / memory safety), not a
+normal-boot oops.
 
-Record: Bind PL330 with debugfs on → unbind or unload → read leftover
-`/sys/kernel/debug/<devname>`. Not every boot. Root-oriented (debugfs).
-Race-free UAF after teardown; concurrent read during remove is handled
-by debugfs `active_users`.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
-Record: **Use-after-free → oops / KASAN / potential memory corruption.**
-Severity **HIGH**. debugfs is usually root-only, so not a typical
-unprivileged CVE path, still a real crash/UAF.
-
-**Step 8.4: RISK-BENEFIT**
-
-Record:
-- **Benefit:** medium-high for PL330 + debugfs users (prevents UAF on
-  teardown).
-- **Risk:** very low (~19 lines, one driver, standard `debugfs_remove`).
-- **Ratio:** favorable.
+**Step 8.4:** Record: **Benefit high** for Allwinner error-path safety;
+**risk very low** (6-line index fix). Ratio strongly favors backport.
 
 ---
 
 ## Phase 9: Synthesis
 
-**Step 9.1: EVIDENCE**
+**Step 9.1: Evidence**
 
-**For:**
-- Real UAF: debugfs private data outlives `pl330` / `channels`
-- Show callback indexes `pl330->channels[ch]` after `kfree`
-- Small, obviously correct, matches other DMA drivers
-- Maintainer applied v1
-- `debugfs_remove()` waits for active readers
-- Bug present since v5.2; driver is in this tree
+FOR:
+- Real OOB/leak in shared CCU probe cleanup; counts differ on H6/A64/RTC
+  in this tree
+- Sashiko High; maintainer Reviewed-by + applied
+- Tiny, obviously correct, no new API
+- Bug from v6.10 (`ea977d742507e`) is in this tree
+- No extra series patches required
 
-**Against:**
-- No user/syzbot report (inspection-only)
-- Needs `CONFIG_DEBUG_FS` and unbind/unload
-- debugfs typically root-only
-- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
+AGAINST:
+- Error-path only (not every boot)
+- Nested in an A733 **feature** series (this patch is still self-
+  contained)
+- No live user oops; found by static review
+- No `Fixes:` / `Cc: stable` (not a negative here)
 
-**Unresolved:** stable@ lore search (HTTP 403).
+UNRESOLVED:
+- lore HTML 403 (mbox/raw used instead)
+- Exact production hit rate of `of_clk_set_defaults()` failure on CCU
+  nodes
 
-**Step 9.2: STABLE RULES CHECKLIST**
+**Step 9.2: Stable rules**
+1. Obviously correct and tested — **PASS** (maintainer review; logic is
+   local)
+2. Real bug affecting users — **PASS** (Allwinner CCU probe fail →
+   leak/OOB)
+3. Important (crash/corruption/deadlock/security) — **PASS** (OOB;
+   incomplete unwind + free of lock)
+4. Small and contained — **PASS** (12 lines, one function)
+5. No new features/APIs — **PASS**
+6. Can apply to this tree — **PASS**
 
-1. Obviously correct and tested? **PASS** — standard debugfs lifetime;
-   maintainer applied.
-2. Real bug affecting users? **PASS** — leftover file + UAF on read
-   after remove.
-3. Important (crash/security/corruption/deadlock)? **PASS** — UAF/oops.
-   HIGH, not a hot-path panic.
-4. Small and contained? **PASS** — one file, +16/-3.
-5. No new features/APIs? **PASS**
-6. Can apply to the local tree? **PASS** — same file/functions; already
-   landed here as the upstream commit.
+**Step 9.3: Exception category**
+Record: None (not an ID/quirk/DT/build/doc exception). It is a normal
+small bugfix.
 
-**Step 9.3: EXCEPTION CATEGORIES**
-
-Record: None (not an ID/quirk/DT/build/docs exception). Ordinary bug
-fix.
-
-**Step 9.4: DECISION**
-
-This is a contained UAF fix in a long-shipped ARM DMA driver. The local
-v7.3-rc4 tree has the PL330 debugfs code; the change is the right stable
-material (crash/UAF, tiny, no new API). Missing reports and debugfs-only
-trigger do not outweigh that.
+**Step 9.4: Decision**
+This tree is **7.3-rc4**. The helper and the v6.10 index-clobber exist
+here. The patch is a surgical error-path memory-safety fix for every
+sunxi-ng CCU, including OOB on RTC when `num_ccu_clks` (12) exceeds
+`hw_clks->num` (8). It meets stable rules with very low regression risk.
 
 ---
 
-### What the commit solves
+### Problem and why it matters
 
-`init_pl330_debugfs()` created `/sys/kernel/debug/<dev>` with `pl330` as
-private data and never removed it. `pl330_remove()` then freed
-`pl330->channels` and let `devm` free `pl330`. A later debugfs read is a
-use-after-free. The patch stores the dentry and removes it first;
-`debugfs_remove()` drains active readers.
+`sunxi_ccu_probe()` registered `hw_clks` with index `i`, then reused `i`
+to walk `ccu_clks` for rate limits. On later failure it unregistered
+with that leftover `i`. Those array lengths differ on real SoCs, so
+cleanup either walks off `hws[]` or leaves clocks registered (and can
+free the `ccu` lock those clocks still use). Stable Allwinner devices
+share this helper.
 
-### Stable rules
+### Stable rules / risk
 
-Meets them: real UAF, small, no new API, applies to this driver’s
-existing debugfs code.
-
-### Risk vs benefit
-
-Benefit is preventing oops/UAF after PL330 teardown. Risk is very low.
+Small, reviewed, no features, applies cleanly. Benefit is avoiding
+OOB/UAF on CCU probe failure; risk is a loop-index change only.
 
 ### Concerns
 
-No `Fixes:` tag (introducer is `b45aef3aef636` / v5.2). No mailing-list
-stable nomination. Trigger is unbind/unload + debugfs. None of that
-blocks backport.
-
----
+Needs `ea977d742507e` (present here). Do not pull the rest of the A733
+series. Trigger is probe-error, not hot-path, but the failure mode is
+memory safety.
 
 Verification:
-- [Phase 1] Parsed tags: Link to msgid
-  `20260615091645.28878-1-pengpeng@iscas.ac.cn`; SOBs Hou + Vinod Koul;
-  no Fixes/Reported-by/Cc stable
-- [Phase 1] Body describes create-without-remove and show-callback
-  lifetime
-- [Phase 2] Diff: `drivers/dma/pl330.c` +16/-3; `dbgfs` field;
-  `deinit_pl330_debugfs` in `pl330_remove` before teardown
-- [Phase 2] Pre-patch `init_pl330_debugfs` discarded
-  `debugfs_create_file()`; `pl330_remove` had no remove
-- [Phase 2] `pl330_probe`: `devm_kzalloc` for `pl330`; `pl330_del` →
-  `kfree(pl330->channels)`
-- [Phase 2] `fs/debugfs/inode.c`: `debugfs_remove` handles
-  `IS_ERR_OR_NULL`; waits on `active_users`
-- [Phase 3] `git blame` / `git log -S init_pl330_debugfs --
-  drivers/dma/pl330.c`: introducer `b45aef3aef636` (v5.2-rc1)
-- [Phase 3] `git merge-base --is-ancestor b45aef3aef636 HEAD` and
-  `0d3e3376b289c HEAD`: both true
-- [Phase 3] `git log --oneline -20 -- drivers/dma/pl330.c`: no
-  prerequisite series
-- [Phase 3] Author log on `drivers/dma/`: only this commit
-- [Phase 4] `b4 dig -c 0d3e3376b289c`: lore match at the msgid above
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Vinod Koul, Frank Li, dmaengine@, linux-kernel@
-- [Phase 4] mbox: Vinod applied as `0d3e3376b289c`; sashiko comments
-  were pre-existing, not a NAK of this fix
-- [Phase 4] lore HTTP 403; stable@ search 403 — UNVERIFIED via
-  WebFetch/curl
-- [Phase 5] Callers: probe → init; remove → deinit; show via debugfs
-- [Phase 5] Same debugfs-remove pattern in other `drivers/dma/*` files
-- [Phase 6] `git describe HEAD` / Makefile: v7.3-rc4; `pl330.c` present;
-  fix already on HEAD
-- [Phase 7] `CONFIG_PL330_DMA` in
-  arm64/multi_v7/exynos/socfpga/hisi/axm55xx defconfigs
-- [Phase 8] Failure mode: UAF on leftover debugfs read after remove,
-  severity HIGH
-- UNVERIFIED: whether stable@ ever discussed this patch (HTTP 403)
+- [Phase 1] Tags: Sashiko Reported-by/Closes, Chen-Yu Reviewed-by, msgid
+  v4 3/9; no Fixes/Cc stable
+- [Phase 2] Diff: `i` vs `j` in `sunxi_ccu_probe()`; +6/−6 in
+  `ccu_common.c`
+- [Phase 3] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; blame:
+  bug from `ea977d742507e` (v6.10-rc7); `git merge-base --is-ancestor
+  ea977d742507e HEAD` → yes
+- [Phase 3] `git log --oneline -- drivers/clk/sunxi-ng/ccu_common.c`:
+  candidate `81f4ddc9f7e0c`; later commits are A733 features, not
+  prerequisites
+- [Phase 4] `b4 dig -c 81f4ddc9f7e0c` → lore msgid; `-a` v1–v4; `-w`
+  sunxi/clk maintainers; `-m` 25-message mbox; Chen-Yu applied 3/9; no
+  NAK
+- [Phase 4] Original Sashiko report (curl raw): High, wrong loop limit,
+  leak or OOB
+- [Phase 4] Stable lore search: no prior stable-thread hit
+- [Phase 5] Callers: `devm_sunxi_ccu_probe` / `of_sunxi_ccu_probe` → all
+  sunxi-ng CCU drivers
+- [Phase 5] H6 127 vs 138; A64 104 vs 115; RTC 12 vs 8
+  (`CLK_NUMBER_NO_GATES`) verified in tree
+- [Phase 5] `of_clk_add_hw_provider` can return `-ENOMEM` or
+  `of_clk_set_defaults` error
+- [Phase 6] Pre-fix source at `81f4ddc9f7e0c^` still uses one `i`;
+  current file already has `j`
+- [Phase 7] MAINTAINERS: Chen-Yu Tsai maintains `drivers/clk/sunxi-ng/`
+- [Phase 8] Failure mode: OOB / leak / possible lock UAF on probe error
+  — HIGH, error-path
+- UNVERIFIED: live user crash report beyond Sashiko; lore HTML pages
+  (403)
 
 **YES**
 
- drivers/dma/pl330.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/clk/sunxi-ng/ccu_common.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 82a9fe88ad54c..fe4d266ee611c 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -502,6 +502,7 @@ struct pl330_dmac {
- 	struct dma_pl330_chan *peripherals; /* keep at end */
- 	int quirks;
- 
-+	struct dentry		*dbgfs;
- 	struct reset_control	*rstc;
- 	struct reset_control	*rstc_ocp;
- };
-@@ -2958,14 +2959,24 @@ DEFINE_SHOW_ATTRIBUTE(pl330_debugfs);
- 
- static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
+diff --git a/drivers/clk/sunxi-ng/ccu_common.c b/drivers/clk/sunxi-ng/ccu_common.c
+index c7e00f0c29a55..bbda75c2bc461 100644
+--- a/drivers/clk/sunxi-ng/ccu_common.c
++++ b/drivers/clk/sunxi-ng/ccu_common.c
+@@ -114,7 +114,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 			   const struct sunxi_ccu_desc *desc)
  {
--	debugfs_create_file(dev_name(pl330->ddma.dev),
--			    S_IFREG | 0444, NULL, pl330,
--			    &pl330_debugfs_fops);
-+	pl330->dbgfs = debugfs_create_file(dev_name(pl330->ddma.dev),
-+					   S_IFREG | 0444, NULL, pl330,
-+					   &pl330_debugfs_fops);
-+}
-+
-+static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
-+{
-+	debugfs_remove(pl330->dbgfs);
-+	pl330->dbgfs = NULL;
- }
- #else
- static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
- {
- }
-+
-+static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
-+{
-+}
- #endif
+ 	struct ccu_reset *reset;
+-	int i, ret;
++	int i, j, ret;
  
- /*
-@@ -3211,6 +3222,8 @@ static void pl330_remove(struct amba_device *adev)
- 	struct dma_pl330_chan *pch, *_p;
- 	int i, irq;
+ 	ccu->desc = desc;
  
-+	deinit_pl330_debugfs(pl330);
-+
- 	pm_runtime_get_noresume(pl330->ddma.dev);
+@@ -130,8 +130,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 		cclk->lock = &ccu->lock;
+ 	}
  
- 	if (adev->dev.of_node)
+-	for (i = 0; i < desc->hw_clks->num ; i++) {
+-		struct clk_hw *hw = desc->hw_clks->hws[i];
++	for (j = 0; j < desc->hw_clks->num ; j++) {
++		struct clk_hw *hw = desc->hw_clks->hws[j];
+ 		const char *name;
+ 
+ 		if (!hw)
+@@ -143,7 +143,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 		else
+ 			ret = of_clk_hw_register(node, hw);
+ 		if (ret) {
+-			pr_err("Couldn't register clock %d - %s\n", i, name);
++			pr_err("Couldn't register clock %d - %s\n", j, name);
+ 			goto err_clk_unreg;
+ 		}
+ 	}
+@@ -186,8 +186,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ err_del_provider:
+ 	of_clk_del_provider(node);
+ err_clk_unreg:
+-	while (--i >= 0) {
+-		struct clk_hw *hw = desc->hw_clks->hws[i];
++	while (--j >= 0) {
++		struct clk_hw *hw = desc->hw_clks->hws[j];
+ 
+ 		if (!hw)
+ 			continue;
 -- 
 2.53.0
 
