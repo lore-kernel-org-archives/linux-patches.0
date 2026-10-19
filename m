@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C459E3CB;
-	Mon, 19 Oct 2026 13:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E392759F4E5;
+	Mon, 19 Oct 2026 13:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418366; cv=none; b=WiX1UYOfKncG6qpng1xK57t3j77AOOFVhYCEA0dor7Qau6sOJDxDPa1l0cl9bEwjzxsyqO+u6SFjhRIDZOOl15KPks2BLBvCOtRtIlCemP107nYsQMBuZOAgOgT+lilUWDSSmhbmM5jr8CsfjMQzm/wpK4EqdsHYhcFG03j6mCU=
+	t=1792418368; cv=none; b=lVmgkS8mDTq1d6Sx12hyu6cY4ad42Udg+kH+1m7uHC1rtXR5Hew1ME1jiLOmmYQCXghsWmZVgVreLkMsm1+tAJ6y/9NW0ebQIJYvvVa5ZNl0UMSlOk4wuAC0IhyAw+nlczBm27Gfpb7TZY65hoUBAgnd04OhHwcJy4ZDDLfsQu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418366; c=relaxed/simple;
-	bh=MviBe4MznznVxsVgPkS0AqNmhANgA8yAJYxoTX4/4tA=;
+	s=arc-20240116; t=1792418368; c=relaxed/simple;
+	bh=LmtkZ2SV1/chEwC4xhQ3CvS+sPilx0UDFXeyUOFAGrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cJGb3Ve95aO6LYas5mThgVQnM3dfGxa297FIXJtZSG+5Ryqq8dwlJePtwmLJEUO1zmn53g3wJl0+G6B6swt8C0zK9RGotEYWU/8EcfXUcTg4GWzFiRtiXtBxjV/WpG6QID89ZFfusJfwgBzEt3QIOPsFkgbN5f757NcgbBOzTfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpbRMVb9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h70IXBOggBIEjGbi4sFvXzSxjowm+pLBNHYSIRwgK6clpq6XxtlSEfhZggBVW/VDs4lizZUTHCKjulh+GhIFiCifK/8quEUKVPjSHOmU7WLWZpRy3tz2Tx9WZ55vveMgmwXvxoet66CzcJQc2fHph9K9MhlS7LiFCChzda0DLo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bJcgu4J+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpbRMVb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D421F000C6;
-	Mon, 19 Oct 2026 13:59:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJcgu4J+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775D51F000C8;
+	Mon, 19 Oct 2026 13:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418364;
-	bh=rf3jQXJMEDBahfFqGErEQK7QyYPwTAQXBV+5PDuGPRs=;
+	s=k20260515; t=1792418365;
+	bh=dfaSzENZdtWDtRhEiA8zAhs3rBjmvEZNAHYLn8XcjZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpbRMVb9qiHEGaZ7OJ1dxsuvZ1HoINsdkBvf22z+/h2Ik11DUSs/Etv/r0aUscOq7
-	 X6YHBtjaT8T1mAup/AdRQ4oNq/IUKT+wsEAaBqoYKQzp5PIXP6/B9CtfiBGWjqHkG9
-	 iTzkzmrMDliP0m7yTgg/UlJGl/D3SYHh0TDx58F99jja/q7ijLPX3FMi7vT530THa5
-	 gQ+x2sey4OsMO7lrRWXBBB3csxs90E6QIhcjQdGNyfWKU8vI0FmkgPTPrA5bN8iUaY
-	 tmMg14DhdBBNWaiAuZ9qIKyQ1VG8mJXGRp43SkW+PSreX46rwhRuQDrLyxJDDrgq1/
-	 QGdFzGx59NdzQ==
+	b=bJcgu4J+o66k+IW1Zoio421HZIen1v1j/QJpuUDyBdNoNDYQaIqeiSgG9YDyCiFPj
+	 nIqcy0YA+MPYiVxY2Cr9HoMzE7k4UrW6qfQm/OEn54NV+sGVhBUEcDVffTA1m0E0Rv
+	 ou01qVcRZ/aMQyF5DCEcw/cwqMPPeAplLCKKsbKFRyvVRb6c7rJ3lGdBCL7eYFaAHD
+	 Ve2fxoMg33wpE2tilOIS2dF2VZhf3pPmnA/LwgsUmJQKgQ6mlfqAcY6sCTWtSQHe0A
+	 7Oayg3ZjUVp1PkuOu8yfrv0BSvyGb5NVr2rhc4a11Zdf4Qum6YpHP8asHp4HeBR+RV
+	 xDkOyJa7zA7ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Xixin Liu <liuxixin@kylinos.cn>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	hare@suse.de,
+	axboe@kernel.dk,
+	sagi@grimberg.me,
+	kch@nvidia.com,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] smb/server: cancel async requests when closing connection
-Date: Mon, 19 Oct 2026 09:48:06 -0400
-Message-ID: <20261019135441.1420968-195-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] nvme-auth: use crypto_memneq for DH-HMAC-CHAP response comparison
+Date: Mon, 19 Oct 2026 09:48:07 -0400
+Message-ID: <20261019135441.1420968-196-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,405 +58,491 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851 ]
+[ Upstream commit 3a6d89836ab09d53f4c32c57588689a378ce4363 ]
 
-An async request may still be waiting when a connection is closed.
-This can stop the connection from closing.
+DH-HMAC-CHAP authentication compares HMAC response digests with memcmp().
+Standard memcmp() may stop at the first differing byte, which can leak
+timing information to a remote attacker and allow incremental recovery
+of the expected digest.
 
-Cancel active async requests before waiting for them to finish.
+Use crypto_memneq() for constant-time comparison on both the host path
+that validates the controller Success1 response and the target path that
+validates the host Reply digest.  Other memcmp() uses in the NVMe auth
+code (e.g. fixed string prefix checks) are not security-sensitive and
+are left unchanged.
 
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`p-6.12-3-gc504cf0baa3d8`). The hang is
-in this tree: `ksmbd_conn_handler_loop()` waits for `r_count == 0`
-without cancelling blocked SMB2_LOCK async work.
+The local tree is **v7.3-rc4** (`7.3.0-rc4`, `f0100363d8c37`). The
+commit under review is `3a6d89836ab09` (“nvme-auth: use crypto_memneq
+for DH-HMAC-CHAP response comparison”). It is already an ancestor of
+HEAD (landed in v7.3-rc1). That does not decide the backport question;
+the decision below is on technical merit and whether the bug exists in
+this lineage.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[smb/server (ksmbd)] [cancel] [cancel async requests when
-closing connection]**
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record: **[nvme-auth]** **[use]** Replace `memcmp()` with
+`crypto_memneq()` when comparing DH-HMAC-CHAP HMAC response digests.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Suggested-by: Namjae Jeon `<linkinjeon@kernel.org>` (ksmbd maintainer;
-  he asked for this)
-- Signed-off-by: ChenXiaoSong `<chenxiaosong@kylinos.cn>` (author)
-- Signed-off-by: Namjae Jeon `<linkinjeon@kernel.org>` (maintainer
-  applied it)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Link:, or Cc:
-  stable (absence is expected)
+- `Fixes:` — none (expected)
+- `Reported-by:` — none
+- `Tested-by:` — none
+- `Reviewed-by: Hannes Reinecke <hare@kernel.org>` (author of the
+  original NVMe in-band auth code)
+- `Reviewed-by: Christoph Hellwig <hch@lst.de>`
+- `Link:` — none in the commit
+- `Cc: stable@vger.kernel.org` — none (expected)
+- `Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>` (author)
+- `Signed-off-by: Keith Busch <kbusch@kernel.org>` (NVMe maintainer)
+- Ignore pipeline `Signed-off-by: Sasha Levin` if present; it is not in
+  this commit
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: an async request can still be waiting when the connection closes
-- Symptom: connection teardown never finishes (`wait_event` on `r_count`
-  never wakes)
-- Root cause: teardown waits for pending work but does not invoke the
-  same `cancel_fn` path that SMB2_CANCEL uses
-- Version info: none in the message; mechanism is independent of
-  CHANGE_NOTIFY
+- **Bug:** DH-HMAC-CHAP compares HMAC response digests with `memcmp()`,
+  which can return at the first differing byte.
+- **Symptom/failure mode:** Timing leak of how far the computed HMAC
+  matches the expected digest; a remote attacker could try to recover
+  the expected digest incrementally.
+- **Version information:** none in the message. Keith later said on-list
+  it was applied “for 7.2”; `git merge-base --is-ancestor` shows it is
+  **not** in `v7.2` and **is** in `v7.3-rc1`.
+- **Root cause (author):** variable-time comparison of authentication
+  MAC material.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hang fix. The series
-cover letter says “in preparation for change notify,” but this patch
-describes a pre-existing teardown hang. In this 6.12 tree CHANGE_NOTIFY
-is still `STATUS_NOT_IMPLEMENTED`; SMB2_LOCK already waits
-asynchronously.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Not a disguised cleanup. It is an explicit security/correctness
+change: secret MAC comparison must be constant-time. The remaining
+`memcmp()` uses (string prefixes, GUIDs) are called out as non-sensitive
+and left alone.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `fs/smb/server/connection.c` only (~21 lines added)
-- New helper: `ksmbd_conn_cancel_async_requests()`
-- Call site: `ksmbd_conn_handler_loop()` after
-  `ksmbd_conn_set_releasing()`, before `wait_event(conn->r_count_q,
-  ...)`
-- Scope: single-file surgical fix
+**Step 2.1: INVENTORY THE CHANGES**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: handler loop exits → set RELEASING → sleep until `r_count ==
-  0` → disconnect. A worker blocked in `ksmbd_vfs_posix_lock_wait()`
-  never drops `r_count`.
-- After: same path, but first walk `conn->async_requests` under
-  `request_lock`, mark ACTIVE work `KSMBD_WORK_CANCELLED`, and call
-  `cancel_fn` so waiters wake and drain.
+- `drivers/nvme/host/auth.c`: +2 / −1 (`#include <crypto/utils.h>`;
+  `memcmp` → `crypto_memneq` in `nvme_auth_process_dhchap_success1`)
+- `drivers/nvme/target/fabrics-cmd-auth.c`: +2 / −1 (same include;
+  `memcmp` → `crypto_memneq` in `nvmet_auth_reply`)
+- **Scope:** two-file surgical fix, 4 insertions, 2 deletions. No API,
+  Kconfig, or data-structure changes.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: hang / stuck kthread (logic/correctness: missing
-  cancellation on teardown)
-- Mechanism: SMB2_LOCK deferred wait holds an `r_count` ref. Teardown
-  did not call `smb2_remove_blocked_lock()` (`locks_delete_block` +
-  `locks_wake_up`). Same pattern as existing `smb2_cancel()`. Non-ACTIVE
-  work is skipped (avoids the known `file_lock` UAF on
-  CANCELLED/CLOSED).
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Quality: obviously correct; copies the `smb2_cancel()` ACTIVE +
-  `cancel_fn` pattern
-- Regression risk: low. `cancel_fn` under `request_lock` is already how
-  `smb2_cancel()` works. `cancel_fn` may be NULL (oplock interim work);
-  the new code checks that. Patch 3 of the series closes a remaining
-  TOCTOU if `setup_async_work()` runs after this walk; that is a
-  separate, rarer race, not a reason to reject this patch.
+- **Host (`nvme_auth_process_dhchap_success1`):** after `data->hl ==
+  chap->hash_len` and `data->rvalid`, the host used to
+  `memcmp(chap->response, data->rval, data->hl)`. Now
+  `crypto_memneq(...)`. Failure still sets
+  `NVME_AUTH_DHCHAP_FAILURE_FAILED` and returns `-ECONNREFUSED`.
+- **Target (`nvmet_auth_reply`):** after computing the expected host
+  HMAC into `response`, the target used to `memcmp(data->rval, response,
+  data->hl)`. Now `crypto_memneq(...)`. Failure still frees `response`
+  and returns `NVME_AUTH_DHCHAP_FAILURE_FAILED`.
+- Affected path: authentication success/reply validation only, not
+  probe/init/error-unrelated code.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Memory safety / crypto side channel]** Variable-time
+`memcmp()` on HMAC digests. `crypto_memneq()` (`include/crypto/utils.h`)
+is documented as “Compare two areas of memory without leaking timing
+information” and returns 0 if equal, 1 otherwise — same boolean sense as
+`if (memcmp(...))`.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: Obviously correct and minimal. Length `data->hl` is already
+checked against `chap->hash_len` on the host path. Return-value polarity
+matches. Regression risk is very low: same control flow, slightly more
+work per compare (HMAC length is 32–64 bytes). No new locks, APIs, or
+userspace ABI.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- `wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0)` comes
-  from `a14c573870a664` (“ksmbd: use wait_event instead of
-  schedule_timeout()”, Jul 2022)
-- `ksmbd_conn_set_releasing()` from `abcc506a9a7197` (2023)
-- Async cancel via `cancel_fn` has existed since cifsd
-  (`e2f34481b24db2`, 2021)
-- Buggy teardown wait has been in this lineage for years, including 6.12
+- Host `memcmp`: introduced in `f50fff73d620cd` (“nvme: implement In-
+  Band authentication”, Hannes Reinecke, 2022). **In `v6.0`**, not in
+  `v5.19`.
+- Target `memcmp`: introduced in `db1312dd95488b` (“nvmet: implement
+  basic In-Band Authentication”). Same merge window, **v6.0**.
+- The buggy comparison has been in tree for many years.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Related: `ddb9239828336` / `89ae9df09d2c1` — UAF if `cancel_fn` is
-  fired on non-ACTIVE deferred locks (already in this tree; this patch
-  uses the same ACTIVE guard)
-- `setup_async_work()` / `release_async_work()` already present
-- This commit is not in HEAD (`git log --grep='cancel async requests
-  when closing'` on `fs/smb/server/` is empty)
+Record: No `Fixes:` tag. The introducing commits above are the
+functional equivalent. Both are ancestors of this tree.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: ChenXiaoSong has other ksmbd backports in this tree (PDU size,
-etc.). Namjae Jeon is the ksmbd maintainer and both suggested and
-applied this.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No code dependency on series patch 1 (signing). Patch 3
-(`setup_async_work` refuses new async on EXITING/RELEASING) is
-complementary, not required for the helper or call site. All symbols
-(`KSMBD_WORK_ACTIVE`, `async_requests`, `request_lock`, `cancel_fn`,
-`ksmbd_debug(CONN, ...)`) exist here. Standalone apply is viable.
+Record: Recent work on these files is auth bounds-checking, hashing
+updates, and secure-channel concatenation. This commit is standalone
+(subject is not `N/M`). No prerequisite refactor is required for the
+two-line swap plus include.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Xixin Liu is a contributor, not the NVMe auth maintainer. Weight
+comes from **Reviewed-by Hannes Reinecke** (original auth author) and
+**Christoph Hellwig**, applied by **Keith Busch**.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: Depends only on `crypto_memneq()` / `<crypto/utils.h>`. In this
+tree, `include/crypto/utils.h` exists (`c616fb0cbae8`, 2023) and
+`CONFIG_CRYPTO` selects `CRYPTO_LIB_UTILS` (`lib/crypto/memneq.c`).
+`NVME_AUTH` already `select CRYPTO`. Standalone on this tree.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig` cannot match a SHA that is not in this checkout (lore search
-  from `b4` also 403’d)
-- Thread recovered from lore mirrors: https://ratatoskr.run/linux-
-  cifs/2026/07/17307517/t
-- Series: `[PATCH v3 0/3] smb/server: fix some bugs in preparation for
-  change notify support`
-- v2→v3: this patch switched to `list_for_each_entry_safe()`
-- Namjae: “Applied 0001 and 0002 patch to #ksmbd-for-next-next.” Patch 3
-  was rewritten separately.
-- Later landed in the ksmbd 7.3-rc1 pull as “smb/server: cancel async
-  requests when closing connection”
-- No NAK. No reviewer objection to patch 2.
+- `b4 dig -c 3a6d89836ab09` → https://patch.msgid.link/0001.nvme-auth-
+  memneq.1781751816.git.liuxixin@kylinos.cn
+- `b4 dig -a`: **v1 only** (no v2/v3). Applied as submitted.
+- Thread (mbox): Christoph: “Looks good” + Reviewed-by. Hannes:
+  Reviewed-by. No NAK, no stable discussion, no requested changes.
+- Keith (2026-09-15): applied earlier; pointed at `3a6d89836ab09`.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Suggested-by and applied by Namjae Jeon. Recipients were linux-
-cifs / ksmbd maintainers (from the v3 thread).
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Found while implementing CHANGE_NOTIFY;
-author states the hang is a pre-existing bug. Trigger is concrete:
-disconnect while SMB2_LOCK is deferred.
+Record (`b4 dig -w`): To/Cc included `linux-nvme@lists.infradead.org`,
+Keith Busch, Jens Axboe, Christoph Hellwig, Sagi Grimberg, Chaitanya
+Kulkarni, Hannes Reinecke. Right maintainers were on the patch.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Patch 1 is unrelated signing. Patch 3/Namjae follow-up (“avoid
-registering async requests during connection close”) is a race follow-
-up. Patch 2 was applied on its own.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No useful stable-list hit for this subject. Not previously
-rejected for stable (search did not surface a ksmbd discussion of this
-patch).
+Record: No `Reported-by`, bugzilla, or syzbot. This is code-audit /
+crypto-hygiene, not a user crash report.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Cover was `[PATCH v1 0/1]` / `[PATCH v1 1/1]` — single patch.
+Precedent in this tree: `ksmbd: Compare MACs in constant time`
+(`c5794709bc910`, had `Cc: stable`); `scsi: target: Use constant-time
+crypto_memneq() for CHAP digests` (`cf14fc2be8688`); TPM/SMB client
+similar replacements.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: **UNVERIFIED** on lore.kernel.org/stable (WebFetch 403,
+WebSearch failed). The original NVMe thread never mentions `stable@`.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: added `ksmbd_conn_cancel_async_requests()`; one call from
-`ksmbd_conn_handler_loop()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
-Step 5.2: TRACE CALLERS
+Record: `nvme_auth_process_dhchap_success1`, `nvmet_auth_reply`.
+Includes only otherwise.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- `ksmbd_conn_handler_loop()` is the per-connection kthread (TCP/RDMA
-  receive loop)
-- After loop exit (client drop, PDU error, `ksmbd_conn_alive()` false,
-  module stop)
+- `nvme_auth_process_dhchap_success1` ← `nvme_queue_auth_work` in
+  `drivers/nvme/host/auth.c` (DH-HMAC-CHAP Success1 after AUTH_RECEIVE).
+  Queued from connect / `dhchap_auth_work` / sysfs re-auth.
+- `nvmet_auth_reply` ← `nvmet_execute_auth_send` when the DH-HMAC-CHAP
+  step is Reply. `nvmet_execute_auth_send` is the fabrics AUTH_SEND
+  execute handler (`drivers/nvme/target/fabrics-cmd.c`).
 
-Step 5.3: TRACE CALLEES
-Record: `spin_lock(request_lock)`, list walk,
-`work->cancel_fn(work->cancel_argv)`. For lock waiters,
-`smb2_remove_blocked_lock()` → `ksmbd_vfs_posix_lock_unblock()` /
-`locks_wake_up()`.
+**Step 5.3: TRACE CALLEES**
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace/SMB client can trigger it: SMB2_LOCK that returns
-`FILE_LOCK_DEFERRED` → `setup_async_work(..., smb2_remove_blocked_lock,
-...)` → `ksmbd_vfs_posix_lock_wait()` → client disconnect → handler
-`wait_event(r_count)`. Reachable from a normal SMB session. In 6.12 the
-only long-lived async waiter with `cancel_fn` is SMB2_LOCK
-(`smb2_notify()` is a stub; oplock `setup_async_work(in_work, NULL,
-NULL)` is immediately released).
+Record: Target computes expected HMAC via `nvmet_auth_host_hash()` (HMAC
+over challenge `dhchap_c1`, transformed host key, etc.), then compares.
+Host compares precomputed `chap->response` to controller `rval`. No
+allocation/locking change in the hunks.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: `smb2_cancel()` and `set_close_state_blocked_works()` already
-cancel this way. Teardown was the missing caller.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: **Reachable from the network** on an NVMe-oF target with
+`CONFIG_NVME_TARGET_AUTH`. An unauthenticated remote host sending
+AUTH_SEND Reply hits `nvmet_auth_reply`. Host path is hit when
+connecting with in-band auth / bidirectional controller auth. Not a
+syscall smash; it is the authentication protocol itself.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: After this commit, no remaining `memcmp` of HMAC material in
+`drivers/nvme/host/auth.c` or `drivers/nvme/target/fabrics-cmd-auth.c`.
+Other NVMe `memcmp` uses are prefix/GUID/debugfs checks, which the
+commit correctly left alone.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `fs/smb/server/connection.c` ~522–524:
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-```
-out:
-        ksmbd_conn_set_releasing(conn);
-        /* Wait till all reference dropped to the Server object*/
-        wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0);
-```
+Record: Yes, in this lineage since v6.0. This checkout already contains
+the fix (`crypto_memneq` at `drivers/nvme/host/auth.c:365` and
+`drivers/nvme/target/fabrics-cmd-auth.c:189`). The pre-fix `memcmp` is
+in `3a6d89836ab09^`.
 
-`ksmbd_conn_cancel_async_requests` is absent. `r_count` is inc’d in
-`queue_ksmbd_work()` and dec’d only when `handle_ksmbd_work()` finishes.
-Introduced with `a14c573870a664` (2022), present throughout 6.12.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: First hunk (new helper after `ksmbd_conn_try_dequeue_request`)
-matches this tree. Second hunk context includes a later
-`ksmbd_debug(CONN, "Wait for all pending requests...")` line that 6.12
-does not have. Expected difficulty: **minor context tweak** — insert the
-one call after `ksmbd_conn_set_releasing(conn)`.
+Record: **Clean apply on this tree** (already applied). Include is
+`<crypto/utils.h>`, which this 7.3 tree has. For much older stables the
+header was `crypto/algapi.h`; that is not a problem **here**.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No equivalent cancel-on-close. UAF guards on `smb2_cancel()` are
-already here and align with this patch’s ACTIVE check.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: This *is* the fix in this tree. No earlier alternate memneq
+conversion on these files.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: `fs/smb/server` (ksmbd). **IMPORTANT** for systems that enable
-`CONFIG_SMB_SERVER`; not core VFS/mm. Default is `n`.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively developed; many ksmbd stable backports already on this
-6.12 branch. The hang itself is old, not a 7.x-only feature bug.
+Record: NVMe over Fabrics in-band authentication
+(`drivers/nvme/host/auth.c`, `drivers/nvme/target/fabrics-cmd-auth.c`).
+**IMPORTANT** for NVMe-oF deployments that enable auth; not core mm/VFS.
+Configs: `NVME_HOST_AUTH` / `NVME_TARGET_AUTH` (help text “If unsure,
+say N”), both select `NVME_AUTH`.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained (recent OOB/auth bounds fixes on the same
+files). Auth itself has been stable in design since 2022.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: ksmbd users (`CONFIG_SMB_SERVER`) who have a client block on
-SMB2_LOCK and then drop the connection. Also anyone unloading ksmbd
-while such a connection exists (`stop_sessions()` keeps looping until
-connections are gone).
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Byte-range lock conflict + disconnect/network drop. Not every
-connection; common SMB clients do use locks. Unprivileged SMB clients on
-an exported share can trigger it. Not a tiny race: the waiter is already
-parked on `flc_wait`.
+Record: Config-specific (`NVME_HOST_AUTH` / `NVME_TARGET_AUTH`) and only
+during DH-HMAC-CHAP. Target comparison is the access-control check for
+remote hosts.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Connection kthread sleeps forever in `wait_event`; connection
-never fully released; module teardown can stall in `stop_sessions()`.
-**Severity: HIGH** (hang / stuck kthread; not a panic, not data
-corruption).
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for ksmbd — prevents teardown/unload hangs
-- Risk: low — ~21 lines, one file, established cancel path
-- Ratio: favors backport
+Record: Every in-band auth exchange that validates an HMAC response.
+Target path: remote peer during AUTH_SEND Reply. Host path:
+bidirectional controller auth when `rvalid` is set. Unprivileged remote
+initiator can hit the target compare if the subsystem is enabled.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: **Timing side channel on authentication MACs.** Severity
+**HIGH** as a security defect (auth protocol using variable-time
+compare). Practical “byte-by-byte recover the static secret” is weaker
+than the commit text implies: `nvmet_auth_host_hash()` HMACs a per-
+session challenge (`dhchap_c1`), so the expected digest is not a stable
+value across attempts. Same caveat as the SCSI CHAP memneq patch. It is
+still the wrong primitive for MAC compare; ksmbd’s analogous change was
+`Cc: stable`.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record: **Benefit: high** for NVMe-oF auth users (closes a real class of
+crypto bug on a remote-facing check). **Risk: very low** (4 insertions,
+same branches, standard helper). Ratio strongly favors applying it.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real hang in this 6.12 tree when SMB2_LOCK is deferred across
-  disconnect
-- Small, obviously correct, maintainer-suggested and applied
-- Same cancel protocol as `smb2_cancel()`, with the ACTIVE guard already
-  required here
-- No missing types/helpers in this tree
+**Step 9.1: COMPILE THE EVIDENCE**
 
-AGAINST:
-- Series was framed around CHANGE_NOTIFY (not in 6.12 as a real waiter)
-- Follow-up patch 3 not included (rarer TOCTOU)
-- ksmbd is config-optional
-- No public crash report / syzbot
+**FOR:**
+- Real crypto bug: `memcmp` on HMAC responses in DH-HMAC-CHAP
+- Remote-facing target auth path
+- 4-line, obviously correct replacement with the kernel’s constant-time
+  helper
+- Reviewed by Hannes Reinecke and Christoph Hellwig; applied by Keith
+  Busch
+- Bug present since v6.0; `crypto_memneq` already available here
+- Same pattern as other MAC compares that stable has taken (e.g. ksmbd)
+- No new feature/API; no locking/ABI change
 
-UNRESOLVED:
-- Could not `b4 dig` a local SHA (commit not in this checkout)
-- lore.kernel.org fetches returned 403; used ratatoskr/openwall mirrors
-  instead
-- No stable-list discussion found
+**AGAINST:**
+- Optional Kconfig (default N)
+- No CVE/syzbot/user report
+- Incremental digest recovery is harder than the message states because
+  HMAC input includes a unique challenge
+- No in-thread `Cc: stable`
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — mirrors `smb2_cancel()`;
-   maintainer applied v3
-2. Fixes a real bug that affects users? **PASS** — teardown hang on
-   deferred lock + disconnect
-3. Important issue? **PASS** — hang / stuck connection kthread (HIGH)
-4. Small and contained? **PASS** — one file, ~21 lines
+**UNRESOLVED:**
+- Whether stable@ ever discussed this (lore stable search failed)
+- Practical remote exploitability over NVMe-oF (network jitter)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — polarity of `crypto_memneq`
+   matches `memcmp`; reviewed by auth author and NVMe core reviewers; in
+   mainline since 7.3-rc1.
+2. Fixes a real bug that affects users? **PASS** — wrong comparison
+   primitive on live HMAC auth; users with NVMe-oF in-band auth are
+   affected.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   security (timing leak on authentication MAC), HIGH.
+4. Small and contained? **PASS** — 2 files, +4/−2.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — bug present; one-line context
-   adjustment for missing debug print
+6. Can apply to the local tree? **PASS** — already applied;
+   `<crypto/utils.h>` and `CRYPTO_LIB_UTILS` are present.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not an ID/quirk/DT/build/docs exception). It is a normal
-hang fix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Step 9.4: MAKE YOUR DECISION
-This is a hang fix that belongs on 6.12. The CHANGE_NOTIFY framing is
-not a reason to skip it: the waiter that deadlocks teardown is already
-SMB2_LOCK. Patch 3 is a nice follow-up, not a prerequisite for this
-change to be correct for already-queued async work.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a small
+security fix, which is in-scope for stable on its own.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This is a small, maintainer-reviewed security fix for NVMe-oF DH-HMAC-
+CHAP: the host Success1 path and the target Reply path compared HMAC
+digests with `memcmp()`. That can leak match length. `crypto_memneq()`
+is the established kernel helper; control flow is unchanged. The code
+has existed since v6.0, applies cleanly here, and does not need extra
+commits.
+
+Even if full incremental recovery of a static digest is unlikely because
+each HMAC includes a fresh challenge, stable trees should not leave
+authentication MACs on a variable-time compare. Risk is negligible;
+benefit is closing a real crypto-hygiene hole on a network-facing auth
+check.
+
+### What problem it solves and why it matters
+DH-HMAC-CHAP is NVMe-oF in-band authentication. The target decides
+whether the host’s Reply HMAC is correct; the host (when bidirectional)
+decides whether the controller’s Success1 HMAC is correct. Using
+`memcmp()` can stop at the first mismatch and leak timing. Stable users
+who enable this optional auth still need that check to be constant-time.
+
+### Stable rules
+The patch is obviously correct, tiny, already reviewed, and does not add
+features. It fixes a security issue, not a style nit.
+
+### Risk vs benefit
+Very low regression risk versus a meaningful security improvement for
+NVMe-oF auth. Header/`CRYPTO_LIB_UTILS` dependencies are already
+satisfied in this 7.3 tree.
+
+### Concerns
+Exploitability is weaker than a static-secret `memcmp` leak; feature is
+optional. Neither outweighs applying a 4-line, standard crypto fix.
 
 Verification:
-- [Phase 1] Parsed tags: Suggested-by/SOB Namjae Jeon; author
-  ChenXiaoSong; no Fixes/Cc/Reported-by
-- [Phase 2] Diff: +21 lines in `connection.c`; helper + one call before
-  `wait_event`
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.12.111,
-  `p-6.12-3-gc504cf0baa3d8`
-- [Phase 3] `git blame` on wait path: `a14c573870a664` (2022) introduced
-  `wait_event` without async cancel
-- [Phase 3] `git log --grep='cancel async requests when closing' --
-  fs/smb/server/`: empty — not in this tree
-- [Phase 3] `git merge-base --is-ancestor ddb9239828336 HEAD`: yes —
-  ACTIVE-state UAF guard already present
-- [Phase 3] Confirmed `ksmbd_conn_try_dequeue_request` /
-  `ksmbd_conn_lock` match insertion context
-- [Phase 4] b4 dig on a local SHA: lore 403; candidate commit not in
-  tree
-- [Phase 4] v3 thread: Namjae applied 0001 and 0002; patch 3 rewritten
-- [Phase 4] 7.3-rc1 ksmbd pull lists this subject
-- [Phase 5] `setup_async_work` callers: `smb2_lock` (real waiter) and
-  oplock (NULL cancel_fn, immediate release)
-- [Phase 5] `smb2_notify()` in this tree returns
-  `STATUS_NOT_IMPLEMENTED`
-- [Phase 6] Local lines 521–524: set_releasing then wait_event, no
-  cancel
-- [Phase 6] Backport: helper applies cleanly; call site needs dropping
-  unavailable debug context
-- [Phase 8] Failure mode verified: `queue_ksmbd_work` incs `r_count`;
-  lock wait never returns so `ksmbd_conn_r_count_dec` never runs
-- UNVERIFIED: original lore.kernel.org HTML (403); no stable@ thread
-  found
+- [Phase 1] Parsed commit `3a6d89836ab09`: no Fixes/Reported-
+  by/Cc:stable; Reviewed-by Hannes Reinecke and Christoph Hellwig; SOB
+  Keith Busch
+- [Phase 2] Diff: +`#include <crypto/utils.h>` and
+  `memcmp`→`crypto_memneq` in `nvme_auth_process_dhchap_success1` and
+  `nvmet_auth_reply` (+4/−2)
+- [Phase 2] `include/crypto/utils.h`: `crypto_memneq` returns 0 if
+  equal, 1 otherwise — matches `if (memcmp(...))`
+- [Phase 3] `git blame` on parent: host memcmp from `f50fff73d620cd`
+  (v6.0); target from `db1312dd95488b` (v6.0)
+- [Phase 3] `git merge-base --is-ancestor f50fff73d620cd v6.0` yes;
+  `v5.19` no
+- [Phase 3] No Fixes tag to follow
+- [Phase 3] Standalone 1/1 series; `NVME_AUTH` selects `CRYPTO`;
+  `CRYPTO` selects `CRYPTO_LIB_UTILS`
+- [Phase 4] `b4 dig -c 3a6d89836ab09`: lore msgid `0001.nvme-auth-
+  memneq.1781751816.git.liuxixin@kylinos.cn`
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: linux-nvme plus
+  Busch/Axboe/Hellwig/Grimberg/Kulkarni/Reinecke
+- [Phase 4] mbox: Christoph “Looks good”; Hannes Reviewed-by; no NAK;
+  Keith: applied as `3a6d89836ab09`
+- [Phase 4] WebFetch lore 403; WebSearch failed; stable-list discussion
+  UNVERIFIED
+- [Phase 5] Callers: host auth workqueue; target
+  `nvmet_execute_auth_send` ← fabrics AUTH_SEND (remote)
+- [Phase 5] `nvmet_auth_host_hash` HMACs `dhchap_c1` (per-session
+  challenge) — verified in `drivers/nvme/target/auth.c`
+- [Phase 5] No leftover HMAC `memcmp` in the two auth files
+- [Phase 6] `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 6] `git merge-base --is-ancestor 3a6d89836ab09 HEAD` yes; not
+  in `v7.2`; yes in `v7.3-rc1`
+- [Phase 6] Local files already use `crypto_memneq` at the two call
+  sites
+- [Phase 8] Failure mode: timing leak on auth MAC compare; severity HIGH
+  (security); trigger: NVMe-oF in-band auth
+- UNVERIFIED: practical remote exploitability; whether stable@ already
+  discussed the patch
 
 **YES**
 
- fs/smb/server/connection.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/nvme/host/auth.c               | 3 ++-
+ drivers/nvme/target/fabrics-cmd-auth.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 16fcedf45739f..8f1b70e39362e 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -232,6 +232,26 @@ void ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
- 	wake_up_all(&conn->req_running_q);
- }
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 8f3ccb317e4de..9d73713d6f828 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -9,6 +9,7 @@
+ #include <linux/unaligned.h>
+ #include <crypto/hash.h>
+ #include <crypto/dh.h>
++#include <crypto/utils.h>
+ #include "nvme.h"
+ #include "fabrics.h"
+ #include <linux/nvme-auth.h>
+@@ -381,7 +382,7 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
+ 		return 0;
  
-+static void ksmbd_conn_cancel_async_requests(struct ksmbd_conn *conn)
-+{
-+	struct ksmbd_work *work, *tmp;
-+
-+	ksmbd_debug(CONN, "Cancel pending async requests on releasing connection\n");
-+	spin_lock(&conn->request_lock);
-+	list_for_each_entry_safe(work, tmp, &conn->async_requests,
-+				 async_request_entry) {
-+		if (work->state != KSMBD_WORK_ACTIVE)
-+			continue;
-+
-+		ksmbd_debug(CONN, "Cancel async request id %d\n",
-+			    work->async_id);
-+		work->state = KSMBD_WORK_CANCELLED;
-+		if (work->cancel_fn)
-+			work->cancel_fn(work->cancel_argv);
-+	}
-+	spin_unlock(&conn->request_lock);
-+}
-+
- void ksmbd_conn_lock(struct ksmbd_conn *conn)
- {
- 	mutex_lock(&conn->srv_mutex);
-@@ -543,6 +563,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 	/* Validate controller response */
+-	if (memcmp(chap->response, data->rval, data->hl)) {
++	if (crypto_memneq(chap->response, data->rval, data->hl)) {
+ 		dev_dbg(ctrl->device, "%s: qid %d ctrl response %*ph\n",
+ 			__func__, chap->qid, (int)chap->hash_len, data->rval);
+ 		dev_dbg(ctrl->device, "%s: qid %d host response %*ph\n",
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 35bf1a2357d49..5b010318286e4 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -10,6 +10,7 @@
+ #include <linux/nvme-auth.h>
+ #include <crypto/hash.h>
+ #include <crypto/kpp.h>
++#include <crypto/utils.h>
+ #include "nvmet.h"
  
- out:
- 	ksmbd_conn_set_releasing(conn);
-+	ksmbd_conn_cancel_async_requests(conn);
- 	/* Wait till all reference dropped to the Server object*/
- 	ksmbd_debug(CONN, "Wait for all pending requests(%d)\n", atomic_read(&conn->r_count));
- 	wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0);
+ static void nvmet_auth_expired_work(struct work_struct *work)
+@@ -187,7 +188,7 @@ static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
+ 		return NVME_AUTH_DHCHAP_FAILURE_FAILED;
+ 	}
+ 
+-	if (memcmp(data->rval, response, data->hl)) {
++	if (crypto_memneq(data->rval, response, data->hl)) {
+ 		pr_info("ctrl %d qid %d host response mismatch\n",
+ 			ctrl->cntlid, req->sq->qid);
+ 		pr_debug("ctrl %d qid %d rval %*ph\n",
 -- 
 2.53.0
 
