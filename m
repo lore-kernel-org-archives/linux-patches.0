@@ -1,52 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7A85FC7A8;
-	Mon, 19 Oct 2026 14:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A57526597;
+	Mon, 19 Oct 2026 14:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418571; cv=none; b=LZdBhOA/ZUsuwJ6LuQgp6vwR9cKSFWpHjnTVNTo5W5rBqG6AlDBauP4vHm07i949WdIqmWRKGnD0Z+hKlCVuVkclo9T5uwixPpJT5q19lfcd7lLc4QNvrRKRTnivFKVIU/Y7ljn4kVyzIQDxHHWVHA3KnnKb0iIdE4VLcReA8oo=
+	t=1792418573; cv=none; b=kk4cELhDuiolgN0dwbZBBmLILGRsKcV2we/y0eBq9aSfwq+oFVI7VuiVQmI/45rC5HmO7c0KyHVt9CgXAWcSx12eZe8PmieHKaCggpEOHjPPEv1EpOtoFN9DiaTdOIR6eMP2+vfNLqcFnj9awFXqT6064xD7p5IflHJY1dRPmYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418571; c=relaxed/simple;
-	bh=k/fxEd+Mw6yldXC9WnQz48+bNt4sf4NgeMRR214mN0M=;
+	s=arc-20240116; t=1792418573; c=relaxed/simple;
+	bh=QF1eQoIqa08aJYjuOaD3cOfQFUsXGmH5ogs9SHg25ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GSqhKPNdn6VS3K02EHiGSRqCjIiqroFc4c7zjCnU0MWnt5BQde1hYEDzrF6kt0NFwdAWI5rxUhY2b38L0jrcMrt8HK7JK8XNBPeN3p83pGBhbcohWAeepXP4Wv5a+wFl8ohTBGzmXbHB6BM7c2wqCqu/nZeJ3QHKdh2XGHkFnAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmJXm+m/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kBDyuupke+rkpxX5AUZ5bwT67uQ81WsyUrknJ7q8QvGvL0vHxr8wNFoqaPdvzqSeVGL2iEn4dTSexdwOnglzXZr+tVSLtiWrOZDb+VpjLk5lnDPgp8HKQG/B4J6LAyXNr1l26Bo2P/x7280s+O234bJh2UzIRqa5DPZLvIDcZaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F3ab/Beh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmJXm+m/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011911F000C5;
-	Mon, 19 Oct 2026 14:02:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F3ab/Beh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030591F000C9;
+	Mon, 19 Oct 2026 14:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418568;
-	bh=OC8GhUqh3bS6U7IO72fCtcHGRln1xRSC2VSLtJFjCHE=;
+	s=k20260515; t=1792418569;
+	bh=EXOEt8iWCksbEuOcUGPJXw9M2YosVwX4WoL1niqqiAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmJXm+m/z4ghHUYoGy9demgxWvjQxyAbttpTTiicQFI746fvWCKvt1P6uduAHGkgK
-	 /fiNnkX4Bb7fnGw32tU8om7FTbKDA40AAnIiEH1GijVqg05vHedUOuznTqxwWS4Kl0
-	 IzRFA/+mJazLLMeutUxh+4kYIsIyXy7k+QjoqYOWhy9Vs+rMa7XO4NwrKzYUURizGy
-	 nGdWFC8cjbFE50h2GWJPAnAEJdY5EkiMGU+Lu44UkN+Nn7/p6JTQvjEwgeCzPKI2sM
-	 IBSggpxEnM1e3O4hbB8+1QFP5KFdFfQlVRNdjbA4tUBdvfH4T+NpVzQa6VUiEfPLA7
-	 HV+icSvDXGm6w==
+	b=F3ab/BehDzOhAQAYE+CefBEKbWSvcwvuYFz0d8aLyr4q0mo/yt0fHDmXb2sHfLAC5
+	 WHlyOUXIBtqFm3kQZpM/1EfxtprtibZHkGsNMj5ouzU3wTIvklm2996e3vPPxEEl3L
+	 aULBWUh1caCYR7mzkDCHsrPgG+uWSpZz7GlUzCFfDm2HiBx8chAwGJUsVloZLnkbSR
+	 pBS3umQ2a1ea9Yl6cSJncKV5m54O7ho1fg27USieI1t0GMlvf1bnOh1IeRWoYIOU6h
+	 Q/rnKwFXxcH18fq3Yc4tqqd8dLk3CuJ6YxiADRlPXoRg0U/Q8VSFgYty2velSM2o/l
+	 26GHB/oduPHPQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charlene Liu <Charlene.Liu@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Yashraj Ghule <yashrajghule.221@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: fix max dispclk_khz/dppclk_khz double 1000
-Date: Mon, 19 Oct 2026 09:50:31 -0400
-Message-ID: <20261019135441.1420968-340-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Fix mute LED for HP Victus 15-fa1xxx (MB 8C3F)
+Date: Mon, 19 Oct 2026 09:50:32 -0400
+Message-ID: <20261019135441.1420968-341-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -62,301 +54,351 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Yashraj Ghule <yashrajghule.221@gmail.com>
 
-[ Upstream commit f48124ff35357d05a98d9cd5cb7982e7e5509003 ]
+[ Upstream commit 19b02fecd8f857909af779afe3816e487ac10cd0 ]
 
-[why]
-Fix regresson caused by double roundup and index out of range
+The HP Victus 15-fa1xxx with motherboard 8C3F is missing the
+existing mute LED quirk for ALC245 codecs.
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add the 103c:8c3f subsystem ID to the existing
+ALC245_FIXUP_HP_MUTE_LED_COEFBIT quirk.
+
+Tested on HP Victus 15-fa1xxx (MB 8C3F). The mute LED works
+as intended.
+
+Signed-off-by: Yashraj Ghule <yashrajghule.221@gmail.com>
+Link: https://patch.msgid.link/20260816110655.11592-1-yashrajghule.221@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to judge this for 6.18.y: the DML21 clock-table bug is
-present here, the fix is four lines, and it applies to the local
-`dml21_wrapper.c` path.
+Confirmed: this is a one-line HDA subsystem-ID quirk, the existing
+ALC245 mute-LED fixup is already in 6.12, and 0x8c3f is not. Writing the
+full nine-phase analysis.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[drm/amd/display] [fix] correct max dispclk_khz/dppclk_khz
-(remove double *1000 and fix last-index)`
+
+Record: **[ALSA: hda/realtek]** **[Fix]** mute LED for HP Victus
+15-fa1xxx motherboard 8C3F by adding PCI/HDA subsystem ID `103c:8c3f` to
+an existing quirk.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- `Reviewed-by: Dillon Varone <dillon.varone@amd.com>` (AMD DC)
-- `Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>` (AMD
-  DC)
-- `Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>` (author)
-- `Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>` (AMD DC,
-  series submitter)
-- `Tested-by: Dan Wheeler <daniel.wheeler@amd.com>` (AMD QA)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-  maintainer)
-- No `Fixes:` tag (expected for this review)
-- No `Cc: stable` (expected)
-- No `Reported-by:` / syzbot / Link
-- Ignore pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
-  ...]`
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** none
+- **Tested-by:** none as a tag; the body states the author tested it on
+  the matching machine
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** `https://patch.msgid.link/20260816110655.11592-1-
+  yashrajghule.221@gmail.com`
+- **Cc: stable:** none (expected; not a negative signal)
+- **Signed-off-by:** Yashraj Ghule `<yashrajghule.221@gmail.com>`
+  (author); Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer)
+- Ignore any Sasha Levin SOB if present in candidate packaging
+
+Notable: ALSA maintainer SOB; author-tested; no syzbot/crash report (not
+expected for a hardware quirk).
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: “regression caused by double roundup and index out of range.”
-- Symptom: wrong `max_supported_dispclk_khz` /
-  `max_supported_dppclk_khz` (0 from off-by-one into a zero pad, or
-  ~1000× too large from a second `* 1000`).
-- No stack trace, no public repro, no version list.
-- Root cause as stated: double unit conversion plus using
-  `num_clk_values` as an index instead of `num_clk_values - 1`.
+- **Bug:** HP Victus 15-fa1xxx with motherboard ID 8C3F does not match
+  the existing ALC245 mute-LED quirk, so the mute LED does not follow
+  mute state.
+- **Symptom:** mute LED stays wrong / does not work.
+- **Version info:** none in the message.
+- **Root cause:** missing `SND_PCI_QUIRK` for SSID `103c:8c3f`. Same
+  product line already has other SSIDs (this tree already has
+  `103c:8bc8` "HP Victus 15-fa1xxx").
+- **Fix:** add that SSID to `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Subject and body both describe a correctness fix
-(units + indexing).
+
+Record: Not a hidden fix. It is an explicit hardware quirk / device-ID
+addition. The verb "Fix" is accurate: the LED hardware is already there;
+the driver never maps this SSID onto the existing coefbit LED helper.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- User/mainline path:
-  `drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_wrapper_fpu.c`
-- This tree: `drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c`
-  (DML21 not yet split into `dml2_0` + `_fpu`)
-- 4 lines changed, same function: `dml21_calculate_rq_and_dlg_params`
-- Scope: single-file surgical fix
+- File in the candidate: `sound/hda/codecs/realtek/alc269.c` (+1 / −0)
+- This 6.12 tree still uses `sound/pci/hda/patch_realtek.c` (codec split
+  not present)
+- Function/table: `alc269_fixup_tbl[]`
+- Scope: single-file, one-line surgical quirk addition
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before, if `num_clk_values > 1`: read `clk_values_khz[num_clk_values]`
-  (one past last valid entry) and multiply by 1000.
-- Before, else: read `[0]` and multiply by 1000.
-- After: last valid entry `[num_clk_values - 1]`, no extra `* 1000`.
-- Same for dispclk and dppclk. Path is normal modeset validation on
-  DML21, not an error path.
+- **Before:** `snd_hda_pick_fixup()` during Realtek ALC269-family probe
+  walks `alc269_fixup_tbl` by PCI SSID. `103c:8c3f` does not match.
+  Probe then may fall through to pin fixups and the vendor-wide HP entry
+  `SND_PCI_QUIRK_VENDOR(0x103c, "HP", ALC269_FIXUP_HP_MUTE_LED)`
+  (`alc269_fixup_vendor_tbl`). That generic HP LED path is not the
+  ALC245 coefbit path used by other Victus 15-fa/fb machines.
+- **After:** SSID `103c:8c3f` matches
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`, so
+  `alc245_fixup_hp_mute_led_coefbit()` runs at `HDA_FIXUP_ACT_PRE_PROBE`
+  and registers the mute LED via coef index 0x0b.
+- Path affected: codec probe / mute-LED setup on that one HP SSID only.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
+
 Record:
-- Category: logic/correctness + off-by-one (g, plus memory-safety-class
-  indexing).
-- Table fill in `dcn401_soc_and_ip_translator.c` already does
-  `dispclk_mhz * 1000` into `clk_values_khz[]`. Unused slots are 0.
-  Valid indices are `0 .. num_clk_values-1`.
-- Mechanism: copy-paste of DML2.0’s `*_mhz * 1000` onto a table that is
-  already kHz, plus using count as an index.
-- Verified sibling: `dml2_utils.c` still converts from `dispclk_mhz *
-  1000` because that path stores MHz.
+- **Category:** hardware workaround / device ID addition (stable
+  exception).
+- **Mechanism:** HP reused the Victus 15-fa1xxx name across motherboard
+  SSIDs (`8bc8` already in this tree; mainline also has `8c2d`, `8c3f`,
+  and later `8bb1`). Quirk matching is exact vendor:device. Missing ID →
+  LED not driven by the ALC245 coefbit helper.
+- Not UAF, leak, race, or crash.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- Obviously correct vs the type name `clk_values_khz` and vs every other
-  DML21 use of `clk_values_khz[num_clk_values - 1]` (e.g.
-  `dml2_dpmm_dcn4.c`, `dml2_core_dcn4_calcs.c`).
-- Minimal; no API or struct change.
-- Regression risk: very low. Correcting max-clock metadata; does not
-  change DML’s `min_clocks` programming path.
+- Obviously correct: one `SND_PCI_QUIRK` using the same fixup already
+  used by many Victus SKUs in this file (`8a4f`, `8a50`, `8bc8`, `8c30`,
+  `8c99`, `8c9c`, …).
+- Minimal; no unrelated edits.
+- Regression risk is very low: the new entry is SSID-specific. Wrong
+  SSID would not match. Same helper is already production-used on this
+  tree.
+- v2 reordering (SSID sort) does not change runtime (the table is a
+  match list, not order-dependent beyond uniqueness).
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- Introduced in `70839da6360500` (“drm/amd/display: Add new DCN401
-  sources”, Aurabindo Pillai, 2024-04-19).
-- `git merge-base --is-ancestor 70839da6360500 HEAD` → yes. Present
-  since DCN401 landed; in this 6.18.y tree from day one of DML21.
+- Insertion sits next to `SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus
+  15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` — blamed to
+  `b474f60f6a0c9` (Adam Queler, 2024-09-03), already in this tree,
+  originally `Cc: stable`.
+- The fixup enum/function `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` /
+  `alc245_fixup_hp_mute_led_coefbit()` exists here (`patch_realtek.c`
+  around 4778 and 10522).
+- Helper was brought in via `c4cc8f6c31263` ("ALSA: hda/realtek -
+  Support mute led function for HP platform", upstream `22c7f77247a8`),
+  ancestor of HEAD.
+- Same product line: `96fe253552c26` already added `103c:8bc8` "HP
+  Victus 15-fa1xxx" to this tree (upstream `a0914bf56e26`, `Cc:
+  stable`).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy commit is the DCN401/DML21 introduction
-above, which is in this tree.
+
+Record: No `Fixes:` tag. N/A. The "bug" is a missing table entry, not a
+regression from a specific prior commit.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
 Record:
-- Recent file history is DML21 FPU guards, init refactor, mcache, etc.
-- Related later change on this branch: `5d22a3f28b5b9` (“add
-  DalForceMaxDisplayClock debug option to DML2”) copies
-  `max_supported_*` into `bw_dispclk_khz` / `bw_dppclk_khz` when
-  `forced_clocks` or `debug.max_disp_clk`. That is **not** in
-  `v6.18.53`.
-- This fix is standalone; it is not patch N/M of a required sequence in-
-  tree.
+- This tree already contains many of the same class of patches (git log
+  `--grep='mute LED' -- sound/pci/hda/patch_realtek.c` returned 166
+  commits).
+- Recent examples: Victus 16-e0xxx MB 88ED (`faee5b4612c26`), Victus
+  15-fa0xxx MB 8A50 (`0ecc9d81b46b1`), Victus 16-s0xxx, 16-r0xxx,
+  15-fb1xxx (`b474f60f6a0c9`).
+- Mainline context line `103c:8c2d` "HP Victus 15-fa1xxx (MB 8C2D)" is
+  **not** in this tree (`git log --grep='8C2D' --
+  sound/pci/hda/patch_realtek.c` empty). That is neighboring context,
+  not a functional prerequisite.
+- Standalone: yes. Not patch X/Y.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Charlene Liu is a regular AMD DC contributor. Series was signed
-off by Aurabindo Pillai and Alex Deucher. AMD QA `Tested-by` present.
+
+Record: `git log --author='Yashraj Ghule' -- sound/pci/hda/` is empty in
+this tree. Author is an end-user contributor, not the subsystem
+maintainer. Weight comes from Takashi Iwai applying it, plus the well-
+worn quirk pattern.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Submitted as `[PATCH 07/24]` in “DC Patches for 8 June 2026”.
-Neighbors are unrelated (PHY SSC, writeback, KUnit, dead code). Diff
-needs no new helpers. Can apply standalone to this tree’s
-`dml21_wrapper.c`.
+
+Record:
+- Needs `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and `alc269_fixup_tbl` — both
+  present.
+- Does **not** need the later `alc269.c` file split.
+- Does **not** need the 8C2D quirk.
+- Can apply standalone with path remap to
+  `sound/pci/hda/patch_realtek.c` and insertion after the existing
+  `0x8c30` line.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig -c f48124ff35357d05a98d9cd5cb7982e7e5509003`: lore search
-  failed (server error / 403).
-- Found on amd-gfx: https://www.mail-archive.com/amd-
-  gfx@lists.freedesktop.org/msg144416.html
-- Message-id: `20260604145428.809959-8-aurabindo.pillai@amd.com`
-- From Charlene Liu, submitted by Aurabindo Pillai, 2026-06-04, `[PATCH
-  07/24]`.
-- Body matches the committed patch. No v2/v3 of this hunk found.
-- No reviewer NAK in the archived message; R-b already on the patch
-  (internal AMD review before list).
+- `b4 dig -c <HEAD>` cannot match this commit; it is not in this
+  checkout.
+- `b4 mbox` on Message-ID
+  `20260816110655.11592-1-yashrajghule.221@gmail.com` found **4
+  messages**.
+- Thread: v1 (15 Aug 2026) → Takashi review → v2 (16 Aug 2026) → Takashi
+  "Applied now."
+- v1 issues (not technical risk of the quirk): SOB must use a real name;
+  table must stay in PCI SSID order (`8c3f` belongs after `8c30`, not
+  before).
+- v2 addressed both; that is the committed form.
+- No NAK. No reviewer concern about the quirk itself. No `Cc: stable` in
+  the thread.
+- lore.kernel.org HTTP fetch returned 403; thread recovered from lore
+  via `b4 mbox`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Dillon Varone, Dmytro Laktyushkin (AMD DC); maintainer SOB Alex
-Deucher. Appropriate reviewers.
+
+Record (from mbox, equivalent of `b4 dig -w`):
+- To: Jaroslav Kysela `perex@perex.cz`
+- Cc: Takashi Iwai `tiwai@suse.de`, `linux-sound@vger.kernel.org`
+- Reviewer/applier: Takashi Iwai (ALSA/HDA maintainer)
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No public bugzilla/syzbot. “Regression” is AMD-internal. QA
-`Tested-by: Dan Wheeler`.
+
+Record: No bugzilla/syzbot link. Evidence of user impact is the author
+test on HP Victus 15-fa1xxx (MB 8C3F). Same model family already needed
+extra SSIDs (8bc8 here; 8C2D and 8BB1 in later/mainline discussion),
+which matches HP shipping multiple board IDs under one marketing name.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 24-patch DC drop; this hunk is independent. Later
-DalForceMaxDisplayClock uses the fields this commit corrects; it is not
-a prerequisite for this fix.
+
+Record: Standalone v1→v2, not a multi-patch series. Related but
+independent: 8C2D (Eren Demir) and 8BB1 (Krish Gulati / bugzilla 221982)
+add other fa1xxx SSIDs. None of those replace 8C3F.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search not usable here (403). No evidence
-this was rejected for stable.
+
+Record: No stable-list discussion found for 8C3F specifically. Closely
+related 8bc8 and 8c30 quirks in this tree **did** carry `Cc: stable` and
+were backported. That is the established policy for this exact pattern,
+not evidence this commit was already selected.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `dml21_calculate_rq_and_dlg_params` only.
+**Step 5.1: KEY FUNCTIONS**
+
+Record: table `alc269_fixup_tbl`; runtime helper
+`alc245_fixup_hp_mute_led_coefbit()` (unchanged); picker
+`snd_hda_pick_fixup()`.
 
 **Step 5.2: TRACE CALLERS**
+
 Record:
-- Called from `dml21_validate()` after mode programming
-  (`dml21_wrapper.c` ~line 262).
-- `dml2_validate()` dispatches to `dml21_validate` when `architecture ==
-  dml2_architecture_21`.
-- `dml2_create()` selects DML21 when `debug.using_dml21 && dce_version
-  >= DCN_VERSION_4_01`.
-- DCN401 debug defaults: `.using_dml21 = true` in `dcn401_resource.c`.
-- DCN401 is `AMDGPU_FAMILY_GC_12_0_0` (RDNA4, e.g. Navi 48).
-- Call context: modeset / bandwidth validation, not IRQ.
+- Realtek ALC269-family probe in `patch_realtek.c` (~12583) calls
+  `snd_hda_pick_fixup(..., alc269_fixup_tbl, alc269_fixups)`.
+- Then `snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_PRE_PROBE)` (~12606).
+- Context: codec probe (device enumeration), not IRQ/hot path.
 
 **Step 5.3: TRACE CALLEES**
-Record: This hunk only indexes
-`soc_bb.clk_table.{dispclk,dppclk}.clk_values_khz`. Actual pipe clocks
-are set earlier in the same function via `dml21_program_dc_pipe` →
-`dml21_utils.c` (`dppclk_khz` from DML `min_clocks`), then
-`dml21_copy_clocks_to_dc_state` overwrites `dispclk_khz` from
-programming output. It does **not** overwrite `max_supported_*`.
+
+Record: `alc245_fixup_hp_mute_led_coefbit()` sets `spec->mute_led_coef`
+(idx 0x0b, mask/on/off bits) and `snd_hda_gen_add_mute_led_cdev(codec,
+coef_mute_led_set)`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace modeset on DCN401 reaches this on every validate-and-
-program. Buggy **fields** are written on that path. Verified DCN401
-consumers of `max_supported_*`:
-- `dcn401_update_clocks` / `dcn401_are_clock_states_equal`: do **not**
-  read them.
-- `dcn401_get_max_clock_khz`: uses SMU DPM table, not these fields.
-- `amdgpu_dm_trace.h` and `dcn10_hwseq.c` log them.
-- `dcn20_clk_mgr.c` does use them for `clock_cfg->max_clock_khz`, but
-  that clk_mgr is not DCN401.
-- In **this checkout**, after a later candidate, `forced_clocks` /
-  `debug.max_disp_clk` copy them into `bw_*clk_khz`. That later commit
-  is **not** in `v6.18.53`.
 
-So the default 6.18.y DCN401 clock request path does not program SMU
-from these two fields. They are still wrong on every modeset.
+Record: userspace/hw mute → HDA mixer/LED classdev → coef write.
+Reachable on this laptop at boot + mute key. Not a syscall security
+path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: No remaining `clk_values_khz[num_clk_values]` (without `- 1`)
-under `dc/dml2`. Other DML21 code already uses `num_clk_values - 1`.
+
+Record: many `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` rows for Victus SSIDs
+already in this file (including `0x8bc8` 15-fa1xxx and `0x8c30`
+15-fb1xxx). Same bug, different board ID — systematic HP SSID
+fragmentation.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
 Record:
-- `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`
-- `make kernelversion` → `6.18.53`
-- `v6.18.53` `dml21_wrapper.c` still has `clk_values_khz[num_clk_values]
-  * 1000`.
-- `dml2_0/.../dml21_wrapper_fpu.c` does **not** exist here; equivalent
-  file is `dml2/dml21/dml21_wrapper.c`.
-- Bug introduced with DCN401 (2024); this series has it.
+- Tree: `pending-6.12` / `git describe` `p-6.12-3-gc504cf0baa3d8` /
+  `make kernelversion` **6.12.111**.
+- `sound/hda/codecs/realtek/alc269.c` does **not** exist.
+- Equivalent table: `sound/pci/hda/patch_realtek.c` `alc269_fixup_tbl`.
+- `0x8c3f` is **absent** (`grep` on that file: no match).
+- `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` **is** present.
+- Nearby `0x8c30` **is** present (line 11088).
+- Nearby mainline `0x8c2d` is **absent**.
+- Bug is a missing ID, not a post-6.12 logic regression. The machine and
+  the helper both exist for 6.12 users.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Expected apply: **clean** on this tree’s file (4-line context
-matches `v6.18.53`). Path rename vs mainline only.
+
+Record: **minor path/context adjustment**, not a rework.
+- Remap file to `sound/pci/hda/patch_realtek.c`.
+- Insert after `0x8c30` (8c2d context from mainline is missing, so a
+  verbatim git-apply of the mainline hunk may not be fully clean).
+- No API/data-structure change.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier fix of this indexing/unit bug in `v6.18.53`.
-DalForceMaxDisplayClock is a separate later change, not an alternate
-fix.
+
+Record: `0x8bc8` covers a different fa1xxx SSID, not 8C3F. Exact PCI
+SSID match only. No substitute for this ID.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/gpu/drm/amd/display` DML21 / DCN401. Criticality:
-**IMPORTANT** (shipping RDNA4 display), not core mm/net. Peripheral to
-machines without DCN401.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: High churn (DC drops). Bug is old (initial DCN401), not last-
-week code.
+Record: ALSA HD-audio / Realtek codec (`sound/pci/hda/`). **IMPORTANT**
+for laptop audio users, **PERIPHERAL** in blast radius (one HP SSID).
+Not mm/fs/net core.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: High churn of device quirks; this file is the standard place for
+HP mute-LED IDs. Mature helper, incremental table growth.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific: AMD DCN 4.0.1 (GC 12.0.0) with DML21, which is
-the default. Not universal.
+**Step 8.1: WHO IS AFFECTED**
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every DML21 validate-and-program (typical modeset). Not a race.
-Unprivileged DRM modeset can run the writer. Common: `num_clk_values` is
-> 1 (DPM table); then the off-by-one hits a 0 pad. Rare: single-level
-table takes the `* 1000` branch.
+Record: **driver-specific / hardware-specific** — only HP SSID
+`103c:8c3f` (Victus 15-fa1xxx MB 8C3F). CONFIG_SND_HDA_CODEC_REALTEK
+(standard laptop configs).
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: every boot + mute on that SKU. Not a race. Unprivileged user can
+observe the LED; not a privilege-escalation path.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: mute LED does not track mute. **MEDIUM** functionally (no
+oops/corruption). Still a real hardware bug. Stable rules explicitly
+include device IDs and hardware quirks.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
 Record:
-- Not a C-array OOB crash: `DML_MAX_CLK_TABLE_SIZE` is 20, fill is
-  `min(20, MAX_NUM_DPM_LVL=8)`, so index `num_clk_values` (≤8) stays in-
-  bounds. “Index out of range” is **logical** OOB of valid entries.
-- Wrong stored max: typically **0** (multi-level) or **1000×** (single-
-  level). `max_supported_*` are `int`; `value_khz * 1000` can overflow
-  signed 32-bit if kHz > ~2.147e6 (clocks ≳ 2147 MHz).
-- Default DCN401 programming does not consume these fields for SMU
-  (verified). User-visible black screen / wrong clocks on stock 6.18.y
-  is **not verified**.
-- Author still called it a **regression**; AMD QA tested the fix.
-- Severity for stock 6.18.y runtime: **MEDIUM** (wrong clock caps in DC
-  state / traces; debug force-max path would mis-program). Class of bug
-  (bad max clocks / logical OOB) is what stable takes for GPU display.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: correct max disp/dpp clocks on DCN401 DML21; unblocks any
-  path that reads them (including later force-max debug); matches
-  DML21’s kHz units.
-- Risk: very low (4 lines, local assignment).
-- Ratio: high benefit/risk for a contained DC correctness fix.
+- **Benefit:** restores mute LED on a shipping HP Victus SKU for 6.12
+  users; same class already backported here many times.
+- **Risk:** very low (one SSID-guarded line, existing helper).
+- **Ratio:** strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -365,129 +407,116 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real unit + off-by-one bug in code that runs on every DCN401 modeset.
-- Tiny, obviously correct; AMD DC review + QA `Tested-by`.
-- Buggy code is in this 6.18.y tree; applies cleanly.
-- No new API; no series dependency.
-- Shipping RDNA4 hardware.
+- Stable rules: "fix a real bug … **or just add a device ID**" and
+  "**hardware quirk**" (`Documentation/process/stable-kernel-rules.rst`
+  lines 15–20).
+- One-line addition to an existing driver/fixup.
+- Target SSID missing; helper and table present in 6.12.111.
+- Author tested on the exact machine; ALSA maintainer applied v2.
+- Same Victus 15-fa1xxx family already has `8bc8` in this tree; 8C3F is
+  another board ID.
+- Dozens of identical mute-LED quirk backports already in this file.
 
 AGAINST:
-- Stock DCN401 clk_mgr does not program SMU from these two fields
-  (verified).
-- No public crash/syzbot; sparse “[why]” text.
-- Logical OOB, not a KASAN-class overflow of the 20-entry array.
+- Not a crash/security/data-corruption fix.
+- Mainline path differs (`alc269.c` vs `patch_realtek.c`); 8c2d context
+  line missing (trivial).
+- No `Cc: stable` on the original (expected here; similar quirks often
+  still go to stable).
 
 UNRESOLVED:
-- Exact AMD-internal regression symptom (black screen vs wrong debug
-  clocks) not in the public thread.
-- lore.kernel.org/stable not readable here (403).
+- Direct lore.kernel.org HTTP was 403; discussion was recovered via `b4
+  mbox`.
+- Could not `b4 dig -c` an upstream SHA because that commit is not in
+  this checkout.
+- No independent bugzilla for 8C3F (author is the tester).
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — units + last index; R-b +
-   Tested-by.
-2. Fixes a real bug that affects users? **PASS** — wrong max clocks on
-   DCN401 DML21; hardware is in this kernel.
-3. Important issue? **PASS** — display clock-limit correctness / logical
-   OOB; not a proven panic, but a real modeset-path clock bug on
-   shipping GPUs, which stable routinely takes for amdgpu DC.
-4. Small and contained? **PASS** — 4 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same hunk in
-   `dml2/dml21/dml21_wrapper.c`.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not an ID/quirk/DT/build/doc exception). Ordinary bugfix.
+1. Obviously correct and tested? **PASS** — one table entry; author
+   tested; maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — mute LED dead on that
+   SKU.
+3. Important issue? **PASS** as hardware quirk / device ID (severity
+   MEDIUM, allowed exception).
+4. Small and contained? **PASS** — +1 line.
+5. No new features or APIs? **PASS** — enables existing fixup for one
+   SSID.
+6. Can apply to the local tree? **PASS** — helper+table exist; needs
+   path remap and insert after `0x8c30`.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The tree has the bug, the fix is surgical and correct, and
-DML21 is the default path for DCN401. Limited SMU use of these fields
-lowers severity but does not make the fix inappropriate for 6.18.y.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-===============================================================
-Detailed explanation
-===============================================================
+Record: **Device ID addition to an existing driver** and **hardware
+quirk/workaround** (HDA `SND_PCI_QUIRK`).
 
-This commit repairs `dml21_calculate_rq_and_dlg_params` so
-`max_supported_dispclk_khz` and `max_supported_dppclk_khz` take the last
-DPM table entry already stored in kHz. The old code indexed one past the
-last valid slot (usually a 0 pad) and multiplied by 1000 again even
-though `dcn401_soc_and_ip_translator.c` already converted MHz→kHz.
+**Step 9.4: DECISION**
 
-On this tree that matters: DCN401 defaults `using_dml21 = true`, so
-RDNA4 modesets hit DML21. The patch is four assignment lines, reviewed
-and tested at AMD, and matches existing `num_clk_values - 1` use
-elsewhere in DML21.
+This should be backported to **this** 6.12 tree. The bug is present
+(missing `103c:8c3f`), the fix is the standard Realtek mute-LED quirk,
+and it is self-contained aside from a trivial file-path/context tweak.
 
-It meets the stable rules: obviously correct, real bug, small, no new
-API, applies to local `dml21_wrapper.c`. Risk is negligible. Benefit is
-correct max-clock state for DCN401 and any consumer of those fields
-(trace, later force-max debug). The main caveat is that `dcn401_clk_mgr`
-does not currently feed these fields to SMU on the default path, so this
-is not a verified oops; it is still a real clock-table bug on hardware
-this kernel supports.
+What it solves for stable users: HP Victus 15-fa1xxx systems with
+motherboard SSID 8C3F get a working mute LED, matching other
+fa1xxx/fb1xxx board IDs already quirked here.
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Subject/tags: fix + AMD R-b/Tested-by/SOB; no Fixes/syzbot.
-  Pipeline SOB/Upstream ignored.
-- [Phase 2] Diff: 4 lines in `dml21_calculate_rq_and_dlg_params`; drop
-  `* 1000`, index `num_clk_values - 1`.
-- [Phase 2] Table fill: `dcn401_soc_and_ip_translator.c` `dispclk_mhz *
-  1000` into `clk_values_khz`; unused = 0.
-- [Phase 2] Array: `DML_MAX_CLK_TABLE_SIZE` 20; `MAX_NUM_DPM_LVL` 8 — C
-  OOB not hit; logical OOB is real.
-- [Phase 3] Blame parent: `70839da6360500` DCN401 sources; ancestor of
-  HEAD.
-- [Phase 3] `v6.18.53` file still has `* 1000` and `num_clk_values`
-  without `- 1`.
-- [Phase 3] No Fixes tag; no other in-tree fix of this bug at v6.18.53.
-- [Phase 4] `b4 dig` failed (lore error). Thread: mail-archive amd-gfx
-  `[PATCH 07/24]`, 2026-06-04, standalone in a 24-patch DC drop.
-- [Phase 5] Callers: `dml21_validate` ← `dml2_validate` when arch 21;
-  `using_dml21` true on DCN401; GC 12.0.0.
-- [Phase 5] `dcn401_update_clocks` / `are_clock_states_equal` do not
-  read `max_supported_*`.
-- [Phase 5] `dml21_copy_clocks_to_dc_state` does not overwrite
-  `max_supported_*`.
-- [Phase 6] Tree is 6.18.53; file exists as
-  `dml2/dml21/dml21_wrapper.c`, not `dml2_0/..._fpu.c`.
-- [Phase 6] Apply difficulty: clean on this path.
-- [Phase 8] Failure mode: wrong max clocks (0 or 1000× / possible int
-  overflow); default SMU programming impact not verified.
-- UNVERIFIED: exact user-visible regression AMD saw; stable-list
-  discussion (lore 403).
+Risk vs benefit: one SSID-specific line vs a user-visible LED bug on a
+current consumer laptop. Benefit dominates.
+
+Concerns: apply to `sound/pci/hda/patch_realtek.c`, not `alc269.c`; do
+not require the absent 8C2D row.
+
+Verification:
+- [Phase 1] Parsed subject/tags/body from the candidate message; Link
+  msgid `20260816110655.11592-1-yashrajghule.221@gmail.com`; SOBs Ghule
+  + Iwai; no Fixes/syzbot/stable Cc.
+- [Phase 2] Diff is +1 `SND_PCI_QUIRK(0x103c, 0x8c3f, ...,
+  ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` in `alc269_fixup_tbl`.
+- [Phase 3] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111; branch `pending-6.12`.
+- [Phase 3] `alc269.c` missing; quirk table in
+  `sound/pci/hda/patch_realtek.c`.
+- [Phase 3] `grep 0x8c3f` in that file: no match.
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` present (enum ~8222, fixup ~10522,
+  function ~4778).
+- [Phase 3] `0x8c30` present (blame `b474f60f6a0c9`); `0x8bc8` present
+  (`96fe253552c26`); `0x8c2d` absent.
+- [Phase 3] `git merge-base --is-ancestor` for `b474f60f6a0c9` and
+  `c4cc8f6c31263`: both ancestors of HEAD.
+- [Phase 3] `git log --grep='mute LED' --
+  sound/pci/hda/patch_realtek.c`: 166 commits of the same class.
+- [Phase 4] `b4 mbox` on the msgid: v1, Takashi review (SOB name + SSID
+  sort), v2, "Applied now."
+- [Phase 4] Recipients: perex, tiwai, linux-sound. No NAK.
+- [Phase 4] lore WebFetch 403; discussion taken from the saved mbox.
+- [Phase 5] Probe path `snd_hda_pick_fixup` ~12583 →
+  `snd_hda_apply_fixup` PRE_PROBE ~12606; vendor HP fallback
+  `ALC269_FIXUP_HP_MUTE_LED` at `alc269_fixup_vendor_tbl`.
+- [Phase 6] Backport difficulty: path remap + insert after 8c30 (8c2d
+  context missing).
+- [Phase 7] ALSA HDA Realtek; quirk-table activity high.
+- [Phase 8] Failure: mute LED inoperative on one HP SSID; severity
+  MEDIUM; risk very low.
+- UNVERIFIED: upstream mainline SHA of this commit (not in this
+  checkout; `b4 dig -c HEAD` cannot match it).
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-index 08f7f03b10231..0167d936feaf5 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -152,16 +152,16 @@ static void dml21_calculate_rq_and_dlg_params(const struct dc *dc, struct dc_sta
- 	context->bw_ctx.bw.dcn.clk.bw_dispclk_khz = context->bw_ctx.bw.dcn.clk.dispclk_khz;
- 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values > 1) {
- 		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz =
--			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values] * 1000;
-+			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values - 1];
- 	} else {
--		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0] * 1000;
-+		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0];
- 	}
- 
- 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values > 1) {
- 		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz =
--			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values] * 1000;
-+			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values - 1];
- 	} else {
--		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0] * 1000;
-+		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0];
- 	}
- 
- 	/* get global mall allocation */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 9ec18f779a700..bc33930e83b9f 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6974,6 +6974,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
++	SND_PCI_QUIRK(0x103c, 0x8c3f, "HP Victus 15-fa1xxx (MB 8C3F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c47, "HP EliteBook 840 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c48, "HP EliteBook 860 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 -- 
 2.53.0
 
