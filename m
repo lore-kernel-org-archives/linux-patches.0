@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE02A50B390;
-	Mon, 19 Oct 2026 14:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353A150B3AA;
+	Mon, 19 Oct 2026 14:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418746; cv=none; b=X0DoOlJDuUezr+s9JAO4iIdTtZC2jCE3UgYUQHm3gCjpY369TaXCuWx8bQ4xJgWoLew9KUnHqO+1RFHg3t36f/f4Z+NTKwcgBeilYxs9NKwvvSzLJhEMCNDscv9SYG/6S3IkXNw9MyRtAx3itk/7JQV/+NXvlbpk7hK+Ka1sRzw=
+	t=1792418748; cv=none; b=oM6B457ojRZMD0rLeYpdYsuzbT4rypup3TFO0Gf7fh95xoy2+QGQGenEdDcMnvV7MRFFJZkRBXNvQlICWk+h2bIuQO/CYNOdgyso53kWMoHF9ANEc+5n2OVF17fB8zu+sDPjPSgRvgGBrxG3fgV8AQRT8HLFlJsZAC8Q2DSVx4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418746; c=relaxed/simple;
-	bh=OKR8MfhjCT4d494Ibm69L1jmkmuwbzzvmUPQL48nEQU=;
+	s=arc-20240116; t=1792418748; c=relaxed/simple;
+	bh=4oRcyGmXOH1XfD125gD7qiYzHYGO3C2D5aOV3bytk8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lv/ZbwVToFeY4uHLawN9N9WwT4WEsKiNa2sgjsGMzMMom7KL6VSHSIIBwODKcF06Gu4qUQj2phS4ElHYrhpXCUTBNOHrOXINOa9IxhCCOZ0ilIXGl96w/8+8y8fUdPYO3LHUl+fSGmi7ZdkVpkVsxpWvgNBJbU2MFnQPcw8yQPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zz2k3LNS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RGbLtkdWMUmxEcyOl7WW48uDg8OONIANdRywVWhzaC3lkQOm1ntYgPEyPFq9bZOt1H4CaWw8KIlmHwT9AcgqqW+l50cLpvo64EvZE4uv3qFzjuu4E6lZY/1y5s07g+FFub0/q33S+/HKUfK1tE39dRB7Fh2WmhqHMr+SsZYcaVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QtAbQFID; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zz2k3LNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B631F000C7;
-	Mon, 19 Oct 2026 14:05:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QtAbQFID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F054C1F000C6;
+	Mon, 19 Oct 2026 14:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418743;
-	bh=eqR8+KOPZ8pnk+K+E0eR+FyydimkvuSbCbmBAmeToow=;
+	s=k20260515; t=1792418744;
+	bh=YFFkrLbjthWIX8mSKrxUrc8VHsO1zAFHlMtQctRZNZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zz2k3LNSG+Lv80/ElMbkkFOzBEwLn+W64zWbxH7AIsXE+yPQKH6Eu9CPt3dIgS5gg
-	 1wAwl/qnH44iTvDfJVV2ub1suR8v6cTSpxwOcvidEB74AZdtQnRyQU21sMphXUluyl
-	 jaOuBzzvAWRRZhhEp3z2ml0VTzHD+HccxchaovNIMf/T4JblJ1UTb5r/9gFCJ9lf49
-	 DuNMcrXwWeSexOj06APVGEghOb8YfgtKreNpsle5dnRwz+3rHRJ8aaQQZ2LLeYiXjb
-	 Z02RePIpxhYZuvvqPvd/8cWzaCdGjhQoog7YaQEYnIoeEyiF4cZOCIvp9GJ3jrEAiS
-	 /XXhham7UurVg==
+	b=QtAbQFIDtO2anpDAkwfEOmezSws8jqgDIkEE0x6RfpO0m1M6ic1JHCzUac7zo6brs
+	 JA+XjEv4ReRU5spVspX5LIq7Q5uVAA0Wee7131aw2SOTydGUPkd7LgBQMq4QDYyOo7
+	 tXVULpqz6+TaJts7jW1i6vd5xCQ9Rap4Zb8bzzsI64xn4lTalTGpxikUwiPNL+XNKr
+	 tP5QpcXTh1F+f9a5/qkfVaK2/ccQZe4Yx9LN9MtZKas+jGSpnLkzti0XS5uS/M4wJD
+	 Wb9Bx2YzRTt1bYuVasghDhD9l/nSjPJvX481pPLWcAorswhvdSzFEnCP6ESId1X+Sy
+	 TWlIQs8CR+WQQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amdgpu/gfx12: set KMD_QUEUE for kernel gfx queues
-Date: Mon, 19 Oct 2026 09:52:35 -0400
-Message-ID: <20261019135441.1420968-464-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] ksmbd: fix durable handle v2 default timeout units (60 -> 60000)
+Date: Mon, 19 Oct 2026 09:52:36 -0400
+Message-ID: <20261019135441.1420968-465-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,334 +52,430 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 9fe5745f9d8eca38d31d9b672a1998edf856f651 ]
+[ Upstream commit c1d7bbfc5e081875053723d1a69eb2cf341eaaf1 ]
 
-Set KMD_QUEUE in the GFX MQD and kernel ring control registers so CP
-preserves kernel IB VMIDs instead of replacing them with the queue VMID.
-Use prop->kernel_queue to distinguish kernel and user MQDs.
+When a client's Durable Handle Request V2 sets Timeout=0 ("let the
+server choose"), fp->durable_timeout was set to 60. Every other use
+of this field is in milliseconds: DURABLE_HANDLE_MAX_TIMEOUT (300000)
+in smb2pdu.h, the nonzero branch immediately above
+(min_t(unsigned int, dh_info.timeout, DURABLE_HANDLE_MAX_TIMEOUT),
+where dh_info.timeout is the wire value and already milliseconds per
+spec), and the scavenger in vfs_cache.c, which adds it directly to
+jiffies_to_msecs(jiffies).
 
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 14741c01680a803050e949744089b57fa53e02f7)
+60 is off by 1000x: the handle becomes scavenger-eligible 60
+milliseconds after close instead of 60 seconds. A client requesting
+Timeout=0 is relying entirely on the server's default to cover the
+gap between a dropped connection and its reconnect -- 60ms is not
+enough time for even a fast network blip to be detected and
+reconnected, so any real disruption loses the race and a subsequent
+DH2C reconnect fails with a durable-handle lookup miss instead of
+succeeding.
+
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough tree, diff, and caller evidence to judge this for 6.18.57.
-Lore lookups failed with 403, so mailing-list review is limited to the
-amd-gfx archive title and the commit tags.
+The local tree is **6.12.111** (`p-6.12-3-gc504cf0baa3d8`). The buggy
+`fp->durable_timeout = 60` assignment is still in this checkout; the
+upstream fix is not.
 
-## Phase 1: Commit message forensics
+---
 
-**Step 1.1 — Subject**
-- Record: `[drm/amdgpu/gfx12] [set] [program KMD_QUEUE on kernel GFX
-  queues so CP keeps kernel IB VMIDs]`
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2 — Tags**
-- Record:
-  - `Reviewed-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-    maintainer)
-  - `Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>` (author)
-  - `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
-    (maintainer)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
-    (absence expected for this review)
-  - Pipeline-only markers ignored: `[Upstream commit ...]`, `(cherry
-    picked from ...)`, `Signed-off-by: Sasha Levin`
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[ksmbd]** **[fix]** durable handle v2 default timeout units
+(60 → 60000). Subsystem is the in-kernel SMB server. Action verb is
+explicitly **fix**.
 
-**Step 1.3 — Body**
-- Record:
-  - Bug: CP replaces kernel IB VMIDs with the queue VMID unless
-    `KMD_QUEUE` is set
-  - Symptom: kernel IBs run in the wrong VM (queue VMID, typically 0)
-  - Root cause: GFX MQD and `CP_RB0_CNTL` never programmed `KMD_QUEUE`
-  - Fix: set the bit from `prop->kernel_queue` (MQD) and hard-set 1 on
-    the kernel ring
-  - No stack trace, repro, or version range in the message
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Upstream commit `337e5ea7498178b3e50b39c266268a8b4d5b48d6` (not an
+ancestor of this tree):
+- **Assisted-by:** Claude:claude-sonnet-5
+- **Signed-off-by:** Gael Blivet \<gael.blivet@gmail.com\>
+- **Acked-by:** Namjae Jeon \<linkinjeon@kernel.org\> (ksmbd maintainer;
+  query text shows this as SOB from candidate prep)
+- **Signed-off-by:** Steve French \<stfrench@microsoft.com\> (CIFS/SMB
+  maintainer)
+- **No Fixes:** tag (expected for this review queue)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Link**
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Not disguised. It is an explicit hardware-programming
-  correctness fix.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** When Durable Handle Request V2 has `Timeout=0` (“let the
+  server choose”), `fp->durable_timeout` is set to **60**.
+- **Root cause:** Every other use of this field is **milliseconds**:
+  wire Timeout per [MS-SMB2], `DURABLE_HANDLE_MAX_TIMEOUT` (300000), the
+  nonzero `min_t` branch, and the scavenger adding it to
+  `jiffies_to_msecs(jiffies)`.
+- **Symptom:** Handle becomes scavenger-eligible **60 ms** after close
+  instead of **60 seconds**. A client using the server default cannot
+  reconnect after a real disconnect; DH2C fails with a durable-handle
+  lookup miss.
+- **Version info in message:** none. Introducer is in this tree (see
+  Phase 3).
 
-## Phase 2: Diff analysis
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. This is an explicit units/correctness fix (1000×),
+not cleanup.
 
-**Step 2.1 — Inventory**
-- Record: `drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c` only; `+2 / -0`
-- Functions: `gfx_v12_0_cp_gfx_resume()`, `gfx_v12_0_gfx_mqd_init()`
-- Scope: single-file surgical fix
+---
 
-**Step 2.2 — Control-flow change**
-- Hunk 1 (`gfx_v12_0_cp_gfx_resume`): `CP_RB0_CNTL` was built with
-  `RB_BUFSZ`/`RB_BLKSZ` only (base 0). After: `KMD_QUEUE=1` on kernel
-  gfx ring 0. Init/resume path, used when `amdgpu_async_gfx_ring` is 0.
-- Hunk 2 (`gfx_v12_0_gfx_mqd_init`): `CP_GFX_HQD_CNTL` was built from
-  `regCP_GFX_HQD_CNTL_DEFAULT` (0x00f00000). After:
-  `KMD_QUEUE=prop->kernel_queue`. This is the default MQD path
-  (`amdgpu_async_gfx_ring` defaults to 1).
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.3 — Bug mechanism**
-- Record: `[logic / hardware programming] [CP overwrites IB VMID unless
-  KMD_QUEUE; fix sets that bit on kernel queues only]`
-- `KMD_QUEUE` is bit 29 (`0x20000000`). Default `0x00f00000` does not
-  include it. `CP_RB0_CNTL` starts from 0, so it was also clear.
-- Same file already sets `KMD_QUEUE` for compute kernel queues in
-  `gfx_v12_0_compute_mqd_init()`. GFX was the missing counterpart.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `fs/smb/server/smb2pdu.c` — **+8 / −1**
+- Function: `smb2_open()`
+- Classification: **single-file surgical fix**
+- Functional change: one assignment `60` → `60000`
+- Extra: comment before `reconnected_fp:` about `conn->is_aapl` on
+  reconnect (documentation only)
 
-**Step 2.4 — Fix quality**
-- Record: Minimal and obviously correct. User MQDs keep `KMD_QUEUE=0`
-  because `mes_userq_mqd_create()` `kzalloc`s `amdgpu_mqd_prop`. Kernel
-  rings set `prop->kernel_queue = true` in `amdgpu_ring_to_mqd_prop()`.
-  Regression risk is low: it matches the existing compute-queue
-  programming.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record (this tree, `smb2_open()` around 3651–3663):
 
-## Phase 3: Git history
+**Before:** `DURABLE_REQ_V2` + `dh_info.timeout == 0` →
+`fp->durable_timeout = 60`.
 
-**Step 3.1 — Blame**
-- Record: Surrounding GFX resume/MQD setup comes from `52cb80c12e8a64`
-  (`drm/amdgpu: Add gfx v12_0 ip block support (v6)`, 2023-07-04). The
-  missing bit has been absent since GFX12 was added.
+**After:** same path → `fp->durable_timeout = 60000`.
 
-**Step 3.2 — Fixes: tag**
-- Record: No `Fixes:` tag. Bug is the original GFX12 bring-up omitting
-  `KMD_QUEUE`. That bring-up commit is an ancestor of this tree.
+Nonzero Timeout is unchanged (`min_t(..., DURABLE_HANDLE_MAX_TIMEOUT)`).
+Path is the **normal CREATE** path when the client requests a v2 durable
+handle with Timeout=0, not an error path.
 
-**Step 3.3 — File history**
-- Record: Prerequisite already here: `7b9110f289795` (`drm/amdgpu/gfx12:
-  set MQD as appriopriate for queue types`) added `prop->kernel_queue` /
-  `RB_NON_PRIV` and compute `KMD_QUEUE`. Present in v6.18.57. This
-  commit is standalone, not patch 2/3 of that older series.
+On close/disconnect, `vfs_cache.c` does:
 
-**Step 3.4 — Author**
-- Record: Jesse Zhang is a regular amdgpu contributor. Same-day sibling:
-  `drm/amdgpu/gfx11: set KMD_QUEUE for kernel gfx queues`. Maintainer
-  reviewed both.
+```1276:1278:fs/smb/server/vfs_cache.c
+        if (fp->durable_timeout)
+                fp->durable_scavenger_timeout =
+                        jiffies_to_msecs(jiffies) + fp->durable_timeout;
+```
 
-**Step 3.5 — Dependencies**
-- Record: Needs `bool kernel_queue` in `amdgpu_mqd_prop`
-  (`284d4dfe850e6`, in v6.18.57) and `CP_*_KMD_QUEUE` masks in
-  `gc_12_0_0_sh_mask.h` (present). Can apply standalone. No new helpers.
+The scavenger then expires the handle when `jiffies_to_msecs(jiffies)`
+passes that deadline.
 
-## Phase 4: Mailing list / external
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Logic / units / correctness]** Default timeout stored as 60
+**seconds-as-if-ms**. Spec Timeout is milliseconds; 0 means server
+default. Result: reconnect window is 60 ms instead of 60 s.
 
-**Step 4.1 — Original discussion**
-- Record: `b4 dig -c 14741c01680a` / `9fe5745f9d8e` / `53db34aed371`
-  failed (lore returned an error). Fallback: amd-gfx September 2026
-  archive lists `[PATCH 09/21] drm/amdgpu/gfx12: set KMD_QUEUE for
-  kernel gfx queues` next to hung-queue / pipe-reset patches. No NAK
-  found. No later conflicting revision found.
+Also advertised to the client: `create_durable_v2_rsp_buf()` sends
+`buf->Timeout = cpu_to_le32(fp->durable_timeout)`, so the client is told
+the window is 60 ms.
 
-**Step 4.2 — Reviewers**
-- Record: `b4 dig -w` failed (same lore error). Commit has `Reviewed-by`
-  / `Signed-off-by` from Alex Deucher.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct: same constant the author intended, in the
+units the rest of the code already uses. Samba uses 60×1000 ms when
+Timeout=0; Windows DurableOpenTimeout is 60 s. Risk is low: handles may
+linger 60 s instead of 60 ms after disconnect, which is the designed
+behavior. Cap remains 300000 ms. Comment is unrelated but harmless;
+`conn->is_aapl` and `reconnected_fp` exist in this tree.
 
-**Step 4.3 — Bug report**
-- Record: No `Reported-by` / syzbot / bugzilla link. Mechanism is stated
-  by the AMD author.
+---
 
-**Step 4.4 — Series**
-- Record: Submitted as 09/21 in a hung-queue/reset series. This hunk
-  does not call any of those new helpers; it is self-contained register
-  programming.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 4.5 — Stable list**
-- Record: No useful stable-list hit for this subject. UNVERIFIED whether
-  anyone already requested or rejected it for stable.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: `fp->durable_timeout = 60` introduced in **`c8efcc786146a`**
+(“ksmbd: add support for durable handles v1/v2”, Namjae Jeon,
+2024-03-12). First appeared in **v6.9-rc1**. Present here. Nearby
+`min_t` cap from **`289ebd9afeb94`** (build warning fix), also in this
+tree.
 
-## Phase 5: Semantic / call-chain
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Introducer is `c8efcc786146a`, confirmed ancestor
+of HEAD.
 
-**Step 5.1 — Functions**
-- Record: `gfx_v12_0_cp_gfx_resume`, `gfx_v12_0_gfx_mqd_init`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `smb2pdu.c` work is other ksmbd fixes (normalized names,
+compound errors, leases). No competing timeout-unit fix. Standalone vs
+series: submitted as **patch 3/8** of “follow-up fixes”; cover letter
+says patch 3 is **unrelated** to the rest (a separate 1000× units bug).
+Other patches are stream delete, mdssvc logs, FSCTL bounds, xattr size,
+DOS attrib init, stream unlink/fallocate.
 
-**Step 5.2 — Callers**
-- Record:
-  - `gfx_v12_0_cp_gfx_resume` ← GFX hw init when
-    `!amdgpu_async_gfx_ring` (module param default is 1, so this is the
-    fallback)
-  - `gfx_v12_0_gfx_mqd_init` ← `adev->mqds[AMDGPU_HW_IP_GFX].init_mqd` ←
-    `amdgpu_ring_init_mqd()` ← `gfx_v12_0_kgq_init_queue()` (default
-    async KGQ path) and `mes_userq_mqd_create()` (user queues,
-    `kernel_queue==false`)
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Gael Blivet has **no** commits in this tree under
+`fs/smb/server/`. Maintainer **Namjae Jeon** acked and applied this
+patch (except 2/8 and 5/8, which are different patches). Steve French
+signed off.
 
-**Step 5.3 — Callees**
-- Record: `REG_SET_FIELD`, `WREG32_SOC15`. No alloc/lock/API change.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None for the assignment change. Durable-handle v2, scavenger,
+and `DURABLE_HANDLE_MAX_TIMEOUT` are already here. Comment needs only
+`reconnected_fp` / `is_aapl`, both present. **Can apply standalone.**
 
-**Step 5.4 — Reachability**
-- Record: Yes. Default GFX12 init uses KGQ MQD init.
-  `gfx_v12_0_ring_emit_ib_gfx()` writes `control |= ib->length_dw |
-  (vmid << 24)` with `AMDGPU_JOB_GET_VMID(job)`. Userspace CS on a
-  kernel gfx ring therefore depends on CP honoring that IB VMID.
+---
 
-**Step 5.5 — Similar patterns**
-- Record: Compute MQD in the same file already sets `KMD_QUEUE` for
-  kernel queues. GFX11 sibling does the same two-line change. KFD MQD
-  managers also set `KMD_QUEUE` for kernel queues.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-## Phase 6: This tree (6.18.57)
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 337e5ea749817` →
+  https://patch.msgid.link/20260709000548.66445-4-g.blivet@me.com
+- Series: `[PATCH 0/8] ksmbd: follow-up fixes to previously-merged
+  patches` (2026-07-09)
+- `b4 dig -a`: **v1 only** (no later revisions of this patch)
+- Lore HTTP fetch returned 403; full thread retrieved with `b4 mbox` (12
+  messages)
+- Cover letter: patch 3 found in a durable-handle-v2 reconnect
+  investigation; Timeout=0 clients lose the reconnect race
+- Namjae on cover: **“Applied them except 0002, 0005 patch to #ksmbd-
+  for-next-next.”** Patch 3 applied as submitted. No NAK, no stable
+  discussion.
 
-**Step 6.1 — Does the bug exist here?**
-- Record: Local tree is **v6.18.57** (`git describe HEAD` =
-  `v6.18.57-155-gcdf239ca885b2`, Makefile 6.18.57).
-- `git merge-base --is-ancestor 14741c01680a HEAD` → not an ancestor.
-- `v6.18.57:drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c` does **not** set
-  `KMD_QUEUE` in `gfx_v12_0_cp_gfx_resume` / `gfx_v12_0_gfx_mqd_init`.
-  The compute path already does. GFX12 IP has been in this line since
-  `52cb80c12e8a64`.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Gaël Blivet-Bailly, **Namjae Jeon**, **linux-
+cifs@vger.kernel.org**. Maintainer ack + apply.
 
-**Step 6.2 — Backport difficulty**
-- Record: Clean apply. v6.18.57 context matches the hunks exactly.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Spec: [MS-SMB2] 2.2.13.2.11 Timeout is
+**milliseconds**; 0 = server default. Samba sets default **1 minute
+(60×1000 ms)** and caps at 300×1000. Windows DurableOpenTimeout is 60 s
+(response Timeout sometimes 180 s). Linux CIFS client defaults
+`handle_timeout = 0` (“most clients default to 0”).
 
-**Step 6.3 — Related fixes already here?**
-- Record: `7b9110f289795` is in v6.18.57 and handles compute `KMD_QUEUE`
-  / GFX `RB_NON_PRIV`. It does not set GFX `KMD_QUEUE`. No equivalent
-  GFX12 fix is in v6.18.57.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Other 7 patches are independent bugs. This one does not need
+them.
 
-## Phase 7: Subsystem context
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable fetch 403. No stable mention in the
+downloaded thread. **UNVERIFIED:** whether anyone already asked for this
+on stable@.
 
-**Step 7.1**
-- Record: `[drm/amdgpu GFX12] [IMPORTANT — common AMD GPU driver, RDNA4
-  / RX 9000 class]`
+---
 
-**Step 7.2**
-- Record: Active but mature GFX12 support in 6.18. This is a leftover
-  bring-up omission, not a brand-new subsystem.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-## Phase 8: Impact and risk
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `smb2_open()` only.
 
-**Step 8.1 — Who is affected**
-- Record: GFX12 amdgpu users (config/driver-specific). Not universal.
+**Step 5.2: TRACE CALLERS**
+Record: `smb2_open` is `SMB2_CREATE` in `fs/smb/server/smb2ops.c`.
+Reachable from any SMB3 client CREATE with DH2Q. Durable parsing only if
+`KSMBD_GLOBAL_FLAG_DURABLE_HANDLE` is set (ksmbd-tools `durable handles
+= yes`; tools default is no).
 
-**Step 8.2 — Trigger**
-- Record: Device init (MQD/`CP_RB0_CNTL` programming), then any kernel
-  gfx IB whose VMID ≠ queue VMID. Unprivileged users trigger this via
-  normal command submission. Default path is async KGQ
-  (`amdgpu_async_gfx_ring=1`).
+**Step 5.3: TRACE CALLEES**
+Record: Timeout consumed by scavenger (`ksmbd_durable_scavenger`) and
+advertised in `create_durable_v2_rsp_buf()`. Parsed from wire via
+`le32_to_cpu(durable_v2_blob->Timeout)`.
 
-**Step 8.3 — Failure mode**
-- Record: Wrong GPU VMID → GFXHUB page fault, ring timeout, GPU reset,
-  or access in the wrong address space. Severity: **HIGH** (GPU hang /
-  fault; possible wrong-VM access).
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace SMB client → SMB2 CREATE + DH2Q Timeout=0 →
+`smb2_open` → later disconnect → scavenger expires in 60 ms → DH2C miss.
+CIFS client sends Timeout=0 by default. **Yes, userspace-reachable** for
+servers with durable handles enabled.
 
-**Step 8.4 — Risk vs benefit**
-- Record: Benefit high for GFX12 boxes. Risk very low (2 lines, kernel
-  queues only, same pattern as compute). Ratio favors backport.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Only this `= 60` default. V1 durable requests do not set
+`durable_timeout` (stays 0; scavenger skips). Separate issue, not this
+patch.
 
-## Phase 9: Synthesis
+---
 
-**Evidence for**
-- Real CP programming bug: kernel IB VMIDs can be replaced with queue
-  VMID 0
-- `gfx_v12_0_ring_emit_ib_gfx()` puts the job VMID in the IB; that path
-  is live
-- Compute KGQ already sets `KMD_QUEUE`; GFX did not
-- 2-line, obviously correct, maintainer-reviewed
-- Bug and prerequisites exist in v6.18.57; applies cleanly
-- No new API/feature
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Evidence against**
-- No public repro, syzbot, or `Fixes:` tag
-- Everyday GFX12 has worked since bring-up, so firmware or privilege
-  bits may mask this in some cases
-- Submitted as 09/21 in a larger reset series (but this hunk is
-  independent)
-- Lore/b4 review thread could not be fetched (server 403)
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** `fs/smb/server/smb2pdu.c:3659`: `fp->durable_timeout =
+60;`. Introduced v6.9-rc1; this is 6.12.111. `git merge-base --is-
+ancestor 337e5ea749817 HEAD` is **false** — fix not present.
 
-**Unresolved**
-- Full reviewer discussion beyond `Reviewed-by: Alex Deucher`
-- Whether a specific firmware version started enforcing VMID replacement
-- Stable-list history for this exact subject
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Mainline hunk is around line 4186 vs 3659 here (later AAPL/open
+growth). Context around the assignment matches. Expected apply: **clean
+or trivial offset**. Comment applies; `is_aapl` exists at 3614–3620.
+Mainline `app_instance_id` memcpy in the *provided* candidate context is
+**not** in this tree; the **actual** upstream diff does not touch that —
+only `60`→`60000` plus the comment.
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** — two `REG_SET_FIELD`s;
-   maintainer reviewed
-2. Real user-facing bug? **PASS** — wrong IB VMID on kernel GFX queues
-3. Important (fault/hang/wrong VM)? **PASS** — HIGH, not cosmetic
-4. Small and contained? **PASS** — +2 lines, one file
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** — v6.18.57 has the buggy code and
-   prerequisites
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No other timeout-units fix. `289ebd9afeb94` only changed `min()`
+to `min_t()`.
 
-**Exception category:** hardware programming / quirk-like register bit
-on an existing driver. Not a new driver or API.
+---
 
-This belongs on 6.18.57. The tree has GFX12, still omits GFX
-`KMD_QUEUE`, and the fix is a two-line register correction with the same
-`kernel_queue` distinction already used for compute MQDs.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### What the commit solves for this tree
-On GFX12, kernel gfx rings submit `PACKET3_INDIRECT_BUFFER` with a job
-VMID. Without `KMD_QUEUE`, CP is specified to replace that VMID with the
-queue VMID (0). That is a GPU address-space bug: faults, hangs, or
-wrong-VM access. v6.18.57 already has the `kernel_queue` flag and
-compute `KMD_QUEUE`; this only fills the GFX gap.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **ksmbd** (`fs/smb/server/`). **IMPORTANT** (in-kernel SMB3
+server), not mm/VFS core. Affects ksmbd users with durable handles
+enabled (Windows/macOS SMB3 reconnect).
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active — many recent ksmbd fixes on this 6.12 branch. Durable-
+handle code itself has been in tree since 6.9.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Config/feature-specific:** ksmbd with durable handles enabled.
+Not all kernel users. Clients that send Timeout=0 (Linux CIFS default,
+typical Windows). Clients that send a nonzero Timeout are unchanged.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Enable durable handles; CREATE with DH2Q Timeout=0; drop the TCP
+connection; reconnect with DH2C. Common for SMB3 durable opens.
+Unprivileged SMB clients can trigger it if the share allows them. Not a
+timing race of locking — the window is just far too short.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **Failure:** durable reconnect fails (lookup miss); open does
+not survive a network blip. **Not** panic, UAF, or silent data
+corruption. **Severity: HIGH** for that feature (feature is effectively
+broken for the default Timeout=0 case), **MEDIUM–HIGH** overall (opt-in,
+but that is exactly who needs reconnect).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit: HIGH** for durable-handle users — reconnect works for the
+  common Timeout=0 case.
+- **Risk: VERY LOW** — one integer, same units as the rest of the code,
+  within the existing 300 s cap. Extra comment is inert.
+- **Ratio:** strong yes.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Real 1000× units bug; Timeout=0 is the spec/common client default.
+- Scavenger and DH2Q response both treat the field as milliseconds.
+- Durable reconnect after a real disconnect fails today.
+- One-line functional change; obviously correct; maintainer acked and
+  applied.
+- Buggy code is in this 6.12 tree since v6.9; fix is not.
+- Applies with no prerequisites.
+
+**AGAINST:**
+- Durable handles are opt-in (tools default off).
+- Not a crash/UAF/CVE.
+- Extra AAPL comment is unrelated (harmless).
+- No Fixes:/Cc: stable (not a negative per rules).
+
+**UNRESOLVED:**
+- Direct stable@ lore search (HTTP 403).
+- No public user bugzilla for this specific 60 ms window (found by
+  reconnect investigation).
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — units match spec and
+   adjacent code; maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — Timeout=0 durable
+   reconnect fails.
+3. Important issue? **PASS** — protocol feature that exists to survive
+   disconnects is broken in the default-timeout path (not panic, but
+   user-visible functional failure).
+4. Small and contained? **PASS** — 1 file, 1 assignment (+ comment).
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS**
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID/quirk/DT/build/doc-only). Ordinary
+correctness fix.
+
+**Step 9.4: MAKE YOUR DECISION**
+This belongs on 6.12. The durable-handle v2 default is stored in the
+wrong units, so any client that asks the server to pick a timeout
+(including the in-tree CIFS client) gets a 60 ms reconnect window. That
+is not a usable durable handle. The fix is a single constant aligned
+with Samba (60 s) and with every other millisecond use of the field.
+Risk is negligible; the code and introducer are already in this tree.
+
+### What problem this solves for stable users
+ksmbd users who enabled durable handles (Windows/macOS/SMB3 reconnect)
+currently lose the handle ~60 ms after a drop when the client sent
+Timeout=0. The reconnect CREATE then misses. After this change, the
+default window is 60 seconds, matching the intended design and the
+protocol’s millisecond Timeout field.
 
 ### Risk vs benefit
-Benefit is correct VMID handling on RDNA4 kernel gfx queues. Risk is a
-two-line bit set on kernel queues only; user queues stay unset.
+Benefit is restoring the feature those users turned on. Risk is holding
+durable state for 60 s instead of 60 ms after disconnect — intended, and
+still far below the 300 s cap.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by/SOB Alex Deucher; no
-  Fixes/Reported-by/Link
-- [Phase 2] Diff: +2 lines in `gfx_v12_0_cp_gfx_resume` and
-  `gfx_v12_0_gfx_mqd_init`
-- [Phase 2] `regCP_GFX_HQD_CNTL_DEFAULT` is `0x00f00000`; `KMD_QUEUE`
-  mask is `0x20000000` — default does not set the bit
-- [Phase 2] Userq path: `mes_userqueue.c` kzallocs props, so
-  `kernel_queue` stays false
-- [Phase 2] Kernel rings: `amdgpu_ring.c` sets `prop->kernel_queue =
-  true`
-- [Phase 3] Blame: GFX12 setup from `52cb80c12e8a64` (2023); `KMD_QUEUE`
-  never set on GFX
-- [Phase 3] Prerequisite `7b9110f289795` / `284d4dfe850e6` are ancestors
-  of v6.18.57
-- [Phase 3] `git merge-base --is-ancestor 14741c01680a HEAD` → not
-  present as that SHA
-- [Phase 4] `b4 dig` failed (lore server error) — UNVERIFIED full thread
-  text
-- [Phase 4] amd-gfx Sept 2026 archive: `[PATCH 09/21] drm/amdgpu/gfx12:
-  set KMD_QUEUE for kernel gfx queues`
-- [Phase 4] lore.kernel.org WebFetch 403; no stable-list discussion
-  found
-- [Phase 5] Default init: `amdgpu_async_gfx_ring=1` →
-  `gfx_v12_0_kgq_init_queue` → `gfx_v12_0_gfx_mqd_init`
-- [Phase 5] `gfx_v12_0_ring_emit_ib_gfx` encodes VMID at bit 24
-- [Phase 6] `git describe HEAD`: v6.18.57-155-gcdf239ca885b2; Makefile
-  6.18.57
-- [Phase 6] `git show v6.18.57:drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c`:
-  GFX `KMD_QUEUE` missing; compute path present
-- [Phase 8] Failure mode: GPU VM fault / hang / wrong address space —
-  HIGH
-- UNVERIFIED: exact firmware interaction that kept some GFX12 systems
-  working without this bit
+- [Phase 1] Subject/tags from `git show 337e5ea749817`: fix, Assisted-by
+  Claude, Acked-by Namjae Jeon, SOB Steve French; no
+  Fixes/Cc:stable/Reported-by
+- [Phase 2] Diff: `fp->durable_timeout = 60` → `60000` plus AAPL
+  reconnect comment in `smb2_open()`
+- [Phase 2] This tree: same assignment at
+  `fs/smb/server/smb2pdu.c:3659`; scavenger adds timeout to
+  `jiffies_to_msecs(jiffies)` at `vfs_cache.c:1276-1278`; response
+  Timeout at `oplock.c:1818`; parse is
+  `le32_to_cpu(durable_v2_blob->Timeout)` at `smb2pdu.c:2868-2869`;
+  `DURABLE_HANDLE_MAX_TIMEOUT` is 300000
+- [Phase 3] `git blame`: line from `c8efcc786146a` (v6.9-rc1); `git
+  merge-base --is-ancestor c8efcc786146a HEAD` true; `289ebd9afeb94`
+  also in tree
+- [Phase 3] `git merge-base --is-ancestor 337e5ea749817 HEAD` false;
+  object exists in repo
+- [Phase 3] `git log -S 'durable_timeout = 60' --
+  fs/smb/server/smb2pdu.c` → only introducer
+- [Phase 4] `b4 dig -c 337e5ea749817`:
+  patch.msgid.link/20260709000548.66445-4-g.blivet@me.com, PATCH 3/8
+- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: Namjae + linux-cifs
+- [Phase 4] `b4 mbox`: cover letter calls patch 3 standalone units bug;
+  Namjae applied all but 2/8 and 5/8
+- [Phase 4] MS-SMB2 Timeout is milliseconds, 0 = server default
+  (WebFetch)
+- [Phase 4] Samba default 60×1000 ms; Windows DurableOpenTimeout 60 s
+- [Phase 4] lore.kernel.org HTTP 403; used b4 mbox instead
+- [Phase 5] `smb2_open` is SMB2_CREATE handler; gated on
+  `KSMBD_GLOBAL_FLAG_DURABLE_HANDLE`
+- [Phase 5] CIFS client `ctx->handle_timeout = 0` (`fs_context.c:1839`);
+  DH2Q Timeout from that (`smb2pdu.c:2461`)
+- [Phase 6] `git describe HEAD` / `make kernelversion`: p-6.12-3 /
+  6.12.111; Makefile VERSION=6 PATCHLEVEL=12 SUBLEVEL=111
+- [Phase 8] Failure: DH2C lookup miss after disconnect; not a panic
+- UNVERIFIED: stable@ mailing list archive via HTTP; no public user
+  bugzilla for this 60 ms window
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/smb2pdu.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index 433381f806b2b..06fde713b9229 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -2733,6 +2733,7 @@ static int gfx_v12_0_cp_gfx_resume(struct amdgpu_device *adev)
- 	rb_bufsz = order_base_2(ring->ring_size / 8);
- 	tmp = REG_SET_FIELD(0, CP_RB0_CNTL, RB_BUFSZ, rb_bufsz);
- 	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, RB_BLKSZ, rb_bufsz - 2);
-+	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, KMD_QUEUE, 1);
- 	WREG32_SOC15(GC, 0, regCP_RB0_CNTL, tmp);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 22c49921b1c07..ccefd325e52e3 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3681,10 +3681,17 @@ int smb2_open(struct ksmbd_work *work)
+ 					min_t(unsigned int, dh_info.timeout,
+ 					      DURABLE_HANDLE_MAX_TIMEOUT);
+ 			else
+-				fp->durable_timeout = 60;
++				fp->durable_timeout = 60000;
+ 		}
+ 	}
  
- 	/* Initialize the ring buffer's write pointers */
-@@ -3025,6 +3026,7 @@ static int gfx_v12_0_gfx_mqd_init(struct amdgpu_device *adev, void *m,
- 	tmp = regCP_GFX_HQD_CNTL_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BUFSZ, rb_bufsz);
- 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BLKSZ, rb_bufsz - 2);
-+	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, KMD_QUEUE, prop->kernel_queue);
- #ifdef __BIG_ENDIAN
- 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, BUF_SWAP, 1);
- #endif
++	/*
++	 * conn->is_aapl detection above (this function's create-context
++	 * parsing) is skipped on the reconnect path below, since a
++	 * reconnect always arrives on a fresh connection -- if the client
++	 * cares, it sends its own AAPL context on this same CREATE, which
++	 * this function's normal (non-reconnect) parsing already handles.
++	 */
+ reconnected_fp:
+ 	rsp->StructureSize = cpu_to_le16(89);
+ 	opinfo = opinfo_get(fp);
 -- 
 2.53.0
 
