@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D55500A99;
-	Mon, 19 Oct 2026 13:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6555810E7;
+	Mon, 19 Oct 2026 13:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418324; cv=none; b=JLX9j7c2fcJE/dNoaR5oBfsRRhT3XWM8ku5IXjFoZusiq6yRn5txJ4RvFlmL2sKyWusJH/D0TnT0gRTmWyVYzleMP4szBGqsASZaVFivzj4pku8Rv2e3AG3KEEJBSaexD3dyFjnWx9ktNB+gDd6/Lysh4KvpBzs5VFDl9Nw0HLI=
+	t=1792418325; cv=none; b=e/F9aWPOMSKTEXr1CMEQ9HbN/CuHz+TBxmGPHnKP65zNfkmfViR0SZoio4LdX8bFqik/JlrqfnPpL6UfwmXyeV7pdEyV1ihjBsneFeTHONsI+VkdnYLcdTlW+ftm5QfOKmYDj/uf2F4TkSayhF0/xMwS2qSJviFF5s62sE4wWUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418324; c=relaxed/simple;
-	bh=v4i/sp+jK+cJnVRz6+KH9dDUSk7IzusOS5QKSQau6JI=;
+	s=arc-20240116; t=1792418325; c=relaxed/simple;
+	bh=0/+oTq/iPFd4Dx56ED+kSetpVtEOv78MVIXbnFkc8HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B/q9rLbXB3LdYqzLW/qn4Saj5C2WwC2Ws8VAqrrW/+jZqRPNF5MGhYhgFmwySJO8PDFN+5e/ifJ2uVeZg9vBQtSDwYmynzfG6SpKTtH+ReulP/fv4aF4mrJ4AnB2OQ1lL07Ztxq/cgDyFIOAENZrZVxS/A2U4DXvdVcNj+0BTvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OkGp9nNX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=s07MncBYvcUrdXu6GJySyT+pTOuNwtHHjhHYpi+1S7LTL5pyWB9bjRxVjDOx/+d+Sh9aZ/x8NtWEiGYMlhfeWoKlilGJ96F8mgCJawSSPJVjTd6FKuRo/iZzbEVGDzCQCQBeXcDnsyFM2jZ+slnsHThsQvFtVjcEFu5DjshWMss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gA39CcNJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OkGp9nNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED561F000C8;
-	Mon, 19 Oct 2026 13:58:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gA39CcNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA3D1F000C7;
+	Mon, 19 Oct 2026 13:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418319;
-	bh=W8xraFxeoKo68zra+pQGrg4F7KTb70uKCPQvmJEHKpA=;
+	s=k20260515; t=1792418322;
+	bh=dENmD698szZzBSZbOBfmILBFw0Baf/1rZwQeB805f4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OkGp9nNXkKiP5UoxzypzfMQj1L0W/aqWbfVNF9khX2RG7VQxtpLjLpmQOrLnNvEwX
-	 bbqlCLPGBN3w1oBGIDGodzQBXPbuCcNVsxlKuXOsrfGTVwGEDKoaFvKuiOJDFChxcK
-	 uG81L9ZCvd4/hBISzxvjUSYcGaXSU0RZoHjUgcsXSOt8VA2pO8iI+AdtaHaqMGQ57q
-	 6XL/ypzqcf/s+QSgQ5DiU2SUTl5gm/ewxxj1M5OlPA3P/c2DfSoop+DVsSH76BbQ9y
-	 6KIkNnp4nV5H7Uf6ilKFpWBLGCMxDfqZpUNPDwYrHsOlFYKUDKcIuHD/HSBW1mlAlO
-	 yCRSdkJC/7Qxg==
+	b=gA39CcNJKhHgq7B59R2mfa5+NRFWq4whIH8Gtzo8fJwksfYAP3/FKwXQgBkstbElS
+	 mtEE9PDQ2LNE15+n7/iESZU6Ccq/FGTsZZzIJdDu19NzmGQlXkMQNOuGn61lM1tRkp
+	 L7X1Vjb5VYcobQv5Uur3hJH36oyyc+HO+kcrmaUdRhEbJQacQ+wZUNXn3lCtH6ZtJt
+	 cQuFxVr/uBCDSTEKUjLsFh47QnsT3qwQvY0w1uh93gSTrJi5ybo6pDv/bkNCbF/zZd
+	 d9icni/n6S0l68gOi5ctalm/2tq2BT9wCeEyHdbJOtmjTaBFKDyNmxs1OI2Bu4PMkl
+	 83zrrI8Aeoz0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sashiko <sashiko-bot@kernel.org>,
+Cc: Bryam Vargas <hexlabsecurity@proton.me>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
+	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/msm: Move nr_cmds initialization
-Date: Mon, 19 Oct 2026 09:47:34 -0400
-Message-ID: <20261019135441.1420968-163-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] iio: accel: fxls8962af: clamp the device-reported FIFO sample count
+Date: Mon, 19 Oct 2026 09:47:36 -0400
+Message-ID: <20261019135441.1420968-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,67 +53,69 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 9ee2884ed58e6b39da35732146446d5930e4746b ]
+[ Upstream commit 2f8225b91eb478ca2e9aec8aaef4d229765bcebe ]
 
-Previously if we entered an error path between these two points, we
-could leak the relocs tables due to submit->nr_cmds still being zero.
+fxls8962af_fifo_flush() transfers the sample count the device reports in
+BUF_STATUS into an on-stack buffer sized for FXLS8962AF_FIFO_LENGTH (32)
+samples, but the count is a 6-bit field (0..63) that is only checked for
+zero. A device, or an attacker on the I2C/SPI bus, reporting 33..63
+overflows the buffer by up to 186 bytes: a stack out-of-bounds write.
 
-In practice, relocs are disallowed on a6xx+, and non-ancient userspace
-will not use relocs on earlier gens unless running on an ancient kernel.
-But userspace could use this to trigger a memory leak.
+Clamp the count to FXLS8962AF_FIFO_LENGTH before the transfer, mirroring
+the clamp already applied in fxls8962af_set_watermark(). Conforming
+hardware reports at most that many samples and is unaffected.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/743085/
-Message-ID: <20260729155609.20190-6-robin.clark@oss.qualcomm.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is mainline **v7.3-rc4**. The change is a real, user-
-triggerable reloc-table leak in `MSM_GEM_SUBMIT`; it is small, correct,
-and belongs in this tree.
+The local tree is **6.18.53**. The FIFO clamp is not in `v6.18.53`; the
+32-sample stack buffer and 6-bit `BUF_CNT` path have been here since
+v5.14. That is a real stack out-of-bounds write, so this is a YES on
+technical merit.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[drm/msm] [Move] [initialize `submit->nr_cmds` earlier so
-error-path cleanup can free reloc tables]**
+Record: **[iio/accel/fxls8962af] [clamp] [bound device-reported FIFO
+sample count before stack transfer]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — static-analysis bot,
-  not syzbot
-- `Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>` — msm
-  maintainer / author (ignore any pipeline SOB)
-- `Patchwork: https://patchwork.freedesktop.org/patch/743085/`
-- `Message-ID: <20260729155609.20190-6-robin.clark@oss.qualcomm.com>` —
-  v7 series, this is patch 5/17 (msgid -6 because -1 is the cover)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- No `Tested-by` / `Reviewed-by` / `Acked-by` on the committed message
+- **Reviewed-by:** Andy Shevchenko `<andriy.shevchenko@intel.com>`
+- **Signed-off-by:** Bryam Vargas `<hexlabsecurity@proton.me>` (author)
+- **Signed-off-by:** Jonathan Cameron `<jic23@kernel.org>` (IIO
+  maintainer)
+- No **Fixes:**, **Cc: stable**, **Reported-by**, **Tested-by**, or
+  **Link:** on the committed message (v1 had Fixes/Cc: stable; they were
+  dropped after review)
+- Ignore pipeline markers: `[ Upstream commit
+  2f8225b91eb478ca2e9aec8aaef4d229765bcebe ]`, Sasha Levin SOB
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** If submit hits an error between reloc `kmalloc` in
-  `submit_lookup_cmds()` and the late `submit->nr_cmds = args->nr_cmds`,
-  destroy walks `nr_cmds == 0` and skips `kfree(relocs)`.
-- **Symptom:** Kernel memory leak; userspace can trigger it via
-  `DRM_IOCTL_MSM_GEM_SUBMIT`.
-- **Author’s caveat:** Relocs are disallowed on a6xx+; modern userspace
-  does not use them on older gens. The author still states userspace can
-  force the leak.
-- **Version info:** None in the message. Introduced with reloc buffering
-  in v5.11-rc1.
+- **Bug:** `fxls8962af_fifo_flush()` copies `BUF_STATUS` `BUF_CNT`
+  (GENMASK(5,0), 0..63) into `u16 buffer[FXLS8962AF_FIFO_LENGTH * 3]`
+  (32 samples). Count is only checked for zero.
+- **Symptom:** stack out-of-bounds write of up to 186 bytes (63×6=378
+  into 192-byte buffer), canary/return-address smash.
+- **Root cause:** driver trusts a 6-bit device field against a 32-deep
+  FIFO buffer. Watermark path already clamps; flush path does not.
+- **Version:** unbounded since `79e3a5bdd9ef` (“add hw buffered
+  sampling”), 2021.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. It is an explicit error-path resource-leak fix
-(delayed counter vs allocated objects).
+Record: Not disguised. It is a bounds-check / memory-safety fix. Review
+treated it as hardening against malformed device reports rather than a
+conforming-hardware bug.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS
@@ -125,82 +123,68 @@ PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/gpu/drm/msm/msm_gem_submit.c` (+3 / −2)
-- Functions: `submit_lookup_cmds()`, `msm_ioctl_gem_submit()`
-- Scope: single-file surgical fix
+- File: `drivers/iio/accel/fxls8962af-core.c` (+2 / −0)
+- Function: `fxls8962af_fifo_flush()`
+- Scope: single-file, two-line surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `submit_lookup_cmds()` `kmalloc`s `cmd[i].relocs` then
-  `copy_from_user`. `nr_cmds` stays 0 (kzalloc) until after pin/reloc
-  parsing, then `submit->nr_cmds = args->nr_cmds`. Any `goto out` in
-  between skips that store. `__msm_gem_submit_destroy()` only frees `i <
-  nr_cmds`.
-- **After:** `submit->nr_cmds = i + 1` immediately after a successful
-  `kmalloc`, before `copy_from_user`. The late assignment is removed.
-  Failed `kmalloc` does not bump the counter.
+Record: After `count = reg & FXLS8962AF_BUF_STATUS_BUF_CNT` and the `if
+(!count) return 0` check, add `count = min(count,
+FXLS8962AF_FIFO_LENGTH)` before timestamp math and
+`fxls8962af_fifo_transfer(data, buffer, count)`. Normal path with count
+≤ 32 is unchanged. Path with count 33..63 is capped at 32 instead of
+overflowing the stack buffer.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** error-path resource leak (ioctl-reachable, repeatable)
-- **Mechanism:** counter used as the free loop bound is updated after
-  the allocations. Verified destroy path:
+Record: **Buffer overflow / out-of-bounds write.** Device-reported
+length used as transfer size without clamping to the on-stack array. Fix
+is a bounds clamp (memory-safety / hardware-value validation).
 
-```121:122:drivers/gpu/drm/msm/msm_gem_submit.c
-        for (i = 0; i < submit->nr_cmds; i++)
-                kfree(submit->cmd[i].relocs);
-```
-
-`allow_relocs` is false on a6xx+ (`adreno_gpu.c`: `gpu->allow_relocs =
-family < ADRENO_6XX_GEN1`), but that check runs **after** lookup
-allocates. Userspace with `nr_relocs > 0` allocates, then hits `EINVAL`
-“relocs not allowed” and (before this fix) leaked.
+Verified math:
+- `u16 buffer[32 * 3]` → 192 bytes
+- `fxls8962af_fifo_transfer()` reads `count * 3 * sizeof(u16)` = `count
+  * 6` bytes
+- count=32 → 192 (fits); count=33 → 198 (6 past); count=63 → 378 (**186
+  past**), matching the message
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: free bound tracks allocated slots.
-- Minimal; no API/data-structure change.
-- Regression risk is low. Mid-ioctl code uses `args->nr_cmds` /
-  `cmds_to_parse`, not `submit->nr_cmds`. `msm_job_run()` / GPU submit
-  run only after a successful job push, when `nr_cmds` already equaled
-  `args->nr_cmds`.
-- Failed `kmalloc` still does not increment, so a NULL slot is not
-  `kfree`d.
+Record: Obviously correct and minimal. `min()` is valid here: `count` is
+`u8`, `FXLS8962AF_FIFO_LENGTH` is 32; this tree’s `minmax.h` promotes
+unsigned char to signed int. Regression risk is very low: conforming
+devices report ≤32. Clamping a wild count to 32 can leave unread FIFO
+data rather than crashing; that is safer than a stack smash. Maintainer
+later preferred `dev_err` + abort over a silent clamp, but the clamp
+still prevents the overflow.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Reloc `kmalloc` + destroy `kfree` loop: `20224d715a882`
-  (“drm/msm/submit: Move copy_from_user ahead of locking bos”),
-  **2020-10-23**, in **v5.11-rc1** (`git merge-base --is-ancestor` vs
-  v5.10 failed, vs v5.11-rc1 succeeded).
-- Late `submit->nr_cmds = args->nr_cmds`: `2e6a8a1fe2b262` (“drm/msm:
-  Add VM_BIND ioctl”, 2025-06-29). Before that it was `submit->nr_cmds =
-  i` **after** the parse loop; `goto out` inside that loop still skipped
-  the store. The leak is older than VM_BIND.
+Record: FIFO flush, stack buffer, and unclamped `BUF_CNT` came from
+**`79e3a5bdd9ef`** (Sean Nyekjaer, 2021-05-17), “iio: accel: fxls8962af:
+add hw buffered sampling”. First appeared around **v5.14**. Long-lived
+in this tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy pattern starts at `20224d715a882`
-(v5.11). That commit is an ancestor of this tree.
+Record: No Fixes tag on the committed version. v1 tagged `79e3a5bdd9ef`.
+That commit **is** an ancestor of HEAD and of `v6.18.53`.
 
-**Step 3.3: CHECK FILE HISTORY**
-Record:
-- Same-day series: `0369a2619c50b` SIZE_MAX cleanup, `7aeada642ebfd`
-  overflow check — independent, not required for this leak fix.
-- Related but different: `ad70e46e130a7` submit error-path unpin order.
-- Standalone for the leak; bundled as v7 05/17 “lazy-vm fixes” for
-  convenience.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Related: `1fe16dc1a2f50` (“Fix use after free in
+fxls8962af_fifo_flush”, CVE-2025-38485) — `synchronize_irq()` on
+predisable, **already in v6.18.53**. Different bug; does not bound FIFO
+count. Sibling **`3e766526827ac`** (bmc150 FIFO clamp) **is already in
+v6.18.53** with `Cc: stable`. This patch is standalone, not patch N/M.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Rob Clark is the msm GEM/submit maintainer. Nearby work is other
-submit/VM fixes in the same series.
+Record: Bryam Vargas is not the IIO maintainer. Same author submitted
+the bmc150 clamp (already in this tree). Driver author/regular is Sean
+Nyekjaer (CC’d). Applied by Jonathan Cameron.
 
-**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
-Record: None for this hunk. It only moves an existing store. Applies
-standalone on this tree (already applied as `9ee2884ed58e6`).
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses existing `min()`, `FXLS8962AF_FIFO_LENGTH`, and
+`fxls8962af_fifo_flush()`. Applies standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -208,131 +192,139 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 9ee2884ed58e6`: https://patch.msgid.link/20260729155609.201
-  90-6-robin.clark@oss.qualcomm.com
-- `[PATCH v7 05/17] drm/msm: Move nr_cmds initialization`
-- Cover: `[PATCH v7 00/17] drm/msm: A couple lazy-vm fixes`
-- Revisions v1–v7 of a growing msm series; this leak fix is in v7.
-  Applied version is latest.
-- Lore HTTP fetch returned 403; full thread read from `b4 dig -m` mbox.
-- Sashiko reply on this patch: only **pre-existing** issues (SIZE_MAX in
-  `submit_create`, lazy `ctx->vm` NULL). No NAK of the nr_cmds move.
-  Those other bugs are other patches in the same series.
-- No reviewer `Cc: stable` in the thread.
+- **v1:** https://lore.kernel.org/all/20260613-b4-disp-22362900-v1-1-
+  c5e49f6af027@proton.me/ (had Fixes + Cc: stable, used `min_t(u8,
+  ...)`)
+- **v2:** https://lore.kernel.org/all/20260615-b4-disp-1a8c7886-v2-1-
+  0f0a2c48d840@proton.me/
+- **v3 (applied):** https://lore.kernel.org/all/20260616-b4-disp-
+  2e8d94cf-v3-1-c4e092eef3a2@proton.me/
+- Jonathan on v1: *“This is hardening against broken devices. Nice to
+  have, but not a fix and not back port material.”* Also asked for
+  `min()` instead of `min_t`.
+- Andy: shrink the AI-heavy commit message.
+- Author dropped Fixes/Cc: stable for v2/v3. Andy **Reviewed-by** on v3.
+  Jonathan applied to iio.git testing.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To dri-devel; Cc linux-arm-msm, freedreno,
-Sashiko, Dmitry Baryshkov, Abhinav Kumar, Jessica Zhang, Sean Paul,
-Marijn Suijten, David Airlie, Simona Vetter. Subsystem maintainers were
-on the original mail. No human Reviewed-by on the git commit.
+Record: To/Cc included Jonathan Cameron (maintainer), Andy Shevchenko,
+David Lechner, Nuno Sá, Sean Nyekjaer, linux-iio, linux-kernel.
+Maintainer applied it; Andy reviewed it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Reporter is Sashiko (automated). No syzbot/bugzilla. Author
-independently describes a userspace-triggerable leak. That description
-matches the code.
+Record: No syzbot/bugzilla/user crash. Author reproduced with a
+KASAN_STACK litmus (count=36 → write of size 216 past the 192-byte
+buffer) and a userspace ASan model (count=63). Not a field report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 17-patch lazy-VM series. This patch does not need 01–04
-(ctxlock/queuelock) or 06+ (SIZE_MAX / VM helpers). Standalone leak fix.
+Record: Parallel bmc150 clamp (`ce0e1cae2609` / `3e766526827ac` in this
+tree) with Fixes + Cc: stable. Same author, same week. Jonathan agreed
+with that analysis and only nitted `min()` vs `min_t`.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: Web search of lore.kernel.org/stable for this subject found no
-relevant thread.
+Record: Duplicate sent to stable@ in Aug 2026 (Shengzhuo Wei). Jonathan:
+not a fix, don’t hide it by clamping. After learning Bryam’s patch was
+already in mainline: *“Oops… didn’t think of it in the same way… not
+worth more churn for something we don’t really expect to see in
+practice.”* He did not NAK backporting Bryam’s already-merged clamp; he
+rejected the duplicate and a follow-up rework.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: KEY FUNCTIONS**
-Record: `submit_lookup_cmds`, `msm_ioctl_gem_submit`; cleanup via
-`__msm_gem_submit_destroy`.
+Record: `fxls8962af_fifo_flush()`; helper `fxls8962af_fifo_transfer()`.
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `msm_ioctl_gem_submit` registered with `DRM_RENDER_ALLOW` in
-  `msm_drv.c` (`DRM_IOCTL_MSM_GEM_SUBMIT`).
-- Reachable from render-node ioctl; not irq, not module init.
+Record: Only caller is `fxls8962af_interrupt()` when
+`FXLS8962AF_INT_STATUS_SRC_BUF` is set. IRQ is a threaded oneshot
+handler (`devm_request_threaded_irq(..., NULL, fxls8962af_interrupt,
+...)`). Runs when the IIO buffer is enabled and the device signals
+FIFO/watermark.
 
 **Step 5.3: TRACE CALLEES**
-Record: `kmalloc`, `copy_from_user`, later `submit_reloc` /
-`allow_relocs` check. Destroy: `kfree(relocs)` gated by `nr_cmds`.
+Record: `regmap_read` (`BUF_STATUS`), `iio_get_time_ns`,
+`fxls8962af_fifo_transfer` → `regmap_raw_read` (or I2C errata-3 per-
+sample reads), then `iio_push_to_buffers_with_ts`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: userspace ioctl → `drm_ioctl` → `msm_ioctl_gem_submit` →
-`submit_lookup_cmds` → error `goto out` → `submit_cleanup` →
-`msm_gem_submit_put` → `__msm_gem_submit_destroy`. Unprivileged GPU
-clients (render node) can trigger it.
+Record: Userspace enables the IIO buffer → hardware FIFO IRQ → flush.
+Not a syscall that feeds the count; the count comes from the device over
+I2C/SPI. Unprivileged userspace cannot set `BUF_CNT` without controlling
+the bus or the part.
 
-**Step 5.5: SIMILAR PATTERNS**
-Record: `submit_lookup_objects()` already does `submit->nr_bos = i` on
-the way out so partial BO lookups are cleaned. Cmds did not have the
-analogous update. No sibling drivers with the same bug in this file.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same bug/fix in bmc150 (`__bmc150_accel_fifo_flush`). Watermark
+path already clamps to `FXLS8962AF_FIFO_LENGTH`. `BUF_CNT` is only
+consumed here.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes, in this lineage. `git describe HEAD` =
-`v7.3-rc4-27-gf0100363d8c37`, `make kernelversion` = `7.3.0-rc4`. Parent
-of `9ee2884ed58e6` still has the late assignment and zero `nr_cmds`
-during lookup. Bug present since v5.11; this fix is already an ancestor
-of HEAD (`git merge-base --is-ancestor 9ee2884ed58e6 HEAD` succeeded).
-Decision is still whether the fix has technical merit for this tree, not
-whether a pipeline tag exists.
+Record: **Yes.** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
+`make kernelversion` → **6.18.53**.
+`v6.18.53:drivers/iio/accel/fxls8962af-core.c` has the 32-sample stack
+buffer and unclamped `BUF_CNT`. `git merge-base --is-ancestor
+e25456b3011d9 v6.18.53` is false (candidate only on autosel). Introduced
+**v5.14** (`79e3a5bdd9ef`). Driver configs: `FXLS8962AF_I2C` /
+`FXLS8962AF_SPI`.
 
-**Step 6.2: BACKPORT COMPLICATIONS**
-Record: On this tree the hunk matches current `msm_gem_submit.c`
-(VM_BIND-era `args->nr_cmds` store). Clean apply. (Older pre-VM_BIND
-trees would delete `submit->nr_cmds = i` instead; that is not this
-checkout.)
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply.** `git diff v6.18.53 e25456b3011d9^ --
+drivers/iio/accel/fxls8962af-core.c` is empty. Dry-run of the two-line
+hunk against the v6.18.53 file succeeded.
 
-**Step 6.3: RELATED FIXES ALREADY HERE**
-Record: No earlier equivalent. Follow-ups `0369a2619c50b` /
-`7aeada642ebfd` are overflow cleanups, not another leak fix.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: UAF/CVE-2025-38485 fix is in v6.18.53; it does not clamp count.
+No earlier FIFO-count clamp. bmc150 analog **is** in v6.18.53.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: **drm/msm GEM submit**. **IMPORTANT** (Qualcomm Adreno; Android
-phones and Snapdragon laptops). Not mm/core, but a common production GPU
-driver.
+Record: **IIO accelerometer driver** (`drivers/iio/accel/`).
+**PERIPHERAL / IMPORTANT for users of this NXP automotive accel**
+(FXLS8962AF/64/67/8974). Not core mm/net/fs.
 
 **Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Actively developed (VM_BIND, lazy VM, submit locking). Submit
-ioctl itself is old and long-lived.
+Record: Mature driver (2021) with ongoing IIO-wide and device-specific
+fixes. FIFO flush logic is stable, not newly introduced in 6.18.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: WHO IS AFFECTED**
-Record: Driver-specific (`CONFIG_DRM_MSM`). Anyone who can open the msm
-render node.
+Record: **Driver-specific / config-specific** (`CONFIG_FXLS8962AF_I2C`
+or `_SPI`), when the IIO buffer is on.
 
 **Step 8.2: TRIGGER CONDITIONS**
-Record:
-- Normal submits with `nr_relocs == 0`: `kmalloc(0)` is not a real leak.
-- Trigger: `nr_relocs > 0`, then any error after allocation (bad copy,
-  lock fail, invalid cmd size, **relocs not allowed on a6xx+**).
-- Easy on modern Adreno: pass nonzero relocs; kernel allocates then
-  rejects.
-- Unprivileged with render-node access. Repeatable; size chosen by
-  userspace.
+Record: FIFO IRQ with `BUF_CNT` in 33..63 and `BUF_OVF` clear.
+Conforming silicon: FIFO depth 32; overflow sets `BUF_OVF` and the
+driver returns `-EOVERFLOW` without transferring. Trigger needs a
+bad/malicious/counterfeit part, bus tampering, or a corrupted
+`BUF_STATUS` read (e.g. I2C bit error on bit 5, which adds 32 to a 1..31
+count without setting OVF). Not reachable from syscalls alone. No field
+reports.
 
 **Step 8.3: FAILURE MODE SEVERITY**
-Record: Kernel memory leak in a hot ioctl, unbounded. **HIGH** (DoS /
-memory exhaustion). Not panic/UAF/corruption.
+Record: **Stack out-of-bounds write** (up to 186 bytes) in IRQ-thread
+context → canary smash, oops, or worse. **Severity: HIGH** (CRITICAL if
+the bus is treated as adversarial). Conforming hardware: not hit.
 
 **Step 8.4: RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** Stops a userspace-triggerable leak on a widely used GPU
-  ioctl. High for msm users.
-- **Risk:** Very low (3 insertions, 2 deletions; error/cleanup
-  accounting only).
-- **Ratio:** Strongly favors applying.
+- **Benefit:** stops a kernel stack smash on a wild FIFO count. Same
+  class already shipped in this 6.18.53 tree for bmc150.
+- **Risk:** very low (2 lines, `min()`, no API/locking/structure change;
+  good devices unchanged).
+- **Ratio:** high benefit/risk for a memory-safety clamp. Maintainer
+  preference for “error out instead of clamp” is a design nit, not a
+  regression.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -341,117 +333,109 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real leak: destroy uses `nr_cmds` as the free count; that count was
-  updated too late.
-- User-triggerable via `DRM_IOCTL_MSM_GEM_SUBMIT` (`DRM_RENDER_ALLOW`).
-- On a6xx+ the “relocs not allowed” path is after allocation, so modern
-  hardware is included.
-- Present since v5.11; still the same mechanism here until this commit.
-- 5-line, obviously correct; msm maintainer authored it.
-- Matches the common stable class of ioctl error-path leaks.
+- Real stack OOB: 6-bit count vs 32-sample stack buffer, overflow math
+  verified (186 bytes).
+- Bug exists in **this** 6.18.53 tree; driver since v5.14.
+- Two-line, obviously correct clamp; `min()` is type-safe here.
+- Applies cleanly; no prerequisites.
+- KASAN_STACK reproduction of the overflow.
+- Reviewed by Andy Shevchenko; applied by IIO maintainer.
+- Identical bmc150 clamp already in v6.18.53.
+- IRQ-time path, not dead init code.
 
 AGAINST:
-- Not a crash/UAF; “only” a leak.
-- Honest userspace rarely uses relocs on current gens.
-- Found by Sashiko, not a user oops/syzbot.
-- Shipped in a 17-patch series (but this patch is independent).
-- No `Fixes:` / `Cc: stable` (not a negative per the rules).
+- Jonathan: hardening, *“not a fix and not back port material.”* Author
+  dropped Cc: stable for that reason.
+- No user/syzbot reports; needs non-conforming `BUF_CNT` (OVF already
+  bails out on overflow).
+- Later stable@ thread: prefer logging/error over silent clamp; “don’t
+  expect this in practice.”
 
 UNRESOLVED:
-- Lore.kernel.org HTTP 403; discussion recovered via `b4 dig -m`.
-- Patchwork HTML was a bot-check page.
-- No stable-list thread found.
+- No datasheet fetch here beyond driver comments
+  (`FXLS8962AF_FIFO_LENGTH` 32, `BUF_CNT` GENMASK(5,0)). Driver and
+  review agree on those numbers.
 
 **Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — maintains allocated-vs-freed
-   invariant; maintainer-authored; in mainline since v7.3-rc1.
-2. Fixes a real bug that affects users? **PASS** — ioctl-reachable leak.
-3. Important (crash/security/corruption/deadlock)? **PASS** at HIGH —
-   repeatable kernel memory leak / DoS, not CRITICAL crash.
-4. Small and contained? **PASS** — +3/−2, one file.
+1. Obviously correct and tested? **PASS** — 2-line `min()`; KASAN
+   litmus; W=1 clean; maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — driver uses an
+   unvalidated 6-bit length as a 32-slot stack transfer size. That is a
+   real memory-safety defect; analog already backported for bmc150 on
+   this tree.
+3. Important issue? **PASS** — stack smash / OOB write (HIGH). Not a
+   userspace-only theoretical race; it is a missing bounds check on a
+   device-supplied length.
+4. Small and contained? **PASS** — +2 lines, one function.
 5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — already the code in this
-   checkout.
+6. Can apply to the local tree? **PASS** — v6.18.53 file matches pre-
+   image; dry-run succeeded.
 
 **Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not an ID/quirk/DT/build/doc exception). It qualifies as a
-normal leak fix.
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary memory-
+safety bounds check.
 
 **Step 9.4: DECISION**
-This is a small, correct fix for a long-standing, userspace-triggerable
-kernel memory leak in msm GEM submit. It meets stable rules for this
-tree. Risk is negligible versus the DoS benefit.
+The IIO maintainer did not want this treated as a stable bug because
+conforming parts should never report >32 without `BUF_OVF`. That is why
+Cc: stable was dropped; that absence is not a reason to reject it. In
+this 6.18.53 tree the buggy flush is present, the fix is two lines, and
+the same pattern was already taken for bmc150. A wild `BUF_CNT` still
+produces a kernel stack overflow. That is enough technical merit to
+backport.
 
-------------------------------------------------
-What the commit solves for this tree
-------------------------------------------------
-`submit_lookup_cmds()` allocated per-cmd reloc arrays while
-`submit->nr_cmds` stayed 0 until much later in `msm_ioctl_gem_submit()`.
-Destroy only frees `cmd[0..nr_cmds)`. Any error in that window leaked
-those allocations. Moving `nr_cmds = i + 1` to right after `kmalloc`
-makes cleanup free what was allocated, including the common a6xx+
-“relocs not allowed” failure.
+Verification:
+- [Phase 1] Parsed subject/tags/body from `git log -1 e25456b3011d9` and
+  the user-supplied message; Fixes/Cc: stable dropped after v1 review
+- [Phase 2] Read `fxls8962af_fifo_flush` / `fxls8962af_fifo_transfer`;
+  confirmed 192-byte buffer, `count * 6` transfer, 186-byte max overflow
+- [Phase 2] Confirmed `min(u8, 32)` is valid in this tree’s
+  `include/linux/minmax.h`
+- [Phase 3] `git blame`: buggy FIFO flush from `79e3a5bdd9ef` (2021);
+  `git merge-base --is-ancestor 79e3a5bdd9ef HEAD` true
+- [Phase 3] UAF fix `1fe16dc1a2f50` is in v6.18.53; does not clamp count
+- [Phase 3] bmc150 clamp `3e766526827ac` is in v6.18.53 with Cc: stable
+- [Phase 4] `b4 dig -c 2f8225b91eb478ca2e9aec8aaef4d229765bcebe` → v2/v3
+  lore; `-a` showed v3 applied; `-w` listed IIO maintainers
+- [Phase 4] Fetched Jonathan v1 review: “not a fix and not back port
+  material”
+- [Phase 4] Fetched v3 apply mail and Andy Reviewed-by
+- [Phase 4] lore.kernel.org/stable search: Aug 2026 duplicate; Jonathan
+  restated hardening stance, then dropped rework of Bryam’s already-
+  merged clamp
+- [Phase 5] Only caller: `fxls8962af_interrupt` on BUF status, threaded
+  IRQ
+- [Phase 6] `make kernelversion` / Makefile: 6.18.53; clamp **not** in
+  `v6.18.53`; `git diff v6.18.53 e25456b3011d9^ -- fxls8962af-core.c`
+  empty; patch dry-run against v6.18.53 file succeeded
+- [Phase 7] Kconfig: FXLS8962AF I2C/SPI, automotive accelerometer
+- [Phase 8] Failure mode: stack OOB write in IRQ thread, HIGH
+- UNVERIFIED: live NXP datasheet fetch (FIFO=32 / BUF_CNT width taken
+  from in-tree defines and review, which agree)
 
-------------------------------------------------
-Verification
-------------------------------------------------
-- [Phase 1] Parsed tags: Sashiko Reported-by; Rob Clark SOB; Patchwork
-  743085; msgid 20190-6; no Fixes/Cc-stable
-- [Phase 2] Diff: +3/−2 in `msm_gem_submit.c`; `nr_cmds = i+1` after
-  kmalloc; removed late `nr_cmds = args->nr_cmds`
-- [Phase 2] Destroy loop confirmed at lines 121–122; `allow_relocs` set
-  false for a6xx+ at `adreno_gpu.c:1209`; check is after lookup
-- [Phase 3] `git blame` on parent: reloc alloc from `20224d715a882`
-  (v5.11-rc1); late assign from VM_BIND `2e6a8a1fe2b262`
-- [Phase 3] `git merge-base --is-ancestor 20224d715a882 v5.11-rc1` yes;
-  vs v5.10 no
-- [Phase 3] No Fixes: tag to follow
-- [Phase 4] `b4 dig -c 9ee2884ed58e6`: lore msgid.link
-  20260729155609.20190-6; v7 05/17
-- [Phase 4] `b4 dig -a`: v1–v7 series; applied = v7
-- [Phase 4] `b4 dig -w`: dri-devel + msm maintainers CC’d
-- [Phase 4] mbox: Sashiko comments were pre-existing issues, not a NAK
-  of this change; no stable nomination
-- [Phase 4] lore WebFetch 403; patchwork served bot-check; stable search
-  found nothing relevant
-- [Phase 5] Caller: `DRM_IOCTL_DEF_DRV(..., DRM_RENDER_ALLOW)` in
-  `msm_drv.c:804`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] `git merge-base --is-ancestor 9ee2884ed58e6 HEAD` succeeded;
-  parent still has the leak
-- [Phase 8] Failure mode: ioctl-triggered kmalloc leak, severity HIGH
-- UNVERIFIED: live lore.kernel.org HTML (403); patchwork page body;
-  whether any human mailing-list Reviewed-by was dropped on commit
+The patch is a two-line bounds clamp on a stack FIFO flush that exists
+in this 6.18.53 tree. It prevents a kernel stack out-of-bounds write if
+`BUF_CNT` is 33..63, applies cleanly, and matches a clamp already
+present here for bmc150.
 
 **YES**
 
- drivers/gpu/drm/msm/msm_gem_submit.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/accel/fxls8962af-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 75d9f35743700..2b6b5297f0592 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -260,6 +260,9 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
- 			ret = -ENOMEM;
- 			goto out;
- 		}
-+
-+		submit->nr_cmds = i + 1;
-+
- 		ret = copy_from_user(submit->cmd[i].relocs, userptr, sz);
- 		if (ret) {
- 			ret = -EFAULT;
-@@ -717,8 +720,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 			goto out;
- 	}
+diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
+index 8763e91c63d2b..1ecffbf41f64f 100644
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -970,6 +970,8 @@ static int fxls8962af_fifo_flush(struct iio_dev *indio_dev)
+ 	if (!count)
+ 		return 0;
  
--	submit->nr_cmds = args->nr_cmds;
--
- 	idr_preload(GFP_KERNEL);
++	count = min(count, FXLS8962AF_FIFO_LENGTH);
++
+ 	data->old_timestamp = data->timestamp;
+ 	data->timestamp = iio_get_time_ns(indio_dev);
  
- 	spin_lock(&queue->idr_lock);
 -- 
 2.53.0
 
