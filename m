@@ -1,48 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CE1509EEB;
-	Mon, 19 Oct 2026 13:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC68250EC0D;
+	Mon, 19 Oct 2026 13:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418104; cv=none; b=rGDQOeEy+G8Ck/8wCBpFSn1uIP1z/pKvaqtpNvJ7a8/3OYroIM3s8G5iSx9zJWM69eKk2rsEnRfLHwaA6dY21qLzZy+EPdR5qTZtYk1SxMo2uOyH/6+c5/MgnTyp02tLD/hm0NliBnRgGaiLwOWBGvpm6c19fKA33tSBrY9/PiA=
+	t=1792418105; cv=none; b=DQlmxkexetOt8i+Bsv4llclhVoUi+tNQgqriaOo20WX5yUq5pk9Tuewvy+CFWRXTnmHHXAPE7ZUzetO1HosZFZscpO/ZtEtOF7BeCBvfa3TRYQhKa4VzpI0CJFbtgIJy/HWb6H0KlVeVuN1bKBQas3PtXnRtADlkIha+7ZaOVAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418104; c=relaxed/simple;
-	bh=DakqrA9y3AHrpg1aWOp18RegMHVVjlWOXKNc4PTb6Io=;
+	s=arc-20240116; t=1792418105; c=relaxed/simple;
+	bh=dRKtZiqV8VSzXaZcx6dKZKMWSLuN2sC5YxHYVua8wOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lSwyTRTIZ2hgqMvyoka7jm56OrHsJhZgnFRlX0saLmV914p1ny2MiRuigf5fVfeW1C60Nfz8XNgxNKJg89TmFASy3JT24iilbLHavmdzcHgMydAmEutQHMS+EMble8RdzBLgXbarNEtE1AvW8x03zjlXXraHTcG9y0weYznppXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c4ZDmwY0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Y5Ia3Byz0o6dskjGDzd2I0ErgzWF5Ho0+XJGLD9irulwS+a4Fe35kqZmeaNmwTXcPugdX7YZL1ueHmLeVmtFthdNgNYZX4ROzINFNJaQOQdekoS6hF1EJI69lLeKsiGXJHKm3gNnKo+Y4tYKDDy2KE4EdwnOM8wTSwJL4EJu1kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FmYu8/td; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c4ZDmwY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC6C1F000C5;
-	Mon, 19 Oct 2026 13:55:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FmYu8/td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD571F000C4;
+	Mon, 19 Oct 2026 13:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418101;
-	bh=fvrPgiYUc6CpeaWUNjtwgn7ycls/DoGi4go9Us7AXbA=;
+	s=k20260515; t=1792418103;
+	bh=7MLSX91YXWGMiDuQOVHG7eM6KF/4ZfqZKFra9uborK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4ZDmwY0s1V7ID8N3HpRfzLRv7eYK8Ge+qSZRanqqLM6KWec/hElysxf2v94LLtWW
-	 jmfKApPRQtKF5b3l3xqwMflzkkhP/ETsGjGmqHMwR1L4OzCMBzujoayTmNEHvu8ewA
-	 yvYmOUIyH3dTLV3hBkBMj3S9fc8YEvCQT1FrdHt/tDfxInUtegFU5D8GPM1J/YDq6N
-	 6R7kB91JP0WecbXhDLb/BiG4Uc2QGJ4w0jO5xd2w0ulNWL/YNSnhv/lctN0Ng082zw
-	 DTsGT45tGgtcwyUmsf5j0kFCbSLO/VCMfamE6uToGXSjFRl0OLEziMSNAkGXKwaqpu
-	 KxT0VpoLpmerg==
+	b=FmYu8/tdyWkdcrQpj/khJ7b5PDJxrClr1nJ8vxdwP5lv6vqqflev+AgE3GHsHSVUX
+	 3UudM1472T2OlmQ64pgVUhgY5f2T8WfFiaQSsKJramM/06aOvlUZ2iPgaeCEq1v3a8
+	 axdqzqf9tF2T+ILUCfHUEmS3l0UPQS3TAULUIFf/yPXVJaW/h2X5f+I6Z+Pc47lDZK
+	 Jq7I0aBFkeUTlSVI6wPE+fU81laS2iqNpUfzsSQWZkULd+drIqC0fHC50iw58b1LXj
+	 42U0JxBQxWGAgrGIbBpC0Z5fdx5ZsdBngWd77SaHPvIL/VTKZDH4a5O8jnb89JnLP6
+	 ity1oV8sMmTrg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kenneth.feng@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/amd/pm: Validate Vega hwmgr PowerPlay table bounds
-Date: Mon, 19 Oct 2026 09:45:04 -0400
-Message-ID: <20261019135441.1420968-13-sashal@kernel.org>
+	y.oudjana@protonmail.com,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-clk@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18] clk: mediatek: mt6735-vencsys: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:45:05 -0400
+Message-ID: <20261019135441.1420968-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,535 +60,351 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 3a8d8e0b7f61cd759d5d4870b6220161f8a5b114 ]
+[ Upstream commit 36cf8d279ff90835f4b002dec28eedb059554842 ]
 
-The Vega hwmgr PowerPlay table parsers read fixed table fields,
-state array entries, or SMC PPT fields before validating that the
-VBIOS table buffer covers those structures. A truncated table can
-therefore lead to out-of-bounds reads during hwmgr initialization.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Reject tables smaller than the fixed PowerPlay table. For Vega10, also
-validate the state array offset and entry range before dereferencing
-the state array.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the 6.18.53 tree still has the unvalidated Vega
-parsers, the patch applies cleanly, and it closes a real out-of-bounds
-read on init and `pp_table` upload.
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+This tree is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+driver exists here; the change is a one-line `MODULE_DEVICE_TABLE(of,
+...)` so the vencsys clock module can autoload from DT.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[drm/amd/pm] [Validate] Vega hwmgr PowerPlay table bounds` —
-add missing size/offset checks before parsing Vega10/12/20 PowerPlay
-tables.
+**Step 1.1: Subject line**
+- Record: `[clk/mediatek] [add] add missing MODULE_DEVICE_TABLE() for
+  mt6735-vencsys`
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Signed-off-by: Yang Wang <kevinyang.wang@amd.com>` (author)
-- `Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>` (AMD)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (drm/amd
-  maintainer)
-- Pipeline-added tags ignored per instructions (`[Upstream commit
-  3a8d8e0b7f61...]`, `Signed-off-by: Sasha Levin`)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, `Link:`, or
-  syzbot tags (absence is expected)
+**Step 1.2: Tags**
+- Record:
+  - **Fixes:** none (expected for this review)
+  - **Reported-by:** none
+  - **Tested-by:** none
+  - **Reviewed-by:** Brian Masney `<bmasney@redhat.com>` (COMMON CLK
+    FRAMEWORK maintainer)
+  - **Acked-by:** none
+  - **Link:** none in the commit; mailing list found via `b4 dig`
+  - **Cc: stable:** none (not a negative signal)
+  - **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author);
+    Brian Masney `<bmasney@redhat.com>` (clk maintainer who applied it)
+  - Notable: maintainer review + maintainer SOB; no user/syzbot report
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- Bug: Vega hwmgr parsers read fixed PowerPlay fields, Vega10 state-
-  array entries, or Vega12/20 SMC PPT fields without checking that
-  `soft_pp_table` is large enough.
-- Symptom: out-of-bounds reads during hwmgr initialization (GPU probe /
-  table re-init).
-- Root cause: truncated or offset-corrupt VBIOS/custom PPTable; pointer
-  arithmetic from `usStateArrayOffset` and struct-sized reads happen
-  before a size check.
-- No specific kernel-version range in the message.
+**Step 1.3: Body**
+- Record:
+  - **Bug:** OF match table is wired to `.of_match_table` but not
+    exported with `MODULE_DEVICE_TABLE()`, so `file2alias` does not emit
+    `of:` aliases.
+  - **Symptom:** when `CONFIG_COMMON_CLK_MT6735_VENCSYS=m`,
+    udev/modprobe cannot autoload `clk-mt6735-vencsys` from
+    `mediatek,mt6735-vencsys`.
+  - **Version info:** none in the message. Git: driver added in
+    **v6.13-rc1** (`0bd9b1211f741`); this fix first appears in
+    **v7.3-rc1**.
+  - **Root cause:** omitted alias publication, not a runtime logic
+    error.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit memory-safety fix (OOB read). Also
-corrects `entry_index <= ucNumEntries` to `<` (off-by-one).
+**Step 1.4: Hidden bug fix?**
+- Record: Not hidden. It is a real functional gap (module autoload), not
+  a crash/UAF. The “source-level fix / no hardware reproduction” wording
+  matches the original lore submission, not pipeline decoration.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- `vega10_processpptables.c`: +43/−21 (refactor `check_powerplay_tables`
-  into `get_vega10_state_array`; reuse it from entry lookup)
-- `vega12_processpptables.c`: +7
-- `vega20_processpptables.c`: +7
-- Net: 52 insertions, 21 deletions; three files, one subsystem
-- Functions: `get_vega10_state_array` (new), `check_powerplay_tables`
-  (all three), `vega10_get_number_of_powerplay_table_entries`,
-  `vega10_get_powerplay_table_entry`
-- Scope: surgical, same-family parsers only
+**Step 2.1: Inventory**
+- Record:
+  - `drivers/clk/mediatek/clk-mt6735-vencsys.c`: **+1 / -0**
+  - Function/data: `of_match_mt6735_vencsys[]` (file scope)
+  - Scope: single-file, one-line surgical change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- Vega10 before: `check_powerplay_tables` / entry getters add
-  `usStateArrayOffset` to the table pointer, then read `ucNumEntries`
-  with no size check. Offset/revision checks happen *after* that
-  dereference.
-- Vega10 after: require `soft_pp_table_size >=
-  sizeof(*powerplay_table)`; then offset `<= table_size -
-  sizeof(*state_arrays)`; then `struct_size(..., ucNumEntries) <=
-  remaining`.
-- Vega12/20 before: only format_revision / structuresize (and Vega20 SMC
-  version).
-- Vega12/20 after: also `table_size >= offsetofend(..., smcPPTable)`
-  before those field reads.
-- Vega10 entry lookup: `entry_index <= ucNumEntries` → `entry_index <
-  ucNumEntries`.
-- Path: init/error-reject of bad tables, not a new feature path.
+**Step 2.2: Code flow**
+- Record: Before, the table is only consumed by
+  `platform_driver.driver.of_match_table` (bind if the module is already
+  loaded or built-in). After, `MODULE_DEVICE_TABLE(of,
+  of_match_mt6735_vencsys)` also creates a `__mod_device_table` alias so
+  `scripts/mod/file2alias.c` `do_of_entry()` emits
+  `of:N*T*Cmediatek,mt6735-vencsys`. Build-time metadata only; no probe-
+  path change.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Memory safety / OOB read**, plus a **logic off-by-one**.
-- Mechanism: VBIOS/custom table is smaller than the structures, or
-  `usStateArrayOffset`/`ucNumEntries` describe data past the buffer. The
-  driver still computed pointers and read them.
-- Fix: reject before dereference using `soft_pp_table_size` (already
-  filled by `smu_atom_get_data_table` / cached table).
+**Step 2.3: Bug mechanism**
+- Record: **Hardware matching / module autoload** (same class as missing
+  device IDs). Match table exists but is not published for modules.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct integer bounds checks. Uses existing
-`struct_size` / `offsetofend`. Reject path is the same
-`PP_ASSERT_WITH_CODE(... return -1)` style already used. Regression risk
-is low: a genuine Vega PPTable is at least the header/SMC-PPT size.
-Worst case a truncated table that previously “worked” by reading
-adjacent BIOS bytes would now fail init instead of over-reading — that
-is the intended failure mode. No API/lock/data-structure changes.
+**Step 2.4: Fix quality**
+- Record: Obviously correct; matches sibling MT6735 files that shipped
+  with `MODULE_DEVICE_TABLE` (`apmixedsys`, `infracfg`, `pericfg`,
+  `topckgen`). No runtime lock/API/data-structure change. Regression
+  risk is essentially none. `imgsys` and `mfgcfg` still lack the macro;
+  this patch does not depend on those.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Vega10 `check_powerplay_tables`: `f83a9991648bb4` (Eric Huang,
-  2017-03-06)
-- Vega12: `2cac05dee6e309` (Evan Quan, 2018-03-19)
-- Vega20: `da958630d53025` (Evan Quan, 2018-08-02)
-- Bug is long-standing (4.x/5.x era), present throughout 6.18.y.
+**Step 3.1: Blame**
+- Record: Match table and driver introduced by `0bd9b1211f741` (“clk:
+  mediatek: Add drivers for MT6735 syscon clock and reset controllers”,
+  Yassine Oudjana, 2024-11-06, applied 2024-11-14). First in
+  **v6.13-rc1**. `MODULE_DEVICE_TABLE` line is this commit
+  `36cf8d279ff90`.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable.
+**Step 3.2: Fixes: tag**
+- Record: No `Fixes:` tag. The omission dates from the introducing
+  commit `0bd9b1211f741`, which **is** an ancestor of this tree.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Same-author series (2026-06-23), of which this is **patch 4/5**:
-1. `Validate pp_table header before reading size` (swsmu)
-2. `Use uploaded size for legacy custom PPTable` (`amd_powerplay.c`)
-3. `Validate Tonga PowerPlay state array bounds`
-4. **This commit**
-5. `Validate legacy hwmgr PP table offsets`
+**Step 3.3: File history**
+- Record: Only two commits on this file: introducer + this fix. No later
+  conflicting refactor. Sibling same-day commit `096ab64a0e694` does the
+  same for `clk-mt6735-vdecsys.c`. Standalone; not patch 2/N.
 
-Follow-up (separate series): `Validate Vega10 PPTable subtable bounds` —
-more subtables, not a prerequisite for these checks.
+**Step 3.4: Author**
+- Record: Pengpeng Hou is not the MT6735 clk maintainer (that is Yassine
+  Oudjana). Same author also added `MODULE_DEVICE_TABLE` in `clk-
+  mt6735-vdecsys.c` and two i.MX clk drivers. Applied by clk co-
+  maintainer Brian Masney.
 
-None of 1–5 are in `v6.18.53`. This hunk does not need 1–3 to compile or
-run: it only uses `hwmgr->soft_pp_table_size`, which
-`get_powerplay_table()` already sets in this tree.
+**Step 3.5: Dependencies**
+- Record: None. Uses existing `MODULE_DEVICE_TABLE` / `of_device_id`.
+  Applies on top of the original driver with no prerequisites.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Yang Wang is an AMD pm contributor with a run of PPTable
-bounds/UAF fixes (`fix pptable use-after-free` is already in v6.18.53).
-Hawking Zhang reviewed; Alex Deucher merged.
+## Phase 4: Mailing list and external research
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone for these three files. `struct_size` and
-`offsetofend` exist (`include/linux/overflow.h`,
-`include/linux/stddef.h`). Flexible-array `states[]` is already in
-v6.18.53 (`bae82e8418234` is an ancestor). Patch 2/5 (upload size) makes
-short sysfs uploads match `soft_pp_table_size`; this patch still stops
-offsets past the *allocated* buffer on 6.18.53, because that tree keeps
-the original VBIOS size as the buffer size.
+**Step 4.1: Original discussion**
+- Record: `b4 dig -c 36cf8d279ff90` →
+  https://patch.msgid.link/20260704124808.19916-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: **v1 only** (2026-07-04). Applied version is that v1.
+- Thread (mbox): author patch + Brian Masney `Reviewed-by`. No NAK, no
+  stable nomination, no risk discussion.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: Yassine Oudjana (MT6735 clk maintainer), Stephen Boyd, Brian
+  Masney, Michael Turquette, Matthias Brugger, AngeloGioacchino Del
+  Regno; `linux-clk`, `linux-mediatek`, `linux-arm-kernel`, `linux-
+  kernel`. Right maintainers and lists.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c 3a8d8e0b7f61...` → https://patch.msgid.link/20260623034151.
-  263746-4-kevinyang.wang@amd.com
-- Series: v1 `[PATCH 1/5] ... [PATCH 5/5]`; this is 4/5. `b4 dig -a`
-  showed only this v1 (no later revision of *this* patch).
-- Mbox: Hawking Zhang: “Series is Reviewed-by: Hawking Zhang”. No NAK,
-  no stable-risk comments.
-- lore.kernel.org HTTP fetch returned 403; discussion recovered via `b4
-  dig -m`.
+**Step 4.3: Bug report**
+- Record: No Reported-by, no syzbot, no bugzilla. Author states there
+  was no hardware reproduction.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc `amd-gfx@lists.freedesktop.org`, Alex
-Deucher, Hawking Zhang, Kenneth Feng. Maintainer merge + AMD review.
+**Step 4.4: Series**
+- Record: Independent single patches (vencsys + vdecsys), not a numbered
+  series. This commit does not need the vdecsys patch.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by` / bugzilla / syzbot. Author-driven audit of
-PPTable parsers, consistent with the rest of the series. Trigger is
-still real (init + sysfs upload), not speculative code.
+**Step 4.5: Stable list**
+- Record: **UNVERIFIED.** `curl` to lore.kernel.org/stable returned HTTP
+  403. No in-tree evidence this was rejected for stable.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Self-contained Vega header/state-array/SMC-PPT checks. Follow-up
-subtable patch is extra coverage, not required for these checks to be
-correct.
+## Phase 5: Code semantic analysis
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: UNVERIFIED — `lore.kernel.org/stable/` returned 403. No evidence
-in-tree of a prior rejection.
+**Step 5.1: Functions**
+- Record: No function body changed. Adds `MODULE_DEVICE_TABLE` next to
+  `of_match_mt6735_vencsys[]`. Driver still uses
+  `module_platform_driver` → `mtk_clk_simple_probe` /
+  `mtk_clk_simple_remove`.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.2: Callers**
+- Record: Platform core binds via OF compatible. Probe is boot/device-
+  instantiation, not a syscall hot path. Impact is whether the **module
+  is loaded at all**.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `get_vega10_state_array`, `check_powerplay_tables`
-(vega10/12/20), `vega10_get_number_of_powerplay_table_entries`,
-`vega10_get_powerplay_table_entry`.
+**Step 5.3: Callees**
+- Record: Unchanged. `mtk_clk_simple_probe()` in `clk-mtk.c` registers
+  the vencsys gates from `vencsys_clks`.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `check_powerplay_tables` ← `vega10_pp_tables_initialize` / vega12/20
-  equivalents, and `vega10_baco_set_cap`
-- `pptable_init` ← `hwmgr.c` during hwmgr init
-- `vega10_get_number_of_powerplay_table_entries` / `get_pp_table_entry`
-  ← `psm_init_power_state_table()` (`for (i = 0; i < table_entries;
-  i++)`)
-- Context: process/workqueue GPU init, not IRQ. Also re-entered from
-  `pp_dpm_set_pp_table` → `amd_powerplay_reset` → `hwmgr_hw_init`.
+**Step 5.4: Reachability**
+- Record: Reachable when DT has `mediatek,mt6735-vencsys` and the driver
+  is a module. **No in-tree `.dts`/`.dtsi` uses that compatible** (only
+  `Documentation/devicetree/bindings/clock/mediatek,syscon.yaml`). Users
+  need out-of-tree DT (typical for older MT6735 phones). Built-in (`=y`)
+  is unaffected.
 
-**Step 5.3: TRACE CALLEES**
-Record: `get_powerplay_table` → `smu_atom_get_data_table` (pointer into
-ATOM BIOS + ATOM-reported size). `PP_ASSERT_WITH_CODE` warns and runs
-`return -1`. No new allocations/locks.
+**Step 5.5: Similar patterns**
+- Record: Same omission still present in `clk-mt6735-imgsys.c` and `clk-
+  mt6735-mfgcfg.c`. Four other MT6735 clk files had
+  `MODULE_DEVICE_TABLE` from day one (`43c04ed791892` for apmixedsys).
+  Pattern is systematic but this patch is complete for vencsys.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable on every Vega10/12/20 GPU probe. Also reachable from
-sysfs `pp_table` (`AMDGPU_DEVICE_ATTR_RW` → `S_IRUGO | S_IWUSR`, root
-write). Unprivileged users cannot write it; root/firmware can still
-drive the OOB.
+## Phase 6: Local tree cross-reference
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same pattern in Tonga (`process_pptables_v1_0.c`) and legacy
-(`processpptables.c`) in the same series. Vega12
-`get_powerplay_table_entry` still uses a raw offset after this patch;
-Vega10 is the family that actually walks a state array here. Remaining
-holes are why the follow-up exists; they do not invalidate this patch.
+**Step 6.1: Buggy code in this tree?**
+- Record: Yes. File exists; current tree already has the fix at line 40.
+  Bug was the missing alias from v6.13 until v7.3-rc1.
+  `CONFIG_COMMON_CLK_MT6735_VENCSYS` is **tristate**.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 6.2: Backport difficulty**
+- Record: **Clean apply.** File is essentially unchanged since
+  introduction. One inserted line after the match table.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Local tree is **6.18.53** (`git describe HEAD` →
-`v6.18.53-5049-g0f0bdc2b0dffb`, `make kernelversion` → 6.18.53). `git
-merge-base --is-ancestor 10510a4c2c397 v6.18.53` is false. `v6.18.53`
-`check_powerplay_tables` still dereferences the state array / SMC PPT
-with no size check.
+**Step 6.3: Related fixes already here**
+- Record: This exact commit is already an ancestor of HEAD (`git merge-
+  base --is-ancestor 36cf8d279ff90 HEAD` → yes). That is mainline
+  history, not a reason to reject on merit. No alternate fix. Sibling
+  vdecsys fix is also present; imgsys/mfgcfg still missing.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply onto v6.18.53 file contents (`patch --dry-run` on
-the three files succeeded). `git apply --check` on current HEAD fails
-only because the candidate + follow-up are already stacked on the
-autosel branch.
+## Phase 7: Subsystem context
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: The older `fix pptable use-after-free` is in v6.18.53. No
-equivalent Vega bounds check is. v6.18.53 `pp_dpm_set_pp_table` still
-`memcpy`s into a buffer sized from the original VBIOS table and does
-**not** shrink `soft_pp_table_size`.
+**Step 7.1: Subsystem / criticality**
+- Record: `drivers/clk/mediatek/` — SoC clock driver. **PERIPHERAL**
+  (MT6735 video-encoder clocks only). Not mm/fs/net core.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 7.2: Activity**
+- Record: Mediatek clk is actively maintained; this file is not. Two
+  commits total. Mature omission, not churn.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/gpu/drm/amd/pm/powerplay` — Vega PowerPlay table
-parsing. **IMPORTANT** (common AMD dGPU driver; Vega10/12/20 still in
-the field). Not core mm/net, not staging.
+## Phase 8: Impact and risk
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature parser (2017–2018) with recent bounds-hardening. Long-
-lived bug, not churn from a new subsystem.
+**Step 8.1: Who is affected**
+- Record: Only MT6735 systems with `CONFIG_COMMON_CLK_MT6735_VENCSYS=m`
+  and a DT node `mediatek,mt6735-vencsys`. Driver- and config-specific;
+  small population (no in-tree board DTS).
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 8.2: Trigger**
+- Record: Modular boot + OF device present. Not a race. Unprivileged
+  users do not trigger it; udev autoload fails. Built-in and manual
+  `modprobe` work.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific: Vega10/Vega12/Vega20 amdgpu powerplay. Also
-anyone writing `/sys/class/drm/card*/device/pp_table` on those GPUs.
+**Step 8.3: Failure mode**
+- Record: Module does not autoload → vencsys clocks (smi_larb3, venc,
+  jpgenc, jpgdec) never register → video encode/JPEG on that SoC can
+  fail. **Severity: MEDIUM** (functional miss, not
+  oops/corruption/deadlock). Fits stable-rules “oh, that’s not good” and
+  the device-ID-style enablement exception.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Normal good VBIOS: not triggered.
-- Truncated/corrupt ATOM PPTable at probe: GPU init OOB.
-- Root write of a crafted `pp_table` that re-inits hwmgr: same path.
-- Unprivileged: no (sysfs is `S_IWUSR`).
-- Off-by-one `<=` is latent: `psm_init_power_state_table` uses `i <
-  table_entries`, so the common loop never passes `entry_index ==
-  ucNumEntries`. Still a real bounds bug if any caller passes
-  `ucNumEntries`.
+**Step 8.4: Risk-benefit**
+- Record: **Benefit:** correct autoload for a supported tristate driver;
+  one line. **Risk:** negligible (modinfo/depmod metadata only). Ratio
+  favors applying it on trees that have this driver.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Kernel OOB read (KASAN/oops, possible info leak from adjacent
-BIOS/kmalloc). Init failure on reject is the safe outcome. Severity:
-**HIGH** (memory safety). Not a guaranteed panic on every boot.
+## Phase 9: Final synthesis
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: HIGH for Vega + custom PPTable users; stops OOB on init.
-- Risk: LOW (~50 lines, assert-and-return, no locking/API).
-- Ratio: favorable.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: Evidence**
 
 FOR:
-- Real OOB read in GPU power-management init, present since 2017/2018 in
-  this 6.18 tree
-- Triggerable from truncated VBIOS and from root `pp_table` sysfs re-
-  init
-- Small, obviously correct bounds checks; AMD Reviewed-by + maintainer
-  SOB
-- Applies cleanly to v6.18.53; helpers already present
-- Matches stable’s buffer-overflow / memory-safety class
+- Real autoload bug: match table used, aliases not published
+- One line, obviously correct, reviewed and applied by clk maintainer
+  Brian Masney
+- Driver is tristate; modular build is an intended config
+- Same class as device-ID additions (publish existing OF IDs)
+- Sibling MT6735 files already had the macro; this was an omission from
+  `0bd9b1211f741`
+- Zero runtime regression risk; applies cleanly
+- Driver and bug exist in this 7.3 tree (introduced v6.13)
 
 AGAINST:
-- No public crash/syzbot/CVE write-up
-- Privileged sysfs / firmware trigger, not unprivileged
-- Series 4/5; later patch covers more Vega10 subtables (not required for
-  this hunk)
-- Good VBIOS never hits it
+- Not a crash, UAF, deadlock, or security issue
+- No user report and no hardware reproduction
+- No in-tree DT consumer for this compatible
+- Niche SoC; often clocks are built-in
 
 UNRESOLVED:
-- Stable-list discussion (lore.kernel.org/stable 403)
+- Whether this was discussed on the stable list (lore HTTP 403)
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — integer bounds; reviewed and
-   merged by AMD
-2. Fixes a real bug that affects users? **PASS** — OOB read of PPTable
-   buffer
-3. Important issue? **PASS** — memory-safety OOB (HIGH), not a style fix
-4. Small and contained? **PASS** — 3 files, ~50 net lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — v6.18.53 still has the bug;
-   dry-run apply clean
+**Step 9.2: Stable rules checklist**
+1. Obviously correct and tested? **PASS** — one-line, standard macro,
+   maintainer Reviewed-by/SOB. No runtime test; correctness is
+   mechanical.
+2. Real bug that affects users? **PASS** — modular OF autoload is
+   broken. User set is small but real if they use `=m`.
+3. Important issue? **PASS** (low end of “oh, that’s not good” /
+   hardware-enablement), not CRITICAL.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — publishes existing match table.
+6. Can apply to this tree? **PASS** — file and table exist; patch is a
+   clean one-liner.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
-bugfix.
+**Step 9.3: Exception category**
+- Record: Closest match is **device ID / hardware matching** (OF module
+  aliases), not a new driver.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. This tree still performs unvalidated Vega PPTable pointer math
-during hwmgr init. The patch is the minimal, already-reviewed guard for
-that path.
+**Step 9.4: Decision**
 
-What it solves for 6.18.y users: Vega probe and `pp_table` reload can
-read past the PowerPlay buffer if the table is short or
-`usStateArrayOffset`/`ucNumEntries` (Vega10) / SMC PPT (Vega12/20) stick
-past `soft_pp_table_size`. That is an OOB read, not a feature.
+Backport this. It is a one-line, obviously correct fix for failed OF
+module autoload on an existing tristate driver. That is the same kind of
+enablement stable already takes for new device IDs, with no runtime
+behavior change if the module is built-in or loaded by other means. This
+7.3 tree has the driver (since v6.13); there are no missing
+prerequisites. Limited hardware and no crash report lower urgency, not
+correctness.
 
-Risk vs benefit: low-risk reject-invalid-table change vs stopping kernel
-over-reads on a supported amdgpu path.
+### What it solves for stable users
+If `clk-mt6735-vencsys` is a module, userspace cannot match
+`mediatek,mt6735-vencsys` and load it. Video-encoder clocks then never
+appear. `MODULE_DEVICE_TABLE(of, ...)` generates the aliases
+`file2alias` already knows how to emit.
 
-Concerns: more complete subtable checks come later; v6.18.53 custom-
-upload still keeps the old VBIOS size (patch 2/5). Neither blocks this
-patch: it still applies and still stops offsets past the allocated
-buffer.
+### Risk vs benefit
+Benefit is correct autoload on MT6735 modular configs. Risk is
+negligible: no probe, locking, or ABI change.
 
-Verification:
-- [Phase 1] Tags: author Yang Wang; Reviewed-by Hawking Zhang; SOB Alex
-  Deucher; no Fixes/syzbot
-- [Phase 2] Diff: 52/21 across three Vega processpptables files;
-  size/offset checks + off-by-one
-- [Phase 3] Blame: Vega10 2017 (`f83a9991648bb4`), Vega12 2018, Vega20
-  2018; present in v6.18.53
-- [Phase 3] Series 4/5; no code dependency on 1–3 for these files
-- [Phase 3] `struct_size`/`offsetofend` and flexible `states[]` already
-  in this tree
-- [Phase 4] `b4 dig -c 3a8d8e0b7f61...` → msgid 20260623034151.263746-4;
-  series R-b from Hawking; no NAK
-- [Phase 4] lore.kernel.org HTTP 403; mbox via `b4 dig -m` used instead
-- [Phase 5] Callers: `pptable_init` from `hwmgr.c`;
-  `psm_init_power_state_table`; `pp_dpm_set_pp_table` reset
-- [Phase 5] `smu_atom_get_data_table` returns BIOS pointer + ATOM size
-- [Phase 6] `git describe HEAD` v6.18.53-5049; `merge-base --is-
-  ancestor` vs v6.18.53: not present; buggy code confirmed in `git show
-  v6.18.53:...`
-- [Phase 6] `patch --dry-run` on v6.18.53 copies of the three files:
-  clean
-- [Phase 8] Failure mode: OOB read during hwmgr init; sysfs `pp_table`
-  is `S_IWUSR`
-- UNVERIFIED: stable@ mailing-list thread (HTTP 403)
+## Verification
+- [Phase 1] Parsed tags: Reviewed-by + SOB Brian Masney; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 1] `git show -s 36cf8d279ff90`: body matches the candidate;
+  “source-level fix” is in the real commit and lore v1
+- [Phase 2] Diff: +1 `MODULE_DEVICE_TABLE(of, of_match_mt6735_vencsys)`
+  in `clk-mt6735-vencsys.c`
+- [Phase 2] `include/linux/module.h` and `scripts/mod/file2alias.c`
+  `do_of_entry()`: confirmed alias generation from that macro
+- [Phase 3] `git blame`: table from `0bd9b1211f741` (v6.13-rc1); macro
+  from `36cf8d279ff90`
+- [Phase 3] `git describe --contains 0bd9b1211f741`: v6.13-rc1; fix
+  contained in v7.3-rc1; `git merge-base --is-ancestor` vs v7.2: not in
+  v7.2
+- [Phase 3] File log: only introducer + this commit; sibling
+  `096ab64a0e694` for vdecsys
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 lore thread; Masney Reviewed-by;
+  correct clk/mediatek CCs; no NAK
+- [Phase 4] WebFetch lore/msgid.link: HTTP 403; used mbox instead
+- [Phase 5] Kconfig: `COMMON_CLK_MT6735_VENCSYS` tristate; Makefile
+  `obj-$(CONFIG_COMMON_CLK_MT6735_VENCSYS)`
+- [Phase 5] `mtk_clk_simple_probe` in `clk-mtk.c` used unchanged
+- [Phase 5] Grep: no in-tree dts/dtsi `mediatek,mt6735-vencsys`; binding
+  in `mediatek,syscon.yaml`
+- [Phase 5] imgsys/mfgcfg still lack `MODULE_DEVICE_TABLE`
+- [Phase 6] `make kernelversion` / `git describe HEAD`: 7.3.0-rc4 /
+  v7.3-rc4-27-gf0100363d8c37
+- [Phase 6] File currently contains the macro; `git merge-base --is-
+  ancestor 36cf8d279ff90 HEAD` = yes
+- [Phase 7] MAINTAINERS: MT6735 clk → Yassine Oudjana; COMMON CLK →
+  Stephen Boyd, Brian Masney, Jerome Brunet
+- [Phase 8] Failure mode: missing module autoload, not oops; severity
+  MEDIUM
+- UNVERIFIED: stable@ lore discussion (HTTP 403)
 
 **YES**
 
- .../powerplay/hwmgr/vega10_processpptables.c  | 59 ++++++++++++-------
- .../powerplay/hwmgr/vega12_processpptables.c  |  7 +++
- .../powerplay/hwmgr/vega20_processpptables.c  |  7 +++
- 3 files changed, 52 insertions(+), 21 deletions(-)
+ drivers/clk/mediatek/clk-mt6735-vencsys.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-index 3be616af327ef..64cff9f4850a6 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_processpptables.c
-@@ -63,14 +63,17 @@ static const void *get_powerplay_table(struct pp_hwmgr *hwmgr)
- 	return table_address;
- }
+diff --git a/drivers/clk/mediatek/clk-mt6735-vencsys.c b/drivers/clk/mediatek/clk-mt6735-vencsys.c
+index 8dec7f98492ac..64ba9da9fd427 100644
+--- a/drivers/clk/mediatek/clk-mt6735-vencsys.c
++++ b/drivers/clk/mediatek/clk-mt6735-vencsys.c
+@@ -37,6 +37,7 @@ static const struct of_device_id of_match_mt6735_vencsys[] = {
+ 	{ .compatible = "mediatek,mt6735-vencsys", .data = &vencsys_clks },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, of_match_mt6735_vencsys);
  
--static int check_powerplay_tables(
--		struct pp_hwmgr *hwmgr,
--		const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
-+static int get_vega10_state_array(struct pp_hwmgr *hwmgr,
-+	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table,
-+	const ATOM_Vega10_State_Array **state_array)
- {
- 	const ATOM_Vega10_State_Array *state_arrays;
-+	u16 state_array_offset;
-+	size_t state_array_size;
-+	size_t table_size = hwmgr->soft_pp_table_size;
- 
--	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
--		le16_to_cpu(powerplay_table->usStateArrayOffset));
-+	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
-+			    "Invalid PowerPlay Table!", return -1);
- 
- 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
- 			ATOM_Vega10_TABLE_REVISION_VEGA10),
-@@ -79,12 +82,34 @@ static int check_powerplay_tables(
- 		"State table is not set!", return -1);
- 	PP_ASSERT_WITH_CODE(powerplay_table->sHeader.structuresize > 0,
- 		"Invalid PowerPlay Table!", return -1);
-+
-+	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
-+	PP_ASSERT_WITH_CODE((state_array_offset <=
-+			     table_size - sizeof(*state_arrays)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)powerplay_table) +
-+		state_array_offset);
- 	PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
- 		"Invalid PowerPlay Table!", return -1);
- 
-+	state_array_size = struct_size(state_arrays, states, state_arrays->ucNumEntries);
-+	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	*state_array = state_arrays;
-+
- 	return 0;
- }
- 
-+static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
-+	const ATOM_Vega10_POWERPLAYTABLE *powerplay_table)
-+{
-+	const ATOM_Vega10_State_Array *state_arrays;
-+
-+	return get_vega10_state_array(hwmgr, powerplay_table, &state_arrays);
-+}
-+
- static int set_platform_caps(struct pp_hwmgr *hwmgr, uint32_t powerplay_caps)
- {
- 	set_hw_cap(
-@@ -1249,15 +1274,14 @@ int vega10_get_number_of_powerplay_table_entries(struct pp_hwmgr *hwmgr)
- {
- 	const ATOM_Vega10_State_Array *state_arrays;
- 	const ATOM_Vega10_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
-+	int result;
- 
- 	PP_ASSERT_WITH_CODE((pp_table != NULL),
- 			"Missing PowerPlay Table!", return -1);
--	PP_ASSERT_WITH_CODE((pp_table->sHeader.format_revision >=
--			ATOM_Vega10_TABLE_REVISION_VEGA10),
--			"Incorrect PowerPlay table revision!", return -1);
- 
--	state_arrays = (ATOM_Vega10_State_Array *)(((unsigned long)pp_table) +
--			le16_to_cpu(pp_table->usStateArrayOffset));
-+	result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
-+	PP_ASSERT_WITH_CODE((result == 0),
-+			    "Invalid PowerPlay Table State Array.", return result);
- 
- 	return (uint32_t)(state_arrays->ucNumEntries);
- }
-@@ -1308,17 +1332,11 @@ int vega10_get_powerplay_table_entry(struct pp_hwmgr *hwmgr,
- 
- 	if (pp_table->sHeader.format_revision >=
- 			ATOM_Vega10_TABLE_REVISION_VEGA10) {
--		state_arrays = (ATOM_Vega10_State_Array *)
--				(((unsigned long)pp_table) +
--				le16_to_cpu(pp_table->usStateArrayOffset));
--
--		PP_ASSERT_WITH_CODE(pp_table->usStateArrayOffset > 0,
--				"Invalid PowerPlay Table State Array Offset.",
--				return -1);
--		PP_ASSERT_WITH_CODE(state_arrays->ucNumEntries > 0,
-+		result = get_vega10_state_array(hwmgr, pp_table, &state_arrays);
-+		PP_ASSERT_WITH_CODE((result == 0),
- 				"Invalid PowerPlay Table State Array.",
--				return -1);
--		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
-+				return result);
-+		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
- 				"Invalid PowerPlay Table State Array Entry.",
- 				return -1);
- 
-@@ -1360,4 +1378,3 @@ int vega10_baco_set_cap(struct pp_hwmgr *hwmgr)
- 			PHM_PlatformCaps_BACO);
- 	return result;
- }
--
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-index 89148f73b514a..8e6b1565d00de 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_processpptables.c
-@@ -64,6 +64,13 @@ static int check_powerplay_tables(
- 		struct pp_hwmgr *hwmgr,
- 		const ATOM_Vega12_POWERPLAYTABLE *powerplay_table)
- {
-+	size_t smc_pptable_size =
-+		offsetofend(ATOM_Vega12_POWERPLAYTABLE, smcPPTable);
-+	size_t table_size = hwmgr->soft_pp_table_size;
-+
-+	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
-+			    "Invalid PowerPlay Table!", return -1);
-+
- 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
- 		ATOM_VEGA12_TABLE_REVISION_VEGA12),
- 		"Unsupported PPTable format!", return -1);
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-index 2b446f8866bac..0d008573c0388 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_processpptables.c
-@@ -66,6 +66,13 @@ static int check_powerplay_tables(
- 		struct pp_hwmgr *hwmgr,
- 		const ATOM_Vega20_POWERPLAYTABLE *powerplay_table)
- {
-+	size_t smc_pptable_size =
-+		offsetofend(ATOM_Vega20_POWERPLAYTABLE, smcPPTable);
-+	size_t table_size = hwmgr->soft_pp_table_size;
-+
-+	PP_ASSERT_WITH_CODE((table_size >= smc_pptable_size),
-+			    "Invalid PowerPlay Table!", return -1);
-+
- 	PP_ASSERT_WITH_CODE((powerplay_table->sHeader.format_revision >=
- 		ATOM_VEGA20_TABLE_REVISION_VEGA20),
- 		"Unsupported PPTable format!", return -1);
+ static struct platform_driver clk_mt6735_vencsys = {
+ 	.probe = mtk_clk_simple_probe,
 -- 
 2.53.0
 
