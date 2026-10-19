@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95573633FFC;
-	Mon, 19 Oct 2026 14:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F5653FA34;
+	Mon, 19 Oct 2026 14:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418740; cv=none; b=BDPDBk02cOICmOAReUS+7QO1JEKy8OcXrNKotv5wYhqQ0xoa910LON8HtaGiQ8+IoZ9quTh2oQXhmSewe4ULi55ijJ+W+jW5rcCyrfE/6YQjESxlm4pcWk+pn/nCBHpdtSR4z4cKSn4nUA5XLU4d/QlFUh2YOy7IbIDQsAyx+Ys=
+	t=1792418741; cv=none; b=OWNa0+NV0SKfkkF4orqVMXJL+k2+rccxt15wkV47Mon3qrLSIryCvcBvQXl1rW7mULBq+sg6ama20q/7NmlonrH8rGpGltuH1Du5i8QpPonPKKdVHdlLvuX1avDXP8twDKei5LVhOCmeMwitnKu3onFtzMXWXZQdfytF0TP1Btg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418740; c=relaxed/simple;
-	bh=YLEW8b9yzMQh23dskidj1VjEIgIpLbNfFgxFzUnHCx0=;
+	s=arc-20240116; t=1792418741; c=relaxed/simple;
+	bh=ItiaHpscuhLnvEU67e6Y4Sr5/bGI3Pbtxayik5HC9Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D2kDTgCZQZW/SVr5eJPyr2XCMWR627tsveajIwfW5N8TdqVmMfSdfkUHV4bPHPVyRGQcmL8t1g4PrOZdBH/w31r7RAA1cYLbEYnVO5h+EZUjQpRXEGOMo5EeT4ayt50qmT2tf4SSQsaUh871NasoqrRyoJkxOQwQ8ruSnP+f9Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wu2GkV8J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=c/i/wJRYksWJ0xhrKlhcag4M+MiGMXu9Zj8NxZeJNcFCbYR8kIhOxHRgT2hAIaMCxvY3eC8eb5ADe4HxbSRQynLSRI3L9fXlOj7rdGKOZKK8M1DWAbB14SdhEJryqUL3itUaeqYrvBVacflKV9tMakna3V3LVYEsxjP0QeKn4qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JnAFN8Cs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wu2GkV8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5157D1F000C4;
-	Mon, 19 Oct 2026 14:05:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JnAFN8Cs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDAF1F000C8;
+	Mon, 19 Oct 2026 14:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418737;
-	bh=/jENeapoUpAI6q7vl04UYeMepe/HJl9hNAbGI/jzFjc=;
+	s=k20260515; t=1792418739;
+	bh=LCK6HzOGftkUfxabSJI1PrQfGr8GFb458mN9VeUB30k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wu2GkV8JyU/ge3t50zLChNMSpvHxcEHrufNR5Y70i7RGRwmE5MLlbud3AI1JZcNZR
-	 Agv3rKc/gkGyyW5zU4TdOtUwW0GyngW2bNtvutonAJKuOfrX+uo6AAGz+pFaKUDwkV
-	 A00f4MmLVHa0HXVCo7dwq2jk/g8y8NHO6E7DCnDbyCyGtr8+iEAuBxikD6b2Sls0He
-	 vFLYpkqP3xXUAn1UOOKIomQiomhi4Yr+odMGlArkWdzzcEHD3G+5XmUIDHFysT68ES
-	 q8Ae8bTUHC7eR/NRZIYw9khGUZsDzRyKV88oMon571leh8SyFRfleRpAdS94NdfVt2
-	 sdDT3OuQ22OPw==
+	b=JnAFN8CsBjqT1I9q339vBlRTKeNyLHONguQGmeVKtFkrTHqxo3WiJddoHqiBTiXUN
+	 HkicvSz4oFzsSwRl/K15W104V9L8vnYwnQhXo39ftkfaHh9EHKLyT4oux26ar//mfH
+	 q9uDwZ8ZvAg0u4w3Yr51xl3Npvh/h0/CCi2iTqjcI/h5Y1+1R47obn2GkN23mwUWv2
+	 QkOe1/X8n087DL5MzCKLRm8v12VTwz3RiflpQhtT3fEP1UXj6BdV67kB3OF/debpF3
+	 NupCjOyEDjQlKGHhFIfHFhoad/yibbbSXnrt22lz4B6rzQ1TeJYizRJVF1jHVBvVyH
+	 o/L1RIM051jJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sashiko <sashiko-bot@kernel.org>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
+	christian.koenig@amd.com,
 	airlied@gmail.com,
 	simona@ffwll.ch,
-	linux-arm-msm@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/msm: Fix barriers accessing ctx vm
-Date: Mon, 19 Oct 2026 09:52:31 -0400
-Message-ID: <20261019135441.1420968-460-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdgpu/atomfirmware: WARN() rather than BUG()
+Date: Mon, 19 Oct 2026 09:52:32 -0400
+Message-ID: <20261019135441.1420968-461-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,434 +56,379 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit ae88499d71ce80ecd25c055eddddace108266321 ]
+[ Upstream commit d7c595044965c826e6f3ce30590d3ec4399cd633 ]
 
-Don't rely on store ordering to protect us from caller seeing a
-partially initialized vm.
+There's no need to crash the kernel for this case.  Just
+return an error.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/743079/
-Message-ID: <20260729155609.20190-2-robin.clark@oss.qualcomm.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (mainline `7.3.0-rc4`). This commit is a
-real ARM memory-ordering fix in lazy GPU VM creation: without
-acquire/release, a concurrent ioctl can observe a partially initialized
-VM. The change is small, already in this 7.3 lineage, and is appropriate
-to keep here.
+## Phase 1: Commit message forensics
+
+**Step 1.1: Subject line**
+- Record: `[drm/amdgpu/atomfirmware] [WARN rather than BUG / return an
+  error] [stop panicking the kernel on an unexpected VBIOS gfx_info
+  revision]`
+
+**Step 1.2: Tags**
+- Record:
+  - `Reviewed-by: Kent Russell <kent.russell@amd.com>` (added at commit
+    time; not on the mailed v1 patch)
+  - `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (author;
+    amdgpu maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, `Link:`, or
+    `Cc: stable` (absence expected)
+  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+    ignored per instructions
+
+**Step 1.3: Body**
+- Record:
+  - Bug: `BUG()` on an unexpected atom `gfx_info` firmware revision in
+    `amdgpu_atomfirmware_get_clock_info()`.
+  - Symptom: whole-machine kernel crash during AMDGPU init.
+  - Author intent: do not crash; “just return an error.”
+  - No stack trace, reproducer, or version range in the message.
+  - Actual diff does **not** add `WARN()` and does **not** set `ret =
+    -EINVAL`; it only deletes the `else { BUG(); }`.
+
+**Step 1.4: Hidden bug fix?**
+- Record: Not hidden. It is an explicit crash-prevention change.
+  Title/body oversell the implementation (no `WARN()`, no explicit error
+  return).
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff analysis
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[drm/msm] [Fix] [barriers when publishing the lazily created
-context VM]**
+**Step 2.1: Inventory**
+- Record: `drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c` — **2 lines
+  deleted, 0 added**. Function: `amdgpu_atomfirmware_get_clock_info()`.
+  Single-file surgical change.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — AI review bot
-  (sashiko.dev), **not** syzbot; static/review finding, no reproducer
-- `Signed-off-by: Rob Clark` — MSM Adreno GPU maintainer (ignore any
-  Sasha Levin SOB)
-- `Patchwork: https://patchwork.freedesktop.org/patch/743079/`
-- `Message-ID: <20260729155609.20190-2-robin.clark@oss.qualcomm.com>` —
-  **patch 01/17** of a series (msgid `-2` after cover `-1`)
-- **No** `Fixes:`, **no** `Cc: stable`, **no** `Reviewed-by` / `Tested-
-  by` / `Acked-by` on the committed message (absence of stable tags is
-  expected)
+**Step 2.2: Code flow**
+- Record: On Navi+ (`asic_type >= CHIP_NAVI10`), after a successful
+  `gfx_info` header parse:
+  - **Before:** known revisions (`frev==3`, or `frev==2 && crev==6`, or
+    `frev==2 && crev>=2 && crev!=6`) set `spll->reference_freq` and
+    `ret=0`. Any other `(frev,crev)` hit `BUG()` and panics.
+  - **After:** unknown revisions fall through. `ret` stays whatever
+    earlier `firmwareinfo` / `smu_info` / `umc_info` parsing left (`0`
+    if those succeeded, else `-EINVAL`). No panic.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** lazy `ctx->vm` publication used a plain store; a concurrent
-  reader could see a non-NULL pointer before VM fields were visible
-- **Symptom:** caller observes a **partially initialized VM** (GPU
-  IOVA/page-table garbage, kernel deref of uninitialized `drm_gpuvm`
-  fields)
-- **Version info:** none in the message
-- **Root cause (author):** “Don't rely on store ordering” — classic
-  double-checked locking without acquire/release. MSM runs on ARM64,
-  where that ordering is **not** guaranteed
+**Step 2.3: Bug mechanism**
+- Record: **Logic / correctness + crash prevention.** `BUG()` used as an
+  “unknown firmware table” assert in a driver probe path. Firmware is
+  independent of the kernel; an unknown or newer table must not take
+  down the box. Sibling `amdgpu_atomfirmware_get_gfx_info()` already
+  returns `-EINVAL` for unknown revisions; this path was the
+  inconsistent panic.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not hidden.** Explicit “Fix” plus a documented memory-ordering
-hole. The `mutex_lock` → `guard(mutex)` swap is incidental cleanup
-around the real barrier change.
+**Step 2.4: Fix quality**
+- Record: Minimal and obviously safe (only removes a panic). Regression
+  risk is very low. Residual nit: unknown tables no longer fail the
+  function if earlier tables parsed, so init can continue with the
+  `smu_info` reference clock instead of failing probe. That matches the
+  pre-`BUG()` behavior from 2021 and is still far better than panicking.
+  Message/subject mismatch is cosmetic, not a functional defect.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 3: Git history
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/gpu/drm/msm/msm_drv.c` — **+7 / -6** (13-line hunk)
-- Function: `msm_context_vm()`
-- Scope: **single-file surgical fix**
+**Step 3.1: Blame**
+- Record: `BUG()` added in `a8d59943b8846` (“drm/amdgpu: update query
+  ref clk from bios”, Hawking Zhang, 2022-04-28) when adding
+  `atom_gfx_info_v3_0`. `git describe` =
+  `v5.17-rc6-1819-ga8d59943b8846`. `git merge-base --is-ancestor` vs
+  tags: **not in v5.18, is in v5.19**. Navi+ clock override itself came
+  from `9a530062d57fe` (Aaron Liu, 2021; `v5.12-rc7-1827`), which did
+  **not** `BUG()` — unknown versions just skipped the override.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record (before → after):
-- Fast path: plain `if (ctx->vm) return ctx->vm` → `vm =
-  smp_load_acquire(&ctx->vm); if (vm) return vm`
-- Slow path: `mutex_lock` / assign `ctx->vm` / `mutex_unlock` →
-  `guard(mutex)` then `smp_store_release(&ctx->vm, vm)`
-- Path: concurrent first-use of a DRM context (ioctl), not init-only and
-  not an error path
+**Step 3.2: Fixes: tag**
+- Record: None. Introducer is `a8d59943b8846` as above. That commit is
+  an ancestor of this HEAD.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Synchronization / memory ordering + KCSAN-class data race]**
-- Double-checked locking: unlocked read of `ctx->vm` vs locked write
-- Broken mechanism: pointer published with a plain store; reader can use
-  the object before initialization is visible
-- Fix: standard publication pattern (`smp_store_release` /
-  `smp_load_acquire`)
+**Step 3.3: File history**
+- Record: Latest change on this file in HEAD is this commit. No follow-
+  up on the same function. Standalone; not a functional 2/3 dependency.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- **Obviously correct** DCL publication
-- Mutex still serializes creation; acquire/release only publishes the
-  pointer
-- `guard(mutex)` is equivalent to lock/unlock (cleanup.h)
-- Regression risk: **low**. Inner `if (!ctx->vm)` remains a plain load
-  **under the mutex** (fine). Return after the slow path is also under
-  the mutex, so mutex acquire pairs with the other thread’s
-  `smp_store_release`
-- Pre-existing issue **not** introduced here:
-  `msm_gpu_create_private_vm()` can return `ERR_PTR`/`NULL` and that
-  value was already stored; later `00dfa76bdfc2f` added `IS_ERR_OR_NULL`
-  before the release store
+**Step 3.4: Author**
+- Record: Alex Deucher is the amdgpu maintainer. Same-day series
+  converted many amdgpu `BUG()`/`BUG_ON()` sites. Related file commits
+  are unrelated vram/firmware table work.
+
+**Step 3.5: Prerequisites**
+- Record: None. Only deletes two lines of existing `BUG()`. Applies
+  standalone wherever that `else { BUG(); }` exists.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 4: Mailing list / external
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Lazy VM helper: `6bf32afd37eb6` (“drm/msm: Lazily create context VM”,
-  2025-06-29)
-- Unlocked DCL + `init_lock`: `feb8ef4636a457` (“drm/msm: Add opt-in for
-  VM_BIND”, same day)
-- **First appeared:** **v6.17-rc1** (`git describe --contains` / `git
-  merge-base --is-ancestor 6bf32afd37eb6 v6.17`)
-- Present for many releases before 7.3
+**Step 4.1: Original discussion**
+- Record: `b4 dig -c d7c595044965c` → `[PATCH 18/43]
+  drm/amdgpu/atomfirmware: WARN() rather than BUG()`
+  https://patch.msgid.link/20260615235645.737189-18-
+  alexander.deucher@amd.com
+  - `b4 dig -a`: **v1 only** of a 43-patch June 15 2026 series. Resent
+    as `[PATCH 05/30]` on 2026-07-07 (same diff).
+  - Thread has no technical NAK. Only a ping from Alex on 01/43.
+  - No reviewer-requested `Cc: stable` found in the mbox.
+  - Committed version matches mailed diff (2-line deletion).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No `Fixes:` tag.** Buggy code is the lazy-VM DCL above.
-Confirmed ancestor of this HEAD.
+**Step 4.2: Recipients**
+- Record: `b4 dig -w`: `Alex Deucher`, `amd-gfx@lists.freedesktop.org`
+  only. Kent Russell’s `Reviewed-by` was added at commit, not on the
+  mailed patch.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record (same series, after this commit):
-- `ea69d489d3a68` — queuelock → `ctxlock` (patch 02/17)
-- `2c26f9e46d395` — VM creation on `ctxlock` instead of static
-  `init_lock` (patch 03/17); **keeps** the acquire/release from this
-  patch
-- `00dfa76bdfc2f` — don’t cache `ERR_PTR` in `ctx->vm` (patch 14/17)
-This patch is **standalone**. Later patches refine locking/errors; they
-are not prerequisites for the barriers.
+**Step 4.3: Bug report**
+- Record: No `Reported-by`, syzbot, or bugzilla. No evidence of a user
+  hitting this `BUG()` in the last four years.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: **Rob Clark is the Qualcomm Adreno GPU maintainer**
-(`MAINTAINERS`: “DRM DRIVER for Qualcomm Adreno GPUs”). He authored the
-buggy lazy-VM code and this fix.
+**Step 4.4: Series context**
+- Record: Independent one-file `BUG()` removals. Pull text for drm-
+  next-7.3 lists this under “Old BUG() and BUG_ON() removal.” drm-
+  fixes-7.2 took an earlier batch described as “Drop unnecessary BUG()
+  and BUG_ON() from error paths.” This commit landed in **drm-next for
+  7.3** (`git describe d7c595044965c` = `v7.2-rc2-1048-gd7c595044965c`).
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs `msm_context_vm()` / lazy `ctx->vm` (in this tree since
-6.17). Uses `guard(mutex)` and `smp_load_acquire`/`smp_store_release`
-(present in 7.3). **Can apply standalone.**
+**Step 4.5: Stable list**
+- Record: lore.kernel.org/stable fetch returned 403. **UNVERIFIED**
+  whether stable@ discussed this specific patch. No `Cc: stable` on the
+  submission.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 5: Semantic / call graph
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c ae88499d71ce8` matched patch-id; lore URL `https://patch.ms
-  gid.link/20260729155609.20190-2-robin.clark@oss.qualcomm.com`
-- `b4 dig -a` revisions: v1 (different subject) → **v2–v7 this
-  subject**; applied version is **v7 01/17** (latest)
-- Cover (v7 00/17): *“The VM is created lazily to give userspace a
-  chance to opt-in to VM_BIND. But Sashiko noticed a couple paths that
-  were not handling this properly.”*
-- **No NAK** in the saved thread. No human reviewer replies in that mbox
-  (only Sashiko)
-- Sashiko on this patch: called remaining `ctx->vm` plain reads /
-  `ERR_PTR` caching **pre-existing**, not regressions from this hunk
-- Direct lore/WebFetch: **403 (Anubis)**; used `b4 dig -m` instead
+**Step 5.1: Functions**
+- Record: `amdgpu_atomfirmware_get_clock_info()` only. semcode MCP not
+  available; used grep / read.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included `dri-devel`, `linux-arm-msm`,
-`freedreno`, Sashiko, **Dmitry Baryshkov, Abhinav Kumar, Jessica Zhang,
-Sean Paul, Marijn Suijten, David Airlie, Simona Vetter**. Right
-lists/maintainers; **no `Reviewed-by` on the commit**.
+**Step 5.2: Callers**
+- Record: Sole caller `amdgpu_device.c` (~4085), during device init when
+  `adev->bios && adev->is_atom_fw`. `is_atom_fw` is set for `asic_type
+  >= CHIP_VEGA10`. Failure currently logs and `goto failed` (probe
+  abort). Not IRQ, not a syscall hot path. Runs once per GPU at
+  boot/module load.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Sashiko is an **AI review bot**, not a fuzzer with a crash log.
-Cover letter confirms it flagged lazy-VM handling. Severity comes from
-the **code**, not a user bugzilla.
+**Step 5.3: Callees**
+- Record: `get_index_into_master_table`,
+  `amdgpu_atom_parse_data_header`, `le32_to_cpu` on VBIOS tables. No
+  alloc/lock in the changed hunk.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Started as a small lazy-VM series, grew to **17 patches**. This
-one stayed patch 1 from v2 onward and does not depend on 02–17.
+**Step 5.4: Reachability**
+- Record: Yes, from normal boot on Vega10+ with atom firmware. The
+  `BUG()` itself only ran for Navi+ (`CHIP_NAVI10` and later — RX 5700
+  and essentially all later AMD GPUs) **and** an unrecognized `gfx_info`
+  `(frev,crev)`. Current headers only define v2.2 / v2.3 / v2.4 / v2.7 /
+  v3.0, all of which the `if`/`else if` already accept (`frev==2 &&
+  crev>=2` or `frev==3`). So the panic path is **firmware-mismatch /
+  corruption / future table**, not day-1 shipping VBIOS.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search **blocked (403)**. **UNVERIFIED**
-whether stable@ discussed this. No `Cc: stable` on the patch.
+**Step 5.5: Similar patterns**
+- Record: Same author, same series: imu11/12, ucode, cgs, gfx11/12 SDMA,
+  etc. `get_gfx_info()` in this file already used `-EINVAL` instead of
+  `BUG()`.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 6: This checkout
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `msm_context_vm()`; callee `msm_gpu_create_private_vm()`.
+**Step 6.1: Does the buggy code exist here?**
+- Record: Local tree is **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+  EXTRAVERSION=-rc4`, HEAD `f0100363d8c37`). `git merge-base --is-
+  ancestor d7c595044965c HEAD` → yes. Current source already has the
+  `BUG()` removed (lines 911–920). The panic existed in this lineage
+  from **v5.19** until this commit (**v7.2-rc2+**).
 
-**Step 5.2: TRACE CALLERS**
-Record (this tree):
-- `msm_ioctl_gem_info_iova` / `msm_ioctl_gem_info_set_iova` — GEM ioctls
-- `msm_ioctl_gem_submit` — GPU submit (hot path)
-- `msm_ioctl_vm_bind` — VM_BIND ioctl
-- `msm_gem_new_handle` — `MSM_BO_NO_SHARE` GEM_NEW
-- `msm_submitqueue_create` — VM_BIND submitqueue
-- `adreno_get_param` — GET_PARAM
-All are **userspace ioctl paths** except destroy/close helpers that read
-`ctx->vm` after lifetime rules.
+**Step 6.2: Backport difficulty**
+- Record: Clean 2-line deletion against the pre-image. No structural
+  prerequisites.
 
-**Step 5.3: TRACE CALLEES**
-Record: `msm_gpu_create_private_vm()` may call
-`gpu->funcs->create_private_vm`, take a pid ref, or fall back to the
-global VM. Returned object is expected to be fully set up **before** the
-pointer is published — that is exactly what `smp_store_release` is for.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Unprivileged GPU client (Mesa/VK) opens `/dev/dri/renderD*`,
-then two threads hit GEM_SUBMIT/GEM_NEW/GET_IOVA before VM exists.
-**Reachable from userspace. Common** for multi-threaded GL/Vulkan.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Other `ctx->vm` reads still exist (`msm_gem_close`,
-`a6xx_set_pagetable`, `msm_submitqueue` destroy, `EN_VM_BIND`).
-Close/destroy/submit-pagetable run after VM exists or on teardown.
-Sashiko noted `msm_gem_close` still uses a plain load; that does not
-make **this** publication barrier wrong.
+**Step 6.3: Related fixes already here**
+- Record: This **is** the fix; no alternate fix. No later revert or
+  follow-up on this function.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 7: Subsystem context
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**; `make
-  kernelversion` → **7.3.0-rc4**
-- Buggy DCL **did exist** here (6.17 through 7.2); this commit is
-  **already an ancestor of HEAD** and is in **v7.3-rc1** (`git merge-
-  base --is-ancestor ae88499d71ce8 v7.3-rc1`; **not** in v7.2)
-- Current `msm_context_vm()` still uses `smp_load_acquire` /
-  `smp_store_release` (later switched lock to `ctxlock`)
+**Step 7.1:** Record: `drm/amdgpu` atom firmware parser. **IMPORTANT**
+(very common GPUs), not core mm/VFS.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Against **current HEAD**, this exact diff would **not** apply
-(lock is `ctxlock`, plus `IS_ERR_OR_NULL`). Against the **pre-fix**
-`msm_context_vm()` that this 7.3 series actually shipped from, it
-applied cleanly (that is how it landed). Difficulty for this series:
-**clean when needed; already present now**.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This fix plus later series commits (`2c26f9e46d395`,
-`00dfa76bdfc2f`, …) are already in this checkout. No alternate older
-barrier fix.
+**Step 7.2:** Record: High activity; this particular function has been
+stable since the 2022 v3.0 clock change aside from this `BUG()` removal.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 8: Impact and risk
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drm/msm (Qualcomm Adreno GPU)** — **IMPORTANT** (phones,
-Chromebooks, embedded), not core mm/vfs, not staging.
+**Step 8.1: Who is affected**
+- Record: Users of amdgpu on Navi+ (RDNA and later), i.e. a large
+  fraction of AMD GPU systems, **if** VBIOS `gfx_info` revision is not
+  one of the known cases.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: **Active** (Rob Clark still landing msm fixes on this tree). Bug
-is in relatively new (6.17) VM_BIND/lazy-VM code, not ancient dead code.
+**Step 8.2: Trigger**
+- Record: GPU probe. Not unprivileged syscall. Needs Navi+ **and**
+  unknown `gfx_info` frev/crev (corrupt VBIOS, unexpected vendor
+  firmware, or a newer table the driver was never taught). Common-path
+  shipping firmware does not hit it; firmware is still out of the
+  kernel’s control.
 
----
+**Step 8.3: Failure mode**
+- Record: `BUG()` → kernel panic during device init. **Severity:
+  CRITICAL if triggered, LOW likelihood on known VBIOS.** After the fix,
+  unknown tables skip the gfx_info clock override and typically still
+  return success from earlier tables.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific / config-specific** (`CONFIG_DRM_MSM`),
-Qualcomm Adreno users. Large production population, not a toy driver.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Trigger: two threads racing first `msm_context_vm()` on the same
-  `drm_file`
-- Likelihood: **realistic** for multi-threaded GPU clients; first
-  submit/new/iova after open
-- Unprivileged: **yes** (render node ioctls)
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Partially initialized `drm_gpuvm` → kernel oops on VM field
-access and/or bad GPU pagetable/IOVA programming. **HIGH** (crash and
-possible GPU mapping corruption). Not a panic in every case, but not
-cosmetic.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit: high** — closes a real ARM publication race on a hot ioctl
-  path
-- **Risk: very low** — ~13 lines, standard barriers, no API/ABI change
-- **Ratio: strongly favors including the fix**
+**Step 8.4: Risk-benefit**
+- Record: Benefit medium-high (prevents a machine-killing assert in
+  firmware parse). Risk very low (2-line deletion, no locking/API/data-
+  structure change). Ratio favors applying it.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Synthesis
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: Evidence**
 
-**FOR backporting:**
-- Real double-checked-locking / weak-memory bug on ARM64 (this driver’s
-  CPU)
-- Userspace-reachable concurrent ioctl path
-- Small, obviously correct acquire/release
-- Maintainer-authored; series reviewed on dri-devel / freedreno
-- Sashiko flagged the class of lazy-VM mistakes (even though it is not
-  syzbot)
-- Buggy code existed in this lineage from **v6.17**; 7.3 includes that
-  code
-- No new feature or uAPI
+**For backporting**
+- `BUG()` in driver init panics the whole system; kernel policy
+  (`Documentation/process/coding-style.rst`, `deprecated.rst`) says not
+  to do this.
+- Path is real GPU probe for all modern AMD GPUs; firmware tables can
+  change independently of the kernel.
+- 2-line deletion, obviously correct, no new API.
+- Sibling function already errors instead of panicking.
+- Restores the pre-v5.19 “don’t panic” behavior.
+- Maintainer-authored, Reviewed-by Kent Russell.
+- Zero practical regression surface.
 
-**AGAINST:**
-- No `Reviewed-by`; no runtime reproducer (AI bot, not syzbot)
-- Later series patches still touch the same function (not required for
-  this hunk)
-- Other `ctx->vm` readers still use plain loads (incomplete coverage,
-  not a wrong fix)
-- lore.kernel.org/stable discussion **unverified** (HTTP 403)
+**Against**
+- No user report in ~4 years; known table versions are all handled, so
+  the `else` is effectively a developer assert.
+- Part of a 43-patch “drop old BUG()s” sweep; pull described it as
+  cleanup, and it went to drm-next-7.3, not drm-fixes.
+- Subject/body promise `WARN()` + error return; the patch does neither.
+- After the change, unknown tables can return 0 with the smu_info clock
+  rather than failing probe.
 
-**UNRESOLVED:**
-- Whether anyone nominated this on stable@ (could not fetch lore/stable)
-- No public crash log; impact inferred from the race, not a filed user
-  report
+**Unresolved**
+- Stable@ discussion unverified (lore 403).
+- No public confirmation this `BUG()` ever fired on shipping hardware.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — textbook publication
-   barriers; in mainline 7.3; maintainer-authored
-2. Fixes a real bug that affects users? **PASS** — concurrent first-use
-   of per-context GPU VM
-3. Important issue (crash/security/corruption/deadlock)? **PASS** —
-   **HIGH**: crash and/or GPU mapping corruption on ARM
-4. Small and contained? **PASS** — one function, ~13 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `msm_context_vm()` exists
-   here; this is the 7.3 tree the fix landed in
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — 2-line deletion; maintainer
+   + reviewer.
+2. Real bug affecting users? **PASS** — panicking on unknown firmware is
+   a real driver bug; firmware is untrusted/variable even if reports are
+   absent.
+3. Important (crash/security/corruption/deadlock)? **PASS** — failure
+   mode is a kernel panic. Likelihood is low, severity is high.
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features/APIs? **PASS**.
+6. Can apply to this tree? **PASS** — the hunk exists in this lineage;
+   the tree already contains the commit (`d7c595044965c`).
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **None** (not an ID/quirk/DT/build/docs exception). It qualifies
-as a normal important bugfix.
+**Step 9.3: Exceptions**
+- Record: None (not a device ID, quirk, DT, build, or doc fix).
+  Qualifies on the crash-prevention rule, not an exception category.
 
-**Step 9.4: MAKE YOUR DECISION**
-This tree is **7.3.0-rc4**. The lazy VM and the DCL race are in this
-series. The patch is a contained memory-ordering fix on a userspace GPU
-ioctl path. Risk is low; skipping it would leave Qualcomm GPU users
-exposed to a partially initialized VM. It belongs in this tree’s stable
-lineage.
+**Step 9.4: Decision**
 
----
+This tree is **v7.3-rc4**. The change is a two-line removal of a `BUG()`
+in Navi+ VBIOS clock parsing. That assert can panic the machine during
+amdgpu init if `gfx_info` is an unknown revision. That is the wrong
+failure mode for firmware the kernel does not control. The patch is
+trivial, standalone, and does not add features. Lack of a crash report
+and the series being a BUG() cleanup do not outweigh a panic in GPU
+probe.
 
-### What the commit solves for this tree
-`msm_context_vm()` creates the per-process GPU VM on first use so
-userspace can opt into VM_BIND. Two threads can hit that helper at once.
-The fast path used a plain load of `ctx->vm` and the creator used a
-plain store. On ARM64 that can make a reader see the pointer before the
-VM object is initialized. `smp_store_release` / `smp_load_acquire` close
-that hole.
-
-### Stable rules / risk
-Meets the stable criteria: real, important, small, no new API. Benefit
-(avoid crash/bad GPU mappings) dwarfs the risk of a 13-line barrier
-change.
-
-### Concerns
-- Follow-ups in the same series change the lock and error handling; they
-  are **not** required for this barrier fix to be correct.
-- Sashiko is an AI reviewer, not syzbot; the race is still real on this
-  hardware.
-- Applying **this exact diff** to current HEAD would conflict because
-  later 7.3 commits already evolved the function — that is expected; the
-  fix is already in v7.3-rc1.
+It meets the stable criteria for this tree: real crash fix, small,
+obviously correct, no dependencies.
 
 ---
 
-Verification:
-- [Phase 1] Parsed tags: `Reported-by: Sashiko`, Patchwork 743079, msgid
-  `20190-2` (01/17); no Fixes/Cc:stable/Reviewed-by
-- [Phase 2] Diff: +7/-6 in `msm_context_vm()`; acquire on read, release
-  on publish, `guard(mutex)`
-- [Phase 2] Compared `git show ae88499d71ce8^` vs `ae88499d71ce8` for
-  that function
-- [Phase 3] `git blame` on parent: DCL from `feb8ef4636a457` /
-  `6bf32afd37eb6` (2025-06-29)
-- [Phase 3] `git merge-base --is-ancestor 6bf32afd37eb6 v6.17` → yes;
-  `ae88499d71ce8` in v7.3-rc1, **not** in v7.2
-- [Phase 3] Follow-ups `2c26f9e46d395` / `00dfa76bdfc2f` confirmed; they
-  keep/extend barriers, not replace the need for them
-- [Phase 4] `b4 dig -c ae88499d71ce8` →
-  patch.msgid.link/20260729155609.20190-2-…
-- [Phase 4] `b4 dig -a`: v2–v7; applied = v7 01/17
-- [Phase 4] `b4 dig -w`: MSM maintainers + dri-devel/freedreno CC’d
-- [Phase 4] `b4 dig -m`: cover letter + Sashiko reply; no NAK; Sashiko
-  issues labeled pre-existing
-- [Phase 4] WebFetch lore/stable/patchwork: **403 Anubis** — UNVERIFIED
-  via HTTP
-- [Phase 5] `git grep msm_context_vm`: ioctl callers in msm_drv,
-  msm_gem, msm_gem_submit, msm_gem_vma, msm_submitqueue, adreno_gpu
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+## What the commit solves for stable users
+
+On Navi and later, `amdgpu_atomfirmware_get_clock_info()` used `BUG()`
+when the VBIOS `gfx_info` table had a revision the driver did not list.
+That is a full kernel panic during device init. Stable systems keep a
+GPU for years while VBIOS/firmware can still change; panicking instead
+of skipping the override (or failing probe) is the bug. The fix only
+deletes that `BUG()`.
+
+Risk vs benefit: benefit is avoiding a boot-time panic; risk is
+essentially none. The leftover behavior (continue with the smu_info
+clock, no `WARN()`) is slightly sloppy versus the commit text, but it is
+the old safe path from before v5.19 and is acceptable for stable.
+
+---
+
+## Verification
+- [Phase 1] Parsed tags: Reviewed-by Kent Russell, SOB Alex Deucher; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 1] Body claims WARN + return error; `git show d7c595044965c` is
+  only `- } else {` / `- BUG();`
+- [Phase 2] Diff: 2 deletions in `amdgpu_atomfirmware_get_clock_info()`
+- [Phase 2] Read current function: `ret` starts `-EINVAL`; earlier
+  tables set `ret=0`; unknown gfx_info no longer panics
+- [Phase 3] `git blame` on parent: `BUG()` from `a8d59943b8846`
+  (2022-04-28)
+- [Phase 3] `git merge-base --is-ancestor a8d59943b8846 v5.18` → 1
+  (absent); vs v5.19 → 0 (present)
+- [Phase 3] Pre-BUG code in `9a530062d57fe` did not panic on unknown
+  revisions
+- [Phase 3] `git merge-base --is-ancestor d7c595044965c HEAD` → 0
+  (commit is in this tree)
+- [Phase 4] `b4 dig -c d7c595044965c` → lore/msgid
+  20260615235645.737189-18; 18/43 series
+- [Phase 4] `b4 dig -a`: v1 only; later resent as 05/30 with identical
+  diff
+- [Phase 4] `b4 mbox`: 44 messages, no NAK, no stable nomination; Kent
+  review not on the mailed patch
+- [Phase 4] `b4 dig -w`: To/Cc Alex Deucher + amd-gfx only
+- [Phase 4] lore.kernel.org and lore stable search: HTTP 403 —
+  UNVERIFIED
+- [Phase 5] grep: only caller is `amdgpu_device.c` init when
+  `is_atom_fw`; `is_atom_fw` set for Vega10+
+- [Phase 5] `atomfirmware.h`: gfx_info structs v2.2, v2.3, v2.4, v2.7,
+  v3.0 only — no v4
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
   kernelversion` = 7.3.0-rc4
-- [Phase 6] Current `msm_context_vm()` still has
-  smp_load_acquire/smp_store_release
-- [Phase 7] MAINTAINERS: Rob Clark maintains drm/msm Adreno
-- [Phase 8] Failure mode: partially initialized VM → oops / bad GPU
-  maps; severity HIGH
-- UNVERIFIED: stable@ mailing list discussion (lore 403)
+- [Phase 6] `git describe d7c595044965c` =
+  `v7.2-rc2-1048-gd7c595044965c`
+- [Phase 6] Current file lines 911–920: no `BUG()`
+- [Phase 8] Failure mode: `BUG()` panic on GPU init — CRITICAL if hit
+- UNVERIFIED: whether this `BUG()` has ever fired on shipping VBIOS;
+  whether stable@ already considered it
 
 **YES**
 
- drivers/gpu/drm/msm/msm_drv.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index c2a8aaa33f84a..8094e5e7e9a54 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -226,18 +226,19 @@ struct drm_gpuvm *msm_context_vm(struct drm_device *dev, struct msm_context *ctx
- {
- 	static DEFINE_MUTEX(init_lock);
- 	struct msm_drm_private *priv = dev->dev_private;
-+	struct drm_gpuvm *vm = smp_load_acquire(&ctx->vm);
- 
- 	/* Once ctx->vm is created it is valid for the lifetime of the context: */
--	if (ctx->vm)
--		return ctx->vm;
-+	if (vm)
-+		return vm;
-+
-+	guard(mutex)(&init_lock);
- 
--	mutex_lock(&init_lock);
- 	if (!ctx->vm) {
--		ctx->vm = msm_gpu_create_private_vm(
-+		vm = msm_gpu_create_private_vm(
- 			priv->gpu, current, !ctx->userspace_managed_vm);
--
-+		smp_store_release(&ctx->vm, vm);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
+index c7d32fb216e4e..ce2a4a15d5ecb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
+@@ -806,8 +806,6 @@ int amdgpu_atomfirmware_get_clock_info(struct amdgpu_device *adev)
+ 				   (crev != 6)) {
+ 				spll->reference_freq = le32_to_cpu(gfx_info->v22.rlc_gpu_timer_refclk);
+ 				ret = 0;
+-			} else {
+-				BUG();
+ 			}
+ 		}
  	}
--	mutex_unlock(&init_lock);
- 
- 	return ctx->vm;
- }
 -- 
 2.53.0
 
