@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846E25CDB7F;
-	Mon, 19 Oct 2026 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D7F5CDB9C;
+	Mon, 19 Oct 2026 14:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418476; cv=none; b=rofrOf2p+Y3f7pz63Hkbr5UzZRY0JUVMhspNwofDYkgZOOo8TyQoZ8Z2MKoeQgq3zDtX23Rpw9u44FveBXdceDonpv0TgarH+/c1pDkwzAa5p30SDnAP7lLPXT4gVDSeON7jx8ngqyF72eXegIK9oTXIo2BuKAIsBqR3NEptaWU=
+	t=1792418478; cv=none; b=WV4iqUScBesJ1AIvy5jd7zmFZC8Z7L1HdE6UKiigK88ebeRdEgSzhaYH+prpEKY3XmGjnKndU5ME8n6e6wjge8yQTCy9r6Tii7zPCpkZH5k0X1fQzx0t35e+CuPuoqaT5Ndr+RqkWFvUhcIP+mk4oZHTIvH9HRri6Nnwp30DDfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418476; c=relaxed/simple;
-	bh=2vNjjOL4BVHS72l3hrXYOnFW5T4XsSjcJReEj0tWiR8=;
+	s=arc-20240116; t=1792418478; c=relaxed/simple;
+	bh=dg1OSbhdK+j5YOd2MtI3qmFptUi1dNzhh0R8cegcDXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aV54V+tR0otq6BQVrRzzepeAyaCuqumcvekbZ7IDManhMfyxaEwFdHJy891iJdl3aVXH/yNn0JZY8LUjoYwPx5S3HlRtYGejp+17yeUWtC4rTe53Vvckf2Ic38DYZq3W/l5nP5MDhpDM/u7eHMtEc74lQljpExMAtACM/WcfUIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5pBQBrG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jW+ufL95/HeM9VHt+K6Vt2+SxwtKKIjynQJbUglDNT+uoAUl0KenlvsMmOJGfRM6KUHeR0BG8EF/ynpGHuN+jRU4Dl4VECnJxJNWzrHL+wNpYJmu2TDYrGLPk01TKcBId76TBF9Wxi4F6sau7vjIOPN5fFWCrYlBhl6dTWS5iSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GgHRD7zX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5pBQBrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9C21F000C6;
-	Mon, 19 Oct 2026 14:01:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GgHRD7zX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFFF1F000C9;
+	Mon, 19 Oct 2026 14:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418474;
-	bh=+2pbJ771we+h3ohOnYuS+F6Sr49YChib6X+vHKw7WIQ=;
+	s=k20260515; t=1792418475;
+	bh=JOxAUzlACqLQi93ICgBBTP9HwMF/WetlV2sXwSwxALY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M5pBQBrGymByiOzgpqERs39DLLuZ8WAOy9jwhMrVdmEF/B9TXFIglOrV2PvcdIcOF
-	 km3ZhY9ox29eWGAE3mxOxOukGua8LJj7dg1vwbGNruU3Owle9U3iuXXB+VvjvN9knT
-	 XI/xUHAgJ6b5RQ2hRZkBqpczj0f9xDmBZ4KRkbRUOMV2MH314/oPwLWQBK3wUaUfeO
-	 6uvMCLPCu9Hg0MlZMvkeuDPHju948Q4tIklUK5PszAOOv8FH9c4M58+/jt5aATbqDT
-	 k5zoTCb6jphlm6WoTC8DDFZndP2TCnYuhyO2sgMRskxUeiCFFjnwHp4OCMFiQHTuoe
-	 W7JT/NA47L4Hw==
+	b=GgHRD7zXkMqUxPqUIRRLQG0rSKaGzwg0mj769BU8yfKQhKvbg1UlhseD0NeQkXPCi
+	 6bQtb0CtGk2hxLAPagpuHUmpyXuVyGQrg32CfLs5XyamzuaJCn+/iTd2V+ADAq44+d
+	 KF8ZiYhS8NizkLhtX4eILlVBEqM6+N3NfSn8LP74dsM4sRn8XLRl+Ve8UN7PLwaNr4
+	 Ymwdi69lvDkhRlhz3VeZF3qewYT5lKm0eqCOZlPjHsdVFPrDhcWmVydZx9GpqJ2b2X
+	 yKasmHX1WuQPXOWR19OLtbfVTgw9ELVi6TQsrHDHfmarxqy1WNMyww3IyPx9oySSrF
+	 1q+Cpwa+Y8/Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chris Lew <christopher.lew@oss.qualcomm.com>,
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathieu.poirier@linaro.org,
-	linux-remoteproc@vger.kernel.org,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] rpmsg: char: Check for ongoing chrdev destroy
-Date: Mon, 19 Oct 2026 09:49:25 -0400
-Message-ID: <20261019135441.1420968-274-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] soundwire: dmi-quirks: add a global ghost list
+Date: Mon, 19 Oct 2026 09:49:26 -0400
+Message-ID: <20261019135441.1420968-275-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,317 +54,438 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Lew <christopher.lew@oss.qualcomm.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 1f9c2897afb0fe86c1fdf4f5e23c5fb8f7442f6d ]
+[ Upstream commit b7a5d101d7d267922e828c40135bcaccf8cfb3bf ]
 
-A null pointer panic is observed when stopping a remoteproc and closing
-a character device using the RPMSG_DESTROY_EPT_IOCTL. There is a race
-where each context calls rpmsg_chrdev_eptdev_destroy(). The thread that
-runs second will call cdev_device_del() for a second time, which fails
-because the first call already removed the device from sysfs. Add a
-check at the beginning of destroy and exit early if the destroy call
-has already been done.
+Not like other ghost devices, the 0x000000D010010500 ADR doesn't belong
+to any codec. We should disable it in all devices.
 
-[ 26.654130] Call trace
-[ 26.656658] kernfs_find_and_get_ns+0x28/0x8
-[ 26.661140] sysfs_unmerge_group+0x2c/0x7
-[ 26.665357] dpm_sysfs_remove+0x38/0x8
-[ 26.669305] device_del+0xa4/0x3e
-[ 26.672811] cdev_device_del+0x28/0x7
-[ 26.676675] rpmsg_chrdev_eptdev_destroy+0x68/0x98
-[ 26.682765] rpmsg_eptdev_ioctl+0x130/0x11c8
-[ 26.688318] __arm64_sys_ioctl+0xb4/0x10
-[ 26.692448] invoke_syscall+0x50/0x12
-[ 26.696312] el0_svc_common.constprop.0+0xc8/0xf
-[ 26.701151] do_el0_svc+0x24/0x3
-[ 26.704570] el0_svc+0x40/0x17
-[ 26.707810] el0t_64_sync_handler+0x120/0x13
-[ 26.712288] el0t_64_sync+0x1a0/0x1a
-
-Signed-off-by: Chris Lew <christopher.lew@oss.qualcomm.com>
-Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260406-rpmsg-char-fix-chrdev-destroy-race-v1-1-7317434fa246@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260703011656.2572959-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the race, callers, prerequisites, and mailing-list thread.
-Compiling the full 9-phase verdict for this 7.3-rc4 tree.
+The local tree is Linux **7.3.0-rc4**. This is a hardware quirk that
+disables a bogus SoundWire ACPI `_ADR` on Intel hosts; the same class of
+ghost-device quirks has already been treated as stable material.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject line**
-Record: `[rpmsg: char:]` `[Check]` Check for ongoing chrdev destroy —
-serialize/idempotent-ize `rpmsg_chrdev_eptdev_destroy()` so a second
-destroy does not run `cdev_device_del()` again.
+Step 1.1: PARSE THE SUBJECT LINE
+- Subsystem prefix: `soundwire: dmi-quirks:`
+- Action verb: **add** (adds a global ghost-ADR table)
+- Claimed intent: disable ACPI `_ADR` `0x000000D010010500` on every
+  machine because it is not a real codec
+Record: [soundwire/dmi-quirks] [add] [global ghost ADR list to disable a
+firmware-invented SoundWire device]
 
-**Step 1.2: Tags**
-Record:
-- `Signed-off-by: Chris Lew <christopher.lew@oss.qualcomm.com>` (author)
-- `Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>`
-  (submitter)
-- `Link: https://lore.kernel.org/r/20260406-rpmsg-char-fix-chrdev-
-  destroy-race-v1-1-7317434fa246@oss.qualcomm.com`
-- `Signed-off-by: Bjorn Andersson <andersson@kernel.org>`
-  (remoteproc/rpmsg maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence expected)
-- SHA: `1f9c2897afb0fe86c1fdf4f5e23c5fb8f7442f6d`
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- Fixes: **absent** (expected for this review pipeline; not a negative
+  signal)
+- Reported-by: **absent**
+- Tested-by: **absent**
+- Reviewed-by: Charles Keepax (Cirrus; author of the earlier per-machine
+  ghost-Realtek quirks); Pierre-Louis Bossart (SoundWire expert)
+- Acked-by: **absent**
+- Link: `https://patch.msgid.link/20260703011656.2572959-1-yung-
+  chuan.liao@linux.intel.com`
+- Cc: stable: **absent** (expected)
+- Signed-off-by: Bard Liao (author, Intel SoundWire); Vinod Koul
+  (SoundWire maintainer). Ignore any Sasha Levin SOB if present; none is
+  on this commit.
+Record: Author + two subsystem reviewers + maintainer SOB. No
+user/syzbot report. No Fixes/Cc-stable.
 
-**Step 1.3: Body**
-Record:
-[Bug] Concurrent `rpmsg_chrdev_eptdev_destroy()` from remoteproc
-teardown and `RPMSG_DESTROY_EPT_IOCTL`.
-[Symptom] NULL-pointer panic in `kernfs_find_and_get_ns` via
-`device_del`/`cdev_device_del` (arm64 ioctl stack provided).
-[Root cause] Second destroy calls `cdev_device_del()` after the first
-already removed the device from sysfs.
-[Fix] Under `ept_lock`, if `eptdev->rpdev` is already NULL, return 0.
-[Versions] None stated.
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The body is two sentences: unlike DMI-matched ghost codecs, `_ADR
+0x000000D010010500` does not belong to any codec, so it should be
+disabled on all devices. No stack trace, no machine list, no kernel-
+version range.
+Decoded `_ADR` (MIPI DisCo layout in `include/linux/soundwire/sdw.h`):
+link_id=0, version=0, unique_id=0, mfg_id=`0xd010`, part_id=`0x0105`,
+class_id=0. That is not a known in-tree codec (Realtek is `0x025d`). It
+is firmware garbage, not a real part.
+Record: [Bug: ACPI exposes a non-codec SoundWire `_ADR`] [Symptom:
+kernel enumerates a phantom slave, which can break machine-driver /
+function-topology matching] [No version info] [Root cause: BIOS `_ADR`
+is not a real codec; remap to 0 so core skips it]
 
-**Step 1.4: Hidden bug fix?**
-Record: No — this is an explicit race/panic fix, not cleanup disguised
-as a fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Not disguised cleanup. It is an explicit hardware workaround: treat a
+bogus ACPI device as missing.
+Record: [Not a hidden fix; it is a hardware quirk. Same pattern as
+`ghost_realtek[]` remapping to 0.]
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## Phase 2: Diff analysis
+Step 2.1: INVENTORY THE CHANGES
+- File: `drivers/soundwire/dmi-quirks.c` only
+- +20 / -1 (21-line change)
+- New table `global_ghost_adr[]`; function `sdw_dmi_override_adr()`
+  updated (`break` → `goto out`, then a global remap loop)
+Record: [1 file, +20/-1] [sdw_dmi_override_adr] [single-file surgical
+quirk]
 
-**Step 2.1: Inventory**
-Record: `drivers/rpmsg/rpmsg_char.c` only, **+5 / -0**. Function:
-`rpmsg_chrdev_eptdev_destroy()`. Single-file surgical fix.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Before: `sdw_dmi_override_adr()` only remapped addresses if DMI matched
+`adr_remap_quirk_table`.
+After:
+1. DMI remap still runs first. On a hit, `goto out` so a machine-
+   specific remap wins and is not overwritten.
+2. Otherwise walk `global_ghost_adr[]`. If `addr == 0x000000D010010500`,
+   set `addr = 0`.
+Caller `find_slave()` in `drivers/soundwire/slave.c` already does `if
+(!addr) return false;` (since 2021), so a zero `_ADR` is not enumerated.
+Record: [DMI remap still preferred; unmatched 0x000000D010010500 is
+forced to 0 and skipped during ACPI slave discovery]
 
-**Step 2.2: Flow change**
-Record: Before: every caller locked, set `rpdev = NULL`, tore down the
-endpoint, unlocked, woke readers, then always `cdev_device_del()` +
-`put_device()`. After: if `rpdev` is already NULL, unlock and return;
-only the first destroy does sysfs/cdev teardown.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Category **(h) hardware workaround**, using the existing remap-to-zero
+disable path.
+Record: [Hardware quirk] [BIOS lists a fake SoundWire device; remap to 0
+so Intel SoundWire enumeration ignores it]
 
-**Step 2.3: Bug mechanism**
-Record: **Race / double `device_del`**. First destroy clears `rpdev`
-under `ept_lock` then deletes the device. Second destroy used to delete
-again → NULL deref in sysfs. Guard reuses the existing `rpdev == NULL`
-“already released” flag from `17b88a2050e9d`.
+Step 2.4: ASSESS THE FIX QUALITY
+Obviously correct: same remap-to-0 used by `ghost_realtek[]`. Pierre-
+Louis noted on-list that zero is ignored by existing core logic.
+Regression risk is low: only `_ADR 0x000000D010010500` is dropped, and
+reviewers state it is not a real codec. `ARRAY_SIZE` includes the `{}`
+terminator (one extra compare of `adr==0`); harmless. `goto out` is
+required so a DMI remap is not then clobbered by the global list.
+Record: [Minimal, obviously correct] [Regression risk: low; worst case
+would be disabling a real device with this exact `_ADR`, which the
+author/reviewers say does not exist]
 
-**Step 2.4: Fix quality**
-Record: Minimal and consistent with `rpmsg_eptdev_open()` (`!rpdev` →
-`-ENETRESET`). Mutex serializes the check/set. Second path also skips a
-second `put_device()`, which is correct (only one destroy should drop
-the register/init ref). Regression risk is low; remaining window is
-“second thread still takes `ept_lock` after teardown started,” which is
-safe while the ioctl file or `device_for_each_child()` holds a device
-ref.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
----
+Step 3.1: BLAME THE CHANGED LINES
+`sdw_dmi_override_adr()` and remap-to-0 skip date to **6558b667a7297**
+(“soundwire: add override addr ops”, 2021-03-22, first in **v5.13**).
+File introduced by **f6594cdfec4cd** (v5.12-rc2-2). Per-machine ghost
+Realtek disable: **4dab2b904414f** (in **v7.2**).
+Record: [Quirk infrastructure since v5.13] [This specific ADR workaround
+is new in 7.3; the BIOS bug is not a recent kernel regression]
 
-## Phase 3: Git history
+Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag.
+Record: [N/A — no Fixes tag] [Buggy “code” is firmware; kernel side is
+missing a quirk]
 
-**Step 3.1: Blame**
-Record: Destroy body dates to `c0cdc19f84a471` (“rpmsg: Driver for user
-space endpoint interface”, **v4.11-rc1**). `eptdev->rpdev = NULL` from
-`17b88a2050e9d` (**v6.3-rc1**). `cdev_device_del` from `7a534ae89e34e`
-(v5.17 era). This 5-line guard is `1f9c2897afb0fe` (v7.3-rc1).
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Related commits on this file: `4dab2b904414f` (ghost Realtek, DMI-
+matched), then more ASUS/Lenovo DMI rows, then this global list, then
+more per-machine Realtek ghosts. This commit is not patch N/M.
+Record: [Same-file ghost-device series, but this patch is standalone]
+[No extra kernel commit required for remap-to-0 to work]
 
-**Step 3.2: Fixes: tag**
-Record: None. Implicitly completes the v6.3 `rpdev = NULL` locking,
-which did not make destroy idempotent.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Bard Liao is a regular Intel SoundWire contributor (many
+cadence/intel_ace2x commits). Reviewed by Keepax and Bossart; applied by
+Vinod Koul.
+Record: [Intel SoundWire contributor; patch vetted by subsystem
+experts/maintainer]
 
-**Step 3.3: Related commits (path-limited)**
-Record:
-- `17b88a2050e9d` — lock + `rpdev = NULL` (prerequisite for this check)
-- `c23965b7f7d99` — `ctrl_lock` in `rpmsg_ctrldev_remove` (CREATE vs
-  remove only; does **not** cover endpoint DESTROY ioctl)
-- `467233a4ac29b` — avoid double destroy of default endpoint
-- `7a534ae89e34e` — switch to `cdev_device_del`
-- Standalone v1 patch, not `n/m`
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Needs `sdw_dmi_override_adr` + `if (!addr) return false` in
+`find_slave()` — both present since v5.13. Does not need
+`ghost_realtek[]`. Applies standalone on this tree.
+Record: [No missing prereqs in this tree] [Standalone]
 
-**Step 3.4: Author**
-Record: Chris Lew is a regular Qualcomm rpmsg/glink contributor; Vishnu
-submitted; Bjorn Andersson (maintainer) applied it.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 3.5: Dependencies**
-Record: Needs `ept_lock` and `eptdev->rpdev = NULL` in destroy
-(`17b88a2050e9d`). Both are in this tree (`git merge-base --is-ancestor`
-exit 0). Applies standalone here.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+`b4 dig -c b7a5d101d7d26` matched:
+https://patch.msgid.link/20260703011656.2572959-1-yung-
+chuan.liao@linux.intel.com
+`b4 dig -a`: **v1 only**, dated 2026-07-03. Thread (mbox): Bard submit →
+Pierre-Louis Reviewed-by (notes zero is ignored by core) → Vinod applied
+as `b7a5d101d7d26`. No NAK, no v2.
+Record: [lore via b4] [v1 applied as-is] [No NAKs] [No reviewer Cc:
+stable] [Keepax Rb already on v1]
 
----
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+`b4 dig -w` recipients: linux-sound, Vinod Koul, Pierre-Louis Bossart,
+Peter Ujfalusi, Bard Liao. SoundWire maintainer and Intel SoundWire
+people were on To/Cc.
+Record: [Vinod (maintainer), Pierre-Louis, linux-sound; Keepax reviewed]
 
-## Phase 4: Mailing list
+Step 4.3: SEARCH FOR THE BUG REPORT
+No Reported-by, bugzilla, or syzbot. Web search only finds this patch
+thread. User impact is inferred from the sibling ghost-Realtek commit:
+ACPI-listed missing codecs confuse function-topology sound-card
+creation.
+Record: [No public user bug report for this ADR] [Impact inferred from
+the same ghost-device mechanism, which is documented in 4dab2b904414f]
 
-**Step 4.1:** `b4 dig -c 1f9c2897afb0fe` →
-https://lore.kernel.org/r/20260406-rpmsg-char-fix-chrdev-destroy-
-race-v1-1-7317434fa246@oss.qualcomm.com
-`b4 dig -a`: **v1 only**. Thread: submission + Bjorn “Applied, thanks!”
-(`1f9c2897afb0fe`). No NAK, no review comments, no reviewer `Cc:
-stable`.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Standalone 1/1. Later dmi-quirks commits only add more DMI rows for
+Realtek ghosts; they do not fix this patch.
+Record: [Standalone] [Follow-ups are unrelated extra DMI IDs]
 
-**Step 4.2:** `b4 dig -w`: To/Cc Bjorn Andersson, Mathieu Poirier,
-`linux-remoteproc`, `linux-kernel`, Deepak Singh, Chris Lew.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Direct lore.kernel.org/stable fetch returned 403. Web search found
+**AUTOSEL of the sibling** `soundwire: dmi-quirks: Disable ghost Realtek
+devices` for **6.18–6.1**, and **no AUTOSEL of this global-ghost
+commit** (no Fixes/Cc-stable, so it needs this review).
+Record: [Sibling ghost-device quirk was AUTOSEL’d into stable] [This
+commit was not auto-picked; that is why it is here] [UNVERIFIED: raw
+stable-list HTML]
 
-**Step 4.3:** Bug report is the in-message crash trace (Qualcomm
-remoteproc + DESTROY ioctl). No syzbot/bugzilla.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 4.4:** Single-patch series; no sibling patches required.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: [`sdw_dmi_override_adr`] [new static table `global_ghost_adr`]
 
-**Step 4.5:** lore.kernel.org WebFetch returned 403. `b4 dig -m` got the
-full thread (2 messages). No stable-list discussion found in that
-thread.
+Step 5.2: TRACE CALLERS
+`sdw_intel_ops.override_adr = sdw_dmi_override_adr` in
+`drivers/soundwire/intel_auxdevice.c` only. Invoked from `find_slave()`
+during ACPI child walk when Intel SoundWire enumerates slaves.
+Record: [Intel SoundWire ACPI enumeration only] [Not IRQ/hot path;
+probe/enumeration]
 
----
+Step 5.3: TRACE CALLEES
+`dmi_first_match()`, `dev_dbg()`. No alloc, no locks, no I/O.
+Record: [DMI match + debug print + table walk]
 
-## Phase 5: Semantic / call-path analysis
+Step 5.4: FOLLOW THE CALL CHAIN
+Intel SoundWire link probe → ACPI walk → `find_slave()` →
+`override_adr()` → skip if 0. Reachable on Intel laptops with SoundWire
++ ACPI (typical modern OEM audio). Unprivileged users do not trigger it
+directly; it runs at device probe and can break audio setup.
+Record: [Reachable on Intel SoundWire machines at enumeration] [Not a
+syscall crash path]
 
-**Step 5.1:** Modified: `rpmsg_chrdev_eptdev_destroy()`.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+`ghost_realtek[]` remaps `0x000330025d072201` to 0, but only for DMI-
+matched ASUS/Lenovo boards. This patch is the same disable, globally,
+for a different `_ADR`.
+Record: [Same pattern as in-tree ghost Realtek quirks; this ADR is not
+machine-specific]
 
-**Step 5.2: Callers** (verified with grep):
-1. `rpmsg_eptdev_ioctl()` / `RPMSG_DESTROY_EPT_IOCTL` — userspace ioctl
-   (stack in the commit)
-2. `rpmsg_chrdev_remove()` — `device_for_each_child(...,
-   rpmsg_chrdev_eptdev_destroy)` on rpmsg device removal
-3. `rpmsg_ctrldev_remove()` — same for the control device when
-   remoteproc/rpmsg device goes away
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 5.3:** Callees: `mutex_lock/unlock`, `rpmsg_destroy_ept`,
-`wake_up_interruptible`, `cdev_device_del` → `device_del` →
-`dpm_sysfs_remove`, `put_device`.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+`git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
+kernelversion` = **7.3.0-rc4**.
+`drivers/soundwire/dmi-quirks.c` and `sdw_dmi_override_adr()` are
+present. `find_slave()` skips `addr==0`. Without this quirk, a BIOS that
+publishes `0x000000D010010500` still enumerates a phantom slave. (`git
+merge-base --is-ancestor b7a5d101d7d26 HEAD` is true because this is the
+mainline tree that already contains the commit; that is not used as a
+“already selected” NO.)
+Record: [Yes — Intel SoundWire DMI override path exists] [Firmware bug;
+kernel lacked a global skip until 7.3-rc1]
 
-**Step 5.4:** Reachable from userspace ioctl while firmware is stopped.
-`ctrl_lock` only wraps CREATE/RELEASE on the **ctrl** fd, not DESTROY on
-the **endpoint** fd — so the race is real.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+On this tree the patch is already the current code. Against the pre-
+image (`v7.2` `sdw_dmi_override_adr` is the same shape, only fewer DMI
+rows) it would apply with at most context shift in the DMI table. No
+API/data-structure change.
+Record: [Clean/trivial on this codebase]
 
-**Step 5.5:** Same `!rpdev` pattern already used in
-`rpmsg_eptdev_open()`. No other copy of this exact double-destroy bug
-in-tree.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+`ghost_realtek[]` is here but only matches specific DMI IDs and a
+different `_ADR`. It does **not** hide `0x000000D010010500`.
+Record: [No substitute fix for this ADR]
 
----
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## Phase 6: This checkout
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+`drivers/soundwire/` — Intel SoundWire master + ACPI quirks. Affects
+Intel-laptop audio, not core mm/fs.
+Record: [SoundWire / Intel audio] [IMPORTANT for those machines,
+PERIPHERAL vs core kernel]
 
-**Step 6.1:** Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `VERSION=7
-PATCHLEVEL=3` (`7.3.0-rc4`).
-Buggy function exists at `drivers/rpmsg/rpmsg_char.c`. Dual call paths
-exist. Commit is already an ancestor (`git merge-base --is-ancestor
-1f9c2897afb0fe HEAD` → 0) because it landed in **v7.3-rc1**. That is the
-mainline landing, not a reason to reject on technical merit. Parent of
-the commit still has the unguarded destroy.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Active (BRA/BPT, ACE2x, many 7.3 SoundWire commits). dmi-quirks itself
+is a mature table of BIOS workarounds dating to 2021.
+Record: [Active Intel SoundWire; quirk file is a long-lived table]
 
-**Step 6.2:** Parent destroy matches this tree aside from the 5-line
-guard. Backport difficulty: **clean apply** onto any tree that already
-has `17b88a2050e9d`.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 6.3:** No later follow-up on this file after `1f9c2897afb0fe`. No
-alternate fix for this double-`cdev_device_del` race.
+Step 8.1: DETERMINE WHO IS AFFECTED
+CONFIG_SOUNDWIRE_INTEL machines whose ACPI includes `_ADR
+0x000000D010010500`. Not universal. The author says the ADR is not a
+codec, so the quirk is intentionally global rather than DMI-limited.
+Record: [Intel SoundWire / config-specific; any OEM BIOS with that
+`_ADR`]
 
----
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Triggered at SoundWire/ACPI enumeration (boot or audio-controller
+probe), not a race. Not userspace-triggered. How common the BIOS entry
+is was not documented; Intel submitted it as a global rule, which
+implies it is not one SKU.
+Record: [Boot/probe on matching firmware] [Unprivileged users are not
+the trigger; they see broken or mis-created audio]
 
-## Phase 7: Subsystem
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Not a panic/UAF. Failure mode matches the documented ghost-Realtek
+issue: phantom ACPI device confuses topology/machine matching → missing
+or wrong sound card, probe noise, possible timeouts talking to a device
+that is not there. That is a real user-visible audio failure on affected
+laptops.
+Record: [Broken/misbuilt audio / failed slave probe] [Severity:
+MEDIUM–HIGH for affected hardware; not a generic kernel crash]
 
-**Step 7.1:** `drivers/rpmsg/` — IMPORTANT for Android/embedded
-remoteproc (Qualcomm, TI, ST), not core mm/VFS. Panic on a user ioctl
-still matters.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Benefit: restores correct enumeration on machines with this BIOS bug;
+same class AUTOSEL already accepted for Realtek ghosts. Risk: ~20 lines,
+one file, existing 0-skip path, expert review. Global match is slightly
+broader than DMI quirks but the `_ADR` is not a real vendor/part.
+Record: [Benefit: medium-high for Intel SoundWire laptops] [Risk: very
+low] [Favor applying]
 
-**Step 7.2:** Mature driver (since v4.11), ongoing Qualcomm/Linaro
-fixes. This is a long-standing race, not a brand-new API.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
----
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Hardware quirk/workaround (stable exception category)
+- Small, one-file, uses remap-to-0 that core has honored since v5.13
+- Reviewed by Keepax and Bossart; applied by Vinod
+- Sibling ghost-device dmi-quirks were AUTOSEL’d to 6.1–6.18
+- Code and skip-on-zero path exist in this tree
+- Standalone; no new API
+AGAINST:
+- Thin commit message; no public reproducer or Reported-by
+- Not a crash/security/corruption bug
+- Global (all machines) rather than DMI-scoped
+UNRESOLVED:
+- Could not fetch lore.kernel.org/stable HTML (403)
+- No independent confirmation of how many BIOSes contain this `_ADR`
 
-## Phase 8: Impact and risk
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — existing mechanism; two
+   expert reviews; maintainer applied v1
+2. Fixes a real bug that affects users? **PASS** — phantom ACPI slave
+   breaks audio topology/enumeration
+3. Important issue? **PASS** as hardware quirk (broken audio on real
+   Intel laptops), not as a generic panic
+4. Small and contained? **PASS** — +20/-1, one file
+5. No new features or APIs? **PASS** — table entry + lookup in existing
+   override hook
+6. Can apply to the local tree? **PASS** — `dmi-quirks.c` /
+   `sdw_dmi_override_adr` / `if (!addr)` all present
 
-**Step 8.1:** Users with `CONFIG_RPMSG_CHAR` who stop a remote processor
-while userspace DESTROYs an endpoint (typical Qualcomm/Android rpmsg).
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Hardware quirk/workaround** (SoundWire DMI/`_ADR` quirk,
+equivalent to USB/PCI/codec quirk table entries)
 
-**Step 8.2:** Trigger: remoteproc stop **and**
-`RPMSG_DESTROY_EPT_IOCTL`. Timing-dependent but demonstrated.
-Unprivileged userspace with the endpoint fd can be one side of the race.
-
-**Step 8.3:** Failure: kernel NULL deref / oops in `device_del`.
-**Severity: CRITICAL**.
-
-**Step 8.4:** Benefit high (prevents oops). Risk very low (5 lines,
-existing lock/flag). Ratio strongly favors backport.
-
----
-
-## Phase 9: Synthesis
-
-**For:** Real oops with stack; userspace-reachable race; 5-line
-idempotent destroy; maintainer-applied; prereqs present; matches stable
-rules.
-
-**Against:** No `Fixes:`/`Cc: stable`; no extra `Reviewed-by`; rpmsg-
-char not universal on desktops; uses `rpdev` as a destroyed flag
-(already established in v6.3).
-
-**Unresolved:** Direct lore HTTP 403 (thread recovered via `b4`). No
-independent stable@ discussion.
-
-**Stable rules:**
-1. Obviously correct and tested? **PASS** — lock + existing flag; crash
-   reproduced by author.
-2. Real user bug? **PASS** — oops on remoteproc stop + ioctl.
-3. Important? **PASS** — kernel panic.
-4. Small/contained? **PASS** — +5 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS** — same function/callers; prereq
-   `17b88a2050e9d` present.
-
-**Exception category:** None needed; this is a normal crash fix.
-
-This is a textbook stable candidate: a small, obviously correct guard
-that stops a double `cdev_device_del()` oops when remoteproc teardown
-races `RPMSG_DESTROY_EPT_IOCTL`. The affected code and the `rpdev =
-NULL` flag it depends on are in this tree.
+Step 9.4: MAKE YOUR DECISION
+This is a textbook stable hardware quirk: surgical, reviewed, uses a
+long-standing disable path, and fixes real OEM firmware that would
+otherwise present a fake SoundWire device to audio matching. The missing
+Fixes/Cc-stable tags are why it needs review, not a reason to drop it.
 
 Verification:
-- [Phase 1] Parsed tags: Chris Lew/Vishnu SOB, Bjorn SOB, lore Link; no
-  Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: +5 lines in `rpmsg_chrdev_eptdev_destroy()` after
-  `mutex_lock(&eptdev->ept_lock)`
-- [Phase 2] Confirmed `cdev_device_del()` always calls `device_del()`
-  (`fs/char_dev.c`); second `device_del` matches the
-  `dpm_sysfs_remove`/`kernfs_find_and_get_ns` stack
-- [Phase 3] `git blame`: `rpdev = NULL` from `17b88a2050e9d` (v6.3-rc1);
-  function from `c0cdc19f84a471` (v4.11-rc1)
-- [Phase 3] `git merge-base --is-ancestor 17b88a2050e9d HEAD` → present;
-  `1f9c2897afb0fe` also ancestor (landed v7.3-rc1)
-- [Phase 3] Parent of `1f9c2897afb0fe` still does unconditional
-  `cdev_device_del`
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; Bjorn applied; maintainers
-  CC’d; no NAK
-- [Phase 4] WebFetch lore/stable: 403; thread contents verified from
-  `/tmp/rpmsg-destroy-thread.mbox`
-- [Phase 5] Callers: ioctl DESTROY, `rpmsg_chrdev_remove`,
-  `rpmsg_ctrldev_remove`; `ctrl_lock` does not cover DESTROY
-- [Phase 6] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` → 7.3.0-rc4
-- [Phase 8] Failure mode: NULL deref oops, CRITICAL
-- UNVERIFIED: public lore HTML (403); whether a given older LTS lacks
-  `17b88a2050e9d` (this tree has it)
+- [Phase 1] Tags: Reviewed-by Keepax + Bossart; Link msgid; no
+  Fixes/Reported-by/Cc-stable
+- [Phase 1] ADR decode: mfg_id 0xd010 / part_id 0x0105 / class 0 — not
+  an in-tree codec
+- [Phase 2] Diff: +20/-1 in `dmi-quirks.c`; `sdw_dmi_override_adr`
+  remaps 0x000000D010010500 → 0
+- [Phase 2] `slave.c` `if (!addr) return false` confirmed at lines
+  125–129
+- [Phase 3] override/zero-skip: 6558b667a7297 (v5.13); dmi-quirks file:
+  f6594cdfec4cd; ghost_realtek: 4dab2b904414f (v7.2)
+- [Phase 3] `git merge-base --is-ancestor b7a5d101d7d26 v7.2` → not in
+  v7.2; in v7.3-rc1 via soundwire-7.3-rc1
+- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; Pierre-Louis Rb + zero-skip
+  note; Vinod applied; no NAK
+- [Phase 4] lore WebFetch 403; used b4 mbox instead
+- [Phase 4] Web search: sibling “Disable ghost Realtek devices” AUTOSEL
+  6.18–6.1; this commit not AUTOSEL’d
+- [Phase 5] Only hooked from `intel_auxdevice.c`
+  `sdw_intel_ops.override_adr`
+- [Phase 6] Local `dmi-quirks.c` already contains `global_ghost_adr`;
+  `ghost_realtek[]` does not cover this ADR
+- [Phase 8] Failure mode: phantom slave at Intel SoundWire probe → audio
+  topology/machine mismatch, not oops
+- UNVERIFIED: how many machines ship this `_ADR`; stable-list HTML
+  beyond web snippets
+
+The patch is a small Intel SoundWire hardware quirk, it matches stable
+rules, and the local tree has the code it needs.
 
 **YES**
 
- drivers/rpmsg/rpmsg_char.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soundwire/dmi-quirks.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index d918cb30db9b0..3edc95f48967b 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -79,6 +79,11 @@ int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
- 	struct rpmsg_eptdev *eptdev = dev_to_eptdev(dev);
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 2a98fc8c104d6..62cee6e2179da 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -15,6 +15,14 @@ struct adr_remap {
+ 	u64 remapped_adr;
+ };
  
- 	mutex_lock(&eptdev->ept_lock);
-+	if (!eptdev->rpdev) {
-+		mutex_unlock(&eptdev->ept_lock);
-+		return 0;
-+	}
++static const struct adr_remap global_ghost_adr[] = {
++	{
++		0x000000D010010500ull,
++		0x0000000000000000ull
++	},
++	{}
++};
 +
- 	eptdev->rpdev = NULL;
- 	if (eptdev->ept) {
- 		/* The default endpoint is released by the rpmsg core */
+ /*
+  * Some TigerLake devices based on an initial Intel BIOS do not expose
+  * the correct _ADR in the DSDT.
+@@ -212,6 +220,7 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ u64 sdw_dmi_override_adr(struct sdw_bus *bus, u64 addr)
+ {
+ 	const struct dmi_system_id *dmi_id;
++	int i;
+ 
+ 	/* check if any address remap quirk applies */
+ 	dmi_id = dmi_first_match(adr_remap_quirk_table);
+@@ -223,10 +232,20 @@ u64 sdw_dmi_override_adr(struct sdw_bus *bus, u64 addr)
+ 				dev_dbg(bus->dev, "remapped _ADR 0x%llx as 0x%llx\n",
+ 					addr, map->remapped_adr);
+ 				addr = map->remapped_adr;
+-				break;
++				goto out;
+ 			}
+ 		}
+ 	}
+ 
++	/* remap the ghost ADRs */
++	for (i = 0; i < ARRAY_SIZE(global_ghost_adr); i++) {
++		if (global_ghost_adr[i].adr == addr) {
++			dev_dbg(bus->dev, "remapped _ADR 0x%llx as 0x%llx\n",
++				addr, global_ghost_adr[i].remapped_adr);
++			addr = global_ghost_adr[i].remapped_adr;
++			break;
++		}
++	}
++out:
+ 	return addr;
+ }
 -- 
 2.53.0
 
