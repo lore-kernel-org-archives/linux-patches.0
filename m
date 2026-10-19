@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB80D352009;
-	Mon, 19 Oct 2026 14:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A92592B66;
+	Mon, 19 Oct 2026 14:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418425; cv=none; b=YvlfY9tH92SZOVskq6GYUJNuDVm1UAoJiYQeBFL+TgJBpIp0XmlKleUh/p4SPmPLFNTsBr9ss4qg4HHgst7ULH2YXZxYqSy0+cTtJOJQsIfcB/UB/9V/mlnSRQZlpOfinoOJ9cXOB4c6qyNBFe54SRQqb5gaaszu/kmD2qKNs/4=
+	t=1792418426; cv=none; b=uhYblIfOA7wjOZEgxpKntsJvKi8wOW3DkUXFsusXs2wPXEoQCbT0G1qtz7rCyglw+hTM53FlgHpgM2XzuKxm829cPLlUVQJOxMQauMiYuzWtgIDxOmQu9Roi3iVRCQ6y1Fu0EcA4QRsvZlvnOIspESmwkUE8d3L8ETmWgCmV1pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418425; c=relaxed/simple;
-	bh=6PwSBrS2ZGfT06hFAOJC6dWaXblSkBfSl5CfCBq/Ec0=;
+	s=arc-20240116; t=1792418426; c=relaxed/simple;
+	bh=TkZrjo6xVlumq1jbOYTlenERQ0hj2ghcIjoERJvITkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gyVZwV9Sb14cwaYRKp/Sofzbl1eia7IW4wWUAktTJHZaaL0aeQ2jjfoMGh2tOb9vuIaTlktqqtZ857lnRVllCYfAFAAPrCFUbiXbR7+l/CM6S9hcUOddmcggQXGwzwBWlhTbVo/hcPpu2p2IGqWVMr35LTtIQYcwc8QDiXQF8Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlvTZ10o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BtPaw9r3nJTq6zFKsZnx7Q7weJDVD3zhaOC80ZyktMWKEcjgZThNQYDBLiz/0JkcNj4m3fCzF4JJE9hEVebLqRujOK1LNMpkVe78KupslvXnJc/8t8hBQ2Gd6RHZmTmDeOpBmDNSvs9JV2dQWoOGQ+cru9uPAbz1NC5Jr25CNUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iOoy7u9Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlvTZ10o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016821F000C4;
-	Mon, 19 Oct 2026 14:00:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iOoy7u9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3D31F000CA;
+	Mon, 19 Oct 2026 14:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418422;
-	bh=a/KgmAAZ3k/Z5sTWmZqE+o4FWT0QypiHnRzefYdkXpE=;
+	s=k20260515; t=1792418424;
+	bh=Is/weyjhHN0TXhDIYBdFZSl2+4NZZbpAoTjc+T+5k4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlvTZ10of5mqT7vWgBNJX2DZWrRI/SDJ0T4srfEt/0ZsJZLkAiyVlL5ZzsXOrs5zb
-	 Gq62nSE+6cPyitOVDbX7fh/f1G+FCiYvV/FzP0qa0PirkBl74WrcwCm1J9Nqqfpk1k
-	 ebNezwscN61pmQFAjZ6g6uzmfN21NFGufezyiu8oPUHArt3X1ic/cR+K7RKJH3lM5W
-	 WGYyX+0tthyOENa8Fq1U2con0rW2zQUVtSt8peImxmwHk9xojb9E7RF6nLDZx+Hws3
-	 HdxuomrQk9diiZI7tG1+n7qisGiNcMaG3wcPUjAuCCLfF1M/MgBJfzK/UynayM46rT
-	 zY8qvWT5WTxsQ==
+	b=iOoy7u9YnJNaQeecKAIfyo3sl2rFyfzpyT+l6QywIk4D3HG62X+/cad7CcRyLJL9N
+	 drsXpwcWmbgZtxiP0IfFyO6TbRcHZO/6OjL4H9VLPMceLyUEbDhxVh4ioUrB55Fz0M
+	 lg1y6pNrEAN/YzVFBrslxKqCNglnn2PN5MBHETJ82bFNwQFQ83Da6xxzBU412HVTKn
+	 51vrEXvcfsf7+0vYEdPaZS8z/WGqp4D8jvIjmlsHZ4NgqXctN3B+bzlMY7Zq+7l9gj
+	 u5m8qcH8aS9U4+TQgkHYbfn25ZYM6J/fyIsPHg2KjPdpO8VDdCLNGvYRt+ycqKdKUr
+	 asYO+sJVjILgQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Senjin <senjin@hatchling.org>,
+Cc: Mehmet Aysel <mehmet4ysel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	Vijendar.Mukunda@amd.com,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: load ATTR_BITMAP run extents from $MFT extension records
-Date: Mon, 19 Oct 2026 09:48:49 -0400
-Message-ID: <20261019135441.1420968-238-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] ASoC: amd: acp-config: Add HVY-WXX9/M1060 DMI quirk
+Date: Mon, 19 Oct 2026 09:48:50 -0400
+Message-ID: <20261019135441.1420968-239-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,513 +56,318 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Mehmet Aysel <mehmet4ysel@gmail.com>
 
-[ Upstream commit e31886cb6e0e14cf65e27da0bf1a422ff419d893 ]
+[ Upstream commit 032bb633e0c34a88b70a4bfc65ebd4e2b510f706 ]
 
-When $MFT's ATTR_BITMAP attribute is heavily fragmented, its run list
-can span multiple MFT extension records (attribute list entries with
-vcn > 0). The non-primary segment handler in ntfs_read_mft() only
-processed ATTR_DATA extension segments for MFT_REC_MFT, silently
-skipping any ATTR_BITMAP segments. This left sbi->mft.bitmap.run
-incomplete, causing wnd_init() to fail with -ENOENT when wnd_rescan()
-tried to look up a VCN not covered by the truncated run list.
+Add DMI match table entry for HUAWEI HVY-WXX9 board, product version
+M1060, a MateBook D16 2021 (Ryzen 5 4600H) revision not covered by the
+existing M1010/M1020/M1040 entries. This board uses the same
+FLAG_AMD_LEGACY / ACP_PCI_DEV_ID configuration as the other HVY-WXX9
+variants.
 
-Observed on a 16 TB NTFS volume (0xFFFFFEFF total clusters) whose MFT
-bitmap run list was split across 97 extents in extension records.
-wnd_rescan() successfully looked up VCNs 0-122 from the runs loaded
-from the base record, then failed at VCN 123 (the last cluster of the
-bitmap) whose run was only present in an extension record.
-
-Fix by extending the MFT_REC_MFT special case to also handle
-ATTR_BITMAP extension segments, storing their runs into
-sbi->mft.bitmap.run the same way the primary segment does.
-
-Signed-off-by: Senjin <senjin@hatchling.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
+Link: https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to judge this: a real NTFS3 mount failure, a small first-
-pass run-list fix, and a related later `super.c` workaround already in
-this 7.3 tree. Writing the full 9-phase analysis next.
+## Phase 1: Commit message forensics
 
----
+**Step 1.1: Subject line**
+Record: `[ASoC/amd/acp-config] [Add] DMI quirk for HUAWEI HVY-WXX9
+product version M1060`
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[fs/ntfs3] [load] load ATTR_BITMAP run extents from $MFT
-extension records**
-
-The verb is “load”, not “fix”, but the body describes a mount failure
-and a missing code path. Intent is a bug fix.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Commit: `e31886cb6e0e14cf65e27da0bf1a422ff419d893`
-
-Tags present:
-- `Signed-off-by: Senjin <senjin@hatchling.org>` (author of the fix)
-- `Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-
-  software.com>` (ntfs3 maintainer)
-
-Tags absent (expected for this pipeline): `Fixes:`, `Cc: stable`,
-`Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, `Link:`.
-
-AuthorDate: 2026-07-02; CommitDate: 2026-07-24 (maintainer applied it).
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.2: Tags**
 Record:
-- **Bug:** When `$MFT`’s `ATTR_BITMAP` is heavily fragmented, its run
-  list spans MFT extension records (`le->vcn > 0`). `ntfs_read_mft()`
-  only unpacked `ATTR_DATA` extension segments for `MFT_REC_MFT` and
-  skipped `ATTR_BITMAP` segments.
-- **Symptom:** `sbi->mft.bitmap.run` is truncated. `wnd_init()` →
-  `wnd_rescan()` → `run_lookup_entry()` returns `-ENOENT`. Mount fails.
-- **Evidence:** 16 TB volume (`0xFFFFFEFF` clusters). Bitmap run list
-  split across 97 extents. VCNs 0–122 found from the base record; VCN
-  123 (last bitmap cluster) only in an extension record.
-- **Root cause:** Non-primary segment handler too narrow (`ino !=
-  MFT_REC_MFT || attr->type != ATTR_DATA`).
-- **Fix:** Same special case also unpacks `ATTR_BITMAP` into
-  `sbi->mft.bitmap.run`.
-- **Versions:** None named in the message. Observation used
-  `CONFIG_NTFS3_64BIT_CLUSTER=y` (from the v2 cover letter).
+- `Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>` (author)
+- `Link:
+  https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (ASoC maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of the last two is expected for this
+  review)
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not a disguised cleanup. Explicit mount-failure fix; “load” is
-the mechanism.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+**Step 1.3: Body**
 Record:
-- File: `fs/ntfs3/inode.c` — **+8 / −2** (net +6)
-- Function: `ntfs_read_mft()`
-- Scope: **single-file surgical fix**
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Before (parent `e31886cb6e0e1^`):
-
-```c
-if (le && le->vcn) {
-    /* non-primary segment */
-    if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
-        goto next_attr;
-    run = &ni->file.run;
-    ...
-    goto attr_unpack_run;
-}
-```
-
-After:
-
-```c
-if (le && le->vcn) {
-    if (ino != MFT_REC_MFT)
-        goto next_attr;
-    if (attr->type == ATTR_DATA)
-        run = &ni->file.run;
-    else if (attr->type == ATTR_BITMAP)
-        run = &sbi->mft.bitmap.run;
-    else
-        goto next_attr;
-    ...
-    goto attr_unpack_run;
-}
-```
-
-Record: Non-primary `$MFT` `ATTR_BITMAP` segments now take the same
-`attr_unpack_run` path the primary `ATTR_BITMAP` case already uses (`run
-= &sbi->mft.bitmap.run` around inode.c:323–333). Other inodes and other
-attribute types still skip non-primary segments.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **[Logic / correctness]** Incomplete run-list construction.
-Missing handling of `$MFT` `ATTR_BITMAP` extension segments left
-`sbi->mft.bitmap.run` short, so `wnd_rescan()` failed with `-ENOENT` at
-an uncovered VCN.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-- Obviously correct: it mirrors the existing `ATTR_DATA` special case
-  and the primary `ATTR_BITMAP` assignment.
-- Minimal: one condition split, one extra branch.
-- Regression risk: low. `run_add_entry()` allows overlapping runs, so a
-  later second unpack is safe.
-- No API / locking / data-structure change.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record: Buggy test `if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)`
-comes from **`82cae269cfa953`** (“fs/ntfs3: Add initialization of super
-block”, 2021-08-13) — original ntfs3 merge. Present since **v5.15**.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. Introducer is `82cae269cfa953`, ancestor of
-HEAD (`git merge-base --is-ancestor` exit 0).
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Related commit already in this tree:
-
-**`6d979b64287fb`** — `ntfs3: fix mount failure on volumes with
-fragmented MFT bitmap` (2026-04-07, contained in **v7.1-rc1**).
-
-That patch:
-1. Moves `ni_load_all_mi()` before `wnd_init()`.
-2. Walks attributes and `run_unpack_ex()`s `$BITMAP` extents with `svcn
-   != 0`.
-
-Same symptom (`wnd_init` / `-ENOENT`), different site (`super.c` second
-pass vs `inode.c` first pass). `6d979b64287fb` is an ancestor of
-`e31886cb6e0e1`.
-
-Series context: mailing-list **v2 1/2**. Patch 2/2 is `789af83e41aef`
-(`lseek EINVAL` on 64-bit clusters) — independent, not a prerequisite.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Applied by **Konstantin Komarov**, listed `M:` for NTFS3
-(`MAINTAINERS`: Supported). Senjin also authored the sibling lseek fix.
-Maintainer SOB is a strong quality signal.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Standalone. Uses existing `attr_unpack_run`,
-`sbi->mft.bitmap.run`, and the `MFT_REC_MFT` special case from 2021. No
-new helpers. Patch 2/2 is unrelated.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- `b4 dig -c e31886cb6e0e1` **failed**: lore.kernel.org returned errors.
-- Found via web search:
-  - v1: 2026-06-10, `[PATCH] fs/ntfs3: load ATTR_BITMAP run extents...`
-  - v2: 2026-06-13, `[PATCH v2 1/2]` — **hunk-header fix only, no code
-    change**
-  - Cover: `[PATCH v2 0/2] fs/ntfs3: two fixes for large NTFS volumes`
-  - Openwall: https://lists.openwall.net/linux-kernel/2026/06/13/668 and
-    `/669`
-- No NAKs found. Maintainer merged it into `ntfs3_for_7.3`.
-- Cover letter: both bugs seen on a 16 TB volume with
-  `CONFIG_NTFS3_64BIT_CLUSTER=y`.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: `b4 dig -w` failed. Recipients from the archived mail:
-`ntfs3@lists.linux.dev`, `almaz.alexandrovich@paragon-software.com`,
-`linux-kernel@vger.kernel.org`. Maintainer was CC’d and later signed
-off. No other `Reviewed-by` on the commit.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: Reporter is Senjin (author), with a concrete 16 TB / 97-extent
-case. No syzbot/bugzilla. Cover does not mention `6d979b64287fb`, so
-Senjin likely reproduced on a kernel without that later-pass workaround
-(UNVERIFIED which exact release they ran).
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: v2 0/2 is two independent large-volume fixes. 2/2 is not
-required for 1/2.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org/stable search did not return discussion of this
-commit (403/irrelevant hits). No documented reason to keep it out of
-stable.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `ntfs_read_mft()`; uses `ni_enum_attr_ex()`, `attr_unpack_run` →
-`run_unpack_ex()`. Failure path: `wnd_init()` → `wnd_rescan()` →
-`run_lookup_entry()`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record:
-- `ntfs_read_mft()` is static; only caller is `ntfs_iget5()` when
-  `I_NEW`.
-- Mount: `ntfs_fill_super()` → `ntfs_iget5($MFT)` → `ntfs_read_mft()`.
-- Not IRQ; mount/iget path.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `ni_enum_attr_ex()` loads ATTR_LIST records via `ni_load_mi()`.
-Matching segments go to `run_unpack_ex()` into `sbi->mft.bitmap.run`.
-Later `wnd_init(&sbi->mft.bitmap)` scans that run list.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: `mount -t ntfs3` → `ntfs_fill_super` → load `$MFT` → incomplete
-bitmap runs → `wnd_init` fails → mount fails. **Userspace-reachable.**
-Unprivileged users cannot trigger it without mount rights; operators
-with NTFS volumes can. Volume is unusable until remounted with another
-driver.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Primary `ATTR_BITMAP` already sets `run = &sbi->mft.bitmap.run`.
-`6d979b64287fb` unpacks the same extents later in `ntfs_fill_super()`.
-`run_add_entry()` documents that new runs may overlap existing ones, so
-both paths together are safe.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record:
-- Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
-  **7.3.0-rc4** (mainline-style checkout, detached HEAD).
-- Candidate **is already an ancestor of HEAD**.
-- Buggy skip has existed since `82cae269cfa953` (v5.15). Parent of this
-  commit still has it.
-- `6d979b64287fb` (v7.1-rc1) is also in this tree and tries to paper
-  over the same gap in `super.c`.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Expected apply: **clean** on any tree with the original
-`MFT_REC_MFT`/`ATTR_DATA` special case (all ntfs3 trees since 5.15).
-Hunk is isolated.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: `6d979b64287fb` is here. It is a second-pass unpack after
-`ni_load_all_mi()`, not a replacement for loading during
-`ntfs_read_mft()`. No later commit reverts or replaces `e31886cb6e0e1`.
-ADS/iomap commits after it do not touch this branch.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **fs/ntfs3** — **IMPORTANT** (supported RW Windows filesystem,
-not staging). Not core VFS/mm, but mount failure is serious for dual-
-boot, NAS, and large Windows volumes.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Actively maintained (Paragon tree, multiple 7.x ntfs3 pulls).
-This is a targeted correctness fix, not drive-by churn.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Filesystem-specific / config-specific.** Users of
-`CONFIG_NTFS3_FS` with a fragmented `$MFT` `$BITMAP` (large or long-
-lived NTFS). The 16 TB report also used `CONFIG_NTFS3_64BIT_CLUSTER`.
-Fragmentation itself is not limited to 64-bit clusters; `6d979b64287fb`
-reproduced on a 664 GB volume.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: Every mount of an affected volume. Not a race. Needs mount
-capability, not an unprivileged syscall gadget. Common on large/aged
-NTFS.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: **Mount failure (`-ENOENT`)** — volume cannot be mounted with
-ntfs3. **HIGH** (not a panic, but the filesystem is unusable).
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** High for affected volumes (mount works). Completes the
-  `$MFT` parse the same way `ATTR_DATA` was always handled. Helps trees
-  that lack `6d979b64287fb`; on trees that have it, it is still the
-  right first-pass fix and is overlap-safe.
-- **Risk:** Very low (6 lines in one function, existing unpack helper).
-- **Ratio:** Strongly favors backport.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real mount failure, observed on a 16 TB volume (97 extents; fail at
-  last VCN).
-- Independent 664 GB report of the same class (`6d979b64287fb`).
-- Bug in ntfs3 since v5.15.
-- 8-line, obviously correct extension of an existing special case.
-- Maintainer SOB; merged to `ntfs3_for_7.3`.
-- Standalone (series 2/2 is unrelated).
-- `run_add_entry()` allows overlap with the v7.1 second-pass unpack.
-
-**AGAINST:**
-- `6d979b64287fb` already in **this** 7.3 tree may already make mount
-  succeed via a later unpack.
-- No `Fixes:`/`Cc: stable` (not a negative in this pipeline).
-- Affects ntfs3 only, not all kernel users.
-
-**UNRESOLVED:**
-- Whether Senjin’s 16 TB kernel included `6d979b64287fb` (cover letter
-  never mentions it).
-- lore.kernel.org was unreachable for `b4 dig` / WebFetch; discussion
-  recovered from Openwall/LKML mirrors.
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — mirrors `ATTR_DATA`; tested
-   on a real 16 TB volume; maintainer applied it.
-2. Fixes a real bug that affects users? **PASS** — mount `-ENOENT` on
-   fragmented `$MFT` bitmap.
-3. Important issue? **PASS** — filesystem unmountable (HIGH).
-4. Small and contained? **PASS** — +8/−2, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — code and helpers are present;
-   hunk matches `ntfs_read_mft()`.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: None of the ID/quirk/DT/build/doc exceptions. It qualifies as a
-normal important bug fix.
-
-**Step 9.4: DECISION**
-
-This checkout is 7.3-rc4 and already contains the commit; the question
-is still whether that fix is stable material for this lineage. It is.
-
-`6d979b64287fb` is a later-pass workaround, not a reason to drop the
-first-pass unpack. Silently skipping `$MFT` `ATTR_BITMAP` extents in
-`ntfs_read_mft()` is a real bug. The patch is small, correct,
-maintainer-acked, and prevents a user-visible mount failure on
-large/fragmented NTFS volumes.
-
----
-
-### What the commit solves
-
-`$MFT`’s bitmap run list can spill into extension records.
-`ntfs_read_mft()` unpacked only `ATTR_DATA` there, so
-`sbi->mft.bitmap.run` was truncated and `wnd_init()` failed with
-`-ENOENT`. Mount failed. The patch stores those bitmap extents the same
-way the primary segment already does.
-
-### Stable rules
-
-Meets all six criteria: small, obviously correct, real important bug, no
-new API, applies here.
-
-### Risk vs benefit
-
-Benefit: restores mount on affected NTFS volumes. Risk: very low;
-overlap with `6d979b64287fb` is handled by `run_add_entry()`.
-
-### Concerns
-
-- Series 1/2: 2/2 is an unrelated lseek fix; not required.
-- `6d979b64287fb` already in this 7.3 tree: complementary, not a
-  blocker.
-- No extra prerequisites beyond original ntfs3 `MFT_REC_MFT` handling
-  (v5.15).
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed `e31886cb6e0e1`: Senjin + Konstantin SOBs only;
-  no Fixes/stable/Reported-by.
-- **[Phase 2]** `git show e31886cb6e0e1`: +8/−2 in `ntfs_read_mft()`;
-  `ATTR_BITMAP` → `sbi->mft.bitmap.run`.
-- **[Phase 2]** Read `inode.c` ATTR_BITMAP primary case (lines 323–333)
-  and `attr_unpack_run` (399–414).
-- **[Phase 2]** Read `wnd_rescan()`: missing run → `err = -ENOENT`.
-- **[Phase 3]** `git blame` on parent: buggy line from `82cae269cfa953`
-  (2021-08-13).
-- **[Phase 3]** `git merge-base --is-ancestor 82cae269cfa953 HEAD` →
-  yes.
-- **[Phase 3]** Related fix `6d979b64287fb` in tree (`v7.1-rc1~76^2~6`);
-  ancestor of this commit.
-- **[Phase 3]** `git log --author=Konstantin Komarov -- fs/ntfs3/`:
-  maintainer.
-- **[Phase 4]** `b4 dig -c e31886cb6e0e1`: lore error; UNVERIFIED via
-  b4.
-- **[Phase 4]** Openwall v2 0/2 and 1/2: 16 TB repro; v2 is hunk-header
-  only; 2/2 independent.
-- **[Phase 4]** WebFetch spinics/lore: 500/403; used Openwall/LKML
-  mirrors.
-- **[Phase 4]** No stable@ discussion found.
-- **[Phase 5]** Only caller of `ntfs_read_mft`: `ntfs_iget5`
-  (mount/`I_NEW`).
-- **[Phase 5]** `run_add_entry()` documents overlap is allowed.
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` = 7.3.0-rc4.
-- **[Phase 6]** Candidate is ancestor of HEAD; parent still has the
-  skip.
-- **[Phase 7]** `MAINTAINERS`: NTFS3 Supported, M: Konstantin Komarov.
-- **[Phase 8]** Failure mode: mount `-ENOENT`, severity HIGH.
-- **UNVERIFIED:** Exact kernel Senjin reproduced on; whether
-  `6d979b64287fb` alone would have mounted that 16 TB volume.
-
-The local tree has the ntfs3 code path, the bug dates to the original
-driver, the patch is a small contained mount fix, and it should be
-backported.
+- **Bug:** MateBook D16 2021 (Ryzen 5 4600H), board HVY-WXX9 / product
+  version M1060, is not in the DMI table. Sibling revisions
+  M1010/M1020/M1040 already are.
+- **Symptom:** ACP legacy audio does not bind on this BIOS revision.
+- **Root cause:** `snd_amd_acp_find_config()` only returns
+  `FLAG_AMD_LEGACY` on exact DMI matches; M1060 is missing.
+- **Version info:** same hardware family already supported; this is
+  another product-version string.
+
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. This is an explicit hardware DMI quirk. It is not
+cleanup or refactoring.
+
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
+Record: `sound/soc/amd/acp-config.c` only; **+14 / -0**. One new
+`config_table[]` entry. Single-file surgical change. Functions: none
+changed; static table data only.
+
+**Step 2.2: Code flow**
+Record: **Before:** HVY-WXX9 + M1060 does not match;
+`snd_amd_acp_find_config()` returns 0. `acp_pci_probe()` then does `if
+(flag != FLAG_AMD_LEGACY && flag != FLAG_AMD_LEGACY_ONLY_DMIC) return
+-ENODEV`.
+**After:** Same board matches and gets `FLAG_AMD_LEGACY` /
+`ACP_PCI_DEV_ID`, like M1010/M1020/M1040. Probe path only; no error-path
+or locking change.
+
+**Step 2.3: Bug mechanism**
+Record: **Hardware workaround / DMI quirk.** Missing exact DMI match
+left a real MateBook D16 2021 revision without ACP legacy enablement.
+
+**Step 2.4: Fix quality**
+Record: Copy of the existing M1040 entry with version `"M1060"`.
+Minimal, obviously correct, no API or lock changes. Regression risk is
+limited to that DMI triple (HUAWEI / HVY-WXX9 / M1060).
+
+## Phase 3: Git history
+
+**Step 3.1: Blame**
+Record: M1010 HVY-WXX9: `b5338b1b901e4` (“Add support for a new Huawei
+Matebook laptop”, Marian Postevca, Dec 2023). M1020/M1040:
+`54fcd9dd44b2c` (Aug 2023). Table itself: `f1bdd8d385a80` (Nov 2021).
+All are ancestors of this 6.12 tree. The gap is only the M1060 string.
+
+**Step 3.2: Fixes: tag**
+Record: No `Fixes:` tag. Not applicable.
+
+**Step 3.3: File history**
+Record: Last `acp-config.c` change on this branch is `e17de785850e3`
+(ACP 7.0 ACPI machine id). Huawei DMI rows have been unchanged since
+v6.7-era additions. Standalone table append; no prerequisite refactor.
+
+**Step 3.4: Author**
+Record: Mehmet Aysel has no other commits in `sound/soc/amd/` on this
+tree. ASoC maintainer Mark Brown applied the series. Related historical
+work is Marian Postevca’s HVY-WXX9 entries, including `5513c5d0fb3d5`
+(“Fix support… must also update acp3x-es83xx DMI table”).
+
+**Step 3.5: Dependencies**
+Record: Compiles and applies alone. This is **patch 1/2**. Companion
+`c1a39c228ace` (“ASoC: amd: acp3x-es83xx: Add HVY-WXX9/M1060 DMI quirk”)
+is also not in this tree. Without 2/2, `acp3x_es83xx_probe()` still
+returns `-ENODEV` if ACPI exposes ES83xx but DMI does not match. 1/2 is
+still required: ACP PCI will not bind without `FLAG_AMD_LEGACY`. Same
+two-table pattern as M1010 (`b5338b1b901e4` + `5513c5d0fb3d5`).
+
+## Phase 4: Mailing list / external
+
+**Step 4.1: Original discussion**
+Record: `b4 dig -c 032bb633e0c3` →
+https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com
+`b4 dig -a`: **v1 only** (no v2/v3). Mark Brown applied both patches to
+`broonie/sound` `for-7.3`
+(https://git.kernel.org/broonie/sound/c/032bb633e0c3). Included in the
+sound fixes pull for 7.3-rc1 (`git describe --contains` →
+`v7.3-rc1~17^2^2~4`). No NAK found.
+
+**Step 4.2: Recipients**
+Record: `b4 dig -w`: Liam Girdwood, Mark Brown, Jaroslav Kysela, Takashi
+Iwai, linux-sound, linux-kernel. Right ASoC/sound maintainers.
+
+**Step 4.3: Bug report**
+Record: No Bugzilla/syzbot link. Author describes a specific board/SKU
+not covered by existing exact matches. No user-count beyond that machine
+class.
+
+**Step 4.4: Series**
+Record: Two-patch series. [2/2] adds the same DMI triple to
+`acp3x-es83xx.c` with `ES83XX_ENABLE_DMIC`. Both should be backported
+for working speakers/mic; this commit is still a valid standalone quirk
+and a prerequisite for 2/2.
+
+**Step 4.5: Stable list**
+Record: No stable-list discussion found for HVY-WXX9/M1060. Lore search
+from this environment is 403-limited; lkml/openwall mirrors were used
+instead.
+
+## Phase 5: Semantic / call-graph
+
+**Step 5.1: Functions**
+Record: No function bodies edited. Data consumed by
+`snd_amd_acp_find_config()`.
+
+**Step 5.2: Callers**
+Record: `snd_amd_acp_find_config()` is called from PCI probe:
+- `sound/soc/amd/acp/acp-pci.c` (`acp_pci_probe`) — **this is the path
+  that matters** (`FLAG_AMD_LEGACY`)
+- `sound/soc/amd/renoir/rn-pci-acp3x.c`, `vangogh/pci-acp5x.c`, `yc/pci-
+  acp6x.c`, `ps/pci-ps.c`
+- SOF: `pci-rn.c`, `pci-rmb.c`, `pci-vangogh.c`, `pci-acp63.c`, `pci-
+  acp70.c`
+
+**Step 5.3: Callees**
+Record: `dmi_check_system()` on each `config_entry`. Match sets
+`acp_quirk_data` and returns flags.
+
+**Step 5.4: Reachability**
+Record: Yes — PCI enumeration on AMD ACP `0x15E2`
+(`CONFIG_SND_SOC_AMD_ACP_PCI` / `CONFIG_SND_AMD_ACP_CONFIG`,
+X86+PCI+ACPI). Userspace does not trigger it; missing audio on that
+laptop is the user-visible effect.
+
+**Step 5.5: Similar patterns**
+Record: Same table already has HVY-WXX9 M1010/M1020/M1040 and other
+Huawei KLVL/BOM entries. This tree has many post-v6.12 AMD DMI quirk
+backports (e.g. `6599a33c97f45`, `33680092d71b4`).
+
+## Phase 6: This tree (6.12.y)
+
+**Step 6.1: Buggy/missing code**
+Record: Local tree is **6.12.111** (`git describe HEAD` →
+`p-6.12-3-gc504cf0baa3d8`, `make kernelversion` → 6.12.111). M1060 is
+**absent**. Sibling HVY-WXX9 entries are at `acp-config.c:120-161`.
+`032bb633e0c3` is **not** an ancestor of HEAD.
+
+**Step 6.2: Backport difficulty**
+Record: `git show 032bb633e0c3 | git apply --check` → **Hunk succeeded
+at 159 (offset -50 lines)**. Clean apply.
+
+**Step 6.3: Related fixes already here?**
+Record: No M1060 entry in `sound/soc/amd/`. No substitute fix.
+
+## Phase 7: Subsystem context
+
+**Step 7.1:**
+Record: ASoC AMD ACP machine config. **IMPORTANT** for owners of these
+Huawei AMD laptops; not core mm/fs. Driver already exists here.
+
+**Step 7.2:**
+Record: ACP config table is mature (since ~5.17/6.7 Huawei work). This
+6.12 tree continues to take AMD DMI quirks.
+
+## Phase 8: Impact and risk
+
+**Step 8.1:**
+Record: Driver-specific, DMI-specific: HUAWEI HVY-WXX9 / M1060 (MateBook
+D16 2021, Ryzen 5 4600H).
+
+**Step 8.2:**
+Record: Trigger is boot/ACP PCI probe on that SKU. Not unprivileged-
+attack surface. Common for that machine; zero effect on others.
+
+**Step 8.3:**
+Record: Failure mode is **no audio** (`-ENODEV`), not oops/UAF. Severity
+**MEDIUM** for those users; this is the hardware-quirk exception, not a
+crash fix.
+
+**Step 8.4:**
+Record: **Benefit high** for that SKU (audio enablement, same as
+IDs/quirks already taken here). **Risk very low** (14-line DMI row,
+exact match, existing flag). Ratio strongly favors backport.
+
+## Phase 9: Synthesis
+
+**Evidence FOR:**
+- Documented hardware-quirk / device-ID exception
+- Real laptop revision omitted from exact DMI matches
+- Sibling M1010/M1020/M1040 already in this 6.12 tree
+- +14 lines, one file, no new API
+- Applies cleanly with line offset
+- Applied by ASoC maintainer; in v7.3-rc1 sound pull
+- This tree already backports AMD DMI quirks after v6.12
+
+**Evidence AGAINST:**
+- Not a crash/security/corruption fix
+- Full speakers/mic also need companion 2/2 (`c1a39c228ace`), not in
+  this tree
+- Author is not the subsystem regular (mitigated by Mark Brown applying
+  it)
+
+**Unresolved:** None that change the verdict. Stable-list 403 on lore;
+mirrors showed no NAK and no prior rejection.
+
+**Stable rules:**
+1. Obviously correct and tested? **PASS** — copy of existing entry;
+   maintainer applied
+2. Real bug affecting users? **PASS** — missing audio on M1060
+3. Important (crash/security/corruption/deadlock)? **PASS via quirk
+   exception** — device enablement
+4. Small and contained? **PASS** — 14 lines, one file
+5. No new features/APIs? **PASS** — DMI row for existing driver/flags
+6. Applies to this tree? **PASS** — verified `git apply --check`
+
+**Exception category:** Hardware DMI quirk / device-ID-style addition to
+an existing driver.
+
+The patch makes ACP legacy bind on a MateBook D16 2021 BIOS revision
+this tree already treats as supported for M1010/M1020/M1040. That is
+exactly the class of quirk 6.12.y already takes. Companion
+`acp3x-es83xx` M1060 should be backported too for a complete card, but
+this commit is self-contained, applies cleanly, and is the PCI-bind half
+of that enablement.
+
+Verification:
+- [Phase 1] Tags: author SOB, Mark Brown SOB, msgid link; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: +14 lines in `config_table[]` only; `FLAG_AMD_LEGACY`
+  + `ACP_PCI_DEV_ID` + DMI triple
+- [Phase 3] Blame: M1010=`b5338b1b901e4`, M1020/M1040=`54fcd9dd44b2c`;
+  both ancestors of HEAD
+- [Phase 3] `5513c5d0fb3d5` documents that acp-config alone is
+  incomplete without es83xx DMI
+- [Phase 3] Author has no other `sound/soc/amd` commits on this tree
+- [Phase 4] `b4 dig -c 032bb633e0c3`: msgid 20260825092432.56292-1; v1
+  only; Broonie applied both
+- [Phase 4] Recipients: lgirdwood, broonie, perex, tiwai, linux-sound
+- [Phase 4] Included in sound fixes pull for 7.3-rc1; `git describe
+  --contains` = `v7.3-rc1~17^2^2~4`
+- [Phase 5] `acp_pci_probe()` returns `-ENODEV` unless flag is
+  `FLAG_AMD_LEGACY`
+- [Phase 5] `acp3x_es83xx_probe()` also requires its own DMI table
+  (companion 2/2)
+- [Phase 6] `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` = 6.12.111
+- [Phase 6] `git merge-base --is-ancestor 032bb633e0c3 HEAD` → not
+  ancestor; `M1060` absent
+- [Phase 6] `git apply --check` of 032bb633 → success at line 159,
+  offset -50
+- [Phase 6] Companion `c1a39c228ace` also not an ancestor of HEAD
+- [Phase 7/8] Post-v6.12 AMD DMI quirks already present (e.g.
+  `6599a33c97f45`, 2026-09-21)
+- UNVERIFIED: full lore.kernel.org thread body (HTTP 403); used
+  lkml.iu.edu / openwall / b4 instead
 
 **YES**
 
- fs/ntfs3/inode.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/amd/acp-config.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 120691bc71ee9..99fdba7b403cb 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -126,10 +126,16 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
+index 365209ea53f36..653e8ce946082 100644
+--- a/sound/soc/amd/acp-config.c
++++ b/sound/soc/amd/acp-config.c
+@@ -159,6 +159,20 @@ static const struct config_entry config_table[] = {
+ 			{}
+ 		},
+ 	},
++	{
++		.flags = FLAG_AMD_LEGACY,
++		.device = ACP_PCI_DEV_ID,
++		.dmi_table = (const struct dmi_system_id []) {
++			{
++				.matches = {
++					DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
++				},
++			},
++			{}
++		},
++	},
+ };
  
- 	if (le && le->vcn) {
- 		/* This is non primary attribute segment. Ignore if not MFT. */
--		if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
-+		if (ino != MFT_REC_MFT)
-+			goto next_attr;
-+
-+		if (attr->type == ATTR_DATA)
-+			run = &ni->file.run;
-+		else if (attr->type == ATTR_BITMAP)
-+			run = &sbi->mft.bitmap.run;
-+		else
- 			goto next_attr;
- 
--		run = &ni->file.run;
- 		asize = le32_to_cpu(attr->size);
- 		goto attr_unpack_run;
- 	}
+ static int snd_amd_acp_acpi_find_config(struct pci_dev *pci)
 -- 
 2.53.0
 
