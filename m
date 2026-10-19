@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B2F596E98;
-	Mon, 19 Oct 2026 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B7559A1E4;
+	Mon, 19 Oct 2026 13:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418354; cv=none; b=Lnc0eBEIJgYQnNpcr5vovPOe1Qwy39lBEKcevmPqng2flxqjmqNCg533BDNIuHHgyoYkKc/F1HEFwf1ob2+o5W/fzzOB41tb17RXw6p4BNE6gC1GKvmnBb2z9ljAtDMW01n1DF3CvGKxSWIp4uNC3bHLx2Ga6Qi1IoewhPoOJnQ=
+	t=1792418355; cv=none; b=tttWtuQ2jWAR1FJJXC3qTHe6WS77bb4jE2cjB9ensaCY6JB/YNoK59qZt46R/kWpgGbo38Ur7oELoPNtV4v83jqc1P0xxaT4rFETYOqtvOPKq+yXrZB9ZJmmjS/vTNt+pSH+WXslT9kep7WVwveoS4DbqbuxtEci2pce/gvyQmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418354; c=relaxed/simple;
-	bh=o605FMvXndwHEREVMBPg3HwAA0lcourAG5txsOaZZJk=;
+	s=arc-20240116; t=1792418355; c=relaxed/simple;
+	bh=4v+Q+yf40A3JrQnzEe04WecvtS4tmrTkKXvwJlcREuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uSdNaDcVadTSPIghQJFQEL0gl+nHIS1XawMzsi+zUHVRP7Lu7XQsKfHhq2OyPBFRACl8dez8Kf0NVoeAkhiYXz9MAHfOmrEHhEhbEj3BL/CPAPfVtfIOvxvKdYbLoZfJSoBU0+5nNWbwLcp24OiBdefhf6BndUZdOwzWUbRD8h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCRsKisO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ec7Lc1ZXg7w27I6PhQw9xYONA+jUn0mhPt6ekeHW6tQtGSMen9Uzwgflj2Hcx/P/b3+5oY/I42t3CXdNzs/KJIs+lpRXK7JOYwZ4qm/Do5uZSu/rY0QefmTeEGMJ3zfqiMS/tTAqyFyu/JdH4MOdxVFsPDYykZVC47vmDgNILDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bmxiUX3P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCRsKisO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C922E1F000C7;
-	Mon, 19 Oct 2026 13:59:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bmxiUX3P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3923D1F000C8;
+	Mon, 19 Oct 2026 13:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418351;
-	bh=sUW48Z87ALzhTOhiTFMjpUbWtbdV6iudAstjZ6av5P0=;
+	s=k20260515; t=1792418353;
+	bh=HSVvtdLhyfDEZ79n3urAObHOsfBV/iJhpsAYZse2t9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCRsKisOhVYu+D8OyBmJsqGLmuvFjraHn7mUmxpoYgWpQ+z4cLXmJjMMHLZmzghnw
-	 BPeOPuCTLyualK1AZ28zxY+3tad1URzJ4IXOmd+Gfbz7gew3Iu+BndMm1edWDIFeEX
-	 fdgeT0+J06hFHIAPE8mVIAFbDQtktfKUUGXBZQhqAash7Ygyvma93BusImca7FtQGF
-	 yvjiUUZqCG9QJzWnOnuC0/6co3kxpvEcxLBu8LIjMzhPy4AANgSHQf9IZ+uWpC4vqF
-	 EMnFAFl9Lo3B3kLSdhbyTlp0Ar6vKrQeQ3IoQFpsC55Ymq50VFhlILsWuAfCyxQqcG
-	 hatyTEGyjgpGA==
+	b=bmxiUX3P/tDS/GIfd+7VK8+kEcTdPkXp4Ic6PtRhAoFdb2E4pey3UveJt8i+Go8VG
+	 BdnjK1ne5u4oUglRPMiRh+Khq9MYvYRDl3cu5xJDXZTwp8wL7nWdjXbgk0grm/k27P
+	 aStxXZj6+6mBL1M2LURduRo0CFGQkAE86Wkasem1DrpBEHXt6jiTFelcRtgZ1CD4Eq
+	 in65GVglRUnPPJvjNzfevipqFMKhu42Ct9+7+CX3gd1wSCCsr8cs8jyHNNXXKfAIpP
+	 Fsb6bkawo1BttC1yLYsgPHhn6AIY9bI867lEjzgux//25MbL62DwpukdUdYLyhXeWR
+	 QMSgtrlSjUBNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	basavaraj.natikar@amd.com,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	linux-spi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] HID: amd_sfh: Serialize access to the shared emp2 pointer
-Date: Mon, 19 Oct 2026 09:47:57 -0400
-Message-ID: <20261019135441.1420968-186-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] spi: qpic-snand: free OOB buffer with ECC context
+Date: Mon, 19 Oct 2026 09:47:58 -0400
+Message-ID: <20261019135441.1420968-187-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,427 +52,334 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit c57016bcf6d0b57cda5579e5d6856bd9bbe52a77 ]
+[ Upstream commit 5504e50ffbcf97b3b6ed3740532497922c96a1f1 ]
 
-The SFH accessors reach the device through a file-global emp2 pointer
-that is published at probe and cleared on remove. amd_get_sfh_info() is
-exported and called from other modules on unrelated threads, so a reader
-can observe a non-NULL emp2 and then race a concurrent unbind that clears
-it and frees the device.
+qcom_spi_ecc_init_ctx_pipelined() allocates qspi->oob_buf as part of the
+pipelined ECC context setup. The buffer is then used by the raw and ECC
+page I/O paths through the NAND ECC context.
 
-Serialize the emp2 publish/clear and all readers under a mutex, so a
-reader either sees a live device for the whole access or sees NULL.
+The matching cleanup callback only frees the qpic_ecc structure, and the
+init error path also skips the OOB buffer after it has been allocated.
+Free qspi->oob_buf on both paths and clear the pointer so the ECC context
+teardown owns all resources allocated during init.
 
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260616151129.76060-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111**. The buggy global `emp2` pointer and
-exported `amd_get_sfh_info()` are in this checkout; the 6-line mutex fix
-applies here.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+Record: `[spi/qpic-snand] [free] free OOB buffer with ECC context`
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[HID: amd_sfh]** **[Serialize]** Serialize access to the
-shared `emp2` pointer used by exported SFH accessors.
-
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2 — Tags**
 Record:
-- Signed-off-by: Basavaraj Natikar (author; AMD SFH maintainer)
-- Signed-off-by: Jiri Kosina (HID maintainer; applied the patch)
-- No Fixes, Reported-by, Tested-by, Reviewed-by, Acked-by, Link, or Cc:
-  stable on the committed message (absence of Fixes/Cc:stable is
-  expected for this review)
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Link:
+  https://patch.msgid.link/20260616151129.76060-1-pengpeng@iscas.ac.cn`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (SPI maintainer)
+- Pipeline-only tags ignored: `[Upstream commit 5504e50ffbcf…]`,
+  `Signed-off-by: Sasha Levin`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable` (absence expected)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3 — Body**
+Record: `qcom_spi_ecc_init_ctx_pipelined()` allocates `qspi->oob_buf`.
+Cleanup only frees `qpic_ecc`. Init error path after allocation also
+skips the OOB buffer. Symptom: leaked kmalloc buffer on ECC teardown and
+on init failure after the buffer exists. Root cause: allocation is not
+owned by the ECC cleanup/error path.
+
+**Step 1.4 — Hidden bug fix?**
+Record: Not disguised. Explicit resource-leak fix (`free` / missing
+`kfree`).
+
+## Phase 2: Diff analysis
+
+**Step 2.1 — Inventory**
+Record: `drivers/spi/spi-qpic-snand.c` only; **+5 / −1**. Functions:
+`qcom_spi_ecc_init_ctx_pipelined`, `qcom_spi_ecc_cleanup_ctx_pipelined`.
+Single-file surgical fix. Trailing newline at EOF removed (harmless).
+
+**Step 2.2 — Flow**
 Record:
-- **Bug:** File-global `emp2` is published at probe
-  (`sfh_interface_init`) and cleared on remove (`sfh_deinit_emp2`).
-  `amd_get_sfh_info()` is `EXPORT_SYMBOL_GPL` and is called from other
-  modules on other threads.
-- **Symptom/failure mode:** A reader can see a non-NULL `emp2`, then a
-  concurrent unbind NULLs it and frees the device → use-after-free /
-  MMIO against freed `amd_mp2_dev`.
-- **Version info:** None in the message. Introduced with HPD export in
-  v6.8 (`b5b0774d53bb81`). Present in this 6.12 tree.
-- **Root cause (author):** Missing serialization between publish/clear
-  and all readers.
+- **err_free_ecc_cfg:** previously `kfree(ecc_cfg)` only → also
+  `kfree(oob_buf)` and NULL it. Covers failures after `kmalloc` (notably
+  `qcom_alloc_bam_transaction()` `-ENOMEM`) and is a no-op if `oob_buf`
+  is still NULL.
+- **cleanup_ctx:** previously only `kfree(ecc_cfg)` → get `snandc` via
+  `nand_to_qcom_snand()`, free `oob_buf`, NULL it, then free `ecc_cfg`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. It is an explicit race/UAF fix. Cover letter for
-the v3 series also calls patches 1–2 “preparation” for SW_TABLET_MODE,
-but the mutex independently closes an existing unbind-vs-reader UAF. It
-is not a pure refactor with no standalone value.
+**Step 2.3 — Bug mechanism**
+Record: **resource leak**. `oob_buf` is `kmalloc(mtd->writesize +
+mtd->oobsize)` (typically a few KB). `qspi` itself is `devm_kzalloc`, so
+the buffer is **not** device-managed. `nanddev_find_ecc_configuration()`
+does **not** call `cleanup_ctx` when `init_ctx` fails, so the error-path
+`kfree` is required. Successful attach then `spinand_cleanup()` / probe-
+error after ECC init also leak without the cleanup change.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.4 — Fix quality**
+Record: Obviously correct. `kfree(NULL)` is safe because `qspi` is
+zeroed in probe (`devm_kzalloc`). NULLing after free avoids a later
+double-free if cleanup runs after the error path. Regression risk is
+very low: no locking, API, or I/O-path change. `QPIC_QSPI_NUM_CS` is 1,
+so no multi-chip sharing of `oob_buf`.
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c` (+6 / −0)
-- Functions: file-scope `emp2_lock`; `sfh_deinit_emp2`;
-  `sfh_interface_init`; `amd_get_sfh_info`
-- Scope: single-file surgical fix
+## Phase 3: Git history
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: `emp2 = mp2` / `emp2 = NULL` with no lock.
-  `amd_get_sfh_info()` checks `emp2` then dereferences `emp2->mmio` /
-  `emp2->vsbase` unlocked.
-- After: `DEFINE_MUTEX(emp2_lock)`; `guard(mutex)(&emp2_lock)` around
-  publish, clear, and the whole reader. A reader either keeps a live
-  device for the full access or sees NULL.
-- Paths: probe/init, remove/error-deinit, and the exported reader
-  (normal path from AMD PMF work).
+**Step 3.1 — Blame**
+Record: Driver added in `7304d1909080` (2025-02-24, Md Sadre Alam):
+allocated `oob_buf` in init and never freed it in cleanup.
+`d450cdd9c4398` (2025-03) only freed `ecc_cfg` when OOB alloc failed.
+`65cb56d49f6ede` (in v6.18.53) unified `err_free_ecc_cfg` still only
+`kfree(ecc_cfg)`. Bug present since the driver landed.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Race / UAF (check-then-use on a global device pointer).**
-Writers and the exported reader were unsynchronized. Mutex makes
-publish/clear and MMIO mutually exclusive. Helpers `amd_sfh_hpd_info` /
-`amd_sfh_als_info` stay unlocked internally but are static and only
-called from `amd_get_sfh_info()` while that lock is held.
+**Step 3.2 — Fixes: tag**
+Record: None. Introducer is `7304d1909080`; `git merge-base --is-
+ancestor 7304d1909080 v6.18.53` → yes. The earlier leak fix
+`d450cdd9c4398` is also in v6.18.53 and is incomplete for `oob_buf`.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct for this TOCTOU.
-- Minimal; no API or structure change.
-- Regression risk low: mutex is not nested; readers run in PMF delayed
-  work (sleepable); remove already sleeps (`flush_work`). Holding the
-  lock across `readl`/`memcpy_fromio` can delay unbind slightly; that is
-  the intended tradeoff vs UAF.
-- `linux/cleanup.h` + `guard(mutex)` exist in 6.12; `mutex.h` is already
-  pulled in via `amd_sfh_common.h`.
+**Step 3.3 — File history**
+Record: Related: `d450cdd9c4398` (ecc_cfg leak), `f48d805035042`
+(kzalloc→kmalloc; still no free). Standalone; not `N/M`. Later autosel
+commits (quad mode, ECC strength) are not prerequisites.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.4 — Author**
+Record: Pengpeng Hou has this one SPI qpic commit here; not the original
+driver author. SPI maintainer Mark Brown applied it to `spi/for-7.3`.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: `emp2`, `sfh_deinit_emp2`, `amd_get_sfh_info`, and
-`EXPORT_SYMBOL_GPL` come from **b5b0774d53bb81** (“HID: amd_sfh: Add a
-new interface for exporting HPD data”, 2023-12-20). ALS reader added in
-**584f35a3647d42**. Both are in v6.8 and in this tree. The race is old
-relative to 6.12, not new mainline-only code.
+**Step 3.5 — Dependencies**
+Record: Needs `nand_to_qcom_snand()`, `qspi->oob_buf`,
+`err_free_ecc_cfg`, and `qcom_spi_ecc_cleanup_ctx_pipelined()`. All
+exist in v6.18.53. Standalone.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes tag. Buggy pattern is the unlocked global from
-b5b0774d53bb81, which **is** an ancestor of HEAD.
+## Phase 4: Mailing list
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent 6.12 history on this file is register-access helpers
-(`7902ec988a9a6`, `6296562f30b1c`), not locking. Origin/master later
-added MT_SRA / tablet-mode around this commit; those features are
-**not** in this tree. No existing emp2 lock here.
+**Step 4.1**
+Record: `b4 dig -c 5504e50ffbcf` →
+https://patch.msgid.link/20260616151129.76060-1-pengpeng@iscas.ac.cn
+`b4 dig -a`: **v1 only**. Thread: author submission + Mark Brown
+“Applied to … for-7.3”. No NAK, no requested respin.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Basavaraj Natikar is listed in MAINTAINERS for AMD SENSOR FUSION
-HUB. Same author added the export and later SFH1.1 work. Series v3 was
-applied by Jiri Kosina.
+**Step 4.2**
+Record: `b4 dig -w`: To Mark Brown; Cc linux-spi, linux-kernel.
+Maintainer applied it.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Committed as **[PATCH v3 2/5]** in “Add SW_TABLET_MODE support”.
-- 1/5 “Track MP2 version explicitly” (`1a73a4e7673f57`) is **not** in
-  HEAD and is **not** required for this mutex (different files/fields).
-- 3–5 add operating-mode accessor, aux device, and a new input driver —
-  features, not needed for this fix.
-- This patch is self-contained. `git apply --check` of c57016bcf6d0b on
-  this tree **succeeds** (hunk 3 offset −35: no
-  `amd_sfh_mode_info`/`MT_SRA` in 6.12).
+**Step 4.3**
+Record: No bugzilla/syzbot. Leak found by code inspection.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.4**
+Record: Single-patch series, self-contained.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- Lore/msgid: https://patch.msgid.link/20260803175230.3839752-3-
-  Basavaraj.Natikar@amd.com
-- Series: v1 (operating-mode only) → v2 0/5 → **v3 2/5** (applied).
-- Cover letter (v3 0/5): patches 1–2 are preparation; v2 notes from
-  Sashiko review: serialize emp2 so concurrent unbind cannot free the
-  device while a reader dereferences it.
-- Jiri Kosina queued the series in hid.git#for-7.3/amd-sfh. No NAK. No
-  Cc: stable in review.
+**Step 4.5**
+Record: **UNVERIFIED** — lore.kernel.org/stable blocked by Anubis (403).
+No local evidence this was rejected for stable.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: To/Cc: jikos@kernel.org, bentiss@kernel.org,
-dmitry.torokhov@gmail.com, linux-input@. HID maintainers were on the
-series. Dmitry Acked-by is on 5/5 (input driver), not this patch.
-Applied by Jiri Kosina.
+## Phase 5: Semantic analysis
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Race found in review of the tablet-mode
-series, not a user crash report. The existing PMF caller was already
-racy.
+**Step 5.1**
+Record: `qcom_spi_ecc_init_ctx_pipelined`,
+`qcom_spi_ecc_cleanup_ctx_pipelined`.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 2/5 is the UAF serialization. 3/5 also adds `sfh_set_emp2()` and
-uses `emp2_lock`; that is extra feature plumbing, not required to lock
-the 6.12 HPD/ALS paths.
+**Step 5.2**
+Record: Wired as `.init_ctx` / `.cleanup_ctx` on
+`qcom_spi_ecc_engine_ops_pipelined`. Call chain: `nand_ecc_init_ctx` /
+`nand_ecc_cleanup_ctx` → `nanddev_ecc_engine_init` /
+`nanddev_ecc_engine_cleanup` → `spinand_init` error paths and
+`spinand_cleanup` from `spinand_probe` failure and `spinand_remove`.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned HTTP 403. UNVERIFIED
-whether stable@ discussed this. No evidence in the input thread of a
-stable nomination or a rejection.
+**Step 5.3**
+Record: Init: `kzalloc(ecc_cfg)`, `kmalloc(oob_buf)`,
+`qcom_free_bam_transaction` / `qcom_alloc_bam_transaction`. Cleanup:
+`kfree` only.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.4**
+Record: Reachable on Qualcomm IPQ9574 SPI-NAND attach/detach (boot
+device on many boards). Unprivileged userspace cannot typically unbind
+without privilege; leak still hits rmmod, unbind, and failed probe after
+ECC init.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `sfh_deinit_emp2`, `sfh_interface_init`, `amd_get_sfh_info`; new
-`emp2_lock`.
+**Step 5.5**
+Record: Same driver’s earlier `ecc_cfg` leak (`d450cdd9c4398`) used the
+same pattern. `data_buf` is an op pointer, not a matching leak. MTK SNFI
+cleanup only frees its ecc cfg (different allocation model).
 
-Step 5.2: TRACE CALLERS
-Record:
-- `sfh_interface_init`: `amd_sfh_set_ops()` ← `amd_sfh1_1_init()`
-  (SFH1.1 probe work).
-- `sfh_deinit_emp2`: `amd_mp2_pci_remove` (unbind) and error paths in
-  `amd_sfh1_1_init` after publish.
-- `amd_get_sfh_info`: `amd_pmf_get_sensor_info()` in
-  `drivers/platform/x86/amd/pmf/spc.c` (MT_ALS, MT_HPD) ←
-  `amd_pmf_populate_ta_inputs` ← `amd_pmf_invoke_cmd_enact` ← delayed
-  work `amd_pmf_invoke_cmd` every `pb_actions_ms` (default **1000 ms**).
+## Phase 6: This tree (v6.18.53 / 6.18.y)
 
-Step 5.3: TRACE CALLEES
-Record: Readers do `readl` / `memcpy_fromio` on `emp2->mmio` /
-`emp2->vsbase`. Remove then `amd_sfh_hid_client_deinit`, `stop_all`, PCI
-intx/intr clear. `mp2` is `devm_kzalloc`; mapping is `pcim_iomap` —
-freed after PCI remove.
+**Step 6.1**
+Record: `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`. `make
+kernelversion` → 6.18.53.
+`git merge-base --is-ancestor f320c3a8b1119 v6.18.53` → **NO** (not in
+baseline).
+v6.18.53 still has:
+```
+err_free_ecc_cfg:
+        kfree(ecc_cfg);
+        return ret;
+…
+static void qcom_spi_ecc_cleanup_ctx_pipelined(...)
+{
+        struct qpic_ecc *ecc_cfg = nand_to_ecc_ctx(nand);
+        kfree(ecc_cfg);
+}
+```
+and still allocates `snandc->qspi->oob_buf`. Driver is in v6.18
+(`7304d1909080` is an ancestor of `v6.18`).
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Reachable without the new tablet driver: AMD PMF policy work
-(typical on AMD laptops with PMF) vs SFH1.1 unbind (`amd_sfh_remove` →
-`mp2_ops->remove`). Not a syscall hot path; unbind is admin/module/PCI.
-Still a real concurrent path: 1 Hz reader vs remove.
+**Step 6.2**
+Record: `patch --dry-run` of this diff onto v6.18.53’s file: **clean
+apply**. Context around `err_free_ecc_cfg` / cleanup matches.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Only this file holds `emp2`. No sibling unlocked copy in 6.12.
-Later mainline adds more readers (MT_OP_MODE at 200 ms); those are not
-in this tree.
+**Step 6.3**
+Record: Incomplete leak fix `d450cdd9c4398` is already here; it does not
+free `oob_buf`. No other equivalent fix in v6.18.53.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 7: Subsystem
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c`:
-unlocked `static struct amd_mp2_dev *emp2`, `sfh_deinit_emp2` sets NULL,
-`amd_get_sfh_info` is exported. Introduced v6.8; this tree is 6.12.111.
-`git merge-base --is-ancestor c57016bcf6d0b HEAD` → **not present**.
+**Step 7.1**
+Record: `drivers/spi` QPIC SPI-NAND (`CONFIG_SPI_QPIC_SNAND`,
+`ARCH_QCOM`). Compatible `qcom,ipq9574-snand`. **PERIPHERAL** but real
+embedded/router hardware; NAND is often boot/rootfs.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply** (`git apply --check` succeeded; one hunk
-offset). 6.12 lacks `amd_sfh_mode_info`/`MT_SRA`; that is context only.
-`guard(mutex)` and `DEFINE_MUTEX` are available.
+**Step 7.2**
+Record: Active in 6.16–6.18 (ECC validation, BAM txn, 8-bit ECC,
+unregister-on-remove). Leak is original, not a new-code regression.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `edeae8be4d263` syncs SFH work functions — different bug. No
-emp2 mutex. d1c444b47100d / 01601fdd40ecf not in HEAD (and not
-required).
+## Phase 8: Impact and risk
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 8.1**
+Record: Qualcomm IPQ9574 QPIC SPI-NAND users only.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: HID / AMD SFH (`drivers/hid/amd-sfh-hid/`), plus AMD PMF
-consumer. **IMPORTANT** for AMD Ryzen laptops with SFH1.1 (HPD/ALS) and
-PMF; not core mm/VFS. Config: `CONFIG_AMD_SFH_HID`.
+**Step 8.2**
+Record: Triggers: (1) `init_ctx` failure after `kmalloc` (BAM realloc
+`-ENOMEM`) — cleanup not called; (2) later `spinand_init` failure; (3)
+`spinand_remove` / unbind / rmmod. Not a hot-path unbounded leak. Not
+unprivileged.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature driver (since ~5.11), still receiving fixes. Export of
-`emp2` is from 6.8; the unlocked design lasted until the 7.3 tablet-mode
-series.
+**Step 8.3**
+Record: Failure mode: leaked page-sized+OOB kmalloc. Severity **MEDIUM**
+(not oops/corruption; real leak on teardown and some probe errors).
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 8.4**
+Record: Benefit: medium for this hardware (correct lifetime of ECC-init
+allocations; matches prior leak fix in the same function). Risk: **very
+low** (5 lines, `kfree`+NULL). Ratio favors backport.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific: AMD SFH1.1 (PCI ID MP2 1.1) **and** AMD PMF
-loaded. Typical modern AMD notebooks, not all machines.
+## Phase 9: Synthesis
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Concurrent `amd_get_sfh_info` (PMF delayed work, default 1 s)
-with `sfh_deinit_emp2` (unbind, rmmod, or probe error after publish).
-Unprivileged users cannot normally unbind. Window is small but standard
-check-then-use. New 200 ms tablet poll is **not** in this tree, so
-trigger rate here is lower than mainline after 7.3.
+**For:** Real `kmalloc` leak in this 6.18 tree; error path cannot rely
+on cleanup; 5-line obviously correct fix; applies cleanly; no new API;
+maintainer accepted v1; same class as `d450cdd9c4398` already in 6.18.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Use-after-free of `amd_mp2_dev` / MMIO after `devm` teardown →
-oops/panic, possibly memory corruption. **HIGH**. Not a guaranteed panic
-on every boot.
+**Against:** Not a crash/security issue; no reporter; driver is
+Qualcomm-specific; leak is small and not a hot-path OOM.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: closes a real UAF on a supported unbind path for SFH1.1+PMF
-  systems.
-- Risk: 6 lines, existing mutex helpers, no ABI change; apply is clean.
-- Ratio: favorable. Preparation-for-feature context does not make the
-  existing race fictional.
+**Unresolved:** Stable-list discussion (lore blocked).
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Stable rules:**
+1. Obviously correct and tested? **PASS** — `kfree`/`NULL`; maintainer
+   applied v1.
+2. Real user-visible bug? **PASS** — leak on probe-error and remove for
+   IPQ9574 SPI-NAND.
+3. Important? **PASS** — resource leak on teardown/error; same pattern
+   routinely taken for stable (not a crash; still a real leak of non-
+   devm memory).
+4. Small/contained? **PASS** — 5 lines, one file.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — clean on v6.18.53.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real UAF race on a global pointer vs exported cross-module reader
-  (verified call path: PMF work → `amd_get_sfh_info` vs
-  `amd_mp2_pci_remove`).
-- Buggy code in this 6.12 tree since v6.8.
-- 6-line, obviously correct mutex; maintainer-authored; HID maintainer
-  applied.
-- Applies cleanly here.
-- `guard(mutex)` already used elsewhere in 6.12.
+**Exception category:** none (ordinary leak fix).
 
-AGAINST:
-- Sent as 2/5 “preparation” for SW_TABLET_MODE, not as a standalone
-  stable fix.
-- No user/syzbot report; narrow unbind window; no Cc: stable (not a
-  negative per rules).
-- Later series patches must **not** come along (new feature).
+This tree is **6.18.y**. The buggy allocation and missing free are
+present. The patch is a minimal, correct leak fix with negligible
+regression risk.
 
-UNRESOLVED:
-- Stable list discussion (lore/stable 403).
+### What it solves for stable users
+On IPQ9574 QPIC SPI-NAND, ECC init allocates an OOB scratch buffer that
+is never freed. Failed attach after that allocation, and every
+unbind/rmmod, leaks that buffer. 6.18 already had a partial leak fix for
+`ecc_cfg` only.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — mutex around the only
-   publisher/clearer and the only exported reader; merged to hid.git
-   after review.
-2. Fixes a real bug that affects users? **PASS** — UAF if SFH1.1 unbinds
-   while PMF polls.
-3. Important issue? **PASS** — UAF / crash / possible memory corruption
-   (HIGH).
-4. Small and contained? **PASS** — +6 lines, one file.
-5. No new features or APIs? **PASS** — locking only. (3–5 of the series
-   would FAIL this; they are out of scope.)
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded.
+### Risk vs benefit
+Benefit is a real leak fix for in-tree hardware. Risk is a handful of
+`kfree`s on error/teardown.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID / quirk / DT / build / doc exception).
-Qualifies as a normal race/UAF bugfix.
-
-Step 9.4: MAKE YOUR DECISION
-This tree has the unlocked `emp2` export and the PMF reader. The patch
-does not need MP2 version tracking or tablet-mode. It should be
-backported here.
-
-------------------------------------------------
-What problem it solves for stable users
-------------------------------------------------
-On 6.12, AMD PMF’s delayed work calls `amd_get_sfh_info()` about once a
-second. That function tests the file-global `emp2` and then uses
-`emp2->mmio` / `emp2->vsbase`. Remove (`amd_sfh_remove` →
-`amd_mp2_pci_remove`) sets `emp2 = NULL` and then tears down a
-`devm_kzalloc`’d `amd_mp2_dev`. Without a lock, a reader can keep using
-a pointer to already-freed device/MMIO. The mutex makes that impossible.
-
-Why it meets stable rules
-Small, correct, no new API, applies here, fixes a real UAF. Being patch
-2/5 of a feature series is not a dependency: 1/5 and 3–5 are unrelated
-or features.
-
-Risk vs benefit
-Low risk, meaningful benefit on AMD SFH1.1 + PMF systems. Do not pull
-the rest of the tablet-mode series.
-
-Concerns
-Backport only this commit. Context offset on `amd_get_sfh_info` (no
-MT_SRA) is already handled by a clean apply.
+---
 
 Verification:
-- [Phase 1] Parsed tags: only two SOBs (Natikar, Kosina); no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] Cover letter (mbox): “Patches 1 and 2 are preparation”; v2
-  changelog describes the unbind UAF
-- [Phase 2] Diff: +6 lines, mutex + three `guard(mutex)` sites in one
-  file
-- [Phase 3] git describe HEAD / Makefile: **p-6.12-3-gc504cf0baa3d8**,
-  version **6.12.111**
-- [Phase 3] git blame: emp2/export from b5b0774d53bb81; `git merge-base
-  --is-ancestor b5b0774d53bb81 HEAD` → yes; in v6.8
-- [Phase 3] git merge-base --is-ancestor c57016bcf6d0b HEAD → **no**
-  (candidate not in this tree)
-- [Phase 3] Parent 1a73a4e7673f57 “Track MP2 version” not in HEAD; not
-  required by this diff
-- [Phase 4] b4 dig -c c57016bcf6d0b: https://patch.msgid.link/2026080317
-  5230.3839752-3-Basavaraj.Natikar@amd.com
-- [Phase 4] b4 dig -a: v1 → v2 0/5 → v3 2/5 applied
-- [Phase 4] b4 dig -w: linux-input, jikos, bentiss, dmitry.torokhov
-- [Phase 4] mbox: Jiri queued for-7.3/amd-sfh; no NAK; no stable
-  nomination
-- [Phase 4] lore.kernel.org WebFetch: 403; stable@ search UNVERIFIED
-- [Phase 5] Callers: amd_pmf_get_sensor_info → delayed work default 1000
-  ms; deinit from amd_mp2_pci_remove and probe error paths
-- [Phase 6] Current file still has unlocked emp2; apply --check of
-  c57016bcf6d0b succeeded (hunk 3 offset −35)
-- [Phase 6] include/linux/cleanup.h and DEFINE_GUARD(mutex) in
-  include/linux/mutex.h present; mutex.h included via amd_sfh_common.h
-- [Phase 8] Failure mode: UAF of amd_mp2_dev/MMIO on unbind vs PMF
-  reader; severity HIGH
-- UNVERIFIED: whether anyone asked for this on stable@ (HTTP 403)
+- [Phase 1] Subject/tags: free OOB buffer; SOB Hou + Brown; Link msgid;
+  no Fixes/Reported-by
+- [Phase 2] Diff: +5/−1 in `spi-qpic-snand.c`; `kfree(oob_buf)` + NULL
+  on `err_free_ecc_cfg` and cleanup
+- [Phase 2] v6.18.53 still lacks those `kfree`s;
+  `kmalloc(writesize+oobsize)` present
+- [Phase 2] `qspi = devm_kzalloc` at probe → `oob_buf` starts NULL;
+  `kfree(NULL)` safe
+- [Phase 3] Introducer `7304d1909080` is ancestor of v6.18 and v6.18.53
+- [Phase 3] `d450cdd9c4398` in v6.18.53 frees only `ecc_cfg` on OOB
+  alloc failure
+- [Phase 3] `65cb56d49f6ede` in v6.18.53; `err_free_ecc_cfg` still only
+  frees `ecc_cfg`
+- [Phase 3] Candidate `f320c3a8b1119` is **not** an ancestor of v6.18.53
+- [Phase 4] `b4 dig`: lore thread, v1 only; Brown applied to
+  spi/for-7.3; no NAK
+- [Phase 4] WebFetch lore/msgid 403; curl lore/stable hit Anubis —
+  UNVERIFIED stable-list history
+- [Phase 5] Callers: `nand_ecc_cleanup_ctx` →
+  `nanddev_ecc_engine_cleanup` → `spinand_cleanup` (probe err + remove)
+- [Phase 5] `nanddev_find_ecc_configuration()` returns on `init_ctx`
+  failure **without** `cleanup_ctx`
+- [Phase 5] `QPIC_QSPI_NUM_CS` is 1
+- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb;
+  kernelversion 6.18.53
+- [Phase 6] `patch --dry-run` onto v6.18.53 file: success
+- [Phase 6] `nand_to_qcom_snand()` exists in v6.18.53
+- [Phase 7] `CONFIG_SPI_QPIC_SNAND` depends on `ARCH_QCOM`; OF
+  `qcom,ipq9574-snand`
+- [Phase 8] Failure: kmalloc leak, MEDIUM; not oops/corruption
+- UNVERIFIED: whether linux-stable ever discussed this patch (lore
+  blocked)
 
 **YES**
 
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-qpic-snand.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index 837d59e7a6610..dd2720bae65c3 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -8,12 +8,14 @@
-  * Author: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-  */
- #include <linux/amd-pmf-io.h>
-+#include <linux/cleanup.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/iopoll.h>
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 222e4aa7ee488..919e847c061db 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -394,14 +394,19 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
+ 	return 0;
  
- #include "amd_sfh_interface.h"
- 
- static struct amd_mp2_dev *emp2;
-+static DEFINE_MUTEX(emp2_lock);
- 
- static int amd_sfh_wait_response(struct amd_mp2_dev *mp2, u8 sid, u32 cmd_id)
- {
-@@ -78,12 +80,14 @@ static struct amd_mp2_ops amd_sfh_ops = {
- 
- void sfh_deinit_emp2(void)
- {
-+	guard(mutex)(&emp2_lock);
- 	emp2 = NULL;
+ err_free_ecc_cfg:
++	kfree(snandc->qspi->oob_buf);
++	snandc->qspi->oob_buf = NULL;
+ 	kfree(ecc_cfg);
+ 	return ret;
  }
  
- void sfh_interface_init(struct amd_mp2_dev *mp2)
+ static void qcom_spi_ecc_cleanup_ctx_pipelined(struct nand_device *nand)
  {
- 	mp2->mp2_ops = &amd_sfh_ops;
-+	guard(mutex)(&emp2_lock);
- 	emp2 = mp2;
++	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+ 	struct qpic_ecc *ecc_cfg = nand_to_ecc_ctx(nand);
+ 
++	kfree(snandc->qspi->oob_buf);
++	snandc->qspi->oob_buf = NULL;
+ 	kfree(ecc_cfg);
  }
  
-@@ -160,6 +164,8 @@ static int amd_sfh_als_info(u32 *ambient_light)
- 
- int amd_get_sfh_info(struct amd_sfh_info *sfh_info, enum sfh_message_type op)
- {
-+	guard(mutex)(&emp2_lock);
-+
- 	if (sfh_info) {
- 		switch (op) {
- 		case MT_HPD:
+@@ -1660,4 +1665,3 @@ module_platform_driver(qcom_spi_driver);
+ MODULE_DESCRIPTION("SPI driver for QPIC QSPI cores");
+ MODULE_AUTHOR("Md Sadre Alam <quic_mdalam@quicinc.com>");
+ MODULE_LICENSE("GPL");
+-
 -- 
 2.53.0
 
