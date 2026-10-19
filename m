@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760335E215C;
-	Mon, 19 Oct 2026 14:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D880B470858;
+	Mon, 19 Oct 2026 14:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418549; cv=none; b=gZzFJYJr0E72p5rlArC4lT/PZouZhx0JvJPyI854h0U74bIUfG9G0lLaACibK+SvCtIRBSJ76r4UhZYPGCkLemf4IwmuSk82MhGHLiA3ZhrOeCluyozILMxQhaE9lhhsZqipl57Wvbyxxqdhl6D0rSeuOLALQ9A80nQZ3KZ4K4k=
+	t=1792418550; cv=none; b=OqKRIa9zFEGF2i7LI7z910gt8suOK51qR1MrzpMNJiF0oJARSg9lHNC6v5UUJz5pUkMxqWd1Upl4I0C44gxckJMIdW09FeD5wu5XKBMaYSn7fZby5L/QQHT3whXiEaT7+w+cbHwjLkXA0BA/xL16KYbT2WSrBjUQRA7NT2ZkO68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418549; c=relaxed/simple;
-	bh=vKtA7JRfO70+rdfogeVXY2fLuLw5H3B9c4LIWICzq5Y=;
+	s=arc-20240116; t=1792418550; c=relaxed/simple;
+	bh=CGw/LoqxySi4y3ucj0pSd1ASJG726CFLpKjg3irJQuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WIDFCQ+hM7MdUQ/0LU31F98PGhBgD2XMZNFiJ1ZuEph8OdCtL3zbPrsNHbBcBuj9a2qJhiiBgB74061WRcdnuBlWTqQafexNOUzkTSVfJCWZk3x0gMH3NwSaIOHv5Sjad5OZZC98yl75evh0Jl8Yb2L5K6WWRpKgSepoXfEY8Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bu5ppNYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=twnh+5SQPIoydFABN5Wn2DHeNbbyCJ9LgOyEnisag/jMRjcPgeFKmGzY6luuM0d8/oxW9QrBxH0537T924cRKild9Msd93eJkjkOadmJYJf3Fwq7BOP34G/Y7L5pqGeP13mMclTV2eDN6bUFtc5ePbZvNPdu2DOf5KPyQ1yaXZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGb48cUI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bu5ppNYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFC71F000C7;
-	Mon, 19 Oct 2026 14:02:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGb48cUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2011F000C9;
+	Mon, 19 Oct 2026 14:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418546;
-	bh=2Yx0E8RRn1cWZ8BEo/BfdquUwBZonkPGH7EBNzQe+3M=;
+	s=k20260515; t=1792418547;
+	bh=yVfznEcOE2PnCJM60afoSwR6xdh678dLhjRPRccI0NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bu5ppNYxaPrOn1juxuqzMmeSqr9139wHh3FM2FajtVrqMm9p+stSmWZAC69E2+HyQ
-	 pFsNcahAQ92BPqnm+8Q1e+PeOyRgfFHZHJS9/TDyimUbN+1Ro71QiPOvlfZh9EmUYy
-	 i5OF56Q8k9/sunOsp/MrEJV60I+eWSeLp0rcYDFfT/gjqGG6wEtuu+dtfl9UfXQPRI
-	 P77iRcPNH6YyJ3E8c5eD53ggXL8BEkgjdQtrP9OvwPVWUVGvHkUjuOtNaRIHH6BBhB
-	 8QhvwrjfF7wXIRmVtgOlUNO8I/cNJAFe9HlvJDBBrDZcmpxGR3vSUMhABi9gYjgUL5
-	 V65MkBZX9swaA==
+	b=kGb48cUIJGdKBRrPoHydKYKwYQcYO74XpSukoQj0B9N1VOvEViLHHBi+e6gKMthxF
+	 KYjMwf14+Og0yXQcu1kqqaKT7q0gApvj0P5WJWAP0lBYB6yde5/6+LbnK1ZAYg3aAE
+	 APVsl0ayBDCzjyC2HkOren0JgMC5Ewk8wmh/wwkHWeScaXNN8KAe/pBsYiD89Xg5iR
+	 WEGgLUC9wm/3uGG6V2P9aqrEr3NQG1ReBfcgQw5tm4YosbZc2es5g8OuKD1DW5S6v7
+	 AS+OEhvv6zjBuXpDmyhm43hEsfqGQayQ4SxsDO+mzxCJ94jSq0QAAeGxAsHs0M8IX9
+	 vNqQKcbXsProA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andreas Kemnade <andreas@kemnade.info>,
-	sashiko-bot@kernel.org,
-	Helge Deller <deller@gmx.de>,
+Cc: Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-omap@vger.kernel.org,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
+	xinpeng.sun@intel.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] fbdev: omap2: dsi: do not copy isr table
-Date: Mon, 19 Oct 2026 09:50:16 -0400
-Message-ID: <20261019135441.1420968-325-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: Intel-thc-hid: Intel-quickspi: Fix buffer overflow
+Date: Mon, 19 Oct 2026 09:50:17 -0400
+Message-ID: <20261019135441.1420968-326-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,432 +55,388 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit 31875c51c31edec57b3620f278680c23a823763b ]
+[ Upstream commit a1cdd72371270640bd357bd3e3b2ec0be17c9536 ]
 
-To te able to unregister stuff from isrs, the corresponding table was
-copied.  Nobody seems to unregister stuff that way, so it does not help.
-But there are stack-allocated objects passed to these isrs giving chances
-of UAF of these objects if irqs are unregistered while they are handled,
-so better do not copy that table.
+The input buffers are used to store complete HID-over-SPI packets,
+including their protocol headers. However, their sizes are
+currently calculated from the payload length only.
 
-Suggested-by: sashiko-bot@kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Allocate enough space for both the payload and the packet header to
+prevent a buffer overflow when the payload reaches its maximum size.
+
+Signed-off-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a UAF fix in the OMAP2 fbdev DSI IRQ path. The same change is
-already in this 6.12 tree for the DRM copy of the driver; the fbdev copy
-of the bug is still present.
+This is a real heap overflow in Intel QuickSPI HID input, and the local
+6.18.57 tree still has the undersized `input_buf` allocation, so it
+should be backported.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+Local tree: **v6.18.57** (`6.18.57`, HEAD `cdf239ca885b2`). The buggy
+allocation is present at `v6.18.57`; `HIDSPI_INPUT_BODY_SIZE` already
+exists here. The patch applies cleanly.
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[fbdev/omap2/dsi] [do not copy] [stop copying the DSI ISR table
-before invoking handlers]`
+Record: `[HID/intel-thc-hid/intel-quickspi] [fix] [prevent input_buf
+overflow by including HIDSPI packet header in allocation]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Suggested-by: sashiko-bot@kernel.org` (static-analysis bot; this is
-  the original trigger, not a user crash report)
-- `Signed-off-by: Andreas Kemnade <andreas@kemnade.info>` (author)
-- `Signed-off-by: Helge Deller <deller@gmx.de>` (fbdev maintainer)
-- No `Fixes:` tag (expected for this review queue)
-- No `Cc: stable@vger.kernel.org`
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Link:`
-- Ignore `Signed-off-by: Sasha Levin` / `[Upstream commit ...]` if
-  present in candidate packaging; they are not part of the technical
-  decision
+- `Signed-off-by: Even Xu <even.xu@intel.com>` (author; INTEL THC
+  maintainer)
+- `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Link:`, or `Cc: stable` (absence is expected)
+- Pipeline-only markers ignored: `[Upstream commit
+  a1cdd72371270640bd357bd3e3b2ec0be17c9536]`, `Signed-off-by: Sasha
+  Levin`
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: ISR table was memcpy’d so handlers could unregister themselves,
-  then the copy was walked after dropping `irq_lock`.
-- Author claim: nothing unregisters from ISR context, so the copy is
-  unused for its stated purpose.
-- Failure mode: stack-allocated objects (`DECLARE_COMPLETION_ONSTACK`,
-  `dsi_packet_sent_handler_data` on stack) are passed as ISR `arg`. If
-  unregister/return happens while the IRQ handler still walks the copy,
-  those objects are used after free.
-- No kernel-version range in the message.
-- Root cause: lockless copy of function+arg pointers that alias stack
-  objects.
+- Bug: `input_buf` is sized from HID payload length only, but stores a
+  full HID-over-SPI packet (header + payload).
+- Symptom: buffer overflow when the payload is at its maximum size.
+- Root cause: size uses `max_input_len` / `rep_desc_len` and omits
+  `HIDSPI_INPUT_BODY_HEADER_SIZE` (4 bytes).
+- No stack traces, versions, or syzbot IDs.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is explicitly a UAF/race fix, even
-though the subject does not say “fix”.
+Record: Not hidden. Subject and body state a buffer overflow. The one-
+line change matches that claim.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/video/fbdev/omap2/omapfb/dss/dsi.c` (+1 / −8; 9 lines)
-- Removes `struct dsi_isr_tables isr_tables_copy` from `struct dsi_data`
-- In `omap_dsi_irq_handler()`: drop `memcpy`, call `dsi_handle_isrs()`
-  on the live table **while `irq_lock` is held**, then unlock
+- File: `drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c`
+  (+2/-1)
+- Function: `quickspi_alloc_report_buf()`
 - Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: lock → read/ack IRQ status → memcpy table → unlock →
-  `dsi_handle_isrs(&copy)` → error/stats
-- After: lock → read/ack IRQ status → `dsi_handle_isrs(&live table)` →
-  unlock → error/stats
-- Affected path: hardirq handler (`devm_request_irq(...,
-  omap_dsi_irq_handler, IRQF_SHARED, ...)`)
-- Unregister (`dsi_unregister_isr*`) takes `irq_lock`, so it now waits
-  until handlers finish
+- Before (`v6.18.57`): `qsdev->input_buf = devm_kzalloc(...,
+  max_input_len, ...)` where `max_input_len = max(rep_desc_len,
+  max_input_len)`.
+- After: allocate `HIDSPI_INPUT_BODY_SIZE(max_input_len)` = payload +
+  `sizeof(struct input_report_body_header)` (packed 4 bytes).
+- Path: probe-time allocation; used later on every RX DMA completion.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- Category: use-after-free / race (memory safety)
-- Mechanism: copy of ISR `arg` pointers outlives unregister of stack-
-  allocated completions
-- Verified stack objects passed into ISRs in this tree:
-  - `dsi_sync_vc_vp()` / `dsi_sync_vc_l4()`:
-    `DECLARE_COMPLETION_ONSTACK` + stack `dsi_packet_sent_handler_data`
-  - `dsi_vc_send_bta_sync()`: stack completion registered on **two**
-    tables (global + VC)
-  - `dsi_enter_ulps()`: stack completion registered on CIO table
-- Concrete UAF in `dsi_vc_send_bta_sync()`: `dsi_handle_isrs()` walks
-  global table then VC table. First handler can `complete()`; waiter
-  unregisters and returns; second handler still runs against the copy
-  with a dangling stack pointer.
-- Fix: keep `irq_lock` across handler dispatch so unregister cannot
-  destroy the objects until handlers return.
+Record: `[BUFFER OVERFLOW / OUT-OF-BOUNDS]`
+Mechanism verified in this tree:
+1. IRQ thread `quickspi_irq_thread_handler()` calls `thc_rxdma_read(...,
+   qsdev->input_buf, &input_len, ...)`.
+2. `read_dma_buffer()` does `sg_copy_to_buffer(sg, nent, read_buff,
+   mes_len)` with **no check against `input_buf` allocation size**.
+3. The only bound is `mes_len > read_config->max_packet_size`, and
+   `max_packet_size` is `ALIGN(max_input_len, SZ_4K)`, so a packet of
+   `max_input_len + 4` is allowed for typical HID sizes.
+4. `quickspi_handle_input_data()` treats `input_buf` as `struct
+   input_report_body` (4-byte header + content).
+5. Output path already accounts for the header via
+   `HIDSPI_OUTPUT_REPORT_SIZE` (from `6fcefe71aeb52`, already in
+   `v6.18.57`). Input was left inconsistent.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct given the locking: unregister cannot proceed while
-  handlers run.
-- Minimal; no API change.
-- Regression risk is low **if** no ISR unregisters itself (would
-  deadlock on `irq_lock`). Verified all three callbacks
-  (`dsi_completion_handler`, `dsi_packet_sent_handler_vp`,
-  `dsi_packet_sent_handler_l4`) only `complete()` and/or read registers.
-  None call `dsi_unregister_isr*`.
-- `complete()` under a spinlock is valid.
-- Holding the lock slightly longer in hardirq is register reads +
-  `complete()`, not a sleep.
+Record: Obviously correct. Uses an existing macro. 4 extra
+`devm_kzalloc` bytes. No locking, API, or ABI change. Regression risk is
+very low (slightly larger probe allocation).
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Copy logic and `isr_tables_copy` blamed to `f76ee892a99e6` (“omapfb:
-  copy omapdss & displays for omapfb”, 2015-12-29).
-- Pattern is as old as the fbdev DSS copy in this tree; originally
-  inherited from OMAP DSS ISR support.
-- Long-lived bug, not recent code.
+Record: Buggy alloc introduced in `4138f21115aec` ("HID: intel-thc-hid:
+intel-quickspi: Complete THC QuickSPI driver", Xinpeng Sun, 2025-01-06).
+Present since at least **v6.15**. Present in this 6.18.y tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` on the fbdev commit. The sibling DRM fix
-`2c27a84ba8d1b` (`drm/omap: dsi: Do not copy isr table`) has `Fixes:
-4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")`. That original ISR
-support is what fbdev copied.
+Record: No `Fixes:` tag. Introducer is `4138f21115aec`, which **is** an
+ancestor of `v6.18.57`.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Recent `dsi.c` changes in this tree are unrelated (platform remove,
-  of_graph, timer, pm_runtime).
-- Standalone; not patch N/M.
-- Cover letter on lore points at a DRM twin:
-  `https://lore.kernel.org/lkml/20260702-dsi-
-  uaf-v2-1-dbb4aa0f0b8e@kemnade.info/`
-- That DRM twin **is already in this tree** as `2c27a84ba8d1b`
-  (contained in `v6.12.110~477`).
+Record (on this tree, limited to the file):
+- `6fcefe71aeb52` — already in `v6.18.57`; sized **output** `report_buf`
+  with `HIDSPI_OUTPUT_REPORT_SIZE` and added a copy bound. That made the
+  remaining input undersize obvious.
+- `b2301bdb4b3ed`, `c2854af5774b0`, device-ID commits — unrelated.
+- Sibling `4bda3254e7b4f` (QuickI2C overflow) is a parallel independent
+  fix, not a prerequisite.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record:
-- Andreas Kemnade is an OMAP/display contributor; same author wrote the
-  DRM twin.
-- Helge Deller (fbdev maintainer) applied the fbdev patch.
-- Tomi Valkeinen applied the DRM twin.
+Record: Even Xu is listed in MAINTAINERS as `INTEL TOUCH HOST CONTROLLER
+(THC) DRIVER` co-maintainer. Related work in-tree includes DMA safety
+checks and device IDs. This is a maintainer-authored fix.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- No new functions/types.
-- Applies as a logic change on existing `omap_dsi_irq_handler` / `struct
-  dsi_data`.
-- Context mismatch only: mainline hunk context has `timer_delete()`;
-  this tree still has `del_timer()` (`8fa7292fee5c5` timer rename is not
-  in 6.12). Not a functional dependency.
+Record: Standalone. Needs only `HIDSPI_INPUT_BODY_SIZE` in
+`include/linux/hid-over-spi.h`, present at `v6.18.57:91`. Series is
+`[PATCH 2/2]` with QuickI2C; the two files do not depend on each other.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 31875c51c31ed`: https://patch.msgid.link/20260702-fbomap-
-  uaf-fix-v1-1-6417edf9d3e7@kemnade.info
-- `b4 dig -a`: single revision **v1** only; that version was applied.
-- Thread: author patch → sashiko-bot review → author reply → Helge
-  Deller “applied.”
-- No NAK. Deller accepted it.
-- Bot comments were about **pre-existing sibling bugs** (DRM DSI, DISPC
-  copy, unbind timers), not about this change being wrong.
-- Author noted the DRM variant in the patch footer.
+- `b4 dig -c a1cdd72371270640bd357bd3e3b2ec0be17c9536` →
+  https://patch.msgid.link/20260922024638.932865-3-even.xu@intel.com
+- Cover: `[PATCH 0/2] HID: Intel-thc-hid: Fix potential buffer overflow`
+  (`20260922024638.932865-1`)
+- `b4 dig -a`: **v1 only** (no later revisions)
+- Thread saved via `b4 dig -m`; lore.kernel.org HTTP fetch returned
+  **403**
+- Jiri Kosina: “Applied to hid.git#for-7.3/upstream-fixes, thanks.” No
+  NAK, no requested changes on the SPI patch.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`):
-- To: Helge Deller
-- Cc: linux-omap, linux-fbdev, dri-devel, linux-kernel, sashiko-bot
-- Appropriate lists; fbdev maintainer applied it.
-- No human Reviewed-by besides maintainer application.
+Record (`b4 dig -w`): To/Cc `bentiss@kernel.org` (Benjamin Tissoires),
+`jikos@kernel.org` (Jiri Kosina), `srinivas.pandruvada@linux.intel.com`,
+`linux-input@vger.kernel.org`. HID maintainers were on the original
+mail. Kosina applied it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record:
-- No syzbot/bugzilla user report. Trigger is sashiko-bot static
-  analysis.
-- Bug is still real: code in this tree matches the described UAF (stack
-  completions + lockless copy).
+Record: No `Reported-by` / syzbot / bugzilla. Found by the subsystem
+maintainer as a size mismatch. Cover letter calls it a **potential**
+overflow; the DMA copy path confirms it is reachable, not theoretical.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record:
-- DRM twin already backported here (`2c27a84ba8d1b`).
-- fbdev DISPC still copies a stack `registered_isr` in `dispc-compat.c`
-  (`omap_dispc_irq_handler`); same pattern, **separate** file, not
-  required for this DSI patch to be correct.
-- No revert of either DSI fix on `origin/master`.
+Record: Independent 2-patch set (QuickI2C + QuickSPI). Sashiko AI
+comment was about the **I2C** patch (`report_len` vs
+`HIDI2C_PACKET_LEN`), not this SPI change. SPI `report_buf` is already
+header-sized in this tree.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: UNVERIFIED. `lore.kernel.org/stable/` and lore message URLs
-returned HTTP 403. Thread was recovered via `b4 dig -m` instead. No
-stable-list discussion could be fetched.
+Record: `curl` to lore.kernel.org/stable also returned 403. UNVERIFIED
+whether stable@ discussed this specifically. No local evidence it was
+rejected.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `omap_dsi_irq_handler()`; field removed from `struct dsi_data`.
-Callers of `dsi_handle_isrs()` / `dsi_call_isrs()` unchanged except the
-table pointer and lock scope.
+Record: `quickspi_alloc_report_buf()`
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `omap_dsi_irq_handler` ← `devm_request_irq` in DSI bind/probe (`dsi.c`
-  ~5363). Hardirq, `IRQF_SHARED`.
-- Register/unregister sites are process context, all take `irq_lock`.
-- Sync/BTA/ULPS paths used during DSI frame update, command write, and
-  ULPS enter (`dsi_sync_vc` from update/disable; `dsi_vc_send_bta_sync`
-  as `.bta_sync`; `dsi_enter_ulps`).
+Record: Only `quickspi_probe()` at `pci-quickspi.c:660`, after
+`reset_tic()`, before `quickspi_dma_init()` /
+`quickspi_get_report_descriptor()` / `quickspi_hid_probe()`. Standard
+PCI probe. `input_buf` is then written from the IRQ thread on
+`THC_RXDMA2_INT` (touch input).
 
 **Step 5.3: TRACE CALLEES**
-Record: `dsi_handle_isrs` → `dsi_call_isrs` → registered `isr(arg,
-status)` → `complete()` / `REG_GET`. Then `dsi_handle_irq_errors` and
-`dsi_collect_irq_stats` still after unlock.
+Record: `devm_kzalloc()` only. Consumers: `thc_rxdma_read()` →
+`sg_copy_to_buffer()`; `quickspi_handle_input_data()`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from normal display I/O on `CONFIG_FB_OMAP2=y` +
-`CONFIG_FB_OMAP2_DSS_DSI=y` (MIPI DSI panel). Not a syscall fuzzer path,
-but a real device IRQ + wait-for-completion path. Unprivileged userspace
-can trigger it by updating the framebuffer on such hardware.
+Record: `quickspi_probe` → IRQ `THC_RXDMA2_INT` →
+`thc_rxdma_read(input_buf)` → `quickspi_handle_input_data`. Reachable
+whenever an Intel THC HID-over-SPI touch device delivers a max-sized
+input or report-descriptor packet. Not a userspace-crafted syscall
+overflow; it is device-driven heap overflow on a common input path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record:
-- DRM `drivers/gpu/drm/omapdrm/dss/dsi.c` in **this tree** already calls
-  `dsi_handle_isrs(&dsi->isr_tables, ...)` under `irq_lock` (the
-  backported twin).
-- fbdev `dispc-compat.c` still memcpy’s ISRs then drops the lock;
-  leftover sibling, not a blocker for this patch.
-- `isr_tables_copy` exists only in this fbdev `dsi.c` in this checkout.
+Record: Same class of bug in QuickI2C (`HIDI2C_PACKET_LEN`). Output SPI
+buffer already fixed by `6fcefe71aeb52`. No other `input_buf` alloc in
+this driver.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`
-- `make kernelversion` / Makefile: **6.12.111**
-- `git merge-base --is-ancestor 31875c51c31ed HEAD` → not an ancestor
-  (fix not in this tree)
-- Buggy code present: `isr_tables_copy` at `dsi.c:330`, memcpy at
-  `dsi.c:841-848`
-- Introduced here via `f76ee892a99e6` (v4.5-era copy)
+Record: Yes, at `v6.18.57`:
+
+```
+qsdev->input_buf = devm_kzalloc(qsdev->dev, max_input_len, GFP_KERNEL);
+```
+
+Driver exists from v6.15 through this 6.18.y tree. Bug introduced with
+the completed driver (`4138f21115aec`).
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record:
-- `git apply --check` of `31875c51c31ed` fails only because context has
-  `timer_delete` vs local `del_timer`.
-- The two functional hunks (remove field; move `dsi_handle_isrs` before
-  unlock) match this tree byte-for-byte aside from that nearby timer
-  name.
-- Expected difficulty: **minor context tweak**, not rework.
+Record: **Clean apply**. `patch -p1 --dry-run` against the `v6.18.57`
+file succeeded. Surrounding function matches. Macro already present.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record:
-- DRM equivalent already applied (`2c27a84ba8d1b`).
-- No fbdev DSI equivalent. `FB_OMAP2` depends on `DRM_OMAP=n`, so omapfb
-  users do **not** get the DRM fix.
+Record: Output-side header sizing (`6fcefe71aeb52`) is already in
+`v6.18.57`. Input-side overflow is **not** fixed at `v6.18.57`. No
+alternate input_buf fix found.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/video/fbdev/omap2` — SoC display driver. Criticality:
-**PERIPHERAL** (OMAP2+ boards using legacy fbdev, not omapdrm). Still
-in-tree and user-facing on that hardware.
+Record: `[HID / Intel THC QuickSPI]` `[IMPORTANT]` — not core mm/net,
+but the HID-over-SPI path for Intel touch on MTL/LNL/PTL/ARL/WCL/NVL.
+Crash/overflow there takes down input on those machines.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature/legacy. Low churn; bug has been present since the 2015
-omapdss copy. Maintainer (Deller) still takes fixes.
+Record: Actively maintained (device IDs, PM, DMA bounds). Still a small,
+contained driver, not a refactoring minefield.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / config-specific: `CONFIG_FB_OMAP2` +
-`CONFIG_FB_OMAP2_DSS_DSI` on OMAP2+ with MIPI DSI, and only when DRM
-omap is disabled.
+Record: Driver-specific / config-specific (`CONFIG_INTEL_QUICKSPI`,
+`X86_64 && PCI && ACPI`). Users of Intel THC HID-over-SPI touch (Meteor
+Lake through Nova Lake PCI IDs in this tree).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Trigger: DSI IRQ concurrent with unregister of a stack-backed ISR
-  after `complete()` or timeout (`dsi_sync_vc_*` 10 ms, BTA 500 ms, ULPS
-  1000 ms).
-- Dual-ISR BTA path is the most realistic (two handlers, one stack
-  object).
-- Unprivileged userspace can drive framebuffer updates that hit
-  `dsi_sync_vc`.
+Record: Device sends a HID-over-SPI body whose content length equals
+`max_input_len` or `rep_desc_len`. That is a normal max-size touch
+report / report-descriptor response, not an exotic error path.
+Unprivileged userspace cannot directly size the DMA packet; a
+malicious/buggy touch controller can. Trigger likelihood: **realistic on
+real hardware**.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Use-after-free of stack completions / handler-data → kernel oops
-or memory corruption in hardirq. Severity: **HIGH**.
+Record: Heap buffer overflow via `sg_copy_to_buffer` into `devm_kzalloc`
+memory. Typical overrun is 4 bytes; DMA `max_packet_size` is 4K-aligned,
+so a larger `mes_len` could copy more. Failure mode: heap corruption →
+oops/panic or memory corruption. Severity: **HIGH** (not a WARN-only
+issue).
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: HIGH for omapfb+DSI users (prevents UAF in IRQ). Population
-  is small, but the DRM twin was already taken into this same 6.12.y
-  tree, which shows the bug class is treated as stable-worthy.
-- Risk: LOW (9 lines, verified no self-unregister, `complete()` under
-  spinlock is fine).
-- Ratio: benefit outweighs risk.
+Record: Benefit **high** (stops heap overflow on touch RX). Risk **very
+low** (2 lines, +4 bytes, existing macro). Ratio strongly favors
+backport.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real UAF: lockless copy of pointers to `DECLARE_COMPLETION_ONSTACK`
-  objects
-- Dual-ISR BTA path makes the race practical, not only a 1-instruction
-  window
-- Small, obviously correct lock-scope change
-- All ISR callbacks verified not to unregister (no self-deadlock)
-- Code exists in this 6.12.111 tree; bug dates to 2015 copy
-- fbdev maintainer applied v1 with no NAK
-- Identical DRM fix already in this tree; omapfb users are the leftover
-  affected set
+- Real heap overflow: DMA copies header+payload into a payload-only
+  buffer.
+- Bug exists in this 6.18.57 tree; driver has been in-tree since v6.15.
+- Important: kernel memory corruption / crash on a production Intel
+  touch path.
+- Tiny, obviously correct, uses `HIDSPI_INPUT_BODY_SIZE` already in this
+  tree.
+- Output buffer already got the analogous header sizing here; this
+  completes the same invariant.
+- Author is THC maintainer; HID maintainer applied v1 with no
+  objections.
+- Applies cleanly; no prerequisites missing.
 
 AGAINST:
-- No user `Reported-by` / syzbot (bot-found)
-- Peripheral OMAP fbdev DSI, not a core path
-- Vanilla patch needs a one-line context adjust (`del_timer`)
-- DISPC has a similar leftover pattern (out of scope for this commit)
+- No public crash report / syzbot (maintainer-found “potential”
+  overflow).
+- Affects only Intel THC QuickSPI, not all machines.
+- Cover letter wording is “potential”; DMA copy confirms it is real.
 
 UNRESOLVED:
-- Could not query lore.kernel.org/stable (HTTP 403)
-- No runtime reproduction in this session (analysis is from code +
-  thread)
+- lore.kernel.org HTTP 403; discussion recovered via `b4 dig -m`.
+- Stable list search unverified for the same 403 reason.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — lock documents the intent;
-   maintainer applied; DRM twin already on 6.12.y
-2. Fixes a real bug that affects users? **PASS** — UAF on DSI IRQ vs
-   stack completions
-3. Important issue? **PASS** — UAF / oops / memory corruption (HIGH)
-4. Small and contained? **PASS** — 9 lines, one file
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — functional diff matches;
-   trivial `del_timer` context
+1. Obviously correct and tested? **PASS** — 4-byte header included via
+   existing macro; applied by HID maintainer.
+2. Fixes a real bug that affects users? **PASS** — undersized
+   `input_buf` vs DMA copy of full packets.
+3. Important issue? **PASS** — heap overflow / memory corruption, HIGH.
+4. Small and contained? **PASS** — +2/-1, one function, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — clean apply to `v6.18.57`;
+   macro present.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 Record: Not an ID/quirk/DT/build/docs exception. It is a normal memory-
-safety bugfix.
+safety fix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This should be backported to **this** 6.12.y tree. The buggy
-`isr_tables_copy` path is here; the fix is the same one already taken
-for omapdrm; omapfb is a separate config and still needs it.
+Backport. The bug is in this tree, the fix is surgical, and the failure
+mode is heap overflow on the Intel QuickSPI input path.
 
-Verification:
-- [Phase 1] Tags: Suggested-by sashiko-bot; SOB Kemnade + Deller; no
-  Fixes/Cc stable/Reported-by
-- [Phase 2] Diff: remove `isr_tables_copy`; call
-  `dsi_handle_isrs(&dsi->isr_tables)` before `spin_unlock`
-- [Phase 2] Confirmed stack completions at dsi.c:2298, 2347, 2617, 3115
-- [Phase 2] Confirmed ISR callbacks only complete/read MMIO; no
-  unregister
-- [Phase 3] Blame: f76ee892a99e6 (2015); ancestor check of 31875c51c31ed
-  vs HEAD: not present
-- [Phase 3] DRM twin 2c27a84ba8d1b is in this tree (`git merge-base
-  --is-ancestor` exit 0; `v6.12.110~477`)
-- [Phase 4] b4 dig: lore msgid 20260702-fbomap-uaf-
-  fix-v1-1-6417edf9d3e7@kemnade.info; v1 only; Deller “applied.”
-- [Phase 4] UNVERIFIED: stable@ lore search (HTTP 403)
-- [Phase 5] Handler installed via `devm_request_irq` + `IRQF_SHARED`;
-  sync/BTA/ULPS are the users
-- [Phase 6] Local tree 6.12.111; buggy memcpy still at dsi.c:841-848;
-  apply --check fails only on `timer_delete` vs `del_timer`
-- [Phase 7] Peripheral fbdev OMAP DSI; mutually exclusive with DRM_OMAP
-- [Phase 8] Failure mode: hardirq UAF of stack object, severity HIGH
+---
 
-The patch is a small UAF fix that already exists for the DRM clone in
-this tree, applies with a trivial context tweak, and matches stable
-rules.
+## What the commit solves for this tree
+
+On 6.18.57, `quickspi_alloc_report_buf()` sizes `input_buf` to the HID
+payload only. RX DMA later copies a full HIDSPI body (`struct
+input_report_body_header` + content) into that buffer. At max payload
+(or max report descriptor), that is at least a 4-byte heap overflow, and
+the DMA length check cannot catch it because hardware buffers are
+4K-aligned. Touch IRQ handling is a normal path on Intel THC HID-over-
+SPI laptops.
+
+The change allocates `HIDSPI_INPUT_BODY_SIZE(max_input_len)` instead.
+That matches how this tree already sizes the output buffer. No new API,
+no extra locking, no missing prerequisites.
+
+Risk vs benefit: four extra bytes at probe vs heap corruption on input.
+Benefit dominates.
+
+---
+
+## Verification
+- [Phase 1] Tags: Even Xu + Jiri Kosina SOBs; no Fixes/Reported-by/Cc:
+  stable (expected).
+- [Phase 2] Diff: `quickspi_alloc_report_buf()` switches `devm_kzalloc`
+  from `max_input_len` to `HIDSPI_INPUT_BODY_SIZE(max_input_len)`
+  (+2/-1).
+- [Phase 2] `include/linux/hid-over-spi.h`: `HIDSPI_INPUT_BODY_SIZE` =
+  content + packed 4-byte header.
+- [Phase 2] `read_dma_buffer()` copies `mes_len` into `input_buf` with
+  only `max_packet_size` (`ALIGN(..., SZ_4K)`) as a cap.
+- [Phase 3] `git blame` at v6.18.57: alloc from `4138f21115aec`
+  (v6.15+); still payload-only.
+- [Phase 3] `git merge-base --is-ancestor 4138f21115aec v6.18.57` → yes;
+  `6fcefe71aeb52` already in v6.18.57 (output only).
+- [Phase 3] Author Even Xu is MAINTAINERS THC driver maintainer.
+- [Phase 4] `b4 dig -c a1cdd72371270640bd357bd3e3b2ec0be17c9536`: v1
+  series; Kosina applied to hid.git#for-7.3/upstream-fixes.
+- [Phase 4] `b4 dig -w`: jikos, bentiss, linux-input CCd.
+- [Phase 4] UNVERIFIED: live lore.kernel.org pages (HTTP 403); thread
+  recovered from mbox.
+- [Phase 5] Caller: `quickspi_probe()` → IRQ RXDMA2 →
+  `thc_rxdma_read(input_buf)`.
+- [Phase 6] `git describe HEAD` / Makefile: **6.18.57**. Buggy line
+  present at v6.18.57; `HIDSPI_INPUT_BODY_SIZE` present; `patch --dry-
+  run` clean.
+- [Phase 8] Failure mode: heap overflow on max-size HID-over-SPI input,
+  severity HIGH.
+- UNVERIFIED: whether this was already discussed on stable@ (lore 403).
 
 **YES**
 
- drivers/video/fbdev/omap2/omapfb/dss/dsi.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-index 370e8623754ec..b1df2c014b00c 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-@@ -326,8 +326,6 @@ struct dsi_data {
+diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
+index 1c96d1d85845c..48387a7341604 100644
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
+@@ -549,7 +549,8 @@ static int quickspi_alloc_report_buf(struct quickspi_device *qsdev)
+ 	max_input_len = max(le16_to_cpu(qsdev->dev_desc.rep_desc_len),
+ 			    le16_to_cpu(qsdev->dev_desc.max_input_len));
  
- 	spinlock_t irq_lock;
- 	struct dsi_isr_tables isr_tables;
--	/* space for a copy used by the interrupt handler */
--	struct dsi_isr_tables isr_tables_copy;
+-	qsdev->input_buf = devm_kzalloc(qsdev->dev, max_input_len, GFP_KERNEL);
++	qsdev->input_buf = devm_kzalloc(qsdev->dev,
++					HIDSPI_INPUT_BODY_SIZE(max_input_len), GFP_KERNEL);
+ 	if (!qsdev->input_buf)
+ 		return -ENOMEM;
  
- 	int update_channel;
- #ifdef DSI_PERF_MEASURE
-@@ -838,15 +836,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
- 		timer_delete(&dsi->te_timer);
- #endif
- 
--	/* make a copy and unlock, so that isrs can unregister
--	 * themselves */
--	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
--		sizeof(dsi->isr_tables));
- 
-+	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
- 	spin_unlock(&dsi->irq_lock);
- 
--	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
--
- 	dsi_handle_irq_errors(dsidev, irqstatus, vcstatus, ciostatus);
- 
- 	dsi_collect_irq_stats(dsidev, irqstatus, vcstatus, ciostatus);
 -- 
 2.53.0
 
