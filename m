@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8B5A082D;
-	Mon, 19 Oct 2026 13:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D032572660;
+	Mon, 19 Oct 2026 13:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418374; cv=none; b=jTuOWL4R20ZE8acZnqnWWgjX2FmNVgDITk7NQRcELZdrV+DLYe2H16gaoLEOYmp1031Fg94Of+qZkJLi5onWPJ6cFxXNqgXFg6hwHNtZ/ZyW+TmVpcEJBZt9rrp9dYEnWW6t7Owa9FObPe9FiAAY6pEp7tY3AmGzWyM0RJELlW8=
+	t=1792418375; cv=none; b=kAbw9aWtyCdRl7ksKgia69v48zHIIowiTnv0CfSrxLd8tOPFCf2Gt7iVCEK7/llNYbIuXs/xH66FGZrIZnNFVr7YsjzeGFqS6ZosV2GgUSwTg2Ypeq+BA5+Ul3UIw9TLNiBA9ZxY39TqB5+MK5NAXBzIGD9dhK98ELGP6s6Kqo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418374; c=relaxed/simple;
-	bh=T3zLdA9bCbKodBGblZE0QTW2oGErBGum4uQN2UgSQH8=;
+	s=arc-20240116; t=1792418375; c=relaxed/simple;
+	bh=7fOGAx/Tg/jYcpfn+BboBDM5m3UlT4OV4GNAjWvkG1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rd8sU55erQcnTX/UWMsCqkB/qsqIT0Ph0fni8dBNFrMV73yPt+tym4+FOurJ3fBTWCTpPZdIuo4wuOga5Wh5KrdazUCJ5GfXUzBm8OpGLtKxusfivqc92+DQl2ZywyBgyZdQBHfxASahvH3kthjIoe7au0H1vJreN889j1sr4bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QMytVi/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VF4yfN2FNmR7nDz8mFVB0XfwFqi8OtBWqxeUYeV5ngSvGBLKIBiLWsDUqa8eoksspMHrjEuPw0j6MPFsGtOyZTrpLX8i08U+I/jDY7iHgw3KkOf4R4pwtI1QDDlrMcIRHz212aQQmPDHDd5sZR2LfK6De/KA/btWQ7CPLR5vtQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJbFAI27; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QMytVi/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25CA1F000CA;
-	Mon, 19 Oct 2026 13:59:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJbFAI27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5EC1F000CB;
+	Mon, 19 Oct 2026 13:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418371;
-	bh=BKJyvaJualIFrkcTwoJTDGl29AXmYioDQwVF/x+kK+I=;
+	s=k20260515; t=1792418373;
+	bh=HW6Xp/j1e07UOty9M9psgcYYtqz/Wuq9HNxVQFuKvv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMytVi/bsMdAvKUUbQfpVCPIoTa4PUdoSiI4GXu9vQ/r3k1imvRX3ppQKqqrnIomc
-	 2Y3LrEbMoUrZeAw65bGxvrb05gy1itUqZD84aALNG7VpZzaZBIrSBLQyDIiiErU8rz
-	 3L6ycPN3VSmJ4CO2SiamznoAfWrsdmMrna/HfGv67+127wyDfgoiCR6nVBVdBlCwxG
-	 XZ25wZfcIqTCc7s21NauG5MaSlHtS4FWfi+V2EHNmK7TD0FpKlaLI/wk5PsaHjBuub
-	 1LWCe6mkw7jhEw13fvJsVLKvcEJO4XDGdVk+JNcd8ul/E8DGpGbwScBbcwXpQVZZyW
-	 VtZY2LxT/H8gQ==
+	b=dJbFAI27d9Co9FBGmKJWPplXzTWvIgc+ABTD+Y9I9Q7KGumC7N5BARvlMfv+rxXMq
+	 DABh0M0oJUI7jdCeQMgjZuX6imevpGalEzTCdoCkBXzo3WcJ3J5KYrqUinAQIwL8hG
+	 4h5hZenz3HuQ8kerlw+Z4zAgaIDqr4P+ygWSvyEDMoesZ0srm8/6fISx6p7i1i7T3C
+	 yagXzn0zOVr4rV9WcJUIW4gRP5H1XI23khvGnJCL0m6ygnka4fYj+GkwDze4RzKz62
+	 MGigd1PLW0Ks3lnauavZzVcISnD07wQ4ihVwFLeA1TKa7HwOsALQbaaKE1UKN1s296
+	 p2M7XzKqdeXjQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zizhi Wo <wozizhi@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+Cc: Ian Abbott <abbotti@mev.co.uk>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hirofumi@mail.parknet.co.jp,
+	hsweeten@visionengravers.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] fat: reject name longer than NAME_MAX in msdos_format_name()
-Date: Mon, 19 Oct 2026 09:48:12 -0400
-Message-ID: <20261019135441.1420968-201-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] comedi: ni_atmio16d: Add sanity check to interrupt handler
+Date: Mon, 19 Oct 2026 09:48:13 -0400
+Message-ID: <20261019135441.1420968-202-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,407 +55,420 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
+[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
 
-msdos_format_name() performs no upper-bound check on the input name length.
-It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
-and returns success. The subsequent fat_scan() then matches only against
-these 11 truncated bytes, so it returns an inode as long as any entry with
-the same 8.3 name exists on disk.
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-For example, passing a 300-byte name of all 'A's returns 0 with res set to
-"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
-longer than NAME_MAX.
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
 
-As a result, when a user calls open() on a path component longer than
-NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
-individual component. The dentry keeps the original long name but gets an
-inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
--> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
-reported to userspace with an empty name.
-
-vfat is not affected, as create goes through xlate_to_uni() which refuses
-names longer than FAT_LFN_LEN.
-
-Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
-the single entry point for all msdos name handling, aligning with the
-NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
-
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53**. The buggy `msdos_format_name()` path is
-present here and the three-line `NAME_MAX` check is a self-contained
-correctness fix for that code.
+I have the attach-vs-IRQ ordering, the KASAN report, and the mailing-
+list series. Compiling the full nine-phase verdict next.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[fat]** **[reject]** Reject names longer than `NAME_MAX` in
-`msdos_format_name()`. Subsystem is the MS-DOS FAT namei path. Verb
-“reject” is a correctness/validation fix, not a feature add.
+Record: **[comedi / ni_atmio16d] [Add] [sanity check in IRQ handler to
+avoid using `dev->read_subdev` before attach completes]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Fixes:** none (expected for this review)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none on the commit; mailing-list thread shows Brauner
-  applied it
-- **Acked-by:** none
-- **Link:** https://patch.msgid.link/20260629130943.3671939-1-
-  wozizhi@huaweicloud.com
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Zizhi Wo \<wozizhi@huawei.com\>; Christian Brauner
-  (Amutable) \<brauner@kernel.org\>
-- Pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
-  9d7ed813ee5ff0d469bd99630828ed6fdef4e8da]` ignored as candidate-prep
-  markers
-- Notable: VFS maintainer SOB; FAT maintainer Hirofumi was on the
-  original To: list
+- Reported-by: Jaeyoung Chung `<jjy600901@snu.ac.kr>`
+- Reported-by: Sangyun Kim `<sangyun.kim@snu.ac.kr>`
+- Reported-by: Kyungwook Boo `<bookyungwook@gmail.com>`
+- Link: `https://lore.kernel.org/lkml/20260610115912.780131-1-
+  jjy600901@snu.ac.kr/` (original bug report)
+- Link:
+  `https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk`
+  (applied patch)
+- Signed-off-by: Ian Abbott `<abbotti@mev.co.uk>` (COMEDI maintainer)
+- Signed-off-by: Greg Kroah-Hartman `<gregkh@linuxfoundation.org>`
+- No Fixes: tag (expected)
+- No Cc: stable (expected; not a negative)
+- Three independent reporters (SNU) — real-world/analysis report, not a
+  drive-by cleanup
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `msdos_format_name()` has no upper bound on `len`. It
-  truncates an arbitrary name to 8.3 (11 bytes) and returns 0.
-  `fat_scan()` then matches those 11 bytes, so a 300-byte `"AAA..."`
-  lookup can attach the inode for `"AAAAAAAA"`.
-- **Symptom:** `open()` of a component longer than `NAME_MAX` (255)
-  succeeds because VFS only enforces `PATH_MAX` per path, not per
-  component. The dentry keeps the long name, becomes positive, then
-  `vfs_open()` → `fsnotify_open()` → `fanotify_info_copy_name()` hits
-  `WARN_ON_ONCE()` and reports an empty name to userspace.
-- **Version info:** none stated; code is ancient.
-- **Root cause (author):** missing length check at the single MS-DOS
-  name-formatting entry point. VFAT create is already guarded by
-  `xlate_to_uni()` vs `FAT_LFN_LEN`.
+- **Bug:** IRQ handler is registered in `atmio16d_attach()` before the
+  device is fully set up (`dev->attached` still false,
+  `dev->read_subdev` still NULL).
+- **Symptom:** NULL deref of `dev->read_subdev` if an IRQ arrives early.
+- **Author’s root cause:** `request_irq()` runs after the driver writes
+  registers to disable interrupt generation, so a premature IRQ should
+  only happen with a wrong I/O base/IRQ or bad hardware — still treated
+  as a crash to guard against.
+- **Version info:** none in the message. Git shows the commit is in this
+  tree (`v7.3-rc1` onward).
+- Original report subject: `comedi: KASAN null-ptr-deref in ISA driver
+  IRQ handlers on early IRQ`. It names `ni_atmio16d.c` /
+  `atmio16d_interrupt` explicitly.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit validation fix for
-silent truncation, a kernel `WARN_ON_ONCE`, and a broken fanotify event.
+Record: Not hidden. It is an explicit NULL-deref guard. Cover letter
+title: “Add/fix sanity check in ISA drivers to avoid null-ptr-deref”.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `fs/fat/namei_msdos.c` (+3 / −0)
-- **Function:** `msdos_format_name()`
-- **Scope:** single-file surgical fix
+- File: `drivers/comedi/drivers/ni_atmio16d.c` — **+3 / −0**
+- Function: `atmio16d_interrupt()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before, any length was accepted and folded into 8.3. After, `len
-> NAME_MAX` returns `-ENAMETOOLONG` before truncation. Callers:
-- `msdos_create` / `msdos_mkdir` / rename: surface `-ENAMETOOLONG`
-- `msdos_find` (lookup/unlink/rmdir): still maps any format error to
-  `-ENOENT` (pre-existing), so lookup of a too-long name fails instead
-  of matching a truncated 8.3 entry
-- `msdos_hash` / `msdos_cmp`: fall back to the existing invalid-name
-  path
+Record: Before, the handler always did `s = dev->read_subdev`,
+`inw(AD_FIFO_REG)`, `comedi_buf_write_samples(s, ...)`,
+`comedi_handle_events(dev, s)`. After, if `!dev->attached` it returns
+`IRQ_NONE` before those uses of `s`. Assigning `s` before the check is
+only a pointer copy, not a dereference (unlike sibling “Fix sanity
+check” patches that moved `s->async` loads).
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic / correctness** plus **memory-safety defensive path**.
-Missing bounds check let names longer than `NAME_MAX` become positive
-dentries. `fanotify_info.name_len` is a `u8` (`BUILD_BUG_ON(NAME_MAX >
-U8_MAX)`), so fanotify refuses `name->len > NAME_MAX` with
-`WARN_ON_ONCE` and copies nothing.
+Record: **NULL pointer dereference (memory safety)** in IRQ context.
+`comedi_buf_write_samples()` calls `comedi_get_is_subdevice_running(s)`,
+which does `spin_lock_irqsave(&s->spin_lock, ...)`. If `s` is NULL, that
+is a KASAN null-ptr-deref / oops.
+
+Mechanism: `atmio16d_attach()` calls `request_irq()` at line 597, then
+sets `dev->read_subdev` at line 634. Core sets `dev->attached = true`
+only later in `comedi_device_postconfig()`. Window: handler live,
+`read_subdev` still NULL.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. Regression risk is very low: only
-names longer than 255 bytes change behavior, and those are not valid
-Unix names. No locking, no API, no data-structure change. Slight
-incompleteness: lookup still reports `-ENOENT` rather than
-`-ENAMETOOLONG` because `msdos_find()` swallows format errors; that
-still stops the WARN and the wrong-inode match.
+Record: Obviously correct and matches the existing comedi pattern (`if
+(!dev->attached) return IRQ_NONE` in many drivers). Minimal. Regression
+risk is very low: at worst a premature IRQ during attach is ignored. No
+API/data-structure change. The check is the same idiom already used in
+`ni_mio_common.c`, `das800.c`, `adv_pci1710.c`, etc.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: On `v6.18.53`, `msdos_format_name()` starts at **1da177e4c3f41**
-(Linux-2.6.12-rc2, 2005). No `NAME_MAX` check. The bug is old, not new-
-in-6.19+.
+Record:
+- Handler dates to 2009 (`2323b276308a5d`, Chris R. Baugher).
+- `s = dev->read_subdev` since `bea70d0b2dc07` (2013).
+- `comedi_buf_write_samples()` since `67fdc3073b785` (2014).
+- Driver left staging in `8ffdff6a8cfbd` (2021).
+- Bug is long-standing, not new 7.x code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable.
+Record: No Fixes: tag. Not applicable. Introduced by the historical IRQ-
+before-setup design, not a recent regression commit.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `fs/fat/namei_msdos.c` history on this series is
-unrelated (`fat: avoid parent link count underflow in rmdir`, mount-
-API/idmap ports). No “patch X/Y” series. Standalone.
+Record: This is **patch 5/11** of Ian Abbott’s series (standalone per
+driver). Related in this tree:
+- `1ca4475191513` aio_iiro_16 Add sanity check
+- `e90d0550c5b30` das6402 Add sanity check
+- `8dda63825752a` dt2811 Fix sanity check (moves deref after attached
+  check)
+- `e7356cdc7077a` ni_at_a2150 Fix sanity check
+- this commit
+- `f876cbfe3e066` pcm711 Fix sanity check
+- others for pcl816/pcl818/pcmmio/pcmuio/quatech
+- Earlier: `17221216ae8ce` comedi_parport: deal with premature interrupt
+
+No extra refactor is required for this 3-line change. Sibling “Fix
+sanity check” commits are for drivers that already had the flag test in
+the wrong place; this driver had no check.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: No other `fs/fat/` commits by Zizhi Wo on `master`. Huawei
-contributor; the VFS maintainer applied the patch.
+Record: Ian Abbott is listed as COMEDI maintainer in MAINTAINERS. This
+is a maintainer series fixing the reported drivers plus similar ones.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Diff uses existing `NAME_MAX` and `-ENAMETOOLONG`. No new
-helpers. Applies standalone. `git diff v6.18.53 04dcdda681446 --
-fs/fat/namei_msdos.c` is exactly this 3-line hunk.
+Record: None. Uses existing `dev->attached` and
+`request_irq`/`read_subdev`. Can apply standalone. `df05bcfcbd326` (I/O
+base sanity checks) is unrelated.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+`git merge-base --is-ancestor 13f4796223489 HEAD` → yes (already in this
+7.3-rc4 checkout). That is origin history, not a reason to reject on
+technical merit.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- Lore/msgid: https://patch.msgid.link/20260629130943.3671939-1-
-  wozizhi@huaweicloud.com
-- `b4 dig -a`: **v1 only**
-- Thread: submission + Brauner “Applied to vfs-7.3.fat”. No NAKs, no
-  requested revisions, no reviewer `Cc: stable` in the saved mbox.
+- `b4 dig -c 13f4796223489` →
+  https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+- Subject on list: `[PATCH 05/11] comedi: ni_atmio16d: Add sanity check
+  to interrupt handler`
+- `b4 dig -a`: single series revision **v1** (11 patches), dated
+  2026-06-18. No v2/v3.
+- Cover letter: “comedi: Add/fix sanity check in ISA drivers to avoid
+  null-ptr-deref”
+- Thread mbox: patch series only; no NAK, no reviewer risk flags in the
+  saved thread.
+- Greg KH committed the series into char-misc (2026-07-17).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Hirofumi (FAT maintainer), Brauner,
-linux-fsdevel, linux-kernel, yangerkun@huawei.com,
-chengzhihao1@huawei.com. Brauner applied it the next day.
+Record (`b4 dig -w`): To/Cc were Ian Abbott, linux-kernel, Greg Kroah-
+Hartman, H Hartley Sweeten (other COMEDI maintainer), and the three
+reporters. Appropriate maintainers were on the patch. No Reviewed-by in
+the commit; Greg applied it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla link. Author describes a concrete `open()` +
-fanotify path. Openwall mirror matches the commit text; no extra
-reports.
+Record: Report from Jaeyoung Chung et al., 2026-06-10, lore msgid
+`20260610115912.780131-1-jjy600901@snu.ac.kr`. KASAN null-ptr-deref. It
+lists `ni_atmio16d.c` / `atmio16d_interrupt` and explains: `request_irq`
+then later `dev->read_subdev = s`; handler passes NULL into
+`comedi_buf_write_samples()` → `comedi_get_is_subdevice_running(s)` →
+`&s->spin_lock`. Suggested fix: move `request_irq` or guard the handler.
+Maintainer chose the established `dev->attached` guard.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single-patch series `[1/1]`. No follow-up on `fs/fat/` changing
-this check.
+Record: 11 independent per-driver patches. This one does not need the
+others. `comedi_parport` was fixed earlier (`17221216ae8ce`).
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No relevant stable-list discussion found (search did not surface
-this subject). No known reason to exclude it.
+Record: lore.kernel.org/stable search for these terms did not surface a
+dedicated discussion of this patch (hits were unrelated stable release
+mails). No evidence it was rejected for stable. Absence of Cc: stable is
+expected for this review pipeline.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `msdos_format_name()` only.
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `atmio16d_interrupt()` modified. Callers/setup:
+`atmio16d_attach()` via `request_irq(..., atmio16d_interrupt, ...)`.
+Core: `comedi_device_postconfig()` sets `attached`. Crash site:
+`comedi_buf_write_samples()` → `comedi_get_is_subdevice_running()`.
 
 **Step 5.2: TRACE CALLERS**
-Record (all in `fs/fat/namei_msdos.c`):
-- `msdos_find()` ← `msdos_lookup`, `msdos_rmdir`, unlink
-- `msdos_hash()`, `msdos_cmp()` (dcache)
-- `msdos_create()`, `msdos_mkdir()`, rename
-
-Call context: VFS lookup/create from syscalls (`open`, `stat`, `mkdir`,
-…), not IRQ.
+Record: Registered only from `atmio16d_attach()` when `it->options[1]`
+(IRQ) is non-zero. IRQ context. Attach is `COMEDI_DEVCONFIG`
+(`do_devconfig_ioctl`), which requires `CAP_SYS_ADMIN`.
 
 **Step 5.3: TRACE CALLEES**
-Record: After the check, same 8.3 formatting and `strchr()` validation.
-Success path still feeds `fat_scan()`, which `strncmp()`s 11-byte names.
+Record: `inw()`, `comedi_buf_write_samples()`, `comedi_handle_events()`.
+First of those that uses `s` is `comedi_buf_write_samples` → `spin_lock`
+on `s->spin_lock`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `open()` → VFS lookup → `msdos_lookup()` →
-`msdos_find()` → `msdos_format_name()`. If format “succeeds” on a
-truncated name, `fat_build_inode()` + `d_splice_alias()` make a positive
-dentry; `vfs_open()` → `fsnotify_open()` can call
-`fanotify_info_copy_name()`. **Reachable from userspace** on
-`CONFIG_MSDOS_FS`. VFAT lookup uses `vfat_find()` → `fat_search_long()`
-/ `xlate_to_uni()`, not this function.
+Record: Userspace (admin) configures the ISA card with I/O base + IRQ →
+attach → `request_irq` → possible IRQ before `read_subdev`/`attached`.
+Reachable. Not a hot syscall path for unprivileged users, but a real
+attach-time oops.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same `len > NAME_MAX` → `-ENAMETOOLONG` exists in
-`simple_lookup()`, 9p (`v9fs_vfs_lookup`), ceph, autofs, configfs.
-Commit’s “xfs does this at lookup” is **not** visible as `d_name.len >
-NAME_MAX` under `fs/xfs/` in this tree (minor message inaccuracy). VFAT
-`xlate_to_uni()` already returns `-ENAMETOOLONG` when Unicode length >
-`FAT_LFN_LEN` (255).
+Record: Same class of bug across the 11-driver series; many other comedi
+IRQ handlers already had `if (!dev->attached)`. Systematic ISA attach-
+vs-IRQ issue.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `git describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`,
-`VERSION=6 PATCHLEVEL=18 SUBLEVEL=53`. At **v6.18.53**,
-`msdos_format_name()` has no `NAME_MAX` check. `git merge-base --is-
-ancestor 04dcdda681446 v6.18.53` is **NO**. Bug introduced at 2.6.12-era
-git genesis, still present on this 6.18.y base.
+Record: Local tree is **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`, `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`).
+File `drivers/comedi/drivers/ni_atmio16d.c` is present. Attach still
+does `request_irq` before `read_subdev` / `attached`. The 3-line guard
+is already in this checkout because the commit landed in **v7.3-rc1**
+(not in v7.2). The buggy pattern (IRQ registered before setup) is still
+the attach design; the handler is what this patch hardens. Driver exists
+here; patch applies conceptually with no missing APIs.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Surrounding code at v6.18.53 matches the hunk
-context. No intervening refactor of this function.
+Record: Clean apply. Surrounding handler is the same as the parent of
+`13f4796223489`. No refactor blocking a 3-line insert.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No other `NAME_MAX` / `msdos_format_name` fix on this file in
-6.18.53. `fat: Fix statfs->f_namelen` is unrelated.
+Record: This commit and the rest of the 11-patch series are already
+ancestors of HEAD (char-misc → 7.3). No alternate fix for
+`atmio16d_interrupt` besides this guard. That does not change technical
+merit; it is origin history, not a “already selected for stable” marker.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **fs/fat (MS-DOS namei)**. Criticality **IMPORTANT** for
-`CONFIG_MSDOS_FS` users (USB/floppy/legacy FAT without long names), not
-core VFS. Not staging.
+Record: **comedi** (`drivers/comedi/drivers/ni_atmio16d.c`), National
+Instruments AT-MIO-16/16D ISA DAQ. **PERIPHERAL** (legacy ISA,
+`CONFIG_COMEDI_NI_ATMIO16D`, MAINTAINERS status “Odd Fixes”). Still a
+real in-tree driver with users who need it not to oops.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature; this function has been stable for decades. Low churn
-around the format loop. Typical “old bug, small late fix.”
+Record: Mature/low-churn. Recent work is this sanity-check series plus
+I/O-base checks. Long-lived bug, not a rebase artifact.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Filesystem/config-specific:** `CONFIG_MSDOS_FS` mounts (`mount
--t msdos`). Not the common VFAT long-name driver. Still a real
-production config (Kconfig even says “If unsure, answer Y”).
+Record: **Driver-specific / config-specific** —
+`CONFIG_COMEDI_NI_ATMIO16D` and an AT-MIO-16(D) with an IRQ configured.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Unprivileged user with access to an msdos mount calls
-`open()`/`stat()`/etc. with a component length 256..PATH_MAX, and a
-directory entry whose 8.3 name matches the truncated form. Fanotify
-`WARN` additionally needs a fanotify mark that reports names (typically
-privileged watcher). Trigger is uncommon but fully reachable; not a
-theoretical race.
+Record: IRQ between `request_irq()` and full attach (`attached` /
+`read_subdev`). Author: wrong I/O port or IRQ, or bad hardware;
+reporters: any early IRQ after `request_irq`. Needs `CAP_SYS_ADMIN` to
+attach. Not an unprivileged local DoS, still a kernel oops on a
+documented misconfig/race window.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Kernel `WARN_ON_ONCE` (stack dump; panic if `panic_on_warn`) —
-  **HIGH**
-- fanotify userspace event with empty name (breaks monitors/security
-  policy) — **MEDIUM-HIGH**
-- Lookup/open of the wrong 8.3 file via an illegal Unix name —
-  **MEDIUM**
-Overall: **HIGH** (userspace-triggerable WARN + wrong-file match), not a
-default panic.
+Record: **KASAN null-ptr-deref / oops in IRQ handler**. Severity
+**HIGH** (crash). Not silent corruption.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: **Benefit high** relative to scope (stops WARN, empty fanotify
-names, illegal-name aliasing). **Risk very low** (3 lines, error return
-only). Ratio strongly favors backport.
+Record:
+- **Benefit:** Prevents oops on a real, reported path. High for users of
+  this driver; limited population.
+- **Risk:** Very low (3 lines, established pattern).
+- **Ratio:** Favorable. Crash-prevention on existing driver code is what
+  stable is for.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real bug: names > `NAME_MAX` truncated to 8.3 and treated as success
-- Userspace-triggerable `WARN_ON_ONCE` in fanotify; empty name delivered
-  to watchers
-- `fanotify_info.name_len` is `u8`; the WARN is a hard length invariant
-- Three-line check at the single MS-DOS format entry point
-- Present in this 6.18.53 tree since 2.6.12-era code
-- Applies cleanly; no prerequisites; no new API
-- Applied by VFS maintainer; FAT maintainer was CC’d; v1 accepted as-is
+- Real KASAN null-ptr-deref, named for this driver
+- Three reporters
+- Maintainer-authored, applied by Greg KH
+- 3-line, obviously correct, existing comedi idiom
+- Bug present since ~2013 in this handler
+- No new API/feature
+- Applies cleanly; no prerequisites
+- Failure mode is oops, not cosmetics
 
 AGAINST:
-- Only `CONFIG_MSDOS_FS`, not VFAT
-- No syzbot/`Reported-by`/explicit `Cc: stable`
-- Lookup still maps the error to `-ENOENT` via `msdos_find()`
-- Default severity is WARN + wrong lookup, not oops
+- Niche ISA DAQ; “Odd Fixes”
+- Trigger is attach-time / misconfig, not a hot unprivileged path
+- No Cc: stable (not a valid negative here)
+- 11-patch series, but this patch is self-contained
 
 UNRESOLVED:
-- Direct lore.kernel.org HTTP fetch returned 403; thread recovered via
-  `b4 dig -m`
-- xfs lookup `NAME_MAX` check cited in the message is not in `fs/xfs/`
-  here
-- No stable-list thread found
+- No reviewer replies in the saved lore mbox (Greg still applied it)
+- WebFetch to lore returned 403; report/thread recovered via `b4` + curl
+  `/raw`
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two-line check, Brauner
-   applied v1
-2. Fixes a real bug that affects users? **PASS** — wrong inode +
-   fanotify WARN/empty name
-3. Important issue? **PASS** — userspace-triggerable `WARN_ON_ONCE`;
-   wrong-file match
-4. Small and contained? **PASS** — +3 lines, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on 6.18.53
-   `namei_msdos.c`
+1. Obviously correct and tested? **PASS** — 3-line attached check;
+   maintainer series; Greg applied it.
+2. Fixes a real bug that affects users? **PASS** — KASAN null-ptr-deref
+   report listing this handler.
+3. Important issue? **PASS** — oops in IRQ context (HIGH).
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — driver and handler match; no
+   missing helpers.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID/quirk/DT/build/docs exception). Qualifies
-as a normal small bugfix.
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary crash
+fix.
 
-**Step 9.4: MAKE YOUR DECISION**
-This belongs on this 6.18.y tree. The buggy formatter is here, the
-fanotify WARN path is here, and the fix is a three-line `-ENAMETOOLONG`
-guard with negligible regression risk.
+**Step 9.4: DECISION**
 
-------------------------------------------------
-What the commit solves for stable users
-------------------------------------------------
-On msdos mounts, VFS allows a path **component** up to nearly `PATH_MAX`
-(4096). The MS-DOS formatter then silently compresses that to 8.3 and
-can bind a long name to an existing short-name inode. Opening that
-dentry trips `fanotify_info_copy_name()`’s `WARN_ON_ONCE(name->len >
-NAME_MAX)` and reports an empty name. The patch rejects `len > NAME_MAX`
-at the only MS-DOS format entry point, matching
-9p/ceph/`simple_lookup()`.
+This tree is **Linux 7.3-rc4**. The driver and attach/IRQ ordering are
+here. The patch stops a confirmed NULL deref in `atmio16d_interrupt()`
+when an IRQ fires after `request_irq()` and before `dev->attached` /
+`dev->read_subdev` are valid. That is a small, contained, real crash fix
+with no new ABI and negligible regression risk. It belongs in this
+tree’s comedi ISA driver.
 
-------------------------------------------------
-Verification
-------------------------------------------------
-- [Phase 1] Parsed subject/tags/body from `git log -1 04dcdda681446`;
-  ignored pipeline SOB/Upstream markers
-- [Phase 2] Diff is +3 lines in `msdos_format_name()`; callers grepped
-  in `fs/fat/namei_msdos.c`
-- [Phase 2] Confirmed `fat_scan()` matches 11-byte `MSDOS_NAME`;
-  `fanotify_info.name_len` is `u8`
-- [Phase 3] `git blame v6.18.53 -L 19,45 -- fs/fat/namei_msdos.c` →
-  1da177e4c3f41 (2.6.12-rc2)
-- [Phase 3] No `Fixes:` tag; no series; `git log master --author='Zizhi
-  Wo' -- fs/fat/` empty
-- [Phase 3] `git diff v6.18.53 04dcdda681446 -- fs/fat/namei_msdos.c` is
-  only this hunk
-- [Phase 4] `b4 dig -c 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da` → msgid
-  20260629130943.3671939-1
-- [Phase 4] `b4 dig -a`: v1 only; `-w`: Hirofumi + Brauner + linux-
-  fsdevel; `-m`: Brauner applied to vfs-7.3.fat, no NAK
-- [Phase 4] Openwall archive matches; lore HTTP 403; no stable-list hit
-  for this subject
-- [Phase 5] Call chain: `msdos_lookup` → `msdos_find` →
-  `msdos_format_name`; VFAT uses `xlate_to_uni`/`vfat_find`
-- [Phase 5] `simple_lookup`/9p/ceph have `NAME_MAX` checks; xfs claim
-  unverified in this tree
-- [Phase 6] `git describe HEAD` = v6.18.53-5049; `make kernelversion` =
-  6.18.53
-- [Phase 6] `v6.18.53:fs/fat/namei_msdos.c` lacks the check; ancestor
-  test vs v6.18.53 = NO
-- [Phase 6] fanotify WARN present in
-  `v6.18.53:fs/notify/fanotify/fanotify.h`
-- [Phase 8] Failure mode: `WARN_ON_ONCE` + empty fanotify name +
-  truncated 8.3 match; severity HIGH
-- UNVERIFIED: xfs lookup NAME_MAX check as stated in the commit message
-- UNVERIFIED: live reproduction of the fanotify WARN (code path
-  verified, not executed)
+---
 
-The fix is small, surgical, present-bug in this tree, and meets stable
-criteria.
+## What the commit solves (for this tree)
+
+`atmio16d_attach()` registers `atmio16d_interrupt` before
+`dev->read_subdev` is set and before core sets `dev->attached`. An early
+IRQ calls `comedi_buf_write_samples(NULL, ...)`, which takes
+`&s->spin_lock` and oopses. The patch returns `IRQ_NONE` until attach
+has finished. That matches other comedi handlers and the KASAN report.
+
+Stable rules: real oops, tiny diff, no features, applies here. Benefit
+(no IRQ oops) outweighs risk.
+
+---
+
+## Verification
+- [Phase 1] Tags: 3× Reported-by (SNU), two Link: URLs, Ian Abbott +
+  Greg KH SOB; no Fixes:/Cc: stable
+- [Phase 1] Cover letter: “avoid null-ptr-deref”; ni_atmio16d listed
+- [Phase 2] Diff: +3 in `atmio16d_interrupt()` only
+- [Phase 2] `comedi_get_is_subdevice_running()` does
+  `spin_lock_irqsave(&s->spin_lock)` — NULL `s` is a deref
+- [Phase 2] Attach order in this tree: `request_irq` ~597, `read_subdev`
+  ~634; `attached` set in `comedi_device_postconfig()`
+- [Phase 3] Blame: handler 2009, `read_subdev` 2013,
+  `comedi_buf_write_samples` 2014
+- [Phase 3] No Fixes: tag; `git merge-base --is-ancestor 13f4796223489
+  HEAD` succeeded (in v7.3-rc1, not v7.2)
+- [Phase 3] Series 5/11, standalone; sibling “Fix sanity check” patches
+  are other files
+- [Phase 4] `b4 dig -c 13f4796223489`:
+  patch.msgid.link/20260618102949.26607-6; v1 only
+- [Phase 4] `b4 dig -w`: Greg KH + Hartley Sweeten + reporters CC’d
+- [Phase 4] `b4 dig -a`: one revision, 11 patches
+- [Phase 4] Bug report `/raw`: KASAN null-ptr-deref; names
+  `atmio16d_interrupt`
+- [Phase 4] Stable lore search: no dedicated discussion of this patch
+- [Phase 5] `COMEDI_DEVCONFIG` requires `CAP_SYS_ADMIN`
+  (`do_devconfig_ioctl`)
+- [Phase 5] Same `dev->attached` pattern in many
+  `drivers/comedi/drivers/*.c`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] File present; pre-fix parent handler has no attached check
+- [Phase 7] MAINTAINERS: Ian Abbott; status Odd Fixes;
+  `CONFIG_COMEDI_NI_ATMIO16D`
+- [Phase 8] Failure mode: IRQ-time NULL deref / oops, HIGH
+- UNVERIFIED: full lore HTML (WebFetch 403); no on-list Reviewed-by
+  found in mbox
 
 **YES**
 
- fs/fat/namei_msdos.c | 3 +++
+ drivers/comedi/drivers/ni_atmio16d.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
-index 262ec1b790b56..c03610d0e7247 100644
---- a/fs/fat/namei_msdos.c
-+++ b/fs/fat/namei_msdos.c
-@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
- 	unsigned char c;
- 	int space;
+diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
+index b057b3b3582e1..bf7fb6704710f 100644
+--- a/drivers/comedi/drivers/ni_atmio16d.c
++++ b/drivers/comedi/drivers/ni_atmio16d.c
+@@ -223,6 +223,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	unsigned short val;
  
-+	if (len > NAME_MAX)
-+		return -ENAMETOOLONG;
++	if (!dev->attached)
++		return IRQ_NONE;
 +
- 	if (name[0] == '.') {	/* dotfile because . and .. already done */
- 		if (opts->dotsOK) {
- 			/* Get rid of dot - test for it elsewhere */
+ 	val = inw(dev->iobase + AD_FIFO_REG);
+ 	comedi_buf_write_samples(s, &val, 1);
+ 	comedi_handle_events(dev, s);
 -- 
 2.53.0
 
