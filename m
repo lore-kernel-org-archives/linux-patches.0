@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C863511867;
-	Mon, 19 Oct 2026 13:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7762256CE04;
+	Mon, 19 Oct 2026 13:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418279; cv=none; b=rhPIjDg6Tj0Umr6fq0pOZaOpbayCfWUww0bf9tRYvuWhlxDITrZLhWwHaenl2zlYBolb0A8w0f+bpLxdmAYcjsv3Y+CBtBLvwV25wBv1ZVoI7Q9S/oHYKzY5n8/JDMvspGL4Ey2Rucj4zAxWDmtsiiVssoGTjKX03a5QXjm9w+k=
+	t=1792418280; cv=none; b=ArLc2kVp079IDvSycHytREHYfX+ut9vjN3H69uNrqN6RPxmlWWrAgfgwtQdXYzchRH4r4SnWWch3JrKj/HKuyjLxgRQOSI6Ozpbfx15Kal0H00kjPoi2dirvNHtitQuD3cnwYVhzYCxjkGzPlhqf93/EXWgajViJ/TtfRs12sBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418279; c=relaxed/simple;
-	bh=XDU6+6pwtadhr6doWqCQ3gECBs9cYuwXo/tfRjSkB9Y=;
+	s=arc-20240116; t=1792418280; c=relaxed/simple;
+	bh=p7XwU1Cmktg71iLWiSqZGVHzdkqB53V+abIuVga9KAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RkFk0JHMsu5lpYlwrLGRXX9s++bfk7Oyy5C3xM/4wlE05ITXyOq5g1Mx9F/D00iqAyExGESXXhtXDfrHTbWsP/0DZY48Fm3sDVs+r3ZkiI+riyBZmY6KDrY+sHER8O9IZ22q2L8UiWrDd7428hajJMDldf7MLzNkQGhWiQmK27Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e2uiYRH+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j/zFei94h7iKJ8L6f//N06c4Iaq1r02L1f6yLvpd3DyjhKFgRBW7y7UZjj0kOArjtMoaaFHQu9gSmfTIQL87FjkGWMiTcAYlumN2bGnikfdpPgmQZxdp34sBpTBNHKjIUpjbvWIGBMVbHI3llbzydjvs4U7T5gG3V83Wc39b0qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QzBbMgz6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e2uiYRH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CACF1F000C4;
-	Mon, 19 Oct 2026 13:57:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QzBbMgz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA751F000C6;
+	Mon, 19 Oct 2026 13:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418277;
-	bh=2Gc4i/MTQwtF5eXqj1ku3FnA/N5RAlrlxKhUjAUIBGk=;
+	s=k20260515; t=1792418278;
+	bh=ZePzfD06LTtY9SuocAapOamZxhL1BzMjFtw4kmvDVuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2uiYRH+wFMY93LJpmKJ1Op3ABibC+DCjAO8pyj2eeXVv36XCP2/v/JKoZr8fQVuM
-	 w82J1CkWsqMI4epFONNeiupARJeTem9fBXEcGbn1lJ86GzB5OMGUEiCGKbj3R3t324
-	 1PvGqFKU9aDWcZRmQ6/HLPjOpLPzCPtP7F03JWcXN4tEeKd4+lk4D+Q3YmqmB5g54s
-	 t8ikzpX9m3P9/Zwa1n2a1DfiwrfHP2H5wgtGQVM7c+a7Rtau9feoNxRFeN47nQKfRu
-	 DzEAif74DqfwDCPorYHdZ0T/ZtZND/hfPSIDcazb+QameJIAz6Vwa0Y9PbbB2nL3VV
-	 wycOm0ItOCrZw==
+	b=QzBbMgz6ZQkbYTQQDL3XPiDvofPaOy93nh7jRztpHNWgb2M0AWhoXFMOdAr1TXHJC
+	 RxD2+LOeOO7JR3UMiKqXFN6HysV2yUJ5fZSXcnzZawMJ5VQZxWs8qESK12tQNC2IBk
+	 BXUXaWz0DgCKLwnAQDdtNzzFlYFa/qaPBmlv3PSQPxHNMCR9InCmrtifWs+axdizmi
+	 E1e1CepSIxyu5tFRdQ9GWlxaXtz+4ObuB0v9kN92xfmwvXIo8dyJSoCg5+H+3t3ei6
+	 YBpXVoqZiOjQBpaujZsl6DBRC2c1z5pNqB/lM2zRqspktlioNkpgJhanrSGwkqbXpH
+	 ugkwOBw6+ZMPA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jinqian Yang <yangjinqian1@huawei.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jasowangio@gmail.com,
-	eperezma@redhat.com,
-	virtualization@lists.linux.dev,
+	yung-chuan.liao@linux.intel.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] virtio_ring: fix infinite loop in virtnet_poll_cleantx when device is broken
-Date: Mon, 19 Oct 2026 09:47:04 -0400
-Message-ID: <20261019135441.1420968-133-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] soundwire: dmi-quirks: Disable ghost Realtek on Asus Expertbook
+Date: Mon, 19 Oct 2026 09:47:05 -0400
+Message-ID: <20261019135441.1420968-134-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,513 +53,374 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinqian Yang <yangjinqian1@huawei.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 0d0eff39ceb3dcbf7847a6f4517086c207c60081 ]
+[ Upstream commit 90af3209742db61a7f9d7d054a16165818cfc6d8 ]
 
-virtnet_poll_cleantx() contains a do-while loop that cleans up
-transmitted TX buffers and calls virtqueue_enable_cb_delayed() to check
-whether more buffers need processing. When the virtio backend stops
-responding during guest reboot, used->idx is never updated, so
-virtqueue_enable_cb_delayed() always returns false and the loop never
-terminates. Then it will block reboot process, and the guest will hang.
+The Asus Expertbook B9406CAA also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine driver
+into attempting to create DAI links for the device. Add a quirk to
+remove this device.
 
-The problem occurs during guest reboot under network traffic:
-
-  1. kernel_restart() -> device_shutdown() traverses the device list
-  2. virtio_dev_shutdown() calls virtio_break_device() which sets
-     vq->broken = true
-  3. virtio_dev_shutdown() then calls virtio_synchronize_cbs() to wait
-     for in-flight callbacks to complete
-  4. A virtio interrupt fires, softirq is deferred to ksoftirqd which
-     calls net_rx_action() -> virtnet_poll() -> virtnet_poll_cleantx()
-  5. virtnet_poll_cleantx() enters the do-while loop and never exits
-     because the QEMU backend has stopped updating used->idx, despite
-     vq->broken having been set to true in step 2.
-
-Since the loop runs inside ksoftirqd (a SCHED_OTHER kthread), it is
-visible to the scheduler and does not trigger a hard lockup. However,
-the kthread never leaves the loop, so RCU detects it as a CPU stall
-and reports it periodically. Meanwhile, the reboot process remains
-blocked in device_shutdown() because virtio_dev_shutdown() cannot
-complete its synchronization step, and the guest hangs permanently.
-
-This can be reproduced on a guest with a virtio-net device: run iperf3
-traffic in the guest, then trigger reboot. The reboot occasionally hangs
-permanently with RCU stall on ksoftirqd.
-
-Observed on ARM64 KVM guest:
-
-  CPU#1 RCU stall (ksoftirqd/1), repeated periodically:
-    virtqueue_enable_cb_delayed_split <- virtnet_poll <- __napi_poll <-
-    net_rx_action <- handle_softirqs <- run_ksoftirqd <-
-    smpboot_thread_fn <- kthread
-
-Fix by adding a vq->broken check in virtqueue_enable_cb_delayed(), so
-that the loop exits immediately when the device is broken, allowing
-the device shutdown to proceed.
-
-Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260716115940.394832-1-yangjinqian1@huawei.com>
+Closes: https://github.com/thesofproject/linux/issues/5828
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260630081132.3294488-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the local-tree picture: the cleanup loop is here,
-`virtio_dev_shutdown()` is not, and the missing `vq->broken` check is
-still a hang. Next I’ll write the full nine-phase verdict from that
-evidence.
+I have enough to decide: this is a DMI hardware quirk for a user-
+confirmed “no sound” failure, and the `ghost_realtek` machinery already
+exists in this 7.3 tree.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: [virtio_ring] [fix] [stop infinite loop in virtnet_poll_cleantx
-when the virtqueue is marked broken]
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [soundwire: dmi-quirks] [Disable] [DMI quirk to hide a ghost
+Realtek SoundWire device on Asus Expertbook B9406CAA]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com> (author)
-- Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com> (virtio co-
-  maintainer)
-- Signed-off-by: Michael S. Tsirkin <mst@redhat.com> (virtio maintainer)
-- Message-ID: <20260716115940.394832-1-yangjinqian1@huawei.com>
+- Closes: https://github.com/thesofproject/linux/issues/5828 (user-filed
+  SOF audio bug)
+- Signed-off-by: Charles Keepax (author)
+- Link: https://patch.msgid.link/20260630081132.3294488-1-
+  ckeepax@opensource.cirrus.com
+- Signed-off-by: Vinod Koul (SoundWire maintainer)
 - No Fixes: tag (expected)
 - No Cc: stable (expected)
-- No Reported-by / Tested-by / syzbot / Link: tags in the provided
+- No Reported-by / Tested-by / Reviewed-by / Acked-by in the committed
   message
-- Ignore pipeline markers (none present in the provided text besides
-  normal maintainer SOBs)
+- Ignore pipeline SOBs: none present (no Sasha Levin marker)
 
-Notable: maintainer + co-maintainer sign-off; author describes a real
-reproduced hang, not a theoretical cleanup.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: `virtnet_poll_cleantx()` do-while loops on
-  `virtqueue_enable_cb_delayed()` returning false. If the backend never
-  advances `used->idx`, the loop never ends.
-- Symptom: guest reboot hang under virtio-net traffic; RCU stalls on
-  ksoftirqd (`virtqueue_enable_cb_delayed_split <- virtnet_poll <-
-  net_rx_action <- run_ksoftirqd`); `device_shutdown()` blocked in
-  `virtio_synchronize_cbs()`.
-- Trigger described: `kernel_restart()` → `device_shutdown()` →
-  `virtio_dev_shutdown()` sets `vq->broken` then waits for callbacks; a
-  deferred NAPI poll then spins forever.
-- Root cause: `virtqueue_enable_cb_delayed()` keeps polling `used->idx`
-  even after `vq->broken` is true.
-- Reproduction: iperf3 + reboot on ARM64 KVM guest; occasional permanent
-  hang.
-- Version info in the message: none named; the reboot path names
-  `virtio_dev_shutdown()`.
+- Bug: ACPI lists a Realtek SoundWire device that is not physically
+  present on Asus Expertbook B9406CAA.
+- Symptom: the machine driver tries to create DAI links for that ghost
+  device; audio probe fails (dummy output / no card).
+- Version info in the GitHub issue (not the commit body): worked on 7.0,
+  broken since 7.1 after function-topology matching.
+- Root cause: firmware/ACPI advertises RT722 on link 3; function
+  topology builds the card from ACPI, so the ghost device breaks card
+  creation.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a hidden fix. Subject and body are an explicit
-hang/infinite-loop fix. Not cleanup, refactor, or a feature.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit hardware quirk. The
+“add a table entry” form is the standard stable-acceptable quirk
+pattern.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/virtio/virtio_ring.c` only
-- Scope: +8 lines (comment + `if (unlikely(vq->broken)) return true;`)
-- Function: `virtqueue_enable_cb_delayed()`
-- Classification: single-file surgical fix
+- File: `drivers/soundwire/dmi-quirks.c` (+7 / −0)
+- Function/data: `adr_remap_quirk_table[]` only (no new functions)
+- Scope: single-file surgical DMI match addition
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: convert `_vq` to `vring_virtqueue`, optionally clear
-  `event_triggered`, then call split/packed `enable_cb_delayed`, which
-  looks at `used->idx` / packed used descriptors and returns false if
-  “many pending buffers” remain.
-- After: if `vq->broken`, return true immediately so callers of the form
-  `while (!virtqueue_enable_cb_delayed())` exit.
-- Path affected: any enable-cb-delayed poll/cleanup loop after the
-  device is marked broken. Not a new feature path.
+- Before: B9406CAA did not match `adr_remap_quirk_table`, so ACPI `_ADR`
+  0x000330025d072201 (RT722 on link 3) stayed visible.
+- After: DMI match `ASUS` + board `B9406CAA` uses existing
+  `ghost_realtek[]`, remapping that `_ADR` to 0.
+- Path: SoundWire ACPI slave discovery (`find_slave()`), not a hot path
+  or a new API.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- Category: logic/correctness that produces an infinite loop / hang
-  (also a missing “device broken” abort, same family as other virtqueue
-  ops).
-- Mechanism: `virtqueue_enable_cb_delayed()` did not honor `vq->broken`,
-  unlike `virtqueue_poll()`, `virtqueue_add_*()`,
-  `virtqueue_get_buf_*()`, and `virtqueue_notify()` in this tree.
-  Callers treat a false return as “more work remains”; on a dead backend
-  that is never true, so they spin.
-- Fix: return true when broken, matching `virtqueue_enable_cb()` which
-  already becomes true because `virtqueue_poll()` returns false when
-  broken.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware workaround / DMI quirk]
+Mechanism: `ghost_realtek[]` remaps `0x000330025d072201` → `0`.
+`find_slave()` does `if (!addr) return false;`, so the ghost device is
+not registered and sof_sdw does not build DAI links for it.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: one `unlikely(vq->broken)` check at the API
-  boundary, same pattern as sibling helpers.
-- Minimal: no unrelated edits.
-- Regression risk: low. Returning true skips further used-ring polling
-  and skips re-enabling callbacks. `vring_interrupt()` already refuses
-  to invoke callbacks when broken (returns IRQ_HANDLED / IRQ_NONE
-  without calling `vq->callback`). Leftover TX buffers are still
-  collected later by `free_unused_bufs()` /
-  `virtqueue_detach_unused_buf()` on teardown.
-- Red flags: none (no API change, no new lock, no data-structure
-  change).
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct and minimal. Same pattern as UX5406AA / Lenovo
+83QK / 83SF. Regression risk is very low: only that DMI pair is
+affected; other machines are unchanged.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- `virtqueue_enable_cb_delayed()` wrapper: e6f633e5beab65 /
-  1ce9e6055fa0a9 (Tiwei Bie, 2018) — packed/split split-up; the function
-  itself is older.
-- The spinning loop in `virtnet_poll_cleantx` / `start_xmit`:
-  a7766ef18b3367 (“virtio_net: disable cb aggressively”, 2021-07-08).
-  Present in this tree (`git merge-base --is-ancestor` exit 0).
-- `virtqueue_poll()` already has `if (unlikely(vq->broken)) return
-  false;` in this tree.
+Step 3.1: BLAME THE CHANGED LINES
+Record: The new B9406CAA block is this commit (`90af3209742db`,
+2026-06-30). `ghost_realtek[]` and the PTL comment come from
+`4dab2b904414f` (“Disable ghost Realtek devices”, 2026-05-20, in v7.2).
+`dmi-quirks.c` itself dates to `f6594cdfec4cd` (v5.13).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. The hang the author describes is the interaction
-of that 2021 loop with later reboot teardown, not a one-line typo in a
-single commit.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. The user-visible regression was function topology
+in 7.1 (`e0fb794d67f86` / `45cf24da0a10` pair, present in v7.1). This
+commit does not revert those; it adds a device-specific ACPI workaround.
+`git merge-base --is-ancestor e0fb794d67f86 v7.1` is true.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Recent `virtio_ring.c` work here is KCSAN tagging, resize/reset args,
-  premapped DMA — unrelated.
-- This is standalone, not patch X/Y of a series in-tree.
-- Mailing-list series is v1→v3 of the same fix (see Phase 4).
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Same-file siblings: `4dab2b904414f` (base table), then B9406CAA,
+then UX8407AA / GX651AR / GX651AX. Standalone: one extra DMI row.
+Prerequisite is only `ghost_realtek[]`, which is in this tree.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record:
-- Jinqian Yang has no other virtio_ring/virtio_net commits in this tree.
-  Not the subsystem maintainer.
-- Weight comes from Reviewed-by Xuan Zhuo and SOB Michael S. Tsirkin.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Charles Keepax has 30 SoundWire commits here; he introduced
+`ghost_realtek`. Vinod Koul (maintainer) applied it. Pierre-Louis
+Bossart (reviewer in MAINTAINERS) was CCed.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- The insertion does not use `VIRTQUEUE_CALL` (mainline) vs the 6.12
-  ternary packed/split call. The new code sits before that dispatch.
-- No new helpers. Can apply standalone.
-- The *reboot* scenario names `virtio_dev_shutdown()`, which is **not**
-  in this tree (see Phase 6). The *code defect* does not depend on that
-  function.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Depends on `ghost_realtek[]` (`4dab2b904414f`, in v7.2 and in
+this 7.3 tree) and on remap-to-zero skip in `find_slave()` (`if (!addr)
+return false;` in `drivers/soundwire/slave.c`). Both exist here. Applies
+standalone on this tree.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c <message-id>`: no matching commit object in this checkout
-  (candidate is not on HEAD).
-- `b4 mbox` for Message-ID
-  20260716115940.394832-1-yangjinqian1@huawei.com: lore returned 404.
-- Fallback mirrors (verified):
-  - v3: https://lists.openwall.net/linux-kernel/2026/07/16/1135
-  - v1: https://lkml.iu.edu/2607.1/10830.html (changed `virtio_net.c`
-    loop to also test `virtqueue_is_broken()`)
-  - v2 changelog: moved the check into `virtqueue_enable_cb_delayed()`
-  - v3: subject prefix only (`virtio_net:` → `virtio_ring:`)
-  - Xuan Zhuo Reviewed-by on v3: https://lkml.rescloud.iu.edu/hypermail/
-    linux/kernel/2607.2/09380.html
-- No NAK found. Applied version is v3 (latest).
-- No reviewer “Cc: stable” found in the retrieved mail.
+- b4 dig: https://patch.msgid.link/20260630081132.3294488-1-
+  ckeepax@opensource.cirrus.com
+- Series: v1 only (no v2/v3)
+- Cover note: follow-up quirk after a previous one proved unnecessary
+- Vinod Koul: “Applied, thanks!” → `90af3209742db`
+- No NAK, no review concerns, no Cc: stable in the thread
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: v3 To/Cc (from the v3 post): mst@redhat.com,
-jasowang@redhat.com, xuanzhuo@linux.alibaba.com, eperezma@redhat.com,
-netdev maintainers; lists netdev, virtualization, linux-kernel.
-Appropriate virtio + netdev audience. Reviewed-by Xuan Zhuo; merged via
-MST.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (b4 dig -w): To Vinod Koul; Cc Pierre-Louis Bossart, Bard Liao,
+linux-sound, linux-kernel, Cirrus patches. Maintainer applied it. No
+extra Reviewed-by on this follow-up (the base table had Reviewed-by:
+Pierre-Louis Bossart).
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author reports a reproduced ARM64 KVM guest
-hang (iperf3 + reboot). That is a real user-visible failure, but the
-reboot recipe uses `virtio_dev_shutdown()` (Phase 6).
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: GitHub thesofproject/linux#5828, closed.
+- Reporter q66: no sound on ExpertBook B9406CAA since 7.1 (dummy output;
+  `snd_soc_register_card failed -517`, later duplicate sysfs).
+- Charles identified ACPI ghost: `link 3 mfg_id 0x025d part_id 0x0722`.
+- Reporter confirmed DMI `ASUS` / `B9406CAA` and that this exact quirk
+  restored sound (downstream Chimera Linux kernel).
+- Charles: “Yeah that is the correct fix.”
+- Separate later UCM/mute-LED discussion is unrelated to this quirk.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single-patch series, v1–v3. v1 only fixed the virtio_net loop;
-v2/v3 fixed the core helper so every looping caller is covered
-(`start_xmit` in this tree has the same pattern). No extra patches
-required.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 1/1. Same family as `4dab2b904414f` and later laptop
+rows. No other patches required for this DMI entry.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable fetch returned 403; web search of stable
-archives did not show this subject. UNVERIFIED: no evidence this was
-already requested or rejected for stable.
-
-Related context (verified via git objects + public commit page):
-8bd2fa086a04 (“virtio: break and reset virtio devices on
-device_shutdown()”) added `virtio_dev_shutdown()`. `git merge-base --is-
-ancestor 8bd2fa086a04 HEAD` → not an ancestor. Same SHA **is** an
-ancestor of v6.15, not of v6.12.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
+it was discussed on stable@. On the GitHub issue, Charles said the
+original ghost-Realtek table should be forwarded to stable because 7.1
+already had the topology switch. That is context, not a substitute for
+this patch’s own merit.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `virtqueue_enable_cb_delayed()` (exported). Indirectly
-`virtqueue_enable_cb_delayed_split()` / `_packed()` are skipped when
-broken.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function body changes. Data only: `adr_remap_quirk_table[]`
+using existing `ghost_realtek[]`. Consumer: `sdw_dmi_override_adr()`.
 
-**Step 5.2: TRACE CALLERS**
-Record (this tree, `git grep`):
-- `drivers/net/virtio_net.c`:
-  - `virtnet_poll_cleantx()` — do-while until enable_cb_delayed is true
-    (the hang)
-  - `start_xmit()` — same loop when napi-tx and !xmit_more
-  - TX-stop path (~1066/1068) — not a spin loop; false just schedules
-    NAPI / frees old bufs
-- `tools/virtio/*` test code only
-No other in-tree driver loops on this helper.
-
-Call context: NAPI/`ksoftirqd` (`virtnet_poll` → `virtnet_poll_cleantx`)
-and `ndo_start_xmit`. Userspace-reachable via normal virtio-net RX/TX.
-
-**Step 5.3: TRACE CALLEES**
-Record: `to_vvq()`, optional `event_triggered` clear, then split/packed
-enable which does `START_USE`, writes used-event idx, compares
-`used->idx` vs `last_used_idx`. No alloc; ring MMIO/memory only.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
+Step 5.2: TRACE CALLERS
 Record:
-- `virtnet_poll()` (line 2892) always calls `virtnet_poll_cleantx()`
-  then `virtnet_receive()`.
-- `virtnet_poll` is the RX NAPI poll; with napi-tx it also reaps TX.
-- Reachable from virtio-net interrupts / NAPI. Yes, userspace traffic
-  can keep this hot.
+- `sdw_dmi_override_adr()` is `bus->ops->override_adr` for Intel
+  (`drivers/soundwire/intel_auxdevice.c`).
+- Called from `find_slave()` in `drivers/soundwire/slave.c` during ACPI
+  enumeration.
+- Context: device probe / SoundWire bus init, not IRQ.
 
-Broken-device entry points in **this** tree (not reboot shutdown):
-- `virtio_pci_remove()`: `if (!pci_device_is_present(pci_dev))
-  virtio_break_device(...)` then `unregister_virtio_device()` (verified
-  in `drivers/virtio/virtio_pci_common.c`).
-- `virtqueue_notify()`: sets `vq->broken` if `notify()` fails.
-- `virtio_reset_device()`: `virtio_break_device` +
-  `virtio_synchronize_cbs` only under
-  `CONFIG_VIRTIO_HARDEN_NOTIFICATION`, which `depends on BROKEN` here —
-  not a production 6.12 config.
+Step 5.3: TRACE CALLEES
+Record: `dmi_first_match()`, then table walk. If ADR matches, replace
+with remapped value (0 for ghost Realtek).
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same do-while in `start_xmit()`. Core virtqueue ops already
-abort on `vq->broken`. This helper was the inconsistent one. No second
-copy of the bug in other drivers in this tree.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Boot/probe of Intel SOF SoundWire (Panther Lake Expertbook).
+Userspace cannot trigger it except by using the laptop. Reachable on
+that hardware every boot. Confirmed by dmesg in the issue.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same `ghost_realtek` DMI rows for UX5406AA, 83QK, 83SF, later
+UX8407AA / GX651AR / GX651AX. Systematic ACPI ghost-device problem, not
+a one-off.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: **6.12.111** (`make kernelversion`), branch `pending-6.12`, `git
-  describe` p-6.12-3-gc504cf0baa3d8.
-- `virtqueue_enable_cb_delayed()` at `drivers/virtio/virtio_ring.c:2528`
-  has **no** `vq->broken` check.
-- `virtnet_poll_cleantx()` at `drivers/net/virtio_net.c:2842-2845` still
-  has:
-  `do { virtqueue_disable_cb(); free_old_xmit(); } while
-  (unlikely(!virtqueue_enable_cb_delayed(sq->vq)));`
-- `virtio_bus` has probe/remove only — **no** `.shutdown`, **no**
-  `virtio_dev_shutdown()`.
-- Therefore: the **infinite loop** exists; the **reboot-via-
-  virtio_dev_shutdown** trigger does **not**.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is v7.3-rc4 (`7.3.0-rc4`). `ghost_realtek[]` and
+remap-to-zero skip are present. Function topology on PTL
+(`snd_soc_acpi_intel_no_function_topology` in `soc-acpi-intel-ptl-
+match.c`) is present — that is what made the ghost ACPI entry fatal from
+7.1. The B9406CAA row is already in this checkout at lines 189–195 of
+`dmi-quirks.c` (`git merge-base --is-ancestor 90af3209742db HEAD`
+succeeded). The bug class exists here; this tree already contains the
+fix because it is 7.3 mainline.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean/minor. Mainline uses `VIRTQUEUE_CALL(vq,
-enable_cb_delayed)` after the event_triggered block; 6.12 uses a
-packed/split ternary. The new lines go immediately after `to_vvq()` and
-before `event_triggered`, which exists here (8d622d21d24803 /
-b730cb109633c). Expected apply: clean or trivial context.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply on this tree. Same table layout as the patch. No
+rework needed. (Would need `ghost_realtek[]` on a tree older than v7.2.)
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Comment “When the device is broken there is no point in polling
-used->idx” is absent. `git log --grep='infinite loop in
-virtnet_poll_cleantx'` on these files: empty. No earlier equivalent fix.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: Base table `4dab2b904414f` is here. No alternate B9406CAA fix
+besides this row. Later extra laptops are independent.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: virtio core (`drivers/virtio/virtio_ring.c`) used by virtio-net.
-Criticality: **IMPORTANT** (default NIC in KVM/QEMU/cloud guests; not
-mm/core, but extremely common).
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [SoundWire DMI quirks / Intel SOF audio] [IMPORTANT for affected
+laptops, PERIPHERAL globally]. Not core mm/net, but complete audio loss
+on a shipping Panther Lake laptop.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active but mature. The looping TX cleanup dates to 2021; broken-
-bit handling is long-standing. This is a hole in an old contract, not a
-bug in brand-new 6.12-only code.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Active: multiple 2026 ghost-Realtek DMI additions. Maintainer-
+applied. Mature quirk file since v5.13.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: virtio-net guests (and any other future/looping caller of
-`virtqueue_enable_cb_delayed`). Driver-specific, but a very large VM
-population.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver/platform-specific: Asus Expertbook B9406CAA (DMI board
+name). CONFIG_SOUNDWIRE_INTEL + SOF PTL machine driver.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Documented reboot hang: requires `virtio_dev_shutdown()` — **not in
-  6.12**.
-- In this tree, hang requires (1) napi-tx cleanup loop running, (2)
-  `used->idx` stuck, (3) `vq->broken` true so this patch can abort.
-  Realistic 6.12 cases: virtio-pci surprise removal under traffic;
-  notify failure / backend disconnect with NAPI still polling.
-- Unprivileged guest userspace can generate the traffic;
-  unplug/reboot/backend death is admin/hypervisor-side.
-- Timing-dependent (NAPI already running when the queue is broken).
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every boot on that laptop once function topology is used (7.1+).
+Not a race. Not unprivileged-attack surface. Reporter reproduced on
+7.1.1.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Infinite loop in `ksoftirqd` → RCU stalls; teardown paths that
-wait for NAPI (`unregister_netdev` / `napi_disable`) block forever.
-Severity: **CRITICAL** (guest hang), when the trigger hits. Frequency:
-uncommon (needs broken device + in-flight TX cleanup), but consequences
-are a stuck VM, not a warning.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [No audio / card probe failure] [HIGH for that hardware]. Not a
+panic. User-visible: dummy output, deferred probe `-517`, or failed
+DAI/sysfs setup. Confirmed in issue 5828.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: stops a hard hang in virtio-net TX cleanup once `vq->broken`
-  is set. On 6.12 this is not the 6.15+ reboot path, but it is the same
-  loop vs the same broken flag this kernel already sets on surprise
-  removal and notify failure.
-- Risk: very low (8 lines, existing pattern, `unlikely` fast path).
-- Ratio: favorable.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record: Benefit high for those users (restores sound). Risk very low:
+7-line DMI entry, existing remap table, DMI-gated. Ratio strongly favors
+applying it on trees that already have `ghost_realtek`.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Hardware quirk / DMI workaround — listed as a stable exception.
+- Real user bug: complete audio failure; reporter tested this exact
+  match.
+- Maintainer applied; SOF issue closed with this approach.
+- 7 lines, existing `ghost_realtek[]`, no new API.
+- `ghost_realtek` and remap-to-0 skip exist in this 7.3 tree.
+- Same pattern as other accepted laptop rows.
 
-FOR backporting:
-- Real hang: unbounded loop in NAPI/`ksoftirqd` when `enable_cb_delayed`
-  never returns true.
-- Loop and helper both exist in 6.12.111; fix is not already applied.
-- `vq->broken` is the documented abort switch; this helper uniquely
-  ignored it.
-- Same semantics as `virtqueue_enable_cb()` via `virtqueue_poll()`.
-- 8-line, obviously correct, reviewed by Xuan Zhuo, merged by MST.
-- virtio-net is the common VM NIC; hangs on unplug/backend death matter
-  to stable users.
-- Applies with no prerequisites.
-
-AGAINST backporting:
-- The author’s reboot/kexec story depends on `virtio_dev_shutdown()`
-  from 8bd2fa086a04 (v6.15), which is **not** in this tree. That
-  specific “reboot hangs in device_shutdown” bug was introduced after
-  6.12 branched.
-- No Fixes:/Cc: stable (expected, not a negative).
-- No second independent reporter, no syzbot.
-- Surprise-removal/notify-fail hang is reasoned from call chains, not a
-  6.12-specific user report.
+AGAINST:
+- Not a crash/UAF/security bug (audio probe failure).
+- Affects one laptop model.
+- No Fixes:/Cc: stable (expected for this review pipeline).
+- This 7.3-rc4 checkout already contains the commit (mainline source,
+  not a reason to reject on merit).
 
 UNRESOLVED:
-- Could not run `b4 dig` against a mainline SHA (commit not in this
-  repo); lore.kernel.org 403/404 for some URLs.
-- Stable list discussion: UNVERIFIED (403).
+- lore.kernel.org WebFetch 403; stable@ discussion not independently
+  confirmed beyond GitHub.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — matches sibling broken
-   checks; author reproduced; virtio maintainers reviewed/applied.
-2. Fixes a real bug that affects users? **PASS** — infinite NAPI loop
-   when the queue is broken; the loop exists here. The 6.15 reboot
-   recipe does not, but 6.12 still marks queues broken and still runs
-   this loop.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   hang / RCU stall / teardown stuck. Severity CRITICAL when triggered.
-4. Small and contained? **PASS** — 8 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same function, same insertion
-   point.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — same remap table; user confirmed
+   on B9406CAA; maintainer applied.
+2. Fixes a real bug that affects users? PASS — no sound since 7.1 on
+   that Expertbook.
+3. Important issue? PASS — HIGH: total audio loss, not a panic; still a
+   serious hardware enablement/regression for that machine.
+4. Small and contained? PASS — +7 lines, one file, one DMI entry.
+5. No new features or APIs? PASS — table row only.
+6. Can apply to the local tree? PASS — `ghost_realtek` and
+   `sdw_dmi_override_adr` exist; patch matches current table form.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary hang
-fix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Hardware quirk / DMI workaround for broken ACPI. Automatically
+qualifies.
 
-**Step 9.4: MAKE YOUR DECISION**
+Step 9.4: MAKE YOUR DECISION
+This tree (v7.3-rc4) has the buggy ACPI path, function topology, and
+`ghost_realtek`. The change is a one-row DMI quirk that restores audio
+on a shipping laptop. That is exactly the stable-acceptable quirk class.
 
-This tree is 6.12.111. The reboot hang named in the commit message needs
-`virtio_dev_shutdown()`, which landed in 6.15 and is not here — that
-trigger alone would not justify a backport.
+What it solves: ACPI advertises a non-existent RT722; sof_sdw then fails
+to build the card. The quirk remaps that `_ADR` to 0 so discovery skips
+it.
 
-The patch still belongs on 6.12 because it does not fix that later
-function; it closes a hole in `virtqueue_enable_cb_delayed()` that 6.12
-already has. `virtnet_poll_cleantx()` / `start_xmit()` will spin forever
-if `used->idx` stops moving, and they never look at `vq->broken`. This
-kernel already sets that flag (PCI surprise removal, failed notify).
-Returning true there is the same contract as `virtqueue_poll()` /
-`virtqueue_enable_cb()`, is eight lines, and cannot wait on new APIs.
+Risk vs benefit: benefit is restoring sound; risk is a DMI-gated no-op
+on every other machine.
 
-Benefit is avoiding a virtio-net hang in a widely used guest NIC;
-regression risk is negligible.
+No missing prerequisites on this tree.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body: hang fix; Reviewed-by Xuan Zhuo;
-  SOB MST; Message-ID 20260716115940.394832-1; no Fixes/syzbot
-- [Phase 2] Diff: +8 lines in `virtqueue_enable_cb_delayed()`; return
-  true if `vq->broken`
-- [Phase 3] Blame: wrapper 2018 (e6f633e5beab65); poll_cleantx loop
-  a7766ef18b3367 (2021), ancestor of HEAD
-- [Phase 3] No Fixes: tag; no Jinqian Yang virtio history in this tree
-- [Phase 4] b4 dig on Message-ID: no commit in this repo; b4 mbox: lore
-  404
-- [Phase 4] v1 patched virtio_net loop; v2/v3 moved check to
-  virtio_ring; Xuan Zhuo Reviewed-by on v3 (lkml.rescloud 09380)
-- [Phase 4] 8bd2fa086a04 exists as object, NOT ancestor of HEAD; IS
-  ancestor of v6.15; NOT of v6.12
-- [Phase 4] UNVERIFIED: stable@ discussion (lore 403)
-- [Phase 5] Callers: virtnet_poll_cleantx, start_xmit, TX-stop;
-  poll_cleantx invoked from virtnet_poll line 2892
-- [Phase 5] virtio_pci_remove surprise-removal calls virtio_break_device
-  (line 758-759)
-- [Phase 5] virtqueue_poll/add/get_buf/notify already check broken;
-  enable_cb_delayed does not
-- [Phase 5] CONFIG_VIRTIO_HARDEN_NOTIFICATION depends on BROKEN in this
-  Kconfig
-- [Phase 6] kernelversion 6.12.111; virtio_bus has no .shutdown; fix
-  comment absent
-- [Phase 6] Insertion point (after to_vvq, before event_triggered)
-  present
-- [Phase 8] Failure mode: infinite ksoftirqd loop / RCU stall / teardown
-  hang
-- UNVERIFIED: whether a 6.12 user has actually hit surprise-unplug hang
-  (code path verified, field report not found)
+- [Phase 1] Tags: Closes GitHub 5828; SOB Charles Keepax + Vinod Koul;
+  lore msgid link; no Fixes/Cc: stable
+- [Phase 2] Diff: +7 lines in `adr_remap_quirk_table` matching
+  ASUS/B9406CAA → `ghost_realtek`
+- [Phase 2] `ghost_realtek` remaps 0x000330025d072201 → 0;
+  `find_slave()` skips `!addr`
+- [Phase 3] `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` → 7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor 90af3209742db HEAD` → already
+  in this tree (7.3-rc1+)
+- [Phase 3] `4dab2b904414f` (`ghost_realtek`) is ancestor of v7.2 and of
+  HEAD; not in v7.1
+- [Phase 3] `90af3209742db` is in v7.3-rc1, not in v7.2 / v7.2.7
+- [Phase 3] Topology commits `e0fb794d67f86` / `45cf24da0a10` are in
+  v7.1 (issue’s regression window)
+- [Phase 3] blame: B9406CAA block is 90af3209742db; table intro
+  4dab2b904414f
+- [Phase 4] b4 dig: lore patch-id match, v1 only, Vinod “Applied,
+  thanks!”
+- [Phase 4] b4 dig -w: Vinod, Pierre-Louis Bossart, Bard Liao, linux-
+  sound
+- [Phase 4] GitHub 5828: reporter confirmed quirk; Charles: correct fix;
+  dmesg shows ghost 0x025d:0x0722 on link 3
+- [Phase 4] lore.kernel.org WebFetch 403 — stable@ search UNVERIFIED
+- [Phase 5] callers: `intel_auxdevice` `.override_adr` → `find_slave()`
+  ACPI enum
+- [Phase 6] local `dmi-quirks.c` already has B9406CAA and
+  `ghost_realtek`
+- [Phase 7] SOUNDWIRE maintainers Vinod Koul / Bard Liao; reviewer
+  Pierre-Louis Bossart
+- [Phase 8] Failure: no audio on one Asus PTL laptop; severity HIGH;
+  risk very low
+- UNVERIFIED: stable@ mailing list archive contents (HTTP 403)
+
+This is a hardware quirk for a real, user-confirmed audio failure. It is
+small, already the established `ghost_realtek` pattern, and the
+supporting code is in this tree.
 
 **YES**
 
- drivers/virtio/virtio_ring.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index b8199e578ea98..5c0139f3b9811 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2667,6 +2667,14 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
- {
- 	struct vring_virtqueue *vq = to_vvq(_vq);
- 
-+	/*
-+	 * When the device is broken there is no point in polling used->idx,
-+	 * the backend will never update it. Return true to let callers
-+	 * exit their cleanup loops instead of spinning forever.
-+	 */
-+	if (unlikely(vq->broken))
-+		return true;
-+
- 	if (vq->event_triggered)
- 		data_race(vq->event_triggered = false);
- 
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 32a46a2d90f7c..2a98fc8c104d6 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -178,6 +178,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		.driver_data = (void *)hp_omen_16,
+ 	},
+ 	/* PTL devices */
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "B9406CAA"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
 -- 
 2.53.0
 
