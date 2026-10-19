@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AFC639ACE;
-	Mon, 19 Oct 2026 14:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C8063AC4A;
+	Mon, 19 Oct 2026 14:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418756; cv=none; b=DZWnWYKgQGEXMMSVvcwPhgW0BH4y0xYbAb4+heT5eCzIPIxYZjm+Flg/gbARUNwYGYN/LDoPFV90pL8qxYbgrsWzXjSfktT7Z/ROMJKpBxkes6PDUxVqr5aIq8Wn3wrhgJ/LXMhb2rf1kNRmolDTq6WJrX3KbxFRtym/Ji8sCtA=
+	t=1792418759; cv=none; b=uP1l3fueF31go846670MYRmFYXfBnF2/23NCJN3Z2sRDw8CLN+3F3ENk6382HwcIaXo84MSj2HBvtY4ak7Q2MlO+Iu1Dz8XnlRHB70Zp3fpphQqBCXr3pTTpF7a/gmsgBWjoivVJj84Q9LRF3P0ip+0r8+rGE18DgnLLNL4k3EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418756; c=relaxed/simple;
-	bh=Yf5Zi1ZG1Pr0N7N3RptiN5ozHM77ve8Zfc3vUT3O4Tg=;
+	s=arc-20240116; t=1792418759; c=relaxed/simple;
+	bh=wgFAOnIfWAAtwIbMxwsX/6glIaVoKg0MB/VPPRSKcEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yo5dYWxisJWSEOUB0rWOhya4A14C/H+Eq2L6kydUIPv9VLpVHed0x7vi6+vdpatW1JFhe5vInK50CG129T30F4S3FewhoFQBViJqTLQvsF5/2MYsLLJaY4idnnK+tB5ETbYSXwNCgm8oPJusAk667mDjClk2GKK3BJXjzUgTFTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T5vsjQ+c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r8EdyxJEnge/BKT/CW7cbc1xybBFa4ua1ZzyybXI+BkXpgcWNB3a22foLVkdLgtoEQwggjUpAxtxkjWhob1tDfIApq0i/DZkHj63Brqwsi2eJFv9+QLLGfe5xZzXnXnuChD+uMUdeWQ9rWZ5VOlD/Qx/zt5QAaFPRqztqnKyZUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jRe5gCf6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T5vsjQ+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F211F000C4;
-	Mon, 19 Oct 2026 14:05:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jRe5gCf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2F01F000CC;
+	Mon, 19 Oct 2026 14:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418754;
-	bh=gnaWpt4R9lUhHBkyiNEc2cDWssTbHpo6CPzBNunzywA=;
+	s=k20260515; t=1792418755;
+	bh=nwNci7lncnQZmqv+RzcO6wCyJ135mziBAxyfw2m9PZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5vsjQ+co875Pmgk80Cvjjec3f9BYTI/8uXyWJljfNO4dttTLNVu6WLMgfB5zxPfQ
-	 tkQ8BgYbdS0OhylSy1j6jvy4qxXIotenJKk8Sv/rgTIms2BBg+RW0wa42eNE++0TjM
-	 eOj9rN/XgoCG0QrSK6CxOO2FanvOFrkOaP5wsjPWSHXDpw+9mvPPvy1ekA5eJcyrtw
-	 p4xHht3l1VDsU7zNDfPJw1cHjyLX9mcjaZzc0zI/hnmSglYcQ1OaZ6b4WhwBKL8Zk0
-	 jwebYxXgl+PVzuOk5cyd8bJp4FgoUV+UrmCRO1zByd34Eoi2p/7JSw4Ql4+3IR0Ani
-	 FpIDTfnYs21Qg==
+	b=jRe5gCf605th8ZDNzPfYMkrMUwD/1KEb4G5DAy8Vfx8CylUGEYEJ3wo/+9P0mkapF
+	 3KyOB7CxPzb9/Y3vCFrrLBcZ6uC52TxH2Yy1diOEMWmW3nzZda2DF3SH/jZRQ5/FjG
+	 VbNplbwwzbW+OgSLDqqV2FPG52EYltVTiBl/6R4X+M/JxwsePP8u/ziauW0j82HdOX
+	 CL6BFC8xi+wfPWZsg+FRmCEGJ7Jo8zoOx7t1PLOm1wDMoL8ALX7aZnkkdwkv0rm91a
+	 jAtn8iePu4CUZt+NxJR9G7cEdY2j8G0Mw1aqLDmDFpi7wC0OUbukV1hnW3ZJXNksDp
+	 6N46iLKnrIEEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Oleg Proshkin <oleg.pro171@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+Cc: Amber Lin <amber.lin@amd.com>,
+	David Yat Sin <david.yatsin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mfd@lists.linux.dev,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] mfd: axp20x: Preserve other control bits when powering off
-Date: Mon, 19 Oct 2026 09:52:43 -0400
-Message-ID: <20261019135441.1420968-472-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdkfd: Fix signal reset event
+Date: Mon, 19 Oct 2026 09:52:44 -0400
+Message-ID: <20261019135441.1420968-473-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,35 +58,21 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleg Proshkin <oleg.pro171@gmail.com>
+From: Amber Lin <amber.lin@amd.com>
 
-[ Upstream commit 3756bf05c963563f1325af105356541882dd5899 ]
+[ Upstream commit b38f9b6ffdfc86d5aff36881d9e8028c79bc98c9 ]
 
-axp20x_power_off() triggers shutdown by writing AXP20X_OFF (BIT(7)) to
-the power-off control register with regmap_write(), which rewrites the
-whole register and clears other control bits in it.
+When a mode reset happens, driver needs to notify the process on that
+GPU a reset event is happening. The existing code assumes the process is
+using the GPU that is getting mode reset, which is not always true. For
+example, on a 8G system, the process may be only using GPU 0~4 but a
+mode 2 reset is resetting the all 8 GPUs connected by XGMI. Trying to
+find a process on GPU 5~7 will fail, which is fine and should skip the
+event signal.
 
-On the AXP221/AXP223 (and the register-compatible AXP228) - that
-register also holds the CHGLED auto-control bit.
-Clearing it during an orderly shutdown disables the hardware charge
-indicator, so the charge LED stays dark while the board is powered off
-and charging. Other variants keep unrelated configuration in the same
-register too.
-
-Set only the power-off bit with regmap_set_bits() and leave the rest of
-the register untouched. The shutdown register is readable on every
-variant, so the read-modify-write should be safe.
-
-Tested on a ClockworkPi uConsole (Raspberry Pi Compute Module 4, AXP228,
-which enumerates as AXP221): register AXP20X_OFF_CTRL reads 0x08 at
-runtime, so the old code left it 0x80 whereas setting only BIT(7)
-leaves 0x88. Writing 0x88 at power-off enables the charge LED
-while still powering off the PMIC.
-
-Signed-off-by: Oleg Proshkin <oleg.pro171@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260611154629.76607-1-oleg.pro171@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Amber Lin <amber.lin@amd.com>
+Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -90,301 +81,428 @@ LLM Generated explanations, may be completely bogus:
 Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
 (attempt 1)...
 Retry attempt 1...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 2)...
-Retry attempt 2...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 3)...
-Retry attempt 3...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 4)...
-Retry attempt 4...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 5)...
-Retry attempt 5...
-This is a 6.1.y tree (Makefile 6.1.188, `pending-6.1`, `git describe`
-`p-6.1-9-g27ef8181b8a64`). The candidate is not an ancestor of HEAD. The
-buggy full-register write is present in this tree’s
-`axp20x_power_off()`.
+The local tree is **v7.3-rc4**. The commit is a small, obviously-correct
+logic fix: `kfd_signal_reset_event()` treated “process is not using this
+GPU” as unexpected and fired `WARN_ONCE` during a hive-wide mode reset.
+That warning is a real production issue on multi-GPU XGMI systems.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — Subject**
-Record: **[mfd/axp20x] [Preserve] Keep other bits in the PMIC shutdown
-register when setting the power-off bit**
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[drm/amdkfd] [Fix] [stop treating “process not on this GPU” as
+an error when signaling a reset event]`
 
-**Step 1.2 — Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Reviewed-by: Chen-Yu Tsai `<wens@kernel.org>` (Allwinner/sunXi
-  maintainer)
-- Link: `https://patch.msgid.link/20260611154629.76607-1-
-  oleg.pro171@gmail.com`
-- Signed-off-by: Oleg Proshkin (author); Lee Jones (MFD maintainer)
-- No Fixes:, Reported-by, Tested-by, Cc: stable, or syzbot tags (absence
-  is expected)
+- Fixes: none (expected for this review)
+- Reported-by: none
+- Tested-by: none
+- Reviewed-by: David Yat Sin `<david.yatsin@amd.com>` (author of the
+  CRIU gpu_id remapping that added the `user_gpu_id` lookup)
+- Acked-by: none
+- Link: none in the commit; mailing-list thread found via `b4 dig`
+- Cc: stable: none (expected)
+- Signed-off-by: Amber Lin `<amber.lin@amd.com>` (author); Alex Deucher
+  `<alexander.deucher@amd.com>` (amdgpu/amdkfd maintainer)
+- Sasha Levin SOB: not present on this commit
 
-**Step 1.3 — Body**
+Notable: maintainer SOB + review from the engineer who introduced the
+original lookup. No syzbot, no user-report tags.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `axp20x_power_off()` uses `regmap_write(..., AXP20X_OFF)` (BIT(7)
-  only), which zeros every other bit in the shutdown/CHGLED control
-  register.
-- Symptom: On AXP221/AXP223/AXP228, CHGLED auto-control is cleared, so
-  the charge LED stays dark while the board is powered off and charging.
-  Author notes other variants store unrelated config in the same
-  register.
-- Root cause: whole-register write instead of set-bit RMW.
-- Evidence: ClockworkPi uConsole (CM4 + AXP228 as AXP221); runtime
-  `AXP20X_OFF_CTRL` is 0x08; old write produces 0x80, bit-set produces
-  0x88 and the LED works.
-- Author states the register is readable on every variant, so RMW is
-  safe.
+- Bug: on mode reset the driver notifies KFD processes of a reset. The
+  loop assumes every process uses the GPU being reset.
+- Symptom: looking up a process on GPUs it does not use fails. Example:
+  8-GPU XGMI hive, process on GPUs 0–4, mode-2 reset of all 8 GPUs;
+  lookups on GPUs 5–7 fail.
+- Failure mode: those failed lookups hit `WARN_ONCE` then `continue`.
+  Signaling skip is correct; the warning is not.
+- Version info: none in the message.
+- Root cause: expected “process not bound to this device” was coded as
+  an unexpected error.
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. Explicit hardware-correctness fix (register clobber
-at shutdown).
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. Subject is “Fix …”. It is a real logic/warning bug,
+not cleanup-only.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1 — Inventory**
-Record: `drivers/mfd/axp20x.c` only; 1 insertion, 1 deletion. Function:
-`axp20x_power_off`. Surgical single-file change.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/gpu/drm/amd/amdkfd/kfd_events.c` (+8 / −9)
+- Function: `kfd_signal_reset_event()`
+- Scope: single-file surgical fix, one function
 
-**Step 2.2 — Code flow**
-Record: Before: write 0x80 to the shutdown register, clearing bits 6–0.
-After: `regmap_set_bits()` ORs BIT(7) and leaves the rest. Shutdown path
-only (orderly power-off).
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+Before (inside `hash_for_each_rcu(kfd_processes_table, …)`):
+1. `user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id)`
+2. `pdd = kfd_get_process_device_data(dev, p)`
+3. If `user_gpu_id == -EINVAL` → `WARN_ONCE` + `continue`
+4. If `!pdd` → `WARN_ONCE` + `continue`
 
-**Step 2.3 — Bug mechanism**
-Record: **Logic/correctness + hardware control-register clobber.**
-`regmap_write` of a single bit value wipes CHGLED/battery-detect/N_OE-
-related fields in REG 0x32. Fix is RMW via `regmap_set_bits`.
+After:
+1. `pdd = kfd_get_process_device_data(dev, p)`
+2. If `!pdd` → silent `continue` (process not using this device)
+3. Then `user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id)`
+4. If `user_gpu_id == -EINVAL` → `WARN_ONCE` + `continue` (now a real
+   inconsistency, because `pdd` exists)
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct one-line change. `regmap_set_bits` in this
-tree is `regmap_update_bits_base(map, reg, bits, bits, ...)`. Regression
-risk is low: one extra cached RMW at shutdown. 0x32 is not in axp22x
-volatile ranges (0x04–0x4c is writeable; 0x32 is not volatile), so RMW
-can use the cache. Mainline context (`sys_off_data`, AXP313 switch) is
-not in 6.1, so the raw patch does not apply; the equivalent change is
-still one write→set_bits.
+Also moves `user_gpu_id`/`pdd` from inner-loop locals to function
+locals; format for `dev->id` changes `%x` → `%d`. Normal reset path for
+processes that *do* use the GPU is unchanged.
 
-## Phase 3: Git history
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: `[Logic / correctness] [false WARN_ONCE]`
+`kfd_get_process_device_data()` returns NULL when the process has no pdd
+for `dev`. `kfd_process_get_user_gpu_id()` returns `-EINVAL` for the
+same situation. Both were treated as unexpected. On a hive-wide reset,
+`kgd2kfd_pre_reset()` calls `kfd_signal_reset_event()` per node, and the
+function walks **all** KFD processes, so missing pdd is normal. After
+the fix, missing pdd is expected; `WARN_ONCE` remains only if pdd exists
+but gpu_id lookup still fails.
 
-**Step 3.1 — Blame**
-Record: The full-register write is from **cfb61a419630a8** (“mfd:
-AXP20x: Add mfd driver for AXP20x PMIC”, Carlo Caione, 2014-05-01, first
-appeared **v3.16-rc1**). Present for the entire 6.1 lifetime. AXP288
-skip is af7e9069543aab (2014). Delay is 179dc63d06c51 (2016);
-`msleep`→`mdelay` is 3bcc06c5fd484 (already in this tree).
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct. `kfd_get_process_device_data()` and
+`kfd_process_get_user_gpu_id()` iterate the same `p->pdds[]`; a present
+pdd implies a matching `dev->id`. Minimal, no API/locking/refcount
+changes. Regression risk is very low: processes without a pdd still skip
+signaling (same as before). Residual `WARN_ONCE` is strictly narrower.
 
-**Step 3.2 — Fixes: tag**
-Record: None. Introducer is cfb61a419630a8, which **is** an ancestor of
-HEAD.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.3 — File history**
-Record: Recent 6.1 file history is unrelated (GPIO cells, AXP288 ranges,
-`mdelay` in power-off). No prior CHGLED/bit-preserve fix. Standalone,
-not patch x/y.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Function introduced: `e42051d2133b79` (“drm/amdkfd: Implement GPU
+  reset handlers in KFD”, 2018, v4.19-rc1 era)
+- `user_gpu_id` + first `WARN_ONCE` on `-EINVAL`: `bef153b70c6e35`
+  (“drm/amdkfd: CRIU implement gpu_id remapping”, 2021)
+- `kfd_get_process_device_data` + `!pdd` path: `ee0a469cf9175a`
+  (“drm/amdkfd: support per-queue reset on gfx9”, 2024, in v6.12-rc1)
+- `!pdd` `WARN_ONCE` text using pid: `8544374c0f82ed` (“drm/amdkfd: Have
+  kfd driver use same PASID values…”, 2025)
 
-**Step 3.4 — Author**
-Record: Oleg Proshkin has no other `drivers/mfd/` commits in this tree.
-Reviewer Chen-Yu Tsai is ARM/Allwinner sunXi maintainer; Lee Jones is
-MFD maintainer.
+The false-warning on “process not on this GPU” dates to the 2021 CRIU
+remapping (`user_gpu_id == -EINVAL`). The later `!pdd` WARN made the
+same class of miss look even more like a driver bug. This is long-lived
+code on this tree, not last-month-only.
 
-**Step 3.5 — Dependencies**
-Record: Mainline uses `sys_off_data` (v6.3) and AXP313a register select
-(v6.5). Those are **not** required for the fix. 6.1 already has
-`regmap_set_bits` and `AXP20X_OFF_CTRL`. Standalone with a 1-line
-context adaptation.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Not applicable. The buggy assumption was
+introduced by `bef153b70c6e35` (and reinforced by `ee0a469cf9175a` /
+`8544374c0f82ed`). All three are ancestors of HEAD.
 
-## Phase 4: Mailing list / external
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `kfd_events.c` work is CRIU bounds checks, event mmap
+cleanup, RAS poison ioctl — orthogonal. Same author also landed
+`4693ade087f2e` (“drm/amdkfd: Fix reset event signal”) which guards
+`kfd_signal_reset_event()` in `reset_queues_mes()` when
+`detect_hang_count` is 0. Different bug (false reset *signal* vs false
+*WARN* on missing pdd). This commit is standalone, not patch N/M.
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 3756bf05c96356` →
-https://patch.msgid.link/20260611154629.76607-1-oleg.pro171@gmail.com
-`b4 dig -a`: single **v1**, no later revisions.
-Chen-Yu Tsai: “Makes sense.” + Reviewed-by (openwall 2026-06-12).
-Lee Jones applied 2026-06-18 (lkml.iu.edu); no NAK, no stable-risk
-comments. lore.kernel.org fetches returned 403; discussion recovered via
-b4 and mirrors.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Amber Lin is a regular AMD KFD/queue-reset contributor
+(`drm/amdkfd: Add queue reset support…`, topology, MES). Not the
+subsystem maintainer; maintainer Alex Deucher merged it. Related:
+`4693ade087f2e` as above — complementary, not a prerequisite for this
+diff.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Oleg Proshkin, Chen-Yu Tsai, Lee Jones, linux-kernel@. Right
-maintainers were on the patch.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Diff uses `kfd_get_process_device_data`,
+`kfd_process_get_user_gpu_id`, `kfd_signal_reset_event` — all present in
+this tree. No new helpers. Can apply standalone here.
 
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla. Hardware test is in the commit (ClockworkPi
-uConsole, measured 0x08 vs 0x80 vs 0x88).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.4 — Series**
-Record: Standalone 1/1. No dependents.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c b38f9b6ffdfc86d5aff36881d9e8028c79bc98c9` →
+  https://patch.msgid.link/20260728182609.672822-1-amber.lin@amd.com
+- Also: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-July/149514.html
+- `b4 dig -a`: single revision, v1 only; committed version matches v1
+- Review: David Yat Sin `Reviewed-by` (~12 minutes later):
+  https://lists.freedesktop.org/archives/amd-gfx/2026-July/149516.html
+- No NAK, no requested respin, no reviewer `Cc: stable`
+- lore.kernel.org fetches returned 403; discussion recovered from fd.o
+  archives and `b4 dig`
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org/stable returned 403. No evidence this was
-rejected for stable. UNVERIFIED: no stable-ML thread found.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Original To/Cc (`b4 dig -w`): Amber Lin, amd-
+gfx@lists.freedesktop.org, david.yatsin@amd.com,
+jinhuieric.huang@amd.com. Appropriate KFD reviewers. Merged by Alex
+Deucher.
 
-## Phase 5: Semantic / call graph
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by, no bugzilla/syzbot link. Description reads as
+internal AMD multi-GPU/XGMI observation (“8G system”, mode 2 reset). No
+public user-count. UNVERIFIED: how many field systems hit this.
 
-**Step 5.1 — Functions**
-Record: `axp20x_power_off` only.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone `[PATCH]`, not a series. Earlier similarly titled
+`4693ade087f2e` is a different file/bug. No other patches required for
+this hunk.
 
-**Step 5.2 — Callers (this tree)**
-Record: Probe sets `pm_power_off = axp20x_power_off` when unset. Invoked
-from the kernel power-off path (`kernel_power_off` /
-`do_kernel_power_off`). Not IRQ, not a hot path. AXP288 returns
-immediately (same as mainline skipping that variant).
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned 403. fd.o/mail-archive
+search showed only the amd-gfx v1 + review. No evidence this was already
+discussed on stable. UNVERIFIED via lore stable archive due to 403.
 
-**Step 5.3 — Callees**
-Record: `regmap_write` today; `regmap_set_bits` after the fix;
-`mdelay(500)`.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.4 — Reachability**
-Record: Yes — `shutdown`/`poweroff` from userspace. Affects
-AXP221/223/202/209/803/809/813/806/152 boards that register this
-handler. AXP221 is a first-class compatible in `axp20x-i2c.c`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `kfd_signal_reset_event()` only.
 
-**Step 5.5 — Similar patterns**
-Record: Power-supply code in this tree does not program
-`AXP20X_OFF_CTRL`; CHGLED bits come from hardware/boot default (0x08
-matches bit 3). No sibling fix already present.
+**Step 5.2: TRACE CALLERS**
+Record (from grep in this tree):
+- `kgd2kfd_pre_reset()` in `kfd_device.c` — GPU/mode reset: loops
+  `kfd->num_nodes` and signals each. Called from `amdgpu_amdkfd.c`
+  during amdgpu reset. This is the hive/mode-reset path in the commit
+  message.
+- `reset_queues_mes()` in `kfd_device_queue_manager.c` — per-queue MES
+  reset when `detect_hang_count != 0`
+- other DQM hang-reset paths at lines ~2528 and ~2615 — after successful
+  queue/SDMA reset
 
-## Phase 6: This tree
+Context: GPU reset / hang recovery, not a syscall hot path. Userspace
+compute (ROCm/KFD) processes receive HSA HW_EXCEPTION / MEMORY events.
 
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** HEAD:
+**Step 5.3: TRACE CALLEES**
+Record: `kfd_get_process_device_data` (scan `p->pdds[]` for `dev`, NULL
+if unused), `kfd_process_get_user_gpu_id` (same table → `user_gpu_id` or
+`-EINVAL`), `set_event()`, `amdgpu_file_to_fpriv` /
+`amdgpu_vm_get_task_info_vm` on the hang-count branch (unchanged).
 
-```
-regmap_write(axp20x_pm_power_off->regmap, AXP20X_OFF_CTRL, AXP20X_OFF);
-```
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: amdgpu GPU reset → `kgd2kfd_pre_reset` →
+`kfd_signal_reset_event` → all KFD processes. Reachable on real hardware
+when a GPU hang/reset or XGMI mode-2 reset runs. Not a syzbot syscall
+path; it is a production compute-cluster path. Unprivileged users do not
+directly call it; they can contribute to GPU hangs that trigger reset.
 
-AXP221/AXP223 match and `x-powers,axp221` compatible exist. Bug since
-v3.16.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same `WARN_ONCE` + `kfd_process_get_user_gpu_id` pattern remains
+in `kfd_signal_vm_fault_event()` and
+`kfd_signal_poison_consumed_event()`. Those start from a known
+pdd/pasid, so a miss is more genuinely unexpected. This reset path is
+the one that walks every process against one device.
 
-**Step 6.2 — Backport difficulty**
-Record: **Minor conflicts / trivial rework.** `git apply --check` of the
-mainline hunk fails (`shutdown_reg` / `sys_off_data` not in 6.1).
-Equivalent backport:
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-```
-- regmap_write(axp20x_pm_power_off->regmap, AXP20X_OFF_CTRL,
-- AXP20X_OFF);
-+       regmap_set_bits(axp20x_pm_power_off->regmap, AXP20X_OFF_CTRL,
-+                       AXP20X_OFF);
-```
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. Tree is v7.3-rc4 (`f0100363d8c37`).
+`kfd_signal_reset_event()` exists; `git merge-base --is-ancestor
+b38f9b6ffdfc86 HEAD` is true (fix already on this branch). Pre-fix code
+is the parent of that commit; `bef153b70c6e35`, `ee0a469cf9175a`, and
+`8544374c0f82ed` are all ancestors. Bug introduced in this lineage in
+2021 (warn on missing gpu_id), not after 7.3 branched.
 
-**Step 6.3 — Related fixes already here?**
-Record: No. Only power-off history is the 500ms delay and `mdelay`
-conversion.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply on this tree (already applied as a 17-line hunk).
+Surrounding hang-count / `amdgpu_file_to_fpriv` code is present.
+Expected difficulty here: clean apply.
 
-## Phase 7: Subsystem context
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This exact fix is commit `b38f9b6ffdfc8` on HEAD. No alternate
+fix of the same warning. `4693ade087f2e` is a different reset-signal bug
+and is also in this tree.
 
-**Step 7.1**
-Record: **MFD / X-Powers AXP20x PMIC.** Criticality **IMPORTANT** for
-Allwinner/ARM boards (Pine64, many SBCs, ClockworkPi). Not core mm/fs,
-not staging.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.2**
-Record: Mature driver (2014). 6.1 file log is slow-moving; this is an
-old bug, not churn from new code.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `[drm/amdkfd]` `[IMPORTANT]` — AMD compute (ROCm) on
+Instinct/dGPU, not core mm/VFS. Multi-GPU XGMI hives are production
+HPC/AI machines.
 
-## Phase 8: Impact and risk
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively developed (queue reset, SVM, CRIU, RAS). The reset-
+event function itself has been stable since 2018 with incremental
+lookup/warn additions.
 
-**Step 8.1 — Who**
-Record: Driver-specific: AXP20x/22x users on orderly shutdown,
-especially AXP221/223/228 with a charge LED. Config:
-`CONFIG_MFD_AXP20X`.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.2 — Trigger**
-Record: Every orderly power-off on those PMICs. Unprivileged users can
-typically run shutdown if policy allows; not a remote exploit path.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific: KFD users on multi-GPU AMD systems, especially
+XGMI hives during mode-2 reset. Single-GPU boxes typically always have a
+pdd for the only device, so they would not hit the false warning.
 
-**Step 8.3 — Failure mode**
-Record: PMIC REG 0x32 clobbered at power-off. User-visible: charge LED
-off while charging with SoC down. Other bits in the same register
-(battery detect / CHGLED mode / related config) are also cleared.
-**Severity: MEDIUM** (hardware misprogramming, not
-oops/corruption/deadlock).
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: GPU/mode reset while KFD processes exist that do not use every
+GPU in the reset set. Common on 8-GPU hives with jobs bound to a subset
+of GPUs. Timing-independent. Not directly triggerable by an unprivileged
+syscall; reachable after a hang/reset.
 
-**Step 8.4 — Risk/benefit**
-Record: Benefit medium for battery AXP boards (indicator and leftover
-PMIC config). Risk **very low** (1-line RMW, cached register,
-maintainer-reviewed, hardware-tested). Ratio favors backport.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: `[false WARN_ONCE during GPU reset]` `[MEDIUM, HIGH if
+panic_on_warn]`
+Verified: `WARN_ONCE` → `WARN()` (`include/asm-generic/bug.h`). That
+dumps a stack, taints (`TAINT_WARN`), and panics if `panic_on_warn`.
+Default configs do not panic. Userspace reset events were already
+skipped via `continue`; this is not data corruption or a hang. It *is* a
+real kernel warning on a serious recovery path.
 
-## Phase 9: Synthesis
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- Benefit: medium-high for KFD multi-GPU reset (stops false
+  WARN/taint/possible panic_on_warn during hive reset)
+- Risk: very low (8/9 lines, reorder existing checks, no locking/API)
+- Ratio: favorable
 
-**For:** Real, tested hardware bug; 1-line obviously correct RMW;
-AXP221/223 exist in 6.1; bug since 2014; Chen-Yu Tsai + Lee Jones;
-`regmap_set_bits` already here; shutdown path only.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Against:** Not a crash/security/corruption bug; mainline hunk needs a
-trivial context adapt; no Fixes:/Cc: stable (not a negative).
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Unresolved:** lore.kernel.org 403; no stable-ML thread retrieved.
+FOR:
+- Real bug: expected “process not using this GPU” was `WARN_ONCE`
+- Trigger is concrete (mode-2 XGMI hive reset; 8-GPU example in the
+  message)
+- `WARN_ONCE` taints and can panic with `panic_on_warn`
+- GPU reset is a critical recovery path; false warnings hurt debugging
+- 17-line, single-function, obviously correct
+- No new APIs/features
+- Reviewed by David Yat Sin; merged by Alex Deucher
+- All helpers and the buggy function exist in this tree
+- Standalone, no series dependency
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** — RMW vs full write; tested
-   0x08→0x88; Reviewed-by maintainer.
-2. Real user-facing bug? **PASS** — charge LED dead after shutdown while
-   charging.
-3. Important (crash/security/corruption/deadlock)? **PASS** (borderline)
-   — PMIC control register clobber at power-off; LED is the reported
-   symptom, not a panic. Small enough that this still belongs in LTS.
-4. Small and contained? **PASS** — one call site.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** with a one-line backport (raw
-   mainline patch fails `git apply --check`).
+AGAINST:
+- Not a crash/corruption/deadlock on default configs
+- No Fixes:/Reported-by/syzbot
+- Functional skip was already correct; this mainly removes a false
+  warning
+- Affects multi-GPU KFD, not all kernel users
 
-**Exception:** Not a new ID/DT/build fix. Closest category is hardware-
-correctness/quirk-class behavior.
+UNRESOLVED:
+- lore.kernel.org 403; stable-list discussion not directly readable
+- No public bugzilla/user-count
 
-This tree should get the fix: the buggy write is here, AXP221 is
-supported, and the adapted change is a single `regmap_set_bits` on
-`AXP20X_OFF_CTRL`.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — control-flow matches the
+   described hive-reset case; reviewed and merged
+2. Fixes a real bug that affects users? **PASS** — false `WARN_ONCE` on
+   production multi-GPU reset
+3. Important issue? **PASS** — WARN on GPU reset (taint; panic_on_warn);
+   not a default oops, but this is the class of WARN_ON false positives
+   that stable takes
+4. Small and contained? **PASS** — one function, +8/−9
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — code is present; hunk is
+   already the current text of `kfd_signal_reset_event()`
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device-ID/quirk/DT/build/docs exception). Qualifies
+as a normal small bugfix.
+
+**Step 9.4: MAKE YOUR DECISION**
+The local tree has the amdkfd reset-event path, the pdd/gpu_id lookups,
+and the false-WARN behavior the patch corrects. The change is small,
+correct, and prevents a kernel warning (and possible `panic_on_warn`
+panic) during hive-wide GPU reset. That meets stable criteria for this
+tree.
+
+What the commit solves: `kfd_signal_reset_event()` walks every KFD
+process for each resetting GPU. On XGMI mode-2 reset, processes that
+only use a subset of GPUs produce NULL pdd / `-EINVAL` gpu_id. That was
+warned as a driver bug; it is expected and should skip. The fix checks
+pdd first and only WARNs if a bound process still has no user gpu_id.
+
+Risk vs benefit: very low risk vs stopping a false warning on a GPU-
+reset path used by AMD multi-GPU compute.
 
 Verification:
-- [Phase 1] Tags: Reviewed-by Chen-Yu Tsai, Link msgid, SOBs Oleg/Lee;
-  no Fixes/syzbot
-- [Phase 2] Diff: `regmap_write` → `regmap_set_bits` in
-  `axp20x_power_off`
-- [Phase 3] `git blame HEAD -L 835,848`: write from cfb61a419630a8
-  (v3.16-rc1); `git merge-base --is-ancestor cfb61a419630a HEAD`
-  succeeded
-- [Phase 3] `git merge-base --is-ancestor 3756bf05c96356 HEAD` failed
-  (candidate not in 6.1)
-- [Phase 4] `b4 dig -c 3756bf05c96356`: lore msgid; `-a` v1 only; `-w`
-  wens+lee+lkml
-- [Phase 4] Chen-Yu “Makes sense.”; Lee Jones applied; lore.kernel.org
-  HTTP 403
-- [Phase 5] HEAD probe assigns `pm_power_off = axp20x_power_off`; AXP221
-  compatible in `axp20x-i2c.c`
-- [Phase 6] HEAD Makefile 6.1.188; describe `p-6.1-9-g27ef8181b8a64`;
-  branch `pending-6.1`
-- [Phase 6] HEAD still has `regmap_write(..., AXP20X_OFF_CTRL,
-  AXP20X_OFF)`; `git apply --check` of the mainline hunk fails
-- [Phase 6] `regmap_set_bits` exists; 0x32 in axp22x writeable 0x04–0x4c
-  and not volatile
-- [Phase 8] Failure: CHGLED/other bits cleared at power-off; severity
-  MEDIUM
-- UNVERIFIED: stable@ mailing list (lore/stable 403)
+- [Phase 1] Parsed tags: Reviewed-by David Yat Sin; SOB Amber Lin + Alex
+  Deucher; no Fixes/Reported-by/Link/Cc-stable
+- [Phase 1] Body: mode-2 reset on 8-GPU XGMI; lookup on unused GPUs
+  should skip
+- [Phase 2] Diff: +8/−9 in `kfd_signal_reset_event()`; silent continue
+  on `!pdd`; WARN kept only after pdd exists
+- [Phase 2] Confirmed `kfd_get_process_device_data()` returns NULL when
+  `dev` not in `p->pdds[]`; `kfd_process_get_user_gpu_id()` returns
+  `-EINVAL` in the same case (`kfd_process.c`)
+- [Phase 3] Blame: gpu_id WARN from `bef153b70c6e35` (2021); pdd from
+  `ee0a469cf9175a` (v6.12-rc1); pid WARN from `8544374c0f82ed` (2025)
+- [Phase 3] No Fixes: tag; all introducing commits are ancestors of HEAD
+- [Phase 3] Related `4693ade087f2e` is a different reset-signal bug in
+  DQM, not a prerequisite
+- [Phase 4] `b4 dig -c b38f9b6ffdfc86`:
+  https://patch.msgid.link/20260728182609.672822-1-amber.lin@amd.com
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: amd-gfx, Yat Sin, Eric Huang
+- [Phase 4] fd.o thread: review-only reply, no NAK, no Cc: stable
+- [Phase 4] lore.kernel.org and lore stable: 403 — UNVERIFIED on lore
+  itself
+- [Phase 5] Callers: `kgd2kfd_pre_reset` + three DQM hang-reset sites
+- [Phase 5] `kgd2kfd_pre_reset` signals every node — matches hive-reset
+  description
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 6] `git merge-base --is-ancestor b38f9b6ffdfc86 HEAD`: yes;
+  buggy function present
+- [Phase 8] Failure mode: WARN_ONCE → WARN (stack + taint; panic if
+  panic_on_warn); signaling skip already correct
+- UNVERIFIED: field incidence beyond the commit’s 8-GPU example; stable
+  ML archives (403)
 
 **YES**
 
- drivers/mfd/axp20x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-index c5f0ebae327f5..85506813f089c 100644
---- a/drivers/mfd/axp20x.c
-+++ b/drivers/mfd/axp20x.c
-@@ -1250,7 +1250,7 @@ static int axp20x_power_off(struct sys_off_data *data)
- 		break;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+index b033c3a9ce545..aac5bc4d13fdb 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -1287,6 +1287,8 @@ void kfd_signal_reset_event(struct kfd_node *dev)
+ 	struct kfd_event *ev;
+ 	unsigned int temp;
+ 	uint32_t id, idx;
++	int user_gpu_id;
++	struct kfd_process_device *pdd;
+ 	int reset_cause = atomic_read(&dev->sram_ecc_flag) ?
+ 			KFD_HW_EXCEPTION_ECC :
+ 			KFD_HW_EXCEPTION_GPU_HANG;
+@@ -1302,17 +1304,14 @@ void kfd_signal_reset_event(struct kfd_node *dev)
  
--	regmap_write(axp20x->regmap, shutdown_reg, AXP20X_OFF);
-+	regmap_set_bits(axp20x->regmap, shutdown_reg, AXP20X_OFF);
+ 	idx = srcu_read_lock(&kfd_processes_srcu);
+ 	hash_for_each_rcu(kfd_processes_table, temp, p, kfd_processes) {
+-		int user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id);
+-		struct kfd_process_device *pdd = kfd_get_process_device_data(dev, p);
+-
+-		if (unlikely(user_gpu_id == -EINVAL)) {
+-			WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%x\n", dev->id);
++		pdd = kfd_get_process_device_data(dev, p);
++		if (!pdd)
++			/* no process is using this device */
+ 			continue;
+-		}
++		user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id);
  
- 	/* Give capacitors etc. time to drain to avoid kernel panic msg. */
- 	mdelay(500);
+-		if (unlikely(!pdd)) {
+-			WARN_ONCE(1, "Could not get device data from process pid:%d\n",
+-				  p->lead_thread->pid);
++		if (unlikely(user_gpu_id == -EINVAL)) {
++			WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%d\n", dev->id);
+ 			continue;
+ 		}
+ 
 -- 
 2.53.0
 
