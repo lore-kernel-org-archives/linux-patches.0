@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEF45DD574;
-	Mon, 19 Oct 2026 14:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AE15DE9B6;
+	Mon, 19 Oct 2026 14:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418538; cv=none; b=KdQJQTbCRbNSXuBymwUn5wcd4cAnZ8cQvYI299p9bk7N/eKW2kBcKjJUKP/XpjhpcMD7ukQIooU6IBNbfNwQGefaaozEbAjr2u4fMHnBPM1WEgYYBKjDBphCC1HtYrE6+CLe5mQ6PQ80Az8OiWCMfJoUyoOnVSC1UX1SEjR0Uqk=
+	t=1792418538; cv=none; b=VrBXJ4i//Pu9qcKfg5eWsAmxwUzm4oifQZXkM3LqI93xwaVDllO9qZoscaLlVss4rC2g1MIvkg0drb2318gOmiYyXsyF86pZipaCknAqDivoheMik7jKht0GGytM3KJCJlkyHOuIfinWo6MVaHezdFQ0MHlvvEOOcfLQZTAP/EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418538; c=relaxed/simple;
-	bh=rdreeGsyL3pCHnz92Zx9K7T1XZ/e3VBbHHTB7w/ja3k=;
+	bh=wYz2ykWVtMcmbYXF98u+dcQ2DEnpsBrSBPHeuumRTNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=peY3AfcrSe6lB1LyGx0CcYY7a17LE2P4/h8yL36jWFaM+mO/EEtCGamwsvQgK33jrtFhWtpEeY8TqrytEWE+IrAlIx/OKykTB0WsFOKzONCfCa56nqepsriR/PkOTnU1xUVZ2nc/nMD4ktPCpnQl6PHT4Ml1TNm0HVf+LpTrpuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Or2ODciU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bdY131atQg1LGpBTWvEKupM/K557L1WLaKaV47jkpWhXe4sZFXPAgTx86lUiC7ie/OVsm34ycoiGvrbbxM2ife2bVwqaOaipGrTju864X6tSjI/F7wlq9VOL8eRV4vkVYyuGXM7mEpqa5Qmlypztn3sJkoWlIwEHh/5foGgNYLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BGT/9LEi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Or2ODciU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978431F000C7;
-	Mon, 19 Oct 2026 14:02:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BGT/9LEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3B01F000C6;
+	Mon, 19 Oct 2026 14:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418531;
-	bh=Y0Acs1GjZ8s3VI9YkREK3IWGQmpvGOM/AWX2WIww85A=;
+	s=k20260515; t=1792418536;
+	bh=lnmMdiRihI7doar/6y0AnWxtq+WHN77C7jiP0sBXVD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Or2ODciU7WUELSUSN+yZmyPGr/PS8WZKTgNbpybAuAqGVWDsVCkxt8LrS7x8JmDwu
-	 KpFhrgYCCRh4r9iNfIWGD+LE4LSNShoVp2ZfQ91HbE1ONYV246+aJJm1TWS3Vrmwq3
-	 24VwhOf6iLMqYb642cHJwhAeY9axs2BHX/FSfSpk6gfld9amhoSsaZ9GUIyFSmyMl9
-	 882G2cKs9ZNbq1b/KEOqwlE0nXwKiP8Z8i+bvworf+P9cJ/bd9WkimaICz39EjezPH
-	 Pe5mygpsVRxtKPsQWhJ69/O94+jt1bhGdLwfKrsG8SQe7u0POrUenilTSEAc5T3T/i
-	 I348Ibf1o5sKQ==
+	b=BGT/9LEiZkP3EIftAR+QPOL4gp09fbxsejQKh6y1FEU1oOrE5R8+sW8DmFql2ort3
+	 7V/JufhzJPmUMmC3wkrYQaARLuN+bHJJORl7yPZrOXnIKyDFbve2rhRvBmO9hEuVCX
+	 lVlKTI6EDWEbIi+YeXDleAQ0QFlJjdU7RUx9XUVBx7EKYzbGOCaDeqJW7tBkBaCIfW
+	 UqEOSDgyqTTCLhuIm56MdhPnVZg0wksj0jpck/lmIk/awHeMp9DzNNj5G5+ioUvj07
+	 EYMTSGcy6wC93xVMtxg9xgSygxgjQ50dYeCaWMhIl1bwH/gXoQtsODu1hhPPAKEvQ1
+	 K64+DPXXGJoDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: David Heidelberg <david@ixit.cz>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/panel: panel-edp: Adjust T8 timing for AUO B116XAK01.6 and B140XTK02.4
-Date: Mon, 19 Oct 2026 09:50:05 -0400
-Message-ID: <20261019135441.1420968-314-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] soc: qcom: socinfo: Add SoC ID for SDM850
+Date: Mon, 19 Oct 2026 09:50:09 -0400
+Message-ID: <20261019135441.1420968-318-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,405 +54,369 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 0d40cab39158704e372240ed9821a00bfe117125 ]
+[ Upstream commit 743af1d6a8b4bfa62dd01b5c2d81b1c62ea597f7 ]
 
-Screen garbage or flickering can be observed during mode changes (such
-as VT switches) on systems using the AUO B116XAK01.6 and B140XTK02.4
-panels.
+Recognize the SDM850 SoC.
 
-This occurs because the backlight is enabled before the video signal
-stabilizes. Waveform measurements show that the panel signal takes
-around 140ms to stabilize after a mode change, meaning the previous 50ms T8
-timing was insufficient.
-
-To resolve this issue, adjust the eDP panel delay entry from
-delay_200_500_e50 to delay_200_500_e200 (increasing T8 from 50ms to 200ms).
-This matches the updated panel specifications from AUO, which now formally
-define T8 as 200ms to mask any display abnormalities during mode changes.
-
-Signed-off-by: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260720025358.2781136-1-dioyc_zhang@compal.corp-partner.google.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260627-sda850-v2-2-44bf46ade42e@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This checkout is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-change is a two-line eDP T8 delay quirk for two AUO panels. Both panel
-IDs and `delay_200_500_e200` exist here; the fix is a hardware timing
-workaround, not a new API.
+This tree is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+verdict below is only for this checkout: the socinfo table and
+`QCOM_ID_SDM850` are present here, so the one-line SoC ID addition is a
+valid hardware-ID backport.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[drm/panel: panel-edp] [Adjust] [increase T8/enable delay from
-50ms to 200ms for two AUO eDP panels]`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[soc: qcom: socinfo]** **[Add]** **SoC ID table entry so
+SDM850 is recognized by qcom-socinfo**
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Dio Zhang <dioyc_zhang@compal.corp-
-  partner.google.com>` (author)
-- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
-  reviewer in MAINTAINERS)
-- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (applied via
-  drm-misc)
-- `Link: https://patch.msgid.link/20260720025358.2781136-1-
-  dioyc_zhang@compal.corp-partner.google.com`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, or `Cc:
-  stable` (absence expected)
-- Ignore any pipeline `Upstream commit` / Sasha Levin SOB (none present
-  on the real commit)
+- Fixes: none (expected for this review)
+- Reported-by: none
+- Tested-by: none
+- Reviewed-by: none on this commit (patch 1 of the series has Reviewed-
+  by Konrad Dybcio)
+- Acked-by: Krzysztof Kozlowski \<krzysztof.kozlowski@oss.qualcomm.com\>
+- Link:
+  https://lore.kernel.org/r/20260627-sda850-v2-2-44bf46ade42e@ixit.cz
+- Cc: stable: none (expected)
+- Signed-off-by: David Heidelberg \<david@ixit.cz\> (author); Bjorn
+  Andersson \<andersson@kernel.org\> (qcom SoC maintainer). Ignored: any
+  Sasha Levin SOB (none in the provided message)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** On AUO B116XAK01.6 and B140XTK02.4, the backlight comes on
-  before the video signal is stable after a mode change.
-- **Symptom:** Screen garbage or flickering during mode changes (e.g. VT
-  switches).
-- **Root cause:** T8 (`delay.enable`) was 50ms; waveforms show ~140ms
-  until the signal is stable. AUO’s updated spec now lists T8 as 200ms.
-- **Fix:** Point those two `EDP_PANEL_ENTRY` rows at
-  `delay_200_500_e200` instead of `delay_200_500_e50`.
-- **Versions:** none named in the message.
+- Bug description: SDM850 (numeric SMEM id 348) is not in the socinfo
+  `soc_id[]` table, so the driver cannot map it to a name.
+- Symptom/failure mode: `/sys/devices/soc0/machine` is omitted (NULL
+  machine name). Numeric `soc_id` still works. Not a crash.
+- Version information: none in the message. Cover letter (from the lore
+  mbox): “Useful for sdm850 devices in tree and also will be used by
+  Comma AI comma three.”
+- Root cause: missing table entry, not a logic bug.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit hardware-timing fix
-for a user-visible display glitch.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden crash/UAF/leak fix. It is an explicit **missing
+hardware ID**. That is the documented stable exception for new device
+IDs on an existing driver.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/gpu/drm/panel/panel-edp.c` — **2 insertions, 2
-  deletions** (4 lines with context).
-- No functions rewritten; two table initializers in `edp_panels[]`.
-- Scope: single-file, surgical table tweak.
+- File: `drivers/soc/qcom/socinfo.c` — **+1 / −0**
+- Function: static table `soc_id[]` (not a function body)
+- Scope: **single-file surgical ID addition**
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- Before: AUO 0x1ea5 (B116XAK01.6) and AUO 0x67a8 (B140XTK02.4) used
-  `delay_200_500_e50` (`enable = 50`).
-- After: both use `delay_200_500_e200` (`enable = 200`).
-- Path: EDID-matched panel probe copies `detected_panel->delay` into
-  `desc->delay`; `panel_edp_enable()` then `msleep(delay.enable)` before
-  backlight-on. Only those two product IDs change.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record: Before, `socinfo_machine()` walked `soc_id[]` and returned NULL
+for id 348. After, id 348 matches `QCOM_ID_SDM850` and returns
+`"SDM850"`. Path: `qcom_socinfo_probe()` → `socinfo_machine()` →
+`soc_device_register()`. Normal probe path only; no error-path or
+locking change.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** hardware workaround / timing quirk (T8 too short).
-- **Mechanism:** backlight enabled while the panel still shows invalid
-  frames; lengthening T8 masks the garbage until the signal is valid.
-  Matches other `delay_200_500_e200` users in the same table.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **[Hardware ID / device-ID table]** Missing
+`qcom_board_id(SDM850)` so SMEM id 348 is unnamed. Macro expands to
+`QCOM_ID_SDM850, "SDM850"` via `qcom_board_id()`.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: reuses an existing delay struct; no new constants
-  or control flow.
-- Minimal; no unrelated edits.
-- Regression risk is low and local: +150ms backlight-on delay only for
-  those two EDID IDs. Maintainer Doug Anderson noted that longer delays
-  “always stink, but sometimes is unavoidable,” then reviewed and
-  applied the patch. No deadlock/API/locking change.
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct one-liner, same pattern as neighboring IDs
+(SDM636/SDM632). Regression risk is very low: table is append-only
+lookup; no lock, alloc, or API change. Compile dependency:
+`QCOM_ID_SDM850` must exist in `include/dt-bindings/arm/qcom,ids.h` (it
+does in this tree).
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Current lines are commit `0d40cab391587` (Dio Zhang, 2026-07-20) —
-  this fix.
-- B116XAK01.6 (`0x1ea5`) added in `a70abdd994cb` (“drm/panel-edp: Add
-  AUO B116XAK01.6”, 2022-09-23) with `delay_200_500_e50`. Contained in
-  `v6.1-rc1`.
-- B140XTK02.4 (`0x67a8`) added in `4c34cdb93ea1` (2026-05-09) with
-  `delay_200_500_e50`. Present in this 7.3 tree.
-- `delay_200_500_e200` first appeared in `f6ff4570e567` (2022-07-20,
-  “Add panel entry for R140NWF5 RH”), also `v6.1-rc1` era.
+Step 3.1: BLAME THE CHANGED LINES
+Record: Insertion sits between SDA636 and SDM632, both from
+`34ec89e68db26` (2022-10-17, “soc: qcom: socinfo: create soc_id table
+from bindings”). The table format has been stable since then. SDM850 DT
+has been in tree much longer (`44acee2078447` Yoga C630, 2019-09-05;
+`6be4ba5467bed` sdm850.dtsi, 2021-01-15).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. The original panel-add commits
-used a conservative generic 50ms T8 that later proved too short for
-these two SKUs.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Not applicable. This fills a gap for hardware
+whose DT was added years ago, not a regression from a specific commit.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Same file has many “Fix delays for …” / “Modify … delay” commits (e.g.
-  `43113fd4c5f56` INX N116BCA-EA2, `9abe13a0598a8` CMN 0x14d6).
-  Established pattern.
-- Follow-ups after `0d40cab` are unrelated (I2C leak, new panel IDs,
-  `pre_unprepare`).
-- Standalone; not “patch X/Y”.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: This is **patch 2/2** of “Recognize Snapdragon SDM850”. Patch 1:
+`dt-bindings: arm: qcom,ids: Add SoC ID for Snapdragon SDM 850`
+(`d529495c991a2b` in the qcom tree; also `4e926dc3d6ad3` via arm-soc).
+Recent socinfo history is mostly other SoC/PMIC ID adds. Standalone on
+this tree because the `#define` is already here.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Dio Zhang has this one commit under `drivers/gpu/drm/panel/`.
-Douglas Anderson is the listed reviewer for `DRM DRIVER FOR GENERIC EDP
-PANELS` and authored/applied many `panel-edp` changes.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: David Heidelberg authored both series patches on these paths.
+Not the subsystem maintainer. Maintainer path: Ack from Krzysztof
+Kozlowski, merge by Bjorn Andersson.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs `edp_panels[]`, `delay_200_500_e200`, and the two
-`EDP_PANEL_ENTRY` rows. All exist in this tree. Standalone.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: **Depends on `QCOM_ID_SDM850` (348)** in `qcom,ids.h`. Verified
+present at `include/dt-bindings/arm/qcom,ids.h:187`. `git merge-base
+--is-ancestor` confirms both the socinfo commit `743af1d6a8b4b` and the
+header commit are ancestors of HEAD. Can apply standalone **on this
+tree**. Applying only socinfo without the define would not compile
+(`QCOM_ID_SDM850` undeclared). Parent of `743af1d6a8b4b` did **not**
+have the define (header landed on a different path/timing).
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 0d40cab391587`: v2 at https://patch.msgid.link/202607200253
-  58.2781136-1-dioyc_zhang@compal.corp-partner.google.com
-- `b4 dig -a`: v1 2026-07-17, v2 2026-07-20 (applied).
-- v1 review (mbox): Doug asked only for a real name in SOB/authorship;
-  no NAK; no stable debate.
-- v2 review (mbox): Doug R-b’d, fixed subject to name both panels, noted
-  it needed a trivial rebase onto drm-misc-next, pushed as
-  `0d40cab391587`.
-- WebFetch of lore.kernel.org returned **403**; discussion recovered via
-  `b4 dig -m`.
+- Lore/msgid:
+  https://patch.msgid.link/20260627-sda850-v2-2-44bf46ade42e@ixit.cz
+- Direct lore.kernel.org fetch: **403** (could not read HTML); full
+  thread saved via `b4 dig -m` to `/tmp/sdm850-thread.mbox`
+- Revisions: **v1** (2026-06-23) was only the dt-bindings patch, titled
+  SDA 850; **v2** (2026-06-27) renamed to SDM850 (Konrad) and added this
+  socinfo consumer (Krzysztof). Applied version is v2/2, the latest.
+- Reviewer feedback: Ack from Krzysztof on both patches; Reviewed-by
+  Konrad on patch 1; Bjorn Andersson applied both on 2026-07-05. No
+  NAKs. No reviewer `Cc: stable`.
+- Cover letter: in-tree SDM850 devices + Comma AI comma three.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included `dianders@chromium.org`,
-`neil.armstrong@linaro.org`, `airlied@gmail.com`, `daniel@ffwll.ch`,
-`sam@ravnborg.org`, `dri-devel@lists.freedesktop.org`, `linux-
-kernel@vger.kernel.org`. Subsystem reviewer Doug Anderson both reviewed
-and applied it.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc included Bjorn Andersson, Konrad Dybcio, Rob
+Herring, Krzysztof Kozlowski, Conor Dooley, linux-arm-msm, devicetree,
+linux-kernel. Right maintainers were on the thread.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by` / bugzilla / syzbot. Evidence is the author’s
-waveform measurements plus AUO’s updated T8=200ms spec. Compal/Google-
-partner author implies Chromebook-class hardware.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Motivation is missing ID for already-
+supported boards, not a crash report.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single-patch series. v2 vs v1 is authorship/subject cleanup,
-same diff.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Two-patch series only. No further enablement patches in the
+thread. Patch 1 is the header define (already in this tree).
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — lore.kernel.org/stable WebFetch returned 403.
-No stable mention in the dri-devel mbox.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: **UNVERIFIED** — lore.kernel.org/stable search and WebSearch
+both failed (403 / tool error). No stable discussion in the captured
+msm/devicetree thread.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function bodies edited. Runtime users of the table:
-`find_edp_panel()`, panel identification in `panel_edp_probe()` path
-(`desc->delay = *panel->detected_panel->delay`), `panel_edp_enable()`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: Table `soc_id[]` only. Consumers: `socinfo_machine()`, called
+from `qcom_socinfo_probe()`.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `find_edp_panel()` called from the generic eDP identification path
-  (~line 820) after reading the EDID panel ID.
-- `panel_edp_enable` is the DRM panel `.enable` callback
-  (`panel_edp_funcs`).
-- Called on modeset/enable (including VT switch), not a rare error path.
+Step 5.2: TRACE CALLERS
+Record: `socinfo_machine()` is static, one caller:
+`qcom_socinfo_probe()`. Platform driver `qcom-socinfo`
+(`CONFIG_QCOM_SOCINFO`, default `m` if `ARCH_QCOM`). Probe at Qualcomm
+SoC boot via SMEM `SMEM_HW_SW_BUILD_ID`. Not IRQ/hot-path. Userspace-
+visible via soc bus sysfs.
 
-**Step 5.3: TRACE CALLEES**
-Record: `panel_edp_enable()` uses `msleep(delay)` then
-`panel_edp_wait()` for `prepare_to_enable` / `powered_on_to_enable`.
-This change only increases the `msleep` for those two IDs.
+Step 5.3: TRACE CALLEES
+Record: Probe uses `qcom_smem_get()`, `soc_device_register()`, debugfs
+init, `add_device_randomness()`. This patch does not change those calls.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace modeset / VT switch → DRM enable →
-`panel_edp_enable()` → extra 150ms wait → backlight. Reachable on any
-system whose eDP panel EDID is AUO 0x1ea5 or 0x67a8.
-`CONFIG_DRM_PANEL_EDP` (OF + backlight). Not a syscall memory-safety
-bug; it is a common display path for those laptops.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Boot on SDM850 (Yoga C630, Samsung W737, Huawei Matebook E,
+etc.) → qcom-socinfo probe → SMEM id 348 → name lookup. Reachable on
+real shipped ARM64 laptops already described in this tree’s DT. Not a
+syscall fuzzer path.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Many other panels already use `delay_200_500_e200`. Prior “Fix
-delays for …” commits in this file use the same table-pointer swap.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Many sibling “Add SoC ID for …” commits in the same table. No
+in-tree `soc_device_match()` on `"SDM850"` / `"SDM845"` (grep of
+drivers). Impact is sysfs/userspace identification, not in-kernel quirk
+matching.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion`: **7.3.0-rc4**.
-- Both panel rows exist. `git merge-base --is-ancestor 0d40cab391587
-  HEAD` is true (this is mainline after the fix).
-- Pre-fix state used `delay_200_500_e50` for both IDs; that is the bug
-  this tree’s history actually had. B116XAK01.6 has been in tree since
-  v6.1-rc1; B140XTK02.4 since May 2026, also in 7.3.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. `drivers/soc/qcom/socinfo.c` `soc_id[]` and
+`socinfo_machine()` exist. Header define exists. SDM850 DT:
+`arch/arm64/boot/dts/qcom/sdm850.dtsi` plus board files. Without this
+line, id 348 stays unnamed. The gap existed from the 2022 table
+conversion until this 2026 add; hardware DT is from 2019–2021.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Context in this tree matches the committed hunk (same
-vendor/product rows). `delay_200_500_e200` is present. No structural
-mismatch. Forward `git apply --check` of the patch on current HEAD fails
-only because the after-image is already applied — expected on this
-mainline checkout.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **Clean apply** on this tree: neighbors SDA636/SDM632 match the
+hunk. Same `qcom_board_id()` helper. Prerequisite `#define
+QCOM_ID_SDM850 348` is present.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This is the delay fix for those two IDs. No competing alternate
-T8 patch found on this file.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: This exact line is already in HEAD (`git merge-base --is-
+ancestor 743af1d6a8b4b HEAD` succeeded; blame line 428 is that commit).
+Per instructions that is **not** used as a “already selected” veto; it
+confirms the change is valid in this codebase. No alternate fix for id
+348.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/gpu/drm/panel/panel-edp.c` — generic eDP panel driver.
-**IMPORTANT** for laptops/Chromebooks using generic eDP, not core
-mm/VFS. Peripheral relative to the whole kernel, but the driver is
-widely used.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **drivers/soc/qcom** (Qualcomm socinfo). **IMPORTANT** for
+ARCH_QCOM users, not core mm/net. Identification only; does not bind a
+new driver.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively updated (panel IDs, delay tweaks, probe leak fixes).
-Mature table-driven delay model since ~2022.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively updated (many recent SoC/PMIC ID commits). Table-add
+pattern is mature and repetitive.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / hardware-specific: only EDID AUO 0x1ea5 and
-0x67a8. No effect on other panels.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Platform-specific** — Qualcomm SDM850 boards (in-tree: Lenovo
+Yoga C630, Samsung Galaxy Book2 / w737, Huawei Matebook E 2019). Cover
+letter also cites Comma three. Only if `CONFIG_QCOM_SOCINFO` is enabled
+(default on ARCH_QCOM).
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Mode changes such as VT switches (author). Common on laptops.
-Unprivileged users can trigger VT/modeset on typical distro setups. Not
-a security exploit path.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every boot on SDM850 once socinfo probes. Not a race.
+Unprivileged users only observe sysfs; they cannot trigger a crash with
+this bug.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Screen garbage/flickering. Not oops/deadlock/corruption.
-**MEDIUM** user-visible display bug. Official stable rules explicitly
-list **hardware quirk** next to oops/hang as acceptable
-(`Documentation/process/stable-kernel-rules.rst`).
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Missing `/sys/devices/soc0/machine` (attribute mode 0 when
+`machine` is NULL in `soc_attribute_mode()`). Numeric soc_id still
+exported. **Severity: LOW** as a crash/corruption issue; **hardware
+identification** as a device-ID exception.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Stops garbage/flicker on two real AUO panels; matches
-  vendor T8=200ms; waveform-backed (~140ms needed vs 50ms old).
-- **Risk:** Very low — 2 pointer swaps, existing struct, +150ms enable
-  delay only for those IDs.
-- **Ratio:** Favorable. Same class as USB/PCI delay quirks that
-  routinely go to stable.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record: Benefit: correct SoC name for real shipping devices already
+supported by this tree. Risk: **very low** (1 line, data-only). Ratio:
+favorable under the device-ID exception.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real user-visible bug (garbage/flicker on VT/mode change), measured
-  and spec-backed.
-- Hardware quirk / timing workaround — allowed by stable-kernel-rules.
-- 2-line table change; existing `delay_200_500_e200`; no new
-  API/feature.
-- Reviewed and applied by panel-edp reviewer Douglas Anderson.
-- Both panel IDs and delay helper exist in this 7.3 tree.
-- Isolated to two EDID IDs.
+- Documented stable exception: new device/SoC ID on an existing driver
+- One line, same idiom as the rest of `soc_id[]`
+- Real hardware: in-tree SDM850 DTs since 2019–2021
+- Acked by Krzysztof Kozlowski; applied by Bjorn Andersson
+- Prerequisite `QCOM_ID_SDM850` is in this 7.3-rc4 tree
+- No locking/API/behavior change for other SoCs
 
 AGAINST:
-- Not a crash, UAF, or data-corruption bug.
-- +150ms backlight delay (maintainer accepted that tradeoff).
-- No `Reported-by` from multiple end users / no syzbot.
-- Stable list discussion could not be fetched (lore 403).
+- Not a crash, UAF, deadlock, or data-corruption fix
+- No Cc: stable / Fixes (expected; not a negative)
+- Userspace-visible name fill-in, not driver probe
 
 UNRESOLVED:
-- Could not read lore.kernel.org/stable (HTTP 403).
-- Could not independently view AUO datasheets (not in-tree).
+- Could not query lore.kernel.org/stable (HTTP 403 / search failure)
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — reuses existing delay
-   struct; maintainer review; author reports waveform data.
-2. Fixes a real bug that affects users? **PASS** — garbage/flicker on
-   mode change.
-3. Important issue? **PASS** as hardware quirk (documented exception);
-   severity MEDIUM visual, not CRITICAL crash.
-4. Small and contained? **PASS** — 2 lines, one table.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — target rows,
-   `delay_200_500_e200`, and enable path all exist here.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — one table entry; maintainer
+   ack; merged to qcom/arm-soc
+2. Fixes a real bug that affects users? **PASS** — missing ID for
+   shipping SDM850 machines (Yoga C630 and others)
+3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
+   those classes; **PASS** via device-ID exception
+4. Small and contained? **PASS** — +1 line, one file
+5. No new features or APIs? **PASS** — no new syscall/sysfs ABI; fills
+   existing soc bus `machine` attribute
+6. Can apply to the local tree? **PASS** — table and `QCOM_ID_SDM850`
+   exist here
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk/workaround** (panel power-sequence delay,
-analogous to USB delay quirks).
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **NEW DEVICE ID** on an existing driver (`qcom-socinfo`).
+Analogous to adding a PCI/USB ID.
 
-**Step 9.4: MAKE YOUR DECISION**
-This tree has the driver, both panel IDs, and the 200ms delay helper.
-The change is a small, reviewed T8 quirk that fixes real display garbage
-on mode changes. That meets stable rules for this checkout.
+Step 9.4: MAKE YOUR DECISION
+This is a one-line SoC ID for hardware this tree already describes. It
+does not add a driver or API. Benefit is correct identification on
+SDM850; risk is negligible. That matches the stable device-ID exception,
+so it should be backported to this tree.
+
+**What it solves for stable users:** SDM850 reports as an
+unknown/unnamed SoC in socinfo sysfs. Users of Yoga C630-class machines
+and similar need the name for inventory/userspace matching.
+
+**Risk vs benefit:** Data-only lookup add; no runtime regression path
+identified.
+
+**Concerns:** Must keep the header define (`QCOM_ID_SDM850` / 348). That
+define is already in this checkout, so this commit is self-contained
+here.
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by/SOB Douglas Anderson; Link to
-  msgid; no Fixes/Reported-by/Cc:stable
-- [Phase 1] Body: VT-switch garbage; T8 50ms vs ~140ms measured; AUO
-  spec T8=200ms
-- [Phase 2] Diff: two `EDP_PANEL_ENTRY` pointer swaps in `edp_panels[]`;
-  +2/-2
-- [Phase 2] `delay_200_500_e50.enable=50`,
-  `delay_200_500_e200.enable=200` verified in panel-edp.c
-- [Phase 2] `panel_edp_enable()` `msleep(p->desc->delay.enable)`; probe
-  copies `detected_panel->delay`
-- [Phase 3] `git show 0d40cab391587`: confirmed subject/body/stat
-- [Phase 3] `git merge-base --is-ancestor 0d40cab391587 HEAD` → yes
-  (already in 7.3-rc4 history; not used as circular “already selected”
-  reasoning)
-- [Phase 3] `git blame` on the two rows: this commit; origins
-  `a70abdd994cb` (v6.1-rc1) and `4c34cdb93ea1` (2026-05, in this tree)
-- [Phase 3] `delay_200_500_e200` introduced `f6ff4570e567` (v6.1-rc1
-  era)
-- [Phase 3] Similar delay-fix pattern: `43113fd4c5f56` and others in the
-  same file
-- [Phase 4] `b4 dig -c 0d40cab391587`: v2 lore URL; `-a`: v1+v2; `-w`:
-  dri-devel + dianders
-- [Phase 4] mbox: v1 name-only feedback; v2 Reviewed-by + pushed to drm-
-  misc-next; no NAK
-- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable-list history
-- [Phase 5] Call chain: EDID match → delay table → `panel_edp_enable` on
-  modeset; CONFIG_DRM_PANEL_EDP
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 7.3.0-rc4; both
-  IDs and e200 present
-- [Phase 7] MAINTAINERS: Douglas Anderson reviewer for panel-edp.c
-- [Phase 8] Failure mode: display garbage, MEDIUM; official rules
-  include hardware quirk
-- [Phase 9] stable-kernel-rules.rst lines 15–20: quirk is an accepted
-  class
-- UNVERIFIED: AUO datasheet text; stable@ mailing-list traffic
-
-The fix is small, confined to two EDID entries, and is the usual panel-
-edp delay quirk pattern. Benefit outweighs the extra 150ms enable wait
-on just those panels.
+- [Phase 1] Subject/tags: Add SoC ID; Acked-by Krzysztof Kozlowski; Link
+  msgid 20260627-sda850-v2-2; no Fixes/Reported-by/Cc: stable
+- [Phase 1] Cover letter from mbox: in-tree sdm850 devices + Comma AI
+  comma three; v2 renamed SDA850→SDM850
+- [Phase 2] Diff: +1 line `{ qcom_board_id(SDM850) }` in `soc_id[]` of
+  `drivers/soc/qcom/socinfo.c`
+- [Phase 2] `qcom_board_id(id)` → `QCOM_ID_ ## id, __stringify(id)` at
+  socinfo.c:25
+- [Phase 2] `socinfo_machine()` returns NULL if no match (lines
+  562–571); probe sets `qs->attr.machine` (913–914)
+- [Phase 2] `soc_attribute_mode()` hides machine sysfs when machine is
+  NULL (drivers/base/soc.c:54–55)
+- [Phase 3] `git describe HEAD` / `make kernelversion`: v7.3-rc4-27 /
+  7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor 743af1d6a8b4b HEAD`: yes; also
+  in v7.3-rc1
+- [Phase 3] Prerequisite header commits `d529495c991a2b` and
+  `4e926dc3d6ad3` are ancestors of HEAD; `#define QCOM_ID_SDM850 348` at
+  qcom,ids.h:187
+- [Phase 3] Parent of socinfo commit lacked the define (would not
+  compile alone against that parent)
+- [Phase 3] Blame: neighbors from 34ec89e68db26 (2022); this line from
+  743af1d6a8b4b
+- [Phase 3] SDM850 DT: `git log --diff-filter=A` → 44acee2078447 (2019),
+  6be4ba5467bed (2021)
+- [Phase 4] `b4 dig -c 743af1d6a8b4b`: matched v2 2/2; `-a` showed v1
+  then v2; `-w` listed qcom/dt maintainers; `-m` saved thread
+- [Phase 4] mbox: Krzysztof Ack both; Konrad Reviewed-by on patch 1;
+  Bjorn “Applied, thanks!”; no NAK, no Cc: stable
+- [Phase 4] lore.kernel.org WebFetch 403; stable list search UNVERIFIED
+- [Phase 5] Only caller of `socinfo_machine` is `qcom_socinfo_probe`; no
+  in-tree `soc_device_match` on SDM850
+- [Phase 6] Local files exist; insertion context matches;
+  `CONFIG_QCOM_SOCINFO` in drivers/soc/qcom/Kconfig
+- [Phase 8] Failure mode: missing sysfs machine name, not oops; SDM850
+  boards listed under arch/arm64/boot/dts/qcom/
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/socinfo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 0da04d75e4e96..614c63e95c357 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1901,7 +1901,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x145c, &delay_200_500_e50, "B116XAB01.4"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1999, &delay_200_500_e50, "Unknown"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
--	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
-+	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e200, "B116XAK01.6"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x203d, &delay_200_500_e50, "B140HTN02.0"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x208d, &delay_200_500_e50, "B140HTN02.1"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02.3"),
-@@ -1921,7 +1921,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x635c, &delay_200_500_e50, "B116XAN06.3"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x639c, &delay_200_500_e50, "B140HAK02.7"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50, "B140HAN06.4"),
--	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e50, "B140XTK02.4"),
-+	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e200, "B140XTK02.4"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
- 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 963772f45489d..79a0defe73227 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -359,6 +359,7 @@ static const struct soc_id soc_id[] = {
+ 	{ qcom_board_id(IPQ8078) },
+ 	{ qcom_board_id(SDM636) },
+ 	{ qcom_board_id(SDA636) },
++	{ qcom_board_id(SDM850) },
+ 	{ qcom_board_id(SDM632) },
+ 	{ qcom_board_id(SDA632) },
+ 	{ qcom_board_id(SDA450) },
 -- 
 2.53.0
 
