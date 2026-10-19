@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A686653FA11;
-	Mon, 19 Oct 2026 14:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E4B63139D;
+	Mon, 19 Oct 2026 14:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418733; cv=none; b=cusUfTiU4mEuw3rc5X1FQnUKcvYrNsby3yssbF0QG0Im0KhZpmleIQIBCOQexSxKYTvkAnWLuFFUtZlUJos+7t4CQLguIUfrXmp2/uCmRb771YxHqwP1botjlyTga0AgTN7eW4+YpPHltR4uL3qvh3yx0zuVfJuBeebTmK61GzM=
+	t=1792418733; cv=none; b=SdAEftSRR/zkhIp0E30Tu/70UnlvWd5AM/pzEbTtGcQ48If223UEL7Tz3YXFrFwpivILzXXt7nAitag0B6pVAGjhOrjue6vX5ud0nLtSb61W//U/OgO38Q9nyYPtq+FsBebYCc8GODkudEzEEVYTnfenaW8Z+CGoExPbGSuNMdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418733; c=relaxed/simple;
-	bh=TfjXVatqllOc/iY/Q3aUVmNRuw/gl3fl3bHz3LPdrOM=;
+	bh=MOmZKezusvd3+rl8lQj3gb0nThfx7DNqvGBVftOEahM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o1N2sjjAEBc+M15BdVNm+UgB15Dln+voFoTrCFDAs6xpy+uhNM8iRtpaxXY67DJB+bGx2PKyVlmoKwdoKgU86qcj0QvykAiztGaB6s7i4sTCwXhm1G8POnUSRtbczwqwTVCl75JFA/w/dYPdDNPGfQfHFmW4VcPxLFfBBtXWZ7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PE+cpiz7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XgMnn45byX3MLGCIgSSsUnASFe2HMuSCrwvZvod1E1+Q5EZiEYF6o4hpaEEnsmzoNEtnKwOT+DabvRKScWeEcqaFeR3Km9JY1QzT2aZpGoQ4eRBYeBKntnt7Onq4u9rwR8LXXc7U5svWVG9nSwpgC7l7xjpb52DpsiNzYajnLo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkufR0Z5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PE+cpiz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3861F000C6;
-	Mon, 19 Oct 2026 14:05:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkufR0Z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD6D1F000C7;
+	Mon, 19 Oct 2026 14:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418728;
-	bh=czAK1+Kxgb1MOvp8fqcw27eT99l34C+QFqp+8Yw+G9A=;
+	s=k20260515; t=1792418729;
+	bh=5rmeK0G0kCVmt28KfnVlKueuTOC+BkuMm7WRfsXUmzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PE+cpiz78BNsZwWMJJnIdpLA2TFoE80XAz+fsH/oQKNNWpAsMF/S8HCyx62e1pOBS
-	 BuerdfjMMbncx8a6VRi7M0B3fKJgmT0uB95y/Ylj4PXnV+3ult6a8cHRfG4y6AQlB1
-	 n2CwQaEc2hx1FMaMlvYITLwQaK8wT6901Div4IDFW2DMWhXgp0oAHGhJz2xL2ROWum
-	 9VBzWV/6p/nznyK9DbeKFmFENkie0DnXbsHRfYg7f7kFEgZawME28azV/lxETTfGNF
-	 soy4l55GmS3Ag6QZaIx7bljy6Gvp1SYeZmvOY9M8TSLLUkyBUoQFrfaoTU9dFGX5ov
-	 mFvg9X/cSxq/A==
+	b=AkufR0Z5b4oz2hz/dGdUIbuyKwd0fC6OswogWOg9hS8AUxx7cGQBbauFVxh7cePNP
+	 R8ku+RrnI8xX6v63Q5JDR+cawPc6c4AjFiv3T/Pt2DZR6/O+E4QbeB/MsSYWZkyUBT
+	 OIrIhVbLah/S8bF7R8imo+sPft+l1sIiahR3w+YbBGJEGd/PxJWKzZCjRrETTg1cAf
+	 cjpdfl1YgLBapQ5FnG9NhPkdQSavDxdZKIMXqW5aMb8+5gdWV55a54+yPyooTUlwWE
+	 9VMti4Se7ZhzaIoU18ypRogwfGK4xNJOVqnzCe4Q1Wr/plSwVtahjH1V27hk1LNgJy
+	 vSeE3pvX6Qi+Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maurizio Lombardi <mlombard@redhat.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	justin.tee@broadcom.com,
-	nareshgottumukkala83@gmail.com,
-	paul.ely@broadcom.com,
-	axboe@kernel.dk,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	linux-spi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] nvme-fc: do not warn on controller removal race
-Date: Mon, 19 Oct 2026 09:52:25 -0400
-Message-ID: <20261019135441.1420968-454-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] spi: cadence-qspi: Fix status polling with octal DTR chips
+Date: Mon, 19 Oct 2026 09:52:26 -0400
+Message-ID: <20261019135441.1420968-455-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,69 +52,136 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 62b70e6c87121ae5b79ca20c3a5b005590336ec5 ]
+[ Upstream commit fd99864b0ac936e870c7ae28354c5cd3dad5efd0 ]
 
-In nvme_fc_reconnect_or_delete(), the system attempts to remove
-the controller when reconnect limits are reached by calling
-nvme_delete_ctrl(). This call is currently wrapped in a WARN_ON().
+Most SPI NOR chips today use 0x05 as ReaD Status Register (RDSR)
+opcode. After almost every transaction, the core will wait for the said
+transation to be digested by the chip by polling its status
+register. This mechanism has been automated by certain chips, such as
+the Cadence QSPI controller. Unfortunately, the feature has been
+disabled for various (relevant) reasons. Disabling this feature has been
+done by setting WRITE_COMPLETION_CTRL_REG.DISABLE_POLLING_FLD, keeping
+the rest of the register intact. In this same register, there is also a
+field named WRITE_COMPLETION_CTRL_REG.OPCODE_FLD, which by default also
+contains 0x05, as primary RDSR opcode.
 
-If a user concurrently deletes the controller via sysfs, the
-controller's state may have already transitioned out of the
-CONNECTING state. When this happens, nvme_delete_ctrl() correctly
-rejects the operation and returns -EBUSY. Because of the WARN_ON()
-wrapper, this race condition triggers an unnecessary kernel warning
-stack trace.
+As a result, both the SPI NOR and SPI NAND cores, primary users through
+spi-mem of the spi_mem_ops interface, do send their own RDSR. In this
+driver, such command goes through one of the fifth possible data path
+specifically crafted for short register-like commands, named STIG. In
+STIG mode, the opcode of the operation is written to
+OSPI_FLASH_CMD_CTRL_REG. This means that the opcode field of STIG
+configuration and the opcode field of the automatic polling
+configuration contain the same value.
 
-Remove the WARN_ON() macro around nvme_delete_ctrl();
-this allows the system to safely ignore the -EBUSY return value
-if the controller is already being deleted.
+Unfortunately, the TRM explains in two different places that this
+configuration is forbidden, without explaining why it is problematic:
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+$12.4.2.4.11 OSPI Software-Triggered Instruction Generator (STIG)
+```
+OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD bits should be set
+different than OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD
+and OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD.
+```
+
+and
+
+$12.4.2.5.2 Configuring the OSPI Controller for Optimal Use
+```
+When using the OSPI Controller, the opcodes in
+OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD,
+OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD and
+OSPI_WRITE_COMPLETION_CTRL_REG[7-0] OPCODE_FLD bit fields shall not
+match the opcode in the OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD
+bit field.
+```
+
+For some reasons, this is only unveiled now when testing in ODTR
+mode. Plain SDR modes work flawlessly with the same chips. One possible
+reason for this, is that the internal data path in ODTR mode is
+very different due to the extra opcode extension/repetition which may be
+interpreted differently (this is a wild guess). For sure there is an
+interference, as even the TRM states that there is some magic happening:
+
+$12.4.2.4.13 OSPI Command Translation
+```
+The WREN and the RDSR device instructions are the only ones that are
+sent by the controller under the hood.
+```
+
+I cannot probe the bus when the problem arises, so I don't know exactly
+what is sent on the bus. Practically speaking, the chip was driving the
+lines low (reading all 0s), which is not the usual default state when
+the chip is not driving the lines (all 1s). Other people on the mailing
+list claimed successfully using ODTR chips with this controller. My take
+here is that either they were using a variant of the IP without write
+completion at all (there is a quirk for it), or they were using chips
+slightly more flexible about their opcode sequency or maybe with
+different addr/dummy requirements.
+
+Clearing the WRITE_COMPLETION_CTRL_REG.OPCODE_FLD while disabling write
+completion polling entirely seems the best compromise.
+
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20261001-winbond-spi-next-cadence-rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the local-tree, diff, history, and review evidence. Below is the
-full nine-phase analysis for this 6.18.y checkout.
+This tree is **6.18.57**. The candidate is a 3-line Cadence QSPI
+programming fix: stop leaving the default RDSR opcode in
+`WRITE_COMPLETION_CTRL` after auto-poll is disabled, which the TRM
+forbids and which breaks octal DTR status polling.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[nvme-fc] [do not warn] suppress a false-positive WARN_ON when
-controller deletion races with reconnect exhaustion`
+Record: **[spi: cadence-qspi:] [Fix] [status polling fails with octal
+DTR chips because WRITE_COMPLETION_CTRL.OPCODE_FLD still holds 0x05]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>` (author)
-- `Reviewed-by: Daniel Wagner <dwagner@suse.de>`
-- `Signed-off-by: Keith Busch <kbusch@kernel.org>` (NVMe maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
-  (absence is expected)
-- Pipeline-only tags ignored: `[Upstream commit 62b70e6c8712...]`,
-  `Signed-off-by: Sasha Levin`
+- **Fixes:** none (expected)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** https://patch.msgid.link/20261001-winbond-spi-next-cadence-
+  rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Miquel Raynal (author; MTD/NAND maintainer); Mark
+  Brown (SPI maintainer, applied the patch)
+- Ignore: `[ Upstream commit fd99864b0ac936e870c7ae28354c5cd3dad5efd0 ]`
+  and `Signed-off-by: Sasha Levin` (pipeline)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `nvme_fc_reconnect_or_delete()` wraps `nvme_delete_ctrl()` in
-  `WARN_ON()`.
-- **Symptom:** concurrent sysfs delete can move the controller out of
-  `CONNECTING`; `nvme_delete_ctrl()` then correctly returns `-EBUSY`,
-  and `WARN_ON()` dumps a kernel warning stack.
-- **Root cause:** TOCTOU between the `NVME_CTRL_CONNECTING` check and
-  the delete call. `-EBUSY` is a valid result, not a programming error.
-- **Version info:** none stated. The `WARN_ON` has been on this call
-  since 2017.
+- **Bug:** Auto-HW write-completion polling was disabled by OR-ing
+  `DISABLE_POLLING_FLD` into `WRITE_COMPLETION_CTRL`, which **kept the
+  reset-default OPCODE_FLD = 0x05 (RDSR)**. SPI NOR/NAND then issue
+  their own RDSR via STIG (`OSPI_FLASH_CMD_CTRL_REG`), so STIG opcode
+  and completion-opcode both become 0x05.
+- **TRM:** Cadence OSPI TRM §12.4.2.4.11 and §12.4.2.5.2 forbid STIG
+  `CMD_OPCODE_FLD` matching `WRITE_COMPLETION_CTRL.OPCODE_FLD` (and the
+  read/write instruction opcodes).
+- **Symptom:** In **octal DTR**, the flash drives the bus low (reads as
+  all 0s). SDR with the same chips works. Status 0 means WIP=0, so
+  software can treat a still-busy flash as ready.
+- **Root cause (author):** controller still has “under the hood”
+  WREN/RDSR translation; ODTR’s extra opcode extension/repetition likely
+  makes the illegal opcode collision actually fire.
+- **Versions:** none named. Introduced by the 2021 auto-poll disable,
+  not by new 7.x code.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. It is an explicit false-positive `WARN_ON` fix
-for a real race. Functional delete behavior is unchanged.
+Record: **Not hidden.** Subject and body describe a real hardware-
+programming bug. Not cleanup/refactor.
 
 ---
 
@@ -128,37 +189,43 @@ for a real race. Functional delete behavior is unchanged.
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/nvme/host/fc.c` (`1 insertion, 1 deletion`)
-- Function: `nvme_fc_reconnect_or_delete()`
-- Scope: single-file, one-line surgical change
+- File: `drivers/spi/spi-cadence-quadspi.c` (**+1 / −2**)
+- Function: `cqspi_write_setup()`
+- Scope: **single-file surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** after reconnect limits / `dev_loss_tmo` expiry,
-  `WARN_ON(nvme_delete_ctrl(&ctrl->ctrl))` fires on any non-zero return.
-- **After:** `nvme_delete_ctrl()` is called and `-EBUSY` is ignored.
-- Path: reconnect-failure / teardown, not the successful connect path.
+- **Before:** `reg = readl(WR_COMPLETION_CTRL); reg |=
+  DISABLE_AUTO_POLL; writel(...)` — RMW preserves OPCODE_FLD=0x05 and
+  poll-count/delay/bit fields.
+- **After:** `reg = CQSPI_REG_WR_DISABLE_AUTO_POLL; writel(...)` —
+  writes only BIT(14), so OPCODE_FLD becomes 0 (and other poll fields
+  0).
+- Path: **write setup** for every spi-mem data write when
+  `cqspi->wr_completion` is true (default). Direct-mode writes stay
+  disabled, unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- **Category:** race / incorrect assertion (`WARN_ON` on a legitimate
-  `-EBUSY`)
-- **Mechanism:** `nvme_delete_ctrl()` fails `nvme_change_ctrl_state(...,
-  NVME_CTRL_DELETING)` or fails to queue `delete_work` if delete is
-  already in progress. The reconnect path already checked
-  `nvme_ctrl_state() == NVME_CTRL_CONNECTING` without a lock, so a
-  concurrent sysfs/`nvme_delete_ctrl()` can win. The warning is the bug;
-  deletion is already handled.
+- **Category:** hardware workaround / logic correctness (illegal
+  controller opcode collision)
+- **Mechanism:** disabled auto-poll still advertised RDSR 0x05; STIG
+  RDSR used the same opcode; TRM-forbidden config; ODTR status reads
+  return 0
+- **Fix:** clear OPCODE_FLD while keeping poll disabled, so STIG 0x05 no
+  longer matches
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- Obviously correct: other `nvme_delete_ctrl()` sites in the same file
-  (remoteport unregister, module unload) and RDMA/TCP already omit
-  `WARN_ON`.
-- Minimal, no API/data-structure change.
-- Regression risk is very low: the only behavior change is not warning
-  on an expected `-EBUSY`. A still-`CONNECTING` controller is still
-  deleted.
+- **Quality:** minimal and aligned with the TRM. Polling was already
+  disabled; remaining fields only matter when polling is on.
+  `CQSPI_NO_SUPPORT_WR_COMPLETION` platforms (SoCFPGA, Mobileye) never
+  write this register.
+- **Regression risk:** **low**. SDR already worked with poll disabled;
+  changing opcode from 0x05 to 0 while poll is off is what the TRM
+  wants. Slightly broader than clearing only bits [7:0], but with
+  `DISABLE_POLLING` set that is harmless.
+- No API/data-structure/locking changes.
 
 ---
 
@@ -166,35 +233,35 @@ Record:
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- `WARN_ON(nvme_delete_ctrl(...))` blamed to `c5017e85705bfe` (“nvme:
-  move controller deletion to common code”, Christoph Hellwig,
-  2017-10-29).
-- That commit replaced `WARN_ON(__nvme_fc_del_ctrl(ctrl))` with
-  `WARN_ON(nvme_delete_ctrl(...))`. The common helper can return
-  `-EBUSY` on a concurrent delete; the old wrapper’s assumption no
-  longer holds.
-- Present since ~v4.15-era NVMe-FC code; long-lived in this 6.18 series.
+- Auto-poll disable + RMW: **`9cb2ff11171264`** (“spi: cadence-quadspi:
+  Disable Auto-HW polling”, Apurva Nandan, 2021-07-13) — present since
+  ~v5.15
+- `if (cqspi->wr_completion)` gate: **`98d948eb833104`** (2021-11)
+- DTR support: **`f453f293979fb`** (2021-01-06)
+- The RMW was already used for DTR-only in `f453f293979fb`;
+  `9cb2ff11171264` extended it to all writes. Bug is years old in this
+  tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. Introducer is `c5017e85705bfe`,
-which is in this tree.
+Record: **No Fixes: tag.** Buggy pattern comes from `9cb2ff11171264`,
+which **is** in this tree (`git merge-base --is-ancestor` succeeded).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Recent `fc.c` work is unrelated (DMA unmap, double-free, tagset, rport
-  locking).
-- Precedent in-tree: `6622f9acd29cd` “nvme-loop: do not warn for deleted
-  controllers during reset” (2021) — same class of false `WARN_ON`
-  during concurrent delete.
-- Standalone; not `patch X/Y`.
+Record: Recent cadence-qspi work is clocks, PM, DMA, DT parse —
+unrelated. Independent of later ODTR opcode-filter commit `bee085476d27`
+and its revert (neither is in this tree). **Standalone.**
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Maurizio Lombardi (Red Hat) is a regular NVMe contributor.
-Applied by Keith Busch (NVMe maintainer). Reviewed by Daniel Wagner
-(SUSE, active NVMe-FC). Thread also has `Reviewed-by: Hannes Reinecke`.
+Record: Miquel Raynal maintains MTD/NAND/SPI-NAND and contributes
+regularly to spi-mem/cadence-qspi. Nearby work is DTR/spi-mem, not a
+hidden multi-patch dependency. This submission is **[1/1]**.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `nvme_delete_ctrl()`. Applies standalone.
+Record: Uses only `CQSPI_REG_WR_DISABLE_AUTO_POLL`,
+`cqspi->wr_completion`, and `cqspi_write_setup()` — all present at
+**v6.18.57**. `git diff v6.18.57 a1536ec7381c3^ -- drivers/spi/spi-
+cadence-quadspi.c` is **empty**: the hunk applies cleanly to this
+series.
 
 ---
 
@@ -202,144 +269,131 @@ Record: None. Uses existing `nvme_delete_ctrl()`. Applies standalone.
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 62b70e6c87121ae5b79ca20c3a5b005590336ec5` →
-  https://patch.msgid.link/20260908143434.105513-1-mlombard@redhat.com
-- `b4 dig -a`: single v1, no later revisions
-- Full thread saved via `b4 dig -m`
-- Daniel Wagner: “Yes, this makes sense.” + Reviewed-by
-- Hannes Reinecke: Reviewed-by
-- No NAKs, no risk flags, no `Cc: stable` in review (not a negative)
+- `b4 dig -c fd99864b0ac9`: https://patch.msgid.link/20261001-winbond-
+  spi-next-cadence-rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
+- `b4 dig -a`: **v1 only**, single patch `[PATCH]` / Mark Brown `[1/1]`
+- Thread: author cover + Mark Brown “Applied to spi.git **for-7.3**”
+- **No NAK, no review objections, no reviewer Cc: stable**
+- Cover note: issue is subtle; explanation is long on purpose
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Recipients included `kbusch@kernel.org`, `dwagner@suse.de`,
-`linux-nvme@lists.infradead.org`. Right maintainers and list. Keith
-Busch signed off.
+Record (`b4 dig -w`): Mark Brown (applied), Thomas Petazzoni, Santhosh
+Kumar K / Vignesh Raghavendra (TI, cadence-qspi), Steam Lin (Winbond),
+linux-spi. Maintainer-applied; no extra Reviewed-by.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by` / bugzilla / syzbot. Description is a concrete
-sysfs-vs-reconnect race, not theoretical cleanup.
+Record: No syzbot/bugzilla. Author reproduced on real ODTR hardware (bus
+stuck low / reads 0). Winbond engineer CC’d. Others on-list said ODTR
+worked — author attributes that to IP without write-completion (quirk)
+or more tolerant chips.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone one-patch series. Sibling transports already call
-`nvme_delete_ctrl()` without `WARN_ON`.
+Record: Series name `winbond-spi-next-cadence-rdsr-fix` is **one
+patch**. Not 2/3 of a stack. Later opcode-filter revert is a different
+bug and not required here.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org WebFetch returned 403. The captured NVMe thread
-has no stable discussion. **UNVERIFIED:** whether `stable@` discussed
-this commit.
+Record: WebSearch of lore.kernel.org/stable for this subject found
+**no** stable discussion (and no documented reason to skip it).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `nvme_fc_reconnect_or_delete()`; callee `nvme_delete_ctrl()`.
+semcode MCP is **not available**; used grep/read.
+
+**Step 5.1: KEY FUNCTIONS**
+Record: **`cqspi_write_setup()`** only.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- `nvme_fc_reset_ctrl_work()` → `nvme_fc_reconnect_or_delete(ctrl,
-  -ENOTCONN)` when the remoteport is not `ONLINE`
-- `nvme_fc_connect_ctrl_work()` → `nvme_fc_reconnect_or_delete(ctrl,
-  ret)` when `nvme_fc_create_association()` fails
-Both run on `nvme_wq` after link loss / failed reconnect — a normal SAN
-path.
+- `cqspi_write_setup` ← `cqspi_write` ← `cqspi_mem_process` ←
+  `cqspi_exec_mem_op` (`spi_controller_mem_ops.exec_op`)
+- After a data write, spi-nor/spi-nand poll RDSR via
+  **`cqspi_command_read()` (STIG)** when the op has no address or is a
+  small register read (`nbytes <= STIG max`).
+- Context: process context, MTD/spi-mem, not IRQ.
 
 **Step 5.3: TRACE CALLEES**
-Record: `nvme_delete_ctrl()` does `nvme_change_ctrl_state(ctrl,
-NVME_CTRL_DELETING)` then `queue_work(nvme_delete_wq,
-&ctrl->delete_work)`, returning `-EBUSY` if either fails. Sysfs
-`delete_controller` uses `nvme_delete_ctrl_sync()` (same `DELETING`
-transition).
+Record: `cqspi_enable_dtr`, `writel` of WR/RD_INSTR and
+WR_COMPLETION_CTRL, then size register. No alloc/locks.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record:
-```
-fabric reconnect work / reset work
-  → nvme_fc_reconnect_or_delete()
-      [state == CONNECTING?]
-      → nvme_delete_ctrl()   // races with:
-           sysfs delete_controller (CAP_SYS_ADMIN, S_IWUSR)
-           nvme_fc_unregister_remoteport()
-           nvme_fc_delete_controllers() (module unload)
-```
-Reachable in production NVMe-FC setups. Sysfs delete needs privilege;
-reconnect exhaustion does not.
+Record: Userspace/MTD write/erase → spi-nor `spi_nor_octal_dtr_write` /
+page program → exec_op write → `cqspi_write_setup` programs
+WR_COMPLETION_CTRL → `spi_nor_read_sr()` issues RDSR (0x05; in 8-8-8 DTR
+also dummy/addr and 2 data bytes) → STIG. **Reachable on every flash
+write** on Cadence OSPI with wr_completion. Not a syscall UAF, but
+boot/rootfs-on-OSPI is a common embedded path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: At `v6.18.57`, `WARN_ON(nvme_delete_ctrl` exists only in
-`drivers/nvme/host/fc.c`. RDMA (`nvme_rdma_reconnect_or_remove`), TCP,
-and the other two FC call sites already ignore the return. This site is
-the leftover.
-
-semcode MCP: not available; used `git grep` / `rg`.
+Record: `WR_COMPLETION_CTRL` is only written here. Platforms with
+`CQSPI_NO_SUPPORT_WR_COMPLETION` skip it (SoCFPGA, Mobileye EyeQ5).
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Local tree: `v6.18.57` (`VERSION=6`, `PATCHLEVEL=18`, `SUBLEVEL=57`;
-  `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`)
-- At `v6.18.57`, `drivers/nvme/host/fc.c:3337` is
-  `WARN_ON(nvme_delete_ctrl(&ctrl->ctrl));`
-- Upstream fix `62b70e6c8712` is **not** an ancestor of `v6.18.57`
-- Bug introduced 2017; present in this series
+Record: **Yes.** At **v6.18.57** `cqspi_write_setup()` still does the
+RMW. Tree: `git describe HEAD` = **v6.18.57-155-gcdf239ca885b2**, `make
+kernelversion` = **6.18.57**. DTR (`cqspi_mem_caps.dtr = true`,
+`cqspi_enable_dtr`) and octal (`CQSPI_SUPPORTS_OCTAL` on TI AM654 and
+Versal) are here. spi-nor has `SNOR_PROTO_8_8_8_DTR` and
+`spi_nor_read_sr()` DTR RDSR.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Context around the line at `v6.18.57` matches the
-patch. `git apply --check` against the `v6.18.57` file succeeded.
-Difficulty: clean apply.
+Record: **Clean apply** to v6.18.57. Surrounding function matches the
+hunk exactly.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No other in-tree commit removes this FC `WARN_ON`. The loop
-analog (`6622f9acd29cd`) is already present and does not replace this
-fix.
+Record: No other commit in this tree fixes OPCODE_FLD vs STIG. This
+candidate is the first.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: NVMe over Fabrics FC host (`drivers/nvme/host/fc.c`).
-**IMPORTANT** (enterprise SAN storage), not core mm/VFS, not staging.
+Record: **drivers/spi** Cadence Quad SPI (`CONFIG_SPI_CADENCE_QUADSPI`).
+**IMPORTANT** for embedded: TI K3 OSPI (`ti,am654-ospi`), AMD/Xilinx
+Versal OSPI, plus JH7110, Intel LGM, etc. Often **boot/root filesystem
+flash**. Not core mm/VFS, not staging.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (recent FC locking, tagset, DMA fixes). This
-line itself has been stable since 2017.
+Record: Actively maintained (PM, clocks, DMA) but this programming
+sequence has been stable since 2021.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config-specific / driver-specific: `CONFIG_NVME_FC` users.
-Typical audience is enterprise FC-SAN, i.e. LTS/stable deployments.
+Record: **Driver-specific**, especially **octal DTR** on controllers
+that **have** write-completion (TI AM654/K3 OSPI, Versal OSPI).
+SoCFPGA/Mobileye skip the register. SDR of the same chips is reported
+working.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Trigger: reconnect attempts exhausted **and** a concurrent delete
-  (sysfs, remoteport teardown, or module unload)
-- Not every I/O; realistic during link flaps / admin teardown
-- Unprivileged users cannot write `delete_controller`; they can
-  contribute to reconnect failure. Privilege needed for the sysfs side
-  of the described race.
+Record: Flash write/erase then software RDSR poll in **8-8-8 DTR**.
+Needs octal-capable controller + ODTR NOR/NAND. Not unprivileged-attack
+surface; typically MTD from kernel/root. Timing-independent once ODTR is
+on — author reproduced it.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 Record:
-- Default: `WARN_ON` stack dump (no data loss; delete still happens on
-  the other path)
-- With `panic_on_warn`: kernel panic during controller teardown
-- Severity: **MEDIUM** normally, **HIGH/CRITICAL** if `panic_on_warn` is
-  enabled (CI, hardened, some Android/enterprise)
+- **Failure:** RDSR returns 0 (lines held low). WIP=0 can look like “not
+  busy” while a program/erase is still running → **failed writes or
+  flash corruption**. Or ops just fail.
+- **Severity: HIGH** (flash integrity on OSPI-boot systems). Not a KASAN
+  crash, but real storage failure.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** medium — stops a user-visible warning and a possible
-  `panic_on_warn` crash on a path enterprise NVMe-FC users actually hit
-- **Risk:** very low — one line, no locking/API change, matches other
-  transports
-- **Ratio:** benefit exceeds risk
+- **Benefit: high** for ODTR-on-Cadence-QSPI users (TI K3, Versal, …)
+- **Risk: very low** (1–3 lines, poll already off, quirk skips broken
+  IP)
+- **Ratio: strongly favors backport**
 
 ---
 
@@ -348,127 +402,118 @@ Record:
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- Real race; `-EBUSY` is correct, `WARN_ON` is not
-- `WARN_ON` is a listed strong-yes class (and can panic)
-- One-line, obviously correct, reviewed by Wagner/Reinecke, applied by
-  Busch
-- Buggy line exists in `v6.18.57`; applies cleanly; no prerequisites
-- Same file’s other delete sites and RDMA/TCP already omit the warning
-- Precedent: nvme-loop “do not warn for deleted controllers”
+- Real, reproduced bug: ODTR status poll returns all 0s
+- TRM forbids this opcode collision
+- Possible **write-completion mis-detect / flash corruption**
+- 3-line, obviously correct, no new API
+- Code has been wrong in this tree since 2021; DTR/octal already exist
+- Applies cleanly to v6.18.57
+- Author is MTD maintainer; SPI maintainer applied it
+- Hardware-programming workaround (stable exception class)
 
 **AGAINST:**
-- Not data corruption / UAF / deadlock
-- No public user report or syzbot
-- Default impact is a warning, not a functional hang
-- NVMe-FC is not universal
+- No Fixes:/Cc: stable (not a negative per rules)
+- No extra reviewers; applied to **for-7.3** not as an -rc hotfix
+- Author is not 100% sure of the internal ODTR datapath (“wild guess”)
+- Hits ODTR more than SDR; fewer machines than a core-mm bug
+- Writes the whole register, not only OPCODE_FLD (still safe with poll
+  disabled)
 
-**UNRESOLVED:**
-- Whether `stable@` discussed it (lore search 403)
-- How often the race is hit in the field (no `Reported-by`)
+**UNRESOLVED:** Exact on-wire ODTR sequence (author could not probe). No
+stable-list thread. Unverified whether every Cypress Semper setup
+already failed the same way (Winbond exposed it; TRM still applies).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one-line, two NVMe
-   reviewers, maintainer SOB
-2. Fixes a real bug that affects users? **PASS** — false `WARN_ON` on a
-   reachable race
-3. Important issue? **PASS** — `WARN_ON` / possible `panic_on_warn`
-   panic; not silent corruption, but in the documented yes class
-4. Small and contained? **PASS** — 1 line, 1 file
+1. Obviously correct and tested? **PASS** — TRM + reproduced ODTR
+   failure; maintainer applied
+2. Fixes a real bug that affects users? **PASS** — OSPI flash status
+   poll broken in ODTR
+3. Important issue? **PASS** — HIGH: failed program/erase or false
+   “ready” (corruption risk)
+4. Small and contained? **PASS** — +1/−2, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on `v6.18.57`
+6. Can apply to the local tree? **PASS** — v6.18.57 has the RMW; empty
+   diff vs parent file
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID / quirk / DT / build / docs exception).
-Qualifies as a normal small bugfix.
+Record: **Hardware workaround** for Cadence OSPI write-completion vs
+STIG RDSR. Not a new driver/API.
 
-**Step 9.4: DECISION**
-This tree is 6.18.y. The `WARN_ON` is still in `v6.18.57`. The patch is
-a one-line removal of a false assertion on a real reconnect-vs-delete
-race. It does not change successful-delete behavior, matches every other
-NVMe transport, and is the kind of warning-to-panic issue stable should
-take.
+**Step 9.4: MAKE YOUR DECISION**
+This belongs on 6.18.y: the buggy RMW is in this tree, octal DTR is
+supported, the fix is tiny, and the failure is flash status polling — a
+data-integrity problem on platforms that boot from OSPI.
 
 ---
 
-## What the commit solves, and why it matters here
+### Problem and why it matters here
+`cqspi_write_setup()` disables controller auto-poll but left
+`WRITE_COMPLETION_CTRL.OPCODE_FLD` at the reset default **0x05**.
+Software RDSR also uses 0x05 in STIG. The Cadence TRM forbids that
+match. In octal DTR, status reads come back 0, so WIP can look clear
+while the chip is still busy. On TI AM654/K3 and Versal OSPI that is
+boot/storage flash, not a niche sysfs knob.
 
-On 6.18.y NVMe-FC, when reconnects are exhausted,
-`nvme_fc_reconnect_or_delete()` tries to delete the controller. If
-userspace (`delete_controller`) or another teardown path already moved
-the controller to `DELETING`, `nvme_delete_ctrl()` returns `-EBUSY` by
-design. Wrapping that in `WARN_ON()` turns a handled race into a kernel
-warning (or a panic if `panic_on_warn` is set). Removing the wrapper is
-the same policy RDMA, TCP, and the other FC delete sites already use.
+### Stable rules / risk
+Surgical, no new ABI, applies to **this** 6.18.57 tree without
+prerequisites. Benefit (correct ODTR status, avoid bad write completion)
+dwarfs the risk of writing BIT(14) instead of RMW.
 
-Risk is negligible; benefit is avoiding a production warning/panic on
-enterprise FC fabrics that 6.18.y actually ships.
+### Verification
+- **[Phase 1]** Tags: Link to msgid `20261001-winbond-spi-next-cadence-
+  rdsr-fix-v1-1-…`; SOB Miquel Raynal + Mark Brown; no Fixes/Reported-
+  by/Cc: stable
+- **[Phase 2]** Diff: `cqspi_write_setup()` RMW → `reg =
+  CQSPI_REG_WR_DISABLE_AUTO_POLL` (+1/−2)
+- **[Phase 3]** blame: RMW from `9cb2ff11171264` (2021); wr_completion
+  gate `98d948eb833104`; DTR `f453f293979fb`; all ancestors of HEAD
+- **[Phase 3]** `git merge-base --is-ancestor 9cb2ff11171264 HEAD` → yes
+- **[Phase 3]** `git diff v6.18.57 a1536ec7381c3^ -- drivers/spi/spi-
+  cadence-quadspi.c` → 0 lines (clean apply)
+- **[Phase 4]** `b4 dig -c fd99864b0ac9`: lore/patch.msgid.link match;
+  `-a` v1 only; `-w` Broonie/TI/Winbond/linux-spi; mbox: Applied
+  **for-7.3**, no NAK
+- **[Phase 4]** lore.kernel.org WebFetch → 403; recovered via `b4 -m` +
+  patchew
+- **[Phase 4]** stable lore search: no hits
+- **[Phase 5]** callers: `cqspi_write` → `cqspi_mem_process` →
+  `cqspi_exec_mem_op`; RDSR via `cqspi_command_read` STIG;
+  `spi_nor_read_sr()` DTR path in `drivers/mtd/spi-nor/core.c`
+- **[Phase 6]** `git describe HEAD` = v6.18.57-155-gcdf239ca885b2; `make
+  kernelversion` = 6.18.57; v6.18.57 still has the RMW
+- **[Phase 6]** octal platdata: `am654_ospi`, `versal_ospi`,
+  `versal2_ospi` have `CQSPI_SUPPORTS_OCTAL` and wr_completion;
+  SoCFPGA/Mobileye set `CQSPI_NO_SUPPORT_WR_COMPLETION`
+- **[Phase 7]** `CONFIG_SPI_CADENCE_QUADSPI`; compatibles include
+  `ti,am654-ospi`, `xlnx,versal-ospi-1.0`
+- **[Phase 8]** Failure: ODTR RDSR all 0s → false ready / failed flash
+  ops; severity HIGH
+- **UNVERIFIED:** on-wire ODTR collision (author could not probe);
+  whether every Cypress Semper board already failed identically
+- **semcode:** namespace not available
 
----
-
-## Verification
-- [Phase 1] Parsed tags: author SOB Maurizio Lombardi; Reviewed-by
-  Daniel Wagner; SOB Keith Busch; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: 1 line in `nvme_fc_reconnect_or_delete()`;
-  `WARN_ON(nvme_delete_ctrl())` → `nvme_delete_ctrl()`
-- [Phase 2] `nvme_delete_ctrl()` at `drivers/nvme/host/core.c:257`
-  returns `-EBUSY` if state change or `queue_work` fails
-- [Phase 2] State machine: `CONNECTING` → `DELETING` or `LIVE` only;
-  concurrent delete explains `-EBUSY`
-- [Phase 3] `git blame` at parent: line from `c5017e85705bfe` (2017);
-  originally `WARN_ON(__nvme_fc_del_ctrl)`
-- [Phase 3] `git log -S 'WARN_ON(nvme_delete_ctrl'` on `fc.c`:
-  introducer + this removal
-- [Phase 3] Related: `6622f9acd29cd` nvme-loop “do not warn…” is already
-  an ancestor
-- [Phase 3] No later `fc.c` commits after the candidate rewrite this
-  line
-- [Phase 4] `b4 dig -c 62b70e6c8712`:
-  https://patch.msgid.link/20260908143434.105513-1-mlombard@redhat.com
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: kbusch, dwagner, linux-nvme CC’d
-- [Phase 4] `b4 dig -m`: Wagner + Reinecke Reviewed-by; no NAK
-- [Phase 4] lore WebFetch 403 — used b4 mbox instead
-- [Phase 4] UNVERIFIED: stable@ mailing list history (403)
-- [Phase 5] Callers verified: `nvme_fc_reset_ctrl_work`,
-  `nvme_fc_connect_ctrl_work`
-- [Phase 5] Concurrent deleters: `nvme_sysfs_delete` →
-  `nvme_delete_ctrl_sync`; `nvme_fc_unregister_remoteport`;
-  `nvme_fc_delete_controllers`
-- [Phase 5] `git grep` at v6.18.57: only FC reconnect path uses
-  `WARN_ON(nvme_delete_ctrl`
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57
-- [Phase 6] `git show v6.18.57:drivers/nvme/host/fc.c` line 3337:
-  `WARN_ON` present
-- [Phase 6] `git merge-base --is-ancestor 62b70e6c8712 v6.18.57` / HEAD:
-  not in the 6.18.57 base
-- [Phase 6] Apply check of the patch onto the v6.18.57 file: success
-- [Phase 7] `CONFIG_NVME_FC`; MAINTAINERS: Keith Busch + NVMe FC
-  transport
-- [Phase 8] Failure mode: WARN_ON stack / panic_on_warn; severity MEDIUM
-  (HIGH if panic_on_warn)
-- UNVERIFIED: field frequency (no Reported-by)
-
-The fix is small, surgical, present as a real bug in this 6.18.y tree,
-and meets the stable criteria.
+The patch is a small, correct hardware programming fix for a real flash-
+status bug that exists in this 6.18.y tree.
 
 **YES**
 
- drivers/nvme/host/fc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-cadence-quadspi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index fc7aa3fc6c2b5..186d1beecf32b 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3334,7 +3334,7 @@ nvme_fc_reconnect_or_delete(struct nvme_fc_ctrl *ctrl, int status)
- 				ctrl->cnum, min_t(int, portptr->dev_loss_tmo,
- 					(ctrl->ctrl.opts->max_reconnects *
- 					 ctrl->ctrl.opts->reconnect_delay)));
--		WARN_ON(nvme_delete_ctrl(&ctrl->ctrl));
-+		nvme_delete_ctrl(&ctrl->ctrl);
- 	}
- }
- 
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 0a32e28eefd51..441426bc232ef 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1058,8 +1058,7 @@ static int cqspi_write_setup(struct cqspi_flash_pdata *f_pdata,
+ 	 * care of polling the status register.
+ 	 */
+ 	if (cqspi->wr_completion) {
+-		reg = readl(reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
+-		reg |= CQSPI_REG_WR_DISABLE_AUTO_POLL;
++		reg = CQSPI_REG_WR_DISABLE_AUTO_POLL;
+ 		writel(reg, reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
+ 		/*
+ 		 * DAC mode require auto polling as flash needs to be polled
 -- 
 2.53.0
 
