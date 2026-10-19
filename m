@@ -1,67 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB3928E0;
-	Mon, 19 Oct 2026 00:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06C219F40B;
+	Mon, 19 Oct 2026 00:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792368862; cv=none; b=L+ZUFaDy+tdPg7LsV5yPGl5EbVZpzO5zTgYzGpUABRd6zQIObTR1dk8lMhLN58dkCfdhgQrThI+LCmz7mOpDVEK0Sq8WIYUbGAymeXkbih/Fy/bRpRH3OFCW1hVVIOlTuUB5pRz66DM4PP/HuDlOZKyZLMZrdn9BsiBLuMusq8c=
+	t=1792368863; cv=none; b=DD8lu6D3lVqPcZSeK8ztIPd8C/43E1pZzp67RO9hrGF/6Li1D80OkmcokoGDQLImXfxsj6celCxvAOeiGEIJLOLxi9xsrRl1fC+cKJ2MXSQBvWTFKn3n+egPyM+lQsPYtzItsUvjUM8qFVvt7WsbXblgCIP3yk/xmaYdAIZEyZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792368862; c=relaxed/simple;
-	bh=31LFka9lqTPPvFf0v4Zf4jEDwkXm8S9OsSIeRxHt1N8=;
+	s=arc-20240116; t=1792368863; c=relaxed/simple;
+	bh=GiIOqfrFzCMBf+V5v1PGDEiZ71ZjG2EWN6OYiElQyJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvQx3pCC+qbCdcXzG5/+Esp9hrBQrVJsC2sPu1KaM8yMOEtJd6cazQtzQG8R1vokVHjVy2uSpMTsXreVlvXNSrcbLCyv7zQZesSJ9HRUMBMXyuixVu1hCmsLAE35oWPdc7VO3WwwHQWODhY4rRF2WwPWFCTFuu4yfT19D2+NKU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KXuOKhlZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qJ3mu51VbMf0nzpuiiZULNz4qtqwjD8Nr+NYGvAPrhCncDmjDt4UPK5HFPb+ieIeevIGiXIi1eas4HfcO1GhH/cZSL1q4ZCRP72yhHzePEtWH8KZDnw8dGbt+vPSzTpERoQCLBq4rvF/G5fdecH0S4UwZaaf4L8T+UpdnYdklyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIUP+LKy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KXuOKhlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0DC1F000C4;
-	Mon, 19 Oct 2026 00:14:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIUP+LKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65091F000C6;
+	Mon, 19 Oct 2026 00:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792368861;
-	bh=ptSEciUqOh9Yj+UTSoFmlUsn05uRlW6npRwspgA7+pQ=;
+	s=k20260515; t=1792368862;
+	bh=lKspkskkQmk+Bi0bnoCdzA+YUBvleRnu0FCCGCl+QBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXuOKhlZwxWB7pcbEGie15m1kb3tkU+4KcI4EUyo0uOynIBEeYWLiN/k4gH3Pw+4k
-	 jn0ClMNn3b0gS52UV9Sy0YhrFC4YSeePZ/b0OJMRX+puEU3ZAzinvfKkofqOG+k+ke
-	 hyKjnYgA0H5xlbyhnJFhrbTKqdLlqlUG9DwHvTLCkH0pB50HjrAjaZak19FXh8flr1
-	 TJFMlFEkY9cIaUJ0Pwvx/MsrOvgeXG9BwKX9viw47nii/YHP4AeTgDsOJr1b9itehI
-	 gGLwlvj0VPTwzbtoph+FsKWfL7C/rhobNZpCk9Sfi2yWyzi33dMhslF0BkQdtQRoIQ
-	 rJ4nRQRhXbaqQ==
+	b=AIUP+LKy6IYnjeRR05BnKtJk58Za3oufBp9f9ww1RHL8jPbRBP5jg6W5/8rPJjaLZ
+	 Sbv0iAbjQ3f9lGG1Pxbmn9wFtGPRfF2PoQZ5ByuzOzG7mZYS1UOfLgKjVVKYGMCi2p
+	 mG6iDfRNjVqZXkH7dHAPDVU6XyiEnw2sMdYPnyTxglcJF6ieRVx46bvcnF/lhDK85f
+	 ztpXQdIayHL2gl1Ba77yXBgX6rem2sbTcqjNpJiupB9+Z9NeGCF+IAHZBIJU5m8+QF
+	 3Y8C3tvlF71wivL4h9vQsjN9nA5HN2zCwuMB5qOrKtEdVzoqUlHzPG5GOlMXTmrvoT
+	 lHDY42AZk2HhQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
 Cc: Sasha Levin <sashal@kernel.org>,
-	gregkh@linuxfoundation.org,
-	achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Chuck Lever <cel@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Dai Ngo <Dai.Ngo@oracle.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-nfs@vger.kernel.org
-Subject: Re: [PATCH 6.6 0000/1674] 6.6.160-rc1 review
-Date: Sun, 18 Oct 2026 20:14:12 -0400
-Message-ID: <2026-10-18-1-daily-reply-0001-6-6-160-rc1-review@kernel.org>
+	patches@lists.linux.dev,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Kees Cook <kees@kernel.org>
+Subject: Re: [PATCH 6.12 696/869] kcfi: Rename CONFIG_CFI_CLANG to CONFIG_CFI
+Date: Sun, 18 Oct 2026 20:14:13 -0400
+Message-ID: <2026-10-18-1-daily-reply-0002-kcfi-rename-config-cfi@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261018094833.47517-1-ojeda@kernel.org>
-References: <20261017160431.119607952@linuxfoundation.org> <20261018094833.47517-1-ojeda@kernel.org>
+In-Reply-To: <20261017194548.GA318740@ax162>
+References: <20261017160036.979869304@linuxfoundation.org> <20261017160054.817469217@linuxfoundation.org> <20261017194548.GA318740@ax162>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,20 +48,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 18 Oct 2026 11:48:33 +0200, Miguel Ojeda <ojeda@kernel.org> wrote:
-> It looks like mainline cleans that up in the next commit which was not
-> backported, so we get to see the intermediate warning here:
->
->   7b31f4daebad ("SUNRPC: rename and refactor svc_get_next_xprt()")
+On Sat, 17 Oct 2026 12:45:48 -0700, Nathan Chancellor <nathan@kernel.org> wrote:
+> I object to this being backported in its current form, especially as a
+> "dependency" of the listed change... The transitional keyword is very
+> much needed for this change to avoid silently disabling the feature
+> across olddefconfig. Either backport it as well or just do the simple
+> thing and properly adjust 52fb1756ea1d for trees that do not contain
+> 23ef9d43976:
 
-Thanks for the report. e3274026e2ec ("SUNRPC: move all of xprt handling
-into svc_xprt_handle()") was only queued for 6.6 as a prerequisite of
-c479bde671cb ("sunrpc: defer rq_argp and rq_resp free until after RCU
-grace period"), and that fix does not do anything on 6.6: it protects RCU
-readers in the nfsd netlink rpc_status interface, which was added in 6.7.
+Agreed, thanks for catching this. I confirmed that with the queued 6.12
+adaptation, running olddefconfig on a .config with CONFIG_CFI_CLANG=y
+leaves CONFIG_CFI unset.
 
-So instead of adding 7b31f4daebad, I dropped the whole chain from the
-6.6 queue.
+I dropped 23ef9d439769 from the 6.12 queue, along with the two patches
+that depend on the rename.
 
 -- 
 Thanks,
