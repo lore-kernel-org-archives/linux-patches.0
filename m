@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B552B57DF56;
-	Mon, 19 Oct 2026 13:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D244457FEC8;
+	Mon, 19 Oct 2026 13:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418318; cv=none; b=FtB9s/1G5AWISae9FaCsYg/HoYRcf9aa0d4DRca+6zeSE+G+g9Dt+er8Cwu8Ob348SME5S2QmvumfzJ5gn2RpdDLleuOdRIfNdFrNgucnrNdsOuA0FJhTZg51DhvrAM0gXw8RqWn08C7EZtEU73TFQ1idv6uwLg3IuyufMWpoyk=
+	t=1792418321; cv=none; b=Pi8ds7ddbNoWXqzZqdFBf6eyqMFsABdhikD8MK49bI8f1PkCDneP1sZAe/C/nZt0g8HPUWNPTUCaA6NkP692axXUdaj/GQNLQ3WL/ZZ41QPO4lA4XpgaQjuiAr3iPqQR6yeppUsTRpzCayGWLxrQ6cACv1cX1Eae/KPPOIIVPoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418318; c=relaxed/simple;
-	bh=TByxiAa87WS+0dfP+PTPC56jYerIQi/Vl0JP/+iO7Q8=;
+	s=arc-20240116; t=1792418321; c=relaxed/simple;
+	bh=CgGtJq0aTEtEMqZrs33JafunuSD6J9ZY0c1lfNQdfis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sBT5sycsG/ywQAPts898othtfomvaIoTOH/R5kDrT68MmwiV4nkPfnSyKuGpzJUo6remHQ3vpmfIIBM1m4qepJksWINScWzSXzSOfEk5nCf0dRriRmj7OE4MO8E2oF2TIHiPUSepUBhAHygh4rBFotHv/dyUj3QjkYhL1S4Tdgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDpzZOoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I8L9aWzm4epRFqx5Q7lZcp3i7gwU2jlKETcW9LvsWsvTHW1Xn9rnwyW6c0mZ4WhUKvoJYFV6EY8pqxEgQk/lKso/ePntBUEX2qJxa7CLyEyx1BkhN2x37pJHPfdbUn1YqbMlSoU2T4NSgEwLQRZvyRZrqhQJdWAVYRKoUsOS5Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+HEl9MD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDpzZOoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F61F000C7;
-	Mon, 19 Oct 2026 13:58:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+HEl9MD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4541F000CB;
+	Mon, 19 Oct 2026 13:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418314;
-	bh=KRme9n4h5hg79JHHCTeZvcrZGH9RVtyMTsRB4ixU1CU=;
+	s=k20260515; t=1792418316;
+	bh=ODWujkqTHL7NVTZ1jLG8dOyW8QG5FiXF7neQAMrOoSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RDpzZOoEiEg5UpIcJYyJkc3nrFP8G80fs3fwW709N7RM2ikjFSF/P0CYcCYflqp1V
-	 Fizs6amBwHIMsMynUKg144eiN9cH9qq6CbNZ33AzFivkkq1KX1rpiSEMWBeMYH0yRd
-	 ihPOtmj9dz+eZRW/+UOJTCYHm165SAux9SKt8h/wEp31mQfHq7B8xVQMryPhZIKxlG
-	 aO4NbcuXLmvX/iUvIvSDA8FZcEKAXTw1UCA8WUzv7jI1RSqMi8fLA9Uja+K4vZ84oj
-	 iv4lrXOYbcdzizGHZAqBp+yKdlMLIT8Et7HxjyP6VnVAdKDKGY5eaC7G4Nq8j1LeTX
-	 knZM4G9QH/twg==
+	b=J+HEl9MDA77Qhy7tOAEym86Ys4lOXLcqGO00tdiX7lAMqDcLY56qRLwu3gTNalscd
+	 mjAgjkTTTwABL3xgHBvCnO1fXNk/uV7cCVOcbLVnmJTp55Z27rQi+owoLNx3hrJ97g
+	 hJk346VMsAYpj1TbjOrH3q1M9yFkF8SWOeeqiYZVbP1kDhN868mO7bMKwbHq11JvhB
+	 7sTsHR64mcltHO7bPD/VB92xDKTuT74WwOGymaL3+JprmxrtgwcTIa0T/k3dU4mgx8
+	 z0XAqqt3MzM4y0/lGWhL23gKTI/yglKKsYlWLS7SHt536y09Ylml9G0GSiQ71EoMZ3
+	 o8J2blfjOY+Fw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qingtao Cao <qingtao.cao.au@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+Cc: Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] bus: mhi: core: Fix sys error transition latency
-Date: Mon, 19 Oct 2026 09:47:31 -0400
-Message-ID: <20261019135441.1420968-160-sashal@kernel.org>
+	chester.a.unal@arinc9.com,
+	olteanv@gmail.com,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	pabeni@redhat.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] net: dsa: mt7530: check bus->read() error in core_rmw()
+Date: Mon, 19 Oct 2026 09:47:32 -0400
+Message-ID: <20261019135441.1420968-161-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,455 +62,378 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingtao Cao <qingtao.cao.au@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 22568e8f13a42ab69b7d624741768cbf15dded74 ]
+[ Upstream commit 573d6e3afe3d01e34dc82c77bf22ca96a74d805e ]
 
-Bring forward the idea to fix the power down latency in
-mhi_pm_disable_transition() further to mhi_pm_sys_error_transition()
-so that the transition into system error (triggered by AT!RESET) in the
-modems won't have to return only after the timeout of up to 24 seconds.
+core_rmw() accesses the MMD core registers directly rather than
+through the regmap and has the same unchecked bus->read() as the
+one just fixed in the MDIO regmap backend: a negative errno is
+consumed as register data, modified and written back to the switch.
+Check the read and bail out like the surrounding bus accesses do.
 
-Once the device gets reset, there is no guarantee that it will send an
-interrupt to indicate the state transition. So polling is the sensible
-option here.
-
-Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260603011333.3306102-2-qingtao.cao.au@gmail.com
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/48bb9f0b311a9efeda2a6b24a7e05d4792393a3b.1785811140.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the mailing-list thread, the 2021 sibling fix, and the local
-7.3-rc4 code. Next I’ll write the full nine-phase verdict.
-
 ## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+**Step 1.1: Subject line**
+Record: `[net: dsa: mt7530]` [`check`] [detect `bus->read()` failure in
+`core_rmw()` instead of treating errno as register data]
 
-Record: `[bus: mhi: core:]` `[Fix]` `[sys error transition latency]` —
-MHI host power-management: after a device SYSERR/RESET, the host was
-waiting on an interrupt-driven event that may never arrive, so recovery
-sat until `timeout_ms` (up to 24s).
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+**Step 1.2: Tags**
 Record:
-- `Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>` (author)
-- `[mani: commit log]` then `Signed-off-by: Manivannan Sadhasivam
-  <mani@kernel.org>` (MHI maintainer applied it and rewrote the log)
-- `Reviewed-by: Krishna Chaitanya Chundru
-  <krishna.chundru@oss.qualcomm.com>` (Qualcomm MHI reviewer)
-- `Link: https://patch.msgid.link/20260603011333.3306102-2-
-  qingtao.cao.au@gmail.com`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
-  stable@vger.kernel.org`, or syzbot tags (absence of Fixes/Cc:stable is
-  expected here)
+- `Signed-off-by: Daniel Golle <daniel@makrotopia.org>` (author)
+- `Reviewed-by: Andrew Lunn <andrew@lunn.ch>` (DSA co-maintainer)
+- `Link: https://patch.msgid.link/48bb9f0b311a9efeda2a6b24a7e05d4792393a
+  3b.1785811140.git.daniel@makrotopia.org`
+- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev maintainer)
+- No `Fixes:` in the committed message
+- Mailing-list submission **did** include `Fixes: b8f126a8d543 ("net-
+  next: dsa: add dsa support for Mediatek MT7530 switch")` (verified in
+  the saved mbox); it was dropped before mainline
+- No `Reported-by:`, `Tested-by:`, `Cc: stable` in the committed message
+  (absence is expected)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.3: Body**
 Record:
-- **Bug:** `mhi_pm_sys_error_transition()` waits with
-  `wait_event_timeout()` for the MHI RESET bit to clear. After RESET,
-  the device is not guaranteed to raise an interrupt, so the wait often
-  runs to the full controller timeout.
-- **Symptom:** SYSERR handling triggered by modem `AT!RESET` does not
-  finish until timeout (commit text: up to 24 seconds).
-- **Root cause:** interrupt-driven wait is the wrong primitive after
-  RESET; polling the RESET bit is the correct approach (already used in
-  `mhi_pm_disable_transition()`).
-- **Version info in the message:** none. Thread later names a 5.17 test
-  kernel and Sierra EM9291; the same wait lives in this tree.
+- **Bug:** `core_rmw()` talks to MMD core registers via raw
+  `bus->read()`/`bus->write()`, not regmap. A failed `bus->read()`
+  returns a negative errno, which is used as the current register value,
+  masked/ORed, and written back.
+- **Symptom:** garbage RMW into switch MMD registers (clock-gate bits on
+  this path).
+- **Root cause:** same unchecked-read pattern as the MDIO regmap
+  backend, which this tree already has as `93d46870c5440`.
+- **Version info:** none in the body. The inlined form is from
+  `7c5e37d7ee78d` (v6.11 era, present here). The mailing-list `Fixes:`
+  points at the 2017 driver introduction; the old
+  `core_read_mmd_indirect()` had the same unchecked read.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. Explicit error-path correctness fix: missing check →
+errno treated as data → written to hardware.
 
-Record: Not a disguised cleanup. Subject and body both say “Fix”. It is
-a real timeout/hang-style bug, the same class as `44b1eba44dc53` (“Fix
-power down latency”), which had `Cc: stable`.
+---
 
 ## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-
+**Step 2.1: Inventory**
 Record:
-- File: `drivers/bus/mhi/host/pm.c` — 3 insertions, 11 deletions (net
-  −8)
-- Function: `mhi_pm_sys_error_transition()`
-- Scope: single-file surgical wait-primitive swap; error-path structure
-  (`MHI_PM_SYS_ERR_FAIL`, `BHI_INTVEC` reprogram) unchanged
+- File: `drivers/net/dsa/mt7530.c`
+- Scope: ~5 insertions / 1 deletion in one function
+- Function: `core_rmw()`
+- Classification: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record: Inside `if (reset_device)` after `mhi_set_mhi_state(...,
-MHI_STATE_RESET)`:
-
-- **Before:** `wait_event_timeout(state_event, mhi_read_reg_field(...)
-  || !in_reset, timeout)`. `wait_event_timeout()` only rechecks on
-  wakeup or timeout. After RESET, MSI is not expected, so the wait
-  typically sleeps the full `timeout_ms`.
-- **After:** `mhi_poll_reg_field(..., MHICTRL_RESET_MASK, 0, 25000,
-  mhi_cntrl->timeout_ms)` — poll every 25ms until RESET clears or
-  timeout. Failure still uses `if (ret)` → `MHI_PM_SYS_ERR_FAIL`.
-
-Path: SYSERR recovery / RESET, not probe init.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **Logic / correctness (wrong wait primitive after hardware
-RESET)** — not UAF/leak/race.
-
-Mechanism: RESET drops device interrupt context; host waited for
-`state_event`. Nobody wakes it, so SYSERR recovery is delayed by the
-full timeout even though the device already cleared RESET. Polling
-matches power-down and power-up.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
+**Step 2.2: Code flow**
 Record:
-- Obviously correct: same helper/interval already used in
-  `mhi_pm_disable_transition()` and `mhi_ready_state_transition()` in
-  this tree.
-- Minimal: only the wait is replaced.
-- Regression risk: low. Polling `fsleep(25000)` on a workqueue is the
-  established pattern. Worst case is still `timeout_ms`, same as before.
-  Does not change APIs or PM state machine.
+- **Before:** after three checked MMD address writes, `val =
+  bus->read(...)`. No check. `val &= ~mask; val |= set;` then
+  `bus->write(...)`.
+- **After:** `ret = bus->read(...)`; if `ret < 0` goto the existing
+  `err` path (log + unlock); else `val = ret` and continue the RMW.
+- Path: error path of an MDIO read during RMW. Normal success path
+  unchanged.
+
+**Step 2.3: Bug mechanism**
+Record:
+- Category: logic / correctness on an error path (errno consumed as
+  register data, then written back). Same class as the already-present
+  MDIO regmap fix.
+- `mii_bus->read` returns a 16-bit value or a negative errno
+  (`include/linux/mdio.h`: “returns value or negative error code”).
+  `val` is `u32`, so `-ETIMEDOUT` (-110) becomes `0xffffff92`.
+  `bus->write()` takes `u16`, so the switch sees `0xff92` with the
+  intended bit tweaks, not the real register contents.
+- Mechanism: check `ret < 0` and skip the write, matching the
+  surrounding writes.
+
+**Step 2.4: Fix quality**
+Record:
+- Obviously correct; copies the existing write-error pattern in the same
+  function.
+- Minimal; no unrelated edits, no API change.
+- Regression risk: very low. On read failure it no longer writes.
+  `core_rmw()` is still `void` and still only logs (pre-existing); this
+  patch does not invent a new return convention.
+- `val = ret` after the check is safe: success values are 0..0xffff.
+
+---
 
 ## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record: Pre-fix `wait_event_timeout` block blamed to `556bbb442bbb44`
-(“Separate system error and power down handling”, 2020-11-18, first in
-**v5.11-rc1**). That split copied the wait into the new
-`mhi_pm_sys_error_transition()`. Surrounding reset-decision code later
-touched by `4d92e7c5ccadc` (2025) and `bce3f770684cc`
-(`MHI_PM_SYS_ERR_FAIL`, 2024); those are not required for this hunk.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. The incomplete sibling is `44b1eba44dc53`
-(2021-06-24, “Fix power down latency”) with `Cc: stable` and `Fixes:
-a6e2e3522f29`. That commit converted **disable/power-down** to
-`mhi_poll_reg_field` and left **sys_error** on `wait_event_timeout`.
-This commit finishes that leftover.
-
-**Step 3.3: CHECK FILE HISTORY**
-
-Record: Recent `pm.c` commits (`753aa72545ce0` no-M3, `aa1a0e93ed21a`
-SYS_ERR power-up, `4d92e7c5ccadc` power_up vs SYSERR) are unrelated.
-Standalone; not patch 2/N of a functional series.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Qingtao Cao has this single MHI commit in this tree. Applied by
-maintainer Manivannan Sadhasivam; reviewed by Krishna Chaitanya Chundru
-(Qualcomm).
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Needs `mhi_poll_reg_field(..., delayus, timeout_ms)` as in
-`drivers/bus/mhi/host/main.c` (this tree). Signature came from
-`1a42aef258805` plus later bitfield/timeout updates (`d28cab4d4aa06`,
-`6ab3d50b106c9`). All present here. Applies standalone.
-
-## Phase 4: Mailing list and external research
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+**Step 3.1: Blame**
 Record:
-- `b4 dig -c 22568e8f13a42`: https://patch.msgid.link/20260603011333.330
-  6102-2-qingtao.cao.au@gmail.com
-- `b4 dig -a`: single **v1**, subject `[v1 PATCH 1/1] bus: mhi: core:
-  fix sys error handling latency` (msgid `-2` is numbering, not a
-  2-patch series)
-- Thread (5 messages via `b4 mbox`):
-  1. Qingtao: 24s SYSERR wait on `AT!RESET`
-  2. Krishna: initially “we should not see this delay”
-  3. Qingtao: Sierra Wireless EM9291, reused EM919x config (`timeout_ms
-     = 24000`); without patch ~24s, with patch ~11s; 5.17 test kernel
-  4. Krishna: device **does** clear RESET; **MSI is not expected after
-     MHI RESET**; `Reviewed-by`
-  5. Qingtao: same issue as `44b1eba44dc53`
-  6. Mani: applied as `22568e8f13a42`
-- No NAK. No reviewer `Cc: stable`. Maintainer improved the commit log
-  (polling rationale).
+- Unchecked read at lines 155–156: `7c5e37d7ee78d` (“simplify core
+  operations”, Arınç ÜNAL, 2024-04-18).
+- That commit inlined `core_read_mmd_indirect()`, which already returned
+  `bus->read()` without checking. The defect dates to `b8f126a8d543`
+  (2017), driver introduction.
+- Inlined form is in this tree (`git merge-base --is-ancestor
+  7c5e37d7ee78d HEAD` succeeded). `git describe --contains` places it
+  around v6.11-rc1, so it is in 6.12.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+**Step 3.2: Fixes: tag**
+Record: No `Fixes:` on the committed patch. Submission tagged
+`b8f126a8d543`, which **is** an ancestor of this tree. Intermediate:
+`7c5e37d7ee78d` inlined the helper and kept the bug.
 
-Record: `b4 dig -w`: To/Cc included `mani@kernel.org` (maintainer),
-`mhi@lists.linux.dev`, `linux-arm-msm@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`, Krishna (review), Vivek Pernamitta. Right lists
-and maintainer.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No bugzilla/syzbot. Report is the patch author on real hardware
-(EM9291 / `AT!RESET`). Krishna confirmed it is generic MHI RESET
-behavior, not one broken device.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Standalone 1/1. Related historical fix `44b1eba44dc53` already
-in this tree.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: **UNVERIFIED** — lore.kernel.org WebFetch returned 403; no
-stable@ discussion in the mbox. No evidence it was NAK’d for stable.
-
-## Phase 5: Code semantic analysis
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `mhi_pm_sys_error_transition()`; helper `mhi_poll_reg_field()`.
-
-**Step 5.2: TRACE CALLERS**
-
+**Step 3.3: File history**
 Record:
-- `mhi_pm_st_worker()` → `DEV_ST_TRANSITION_SYS_ERR` →
-  `mhi_pm_sys_error_transition()`
-- `mhi_pm_sys_err_handler()` queues that transition
-- `mhi_pm_sys_err_handler()` from `drivers/bus/mhi/host/main.c`: SYSERR
-  in intvec, ctrl event ring `MHI_STATE_SYS_ERR`, IRQ with no events
+- This tree already has the sibling: `93d46870c5440` “check bus->read()
+  errors in the MDIO regmap backend”.
+- Also: `96e0f5184af69` “error out on failed reads in MT7531 PHY
+  polling”.
+- Candidate `573d6e3afe3d0` is **not** an ancestor of HEAD.
+- Standalone vs series: mailing-list subject is `[PATCH net v2 2/6]`.
+  Diff does not depend on 1/6 or 3–6/6.
 
-Call path: device SYSERR / host RESET processing on the MHI high-prio
-workqueue. Reachable when a WWAN modem hits SYSERR or `AT!RESET`.
+**Step 3.4: Author**
+Record: Daniel Golle is a regular MT7530 contributor (OpenWrt/MediaTek).
+Nearby commits by him in this tree are the other MDIO-error fixes.
+Reviewed by Andrew Lunn.
 
-**Step 5.3: TRACE CALLEES**
+**Step 3.5: Dependencies**
+Record: None for this hunk. It uses existing `ret`, `goto err`, and
+`bus->read`/`bus->write`. `git apply --check` succeeded (hunk offset 28
+lines only).
 
-Record: `mhi_set_mhi_state(RESET)`, `mhi_poll_reg_field` →
-`mhi_read_reg_field` + `fsleep`, `mhi_tryset_pm_state`,
-`mhi_write_reg(BHI_INTVEC)`. No new locks or allocations.
+---
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
+## Phase 4: Mailing list / external research
 
-Record: Userspace (`AT!RESET` or modem crash) → device SYSERR → host
-IRQ/event → workqueue → this function. Unprivileged users typically
-cannot issue `AT!RESET` without modem access; operators and WWAN stacks
-can. Not a theoretical path.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same poll already in `mhi_pm_disable_transition()`,
-`mhi_ready_state_transition()`, and `mhi_async_power_up()` SYS_ERR
-reset. Remaining `wait_event_timeout()` uses are M0/M2/M3-style waits
-that still get IRQs — correctly left alone.
-
-## Phase 6: Cross-referencing against the local tree
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
+**Step 4.1: Original discussion**
 Record:
-- Local tree: **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-  EXTRAVERSION=-rc4`, `HEAD` `f0100363d8c37`)
-- File `drivers/bus/mhi/host/pm.c` exists;
-  `mhi_pm_sys_error_transition()` exists
-- Buggy `wait_event_timeout` present from v5.11 through parent of
-  `22568e8f13a42`; this commit is already on `HEAD` as a mainline merge
-  (`git merge-base --is-ancestor 22568e8f13a42 HEAD` succeeded)
-- EM929x uses `modem_sierra_em919x_config` with `.timeout_ms = 24000` in
-  `pci_generic.c` — same 24s the reporter hit
+- `b4 dig -c 573d6e3afe3d0` → https://patch.msgid.link/48bb9f0b311a9efed
+  a2a6b24a7e05d4792393a3b.1785811140.git.daniel@makrotopia.org
+- Series: `[PATCH net v2 0/6] net: dsa: mt7530: fix remaining swallowed
+  MDIO access errors`
+- v2: “no changes” for this patch; Andrew’s `Reviewed-by` kept.
+- Cover letter: leftover companion of the first “swallowed MDIO read
+  errors” series (already on `net`); this is the unchecked `bus->read()`
+  in `core_rmw()`.
+- Sent to `net` (fixes), not `net-next`.
+- No NAK in the saved mbox. Applied by Jakub Kicinski (`0200d48477602`
+  merge).
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Andrew Lunn, Vladimir Oltean, netdev maintainers, MediaTek,
+`netdev@`, `linux-mediatek@`. Right audience. Lunn reviewed.
 
-Record: Clean apply on this tree. `mhi_poll_reg_field()` 6-argument form
-matches. No conflicting refactor of this hunk.
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Found by review of the same MDIO-error class
+(cover letter cites Sashiko AI review of the parent series).
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+**Step 4.4: Series**
+Record: 6 patches. This is 2/6 and is self-contained. 3–5/6 are other
+swallowed-error sites; 1/6 is `pcs-mtk-lynxi`; 6/6 is IRQ-chip
+serialization. Not required for this hunk.
 
-Record: Power-down poll fix `44b1eba44dc53` is here. No other equivalent
-sys_error poll fix besides this commit.
+**Step 4.5: Stable list**
+Record: **UNVERIFIED** — lore.kernel.org returned 403/503 to
+WebFetch/curl. No local evidence this was rejected for stable.
 
-## Phase 7: Subsystem and maintainer context
+---
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+## Phase 5: Code semantics
 
-Record: `drivers/bus/mhi/host/` — MHI host bus for Qualcomm/Sierra/Telit
-WWAN modems. **IMPORTANT** (not core mm/VFS): common on laptops,
-embedded, Android with WWAN. Maintainer: Manivannan Sadhasivam.
+**Step 5.1: Functions**
+Record: `core_rmw()` only.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+**Step 5.2: Callers**
+Record:
+- `core_set()` / `core_clear()` → `core_rmw()`
+- `mt7530_pll_setup()`: clear/set `REG_GSWCK_EN` on
+  `CORE_TRGMII_GSW_CLK_CG` (switch setup, 40 MHz XTAL)
+- `mt7530_setup_port6()`: clear/set `REG_TRGMIICK_EN` (port 6 TRGMII
+  clock)
+- `mt7530_pll_setup()` from `mt7530_setup()` (~line 2422)
+- `mt7530_setup_port6()` from `mt7530_mac_config()` when `port == 6`
 
-Record: Actively maintained (recent no-M3, SYSERR/power_up, tracing,
-pci_generic). The wait itself is old (2020); this is a long-standing
-leftover, not churn in new code.
+**Step 5.3: Callees**
+Record: `mt7530_mutex_lock/unlock`, `bus->write`, `bus->read`,
+`dev_err`.
+
+**Step 5.4: Reachability**
+Record: Yes, from DSA probe/setup and phylink MAC config on MT7530
+(common in MediaTek routers). Not a syscall hot path; hit on bring-up
+and port-6 mode changes. Userspace/netlink can trigger `mac_config`.
+
+**Step 5.5: Similar patterns**
+Record: Same bug already fixed in `mt7530_regmap_read()` in this tree.
+`core_write()` only writes (no analogous read). Remaining siblings
+(PHY_IAC writes, CORE_PLL_GROUP4, FDB/VLAN cmd) are other series
+patches, not prerequisites.
+
+---
+
+## Phase 6: This tree (6.12.y)
+
+**Step 6.1: Buggy code present?**
+Record: Yes. Tree is `pending-6.12` / `6.12.111`
+(`p-6.12-4-gbf6fcdf761abd`). Current `core_rmw()` still does `val =
+bus->read(...)` with no check (`drivers/net/dsa/mt7530.c:155-156`).
+`573d6e3afe3d0` is not an ancestor of HEAD.
+
+**Step 6.2: Backport difficulty**
+Record: Clean apply (`git apply --check`: hunk succeeded at offset 28).
+Surrounding `core_rmw()` matches the pre-image.
+
+**Step 6.3: Related fixes already here?**
+Record: Regmap-backend check is here; PHY polling check is here. This
+leftover `core_rmw()` instance is not. No alternate fix of this
+function.
+
+---
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: `drivers/net/dsa/mt7530.c` — MediaTek MT7530 DSA. **IMPORTANT**
+(common embedded/router switch), not core mm/VFS, not staging.
+
+**Step 7.2**
+Record: Actively maintained; recent 6.12 backports already include other
+MT7530 MDIO-error and hardware fixes.
+
+---
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 8.1: Who is affected**
+Record: Driver-specific: `CONFIG_NET_DSA_MT7530` (MDIO-attached
+MT7530/MT7531, common on MT7621/MT798x-class boards).
 
-Record: Driver-specific: MHI host users (WWAN PCI modems). EM919x/EM929x
-and any controller that takes SYSERR + RESET. RDDM controllers skip
-`mhi_pm_sys_err_handler()`, so they are not on this path.
+**Step 8.2: Trigger**
+Record: `bus->read()` failure during PLL/clock RMW (timeout, NACK, flaky
+MDIO). Not every boot if the bus is healthy. Unprivileged users do not
+trigger MDIO failure directly; they can hit the RMW via interface/port
+config. Timing/hardware dependent.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+**Step 8.3: Failure mode**
+Record: On MDIO read failure, a truncated errno (e.g. `0xff92`) is
+written to `CORE_TRGMII_GSW_CLK_CG` (core / TRGMII clock gates) instead
+of toggling bit 0 or 1. That can leave clocks misconfigured (no link /
+switch not forwarding) rather than failing closed. Severity: **HIGH** on
+that error path (hardware misconfiguration), not a panic/UAF.
 
-Record: Modem SYSERR or `AT!RESET`. Not every boot; common for modem
-recovery/reset. Krishna: **no MSI after RESET is expected** — so the
-full-timeout wait is the normal case, not a rare race. Unprivileged
-trigger only with modem AT access.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: Host sleeps in SYSERR recovery until `timeout_ms` (8s–24s
-typical, 50s–120s on some `pci_generic` configs) even after RESET has
-cleared. Not oops/corruption/UAF. User-visible: WWAN reset/recovery
-stalled for tens of seconds. **Severity: MEDIUM-HIGH** (hang-like
-timeout on a real device path). Measured: 24s → ~11s on EM9291.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
+**Step 8.4: Risk-benefit**
 Record:
-- **Benefit:** high for MHI modem users — removes a systematic multi-
-  second stall on SYSERR/RESET. Same class as the 2021 stable-bound
-  power-down fix.
-- **Risk:** very low — 3 lines added / 11 removed, proven helper, error
-  handling unchanged.
-- **Ratio:** benefit ≫ risk.
+- Benefit: stops garbage writes to switch clock-gate MMDs; completes the
+  same class already backported via the regmap patch.
+- Risk: very low (4–5 lines, existing `err` path, no locking/API
+  change).
+- Ratio: favorable.
 
-## Phase 9: Final synthesis
+---
 
-**Step 9.1: COMPILE THE EVIDENCE**
+## Phase 9: Synthesis
 
-**FOR:**
-- Real, user-reported stall (Sierra EM9291 `AT!RESET`, 24s vs ~11s)
-- Qualcomm reviewer: MSI after RESET is not expected — generic protocol
-  bug
-- Identical 2021 power-down fix (`44b1eba44dc53`) was `Cc: stable`
-- Small, obviously correct, already used on the disable path in this
-  tree
-- Maintainer applied; Reviewed-by from Qualcomm
-- Buggy wait present since v5.11; EM929x + 24000ms timeout exist in this
-  tree
-- `mhi_poll_reg_field` already here; applies cleanly
+**For backporting**
+- Real bug: negative MDIO errno used as register data and written back.
+- Consequence: corrupt RMW of switch clock-gate registers.
+- Small, obviously correct, reviewed by Andrew Lunn, taken into `net` as
+  a fix.
+- Buggy code is in this 6.12 tree; patch applies cleanly.
+- Same class as `93d46870c5440`, already in this tree; this is the
+  leftover `core_rmw()` site.
 
-**AGAINST:**
-- Not oops/UAF/corruption/security
-- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
-- Author’s measurements were on 5.17; logic is unchanged in this tree
-- Krishna first questioned the delay, then agreed and reviewed
+**Against**
+- Error path only (MDIO must already be failing).
+- Still `void`; errors are only logged (pre-existing).
+- No syzbot/user crash report.
+- Labelled 2/6, but this hunk does not need the rest.
 
-**UNRESOLVED:**
-- Whether stable@ ever discussed this (lore 403)
-- Cover letter `3306102-1` body not fetched; series is 1/1 from b4
+**Unresolved**
+- Stable-list discussion (lore 403/503). Does not change the technical
+  case.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Stable rules**
+1. Obviously correct and tested? **PASS** — matches surrounding checks;
+   Lunn `Reviewed-by`; in mainline `net`.
+2. Real user-affecting bug? **PASS** — garbage written to MT7530 clock-
+   gate MMDs on read failure.
+3. Important (crash/security/corruption/deadlock)? **PASS** — hardware
+   misconfiguration of switch clocks; same class already accepted in
+   this tree.
+4. Small and contained? **PASS** — ~5 lines, one function.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — `git apply --check` clean.
 
-1. Obviously correct and tested? **PASS** — copies existing poll; author
-   measured; maintainer + Qualcomm review
-2. Fixes a real bug that affects users? **PASS** — 24s SYSERR recovery
-   on real modem hardware
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   hang-like timeout on RESET; stable rules also cover hangs and “oh,
-   that’s not good”; sibling fix was stable material
-4. Small and contained? **PASS** — 14-line hunk, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — code, helper, and signature
-   all present
+**Exception category:** none (not an ID/quirk/DT/build/doc exception).
+Qualifies as a normal small driver bugfix.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: None (not a device ID, quirk table, DT, build, or docs patch).
-Qualifies as a normal bugfix.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-This tree is v7.3-rc4. The SYSERR path still used interrupt wait after
-RESET until this change. That wait is wrong for MHI RESET, stalls
-recovery for the full controller timeout, and was already fixed the same
-way for power-down in 2021 (and sent to stable). The leftover in
-`mhi_pm_sys_error_transition()` is a small, proven, user-visible fix and
-belongs in this tree.
+---
 
 ### What the commit solves for this tree
 
-`mhi_pm_sys_error_transition()` issued MHI RESET then used
-`wait_event_timeout()` on `state_event`. After RESET the device drops
-interrupt context and does not send MSI, so the host slept until
-`timeout_ms` (24s on EM919x/EM929x). Switching to `mhi_poll_reg_field()`
-watches the RESET bit directly, which is what disable/power-up already
-do here.
+In 6.12, `core_rmw()` still assigns `bus->read()` to `u32 val` without
+checking. On timeout/NACK that errno is masked, OR’d, and written to
+`CORE_TRGMII_GSW_CLK_CG` during PLL setup and port-6 TRGMII clock
+enable. The fix bails out like the three preceding writes. It is the
+companion to the regmap-backend check already present here.
 
-### Stable rules / risk
-
-Meets the rules: real hang-style bug, tiny, no new API, applies cleanly.
-Risk is a 25ms poll loop already used on adjacent paths. Benefit is much
-shorter modem SYSERR/`AT!RESET` recovery.
-
-### Concerns
-
-None that block this tree: helper signature matches; no series deps. Not
-a crash/CVE, but a systematic tens-of-seconds stall on a production WWAN
-path.
+Risk is negligible; benefit is avoiding a bad clock-gate RMW when MDIO
+fails on a widely used MediaTek DSA switch.
 
 Verification:
-- [Phase 1] Tags: SOB Qingtao + Mani, R-b Krishna, Link msgid; no
-  Fixes/Cc:stable/syzbot
-- [Phase 2] Diff: `pm.c` `mhi_pm_sys_error_transition()`,
-  `wait_event_timeout` → `mhi_poll_reg_field`, 3+/11-
-- [Phase 3] blame: `556bbb442bbb44` (v5.11-rc1) introduced the wait;
-  `44b1eba44dc53` (2021, Cc:stable) fixed only disable
-- [Phase 3] `git merge-base --is-ancestor 22568e8f13a42 HEAD`: yes;
-  `44b1eba44dc53` and `556bbb442bbb44` also ancestors
-- [Phase 3] `mhi_poll_reg_field` in `main.c` takes `(mask, val, delayus,
-  timeout_ms)` matching the patch
-- [Phase 4] `b4 dig -c 22568e8f13a42`: lore msgid
-  `20260603011333.3306102-2`; v1 only
-- [Phase 4] `b4 dig -a`: 1/1 series; `b4 dig -w`: maintainer +
-  mhi/linux-arm-msm lists
-- [Phase 4] `b4 mbox`: Krishna confirmed no MSI after RESET; EM9291
-  24s→11s; Mani applied
-- [Phase 4] WebFetch lore/patch.msgid.link: 403 — thread recovered via
-  b4
-- [Phase 5] callers: `mhi_pm_st_worker` / `mhi_pm_sys_err_handler` from
-  SYSERR IRQ/event in `main.c`
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 6] `pci_generic.c`: EM929x shares EM919x config, `timeout_ms =
-  24000`
-- [Phase 8] Failure: SYSERR recovery blocked until timeout; severity
-  hang-like, not oops
-- UNVERIFIED: stable@ lore discussion (HTTP 403)
-- UNVERIFIED: cover letter body `3306102-1`
+- [Phase 1] Parsed tags: Lunn `Reviewed-by`, msgid link; no committed
+  `Fixes:`; mbox had `Fixes: b8f126a8d543`
+- [Phase 2] Diff: 5 insertions in `core_rmw()`; check `ret < 0` before
+  RMW write
+- [Phase 3] Blame: inlined by `7c5e37d7ee78d` (v6.11, in this tree);
+  original unchecked read in `b8f126a8d543` (2017)
+- [Phase 3] `git merge-base --is-ancestor 573d6e3afe3d0 HEAD` → not in
+  tree; `7c5e37d7ee78d` is in tree
+- [Phase 3] Sibling `93d46870c5440` is in this tree
+- [Phase 4] `b4 dig -c 573d6e3afe3d0`: v2 2/6 of “fix remaining
+  swallowed MDIO access errors”; v2 no changes; Lunn review on 1–3 and 6
+- [Phase 4] Cover letter: leftover `core_rmw()` companion of the first
+  MDIO-error series
+- [Phase 4] `b4 dig -w`: netdev + DSA + MediaTek CCs
+- [Phase 4] lore WebFetch/curl 403/503; thread recovered via `b4 dig -m`
+- [Phase 5] Callers: `mt7530_pll_setup`, `mt7530_setup_port6` → DSA
+  setup / `mac_config`
+- [Phase 5] `bus->read` contract: value or negative errno
+  (`include/linux/mdio.h`)
+- [Phase 6] `git describe HEAD`: `p-6.12-4-gbf6fcdf761abd`; `make
+  kernelversion`: 6.12.111; buggy `val = bus->read` still at
+  mt7530.c:155
+- [Phase 6] `git apply --check` of `573d6e3afe3d0`: succeeded (offset
+  28)
+- [Phase 8] Failure mode: truncated errno written to
+  `CORE_TRGMII_GSW_CLK_CG`; severity HIGH on that error path
+- UNVERIFIED: whether stable@ discussed this commit (lore unreachable)
 
 **YES**
 
- drivers/bus/mhi/host/pm.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/dsa/mt7530.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index b4ef115189b50..71bcb0f98ce6a 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -651,21 +651,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 24c7cb225da1a..d2dcc2f1522f4 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -124,8 +124,12 @@ core_rmw(struct mt7530_priv *priv, u32 reg, u32 mask, u32 set)
+ 		goto err;
  
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (reset_device) {
--		u32 in_reset = -1;
--		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
--
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 
- 		/* Wait for the reset bit to be cleared by the device */
--		ret = wait_event_timeout(mhi_cntrl->state_event,
--					 mhi_read_reg_field(mhi_cntrl,
--							    mhi_cntrl->regs,
--							    MHICTRL,
--							    MHICTRL_RESET_MASK,
--							    &in_reset) ||
--					!in_reset, timeout);
--		if (!ret || in_reset) {
-+		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-+				 MHICTRL_RESET_MASK, 0, 25000, mhi_cntrl->timeout_ms);
-+		if (ret) {
- 			dev_err(dev, "Device failed to exit MHI Reset state\n");
- 			write_lock_irq(&mhi_cntrl->pm_lock);
- 			cur_state = mhi_tryset_pm_state(mhi_cntrl,
+ 	/* Read the content of the MMD's selected register */
+-	val = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
++	ret = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
+ 			MII_MMD_DATA);
++	if (ret < 0)
++		goto err;
++	val = ret;
++
+ 	val &= ~mask;
+ 	val |= set;
+ 	/* Write the data into MMD's selected register */
 -- 
 2.53.0
 
