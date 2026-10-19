@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03224FFA3B;
-	Mon, 19 Oct 2026 13:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518AA5649D1;
+	Mon, 19 Oct 2026 13:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418253; cv=none; b=QL/1lcRr6uyPmIL5nh6Z/HZJEK6y9zLbqHgwGYLSOJizaaaQyu+qzkuuvZUM3IdncCM0J+Amzu3WByC582zavphvYc1/RnnZCRQm+ZJiWHp1GRdf4XEy1NGDtEMftVpMVB6StpW7seJDe2RpSa3JCkkCMzw5fQic3KbK6UBXD9o=
+	t=1792418255; cv=none; b=nhNP4Jjr3KYNOdRtg5Xvbn/nZ6vTZlZGEOYIJTqsVsMXQqXU/W2JGLI7lcIk+CSc8/Nh4vM+zOTqMO0YuZKYjBRDLZ07DZxNfKXvi91jHAd7MEtCIcFlqXc2Evvu+tFF8LefrjFHB5EQTZUjzuwwtkUWl0xEwarpYW1pioF41Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418253; c=relaxed/simple;
-	bh=9I6Qj3KGzI3Rj55mhFNfIEuedzmI3EHxt3iNOaGDPXg=;
+	s=arc-20240116; t=1792418255; c=relaxed/simple;
+	bh=g4PTO7lnP6jmMLinerXH5KGJQ1+uOwXMR5HVPq3zdJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UYfIprTcE2ApHLbSmZdbA4syEEnUYpCg0c3fK48IcrGGLEQ6SemovqUMwSCFzedK8e0MuqasBz6wEXfEUeCTaP2OXoFEDpO7os3GJWyVSvlC7ET64H/O+tyJ6OufKYgsWeZc0dQELDD14jq/wW1/la7vjtTQtT/uVBK1Av44j8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hb3TYJgw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ca3YAQAn/agdbJdjuuVAcP5kbgas1VJIcYngxVVUHfVtJe0Q5oKaqgPT4d5spQa8pDK+A/6F3QBMkn4LW/vEv8gziiFs5+WNpFeP76S8TyuPAZf9eu2OgjJAuVv/yhl6hnOjuARu35FH922/7xniBaLspa0efExYwEVKIPzO8UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O6kVQQSn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hb3TYJgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F81F000C4;
-	Mon, 19 Oct 2026 13:57:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O6kVQQSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5331F000C5;
+	Mon, 19 Oct 2026 13:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418250;
-	bh=qHCip7GAWu4TxX5S5wZLFFEX1xL5XSXXVwerPQCjQPw=;
+	s=k20260515; t=1792418251;
+	bh=i1Qy+90BenJPcLfIAdefa7A1eHguDbzBBjH+pknHFrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hb3TYJgwDyGSi2hw04c8QIjGFZ0KQXwm4cX9j95C5t46BvC6Q5ZEbiQAYlTCPpGX5
-	 ij0Lm1Rv2uPU4JOFxEObkbkcq16sEerJRUBk/TO2cabtelJLOkggSj67Vi/U9fQMiX
-	 ymNytKlmx4lUobPBgcpFuZPI5HZsGWYXX+IxL5nNgnUamLP5q2hPBowbbpTVbCJRyA
-	 wNLRtkf70RGwpovIl4YS3MvI8/C0qYOQ1ssV9EtZHVi65s3EyX+tcuZYH5N0GJayCG
-	 Zx876hNCzn5fDvsPGer2nHC5zRaBN7/1aP5KmmsyCvfxyel6QMOxzaZJG+3orG598V
-	 2aUU9n4mlNJgg==
+	b=O6kVQQSnnJ6TXx+oBnL+F+9bkLWT/rY2LPBGa/Aeh4CoLW5cl5NJuSjm5Mc5ywJN2
+	 YgPE9h8gpsTqwjK3Tl+Kd3FURww9RHtkPoTMuE/3A1SKxBR+zasVB97O7VnnsAoEUW
+	 92YoUIVjeZ7qPKDdGkJwMO/or3d0T53kzb+cmEB73QY6tL/ocGlMpkDFzO3Wg3Qb6E
+	 fZZd+bnvrTxQ9gPacvRkiNu+/CHrqZzxrwUvEI/H1rYBweC05Iak50L2/3t0rhnPio
+	 FT50QfgAOb8iHcVEU6DuP2QuvC4Q/U/v47VtRrx4CeaQp453/WgyHd++7oTKr/1dHE
+	 aGXDOu285dzDQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Benjamin Marzinski <bmarzins@redhat.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	keng-yu.lin@hpe.com,
+	yury.norov@gmail.com,
+	linux-arch@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] misc: hpilo: validate device queue entries before use
-Date: Mon, 19 Oct 2026 09:46:50 -0400
-Message-ID: <20261019135441.1420968-119-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] bitops: make the *_bit_le functions use unsigned long
+Date: Mon, 19 Oct 2026 09:46:51 -0400
+Message-ID: <20261019135441.1420968-120-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,383 +53,486 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 7bf6940d7cf41f1f0330a9bae4b7a886e18fd8e3 ]
+[ Upstream commit 1c61b0a6e5c472737619f74f79c390363ee258df ]
 
-ilo_pkt_dequeue() trusts descriptor IDs and lengths read from the shared
-FIFO entry. A bad entry can select a descriptor outside the allocated
-queue memory or report a packet length larger than one descriptor.
+The *_bit_le functions use a signed integer for the bit number.
+However, the *_bit functions can use an unsigned long. This causes
+problems if there is a large bitmap and a bit number > 0x80000000 is
+passed in. Since that is a negative int, it will get sign extended to a
+long when getting passed to the *_bit function, turning it into a huge
+bit number. This usually ends up with the memory address wrapping around
+and the function accessing memory before the start of the bitmap.
 
-Reject entries whose descriptor index or packet length exceeds the queue
-layout before deriving the packet pointer returned to read and write
-paths.
+Avoid this by making the *_bit_le functions take an unsigned long.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This can be triggered by faking an almost 4TB dm-mirror device, which
+uses bitmaps to track the mirror regions:
+
+$ dmsetup create bigzero --table '0 8589934590 zero'
+$ dmsetup create mymirror --table '0 8589934590 mirror core 2 2 nosync 2 /dev/mapper/bigzero 0 /dev/mapper/bigzero 0'
+
+This will access memory before the start of the sync_bits bitmap, and
+likely hit the guard page of the previously allocated clean_bits bitmap,
+causing a kernel panic with the old code.
+
+I looked and didn't see any crazy code using the signed int to
+intentionally try and access bits before some address within the bitmap.
+
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is mainline **v7.3-rc4**. The hpilo driver has been
-here since 2008, and this is a small bounds check on device-shared FIFO
-fields used as a pointer and a copy length.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+Record: `[bitops] [make] make the *_bit_le helpers take unsigned long
+instead of signed int`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[misc: hpilo:] [validate] [reject out-of-range device FIFO
-descriptor IDs and packet lengths before use]**
+Subsystem is generic bitops. The verb is “make”, but the body is a sign-
+extension / out-of-bounds panic fix, not an API feature.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 Record:
-- Signed-off-by: Yousef Alhouseen \<alhouseenyousef@gmail.com\> (author)
-- Link: https://patch.msgid.link/20260624190919.3432-1-
-  alhouseenyousef@gmail.com
-- Signed-off-by: Greg Kroah-Hartman \<gregkh@linuxfoundation.org\> (misc
-  maintainer; applied the patch)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence of Fixes/Cc:stable is expected for this review)
-- Pipeline markers (Sasha Levin SOB / Upstream commit) are not treated
-  as selection evidence
+- Signed-off-by: Benjamin Marzinski \<bmarzins@redhat.com\> (author)
+- Signed-off-by: Yury Norov \<ynorov@nvidia.com\> (bitmap maintainer,
+  applied the patch)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence of Fixes:/Cc: stable is expected here)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 Record:
-- Bug: `ilo_pkt_dequeue()` uses descriptor ID and length from a FIFO
-  shared with the HP iLO device with no bounds check.
-- Symptom/failure mode: a bad ID indexes a descriptor outside the
-  allocated queue; a bad length is larger than one descriptor. Those
-  values feed `ilo_read()`/`ilo_write()`
-  `copy_to_user`/`copy_from_user`.
-- Version info: none in the message. The unvalidated path is from the
-  original 2008 driver.
-- Root cause (author): device-provided FIFO fields are trusted; the fix
-  rejects ID ≥ `NR_QENTRY` or length > one descriptor before forming the
-  packet pointer.
+- Bug: `*_bit_le()` takes `int nr` while `*_bit()` takes a wider
+  unsigned/long index. A bit number \> `0x80000000` becomes a negative
+  `int`, then sign-extends to a huge `long`.
+- Symptom: address wrap, access *before* the bitmap, kernel panic (often
+  on the guard page of a prior vmalloc).
+- Reproducer: ~4TB `dm-zero` + `dm-mirror` with region size 2 (`dmsetup
+  create mymirror --table '0 8589934590 mirror core 2 2 nosync ...'`),
+  hitting `sync_bits` before the start of the bitmap.
+- Root cause: signed `int` bit index vs unsigned/long bitops; author
+  found no callers that intentionally used a negative index.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit missing-validation /
-OOB fix.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. It is a type-signature change whose purpose is to
+stop OOB access and a panic. Not cleanup or a new feature.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
 
-**Step 2.1: INVENTORY THE CHANGES**
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
 Record:
-- File: `drivers/misc/hpilo.c` (+6 / −1)
-- Function: `ilo_pkt_dequeue()`
-- Scope: single-file surgical fix
+- File: `include/asm-generic/bitops/le.h` — 9 insertions, 9 deletions
+  (parameter type only)
+- Functions: `test_bit_le`, `set_bit_le`, `clear_bit_le`,
+  `__set_bit_le`, `__clear_bit_le`, `test_and_set_bit_le`,
+  `test_and_clear_bit_le`, `__test_and_set_bit_le`,
+  `__test_and_clear_bit_le`
+- Scope: single-file surgical type fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: After a successful `fifo_dequeue()`, the old code took `pkt_id =
-get_entry_id(entry)` and used it as `desc + desc_mem_sz(pkt_id)`, and
-passed `get_entry_len(entry)` out as `*len`. The new code stores the
-length, returns 0 (dequeue failed) if `pkt_id >= NR_QENTRY` or `pkt_len
-> desc_mem_sz(1)`, and only then fills `*id`/`*len`/`*pkt`. Normal path
-for in-range entries is unchanged.
+**Step 2.2: Flow change**
+Record: Before, each helper took `int nr` and passed `nr ^
+BITOP_LE_SWIZZLE` into `test_bit`/`set_bit`/etc. After, `nr` is
+`unsigned long`. Bodies are unchanged. Normal path only; no new control
+flow.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Memory safety / OOB (category d)** plus **logic correctness
-(category g)**.
-- `get_entry_id()` is a 12-bit field (0–4095). `NR_QENTRY` is 4.
-  `desc_mem_sz(id)` is `id << 12`, so an ID of 5 already walks off the
-  4×4KiB descriptor array; 4095 is a ~16MiB miss.
-- `get_entry_len()` is a 10-bit qword count shifted by 3, so up to 8184
-  bytes. One descriptor is 4096 bytes (`L2_QENTRY_SZ` 12). Recv
-  descriptors sit at the end of the DMA allocation; a length of 8184 on
-  the last slot reads/writes past `dma_size`.
-- Callers: `ilo_read()` does `copy_to_user(buf, pkt, min(len,
-  pkt_len))`; `ilo_write()` does `copy_from_user(pkt, buf, min(len,
-  pkt_len))`. That is a host kernel OOB read or write, not just a bad
-  error code.
+**Step 2.3: Bug mechanism**
+Record: `[Type / integer conversion] [Memory safety / OOB]`
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: The checks match the layout from `ilo_ccb_setup()` (`NR_QENTRY`
-descriptors of `desc_mem_sz(1)`). Open-time recv enqueue uses
-`desc_mem_sz(1)` exactly, and `>` (not `>=`) still allows a full
-4096-byte packet. Zero-length send packets used at open still pass.
-Regression risk on working firmware is low: in-range entries are
-unchanged. One caveat: `fifo_dequeue()` already advanced the head, so a
-rejected entry is dropped and not re-queued; that can shrink the 4-slot
-queue until close/reopen. That is acceptable fail-closed behavior, not a
-behavior change for valid hardware.
+On 64-bit, `unsigned int`/`unsigned long` bit `0x80000000` converted to
+`int` is negative, then sign-extends into `set_bit(long nr)` /
+`_test_bit(unsigned long nr)` as `0xffffffff80000000`. `BIT_WORD(nr)`
+then yields a pointer *before* `addr` (wrap). Confirmed in
+`generic___set_bit()`:
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+```28:33:include/asm-generic/bitops/generic-non-atomic.h
+generic___set_bit(unsigned long nr, volatile unsigned long *addr)
+{
+        unsigned long mask = BIT_MASK(nr);
+        unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+```
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Unvalidated dequeue is from **89bcb05d9bbf8** (“HP iLO driver”,
-David Altobelli, 2008-07-02). Present since v2.6.27-era. The validation
-lines are this commit.
+**Step 2.4: Fix quality**
+Record: Obviously correct and minimal. Widening `int` → `unsigned long`
+matches `find_*_bit_le()` (already `unsigned long` in
+`include/linux/find.h`) and the generic bitops. Negative callers would
+still sign-extend into `unsigned long`; the author grepped and found
+none. Regression risk is very low: inline helpers, no ABI, no locking,
+no new behavior for in-range bits.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Not applicable. The introducing commit is the
-original driver, which is an ancestor of this tree.
+Note: atomic `set_bit()` in this tree takes `long nr` (signed), not
+`unsigned long`. That does not undo the fix: values in `2^31 .. 2^32-1`
+fit in 64-bit `long` after zero-extension. The bug was 32-bit `int` →
+64-bit `long` sign extension.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `drivers/misc/hpilo.c` work is device-number, class, DMA
-API, and blacklist changes. No prerequisite refactor of the FIFO. After
-this commit only a treewide `*_device_id` style change
-(`f06bae4ddc70d`). Standalone.
+---
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Author is not the hpilo maintainer (that is Keng-Yu Lin, HPE,
-MAINTAINERS “Supported”). Same-day misc validation patches include
-ibmvmc, xilinx_sdfec, bcm-vk, fastrpc — part of a large audit flood.
-That is a quality-process note, not a substitute for reading this diff.
-Greg Kroah-Hartman still applied this one.
+## Phase 3: Git history
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses existing `NR_QENTRY`, `desc_mem_sz()`, `get_entry_id()`,
-`get_entry_len()`. No new helpers. Applies standalone.
+**Step 3.1: Blame**
+Record: Signed `int nr` dates to `a56560b3b2332` (“asm-generic: change
+little-endian bitops to take any pointer types”, 2011-03-23, contained
+in v2.6.39-rc1). The type was stable for ~15 years. Commit
+`1c61b0a6e5c47` (2026-07-06, applied 2026-07-22) is the change under
+review.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.2: Fixes: tag**
+Record: None. Buggy signature is ancient generic bitops, not a recent
+regression.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record: `b4 dig -c 7bf6940d7cf41` →
-https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
-- `b4 dig -a`: single v1, no later revisions
-- lore.kernel.org fetches returned 403; body confirmed via openwall and
-  lkml.iu.edu mirrors
-- LKML index for late June 2026 lists the submission and **no** “Re:”
-  for this hpilo patch (no NAK, no Cc: stable suggestion, no review
-  thread)
+**Step 3.3: File history**
+Record: Recent `le.h` work is old (`6b8ecb84f8f64` moved find_*_le to
+find.h in 2021). No later commits on this file after `1c61b0a6e5c47`.
+Standalone, not patch N/M.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: `b4 dig -w` recipients: Keng-Yu Lin (hpilo maintainer), Arnd
-Bergmann, Greg Kroah-Hartman, linux-kernel. No Reviewed-by/Acked-by on
-the commit. Greg’s SOB is the apply-to-char-misc path.
+**Step 3.4: Author**
+Record: Benjamin Marzinski is a device-mapper contributor (many
+`drivers/md/` commits), not the bitmap maintainer. Yury Norov (BITMAP
+API maintainer) applied it. Related nearby dm-log work: `c20e36b7631d8`
+(region_count overflow, similar ~4TB mirror reproducer) and
+`9743132a41f4d` (bitset_size overflow on 32-bit). Those are separate
+bugs; this patch does not depend on them.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, syzbot, bugzilla, or CVE in the commit or the
-submission. Issue is identified by code inspection of the shared FIFO.
+**Step 3.5: Prerequisites**
+Record: None. Only `include/asm-generic/bitops/le.h`. No new helpers.
+`git merge-base --is-ancestor 1c61b0a6e5c47 HEAD` succeeded (commit is
+already in this checkout).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone `[PATCH]`, not `n/m`. Same-day author flood of
-similar bounds checks; this patch does not depend on those.
+---
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: UNVERIFIED for stable@ lore (HTTP 403). No evidence in the v1
-mail that anyone nominated or rejected it for stable.
+## Phase 4: Mailing list
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `ilo_pkt_dequeue()` only.
-
-**Step 5.2: TRACE CALLERS**
-Record (from `drivers/misc/hpilo.c`):
-- `ilo_ccb_verify()` — open path, SENDQ, uses id only
-- `ilo_read()` — `read(2)` on `/dev/hpilo/dXccbN`, RECVQ, uses id, len,
-  pkt
-- `ilo_write()` — `write(2)`, SENDQ, uses id, len, pkt
-
-**Step 5.3: TRACE CALLEES**
-Record: `fifo_dequeue()` (consumes a C-bit entry under `fifo_lock`),
-`get_entry_id()`, `get_entry_len()`, `desc_mem_sz()`.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `read`/`write` on the char device → dequeue → copy.
-FIFO payload is written by iLO firmware in shared DMA memory, then
-marked consumed. An unprivileged process cannot poke FIFO fields
-directly; it needs the device node **and** a bad/malicious iLO entry. On
-ProLiant this driver is used by host management agents. Reachable in
-production, not a dead path.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: This is the only dequeue that turns FIFO id/len into a host
-pointer and copy size. No sibling copy of the same bug in this driver.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Tree is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`).
-`drivers/misc/hpilo.c`/`hpilo.h` are present. `CONFIG_HP_ILO` exists.
-Unvalidated dequeue is from 89bcb05d9bbf8 (2008). `git merge-base --is-
-ancestor 7bf6940d7cf41 HEAD` is true — this checkout already contains
-the fix because it is mainline after the char-misc merge, not because
-the bug is absent.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Expected apply: **clean**. `ilo_pkt_dequeue()` around the
-dequeue site matches the parent of 7bf6940d7cf41 aside from this hunk.
-No conflicting local churn.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier equivalent bounds check. This commit is the fix.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drivers/misc/hpilo** — HP iLO CHIF channel on ProLiant.
-Criticality: **PERIPHERAL** for generic desktops, **IMPORTANT** for HP
-enterprise servers that use `/dev/hpilo` (common on LTS/distro kernels).
-Not mm/net/fs core.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature, low-churn driver (2008), still Supported by HPE. Bug is
-long-standing, not a brand-new API.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **driver-specific / config-specific** (`CONFIG_HP_ILO`, PCI
-iLO). HP ProLiant hosts running management userspace.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Dequeue of a FIFO entry whose id or length is out of layout. The
-device is expected to update recv length; a firmware length bug is the
-realistic trigger. Malicious/compromised BMC is the security trigger.
-Not a hot every-syscall path for machines without iLO. Unprivileged
-users cannot inject FIFO fields without the device and a bad iLO entry.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Kernel OOB read (`copy_to_user` in `ilo_read`) or OOB write
-(`copy_from_user` in `ilo_write`) → oops, info leak, or memory
-corruption. **Severity: HIGH** (crash/corruption; security-relevant if
-firmware is untrusted). Not a guaranteed unprivileged LPE by itself.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 4.1: Original discussion**
 Record:
-- Benefit: **high for iLO users** — prevents host OOB from a bad FIFO
-  entry on a long-lived production driver.
-- Risk: **very low** — 6 lines, fail-closed, no API/lock/structure
-  change; valid packets unaffected.
-- Ratio: benefit outweighs risk.
+- v1: https://lore.kernel.org/linux-
+  arch/20260702194307.1805533-1-bmarzins@redhat.com/
+- v2 (committed): https://lore.kernel.org/linux-
+  arch/20260706202324.1949190-1-bmarzins@redhat.com/
+- v1→v2: commit message only (wrong “unsigned int” wording; missing
+  reproducer commands). Code unchanged.
+- Yury Norov: “Taking the patch in bitmap-for-next.” Asked for a
+  reproducer and whether this is production.
+- Benjamin: explicit `dmsetup` panic reproducer; LVM default region size
+  is 4096 sectors, so default LVM would need ~4PB devices; “I doubt that
+  anyone has hit this on a production system,” but “This will crash the
+  machine without the fix.”
+- No NAKs.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Yury Norov, Arnd Bergmann, Rasmus Villemoes, linux-arch, linux-
+kernel. Bitmap maintainer was To: and applied the patch.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Author-discovered with a concrete panic
+reproducer. Not a theoretical-only issue.
 
-FOR:
-- Real missing bounds check on device-shared FIFO id/len used as pointer
-  and copy length (verified in `ilo_read`/`ilo_write`).
-- Failure mode is kernel OOB, not cosmetic.
-- Driver and bug exist in this tree since 2008.
-- 6-line, obviously correct check matching `NR_QENTRY` and
-  `desc_mem_sz(1)`.
-- No prerequisites; clean apply.
-- Greg KH applied it; HPE maintainer was on Cc.
-- HP iLO is real hardware on enterprise stable kernels.
+**Step 4.4: Series**
+Record: Standalone v1/v2. Not part of a multi-patch series. Related dm-
+log overflow fixes are independent.
 
-AGAINST:
-- No user report, syzbot, or CVE.
-- Author is not the subsystem maintainer; patch is from a large same-day
-  “validate X” sweep.
-- No mailing-list review comments found.
-- Official stable text dislikes unexplained “this could be a problem”
-  issues; trigger depends on firmware producing a bad entry.
-- Rejected entries are consumed and not recycled (queue-slot leak until
-  reopen) — only if the device already posted garbage.
+**Step 4.5: Stable list**
+Record: UNVERIFIED. lore.kernel.org returned 403; gnuweeb `/stable/`
+search 404. linux-arch thread had no Cc: stable and no stable-list
+discussion.
 
-UNRESOLVED:
-- Full lore.kernel.org / stable@ thread fetch (403).
-- Whether Keng-Yu Lin privately acked (no Acked-by on the commit).
+---
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — layout math matches the
-   allocator; Greg merged it. No extra Tested-by.
-2. Fixes a real bug that affects users? **PASS** — unchecked device
-   length/index on the read/write path. Not style.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   OOB copy, oops/corruption; HIGH not a soft lockup.
-4. Small and contained? **PASS** — +6/−1, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same `ilo_pkt_dequeue()`
-   structure; driver present.
+## Phase 5: Call graph / impact
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID, quirk, DT, build, or doc-only change).
-Qualifies as a normal small memory-safety fix.
+**Step 5.1: Functions**
+Record: The nine `*_bit_le` inlines listed in 2.1.
 
-**Step 9.4: MAKE YOUR DECISION**
-This tree has the hpilo char device and the long-standing unvalidated
-dequeue. The patch stops a bad device FIFO entry from becoming a kernel
-pointer/length for `copy_{to,from}_user`. That is a real, contained OOB
-fix with negligible regression risk on working iLO firmware. It meets
-the stable rules for this checkout.
+**Step 5.2: Callers**
+Record (verified via `git grep`):
+- `drivers/md/dm-log.c` — `log_test_bit`/`log_set_bit`/`log_clear_bit`
+  (`unsigned int bit`); this is the documented panic path
+- `drivers/md/md-bitmap.c` — RAID bitmaps
+- `virt/kvm/kvm_main.c` — `set_bit_le(rel_gfn, memslot->dirty_bitmap)`
+  with `unsigned long rel_gfn`
+- Filesystems: ext4/ext2/f2fs/ocfs2/exfat/ntfs3/minix (on-disk LE
+  bitmaps)
+- Also: RDS congestion, NVDIMM labels, some net drivers
 
-Verification:
-- [Phase 1] Tags: author SOB, Link msgid, Greg KH SOB; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +6/−1 in `ilo_pkt_dequeue()`; reject `pkt_id >= 4` or
-  `pkt_len > 4096`
-- [Phase 2] Callers: `ilo_read` copy_to_user, `ilo_write`
-  copy_from_user, `ilo_ccb_verify`
-- [Phase 2] Bitfields: ID 12 bits (0–4095), len up to 8184, descriptor
-  4096, `NR_QENTRY` 4
-- [Phase 3] git blame: buggy dequeue from 89bcb05d9bbf8 (2008)
-- [Phase 3] git log -- drivers/misc/hpilo.c: no FIFO refactor
-  prerequisite; no follow-up fix
-- [Phase 3] Author also submitted ibmvmc/xilinx_sdfec/bcm-vk validation
-  patches; not hpilo maintainer
-- [Phase 4] b4 dig: v1 only, lore msgid 20260624190919.3432-1; To/Cc
-  includes Keng-Yu Lin, Arnd, Greg
-- [Phase 4] openwall + lkml.iu.edu: patch body matches commit; no public
-  Re: for hpilo
-- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED beyond mirrors
-- [Phase 5] Call chain: userspace read/write on `/dev/hpilo/dXccbN`
-  after device marks FIFO consumed
-- [Phase 6] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; kernelversion
-  7.3.0-rc4
-- [Phase 6] merge-base --is-ancestor 7bf6940d7cf41 HEAD: yes (fix
-  already on this mainline checkout)
-- [Phase 6] Parent of fix: unvalidated `ilo_pkt_dequeue()` still in
-  7bf6940d7cf41^
-- [Phase 7] MAINTAINERS: HEWLETT PACKARD ENTERPRISE ILO CHIF DRIVER,
-  Keng-Yu Lin, Supported
-- [Phase 8] Failure mode: OOB read/write → oops/corruption, HIGH;
-  trigger is bad iLO FIFO entry
-- UNVERIFIED: stable@ mailing list discussion (fetch denied)
+dm-log and KVM are the large-index paths. Filesystem group bitmaps are
+typically far below 2^31 bits.
 
-The fix is small, matches the queue layout in this tree, and prevents a
-host OOB from a bad iLO FIFO entry.
+**Step 5.3: Callees**
+Record:
+`test_bit`/`set_bit`/`clear_bit`/`__set_bit`/`__clear_bit`/`test_and_*`
+plus `BITOP_LE_SWIZZLE` (0 on LE; low-bit swap on BE).
+
+**Step 5.4: Reachability**
+Record: Yes. Privileged `dmsetup` of a large mirror (author’s
+reproducer) panics. KVM dirty logging with `rel_gfn >= 2^31` (memslot ≳
+8TiB at 4K pages) would hit the same conversion. Unprivileged users
+cannot run `dmsetup`; a VM tenant does not set host memslot size.
+
+**Step 5.5: Similar patterns**
+Record: `find_*_bit_le` already use `unsigned long`. This aligns the
+set/test/clear LE helpers. No other `le.h` copies; arches include the
+generic header (x86, arm64, powerpc, s390, …).
+
+---
+
+## Phase 6: This checkout
+
+**Step 6.1: Does the buggy code exist here?**
+Record:
+- Tree: `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+  EXTRAVERSION=-rc4` (7.3.0-rc4)
+- Live `le.h` already has `unsigned long nr` (this commit is an
+  ancestor, merged via `bitmap-for-7.3`)
+- Pre-fix `int nr` existed in this lineage from v2.6.39 through the
+  parent of `1c61b0a6e5c47`
+- Helpers still exist; the bug class is in this codebase’s history, not
+  a post-branch feature
+
+**Step 6.2: Backport difficulty**
+Record: Clean apply to any tree whose `le.h` still has `int nr`. Same
+9-line signature change since 2011. No conflicting local edits.
+
+**Step 6.3: Related fixes already here**
+Record: This exact fix is already in HEAD. Independent dm-log overflow
+fixes (`c20e36b7631d8`, `9743132a41f4d`) do not replace it: they cap
+`region_count` / bitset size; they do not stop sign extension for bits
+in `2^31 .. UINT_MAX-1` (the 8589934590 / region-size-2 case is
+`region_count = 4294967295`).
+
+---
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: `[bitops / asm-generic] [CORE]` — used by filesystems, DM, KVM,
+networking.
+
+**Step 7.2**
+Record: Bitmap API is actively maintained (bitmap-for-7.3 pull). `le.h`
+itself is mature; this is a long-standing type bug, not churn from a
+rewrite.
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+Record: Anyone using `*_bit_le` on a bitmap with index \> `INT_MAX`.
+Concrete: large dm-mirror with tiny region size; theoretically huge KVM
+dirty bitmaps / large md bitmaps. Not universal.
+
+**Step 8.2: Trigger**
+Record: Not every boot. Needs a bitmap \> 256MiB (2^31 bits). Author’s
+case: ~4TB device, region size 2 sectors. LVM default 4096-sector
+regions would need ~4PB. Root/`dmsetup` required. Timing-independent;
+deterministic OOB.
+
+**Step 8.3: Failure mode**
+Record: `[OOB before bitmap → kernel panic] [Severity: CRITICAL if
+triggered, LOW likelihood in default configs]`
+
+**Step 8.4: Risk-benefit**
+Record:
+- Benefit: medium — real panic with a reproducer; production default
+  configs unlikely; still a memory-safety bug in core helpers
+- Risk: very low — 9-line type widen, no logic/locking/API userspace
+  change
+- Ratio: favorable. Cheap, correct panic fix in generic bitops
+
+---
+
+## Phase 9: Synthesis
+
+**Step 9.1: Evidence**
+
+For:
+- Reproducible kernel panic from OOB before a vmalloc bitmap
+- Mechanism is standard 32→64 sign extension; the diff matches it
+- 9 lines, one header, no new APIs
+- Bitmap maintainer took it; v2 only fixed the commit message
+- Matches `find_*_bit_le` (`unsigned long`)
+- Applies to this tree’s `le.h` with no prerequisites
+- dm-log, md-bitmap, and KVM dirty logging are real callers of large
+  indexes
+
+Against:
+- Author doubts production hits with LVM defaults
+- Needs a huge device and a tiny region size (or an enormous KVM slot)
+- No syzbot, no Cc: stable, no Fixes:
+- This 7.3-rc4 checkout already contains the commit
+
+Unresolved:
+- Stable mailing list (HTTP 403/404)
+- Whether any caller relied on negative `int` indexes (author searched;
+  not independently exhaustively proven)
+
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — type-only; author reproduced
+   panic; maintainer applied it
+2. Real bug that affects users? **PASS** — panic on a documented dm-
+   mirror table; also reachable from other large LE bitmaps
+3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
+   panic / OOB. Likelihood is low; severity if hit is high
+4. Small and contained? **PASS** — 9 lines, one file
+5. No new features/APIs? **PASS** — same helpers, wider index type only
+6. Can apply to this tree? **PASS** — file and functions exist;
+   identical hunk. (Already applied here; still a clean backport to any
+   tree with `int nr`.)
+
+**Step 9.3: Exceptions**
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
+panic fix.
+
+**Step 9.4: Decision**
+
+This is a small, obviously correct fix for a real panic: signed `int`
+bit indexes sign-extend into the generic bitops and walk off the front
+of the bitmap. The helpers live in this tree, there are no missing
+prerequisites, and the change does not add features. Rare default-config
+exposure does not outweigh a zero-logic-change panic fix in core bitops.
+
+The commit is already in this 7.3-rc4 history; that is not used as a
+reason to reject it. Technical merit supports taking it on this lineage.
+
+---
+
+## What the commit solves for stable users
+
+On 64-bit, `*_bit_le(int nr)` turns bit numbers ≥ 2^31 into a negative
+`int`, which becomes a huge `long` in `test_bit`/`set_bit`. Address
+arithmetic wraps and the kernel reads/writes *before* the bitmap,
+typically panicking (author: dm-mirror `sync_bits` vs `clean_bits` guard
+page).
+
+That matters for large dm-mirror logs (tiny region size on multi-TB
+devices) and any other LE bitmap with a high index (e.g. KVM
+dirty_bitmap with `unsigned long rel_gfn`). The fix is only changing
+`int` to `unsigned long` on nine inlines.
+
+## Risk vs benefit
+
+Benefit is preventing a confirmed panic. Risk is negligible: no control-
+flow, locking, or userspace ABI change; widening is source-compatible
+for non-negative callers. Worst case for a negative caller is the old
+sign-extension behavior, and none were found.
+
+## Concerns
+
+- Trigger is uncommon with LVM’s 4096-sector default.
+- No Fixes:/Cc: stable (not a negative by itself).
+- Stable-list discussion could not be fetched (403/404).
+- Independent dm-log overflow patches are *not* substitutes for this
+  type fix.
+
+## Verification
+- [Phase 1] Parsed tags: only author + Yury Norov SOBs; no
+  Fixes:/Reported-by:/Cc: stable
+- [Phase 2] Diff: 9 `int nr` → `unsigned long nr` in `include/asm-
+  generic/bitops/le.h`; bodies unchanged
+- [Phase 2] `generic___set_bit` uses `BIT_WORD(nr)` pointer math — huge
+  nr wraps before `addr`
+- [Phase 2] `set_bit` takes `long nr`; `_test_bit`/`___set_bit` take
+  `unsigned long nr`
+- [Phase 3] `git describe HEAD` / Makefile: 7.3.0-rc4
+  (`v7.3-rc4-27-gf0100363d8c37`)
+- [Phase 3] `git merge-base --is-ancestor 1c61b0a6e5c47 HEAD`: yes
+  (already in this tree)
+- [Phase 3] blame: `int nr` from `a56560b3b2332` (v2.6.39-rc1); fix is
+  `1c61b0a6e5c47`
+- [Phase 3] `git show 1c61b0a6e5c47^:include/asm-generic/bitops/le.h`:
+  confirmed `int nr`
+- [Phase 3] No follow-up commits on `le.h` after this one
+- [Phase 4] `b4 dig -c 1c61b0a6e5c47`: v1 then v2; v2 is what was
+  committed
+- [Phase 4] `b4 dig -a/-w`: linux-arch; Yury, Arnd, Rasmus CC’d
+- [Phase 4] Yury: taking into bitmap-for-next; asked about 256MB bitmaps
+  / production
+- [Phase 4] Author: machine crashes without the fix; production with LVM
+  defaults unlikely
+- [Phase 5] Callers: dm-log, md-bitmap, kvm `mark_page_dirty_in_slot`,
+  ext4 macros, others
+- [Phase 5] dm-log `log_*_bit(..., unsigned int bit)` — values ≥
+  0x80000000 hit the old conversion
+- [Phase 5] Reproducer math: 8589934590 sectors / region 2 →
+  `region_count = 4294967295` (UINT_MAX)
+- [Phase 6] Current tree already has `unsigned long nr`; no other `le.h`
+  copies
+- [Phase 6] Arches include `asm-generic/bitops/le.h` (x86, arm64, etc.)
+- [Phase 8] Failure mode: OOB → panic; trigger needs large bitmap
+- UNVERIFIED: stable@ discussion (lore 403, gnuweeb stable search 404)
+- UNVERIFIED: exhaustive proof no caller passed negative `int` on
+  purpose (author stated they looked)
 
 **YES**
 
- drivers/misc/hpilo.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/asm-generic/bitops/le.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/misc/hpilo.c b/drivers/misc/hpilo.c
-index 04bd34c8c5069..9368edf8c4a32 100644
---- a/drivers/misc/hpilo.c
-+++ b/drivers/misc/hpilo.c
-@@ -160,11 +160,16 @@ static int ilo_pkt_dequeue(struct ilo_hwinfo *hw, struct ccb *ccb,
+diff --git a/include/asm-generic/bitops/le.h b/include/asm-generic/bitops/le.h
+index d51beff603755..e3b0da9a25f1b 100644
+--- a/include/asm-generic/bitops/le.h
++++ b/include/asm-generic/bitops/le.h
+@@ -16,47 +16,47 @@
+ #endif
  
- 	ret = fifo_dequeue(hw, fifobar, &entry);
- 	if (ret) {
-+		int pkt_len;
-+
- 		pkt_id = get_entry_id(entry);
-+		pkt_len = get_entry_len(entry);
-+		if (pkt_id >= NR_QENTRY || pkt_len > desc_mem_sz(1))
-+			return 0;
- 		if (id)
- 			*id = pkt_id;
- 		if (len)
--			*len = get_entry_len(entry);
-+			*len = pkt_len;
- 		if (pkt)
- 			*pkt = (void *)(desc + desc_mem_sz(pkt_id));
- 	}
+ 
+-static inline int test_bit_le(int nr, const void *addr)
++static inline int test_bit_le(unsigned long nr, const void *addr)
+ {
+ 	return test_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline void set_bit_le(int nr, void *addr)
++static inline void set_bit_le(unsigned long nr, void *addr)
+ {
+ 	set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline void clear_bit_le(int nr, void *addr)
++static inline void clear_bit_le(unsigned long nr, void *addr)
+ {
+ 	clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline void __set_bit_le(int nr, void *addr)
++static inline void __set_bit_le(unsigned long nr, void *addr)
+ {
+ 	__set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline void __clear_bit_le(int nr, void *addr)
++static inline void __clear_bit_le(unsigned long nr, void *addr)
+ {
+ 	__clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline int test_and_set_bit_le(int nr, void *addr)
++static inline int test_and_set_bit_le(unsigned long nr, void *addr)
+ {
+ 	return test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline int test_and_clear_bit_le(int nr, void *addr)
++static inline int test_and_clear_bit_le(unsigned long nr, void *addr)
+ {
+ 	return test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline int __test_and_set_bit_le(int nr, void *addr)
++static inline int __test_and_set_bit_le(unsigned long nr, void *addr)
+ {
+ 	return __test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
+ 
+-static inline int __test_and_clear_bit_le(int nr, void *addr)
++static inline int __test_and_clear_bit_le(unsigned long nr, void *addr)
+ {
+ 	return __test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+ }
 -- 
 2.53.0
 
