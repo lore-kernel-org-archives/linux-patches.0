@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1ADC5B0649;
-	Mon, 19 Oct 2026 14:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB80D352009;
+	Mon, 19 Oct 2026 14:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418424; cv=none; b=lsYRXoeLcJmPrzNTdgyOvnk4chrouE4KUnvbnqcwshYANboZF3WDlTt3KS/ENQDeJzVcFcHq1bAi0dNzylUmE9mubVYURJhVf7WpPBTup4wf1vzAvhW0MTwQVY4Xnhz0zxMgVpmpAfz+wORksgeSTzdgWrOQmavnWHw2SEqHx1A=
+	t=1792418425; cv=none; b=YvlfY9tH92SZOVskq6GYUJNuDVm1UAoJiYQeBFL+TgJBpIp0XmlKleUh/p4SPmPLFNTsBr9ss4qg4HHgst7ULH2YXZxYqSy0+cTtJOJQsIfcB/UB/9V/mlnSRQZlpOfinoOJ9cXOB4c6qyNBFe54SRQqb5gaaszu/kmD2qKNs/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418424; c=relaxed/simple;
-	bh=DH1bph/ZHzpv5mQ+EDceKJUymowJx5xsSPDLBMJMY4k=;
+	s=arc-20240116; t=1792418425; c=relaxed/simple;
+	bh=6PwSBrS2ZGfT06hFAOJC6dWaXblSkBfSl5CfCBq/Ec0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nW537/RUqs5FWV2b8Aldqvp8eF4FGt8K90ehYw3ROSsSwwzlbYHORvFQMrei23gfUT0r+w5wTWnC+AcxOSr7uVu904QPHfHNckv100M2hhx3XtvWo2D+/Uo3q1RroeVsJBeTBWNGTNHuAUGcVa32l/n4ee6kU8EYZbEBZYAKzuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=euRUvoFj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gyVZwV9Sb14cwaYRKp/Sofzbl1eia7IW4wWUAktTJHZaaL0aeQ2jjfoMGh2tOb9vuIaTlktqqtZ857lnRVllCYfAFAAPrCFUbiXbR7+l/CM6S9hcUOddmcggQXGwzwBWlhTbVo/hcPpu2p2IGqWVMr35LTtIQYcwc8QDiXQF8Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlvTZ10o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="euRUvoFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463D21F000C9;
-	Mon, 19 Oct 2026 14:00:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlvTZ10o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016821F000C4;
+	Mon, 19 Oct 2026 14:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418421;
-	bh=HhP0ck/U0ZuxUzCSDns2N0bWfjBU5WBSekm48YEvXjk=;
+	s=k20260515; t=1792418422;
+	bh=a/KgmAAZ3k/Z5sTWmZqE+o4FWT0QypiHnRzefYdkXpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euRUvoFjq0R3sAUV3ehDp7ayjGlrI7XJ+eK1C5QLHSpVDqmCZ39jK3Kxcdw0707jp
-	 O4ax8xoAmO9ZGeYSBGXCoTodlQc3DAfArtVfFIOTpjFb/x96hLcop6ym8nuZu/mjpl
-	 DzB2ziB6Er4Zf7nShE9BJXaj4iK6M9ewa+PXiRqSib/513jAROaoFRPxpJx1bo4N+S
-	 jq5s4LW2n3MGC2A9bVIQ/tXL53ikN7UwLygZwH0deTNVASDtqFSCWZysvj2YgkvWRK
-	 aS8iFrGhtamut/KLBzJIOW56fhrqrsSKcFZsMfqKS8gH6Ll+gmiftnDVic/145l5kH
-	 IGJoGZvgHIXJQ==
+	b=dlvTZ10of5mqT7vWgBNJX2DZWrRI/SDJ0T4srfEt/0ZsJZLkAiyVlL5ZzsXOrs5zb
+	 Gq62nSE+6cPyitOVDbX7fh/f1G+FCiYvV/FzP0qa0PirkBl74WrcwCm1J9Nqqfpk1k
+	 ebNezwscN61pmQFAjZ6g6uzmfN21NFGufezyiu8oPUHArt3X1ic/cR+K7RKJH3lM5W
+	 WGYyX+0tthyOENa8Fq1U2con0rW2zQUVtSt8peImxmwHk9xojb9E7RF6nLDZx+Hws3
+	 HdxuomrQk9diiZI7tG1+n7qisGiNcMaG3wcPUjAuCCLfF1M/MgBJfzK/UynayM46rT
+	 zY8qvWT5WTxsQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pu Lehui <pulehui@huawei.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Senjin <senjin@hatchling.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	memxor@gmail.com,
-	bpf@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] bpf: Reject callback subprogs invoke tailcall
-Date: Mon, 19 Oct 2026 09:48:48 -0400
-Message-ID: <20261019135441.1420968-237-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: load ATTR_BITMAP run extents from $MFT extension records
+Date: Mon, 19 Oct 2026 09:48:49 -0400
+Message-ID: <20261019135441.1420968-238-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,475 +46,519 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a41d0c30d764e086c62b049e806fd12df4f4acfc ]
+[ Upstream commit e31886cb6e0e14cf65e27da0bf1a422ff419d893 ]
 
-Some JIT compilers, such as x86_64, rely on a register to pass the TCC.
-When subprograms of synchronous callback invoke tailcall, C helpers
-invoking bpf callback clobber this register, and the corrupted TCC may
-bypass the TCC limit, leading to infinite tailcall.
+When $MFT's ATTR_BITMAP attribute is heavily fragmented, its run list
+can span multiple MFT extension records (attribute list entries with
+vcn > 0). The non-primary segment handler in ntfs_read_mft() only
+processed ATTR_DATA extension segments for MFT_REC_MFT, silently
+skipping any ATTR_BITMAP segments. This left sbi->mft.bitmap.run
+incomplete, causing wnd_init() to fail with -ENOENT when wnd_rescan()
+tried to look up a VCN not covered by the truncated run list.
 
-Fix this by rejecting tailcall inside all subprogs of sync callback.
-This also cleanly consolidates the existing async and exception callback
-checks into a single unified `is_cb` check.
+Observed on a 16 TB NTFS volume (0xFFFFFEFF total clusters) whose MFT
+bitmap run list was split across 97 extents in extension records.
+wnd_rescan() successfully looked up VCNs 0-122 from the runs loaded
+from the base record, then failed at VCN 123 (the last cluster of the
+bitmap) whose run was only present in an extension record.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reported-by: Björn Töpel <bjorn@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260716120157.835937-3-pulehui@huaweicloud.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fix by extending the MFT_REC_MFT special case to also handle
+ATTR_BITMAP extension segments, storing their runs into
+sbi->mft.bitmap.run the same way the primary segment does.
+
+Signed-off-by: Senjin <senjin@hatchling.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have enough to judge this: a real NTFS3 mount failure, a small first-
+pass run-list fix, and a related later `super.c` workaround already in
+this 7.3 tree. Writing the full 9-phase analysis next.
 
-**Step 1.1 — Subject line**
-Record: `[bpf]` `[Reject]` Reject callback subprogs that invoke tailcall
-(verifier hardening against TCC clobber / infinite tailcall).
+---
 
-**Step 1.2 — Tags**
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[fs/ntfs3] [load] load ATTR_BITMAP run extents from $MFT
+extension records**
+
+The verb is “load”, not “fix”, but the body describes a mount failure
+and a missing code path. Intent is a bug fix.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
+Commit: `e31886cb6e0e14cf65e27da0bf1a422ff419d893`
+
+Tags present:
+- `Signed-off-by: Senjin <senjin@hatchling.org>` (author of the fix)
+- `Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-
+  software.com>` (ntfs3 maintainer)
+
+Tags absent (expected for this pipeline): `Fixes:`, `Cc: stable`,
+`Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, `Link:`.
+
+AuthorDate: 2026-07-02; CommitDate: 2026-07-24 (maintainer applied it).
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — BPF fuzzer found
-  this
-- `Reported-by: Björn Töpel <bjorn@kernel.org>` — independently reported
-  by a BPF JIT developer
-- `Acked-by: Eduard Zingerman <eddyz87@gmail.com>` — BPF verifier
-  maintainer
-- `Link: https://patch.msgid.link/20260716120157.835937-3-
-  pulehui@huaweicloud.com` — v3 2/3 of a 3-patch series
-- `Signed-off-by: Pu Lehui <pulehui@huawei.com>`
-- `Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>`
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-  if present — none on the original commit
+- **Bug:** When `$MFT`’s `ATTR_BITMAP` is heavily fragmented, its run
+  list spans MFT extension records (`le->vcn > 0`). `ntfs_read_mft()`
+  only unpacked `ATTR_DATA` extension segments for `MFT_REC_MFT` and
+  skipped `ATTR_BITMAP` segments.
+- **Symptom:** `sbi->mft.bitmap.run` is truncated. `wnd_init()` →
+  `wnd_rescan()` → `run_lookup_entry()` returns `-ENOENT`. Mount fails.
+- **Evidence:** 16 TB volume (`0xFFFFFEFF` clusters). Bitmap run list
+  split across 97 extents. VCNs 0–122 found from the base record; VCN
+  123 (last bitmap cluster) only in an extension record.
+- **Root cause:** Non-primary segment handler too narrow (`ino !=
+  MFT_REC_MFT || attr->type != ATTR_DATA`).
+- **Fix:** Same special case also unpacks `ATTR_BITMAP` into
+  `sbi->mft.bitmap.run`.
+- **Versions:** None named in the message. Observation used
+  `CONFIG_NTFS3_64BIT_CLUSTER=y` (from the v2 cover letter).
 
-**Step 1.3 — Body**
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Not a disguised cleanup. Explicit mount-failure fix; “load” is
+the mechanism.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- **Bug:** Some JITs (x86-64) pass the tail-call counter (TCC) in a
-  register. A sync callback is invoked from a C helper, which clobbers
-  that register. If a callback subprog then tail-calls, TCC is garbage
-  and the limit can be bypassed.
-- **Symptom:** Infinite tailcall (CPU hang / soft lockup).
-- **Root cause:** Verifier only rejected tailcalls inside exception
-  callbacks (`is_exception_cb`), not sync callbacks (`bpf_loop`,
-  `bpf_for_each_map_elem`, etc.).
-- **Fix:** Reject tailcall on any callback frame via unified `is_cb`.
-  Also drop the special async-cb `verifier_bug` in favor of that same
-  check.
-- **Version:** Landed in v7.3-rc1 (2026-07-16); this checkout is
-  v7.3-rc4.
+- File: `fs/ntfs3/inode.c` — **+8 / −2** (net +6)
+- Function: `ntfs_read_mft()`
+- Scope: **single-file surgical fix**
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. Explicit security/correctness fix (infinite
-tailcall), plus a small consolidation of existing callback checks. Not
-cleanup-only.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
----
+Before (parent `e31886cb6e0e1^`):
 
-## Phase 2: Diff analysis
+```c
+if (le && le->vcn) {
+    /* non-primary segment */
+    if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
+        goto next_attr;
+    run = &ni->file.run;
+    ...
+    goto attr_unpack_run;
+}
+```
 
-**Step 2.1 — Inventory**
+After:
+
+```c
+if (le && le->vcn) {
+    if (ino != MFT_REC_MFT)
+        goto next_attr;
+    if (attr->type == ATTR_DATA)
+        run = &ni->file.run;
+    else if (attr->type == ATTR_BITMAP)
+        run = &sbi->mft.bitmap.run;
+    else
+        goto next_attr;
+    ...
+    goto attr_unpack_run;
+}
+```
+
+Record: Non-primary `$MFT` `ATTR_BITMAP` segments now take the same
+`attr_unpack_run` path the primary `ATTR_BITMAP` case already uses (`run
+= &sbi->mft.bitmap.run` around inode.c:323–333). Other inodes and other
+attribute types still skip non-primary segments.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Logic / correctness]** Incomplete run-list construction.
+Missing handling of `$MFT` `ATTR_BITMAP` extension segments left
+`sbi->mft.bitmap.run` short, so `wnd_rescan()` failed with `-ENOENT` at
+an uncovered VCN.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- File: `kernel/bpf/verifier.c` (`+2 / -6`, 8 lines)
-- Function: `check_max_stack_depth_subprog()`
-- Scope: single-file surgical verifier change
+- Obviously correct: it mirrors the existing `ATTR_DATA` special case
+  and the primary `ATTR_BITMAP` assignment.
+- Minimal: one condition split, one extra branch.
+- Regression risk: low. `run_add_entry()` allows overlapping runs, so a
+  later second unpack is safe.
+- No API / locking / data-structure change.
 
-**Step 2.2 — Code flow**
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record: Buggy test `if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)`
+comes from **`82cae269cfa953`** (“fs/ntfs3: Add initialization of super
+block”, 2021-08-13) — original ntfs3 merge. Present since **v5.15**.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: No `Fixes:` tag. Introducer is `82cae269cfa953`, ancestor of
+HEAD (`git merge-base --is-ancestor` exit 0).
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
+Record: Related commit already in this tree:
+
+**`6d979b64287fb`** — `ntfs3: fix mount failure on volumes with
+fragmented MFT bitmap` (2026-04-07, contained in **v7.1-rc1**).
+
+That patch:
+1. Moves `ni_load_all_mi()` before `wnd_init()`.
+2. Walks attributes and `run_unpack_ex()`s `$BITMAP` extents with `svcn
+   != 0`.
+
+Same symptom (`wnd_init` / `-ENOENT`), different site (`super.c` second
+pass vs `inode.c` first pass). `6d979b64287fb` is an ancestor of
+`e31886cb6e0e1`.
+
+Series context: mailing-list **v2 1/2**. Patch 2/2 is `789af83e41aef`
+(`lseek EINVAL` on 64-bit clusters) — independent, not a prerequisite.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Applied by **Konstantin Komarov**, listed `M:` for NTFS3
+(`MAINTAINERS`: Supported). Senjin also authored the sibling lseek fix.
+Maintainer SOB is a strong quality signal.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: Standalone. Uses existing `attr_unpack_run`,
+`sbi->mft.bitmap.run`, and the `MFT_REC_MFT` special case from 2021. No
+new helpers. Patch 2/2 is unrelated.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-1. **Removed** `if (subprog[sidx].is_async_cb && has_tail_call)
-   verifier_bug; return -EFAULT`. Async callbacks with a tailcall are no
-   longer a verifier BUG; they fall through to the unified reject.
-2. **Changed** the stack-walk guard from `is_exception_cb` (“cannot tail
-   call within exception cb”) to `is_cb` (“cannot tail call within
-   callback”). Any callback on the bpf2bpf stack of a tailcall-reachable
-   subprog is rejected with `-EINVAL`.
+- `b4 dig -c e31886cb6e0e1` **failed**: lore.kernel.org returned errors.
+- Found via web search:
+  - v1: 2026-06-10, `[PATCH] fs/ntfs3: load ATTR_BITMAP run extents...`
+  - v2: 2026-06-13, `[PATCH v2 1/2]` — **hunk-header fix only, no code
+    change**
+  - Cover: `[PATCH v2 0/2] fs/ntfs3: two fixes for large NTFS volumes`
+  - Openwall: https://lists.openwall.net/linux-kernel/2026/06/13/668 and
+    `/669`
+- No NAKs found. Maintainer merged it into `ntfs3_for_7.3`.
+- Cover letter: both bugs seen on a 16 TB volume with
+  `CONFIG_NTFS3_64BIT_CLUSTER=y`.
 
-**Step 2.3 — Bug mechanism**
-Record: **Logic / correctness** in the BPF verifier, with a **hang**
-failure mode.
-- `is_cb` is set in `push_callback_call()` for every helper/kfunc
-  callback, including sync ones.
-- `has_tail_call` is set in `check_subprogs()` when a subprog contains
-  `BPF_FUNC_tail_call`.
-- x86-64 JIT (`emit_prologue_tail_call`) uses `%rax` as TCC / TCC
-  pointer. Callback entry is a C ABI call, so `%rax` is clobbered.
-- Corrupted TCC can skip `MAX_TAIL_CALL_CNT` and loop forever.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 2.4 — Fix quality**
-Record: Minimal and obviously correct. Same pattern already used for
-exception callbacks (b9ae0c9dd0aca, 2023). Regression risk is **verifier
-tightening**: programs that do `callback → subprog → tailcall` now fail
-to load. Those programs were dangerous. Series patch 1 is required to
-avoid false rejects of unrelated tailcall branches (see Phase 3). No
-API/feature additions.
+Record: `b4 dig -w` failed. Recipients from the archived mail:
+`ntfs3@lists.linux.dev`, `almaz.alexandrovich@paragon-software.com`,
+`linux-kernel@vger.kernel.org`. Maintainer was CC’d and later signed
+off. No other `Reviewed-by` on the commit.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: Reporter is Senjin (author), with a concrete 16 TB / 97-extent
+case. No syzbot/bugzilla. Cover does not mention `6d979b64287fb`, so
+Senjin likely reproduced on a kernel without that later-pass workaround
+(UNVERIFIED which exact release they ran).
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: v2 0/2 is two independent large-volume fixes. 2/2 is not
+required for 1/2.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: lore.kernel.org/stable search did not return discussion of this
+commit (403/irrelevant hits). No documented reason to keep it out of
+stable.
 
 ---
 
-## Phase 3: Git history
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 3.1 — Blame**
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `ntfs_read_mft()`; uses `ni_enum_attr_ex()`, `attr_unpack_run` →
+`run_unpack_ex()`. Failure path: `wnd_init()` → `wnd_rescan()` →
+`run_lookup_entry()`.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- `is_cb` field: 406a6fa44bfbc (2023-12, bitfield conversion);
-  assignment in `push_callback_call()`: ab5cfac139ab85 (2023-11)
-- Exception-only tailcall reject: b9ae0c9dd0aca (2023-09, “bpf: Add
-  support for custom exception callbacks”)
-- Async `has_tail_call` verifier_bug: 7ddc80a476c2d (2021-07, “Teach
-  stack depth check about async callbacks”)
-- `has_tail_call` tracking: 7f6e4312e15a5 (2020)
-- `bpf_loop`: e6f2dd0f80674 (2021-11); CAP_BPF: 5679ff2f138f7 (2022-08)
-- x86 TCC-in-register: ebf7d1f508a7 (cited by series patch 1)
+- `ntfs_read_mft()` is static; only caller is `ntfs_iget5()` when
+  `I_NEW`.
+- Mount: `ntfs_fill_super()` → `ntfs_iget5($MFT)` → `ntfs_read_mft()`.
+- Not IRQ; mount/iget path.
 
-The hole (sync callbacks + tailcall) has been present for years; this
-tree is far newer.
+**Step 5.3: TRACE CALLEES**
 
-**Step 3.2 — Fixes: tag**
-Record: None on this commit. Related: series patch 1 has `Fixes:
-ebf7d1f508a7`. GitHub CI suggested `Fixes: b9ae0c9dd0ac` for this patch
-(that commit only covered exception callbacks).
+Record: `ni_enum_attr_ex()` loads ATTR_LIST records via `ni_load_mi()`.
+Matching segments go to `run_unpack_ex()` into `sbi->mft.bitmap.run`.
+Later `wnd_init(&sbi->mft.bitmap)` scans that run list.
 
-**Step 3.3 — Related file history**
-Record: v3 series “Fixes for tailcall with subprog and callback”:
-1. `3513ea9dab6c1` bpf: Sync tail_call_reachable with callee state on
-   entry
-2. `a41d0c30d764e` **this commit**
-3. `42bfd21a8b701` selftests/bpf: Add testcases for callback with
-   tailcall
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-Follow-up already in this tree: `266aa4ad0b2e8` (“Reject tail calls
-directly from callback frames”) — extra reject in `check_helper_call()`
-to avoid a verifier WARN; it comments that stack-depth validation
-already rejects this.
+Record: `mount -t ntfs3` → `ntfs_fill_super` → load `$MFT` → incomplete
+bitmap runs → `wnd_init` fails → mount fails. **Userspace-reachable.**
+Unprivileged users cannot trigger it without mount rights; operators
+with NTFS volumes can. Volume is unusable until remounted with another
+driver.
 
-**Step 3.4 — Author**
-Record: Pu Lehui is a regular BPF contributor (JIT/verifier). Acked and
-applied by Eduard Zingerman (verifier maintainer).
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-**Step 3.5 — Prerequisites**
-Record: **Not fully standalone.** Patch 1 must come first. Without it,
-`tail_call_reachable` leaks across branches, so patch 2 can reject valid
-programs that mix a tailcall subprog with a no-tailcall callback
-(`tailcall_callback_2` selftest). Both 3513ea9dab6c1 and 42bfd21a8b701
-**are ancestors of this HEAD**. `is_cb` is present. Can apply on this
-tree (already applied).
+Record: Primary `ATTR_BITMAP` already sets `run = &sbi->mft.bitmap.run`.
+`6d979b64287fb` unpacks the same extents later in `ntfs_fill_super()`.
+`run_add_entry()` documents that new runs may overlap existing ones, so
+both paths together are safe.
 
 ---
 
-## Phase 4: Mailing list / external research
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 4.1 — Original discussion**
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
 Record:
-- Lore: https://patch.msgid.link/20260716120157.835937-3-
-  pulehui@huaweicloud.com
-- Cover: https://patch.msgid.link/20260716120157.835937-1-
-  pulehui@huaweicloud.com
-- Revisions: v1 (2 patches, 2026-07-11) → v2 (2026-07-14) → **v3 (3
-  patches, 2026-07-16)** applied
-- v3 added patch 1 after Sashiko found the `tail_call_reachable` leak
-- Applied to **bpf-next** (not bpf fixes) by Eduard Zingerman on
-  2026-07-17
-- Sashiko AI review flagged removing the async `verifier_bug`. Author
-  replied: async/exception tailcalls are meaningless (ctx not passed);
-  sync callbacks are subprogs so `is_cb` fires; direct tailcall in a
-  callback is already rejected earlier in `check_helper_call` via
-  unknown R0 vs callback return range
-- No NAKs. Eduard acked. Patchwork applied v3 as latest.
+- Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
+  **7.3.0-rc4** (mainline-style checkout, detached HEAD).
+- Candidate **is already an ancestor of HEAD**.
+- Buggy skip has existed since `82cae269cfa953` (v5.15). Parent of this
+  commit still has it.
+- `6d979b64287fb` (v7.1-rc1) is also in this tree and tries to paper
+  over the same gap in `super.c`.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: bpf@vger, Alexei, Andrii, Daniel Borkmann, Martin KaFai Lau,
-Kartikeya, Yonghong, Song Liu, Jiri Olsa, Björn Töpel, Eduard. Right
-maintainers.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-**Step 4.3 — Bug report**
-Record: Two independent reports:
-- Sashiko fuzzer
-- Björn Töpel, in review of RISC-V JIT bpf2bpf+tailcall: callback
-  entered from C ABI with clobbered TCC, then subprog tailcall. He
-  confirmed the verifier accepted `callback → subprog → tailcall`.
+Record: Expected apply: **clean** on any tree with the original
+`MFT_REC_MFT`/`ATTR_DATA` special case (all ntfs3 trees since 5.15).
+Hunk is isolated.
 
-**Step 4.4 — Series**
-Record: 3 patches; 1+2 are kernel, 3 is selftests. Patch 1 is a
-correctness prerequisite for patch 2. Both are in this tree.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org/stable search returned 403. UNVERIFIED whether
-it was discussed on stable@. No `Cc: stable` on the patch. Submitted to
-bpf-next during the 7.2 cycle, so it was aimed at 7.3, not 7.2-rc.
+Record: `6d979b64287fb` is here. It is a second-pass unpack after
+`ni_load_all_mi()`, not a replacement for loading during
+`ntfs_read_mft()`. No later commit reverts or replaces `e31886cb6e0e1`.
+ADS/iomap commits after it do not touch this branch.
 
 ---
 
-## Phase 5: Code semantic analysis
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 5.1 — Functions**
-Record: `check_max_stack_depth_subprog()` only.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-**Step 5.2 — Callers**
-Record: `check_max_stack_depth()` → `do_check` finalization
-(`kernel/bpf/verifier.c` ~21334). Runs on every successful
-`BPF_PROG_LOAD` before JIT. Called for main (`i==0`) and every
-`is_async_cb` subprog.
+Record: **fs/ntfs3** — **IMPORTANT** (supported RW Windows filesystem,
+not staging). Not core VFS/mm, but mount failure is serious for dual-
+boot, NAS, and large Windows volumes.
 
-**Step 5.3 — Callees**
-Record: Walks insns, `bpf_find_subprog()`, `bpf_pseudo_call` /
-`bpf_pseudo_func`. Sets `tail_call_reachable` from callee
-`has_tail_call`, then marks `tail_call_reachable` on the frame stack for
-the JIT.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-**Step 5.4 — Reachability**
-Record: Userspace `BPF_PROG_LOAD`. Typical trigger: TC/XDP/cgroup
-program with `bpf_loop` (or similar) whose callback calls a subprog that
-tail-calls. `bpf_loop` is CAP_BPF-gated (`kernel/bpf/helpers.c`). Not
-fully unprivileged; reachable by any CAP_BPF loader (Cilium, systemd,
-containers with CAP_BPF). **Yes, reachable from userspace.**
-
-**Step 5.5 — Similar patterns**
-Record: Same `is_cb` walk used for:
-- BPF_LD_ABS/IND in callbacks (`e7d28823c6621`)
-- `bpf_throw` from callbacks
-Later `266aa4ad0b2e8` added a matching reject in `check_helper_call()`.
+Record: Actively maintained (Paragon tree, multiple 7.x ntfs3 pulls).
+This is a targeted correctness fix, not drive-by churn.
 
 ---
 
-## Phase 6: This tree
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 6.1 — Does the buggy code exist?**
-Record: **Yes, in this lineage, and the fix is already merged.**
-- Tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`)
-- `git merge-base --is-ancestor a41d0c30d764e HEAD` → true
-- `git describe --contains a41d0c30d764e` → `v7.3-rc1~134^2~141^2~1`
-- Not in v7.2 (`merge-base --is-ancestor` failed)
-- Before this commit, `check_max_stack_depth_subprog()` only tested
-  `is_exception_cb`. Sync callbacks were unprotected. That is the 7.3
-  code this commit fixed.
-- Reverse `git apply --check` of the commit succeeds: working tree
-  already has the after-state.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-**Step 6.2 — Backport difficulty**
-Record: **Already applied** on this tree. `is_cb`,
-`check_max_stack_depth_subprog()`, and series patch 1 are present. Would
-apply cleanly to the pre-commit parent; no extra rework for 7.3.
+Record: **Filesystem-specific / config-specific.** Users of
+`CONFIG_NTFS3_FS` with a fragmented `$MFT` `$BITMAP` (large or long-
+lived NTFS). The 16 TB report also used `CONFIG_NTFS3_64BIT_CLUSTER`.
+Fragmentation itself is not limited to 64-bit clusters; `6d979b64287fb`
+reproduced on a 664 GB volume.
 
-**Step 6.3 — Related fixes already here**
-Record: Series 1/3 and 3/3, plus follow-up `266aa4ad0b2e8`. No alternate
-fix that would make this redundant; the follow-up depends on this
-diagnostic.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
----
+Record: Every mount of an affected volume. Not a race. Needs mount
+capability, not an unprivileged syscall gadget. Common on large/aged
+NTFS.
 
-## Phase 7: Subsystem context
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 
-**Step 7.1**
-Record: **BPF verifier** (`kernel/bpf/verifier.c`). **IMPORTANT** (core
-BPF safety; all BPF loaders). Not mm/scheduler, but verifier bugs are
-security-relevant.
+Record: **Mount failure (`-ENOENT`)** — volume cannot be mounted with
+ntfs3. **HIGH** (not a panic, but the filesystem is unusable).
 
-**Step 7.2**
-Record: Highly active in 7.3. This is a mature path
-(`check_max_stack_depth` has existed for years), not new infrastructure.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1 — Who is affected**
-Record: Config-specific / BPF users. Needs JIT that passes TCC in a
-register (x86-64 is the cited case; Björn noted RISC-V too). Sync
-callbacks (`bpf_loop`, for-each helpers) plus tailcall.
-
-**Step 8.2 — Trigger**
-Record: Load and run a BPF program: callback subprog tail-calls. Timing-
-independent. Needs CAP_BPF (and usually CAP_NET_ADMIN/PERFMON for the
-program type). Confirmed accepted by the old verifier.
-
-**Step 8.3 — Failure mode**
-Record: **Infinite tailcall → CPU hang / soft lockup.** Severity
-**HIGH** (DoS / hang). Not a verified memory-corruption UAF, but a real
-stability/security issue.
-
-**Step 8.4 — Risk-benefit**
 Record:
-- **Benefit:** Stops a hang/DoS in a common BPF pattern (loop callback +
-  tailcall) on x86-64.
-- **Risk:** Low. 8-line verifier reject. Can break previously accepted
-  (unsafe) programs. False-positive risk is handled by patch 1, already
-  in this tree.
-- **Ratio:** High benefit / low risk.
+- **Benefit:** High for affected volumes (mount works). Completes the
+  `$MFT` parse the same way `ATTR_DATA` was always handled. Helps trees
+  that lack `6d979b64287fb`; on trees that have it, it is still the
+  right first-pass fix and is overlap-safe.
+- **Risk:** Very low (6 lines in one function, existing unpack helper).
+- **Ratio:** Strongly favors backport.
 
 ---
 
-## Phase 9: Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 — Evidence**
+**Step 9.1: COMPILE THE EVIDENCE**
 
-For backporting / keeping this in this tree:
-- Real hang: TCC clobber → infinite tailcall (x86-64 JIT, independently
-  described by Töpel)
-- Two reporters (Sashiko + Björn Töpel)
-- Verifier maintainer Acked-by and applied
-- 8-line, obviously correct extension of an existing guard
-- Selftests in 42bfd21a8b701
-- Call path is `BPF_PROG_LOAD` (userspace)
-- This tree has the code, patch 1, and `is_cb`
+**FOR:**
+- Real mount failure, observed on a 16 TB volume (97 extents; fail at
+  last VCN).
+- Independent 664 GB report of the same class (`6d979b64287fb`).
+- Bug in ntfs3 since v5.15.
+- 8-line, obviously correct extension of an existing special case.
+- Maintainer SOB; merged to `ntfs3_for_7.3`.
+- Standalone (series 2/2 is unrelated).
+- `run_add_entry()` allows overlap with the v7.1 second-pass unpack.
 
-Against:
-- Sent to bpf-next, not bpf fixes; no `Fixes:` / `Cc: stable`
-- Tightens verifier (rejects previously valid programs)
-- Series member 2/3; needs patch 1 (present here)
-- Original commit already in v7.3-rc1, so this checkout already contains
-  the fix
+**AGAINST:**
+- `6d979b64287fb` already in **this** 7.3 tree may already make mount
+  succeed via a later unpack.
+- No `Fixes:`/`Cc: stable` (not a negative in this pipeline).
+- Affects ntfs3 only, not all kernel users.
 
-Unresolved: whether anyone asked for it on stable@ (lore/stable 403).
+**UNRESOLVED:**
+- Whether Senjin’s 16 TB kernel included `6d979b64287fb` (cover letter
+  never mentions it).
+- lore.kernel.org was unreachable for `b4 dig` / WebFetch; discussion
+  recovered from Openwall/LKML mirrors.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — Acked, applied, selftests,
-   follow-up confirms the check
-2. Real bug affecting users? **PASS** — accepted programs can hang a CPU
-3. Important (crash/security/corruption/deadlock)? **PASS** — hang/DoS;
-   HIGH
-4. Small and contained? **PASS** — 8 lines, one function
-5. No new features/APIs? **PASS** — verifier reject only
-6. Can apply to this tree? **PASS** — already in v7.3-rc1; prerequisites
-   present
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-**Step 9.3 — Exceptions**
-Record: None (not a device ID / quirk / DT / build / docs patch).
-Qualifies as a normal important bugfix.
+1. Obviously correct and tested? **PASS** — mirrors `ATTR_DATA`; tested
+   on a real 16 TB volume; maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — mount `-ENOENT` on
+   fragmented `$MFT` bitmap.
+3. Important issue? **PASS** — filesystem unmountable (HIGH).
+4. Small and contained? **PASS** — +8/−2, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — code and helpers are present;
+   hunk matches `ntfs_read_mft()`.
 
-**Step 9.4 — Decision**
-This tree is **v7.3-rc4**. The bug is in this series’ BPF verifier/JIT,
-the fix is small and correct, and the only dependency (patch 1) is
-already here. Already merged in 7.3-rc1 is not a reason to treat it as
-unsuitable; it is evidence it belongs in this tree. Technical merit
-supports including it.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: None of the ID/quirk/DT/build/doc exceptions. It qualifies as a
+normal important bug fix.
+
+**Step 9.4: DECISION**
+
+This checkout is 7.3-rc4 and already contains the commit; the question
+is still whether that fix is stable material for this lineage. It is.
+
+`6d979b64287fb` is a later-pass workaround, not a reason to drop the
+first-pass unpack. Silently skipping `$MFT` `ATTR_BITMAP` extents in
+`ntfs_read_mft()` is a real bug. The patch is small, correct,
+maintainer-acked, and prevents a user-visible mount failure on
+large/fragmented NTFS volumes.
 
 ---
 
-### What the commit solves, and why it matters here
+### What the commit solves
 
-x86-64 (and similar JITs) pass the tail-call counter in a register. Sync
-BPF callbacks run from C helpers, which clobber that register. If a
-callback’s subprogram tail-calls, the counter can be garbage, the
-33-call limit is skipped, and the CPU can tail-call forever.
+`$MFT`’s bitmap run list can spill into extension records.
+`ntfs_read_mft()` unpacked only `ATTR_DATA` there, so
+`sbi->mft.bitmap.run` was truncated and `wnd_init()` failed with
+`-ENOENT`. Mount failed. The patch stores those bitmap extents the same
+way the primary segment already does.
 
-The verifier only blocked that for exception callbacks. This patch uses
-the existing `is_cb` bit so **all** callbacks are rejected. That is a
-real hang/DoS for CAP_BPF program loaders on this kernel.
+### Stable rules
 
-It meets stable rules: obviously correct, important, 8 lines, no new
-API. Patch 1 of the same series is already in this tree, so the false-
-reject leak is not an issue here.
+Meets all six criteria: small, obviously correct, real important bug, no
+new API, applies here.
 
 ### Risk vs benefit
 
-Benefit is high (prevents hang). Risk is low (reject unsafe programs).
-The only behavioral change is failing `BPF_PROG_LOAD` for
-callback+tailcall, which is the intended safety net.
+Benefit: restores mount on affected NTFS volumes. Risk: very low;
+overlap with `6d979b64287fb` is handled by `run_add_entry()`.
 
 ### Concerns
 
-- Needs series patch 1 (`3513ea9dab6c1`) — **already in this tree**
-- Selftests (`42bfd21a8b701`) are nice-to-have, not required for the
-  kernel fix — **already in this tree**
-- Follow-up `266aa4ad0b2e8` is a separate WARN-avoidance fix, not a
-  prerequisite for this one
+- Series 1/2: 2/2 is an unrelated lseek fix; not required.
+- `6d979b64287fb` already in this 7.3 tree: complementary, not a
+  blocker.
+- No extra prerequisites beyond original ntfs3 `MFT_REC_MFT` handling
+  (v5.15).
 
 ---
 
-### Verification
+## Verification
 
-- **[Phase 1]** Parsed tags: Sashiko + Björn Töpel Reported-by; Eduard
-  Acked-by/SOB; Link msgid `835937-3` (v3 2/3); no Fixes/Cc-stable
-- **[Phase 1]** `git show a41d0c30d764e --format=full`: infinite
-  tailcall from TCC clobber; reject via `is_cb`
-- **[Phase 2]** Diff: `kernel/bpf/verifier.c` +2/-6 in
-  `check_max_stack_depth_subprog()`; `is_exception_cb` → `is_cb`; remove
-  async `verifier_bug`
-- **[Phase 2]** Current code at 5480–5482 already has `if
-  (subprog[tmp].is_cb)` / `"cannot tail call within callback"`
-- **[Phase 3]** `git describe HEAD` / `make kernelversion`:
-  **v7.3-rc4**, 7.3.0-rc4
-- **[Phase 3]** `git merge-base --is-ancestor a41d0c30d764e HEAD`: yes
-  (already in this tree, v7.3-rc1)
-- **[Phase 3]** `git merge-base --is-ancestor a41d0c30d764e v7.2`: no
-  (7.2 does not have it; not used as a split verdict)
-- **[Phase 3]** Parent `3513ea9dab6c1` is series 1/3; `git merge-base
-  --is-ancestor 3513ea9dab6c1 HEAD`: yes
-- **[Phase 3]** Blame: exception check b9ae0c9dd0aca (2023); async bug
-  7ddc80a476c2d (2021); `is_cb` 406a6fa44bfbc / ab5cfac139ab85 (2023)
-- **[Phase 3]** Follow-up `266aa4ad0b2e8` already in tree; extra reject
-  in `check_helper_call()` at 11320
-- **[Phase 4]** `b4 dig -c a41d0c30d764e`: lore msgid
-  20260716120157.835937-3
-- **[Phase 4]** `b4 dig -a`: v1→v2→v3; v3 applied; v3 added patch 1
-  after Sashiko
-- **[Phase 4]** `b4 dig -w`: bpf maintainers CC’d (Alexei, Eduard,
-  Daniel, Andrii, Björn, Kartikeya)
-- **[Phase 4]** mbox: Eduard applied to bpf-next; Sashiko AI concern
-  answered by author; no NAK
-- **[Phase 4]** WebSearch: Töpel RISC-V thread confirms verifier
-  accepted callback→subprog→tailcall
-- **[Phase 4]** lore.kernel.org/stable: **UNVERIFIED** (403)
-- **[Phase 5]** `check_max_stack_depth()` at 5552 calls this; verifier
-  finalize at 21334 on every successful load
-- **[Phase 5]** `push_callback_call()` sets `is_cb` at 9847;
-  `check_subprogs()` sets `has_tail_call` at 3031
-- **[Phase 5]** x86 JIT `emit_prologue_tail_call` uses `%rax` for TCC
-  (arch/x86/net/bpf_jit_comp.c:500–526)
-- **[Phase 5]** `bpf_loop` behind CAP_BPF (`kernel/bpf/helpers.c:2124`)
-- **[Phase 5]** Selftest
-  `tools/testing/selftests/bpf/progs/tailcall_callback.c` expects
-  `"cannot tail call within callback"`
-- **[Phase 6]** Reverse `git apply --check` of this commit: success (fix
-  already present)
-- **[Phase 8]** Failure mode: infinite tailcall hang, severity HIGH;
-  trigger CAP_BPF BPF_PROG_LOAD
-- **UNVERIFIED:** Stable mailing-list discussion (HTTP 403)
+- **[Phase 1]** Parsed `e31886cb6e0e1`: Senjin + Konstantin SOBs only;
+  no Fixes/stable/Reported-by.
+- **[Phase 2]** `git show e31886cb6e0e1`: +8/−2 in `ntfs_read_mft()`;
+  `ATTR_BITMAP` → `sbi->mft.bitmap.run`.
+- **[Phase 2]** Read `inode.c` ATTR_BITMAP primary case (lines 323–333)
+  and `attr_unpack_run` (399–414).
+- **[Phase 2]** Read `wnd_rescan()`: missing run → `err = -ENOENT`.
+- **[Phase 3]** `git blame` on parent: buggy line from `82cae269cfa953`
+  (2021-08-13).
+- **[Phase 3]** `git merge-base --is-ancestor 82cae269cfa953 HEAD` →
+  yes.
+- **[Phase 3]** Related fix `6d979b64287fb` in tree (`v7.1-rc1~76^2~6`);
+  ancestor of this commit.
+- **[Phase 3]** `git log --author=Konstantin Komarov -- fs/ntfs3/`:
+  maintainer.
+- **[Phase 4]** `b4 dig -c e31886cb6e0e1`: lore error; UNVERIFIED via
+  b4.
+- **[Phase 4]** Openwall v2 0/2 and 1/2: 16 TB repro; v2 is hunk-header
+  only; 2/2 independent.
+- **[Phase 4]** WebFetch spinics/lore: 500/403; used Openwall/LKML
+  mirrors.
+- **[Phase 4]** No stable@ discussion found.
+- **[Phase 5]** Only caller of `ntfs_read_mft`: `ntfs_iget5`
+  (mount/`I_NEW`).
+- **[Phase 5]** `run_add_entry()` documents overlap is allowed.
+- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` = 7.3.0-rc4.
+- **[Phase 6]** Candidate is ancestor of HEAD; parent still has the
+  skip.
+- **[Phase 7]** `MAINTAINERS`: NTFS3 Supported, M: Konstantin Komarov.
+- **[Phase 8]** Failure mode: mount `-ENOENT`, severity HIGH.
+- **UNVERIFIED:** Exact kernel Senjin reproduced on; whether
+  `6d979b64287fb` alone would have mounted that 16 TB volume.
 
-The local tree is v7.3-rc4. The buggy verifier path exists in this
-series, the 8-line reject is a real hang fix, prerequisites are present,
-and the change belongs in this tree.
+The local tree has the ntfs3 code path, the bug dates to the original
+driver, the patch is a small contained mount fix, and it should be
+backported.
 
 **YES**
 
- kernel/bpf/verifier.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ fs/ntfs3/inode.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index b89a5d717e422..5cc3e9a990ef7 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6808,10 +6808,6 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 		if (verifier_bug_if(sidx < 0, env, "callee not found at insn %d", next_insn))
- 			return -EFAULT;
- 		if (subprog[sidx].is_async_cb) {
--			if (subprog[sidx].has_tail_call) {
--				verifier_bug(env, "subprog has tail_call and async cb");
--				return -EFAULT;
--			}
- 			/* async callbacks don't increase bpf prog stack size unless called directly */
- 			if (!bpf_pseudo_call(insn + i))
- 				continue;
-@@ -6852,8 +6848,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 	 */
- 	if (tail_call_reachable)
- 		for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
--			if (subprog[tmp].is_exception_cb) {
--				verbose(env, "cannot tail call within exception cb\n");
-+			if (subprog[tmp].is_cb) {
-+				verbose(env, "cannot tail call within callback\n");
- 				return -EINVAL;
- 			}
- 			subprog[tmp].tail_call_reachable = true;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 120691bc71ee9..99fdba7b403cb 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -126,10 +126,16 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 
+ 	if (le && le->vcn) {
+ 		/* This is non primary attribute segment. Ignore if not MFT. */
+-		if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
++		if (ino != MFT_REC_MFT)
++			goto next_attr;
++
++		if (attr->type == ATTR_DATA)
++			run = &ni->file.run;
++		else if (attr->type == ATTR_BITMAP)
++			run = &sbi->mft.bitmap.run;
++		else
+ 			goto next_attr;
+ 
+-		run = &ni->file.run;
+ 		asize = le32_to_cpu(attr->size);
+ 		goto attr_unpack_run;
+ 	}
 -- 
 2.53.0
 
