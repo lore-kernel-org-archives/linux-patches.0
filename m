@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9B66178A6;
-	Mon, 19 Oct 2026 14:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0688533D02;
+	Mon, 19 Oct 2026 14:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418655; cv=none; b=efwgAP+HtejfWgSM+OVArA0lvohrBWzCeHL1gma2z/4POdXUr7VK4Ac2z8iOUr2EINrTf0eBTdKVcm/TJ8ML3KVIehg7PdXX/Km3DRh6Mf8n4yW4tVwaMPjOrvvzP+6HELeQ52Ie8RVgpFJ0yiUDB2O21+zVrTrQVLsSZLs2no0=
+	t=1792418656; cv=none; b=tv4RIB0vxi9Bo4wH0tQP1zdafvXjctc9ZksJz5RfmTXUxquXWQpyBC/ax0hM//CWW3TAobwFVcN2YE+0BN/bY3Y2+KKQVGwjE4j/qFWIvn8Rl2neevccXv+7kTSOeOhQxRkN6dHaLLrcq9dHgbHHmV014TYziXsFvXF3+9Aphzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418655; c=relaxed/simple;
-	bh=vb1BrXPAXRZGl2+QbSVhGabov/4ozl/PA7uJrJGmsW4=;
+	s=arc-20240116; t=1792418656; c=relaxed/simple;
+	bh=C1bgs5jaFhTTg1reKUnIiNRWJYbvls4rGwTNxbfQfjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FyATzkwDPejpR0xepWu8nmZfo0wj9Nt54GY1zLr87di2teBZMa1mHRQkGfy81pbM6KLBQQgXE5CsjrPMqFGutIXI9005kP1dkhFlYUn46jqm1OJf9VUE5NUHc3sEaoppSuXDVM+ik4Gr/TKfuOZC4k7EBy64hgBtKag3RBV9O1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hi73eNEs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dCkzMmDEyCfy9lzrT6N3liGKd/tDXgrAOB1ZU23YdgpKzJDOx5aZyd3XOY5fDjPTP+KWbF02eDhiSWT5O3cLu85uTNYUnZ1ckKGJk8G/LJPdzUUy6V7BwWj9N7LlNrl3XnrZ8puoq7DxdNYtelcP+4bE1fA+H/NgwH68GAFesiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dIIjvSe+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hi73eNEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2141F000C6;
-	Mon, 19 Oct 2026 14:04:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dIIjvSe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1431F000CA;
+	Mon, 19 Oct 2026 14:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418652;
-	bh=1X3walW0UzjWCIBQnJ9vLvCPTV6HOoKNhQC6AF6gz4c=;
+	s=k20260515; t=1792418653;
+	bh=yMtq3J68VL+kcl1SdaOWIUMZYTtpupDYw937qffVKRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hi73eNEs13IvjEaavfbwCduP/wbb5EgRVB8H4JuLwY1vghitkDziqjI43L3/q2qbD
-	 nc7m/pa4CYqmWSqqdgSG7eunL9lDCh2hiOH8/P709kCYJ6z5X4SLygzlv0BmoywBxJ
-	 CJMyef/xz5uM6u+IZnG2fm+bTSjl5161hHPm6iyxHLBJRePYpPU1hGX9u2SHzwna3O
-	 p7n0h7rcpq8WT5kFq2NnGxJbfMZ/yM3Wz7wooXySrgAke5XM0X8Hs45bgjEncQs2Re
-	 M4Jpj9Bk+H0xW/jAoWJy0S3kdifnt5mGywMfRa/UaoCrCLJGXwvlgMgIxONEKZ2Zxf
-	 6pAbMdT7HAbtQ==
+	b=dIIjvSe+zh5eqyHsWRUV5R9hRaol2oaf2vn2QxOHQ6n9z2v7cfoEk0rltJH45ZztL
+	 sDCvcpGV2wwIfbORZUXlgkA5DPb6R7fDMzbAPri3tZdVmxqLg2Q5PDGdenT8nouFPH
+	 5V4PF5XbcGsTUJbgJTBmAwU4teLGGa0ktLQ1Zf0UK5OZRnHXEJf6m1KWehtKCLOCKy
+	 LAWz/LrmzLRwb/2BXfVMYuSG4q64/oCNQY20hgyt4AXRCBAvpdqmzVKpX7wvbh7rhC
+	 xKdWioEbeGlYSO6bEt2jL5VWRCNzAhWsFbf/yaQFgiQugJE3Lsh9VWtuvcCHwgDEO7
+	 igmpYJ9Cpo3WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Tyrel Datwyler <tyreld@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dsahern@kernel.org,
-	idosch@nvidia.com,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	maddy@linux.ibm.com,
+	James.Bottomley@HansenPartnership.com,
+	mkp@kernel.org,
+	linux-scsi@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] gre: fix ERSPAN o_flags race/corruption in xmit and fill_info
-Date: Mon, 19 Oct 2026 09:51:32 -0400
-Message-ID: <20261019135441.1420968-401-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: ibmvfc: free ibmvfc_target allocations with mempool_free
+Date: Mon, 19 Oct 2026 09:51:33 -0400
+Message-ID: <20261019135441.1420968-402-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,650 +56,384 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
 
-[ Upstream commit 9958e69b98930834a576e156f6458166d1db1c02 ]
+[ Upstream commit 99143433f7f14139ac373c553ec8e1317d0ae58a ]
 
-For IPv4 ERSPAN:
-In erspan_xmit(), the driver clears IP_TUNNEL_SEQ_BIT (for version 0)
-and IP_TUNNEL_KEY_BIT directly in the shared tunnel->parms.o_flags
-structure. Since transmit paths can run locklessly and concurrently,
-this leads to a data race.
+The ibmvfc_target *tgt structures for discovery are allocated using
+mempool_alloc but in turn free'd via kfree in ibmvfc_release_target
+breaking pool guarentees.
 
-Furthermore, modifying tunnel->parms.o_flags permanently alters the
-tunnel configuration. To work around this, erspan_fill_info() (which
-reports config to userspace) was setting IP_TUNNEL_KEY_BIT back. If
-erspan_fill_info (running under RTNL) and erspan_xmit (running locklessly)
-race, erspan_xmit might see IP_TUNNEL_KEY_BIT set when it shouldn't,
-leading to GRE header corruption (injecting a key field into the ERSPAN
-GRE header).
+Fixup ibmvfc_release_target to call mempool_free instead so that memory
+is properly returned to the mempool instead of the general allocator.
 
-Fix this by:
-1) Passing flags as an argument to __gre_xmit().
-2) Using local stack flags in ipgre_xmit(), gre_tap_xmit(), and erspan_xmit()
-   to prevent TOCTOU data races with concurrent configuration updates,
-   and passing them to __gre_xmit().
-3) Removing the racy modification of t->parms.o_flags in erspan_fill_info().
-4) Forcing IP_TUNNEL_KEY_BIT in the reported flags for ERSPAN locally
-   in ipgre_fill_info().
-
-For IPv6 ERSPAN:
-ip6erspan_tunnel_xmit() was locklessly clearing IP_TUNNEL_KEY_BIT in
-t->parms.o_flags even though it does not use these flags for building
-the GRE header (it uses local flags). This permanently corrupts the
-configuration and races with ip6gre_fill_info() which reads it.
-
-Remove the redundant and racy modification.
-This should remove false sharing in a fast path.
-
-Add const qualifiers in ipgre_fill_info(), erspan_fill_info()
-and ip6gre_fill_info() to clarify that these methods are not
-supposed to write any live parameters.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260812142257.21283-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://patch.msgid.link/20260723000149.969416-5-tyreld@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the buggy shared `o_flags` mutation is in this
-6.12 tree, the APIs match, and the failure mode is GRE header
-corruption. Compiling the full analysis.
+I have enough to decide: this is a one-line mempool/kfree mismatch in
+ibmvfc that can drain the target pool and hang discovery. The local
+7.3-rc4 tree has the driver and the bug’s code path.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [gre] [fix] [ERSPAN o_flags race/corruption in xmit and
-fill_info]
-Subsystem: GRE/ERSPAN tunnels (`net/ipv4/ip_gre.c`,
-`net/ipv6/ip6_gre.c`). Action verb is explicitly **fix**.
+**Step 1.1: Subject**
+Record: `[scsi/ibmvfc] [free] free ibmvfc_target allocations with
+mempool_free` — claimed intent: stop freeing mempool-allocated target
+structs with `kfree`.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record (from the candidate text and from the original mailing-list
-submission):
-- Signed-off-by: Eric Dumazet <edumazet@google.com> (author; networking
-  core maintainer)
-- Reviewed-by: Simon Horman <horms@kernel.org>
-- Link:
-  https://patch.msgid.link/20260812142257.21283-1-edumazet@google.com
-- Signed-off-by: Jakub Kicinski <kuba@kernel.org> (netdev maintainer,
-  applied to net-next)
-- Ignore: pipeline "Signed-off-by: Sasha Levin" / "[Upstream commit
-  ...]" if present
-
-Original v4 submission (verified in `/tmp/erspan_thread.mbox`) also had:
-- Fixes: 84e54fe0a5ea ("gre: introduce native tunnel support for
-  ERSPAN")
-- Fixes: ee496694b9ee ("ip_gre: do not report erspan version on GRE
-  interface")
-- Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
-
-v2 was sent to **net** with **Cc: stable@vger.kernel.org**. v4 dropped
-Cc: stable and went to net-next after review. Absence of Cc: stable on
-the committed v4 is expected for this review pipeline and is not a
-negative signal.
-
-No Reported-by / syzbot / Tested-by on this specific patch. Author found
-it while working on RTNL-less fill_info.
-
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.2: Tags**
 Record:
-- Bug: IPv4 `erspan_xmit()` locklessly clears `IP_TUNNEL_SEQ_BIT` (v0)
-  and `IP_TUNNEL_KEY_BIT` in the **shared** `tunnel->parms.o_flags`.
-  That permanently mutates tunnel config. `erspan_fill_info()` then
-  writes `IP_TUNNEL_KEY_BIT` back so userspace dumps look correct.
-- Symptom: TOCTOU data race between lockless xmit and RTNL fill_info. If
-  xmit observes KEY_BIT set, `gre_build_header()` injects a GRE key
-  field into the ERSPAN header (malformed GRE / header corruption).
-- IPv6: `ip6erspan_tunnel_xmit()` also locklessly clears KEY_BIT on
-  shared `t->parms.o_flags` even though it builds the GRE header from
-  **local** flags. That is redundant, races with `ip6gre_fill_info()`,
-  and causes false sharing on a fast path.
-- Root cause: treating per-tunnel `o_flags` as scratch space from
-  ndo_start_xmit.
-- Versions: Fixes tags point at ERSPAN introduction (2017) and the
-  fill_info KEY_BIT workaround (2022). All three are ancestors of this
-  6.12 tree.
+- `Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>` (author; IBM
+  ibmvfc maintainer)
+- `Link:
+  https://patch.msgid.link/20260723000149.969416-5-tyreld@linux.ibm.com`
+- `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>` (SCSI
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of the last two is expected for this
+  review)
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. This is an explicit race + packet-corruption fix.
-Extra `const` on fill_info is documentation-only. Snapshotting flags in
-`ipgre_xmit()`/`gre_tap_xmit()` is extra TOCTOU hardening requested by
-Ido Schimmel, still a correctness fix, not a feature.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-Step 2.1: INVENTORY THE CHANGES
+**Step 1.3: Body**
 Record:
-- `net/ipv4/ip_gre.c`: ~+23/-19 in `__gre_xmit`, `ipgre_xmit`,
-  `erspan_xmit`, `gre_tap_xmit`, `ipgre_fill_info`, `erspan_fill_info`
-- `net/ipv6/ip6_gre.c`: ~+2/-3 in `ip6erspan_tunnel_xmit`,
-  `ip6gre_fill_info`
-- Scope: single-purpose, two-file surgical fix. `__gre_xmit` is file-
-  static; no public API.
+- Bug: `ibmvfc_target` objects are allocated with `mempool_alloc()` but
+  released with `kfree()` in `ibmvfc_release_tgt` (message says
+  `ibmvfc_release_target`; the function is `ibmvfc_release_tgt`).
+- Symptom: “breaking pool guarantees” — reserved mempool elements never
+  return to the pool.
+- Root cause: allocator/free mismatch (`mempool_alloc` vs `kfree`).
+- No stack trace, reproducer, or version range. Failure mode is implied
+  (pool accounting), not a reported oops.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. It is an explicit allocator-mismatch fix. The cover
+letter for the series later names it as one of four pre-existing bugs,
+not NVMe feature work.
+
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
 Record:
-- `__gre_xmit`: no longer copies `tunnel->parms.o_flags` itself; callers
-  pass a local flags snapshot.
-- `ipgre_xmit` / `gre_tap_xmit`: copy `o_flags` once, use that copy for
-  CSUM offload check and header build (closes TOCTOU vs concurrent
-  changelink).
-- `erspan_xmit`: copy flags, then `__clear_bit` KEY (and SEQ for v0) on
-  the **stack copy**, pass that to `__gre_xmit`. Shared `parms.o_flags`
-  is no longer written from xmit.
-- `erspan_fill_info`: stop writing KEY_BIT into live `t->parms.o_flags`.
-- `ipgre_fill_info`: if `erspan_ver != 0 && !collect_md`, set KEY_BIT on
-  a **local** dump copy. Regular GRE/GRETAP keep `erspan_ver == 0`
-  (`erspan_setup()` is the only path that sets it to 1).
-- `ip6erspan_tunnel_xmit`: delete the unused shared
-  `__clear_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags)`.
-- fill_info functions: `const` on tunnel/parm pointers.
+- File at commit time: `drivers/scsi/ibmvscsi/ibmvfc.c` (`1 insertion, 1
+  deletion`)
+- Function: `ibmvfc_release_tgt`
+- Scope: single-file, one-line surgical fix
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Race + packet corruption + config corruption]
-Mechanism: RMW of a shared bitmap from xmit (`__clear_bit`) vs fill_info
-(`__set_bit`). `gre_build_header()` then uses `tun_hlen` (8 for ERSPAN
-v1/v2) **and** the flags word. If KEY_BIT is set with SEQ, it writes key
-then seq into an 8-byte push, and the key write lands on the GRE
-flags/protocol word:
-
-```102:144:include/net/gre.h
-static inline void gre_build_header(struct sk_buff *skb, int hdr_len,
-                                    const unsigned long *flags, __be16
-proto,
-                                    __be32 key, __be32 seq)
-{
-        ...
-        skb_push(skb, hdr_len);
-        ...
-        if (ip_tunnel_flags_intersect(flags, cond)) {
-                __be32 *ptr = (__be32 *)(((u8 *)greh) + hdr_len - 4);
-                if (test_bit(IP_TUNNEL_SEQ_BIT, flags)) {
-                        *ptr = seq;
-                        ptr--;
-                }
-                if (test_bit(IP_TUNNEL_KEY_BIT, flags)) {
-                        *ptr = key;
-                        ptr--;
-                }
-```
-
-With `hdr_len == 8` and both SEQ and KEY, KEY overwrites the GRE base
-header. That is real on-wire corruption of mirrored traffic.
-
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct. Local snapshot + mutate the copy is the
-standard pattern (IPv6 xmit already used local flags). v4 dropped v2's
-`gre_calc_hlen(flags)` substitution after review showed it could emit a
-4-byte GRE header when SEQ was absent from o_flags; v4 keeps
-`tunnel->tun_hlen`, which is the safer stable-friendly approach.
-Regression risk is low: no new locks, no API change, fill_info dump
-semantics preserved for ERSPAN KEY reporting.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-Step 3.1: BLAME THE CHANGED LINES
-Record: Shared-flag mutation dates to ERSPAN introduction:
-- `f551c91de262ba` (2017-12-13) / `84e54fe0a5ea` (2017-08-22): IPv4
-  ERSPAN xmit
-- `5a963eb61b7c` / `e41c7c68ea7716` (2017): IPv6 ERSPAN
-- `ee496694b9ee` (2022-12-03): `erspan_fill_info` KEY_BIT restore
-  workaround
-- `5832c4a77d693` (2024-03-27): `__be16` flags → bitmaps
-  (`__clear_bit`/`__set_bit`); **in this tree**
-
-Bug has been in the driver since 2017; bitmap conversion only changed
-the accessor.
-
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: All three Fixes SHAs **are ancestors of HEAD**:
-- `84e54fe0a5ea` IS ancestor
-- `ee496694b9ee` IS ancestor
-- `5a963eb61b7c` IS ancestor
-Mainline commit `9958e69b9893` is **not** an ancestor of this checkout.
-
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent GRE work in this tree includes `9f948e9aede96` (restore
-GRE/GRETAP `lltx`) and capability checks. No prior fix of this o_flags
-xmit/fill_info race. Standalone commit (not patch X/Y). v1–v4 were
-revisions of the **same** patch.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Eric Dumazet is a net core maintainer with many GRE/tunnel
-commits here (`erspan: make sure erspan_base_hdr is present`, header
-robustness, etc.). High-confidence author.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Needs `IP_TUNNEL_DECLARE_FLAGS` / `ip_tunnel_flags_copy` /
-`ip_tunnel_parm_kern` — all present (`5832c4a77d693`, `117aef12a7b1b`).
-`__gre_xmit` is static to `ip_gre.c`. Can apply standalone.
-
-Later mainline discussion (Sept 2026, `net: erspan: set lltx to avoid
-sch_direct_xmit deadlock`) names **this commit as a stable
-prerequisite** before enabling ERSPAN `lltx`. That later patch is not in
-this tree (`erspan_tunnel_init` still does not set `dev->lltx`). This
-fix is still valuable on its own because fill_info (RTNL) vs xmit (TX
-lock) already race.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 2.2: Code flow**
 Record:
-- b4 dig matched v4:
-  https://patch.msgid.link/20260812142257.21283-1-edumazet@google.com
-- Revisions: v1 net-next (2026-06-15), v2 **net + Cc: stable**
-  (2026-07-20), v3 net-next (2026-08-11), v4 net-next (2026-08-12,
-  applied)
-- v1 was sent to net-next because “7.1 was just released” (merge-window
-  timing), not because it was considered a feature.
-- v2 review (Sashiko): using `gre_calc_hlen(flags)` could emit a 4-byte
-  GRE header when SEQ is missing from o_flags; `tun_hlen` previously
-  forced 8 bytes. Eric marked CR (“What a mess”).
-- v4 dropped that `gre_calc_hlen` change and kept `tun_hlen`.
-- No NAK. Horman Reviewed-by. Jakub applied to netdev/net-next as
-  `9958e69b9893`.
+- Before: last `kref_put` on a target calls `kfree(tgt)`.
+- After: same path calls `mempool_free(tgt, tgt->vhost->tgt_pool)`.
+- Path: target teardown / kref drain (discovery logout, rport delete,
+  sysfs starget accessors, host teardown), not an error-only path.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients: davem, kuba, pabeni, horms, idosch, netdev. Ido
-asked v1 to snapshot flags in ipgre/gretap too (done in v4). Horman
-reviewed v4. Appropriate maintainers.
+**Step 2.3: Bug mechanism**
+Record: `[resource / mempool accounting]` plus a possible `[hang]`
+- Alloc: `tgt = mempool_alloc(vhost->tgt_pool, GFP_NOIO)` in
+  `ibmvfc_alloc_target`.
+- Pool: `mempool_create_kmalloc_pool(IBMVFC_TGT_MEMPOOL_SZ,
+  sizeof(struct ibmvfc_target))` with `IBMVFC_TGT_MEMPOOL_SZ == 64`.
+- `kfree` of a reserved pool object returns that slab object to the page
+  allocator without incrementing `pool->curr_nr`. After 64 alloc/free
+  cycles the reserved pool is empty.
+- `mempool_alloc()` with `GFP_NOIO` (`__GFP_RECLAIM` /
+  `__GFP_DIRECT_RECLAIM`) first tries `kmalloc`; on failure it waits
+  uninterruptibly on `pool->wait` until `mempool_free` refills. If
+  nothing ever calls `mempool_free`, that wait never ends.
+- Commit `5c66d9393f583` (2017) removed the NULL check on this
+  `mempool_alloc` because “mempool_alloc() cannot fail when passed
+  GFP_NOIO”. That is only true if the pool is actually returned to.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla for this race. Author discovered it while
-working on RTNL-less fill_info. Trigger is ordinary: ERSPAN TX plus `ip
--d link show` / RTNL dump.
+**Step 2.4: Fix quality**
+Record: Obviously correct matching free. Minimal. `tgt->vhost` is set
+before `kref_init`, so the pool pointer is valid on the free path.
+Regression risk is low. Theoretical extra requirement vs `kfree`: the
+pool must still exist; `ibmvfc_remove` does `fc_remove_host` /
+`scsi_remove_host` and target `kref_put`s before `ibmvfc_free_mem()` →
+`mempool_destroy()`. No later revert of this change.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single-patch series. Follow-up ERSPAN `lltx` deadlock fix
-depends on this for “no shared mutable o_flags in xmit.” Author agreed
-to list this as a stable prerequisite for that later patch.
+## Phase 3: Git history
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No lore.kernel.org/stable thread found that rejected this fix.
-v2 was explicitly Cc'd to stable. The later lltx discussion notes this
-commit was **not auto-queued** because v4 lacked Cc: stable — which is
-why it is in this evaluation pipeline.
+**Step 3.1: Blame**
+Record: `kfree(tgt)` in `ibmvfc_release_tgt` comes from `b3c10489cb464b`
+/ original driver `072b91f9c6510` (“[SCSI] ibmvfc: IBM Power Virtual
+Fibre Channel Adapter Client Driver”, 2008-07-12, contained in
+v2.6.27-rc1). The mismatch is as old as the driver. `tgt_pool` was
+created in that same commit.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 3.2: Fixes tag**
+Record: None. Introducer is the original 2008 driver, present in this
+tree’s history.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `__gre_xmit`, `ipgre_xmit`, `erspan_xmit`, `gre_tap_xmit`,
-`ipgre_fill_info`, `erspan_fill_info`, `ip6erspan_tunnel_xmit`,
-`ip6gre_fill_info`.
+**Step 3.3: File history**
+Record: This commit is `99143433f7f14`. Neighbors from the same
+submission:
+- `9c2aa65000f6f` 01/33 MAD send-failure deadlock
+- `7e35396ec8539` 02/33 rport_add_work_q teardown
+- `0122eab60b151` 03/33 NULL evt deref
+- **this** 04/33 mempool_free
+- `de7ac0f3f08b1` 05/33 move target list (NVMe prep, not required for
+  this line)
 
-Step 5.2: TRACE CALLERS
+Standalone relative to 05/33+. Later `848c70852e3fb` split `ibmvfc.c`
+into `ibmvfc-core.c`; current tree has the fixed `mempool_free` in
+`ibmvfc-core.c`.
+
+**Step 3.4: Author**
+Record: Tyrel Datwyler is the IBM ibmvfc maintainer (majority of recent
+`drivers/scsi/ibmvscsi/` commits). SCSI maintainer Martin K. Petersen
+applied the series.
+
+**Step 3.5: Dependencies**
+Record: None for the one-line change. It does not need NVMe/FC patches.
+`mempool_free` / `tgt_pool` / `ibmvfc_release_tgt` all exist in this
+tree.
+
+## Phase 4: Mailing list
+
+**Step 4.1: b4 dig**
 Record:
-- `erspan_xmit` / `ipgre_xmit` / `gre_tap_xmit` /
-  `ip6erspan_tunnel_xmit`: `ndo_start_xmit` (hot path).
-- `ipgre_fill_info`: GRE and GRETAP `rtnl_link_ops.fill_info`; also
-  called from `erspan_fill_info`.
-- `erspan_fill_info` / `ip6gre_fill_info`: netlink dump.
+- Lore:
+  https://patch.msgid.link/20260723000149.969416-5-tyreld@linux.ibm.com
+- Subject on list: `[PATCH v2 04/33] ibmvfc: free ibmvfc_target
+  allocations with mempool_free`
+- Series: `[PATCH v2 00/33] ibmvfc: NVMe/FC support over IBM Virtual FC`
+  (2026-07-22)
+- Cover letter (from saved mbox): “Patches 1-5: Bug fixes and
+  preparatory refactoring. Four pre-existing bugs are fixed before any
+  NVMe/FC work is introduced: … an allocator mismatch where mempool-
+  allocated ibmvfc_target structs are freed via kfree rather than
+  mempool_free.”
+- Martin K. Petersen: “Applied to 7.3/scsi-staging, thanks!”
+- No NAK on this patch. No reviewer asked for `Cc: stable` on this
+  specific patch.
 
-Step 5.3: TRACE CALLEES
-Record: `gre_build_header`, `gre_handle_offloads` →
-`iptunnel_handle_offloads`, `ip_tunnel_xmit` / `ip6_tnl_xmit`,
-`ip_tunnel_flags_copy`, `__clear_bit`/`__set_bit`.
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: `james.bottomley@hansenpartnership.com`,
+`martin.petersen@oracle.com`, `linux-scsi@vger.kernel.org`, `linuxppc-
+dev@lists.ozlabs.org`, `brking@linux.ibm.com`, `davemarq@linux.ibm.com`.
+Right SCSI/PPC/IBM lists.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace-reachable: send on an ERSPAN/GRE/GRETAP netdev; dump
-via RTNL (`ip link`). Unprivileged users typically cannot create tunnels
-(needs CAP_NET_ADMIN), but once created, TX is a normal data path. Not
-theoretical.
+**Step 4.3: Bug report**
+Record: No `Reported-by` / Bugzilla / syzbot. Bug was found by the
+maintainer while preparing NVMe/FC.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: IPv6 native GRE already snapshots flags in `__gre6_xmit`. IPv6
-fill_info already set KEY_BIT on a **local** copy. IPv4 ERSPAN was the
-inconsistent leftover that mutated live parms.
+**Step 4.4: Series**
+Record: 33-patch NVMe/FC feature series. This patch is explicitly a pre-
+existing bugfix (phase 1, patches 1–4). Self-contained.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 4.5: Stable list**
+Record: UNVERIFIED. lore.kernel.org search hit Anubis bot-protection
+(403). No stable discussion in the saved scsi thread mbox.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.** Local tree is **6.12.111** (`pending-6.12`,
-`p-6.12-3-gc504cf0baa3d8`).
-Verified present:
-```746:747:net/ipv4/ip_gre.c
-        __clear_bit(IP_TUNNEL_KEY_BIT, tunnel->parms.o_flags);
-        __gre_xmit(skb, dev, &tunnel->parms.iph, proto);
-```
-```1603:1604:net/ipv4/ip_gre.c
-                if (t->erspan_ver != 0 && !t->collect_md)
-                        __set_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
-```
-```999:999:net/ipv6/ip6_gre.c
-        __clear_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
-```
-Bug introduced 2017; fill_info KEY restore 2022. Both long before 6.12.
+## Phase 5: Semantic / call graph
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Expected apply: **minor context fuzz**, not a rewrite.
-This tree’s `gre_rcv` drop path lacks `dev_core_stats_rx_dropped_inc()`
-that appears as context in the mainline hunk; `__gre_xmit` itself
-matches. All other hunks match current 6.12 code
-(`IP_TUNNEL_DECLARE_FLAGS`, `ip_tunnel_parm_kern`, function layout). No
-conflicting refactor.
+**Step 5.1: Functions**
+Record: `ibmvfc_release_tgt` only.
 
-Note: IPv4/IPv6 ERSPAN **do not** set `dev->lltx` here
-(`erspan_tunnel_init` / `ip6erspan_tap_init`). Concurrent xmit on one
-ERSPAN device is still serialized by `_xmit_lock`. The **fill_info
-(RTNL) vs xmit (TX lock)** race remains, and any future ERSPAN lltx
-backport would make concurrent xmit racy without this patch.
+**Step 5.2: Callers**
+Record: Many `kref_put(&tgt->kref, ibmvfc_release_tgt)` sites in
+`ibmvfc-core.c` and `ibmvfc-nvme.c`: starget node/port name/id sysfs,
+implicit logout / delete, PLOGI/PRLI, rport add/delete, host work
+thread, module remove. Reachable from FC discovery, link events, and
+sysfs.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `git log --grep="fix ERSPAN o_flags race"` on these files:
-empty. No equivalent fix in this tree.
+**Step 5.3: Callees**
+Record: `container_of`, then `mempool_free`. No new locks or
+allocations.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 5.4: Reachability**
+Record: Yes, from normal IBM Power virtual FC use (target
+discovery/logout and host removal). Not an obscure debug path.
+`CONFIG_SCSI_IBMVFC` depends on `PPC_PSERIES`.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [net/ipv4 GRE + net/ipv6 GRE ERSPAN] [IMPORTANT]
-Not core mm/VFS, but a widely used tunnel type (SPAN/ERSPAN mirroring,
-cloud TAP, Kubernetes). Packet corruption on the mirror path is user-
-visible.
+**Step 5.5: Similar patterns**
+Record: Only this kfree/mempool mismatch for targets. Event pools in the
+same driver already used mempool correctly. No follow-up fix after
+`99143433f7f14`.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature GRE/ERSPAN (since 4.x). Still receiving correctness fixes
-(lltx, headroom, capability checks). This is a long-standing bug, not
-churn from new code.
+semcode MCP: not available in this session; used `git grep` / file
+reads.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 6: This tree
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver/config-specific: IPv4 ERSPAN (primary), IPv6 ERSPAN
-(shared o_flags clear), plus GRE/GRETAP get a small TOCTOU snapshot.
-Anyone running ERSPAN mirrors plus netlink dumps.
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Trigger: ERSPAN transmit concurrent with RTNL dump (`ip -d link
-show`, monitoring agents). Common in production TAP setups. Creating the
-tunnel needs CAP_NET_ADMIN; TX after that is the normal data path.
-Timing-dependent, but the window is every dump-vs-packet overlap, not a
-one-in-a-billion theoretical race.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [GRE header corruption / wrong optional fields / overwrite of
-GRE flags+protocol when KEY is injected into an 8-byte header] [HIGH]
-Also: permanent clear of KEY_BIT in live config until fill_info writes
-it back; data race on a bitmap word (KCSAN-class). Not a panic by
-itself, but corrupted mirrored packets and broken GRE layout. Stable
-rules treat this class of correctness bugs as important.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 6.1: Local tree and buggy code**
 Record:
-- Benefit: HIGH for ERSPAN users (stops header corruption and config
-  clobber; unblocks a correct lltx backport later).
-- Risk: LOW (~25 net lines, local stack flags, no locking change, no
-  uAPI change, reviewed by Horman/Ido, written by Dumazet).
-- Ratio: strongly favors backport.
+- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
+- `make kernelversion`: `7.3.0-rc4`
+- `git merge-base --is-ancestor 99143433f7f14 HEAD`: yes — the fix is
+  already in this checkout
+- Current code (`ibmvfc-core.c:1431-1434`) already has
+  `mempool_free(tgt, tgt->vhost->tgt_pool)`
+- The mismatch existed here from v2.6.27 until this commit; the driver
+  and `tgt_pool` still exist
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 6.2: Backport difficulty**
+Record: Clean one-liner against pre-split `ibmvfc.c`. This 7.3-rc4 tree
+already contains it; later split to `ibmvfc-core.c` does not change the
+correctness of the fix.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real race: xmit mutates shared `o_flags`; fill_info writes KEY_BIT
-  back under a different lock (RTNL vs TX lock).
-- Concrete failure: KEY_BIT observed in `gre_build_header()` with
-  `tun_hlen==8` overwrites the GRE base header.
-- Buggy code is in this 6.12 tree; Fixes commits are ancestors.
-- Small, obviously correct, no new APIs.
-- Author is a net maintainer; Horman Reviewed-by; Ido requested the
-  GRE/GRETAP snapshot.
-- v2 was Cc: stable; later ERSPAN lltx work calls this a stable
-  prerequisite.
-- v4 kept `tun_hlen` after review found v2’s `gre_calc_hlen` unsafe.
+**Step 6.3: Related fixes already here**
+Record: The fix itself is here. `5c66d9393f583` (NULL-check removal) is
+also here, which makes restoring pool refill more important.
 
-AGAINST:
-- v4 landed in net-next without Cc: stable (timing/review, not a NAK).
-- IPv4 ERSPAN is not yet lltx here, so concurrent xmit is serialized;
-  the remaining race is dump vs TX (still real).
-- First hunk may need trivial context adjustment around `gre_rcv`.
-- Extra snapshots in `ipgre_xmit`/`gre_tap_xmit` are slightly broader
-  than the ERSPAN-only bug, but they are the same pattern and low risk.
+## Phase 7: Subsystem
 
-UNRESOLVED: none that affect the verdict. Could not fetch
-lore.kernel.org HTML (403); used b4 mbox + openwall mirrors instead.
+**Step 7.1**
+Record: SCSI LLD `drivers/scsi/ibmvscsi/` — IBM Power Virtual FC.
+Criticality: IMPORTANT for `PPC_PSERIES` storage (enterprise PowerVM),
+PERIPHERAL for everyone else.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — local snapshot, reviewed,
-   applied upstream.
-2. Fixes a real bug that affects users? **PASS** — ERSPAN GRE
-   header/config corruption.
-3. Important issue? **PASS** — HIGH: on-wire header corruption (not a
-   panic, but not cosmetic).
-4. Small and contained? **PASS** — ~25 lines, two files, static helper
-   signature only.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — buggy code and bitmap APIs
-   present; minor gre_rcv context at most.
+**Step 7.2**
+Record: Actively developed in 7.3 (large NVMe/FC series). The bug itself
+is old, not a new-subsystem issue.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary
-networking correctness fix.
+## Phase 8: Impact and risk
 
-Step 9.4: MAKE YOUR DECISION
-This belongs in **this** 6.12 tree. The bug is here, the fix is small
-and correct, and it prevents GRE header corruption on ERSPAN plus
-shared-state races that a later lltx change would make worse.
+**Step 8.1: Who is affected**
+Record: Users of `CONFIG_SCSI_IBMVFC` on IBM POWER (pSeries) with
+Virtual Fibre Channel. Not universal.
 
-What the commit solves for stable users: ERSPAN xmit must not clear
-KEY/SEQ in the live tunnel parms. Doing so races with netlink fill_info
-and can inject a GRE key into an 8-byte ERSPAN GRE header, corrupting
-mirrored packets. Snapshot flags on the stack and report KEY only on the
-dump copy.
+**Step 8.2: Trigger**
+Record: Target alloc/free churn (discovery, logout, rport delete, host
+reset). After 64 such cycles the reserved pool is empty. Hang requires
+subsequent `mempool_alloc(GFP_NOIO)` while `kmalloc` fails (memory
+pressure, no `__GFP_FS` reclaim). Unprivileged users do not call this
+directly; fabric events and scans do.
 
-Risk vs benefit: low risk, high benefit for ERSPAN. Apply with at most a
-small context tweak on the `__gre_xmit` hunk.
+**Step 8.3: Failure mode**
+Record: Permanent mempool drain; under memory pressure, uninterruptible
+hang in `mempool_alloc` during discovery (storage bring-up / recovery
+stuck). Severity: HIGH for that platform (hang / lost discovery), not a
+KASAN UAF from `kfree` of kmalloc-backed pool memory.
+
+**Step 8.4: Risk-benefit**
+Record: Benefit HIGH for ibmvfc users (restore mempool guarantees; avoid
+discovery hang). Risk VERY LOW (1 line, matching alloc/free, maintainer-
+authored, SCSI maintainer applied). Ratio favors including the fix.
+
+## Phase 9: Synthesis
+
+**Step 9.1: Evidence**
+
+For:
+- Real allocator mismatch present since 2008
+- One-line, obviously correct `mempool_free`
+- Can empty the 64-element pool and then hang `mempool_alloc(GFP_NOIO)`
+  under memory pressure
+- 2017 change already assumes mempool never fails on this path
+- Cover letter labels it a pre-existing bug, independent of NVMe/FC
+- IBM/SCSI maintainers; applied to 7.3 scsi-staging
+- Driver and bug exist in this 7.3-rc4 tree
+
+Against:
+- No user/syzbot report in 18 years (may be rare or attributed to memory
+  pressure)
+- Sent as 04/33 of a feature series (the line itself does not depend on
+  the rest)
+- Platform-specific (PowerVM virtual FC only)
+- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
+
+Unresolved:
+- Stable-list discussion (lore search blocked)
+
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — matching free; applied by
+   SCSI maintainer.
+2. Real bug that affects users? **PASS** — pool contract broken on every
+   target free; hang is a realistic stress case.
+3. Important (crash/security/corruption/deadlock)? **PASS** —
+   uninterruptible wait in discovery if the drained pool cannot be
+   refilled; storage recovery hang.
+4. Small and contained? **PASS** — 1 line, one function.
+5. No new features/APIs? **PASS** — not the NVMe work; just the free
+   path.
+6. Can apply to this tree? **PASS** — code exists; commit is already an
+   ancestor of HEAD; equivalent `mempool_free` is in `ibmvfc-core.c`.
+
+**Step 9.3: Exception category**
+Record: None needed (not a device ID/quirk/DT/build/doc exception). It
+is a normal bugfix.
+
+**Step 9.4: Decision**
+This should be backported to this tree. It is a one-line correction of a
+long-standing mempool leak/drain in IBM virtual FC target discovery,
+with hang potential under memory pressure, and no meaningful regression
+risk.
+
+---
+
+**What it solves for this tree:** `ibmvfc_target` objects come from
+`vhost->tgt_pool` but were `kfree`d, so reserved pool slots were
+permanently lost. After enough discovery/logout churn,
+`mempool_alloc(GFP_NOIO)` no longer has a reserved pool and can block
+forever if `kmalloc` fails. This 7.3-rc4 tree still has that driver; the
+one-line `mempool_free` restores the guarantee.
+
+**Stable rules:** Small, obviously correct, no new API, real
+hang/discovery-failure bug, applies here.
+
+**Risk vs benefit:** Very low risk, high benefit for PowerVM FC users.
+
+**Concerns:** No field crash report; bug is old. That does not make the
+mismatch or the hang path hypothetical. No extra commits are required.
 
 Verification:
-- [Phase 1] Parsed subject/tags; original v4 mbox has Fixes:
-  84e54fe0a5ea, ee496694b9ee, 5a963eb61b7c; v2 had Cc: stable
-- [Phase 2] Diff: local flags to `__gre_xmit`; stop mutating
-  `parms.o_flags` in erspan_xmit/fill_info and ip6erspan xmit
-- [Phase 2] `gre_build_header()` with hdr_len=8 + KEY+SEQ overwrites GRE
-  base header — verified in `include/net/gre.h`
-- [Phase 3] blame: mutation since 2017 ERSPAN; bitmap conversion
-  5832c4a77d693 in this tree
-- [Phase 3] `git merge-base --is-ancestor` all three Fixes SHAs: yes;
-  9958e69b9893: no
-- [Phase 4] `b4 dig -c 9958e69b9893`: lore msgid 20260812142257.21283-1;
-  v2/v3/v4; Horman Reviewed-by; no NAK
-- [Phase 4] Ido asked for ipgre/gretap snapshots; Sashiko caught v2
-  gre_calc_hlen malformation; v4 dropped that
-- [Phase 4] Later lltx deadlock thread names this commit as stable
-  prerequisite
-- [Phase 5] Callers are ndo_start_xmit and RTNL fill_info
-- [Phase 6] `git describe HEAD`: p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion`: 6.12.111; buggy `__clear_bit`/`__set_bit` present
-- [Phase 6] ERSPAN init does not set lltx in this tree; fill_info vs
-  xmit still races
-- [Phase 8] Failure mode: GRE header corruption, severity HIGH
-- UNVERIFIED: lore.kernel.org HTML 403 (used b4 + openwall); no stable-
-  list rejection found
+- [Phase 1] Parsed tags: author Tyrel Datwyler, Link msgid
+  `...969416-5`, SOB Martin K. Petersen; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: 1 line in `ibmvfc_release_tgt`, `kfree(tgt)` →
+  `mempool_free(tgt, tgt->vhost->tgt_pool)`
+- [Phase 2] Confirmed alloc at `ibmvfc_alloc_target`:
+  `mempool_alloc(vhost->tgt_pool, GFP_NOIO)`; pool size 64; `GFP_NOIO`
+  is `__GFP_RECLAIM`
+- [Phase 2] `mm/mempool.c`: `mempool_alloc_noprof` retries and waits on
+  `pool->wait` when `__GFP_DIRECT_RECLAIM` is set; waiters woken from
+  `mempool_free`
+- [Phase 3] git blame: `kfree(tgt)` from original driver `072b91f9c6510`
+  (2008, v2.6.27-rc1)
+- [Phase 3] `git merge-base --is-ancestor 99143433f7f14 HEAD`: yes
+- [Phase 3] Related: `5c66d9393f583` (v4.12-rc1) removed mempool_alloc
+  NULL check
+- [Phase 4] `b4 dig -c 99143433f7f14`: `[PATCH v2 04/33]`; cover letter
+  lists this as a pre-existing bug; Martin: applied to 7.3/scsi-staging
+- [Phase 4] `b4 dig -w`: linux-scsi, linuxppc-dev, Bottomley, Petersen,
+  IBM
+- [Phase 4] `b4 dig -a`: v2 of 33-patch NVMe/FC series; this patch is in
+  the bugfix prefix
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable search (Anubis 403)
+- [Phase 5] Callers: many `kref_put(..., ibmvfc_release_tgt)` in
+  discovery/teardown/sysfs
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37;
+  kernelversion 7.3.0-rc4; current `ibmvfc-core.c` already uses
+  `mempool_free`
+- [Phase 7] `CONFIG_SCSI_IBMVFC` depends on `PPC_PSERIES`
+- [Phase 8] Failure mode: mempool drain → possible D-state hang in
+  target discovery under memory pressure; severity HIGH for that
+  platform
+- UNVERIFIED: whether a target kref can outlive `mempool_destroy` on
+  remove (no evidence it does; remove deletes rports first)
 
 **YES**
 
- net/ipv4/ip_gre.c  | 42 +++++++++++++++++++++++-------------------
- net/ipv6/ip6_gre.c |  5 ++---
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ drivers/scsi/ibmvscsi/ibmvfc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index b15cc4ee0d920..b1ec4f92d3462 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -474,12 +474,9 @@ static int gre_rcv(struct sk_buff *skb)
- 
- static void __gre_xmit(struct sk_buff *skb, struct net_device *dev,
- 		       const struct iphdr *tnl_params,
--		       __be16 proto)
-+		       __be16 proto, const unsigned long *flags)
+diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
+index 63cc569284ded..e3853e05aa27a 100644
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -1366,7 +1366,7 @@ static void ibmvfc_set_rport_dev_loss_tmo(struct fc_rport *rport, u32 timeout)
+ static void ibmvfc_release_tgt(struct kref *kref)
  {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
--	IP_TUNNEL_DECLARE_FLAGS(flags);
--
--	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
+ 	struct ibmvfc_target *tgt = container_of(kref, struct ibmvfc_target, kref);
+-	kfree(tgt);
++	mempool_free(tgt, tgt->vhost->tgt_pool);
+ }
  
- 	/* Push GRE header. */
- 	gre_build_header(skb, tunnel->tun_hlen,
-@@ -652,6 +649,7 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 			      struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	const struct iphdr *tnl_params;
- 
- 	if (!pskb_inet_may_pull(skb))
-@@ -687,11 +685,12 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		tnl_params = &tunnel->parms.iph;
- 	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, tnl_params, skb->protocol);
-+	__gre_xmit(skb, dev, tnl_params, skb->protocol, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -704,6 +703,7 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 			       struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	bool truncate = false;
- 	__be16 proto;
- 
-@@ -727,10 +727,12 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		truncate = true;
- 	}
- 
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
- 	/* Push ERSPAN header */
- 	if (tunnel->erspan_ver == 0) {
- 		proto = htons(ETH_P_ERSPAN);
--		__clear_bit(IP_TUNNEL_SEQ_BIT, tunnel->parms.o_flags);
-+		__clear_bit(IP_TUNNEL_SEQ_BIT, flags);
- 	} else if (tunnel->erspan_ver == 1) {
- 		erspan_build_header(skb, ntohl(tunnel->parms.o_key),
- 				    tunnel->index,
-@@ -745,8 +747,8 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		goto free_skb;
- 	}
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, tunnel->parms.o_flags);
--	__gre_xmit(skb, dev, &tunnel->parms.iph, proto);
-+	__clear_bit(IP_TUNNEL_KEY_BIT, flags);
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, proto, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -759,6 +761,7 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 				struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 
- 	if (!pskb_inet_may_pull(skb))
- 		goto free_skb;
-@@ -768,14 +771,15 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB));
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB), flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -1571,12 +1575,15 @@ static size_t ipgre_get_size(const struct net_device *dev)
- 
- static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip_tunnel *t = netdev_priv(dev);
--	struct ip_tunnel_parm_kern *p = &t->parms;
-+	const struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel_parm_kern *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
- 
-+	if (t->erspan_ver != 0 && !t->collect_md)
-+		__set_bit(IP_TUNNEL_KEY_BIT, o_flags);
-+
- 	if (nla_put_u32(skb, IFLA_GRE_LINK, p->link) ||
- 	    nla_put_be16(skb, IFLA_GRE_IFLAGS,
- 			 gre_tnl_flags_to_gre_flags(p->i_flags)) ||
-@@ -1619,12 +1626,9 @@ static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- 
- static int erspan_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel *t = netdev_priv(dev);
- 
- 	if (t->erspan_ver <= 2) {
--		if (t->erspan_ver != 0 && !t->collect_md)
--			__set_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
--
- 		if (nla_put_u8(skb, IFLA_GRE_ERSPAN_VER, t->erspan_ver))
- 			goto nla_put_failure;
- 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index ebd0198458cd3..905c22e6990b8 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -967,7 +967,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	if (skb_cow_head(skb, dev->needed_headroom ?: t->hlen))
- 		goto tx_err;
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
- 	IPCB(skb)->flags = 0;
- 
- 	/* For collect_md mode, derive fl6 from the tunnel key,
-@@ -2116,8 +2115,8 @@ static size_t ip6gre_get_size(const struct net_device *dev)
- 
- static int ip6gre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip6_tnl *t = netdev_priv(dev);
--	struct __ip6_tnl_parm *p = &t->parms;
-+	const struct ip6_tnl *t = netdev_priv(dev);
-+	const struct __ip6_tnl_parm *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
+ /**
 -- 
 2.53.0
 
