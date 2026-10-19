@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDDE51DAE6;
-	Mon, 19 Oct 2026 13:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BF156DCCC;
+	Mon, 19 Oct 2026 13:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418285; cv=none; b=nH66x190PT4JVxVQKahXuDWdEnQ1pyHdV7iDyHuPrfsiw5Kmrh4RHzQD8T4xnyn/7+5mQmM6lI/ArGtJeaZ26uQ5BWVuMzhaptFyRSivO+ax98Wj+RB5r+sZC3E8E+xZw1H7+cAMFgOzdqpLVrCUoPodhhvCjDVjEUjbUyufkzI=
+	t=1792418286; cv=none; b=bVVCi79WI0CNj3x2pMcm+Ivf3vT7xpPPML54DEmtiIMtZ30vUJ9QDudB1Bk0rS+IFjXsv/r2WSQevYzh8zPWZqWXRCXk2qt1TKUgbYeVtNNF7OoqZO3ygYWc7KaZHr2rlGGZ7QQmQC7nyxuJvg3RQ+2mJWpLAiSxpoMQcaQ0Jr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418285; c=relaxed/simple;
-	bh=Gv6k1C/39ggz7wO/3bNh8gJiH5NU5JV0k6IW8N9JWMo=;
+	s=arc-20240116; t=1792418286; c=relaxed/simple;
+	bh=3QGg+1T51XI+6ErIgq7haAN3iJcqq4509MpqRcj74Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CGJ2jBhon/c8bLlOFYTPHGFgB+9twBoR8JVW5tTSo28SxsfeaRH6n6Ov76AHpAFYtZcNvGKa1yU7vOEfHun3yILZaQNnrEf3j+imxD5pGSqgatnBccIm8J5p3DpkfPhcyaqFY2gVRnJT15CWNRt1eEv3NIe9Vh/qwR4K5lc7cK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=am+o/k7+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qIKSOvXSdJLL/6G3nWE5fVb03TCr2MFy7iiw0MtGbx1I4fbo2uqRGGijx/KrXUizy1os8JahicfCT0FlhkNjpj8Nknk80Bwe1w7jSAOCdseWAgoANLs3zwHqepqgw8i/evko4JO4gFAiK318TxWK9W1VFmNs9hyEUxu1DykiYbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2lWsD3/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="am+o/k7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421FA1F000C8;
-	Mon, 19 Oct 2026 13:58:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2lWsD3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433F1F000C6;
+	Mon, 19 Oct 2026 13:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418282;
-	bh=cUgDBXxJlx6W2o3Tcn+WyqZtO/tJR3ZczkJTDItOmjQ=;
+	s=k20260515; t=1792418283;
+	bh=Dv3twa7zYOB3knqGrwOntSkkwfPWGCbTt5dOVIhc7Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=am+o/k7+BFnkfbe/shplaYggAYQOJpBR1LQY9GUwvjSw5ILaxTfBEwrV8STf8Nzc+
-	 oZaTom7BqvI9RU0XqIkhYzh8pSBw6YQ3Q7DZd7p+u+41YT8eHrVv3+3f3OuByUgnz0
-	 vgEPwabuTvlO8h/1vbYFLfxmQYzVjkXafWXzz5dRDTu51TSdioYvdaS+q9Wm7KEuJb
-	 gda/8JYIg6g76yHCCUPhDuMRDV/yYENXnQrCWHVLEPTQQ9P4ibiwIszwuj5ynJHrrl
-	 PD6sVyadESvJe0eQ2G1ul29RQUteKZD9MUzQZaktltyVxv/O2cHvS2NfS5b7lgpEs5
-	 a4kWMRGmIWUGA==
+	b=l2lWsD3/9dHeUKkLyg+Z6WFUrxPIulOKlijIB69wU2fTw7mbnD0ceHmMy6CTOWqXv
+	 NxpOM9SDBm/HUsSBGDXGfmn4WvoM6lDD7How7yVRn12lcb+uDb7p7tZd4z2NRvtvZu
+	 IdQTJPqRcnHgPZZ7hzYOfphQGBgpkcwBwc6n9nyARAlswKmBmpC64+srtMQwJcXfsQ
+	 Ahd7IyUCF9+sJnuHyrM7o8Wfnxgm2//KAjhAsPYPLJcKdRBpCkTRwFW60CV6rU6zMc
+	 AUf1NEOc9VJ4SGbnBo695HH+pGwVBCHYH/vHxYr/f+7NTKXaMFpQbontv/0JZ0jN09
+	 TgbTaxKq7SKyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Schaefer <dhs@frame.work>,
-	=?UTF-8?q?Sven=20Vaink=C3=BCla?= <sven@xn--vainkla-r2a.ee>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+Cc: Jenson Johnathon Reggentin <mail@jregg.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	jic23@kernel.org,
-	linux-input@vger.kernel.org,
-	linux-iio@vger.kernel.org,
+	axboe@kernel.dk,
+	linux-block@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] iio: hid-sensor: als: scale each channel individually
-Date: Mon, 19 Oct 2026 09:47:08 -0400
-Message-ID: <20261019135441.1420968-137-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] docs: block: fix dead http link in blk-mq.rst
+Date: Mon, 19 Oct 2026 09:47:09 -0400
+Message-ID: <20261019135441.1420968-138-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,516 +49,383 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Jenson Johnathon Reggentin <mail@jregg.de>
 
-[ Upstream commit cad928dad9a4c26aa56b4223dc2a29bca517fb5f ]
+[ Upstream commit b40a680ea4efe4ef2addada63e304a94d19500d1 ]
 
-Some sensors have multiple channels (not just brightness but color ALS
-sensors) with different scaling factors.
+The current link http://kernel.dk/blk-mq.pdf leads to a 404 error page.
+https://www.kernel.dk/blk-mq.pdf leads to the correct document.
 
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Link: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy/-/merge_requests/413
-Tested-by: Sven Vainküla <sven@xn--vainkla-r2a.ee> #Asus ProArt PX13 laptop.
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+v2 to add the missing www. prefix in the actual file change.
+
+Signed-off-by: Jenson Johnathon Reggentin <mail@jregg.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260819192422.42189-1-mail@jregg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **Linux 7.3-rc4** (mainline). Color ALS channels exist
-here (since v6.9), and this is a small per-channel IIO scale correctness
-fix with a real user report. Full phase walkthrough follows.
+I have the tree identity, the dead URL in-tree, review history, and a
+clean apply. Next I’ll finish call-site and stable-rule checks, then
+give the backport verdict.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Record: **[iio/hid-sensor-als] [scale] scale each ALS channel
-individually rather than using one illuminance scale for every channel**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: `[docs: block:]` `[fix]` `[dead HTTP link in blk-mq.rst]` —
+documentation URL correction in the block multi-queue overview.
 
-- Subsystem: `iio: hid-sensor: als`
-- Verb: “scale” (correctness of IIO `in_*_scale`, not a refactor)
-- Claimed intent: color ALS sensors have per-channel scaling factors;
-  the driver used a single shared scale
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record: tags (ignoring pipeline `Signed-off-by: Sasha Levin` /
-`[Upstream commit …]`):
-- **Signed-off-by:** Daniel Schaefer `<dhs@frame.work>` (author,
-  Framework)
-- **Link:** `https://gitlab.freedesktop.org/hadess/iio-sensor-
-  proxy/-/merge_requests/413`
-- **Tested-by:** Sven Vainküla (Asus ProArt PX13)
-- **Acked-by:** Srinivas Pandruvada (HID sensor hub maintainer)
-- **Signed-off-by:** Jonathan Cameron (IIO maintainer)
-- **No Fixes:** (expected for this review)
-- **No Cc: stable:** (expected)
-- **No Reported-by / syzbot / KASAN**
-
-Notable: real hardware Tested-by, userspace (iio-sensor-proxy) link,
-maintainer Ack.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Bug:** some HID ALS devices are color ALS (illuminance + color
-  temperature + chromaticity), not brightness-only, and those extra
-  channels have different HID unit/exponent than illuminance.
-- **Symptom:** userspace (iio-sensor-proxy, compositors) applies the
-  illuminance scale to color-temp/chromaticity raw values → wrong
-  physical units (night light / color management broken or nonsense).
-- **Version info:** none in the message. Color/chromaticity channels
-  themselves landed in v6.9.
-- **Root cause:** `hid_sensor_format_scale()` was called only on
-  `als[CHANNEL_SCAN_INDEX_INTENSITY]` and that one scale was returned
-  for every channel.
+- Signed-off-by: Jenson Johnathon Reggentin `<mail@jregg.de>` (author)
+- Acked-by: Randy Dunlap `<rdunlap@infradead.org>` (docs reviewer)
+- Signed-off-by: Jonathan Corbet `<corbet@lwn.net>` (docs maintainer,
+  applied it)
+- Message-ID: `<20260819192422.42189-1-mail@jregg.de>` (v2 submission)
+- No Fixes: tag (expected)
+- No Reported-by / Tested-by / Reviewed-by on the committed form (v1 had
+  Reviewed-by: Md Haris Iqbal; that tag was not carried to v2)
+- No Cc: stable (expected; not a negative)
+- Ignore any pipeline “Upstream commit” / “Signed-off-by: Sasha Levin”
+  markers if present
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not a hidden cleanup.** It is an explicit correctness fix:
-wrong IIO SCALE sysfs values for extra ALS channels. Same class as
-`8b518cdb03f5f` (“iio: hid-sensor-prox: support multi-channel SCALE
-calculation”), which had `Cc: stable` and `Fixes:`.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **File:** `drivers/iio/light/hid-sensor-als.c` only
-- **Size:** 12 insertions, 10 deletions (net +2)
-- **Functions:** `struct als_state`, `als_read_raw()`,
-  `als_parse_report()`
-- **Scope:** single-file surgical driver fix
+- Bug: `http://kernel.dk/blk-mq.pdf` in the “Further reading” section
+  returns 404.
+- Symptom: readers of blk-mq documentation cannot open the canonical
+  blk-mq paper.
+- Fix: switch to `https://www.kernel.dk/blk-mq.pdf`.
+- v2 note: v1 used `https://kernel.dk/blk-mq.pdf` (missing `www.`),
+  which still 404’d / had a bad cert; v2 adds `www.`.
+- No kernel version range given; no crash/trace.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden runtime fix. It is exactly what it says: a
+documentation hyperlink correction. Not a leak/race/UAF disguised as
+cleanup.
 
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+Step 2.1: INVENTORY THE CHANGES
 Record:
-1. **State:** `scale_pre_decml` / `scale_post_decml` / `scale_precision`
-   become arrays of `CHANNEL_SCAN_INDEX_MAX`.
-2. **`als_read_raw` IIO_CHAN_INFO_SCALE:** used to return the one
-   illuminance scale for any channel; now indexes by `chan->scan_index`,
-   with a bounds check.
-3. **`als_parse_report`:** scale is computed **inside** the per-usage
-   loop with `st->als[i]` (that channel’s units/exponent), instead of
-   once afterward from intensity only.
+- File: `Documentation/block/blk-mq.rst` — 1 line changed (`-1/+1`)
+- Functions: none
+- Scope: single-file, surgical documentation edit
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **[Logic / correctness]** IIO SCALE ABI wrong for color ALS.
-
-`hid_sensor_format_scale()` (verified in `hid-sensor-attributes.c`)
-matches `usage_id` (still the ALS sensor usage `0x200041`) **and**
-`attr_info->units`, then applies `attr_info->unit_expo`. The per-channel
-difference is those HID attribute fields. Intensity/illuminance share
-`HID_USAGE_SENSOR_LIGHT_ILLUM`; color-temp and chromaticity have
-different attributes, so they must not reuse intensity’s exponent.
-
-Classic brightness-only ALS is unchanged: both intensity and illum still
-use the same HID usage and therefore the same scale.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Quality:** obviously correct; same pattern as hid-sensor-prox
-  (`scale_pre_decml[index]` + format_scale in the parse loop).
-- **Minimal:** no unrelated edits.
-- **Regression risk:** low. Traditional ALS behavior is preserved.
-  Color-temp/chromaticity SCALE sysfs values change from wrong to
-  correct (intended).
-- **Known limitation (discussed on-list, not a NAK):**
-  `IIO_CHAN_INFO_SCALE` stays `info_mask_shared_by_type`, so
-  chromaticity X and Y share one sysfs scale. Jonathan Cameron: that
-  only matters if X and Y scales differ; the reported bug is illuminance
-  vs color-temp. Author: “in practice it's probably not needed and the
-  patch works as is.” No v2 was required; v1 was applied.
+- Before: RST link target `http://kernel.dk/blk-mq.pdf`
+- After: RST link target `https://www.kernel.dk/blk-mq.pdf`
+- Path affected: documentation “Further reading” only; no execution path
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: Not a memory-safety/locking/refcount bug. Category:
+documentation correctness (dead external URL). Mechanism: site now
+requires HTTPS + `www.` hostname.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Shared scale fields date to **`36783d09f1a5c`** (“iio: hid-sensors:
-  ALS: adjust scale and offset”, 2014) — correct when there was only
-  illuminance.
-- Extra channels: **`3765d426fe864`** color temperature,
-  **`2ec17b1950bb8`** chromaticity, both **v6.9-rc1**. That is when one
-  scale became wrong.
-- Dynamic channel assignment: **`f2a71ebdf2312`** (v6.9).
+- Obviously correct once v2 uses the working URL.
+- Minimal; no unrelated edits.
+- Regression risk: none at runtime. Residual risk is only that the
+  remote host could move again (same class of risk as any external
+  link).
+- v1 was wrong (Randy Dunlap reported continued 404 / bad SSL);
+  committed v2 addresses that.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+Verified live:
+- `http://kernel.dk/blk-mq.pdf` → 404
+- `https://www.kernel.dk/blk-mq.pdf` → PDF retrieved (51.5 KB)
 
-Record: **No Fixes: tag.** Closest introduction of the bug is the v6.9
-color-temp/chromaticity additions. Those commits **are** ancestors of
-this 7.3-rc4 tree (`git merge-base --is-ancestor` not required for each;
-`git describe --contains` shows `v6.9-rc1`).
+---
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Record: recent ALS history includes channel init refactor, timestamp
-alignment, probe race fix. **No prerequisite series** for this patch
-(standalone v1). **No follow-ups** on this file after `cad928dad9a4c`.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Daniel Schaefer has this single IIO commit in-tree. Not the
-subsystem maintainer. Weight comes from **Acked-by Srinivas Pandruvada**
-and **SOB Jonathan Cameron**.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: needs existing `als[]` per-channel attribute array,
-`CHANNEL_SCAN_INDEX_*`, and `hid_sensor_format_scale()` — all present
-here since v6.9 / much earlier. **Applies standalone.** Prox analog
-`8b518cdb03f5f` is a sibling pattern, not a dependency.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- **b4 dig:** https://patch.msgid.link/20260723-chromaticity-v1-1-
-  5ef5746ace2a@frame.work
-- **Series:** v1 only (no v2/v3 despite author briefly offering a v2 for
-  `info_mask_separate`)
-- **Jonathan Cameron (2026-07-26):** SCALE shared-by-type is OK unless
-  chromaticity X/Y differ; “the change here looks fine”; queued on
-  iio.git testing.
-- **Srinivas Pandruvada:** Acked-by.
-- **David Lechner:** explained testing-branch means accepted/applied.
-- **No NAK.** No reviewer asked for Cc: stable.
-- **Sashiko bot:** flagged shared-by-type (addressed in discussion) and
-  a **pre-existing** buffer-layout concern, not introduced by this
-  patch.
+- Introduced in `46e906144c3f4b` (“docs: block: Create blk-mq
+  documentation”, André Almeida, 2020-06-19)
+- First appeared: `v5.9-rc1` (`git describe --contains` →
+  `v5.9-rc1~150^2~141`)
+- Present in this tree for the entire 6.12 lifetime
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. The introducing commit is the original
+documentation add, not a later regression in C code.
 
-Record: To/Cc included Jonathan Cameron, Srinivas Pandruvada, David
-Lechner, Nuno Sá, Andy Shevchenko, linux-iio, linux-input. Right
-maintainers were in the loop.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record (this tree, `-- Documentation/block/blk-mq.rst`):
+- `41bd33df4e180` docs: correct places → place
+- `c19430eec84f7` Fix small typo
+- `2bc602cb0e0d9` correct drive → driver
+- `8ac867340bd8c` / `9303c9d5e9883` Sphinx `:c:type` cleanup
+- `46e906144c3f4b` create the file
+No later URL rewrite in this checkout. Standalone; not patch X/Y of a
+functional series.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: `git log --author="Jenson Johnathon Reggentin"` /
+`mail@jregg.de` on this tree: no hits. One-off docs contributor, not the
+block maintainer. Applied by Jonathan Corbet; Acked-by Randy Dunlap.
 
-Record: GitLab iio-sensor-proxy MR 413 returned **HTTP 403** (UNVERIFIED
-beyond the Link tag). Hardware evidence that **is** verified: Tested-by
-on Asus ProArt PX13; Framework author; iio-sensor-proxy is the standard
-userspace for laptop ALS.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: No new helpers, structs, or APIs. The hunk matches the current
+file byte-for-byte. Can apply standalone.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+---
 
-Record: standalone, not N/M. Prox multi-channel SCALE (`8b518cdb03f5f`,
-v6.15-rc6) is the same bug class and **was** `Cc: stable`.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: no “stable” in the lore mbox. UNVERIFIED whether linux-stable@
-discussed it separately (no lore.kernel.org/stable hit via b4 thread).
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `als_read_raw`, `als_parse_report`; struct `als_state`. Probe
-path: `hid_als_probe` → `als_parse_report`. Sysfs/read path: IIO core →
-`als_info.read_raw` → `als_read_raw`.
-
-**Step 5.2: TRACE CALLERS**
-
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `als_parse_report`: only from `hid_als_probe` (HID-SENSOR-200041 /
-  LISS-0041 platform devices).
-- `als_read_raw`: IIO `read_raw` for sysfs (`in_illuminance_scale`,
-  `in_colortemp_scale`, `in_chromaticity_x_scale`, etc.) and buffered
-  metadata. **Userspace-reachable**, not IRQ-hot.
+- `b4 mbox 20260819192422.42189-1-mail@jregg.de` saved 12-message thread
+  (lore HTTP 403 from WebFetch; b4 succeeded).
+- v1: `https://kernel.dk/blk-mq.pdf` (no www)
+- v2 (applied): `https://www.kernel.dk/blk-mq.pdf`
+- Randy Dunlap: v1 still 404 + invalid SSL; confirmed `www.` works;
+  Acked-by on v2; asked changelog-after-`---` nit
+- Haris Iqbal: Reviewed-by on v1; spotted missing `www.`
+- Jonathan Corbet: asked for a version that actually works; applied v2
+  (“Applied, thanks.”)
+- No NAK. No reviewer asked for Cc: stable.
+- Included in Corbet’s `[GIT PULL] Documentation stragglers for 7.3`
+  (`docs-7.3-2`), described as late-arriving docs fixes, not a stable-
+  critical runtime fix.
+- Syzbot CI skipped both versions: “AI determined the patch has no
+  functional impact”
 
-**Step 5.3: TRACE CALLEES**
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (syzbot CI Cc + thread):
+- To/Cc: Jens Axboe, Jonathan Corbet, linux-block, linux-doc
+- Reviewers who spoke: Randy Dunlap (ack), Md Haris Iqbal (v1 r-b),
+  Jonathan Corbet (applied)
+- Block maintainer was copied; no Axboe reply in the 12-message thread
 
-Record: `hid_sensor_format_scale()` → unit table +
-`adjust_exponent_nano()`; `sensor_hub_input_get_attribute_info()` fills
-per-channel `units`/`unit_expo`.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot crash. Author observed a 404. Confirmed
+independently in this analysis.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone. v1→v2 only to correct the hostname. No sibling
+functional patches required.
 
-Record: unprivileged users can read IIO sysfs on a system with this HID
-ALS. Color ALS on recent AMD/laptop HID sensor hubs (v6.9+ channels).
-**Reachable from userspace.**
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED that
+stable@ discussed this specific URL. No evidence in the docs thread of a
+stable nomination or of a reason to exclude it.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+---
 
-Record: hid-sensor-prox already uses per-channel scale arrays. Other
-hid-sensor drivers (accel, gyro, press, temp) still use a single scale
-because they are not mixed-unit multi-channel in the same way. ALS was
-the leftover mismatch after v6.9 extra channels.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Step 5.1: KEY FUNCTIONS
+Record: None. Only an RST hyperlink.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Step 5.2: TRACE CALLERS
+Record: N/A — not callable kernel code. Consumers are humans (and Sphinx
+HTML on kernel.org / distro doc packages).
 
+Step 5.3: TRACE CALLEES
+Record: N/A.
+
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Not reachable from syscalls. User impact is documentation-only.
+kernel.org `v6.12` HTML is built from this tree, so the 404 is user-
+visible for people reading 6.12 docs.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: `kernel.dk/blk-mq` appears only in `Documentation/block/blk-
+mq.rst` in this tree. Other `kernel.dk` hits are emails/copyrights, not
+this PDF.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
 Record:
-- **Tree:** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = **7.3.0-rc4** (Linus mainline, not an LTS branch).
-- Color ALS channels **are** in `hid-sensor-als.c`.
-- Commit **`cad928dad9a4c` is already an ancestor of HEAD** (working
-  tree already has per-channel arrays). That is the mainline landing of
-  this fix during 7.3, **not** a reason to reject it on technical merit
-  (pipeline “already selected” markers ignored).
-- Bug introduced **v6.9** (2024), long before this tree.
+- `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`
+- `make kernelversion` / Makefile → **6.12.111**, branch `pending-6.12`
+- Line 142 of `Documentation/block/blk-mq.rst` still has
+  `http://kernel.dk/blk-mq.pdf`
+- `git merge-base --is-ancestor 46e906144c3f4b HEAD` → yes
+- Bug introduced v5.9-rc1 (2020); present here
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Surrounding hunk is identical to the patch context. Expected
+apply: **clean**. `git log v6.12..HEAD -- Documentation/block/blk-
+mq.rst` is empty (no conflicting stable edits).
 
-Record: against **this** 7.3 tree the change is already applied / would
-apply cleanly. Context in the submitted v1 still used
-`als_adjust_channel_bit_mask`; this tree uses `iio_scan_type`
-initializer (`cded217233845`). For **this** checkout that is already
-resolved. No extra commits required for the logic of the fix.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: Replacement URL not present. No alternate rewrite of this link.
+Comparable docs-link backports **do** exist after v6.12 in this tree,
+e.g.:
+- `b23111ec50d86` `docs: hwmon: fix link to g762 devicetree binding`
+- `a7f28636da6f9` `docs: media: update location of the media patches`
+  (explicit Cc: stable)
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+---
 
-Record: this exact commit is in HEAD. No later revert or competing fix.
-No other ALS scale fix in `git log cad928dad9a4c..HEAD --
-drivers/iio/light/hid-sensor-als.c`.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **IIO light / HID sensor hub ALS** — **PERIPHERAL to IMPORTANT**
-depending on hardware. Laptop ambient/color light (Framework, Asus
-ProArt, HID sensor hubs). Not mm/net/fs core, but commonly used on
-notebooks via iio-sensor-proxy.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: mature driver (2012), still getting channel and race fixes.
-Color ALS is several years old (v6.9), not brand-new staging code.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **driver-specific / config-specific** (`CONFIG_HID_SENSOR_ALS`).
-Users of HID color ALS (not every illuminance-only ALS). Confirmed: Asus
-ProArt PX13; likely other color-ALS HID laptops.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: **Every read of IIO SCALE** for color-temp/chromaticity, and
-every userspace conversion of those raw values. Not a race. Unprivileged
-users with IIO device node/sysfs access can observe it. Common on
-affected laptops at session start (iio-sensor-proxy).
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: **Wrong sensor physical values** (color temperature /
-chromaticity), not oops/UAF/deadlock. Userspace brightness for classic
-ALS is unaffected (same HID usage). Compositor color/night-light using
-color ALS can be wrong. **Severity: MEDIUM** — real, user-visible, “oh
-that’s not good,” not CRITICAL.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
+Step 7.1: SUBSYSTEM AND CRITICALITY
 Record:
-- **Benefit:** correct IIO scale on color ALS; unbreaks iio-sensor-
-  proxy/hardware that already exists in this lineage.
-- **Risk:** very low (≈20-line, one file, no locking/API).
-- **Ratio:** favorable. Same class already taken for stable in prox.
+- Subsystem: Documentation for the block layer (`Documentation/block/`,
+  MAINTAINERS: BLOCK LAYER, Jens Axboe; docs tree via Corbet)
+- Criticality of **blk-mq itself**: IMPORTANT (common block I/O)
+- Criticality of **this change**: documentation-only, not the I/O path
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+Step 7.2: SUBSYSTEM ACTIVITY
+Record: `Documentation/block/` is mature; this file’s last change in-
+tree is a 2023 typo fix. The URL has been wrong/stale for years; the
+site layout change is what made `http://kernel.dk/...` a hard 404.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+---
 
-**FOR backporting**
-- Real userspace-visible bug: mixed-unit color ALS channels reused
-  illuminance scale.
-- Hit on real hardware (Asus ProArt PX13 Tested-by); iio-sensor-proxy MR
-  linked.
-- Small, obviously correct, acked by HID-sensor maintainer, applied by
-  IIO maintainer.
-- Identical prox bug was explicitly `Cc: stable`.
-- This tree **has** the v6.9 color/chromaticity channels, so the bug
-  class exists in this lineage.
-- Traditional ALS unchanged; only extra channels’ SCALE change.
-- Fits documented stable bar: “real bug that bothers people” / “oh,
-  that’s not good.”
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**AGAINST**
-- Not a crash, UAF, deadlock, or security issue.
-- No Fixes:/Cc: stable (not a negative per review rules).
-- SCALE still shared-by-type for chromaticity X/Y (accepted by
-  maintainer as OK for the reported bug).
-- Peripheral driver, not core kernel.
-- GitLab MR body UNVERIFIED (403).
+Step 8.1: WHO IS AFFECTED
+Record: Anyone reading in-tree or generated blk-mq docs (developers,
+distro doc packages, kernel.org HTML for 6.12). Not a
+runtime/driver/config population.
 
-**UNRESOLVED**
-- Exact HID unit/exponent values on the PX13 (not in-tree).
-- Whether chromaticity X vs Y ever differ on some firmware (maintainers
-  assumed no).
+Step 8.2: TRIGGER CONDITIONS
+Record: Opening the “Further reading” PDF link. Common for people
+studying blk-mq; never triggered by unprivileged syscalls. Not a race.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+Step 8.3: FAILURE MODE SEVERITY
+Record:
+- Failure: HTTP 404 / cannot open the referenced paper
+- Severity: **LOW** (incorrect documentation, no crash/corruption/hang)
+- No kernel oops, leak, or security effect
 
-1. Obviously correct and tested? **PASS** — Tested-by, Acked-by, IIO
-   maintainer queued v1.
-2. Fixes a real bug that affects users? **PASS** — wrong IIO scale on
-   color ALS; userspace conversion broken.
-3. Important issue? **PASS** (medium “oh that’s not good,” not CRITICAL
-   crash) — wrong physical units for sensors userspace actually uses.
-4. Small and contained? **PASS** — one file, +12/−10.
-5. No new features or APIs? **PASS** — corrects SCALE for channels that
-   already exist; no new sysfs ABI.
-6. Can apply to the local tree? **PASS** — affected code is in 7.3-rc4;
-   change is already the current code here.
+Step 8.4: RISK-BENEFIT RATIO
+Record:
+- Benefit: working further-reading link in 6.12 docs; small but real for
+  doc users
+- Risk: **very low** (one RST URL; no code, locks, APIs)
+- Ratio: favorable *if* documentation corrections are in scope; not a
+  stability win
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+---
 
-Record: not a device-ID/quirk/DT/build/docs exception. Ordinary driver
-correctness fix.
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.4: MAKE YOUR DECISION**
+Step 9.1: COMPILE THE EVIDENCE
 
-This tree’s ALS driver includes color-temperature and chromaticity
-channels added in v6.9 but, until this change, advertised a single
-illuminance-derived IIO scale for all of them. That is a real, tested
-userspace bug (wrong color ALS readings via iio-sensor-proxy), not a
-feature or cleanup. The patch is small, matches the already-stable-
-worthy prox multi-channel SCALE fix, and does not change classic
-illuminance ALS. Benefit outweighs the low regression risk.
+FOR backporting:
+- Dead link is real (404 verified); replacement URL works
+- One-line, obviously correct v2 after review
+- Docs maintainer applied it; Randy Dunlap Acked-by
+- Buggy line exists in this 6.12.111 tree since v5.9; applies cleanly
+- User-facing exception: documentation/comment fixes with zero runtime
+  regression
+- This same 6.12 tree already took other documentation link-location
+  fixes
 
-### What the commit solves and why it matters here
+AGAINST backporting:
+- Not a crash, deadlock, corruption, UAF, or security bug
+- Official rule 3 (“important issue”) is not met in the runtime sense
+- No functional kernel impact (syzbot CI skipped it for that reason)
+- No Cc: stable; landed as docs-7.3 stragglers, not a hotfix
+- Stable rules also discourage purely trivial edits; this is adjacent to
+  that class
+- Benefit is only to documentation readers, not production uptime
 
-Color HID ALS devices expose extra channels with different HID
-units/exponents. The driver formatted scale only from the intensity
-attribute, so `in_colortemp_scale` / chromaticity scale were wrong. On
-this 7.3-rc4 tree those channels exist, so the fix is applicable and is
-the right stable-style correctness change for that hardware.
+UNRESOLVED:
+- Could not fetch lore.kernel.org or lore stable search via WebFetch
+  (403); thread recovered via b4
+- Commit SHA is not in this checkout’s `master` (that tip is ~7.2; patch
+  went in docs-7.3-2)
 
-### Risk vs benefit
+Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — v2 URL verified; Acked-by +
+   maintainer apply
+2. Fixes a real bug that affects users? **PASS** — 404 in
+   shipped/generated docs, not a runtime bug
+3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
+   runtime severity; **LOW** doc defect only
+4. Small and contained? **PASS** — 1 line, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — context identical, URL still
+   old
 
-Benefit: correct sensor units for color ALS on laptops that already use
-this driver. Risk: a few array/index changes on the sysfs read path;
-illuminance-only devices keep the same scale.
+Step 9.3: EXCEPTION CATEGORIES
+Record: **Documentation fix** (incorrect/obsolete external link). That
+exception is why a LOW-severity, zero-runtime patch can still be
+appropriate for this tree.
 
-### Concerns
+Step 9.4: DECISION
+The change does not stabilize running 6.12 systems, but it is a
+contained, verified correction of documentation this tree still ships,
+with no regression surface and with precedent for similar doc-link
+backports here. That matches the documentation exception, not a “new
+feature” or refactor.
 
-No crash-level severity; chromaticity X/Y still share type-wide scale
-(explicitly accepted). Neither blocks backport of this contained fix.
+What it solves for stable users: kernel.org / distro HTML for 6.12
+currently points “Further reading” at a 404; after backport it points at
+Jens Axboe’s actual blk-mq PDF.
 
-Verification:
-- [Phase 1] Parsed tags: Tested-by Sven Vainküla (Asus ProArt PX13);
-  Acked-by Srinivas Pandruvada; SOB Jonathan Cameron; Link to iio-
-  sensor-proxy MR 413; no Fixes/Cc:stable
-- [Phase 2] Diff: 12+/10- in hid-sensor-als.c; scalar scale → per-
-  scan_index arrays; format_scale moved into parse loop over
-  `st->als[i]`
-- [Phase 2] Verified `hid_sensor_format_scale()` uses `attr_info->units`
-  and `unit_expo`; ALS unit table only has ALS+0 and ALS+LUX
-- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor cad928dad9a4c HEAD` → already
-  in this tree (mainline landing)
-- [Phase 3] Color temp `3765d426fe864` and chromaticity `2ec17b1950bb8`
-  contained in v6.9-rc1
-- [Phase 3] Prox analog `8b518cdb03f5f` had Cc: stable + Fixes
-- [Phase 3] No follow-up commits on hid-sensor-als.c after cad928dad9a4c
-- [Phase 4] `b4 dig -c cad928dad9a4c`: lore https://patch.msgid.link/202
-  60723-chromaticity-v1-1-5ef5746ace2a@frame.work
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: IIO + HID-sensor maintainers on To/Cc
-- [Phase 4] mbox: Jonathan OK with shared-by-type; Srinivas Ack; no NAK;
-  no stable nomination in thread
-- [Phase 4] GitLab MR fetch: 403, body UNVERIFIED
-- [Phase 5] semcode: not available; grep shows als_read_raw only from
-  als_info; hid_als_probe only caller of als_parse_report
-- [Phase 6] Working tree already has per-channel scale arrays at lines
-  36–38 and 332–334
-- [Phase 8] Failure mode: wrong IIO SCALE for color ALS → incorrect
-  userspace conversion; severity MEDIUM
-- UNVERIFIED: exact PX13 HID unit/exponent values; linux-stable@
-  discussion outside this thread
+Risk vs benefit: negligible risk, modest doc benefit. No dependencies or
+backport rework.
+
+---
+
+## Verification
+- [Phase 1] Tags: author SOB, Randy Dunlap Acked-by, Jonathan Corbet
+  SOB, Message-ID v2; no Fixes/Reported-by/Cc-stable
+- [Phase 2] Diff: single RST URL `http://kernel.dk/blk-mq.pdf` →
+  `https://www.kernel.dk/blk-mq.pdf`
+- [Phase 2] WebFetch: old URL 404; new URL returns the PDF
+- [Phase 3] `git blame` line 142: `46e906144c3f4b` (2020); `git describe
+  --contains` → v5.9-rc1
+- [Phase 3] `git merge-base --is-ancestor 46e906144c3f4b HEAD` succeeded
+- [Phase 3] Author has no other commits in this tree; file history is
+  typo/Sphinx-only
+- [Phase 4] `b4 mbox`: 12-message v1/v2 thread; Randy caught v1 404/SSL;
+  Corbet applied v2
+- [Phase 4] LKML pull: included in Documentation stragglers for 7.3
+- [Phase 4] Syzbot CI: skipped, no functional impact
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
+- [Phase 5] No functions/callers; only docs consumers
+- [Phase 6] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; kernelversion
+  6.12.111; dead URL still at blk-mq.rst:142
+- [Phase 6] Apply would be clean; no post-v6.12 edits to this file
+- [Phase 6] Precedent: `docs: hwmon: fix link to g762...` and `docs:
+  media: update location...` already in this 6.12 tree
+- [Phase 8] Failure mode: documentation 404, severity LOW; runtime risk
+  none
 
 **YES**
 
- drivers/iio/light/hid-sensor-als.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ Documentation/block/blk-mq.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/hid-sensor-als.c b/drivers/iio/light/hid-sensor-als.c
-index 384572844162c..232cb58e0a9ff 100644
---- a/drivers/iio/light/hid-sensor-als.c
-+++ b/drivers/iio/light/hid-sensor-als.c
-@@ -33,9 +33,9 @@ struct als_state {
- 		u32 illum[CHANNEL_SCAN_INDEX_MAX];
- 		aligned_s64 timestamp;
- 	} scan;
--	int scale_pre_decml;
--	int scale_post_decml;
--	int scale_precision;
-+	int scale_pre_decml[CHANNEL_SCAN_INDEX_MAX];
-+	int scale_post_decml[CHANNEL_SCAN_INDEX_MAX];
-+	int scale_precision[CHANNEL_SCAN_INDEX_MAX];
- 	int value_offset;
- 	int num_channels;
- 	s64 timestamp;
-@@ -186,9 +186,11 @@ static int als_read_raw(struct iio_dev *indio_dev,
- 		ret_type = IIO_VAL_INT;
- 		break;
- 	case IIO_CHAN_INFO_SCALE:
--		*val = als_state->scale_pre_decml;
--		*val2 = als_state->scale_post_decml;
--		ret_type = als_state->scale_precision;
-+		if (chan->scan_index >= CHANNEL_SCAN_INDEX_MAX)
-+			return -EINVAL;
-+		*val = als_state->scale_pre_decml[chan->scan_index];
-+		*val2 = als_state->scale_post_decml[chan->scan_index];
-+		ret_type = als_state->scale_precision[chan->scan_index];
- 		break;
- 	case IIO_CHAN_INFO_OFFSET:
- 		*val = als_state->value_offset;
-@@ -338,6 +340,10 @@ static int als_parse_report(struct platform_device *pdev,
- 		als_adjust_channel_bit_mask(channels, index, st->als[i].size);
- 		++index;
+diff --git a/Documentation/block/blk-mq.rst b/Documentation/block/blk-mq.rst
+index fc06761b6ea90..2798761efe0d6 100644
+--- a/Documentation/block/blk-mq.rst
++++ b/Documentation/block/blk-mq.rst
+@@ -139,7 +139,7 @@ completed.
+ Further reading
+ ---------------
  
-+		st->scale_precision[i] = hid_sensor_format_scale(usage_id,
-+					&st->als[i], &st->scale_pre_decml[i],
-+					&st->scale_post_decml[i]);
-+
- 		dev_dbg(&pdev->dev, "als %x:%x\n", st->als[i].index,
- 			st->als[i].report_id);
- 	}
-@@ -347,10 +353,6 @@ static int als_parse_report(struct platform_device *pdev,
- 	if (index)
- 		ret = 0;
+-- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <http://kernel.dk/blk-mq.pdf>`_
++- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <https://www.kernel.dk/blk-mq.pdf>`_
  
--	st->scale_precision = hid_sensor_format_scale(usage_id,
--				&st->als[CHANNEL_SCAN_INDEX_INTENSITY],
--				&st->scale_pre_decml, &st->scale_post_decml);
--
- 	return ret;
- }
+ - `NOOP scheduler <https://en.wikipedia.org/wiki/Noop_scheduler>`_
  
 -- 
 2.53.0
