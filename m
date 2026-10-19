@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85336301E7;
-	Mon, 19 Oct 2026 14:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD863020F;
+	Mon, 19 Oct 2026 14:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418729; cv=none; b=IlxDLVlPJqNZPnop2lQKQMSjj8s8FkfzdQgB6nuTfFzAeg6mnBCiAZML8ci6QPXaYLR+bf57PNJZc1LyIdCR1h/x7pN/JMaER59RvwG2YpjY5bfnBiB21zEvWiOhFkejAXnYCpfBWYfFNSc5oF/czafRHOJyHZCRpNYNfWASdTA=
+	t=1792418730; cv=none; b=hekT6ndq7dBOI18bGDkbFgwfKSM4Jrwk/OsOB0hZXLOZQsJCezW95tOmygZMmLUs6tTH+qZ8q/iuIxnX+HruzG1drG/s9eE9SJWwbY4lncIft1qaFHdkg6jEwKAPsNXo/9MWunLq81KfZGrWOaRD6UhIy1bnUPZX6B2ykNUY5zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418729; c=relaxed/simple;
-	bh=1jnWH4VwF8YerAsB7d5GBxnznGwbwqpbjy5I7grac7w=;
+	s=arc-20240116; t=1792418730; c=relaxed/simple;
+	bh=qvoG948+wlY6YhQE8UFJDGh3inRWIHWrZ1ygpY4gKuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O7ZH3yXCkBdFTyEg7qkzvhgsfS484i0mTMeNxEVF10+BYF4N6YWj2NwPSTsdBtxge++YGijocT2jyGdmGanPL2+f9wWE1x7cJdaFlkc5evzHaFwiBGeB8FBoey1o9z/y1z15ACX+SXsIMFBA3/gfxmVpSio/fxNNWCkCCOV9ZVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M8P32T69; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cjxQ1F7Pq7r2Ngi01k0FWUr1xsuveSkv8qWj6bdsrSBQyupjgL+bWk187GQnaN7pRY6hMeb4zYvxT95NwmdV/d4TP+jT68+XtBhLR31j7v8d0qlHz7HLBWqnkVBEi5LyMU61ZitKqqRB94rRMJpuegyoIpZ6NV7Mzk/Fp24YcAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YWNFuYXy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M8P32T69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD34E1F000CA;
-	Mon, 19 Oct 2026 14:05:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YWNFuYXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168A21F000CB;
+	Mon, 19 Oct 2026 14:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418725;
-	bh=20E9De6BR+S8VMH4NJX+3knCPN5YgOZQEqpYqKvUVww=;
+	s=k20260515; t=1792418726;
+	bh=DJWgP9LAVP+WfTHuThDxm+9DemxUo7ypk1YTH37/tT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8P32T69oDdZsTGtioWELWnFL5tDcoALk2OUF07xosR+exBuTjGmm7L3x8lIauq7U
-	 ySx1kfwhXABsosgtOphwHJ6gVYoKGfn2dsAi1MCyn0yTkjimnKk3nzkqQx0Dft3xkC
-	 8Q74HkUEEnRVa5/YocAzuVcxt0goSHkyZHzDTK73IgKcZ9VvbImxmhhe+o+dRkc9kG
-	 Y9xQe5QlqUsDqwKeiD1AFqLOOz4XpKhEPC1XzCUNY8XBSZU/ZySg4Ksc00M0vjY+ac
-	 L9I241RUXElfOQgYGTO4wvEag7BHKlTM3Dc3oLKJjJ6L71Euhz5gN7a6qEUdxcp2Zu
-	 NvhPLZFtWRt1w==
+	b=YWNFuYXyMz64LMhuCQ/6Rk3RLS/LQxbO2M+9pHq2dWeBNXRPiHSk8y6Q21st3TBO/
+	 grsRI+EOFrQGPSWpk8tXTMh5n3SNNCbAzTaV245AXhoV+Ik/1Ig+4jk1iq2WfxLjPz
+	 9ln7g08oUhNd0YOgQvEfUjRI1tB692RfOaeHKEw2J3UaueTM5uqS3Df5kR5mMtKiwZ
+	 nJcbfv8lTy33Fz2gXlAvmirxu3XpgDJjHwlDz1fUeUuhHP5ieP8SCdDdUpN+bJ1ooS
+	 eI2xLI5a/w1GJ7+y9Nw8ZhNyfgs0xcdyyFJtVbyriMspUB6gih3uin0A/7S3Xa2QZS
+	 bERiG2EDLd0rw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Ayala Beker <ayala.beker@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: cec/core: drop cec_post_state_event call
-Date: Mon, 19 Oct 2026 09:52:23 -0400
-Message-ID: <20261019135441.1420968-452-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: drop connection on D3 resume failure
+Date: Mon, 19 Oct 2026 09:52:24 -0400
+Message-ID: <20261019135441.1420968-453-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,392 +53,412 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Ayala Beker <ayala.beker@intel.com>
 
-[ Upstream commit 2ff4b91e82bd76e1a6e1ff22bfc9aeda08e12a61 ]
+[ Upstream commit 4f5384b58b483e4aec576ce461dec45b41df18db ]
 
-No need to call cec_post_state_event() if the next call
-is to cec_adap_unconfigure() since that will also call
-cec_post_state_event().
+When FW crashes on D3 exit, iwl_mld_nic_error() sets
+STATUS_RESET_PENDING and queues restart wk, but mac80211's resume
+callback synchronously calls iwl_trans_stop_device() which clears
+the flag. As a result restart wk skips sw_reset, and the FW error
+recovery buffer is never read.
 
-This fixes the case when, when the physical address is
-invalidated, you get two CEC_EVENT_STATE_CHANGE events:
-one with a non-zero log_addr_mask and one with a zero
-log_addr_mask.
+The new FW boots with empty BA state and initial sequence numbers,
+while the AP still holds its A-MPDU RX reorder window.
+This causes MPDUs to be dropped as IWL_RX_MPDU_REORDER_BA_OLD_SN until
+ADDBA is renegotiated.
 
-You just want to see the event with phys_addr set to
-f.f.f.f and log_addr_mask set to 0.
+We don't know how long the firmware has been in an error state
+or whether the AP still considers us associated, so keeping the
+connection alive is not worth it.
+Call ieee80211_resume_disconnect() when iwl_mld_wait_d3_notif() fails,
+and let userspace reassociate.
 
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Ayala Beker <ayala.beker@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260717172958.3e10c8498f53.Icf5644b42d79e984ecc16abfa873bd37f611e778@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (mainline 7.3). The extra
-`cec_post_state_event()` lives in `__cec_s_phys_addr()` and is a real
-UAPI-visible duplicate-event bug on HDMI unplug, not a cleanup-only
-change.
+This is a real WoWLAN resume recovery bug in `iwlwifi` MLD: after a
+firmware crash on D3 exit the driver keeps the association, so traffic
+is dropped. The local tree is **7.3.0-rc4**
+(`v7.3-rc4-27-gf0100363d8c37`); the MLD D3 path exists here, and the
+three-line fix is self-contained.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject line**
-Record: **[media/cec/core] [drop] [remove redundant
-`cec_post_state_event()` before `cec_adap_unconfigure()`]**
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[wifi: iwlwifi: mld:] [drop] [drop the association when
+D3/WoWLAN resume fails to get firmware notifications]`
 
-**Step 1.2: Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Hans Verkuil \<hverkuil+cisco@kernel.org\> (CEC
-  maintainer / author)
-- Signed-off-by: Mauro Carvalho Chehab \<mchehab+huawei@kernel.org\>
-  (media maintainer)
-- No Fixes:, Reported-by, Tested-by, Reviewed-by, Acked-by, Link:, or
-  Cc: stable (absence of Fixes:/Cc: stable is expected for this review)
+- `Fixes:` — none (expected; not a negative signal)
+- `Reported-by:` — none
+- `Tested-by:` — none
+- `Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>`
+  (iwlwifi maintainer)
+- `Acked-by:` — none
+- `Link: https://patch.msgid.link/20260717172958.3e10c8498f53.Icf5644b42
+  d79e984ecc16abfa873bd37f611e778@changeid`
+- `Cc: stable@vger.kernel.org` — none (expected)
+- `Signed-off-by: Ayala Beker <ayala.beker@intel.com>` (author)
+- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
+  (iwlwifi-next maintainer)
+- No syzbot / kernel test robot tags
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** When the CEC physical address is invalidated, userspace gets
-  two `CEC_EVENT_STATE_CHANGE` events: one with a non-zero
-  `log_addr_mask`, then one with zero.
-- **Symptom:** Extra/inconsistent state-change event. Desired event is
-  `phys_addr = f.f.f.f` and `log_addr_mask = 0`.
-- **Root cause:** `__cec_s_phys_addr()` posts a state event, then
-  immediately calls `cec_adap_unconfigure()`, which posts another after
-  clearing `log_addr_mask`.
-- **Version info:** none in the message. The double-post has been in
-  `__cec_s_phys_addr()` since the original CEC adapter (2016).
+- **Bug:** Firmware crash on D3 exit. `iwl_trans_fw_error()` →
+  `iwl_trans_schedule_reset()` sets `STATUS_RESET_PENDING` and queues
+  restart work. mac80211 resume then calls `iwl_trans_stop_device()`,
+  which clears that flag, so restart work skips SW reset and never reads
+  the FW error recovery buffer.
+- **Symptom:** New firmware boots with empty BA state / initial SNs
+  while the AP still has its A-MPDU RX reorder window. RX MPDUs are
+  dropped as `IWL_RX_MPDU_REORDER_BA_OLD_SN` until ADDBA is
+  renegotiated. Association state with the AP is also unknown.
+- **Version info:** none in the message. MLD D3 code has existed since
+  the MLD driver was added (in this history: `d1e879ec600f9`, present by
+  v6.15).
+- **Root cause (author):** keep-alive after a failed D3 resume is not
+  safe; disconnect and let userspace reassociate.
 
-**Step 1.4: Hidden bug fix?**
-Record: **Not hidden.** The first sentence sounds like cleanup, but the
-body describes a real userspace-visible duplicate event. Confirmed by
-the UAPI docs: `log_addr_mask` must be 0 if `phys_addr` is
-`CEC_PHYS_ADDR_INVALID`. The first event violates that.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a hidden cleanup. Explicit recovery/correctness fix for a
+broken post-resume connection.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/media/cec/core/cec-adap.c` (−1 line)
-- Function: `__cec_s_phys_addr()`
-- Scope: single-file, one-line surgical deletion
+- File: `drivers/net/wireless/intel/iwlwifi/mld/d3.c` (+3 / −0)
+- Function: `iwl_mld_wowlan_resume()`
+- Scope: single-file surgical fix (3 lines on the existing error path)
 
-**Step 2.2: Code flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record: Before, `iwl_mld_wait_d3_notif()` failure logged `"Couldn't get
+the d3 notifs"` and `goto err`, which sets `in_hw_restart = true` and
+returns `1`. mac80211 treats `1` as “full reconfig on wakeup” and
+**keeps** the STA associated. After, if `bss_vif->cfg.assoc`, it also
+calls `ieee80211_resume_disconnect(bss_vif)` so mac80211 tears the
+connection down during resume reconfig. The same function already did
+that on the success path when `keep_connection` is false.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: `[Logic / correctness]` — failed D3 resume left a zombie
+association. Firmware BA state is reset; AP reorder window is not.
+`ieee80211_resume_disconnect()` sets
+`IEEE80211_SDATA_DISCONNECT_RESUME`, taints keys, and
+`ieee80211_sta_restart()` later calls `ieee80211_sta_connection_lost()`.
+This matches MVM: `__iwl_mvm_resume()` always runs
+`iwl_mvm_d3_disconnect_iter` unless `keep` is true (and `keep` stays
+false on error).
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct and minimal. `ieee80211_resume_disconnect()`
+is documented for the resume callback; `iwl_mld_wowlan_resume()` is
+called only from `iwl_mld_resume()`. Must be used here rather than
+`ieee80211_hw_restart_disconnect()`, which WARNs unless
+`local->in_reconfig`. Guarded by `bss_vif->cfg.assoc`. Regression risk
+is low: extra disconnect only when D3 notifs already failed, which is
+already treated as a restart-needed error.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: The `iwl_mld_wait_d3_notif()` error path comes from
+`d1e879ec600f9` (“wifi: iwlwifi: add iwlmld sub-driver”, 2025-03-05).
+Present in this tree; `git merge-base --is-ancestor d1e879ec600f9 v6.15`
+succeeds. The bug is old relative to 7.3, not brand-new code.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Buggy behavior is the original MLD wowlan-
+resume error path, not a later regression.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `mld/d3.c` work is other WoWLAN validation (`validate
+D3_END notif size`, `validate WoWLAN notif header`, wake-packet checks).
+`ieee80211_resume_disconnect` on the *success* path was added in
+`99f201a9a7d59` (keep_connection). No prerequisite refactor is required
+for these three lines. No later commits on this file after
+`4f5384b58b483`.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Ayala Beker is a regular Intel iwlwifi contributor (MVM and
+MLD). Reviewed by Emmanuel Grumbach; applied by Miri Korenblit. Strong
+maintainer signal.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Submitted as **patch 4/8** of `iwlwifi-next` updates
+(2026-07-17). Cover letter: “A couple of fixes, features and cleanups.”
+Other patches (wake-packet validation, scan-abort init, MVM sync frames,
+SAR define move, MCC v2, debug log, BIOS code move) do not change this
+error path. Standalone: uses existing `ieee80211_resume_disconnect()`
+and `bss_vif->cfg.assoc`.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record: `b4 dig -c 4f5384b58b483` → https://patch.msgid.link/20260717172
+958.3e10c8498f53.Icf5644b42d79e984ecc16abfa873bd37f611e778@changeid
+`b4 dig -a`: single v1 series, no v2/v3.
+Mbox (`b4 dig -m`): 9 messages, cover + 8 patches, **no replies, NAKs,
+or reviewer concerns**. `Reviewed-by: Emmanuel Grumbach` was already on
+the submission. No `Cc: stable` in-thread.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: `b4 dig -w` recipients: Johannes Berg
+(`johannes@sipsolutions.net`), `linux-wireless@vger.kernel.org`, Ayala
+Beker, Emmanuel Grumbach, Miri Korenblit. Right maintainers/list.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by` / bugzilla / syzbot. Bug is described from
+driver/firmware analysis, not a public user report.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Mixed iwlwifi-next dump; this hunk does not depend on 1–3 or
+5–8.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org HTTP 403 from this environment. No stable-list
+discussion verified. `b4` thread does not mention stable.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `iwl_mld_wowlan_resume()`; calls
+`ieee80211_resume_disconnect()`.
+
+**Step 5.2: TRACE CALLERS**
 Record:
-- **Before:** On PA change/invalidation (`becomes_invalid ||
-  !is_invalid`): set `adap->phys_addr = CEC_PHYS_ADDR_INVALID`, **post
-  STATE_CHANGE** (mask still old/non-zero), then
-  `cec_adap_unconfigure()` which zeros `log_addr_mask` and posts again.
-- **After:** Same path, but only `cec_adap_unconfigure()` posts.
-  Userspace sees one event with invalid PA and mask 0.
-- Path: HDMI unplug / HPD low / `CEC_ADAP_S_PHYS_ADDR` with
-  `CEC_PHYS_ADDR_INVALID` / notifier invalidation. Not an error path.
+- `iwl_mld_wowlan_resume()` ← `iwl_mld_resume()` in `mld/mac80211.c`
+  (mac80211 `.resume`)
+- `iwl_mld_resume()` ← `drv_resume()` in `ieee80211_reconfig()` when
+  `local->wowlan`
+- `iwl_mld_wait_d3_notif()` also used by `iwl_mld_no_wowlan_resume()`;
+  this patch does **not** change that path (no-wowlan resume is handled
+  in `iwl_mld_mac80211_start()`; mac80211 already cleaned state)
 
-**Step 2.3: Bug mechanism**
-Record: **Logic / userspace-event correctness.** Redundant notification
-posted before logical addresses were cleared. First event contradicts
-the documented invariant. `cec_adap_unconfigure()` already posts the
-correct event (verified at line 1426).
+**Step 5.3: TRACE CALLEES**
+Record: `ieee80211_resume_disconnect()` →
+`ieee80211_reconfig_disconnect(..., IEEE80211_SDATA_DISCONNECT_RESUME)`
+→ set sdata flag + `KEY_FLAG_TAINTED`. Later `ieee80211_sta_restart()` →
+`ieee80211_sta_connection_lost()`.
 
-**Step 2.4: Fix quality**
-Record: Obviously correct. `cec_adap_unconfigure()` still posts after
-clearing the mask. No API/data-structure change. Regression risk is very
-low: anyone depending on the intermediate non-zero mask with invalid PA
-would be depending on a documented-impossible state.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace/system suspend with WoWLAN → resume →
+`ieee80211_reconfig()` → `iwl_mld_resume()`. If wait for D3 notifs
+fails, return 1 still triggers full reconfig **and** (with this patch)
+disconnect. Reachable on laptops with Intel MLD (Wi-Fi 7) firmware and
+WoWLAN. Unprivileged users do not trigger it directly; any user who
+suspends the machine can.
 
-## Phase 3: Git history
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: MVM already disconnects on D3 resume unless `keep` is true
+(`iwl_mvm_d3_disconnect_iter`). Same `ieee80211_resume_disconnect()`
+already used in this function when wowlan status says not to keep the
+connection. MLD also has `iwl_mld_restart_disconnect_iter` for invalid
+recovery blobs during `iwl_mld_send_recovery_cmd()` — a different path,
+and it does not cover “recovery buffer never read.”
 
-**Step 3.1: Blame**
-Record: The extra `cec_post_state_event()` before
-`cec_adap_unconfigure()` is from **9881fe0ca187c2** (“[media] cec: add
-HDMI CEC framework (adapter)”, 2016-06-28). Present since CEC was
-introduced.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 3.2: Fixes: tag**
-Record: None. The double-post is original 2016 code. It became much more
-visible after **67d9598720159** (“handle core events like normal
-events”, 2026-07-17), which raised the STATE_CHANGE queue from 1 to 3 so
-the first event is no longer overwritten.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. Tree is **7.3.0-rc4**.
+`drivers/net/wireless/intel/iwlwifi/mld/d3.c` and
+`iwl_mld_wowlan_resume()` exist (`CONFIG_IWLMLD`). Error path introduced
+with MLD (`d1e879ec600f9`, in v6.15+). `ieee80211_vif.cfg.assoc` exists
+in this tree.
 
-**Step 3.3: Related file history**
-Record: Same-day series (Hans Verkuil, 2026-07-10, merged 2026-07-17):
-1. `e6dcc43e5174d` max_retries → max_attempts (rename)
-2. `0c138a5d5045f` drop ABORTED/TIMEOUT check
-3. `67d9598720159` handle core events like normal events (**makes
-   duplicate visible**)
-4. `2ff4b91e82bd7` **this commit**
-5. `350308a05f7dd` flush stale STATE_CHANGE events (related,
-   independent)
-6–8. new UAPI flag, pin toggle, debugfs (features)
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply on this tree. Context around the wait-d3-notif error
+path matches the hunk. No conflicting local changes.
 
-This patch is 4/8. It is self-contained: it only deletes a call that has
-existed since 2016.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No other commit greps as an alternate fix for “D3 resume
+failure” disconnect in MLD. MVM already had the equivalent behavior;
+this fills the MLD gap.
 
-**Step 3.4: Author**
-Record: Hans Verkuil is the CEC subsystem maintainer and original author
-of this function. High confidence in the diagnosis.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 3.5: Prerequisites**
-Record: Applies standalone (one-line delete). **67d9598720159 is in this
-tree** (`git merge-base --is-ancestor` succeeded), so the duplicate is
-actually delivered here. Follow-up `350308a05f7dd` is not required for
-this fix.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `[drivers/net/wireless/intel/iwlwifi/mld]` `[IMPORTANT]` — not
+core mm/VFS, but Intel Wi-Fi 7 (MLD) on laptops; WoWLAN resume is a
+common path.
 
-## Phase 4: Mailing list / external research
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively developed (frequent mld/d3.c changes). Bug is in
+original wowlan-resume error handling, not a one-off new feature.
 
-**Step 4.1: Original discussion**
-Record:
-- `b4 dig -c 2ff4b91e82bd7` → https://patch.msgid.link/cc357768324be21b0
-  133799326e8230face817ad.1783681656.git.hverkuil+cisco@kernel.org
-- Cover: `[PATCH 0/8] media: cec/core: fixes and improvements`
-- `b4 dig -a`: **v1 only**, no later revisions
-- Thread (mbox) contains only Hans’s 8 patches. **No replies, no NAKs,
-  no reviewer Cc: stable.**
-- Cover letter: mixed “fixes and improvements”; this patch’s body is a
-  concrete event bug, not a feature.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 4.2: Recipients**
-Record: `b4 dig -w`: Hans Verkuil + linux-media@vger.kernel.org. Merged
-by Mauro Chehab. No external reviewer tags.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver/config-specific: `CONFIG_IWLMLD` + `CONFIG_PM_SLEEP`,
+Intel MLD firmware, WoWLAN enabled. Typical: recent Intel Wi-Fi 7
+laptops.
 
-**Step 4.3: Bug report**
-Record: No Reported-by / Link / bugzilla / syzbot. Author-found while
-changing event queuing.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Not every resume. Trigger is D3-exit firmware failure
+(crash/timeout so D3 notifs never arrive). Timing-dependent around
+firmware error vs resume `stop_device`. Not a syscall smash; any
+suspend/resume with WoWLAN can hit it if FW dies on the way out of D3.
 
-**Step 4.4: Series**
-Record: 8-patch series. Patches 6–8 add a UAPI flag and debugfs (not
-needed here). Patch 3 is in this tree and is why two STATE_CHANGE events
-are queued. Patch 5 flushes older queued events on invalid PA;
-complementary, not a prerequisite.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Not a panic. User-visible **broken Wi-Fi after sleep**:
+interface still associated, MPDUs dropped as old SN, possible stale
+association if the AP already dropped the client. Severity **HIGH**
+(serious connectivity failure on a common laptop path), not CRITICAL (no
+oops/deadlock/corruption).
 
-**Step 4.5: Stable list**
-Record: lore.kernel.org returned HTTP 403 via WebFetch/curl.
-**UNVERIFIED** whether this was discussed on stable@. No Cc: stable in
-the commit or mbox.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: Benefit high for affected users (restores a clean reassociate
+instead of a zombie session). Risk very low (3 lines, existing API,
+error path only, same pattern as MVM and the local success path). Ratio
+strongly favors applying it.
 
-## Phase 5: Code semantic analysis
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 5.1: Functions**
-Record: `__cec_s_phys_addr()` (modified). Helpers involved:
-`cec_post_state_event()`, `cec_adap_unconfigure()`, `cec_s_phys_addr()`.
-
-**Step 5.2: Callers**
-Record:
-- `cec_s_phys_addr()` — exported; HDMI drivers/notifiers (DRM HDMI
-  helper, DP CEC, Pulse8, Extron, adv76xx, tc358743, sun4i, omap,
-  ch7322, vivid, …)
-- `__cec_s_phys_addr()` also from `cec-api.c` (`CEC_ADAP_S_PHYS_ADDR`)
-  and `cec-core.c` (unregister)
-- `cec-notifier.c` on HDMI HPD/EDID PA updates
-
-Reachable from ioctl and from HDMI hotplug.
-
-**Step 5.3: Callees**
-Record: Sets `adap->phys_addr`, `cec_adap_unconfigure()` (clears mask,
-flush, **posts event**), `cec_adap_enable()`, `cec_claim_log_addrs()`.
-Called with `adap->lock` held.
-
-**Step 5.4: Call chain / reachability**
-Record: Userspace-reachable. Common trigger: HDMI unplug →
-notifier/driver sets PA invalid → `__cec_s_phys_addr()`. Also
-`CEC_ADAP_S_PHYS_ADDR`. `cec_dqevent()` takes only `fh->lock`, not
-`adap->lock`, so a waiter can dequeue the first (bad) event before
-unconfigure posts the second.
-
-**Step 5.5: Similar patterns**
-Record: Other `cec_post_state_event()` sites (unconfigure, config-
-complete, `cec_s_conn_info`) post once after state is consistent. Only
-this site posted before clearing the mask. Follow-up `350308a05f7dd`
-flushes stale STATE_CHANGE events when PA becomes invalid.
-
-## Phase 6: This tree
-
-**Step 6.1: Does the buggy code exist?**
-Record: **Yes.** Tree is **v7.3-rc4** (`7.3.0-rc4`).
-`__cec_s_phys_addr()` and the extra post exist in this lineage since
-2016. Parent **67d9598720159 is an ancestor of HEAD**, so the
-STATE_CHANGE queue depth is 3 and both events are delivered. Bug
-introduced in 2016; user-visible duplicate made systematic in 7.3.
-
-**Step 6.2: Backport difficulty**
-Record: Clean apply. Surrounding function matches the pre-image. One-
-line deletion, no conflicts expected.
-
-**Step 6.3: Related fixes already here**
-Record: `350308a05f7dd` (flush stale events) is already in this tree as
-the next series patch. It does not replace this deletion; it handles
-previously queued events. No alternate fix for the double-post.
-
-## Phase 7: Subsystem context
-
-**Step 7.1:**
-Record: **media/CEC core**. Criticality: **IMPORTANT** for HDMI-CEC
-users (TVs, Android TV, STBs, desktops with HDMI CEC). Not mm/fs/net
-core, but the CEC device node is the userspace ABI for that class of
-hardware.
-
-**Step 7.2:**
-Record: Active. Multiple CEC core commits in 7.3 from the maintainer.
-This file is mature (2016) with ongoing event/config fixes.
-
-## Phase 8: Impact and risk
-
-**Step 8.1: Who is affected**
-Record: Driver/config-specific: `CONFIG_CEC_CORE` and a CEC adapter (DRM
-HDMI, USB CEC dongles, SoC CEC). Userspace that dequeues
-`CEC_EVENT_STATE_CHANGE` (libcec, v4l-utils, Android CEC HAL).
-
-**Step 8.2: Trigger**
-Record: HDMI unplug / HPD low / invalidating the physical address.
-Common for CEC users. Unprivileged userspace with a CEC fd can also set
-PA via ioctl if `CEC_CAP_PHYS_ADDR` is set. Timing: the two posts are
-consecutive in one lock section, but `cec_dqevent()` does not take
-`adap->lock`, so a blocked waiter can observe the first event.
-
-**Step 8.3: Failure mode**
-Record: Userspace sees a STATE_CHANGE with `phys_addr = f.f.f.f` and
-**non-zero** `log_addr_mask`, which the UAPI docs forbid, then a second
-correct event. Can confuse adapters as still configured after
-disconnect. **Severity: MEDIUM** (incorrect userspace event / UAPI
-invariant break; not a kernel oops, leak, or corruption).
-
-**Step 8.4: Risk-benefit**
-Record:
-- **Benefit:** Medium. Stops a documented-impossible event on a common
-  HDMI path in this 7.3 tree, where queue depth is 3.
-- **Risk:** Very low. One-line delete; unconfigure still posts the
-  correct event.
-- **Ratio:** Favorable.
-
-## Phase 9: Synthesis
-
-**Step 9.1: Evidence**
+**Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real userspace bug: two STATE_CHANGE events, first with invalid PA and
-  non-zero mask
-- Violates documented UAPI (`log_addr_mask` must be 0 if PA is invalid)
-- HDMI unplug / PA invalidation is a common path
-- This tree has 67d9598720159, so both events are queued (not coalesced)
-- 1-line deletion, obviously correct
-- `cec_adap_unconfigure()` already posts the right event
-- Author is the CEC maintainer; media maintainer merged it
-- Applies cleanly here; no new API
+- Real post-resume connectivity bug (dropped MPDUs / unknown
+  association), not style
+- Matches MVM’s long-standing “disconnect unless keep” D3 resume
+  behavior
+- 3-line, obviously correct use of `ieee80211_resume_disconnect()` from
+  the resume callback
+- Reviewed by Emmanuel Grumbach; applied by Miri Korenblit; To: Johannes
+  Berg
+- Buggy path present in this 7.3 tree since MLD introduction
+- Standalone; series-mates are unrelated
+- Tiny error-path change; disconnect is conservative when firmware state
+  is untrustworthy
 
 AGAINST:
-- Not a kernel crash, UAF, deadlock, or security issue
-- No Reported-by / syzbot / user bug report
-- Patch 4/8 in a mixed “fixes and improvements” series
-- No mailing-list review comments beyond submission
-- Severity is MEDIUM (wrong event), not CRITICAL
+- No crash, UAF, or CVE; not every resume
+- No user `Reported-by` / syzbot
+- Mixed “fixes, features and cleanups” series (this patch itself is a
+  fix)
+- Lore HTTP 403; no independent stable-list confirmation
 
 UNRESOLVED:
-- lore.kernel.org HTTP 403; stable@ discussion not independently
-  confirmed (no Cc: stable in the mbox)
+- Could not read lore/stable HTML (403). Thread contents were recovered
+  via `b4 dig -m`.
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? **PASS** — one redundant call removed;
-   unconfigure still notifies. Maintainer-authored, merged to media
-   tree.
-2. Real bug affecting users? **PASS** — duplicate/inconsistent CEC event
-   on PA invalidation; userspace that trusts the UAPI invariant can mis-
-   handle HDMI disconnect.
-3. Important issue? **PASS** (medium) — not oops/corruption, but a
-   userspace ABI invariant break on a common hotplug path. In this tree
-   it is systematic because STATE_CHANGE is no longer a single-slot core
-   event.
-4. Small and contained? **PASS** — −1 line, one function.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — code and prerequisite
-   67d9598720159 are present; hunk matches.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — uses the documented resume-
+   disconnect API; maintainer Reviewed-by
+2. Fixes a real bug that affects users? **PASS** — WoWLAN resume leaves
+   a dead/stale association
+3. Important issue? **PASS** — serious connectivity loss after suspend,
+   not a panic but user-visible and persistent until reassoc/ADDBA
+4. Small and contained? **PASS** — 3 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — MLD D3 resume code is here;
+   context matches
 
-**Step 9.3: Exception category**
-Record: None (not a device ID, quirk, DT, build, or docs fix). Qualifies
-as a normal small bugfix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID/quirk/DT/build/docs exception). Qualifies
+as a normal bugfix.
 
-**Step 9.4: Decision**
-This tree is 7.3-rc4. The buggy double-post is in this lineage, and
-67d9598720159 is here, so userspace actually receives the illegal first
-event. The fix is a one-line deletion with essentially no regression
-risk. That is appropriate to carry on this tree.
+**Step 9.4: MAKE YOUR DECISION**
+The local 7.3 tree has the MLD wowlan-resume error path. Without this
+change, a firmware crash on D3 exit keeps the mac80211 association
+through reconfig while BA state is reset, so traffic dies until ADDBA.
+Disconnect-on-failure is the same policy MVM already uses and is a
+three-line, low-risk fix.
 
-## What the commit solves for this tree
+Verification:
+- [Phase 1] Parsed tags: Reviewed-by Emmanuel Grumbach; Link msgid; no
+  Fixes/Reported-by/Cc-stable
+- [Phase 1] Body: FW D3-exit crash → reset flag cleared by
+  `iwl_trans_stop_device()` → empty BA vs AP reorder window → OLD_SN
+  drops
+- [Phase 2] Diff: +3 lines in `iwl_mld_wowlan_resume()` after
+  `iwl_mld_wait_d3_notif()` failure
+- [Phase 2] Confirmed `goto err` already sets `in_hw_restart` and
+  returns 1; mac80211 `drv_resume()` res==1 does full reconfig and keeps
+  association
+- [Phase 2] Confirmed success path already calls
+  `ieee80211_resume_disconnect()` when `keep_connection` is false
+  (`99f201a9a7d59`)
+- [Phase 2] Confirmed MVM `__iwl_mvm_resume()` disconnects all STATION
+  vifs unless `keep` (false on error)
+- [Phase 3] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4
+- [Phase 3] `git blame`: error path from `d1e879ec600f9` (MLD intro);
+  `git merge-base --is-ancestor d1e879ec600f9 v6.15` true
+- [Phase 3] `git merge-base --is-ancestor 4f5384b58b483 v7.2` false
+  (landed in 7.3 cycle)
+- [Phase 3] No Fixes tag; no later d3.c commits after this one
+- [Phase 3] Series 4/8 of mixed iwlwifi-next; parent is unrelated MVM
+  patch; standalone
+- [Phase 3] `iwl_trans_fw_error()` → `iwl_trans_schedule_reset()` sets
+  `STATUS_RESET_PENDING`; `iwl_trans_stop_device()` clears it — matches
+  the described mechanism (nic_error itself sets `in_hw_restart`, not
+  the bit)
+- [Phase 4] `b4 dig -c`: lore msgid match; `b4 dig -a`: v1 only; `b4 dig
+  -w`: Johannes + linux-wireless + Intel iwlwifi maintainers
+- [Phase 4] mbox: 9 messages, no replies/NAKs; cover lists this as a fix
+  among mixed patches
+- [Phase 4] lore.kernel.org WebFetch/curl 403 — UNVERIFIED via HTML;
+  thread recovered with b4
+- [Phase 5] Callers: `iwl_mld_resume` ← mac80211 wowlan resume;
+  `ieee80211_sta_restart` honors `IEEE80211_SDATA_DISCONNECT_RESUME`
+- [Phase 5] `agg.c` drops frames when `IWL_RX_MPDU_REORDER_BA_OLD_SN` is
+  set
+- [Phase 6] File and `iwl_mld_wait_d3_notif` error path present;
+  `bss_vif->cfg.assoc` valid in this tree
+- [Phase 7] iwlwifi MLD, important for Intel Wi-Fi 7 laptops
+- [Phase 8] Failure: zombie association / packet drops after suspend,
+  severity HIGH; fix risk very low
+- UNVERIFIED: public stable@ discussion (lore HTTP 403)
 
-`__cec_s_phys_addr()` used to notify userspace **before** logical
-addresses were cleared, then `cec_adap_unconfigure()` notified again.
-After 67d9598720159 (in this tree), both events are queued. On HDMI
-unplug, apps can see `phys_addr = f.f.f.f` with a non-zero
-`log_addr_mask`, which the CEC UAPI says cannot happen. Dropping the
-first post leaves a single correct event.
-
-## Risk vs benefit
-
-Benefit is correct CEC state on disconnect for every CEC userspace
-client in 7.3. Risk is a one-line delete of a notification that is
-immediately superseded. No locking, allocation, or ABI change.
-
-## Concerns
-
-- Importance is medium, not a kernel crash. Still a real ABI bug on a
-  common path, with a trivial fix.
-- Series patches 6–8 are unrelated features and must not be pulled with
-  this.
-- Patch 5 (flush stale events) is complementary, not required for this
-  deletion to be correct.
-
-## Verification
-- [Phase 1] Parsed tags: author Hans Verkuil, SOB Mauro Chehab; no
-  Fixes:/Reported-by/Cc: stable
-- [Phase 1] UAPI docs in `cec-ioc-dqevent.rst`: `log_addr_mask` is 0 if
-  `phys_addr` is `CEC_PHYS_ADDR_INVALID`
-- [Phase 2] Diff: −1 line in `__cec_s_phys_addr()`;
-  `cec_adap_unconfigure()` still calls `cec_post_state_event()` at line
-  1426
-- [Phase 3] `git describe HEAD` / Makefile: v7.3-rc4, VERSION=7
-  PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4
-- [Phase 3] `git blame` on pre-fix file: extra call from 9881fe0ca187c2
-  (2016 CEC adapter)
-- [Phase 3] `git show 9881fe0ca187c2`: original `__cec_s_phys_addr`
-  already had post-then-unconfigure
-- [Phase 3] `git merge-base --is-ancestor 2ff4b91e82bd7 HEAD` and
-  `67d9598720159 HEAD`: both ancestors
-- [Phase 3] `git show 67d9598720159`: STATE_CHANGE `max_events` 1→3;
-  core-event overwrite removed
-- [Phase 3] Series around the commit: 8 patches; this is 4/8; 5/8 is
-  flush-stale, independent
-- [Phase 4] `b4 dig -c 2ff4b91e82bd7`: lore URL found; v1 only; linux-
-  media only; no replies in mbox
-- [Phase 4] Cover letter: “fixes and improvements”; this patch body is
-  the duplicate-event fix
-- [Phase 4] lore.kernel.org WebFetch/curl: 403 — stable@ discussion
-  UNVERIFIED
-- [Phase 5] Callers: `cec_s_phys_addr`, ioctl, notifier, HDMI
-  DRM/USB/platform drivers
-- [Phase 5] `cec_dqevent()` uses only `fh->lock`; can dequeue between
-  the two posts
-- [Phase 6] Current `__cec_s_phys_addr` in this checkout already lacks
-  the extra call (fix present in 7.3-rc4 lineage); pre-image still
-  matches for a clean apply
-- [Phase 8] Failure mode: inconsistent CEC_EVENT_STATE_CHANGE, severity
-  MEDIUM, trigger HDMI PA invalidation
+The patch is a small, maintainer-reviewed recovery fix for a real WoWLAN
+resume failure on hardware this tree already supports.
 
 **YES**
 
- drivers/media/cec/core/cec-adap.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index 84eaf9780db25..4d2262530c94a 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -1708,7 +1708,6 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
- 		cec_phys_addr_exp(phys_addr));
- 	if (becomes_invalid || !is_invalid) {
- 		adap->phys_addr = CEC_PHYS_ADDR_INVALID;
--		cec_post_state_event(adap);
- 		cec_adap_unconfigure(adap);
- 		if (becomes_invalid) {
- 			cec_adap_enable(adap);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index b75936125b46d..69d8afda9fcd9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -2077,6 +2077,9 @@ int iwl_mld_wowlan_resume(struct iwl_mld *mld)
+ 	ret = iwl_mld_wait_d3_notif(mld, &resume_data, true);
+ 	if (ret) {
+ 		IWL_ERR(mld, "Couldn't get the d3 notifs %d\n", ret);
++
++		if (bss_vif->cfg.assoc)
++			ieee80211_resume_disconnect(bss_vif);
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
