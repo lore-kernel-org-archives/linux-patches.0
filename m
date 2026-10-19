@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68986031AE;
-	Mon, 19 Oct 2026 14:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED818501F25;
+	Mon, 19 Oct 2026 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418589; cv=none; b=WKg9gkbW99OOVj+1lYpW1dtqZEl3But12wAzOQfJ2gY5iGdIla+3g950uE+ECI+BMhxhdjCblSQDOw4RdsIYLY7lOLRfDXL5/3IlzWRr7sZ7wljymECLQ/HbQ4JddAkU5tuKIzMjgI6GV3HddBCSLKWXBX7oxXNdcwsfBf8Ij10=
+	t=1792418590; cv=none; b=HhfPR+5IMj/wPPOYi72C6egNOPqFRWDncHQvRcnXejKjhG2WDn/y0ahjuGJzdNFOuvjHrwyAtQCeCXfwi4FaOTzSqACBps85aMbZ1Gd+UOOH6VS9U1p/oaa9rK7s4emdfefUrqy/MLnC0lQf3Xq/OyzIQPyzHKEUEx84XjVLiBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418589; c=relaxed/simple;
-	bh=uZZktAR7v7UA3PVr5ZWZytbVS+DohQChro9MPtbC6Ss=;
+	s=arc-20240116; t=1792418590; c=relaxed/simple;
+	bh=OLVGoswyQ/TRqc+Zx5c8BPwrw6fbIxyRFacQ20bze1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gx6S/vtNA8c9+WpgK5p7PnynJjGAe1NDluubrP24nKlkY8ZnAlzOzKJnzJ5XXR2RN9m5BcAJhlqiiE3eWbS2KD0ceR9hrSx0uVYc7aUtsFlB6hr+2/4W+UQDTjxKHIuYKcoC9j2+xDcfAWkoJuvV61CenRofaK0xeQBzylwdUzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnGC6lE+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DOueLRADufByaoqI9GJjOKQAmagxxJgzHfjX0rvd1eZdj+axzTI/ToxpBjeQn/U6aJRRfVy1ByIUrrzaY0HRBzvJZV6qDh1crwc3vuZhIoSKfNboNOEjEnhxQpgka+v1NvT8ehFersZ4/6VZd1NTlWoj0hiE0U1k1wMnsvz69mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PUevxqf3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnGC6lE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36171F000C5;
-	Mon, 19 Oct 2026 14:03:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PUevxqf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0741F1F000C6;
+	Mon, 19 Oct 2026 14:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418586;
-	bh=UrBoKXgdFjbvBi2S4ldc/8m0a8SdpCOAMv6qxac9ozI=;
+	s=k20260515; t=1792418587;
+	bh=ZEkpzJm/Fz1AhN269JabheOuxq5CAfN3wBBhNvPXViE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CnGC6lE++FOrkhZGyA/2fgTb16i9QPkYBjcB/qGDZIv+Btx9V119Rv7J0s5mVyBXx
-	 KZ3tmoT6zQVoSpnHDwmvScVu2SfDRP2VdfziH+85m/IzHhd77QEw0gzqh/1j7If38x
-	 PSvN6xVZr4IoiL+5tYmgGFHxNnYZXGmJl14bZp4CL9hz/LShnPpAGheCAUTusYggUg
-	 KAdQ3oMbHNsTn6ShqOZ/g74bdgy2UcoW2II9ImuyNpaNJ37wQVSPcmMC+jLGeNwZ2/
-	 1UKJahzNNXU9B7gaxTSQqyfVw31haoZV77GC0DelNV1MsnnUJaxoXS5oU1Atf/l4L/
-	 /JtpeF+m9sMrg==
+	b=PUevxqf3qSR5rq6Dd7olmieaBbCc767tte8MeKrPpybO92n0LfHIrxR5V1B3YKICH
+	 oqwhyjq2kcfa13IO6DB1+vreUcTqKlVvFithHIJzCieWEz0rtALw9brQyGGpqBX0kX
+	 bMThzv6/kts6nQsh12FG8U+Z3YvoF/S0rI/r4kKNJ6PG0+zLUOhom97o7ZYjB73l57
+	 78ApoSr8CRFH8HQAEUviBdodPgL9dx9pOPBRaxxSMvf3XbWzXfkOyyRzKGhahEfPZF
+	 Yhf8xm+ihtUPN1Ov9XkSrjtmvMTz1p+FW1LY9kQun5xDEWIbhRSB9wJGzlwBxpcIH5
+	 dI3jzq3uO3JMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Oliver Neukum <oneukum@suse.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] usb: misc: cypress_cy7c63: check result of IO
-Date: Mon, 19 Oct 2026 09:50:44 -0400
-Message-ID: <20261019135441.1420968-353-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] media: v4l2-tpg: reduce stack usage for kasan builds
+Date: Mon, 19 Oct 2026 09:50:45 -0400
+Message-ID: <20261019135441.1420968-354-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,390 +53,423 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
+[ Upstream commit c49cdaafa443ccf861a72d3191121294742c28c7 ]
 
-If the device returns a bogus short read, treat it as EIO.
-Actually check for IO errors.
+tpg_fill_plane_buffer() is a rather complex function. While there is
+nothing wrong with it per se, I have run into corner cases with clang-22
+on s390 using KASAN that makes it run out of registers and blow the
+stack warning limit from excessive spills:
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2629:6: error: stack frame size (1560) exceeds limit (1536)
+      in 'tpg_fill_plane_buffer' [-Werror,-Wframe-larger-than]
+ 2629 | void tpg_fill_plane_buffer(struct tpg_data *tpg, v4l2_std_id std,
+
+Forcing the two largest callees out of line completely avoids the problem
+and prevents all the register spills, with the stack usage for each function
+going down to a few bytes for the local variables.
+
+Arguably this is a problem caused by clang rather than the code, but
+a noinline_for_stack annotation is an easy workaround.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is mainline **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`).
-The Cypress driver and the incomplete short-transfer check are present
-here; the follow-up I/O-error handling is a real, small correctness fix.
+I have enough history, diff, and mailing-list evidence to walk through
+all nine phases and decide for this 7.3-rc4 tree.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[usb/misc/cypress_cy7c63] [check] check result of IO**
-- Subsystem: `usb: misc: cypress_cy7c63`
-- Verb: “check” — correctness / missing return-value handling, not a
-  refactor
+**Step 1.1: Subject line**
+- Record: `[media/v4l2-tpg] [reduce] Reduce stack usage of
+  tpg_fill_plane_buffer() for clang+KASAN builds so -Wframe-larger-than
+  does not fail the build.`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- `Signed-off-by: Oliver Neukum <oneukum@suse.com>` (author; known USB
-  developer)
-- `Link:
-  https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of the last two is expected for this
-  review)
-- Not syzbot, not a user crash report
+**Step 1.2: Tags**
+- Record:
+  - `Signed-off-by: Arnd Bergmann <arnd@arndb.de>` (author)
+  - `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (media
+    maintainer)
+  - No `Fixes:`
+  - No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
+    `Link:` / `Cc: stable`
+  - Absence of `Fixes:` / `Cc: stable` is expected for this pipeline and
+    is not a negative signal
+  - Notable: author is Arnd Bergmann (kbuild/clang/stack-usage); applied
+    by Hans Verkuil (V4L2 maintainer). No syzbot, no user crash reports.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: a short USB control read is not treated as failure; I/O errors
-  are not checked on the sysfs read path
-- Symptom: userspace can see a successful sysfs write, or a stale port
-  value on sysfs read, after a failed/short transfer
-- Root cause: `usb_control_msg()` may return `0`/`1` (short success) or
-  a negative errno; `vendor_command()` used to return those short
-  lengths as success, and `read_port()` never tested the result
-- No version range given
+**Step 1.3: Body**
+- Record:
+  - **Bug:** `tpg_fill_plane_buffer()` is large; clang-22 on s390 with
+    KASAN spills so many temporaries that the compile-time stack-frame
+    warning fires as an error.
+  - **Symptom:** `error: stack frame size (1560) exceeds limit (1536) in
+    'tpg_fill_plane_buffer' [-Werror,-Wframe-larger-than]`
+  - **Root cause:** clang register allocator + KASAN instrumentation,
+    not incorrect C logic. Author: “nothing wrong with it per se” / “a
+    problem caused by clang rather than the code”.
+  - **Fix:** `noinline_for_stack` on the two largest callees so they are
+    not inlined into the parent; per-function stack then drops to a few
+    bytes.
+  - **Version info:** clang-22, s390, KASAN. No kernel-version range
+    given.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. The subject and body state the bug. It completes the
-earlier short-transfer check (`49cd2f4d747ee`, which *was* `CC:
-stable`).
+**Step 1.4: Hidden bug fix?**
+- Record: Not a disguised UAF/leak/race. It is a **build-failure
+  workaround**. Cover letter in the mbox also offers an LLVM bug if
+  reviewers want one. Not a hidden runtime fix.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/usb/misc/cypress_cy7c63.c` — **+6 / −2** (8 lines in
-  the diff)
-- Functions: `vendor_command()`, `read_port()`
-- Scope: single-file surgical fix
+**Step 2.1: Inventory**
+- Record:
+  - File: `drivers/media/common/v4l2-tpg/v4l2-tpg-core.c` — 8
+    insertions, 6 deletions (net +2)
+  - Functions: `tpg_fill_plane_extras()`, `tpg_fill_plane_pattern()` —
+    declaration only
+  - Scope: single-file surgical annotation change; no logic, locking, or
+    API change
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-1. `vendor_command()`: after `usb_control_msg()`, `if (retval < 2) goto
-   err_buf` already skipped storing `iobuf[1]`, but still returned `0`
-   or `1`. Now a non-negative short result becomes `-EIO`.
-2. `read_port()`: used to `sprintf()` `cyp->port[port_num]` even when
-   `vendor_command()` failed. Now `result < 0` is returned to sysfs.
+**Step 2.2: Code flow**
+- Record:
+  - **Before:** both helpers are `static void`, so the compiler may
+    inline them into `tpg_fill_plane_buffer()`.
+  - **After:** both are `static noinline_for_stack void`; they remain
+    callable from the same loop in `tpg_fill_plane_buffer()` (lines
+    2707–2710) but cannot be inlined.
+  - Path affected: compile-time inlining of the per-line fill helpers.
+    Runtime control flow is unchanged.
 
-`write_port()` already did `return result < 0 ? result : count`, so the
-`-EIO` conversion is what makes short writes fail instead of reporting
-`count`.
+**Step 2.3: Bug mechanism**
+- Record: **Build / compiler-workaround (hardware-workaround
+  analogue).** Not UAF, leak, race, NULL deref, or overflow.
+  `noinline_for_stack` is `noinline` in `include/linux/compiler_types.h`
+  “to prevent stack consumption”.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: **logic / correctness** (USB I/O result handling; short
-  transfer → `-EIO`)
-- Mechanism: `usb_control_msg()` returns transferred byte count on
-  success (kernel-doc in `drivers/usb/core/message.c`). A 0- or 1-byte
-  IN was treated as success. `read_port()` ignored errors and returned
-  the last cached port byte (or 0).
+**Step 2.4: Fix quality**
+- Record: Obviously correct and minimal. Regression risk is very low:
+  extra calls in a test-pattern generator, not a production hot path.
+  Arnd reports stack usage of each function drops. No public API /
+  struct / locking change.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct and the usual USB pattern (same shape as other
-  short-control-msg fixes)
-- Minimal; no API/lock/structure changes
-- Regression risk: **very low** (error path only; successful ≥2-byte
-  transfers unchanged)
+## Phase 3: Git history
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.1: Blame**
+- Record: The two functions date to Hans Verkuil’s vivid TPG (2015),
+  exported as `drivers/media/common/v4l2-tpg/v4l2-tpg-core.c` in
+  `e07d46e7e0da8` (2016). The `noinline_for_stack` lines are this commit
+  (`c49cdaafa443c`, 2026-06-18 / applied 2026-07-10). Long-lived code;
+  the warning is from clang-22+KASAN inlining, not a new logic bug.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Driver added **2006-06-22**, `9189bfc2df0fd` (Oliver Bock)
-- Short-transfer skip: **2024-09-12**, `49cd2f4d747ee` (Oliver Neukum),
-  contained in `v6.12-rc1`, **`CC: stable@vger.kernel.org`**
-- `read_port()` never checked `result` from 2006 until this commit
-- This follow-up: `0673b919e0933` (2026-07-10 / applied 2026-07-17)
+**Step 3.2: Fixes: tag**
+- Record: None. Not applicable.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` tag. Related buggy/incomplete commit is
-`49cd2f4d747ee`, which **is** an ancestor of this HEAD (`git merge-base
---is-ancestor` exit 0). That patch stopped using a short buffer but
-still returned a positive short length.
+**Step 3.3: File history**
+- Record: Recent TPG work is formats/patterns (`5a3757801e58a`,
+  `5a531791edb24`), a div-by-zero fix, memleak fix. No prerequisite
+  refactor. Standalone, not `N/M`.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent file history is this I/O-check pair plus unrelated
-alloc/ref cleanups. Standalone follow-up to `49cd2f4d747ee`, not patch
-2/N of a larger series. No later commits on this file after
-`0673b919e0933`.
+**Step 3.4: Author**
+- Record: Arnd Bergmann; many similar media stack-usage fixes
+  (`c03b7dec3c4dd` rkvdec, `1a03f91c2c241` vivid clang stack,
+  `ad4729225d93f` mxl5005s, etc.). This is the established
+  `noinline_for_stack` pattern. Hans Verkuil applied it.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Oliver Neukum is a regular USB contributor; he wrote both
-Cypress I/O checks. Other `drivers/usb/misc/` work is race/error
-handling in iowarrior/yurex/chaoskey. USB subsystem maintainer who
-applied this is Greg Kroah-Hartman.
+**Step 3.5: Dependencies**
+- Record: Only `noinline_for_stack`, present in this tree as `#define
+  noinline_for_stack noinline`. Applies standalone.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Depends on the `if (retval < 2) goto err_buf` block from
-`49cd2f4d747ee`. That commit is in this tree. The patch applies as a
-small edit of that check plus two lines in `read_port()`. Standalone on
-this tree.
+## Phase 4: Mailing list / external
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.1: Original discussion**
+- Record:
+  - `b4 dig -c c49cdaafa443c` →
+    https://patch.msgid.link/20260618143252.1885475-1-arnd@kernel.org
+  - `b4 dig -a`: **v1 only**, 2026-06-18. No later revision.
+  - mbox is the patch plus: “If anyone thinks we should track this as an
+    llvm bug, I can help come up with a reproducer”. **No replies, no
+    NAK, no Cc: stable suggestion.**
+  - lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
+    -m`.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 0673b919e0933` →
-  https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
-- `b4 dig -a`: single **v1**, 2026-07-10; no v2/v3
-- Saved mbox: **one message** (the patch). No replies, no NAK, no
-  reviewer `Cc: stable`
-- Direct lore fetch returned HTTP 403; discussion is from the mbox
-  instead
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: Mauro Chehab, Nathan Chancellor, Nick Desaulniers, Bill
+  Wendling, Justin Stitt, linux-media, LKML, llvm@lists.linux.dev. Right
+  maintainers and LLVM list. No review tags in-tree beyond Hans’s SOB on
+  apply.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc included Greg Kroah-Hartman, linux-usb,
-Johan Hovold (`johan@kernel.org`), Kees Cook, original driver contacts.
-No on-list review comments; Greg applied it.
+**Step 4.3: Bug report**
+- Record: No syzbot/bugzilla. The “report” is Arnd’s own clang-22 s390
+  KASAN build. Severity: compile error under `-Werror`, not a runtime
+  crash.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No `Reported-by` / bugzilla / syzbot. Author-driven completeness
-of the 2024 short-transfer fix.
+**Step 4.4: Series**
+- Record: Standalone v1. Not part of a multi-patch series.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Same-week USB work by the author is unrelated (`USB: core:
-ratelimit cabling message`). Related historical patch is `49cd2f4d747ee`
-only.
+**Step 4.5: Stable list**
+- Record: lore.kernel.org/stable WebFetch 403. **UNVERIFIED:** whether
+  this was discussed on stable@. Nothing in the mbox nominates it.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search was not readable (403). Unverified
-whether stable@ already discussed this SHA. The 2024 sibling *was*
-explicitly nominated for stable.
+## Phase 5: Semantic / call graph
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.1: Functions**
+- Record: `tpg_fill_plane_extras`, `tpg_fill_plane_pattern`
+  (annotations). Indirectly `tpg_fill_plane_buffer` (the function named
+  in the warning).
 
-Step 5.1: IDENTIFY KEY FUNCTIONS
-Record: `vendor_command()`, `read_port()` (callers of the latter:
-`port0_show` / `port1_show`). `write_port()` is not edited but consumes
-the new `-EIO`.
+**Step 5.2: Callers**
+- Record: Both helpers are static and only called from
+  `tpg_fill_plane_buffer()`. That function is `EXPORT_SYMBOL_GPL` and
+  called from:
+  - `tpg_fillbuffer()` (same file)
+  - `drivers/media/test-drivers/vivid/vivid-kthread-cap.c`
+  - `drivers/media/test-drivers/vimc/vimc-sensor.c`
+  - `drivers/media/test-drivers/visl/visl-dec.c`
+- Userspace-reachable only if a **virtual V4L2 test driver**
+  (vivid/vimc/visl) is loaded. Not IRQ/core.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `vendor_command()` ← `write_port()` (sysfs store port0/port1),
-  `read_port()` (sysfs show)
-- `read_port()` ← `port0_show`, `port1_show`
-- Context: process / sysfs, not IRQ. Reachable from userspace on a bound
-  device.
+**Step 5.3: Callees**
+- Record: memcpy of pattern lines, rectangle/pillar drawing, pixel-
+  format switches. No locks, no alloc in the changed signatures.
 
-Step 5.3: TRACE CALLEES
-Record: `kzalloc`, `usb_rcvctrlpipe`, `usb_control_msg`, `kfree`;
-`read_port` also `sprintf`. Control pipeline 0, vendor IN, 8-byte max.
+**Step 5.4: Reachability**
+- Record: Yes from userspace via vivid/vimc/visl, but those Kconfigs say
+  “When in doubt, say N.” The failure being fixed is **compile-time**,
+  so it hits anyone who *builds* `VIDEO_V4L2_TPG` (selected by those
+  drivers; allmodconfig will build it).
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: userspace `cat`/`echo` on sysfs `port0`/`port1` → show/store →
-`vendor_command` → `usb_control_msg`. Yes, userspace-reachable. Requires
-`CONFIG_USB_CYPRESS_CY7C63` and device `0x0a2c:0x0008`.
+**Step 5.5: Similar patterns**
+- Record: Same `noinline_for_stack` workaround exists elsewhere in media
+  (vivid 2019, rkvdec 2026). This instance is the TPG core helper, not a
+  duplicate of those.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same short-read → `-EIO` pattern used elsewhere in USB (e.g.
-historical `legousbtower` get-version check). This driver had the length
-check without converting short success to an error.
+## Phase 6: This checkout
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 6.1: Local tree and buggy code**
+- Record:
+  - `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`
+  - `make kernelversion` → `7.3.0-rc4`
+  - Makefile: VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4
+  - File and functions exist. Pre-patch form was `static void
+    tpg_fill_plane_*`. TPG present since 2016 (`e07d46e7e0da8` is an
+    ancestor).
+  - `git merge-base --is-ancestor c49cdaafa443c HEAD` is true (commit is
+    in this development tree). That is **not** treated as “already
+    selected for stable”.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. File and functions exist; driver since 2006. Incomplete
-`retval < 2` path from `49cd2f4d747ee` is an ancestor. `git merge-base
---is-ancestor 0673b919e0933 HEAD` is true (the candidate is already in
-this mainline checkout). Pre-fix behavior is confirmed via `git show
-0673b919e0933^:drivers/usb/misc/cypress_cy7c63.c`.
+**Step 6.2: Backport difficulty**
+- Record: Clean apply on this tree. Only the two `static void`
+  prototypes change. `noinline_for_stack` exists.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply** on this tree (already applied). Context matches
-a typical stable driver file aside from unrelated later `kzalloc_obj` in
-probe.
+**Step 6.3: Related fixes already here**
+- Record: No earlier equivalent TPG stack workaround. `1a03f91c2c241` is
+  a similar vivid kthread workaround from 2019, different file/function.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `49cd2f4d747ee` is here; it is incomplete without this commit.
-No other equivalent error-propagation fix.
+## Phase 7: Subsystem context
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 7.1**
+- Record: Subsystem `drivers/media/common/v4l2-tpg` (V4L2 test pattern
+  generator). **PERIPHERAL** — only vivid/vimc/visl test drivers. Not
+  mm/fs/net core.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **USB misc driver** (`drivers/usb/misc/cypress_cy7c63.c`),
-`CONFIG_USB_CYPRESS_CY7C63`. Criticality: **PERIPHERAL** (AK Modul-Bus
-CY7C63xxx I/O). USB core is not changed.
+**Step 7.2**
+- Record: Mature (2015–2016), occasional format additions. Not a high-
+  churn core path.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: File is mature/low-churn (2006 driver; occasional USB-wide
-cleanups). USB misc as a whole is actively maintained by Greg KH.
+## Phase 8: Impact and risk
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 8.1: Who is affected**
+- Record: Config-specific: `CONFIG_VIDEO_V4L2_TPG` via vivid/vimc/visl,
+  plus clang-22, KASAN, `-Werror`, and `CONFIG_FRAME_WARN=1536` (error
+  text). Default 64-bit `FRAME_WARN` is **2048** (`lib/Kconfig.debug`);
+  1560 < 2048, so **default s390 64-bit allmodconfig would not fail**.
+  1536 is the 32-bit Xtensa default, or a non-default int in
+  randconfig/custom CI.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific** — only users of this
-Cypress device with the driver enabled.
+**Step 8.2: Trigger**
+- Record: Building that file with that toolchain/config. Not a runtime
+  trigger. Unprivileged users cannot “hit” it except as a failed kernel
+  build.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Trigger is a failed or short vendor control IN while
-reading/writing sysfs ports (disconnect, stall, timeout, non-compliant
-firmware). Unprivileged users who can open the sysfs attrs of that
-device can hit it. Not a boot-critical path.
+**Step 8.3: Failure mode**
+- Record: Compile error under `-Werror` (WERROR defaults to
+  COMPILE_TEST). Runtime stack on s390 is 16KiB, 64KiB with KASAN
+  (`arch/s390/Makefile`); 1560 bytes is not a runtime overflow.
+  Severity: **MEDIUM for CI/debug builds with a lowered FRAME_WARN; LOW
+  for production stable users.**
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Failure: sysfs read returns stale/zero port data; sysfs write can
-  return success on a short IN
-- Not oops/UAF/deadlock
-- Severity: **MEDIUM** — wrong userspace-visible I/O / false success,
-  not kernel memory unsafety (buffer is `kzalloc`’d; `49cd2f4d747ee`
-  already skipped storing a short payload)
+**Step 8.4: Risk-benefit**
+- Record:
+  - Benefit: unblocks clang+KASAN+Werror builds of TPG/vivid; tiny
+    annotation.
+  - Risk: very low (2 annotations, no behavior change).
+  - Ratio: favorable **if** treated as a build fix; modest user benefit
+    because the default 64-bit limit is 2048.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: medium for this hardware (correct errors instead of silent
-  wrong GPIO-like values); low globally
-- Risk: **very low** (6 lines, error paths only)
-- Ratio: favorable — small completion of a prior stable-nominated fix
+## Phase 9: Synthesis
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 9.1: Evidence**
 
-Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real I/O-error bug: short `usb_control_msg` success (`0`/`1`) and
-  ignored negative results on read
-- `write_port()` already treats any non-negative result as success —
-  without `-EIO`, a short transfer is a false success
-- Completes `49cd2f4d747ee`, which went to stable with `CC: stable`
-- Tiny (+6/−2), obviously correct, standard USB pattern
-- Code has existed since 2006; prerequisite is in this tree
-- Authored by a USB regular, applied by the USB maintainer
+- Official `stable-kernel-rules.rst` lists **build error** (not
+  CONFIG_BROKEN).
+- Build-fix exception in the evaluation rubric.
+- 8/6-line, obviously correct `noinline_for_stack` — the kernel’s
+  standard answer to clang+KASAN frame-size errors.
+- Author Arnd Bergmann; applied by Hans Verkuil; LLVM Linux people on
+  Cc.
+- Helpers and macro exist in this 7.3-rc4 tree; applies cleanly; no
+  series deps.
+- Similar media workarounds have been used for years.
 
 AGAINST:
-- Niche driver, no user/syzbot report
-- Not a crash, UAF, or security hole
-- Author did not `Cc: stable` this time (not a veto per the rules above)
+- Not a crash, UAF, deadlock, corruption, or security bug.
+- Author: clang problem, not a logic bug.
+- Only vivid/vimc/visl (test drivers, “When in doubt, say N”).
+- Reproduced with FRAME_WARN **1536**; 64-bit default is **2048**, so
+  typical s390 KASAN allmodconfig may not fail.
+- clang-22 + s390 + KASAN is a narrow toolchain.
+- No stable nomination, no user reports, v1 with no review discussion.
 
 UNRESOLVED:
-- lore HTTP 403; no on-list review text beyond the v1 patch
-- Whether stable@ already queued this SHA
+- Whether default `FRAME_WARN=2048` allmodconfig on this tree fails with
+  clang-22+KASAN (reported size 1560 suggests no).
+- Whether 32-bit clang+KASAN exceeds the 1280 default (not claimed;
+  unverified).
+- Whether stable@ ever discussed this (lore 403).
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — matches `usb_control_msg`
-   semantics; applied by Greg KH
-2. Fixes a real bug that affects users? **PASS** — sysfs can report
-   success/stale port data after failed USB I/O
-3. Important issue? **PASS** (medium) — incorrect device I/O / false
-   success, in the “oh, that's not good” class; not a panic
-4. Small and contained? **PASS** — 6 insertions, one file
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — prerequisite and target code
-   are here
+**Step 9.2: Stable rules checklist**
+1. Obviously correct and tested? **PASS** — two `noinline_for_stack`
+   marks; Arnd built it; maintainer applied v1.
+2. Real bug that affects users? **PASS** as a **build error** for the
+   configs that hit it; **weak** for production runtime users.
+3. Important (crash/security/corruption/deadlock)? **PASS only via the
+   documented build-error clause**, not via runtime severity. Frame 1560
+   vs 1536 is a warning-as-error, not an oops.
+4. Small and contained? **PASS** — one file, ~14-line diff, well under
+   100 lines.
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — file, functions, and
+   `noinline_for_stack` are all here.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not an ID/quirk/DT/build/docs exception). It is a normal
-small driver bugfix.
+**Step 9.3: Exception category**
+- Record: **Build fix** (compilation error/warning under `-Werror`). Not
+  a device-ID, quirk, DT, or docs exception.
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported. The 2024 short-transfer patch left callers
-treating a short IN as success and left `read_port()` returning cached
-data on any error. That is user-visible wrong I/O on a long-lived
-driver, the fix is six lines, and the only dependency is already in this
-tree.
+**Step 9.4: Decision**
 
-What it solves for stable users: failed or truncated vendor control
-transfers no longer look like a successful port read/write.
+This tree is **Linux 7.3-rc4** (mainline). The TPG helpers are present;
+the patch is self-contained and matches the code here.
 
-Risk vs benefit: very low risk, clear correctness gain on the error
-path.
+It is not a runtime stability fix. It is the documented class of **build
+error** that stable rules allow: clang-22 + KASAN inlines two large
+`static` helpers into `tpg_fill_plane_buffer()` until `-Wframe-larger-
+than` fails with `-Werror`. The change is two `noinline_for_stack`
+annotations, no semantic change, negligible regression risk.
 
-Concerns: niche hardware; no crash. That does not outweigh completing an
-incomplete stable fix with a trivial, standard `-EIO` conversion.
+That is enough for this tree: the affected code exists, the workaround
+is the usual one, and blocking KASAN/clang builds of `VIDEO_V4L2_TPG` is
+a real compile failure even though vivid is a test driver.
 
-Verification:
-- [Phase 1] Parsed tags: Oliver Neukum SOB, Greg KH SOB, msgid Link; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] Body: short read → EIO; actually check I/O errors
-- [Phase 2] Diff: `vendor_command` maps `0 <= retval < 2` to `-EIO`;
-  `read_port` returns `result` if `< 0`
-- [Phase 2] Confirmed `write_port` uses `result < 0 ? result : count`
-  (pre-patch parent file)
-- [Phase 3] `git describe HEAD` / `make kernelversion`: **v7.3-rc4 /
-  7.3.0-rc4**
-- [Phase 3] `git merge-base --is-ancestor 0673b919e0933 HEAD`: yes
-  (commit already in this tree)
-- [Phase 3] blame: driver 2006 (`9189bfc2df0fd`); short check 2024
-  (`49cd2f4d747ee`, CC:stable, v6.12-rc1)
-- [Phase 3] `git show 49cd2f4d747ee`: added `if (retval < 2) goto
-  err_buf` without `-EIO`
-- [Phase 3] `git merge-base --is-ancestor 49cd2f4d747ee HEAD`: yes
+## What the commit solves for this tree
+
+`tpg_fill_plane_buffer()` grows a 1560-byte frame when clang-22+KASAN
+inlines `tpg_fill_plane_extras()` and `tpg_fill_plane_pattern()`. With
+`CONFIG_FRAME_WARN=1536` and `CONFIG_WERROR`, the build dies. Forcing
+those callees out of line removes the spill storm. Stable users who
+build this kernel with clang+KASAN+Werror (CI, debug kernels) need that
+to compile; production runtime behavior is unchanged.
+
+## Risk vs benefit
+
+Benefit is restoring those builds; risk is two extra calls in a test-
+pattern path. The FRAME_WARN=1536 vs default 2048 gap means default
+64-bit configs may already pass, but the official build-error rule still
+covers the failure Arnd hit, and the patch is too small to justify
+withholding it.
+
+## Verification
+- [Phase 1] Parsed message/tags: Arnd + Hans SOB only; no
+  Fixes/Reported-by/Link/Cc:stable
+- [Phase 2] `git show c49cdaafa443c --stat`: 1 file, +8/-6; only two
+  function signatures
+- [Phase 2] Read `v4l2-tpg-core.c` ~2350–2712: loop still calls both
+  helpers; no logic change
+- [Phase 2] `noinline_for_stack` is `#define noinline` in
+  `include/linux/compiler_types.h:264`
+- [Phase 3] `git blame` on the annotations: `c49cdaafa443c`; older
+  `static void` from 2015 vivid TPG
+- [Phase 3] Origin `e07d46e7e0da8` (2016) is an ancestor of HEAD
+- [Phase 3] No Fixes: tag to follow
 - [Phase 3] `git log --oneline -20 --
-  drivers/usb/misc/cypress_cy7c63.c`: this commit is latest on the file
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; recipients gregkh, linux-usb,
-  johan, kees; mbox has no replies
-- [Phase 4] WebFetch lore/msgid: 403 — discussion taken from b4 mbox
-- [Phase 5] Callers: only `write_port`/`read_port` sysfs paths in this
-  file (`rg vendor_command`)
-- [Phase 5] `usb_control_msg` kernel-doc: success = byte count, else
-  negative errno
-- [Phase 6] Pre-image of `0673b919e0933^` matches the submitted hunk
-  context
-- [Phase 7] Kconfig `USB_CYPRESS_CY7C63`; MAINTAINERS USB SUBSYSTEM →
-  Greg KH
-- [Phase 8] Failure mode: stale sysfs port value / false write success,
-  not oops
-- UNVERIFIED: stable@ mailing-list archive (HTTP 403)
+  drivers/media/common/v4l2-tpg/v4l2-tpg-core.c`: no prerequisite series
+- [Phase 4] `b4 dig -c c49cdaafa443c`: lore msgid
+  `20260618143252.1885475-1-arnd@kernel.org`
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: media + LLVM maintainers Cc’d
+- [Phase 4] `b4 dig -m /tmp/tpg-thread.mbox`: patch + LLVM-bug offer; no
+  replies
+- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable-list history
+- [Phase 5] `git grep tpg_fill_plane_buffer`: vivid, vimc, visl only
+- [Phase 5] No semcode MCP; used grep/read
+- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4
+- [Phase 6] `git merge-base --is-ancestor c49cdaafa443c HEAD`: yes
+  (original commit in this tree; not used as circular “already
+  selected”)
+- [Phase 6] Parent blobs still have `static void
+  tpg_fill_plane_extras/pattern`
+- [Phase 7] Kconfig: `VIDEO_V4L2_TPG` tristate selected by
+  vivid/vimc/visl test drivers
+- [Phase 8] `lib/Kconfig.debug`: FRAME_WARN default 2048 if 64BIT, 1536
+  only if !64BIT && XTENSA; s390 `STACK_SIZE` 16K/64K with KASAN
+- [Phase 8] `init/Kconfig`: WERROR default COMPILE_TEST
+- UNVERIFIED: allmodconfig with default FRAME_WARN=2048 on clang-22 s390
+  KASAN (1560 suggests it would pass)
+- UNVERIFIED: 32-bit clang KASAN frame size vs 1280 default
 
 **YES**
 
- drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/common/v4l2-tpg/v4l2-tpg-core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
-index 75f5a740cba39..e1a0c1ae93f2b 100644
---- a/drivers/usb/misc/cypress_cy7c63.c
-+++ b/drivers/usb/misc/cypress_cy7c63.c
-@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
- 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
- 				 USB_CTRL_GET_TIMEOUT);
- 	/* we must not process garbage */
--	if (retval < 2)
-+	if (retval < 2) {
-+		if (retval >= 0)
-+			retval = -EIO;
- 		goto err_buf;
-+	}
- 
- 	/* store returned data (more READs to be added) */
- 	switch (request) {
-@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
- 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
- 
- 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
--
- 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
-+	if (result < 0)
-+		return result;
- 
- 	return sprintf(buf, "%d", cyp->port[port_num]);
+diff --git a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+index 931e5dc453b90..e1d5c220f7381 100644
+--- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
++++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+@@ -2346,9 +2346,11 @@ static void tpg_fill_params_extras(const struct tpg_data *tpg,
+ 			(params->is_60hz ? V4L2_FIELD_TOP : V4L2_FIELD_BOTTOM);
  }
+ 
+-static void tpg_fill_plane_extras(const struct tpg_data *tpg,
+-				  const struct tpg_draw_params *params,
+-				  unsigned p, unsigned h, u8 *vbuf)
++/* noinline to work around clang KASAN issues */
++static noinline_for_stack void
++tpg_fill_plane_extras(const struct tpg_data *tpg,
++		      const struct tpg_draw_params *params,
++		      unsigned p, unsigned h, u8 *vbuf)
+ {
+ 	unsigned twopixsize = params->twopixsize;
+ 	unsigned img_width = params->img_width;
+@@ -2483,9 +2485,9 @@ static void tpg_fill_plane_extras(const struct tpg_data *tpg,
+ 	}
+ }
+ 
+-static void tpg_fill_plane_pattern(const struct tpg_data *tpg,
+-				   const struct tpg_draw_params *params,
+-				   unsigned p, unsigned h, u8 *vbuf)
++static noinline_for_stack void
++tpg_fill_plane_pattern(const struct tpg_data *tpg, const struct tpg_draw_params *params,
++		       unsigned p, unsigned h, u8 *vbuf)
+ {
+ 	unsigned twopixsize = params->twopixsize;
+ 	unsigned img_width = params->img_width;
 -- 
 2.53.0
 
