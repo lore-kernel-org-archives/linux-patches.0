@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67845B9219;
-	Mon, 19 Oct 2026 14:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183985BE67A;
+	Mon, 19 Oct 2026 14:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418467; cv=none; b=kkln8Ke5wXk8faeaWvNs/QntAmXSOdXJQN3AcqpTodJz/ZPuuh/qF1Mfe0QvRdViP8tSv5nIjva+Sc+3heXR5mkgxDe4jUMpqXk954R2oVCi7X4Lmcc6P4E7XPFNTvmzDTgICHJiftZRdl1TLTOCD46A1yiT2g68WDaBny4rCUs=
+	t=1792418468; cv=none; b=KZJatxGYuXiHBQPxIGLcwxjkT+WYdw/oxn9eGtnuuRW3vELjtZPDz634YSLcp8D5Zpgc35ag3QPR/F13qpNPIxFQKXKFUiCcOISd3u9vlfH5gZRd+dbD9hPUUDXZOWSK5SLcqIS6ubH00muOiTxMqg7yPrWrqm+COdEOG/EjtK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418467; c=relaxed/simple;
-	bh=3O+2p/byA5q5+JM2GdHGKj30mIYDY/saB/4wzZrmHp8=;
+	s=arc-20240116; t=1792418468; c=relaxed/simple;
+	bh=4NjTx8XdW50H5bbuTROplug+5EW0agz+1V/XruY5rec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C47aPB8Dp5TDVo0zbQppmIKXsNgvlzDBLi2Vna0T3sVMoVwWbEn/FaFCecyMT8+bSCJPG+CeJtDfwpOjJ1rPw3n27+Gxt5kU48IXI6uAH5dd9TPe59tXTIIEurWhWxBeXW/H1ovi5VuCFN7ImcnraEPUmH0tN/TU4mrM7YKpY38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QXr9DrRu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VfHj0ixBdGpnnGxuJT6lSnF2GuPhwIxHQkDxgL4Mwt5FoNqTN0CfMy1XKtp3H0khi+rRwINKeaF/EuyQJtf5OnIZDEsaIhcxrX+wTQIVP4AR7nC01BDueBVmD4va1Le48qO0DMsrWyaP25L0P8SUJo3lwzqaE/mashHpjQRtmyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bdgBe6gs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QXr9DrRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743E61F000C6;
-	Mon, 19 Oct 2026 14:01:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bdgBe6gs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DDC1F000C8;
+	Mon, 19 Oct 2026 14:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418464;
-	bh=U0IYCG9nCxFnocbQjEcAd92W3Xn3u7y92lU7IboXoQY=;
+	s=k20260515; t=1792418466;
+	bh=exWpYuFcOfGsyhXx78/xtwD0VeLLPrL+e4s4PSQ6iTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXr9DrRuRHgwZxeXh9IjolW+j5slb5di00jah7JDYfDAYGLb6PWNMizDgb8KdJTr5
-	 R1QGCxmeHtev/v7r7qQY+edbDFz57cdmPFeFnrHkSpnz4iTJneTIlmAlPqxM/0iUfU
-	 W9apSVBifEjCWA9/4nFmVC0BWDb5Jn2XcCeNqy5Aazr7f7ny69Dd+2GwOzoVxBMYCh
-	 f2BAJTJz5vRQPRZm3YNxLHPjkp0HO2iVLN+2alVDE4EkWxO8MkVQ9j2HsT0iat3QN6
-	 5FHCE2FfANIFdX6kTn5209u/TBaLdCI+2Q/tElS9KS+4mR4Ah6ECxRFpUwLDBsOsY9
-	 9DThsjzS9r5xg==
+	b=bdgBe6gsozJC/6PKFM6Zo/meu3g/yXf5r6dMpQaKZAhjqigmCg7RfnMRNhkn/W1v4
+	 VoGyrR8h3uzv6GrqplatT4TbHFQwWJN5v51CE3OWOCYkaBvnO3lGMxWzI1UZssfQc2
+	 B2DH3FLFosXyU1YLhW5Hdyqfid2BYeZsSlB+qTFbYwxKShTFzQc7fVKXyOTLobIVB+
+	 6gQNwufGZlZK+59Mzp7C2HkPbYys60We5MufbNz8nGaL5E0L99EvtUAQyhrsuW7pye
+	 CwKeCNi3O17oYalNB6sNJIa0/bxisRKLI5uIE7iuO3VJxTCSElqKQ9YAvaEhSD41jU
+	 nz/3lBrOSnFVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Griffin Kroah-Hartman <griffin@kroah.com>,
-	David Heidelberg <david@ixit.cz>,
-	Carl Lee <carl.lee@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	oe-linux-nfc@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] nfc: nxp-nci: Add remove on IRQ error
-Date: Mon, 19 Oct 2026 09:49:18 -0400
-Message-ID: <20261019135441.1420968-267-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Add quirk for Lenovo ThinkBook G8+
+Date: Mon, 19 Oct 2026 09:49:19 -0400
+Message-ID: <20261019135441.1420968-268-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,366 +48,460 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 56345cea6a30dc7a1b036d5fb7900434b4a4c5e8 ]
+[ Upstream commit 4322ac247f4ce7932edbd46aa37f3dae62cde424 ]
 
-Add a call to nxp_nci_remove() in nxp_nci_i2c_probe() when the
-request_threaded_irq() fails.
-Previously, IRQ resources were not being freed upon error.
+Fix Bass Speaker volume control on Lenovo ThinkBook G8+ by adding
+quirk 17aa:38dc with ALC285_FIXUP_SPEAKER2_TO_DAC1.
 
-Assisted-by: gkh_clanker_2000
-Cc: David Heidelberg <david@ixit.cz>
-Cc: Carl Lee <carl.lee@amd.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Ian Ray <ian.ray@gehealthcare.com>
-Cc: "Uwe Kleine-König (The Capable Hub)" <u.kleine-koenig@baylibre.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/2026070726-observer-fang-9716@gregkh
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221799
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260921124450.639601-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the probe error path is in this 6.12 tree, the
-leftover NCI device is a real leak, and the three-line cleanup applies
-here.
+The local tree is **6.18.57**. The ThinkBook G8+ SSID is not in
+`v6.18.57`; the existing `ALC285_FIXUP_SPEAKER2_TO_DAC1` path is, so
+this is a one-line hardware quirk that belongs in this series.
 
-## Phase 1: Commit message forensics
+---
 
-**Step 1.1: Subject line**
-- Record: `[nfc / nxp-nci]` `[Add]` `call nxp_nci_remove() when IRQ
-  registration fails in I2C probe`
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2: Tags**
-- Record:
-  - `Assisted-by: gkh_clanker_2000` (AI-assisted)
-  - `Cc: David Heidelberg`, `Carl Lee`, `Jakub Kicinski`, `Krzysztof
-    Kozlowski`, `Ian Ray`, `Uwe Kleine-König`
-  - `Signed-off-by: Griffin Kroah-Hartman` (author)
-  - `Signed-off-by: Greg Kroah-Hartman`
-  - `Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>`
-  - `Link: https://patch.msgid.link/2026070726-observer-
-    fang-9716@gregkh`
-  - `Signed-off-by: David Heidelberg` (NFC maintainer)
-  - No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence expected)
-  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-    ...]` markers
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.3: Body**
-- Record: Claimed bug is that `request_threaded_irq()` failure in
-  `nxp_nci_i2c_probe()` does not clean up. Symptom described as “IRQ
-  resources were not being freed.” Root cause stated as missing
-  `nxp_nci_remove()` after a failed IRQ request. No stack trace, no
-  reproducer, no version range.
-- The “IRQ resources” wording is inaccurate: a failed
-  `request_threaded_irq()` never acquired an IRQ, so there is nothing to
-  `free_irq()`. The real leak is the NCI/NFC device created by the
-  earlier `nxp_nci_probe()` success.
+Record: `[ALSA/hda/realtek] [Add] [quirk for Lenovo ThinkBook G8+ to fix
+bass speaker volume]`
 
-**Step 1.4: Hidden bug fix?**
-- Record: Yes. This is error-path cleanup framed as “Add remove”. It is
-  a real leak/UAF fix, not a feature. The AI-written message understates
-  (and mislabels) the actual leftover object.
+- Subsystem: `ALSA: hda/realtek`
+- Verb: `Add` (hardware quirk, not a new API)
+- Intent: enable an existing Realtek fixup for PCI SSID `17aa:38dc`
 
-## Phase 2: Diff analysis
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-**Step 2.1: Inventory**
-- Record: `drivers/nfc/nxp-nci/i2c.c` only. ~3 lines added, 1 line
-  changed. Function: `nxp_nci_i2c_probe()`. Surgical single-file error-
-  path change.
+Record:
+- `Link: https://bugzilla.kernel.org/show_bug.cgi?id=221799` — user-
+  filed hardware bug
+- `Link:
+  https://patch.msgid.link/20260921124450.639601-1-zhangheng@kylinos.cn`
+  — original submission
+- `Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>` — author
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA maintainer
+- No `Fixes:` tag (expected; this adds a device match, it does not
+  revert an earlier logic bug)
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Cc: stable`
+  (absence is expected)
+- Pipeline markers (`[Upstream commit 4322ac247f4ce…]`, `Signed-off-by:
+  Sasha Levin`) ignored per instructions
 
-**Step 2.2: Code flow**
-- Record: Before: `nxp_nci_probe()` registers an NCI/NFC device, then
-  `request_threaded_irq()`; on failure the driver logs and returns the
-  error. I2C core does **not** call `.remove()`. After: same log, plus
-  `nxp_nci_remove(phy->ndev)` before returning. Only the IRQ-request
-  failure path changes.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-**Step 2.3: Bug mechanism**
-- Record: `[Error path / resource leak]` with a follow-on UAF.
-  `nxp_nci_probe()` does `nci_allocate_device()` +
-  `nci_register_device()` (`nfc_register_device()`, three workqueues,
-  rfkill, LLCP, genl “device added”). Those objects are not
-  `devm`-backed. `phy` and `info` **are** `devm_kzalloc`. On probe
-  failure, `really_probe()` → `device_unbind_cleanup()` →
-  `devres_release_all()` frees `info`/`phy` while the registered
-  `nci_dev` still holds `driver_data` pointing at `info`. Opening that
-  leftover NFC device reaches `nxp_nci_open()` → `nci_get_drvdata()` on
-  freed memory.
+Record:
+- Bug: bass speaker volume control is broken on Lenovo ThinkBook G8+
+- Symptom: users cannot control bass speaker volume
+- Root cause (from the existing fixup, not restated in this commit): NID
+  0x17 (bass speaker) is not routed to DAC1 (0x02), so volume amp is
+  missing
+- Fix: match SSID `17aa:38dc` to `ALC285_FIXUP_SPEAKER2_TO_DAC1`
+- Version info: none in the message; patch dated 2026-09-21, applied by
+  Takashi Iwai 2026-09-28
 
-**Step 2.4: Fix quality**
-- Record: Obviously correct and matches `s3fwrn5_i2c_probe()` in this
-  tree (`goto s3fwrn5_remove` → `s3fwrn5_remove()`). Does not
-  `free_irq()` (correct: IRQ was never taken). Uses the same
-  `nxp_nci_remove()` as `.remove`. On this path `NCI_UP` is unset, so
-  `nci_close_device()` does not call `nxp_nci_close()`; no new deadlock.
-  Regression risk is very low.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-## Phase 3: Git history
+Record: Not a disguised cleanup. This is an explicit hardware quirk for
+a documented laptop audio defect.
 
-**Step 3.1: Blame**
-- Record: Missing cleanup is original I2C probe code from
-  `6be88670fc59d5` (“NFC: nxp-nci_i2c: Add I2C support to NXP NCI
-  driver”, Clément Perrochaud, 2015-03-09). `git describe --contains` →
-  `v4.1-rc1~...`. Present for the entire life of this 6.12 tree.
+---
 
-**Step 3.2: Fixes: tag**
-- Record: None. Buggy commit is `6be88670fc59d5`, and `git merge-base
-  --is-ancestor 6be88670fc59d5 HEAD` succeeds.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.3: File history**
-- Record: Recent local history is IRQ-trigger work (`78ac2b2f981f6`,
-  `42c445f8dab95`), GPIO sleep, unaligned.h move. No prior fix for this
-  IRQ-fail cleanup. Not a multi-patch series that needs later nxp-nci
-  commits.
+**Step 2.1: INVENTORY THE CHANGES**
 
-**Step 3.4: Author**
-- Record: Griffin Kroah-Hartman; no other nxp-nci commits in this tree.
-  Greg KH SOB. Ian Ray Reviewed-by. David Heidelberg (NFC) took it.
-  Driver is `S: Orphan` in MAINTAINERS.
+Record:
+- File: `sound/hda/codecs/realtek/alc269.c` (`+1 / -0`)
+- Function/table: `alc269_fixup_tbl[]`
+- Scope: single-file, one-line surgical addition
 
-**Step 3.5: Prerequisites**
-- Record: Needs `nxp_nci_probe()` / `nxp_nci_remove()` / `phy->ndev`,
-  all present in `drivers/nfc/nxp-nci/core.c` here. Standalone.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-## Phase 4: Mailing list / external
+Record:
+- Before: PCI SSID `17aa:38dc` has no quirk; generic Realtek auto-config
+  is used
+- After: that SSID selects `ALC285_FIXUP_SPEAKER2_TO_DAC1` at codec
+  probe
+- Path: HDA codec probe / pin-config fixup (init path), not a hot path
+  or error path
+- Only machines with that SSID are affected
 
-**Step 4.1: Original discussion**
-- Record: Lore `patch.msgid.link` and `lore.kernel.org` fetches returned
-  403. Recovered from Openwall/LKML:
-  - https://lists.openwall.net/linux-kernel/2026/07/07/1891
-  - https://lkml.iu.edu/hypermail/linux/kernel/2607.0/13842.html
-  - Single `[PATCH]` (not v2/v3). Posted 2026-07-07 to `oe-linux-nfc` /
-    LKML.
-  - Ian Ray: “Nice improvement!” + `Reviewed-by`
-    (https://lkml.iu.edu/hypermail/linux/kernel/2607.0/14256.html). No
-    NAK.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-**Step 4.2: Recipients**
-- Record: `oe-linux-nfc`, LKML, David Heidelberg, Carl Lee, Jakub
-  Kicinski, Krzysztof Kozlowski, Ian Ray, Uwe Kleine-König. NFC list +
-  net maintainer CC’d.
+Record:
+- Category: hardware workaround / codec quirk (`SND_PCI_QUIRK`)
+- Mechanism: `alc285_fixup_speaker2_to_dac1()` on
+  `HDA_FIXUP_ACT_PRE_PROBE` calls `snd_hda_override_conn_list(codec,
+  0x17, …, {0x02})`, forcing the bass-speaker pin onto DAC1 so volume
+  control works
+- The fixup is also chained to `ALC269_FIXUP_THINKPAD_ACPI` (Lenovo ACPI
+  hooks), which is the same chain already used for Yoga Pro 7 14ARP8
+  (`17aa:386e`)
 
-**Step 4.3: Bug report**
-- Record: No user/syzbot/bugzilla report. Found as AI-assisted error-
-  path audit.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 4.4: Series / merge**
-- Record: David Heidelberg’s NFC net-next PR 2026-08-17 lists it under
-  **Improvements**, not Fixes: https://lists.openwall.net/linux-
-  kernel/2026/08/17/1882 (based on 7.2-rc7). Sibling Griffin patch:
-  `nfc: mrvl: spi: Unregister dev on allocation fail`. Taken for
-  mainline, not as a `-net` hotfix.
+Record:
+- Obviously correct: one table entry using an existing, long-lived fixup
+- Minimal: no unrelated edits
+- Regression risk: low and SSID-scoped. Wrong SSID would mis-route audio
+  on that ID only; `17aa:38dc` is unused in this tree’s HDA tables
+- No public API / data-structure change
 
-**Step 4.5: Stable list**
-- Record: No stable-thread hit for this subject. UNVERIFIED that nobody
-  later nominated it; lore.kernel.org/stable search was not usable (403
-  / unrelated hits).
+---
 
-## Phase 5: Semantic / call graph
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.1: Functions**
-- Record: `nxp_nci_i2c_probe()`; calls `nxp_nci_remove()`.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 5.2: Callers**
-- Record: I2C `.probe` via `module_i2c_driver(nxp_nci_i2c_driver)`.
-  Device enumeration / bind / module load. Not IRQ/hot path except that
-  this *is* the IRQ-setup failure arm.
+Record:
+- This is a new table row, not a change to old lines
+- Neighboring Lenovo SSIDs (`0x38d7`, `0x38df`) already exist in
+  `v6.18.57`
+- `alc285_fixup_speaker2_to_dac1` / bass-speaker-to-DAC pattern dates to
+  `e79c22695abd3` (2019; originally `Cc: stable`)
+- Same enum used for Yoga Pro 7 14ARP8 in `1a49509885cd9` (2024-06-16),
+  which **is** an ancestor of `v6.18.57`
 
-**Step 5.3: Callees**
-- Record: `nxp_nci_remove()` → `nci_unregister_device()` +
-  `nci_free_device()`; optional FW work cancel; `set_mode(COLD)`.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 5.4: Reachability**
-- Record: Yes, from device probe (init/userspace bind). The leftover NFC
-  device is userspace-visible: `nfc_register_device()` does
-  `device_add()` and `nfc_genl_device_added()`. A daemon that opens it
-  after a failed probe hits the UAF. Trigger is `request_threaded_irq()`
-  failure (bad/busy IRQ, ENOMEM), not every boot.
+Record: No `Fixes:` tag. Not applicable. The “bug” is missing hardware
+enablement for this SSID, not a regression of a prior commit.
 
-**Step 5.5: Similar patterns**
-- Record: `drivers/nfc/s3fwrn5/i2c.c` already unwinds with
-  `s3fwrn5_remove()` on IRQ failure. `drivers/nfc/st-nci/i2c.c` has the
-  same missing unwind (`devm_request_threaded_irq` fail just logs).
-  `pn533/i2c.c` uses `goto irq_rqst_err`. This is a known probe-pattern
-  bug, not unique to nxp-nci.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-## Phase 6: This tree (6.12.111)
+Record:
+- Recent `alc269.c` history is dominated by similar `SND_PCI_QUIRK`
+  additions
+- Submitted as `[PATCH 1/2]`; 2/2 is an unrelated Acer Nitro headset-mic
+  quirk (`1025:151e`). Not a prerequisite
+- Standalone
 
-**Step 6.1: Buggy code present?**
-- Record: Yes. `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → **6.12.111**. Current `nxp_nci_i2c_probe()` still
-  returns on IRQ failure without `nxp_nci_remove()` (`drivers/nfc/nxp-
-  nci/i2c.c` around the `request_threaded_irq()` call). Introduced v4.1,
-  long before 6.12.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-**Step 6.2: Backport difficulty**
-- Record: Clean/trivial. The hunk matches this tree (including Carl Lee
-  ACPI IRQ context already backported as `42c445f8dab95`). Candidate
-  later tree uses `{ .name = "nxp-nci_i2c" }` vs `{ "nxp-nci_i2c" }`
-  here; that is unused context, not the fix.
+Record:
+- Zhang Heng is a regular Realtek quirk contributor (ASUS, Lenovo, HP,
+  Samsung entries in this file)
+- Not the subsystem maintainer; Takashi Iwai applied the patch
 
-**Step 6.3: Related fixes already here?**
-- Record: No `git log --grep` hit for “Add remove on IRQ” or
-  `nxp_nci_remove` on the error path. No alternate unwind.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-## Phase 7: Subsystem context
+Record:
+- Needs `ALC285_FIXUP_SPEAKER2_TO_DAC1`,
+  `alc285_fixup_speaker2_to_dac1()`, `ALC269_FIXUP_THINKPAD_ACPI`,
+  `snd_hda_override_conn_list()`, and `alc269_fixup_tbl[]`
+- All present in `v6.18.57`
+- Can apply standalone
 
-**Step 7.1**
-- Record: `[drivers/nfc/nxp-nci]` NXP NCI I2C (PN547/PN548/PN7150).
-  **IMPORTANT/PERIPHERAL**: not core mm/net, but this driver is on real
-  laptops (Lenovo T14s IRQ-storm traffic in 2026). Kconfig:
-  `NFC_NXP_NCI` / `NFC_NXP_NCI_I2C`.
+---
 
-**Step 7.2**
-- Record: Mature (2015); recent churn is IRQ polarity/ACPI, not a
-  rewrite. Orphan.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-## Phase 8: Impact and risk
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 8.1: Who**
-- Record: Users with NXP NCI over I2C (`CONFIG_NFC_NXP_NCI_I2C`), and
-  only when IRQ request fails during probe.
+Record:
+- `b4 dig -c 4322ac247f4ce7932edbd46aa37f3dae62cde424` →
+  https://patch.msgid.link/20260921124450.639601-1-zhangheng@kylinos.cn
+- Series: **v1 only** (`[PATCH 1/2]`)
+- Takashi Iwai reply (`875wzp5yr7.wl-tiwai@suse.de`, 2026-09-28):
+  “Applied both patches. Thanks.”
+- No NAK, no requested revision, no stable-risk comments
 
-**Step 8.2: Trigger**
-- Record: Failed `request_threaded_irq()` after successful
-  `nxp_nci_probe()`. Uncommon on healthy firmware, but deterministic
-  when it happens. Unprivileged userspace can then talk to the genl-
-  announced leftover NFC device.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 8.3: Failure mode**
-- Record: Leaked `nci_dev`/`nfc_dev`, three workqueues, rfkill, LLCP;
-  registered NFC node after a failed bind; UAF of `devm` `info`/`phy` if
-  the leftover device is opened. Severity: **HIGH** if hit (UAF/oops),
-  **LOW–MEDIUM** likelihood.
+Record (`b4 dig -w`):
+- To: `tiwai@suse.com` (ALSA maintainer)
+- Cc: `linux-sound@vger.kernel.org`, `linux-kernel@vger.kernel.org`
+- Maintainer applied it after review
 
-**Step 8.4: Benefit vs risk**
-- Record: Benefit medium for affected hardware (prevents leak + UAF on a
-  failed probe). Risk very low (3 lines, existing teardown, only the
-  already-failed path). Ratio is favorable.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-## Phase 9: Synthesis
+Record:
+- Commit cites bugzilla 221799
+- Direct fetch of bugzilla/lore HTML was blocked by Anubis/captcha (403
+  / bot check)
+- UNVERIFIED: bugzilla comment text, number of duplicates, reporter
+  hardware dump
+- Verified: author and maintainer treated it as a real bass-speaker
+  volume bug for SSID `17aa:38dc`
 
-**Evidence FOR**
-- Real probe error-path leak of a registered NFC/NCI device and
-  associated workqueues.
-- Verified UAF: `device_unbind_cleanup()` frees `devm` `info` while
-  `nci_dev->driver_data` still points at it; `nfc_genl_device_added()`
-  can pull userspace in.
-- Bug present since v4.1; in this 6.12.111 tree unchanged.
-- 3-line, obviously correct unwind; same pattern as `s3fwrn5` here.
-- Reviewed-by Ian Ray; merged by David Heidelberg.
-- Applies cleanly (or with trivial context).
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Evidence AGAINST**
-- Maintainer filed it as a net-next **Improvement**, reviewer said “Nice
-  improvement!” — not treated as a crash fix.
-- Commit message is wrong about “IRQ resources”.
-- AI-assisted, no user/syzbot report in 11 years.
-- Trigger is rare; driver is orphan; NFC is not core.
-- No `Fixes:` (expected, not a veto).
+Record:
+- 2/2 is an independent Acer quirk, not required here
+- Same fixup already used for Lenovo Yoga Pro 7 14ARP8 in this tree
 
-**Unresolved**
-- Could not fetch lore.kernel.org (403). Used Openwall/LKML instead.
-- No usable stable-list discussion found.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** — 3 lines, existing
-   `nxp_nci_remove()`, Reviewed-by, in NFC pull.
-2. Real bug affecting users? **PASS** — leftover registered NFC device +
-   leak; UAF if opened.
-3. Important (crash/security/corruption/deadlock)? **PASS** — UAF/oops
-   on leftover device; not a hot-path crash, but still a serious failure
-   mode.
-4. Small and contained? **PASS** — one file, ~3 lines.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS**.
+Record: lore.kernel.org/stable search blocked by Anubis. UNVERIFIED
+whether anyone already asked for this on stable@. No in-tree evidence of
+a prior rejection.
 
-**Exception category:** none (not a device ID/quirk/DT/build/doc
-exception). It is a normal error-path leak/UAF fix.
+---
 
-The inaccuracy of the commit message and the “improvement” label do not
-change the code: without `nxp_nci_remove()`, a failed IRQ request leaves
-an NFC device registered after `devm` teardown. That is exactly the
-class of probe-path leak stable trees take, and the patch is safe on
-6.12.111.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### What this solves for 6.12 users
-If `nxp_nci_i2c_probe()` fails at `request_threaded_irq()`, 6.12
-currently keeps the NCI/NFC device from `nxp_nci_probe()` and then frees
-the `devm` private data. Userspace can still see that NFC device. The
-patch unregisters and frees it, matching `.remove`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
 
-### Risk vs benefit
-Benefit is avoiding a leak and a reachable UAF on that failure path.
-Risk is negligible: the new call is the same teardown already used on
-unbind, and the device was never brought up (`NCI_UP` clear).
+Record:
+- Modified: `alc269_fixup_tbl[]` (data)
+- Invoked fixup: `alc285_fixup_speaker2_to_dac1()`
+- Lookup at probe: `alc269_fixup_tbl` passed into the generic HDA fixup
+  picker (around line 8558 in this checkout / 8528 in `v6.18.57`)
+
+**Step 5.2: TRACE CALLERS**
+
+Record:
+- Table is consulted during Realtek ALC269-family codec probe
+- Triggered by HDA bus enumeration of matching PCI SSID
+- Not IRQ/hot-path; once per codec init
+
+**Step 5.3: TRACE CALLEES**
+
+Record:
+- `snd_hda_override_conn_list()` — present in `v6.18.57`
+  (`include/sound/hda_codec.h`)
+- Chained `ALC269_FIXUP_THINKPAD_ACPI` — present in `v6.18.57`
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record:
+- Userspace-reachable: yes, by using the laptop’s speakers / mixer
+- Unprivileged users cannot attack other machines; they only exercise
+  this laptop’s audio path
+- Impact is functional (bass volume), not a kernel crash
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record:
+- Same fixup already bound to Yoga Pro 7 14ARP8 (`SND_PCI_QUIRK(0x17aa,
+  0x386e, …, ALC285_FIXUP_SPEAKER2_TO_DAC1)`)
+- Many other `SND_PCI_QUIRK` Lenovo entries in the same table
+- Systematic, well-worn pattern
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record:
+- Tree: `git describe HEAD` → `v6.18.57-155-gcdf239ca885b2`; `make
+  kernelversion` → `6.18.57`
+- `git merge-base --is-ancestor 4322ac247f4ce7932edbd46aa37f3dae62cde424
+  v6.18.57` → **NO** (upstream commit not in 6.18.57)
+- `git grep 0x38dc v6.18.57 -- sound/hda/codecs/realtek/alc269.c` →
+  **absent**
+- The missing-quirk bug **does** exist in this series
+- Driver, fixup enum, and function **do** exist
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record:
+- Dry-run of the upstream hunk onto
+  `v6.18.57:sound/hda/codecs/realtek/alc269.c`: **Hunk #1 succeeded at
+  7538 (offset -726 lines)**
+- Expected difficulty: clean apply (line-offset only)
+- Neighboring context (`0x38d7` Yoga 9, then `0x38df` Yoga Y990) matches
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record:
+- No other `17aa:38dc` HDA quirk in `v6.18.57`
+- No alternate ThinkBook G8+ fix
+- (HEAD currently contains the autosel candidate copy; ignored as
+  pipeline state)
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record:
+- Subsystem: ALSA HD-audio Realtek codec (`sound/hda/codecs/realtek/`)
+- Criticality: IMPORTANT (very common laptop audio), not core
+  mm/scheduler
+- Affects only Lenovo ThinkBook G8+ (`17aa:38dc`)
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record:
+- Mature but active: `v6.18.57` already contains many similar quirk
+  backports (HP, Lenovo, ASUS)
+- Typical stable material for this file
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: driver-specific / machine-specific — owners of Lenovo ThinkBook
+G8+ with PCI SSID `17aa:38dc`
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record:
+- Trigger: boot / audio init on that laptop, then using speaker volume
+- Common for those users (every session)
+- Not a security trigger; not a race
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record:
+- Failure mode: bass speaker volume control does not work (wrong DAC
+  routing)
+- Severity: MEDIUM functionally, but this is an explicit **hardware
+  quirk** exception that stable routinely takes
+- Not a panic/UAF/corruption
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- Benefit: high for affected hardware (makes volume control work); zero
+  for everyone else
+- Risk: very low (1 line, existing fixup, SSID-matched)
+- Ratio: strongly favors backport
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real hardware bug with bugzilla link
+- One-line `SND_PCI_QUIRK` using an existing fixup already in 6.18.57
+- ALSA maintainer applied it with no objections
+- Same pattern as Yoga Pro 7 14ARP8 in this tree
+- Applies cleanly to `v6.18.57`
+- Explicit stable exception: audio codec quirks
+
+AGAINST:
+- Not a crash/security/data-corruption issue
+- Affects one laptop SSID
+- Bugzilla body could not be fetched (captcha)
+
+UNRESOLVED:
+- Full bugzilla 221799 text
+- Whether stable@ already discussed this commit
+
+Those gaps do not outweigh the verified quirk itself.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — 1-line table entry;
+   maintainer applied; existing fixup
+2. Fixes a real bug that affects users? **PASS** — broken bass volume on
+   ThinkBook G8+
+3. Important issue? **PASS** under the hardware-quirk exception (pin/DAC
+   routing so speakers are controllable)
+4. Small and contained? **PASS** — +1 line, one file
+5. No new features or APIs? **PASS** — no new fixup, no new kAPI; device
+   ID/quirk only
+6. Can apply to the local tree? **PASS** — dry-run succeeded on
+   `v6.18.57`
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **Hardware quirk / workaround** (ALSA Realtek `SND_PCI_QUIRK`
+for a specific laptop). This is the documented stable exception for
+codec quirks.
+
+**Step 9.4: DECISION**
+
+This should be backported to this 6.18.y tree. The driver and fixup are
+already here; only the SSID match is missing. That is exactly the class
+of change stable takes for laptop audio.
+
+---
+
+### What the commit solves and why it matters
+
+Without the quirk, ThinkBook G8+ (`17aa:38dc`) leaves the bass speaker
+pin on a DAC without volume amp, so bass volume cannot be controlled.
+The one-line match sends that SSID through
+`alc285_fixup_speaker2_to_dac1()`, which is already used for other
+Lenovo dual-speaker machines in this tree.
+
+### Stable rules / risk
+
+It is small, obviously correct, introduces no API, and is SSID-scoped.
+Apply risk is an offset-only hunk. Benefit is real for users of that
+laptop on 6.18.y; risk to other machines is negligible.
 
 ### Concerns
-None that block a backport. Context around ACPI IRQ flags is already in
-this tree. No extra commits required.
+
+None that block backport. Series 2/2 is unrelated. Bugzilla details were
+not readable due to captcha, but the code, existing fixup, and
+maintainer accept are sufficient.
 
 Verification:
-- [Phase 1] Parsed tags: AI-assisted; Reviewed-by Ian Ray; David
-  Heidelberg SOB; no Fixes/Reported-by/Cc:stable
-- [Phase 1] Body claims “IRQ resources” leak; code actually cleans the
-  NCI device, not an IRQ
-- [Phase 2] Diff: 3 lines in `nxp_nci_i2c_probe()` adding
-  `nxp_nci_remove(phy->ndev)` on IRQ failure
-- [Phase 2] `nxp_nci_probe()` registers via `nci_register_device()` →
-  `nfc_register_device()` (`device_add`, genl); `nci_allocate_device()`
-  is `kzalloc`, not `devm`
-- [Phase 2] `phy`/`info` are `devm_kzalloc`; `really_probe()` failure
-  path calls `device_unbind_cleanup()` → `devres_release_all()`
-  (verified in `drivers/base/dd.c`)
-- [Phase 2] On this path `nci_close_device()` skips `ops->close` when
-  `NCI_UP` is clear (verified in `net/nfc/nci/core.c`)
-- [Phase 3] Blame: `6be88670fc59d5` (v4.1-rc1); ancestor of HEAD
-- [Phase 3] No existing unwind for this path in this tree
-- [Phase 4] Openwall 2026-07-07 submission; Ian Ray “Nice improvement!”;
-  NFC PR 2026-08-17 lists it under Improvements
-- [Phase 4] UNVERIFIED: lore.kernel.org 403; no stable-list thread found
-- [Phase 5] Sibling `s3fwrn5` already calls remove on IRQ failure; `st-
-  nci` still does not
-- [Phase 6] Local tree 6.12.111; buggy `if (r < 0) nfc_err(...); return
-  r;` still present; `nxp_nci_remove()` exists
-- [Phase 7] Orphan nxp-nci I2C driver; used on real PCs (ACPI IRQ work
-  already in this tree)
-- [Phase 8] Failure: leak + leftover NFC device + UAF if opened; trigger
-  uncommon; fix risk very low
+- [Phase 1] Parsed subject/tags: quirk add; bugzilla 221799; Iwai SOB;
+  no Fixes tag
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x17aa, 0x38dc, …,
+  ALC285_FIXUP_SPEAKER2_TO_DAC1)` in `alc269_fixup_tbl`
+- [Phase 2] Read `alc285_fixup_speaker2_to_dac1()` at `alc269.c:2532`:
+  overrides NID 0x17 conn list to DAC 0x02; chained to
+  `ALC269_FIXUP_THINKPAD_ACPI`
+- [Phase 3] `git merge-base --is-ancestor 4322ac247f4ce v6.18.57` → NO
+  (not already in 6.18.57)
+- [Phase 3] Fixup enum/function present in `v6.18.57` (`alc269.c:3791`,
+  `:4907`, Yoga Pro 7 use at `:7492`)
+- [Phase 3] Similar Lenovo quirk `1a49509885cd9` is an ancestor of
+  `v6.18.57`
+- [Phase 3] Series 2/2 is an independent Acer quirk; not a dependency
+- [Phase 4] `b4 dig -c 4322ac247f4ce`: lore/msgid
+  `20260921124450.639601-1-zhangheng@kylinos.cn`; v1 only
+- [Phase 4] `b4 dig -w`: To Iwai, Cc linux-sound
+- [Phase 4] mbox: Iwai “Applied both patches. Thanks.”; no NAK
+- [Phase 4] UNVERIFIED: bugzilla 221799 body (Anubis/403); stable@
+  search (Anubis)
+- [Phase 5] Table consumed at Realtek codec probe;
+  `snd_hda_override_conn_list` exists in `v6.18.57`
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57;
+  `0x38dc` absent from `v6.18.57` alc269.c
+- [Phase 6] `patch --dry-run` of upstream hunk onto `v6.18.57` file:
+  succeeded at line 7538
+- [Phase 8] Failure mode: bass speaker volume broken on one Lenovo SSID;
+  quirk-scoped
+- UNVERIFIED: exact bugzilla reporter comments and whether stable@
+  already nominated this
 
 **YES**
 
- drivers/nfc/nxp-nci/i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
-index a6c08175d9dd9..213d3eea7dd04 100644
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -326,8 +326,10 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
- 				 nxp_nci_i2c_irq_thread_fn,
- 				 irqflags | IRQF_ONESHOT,
- 				 NXP_NCI_I2C_DRIVER_NAME, phy);
--	if (r < 0)
-+	if (r < 0) {
- 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
-+		nxp_nci_remove(phy->ndev);
-+	}
- 
- 	return r;
- }
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index b1cb93922c3bc..6afb35769f746 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7572,6 +7572,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38d5, "Yoga S990-16 Pro IMH YC Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d6, "Yoga S990-16 Pro IMH VECO Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d7, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38dc, "Lenovo ThinkBook G8", ALC285_FIXUP_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x17aa, 0x38df, "Yoga Y990 Intel YC Dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38e0, "Yoga Y990 Intel VECO Dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38f8, "Yoga Book 9i", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
