@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE06952F98C;
-	Mon, 19 Oct 2026 14:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0F952F9A2;
+	Mon, 19 Oct 2026 14:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418627; cv=none; b=iSdILONE9ZDdWGZsPNRXq4GeesEFVuVUhf1CDRtk/VgdT4RKrTujc3sPlYpueCQ3ut93M+VyJP6wPiDfwAkVBiNo9l4qwiIkFgHg72UjGg3XEarQH5EWqhIJ94Zo2GApIC55Hwbxngx9YvLwDzc95XJ8M0nPEwMf4xr57voc188=
+	t=1792418628; cv=none; b=NNAFGHBsISr1zBpsO0uBplHHu8vFNeN85x99DwfLaOiURZyJz/W8xdmTyxi7WaYTnfAIAkZDKGBDxCFrUX4keaIIQETD1KJf0F+74FMMZcPZXpKvRqZGnXMvdVsq9xLlFVWQ3A8/qGjL5PyoqoDwDNuwikaJQnOpK1s3Q7+9mgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418627; c=relaxed/simple;
-	bh=/HUmepZXYq4t+d03pMQ63ydvjgfse49Qw9AkoESUZj0=;
+	s=arc-20240116; t=1792418628; c=relaxed/simple;
+	bh=lEe040fMAo+CPU8jdV6O5Z2V4KBYzQ6++iuPEVT39zQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fOoIMMJlIuvs7IA+/o5cG2mKDroJ5cFpHldzbBTxGbHaOAq3feIGjB3AOcJ/XMzpr3pcoF6BNN9YQSmNRFbP4BeJmYzqXlPBHg2CiMc8d9gdmclLGJsfGjrXNp3tT3GpwP70JiRfS1eNVq974+ZNK4eUmGB/OFnaSwNd+w9NVLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eR82vohB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bQzzmwz1ucF9iYCs9WPjH4eDh47RbUoN+6e3GMSXp56MjajFMmMgw6X2p163iBdp7qTY9F/XtUfnO/FTmtzxp2ESYwoqf9t8rBb2Uc7fQPf8o4Pxp+qkot76LMKqBSkSdAwd5KeiQ3cUvgxxL1TZe9yN4LotgrlR0x6ivjAsL1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZVRkXTD9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eR82vohB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5691F000C9;
-	Mon, 19 Oct 2026 14:03:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZVRkXTD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA57E1F000C8;
+	Mon, 19 Oct 2026 14:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418624;
-	bh=TY9yFAc9CnAGBHMFROU8LJaf2xVUG2G4I4/+5crIfrM=;
+	s=k20260515; t=1792418625;
+	bh=7BDK+crvFAJNRkrf+kIBvqU5VWEEIrHWQysBFcfsRbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR82vohBcNNefBvpqIVqn1UOhaB6nl5KTG79dWFxirBA08dQ3g/NJruHkbJkqKwqB
-	 0LHiby5zprMkRJHJtYI9Rts5jQt+mESexNWpQ1B2UtwcIxjFimO6KzqnKxT4why0ro
-	 8xd8nfCh5ADu+cfIIYQf28Mc9nHGAFx3gLxt6s9Ok6apiVAX7x3I5Q9F8wWfDGZEcy
-	 28es7hHjbuWT+JbMqau3ApQ4P/gJ0QXymyul6kIct9n7n3qQaFqd8lu0+s3QlRcFnU
-	 5dmqv9DIbzFt028schKiagu8YQT/NFLii7IbR7hVvkBeb/XWgYmILyxTjdLkk201By
-	 t2rSFz8e0/mkQ==
+	b=ZVRkXTD9LSHNTi8xhIrw5YWaS183AG/rZ0vWfEO4A4yeh5UD5dcXKWBYAjW5OVqgc
+	 29ws4s9+WGjjlQYE31KQGu1/uEQ/y6MxUHQvsocTCciXuvT5bSmdeQyJRnRTWj0c4f
+	 nogw6N8D9L2ePtuib2asgrqL0i24DcY0U4JqEa1qxA/XUoZlzR6uAeKStkBAHqfOQC
+	 4vOUBRsiEARZIYLvVPwcivC0sDxA0bI0apxFzJ4KVnFg8wcVZ4PvApa9ZSVbYznRrx
+	 ZRmNaXOUXSPSSvKvgZfK5+gA8Y/FzHyiqk4utMSOndHpyj2BMNB97L4TEzH7PRjxFU
+	 vunGNAj2zKWkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Bastien Nocera <hadess@hadess.net>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Avraham Stern <avraham.stern@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] HID: logitech-hidpp: Add support for G502 X Plus USB mouse
-Date: Mon, 19 Oct 2026 09:51:12 -0400
-Message-ID: <20261019135441.1420968-381-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: support aborting an ongoing ftm request
+Date: Mon, 19 Oct 2026 09:51:13 -0400
+Message-ID: <20261019135441.1420968-382-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,274 +52,410 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 6f4b44abe4ccdcfdab75c9493b8c7634fee37133 ]
+[ Upstream commit ef704fc32ae1a519801ac4a06aa290fece5f403c ]
 
-The wireless dongle is already supported, this adds detection for
-the mouse in wired mode. Supports battery reporting.
+Add support for aborting an ongoing FTM request.
 
-Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715220243.340040bdc6a3.Ifbbf70021e42bf1d59db6ec45a73f1806a1c2289@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is **pending-5.15** (kernel **5.15.221**). This is a
-two-line USB ID addition to an existing HID++ driver, which stable rules
-explicitly allow.
-
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-Record: **[HID / logitech-hidpp] [Add] [USB detection for G502 X Plus
-wired mouse]**
+Record: **[iwlwifi/mld]** **[support]** add abort for an in-flight FTM
+(Fine Timing Measurement / peer measurement) request.
 
 **Step 1.2: Tags**
 Record:
-- Signed-off-by: Stuart Hayhurst \<stuart.a.hayhurst@gmail.com\>
-  (author)
-- Reviewed-by: Bastien Nocera \<hadess@hadess.net\> (HID++ reviewer)
-- Signed-off-by: Jiri Kosina \<jkosina@suse.com\> (HID maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Link:
-- Ignore any pipeline “Upstream commit” / Sasha Levin SOB if present
+- Signed-off-by: Avraham Stern <avraham.stern@intel.com> (author)
+- Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+  (iwlwifi maintainer)
+- Link: https://patch.msgid.link/20260715220243.340040bdc6a3.Ifbbf70021e
+  42bf1d59db6ec45a73f1806a1c2289@changeid
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence of the last two is expected for this review)
 
 **Step 1.3: Body**
-Record: [Bug/gap: G502 X Plus is detected on the Lightspeed dongle but
-not when plugged in over USB.] [Symptom: no HID++ binding in wired mode,
-so no kernel battery reporting.] [No version range in the message.]
-[Root cause: missing `HID_USB_DEVICE(..., 0xC095)` in
-`hidpp_devices[]`.]
+Record:
+- Bug description from message: none. One sentence: “Add support for
+  aborting an ongoing FTM request.”
+- Symptom/failure mode: not stated
+- Version information: none
+- Root-cause explanation: none
 
 **Step 1.4: Hidden bug fix?**
-Record: Not a disguised leak/race fix. It is a **new device ID** for
-existing driver code.
+Record: **Yes.** The wording is feature-like, but the MLD path already
+stores `mld->ftm_initiator.req` and later dereferences it. cfg80211
+frees that object on abort whether or not the driver implements
+`abort_pmsr`. Missing abort is a use-after-free / stuck-FTM hole, not a
+new userspace API.
 
 ## Phase 2: Diff analysis
 
 **Step 2.1: Inventory**
-Record: `drivers/hid/hid-logitech-hidpp.c` only; **+2 / -0**. Function:
-`hidpp_devices[]` ID table. Scope: single-file surgical ID add.
+Record:
+- `drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c`: +21 (new
+  `iwl_mld_ftm_abort`)
+- `drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h`: +1
+  (prototype)
+- `drivers/net/wireless/intel/iwlwifi/mld/mac80211.c`: +10
+  (`iwl_mld_abort_pmsr` + `.abort_pmsr` ops)
+- Total: **+32 / −0**, single-driver surgical change
 
 **Step 2.2: Code flow**
-Record: Before: USB `046d:c095` is not matched by logitech-hidpp and is
-handled by hid-generic (mouse works; no HID++ battery). After:
-`hidpp_probe()` binds with `driver_data = 0` (same as G403/G703/G903 USB
-entries). Path: device enumeration / probe, not an error path.
+Record:
+- Before: `.start_pmsr` was wired; `.abort_pmsr` was NULL. On netlink
+  close or wdev teardown, cfg80211 still `kfree()`s the request while
+  the driver keeps the pointer and firmware keeps ranging.
+- After: abort sends `TOF_RANGE_ABORT_CMD`, cancels queued FTM RX
+  notifications, then `iwl_mld_ftm_reset()` NULLs `req`/`req_wdev`.
+- Path: abort/teardown only, not the normal completion path.
 
 **Step 2.3: Bug mechanism**
-Record: **Hardware ID / quirk table (h).** Missing product ID; adding
-`HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC095)`.
+Record: **Use-after-free + leftover firmware ranging**, fixed by
+implementing the existing mac80211 `abort_pmsr` op (same pattern as
+MVM). Also prevents the next `iwl_mld_ftm_start()` from returning
+`-EBUSY` forever because `ftm_initiator.req` stayed non-NULL after the
+object was freed.
 
 **Step 2.4: Fix quality**
-Record: Obviously correct; matches neighboring Lightspeed USB mice. No
-API, locking, or structure change. Regression risk is low; the 2019 G502
-revert was for **different** PIDs (Hero/Proteus 0xC07D/0xC332/0xC08B),
-not this Lightspeed X device.
+Record: Obviously correct relative to `iwl_mvm_ftm_abort()`. Minimal.
+Regression risk is low: new code runs only on abort; on firmware abort
+failure it still resets local state (the UAF-critical part). Helpers it
+calls already exist in this tree.
 
 ## Phase 3: Git history
 
-**Step 3.1: Blame**
-Record: USB HID++ IDs in this tree come from `91cf9a98ae4127` (2019) and
-`27fc32fd941796` (2019), plus G915 TKL `fd41646d43504` (backported
-2023). Table has been stable for years.
+**Step 3.1: Blame / introduction**
+Record: Buggy pattern came in with **`d1e879ec600f9`** (“wifi: iwlwifi:
+add iwlmld sub-driver”, 2025-02-16). FTM start stored `req` and
+registered `RX_HANDLER_OF_FTM_REQ` / `IWL_MLD_OBJECT_TYPE_FTM_REQ` from
+day one, but never called cancel/abort. MVM has had abort since
+**`fc36ffda32670`** (2019, “support FTM initiator”).
 
 **Step 3.2: Fixes: tag**
-Record: None. This does not revert a bug-introducing commit; it adds an
-ID.
+Record: None. Not applicable.
 
-**Step 3.3: Related file history**
-Record: Related mainline IDs: `a343a7682acc5` (G502 Lightspeed 0xC08D,
-2023) and `fce551616dfa4` (G502 X Lightspeed 0xC098, 2026). Neither is
-in this tree. Not a numbered series; standalone v1. Same-author
-companion `456d506b6041d` (duplicate G703 ID) is unrelated cleanup.
+**Step 3.3: File history**
+Record: Recent FTM-initiator commits are unrelated (location BW
+encoding, switch indentation). Neighbor **`71ac392d8b5c2`** (FW recovery
+reset) is a different path. No prerequisite refactor for this hunk.
 
 **Step 3.4: Author**
-Record: Stuart Hayhurst is a regular HID++ ID contributor. Same
-author/reviewer pair already landed G915 TKL IDs in **this** 5.15 tree
-(`fd41646d43504`).
+Record: Avraham Stern is a regular iwlwifi FTM contributor. Maintainer
+Miri Korenblit signed off. Related later Stern commits in this tree are
+MEI length checks, not FTM abort follow-ups. **No follow-up fix** to
+`iwl_mld_ftm_abort` after this commit.
 
 **Step 3.5: Dependencies**
-Record: No new helpers. Needs existing `hidpp_devices[]` /
-`HID_USB_DEVICE` / battery init. Unified Battery 0x1004
-(`e037acf0b1aed`) **is** an ancestor of this tree. G502 Lightspeed
-0xC08D is only nearby context, not a functional prerequisite.
-Standalone.
+Record: Standalone. Uses existing `iwl_mld_send_cmd_pdu`,
+`iwl_mld_cancel_notifications_of_object`, `IWL_MLD_OBJECT_TYPE_FTM_REQ`,
+`iwl_mld_ftm_reset`, `TOF_RANGE_ABORT_CMD`. Series membership is **01/15
+of an iwlwifi-next “updates” dump**; other patches (MEI, WoWLAN, LARI,
+etc.) are unrelated. Can apply alone.
 
 ## Phase 4: Mailing list / external
 
 **Step 4.1: Original discussion**
-Record: `b4 dig -c 6f4b44abe4ccd` → https://patch.msgid.link/20260721171
-246.461232-5-stuart.a.hayhurst@gmail.com
-`b4 dig -a`: **v1 only**. Thread: Bastien `Reviewed-by`; Jiri “Applied,
-thanks.” No NAK, no stable concern.
+Record:
+- `b4 dig -c ef704fc32ae1a`: https://patch.msgid.link/20260715220243.340
+  040bdc6a3.Ifbbf70021e42bf1d59db6ec45a73f1806a1c2289@changeid
+- Cover: `[PATCH iwlwifi-next 00/15] wifi: iwlwifi: updates -
+  07-15-2026` — “Cleanups, features, and fixes from our internal tree.”
+- `b4 dig -a`: **v1 only**, this is the applied version
+- No reviewer comments, NAKs, or Cc: stable on this patch in the saved
+  thread
+- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
+  -m`
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Jiri Kosina, Benjamin Tissoires, Bastien Nocera, Filipe Laíns,
-linux-input, linux-kernel.
+**Step 4.2: Recipients**
+Record: To Johannes Berg; Cc linux-wireless, Avraham Stern. Subsystem
+maintainer (Miri) submitted the series.
 
 **Step 4.3: Bug report**
-Record: No syzbot/bugzilla. Author describes wired detection + battery.
-Libratbag also lists G502 X Plus wired 0xC095 (external confirmation of
-the PID).
+Record: None. No syzbot/bugzilla.
 
 **Step 4.4: Series**
-Record: Subject is `[PATCH]`, not `X/Y`. Later G502 X Lightspeed ID
-(`fce551616dfa4`) is a separate author/date.
+Record: Mixed iwlwifi-next batch. This patch does not depend on 02–15.
 
-**Step 4.5: stable@**
-Record: lore.kernel.org WebFetch returned 403. UNVERIFIED on stable@
-archives. `Documentation/process/stable-kernel-rules.rst` line 24: “New
-device IDs and quirks are also accepted.”
+**Step 4.5: Stable list**
+Record: No stable-list discussion found (search did not surface this
+subject).
 
-## Phase 5: Semantic / call graph
+## Phase 5: Semantic / call-chain
 
 **Step 5.1: Functions**
-Record: `hidpp_devices[]` only. Consumed by `hidpp_driver.id_table` →
-`hidpp_probe()`.
+Record: `iwl_mld_ftm_abort` (new), `iwl_mld_abort_pmsr` (new),
+`iwl_mld_hw_ops.abort_pmsr` assignment.
 
 **Step 5.2: Callers**
-Record: HID core match → `hidpp_probe()` → `hidpp_connect_event()` →
-`hidpp_initialize_battery()`. Userspace-visible on USB plug-in.
+Record:
+- `cfg80211_release_pmsr()` from `nl80211.c` on netlink port release
+- `cfg80211_pmsr_wdev_down()` from `net/wireless/core.c` on wdev
+  teardown
+- both → `cfg80211_pmsr_process_abort()` → `rdev_abort_pmsr()` →
+  `ieee80211_abort_pmsr()` → `drv_abort_pmsr()` → `iwl_mld_abort_pmsr()`
+- `drv_abort_pmsr` only calls the driver if `local->ops->abort_pmsr` is
+  set; cfg80211 **always kfree()s** afterward (`pmsr.c` around the abort
+  loop)
 
 **Step 5.3: Callees**
-Record: Unchanged. Battery path already tries 0x1000, then 0x1004, then
-0x1001.
+Record: firmware abort PDU; `iwl_mld_cancel_notifications_of_object()`;
+`iwl_mld_ftm_reset()`.
 
 **Step 5.4: Reachability**
-Record: Yes, from plugging the mouse in over USB. Unprivileged physical
-access; not a syscall fuzzer path.
+Record: Yes, from userspace: start peer measurement
+(`NL80211_CMD_PEER_MEASUREMENT_START`), then close the netlink socket or
+take the interface down while ranging is in progress. Typically
+privileged (`nl80211`), but a crashing location/RTT helper is a
+realistic trigger (Android Wi-Fi RTT uses this API).
 
 **Step 5.5: Similar patterns**
-Record: Same pattern as G403/G703/G903 USB IDs already here, and G915
-TKL already backported here.
+Record: Only iwlwifi MVM/MLD and mac80211_hwsim implement `.abort_pmsr`.
+MVM has had it since FTM was added; MLD start without abort was the
+incomplete copy.
 
-## Phase 6: This tree (5.15.221)
+Verified UAF path in this tree:
 
-**Step 6.1: Does the gap exist?**
-Record: Yes. `hidpp_devices[]` around `drivers/hid/hid-logitech-
-hidpp.c:4354` has G403 `0xC082` then G703 `0xC087`. **No `0xC095`.**
-`git merge-base --is-ancestor 6f4b44abe4ccd HEAD` → not ancestor.
-Wireless still covered by `LDJ_DEVICE(HID_ANY_ID)` at line 4338.
+```246:247:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
+        if (mld->ftm_initiator.req)
+                return -EBUSY;
+```
+
+```267:270:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
+        if (!ret) {
+                mld->ftm_initiator.req = req;
+                mld->ftm_initiator.req_wdev =
+ieee80211_vif_to_wdev(vif);
+        }
+```
+
+```340:342:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
+        if (IWL_FW_CHECK(mld, !mld->ftm_initiator.req,
+                         "FTM response without a pending request\n"))
+                return;
+```
+
+That NULL check does not save a dangling pointer.
+`cfg80211_pmsr_process_abort()` kfree’s the request after the (optional)
+abort op.
+
+## Phase 6: This checkout
+
+**Step 6.1: Local tree and buggy code**
+Record:
+- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion`: **7.3.0-rc4**
+- MLD FTM initiator **is present**. Bug introduced with MLD
+  (`d1e879ec600f9`), long before 7.3 branched.
+- Candidate SHA **`ef704fc32ae1a`**; `git merge-base --is-ancestor
+  ef704fc32ae1a HEAD` → already in this mainline snapshot (landed in
+  **7.3-rc1**, not in 7.2). Evaluation is still on technical merit, not
+  “already selected.”
 
 **Step 6.2: Backport difficulty**
-Record: **Minor context tweak.** Upstream hunk sits after G502
-Lightspeed `0xC08D`, which is not in 5.15. Insert after G403 / before
-G703. Two lines.
+Record: Clean apply on this tree. Structures and helpers match the hunk.
 
-**Step 6.3: Related fixes already here?**
-Record: No `0xC095`. G915 TKL IDs are present (same class of HID++ ID
-add). Unified Battery is present.
+**Step 6.3: Related fixes already here**
+Record: `iwl_mld_ftm_restart_cleanup()` covers FW restart only, not
+userspace abort. No earlier abort implementation.
 
-## Phase 7: Subsystem
+## Phase 7: Subsystem context
 
-**Step 7.1:** Record: **HID / logitech-hidpp**. Criticality:
-**IMPORTANT** (common USB HID, not core mm/net).
-`CONFIG_HID_LOGITECH_HIDPP`.
+**Step 7.1**
+Record: **iwlwifi MLD** (Intel Wi-Fi 7 opmode). Criticality:
+**IMPORTANT** (common client Wi-Fi driver), not core mm/VFS. FTM itself
+is a subset of users (RTT / indoor location).
 
-**Step 7.2:** Record: Mature driver; ID table is the usual extension
-point. Still receiving stable HID++ fixes on this branch.
+**Step 7.2**
+Record: Actively developed; MLD is the current Intel path. This is a
+missing piece from the original MLD port, not a brand-new subsystem.
 
-## Phase 8: Impact / risk
+## Phase 8: Impact and risk
 
-**Step 8.1:** Record: **driver-specific / hardware-specific** — Logitech
-G502 X Plus in **wired USB** mode.
+**Step 8.1: Who is affected**
+Record: Intel MLD devices using nl80211 peer measurement (FTM
+initiator). Not universal.
 
-**Step 8.2:** Record: Trigger = plug in with cable. Common for
-charging/wired use. Not remotely triggerable.
+**Step 8.2: Trigger**
+Record: Start FTM, then abort via socket close or iface down before
+firmware completes. Not every boot; realistic for location stacks and
+interface teardown. Unprivileged trigger: unverified (nl80211 PMSR is
+typically admin-capable).
 
-**Step 8.3:** Record: Without the ID, generic HID still moves the
-cursor. With the ID, HID++ battery sysfs works. Severity **MEDIUM** as a
-bug, but this is the **device-ID exception**, not a crash fix.
+**Step 8.3: Failure mode**
+Record:
+- Firmware response after abort: **UAF** of `cfg80211_pmsr_request`
+  (crash / KASAN / potential memory corruption)
+- Without a later notification: FTM stays “busy” (`-EBUSY`) until driver
+  reset
+- Firmware keeps ranging until timeout
+Severity: **HIGH** (UAF), not a panic on every probe.
 
-**Step 8.4:** Record: Benefit: battery/HID++ for a shipping 2022 mouse
-on 5.15 LTS. Risk: very low (2 lines, no quirks). Same shape as G915 TKL
-already on this tree. Ratio: **favorable**.
+**Step 8.4: Risk/benefit**
+Record: Benefit medium-high for MLD FTM users (UAF + stuck session).
+Risk **low** (32 lines, abort path only, same design as MVM). Ratio
+favors taking it.
 
 ## Phase 9: Synthesis
 
-**Evidence FOR**
-- Stable rules explicitly accept new device IDs (`stable-kernel-
-  rules.rst`).
-- Driver and battery stack (including 0x1004) exist in 5.15.221.
-- +2 lines, no new API, no quirks.
-- Reviewed by Bastien Nocera; applied by Jiri Kosina.
-- Precedent on this tree: G915 TKL USB/BT IDs (`fd41646d43504`), same
-  author, same “battery on top of hid-generic” rationale.
-- 0xC095 is unused by other HID drivers here.
+**Step 9.1: Evidence**
 
-**Evidence AGAINST**
-- Not a crash/UAF/security fix; mouse already works via hid-generic.
-- 2019 G502 USB IDs were reverted for timeouts — **different PIDs**.
-- Hunk context needs a tiny edit because 0xC08D is missing.
+FOR:
+- Verified UAF: driver borrows cfg80211’s request; abort path frees it
+  without clearing the driver pointer
+- Also stuck `-EBUSY` on later FTM starts
+- Small, self-contained, copies a long-standing MVM abort
+- Cancel infrastructure (`IWL_MLD_OBJECT_TYPE_FTM_REQ`) was already
+  registered; abort was the missing caller
+- Maintainer-signed; applies cleanly here
+- Same class of “missing stop/abort op” that stable routinely takes
 
-**Unresolved**
-- Could not fetch lore/stable HTML (403). Thread recovered via `b4`
-  mbox.
-- Did not physically test a G502 X Plus on 5.15.
+AGAINST:
+- Message sells it as “add support,” no crash report, no Fixes/syzbot
+- Sent to **iwlwifi-next** in a mixed updates series
+- FTM is not a hot path for most desktops
+- Adds a new ops pointer (looks like a feature if you only read the
+  subject)
 
-**Stable rules checklist**
-1. Obviously correct and tested? **PASS** (trivial ID; author + HID++
-   reviewer).
-2. Fixes a real user-visible gap? **PASS** (wired HID++/battery).
-3. Important? **PASS** under the device-ID exception (not a panic).
-4. Small and contained? **PASS** (+2 lines, one table).
-5. No new features/APIs? **PASS** (existing probe/battery only).
-6. Applies to this tree? **PASS** with trivial context adjust.
+UNRESOLVED:
+- Could not fetch lore HTML (403); used `b4` mbox instead
+- No evidence of a real-world crash report
+- Unverified whether unprivileged users can start PMSR on typical
+  distros
 
-**Exception category:** New USB device ID on an existing driver.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** (MVM analogue; Intel-authored)
+2. Real user-visible bug? **PASS** (UAF / stuck FTM after abort)
+3. Important (crash/security/corruption)? **PASS** (UAF is crash/memory-
+   safety; FTM-specific but real)
+4. Small and contained? **PASS** (32 lines, one driver)
+5. No new features/APIs? **PASS** — implements an existing mac80211 op;
+   not a new syscall/uAPI
+6. Can apply to this tree? **PASS** (MLD FTM code is here; helpers
+   exist)
 
-This belongs on 5.15.y: the hardware is real, the driver already handles
-this class of Lightspeed USB mice, and the change is the same kind of ID
-add this tree has already taken.
+**Step 9.3: Exception category**
+Record: Not ID/quirk/DT/build/docs. Ordinary driver correctness fix.
+
+**Step 9.4: Decision**
+This is a missing abort handler on a driver that caches a cfg80211-owned
+object. That is a UAF fix, even though the subject says “support.” It is
+small, applies here, and does not need the rest of the 15-patch series.
+
+### What it solves for this tree
+On 7.3-rc4, iwlwifi MLD FTM start stores `req` and handles firmware
+range responses. Without abort, closing the measurement netlink socket
+or taking the wdev down frees `req` while the driver and firmware still
+use it. That is a use-after-free and can pin FTM at `-EBUSY`. The patch
+aborts firmware, drops queued FTM notifs, and clears driver state.
+
+### Risk vs benefit
+Low risk, high severity if the abort path is hit. Benefit is limited to
+Intel MLD + FTM users, which is enough given UAF.
 
 Verification:
-- [Phase 1] Tags: author SOB, Bastien Reviewed-by, Jiri SOB; no Fixes/Cc
-  stable
-- [Phase 2] Diff: +2 lines in `hidpp_devices[]`, USB 0xC095, no quirks
-- [Phase 3] Mainline SHA `6f4b44abe4ccdcfdab75c9493b8c7634fee37133`; not
-  ancestor of HEAD
-- [Phase 3] Unified Battery `e037acf0b1aed` **is** ancestor of HEAD
-- [Phase 3] G502 Lightspeed `a343a7682acc5` is **not** in this tree
-  (context only)
-- [Phase 4] `b4 dig -c 6f4b44abe4ccd`: lore match; v1 only; Reviewed-by
-  + Applied
-- [Phase 4] WebFetch lore/stable: 403; thread read from
-  `/tmp/g502xplus.mbox`
-- [Phase 5] ID table → `hidpp_probe` → `hidpp_initialize_battery`
-  (0x1000/1004/1001)
-- [Phase 6] `git describe HEAD`: p-5.15-2-g9a29d9b0f9507; `make
-  kernelversion`: 5.15.221; branch pending-5.15
-- [Phase 6] No 0xC095 in `hidpp_devices[]`; `LDJ_DEVICE(HID_ANY_ID)`
-  present
-- [Phase 6] G915 TKL IDs already backported here (`fd41646d43504`)
-- [Phase 7] `CONFIG_HID_LOGITECH_HIDPP`; Kconfig selects POWER_SUPPLY
-- [Phase 8] Failure mode: missing HID++/battery in wired mode, not oops
-- UNVERIFIED: stable@ archive search (HTTP 403); no hardware test on
-  5.15
+- [Phase 1] Parsed tags: SOB Stern + Korenblit; Link msgid; no
+  Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: +32 lines, `iwl_mld_ftm_abort` + `.abort_pmsr`
+- [Phase 3] `git show ef704fc32ae1a`; ancestor of HEAD; introduced with
+  `d1e879ec600f9`; MVM abort `fc36ffda32670`
+- [Phase 3] `git merge-base --is-ancestor ef704fc32ae1a 8d3ae59288f1e` →
+  not in 7.2; in 7.3-rc1
+- [Phase 3] No follow-ups on `ftm-initiator.c` after this commit
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 iwlwifi-next 01/15, To Johannes, no
+  review replies in mbox
+- [Phase 4] WebFetch lore/msgid.link → 403; used local mbox
+- [Phase 5] Call chain: `cfg80211_release_pmsr` /
+  `cfg80211_pmsr_wdev_down` → kfree after optional abort;
+  `iwl_mld_handle_ftm_resp_notif` derefs `ftm_initiator.req`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
+  kernelversion 7.3.0-rc4; MLD FTM present
+- [Phase 8] Failure mode: UAF on FTM abort + `-EBUSY` stuck state,
+  severity HIGH
+- UNVERIFIED: unprivileged PMSR start; no user crash report
 
 **YES**
 
- drivers/hid/hid-logitech-hidpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../intel/iwlwifi/mld/ftm-initiator.c         | 21 +++++++++++++++++++
+ .../intel/iwlwifi/mld/ftm-initiator.h         |  1 +
+ .../net/wireless/intel/iwlwifi/mld/mac80211.c | 10 +++++++++
+ 3 files changed, 32 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index a2bb7d8b15b69..a931713a9cb69 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4615,6 +4615,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC082) },
- 	{ /* Logitech G502 Lightspeed Wireless Gaming Mouse over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC08D) },
-+	{ /* Logitech G502 X Plus Wireless Gaming Mouse over USB */
-+	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC095) },
- 	{ /* Logitech G703 Gaming Mouse over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC087) },
- 	{ /* Logitech G703 Hero Gaming Mouse over USB */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
+index 3464b32687124..6e174c4d8b75e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
+@@ -449,3 +449,24 @@ void iwl_mld_ftm_restart_cleanup(struct iwl_mld *mld)
+ 			       mld->ftm_initiator.req, GFP_KERNEL);
+ 	iwl_mld_ftm_reset(mld);
+ }
++
++void iwl_mld_ftm_abort(struct iwl_mld *mld, struct cfg80211_pmsr_request *req)
++{
++	struct iwl_tof_range_abort_cmd cmd = {
++		.request_id = req->cookie,
++	};
++
++	lockdep_assert_wiphy(mld->wiphy);
++
++	if (req != mld->ftm_initiator.req)
++		return;
++
++	if (iwl_mld_send_cmd_pdu(mld, WIDE_ID(LOCATION_GROUP,
++					      TOF_RANGE_ABORT_CMD),
++				 &cmd))
++		IWL_ERR(mld, "failed to abort FTM process\n");
++
++	iwl_mld_cancel_notifications_of_object(mld, IWL_MLD_OBJECT_TYPE_FTM_REQ,
++					       mld->ftm_initiator.req->cookie);
++	iwl_mld_ftm_reset(mld);
++}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
+index 3fab25a52508a..e82237b314673 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
++++ b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
+@@ -25,5 +25,6 @@ int iwl_mld_ftm_start(struct iwl_mld *mld, struct ieee80211_vif *vif,
+ void iwl_mld_handle_ftm_resp_notif(struct iwl_mld *mld,
+ 				   struct iwl_rx_packet *pkt);
+ void iwl_mld_ftm_restart_cleanup(struct iwl_mld *mld);
++void iwl_mld_ftm_abort(struct iwl_mld *mld, struct cfg80211_pmsr_request *req);
+ 
+ #endif /* __iwl_mld_ftm_initiator_h__ */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+index 69a066904a808..5234229a070a7 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+@@ -2609,6 +2609,15 @@ static int iwl_mld_start_pmsr(struct ieee80211_hw *hw,
+ 	return iwl_mld_ftm_start(mld, vif, request);
+ }
+ 
++static void iwl_mld_abort_pmsr(struct ieee80211_hw *hw,
++			       struct ieee80211_vif *vif,
++			       struct cfg80211_pmsr_request *request)
++{
++	struct iwl_mld *mld = IWL_MAC80211_GET_MLD(hw);
++
++	iwl_mld_ftm_abort(mld, request);
++}
++
+ static enum ieee80211_neg_ttlm_res
+ iwl_mld_can_neg_ttlm(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 		     struct ieee80211_neg_ttlm *neg_ttlm)
+@@ -2696,5 +2705,6 @@ const struct ieee80211_ops iwl_mld_hw_ops = {
+ 	.prep_add_interface = iwl_mld_prep_add_interface,
+ 	.set_hw_timestamp = iwl_mld_set_hw_timestamp,
+ 	.start_pmsr = iwl_mld_start_pmsr,
++	.abort_pmsr = iwl_mld_abort_pmsr,
+ 	.can_neg_ttlm = iwl_mld_can_neg_ttlm,
+ };
 -- 
 2.53.0
 
