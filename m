@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0481F5087FD;
-	Mon, 19 Oct 2026 13:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6814C502575;
+	Mon, 19 Oct 2026 13:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418167; cv=none; b=uHKdgxIg/476koU+aPVYrfex4LGZNuy2y9PtXMHotNHKFuI9LltsvHLmekg28Zx6oZ09FVN0fBvs0vHH+edKgu+jPuaPwstS4vPjAxER6imOZBZ9Ji2zaocW80FiNcktT8ESHN6BYsbLTJshuIfTt17VVFv5R68n5n9usAdxXck=
+	t=1792418168; cv=none; b=Qcs6D7rp1O/iaCNYvAglv6p1I8YyhDWXDGlgvQkVSYIJ1GcKAMU6QjvAyglxge7JtHpsQHBlTGF4cs6Tl5+MYFegTj4o7hVYIZJe/t/fthZsxkmStWssg9NpVNs4nsGHm2imCTkpexUIqbe129tHcMrrOiWq9OjU2mhWbO5w1wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418167; c=relaxed/simple;
-	bh=CVm7uD/Hf/UEIITKGTXusvvMtbFTFyxCZbvY7JC18js=;
+	s=arc-20240116; t=1792418168; c=relaxed/simple;
+	bh=PagkDkatg2vkUjw8ywuAPeJUtrrOOuTOFVOG3JBuNZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q1+4gT0g9rqaN3hOTLiJt+VgPlHgGmEzYco+X2zqb94GJSwkLucrIysgGXIVNpr8ZImCGHsjwjo67dM7xGKwPOBbEofe020lJsfAEDQsmTXex3IwI7svD9x4U+dSK49rbl7gKiaegvjWERweW4RVbE0xlYXkfWpFpq4Q6tYturQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XDM3fgyy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sy8BcNSb/iD91DLSGl180JzDkAK+NJ9UXHxpHS86S/YObAHHavHTJU7B+ery9C8LOtfS7fxL7+JNG+jYh0ppvHSp+J2ByWH5GOzFqwUZPy+mjba1ozfJMdMn0hjHbYYjd3HnWLcby0hPBteR5Adl3MCbdamHBFlU1pXOQ45bkEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLtJle2C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XDM3fgyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AD31F000C4;
-	Mon, 19 Oct 2026 13:56:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLtJle2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BED1F000C6;
+	Mon, 19 Oct 2026 13:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418162;
-	bh=tkjY0osqp2/Vm2Opt0bHibUbVAjdzGYrtqr88weKT2Y=;
+	s=k20260515; t=1792418165;
+	bh=mtmFXFrqn44bCQ1htm2kFYcTt2aWR/brBgEmJVJnVM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDM3fgyywyz9ySxAC7Zf0iN6yomJ0JXNM7LRHE8LGhjL4J40ER8DsiucBOAJC/Rn9
-	 7ZCccVRS0aL+gJxKB7y5V29Gj9wcTul+zF6+yYrIPl2jAoQju+HAO8FMJTO7SY3aYq
-	 HRCctoKhsMjgOXxMQORupEtsFlGZa7VZjhhAHddgFqRfjaaVnZI7gjOHD5GsncwrI9
-	 6vXNpfAhqiP6TPjbCy17rqNeisVse5yBZ5K0g7qZWFJGyqFCF4RPxmpGplKH6sFFFU
-	 cBsoVH3JzHyCd0CBjSlMLnmA2LknOIM8LoQOKammlbDB4Uj5qD+R2jKuZABHVr/cyk
-	 K1z/u8lNXr73Q==
+	b=RLtJle2C90wBCdUacXK5jcjfvUVGafgYgwI789tD+11rr0II80OdOfnmvyJ5uv/50
+	 nivl1HUdD4k0WrkCue8n33h5o+YX8hYaNVcspxtIU7xaarTM7Sf9LPKa6mSZuPzPOO
+	 F3RXsz8jRNmJuaE/fuDfNr7tXhltDpLukUt9ZTWj9zEwwEbfZAcb9SgB34D9vh40lx
+	 rdQ/HmQyMaqXaGEZBcBC7C8Veq7nNgRxp3R7SdX5DwUVJnTTSLgvhSzkOGaMjscAFh
+	 vrTi7/7Im5I/3vb8qG+VUjjlmJuj2bMY40MDsd6bURmx/l3LQObrIrueWsrBsz8zEk
+	 hdfMiV+2y3Ujw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: support TTL platform device ID
-Date: Mon, 19 Oct 2026 09:45:47 -0400
-Message-ID: <20261019135441.1420968-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Mon, 19 Oct 2026 09:45:49 -0400
+Message-ID: <20261019135441.1420968-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,67 +54,86 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 3bff0d12c36247073fca976498b58a940fca72dc ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-Add support for a new device ID that we will have on TTL (sc2).
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260714165826.46183446954f.Icc260831e530c1c92c9be615a7077768b1b9ae30@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
+
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
+
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
+
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
+
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The change
-is a one-line PCI ID add for existing iwlwifi Sc/sc2 support. That is
-the stable device-ID exception, so the rest of this write-up is the
-forensic checklist behind a **YES**.
+The local tree is **6.12.111** (`pending-6.12`). The buggy
+`set_bt_context()` placement is present in `drivers/bluetooth/btrsi.c`,
+and the 3-line UAF fix applies here.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[iwlwifi / wifi] [support] [add PCI device ID for TTL (sc2)
-platform]**
-
-- Subsystem: `wifi: iwlwifi`
-- Verb: **support** (hardware enablement, not a crash fix)
-- Intent: bind iwlwifi to a new Intel platform PCI ID
+Record: [Bluetooth/btrsi] [Move] [Call `set_bt_context()` only after
+`hci_register_dev()` succeeds so a failed HCI attach does not leave a
+dangling `bt_adapter`.]
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Reviewed-by:** Johannes Berg `<johannes.berg@intel.com>` (iwlwifi
-  maintainer)
-- **Link:** `https://patch.msgid.link/20260714165826.46183446954f.Icc260
-  831e530c1c92c9be615a7077768b1b9ae30@changeid`
-- **Signed-off-by:** Miri Korenblit
-  `<miriam.rachel.korenblit@intel.com>` (author)
-- No **Fixes:** tag (expected; this is not a regression fix)
-- No **Cc: stable** (expected for this review path)
-- No **Reported-by**, **Tested-by**, **Acked-by**, syzbot, or bugzilla
-  tags
-- Ignore pipeline **Signed-off-by: Sasha Levin** / **[Upstream commit
-  ...]** (none present on the real commit `3bff0d12c36247`)
+- Signed-off-by: Chen Changcheng \<chenchangcheng@kylinos.cn\> (author)
+- Signed-off-by: Luiz Augusto von Dentz \<luiz.von.dentz@intel.com\>
+  (Bluetooth maintainer; applied to bluetooth-next)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence is expected for this review pipeline)
+- Upstream object (verified in this repo’s object store, not an ancestor
+  of HEAD): `17abcfc57c8a0071e60a56256fbc4428957d22bb`
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug/problem:** Driver does not claim PCI device `0x9327`, so TTL
-  (sc2) Wi-Fi does not bind.
-- **Symptom:** iwlwifi never probes; no wireless interface on that SKU.
-- **Version info:** none in the message. Author date 2026-07-14; landed
-  as `v7.2-rc1-199-g3bff0d12c3624`.
-- **Root cause (author):** missing PCI ID in `iwl_hw_card_ids` for
-  hardware “we will have on TTL (sc2).” Same wording as the earlier RZL
-  ID commit (`6a1b633fdcd904`).
+- Bug: `rsi_hci_attach()` stores `h_adapter` into `common->bt_adapter`
+  via `ops->set_bt_context()` *before* `hci_alloc_dev()` /
+  `hci_register_dev()`. On failure it `kfree`s `h_adapter` but leaves
+  `bt_adapter` non-NULL.
+- Symptom: use-after-free in later detach callers that test `bt_adapter`
+  and call `rsi_bt_ops.detach()`.
+- Named triggers: SDIO `.remove` (`rsi_disconnect`), USB `.disconnect`
+  (`rsi_disconnect`), SDIO `.shutdown` (`rsi_shutdown`), hibernation
+  `.freeze` (`rsi_freeze`).
+- Root cause: `coex_mode` is set in `rsi_91x_init()` and is not cleared
+  on attach failure, so deinit still takes the BT detach path.
+- Version info: none in the message. The buggy placement dates to the
+  original driver (`38aa4da504837`, v4.17-rc1).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not a hidden leak/race/UAF.** It is an explicit new-PCI-ID
-addition. That is an allowed stable exception, not a disguised memory-
-safety fix.
+Record: Not hidden. This is an explicit UAF fix described as such. The
+verb “Move” is the mechanism, not a cleanup.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -120,80 +141,73 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/net/wireless/intel/iwlwifi/pcie/drv.c` (**+1 / -0**)
-- Function/data: `iwl_hw_card_ids[]` (PCI ID table)
-- Scope: **single-file surgical**, one table entry
+- File: `drivers/bluetooth/btrsi.c` only (+2 / −1 in the actual commit
+  `17abcfc57c8a`; the candidate dump showed extra surrounding context
+  including `kzalloc_obj`, which is **not** part of the functional
+  change).
+- Function: `rsi_hci_attach()`.
+- Scope: single-file surgical fix.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** Sc block lists `0xE440`, `0xE340`, `0xD340`, `0x6E70`,
-  `0xD240` with `iwl_sc_mac_cfg`. `0x9327` does not match;
-  `iwl_pci_driver.id_table` does not bind.
-- **After:** `{IWL_PCI_DEVICE(0x9327, PCI_ANY_ID, iwl_sc_mac_cfg)}` is
-  added. Probe is `iwl_pci_probe()` → `iwl_pci_gen1_2_probe()` with
-  existing Sc MAC config.
-- Path affected: **PCI enumeration / driver bind** for that device ID
-  only.
+- Before: after `kzalloc`, immediately `ops->set_bt_context(priv,
+  h_adapter)` (writes `common->bt_adapter`). Then `hci_alloc_dev()` /
+  `hci_register_dev()`. Either failure does `goto err` →
+  `kfree(h_adapter)` while `bt_adapter` still points at it.
+- After: `set_bt_context()` runs only after `hci_register_dev()` returns
+  success. Failure paths leave `bt_adapter` NULL (it was never written),
+  so deinit skips detach.
+- Path affected: HCI attach error path; success path still publishes the
+  adapter, just later.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Hardware workaround / device ID addition]**
-- Macro expands to Intel vendor, device `0x9327`, any
-  subvendor/subdevice, `driver_data = iwl_sc_mac_cfg`.
-- Newer iwlwifi devices are identified from HW RF/MAC registers via
-  `iwl_pci_find_dev_info()`; Sc IDs are not duplicated as `DEVICE(0x…)`
-  in `iwl_dev_info_table`. FM/WH/PE RF entries already exist. Same
-  pattern as `0xD240`.
-- `MODULE_DEVICE_TABLE(pci, iwl_hw_card_ids)` updates userspace modalias
-  matching.
+Record: [USE-AFTER-FREE / dangling pointer] Mechanism: publish-then-free
+on error. Fix: publish only after successful registration. Category (d)
+memory safety + (g) error-path ordering.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- **Quality:** Obviously correct; identical to neighboring Sc IDs.
-- **Regression risk:** Very low. Only PCI `8086:9327` is affected. Wrong
-  ID would only mis-bind another Intel function using that ID (Intel
-  assigns these IDs).
-- No API, locking, or data-structure change.
+- Obviously correct: `rsi_set_bt_context()` is a straight store of
+  `common->bt_adapter`; delaying that store until the object is fully
+  live is the right lifetime rule.
+- Minimal: one call moved, no API/data-structure change.
+- Regression risk: low. During `hci_register_dev()`, `bt_adapter` stays
+  NULL so `recv_pkt` is skipped (`if (common->bt_adapter)`). HCI
+  callbacks use `hci_set_drvdata()`, which is set before register.
+  Attach is synchronous in the RX path, so by the next BT packet
+  `bt_adapter` is either valid or still NULL.
+- Red flags: none.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Line adding `0x9327`: commit **`3bff0d12c36247`** (Miri Korenblit,
-  2026-07-14).
-- Surrounding Sc IDs: `c96a36491003d7` (2025-05-08) and `6a1b633fdcd904`
-  (RZL `0xD240`, 2025-06-12).
-- `iwl_sc_mac_cfg` and Sc support are long-lived in this 7.3 tree, not
-  last-month code.
+Record: Buggy `ops->set_bt_context(priv, h_adapter)` at line 120 is from
+`38aa4da504837` (“Bluetooth: btrsi: add new rsi bluetooth driver”,
+Prameela Rani Garnepudi, 2018-02-27). Contained in v4.17-rc1. Present in
+this 6.12 tree (`git merge-base --is-ancestor 38aa4da504837 HEAD`
+succeeded).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No Fixes: tag.** Not introduced by a buggy prior commit; the
-ID was simply absent.
+Record: No Fixes: tag. The introducing commit is the original driver
+add, confirmed by blame.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Related: `6a1b633fdcd904` “support RZL platform device ID” (same one-
-  line pattern).
-- `5f88b045d959f` “pcie: add two LNL PCI IDs”.
-- No later `-S 0x9327` follow-up; the ID was not corrected or reverted.
-- Nearby series mates (compile-time hcmd check, FCS d3 fix, etc.) do
-  **not** touch this table entry.
+Record: Recent `btrsi.c` history in this tree is unrelated (unaligned.h
+move, HCI_AMP removal, header/comment cleanups, tx timeout). No prior
+UAF/`set_bt_context` fix. Standalone; not patch X/Y.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Miri Korenblit is a regular iwlwifi author (often applying Intel
-wireless patches). Johannes Berg reviewed this ID add. Same author wrote
-the RZL ID add.
+Record: Chen Changcheng has no other commits in this tree under
+`drivers/bluetooth/`. Luiz von Dentz (who applied it) is the Bluetooth
+subsystem maintainer and is active here. Author is not the RSI driver
+maintainer; the patch was still taken by the Bluetooth maintainer.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `iwl_sc_mac_cfg` and the Sc PCI block — **present** in this tree
-  (`cfg/sc.c`, `iwl-config.h`, `drv.c`).
-- sc2 firmware prefixes `IWL_SC2_A_FM_C_FW_PRE` /
-  `IWL_SC2_A_WH_A_FW_PRE` and `IWL_CFG_MAC_TYPE_SC2` are already here;
-  MAC type is read from CSR at runtime, not from this PCI ID.
-- **Standalone:** one line; does not need the other 14 patches from the
-  07-14-2026 series.
+Record: No prerequisites. `set_bt_context` / `rsi_hci_attach` /
+`rsi_bt_ops.detach` all exist in this tree. `git apply --check` of
+`17abcfc57c8a` succeeded (hunks at offset +10). Standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -201,129 +215,161 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 3bff0d12c36247`: **[PATCH v2 iwlwifi-next 04/15] wifi:
-  iwlwifi: support TTL platform device ID**
-- URL: `https://patch.msgid.link/20260714165826.46183446954f.Icc260831e5
-  30c1c92c9be615a7077768b1b9ae30@changeid`
-- `b4 dig -a`: v2 of “wifi: iwlwifi: updates - 07-14-2026”. Cover
-  letter: v2 was a resend so -next contained an unrelated compile fix
-  for a sibling patch. **This ID hunk did not change between versions.**
-- Thread mbox: **16 messages, all series patches**; no NAKs, no public
-  review replies, no `Cc: stable` discussion on this patch.
-- Cover letter: “Usual fixed, cleanups and **features** from our
-  internal tree.” This ID add is listed under Miri’s patches, not as a
-  CVE/crash fix.
-- WebFetch to lore.kernel.org returned **403**; discussion recovered via
-  `b4 dig -m`.
+- `b4 dig -c 17abcfc57c8a`: https://patch.msgid.link/20260722083136.1756
+  50-1-chenchangcheng@kylinos.cn
+- `b4 dig -a`: single v1 series (2026-07-22); no v2/v3.
+- Thread: original patch, BlueZ CI bot, patchwork-bot “applied by Luiz”.
+  No NAKs. No reviewer-requested respin. No explicit “Cc: stable” in the
+  thread.
+- Applied to bluetooth-next as `17abcfc57c8a` by Luiz Augusto von Dentz
+  (2026-07-23).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc **Johannes Berg**, **linux-
-wireless@vger.kernel.org**. **Reviewed-by: Johannes Berg** already on
-the sent patch (internal review). Right maintainer and list.
+Record (`b4 dig -w`): To Marcel Holtmann, Luiz von Dentz; Cc linux-
+bluetooth, linux-kernel. Appropriate Bluetooth maintainers. Luiz applied
+it (maintainer SOB). No additional human Reviewed-by in the mbox.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by / bugzilla / syzbot. This is vendor hardware
-enablement, not a user crash report.
+Record: No Reported-by, syzbot, or bugzilla. Bug is explained from code
+analysis. BlueZ CI: CheckPatch/BuildKernel/CheckSparse/IncrementalBuild
+PASS.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 15-patch **iwlwifi-next** “updates” mix (validations, recovery,
-LARI v14, UHR DBE). **04/15 is independent.** Other patches are not
-required for this ID to apply or work.
+Record: Standalone 1-patch series. No sibling patches required.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable WebFetch **403**. `b4` thread has **no**
-stable-list discussion. **UNVERIFIED** whether anyone later nominated it
-on stable@.
+Record: No useful stable-list discussion of this fix was found
+(lore.kernel.org search 403; web search for site:lore.kernel.org/stable
+returned unrelated btrfs hits). UNVERIFIED that nobody previously
+rejected it for stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function body edited. Data: **`iwl_hw_card_ids[]`**.
-Consumers: `MODULE_DEVICE_TABLE`, `iwl_pci_driver.id_table`, probe
-`iwl_pci_probe()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `rsi_hci_attach()` only. Related callees/callers used to confirm
+the UAF: `rsi_set_bt_context()`, `rsi_hci_detach()`, `rsi_attach_bt()`.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- `iwl_pci_register_driver()` registers `iwl_pci_driver` with `.id_table
-  = iwl_hw_card_ids`.
-- PCI core calls `iwl_pci_probe()` on match.
-- Context: process/probe, not IRQ. Common path **only if** device
-  `8086:9327` is present.
+- `rsi_hci_attach` is `rsi_bt_ops.attach`.
+- `rsi_attach_bt()` in `drivers/net/wireless/rsi/rsi_91x_main.c` calls
+  `rsi_bt_ops.attach()` and **only logs** on failure.
+- Callers of `rsi_attach_bt()`: RX handler on `BT_CARD_READY_IND`
+  (`rsi_91x_main.c`), and deferred attach from mgmt FSM
+  (`rsi_91x_mgmt.c`).
+- Detach UAF sites (all present here):
+  - `rsi_91x_sdio.c` remove (~1226), freeze (~1407), shutdown (~1460)
+  - `rsi_91x_usb.c` disconnect (~882)
+  - `rsi_91x_main.c` `rsi_91x_deinit()` (~411) — same pattern, not
+    listed in the commit message
+- Context: probe/firmware-ready path and later remove/shutdown/PM. Not
+  IRQ-critical; reachable from device lifecycle.
 
 **Step 5.3: TRACE CALLEES**
-Record: Probe enables PCI, maps BAR0, reads `CSR_HW_REV`, calls
-`iwl_pci_gen1_2_probe(..., iwl_sc_mac_cfg, ...)`. Device family
-`IWL_DEVICE_FAMILY_SC` is already used by other Sc IDs.
+Record:
+`kzalloc`/`hci_alloc_dev`/`hci_register_dev`/`hci_free_dev`/`kfree`;
+`ops->set_bt_context` → `rsi_set_bt_context()` which assigns
+`common->bt_adapter = bt_context`. `rsi_hci_detach()` does
+`hci_unregister_dev`/`hci_free_dev`/`kfree` on that pointer.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: PCI enumerates → id_table match → `iwl_pci_probe` → gen1/2
-trans/op-mode → firmware via existing sc/sc2 names. **Reachable from
-userspace** only by having the hardware (or VFIO/passthrough of that
-ID). Not a syscall fuzz path.
+Record: Plug RSI SDIO/USB device with BT+WiFi firmware
+(`CONFIG_RSI_COEX`, `coex_mode > 1`) → firmware `BT_CARD_READY_IND` →
+`rsi_attach_bt()` → `rsi_hci_attach()`. If `hci_alloc_dev()` or
+`hci_register_dev()` fails, `h_adapter` is freed but `bt_adapter`
+remains set. Subsequent BT RX packets hit `if (common->bt_adapter)
+rsi_bt_ops.recv_pkt(...)` (UAF without waiting for unplug).
+Unplug/shutdown/hibernate also UAF in detach. Userspace can trigger the
+lifecycle (unplug, reboot, hibernate); the attach failure itself is an
+error path (OOM or HCI register failure).
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same one-line Sc ID adds (`0xD240` RZL). No extra
-`IWL_DEV_INFO(DEVICE(0x9327))` for other Sc IDs either.
+Record: All `rsi_bt_ops.detach(bt_adapter)` sites share the same
+`bt_adapter` NULL-check. No other `set_bt_context` call sites. Same bug
+class is concentrated in this one publish point.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `drivers/net/wireless/intel/iwlwifi/pcie/drv.c` Sc
-block and `iwl_sc_mac_cfg` exist. Without this ID, `0x9327` is
-unmatched. sc2 (`IWL_CFG_MAC_TYPE_SC2` / `iwlwifi-sc2-a0-*`) already
-exists. Bug/gap is “missing ID,” not missing subsystem.
+Record: Yes. `drivers/bluetooth/btrsi.c` lines 119–153:
+
+```119:153:drivers/bluetooth/btrsi.c
+        h_adapter->priv = priv;
+        ops->set_bt_context(priv, h_adapter);
+        h_adapter->proto_ops = ops;
+        // ...
+        err = hci_register_dev(hdev);
+        if (err < 0) {
+                BT_ERR("HCI registration failed with errcode %d", err);
+                hci_free_dev(hdev);
+                goto err;
+        }
+        return 0;
+err:
+        h_adapter->hdev = NULL;
+        kfree(h_adapter);
+```
+
+`rsi_set_bt_context()` assigns `common->bt_adapter`. `coex_mode` is set
+in `rsi_91x_init()` (lines 347–366) and is not cleared on attach
+failure. Introduced in v4.17; present in 6.12.111.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Neighboring lines match the candidate diff. No
-refactor needed on 7.3-rc4.
+Record: Clean apply. `git show 17abcfc57c8a -- drivers/bluetooth/btrsi.c
+| git apply --check` succeeded (offset 10). This tree still uses
+`kzalloc(sizeof(*h_adapter), GFP_KERNEL)` rather than mainline
+`kzalloc_obj`; that line is outside the committed hunks. No conflicting
+local changes.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No alternate TTL ID fix. `0x9327` appears only from this commit.
-Prerequisite Sc/sc2 stack is already in 7.3.
+Record: `git log --grep="set_bt_context"` on these files is empty.
+`17abcfc57c8a` is **not** an ancestor of HEAD. No alternate fix present.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drivers/net/wireless/intel/iwlwifi** — **IMPORTANT** (very
-common laptop/desktop Wi-Fi), not mm/core. Only TTL/sc2 SKUs with this
-ID.
+Record: [Bluetooth HCI driver + RSI 91x WiFi coexistence] [IMPORTANT for
+RSI users, PERIPHERAL vs core kernel]. `CONFIG_RSI_COEX` is `default y`
+when `RSI_91X && BT`. `BT_HCIRSI` is selected by that. Affects
+Redpine/Silicon Labs RS9113-class BT+WiFi modules, not all machines.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: **Active** (regular Intel iwlwifi-next dumps). ID tables are
-still the supported way to enable new SKUs; this is not staging.
+Record: RSI wireless still receives real fixes in this tree (heap OOB,
+beacon length, kthread lifetime, memory corruption). Bluetooth stack is
+actively maintained. The UAF itself is old (2018), not a new-code issue.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific / hardware-specific.** Users with Intel Wi-Fi
-PCI `0x9327` (TTL/sc2). Everyone else: no behavior change.
+Record: Driver-specific + config-specific: RSI 91x with
+`CONFIG_RSI_COEX` (default y) in BT coexistence `oper_mode` (`coex_mode
+> 1`).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Boot or hotplug of that device. Common **on that platform**,
-never otherwise. Unprivileged users cannot trigger it without the
-hardware. **UNVERIFIED** whether TTL has shipped at evaluation time;
-Intel’s “we will have” language matches prior RZL ID adds.
+Record: Requires HCI attach failure (`hci_alloc_dev` OOM or
+`hci_register_dev` error) after `coex_mode` is already > 1, then either
+continued BT RX or remove/shutdown/freeze. Not every boot; once attach
+fails, UAF is deterministic. Unprivileged users can unplug USB or
+trigger shutdown; they cannot typically force `hci_register_dev` failure
+except under memory pressure.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **No oops/UAF/corruption.** Failure is **Wi-Fi never binds** on
-that SKU. Severity for those users is **HIGH** (device unusable); global
-severity **LOW**. Stable still takes these ID adds.
+Record: [Use-after-free of `rsi_hci_adapter`, then
+`hci_unregister_dev`/`kfree` on freed memory] [HIGH]. Crash/oops; UAF is
+also a memory-safety issue. Not a guaranteed panic on every RSI boot.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Enables existing iwlwifi/Sc/sc2 on TTL platforms that
-  this tree already knows how to drive.
-- **Risk:** **Very low** (1 line, existing cfg pointer, isolated PCI
-  match).
-- **Ratio:** Benefit/risk favors taking it.
+Record: Benefit HIGH for affected hardware (prevents UAF/crash on a
+reachable error path). Risk VERY LOW (3-line reorder, no locking/API
+change, applies cleanly). Ratio strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -332,119 +378,127 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Canonical **new PCI ID on an existing driver**
-- 1 line, same as other Sc IDs and RZL
-- `iwl_sc_mac_cfg`, sc2 firmware names, RF matching already in this tree
-- Maintainer Reviewed-by (Johannes Berg)
-- `MODULE_DEVICE_TABLE` so autoload works
-- Standalone; no series dependency
-- Zero impact on other devices
+- Real UAF: `bt_adapter` published, object freed, later detach/recv uses
+  it.
+- Confirmed in *this* 6.12.111 tree; introducing commit is an ancestor.
+- Multiple concrete deinit paths match the message; `rsi_91x_deinit()`
+  is another.
+- Attach failure is ignored (`rsi_attach_bt` only logs), so the device
+  stays up with a dangling pointer.
+- 3-line, obviously correct, Bluetooth maintainer applied it, BlueZ CI
+  passed.
+- Applies cleanly here; no prerequisites.
+- UAF is a standard stable-worthy class.
 
 AGAINST:
-- Not a crash/security/corruption fix; iwlwifi-next “features” series
-- Future-tense “we will have”; shipping status unverified
-- No stable@ nomination in the thread
-- Mixed 15-patch series (this patch itself is still self-contained)
+- Niche driver (Redpine RSI), not core mm/net.
+- Primary trigger is an HCI alloc/register *failure*, not the happy
+  path.
+- No syzbot/user crash report; found by code inspection.
+- No Fixes:/Cc: stable (expected; not a negative).
+- No extra human Reviewed-by beyond maintainer application.
 
 UNRESOLVED:
-- lore.kernel.org HTTP 403 (mailbox recovered via b4)
-- No stable@ thread found
-- Whether TTL silicon is in users’ machines yet
+- No stable-list history found (lore.kernel.org 403; search noise).
+- Could not walk descendants of `17abcfc57c8a` without forbidden
+  `--all`; no evidence of a follow-up is needed for this standalone
+  reorder.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one table row, maintainer
-   Reviewed-by.
-2. Fixes a real bug that affects users? **PASS** — missing ID means the
-   driver never attaches (real for that SKU).
-3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
-   crash/security; **PASS** under the documented **device-ID
-   exception**.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — no new API; only an ID on
-   existing probe/config.
-6. Can apply to the local tree? **PASS** — Sc/sc2 and `iwl_sc_mac_cfg`
-   are here; hunk applies cleanly.
+1. Obviously correct and tested? **PASS** — lifetime reorder; applied by
+   Luiz; CI PASS.
+2. Fixes a real bug that affects users? **PASS** — UAF on RSI BT+WiFi
+   coexistence after failed HCI attach, then unplug/shutdown/hibernate
+   or further BT RX.
+3. Important issue? **PASS** — UAF / crash (HIGH). Not a style change.
+4. Small and contained? **PASS** — 3 lines, one function, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **NEW DEVICE ID (PCI) to an existing driver.** Driver already
-exists; only `0x9327` is new. Same class as “drm/i915: Add new device ID
-for Raptor Lake.”
+Record: Not a device-ID/quirk/DT/build/docs exception. It qualifies as a
+normal UAF bug fix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This tree already has iwlwifi Sc/sc2. Adding PCI ID `0x9327` is the
-standard, low-risk way to make TTL hardware work. It should be taken for
-this tree.
+This is a small, correct UAF fix for code that has been in tree since
+v4.17 and is still buggy in 6.12.111. Benefit outweighs risk.
 
-### What it solves and why it matters here
-Without the ID, PCI `8086:9327` never matches `iwl_pci_driver`, so Wi-Fi
-stays down on TTL (sc2) even though this kernel already has
-`iwl_sc_mac_cfg` and sc2 firmware naming. That is exactly the hardware-
-enablement stable trees routinely accept.
+------------------------------------------------
+What the commit solves for stable users
+------------------------------------------------
+On RSI 91x BT+WiFi coexistence, a failed HCI attach currently leaves
+`common->bt_adapter` pointing at freed memory. Later disconnect,
+shutdown, freeze, deinit, or even the next BT packet will use that
+pointer. Moving `set_bt_context()` until after successful
+`hci_register_dev()` keeps `bt_adapter` NULL on failure so those paths
+skip detach/recv.
 
-### Stable rules
-Small, correct, no new APIs, applies here. Importance is “device works,”
-via the PCI-ID exception, not a KASAN-class bug.
+It meets stable rules: real UAF, small, no new API, applies cleanly, low
+regression risk.
 
-### Risk vs benefit
-Risk is a single ID match. Benefit is working wireless on that Intel
-SKU. Other machines are unchanged.
-
-### Concerns
-None that block a backport here: no missing prerequisites, no extra
-`IWL_DEV_INFO` needed (other Sc IDs have none), no follow-up fix to
-`0x9327`. Firmware blobs remain a linux-firmware concern, not a reason
-to omit the ID.
-
-Verification:
-- [Phase 1] Subject/tags: support new ID; Reviewed-by Johannes Berg;
-  Link msgid; no Fixes/stable/syzbot
-- [Phase 1] Body: “new device ID that we will have on TTL (sc2)”
-- [Phase 2] Diff: +1 line in `iwl_hw_card_ids[]` under Sc devices:
-  `0x9327` → `iwl_sc_mac_cfg`
-- [Phase 2] `IWL_PCI_DEVICE` → Intel vendor + `MODULE_DEVICE_TABLE` +
-  `iwl_pci_driver.id_table`
-- [Phase 2] Other Sc IDs also lack `DEVICE(0x…)` in
-  `iwl_dev_info_table`; FM/WH matching already present
-- [Phase 3] `git describe HEAD` / Makefile: **7.3.0-rc4**
-  (`v7.3-rc4-27-gf0100363d8c37`)
-- [Phase 3] `git blame`: `0x9327` is `3bff0d12c36247`; neighbors
-  `c96a36491003d7` / `6a1b633fdcd904`
-- [Phase 3] `git merge-base --is-ancestor 3bff0d12c36247 HEAD` → yes;
-  `git describe 3bff0d12c36247` → `v7.2-rc1-199-g3bff0d12c3624`
-- [Phase 3] `git log -S 0x9327 -- drv.c` → only this commit (no later
-  correction)
-- [Phase 3] RZL analog `6a1b633fdcd904` is the same one-line pattern
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v2 iwlwifi-next 04/15; Johannes +
-  linux-wireless; no NAK; v2 resend unrelated to this hunk
-- [Phase 4] Cover letter: mixed fixes/cleanups/features; this ID listed
-  under Miri
-- [Phase 4] UNVERIFIED: lore HTTP 403; no stable@ thread retrieved
-- [Phase 5] Callers: PCI probe via `iwl_pci_probe` →
-  `iwl_pci_gen1_2_probe`; sc2 MAC type from CSR (`iwl-drv.c`)
-- [Phase 6] `iwl_sc_mac_cfg` in `cfg/sc.c`; sc2 FW prefixes present;
-  hunk context matches
-- [Phase 6] Apply difficulty: clean
-- [Phase 7] iwlwifi: important, actively maintained
-- [Phase 8] Failure: no driver bind on `0x9327`; risk very low
-- UNVERIFIED: whether TTL hardware is already shipping
+------------------------------------------------
+Verification
+------------------------------------------------
+- [Phase 1] `git describe HEAD` / `make kernelversion`:
+  `p-6.12-3-g710455e2077bb`, **6.12.111**, branch `pending-6.12`.
+- [Phase 1] Parsed tags: author + Luiz SOBs only; no Fixes/Reported-
+  by/Cc: stable.
+- [Phase 2] Actual upstream commit `17abcfc57c8a`: +2/−1 in
+  `rsi_hci_attach()`; candidate dump’s `kzalloc_obj` is surrounding
+  mainline context, not the fix.
+- [Phase 3] `git blame drivers/bluetooth/btrsi.c` lines 109–154:
+  `38aa4da504837` (v4.17-rc1).
+- [Phase 3] `git merge-base --is-ancestor 38aa4da504837 HEAD`: yes. `git
+  merge-base --is-ancestor 17abcfc57c8a HEAD`: no (fix not in this
+  tree).
+- [Phase 3] No related `set_bt_context` history in this tree.
+- [Phase 4] `b4 dig -c 17abcfc57c8a`: lore msgid
+  `20260722083136.175650-1-chenchangcheng@kylinos.cn`; v1 only; To
+  Luiz/Marcel.
+- [Phase 4] Saved mbox: CI PASS; patchwork-bot applied by Luiz; no NAK.
+- [Phase 4] lore.kernel.org WebFetch 403; spinics 500 — used b4 mbox
+  instead.
+- [Phase 5] Callers verified in `rsi_91x_main.c`, `rsi_91x_mgmt.c`,
+  `rsi_91x_sdio.c`, `rsi_91x_usb.c`; `rsi_set_bt_context()` writes
+  `common->bt_adapter`.
+- [Phase 6] Buggy `set_bt_context` still at line 120 of this tree’s
+  `btrsi.c`.
+- [Phase 6] `git apply --check` of `17abcfc57c8a`: succeeded (offset
+  10).
+- [Phase 7] `CONFIG_RSI_COEX` default y in
+  `drivers/net/wireless/rsi/Kconfig`.
+- [Phase 8] Failure mode: UAF → oops / memory safety, severity HIGH;
+  trigger is attach-failure then deinit/RX.
+- UNVERIFIED: later mainline follow-ups after `17abcfc57c8a` (no
+  `--all`); no stable-list discussion.
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index 0e8481219839b..4314d95dd12af 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -548,6 +548,7 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
- 	{IWL_PCI_DEVICE(0xD340, PCI_ANY_ID, iwl_sc_mac_cfg)},
- 	{IWL_PCI_DEVICE(0x6E70, PCI_ANY_ID, iwl_sc_mac_cfg)},
- 	{IWL_PCI_DEVICE(0xD240, PCI_ANY_ID, iwl_sc_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x9327, PCI_ANY_ID, iwl_sc_mac_cfg)},
- #endif /* CONFIG_IWLMVM || CONFIG_IWLMLD */
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 6c1f584c8a337..0e2894e93e82e 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
  
- 	{0}
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
+ 
+ 	hdev = hci_alloc_dev();
+@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
+ 
++	ops->set_bt_context(priv, h_adapter);
++
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
