@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D6E501F24;
-	Mon, 19 Oct 2026 13:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0743502761;
+	Mon, 19 Oct 2026 13:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418099; cv=none; b=grHRnqRnGp4Cql27YPZ4K3uhqONzQWqIF/lZ2nTxR22pn8aKGHqfNL0/YAu5OBbzNxEyfyoaEbakhvcMTgByEGfvlBLUo8om6rCJQS5RZB1fL+0UKzLSGlojRZiIfrMdQycdrnOvbRxLbpYv+qZYwwLBwNTfD8TYPXk4GJlwr6Q=
+	t=1792418100; cv=none; b=L8SQJ41mZo/67AvwStTAeZ1yEK2Fte3JWn8cqM7zlNPHQljzFOYIAX/U6fRnFnQG6ELfwbgE5eHA0TQ/z9CQmnV4IEGbWSZOrSiZeoLb25kXJ1lFJHvdxA3a0op4zJrYYKNLWFj9Kd9GQSG3o+VuCNTRglxIwpfSLZ/wWFaEPhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418099; c=relaxed/simple;
-	bh=NVetNNEzOAHuseoFgEMvq38N3+QCRz8vPEa6tSnFy2Q=;
+	s=arc-20240116; t=1792418100; c=relaxed/simple;
+	bh=U1hSlX6is/+DZkSOHfZzx7CPO93HGULopVL/4fORQPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=seK6N2sPbIHdz9s9ecgRnz/cCU9DAYwLGNOTw34Fbxz2iOF9QRypvhKxopfQCF4G/aVdtKwKucGiiWiRm0kf1QSLWJCEwnSFyfgtLhbNHGurcffB+nZT1BEGDkxfZ7st3viGgB9nnw+qiVEhsm468Ko4V9GVOFdiDttDNYS0DS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9CCz0e9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b/AsTtESpFIwH9qMuxpUSL2x7B7dhVmz5Uz4XJr0GlQrpiUuY/3o1HayzqMh9q/bbr7Jjr/1c1mthXI6XbFxGLf9Nf6cgxdCUZIQvBU+1mSDayDJQ9Z9+h3PYL5h+jqhtcqb3ZpF6fc7uB/dzy9OAyqitQfZIQnj3I5R3Ho5RHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cZ/dEdz3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9CCz0e9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FBA1F000C5;
-	Mon, 19 Oct 2026 13:54:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cZ/dEdz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F1C1F000C4;
+	Mon, 19 Oct 2026 13:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418095;
-	bh=naQpsq1oOIaJNCMfkoIcYYTRo5AJT7ecBXQg43SNO7M=;
+	s=k20260515; t=1792418096;
+	bh=zKuoh1nnUGwxg6ybdmMK7TTsXQpl1pI2r6jynQVGfEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9CCz0e9kh38vtJRn+633Vm7VOYrZDAnWSFw58ZiJDtIJr9RoZEk7TmtpUb1vOtpE
-	 HO2BZr76h86hGvJGIjN1MIPEF631t+zgiAD7es+o5G3a/lyZ3PNmYIR33psYLGlONJ
-	 Cfugvk8tn+Q/vM0GuYRyMZ4J6LEH6Hxwfg6PIQqwkUD/W15jD+xborH8CcdMDzy5/f
-	 8KvDdVytC4oxaJoQcHR6A9TDjSdh7CVb4m9PVHCCvtFEASX/A3GOJ+++TeN2YD7UlG
-	 btis2qwQ/wbLRKO5zHBR0u8BNWJOLUHhyrirjDQ+8YKxZ8RQJ9ezqHqOxQWrw9XkTK
-	 1vPGXZwrbfWZA==
+	b=cZ/dEdz3mRGACoL52g5D+5XLyEum6XEfFc/HJ9GDFsHHK7W9f5YnOpgBMcRqvjwkM
+	 wyXa9oBWiEhylBUXRQhoCrQl4yalPmbQNVAKNTQAhbvazQmXcdoHvxOjqBEjk0jK3l
+	 +hUsjtFRIQpirCrd8v2MAzdT61sZ30DgX1LDiy+1MKFjos6OLlwEolJwXGKBOCjuDa
+	 Wb8zwxSoOt9vijcO4FimbhDXNoUgvIE3m/FEmQk4uYB23R5ZlxzfmMU6u0hOvBJJdq
+	 VrKb36XwFvv7FQsHjCf7rp8zGBXSZF5OAynPU6OsouwKxXDkmWAlr/JJ/SBNJMKGik
+	 sZ8nLjvIkjq8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+Cc: Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	eddyz87@gmail.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	memxor@gmail.com,
-	bpf@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] libbpf: Skip bpf_object__probe_loading() when BPF token is in use
-Date: Mon, 19 Oct 2026 09:45:00 -0400
-Message-ID: <20261019135441.1420968-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
+Date: Mon, 19 Oct 2026 09:45:01 -0400
+Message-ID: <20261019135441.1420968-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,430 +52,408 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit d262a25d8b58b697b2a1a2fe4b0078446cc00e11 ]
+[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
 
-bpf_object__probe_loading() tries to load trivial SOCKET_FILTER and
-TRACEPOINT programs to verify the BPF environment works.  When a
-BPF token is in use with restricted program type permissions, these
-probe loads may fail because the token does not allow the specific
-program types, even though BPF loading is perfectly functional.
+smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
+client's CREATE request includes an AllocationSize create context.
+For a stream handle, fp->filp refers to the base file's data fork
+(streams are xattr-backed on the same underlying file, not separate
+files), so this pre-allocates storage on the base file's actual data
+instead of doing anything meaningful for the stream -- fallocate has
+no applicability to an xattr-backed stream at all.
 
-Fix by skipping the probe when a token FD is present: BPF token
-creation itself proves the kernel has a working BPF subsystem.
-Real BPF issues will be caught during actual program and map loading.
+Skip the fallocate call for stream handles.
 
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260610145059.113412-2-chenyuan_fl@163.com
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real libbpf load-path bug in this 6.18 tree: restricted BPF
-tokens make `bpf_object__probe_loading()` fail even when the actual
-programs would load. The change is small, already present in the
-matching 6.18 code, and is worth backporting.
+The local tree is **6.12.111**. The buggy `vfs_fallocate()` on stream
+CREATEs is present here, and the skip is a small, self-contained
+correctness fix that applies to this checkout.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[libbpf] [Skip] Skip bpf_object__probe_loading() when BPF
-  token is in use`
-- Subsystem: `libbpf` (userspace library in `tools/lib/bpf/`)
-- Verb “Skip” is a workaround/fix for a false-negative probe, not a
-  feature.
+**Step 1.1: Subject line**
+- Record: **[ksmbd] [skip] skip fallocate for
+  SMB2_CREATE_ALLOCATION_SIZE on a stream handle**
+- Subsystem: ksmbd (in-kernel SMB3 server). Verb “skip” here means “do
+  not run a VFS operation that does not apply.”
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 - Record:
-  - `Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>` (author)
-  - `Signed-off-by: Andrii Nakryiko <andrii@kernel.org>` (libbpf/BPF
-    maintainer)
-  - `Link: https://lore.kernel.org/bpf/20260610145059.113412-2-
-    chenyuan_fl@163.com`
-  - No `Fixes:`, `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`,
-    or `Cc: stable` in the committed message (absence of Fixes/Cc-stable
-    is expected here)
-  - Mailing-list review did include `Acked-by: Mykyta Yatsenko
-    <yatsenko@meta.com>` (not copied into the final commit text)
+  - `Assisted-by: Claude:claude-sonnet-5`
+  - `Signed-off-by: Gael Blivet <gael.blivet@gmail.com>`
+  - `Acked-by: Namjae Jeon <linkinjeon@kernel.org>` (on `e360be3d03f77`;
+    the candidate copy uses `Signed-off-by: Namjae Jeon`)
+  - `Signed-off-by: Steve French` (on the smb.git copy)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, or `Link:`
+  - Absence of `Fixes:`/`Cc: stable` is expected for this review
+    pipeline
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 - Record:
-  - **Bug:** `bpf_object__probe_loading()` loads dummy `SOCKET_FILTER`
-    and `TRACEPOINT` programs. With a BPF token whose allowed program
-    types exclude those, the probe fails even though real loads would
-    work.
-  - **Symptom:** `bpf_object__load()` / `bpf_object__prepare()` returns
-    an error and warns that BPF/RLIMIT_MEMLOCK is broken. In-tree token
-    selftests (`obj_priv_map`, `obj_priv_prog`, freplace, implicit-
-    token, struct_ops BTF cases) hit this.
-  - **Cover letter (v3):** same probe can also drop the token path and
-    then break later loads (struct_ops + global data: `fd X is not
-    pointing to valid bpf_map`).
-  - **Root cause:** probe uses hardcoded program types and passes
-    `obj->token_fd`.
-  - **Fix:** skip the probe when `token_fd` is set; creating the token
-    already proves BPF syscalls work.
-  - **Versions:** no version list in the message. BPF tokens exist since
-    ~6.9; this 6.18 tree has them.
+  - **Bug:** `smb2_open()` always calls `vfs_fallocate(fp->filp,
+    FALLOC_FL_KEEP_SIZE, …)` when CREATE has an AllocationSize context.
+  - **Root cause:** For a named-stream handle, `fp->filp` is the **base
+    file**. Streams are xattr-backed, not separate files.
+  - **Symptom:** Preallocation (and a level-II oplock break) hits the
+    base file’s data fork instead of the stream.
+  - **Failure mode:** Wrong-file disk preallocation; unexpected oplock
+    break on the base file.
+  - No stack trace, no version list, no user report.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a disguised cleanup. It is an explicit functional fix for
-  a false probe failure. Skipping the probe is the fix, not a refactor.
+**Step 1.4: Hidden bug fix?**
+- Record: **Yes, this is an explicit bug fix**, not cleanup. Cover
+  letter for series 8/8: opening a stream with AllocationSize
+  “fallocates storage on the underlying base file’s actual data.”
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
 - Record:
-  - File: `tools/lib/bpf/libbpf.c` — 3 insertions, 7 deletions
-  - Function: `bpf_object__probe_loading()`
-  - Scope: single-file surgical change
+  - File: `fs/smb/server/smb2pdu.c` only
+  - Scope: **+16 / −7** (net +9), one function: `smb2_open()`
+  - Classification: **single-file surgical fix**
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.2: Code-flow change**
 - Record:
-  - **Before:** After `bpf_object_prepare_token()`, probe always runs
-    (except `gen_loader`). It passes `token_fd` / `BPF_F_TOKEN_FD` into
-    dummy `SOCKET_FILTER` then `TRACEPOINT` loads. Either failure aborts
-    object prepare/load.
-  - **After:** If `obj->token_fd` is set, return 0 immediately (same as
-    `gen_loader`). Dummy loads no longer use token opts (`NULL` opts).
-  - **Path:** initialization/prepare of every `bpf_object` load, not a
-    rare error path.
+  - **Before:** If CREATE has `SMB2_CREATE_ALLOCATION_SIZE`, always
+    `smb_break_all_levII_oplock(work, fp, 1)` then
+    `vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0, alloc_size)`.
+    Failures are only debug-logged.
+  - **After:** Same path, but only when `!ksmbd_stream_fd(fp)`. Stream
+    handles skip both the oplock break and fallocate.
+  - Affected path: SMB2 CREATE with AllocationSize on a stream, after
+    the file is already opened.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 2.3: Bug mechanism**
 - Record:
-  - **Category:** logic/correctness (false failure in a capability
-    probe)
-  - **Mechanism:** probe assumes `SOCKET_FILTER` or `TRACEPOINT` is
-    allowed. Restricted tokens are the whole point of BPF token
-    delegation. Probe failure is treated as “BPF is unavailable,” so
-    legitimate objects never load.
-  - Not UAF/leak/race/overflow.
+  - **Category:** logic / correctness (wrong object for a VFS call),
+    with resource side effects
+  - **Mechanism:** Stream fds share the base `struct file`.
+    `ksmbd_stream_fd()` is `fp->stream.name != NULL`. Stream I/O already
+    goes through xattrs (`ksmbd_vfs_stream_read`/`_write`); fallocate
+    has no stream equivalent.
+  - `FALLOC_FL_KEEP_SIZE` does not change `i_size`, but it **does**
+    allocate blocks on the base inode and can fill the filesystem.
+    `vfs_fallocate()` also takes `file_start_write()` and may run for a
+    long time on a large client-supplied size (bounded by `s_maxbytes`).
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+**Step 2.4: Fix quality**
 - Record:
-  - Obviously correct: token creation already used `bpf_token_create()`.
-    Real map/prog errors still happen in the real load path.
-  - Minimal: one extra skip condition; dummy loads drop unused token
-    opts.
-  - `bpf_prog_load(..., NULL)` is valid: `OPTS_VALID` treats NULL as OK;
-    `OPTS_GET` falls back to 0. Same as empty opts when `token_fd == 0`.
-  - Regression risk is low. Skipping `bump_rlimit_memlock()` in this
-    function is fine: `bpf_prog_load()` still calls it, and tokens imply
-    6.9+ with memcg BPF accounting.
-  - Residual gap: series patch 2 (feature probes using hardcoded types)
-    is **not** in this tree. This patch still stands alone for the
-    probe_loading hard-fail.
+  - Obviously correct: skip a VFS op that cannot apply to an xattr
+    stream.
+  - Matches existing stream guards (read/write/copy-chunk).
+  - Regression risk is **very low**: regular-file CREATE is unchanged;
+    stream CREATE only stops a harmful no-op-for-the-stream.
+  - Incomplete vs SET_INFO: `set_file_allocation_info()` in this tree
+    still fallocates `fp->filp` with no stream check. That does not make
+    this CREATE skip wrong.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 3.1: Blame**
 - Record:
-  - Probe itself: Stanislav Fomichev, 2018 (`47eff61777c7`).
-  - Token opts in the probe: `6b434b61b4d9e` (“libbpf: Wire up BPF token
-    support at BPF object level”), Andrii Nakryiko, 2024-01-23 (kernel
-    ~6.9).
-  - Buggy pattern has been in this 6.18 line since the branch, not a
-    post-6.18 introduction.
+  - Unconditional fallocate in `smb2_open()` comes from `e8c061917133dd`
+    (“ksmbd: opencode to avoid trivial wrappers”, 2021-06-22), replacing
+    `ksmbd_vfs_alloc_size()`.
+  - That commit **is an ancestor of this HEAD**.
+  - `ksmbd_stream_fd()` is from `f44158485826c0` (2021-03-16) and is
+    also an ancestor.
+  - Bug has been in ksmbd for the lifetime of this 6.12 line.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag (Mykyta asked for one; it was never added).
-  The introducing commit is `6b434b61b4d9e`, which **is** in this tree
-  (`git merge-base --is-ancestor` succeeded).
+**Step 3.2: Fixes: tag**
+- Record: **N/A** (no `Fixes:`). Introducer is the original CREATE
+  AllocationSize handling, present since cifsd/`e8c0619`.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 3.3: Related file history**
 - Record:
-  - `f9bceaa59c5c4` already skips this probe for light skeleton
-    (`gen_loader`); this patch extends that idea to tokens.
-  - `1315c28ed8095` split load into `bpf_object__prepare()` / load;
-    probe now runs from `bpf_object_prepare()`.
-  - Series patch 2 (“fetch probeable prog type from token”) is **not**
-    in this tree.
-  - Standalone: Andrii said this was the only v2 patch that should land
-    on its own.
+  - `a9f106c765c12` — “fix wrong allocation size update in smb2_open()”
+    (response timing, not this bug).
+  - `2a4179c99bc6b` — overflow in `set_file_allocation_info()` (already
+    in this tree).
+  - `3b41d8b05dc89` — “return requested create allocation size” is
+    **not** in this tree (`merge-base --is-ancestor` failed). Candidate
+    parent uses outer-scope `alloc_size`; 6.12 still has a local `loff_t
+    alloc_size`. Functional hunk still matches.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Yuan Chen has another libbpf fix here (`aa485e8789d56`, NULL
-  deref in `btf_dump__free`). Not the libbpf maintainer. Applied by
-  Andrii Nakryiko.
+**Step 3.4: Author**
+- Record: Gael Blivet, stream/AAPL/Time Machine work; maintainer Namjae
+  Jeon acked and applied this patch. Not a drive-by.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: Needs `obj->token_fd` and `bpf_object__probe_loading()`, both
-  present. No new helpers. Applies standalone. Patch 2 is a related but
-  separate feature-probe issue.
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+**Step 3.5: Dependencies**
 - Record:
-  - `b4 dig -c d262a25d8b58`:
-    https://patch.msgid.link/20260610145059.113412-2-chenyuan_fl@163.com
-  - Revisions:
-    - v1 (2026-05-29): selftest workaround — add
-      SOCKET_FILTER/TRACEPOINT to token tests
-    - v2 (2026-06-04): 3 patches; this skip plus selftest ARRAY map plus
-      feature-probe skip
-    - `[PATCH bpf]` (2026-06-09): this patch alone after Andrii asked to
-      resend it
-    - v3 (2026-06-10): 2 patches; this skip plus smarter feature probes
-      — **this is what landed**
-  - Review:
-    - Mykyta: skip is correct; making the probe token-aware would be
-      worse. `Acked-by`.
-    - Andrii: this is the only v2 patch that should apply; resend it
-      alone.
-    - Mykyta on the bpf-tree resend: retarget **bpf-next**, add a Fixes
-      tag, include Acks. No NAK.
-  - No reviewer `Cc: stable`. bpf-next targeting is a process note, not
-    a statement that the bug is absent from 6.18.
+  - Cover: **“None of this depends on or touches the AAPL/Time Machine
+    feature series.”**
+  - Needs only `ksmbd_stream_fd()`, which exists here.
+  - Series is **[PATCH 8/8]**; this hunk does not need patches 1–7.
+  - `git apply --check` of `e360be3d03f77` on this tree: **Hunk #1
+    succeeded at 3593 (offset -504 lines).**
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: Recipients included Andrii Nakryiko, Alexei Starovoitov,
-  Daniel Borkmann, Eduard Zingerman, Mykyta Yatsenko,
-  `bpf@vger.kernel.org`. Right maintainers. Applied by Andrii.
+## Phase 4: Mailing list / external
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No syzbot/bugzilla. Trigger is in-tree
-  `tools/testing/selftests/bpf/prog_tests/token.c`: `obj_priv_map`
-  (QUEUE map only), `obj_priv_prog` (XDP only), freplace, implicit-token
-  struct_ops. Author hit failing tests; v1 tried widening token
-  permissions instead of fixing libbpf.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: v3 2/2 is the feature-probe follow-up (`features.c`). Not
-  required for this skip to be correct. Not in this tree.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable search returned HTTP 403. UNVERIFIED
-  whether stable@ discussed this. No in-tree evidence of a prior
-  rejection.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: `bpf_object__probe_loading()` only.
-
-**Step 5.2: TRACE CALLERS**
-- Record: Single caller, `bpf_object_prepare()` (`libbpf.c` ~8705),
-  which is called from:
-  - `bpf_object_load()` if state `< OBJ_PREPARED`
-  - public `bpf_object__prepare()`
-- Every normal `bpf_object__load()` / skeleton load goes through this
-  after token setup.
-
-**Step 5.3: TRACE CALLEES**
-- Record: `bump_rlimit_memlock()`, `bpf_prog_load()`, `close()`,
-  `pr_warn()`. After the skip, those are not used when a token is
-  present.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Userspace, reachable from any app using in-tree
-  libbpf/bpftool/selftests with a BPF token (explicit `bpf_token_path`
-  or implicit `/sys/fs/bpf`). Not a kernel oops path. Unprivileged user-
-  namespace workloads with delegated tokens are the intended users.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Same skip already exists for `obj->gen_loader`.
-  `tools/lib/bpf/features.c` still hardcodes probe program types with
-  `token_fd` — that is series patch 2, still open in this tree.
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+**Step 4.1: Original discussion**
 - Record:
-  - Local tree: `v6.18.53` (`Makefile` 6.18.53, `git describe HEAD` =
-    `v6.18.53-5049-g0f0bdc2b0dffb`), branch `autosel`.
-  - `v6.18:tools/lib/bpf/libbpf.c` has the pre-fix probe: token opts +
-    `SOCKET_FILTER`/`TRACEPOINT`.
-  - Pre-fix hunk md5 matches `v6.18` exactly.
-  - Kernel BPF token (`kernel/bpf/token.c`, `35f96de04127d`) is in 6.18.
-  - Bug introduced ~6.9 (`6b434b61b4d9e`), well before 6.18.
+  - `b4 dig -c e360be3d03f77` →
+    https://patch.msgid.link/20260709000548.66445-9-g.blivet@me.com
+  - Series: **[PATCH 0/8] ksmbd: follow-up fixes to previously-merged
+    patches** (2026-07-09)
+  - Only **v1** found (`b4 dig -a`).
+  - Namjae Jeon: **“Applied them except 0002, 0005 patch”** — this is
+    patch 8, so it was applied. No NAK on patch 8. No `Cc: stable` in
+    review.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: Clean apply. Context around `bpf_object__probe_loading()`
-  matches 6.18. No refactor in the way.
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: Gaël Blivet-Bailly, Namjae Jeon, `linux-cifs@vger.kernel.org`.
+  Maintainer was on To/Cc and acked.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: No other skip of this probe for tokens. No equivalent feature-
-  probe fix. Token selftests still omit SOCKET_FILTER/TRACEPOINT for
-  `obj_priv_*`, so they still depend on this libbpf change.
+**Step 4.3: Bug report**
+- Record: No syzbot/bugzilla. Found by **Sashiko (LLM review)** of
+  stream-handling code. Related real-world class: namjaejeon/ksmbd#507
+  (SetInfo/EOF on a stream truncated the **base** file because
+  `fp->filp` is the base file). Same object-confusion pattern.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 4.4: Series context**
+- Record: Eight independent follow-ups. Patch 8 is standalone. Also
+  listed in the 7.3-rc1 ksmbd pull under alternate-data-stream handling
+  (`e360be3d03f77`).
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `tools/lib/bpf` — IMPORTANT, not CORE kernel. Used by bpftool,
-  selftests, and distro in-tree libbpf. BPF tokens are the supported
-  unprivileged/container path.
+**Step 4.5: Stable list**
+- Record: lore.kernel.org/stable returned **403**. **UNVERIFIED**
+  whether stable@ already discussed this; that does not change the
+  technical verdict.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Active (recent libbpf mmap/percpu/relocation fixes). Token
-  wiring itself has been stable since 6.9; this is a late correctness
-  fix, not churn in brand-new code.
+## Phase 5: Semantic / call-graph
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 5.1: Functions**
+- Record: `smb2_open()` only. Helper used: `ksmbd_stream_fd()`.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: Config/driver-specific in the BPF-token sense: users of libbpf
-  object load with a token whose allowed types exclude SOCKET_FILTER
-  **and** TRACEPOINT. That includes the in-tree token selftests and
-  container/user-ns setups that delegate only XDP, struct_ops, maps,
-  etc.
+**Step 5.2: Callers**
+- Record: `fs/smb/server/smb2ops.c` maps `SMB2_CREATE_HE` → `smb2_open`.
+  Reachable from any authenticated SMB2 CREATE.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: Trigger is common for token users: every
-  `bpf_object__load()`/`prepare()`. Not a race. Unprivileged tasks in a
-  delegated user ns can hit it; that is the token design.
+**Step 5.3: Callees**
+- Record: `smb2_find_context_vals()`, `smb_break_all_levII_oplock()`,
+  `vfs_fallocate()`. Stream CREATE still sets `fp->stream.name` via
+  `smb2_set_stream_name_xattr()` **before** this block (around line
+  3485).
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: Object load/prepare fails outright with a misleading “Couldn't
-  load trivial BPF program” warning. Not a kernel oops/corruption.
-  **Severity: MEDIUM-HIGH** for token users (feature completely
-  unusable), **LOW** for everyone else (`token_fd == 0` path is
-  unchanged).
+**Step 5.4: Reachability**
+- Record: **Yes, from the network.** Requires:
+  1. `CONFIG_SMB_SERVER`
+  2. Share with `KSMBD_SHARE_FLAG_STREAMS`
+  3. CREATE of `name:stream` plus AllocationSize create context (`AlSi`)
+- Windows ADS and macOS resource-fork/Finder streams are the usual
+  clients. Unprivileged local syscall is not the path; an authenticated
+  SMB client is.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 5.5: Similar patterns**
+- Record: `ksmbd_vfs_read`/`write` already branch on
+  `ksmbd_stream_fd()`. `ksmbd_vfs_copy_file_ranges()` returns `-EBADF`
+  for streams. This CREATE fallocate path was the missing guard.
+  `set_file_allocation_info()` still unguarded in **this** tree.
+
+## Phase 6: This tree (6.12.111)
+
+**Step 6.1: Buggy code present?**
+- Record: **Yes.** `fs/smb/server/smb2pdu.c` ~3596–3602:
+
+```3592:3602:fs/smb/server/smb2pdu.c
+                        alloc_size =
+le64_to_cpu(az_req->AllocationSize);
+                        ksmbd_debug(SMB,
+                                    "request smb2 create allocate size :
+%llu\n",
+                                    alloc_size);
+                        smb_break_all_levII_oplock(work, fp, 1);
+                        err = vfs_fallocate(fp->filp,
+FALLOC_FL_KEEP_SIZE, 0,
+                                            alloc_size);
+                        if (err < 0)
+                                ksmbd_debug(SMB,
+                                            "vfs_fallocate is failed :
+%d\n",
+                                            err);
+```
+
+- `ksmbd_stream_fd()` is in `fs/smb/server/vfs_cache.h`.
+- Candidate SHAs `e360be3d03f77` / `bfdf81c62f4f` are **not** ancestors
+  of HEAD.
+
+**Step 6.2: Backport difficulty**
+- Record: **Clean apply with offset** (`git apply --check` succeeded at
+  line 3593). Local `loff_t alloc_size` vs later outer-scope
+  `alloc_size` does not conflict with the wrapped lines.
+
+**Step 6.3: Related fixes already here?**
+- Record: No skip of CREATE fallocate for streams. Overflow check in
+  SET_INFO allocation is a different bug.
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+- Record: **ksmbd (`fs/smb/server`)**, **IMPORTANT** (in-kernel SMB3
+  server for NAS/shares). Not mm/core, but network-facing and used in
+  production.
+
+**Step 7.2**
+- Record: Actively backported on this branch (many ksmbd fixes in recent
+  `git log -- fs/smb/server`).
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+- Record: ksmbd users with **streams enabled**, when a client CREATEs a
+  named stream with AllocationSize. Typical Windows/macOS
+  interoperability.
+
+**Step 8.2: Trigger**
+- Record: Authenticated SMB CREATE of `file:stream` + AllocationSize.
+  Not every open; common enough for ADS-aware clients. Same client could
+  already write the file; unique harm is **wrong object** (base file)
+  and a large fallocate without intending to preallocate the data fork.
+
+**Step 8.3: Failure mode**
 - Record:
-  - **Benefit:** Restricted-token libbpf loads work; in-tree token tests
-    can pass; matches the token least-privilege model.
-  - **Risk:** Very low (net −4 lines, one extra early return).
-  - **Ratio:** Strongly favorable for 6.18.
+  - Preallocates blocks on the **base file** (`FALLOC_FL_KEEP_SIZE` → no
+    size change, but real space use).
+  - Breaks level-II oplocks on the base file (other clients can lose
+    caching).
+  - Large `AllocationSize` can run a long `fallocate` under
+    `file_start_write()` (filesystem write exclusion).
+  - **Severity: HIGH** for disk/oplock side effects on a NAS; not a
+    panic/UAF. Not content corruption of existing data.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.4: Risk–benefit**
+- Record:
+  - **Benefit:** Stops wrong-file preallocation and spurious oplock
+    breaks; one `if` around existing code.
+  - **Risk:** Very low. Stream CREATE AllocationSize currently does the
+    wrong thing; skipping is the correct xattr-stream behavior.
+  - **Ratio:** Favorable.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+## Phase 9: Synthesis
 
-FOR:
-- Real, reproducible false failure on every object load with a
-  restricted token
-- In-tree selftests exercise exactly this (XDP-only, map-only,
-  struct_ops-only tokens)
-- Buggy code is in 6.18; tokens are in 6.18
-- 10-line, obviously correct skip; same pattern as `gen_loader`
-- Acked by Mykyta Yatsenko; applied by Andrii Nakryiko
-- Clean apply; no new API
-- Andrii treated this patch as independently landable
+**Step 9.1: Evidence**
 
-AGAINST:
-- Userspace libbpf, not a kernel oops/UAF/deadlock
-- No `Cc: stable`; reviewers asked for bpf-next (process, not “bug
-  absent from 6.18”)
-- Series patch 2 (feature probes) is still missing; some
-  struct_ops+global-data cases may still fail
-- Specialized to BPF token users, not all machines
+**For:**
+- Real wrong-file VFS operation, present since 2021, present in 6.12.111
+- User-visible: disk on the base file, oplock disruption
+- Small, obviously correct, applies with offset
+- `ksmbd_stream_fd()` already here; no AAPL/Time Machine dependency
+- Maintainer applied it (patch 8 of 8)
+- Same stream/`fp->filp` confusion class as documented user bugs
 
-UNRESOLVED:
-- Stable@ thread search failed (HTTP 403)
-- Cover-letter claim that a failed probe “drops the token reference” in
-  the kernel was not independently verified; the libbpf-level hard-fail
-  is verified from code and tests
+**Against:**
+- No crash/UAF/CVE; found by automated review, not a reporter
+- SET_INFO allocation path still unfixed here
+- Needs streams share flag
+- lore stable search unverified (HTTP 403)
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — skip is the same idea as
-   `gen_loader`; reviewed/acked; tests exist
-2. Fixes a real bug that affects users? **PASS** — object load fails for
-   valid token configs
-3. Important issue? **PASS** (MEDIUM-HIGH for token users) — complete
-   load failure, not theoretical; fits “oh, that's not good”
-4. Small and contained? **PASS** — 3/7 lines, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — 6.18 source matches the pre-
-   image
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — skip is correct; maintainer
+   applied it.
+2. Real bug affecting users? **PASS** — wrong-file fallocate on stream
+   CREATE.
+3. Important (crash/security/corruption/deadlock/etc.)? **PASS** —
+   unexpected allocation and oplock break on the base file of a network
+   file server; can consume substantial disk.
+4. Small and contained? **PASS** — ~9 lines, one function.
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** — `git apply --check` succeeded.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: None (not a device ID, quirk, DT, build, or docs fix).
-  Qualifies as a normal small bugfix.
+**Step 9.3: Exceptions**
+- Record: Not a device-ID/quirk/DT/build/doc exception. Qualifies as a
+  normal small bugfix.
 
-**Step 9.4: DECISION**
+**Step 9.4: Decision**
+Backport to **this** 6.12.111 tree. The bug is here, the helper is here,
+the patch applies, and the change only disables a harmful path.
 
-6.18 ships BPF tokens and this probe. Without the skip, libbpf treats a
-least-privilege token as “BPF does not work” and aborts prepare/load.
-That is a real, user-visible break for the token feature and for in-tree
-tests, with a tiny, maintainer-reviewed fix and negligible regression
-risk.
+---
 
-### What the commit solves for this tree
-Restricted BPF tokens cannot load objects through libbpf because a dummy
-SOCKET_FILTER/TRACEPOINT probe is not in the token’s allow-list.
-Skipping the probe when a token FD exists restores load/prepare for
-those objects.
+### What this solves for 6.12 users
+On ksmbd shares with named streams, an SMB2 CREATE of an alternate data
+stream that includes AllocationSize currently calls `vfs_fallocate()` on
+the **base file**. That can allocate disk and break oplocks on the wrong
+object. Streams are xattr-backed; fallocate cannot apply to them.
+Skipping it is the correct, minimal fix.
 
-### Stable rules / risk
-Meets the written rules: small, obviously correct, real bug, no new API,
-applies cleanly to 6.18. Benefit is restoring a supported 6.18 feature;
-risk is an extra early return on a userspace probe.
-
-### Concerns
-Feature-probe hardcoded types (series patch 2) remain in this tree, so
-some token+global-data cases may still be incomplete. That does not
-remove the standalone value of stopping probe_loading from failing the
-whole load.
-
-Verification:
-- [Phase 1] Parsed tags: author Yuan Chen; SOB Andrii Nakryiko; lore
-  link; no Fixes/Reported-by/Cc-stable in the commit
-- [Phase 2] Diff: `tools/lib/bpf/libbpf.c`,
-  `bpf_object__probe_loading()`, +3/−7; skip on `obj->token_fd`; dummy
-  loads use NULL opts
-- [Phase 2] Confirmed `OPTS_VALID(NULL)` is true in `libbpf_internal.h`
-- [Phase 3] Blame: token opts added in `6b434b61b4d9e` (2024-01-23);
-  ancestor of this tree
-- [Phase 3] No Fixes tag; introducing commit present; patch 2 not in
-  this tree
-- [Phase 4] `b4 dig -c d262a25d8b58`: lore
-  https://patch.msgid.link/20260610145059.113412-2-chenyuan_fl@163.com
-- [Phase 4] `b4 dig -a`: v1 selftest workaround → v2 series → bpf-only
-  resend → v3 1/2 (landed)
-- [Phase 4] `b4 dig -w`: bpf maintainers on Cc
-- [Phase 4] mbox: Mykyta Acked-by; Andrii asked to land this patch
-  alone; later asked bpf-next + Fixes tag
-- [Phase 5] Only caller is `bpf_object_prepare()` ← `bpf_object_load()`
-  and `bpf_object__prepare()`
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.53; `v6.18`
-  file matches pre-fix hunk md5
-- [Phase 6] Token selftests in this tree still use XDP-only / map-only
-  tokens without SOCKET_FILTER/TRACEPOINT
-- [Phase 8] Failure mode: userspace object load abort, not kernel oops;
-  severity MEDIUM-HIGH for token users
-- UNVERIFIED: stable@ mailing-list discussion (lore 403); kernel “drops
-  token reference” cover-letter claim
+### Verification
+- **[Phase 1]** Parsed tags on `e360be3d03f77` / `bfdf81c62f4f` (same
+  patch-id `8e46981f5116…`); no Fixes/Reported-by/Cc:stable
+- **[Phase 2]** Diff: wrap fallocate + oplock break in `if
+  (!ksmbd_stream_fd(fp))` in `smb2_open()`
+- **[Phase 3]** `git blame`: fallocate from `e8c061917133dd` (ancestor);
+  `ksmbd_stream_fd` from `f44158485826c0` (ancestor)
+- **[Phase 3]** `git merge-base --is-ancestor e360be3d03f77 HEAD` → not
+  in this tree
+- **[Phase 3]** `git merge-base --is-ancestor 3b41d8b05dc89 HEAD` →
+  later alloc_size-field commit not here
+- **[Phase 4]** `b4 dig -c e360be3d03f77` → lore msgid
+  `20260709000548.66445-9-g.blivet@me.com`; series 8/8
+- **[Phase 4]** `b4 dig -a`: v1 only; `b4 dig -w`: linux-cifs + Namjae
+  Jeon
+- **[Phase 4]** mbox: Namjae “Applied them except 0002, 0005”; patch 8
+  applied; no NAK
+- **[Phase 4]** Cover: independent of Time Machine/AAPL
+- **[Phase 5]** `SMB2_CREATE_HE` → `smb2_open`; streams gated by
+  `KSMBD_SHARE_FLAG_STREAMS`
+- **[Phase 6]** `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → **6.12.111**
+- **[Phase 6]** Buggy lines at `smb2pdu.c:3596–3602`; `git apply
+  --check` succeeded at 3593
+- **[Phase 8]** Failure mode: wrong-file preallocation + oplock break;
+  severity HIGH for ksmbd/NAS, not a panic
+- **UNVERIFIED:** stable@ lore search (HTTP 403); whether Windows always
+  sends AllocationSize on ADS CREATE (bug is still real when it does)
 
 **YES**
 
- tools/lib/bpf/libbpf.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index b21d2f842579f..1aaf2bdf26857 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -5070,12 +5070,8 @@ bpf_object__probe_loading(struct bpf_object *obj)
- 		BPF_EXIT_INSN(),
- 	};
- 	int ret, insn_cnt = ARRAY_SIZE(insns);
--	LIBBPF_OPTS(bpf_prog_load_opts, opts,
--		.token_fd = obj->token_fd,
--		.prog_flags = obj->token_fd ? BPF_F_TOKEN_FD : 0,
--	);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index f383d1e5e5cb7..9c5275d3640cc 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3633,13 +3633,22 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+-			smb_break_all_levII_oplock(work, fp, 1);
+-			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
+-					    alloc_size);
+-			if (err < 0)
+-				ksmbd_debug(SMB,
+-					    "vfs_fallocate is failed : %d\n",
+-					    err);
++			/*
++			 * fp->filp is the base file's data fork for a stream
++			 * handle (streams are xattr-backed on the same
++			 * underlying file) -- fallocate has no meaning for a
++			 * stream and would otherwise pre-allocate storage on
++			 * the base file's data instead.
++			 */
++			if (!ksmbd_stream_fd(fp)) {
++				smb_break_all_levII_oplock(work, fp, 1);
++				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
++						    alloc_size);
++				if (err < 0)
++					ksmbd_debug(SMB,
++						    "vfs_fallocate is failed : %d\n",
++						    err);
++			}
+ 		}
  
--	if (obj->gen_loader)
-+	if (obj->gen_loader || obj->token_fd)
- 		return 0;
- 
- 	ret = bump_rlimit_memlock();
-@@ -5084,9 +5080,9 @@ bpf_object__probe_loading(struct bpf_object *obj)
- 			errstr(ret));
- 
- 	/* make sure basic loading works */
--	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, &opts);
-+	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, NULL);
- 	if (ret < 0)
--		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, &opts);
-+		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, NULL);
- 	if (ret < 0) {
- 		ret = errno;
- 		pr_warn("Error in %s(): %s. Couldn't load trivial BPF program. Make sure your kernel supports BPF (CONFIG_BPF_SYSCALL=y) and/or that RLIMIT_MEMLOCK is set to big enough value.\n",
+ 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
 -- 
 2.53.0
 
