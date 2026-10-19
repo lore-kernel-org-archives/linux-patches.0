@@ -1,53 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=141.84.225.229
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792427411;
-	b=e4qlgbsXz0eZAxw1ZoVV1IsjAkKDMts+FOLCY9plPBv6AIwp8vvTxCCGHrpqYktZzO48
-	 A0jiLWYPizPWnRQQhvu4IIL+omTYVXFQtZD0ux/h7W1DGWjU42AuKAKTrLXuhiSfCuSn7
-	 r//BEgSpExTUlj+9zQQ//g0FdB5RnlqUqSU5ZNJ58yCvfB63sQ5Sn5rQDffn4LxvL4J+r
-	 JdP6oxvxnsOeBaN3hugV0D4/Cn+1ghNDjgTIjq6BczLtw5f1HfT5tsyRk/TWxrilTCk6F
-	 bbdR/Wz+90XSab25TkThPm93QFHAKPhuobBWJFtqRske04rwJejSQFJhbO79Tx93E7w==
+	t=1792428886;
+	b=ETX/PoLVXsZqH4TDOPGLVBz6ek9U4mjWIDhmEU4MTatop/+SfvGytOOTUCCGlGF0bo4Z
+	 gRGb1TfLm52qe2IgZGxNnnsv+4obakLgaE+O4moT0o51G42vFvXpdHHWS8GBhjzY9EABR
+	 Gxk3qaCxsXFo16LCg+m5JGnbc92BD20QNuEG1ogShcvnwQlB9IRNVRr9OvL/75kOOy36R
+	 269PojApSonb1N+TCMzUGuUpZUjwYabs+OV6PbuPbyRonH6RkQeRWeF7O4J3cULrwpZLQ
+	 zdDBGlueN7FIJrueLT31IQrsnnqzoDZR+4GUcftyA7P/15yWoTuXtkl8FIr6OpmBWAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792427411;
-	h=DMARC-Filter:Received:DKIM-Signature:MIME-Version:Date:From:To:Cc:
-	 Subject:In-Reply-To:References:Message-ID:X-Sender:Organization:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=bbP6Y1YX+hAETPVaAi3loOJPV58drResJNqBABhUf4E=;
-	b=ifQ23wb3t1zBxyMxneVF9hJ/ad8Trh86jFy3QHy1/FDvr/onumDWwIEKlipR7jkbFIIa
-	 0WFcOYfQTaAP9MQBaKDqApGpM/aUuPzAUBs9GCW6IfWuZCKfaoo6HWIDCXAriKGAfgssn
-	 4yXrsOxo0/jk97Y5oQwtgq+ViAcdyn9RU+ggqlkHtgYAwaVmL3RP4/xGn5DHppONG5HPi
-	 UKnLw75S1MGGMtne1Jtakw8HT7vR7hmCaRFeq520FQKUMY4YoXUSXZUgYRS1IL9izC/Qu
-	 lcXq2wg/wgLRQaM0ndmXph2wdcTIkaxXnRf6U/kyBhiAUFI1BlgskhaGQQU31HmJn+w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792428886;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=mw/YN7QprLCeeR01eTmOl8h4o6QKEAmu0NdhWRuwULE=;
+	b=47+Ks4hN2wZLXRIlDo5mKcy6+h4K2vH87/8XGG6FXuydX9MnaHA1vjZdGi/MQ6GbE4pd
+	 aS3yeBZJz/lZ7ZIfdYJ0QdkEXD0w6oGIBKwHJD0D/s89e2VsKo4ozTJts/5gxQayXbrab
+	 b2uUrzXKiqyuaEiKiOp48ZOp2M5JZ6B5Mfoa6i1cVTcotJ/5PgkHtl6VKmJFOnvsSQNMP
+	 O8GQwEYoglzCuHEMeMkOFLhxR31K7IrkxeXs9xkNl+A810TVRlNeepgLwzbe8X9tvzGVW
+	 Ps1QMI48Li+iDG/hPbFUEHxQsTMLuv+fpJzauf5jjutXBwgK1j7y7VUgLCMVYVb6p3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=stwm.de;
-	spf=pass smtp.mailfrom=stwm.de;
-	dkim=pass header.d=stwm.de header.i=@stwm.de header.a=rsa-sha256 header.s=stwm-20170627 header.b=QZaGZvGC;
-	arc=none smtp.remote-ip=141.84.225.229
-Received: from email.studentenwerk.mhn.de (dresden.studentenwerk.mhn.de [141.84.225.229])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KkyGwT4b;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E757606A32D
-	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 16:30:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E757606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=stwm.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stwm.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEFE606A31F;
+	Mon, 19 Oct 2026 16:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=stwm.de header.i=@stwm.de header.a=rsa-sha256 header.s=stwm-20170627 header.b=QZaGZvGC
-Received: from mailhub.studentenwerk.mhn.de (mailhub.studentenwerk.mhn.de [127.0.0.1])
-	by email.studentenwerk.mhn.de (Postfix) with ESMTPS id 4j7gxd6H1JzRhR7;
-	Mon, 19 Oct 2026 18:29:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwm.de; s=stwm-20170627;
-	t=1792427397;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bbP6Y1YX+hAETPVaAi3loOJPV58drResJNqBABhUf4E=;
-	b=QZaGZvGCo6d8tLRPBRgoiJtcphlIHU0szsY0DAr5h4xu/UiB7adIckEheOJGdEDkU34j5Z
-	5zxt6qZ6m1zhsK9PIgt+z3YYcWMAc3veXuV9icV2Y929NZXdGQ4NlhXA7VB2jA6cs5LXt9
-	tL8haEETKexWgmLrbnNIlA5zaDuNoX9IkOa5+lA8/5JbOWmerqdo99jWRy/EOZvjLsu0Xn
-	SoqBbtF1uJ1RPrs3+5A+81uRFNeRc8+tBjzXRexqkwoPYZ586sk7Oh44Bfuf8/FF1+lQcI
-	pP8UqfxxUK6EJo9tKShrkRk2/81n2D3E/a8XG/S1CfENdwjYIdAMUKWgcbHYNA==
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KkyGwT4b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9925F1F000C4;
+	Mon, 19 Oct 2026 16:54:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792428885;
+	bh=mw/YN7QprLCeeR01eTmOl8h4o6QKEAmu0NdhWRuwULE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KkyGwT4b9e4KbNqEkLA6I9Ac6sTn2+C6OHTBOlvq/as7G5XjOhjfimYDgaEx63YvM
+	 eLSLxjDWpOhXZ77vYs60szKv7Woj9ySQFwTOuelfCvvMtmKjcaI9pxvJcQt59AP4A+
+	 wH6T04KE+q/x3yuWLAftcFAB/W72ML2kno7M/1+7+g7yyH5SdDC3nrBl0B+UaotTwo
+	 3Kb3Qor66KZuTHN5HsySDYB3phouX8+j3Ipg61qYv5i0jTBI59+jcwcHbdZU0CYAph
+	 lEzy30vG8HGObIkWSgUYBnjgpch7ROoGWe8pY/ypUZ97rNBP6KMZqHwqp0NWeJdMnB
+	 XK7/FwxPIVj8Q==
+From: Sasha Levin <sashal@kernel.org>
+To: Peter Schneider <pschneider1968@googlemail.com>
+Cc: Sasha Levin <sashal@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: Re: [PATCH 6.6 0000/1674] 6.6.160-rc1 review
+Date: Mon, 19 Oct 2026 12:54:29 -0400
+Message-ID: <rc-reply-0001-6f27dc9abcab@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <7201018c-20e8-4187-832a-aeb0e5db98ca@googlemail.com>
+References: <20261017160431.119607952@linuxfoundation.org> <827e9f8d-5654-4964-a999-5ce94bd98fd4@googlemail.com> <7201018c-20e8-4187-832a-aeb0e5db98ca@googlemail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -57,44 +79,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Mon, 19 Oct 2026 18:29:57 +0200
-From: Wolfgang Walter <linux@stwm.de>
-To: Bob Anderson <kernel@ametros.net>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
- Sasha Levin <sashal@kernel.org>
-Subject: Re: regression 6.18.57: acpi power button vanished in machines
- running in qemu
-In-Reply-To: <atUi2y2BDyrDGbpG@ametros.net>
-References: <5fe757e7aa54c38df3525d313598db99@stwm.de>
- <2026101834-parchment-reps-0bee@gregkh> <atSdI7buRErdF1jZ@ametros.net>
- <2026101813-doorstop-hyphen-614c@gregkh> <atUi2y2BDyrDGbpG@ametros.net>
-Message-ID: <6bf6fb6e4d8a3afbd0935142d8d4f8ec@stwm.de>
-X-Sender: linux@stwm.de
-Organization: =?UTF-8?Q?Studierendenwerk_M=C3=BCnchen_Oberbayern?=
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello Bob,
+On Mon, Oct 19, 2026 at 06:02:37AM +0200, Peter Schneider wrote:
+> # first bad commit: [7c1e132b0967210526de05e7af6f1c26ad0c1516] sysfs: Introduce a mechanism to hide static attribute_groups
 
-indeed, this fixes the problem for me und virtual machines. Thanks for 
-looking into it.
+Thanks for bisecting this.
 
-Am 2026-10-18 21:49, schrieb Bob Anderson:
-> On Sat, Oct 17, 2026 at 07:26:54PM +0200, Wolfgang Walter wrote:
->> since 6.18.57 there is no acpi power button any more in virtual qemu 
->> based
->> machines (as far as I can see model doesn't matter).
-> 
-> Cherry-picking ab06eb9204010c61e754bf4e71ee6f554584714d should fix 
-> things.
-> 
-> thanks,
-> Bob.
+> I think the problem is, that if you take this patch for stable, you need to also take the patch which is upstream [
+> cd69fedf58f8ab1ab511f7c6ac1969cebf1c935f] sysfs: Fix crash on empty group attributes array. It addresses the exact crash
+> that I've run into.
 
-Regards
+Rather than adding cd69fedf58f8, I dropped d87c295f599c ("sysfs: Introduce a
+mechanism to hide static attribute_groups") and its dependent c7fbb8218b4a
+("sysfs: check visibility before changing group attribute ownership") from the
+6.6 and 6.1 queues.
+
 -- 
-Wolfgang Walter
-Studierendenwerk München Oberbayern
-Anstalt des öffentlichen Rechts
+Thanks,
+Sasha
