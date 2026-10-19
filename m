@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0678C52F849;
-	Mon, 19 Oct 2026 13:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF1252F82F;
+	Mon, 19 Oct 2026 13:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418388; cv=none; b=MNWdHpz2xCMvnljQuzPWmrpPHA9PgZM/utSxMIoe/nKwxEe2LpxneR4jbmKzQ4szUD5zckB0ssSqL6LG/HCLhfxlNSJhrx2D+diB05rV5yDK3I3nEX1tgHD/bW1WoqparMCYOnIhEcT2i2Oqpk6qhg55v0N+3vPfe5wKfxFSXV4=
+	t=1792418389; cv=none; b=tEryHEQskWwc6Gp52kbcF6xqHYG4jG7/FV0lGCXF4YH6JZ4ATERVV8rLG2zboQqxYyccxBMFIbkIc28XnMu28pH+g6cdRxbqzOxT6uydO+aHOkU9htWkl0J6ZWgslkfaAO92Ti8f4bZqSOx6x5abFCk9iuKw4nxou/OKfQzOYa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418388; c=relaxed/simple;
-	bh=q4Kwr21DP2sbCnW/Ls1zpcfgGb54QCiTQ8IzQOgJZYg=;
+	s=arc-20240116; t=1792418389; c=relaxed/simple;
+	bh=CXzADxk9wqX09v7ycqrdX6eAVir6soUV+PCXFq9YVhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QFuuOq+bFx4U3l8FqbOnC4qZxXq3H8yrHlyScTEkgGIdcwmi/0AoQmXXIRWGGcBuKloXjhjAjW+aNs3EpDzCO1jAX7dMdNfZZA+/qgRgFUhPByae7o2nK/m06JAC7cv/Sx/3uRRonr0WJzmuYsQSfwqOULfVzfs2SbifXz51WQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQtdEHYA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N/EbjqCU3X7BMqf1MEScMyPc4UFYFykxup8Y0lO8jJAzYa7/KyVVqym5GBOy842bEEwMCfpU8wBB3dJNY6owBcqZLbffdvZeCylbZnYrOkzbzm+HpfrvyXfSc43Fe09zL7w035eiX0pLiSQLb64+mf9o3j69z0DhFzg0bkP9T0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKQoQXyf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQtdEHYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EBE1F000C6;
-	Mon, 19 Oct 2026 13:59:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKQoQXyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EEE1F000C9;
+	Mon, 19 Oct 2026 13:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418385;
-	bh=aadi2K92DwERhOn4Fk0o1ulK5sm4tl7p50s/tBdXtHQ=;
+	s=k20260515; t=1792418384;
+	bh=8mQ3Y+7UHIH059+NAi9vk+LgHMB4/3HWDkvw9jCS914=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQtdEHYAzmjqs0rc1BNACaVeZ7RMQg1DM5Rzm+Uz5CN184czaqbWFB/BlJKD88c9N
-	 fQRFxHny3nrGtDOBzIAFltmooKtThy6QJ7Bab2oCvrw5wycC6XJUGFFG2BWy9tbskB
-	 Pe8tnrITIqmd6Z7uC1dDWzjtv6ZwgaspRg1L7Piv/AONZQL1eKx7Oy8pQVpxqWuIvR
-	 NBFkPduVjjjjIbHV7O+tzqJjkgTXbD5JFvEX122Ajd1W7+pU4v8A2nN5skU56g+x8d
-	 VFt98M1BjeK5113vb7E7+EUsQQemfubVdVXUm4cu9ly+fy67OAQ4dLD0uw4DIRC+8j
-	 qiuwW7+s+E7pA==
+	b=TKQoQXyfw4atyFLeKELm/jUlqecQo+rgyrlTYIUx+2HIV2m5H+ceoUzXEMb0lgZNO
+	 u4peYGDHCVg0FGbCHnjtJ57Xv0UIkZGFXGVPrBoiB6n4YacCMeepEfUm8zlgUIDPv/
+	 rjsG1Zhy92+6V3LWVIhd0YDLqEkSf2K4dciowLCWaSGl/TOK7o5nlE9doQsgqxPK+d
+	 1vVHkZ27eF8y6y0aXhE1PHPjTMvUewtzJHE7grF4lUBhX4wtDhrUG+dmqm0hNaqrfU
+	 c4k9pIixM/G2lZrM8LcxQHN6PQAipYI0OUluciASVM7skjFLohpgxbGaQLFPcQEcNo
+	 yi2EH9E6eCoXg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namhyung Kim <namhyung@kernel.org>,
-	Sashiko Review <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+Cc: Michal Pecio <michal.pecio@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] tools/lib/api: Fix potential double-free from fdarray__grow()
-Date: Mon, 19 Oct 2026 09:48:23 -0400
-Message-ID: <20261019135441.1420968-212-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: usx2y: Stop clearing urb->hcpriv before submission
+Date: Mon, 19 Oct 2026 09:48:22 -0400
+Message-ID: <20261019135441.1420968-211-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,280 +54,314 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit eadce0f46a1d066b812c7e5aa46a33711c78a755 ]
+[ Upstream commit fabae5548149ef5c8a056875d9ebdc38366db539 ]
 
-If the realloc for fda->entries succeeds but the realloc for fda->priv
-fails, the error path frees the newly allocated entries.
+This is managed by USB core and drivers aren't expected to touch it.
 
-However, fda->entries is neither updated to point to the new entries block
-nor cleared to NULL. If realloc moved the allocation to a new block, the
-old fda->entries pointer is now freed memory.
+It should only be not NULL on a submitted URB, in which case clearing
+defeats the "submitted while active" sanity check in usb_submit_urb()
+and may crash the HCD handling the URB and panic the kernel.
 
-When fdarray__exit() is later called to clean up, it executes
-free(fda->entries), which would trigger a double-free on that old pointer.
-
-Reported-by: Sashiko Review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-perf-users/20260710200150.11FE71F00A3A@smtp.kernel.org
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is mainline **v7.3-rc4**. The change is a real `realloc`
-double-free in `perf`/`libperf` userspace, present since v3.18, and it
-is small enough to meet the stable rules.
+I have the local tree, the live `hcpriv` path, and the mailing-list
+record. The rest of this is the nine-phase write-up and the backport
+verdict for 6.12 only.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[tools/lib/api] [fix] [prevent double-free in fdarray__grow()
-on partial realloc failure]**
+
+Record: **[ALSA/usx2y] [Stop]** Stop clearing `urb->hcpriv` before
+`usb_submit_urb()`. “Stop” here means “stop doing something unsafe,”
+i.e. a correctness fix, not a feature.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Reported-by: Sashiko Review <sashiko-bot@kernel.org>` — AI static
-  review, not a user crash
-- `Closes: https://lore.kernel.org/linux-perf-
-  users/20260710200150.11FE71F00A3A@smtp.kernel.org`
-- `Reviewed-by: Ian Rogers <irogers@google.com>` — perf tools reviewer
-- `Signed-off-by: Namhyung Kim <namhyung@kernel.org>` — perf tools
-  maintainer (author and committer)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  ...]` markers — none on the real commit
+
+Verified from `git show fabae5548149ef5c8a056875d9ebdc38366db539`:
+
+- `Signed-off-by: Michal Pecio <michal.pecio@gmail.com>` (author)
+- `Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@g
+  mail.com`
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
+
+Absent (expected for this pipeline, not a negative signal): `Fixes:`,
+`Cc: stable`, `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`.
+
+No syzbot, no CVE, no multi-user report.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug:** In `fdarray__grow()`, `realloc(fda->entries)` can succeed and
-  `realloc(fda->priv)` can fail. The old error path `free(entries)`
-  without updating `fda->entries`.
-- **Symptom:** If `realloc` moved the block, `fda->entries` still points
-  at the old (already freed) pointer. Later `fdarray__exit()` does
-  `free(fda->entries)` → **double-free**.
-- **Version info:** none in the message. Git shows the two-`realloc`
-  pattern since **v3.18-rc1**.
-- **Root cause:** classic partial-`realloc` handling: new pointer
-  discarded, struct left holding a dangling pointer.
+- **Bug:** Client driver writes `urb->hcpriv = NULL` immediately before
+  `usb_submit_urb()`. `hcpriv` is USB-core/HCD private.
+- **Symptom/failure mode:** If the URB is still active (`hcpriv !=
+  NULL`), that store hides it from `usb_submit_urb()`’s “submitted while
+  active” check. The HCD then treats a live URB as a new submit and
+  **can crash / panic**.
+- **Version info in the message:** none. Git places the commit at
+  `v7.2-rc5-196-gfabae5548149e` (2026-08-10). The assignment itself
+  dates to `1da177e4c3f41` (Linux-2.6.12-rc2).
+- **Root cause (author):** drivers must not touch `hcpriv`; a non-NULL
+  value means “already submitted.”
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit double-free fix. The `fdarray__new()`
-`free(fda)` → `fdarray__delete(fda)` change is the matching leak fix
-once `fda->entries` is kept on failure.
+
+Record: Not a disguised cleanup. The message names the panic path. The
+diff is a one-line deletion of an illegal store.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `tools/lib/api/fd/array.c` — **+3 / −2** (net +1), 5 lines
-  touched
-- Functions: `fdarray__grow()`, `fdarray__new()`
-- Scope: **single-file surgical fix**
+- File: `sound/usb/usx2y/usbusx2yaudio.c` — 1 deletion, 0 additions
+- Function: `usx2y_urb_submit()`
+- Scope: single-file, surgical
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- Hunk 1 (`fdarray__grow` error path): **before** `free(entries)` and
-  return `-ENOMEM`, leaving `fda->entries` stale. **after** assign
-  `fda->entries = entries` and return `-ENOMEM`, so `fdarray__exit()`
-  frees the live block once.
-- Hunk 2 (`fdarray__new`): **before** `free(fda)` on grow failure,
-  leaking the entries block after hunk 1. **after**
-  `fdarray__delete(fda)` which runs `fdarray__exit()` then `free(fda)`.
+
+Record: Before, `usx2y_urb_submit()` set `start_frame`, **zeroed
+`hcpriv`**, set `urb->dev`, then `usb_submit_urb(GFP_ATOMIC)`. After,
+the `hcpriv` store is gone. This is the **normal ISO resubmit path**
+(completion → `usx2y_usbframe_complete()` → `usx2y_urb_submit()`), not
+an error-only path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** double-free (and a companion leak on `fdarray__new`)
-- **Mechanism:** two-step `realloc`. `sizeof(struct priv)` is larger
-  than `sizeof(struct pollfd)` (pointer + flags vs 8-byte `pollfd`), so
-  `psize` is larger than `size`. Entries can grow while priv allocation
-  fails under memory pressure. Callers then `fdarray__exit()`.
+
+Record: **[Memory safety / HCD invariant]** `urb->hcpriv` is documented
+in `include/linux/usb.h` as HCD-private. `usb_submit_urb()` in this
+tree:
+
+```378:381:drivers/usb/core/urb.c
+        if (urb->hcpriv) {
+                WARN_ONCE(1, "URB %pK submitted while active\n", urb);
+                return -EBUSY;
+        }
+```
+
+`__usb_hcd_giveback_urb()` already sets `urb->hcpriv = NULL` **before**
+the complete callback, so on a legal resubmit the driver’s store is a
+no-op. If the URB is still queued, the store defeats
+`-EBUSY`/`WARN_ONCE`. xHCI then does `urb->hcpriv = urb_priv` in
+`xhci_urb_enqueue()` over a live URB (new `urb_priv`, old still on the
+ring) → DMA/ring corruption and panic.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct `realloc` handling: if the first `realloc` moved the
-  block, the old pointer is already invalid and **must** be replaced.
-- Clearing `fda->entries` to NULL (what the bot suggested) would leak
-  the new block and leave `fda->nr > 0` with a NULL array.
-- Minimal, no API/`struct fdarray` change. `fdarray__delete()` has
-  existed since 2014.
-- Regression risk: **very low**. Error path only. On failure, extra
-  unused entries capacity may remain (`nr_alloc` unchanged); that is
-  harmless.
+
+Record: Obviously correct: delete an illegal write. Minimal. Regression
+risk is very low: giveback already NULL’s `hcpriv` before complete;
+first-time submits from `usx2y_urbs_start()` go through
+`usb_submit_urb()` directly with a freshly allocated URB. On a true
+double-submit, users get `-EBUSY` and this driver’s existing `dev_err` +
+`usx2y_clients_stop()` instead of an HCD panic.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- `free(entries)` on priv failure introduced in **`2171a9256862ec`**
-  (“tools lib fd array: Allow associating an integer cookie with each
-  entry”), Arnaldo, 2014-09-25.
-- First appeared in **v3.18-rc1**.
-- `fdarray` itself: **`1b85337d0685d`** (same merge window).
+
+Record: `git blame` on line 170: `urb->hcpriv = NULL` introduced in
+**`1da177e4c3f41` (Linux-2.6.12-rc2, 2005)**. Present for the entire
+life of this driver. Surrounding function was only renamed/style-fixed
+(Takashi Iwai, 2021).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The introducing commit is `2171a9256862ec`,
-ancestor of this tree (`git merge-base --is-ancestor` exit 0).
+
+Record: No `Fixes:` tag. The broken line is original driver code, not a
+later regression. The USB-core check was added in **`2f02bc8af3abb`
+(Alan Stern, 2012)** “USB: report submission of active URBs”
+(`WARN_ONCE` + `-EBUSY`). That commit exists in this tree. This driver
+has been defeating that check since the check existed.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Later fdarray work (flags, duplicate, poll-storm, hang) does not
-replace this error path. No follow-up after `eadce0f46a1d0`. Standalone,
-not `N/M`.
+
+Record: Recent local history on this file includes `86f82bf2b5f99`
+(validate `nrpacks`), print API, `__counted_by`, etc. None of those
+remove `hcpriv`. `git merge-base --is-ancestor fabae5548149e HEAD` →
+**not an ancestor** (exit 1). Standalone one-line patch, not `N/M`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Namhyung Kim is a **PERFORMANCE EVENTS SUBSYSTEM** maintainer.
-Ian Rogers is a listed reviewer. Author applied it to perf-tools-next.
+
+Record: Michal Pecio has no prior ALSA usx2y commits in this checkout.
+On `origin/master` the only nearby `hcpriv` work is `25e531b422dc2`
+(`usb: xhci: Make usb_host_endpoint.hcpriv survive endpoint_disable()`)
+— different field (`ep->hcpriv`), not a prerequisite. Author is a
+USB/xHCI contributor; ALSA maintainer applied this the same day.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `fdarray__delete()` / `fdarray__exit()`. Can
-apply standalone to any tree that still has the two-`realloc` grow path.
+
+Record: None. The function, field, and `usb_submit_urb()` check all
+exist here. `git show fabae5548149e | git apply --check` succeeded.
+Standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig -c eadce0f46a1d0` →
-  https://patch.msgid.link/20260711003235.1963043-1-namhyung@kernel.org
-- v1: `[PATCH v1] lib/api/fd: Fix potential double-free from
-  fdarray__grow()` (2026-07-10)
-- v2: subject-only (`tools/lib/api:`); **no code change**
-- Ian Rogers: `Reviewed-by` (2026-07-15)
-- Namhyung: “Applied to perf-tools-next, thanks!” (2026-07-16)
-- No NAKs, no `Cc: stable` in review, no reviewer risk flags
+- `b4 dig -c fabae5548149e` → https://patch.msgid.link/20260810075728.48
+  3c827e.michal.pecio@gmail.com
+- `b4 dig -a`: **v1 only**, 2026-08-10
+- Thread (LKML/openwall): standalone `[PATCH]`, no v2. Takashi Iwai:
+  “Applied to for-next branch. Thanks.” No NAK, no stable discussion, no
+  reviewer risk flags.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): Namhyung, Arnaldo, Ian Rogers, Jiri Olsa, Adrian
-Hunter, James Clark, Peter Zijlstra, Ingo Molnar, LKML, linux-perf-
-users, Sashiko. Right maintainer set.
+
+Record (`b4 dig -w`): To/Cc Jaroslav Kysela, Takashi Iwai, linux-sound,
+linux-kernel. **Not** linux-usb. Applied by the ALSA maintainer the same
+day; no separate Reviewed-by.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Sashiko flagged a **High** pre-existing issue on another fdarray
-patch. Namhyung replied “I'll handle this in a separate patch.” No user
-repro, syzbot, or bugzilla. Bug is from code inspection, not a field
-crash.
+
+Record: No `Reported-by`, no bugzilla/syzbot. Inspection-driven.
+Severity from the author is kernel panic; no public crash log was found.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone. Separate from the `fdarray__filter()` nonfilterable
-fix that triggered the review.
+
+Record: Not a series. `git log origin/master
+fabae5548149e..origin/master -- sound/usb/usx2y/usbusx2yaudio.c` is
+empty (no follow-up/revert).
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** (lore.kernel.org HTTP 403). The v2 mbox has no
-stable discussion.
+
+Record: lore.kernel.org returned 403 via WebFetch. Web search of
+`site:lore.kernel.org/stable usx2y hcpriv` found **no** stable-list
+thread. UNVERIFIED beyond that search: no evidence it was rejected for
+stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `fdarray__grow()`, `fdarray__new()`. Cleanup via
-`fdarray__exit()` / `fdarray__delete()`.
+semcode MCP is not available; callers/callees from grep + reads.
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `usx2y_urb_submit()` only.
 
 **Step 5.2: TRACE CALLERS**
-Record (grep on this tree):
-- `fdarray__grow`: `fdarray__new`, `fdarray__add`,
-  `perf_evlist__alloc_pollfd`
-- `fdarray__add`: `perf_evlist__add_pollfd`, `builtin-record.c` (per-
-  thread pollfd), `builtin-daemon.c`, `fdarray__dup_entry_from`, tests
-- `fdarray__exit` on those objects: `perf_evlist__exit`, `record` thread
-  teardown (`fdarray__exit(&thread_data[t].pollfd)`), daemon `goto out`
-  → `fdarray__exit(&fda)`
+
+Record:
+- `usx2y_usbframe_complete()` in the same file: playback URB after
+  `usx2y_urb_play_prepare()`, capture `completed_urb` after retire.
+  Called from `i_usx2y_urb_complete()` (URB complete / giveback).
+- `usx2yhwdeppcm.c` includes `usbusx2yaudio.c` and calls
+  `usx2y_urb_submit()` for capture (and second capture) in the
+  hwdep/rawusb path.
+
+Hot path: **every ISO frame** while PCM is running. Userspace trigger:
+open/play/record on a Tascam US-122/224/428 (`CONFIG_SND_USB_USX2Y`).
 
 **Step 5.3: TRACE CALLEES**
-Record: `realloc`, `memset`, `calloc`, `free`. No locks, no kernel
-allocators.
+
+Record: `usb_submit_urb(urb, GFP_ATOMIC)`, `dev_err` on failure. No
+alloc, no new locks.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `perf` / libperf. Typical path: `perf record` mmap →
-`perf_evlist__alloc_pollfd` → `fdarray__grow`. On `-ENOMEM`,
-evlist/thread/daemon cleanup calls `fdarray__exit`. **Reachable from a
-normal perf invocation under memory pressure**, not a kernel syscall
-path.
+
+Record: `usb_hcd_giveback_urb` → `__usb_hcd_giveback_urb` (`hcpriv =
+NULL`) → `i_usx2y_urb_complete` → `usx2y_usbframe_complete` →
+`usx2y_urb_submit` → `usb_submit_urb`. Reachable from normal PCM. On a
+clean complete, `hcpriv` is already NULL. Double-submit is the dangerous
+case (startup state machine `STATE_STARTING1/2` can pick
+`urb[0]`/`urb[1]` by index; two URBs per substream, `NRURBS == 2`).
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Only this grow function does the paired `entries`/`priv`
-realloc. No sibling copy of the bug.
+
+Record: `urb->hcpriv = NULL` in `sound/` exists **only** in this file.
+Other `hcpriv` writes are in HCDs (`xhci`, `ehci`, `ohci`, …), which is
+correct. This driver is the outlier among ALSA USB.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
-- `make kernelversion`: **7.3.0-rc4** (Linus mainline, `origin` =
-  torvalds/linux.git)
-- Fix commit **`eadce0f46a1d0` is already an ancestor of HEAD**
-- Buggy two-`realloc` body exists in history from v3.18; current file
-  already has the fix
-- Introduced long before this tree
+
+Record: **Yes.** Local tree: `pending-6.12`, `git describe`
+`p-6.12-3-gc504cf0baa3d8`, **`make kernelversion` = 6.12.111**. Line 170
+of `sound/usb/usx2y/usbusx2yaudio.c` is `urb->hcpriv = NULL;`.
+Introduced in 2.6.12-rc2; present for this entire 6.12 line.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** to any tree with this `fdarray__grow` shape.
-Function has been stable aside from later `memset` of new slots. No
-conflicting refactor in this file.
+
+Record: **Clean apply** (`git apply --check` exit 0). Hunk context
+matches. No refactor of this submit helper in 6.12 vs the mainline
+parent.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This is the fix. No earlier equivalent.
+
+Record: No prior usx2y `hcpriv` fix (`git log --grep=hcpriv --
+sound/usb/usx2y/` empty). Nearby usx2y hardening in this tree (`nrpacks`
+validation, URB `actual_length` checks, etc.) does not replace this
+change.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **tools/lib/api** used by **tools/perf** and **tools/lib/perf**.
-Criticality: **IMPORTANT** for perf users, **not CORE kernel**.
-Userspace heap corruption, not a kernel oops.
+
+Record: **ALSA USB** (`sound/usb/usx2y/`), driver-specific.
+**PERIPHERAL/IMPORTANT-for-those-devices**: Tascam US-122/224/428
+(`CONFIG_SND_USB_USX2Y`, x86/PPC/Alpha). Not core mm/net, but USB audio
+submit on a live HCD is a **system-wide panic** if it fires.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active (recent poll-storm/hang fixes in the same file’s
-callers). The grow error path itself dates to 2014 and was untouched
-until this commit.
+
+Record: Mature (2002–2005 origin), still receiving real fixes in 6.12
+(parameter validation, bounds). Low churn, not staging.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **config/tool-specific** — anyone running kernel-tree `perf` /
-libperf (record, daemon, evlist polling). Distros ship this `perf`. Not
-a kernel-wide crash.
+
+Record: **Driver-specific / config-specific**: users with Tascam
+US-122/224/428 and `CONFIG_SND_USB_USX2Y`. Unprivileged PCM I/O can
+exercise the path.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Grow of an fdarray that already has (or just got) an entries
-  allocation
-- `realloc(entries)` succeeds, `realloc(priv)` fails
-- Then `fdarray__exit()` (all production callers do this)
-- Unprivileged `perf` can hit grow; failure needs allocation failure, so
-  uncommon but not fictional (`priv` is the larger realloc)
-- Not a timing race
+
+Record: Legal resubmit after giveback: `hcpriv` already NULL → **no
+behavior change**. Panic requires submitting a still-active URB (startup
+state machine, lost `completed_urb`, or overlapping complete/submit).
+Not shown with a public reproducer; ISO ping-pong with two URBs makes it
+**plausible**. Unprivileged users running audio can hit the submit path.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Userspace double-free / heap corruption** of `perf` → abort or
-allocator abort. Severity: **HIGH** for the tool, **not** a kernel
-panic. Possible security angle only if `perf` is privileged; unverified
-here.
+
+Record: **HCD crash / kernel panic** if an active URB is submitted after
+`hcpriv` is cleared. **Severity: CRITICAL** when it fires; **likelihood:
+unproven / low** (no Reported-by). After the fix: `-EBUSY` + WARN +
+stream stop — **HIGH** improvement vs panic.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- **Benefit:** stops a real double-free on a cleanup path every grow-
-  failure caller uses
-- **Risk:** very low (5 lines, error path, maintainer-authored and
-  reviewed)
-- **Ratio:** favorable. Official “bothers people” bar is weaker (bot-
-  found, no field report), but the defect is concrete, not a speculative
-  race.
+- **Benefit:** Restores USB core’s active-URB guard on a path that
+  otherwise can panic the machine; correct path unchanged.
+- **Risk:** 1-line deletion, no API, no locking, no data-structure
+  change.
+- **Ratio:** Strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -334,127 +370,124 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real double-free, not style
-- Tiny, obviously correct
-- Bug since v3.18; this tree has the code
-- All major callers `fdarray__exit()` after `-ENOMEM`
-- Partial failure is plausible because priv is larger than entries
-- Reviewed by Ian Rogers; applied by Namhyung Kim
-- No dependencies; clean apply
-- Matches stable double-free / error-path pattern
+- Objectively illegal write to HCD-private `urb->hcpriv` (docs + USB
+  core).
+- Defeats `usb_submit_urb()`’s `WARN_ONCE`/`-EBUSY` (in this tree since
+  2012).
+- Failure mode is HCD crash/panic (xhci re-owns a live URB).
+- Buggy line present here since 2.6.12; commit is **not** in HEAD.
+- 1 deletion; `git apply --check` clean; no prerequisites.
+- USB-knowledgeable author; ALSA maintainer applied v1 same day; no NAK;
+  no later revert.
 
 AGAINST:
-- Userspace tools, not kernel runtime
-- Found by Sashiko, not a user
-- Subject says “potential”; no `Fixes:`/`Cc: stable`
-- Official rule: “real bug that bothers people” / not “this could be a
-  problem”
-- Trigger needs allocation failure
+- No `Reported-by` / syzbot / crash log.
+- Tascam-only driver.
+- On the spec-compliant complete path the store is already a no-op
+  (giveback NULL’s `hcpriv` first), so this is **latent** unless double-
+  submit happens.
 
 UNRESOLVED:
-- Whether stable@ ever discussed it (lore HTTP 403)
-- Whether any distro `perf` user hit it
+- Could not fetch lore.kernel.org (403); discussion recovered via b4 +
+  LKML/openwall.
+- No stable-list hit found; not proven it was ever NAK’d for stable.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — realloc semantics;
-   maintainer + reviewer
-2. Fixes a real bug that affects users? **PASS** — double-free on grow-
-   fail + exit; users are `perf` users
-3. Important issue? **PASS** (HIGH userspace heap corruption; not a
-   kernel oops)
-4. Small and contained? **PASS** — 5 lines, one file
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — already present here; same
-   hunk applies to older trees that still have this grow function
+
+1. Obviously correct and tested? **PASS** — one illegal store removed;
+   maintainer applied; correct path unchanged.
+2. Fixes a real bug that affects users? **PASS** — drivers must not
+   clear `hcpriv`; this driver does; users of this hardware exist.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   bypass can panic the HCD; severity is crash, even if unreported.
+4. Small and contained? **PASS** — 1 line, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — clean apply; code present.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not an ID/quirk/DT/build/doc exception). It is a normal
-bug fix.
+
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This tree is **7.3-rc4 mainline**, and the fix is already in it. The
-evaluation is whether that fix is stable material for this codebase: it
-is. Distros ship `tools/perf` from the kernel tree; a double-free on a
-path every evlist/daemon/record teardown takes is a real crash of that
-tool. The patch is too small and too localized to justify holding it
-back because the finder was a bot or the trigger is OOM.
 
-===============================================================
-What the commit solves, and why it matters
-===============================================================
-`fdarray__grow()` grows two parallel allocations. On the second
-`realloc` failing it used to `free()` the first result without storing
-it, so `fda->entries` could dangle. `perf record`, libperf evlist, and
-`perf daemon` all `fdarray__exit()` afterward, which is a double-free of
-the process heap. Stable users who cannot bump the whole kernel still
-use this `perf`.
+This belongs in **this** 6.12 tree. The hardware set is narrow, but the
+patch is the lowest-risk way to stop a driver from disabling USB core’s
+double-submit guard. A panic on ISO resubmit is exactly the class of bug
+stable is meant to take; waiting for a public oops is unnecessary when
+the mechanism is visible in this checkout.
 
-Risk vs benefit: benefit is preventing heap corruption in a widely
-shipped tool; risk is a 5-line error-path change already reviewed by the
-subsystem.
+------------------------------------------------
+What the commit solves for 6.12 users
+------------------------------------------------
+`usx2y_urb_submit()` currently zeros `urb->hcpriv` before
+`usb_submit_urb()`. USB core uses that pointer as “this URB is in the
+HCD.” Clearing it lets a still-active URB through as if it were idle.
+That can crash the host controller. After the deletion, a double-submit
+returns `-EBUSY` and this driver already stops the streams.
 
-No missing prerequisites. No backport rework needed for this `array.c`.
+Meets stable rules: obviously correct, real invariant bug, crash
+severity, 1 line, no new API, applies here.
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Tags: Sashiko Reported-by, Closes lore, Reviewed-by Ian
-  Rogers, SOB Namhyung; no Fixes/Cc-stable
-- [Phase 2] Diff: 5 lines in `tools/lib/api/fd/array.c`; `free(entries)`
-  → keep pointer; `free(fda)` → `fdarray__delete(fda)`
-- [Phase 3] `git blame` on parent: `free(entries)` from `2171a9256862ec`
-  (v3.18-rc1)
-- [Phase 3] `git merge-base --is-ancestor 2171a9256862ec HEAD` → yes;
-  `eadce0f46a1d0` also ancestor
-- [Phase 3] `git log --oneline eadce0f46a1d0..HEAD --
-  tools/lib/api/fd/array.c` → empty (no follow-up)
-- [Phase 4] `b4 dig -c eadce0f46a1d0`: v2 at
-  patch.msgid.link/20260711003235.1963043-1-namhyung@kernel.org
-- [Phase 4] `b4 dig -a`: v1→v2 subject-only; applied to perf-tools-next
-- [Phase 4] `b4 dig -w`: perf maintainers on To/Cc
-- [Phase 4] `b4 mbox` of Closes: Sashiko High pre-existing double-free;
-  Namhyung “I'll handle this in a separate patch”
-- [Phase 4] lore WebFetch/curl: 403 — stable@ search UNVERIFIED
-- [Phase 5] grep callers: evlist, builtin-record, builtin-daemon, tests;
-  all production paths `fdarray__exit`
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 6] Current `array.c` already contains the fixed grow/new bodies
-- [Phase 7] MAINTAINERS: Namhyung maintainer, Ian Rogers reviewer of
-  PERFORMANCE EVENTS SUBSYSTEM
-- [Phase 8] Failure mode: userspace double-free in perf, HIGH for the
-  tool
-- UNVERIFIED: field reports; privileged-perf exploitability; stable@
-  thread
+Risk vs benefit: benefit is avoiding a panic; risk is effectively zero
+on the giveback path this driver uses every frame.
+
+Concerns: niche device, no reproducer. Neither blocks a one-line restore
+of an existing USB-core check.
+
+Verification:
+- [Phase 1] Tags: author SOB, Link msgid, Takashi Iwai SOB; no
+  Fixes/Reported-by/stable Cc
+- [Phase 1] Subject/body: stop illegal `hcpriv` clear; panic if URB
+  still active
+- [Phase 2] Diff: delete `urb->hcpriv = NULL` in `usx2y_urb_submit()`;
+  confirmed at line 170 in this tree
+- [Phase 2] `usb_submit_urb()` checks `urb->hcpriv` and returns `-EBUSY`
+  (`drivers/usb/core/urb.c:378-381`)
+- [Phase 2] `__usb_hcd_giveback_urb()` sets `urb->hcpriv = NULL` before
+  `urb->complete()` (`hcd.c:1627`)
+- [Phase 2] xHCI `xhci_urb_enqueue()` assigns `urb->hcpriv = urb_priv`
+  (`xhci.c:1552`)
+- [Phase 2] `include/linux/usb.h`: `hcpriv` is HCD-private;
+  Documentation `-EBUSY` = URB already active
+- [Phase 3] blame: `1da177e4c3f41` Linux-2.6.12-rc2 introduced the store
+- [Phase 3] sanity check added `2f02bc8af3abb` (2012), present here
+- [Phase 3] `git merge-base --is-ancestor fabae5548149e HEAD` → not in
+  this tree
+- [Phase 3] no follow-up/revert on `origin/master` for this file after
+  the commit
+- [Phase 4] `b4 dig -c fabae5548149e`: lore msgid; v1 only; To/Cc ALSA
+  maintainers
+- [Phase 4] Takashi Iwai applied to for-next; no NAK
+- [Phase 4] lore.kernel.org WebFetch 403; LKML/openwall used instead
+- [Phase 5] callers: `usx2y_usbframe_complete`, hwdep path via `#include
+  "usbusx2yaudio.c"`
+- [Phase 5] only `sound/` instance of `urb->hcpriv = NULL`
+- [Phase 6] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; `make
+  kernelversion` = 6.12.111
+- [Phase 6] `git apply --check` of `fabae5548149e` succeeded
+- [Phase 7] `CONFIG_SND_USB_USX2Y` Tascam US-122/224/428
+- [Phase 8] Failure mode: HCD panic on active-URB submit; severity
+  CRITICAL if triggered
+- UNVERIFIED: no public reproducer; stable@ archive not readable (403)
 
 **YES**
 
- tools/lib/api/fd/array.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/usb/usx2y/usbusx2yaudio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
-index f0f195207fca9..dcb396ab51eb1 100644
---- a/tools/lib/api/fd/array.c
-+++ b/tools/lib/api/fd/array.c
-@@ -31,7 +31,8 @@ int fdarray__grow(struct fdarray *fda, int nr)
- 
- 	priv = realloc(fda->priv, psize);
- 	if (priv == NULL) {
--		free(entries);
-+		/* this will be freed by fdarray__exit() */
-+		fda->entries = entries;
- 		return -ENOMEM;
- 	}
- 
-@@ -50,7 +51,7 @@ struct fdarray *fdarray__new(int nr_alloc, int nr_autogrow)
- 
- 	if (fda != NULL) {
- 		if (fdarray__grow(fda, nr_alloc)) {
--			free(fda);
-+			fdarray__delete(fda);
- 			fda = NULL;
- 		} else {
- 			fda->nr_autogrow = nr_autogrow;
+diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
+index c7c7ec9c228b4..1ea181e9bb283 100644
+--- a/sound/usb/usx2y/usbusx2yaudio.c
++++ b/sound/usb/usx2y/usbusx2yaudio.c
+@@ -167,7 +167,6 @@ static int usx2y_urb_submit(struct snd_usx2y_substream *subs, struct urb *urb, i
+ 	if (!urb)
+ 		return -ENODEV;
+ 	urb->start_frame = frame + NRURBS * nr_of_packs();  // let hcd do rollover sanity checks
+-	urb->hcpriv = NULL;
+ 	urb->dev = subs->usx2y->dev; /* we need to set this at each time */
+ 	err = usb_submit_urb(urb, GFP_ATOMIC);
+ 	if (err < 0) {
 -- 
 2.53.0
 
