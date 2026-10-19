@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECD4508818;
-	Mon, 19 Oct 2026 13:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0481F5087FD;
+	Mon, 19 Oct 2026 13:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418166; cv=none; b=XFTwXD+IMGnZMflNJq5ge/svmajBzxKF5lLf1oT0TxyYCb382HYlCbBK+OiatI4ZRfmDp58j3LxGAhQ68HeHcgm0ZXOFAq+P9eXsk7NJxMaWnTOu4KusJWQIcbPShDwd6Hs3iDBHLLMSP3ai2rujJEtIPN7nWCzdf5GfPw4x1LQ=
+	t=1792418167; cv=none; b=uHKdgxIg/476koU+aPVYrfex4LGZNuy2y9PtXMHotNHKFuI9LltsvHLmekg28Zx6oZ09FVN0fBvs0vHH+edKgu+jPuaPwstS4vPjAxER6imOZBZ9Ji2zaocW80FiNcktT8ESHN6BYsbLTJshuIfTt17VVFv5R68n5n9usAdxXck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418166; c=relaxed/simple;
-	bh=DEOX1JM4PMaj4Hkdqru6zsIucAAEHc+fB3xAWBKvW28=;
+	s=arc-20240116; t=1792418167; c=relaxed/simple;
+	bh=CVm7uD/Hf/UEIITKGTXusvvMtbFTFyxCZbvY7JC18js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=amJtJwZ2VIUA7hxQbWx9dNxqc/k/esuxwwo+uV8JnCkYr0mmsR0S7PpEOcj9ntQRr0hF+KpEiaumFXtQ3pDU3h7CK3GqfhXjjFeqTjw4AJ2Z5R3BmfzLiJtZ5U7XflXDqY+XZGU5WeAIVU/mxxU31lJnL9eUJgrTboLENOnjBu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8D917HT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=q1+4gT0g9rqaN3hOTLiJt+VgPlHgGmEzYco+X2zqb94GJSwkLucrIysgGXIVNpr8ZImCGHsjwjo67dM7xGKwPOBbEofe020lJsfAEDQsmTXex3IwI7svD9x4U+dSK49rbl7gKiaegvjWERweW4RVbE0xlYXkfWpFpq4Q6tYturQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XDM3fgyy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8D917HT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CE51F000C7;
-	Mon, 19 Oct 2026 13:56:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XDM3fgyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AD31F000C4;
+	Mon, 19 Oct 2026 13:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418164;
-	bh=NbG8KeK/8Obh+OVNCohBG662A62vEgDIt/OjzMVvTJg=;
+	s=k20260515; t=1792418162;
+	bh=tkjY0osqp2/Vm2Opt0bHibUbVAjdzGYrtqr88weKT2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8D917HTxc+QaL2hEcPjyHgp+rBYjX2HoiHwg7rNpvRZhVny9ZJiJyRlQBGNaymKi
-	 xlR1N6OVd680McvzTTaBZOWX5FWG221bx+zGP/hn4LyjK0HHqnEV1Oiqo1SpAOvTT/
-	 17qlBJFCs4HJYBnDRPz77/UZMszqbbLWDBlDhZNYmGcKo2tpOnDdRp4khGCUru2LIy
-	 laAYifWMggd9VTY6GdKETh9cL2qhIOmFOmnRFtIt7k5NKgInlip8m2vi/ptD8xL0Pl
-	 7LztRbIEODhm7Jnz2OtOtColE6WZxtwUvcZuIEgq93TCYAKE7j1X0fBtMNmhtydgwD
-	 XdMeC/CgaFnBA==
+	b=XDM3fgyywyz9ySxAC7Zf0iN6yomJ0JXNM7LRHE8LGhjL4J40ER8DsiucBOAJC/Rn9
+	 7ZCccVRS0aL+gJxKB7y5V29Gj9wcTul+zF6+yYrIPl2jAoQju+HAO8FMJTO7SY3aYq
+	 HRCctoKhsMjgOXxMQORupEtsFlGZa7VZjhhAHddgFqRfjaaVnZI7gjOHD5GsncwrI9
+	 6vXNpfAhqiP6TPjbCy17rqNeisVse5yBZ5K0g7qZWFJGyqFCF4RPxmpGplKH6sFFFU
+	 cBsoVH3JzHyCd0CBjSlMLnmA2LknOIM8LoQOKammlbDB4Uj5qD+R2jKuZABHVr/cyk
+	 K1z/u8lNXr73Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: ni_at_a2150: Fix sanity check in interrupt handler
-Date: Mon, 19 Oct 2026 09:45:48 -0400
-Message-ID: <20261019135441.1420968-57-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: support TTL platform device ID
+Date: Mon, 19 Oct 2026 09:45:47 -0400
+Message-ID: <20261019135441.1420968-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,358 +52,399 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit e7356cdc7077a4f30fc5232a18e9fc6a4d404581 ]
+[ Upstream commit 3bff0d12c36247073fca976498b58a940fca72dc ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+Add support for a new device ID that we will have on TTL (sc2).
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing various pointers which may be NULL if dev->attached is
-false.  Move the check to avoid the possible null pointer dereferences.
-
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260714165826.46183446954f.Icc260831e530c1c92c9be615a7077768b1b9ae30@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+Local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The change
+is a one-line PCI ID add for existing iwlwifi Sc/sc2 support. That is
+the stable device-ID exception, so the rest of this write-up is the
+forensic checklist behind a **YES**.
 
-**Step 1.1:** Record: `[comedi: ni_at_a2150:] [Fix] [Move the
-`dev->attached` check in `a2150_interrupt()` so it runs before pointer
-dereferences that can be NULL while the device is still attaching.]`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2:** Tags in `e7356cdc7077a`:
-- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (author; comedi
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[iwlwifi / wifi] [support] [add PCI device ID for TTL (sc2)
+platform]**
+
+- Subsystem: `wifi: iwlwifi`
+- Verb: **support** (hardware enablement, not a crash fix)
+- Intent: bind iwlwifi to a new Intel platform PCI ID
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- **Reviewed-by:** Johannes Berg `<johannes.berg@intel.com>` (iwlwifi
   maintainer)
-- `Link:
-  https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` on the committed message (absence is expected
-  here)
+- **Link:** `https://patch.msgid.link/20260714165826.46183446954f.Icc260
+  831e530c1c92c9be615a7077768b1b9ae30@changeid`
+- **Signed-off-by:** Miri Korenblit
+  `<miriam.rachel.korenblit@intel.com>` (author)
+- No **Fixes:** tag (expected; this is not a regression fix)
+- No **Cc: stable** (expected for this review path)
+- No **Reported-by**, **Tested-by**, **Acked-by**, syzbot, or bugzilla
+  tags
+- Ignore pipeline **Signed-off-by: Sasha Levin** / **[Upstream commit
+  ...]** (none present on the real commit `3bff0d12c36247`)
 
-Mailbox recipients of the original mail also included H Hartley Sweeten,
-Jaeyoung Chung, and a malformed Cc that was meant to be `Reported-by:
-Sangyun Kim` plus Kyungwook Boo. Those trailers were not copied onto the
-git commit.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug/problem:** Driver does not claim PCI device `0x9327`, so TTL
+  (sc2) Wi-Fi does not bind.
+- **Symptom:** iwlwifi never probes; no wireless interface on that SKU.
+- **Version info:** none in the message. Author date 2026-07-14; landed
+  as `v7.2-rc1-199-g3bff0d12c3624`.
+- **Root cause (author):** missing PCI ID in `iwl_hw_card_ids` for
+  hardware “we will have on TTL (sc2).” Same wording as the earlier RZL
+  ID commit (`6a1b633fdcd904`).
 
-**Step 1.3:** Record:
-- Bug: the ISR is registered in `a2150_alloc_irq_and_dma()` during
-  `a2150_attach()`, before postconfig sets `dev->attached`.
-- Symptom: NULL pointer dereference in interrupt context if the handler
-  runs while `dev->attached` is still false.
-- Version info: none in the commit body.
-- Root cause: the existing `if (!dev->attached)` guard sits *after*
-  `dma->desc[0]`, `s->async`, `async->cmd`, and `desc->virt_addr`.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: **Not a hidden leak/race/UAF.** It is an explicit new-PCI-ID
+addition. That is an allowed stable exception, not a disguised memory-
+safety fix.
 
-Cover letter for the 11-patch series: “Add/fix sanity check in ISA
-drivers to avoid null-ptr-deref”.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 1.4:** Record: Not a hidden fix. Subject and body are explicit
-NULL-deref prevention.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/net/wireless/intel/iwlwifi/pcie/drv.c` (**+1 / -0**)
+- Function/data: `iwl_hw_card_ids[]` (PCI ID table)
+- Scope: **single-file surgical**, one table entry
 
-## Phase 2: Diff analysis
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** Sc block lists `0xE440`, `0xE340`, `0xD340`, `0x6E70`,
+  `0xD240` with `iwl_sc_mac_cfg`. `0x9327` does not match;
+  `iwl_pci_driver.id_table` does not bind.
+- **After:** `{IWL_PCI_DEVICE(0x9327, PCI_ANY_ID, iwl_sc_mac_cfg)}` is
+  added. Probe is `iwl_pci_probe()` → `iwl_pci_gen1_2_probe()` with
+  existing Sc MAC config.
+- Path affected: **PCI enumeration / driver bind** for that device ID
+  only.
 
-**Step 2.1:** Record:
-- File: `drivers/comedi/drivers/ni_at_a2150.c` (+9 / −4; 13 lines
-  changed)
-- Function: `a2150_interrupt()`
-- Scope: single-file surgical ISR change
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Hardware workaround / device ID addition]**
+- Macro expands to Intel vendor, device `0x9327`, any
+  subvendor/subdevice, `driver_data = iwl_sc_mac_cfg`.
+- Newer iwlwifi devices are identified from HW RF/MAC registers via
+  `iwl_pci_find_dev_info()`; Sc IDs are not duplicated as `DEVICE(0x…)`
+  in `iwl_dev_info_table`. FM/WH/PE RF entries already exist. Same
+  pattern as `0xD240`.
+- `MODULE_DEVICE_TABLE(pci, iwl_hw_card_ids)` updates userspace modalias
+  matching.
 
-**Step 2.2:** Record: Before, locals were initialized with dereferences,
-then `dev->attached` was checked. After, `desc`/`async`/`cmd`/`buf` are
-declared uninitialized, the attached check runs, then those pointers are
-filled. Normal attached-and-running IRQ path is unchanged.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- **Quality:** Obviously correct; identical to neighboring Sc IDs.
+- **Regression risk:** Very low. Only PCI `8086:9327` is affected. Wrong
+  ID would only mis-bind another Intel function using that ID (Intel
+  assigns these IDs).
+- No API, locking, or data-structure change.
 
-**Step 2.3:** Record: `[NULL pointer dereference] [ISR used `dma`,
-`read_subdev`, and `async` before the attached guard; those can still be
-NULL between `request_irq()` and `dev->attached = true`, and `dma` can
-already have been freed on detach before `free_irq()`.]`
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-Verified attach/detach order in this tree:
-1. `comedi_alloc_devpriv()` then `a2150_alloc_irq_and_dma()` →
-   `request_irq(a2150_interrupt, …)` then DMA alloc, then later
-   `comedi_alloc_subdevices()` / `dev->read_subdev = s`.
-2. `comedi_device_attach()` only then calls
-   `comedi_device_postconfig()`, which sets `dev->attached = true`.
-3. Detach sets `dev->attached = false` first, then `a2150_detach()`
-   frees DMA, then `comedi_legacy_detach()` calls `free_irq()`.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Line adding `0x9327`: commit **`3bff0d12c36247`** (Miri Korenblit,
+  2026-07-14).
+- Surrounding Sc IDs: `c96a36491003d7` (2025-05-08) and `6a1b633fdcd904`
+  (RZL `0xD240`, 2025-06-12).
+- `iwl_sc_mac_cfg` and Sc support are long-lived in this 7.3 tree, not
+  last-month code.
 
-So a premature IRQ during attach hits NULL `dma` or NULL `s`/`s->async`.
-An IRQ between DMA free and `free_irq()` hits a freed `dma` (UAF) in the
-old code.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: **No Fixes: tag.** Not introduced by a buggy prior commit; the
+ID was simply absent.
 
-Loads that remain before the check (`dev->private`, `devpriv->dma`,
-`dev->read_subdev`) are pointer loads, not the crashing derefs.
-`private` is allocated before `request_irq()`, and it is still valid
-until after `free_irq()`.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- Related: `6a1b633fdcd904` “support RZL platform device ID” (same one-
+  line pattern).
+- `5f88b045d959f` “pcie: add two LNL PCI IDs”.
+- No later `-S 0x9327` follow-up; the ID was not corrected or reverted.
+- Nearby series mates (compile-time hcmd check, FCS d3 fix, etc.) do
+  **not** touch this table entry.
 
-**Step 2.4:** Record: Obviously correct and minimal. Regression risk is
-very low: early return already existed; only the check moved. No
-API/locking/data-structure change. Residual theoretical issue: if
-`attached` were true with `dma` or `read_subdev` still NULL, later
-derefs would still fault — that is not the attach/detach window this
-patch targets, and `dev->irq` is only kept when DMA alloc succeeded.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Miri Korenblit is a regular iwlwifi author (often applying Intel
+wireless patches). Johannes Berg reviewed this ID add. Same author wrote
+the RZL ID add.
 
-## Phase 3: Git history
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- Needs `iwl_sc_mac_cfg` and the Sc PCI block — **present** in this tree
+  (`cfg/sc.c`, `iwl-config.h`, `drv.c`).
+- sc2 firmware prefixes `IWL_SC2_A_FM_C_FW_PRE` /
+  `IWL_SC2_A_WH_A_FW_PRE` and `IWL_CFG_MAC_TYPE_SC2` are already here;
+  MAC type is read from CSR at runtime, not from this PCI ID.
+- **Standalone:** one line; does not need the other 14 patches from the
+  07-14-2026 series.
 
-**Step 3.1:** Record: `if (!dev->attached)` is old (Frank Mori Hess,
-2009). The dangerous pre-check initializers come from `1a97f144e3d3e9`
-(“staging: comedi: ni_at_a2150: remove depends on ISA_DMA_API
-limitation”, H Hartley Sweeten, 2015-01-14), first contained in
-`v4.0-rc1`. Present in this tree (`git merge-base --is-ancestor
-1a97f144e3d3e9 HEAD`).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 3.2:** Record: No `Fixes:` tag. Introduced by `1a97f144e3d3e9`
-(v4.0), which is in this checkout.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 3bff0d12c36247`: **[PATCH v2 iwlwifi-next 04/15] wifi:
+  iwlwifi: support TTL platform device ID**
+- URL: `https://patch.msgid.link/20260714165826.46183446954f.Icc260831e5
+  30c1c92c9be615a7077768b1b9ae30@changeid`
+- `b4 dig -a`: v2 of “wifi: iwlwifi: updates - 07-14-2026”. Cover
+  letter: v2 was a resend so -next contained an unrelated compile fix
+  for a sibling patch. **This ID hunk did not change between versions.**
+- Thread mbox: **16 messages, all series patches**; no NAKs, no public
+  review replies, no `Cc: stable` discussion on this patch.
+- Cover letter: “Usual fixed, cleanups and **features** from our
+  internal tree.” This ID add is listed under Miri’s patches, not as a
+  CVE/crash fix.
+- WebFetch to lore.kernel.org returned **403**; discussion recovered via
+  `b4 dig -m`.
 
-**Step 3.3:** Record: This is patch 4/11 of Ian Abbott’s June 2026
-series. Neighbor commits are the same class of per-driver ISR guards
-(`dt2811`, `aio_iiro_16`, `das6402`, `pcl711`, etc.). Independent; no
-shared helper or prerequisite refactor. No later follow-up on
-`ni_at_a2150.c`.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To/Cc **Johannes Berg**, **linux-
+wireless@vger.kernel.org**. **Reviewed-by: Johannes Berg** already on
+the sent patch (internal review). Right maintainer and list.
 
-**Step 3.4:** Record: Ian Abbott is the long-time comedi maintainer.
-Greg Kroah-Hartman applied the series. Related work: `17221216ae8ce`
-(“comedi: comedi_parport: deal with premature interrupt”) for the same
-premature-IRQ class, with syzbot + `Cc: stable`.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by / bugzilla / syzbot. This is vendor hardware
+enablement, not a user crash report.
 
-**Step 3.5:** Record: No extra commits required. The ISR,
-`dev->attached`, `request_irq`, and `comedi_legacy_detach()` already
-exist here. Standalone.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 15-patch **iwlwifi-next** “updates” mix (validations, recovery,
+LARI v14, UHR DBE). **04/15 is independent.** Other patches are not
+required for this ID to apply or work.
 
-## Phase 4: Mailing list / external research
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable WebFetch **403**. `b4` thread has **no**
+stable-list discussion. **UNVERIFIED** whether anyone later nominated it
+on stable@.
 
-**Step 4.1:** Record:
-- `b4 dig -c e7356cdc7077a` →
-  https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
-- `b4 dig -a`: v1 only (no v2/v3)
-- Cover letter: “comedi: Add/fix sanity check in ISA drivers to avoid
-  null-ptr-deref”
-- No NAKs in the saved thread (12 series mails, no review replies)
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 4.2:** Record (`b4 dig -w`): linux-kernel, Greg KH, Hartley
-Sweeten, Jaeyoung Chung, Sangyun Kim, Kyungwook Boo. Maintainer-
-authored, applied by Greg.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: No function body edited. Data: **`iwl_hw_card_ids[]`**.
+Consumers: `MODULE_DEVICE_TABLE`, `iwl_pci_driver.id_table`, probe
+`iwl_pci_probe()`.
 
-**Step 4.3:** Record: Original report retrieved with `b4 mbox` msgid
-`20260610115912.780131-1-jjy600901@snu.ac.kr`:
-- Subject: “comedi: KASAN null-ptr-deref in ISA driver IRQ handlers on
-  early IRQ”
-- From Jaeyoung Chung; Reported-by Sangyun Kim and Kyungwook Boo
-- Failure: handler runs before `read_subdev` is set → KASAN NULL deref /
-  panic
-- Named drivers: das6402, ni_atmio16d, aio_iiro_16, pcmmio,
-  comedi_parport, pcl711
-- ni_at_a2150 was not in that list; Ian added it after finding the same
-  `request_irq` / `read_subdev` / attached-check ordering
+**Step 5.2: TRACE CALLERS**
+Record:
+- `iwl_pci_register_driver()` registers `iwl_pci_driver` with `.id_table
+  = iwl_hw_card_ids`.
+- PCI core calls `iwl_pci_probe()` on match.
+- Context: process/probe, not IRQ. Common path **only if** device
+  `8086:9327` is present.
 
-Related: `comedi_parport` premature IRQ was a syzbot GPF in
-`comedi_get_is_subdevice_running()`.
+**Step 5.3: TRACE CALLEES**
+Record: Probe enables PCI, maps BAR0, reads `CSR_HW_REV`, calls
+`iwl_pci_gen1_2_probe(..., iwl_sc_mac_cfg, ...)`. Device family
+`IWL_DEVICE_FAMILY_SC` is already used by other Sc IDs.
 
-**Step 4.4:** Record: 11 independent per-driver patches. This one does
-not need the others.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: PCI enumerates → id_table match → `iwl_pci_probe` → gen1/2
+trans/op-mode → firmware via existing sc/sc2 names. **Reachable from
+userspace** only by having the hardware (or VFIO/passthrough of that
+ID). Not a syscall fuzz path.
 
-**Step 4.5:** Record: UNVERIFIED — lore.kernel.org returned HTTP 403 for
-`/stable/` search. No stable-list discussion confirmed.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same one-line Sc ID adds (`0xD240` RZL). No extra
+`IWL_DEV_INFO(DEVICE(0x9327))` for other Sc IDs either.
 
-## Phase 5: Code semantic analysis
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 5.1:** Record: `a2150_interrupt()` only.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** `drivers/net/wireless/intel/iwlwifi/pcie/drv.c` Sc
+block and `iwl_sc_mac_cfg` exist. Without this ID, `0x9327` is
+unmatched. sc2 (`IWL_CFG_MAC_TYPE_SC2` / `iwlwifi-sc2-a0-*`) already
+exists. Bug/gap is “missing ID,” not missing subsystem.
 
-**Step 5.2:** Record: Sole registration is `request_irq()` in
-`a2150_alloc_irq_and_dma()`, called from `a2150_attach()`. Hardirq
-context. Userspace can trigger attach/detach via comedi config
-(`COMEDI_NI_AT_A2150`).
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply.** Neighboring lines match the candidate diff. No
+refactor needed on 7.3-rc4.
 
-**Step 5.3:** Record: After the guard: `inw(STATUS_REG)`,
-`comedi_handle_events()`, `comedi_isadma_disable()`, sample copy into
-the async buffer.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No alternate TTL ID fix. `0x9327` appears only from this commit.
+Prerequisite Sc/sc2 stack is already in 7.3.
 
-**Step 5.4:** Record: Reachable from the comedi attach ioctl / config
-path on ISA AT-A2150 (or a crafted I/O base/IRQ). Same class as the
-KASAN/syzbot premature-IRQ bugs. Not a hot syscall path for typical
-machines.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 5.5:** Record: Same `if (!dev->attached)` pattern across many
-`drivers/comedi/drivers/*.c` files; this series fixes the ones that
-checked too late or not at all.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **drivers/net/wireless/intel/iwlwifi** — **IMPORTANT** (very
+common laptop/desktop Wi-Fi), not mm/core. Only TTL/sc2 SKUs with this
+ID.
 
-## Phase 6: Local tree (this checkout)
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: **Active** (regular Intel iwlwifi-next dumps). ID tables are
+still the supported way to enable new SKUs; this is not staging.
 
-**Step 6.1:** Record:
-- `make kernelversion` / Makefile: **7.3.0-rc4**
-- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
-- File and ISR exist. Pre-fix ISR confirmed at `e7356cdc7077a^`. Bug
-  dates to v4.0 (`1a97f144e3d3e9`). This is mainline, not a 6.x.y stable
-  branch; the driver code the patch targets is present.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 6.2:** Record: Clean apply on the pre-image in this history. No
-extra backport rework needed for a tree that still has the old ISR.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / hardware-specific.** Users with Intel Wi-Fi
+PCI `0x9327` (TTL/sc2). Everyone else: no behavior change.
 
-**Step 6.3:** Record: No earlier ni_at_a2150-specific substitute.
-`comedi_parport` got a related premature-IRQ fix; it does not cover this
-driver.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Boot or hotplug of that device. Common **on that platform**,
+never otherwise. Unprivileged users cannot trigger it without the
+hardware. **UNVERIFIED** whether TTL has shipped at evaluation time;
+Intel’s “we will have” language matches prior RZL ID adds.
 
-## Phase 7: Subsystem / maintainer
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **No oops/UAF/corruption.** Failure is **Wi-Fi never binds** on
+that SKU. Severity for those users is **HIGH** (device unusable); global
+severity **LOW**. Stable still takes these ID adds.
 
-**Step 7.1:** Record: `[drivers/comedi — ISA DAQ] [PERIPHERAL]`. Out of
-staging (`8ffdff6a8cfbd`). Hardware is old NI AT-A2150 ISA cards
-(`CONFIG_COMEDI_NI_AT_A2150`).
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Enables existing iwlwifi/Sc/sc2 on TTL platforms that
+  this tree already knows how to drive.
+- **Risk:** **Very low** (1 line, existing cfg pointer, isolated PCI
+  match).
+- **Ratio:** Benefit/risk favors taking it.
 
-**Step 7.2:** Record: Mature, low churn. Ian Abbott still actively
-fixing ISR attach races in 2026.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-## Phase 8: Impact and risk
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 8.1:** Record: Driver-specific, `CONFIG_COMEDI_NI_AT_A2150`.
-Small user set (legacy ISA DAQ).
+FOR:
+- Canonical **new PCI ID on an existing driver**
+- 1 line, same as other Sc IDs and RZL
+- `iwl_sc_mac_cfg`, sc2 firmware names, RF matching already in this tree
+- Maintainer Reviewed-by (Johannes Berg)
+- `MODULE_DEVICE_TABLE` so autoload works
+- Standalone; no series dependency
+- Zero impact on other devices
 
-**Step 8.2:** Record: Trigger is attach (IRQ registered before
-`attached`/`read_subdev`) or detach (DMA freed before `free_irq()`).
-Needs the device (or a spurious/pending IRQ on that line). Not a general
-unprivileged remote exploit; privileged/local comedi attach is enough if
-the IRQ fires. Likelihood is low, but the window is real and matches a
-KASAN report for the same pattern.
+AGAINST:
+- Not a crash/security/corruption fix; iwlwifi-next “features” series
+- Future-tense “we will have”; shipping status unverified
+- No stable@ nomination in the thread
+- Mixed 15-patch series (this patch itself is still self-contained)
 
-**Step 8.3:** Record: `[NULL deref / possible UAF in hardirq →
-oops/panic] [HIGH]` (CRITICAL for that machine; not data corruption).
+UNRESOLVED:
+- lore.kernel.org HTTP 403 (mailbox recovered via b4)
+- No stable@ thread found
+- Whether TTL silicon is in users’ machines yet
 
-**Step 8.4:** Record: Benefit HIGH for anyone using this driver (avoids
-IRQ oops on attach/detach). Risk very low (13-line ISR reorder). Ratio
-favors backport.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — one table row, maintainer
+   Reviewed-by.
+2. Fixes a real bug that affects users? **PASS** — missing ID means the
+   driver never attaches (real for that SKU).
+3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
+   crash/security; **PASS** under the documented **device-ID
+   exception**.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — no new API; only an ID on
+   existing probe/config.
+6. Can apply to the local tree? **PASS** — Sc/sc2 and `iwl_sc_mac_cfg`
+   are here; hunk applies cleanly.
 
-## Phase 9: Synthesis
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **NEW DEVICE ID (PCI) to an existing driver.** Driver already
+exists; only `0x9327` is new. Same class as “drm/i915: Add new device ID
+for Raptor Lake.”
 
-**Evidence FOR:**
-- Real NULL deref (and detach UAF) in an interrupt handler
-- Same class as a KASAN report and a syzbot GPF on sibling comedi
-  drivers
-- Author is the comedi maintainer; Greg applied v1 unchanged
-- Small, obviously correct, no new API
-- Bug present since v4.0; code exists in this tree
-- Independent of the rest of the series
+**Step 9.4: MAKE YOUR DECISION**
+This tree already has iwlwifi Sc/sc2. Adding PCI ID `0x9327` is the
+standard, low-risk way to make TTL hardware work. It should be taken for
+this tree.
 
-**Evidence AGAINST:**
-- Niche obsolete ISA hardware
-- Not in the original SNU driver list (Ian’s extra finding)
-- Committed message has no `Fixes:` / `Cc: stable` (expected for this
-  review)
-- No Tested-by on hardware in the thread
+### What it solves and why it matters here
+Without the ID, PCI `8086:9327` never matches `iwl_pci_driver`, so Wi-Fi
+stays down on TTL (sc2) even though this kernel already has
+`iwl_sc_mac_cfg` and sc2 firmware naming. That is exactly the hardware-
+enablement stable trees routinely accept.
 
-**UNRESOLVED:**
-- Could not read lore.kernel.org in the browser (403); used `b4` mboxes
-  instead
-- No confirmed stable@ discussion
-- No hardware Tested-by
-
-**Stable rules:**
-1. Obviously correct and tested? **PASS** — logic is local and matches
-   core `attached` semantics; applied by Greg. No extra hardware Tested-
-   by, but the defect is visible in code.
-2. Real user-visible bug? **PASS** — KASAN NULL deref / panic for this
-   ISR pattern.
-3. Important (crash/security/corruption/deadlock)? **PASS** — hardirq
-   oops/panic.
-4. Small and contained? **PASS** — one function, +9/−4.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — pre-fix ISR is the historical form
-   of this file; no missing helpers.
-
-**Exception category:** none (ordinary crash fix).
-
-This is a 13-line IRQ-handler NULL-deref (and detach UAF) fix in
-existing comedi code. It meets the stable rules. The local 7.3.0-rc4
-tree has the driver and had the bug since v4.0.
-
-### What it fixes for stable users
-If the AT-A2150 ISR runs after `request_irq()` but before
-`dev->attached` (or after DMA is freed on detach), the old handler
-oopses on NULL/dangling `dma`/`read_subdev`/`async`. Moving the existing
-guard first prevents that crash.
+### Stable rules
+Small, correct, no new APIs, applies here. Importance is “device works,”
+via the PCI-ID exception, not a KASAN-class bug.
 
 ### Risk vs benefit
-Benefit is avoiding a kernel oops; risk is negligible. Other patches in
-the 11-patch series are not required.
+Risk is a single ID match. Benefit is working wireless on that Intel
+SKU. Other machines are unchanged.
 
----
+### Concerns
+None that block a backport here: no missing prerequisites, no extra
+`IWL_DEV_INFO` needed (other Sc IDs have none), no follow-up fix to
+`0x9327`. Firmware blobs remain a linux-firmware concern, not a reason
+to omit the ID.
 
 Verification:
-- [Phase 1] Parsed `e7356cdc7077a`: Ian Abbott + Greg KH; msgid
-  `20260618102949.26607-5`; no Fixes/Cc stable
-- [Phase 1] Cover letter from mbox: series is explicitly “avoid null-
-  ptr-deref”
-- [Phase 2] Diff: +9/−4 in `a2150_interrupt()`; moved
-  `desc`/`async`/`cmd`/`buf` after `if (!dev->attached)`
-- [Phase 2] `a2150_attach` / `a2150_alloc_irq_and_dma` /
-  `comedi_device_postconfig`: `request_irq` before `attached = true`
-- [Phase 2] `comedi_device_detach_locked`: `attached = false` before
-  `a2150_free_dma` then `free_irq`
-- [Phase 3] `git blame` on pre-image: check from 2009; early derefs from
-  `1a97f144e3d3e9` (v4.0-rc1)
-- [Phase 3] `git merge-base --is-ancestor 1a97f144e3d3e9 HEAD` and
-  `e7356cdc7077a HEAD`: both true
-- [Phase 3] Series is 11 independent driver patches; no ni_at_a2150
-  follow-up
-- [Phase 4] `b4 dig -c/-a/-w`: v1 only; recipients include Greg, Hartley
-  Sweeten, SNU reporters
-- [Phase 4] `b4 mbox` of `20260610115912.780131-1-jjy600901@snu.ac.kr`:
-  KASAN null-ptr-deref report
-- [Phase 4] Related `17221216ae8ce` comedi_parport fix: syzbot GPF + Cc
-  stable
-- [Phase 4] lore HTTP 403; UNVERIFIED stable@ archive search
-- [Phase 5] `a2150_interrupt` only used from `request_irq` in this file
-- [Phase 6] Local tree 7.3.0-rc4 (`v7.3-rc4-27-gf0100363d8c37`); pre-fix
-  ISR confirmed at parent
-- [Phase 7] `CONFIG_COMEDI_NI_AT_A2150`; peripheral ISA DAQ
-- [Phase 8] Failure mode: hardirq NULL deref/UAF oops, severity HIGH;
-  backport risk very low
-- UNVERIFIED: hardware reproduction on a real AT-A2150; stable mailing-
-  list mentions
+- [Phase 1] Subject/tags: support new ID; Reviewed-by Johannes Berg;
+  Link msgid; no Fixes/stable/syzbot
+- [Phase 1] Body: “new device ID that we will have on TTL (sc2)”
+- [Phase 2] Diff: +1 line in `iwl_hw_card_ids[]` under Sc devices:
+  `0x9327` → `iwl_sc_mac_cfg`
+- [Phase 2] `IWL_PCI_DEVICE` → Intel vendor + `MODULE_DEVICE_TABLE` +
+  `iwl_pci_driver.id_table`
+- [Phase 2] Other Sc IDs also lack `DEVICE(0x…)` in
+  `iwl_dev_info_table`; FM/WH matching already present
+- [Phase 3] `git describe HEAD` / Makefile: **7.3.0-rc4**
+  (`v7.3-rc4-27-gf0100363d8c37`)
+- [Phase 3] `git blame`: `0x9327` is `3bff0d12c36247`; neighbors
+  `c96a36491003d7` / `6a1b633fdcd904`
+- [Phase 3] `git merge-base --is-ancestor 3bff0d12c36247 HEAD` → yes;
+  `git describe 3bff0d12c36247` → `v7.2-rc1-199-g3bff0d12c3624`
+- [Phase 3] `git log -S 0x9327 -- drv.c` → only this commit (no later
+  correction)
+- [Phase 3] RZL analog `6a1b633fdcd904` is the same one-line pattern
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v2 iwlwifi-next 04/15; Johannes +
+  linux-wireless; no NAK; v2 resend unrelated to this hunk
+- [Phase 4] Cover letter: mixed fixes/cleanups/features; this ID listed
+  under Miri
+- [Phase 4] UNVERIFIED: lore HTTP 403; no stable@ thread retrieved
+- [Phase 5] Callers: PCI probe via `iwl_pci_probe` →
+  `iwl_pci_gen1_2_probe`; sc2 MAC type from CSR (`iwl-drv.c`)
+- [Phase 6] `iwl_sc_mac_cfg` in `cfg/sc.c`; sc2 FW prefixes present;
+  hunk context matches
+- [Phase 6] Apply difficulty: clean
+- [Phase 7] iwlwifi: important, actively maintained
+- [Phase 8] Failure: no driver bind on `0x9327`; risk very low
+- UNVERIFIED: whether TTL hardware is already shipping
 
 **YES**
 
- drivers/comedi/drivers/ni_at_a2150.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/comedi/drivers/ni_at_a2150.c b/drivers/comedi/drivers/ni_at_a2150.c
-index e4e5a0ebd195a..93e9591f5dd4c 100644
---- a/drivers/comedi/drivers/ni_at_a2150.c
-+++ b/drivers/comedi/drivers/ni_at_a2150.c
-@@ -132,11 +132,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
- 	struct comedi_device *dev = d;
- 	struct a2150_private *devpriv = dev->private;
- 	struct comedi_isadma *dma = devpriv->dma;
--	struct comedi_isadma_desc *desc = &dma->desc[0];
-+	struct comedi_isadma_desc *desc;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_async *async = s->async;
--	struct comedi_cmd *cmd = &async->cmd;
--	unsigned short *buf = desc->virt_addr;
-+	struct comedi_async *async;
-+	struct comedi_cmd *cmd;
-+	unsigned short *buf;
- 	unsigned int max_points, num_points, residue, leftover;
- 	unsigned short dpnt;
- 	int status;
-@@ -145,6 +145,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
- 	if (!dev->attached)
- 		return IRQ_HANDLED;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 0e8481219839b..4314d95dd12af 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -548,6 +548,7 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
+ 	{IWL_PCI_DEVICE(0xD340, PCI_ANY_ID, iwl_sc_mac_cfg)},
+ 	{IWL_PCI_DEVICE(0x6E70, PCI_ANY_ID, iwl_sc_mac_cfg)},
+ 	{IWL_PCI_DEVICE(0xD240, PCI_ANY_ID, iwl_sc_mac_cfg)},
++	{IWL_PCI_DEVICE(0x9327, PCI_ANY_ID, iwl_sc_mac_cfg)},
+ #endif /* CONFIG_IWLMVM || CONFIG_IWLMLD */
  
-+	desc = &dma->desc[0];
-+	async = s->async;
-+	cmd = &async->cmd;
-+	buf = desc->virt_addr;
-+
- 	status = inw(dev->iobase + STATUS_REG);
- 	if ((status & INTR_BIT) == 0)
- 		return IRQ_NONE;
+ 	{0}
 -- 
 2.53.0
 
