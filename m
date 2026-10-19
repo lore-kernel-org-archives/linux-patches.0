@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D9754FEB5;
-	Mon, 19 Oct 2026 13:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72779513BB9;
+	Mon, 19 Oct 2026 13:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418221; cv=none; b=PvKT4t2x2N7RWZTCX0aLi32aQPZafuM9Om+CmMKeB/lb6/CoQl97EXYiP2LaWhGHf3ox6k7ztEeoAyVdlmCjKdCW/sAIQ459+xaTVsOg9Xq04+NhVYV6eaUs1Tfp8V+LiJ4WQheVl6z0fsD0hxYKQFnN3ZKA8R/d8oGAbkVK+eY=
+	t=1792418222; cv=none; b=Xze10jUgCKwCAgRgW10pgs7XXDwe6gX3cToLi3fuzG2kN7ty/Nuc+f4wn0urYo7MiS8fLGltKghgGaC9HsHXGrkg2qtXusu6gHNfboW8jDSqZwld7GqTvFS4oO7zv2eJCZOx41gsM9SVLH+eutpy2Tcg+xHjdBkGzujrP4FLIvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418221; c=relaxed/simple;
-	bh=n9wHKD2O9IpNjCp2rrC4hUtFJkVuW27YbDBf7dw322s=;
+	s=arc-20240116; t=1792418222; c=relaxed/simple;
+	bh=cxkFP+7Zr8mgYtM6Y7zky3J6+jbW/OsGrn2CamG3hyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iZHNvb/yrlm4YphT0fAydjqotWJO5pDT6dn1YQzRKZbkbEcmVZaIMDtvYHMCG/BcxyRVmsWpM8STd80e6kuQr5D5gi5hyxNEg2xMw3oNSFO60QNHMnZtlgA+x1D30whV2oLHSaAfTYO4AfrBzH/NWL837PVewootkZKP+A1+jhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXfBdrsr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O0rtPQ7uyP22fmgXrIR+Sdy3ONu08dJOdZaVZzrfBEmIGJm5WJjAFL3ePoRh/mX8T4gj2rWJaXTjV4x56WBqlmjhTkZp5qjU8eY6HCFSUBLz7lZWoyo4UxE3YNeo9YeCV9lyJj4WatSHAkz8eeo4mK4CB33KiWpH9EoIYeIqnWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AQaKM/T3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXfBdrsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3706B1F000C4;
-	Mon, 19 Oct 2026 13:56:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AQaKM/T3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF0C1F000C7;
+	Mon, 19 Oct 2026 13:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418218;
-	bh=aIN5BhUeoH5hONmFrj7uiLaPc6hxPRvbFMgdVeU9bDU=;
+	s=k20260515; t=1792418219;
+	bh=nL4fSE6q4hzExWtxquVD6K/lhTni8lNaviwhzv76uJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXfBdrsrRGgWDFqvbAMpfruuTrpZtIN/aI/EDW0POm+A+HaJLtp7BfTcVcGudtlVg
-	 RoOxqJI2Nihylg2E9kBhJ5rDLBiRR1jhj/SYc6pd8hItlwUiUia9F6QL0Ol6qX+V0Z
-	 dVp9ucunW8iEyfIra6iCzA0O1taz2CFd9aVwUxQyxIt4kqwVRxJtTOXEUwNc0l2FU7
-	 HxMQCAIqIc2fayo+w+v3kM91eKm20hJe4bESTEzVgeaZiSQG5OZcQN8KK0BIUkOhGv
-	 O0CP4aQYFsskF0Pb8lAMwv77SeD8xv3fnQGIlPwEg9PLgi+bm6e473wfGFs/B5X1eB
-	 aq2ywfIyKsz8A==
+	b=AQaKM/T3k4ylXivoHvHpB6UgRRRkoukoLJCYM/m0wPma7nJE0kpCr+WFh4ppncDoM
+	 P7UChUrKlcWauPgQnFLD1xTFnOQQbOEA0Jq4VnWXUq4Eb8wCqat2krgi1ruR6n+0gC
+	 bj+EKj3wh6w6G9ZrkriXSL6o1wgXDK+PTc04rs3Fu9CBbuX6rmz+0kUrtaIwKeDF/z
+	 3V0ug9bLatT3nOeKxyN+lE9tv3OyvijsBv0G5euMPkn5s4N+sM740ybCJuct4j7nZo
+	 r0yf5Y+sFHFae9uk5M1ppNFrQVenw3BAsbk0CWpcN1vXIOpLzxka3SxF+rFd6pcv/g
+	 4xSb2gX4mxinw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	viro@zeniv.linux.org.uk,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ALSA: hda/realtek: add missing error checks for COEF index reads in alc269
-Date: Mon, 19 Oct 2026 09:46:27 -0400
-Message-ID: <20261019135441.1420968-96-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] Revert "namei: don't reveal overmounted entries in refwalk"
+Date: Mon, 19 Oct 2026 09:46:28 -0400
+Message-ID: <20261019135441.1420968-97-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,404 +52,474 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 5b106b40ed22098f2bc049efb645148d038444bd ]
+[ Upstream commit 214897acc8c2e5d6b63189d23ccaed6fa2af45a9 ]
 
-alc_read_coef_idx() and alc_read_coefex_idx() can return -1 on error
-via snd_hda_codec_read(). Several codec initialization and shutdown
-functions save these return values and later write them back to
-hardware registers without checking for errors, potentially corrupting
-COEF register state on a read failure.
+This reverts commit 8189ab688f5a2c745dc90b63374da02f213d6994.
 
-Add error checks in:
-- alc282_init() and alc282_shutup(): check coef78 before write-back
-- alc285_hp_init(): check coef38/coef0d/coef36 before update, check
-  val before write-back, and break polling loop on error
-- alc294_hp_init(): break polling loop on read error
+This bug class is bigger than can be fixed with this simple patch.
+Back out of it and give us some time to fix this properly.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.1.188**. The unguarded COEF save/restore paths are
-present in `sound/pci/hda/patch_realtek.c`, and the same class of bug
-already went to stable in 2014 because writing a failed COEF read can
-stall the codec.
+This revert should go into this 6.18.57 tree. The incomplete
+`unlink_may_reveal()` check is already in v6.18.57, the VFS maintainer
+pulled it back as an rc8 fix, and leaving it here regresses common
+unlink/open races.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — Subject**
-Record: `[ALSA/hda/realtek] [add] missing error checks for COEF index
-reads in alc269`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: `[vfs/namei] [Revert] undo "don't reveal overmounted entries in
+refwalk"`
 
-**Step 1.2 — Tags**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Bob Song <songxiebing@kylinos.cn>` (author)
-- `Link: https://patch.msgid.link/20260730015302.253008-1-
-  songxiebing@kylinos.cn`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable` (absence expected)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  ...]` if present
+- No `Fixes:` tag on the revert itself (it names the reverted SHA in the
+  body)
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, `Link:`,
+  or `Cc: stable`
+- `Signed-off-by: Christian Brauner <brauner@kernel.org>` (VFS
+  maintainer; ignore Sasha Levin SOB)
+- Body: `This reverts commit 8189ab688f5a2c745dc90b63374da02f213d6994`
 
-**Step 1.3 — Body**
+The original commit that is being reverted **did** have `Fixes:
+8ed936b5671b`, `Cc: stable@vger.kernel.org`, and `Link:
+https://patch.msgid.link/20261002-work-mount-
+fixes-4-v1-2-dd44b89d44ce@kernel.org`. That is why 8189ab68 already
+landed in this stable series; the revert is the follow-up.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: `alc_read_coef_idx()` / `alc_read_coefex_idx()` can return `-1`
-  via `snd_hda_codec_read()`. Init/shutdown save that value and write it
-  back.
-- Symptom: COEF register corruption on read failure (wrong headphone-amp
-  / depop state; historically this class of write can stall the codec).
-- Root cause: missing `!= -1` checks on save/restore and on depop
-  polling.
-- No version bounds in the message.
+- Bug description: the earlier “simple patch” does not cover this bug
+  class
+- Symptom/failure mode: not a crash; an incomplete pathwalk/mount-cover
+  check that must be withdrawn
+- Version information: none in the revert message
+- Root cause (author): “This bug class is bigger than can be fixed with
+  this simple patch. Back out of it and give us some time to fix this
+  properly.”
 
-**Step 1.4 — Hidden bug fix?**
-Record: Yes. “Add missing error checks” is a real error-path fix, not
-style. Same pattern as `alc_update_coefex_idx()` and
-`alc269_fill_coef()` in this tree.
+Linus’s `vfs-7.3-rc8.fixes` pull restates the same thing: *Revert
+"namei: don't reveal overmounted entries in refwalk" from the rc7 fixes.
+The bug class is bigger than that patch.*
 
-## Phase 2: Diff analysis
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised cleanup. This is an explicit revert of a recently
+merged, incomplete VFS change. A later (unmerged) follow-up documented a
+real regression: any unlink/rename racing a refwalk returned `-ESTALE`
+and forced a full `LOOKUP_REVAL` walk, which on NFS/FUSE revalidates
+every path component.
 
-**Step 2.1 — Inventory**
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File in the candidate: `sound/hda/codecs/realtek/alc269.c` (`+14/-8`)
-- Functions: `alc282_init`, `alc282_shutup`, `alc285_hp_init`,
-  `alc294_hp_init`
-- Scope: single-file surgical fix
+- File: `fs/namei.c` only
+- Mainline revert: remove `unlink_may_reveal()` (~27 lines) and its one
+  call site (2 lines). Net −29
+- Local 6.18.y equivalent of the original add is `5f97df8ca7fad`; the
+  revert is its inverse
+- Functions: delete `unlink_may_reveal`; one call removed from
+  `step_into()` (this tree) / `step_into_slowpath()` (mainline after a
+  later split)
+- Scope: single-file surgical revert
 
-**Step 2.2 — Flow change**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- `alc282_init` / `alc282_shutup`: save coef 0x78, temporarily write
-  `0x9004`, then restore. After: restore only if `coef78 != -1`.
-- `alc285_hp_init`: depop poll `val & 0x8000` for up to 20×50ms, then
-  write `val` and restore coef 0x38/0x0d/0x36. After: stop poll on `-1`;
-  skip those writes if the saved/read value is `-1`.
-- `alc294_hp_init`: same poll pattern on bit `0x0080`; after: break on
-  `-1`. No val write-back here.
+- Before (v6.18.57): in the non-RCU / refwalk arm of `step_into()`,
+  after `handle_mounts()`, `unlink_may_reveal()` returns true if the
+  dentry is `cant_mount()` **and** `d_unlinked()`, the walk has not
+  crossed a mount, and flags are not `WALK_NOFOLLOW`/`LOOKUP_REVAL`. It
+  `dput()`s `path->dentry` and the caller returns `-ESTALE`.
+- After: that check is gone; refwalk accepts the dentry as it did before
+  5f97.
+- Path: common pathname lookup (`open`/`stat`/`lookup`), refwalk only
+  (RCU walk already retries via `d_seq`/`mount_lock`).
 
-**Step 2.3 — Bug mechanism**
-Record: Logic / hardware-state corruption on error.
-- `codec_read()` in this tree returns `-1` when `snd_hdac_exec_verb()`
-  fails (`sound/hda/hdac_device.c`).
-- COEF payload is 16-bit, so `-1` becomes `0xFFFF` on write.
-- `alc_update_coef_idx(..., mask, coefXX)` with `coefXX == -1` does
-  `(current & ~mask) | 0xFFFFFFFF` and sets every bit.
-- `val & 0x8000` is true for `-1`, so the depop loop always runs the
-  full ~1s then writes `0xFFFF`.
-
-**Step 2.4 — Fix quality**
-Record: Obviously correct and matches existing `if (val != -1)` guards.
-Success path unchanged. Regression risk is low: skipping a restore when
-there is no valid saved value is safer than writing `0xFFFF`.
-
-## Phase 3: Git history
-
-**Step 3.1 — Blame / introduction**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- ALC282 save/restore: `7b5c7a0240b11` (2014) “Fix the noise after
-  suspend and resume on ALC282 codec” — ancestor of this HEAD.
-- ALC285 HP init: `3c24e48330adf` (2021) — ancestor of this HEAD.
-- 2014 COEF-guard: `f3ee07d8b6e06` “Avoid setting wrong COEF on ALC269 &
-  co” — ancestor of this HEAD; `Cc: stable`; documented that writing
-  after a `-1` read can stall the codec and broke resume on Acer AO725.
+- Category: revert of an incomplete logic/correctness change that also
+  caused a lookup-retry regression
+- Mechanism: `dont_mount()` runs on **every** successful `vfs_unlink()`
+  / `vfs_rmdir()` / rename-over, not only mountpoints. Combined with
+  `d_unlinked()`, the helper treated ordinary unlinks as “may reveal a
+  covered file” and forced `-ESTALE` → `LOOKUP_REVAL`. That is far
+  broader than the mount-cover race it meant to close, and it still did
+  not cover the rest of the bug class.
 
-**Step 3.2 — Fixes: tag**
-Record: None. The incomplete coverage of `f3ee07d8b6e06` is the
-historical analogue.
+Verified `dont_mount()` call sites in this tree: `vfs_rmdir()` ~4558,
+`vfs_unlink()` ~4679, `vfs_rename()` ~5230.
 
-**Step 3.3 — Related file history**
-Record: Recent `patch_realtek.c` commits are quirks, not this fix. `git
-log --grep="missing error checks"` / `"COEF index reads"` on this file:
-no hit. Candidate `5b106b40ed220` is **not** an ancestor of HEAD.
-
-**Step 3.4 — Author**
-Record: Bob Song (Kylinos), not the ALSA maintainer. Takashi Iwai
-applied it after a v1→v2 split.
-
-**Step 3.5 — Dependencies**
-Record: Standalone. Needs only `alc_read_coef*_idx()` returning `-1`,
-which this tree already has. No new helpers.
-
-## Phase 4: Mailing list
-
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 5b106b40ed220` →
-https://patch.msgid.link/20260730015302.253008-1-songxiebing@kylinos.cn
-- v1 combined this with a `codec->bus->pci` NULL check.
-- Takashi: “Could you split the NULL check to another patch? Basically
-  it's a completely different sort of fix from others.”
-- v2: this COEF patch only. Takashi: “Applied to for-next branch.
-  Thanks.”
-- No NAK, no stable nomination, no reviewer concern about the COEF
-  checks.
-
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: `tiwai@suse.com`, `perex@perex.cz`, `linux-sound@`, `linux-
-kernel@`. Maintainer was To: and applied it.
-
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla for *these* sites. The stall/resume failure
-for the same `-1` write pattern is documented in `f3ee07d8b6e06` /
-bugzilla 52181.
-
-**Step 4.4 — Series**
-Record: v2 series patch 1/2 is this fix; patch 2/2 is the PCI NULL check
-(separate). This patch is self-contained.
-
-**Step 4.5 — Stable list**
-Record: lore.kernel.org WebFetch returned 403 (Anubis). UNVERIFIED
-whether stable@ already discussed this specific commit. Full linux-sound
-thread was recovered via `b4 dig -m`.
-
-## Phase 5: Code semantics (this tree)
-
-**Step 5.1 — Functions**
-Record: `alc282_init`, `alc282_shutup`, `alc285_hp_init`,
-`alc294_hp_init` in `sound/pci/hda/patch_realtek.c`.
-
-**Step 5.2 — Callers (verified)**
-Record:
-- `alc282_init` / `alc282_shutup`: codec `0x10ec0282` (`spec->init_hook`
-  / `spec->shutup`).
-- `alc285_hp_init`: from `alc225_init` on boot and S3/S4 resume (skipped
-  only for ALC287/ALC245).
-- `alc225_init`: ALC215/245/285/289, ALC225/295/299, ALC287.
-- `alc294_hp_init`: from `alc294_init` on boot / S4 restore;
-  ALC234/274/294 and ALC700.
-- `alc_init()` runs `spec->init_hook`; `.init = alc_init`.
-- `alc_suspend()` → `alc_shutup()` → `spec->shutup`; `alc_resume()` →
-  `patch_ops.init`.
-
-**Step 5.3 — Callees**
-Record: `alc_read_coef*_idx`, `alc_write_coef*_idx`,
-`alc_update_coef*_idx`, `snd_hda_codec_write`, `msleep`.
-
-**Step 5.4 — Reachability**
-Record: Yes. Probe, suspend, and resume on common Realtek laptop codecs.
-Not an obscure config path.
-
-**Step 5.5 — Similar patterns**
-Record: Already guarded in this file:
-- `__alc_update_coefex_idx()`: `if (val != -1)`
-- `alc269_fill_coef()`: `if (val != -1 && ...)` before write
-These four functions were the remaining save/restore holes.
-
-## Phase 6: This checkout (6.1.188)
-
-**Step 6.1 — Does the buggy code exist?**
-Record: Yes. Unguarded write-backs:
-
-```3429:3431:sound/pci/hda/patch_realtek.c
-        /* Headphone capless set to normal mode */
-        alc_write_coef_idx(codec, 0x78, coef78);
-}
+Verified ESTALE retry in this tree:
+```2708:2709:fs/namei.c
+        if (unlikely(retval == -ESTALE))
+                retval = path_lookupat(&nd, flags | LOOKUP_REVAL, path);
 ```
+Same pattern in `do_filp_open()` / `do_file_open_root()`. The helper
+itself skipped the check when `LOOKUP_REVAL` was already set, which
+matches the “fail once, then full revalidate” behavior.
 
-```3465:3468:sound/pci/hda/patch_realtek.c
-        alc_auto_setup_eapd(codec, false);
-        alc_shutup_pins(codec);
-        alc_write_coef_idx(codec, 0x78, coef78);
-}
-```
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Quality: obviously correct as a revert — it is the exact inverse of
+  5f97 in this tree
+- Regression risk of the revert: re-opens the remaining refwalk window
+  where a walker that already held the dentry can see a file after its
+  covering mounts were detached. That race is old (Fixes target
+  8ed936b5671b, 2014). 6.18.y lived with it until 6.18.57. A sibling
+  backport, `d29cd99db3db7` (“unhash a dentry before detaching the
+  mounts”), remains and still shrinks the *new lookup* side of the race.
+- Risk of keeping 5f97: extra `LOOKUP_REVAL` on common unlink/create
+  storms; incomplete security fix in core pathwalk
 
-```3718:3727:sound/pci/hda/patch_realtek.c
-        val = alc_read_coefex_idx(codec, 0x58, 0x00);
-        for (i = 0; i < 20 && val & 0x8000; i++) {
-                msleep(50);
-                val = alc_read_coefex_idx(codec, 0x58, 0x00);
-        } /* Wait for depop procedure finish  */
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-        alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the
-result */
-        alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
-```
+Step 3.1: BLAME THE CHANGED LINES
+Record: At v6.18.57, every `unlink_may_reveal` line and the
+`step_into()` call are `5f97df8ca7fad` (Christian Brauner, 2026-10-02;
+committed to 6.18.y by Greg Kroah-Hartman on 2026-10-15). Surrounding
+`step_into()` logic is old Al Viro/Linus code (2011–2022).
 
-Same unguarded poll in `alc294_hp_init`. Introduced 2014/2021; both are
-in this tree.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: The revert has no Fixes tag. It reverts mainline `8189ab688f5a`
+= local `5f97df8ca7fad`.
+- `git merge-base --is-ancestor 5f97df8ca7fad v6.18.57` → yes
+  (v6.18.57~479)
+- `git merge-base --is-ancestor 5f97df8ca7fad v6.18.56` → no
+- Original 8189ab68 `Fixes: 8ed936b5671b` **is** an ancestor of this
+  tree (2014-10-09)
 
-**Step 6.2 — Backport difficulty**
-Record: Minor path rework. Candidate path
-`sound/hda/codecs/realtek/alc269.c` does not exist here; equivalent code
-is `sound/pci/hda/patch_realtek.c`. Function bodies match the pre-patch
-logic. Not a semantic conflict.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- `d29cd99db3db7 namespace: unhash a dentry before detaching the mounts
+  on it` is also in v6.18.57 (same Greg KH batch, same original series).
+  It stays; this revert does not undo it.
+- No other `unlink_may_reveal` / `DCACHE_UNCOVERED` commits in this tree
+- Standalone revert, not patch 2/N of something this tree still needs
 
-**Step 6.3 — Already fixed here?**
-Record: No. `git merge-base --is-ancestor 5b106b40ed220 HEAD` failed. No
-later substitute fix in this file.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Christian Brauner is the VFS maintainer. Recent `fs/namei.c`
+work in this history includes the original add, this revert, and other
+VFS fixes. Weight: high.
 
-## Phase 7: Subsystem
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: The only prerequisite is that 5f97 exists, which it does. The
+revert applies as the exact inverse of 5f97 (`step_into`, not mainline’s
+later `step_into_slowpath`). No new helpers. Standalone.
 
-**Step 7.1**
-Record: ALSA HD-audio Realtek codec. **IMPORTANT** (default audio on a
-huge set of laptops).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 7.2**
-Record: Mature driver; current 6.1.y activity is mostly quirks. These
-init/shutup paths have been stable for years, which is why leftover `-1`
-write-backs still matter.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 214897acc8c2` failed: lore.kernel.org returned errors
+  (UNVERIFIED: no dedicated mailed revert thread found; Brauner likely
+  committed this directly)
+- WebFetch of lore.kernel.org returned 403 (UNVERIFIED: full lore
+  thread)
+- Original add was series `work-mount-fixes-4` patch 02/21 (msgid
+  `20261002-work-mount-fixes-4-v1-2-dd44b89d44ce@kernel.org`); also on
+  lkml.iu.edu / patchew
+- Linus merged the revert in `1dbb7422053fa` *Merge tag
+  'vfs-7.3-rc8.fixes'* and called it out in the pull text
+- An unmerged follow-up (syzbot CI series) explained the LOOKUP_REVAL
+  regression and tried `DCACHE_UNCOVERED`; that approach was **not**
+  merged — they reverted instead
 
-## Phase 8: Impact and risk
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w` failed (lore error). Author is the VFS maintainer;
+Linus merged it as an rc8 VFS fix. That is stronger than a typical
+mailing-list Ack.
 
-**Step 8.1 — Who**
-Record: Users of ALC282, ALC215/225/285/289, ALC225/295/299,
-ALC234/274/294, ALC700 — typical `CONFIG_SND_HDA_CODEC_REALTEK` x86
-laptops.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla on the revert. The **original** add included
+a userspace reproducer (`unlink_covered`) showing the mount-cover race
+(~27 hits/60s without widening). The unmerged follow-up’s `unlink_storm`
+reproducer showed 463 LOOKUP_REVAL retries in 16.8 million opens from
+the too-broad check.
 
-**Step 8.2 — Trigger**
-Record: Codec COEF read returns `-1` (verb timeout, invalid COEF on a
-variant, flaky link during suspend/resume). Not an unprivileged syscall
-exploit; it is a common device PM path.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Original add was 02/21 of a large mount-fixes series. Sibling
+`unhash a dentry before detaching` is already in 6.18.57 and is **not**
+reverted. No merged “proper” replacement for `unlink_may_reveal` exists
+in this tree or in the nearby mainline objects inspected.
 
-**Step 8.3 — Failure mode**
-Record: Wrong COEF restore / depop result. Severity **HIGH** for audio:
-headphone noise, failed depop, or codec stall (the failure
-`f3ee07d8b6e06` already shipped to stable). Not a kernel oops by itself.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search could not be fetched (403).
+UNVERIFIED whether anyone separately requested this revert on the stable
+list. Not needed: the original went to 6.18.57 via `Cc: stable`, and the
+author immediately backed it out in mainline.
 
-**Step 8.4 — Ratio**
-Record: Benefit medium-high (PM path on common hardware, same class as a
-prior stable fix). Risk very low (~14 lines of `!= -1` guards, success
-path identical).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-## Phase 9: Synthesis
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `unlink_may_reveal` (removed), `step_into` (call removed). No
+semcode tools available.
 
-**Evidence FOR**
-- Real write of error sentinel `-1`/`0xFFFF` into codec COEF state.
-- `alc_update_coef_idx(..., saved)` with `saved == -1` sets all bits on
-  a register that may still be readable.
-- Depop poll treats `-1` as “still busy” for a full second.
-- Same class as `f3ee07d8b6e06` (codec stall / resume failure, `Cc:
-  stable`).
-- Small, obviously correct, maintainer-applied.
-- Buggy functions exist in this 6.1.188 tree and are not fixed.
+Step 5.2: TRACE CALLERS
+Record: `step_into()` callers in this tree:
+- `handle_dots()` (WALK_NOFOLLOW — helper returned false anyway)
+- `walk_component()` — every normal path component
+- one more WALK_NOFOLLOW site ~2660
+- `open_last_lookups` path ~3922 (`WALK_TRAILING`)
+Impact surface: **every pathname lookup** that drops out of RCU-walk
+into refwalk.
 
-**Evidence AGAINST**
-- No user report for these four sites.
-- Exact patch needs a file-path backport (`alc269.c` →
-  `patch_realtek.c`).
-- Static-analysis style; trigger is an already-failing verb.
+Step 5.3: TRACE CALLEES
+Record: Helper used `cant_mount()`, `d_unlinked()`,
+`dput(no_free_ptr(path->dentry))`. Returning `-ESTALE` skipped the
+normal `dput(nd->path.dentry)` / `mntput` in `step_into()`;
+`terminate_walk()` still owns `nd->path`. The extra `dput` was only on
+the ESTALE path.
 
-**Unresolved**
-- lore.kernel.org HTTP 403 for stable@ search (thread itself was
-  retrieved with b4).
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: userspace `open`/`openat`/`stat`/`fstatat`/etc. →
+`filename_lookup` / `do_filp_open` → `link_path_walk` → `walk_component`
+→ `step_into`. Unprivileged users trigger this constantly. The false
+ESTALE path is a realistic unlink vs open race, not only the exotic
+mount-cover case.
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** (maintainer applied v2;
-   success path unchanged)
-2. Real user-visible bug? **PASS** (bad COEF restore on
-   init/suspend/resume)
-3. Important (stall / broken audio / register corruption)? **PASS**
-   (same class as the 2014 stable COEF-stall fix)
-4. Small and contained? **PASS** (`+14/-8`, four local checks)
-5. No new features/APIs? **PASS**
-6. Can apply here? **PASS** with a trivial path backport to
-   `patch_realtek.c`
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: No other `unlink_may_reveal` copies. `cant_mount()` remains in
+`fs/namespace.c` and `fs/dcache.c` for mount setup, which is correct and
+unrelated.
 
-**Exception category:** none (not an ID/quirk/DT/build/docs exception).
-It is a normal small bugfix.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-This should go into this 6.1.188 tree. The bug is in the local
-`alc282_*` / `alc285_hp_init` / `alc294_hp_init` paths; the fix is a few
-`!= -1` guards that this tree already uses elsewhere.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes, in **v6.18.57** (`fs/namei.c` `unlink_may_reveal` + call in
+`step_into`). Tree identity: `git describe HEAD` =
+`v6.18.57-155-gcdf239ca885b2`, `make kernelversion` = 6.18.57.
+Introduced here by 5f97 (upstream 8189ab68), first in 6.18.57, not
+6.18.56.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Local revert hunks match 5f97 exactly (`step_into`,
+not `step_into_slowpath`). No conflicting namei refactor between 5f97
+and v6.18.57.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No later replacement for this check. `d29cd99` (unhash before
+detach) is present and complementary; it must stay. This revert does not
+remove it.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: `fs/namei.c` — VFS pathname lookup. **CORE**. Affects every user
+of every filesystem.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature, still actively fixed (recent mount/namespace series).
+This is not staging/experimental code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Universal for anyone running 6.18.57+. NFS/FUSE users feel the
+LOOKUP_REVAL retry cost most. Container/user-ns users care about the
+original mount-cover race; that race is only partially addressed by
+d29cd99 and was not fully fixed by 5f97.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- False ESTALE: concurrent unlink/rename vs refwalk on any name
+  (`dont_mount` is unconditional). Common.
+- Original cover-reveal race: unlink of a mountpoint while another task
+  walks the covering name. Narrow but real; original commit measured 27
+  hits/60s.
+- Unprivileged users can trigger both (open/unlink). The cover case
+  typically needs mount privileges or a shared mount namespace.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Keeping 5f97: extra full-path revalidation (MEDIUM–HIGH on NFS/FUSE;
+  LOW on local tmpfs except under unlink storms). Incomplete mount-cover
+  fix (the author says the class is bigger).
+- After revert: restore pre-6.18.57 `step_into` behavior; remaining
+  cover-reveal race is the long-standing one (MEDIUM, security-adjacent,
+  narrow), with d29cd99 still reducing new-lookup hits.
+- Severity of **not** reverting a known-wrong core pathwalk change that
+  already shipped in 6.18.57: HIGH (stable regression vs 6.18.56).
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: remove a too-broad ESTALE/LOOKUP_REVAL regression from core
+  lookup; align 6.18.y with the VFS maintainer’s rc8 correction; drop an
+  incomplete security bandage rather than pretend it closed the class
+- Risk: very low — exact inverse of a 29-line function added in 6.18.57
+- Ratio: strongly favors backporting the revert
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- The commit being reverted **is in this tree** (5f97, v6.18.57~479)
+- VFS maintainer authored the revert; Linus merged it as
+  vfs-7.3-rc8.fixes
+- Documented too-broad check: every unlink/rename vs refwalk, not only
+  overmounts
+- Small, exact inverse, applies cleanly
+- Sibling unhash-before-detach fix remains
+- Revert of a stable-to-stable mistake (5f97 was itself a 6.18.57
+  backport)
+
+AGAINST:
+- Re-opens the remaining “walker already holds the dentry” cover-reveal
+  window
+- Original add had a reproducer and `Cc: stable`
+
+UNRESOLVED:
+- Full lore thread for the revert itself (b4/lore failed)
+- Whether a later proper fix exists only on branches not in this object
+  store (none found on 214897’s nearby history)
+
+The “against” point is why 5f97 was written. The maintainer’s later
+judgment, merged by Linus, is that keeping that patch is worse than
+living with the old narrow race until a real fix exists. For stable,
+shipping 5f97 for a few days and then following the revert is the
+conservative choice.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — exact revert of a known SHA;
+   merged as an rc8 VFS fix
+2. Fixes a real bug that affects users? **PASS** — removes a too-broad
+   ESTALE/LOOKUP_REVAL pathwalk regression introduced in 6.18.57
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   core VFS lookup regression; incomplete security check is worse than
+   no check plus the remaining unhash fix
+4. Small and contained? **PASS** — −29 lines, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — inverse of 5f97 on
+   `step_into()`
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/docs case. It is the documented revert
+case: original commit **is** in this stable tree, so the revert is
+needed.
+
+Step 9.4: MAKE YOUR DECISION
+This tree is 6.18.57. It already contains the incomplete refwalk check.
+The revert is the maintainer’s correction of that 6.18.57 backport and
+should be applied here.
+
+What it does for stable users: it takes `unlink_may_reveal()` out of
+`step_into()` so ordinary unlink/open races no longer force a full
+`LOOKUP_REVAL` walk, and it stops treating a known-incomplete mount-
+cover check as a finished fix. `d29cd99` still unhashes before detaching
+mounts.
+
+Risk vs benefit: benefit is high (undo a core-pathwalk regression that
+is only days old in 6.18.57); risk is very low (surgical revert).
+
+Concerns: the original cover-reveal race is not fully solved; that is
+intentional per the author. No extra prerequisites.
 
 Verification:
-- [Phase 1] Parsed tags: author Bob Song; Link msgid; SOB Takashi Iwai;
-  no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: 14 insertions / 8 deletions; four functions; skip
-  write-back and stop poll on `-1`
-- [Phase 2] `codec_read()` in this tree returns `-1` on
-  `snd_hdac_exec_verb()` failure (`sound/hda/hdac_device.c:988-997`)
-- [Phase 3] `git merge-base --is-ancestor 7b5c7a0240b11 HEAD` — yes
-  (ALC282 write-back, 2014)
-- [Phase 3] `git merge-base --is-ancestor 3c24e48330adf HEAD` — yes
-  (alc285_hp_init, 2021)
-- [Phase 3] `git merge-base --is-ancestor f3ee07d8b6e06 HEAD` — yes
-  (2014 COEF-guard, Cc:stable, codec stall)
-- [Phase 3] `git merge-base --is-ancestor 5b106b40ed220 HEAD` — no (fix
-  not in this tree)
-- [Phase 4] `b4 dig -c 5b106b40ed220`: v1 split requested, v2 applied;
-  no NAK
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
-- [Phase 5] Callers: `alc_init` → init_hook; `alc_suspend` → shutup;
-  `alc_resume` → init; vendor IDs 0x10ec0282 / 0215 / 0225 / 0234 / 0285
-  / 0294 / …
-- [Phase 6] `git describe HEAD`: `p-6.1-2-g8ee893656ef69`; `make
-  kernelversion`: **6.1.188**
-- [Phase 6] Buggy code present in `sound/pci/hda/patch_realtek.c` lines
-  3430, 3467, 3719-3727, 3992
-- [Phase 6] Target file `sound/hda/codecs/realtek/alc269.c` missing
-  here; equivalent functions exist
-- [Phase 8] Failure mode: COEF corruption / possible codec stall on
-  resume; severity HIGH for audio, not a kernel oops
+- [Phase 1] Parsed revert tags: Brauner SOB only; body reverts
+  8189ab688f5a; original add had Fixes/Cc stable/Link
+- [Phase 1] Linus vfs-7.3-rc8.fixes pull explicitly names this revert
+- [Phase 2] Diff: −29 lines in fs/namei.c; removes unlink_may_reveal +
+  ESTALE return in step_into
+- [Phase 2] Verified dont_mount() on vfs_unlink/vfs_rmdir/vfs_rename;
+  ESTALE→LOOKUP_REVAL in filename_lookup/do_filp_open
+- [Phase 3] git describe HEAD: v6.18.57-155-gcdf239ca885b2;
+  kernelversion 6.18.57
+- [Phase 3] git merge-base --is-ancestor 5f97df8ca7fad v6.18.57: yes;
+  v6.18.56: no
+- [Phase 3] git blame v6.18.57: unlink_may_reveal entirely 5f97df8ca7fad
+- [Phase 3] 8ed936b5671b is an ancestor; d29cd99 unhash-before-detach is
+  in v6.18.57 and stays
+- [Phase 3] Local revert is the exact inverse of 5f97 on step_into (not
+  step_into_slowpath)
+- [Phase 4] b4 dig -c 214897acc8c2: lore server error — UNVERIFIED
+  mailed thread
+- [Phase 4] lore WebFetch 403 — UNVERIFIED lore discussion
+- [Phase 4] Unmerged DCACHE_UNCOVERED follow-up documents LOOKUP_REVAL
+  regression (syzbot CI / series text)
+- [Phase 5] step_into callers: walk_component, handle_dots,
+  open_last_lookups — core pathwalk
+- [Phase 6] Buggy helper present at v6.18.57:fs/namei.c:1983; clean
+  apply
+- [Phase 8] Failure mode: extra LOOKUP_REVAL on unlink vs open; NFS/FUSE
+  revalidate whole path
+- UNVERIFIED: stable@ mailing list discussion of this specific revert
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ fs/namei.c | 29 -----------------------------
+ 1 file changed, 29 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index d88627558150f..3364f6ad91fcb 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -296,7 +296,8 @@ static void alc282_init(struct hda_codec *codec)
- 		msleep(100);
- 
- 	/* Headphone capless set to normal mode */
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
+diff --git a/fs/namei.c b/fs/namei.c
+index 2e86733b4bacb..003c9a1b2f904 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -1973,33 +1973,6 @@ static const char *pick_link(struct nameidata *nd, struct path *link,
+ 	return NULL;
  }
  
- static void alc282_shutup(struct hda_codec *codec)
-@@ -333,7 +334,8 @@ static void alc282_shutup(struct hda_codec *codec)
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
- }
- 
- static const struct coef_fw alc283_coefs[] = {
-@@ -585,15 +587,19 @@ static void alc285_hp_init(struct hda_codec *codec)
- 
- 	alc_write_coefex_idx(codec, 0x58, 0x00, 0xf888); /* HP depop procedure start */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x00);
--	for (i = 0; i < 20 && val & 0x8000; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x8000; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x00);
- 	} /* Wait for depop procedure finish  */
- 
--	alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
--	alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
--	alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
--	alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
-+	if (val != -1)
-+		alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
-+	if (coef38 != -1)
-+		alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
-+	if (coef0d != -1)
-+		alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
-+	if (coef36 != -1)
-+		alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
- 
- 	msleep(50);
- 	alc_update_coef_idx(codec, 0x4a, 1<<15, 0);
-@@ -858,7 +864,7 @@ static void alc294_hp_init(struct hda_codec *codec)
- 
- 	/* Wait for depop procedure finish  */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x01);
--	for (i = 0; i < 20 && val & 0x0080; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x0080; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x01);
- 	}
+-/*
+- * Be careful in case the dentry is unlinked or renamed. Any mounts
+- * stacked on top of it are going away. We need to make sure that we
+- * don't reveal the underyling dentry during refwalk. In rcuwalk we
+- * catch this via d_seq and another lookup for the name. Give the same
+- * guarantee in refwalk.
+- */
+-static bool unlink_may_reveal(struct nameidata *nd, int flags,
+-			      struct path *path, struct dentry *dentry)
+-{
+-	/* ".." and LOOKUP_DOWN may land on an unhashed directory */
+-	if (flags & WALK_NOFOLLOW)
+-		return false;
+-	if (nd->flags & LOOKUP_REVAL)
+-		return false;
+-	/* We crossed onto a mount and the name led us here while it still existed */
+-	if (path->mnt != nd->path.mnt)
+-		return false;
+-	/* only a name on its way out is flagged */
+-	if (likely(!cant_mount(dentry)))
+-		return false;
+-	if (!d_unlinked(dentry))
+-		return false;
+-	dput(no_free_ptr(path->dentry));
+-	return true;
+-}
+-
+ /*
+  * Do we need to follow links? We _really_ want to be able
+  * to do this check without having to look at inode->i_op,
+@@ -2028,8 +2001,6 @@ static const char *step_into(struct nameidata *nd, int flags,
+ 			if (unlikely(!inode))
+ 				return ERR_PTR(-ENOENT);
+ 		} else {
+-			if (unlikely(unlink_may_reveal(nd, flags, &path, dentry)))
+-				return ERR_PTR(-ESTALE);
+ 			dput(nd->path.dentry);
+ 			if (nd->path.mnt != path.mnt)
+ 				mntput(nd->path.mnt);
 -- 
 2.53.0
 
