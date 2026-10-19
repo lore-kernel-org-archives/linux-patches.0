@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649705827B6;
-	Mon, 19 Oct 2026 14:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E625AE423;
+	Mon, 19 Oct 2026 14:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418417; cv=none; b=Eb/c1EQViFVky5D8jp7QJ4R0VZ102II/oDqppaQnPsbR6lVBuZi73Aduw4KJTGUo0F2YnzhWv8uaeurlHhD8xPET+FjXdHXsfjgvD/urflLRsmyMs5saLPxFcfxZp9HSqcFwwooc3h+ZIgDWghRHMKBosffMcbhvAYvjH5iAVdI=
+	t=1792418418; cv=none; b=bDJxbDIIisDEdenoFKVw2QtfJVcrRid0zUZUhn2jyHdRR5aeyb1r/b6guRXyF+soEyTTwHIblL/59vHPdUGHNZVHHAD0aZ9nItTD37CsoDjfIbKxI+ZeeJC+xgPy4GvQDFrSLaL4H3GfkiDzuMvzz5bNnK09XxADq5GApyl2/Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418417; c=relaxed/simple;
-	bh=+xOolqVHTIjUNje/NBlWqngZewdY5WPe7Cv7eyrJaHo=;
+	s=arc-20240116; t=1792418418; c=relaxed/simple;
+	bh=atj6UOvgApRieG1GJGv5RDUIMlc+SFdaGNyRb7mWE5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g4cYwBns3s8ZW5wnDPi7JSiHklQBAUs0gvsSW6FguptNsPcMCKjU2WyB7J67haHKcEdiqe376hq3YSgIZPJ2jYkgv3RKs3fkyjJiHw+cOpSjNxXiR0cFaB46gyBGIKPVfihf95b7GOZZ63v8RDfxSW963af8AavnlIyEaH8zI8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olOeDOjT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l9RF2CHHu7XJHrogpn5SeHUbcKTzknad0FGAYbCi49FDvcUdqH0WC8bPA5VJ41TsuNckLNAjcY+oRwO9MqvS654kzhoo49WAP8Pe34KZ2yiL/6Z4QkTsnCl5fRZcCFONiMXo1ML67v7hZIZoD2LRQotZjk2GNWgV3E7RA8hRCk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dGSHiR23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olOeDOjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179181F000CB;
-	Mon, 19 Oct 2026 14:00:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dGSHiR23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86C51F000C4;
+	Mon, 19 Oct 2026 14:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418414;
-	bh=ZBGxOJXU7HjBVpyfzOXs9dH+Zt09Hx8bIDlSjJjZIfU=;
+	s=k20260515; t=1792418415;
+	bh=OpFOufFlSjediWMBK9vzhB5wdkH6ywbB5g9Et8FopIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=olOeDOjTLuRm4sKwbNu0/Rcpa7GSsMFZTmi2jhIKuEuwf8qC9/FtzeCYUK9PxXZNv
-	 hly3hf2uXpxmvtLzM1G/Xbq4ZSndpum6fEsRO+vkjd3lb+IjCsyo5BN3sUh/gmIuER
-	 QK9bXf+Ohuslhe/bKz3ygChK+lDQzeG3UXdIlOVESsGblOte11MbmSFO613D9L567u
-	 8lencfBzirbJYhHd3nK58hBLlIv+lFe3UxdN1RDDcCY8kbsXjr7WjNed/0wlZtP7cq
-	 hGb1OALT8gfNvmmyZVWDYWkzk7KU6bC6evEhNSAm8i9wW3ESvtIfIKSgGsdHZeLJSa
-	 NhDXAwXgHtZwA==
+	b=dGSHiR23DoZKzWb5kdvDKnj4VyzrCAUP4CYZ4YPLp/WPfzPo8Fe3ddN9DmqrZCFqy
+	 DXGoczJQZmlD0M6Y6YVnHLu1OzH4YjUOWK93bGPXAZjFkjgn6ln2bvh9DBmzZju/Kf
+	 Y3RNtFM9BnWllRiwuangGTYW5en316jY1Kt91esSwbSaDm/wvJ7lXgUboHdR0Vigw3
+	 XaidOKqFkVGPwNCFwbWCHgfpLM8Y3R4BTW/8BpTmB8lOuDYpdqrER2Lj7/X4kh8W+b
+	 s2VWV6TN+Ra+izuKKZPWgj6huSFLOZ03IAMKITia8W6Rsv6uC3MTgzAJ88PNzHa1Mr
+	 laxTEAsaHjqmw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mengyuanlou@net-swift.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net: libwx: disable TX VLAN offload for packets with >2 VLAN tags
-Date: Mon, 19 Oct 2026 09:48:43 -0400
-Message-ID: <20261019135441.1420968-232-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:48:44 -0400
+Message-ID: <20261019135441.1420968-233-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,435 +53,411 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f5cfb576ce39ba5647024c6d6eeb5b7a822fab6e ]
+[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
 
-The current hardware does not support TX VLAN offload for packets with
-three or more VLAN tags. When such packets are transmitted with hardware
-VLAN offload enabled, the hardware may malfunction or produce corrupted
-frames.
+The driver has a match table for the spi bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Add a check in wx_features_check() to parse the VLAN depth of the
-skb. If more than two VLAN tags are detected (including both the
-hardware tag and in-band tags), strip NETIF_F_HW_VLAN_CTAG_TX and
-NETIF_F_HW_VLAN_STAG_TX from the feature set. This forces the
-kernel networking stack to handle VLAN insertion in software for
-these specific packets, ensuring correct transmission.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/069DF89AA8029189+20260713060441.276612-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The candidate is a hardware-limitation workaround in Wangxun `libwx`: TX
-VLAN offload is unsafe for more than two tags and can corrupt frames.
-This 7.3-rc4 tree already has `wx_features_check` and the VLAN TX path,
-so the rest of the write-up is whether that fix belongs here as a stable
-backport.
+The local checkout is mainline **7.3.0-rc4** (`v7.3-rc4-27`,
+`origin/master`). The change is a one-line `MODULE_DEVICE_TABLE(spi, …)`
+for an existing IIO ADC driver. Below is the full checklist against that
+tree.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[net/libwx] [disable] disable TX VLAN offload for packets
-  with >2 VLAN tags`
-- Subsystem: `net: libwx` (Wangxun shared NIC library used by
-  txgbe/ngbe)
-- Verb `disable` is a hardware-workaround action, not a feature or
-  cleanup
+Record: `[iio: adc: max1241:]` `[add]` `[export the existing SPI
+id_table via MODULE_DEVICE_TABLE so udev can autoload the module]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - `Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>` (author;
-    Wangxun maintainer)
-  - `Link: https://patch.msgid.link/069DF89AA8029189+20260713060441.2766
-    12-1-jiawenwu@trustnetic.com`
-  - `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev
-    maintainer, applied)
-  - No `Fixes:` tag (expected for this review pipeline)
-  - No `Cc: stable@vger.kernel.org`
-  - No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`
-  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-    ...]` (none in the real commit)
+Record:
+- `Fixes:` none (expected)
+- `Reported-by:` none
+- `Tested-by:` none
+- `Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>`
+- `Acked-by:` none
+- `Link:` none in the git commit
+- `Cc: stable@vger.kernel.org:` none (expected)
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Jonathan Cameron <jic23@kernel.org>` (IIO maintainer)
+- No syzbot, no CVE, no bugzilla
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record:
-  - **Bug:** Wangxun TX VLAN offload does not support three or more VLAN
-    tags
-  - **Symptom / failure mode:** hardware may malfunction or produce
-    **corrupted frames**
-  - **Root cause (author):** HW offload still used on >2-tag packets
-  - **Fix:** in `wx_features_check()`, count hwaccel + in-band VLAN
-    tags; if `vlan_num > 2`, drop `NETIF_F_HW_VLAN_CTAG_TX` and
-    `NETIF_F_HW_VLAN_STAG_TX` so the stack inserts in software
-  - **Version info in message:** none
+Record:
+- **Bug:** `max1241_id[]` is wired to `spi_driver.id_table`, but not
+  published with `MODULE_DEVICE_TABLE(spi, …)`.
+- **Symptom:** `file2alias` never emits `spi:max1241`, so udev/modprobe
+  will not autoload `max1241.ko` for SPI-id instantiation.
+- **Failure mode:** driver stays unloaded until a manual `modprobe` /
+  builtin; not a crash.
+- **Version info in message:** none.
+- **Root cause:** missing module-alias publication for an already-
+  registered match table.
+- The “source-level fix / no dynamic hardware reproduction” paragraph is
+  in the original lore submission, not a stable-pipeline marker.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a disguised cleanup. This is an explicit hardware
-  workaround for incorrect TX offload. Intel reviewer Jacob Keller
-  treated it as a bug fix that should have gone to `net` with a `Fixes:`
-  tag (see Phase 4).
+Record: Not a disguised cleanup. It is an explicit autoload/modalias
+fix. Same pattern as other “publish the module alias” patches.
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-- Record:
-  - File: `drivers/net/ethernet/wangxun/libwx/wx_lib.c` — **+24 / -0**
-  - Function: `wx_features_check()`
-  - Scope: single-file surgical addition inside an existing
-    `ndo_features_check` hook
+Record:
+- File: `drivers/iio/adc/max1241.c` (`+1 / -0`)
+- Function/data: none rewritten; one macro after `max1241_id[]`
+- Scope: single-file, one-line surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record:
-  - **Before:** `wx_features_check()` only restricted checksum/GSO for
-    encapsulated packets; VLAN TX offload was left on for every packet
-  - **After:** count `skb_vlan_tag_present()` plus in-band
-    `eth_type_vlan()` headers via `skb_header_pointer()`. If more than
-    two tags, clear HW VLAN TX features and break
-  - Path: per-packet TX feature check (`netif_skb_features()` →
-    `ndo_features_check`). Normal TX path, not probe/error-only
+Record:
+- **Before:** SPI id table exists and is used at bind time if the module
+  is already loaded; `modules.alias` has no `spi:max1241`.
+- **After:** build-time alias `spi:max1241` is generated (same mechanism
+  as the existing `MODULE_DEVICE_TABLE(of, max1241_dt_ids)`).
+- **Path affected:** module autoload for SPI-id devices. Probe/runtime
+  I/O unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record:
-  - Category: **hardware workaround / logic correctness** (not
-    UAF/leak/race)
-  - Mechanism: HW can insert/offload at most two VLAN tags. With a third
-    tag and HW VLAN TX still enabled, the NIC may emit corrupted frames
-    or malfunction
-  - How the fix works: `validate_xmit_vlan()` in `net/core/dev.c` sees
-    VLAN TX offload cleared and calls `__vlan_hwaccel_push_inside()`, so
-    the extra tag is inserted in software
+Record: **Hardware matching / module autoload (logic/correctness,
+device-ID class).** Not UAF, leak, race, or crash. `MODULE_DEVICE_TABLE`
+is consumed by `scripts/mod/file2alias.c` (`do_spi_entry`).
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-- Record:
-  - Obviously correct: this is the standard `ndo_features_check`
-    pattern; `skb_header_pointer()` is NULL-safe; loop stops at >2 tags
-  - v1 skipped the in-band walk when no hwaccel tag; v2 (applied) always
-    walks in-band tags — better
-  - Minimal, no API/data-structure change
-  - Regression risk: **low**. Extra work only while
-    `eth_type_vlan(skb->protocol)` is true. Worst case is extra software
-    VLAN insertion, not a new crash path
-  - Residual gap (not a reason to reject): VF drivers
-    (`txgbevf`/`ngbevf`) use `wx_xmit_frame` but do **not** set
-    `ndo_features_check`, so VFs are not covered
+Record: Obviously correct; matches every other SPI IIO ADC in this tree.
+No API, locking, or control-flow change. Regression risk is negligible.
+The committed hunk matches the driver after `d04a09b41d2e2` (`{ .name =
+"max1241" }`); the lore v1 still had `{ "max1241", max1241 }`, but the
+macro placement is identical.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-- Record:
-  - New lines are entirely from `f5cfb576ce39b` (this commit)
-  - Surrounding `wx_features_check()` introduced by `3b05aa997c491`
-    (“net: wangxun: restrict feature flags for tunnel packets”,
-    2025-04-22)
-  - TX VLAN offload itself: `3403960cdf86c` (“net: wangxun: libwx add tx
-    offload functions”, 2023-05-31, in v6.5-rc1)
+Record: `max1241_id[]` and `id_table` come from `8a80a71d9020b` (“iio:
+adc: Add MAX1241 driver”, 2020-04-03), contained in **v5.8-rc1**. OF
+table had `MODULE_DEVICE_TABLE(of, …)` from day one; SPI publication was
+omitted then and stayed omitted until this commit.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Author told Jacob Keller they could not
-  identify one. The limitation dates to original TX VLAN offload
-  (`3403960cdf86c`), not a later regression. That commit **is** an
-  ancestor of this tree.
+Record: No `Fixes:` tag. Introduction commit is `8a80a71d9020b` (v5.8).
+No later competing fix for the same SPI alias.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record:
-  - Immediate follow-up: `732ed8f75ce58` “net: libwx: fix FDIR ATR queue
-    mismatch for software VLAN packets” — sets `WX_TX_FLAGS_SW_VLAN`
-    when VLAN is in-band; has its own `Fixes: b501d261a5b3`. Related
-    when more packets take the SW VLAN path, but standalone
-  - Not labeled patch X/Y. Standalone 24-line addition
-  - Prerequisite in this tree: `wx_features_check()` exists
-    (`3b05aa997c491` is an ancestor)
+Record (file log, no `--all`):
+- `790a2080e0c9e` — this commit (v7.3-rc1)
+- `d04a09b41d2e2` — simplify id table (named initializer; not a
+  prerequisite for the macro)
+- `09e3bdfe499d5` — id-table formatting
+- Driver added in `8a80a71d9020b`
+Standalone; not patch `X/Y`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Jiawen Wu is the Wangxun maintainer (`MAINTAINERS`: `M: Jiawen
-  Wu <jiawenwu@trustnetic.com>`). Regular libwx/txgbe/ngbe fixes around
-  the same time.
+Record: Pengpeng Hou is a regular contributor of the same
+`MODULE_DEVICE_TABLE` pattern (IIO `bmi270`, rtc, vdpa, watchdog, hwmon,
+fbdev). Not the IIO maintainer. Same-day sibling: `87359c88846fa` (`iio:
+imu: bmi270: add missing MODULE_DEVICE_TABLE()`), also applied by
+Jonathan Cameron.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: Depends on `wx_features_check()` / `ndo_features_check`
-  (`3b05aa997c491`). Both exist here. Helpers used (`eth_type_vlan`,
-  `skb_header_pointer`, `skb_vlan_tag_present`) are long-standing core
-  APIs. Can apply standalone on this tree.
+Record: None. Macro sits next to an array that has existed since v5.8.
+Applies on both old `{ "max1241", max1241 }` and new `.name` forms.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record:
-  - `b4 dig -c f5cfb576ce39b`: [PATCH net-next v2] https://patch.msgid.l
-    ink/069DF89AA8029189+20260713060441.276612-1-jiawenwu@trustnetic.com
-  - `b4 dig -a`: v1 (2026-07-10) → v2 (2026-07-13, applied)
-  - v1 review (Przemek Kitszel): style/logic nits — don’t skip the loop
-    when no hwaccel tag; don’t use a dummy parse depth of 8; move the
-    `vlan_num > 2` test inside the loop. All addressed in v2
-  - v2 review (Jacob Keller): **asked why this went to net-next instead
-    of net with a Fixes: tag to the commit that introduced VLAN
-    tagging**
-  - Author reply: “Probably because I couldn't find a Fixes tag for
-    it...”
-  - Applied to **netdev/net-next.git** by Jakub Kicinski (patchwork bot,
-    2026-07-22)
-  - No NAKs; no reviewer objection to the fix itself
-  - No explicit `Cc: stable` in the thread (Jacob’s question is the
-    stable-relevant signal)
+Record:
+- `b4 dig -c 790a2080e0c9e` →
+  https://patch.msgid.link/20260704151633.38517-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: **v1 only** (no v2/v3)
+- Thread: Andy Shevchenko `Reviewed-by`; Jonathan Cameron applied it.
+- **Maintainer comment (verbatim from mbox):** “I'm not rushing this in
+  given we don't have reports of it actually causing problems for any
+  users. Applied to the testing branch of iio.git which means it'll go
+  upstream in the next merge window.”
+- No NAK. No `Cc: stable` in review. Landed in `iio-for-7.3a` (merge
+  window), not `iio-fixes`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record (`b4 dig -w`): netdev maintainers (Kicinski, Abeni, Dumazet,
-  Miller, Horman, Lunn), Wangxun (Jiawen Wu, Duanqiang Wen, Mengyuan
-  Lou), Intel NIC reviewers (Jacob Keller, Przemek Kitszel). Right
-  audience.
+Record (`b4 dig -w`): To/Cc were Jonathan Cameron, David Lechner, Nuno
+Sá, Andy Shevchenko, `linux-iio`, `linux-kernel`. Andy reviewed;
+Jonathan applied.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No `Reported-by`, syzbot, or bugzilla. Vendor/maintainer
-  hardware-limitation report. Severity from message: corrupted frames /
-  hardware malfunction.
+Record: No `Reported-by`, no bugzilla, no syzbot. Author presents it as
+source-level evidence (table present, not exported). No hardware repro
+claimed.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Standalone v1/v2 of one patch, not a multi-patch series.
-  Follow-up ATR SW-VLAN fix is separate and already in this tree.
+Record: Same-day IIO sibling `bmi270` (OF table, more important for DT
+autoload). This max1241 patch is a single standalone `[PATCH]`, not a
+numbered series.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: **UNVERIFIED** — lore.kernel.org HTTP 403; no local stable@
-  discussion found. No evidence it was rejected for stable.
+Record: lore.kernel.org/stable search for this subject/max1241 found
+**no** discussion of *this* commit. Broader `MODULE_DEVICE_TABLE` search
+**did** show current stable practice taking the same class, e.g. `[PATCH
+6.18 190/398] Input: eeti_ts - publish the OF module alias`, ASoC
+“Publish the OF/PCI module aliases” into 6.12/6.18. Those are the same
+autoload-publication category Greg is shipping now.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-- Record: `wx_features_check()` only (exported)
+Record: No function body changed. Added `MODULE_DEVICE_TABLE(spi,
+max1241_id)` beside `max1241_id[]`. Related symbols:
+`max1241_spi_driver.id_table`, `module_spi_driver()`.
 
 **Step 5.2: TRACE CALLERS**
-- Record:
-  - `txgbe_netdev_ops.ndo_features_check = wx_features_check`
-    (`txgbe_main.c`)
-  - `ngbe_netdev_ops.ndo_features_check = wx_features_check`
-    (`ngbe_main.c`)
-  - Core: `netif_skb_features()` → `dev->netdev_ops->ndo_features_check`
-    (`net/core/dev.c`)
-  - Called from the generic TX validation path (`validate_xmit_skb` /
-    `xmit_one`) — userspace-reachable on every transmit for those NICs
-  - VF ops use `wx_xmit_frame` but **no** `ndo_features_check` (coverage
-    gap)
+Record: Runtime callers of `max1241_probe` are SPI core bind
+(`module_spi_driver`). The new macro is **not** called at runtime;
+`scripts/mod/file2alias.c` `do_spi_entry` reads it at `modpost`.
+Userspace trigger is udev/modprobe on `MODALIAS=spi:max1241`.
 
 **Step 5.3: TRACE CALLEES**
-- Record: `skb_vlan_tag_present`, `eth_type_vlan`, `skb_header_pointer`
-  — read-only skb inspection; no alloc/lock/I/O
+Record: N/A for the added line. Existing probe still uses
+regulators/GPIO/IIO register.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: syscall/send path → qdisc → `validate_xmit_skb()` →
-  `netif_skb_features()` → `wx_features_check()` → if VLAN TX bits
-  dropped, `validate_xmit_vlan()` software-inserts the tag →
-  `wx_xmit_frame()`. Reachable from userspace on Wangxun PF devices.
-  Triple-tag is uncommon (QinQ + extra tag) but real.
+Record: Reachable when `CONFIG_MAX1241=m` and a SPI device is
+instantiated by **SPI id** (`spi_board_info` / `spi_new_device` / ACPI
+SPI name), not by DT. DT already autoloads via existing
+`MODULE_DEVICE_TABLE(of, max1241_dt_ids)` (`of:N*T*Cmaxim,max1241`). No
+in-tree DTS or board file instantiates `max1241` (only
+`Documentation/devicetree/bindings/iio/adc/maxim,max1241.yaml`).
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Many NICs call `vlan_features_check()`, which **keeps** HW
-  VLAN TX on multi-tag skbs and only tightens csum features. Wangxun’s
-  extra restriction is device-specific (max two tags). Same idea as
-  other `ndo_features_check` HW-limit hooks, not a copy of
-  `vlan_features_check()`.
+Record: Dozens of `drivers/iio/adc/*` files already have
+`MODULE_DEVICE_TABLE(spi, …)` (`max1118.c`, `max11205.c`, `ad7476.c`,
+…). Historical IIO fixes of the same bug: `8f0d7daf53972` (imx25-gcq
+autoload), `447ccb4e0834a` (qcom-spmi-adc5, had `Cc: stable`),
+`cc3304052a89a` (stm32-dfsdm aliases).
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record:
-  - Local tree: **v7.3-rc4-27-gf0100363d8c37**, `make kernelversion` =
-    **7.3.0-rc4**
-  - `wx_features_check()` exists; pre-patch body had no VLAN-depth check
-    (`git show f5cfb576ce39b^:...`)
-  - TX VLAN flags (`WX_TXD_VLE`, `skb_vlan_tag_present` in
-    `wx_xmit_frame`) exist since `3403960cdf86c`
-  - Candidate **is** already an ancestor of HEAD (already merged here).
-    Evaluation is still whether the fix has stable merit for this
-    codebase; the pre-fix function is the buggy code
+Record:
+- `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`
+- `make kernelversion` → `7.3.0-rc4`
+- Driver is present (`drivers/iio/adc/max1241.c`, `CONFIG_MAX1241`).
+- Bug introduced **v5.8**, long before this branch.
+- `git merge-base --is-ancestor 790a2080e0c9e HEAD` → yes; this commit
+  landed in **v7.3-rc1**. Current file already has the SPI
+  `MODULE_DEVICE_TABLE`. That is expected on mainline; it does **not**
+  mean the autoload bug is absent from older stables that still have the
+  v5.8-style driver. The SPI id table and OF table this patch depends on
+  are both here.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **Clean apply** on this tree. Context is the existing
-  `wx_features_check()`; no conflicting refactor of that function
-  besides this commit and later unrelated wangxun work
+Record: Clean apply. One line after the existing `max1241_id[]`
+terminator. No refactor required. Table-format commits (`09e3bdfe499d5`,
+`d04a09b41d2e2`) do not block the macro.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: This fix is in the tree. Related ATR SW-VLAN fix
-  `732ed8f75ce58` is also here. No alternate fix of the >2-tag HW limit.
+Record: This is the SPI-table publication. OF publication was always
+present. No alternate SPI-alias fix in the file log.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `drivers/net/ethernet/wangxun/libwx` — **IMPORTANT** for
-  Wangxun NIC users (txgbe/ngbe PFs), **PERIPHERAL** vs core mm/net. Not
-  staging.
+Record: `drivers/iio/adc/` — **PERIPHERAL/IMPORTANT**: IIO ADC, one
+Maxim SPI chip (`CONFIG_MAX1241`). Not mm/net/core. Users are boards
+with this ADC, typically DT.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Actively developed (2026 wangxun commits: Tx timeout, PCIe
-  AER, FDIR, PTP). Author is the maintainer.
+Record: IIO ADC is actively developed (continuous `iio-for-7.3a` / fixes
+merges). This particular file is mature (added 2020, infrequent
+changes).
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: **driver-specific** — CONFIG_TXGBE / CONFIG_NGBE Wangxun PF
-  users. Not universal. VFs not covered by this hook.
+Record: **Driver-specific / config-specific** (`CONFIG_MAX1241=m`).
+Built-in (`=y`) is unaffected. DT users already autoload via OF aliases.
+Remaining gap: SPI-id (non-DT) instantiation.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: TX of a frame with **three or more** VLAN tags (hwaccel + in-
-  band) while HW VLAN TX is on. Uncommon vs plain Ethernet; used in
-  QinQ/provider/NFV setups. Unprivileged users can send tagged frames if
-  the interface/bridge allows it. Not a pure timing race.
+Record: Module build + SPI device named `max1241` without OF compatible.
+Not every boot; not a syscall crash path. Unprivileged users do not
+trigger it directly. No in-tree board/DTS consumer of the SPI id was
+found.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: Corrupted TX frames and possible hardware malfunction.
-  **HIGH** (data corruption on the wire; possible device misbehavior).
-  Not a kernel oops, but not cosmetic.
+Record: **Failure mode:** module not autoloaded; ADC node missing until
+manual load. **Severity: LOW–MEDIUM** (functionality, not
+oops/corruption/deadlock). Workaround: `modprobe max1241`.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record:
-  - **Benefit:** high for affected Wangxun users (correct frames; avoid
-    HW malfunction)
-  - **Risk:** very low (24 lines, feature-bit clear, standard stack
-    fallback)
-  - **Ratio:** favors backporting
+Record:
+- **Benefit:** restores SPI-id autoload for a driver that already claims
+  `id_table`; same class Greg is taking (“publish the … module alias”).
+- **Risk:** very low (one macro, no runtime logic).
+- **Ratio:** favorable *because* cost is ~zero, even though user
+  population for the SPI-id path is small.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real HW limit: >2 VLAN tags + HW VLAN TX → corrupted frames /
-  malfunction
-- Jacob Keller explicitly framed it as a `net` bugfix that needed
-  `Fixes:`
-- Author is the Wangxun maintainer; netdev maintainers applied it
-- Small (+24), contained, no new APIs
-- Uses the intended `ndo_features_check` mechanism
-- Hardware quirk/workaround class (stable exception)
-- `wx_features_check` and VLAN TX offload exist in this tree
-- v2 addressed review nits; no NAKs
+**FOR backporting:**
+- Real autoload bug: SPI match table registered but not exported.
+- One line, obviously correct, reviewed (Andy Shevchenko) and merged by
+  the IIO maintainer.
+- Same class as device-ID / module-alias publication, which stable
+  currently accepts (`eeti_ts` OF alias on 6.18/7.2; ASoC OF/PCI aliases
+  on 6.12/6.18).
+- Earlier IIO autoload fixes used `Cc: stable` (`447ccb4e0834a`).
+- Driver present since v5.8; no missing prerequisites in this tree.
+- Zero runtime regression surface.
 
-**AGAINST:**
-- Sent to net-next, not `net` (author could not pick a `Fixes:` SHA)
-- No public reproducer, crash log, or extra `Reported-by`
-- Triple-tag TX is a relatively rare path
-- VF devices sharing `wx_xmit_frame` still lack this hook
+**AGAINST backporting:**
+- Not a crash, UAF, deadlock, or data-corruption bug.
+- OF `MODULE_DEVICE_TABLE` already exists, so the normal DT path already
+  works.
+- Maintainer delayed it to the merge window specifically because there
+  were **no user reports**.
+- No in-tree DTS/board instantiation of the SPI id.
+- Author series is a static sweep of missing tables, not an incident
+  report.
 
 **UNRESOLVED:**
-- No stable@ lore search (HTTP 403)
-- “Malfunction” not independently characterized beyond the vendor commit
-  message
+- How many production boards instantiate max1241 by SPI board_info/ACPI
+  rather than DT (no evidence found).
+- WebFetch to lore returned 403/timeout; thread was recovered via `b4
+  dig -m` instead.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — v2 after review; applied by
-   Kicinski; logic matches core `validate_xmit_vlan()`
-2. Fixes a real bug that affects users? **PASS** — HW TX of >2 VLAN tags
-   is wrong and user-triggerable
-3. Important issue? **PASS** — on-wire corruption / HW malfunction
-   (HIGH, not a core oops)
-4. Small and contained? **PASS** — +24 lines, one function
-5. No new features or APIs? **PASS** — disables an unsafe offload for
-   specific packets
-6. Can apply to the local tree? **PASS** — `wx_features_check()`
-   present; patch is a clean addition
+1. Obviously correct and tested? **PASS** — one macro, reviewed, in
+   mainline v7.3-rc1.
+2. Fixes a real bug that affects users? **PASS** — missing `spi:` alias
+   when `CONFIG_MAX1241=m`; impact is real but narrow.
+3. Important issue? **PASS** under the device-ID / module-alias
+   exception (not a crash). Official `stable-kernel-rules.rst` allows
+   “just add a device ID”; publishing the existing SPI id is that
+   mechanism.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — surrounding `max1241_id[]` /
+   `id_table` exist; hunk is a single insertion.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: **Hardware quirk/workaround** — disable an offload the NIC
-  cannot perform. Same class as USB/PCI/codec quirks.
+Record: **Device ID / module-alias publication** (not a new driver, not
+a new API). Closest listed exception: adding IDs to an existing driver.
+Build/docs/quirk categories do not apply.
 
-**Step 9.4: DECISION**
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the driver and the SPI id table the patch exports. The
+change is a one-line, zero-risk autoload fix of a type already going
+into stable. Maintainer caution (no reports, not iio-fixes) lowers
+severity but does not make it a cleanup or a new feature. Criterion 3 is
+met via the device-ID exception, not via crash/security.
 
-This tree is 7.3.0-rc4 and already contains the Wangxun TX offload path
-and `wx_features_check()`. The patch is a small, reviewed workaround for
-a vendor-confirmed HW limit that otherwise yields corrupted frames.
-Missing `Fixes:`/`Cc: stable` is why it needs manual review, not a
-reason to drop it. Jacob Keller’s net-vs-net-next question is the right
-classification: this is a bugfix, not a feature.
+What it solves for stable users: if `max1241` is built as a module and
+the chip is created by SPI id rather than DT, udev can load the driver
+instead of leaving the ADC unbound. DT users are already covered; the
+extra alias does not change their path.
 
-### What the commit solves for stable users
-Wangxun PFs will no longer ask the NIC to hardware-insert/offload a
-third VLAN tag. Those packets fall back to software VLAN insertion,
-which avoids bad frames and possible device malfunction.
+Risk vs benefit: benefit is modest and device-specific; risk is
+effectively none. That trade-off matches other “publish the module
+alias” stable commits.
 
-### Risk vs benefit
-Benefit is correctness on a real (if uncommon) TX path. Risk is a few
-extra header walks and software VLAN push only when tags are already
-present.
+### Verification
+- [Phase 1] Parsed tags: Reviewed-by Andy Shevchenko; SOB Jonathan
+  Cameron; no Fixes/Reported-by/Cc: stable/syzbot
+- [Phase 1] Body: missing SPI `MODULE_DEVICE_TABLE`; autoload aliases;
+  source-level, no hardware repro
+- [Phase 2] Diff: +1 line in `drivers/iio/adc/max1241.c` after
+  `max1241_id[]`
+- [Phase 3] `git blame`: table from `8a80a71d9020b` (v5.8-rc1); OF table
+  always exported; SPI table not
+- [Phase 3] No Fixes: tag; introduction commit confirmed via `git show`
+  / `git describe --contains --match 'v*'`
+- [Phase 3] Author also landed `87359c88846fa` (bmi270
+  MODULE_DEVICE_TABLE) the same day
+- [Phase 3] `git merge-base --is-ancestor 790a2080e0c9e HEAD` exit 0;
+  contained in v7.3-rc1
+- [Phase 4] `b4 dig -c 790a2080e0c9e`:
+  https://patch.msgid.link/20260704151633.38517-1-pengpeng@iscas.ac.cn
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: IIO maintainers + linux-iio
+- [Phase 4] `b4 dig -m /tmp/max1241-thread.mbox`: Andy Reviewed-by;
+  Jonathan: not rushing, no user reports, testing branch / next merge
+  window
+- [Phase 4] lore.kernel.org/stable: no thread for this commit; other
+  “publish the module alias” patches are in 6.12/6.18/7.2
+- [Phase 5] `file2alias.c` `do_spi_entry` generates SPI aliases; probe
+  path unchanged
+- [Phase 5] No in-tree DTS/board `max1241` users (grep `arch/` and dts);
+  only DT binding YAML
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27; `kernelversion`
+  7.3.0-rc4; driver + both match tables present
+- [Phase 6] Pre-fix parent `790a2080e0c9e^` has SPI table and OF
+  MODULE_DEVICE_TABLE, no SPI MODULE_DEVICE_TABLE
+- [Phase 7] Subsystem IIO ADC, CONFIG_MAX1241 tristate “module will be
+  called max1241”
+- [Phase 8] Failure mode: missing autoload, severity LOW–MEDIUM; risk
+  very low
+- UNVERIFIED: real-world count of non-DT max1241 boards (no evidence
+  found; not used as a YES driver)
+- UNVERIFIED: WebFetch lore (403/timeout); replaced by `b4 dig` mbox +
+  curl
 
-### Concerns
-- Needs `wx_features_check()` (present here)
-- Optional companion `732ed8f75ce58` for FDIR ATR on SW-VLAN packets is
-  already in this tree
-- VFs still omit `ndo_features_check`; that is a remaining gap, not a
-  regression from this patch
-
-Verification:
-- [Phase 1] Parsed subject/tags/body from `git log -1` / `git show
-  f5cfb576ce39b`; no Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: +24 in `wx_features_check()` only; confirmed current
-  file at wx_lib.c:3265-3313
-- [Phase 2] Confirmed stack fallback: `validate_xmit_vlan()` in
-  net/core/dev.c:3971-3977
-- [Phase 3] `git blame` on wx_features_check: body from 3b05aa997c491;
-  new VLAN loop from f5cfb576ce39b
-- [Phase 3] TX offload intro `3403960cdf86c` (v6.5-rc1); `git merge-base
-  --is-ancestor` both 3b05aa997c491 and 3403960cdf86c vs HEAD: yes
-- [Phase 3] Follow-up 732ed8f75ce58 exists; not a required prereq for
-  this hunk
-- [Phase 3] Author Jiawen Wu listed as Wangxun maintainer in MAINTAINERS
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1→v2, lore msgid
-  069DF89AA8029189+...; Przemek nits on v1; Jacob Keller asked why not
-  net+Fixes; author said no Fixes SHA; applied to net-next
-- [Phase 4] lore WebFetch 403; v1 retrieved via `b4 mbox`
-- [Phase 5] Callers: txgbe_main.c:705, ngbe_main.c:681;
-  netif_skb_features in net/core/dev.c:3895-3924
-- [Phase 5] VF netdev_ops: ndo_start_xmit=wx_xmit_frame, no
-  ndo_features_check
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4; pre-patch function confirmed via `git show
-  f5cfb576ce39b^`
-- [Phase 8] Failure mode from commit text + HW offload path: corrupted
-  frames / malfunction, severity HIGH
-- UNVERIFIED: stable@ mailing-list history (lore 403); independent
-  crash/reproducer beyond vendor description
+The patch is a one-line, obviously correct module-alias export for an
+existing SPI id table. This tree has the driver (since v5.8). It matches
+the device-ID/module-alias exception and current stable practice for
+“publish the module alias” fixes, with negligible regression risk.
 
 **YES**
 
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 24 +++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/iio/adc/max1241.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 4a6851612368d..9be339965a683 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -3193,6 +3193,30 @@ netdev_features_t wx_features_check(struct sk_buff *skb,
- 				    netdev_features_t features)
- {
- 	struct wx *wx = netdev_priv(netdev);
-+	__be16 type = skb->protocol;
-+	u16 vlan_depth = ETH_HLEN;
-+	u32 vlan_num = 0;
-+
-+	if (skb_vlan_tag_present(skb))
-+		vlan_num++;
-+
-+	while (eth_type_vlan(type)) {
-+		struct vlan_hdr vhdr, *vh;
-+
-+		vh = skb_header_pointer(skb, vlan_depth, sizeof(vhdr), &vhdr);
-+		if (unlikely(!vh))
-+			break;
-+
-+		type = vh->h_vlan_encapsulated_proto;
-+		vlan_depth += VLAN_HLEN;
-+		vlan_num++;
-+
-+		if (vlan_num > 2) {
-+			features &= ~(NETIF_F_HW_VLAN_CTAG_TX |
-+				      NETIF_F_HW_VLAN_STAG_TX);
-+			break;
-+		}
-+	}
+diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
+index d62c1a0116593..cab04beae7293 100644
+--- a/drivers/iio/adc/max1241.c
++++ b/drivers/iio/adc/max1241.c
+@@ -179,6 +179,7 @@ static const struct spi_device_id max1241_id[] = {
+ 	{ "max1241", max1241 },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(spi, max1241_id);
  
- 	if (!skb->encapsulation)
- 		return features;
+ static const struct of_device_id max1241_dt_ids[] = {
+ 	{ .compatible = "maxim,max1241" },
 -- 
 2.53.0
 
