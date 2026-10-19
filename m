@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209E25B5867;
-	Mon, 19 Oct 2026 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874B55B6793;
+	Mon, 19 Oct 2026 14:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418442; cv=none; b=SyufBb36T/q7DsUlwsUnThTenLvee8XcUt0AsaPi67m6ilfCL323R29hbjSzxloMMnyTkpIK6ER1Lhy7QiYkQo2oBZF++gT8epbU+ZS4tjIpCX6mG0xq5Es58GubzQwACrG38Z+UvwbW+uExZe1EpYz4Rz+nBfG00k7W7whZ734=
+	t=1792418444; cv=none; b=aMylkdaCYpyyUPczdDW88pPlsM7TzKcMhl7lzX+MaJdKgli/0P4Ip0nL2EuCP7Cjrsk3aB5NQQO/Q520TRodKuEfa5z8fe3Ehcj567glT+D1tqa9HpJZW1ZM2lcJxuWPMdZFd06rG+8kDdArQijaGxz+5NsVaVVFHL1Mo6I8g50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418442; c=relaxed/simple;
-	bh=KH1gZ0iSo8ZMkj7QxDbs2N6J7RnFZAXfj+bSqZteFPk=;
+	s=arc-20240116; t=1792418444; c=relaxed/simple;
+	bh=kDZcdXAdhCI7mVYRke3rRDlWlNGQWvzvDMs5QSQVMWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h/w1ehUYSYudyIGECAauFECRauDpX8g1MmOxB6P3ZM8u6GMiQY08WwxcaBiPFnXDOJRa/uRVW4dXGqm6dZG2OIDY9+09e/dhG6smWUcLnOgblfxFnWa4EJFcaoQw3Bgv3A6gOOPp1jrBKRcuKUuwMP6O0GsIhHZU4pP1xh0aTqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F0Oe4IX2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WMskcIPp63M8jXc2/xufrs/c5sPvqiFIpFEUGlt8hJDQ5DhjFi6H56ABTkkeQeSN5hOes+VecgMtwzXUIfSRQ34mNQ5aoMuTB8YtcER7pzu3veVIPzn0h/eg9LLY0qYiC+cQdMr/s5CIAwswim9m8eIRCp8lxvMl7j+Q3MfitfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TBqMS+nO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F0Oe4IX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AF41F000C8;
-	Mon, 19 Oct 2026 14:00:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TBqMS+nO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652A81F000C6;
+	Mon, 19 Oct 2026 14:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418440;
-	bh=4Fr6kfWDp4dOvN1nv2z8jERPaky7/iIWciLiTwBsJ0Q=;
+	s=k20260515; t=1792418441;
+	bh=HnH9Q1B70h7WaZqs+atuLrBcDHt4+dPha0IK0njWoO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0Oe4IX2jzoiIWK7d7AmZdYtxXCT6Zsx60Nld666lsTfqLRHrfb4KWQWxdEVHjd7E
-	 zgCoexYtOHU1C4dX51cMLtx+B1D4LkBtFjXVzj2McIx/2C9tAj21xq/pme1o7WPzYt
-	 CsG3dVBDnPqBcGSpLcVOM2KC/vsNkzvRCAYzgfJ4YTHrrLShEOAhzqykiatZmXBtxi
-	 uWmYF7P7Fcme4wwnthciE4b77Fp/iuTHQJc1nr2WLVbhoc+zk/BQVtJ5SNBEACbneL
-	 zCHcxs8QQfAXEEk6bFu724OyZ68CKJpM8z3vj1iECYws407Dzu7tBuFW0KZGlzbWaX
-	 r6Add9AfByKcw==
+	b=TBqMS+nO+vDSQDC148tld5QpvzFElW+E9on42cilefWgs+XJO456poMgF+HHnJSY9
+	 0+fAv7FEhc4uYWxdI/xi/2IcNhju5gf7bI5A6WIdfPbWJrgWDVn0xSKnWazTSJqTtR
+	 7CVYG9/XN34nE2I6uh9Rqx7k7YMi9VnfoT5quTP84zr4dQyn2eteVMYcw8ir2YTjLf
+	 URqCCGxX/VU/a92H+Tmwxo3zXomZRwMXrgAJyZN9G34QIu2RDRIqi5MxubuW/0sfuq
+	 kSTV6Uqns0HtwlyDxy7gU7Zhl/L+MX2xHyTiXVv+fOHjIKN2GpjqimoVrZqerZJ1rt
+	 lJGj6rOtUZxdg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	lgirdwood@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: go7007: avoid undefined shifts in MPEG-4 headers
-Date: Mon, 19 Oct 2026 09:49:01 -0400
-Message-ID: <20261019135441.1420968-250-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] regulator: rt6245: Restore state on enable failure
+Date: Mon, 19 Oct 2026 09:49:02 -0400
+Message-ID: <20261019135441.1420968-251-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,469 +52,502 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 41f82777e547732460290ceb28fcc7c1b95ef192 ]
+[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
 
-The byte-alignment paths can call CODE_ADD() with a zero bit
-length.  The macro then shifts an int by name.b, which can be 32
-after the preceding bit was flushed.
+Currently, if regcache_sync() fails after the enable GPIO has been
+asserted, the driver returns with enable_gpio still set high and
+regcache_cache_only() left disabled. This leaves the device state
+inconsistent with the disabled state, where the enable GPIO is low and
+cache_only is enabled.
+On failure, restore the original state by setting cache_only back to
+true and driving the enable GPIO low before returning the error.
 
-vti_bitlen() can likewise shift a signed int into its sign bit while
-searching for the bit length, and the package mask construction can
-shift by the full type width.
-
-Make zero-length additions a no-op, derive the bit length with fls(),
-and build the mask with GENMASK().
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
-
-**Step 1.1 — Subject line**
-Record: `[media/go7007] [avoid] undefined shifts in MPEG-4 header bit-
-packing`. Subsystem is the WIS GO7007 USB MPEG encoder. “Avoid” is a
-bug-fix verb: the patch stops C undefined behavior, not adding a
-feature.
-
-**Step 1.2 — Tags**
-Record:
-- `Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>` (author)
-- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (media
-  maintainer; applied)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable` (absence of Fixes/Cc-stable is expected
-  for this review)
-
-**Step 1.3 — Body**
-Record:
-- Bug: `CODE_ADD()` can be called with bit length 0; after a flush
-  `name.b` can be 32, so `(val) << name.b` is a 32-bit shift of a 32-bit
-  int (C UB).
-- `vti_bitlen()` uses `(1 << i)` with signed `1` and `i` starting at 31
-  (shift into the sign bit).
-- Package mask `(1 << vop_time_increment_bitlength) - 1` can shift by
-  the full type width.
-- Symptoms: UBSAN shift diagnostics; wrong bitstream on arches that mask
-  the shift count; possible hang in `vti_bitlen()` when `max_time_incr
-  == 0`.
-- No version range or crash log in the message.
-- Root cause as stated: unguarded shift counts in the MPEG header
-  bitpacker.
-
-**Step 1.4 — Hidden bug fix?**
-Record: Not disguised. It is an explicit UB/correctness fix. The `fls()`
-rewrite is equivalent for every nonzero value and also stops an unsigned
-wrap / infinite loop when `max_time_incr == 0`.
+Local tree is **6.1.188** (`pending-6.1`). The buggy `rt6245_enable()`
+error path is present and matches the patch pre-image; this is a small,
+self-contained rollback of GPIO and regcache state after
+`regcache_sync()` fails.
 
 ---
 
-## Phase 2: Diff analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[regulator / rt6245] [Restore] restore GPIO + regcache state
+when enable fails after `regcache_sync()`**
+
+Subsystem prefix `regulator: rt6245:`. Verb “Restore” is rollback
+language: incomplete error recovery, not a feature.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- File: `drivers/media/usb/go7007/go7007-fw.c` (+15 / −13)
-- Functions/macros: `CODE_ADD`, `vti_bitlen()`, `seqhead_to_package()`;
-  plus `#include <linux/bitops.h>`
-- Scope: single-file surgical fix
+- `Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>` (author)
+- `Link:
+  https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (regulator
+  maintainer)
+- No `Fixes:`, no `Cc: stable`, no `Reported-by`, no `Tested-by`, no
+  `Reviewed-by`, no syzbot
+- Absence of `Fixes:` / `Cc: stable` is expected for this review and is
+  not a negative signal
 
-**Step 2.2 — Flow change**
+Mainline SHA (from git.kernel.org, not used as a “already selected”
+signal): `e95a0a309ca02bf26dc937cdeb3fe2a235c65f63`
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-1. `CODE_ADD`: previously always did `name.b -= length; name.a |= (val)
-   << name.b`. After: `if (length)` wraps the body, so length-0 is a no-
-   op.
-2. `vti_bitlen`: previously a countdown from 31 with `(1 << i) - 1`
-   masks. After: `fls(max_time_incr)` with `bitlen ?: 1`.
-3. `seqhead_to_package`: `(1 << vop_time_increment_bitlength) - 1` →
-   `GENMASK(vop_time_increment_bitlength - 1, 0)`.
+- **Bug:** After asserting `enable_gpio` and turning cache-only off,
+  `regcache_sync()` can fail. The function then returns without undoing
+  those two steps.
+- **Symptom:** Software reports enable failed (`enable_state` stays
+  false) while the chip enable pin stays high and
+  `regcache_cache_only()` stays disabled. That does not match the
+  disabled state (GPIO low, cache-only on).
+- **Root cause:** Missing rollback on the `regcache_sync()` error path.
+- **Version info:** None in the message. Introduced with the driver
+  itself (2021).
+- No stack trace, no reproducer, no user report.
 
-Affected path is firmware-image construction at MPEG-4 stream start
-(`go7007_start_encoder()`), not a generic hot path.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.3 — Bug mechanism**
-Record: **Type / undefined-shift (UBSAN class)**, with a logic/hang side
-effect.
+Record: This is an explicit error-path fix, not a disguised cleanup. It
+restores hardware and cache mode so they match “disabled” before
+returning the error.
 
-Verified zero-length `CODE_ADD` in `mpeg4_frame_header()` /
-`mpeg4_sequence_header()`:
+---
 
-```758:761:drivers/media/usb/go7007/go7007-fw.c
-        /* Byte-align with a zero followed by ones */
-        i = 8 - (CODE_LENGTH(c) % 8);
-        CODE_ADD(c, 0, 1);
-        CODE_ADD(c, (1 << (i - 1)) - 1, i - 1);
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
+Record:
+- File: `drivers/regulator/rt6245-regulator.c` (+4 / −1)
+- Function: `rt6245_enable()`
+- Scope: single-file surgical error-path fix
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
+Before (this tree, lines 47–56):
+
+```47:56:drivers/regulator/rt6245-regulator.c
+        gpiod_direction_output(priv->enable_gpio, 1);
+        usleep_range(RT6245_ENTIME_IN_US, RT6245_ENTIME_IN_US + 1000);
+
+        regcache_cache_only(regmap, false);
+        ret = regcache_sync(regmap);
+        if (ret)
+                return ret;
+
+        priv->enable_state = true;
+        return 0;
 ```
 
-When `CODE_LENGTH % 8 == 7`, `i == 1`, so the second call is
-`CODE_ADD(..., 0, 0)`. After the 1-bit add, `name.b` can be 32, then
-`(val) << 32` is UB.
+After: on `regcache_sync()` failure, set `regcache_cache_only(regmap,
+true)`, drive GPIO low, then return `ret`. `priv->enable_state` is still
+not set (already false on this path).
 
-Pre-fix `vti_bitlen`:
+Affected path: enable error path only, and only when `enable_gpio` is
+present (early `return 0` if it is NULL).
 
-```c
-for (i = 31; (max_time_incr & ((1 << i) - 1)) == max_time_incr; --i)
-    ;
-return i + 1;
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **Error-path / incomplete rollback**, not UAF/race/leak.
+
+Mechanism:
+1. GPIO is driven high (chip powered).
+2. Cache-only is disabled so I2C writes go to hardware.
+3. `regcache_sync()` fails (I2C/NAK/timeout).
+4. Function returns. Regulator core does **not** call `disable()` on
+   enable failure (see Phase 5).
+5. Chip stays powered; cache-only stays off; `is_enabled()` still
+   reports off.
+
+Disable already does the matching pair (`cache_only true` + GPIO low).
+The patch copies that rollback onto the failed-enable path.
+
+Note: `rt6245_disable()` also calls `regcache_mark_dirty()`. This patch
+does not. For this driver that is still correct: it uses
+`REGCACHE_FLAT`, and `regcache_sync()` only clears `map->cache_dirty` on
+success (`drivers/base/regmap/regcache.c`). A failed sync leaves the
+cache dirty, so the next enable still resyncs. `mark_dirty()` is needed
+on disable because a *successful* enable had already cleared that flag.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record:
+- Obviously correct: undoes exactly the two side effects performed
+  before the failing call, in reverse order (cache-only first, then
+  GPIO, matching disable).
+- Minimal: four lines, no unrelated churn.
+- Regression risk: very low. GPIO is already known non-NULL on this
+  path. No locking change. No API change.
+- `gpiod_direction_output(..., 0)` matches the style already used in
+  this file’s enable/disable (this tree does not use `gpiod_set_value()`
+  here).
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record: Buggy sequence was introduced in
+`a747070e9b629eeb70118651dfbd500bf8bb5ebe` (“regulator: rt6245: Add
+support for Richtek RT6245”, 2021-06-03, ChiYuan Huang). `git merge-base
+--is-ancestor a747070e9b629 HEAD` succeeds. `git merge-base --is-
+ancestor a747070e9b629 v6.1` succeeds. Present since the driver landed,
+well before 6.1.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: No `Fixes:` tag. The introducing commit is the driver add
+itself, and it is in this tree.
+
+**Step 3.3: CHECK FILE HISTORY**
+
+Record: Only two commits on this file in this tree:
+- `a747070e9b629` — add driver
+- `508f8ccd993d1` — make `func_base` static (unrelated size tweak)
+
+No later refactor, no series glue, no conflicting change. Standalone.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Author is not the subsystem maintainer (that is Mark Brown;
+driver author is ChiYuan Huang). Same author has similar “restore cache-
+only on sync failure” work already in this tree, e.g.:
+- `3de4b44d5887d` ASoC rockchip spdif: restore cache-only on sync
+  failure
+- `0614f2fa0998f` gpio pca953x: restore cache_only/IRQ on
+  restore_context failure
+
+Those are the same class of error-path rollback. This rt6245 change is
+not in HEAD (`git merge-base --is-ancestor e95a0a309ca0 HEAD` fails).
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: None. Uses only `regcache_cache_only()`, `regcache_sync()`,
+`gpiod_direction_output()`, all present. Pre-image of the hunk matches
+this tree exactly. Can apply standalone.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
+Record:
+- msgid `20260729100018.66577-1-phucduc.bui@gmail.com`
+- `b4 dig` / `b4 mbox`: no match / lore 404
+- lore.kernel.org fetch: HTTP 403
+- Patchew fetch: timeout
+- LKML archive:
+  https://lkml.iu.edu/hypermail/linux/kernel/2607.3/10141.html — v1
+  patch text matches the committed diff; no review replies on that page
+- Patchew summary (search): Mark Brown applied it to `for-7.3` the next
+  day
+- git.kernel.org: committed 2026-07-30 by Mark Brown; tags are only
+  author SOB + Link + maintainer SOB
+- Included in “regulator updates for v7.3” pull (Mark Brown, 2026-08-17)
+
+No NAK found. No later v2/v3 of this specific patch found. Applied as
+submitted.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+
+Record (from Patchew mbox snippet): To Liam Girdwood and Mark Brown; Cc
+linux-kernel. Mark Brown applied it. No extra Reviewed-by.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: No bugzilla, no syzbot, no user report. Analysis-driven error-
+path fix.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Single `[PATCH]`, not `N/M`. Sibling Richtek drivers in this
+tree (`rt6160`, `rtq6752`) have similar enable+sync patterns; this
+commit does not depend on changing them.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: Search of lore.kernel.org/stable for this subject did not find a
+prior stable request or rejection. UNVERIFIED beyond search snippets
+(lore 403).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `rt6245_enable()` only. Wired as `.enable` in
+`rt6245_regulator_ops`.
+
+**Step 5.2: TRACE CALLERS**
+
+Record: Not called by name elsewhere. Invoked through regulator core
+`_regulator_do_enable()`:
+
+```2814:2817:drivers/regulator/core.c
+        } else if (rdev->desc->ops->enable) {
+                ret = rdev->desc->ops->enable(rdev);
+                if (ret < 0)
+                        return ret;
 ```
 
-`1 << 31` is a signed shift into the sign bit (UB) on every call. If
-`max_time_incr == 0`, the condition is always true, `i` is `unsigned
-int`, `--i` wraps, and the loop does not terminate.
+On failure the core returns immediately. It does not call
+`ops->disable`. The leftover GPIO-high / cache-only-off state persists
+until a later disable (which the core will not issue, because it never
+counted the regulator as enabled).
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct and minimal.
-- `fls(x)` matches the old loop for all `x > 0` (spot-checked 1, 2,
-  30000, 0x80000000).
-- `fls(0) ?: 1` returns 1 instead of hanging.
-- `GENMASK(n-1, 0)` is the defined way to build an n-bit mask;
-  `vti_bitlen()` never returns 0 after the `?: 1` guard, so `GENMASK(-1,
-  0)` cannot happen.
-- Regression risk is low: no locking, no API, no data-structure change.
-  Residual UB not in this patch: `(1 << (i - 1))` in the same padding
-  path is safe because `i` is in 1..8.
+**Step 5.3: TRACE CALLEES**
 
----
+Record: `gpiod_direction_output`, `usleep_range`, `regcache_cache_only`,
+`regcache_sync`. I2C writes happen inside `rt6245_reg_write()` during
+sync.
 
-## Phase 3: Git history
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-**Step 3.1 — Blame**
-Record: Buggy `CODE_ADD` / `vti_bitlen` / mask come from
-`866b8695d67e83` (“Staging: add the go7007 video driver”, 2008-10-10).
-Driver left staging in `7955f03d18d14`. The bug is ~18 years old, not
-recent churn.
+Record: Reachable from `regulator_enable()` consumers and from sysfs
+enable of this regulator. Trigger: board has `enable-gpios`, someone
+enables the regulator, I2C `regcache_sync()` fails. Not every boot; it
+is an I2C error path. Unprivileged trigger depends on whether that
+regulator sysfs is exposed; kernel consumers can hit it during
+probe/resume.
 
-**Step 3.2 — Fixes: tag**
-Record: No `Fixes:` tag. Introducer is the 2008 staging add above. `git
-merge-base --is-ancestor 41f82777e5477 HEAD` is true: this snapshot
-already contains the fix.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-**Step 3.3 — File history**
-Record: Recent `go7007-fw.c` commits are unrelated (min/max macros,
-SPDX, KASAN frame warning, sparse). Standalone, not `N/M`.
-
-**Step 3.4 — Author**
-Record: Yousef Alhouseen is not the media maintainer; nearby work is a
-series of small correctness patches. Weight comes from Hans Verkuil’s
-SOB (applied to media tree).
-
-**Step 3.5 — Dependencies**
-Record: Needs `fls()` and `GENMASK()`, both long-standing
-(`<linux/bitops.h>` / `<linux/bits.h>`). No prerequisite series. Can
-apply standalone to any tree that still has this file.
+Record: Same class in this tree: `rt6160_enable()` also does GPIO +
+`regcache_sync()` with no rollback
+(`drivers/regulator/rt6160-regulator.c`). `rtq6752_set_vdd_enable()`
+likewise returns on sync failure after GPIO high. Those are separate
+bugs, not prerequisites.
 
 ---
 
-## Phase 4: Mailing list / external
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 41f82777e5477` → https://patch.msgid.link/20260630105
-257.54757-1-alhouseenyousef@gmail.com
-`b4 dig -a`: **v1 only**, one revision.
-Saved mbox: single message, no replies. Hans applied it without public
-review comments. No NAK, no reviewer `Cc: stable`.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Hans Verkuil, Mauro Chehab, linux-media, linux-kernel. Right
-maintainers were on the To/Cc list.
+Record: Yes. `drivers/regulator/rt6245-regulator.c` `rt6245_enable()`
+lines 50–53. Introduced 2021-06-03, in v6.1. Fix is not an ancestor of
+HEAD.
 
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla/Reported-by. Inspection/UBSAN-style fix, not
-a user crash report.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-**Step 4.4 — Series**
-Record: Standalone v1. Same-day sibling `media: go7007: s2250: propagate
-control I/O failures` is a different bug.
+Record: **Clean apply.** Hunk context is identical. No refactor of this
+function after the driver was added. (`probe_new` vs later `probe` is
+unrelated.)
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org/stable fetch returned 403. Web search for this
-subject on stable found **no** discussion. UNVERIFIED beyond that
-search.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No other rt6245 enable-failure rollback. File history is only
+the two commits above.
 
 ---
 
-## Phase 5: Semantic / call graph
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 5.1 — Functions**
-Record: `CODE_ADD` (macro), `vti_bitlen()`, `seqhead_to_package()`. No
-semcode MCP in this environment; used grep.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 5.2 — Callers**
+Record: **regulator / Richtek RT6245 I2C buck**. Criticality:
+**PERIPHERAL** (specific PMIC/regulator, `CONFIG_REGULATOR_RT6245`). It
+is a 14A, 0.4375–1.3875 V converter, typically a CPU/core or similar
+rail on boards that use it.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Regulator core in this tree is actively backported. This file
+itself is mature and almost untouched since 2021.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: Driver-specific / config-specific: `CONFIG_REGULATOR_RT6245`
+plus DT `enable-gpios`. No in-tree `.dts`/`.dtsi` uses `richtek,rt6245`
+(only the binding example). Real users are out-of-tree / vendor DTs.
+Still a shipped mainline driver.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: Enable with GPIO, then I2C `regcache_sync()` fails. Uncommon
+compared with the happy path, but a lasting state once it happens (core
+will not disable). Not a race.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
 Record:
-- `vti_bitlen()` ← `mpeg4_frame_header()`, `mpeg4_sequence_header()`,
-  `seqhead_to_package()`
-- those ← `gen_mpeg4hdr_to_package()` / `do_special(SPECIAL_SEQHEAD)`
-  when `go->format == V4L2_PIX_FMT_MPEG4`
-- `go7007_construct_fw_image()` ← `go7007_start_encoder()` ←
-  `go7007_start_streaming()` (vb2 `start_streaming`)
+- Hardware enable pin left asserted on a 14 A regulator while the
+  framework thinks it is off.
+- Cache-only left disabled, so later cache/I2C behavior does not match
+  “disabled”.
+- Not a panic, UAF, or filesystem corruption.
 
-**Step 5.3 — Callees**
-Record: After the patch, `fls()` and `GENMASK()` only. No alloc/lock in
-the changed lines.
+Severity: **MEDIUM–HIGH** for this hardware (wrong power state /
+unexpected rail power), **LOW** for the rest of the kernel.
 
-**Step 5.4 — Reachability**
-Record: Yes, from userspace: open the V4L2 node, `VIDIOC_S_FMT` MPEG-4,
-`VIDIOC_STREAMON`. Firmware construction runs with `hw_lock` held.
+**Step 8.4: RISK-BENEFIT RATIO**
 
-`VIDIOC_S_PARM` can make `fps_scale` huge:
-
-```485:491:drivers/media/usb/go7007/go7007-v4l2.c
-        n = go->sensor_framerate *
-                parm->parm.capture.timeperframe.numerator;
-        d = 1001 * parm->parm.capture.timeperframe.denominator;
-        if (n != 0 && d != 0 && n > d)
-                go->fps_scale = (n + d/2) / d;
-        else
-                go->fps_scale = 1;
-```
-
-If `fps_scale > sensor_framerate` (~25025–30030), `max_time_incr == 0`
-and the old loop hangs while holding `hw_lock`. Needs device node access
-(typically `video` group), not a random unprivileged syscall on machines
-without the hardware.
-
-**Step 5.5 — Similar patterns**
-Record: MPEG-1 byte-align already skips `CODE_ADD` when `j == 8`. MPEG-4
-padding is the length-0 case. No sibling drivers share this macro.
-
----
-
-## Phase 6: This checkout
-
-**Step 6.1 — Does the buggy code exist here?**
-Record: Local tree is **v7.3-rc4** (`7.3.0-rc4`, `f0100363d8c37`). The
-driver is present. Current `go7007-fw.c` already has the fix (`#include
-<linux/bitops.h>`, `if (length)`, `fls()`, `GENMASK()`). Pre-fix code
-lived in this file from 2008 until `41f82777e5477` (2026-07-15). Any
-stable kernel that still has unfixed `go7007-fw.c` has the bug.
-
-**Step 6.2 — Backport difficulty**
-Record: Clean apply. The bitpacker has been stable since 2008; the hunks
-match the historical file. Only extra include is `<linux/bitops.h>`.
-
-**Step 6.3 — Related fixes already here**
-Record: This *is* the fix. No earlier alternate fix in the file history.
-
----
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: `drivers/media/usb/go7007` — USB V4L2 MPEG encoder (WIS GO7007 /
-Sensoray 2250, Plextor, etc.). Criticality: **PERIPHERAL** (specific old
-capture dongles), but not staging.
-
-**Step 7.2**
-Record: Low churn. Recent commits are small leak/error-path fixes.
-Mature, rarely touched encoder header generator.
-
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1 — Who is affected**
-Record: Users of `CONFIG_VIDEO_GO7007` with MPEG-4 encode. Hardware IDs
-include Sensoray 2250/2251 (`0x1943:0xa250`) and several WIS/Plextor USB
-IDs. Not universal.
-
-**Step 8.2 — Trigger**
 Record:
-- Common: every MPEG-4 `STREAMON` can hit length-0 `CODE_ADD` depending
-  on header bit length (UBSAN / UB). Typical `val` is 0, so x86 often
-  still produces a no-op.
-- Uncommon but real: `VIDIOC_S_PARM` with a large time-per-frame →
-  `max_time_incr == 0` → old `vti_bitlen` infinite loop under `hw_lock`.
-- Typical `sensor_framerate` is 25025/30000/30030, so `(1 << vti_bitlen)
-  - 1` is a ~15-bit shift and not the 32-bit case; the GENMASK change is
-  defensive for that site.
-
-**Step 8.3 — Failure mode**
-Record:
-- Length-0 shift: UBSAN / undefined; functional impact usually none
-  because `val == 0`. Severity **MEDIUM** (UBSAN), not a proven oops.
-- `vti_bitlen` hang: driver stuck with `hw_lock` held → STREAMON never
-  finishes. Severity **HIGH** for that device, not a machine-wide panic.
-- Overall: **MEDIUM–HIGH**, not core-kernel CRITICAL.
-
-**Step 8.4 — Risk vs benefit**
-Record: Benefit medium for go7007 users (defined behavior, no hang).
-Risk **very low** (~15 lines, equivalent `fls()`, maintainer-applied).
-Ratio favors backport.
+- **Benefit:** Stops a failed enable from leaving a high-current rail
+  powered and the regmap in the wrong mode. Matches disable semantics.
+- **Risk:** Four lines on an error path, same operations disable already
+  uses. Very low.
+- **Ratio:** Favorable. Cheap, contained, real rollback.
 
 ---
 
-## Phase 9: Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 — Evidence**
+**Step 9.1: COMPILE THE EVIDENCE**
 
-For:
-- Real C undefined shifts in reachable MPEG-4 header generation
-- Old `vti_bitlen()` can livelock when `fps_scale` is large
-- 15/13 lines, one file, obviously correct
-- `fls()` is equivalent for all nonzero inputs
-- Hans Verkuil signed off
-- Bug present since 2008; applies cleanly
-- No new API/feature
+**FOR:**
+- Real incomplete error recovery; hardware and cache mode left
+  inconsistent with “disabled”.
+- Regulator core does not call disable on enable failure, so the leak is
+  permanent until some other disable.
+- Buggy code has been in this 6.1 tree since the driver was added
+  (2021).
+- Four-line, obviously correct, applies cleanly, no new API, no
+  dependencies.
+- Maintainer (Mark Brown) applied it; same author pattern already
+  accepted in this tree for other cache-only rollbacks.
 
-Against:
-- Niche USB encoder, few systems
-- No user/syzbot report
-- Common-path length-0 add is `val==0`, often a practical no-op
-- GENMASK site is not a 32-bit shift with real framerates
-- No public review beyond maintainer apply
+**AGAINST:**
+- Peripheral driver; no in-tree board DT.
+- I2C error path; no user/syzbot report.
+- Not a crash/security/deadlock/corruption bug.
 
-Unresolved:
-- Could not read lore.kernel.org/stable (403)
-- No sanitizer log attached to the commit (whether UBSAN actually fired
-  is unverified)
+**UNRESOLVED:**
+- Full lore thread unreable (403/404); no extra reviewer comments
+  retrieved.
+- No stable-list discussion found.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — equivalent rewrite;
-   maintainer applied v1.
-2. Real bug that affects users? **PASS** — UB on MPEG-4 start; hang if
-   `max_time_incr==0`.
-3. Important (crash/security/corruption/deadlock)? **PASS** — hang under
-   `hw_lock` plus UBSAN-class UB. Not a core panic, but a real driver
-   DoS/UB, not style cleanup.
-4. Small and contained? **PASS** — one file, ~28 lines.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree’s go7007 code? **PASS** — same file/macros;
-   include is standard.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-**Step 9.3 — Exception category**
-Record: None (not a device ID/quirk/DT/build/docs). It is a normal small
-correctness fix.
+1. Obviously correct and tested? **PASS** — rollback is local and
+   matches disable; applied by maintainer. No extra Tested-by.
+2. Fixes a real bug that affects users? **PASS** — failed enable leaves
+   the rail on and cache-only off.
+3. Important issue? **PASS** (medium) — wrong power state on a high-
+   current regulator, not a kernel oops. Within the “etc.” of hardware
+   left in a bad state.
+4. Small and contained? **PASS** — 4 insertions / 1 deletion, one
+   function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — pre-image matches; driver
+   present.
 
-**Step 9.4 — Decision**
-This checkout is mainline 7.3-rc4, which already contains the commit;
-the question is whether the fix has stable technical merit for trees
-that still have the 2008 bitpacker. It does: small, correct, no
-dependencies, fixes defined-behavior bugs and a reachable livelock in
-`go7007_start_encoder()`. Risk of regression is negligible.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-### What the commit solves for stable users
-On MPEG-4 stream start the GO7007 firmware generator packes headers with
-`CODE_ADD()`. Padding can request a 0-bit add after a flush (`name.b ==
-32`), which is an illegal shift. `vti_bitlen()` always does `1 << 31`
-and, if userspace sets a very large frame interval, can spin forever
-with `hw_lock` held so `VIDIOC_STREAMON` never returns. The patch skips
-zero-length adds, uses `fls()`, and builds the mask with `GENMASK()`.
+Record: Not a device ID / quirk / DT / build / docs exception. Ordinary
+driver bugfix.
 
-### Risk vs benefit
-Benefit is defined behavior and no encoder-start hang for remaining
-GO7007/Sensoray users. Risk is a few lines in a dormant driver with no
-API change.
+**Step 9.4: DECISION**
 
-### Concerns
-Obscure hardware and no field report. That lowers urgency, not
-correctness. No backport rework needed.
+This belongs on 6.1. The bug exists here, the fix is surgical, and
+leaving a 14 A enable pin high after a failed enable is a real hardware-
+state bug, not style cleanup. Risk of regression is negligible.
 
 ---
 
-Verification:
-- [Phase 1] Parsed subject/body/tags: only author + Hans Verkuil SOBs;
-  no Fixes/Reported-by/Link/Cc-stable
-- [Phase 2] `git show --numstat 41f82777e5477`: 15/13, one file; read
-  current and `41f82777e5477^` `CODE_ADD` / `vti_bitlen` / mask
-- [Phase 2] Confirmed length-0 path: `i = 8 - (CODE_LENGTH % 8)` then
-  `CODE_ADD(..., i-1)` when `i==1`
-- [Phase 2] Confirmed `fls` equivalence for 1, 2, 30000, 0x80000000;
-  `fls(0)?:1` vs old wrap
-- [Phase 3] `git blame` / `git log -1 866b8695d67e83`: introduced 2008
-  with staging driver
-- [Phase 3] `git merge-base --is-ancestor 41f82777e5477 HEAD` → yes
-  (already in this 7.3-rc4 snapshot)
-- [Phase 3] `git log --oneline --author="Yousef Alhouseen"`: standalone
-  vs nearby s2250 patch
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; To Hans/Mauro/linux-media;
-  mbox has no replies
-- [Phase 4] lore.kernel.org 403; lkml.iu.edu shows the same v1 patch
-  text
-- [Phase 4] WebSearch stable archive: no hit for this subject
-- [Phase 5] grep callers: `vti_bitlen` → MPEG-4 headers → `do_special` →
-  `go7007_construct_fw_image` → `go7007_start_encoder` →
-  `go7007_start_streaming`
-- [Phase 5] Read `vidioc_s_parm`: `fps_scale` unbounded when `n > d`
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Current file already has the fix; parent file has the old
-  loop/mask
-- [Phase 7] Kconfig `VIDEO_GO7007`; USB IDs include Sensoray 2250
-- [Phase 8] Failure: UB on padding; hang if `max_time_incr==0` under
-  `hw_lock`
-- UNVERIFIED: whether UBSAN actually reported this in a boot/log;
-  stable-list archives beyond web search (403)
+## What the commit solves for this tree
+
+On `CONFIG_REGULATOR_RT6245` boards that use `enable-gpios`, a failed
+`regcache_sync()` during enable currently returns an error while the
+chip stays powered and the regmap is no longer cache-only. The regulator
+core will not run disable for that failed enable, so the rail stays on.
+The patch restores cache-only and deasserts the GPIO, which is the
+disabled state this driver already uses.
+
+It meets the stable rules: obviously correct, real bug, small, no new
+API, clean apply on 6.1.188. Benefit is restoring consistent power/cache
+state; risk is a four-line error path.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed subject/tags/body from the candidate message and
+  from git.kernel.org commit `e95a0a309ca0` (author SOB, Link, Mark
+  Brown SOB; no Fixes/stable/Reported-by).
+- **[Phase 2]** Diff is +4/−1 in `rt6245_enable()`; local file matches
+  the pre-image (`if (ret) return ret;` after `regcache_sync`).
+- **[Phase 2]** Compared with `rt6245_disable()`: disable already does
+  cache-only + GPIO low; enable failure did not.
+- **[Phase 2]** `regcache_sync()` only clears `cache_dirty` on success —
+  missing `mark_dirty` is not required on this failure path for
+  `REGCACHE_FLAT`.
+- **[Phase 3]** `git blame`: lines from `a747070e9b629` (2021-06-03).
+  Ancestor of HEAD and of `v6.1`.
+- **[Phase 3]** `git log --oneline --
+  drivers/regulator/rt6245-regulator.c`: only add-driver + static-array
+  commit.
+- **[Phase 3]** `git merge-base --is-ancestor e95a0a309ca0 HEAD` → not
+  in this tree.
+- **[Phase 4]** `b4 dig`/`b4 mbox`: no lore thread; lore HTTP 403;
+  Patchew timeout.
+- **[Phase 4]** LKML archive shows v1 matching the committed diff; v7.3
+  regulator pull lists this commit.
+- **[Phase 4]** Recipients: Liam Girdwood, Mark Brown (Patchew mbox
+  snippet).
+- **[Phase 5]** `rt6245_enable` is only `.enable` in ops;
+  `_regulator_do_enable()` returns on `ops->enable` failure without
+  disable.
+- **[Phase 5]** `git grep richtek,rt6245` in dts/dtsi: no in-tree users;
+  binding YAML only.
+- **[Phase 6]** `git describe HEAD` → `p-6.1-9-g27ef8181b8a64`;
+  `Makefile` 6.1.188; `make kernelversion` 6.1.188.
+- **[Phase 6]** Python pre-image check: enable() does not yet restore
+  cache-only/GPIO on sync failure.
+- **[Phase 7]** Kconfig `REGULATOR_RT6245` present; Makefile builds
+  `rt6245-regulator.o`.
+- **[Phase 8]** Failure mode verified from code: GPIO left high + cache-
+  only left false + `enable_state` still false.
+- **UNVERIFIED:** Full lore review comments (fetch blocked); whether any
+  out-of-tree board actually hits the I2C-fail path in production.
+
+The patch is small, applies cleanly to this 6.1 tree, and fixes a real
+enable-failure rollback for hardware that this tree already ships.
 
 **YES**
 
- drivers/media/usb/go7007/go7007-fw.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/regulator/rt6245-regulator.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/go7007/go7007-fw.c b/drivers/media/usb/go7007/go7007-fw.c
-index 86ce593e0c546..8cf959c20e30c 100644
---- a/drivers/media/usb/go7007/go7007-fw.c
-+++ b/drivers/media/usb/go7007/go7007-fw.c
-@@ -13,6 +13,7 @@
-  */
+diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
+index 1843ecec19229..5c0ee04e97ac7 100644
+--- a/drivers/regulator/rt6245-regulator.c
++++ b/drivers/regulator/rt6245-regulator.c
+@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
  
- #include <linux/module.h>
-+#include <linux/bitops.h>
- #include <linux/time.h>
- #include <linux/mm.h>
- #include <linux/device.h>
-@@ -58,14 +59,16 @@ struct code_gen {
- #define CODE_GEN(name, dest) struct code_gen name = { dest, 0, 32, 0 }
+ 	regcache_cache_only(regmap, false);
+ 	ret = regcache_sync(regmap);
+-	if (ret)
++	if (ret) {
++		regcache_cache_only(regmap, true);
++		gpiod_direction_output(priv->enable_gpio, 0);
+ 		return ret;
++	}
  
- #define CODE_ADD(name, val, length) do { \
--	name.b -= (length); \
--	name.a |= (val) << name.b; \
--	while (name.b <= 24) { \
--		*name.p = name.a >> 24; \
--		++name.p; \
--		name.a <<= 8; \
--		name.b += 8; \
--		name.len += 8; \
-+	if (length) { \
-+		name.b -= (length); \
-+		name.a |= (val) << name.b; \
-+		while (name.b <= 24) { \
-+			*name.p = name.a >> 24; \
-+			++name.p; \
-+			name.a <<= 8; \
-+			name.b += 8; \
-+			name.len += 8; \
-+		} \
- 	} \
- } while (0)
- 
-@@ -707,11 +710,10 @@ static int gen_mpeg1hdr_to_package(struct go7007 *go,
- 
- static int vti_bitlen(struct go7007 *go)
- {
--	unsigned int i, max_time_incr = go->sensor_framerate / go->fps_scale;
-+	unsigned int max_time_incr = go->sensor_framerate / go->fps_scale;
-+	int bitlen = fls(max_time_incr);
- 
--	for (i = 31; (max_time_incr & ((1 << i) - 1)) == max_time_incr; --i)
--		;
--	return i + 1;
-+	return bitlen ?: 1;
- }
- 
- static int mpeg4_frame_header(struct go7007 *go, unsigned char *buf,
-@@ -1209,7 +1211,7 @@ static int seqhead_to_package(struct go7007 *go, __le16 *code, int space,
- 		0xbf08,		fps,
- 		0xbf09,		0,
- 		0xbff2,		vop_time_increment_bitlength,
--		0xbff3,		(1 << vop_time_increment_bitlength) - 1,
-+		0xbff3,		GENMASK(vop_time_increment_bitlength - 1, 0),
- 		0xbfe6,		0,
- 		0xbfe7,		(fps / 1000) << 8,
- 		0,		0,
+ 	priv->enable_state = true;
+ 	return 0;
 -- 
 2.53.0
 
